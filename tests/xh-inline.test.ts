@@ -12,6 +12,10 @@ import test from 'node:test';
 
 import { XH_INLINE_SOURCE } from '@/lib/locales/xh-inline/index';
 import { inlineDraftsLoaded, inlineTemplate, inlineText, placeholdersOf, registerInlineDrafts, registerXhInline, xhInlineDraft } from '@/lib/xh-inline';
+import { REPORT_DOCUMENT_COPY } from '@/lib/report-localisation';
+import { PLAN_ASSURANCE_COPY } from '@/lib/plan-assurance';
+import { REPORT_VISUAL_COPY } from '@/lib/report-visuals';
+import { REPORT_SUMMARY_COPY } from '@/lib/report-summary';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const SHARD_DIR = join(ROOT, 'lib/locales/xh-inline');
@@ -77,4 +81,37 @@ test('inlineDraftsLoaded is true only for a draft language whose drafts are regi
   assert.equal(inlineDraftsLoaded('af'), false);
   registerXhInline(XH_INLINE_SOURCE);
   assert.equal(inlineDraftsLoaded('xh'), true);
+});
+
+test('inlineDraftsLoaded is true only for isiXhosa and only once its drafts are registered', () => {
+  registerXhInline({});
+  assert.equal(inlineDraftsLoaded('xh'), false);
+  registerXhInline({ 'Save': 'Gcina' });
+  assert.equal(inlineDraftsLoaded('xh'), true);
+  assert.equal(inlineDraftsLoaded('zu'), false);
+  assert.equal(inlineDraftsLoaded('en'), false);
+  assert.equal(inlineDraftsLoaded(''), false);
+  registerXhInline({});
+  assert.equal(inlineDraftsLoaded('xh'), false);
+  registerXhInline(XH_INLINE_SOURCE);
+  assert.equal(inlineDraftsLoaded('xh'), true);
+});
+
+test('the site report document has an isiXhosa draft for every wording its code writes (cover, glance, costs, M&E, risks, trust statement, drawings, summaries)', () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const registries: Array<[string, string[]]> = [
+    ['report document', REPORT_DOCUMENT_COPY.map((row) => row.english)],
+    ['plan assurance', PLAN_ASSURANCE_COPY.map((row) => row.english)],
+    ['report visuals', REPORT_VISUAL_COPY.map((row) => row.english)],
+    ['report summary', REPORT_SUMMARY_COPY.map((row) => row.english)],
+  ];
+  const figures = (text: string) => (text.match(/\d+/g) ?? []).sort().join(',');
+  for (const [name, keys] of registries) {
+    const missing = keys.filter((english) => xhInlineDraft(english) === null);
+    assert.deepEqual(missing, [], `${name}: no isiXhosa draft for these`);
+    for (const english of keys) assert.equal(figures(xhInlineDraft(english)!), figures(english), `${name}: figures changed in ${JSON.stringify(english)}`);
+  }
+  // The shard is registered in the index, so the route and the browser both read it.
+  assert.equal(XH_INLINE_SOURCE['Site at a Glance'], 'Indawo ngokubona nje');
+  assert.equal(XH_INLINE_SOURCE['Status'], 'Isimo');
 });

@@ -13,8 +13,9 @@ import type { MapRefLayers } from '../lib/base-layers.ts';
 import type { ReportSiteFacts } from '../lib/report-site-facts.ts';
 import type { LocationData } from '../lib/types.ts';
 import type { PhasePlan } from '../lib/phasing.ts';
-import { registerInlineDrafts } from '../lib/xh-inline.ts';
+import { registerInlineDrafts, registerXhInline } from '../lib/xh-inline.ts';
 import { AF_INLINE_SOURCE } from '../lib/locales/af-inline/index.ts';
+import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index.ts';
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const fixture = JSON.parse(read('tests/fixtures/report-figures-translation/source-cases.json')) as {
@@ -176,6 +177,55 @@ test('Afrikaans drawings: English bytes until the drafts load, then Afrikaans wo
     assert.equal(withReportFigures(localised, af, 'af').slideHint, reportVisualText('Slide to see more', 'af'));
   } finally {
     registerInlineDrafts('af', {});
+  }
+  assert.equal(JSON.stringify(fixture), snapshot);
+});
+
+test('isiXhosa drawings: once the drafts load, isiXhosa words and months with every figure, input and species name exact; the other languages do not move', () => {
+  const snapshot = JSON.stringify(fixture);
+  const english = all('en');
+  const others = ['en', ...languages].map(language => all(language).map(f => f.svg));
+  registerXhInline(XH_INLINE_SOURCE);
+  try {
+    const xh = all('xh');
+    assert.deepEqual(xh.map(f => f.id), english.map(f => f.id), 'no drawing disappears');
+    for (const figure of xh.filter(f => selected.has(f.id))) {
+      const original = english.find(f => f.id === figure.id)!;
+      for (const key of ['title', 'note', 'alt'] as const) assert.notEqual(figure[key], original[key], `xh ${figure.id} ${key}`);
+      assert.equal(figure.width, original.width);
+    }
+    // The ground projection, bed codes and species identities are the English ones.
+    const projection = (svg: string) => svg.split('<g clip-path="url(#plan)">')[1].split('</g>')[0];
+    const plan = sitePlanFigure(fixture.canvas, 'xh', fixture.refs)!, plain = sitePlanFigure(fixture.canvas, 'en', fixture.refs)!;
+    assert.equal(projection(plan.svg), projection(plain.svg));
+    const codes = plantCodesForSheet(fixture.canvas.items.map(row => row.defId));
+    for (const [id, code] of codes) if (!(BED_DEF_IDS as readonly string[]).includes(id)) assert.ok(words(plan.svg).includes(`${code} ${ELEMENTS_BY_ID[id].name}`), 'plant names are identities, not translation candidates');
+    assert.ok(plan.note.includes(reportVisualText('It is not a land survey.', 'xh')));
+    // The climate drawing names its months in isiXhosa and keeps its own year-range kicker.
+    const climate = xh.find(f => f.id === 'climate');
+    if (climate) {
+      const text = words(climate.svg);
+      assert.ok(/\bMat\b/.test(text) && /\bDis\b/.test(text), 'isiXhosa month labels');
+      assert.ok(!/\b(Mar|Dec)\b/.test(text), 'no English month label left in the isiXhosa drawing');
+      const digits = (svg: string) => (words(svg).match(/\d+/g) ?? []).sort();
+      assert.deepEqual(digits(climate.svg), digits(english.find(f => f.id === 'climate')!.svg), 'every printed figure is the English one');
+    }
+    // Visual overview for the same site: values are the English ones.
+    const base = siteReportVisuals(fixture.facts, fixture.location), localised = siteReportVisuals(fixture.facts, fixture.location, 'xh');
+    assert.deepEqual(localised.metrics.map(m => m.value), base.metrics.map(m => m.value));
+    assert.deepEqual(localised.charts.map(c => c.rows.map(r => r.value)), base.charts.map(c => c.rows.map(r => r.value)));
+    assert.equal(localised.overviewTitle, 'Indawo ngokubona nje');
+    assert.equal(withReportFigures(localised, xh, 'xh').slideHint, reportVisualText('Slide to see more', 'xh'));
+    // Every registered diagram wording has an isiXhosa draft that keeps its placeholders and figures.
+    for (const [englishText] of sources) {
+      const draft = reportVisualText(englishText, 'xh');
+      assert.deepEqual(draft.match(/\{\w+\}/g)?.sort() ?? [], englishText.match(/\{\w+\}/g)?.sort() ?? [], englishText);
+      assert.deepEqual(draft.match(/\d+/g)?.sort() ?? [], englishText.match(/\d+/g)?.sort() ?? [], englishText);
+    }
+    // Drafts being loaded changes nothing for the other languages.
+    assert.deepEqual(['en', ...languages].map(language => all(language).map(f => f.svg)), others);
+  } finally {
+    registerXhInline({});
   }
   assert.equal(JSON.stringify(fixture), snapshot);
 });

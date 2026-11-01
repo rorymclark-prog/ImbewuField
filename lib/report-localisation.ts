@@ -1725,18 +1725,20 @@ export const REPORT_DOCUMENT_COPY:readonly {english:string;zu:string;st:string;t
   }
 ];
 export const REPORT_DOCUMENT_LANGUAGES=['zu','st','ts','ve'] as const;
-/** True when reportDocumentText really changes the language: the four paired languages, and Afrikaans once its drafts are loaded. */
+/** True when reportDocumentText really changes the language: the four paired languages, and Afrikaans or isiXhosa once their drafts are loaded. */
 export function reportDocumentTranslated(language:string):boolean {
-  return REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])||(language==='af'&&inlineDraftsLoaded('af'));
+  return REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])||((language==='af'||language==='xh')&&inlineDraftsLoaded(language));
 }
 /** The shared Afrikaans draft for 'Amount' means a quantity (Hoeveelheid); in the cost table beside 'Quantity' it is the money column,
- * so it takes the money book's word, as lib/farm-report.ts does. */
+ * so it takes the money book's word (Bedrag), as lib/farm-report.ts does. The same for isiXhosa (Ubungakanani -> Isixa). */
 const AF_DOCUMENT_WORDS:Readonly<Record<string,string>>={Amount:'Bedrag'};
+const XH_DOCUMENT_WORDS:Readonly<Record<string,string>>={Amount:'Isixa'};
 const documentCopy=new Map(REPORT_DOCUMENT_COPY.map(row=>[row.english,row]));
 export function reportDocumentText(source:string,language='en',values:Record<string,string|number>={}):string {
   const row=documentCopy.get(source);
-  // Afrikaans: the draft keyed by the exact English (lib/locales/af-inline), else English until the drafts load.
-  const text=language==='af'?(Object.hasOwn(AF_DOCUMENT_WORDS,source)&&inlineDraftsLoaded('af')?AF_DOCUMENT_WORDS[source]:inlineDraft('af',source)??source):row&&REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])?row[language as typeof REPORT_DOCUMENT_LANGUAGES[number]]:source;
+  // Afrikaans and isiXhosa: the draft keyed by the exact English (lib/locales/af-inline, lib/locales/xh-inline), else English until the drafts load.
+  const inlineWords=language==='af'?AF_DOCUMENT_WORDS:XH_DOCUMENT_WORDS;
+  const text=language==='af'||language==='xh'?(Object.hasOwn(inlineWords,source)&&inlineDraftsLoaded(language)?inlineWords[source]:inlineDraft(language,source)??source):row&&REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])?row[language as typeof REPORT_DOCUMENT_LANGUAGES[number]]:source;
   return text.replace(/\{(\w+)\}/g,(token,key:string)=>Object.hasOwn(values,key)?String(values[key]):token);
 }
 

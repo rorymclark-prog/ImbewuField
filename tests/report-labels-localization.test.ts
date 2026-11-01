@@ -13,18 +13,21 @@ import {reportDocumentText}from '../lib/report-localisation.ts';
 import {TANK_IDS,statedTankCapacityLitres}from '../lib/water-system.ts';
 import type{ReportHeaderInput}from '../lib/report-site-facts.ts';
 import type{LocationData}from '../lib/types.ts';
-import {registerInlineDrafts}from '../lib/xh-inline.ts';
+import {registerInlineDrafts,registerXhInline,inlineDraftsLoaded}from '../lib/xh-inline.ts';
 import {AF_INLINE_SOURCE}from '../lib/locales/af-inline/index.ts';
+import {XH_INLINE_SOURCE}from '../lib/locales/xh-inline/index.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const fixture=JSON.parse(read('tests/fixtures/report-labels-translation/source-cases.json')) as {sourceSha:string;cases:Array<{name:string;input:ReportHeaderInput;english:string;visuals:ReturnType<typeof siteReportVisuals>}>;location:LocationData};
 const languages=['zu','st','ts','ve']as const;
 // Afrikaans wording exists only once its drafts are registered (the browser's af locale chunk does that); the other tests here run without them, as the server does.
 const withAfrikaans=async<T,>(run:()=>T|Promise<T>):Promise<T>=>{registerInlineDrafts('af',AF_INLINE_SOURCE);try{return await run();}finally{registerInlineDrafts('af',{});}};
+// isiXhosa wording exists only once its drafts are registered (the browser's xh locale chunk does that); the other tests here run without them, as the server does.
+const withXhosa=async<T,>(run:()=>T|Promise<T>):Promise<T>=>{registerXhInline(XH_INLINE_SOURCE);try{return await run();}finally{registerXhInline({});}};
 const packet=JSON.parse(read('docs/translation/four-language-completion/report-labels-drafts.json'));
 
 test('the catalogue label pass preserves exact English output and every earlier legacy or custom name',()=>{
  assert.equal(fixture.sourceSha,'ac308edb2c7b2e4c5bda9c41ebdf611804bead35');assert.equal(packet.sourceSha,fixture.sourceSha);assert.match(packet.status,/Unreviewed/);
- for(const c of fixture.cases){assert.equal(buildReportHeaderMarkdown(c.input),c.english);assert.equal(buildReportHeaderMarkdown(c.input,'af'),c.english,`${c.name}: before its drafts load Afrikaans is the English`);assert.deepEqual(siteReportVisuals(c.input.facts!,fixture.location),c.visuals);}
+ for(const c of fixture.cases){assert.equal(buildReportHeaderMarkdown(c.input),c.english);assert.equal(buildReportHeaderMarkdown(c.input,'af'),c.english,`${c.name}: before its drafts load Afrikaans is the English`);assert.equal(buildReportHeaderMarkdown(c.input,'xh'),c.english,`${c.name}: before its drafts load isiXhosa is the English`);assert.deepEqual(siteReportVisuals(c.input.facts!,fixture.location),c.visuals);}
  for(const row of packet.entries){assert.deepEqual(REPORT_VISUAL_COPY.find(r=>r.english===row.english),row);for(const lang of languages){assert.ok(row[lang].trim());assert.notEqual(row[lang],row.english);assert.deepEqual(row[lang].match(/\d+/g),row.english.match(/\d+/g));}}
 });
 
@@ -113,4 +116,42 @@ test('the real report API reaches the Afrikaans equipment/route display with moc
   assert.equal(reportElementDisplayName(def.name,def.id,'af'),'JoJo-tenk 2500L');assert.ok(table.includes('JoJo-tenk 2500L'));
   for(const g of facts.design!.elements)assert.ok(table.includes(reportElementDisplayName(g.name,g.defId,'af')));for(const route of facts.design!.routes)assert.ok(table.includes(reportRouteShortName(route.label,route.kind,'af')));
  }finally{hooks.deregister();globalThis.fetch=old;registerInlineDrafts('af',{});}
+});
+
+test('isiXhosa standard equipment and routes translate only on an exact recorded identity while every plant stays canonical',()=>withXhosa(()=>{
+ const defaults=Object.values(ELEMENTS_BY_ID);const untranslated:string[]=[];
+ for(const def of defaults){
+  const plant=def.category==='growing'||Boolean(def.botanical)||plantTakesCode(def.id);const actual=reportElementDisplayName(def.name,def.id,'xh');
+  if(plant)assert.equal(actual,def.name,`${def.id}: species/plant identity`);
+  else {assert.equal(actual,reportVisualText(def.name,'xh'));if(actual===def.name)untranslated.push(def.name);}
+  assert.equal(reportElementDisplayName(def.name,undefined,'xh'),def.name);
+  for(const id of ['unknown','constructor','__proto__','toString'])assert.equal(reportElementDisplayName(def.name,id,'xh'),def.name);
+  assert.equal(reportElementDisplayName('Named '+def.name,def.id,'xh'),'Named '+def.name);
+  const other=defaults.find(d=>d.id!==def.id&&d.name!==def.name)!;assert.equal(reportElementDisplayName(def.name,other.id,'xh'),def.name);
+ }
+ // A name that is the same word in isiXhosa (Compost, ...) is the only way a default stays unchanged.
+ assert.ok(untranslated.length<=Math.ceil(defaults.length/10),`too many untranslated default equipment names: ${untranslated.join(', ')}`);
+ for(const [kind,label]of Object.entries(ROUTE_LABELS)){const short=label.replace(/ \(.*\)$/,'');assert.equal(reportRouteShortName(label,kind,'xh'),reportVisualText(short,'xh'));assert.equal(reportRouteShortName(label,kind,'en'),short);assert.equal(reportRouteShortName(label,undefined,'xh'),short);assert.equal(reportRouteShortName('Named '+label,kind,'xh'),'Named '+short);
+  for(const other of ['unknown','constructor','__proto__','toString',...Object.keys(ROUTE_LABELS).filter(k=>k!==kind)])assert.equal(reportRouteShortName(label,other,'xh'),short);}
+}));
+
+test('the isiXhosa table translates equipment and routes but does not mutate source data or reinterpret a legacy name',()=>withXhosa(()=>{
+ for(const c of fixture.cases){const before=JSON.stringify(c.input);const markdown=buildReportHeaderMarkdown(c.input,'xh');for(const g of c.input.facts!.design!.elements)assert.ok(markdown.includes(reportElementDisplayName(g.name,g.defId,'xh')+' x'+g.count));for(const r of c.input.facts!.design!.routes)assert.ok(markdown.includes(reportRouteShortName(r.label,r.kind,'xh')));
+  if(c.name!=='catalogue')for(const g of c.input.facts!.design!.elements)assert.ok(markdown.includes(g.name));assert.equal(JSON.stringify(c.input),before);
+  // The isiXhosa diagrams keep every drawn value; only their words change.
+  const english=siteReportVisuals(c.input.facts!,fixture.location),xh=siteReportVisuals(c.input.facts!,fixture.location,'xh');
+  assert.equal(xh.language,'xh');assert.deepEqual(xh.metrics.map(m=>m.value),english.metrics.map(m=>m.value));assert.deepEqual(xh.charts.map(chart=>chart.rows.map(r=>r.value)),english.charts.map(chart=>chart.rows.map(r=>r.value)));
+  assert.equal(xh.overviewTitle,'Indawo ngokubona nje');assert.equal(reportDocumentText('Site at a Glance','xh'),xh.overviewTitle);
+  for(const chart of xh.charts)assert.ok(reportChartAlt(chart)&&reportChartSvg(chart).svg);
+ }
+}));
+
+test('the real report API reaches the isiXhosa equipment/route display with mocked generation, loading the drafts itself',async()=>{
+ const source=(s:string)=>'data:text/javascript,'+encodeURIComponent(s);const hooks=registerHooks({resolve(s,c,next){if(s==='@anthropic-ai/sdk')return{url:source('export default class Anthropic{}'),shortCircuit:true};if(s==='next/server')return{url:source('export class NextRequest{}'),shortCircuit:true};if(s==='@/lib/api-auth')return{url:source('export async function guardPaidApiRequest(){return {uid:"labels-test"}}'),shortCircuit:true};if(s==='@/lib/metered-ai')return{url:source("export const AI_MODELS={main:'mock'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async()=>({usage:{},stop_reason:'end_turn',content:[{type:'text',text:'## Mocked body\\nMocked response.'}]})}}}}"),shortCircuit:true};return next(s,c);}});const old=globalThis.fetch;globalThis.fetch=async()=>new Response('{}');registerXhInline({});
+ try{const{POST}=await import('../app/api/generate-report/route.ts');const facts=structuredClone(fixture.cases[0].input.facts!);const def=ELEMENTS_BY_ID['jojo_2500'];facts.water!.tanks=[{name:def.name,defId:def.id,count:1,statedLitres:2500,status:'proposed'}];
+  const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language:'xh',locationData:fixture.location,siteFacts:facts,sections:['Executive Summary']})})as any);assert.equal(response.status,200);assert.equal(inlineDraftsLoaded('xh'),true);const text=await response.text();
+  const start=text.indexOf('## '+reportDocumentText('Site at a Glance','xh'));const table=text.slice(start,text.indexOf('## 1. Mocked body'));assert.ok(start>=0);
+  assert.equal(reportElementDisplayName(def.name,def.id,'xh'),'Itanki ye-JoJo 2500L');assert.ok(table.includes('Itanki ye-JoJo 2500L'));
+  for(const g of facts.design!.elements)assert.ok(table.includes(reportElementDisplayName(g.name,g.defId,'xh')));for(const route of facts.design!.routes)assert.ok(table.includes(reportRouteShortName(route.label,route.kind,'xh')));
+ }finally{hooks.deregister();globalThis.fetch=old;registerXhInline({});}
 });

@@ -9,14 +9,17 @@ import {AlertTriangle}from'lucide-react';
 import {ASSURANCE_TITLE,ASSURANCE_PARAGRAPHS,ASSURANCE_ONE_LINE,SOIL_CAUTION,SOIL_TEST_INVITE,SOIL_UNKNOWN_CAUTION,SOIL_PROVENANCE_TITLES,PLAN_ASSURANCE_COPY,planAssuranceText,planAssuranceParagraphs,planSoilCaution,planSoilCautionTitle}from'../lib/plan-assurance.ts';
 import {assuranceMarkdown}from'../lib/report-site-facts.ts';
 import {parseReportMarkdown}from'../lib/report-pdf.ts';
-import {registerInlineDrafts}from'../lib/xh-inline.ts';
+import {registerInlineDrafts,registerXhInline}from'../lib/xh-inline.ts';
 import {AF_INLINE_SOURCE}from'../lib/locales/af-inline/index.ts';
+import {XH_INLINE_SOURCE}from'../lib/locales/xh-inline/index.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const f=JSON.parse(read('tests/fixtures/report-assurance-translation/source-cases.json'));
 const packet=JSON.parse(read('docs/translation/four-language-completion/report-assurance-drafts.json'));
 const languages=['zu','st','ts','ve']as const;
 // Afrikaans wording exists only once its drafts are registered (the browser's af locale chunk does that); the other tests here run without them, as the server does.
 const withAfrikaans=<T,>(run:()=>T):T=>{registerInlineDrafts('af',AF_INLINE_SOURCE);try{return run();}finally{registerInlineDrafts('af',{});}};
+// isiXhosa wording exists only once its drafts are registered (the browser's xh locale chunk does that); the other tests here run without them, as the server does.
+const withXhosa=<T,>(run:()=>T):T=>{registerXhInline(XH_INLINE_SOURCE);try{return run();}finally{registerXhInline({});}};
 const digits=(s:string)=>(s.match(/\d+/g)??[]).sort();
 const sources=[ASSURANCE_TITLE,...ASSURANCE_PARAGRAPHS,ASSURANCE_ONE_LINE,...Object.values(SOIL_CAUTION),SOIL_TEST_INVITE,SOIL_UNKNOWN_CAUTION,...Object.values(SOIL_PROVENANCE_TITLES)];
 const map=new Map(PLAN_ASSURANCE_COPY.map(r=>[r.english,r]));
@@ -26,6 +29,7 @@ test('the shared English statements and generic report remain exact while all so
  assert.equal(ASSURANCE_TITLE,f.english.title);assert.deepEqual(ASSURANCE_PARAGRAPHS,f.english.paragraphs);assert.equal(ASSURANCE_ONE_LINE,f.english.footer);assert.deepEqual(SOIL_CAUTION,f.english.soil);assert.equal(SOIL_TEST_INVITE,f.english.invite);assert.equal(assuranceMarkdown(),f.english.markdown);assert.equal(assuranceMarkdown('af'),f.english.markdown);
  assert.equal(map.size,PLAN_ASSURANCE_COPY.length);assert.deepEqual(PLAN_ASSURANCE_COPY,packet.entries);assert.deepEqual([...map.keys()].sort(),[...sources].sort());for(const source of sources)for(const lang of languages){const translated=planAssuranceText(source,lang);assert.equal(translated,map.get(source)![lang]);assert.notEqual(translated,source);assert.ok(translated.trim());assert.deepEqual(digits(translated),digits(source));assert.deepEqual(translated.match(/\{\w+\}/g),source.match(/\{\w+\}/g));}
  for(const value of['Recorded custom text {count}','High','constructor','__proto__'])for(const lang of languages)assert.equal(planAssuranceText(value,lang),value);
+ for(const source of sources)assert.equal(planAssuranceText(source,'xh'),source,'before its drafts load isiXhosa is the English');assert.equal(assuranceMarkdown('xh'),f.english.markdown);
 });
 
 test('the full native statement retains each source paragraph in order rather than reducing its cautions to a short footer',()=>{
@@ -72,4 +76,18 @@ test('Afrikaans assurance: once the drafts load every source clause is Afrikaans
  for(const value of['Recorded custom text {count}','constructor','__proto__'])assert.equal(planAssuranceText(value,'af'),value);
  // The English statement is untouched by the Afrikaans drafts being loaded.
  assert.equal(assuranceMarkdown(),f.english.markdown);assert.deepEqual(planAssuranceParagraphs(),f.english.paragraphs);
+}));
+
+test('isiXhosa assurance: once the drafts load every source clause is isiXhosa, keeps its figures, and the soil caution still follows the recorded source',()=>withXhosa(()=>{
+ for(const source of sources){const xh=planAssuranceText(source,'xh');assert.notEqual(xh,source,`missing isiXhosa draft: ${source.slice(0,60)}`);assert.deepEqual(digits(xh),digits(source));}
+ assert.equal(planAssuranceText(ASSURANCE_TITLE,'xh'),'Ungalithemba ngakanani eli cwangciso');
+ const actual=planAssuranceParagraphs('xh');assert.equal(actual.length,ASSURANCE_PARAGRAPHS.length);for(let i=0;i<actual.length;i++)assert.equal(actual[i],planAssuranceText(ASSURANCE_PARAGRAPHS[i],'xh'));
+ const blocks=parseReportMarkdown(assuranceMarkdown('xh'));assert.equal(blocks.length,1+actual.length);assert.deepEqual(blocks.map((b:any)=>b.text),[planAssuranceText(ASSURANCE_TITLE,'xh'),...actual]);
+ for(const soilSource of['lab','soilgrids','estimate',undefined,null,'unfamiliar','constructor','__proto__','toString']){const context={soilSource};const before=JSON.stringify(context);const paragraphs=planAssuranceParagraphs('xh',context);assert.equal(paragraphs.length,5);for(const index of[0,1,3,4])assert.equal(paragraphs[index],planAssuranceText(ASSURANCE_PARAGRAPHS[index],'xh'));assert.equal(paragraphs[2],soilSource==='soilgrids'?planAssuranceText(ASSURANCE_PARAGRAPHS[2],'xh'):planSoilCaution(soilSource,'xh'));assert.equal(JSON.stringify(context),before);}
+ for(const source of['lab','soilgrids','estimate']as const){assert.equal(planSoilCaution(source,'xh'),planAssuranceText(SOIL_CAUTION[source],'xh'));assert.notEqual(planSoilCaution(source,'xh'),SOIL_CAUTION[source]);assert.equal(planSoilCautionTitle(source,'xh'),planAssuranceText(SOIL_PROVENANCE_TITLES[source],'xh'));}
+ for(const source of[null,undefined,'unknown','constructor','__proto__','Recorded custom source']){assert.equal(planSoilCaution(source,'xh'),planAssuranceText(SOIL_UNKNOWN_CAUTION,'xh'));assert.equal(planSoilCautionTitle(source,'xh'),planAssuranceText(SOIL_PROVENANCE_TITLES.unknown,'xh'));}
+ for(const value of['Recorded custom text {count}','constructor','__proto__'])assert.equal(planAssuranceText(value,'xh'),value);
+ // The English statement and the four paired languages are untouched by the isiXhosa drafts being loaded.
+ assert.equal(assuranceMarkdown(),f.english.markdown);assert.deepEqual(planAssuranceParagraphs(),f.english.paragraphs);
+ for(const lang of languages)for(const source of sources)assert.equal(planAssuranceText(source,lang),map.get(source)![lang]);
 }));

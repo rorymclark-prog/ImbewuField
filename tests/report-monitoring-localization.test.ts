@@ -10,21 +10,24 @@ import {assuranceMarkdown}from'../lib/report-site-facts.ts';
 import {REPORT_DOCUMENT_COPY,reportDocumentText,zuluReportClosingNotes}from'../lib/report-localisation.ts';
 import {buildBillOfQuantities,billOfQuantitiesMarkdown}from'../lib/report-boq.ts';
 import type{ReportSiteFacts}from'../lib/report-site-facts.ts';
-import {registerInlineDrafts}from'../lib/xh-inline.ts';
+import {registerInlineDrafts,registerXhInline,inlineDraftsLoaded}from'../lib/xh-inline.ts';
 import {AF_INLINE_SOURCE}from'../lib/locales/af-inline/index.ts';
+import {XH_INLINE_SOURCE}from'../lib/locales/xh-inline/index.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const fx=JSON.parse(read('tests/fixtures/report-monitoring-translation/source-cases.json'));
 const packet=JSON.parse(read('docs/translation/four-language-completion/report-monitoring-drafts.json'));
 const languages=['zu','st','ts','ve']as const;
 // Afrikaans wording exists only once its drafts are registered (the browser's af locale chunk does that); the other tests here run without them, as the server does.
 const withAfrikaans=async<T,>(run:()=>T|Promise<T>):Promise<T>=>{registerInlineDrafts('af',AF_INLINE_SOURCE);try{return await run();}finally{registerInlineDrafts('af',{});}};
+// isiXhosa wording exists only once its drafts are registered (the browser's xh locale chunk does that); the other tests here run without them, as the server does.
+const withXhosa=async<T,>(run:()=>T|Promise<T>):Promise<T>=>{registerXhInline(XH_INLINE_SOURCE);try{return await run();}finally{registerXhInline({});}};
 const words=new Map(REPORT_DOCUMENT_COPY.map(r=>[r.english,r]));
 const numbers=(s:string)=>(s.match(/(?<![\p{L}\p{N}])-?\d+(?:[.,]\d+)?/gu)??[]).sort();
 const tokens=(s:string)=>(s.match(/\{\w+\}/g)??[]).sort();
 
 test('source monitoring rows, all risk boundaries and English markdown stay exact while native-only closing notes retain their original text',()=>{
- assert.equal(fx.sourceSha,'013cec5286cfb6c7251e48a5907bb8548c80a25d');for(const c of fx.monitoring){assert.deepEqual(buildMonitoringPlan(c.facts),c.rows,c.name);assert.deepEqual(buildMonitoringPlan(c.facts,'af'),c.rows,`${c.name}: before its drafts load Afrikaans is the English`);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts)),c.markdown);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts,'af'),'af'),c.markdown);}
- for(const c of fx.risks){assert.deepEqual(buildRiskRegister(c.input),c.rows,c.name);assert.deepEqual(buildRiskRegister(c.input,'af'),c.rows);assert.equal(riskRegisterMarkdown(buildRiskRegister(c.input)),c.markdown);assert.equal(riskRegisterMarkdown(buildRiskRegister(c.input,'af'),'af'),c.markdown);}
+ assert.equal(fx.sourceSha,'013cec5286cfb6c7251e48a5907bb8548c80a25d');for(const c of fx.monitoring){assert.deepEqual(buildMonitoringPlan(c.facts),c.rows,c.name);assert.deepEqual(buildMonitoringPlan(c.facts,'af'),c.rows,`${c.name}: before its drafts load Afrikaans is the English`);assert.deepEqual(buildMonitoringPlan(c.facts,'xh'),c.rows,`${c.name}: before its drafts load isiXhosa is the English`);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts,'xh'),'xh'),c.markdown);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts)),c.markdown);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts,'af'),'af'),c.markdown);}
+ for(const c of fx.risks){assert.deepEqual(buildRiskRegister(c.input),c.rows,c.name);assert.deepEqual(buildRiskRegister(c.input,'af'),c.rows);assert.deepEqual(buildRiskRegister(c.input,'xh'),c.rows,`${c.name}: before its drafts load isiXhosa is the English`);assert.equal(riskRegisterMarkdown(buildRiskRegister(c.input,'xh'),'xh'),c.markdown);assert.equal(riskRegisterMarkdown(buildRiskRegister(c.input)),c.markdown);assert.equal(riskRegisterMarkdown(buildRiskRegister(c.input,'af'),'af'),c.markdown);}
  const facts=fx.monitoring.find((r:any)=>r.name==='saved-design').facts;const notes=zuluReportClosingNotes(facts,fx.location);assert.equal(notes.crop,fx.legacyZulu[0]);
  // Full shared costs supersede the earlier abbreviated native table; every measured line stays present.
  const nativeBill=buildBillOfQuantities(facts,'zu');const nativeCosts=billOfQuantitiesMarkdown(nativeBill,'zu');for(const line of nativeBill.lines)assert.ok(nativeCosts.includes(line.quantity));
@@ -107,3 +110,44 @@ test('Afrikaans risk rows keep triggered rows, IDs, canonical ratings, exact sou
  }
  const row={id:'R004',risk:'High {threshold} named by farmer',trigger:'Recorded custom trigger -2.2',likelihood:'Low',impact:'High',mitigation:'Recorded custom mitigation'}as const;const text=riskRegisterMarkdown([{...row}],'af');for(const value of[row.id,row.risk,row.trigger,row.mitigation])assert.ok(text.includes(value));assert.ok(text.includes('| Laag | Hoog |'));
 }));
+
+test('isiXhosa monitoring fields translate while baselines retain quantities, explicit missing data and exact recorded names',()=>withXhosa(()=>{
+ for(const c of fx.monitoring){const before=JSON.stringify(c.facts);const xh=buildMonitoringPlan(c.facts,'xh');assert.equal(xh.length,c.rows.length);
+  for(let i=0;i<xh.length;i++)for(const key of Object.keys(c.rows[i])as Array<keyof MonitoringRow>){assert.notEqual(xh[i][key],c.rows[i][key],`${c.name}/xh/${key}`);assert.deepEqual(numbers(xh[i][key]),numbers(c.rows[i][key]),`${c.name}/${key}: quantity changed`);}
+  const treeBaseline=xh[c.rows.findIndex((r:any)=>r.indicator==='Tree and perennial survival')].baseline;for(const g of c.facts?.design?.elements??[])if(g.category==='growing'&&c.rows.some((r:any)=>r.baseline.includes(g.name)))assert.ok(treeBaseline.includes(g.name));assert.equal(JSON.stringify(c.facts),before);
+  const markdown=monitoringMarkdown(xh,'xh');for(const row of xh)for(const value of Object.values(row))assert.ok(markdown.includes(value));assert.ok(markdown.includes('## Isicwangciso sokubeka esweni nokuvavanya'));assert.ok(markdown.includes(reportDocumentText('Take baseline readings before support starts. Label any later or recalled starting figures clearly; compare matching periods and do not attribute every change to the project.','xh')));
+  // The other languages do not move when the isiXhosa drafts load.
+  registerXhInline({});const others=['en',...languages].map(l=>monitoringMarkdown(buildMonitoringPlan(c.facts,l),l));registerXhInline(XH_INLINE_SOURCE);
+  assert.deepEqual(['en',...languages].map(l=>monitoringMarkdown(buildMonitoringPlan(c.facts,l),l)),others);
+ }
+}));
+
+test('isiXhosa risk rows keep triggered rows, IDs, canonical ratings, exact source numbers and input objects at every boundary',()=>withXhosa(()=>{
+ for(const c of fx.risks){const before=JSON.stringify(c.input);const xh=buildRiskRegister(c.input,'xh');assert.equal(xh.length,c.rows.length,c.name);for(let i=0;i<xh.length;i++){const row=xh[i],old=c.rows[i];assert.deepEqual([row.id,row.likelihood,row.impact],[old.id,old.likelihood,old.impact]);for(const key of['risk','trigger','mitigation']as const){assert.notEqual(row[key],old[key],`${c.name}/xh/${key}`);assert.deepEqual(numbers(row[key]),numbers(old[key]),`${c.name}/${key}: source numbers`);}}
+  const markdown=riskRegisterMarkdown(xh,'xh');assert.ok(markdown.includes('## Irejista yemingcipheko'));if(!xh.length){assert.ok(markdown.includes(reportDocumentText("No risk in this register's rule set was triggered by this site's data. That is not the same as no risk — it means the specific thresholds this report checks (rainfall, slope, frost, soil basis, traced boundary, unpriced work, crop plan) were all clear.",'xh')));assert.ok(!markdown.includes('| # |'));}else{for(const row of xh){assert.ok(markdown.includes(row.trigger));assert.ok(markdown.includes('| '+reportDocumentText(row.likelihood,'xh')+' | '+reportDocumentText(row.impact,'xh')+' |'));}}
+  assert.equal(JSON.stringify(c.input),before);
+ }
+ const input=fx.risks.find((r:any)=>r.name==='one-unknown-tank').input;const names=buildRiskRegister(input,'xh').map(r=>r.risk);assert.ok(names.includes(reportDocumentText('Storage cannot be planned — tank sizes are not recorded','xh')));assert.ok(!names.includes(reportDocumentText('Roof runoff is lost — catchment traced but nothing to store it in','xh')));
+ const facts=fx.monitoring.find((r:any)=>r.name==='saved-design').facts as ReportSiteFacts;
+ for(const rainfallMm of[0,499,500,501])for(const slopeDeg of[4.999,5,9.999,10])for(const minTempC of[undefined,-2.2,4.99,5])for(const soilSource of[undefined,'estimate','soilgrids','lab']as const)for(const unpricedBoqLines of[0,1,2]){
+  const input2:RiskInput={facts,rainfallMm,slopeDeg,minTempC,soilSource,unpricedBoqLines};const source=buildRiskRegister(input2),rows=buildRiskRegister(input2,'xh');assert.deepEqual(rows.map(r=>[r.id,r.likelihood,r.impact,numbers(r.trigger)]),source.map(r=>[r.id,r.likelihood,r.impact,numbers(r.trigger)]));
+ }
+ const row={id:'R004',risk:'High {threshold} named by farmer',trigger:'Recorded custom trigger -2.2',likelihood:'Low',impact:'High',mitigation:'Recorded custom mitigation'}as const;const text=riskRegisterMarkdown([{...row}],'xh');for(const value of[row.id,row.risk,row.trigger,row.mitigation])assert.ok(text.includes(value));assert.ok(text.includes('| Ezantsi | Phezulu |'));
+}));
+
+test('the real API emits complete isiXhosa monitoring and risk tables with unchanged source decisions, loading the drafts itself',async()=>{
+ const url=(s:string)=>'data:text/javascript,'+encodeURIComponent(s);const hooks=registerHooks({resolve(s,c,next){if(s==='@anthropic-ai/sdk')return{url:url('export default class Anthropic{}'),shortCircuit:true};if(s==='next/server')return{url:url('export class NextRequest{}'),shortCircuit:true};if(s==='@/lib/api-auth')return{url:url('export async function guardPaidApiRequest(){return {uid:"monitoring-test"}}'),shortCircuit:true};if(s==='@/lib/metered-ai')return{url:url("export const AI_MODELS={main:'mock'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async()=>({usage:{},stop_reason:'end_turn',content:[{type:'text',text:'## Mocked body\\nMocked body content.'}]})}}}}"),shortCircuit:true};return next(s,c);}});const old=globalThis.fetch;globalThis.fetch=async()=>new Response('{}');registerXhInline({});
+ try{const{POST}=await import('../app/api/generate-report/route.ts');for(const c of[fx.monitoring[0],fx.monitoring[1],fx.monitoring.find((r:any)=>r.name==='unknown-water')]){const boq=buildBillOfQuantities(c.facts);const d=fx.location;const input:RiskInput={facts:c.facts,rainfallMm:d.rainfall.annual,slopeDeg:d.elevation.slopeDeg,minTempC:d.climate.minTemp,soilSource:d.soil.soilSource,unpricedBoqLines:boq.unpricedCount};const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language:'xh',locationData:d,siteFacts:c.facts,sections:['Executive Summary']})})as any);assert.equal(response.status,200);assert.equal(inlineDraftsLoaded('xh'),true);const text=await response.text();for(const markdown of[monitoringMarkdown(buildMonitoringPlan(c.facts,'xh'),'xh'),riskRegisterMarkdown(buildRiskRegister(input,'xh'),'xh')]){const[label,...body]=markdown.split('\n');assert.ok(text.includes(label.slice(3)),'xh: native heading');assert.ok(text.includes(body.join('\n').trim()),'xh: missing full native table');}assert.ok(!text.includes('## Monitoring & Evaluation Plan'));assert.ok(!text.includes('## Risk Register'));}}
+ finally{hooks.deregister();globalThis.fetch=old;registerXhInline({});}
+});
+
+test('the actual reader gives every isiXhosa checklist cell its matching field label once the drafts load, and English tables are never mistaken for them',async()=>{
+ const React=await import('react');const{renderToStaticMarkup}=await import('react-dom/server');const{stripInlineMarkdown}=await import('../lib/report-pdf.ts');const tree=ts.createSourceFile('view.tsx',read('components/ReportView.tsx'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);const fn=tree.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='renderReport');assert.ok(fn);
+ const js=ts.transpileModule(fn.getText(tree),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.None,target:ts.ScriptTarget.ES2022}}).outputText;
+ const render=new Function('React','stripInlineMarkdown','ReportChapterGraphics','ChevronRight','REPORT_DOCUMENT_LANGUAGES','reportDocumentText',js+';return renderReport;')(React,stripInlineMarkdown,()=>null,()=>null,languages,reportDocumentText);
+ const html=(markdown:string)=>renderToStaticMarkup(React.createElement('div',null,...render(markdown)));
+ const risk=fx.risks.find((r:any)=>r.name==='all-possible');
+ assert.ok(!html(fx.monitoring[1].markdown).includes('data-native-checklist'));
+ await withXhosa(()=>{for(const markdown of[monitoringMarkdown(buildMonitoringPlan(fx.monitoring[1].facts,'xh'),'xh'),riskRegisterMarkdown(buildRiskRegister(risk.input,'xh'),'xh')]){const output=html(markdown);assert.ok(output.includes('data-native-checklist="true"'));assert.equal((output.match(/role="columnheader"/g)??[]).length,6);const headers=markdown.split('\n').find(l=>l.startsWith('| '))!.slice(1,-1).split('|').map(c=>c.trim());const cells=[...output.matchAll(/<td[^>]*data-label="([^"]*)"/g)];assert.ok(cells.length>=6);for(let i=0;i<cells.length;i++)assert.equal(cells[i][1],headers[i%6]);}
+  for(const markdown of[fx.monitoring[1].markdown,risk.markdown])assert.ok(!html(markdown).includes('data-native-checklist'),'English tables stay as they were');});
+});

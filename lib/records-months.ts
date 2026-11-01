@@ -175,8 +175,11 @@ export function recordsReportDate(lang: string, date: Date, withYear: boolean): 
   return lang === 'af' && inlineDraftsLoaded('af') ? recordsBookDate(lang, date, withYear) : recordsDate(lang, date, withYear);
 }
 
-/** recordsSeasonLabel for the site report: the month range in Afrikaans months, 'year-round' and 'none' in Afrikaans. */
+/** recordsSeasonLabel for the site report: for Afrikaans (once its drafts are loaded) the month range in Afrikaans months, 'year-round' and 'none' in Afrikaans;
+ * for isiXhosa the label names isiXhosa months only once the isiXhosa drafts are loaded, so a report built before then (on the server) stays
+ * English throughout instead of printing one isiXhosa month word inside English text. Every other language is exactly recordsSeasonLabel. */
 export function recordsReportSeasonLabel(language: string, value: string): string {
+  if (language === 'xh' && !inlineDraftsLoaded('xh')) return value;
   if (language !== 'af' || !inlineDraftsLoaded('af')) return recordsSeasonLabel(language, value);
   if (value === 'year-round') return 'heeljaar';
   if (value === 'none') return 'geen';

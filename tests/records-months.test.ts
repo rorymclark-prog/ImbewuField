@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import { recordsDate, recordsMonthLong, recordsMonthShort, recordsMonthYear, recordsSeasonLabel, recordsBookDate, recordsBookMonthLong, recordsBookMonthShort, recordsBookMonthYear, recordsReportDate, recordsReportMonthShort, recordsReportSeasonLabel } from '@/lib/records-months';
 import { registerInlineDrafts } from '@/lib/xh-inline';
 import { AF_INLINE_SOURCE } from '@/lib/locales/af-inline/index';
+import { XH_INLINE_SOURCE } from '@/lib/locales/xh-inline/index';
 import { buildFinanceSeries } from '@/lib/finance-series';
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
@@ -168,8 +169,15 @@ test('the site report reads Afrikaans months only once the Afrikaans drafts are 
         assert.equal(recordsReportDate(lang, day, true), recordsDate(lang, day, true));
         assert.equal(recordsReportDate(lang, day, false), recordsDate(lang, day, false));
       }
-      for (const value of ['Nov–Mar', 'Jan–Dec', 'year-round', 'none', 'Whenever it rains']) assert.equal(recordsReportSeasonLabel(lang, value), recordsSeasonLabel(lang, value));
+      // isiXhosa season labels name isiXhosa months only once the isiXhosa drafts are loaded (checked below); every other language is the plain function.
+      if (lang !== 'xh') for (const value of ['Nov–Mar', 'Jan–Dec', 'year-round', 'none', 'Whenever it rains']) assert.equal(recordsReportSeasonLabel(lang, value), recordsSeasonLabel(lang, value));
     }
+    // isiXhosa: the English until its own drafts load (the Afrikaans drafts being loaded changes nothing), the plain function after.
+    registerInlineDrafts('xh', {});
+    for (const value of ['Nov–Mar', 'Jan–Dec', 'year-round', 'none', 'Whenever it rains']) assert.equal(recordsReportSeasonLabel('xh', value), value);
+    registerInlineDrafts('xh', XH_INLINE_SOURCE);
+    for (const value of ['Nov–Mar', 'Jan–Dec', 'year-round', 'none', 'Whenever it rains']) assert.equal(recordsReportSeasonLabel('xh', value), recordsSeasonLabel('xh', value));
+    registerInlineDrafts('xh', {});
     assert.equal(recordsMonthShort('af', 3), 'Mar');
     assert.equal(recordsSeasonLabel('af', 'Nov–Mar'), 'Nov–Mar');
   } finally {

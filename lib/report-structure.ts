@@ -16,15 +16,17 @@
 import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES } from './report-localisation';
 import { fillInline, inlineText } from '@/lib/xh-inline';
 
-/** isiXhosa's contents title is fixed (it must be recognised on the server, where no isiXhosa
- * drafts load); the other front-matter wording uses the draft keyed by the exact English. */
-const XH_CONTENTS = 'Okuqulathwe';
+/** isiXhosa's front-matter titles are fixed (they must be recognised on the server before any isiXhosa drafts load, and again in a
+ * fresh browser tab); the other front-matter wording uses the draft keyed by the exact English.
+ * tests/report-document-localization.test.ts pins these three to the drafts. */
+export const XH_FRONT_MATTER_TITLES = { 'Contents': 'Okuqulathwe', 'Document control': 'Ulawulo lwamaxwebhu', 'Site at a Glance': 'Indawo ngokubona nje' } as const;
+const XH_CONTENTS = XH_FRONT_MATTER_TITLES.Contents;
 /** Afrikaans front-matter titles are fixed for the same reason: a document built on the server, before any Afrikaans
  * drafts load, must still be recognised (and left unnumbered) by the browser. tests/report-structure.test.ts pins them to the drafts. */
 export const AF_FRONT_MATTER_TITLES = { 'Contents': 'Inhoud', 'Document control': 'Dokumentbeheer', 'Site at a Glance': "Die terrein in 'n oogopslag" } as const;
 function documentText(source: string, language: string, values: Record<string, string | number> = {}): string {
   if (language !== 'xh') return reportDocumentText(source, language, values);
-  if (source === 'Contents') return XH_CONTENTS;
+  if (Object.hasOwn(XH_FRONT_MATTER_TITLES, source)) return XH_FRONT_MATTER_TITLES[source as keyof typeof XH_FRONT_MATTER_TITLES];
   return fillInline(inlineText(language, source), values);
 }
 
@@ -35,8 +37,8 @@ const UNNUMBERED_TITLES = new Set([
   'site at a glance',
   'indawo kafushane',
   'okuqukethwe',
-  XH_CONTENTS.toLocaleLowerCase(),
   ...Object.values(AF_FRONT_MATTER_TITLES).map(title => title.toLocaleLowerCase()),
+  ...Object.values(XH_FRONT_MATTER_TITLES).map(title => title.toLocaleLowerCase()),
   ...['Contents','Document control','Site at a Glance'].flatMap(title=>REPORT_DOCUMENT_LANGUAGES.map(language=>reportDocumentText(title,language).toLocaleLowerCase())),
 ]);
 

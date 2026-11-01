@@ -37,8 +37,9 @@ import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
 import { assembleReportDocument } from '@/lib/report-assemble';
-import { inlineDraftsLoaded, registerInlineDrafts } from '@/lib/xh-inline';
+import { inlineDraftsLoaded, registerInlineDrafts, registerXhInline } from '@/lib/xh-inline';
 import { recordsBookMonthLong } from '@/lib/records-months';
+import { formatXhosaDate } from '@/lib/xh-dates';
 import { zuluReportClosingNotes, savedCropPlanMarkdown, reportHeadingLookup, reportHeadingPrompt, reportDocumentText, reportUiDate } from '@/lib/report-localisation';
 import {
   normaliseSiteAnalysisImages,
@@ -233,6 +234,10 @@ export async function POST(req: NextRequest) {
   // read the English-keyed Afrikaans drafts. The browser registers them when its Afrikaans chunk loads; this
   // server has no such chunk, so load them here, for Afrikaans only. Without them every part stays English.
   if (langCode === 'af' && !inlineDraftsLoaded('af')) registerInlineDrafts('af', (await import('@/lib/locales/af-inline/index')).AF_INLINE_SOURCE);
+  // isiXhosa: the code-written parts (cover, glance table, cost table, M&E plan, risk register, trust statement)
+  // read the English-keyed isiXhosa drafts. The browser registers them when its isiXhosa chunk loads; this
+  // server has no such chunk, so load them here, for isiXhosa only. Without them every part stays English.
+  if (langCode === 'xh' && !inlineDraftsLoaded('xh')) registerXhInline((await import('@/lib/locales/xh-inline/index')).XH_INLINE_SOURCE);
   const langName = LANGUAGES[langCode] ?? 'English';
   const headingLookup = await reportHeadingLookup(langCode);
   const isSimple = tone === 'simple';
@@ -786,6 +791,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   const now = new Date();
   const dateLabel = headingLookup?reportUiDate(langCode,now.toISOString(),false)
     : langCode === 'af' ? `${now.getDate()} ${recordsBookMonthLong('af', now.getMonth() + 1)} ${now.getFullYear()}`
+    : langCode === 'xh' ? formatXhosaDate(now, { day: true, month: 'long', year: true })
     : now.toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
 
   const header = buildReportHeaderMarkdown({
