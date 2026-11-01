@@ -131,7 +131,13 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   recorded evidence are unchanged (tests in `tests/mel-report.test.ts`, `staff-report.test.ts`,
   `field-api-core.test.ts`). The programme report's MEL tab now carries the same "unreviewed Afrikaans
   draft" notice as the other tabs; the older "MEL analysis text is in English" notice key was retired.
-  Still English: the mentor field report (`lib/field-report.ts`, `FieldTeams.tsx`).
+- **Mentor field report (1 Nov):** `FieldTeams.tsx` now passes `'af'` (`isInlineDraftLang(lang) ? lang : 'en'`) to
+  `buildFieldReport` and `fieldVisitReportLines`, so the field implementation report, the saved-visit report
+  and the focus and programme labels follow Afrikaans once the drafts load (`af-inline/g49-field-report.ts`,
+  the same 109 keys as isiXhosa `g47`). Both reports show the existing "unreviewed Afrikaans draft" notice.
+  Before the drafts load, and for every other language, the output is the English byte for byte; the download
+  keeps its English file name; figures, dates, coordinates, names and typed text are unchanged
+  (tests in `tests/staff-report.test.ts`, `field-programmes-i18n.test.ts`).
 - **Blind review of the 1 Nov drafts:** 858 money book, site report and release-note drafts back-translated
   before seeing the English; 24 repairs (`docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-2026-11-01/`).
 - **isiXhosa fix found on the way:** the invoice page told isiXhosa farmers the buyer's invoice "stays in
