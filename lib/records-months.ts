@@ -15,6 +15,8 @@
 // axis; they are not an established abbreviation convention. See
 // docs/translation-reviews/records-finance-2026-10-06/README.md (Round 5) for the open questions.
 
+import { inlineDraftsLoaded } from '@/lib/xh-inline';
+
 export type RecordsMonthLang = 'zu' | 'st' | 've' | 'ts' | 'xh';
 
 const ENGLISH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const;
@@ -122,4 +124,14 @@ export function recordsSeasonLabel(language:string,value:string):string {
   if(named)return language==='xh'?(XH_SEASON_WORDS[named.english]??value):named[language];
   const months=recordsMonthRangeIndices(value);
   return months.length?`${recordsMonthShort(language,months[0]+1)}–${recordsMonthShort(language,months[months.length-1]+1)}`:value;
+}
+
+// ── isiXhosa, for the site report ───────────────────────────────────────────────────────────
+// The site report's season labels name isiXhosa months only once the isiXhosa drafts are loaded, so a report
+// built before then (on the server) stays English throughout instead of printing one isiXhosa month word
+// inside English text. Every other language, and isiXhosa after the drafts load, is exactly recordsSeasonLabel.
+
+/** recordsSeasonLabel for the site report. */
+export function recordsReportSeasonLabel(language: string, value: string): string {
+  return language === 'xh' && !inlineDraftsLoaded('xh') ? value : recordsSeasonLabel(language, value);
 }

@@ -70,6 +70,11 @@ All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline
 and isiZulu output are unchanged.
 - **Reports:** programme report builder takes a language option (`lib/programme-report.ts`, g18), and
   the funder cohort charts are translated (g23).
+- **Site report document parts (1 Nov):** the header, glance table, cost table, M&E plan, risk register,
+  trust statement, cover and fixed front-matter titles follow isiXhosa (`xh-inline/g43-site-report-document.ts`,
+  390 drafts; `reportDocumentText` reads them). They were English before. The wording is isiXhosa only once
+  the drafts are loaded; before that it is the English byte for byte. The generate-report route loads the
+  drafts for isiXhosa requests only. The cost table's money column is "Isixa", not the quantity word.
 - **Crops and production:**
   - Crop components and `/samples/production` (g19).
   - Production data prose and product guidance (g22, g24). `lib/xh-inline-match.ts` translates

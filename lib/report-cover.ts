@@ -1,4 +1,4 @@
-import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES } from './report-localisation';
+import { reportDocumentText, reportDocumentTranslated } from './report-localisation';
 
 /**
  * report-cover.ts — the cover page and document-control block.
@@ -124,7 +124,7 @@ export function buildCoverMarkdown(input: ReportCoverInput, language = 'en'): st
   out.push(`| ${t('Status')} | ${t("For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification.")} |`);
   out.push('');
   out.push(t("This report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap."));
-  if(REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])){out.push('');out.push(t('Draft translation: not yet reviewed by a fluent speaker. Check the English source before acting.'));}
+  if(reportDocumentTranslated(language)){out.push('');out.push(t('Draft translation: not yet reviewed by a fluent speaker. Check the English source before acting.'));}
   out.push('');
 
   return out.join('\n');

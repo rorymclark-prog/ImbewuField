@@ -1,5 +1,6 @@
 import { REPORT_UI_KEYS } from './i18n-pending.ts';
 import { recordsDate, recordsMonthShort } from './records-months.ts';
+import { inlineDraftsLoaded, xhInlineDraft } from '@/lib/xh-inline';
 import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
@@ -1724,10 +1725,18 @@ export const REPORT_DOCUMENT_COPY:readonly {english:string;zu:string;st:string;t
   }
 ];
 export const REPORT_DOCUMENT_LANGUAGES=['zu','st','ts','ve'] as const;
+/** True when reportDocumentText really changes the language: the four paired languages, and isiXhosa once its drafts are loaded. */
+export function reportDocumentTranslated(language:string):boolean {
+  return REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])||(language==='xh'&&inlineDraftsLoaded('xh'));
+}
+/** The shared isiXhosa draft for 'Amount' means a quantity (Ubungakanani); in the cost table beside 'Quantity' it is the money column,
+ * so it takes the money book's word (Isixa), as lib/farm-report.ts does. */
+const XH_DOCUMENT_WORDS:Readonly<Record<string,string>>={Amount:'Isixa'};
 const documentCopy=new Map(REPORT_DOCUMENT_COPY.map(row=>[row.english,row]));
 export function reportDocumentText(source:string,language='en',values:Record<string,string|number>={}):string {
   const row=documentCopy.get(source);
-  const text=row&&REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])?row[language as typeof REPORT_DOCUMENT_LANGUAGES[number]]:source;
+  // isiXhosa: the draft keyed by the exact English (lib/locales/xh-inline), else English until the drafts load.
+  const text=language==='xh'?(Object.hasOwn(XH_DOCUMENT_WORDS,source)&&inlineDraftsLoaded('xh')?XH_DOCUMENT_WORDS[source]:xhInlineDraft(source)??source):row&&REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])?row[language as typeof REPORT_DOCUMENT_LANGUAGES[number]]:source;
   return text.replace(/\{(\w+)\}/g,(token,key:string)=>Object.hasOwn(values,key)?String(values[key]):token);
 }
 

@@ -1,5 +1,5 @@
-import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES, reportRecordedSourceLabel } from './report-localisation';
-import { recordsSeasonLabel } from './records-months';
+import { reportDocumentText, reportDocumentTranslated, reportRecordedSourceLabel } from './report-localisation';
+import { recordsReportSeasonLabel } from './records-months';
 import { reportVisualText, reportElementDisplayName, reportRouteShortName } from './report-visuals';
 import { cleanChoices, type HousingKind } from './animal-enterprises';
 import type { PlacedPlant } from './perennial-harvest';
@@ -838,7 +838,7 @@ const SOIL_SOURCE_LABEL: Record<string, string> = {
 export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'): string {
   const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
   const pointCategory=(category:string)=>{
-    if(!REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number]))return category;
+    if(!reportDocumentTranslated(language))return category;
     const labels:Readonly<Record<string,string>>={Dam:'dam',Pond:'pond',Borehole:'borehole',Spring:'spring',Well:'well',Tank:'tank'};
     return Object.hasOwn(labels,category)?t(labels[category]):category;
   };
@@ -938,7 +938,7 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
     row('Wind observed on site', t('From the {direction}',{direction:facts.measurements.localWindFrom})+(facts.measurements.localWindStrongestFrom?t(', strongest from the {direction}',{direction:facts.measurements.localWindStrongestFrom}):''), t('Farmer\'s own observation'));
   }
 
-  row('Annual rainfall', t('{rainfall} mm — wet {wet}, dry {dry}',{rainfall:input.rainfallMm,wet:recordsSeasonLabel(language,input.wetSeason),dry:recordsSeasonLabel(language,input.drySeason)}), input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : t('Climate data service'));
+  row('Annual rainfall', t('{rainfall} mm — wet {wet}, dry {dry}',{rainfall:input.rainfallMm,wet:recordsReportSeasonLabel(language,input.wetSeason),dry:recordsReportSeasonLabel(language,input.drySeason)}), input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : t('Climate data service'));
   if (input.vegUnit) row('Natural vegetation', input.vegUnit, 'SANBI 2018 National Vegetation Map');
   if (input.bruLabel) row('Agro-ecological zone', t('Closest to {label}',{label:input.bruLabel}), t('KZN DARD bioresource units — a best-effort climate match, not a verified classification'));
   // Location responses also carry generic placeholders. The narrative and short guide already

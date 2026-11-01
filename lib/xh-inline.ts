@@ -24,6 +24,15 @@ export function registerXhInline(drafts: Record<string, string>): void {
   XH_INLINE = drafts;
 }
 
+/**
+ * True once this language's drafts are registered (the locale chunk has loaded); false on the server and
+ * before then. Only isiXhosa has inline drafts on this branch. The site report's code-written parts use it
+ * to stay English, byte for byte, until their drafts exist.
+ */
+export function inlineDraftsLoaded(lang: string): boolean {
+  return lang === 'xh' && Object.keys(XH_INLINE).length > 0;
+}
+
 export function placeholdersOf(text: string): string {
   return [...text.matchAll(/\{([a-zA-Z]+)\}/g)].map((m) => m[1]).sort().join(',');
 }

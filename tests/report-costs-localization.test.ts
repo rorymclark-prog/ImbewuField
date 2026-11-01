@@ -11,12 +11,17 @@ import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
 import { plantTakesCode } from '../lib/plant-codes.ts';
 import { ROUTE_LABELS } from '../lib/design-studio-report.ts';
 import { DISCLAIMER } from '../lib/price-book.ts';
+import { registerXhInline, inlineDraftsLoaded } from '../lib/xh-inline.ts';
+import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index.ts';
 const read = (p:string) => fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const fx = JSON.parse(read('tests/fixtures/report-costs-translation/source-cases.json'));
 const packet = JSON.parse(read('docs/translation/four-language-completion/report-costs-drafts.json'));
 const languages = ['zu','st','ts','ve'] as const;
 const tokens = (s:string) => (s.match(/\{\w+\}/g)??[]).sort();
 const figures = (s:string) => (s.match(/\d+(?:[.,]\d+)?/g)??[]).sort();
+// isiXhosa wording exists only once its drafts are registered (the browser's xh locale chunk does that); the other tests here run
+// without them, exactly as the server does.
+const withXhosa = async <T,>(run:()=>T|Promise<T>):Promise<T> => { registerXhInline(XH_INLINE_SOURCE); try { return await run(); } finally { registerXhInline({}); } };
 const byName = (name:string) => fx.cases.find((c:any)=>c.name===name);
 
 test('cost drafts bind their original cautions, date basis, numbers and placeholders to a review packet',()=>{
@@ -33,6 +38,12 @@ test('cost drafts bind their original cautions, date basis, numbers and placehol
 test('every original English bill, model and summary stays exact, including legacy, missing, existing and regulated records',()=>{
   for(const c of fx.cases){
     const before=JSON.stringify(c.facts);
+    // isiXhosa is the English too, for the bill and its markdown, until its drafts are loaded (its summary pages already label their English notes, so they are not compared here).
+    {
+      const boq=buildBillOfQuantities(c.facts,'xh');
+      assert.deepEqual(boq,c.boq,`${c.name}: before its drafts load isiXhosa is the English`);
+      assert.equal(billOfQuantitiesMarkdown(boq,'xh'),c.markdown,c.name);
+    }
     for(const lang of ['en','af']){
       const boq=buildBillOfQuantities(c.facts,lang);
       assert.deepEqual(boq,c.boq,c.name);
@@ -168,4 +179,111 @@ test('the actual reader gives every native cost field a label and each group one
   }
   assert.match(html('| Item | Amount |\n|---|---|'), /<tbody><\/tbody>/, 'an unrelated empty table retains its original rowgroup');
   for(const markdown of[byName('catalogue').markdown,'| Item | Price | Quantity | Amount | Note |\n|---|---|---|---|---|\n| Saved name | R1 | 1 | R1 | Saved note |'])assert.ok(!html(markdown).includes('data-native-costs'));
+});
+
+test('isiXhosa cost lines retain exact money, quantity values, order, grouping, rate decisions and provenance once the drafts load',()=>withXhosa(()=>{
+  for(const c of fx.cases){
+    const lang='xh',before=JSON.stringify(c.facts),boq=buildBillOfQuantities(c.facts,lang),markdown=billOfQuantitiesMarkdown(boq,lang);
+    assert.deepEqual([boq.subtotalZar,boq.unpricedCount,boq.existingCount],[c.boq.subtotalZar,c.boq.unpricedCount,c.boq.existingCount]);
+    assert.equal(boq.lines.length,c.boq.lines.length);
+    for(const [i,line] of boq.lines.entries()){
+      const original=c.boq.lines[i];
+      assert.deepEqual([line.group,line.zar,line.unpriced,line.descriptionSource],[original.group,original.zar,original.unpriced,original.descriptionSource]);
+      assert.deepEqual(figures(line.quantity),figures(original.quantity));
+      assert.equal(line.quantity,original.quantity.endsWith(' no.')?reportDocumentText('{count} no.',lang,{count:original.quantity.slice(0,-4)}):original.quantity);
+      assert.equal(line.rate,original.rate?.endsWith(' each')?reportDocumentText('{amount} each',lang,{amount:original.rate.slice(0,-5)}):original.rate);
+      assert.equal(line.source,reportDocumentText(original.source,lang));
+      assert.ok(markdown.includes(`| ${line.description} | ${line.quantity} | ${line.rate??'—'} |`));
+      if(original.descriptionSource)assert.equal(line.description,summaryBoqDescription(original,lang));
+      assert.equal(line.zar===null,line.rate===null,'unknown is unpriced, never a guessed zero');
+    }
+    assert.deepEqual(figures(markdown),figures(c.markdown),`xh/${c.name}: printed financial or measured number changed`);
+    assert.ok(markdown.includes('## Iindleko noluhlu lobungakanani'));
+    if(boq.lines.length){
+      assert.ok(markdown.includes('| Into | Ubungakanani | Izinga | Isixa | Kulinganiswe ukusuka |'),'the money column is not called Ubungakanani twice');
+      assert.ok(markdown.includes(reportDocumentText(DISCLAIMER,lang)));assert.notEqual(reportDocumentText(DISCLAIMER,lang),DISCLAIMER);
+      for(const group of new Set(boq.lines.map(l=>l.group)))assert.ok(markdown.includes(`| **${reportVisualText(group,lang)}** | | | | |`));
+      if(boq.unpricedCount)assert.ok(markdown.includes(reportDocumentText(boq.unpricedCount===1?'{count} line carries':'{count} lines carry',lang,{count:boq.unpricedCount})));
+      if(boq.existingCount)assert.ok(markdown.includes(reportDocumentText(boq.existingCount===1?'{count} item marked as already on the farm is':'{count} items marked as already on the farm are',lang,{count:boq.existingCount})));
+    }else assert.ok(markdown.includes(reportDocumentText('No priced work can be listed yet: nothing has been drawn on the plan to measure. Draw the beds, tanks, fences and paths in the Design Studio and this bill fills itself from those measurements.',lang)));
+    assert.equal(JSON.stringify(c.facts),before);
+    // Loading the isiXhosa drafts changes nothing for the other languages' bills.
+    registerXhInline({});
+    const others=['en','af','zu','st','ts','ve'].map(l=>billOfQuantitiesMarkdown(buildBillOfQuantities(c.facts,l),l));
+    registerXhInline(XH_INLINE_SOURCE);
+    assert.deepEqual(['en','af','zu','st','ts','ve'].map(l=>billOfQuantitiesMarkdown(buildBillOfQuantities(c.facts,l),l)),others);
+    assert.equal(others[0],c.markdown);
+  }
+}));
+
+test('isiXhosa equipment and route names translate only with recorded identity while plant and saved names stay exact',()=>withXhosa(()=>{
+  const catalogue=byName('catalogue');const lang='xh';
+  for(const item of catalogue.facts.design.elements){
+    const def=ELEMENTS_BY_ID[item.defId];
+    const label=reportElementDisplayName(item.name,item.defId,lang);
+    if(def.category==='growing'||def.botanical||plantTakesCode(def.id))assert.equal(label,item.name,'species names are never translated');
+    else assert.equal(label,reportVisualText(def.name,lang));
+    assert.equal(reportElementDisplayName('Named '+item.name,item.defId,lang),'Named '+item.name);
+    assert.equal(reportElementDisplayName(item.name,undefined,lang),item.name);
+  }
+  for(const [kind,label]of Object.entries(ROUTE_LABELS)){
+    assert.equal(reportRouteDisplayName(label,kind,lang),reportVisualText(label,lang));
+    assert.equal(reportRouteDisplayName('Named '+label,kind,lang),'Named '+label);
+    assert.equal(reportRouteDisplayName(label,undefined,lang),label);
+  }
+  for(const name of['custom','legacy','source-word-collisions']){
+    const c=byName(name),xh=buildBillOfQuantities(c.facts,lang);
+    for(const[i,line]of xh.lines.entries())if(!line.descriptionSource&&(name!=='source-word-collisions'||line.group==='Structures & planting'))assert.equal(line.description,c.boq.lines[i].description,`xh/${name}: source word match must not rename a saved item`);
+  }
+  assert.equal(reportElementDisplayName('JoJo Tank 2500L','jojo_2500',lang),'Itanki ye-JoJo 2500L');
+}));
+
+test('the actual API emits the full isiXhosa cost bill with all measured lines, loading the drafts itself and only for isiXhosa',async()=>{
+  const url=(s:string)=>'data:text/javascript,'+encodeURIComponent(s);
+  const hooks=registerHooks({resolve(s,c,next){
+    if(s==='@anthropic-ai/sdk')return{url:url('export default class Anthropic{}'),shortCircuit:true};
+    if(s==='next/server')return{url:url('export class NextRequest{}'),shortCircuit:true};
+    if(s==='@/lib/api-auth')return{url:url('export async function guardPaidApiRequest(){return {uid:"costs-test"}}'),shortCircuit:true};
+    if(s==='@/lib/metered-ai')return{url:url("export const AI_MODELS={main:'mock'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async()=>({usage:{},stop_reason:'end_turn',content:[{type:'text',text:'## Mocked body\\nMocked body content.'}]})}}}}"),shortCircuit:true};
+    return next(s,c);
+  }});
+  const old=globalThis.fetch;globalThis.fetch=async()=>new Response('{}');registerXhInline({});
+  try{const{POST}=await import('../app/api/generate-report/route.ts');
+    const post=async(language:string,facts:any)=>{const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language,locationData:fx.location,siteFacts:facts,sections:['Executive Summary']})})as any);assert.equal(response.status,200);return response.text();};
+    await post('en',byName('empty').facts);assert.equal(inlineDraftsLoaded('xh'),false,'an English request does not load the isiXhosa drafts');
+    for(const name of['empty','saved-design','unknown-capacity','source-word-collisions']){
+      const facts=byName(name).facts,text=await post('xh',facts);assert.equal(inlineDraftsLoaded('xh'),true);
+      const xh=billOfQuantitiesMarkdown(buildBillOfQuantities(facts,'xh'),'xh');const[heading,...body]=xh.split('\n');
+      assert.equal(heading,'## Iindleko noluhlu lobungakanani');
+      assert.ok(text.includes('Iindleko noluhlu lobungakanani'));assert.ok(text.includes(body.join('\n').trim()),`xh/${name}: full cost bill missing`);
+      assert.ok(!text.includes('Cost & Bill of Quantities'));
+    }
+    registerXhInline({});
+    const english=await post('en',byName('saved-design').facts);assert.ok(english.includes('Cost & Bill of Quantities'));assert.ok(!english.includes('Iindleko'));
+  }finally{hooks.deregister();globalThis.fetch=old;registerXhInline({});}
+});
+
+test('the actual reader labels every isiXhosa cost field, and an English or isiXhosa-before-drafts table is not mistaken for a translated one',async()=>{
+  const React=await import('react');const{renderToStaticMarkup}=await import('react-dom/server');const{stripInlineMarkdown}=await import('../lib/report-pdf.ts');
+  const tree=ts.createSourceFile('view.tsx',read('components/ReportView.tsx'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);const fn=tree.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='renderReport');assert.ok(fn);
+  const js=ts.transpileModule(fn.getText(tree),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.None,target:ts.ScriptTarget.ES2022}}).outputText;
+  const render=new Function('React','stripInlineMarkdown','ReportChapterGraphics','ChevronRight','REPORT_DOCUMENT_LANGUAGES','reportDocumentText',js+';return renderReport;')(React,stripInlineMarkdown,()=>null,()=>null,languages,reportDocumentText);
+  const html=(markdown:string)=>renderToStaticMarkup(React.createElement('div',null,...render(markdown)));
+  const catalogue=byName('catalogue');
+  // Drafts not loaded: the English table, and an English-wording table asked for in isiXhosa, are plain tables.
+  assert.ok(!html(catalogue.markdown).includes('data-native-costs'));
+  assert.ok(!html(billOfQuantitiesMarkdown(buildBillOfQuantities(catalogue.facts,'xh'),'xh')).includes('data-native-costs'));
+  await withXhosa(()=>{
+    const boq=buildBillOfQuantities(catalogue.facts,'xh'),markdown=billOfQuantitiesMarkdown(boq,'xh'),output=html(markdown);
+    assert.ok(output.includes('data-native-costs="true"'));assert.ok(output.includes('role="table"'));
+    assert.equal((output.match(/role="columnheader"/g)??[]).length,5);
+    assert.equal((output.match(/colSpan="5" scope="rowgroup" role="rowheader"/g)??[]).length,new Set(boq.lines.map(l=>l.group)).size);
+    const headers=['Item','Quantity','Rate','Amount','Measured from'].map(source=>reportDocumentText(source,'xh'));
+    assert.deepEqual(headers,['Into','Ubungakanani','Izinga','Isixa','Kulinganiswe ukusuka']);
+    const cells=[...output.matchAll(/<td[^>]*data-label="([^"]*)"/g)];assert.equal(cells.length,boq.lines.length*5);
+    for(let i=0;i<cells.length;i++)assert.equal(cells[i][1],headers[i%5]);
+    // The English table is still not a native table while isiXhosa drafts are loaded.
+    assert.ok(!html(catalogue.markdown).includes('data-native-costs'));
+    assert.ok(!html('| Item | Price | Quantity | Amount | Note |\n|---|---|---|---|---|\n| Saved name | R1 | 1 | R1 | Saved note |').includes('data-native-costs'));
+  });
 });
