@@ -6,7 +6,7 @@ Rory asked to focus on agroecological commercial market gardeners and the organi
 
 - Targets accept kg, bunches, bags, crates, trays of harvested produce and individual items/heads. The units and whole-item validation come from the existing farm-records authority. Old kg-only targets retain their saved shape.
 - A produce-pack target owns its grower-entered harvest kg per pack. No weight is supplied by default or borrowed from another crop, outlet or farm. Unknown pack weights remain saved and visible; demand mass, area and shortage remain unknown and no automatic sowing is allocated.
-- An optional grower-entered saleable share scales credited target capacity and required crop-cycle area. Blank means no allowance; 0% cannot supply saleable demand. It does not rewrite catalogue yields, production graphs, recorded harvests or measured beds.
+- An optional grower-entered saleable share scales credited target capacity and required crop-cycle area. Blank means no allowance; 0% cannot supply saleable demand. It does not rewrite catalogue yields, production graphs, recorded harvests or measured beds. Farmer-facing copy calls this the benchmark before the allowance: the catalogue does not establish that its yield figures represent gross field biomass.
 - Cards and reviews show pack equivalents alongside kg, explicitly as estimates rather than packed inventory. Growers may label the intended market, restaurant or box scheme in their existing account/site-scoped plan. This is not an order, reservation, invoice or shared customer record.
 - Existing dated placement, source-calendar, climate, irrigation, whole-field, standard-share and rotation rules remain authoritative. Accepting adds dated rows and the existing calendar tasks; editing an allowance preserves accepted rows and adds only further feasible capacity.
 
@@ -21,7 +21,7 @@ The adjacent opportunities are grower-owned local templates, explicit-date succe
 ## Verification
 
 - Typecheck passed; 315 affected tests passed, including 20 harvest-target cases. New cases cover conversions, unknown weights, invalid/ambiguous units, whole items, saleable allowances, unchanged catalogue/geometry/history and account-scoped persistence. Existing behavioural assertions remain; one assessment variable has an explicit type for the widened nullable-mass API.
-- Local browser: saved a 10-bunch/week carrot target without a pack weight and saw unknown demand/area; edited it with disposable example assumptions of 0.25 kg/bunch and 80% saleable; reviewed and accepted one dated sowing. A 20 kg gross benchmark displayed as 16 kg / 64 bunch-equivalents after the allowance, with the remaining shortage visible. Three existing calendar tasks appeared. Reload retained the target, conversion, allowance, outlet and accepted row.
+- Local browser: saved a 10-bunch/week carrot target without a pack weight and saw unknown demand/area; edited it with disposable example assumptions of 0.25 kg/bunch and 80% saleable; reviewed and accepted one dated sowing. A 20 kg unadjusted benchmark displayed as 16 kg / 64 bunch-equivalents after the allowance, with the remaining shortage visible. Three existing calendar tasks appeared. Reload retained the target, conversion, allowance, outlet and accepted row.
 - Desktop and 390px phone cards were visually inspected. Screenshots are in `output/market-garden-sales/` (untracked). The temporary viewport was reset.
 - Update notices in isiZulu, Sesotho, Xitsonga and Tshivenda are source-paired unreviewed machine drafts. No fluent review is claimed.
 

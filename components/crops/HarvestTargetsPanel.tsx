@@ -125,7 +125,7 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
         <label className="text-sm">Saleable share (%) (optional)
           <input type="number" min="0" max="100" step="any" inputMode="decimal" value={marketablePercent} onChange={(e) => setMarketablePercent(e.target.value)} placeholder="Your own estimate" className={field} />
         </label>
-        <p className="sm:col-span-2 lg:col-span-4 text-xs text-[var(--text-secondary)]">Use your measured harvest weight for one produce pack. A target without its pack weight stays saved; growing space waits for that conversion. Leave the saleable share blank to apply no allowance. Trays here contain harvested produce; nursery starts need their own planning.</p>
+        <p className="sm:col-span-2 lg:col-span-4 text-xs text-[var(--text-secondary)]">Use your measured harvest weight for one produce pack. A target without its pack weight stays saved; growing space waits for that conversion. The saleable share is a percentage of the catalogue benchmark; leave it blank to apply no allowance. Trays here contain harvested produce; nursery starts need their own planning.</p>
         <div className="sm:col-span-2 lg:col-span-4 flex flex-wrap items-center gap-2">
           <button type="submit" className={primary}>{editingId ? 'Save target changes' : 'Save harvest target'}</button>
           {editingId && <button type="button" className={secondary} onClick={resetForm}>Cancel edit</button>}
@@ -154,12 +154,12 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 text-sm">
           <p><span className="block text-xs text-[var(--text-secondary)]">Total demand</span>{targetAmount(a.demandKg, a.target)}</p>
           <p><span className="block text-xs text-[var(--text-secondary)]">Crop-cycle area needed</span>{a.cycleAreaM2 === null ? 'Not calculated' : `${numberLabel(a.cycleAreaM2, 1)} m²`}</p>
-          <p><span className="block text-xs text-[var(--text-secondary)]">{a.target.marketablePercent === undefined ? 'Gross cycle capacity' : 'Capacity after your allowance'}</span>{a.missingReasons.includes('crop-evidence') ? 'Not calculated' : targetAmount(a.allocatedKg, a.target)}</p>
+          <p><span className="block text-xs text-[var(--text-secondary)]">{a.target.marketablePercent === undefined ? 'Benchmark before allowance' : 'Capacity after your allowance'}</span>{a.missingReasons.includes('crop-evidence') ? 'Not calculated' : targetAmount(a.allocatedKg, a.target)}</p>
           <p><span className="block text-xs text-[var(--text-secondary)]">Unallocated volume</span>{targetAmount(a.shortageKg, a.target)}</p>
         </div>
         {a.surplusKg !== null && a.surplusKg > 0.001 && <p className="text-xs">{targetAmount(a.surplusKg, a.target)} above total demand because whole fields or standard bed shares are used.</p>}
         {a.target.unit && a.target.kgPerUnit !== undefined && <p className="text-xs">Your conversion: {String(a.target.kgPerUnit)} kg of harvest per {packLabel(a.target.unit)}. Pack equivalents are estimates, not packed stock.</p>}
-        {a.target.marketablePercent !== undefined && <p className="text-xs">Your saleable share: {numberLabel(a.target.marketablePercent)}%. Gross linked benchmark: {amount(a.grossCycleKg)}. This allowance sizes this target; production graphs keep the harvest benchmark.</p>}
+        {a.target.marketablePercent !== undefined && <p className="text-xs">Your saleable share: {numberLabel(a.target.marketablePercent)}%. Benchmark before your allowance: {amount(a.grossCycleKg)}. This allowance sizes this target; production graphs keep the harvest benchmark.</p>}
         {a.missingReasons.includes('unit-weight') && <p className="text-xs text-[var(--gold)]">Enter your own harvest kg per sales unit before calculating growing space or suggesting sowings.</p>}
         {a.missingReasons.includes('zero-saleable-share') && <p className="text-xs text-[var(--gold)]">Your saleable share is 0%, so no saleable capacity can be planned.</p>}
         {a.missingReasons.includes('crop-evidence') && <p className="text-xs text-[var(--gold)]">Verified crop yield, timing or establishment evidence is missing.</p>}
@@ -182,7 +182,7 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
         <h3 className="font-display font-semibold">Review {result.plantings.length} proposed sowing{result.plantings.length === 1 ? '' : 's'}</h3>
         {ownTargets.map((target) => {
           const a = assessHarvestTarget(target, beds, [...plantings, ...result.plantings])!;
-          return <p key={target.id} className="text-sm"><strong>{cropByKey(target.cropKey)?.name} · {weeklyLabel(target)}:</strong> {a.demandKg === null ? 'Growing space awaits your pack weight. ' : `${targetAmount(a.allocatedKg, target)} linked cycle capacity after adding${target.marketablePercent === undefined ? ' (gross benchmark)' : ' (after your saleable allowance)'}; ${targetAmount(a.shortageKg, target)} still unallocated. `}{a.surplusKg !== null && a.surplusKg > 0.001 ? `${targetAmount(a.surplusKg, target)} above total demand. ` : ''}{a.gapMonths.length ? `No picking window in ${a.gapMonths.map(monthName).join(', ')}.` : 'A picking window reaches each requested month; weekly quantities remain unverified.'}</p>;
+          return <p key={target.id} className="text-sm"><strong>{cropByKey(target.cropKey)?.name} · {weeklyLabel(target)}:</strong> {a.demandKg === null ? 'Growing space awaits your pack weight. ' : `${targetAmount(a.allocatedKg, target)} linked cycle capacity after adding${target.marketablePercent === undefined ? ' (unadjusted benchmark)' : ' (after your saleable allowance)'}; ${targetAmount(a.shortageKg, target)} still unallocated. `}{a.surplusKg !== null && a.surplusKg > 0.001 ? `${targetAmount(a.surplusKg, target)} above total demand. ` : ''}{a.gapMonths.length ? `No picking window in ${a.gapMonths.map(monthName).join(', ')}.` : 'A picking window reaches each requested month; weekly quantities remain unverified.'}</p>;
         })}
         {result.plantings.length > 0 && <div className="max-h-64 overflow-auto"><table className="w-full text-left text-xs">
           <caption className="text-left mb-2">Proposed additions — saved crops stay in place</caption>
