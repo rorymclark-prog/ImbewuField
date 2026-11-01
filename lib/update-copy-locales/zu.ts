@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Nursery: docs/audits/2026-11-01/nursery-release-drafts.json; unreviewed.
+  "Plan seedlings, trays and nursery space with your own equipment and estimates.": "Hlela izithombo, amathileyi nendawo yenkulisa ngohlelo lwakho lwezitshalo usebenzisa izinto nezilinganiso zakho.",
+  "Check nursery space": "Hlola indawo yenkulisa",
+  "Crop planner → Nursery planner": "Umhleli wezitshalo → Umhleli wenkulisa",
+  "Add your tray sizes, usable nursery surface and crop estimates. Review overlapping demand and missing information before adding automatic sowings.": "Faka osayizi bamathileyi akho, indawo yenkulisa engasetshenziswa nezilinganiso zezitshalo. Hlola izidingo ezihlangana ngesikhathi nolwazi olungekho ngaphambi kokwengeza ukuhlwanyela okuzenzakalelayo.",
+
   // Sales-unit targets: docs/audits/2026-11-01/market-garden-sales-release-drafts.json; unreviewed.
   "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Hlela imigomo yesivuno ngamaphakethe omkhiqizo usebenzisa izisindo zamaphakethe nengxenye ethengisekayo oyifakile.",
 

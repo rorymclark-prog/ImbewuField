@@ -1,6 +1,7 @@
 import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPerM2Range } from './crop-catalog';
 import { normaliseRecordUnit, validRecordQuantity, type RecordUnit } from './farm-records';
+import { sanitiseNurserySettings, type NurserySettings } from './nursery-settings';
 import { foodGroupOf, nutritionGroupOf } from './crop-groups';
 import {
   isSampleMode,
@@ -101,6 +102,8 @@ export interface CropPlanState {
   plantings: Planting[];
   /** Buyer demand belongs to a site, even when two farms use the same crop. */
   harvestTargets?: HarvestTarget[];
+  /** Grower-owned nursery equipment and estimates, scoped to their sites. */
+  nursery?: NurserySettings;
   /** Climate window used when the plan was generated. Optional so every plan
    * saved before this field existed remains readable. */
   rainPattern?: RainPattern;
@@ -423,6 +426,7 @@ export function loadCropPlan(): CropPlanState {
       version: 1,
       plantings: settle(parsed.plantings),
       ...(Array.isArray(parsed.harvestTargets) ? { harvestTargets: sanitiseHarvestTargets(parsed.harvestTargets) } : {}),
+      ...(parsed.nursery !== undefined ? { nursery: sanitiseNurserySettings(parsed.nursery) } : {}),
       ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
       ...(Array.isArray(parsed.productionRecords) ? { productionRecords: sanitiseProductionRecords(parsed.productionRecords) } : {}),
       ...(Array.isArray(parsed.preservedProducts) ? { preservedProducts: sanitisePreservedFoodRecords(parsed.preservedProducts) } : {}),

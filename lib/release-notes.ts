@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 November 2026', sha: '0f34e3043', changes: [
+    'Plan seedlings, trays and nursery space with your own equipment and estimates.',
+  ], tour: [{ title: 'Check nursery space', where: 'Crop planner → Nursery planner', href: '/facilitator/crops',
+    detail: 'Add your tray sizes, usable nursery surface and crop estimates. Review overlapping demand and missing information before adding automatic sowings.' }] },
   { when: '1 November 2026', sha: '256c67dd9', changes: [
     'Plan harvest targets in produce packs with your own pack weights and saleable share.',
   ] },
