@@ -1,5 +1,6 @@
 import type { UserRole } from './db/types';
 import { validEvidenceImage } from './invoice-logo';
+import { inlineText, inlineTemplate } from './xh-inline';
 
 /**
  * bug-11: the calendar date in the DEVICE'S OWN TIME ZONE, not UTC. `new Date().toISOString()`
@@ -31,6 +32,11 @@ export const FIELD_PROGRAMMES = { general: 'General garden support', 'act-sef-fo
 export type FieldProgramme = keyof typeof FIELD_PROGRAMMES;
 export const FIELD_FOCUS = { garden: 'Garden establishment & upkeep', water: 'Water access & repairs', soil: 'Soil health & compost', seedlings: 'Seedlings & seed saving', crops: 'Crop care & protection', harvest: 'Harvest & food distribution', learning: 'Practical skills & coaching', records: 'Records & livelihood support' } as const;
 export type FieldFocus = keyof typeof FIELD_FOCUS;
+/** A fixed label in the reader's language: 'xh' reads the isiXhosa drafts (lib/locales/xh-inline/g47-field-report.ts) and any other language is the English above, byte for byte. */
+export const fieldProgrammeLabel = (key: FieldProgramme, language?: string): string => inlineText(language ?? 'en', FIELD_PROGRAMMES[key]);
+export const fieldFocusLabel = (key: FieldFocus, language?: string): string => inlineText(language ?? 'en', FIELD_FOCUS[key]);
+/** The recorded result of a practical-skill check, worded for a report. */
+export const fieldSkillResultLabel = (result: FieldVisit['skillResult'], language?: string): string => inlineText(language ?? 'en', result === 'demonstrated' ? 'Demonstrated during this visit' : result === 'needs-support' ? 'Needs further support' : 'Not assessed');
 export type FieldTeam = { programme?: FieldProgramme; mentorId: string; location: string; farmerIds: string[]; guidance: string; updatedAt: string };
 export type FieldVisitPhoto = { image: string; caption: string };
 export type VisitPhoto = FieldVisitPhoto;
@@ -84,19 +90,21 @@ export function fieldVisitDocumentId(mentorId: string, visitId: string): string 
 export function canReadFieldVisit(visit: FieldVisit, uid: string, manage: boolean, assignedFarmerIds: ReadonlySet<string>): boolean {
   return manage || visit.mentorId===uid && assignedFarmerIds.has(visit.farmerId);
 }
-export function fieldVisitReportLines(visit: FieldVisit, farmerName: string, mentorName?: string): string[] {
-  return [`${visit.date} | ${farmerName}${mentorName ? ` | Mentor: ${mentorName}` : ''}`,
-    ...(visit.location ? [`Site location: ${visit.location}`] : []),
-    ...(visit.latitude!=null && visit.longitude!=null ? [`Location: ${visit.latitude.toFixed(5)}, ${visit.longitude.toFixed(5)}`,`Google Maps: https://www.google.com/maps/search/?api=1&query=${visit.latitude},${visit.longitude}`] : []),
-    ...(visit.focus?.length ? [`Support areas: ${visit.focus.map(key=>FIELD_FOCUS[key]).join('; ')}`] : []),
-    ...(visit.practicalSkill ? [`Practical skill: ${visit.practicalSkill} | ${visit.skillResult==='demonstrated'?'Demonstrated during this visit':visit.skillResult==='needs-support'?'Needs further support':'Not assessed'}`] : []),
-    ...(visit.actionCompletedOn ? [`Action completed: ${visit.actionCompletedOn}`,`Completion evidence: ${visit.actionOutcome}`] : []),
-    ...(visit.supportRequested ? [`Support requested: ${visit.supportRequested}`] : []),
-    ...(visit.observations ? [`Observations / issues: ${visit.observations}`] : []),
-    ...(visit.notes ? [`Visit notes: ${visit.notes}`] : []),
-    ...(visit.originalNotes ? [`Original notes before AI cleanup: ${visit.originalNotes}`] : []),
-    ...(visit.agreedAction ? [`Agreed action: ${visit.agreedAction}`,`Responsible person: ${visit.responsiblePerson || 'Not yet assigned'}`,`Follow-up: ${visit.followUpDate || 'Not yet scheduled'}`] : []),
-    ...(visit.photoCount || visit.photos?.length ? [`Visit photos: ${visit.photoCount ?? visit.photos?.length ?? 0}`] : []),
+/** `language` 'xh' words the fixed labels in isiXhosa (an unreviewed draft); every other language is the English lines, byte for byte. Names, dates, figures, units and recorded text pass through as recorded. */
+export function fieldVisitReportLines(visit: FieldVisit, farmerName: string, mentorName?: string, language?: string): string[] {
+  const t = (english: string, vars: Record<string, string | number> = {}) => inlineTemplate(language ?? 'en', english, null, vars);
+  return [mentorName ? t('{date} | {farmer} | Mentor: {mentor}', { date: visit.date, farmer: farmerName, mentor: mentorName }) : t('{date} | {farmer}', { date: visit.date, farmer: farmerName }),
+    ...(visit.location ? [t('Site location: {location}', { location: visit.location })] : []),
+    ...(visit.latitude!=null && visit.longitude!=null ? [t('Location: {latitude}, {longitude}', { latitude: visit.latitude.toFixed(5), longitude: visit.longitude.toFixed(5) }),`Google Maps: https://www.google.com/maps/search/?api=1&query=${visit.latitude},${visit.longitude}`] : []),
+    ...(visit.focus?.length ? [t('Support areas: {areas}', { areas: visit.focus.map(key=>fieldFocusLabel(key, language)).join('; ') })] : []),
+    ...(visit.practicalSkill ? [t('Practical skill: {skill} | {result}', { skill: visit.practicalSkill, result: fieldSkillResultLabel(visit.skillResult, language) })] : []),
+    ...(visit.actionCompletedOn ? [t('Action completed: {date}', { date: visit.actionCompletedOn }), t('Completion evidence: {evidence}', { evidence: visit.actionOutcome as string })] : []),
+    ...(visit.supportRequested ? [t('Support requested: {text}', { text: visit.supportRequested })] : []),
+    ...(visit.observations ? [t('Observations / issues: {text}', { text: visit.observations })] : []),
+    ...(visit.notes ? [t('Visit notes: {text}', { text: visit.notes })] : []),
+    ...(visit.originalNotes ? [t('Original notes before AI cleanup: {text}', { text: visit.originalNotes })] : []),
+    ...(visit.agreedAction ? [t('Agreed action: {text}', { text: visit.agreedAction }), t('Responsible person: {name}', { name: visit.responsiblePerson || t('Not yet assigned') }), t('Follow-up: {date}', { date: visit.followUpDate || t('Not yet scheduled') })] : []),
+    ...(visit.photoCount || visit.photos?.length ? [t('Visit photos: {n}', { n: visit.photoCount ?? visit.photos?.length ?? 0 })] : []),
   ];
 }
 
