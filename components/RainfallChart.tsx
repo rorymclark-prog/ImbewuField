@@ -14,7 +14,7 @@ const ZU_MONTH_FULL = [
   'uNtulikazi', 'uNcwaba', 'uMandulo', 'uMfumfu', 'uLwezi', 'uZibandlela',
 ];
 
-// isiXhosa month names come from the dictionary (waterBalanceMonth*), so they track the reviewed wording.
+// isiXhosa and Afrikaans month names come from the dictionary (waterBalanceMonth*), so they track the reviewed wording.
 const XH_MONTH_KEYS = [
   'waterBalanceMonthJan', 'waterBalanceMonthFeb', 'waterBalanceMonthMar', 'waterBalanceMonthApr',
   'waterBalanceMonthMay', 'waterBalanceMonthJun', 'waterBalanceMonthJul', 'waterBalanceMonthAug',
@@ -27,14 +27,15 @@ export default function RainfallChart({ rainfall }: Props) {
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   const isXhosa = lang === 'xh';
-  // Both unreviewed drafts are shown beside their English source, so a reader can check the figures.
-  const bilingual = isZulu || isXhosa;
+  const isDraftLang = isXhosa || lang === 'af';
+  // The unreviewed drafts (isiZulu, isiXhosa, Afrikaans) are shown beside their English source, so a reader can check the figures.
+  const bilingual = isZulu || isDraftLang;
   const text = (en: string, zu: string) => inlineText(lang, en, zu);
   if (!rainfall?.monthly?.length) return null;
   const maxVal = Math.max(...rainfall.monthly, 10);
   const data = rainfall.monthly.map((v, i) => ({
     month: bilingual ? String(i + 1) : MONTHS[i],
-    full: isZulu ? `${ZU_MONTH_FULL[i]} · ${MONTH_FULL[i]}` : isXhosa ? `${t(XH_MONTH_KEYS[i])} · ${MONTH_FULL[i]}` : MONTH_FULL[i],
+    full: isZulu ? `${ZU_MONTH_FULL[i]} · ${MONTH_FULL[i]}` : isDraftLang ? `${t(XH_MONTH_KEYS[i])} · ${MONTH_FULL[i]}` : MONTH_FULL[i],
     mm: Math.round(v),
   }));
   // Source pairs: winter / Winter rainfall; summer / Summer rainfall; year-round / Year-round rain.
@@ -45,7 +46,7 @@ export default function RainfallChart({ rainfall }: Props) {
         : `${t('climatePatternYearRound')} · Year-round rain`
     : rainfall.pattern;
   const seasonValue = (value: string) => {
-    if (isXhosa) {
+    if (isDraftLang) {
       if (value === 'year-round') return `${t('reportSeasonYearRound')} · year-round`;
       if (value === 'none') return `${t('reportSeasonNone')} · none`;
       const [from, to] = value.split('–');
@@ -75,6 +76,7 @@ export default function RainfallChart({ rainfall }: Props) {
           </span>
           {isZulu && <div className="text-xs text-[var(--text-muted)]">Uhlaka lwesiZulu olungakabuyekezwa · Unreviewed isiZulu draft</div>}
           {isXhosa && <div className="text-xs text-[var(--text-muted)]">{inlineText(lang, 'Unreviewed isiXhosa draft')}</div>}
+          {lang === 'af' && <div className="text-xs text-[var(--text-muted)]">{inlineText(lang, 'Unreviewed Afrikaans draft')}</div>}
         </div>
         <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
           <span className="text-[var(--blue)]">{inlineTemplate(lang, '{annual}mm/yr', '{annual} mm/ngonyaka · mm/yr', { annual: rainfall.annual })}</span>
