@@ -117,12 +117,20 @@ test('the finance series still labels months in English and also exposes the fir
 test('wiring: the money book, charts, harvest list and saved-invoice list use the month helper; printed output does not', () => {
   assert.match(read('app/records/page.tsx'), /recordsBookDate\(lang, d, false\)/);
   assert.match(read('components/MyRecords.tsx'), /recordsBookDate\(lang, d, true\)/);
-  assert.match(read('components/CashflowChart.tsx'), /recordsMonthShort\(lang, m\.month\)/);
-  assert.match(read('components/CashflowChart.tsx'), /recordsMonthYear\(lang, month\.month, month\.year\)/);
+  // Afrikaans months are not in the shared tables (reports pin English), so the money charts read the recordsBook* functions.
+  assert.match(read('components/CashflowChart.tsx'), /records(?:Book)?MonthShort\(lang, m\.month\)/);
+  assert.match(read('components/CashflowChart.tsx'), /records(?:Book)?MonthYear\(lang, month\.month, month\.year\)/);
+  assert.match(read('components/CashflowChart.tsx'), /recordsBookMonthShort\(lang, m\.month\)/);
+  assert.match(read('components/CashflowChart.tsx'), /recordsBookMonthYear\(lang, month\.month, month\.year\)/);
+  assert.match(read('components/CashflowChart.tsx'), /recordsBookMonthYear\(lang, series\.firstRecordMonth, series\.firstRecordYear\)/);
+  assert.doesNotMatch(read('components/CashflowChart.tsx'), /(?<!Book)records(?:MonthShort|MonthYear)\(/, 'the cash-flow chart must not read the plain month tables');
   assert.match(read('components/FinanceGraphs.tsx'), /recordsBookMonthShort\(lang, m\.month\)/);
   assert.match(read('components/FinanceGraphs.tsx'), /recordsBookMonthYear\(lang, selected\.month, selected\.year\)/);
-  assert.match(read('components/ComingUpHarvests.tsx'), /recordsMonthLong\(lang, h\.endMonth\)/);
-  assert.match(read('app/invoice/page.tsx'), /recordsDate\(lang, new Date\(inv\.dateISO\), true\)/);
+  assert.match(read('components/ComingUpHarvests.tsx'), /records(?:Book)?MonthLong\(lang, h\.endMonth\)/);
+  assert.match(read('components/ComingUpHarvests.tsx'), /recordsBookMonthLong\(lang, h\.endMonth\)/);
+  assert.match(read('components/ComingUpHarvests.tsx'), /recordsBookMonthYear\(lang, month\.month, month\.year\)/);
+  assert.match(read('app/invoice/page.tsx'), /records(?:Book)?Date\(lang, new Date\(inv\.dateISO\), true\)/);
+  assert.match(read('app/invoice/page.tsx'), /isRecordsRegionalLang\(lang\) \|\| lang === 'af'\s*\? recordsBookDate\(lang, new Date\(inv\.dateISO\), true\)/);
   // The CSV export stays on its own English dates. w18-41: the invoice document now builds its
   // isiZulu dates from the month table (the platform zu-ZA locale fell back to US-order English).
   for (const printed of ['lib/invoice-entry.ts']) {

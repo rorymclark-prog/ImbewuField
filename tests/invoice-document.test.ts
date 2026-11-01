@@ -360,7 +360,12 @@ test('an isiXhosa invoice changes only words: same number, amounts, bank details
 });
 
 test('the invoice screen, the money book and the picker pass isiXhosa through to the document', () => {
-  assert.match(src('../app/invoice/page.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : 'en'\}/);
+  // Afrikaans (1 Nov 2026) joined the invoice screen's picker line: the old isiZulu/isiXhosa/English line
+  // is now the same line with an Afrikaans arm before the English fallback, and the arm must be there.
+  assert.match(src('../app/invoice/page.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : (?:lang === 'af' \? 'af' : )?'en'\}/);
+  assert.match(src('../app/invoice/page.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : lang === 'af' \? 'af' : 'en'\}/);
+  // The invoice document itself is built from the selected language, so an Afrikaans farmer gets DOCUMENT_COPY.af.
+  assert.match(src('../app/invoice/page.tsx'), /buildInvoiceDocument\(\{\s*language: lang,/);
   assert.match(src('../components/MyRecords.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : (?:lang === 'af' \? 'af' : )?'en'\}/);
   // Afrikaans (1 Nov 2026) is passed through by the money book too, and the picker's union admits it.
   assert.match(src('../components/MyRecords.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : lang === 'af' \? 'af' : 'en'\}/);

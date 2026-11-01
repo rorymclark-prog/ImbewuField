@@ -7,7 +7,8 @@ import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Buildi
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
-import { recordsDate } from '@/lib/records-months';
+import { recordsBookDate } from '@/lib/records-months';
+import { inlineText } from '@/lib/xh-inline';
 import {
   isRecordsRegionalLang, recordsDraftNotice, recordsFill, recordsPaired, recordsQuantityLabel, recordsTemplate,
 } from '@/lib/records-regional-drafts';
@@ -226,10 +227,11 @@ export default function InvoicePage() {
   const simple = useAppLevel() === 'simple';
   const ui = (english: string, isiZulu?: string) => {
     if (lang !== 'zu') {
-      // Sesotho, Tshivenda and Xitsonga: an unreviewed machine draft keyed by this exact English
-      // sentence (lib/records-regional-drafts.ts), English when there is none. A sentence a farmer
-      // may act on keeps the English beside the draft. Any other language keeps English.
-      if (!isRecordsRegionalLang(lang)) return english;
+      // Sesotho, Tshivenda, Xitsonga, isiXhosa and Afrikaans: an unreviewed machine draft keyed by this
+      // exact English sentence (lib/records-regional-drafts.ts; Afrikaans reads lib/locales/af-inline/
+      // through it), English when there is none. A sentence a farmer may act on keeps the English
+      // beside the draft. Any other language keeps English.
+      if (!isRecordsRegionalLang(lang) && lang !== 'af') return english;
       return INVOICE_PAIRED_COPY.has(english) ? recordsPaired(lang, english) : recordsFill(lang, english);
     }
     // Existing isiZulu wording always wins; only an English fallback is filled from a draft. A
@@ -808,6 +810,12 @@ export default function InvoicePage() {
           {/* ── Editor (screen only) ───────────────────────────────────── */}
           <div className={`no-print ${workspace.invoiceEditor} space-y-4`}>
 
+            {lang === 'af' && (
+              <p role="note" lang="af" className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>
+                {inlineText(lang, 'AFRIKAANS MACHINE DRAFT — This wording has not been reviewed by a fluent Afrikaans speaker. Text not yet drafted stays in English.')}
+              </p>
+            )}
+
             {isRecordsRegionalLang(lang) && (
               <p role="note" lang="en" data-records-draft-notice={lang} className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>
                 {recordsDraftNotice(lang)} The invoice a buyer receives (print and PDF) stays in English.
@@ -956,9 +964,9 @@ export default function InvoicePage() {
                             <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                               {lang === 'xh'
                                 ? formatXhosaDate(new Date(inv.dateISO), { day: true, month: 'short', year: true })
-                                : isRecordsRegionalLang(lang)
-                                ? recordsDate(lang, new Date(inv.dateISO), true)
-                                : new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : lang === 'af' ? 'af-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                : isRecordsRegionalLang(lang) || lang === 'af'
+                                ? recordsBookDate(lang, new Date(inv.dateISO), true)
+                                : new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                             </div>
                           </button>
                           <span className="hidden md:inline-block text-sm font-display tabular-nums" style={{ color: 'var(--text-primary)', minWidth: '7rem' }}>
@@ -1184,7 +1192,7 @@ export default function InvoicePage() {
                     <div className="flex-1 min-w-0">
                       <CropSelect
                         ariaLabel={ui('Crop or product')}
-                        language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en'}
+                        language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : lang === 'af' ? 'af' : 'en'}
                         value={it.desc}
                         rememberedCrops={products.map((product) => product.desc)}
                         onChange={(crop, cropKey) => chooseCrop(it.id, crop, cropKey)}

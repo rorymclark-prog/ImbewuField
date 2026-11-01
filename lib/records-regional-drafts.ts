@@ -22,6 +22,7 @@
 
 import { kgPreciseLabel } from '@/lib/format-figures';
 import { RECORDS_DRAFTS } from '@/lib/records-regional-drafts-data';
+import { inlineDraft } from '@/lib/xh-inline';
 import { recordQuantity, recordUnit, type RecordQuantityRow, type RecordUnit } from '@/lib/farm-records';
 
 export type RecordsDraftLang = 'zu' | 'st' | 've' | 'ts' | 'xh';
@@ -33,8 +34,16 @@ export function isRecordsRegionalLang(lang: string): lang is RecordsRegionalLang
   return (RECORDS_REGIONAL_LANGS as readonly string[]).includes(lang);
 }
 
-/** The draft for `english` in `lang`, or null when there is none (the caller shows English). */
+/**
+ * The draft for `english` in `lang`, or null when there is none (the caller shows English).
+ *
+ * Afrikaans (1 Nov 2026) is not a column of the generated table above: like the rest of the Afrikaans
+ * app it reads lib/locales/af-inline/ through the same English-keyed lookup (lib/xh-inline.ts), where
+ * g44-records-book-rows.ts holds the money book's row words. Until the Afrikaans locale chunk has
+ * registered them (and on the server) the lookup is empty and the screen shows English, as before.
+ */
 export function recordsDraft(lang: string, english: string): string | null {
+  if (lang === 'af') return inlineDraft('af', english);
   if (lang !== 'zu' && !isRecordsRegionalLang(lang)) return null;
   const row = RECORDS_DRAFTS[english];
   const draft = row?.[lang as RecordsDraftLang];
