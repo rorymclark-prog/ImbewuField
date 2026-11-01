@@ -79,7 +79,7 @@ const drafts: Record<string, string> = {
   "Decisions for the next visit": "Izigqibo zotyelelo olulandelayo",
   "Review current assignments without a selected visit and agree which people need support first.": "Phonononga izabelo zangoku ezingenalo utyelelo olukhethiweyo nivumelane ukuba ngoobani abantu abafuna inkxaso kuqala.",
   "Give open actions a responsible person and review date. Record the outcome when an action is completed.": "Nika izenzo ezivulekileyo umntu onoxanduva nomhla wokuhlola. Rekhoda isiphumo xa isenzo sigqityiwe.",
-  "Check a named practical skill against an observed task. Record later application separately before claiming adoption.": "Hlola isakhono esisebenzayo esinikiweyo ngomsebenzi owuqwalaselileyo. Rekhoda ukusetyenziswa kamva ngokwahlukileyo phambi kokuthi bekwamkelwe.",
+  "Check a named practical skill against an observed task. Record later application separately before claiming adoption.": "Hlola isakhono esisebenzayo esinikiweyo ngomsebenzi owuqwalaselileyo. Rekhoda ukusetyenziswa kamva ngokwahlukileyo phambi kokuba uthi kwamkelwe.",
   "Keep private observations in the authorised team. A downloaded PDF does not inherit the app’s access controls.": "Gcina amanqaku abucala kwiqela eligunyazisiweyo. I-PDF ekhutshelweyo ayilifumani lawulo lofikelelo lwe-app.",
   // Sources
   "Sources & evidence limits": "Imithombo nemida yobungqina",
