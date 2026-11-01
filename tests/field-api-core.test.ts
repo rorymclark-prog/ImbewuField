@@ -109,3 +109,20 @@ test('the offline drawing canvas has no network style, tile, sprite or font depe
   assert.equal(OFFLINE_MAP_STYLE.sprite,undefined);assert.equal(OFFLINE_MAP_STYLE.glyphs,undefined);
   assert.equal(OFFLINE_MAP_STYLE.layers[0].type,'background');
 });
+
+test('the offline report note is English unless the reader asked for isiXhosa, and then keeps the saved date exactly', async () => {
+  const { XH_INLINE_SOURCE } = await import('../lib/locales/xh-inline/index');
+  const { registerXhInline } = await import('../lib/xh-inline');
+  const data = { _device: { cached: true, savedAt: Date.UTC(2026, 9, 24, 8, 30) }, visits: [{ _pending: true }] };
+  const english = fieldDataReportNote(data)!;
+  assert.equal(english, 'Uses information saved on this device on 2026-10-24T08:30:00.000Z. Includes device-saved changes not yet confirmed by the server.');
+  try {
+    registerXhInline({});
+    assert.equal(fieldDataReportNote(data, 'xh'), english, 'English until the drafts load');
+    registerXhInline(XH_INLINE_SOURCE);
+    for (const language of ['en', 'zu', 'st', undefined]) assert.equal(fieldDataReportNote(data, language), english);
+    const xh = fieldDataReportNote(data, 'xh')!;
+    assert.notEqual(xh, english); assert.ok(xh.includes('2026-10-24T08:30:00.000Z'));
+    assert.equal(fieldDataReportNote({ _device: { cached: false, pending: false } }, 'xh'), null);
+  } finally { registerXhInline({}); }
+});

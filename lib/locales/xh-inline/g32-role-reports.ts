@@ -1,7 +1,7 @@
 // isiXhosa drafts for the role report screens added in #1100: components/FarmReports.tsx,
 // components/FacilitatorReport.tsx, components/MelEvidenceReport.tsx and the MEL choice in
-// components/ProgrammeReports.tsx. The report BODY (titles, sections, tables, metrics from
-// lib/farm-report.ts, lib/training-report.ts, lib/mel-report.ts) stays English on purpose.
+// components/ProgrammeReports.tsx. The report BODIES (titles, sections, tables, metrics) are drafted
+// elsewhere: lib/farm-report.ts in g34, lib/mel-report.ts in g45, lib/training-report.ts in g46.
 // Keyed by the exact English the screen shows (see lib/xh-inline.ts). Unreviewed machine drafts.
 const drafts: Record<string, string> = {
   // FarmReports
@@ -79,7 +79,6 @@ const drafts: Record<string, string> = {
   "MEL evidence": "Ubungqina be-MEL",
   "Agreed indicators, assessment findings and matched change.": "Izalathisi ezivunyiweyo, okufunyenweyo kuvavanyo notshintsho olufanisiweyo.",
   "Choose project and assessment scope in the MEL workspace below.": "Khetha iprojekthi nobubanzi bovavanyo kwindawo ye-MEL engezantsi.",
-  "The controls here are an unreviewed isiXhosa draft. The MEL analysis text, tables and PDF are in English. Names and recorded evidence are kept as recorded.": "Izilawuli apha ziyidrafti engaphononongwanga yesiXhosa. Umbhalo wohlalutyo lwe-MEL, iitafile ne-PDF zikwisiNgesi. Amagama nobungqina oburekhodiweyo bugcinwa njengoko burekhodiwe.",
 };
 
 export default drafts;
