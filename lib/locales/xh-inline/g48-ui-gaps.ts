@@ -69,7 +69,7 @@ const drafts: Record<string, string> = {
   "Photo {n}": "Ifoto {n}",
   "View one photo": "Jonga ifoto enye",
   "Compare with another photo": "Thelekisa neyinye ifoto",
-  "Draft from your crop plan. Check what happened before saving. Today is selected; choose the day you actually did the work. This does not record a harvest quantity or mark the task complete.": "Uyilo olusuka kwisicwangciso sakho sezityalo. Khangela into eyenzekileyo ngaphambi kokugcina. Namhlanje ukhethiwe; khetha usuku owawenza ngalo umsebenzi. Oku akurekhodi bungakanani besivuno okanye kuphawule umsebenzi njengogqityiweyo.",
+  "Draft from your crop plan. Check what happened before saving. Today is selected; choose the day you actually did the work. This does not record a harvest quantity or mark the task complete.": "Idrafti esuka kwisicwangciso sakho sezityalo. Khangela into eyenzekileyo ngaphambi kokugcina. Namhlanje ukhethiwe; khetha usuku owawenza ngalo umsebenzi. Oku akurekhodi bungakanani besivuno okanye kuphawule umsebenzi njengogqityiweyo.",
   "Write a field note": "Bhala inqaku lasentsimini",
   "Write a field note: {title}": "Bhala inqaku lasentsimini: {title}",
   "Log what you picked": "Rekhoda oko ukuvuneyo",
@@ -90,7 +90,7 @@ const drafts: Record<string, string> = {
   "{n} visible farmer records; coverage is not total project reach": "Iirekhodi zabalimi ezibonakalayo ezingu-{n}; ukugubungela akuyonto yonke ifikelelwe yiprojekthi",
   "Area figures use each garden’s latest observation. Farmer production and finances use available cumulative records, whose reporting periods and coverage may differ.": "Amanani endawo asebenzisa into ebonwe ngamva nje kwigadi nganye. Imveliso nemali yomlimi zisebenzisa iirekhodi ezidibeneyo ezikhoyo, ezinokwahluka ngamaxesha okubika nokugubungela.",
   "Sales are revenue. Profit and R/m² require costs, production area and dates matched to the same activity; those ratios are not calculated here.": "Iintengiso yingeniso. Inzuzo ne-R/m² zifuna iindleko, indawo yokuvelisa kunye nemihla ehambelana nomsebenzi omnye; ezo ndlela zokuthelekisa azibaliswa apha.",
-  "{n} enrolled farmers are withheld from the portfolio for consent.": "Abalimi abangu-{n} ababhalisiweyo abafakwanga kweli qela ngenxa yemvume.",
+  "{n} enrolled farmers are withheld from the portfolio for consent.": "Abalimi abangu-{n} ababhalisiweyo abafakwanga kweli qela ngenxa yokungabikho kwemvume.",
   // Example photo captions (/samples/farm)
   "AI-generated example garden aerial. Not a satellite image or photograph of Ubhejane.": "Umzekelo wegadi ebukwa phezulu owenziwe yi-AI. Ayisosithombe se-satellite okanye ifoto ye-Ubhejane.",
   "AI-generated example harvest. Not evidence of the real garden's production.": "Umzekelo wesivuno owenziwe yi-AI. Asingubungqina bemveliso yegadi yokwenyani.",
