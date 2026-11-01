@@ -2,38 +2,46 @@ import { cropByKey, hasAutomaticPlanningBasis } from './crop-catalog';
 import {
   benchmarkDatedAreaConflictPlantingIds, datedPlantingSowIndex, estimatedYieldKg,
   harvestTargetMonthIndex, planningMaturityMonths, sanitiseHarvestTargets,
+  harvestTargetWeeklyKg, harvestTargetYieldFactor,
   TRANSPLANT_ENTRY_PLANNED_MONTHS,
-  type HarvestTarget, type PlanBed, type Planting,
+  type HarvestTarget, type KgHarvestTarget, type PlanBed, type Planting,
 } from './crop-plan';
 
 export const HARVEST_TARGET_BASIS = 'Crop-cycle capacity uses the catalogue’s South African planning yields and picking windows. It does not forecast kilograms each week. Check local suitability, losses and actual harvest records before promising deliveries.';
 
 export interface HarvestTargetAssessment {
   target: HarvestTarget;
-  demandKg: number;
+  demandKg: number | null;
   days: number;
   /** Area summed across crop cycles, not a claim about simultaneous land. */
   cycleAreaM2: number | null;
   allocatedKg: number;
-  shortageKg: number;
-  surplusKg: number;
+  grossCycleKg: number;
+  shortageKg: number | null;
+  surplusKg: number | null;
   pickingMonths: string[];
   gapMonths: string[];
   excludedRows: number;
   missingBasis: boolean;
+  missingReasons: ('crop-evidence' | 'unit-weight' | 'zero-saleable-share')[];
 }
+
+type KnownMassAssessment = HarvestTargetAssessment & { demandKg: number; shortageKg: number; surplusKg: number };
 
 export function targetMonthStamp(index: number): string {
   return `${Math.floor(index / 12)}-${String(index % 12 + 1).padStart(2, '0')}`;
 }
 
-export function targetDemand(target: HarvestTarget): { demandKg: number; days: number } | null {
+export function targetDemand(target: KgHarvestTarget): { demandKg: number; days: number } | null;
+export function targetDemand(target: HarvestTarget): { demandKg: number | null; days: number } | null;
+export function targetDemand(target: HarvestTarget): { demandKg: number | null; days: number } | null {
   if (!sanitiseHarvestTargets([target]).length) return null;
   const start = harvestTargetMonthIndex(target.startMonth)!;
   const end = harvestTargetMonthIndex(target.endMonth)!;
   const days = (Date.UTC(Math.floor((end + 1) / 12), (end + 1) % 12, 1)
     - Date.UTC(Math.floor(start / 12), start % 12, 1)) / 86_400_000;
-  return { days, demandKg: target.weeklyKg * days / 7 };
+  const weeklyKg = harvestTargetWeeklyKg(target);
+  return { days, demandKg: weeklyKg === null ? null : weeklyKg * days / 7 };
 }
 
 /** Credit a whole cycle only when its entire planning picking window fits.
@@ -55,13 +63,24 @@ export function targetPickingWindow(planting: Planting, target: HarvestTarget): 
 }
 
 export function assessHarvestTarget(
+  target: KgHarvestTarget, beds: PlanBed[], plantings: Planting[], now?: { year: number; month: number },
+): KnownMassAssessment | null;
+export function assessHarvestTarget(
+  target: HarvestTarget, beds: PlanBed[], plantings: Planting[], now?: { year: number; month: number },
+): HarvestTargetAssessment | null;
+export function assessHarvestTarget(
   target: HarvestTarget, beds: PlanBed[], plantings: Planting[],
   now = { year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
 ): HarvestTargetAssessment | null {
   const demand = targetDemand(target);
   if (!demand) return null;
   const crop = cropByKey(target.cropKey)!;
-  const missingBasis = !hasAutomaticPlanningBasis(crop);
+  const factor = harvestTargetYieldFactor(target);
+  const missingReasons: HarvestTargetAssessment['missingReasons'] = [];
+  if (!hasAutomaticPlanningBasis(crop)) missingReasons.push('crop-evidence');
+  if (demand.demandKg === null) missingReasons.push('unit-weight');
+  if (factor === 0) missingReasons.push('zero-saleable-share');
+  const missingBasis = missingReasons.length > 0;
   const bedById = new Map(beds.map((bed) => [bed.id, bed]));
   const originIndex = now.year * 12 + now.month - 1;
   const linked = plantings.filter((p) => p.harvestTargetId === target.id);
@@ -72,7 +91,7 @@ export function assessHarvestTarget(
     startIndex, endIndex: harvestTargetMonthIndex(target.endMonth)! + 1, originIndex,
   });
   const picking = new Set<number>();
-  let allocatedKg = 0;
+  let grossCycleKg = 0;
   let excludedRows = 0;
   for (const row of linked) {
     const bed = bedById.get(row.bedId);
@@ -85,18 +104,20 @@ export function assessHarvestTarget(
       continue;
     }
     const kg = estimatedYieldKg(row, bed.areaM2);
-    if (!Number.isFinite(kg) || !Number.isFinite(allocatedKg + kg)) { excludedRows++; continue; }
-    allocatedKg += kg;
+    if (!Number.isFinite(kg) || !Number.isFinite(grossCycleKg + kg)) { excludedRows++; continue; }
+    grossCycleKg += kg;
     window.forEach((month) => picking.add(month));
   }
   const start = harvestTargetMonthIndex(target.startMonth)!;
   const end = harvestTargetMonthIndex(target.endMonth)!;
   const months = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  const allocatedKg = grossCycleKg * factor;
   return {
-    target, ...demand, missingBasis,
-    cycleAreaM2: missingBasis ? null : demand.demandKg / crop.yieldKgPerM2!,
-    allocatedKg, shortageKg: Math.max(0, demand.demandKg - allocatedKg),
-    surplusKg: Math.max(0, allocatedKg - demand.demandKg), excludedRows,
+    target, ...demand, missingBasis, missingReasons,
+    cycleAreaM2: missingBasis ? null : demand.demandKg! / (crop.yieldKgPerM2! * factor),
+    allocatedKg, grossCycleKg,
+    shortageKg: demand.demandKg === null ? null : Math.max(0, demand.demandKg - allocatedKg),
+    surplusKg: demand.demandKg === null ? null : Math.max(0, allocatedKg - demand.demandKg), excludedRows,
     pickingMonths: months.filter((m) => picking.has(m)).map(targetMonthStamp),
     gapMonths: months.filter((m) => !picking.has(m)).map(targetMonthStamp),
   };
