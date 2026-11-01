@@ -8,7 +8,8 @@ import { freshSampleAssessment, freshSampleFarmPack, SAMPLE_FARM_SITE_ID, sample
 import { validFeedback, feedbackText } from '../lib/product-feedback';
 import { buildDemoSavedPlace } from '../lib/demo-farm';
 import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index';
-import { inlineText, registerXhInline } from '../lib/xh-inline';
+import { AF_INLINE_SOURCE } from '../lib/locales/af-inline/index';
+import { inlineText, registerInlineDrafts, registerXhInline } from '../lib/xh-inline';
 
 test('sample tour spans 15 minutes and leads to real farm pages with bounded progress',()=>{
   assert.equal(FARM_TOUR.reduce((n,s)=>n+s.minutes,0),15);
@@ -440,7 +441,26 @@ test('the two example photo captions read in isiXhosa (keeping AI) while the sav
   } finally { registerXhInline({}); }
   const page=readFileSync(new URL('../app/samples/farm/page.tsx',import.meta.url),'utf8');
   assert.match(page,/alt=\{inlineText\(lang,p\.caption\)\}/);
-  assert.match(page,/<figcaption lang=\{lang==='xh'\?'xh':undefined\}>\{inlineText\(lang,p\.caption\)\}<\/figcaption>/);
+  assert.match(page,/<figcaption lang=\{isInlineDraftLang\(lang\)\?lang:undefined\}>\{inlineText\(lang,p\.caption\)\}<\/figcaption>/);
   assert.ok(!/soil test results and photo captions/.test(page),'the isiXhosa notice must not say photo captions stay in English');
   assert.match(page,/caption:p\.caption\}/,'the saved pack keeps the caption exactly as recorded');
+});
+
+test('the two example photo captions read in Afrikaans (keeping AI) and the sample-farm notice says only records, evidence texts and soil results stay English',()=>{
+  registerInlineDrafts('af',AF_INLINE_SOURCE);
+  try {
+    for(const photo of SAMPLE_PHOTOS){
+      const draft=inlineText('af',photo.caption);
+      assert.notEqual(draft,photo.caption,photo.caption);
+      assert.match(draft,/^AI-gegenereerde /,'AI stays AI');
+      assert.equal(inlineText('en',photo.caption),photo.caption);
+      assert.equal(inlineText('zu',photo.caption),photo.caption);
+    }
+    const notice='Sample records, evidence texts and soil test results are kept in English so that sources and facts are preserved. Ask for help translating them before using the farming information.';
+    assert.notEqual(inlineText('af',notice),notice,'the notice has an Afrikaans draft');
+    assert.equal(inlineText('af','Sample records, evidence texts, soil test results and photo captions are kept in English so that sources and facts are preserved. Ask for help translating them before using the farming information.'),'Sample records, evidence texts, soil test results and photo captions are kept in English so that sources and facts are preserved. Ask for help translating them before using the farming information.','the retired wording has no draft');
+  } finally { registerInlineDrafts('af',{}); }
+  const page=readFileSync(new URL('../app/samples/farm/page.tsx',import.meta.url),'utf8');
+  assert.match(page,/\(lang === 'zu' \|\| isInlineDraftLang\(lang\)\) && <p role="note" className=\{styles\.notice\} lang=\{lang\}>/,'isiXhosa and Afrikaans both get the notice');
+  assert.match(page,/<figcaption lang=\{isInlineDraftLang\(lang\)\?lang:undefined\}>/,'the Afrikaans caption is marked as Afrikaans');
 });

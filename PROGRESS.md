@@ -138,6 +138,20 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   Before the drafts load, and for every other language, the output is the English byte for byte; the download
   keeps its English file name; figures, dates, coordinates, names and typed text are unchanged
   (tests in `tests/staff-report.test.ts`, `field-programmes-i18n.test.ts`).
+- **Browser-sweep gap fixes (1 Nov):** the fixes the isiXhosa browser check led to now serve Afrikaans through
+  the shared helpers in `lib/xh-inline.ts` (`isInlineDraftLang`, `inlineText`, `inlineDraft`). New shard
+  `af-inline/g50-ui-gaps.ts` (83 drafts; "Crop or product" was already drafted) covers the same keys as
+  isiXhosa `g48`: the Farm memory journal controls (`farmMemoryText('af', …)`), the funder/NGO programme record
+  cards (`programmeMetricLabel`, `programmeMetricNote`, `programmeMetricValue`), the two sample-farm photo
+  captions (AI stays AI) and "Which report do I need?". The sample-farm notice was re-keyed in g10 (photo
+  captions are no longer claimed to stay English). Journal CSV/printable copies stay English for Afrikaans and
+  the screen says so ("Gestoorde kopieë …"); `lang` attributes on the journal, entry sheet and photo review
+  follow the draft language. The crop planner pairs a month with its English once, shows the draft notice once
+  (no per-row label) and writes Afrikaans task titles ("Oes Uie", `ACTION_AF_VERB`, crop names through the
+  inline drafts). The money book lender card leads with the Afrikaans draft then the English source; stock
+  assessment titles (`melAssessmentTitle`) and the report contents lists use the drafts. Tests extended:
+  `farm-memory-copy`, `farm-memory-ui`, `farm-memory-task-controls`, `programme-evidence`, `sample-programme`,
+  `zu-11-ux-18-produce-label`, `report-ui-localization`.
 - **Blind review of the 1 Nov drafts:** 858 money book, site report and release-note drafts back-translated
   before seeing the English; 24 repairs (`docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-2026-11-01/`).
 - **isiXhosa fix found on the way:** the invoice page told isiXhosa farmers the buyer's invoice "stays in

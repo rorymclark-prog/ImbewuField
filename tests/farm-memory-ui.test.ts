@@ -6,7 +6,8 @@ import { mountJournal, renderedText, renderedButton, journalFixture } from './jo
 import { FARM_MEMORY_EN, FARM_MEMORY_ZU, farmMemoryText } from '../lib/farm-memory-copy.ts';
 import type { JournalEntry } from '../lib/field-journal.ts';
 import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index.ts';
-import { registerXhInline } from '../lib/xh-inline.ts';
+import { AF_INLINE_SOURCE } from '../lib/locales/af-inline/index.ts';
+import { registerInlineDrafts, registerXhInline } from '../lib/xh-inline.ts';
 
 const rows: JournalEntry[] = [
   { ...journalFixture('old-river', 'My original English note', '2025-01-02', 'Lettuce'), bedId: 'river', bedLabel: 'River bed', notes: 'The original words must remain.' },
@@ -185,4 +186,31 @@ test('isiXhosa Farm memory controls, result bar and copy notice render in isiXho
     assert.equal(app.exports[0].options.selection, farmMemoryText('en', 'cropScope', { value: 'Carrots' }));
     assert.equal(app.exports[0].entries[0].notes, 'Amanothi ami.');
   } finally { registerXhInline({}); await app.close(); }
+});
+
+test('Afrikaans Farm memory controls, result bar and copy notice render in Afrikaans, and the saved copies stay English', async () => {
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  const app = await mountJournal({ entries: rows, lang: 'af' });
+  try {
+    const controls = app.renderer.root.findByProps({ 'aria-label': farmMemoryText('af', 'findEntries') });
+    assert.equal(controls.props.lang, 'af');
+    assert.equal(renderedText(controls.findByType('h2')), 'Plaasgeheue');
+    assert.equal(app.renderer.root.findByProps({ type: 'search' }).props.placeholder, farmMemoryText('af', 'searchPlaceholder'));
+    assert.match(renderedText(controls), new RegExp(farmMemoryText('af', 'help')));
+    assert.match(renderedText(controls), new RegExp(farmMemoryText('af', 'keepCopyMany', { n: 3 })));
+    assert.match(renderedText(app.renderer.root), /JOU VELDNOTAS/);
+    // The old notice claimed search, filters and export controls were English; only the saved copies are.
+    const notice = controls.findAllByProps({ role: 'note' }).map(node => renderedText(node)).join(' ');
+    assert.match(notice, /Gestoorde kopieë/);
+    assert.doesNotMatch(notice, /currently in English/);
+    const noticeNode = controls.findAllByProps({ role: 'note' }).find(node => /Gestoorde kopieë/.test(renderedText(node)))!;
+    assert.equal(noticeNode.props.lang, 'af');
+    const cropTag = app.renderer.root.findAllByType('button').find(node => node.props['aria-label'] === farmMemoryText('af', 'cropHistory', { value: 'Carrots' }));
+    assert.ok(cropTag, 'the crop history tag is labelled in Afrikaans');
+    await act(async () => cropTag.props.onClick());
+    await act(async () => renderedButton(app.renderer, farmMemoryText('af', 'printableCopy')).props.onClick());
+    assert.equal(app.exports[0].options.lang, 'en', 'the saved copy is English for Afrikaans');
+    assert.equal(app.exports[0].options.selection, farmMemoryText('en', 'cropScope', { value: 'Carrots' }));
+    assert.equal(app.exports[0].entries[0].notes, 'Amanothi ami.');
+  } finally { registerInlineDrafts('af', {}); await app.close(); }
 });

@@ -252,7 +252,7 @@ const drafts: Record<string, string> = {
   "Explore the design, visit records and evidence. Your edits stay available until you reload or reset this workspace.": "Verken die ontwerp, besoekrekords en bewyse. Jou wysigings bly beskikbaar totdat jy hierdie werkruimte herlaai of terugstel.",
   "Please allow session storage to open this tour.": "Laat asseblief sessieberging toe om hierdie toer oop te maak.",
   "Open farm workspace": "Maak plaaswerkruimte oop",
-  "Sample records, evidence texts, soil test results and photo captions are kept in English so that sources and facts are preserved. Ask for help translating them before using the farming information.": "Voorbeeldrekords, bewystekste, grondtoetsresultate en foto-onderskrifte word in Engels gehou sodat bronne en feite bewaar bly. Vra vir hulp om hulle te vertaal voordat jy die boerdery-inligting gebruik.",
+  "Sample records, evidence texts and soil test results are kept in English so that sources and facts are preserved. Ask for help translating them before using the farming information.": "Voorbeeldrekords, bewystekste en grondtoetsresultate word in Engels gehou sodat bronne en feite bewaar bly. Vra vir hulp om hulle te vertaal voordat jy die boerdery-inligting gebruik.",
   "Saved place & map": "Gestoorde plek en kaart",
   "Edit design": "Wysig ontwerp",
   "Edit site assessment": "Wysig terreinassessering",

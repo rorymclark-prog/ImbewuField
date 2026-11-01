@@ -1,0 +1,103 @@
+// Unreviewed Afrikaans machine drafts keyed by the exact English (see index.ts).
+// The Afrikaans twin of lib/locales/xh-inline/g48-ui-gaps.ts, for the English gaps a browser check of the
+// isiXhosa UI found (1 Nov 2026) and Afrikaans shares:
+//  - the Farm memory journal controls (lib/farm-memory-copy.ts, rendered by components/journal/* and the
+//    crop-plan task links). The saved CSV / printable copies stay English for Afrikaans, so their document
+//    wording is deliberately not drafted here;
+//  - the programme record cards on /funder and /ngo (lib/programme-progress.ts programmeMetricLabel / programmeMetricNote);
+//  - the two example photo captions on /samples/farm (lib/sample-farm-pack.ts);
+//  - the contents-list heading of the site report ("Which report do I need?").
+// Recorded names, dates and counts are passed in through the {placeholders}; placeholders, digits and "AI" are kept exactly.
+// "Crop or product" ("Gewas of produk") is already drafted in an earlier shard and is not repeated.
+// Terms: inskrywing = entry, joernaal = journal, bedding = bed, gewas = crop, sperdatum = due date,
+// konsep = draft, rekord = record, uitgawes = expenses, portefeulje = portfolio.
+const drafts: Record<string, string> = {
+  // Farm memory (journal)
+  "Farm memory": "Plaasgeheue",
+  "Find journal entries": "Vind joernaalinskrywings",
+  "Find the note, photo or field observation you need again.": "Vind die nota, foto of veldwaarneming wat jy weer nodig het.",
+  "Search journal titles, notes, crops and beds": "Soek joernaaltitels, notas, gewasse en beddings",
+  "Search your journal": "Soek in jou joernaal",
+  "Filters": "Filters",
+  "From date": "Vanaf datum",
+  "Through date": "Tot en met datum",
+  "Both dates are included. Leave either date empty for an open range.": "Albei datums word ingesluit. Laat enige datum leeg vir 'n oop reeks.",
+  "Bed or plot": "Bedding of perseel",
+  "All beds and plots": "Alle beddings en persele",
+  "All crops and products": "Alle gewasse en produkte",
+  "Clear all filters": "Maak alle filters skoon",
+  "Keep a copy of this {n} entry": "Hou 'n kopie van hierdie {n} inskrywing",
+  "Keep a copy of these {n} entries": "Hou 'n kopie van hierdie {n} inskrywings",
+  "Printable copy": "Drukbare kopie",
+  "Works offline. Only the matching entries are included. You can include saved photo thumbnails in the printable copy.": "Werk vanlyn. Slegs die passende inskrywings word ingesluit. Jy kan gestoorde foto-duimnaelskets in die drukbare kopie insluit.",
+  "Include saved photos": "Sluit gestoorde foto's in",
+  "Leave this on to include saved photo thumbnails. Turn it off for a smaller copy with notes only.": "Los dit aan om gestoorde foto-duimnaelskets in te sluit. Skakel dit af vir 'n kleiner kopie met slegs notas.",
+  "These notes stay on this device. Keep a copy before clearing browser storage or changing phones.": "Hierdie notas bly op hierdie toestel. Hou 'n kopie voordat jy die blaaier se gestoorde data uitvee of van foon verander.",
+  "Preparing your copy…": "Berei jou kopie voor…",
+  "CSV downloaded. It contains the entries shown here.": "CSV afgelaai. Dit bevat die inskrywings wat hier gewys word.",
+  "Printable copy downloaded. Open the HTML file, then choose Print or Save as PDF in your browser.": "Drukbare kopie afgelaai. Maak die HTML-lêer oop en kies dan Druk of Stoor as PDF in jou blaaier.",
+  "The selected entries were shared.": "Die gekose inskrywings is gedeel.",
+  "The file could not be prepared. Your notes are unchanged. Try again.": "Die lêer kon nie voorberei word nie. Jou notas is onveranderd. Probeer weer.",
+  "YOUR SELECTION": "JOU KEUSE",
+  "YOUR FIELD NOTES": "JOU VELDNOTAS",
+  "{n} entry": "{n} inskrywing",
+  "{n} entries": "{n} inskrywings",
+  "{n} entry of {total}": "{n} inskrywing van {total}",
+  "{n} entries of {total}": "{n} inskrywings van {total}",
+  "Show all entries": "Wys alle inskrywings",
+  "No matching entries": "Geen passende inskrywings nie",
+  "Try another word, a wider date range, or clear the filters. Your saved notes are still here.": "Probeer 'n ander woord, 'n wyer datumreeks, of maak die filters skoon. Jou gestoorde notas is steeds hier.",
+  "Choose a valid start date.": "Kies 'n geldige begindatum.",
+  "Choose a valid end date.": "Kies 'n geldige einddatum.",
+  "The start date must be on or before the end date.": "Die begindatum moet op of voor die einddatum wees.",
+  "Unnamed bed": "Onbenoemde bedding",
+  "{label} (recorded group {n})": "{label} (aangetekende groep {n})",
+  "Show journal history for bed: {value}": "Wys joernaalgeskiedenis vir bedding: {value}",
+  "Show journal history for crop: {value}": "Wys joernaalgeskiedenis vir gewas: {value}",
+  "{recorded} ({current} now)": "{recorded} ({current} nou)",
+  "Journal photos": "Joernaalfoto's",
+  "Photos in these notes": "Foto's in hierdie notas",
+  "Open a photo or compare two dates. These are the pictures saved with your notes.": "Maak 'n foto oop of vergelyk twee datums. Dit is die foto's wat saam met jou notas gestoor is.",
+  "Open photo: {label}": "Maak foto oop: {label}",
+  "Compare two photos": "Vergelyk twee foto's",
+  "Compare your observations": "Vergelyk jou waarnemings",
+  "Journal photo": "Joernaalfoto",
+  "Close journal photos": "Maak joernaalfoto's toe",
+  "Dates and captions come from your notes. Photos alone do not measure growth or prove a yield.": "Datums en onderskrifte kom uit jou notas. Foto's alleen meet nie groei nie en bewys nie 'n opbrengs nie.",
+  "First photo": "Eerste foto",
+  "Second photo": "Tweede foto",
+  "Choose a photo": "Kies 'n foto",
+  "Untitled note": "Nota sonder titel",
+  "Journal observation": "Joernaalwaarneming",
+  "Photo {n}": "Foto {n}",
+  "View one photo": "Bekyk een foto",
+  "Compare with another photo": "Vergelyk met 'n ander foto",
+  "Draft from your crop plan. Check what happened before saving. Today is selected; choose the day you actually did the work. This does not record a harvest quantity or mark the task complete.": "Konsep uit jou gewasplan. Kontroleer wat gebeur het voordat jy stoor. Vandag is gekies; kies die dag waarop jy die werk werklik gedoen het. Dit teken nie 'n oeshoeveelheid aan nie en merk nie die taak as voltooi nie.",
+  "Write a field note": "Skryf 'n veldnota",
+  "Write a field note: {title}": "Skryf 'n veldnota: {title}",
+  "Log what you picked": "Teken aan wat jy gepluk het",
+  "Log what you picked: {title}": "Teken aan wat jy gepluk het: {title}",
+  "Saved copies (CSV and printable) are in English. Your notes keep their original language.": "Gestoorde kopieë (CSV en drukbaar) is in Engels. Jou notas behou hul oorspronklike taal.",
+  // Programme record cards (/funder, /ngo)
+  "Gardens with area records": "Tuine met oppervlakterekords",
+  "Farmers with production or sales records": "Boere met produksie- of verkoperekords",
+  "Farmers active in the last 90 days": "Boere wat in die laaste 90 dae aktief was",
+  "Portfolio records unavailable": "Portefeuljerekords nie beskikbaar nie",
+  "No shared area observations available": "Geen gedeelde oppervlaktewaarnemings beskikbaar nie",
+  "Based on recorded activity; this does not establish continued participation": "Gebaseer op aangetekende aktiwiteit; dit bewys nie voortgesette deelname nie",
+  "Vegetable beds + staple plots; physical area counted once": "Groentebeddings + stapelgewaspersele; fisiese oppervlakte een keer getel",
+  "{n} distinct gardens · observations {first} to {last}": "{n} afsonderlike tuine · waarnemings {first} tot {last}",
+  "{n} of {m} visible farmer records include production": "{n} van {m} sigbare boerrekords sluit produksie in",
+  "{n} of {m} visible farmer records include sales": "{n} van {m} sigbare boerrekords sluit verkope in",
+  "{n} of {m} visible farmer records include expenses": "{n} van {m} sigbare boerrekords sluit uitgawes in",
+  "{n} visible farmer records; coverage is not total project reach": "{n} sigbare boerrekords; dekking is nie die projek se totale bereik nie",
+  "Area figures use each garden’s latest observation. Farmer production and finances use available cumulative records, whose reporting periods and coverage may differ.": "Oppervlaktesyfers gebruik elke tuin se jongste waarneming. Boere se produksie en finansies gebruik beskikbare kumulatiewe rekords, wie se verslagtydperke en dekking kan verskil.",
+  "Sales are revenue. Profit and R/m² require costs, production area and dates matched to the same activity; those ratios are not calculated here.": "Verkope is inkomste. Wins en R/m² vereis koste, produksie-oppervlakte en datums wat by dieselfde aktiwiteit pas; daardie verhoudings word nie hier bereken nie.",
+  "{n} enrolled farmers are withheld from the portfolio for consent.": "{n} ingeskrewe boere word weens toestemming uit die portefeulje weggelaat.",
+  // Example photo captions (/samples/farm)
+  "AI-generated example garden aerial. Not a satellite image or photograph of Ubhejane.": "AI-gegenereerde voorbeeld van 'n tuin uit die lug. Nie 'n satellietbeeld of foto van Ubhejane nie.",
+  "AI-generated example harvest. Not evidence of the real garden's production.": "AI-gegenereerde voorbeeldoes. Nie bewys van die regte tuin se produksie nie.",
+  // Site report
+  "Which report do I need?": "Watter verslag het ek nodig?",
+};
+export default drafts;

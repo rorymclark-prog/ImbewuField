@@ -81,8 +81,8 @@ function recordsUi(lang: string, english: string, isiZulu: string, paired = fals
 // then the isiZulu one (recordsUi's `paired` order above), on a card specifically meant to be
 // shown to a lender who may read isiZulu first. Same pairing, isiZulu first.
 function recordsUiZuFirst(lang: string, english: string, isiZulu: string): string {
-  // isiXhosa follows the same rule as isiZulu here: the draft first, the English source after it.
-  if (lang === 'xh') {
+  // isiXhosa and Afrikaans follow the same rule as isiZulu here: the draft first, the English source after it.
+  if (lang === 'xh' || lang === 'af') {
     const draft = recordsDraft(lang, english);
     return draft && draft !== english ? `${draft} — ${english}` : english;
   }

@@ -106,7 +106,7 @@ export default function FieldJournal() {
   const router = useRouter();
   const { t, lang } = useLanguage();
   const isZulu = lang === 'zu';
-  const memoryLang = isZulu ? 'zu' : lang === 'xh' ? 'xh' : 'en';
+  const memoryLang = isZulu ? 'zu' : isInlineDraftLang(lang) ? lang : 'en';
   const memory = (key: FarmMemoryKey, vars?: Record<string, string | number>) => farmMemoryText(lang, key, vars);
   const ui = (english: string, zulu: string) => inlineText(lang, english, zulu);
   const simple = useAppLevel() === 'simple';
@@ -232,8 +232,8 @@ export default function FieldJournal() {
     if (exporting || !visible.length || dateError) return;
     setExporting(true);
     setExportNotice(null);
-    // The saved copies stay English for isiXhosa (lib/journal-export.ts), so their selection line is built in English too.
-    const copyLang = lang === 'xh' ? 'en' : lang;
+    // The saved copies stay English for isiXhosa and Afrikaans (lib/journal-export.ts), so their selection line is built in English too.
+    const copyLang = isInlineDraftLang(lang) ? 'en' : lang;
     const copyText = (key: FarmMemoryKey, vars?: Record<string, string | number>) => farmMemoryText(copyLang, key, vars);
     const selection = [
       query.trim() ? copyText('searchScope', { value: query.trim() }) : '',
@@ -370,8 +370,8 @@ export default function FieldJournal() {
       {ready && entries.length > 0 && <section className={explore.tools} aria-label={memory('findEntries')} lang={memoryLang}>
         <div className={explore.heading}><NotebookPen size={17} aria-hidden="true" /><h2>{memory('title')}</h2></div>
         <p className={explore.help}>{memory('help')}</p>
-        {lang === 'xh' && <p className={explore.languageNote} role="note" lang="xh">{inlineText(lang, 'Saved copies (CSV and printable) are in English. Your notes keep their original language.')}</p>}
-        {lang !== 'en' && lang !== 'zu' && lang !== 'xh' && <p className={explore.languageNote} role="note">{memory('englishControls')}</p>}
+        {isInlineDraftLang(lang) && <p className={explore.languageNote} role="note" lang={lang}>{inlineText(lang, 'Saved copies (CSV and printable) are in English. Your notes keep their original language.')}</p>}
+        {lang !== 'en' && lang !== 'zu' && !isInlineDraftLang(lang) && <p className={explore.languageNote} role="note">{memory('englishControls')}</p>}
         <label className={explore.search}>
           <Search size={18} aria-hidden="true" />
           <span className="sr-only">{memory('searchLabel')}</span>

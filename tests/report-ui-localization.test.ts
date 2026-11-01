@@ -267,3 +267,28 @@ test('isiXhosa readers get the standard chapter headings in the contents lists a
   assert.match(guide, /chapterDraft\(chapter\.title\) \?\? chapter\.title/, 'the chapter finder drafts a standard heading and falls back to the saved one');
   assert.match(read('components/report/ReportPurposeGuide.tsx'), /inlineText\(uiLanguage, 'Which report do I need\?'\)/);
 });
+
+test('Afrikaans readers get the standard chapter headings in the contents lists and the purpose-guide heading, with the saved report text untouched', async () => {
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index.ts');
+  const { inlineDraft, registerInlineDrafts } = await import('../lib/xh-inline.ts');
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  try {
+    for (const heading of ['report basis', 'Crop plan', 'Water, soil and the mapped site', 'Bill of quantities', 'Next actions and checks', 'Evidence and limitations', 'Which report do I need?']) {
+      const draft = inlineDraft('af', heading);
+      assert.ok(draft && draft !== heading, `${heading}: no Afrikaans draft`);
+    }
+    assert.equal(inlineDraft('af', 'Which report do I need?'), 'Watter verslag het ek nodig?');
+    // The draft is bound to the exact English, and isiXhosa does not read it.
+    assert.equal(inlineDraft('xh', 'Which report do I need?'), null);
+  } finally { registerInlineDrafts('af', {}); }
+  // Both lists pick the draft for any inline-draft language, not for isiXhosa alone, and the saved text stays the tooltip.
+  const view = read('components/ReportView.tsx');
+  assert.match(view, /const xhDraft = \(en: string\) => isInlineDraftLang\(uiLanguage\) \? inlineDraft\(uiLanguage, en\) : null;/);
+  assert.match(view, /title=\{xhDraft\(title\) \? title : undefined\}/, 'the saved heading is the tooltip when a draft replaces it');
+  const guide = read('components/report/ReportReadingGuide.tsx');
+  assert.match(guide, /const chapterDraft = \(title: string\) => \(isInlineDraftLang\(uiLanguage\) \? inlineDraft\(uiLanguage, title\) : null\);/);
+  assert.match(guide, /title=\{chapterDraft\(chapter\.title\) \? chapter\.title : undefined\}/);
+  const purpose = read('components/report/ReportPurposeGuide.tsx');
+  assert.match(purpose, /<strong lang=\{isInlineDraftLang\(uiLanguage\) \? uiLanguage : undefined\}>\{inlineText\(uiLanguage, 'Which report do I need\?'\)\}<\/strong>/);
+  assert.match(purpose, /<p lang=\{isInlineDraftLang\(language\) \? language : undefined\}>\{inlineText\(language, 'This guide is currently in English\.'\)\}<\/p>/);
+});

@@ -8,15 +8,16 @@ import ts from 'typescript';
 import { farmMemoryText } from '../lib/farm-memory-copy.ts';
 import { taskJournalHref, taskHarvestHref } from '../lib/task-record-link.ts';
 import type { BoardTask } from '../lib/task-board.ts';
-import { inlineText, inlineTemplate, isInlineDraftLang, registerXhInline } from '../lib/xh-inline.ts';
+import { inlineDraft, inlineText, inlineTemplate, isInlineDraftLang, registerInlineDrafts, registerXhInline } from '../lib/xh-inline.ts';
 import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index.ts';
+import { AF_INLINE_SOURCE } from '../lib/locales/af-inline/index.ts';
 
 const require = createRequire(import.meta.url);
 const source = readFileSync(new URL('../app/cropplan/page.tsx', import.meta.url), 'utf8');
 const tree = ts.createSourceFile('page.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 const taskList = tree.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'TaskList');
 assert.ok(taskList, 'exercise the real planner controls rather than copies of their labels');
-const helperNames = new Set(['ACTION_DRAFT_VERB', 'ACTION_SOURCE_VERB', 'taskTitleDraft', 'taskSubtitleDraft', 'ACTION_XH_VERB', 'taskTitleXh', 'taskSubtitleXh']);
+const helperNames = new Set(['ACTION_DRAFT_VERB', 'ACTION_SOURCE_VERB', 'taskTitleDraft', 'taskSubtitleDraft', 'ACTION_XH_VERB', 'ACTION_AF_VERB', 'taskTitleXh', 'taskSubtitleXh']);
 const helpers = tree.statements.filter(node =>
   (ts.isFunctionDeclaration(node) && helperNames.has(node.name?.text ?? '')) ||
   (ts.isVariableStatement(node) && node.declarationList.declarations.some(declaration => helperNames.has(declaration.name.getText(tree)))),
@@ -94,7 +95,8 @@ test('isiXhosa task links read the Farm memory drafts, the task lines carry isiX
 test('the planner month heading is not paired with an identical English month, and the page shows the isiXhosa note once', () => {
   assert.match(source, /draft === english \? english : `\$\{draft\} \/ \$\{english\}`/, 'a draft equal to the English month is shown once');
   assert.equal((source.match(/Unreviewed isiXhosa drafts with English sources; some farming instructions remain in English for review\./g) ?? []).length, 2, 'one page-level note: its draft key and its English source line');
-  assert.match(source, /draftLabel=\{lang !== 'xh'\}/, 'the per-row isiXhosa label is switched off');
+  assert.match(source, /draftLabel=\{!isInlineDraftLang\(lang\)\}/, 'the per-row isiXhosa and Afrikaans label is switched off');
+  assert.equal((source.match(/Unreviewed Afrikaans drafts with English sources; some farming instructions remain in English for review\./g) ?? []).length, 2, 'Afrikaans has the same single page-level note: its draft key and its English source line');
 });
 
 test('IsiZuluDraftSource drops only the isiXhosa draft label on request and always keeps the English source line', async () => {
@@ -105,7 +107,7 @@ test('IsiZuluDraftSource drops only the isiXhosa draft label on request and alwa
   const mod = { exports: {} as any };
   new Function('require', 'module', 'exports', draftSource)((name: string) => {
     if (name === '@/lib/records-regional-drafts') return { isRecordsRegionalLang: () => false, recordsDraft: () => null, recordsTemplate: (_l: string, e: string) => e };
-    if (name === '@/lib/xh-inline') return { fillInline: (t: string) => t, inlineText, xhInlineDraft: (e: string) => (e === 'Due this month' ? 'Kumele kwenziwe kule nyanga' : null) };
+    if (name === '@/lib/xh-inline') return { fillInline: (t: string) => t, inlineText, isInlineDraftLang, inlineDraft: (l: string, e: string) => (l === 'xh' && e === 'Due this month' ? 'Kumele kwenziwe kule nyanga' : l === 'af' && e === 'Due this month' ? 'Hierdie maand te doen' : null) };
     return require(name);
   }, mod, mod.exports);
   const Source = mod.exports.default as React.ComponentType<any>;
@@ -122,5 +124,44 @@ test('IsiZuluDraftSource drops only the isiXhosa draft label on request and alwa
     assert.match(quiet, /Kumele kwenziwe kule nyanga/);
     assert.match(quiet, /English source: /);
     assert.match(quiet, /Due this month/);
+    // Afrikaans follows the same rule: the label shows by default and is dropped on request, the English source stays.
+    assert.match(text({ lang: 'af' }), /Unreviewed Afrikaans draft\.|Ongetoetste Afrikaanse konsep\./, 'the Afrikaans label shows by default');
+    const afQuiet = text({ lang: 'af', draftLabel: false });
+    assert.doesNotMatch(afQuiet, /Unreviewed Afrikaans draft|Ongetoetste Afrikaanse konsep/);
+    assert.match(afQuiet, /Hierdie maand te doen/);
+    assert.match(afQuiet, /English source: /);
+    assert.match(afQuiet, /Due this month/);
   } finally { registerXhInline({}); }
+});
+
+test('Afrikaans task links read the Farm memory drafts, the task lines carry Afrikaans verbs and crop names, and no line repeats the draft label', async () => {
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  const seen: Array<Record<string, unknown>> = [];
+  const Capture = (props: Record<string, unknown>) => { seen.push(props); return React.createElement('span', null, String(props.english)); };
+  const List = buildTaskList(Capture as unknown as React.ComponentType<any>);
+  const generated: BoardTask[] = [
+    { ...task, id: 'crop:harvest-onions', title: 'Harvest Onions', subtitle: 'Bed 1 · Due this month', action: 'harvest' },
+    { ...task, id: 'crop:prep-butternut', title: 'Prep bed for Butternut', subtitle: 'Bed 2 · Due next month', action: 'prep' },
+    { ...task, id: 'crop:transplant-tomatoes', title: 'Transplant Tomatoes', subtitle: 'Bed 3 · Due in 3 months', action: 'transplant' },
+  ];
+  let renderer!: ReactTestRenderer;
+  try {
+    await act(async () => { renderer = create(React.createElement(List, { tasks: generated, lang: 'af', onToggle: () => {}, emptyMessage: '', doneLabel: 'Done', notDoneLabel: 'Not done' })); });
+    const links = renderer.root.findAllByType('a');
+    assert.equal(links[0].children.at(-1), farmMemoryText('af', 'writeFieldNote'));
+    assert.equal(links[0].children.at(-1), "Skryf 'n veldnota");
+    assert.equal(links[1].children.at(-1), 'Teken aan wat jy gepluk het');
+    assert.equal(renderer.root.findAllByProps({ lang: 'af' }).length > 0, true, 'the link group is marked as Afrikaans');
+    const byEnglish = new Map(seen.map(props => [props.english, props]));
+    assert.equal(byEnglish.get('Harvest Onions')!.xhosa, 'Oes Uie');
+    assert.equal(byEnglish.get('Prep bed for Butternut')!.xhosa, 'Berei bedding voor vir Butternut', 'a crop with no recorded draft keeps its name as recorded');
+    assert.equal(byEnglish.get('Transplant Tomatoes')!.xhosa, 'Verplant Tamaties');
+    assert.equal(byEnglish.get('Bed 1 · Due this month')!.xhosa, 'Bed 1 · Hierdie maand te doen');
+    assert.equal(byEnglish.get('Bed 3 · Due in 3 months')!.xhosa, 'Bed 3 · Oor 3 maande te doen');
+    // The page-level note says "unreviewed drafts with English sources" once; the per-line label is not repeated.
+    assert.ok(seen.length >= 6);
+    for (const props of seen) assert.equal(props.draftLabel, false, 'no per-row draft label for Afrikaans');
+  } finally { registerInlineDrafts('af', {}); await act(async () => renderer?.unmount()); }
+  // Until the Afrikaans chunk loads the lookups are English.
+  assert.equal(inlineDraft('af', 'Harvest'), null);
 });

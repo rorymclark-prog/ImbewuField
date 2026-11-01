@@ -1,5 +1,5 @@
 import { numberLabel } from '@/lib/format-figures';
-import { inlineTemplate, inlineText } from './xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from './xh-inline';
 import { portfolioTotals, type NetworkFarmerSummary } from './network';
 import type { productionAreaSummary } from './production-sites';
 import type { ProgrammeMilestone } from './programme-evidence';
@@ -87,7 +87,7 @@ export function progressRecordSections(records: ProgrammeRecords) {
   return PROGRESS_AREAS.map(a => ({ title:`${a.title} · latest organisation records`, lines:records.metrics.filter(m=>m.category===a.id).map(m=>`${m.label}: ${progressValue(m.value,m.unit)}. ${m.note}`) })).filter(s=>s.lines.length);
 }
 
-// isiXhosa for the on-screen metric cards. The English labels and notes above are also the wording of the saved
+// isiXhosa and Afrikaans for the on-screen metric cards. The English labels and notes above are also the wording of the saved
 // programme reports (lib/mel-report.ts), so they stay English; the screen translates them where it paints them.
 // A note that carries a figure is matched back to its template, so the draft is bound to the sentence.
 const COVERAGE_NOTE = /^(\d+) of (\d+) visible farmer records include (production|sales|expenses)$/;
@@ -101,11 +101,11 @@ const VISIBLE_NOTE = /^(\d+) visible farmer records; coverage is not total proje
 const WITHHELD_NOTE = /^(\d+) enrolled farmers are withheld from the portfolio for consent\.$/;
 
 export function programmeMetricLabel(lang: string, label: string): string {
-  return lang === 'xh' ? inlineText(lang, label) : label;
+  return isInlineDraftLang(lang) ? inlineText(lang, label) : label;
 }
 
 export function programmeMetricNote(lang: string, note: string): string {
-  if (lang !== 'xh') return note;
+  if (!isInlineDraftLang(lang)) return note;
   const coverage = COVERAGE_NOTE.exec(note);
   if (coverage) return inlineTemplate(lang, COVERAGE_TEMPLATES[coverage[3] as keyof typeof COVERAGE_TEMPLATES], null, { n: coverage[1], m: coverage[2] });
   const area = AREA_NOTE.exec(note);
@@ -119,5 +119,5 @@ export function programmeMetricNote(lang: string, note: string): string {
 
 /** The metric's figure, with "Not reported" in the reader's language where the figure is missing. */
 export function programmeMetricValue(lang: string, value: number | null, unit = ''): string {
-  return value === null && lang === 'xh' ? inlineText(lang, 'Not reported') : progressValue(value, unit);
+  return value === null && isInlineDraftLang(lang) ? inlineText(lang, 'Not reported') : progressValue(value, unit);
 }

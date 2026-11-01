@@ -131,9 +131,23 @@ const ACTION_XH_VERB: Partial<Record<NonNullable<BoardTask['action']>, string>> 
   'weed-mid': 'Sula ukhula uze ukhangele:',
 };
 
+// Afrikaans for the same task titles: the same verbs as the dictionary's taskVerb* lines (lib/locales/af.ts), as a
+// prefix so the crop name can go through the inline drafts ('Harvest Onions' reads 'Oes Uie').
+const ACTION_AF_VERB: Partial<Record<NonNullable<BoardTask['action']>, string>> = {
+  prep: 'Berei bedding voor vir',
+  sow: 'Saai',
+  transplant: 'Verplant',
+  mulch: 'Gee water en deklaag:',
+  harvest: 'Oes',
+  'terminate-cover': 'Sny of rol plat:',
+  'weed-early': 'Skoffel rondom',
+  'weed-mid': 'Skoffel en kyk na',
+};
+
+// The task title in the isiXhosa or Afrikaans draft (the name predates Afrikaans), or undefined to show the isiZulu / English path.
 function taskTitleXh(task: BoardTask, lang: string): string | undefined {
-  if (lang !== 'xh' || task.kind !== 'crop' || !task.action) return undefined;
-  const verb = ACTION_XH_VERB[task.action];
+  if ((lang !== 'xh' && lang !== 'af') || task.kind !== 'crop' || !task.action) return undefined;
+  const verb = (lang === 'af' ? ACTION_AF_VERB : ACTION_XH_VERB)[task.action];
   const sourceVerb = ACTION_SOURCE_VERB[task.action];
   if (!verb || !sourceVerb || !task.title.startsWith(sourceVerb)) return undefined;
   const cropName = task.title.slice(sourceVerb.length).trim();
@@ -167,9 +181,9 @@ function CropPlanDraftSource({ lang, english, zulu, heldForReview = false, class
       </div>
     );
   }
-  // isiXhosa: the page-level note above the list already says these are unreviewed drafts with English sources,
-  // so the per-line "Unreviewed isiXhosa draft." label is not repeated under every line.
-  return <IsiZuluDraftSource lang={lang} english={english} zulu={zulu} className={className} style={style} draftLabel={lang !== 'xh'} />;
+  // isiXhosa and Afrikaans: the page-level note above the list already says these are unreviewed drafts with English
+  // sources, so the per-line "Unreviewed … draft." label is not repeated under every line.
+  return <IsiZuluDraftSource lang={lang} english={english} zulu={zulu} className={className} style={style} draftLabel={!isInlineDraftLang(lang)} />;
 }
 
 // ─── Month helpers ───────────────────────────────────────────────────────────
@@ -250,7 +264,7 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
                   english={task.title}
                   zulu={taskTitleDraft(task) ?? task.title}
                   xhosa={taskTitleXh(task, lang)}
-                  draftLabel={lang !== 'xh'}
+                  draftLabel={!isInlineDraftLang(lang)}
                 />
               </div>
               <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>
@@ -259,11 +273,11 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
                   english={task.subtitle}
                   zulu={taskSubtitleDraft(task) ?? task.subtitle}
                   xhosa={taskSubtitleXh(task, lang)}
-                  draftLabel={lang !== 'xh'}
+                  draftLabel={!isInlineDraftLang(lang)}
                 />
               </div>
               {(journalHref || harvestHref) && (
-                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1" lang={lang === 'zu' || lang === 'xh' ? lang : 'en'}>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1" lang={lang === 'zu' || isInlineDraftLang(lang) ? lang : 'en'}>
                   {journalHref && <Link href={journalHref} className="inline-flex items-center gap-1 min-h-11 font-sans text-sm underline underline-offset-4" style={{ color: 'var(--color-forest-800)' }} aria-label={farmMemoryText(lang, 'writeFieldNoteAria', { title: task.title })}>
                     <ClipboardList size={15} aria-hidden /> {farmMemoryText(lang, 'writeFieldNote')}
                   </Link>}

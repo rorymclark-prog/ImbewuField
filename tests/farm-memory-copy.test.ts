@@ -6,7 +6,8 @@ import { FARM_MEMORY_EN, FARM_MEMORY_ZU, farmMemoryCategoryLabel, farmMemoryText
 import { formatAfrikaansJournalDate, formatAfrikaansMonth, formatXhosaJournalDate, formatXhosaMonth, formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from '@/components/journal/journal-labels';
 import { filterJournalEntries, journalBedFilterValue, journalDateRangeError, journalFilterOptions } from '@/lib/journal-view';
 import { XH_INLINE_SOURCE } from '@/lib/locales/xh-inline/index';
-import { registerXhInline } from '@/lib/xh-inline';
+import { AF_INLINE_SOURCE } from '@/lib/locales/af-inline/index';
+import { registerInlineDrafts, registerXhInline } from '@/lib/xh-inline';
 import { buildJournalCsv, buildJournalHtml } from '@/lib/journal-export';
 
 const placeholders = (value: string) => [...value.matchAll(/\{(\w+)\}/g)].map(match => match[1]).sort();
@@ -124,4 +125,37 @@ test('isiXhosa reads a draft for every Farm memory screen control, keeps its dat
     assert.equal(buildJournalCsv([entry], { lang: 'xh' }), buildJournalCsv([entry], { lang: 'en' }));
     assert.equal(buildJournalHtml([entry], { lang: 'xh', generatedAt: '2026-10-29T00:00:00Z' }), buildJournalHtml([entry], { lang: 'en', generatedAt: '2026-10-29T00:00:00Z' }));
   } finally { registerXhInline({}); }
+});
+
+test('Afrikaans reads a draft for every Farm memory screen control, keeps its data slots, and the saved copies stay English', () => {
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  try {
+    const screenKeys = (Object.keys(FARM_MEMORY_EN) as FarmMemoryKey[]).filter(key => !EXPORT_DOCUMENT_KEYS.includes(key));
+    for (const key of screenKeys) {
+      const draft = farmMemoryText('af', key);
+      // 'Filters' is the same word in both languages; every other screen control reads differently.
+      if (key !== 'filters') assert.notEqual(draft, FARM_MEMORY_EN[key], `${key}: no Afrikaans draft`);
+      assert.deepEqual(placeholders(draft), placeholders(FARM_MEMORY_EN[key]), `${key}: data slots drifted`);
+    }
+    assert.equal(farmMemoryText('af', 'title'), 'Plaasgeheue');
+    assert.equal(farmMemoryText('af', 'yourNotes'), 'JOU VELDNOTAS');
+    assert.equal(farmMemoryText('af', 'keepCopyMany', { n: 4 }), "Hou 'n kopie van hierdie 4 inskrywings");
+    assert.equal(farmMemoryText('af', 'writeFieldNote'), "Skryf 'n veldnota");
+    assert.equal(farmMemoryText('af', 'logPicked'), 'Teken aan wat jy gepluk het');
+    // A farmer's own wording passes through untouched.
+    assert.equal(farmMemoryText('af', 'bedHistory', { value: 'Bed {n} $&' }), 'Wys joernaalgeskiedenis vir bedding: Bed {n} $&');
+    // isiZulu, isiXhosa, English and the languages with no draft are unchanged.
+    registerXhInline(XH_INLINE_SOURCE);
+    assert.equal(farmMemoryText('xh', 'title'), 'Inkumbulo yefama');
+    registerXhInline({});
+    assert.equal(farmMemoryText('zu', 'title'), FARM_MEMORY_ZU.title);
+    assert.equal(farmMemoryText('en', 'title'), FARM_MEMORY_EN.title);
+    assert.equal(farmMemoryText('st', 'title'), FARM_MEMORY_EN.title);
+    // The saved copies are English whatever the screen language, byte for byte.
+    const entry: JournalEntry = { id: 'a', date: '2026-10-29', title: 'Note', notes: 'Body', category: 'harvest', bedId: null, bedLabel: null, cropName: null, photos: [] } as unknown as JournalEntry;
+    assert.equal(buildJournalCsv([entry], { lang: 'af' }), buildJournalCsv([entry], { lang: 'en' }));
+    assert.equal(buildJournalHtml([entry], { lang: 'af', generatedAt: '2026-10-29T00:00:00Z' }), buildJournalHtml([entry], { lang: 'en', generatedAt: '2026-10-29T00:00:00Z' }));
+  } finally { registerInlineDrafts('af', {}); }
+  // Until the Afrikaans chunk loads every control is the English.
+  assert.equal(farmMemoryText('af', 'title'), FARM_MEMORY_EN.title);
 });
