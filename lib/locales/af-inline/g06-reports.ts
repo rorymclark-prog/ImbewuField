@@ -223,7 +223,6 @@ const drafts: Record<string, string> = {
   "Bed allocations, varieties, seed buying and monthly jobs are in the separate crop-plan report. This calendar shows planned starts, not confirmation of planting.": "Beddingtoewysings, kultivars, saadaankope en maandelikse take is in die aparte gewasplanverslag. Hierdie kalender wys beplande begindatums, nie bevestiging van aanplanting nie.",
   "Open current crop planner": "Maak huidige gewasbeplanner oop",
   "Improve this report": "Verbeter hierdie verslag",
-  "The isiXhosa text here is an unreviewed draft. Record statuses, evidence details and the notes below stay in English so their meaning remains accurate.": "Die isiXhosa-teks hier is 'n onhersiene konsep. Rekordstatusse, bewysbesonderhede en die notas hieronder bly in Engels sodat hul betekenis akkuraat bly.",
   "Name and save this site to attach its evidence": "Gee hierdie terrein 'n naam en stoor dit om sy bewyse aan te heg",
   "Your garden or site name": "Jou tuin- of terreinnaam",
   "Save site": "Stoor terrein",

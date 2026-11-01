@@ -10,6 +10,9 @@ import type { CompletionScoreInputs } from '../lib/completion-score.ts';
 import type { EvidenceItem } from '../lib/site-evidence.ts';
 import { DEMO_LOCATION } from '../lib/demo-site.ts';
 import { recordsDate } from '../lib/records-months.ts';
+import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index.ts';
+import { AF_INLINE_SOURCE } from '../lib/locales/af-inline/index.ts';
+import { inlineDraft, registerInlineDrafts, registerXhInline, xhInlineDraft } from '../lib/xh-inline.ts';
 
 const languages = ['zu', 'st', 'ts', 've'] as const;
 const read = (file: string) => readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
@@ -84,6 +87,102 @@ test('translated preparation preserves prior English behavior, evidence presence
   }
 });
 
+test('isiXhosa: every preparation wording has a draft, keeps figures and recorded labels, and is English until the drafts load', () => {
+  try {
+    // Before the xh chunk registers its drafts (server, first paint) the checklist is the English, byte for byte.
+    registerXhInline({});
+    for (const row of fixture.cases) {
+      const english = reportPreparation(row.inputs, row.evidence, row.records);
+      // Only the saved-map date already followed the language's month names before this (recordsDate), so compare around it.
+      const latest = row.records.maps?.latestAt;
+      const unloaded = reportPreparation(row.inputs, row.evidence, row.records, 'xh').map(item => latest && Number.isFinite(Date.parse(latest))
+        ? { ...item, detail: item.detail.replace(recordsDate('xh', new Date(latest), true), recordsDate('en', new Date(latest), true)) } : item);
+      assert.deepEqual(unloaded, english, `${row.name}: xh must stay English before its drafts load`);
+    }
+    assert.equal(reportPreparationText('Save site', 'xh'), 'Save site');
+    registerXhInline(XH_INLINE_SOURCE);
+    for (const row of REPORT_PREPARATION_COPY) {
+      const draft = xhInlineDraft(row.english);
+      assert.ok(draft, `xh: no isiXhosa draft for ${JSON.stringify(row.english)}`);
+      assert.notEqual(draft, row.english, `xh: English fallback for ${row.english}`);
+      assert.deepEqual(tokens(draft), tokens(row.english), `xh: placeholder changed in ${row.english}`);
+      assert.deepEqual(digits(draft), digits(row.english), `xh: figure changed in ${row.english}`);
+      if (row.english.includes('m²')) assert.ok(draft.includes('m²'));
+      if (row.english.includes('{perimeter} m')) assert.ok(draft.includes('{perimeter} m'));
+      if (row.english.includes('{length} m')) assert.ok(draft.includes('{length} m'));
+    }
+    for (const row of fixture.cases) {
+      const before = JSON.stringify(row);
+      const english = reportPreparation(row.inputs, row.evidence, row.records);
+      const native = reportPreparation(row.inputs, row.evidence, row.records, 'xh');
+      assert.deepEqual(native.map(item => [item.id, item.hasRecord]), english.map(item => [item.id, item.hasRecord]), `xh/${row.name}: translation changed readiness`);
+      for (const [at, item] of native.entries()) {
+        for (const field of ['title', 'status', 'detail', 'action'] as const) {
+          assert.notEqual(item[field], english[at][field], `xh/${row.name}/${item.id}/${field}: English fallback`);
+          assert.deepEqual(digits(item[field]), digits(english[at][field]), `xh/${row.name}/${item.id}/${field}: lost a source figure`);
+          assert.doesNotMatch(item[field], /\{\w+\}/, 'all presentation placeholders should be replaced');
+        }
+      }
+      if (row.records.facts?.boundary) assert.ok(native.find(item => item.id === 'boundary')!.detail.includes(row.records.facts.boundary.source), 'recorded source labels stay verbatim');
+      const latest = row.records.maps?.latestAt;
+      if (latest && Number.isFinite(Date.parse(latest))) assert.ok(native.find(item => item.id === 'design')!.detail.includes(recordsDate('xh', new Date(latest), true)));
+      assert.equal(JSON.stringify(row), before, `xh/${row.name}: translating mutated saved input`);
+    }
+    assert.equal(reportPreparationText('{count} of 7 areas have records · see what to add or review', 'xh', { count: 'Original {total} label' }), '{count} kwiindawo ezi-7 zinerekhodi · jonga into onokuyongeza okanye ophonononga'.replace('{count}', 'Original {total} label'), 'xh: replacement values are never interpreted as templates');
+    assert.equal(reportPreparationText('{filled} of {total} key checks recorded', 'xh', { filled: 3, total: 9 }), 'Ukuhlolwa okuphambili okungu-3 kwezingu-9 kurekhodiwe');
+  } finally {
+    registerXhInline(XH_INLINE_SOURCE);
+  }
+});
+
+test('Afrikaans: every preparation wording has a draft, keeps figures and recorded labels, and is English until the drafts load', () => {
+  try {
+    // Before the af chunk registers its drafts (server, first paint) the checklist is the English, byte for byte.
+    registerInlineDrafts('af', {});
+    for (const row of fixture.cases) {
+      const english = reportPreparation(row.inputs, row.evidence, row.records);
+      // Only the saved-map date already followed the language's month names before this (recordsDate), so compare around it.
+      const latest = row.records.maps?.latestAt;
+      const unloaded = reportPreparation(row.inputs, row.evidence, row.records, 'af').map(item => latest && Number.isFinite(Date.parse(latest))
+        ? { ...item, detail: item.detail.replace(recordsDate('af', new Date(latest), true), recordsDate('en', new Date(latest), true)) } : item);
+      assert.deepEqual(unloaded, english, `${row.name}: af must stay English before its drafts load`);
+    }
+    assert.equal(reportPreparationText('Save site', 'af'), 'Save site');
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+    for (const row of REPORT_PREPARATION_COPY) {
+      const draft = inlineDraft('af', row.english);
+      assert.ok(draft, `af: no Afrikaans draft for ${JSON.stringify(row.english)}`);
+      assert.notEqual(draft, row.english, `af: English fallback for ${row.english}`);
+      assert.deepEqual(tokens(draft), tokens(row.english), `af: placeholder changed in ${row.english}`);
+      assert.deepEqual(digits(draft), digits(row.english), `af: figure changed in ${row.english}`);
+      if (row.english.includes('m²')) assert.ok(draft.includes('m²'));
+      if (row.english.includes('{perimeter} m')) assert.ok(draft.includes('{perimeter} m'));
+      if (row.english.includes('{length} m')) assert.ok(draft.includes('{length} m'));
+    }
+    for (const row of fixture.cases) {
+      const before = JSON.stringify(row);
+      const english = reportPreparation(row.inputs, row.evidence, row.records);
+      const native = reportPreparation(row.inputs, row.evidence, row.records, 'af');
+      assert.deepEqual(native.map(item => [item.id, item.hasRecord]), english.map(item => [item.id, item.hasRecord]), `af/${row.name}: translation changed readiness`);
+      for (const [at, item] of native.entries()) {
+        for (const field of ['title', 'status', 'detail', 'action'] as const) {
+          assert.notEqual(item[field], english[at][field], `af/${row.name}/${item.id}/${field}: English fallback`);
+          assert.deepEqual(digits(item[field]), digits(english[at][field]), `af/${row.name}/${item.id}/${field}: lost a source figure`);
+          assert.doesNotMatch(item[field], /\{\w+\}/, 'all presentation placeholders should be replaced');
+        }
+      }
+      if (row.records.facts?.boundary) assert.ok(native.find(item => item.id === 'boundary')!.detail.includes(row.records.facts.boundary.source), 'recorded source labels stay verbatim');
+      const latest = row.records.maps?.latestAt;
+      if (latest && Number.isFinite(Date.parse(latest))) assert.ok(native.find(item => item.id === 'design')!.detail.includes(recordsDate('af', new Date(latest), true)));
+      assert.equal(JSON.stringify(row), before, `af/${row.name}: translating mutated saved input`);
+    }
+    assert.equal(reportPreparationText('{count} of 7 areas have records · see what to add or review', 'af', { count: 'Original {total} label' }), '{count} van 7 areas het rekords · kyk wat om by te voeg of te hersien'.replace('{count}', 'Original {total} label'), 'af: replacement values are never interpreted as templates');
+    assert.equal(reportPreparationText('{filled} of {total} key checks recorded', 'af', { filled: 3, total: 9 }), '3 van 9 sleutelkontroles aangeteken');
+  } finally {
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+  }
+});
+
 test('the real preparation panel follows app language, keeps typed names and repaints a storage failure without remounting', async () => {
   class MemoryStorage {
     rows = new Map<string, string>();
@@ -127,7 +226,9 @@ test('the real preparation panel follows app language, keeps typed names and rep
     storage.throwOnWrite = true;
     await act(async () => view.root.findByType('form').props.onSubmit({ preventDefault() {} }));
     storage.throwOnWrite = false;
-    for (const lang of languages) {
+    registerXhInline(XH_INLINE_SOURCE);
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+    for (const lang of [...languages, 'xh', 'af'] as const) {
       await act(async () => view.update(element(lang)));
       const copy = (source: string) => reportPreparationText(source, lang);
       const text = textOf(view.toJSON());
@@ -139,6 +240,9 @@ test('the real preparation panel follows app language, keeps typed names and rep
       assert.equal(textOf(view.root.findByProps({ role: 'alert' })), copy('The site could not be saved. Keep this page open and try again.'));
       for (const source of ['Generate with the information you have, or add more evidence first. Records present do not mean the information has been checked or the design is finished.', 'This checklist describes your current site. The saved report remains an earlier snapshot; generate a new report to use updated evidence.', 'Climate and regional soil layers provide context. They do not replace your site observations or laboratory measurements.']) assert.ok(text.includes(copy(source)), `${lang}: missing source limitation`);
       assert.ok(!text.includes('Test results not recorded'));
+      if (lang === 'xh') assert.equal(textOf(view.root.findByProps({ role: 'note' })), 'Umbhalo wesiXhosa apha uyilo olungekahlolwa. Amagama, izaziso neelebhile zemithombo ozirekhodileyo okanye ozibhalileyo ziboniswa kanye ngendlela ozibhale ngayo.', 'xh: the note says only typed content stays as written');
+      else if (lang === 'af') assert.equal(textOf(view.root.findByProps({ role: 'note' })), "Die Afrikaanse teks hier is 'n onhersiene konsep. Name, notas en bronetikette wat jy aangeteken of getik het, word presies soos jy dit geskryf het gewys.", 'af: the note says only typed content stays as written');
+      else assert.equal(view.root.findAllByProps({ role: 'note' }).length, 0);
       assert.deepEqual(saved, [], 'failed saves must not report success');
     }
     await act(async () => view.root.findByType('form').props.onSubmit({ preventDefault() {} }));
