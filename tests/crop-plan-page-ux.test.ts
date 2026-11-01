@@ -786,3 +786,13 @@ test('Afrikaans readers get Afrikaans months on the crop-plan grid, in sentences
   const cropplan = source('../app/cropplan/page.tsx');
   assert.match(cropplan, /lang === 'af'\s*\? MONTHS_SHORT\.map\(\(_, month\) => recordsBookMonthShort\(lang, month \+ 1\)\)/);
 });
+
+test('the production-plan header wraps on a phone instead of clipping the title or pushing the bed count off the right edge', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  const header = page.match(/<header className="([^"]*)" style=\{\{ minHeight: 56,/);
+  assert.ok(header, 'the page header keeps a 56px minimum, not a fixed height that forces one clipped row');
+  assert.match(header[1], /\bflex-wrap\b/, 'a narrow header wraps');
+  assert.match(header[1], /\bmd:flex-nowrap\b/, 'a wide header is still one row');
+  assert.match(header[1], /\bmd:h-14\b/, 'a wide header is still 56px tall');
+  assert.doesNotMatch(header[1], /(^|\s)overflow-x-auto/, 'no horizontal scroll on a phone');
+});

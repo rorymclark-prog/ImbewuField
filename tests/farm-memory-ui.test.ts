@@ -5,6 +5,8 @@ import { readFileSync } from 'node:fs';
 import { mountJournal, renderedText, renderedButton, journalFixture } from './journal-workflow-renderer.ts';
 import { FARM_MEMORY_EN, FARM_MEMORY_ZU, farmMemoryText } from '../lib/farm-memory-copy.ts';
 import type { JournalEntry } from '../lib/field-journal.ts';
+import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index.ts';
+import { registerXhInline } from '../lib/xh-inline.ts';
 
 const rows: JournalEntry[] = [
   { ...journalFixture('old-river', 'My original English note', '2025-01-02', 'Lettuce'), bedId: 'river', bedLabel: 'River bed', notes: 'The original words must remain.' },
@@ -158,4 +160,29 @@ test('printable photos are included by default and can be omitted without changi
     assert.deepEqual(app.exports[2].entries.map(row => row.id), ['renamed-river']);
     assert.equal(app.writes.length, 0);
   } finally { await app.close(); }
+});
+
+test('isiXhosa Farm memory controls, result bar and copy notice render in isiXhosa, and the saved copies stay English', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const app = await mountJournal({ entries: rows, lang: 'xh' });
+  try {
+    const controls = app.renderer.root.findByProps({ 'aria-label': farmMemoryText('xh', 'findEntries') });
+    assert.equal(controls.props.lang, 'xh');
+    assert.equal(renderedText(controls.findByType('h2')), 'Inkumbulo yefama');
+    assert.equal(app.renderer.root.findByProps({ type: 'search' }).props.placeholder, farmMemoryText('xh', 'searchPlaceholder'));
+    assert.match(renderedText(controls), new RegExp(farmMemoryText('xh', 'help')));
+    assert.match(renderedText(controls), new RegExp(farmMemoryText('xh', 'keepCopyMany', { n: 3 })));
+    assert.match(renderedText(app.renderer.root), /AMANQAKU AKHO ASENTSIMINI/);
+    // The old notice claimed search, filters and export controls were English; only the saved copies are.
+    const notice = controls.findAllByProps({ role: 'note' }).map(node => renderedText(node)).join(' ');
+    assert.match(notice, /Iikopi ezigciniweyo/);
+    assert.doesNotMatch(notice, /currently in English/);
+    const cropTag = app.renderer.root.findAllByType('button').find(node => node.props['aria-label'] === farmMemoryText('xh', 'cropHistory', { value: 'Carrots' }));
+    assert.ok(cropTag, 'the crop history tag is labelled in isiXhosa');
+    await act(async () => cropTag.props.onClick());
+    await act(async () => renderedButton(app.renderer, farmMemoryText('xh', 'printableCopy')).props.onClick());
+    assert.equal(app.exports[0].options.lang, 'en', 'the saved copy is English for isiXhosa');
+    assert.equal(app.exports[0].options.selection, farmMemoryText('en', 'cropScope', { value: 'Carrots' }));
+    assert.equal(app.exports[0].entries[0].notes, 'Amanothi ami.');
+  } finally { registerXhInline({}); await app.close(); }
 });

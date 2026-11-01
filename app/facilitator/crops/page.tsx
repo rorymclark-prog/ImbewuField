@@ -2159,7 +2159,7 @@ function FacilitatorCropsPageInner() {
         </div>
       )}
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto" style={{ height: 56, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+      <header className="flex-shrink-0 flex items-center flex-wrap md:flex-nowrap px-3 md:px-5 gap-x-2 gap-y-1 md:gap-3 py-1.5 md:py-0 md:h-14 md:overflow-x-auto" style={{ minHeight: 56, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <RegisterInFlowBack />
         <MenuButton />
         <Link

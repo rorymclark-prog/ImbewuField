@@ -249,3 +249,21 @@ test('real saved-report controls switch app language while saved text and the ne
     hooks.deregister();
   }
 });
+
+test('isiXhosa readers get the standard chapter headings in the contents lists and the purpose-guide heading, while the saved report text is untouched', async () => {
+  const { XH_INLINE_SOURCE } = await import('../lib/locales/xh-inline/index.ts');
+  const { registerXhInline, xhInlineDraft } = await import('../lib/xh-inline.ts');
+  registerXhInline(XH_INLINE_SOURCE);
+  try {
+    for (const heading of ['report basis', 'Crop plan', 'Water, soil and the mapped site', 'Bill of quantities', 'Next actions and checks', 'Evidence and limitations', 'Which report do I need?']) {
+      const draft = xhInlineDraft(heading);
+      assert.ok(draft && draft !== heading, `${heading}: no isiXhosa draft`);
+    }
+  } finally { registerXhInline({}); }
+  const view = read('components/ReportView.tsx');
+  assert.match(view, /\{xhDraft\(title\) \?\? title\}/, 'the side contents list drafts a standard heading');
+  assert.match(view, /title: stripInlineMarkdown\(line\.slice\(3\)\)/, 'the chapter titles still come from the saved report text');
+  const guide = read('components/report/ReportReadingGuide.tsx');
+  assert.match(guide, /chapterDraft\(chapter\.title\) \?\? chapter\.title/, 'the chapter finder drafts a standard heading and falls back to the saved one');
+  assert.match(read('components/report/ReportPurposeGuide.tsx'), /inlineText\(uiLanguage, 'Which report do I need\?'\)/);
+});

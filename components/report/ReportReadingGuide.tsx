@@ -19,6 +19,9 @@ export default function ReportReadingGuide({ reading, onChange, language, chapte
   const { lang: uiLanguage, t: appT } = useLanguage();
   // isiXhosa: the draft keyed by the exact English (lib/locales/xh-inline), else the dictionary.
   const t = (en: string, zu: string) => (isInlineDraftLang(uiLanguage) ? inlineDraft(uiLanguage, en) : null) ?? reportUiText(en, uiLanguage, appT, zu);
+  // The contents list points into the saved report, whose headings stay as saved; isiXhosa readers get the draft of a
+  // standard heading here, with the saved heading as the tooltip. Any other heading is shown as saved.
+  const chapterDraft = (title: string) => (isInlineDraftLang(uiLanguage) ? inlineDraft(uiLanguage, title) : null);
   const editions = [
     { id: 'one', Icon: LayoutDashboard, title: t('At a glance', 'Ngokubheka nje'), note: t('The essentials, clearly laid out.', 'Okubalulekile, kubekwe ngokucacile.'), detail: t('1-page summary PDF', 'I-PDF yesifinyezo sekhasi elilodwa') },
     { id: 'five', Icon: FileText, title: t('Field guide', 'Umhlahlandlela wasensimini'), note: t('The site, resources and next actions.', 'Indawo, izinsiza nezinyathelo ezilandelayo.'), detail: t('5-page summary PDF', 'I-PDF yesifinyezo samakhasi amahlanu') },
@@ -33,7 +36,7 @@ export default function ReportReadingGuide({ reading, onChange, language, chapte
     {reading !== 'full' && <p className={styles.exportNote}>{preparedExample ? t('These summaries use the same prepared records. Full example includes all available maps and visuals.', 'Lezi zifinyezo zisebenzisa amarekhodi afanayo alungiselelwe. Isibonelo esigcwele sifaka wonke amamephu nemifanekiso etholakalayo.') : t('Visuals help you read on screen. The summary PDF is a concise, ink-saving handout; choose Complete report for the full visual PDF.', 'Imifanekiso isiza ukufunda esikrinini. I-PDF yesifinyezo iyonga uyinki; khetha Umbiko ogcwele ukuze uthole i-PDF enemifanekiso yonke.')}</p>}
     {reading === 'full' && chapters.length > 0 && <details className={styles.contents}>
       <summary><ArrowDown size={17} aria-hidden="true" />{t('Find a chapter', 'Thola isahluko')}<span>{chapters.length}</span></summary>
-      <nav aria-label={t('Report chapters', 'Izahluko zombiko')}>{chapters.map((chapter, i) => <button key={chapter.id} onClick={() => onChapter(chapter.id)}><span>{String(i + 1).padStart(2, '0')}</span>{chapter.title}</button>)}</nav>
+      <nav aria-label={t('Report chapters', 'Izahluko zombiko')}>{chapters.map((chapter, i) => <button key={chapter.id} onClick={() => onChapter(chapter.id)} title={chapterDraft(chapter.title) ? chapter.title : undefined}><span>{String(i + 1).padStart(2, '0')}</span>{chapterDraft(chapter.title) ?? chapter.title}</button>)}</nav>
     </details>}
   </section>;
 }

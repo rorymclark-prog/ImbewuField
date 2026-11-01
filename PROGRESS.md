@@ -164,6 +164,12 @@ and isiZulu output are unchanged.
 - **Mentor field report (1 Nov):** `buildFieldReport` and `fieldVisitReportLines` take a language; the
   field implementation report, the saved-visit report and the focus and programme labels follow isiXhosa
   (`xh-inline/g47-field-report.ts`, 109 drafts). The download keeps its English file name (`filenameTitle`).
+- **Browser check fixes (1 Nov):** a sample-mode browser sweep in isiXhosa found English on the journal
+  header and filters, the crop planner links, the money book lender card, the funder/NGO record cards and
+  assessment titles, the sample-farm captions and the site report contents lists; all now draft
+  (`xh-inline/g48-ui-gaps.ts`, 84 drafts). The crop planner shows its draft notice once, not per row, and
+  no longer pairs a month with an identical English. The facilitator crops header wraps at 390 px.
+  Journal CSV/printable copies stay English (the notice says so).
 - **Blind review of the 1 Nov drafts:** 435 strings, 11 repairs ("Berm" had read as a gun; "drawn" as
   "counted") — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-01/`.
 - **Crops and production:**

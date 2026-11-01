@@ -167,7 +167,9 @@ function CropPlanDraftSource({ lang, english, zulu, heldForReview = false, class
       </div>
     );
   }
-  return <IsiZuluDraftSource lang={lang} english={english} zulu={zulu} className={className} style={style} />;
+  // isiXhosa: the page-level note above the list already says these are unreviewed drafts with English sources,
+  // so the per-line "Unreviewed isiXhosa draft." label is not repeated under every line.
+  return <IsiZuluDraftSource lang={lang} english={english} zulu={zulu} className={className} style={style} draftLabel={lang !== 'xh'} />;
 }
 
 // ─── Month helpers ───────────────────────────────────────────────────────────
@@ -248,6 +250,7 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
                   english={task.title}
                   zulu={taskTitleDraft(task) ?? task.title}
                   xhosa={taskTitleXh(task, lang)}
+                  draftLabel={lang !== 'xh'}
                 />
               </div>
               <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>
@@ -256,10 +259,11 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
                   english={task.subtitle}
                   zulu={taskSubtitleDraft(task) ?? task.subtitle}
                   xhosa={taskSubtitleXh(task, lang)}
+                  draftLabel={lang !== 'xh'}
                 />
               </div>
               {(journalHref || harvestHref) && (
-                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1" lang={lang === 'zu' ? 'zu' : 'en'}>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1" lang={lang === 'zu' || lang === 'xh' ? lang : 'en'}>
                   {journalHref && <Link href={journalHref} className="inline-flex items-center gap-1 min-h-11 font-sans text-sm underline underline-offset-4" style={{ color: 'var(--color-forest-800)' }} aria-label={farmMemoryText(lang, 'writeFieldNoteAria', { title: task.title })}>
                     <ClipboardList size={15} aria-hidden /> {farmMemoryText(lang, 'writeFieldNote')}
                   </Link>}
@@ -292,7 +296,7 @@ export default function CropPlanPage() {
   const monthNames = lang === 'zu'
     ? MONTHS.map((english, month) => `${zuMonths[month]} / ${english}`)
     : isInlineDraftLang(lang)
-      ? MONTHS.map((english) => `${inlineText(lang, english)} / ${english}`)
+      ? MONTHS.map((english) => { const draft = inlineText(lang, english); return draft === english ? english : `${draft} / ${english}`; })
       : MONTHS;
   const monthShortNames = lang === 'zu' || lang === 'xh'
     ? zuMonths

@@ -2,7 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { completeSampleEvidence, freshEvidenceData, trainingTotals, milestoneAt, publishedTraining, validTrainingRecord, validProgrammeMilestone, validProgrammeBranding, validEvidenceImage, trainingForStorage, trainingFromStorage, sharedTrainingPhotos, trainingFeedbackSummary } from '../lib/programme-evidence';
 import { melCan, memberAccessSummary, programmeCapabilities } from '../lib/mel';
-import { programmeRecordMetrics, PROGRESS_TEMPLATES, progressValue, progressRecordSections } from '../lib/programme-progress';
+import { programmeRecordMetrics, PROGRESS_TEMPLATES, progressValue, progressRecordSections, programmeMetricLabel, programmeMetricNote, programmeMetricValue } from '../lib/programme-progress';
+import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index';
+import { registerXhInline } from '../lib/xh-inline';
+import { melAssessmentTitle, MEL_TEMPLATES } from '../lib/mel-templates';
 import { DEMO_NETWORK } from '../lib/network-demo';
 import { productionAreaSummary } from '../lib/production-sites';
 
@@ -106,6 +109,42 @@ test('programme totals distinguish unavailable records from recorded zero and pr
   assert.ok(progressRecordSections(records).some(s=>s.title.includes('livelihoods')));
   assert.ok(!records.metrics.some(m=>/profit|per m|r\/m/i.test(m.label)));
   assert.notEqual(progressValue(0.0001,'ha'),'0 ha');
+});
+test('isiXhosa programme record cards: every label, figure note and basis note reads a draft, figures and dates exact; English and isiZulu unchanged', () => {
+  const farmer=structuredClone(DEMO_NETWORK.farmers[0]);
+  const english=programmeRecordMetrics([farmer],productionAreaSummary([]),2);
+  const sample=programmeRecordMetrics([farmer,structuredClone(DEMO_NETWORK.farmers[1])],{sites:7,vegetableM2:120,stapleM2:80,hectares:0.02,firstObserved:'2026-02-01',lastObserved:'2026-09-30'} as ReturnType<typeof productionAreaSummary>,3);
+  registerXhInline({});
+  for(const m of sample.metrics){ assert.equal(programmeMetricLabel('xh',m.label),m.label,'English until the isiXhosa drafts load'); assert.equal(programmeMetricNote('xh',m.note),m.note); }
+  registerXhInline(XH_INLINE_SOURCE);
+  try {
+    const gaps=['Gardens with area records','Farmers with production or sales records','Farmers active in the last 90 days'];
+    for(const label of gaps) assert.notEqual(programmeMetricLabel('xh',label),label,label);
+    for(const m of [...sample.metrics,...english.metrics]){
+      assert.notEqual(programmeMetricLabel('xh',m.label),m.label,`label ${m.label}`);
+      assert.notEqual(programmeMetricNote('xh',m.note),m.note,`note ${m.note}`);
+      assert.equal(programmeMetricLabel('en',m.label),m.label);
+      assert.equal(programmeMetricLabel('zu',m.label),m.label);
+      assert.equal(programmeMetricNote('zu',m.note),m.note);
+      assert.equal(programmeMetricNote('en',m.note),m.note);
+    }
+    const figures=(text:string)=>(text.match(/\d+/g)??[]).join(',');
+    for(const m of sample.metrics){ const note=programmeMetricNote('xh',m.note); assert.equal(figures(note),figures(m.note),`figures in ${m.note}`); }
+    const coverage=sample.metrics.find(m=>m.id==='harvest')!;
+    assert.match(coverage.note,/^\d+ of \d+ visible farmer records include production$/);
+    assert.match(programmeMetricNote('xh',coverage.note),/ziquka imveliso$/);
+    assert.match(programmeMetricNote('xh',sample.metrics.find(m=>m.id==='gardens')!.note),/2026-02-01.*2026-09-30/);
+    for(const note of sample.notes) assert.notEqual(programmeMetricNote('xh',note),note,note);
+    assert.equal(programmeMetricValue('xh',null),'Akubikwanga');
+    assert.equal(programmeMetricValue('en',null),'Not reported');
+    assert.equal(programmeMetricValue('xh',12,'kg'),progressValue(12,'kg'));
+    // The stock stage names read in isiXhosa; a title someone typed is shown as recorded.
+    assert.equal(melAssessmentTitle('xh','course_before','Before the in-person course'),'Phambi kwekhosi yobuso ngobuso');
+    assert.equal(melAssessmentTitle('xh','course_after',MEL_TEMPLATES.course_after.en),'Emva kwekhosi yobuso ngobuso');
+    assert.equal(melAssessmentTitle('xh','course_before','Spring cohort — before'),'Spring cohort — before');
+    assert.equal(melAssessmentTitle('en','course_before','Before the in-person course'),'Before the in-person course');
+    assert.equal(melAssessmentTitle('zu','course_before','Before the in-person course'),'Before the in-person course');
+  } finally { registerXhInline({}); }
 });
 test('indicator suggestions cover the whole programme and do not pre-fill results or numeric targets', () => {
   assert.equal(new Set(PROGRESS_TEMPLATES.map(t=>t.category)).size,7);
