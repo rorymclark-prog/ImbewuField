@@ -93,6 +93,10 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
 - **Studies slide cards:** all 10 modules (240 silent cards, about 60 MB) in `public/course-decks/<module>/af-silent/`,
   built by `scripts/build-af-deck-release.mjs` into a separate Afrikaans release registry. The narration
   had a blind review (2 repairs).
+- **Farm report (Records book):** `buildFarmReport({ language: 'af' })` builds the farmer's production and
+  finance report in Afrikaans from the existing g34 drafts, as isiXhosa does. Recorded names, units, amounts
+  and the file name stay as recorded. The month rows use `af-ZA` short months, and the unpaid-invoice column
+  says "Bedrag" (money), not the quantity word. `tests/farm-report.test.ts` checks every figure.
 
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English

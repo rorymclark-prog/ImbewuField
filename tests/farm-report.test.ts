@@ -181,3 +181,54 @@ test('isiXhosa reader: the report body is isiXhosa, every figure and recorded na
   // Without the isiXhosa drafts loaded (the server, English readers) the English comes back unchanged.
   assert.deepEqual(buildFarmReport(options({ ...base, language: 'xh' })), buildFarmReport(options({ ...base })));
 });
+
+test('Afrikaans reader: the report body is Afrikaans, every figure and recorded name is unchanged, and English is untouched', async () => {
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index');
+  const { registerInlineDrafts } = await import('../lib/xh-inline');
+  const figures = (value: unknown) => (JSON.stringify(value).match(/\d+(?:[.,]\d+)?/g) ?? []).join(' ');
+  const eggs = { ...harvest('count', 0), crop: 'Eggs', ...recordQuantityPayload(12, 'eggs') };
+  const base = {
+    production: [harvest('a', 10), harvest('b', 4, '2025-12-20T10:00:00'), eggs, { ...harvest('nodate', 999), logged_at: '' }],
+    sales: [sale('direct', 20), sale('linked', 60, { invoice_id: 'invoice-1' })],
+    expenses: [cost('cost', 25), { ...cost('tagged', 5), category: 'Seed' }] as ExpenseLog[],
+    invoices: [invoice({ total: 75 }), invoice({ id: 'invoice-2', no: 2, status: 'unpaid', paidAt: undefined, dueDateISO: '2026-02-01' })],
+  };
+  try {
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+    for (const kind of ['production', 'finance'] as const) {
+      const english = buildFarmReport(options({ ...base, kind }));
+      assert.deepEqual(buildFarmReport(options({ ...base, kind, language: 'en' })), english);
+      const af = buildFarmReport(options({ ...base, kind, language: 'af' }));
+      assert.notEqual(af.title, english.title);
+      assert.notEqual(af.period, english.period);
+      assert.deepEqual(af.sections.map(s => s.title).filter(title => english.sections.some(s => s.title === title)), [], 'every section title is Afrikaans');
+      assert.deepEqual(af.tables.map(table => table.title).filter(title => english.tables.some(table => table.title === title)), [], 'every table title is Afrikaans');
+      assert.deepEqual(af.metrics.map(m => m.label).filter(label => english.metrics.some(m => m.label === label)), [], 'every metric label is Afrikaans');
+      assert.deepEqual(af.sections.map(s => s.lines.length), english.sections.map(s => s.lines.length));
+      assert.deepEqual(af.tables.map(table => [table.rows.length, table.columns.length]), english.tables.map(table => [table.rows.length, table.columns.length]));
+      assert.equal(af.chart?.rows.length, english.chart?.rows.length);
+      af.sections.forEach((section, i) => section.lines.forEach((line, n) => assert.notEqual(line, english.sections[i].lines[n], `section line ${i}.${n} is Afrikaans`)));
+      af.tables.forEach((table, i) => { assert.notEqual(table.note, english.tables[i].note); table.columns.forEach((column, n) => assert.notEqual(column, english.tables[i].columns[n], `${table.title} column ${n}`)); });
+      if (english.chart) { assert.notEqual(af.chart!.title, english.chart.title); assert.notEqual(af.chart!.note, english.chart.note); }
+      for (const amount of JSON.stringify(english).match(/-?R\d[\d\s,]*/g) ?? []) assert.ok(JSON.stringify(af).includes(amount), `${amount} survives`);
+      const numbersIn = (value: string) => (value.match(/\d[\d\s,]*/g) ?? []).map(number => number.trim());
+      assert.deepEqual(af.metrics.map(m => numbersIn(m.value)), english.metrics.map(m => numbersIn(m.value)));
+      assert.deepEqual(af.metrics.map(m => numbersIn(m.detail ?? '')), english.metrics.map(m => numbersIn(m.detail ?? '')));
+      assert.equal(af.filename, english.filename);
+      assert.equal(af.date, english.date);
+      assert.match(af.period, /^2025-12-01 .*2026-02-28 · /);
+      const text = JSON.stringify(af);
+      for (const name of ['Swiss chard', 'Eggs', 'Recorded expense', 'Example farm', '12 eggs']) if (JSON.stringify(english).includes(name)) assert.ok(text.includes(name), `${name} stays as recorded`);
+      assert.ok(figures(af.tables.map(table => table.rows.map(row => row.filter(cell => /\d/.test(cell) && !/[a-z]/i.test(cell)))))
+        === figures(english.tables.map(table => table.rows.map(row => row.filter(cell => /\d/.test(cell) && !/[a-z]/i.test(cell))))), 'purely numeric cells (amounts, counts, dates) are identical');
+    }
+    const finance = buildFarmReport(options({ ...base, kind: 'finance', language: 'af' }));
+    // The unpaid-invoice money column uses the money book's word for an amount of money, not a quantity.
+    const unpaid = finance.tables.find(table => table.columns.includes('Bedrag'))!;
+    assert.ok(unpaid && !unpaid.columns.includes('Hoeveelheid'));
+    // The month rows use Afrikaans short month names with the same year.
+    assert.match(String(finance.tables[0].rows[0][0]), /^(Jan|Feb|Mrt|Apr|Mei|Jun|Jul|Aug|Sep|Okt|Nov|Des)\.? 20\d\d$/);
+  } finally { registerInlineDrafts('af', {}); }
+  // Without the Afrikaans drafts loaded (the server, English readers) the English comes back unchanged.
+  assert.deepEqual(buildFarmReport(options({ ...base, language: 'af' })), buildFarmReport(options({ ...base })));
+});

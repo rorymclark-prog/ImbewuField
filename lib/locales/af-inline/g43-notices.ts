@@ -2,6 +2,7 @@
 // The Afrikaans-only draft notices: what each screen says about its own unreviewed Afrikaans.
 const drafts: Record<string, string> = {
   "AFRIKAANS MACHINE DRAFT.": "AFRIKAANSE MASJIENKONSEP.",
+  "The report analysis and tables are an unreviewed Afrikaans draft. Recorded names and units stay as recorded.": "Die verslag se ontleding en tabelle is 'n onhersiene Afrikaanse konsep. Aangetekende name en eenhede bly soos aangeteken.",
   "Afrikaans interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.": "Die Afrikaanse bewoording van die koppelvlak is 'n onhersiene konsep. Engels word onder vertaalde etikette gewys. Data, plek- en spesiename, verduidelikings, bronne en boerderywaarskuwings bly soos verskaf.",
   "Afrikaans machine draft": "Afrikaanse masjienkonsep",
   "Afrikaans machine drafts — not reviewed.": "Afrikaanse masjienkonsepte — nie hersien nie.",
