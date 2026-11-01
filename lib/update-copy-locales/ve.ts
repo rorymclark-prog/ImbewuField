@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Sales-unit targets: docs/audits/2026-11-01/market-garden-sales-release-drafts.json; unreviewed.
+  "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Pulanani zwipikwa zwa khaṋo nga phakhethe dza zwibveledzwa ni tshi shumisa zwileme zwa phakhethe na tshipiḓa tshine tsha rengisea zwe na dzhenisa.",
+
   // Harvest targets: docs/audits/2026-11-01/harvest-target-release-drafts.json; unreviewed.
   "Set weekly harvest targets and review growing space, dated sowings and gaps.": "Vheani zwipikwa zwa khaṋo ya vhege iṅwe na iṅwe ni ṱole fhethu ha u ṱavha, zwifhinga zwa u zwala na zwikhala.",
   "Plan from a harvest target": "Pulana u bva kha tshipikwa tsha khaṋo",

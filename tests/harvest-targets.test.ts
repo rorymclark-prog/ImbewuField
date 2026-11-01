@@ -6,7 +6,7 @@ import {
   benchmarkAreaConflictDetails, estimatedYieldKg, loadCropPlan, saveCropPlan, sanitiseHarvestTargets,
   tasksForPlan, taskMonthsFromNow, type HarvestTarget, type PlanBed, type Planting,
 } from '@/lib/crop-plan';
-import { assessHarvestTarget, targetDemand, targetPickingWindow } from '@/lib/harvest-targets';
+import { assessHarvestTarget, targetDemand, targetPickingWindow, type HarvestTargetAssessment } from '@/lib/harvest-targets';
 import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 
 const now = { year: 2026, month: 11 };
@@ -85,7 +85,7 @@ test('overbooked, pending, finished, missing and incorrectly dated allocations c
   const row = result.plantings[0];
   for (const change of [{ awaitingSowingConfirmation: true }, { finishedOnceSowing: true }, { bedId: 'gone' },
     { once: '2027-13' }, { cropKey: 'cabbage' }, { areaFraction: NaN }] as const) {
-    const a = assessHarvestTarget(target, beds, [{ ...row, ...change }])!;
+    const a: HarvestTargetAssessment = assessHarvestTarget(target, beds, [{ ...row, ...change }])!;
     assert.equal(a.allocatedKg, 0);
     assert.equal(a.excludedRows, 1);
   }
@@ -186,6 +186,98 @@ test('saved targets round-trip with an account and old crop plans still load wit
     assert.equal(loadCropPlan().harvestTargets, undefined);
     assert.equal(saveCropPlan({ version: 1, plantings: [], harvestTargets: [target, { ...target, id: 'bad', weeklyKg: Infinity }], updatedAt: 3 }), true);
     assert.deepEqual(loadCropPlan().harvestTargets, [target]);
+  } finally {
+    bindMountedAccountLocalStorageUid(null);
+    if (original) Object.defineProperty(globalThis, 'window', original);
+    else Reflect.deleteProperty(globalThis, 'window');
+  }
+});
+
+test('produce packs retain their own unit and conversion rather than borrowing a universal bunch weight', () => {
+  const { weeklyKg: _kg, ...base } = target;
+  for (const unit of ['bunches', 'bags', 'crates', 'trays', 'each'] as const) {
+    const pack = { ...base, unit, weeklyQuantity: 6, kgPerUnit: 0.5, outlet: 'Saturday market' };
+    assert.deepEqual(sanitiseHarvestTargets([pack]), [pack]);
+    assert.deepEqual(targetDemand(pack), targetDemand(target));
+    assert.deepEqual(suggestHarvestTargets([pack], 'farm-a', answers, 'mild-frost', beds, [], now).plantings, suggest().plantings);
+  }
+  const unknown = { ...base, unit: 'bunches' as const, weeklyQuantity: 6 };
+  assert.deepEqual(sanitiseHarvestTargets([unknown]), [unknown]);
+  assert.equal(targetDemand(unknown)!.demandKg, null);
+  const assessment = assessHarvestTarget(unknown, beds, [])!;
+  assert.equal(assessment.cycleAreaM2, null);
+  assert.equal(assessment.shortageKg, null);
+  assert.equal(assessment.surplusKg, null);
+  assert.deepEqual(assessment.missingReasons, ['unit-weight']);
+  const result = suggestHarvestTargets([unknown], 'farm-a', answers, 'mild-frost', beds, [], now);
+  assert.equal(result.plantings.length, 0);
+  assert.ok(result.notes.some((n) => n.text.includes('conversion')));
+});
+
+test('invalid pack counts, conflicting mass fields and impossible allowances cannot become target evidence', () => {
+  const { weeklyKg: _kg, ...base } = target;
+  const pack = { ...base, unit: 'each', weeklyQuantity: 6, kgPerUnit: 0.5 };
+  for (const patch of [{ weeklyQuantity: 1.5 }, { weeklyQuantity: 0 }, { weeklyQuantity: Infinity },
+    { kgPerUnit: 0 }, { kgPerUnit: -1 }, { kgPerUnit: NaN }, { kgPerUnit: Infinity },
+    { kgPerUnit: Number.MAX_VALUE }, { weeklyKg: 3 }, { unit: 'kg' }, { unit: 'eggs' }, { unit: 'jars' },
+    { unit: 'seedlings' }, { marketablePercent: -1 }, { marketablePercent: 101 },
+    { marketablePercent: NaN }, { outlet: 'x'.repeat(121) }]) {
+    assert.equal(sanitiseHarvestTargets([{ ...pack, ...patch }]).length, 0, JSON.stringify(patch));
+  }
+  assert.deepEqual(sanitiseHarvestTargets([{ ...pack, unit: ' BUNCHES ', outlet: '  Market  ' }]),
+    [{ ...pack, unit: 'bunches', outlet: 'Market' }]);
+  assert.equal(sanitiseHarvestTargets([{ ...target, kgPerUnit: 0.5 }]).length, 0);
+});
+
+test('a grower saleable allowance increases target area without changing the catalogue or gross harvest benchmark', () => {
+  const crop = structuredClone(cropByKey(target.cropKey));
+  const half = { ...target, marketablePercent: 50 };
+  const rows = suggest().plantings;
+  const before = structuredClone({ beds, rows });
+  const gross = assessHarvestTarget(target, beds, rows, now)!;
+  const saleable = assessHarvestTarget(half, beds, rows, now)!;
+  assert.equal(saleable.grossCycleKg, gross.allocatedKg);
+  assert.equal(saleable.allocatedKg, gross.allocatedKg / 2);
+  assert.equal(saleable.cycleAreaM2, gross.cycleAreaM2! * 2);
+  assert.equal(saleable.shortageKg, Math.max(0, saleable.demandKg - saleable.allocatedKg));
+  const zero = { ...target, marketablePercent: 0 };
+  const blocked = assessHarvestTarget(zero, beds, rows, now)!;
+  assert.equal(blocked.allocatedKg, 0);
+  assert.equal(blocked.cycleAreaM2, null);
+  assert.deepEqual(blocked.missingReasons, ['zero-saleable-share']);
+  assert.equal(suggest([zero]).plantings.length, 0);
+  assert.equal(assessHarvestTarget({ ...target, marketablePercent: 100 }, beds, rows, now)!.allocatedKg, gross.allocatedKg);
+  assert.deepEqual({ beds, rows }, before);
+  assert.deepEqual(cropByKey(target.cropKey), crop);
+});
+
+test('saleable targets allocate additional real space and keep accepted rows when the allowance changes', () => {
+  const order = { ...target, weeklyKg: 0.5 };
+  const first = suggest([order]).plantings;
+  const copy = structuredClone(first);
+  const allowance = { ...order, marketablePercent: 50 };
+  const extra = suggest([allowance], beds, first).plantings;
+  assert.ok(extra.length > 0, 'saleable demand needs more growing capacity than the gross benchmark');
+  assert.equal(assessHarvestTarget(allowance, beds, [...first, ...extra], now)!.shortageKg, 0);
+  assert.ok(extra.every((p) => !first.some((saved) => saved.id === p.id)));
+  assert.deepEqual(first, copy);
+});
+
+test('unknown pack weights and private outlet assumptions survive the existing account-scoped plan store', () => {
+  const original = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const storage = new Map<string, string>();
+  const localStorage = { getItem: (k: string) => storage.get(k) ?? null, setItem: (k: string, v: string) => storage.set(k, v) };
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: { localStorage, sessionStorage: { getItem: () => null }, dispatchEvent: () => true } });
+  const { weeklyKg: _kg, ...base } = target;
+  const pack = { ...base, unit: 'bunches' as const, weeklyQuantity: 10, marketablePercent: 75, outlet: 'Private restaurant order' };
+  bindMountedAccountLocalStorageUid('pack-owner');
+  try {
+    assert.equal(saveCropPlan({ version: 1, plantings: [], harvestTargets: [pack], updatedAt: 1 }), true);
+    assert.deepEqual(loadCropPlan().harvestTargets, [pack]);
+    bindMountedAccountLocalStorageUid('different-account');
+    assert.equal(loadCropPlan().harvestTargets, undefined);
+    bindMountedAccountLocalStorageUid('pack-owner');
+    assert.deepEqual(loadCropPlan().harvestTargets, [pack]);
   } finally {
     bindMountedAccountLocalStorageUid(null);
     if (original) Object.defineProperty(globalThis, 'window', original);

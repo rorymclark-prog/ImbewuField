@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Sales-unit targets: docs/audits/2026-11-01/market-garden-sales-release-drafts.json; unreviewed.
+  "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Hlela imigomo yesivuno ngamaphakethe omkhiqizo usebenzisa izisindo zamaphakethe nengxenye ethengisekayo oyifakile.",
+
   // Harvest targets: docs/audits/2026-11-01/harvest-target-release-drafts.json; unreviewed.
   "Set weekly harvest targets and review growing space, dated sowings and gaps.": "Beka imigomo yesivuno samasonto onke bese ubuyekeza indawo yokutshala, izinsuku zokuhlwanyela nezikhala.",
   "Plan from a harvest target": "Hlela ngomgomo wesivuno",

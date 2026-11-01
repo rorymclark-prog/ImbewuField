@@ -1,5 +1,6 @@
 import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPerM2Range } from './crop-catalog';
+import { normaliseRecordUnit, validRecordQuantity, type RecordUnit } from './farm-records';
 import { foodGroupOf, nutritionGroupOf } from './crop-groups';
 import {
   isSampleMode,
@@ -133,14 +134,47 @@ export interface CropPlanState {
   updatedAt: number;
 }
 
-export interface HarvestTarget {
+interface HarvestTargetBase {
   id: string;
   siteId: string;
   cropKey: string;
-  weeklyKg: number;
   /** Inclusive calendar months; demand uses their actual day counts. */
   startMonth: string;
   endMonth: string;
+  /** A private planning label, not a permission to share a customer's details. */
+  outlet?: string;
+  /** Grower's own expected saleable fraction; absence applies no allowance. */
+  marketablePercent?: number;
+}
+
+export const HARVEST_TARGET_UNITS = ['kg', 'bunches', 'bags', 'crates', 'trays', 'each'] as const satisfies readonly RecordUnit[];
+export type HarvestPackUnit = Exclude<typeof HARVEST_TARGET_UNITS[number], 'kg'>;
+export interface KgHarvestTarget extends HarvestTargetBase {
+  weeklyKg: number;
+  weeklyQuantity?: never;
+  unit?: never;
+  kgPerUnit?: never;
+}
+export interface PackHarvestTarget extends HarvestTargetBase {
+  weeklyQuantity: number;
+  unit: HarvestPackUnit;
+  /** Harvest weight represented by one produce pack, supplied by the grower. */
+  kgPerUnit?: number;
+  weeklyKg?: never;
+}
+export type HarvestTarget = KgHarvestTarget | PackHarvestTarget;
+
+/** A bunch, head or tray has no universal weight. Keep an unknown conversion
+ * unknown, and never borrow a weight from another crop, customer or farm. */
+export function harvestTargetWeeklyKg(target: HarvestTarget): number | null {
+  if (target.weeklyKg !== undefined) return target.weeklyKg;
+  if (target.kgPerUnit === undefined) return null;
+  const kg = target.weeklyQuantity * target.kgPerUnit;
+  return Number.isFinite(kg) && kg > 0 ? kg : null;
+}
+
+export function harvestTargetYieldFactor(target: HarvestTarget): number {
+  return target.marketablePercent === undefined ? 1 : target.marketablePercent / 100;
 }
 
 export function harvestTargetMonthIndex(stamp: unknown): number | null {
@@ -159,12 +193,34 @@ export function sanitiseHarvestTargets(value: unknown): HarvestTarget[] {
     if (typeof t.id !== 'string' || !t.id.trim() || seen.has(t.id)
       || typeof t.siteId !== 'string' || !t.siteId.trim()
       || typeof t.cropKey !== 'string' || !cropByKey(t.cropKey)
-      || typeof t.weeklyKg !== 'number' || !Number.isFinite(t.weeklyKg) || t.weeklyKg <= 0
       || start === null || end === null || end < start || end - start >= 12
-      || !Number.isFinite(t.weeklyKg * 366 / 7)) return [];
+      || (t.outlet !== undefined && (typeof t.outlet !== 'string' || t.outlet.trim().length > 120))
+      || (t.marketablePercent !== undefined && (typeof t.marketablePercent !== 'number'
+        || !Number.isFinite(t.marketablePercent) || t.marketablePercent < 0 || t.marketablePercent > 100))) return [];
+    const base = { id: t.id, siteId: t.siteId, cropKey: t.cropKey,
+      startMonth: t.startMonth!, endMonth: t.endMonth!,
+      ...(t.outlet?.trim() ? { outlet: t.outlet.trim() } : {}),
+      ...(t.marketablePercent !== undefined ? { marketablePercent: t.marketablePercent } : {}),
+    };
+    let target: HarvestTarget;
+    if (t.weeklyQuantity !== undefined) {
+      const unit = normaliseRecordUnit(t.unit);
+      if (t.weeklyKg !== undefined || !unit || unit === 'kg'
+        || !(HARVEST_TARGET_UNITS as readonly string[]).includes(unit)
+        || !validRecordQuantity(t.weeklyQuantity, unit)
+        || !Number.isFinite(t.weeklyQuantity * 366 / 7)
+        || (t.kgPerUnit !== undefined && (typeof t.kgPerUnit !== 'number'
+          || !Number.isFinite(t.kgPerUnit) || t.kgPerUnit <= 0
+          || !Number.isFinite(t.weeklyQuantity * t.kgPerUnit * 366 / 7)))) return [];
+      target = { ...base, weeklyQuantity: t.weeklyQuantity, unit: unit as HarvestPackUnit,
+        ...(t.kgPerUnit !== undefined ? { kgPerUnit: t.kgPerUnit } : {}) };
+    } else {
+      if (t.unit !== undefined || t.kgPerUnit !== undefined || typeof t.weeklyKg !== 'number'
+        || !Number.isFinite(t.weeklyKg) || t.weeklyKg <= 0 || !Number.isFinite(t.weeklyKg * 366 / 7)) return [];
+      target = { ...base, weeklyKg: t.weeklyKg };
+    }
     seen.add(t.id);
-    return [{ id: t.id, siteId: t.siteId, cropKey: t.cropKey, weeklyKg: t.weeklyKg,
-      startMonth: t.startMonth!, endMonth: t.endMonth! }];
+    return [target];
   });
 }
 

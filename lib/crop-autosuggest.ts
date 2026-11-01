@@ -14,6 +14,7 @@ import {
   existingSowOffset,
   harvestTargetMonthIndex,
   sanitiseHarvestTargets,
+  harvestTargetYieldFactor,
   harvestEndMonthForCrop,
   harvestMonthForCrop,
   isSpaceHungry,
@@ -3788,9 +3789,16 @@ export function suggestHarvestTargets(
       const crop = cropByKey(target.cropKey)!;
       let assessment = assessHarvestTarget(target, beds, [...existingPlantings, ...added], realNow)!;
       if (assessment.missingBasis) {
-        notes.push(planNote('gap', `${crop.name}: verified yield, timing or establishment evidence is missing; no automatic target allocation was made.`));
+        const reasons = assessment.missingReasons.map((reason) => reason === 'unit-weight'
+          ? 'your harvest-weight conversion per sales unit is missing'
+          : reason === 'zero-saleable-share' ? 'your saleable share is 0%'
+            : 'verified yield, timing or establishment evidence is missing');
+        notes.push(planNote('gap', `${crop.name}: ${reasons.join('; ')}; no automatic target allocation was made.`));
         continue;
       }
+      const demandKg = assessment.demandKg!;
+      let remainingKg = assessment.shortageKg!;
+      const yieldFactor = harvestTargetYieldFactor(target);
       if (harvestTargetMonthIndex(target.endMonth)! < origin) {
         notes.push(planNote('gap', `${crop.name}: this target window has ended. Change its dates before planning new sowings.`));
         continue;
@@ -3807,17 +3815,17 @@ export function suggestHarvestTargets(
       let spaceBlocked = false;
       // Spread the requested volume over legal sowing months when space permits.
       // This is a choice of cohort sizes, never a model of weekly picking rates.
-      const perCohortKg = assessment.shortageKg / Math.max(1, candidates.length);
-      for (let pass = 0; pass < 2 && assessment.shortageKg > 0.000001; pass++) {
+      const perCohortKg = remainingKg / Math.max(1, candidates.length);
+      for (let pass = 0; pass < 2 && remainingKg > 0.000001; pass++) {
         for (const { index, sowMonth } of candidates) {
           let cohortKg = 0;
           for (const bed of cropBeds) {
-            if (assessment.shortageKg <= 0.000001) break;
+            if (remainingKg <= 0.000001) break;
             if (added.some((p) => p.harvestTargetId === target.id && p.bedId === bed.id && p.once === targetMonthStamp(index))) continue;
             if (rotation.repeats(bed.id, crop, sowMonth)) { rotationBlocked = true; continue; }
-            const wantedKg = pass === 0 ? Math.min(perCohortKg - cohortKg, assessment.shortageKg) : assessment.shortageKg;
+            const wantedKg = pass === 0 ? Math.min(perCohortKg - cohortKg, remainingKg) : remainingKg;
             if (wantedKg <= 0.000001) break;
-            const wantedFraction = wantedKg / (bed.areaM2 * crop.yieldKgPerM2!);
+            const wantedFraction = wantedKg / (bed.areaM2 * crop.yieldKgPerM2! * yieldFactor);
             const full = isSpaceHungry(crop) || bed.kind === 'plot' || !occupancy.allowsBedSharing();
             const fraction = full ? 1 : [...BED_FRACTION_PRESETS].reverse().find((f) => f >= wantedFraction - 0.000001) ?? 1;
             const share = usableShare(occupancy, bed, sowMonth, crop, fraction, 1, true);
@@ -3843,11 +3851,12 @@ export function suggestHarvestTargets(
             added.push(planting);
             cohortKg += next.allocatedKg - assessment.allocatedKg;
             assessment = next;
+            remainingKg = Math.max(0, demandKg - assessment.allocatedKg);
             if (pass === 0 && cohortKg >= perCohortKg - 0.000001) break;
           }
         }
       }
-      if (assessment.shortageKg > 0.000001) {
+      if (remainingKg > 0.000001) {
         const reasons = [!candidates.length ? 'no complete picking window fits from a legal sowing in the next 12 months' : '',
           !cropBeds.length ? 'no compatible mapped growing area' : '',
           rotationBlocked ? 'rotation conflicts' : '', spaceBlocked ? 'occupied ground or an unusable share' : ''].filter(Boolean);
@@ -3855,7 +3864,7 @@ export function suggestHarvestTargets(
       }
     }
     if (rainFed) notes.push(planNote('warning', 'Rain-fed placement uses this site’s average monthly climate, not a guarantee of water in a dry spell.'));
-    notes.push(planNote('basis', 'Only dated plantings linked to each target count towards its volume. Existing crops stay unchanged. Whole open fields and standard bed shares can create surplus; no storage or saleable-packout allowance is assumed.'));
+    notes.push(planNote('basis', 'Only dated plantings linked to each target count towards its volume. Existing crops stay unchanged. Whole open fields and standard bed shares can create surplus. Pack weights and saleable shares use only the grower’s entries; no allowance is applied when none is entered.'));
     return { plantings: added, notes: orderNotes(notes), laterThisYear: [] };
   });
 }
