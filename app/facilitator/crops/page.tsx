@@ -23,6 +23,7 @@ import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabilityGraphs';
 import ProductionRecordsEditor from '@/components/crops/ProductionRecordsEditor';
+import HarvestTargetsPanel from '@/components/crops/HarvestTargetsPanel';
 import ProductionGuideCard from '@/components/crops/ProductionGuideCard';
 import PoultryGuidanceCard from '@/components/crops/PoultryGuidanceCard';
 import SiteSurveySheet from '@/components/SiteSurveySheet';
@@ -2457,6 +2458,33 @@ function FacilitatorCropsPageInner() {
             {beds.length === 0 && <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
               {inlineText(lang, 'Your mapped plants and animal housing are listed below. To plan vegetable or staple crops,')} <Link href={designHref} style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>{inlineText(lang, 'add a bed or plot in the Design Studio')}</Link>.
             </p>}
+
+            {productionSiteId && beds.length > 0 && <HarvestTargetsPanel
+              key={`harvest-targets:${productionSiteId}`}
+              siteId={productionSiteId}
+              targets={plan?.harvestTargets ?? []}
+              beds={beds} plantings={plantings} pattern={pattern}
+              climate={{
+                siteMonthlyTempC: siteClimate?.monthlyTempC,
+                siteMonthlyRainMm: siteClimate?.monthlyRainMm,
+                siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
+                observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined,
+              }}
+              onTargets={(harvestTargets) => {
+                pushPlanHistory();
+                setPlan((previous) => ({ ...(previous ?? { version: 1 as const, plantings: [] }), harvestTargets, updatedAt: Date.now() }));
+              }}
+              onAccept={(result) => {
+                pushPlanHistory();
+                setPlan((previous) => {
+                  const base = previous ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
+                  const savedIds = new Set(base.plantings.map((p) => p.id));
+                  return { ...base, rainPattern: pattern,
+                    plantings: [...base.plantings, ...result.plantings.filter((p) => !savedIds.has(p.id))],
+                    planNotes: result.notes, planNotesAt: Date.now(), updatedAt: Date.now() };
+                });
+              }}
+            />}
 
             {/* Timeline. The month header and the bed-rows body are TWO
                 separate horizontal-scroll regions kept in sync by JS

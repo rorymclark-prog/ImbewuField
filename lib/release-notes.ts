@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 November 2026', sha: '256c67dd9', changes: [
+    'Plan harvest targets in produce packs with your own pack weights and saleable share.',
+  ] },
+  { when: '1 November 2026', sha: '7fe20b32c', changes: [
+    'Set weekly harvest targets and review growing space, dated sowings and gaps.',
+  ], tour: [{ title: 'Plan from a harvest target', where: 'Crop planner → Harvest targets', href: '/facilitator/crops',
+    detail: 'Choose a crop, weekly weight and harvest months. Review the proposal before adding its dated sowings to your crop plan.' }] },
   { when: '31 October 2026', sha: '310c11089', changes: [
     'Earthworks starts with your available aerial photo; plain paper remains a choice.',
   ] },

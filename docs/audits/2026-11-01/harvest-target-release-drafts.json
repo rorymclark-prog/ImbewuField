@@ -1,0 +1,42 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "Harvest-target update notice and guide only; no fluent review claimed. No lesson or quiz changes.",
+  "entries": [
+    {
+      "source": "Set weekly harvest targets and review growing space, dated sowings and gaps.",
+      "drafts": {
+        "zu": "Beka imigomo yesivuno samasonto onke bese ubuyekeza indawo yokutshala, izinsuku zokuhlwanyela nezikhala.",
+        "st": "Beha dipheo tsa kotulo tsa beke le beke mme o hlahlobe sebaka sa temo, dinako tsa ho jala le dikgeo.",
+        "ts": "Veka swikongomelo swa ntshovelo wa vhiki na vhiki kutani u kambisisa ndhawu yo byala, masiku yo byala ni swikhala.",
+        "ve": "Vheani zwipikwa zwa khaṋo ya vhege iṅwe na iṅwe ni ṱole fhethu ha u ṱavha, zwifhinga zwa u zwala na zwikhala."
+      }
+    },
+    {
+      "source": "Plan from a harvest target",
+      "drafts": {
+        "zu": "Hlela ngomgomo wesivuno",
+        "st": "Rala ho ya ka sepheo sa kotulo",
+        "ts": "Kunguhata hi xikongomelo xa ntshovelo",
+        "ve": "Pulana u bva kha tshipikwa tsha khaṋo"
+      }
+    },
+    {
+      "source": "Crop planner → Harvest targets",
+      "drafts": {
+        "zu": "Umhleli wezitshalo → Imigomo yesivuno",
+        "st": "Moralo wa dijalo → Dipheo tsa kotulo",
+        "ts": "Mukungu wa swibyariwa → Swikongomelo swa ntshovelo",
+        "ve": "Mupulani wa zwiliṅwa → Zwipikwa zwa khaṋo"
+      }
+    },
+    {
+      "source": "Choose a crop, weekly weight and harvest months. Review the proposal before adding its dated sowings to your crop plan.",
+      "drafts": {
+        "zu": "Khetha isitshalo, isisindo samasonto onke nezinyanga zokuvuna. Buyekeza isiphakamiso ngaphambi kokwengeza ukuhlwanyela okunezinsuku ohlelweni lwakho lwezitshalo.",
+        "st": "Kgetha sejalo, boima ba beke le beke le dikgwedi tsa kotulo. Hlahloba tlhahiso pele o eketsa dinako tsa ho jala moralong wa hao wa dijalo.",
+        "ts": "Hlawula xibyariwa, ntiko wa vhiki na vhiki ni tin’hweti ta ntshovelo. Kambisisa xiringanyeto u nga si engetela masiku ya xona yo byala eka kungu ra wena ra swibyariwa.",
+        "ve": "Nangani tshiliṅwa, tshileme tsha vhege iṅwe na iṅwe na miṅwedzi ya khaṋo. Ṱolani nyeletshedzo ni sa athu u engedza zwifhinga zwayo zwa u zwala kha pulane yaṋu ya zwiliṅwa."
+      }
+    }
+  ]
+}

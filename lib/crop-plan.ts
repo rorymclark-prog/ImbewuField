@@ -1,5 +1,6 @@
 import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPerM2Range } from './crop-catalog';
+import { normaliseRecordUnit, validRecordQuantity, type RecordUnit } from './farm-records';
 import { foodGroupOf, nutritionGroupOf } from './crop-groups';
 import {
   isSampleMode,
@@ -33,6 +34,8 @@ export interface PlanBed {
 }
 
 export interface Planting {
+  /** A dated crop-cycle capacity allocation, never a weekly delivery promise. */
+  harvestTargetId?: string;
   id: string;
   bedId: string;
   cropKey: string;
@@ -96,6 +99,8 @@ export interface Planting {
 export interface CropPlanState {
   version: 1;
   plantings: Planting[];
+  /** Buyer demand belongs to a site, even when two farms use the same crop. */
+  harvestTargets?: HarvestTarget[];
   /** Climate window used when the plan was generated. Optional so every plan
    * saved before this field existed remains readable. */
   rainPattern?: RainPattern;
@@ -127,6 +132,96 @@ export interface CropPlanState {
    */
   planNotesAt?: number;
   updatedAt: number;
+}
+
+interface HarvestTargetBase {
+  id: string;
+  siteId: string;
+  cropKey: string;
+  /** Inclusive calendar months; demand uses their actual day counts. */
+  startMonth: string;
+  endMonth: string;
+  /** A private planning label, not a permission to share a customer's details. */
+  outlet?: string;
+  /** Grower's own expected saleable fraction; absence applies no allowance. */
+  marketablePercent?: number;
+}
+
+export const HARVEST_TARGET_UNITS = ['kg', 'bunches', 'bags', 'crates', 'trays', 'each'] as const satisfies readonly RecordUnit[];
+export type HarvestPackUnit = Exclude<typeof HARVEST_TARGET_UNITS[number], 'kg'>;
+export interface KgHarvestTarget extends HarvestTargetBase {
+  weeklyKg: number;
+  weeklyQuantity?: never;
+  unit?: never;
+  kgPerUnit?: never;
+}
+export interface PackHarvestTarget extends HarvestTargetBase {
+  weeklyQuantity: number;
+  unit: HarvestPackUnit;
+  /** Harvest weight represented by one produce pack, supplied by the grower. */
+  kgPerUnit?: number;
+  weeklyKg?: never;
+}
+export type HarvestTarget = KgHarvestTarget | PackHarvestTarget;
+
+/** A bunch, head or tray has no universal weight. Keep an unknown conversion
+ * unknown, and never borrow a weight from another crop, customer or farm. */
+export function harvestTargetWeeklyKg(target: HarvestTarget): number | null {
+  if (target.weeklyKg !== undefined) return target.weeklyKg;
+  if (target.kgPerUnit === undefined) return null;
+  const kg = target.weeklyQuantity * target.kgPerUnit;
+  return Number.isFinite(kg) && kg > 0 ? kg : null;
+}
+
+export function harvestTargetYieldFactor(target: HarvestTarget): number {
+  return target.marketablePercent === undefined ? 1 : target.marketablePercent / 100;
+}
+
+export function harvestTargetMonthIndex(stamp: unknown): number | null {
+  const index = stampIndexOf(stamp);
+  return index !== null && index >= 2020 * 12 && index < 2100 * 12 ? index : null;
+}
+
+export function sanitiseHarvestTargets(value: unknown): HarvestTarget[] {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set<string>();
+  return value.flatMap((raw): HarvestTarget[] => {
+    if (!raw || typeof raw !== 'object') return [];
+    const t = raw as Partial<HarvestTarget>;
+    const start = harvestTargetMonthIndex(t.startMonth);
+    const end = harvestTargetMonthIndex(t.endMonth);
+    if (typeof t.id !== 'string' || !t.id.trim() || seen.has(t.id)
+      || typeof t.siteId !== 'string' || !t.siteId.trim()
+      || typeof t.cropKey !== 'string' || !cropByKey(t.cropKey)
+      || start === null || end === null || end < start || end - start >= 12
+      || (t.outlet !== undefined && (typeof t.outlet !== 'string' || t.outlet.trim().length > 120))
+      || (t.marketablePercent !== undefined && (typeof t.marketablePercent !== 'number'
+        || !Number.isFinite(t.marketablePercent) || t.marketablePercent < 0 || t.marketablePercent > 100))) return [];
+    const base = { id: t.id, siteId: t.siteId, cropKey: t.cropKey,
+      startMonth: t.startMonth!, endMonth: t.endMonth!,
+      ...(t.outlet?.trim() ? { outlet: t.outlet.trim() } : {}),
+      ...(t.marketablePercent !== undefined ? { marketablePercent: t.marketablePercent } : {}),
+    };
+    let target: HarvestTarget;
+    if (t.weeklyQuantity !== undefined) {
+      const unit = normaliseRecordUnit(t.unit);
+      if (t.weeklyKg !== undefined || !unit || unit === 'kg'
+        || !(HARVEST_TARGET_UNITS as readonly string[]).includes(unit)
+        || !validRecordQuantity(t.weeklyQuantity, unit)
+        || !Number.isFinite(t.weeklyQuantity * 366 / 7)
+        || (t.kgPerUnit !== undefined && (typeof t.kgPerUnit !== 'number'
+          || !Number.isFinite(t.kgPerUnit) || t.kgPerUnit <= 0
+          || !Number.isFinite(t.weeklyQuantity * t.kgPerUnit * 366 / 7)))) return [];
+      target = { ...base, weeklyQuantity: t.weeklyQuantity, unit: unit as HarvestPackUnit,
+        ...(t.kgPerUnit !== undefined ? { kgPerUnit: t.kgPerUnit } : {}) };
+    } else {
+      if (t.unit !== undefined || t.kgPerUnit !== undefined || typeof t.weeklyKg !== 'number'
+        || !Number.isFinite(t.weeklyKg) || t.weeklyKg <= 0 || !Number.isFinite(t.weeklyKg * 366 / 7)) return [];
+      target = { ...base, weeklyKg: t.weeklyKg };
+    }
+    seen.add(t.id);
+    return [target];
+  });
 }
 
 const STORAGE_KEY = 'imbewu_crop_plan_v1';
@@ -327,6 +422,7 @@ export function loadCropPlan(): CropPlanState {
     return {
       version: 1,
       plantings: settle(parsed.plantings),
+      ...(Array.isArray(parsed.harvestTargets) ? { harvestTargets: sanitiseHarvestTargets(parsed.harvestTargets) } : {}),
       ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
       ...(Array.isArray(parsed.productionRecords) ? { productionRecords: sanitiseProductionRecords(parsed.productionRecords) } : {}),
       ...(Array.isArray(parsed.preservedProducts) ? { preservedProducts: sanitisePreservedFoodRecords(parsed.preservedProducts) } : {}),
@@ -852,6 +948,16 @@ export function benchmarkDatedAreaConflictBedLabels(
     .filter(record => !period.plantingId || record.plantingIds.has(period.plantingId));
   return [...new Set(records.map(record => record.bedLabel))]
     .sort((a, b) => a.localeCompare(b));
+}
+
+/** Target allocations need the implicated rows, so an unrelated conflict on
+ * the same bed cannot erase an otherwise valid dated crop's capacity. */
+export function benchmarkDatedAreaConflictPlantingIds(
+  plantings: Planting[], beds: PlanBed[],
+  period: { startIndex: number; endIndex: number; originIndex: number },
+): Set<string> {
+  return new Set(benchmarkAreaConflictBeds(plantings, beds, undefined, period)
+    .flatMap((record) => [...record.plantingIds]));
 }
 
 /**
