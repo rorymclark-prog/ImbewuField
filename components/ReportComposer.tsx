@@ -19,7 +19,7 @@ import ReportVisualOverview from './report/ReportVisualOverview';
 import type { ReportPresentation, ReportVisuals } from '@/lib/report-visuals';
 import { prepareVisualPdfAssets } from '@/lib/report-visual-pdf';
 
-import { buildProgrammePdf, pdfLabelXh, programmeReportMetrics, programmeReportTableRows, programmeReportColumnWidths, type ReportMetric, type ReportChart, type ReportTable, type ReportSection } from '@/lib/programme-report-pdf';
+import { buildProgrammePdf, pdfLabelDraft, programmeReportMetrics, programmeReportTableRows, programmeReportColumnWidths, type ReportMetric, type ReportChart, type ReportTable, type ReportSection } from '@/lib/programme-report-pdf';
 export type { ReportSection } from '@/lib/programme-report-pdf';
 export default function ReportComposer({ title, sample, sections: suppliedSections, deviceData, branding: suppliedBranding, orgId, photos = [], photoHeading = 'Site photographs', photosByDefault = false, visuals, reportDate, metrics, chart, session, funder = false, tables = [], subtitle, filenameBase, reportLabel, ownerLabel, aggregate = false }: { title: string; sample: boolean; sections: ReportSection[]; deviceData?: unknown; branding?: ProgrammeBranding; orgId?: string | null; photos?: VenuePhoto[]; photoHeading?: string; photosByDefault?: boolean; visuals?: ReportVisuals; reportDate?: string; metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; tables?: ReportTable[]; subtitle?: string; filenameBase?: string; reportLabel?: string; ownerLabel?: string; aggregate?: boolean }) {
   const { lang } = useLanguage();
@@ -46,15 +46,15 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
   const [format, setFormat] = useState<'summary' | 'full'>('full');
   const [busy, setBusy] = useState(false), [error, setError] = useState('');
   const reportMetrics=programmeReportMetrics({metrics,session,funder});
-  // isiXhosa has no per-metric table here: the English labels are the keys of its drafts, and counted details are matched by shape (pdfLabelXh).
-  const xhMetric = (value: string) => pdfLabelXh(value);
+  // isiXhosa and Afrikaans have no per-metric table here: the English labels are the keys of their drafts, and counted details are matched by shape (pdfLabelDraft).
+  const draftMetric = (value: string) => lang === 'xh' || lang === 'af' ? pdfLabelDraft(lang, value) : value;
   const zuluMetric = (value: string) => zu ? ({
     'Attendance':'Ukuba khona', 'Signed register':'Uhlu olusayiniwe', 'Feedback':'Impendulo', 'Photographs':'Izithombe',
     'No register yet':'Alukho uhlu okwamanje', 'Attendance signatures':'Amasiginesha okuba khona',
     'Responses / attendees':'Izimpendulo / abebehambele', 'Session evidence':'Ubufakazi beseshini',
     'Programme evidence':'Ubufakazi bohlelo', 'Site photographs':'Izithombe zesayithi',
     'Implemented by':'Kwenziwe ngu', 'Community / project':'Umphakathi / iphrojekthi', 'Supported by':'Kwesekwe ngu',
-  } as Record<string,string>)[value] ?? value.replace(/^(\d+)% present$/, '$1% bakhona') : lang === 'xh' ? xhMetric(value) : value;
+  } as Record<string,string>)[value] ?? value.replace(/^(\d+)% present$/, '$1% bakhona') : draftMetric(value);
   const reportChart=chart;
   const feedback=session?trainingFeedbackSummary(session,funder):null;
   const visible = sections.filter(s=>!session||!['Attendance register','Attendance summary'].includes(s.title)).map(s => ({ ...s, lines: format === 'summary' ? (s.summaryLines ?? s.lines.slice(0, 5)) : s.lines }));
@@ -71,7 +71,7 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
         return { ...photo, image };
       })) : [];
       const visual = visuals && presentation !== 'ink' ? { visuals, assets: await prepareVisualPdfAssets(visuals, attached), date: reportDate ?? new Date().toISOString().slice(0, 10) } : undefined;
-      const doc = await buildProgrammePdf(title, sample, sections, format, branding, attached, localizedPhotoHeading, visual, {metrics:reportMetrics,chart:reportChart,session,funder,ink:presentation==='ink',language:zu?'zu':lang==='xh'?'xh':'en',tables,subtitle,date:reportDate,reportLabel,ownerLabel});
+      const doc = await buildProgrammePdf(title, sample, sections, format, branding, attached, localizedPhotoHeading, visual, {metrics:reportMetrics,chart:reportChart,session,funder,ink:presentation==='ink',language:zu?'zu':lang==='xh'?'xh':lang==='af'?'af':'en',tables,subtitle,date:reportDate,reportLabel,ownerLabel});
       await deliverFile(doc.output('blob'), filenameBase ? `${filenameBase}-${format}${presentation === 'ink' ? '-ink' : ''}.pdf` : `ImbewuField-${title.replace(/[^a-zA-Z0-9]+/g, '-')}.pdf`, title);
     } catch { setError('The PDF could not be created. Your records have not changed.'); }
     finally { setBusy(false); }

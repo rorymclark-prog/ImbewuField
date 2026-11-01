@@ -16,8 +16,13 @@ export function programmeReportColumnWidths(table: ReportTable): number[] {
 }
 export type ReportMetric = { label: string; value: string; detail?: string };
 export type ReportChart = { title: string; rows: { label: string; value: number; display?: string }[]; suffix?: string; minimumScale?:number; note?: string };
-export type ProgrammePresentation = { metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; ink?: boolean; language?: 'en' | 'zu' | 'xh'; tables?: ReportTable[]; subtitle?: string; date?: string; reportLabel?: string; ownerLabel?: string };
-const pdfLabel = (en: string, language: 'en' | 'zu' | 'xh' | undefined) => language === 'xh' ? pdfLabelXh(en) : language === 'zu' ? ({
+/** The language of the PDF's fixed wording. English is the authority; isiZulu has its own table below;
+ * 'xh' and 'af' read the unreviewed isiXhosa / Afrikaans inline drafts keyed by the English, and are English
+ * until those drafts are loaded. Recorded data and evidence text are never translated. */
+export type ProgrammePdfLanguage = 'en' | 'zu' | 'xh' | 'af';
+const isDraftPdfLanguage = (language: string | undefined): language is 'xh' | 'af' => language === 'xh' || language === 'af';
+export type ProgrammePresentation = { metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; ink?: boolean; language?: ProgrammePdfLanguage; tables?: ReportTable[]; subtitle?: string; date?: string; reportLabel?: string; ownerLabel?: string };
+const pdfLabel = (en: string, language: ProgrammePdfLanguage | undefined) => isDraftPdfLanguage(language) ? pdfLabelDraft(language, en) : language === 'zu' ? ({
   'Full report':'Umbiko ogcwele', 'Brief summary':'Isifinyezo esifushane', 'Tour workspace':'Indawo yokuhlola',
   'Attendance':'Ukuba khona', 'No register yet':'Alukho uhlu okwamanje', 'Signed register':'Uhlu olusayiniwe',
   'Attendance signatures':'Amasiginesha okuba khona', 'Feedback':'Impendulo', 'Responses / attendees':'Izimpendulo / abebehambele',
@@ -34,11 +39,10 @@ const pdfLabel = (en: string, language: 'en' | 'zu' | 'xh' | undefined) => langu
   'answered':'baphendulile', 'skipped':'beqile', 'First action':'Isenzo sokuqala', 'Suggested improvement':'Isiphakamiso sokuthuthukisa',
   'Programme report':'Umbiko wohlelo', 'Internal session record':'Irekhodi leseshini yangaphakathi',
 } as Record<string,string>)[en] ?? en.replace(/^(\d+)% present$/, '$1% bakhona') : en;
-/** isiXhosa (unreviewed machine draft): the shard draft for this exact English label, English when there is none. */
-/** A survey question or answer option: isiZulu from the template, isiXhosa from the inline drafts, else English. */
-const feedbackWording = (language: 'en' | 'zu' | 'xh' | undefined, zu: string, en: string) => language === 'zu' ? zu : language === 'xh' ? inlineText('xh', en) : en;
+/** A survey question or answer option: isiZulu from the template, isiXhosa / Afrikaans from the inline drafts, else English. */
+const feedbackWording = (language: ProgrammePdfLanguage | undefined, zu: string, en: string) => language === 'zu' ? zu : isDraftPdfLanguage(language) ? inlineText(language, en) : en;
 // Metric details that carry counts (built in lib/programme-report.ts): each shape is the key of its
-// isiXhosa draft, so the figures stay in the sentence and only the words change.
+// draft (isiXhosa and Afrikaans), so the figures stay in the sentence and only the words change.
 const METRIC_TEMPLATES = [
   '{n}% present',
   '{a} of {n} farmers · current snapshot', '{a} of {n} farmer · current snapshot',
@@ -47,13 +51,15 @@ const METRIC_TEMPLATES = [
   '{a} of {n} books readable; known weights only · selected months',
   '{a} readable learning records · current snapshot', '{a} readable learning record · current snapshot',
 ].map(template => ({ template, pattern: new RegExp('^' + template.replace(/[.*+?^$()|[\]\\]/g, '\\$&').replace(/\{(\w+)\}/g, '(?<$1>\\d+)') + '$') }));
-export function pdfLabelXh(en: string): string {
+/** isiXhosa or Afrikaans (unreviewed machine drafts): the shard draft for this exact English label, English when there is none. */
+export function pdfLabelDraft(language: 'xh' | 'af', en: string): string {
   for (const { template, pattern } of METRIC_TEMPLATES) {
     const found = pattern.exec(en);
-    if (found?.groups) return inlineTemplate('xh', template, null, found.groups);
+    if (found?.groups) return inlineTemplate(language, template, null, found.groups);
   }
-  return inlineText('xh', en);
+  return inlineText(language, en);
 }
+export const pdfLabelXh = (en: string): string => pdfLabelDraft('xh', en);
 export function programmeReportMetrics(p: ProgrammePresentation): ReportMetric[] {
   if(!p.session)return p.metrics??[];
   const s=p.session,e=trainingEvidenceSummary(s),f=trainingFeedbackSummary(s,p.funder);
@@ -68,8 +74,9 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
   const doc = new jsPDF({ compress: true });
   doc.setProperties({title,author:'ImbewuField',subject:presentation.subtitle ?? 'Programme evidence'});
   const ink=presentation.ink===true;
-  // Fixed report wording that isiZulu keeps in English: isiXhosa gets its draft, everyone else the English.
-  const xhText=(en:string)=>presentation.language==='xh'?inlineText('xh',en):en;
+  // Fixed report wording that isiZulu keeps in English: isiXhosa and Afrikaans get their draft, everyone else the English.
+  const draftLang=isDraftPdfLanguage(presentation.language)?presentation.language:null;
+  const xhText=(en:string)=>draftLang?inlineText(draftLang,en):en;
   let y=20;
   const page=()=>{doc.addPage();y=23;};
   const ensure=(height:number)=>{if(y+height>273)page();};
@@ -87,7 +94,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     const { drawVisualReportFront } = await import('./report-visual-pdf');
     drawVisualReportFront(doc, visual.visuals, visual.assets, visual.date, presentation.language);page();
   }
-  if(!ink){doc.setFillColor(23,62,44);doc.rect(0,0,210,presentation.language==='zu'||presentation.language==='xh'?58:49,'F');doc.setTextColor(255);}
+  if(!ink){doc.setFillColor(23,62,44);doc.rect(0,0,210,presentation.language==='zu'||draftLang?58:49,'F');doc.setTextColor(255);}
   else {doc.setDrawColor(35,75,49);doc.setLineWidth(.6);doc.line(18,46,192,46);doc.setTextColor(23,62,44);}
   doc.setFont('times','normal');doc.setFontSize(24);
   const titleRows=doc.splitTextToSize(pdfSafe(presentation.session?.title??title),174) as string[];
@@ -98,11 +105,11 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(ink?75:245,ink?95:245,ink?80:245);
     doc.text(pdfSafe('Izihloko zesiZulu azikabuyekezwa; umbhalo wobufakazi ugcinwa ngolimi oqoshwe ngalo.'),18,51);
   }
-  if(presentation.language==='xh'){
+  if(draftLang){
     doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(ink?75:245,ink?95:245,ink?80:245);
-    doc.text(pdfSafe(inlineText('xh','The isiXhosa headings are unreviewed; evidence text is kept in the language it was recorded in.')),18,51);
+    doc.text(pdfSafe(inlineText(draftLang,draftLang==='af'?'The Afrikaans headings are unreviewed; evidence text is kept in the language it was recorded in.':'The isiXhosa headings are unreviewed; evidence text is kept in the language it was recorded in.')),18,51);
   }
-  y=presentation.language==='zu'||presentation.language==='xh'?67:59;
+  y=presentation.language==='zu'||draftLang?67:59;
   if(sample) write(xhText('DEMONSTRATION RECORDS - illustrative figures, not real programme results.'),9,true);
   if(presentation.subtitle) write(presentation.subtitle,10);
   const partners=branding?(['organisation','garden','funder'] as const).filter(k=>branding[k].label||branding[k].image):[];
@@ -113,7 +120,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
       if(p.image){const a=doc.getImageProperties(p.image);const scale=Math.min(13/a.width,15/a.height);doc.addImage(p.image,a.fileType,x,y,a.width*scale,a.height*scale);}
       const labelX=x+(p.image?16:0),width=p.image?40:55;
       doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(60,82,67);
-      doc.text(pdfSafe(pdfLabel(key==='organisation'&&presentation.ownerLabel?presentation.ownerLabel:key==='organisation'?'Implemented by':key==='garden'?'Community / project':'Supported by',presentation.language).toLocaleUpperCase(presentation.language==='zu'?'zu-ZA':'en-ZA')),labelX,y+3);
+      doc.text(pdfSafe(pdfLabel(key==='organisation'&&presentation.ownerLabel?presentation.ownerLabel:key==='organisation'?'Implemented by':key==='garden'?'Community / project':'Supported by',presentation.language).toLocaleUpperCase(presentation.language==='zu'?'zu-ZA':presentation.language==='af'?'af-ZA':'en-ZA')),labelX,y+3);
       doc.setFont('helvetica','bold');doc.setFontSize(9);const names=doc.splitTextToSize(pdfSafe(p.label),width) as string[];doc.text(names,labelX,y+9);height=Math.max(height,names.length*4+12);
     });y+=height+8;
   }
@@ -206,7 +213,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
         if(cells.some(c=>c.length)) { page(); heading(); }
       }
     }
-    if(format==='summary' && table.rows.length>rows.length) write(inlineTemplate(presentation.language==='xh'?'xh':'en','{n} further rows in the full report.',null,{n:table.rows.length-rows.length}),9);
+    if(format==='summary' && table.rows.length>rows.length) write(inlineTemplate(draftLang??'en','{n} further rows in the full report.',null,{n:table.rows.length-rows.length}),9);
     y+=10;
   }
   };
@@ -275,6 +282,6 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     }
   }
   const pages=doc.getNumberOfPages();
-  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setDrawColor(207,220,211);doc.line(18,281,192,281);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(64,86,72);doc.text(presentation.reportLabel?`ImbewuField · ${pdfSafe(presentation.reportLabel)}`:presentation.language==='zu'||presentation.language==='xh'?`ImbewuField · ${pdfLabel(presentation.session&&!presentation.funder?'Internal session record':'Programme report',presentation.language)}`:'ImbewuField',18,288);doc.text(`${p} / ${pages}`,192,288,{align:'right'});}
+  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setDrawColor(207,220,211);doc.line(18,281,192,281);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(64,86,72);doc.text(presentation.reportLabel?`ImbewuField · ${pdfSafe(presentation.reportLabel)}`:presentation.language==='zu'||isDraftPdfLanguage(presentation.language)?`ImbewuField · ${pdfLabel(presentation.session&&!presentation.funder?'Internal session record':'Programme report',presentation.language)}`:'ImbewuField',18,288);doc.text(`${p} / ${pages}`,192,288,{align:'right'});}
   return doc;
 }
