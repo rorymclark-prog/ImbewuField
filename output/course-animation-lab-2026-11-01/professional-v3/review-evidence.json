@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-01",
+  "status": "review draft, not installed in the course",
+  "final": {
+    "file": "professional-study-pilot.mp4",
+    "duration_seconds": 24.0,
+    "width": 1920,
+    "height": 1080,
+    "frames": 576,
+    "audio_codec": "aac",
+    "sha256": "87839cef5493f47330e70db5571bd0086af4c7fa39ae0f2cd40c1ef096da71a3"
+  },
+  "motion_checks": {
+    "moving_opening_mean_absolute_pixel_difference": 42.454,
+    "intentional_hold_background_mean_absolute_pixel_difference": 1.298,
+    "decoded_audio_rms": 0.060211,
+    "full_decode": "passed"
+  },
+  "production": {
+    "footage": "Google Flow / Veo 3.1 Fast, original 720p, fictional scene",
+    "graphics": "native Apple Motion document, rendered by Apple Compressor",
+    "master": "apple-motion-native-master-r2.mov",
+    "native_project": "sources/Professional-Study-Apple-Motion.motn",
+    "narration": "existing manifested intro-permaculture/en/slide-17.mp3, reused unchanged",
+    "narration_sha256": "7dfd03c6c9087ca406c8551ca74c76a946e7045ab4483aab72e420380ee927ed",
+    "audio_start_seconds": 0.8
+  },
+  "reviewed": "Exported contact sheet plus representative full-size frames. Human learner comprehension and preferred style remain for Rory to judge.",
+  "limits": [
+    "AI footage is illustrative, not a measured farm plan.",
+    "Export is 1080p; original generated footage is 720p.",
+    "Ten-minute lessons and their stitched long version were not completed after the rejected style directions.",
+    "No lesson body, quiz, species list, saved geometry, app route, public asset, audio manifest or PLAN_VERSION changed."
+  ],
+  "repository_checks": {
+    "typecheck": "Blocked in clean worktree: shared node_modules lacks @rive-app/react-canvas-lite. Initial main checkout also includes unrelated qedit_tmp type errors.",
+    "full_test_suite": "Started, then stopped on user style pivot; no passing full-suite claim.",
+    "diff_check": "Run separately before commit."
+  },
+  "sources": [
+    {
+      "url": "https://cumi.co.uk/map-illustration/",
+      "application": "One coherent look and geographic frame; checked locations and routes before animation."
+    },
+    {
+      "url": "https://www.esri.com/arcgis-blog/products/arcgis-storymaps/constituent-engagement/choreograph-your-maps-with-arcgis-storymaps",
+      "application": "Controlled focal point, progressive reveal, continuity and a pause for explanation."
+    },
+    {
+      "url": "https://doi.org/10.1017/9781108894333.019",
+      "application": "Less irrelevant material; nearby labels and graphics introduced with the explanation."
+    }
+  ]
+}
