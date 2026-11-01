@@ -9,10 +9,14 @@ import {AlertTriangle}from'lucide-react';
 import {ASSURANCE_TITLE,ASSURANCE_PARAGRAPHS,ASSURANCE_ONE_LINE,SOIL_CAUTION,SOIL_TEST_INVITE,SOIL_UNKNOWN_CAUTION,SOIL_PROVENANCE_TITLES,PLAN_ASSURANCE_COPY,planAssuranceText,planAssuranceParagraphs,planSoilCaution,planSoilCautionTitle}from'../lib/plan-assurance.ts';
 import {assuranceMarkdown}from'../lib/report-site-facts.ts';
 import {parseReportMarkdown}from'../lib/report-pdf.ts';
+import {registerInlineDrafts}from'../lib/xh-inline.ts';
+import {AF_INLINE_SOURCE}from'../lib/locales/af-inline/index.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const f=JSON.parse(read('tests/fixtures/report-assurance-translation/source-cases.json'));
 const packet=JSON.parse(read('docs/translation/four-language-completion/report-assurance-drafts.json'));
 const languages=['zu','st','ts','ve']as const;
+// Afrikaans wording exists only once its drafts are registered (the browser's af locale chunk does that); the other tests here run without them, as the server does.
+const withAfrikaans=<T,>(run:()=>T):T=>{registerInlineDrafts('af',AF_INLINE_SOURCE);try{return run();}finally{registerInlineDrafts('af',{});}};
 const digits=(s:string)=>(s.match(/\d+/g)??[]).sort();
 const sources=[ASSURANCE_TITLE,...ASSURANCE_PARAGRAPHS,ASSURANCE_ONE_LINE,...Object.values(SOIL_CAUTION),SOIL_TEST_INVITE,SOIL_UNKNOWN_CAUTION,...Object.values(SOIL_PROVENANCE_TITLES)];
 const map=new Map(PLAN_ASSURANCE_COPY.map(r=>[r.english,r]));
@@ -56,3 +60,16 @@ test('the actual report API emits full native assurances and chooses the existin
  try{const{POST}=await import('../app/api/generate-report/route.ts');const{DEMO_LOCATION}=await import('../lib/demo-site.ts');for(const lang of['en',...languages])for(const soilSource of['lab','soilgrids','estimate',undefined]){const locationData={...DEMO_LOCATION,soil:{...DEMO_LOCATION.soil,soilSource}};const before=JSON.stringify(locationData);const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language:lang,locationData,sections:['Executive Summary']})})as any);assert.equal(response.status,200);const text=await response.text();assert.ok(text.includes(planAssuranceText(ASSURANCE_TITLE,lang)));for(const paragraph of planAssuranceParagraphs(lang,{soilSource}))assert.ok(text.includes(paragraph),`${lang}/${soilSource}: complete assurance source`);if(soilSource!=='soilgrids')assert.ok(!text.includes(planAssuranceText(ASSURANCE_PARAGRAPHS[2],lang)),'known different/missing provenance must not claim generic global-model soil');assert.equal(JSON.stringify(locationData),before);}}
  finally{globalThis.fetch=old;hooks.deregister();}
 });
+
+test('Afrikaans assurance: once the drafts load every source clause is Afrikaans, keeps its figures, and the soil caution still follows the recorded source',()=>withAfrikaans(()=>{
+ for(const source of sources){const af=planAssuranceText(source,'af');assert.notEqual(af,source,`missing Afrikaans draft: ${source.slice(0,60)}`);assert.deepEqual(digits(af),digits(source));}
+ assert.equal(planAssuranceText(ASSURANCE_TITLE,'af'),'Hoeveel om hierdie plan te vertrou');
+ const actual=planAssuranceParagraphs('af');assert.equal(actual.length,ASSURANCE_PARAGRAPHS.length);for(let i=0;i<actual.length;i++)assert.equal(actual[i],planAssuranceText(ASSURANCE_PARAGRAPHS[i],'af'));
+ const blocks=parseReportMarkdown(assuranceMarkdown('af'));assert.equal(blocks.length,1+actual.length);assert.deepEqual(blocks.map((b:any)=>b.text),[planAssuranceText(ASSURANCE_TITLE,'af'),...actual]);
+ for(const soilSource of['lab','soilgrids','estimate',undefined,null,'unfamiliar','constructor','__proto__','toString']){const context={soilSource};const before=JSON.stringify(context);const paragraphs=planAssuranceParagraphs('af',context);assert.equal(paragraphs.length,5);for(const index of[0,1,3,4])assert.equal(paragraphs[index],planAssuranceText(ASSURANCE_PARAGRAPHS[index],'af'));assert.equal(paragraphs[2],soilSource==='soilgrids'?planAssuranceText(ASSURANCE_PARAGRAPHS[2],'af'):planSoilCaution(soilSource,'af'));assert.equal(JSON.stringify(context),before);}
+ for(const source of['lab','soilgrids','estimate']as const){assert.equal(planSoilCaution(source,'af'),planAssuranceText(SOIL_CAUTION[source],'af'));assert.notEqual(planSoilCaution(source,'af'),SOIL_CAUTION[source]);assert.equal(planSoilCautionTitle(source,'af'),planAssuranceText(SOIL_PROVENANCE_TITLES[source],'af'));}
+ for(const source of[null,undefined,'unknown','constructor','__proto__','Recorded custom source']){assert.equal(planSoilCaution(source,'af'),planAssuranceText(SOIL_UNKNOWN_CAUTION,'af'));assert.equal(planSoilCautionTitle(source,'af'),planAssuranceText(SOIL_PROVENANCE_TITLES.unknown,'af'));}
+ for(const value of['Recorded custom text {count}','constructor','__proto__'])assert.equal(planAssuranceText(value,'af'),value);
+ // The English statement is untouched by the Afrikaans drafts being loaded.
+ assert.equal(assuranceMarkdown(),f.english.markdown);assert.deepEqual(planAssuranceParagraphs(),f.english.paragraphs);
+}));

@@ -77,9 +77,8 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
 - **Release notes and tour:** all 235 lines (`lib/update-copy-locales/af.ts`).
 - **Dates, weather, error pages:** on-screen dates use the browser's `af-ZA` month names; the weather card
   and error/offline pages carry their own Afrikaans tables.
-- **Kept English for Afrikaans on purpose:** the site report summaries, month names and PDF labels
-  (pinned by the report-header and report-costs tests). The farm report, programme report and invoice
-  documents were added later (below).
+- **Kept English for Afrikaans on purpose:** at first, all report documents. The farm, programme and site
+  reports and the invoice document were drafted later (below).
 - **Blind review of safety, money and consent drafts:** 1,936 drafts back-translated by six independent
   reviewers before seeing the English; 44 repairs applied (`docs/translation-reviews/afrikaans-ui-2026-10-31/`).
 - **Studies lessons:** all 10 modules (33 lessons, 646 fields) as source-paired drafts
@@ -116,6 +115,12 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   The sample assessment programme has an Afrikaans toggle and notice.
   The field journal, both crop planners, community "time ago" dates and the water-balance dry season
   also use Afrikaans months (journal weekdays So Ma Di Wo Do Vr Sa, as `af-ZA` writes them).
+- **Site report:** the summaries, header, glance table, cost table, M&E plan, risk register, trust statement,
+  cover, contents, figure labels and months follow Afrikaans (`af-inline/g45-site-report.ts`, 389 drafts;
+  `reportDocumentText` reads them). They are Afrikaans only once the drafts are loaded; before that the
+  output is the English byte for byte, and the old "af is English" assertions stay as that check. The
+  generate-report route loads the drafts for Afrikaans requests only. Still English: the 39 preparation
+  checklist rows and the crop-plan PDF pages (the same for isiXhosa).
 - **isiXhosa fix found on the way:** the invoice page told isiXhosa farmers the buyer's invoice "stays in
   English", but it uses `DOCUMENT_COPY.xh`. The note now says so (fixed on #1090).
 - **Staff and map screens:** the M&E dashboard and overview, sector overlay compass words, rainfall chart

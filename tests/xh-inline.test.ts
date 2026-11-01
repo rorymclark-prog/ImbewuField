@@ -11,7 +11,7 @@ import { join } from 'node:path';
 import test from 'node:test';
 
 import { XH_INLINE_SOURCE } from '@/lib/locales/xh-inline/index';
-import { inlineTemplate, inlineText, placeholdersOf, registerXhInline, xhInlineDraft } from '@/lib/xh-inline';
+import { inlineDraftsLoaded, inlineTemplate, inlineText, placeholdersOf, registerInlineDrafts, registerXhInline, xhInlineDraft } from '@/lib/xh-inline';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const SHARD_DIR = join(ROOT, 'lib/locales/xh-inline');
@@ -63,4 +63,18 @@ test('lookups: isiZulu keeps its wording, isiXhosa reads the drafts, everyone el
   // A draft that dropped its placeholder would lose the figure, so English is shown.
   assert.equal(xhInlineDraft('Bad {n}'), null);
   registerXhInline(XH_INLINE_SOURCE);
+});
+
+test('inlineDraftsLoaded is true only for a draft language whose drafts are registered', () => {
+  registerInlineDrafts('af', {});
+  assert.equal(inlineDraftsLoaded('af'), false);
+  registerInlineDrafts('af', { 'Save': 'Stoor' });
+  assert.equal(inlineDraftsLoaded('af'), true);
+  assert.equal(inlineDraftsLoaded('zu'), false);
+  assert.equal(inlineDraftsLoaded('en'), false);
+  assert.equal(inlineDraftsLoaded(''), false);
+  registerInlineDrafts('af', {});
+  assert.equal(inlineDraftsLoaded('af'), false);
+  registerXhInline(XH_INLINE_SOURCE);
+  assert.equal(inlineDraftsLoaded('xh'), true);
 });

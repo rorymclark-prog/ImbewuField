@@ -201,20 +201,20 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
       // Long native field/source words hid the source column on a phone. Only those columns may
       // break within a word; the measurement value must never split a decimal or a stored name.
       // Minimum widths also stop the auto table layout turning field labels into two-letter lines.
-      const nativeMeasurementTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
-        headers.length === 3 && ['Measure','Value','Where it comes from'].every((source,index) =>
-          headers[index].trim() === reportDocumentText(source,language)));
+      // Afrikaans counts too, but only once its drafts have loaded: before then reportDocumentText('…','af') is the English,
+      // and an English table must never be taken for a translated one (hence the 'differs from the English' condition).
+      const nativeHeaders = (sources: readonly string[]) => headers.length === sources.length && [...REPORT_DOCUMENT_LANGUAGES, 'af'].some(language =>
+        sources.every((source, index) => headers[index].trim() === reportDocumentText(source, language))
+        && (language !== 'af' || sources.some((source, index) => headers[index].trim() !== source)));
+      const nativeMeasurementTable = nativeHeaders(['Measure','Value','Where it comes from']);
       const measurementWidths = [95,126,130];
       // A six-column native checklist hid its final actions off the phone. Exact source headers
       // identify these tables so phone rows can keep every field visible with its own label.
-      const nativeChecklistTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
-        [ ['Indicator','What it answers','Baseline','How to measure','How often','Recorded in'],
-          ['#','Risk','What raised it','Likelihood','Impact','What to do about it'],
-        ].some(labels => headers.length === labels.length && labels.every((source,index) =>
-          headers[index].trim() === reportDocumentText(source,language))));
-      const nativeCostTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
-        headers.length === 5 && ['Item','Quantity','Rate','Amount','Measured from'].every((source,index) =>
-          headers[index].trim() === reportDocumentText(source,language)));
+      const nativeChecklistTable = [
+        ['Indicator','What it answers','Baseline','How to measure','How often','Recorded in'],
+        ['#','Risk','What raised it','Likelihood','Impact','What to do about it'],
+      ].some(labels => nativeHeaders(labels));
+      const nativeCostTable = nativeHeaders(['Item','Quantity','Rate','Amount','Measured from']);
       const nativeFieldTable = nativeChecklistTable || nativeCostTable;
       const rows = body.map(splitRow);
       const groups: { heading?: string; rows: { cells: string[]; index: number }[] }[] = [];

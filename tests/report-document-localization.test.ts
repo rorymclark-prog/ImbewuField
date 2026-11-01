@@ -8,19 +8,23 @@ import {renderToStaticMarkup} from 'react-dom/server';
 import {stripInlineMarkdown} from '../lib/report-pdf.ts';
 import {buildCoverMarkdown,preparedFromLabel,documentReference,type ReportCoverInput} from '../lib/report-cover.ts';
 import {assembleReportDocument,type AssembleInput} from '../lib/report-assemble.ts';
-import {numberFigures,numberSections,ensureDocumentArchitecture,buildContents,buildListOfFigures} from '../lib/report-structure.ts';
+import {numberFigures,numberSections,ensureDocumentArchitecture,buildContents,buildListOfFigures,AF_FRONT_MATTER_TITLES} from '../lib/report-structure.ts';
+import {registerInlineDrafts} from '../lib/xh-inline.ts';
+import {AF_INLINE_SOURCE} from '../lib/locales/af-inline/index.ts';
 import {REPORT_DOCUMENT_COPY,REPORT_DOCUMENT_LANGUAGES,reportDocumentText} from '../lib/report-localisation.ts';
 import {DEMO_LOCATION} from '../lib/demo-site.ts';
 const read=(path:string)=>fs.readFileSync(new URL('../'+path,import.meta.url),'utf8');
 const fixture=JSON.parse(read('tests/fixtures/report-document-translation/source-cases.json')) as {sourceSha:string;covers:Array<{input:ReportCoverInput;expected:string;prepared:string}>;assembly:{input:AssembleInput;expected:ReturnType<typeof assembleReportDocument>};legacy:{input:string;expected:string}};
 const code=['zu','st','ts','ve'] as const;
+// Afrikaans wording exists only once its drafts are registered (the browser's af locale chunk does that); the other tests here run without them, as the server does.
+const withAfrikaans=<T,>(run:()=>T):T=>{registerInlineDrafts('af',AF_INLINE_SOURCE);try{return run();}finally{registerInlineDrafts('af',{});}};
 const sources=new Map(REPORT_DOCUMENT_COPY.map(row=>[row.english,row]));
 const tokens=(s:string)=>(s.match(/\{\w+\}/g)??[]).sort();
 const digits=(s:string)=>(s.match(/\d+/g)??[]).sort();
 
 test('English covers, references, provenance, assembly and legacy architecture remain exact to the original source',()=>{
  const before=JSON.stringify(fixture);
- for(const row of fixture.covers){assert.equal(buildCoverMarkdown(row.input),row.expected);assert.equal(preparedFromLabel(row.input.sources),row.prepared);}
+ for(const row of fixture.covers){assert.equal(buildCoverMarkdown(row.input),row.expected);assert.equal(preparedFromLabel(row.input.sources),row.prepared);assert.equal(buildCoverMarkdown(row.input,'af'),row.expected,'before its drafts load Afrikaans is the English');}
  assert.deepEqual(assembleReportDocument(fixture.assembly.input),fixture.assembly.expected);
  assert.equal(ensureDocumentArchitecture(fixture.legacy.input),fixture.legacy.expected);
  assert.equal(JSON.stringify(fixture),before);
@@ -106,4 +110,37 @@ test('the actual reader preserves decimal coordinates and areas while ordinary n
  assert.equal((html.match(/>[12]\.<\/span>/g)??[]).length,2);
  const old=source.replace('line.match(/^\\d+\\.\\s/)','line.match(/^\\d+\\./)').replace('line.replace(/^\\d+\\.\\s+/,','line.replace(/^\\d+\\.\\s*/,');
  assert.notEqual(old,source);assert.ok(!render(old,markdown).includes('28.6280° S, 29.8910° E</p>'),'the test must detect the original decimal/list collision');
+});
+
+test('Afrikaans covers name only supplied sources and keep identity, coordinates, counts and certification caveats once the drafts load',()=>withAfrikaans(()=>{
+ for(const row of fixture.covers){const before=JSON.stringify(row.input);const af=buildCoverMarkdown(row.input,'af');const t=(source:string)=>reportDocumentText(source,'af');
+  assert.notEqual(af,row.expected);assert.ok(af.startsWith('# '+t('Permaculture Site Report').split(' — ')[0]));assert.ok(af.includes(documentReference(row.input)));
+  const coordinate=row.expected.split('\n').find(l=>l.includes('°'))!;assert.ok(af.includes(coordinate));
+  assert.ok(af.includes(row.input.dateLabel));if(row.input.farmName)assert.ok(af.includes(row.input.farmName));
+  assert.ok(af.includes(t('For the farmer\'s use and discussion. Not a professional engineering, agronomic or financial certification.')));
+  assert.ok(af.includes('Konsepvertaling: nog nie deur \'n vlot Afrikaanssprekende hersien nie.'),'the draft notice says who has not reviewed it');
+  assert.ok(af.includes(t('1 — first issue')));assert.ok(af.includes(String(row.input.sectionCount)));
+  const provenance=af.split('\n').find(line=>line.startsWith('| '+t('Prepared by')+' |'))!;assert.ok(provenance);
+  for(const [flag,source]of [['map','map'],['survey','survey'],['cropPlan','crop plan']]as const)assert.equal(provenance.includes(t(source)),row.input.sources[flag],`af: false or missing ${source} provenance`);
+  assert.equal(JSON.stringify(row.input),before);
+ }
+}));
+
+test('Afrikaans contents and figure words preserve final numbering, alternatives, fences and legacy idempotence; front-matter titles are fixed so a server-built document is still recognised',()=>{
+ // The three fixed titles are the Afrikaans drafts (the browser recognises them before any draft loads).
+ withAfrikaans(()=>{for(const [source,title] of Object.entries(AF_FRONT_MATTER_TITLES))assert.equal(reportDocumentText(source,'af'),title);});
+ withAfrikaans(()=>{const t=(source:string)=>reportDocumentText(source,'af');const input={...fixture.assembly.input,language:'af',cover:'# Original title\n\n## '+t('Document control')+'\n\nRecord',glance:'## '+t('Site at a Glance')+'\n\nOriginal source 25 m².'};const before=JSON.stringify(input);const out=assembleReportDocument(input);
+  assert.equal(out.sectionCount,fixture.assembly.expected.sectionCount);assert.equal(out.figureCount,2);
+  for(const label of ['Document control','Site at a Glance','Contents','Figures'])assert.ok(out.markdown.includes('## '+t(label)));
+  assert.ok(out.markdown.includes('## Inhoud'));assert.ok(out.markdown.includes('## 1. Original chapter'));assert.ok(out.markdown.includes('## 3. Original closing section'));
+  assert.ok(out.markdown.includes(reportDocumentText('Figure {number} — {caption}','af',{number:1,caption:'Original image'})));
+  for(const source of ['![Original image](/original.png)','![](/empty.png)','Inline ![Inline](/inline.png).','```\n![In code](/code.png)\n```','Original source 25 m².','Saved body.','Do not rewrite.'])assert.ok(out.markdown.includes(source));
+  assert.equal(ensureDocumentArchitecture(out.markdown,'af'),out.markdown);assert.equal(ensureDocumentArchitecture(out.markdown,'en'),out.markdown,'exporting an Afrikaans saved report must not add an English contents page');
+  const legacy=ensureDocumentArchitecture(fixture.legacy.input,'af');assert.ok(legacy.includes('## '+t('Contents')));assert.equal(ensureDocumentArchitecture(legacy,'af'),legacy);
+  assert.equal(buildContents([],'af'),'');assert.equal(buildListOfFigures([],'af'),'');assert.deepEqual(numberSections('## '+t('Document control')+'\n## First body').headings.map(h=>h.number),['1']);
+  assert.equal(JSON.stringify(input),before);
+  // The Afrikaans document, exported with no drafts in memory (a fresh tab), is still recognised and left as it is.
+  registerInlineDrafts('af',{});assert.equal(ensureDocumentArchitecture(out.markdown),out.markdown);
+  assert.deepEqual(numberSections('## '+AF_FRONT_MATTER_TITLES['Site at a Glance']+'\n## First body').headings.map(h=>h.number),['1']);
+ });
 });

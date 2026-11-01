@@ -1,7 +1,7 @@
 import { ELEMENTS_BY_ID } from './design-elements';
 import { plantTakesCode } from './plant-codes';
 import { ROUTE_LABELS } from './design-studio-report';
-import { recordsMonthShort } from './records-months.ts';
+import { recordsReportMonthShort } from './records-months.ts';
 import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
@@ -44,7 +44,7 @@ export function siteReportVisuals(facts: ReportSiteFacts | null, location: Locat
   }
   if (valid(location.rainfall.annual)) metrics.push({ label: t('Annual rainfall', 'Imvula yonyaka'), value: `${n(location.rainfall.annual)} mm`, note: t('Climate estimate', 'Isilinganiso sesimo sezulu') });
   if (facts?.water) metrics.push({ label: t('Storage in the plan', 'Amanzi ohlelweni'), value: facts.water.tanksOfUnknownCapacity && !facts.water.statedStorageLitres ? t('Not stated', 'Akubhaliwe') : `${n(facts.water.statedStorageLitres)} L`, note: facts.water.tanksOfUnknownCapacity ? `${facts.water.tanksOfUnknownCapacity} ${t('tanks have no stated capacity', 'amathangi awunawo umthamo obhaliwe')}` : t('Stated capacity; check installation', 'Umthamo obhaliwe; hlola ukufakwa') });
-  if (location.rainfall.monthly.length === 12 && location.rainfall.monthly.every(valid)) charts.push({ id: 'rainfall', title: t('Rain through the year', 'Imvula phakathi nonyaka'), note: `${location.rainfall.rainfallSource ?? t('Climate estimate', 'Isilinganiso sesimo sezulu')} · ${t('Monthly rainfall, not a weather forecast.', 'Imvula yenyanga, akusona isibikezelo sezulu.')}`, unit: 'mm', kind: 'months', rows: location.rainfall.monthly.map((value, i) => ({ label: recordsMonthShort(language, i + 1), value })) });
+  if (location.rainfall.monthly.length === 12 && location.rainfall.monthly.every(valid)) charts.push({ id: 'rainfall', title: t('Rain through the year', 'Imvula phakathi nonyaka'), note: `${location.rainfall.rainfallSource ?? t('Climate estimate', 'Isilinganiso sesimo sezulu')} · ${t('Monthly rainfall, not a weather forecast.', 'Imvula yenyanga, akusona isibikezelo sezulu.')}`, unit: 'mm', kind: 'months', rows: location.rainfall.monthly.map((value, i) => ({ label: recordsReportMonthShort(language, i + 1), value })) });
   if (facts?.water?.tanks.length) charts.push({ id: 'water', title: t('Water storage', 'Ukugcina amanzi'), note: `${t('Capacity is not water currently available.', 'Umthamo awusho amanzi akhona manje.')} ${facts.water.tanksOfUnknownCapacity ? `${facts.water.tanksOfUnknownCapacity} ${t('tanks have no stated capacity.', 'amathangi awunawo umthamo obhaliwe.')}` : ''}`, kind: 'bars', unit: 'L', rows: facts.water.tanks.filter(r => r.statedLitres !== null).map(r => ({ label: `${reportElementDisplayName(r.name,r.defId,language)} ×${r.count}`, value: r.statedLitres! * r.count, detail: reportVisualText(r.status, language) })) });
   const cropRows = facts?.crop?.crops ?? [];
   // Chunk rather than truncate: the last crop deserves the same visibility as the first.
@@ -127,7 +127,7 @@ export function reportChartSvg(chart: ReportChart, ink = false): { svg: string; 
     parts.push(`<circle cx="135" cy="122" r="${radius}" fill="none" stroke="#e7ece8" stroke-width="18"/><circle cx="135" cy="122" r="${radius}" fill="none" stroke="${colours[0]}" stroke-width="18" stroke-dasharray="${value / 100 * circumference} ${circumference}" transform="rotate(-90 135 122)"/>`);
     text(135, 135, `${n(value)}%`, 44, 'middle', 600); text(275, 110, chart.rows[0].label, 23, 'start', 600); text(275, 145, reportVisualText('{remaining}% remaining', language, { remaining: n(100 - value) }), 20);
   } else {
-    REPORT_MONTHS.forEach((_, i) => text(267 + i * 46, 27, recordsMonthShort(language, i + 1), 15, 'middle', 600));
+    REPORT_MONTHS.forEach((_, i) => text(267 + i * 46, 27, recordsReportMonthShort(language, i + 1), 15, 'middle', 600));
     chart.rows.forEach((r, i) => { const y = 56 + i * 58; text(12, y + 16, r.label, 17, 'start', 600); if (r.detail) text(12, y + 35, r.detail.length > 31 ? `${r.detail.slice(0, 28)}…` : r.detail, 13); REPORT_MONTHS.forEach((_, m) => { const x = 267 + m * 46; rect(x - 18, y, 36, 36, '#f1f5f2'); if (r.months?.includes(m)) parts.push(`<circle cx="${x}" cy="${y + 18}" r="9" stroke="${colours[0]}" stroke-width="3" fill="${r.once?.includes(m) ? 'white' : colours[0]}"/>`); }); });
   }
   parts.push('</svg>');
@@ -3060,7 +3060,7 @@ export function reportVisualText(english: string, language: string, values: Reco
 }
 
 export function reportYearRange(language: string): string {
-  return `${recordsMonthShort(language, 1).toUpperCase()} – ${recordsMonthShort(language, 12).toUpperCase()}`;
+  return `${recordsReportMonthShort(language, 1).toUpperCase()} – ${recordsReportMonthShort(language, 12).toUpperCase()}`;
 }
 
 function figureKicker(id: string, language: string): string {
@@ -3079,10 +3079,10 @@ export function reportChartAlt(chart: ReportChart): string {
   return `${chart.title}. ${chart.rows.map(row => {
     const label = row.detail && chart.kind === 'calendar' ? `${row.label} · ${row.detail}` : row.label;
     const value = chart.kind === 'calendar'
-      ? (row.months ?? []).map(month => recordsMonthShort(language, month + 1)).join(', ')
+      ? (row.months ?? []).map(month => recordsReportMonthShort(language, month + 1)).join(', ')
       : `${row.value} ${chart.unit}`;
     const once = chart.kind === 'calendar' && row.once?.length
-      ? `; ${reportVisualText('first season only', language)}: ${row.once.map(month => recordsMonthShort(language, month + 1)).join(', ')}` : '';
+      ? `; ${reportVisualText('first season only', language)}: ${row.once.map(month => recordsReportMonthShort(language, month + 1)).join(', ')}` : '';
     return `${label}: ${value}${once}`;
   }).join('; ')}`;
 }

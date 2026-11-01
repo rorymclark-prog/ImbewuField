@@ -15,12 +15,15 @@
 // axis; they are not an established abbreviation convention. See
 // docs/translation-reviews/records-finance-2026-10-06/README.md (Round 5) for the open questions.
 //
-// AFRIKAANS (1 Nov 2026) is deliberately NOT in the tables above. Those tables also feed the report
-// builders, and an Afrikaans report is still English throughout (tests/report-header-localization.test.ts,
-// tests/report-costs-localization.test.ts pin that), so giving them Afrikaans months would print one
-// Afrikaans word inside an English report. The money book, the invoice and the money charts opt in
-// through the recordsBook* functions at the bottom, which read the standard Afrikaans month names (the
-// same ones lib/update-copy-date.ts prints) and are the plain functions for every other language.
+// AFRIKAANS (1 Nov 2026) is deliberately NOT in the tables above, which are shared by every report
+// builder. The money book, the invoice and the money charts opt in through the recordsBook* functions at
+// the bottom, which read the standard Afrikaans month names (the same ones lib/update-copy-date.ts
+// prints) and are the plain functions for every other language. The site report opts in through the
+// recordsReport* functions after them: the same Afrikaans names, but only once the Afrikaans drafts
+// have loaded, so a report built before then (on the server) stays English throughout instead of
+// printing one Afrikaans month word inside English text.
+
+import { inlineDraftsLoaded } from '@/lib/xh-inline';
 
 export type RecordsMonthLang = 'zu' | 'st' | 've' | 'ts' | 'xh';
 
@@ -156,4 +159,27 @@ export function recordsBookDate(lang: string, date: Date, withYear: boolean): st
   if (lang !== 'af' || Number.isNaN(date.getTime())) return recordsDate(lang, date, withYear);
   const base = `${String(date.getDate()).padStart(2, '0')} ${AF_SHORT[date.getMonth()]}`;
   return withYear ? `${base} ${date.getFullYear()}` : base;
+}
+
+// ── Afrikaans, for the site report (see the note at the top) ─────────────────────────────────
+// Afrikaans months only once the Afrikaans drafts are loaded; every other language, and Afrikaans
+// before then, is exactly the plain function.
+
+/** recordsMonthShort for the site report. */
+export function recordsReportMonthShort(lang: string, month: number): string {
+  return lang === 'af' && inlineDraftsLoaded('af') ? recordsBookMonthShort(lang, month) : recordsMonthShort(lang, month);
+}
+
+/** recordsDate for the site report. */
+export function recordsReportDate(lang: string, date: Date, withYear: boolean): string {
+  return lang === 'af' && inlineDraftsLoaded('af') ? recordsBookDate(lang, date, withYear) : recordsDate(lang, date, withYear);
+}
+
+/** recordsSeasonLabel for the site report: the month range in Afrikaans months, 'year-round' and 'none' in Afrikaans. */
+export function recordsReportSeasonLabel(language: string, value: string): string {
+  if (language !== 'af' || !inlineDraftsLoaded('af')) return recordsSeasonLabel(language, value);
+  if (value === 'year-round') return 'heeljaar';
+  if (value === 'none') return 'geen';
+  const months = recordsMonthRangeIndices(value);
+  return months.length ? `${AF_SHORT[months[0]]}–${AF_SHORT[months[months.length - 1]]}` : value;
 }

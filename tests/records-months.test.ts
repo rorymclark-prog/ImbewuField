@@ -2,7 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-import { recordsDate, recordsMonthLong, recordsMonthShort, recordsMonthYear, recordsSeasonLabel, recordsBookDate, recordsBookMonthLong, recordsBookMonthShort, recordsBookMonthYear } from '@/lib/records-months';
+import { recordsDate, recordsMonthLong, recordsMonthShort, recordsMonthYear, recordsSeasonLabel, recordsBookDate, recordsBookMonthLong, recordsBookMonthShort, recordsBookMonthYear, recordsReportDate, recordsReportMonthShort, recordsReportSeasonLabel } from '@/lib/records-months';
+import { registerInlineDrafts } from '@/lib/xh-inline';
+import { AF_INLINE_SOURCE } from '@/lib/locales/af-inline/index';
 import { buildFinanceSeries } from '@/lib/finance-series';
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
@@ -77,7 +79,7 @@ test('Afrikaans names the twelve months for the money book, and dates keep their
       assert.equal(recordsBookDate(lang, day, false), recordsDate(lang, day, false));
     }
   }
-  // The report builders still see Afrikaans as an English report: the shared tables have no Afrikaans (the report tests pin this).
+  // The shared tables (which every report builder reads) have no Afrikaans; the site report opts in through recordsReport*, below.
   assert.equal(recordsMonthShort('af', 3), 'Mar');
   assert.equal(recordsMonthLong('af', 5), 'May');
   assert.equal(recordsSeasonLabel('af', 'Nov–Mar'), 'Nov–Mar');
@@ -137,4 +139,40 @@ test('wiring: the money book, charts, harvest list and saved-invoice list use th
     assert.doesNotMatch(read(printed), /records-months/, `${printed} must not use regional month names`);
   }
   assert.match(read('app/records/page.tsx'), /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : lang === 'af' \? 'af' : 'en'\);/);
+});
+
+test('the site report reads Afrikaans months only once the Afrikaans drafts are loaded, and every other language is the plain function', () => {
+  registerInlineDrafts('af', {});
+  const d = new Date(2026, 2, 5, 9, 0, 0);
+  // Before the drafts load (the server, first paint) an Afrikaans report is English throughout, so no Afrikaans month word sits inside English text.
+  for (let month = 1; month <= 12; month++) assert.equal(recordsReportMonthShort('af', month), recordsMonthShort('af', month));
+  assert.equal(recordsReportDate('af', d, true), recordsDate('af', d, true));
+  assert.equal(recordsReportSeasonLabel('af', 'Nov–Mar'), 'Nov–Mar');
+  assert.equal(recordsReportSeasonLabel('af', 'year-round'), 'year-round');
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  try {
+    assert.deepEqual(Array.from({ length: 12 }, (_, i) => recordsReportMonthShort('af', i + 1)), ['Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des']);
+    assert.equal(recordsReportMonthShort('af', 13), '');
+    assert.equal(recordsReportDate('af', d, true), '05 Mrt 2026');
+    assert.equal(recordsReportDate('af', d, false), '05 Mrt');
+    assert.equal(recordsReportDate('af', new Date('nope'), true), 'Invalid Date');
+    assert.equal(recordsReportSeasonLabel('af', 'Nov–Mar'), 'Nov–Mar'.replace('Mar', 'Mrt'));
+    assert.equal(recordsReportSeasonLabel('af', 'year-round'), 'heeljaar');
+    assert.equal(recordsReportSeasonLabel('af', 'none'), 'geen');
+    assert.equal(recordsReportSeasonLabel('af', 'Whenever it rains'), 'Whenever it rains');
+    // The drafts being loaded changes nothing for any other language, and the shared tables still have no Afrikaans.
+    for (const lang of ['en', 'zu', 'xh', 'st', 've', 'ts', 'fr', '']) {
+      for (let month = 1; month <= 12; month++) {
+        assert.equal(recordsReportMonthShort(lang, month), recordsMonthShort(lang, month));
+        const day = new Date(2026, month - 1, 5, 9, 0, 0);
+        assert.equal(recordsReportDate(lang, day, true), recordsDate(lang, day, true));
+        assert.equal(recordsReportDate(lang, day, false), recordsDate(lang, day, false));
+      }
+      for (const value of ['Nov–Mar', 'Jan–Dec', 'year-round', 'none', 'Whenever it rains']) assert.equal(recordsReportSeasonLabel(lang, value), recordsSeasonLabel(lang, value));
+    }
+    assert.equal(recordsMonthShort('af', 3), 'Mar');
+    assert.equal(recordsSeasonLabel('af', 'Nov–Mar'), 'Nov–Mar');
+  } finally {
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+  }
 });

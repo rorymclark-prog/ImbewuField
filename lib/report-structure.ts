@@ -19,6 +19,9 @@ import { fillInline, inlineText } from '@/lib/xh-inline';
 /** isiXhosa's contents title is fixed (it must be recognised on the server, where no isiXhosa
  * drafts load); the other front-matter wording uses the draft keyed by the exact English. */
 const XH_CONTENTS = 'Okuqulathwe';
+/** Afrikaans front-matter titles are fixed for the same reason: a document built on the server, before any Afrikaans
+ * drafts load, must still be recognised (and left unnumbered) by the browser. tests/report-structure.test.ts pins them to the drafts. */
+export const AF_FRONT_MATTER_TITLES = { 'Contents': 'Inhoud', 'Document control': 'Dokumentbeheer', 'Site at a Glance': "Die terrein in 'n oogopslag" } as const;
 function documentText(source: string, language: string, values: Record<string, string | number> = {}): string {
   if (language !== 'xh') return reportDocumentText(source, language, values);
   if (source === 'Contents') return XH_CONTENTS;
@@ -33,6 +36,7 @@ const UNNUMBERED_TITLES = new Set([
   'indawo kafushane',
   'okuqukethwe',
   XH_CONTENTS.toLocaleLowerCase(),
+  ...Object.values(AF_FRONT_MATTER_TITLES).map(title => title.toLocaleLowerCase()),
   ...['Contents','Document control','Site at a Glance'].flatMap(title=>REPORT_DOCUMENT_LANGUAGES.map(language=>reportDocumentText(title,language).toLocaleLowerCase())),
 ]);
 
@@ -258,7 +262,7 @@ export function ensureDocumentArchitecture(markdown: string,language='en'): stri
   const text = markdown ?? '';
   if (!text.trim()) return text;
   // Already a structured document — leave it exactly as generated.
-  const contentsTitles=new Set([...['en',...REPORT_DOCUMENT_LANGUAGES].map(code=>reportDocumentText('Contents',code).toLocaleLowerCase()),XH_CONTENTS.toLocaleLowerCase()]);
+  const contentsTitles=new Set([...['en',...REPORT_DOCUMENT_LANGUAGES].map(code=>reportDocumentText('Contents',code).toLocaleLowerCase()),XH_CONTENTS.toLocaleLowerCase(),AF_FRONT_MATTER_TITLES.Contents.toLocaleLowerCase()]);
   if(text.split('\n').some(line=>{const match=/^##\s+(.+?)\s*$/.exec(line);return match&&contentsTitles.has(match[1].toLocaleLowerCase());}))return text;
 
   const figured = numberFigures(text,language);

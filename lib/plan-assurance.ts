@@ -33,6 +33,8 @@
  * as covering them.
  */
 
+import { inlineDraft } from '@/lib/xh-inline';
+
 /** Headline shown above any generated plan or report. */
 export const ASSURANCE_TITLE = 'How much to trust this plan';
 
@@ -213,6 +215,8 @@ export const PLAN_ASSURANCE_COPY:readonly {english:string;zu:string;st:string;ts
 const assuranceCopy = new Map(PLAN_ASSURANCE_COPY.map(row=>[row.english,row]));
 export function planAssuranceText(source:string,language='en'):string {
   const row=assuranceCopy.get(source);
+  // Afrikaans: the draft keyed by the exact English (lib/locales/af-inline), else English until the drafts load.
+  if(language==='af')return inlineDraft('af',source)??source;
   return row&&(language==='zu'||language==='st'||language==='ts'||language==='ve')?row[language]:source;
 }
 

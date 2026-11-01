@@ -32,6 +32,11 @@ export function registerInlineDrafts(lang: InlineDraftLang, drafts: Record<strin
   INLINE[lang] = drafts;
 }
 
+/** True once this language's drafts are registered (the locale chunk has loaded); false on the server and before then. */
+export function inlineDraftsLoaded(lang: string): boolean {
+  return isInlineDraftLang(lang) && Object.keys(INLINE[lang] ?? {}).length > 0;
+}
+
 /** Called once by the xh locale chunk. */
 export function registerXhInline(drafts: Record<string, string>): void {
   registerInlineDrafts('xh', drafts);
