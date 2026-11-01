@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Harvest targets: docs/audits/2026-11-01/harvest-target-release-drafts.json; unreviewed.
+  "Set weekly harvest targets and review growing space, dated sowings and gaps.": "Vheani zwipikwa zwa khaṋo ya vhege iṅwe na iṅwe ni ṱole fhethu ha u ṱavha, zwifhinga zwa u zwala na zwikhala.",
+  "Plan from a harvest target": "Pulana u bva kha tshipikwa tsha khaṋo",
+  "Crop planner → Harvest targets": "Mupulani wa zwiliṅwa → Zwipikwa zwa khaṋo",
+  "Choose a crop, weekly weight and harvest months. Review the proposal before adding its dated sowings to your crop plan.": "Nangani tshiliṅwa, tshileme tsha vhege iṅwe na iṅwe na miṅwedzi ya khaṋo. Ṱolani nyeletshedzo ni sa athu u engedza zwifhinga zwayo zwa u zwala kha pulane yaṋu ya zwiliṅwa.",
+
   // Live render review: docs/audits/2026-10-31/live-map-settings-release-drafts.json; unreviewed.
   "Earthworks starts with your available aerial photo; plain paper remains a choice.": "Mishumo ya mavu i thoma nga tshifanyiso tsha fhethu tsho dzhiiwaho nṱha tshi re hone; bammbiri ḽi si na tshifanyiso ḽi kha ḓi vha khetho.",
   // Map defaults: docs/audits/2026-10-31/map-defaults-release-drafts.json; unreviewed.
