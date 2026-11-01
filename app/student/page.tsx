@@ -1236,6 +1236,11 @@ export default function StudentPage() {
                           ? 'Slides: isiXhosa AI draft + English source'
                           : 'Slides: English')}
                       </span>}
+                      {lang === 'af' && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: 'var(--gold-dim)' }}>
+                        {inlineText(lang, resolveLearnerDeckLang(mod.id, 'af')?.exact
+                          ? 'Slides: Afrikaans AI draft + English source'
+                          : 'Slides: English')}
+                      </span>}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
                           <span className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>

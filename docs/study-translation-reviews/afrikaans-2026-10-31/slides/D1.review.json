@@ -1,0 +1,16 @@
+{
+  "unit": "D1",
+  "okCount": 271,
+  "items": [
+    {
+      "index": 82,
+      "path": "intro-permaculture/17/body/2",
+      "verdict": "repair",
+      "english": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+      "draft": "Hoe meer gereeld iets jou nodig het, hoe nader woon dit. Dit kan oor 'n seisoen loop en werk spaar.",
+      "backtranslation": "The more often something needs you, the closer it lives. It can run/last over a season and save work.",
+      "problem": "\"Dit kan oor 'n seisoen loop en werk spaar\" reads most naturally as \"it can last over a season and save work\" (loop = run/last), so the saving in walking is lost and the sentence is unclear.",
+      "corrected": "Hoe meer gereeld iets jou nodig het, hoe nader woon dit. Oor 'n seisoen kan dit jou geloop en werk spaar."
+    }
+  ]
+}

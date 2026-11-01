@@ -18,12 +18,12 @@ const files: Record<string, Row> = {
   'app/student/page.tsx': {
     beforePath: 'tests/fixtures/student-page-before-af-studies.tsx.txt',
     beforeSha256: 'd5cdf42e6773cb7d95ed2549a061987ba79a5d59bb4867bd12ef8c9adaf040bf',
-    afterSha256: 'c52d56aad09ec88535cbaa6040f8fb37503a1aa217a5ab9dcd579ae8e7d3b558',
-    afterBytes: 90939,
+    afterSha256: '6ba4054606030d8341fa375e5341d99282a8f31c42aac618d97405b3ca5b8910',
+    afterBytes: 91311,
     // Present in the isiXhosa file, absent from the Afrikaans one.
     gone: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts', 'xh']);", "{regionalDraft && lang !== 've' && lang !== 'xh' && <div"],
     // Absent from the isiXhosa file, present in the Afrikaans one.
-    arrived: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts', 'xh', 'af']);", "'Unreviewed Afrikaans AI draft.", "<span lang=\"af\">{inlineText(lang, 'Unreviewed Afrikaans machine draft.')}</span>", "lang === 'af' ? 'Afrikaans AI draft · review pending'"],
+    arrived: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts', 'xh', 'af']);", "'Unreviewed Afrikaans AI draft.", "<span lang=\"af\">{inlineText(lang, 'Unreviewed Afrikaans machine draft.')}</span>", "lang === 'af' ? 'Afrikaans AI draft · review pending'", "'Slides: Afrikaans AI draft + English source'"],
   },
 };
 const beforeFiles = new Map<string, Buffer>();

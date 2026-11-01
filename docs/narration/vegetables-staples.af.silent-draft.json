@@ -1,0 +1,790 @@
+{
+  "language": "af",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Vegetables and Staple Crops",
+        "body": [
+          "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+          "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week.",
+          "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Groente en stapelgewasse"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Welkom. Dit is Groente en stapelgewasse. Dit is een van die tien modules in die ImbewuField-opleiding."
+          },
+          {
+            "status": "draft",
+            "text": "'n Produktiewe tuin is nie die een wat op een dag die volste lyk nie. Dit is die een wat week ná week aanhou om kos na die huishouding te bring."
+          },
+          {
+            "status": "draft",
+            "text": "In die volgende paar minute bespreek ons vier dinge. Hoe om 'n bedding te bou. Hoe om die oeste aan die kom te hou. Watter stapelgewasse om te kweek. En wat om te doen wanneer peste opdaag."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "Let's start with the problem.",
+          "One big sowing gives you a glut. Everything is ready at once. You eat what you can, you give some away, and the rest is wasted.",
+          "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it.",
+          "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+          "That rhythm is what feeds a household. Not the size of the garden."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hoekom dit saak maak"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kom ons begin met die probleem."
+          },
+          {
+            "status": "draft",
+            "text": "Een groot saaiing gee jou 'n oorskot. Alles is gelyktydig gereed. Jy eet wat jy kan, jy gee 'n deel weg, en die res word vermors."
+          },
+          {
+            "status": "draft",
+            "text": "Dan kom die gaping. Niks is gereed nie. Die tuin is vol plante, maar daar is geen kos in nie."
+          },
+          {
+            "status": "draft",
+            "text": "Klein saaiings skep eerder 'n ritme. Plant, versorg en oes oorvleuel. Daar is altyd iets wat gereed word."
+          },
+          {
+            "status": "draft",
+            "text": "Daardie ritme is wat 'n huishouding voed. Nie die grootte van die tuin nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end of this module, you'll be able to make four decisions in your own field.",
+          "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+          "Two. Keep harvests moving, using succession planting and intercropping.",
+          "Three. Choose staples that protect you when one crop fails.",
+          "Four. Read a pest problem before you treat it.",
+          "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Leeruitkomste"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Teen die einde van hierdie module sal jy vier besluite op jou eie land kan neem."
+          },
+          {
+            "status": "draft",
+            "text": "Een. Bou die regte bedding — pas die breedte en die soort bedding by jou grond en jou reënval."
+          },
+          {
+            "status": "draft",
+            "text": "Twee. Hou die oeste aan die gang met opvolgplanting en tussenverbouing."
+          },
+          {
+            "status": "draft",
+            "text": "Drie. Kies stapelgewasse wat jou beskerm wanneer een gewas misluk."
+          },
+          {
+            "status": "draft",
+            "text": "Vier. Lees 'n pesprobleem voordat jy dit behandel."
+          },
+          {
+            "status": "draft",
+            "text": "Hierdie vier hoort saam. 'n Goed gevormde bedding misluk steeds as alles op een dag ingesit word. 'n Diverse aanplanting sukkel steeds as jy elke geel blaar as 'n insekprobleem behandel."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Roots Need Loose Soil, Paths Need Your Feet",
+        "body": [
+          "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+          "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+          "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+          "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Wortels het los grond nodig, paadjies het jou voete nodig"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Verdigte grond verloor sy lugruimtes. Wortels groei stadiger. Water trek anders in. Die bedding word elke seisoen moeiliker om te bewerk."
+          },
+          {
+            "status": "draft",
+            "text": "Die beskerming is eenvoudig. Permanente paadjies, en 'n bedding wat smal genoeg is om van albei kante af in te reik."
+          },
+          {
+            "status": "draft",
+            "text": "Een meter tot een komma twee meter breed. Dis die werksgetal. By daardie breedte kan jy die middel van enige van die paadjies af bereik, en jou voete raak nooit die groeiarea nie."
+          },
+          {
+            "status": "draft",
+            "text": "Dink nou aan jou eie beddings. Kan jy die middel bereik sonder om binne-in te trap? Gaan probeer dit voordat jy enigiets anders plant."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Choose the Bed for the Soil and Rainfall",
+        "body": [
+          "There's no single bed shape that's right everywhere.",
+          "Start with the least disturbance that solves your problem.",
+          "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+          "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+          "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+          "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+          "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kies die bedding vir die grond en reënval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Daar is nie een beddingvorm wat oral reg is nie."
+          },
+          {
+            "status": "draft",
+            "text": "Begin met die minste versteuring wat jou probleem oplos."
+          },
+          {
+            "status": "draft",
+            "text": "Die geen-grawe-metode pas by die meeste tuingronde. Los die struktuur uit en bou vrugbaarheid bo-op."
+          },
+          {
+            "status": "draft",
+            "text": "Moenie nat klei grawe nie. As verdigting of swak dreinering ernstig is, identifiseer die oorsaak met plaaslike advies voordat jy dieper bewerking kies."
+          },
+          {
+            "status": "draft",
+            "text": "Verhoogde beddings pas by nat grond, waar water êrens heen moet kan dreineer."
+          },
+          {
+            "status": "draft",
+            "text": "Versonke beddings pas by droë grond, waar jy die reën wat jy wel kry, wil opvang en hou."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk ná swaar reën. Waar bly water staan of loop dit af? Kombineer daardie waarneming met grond- en dreineringsadvies voordat jy die bedding kies."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Seed or Seedling?",
+        "body": [
+          "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+          "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+          "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Saad of saailing?"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sommige gewasse verdra dit sleg as hul wortels versteur word. Hulle doen beter as hulle direk gesaai word waar hulle sal groei. Bone, geelwortels en mielies behoort in daardie groep."
+          },
+          {
+            "status": "draft",
+            "text": "Ander doen beter met 'n beskermde begin in 'n kwekery, en dan oorplanting. Tamaties en koolgewasse behoort daar."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik spasiëringsriglyne vir die gewas, variëteit en plaaslike toestande. Kontroleer die pakkie en plaaslike kwekers se advies. Hou dop of plante te dig staan soos hulle ontwikkel."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Mark the Working Shape",
+        "body": [
+          "Before you plant, mark the bed out.",
+          "One point two metres wide. Three metres long. One practice bed.",
+          "Use pegs and string. Mark the rectangle, and mark both access paths.",
+          "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+          "A string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.",
+          "That bed gets easier to improve every season, because you stopped walking on it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Merk die werksvorm uit"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Voordat jy plant, merk die bedding uit."
+          },
+          {
+            "status": "draft",
+            "text": "Een komma twee meter breed. Drie meter lank. Een oefenbedding."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik penne en tou. Merk die reghoek af, en merk albei toegangspaadjies af."
+          },
+          {
+            "status": "draft",
+            "text": "Berei dan voor vir jou eie grond — eers geen-grawe, en grawe slegs dieper as jou grond dit werklik nodig het."
+          },
+          {
+            "status": "draft",
+            "text": "'n Toulyn maak van 'n idee 'n besluit. Sodra die paadjies bestaan, hou hulle. Sodra die groeiarea bestaan, beskerm dit."
+          },
+          {
+            "status": "draft",
+            "text": "Daardie bedding word elke seisoen makliker om te verbeter, omdat jy opgehou het om daarop te loop."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "A Sowing Rhythm Keeps Food Moving",
+        "body": [
+          "Succession planting is a calendar habit, not a special crop.",
+          "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+          "Plant a short row every two to three weeks.",
+          "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+          "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
+          "Which fast crop could you sow in small batches? Decide on one, and start it this week."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "'n Saairitme hou kos aan die kom"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Opvolgplanting is 'n kalendergewoonte, nie 'n spesiale gewas nie."
+          },
+          {
+            "status": "draft",
+            "text": "Kies iets wat jou huishouding werklik gereeld eet. Saai dan 'n klein hoeveelheid daarvan, keer op keer."
+          },
+          {
+            "status": "draft",
+            "text": "Plant elke twee tot drie weke 'n kort ry."
+          },
+          {
+            "status": "draft",
+            "text": "Minder vermorsing wanneer daar 'n oorskot is. Vars kos vir langer. En die arbeid versprei oor die seisoen in plaas daarvan dat dit alles op een slag op jou val."
+          },
+          {
+            "status": "draft",
+            "text": "Afsonderlike saaiings kan die risiko verminder dat jy alles op een slag verloor. Hulle waarborg nie 'n oes as moeilike toestande voortduur nie."
+          },
+          {
+            "status": "draft",
+            "text": "Watter vinnige gewas kan jy in klein hoeveelhede saai? Besluit op een, en begin dit hierdie week."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Sow Little and Often",
+        "body": [
+          "Here's what it looks like in practice.",
+          "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+          "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+          "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+          "Watch what your own garden does, and adjust the interval. That observation is the skill."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Saai min en dikwels"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "So lyk dit in die praktyk."
+          },
+          {
+            "status": "draft",
+            "text": "Saai die eerste. Twee tot drie weke later, saai die tweede. Saai dan die derde. Saai dan die vierde."
+          },
+          {
+            "status": "draft",
+            "text": "Met geskikte tydsberekening vir die gewas kan oeste begin oorvleuel. Die eerste groep sal nie altyd teen die vierde saaiing gereed wees nie."
+          },
+          {
+            "status": "draft",
+            "text": "Twee tot drie weke is 'n beginritme, nie 'n wet nie. 'n Blaargewas vir die koel seisoen kan langer hou. Hitte kan dinge versnel, of 'n mislukking veroorsaak."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk wat jou eie tuin doen, en pas die tussenpose aan. Daardie waarneming is die vaardigheid."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Each Crop Earns Its Place",
+        "body": [
+          "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+          "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+          "Maize gives height and structure.",
+          "Beans climb the maize, and store as protein.",
+          "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+          "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+          "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Elke gewas verdien sy plek"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Tussenverbouing is nie net om verskillende plante saam te druk nie. Elke plant het 'n taak nodig, en genoeg ruimte om dit te doen."
+          },
+          {
+            "status": "draft",
+            "text": "Die Drie Susters is 'n voorbeeld uit inheemse boerderytradisies in die Amerikas."
+          },
+          {
+            "status": "draft",
+            "text": "Mielies gee hoogte en struktuur."
+          },
+          {
+            "status": "draft",
+            "text": "Bone klim teen die mielies op, en word as proteïen geberg."
+          },
+          {
+            "status": "draft",
+            "text": "Pampoen versprei oor die grond, gee skaduwee op die grond en hou vog vas."
+          },
+          {
+            "status": "draft",
+            "text": "Tydsberekening maak saak. Vestig die mielies eerste, sodat hulle sterk genoeg is om die bone te dra wanneer hulle begin klim."
+          },
+          {
+            "status": "draft",
+            "text": "Die plante kan steeds met mekaar meeding. Gee hulle geskikte ruimte, water en lig. Bone bind stikstof met wortelbakterieë, maar moenie aanvaar dat hulle die mielies onmiddellik voed nie; voedingstowwe in plantreste word tydens ontbinding vrygestel."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Plan Backwards From Your Hungry Gap",
+        "body": [
+          "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+          "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+          "Don't copy somebody else's calendar. Name your own months first.",
+          "Write them down. Then choose the crop and the sowing date that puts food into that gap.",
+          "That's planning backwards, and it's the difference between a garden that looks productive and a household that eats."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Beplan terug vanaf jou hongergaping"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Huishouding kan 'n hongergaping hê: weke wanneer gebergde kos min raak voordat die volgende oes gereed is."
+          },
+          {
+            "status": "draft",
+            "text": "Joune kom dalk nadat die gebergde mielies op is. Dit kom dalk voordat die winterblaargroente gereed is. Dit kom dalk in 'n droë tydperk wanneer water die tuin beperk."
+          },
+          {
+            "status": "draft",
+            "text": "Moenie iemand anders se kalender kopieer nie. Benoem eers jou eie maande."
+          },
+          {
+            "status": "draft",
+            "text": "Skryf hulle neer. Kies dan die gewas en die saaidatum wat kos in daardie gaping sit."
+          },
+          {
+            "status": "draft",
+            "text": "Dit is agteruit beplan, en dit is die verskil tussen 'n tuin wat produktief lyk en 'n huishouding wat eet."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Staples Are Food Insurance",
+        "body": [
+          "A staple earns its place because it feeds the household beyond the day of harvest.",
+          "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+          "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+          "Grow at least two. Not one.",
+          "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Stapelgewasse is voedselversekering"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Stapelgewas verdien sy plek omdat dit die huishouding ook ná die dag van die oes voed."
+          },
+          {
+            "status": "draft",
+            "text": "Dit dra energie of proteïen. Dit kan geberg word, of dit bly in die grond totdat jy dit nodig het. En dikwels dra dit ook kulturele herinnering."
+          },
+          {
+            "status": "draft",
+            "text": "Een stapelgewas laat jou kwesbaar. Twee of meer gee jou keuses wanneer weer of peste toeslaan."
+          },
+          {
+            "status": "draft",
+            "text": "Kweek ten minste twee. Nie een nie."
+          },
+          {
+            "status": "draft",
+            "text": "Op watter stapelgewas steun jou huishouding nou die swaarste? Dit is die een wie se mislukking die seerste sou maak — so dit is die een wat 'n metgesel nodig het."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Different Staples Protect Against Different Risks",
+        "body": [
+          "Each staple protects you against something different.",
+          "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+          "Beans and cowpeas give a storable protein harvest.",
+          "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+          "Amadumbe handles wetter ground, where other staples struggle.",
+          "Notice that they fail in different conditions. That's the whole point."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Verskillende stapelgewasse beskerm teen verskillende risiko's"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Elke stapelgewas beskerm jou teen iets anders."
+          },
+          {
+            "status": "draft",
+            "text": "Mielies gee kalorieë, en kan droog geberg word. Oopbestuifde mielies laat jou ook toe om jou eie saad te bewaar, as jy isolasie en seleksie bestuur."
+          },
+          {
+            "status": "draft",
+            "text": "Bone en cowpeas gee 'n proteïenoes wat geberg kan word."
+          },
+          {
+            "status": "draft",
+            "text": "Patats ontwikkel 'n mate van droogteverdraagsaamheid nadat hul bergwortels gevorm het. Hulle het water nodig in die eerste weke en terwyl die wortels vorm; waterstres op daardie tydstip kan die oes verminder. Hul jong blare is ook eetbaar."
+          },
+          {
+            "status": "draft",
+            "text": "Amadumbe hanteer natter grond, waar ander stapelgewasse sukkel."
+          },
+          {
+            "status": "draft",
+            "text": "Let op dat hulle onder verskillende toestande misluk. Dit is die hele punt."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Diversity Keeps Food Moving",
+        "body": [
+          "Resilience doesn't mean nothing fails.",
+          "It means one failure doesn't finish your household's food plan.",
+          "One crop is one point of failure.",
+          "Two or more staples give you more ways to keep eating.",
+          "Different crops use water, soil and seasons differently. That difference is the protection."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Diversiteit hou kos aan die kom"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Veerkragtigheid beteken nie dat niks misluk nie."
+          },
+          {
+            "status": "draft",
+            "text": "Dit beteken dat een mislukking nie 'n einde maak aan jou huishouding se voedselplan nie."
+          },
+          {
+            "status": "draft",
+            "text": "Een gewas is een punt van mislukking."
+          },
+          {
+            "status": "draft",
+            "text": "Twee of meer stapelgewasse gee jou meer maniere om aan te hou eet."
+          },
+          {
+            "status": "draft",
+            "text": "Verskillende gewasse gebruik water, grond en seisoene verskillend. Daardie verskil is die beskerming."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Pests Are Messengers Before They Are Enemies",
+        "body": [
+          "Pest pressure usually rises for a reason.",
+          "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+          "So before you treat anything, look at the whole system.",
+          "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+          "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Peste is boodskappers voordat hulle vyande is"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Pesdruk styg gewoonlik om 'n rede."
+          },
+          {
+            "status": "draft",
+            "text": "Plante onder stres. Een gewas wat die grond oorheers. Of breë gebruik van chemikalieë wat reeds die roofdiere verwyder het wat jou gehelp het."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk dus na die hele stelsel voordat jy enigiets behandel."
+          },
+          {
+            "status": "draft",
+            "text": "Kort die plant water? Is die grond verdig, of honger? Werk roofdiere reeds vir jou aan die probleem?"
+          },
+          {
+            "status": "draft",
+            "text": "'n Geel blaar is nie outomaties 'n insek nie. Dit kan water, voeding of wortelskade wees. Vind uit watter een voordat jy optree."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Treat the Cause Before the Insect",
+        "body": [
+          "Work through four steps, in order.",
+          "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+          "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+          "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+          "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+          "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+          "Be honest with yourself about which step you usually skip."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Behandel die oorsaak voor die insek"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Werk deur vier stappe, in volgorde."
+          },
+          {
+            "status": "draft",
+            "text": "Een. Neem waar. Kyk na die skadepatroon, die onderkant van die blaar, die stingel en die plante naby."
+          },
+          {
+            "status": "draft",
+            "text": "Twee. Kontroleer vir stres. Grondvog, wortels, spasiëring, voeding, dreinering."
+          },
+          {
+            "status": "draft",
+            "text": "Drie. Beskerm wat jou help. Nuttige insekte doen werk wat jy andersins self sou doen."
+          },
+          {
+            "status": "draft",
+            "text": "Vier. Tree eers dan op — en begin met die ligste ding wat werk. Fisiese verwydering, versperrings of veranderinge in gewasversorging kan help. Kontroleer dat die optrede by die probleem pas en hou die resultaat dop."
+          },
+          {
+            "status": "draft",
+            "text": "As 'n behandeling nodig is, gebruik 'n produk wat vir daardie gewas en pes geregistreer is, en volg sy etiket. Dit sluit neemprodukte in. Kontroleer die instruksies oor beskerming en die wagperiode voor oes. Moenie mengsels improviseer of sterker dosisse gebruik nie."
+          },
+          {
+            "status": "draft",
+            "text": "Wees eerlik met jouself oor watter stap jy gewoonlik oorslaan."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Now the lesson finishes in the soil.",
+          "Build one bed that can keep feeding you. One point two metres by three metres.",
+          "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+          "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+          "Photograph it when it's planted. Then come back after ten days with what you observed.",
+          "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldopdrag"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Nou eindig die les in die grond."
+          },
+          {
+            "status": "draft",
+            "text": "Bou een bedding wat jou kan aanhou voed. Een komma twee meter by drie meter."
+          },
+          {
+            "status": "draft",
+            "text": "Bereik die middel van albei kante af. Hou elke voet op die paadjies. Spasieer jou plante vir jou eie klimaat. Bedek die bedding met deklaag."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer die bedding gereeld vandat jy plant. Gebruik die foto ná tien dae as 'n kontrolepunt vir die opdrag, nie as 'n rede om versorging uit te stel nie."
+          },
+          {
+            "status": "draft",
+            "text": "Neem 'n foto wanneer dit geplant is. Kom dan ná tien dae terug met wat jy waargeneem het."
+          },
+          {
+            "status": "draft",
+            "text": "Die doel is nie 'n perfekte foto nie. Die doel is 'n bedding waarvan jy die vorm, spasiëring en ritme doelbewus gekies het."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "This week, put one bed into production.",
+          "One. Mark the bed and the paths.",
+          "Two. Plant, with your spacing and your sowing rhythm.",
+          "Three. Return after ten days, with a photo.",
+          "Then observe. Adjust. And write it down.",
+          "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+          "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+          "Use your record with reliable local advice when making the next decision."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldaksie"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sit hierdie week een bedding in produksie."
+          },
+          {
+            "status": "draft",
+            "text": "Een. Merk die bedding en die paadjies uit."
+          },
+          {
+            "status": "draft",
+            "text": "Twee. Plant, met jou spasiëring en jou saairitme."
+          },
+          {
+            "status": "draft",
+            "text": "Drie. Kom ná tien dae terug, met 'n foto."
+          },
+          {
+            "status": "draft",
+            "text": "Neem dan waar. Pas aan. En skryf dit neer."
+          },
+          {
+            "status": "draft",
+            "text": "Teken die saaidatum aan. Die reën. Wat ontkiem het. Pesdruk. Wat jy geoes het."
+          },
+          {
+            "status": "draft",
+            "text": "Seisoen ná seisoen raak jou tuin minder afhanklik van raaiwerk — en meer van wat jy werklik op jou eie grond sien gebeur het."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik jou rekord saam met betroubare plaaslike advies wanneer jy die volgende besluit neem."
+          }
+        ]
+      }
+    }
+  ]
+}

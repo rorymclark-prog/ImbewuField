@@ -29,6 +29,10 @@ const drafts: Record<string, string> = {
   "AFRIKAANS DRAFT — Built-in demonstration text is an unreviewed AI draft. Questions written by an organisation appear in the original English. Ask the survey creator before submitting if anything is unclear.": "AFRIKAANSE KONSEP — Ingeboude demonstrasieteks is 'n onhersiene AI-konsep. Vrae wat deur 'n organisasie geskryf is, verskyn in die oorspronklike Engels. Vra die skepper van die opname voordat jy indien as enigiets onduidelik is.",
   "Unreviewed Afrikaans AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers.": "Onhersiene Afrikaanse AI-konsep. Dit is nie deur 'n vlot spreker of 'n plaaslike boerdery-hersiener nagegaan nie. Die presiese Engelse bron word langs die les en antwoorde gewys.",
   "Unreviewed Afrikaans machine draft.": "Onhersiene Afrikaanse masjienkonsep.",
+  "Afrikaans AI draft": "Afrikaanse AI-konsep",
+  "English source narration selected. Afrikaans narration is not available for this module yet.": "Vertelling in die Engelse bron is gekies. Afrikaanse vertelling is nog nie vir hierdie module beskikbaar nie.",
+  "No Afrikaans narration is available. Select English source narration or No narration.": "Geen Afrikaanse vertelling is beskikbaar nie. Kies vertelling in die Engelse bron of Geen vertelling.",
+  "Slides: Afrikaans AI draft + English source": "Skyfies: Afrikaanse AI-konsep + Engelse bron",
 };
 
 export default drafts;

@@ -28,6 +28,21 @@ back-translation, then compared it with the English (`LESSON-REVIEW-BRIEF.md`). 
 
 One quiz option's grammar ("Hou aan verkoop") was also fixed.
 
+## Slide cards (`slides/`)
+All 10 modules (240 slides) have Afrikaans slide cards. Each card shows the Afrikaans draft above the
+exact English narration, over the illustrated English slide, and is labelled "AFRIKAANS AI DRAFT /
+NOT REVIEWED". The cards are silent: there is no Afrikaans narration, so learners choose English
+source narration or none. Three model agents drafted `docs/narration/<module>.af.silent-draft.json`,
+reusing the lesson wording where the narration repeats it. Three independent reviewers then
+back-translated the 1,014 fields before seeing the English: 2 repairs, 0 holds, both applied.
+- "Save walking and work over a season" had read as "last over a season".
+- The soil-jar caution still read as "do not water". The clearer wording now ships in the lesson too.
+
+`scripts/build-af-deck-release.mjs` renders the cards to `public/course-decks/<module>/af-silent/`
+(about 60 MB, like isiXhosa) and writes `lib/course-deck-release-bindings-af-data.ts`. It is a separate
+registry, so a fault withdraws only the Afrikaans cards (`tests/af-deck-release.test.ts`,
+`tests/af-deck-history-checks.ts`).
+
 ## Terms for the fluent reviewer first
 - **Place names written in Afrikaans:** Hoëveld (Highveld), Suid-Afrika.
 - **Species and crops:**

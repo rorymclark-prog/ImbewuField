@@ -70,6 +70,7 @@ const LANG_NAME: Record<string, string> = {
 const langName = (code: string, uiLang: string) => uiLang === 'zu' && code === 'en'
   ? 'isiNgisi'
   : uiLang === 'xh' && code === 'en' ? 'isiNgesi'
+  : uiLang === 'af' && code === 'en' ? 'Engels'
   : LANG_NAME[code] ?? code;
 
 type IsiZuluSourcePairContentProps = {
@@ -150,7 +151,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // English, a facilitator checks both, and the app-wide language is a heavier thing to change and
   // change back. It defaults to the app's language and is only offered when the module actually
   // has more than one recording.
-  const regionalSlidesSelected = ['st', 've', 'ts', 'xh'].includes(appLang);
+  const regionalSlidesSelected = ['st', 've', 'ts', 'xh', 'af'].includes(appLang);
   const needsExplicitChoice = requiresLearnerNarrationChoice(moduleId, appLang);
   const needsSourceNarrationChoice = needsExplicitChoice && !!narration?.languages.includes('en');
   const defaultNarrationChoice = needsExplicitChoice ? NO_NARRATION : appLang;
@@ -823,6 +824,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             : appLang === 'xh' ? <>{inlineText(appLang, 'isiXhosa AI draft')} · {narrationChoice === 'en'
             ? inlineText(appLang, 'English source narration selected. isiXhosa narration is not available for this module yet.')
             : inlineText(appLang, 'No isiXhosa narration is available. Select English source narration or No narration.')}</>
+            : appLang === 'af' ? <>{inlineText(appLang, 'Afrikaans AI draft')} · {narrationChoice === 'en'
+            ? inlineText(appLang, 'English source narration selected. Afrikaans narration is not available for this module yet.')
+            : inlineText(appLang, 'No Afrikaans narration is available. Select English source narration or No narration.')}</>
             : appLang === 'st' ? <>Sesotho AI draft · {narrationChoice === 'en'
             ? 'Ho kgethilwe modumo wa Senyesemane (wa mohlodi). English source: English source narration selected.'
             : 'Ha ho modumo wa Sesotho wa thuto ena. Kgetha modumo wa Senyesemane gore o mamele thuto, kana khetha “No narration”. English source: No Sesotho narration is available. Select English source narration or No narration.'}</>

@@ -1,0 +1,1161 @@
+{
+  "language": "af",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Seeds and Seed Sovereignty",
+        "body": [
+          "Seed is where the next season begins.",
+          "When your household can save, store and share good seed, it carries more than a crop forward. It also carries the freedom to choose.",
+          "In this lesson, you will follow seed from the parent plant to the packet, the germination test and a neighbour’s hand.",
+          "Think about the crops in your area. Which ones do you already save seed from? Which seed do you buy? Which seed do you exchange?",
+          "Try to name at least one crop whose seed is already being saved in your area."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sade en saadsoewereiniteit"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Saad is waar die volgende seisoen begin."
+          },
+          {
+            "status": "draft",
+            "text": "Wanneer jou huishouding goeie saad kan bewaar, berg en deel, dra dit meer as 'n gewas vorentoe. Dit dra ook die vryheid om te kies."
+          },
+          {
+            "status": "draft",
+            "text": "In hierdie les volg jy saad van die ouerplant tot by die pakkie, die ontkiemingstoets en die hand van 'n buurman."
+          },
+          {
+            "status": "draft",
+            "text": "Dink aan die gewasse in jou omgewing. Van watter gewasse bewaar jy reeds saad? Watter saad koop jy? Watter saad ruil jy?"
+          },
+          {
+            "status": "draft",
+            "text": "Probeer om ten minste een gewas te noem waarvan die saad reeds in jou omgewing bewaar word."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why Saving Seed Matters",
+        "body": [
+          "Saving seed does not mean rejecting all bought seed. It means building practical choices.",
+          "Each crop you learn to save well removes one repeated purchase. It also begins a local record of what performs well in your soil and your season.",
+          "Think about the seed you buy again and again. Which repeated seed purchase costs your household the most each year?",
+          "Choose one crop from your planting list. Make it your practical starting point for seed saving. Do not try to save everything at once."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hoekom saadbewaring saak maak"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Om saad te bewaar beteken nie dat jy alle gekoopte saad verwerp nie. Dit beteken dat jy praktiese keuses opbou."
+          },
+          {
+            "status": "draft",
+            "text": "Elke gewas wat jy leer om goed te bewaar, haal een herhaalde aankoop weg. Dit begin ook 'n plaaslike rekord van wat goed presteer in jou grond en jou seisoen."
+          },
+          {
+            "status": "draft",
+            "text": "Dink aan die saad wat jy keer op keer koop. Watter herhaalde saadaankoop kos jou huishouding elke jaar die meeste?"
+          },
+          {
+            "status": "draft",
+            "text": "Kies een gewas uit jou plantlys. Maak dit jou praktiese beginpunt vir saadbewaring. Moenie probeer om alles gelyktydig te bewaar nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "This lesson ends with a working seed store, not a list of facts.",
+          "You will make four decisions.",
+          "What will you save?",
+          "How will you process it?",
+          "How will you protect it?",
+          "And how will you know it is still alive before you depend on it?",
+          "Which of these four decisions is least familiar to you?",
+          "Say them again in your own words: select, process, protect and verify."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Leeruitkomste"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hierdie les eindig met 'n saadberging wat werk, nie met 'n lys feite nie."
+          },
+          {
+            "status": "draft",
+            "text": "Jy sal vier besluite neem."
+          },
+          {
+            "status": "draft",
+            "text": "Wat sal jy bewaar?"
+          },
+          {
+            "status": "draft",
+            "text": "Hoe sal jy dit verwerk?"
+          },
+          {
+            "status": "draft",
+            "text": "Hoe sal jy dit beskerm?"
+          },
+          {
+            "status": "draft",
+            "text": "En hoe sal jy weet dat dit nog lewe voordat jy daarop staatmaak?"
+          },
+          {
+            "status": "draft",
+            "text": "Watter van hierdie vier besluite ken jy die minste?"
+          },
+          {
+            "status": "draft",
+            "text": "Sê hulle weer in jou eie woorde: kies, verwerk, beskerm en verifieer."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Open-Pollinated Seed and F1 Seed",
+        "body": [
+          "Open-pollinated seed is not magic.",
+          "A stable variety can produce similar generations when it is properly isolated or self-pollinated.",
+          "F1 seed usually remains alive. But the next generation separates into different combinations of the parent traits.",
+          "The problem is unpredictability, not failure to germinate.",
+          "Think about one small bed on your own plot. Why could unpredictable plants be a risk when space is limited?",
+          "If you have seed packets, check whether they are marked open-pollinated or F1. Which would you choose for saving dependable seed?",
+          "Remember: the next F1 generation varies. It does not automatically die."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Oopbestuifde saad en F1-saad"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Oopbestuifde saad is nie towerkrag nie."
+          },
+          {
+            "status": "draft",
+            "text": "'n Stabiele variëteit kan soortgelyke generasies voortbring wanneer dit behoorlik geïsoleer word of homself bestuif."
+          },
+          {
+            "status": "draft",
+            "text": "F1-saad bly gewoonlik lewend. Maar die volgende generasie verdeel in verskillende kombinasies van die ouers se eienskappe."
+          },
+          {
+            "status": "draft",
+            "text": "Die probleem is onvoorspelbaarheid, nie dat dit nie ontkiem nie."
+          },
+          {
+            "status": "draft",
+            "text": "Dink aan een klein bedding op jou eie stuk grond. Hoekom kan onvoorspelbare plante 'n risiko wees wanneer ruimte beperk is?"
+          },
+          {
+            "status": "draft",
+            "text": "As jy saadpakkies het, kyk of hulle as oopbestuif of F1 gemerk is. Watter een sou jy kies om betroubare saad te bewaar?"
+          },
+          {
+            "status": "draft",
+            "text": "Onthou: die volgende F1-generasie wissel. Dit gaan nie outomaties dood nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Watch: Open-Pollinated Seed and F1 Seed",
+        "body": [
+          "Watch both sides.",
+          "Both kinds of seed germinate.",
+          "Open-pollinated seed produces similar plants when the variety is stable and pollination is properly managed.",
+          "Seed saved from an F1 plant also germinates. But its next generation varies. Some plants may be tall. Others may be short. Their vigour and yield may differ.",
+          "Ask yourself what this means when choosing seed to save.",
+          "If you understand the difference, you can explain it in one sentence: both germinate, but the next F1 generation is unpredictable."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: oopbestuifde saad en F1-saad"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kyk na albei kante."
+          },
+          {
+            "status": "draft",
+            "text": "Albei soorte saad ontkiem."
+          },
+          {
+            "status": "draft",
+            "text": "Oopbestuifde saad bring soortgelyke plante voort wanneer die variëteit stabiel is en bestuiwing behoorlik bestuur word."
+          },
+          {
+            "status": "draft",
+            "text": "Saad wat van 'n F1-plant bewaar is, ontkiem ook. Maar die volgende generasie wissel. Sommige plante is dalk lank. Ander is dalk kort. Hul groeikrag en opbrengs kan verskil."
+          },
+          {
+            "status": "draft",
+            "text": "Vra jouself af wat dit beteken wanneer jy saad kies om te bewaar."
+          },
+          {
+            "status": "draft",
+            "text": "As jy die verskil verstaan, kan jy dit in een sin verduidelik: albei ontkiem, maar die volgende F1-generasie is onvoorspelbaar."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Seed Sovereignty",
+        "body": [
+          "Seed sovereignty does not live in a slogan.",
+          "It lives in a dry packet, a written record and knowledge of how the seed behaves.",
+          "Your household begins it. Neighbours extend it. The seasons make the local seed collection more useful.",
+          "Which seed does your household already save best?",
+          "Draw a small map of the homes near you. Beside each home, write one crop that household could bring to a seed exchange.",
+          "Sovereignty needs three things: usable seed, written information and exchange."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Saadsoewereiniteit"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Saadsoewereiniteit leef nie in 'n slagspreuk nie."
+          },
+          {
+            "status": "draft",
+            "text": "Dit leef in 'n droë pakkie, 'n geskrewe rekord en kennis van hoe die saad hom gedra."
+          },
+          {
+            "status": "draft",
+            "text": "Jou huishouding begin dit. Bure brei dit uit. Die seisoene maak die plaaslike saadversameling nuttiger."
+          },
+          {
+            "status": "draft",
+            "text": "Watter saad bewaar jou huishouding reeds die beste?"
+          },
+          {
+            "status": "draft",
+            "text": "Teken 'n klein kaart van die huise naby jou. Skryf langs elke huis een gewas wat daardie huishouding na 'n saadruil kan bring."
+          },
+          {
+            "status": "draft",
+            "text": "Soewereiniteit het drie dinge nodig: bruikbare saad, geskrewe inligting en ruil."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Watch: Household Seed Network",
+        "body": [
+          "Well-saved seed becomes more powerful when it is known and shared.",
+          "Watch one household begin by saving seed well from one crop. Dry seed goes into clean packets. Some packets move to neighbouring homes. The neighbours share different seed in return.",
+          "By the end, each household holds more varieties than it had before.",
+          "Think about which seed you could share and which seed you might receive from a neighbour. Seed moves. Knowledge and trust must move with it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: saadnetwerk van huishoudings"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Goed bewaarde saad word kragtiger wanneer dit bekend is en gedeel word."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk hoe een huishouding begin deur saad van een gewas goed te bewaar. Droë saad gaan in skoon pakkies. Sommige pakkies gaan na huise in die buurt. Die bure deel in ruil ander saad."
+          },
+          {
+            "status": "draft",
+            "text": "Teen die einde het elke huishouding meer variëteite as wat dit voorheen gehad het."
+          },
+          {
+            "status": "draft",
+            "text": "Dink aan watter saad jy kan deel en watter saad jy dalk van 'n buurman kan ontvang. Saad beweeg. Kennis en vertroue moet saam daarmee beweeg."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Select Several Parent Plants",
+        "body": [
+          "The largest fruit is not always the best seed parent.",
+          "Look at the whole plant.",
+          "Was it healthy?",
+          "Did it mature at the right time?",
+          "Was it true to type?",
+          "Save from several good plants, especially in cross-pollinated crops. This prevents the next generation from coming from only one parent.",
+          "What would make you reject a seed plant even if its fruit were large?",
+          "Go to your own plot. Point out the plants you would select and the plants you would reject. Choose several healthy, true-to-type plants. Reject diseased plants and those that are not true to type."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kies verskeie ouerplante"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Die grootste vrug is nie altyd die beste saadouer nie."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk na die hele plant."
+          },
+          {
+            "status": "draft",
+            "text": "Was dit gesond?"
+          },
+          {
+            "status": "draft",
+            "text": "Het dit op die regte tyd ryp geword?"
+          },
+          {
+            "status": "draft",
+            "text": "Was dit tipe-eg?"
+          },
+          {
+            "status": "draft",
+            "text": "Bewaar saad van verskeie goeie plante, veral by gewasse wat kruisbestuif. Dit keer dat die volgende generasie van net een ouer kom."
+          },
+          {
+            "status": "draft",
+            "text": "Wat sou jou 'n saadplant laat verwerp, selfs al was sy vrugte groot?"
+          },
+          {
+            "status": "draft",
+            "text": "Gaan na jou eie stuk grond. Wys die plante uit wat jy sou kies en die plante wat jy sou verwerp. Kies verskeie gesonde, tipe-egte plante. Verwerp siek plante en dié wat nie tipe-eg is nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Control Pollination",
+        "body": [
+          "Some crops mostly self-pollinate. A small garden can therefore keep the variety similar.",
+          "Crops pollinated by wind or insects can cross over long distances.",
+          "The distance needed depends on the crop, the place and the purpose of the seed. Do not promise varietal purity until you have checked the crop.",
+          "How can you separate two varieties without using distance?",
+          "You can plant them at different times so they do not flower together. You can also control pollination by hand or with covers.",
+          "Remember the three tools: distance, flowering time or controlled pollination."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Beheer bestuiwing"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sommige gewasse bestuif hulself meestal. 'n Klein tuin kan die variëteit dus soortgelyk hou."
+          },
+          {
+            "status": "draft",
+            "text": "Gewasse wat deur wind of insekte bestuif word, kan oor lang afstande kruis."
+          },
+          {
+            "status": "draft",
+            "text": "Die afstand wat nodig is, hang af van die gewas, die plek en die doel van die saad. Moenie variëteitsuiwerheid belowe voordat jy die gewas nagegaan het nie."
+          },
+          {
+            "status": "draft",
+            "text": "Hoe kan jy twee variëteite skei sonder om afstand te gebruik?"
+          },
+          {
+            "status": "draft",
+            "text": "Jy kan hulle op verskillende tye plant sodat hulle nie gelyktydig blom nie. Jy kan bestuiwing ook met die hand of met bedekkings beheer."
+          },
+          {
+            "status": "draft",
+            "text": "Onthou die drie hulpmiddels: afstand, blomtyd of beheerde bestuiwing."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Watch: Self-Pollination and Crossing",
+        "body": [
+          "Follow the path of the pollen.",
+          "In self-pollination, pollen moves within one flower from the part that produces it to the part that receives it. This often helps the variety remain similar.",
+          "In a maize field, wind carries pollen from the tassels to the silks. If two varieties are close together and flower at the same time, they can cross.",
+          "Think about how distance or different flowering times could prevent that on your own plot."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: selfbestuiwing en kruising"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Volg die pad van die stuifmeel."
+          },
+          {
+            "status": "draft",
+            "text": "By selfbestuiwing beweeg stuifmeel binne een blom van die deel wat dit maak na die deel wat dit ontvang. Dit help dikwels dat die variëteit soortgelyk bly."
+          },
+          {
+            "status": "draft",
+            "text": "In 'n mielieland dra die wind stuifmeel van die pluime na die baarde. As twee variëteite naby mekaar is en gelyktydig blom, kan hulle kruis."
+          },
+          {
+            "status": "draft",
+            "text": "Dink daaraan hoe afstand of verskillende blomtye dit op jou eie stuk grond kan voorkom."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Dry and Wet Processing",
+        "body": [
+          "There are two broad ways to process seed.",
+          "Dry seed matures in a pod, head or cob. It is collected when fully mature.",
+          "Seed inside a fleshy fruit must first be separated from the flesh.",
+          "Brief fermentation is especially useful for tomato seed. It is not a rule for every wet-seeded crop.",
+          "Think about the crops in your area. Which fit the dry method? Which fit the wet method?",
+          "If you have seed or fruit nearby, sort the examples into these two types. Explain the difference by describing what the seed is like at harvest."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Droë en nat verwerking"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Daar is twee breë maniere om saad te verwerk."
+          },
+          {
+            "status": "draft",
+            "text": "Droë saad word ryp in 'n peul, saadkop of mieliekop. Dit word ingesamel wanneer dit heeltemal ryp is."
+          },
+          {
+            "status": "draft",
+            "text": "Saad binne-in 'n vlesige vrug moet eers van die vrugvleis geskei word."
+          },
+          {
+            "status": "draft",
+            "text": "Kort fermentasie is veral nuttig vir tamatiesaad. Dit is nie 'n reël vir elke gewas met nat saad nie."
+          },
+          {
+            "status": "draft",
+            "text": "Dink aan die gewasse in jou omgewing. Watter pas by die droë metode? Watter pas by die nat metode?"
+          },
+          {
+            "status": "draft",
+            "text": "As jy saad of vrugte naby het, sorteer die voorbeelde in hierdie twee soorte. Verduidelik die verskil deur te beskryf hoe die saad lyk wanneer dit geoes word."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Process Dry Seed",
+        "body": [
+          "Leave dry-seeded crops on the plant until the seed is fully mature.",
+          "Collect it before weather, birds or bursting pods take the harvest.",
+          "Remove chaff and damaged seed.",
+          "Then spread the clean seed in a single layer in moving air and shade.",
+          "What tells you that dry seed is mature enough to collect?",
+          "If you have a dry pod or seed head, handle it. Listen for the seed. Compare green, flexible plant material with brown, brittle material.",
+          "Wait for maturity. For final drying, use shade and airflow."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Verwerk droë saad"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Laat gewasse met droë saad op die plant totdat die saad heeltemal ryp is."
+          },
+          {
+            "status": "draft",
+            "text": "Samel dit in voordat weer, voëls of peule wat oopbars die oes wegneem."
+          },
+          {
+            "status": "draft",
+            "text": "Verwyder kaf en beskadigde saad."
+          },
+          {
+            "status": "draft",
+            "text": "Sprei dan die skoon saad in 'n enkele laag uit, in die skaduwee waar die lug beweeg."
+          },
+          {
+            "status": "draft",
+            "text": "Wat sê vir jou dat droë saad ryp genoeg is om in te samel?"
+          },
+          {
+            "status": "draft",
+            "text": "As jy 'n droë peul of saadkop het, hanteer dit. Luister na die saad. Vergelyk groen, buigsame plantmateriaal met bruin, bros materiaal."
+          },
+          {
+            "status": "draft",
+            "text": "Wag totdat dit ryp is. Gebruik skaduwee en lugvloei vir die finale droging."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Watch: Dry Processing",
+        "body": [
+          "Allow the seed to mature on the plant before collecting it.",
+          "Watch how it is collected once mature. Chaff and debris are removed. Damaged seed is taken out.",
+          "The clean seed is then spread in a single layer in moving air and shade.",
+          "Follow the steps in order: mature, collect, clean, dry.",
+          "Think about where you could carry out each part of this process."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: droë verwerking"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Laat die saad op die plant ryp word voordat jy dit insamel."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk hoe dit ingesamel word sodra dit ryp is. Kaf en vuilgoed word verwyder. Beskadigde saad word uitgehaal."
+          },
+          {
+            "status": "draft",
+            "text": "Die skoon saad word dan in 'n enkele laag uitgesprei, in die skaduwee waar die lug beweeg."
+          },
+          {
+            "status": "draft",
+            "text": "Volg die stappe in volgorde: laat ryp word, samel in, maak skoon, droog."
+          },
+          {
+            "status": "draft",
+            "text": "Dink daaraan waar jy elke deel van hierdie proses kan doen."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Wet Processing for Tomato Seed",
+        "body": [
+          "Scoop tomato seed and flesh into a clean jar with a little water.",
+          "Leave it open or loosely covered. Keep it out of direct sun.",
+          "After two to three days, a light film and a sour smell may appear.",
+          "Rinse promptly. Remove debris. Then spread the clean seed thinly to dry.",
+          "Do not seal an actively fermenting jar.",
+          "Think about the signs that tell you the process has begun. Also think about signs that would make you discard the batch.",
+          "Find a jar, a sieve and a drying plate. When you are ready, start a small batch. Remember the order: scoop, ferment briefly, rinse and dry completely."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Nat verwerking vir tamatiesaad"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Skep tamatiesaad en -vleis in 'n skoon fles met 'n bietjie water."
+          },
+          {
+            "status": "draft",
+            "text": "Laat dit oop of los bedek. Hou dit uit direkte son."
+          },
+          {
+            "status": "draft",
+            "text": "Ná twee tot drie dae kan 'n ligte vlies en 'n suur reuk verskyn."
+          },
+          {
+            "status": "draft",
+            "text": "Spoel dit dadelik af. Verwyder vuilgoed. Sprei dan die skoon saad dun uit om te droog."
+          },
+          {
+            "status": "draft",
+            "text": "Moenie 'n fles verseël wat aktief fermenteer nie."
+          },
+          {
+            "status": "draft",
+            "text": "Dink aan die tekens wat vir jou sê dat die proses begin het. Dink ook aan tekens wat jou die lot sou laat weggooi."
+          },
+          {
+            "status": "draft",
+            "text": "Kry 'n fles, 'n sif en 'n droogbord. Wanneer jy gereed is, begin 'n klein lot. Onthou die volgorde: skep, fermenteer kortliks, spoel af en droog heeltemal."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Watch: Wet Processing for Tomato Seed",
+        "body": [
+          "Watch the whole process in order.",
+          "A ripe tomato is opened. The seed and gel are scooped into a clean jar. Only a little water is added.",
+          "The jar is left open or loosely covered for two to three days.",
+          "When a light film and sour smell appear, the contents are poured through a sieve. The seed is rinsed until it is clean.",
+          "Finally, the seed is spread in a single layer in the shade until completely dry.",
+          "Repeat the steps to yourself: scoop, ferment briefly, rinse, dry completely."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: nat verwerking vir tamatiesaad"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kyk na die hele proses in volgorde."
+          },
+          {
+            "status": "draft",
+            "text": "'n Ryp tamatie word oopgemaak. Die saad en jel word in 'n skoon fles geskep. Net 'n bietjie water word bygevoeg."
+          },
+          {
+            "status": "draft",
+            "text": "Die fles word vir twee tot drie dae oop of los bedek gelaat."
+          },
+          {
+            "status": "draft",
+            "text": "Wanneer 'n ligte vlies en 'n suur reuk verskyn, word die inhoud deur 'n sif gegooi. Die saad word afgespoel totdat dit skoon is."
+          },
+          {
+            "status": "draft",
+            "text": "Laastens word die saad in 'n enkele laag in die skaduwee uitgesprei totdat dit heeltemal droog is."
+          },
+          {
+            "status": "draft",
+            "text": "Herhaal die stappe vir jouself: skep, fermenteer kortliks, spoel af, droog heeltemal."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Practical Activity",
+        "body": [
+          "This is where the lesson leaves the screen and reaches your hands.",
+          "Start one real batch of wet-processed seed.",
+          "Use one ripe, healthy fruit, a clean jar, a spoon, a little water, a sieve and a drying plate.",
+          "Put the seed, flesh and a little water into the jar. Add a label with the date.",
+          "You will look after this jar after the lesson. Decide now when you will inspect it, when you will rinse it and when you will dry the seed.",
+          "Your jar needs a date and a return plan. Write down the date when you will inspect it after two days."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Praktiese aktiwiteit"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hier verlaat die les die skerm en kom dit in jou hande."
+          },
+          {
+            "status": "draft",
+            "text": "Begin een regte lot saad wat nat verwerk word."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik een ryp, gesonde vrug, 'n skoon fles, 'n lepel, 'n bietjie water, 'n sif en 'n droogbord."
+          },
+          {
+            "status": "draft",
+            "text": "Sit die saad, vrugvleis en 'n bietjie water in die fles. Sit 'n etiket met die datum op."
+          },
+          {
+            "status": "draft",
+            "text": "Jy sal ná die les na hierdie fles omsien. Besluit nou wanneer jy dit sal inspekteer, wanneer jy dit sal afspoel en wanneer jy die saad sal droog."
+          },
+          {
+            "status": "draft",
+            "text": "Jou fles het 'n datum en 'n plan nodig vir wanneer jy terugkom. Skryf die datum neer waarop jy dit ná twee dae sal inspekteer."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Dry First, Seal Later",
+        "body": [
+          "Drying is not a decorative final step.",
+          "Moist seed keeps breathing. It can heat, rot or die in storage.",
+          "Use shade, moving air and time.",
+          "Seal seed only when you are sure it is dry.",
+          "Which place in your home has shade and airflow, but is protected from rain and cooking steam?",
+          "Choose one safe drying place. Then identify one unsafe place.",
+          "Repeat this to check your understanding: dry first, seal later."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Droog eers, verseël later"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Droging is nie 'n versierende laaste stap nie."
+          },
+          {
+            "status": "draft",
+            "text": "Klam saad hou aan asemhaal. Dit kan in berging warm word, vrot of doodgaan."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik skaduwee, bewegende lug en tyd."
+          },
+          {
+            "status": "draft",
+            "text": "Verseël saad slegs wanneer jy seker is dat dit droog is."
+          },
+          {
+            "status": "draft",
+            "text": "Watter plek in jou huis het skaduwee en lugvloei, maar is beskerm teen reën en stoom van kookkos?"
+          },
+          {
+            "status": "draft",
+            "text": "Kies een veilige plek om te droog. Identifiseer dan een onveilige plek."
+          },
+          {
+            "status": "draft",
+            "text": "Herhaal dit om jou begrip te toets: droog eers, verseël later."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Protect Seed from Heat, Light and Moisture",
+        "body": [
+          "Paper packets breathe and organise seed. But they are not enough in a humid climate.",
+          "Once the seed is completely dry, place the labelled packets inside a sealed, moisture-proof container. If available, include a food-safe desiccant.",
+          "Keep the container as cool and dark as possible in your home.",
+          "Which room or cupboard in your home stays coolest and driest?",
+          "Compare a paper envelope on its own with an envelope inside a sealed container.",
+          "Safe storage has two layers: a labelled paper packet inside a dry, sealed container."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Beskerm saad teen hitte, lig en vog"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Papierpakkies kan asemhaal en hou saad georden. Maar hulle is nie genoeg in 'n vogtige klimaat nie."
+          },
+          {
+            "status": "draft",
+            "text": "Sodra die saad heeltemal droog is, sit die gemerkte pakkies in 'n verseëlde, vogdigte houer. Sit 'n voedselveilige droogmiddel by as jy een het."
+          },
+          {
+            "status": "draft",
+            "text": "Hou die houer so koel en donker as moontlik in jou huis."
+          },
+          {
+            "status": "draft",
+            "text": "Watter kamer of kas in jou huis bly die koelste en droogste?"
+          },
+          {
+            "status": "draft",
+            "text": "Vergelyk 'n papierkoevert op sy eie met 'n koevert binne-in 'n verseëlde houer."
+          },
+          {
+            "status": "draft",
+            "text": "Veilige berging het twee lae: 'n gemerkte papierpakkie binne-in 'n droë, verseëlde houer."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Label Every Packet",
+        "body": [
+          "Storage protects the seed physically. Written information protects its meaning.",
+          "The packet must tell the next person what crop it is.",
+          "It must give the variety or local name.",
+          "It must say when the seed was saved and where it came from.",
+          "Which local names could be lost if you write only the crop name?",
+          "Take a blank packet. Practise writing the four pieces of information: crop, variety or local name, date and source.",
+          "Check again that all four are present."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Merk elke pakkie"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Berging beskerm die saad fisies. Geskrewe inligting beskerm die betekenis daarvan."
+          },
+          {
+            "status": "draft",
+            "text": "Die pakkie moet vir die volgende persoon sê watter gewas dit is."
+          },
+          {
+            "status": "draft",
+            "text": "Dit moet die variëteit of plaaslike naam gee."
+          },
+          {
+            "status": "draft",
+            "text": "Dit moet sê wanneer die saad bewaar is en waar dit vandaan kom."
+          },
+          {
+            "status": "draft",
+            "text": "Watter plaaslike name kan verlore gaan as jy net die gewas se naam skryf?"
+          },
+          {
+            "status": "draft",
+            "text": "Neem 'n leë pakkie. Oefen om die vier stukke inligting te skryf: gewas, variëteit of plaaslike naam, datum en herkoms."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer weer dat al vier daar is."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Ten-Seed Germination Test",
+        "body": [
+          "A seed packet can look perfect even when the seed is losing life.",
+          "Ten seeds make the calculation easy.",
+          "Keep them warm and moist. Do not submerge them in water.",
+          "Then count the normal seedlings.",
+          "Six out of ten is about sixty percent. That tells you to sow more heavily, use the seed only as a trial, or replace it.",
+          "If eight seeds out of ten germinate, what percentage is that?",
+          "The answer is eighty percent.",
+          "Start a ten-seed test with an old packet. Write down the date and the day when you will count."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ontkiemingstoets met tien sade"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Saadpakkie kan perfek lyk selfs wanneer die saad besig is om sy lewenskrag te verloor."
+          },
+          {
+            "status": "draft",
+            "text": "Tien sade maak die berekening maklik."
+          },
+          {
+            "status": "draft",
+            "text": "Hou hulle warm en klam. Moenie hulle onder water dompel nie."
+          },
+          {
+            "status": "draft",
+            "text": "Tel dan die normale saailinge."
+          },
+          {
+            "status": "draft",
+            "text": "Ses uit tien is ongeveer sestig persent. Dit sê vir jou om digter te saai, die saad slegs as 'n proef te gebruik, of dit te vervang."
+          },
+          {
+            "status": "draft",
+            "text": "As agt uit tien sade ontkiem, watter persentasie is dit?"
+          },
+          {
+            "status": "draft",
+            "text": "Die antwoord is tagtig persent."
+          },
+          {
+            "status": "draft",
+            "text": "Begin 'n toets met tien sade uit 'n ou pakkie. Skryf die datum neer en die dag waarop jy sal tel."
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "heading": "Watch: Ten-Seed Germination Test",
+        "body": [
+          "Count exactly ten seeds.",
+          "Place them in two rows of five.",
+          "Keep them on moist paper or cloth. Do not submerge them in water.",
+          "After some time, count again.",
+          "Here, six have germinated. Four have not. The total is still ten.",
+          "The germination rate is therefore sixty percent.",
+          "Check yourself. Did you count ten at the start, six germinated seeds and four ungerminated seeds at the end?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: ontkiemingstoets met tien sade"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Tel presies tien sade."
+          },
+          {
+            "status": "draft",
+            "text": "Sit hulle in twee rye van vyf."
+          },
+          {
+            "status": "draft",
+            "text": "Hou hulle op klam papier of lap. Moenie hulle onder water dompel nie."
+          },
+          {
+            "status": "draft",
+            "text": "Tel weer ná 'n ruk."
+          },
+          {
+            "status": "draft",
+            "text": "Hier het ses ontkiem. Vier het nie. Die totaal is steeds tien."
+          },
+          {
+            "status": "draft",
+            "text": "Die ontkiemingsyfer is dus sestig persent."
+          },
+          {
+            "status": "draft",
+            "text": "Toets jouself. Het jy aan die begin tien getel, en aan die einde ses sade wat ontkiem het en vier sade wat nie ontkiem het nie?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "heading": "Share Seed with Its Information",
+        "body": [
+          "A seed exchange is not a table of unknown packets.",
+          "A good exchange moves information with the seed.",
+          "It tells you what the seed is. Where it came from. When it was saved. And whether it has been tested.",
+          "This honesty strengthens the whole network.",
+          "What information would help you trust seed from another household?",
+          "Take one of your packets. Practise describing it before sharing it. Give the seed and its basic history together."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Deel saad saam met sy inligting"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Saadruil is nie 'n tafel vol onbekende pakkies nie."
+          },
+          {
+            "status": "draft",
+            "text": "'n Goeie ruil laat inligting saam met die saad beweeg."
+          },
+          {
+            "status": "draft",
+            "text": "Dit vertel jou wat die saad is. Waar dit vandaan kom. Wanneer dit bewaar is. En of dit getoets is."
+          },
+          {
+            "status": "draft",
+            "text": "Hierdie eerlikheid versterk die hele netwerk."
+          },
+          {
+            "status": "draft",
+            "text": "Watter inligting sal jou help om saad van 'n ander huishouding te vertrou?"
+          },
+          {
+            "status": "draft",
+            "text": "Neem een van jou pakkies. Oefen om dit te beskryf voordat jy dit deel. Gee die saad en sy basiese geskiedenis saam."
+          }
+        ]
+      }
+    },
+    {
+      "n": 23,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "This task is small enough to finish. It is important enough to matter.",
+          "Build one working seed-storage container.",
+          "Put labelled paper packets inside a dry, sealed container.",
+          "Take a photograph of it.",
+          "Then name the crop whose seed you will save this season.",
+          "The photograph is evidence. The packet is a beginning.",
+          "What do you still need to finish this at home?",
+          "Write a short materials list. Choose a completion date.",
+          "Before sealing the container, check your work: the seed is completely dry; every packet has the crop, variety and date; the container is cool, dark and protected from moisture; and you selected several healthy parent plants."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldopdrag"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hierdie taak is klein genoeg om klaar te maak. Dit is belangrik genoeg om saak te maak."
+          },
+          {
+            "status": "draft",
+            "text": "Bou een houer vir saadberging wat werk."
+          },
+          {
+            "status": "draft",
+            "text": "Sit gemerkte papierpakkies in 'n droë, verseëlde houer."
+          },
+          {
+            "status": "draft",
+            "text": "Neem 'n foto daarvan."
+          },
+          {
+            "status": "draft",
+            "text": "Noem dan die gewas waarvan jy hierdie seisoen saad sal bewaar."
+          },
+          {
+            "status": "draft",
+            "text": "Die foto is bewyse. Die pakkie is 'n begin."
+          },
+          {
+            "status": "draft",
+            "text": "Wat het jy nog nodig om dit tuis klaar te maak?"
+          },
+          {
+            "status": "draft",
+            "text": "Skryf 'n kort lys van materiaal. Kies 'n datum waarteen dit klaar moet wees."
+          },
+          {
+            "status": "draft",
+            "text": "Voordat jy die houer verseël, kontroleer jou werk: die saad is heeltemal droog; elke pakkie het die gewas, variëteit en datum; die houer is koel, donker en beskerm teen vog; en jy het verskeie gesonde ouerplante gekies."
+          }
+        ]
+      }
+    },
+    {
+      "n": 24,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Select.",
+          "Process.",
+          "Protect.",
+          "Verify.",
+          "Those four actions carry a seed collection from this field into the next season.",
+          "Begin with one crop and do it well.",
+          "Which crop will you begin with?",
+          "Say it aloud. Then choose one action you will take next.",
+          "The next season is already inside the seed you choose today."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldaksie"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kies."
+          },
+          {
+            "status": "draft",
+            "text": "Verwerk."
+          },
+          {
+            "status": "draft",
+            "text": "Beskerm."
+          },
+          {
+            "status": "draft",
+            "text": "Verifieer."
+          },
+          {
+            "status": "draft",
+            "text": "Daardie vier aksies dra 'n saadversameling van hierdie land na die volgende seisoen."
+          },
+          {
+            "status": "draft",
+            "text": "Begin met een gewas en doen dit goed."
+          },
+          {
+            "status": "draft",
+            "text": "Met watter gewas sal jy begin?"
+          },
+          {
+            "status": "draft",
+            "text": "Sê dit hardop. Kies dan een aksie wat jy volgende sal doen."
+          },
+          {
+            "status": "draft",
+            "text": "Die volgende seisoen is reeds binne-in die saad wat jy vandag kies."
+          }
+        ]
+      }
+    }
+  ]
+}

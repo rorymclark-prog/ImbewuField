@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test, { after } from 'node:test';
 import { XH_DECK_RELEASE_ROWS } from '../lib/course-deck-release-bindings-xh-data.ts';
+import { AF_DECK_RELEASE_ROWS } from '../lib/course-deck-release-bindings-af-data.ts';
 import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, copyFileSync, cpSync, constants, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -114,6 +115,9 @@ async function isolatedGuard() {
     // its release declarations and every declared card.
     'tests/xh-deck-history-checks.ts','lib/course-deck-release-bindings-xh-data.ts',
     ...XH_DECK_RELEASE_ROWS.flatMap(row => row.slides.map(slide => 'public' + slide.imageUrl)),
+    // The Afrikaans slide-card layer sits in front of the isiXhosa one the same way.
+    'tests/af-deck-history-checks.ts','lib/course-deck-release-bindings-af-data.ts',
+    ...AF_DECK_RELEASE_ROWS.flatMap(row => row.slides.map(slide => 'public' + slide.imageUrl)),
     // w25-03: the service-worker layer is projected first by slides-webp-history-checks.ts.
     'tests/wave-25-offline-history-checks.ts','tests/fixtures/sw-route-before-w25-offline.ts.txt']);
   for (const file of files) { if (retiredJpegs.has(file)) continue;const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }

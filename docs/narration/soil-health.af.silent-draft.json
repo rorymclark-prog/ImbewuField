@@ -1,0 +1,637 @@
+{
+  "language": "af",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Soil Health & Composting",
+        "body": [
+          "Soil is more than the ground under your feet.",
+          "It is a living place that feeds crops, holds water, and carries your harvest.",
+          "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Grondgesondheid en kompos"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Grond is meer as net die aarde onder jou voete."
+          },
+          {
+            "status": "draft",
+            "text": "Dit is 'n lewende plek wat gewasse voed, water vashou en jou oes dra."
+          },
+          {
+            "status": "draft",
+            "text": "In hierdie module leer jy om grond te lees, veilige kompos te maak, kaal grond te beskerm, en dekgewasse en wurmplase te gebruik."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "Soil condition affects roots, water and the harvest.",
+          "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+          "Observe your soil, then choose ways to protect and improve it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hoekom dit saak maak"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Die toestand van die grond beïnvloed wortels, water en die oes."
+          },
+          {
+            "status": "draft",
+            "text": "Om die grond herhaaldelik kaal te laat lê, verdigting en verlies aan organiese materiaal kan die grond beskadig. Kleur alleen vertel nie die hele storie nie."
+          },
+          {
+            "status": "draft",
+            "text": "Neem jou grond waar, en kies dan maniere om dit te beskerm en te verbeter."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "Look for several clues about soil condition.",
+          "Use a jar to explore soil texture, while recognising its limits.",
+          "Care for a compost heap, protect bare ground, and distinguish worm castings from liquid drainage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Leeruitkomste"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Soek na verskeie leidrade oor die grond se toestand."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik 'n fles om grondtekstuur te verken, en erken die beperkings daarvan."
+          },
+          {
+            "status": "draft",
+            "text": "Versorg 'n komposhoop, beskerm kaal grond, en ken die verskil tussen wurmgietsels en vloeistof wat uitdreineer."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Soil Is Alive",
+        "body": [
+          "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+          "Look at roots, soil structure and water movement as well as visible soil life."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Grond is lewend"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Grond bevat baie soorte lewende organismes. Bakterieë en swamme help om organiese materiaal af te breek en voedingstowwe te hersirkuleer."
+          },
+          {
+            "status": "draft",
+            "text": "Sommige swamme help wortels om voedingstowwe op te neem. Wurmkanale kan help dat water en lug die grond binnedring."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk na wortels, grondstruktuur en waterbeweging, sowel as sigbare grondlewe."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Watch: Read Your Soil",
+        "body": [
+          "Look closely at these two soil examples.",
+          "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+          "Look at the roots and the spaces around them.",
+          "Look at the surface cover. Loose mulch covers one example.",
+          "Use several clues together. Colour alone cannot tell you soil health. Check moisture, plant growth and how water enters the ground."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: lees jou grond"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kyk mooi na hierdie twee grondvoorbeelde."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk eers na die grondstruktuur. Voel op die land hoe 'n klam stuk grond uitmekaar breek."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk na die wortels en die ruimtes om hulle."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk na die bedekking op die oppervlak. Los deklaag bedek een voorbeeld."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik verskeie leidrade saam. Kleur alleen kan jou nie vertel hoe gesond die grond is nie. Kontroleer vog, plantgroei en hoe water die grond binnedring."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Explore Soil Texture with a Jar",
+        "body": [
+          "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+          "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+          "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Verken grondtekstuur met 'n fles"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sit grond en water in 'n deursigtige fles, met 'n bietjie geskikte dispergerende wasmiddel. Maak dit toe en skud dit, en laat dit dan ongestoord staan."
+          },
+          {
+            "status": "draft",
+            "text": "Sand sak eerste. Slik sak daarna, terwyl klei baie langer in die water kan bly sweef."
+          },
+          {
+            "status": "draft",
+            "text": "Dit is 'n rowwe leeroefening. Klonte en klei wat nog nie gesak het nie, kan jou mislei; gebruik 'n grondlaboratorium wanneer akkurate tekstuur nodig is."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Read the Jar Carefully",
+        "body": [
+          "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+          "Compare the settled layers and feel the soil in the field.",
+          "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lees die fles versigtig"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Dik sandlaag onder troebel water vertel jou nog nie die finale verhoudings nie. Sommige fyn deeltjies kan steeds in die water sweef."
+          },
+          {
+            "status": "draft",
+            "text": "Vergelyk die lae wat gesak het, en voel die grond op die land."
+          },
+          {
+            "status": "draft",
+            "text": "Teken aan wat jy sien en wat onseker bly. Moenie net op grond van een fles voorskrifte vir watergee of grondbehandelings gee nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Investigate Before You Treat",
+        "body": [
+          "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+          "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+          "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ondersoek voordat jy behandel"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Verdigting, swak dreinering en verlies aan organiese materiaal kan wortels en grondlewe beperk."
+          },
+          {
+            "status": "draft",
+            "text": "Bleek kleur of min wurms bewys nie dat chemikalieë die grond doodgemaak het nie. Wurmaktiwiteit verander ook met vog en seisoen."
+          },
+          {
+            "status": "draft",
+            "text": "Soek na patrone oor die hele land. Kontroleer die bestuursgeskiedenis, dreinering en plantgroei voordat jy 'n oplossing kies."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Compost Feeds the Soil",
+        "body": [
+          "Compost is organic matter broken down under managed conditions.",
+          "Finished compost can improve soil structure and contribute nutrients.",
+          "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kompos voed die grond"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kompos is organiese materiaal wat onder beheerde toestande afgebreek is."
+          },
+          {
+            "status": "draft",
+            "text": "Voltooide kompos kan grondstruktuur verbeter en voedingstowwe bydra."
+          },
+          {
+            "status": "draft",
+            "text": "Die tyd voordat kompos gereed is, wissel met materiale, vog, lug en temperatuur. 'n Provinsienaam of 'n vaste aantal weke is nie 'n toets of dit gereed is nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Watch: Build the Compost Heap",
+        "body": [
+          "Build the heap with dry browns and fresh greens.",
+          "Keep the layers moist, not wet, so air and decomposers can work."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: bou die komposhoop"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bou die hoop met droë bruin materiaal en vars groen materiaal."
+          },
+          {
+            "status": "draft",
+            "text": "Hou die lae klam, nie nat nie, sodat lug en ontbinders hul werk kan doen."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Balance Browns and Greens",
+        "body": [
+          "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+          "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+          "Check moisture and air as the heap changes; one recipe does not suit every mix of materials."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Balanseer bruin en groen materiaal"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Meng droë bruin materiaal met vars groen materiaal. Vermy dik, nat lae wat lug uithou."
+          },
+          {
+            "status": "draft",
+            "text": "As die hoop slymerig word of sterk na ammoniak ruik, voeg droë bruin materiaal by en draai dit om."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer vog en lug soos die hoop verander; een resep pas nie by elke mengsel van materiale nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Heat Alone Is Not a Safety Check",
+        "body": [
+          "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+          "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+          "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hitte alleen is nie 'n veiligheidstoets nie"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Warm middel bewys nie dat elke deel van 'n hoop behandel is nie. Tyd, temperatuur en bestuur maak almal saak."
+          },
+          {
+            "status": "draft",
+            "text": "Hou vleis, suiwel, siek plante, troeteldiermis en besmette materiale uit hierdie eenvoudige huishoudelike stelsel."
+          },
+          {
+            "status": "draft",
+            "text": "Moenie aanvaar dat tuiskompostering elke onkruidsaad of siekte-organisme vernietig nie. Gebruik 'n erkende proses waar sanitasie vereis word."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Keep Seed Pods and Contaminants Out",
+        "body": [
+          "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+          "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+          "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hou saadpeule en besmette materiaal uit"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hou wattle-saadpeule uit die komposhoop. 'n Gewone hoop sorg dalk nie dat elke saad sy kiemkrag verloor nie."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik slegs skoon, onbehandelde materiale. Bas breek stadig af; sy naam alleen is nie bewys dat dit vry van besmetting is nie."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer die hoop en draai dit om wanneer dit meer lug of vermenging nodig het. Hou dit klam eerder as deurdrenk."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Watch: Bare Soil and Mulch",
+        "body": [
+          "Compare bare soil with mulched soil.",
+          "When rain hits mulch instead of bare soil, much of the raindrop energy is dissipated. This diagram shows that surface-impact idea only; it does not predict how water will move at a particular site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: kaal grond en deklaag"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vergelyk kaal grond met grond onder deklaag."
+          },
+          {
+            "status": "draft",
+            "text": "Wanneer reën op deklaag val in plaas van op kaal grond, gaan baie van die reëndruppels se energie verlore. Hierdie diagram wys slegs daardie idee van impak op die oppervlak; dit voorspel nie hoe water op 'n bepaalde terrein sal beweeg nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Mulch Protects the Ground",
+        "body": [
+          "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+          "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+          "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Deklaag beskerm die grond"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bedek kaal grond met geskikte skoon deklaag, soos strooi, droë gras of houtspaanders."
+          },
+          {
+            "status": "draft",
+            "text": "Deklaag kan verdamping verminder, die impak van reën versag en onkruid onderdruk."
+          },
+          {
+            "status": "draft",
+            "text": "Hou dit weg van stamme en stingels. Kontroleer die vog daaronder en pas die laag aan; meer deklaag is nie altyd beter nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Cover Crops Between Seasons",
+        "body": [
+          "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+          "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+          "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dekgewasse tussen seisoene"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Dekgewasse kan grond tussen hoofgewasse beskerm. Kies hulle volgens die plaaslike weer, beskikbare water en die volgende aanplanting."
+          },
+          {
+            "status": "draft",
+            "text": "Die kursus se voorbeelde sluit hawer, lupiene, sunn hemp en cowpea in. Kontroleer of hulle plaaslik geskik is voordat jy saai."
+          },
+          {
+            "status": "draft",
+            "text": "Peulgewasse het geskikte bakterieë en groeitoestande nodig om stikstof te bind. Voedingstowwe in hul plantreste word beskikbaar soos die materiaal ontbind."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Worm Castings and Liquid Drainage",
+        "body": [
+          "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+          "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+          "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Wurmgietsels en vloeistof wat uitdreineer"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Wurmplase kan geskikte kosafval en beddingmateriaal in wurmgietsels omskep. Kontroleer die bak eerder as om 'n vaste oesdatum te verwag."
+          },
+          {
+            "status": "draft",
+            "text": "Vloeistof wat natuurlik uit 'n wurmbak dreineer, word uitloogsel genoem. Dit is nie dieselfde as voorbereide wurmgietseltee nie."
+          },
+          {
+            "status": "draft",
+            "text": "Uitloogsel kan skadelike organismes of stowwe bevat. Moenie dit op eetbare plante gebruik nie, en moenie aanvaar dat verdunning dit veilig maak nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Protect Soil All Year",
+        "body": [
+          "A Highveld field left bare after the maize harvest faces two main risks.",
+          "Winter wind can carry away dry topsoil.",
+          "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+          "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Beskerm die grond die hele jaar"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Land op die Hoëveld wat ná die mielie-oes kaal gelaat word, staar twee hoofrisiko's in die gesig."
+          },
+          {
+            "status": "draft",
+            "text": "Winterwind kan droë bogrond wegwaai."
+          },
+          {
+            "status": "draft",
+            "text": "Die eerste swaar lentestorm kan kaal grond tref en die oppervlak en struktuur daarvan beskadig. As water oor die land loop, kan dit losgemaakte grond wegspoel."
+          },
+          {
+            "status": "draft",
+            "text": "Dekgewasse, deklaag en organiese materiaal kan help om grond op sy plek te hou en dit lewend te hou."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.",
+          "Compare another spot and note recent weather and management.",
+          "Try the jar exercise. Write what it suggests, what is uncertain, and whether a laboratory test or local adviser could help."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldopdrag"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ondersoek die grond in 'n werkarea. Teken kleur, struktuur, wortels, vog en enige wurmkanale aan."
+          },
+          {
+            "status": "draft",
+            "text": "Vergelyk dit met 'n ander plek en teken die onlangse weer en bestuur aan."
+          },
+          {
+            "status": "draft",
+            "text": "Probeer die flesoefening. Skryf neer wat dit aandui, wat onseker is, en of 'n laboratoriumtoets of 'n plaaslike adviseur kan help."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Start one soil-building action from this module.",
+          "Cover bare ground with mulch, begin a balanced compost heap, sow a suitable cover crop, or prepare a worm farm.",
+          "If your compost smells of ammonia and feels slimy, add dry carbon such as straw and turn it.",
+          "Build soil life step by step."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldaksie"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Begin met een aksie uit hierdie module wat grond bou."
+          },
+          {
+            "status": "draft",
+            "text": "Bedek kaal grond met deklaag, begin 'n gebalanseerde komposhoop, saai 'n geskikte dekgewas, of berei 'n wurmplaas voor."
+          },
+          {
+            "status": "draft",
+            "text": "As jou kompos na ammoniak ruik en slymerig voel, voeg droë koolstofmateriaal soos strooi by en draai dit om."
+          },
+          {
+            "status": "draft",
+            "text": "Bou grondlewe stap vir stap op."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1042,6 +1042,7 @@ test('Tshivenda source pairing uses its native visible label and the same exact 
   draft.language = 'ts';
   assert.throws(() => validatePairedDraft(draft, source, 've'), /language must be ve/);
   assert.equal(pairedDraftLanguageLabel('xh'), 'ISIXHOSA');
+  assert.equal(pairedDraftLanguageLabel('af'), 'AFRIKAANS');
   assert.equal(pairedDraftLanguageLabel('af'), null);
 });
 

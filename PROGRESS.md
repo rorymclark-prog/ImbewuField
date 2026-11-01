@@ -90,8 +90,9 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   (`research/manual/review-af/`, notes and open decisions in `research/manual/REVIEW-af.md`).
 - **Fluent-review hand-off:** `docs/translation-reviews/afrikaans-ui-2026-10-31/fluent-review-handoff-2026-10-31.csv`
   (11,851 rows, safety first).
-- **Still to do:** the Studies slide decks. These would add about 63 MB of rendered cards, as isiXhosa
-  did, and wait on Rory's decision.
+- **Studies slide cards:** all 10 modules (240 silent cards, about 60 MB) in `public/course-decks/<module>/af-silent/`,
+  built by `scripts/build-af-deck-release.mjs` into a separate Afrikaans release registry. The narration
+  had a blind review (2 repairs).
 
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English

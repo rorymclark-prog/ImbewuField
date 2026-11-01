@@ -4,12 +4,14 @@ import { readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { XH_DECK_RELEASE_ROWS } from '../lib/course-deck-release-bindings-xh-data.ts';
+import { afDeckListingBefore, afDeckUrlsBefore } from './af-deck-history-checks.ts';
 
 // isiXhosa Studies slide cards (24 Oct 2026): 240 new files under public/course-decks/<module>/xh-silent/.
 // Older media layers inventory every course media file, so this layer accounts for exactly these
 // new cards: each must be a card the isiXhosa release declares, byte-exact to its recorded digest,
 // and every declared card must exist. Older layers then see the listing without them. Nothing older
-// is changed by this layer; tests/xh-deck-release.test.ts checks the release itself.
+// is changed by this layer; tests/xh-deck-release.test.ts checks the release itself. The Afrikaans
+// cards are a newer layer (tests/af-deck-history-checks.ts), so listings pass through it first.
 const root = fileURLToPath(new URL('../', import.meta.url));
 const sha = (v: Uint8Array) => createHash('sha256').update(v).digest('hex');
 const XH_CARD = /^public\/course-decks\/[a-z0-9-]+\/xh-silent\//;
@@ -18,7 +20,8 @@ const declared = new Map(XH_DECK_RELEASE_ROWS.flatMap(row => row.slides.map(slid
 
 let lastSuccessfulSignature = '';
 /** The media listing as it was before the isiXhosa cards, after proving the cards are exactly the release's. */
-export function xhDeckListingBefore(paths: readonly string[]): string[] {
+export function xhDeckListingBefore(supplied: readonly string[]): string[] {
+  const paths = afDeckListingBefore(supplied);
   const cards = paths.filter(path => XH_CARD.test(path)).sort();
   assert.deepEqual(cards, [...declared.keys()].sort(), 'isiXhosa card folders hold exactly the declared release cards');
   const signature = cards.map(path => {
@@ -38,7 +41,8 @@ export function xhDeckListingBefore(paths: readonly string[]): string[] {
 }
 
 /** The same, for listings written as public URLs ('/course-decks/...') of one module's deck folder. */
-export function xhDeckUrlsBefore(urls: readonly string[], moduleId: string): string[] {
+export function xhDeckUrlsBefore(supplied: readonly string[], moduleId: string): string[] {
+  const urls = afDeckUrlsBefore(supplied, moduleId);
   const prefix = `/course-decks/${moduleId}/xh-silent/`;
   const cards = urls.filter(url => url.startsWith(prefix)).sort();
   const expected = [...declared.keys()].filter(path => path.startsWith('public' + prefix)).map(path => path.slice('public'.length)).sort();
