@@ -3,7 +3,7 @@ import test from 'node:test';
 import { suggestHarvestTargets, autoSuggestPlan, type AutoSuggestAnswers } from '@/lib/crop-autosuggest';
 import { cropByKey } from '@/lib/crop-catalog';
 import {
-  benchmarkAreaConflictDetails, loadCropPlan, saveCropPlan, sanitiseHarvestTargets,
+  benchmarkAreaConflictDetails, estimatedYieldKg, loadCropPlan, saveCropPlan, sanitiseHarvestTargets,
   tasksForPlan, taskMonthsFromNow, type HarvestTarget, type PlanBed, type Planting,
 } from '@/lib/crop-plan';
 import { assessHarvestTarget, targetDemand, targetPickingWindow } from '@/lib/harvest-targets';
@@ -134,6 +134,43 @@ test('an unverified incumbent cannot silently release a bed for promised target 
   const result = suggest([target], [beds[0]], saved);
   assert.equal(result.plantings.length, 0);
   assert.ok(result.notes.some((n) => n.kind === 'warning' && n.bedIds?.includes(beds[0].id)));
+});
+
+test('a large order is shared between legal sowing cohorts instead of putting nearly every bed in the first month', () => {
+  const mappedBeds = Array.from({ length: 24 }, (_, i) => ({ id: `mapped-${i}`, label: `Block / Bed ${i}`, areaM2: 12 * 1.2, minDimM: 1.2 }));
+  const order = { ...target, weeklyKg: 5, startMonth: '2026-11', endMonth: '2027-10' };
+  const result = suggestHarvestTargets([order], order.siteId, { ...answers, allowMixedCropsInBed: false }, 'summer', mappedBeds, [], now);
+  const bySow = new Map<string, number>();
+  for (const row of result.plantings) bySow.set(row.once!, (bySow.get(row.once!) ?? 0) + estimatedYieldKg(row, mappedBeds[0].areaM2));
+  assert.ok(bySow.size > 1, 'this source calendar has several legal cohorts in the requested window');
+  const capacities = [...bySow.values()];
+  const oneBedKg = mappedBeds[0].areaM2 * cropByKey(order.cropKey)!.yieldKgPerM2!;
+  assert.ok(Math.max(...capacities) - Math.min(...capacities) <= oneBedKg + 0.000001,
+    'whole-bed rounding may differ by one bed; a one-bed-per-month first pass must not dump the rest into the earliest cohort');
+  assert.equal(assessHarvestTarget(order, mappedBeds, result.plantings, now)!.shortageKg, 0);
+});
+
+test('raising a target can add a free share to an accepted cohort without replacing its saved row or task identity', () => {
+  const small = { ...target, weeklyKg: 0.1 };
+  const first = suggest([small], [beds[0]]).plantings;
+  assert.equal(first.length, 1);
+  const original = structuredClone(first);
+  const bigger = { ...small, weeklyKg: 0.5 };
+  const extra = suggest([bigger], [beds[0]], first).plantings;
+  assert.ok(extra.some((p) => p.once === first[0].once && p.bedId === first[0].bedId));
+  assert.ok(extra.every((p) => !first.some((old) => old.id === p.id)));
+  assert.deepEqual(first, original);
+  assert.equal(assessHarvestTarget(bigger, [beds[0]], [...first, ...extra], now)!.shortageKg, 0);
+  assert.equal(suggest([bigger], [beds[0]], [...first, ...extra]).plantings.length, 0);
+});
+
+test('a finished cohort retains its history while replacement sowing tasks get new identities', () => {
+  const order = { ...target, weeklyKg: 0.1 };
+  const finished = suggest([order], [beds[0]]).plantings.map((p) => ({ ...p, finishedOnceSowing: true as const }));
+  const replacement = suggest([order], [beds[0]], finished).plantings;
+  assert.ok(replacement.length > 0);
+  assert.ok(replacement.every((p) => !finished.some((old) => old.id === p.id)));
+  assert.ok(assessHarvestTarget(order, [beds[0]], [...finished, ...replacement], now)!.allocatedKg > 0);
 });
 
 test('saved targets round-trip with an account and old crop plans still load without targets', () => {

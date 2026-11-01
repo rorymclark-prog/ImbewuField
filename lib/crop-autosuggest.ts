@@ -3748,6 +3748,7 @@ export function suggestHarvestTargets(
 ): AutoSuggestResult {
   const notes: PlanNote[] = [planNote('basis', HARVEST_TARGET_BASIS)];
   const added: Planting[] = [];
+  const reservedIds = new Set(existingPlantings.map((p) => p.id));
   if (!Number.isInteger(realNow.year) || !Number.isInteger(realNow.month)
     || realNow.year < 2020 || realNow.year >= 2100 || realNow.month < 1 || realNow.month > 12) {
     return { plantings: [], notes: [planNote('warning', 'A valid current date is needed to date the sowing tasks.')], laterThisYear: [] };
@@ -3809,23 +3810,28 @@ export function suggestHarvestTargets(
       const perCohortKg = assessment.shortageKg / Math.max(1, candidates.length);
       for (let pass = 0; pass < 2 && assessment.shortageKg > 0.000001; pass++) {
         for (const { index, sowMonth } of candidates) {
+          let cohortKg = 0;
           for (const bed of cropBeds) {
             if (assessment.shortageKg <= 0.000001) break;
             if (added.some((p) => p.harvestTargetId === target.id && p.bedId === bed.id && p.once === targetMonthStamp(index))) continue;
             if (rotation.repeats(bed.id, crop, sowMonth)) { rotationBlocked = true; continue; }
-            const wantedKg = pass === 0 ? Math.min(perCohortKg, assessment.shortageKg) : assessment.shortageKg;
+            const wantedKg = pass === 0 ? Math.min(perCohortKg - cohortKg, assessment.shortageKg) : assessment.shortageKg;
+            if (wantedKg <= 0.000001) break;
             const wantedFraction = wantedKg / (bed.areaM2 * crop.yieldKgPerM2!);
             const full = isSpaceHungry(crop) || bed.kind === 'plot' || !occupancy.allowsBedSharing();
             const fraction = full ? 1 : [...BED_FRACTION_PRESETS].reverse().find((f) => f >= wantedFraction - 0.000001) ?? 1;
             const share = usableShare(occupancy, bed, sowMonth, crop, fraction, 1, true);
             if (share === null || (full && share < 1)) { spaceBlocked = true; continue; }
             const once = targetMonthStamp(index);
+            const baseId = `target:${target.id}:${bed.id}:${once}`;
+            let id = baseId;
+            // A grower may increase a target or finish a failed cohort and
+            // plan again. Keep those saved rows, with distinct new task IDs.
+            for (let serial = 1; reservedIds.has(id); serial++) id = `${baseId}:${serial}`;
             const planting: Planting = {
-              id: `target:${target.id}:${bed.id}:${once}`, bedId: bed.id, cropKey: crop.key,
+              id, bedId: bed.id, cropKey: crop.key,
               sowMonth, once, harvestTargetId: target.id, ...(share < 1 ? { areaFraction: share } : {}),
             };
-            // An accepted cohort may already carry this identity after a partial re-plan.
-            if (existingPlantings.some((p) => p.id === planting.id)) continue;
             const next = assessHarvestTarget(target, beds, [...existingPlantings, ...added, planting], realNow)!;
             // A malformed or unverified incumbent may have no usable hold in
             // the placement ledger. The shared dated conflict authority must
@@ -3833,9 +3839,11 @@ export function suggestHarvestTargets(
             if (next.allocatedKg <= assessment.allocatedKg + 0.000001) { spaceBlocked = true; continue; }
             occupancy.add(bed.id, sowMonth, crop, share);
             rotation.recordOnceUse(bed.id, crop, sowMonth);
+            reservedIds.add(id);
             added.push(planting);
+            cohortKg += next.allocatedKg - assessment.allocatedKg;
             assessment = next;
-            if (pass === 0) break;
+            if (pass === 0 && cohortKg >= perCohortKg - 0.000001) break;
           }
         }
       }

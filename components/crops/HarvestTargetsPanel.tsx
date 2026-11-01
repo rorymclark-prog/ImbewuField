@@ -66,7 +66,7 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
   return <details className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] text-[var(--text-primary)]">
     <summary className="min-h-12 cursor-pointer px-4 py-3 font-display font-semibold">
       <Target size={17} aria-hidden className="inline mr-2 align-text-bottom" />
-      Harvest targets{ownTargets.length > 0 ? ` · ${ownTargets.length}` : ''}
+      Harvest targets{ownTargets.length > 0 ? ` · ${ownTargets.length}` : ''}{' '}
       <span className="ml-2 text-xs font-sans font-normal text-[var(--text-secondary)]">Plan from weekly demand</span>
     </summary>
     <div className="px-4 pb-4 space-y-4 font-sans">
@@ -134,7 +134,7 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
         <h3 className="font-display font-semibold">Review {result.plantings.length} proposed sowing{result.plantings.length === 1 ? '' : 's'}</h3>
         {ownTargets.map((target) => {
           const a = assessHarvestTarget(target, beds, [...plantings, ...result.plantings])!;
-          return <p key={target.id} className="text-sm"><strong>{cropByKey(target.cropKey)?.name}:</strong> {amount(a.allocatedKg)} linked cycle capacity after adding; {amount(a.shortageKg)} still unallocated. {a.gapMonths.length ? `No picking window in ${a.gapMonths.map(monthName).join(', ')}.` : 'A picking window reaches each requested month; weekly quantities remain unverified.'}</p>;
+          return <p key={target.id} className="text-sm"><strong>{cropByKey(target.cropKey)?.name}:</strong> {amount(a.allocatedKg)} linked cycle capacity after adding; {amount(a.shortageKg)} still unallocated. {a.surplusKg > 0.001 ? `${amount(a.surplusKg)} above total demand. ` : ''}{a.gapMonths.length ? `No picking window in ${a.gapMonths.map(monthName).join(', ')}.` : 'A picking window reaches each requested month; weekly quantities remain unverified.'}</p>;
         })}
         {result.plantings.length > 0 && <div className="max-h-64 overflow-auto"><table className="w-full text-left text-xs">
           <caption className="text-left mb-2">Proposed additions — saved crops stay in place</caption>
