@@ -20,6 +20,7 @@ import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
+import { recordsBookMonthShort } from '@/lib/records-months';
 import { CROP_PLAN_MONTH_FOCUS_HOLD_MONTHS, CROP_PLAN_MONTH_FOCUS_ZU } from '@/lib/calendar-zu-draft';
 import {
   TASK_BOARD_CHANGED_EVENTS, loadCropBoardYear,
@@ -295,7 +296,9 @@ export default function CropPlanPage() {
       : MONTHS;
   const monthShortNames = lang === 'zu' || lang === 'xh'
     ? zuMonths
-    : MONTHS_SHORT;
+    : lang === 'af'
+      ? MONTHS_SHORT.map((_, month) => recordsBookMonthShort(lang, month + 1))
+      : MONTHS_SHORT;
   const [view, setView] = useState<View>('month');
   // Simple has no Season tab to switch into, so it always reads as Month regardless of a view
   // choice made earlier in All tools (e.g. switching level mid-session).

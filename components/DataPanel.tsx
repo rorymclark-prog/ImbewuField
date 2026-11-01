@@ -910,7 +910,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {/* Rainfall deliberately omitted here — the headline "Annual rainfall" stat below is the
                     single measured figure; showing BRU's zone-average mm/yr too reads as a second,
                     competing rainfall number for the same site. */}
-                BRU {data.bru.brucode} · {lang === 'zu' || lang === 'xh' ? t('bruZoneApprox') : 'approx.'} {data.bru.nearestBrg} · {data.bru.tmean}{t('unitTempAverage')}
+                BRU {data.bru.brucode} · {lang === 'zu' || lang === 'xh' || lang === 'af' ? t('bruZoneApprox') : 'approx.'} {data.bru.nearestBrg} · {data.bru.tmean}{t('unitTempAverage')}
               </div>
             )}
             {!simple && (
@@ -920,7 +920,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             )}
             {!simple && data.bru && (
               <div className="mt-0.5" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)' }}>
-                {lang === 'zu' || lang === 'xh' ? t('bruZoneAttribution') : data.bru.attribution} — {lang === 'zu' || lang === 'xh' ? t('bruZoneNameCaveat') : 'zone name is a best-effort climate match, not verified'}
+                {lang === 'zu' || lang === 'xh' || lang === 'af' ? t('bruZoneAttribution') : data.bru.attribution} — {lang === 'zu' || lang === 'xh' || lang === 'af' ? t('bruZoneNameCaveat') : 'zone name is a best-effort climate match, not verified'}
               </div>
             )}
           </div>

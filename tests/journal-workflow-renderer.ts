@@ -71,7 +71,7 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
     },
     '@/lib/use-escape-close': { useEscapeClose: () => {} },
     '@/lib/use-dialog-focus': { useDialogFocus: () => {} },
-    './journal-labels': { formatZuluJournalDate: journal.formatJournalDate, formatZuluMonth: journal.monthLabelOf, formatXhosaJournalDate: journal.formatJournalDate, formatXhosaMonth: journal.monthLabelOf, journalCategoryLabel: (key: string) => key },
+    './journal-labels': { formatZuluJournalDate: journal.formatJournalDate, formatZuluMonth: journal.monthLabelOf, formatXhosaJournalDate: journal.formatJournalDate, formatXhosaMonth: journal.monthLabelOf, formatAfrikaansJournalDate: journal.formatJournalDate, formatAfrikaansMonth: journal.monthLabelOf, journalCategoryLabel: (key: string) => key },
     './JournalPhotoReview': { __esModule: true, default: () => null },
     'next/link': { __esModule: true, default: ({ children, ...props }: any) => React.createElement('a', props, children) },
   };

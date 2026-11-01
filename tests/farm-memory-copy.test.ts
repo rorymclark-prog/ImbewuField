@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { JOURNAL_CATEGORIES, type JournalEntry } from '@/lib/field-journal';
 import { FARM_MEMORY_EN, FARM_MEMORY_ZU, farmMemoryCategoryLabel, farmMemoryText, type FarmMemoryKey } from '@/lib/farm-memory-copy';
-import { journalCategoryLabel } from '@/components/journal/journal-labels';
+import { formatAfrikaansJournalDate, formatAfrikaansMonth, formatXhosaJournalDate, formatXhosaMonth, formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from '@/components/journal/journal-labels';
 import { filterJournalEntries, journalBedFilterValue, journalDateRangeError, journalFilterOptions } from '@/lib/journal-view';
 
 const placeholders = (value: string) => [...value.matchAll(/\{(\w+)\}/g)].map(match => match[1]).sort();
@@ -62,4 +63,26 @@ test('isiZulu UI copy marks the language draft and keeps a planned task separate
   assert.match(FARM_MEMORY_EN.draftNotice, /unreviewed draft/);
   assert.match(FARM_MEMORY_EN.taskDraftNotice, /does not record a harvest quantity or mark the task complete/);
   assert.match(FARM_MEMORY_ZU.taskDraftNotice, /akurekhodi inani lesivuno noma kuphawule umsebenzi njengoqediwe/);
+});
+
+test('the journal month heading and entry date have Afrikaans months and leave isiZulu / isiXhosa exactly as they were', () => {
+  assert.equal(formatAfrikaansMonth('2026-03'), 'Maart 2026');
+  assert.equal(formatAfrikaansMonth('2026-12'), 'Desember 2026');
+  assert.equal(formatAfrikaansMonth('2026-13'), 'Onbekende datum');
+  assert.equal(formatAfrikaansMonth('nope'), 'Onbekende datum');
+  assert.equal(formatAfrikaansJournalDate('2026-03-05'), 'Do 5 Mrt');
+  assert.equal(formatAfrikaansJournalDate('2026-10-25'), 'So 25 Okt');
+  assert.equal(formatAfrikaansJournalDate('2026-02-30'), '2026-02-30');
+  assert.equal(formatAfrikaansJournalDate('not a date'), 'not a date');
+  // The older languages are untouched by the Afrikaans additions.
+  assert.equal(formatZuluMonth('2026-03'), 'Mashi 2026');
+  assert.equal(formatZuluJournalDate('2026-03-05'), 'Sin 5 Mas');
+  assert.equal(formatXhosaMonth('2026-03'), 'Matshi 2026');
+  assert.equal(formatXhosaJournalDate('2026-03-05'), 'Sin 5 Mat');
+});
+
+test('FieldJournal routes Afrikaans to the Afrikaans month and date formatters', () => {
+  const source = readFileSync(new URL('../components/journal/FieldJournal.tsx', import.meta.url), 'utf8');
+  assert.match(source, /lang === 'af' \? formatAfrikaansMonth\(group\.key\)/);
+  assert.equal(source.match(/lang === 'af' \? formatAfrikaansJournalDate\(entry\.date\)/g)?.length, 2, 'the row date and the Edit aria-label');
 });

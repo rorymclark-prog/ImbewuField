@@ -90,7 +90,7 @@ import { UNPRICED_CROPS, asFarmerOwnPrice, isUsablePrice, priceFor, loadCropPric
 import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format';
 import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import { inlineBuilt, inlineBuiltList } from '@/lib/xh-inline-match';
-import { recordsMonthLong, recordsMonthShort } from '@/lib/records-months';
+import { recordsBookMonthLong, recordsBookMonthShort } from '@/lib/records-months';
 import { localeDate } from '@/lib/xh-dates';
 // Task wording lives in the export module now, not here: the screen, the
 // calendar file and the printed plan all have to describe a task the same way,
@@ -367,9 +367,9 @@ function bedLabelText(lang: string, label: string): string {
 }
 
 const MONTH_ABBREVIATION = new RegExp(`\\b(${MONTHS_SHORT.join('|')})\\b`, 'g');
-/** English month abbreviations inside a sentence the lib built ("Sep–Dec"), in isiXhosa for xh. */
+/** English month abbreviations inside a sentence the lib built ("Sep–Dec"), in isiXhosa for xh and Afrikaans for af. */
 function monthsInText(lang: string, text: string): string {
-  return lang === 'xh' ? text.replace(MONTH_ABBREVIATION, (abbreviation) => recordsMonthShort('xh', MONTHS_SHORT.indexOf(abbreviation) + 1)) : text;
+  return lang === 'xh' || lang === 'af' ? text.replace(MONTH_ABBREVIATION, (abbreviation) => recordsBookMonthShort(lang, MONTHS_SHORT.indexOf(abbreviation) + 1)) : text;
 }
 
 /** "Bed 1 (Sep–Dec), Plot 2 (all year)" or "4 plots": labels, months and the two fixed words. */
@@ -711,10 +711,10 @@ function wrapMonth(m: number): number {
 function patternLabelText(lang: string, pattern: RainPattern): string {
   return inlineText(lang, PATTERN_META[pattern].label);
 }
-/** 'Jan'…'Dec' (month 1-12); the isiXhosa short name for an isiXhosa reader. Every other
+/** 'Jan'…'Dec' (month 1-12); the isiXhosa or Afrikaans short name for that reader. Every other
  * language, and everything that is stored or printed, keeps the English abbreviation. */
 function monthShortText(lang: string, m: number): string {
-  return lang === 'xh' ? recordsMonthShort('xh', m) : MONTHS_SHORT[m - 1];
+  return lang === 'xh' || lang === 'af' ? recordsBookMonthShort(lang, m) : MONTHS_SHORT[m - 1];
 }
 function monthLabel(m: number, lang: string): string {
   return monthShortText(lang, wrapMonth(m));
@@ -3531,7 +3531,7 @@ function MonthAxisTag({ slot, fontSize = 9.5 }: { slot?: MonthAxisSlot; fontSize
 /** "September 2026 (now)" — the words a screen reader and a hover tooltip get for one column. */
 function monthAxisTitle(slot: MonthAxisSlot | undefined, m: number, lang = 'en'): string {
   if (!slot) return monthShortText(lang, m);
-  return `${lang === 'xh' ? recordsMonthLong('xh', slot.month) : MONTH_NAMES[slot.month - 1]} ${slot.year}${slot.isNow ? ` (${inlineText(lang, 'now')})` : ''}`;
+  return `${lang === 'xh' || lang === 'af' ? recordsBookMonthLong(lang, slot.month) : MONTH_NAMES[slot.month - 1]} ${slot.year}${slot.isNow ? ` (${inlineText(lang, 'now')})` : ''}`;
 }
 
 function MonthLineChart({

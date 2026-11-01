@@ -106,9 +106,18 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
 - **Money book, CSV, invoice and money charts:** the CSV headings and duplicate note, the invoice document
   (`DOCUMENT_COPY.af`: "Faktuur", "Bedrag", unit and payment words) and the chart months are in Afrikaans.
   Afrikaans months come from the new `recordsBook*` functions in `lib/records-months.ts`. They are kept apart
-  from the shared month tables, which the report tests pin to English for `af`. Row words such as "sale"
-  still show in English, as they do on screen (`recordsFill` has no Afrikaans column yet). The money book
-  has its own Afrikaans draft notice.
+  from the shared month tables, which the report tests pin to English for `af`. The row words, units,
+  categories and instructions ("verkoping", "koste", "kwitansie") come from `recordsDraft('af', …)`, which
+  reads the 464 drafts in `af-inline/g44-records-book-rows.ts`; recorded names and typed text never pass
+  through it. The cashflow and coming-harvest charts and the invoice page follow. The money book and
+  invoice page have their own Afrikaans draft notice.
+- **Dates elsewhere:** the report view, community posts and messages, mentor due dates and facilitator
+  crop designs use `af-ZA`; the calendar tabs, crop price dates and M&E due dates use Afrikaans months.
+  The sample assessment programme has an Afrikaans toggle and notice.
+  The field journal, both crop planners, community "time ago" dates and the water-balance dry season
+  also use Afrikaans months (journal weekdays So Ma Di Wo Do Vr Sa, as `af-ZA` writes them).
+- **isiXhosa fix found on the way:** the invoice page told isiXhosa farmers the buyer's invoice "stays in
+  English", but it uses `DOCUMENT_COPY.xh`. The note now says so (fixed on #1090).
 - **Staff and map screens:** the M&E dashboard and overview, sector overlay compass words, rainfall chart
   and photo viewer now use the Afrikaans drafts and notices that isiXhosa already had.
 

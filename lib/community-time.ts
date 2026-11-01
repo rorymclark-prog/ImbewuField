@@ -14,6 +14,7 @@ export function communityTimeAgo(timestamp:unknown,lang:string,t:(key:string)=>s
     if(difference<86_400_000)return text(compact?'communityTimeHours':'communityTimeHoursAgo',Math.floor(difference/3_600_000));
     // Existing English/isiZulu date spelling stays exact. Other drafts share the money book's month authority.
     if(['st','ts','ve'].includes(lang))return recordsDate(lang,date,false);
-    return date.toLocaleDateString(lang==='zu'?'zu-ZA':'en-ZA',{day:'numeric',month:'short'});
+    // Afrikaans reads its own months from the platform locale pack (af-ZA ships real names, unlike zu/xh).
+    return date.toLocaleDateString(lang==='zu'?'zu-ZA':lang==='af'?'af-ZA':'en-ZA',{day:'numeric',month:'short'});
   } catch {return '';}
 }

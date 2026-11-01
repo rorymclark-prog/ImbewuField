@@ -775,3 +775,14 @@ test('animal save failures remain visible until both choices and production mont
   }
   assert.match(productionPage, /animalSaveFailed && <p role="alert"[^>]*>(?:\{inlineText\(lang, ')?Animal products and production months could not be saved/);
 });
+
+test('Afrikaans readers get Afrikaans months on the crop-plan grid, in sentences and on the axis tooltip', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  assert.match(page, /lang === 'xh' \|\| lang === 'af' \? recordsBookMonthShort\(lang, m\) : MONTHS_SHORT\[m - 1\]/);
+  assert.match(page, /lang === 'xh' \|\| lang === 'af' \? text\.replace\(MONTH_ABBREVIATION, \(abbreviation\) => recordsBookMonthShort\(lang,/);
+  assert.match(page, /lang === 'xh' \|\| lang === 'af' \? recordsBookMonthLong\(lang, slot\.month\) : MONTH_NAMES\[slot\.month - 1\]/);
+  // The plan-export date label (feeds the crop plan PDF) is not touched.
+  assert.match(page, /dateLabel: new Date\(\)\.toLocaleDateString\('en-ZA', \{ day: 'numeric', month: 'long', year: 'numeric' \}\)/);
+  const cropplan = source('../app/cropplan/page.tsx');
+  assert.match(cropplan, /lang === 'af'\s*\? MONTHS_SHORT\.map\(\(_, month\) => recordsBookMonthShort\(lang, month \+ 1\)\)/);
+});
