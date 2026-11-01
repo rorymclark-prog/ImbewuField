@@ -48,7 +48,7 @@ import { produceDisplayName } from '@/lib/perennial-produce';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import { recordsFill, recordsTemplate, recordsLabel, recordsQuantityLabel } from '@/lib/records-regional-drafts';
-import { recordsMonthShort, recordsMonthYear } from '@/lib/records-months';
+import { recordsBookMonthShort, recordsBookMonthYear } from '@/lib/records-months';
 
 const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
@@ -274,7 +274,7 @@ function MeasuredView({
           {lang === 'zu' ? (series.earlierRecords ? 'Akukho okuvunyiwe noma okudayisiwe kulezi zinyanga' : 'Asikho isivuno esirekhodiwe okwamanje') : recordsFill(lang, series.earlierRecords ? 'Nothing picked or sold in these months' : 'No harvest recorded yet')}
         </p>
         <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang} english={emptyEnglish} zulu={emptyZulu}
-          template={series.earlierRecords ? 'Your records start in {month}. Try a longer window above to reach them.' : undefined} vars={{ month: series.firstRecordMonth && series.firstRecordYear ? recordsMonthYear(lang, series.firstRecordMonth, series.firstRecordYear) : '' }} />
+          template={series.earlierRecords ? 'Your records start in {month}. Try a longer window above to reach them.' : undefined} vars={{ month: series.firstRecordMonth && series.firstRecordYear ? recordsBookMonthYear(lang, series.firstRecordMonth, series.firstRecordYear) : '' }} />
         <Link href="/records" className="inline-block mt-2.5 font-sans font-semibold"
           style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
           {tx('Log a harvest', 'Rekhoda isivuno')}
@@ -312,7 +312,7 @@ function MeasuredView({
     .map((m) => `${m.longLabel}, ${kgLabel(Math.max(m.producedKg, m.soldKg))}`);
   const clippedLocal = months
     .filter((_, i) => kgScale.isClipped(monthTotals[i]))
-    .map((m) => `${recordsMonthYear(lang, m.month, m.year)}, ${kgLabel(Math.max(m.producedKg, m.soldKg))}`);
+    .map((m) => `${recordsBookMonthYear(lang, m.month, m.year)}, ${kgLabel(Math.max(m.producedKg, m.soldKg))}`);
   const keptExplanationEnglish = '“Kept” is what you picked less what you sold — food eaten at home, given away, fed out, saved for seed or spoiled. The app cannot tell those apart, so it does not guess.';
   const keptExplanationZulu = '“Okusele” yinani olivunile kususwe oluthengisile — kungaba ukudla okudliwe ekhaya, okuphiwe abanye, okuphiwe izilwane, okugcinelwe imbewu noma okonakele. Uhlelo alukwazi ukuhlukanisa lezi zinto, ngakho aluqageli.';
   const mismatchExplanationEnglish = 'A dashed outline means more was sold that month than was logged as picked, so the kept figure is unknown — usually picking that never got written down, sometimes a sale out of an earlier month’s harvest.';
@@ -379,7 +379,7 @@ function MeasuredView({
           {months.map((m, i) => (
             <g key={`x-${m.key}`}>
               {showLabel(i) && (
-                <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{recordsMonthShort(lang, m.month)}</text>
+                <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{recordsBookMonthShort(lang, m.month)}</text>
               )}
             </g>
           ))}
@@ -391,7 +391,7 @@ function MeasuredView({
               )}
               <rect x={cx(i) - colW / 2} y={0} width={colW} height={totalH} fill="transparent"
                 style={{ cursor: 'pointer' }} onClick={() => onPick(m.key)}>
-                <title>{recordsLabel(lang, '{month} — picked {picked}, sold {sold}', '{month} — kuvuniwe {picked}, kudayisiwe {sold}', { month: recordsMonthYear(lang, m.month, m.year), picked: kgLabel(m.producedKg), sold: kgLabel(m.soldKg) })}</title>
+                <title>{recordsLabel(lang, '{month} — picked {picked}, sold {sold}', '{month} — kuvuniwe {picked}, kudayisiwe {sold}', { month: recordsBookMonthYear(lang, m.month, m.year), picked: kgLabel(m.producedKg), sold: kgLabel(m.soldKg) })}</title>
               </rect>
             </g>
           ))}
@@ -399,7 +399,7 @@ function MeasuredView({
       </div>
 
       <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: '1px solid var(--border)' }}>
-        <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{recordsMonthYear(lang, selected.month, selected.year)}</span>
+        <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{recordsBookMonthYear(lang, selected.month, selected.year)}</span>
         {selected.hasRecords ? (
           <>
         <Chip dot={SOLD} label={tx('sold', 'kudayisiwe')} value={kgLabel(selected.soldKg)} />
@@ -506,11 +506,11 @@ function PlanView({ plan, source, wide, orchard, lang }: {
       </div>
 
       <div className="px-4 pb-3 flex flex-wrap items-center" style={{ gap: '4px 14px' }}>
-        <Chip dot={BENCH} title={lang === 'zu' || lang === 'xh' ? 'English source: plan benchmark' : undefined} label={tx('plan benchmark', 'isilinganiso sohlelo')} value="" />
-        <Chip dot={SOLD} title={lang === 'zu' || lang === 'xh' ? 'English source: logged picked' : undefined} label={tx('logged picked', 'okuvuniwe okurekhodiwe')} value="" />
+        <Chip dot={BENCH} title={lang === 'zu' || lang === 'xh' || lang === 'af' ? 'English source: plan benchmark' : undefined} label={tx('plan benchmark', 'isilinganiso sohlelo')} value="" />
+        <Chip dot={SOLD} title={lang === 'zu' || lang === 'xh' || lang === 'af' ? 'English source: logged picked' : undefined} label={tx('logged picked', 'okuvuniwe okurekhodiwe')} value="" />
         {plan.lossConfirmed
           ? <Chip dot="#C07A1E"
-              title={lang === 'zu' || lang === 'xh' ? `English source: after your ${Math.round(plan.lossPercent)}% loss allowance` : undefined}
+              title={lang === 'zu' || lang === 'xh' || lang === 'af' ? `English source: after your ${Math.round(plan.lossPercent)}% loss allowance` : undefined}
               label={recordsTemplate(lang, 'after your {pct}% loss allowance', 'ngemva kwesilinganiso sokulahleka esingu-{pct}%', { pct: Math.round(plan.lossPercent) })} value="" />
           : (
             <Link href="/facilitator/crops" className="font-sans"
@@ -566,7 +566,7 @@ function PlanRow({ row, pct, lossPercent, clipped, lang }: {
           <span aria-hidden="true">{row.icon}</span> {row.cropName}
         </span>
         <span className="font-display tabular-nums flex-shrink-0" style={{ fontSize: 12, color: MUTED }}
-          title={lang === 'zu' || lang === 'xh' ? `English source: ${kgLabel(row.harvestedKg)} harvested of ${kgLabel(row.benchmarkKg)} benchmark` : undefined}>
+          title={lang === 'zu' || lang === 'xh' || lang === 'af' ? `English source: ${kgLabel(row.harvestedKg)} harvested of ${kgLabel(row.benchmarkKg)} benchmark` : undefined}>
           {lang === 'zu'
             ? <>Kuvunyiwe {kgLabel(row.harvestedKg)} · isilinganiso {kgLabel(row.benchmarkKg)}</>
             : <>{kgLabel(row.harvestedKg)} <span style={{ color: 'var(--text-muted)' }}>{recordsTemplate(lang, 'of {benchmark}', null, { benchmark: kgLabel(row.benchmarkKg) })}</span></>}

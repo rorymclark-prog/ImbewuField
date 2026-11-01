@@ -257,9 +257,12 @@ test('validation text and the draft notice reach the screen for the regional lan
 
 test('the CSV export never carries an unreviewed regional draft: Sesotho, Tshivenda and Xitsonga export English', () => {
   const page = read('app/records/page.tsx');
-  assert.match(page, /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : 'en'\);/);
+  assert.match(page, /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : lang === 'af' \? 'af' : 'en'\);/);
   // isiXhosa is the one regional-lane language that IS exported (headings only; column order and values unchanged).
   assert.match(page, /\? \['Umhla', 'Inkcazelo', 'Ubungakanani', 'Engenayo', 'Umthombo', 'Ephumayo', 'Hlola'\]/);
+  // Afrikaans (also an unreviewed draft) is exported the same way: headings and the duplicate note only.
+  assert.match(page, /\? \['Datum', 'Beskrywing', 'Hoeveelheid', 'Geld in', 'Bron', 'Geld uit', 'Kontrole'\]/);
+  assert.match(page, /"Moontlik dieselfde verkoping — 'n betaalde faktuur word reeds as inkomste getel\."/);
   assert.match(page, /: \['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'\]/);
   const csvLine = page.match(/const csvLang = [^\n]*/)![0];
   for (const held of ['st', 've', 'ts']) assert.doesNotMatch(csvLine, new RegExp(`'${held}'`), `${held} must not reach the CSV`);
@@ -419,4 +422,24 @@ test('the invoice a buyer receives stays English whatever the farmer reads: prin
   const english = buildInvoiceDocument({ ...input, language: 'en' });
   for (const lang of LANGS) assert.deepEqual(buildInvoiceDocument({ ...input, language: lang }), english, `${lang}: the document must be the English one`);
   assert.notDeepEqual(buildInvoiceDocument({ ...input, language: 'zu' }), english, 'isiZulu documents are unchanged by this round');
+});
+
+test('Afrikaans reaches the money book wherever isiXhosa does: crop picker language, draft notice, chart tooltips', async () => {
+  const records = read('components/MyRecords.tsx');
+  // Both CropSelect callers (harvest and sale forms) pass Afrikaans through, and the picker's type admits it.
+  const passes = records.match(/language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : lang === 'af' \? 'af' : 'en'\}/g) ?? [];
+  assert.equal(passes.length, 2);
+  assert.match(read('components/CropSelect.tsx'), /language\?: 'en' \| 'zu' \| 'xh' \| 'af';/);
+  // The Afrikaans machine-draft notice sits beside the isiXhosa one, in Afrikaans, and its draft exists.
+  const notice = 'AFRIKAANS MACHINE DRAFT — This wording has not been reviewed by a fluent Afrikaans speaker. Text not yet drafted stays in English.';
+  assert.match(records, /\{lang === 'af' && <p role="note" lang="af" className="mb-3 text-xs"[^\n]*inlineText\(lang, 'AFRIKAANS MACHINE DRAFT — /);
+  assert.ok(read('lib/locales/af-inline/g43-notices.ts').includes(`"${notice}"`), 'the Afrikaans notice draft is missing');
+  assert.match(records, /\{lang === 'xh' && <p role="note" lang="xh"/, 'the isiXhosa notice must still be there');
+  // The "English source:" tooltips follow the same languages as isiZulu and isiXhosa.
+  const graphs = read('components/FinanceGraphs.tsx');
+  assert.equal((graphs.match(/lang === 'zu' \|\| lang === 'xh' \|\| lang === 'af' \?/g) ?? []).length, 4);
+  assert.doesNotMatch(graphs.replace(/lang === 'zu' \|\| lang === 'xh' \|\| lang === 'af'/g, ''), /lang === 'zu' \|\| lang === 'xh'/);
+  // English and isiXhosa wording of the records tooltips is unchanged (no draft is read for English).
+  assert.equal(recordsDraft('en', 'Direct sale'), null);
+  assert.equal(recordsDraft('xh', 'Direct sale'), 'Intengiso ngqo');
 });

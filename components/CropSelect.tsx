@@ -17,7 +17,7 @@ interface CropSelectProps {
   onChange: (crop: string, cropKey: string | null) => void;
   ariaLabel?: string;
   rememberedCrops?: string[];
-  language?: 'en' | 'zu' | 'xh';
+  language?: 'en' | 'zu' | 'xh' | 'af';
 }
 
 export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememberedCrops = [], language = 'en' }: CropSelectProps) {

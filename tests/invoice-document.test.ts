@@ -361,7 +361,68 @@ test('an isiXhosa invoice changes only words: same number, amounts, bank details
 
 test('the invoice screen, the money book and the picker pass isiXhosa through to the document', () => {
   assert.match(src('../app/invoice/page.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : 'en'\}/);
-  assert.match(src('../components/MyRecords.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : 'en'\}/);
+  assert.match(src('../components/MyRecords.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : (?:lang === 'af' \? 'af' : )?'en'\}/);
+  // Afrikaans (1 Nov 2026) is passed through by the money book too, and the picker's union admits it.
+  assert.match(src('../components/MyRecords.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : lang === 'af' \? 'af' : 'en'\}/);
+  assert.match(src('../components/CropSelect.tsx'), /language\?: 'en' \| 'zu' \| 'xh' \| 'af'/);
   assert.match(src('../components/CropSelect.tsx'), /language\?: 'en' \| 'zu' \| 'xh'/);
   assert.match(src('../app/invoice/page.tsx'), /lang === 'xh'\s*\? formatXhosaDate\(new Date\(inv\.dateISO\)/);
+});
+
+// ── Afrikaans (unreviewed machine draft, 1 Nov 2026) ───────────────────────────────────────────
+test('the Afrikaans invoice copy has exactly the English keys, every one filled, and keeps the brand', () => {
+  const en = Object.keys(INVOICE_DOCUMENT_COPY.en).sort();
+  assert.deepEqual(Object.keys(INVOICE_DOCUMENT_COPY.af).sort(), en);
+  for (const key of en) {
+    const af = (INVOICE_DOCUMENT_COPY.af as Record<string, string>)[key];
+    assert.ok(af.trim().length > 0, `${key} is empty`);
+    assert.equal(/\{[a-zA-Z]+\}/.test(af), /\{[a-zA-Z]+\}/.test((INVOICE_DOCUMENT_COPY.en as Record<string, string>)[key]), `${key} placeholders`);
+  }
+  assert.match(INVOICE_DOCUMENT_COPY.af.footer, /ImbewuField/);
+  assert.notEqual(INVOICE_DOCUMENT_COPY.af.invoice, INVOICE_DOCUMENT_COPY.en.invoice);
+  // The money column is "Bedrag" (the money book's word for an amount), never the quantity word.
+  assert.equal(INVOICE_DOCUMENT_COPY.af.amount, 'Bedrag');
+});
+
+test('an Afrikaans invoice changes only words: same number, amounts, bank details, VAT line and dates in Afrikaans months', () => {
+  const input: InvoiceDocumentInput = {
+    ...BASE,
+    issuedISO: '2026-10-23T08:00:00.000Z',
+    dueISO: '2026-11-22T08:00:00.000Z',
+    seller: { name: 'Thandi Mbeki', taxNumber: '4123456789' },
+    items: [{ desc: 'Spinach', qty: 12.5, unit: 'bunches', price: 35 }, { desc: 'Eggs', qty: 1, unit: 'trays', price: 0 }],
+    banking: { bankName: 'FNB', accountName: 'T Mbeki', accountNumber: '62001234567', branchCode: '250655' },
+    status: 'paid', paidAt: '2026-10-24T08:00:00.000Z', paymentMethod: 'mobile', notes: 'Thank you',
+  };
+  const en = buildInvoiceDocument({ ...input, language: 'en' });
+  const af = buildInvoiceDocument({ ...input, language: 'af' });
+  assert.equal(af.number, en.number);
+  assert.equal(af.totalLabel, en.totalLabel);
+  assert.deepEqual(af.rows.map((r) => r.amount), en.rows.map((r) => r.amount));
+  assert.deepEqual(af.rows.map((r) => r.desc), en.rows.map((r) => r.desc), 'recorded item names are never translated');
+  assert.deepEqual(af.sellerLines, en.sellerLines);
+  assert.match(af.bankingLines.join('|'), /62001234567/);
+  assert.match(af.bankingLines.join('|'), /250655/);
+  assert.match(af.issuedLabel, /^23 Oktober 2026$/);
+  assert.match(af.dueLabel ?? '', /^22 November 2026$/);
+  assert.match(af.paidStamp ?? '', /^Betaal · 24 Okt 2026 · Selfoon$/);
+  assert.equal(af.rows[0].detail, '12,5 bosse × R35,00');
+  assert.equal(af.rows[1].detail, '1 bak');
+  assert.equal(af.totalHeading, INVOICE_DOCUMENT_COPY.af.total);
+  assert.equal(af.labels.invoice, 'Faktuur');
+  assert.equal(af.labels.amount, 'Bedrag');
+  assert.match(af.notes ?? '', /^Notas: Thank you$/);
+  assert.match(af.footer, /^Gegenereer met ImbewuField · imbewufield\.vercel\.app$/);
+  // An unpaid Afrikaans copy still asks for the money; a paid one does not.
+  assert.equal(buildInvoiceDocument({ ...input, status: 'unpaid', language: 'af' }).totalHeading, INVOICE_DOCUMENT_COPY.af.totalDue);
+  // English, isiZulu and isiXhosa output must not move.
+  assert.match(en.issuedLabel, /^23 October 2026$/);
+  assert.match(buildInvoiceDocument({ ...input, language: 'zu' }).issuedLabel, /^23 Okthoba 2026$/);
+  assert.match(buildInvoiceDocument({ ...input, language: 'xh' }).issuedLabel, /^23 Okthobha 2026$/);
+  assert.equal(unitLabel(2, 'bags', 'af'), 'sakke');
+  assert.equal(unitLabel(1, 'bags', 'af'), 'sak');
+  assert.equal(unitLabel(1, 'kg', 'af'), 'kg');
+  assert.equal(unitLabel(2, 'bags', 'xh'), 'iingxowa');
+  assert.equal(unitLabel(1, 'bags', 'zu'), 'isaka');
+  assert.equal(unitLabel(2, 'bags', 'en'), 'bags');
 });

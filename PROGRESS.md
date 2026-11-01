@@ -77,8 +77,9 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
 - **Release notes and tour:** all 235 lines (`lib/update-copy-locales/af.ts`).
 - **Dates, weather, error pages:** on-screen dates use the browser's `af-ZA` month names; the weather card
   and error/offline pages carry their own Afrikaans tables.
-- **Kept English for Afrikaans on purpose:** report and invoice documents, report summaries and PDF labels
-  (pinned by the report-header and report-costs tests).
+- **Kept English for Afrikaans on purpose:** the site report summaries, month names and PDF labels
+  (pinned by the report-header and report-costs tests). The farm report, programme report and invoice
+  documents were added later (below).
 - **Blind review of safety, money and consent drafts:** 1,936 drafts back-translated by six independent
   reviewers before seeing the English; 44 repairs applied (`docs/translation-reviews/afrikaans-ui-2026-10-31/`).
 - **Studies lessons:** all 10 modules (33 lessons, 646 fields) as source-paired drafts
@@ -97,6 +98,19 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   finance report in Afrikaans from the existing g34 drafts, as isiXhosa does. Recorded names, units, amounts
   and the file name stay as recorded. The month rows use `af-ZA` short months, and the unpaid-invoice column
   says "Bedrag" (money), not the quantity word. `tests/farm-report.test.ts` checks every figure.
+  The farm report PDF (via `ReportComposer`) now uses the Afrikaans labels too.
+- **Programme report (staff/funder):** `lib/programme-report-pdf.ts` takes `language: 'af'`. The screen
+  controls, analysis text, tables and PDF headings, footer ("Programverslag") and counts use the Afrikaans
+  drafts; figures and recorded names are unchanged. The screen note no longer claims that the PDF stays English.
+  `tests/programme-report.test.ts` adds two Afrikaans tests.
+- **Money book, CSV, invoice and money charts:** the CSV headings and duplicate note, the invoice document
+  (`DOCUMENT_COPY.af`: "Faktuur", "Bedrag", unit and payment words) and the chart months are in Afrikaans.
+  Afrikaans months come from the new `recordsBook*` functions in `lib/records-months.ts`. They are kept apart
+  from the shared month tables, which the report tests pin to English for `af`. Row words such as "sale"
+  still show in English, as they do on screen (`recordsFill` has no Afrikaans column yet). The money book
+  has its own Afrikaans draft notice.
+- **Staff and map screens:** the M&E dashboard and overview, sector overlay compass words, rainfall chart
+  and photo viewer now use the Afrikaans drafts and notices that isiXhosa already had.
 
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English

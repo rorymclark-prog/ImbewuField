@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-import { recordsDate, recordsMonthLong, recordsMonthShort, recordsMonthYear } from '@/lib/records-months';
+import { recordsDate, recordsMonthLong, recordsMonthShort, recordsMonthYear, recordsSeasonLabel, recordsBookDate, recordsBookMonthLong, recordsBookMonthShort, recordsBookMonthYear } from '@/lib/records-months';
 import { buildFinanceSeries } from '@/lib/finance-series';
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
@@ -52,6 +52,38 @@ test('isiXhosa reuses the month names the app already carries for Home; nothing 
   assert.deepEqual(Array.from({ length: 12 }, (_, i) => recordsMonthLong('xh', i + 1)), existing);
 });
 
+test('Afrikaans names the twelve months for the money book, and dates keep their shape', () => {
+  const long = Array.from({ length: 12 }, (_, i) => recordsBookMonthLong('af', i + 1));
+  const short = Array.from({ length: 12 }, (_, i) => recordsBookMonthShort('af', i + 1));
+  assert.deepEqual(long, ['Januarie', 'Februarie', 'Maart', 'April', 'Mei', 'Junie', 'Julie', 'Augustus', 'September', 'Oktober', 'November', 'Desember']);
+  assert.deepEqual(short, ['Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des']);
+  assert.equal(new Set(long).size, 12);
+  assert.equal(new Set(short).size, 12);
+  const d = new Date(2026, 2, 5, 9, 0, 0);
+  assert.equal(recordsBookDate('af', d, true), '05 Mrt 2026');
+  assert.equal(recordsBookDate('af', d, false), '05 Mrt');
+  assert.equal(recordsBookMonthYear('af', 10, 2026), 'Oktober 2026');
+  assert.equal(recordsBookDate('af', new Date('nope'), true), 'Invalid Date');
+  assert.equal(recordsBookMonthLong('af', 13), '');
+  assert.equal(recordsBookMonthShort('af', 0), '');
+  // Every other language is exactly the plain function: English, isiZulu, isiXhosa and the regional drafts do not move.
+  for (const lang of ['en', 'zu', 'xh', 'st', 've', 'ts', 'fr', '']) {
+    for (let month = 1; month <= 12; month++) {
+      assert.equal(recordsBookMonthShort(lang, month), recordsMonthShort(lang, month));
+      assert.equal(recordsBookMonthLong(lang, month), recordsMonthLong(lang, month));
+      assert.equal(recordsBookMonthYear(lang, month, 2026), recordsMonthYear(lang, month, 2026));
+      const day = new Date(2026, month - 1, 5, 9, 0, 0);
+      assert.equal(recordsBookDate(lang, day, true), recordsDate(lang, day, true));
+      assert.equal(recordsBookDate(lang, day, false), recordsDate(lang, day, false));
+    }
+  }
+  // The report builders still see Afrikaans as an English report: the shared tables have no Afrikaans (the report tests pin this).
+  assert.equal(recordsMonthShort('af', 3), 'Mar');
+  assert.equal(recordsMonthLong('af', 5), 'May');
+  assert.equal(recordsSeasonLabel('af', 'Nov–Mar'), 'Nov–Mar');
+  assert.equal(recordsSeasonLabel('af', 'year-round'), 'year-round');
+});
+
 test('regional months keep the order of the calendar (blind reviewers mapped each name back to its month)', () => {
   assert.deepEqual([1, 6, 12].map((m) => recordsMonthLong('st', m)), ['Pherekgong', 'Phupjane', 'Tshitwe']);
   assert.deepEqual([1, 6, 12].map((m) => recordsMonthLong('ve', m)), ['Phando', 'Fulwi', 'Nyendavhusiku']);
@@ -83,12 +115,12 @@ test('the finance series still labels months in English and also exposes the fir
 });
 
 test('wiring: the money book, charts, harvest list and saved-invoice list use the month helper; printed output does not', () => {
-  assert.match(read('app/records/page.tsx'), /recordsDate\(lang, d, false\)/);
-  assert.match(read('components/MyRecords.tsx'), /recordsDate\(lang, d, true\)/);
+  assert.match(read('app/records/page.tsx'), /recordsBookDate\(lang, d, false\)/);
+  assert.match(read('components/MyRecords.tsx'), /recordsBookDate\(lang, d, true\)/);
   assert.match(read('components/CashflowChart.tsx'), /recordsMonthShort\(lang, m\.month\)/);
   assert.match(read('components/CashflowChart.tsx'), /recordsMonthYear\(lang, month\.month, month\.year\)/);
-  assert.match(read('components/FinanceGraphs.tsx'), /recordsMonthShort\(lang, m\.month\)/);
-  assert.match(read('components/FinanceGraphs.tsx'), /recordsMonthYear\(lang, selected\.month, selected\.year\)/);
+  assert.match(read('components/FinanceGraphs.tsx'), /recordsBookMonthShort\(lang, m\.month\)/);
+  assert.match(read('components/FinanceGraphs.tsx'), /recordsBookMonthYear\(lang, selected\.month, selected\.year\)/);
   assert.match(read('components/ComingUpHarvests.tsx'), /recordsMonthLong\(lang, h\.endMonth\)/);
   assert.match(read('app/invoice/page.tsx'), /recordsDate\(lang, new Date\(inv\.dateISO\), true\)/);
   // The CSV export stays on its own English dates. w18-41: the invoice document now builds its
@@ -96,5 +128,5 @@ test('wiring: the money book, charts, harvest list and saved-invoice list use th
   for (const printed of ['lib/invoice-entry.ts']) {
     assert.doesNotMatch(read(printed), /records-months/, `${printed} must not use regional month names`);
   }
-  assert.match(read('app/records/page.tsx'), /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : 'en'\);/);
+  assert.match(read('app/records/page.tsx'), /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : lang === 'af' \? 'af' : 'en'\);/);
 });

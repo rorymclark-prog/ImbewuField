@@ -70,7 +70,7 @@ import FarmReports from '@/components/FarmReports';
 import { recordQuantity, recordUnit, recordQuantityPayload, recordWeightKg, quantityTotals, type RecordUnit } from '@/lib/farm-records';
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, isRecordsRegionalLang, recordsDraftNotice } from '@/lib/records-regional-drafts';
-import { recordsDate } from '@/lib/records-months';
+import { recordsBookDate } from '@/lib/records-months';
 
 // w19-12: on screen the thousands separator is a no-break space so "R8 175,00" never splits
 // across lines. lib/invoice-document.ts keeps the plain space because jsPDF's core fonts
@@ -106,7 +106,7 @@ function fmtDate(raw: string | null | undefined, lang = 'en'): string {
   const d = new Date(raw);
   return isNaN(d.getTime())
     ? raw
-    : recordsDate(lang, d, false);
+    : recordsBookDate(lang, d, false);
 }
 
 function isThisMonth(isoString: string | null | undefined): boolean {
@@ -1073,25 +1073,31 @@ function filterLedgerRows(rows: LedgerRow[], only: 'picked' | 'in' | 'out' | und
 
 /**
  * The export keeps isiZulu's existing wording and, since 24 Oct 2026, carries isiXhosa headings
- * (the whole isiXhosa app is an unreviewed machine draft, like the isiZulu one). The unreviewed
+ * (the whole isiXhosa app is an unreviewed machine draft, like the isiZulu one) and, since 1 Nov 2026,
+ * Afrikaans headings (also an unreviewed machine draft). The unreviewed
  * Sesotho, Tshivenda and Xitsonga drafts still never go into a file.
  */
-const csvLang = (lang: string) => (lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en');
+const csvLang = (lang: string) => (lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : lang === 'af' ? 'af' : 'en');
 
 function exportLedgerCsv(rows: LedgerRow[], period: Period, lang = 'en') {
   const head = lang === 'zu'
     ? ['Usuku', 'Incazelo', 'Inani', 'Ingenayo', 'Umthombo', 'Ephumayo', 'Hlola']
     : lang === 'xh'
       ? ['Umhla', 'Inkcazelo', 'Ubungakanani', 'Engenayo', 'Umthombo', 'Ephumayo', 'Hlola']
-      : ['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'];
+      : lang === 'af'
+        ? ['Datum', 'Beskrywing', 'Hoeveelheid', 'Geld in', 'Bron', 'Geld uit', 'Kontrole']
+        : ['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'];
   // The CSV can leave the app for a lender or accountant, so unreviewed Sesotho, Tshivenda and
   // Xitsonga drafts stay out of it: those languages export English headings, as before.
-  // isiXhosa (unreviewed too) is exported on request of the isiXhosa rollout, headings only; every value is unchanged.
+  // isiXhosa and Afrikaans (unreviewed too) are exported on request of their rollouts, headings only; every value is unchanged.
+  // The Afrikaans money columns are "Geld in" / "Geld uit" (as in the farm report); "Hoeveelheid" is the quantity column.
   const duplicateNote = lang === 'zu'
     ? 'Kungenzeka ukuthi ukuthengisa kubalwe kabili — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.'
     : lang === 'xh'
       ? 'Kusenokwenzeka ukuba yintengiso enye — i-invoyisi ehlawulweyo sele ibaliwe njengengeniso.'
-      : DUPLICATE_ROW_NOTE;
+      : lang === 'af'
+        ? "Moontlik dieselfde verkoping — 'n betaalde faktuur word reeds as inkomste getel."
+        : DUPLICATE_ROW_NOTE;
   const body = rows.map((r) => [r.date, r.desc, r.qty, r.inAmt != null ? fmtZAR(r.inAmt) : '', r.source, r.outAmt != null ? fmtZAR(r.outAmt) : '', r.duplicateSuspect ? duplicateNote : '']);
   const csv = [head, ...body].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));

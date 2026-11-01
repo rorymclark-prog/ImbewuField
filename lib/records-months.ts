@@ -14,6 +14,13 @@
 // the journal (lib/locales/xh.ts homeMonth*), also an unreviewed machine draft. The short forms are 3 to 4 letters and all different, for a chart
 // axis; they are not an established abbreviation convention. See
 // docs/translation-reviews/records-finance-2026-10-06/README.md (Round 5) for the open questions.
+//
+// AFRIKAANS (1 Nov 2026) is deliberately NOT in the tables above. Those tables also feed the report
+// builders, and an Afrikaans report is still English throughout (tests/report-header-localization.test.ts,
+// tests/report-costs-localization.test.ts pin that), so giving them Afrikaans months would print one
+// Afrikaans word inside an English report. The money book, the invoice and the money charts opt in
+// through the recordsBook* functions at the bottom, which read the standard Afrikaans month names (the
+// same ones lib/update-copy-date.ts prints) and are the plain functions for every other language.
 
 export type RecordsMonthLang = 'zu' | 'st' | 've' | 'ts' | 'xh';
 
@@ -122,4 +129,31 @@ export function recordsSeasonLabel(language:string,value:string):string {
   if(named)return language==='xh'?(XH_SEASON_WORDS[named.english]??value):named[language];
   const months=recordsMonthRangeIndices(value);
   return months.length?`${recordsMonthShort(language,months[0]+1)}–${recordsMonthShort(language,months[months.length-1]+1)}`:value;
+}
+
+// ── Afrikaans, for the money book only (see the note at the top) ─────────────────────────────
+// An unreviewed machine draft like the rest of the Afrikaans app. Short forms are the usual 3 letters.
+const AF_LONG = ['Januarie', 'Februarie', 'Maart', 'April', 'Mei', 'Junie', 'Julie', 'Augustus', 'September', 'Oktober', 'November', 'Desember'] as const;
+const AF_SHORT = ['Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des'] as const;
+
+/** recordsMonthShort for the money book: Afrikaans gets its own months, every other language is recordsMonthShort. */
+export function recordsBookMonthShort(lang: string, month: number): string {
+  return lang === 'af' && validMonth(month) ? AF_SHORT[month - 1] : recordsMonthShort(lang, month);
+}
+
+/** recordsMonthLong for the money book: Afrikaans gets its own months, every other language is recordsMonthLong. */
+export function recordsBookMonthLong(lang: string, month: number): string {
+  return lang === 'af' && validMonth(month) ? AF_LONG[month - 1] : recordsMonthLong(lang, month);
+}
+
+/** recordsMonthYear for the money book ('Oktober 2026' in Afrikaans); every other language is recordsMonthYear. */
+export function recordsBookMonthYear(lang: string, month: number, year: number): string {
+  return lang === 'af' && validMonth(month) ? `${AF_LONG[month - 1]} ${year}` : recordsMonthYear(lang, month, year);
+}
+
+/** recordsDate for the money book ('05 Mrt 2026' in Afrikaans, same shape as the other languages); every other language is recordsDate. */
+export function recordsBookDate(lang: string, date: Date, withYear: boolean): string {
+  if (lang !== 'af' || Number.isNaN(date.getTime())) return recordsDate(lang, date, withYear);
+  const base = `${String(date.getDate()).padStart(2, '0')} ${AF_SHORT[date.getMonth()]}`;
+  return withYear ? `${base} ${date.getFullYear()}` : base;
 }

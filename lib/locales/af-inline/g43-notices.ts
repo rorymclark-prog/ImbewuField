@@ -2,6 +2,7 @@
 // The Afrikaans-only draft notices: what each screen says about its own unreviewed Afrikaans.
 const drafts: Record<string, string> = {
   "AFRIKAANS MACHINE DRAFT.": "AFRIKAANSE MASJIENKONSEP.",
+  "AFRIKAANS MACHINE DRAFT — This wording has not been reviewed by a fluent Afrikaans speaker. Text not yet drafted stays in English.": "AFRIKAANSE MASJIENKONSEP — Hierdie bewoording is nie deur 'n vlot Afrikaanse spreker hersien nie. Teks wat nog nie opgestel is nie, bly in Engels.",
   "The report analysis and tables are an unreviewed Afrikaans draft. Recorded names and units stay as recorded.": "Die verslag se ontleding en tabelle is 'n onhersiene Afrikaanse konsep. Aangetekende name en eenhede bly soos aangeteken.",
   "Afrikaans interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.": "Die Afrikaanse bewoording van die koppelvlak is 'n onhersiene konsep. Engels word onder vertaalde etikette gewys. Data, plek- en spesiename, verduidelikings, bronne en boerderywaarskuwings bly soos verskaf.",
   "Afrikaans machine draft": "Afrikaanse masjienkonsep",
@@ -15,7 +16,8 @@ const drafts: Record<string, string> = {
   "The Afrikaans text is a draft awaiting review by a fluent Afrikaans speaker.": "Die Afrikaanse teks is 'n konsep wat wag op hersiening deur 'n vlot Afrikaanse spreker.",
   "The assessment text and evidence in this report are still in English; they are not verified Afrikaans farming instructions.": "Die assesseringsteks en bewyse in hierdie verslag is nog in Engels; dit is nie geverifieerde Afrikaanse boerdery-instruksies nie.",
   "The controls here are an unreviewed Afrikaans draft. The MEL analysis text, tables and PDF are in English. Names and recorded evidence are kept as recorded.": "Die kontroles hier is 'n onhersiene Afrikaanse konsep. Die MEL-ontledingsteks, tabelle en PDF is in Engels. Name en aangetekende bewyse word gehou soos aangeteken.",
-  "The controls, analysis text and tables here are an unreviewed Afrikaans draft. The PDF labels stay in English. Names and recorded evidence are kept as recorded.": "Die kontroles, ontledingsteks en tabelle hier is 'n onhersiene Afrikaanse konsep. Die PDF se etikette bly in Engels. Name en aangetekende bewyse word gehou soos aangeteken.",
+  "The controls, analysis text, tables and PDF here are an unreviewed Afrikaans draft. Names and recorded evidence are kept as recorded.": "Die kontroles, ontledingsteks, tabelle en PDF hier is 'n onhersiene Afrikaanse konsep. Name en aangetekende bewyse word gehou soos aangeteken.",
+  "The Afrikaans headings are unreviewed; evidence text is kept in the language it was recorded in.": "Die Afrikaanse opskrifte is nie hersien nie; bewysteks word gehou in die taal waarin dit aangeteken is.",
   "The sharing controls and notices on this page are in Afrikaans. Some charts, data-status warnings and the farmer detail panel are still shown in English; names, figures and evidence typed by people are shown as saved.": "Die deelkontroles en kennisgewings op hierdie bladsy is in Afrikaans. Sommige grafieke, datastatuswaarskuwings en die boer se besonderhedepaneel word nog in Engels gewys; name, syfers en bewyse wat mense ingetik het, word gewys soos gestoor.",
   "These Afrikaans headings and controls have not yet been reviewed by a fluent speaker. Evidence text and participant responses are kept in the language they were written in.": "Hierdie Afrikaanse opskrifte en kontroles is nog nie deur 'n vlot spreker hersien nie. Bewysteks en deelnemers se antwoorde word gehou in die taal waarin dit geskryf is.",
   "Unreviewed Afrikaans draft.": "Onhersiene Afrikaanse konsep.",
@@ -34,6 +36,9 @@ const drafts: Record<string, string> = {
   "English source narration selected. Afrikaans narration is not available for this module yet.": "Vertelling in die Engelse bron is gekies. Afrikaanse vertelling is nog nie vir hierdie module beskikbaar nie.",
   "No Afrikaans narration is available. Select English source narration or No narration.": "Geen Afrikaanse vertelling is beskikbaar nie. Kies vertelling in die Engelse bron of Geen vertelling.",
   "Slides: Afrikaans AI draft + English source": "Skyfies: Afrikaanse AI-konsep + Engelse bron",
+  "Unreviewed Afrikaans draft": "Onhersiene Afrikaanse konsep",
+  "The Afrikaans text in assessments has not yet been reviewed by a fluent Afrikaans speaker. Do not treat it as fully translated and approved.": "Die Afrikaanse teks in assesserings is nog nie deur 'n vlot Afrikaanse spreker hersien nie. Moenie dit as volledig vertaal en goedgekeur beskou nie.",
+  "Some Afrikaans wording in this assessment is an unreviewed draft; the English source text is shown below it.": "Sommige Afrikaanse bewoording in hierdie assessering is 'n onhersiene konsep; die Engelse bronteks word daaronder gewys.",
 };
 
 export default drafts;
