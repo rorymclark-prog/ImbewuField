@@ -96,7 +96,7 @@ const drafts: Record<string, string> = {
   // Historical milestone comparison table
   "Historical milestone comparison": "Uthelekiso lwamanqanaba abalulekileyo akudala",
   "Cutoffs {earlier} → {date}. Uses the latest corrected observation histories and current definitions, targets and sharing permissions. These are readings by each cutoff, not a reconstruction of past access or records. A carried-forward reading is not evidence of no activity.": "Imihla yokuvala {earlier} → {date}. Isebenzisa imbali yoqwalaselo elilungisiweyo lamva nje kunye neenkcazo zangoku, iinjongo neemvume zokwabelana. Ezi ngemilinganiselo ngomhla wokuvala ngamnye, ayiyiyo ukwakhiwa kwakhona kokufikelela okanye kwamarekhodi akudala. Umlinganiselo ophethwe phambili asingobungqina bokuba akukho msebenzi.",
-  "Indicator / basis": "Isalathisi / isiseko",
+  "Indicator / basis": "Isalathisi / uhlobo lokulinganisa",
   "Earlier reading": "Umlinganiselo wangaphambili",
   "Selected reading": "Umlinganiselo okhethiweyo",
   "Difference / interpretation": "Umahluko / ukutolikwa",
