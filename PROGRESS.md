@@ -75,6 +75,9 @@ and isiZulu output are unchanged.
   390 drafts; `reportDocumentText` reads them). They were English before. The wording is isiXhosa only once
   the drafts are loaded; before that it is the English byte for byte. The generate-report route loads the
   drafts for isiXhosa requests only. The cost table's money column is "Isixa", not the quantity word.
+- **Report preparation checklist (1 Nov):** its 39 English rows (statuses, evidence details, notes) now read
+  isiXhosa drafts (`xh-inline/g44-report-preparation.ts`). The panel note now says only typed names and
+  notes stay as written.
 - **Crops and production:**
   - Crop components and `/samples/production` (g19).
   - Production data prose and product guidance (g22, g24). `lib/xh-inline-match.ts` translates

@@ -260,7 +260,6 @@ const drafts: Record<string, string> = {
   "Bed allocations, varieties, seed buying and monthly jobs are in the separate crop-plan report. This calendar shows planned starts, not confirmation of planting.": "Ukwabiwa kweebhedi, iindidi, ukuthenga imbewu nemisebenzi yenyanga zikwingxelo ahlukileyo yesicwangciso sezityalo. Le khalenda ibonisa ukuqala okucwangcisiweyo, hayi ukuqinisekisa ukutyala.",
   "Open current crop planner": "Vula isicwangciso sezityalo sangoku",
   "Improve this report": "Phucula le ngxelo",
-  "The isiXhosa text here is an unreviewed draft. Record statuses, evidence details and the notes below stay in English so their meaning remains accurate.": "Umbhalo wesiXhosa apha uyilo olungekahlolwa. Iimeko zerekhodi, iinkcukacha zobungqina nezaziso ezingezantsi zihlala zisesiNgesi ukuze intsingiselo yazo ihlale ichanekile.",
   "Name and save this site to attach its evidence": "Yinike igama uze ugcine le ndawo ukuze uqhotyoshelwe ubungqina bayo",
   "Your garden or site name": "Igama legadi okanye lendawo yakho",
   "Save site": "Gcina indawo",
