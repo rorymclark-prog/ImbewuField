@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Sales-unit targets: docs/audits/2026-11-01/market-garden-sales-release-drafts.json; unreviewed.
+  "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Rala dipheo tsa kotulo ka diphutheloana tsa dihlahiswa o sebedisa boima ba diphutheloana le karolo e rekisehang eo o e kentseng.",
+
   // Harvest targets: docs/audits/2026-11-01/harvest-target-release-drafts.json; unreviewed.
   "Set weekly harvest targets and review growing space, dated sowings and gaps.": "Beha dipheo tsa kotulo tsa beke le beke mme o hlahlobe sebaka sa temo, dinako tsa ho jala le dikgeo.",
   "Plan from a harvest target": "Rala ho ya ka sepheo sa kotulo",
