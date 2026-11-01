@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Harvest targets: docs/audits/2026-11-01/harvest-target-release-drafts.json; unreviewed.
+  "Set weekly harvest targets and review growing space, dated sowings and gaps.": "Beka imigomo yesivuno samasonto onke bese ubuyekeza indawo yokutshala, izinsuku zokuhlwanyela nezikhala.",
+  "Plan from a harvest target": "Hlela ngomgomo wesivuno",
+  "Crop planner → Harvest targets": "Umhleli wezitshalo → Imigomo yesivuno",
+  "Choose a crop, weekly weight and harvest months. Review the proposal before adding its dated sowings to your crop plan.": "Khetha isitshalo, isisindo samasonto onke nezinyanga zokuvuna. Buyekeza isiphakamiso ngaphambi kokwengeza ukuhlwanyela okunezinsuku ohlelweni lwakho lwezitshalo.",
+
   // Live render review: docs/audits/2026-10-31/live-map-settings-release-drafts.json; unreviewed.
   "Earthworks starts with your available aerial photo; plain paper remains a choice.": "Umsebenzi womhlaba uqala ngesithombe sendawo esithathwe phezulu esitholakalayo; iphepha elimhlophe lisekhona njengenketho.",
   // Map defaults: docs/audits/2026-10-31/map-defaults-release-drafts.json; unreviewed.

@@ -8,9 +8,12 @@
 
 import type { CropDef, RainPattern } from './crop-catalog';
 import { CROPS, cropByKey, FROST_FREE_CALENDAR_CITED, hasAutomaticPlanningBasis, hasVerifiedSchedule, MONTHS_SHORT, plantsPerM2 } from './crop-catalog';
-import type { PlanBed, Planting } from './crop-plan';
+import type { HarvestTarget, PlanBed, Planting } from './crop-plan';
+import { assessHarvestTarget, HARVEST_TARGET_BASIS, targetMonthStamp, targetPickingWindow } from './harvest-targets';
 import {
   existingSowOffset,
+  harvestTargetMonthIndex,
+  sanitiseHarvestTargets,
   harvestEndMonthForCrop,
   harvestMonthForCrop,
   isSpaceHungry,
@@ -3734,6 +3737,127 @@ export function autoSuggestPlan(
   const gate = climateGateFrom(answers, rainFed);
   return withClimateGate(gate, answers.observedFrostMonths, () =>
     autoSuggestPlanUnderGate(answers, pattern, beds, existingPlantings, nowMonth, realNow, gate, rainFed));
+}
+
+/** Buyer demand limits this pass; it must never fill spare ground with an
+ * unrequested substitute. Placement still uses the ordinary planner's gates,
+ * whole-field rule, share ladder, occupancy and chronological rotation ledger. */
+export function suggestHarvestTargets(
+  targets: HarvestTarget[], siteId: string, answers: AutoSuggestAnswers,
+  pattern: RainPattern, beds: PlanBed[], existingPlantings: Planting[], realNow: RealNow,
+): AutoSuggestResult {
+  const notes: PlanNote[] = [planNote('basis', HARVEST_TARGET_BASIS)];
+  const added: Planting[] = [];
+  const reservedIds = new Set(existingPlantings.map((p) => p.id));
+  if (!Number.isInteger(realNow.year) || !Number.isInteger(realNow.month)
+    || realNow.year < 2020 || realNow.year >= 2100 || realNow.month < 1 || realNow.month > 12) {
+    return { plantings: [], notes: [planNote('warning', 'A valid current date is needed to date the sowing tasks.')], laterThisYear: [] };
+  }
+  const selected = sanitiseHarvestTargets(targets).filter((t) => t.siteId === siteId)
+    .sort((a, b) => a.endMonth.localeCompare(b.endMonth) || a.startMonth.localeCompare(b.startMonth));
+  const seen = new Set<string>();
+  beds = beds.filter((bed) => {
+    if (!bed.id.trim() || seen.has(bed.id) || !Number.isFinite(bed.areaM2) || bed.areaM2 <= 0
+      || (bed.minDimM !== undefined && (!Number.isFinite(bed.minDimM) || bed.minDimM <= 0))) return false;
+    seen.add(bed.id);
+    return true;
+  });
+  existingPlantings = existingPlantings.filter((p) => seen.has(p.bedId)
+    && !p.awaitingSowingConfirmation && !p.finishedOnceSowing);
+  const uncertainBeds = new Set(existingPlantings.filter((p) => {
+    const crop = cropByKey(p.cropKey);
+    const stamp = p.confirmedOnceSowing ?? p.once;
+    return !crop || !hasVerifiedSchedule(crop) || !Number.isInteger(p.sowMonth) || p.sowMonth < 1 || p.sowMonth > 12
+      || (stamp !== undefined && (harvestTargetMonthIndex(stamp) === null
+        || harvestTargetMonthIndex(stamp)! % 12 + 1 !== p.sowMonth));
+  }).map((p) => p.bedId));
+  if (uncertainBeds.size) notes.push(planNote('warning', 'Some mapped ground has saved crops with unverified timing, establishment or dates. Review those crops before assigning that ground to a harvest target.', [...uncertainBeds]));
+  const rainFed = answers.reliableIrrigation !== true;
+  const gate = climateGateFrom(answers, rainFed);
+  if (rainFed && !gate?.rainFedMonths) {
+    notes.push(planNote('warning', 'Confirm reliable irrigation or supply this site’s monthly rainfall and temperature before generating target plantings. A regional rainfall label cannot establish available water.'));
+    return { plantings: [], notes, laterThisYear: [] };
+  }
+  return withClimateGate(gate, answers.observedFrostMonths, () => {
+    const occupancy = new Occupancy(answers.allowMixedCropsInBed === true, realNow.month);
+    occupancy.seed(existingPlantings, (p) => cropByKey(p.cropKey) ?? { key: p.cropKey, daysToHarvest: 0 }, realNow.month, realNow);
+    // A sales target cannot quietly waive rotation just because only one family was ordered.
+    const rotation = new BedRotation(existingPlantings, realNow.month, true, null, realNow);
+    const origin = realNow.year * 12 + realNow.month - 1;
+    for (const target of selected) {
+      const crop = cropByKey(target.cropKey)!;
+      let assessment = assessHarvestTarget(target, beds, [...existingPlantings, ...added], realNow)!;
+      if (assessment.missingBasis) {
+        notes.push(planNote('gap', `${crop.name}: verified yield, timing or establishment evidence is missing; no automatic target allocation was made.`));
+        continue;
+      }
+      if (harvestTargetMonthIndex(target.endMonth)! < origin) {
+        notes.push(planNote('gap', `${crop.name}: this target window has ended. Change its dates before planning new sowings.`));
+        continue;
+      }
+      const legalMonths = sowMonthsOf(crop, pattern);
+      const candidates = Array.from({ length: 12 }, (_, offset) => origin + offset)
+        .map((index) => ({ index, sowMonth: index % 12 + 1 }))
+        .filter(({ sowMonth, index }) => legalMonths.includes(sowMonth)
+          && targetPickingWindow({ id: '', bedId: '', cropKey: crop.key, sowMonth, once: targetMonthStamp(index) }, target).length);
+      const cropBeds = beds.filter((bed) => !uncertainBeds.has(bed.id) && supportsAutomaticPlacement(crop, bed)
+        && Number.isFinite(bed.areaM2 * crop.yieldKgPerM2!)
+        && poolForBed(bed, [crop], answers.allowVinesInBeds, undefined, new Set([crop.key])).some((c) => c.key === crop.key));
+      let rotationBlocked = false;
+      let spaceBlocked = false;
+      // Spread the requested volume over legal sowing months when space permits.
+      // This is a choice of cohort sizes, never a model of weekly picking rates.
+      const perCohortKg = assessment.shortageKg / Math.max(1, candidates.length);
+      for (let pass = 0; pass < 2 && assessment.shortageKg > 0.000001; pass++) {
+        for (const { index, sowMonth } of candidates) {
+          let cohortKg = 0;
+          for (const bed of cropBeds) {
+            if (assessment.shortageKg <= 0.000001) break;
+            if (added.some((p) => p.harvestTargetId === target.id && p.bedId === bed.id && p.once === targetMonthStamp(index))) continue;
+            if (rotation.repeats(bed.id, crop, sowMonth)) { rotationBlocked = true; continue; }
+            const wantedKg = pass === 0 ? Math.min(perCohortKg - cohortKg, assessment.shortageKg) : assessment.shortageKg;
+            if (wantedKg <= 0.000001) break;
+            const wantedFraction = wantedKg / (bed.areaM2 * crop.yieldKgPerM2!);
+            const full = isSpaceHungry(crop) || bed.kind === 'plot' || !occupancy.allowsBedSharing();
+            const fraction = full ? 1 : [...BED_FRACTION_PRESETS].reverse().find((f) => f >= wantedFraction - 0.000001) ?? 1;
+            const share = usableShare(occupancy, bed, sowMonth, crop, fraction, 1, true);
+            if (share === null || (full && share < 1)) { spaceBlocked = true; continue; }
+            const once = targetMonthStamp(index);
+            const baseId = `target:${target.id}:${bed.id}:${once}`;
+            let id = baseId;
+            // A grower may increase a target or finish a failed cohort and
+            // plan again. Keep those saved rows, with distinct new task IDs.
+            for (let serial = 1; reservedIds.has(id); serial++) id = `${baseId}:${serial}`;
+            const planting: Planting = {
+              id, bedId: bed.id, cropKey: crop.key,
+              sowMonth, once, harvestTargetId: target.id, ...(share < 1 ? { areaFraction: share } : {}),
+            };
+            const next = assessHarvestTarget(target, beds, [...existingPlantings, ...added, planting], realNow)!;
+            // A malformed or unverified incumbent may have no usable hold in
+            // the placement ledger. The shared dated conflict authority must
+            // still veto selling that ground's capacity to a buyer.
+            if (next.allocatedKg <= assessment.allocatedKg + 0.000001) { spaceBlocked = true; continue; }
+            occupancy.add(bed.id, sowMonth, crop, share);
+            rotation.recordOnceUse(bed.id, crop, sowMonth);
+            reservedIds.add(id);
+            added.push(planting);
+            cohortKg += next.allocatedKg - assessment.allocatedKg;
+            assessment = next;
+            if (pass === 0 && cohortKg >= perCohortKg - 0.000001) break;
+          }
+        }
+      }
+      if (assessment.shortageKg > 0.000001) {
+        const reasons = [!candidates.length ? 'no complete picking window fits from a legal sowing in the next 12 months' : '',
+          !cropBeds.length ? 'no compatible mapped growing area' : '',
+          rotationBlocked ? 'rotation conflicts' : '', spaceBlocked ? 'occupied ground or an unusable share' : ''].filter(Boolean);
+        notes.push(planNote('gap', `${crop.name}: some requested crop-cycle volume remains unallocated${reasons.length ? ` (${reasons.join('; ')})` : ''}.`));
+      }
+    }
+    if (rainFed) notes.push(planNote('warning', 'Rain-fed placement uses this site’s average monthly climate, not a guarantee of water in a dry spell.'));
+    notes.push(planNote('basis', 'Only dated plantings linked to each target count towards its volume. Existing crops stay unchanged. Whole open fields and standard bed shares can create surplus; no storage or saleable-packout allowance is assumed.'));
+    return { plantings: added, notes: orderNotes(notes), laterThisYear: [] };
+  });
 }
 
 function autoSuggestPlanUnderGate(

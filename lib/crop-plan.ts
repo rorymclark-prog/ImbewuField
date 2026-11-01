@@ -33,6 +33,8 @@ export interface PlanBed {
 }
 
 export interface Planting {
+  /** A dated crop-cycle capacity allocation, never a weekly delivery promise. */
+  harvestTargetId?: string;
   id: string;
   bedId: string;
   cropKey: string;
@@ -96,6 +98,8 @@ export interface Planting {
 export interface CropPlanState {
   version: 1;
   plantings: Planting[];
+  /** Buyer demand belongs to a site, even when two farms use the same crop. */
+  harvestTargets?: HarvestTarget[];
   /** Climate window used when the plan was generated. Optional so every plan
    * saved before this field existed remains readable. */
   rainPattern?: RainPattern;
@@ -127,6 +131,41 @@ export interface CropPlanState {
    */
   planNotesAt?: number;
   updatedAt: number;
+}
+
+export interface HarvestTarget {
+  id: string;
+  siteId: string;
+  cropKey: string;
+  weeklyKg: number;
+  /** Inclusive calendar months; demand uses their actual day counts. */
+  startMonth: string;
+  endMonth: string;
+}
+
+export function harvestTargetMonthIndex(stamp: unknown): number | null {
+  const index = stampIndexOf(stamp);
+  return index !== null && index >= 2020 * 12 && index < 2100 * 12 ? index : null;
+}
+
+export function sanitiseHarvestTargets(value: unknown): HarvestTarget[] {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set<string>();
+  return value.flatMap((raw): HarvestTarget[] => {
+    if (!raw || typeof raw !== 'object') return [];
+    const t = raw as Partial<HarvestTarget>;
+    const start = harvestTargetMonthIndex(t.startMonth);
+    const end = harvestTargetMonthIndex(t.endMonth);
+    if (typeof t.id !== 'string' || !t.id.trim() || seen.has(t.id)
+      || typeof t.siteId !== 'string' || !t.siteId.trim()
+      || typeof t.cropKey !== 'string' || !cropByKey(t.cropKey)
+      || typeof t.weeklyKg !== 'number' || !Number.isFinite(t.weeklyKg) || t.weeklyKg <= 0
+      || start === null || end === null || end < start || end - start >= 12
+      || !Number.isFinite(t.weeklyKg * 366 / 7)) return [];
+    seen.add(t.id);
+    return [{ id: t.id, siteId: t.siteId, cropKey: t.cropKey, weeklyKg: t.weeklyKg,
+      startMonth: t.startMonth!, endMonth: t.endMonth! }];
+  });
 }
 
 const STORAGE_KEY = 'imbewu_crop_plan_v1';
@@ -327,6 +366,7 @@ export function loadCropPlan(): CropPlanState {
     return {
       version: 1,
       plantings: settle(parsed.plantings),
+      ...(Array.isArray(parsed.harvestTargets) ? { harvestTargets: sanitiseHarvestTargets(parsed.harvestTargets) } : {}),
       ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
       ...(Array.isArray(parsed.productionRecords) ? { productionRecords: sanitiseProductionRecords(parsed.productionRecords) } : {}),
       ...(Array.isArray(parsed.preservedProducts) ? { preservedProducts: sanitisePreservedFoodRecords(parsed.preservedProducts) } : {}),
@@ -852,6 +892,16 @@ export function benchmarkDatedAreaConflictBedLabels(
     .filter(record => !period.plantingId || record.plantingIds.has(period.plantingId));
   return [...new Set(records.map(record => record.bedLabel))]
     .sort((a, b) => a.localeCompare(b));
+}
+
+/** Target allocations need the implicated rows, so an unrelated conflict on
+ * the same bed cannot erase an otherwise valid dated crop's capacity. */
+export function benchmarkDatedAreaConflictPlantingIds(
+  plantings: Planting[], beds: PlanBed[],
+  period: { startIndex: number; endIndex: number; originIndex: number },
+): Set<string> {
+  return new Set(benchmarkAreaConflictBeds(plantings, beds, undefined, period)
+    .flatMap((record) => [...record.plantingIds]));
 }
 
 /**

@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Harvest targets: docs/audits/2026-11-01/harvest-target-release-drafts.json; unreviewed.
+  "Set weekly harvest targets and review growing space, dated sowings and gaps.": "Beha dipheo tsa kotulo tsa beke le beke mme o hlahlobe sebaka sa temo, dinako tsa ho jala le dikgeo.",
+  "Plan from a harvest target": "Rala ho ya ka sepheo sa kotulo",
+  "Crop planner → Harvest targets": "Moralo wa dijalo → Dipheo tsa kotulo",
+  "Choose a crop, weekly weight and harvest months. Review the proposal before adding its dated sowings to your crop plan.": "Kgetha sejalo, boima ba beke le beke le dikgwedi tsa kotulo. Hlahloba tlhahiso pele o eketsa dinako tsa ho jala moralong wa hao wa dijalo.",
+
   // Live render review: docs/audits/2026-10-31/live-map-settings-release-drafts.json; unreviewed.
   "Earthworks starts with your available aerial photo; plain paper remains a choice.": "Mesebetsi ya mobu e qala ka setshwantsho sa sebaka se nkilweng hodimo se fumanehang; pampiri e se nang setshwantsho e ntse e le kgetho.",
   // Map defaults: docs/audits/2026-10-31/map-defaults-release-drafts.json; unreviewed.
