@@ -243,3 +243,81 @@ test('isiXhosa reader: the MEL body is isiXhosa, every figure, name and recorded
     assert.ok(!/Evidence review/.test(content));
   } finally { registerXhInline({}); }
 });
+
+// ---- Afrikaans reader (the same drafts-gated path as isiXhosa; g47-mel-report.ts) -------------------------
+test('Afrikaans reader: the MEL body is Afrikaans, every figure, name and recorded phrase is unchanged, and every other language is the same English', async () => {
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index');
+  const { registerInlineDrafts } = await import('../lib/xh-inline');
+  // Words that are spelled the same in Afrikaans and English.
+  const AFRIKAANS_SAME_AS_ENGLISH = ['Status'];
+  const scenarios: Array<[string, MelReportOptions]> = [
+    ['staff with donor, sef, history and matched change', xhScenario()],
+    ['funder', xhScenario({ funder: true })],
+    ['staff, no donor, sources unreadable', xhScenario({ donorName: undefined, donorReference: 'none', comparisonAsOf: undefined, sample: false, assessmentSource: false, milestoneSource: false, analysis: null, assessments: [] })],
+  ];
+  try {
+    registerInlineDrafts('af', {}); // the server, or before the Afrikaans drafts load
+    for (const [label, input] of scenarios) {
+      const english = buildMelEvidenceReport(input);
+      for (const language of ['en', 'zu', 'st', 'xh', 'af', undefined]) assert.deepEqual(buildMelEvidenceReport({ ...input, language }), english, `${label}: ${language} before drafts load`);
+    }
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+    for (const [label, input] of scenarios) {
+      const english = buildMelEvidenceReport(input);
+      // Omitting the language or asking for English or isiZulu or Sesotho is the same English report.
+      for (const language of ['en', 'zu', 'st', 'ts', 've', 'xh', undefined]) assert.deepEqual(buildMelEvidenceReport({ ...input, language }), english, `${label}: ${language}`);
+      const af = buildMelEvidenceReport({ ...input, language: 'af' });
+      // Same shape: metrics, tables, rows, columns, sections, lines, references.
+      assert.deepEqual(af.metrics.length, english.metrics.length);
+      assert.deepEqual(af.tables.map(table => [table.rows.length, table.columns.length, table.columnWeights, table.keepAllRowsInSummary, table.includeInSummary]), english.tables.map(table => [table.rows.length, table.columns.length, table.columnWeights, table.keepAllRowsInSummary, table.includeInSummary]), label);
+      assert.deepEqual(af.sections.map(section => [section.lines.length, section.summaryLines?.length]), english.sections.map(section => [section.lines.length, section.summaryLines?.length]), label);
+      assert.deepEqual(af.sections.map(section => section.references), english.sections.map(section => section.references), 'source names and links are unchanged');
+      assert.equal(af.filename, english.filename, 'the download name is built from English');
+      // The fixed wording is Afrikaans.
+      assert.notEqual(af.title, english.title);
+      assert.deepEqual(af.sections.map(section => section.title).filter(title => english.sections.some(section => section.title === title)), [], 'every section title is Afrikaans');
+      assert.deepEqual(af.tables.map(table => table.title).filter(title => english.tables.some(table => table.title === title)), [], 'every table title is Afrikaans');
+      assert.deepEqual(af.metrics.map(metric => metric.label).filter(text => english.metrics.some(metric => metric.label === text)), [], 'every metric label is Afrikaans');
+      af.tables.forEach((table, index) => { assert.notEqual(table.note, english.tables[index].note, `${table.title} note`); table.columns.forEach((column, n) => { if (!AFRIKAANS_SAME_AS_ENGLISH.includes(column)) assert.notEqual(column, english.tables[index].columns[n], `${table.title} column ${n}`); }); });
+      af.sections.forEach((section, index) => section.lines.forEach((line, n) => { if (line !== af.scope && !line.startsWith('Assessment register: ') && !line.startsWith('Assessment findings: ')) assert.notEqual(line, english.sections[index].lines[n], `${section.title} line ${n}`); }));
+      // Every figure is exact: counts, means, dates and the signed changes, string by string.
+      const englishStrings = everyString(english), afStrings = everyString(af);
+      assert.equal(afStrings.length, englishStrings.length);
+      englishStrings.forEach((text, index) => assert.equal(digitsIn(afStrings[index]), digitsIn(text), `figures in ${JSON.stringify(text.slice(0, 80))}`));
+      // Recorded names, evidence and codes are never translated.
+      const text = JSON.stringify(af);
+      for (const recorded of ['Example organisation', 'Fictional donor', 'TEST-AGREEMENT', 'TEST-01', 'Fictional agreed output', 'TEST-EVIDENCE-B', 'Plant more cover crops', 'PRIVATE OWNER NAME']) if (JSON.stringify(english).includes(recorded)) assert.ok(text.includes(recorded), `${recorded} stays as recorded`);
+      if (input.funder) for (const privateText of ['PRIVATE OWNER NAME', 'Plant more cover crops']) assert.ok(!text.includes(privateText));
+    }
+    // Withheld results, matched changes and the unreported markers are said in Afrikaans with the same numbers.
+    const withheld = xhScenario({ funder: true }); withheld.analysis!.metrics = [{ id: 'growing_m2', en: 'Area', zu: 'Area', n: 0, missing: 0, mean: 987654321, suppressed: true }];
+    const row = buildMelEvidenceReport({ ...withheld, language: 'af' }).tables.find(table => table.rows[0]?.[1] === "Teruggehou om 'n klein groep te beskerm");
+    assert.deepEqual(row!.rows[0].slice(1), ["Teruggehou om 'n klein groep te beskerm", 'Teruggehou', 'Teruggehou']);
+    assert.ok(!JSON.stringify(buildMelEvidenceReport({ ...withheld, language: 'af' })).includes('987654321'));
+    const changed = buildMelEvidenceReport({ ...xhScenario(), language: 'af' }).tables.find(table => table.columns.length === 5 && /^[+-]/.test(String(table.rows[0]?.[2])));
+    assert.ok(changed, 'the matched change keeps its sign and decimals');
+    // The Afrikaans PDF carries the Afrikaans body and the recorded names.
+    const report = buildMelEvidenceReport({ ...xhScenario(), language: 'af' });
+    const pdf = await buildProgrammePdf(report.title, false, report.sections, 'full', undefined, [], 'Bewyse', undefined, { metrics: report.metrics, tables: report.tables, subtitle: report.scope, language: 'af' });
+    const content = pdfContentStreams(pdf.output('arraybuffer'));
+    assert.match(content, /Bewyshersiening/); assert.match(content, /Fictional donor/);
+    assert.ok(!/Evidence review/.test(content));
+  } finally { registerInlineDrafts('af', {}); }
+});
+
+test('Afrikaans and isiXhosa readers each read only their own drafts, and the report keeps its figures in both', async () => {
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index');
+  const { XH_INLINE_SOURCE } = await import('../lib/locales/xh-inline/index');
+  const { registerInlineDrafts, registerXhInline } = await import('../lib/xh-inline');
+  const input = xhScenario();
+  try {
+    registerInlineDrafts('af', AF_INLINE_SOURCE); registerXhInline(XH_INLINE_SOURCE);
+    const english = buildMelEvidenceReport(input), af = buildMelEvidenceReport({ ...input, language: 'af' }), xh = buildMelEvidenceReport({ ...input, language: 'xh' });
+    assert.notEqual(af.title, xh.title); assert.notEqual(af.title, english.title);
+    assert.equal(af.filename, english.filename); assert.equal(xh.filename, english.filename);
+    assert.deepEqual(buildMelEvidenceReport({ ...input, language: 'zu' }), english);
+    const afStrings = everyString(af), xhStrings = everyString(xh), englishStrings = everyString(english);
+    assert.equal(afStrings.length, englishStrings.length);
+    englishStrings.forEach((text, index) => { assert.equal(digitsIn(afStrings[index]), digitsIn(text)); assert.equal(digitsIn(xhStrings[index]), digitsIn(text)); });
+  } finally { registerInlineDrafts('af', {}); registerXhInline({}); }
+});

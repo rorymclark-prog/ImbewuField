@@ -122,6 +122,16 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   generate-report route loads the drafts for Afrikaans requests only. Still English: the
   crop-plan PDF pages (the same for isiXhosa). The 39 preparation checklist rows followed on 1 Nov
   (`af-inline/g46-report-preparation.ts`), as for isiXhosa.
+- **M&E evidence and facilitator reports (1 Nov):** `buildMelEvidenceReport` and `buildTrainingReport` already
+  take a `language` option; `MelEvidenceReport`, `FacilitatorReport` and the offline note
+  (`fieldDataReportNote`) now pass `'af'` through, so on screen and in the PDF the body follows Afrikaans once
+  the drafts load (`af-inline/g47-mel-report.ts` 188 drafts, `g48-staff-reports.ts` 56 drafts; the same
+  244 keys as isiXhosa `g45`/`g46`). Before the drafts load, and for every other language, the output is
+  the English byte for byte; the download file name is built from English; figures, units, dates, names and
+  recorded evidence are unchanged (tests in `tests/mel-report.test.ts`, `staff-report.test.ts`,
+  `field-api-core.test.ts`). The programme report's MEL tab now carries the same "unreviewed Afrikaans
+  draft" notice as the other tabs; the older "MEL analysis text is in English" notice key was retired.
+  Still English: the mentor field report (`lib/field-report.ts`, `FieldTeams.tsx`).
 - **Blind review of the 1 Nov drafts:** 858 money book, site report and release-note drafts back-translated
   before seeing the English; 24 repairs (`docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-2026-11-01/`).
 - **isiXhosa fix found on the way:** the invoice page told isiXhosa farmers the buyer's invoice "stays in

@@ -46,9 +46,11 @@ import g43 from './g43-notices';
 import g44 from './g44-records-book-rows';
 import g45 from './g45-site-report';
 import g46 from './g46-report-preparation';
+import g47 from './g47-mel-report';
+import g48 from './g48-staff-reports';
 import s01 from './s01-mel-templates';
 import s02 from './s02-study-tracks';
 
-const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g13, g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26, g27, g28, g29, g30, g31, g32, g33, g34, g35, g36, g37, g38, g39, g40, g41, g42, g43, g44, g45, g46, s01, s02];
+const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g13, g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26, g27, g28, g29, g30, g31, g32, g33, g34, g35, g36, g37, g38, g39, g40, g41, g42, g43, g44, g45, g46, g47, g48, s01, s02];
 
 export const AF_INLINE_SOURCE: Record<string, string> = Object.assign({}, ...SHARDS);

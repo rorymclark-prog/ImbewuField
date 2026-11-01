@@ -71,7 +71,6 @@ const drafts: Record<string, string> = {
   "MEL evidence": "MEL-bewyse",
   "Agreed indicators, assessment findings and matched change.": "Ooreengekome aanwysers, assesseringsbevindinge en gepaarde verandering.",
   "Choose project and assessment scope in the MEL workspace below.": "Kies projek- en assesseringsomvang in die MEL-werkruimte hieronder.",
-  "The controls here are an unreviewed isiXhosa draft. The MEL analysis text, tables and PDF are in English. Names and recorded evidence are kept as recorded.": "Die kontroles hier is 'n onhersiene isiXhosa-konsep. Die MEL-ontledingsteks, tabelle en PDF is in Engels. Name en aangetekende bewyse word gehou soos aangeteken.",
 };
 
 export default drafts;
