@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { fieldApi } from '@/lib/field-api';
 import { fieldDataReportNote } from '@/lib/field-request-model';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -20,7 +20,9 @@ import styles from './MelDashboard.module.css';
 import reports from './ProgrammeReports.module.css';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 
-type EvidenceSources = { assessments: MelReportAssessment[]; milestones: ProgrammeMilestone[]; assessmentSource: boolean; milestoneSource: boolean; branding?: ProgrammeBranding; notes: string[]; errors: string[] };
+type EvidenceSources = { assessments: MelReportAssessment[]; milestones: ProgrammeMilestone[]; assessmentSource: boolean; milestoneSource: boolean; branding?: ProgrammeBranding; noteSources: { source: string; payload: unknown }[]; errors: string[] };
+// The device-saved note of the assessment request is kept as data, so the report can word it in the reader's language.
+type AnalysisState = MelReportAnalysis & { noteSource?: unknown };
 export default function MelEvidenceReport({ orgId, organisation, funder, sample }: { orgId: string; organisation: string; funder: boolean; sample: boolean }) {
   const { lang } = useLanguage();
   const ui = (en: string, zu: string) => inlineText(lang, en, zu);
@@ -29,14 +31,14 @@ export default function MelEvidenceReport({ orgId, organisation, funder, sample 
   const [project, setProject] = useState(''), [asOf, setAsOf] = useState(today), [selectedId, setSelectedId] = useState(''), [beforeId, setBeforeId] = useState('');
   const [comparisonAsOf,setComparisonAsOf]=useState(''),[donorName,setDonorName]=useState(''),[donorReference,setDonorReference]=useState<'none'|'sef'>('none');
   const validDates=validEvidenceDate(asOf) && asOf<=today && (!comparisonAsOf || validEvidenceDate(comparisonAsOf) && comparisonAsOf<asOf);
-  const [analysis, setAnalysis] = useState<MelReportAnalysis | null>(null), [analysisError, setAnalysisError] = useState('');
+  const [analysis, setAnalysis] = useState<AnalysisState | null>(null), [analysisError, setAnalysisError] = useState('');
   useEffect(() => {
     let cancelled = false; setData(null); setAnalysis(null); setAnalysisError('');
     if (sample) {
       const controls = readSampleProgramme(), evidence = completeSampleEvidence(isSampleMode() ? sampleRead('programme-evidence', freshEvidenceData) : freshEvidenceData());
       const available = !funder || controls.funderAccess;
       const assessments = !available ? [] : funder ? samplePublishedAssessments(controls) : sampleAssessments(controls).map(({ assessment, rows }) => ({ ...assessment, ...analyseAssessment(assessment, MEL_TEMPLATES[assessment.stage], rows) }));
-      setData({ assessments, milestones: available ? evidence.milestones.filter(milestone => !funder || milestone.published) : [], branding: evidence.branding, assessmentSource: available, milestoneSource: available, notes: [], errors: available ? [] : ['The organisation has switched off funder access.'] });
+      setData({ assessments, milestones: available ? evidence.milestones.filter(milestone => !funder || milestone.published) : [], branding: evidence.branding, assessmentSource: available, milestoneSource: available, noteSources: [], errors: available ? [] : ['The organisation has switched off funder access.'] });
       return;
     }
     if (!orgId) return;
@@ -47,7 +49,7 @@ export default function MelEvidenceReport({ orgId, organisation, funder, sample 
       const assessmentData = assessmentResult.status === 'fulfilled' ? assessmentResult.value : null, milestoneData = milestoneResult.status === 'fulfilled' ? milestoneResult.value : null;
       const assessmentSource = Boolean(assessmentData && (funder || assessmentData.permissions?.analyse)), milestoneSource = Boolean(milestoneData && !milestoneData.brandingOnly);
       setData({ assessments: assessmentSource ? assessmentData.assessments.map((assessment: MelReportAssessment) => ({ ...assessment, published: funder ? true : assessment.published })) : [], milestones: milestoneSource ? milestoneData.milestones : [], branding: milestoneData?.branding, assessmentSource, milestoneSource,
-        notes: [["Assessment register", assessmentData], ["Milestone register", milestoneData]].flatMap(([source, payload]) => { const note = fieldDataReportNote(payload); return note ? [`${source}: ${note}`] : []; }),
+        noteSources: [{ source: 'Assessment register', payload: assessmentData }, { source: 'Milestone register', payload: milestoneData }],
         errors: [!assessmentSource ? 'Assessment analysis is unavailable or not enabled for this account.' : '', !milestoneSource ? 'Programme milestone evidence is unavailable for this account.' : ''].filter(Boolean) });
     })();
     return () => { cancelled = true; };
@@ -72,7 +74,7 @@ export default function MelEvidenceReport({ orgId, organisation, funder, sample 
         if (funder && !beforeId) { if (!selected.metrics) throw new UserFacingError('Published assessment findings are unavailable.'); setAnalysis({ assessmentId: selected.id, beforeId, metrics: selected.metrics, assigned: selected.assigned, completed: selected.completed, comparison: null }); return; }
         const result = await fieldApi(`/api/assessments?org=${encodeURIComponent(orgId)}&mode=${funder ? 'published' : 'analysis'}&id=${encodeURIComponent(selected.id)}${beforeId ? `&compare=${encodeURIComponent(beforeId)}` : ''}`);
         if (cancelled) return;
-        setAnalysis({ assessmentId: selected.id, beforeId, metrics: funder ? selected.metrics || [] : result.metrics, assigned: funder ? selected.assigned : result.assigned, completed: funder ? selected.completed : result.completed, comparison: result.comparison, notes: fieldDataReportNote(result) ? [`Assessment findings: ${fieldDataReportNote(result)}`] : [] });
+        setAnalysis({ assessmentId: selected.id, beforeId, metrics: funder ? selected.metrics || [] : result.metrics, assigned: funder ? selected.assigned : result.assigned, completed: funder ? selected.completed : result.completed, comparison: result.comparison, noteSource: result });
       } catch (error) { if (!cancelled) setAnalysisError(inlineText(lang, userFacingMessage(error, 'Selected assessment findings are unavailable.'))); }
     })();
     return () => { cancelled = true; };
@@ -82,7 +84,12 @@ export default function MelEvidenceReport({ orgId, organisation, funder, sample 
   const projects = [...new Set([...(data?.assessments.map(assessment => assessment.project) || []), ...(data?.milestones.map(milestone => milestone.project) || [])])].sort();
   const readyAnalysis = analysis?.assessmentId === selectedId && analysis.beforeId === beforeId ? analysis : null;
   const donors=[...new Set((data?.milestones || []).filter(m=>(!project || m.project===project) && (!funder || m.published)).flatMap(m=>m.donor?[m.donor.funder]:[]))].sort();
-  const report = data && validDates ? buildMelEvidenceReport({ organisation, project, funder, sample, today, asOf, comparisonAsOf, donorName, donorReference, assessments: data.assessments, milestones: data.milestones, assessmentSource: data.assessmentSource, milestoneSource: data.milestoneSource, selectedId, beforeId, analysis: readyAnalysis, sourceNotes: data.notes }) : null;
+  // isiXhosa readers get the report body in isiXhosa (an unreviewed draft); every other language builds the English report. The download file name is built from English inside buildMelEvidenceReport.
+  const reportLanguage = lang === 'xh' ? 'xh' : 'en';
+  const sourceNotes = (data?.noteSources || []).flatMap(({ source, payload }) => { const note = fieldDataReportNote(payload, reportLanguage); return note ? [inlineTemplate(reportLanguage, '{source}: {note}', null, { source: inlineText(reportLanguage, source), note })] : []; });
+  const findingsNote = readyAnalysis?.noteSource ? fieldDataReportNote(readyAnalysis.noteSource, reportLanguage) : null;
+  const reportAnalysis = readyAnalysis ? { ...readyAnalysis, notes: findingsNote ? [inlineTemplate(reportLanguage, 'Assessment findings: {note}', null, { note: findingsNote })] : [] } : null;
+  const report = data && validDates ? buildMelEvidenceReport({ organisation, project, funder, sample, today, asOf, comparisonAsOf, donorName, donorReference, assessments: data.assessments, milestones: data.milestones, assessmentSource: data.assessmentSource, milestoneSource: data.milestoneSource, selectedId, beforeId, analysis: reportAnalysis, sourceNotes, language: reportLanguage }) : null;
   if (!orgId && !sample) return <div className={reports.state} role="status">{inlineText(lang, 'Choose an authorised organisation to review its MEL evidence.')}</div>;
   return <section aria-label={inlineText(lang, 'MEL evidence workspace')}>
     <header className={reports.intro}><div><p className={reports.eyebrow}>{inlineText(lang, 'MONITORING, EVALUATION & LEARNING')}</p><h2>{ui('Evidence, change & learning', 'Ubufakazi, ushintsho nokufunda')}</h2><p>{ui('Bring agreed indicators and assessment evidence into the same review, keeping their populations and dates explicit.', 'Hlanganisa izinkomba okuvunyelwene ngazo nobufakazi bokuhlola, ucacise abantu nezinsuku ezithintekayo.')}</p></div></header>
@@ -99,7 +106,7 @@ export default function MelEvidenceReport({ orgId, organisation, funder, sample 
         <label>{ui('Assessment findings', 'Okutholakele ekuhloleni')}<select value={selectedId} disabled={!data.assessmentSource} onChange={event => { setSelectedId(event.target.value); setBeforeId(''); setAnalysis(null); }}><option value="">{inlineText(lang, 'Choose an assessment')}</option>{assessments.map(assessment => <option key={assessment.id} value={assessment.id}>{assessment.title} · {inlineText(lang, MEL_STAGE_LABELS[assessment.stage])}</option>)}{selectedId && !selected && <option value={selectedId}>{inlineText(lang, 'Selected assessment · unavailable')}</option>}</select></label>
         <label>{ui('Compare with', 'Qhathanisa nokuthi')}<select value={beforeId} disabled={!selected || !earlier.length} onChange={event => { setBeforeId(event.target.value); setAnalysis(null); }}><option value="">{inlineText(lang, 'No matched comparison')}</option>{earlier.map(assessment => <option key={assessment.id} value={assessment.id}>{assessment.title}</option>)}{beforeId && !earlier.some(assessment => assessment.id === beforeId) && <option value={beforeId}>{inlineText(lang, 'Selected earlier assessment · unavailable')}</option>}</select></label>
       </div><p>{ui('Milestones use the selected observation cutoff. Assessment answers and action status remain current snapshots. Each measure shows its own coverage.', 'Izinkomba zisebenzisa usuku olukhethiwe. Izimpendulo zokuhlola nezimo zezenzo zisebenzisa amarekhodi amanje. Isilinganiso ngasinye sibonisa ububanzi baso.')}</p></section>
-      {analysisError ? <div role="alert" className={reports.state}><p>{inlineText(lang, analysisError)}</p><button type="button" onClick={() => setReload(value => value + 1)}>{inlineText(lang, 'Retry evidence')}</button></div> : !validDates ? <p role="alert" className={reports.state}>{inlineText(lang, 'Choose a valid milestone evidence date on or before today and an earlier comparison cutoff, or leave the comparison blank.')}</p> : selectedId && (!selected || !readyAnalysis) ? <p role="status" className={reports.state}>{selected ? inlineText(lang, 'Loading the selected assessment…') : inlineText(lang, 'The selected assessment is no longer available. Choose an assessment to continue.')}</p> : report && <ReportComposer aggregate key={`${project}:${asOf}:${comparisonAsOf}:${donorName}:${donorReference}:${selectionKey}`} title={report.title} reportLabel="MEL evidence" sample={sample} funder={funder} orgId={orgId} branding={data.branding} reportDate={today} filenameBase={report.filename} subtitle={report.scope} metrics={report.metrics} tables={report.tables} sections={report.sections} />}
+      {analysisError ? <div role="alert" className={reports.state}><p>{inlineText(lang, analysisError)}</p><button type="button" onClick={() => setReload(value => value + 1)}>{inlineText(lang, 'Retry evidence')}</button></div> : !validDates ? <p role="alert" className={reports.state}>{inlineText(lang, 'Choose a valid milestone evidence date on or before today and an earlier comparison cutoff, or leave the comparison blank.')}</p> : selectedId && (!selected || !readyAnalysis) ? <p role="status" className={reports.state}>{selected ? inlineText(lang, 'Loading the selected assessment…') : inlineText(lang, 'The selected assessment is no longer available. Choose an assessment to continue.')}</p> : report && <ReportComposer aggregate key={`${project}:${asOf}:${comparisonAsOf}:${donorName}:${donorReference}:${selectionKey}`} title={report.title} reportLabel={inlineText(lang, 'MEL evidence')} sample={sample} funder={funder} orgId={orgId} branding={data.branding} reportDate={today} filenameBase={report.filename} subtitle={report.scope} metrics={report.metrics} tables={report.tables} sections={report.sections} />}
       <div className={reports.nextReview}><div><h3>{ui('Turn findings into the next decision', 'Sebenzisa okutholakele ukwenza isinqumo esilandelayo')}</h3><p>{inlineText(lang, 'Use the existing assessment and milestone workspaces to record the agreed action, owner, date and evidence.')}</p></div><div><Link className={styles.secondary} href={selected ? `/assessments?assessment=${encodeURIComponent(selected.id)}&org=${encodeURIComponent(orgId)}` : '/assessments'}>{inlineText(lang, 'Review assessment evidence')}</Link></div></div>
     </>}
   </section>;

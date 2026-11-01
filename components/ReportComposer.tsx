@@ -26,8 +26,8 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
   const zu = lang === 'zu';
   const ui = (en: string, zuText: string) => inlineText(lang, en, zuText);
   const localizedPhotoHeading = photoHeading === 'Site photographs' ? ui(photoHeading,'Izithombe zesayithi') : photoHeading;
-  const note=fieldDataReportNote(deviceData);
-  const sections=note?[{title:'Data availability',lines:[note]},...suppliedSections]:suppliedSections;
+  const note=fieldDataReportNote(deviceData,lang);
+  const sections=note?[{title:inlineText(lang,'Data availability'),lines:[note]},...suppliedSections]:suppliedSections;
   const { profile } = useAuth();
   const [loadedBranding, setLoadedBranding] = useState<ProgrammeBranding>();
   const sourceBranding = suppliedBranding ?? loadedBranding;

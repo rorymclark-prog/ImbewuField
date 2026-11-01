@@ -78,6 +78,12 @@ and isiZulu output are unchanged.
 - **Report preparation checklist (1 Nov):** its 39 English rows (statuses, evidence details, notes) now read
   isiXhosa drafts (`xh-inline/g44-report-preparation.ts`). The panel note now says only typed names and
   notes stay as written.
+- **M&E evidence and facilitator reports (1 Nov):** `buildMelEvidenceReport` and `buildTrainingReport` take a
+  `language` option; on screen and in the PDF the body follows isiXhosa once the drafts load (`xh-inline/g45`,
+  `g46`, 244 drafts). English is identical across 3,456 MEL and 144 training scenarios. Still English: the
+  mentor field report (`lib/field-report.ts`, `FieldTeams.tsx`).
+- **Blind review of the 1 Nov drafts:** 435 strings, 11 repairs ("Berm" had read as a gun; "drawn" as
+  "counted") — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-01/`.
 - **Crops and production:**
   - Crop components and `/samples/production` (g19).
   - Production data prose and product guidance (g22, g24). `lib/xh-inline-match.ts` translates

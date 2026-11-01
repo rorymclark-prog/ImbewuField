@@ -1,4 +1,5 @@
 import { productionAreaSummary } from './production-sites';
+import { inlineTemplate } from './xh-inline';
 export type FieldWrite = { url: string; body: Record<string, any>; operationId: string; label: string; createdAt: number; state: 'waiting' | 'sending' | 'review'; leaseUntil: number; error?: string; acknowledged?: boolean };
 export const FIELD_CHANGED = 'imbewu:fieldwork-changed';
 export const FIELD_SYNCED = 'imbewu:fieldwork-synced';
@@ -47,9 +48,11 @@ export function overlayFieldWrites(url: string, original: any, writes: FieldWrit
   return out;
 }
 
-export function fieldDataReportNote(data: any): string | null {
+/** The report's offline note. `language` 'xh' reads the isiXhosa drafts for its fixed wording (the saved date stays as recorded); anything else is the English. */
+export function fieldDataReportNote(data: any, language?: string): string | null {
   const status=data?._device;
   const pending=status?.pending || ['visits','sessions','milestones','sites'].some(key=>Array.isArray(data?.[key])&&data[key].some((row:any)=>row._pending));
   if(!status?.cached&&!pending)return null;
-  return [status?.cached?`Uses information saved on this device${status.savedAt?` on ${new Date(status.savedAt).toISOString()}`:''}.`:null,pending?'Includes device-saved changes not yet confirmed by the server.':null].filter(Boolean).join(' ');
+  const t=(english:string,vars:Record<string,string|number>={})=>inlineTemplate(language??'en',english,null,vars);
+  return [status?.cached?(status.savedAt?t('Uses information saved on this device on {date}.',{date:new Date(status.savedAt).toISOString()}):t('Uses information saved on this device.')):null,pending?t('Includes device-saved changes not yet confirmed by the server.'):null].filter(Boolean).join(' ');
 }

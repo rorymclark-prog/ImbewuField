@@ -120,3 +120,64 @@ test('a chart that fits one fresh page keeps its last observation with its headi
   const chartPage = pages.find(page => page?.join('\n').includes(chart.title));
   assert.ok(chartPage?.join('\n').includes('Final observed group'), 'the final observation must stay with the heading when the whole chart fits one page');
 });
+
+// ---- isiXhosa reader: the facilitator delivery report ------------------------------------------------
+test('isiXhosa reader: the facilitator report body is isiXhosa, every figure and recorded name is unchanged, and every other language is the same English', async () => {
+  const { XH_INLINE_SOURCE } = await import('../lib/locales/xh-inline/index');
+  const { registerXhInline } = await import('../lib/xh-inline');
+  const session = structuredClone(freshEvidenceData().sessions[0]);
+  session.attendance.push({ id: 'guest-example', name: 'PRIVATE GUEST', present: true });
+  session.presentCount = 3; session.registeredCount = 3; session.assessmentId = 'linked';
+  session.feedback = [{ participantId: session.attendance[0].id, consent: true, language: 'en', recordedAt: '2026-08-15', answers: { course_clear: '4', course_change: 'PRIVATE COMMENT' } }];
+  const sessions = [session, { ...session, id: 'second', date: '2026-09-01', facilitator: '', nextSteps: '', report: '', assessmentId: '' }];
+  const inputs = [
+    { ...options },
+    { ...options, from: '2026-08-01', to: '2026-09-30', comparePrevious: true, assessments: [{ id: 'linked', title: 'Linked example assessment' }] },
+    { ...options, ownerId: session.ownerId, project: session.project },
+    { ...options, project: 'No such project' },
+  ];
+  const everyString = (value: unknown, out: string[] = []): string[] => {
+    if (typeof value === 'string') out.push(value);
+    else if (Array.isArray(value)) value.forEach(item => everyString(item, out));
+    else if (value && typeof value === 'object') Object.entries(value).forEach(([key, item]) => { if (key !== 'url') everyString(item, out); });
+    return out;
+  };
+  const digitsIn = (text: string) => (text.match(/\d+(?:[.,]\d+)?/g) ?? []).join(' ');
+  try {
+    registerXhInline({}); // the server, or before the isiXhosa drafts load
+    for (const input of inputs) assert.deepEqual(buildTrainingReport(sessions, { ...input, language: 'xh' }), buildTrainingReport(sessions, input));
+    registerXhInline(XH_INLINE_SOURCE);
+    for (const input of inputs) {
+      const english = buildTrainingReport(sessions, input);
+      for (const language of ['en', 'zu', 'st', 'ts', 've', undefined]) assert.deepEqual(buildTrainingReport(sessions, { ...input, language }), english, `${language}`);
+      const xh = buildTrainingReport(sessions, { ...input, language: 'xh' });
+      assert.deepEqual(xh.counts, english.counts); assert.deepEqual(xh.sessions, english.sessions);
+      assert.equal(xh.filename, english.filename, 'the download name is built from English');
+      assert.deepEqual(xh.metrics.length, english.metrics.length);
+      assert.deepEqual(xh.tables.map(table => [table.rows.length, table.columns.length, table.columnWeights, table.keepAllRowsInSummary, table.includeInSummary]), english.tables.map(table => [table.rows.length, table.columns.length, table.columnWeights, table.keepAllRowsInSummary, table.includeInSummary]));
+      assert.deepEqual(xh.sections.map(section => [section.lines.length, section.references]), english.sections.map(section => [section.lines.length, section.references]));
+      assert.notEqual(xh.title, english.title);
+      assert.deepEqual(xh.sections.map(section => section.title).filter(title => english.sections.some(section => section.title === title)), [], 'every section title is isiXhosa');
+      assert.deepEqual(xh.tables.map(table => table.title).filter(title => english.tables.some(table => table.title === title)), [], 'every table title is isiXhosa');
+      assert.deepEqual(xh.metrics.map(metric => metric.label).filter(label => english.metrics.some(metric => metric.label === label)), [], 'every metric label is isiXhosa');
+      xh.tables.forEach((table, index) => { assert.notEqual(table.note, english.tables[index].note); table.columns.forEach((column, n) => assert.notEqual(column, english.tables[index].columns[n], `${table.title} column ${n}`)); });
+      xh.sections.forEach((section, index) => section.lines.forEach((line, n) => { if (line !== xh.scope) assert.notEqual(line, english.sections[index].lines[n], `${section.title} line ${n}`); }));
+      // Every figure is exact, string by string.
+      const englishStrings = everyString(english), xhStrings = everyString(xh);
+      assert.equal(xhStrings.length, englishStrings.length);
+      englishStrings.forEach((text, index) => assert.equal(digitsIn(xhStrings[index]), digitsIn(text), `figures in ${JSON.stringify(text.slice(0, 80))}`));
+      // Recorded names and text stay as recorded; private text stays out.
+      const text = JSON.stringify(xh);
+      for (const recorded of [session.title, session.project, session.facilitator, session.nextSteps, 'Linked example assessment']) if (JSON.stringify(english).includes(recorded)) assert.ok(text.includes(recorded), `${recorded} stays as recorded`);
+      assert.ok(!text.includes('PRIVATE GUEST') && !text.includes('PRIVATE COMMENT') && !text.includes(session.attendance[0].name));
+    }
+    // The survey question is the MEL template's isiXhosa wording, with the same counts.
+    const feedback = buildTrainingReport(sessions, { ...options, language: 'xh' }).tables.find(table => table.columns.length === 4 && table.rows.some(row => row[2] === '2 / 6'));
+    assert.ok(feedback, 'answered / eligible keeps its figures');
+    // The preparation of the isiXhosa PDF works and carries the isiXhosa body.
+    const report = buildTrainingReport(sessions, { ...options, language: 'xh' });
+    const pdf = await buildProgrammePdf(report.title, false, report.sections, 'full', undefined, [], 'Ubungqina', undefined, { metrics: report.metrics, tables: report.tables, language: 'xh', reportLabel: 'Iirekhodi zokuhanjiswa kweqeqesho' });
+    const content = pdfContentStreams(pdf.output('arraybuffer'));
+    assert.match(content, /Uphononongo lokuhanjiswa/); assert.ok(!/Delivery review/.test(content));
+  } finally { registerXhInline({}); }
+});

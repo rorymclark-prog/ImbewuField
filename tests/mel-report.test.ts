@@ -162,3 +162,84 @@ test('full and brief MEL exports retain matched coverage, source limitations and
     assert.ok(!/participantIds|person-0/.test(text));
   }
 });
+
+// ---- isiXhosa reader -------------------------------------------------------------------------------
+const donorExample = { funder: 'Fictional donor', agreement: 'TEST-AGREEMENT', code: 'TEST-01', periodStart: '2026-08-01', periodEnd: '2026-09-30', population: 'Six explicitly identified demonstration gardens.', disaggregation: 'No demographic breakdown agreed.', frequency: 'Monthly', basis: 'cumulative' as const };
+const xhScenario = (extra: Partial<MelReportOptions> = {}): MelReportOptions => {
+  const b = assessment('before', 'baseline'), a = { ...assessment('after', 'midpoint'), action: 'Plant more cover crops', actionOwner: 'PRIVATE OWNER NAME', actionDue: '2026-10-01', state: 'open' as const };
+  const afterSummary = analyseAssessment(a, MEL_TEMPLATES.midpoint, responses(a)), beforeSummary = analyseAssessment(b, MEL_TEMPLATES.baseline, responses(b));
+  const [first, second] = freshEvidenceData().milestones;
+  const milestones = [
+    { ...first, project: 'Project', title: 'Fictional agreed output', donor: donorExample, observations: [{ date: '2026-08-15', actual: 2, evidence: 'TEST-EVIDENCE-A', recordedAt: '2026-08-15' }, { date: '2026-09-01', actual: 4, evidence: 'TEST-EVIDENCE-B', recordedAt: '2026-09-01' }] },
+    { ...second, project: 'Project', title: 'Fictional unmeasured output', baseline: null, target: null, observations: [] },
+  ];
+  return reportOptions({ sample: true, comparisonAsOf: '2026-08-31', asOf: '2026-09-30', today: '2026-10-26', donorName: donorExample.funder, donorReference: 'sef', milestones, beforeId: b.id,
+    assessments: [{ ...b, ...beforeSummary }, { ...a, ...afterSummary }],
+    analysis: { assessmentId: a.id, beforeId: b.id, ...afterSummary, comparison: compare(b, a, responses(b), responses(a, '20').slice(0, 6)), notes: ['Assessment findings: Uses information saved on this device.'] },
+    sourceNotes: ['Assessment register: Includes device-saved changes not yet confirmed by the server.'], ...extra });
+};
+const everyString = (value: unknown, out: string[] = []): string[] => {
+  if (typeof value === 'string') out.push(value);
+  else if (Array.isArray(value)) value.forEach(item => everyString(item, out));
+  else if (value && typeof value === 'object') Object.entries(value).forEach(([key, item]) => { if (key !== 'url') everyString(item, out); });
+  return out;
+};
+const digitsIn = (text: string) => (text.match(/\d+(?:[.,]\d+)?/g) ?? []).join(' ');
+
+test('isiXhosa reader: the MEL body is isiXhosa, every figure, name and recorded phrase is unchanged, and every other language is the same English', async () => {
+  const { XH_INLINE_SOURCE } = await import('../lib/locales/xh-inline/index');
+  const { registerXhInline } = await import('../lib/xh-inline');
+  const scenarios: Array<[string, MelReportOptions]> = [
+    ['staff with donor, sef, history and matched change', xhScenario()],
+    ['funder', xhScenario({ funder: true })],
+    ['staff, no donor, sources unreadable', xhScenario({ donorName: undefined, donorReference: 'none', comparisonAsOf: undefined, sample: false, assessmentSource: false, milestoneSource: false, analysis: null, assessments: [] })],
+  ];
+  try {
+    registerXhInline({}); // the server, or before the isiXhosa drafts load
+    for (const [label, input] of scenarios) {
+      const english = buildMelEvidenceReport(input);
+      for (const language of ['en', 'zu', 'st', 'xh', undefined]) assert.deepEqual(buildMelEvidenceReport({ ...input, language }), english, `${label}: ${language} before drafts load`);
+    }
+    registerXhInline(XH_INLINE_SOURCE);
+    for (const [label, input] of scenarios) {
+      const english = buildMelEvidenceReport(input);
+      // Omitting the language or asking for English or isiZulu or Sesotho is the same English report.
+      for (const language of ['en', 'zu', 'st', 'ts', 've', undefined]) assert.deepEqual(buildMelEvidenceReport({ ...input, language }), english, `${label}: ${language}`);
+      const xh = buildMelEvidenceReport({ ...input, language: 'xh' });
+      // Same shape: metrics, tables, rows, columns, sections, lines, references.
+      assert.deepEqual(xh.metrics.length, english.metrics.length);
+      assert.deepEqual(xh.tables.map(table => [table.rows.length, table.columns.length, table.columnWeights, table.keepAllRowsInSummary, table.includeInSummary]), english.tables.map(table => [table.rows.length, table.columns.length, table.columnWeights, table.keepAllRowsInSummary, table.includeInSummary]), label);
+      assert.deepEqual(xh.sections.map(section => [section.lines.length, section.summaryLines?.length]), english.sections.map(section => [section.lines.length, section.summaryLines?.length]), label);
+      assert.deepEqual(xh.sections.map(section => section.references), english.sections.map(section => section.references), 'source names and links are unchanged');
+      assert.equal(xh.filename, english.filename, 'the download name is built from English');
+      // The fixed wording is isiXhosa.
+      assert.notEqual(xh.title, english.title);
+      assert.deepEqual(xh.sections.map(section => section.title).filter(title => english.sections.some(section => section.title === title)), [], 'every section title is isiXhosa');
+      assert.deepEqual(xh.tables.map(table => table.title).filter(title => english.tables.some(table => table.title === title)), [], 'every table title is isiXhosa');
+      assert.deepEqual(xh.metrics.map(metric => metric.label).filter(text => english.metrics.some(metric => metric.label === text)), [], 'every metric label is isiXhosa');
+      xh.tables.forEach((table, index) => { assert.notEqual(table.note, english.tables[index].note, `${table.title} note`); table.columns.forEach((column, n) => assert.notEqual(column, english.tables[index].columns[n], `${table.title} column ${n}`)); });
+      xh.sections.forEach((section, index) => section.lines.forEach((line, n) => { if (line !== xh.scope && !line.startsWith('Assessment register: ') && !line.startsWith('Assessment findings: ')) assert.notEqual(line, english.sections[index].lines[n], `${section.title} line ${n}`); }));
+      // Every figure is exact: counts, means, dates and the signed changes, string by string.
+      const englishStrings = everyString(english), xhStrings = everyString(xh);
+      assert.equal(xhStrings.length, englishStrings.length);
+      englishStrings.forEach((text, index) => assert.equal(digitsIn(xhStrings[index]), digitsIn(text), `figures in ${JSON.stringify(text.slice(0, 80))}`));
+      // Recorded names, evidence and codes are never translated.
+      const text = JSON.stringify(xh);
+      for (const recorded of ['Example organisation', 'Fictional donor', 'TEST-AGREEMENT', 'TEST-01', 'Fictional agreed output', 'TEST-EVIDENCE-B', 'Plant more cover crops', 'PRIVATE OWNER NAME']) if (JSON.stringify(english).includes(recorded)) assert.ok(text.includes(recorded), `${recorded} stays as recorded`);
+      if (input.funder) for (const privateText of ['PRIVATE OWNER NAME', 'Plant more cover crops']) assert.ok(!text.includes(privateText));
+    }
+    // Withheld results, matched changes and the unreported markers are said in isiXhosa with the same numbers.
+    const withheld = xhScenario({ funder: true }); withheld.analysis!.metrics = [{ id: 'growing_m2', en: 'Area', zu: 'Area', n: 0, missing: 0, mean: 987654321, suppressed: true }];
+    const row = buildMelEvidenceReport({ ...withheld, language: 'xh' }).tables.find(table => table.rows[0]?.[1] === 'Kufihliwe ukukhusela iqela elincinci');
+    assert.deepEqual(row!.rows[0].slice(1), ['Kufihliwe ukukhusela iqela elincinci', 'Kufihliwe', 'Kufihliwe']);
+    assert.ok(!JSON.stringify(buildMelEvidenceReport({ ...withheld, language: 'xh' })).includes('987654321'));
+    const changed = buildMelEvidenceReport({ ...xhScenario(), language: 'xh' }).tables.find(table => table.columns.length === 5 && /^[+-]/.test(String(table.rows[0]?.[2])));
+    assert.ok(changed, 'the matched change keeps its sign and decimals');
+    // The isiXhosa PDF carries the isiXhosa body and the recorded names.
+    const report = buildMelEvidenceReport({ ...xhScenario(), language: 'xh' });
+    const pdf = await buildProgrammePdf(report.title, false, report.sections, 'full', undefined, [], 'Ubungqina', undefined, { metrics: report.metrics, tables: report.tables, subtitle: report.scope, language: 'xh' });
+    const content = pdfContentStreams(pdf.output('arraybuffer'));
+    assert.match(content, /Uphononongo lobungqina/); assert.match(content, /Fictional donor/);
+    assert.ok(!/Evidence review/.test(content));
+  } finally { registerXhInline({}); }
+});
