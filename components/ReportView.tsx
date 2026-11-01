@@ -1269,12 +1269,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     <button
                       key={id}
                       onClick={() => jumpToChapter(id)}
+                      title={xhDraft(title) ? title : undefined}
                       className="min-h-11 w-full text-left px-2 py-1.5 rounded-lg text-xs font-display transition-all"
                       style={{ color: 'var(--report-muted)', background: 'transparent', border: '1px solid transparent' }}
                       onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-ink)'; (e.target as HTMLButtonElement).style.background = 'var(--report-panel)'; }}
                       onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-muted)'; (e.target as HTMLButtonElement).style.background = 'transparent'; }}
                     >
-                      {title}
+                      {xhDraft(title) ?? title}
                     </button>
                   ))}
                 </div>

@@ -1,4 +1,5 @@
 import { journalCategory, type JournalCategory } from './field-journal';
+import { inlineText } from './xh-inline';
 
 // These controls are an isiZulu draft, not a reviewed translation of a farmer's observations.
 // Keep both languages complete here so the journal, photo viewer and saved copies cannot drift.
@@ -235,7 +236,10 @@ const ZULU_CATEGORIES: Record<JournalCategory, string> = {
 };
 
 export function farmMemoryText(lang: string, key: FarmMemoryKey, vars: Record<string, string | number> = {}): string {
-  const template = lang === 'zu' ? FARM_MEMORY_ZU[key] : FARM_MEMORY_EN[key];
+  // isiXhosa reads the unreviewed drafts keyed by the exact English (lib/locales/xh-inline/g48-ui-gaps.ts); a key with
+  // no draft, and every key before the isiXhosa chunk has loaded, keeps the English. The saved copies (journal-export)
+  // are always built in English for isiXhosa, so the document wording is not drafted.
+  const template = lang === 'zu' ? FARM_MEMORY_ZU[key] : lang === 'xh' ? inlineText('xh', FARM_MEMORY_EN[key]) : FARM_MEMORY_EN[key];
   // Substitute once: a farmer's original wording may itself contain braces or dollar signs.
   return template.replace(/\{(\w+)\}/g, (placeholder, name: string) => Object.hasOwn(vars, name) ? String(vars[name]) : placeholder);
 }

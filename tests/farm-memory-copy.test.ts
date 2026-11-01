@@ -4,6 +4,9 @@ import { JOURNAL_CATEGORIES, type JournalEntry } from '@/lib/field-journal';
 import { FARM_MEMORY_EN, FARM_MEMORY_ZU, farmMemoryCategoryLabel, farmMemoryText, type FarmMemoryKey } from '@/lib/farm-memory-copy';
 import { journalCategoryLabel } from '@/components/journal/journal-labels';
 import { filterJournalEntries, journalBedFilterValue, journalDateRangeError, journalFilterOptions } from '@/lib/journal-view';
+import { XH_INLINE_SOURCE } from '@/lib/locales/xh-inline/index';
+import { registerXhInline } from '@/lib/xh-inline';
+import { buildJournalCsv, buildJournalHtml } from '@/lib/journal-export';
 
 const placeholders = (value: string) => [...value.matchAll(/\{(\w+)\}/g)].map(match => match[1]).sort();
 
@@ -62,4 +65,40 @@ test('isiZulu UI copy marks the language draft and keeps a planned task separate
   assert.match(FARM_MEMORY_EN.draftNotice, /unreviewed draft/);
   assert.match(FARM_MEMORY_EN.taskDraftNotice, /does not record a harvest quantity or mark the task complete/);
   assert.match(FARM_MEMORY_ZU.taskDraftNotice, /akurekhodi inani lesivuno noma kuphawule umsebenzi njengoqediwe/);
+});
+
+// Keys the saved CSV / printable copy writes. isiXhosa has no draft of the document wording: those copies stay English,
+// so the screen's notice says so and nothing in the file is a half-translated mix.
+const EXPORT_DOCUMENT_KEYS = ['draftNotice', 'englishControls', 'exportDate', 'exportCategory', 'exportTitle', 'exportNotes', 'exportBed', 'exportBedId',
+  'exportCrop', 'exportPhotos', 'exportBasisHeading', 'exportSelection', 'exportBasis', 'exportDemo', 'exportDefaultSelection', 'exportHeading', 'exportNote',
+  'exportPhotoAlt', 'exportPhotoOmittedOne', 'exportPhotoOmittedMany', 'exportOmittedByChoice', 'exportOmittedUnavailable', 'exportCopyLabel', 'exportSelectedOne',
+  'exportSelectedMany', 'exportPrepared', 'exportScope', 'exportPrintHelp', 'exportEmpty', 'exportFooter', 'exportDemoFooter', 'exportShareTitle',
+  'exportPrintShareTitle', 'searchScope', 'categoryScope', 'fromScope', 'toScope', 'bedScope', 'cropScope', 'allEntries', 'csv'] as FarmMemoryKey[];
+
+test('isiXhosa reads a draft for every Farm memory screen control, keeps its data slots, and the saved copies stay English', () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  try {
+    const screenKeys = (Object.keys(FARM_MEMORY_EN) as FarmMemoryKey[]).filter(key => !EXPORT_DOCUMENT_KEYS.includes(key));
+    for (const key of screenKeys) {
+      const draft = farmMemoryText('xh', key);
+      assert.notEqual(draft, FARM_MEMORY_EN[key], `${key}: no isiXhosa draft`);
+      assert.deepEqual(placeholders(draft), placeholders(FARM_MEMORY_EN[key]), `${key}: data slots drifted`);
+    }
+    // The headings and controls the browser check found in English.
+    assert.equal(farmMemoryText('xh', 'title'), 'Inkumbulo yefama');
+    assert.equal(farmMemoryText('xh', 'yourNotes'), 'AMANQAKU AKHO ASENTSIMINI');
+    assert.equal(farmMemoryText('xh', 'keepCopyMany', { n: 4 }), 'Gcina ikopi yokubhaliweyo okungu-4');
+    assert.equal(farmMemoryText('xh', 'writeFieldNote'), 'Bhala inqaku lasentsimini');
+    assert.equal(farmMemoryText('xh', 'logPicked'), 'Rekhoda oko ukuvuneyo');
+    // A farmer's own wording passes through untouched.
+    assert.equal(farmMemoryText('xh', 'bedHistory', { value: 'Bed {n} $&' }), 'Bonisa imbali yencwadi yemihla yebhedi: Bed {n} $&');
+    // isiZulu, English and the languages with no draft are unchanged.
+    assert.equal(farmMemoryText('zu', 'title'), FARM_MEMORY_ZU.title);
+    assert.equal(farmMemoryText('en', 'title'), FARM_MEMORY_EN.title);
+    assert.equal(farmMemoryText('st', 'title'), FARM_MEMORY_EN.title);
+    // The saved copies are English whatever the screen language, byte for byte.
+    const entry: JournalEntry = { id: 'a', date: '2026-10-29', title: 'Note', notes: 'Body', category: 'harvest', bedId: null, bedLabel: null, cropName: null, photos: [] } as unknown as JournalEntry;
+    assert.equal(buildJournalCsv([entry], { lang: 'xh' }), buildJournalCsv([entry], { lang: 'en' }));
+    assert.equal(buildJournalHtml([entry], { lang: 'xh', generatedAt: '2026-10-29T00:00:00Z' }), buildJournalHtml([entry], { lang: 'en', generatedAt: '2026-10-29T00:00:00Z' }));
+  } finally { registerXhInline({}); }
 });

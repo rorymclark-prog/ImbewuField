@@ -8,7 +8,8 @@ import ts from 'typescript';
 import { farmMemoryText } from '../lib/farm-memory-copy.ts';
 import { taskJournalHref, taskHarvestHref } from '../lib/task-record-link.ts';
 import type { BoardTask } from '../lib/task-board.ts';
-import { inlineText, inlineTemplate } from '../lib/xh-inline.ts';
+import { inlineText, inlineTemplate, registerXhInline } from '../lib/xh-inline.ts';
+import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index.ts';
 
 const require = createRequire(import.meta.url);
 const source = readFileSync(new URL('../app/cropplan/page.tsx', import.meta.url), 'utf8');
@@ -24,11 +25,12 @@ const code = ts.transpileModule([...helpers, taskList.getText(tree)].join('\n'),
   jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022,
 } }).outputText;
 const Icon = () => null;
-const TaskList = new Function('require', 'exports', 'workspace', 'actionMeta', 'taskJournalHref', 'taskHarvestHref', 'farmMemoryText', 'inlineText', 'inlineTemplate', 'IsiZuluDraftSource', 'Link', 'CheckCircle2', 'Circle', 'ClipboardList', 'Scissors', `${code}; return TaskList;`)(
+const buildTaskList = (IsiZuluDraftSource: React.ComponentType<any>) => new Function('require', 'exports', 'workspace', 'actionMeta', 'taskJournalHref', 'taskHarvestHref', 'farmMemoryText', 'inlineText', 'inlineTemplate', 'IsiZuluDraftSource', 'Link', 'CheckCircle2', 'Circle', 'ClipboardList', 'Scissors', `${code}; return TaskList;`)(
   require, {}, { cards: 'cards' }, () => ({ Icon, color: '#123456' }), taskJournalHref, taskHarvestHref,
-  farmMemoryText, inlineText, inlineTemplate, ({ english }: { english: string }) => React.createElement('span', null, english),
+  farmMemoryText, inlineText, inlineTemplate, IsiZuluDraftSource,
   ({ children, ...props }: any) => React.createElement('a', props, children), Icon, Icon, Icon, Icon,
 ) as React.ComponentType<any>;
+const TaskList = buildTaskList(({ english }: { english: string }) => React.createElement('span', null, english));
 
 const task: BoardTask = {
   id: 'crop:harvest', kind: 'crop', title: 'Original task title', subtitle: 'Original bed label',
@@ -36,7 +38,7 @@ const task: BoardTask = {
   dueMonth: 10, monthsAway: 0, completed: false,
 };
 
-for (const lang of ['en', 'zu']) test(`${lang} task links translate controls while retaining original task context and safe destinations`, async () => {
+for (const lang of ['en', 'zu', 'xh']) test(`${lang} task links translate controls while retaining original task context and safe destinations`, async () => {
   let renderer!: ReactTestRenderer;
   const toggles: string[] = [];
   await act(async () => { renderer = create(React.createElement(TaskList, {
@@ -55,4 +57,70 @@ for (const lang of ['en', 'zu']) test(`${lang} task links translate controls whi
     await act(async () => renderer.root.findByType('button').props.onClick());
     assert.deepEqual(toggles, [task.id], 'the explicit completion control stays independent');
   } finally { await act(async () => renderer.unmount()); }
+});
+
+test('isiXhosa task links read the Farm memory drafts, the task lines carry isiXhosa verbs, and no line repeats the draft label', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const seen: Array<Record<string, unknown>> = [];
+  const Capture = (props: Record<string, unknown>) => { seen.push(props); return React.createElement('span', null, String(props.english)); };
+  const List = buildTaskList(Capture as unknown as React.ComponentType<any>);
+  const generated: BoardTask[] = [
+    { ...task, id: 'crop:harvest-onions', title: 'Harvest Onions', subtitle: 'Bed 1 · Due this month', action: 'harvest' },
+    { ...task, id: 'crop:prep-butternut', title: 'Prep bed for Butternut', subtitle: 'Bed 2 · Due next month', action: 'prep' },
+    { ...task, id: 'crop:transplant-tomatoes', title: 'Transplant Tomatoes', subtitle: 'Bed 3 · Due in 3 months', action: 'transplant' },
+  ];
+  let renderer!: ReactTestRenderer;
+  try {
+    await act(async () => { renderer = create(React.createElement(List, { tasks: generated, lang: 'xh', onToggle: () => {}, emptyMessage: '', doneLabel: 'Done', notDoneLabel: 'Not done' })); });
+    const links = renderer.root.findAllByType('a');
+    assert.equal(links[0].children.at(-1), 'Bhala inqaku lasentsimini');
+    assert.equal(links[1].children.at(-1), 'Rekhoda oko ukuvuneyo');
+    assert.equal(renderer.root.findAllByProps({ lang: 'xh' }).length > 0, true, 'the link group is marked as isiXhosa');
+    const byEnglish = new Map(seen.map(props => [props.english, props]));
+    assert.equal(byEnglish.get('Harvest Onions')!.xhosa, 'Vuna Amatswele');
+    assert.equal(byEnglish.get('Prep bed for Butternut')!.xhosa, 'Lungisa umbhede: Butternut', 'a crop with no recorded draft keeps its name as recorded');
+    assert.equal(byEnglish.get('Transplant Tomatoes')!.xhosa, 'Tyala izithole: Iitumato');
+    assert.match(String(byEnglish.get('Bed 3 · Due in 3 months')!.xhosa), /^Bed 3 · /);
+    // The page-level note says "unreviewed drafts with English sources" once; the per-line label is not repeated.
+    assert.ok(seen.length >= 6);
+    for (const props of seen) assert.equal(props.draftLabel, false, 'no per-row draft label for isiXhosa');
+  } finally { registerXhInline({}); await act(async () => renderer?.unmount()); }
+  const zulu = create(React.createElement(buildTaskList(Capture as unknown as React.ComponentType<any>), { tasks: [task], lang: 'zu', onToggle: () => {}, emptyMessage: '', doneLabel: 'Done', notDoneLabel: 'Not done' }));
+  const zuluProps = seen.slice(-2);
+  for (const props of zuluProps) assert.equal(props.draftLabel, true, 'isiZulu keeps its per-row label');
+  zulu.unmount();
+});
+
+test('the planner month heading is not paired with an identical English month, and the page shows the isiXhosa note once', () => {
+  assert.match(source, /draft === english \? english : `\$\{draft\} \/ \$\{english\}`/, 'a draft equal to the English month is shown once');
+  assert.equal((source.match(/Unreviewed isiXhosa drafts with English sources; some farming instructions remain in English for review\./g) ?? []).length, 2, 'one page-level note: its draft key and its English source line');
+  assert.match(source, /draftLabel=\{lang !== 'xh'\}/, 'the per-row isiXhosa label is switched off');
+});
+
+test('IsiZuluDraftSource drops only the isiXhosa draft label on request and always keeps the English source line', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const draftSource = ts.transpileModule(readFileSync(new URL('../components/IsiZuluDraftSource.tsx', import.meta.url), 'utf8'), { compilerOptions: {
+    jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true,
+  } }).outputText;
+  const mod = { exports: {} as any };
+  new Function('require', 'module', 'exports', draftSource)((name: string) => {
+    if (name === '@/lib/records-regional-drafts') return { isRecordsRegionalLang: () => false, recordsDraft: () => null, recordsTemplate: (_l: string, e: string) => e };
+    if (name === '@/lib/xh-inline') return { fillInline: (t: string) => t, inlineText, xhInlineDraft: (e: string) => (e === 'Due this month' ? 'Kumele kwenziwe kule nyanga' : null) };
+    return require(name);
+  }, mod, mod.exports);
+  const Source = mod.exports.default as React.ComponentType<any>;
+  const text = (props: Record<string, unknown>) => {
+    const r = create(React.createElement(Source, { lang: 'xh', english: 'Due this month', zulu: '', ...props }));
+    const out = JSON.stringify(r.toJSON());
+    r.unmount();
+    return out;
+  };
+  try {
+    assert.match(text({}), /Unreviewed isiXhosa draft\.|Idrafti yesiXhosa engekahlolwa\./, 'the label shows by default');
+    const quiet = text({ draftLabel: false });
+    assert.doesNotMatch(quiet, /Idrafti yesiXhosa|Unreviewed isiXhosa draft/);
+    assert.match(quiet, /Kumele kwenziwe kule nyanga/);
+    assert.match(quiet, /English source: /);
+    assert.match(quiet, /Due this month/);
+  } finally { registerXhInline({}); }
 });

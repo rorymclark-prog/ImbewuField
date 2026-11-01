@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import { produceLabel } from '../lib/produce-label.ts';
+import { RECORDS_DRAFTS } from '../lib/records-regional-drafts-data.ts';
 import { pricedCropList } from '../components/prices/CropPriceGuide.format.ts';
 
 // ux-18 (wave 14): the same crop read 'Sweet Potato' on /calendar, 'Sweet potato' on /home and
@@ -48,6 +49,14 @@ test('MyRecords\' lender summary reads isiZulu first, and the orchard chip/expor
   // The old fixed-colour, theme-blind pattern must not come back.
   assert.doesNotMatch(myRecords, /color-mix\(in srgb, var\(--color-forest-800\)/, 'the orchard chip must not reintroduce a fixed-opacity mix of a token that itself changes per theme');
   assert.doesNotMatch(myRecords, /background: loading \? 'rgba\(46,107,58/, 'the export button must not reintroduce its fixed rgba(46,107,58,…) background');
+});
+
+test('MyRecords\' lender summary reads the isiXhosa draft first, then the English source, and never prints the English twice', () => {
+  assert.match(myRecords, /if \(lang === 'xh'\) \{\n    const draft = recordsDraft\(lang, english\);\n    return draft && draft !== english \? `\$\{draft\} — \$\{english\}` : english;/);
+  const paragraph = RECORDS_DRAFTS['A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit score or a loan approval.'];
+  assert.ok(paragraph?.xh && paragraph.xh.trim() !== '', 'the lender paragraph has an isiXhosa draft to lead with');
+  // The other regional languages keep English first, as before.
+  assert.match(myRecords, /if \(lang !== 'zu'\) return recordsPaired\(lang, english\);/);
 });
 
 test('app/calendar/page.tsx derives its grid crop names from produceLabel, not a hardcoded Title Case literal', () => {

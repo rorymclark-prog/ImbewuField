@@ -277,7 +277,7 @@ const drafts: Record<string, string> = {
   "Explore the design, visit records and evidence. Your edits stay available until you reload or reset this workspace.": "Hlola uyilo, iirekhodi zotyelelo nobungqina. Utshintsho lwakho luhlala lukho de ulayishe kwakhona okanye useta kwakhona le ndawo yokusebenza.",
   "Please allow session storage to open this tour.": "Nceda uvumele indawo yokugcina yeseshoni ukuvula olu khenketho.",
   "Open farm workspace": "Vula indawo yokusebenza yefama",
-  "Sample records, evidence texts, soil test results and photo captions are kept in English so that sources and facts are preserved. Ask for help translating them before using the farming information.": "Iirekhodi zomzekelo, imibhalo yobungqina, iziphumo zovavanyo lomhlaba namabinzana eefoto zigcinwe ngesiNgesi ukuze imithombo neenyani zigcineke. Cela uncedo lokuzihumushela phambi kokusebenzisa ulwazi lokulima.",
+  "Sample records, evidence texts and soil test results are kept in English so that sources and facts are preserved. Ask for help translating them before using the farming information.": "Iirekhodi zomzekelo, imibhalo yobungqina neziphumo zovavanyo lomhlaba zigcinwe ngesiNgesi ukuze imithombo neenyani zigcineke. Cela uncedo lokuzihumushela phambi kokusebenzisa ulwazi lokulima.",
   "Saved place & map": "Indawo egciniweyo nemephu",
   "Edit design": "Hlela uyilo",
   "Edit site assessment": "Hlela uvavanyo lwendawo",

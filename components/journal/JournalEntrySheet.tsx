@@ -176,7 +176,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
         <div style={{ padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
           {initialDraft && !entry && (
-            <p role="note" lang={isZulu ? 'zu' : 'en'} style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
+            <p role="note" lang={isZulu ? 'zu' : lang === 'xh' ? 'xh' : 'en'} style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
               {farmMemoryText(lang, 'taskDraftNotice')}
             </p>
           )}

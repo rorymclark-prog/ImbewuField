@@ -775,3 +775,13 @@ test('animal save failures remain visible until both choices and production mont
   }
   assert.match(productionPage, /animalSaveFailed && <p role="alert"[^>]*>(?:\{inlineText\(lang, ')?Animal products and production months could not be saved/);
 });
+
+test('the production-plan header wraps on a phone instead of clipping the title or pushing the bed count off the right edge', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  const header = page.match(/<header className="([^"]*)" style=\{\{ minHeight: 56,/);
+  assert.ok(header, 'the page header keeps a 56px minimum, not a fixed height that forces one clipped row');
+  assert.match(header[1], /\bflex-wrap\b/, 'a narrow header wraps');
+  assert.match(header[1], /\bmd:flex-nowrap\b/, 'a wide header is still one row');
+  assert.match(header[1], /\bmd:h-14\b/, 'a wide header is still 56px tall');
+  assert.doesNotMatch(header[1], /(^|\s)overflow-x-auto/, 'no horizontal scroll on a phone');
+});
