@@ -8,7 +8,7 @@
 // and the FIELD_PROGRAMMES names are drafted once in earlier shards and are not repeated.
 // Placeholders, digits, the "|" separators and symbols are kept exactly.
 // Terms: besoek = visit, opvolg = follow-up, deelnemer = participant, aangeteken = recorded,
-// tuin = garden, terrein = site, toewysing = assignment, leiding = guidance, bewyse = evidence.
+// tuin = garden, terrein = site, toewysing = assignment, riglyne = guidance, bewyse = evidence.
 const drafts: Record<string, string> = {
   // Names the report falls back to
   "Site not recorded": "Terrein nie aangeteken nie",
@@ -21,15 +21,15 @@ const drafts: Record<string, string> = {
   // Metrics
   "Visits recorded": "Besoeke aangeteken",
   "Completed visit records in this selection": "Voltooide besoekrekords in hierdie keuse",
-  "Assigned people visited": "Toegewysde mense besoek",
+  "Assigned people visited": "Toegewysde mense wat besoek is",
   "Current assignments; not unique garden sites": "Huidige toewysings; nie unieke tuinterreine nie",
   "Open actions": "Oop aksies",
-  "{n} due or overdue as of {today}": "{n} verskuldig of agterstallig op {today}",
+  "{n} due or overdue as of {today}": "{n} met sperdatum op of voor {today}",
   "Completed actions": "Voltooide aksies",
   "Latest status of actions from these visits": "Jongste status van aksies uit hierdie besoeke",
   // Support coverage
   "Support coverage": "Ondersteuningsdekking",
-  "Currently assigned participants, with visits inside the selected period. No recorded visit does not establish that no support happened elsewhere.": "Deelnemers wat tans toegewys is, met besoeke binne die gekose tydperk. Geen aangetekende besoek bewys nie dat daar nêrens anders ondersteuning was nie.",
+  "Currently assigned participants, with visits inside the selected period. No recorded visit does not establish that no support happened elsewhere.": "Deelnemers wat tans toegewys is, met besoeke binne die gekose tydperk. Die afwesigheid van 'n aangetekende besoek bewys nie dat daar nêrens anders ondersteuning was nie.",
   "Garden / site": "Tuin / terrein",
   "Visits": "Besoeke",
   "Latest selected visit": "Jongste gekose besoek",
@@ -63,15 +63,15 @@ const drafts: Record<string, string> = {
   "Saved visit evidence": "Gestoorde besoekbewyse",
   "Not classified": "Nie geklassifiseer nie",
   // Assignments and guidance
-  "Assignments & organisation guidance": "Toewysings en organisasie se leiding",
-  "Current team guidance, separate from dated visit evidence. It is not a record of the guidance that existed at a past visit.": "Huidige spanleiding, apart van gedateerde besoekbewyse. Dit is nie 'n rekord van die leiding wat tydens 'n vorige besoek bestaan het nie.",
+  "Assignments & organisation guidance": "Toewysings en organisasie se riglyne",
+  "Current team guidance, separate from dated visit evidence. It is not a record of the guidance that existed at a past visit.": "Huidige riglyne vir die span, apart van gedateerde besoekbewyse. Dit is nie 'n rekord van die riglyne wat tydens 'n vorige besoek bestaan het nie.",
   "Service location / programme": "Dienspunt / program",
-  "Recorded guidance": "Aangetekende leiding",
-  "No guidance recorded": "Geen leiding aangeteken nie",
+  "Recorded guidance": "Aangetekende riglyne",
+  "No guidance recorded": "Geen riglyne aangeteken nie",
   // Support review
   "Support review": "Ondersteuningshersiening",
   "{visits} recorded visits reached {visited} of {assigned} currently assigned participants in this selection.": "{visits} aangetekende besoeke het {visited} van die {assigned} deelnemers wat tans in hierdie keuse toegewys is, bereik.",
-  "{unvisited} current assignments have no recorded visit in this selection. {open} actions remain open, including {due} due or overdue.": "{unvisited} huidige toewysings het geen aangetekende besoek in hierdie keuse nie. {open} aksies bly oop, waarvan {due} verskuldig of agterstallig is.",
+  "{unvisited} current assignments have no recorded visit in this selection. {open} actions remain open, including {due} due or overdue.": "{unvisited} huidige toewysings het geen aangetekende besoek in hierdie keuse nie. {open} aksies bly oop, waarvan {due} se sperdatum bereik of verby is.",
   "Service delivery, observed skills and subsequent garden outcomes are separate evidence. This report does not infer employment attendance, payroll approval or livelihood impact.": "Dienslewering, waargenome vaardighede en daaropvolgende tuinuitkomste is aparte bewyse. Hierdie verslag lei nie werksbywoning, betaalstaatgoedkeuring of impak op lewensbestaan af nie.",
   // Scope
   "Programme focus: {programme}. Prepared {today}.": "Programfokus: {programme}. Voorberei op {today}.",
@@ -90,7 +90,7 @@ const drafts: Record<string, string> = {
   "Photograph coverage: {loaded} / {recorded} recorded. Photographs are included only when loaded and explicitly selected; counts do not verify a claim.": "Fotodekking: {loaded} / {recorded} aangeteken. Foto's word slegs ingesluit wanneer dit gelaai en uitdruklik gekies is; getalle bevestig nie 'n bewering nie.",
   "loaded count unavailable": "gelaaide getal nie beskikbaar nie",
   "{n} loaded for selection": "{n} vir keuse gelaai",
-  "Training attendance, self-reported confidence and observed practical skills are separate evidence. Use the full report for saved visit details and organisation guidance.": "Opleidingsbywoning, selfgerapporteerde vertroue en waargenome praktiese vaardighede is aparte bewyse. Gebruik die volledige verslag vir gestoorde besoekbesonderhede en organisasie se leiding.",
+  "Training attendance, self-reported confidence and observed practical skills are separate evidence. Use the full report for saved visit details and organisation guidance.": "Opleidingsbywoning, selfgerapporteerde vertroue en waargenome praktiese vaardighede is aparte bewyse. Gebruik die volledige verslag vir gestoorde besoekbesonderhede en organisasie se riglyne.",
   "Source: saved records in this field-team workspace, filtered by participant and visit date. Work recorded in other systems is outside this report.": "Bron: gestoorde rekords in hierdie veldspan-werkruimte, gefiltreer volgens deelnemer en besoekdatum. Werk wat in ander stelsels aangeteken is, val buite hierdie verslag.",
   "Visit photographs are included only when loaded from their saved visit and explicitly selected. Photograph counts do not establish that a claim was verified.": "Besoekfoto's word slegs ingesluit wanneer dit vanaf hul gestoorde besoek gelaai en uitdruklik gekies is. Fotogetalle bewys nie dat 'n bewering geverifieer is nie.",
   "Photograph coverage: {loaded} / {recorded} recorded. Open the saved visits to load further photographs.": "Fotodekking: {loaded} / {recorded} aangeteken. Maak die gestoorde besoeke oop om meer foto's te laai.",
@@ -100,7 +100,7 @@ const drafts: Record<string, string> = {
   "Historical fieldwork comparison": "Historiese veldwerkvergelyking",
   "Earlier {earlierFrom} to {earlierTo}; selected {from} to {to}. Equal numbers of calendar days. Current assignments and corrected visit records apply to both periods. This is delivery coverage, not a matched outcome comparison. Open/completed action status is current and is not compared historically. Zero recorded visits does not establish no support.": "Vroeër {earlierFrom} tot {earlierTo}; gekies {from} tot {to}. Gelyke getalle kalenderdae. Huidige toewysings en reggestelde besoekrekords geld vir albei tydperke. Dit is leweringsdekking, nie 'n gepaarde uitkomsvergelyking nie. Oop/voltooide aksiestatus is huidig en word nie histories vergelyk nie. Nul aangetekende besoeke bewys nie dat daar geen ondersteuning was nie.",
   "Saved visits": "Gestoorde besoeke",
-  "Current assigned people visited": "Huidige toegewysde mense besoek",
+  "Current assigned people visited": "Huidige toegewysde mense wat besoek is",
   // Chart
   "Support delivered by recorded focus": "Ondersteuning gelewer volgens aangetekende fokus",
   "A visit can cover several focus areas. These bars must not be added as unique visits.": "'n Besoek kan verskeie fokusareas dek. Hierdie stawe mag nie as unieke besoeke bymekaargetel word nie.",
