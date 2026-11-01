@@ -402,6 +402,7 @@ test('invoice page ui(): regional languages read the English-keyed lookup, Engli
   assert.doesNotMatch(INVOICE_PAGE, /recordQuantityLabel\(/, 'the recorded-sale picker must not bypass the unit-word lookup');
   assert.match(INVOICE_PAGE, /data-records-draft-notice=\{lang\}/);
   assert.match(INVOICE_PAGE, /The invoice a buyer receives \(print and PDF\) stays in English\./);
+  assert.match(INVOICE_PAGE, /lang === 'xh' \? ' The invoice a buyer receives \(print and PDF\) uses the isiXhosa draft labels/, 'isiXhosa invoices use DOCUMENT_COPY.xh, so the note must not claim English');
 });
 
 test('the price-guide sentences keep their rand figure and date when drafted', () => {

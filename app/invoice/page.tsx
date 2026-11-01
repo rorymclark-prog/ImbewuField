@@ -818,7 +818,7 @@ export default function InvoicePage() {
 
             {isRecordsRegionalLang(lang) && (
               <p role="note" lang="en" data-records-draft-notice={lang} className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>
-                {recordsDraftNotice(lang)} The invoice a buyer receives (print and PDF) stays in English.
+                {recordsDraftNotice(lang)}{lang === 'xh' ? ' The invoice a buyer receives (print and PDF) uses the isiXhosa draft labels; names, amounts and banking details stay as typed.' : ' The invoice a buyer receives (print and PDF) stays in English.'}
               </p>
             )}
 
