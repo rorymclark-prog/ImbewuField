@@ -17,6 +17,7 @@ import TabBar from '@/components/TabBar';
 import type { Profile } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
 import AppHeader from '@/components/layout/AppHeader';
+import XhosaDraftNote from '@/components/XhosaDraftNote';
 import motion from './ContactMotion.module.css';
 
 interface ContactReply {
@@ -180,6 +181,7 @@ export default function ContactPage() {
         title={ui('Contact', 'Xhumana')}
         right={<LessonLink id="contact:overview" label={ui('Learn', 'Funda')} />}
       />
+      <XhosaDraftNote scope="contact" />
 
       {/* Content */}
       <main

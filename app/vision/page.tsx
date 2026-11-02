@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { Camera, Loader2, Leaf, Scale, ChevronRight } from 'lucide-react';
 import AppHeader from '@/components/layout/AppHeader';
+import XhosaDraftNote from '@/components/XhosaDraftNote';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import { paidApiHeaders } from '@/lib/api-client-auth';
@@ -226,6 +227,7 @@ export default function VisionPage() {
         title="Lima Vision"
         right={<LessonLink id="vision:overview" label={t('Learn', 'Funda')} />}
       />
+      <XhosaDraftNote scope="vision" />
 
       {/* ── Scrollable body ── */}
       <main className="flex-1 overflow-y-auto">

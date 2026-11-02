@@ -8,6 +8,7 @@
 import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type Dispatch, type SetStateAction } from 'react';
 import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
+import XhosaDraftNote from '@/components/XhosaDraftNote';
 import FieldBlocksPanel from '@/components/design/FieldBlocksPanel';
 import { configureFieldBlock, reconcileFieldBlockEdit } from '@/lib/bed-block';
 import { loadCropPlan } from '@/lib/crop-plan';
@@ -515,6 +516,7 @@ function EmptyState() {
     <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column', background: 'var(--bg-0)' }}>
     {/* w20-23: the shared AppHeader replaces the picker's own Compass-and-title header. */}
     <AppHeader title={isZulu ? 'Isitudiyo Sokuklama' : inlineText(lang, 'Design Studio')} backFallback="/home" />
+    <XhosaDraftNote scope="design" />
     <div
       style={{
         flex: 1,

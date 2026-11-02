@@ -23,8 +23,8 @@ const files: Record<string, Row> = {
   'app/student/page.tsx': {
     beforePath: 'tests/fixtures/student-page-before-xh-studies.tsx.txt',
     beforeSha256: 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272',
-    afterSha256: 'd5cdf42e6773cb7d95ed2549a061987ba79a5d59bb4867bd12ef8c9adaf040bf',
-    afterBytes: 89785,
+    afterSha256: '03162b1540ea9cb2c4870799d6afd8c5ab1325b3de7a7bcd30478c154329be16',
+    afterBytes: 89999,
     // Present in the wave 17 file, absent from the isiXhosa one.
     gone: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts']);", "{regionalDraft && lang !== 've' && <div role=\"status\"", '<strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span>'],
     // Absent from the wave 17 file, present in the isiXhosa one.

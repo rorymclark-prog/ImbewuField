@@ -49,6 +49,7 @@ import FieldDataStatus from '@/components/FieldDataStatus';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
 import type { UserRole } from '@/lib/db/types';
 import AppHeader from '@/components/layout/AppHeader';
+import XhosaDraftNote from '@/components/XhosaDraftNote';
 import TabBar from '@/components/TabBar';
 import {
   attentionFlags,
@@ -249,6 +250,7 @@ export default function NetworkPage() {
           </>
         }
       />
+      <XhosaDraftNote scope="network" />
       {/* nav-17: AppHeader's title is a <span>; keep a real h1 for the page since the old
           header's h1 is gone. The stat strip right below already repeats "Sites" etc, so this
           stays visually quiet (matches the previous text-xs treatment). */}

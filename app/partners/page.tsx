@@ -6,6 +6,7 @@ import {
 import BackButton from '@/components/BackButton';
 import Screenshot, { QrCode } from '@/components/partners/Screenshot';
 import T from '@/components/InlineText';
+import XhosaDraftNote from '@/components/XhosaDraftNote';
 
 // Public showcase page for NGOs and funders — "the place an organisation lands to see what the
 // app does and get it onto phones" (Rory, briefing this page). Deliberately outside the signed-in
@@ -174,6 +175,8 @@ export default function PartnersPage() {
           <T en="Get the app" />
         </a>
       </div>
+
+      <XhosaDraftNote scope="partners" className="px-5 sm:px-8 pt-2" />
 
       <main className="flex-1 overflow-y-auto">
         {/* ── Hero ─────────────────────────────────────────────────────────── */}

@@ -2208,19 +2208,19 @@ function FacilitatorCropsPageInner() {
         {!canvasSite && myDesignsList && myDesignsList.length > 0 ? (
           <button
             onClick={() => setSwitchingSite(true)}
-            className="flex-shrink-0 flex items-center gap-1.5 min-w-0"
+            className="flex items-center gap-1.5 min-w-0 max-w-full md:flex-shrink-0"
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left' }}
           >
             <div className="flex flex-col min-w-0">
-              <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
-              <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>{designTitle}</span>
+              <span className="font-display font-semibold truncate" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
+              <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 'min(220px, 100%)' }}>{designTitle}</span>
             </div>
             <ChevronDown size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
           </button>
         ) : (
-          <div className="flex flex-col min-w-0 flex-shrink-0">
-            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
-            <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>
+          <div className="flex flex-col min-w-0 max-w-full md:flex-shrink-0">
+            <span className="font-display font-semibold truncate" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
+            <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 'min(220px, 100%)' }}>
               {canvasSite ? cropUi(lang, 'Plants and housing from your map', 'Izitshalo nezindlu zezilwane ezisemephini yakho') : designTitle}
             </span>
           </div>

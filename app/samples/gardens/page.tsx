@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import AppHeader from '@/components/layout/AppHeader';
+import XhosaDraftNote from '@/components/XhosaDraftNote';
 import TabBar from '@/components/TabBar';
 import SampleGardenVisual from '@/components/SampleGardenVisual';
 import ReportComposer from '@/components/ReportComposer';
@@ -37,7 +38,7 @@ export default function SampleGardensPage() {
   useEffect(() => { const id = new URLSearchParams(window.location.search).get('garden'); if (id && SAMPLE_GARDENS.some(g => g.id === id)) setSelected(id); }, []);
   useEffect(()=>{if(selected)detail.current?.scrollIntoView({block:'start',behavior:'auto'});},[selected]);
   return <main className={styles.page} style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', paddingBottom: 0 }}>
-    <AppHeader backFallback="/samples" title={ui('Gardens','Izingadi')} /><div className={styles.content} style={{ flex: 1, overflowY: 'auto', paddingBottom: 'calc(max(180px, var(--lima-fab-clearance, 180px)) + var(--bottom-nav-height, 0px) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
+    <AppHeader backFallback="/samples" title={ui('Gardens','Izingadi')} /><XhosaDraftNote scope="sample-gardens" /><div className={styles.content} style={{ flex: 1, overflowY: 'auto', paddingBottom: 'calc(max(180px, var(--lima-fab-clearance, 180px)) + var(--bottom-nav-height, 0px) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
     <h1>{SAMPLE_GARDENS.length} {ui('gardens','izingadi')}</h1><p>{ui('Choose a garden to explore its layout, people and report.','Khetha ingadi ukuze uhlole ukuhleleka kwayo, abantu nombiko.')}</p>
     {garden&&<section ref={detail} className={styles.card} aria-label={ui('Selected garden','Ingadi ekhethiwe')}>
       <div className={styles.actions}><button onClick={()=>setSelected(null)}>← {ui('All gardens','Zonke izingadi')}</button><label>{ui('Change garden','Shintsha ingadi')}<select value={garden.id} onChange={e=>setSelected(e.target.value)}>{SAMPLE_GARDENS.map(g=><option key={g.id} value={g.id}>{g.name}</option>)}</select></label></div>

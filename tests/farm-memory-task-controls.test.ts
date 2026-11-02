@@ -11,13 +11,16 @@ import type { BoardTask } from '../lib/task-board.ts';
 import { inlineDraft, inlineText, inlineTemplate, isInlineDraftLang, registerInlineDrafts, registerXhInline } from '../lib/xh-inline.ts';
 import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index.ts';
 import { AF_INLINE_SOURCE } from '../lib/locales/af-inline/index.ts';
+import { ACTION_SOURCE_VERB, taskTitleXh, taskSubtitleXh } from '../lib/task-title-draft.ts';
 
 const require = createRequire(import.meta.url);
 const source = readFileSync(new URL('../app/cropplan/page.tsx', import.meta.url), 'utf8');
 const tree = ts.createSourceFile('page.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 const taskList = tree.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'TaskList');
 assert.ok(taskList, 'exercise the real planner controls rather than copies of their labels');
-const helperNames = new Set(['ACTION_DRAFT_VERB', 'ACTION_SOURCE_VERB', 'taskTitleDraft', 'taskSubtitleDraft', 'ACTION_XH_VERB', 'ACTION_AF_VERB', 'taskTitleXh', 'taskSubtitleXh']);
+// The isiXhosa task-line helpers (ACTION_SOURCE_VERB, taskTitleXh, taskSubtitleXh) moved to lib/task-title-draft.ts so Home
+// can share them; the page imports them and this test injects the same real module functions.
+const helperNames = new Set(['ACTION_DRAFT_VERB', 'taskTitleDraft', 'taskSubtitleDraft']);
 const helpers = tree.statements.filter(node =>
   (ts.isFunctionDeclaration(node) && helperNames.has(node.name?.text ?? '')) ||
   (ts.isVariableStatement(node) && node.declarationList.declarations.some(declaration => helperNames.has(declaration.name.getText(tree)))),
@@ -26,9 +29,9 @@ const code = ts.transpileModule([...helpers, taskList.getText(tree)].join('\n'),
   jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022,
 } }).outputText;
 const Icon = () => null;
-const buildTaskList = (IsiZuluDraftSource: React.ComponentType<any>) => new Function('require', 'exports', 'workspace', 'actionMeta', 'taskJournalHref', 'taskHarvestHref', 'farmMemoryText', 'inlineText', 'inlineTemplate', 'isInlineDraftLang', 'IsiZuluDraftSource', 'Link', 'CheckCircle2', 'Circle', 'ClipboardList', 'Scissors', `${code}; return TaskList;`)(
+const buildTaskList = (IsiZuluDraftSource: React.ComponentType<any>) => new Function('require', 'exports', 'workspace', 'actionMeta', 'taskJournalHref', 'taskHarvestHref', 'farmMemoryText', 'inlineText', 'inlineTemplate', 'isInlineDraftLang', 'ACTION_SOURCE_VERB', 'taskTitleXh', 'taskSubtitleXh', 'IsiZuluDraftSource', 'Link', 'CheckCircle2', 'Circle', 'ClipboardList', 'Scissors', `${code}; return TaskList;`)(
   require, {}, { cards: 'cards' }, () => ({ Icon, color: '#123456' }), taskJournalHref, taskHarvestHref,
-  farmMemoryText, inlineText, inlineTemplate, isInlineDraftLang, IsiZuluDraftSource,
+  farmMemoryText, inlineText, inlineTemplate, isInlineDraftLang, ACTION_SOURCE_VERB, taskTitleXh, taskSubtitleXh, IsiZuluDraftSource,
   ({ children, ...props }: any) => React.createElement('a', props, children), Icon, Icon, Icon, Icon,
 ) as React.ComponentType<any>;
 const TaskList = buildTaskList(({ english }: { english: string }) => React.createElement('span', null, english));
@@ -81,7 +84,8 @@ test('isiXhosa task links read the Farm memory drafts, the task lines carry isiX
     assert.equal(byEnglish.get('Harvest Onions')!.xhosa, 'Vuna Amatswele');
     assert.equal(byEnglish.get('Prep bed for Butternut')!.xhosa, 'Lungisa umbhede: Butternut', 'a crop with no recorded draft keeps its name as recorded');
     assert.equal(byEnglish.get('Transplant Tomatoes')!.xhosa, 'Tyala izithole: Iitumato');
-    assert.match(String(byEnglish.get('Bed 3 · Due in 3 months')!.xhosa), /^Bed 3 · /);
+    assert.equal(byEnglish.get('Bed 3 · Due in 3 months')!.xhosa, 'Umbhede 3 · Kufuneka kwenziwe kwiinyanga ezi-3', 'the default bed label and due phrase are both isiXhosa');
+    assert.equal(byEnglish.get('Bed 1 · Due this month')!.xhosa, 'Umbhede 1 · Kufuneka kwenziwe kule nyanga');
     // The page-level note says "unreviewed drafts with English sources" once; the per-line label is not repeated.
     assert.ok(seen.length >= 6);
     for (const props of seen) assert.equal(props.draftLabel, false, 'no per-row draft label for isiXhosa');
@@ -156,12 +160,62 @@ test('Afrikaans task links read the Farm memory drafts, the task lines carry Afr
     assert.equal(byEnglish.get('Harvest Onions')!.xhosa, 'Oes Uie');
     assert.equal(byEnglish.get('Prep bed for Butternut')!.xhosa, 'Berei bedding voor vir Butternut', 'a crop with no recorded draft keeps its name as recorded');
     assert.equal(byEnglish.get('Transplant Tomatoes')!.xhosa, 'Verplant Tamaties');
-    assert.equal(byEnglish.get('Bed 1 · Due this month')!.xhosa, 'Bed 1 · Hierdie maand te doen');
-    assert.equal(byEnglish.get('Bed 3 · Due in 3 months')!.xhosa, 'Bed 3 · Oor 3 maande te doen');
+    assert.equal(byEnglish.get('Bed 1 · Due this month')!.xhosa, 'Bedding 1 · Hierdie maand te doen', 'the default bed label and due phrase are both Afrikaans');
+    assert.equal(byEnglish.get('Bed 3 · Due in 3 months')!.xhosa, 'Bedding 3 · Oor 3 maande te doen');
     // The page-level note says "unreviewed drafts with English sources" once; the per-line label is not repeated.
     assert.ok(seen.length >= 6);
     for (const props of seen) assert.equal(props.draftLabel, false, 'no per-row draft label for Afrikaans');
   } finally { registerInlineDrafts('af', {}); await act(async () => renderer?.unmount()); }
   // Until the Afrikaans chunk loads the lookups are English.
   assert.equal(inlineDraft('af', 'Harvest'), null);
+});
+
+test('the Home upcoming-tasks list and the planner share the isiXhosa task-line helpers; other languages and renamed beds are untouched', () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  try {
+    const home = readFileSync(new URL('../app/home/page.tsx', import.meta.url), 'utf8');
+    assert.match(home, /from '@\/lib\/task-title-draft'/);
+    assert.match(home, /taskTitleXh\(task, lang\) \?\? task\.title/);
+    assert.match(home, /taskSubtitleXh\(task, lang\) \?\? task\.subtitle/);
+    assert.match(source, /from '@\/lib\/task-title-draft'/);
+    const onions: BoardTask = { ...task, title: 'Harvest Onions', subtitle: 'Bed 1 · Due this month', action: 'harvest' };
+    assert.equal(taskTitleXh(onions, 'xh'), 'Vuna Amatswele');
+    assert.equal(taskSubtitleXh(onions, 'xh'), 'Umbhede 1 · Kufuneka kwenziwe kule nyanga');
+    assert.equal(taskSubtitleXh({ ...onions, subtitle: 'River bed · Due next month' }, 'xh'), 'River bed · Kufuneka kwenziwe kwinyanga ezayo', 'a bed the farmer named is shown as typed');
+    for (const lang of ['en', 'zu', 'st', 'ts', 've']) {
+      assert.equal(taskTitleXh(onions, lang), undefined);
+      assert.equal(taskSubtitleXh(onions, lang), undefined);
+    }
+    assert.equal(taskTitleXh({ ...onions, title: 'Vuna Amatswele' }, 'xh'), undefined, 'already-translated titles are left alone');
+    assert.equal(ACTION_SOURCE_VERB.harvest, 'Harvest');
+  } finally { registerXhInline({}); }
+});
+
+test('the Home upcoming-tasks list and the planner share the Afrikaans task-line helpers; other languages and renamed beds are untouched', () => {
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  try {
+    const onions: BoardTask = { ...task, title: 'Harvest Onions', subtitle: 'Bed 1 · Due this month', action: 'harvest' };
+    assert.equal(taskTitleXh(onions, 'af'), 'Oes Uie');
+    assert.equal(taskSubtitleXh(onions, 'af'), 'Bedding 1 · Hierdie maand te doen', 'the default bed label and due phrase are both Afrikaans');
+    assert.equal(taskSubtitleXh({ ...onions, subtitle: 'Bed 3 · Due in 3 months' }, 'af'), 'Bedding 3 · Oor 3 maande te doen');
+    assert.equal(taskSubtitleXh({ ...onions, subtitle: 'River bed · Due next month' }, 'af'), 'River bed · Volgende maand te doen', 'a bed the farmer named is shown as typed');
+    for (const [action, title, expected] of [
+      ['prep', 'Prep bed for Butternut', 'Berei bedding voor vir Butternut'],
+      ['sow', 'Sow Onions', 'Saai Uie'],
+      ['transplant', 'Transplant Tomatoes', 'Verplant Tamaties'],
+      ['weed-mid', 'Weed & check on Onions', 'Skoffel en kyk na Uie'],
+    ] as const) assert.equal(taskTitleXh({ ...onions, action, title }, 'af'), expected);
+    for (const lang of ['en', 'zu', 'st', 'ts', 've']) {
+      assert.equal(taskTitleXh(onions, lang), undefined);
+      assert.equal(taskSubtitleXh(onions, lang), undefined);
+    }
+    assert.equal(taskTitleXh({ ...onions, title: 'Oes Uie' }, 'af'), undefined, 'already-translated titles are left alone');
+    assert.equal(taskTitleXh({ ...onions, kind: 'survey' }, 'af'), undefined, 'only generated crop tasks are rewritten');
+    // isiXhosa is exactly as before: a separate verb table.
+    registerXhInline(XH_INLINE_SOURCE);
+    assert.equal(taskTitleXh(onions, 'xh'), 'Vuna Amatswele');
+    // Both pages read the one shared module; the page no longer carries its own Afrikaans verb table.
+    assert.doesNotMatch(source, /ACTION_AF_VERB/);
+    assert.match(readFileSync(new URL('../lib/task-title-draft.ts', import.meta.url), 'utf8'), /const ACTION_AF_VERB/);
+  } finally { registerInlineDrafts('af', {}); registerXhInline({}); }
 });

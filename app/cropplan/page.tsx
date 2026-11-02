@@ -21,6 +21,7 @@ import MenuButton from '@/components/MenuButton';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import { recordsBookMonthShort } from '@/lib/records-months';
+import { ACTION_SOURCE_VERB, taskTitleXh, taskSubtitleXh } from '@/lib/task-title-draft';
 import { CROP_PLAN_MONTH_FOCUS_HOLD_MONTHS, CROP_PLAN_MONTH_FOCUS_ZU } from '@/lib/calendar-zu-draft';
 import {
   TASK_BOARD_CHANGED_EVENTS, loadCropBoardYear,
@@ -81,16 +82,6 @@ const ACTION_DRAFT_VERB: Partial<Record<NonNullable<BoardTask['action']>, string
   'weed-early': 'Hlakula eduze kwe-',
   'weed-mid': 'Hlakula futhi uhlole i-',
 };
-const ACTION_SOURCE_VERB: Partial<Record<NonNullable<BoardTask['action']>, string>> = {
-  prep: 'Prep bed for',
-  sow: 'Sow',
-  transplant: 'Transplant',
-  mulch: 'Water in & mulch',
-  harvest: 'Harvest',
-  'terminate-cover': 'Cut or roll down',
-  'weed-early': 'Weed around',
-  'weed-mid': 'Weed & check on',
-};
 
 function taskTitleDraft(task: BoardTask): string | null {
   if (task.kind !== 'crop' || !task.action) return null;
@@ -116,56 +107,6 @@ function taskSubtitleDraft(task: BoardTask): string | null {
         ? `Kumele kwenziwe ezinyangeni ezingu-${dueSource.match(/^Due in (\d+) months$/)?.[1]}`
         : null;
   return dueDraft ? `${bedLabel}${separator}${dueDraft}` : null;
-}
-
-// isiXhosa for the same task lines. A local table, not shard entries: the English verbs are bare words
-// ('Sow', 'Harvest') that other screens use as nouns, and the shard is keyed by English alone.
-const ACTION_XH_VERB: Partial<Record<NonNullable<BoardTask['action']>, string>> = {
-  prep: 'Lungisa umbhede:',
-  sow: 'Tyala',
-  transplant: 'Tyala izithole:',
-  mulch: 'Nisela uze ugqume ngengca:',
-  harvest: 'Vuna',
-  'terminate-cover': 'Sika okanye jikelisa phantsi:',
-  'weed-early': 'Sula ukhula ejikeleze:',
-  'weed-mid': 'Sula ukhula uze ukhangele:',
-};
-
-// Afrikaans for the same task titles: the same verbs as the dictionary's taskVerb* lines (lib/locales/af.ts), as a
-// prefix so the crop name can go through the inline drafts ('Harvest Onions' reads 'Oes Uie').
-const ACTION_AF_VERB: Partial<Record<NonNullable<BoardTask['action']>, string>> = {
-  prep: 'Berei bedding voor vir',
-  sow: 'Saai',
-  transplant: 'Verplant',
-  mulch: 'Gee water en deklaag:',
-  harvest: 'Oes',
-  'terminate-cover': 'Sny of rol plat:',
-  'weed-early': 'Skoffel rondom',
-  'weed-mid': 'Skoffel en kyk na',
-};
-
-// The task title in the isiXhosa or Afrikaans draft (the name predates Afrikaans), or undefined to show the isiZulu / English path.
-function taskTitleXh(task: BoardTask, lang: string): string | undefined {
-  if ((lang !== 'xh' && lang !== 'af') || task.kind !== 'crop' || !task.action) return undefined;
-  const verb = (lang === 'af' ? ACTION_AF_VERB : ACTION_XH_VERB)[task.action];
-  const sourceVerb = ACTION_SOURCE_VERB[task.action];
-  if (!verb || !sourceVerb || !task.title.startsWith(sourceVerb)) return undefined;
-  const cropName = task.title.slice(sourceVerb.length).trim();
-  return `${verb} ${inlineText(lang, cropName)}`;
-}
-
-function taskSubtitleXh(task: BoardTask, lang: string): string | undefined {
-  if (!isInlineDraftLang(lang) || task.kind !== 'crop') return undefined;
-  const separator = ' · ';
-  const splitAt = task.subtitle.lastIndexOf(separator);
-  if (splitAt < 0) return undefined;
-  const bedLabel = task.subtitle.slice(0, splitAt);
-  const dueSource = task.subtitle.slice(splitAt + separator.length);
-  const months = dueSource.match(/^Due in (\d+) months$/);
-  const due = dueSource === 'Due this month' || dueSource === 'Due next month'
-    ? inlineText(lang, dueSource)
-    : months ? inlineTemplate(lang, 'Due in {n} months', null, { n: months[1] }) : null;
-  return due && due !== dueSource ? `${bedLabel}${separator}${due}` : undefined;
 }
 
 function CropPlanDraftSource({ lang, english, zulu, heldForReview = false, className = '', style }: {
@@ -360,6 +301,9 @@ export default function CropPlanPage() {
   const season = saSeason(cursorMonth);
   const seasonLabel = ui(season.name, ({ Spring: 'Intwasahlobo', Summer: 'Ihlobo', Autumn: 'Ikwindla', Winter: 'Ubusika' } as Record<string, string>)[season.name]);
   const monthName = monthNames[cursorMonth - 1];
+  // isiXhosa and Afrikaans counts and messages name the month once, in that language: the heading above already
+  // shows the draft / English pair, and "UNOVEMBA / NOVEMBER: 3 jobs" repeats the English month in a sentence.
+  const monthNameXh = (index: number) => inlineText(lang, MONTHS[index]);
   const away = monthsUntil(cursorMonth, todayMonth);
 
   function stepMonth(dir: number) { setCursorMonth((m) => wrapMonth(m + dir)); }
@@ -510,7 +454,7 @@ export default function CropPlanPage() {
                   const n = countFor(m);
                   return (
                     <button key={label} onClick={() => setCursorMonth(m)}
-                      aria-label={isInlineDraftLang(lang) ? inlineTemplate(lang, n === 1 ? '{month} — {n} job' : '{month} — {n} jobs', null, { month: monthNames[i], n }) : `${monthNames[i]} — ${n} ${ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')}`}
+                      aria-label={isInlineDraftLang(lang) ? inlineTemplate(lang, n === 1 ? '{month} — {n} job' : '{month} — {n} jobs', null, { month: monthNameXh(i), n }) : `${monthNames[i]} — ${n} ${ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')}`}
                       aria-current={on ? 'true' : undefined}
                       className="rounded-lg py-1.5 flex flex-col items-center justify-center"
                       style={{
@@ -527,7 +471,7 @@ export default function CropPlanPage() {
 
               <div className="flex items-center gap-2 mb-3 flex-wrap">
                 <span className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
-                  {isInlineDraftLang(lang) ? inlineTemplate(lang, monthTasks.length === 1 ? '{n} job in {month}' : '{n} jobs in {month}', null, { n: monthTasks.length, month: monthName }) : <>{monthTasks.length} {ui(monthTasks.length === 1 ? 'job' : 'jobs', monthTasks.length === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('in', 'ku')} {monthName}</>}
+                  {isInlineDraftLang(lang) ? inlineTemplate(lang, monthTasks.length === 1 ? '{n} job in {month}' : '{n} jobs in {month}', null, { n: monthTasks.length, month: monthNameXh(cursorMonth - 1) }) : <>{monthTasks.length} {ui(monthTasks.length === 1 ? 'job' : 'jobs', monthTasks.length === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('in', 'ku')} {monthName}</>}
                 </span>
                 {/* Describes the MONTH you are browsing, never the jobs in it — a job
                     carries its own "Due in N months" line, and a picking that lands in
@@ -542,7 +486,7 @@ export default function CropPlanPage() {
               <TaskList
                 tasks={monthTasks}
                 onToggle={toggleTask}
-                emptyMessage={lang === 'zu' ? `Akukho msebenzi ohlelweni lwezitshalo ngo-${monthName}.` : isInlineDraftLang(lang) ? inlineTemplate(lang, 'Nothing due from your crop plan in {month}.', null, { month: monthName }) : `Nothing due from your crop plan in ${monthName}.`}
+                emptyMessage={lang === 'zu' ? `Akukho msebenzi ohlelweni lwezitshalo ngo-${monthName}.` : isInlineDraftLang(lang) ? inlineTemplate(lang, 'Nothing due from your crop plan in {month}.', null, { month: monthNameXh(cursorMonth - 1) }) : `Nothing due from your crop plan in ${monthName}.`}
                 doneLabel={ui('Mark done', 'Maka njengokwenziwe')}
                 notDoneLabel={ui('Mark not done', 'Susa uphawu lokwenziwe')}
                 lang={lang}

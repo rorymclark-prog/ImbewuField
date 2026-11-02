@@ -85,7 +85,7 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
         <label>{ui('sampleProgrammeDue', 'Due')}<input type="date" value={chosen.assessment.actionDue ?? ''} onChange={e => update(changeSampleAssessment(controls, selected, { actionDue: e.target.value }))} /></label>
         <label className={styles.option}><input type="checkbox" checked={chosen.assessment.actionDone ?? false} onChange={e => update(changeSampleAssessment(controls, selected, { actionDone: e.target.checked }))} />{ui('sampleProgrammeCompleted', 'Completed')}</label><p className={styles.muted}>{ui('sampleProgrammeChangesSave', 'Changes save as you go.')}</p>
       </details>
-      {chosen.assessment.state === 'closed'  && <label className={styles.option}><input type="checkbox" checked={controls.published.includes(selected)} onChange={e => update({ ...controls, published: e.target.checked ? [...controls.published, selected] : controls.published.filter(id => id !== selected) })} />Share this summary with funders</label>}
+      {chosen.assessment.state === 'closed'  && <label className={styles.option}><input type="checkbox" checked={controls.published.includes(selected)} onChange={e => update({ ...controls, published: e.target.checked ? [...controls.published, selected] : controls.published.filter(id => id !== selected) })} />{inlineText(lang, 'Share this summary with funders')}</label>}
       <details><summary>{ui('sampleProgrammeReviewQuestions', 'Review questions')}</summary>{MEL_TEMPLATES[chosen.assessment.stage].questions.map(q => <p key={q.id}>{zu ? q.zu : q.en}</p>)}</details>
       {notice && <p role="status">{notice}</p>}
     </article>

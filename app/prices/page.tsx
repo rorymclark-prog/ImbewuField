@@ -16,6 +16,7 @@ import { loadCropPriceOverrides, type CropPrice } from '@/lib/crop-prices';
 import { loadCropPlan } from '@/lib/crop-plan';
 import { getCropArt } from '@/lib/crop-art';
 import { translate, useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useAppLevel } from '@/lib/app-level';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 
@@ -91,7 +92,10 @@ export default function PricesPage() {
         <div className={workspace.priceWorkspace}>
           <div className={selected ? workspace.pricePickerActive : undefined}>
             <p className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)', lineHeight: 1.5 }}>
-              {lang === 'zu' || lang === 'xh' || lang === 'af' ? <>{t('pricesChooseCrop')}<span className="block mt-1">{translate('en', 'pricesChooseCrop')}</span></> : t('pricesChooseCrop')}
+              {lang === 'zu' ? <>{t('pricesChooseCrop')}<span className="block mt-1">{translate('en', 'pricesChooseCrop')}</span></>
+                : (lang === 'xh' || lang === 'af') && t('pricesChooseCrop') !== translate('en', 'pricesChooseCrop')
+                  ? <>{t('pricesChooseCrop')}<span lang="en" className="block mt-1">{inlineText(lang, 'English source:')} {translate('en', 'pricesChooseCrop')}</span></>
+                  : t('pricesChooseCrop')}
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3" style={{ marginTop: 16 }}>
               {visibleCrops.map((crop) => (

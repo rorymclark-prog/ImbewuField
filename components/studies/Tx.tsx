@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment, type ImgHTMLAttributes, type ReactNode } from 'react';
-import { useLanguage } from '@/lib/i18n';
+import { useHydratedLang } from '@/lib/use-hydrated-lang';
 import { fillInline, inlineDraft, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import ArrowLabel from './ArrowLabel';
 import draftStyles from './DesignDraftCopy.module.css';
@@ -15,7 +15,7 @@ import draftStyles from './DesignDraftCopy.module.css';
  * (inside SVG text and <title>, where a span would be invalid).
  */
 export default function Tx({ en, values, lookup, plain }: { en: string; values?: Record<string, string | number>; lookup?: string[]; plain?: boolean }) {
-  const { lang } = useLanguage();
+  const lang = useHydratedLang();
   const draft = isInlineDraftLang(lang) && !plain ? inlineDraft(lang, en) : null;
   return draft ? <span lang={lang}>{render(lang, en, values, lookup)}</span> : <>{render(lang, en, values, lookup)}</>;
 }
@@ -29,14 +29,14 @@ function render(lang: string, en: string, values?: Record<string, string | numbe
 
 /** A button or link label with a trailing Lucide arrow: the words stay a plain string so ArrowLabel can keep the last word and the arrow together. */
 export function TxArrow({ en, values, lookup, dir }: { en: string; values?: Record<string, string | number>; lookup?: string[]; dir?: 'next' | 'back' | 'up' }) {
-  const { lang } = useLanguage();
+  const lang = useHydratedLang();
   return <ArrowLabel dir={dir}>{render(lang, en, values, lookup)}</ArrowLabel>;
 }
 
 /** Same lookup for a sentence with markup in it: each {name} placeholder is replaced by the given node
  *  (a <strong> with a figure, say) in the English and in the isiXhosa draft alike. */
 export function TxRich({ en, nodes }: { en: string; nodes: Record<string, ReactNode> }) {
-  const { lang } = useLanguage();
+  const lang = useHydratedLang();
   const draft = isInlineDraftLang(lang) ? inlineDraft(lang, en) : null;
   const parts = (draft ?? en).split(/(\{[a-zA-Z]+\})/);
   const body = parts.map((part, index) => {
@@ -55,7 +55,7 @@ export function XhDraftLine({ xh, en, lang = 'xh' }: { xh: string; en: string; l
 
 /** An illustration whose alt text is English course copy: isiXhosa readers get the draft for it. */
 export function TxImg({ alt, ...rest }: Omit<ImgHTMLAttributes<HTMLImageElement>, 'alt'> & { alt: string }) {
-  const { lang } = useLanguage();
+  const lang = useHydratedLang();
   // eslint-disable-next-line @next/next/no-img-element
   return <img {...rest} alt={inlineText(lang, alt)} />;
 }
