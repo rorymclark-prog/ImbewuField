@@ -131,6 +131,8 @@ and isiZulu output are unchanged.
   Xitsonga unchanged). The Layers panel layer name wraps on word boundaries and a long word drops to the panel's 12 px
   size instead of splitting. Open question: the shared "Bed {n}" draft reads "Umbhede {n}" (Home task lines, now the map)
   while the palette says "Ibhedi"; left as is because `farm-memory-task-controls` pins it.
+- **Blind review of g52 + g53 (2 Nov):** 203 strings, 7 repairs ("pollinator" had read as exploiting insects; swale
+  "level" lost; "downwind" read as "beyond the wind") — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-02b/`.
 - **Report picker (2 Nov):** the sample-mode (prepared example) language picker now offers every inline-draft
   language beside English and isiZulu, in `LANGUAGE_OPTIONS` order. `preparedSampleReport` keeps isiXhosa once its
   drafts are loaded (English otherwise, so English text is never labelled a translation); `preparedExampleNote` has an
