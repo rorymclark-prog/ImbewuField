@@ -4,7 +4,9 @@ import { createHash } from 'node:crypto';
 import test from 'node:test';
 import typescript from 'typescript';
 import { jsPDF } from 'jspdf';
-import { REPORT_SUMMARY_COPY, reportSummaryText, reportSummaryPages, sampleFullSiteReport, buildInkSummaryPdf } from '../lib/report-summary.ts';
+import { REPORT_SUMMARY_COPY, reportSummaryText, reportSummaryPages, sampleFullSiteReport, buildInkSummaryPdf, preparedSampleReport, preparedExampleNote } from '../lib/report-summary.ts';
+import { registerXhInline, inlineDraftsLoaded } from '../lib/xh-inline.ts';
+import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index.ts';
 import { registerReportPdfFont, reportPdfText } from '../lib/report-pdf-font.ts';
 import { buildBillOfQuantities } from '../lib/report-boq.ts';
 import { recordsMonthShort } from '../lib/records-months.ts';
@@ -150,4 +152,146 @@ test('the actual summary exporter passes native words and both safeguards to the
     assert.ok(written.join(' ').includes(reportSummaryText('Additional detail is in the full report.', 've')), 'overflow must be disclosed in the selected language');
     assert.ok(written.join(' ').includes('12.5 m² and 2 500 L'));
   } finally { api.events.splice(api.events.findIndex(row => row[1] === listener), 1); }
+});
+
+// ── isiXhosa in the prepared example (the sample-mode report picker) ───────────────────────────────
+const withXhosa = <T,>(run: () => T): T => { registerXhInline(XH_INLINE_SOURCE); try { return run(); } finally { registerXhInline({}); } };
+const measurements = (value: string) => (value.match(/(?:\d[\d .,]* (?:m²|mm|L)|R \d[\d .,]*)/g) ?? []).map(value => value.trim()).sort();
+
+test('isiXhosa prepared example keeps the English shape and every figure, name and amount; English and isiZulu are unchanged beside it', () => {
+  registerXhInline({});
+  const zuBefore = fixture.cases.map(row => ({ full: sampleFullSiteReport(row.facts, row.location, 'zu'), five: reportSummaryPages(row.facts, row.location, 5, 'zu') }));
+  withXhosa(() => {
+    assert.equal(inlineDraftsLoaded('xh'), true);
+    for (const [index, row] of fixture.cases.entries()) {
+      for (const count of [1, 5] as const) {
+        const native = reportSummaryPages(row.facts, row.location, count, 'xh');
+        const english = count === 1 ? row.expected.en.one : row.expected.en.five;
+        assert.equal(native.length, count);
+        assert.deepEqual(figures(JSON.stringify(native)), figures(JSON.stringify(english)), `xh/${row.name}: a source figure changed`);
+        assert.deepEqual(measurements(JSON.stringify(native)), measurements(JSON.stringify(english)), `xh/${row.name}: a measured unit or currency amount changed`);
+        for (const [at, page] of native.entries()) assert.equal(page.lines.length, english[at].lines.length, 'translation cannot drop an observation or caveat');
+        if (!row.facts) assert.ok(JSON.stringify(native).includes(reportSummaryText('Not recorded', 'xh')), 'absence must not become zero');
+      }
+      const full = sampleFullSiteReport(row.facts, row.location, 'xh');
+      const english = row.expected.en.full;
+      assert.deepEqual(figures(full), figures(english), `xh/${row.name}: sample figure changed`);
+      assert.deepEqual(measurements(full), measurements(english));
+      assert.equal(full.split('\n').length, english.split('\n').length, 'the section and bullet structure is the English one');
+      assert.equal(full.split('\n').filter(line => line.startsWith('## ')).length, english.split('\n').filter(line => line.startsWith('## ')).length);
+      for (const crop of row.facts?.crop?.crops ?? []) { assert.ok(full.includes(crop.name), 'catalogue species identities stay exact'); for (const label of crop.bedLabels) assert.ok(full.includes(label)); }
+      for (const item of row.facts?.design?.elements ?? []) assert.ok(full.includes(item.name));
+      for (const bed of row.facts?.design?.beds ?? []) assert.ok(full.includes(bed.label));
+      if (row.facts?.farmName) assert.ok(full.includes(row.facts.farmName));
+      // The headings and the fixed paragraphs read in isiXhosa, not English.
+      for (const key of ['report basis', 'Full design inventory', 'Production spaces', 'Evidence and limitations', 'Next actions and checks']) {
+        const draft = reportSummaryText(key, 'xh');
+        assert.notEqual(draft, key, `no isiXhosa draft for ${key}`);
+        assert.ok(full.includes(draft));
+      }
+      for (const key of ['This ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.',
+        'Site photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision.']) {
+        assert.notEqual(reportSummaryText(key, 'xh'), key); assert.ok(full.includes(reportSummaryText(key, 'xh')));
+      }
+      // English and isiZulu are byte-identical with the isiXhosa drafts loaded.
+      assert.equal(sampleFullSiteReport(row.facts, row.location), english);
+      assert.equal(sampleFullSiteReport(row.facts, row.location, 'zu'), zuBefore[index].full, 'isiZulu is byte-identical with the isiXhosa drafts loaded');
+      assert.deepEqual(reportSummaryPages(row.facts, row.location, 5, 'zu'), zuBefore[index].five);
+    }
+  });
+});
+
+test('every English string the prepared example emits through the summary lookup has an isiXhosa draft, including the status words, bed kinds and fallbacks', () => {
+  const keys = ['existing', 'proposed', 'mixed', 'bed', 'plot', 'report basis', 'No placed elements recorded.', 'No production spaces recorded.', ...REPORT_SUMMARY_COPY.map(row => row.english)];
+  const tree = typescript.createSourceFile('summary.ts', read('lib/report-summary.ts'), typescript.ScriptTarget.Latest, true);
+  (function visit(node: typescript.Node) {
+    if (typescript.isCallExpression(node) && typescript.isIdentifier(node.expression) && ['t', 'text', 'reportSummaryText'].includes(node.expression.text) && node.arguments[0] && typescript.isStringLiteral(node.arguments[0])) keys.push(node.arguments[0].text);
+    typescript.forEachChild(node, visit);
+  })(tree);
+  assert.ok(keys.length > 60);
+  withXhosa(() => assert.deepEqual([...new Set(keys)].filter(key => reportSummaryText(key, 'xh') === key), [], 'English would show through in the isiXhosa prepared example'));
+  // Names and amounts are never keys: only code-authored wording is looked up.
+  assert.ok(!keys.some(key => /\d/.test(key) && !/\{\w+\}/.test(key)));
+});
+
+test('before the isiXhosa drafts load, the prepared example is the English text, byte for byte', () => {
+  registerXhInline({});
+  assert.equal(inlineDraftsLoaded('xh'), false);
+  for (const row of fixture.cases) {
+    const full = sampleFullSiteReport(row.facts, row.location, 'xh');
+    const english = row.expected.en.full.split('\n'), actual = full.split('\n');
+    assert.equal(actual.length, english.length);
+    // The only lines that may differ are the ones the existing code labels as English notes for a translated language.
+    // Month words come from the calendar authority, not the drafts, so they are put back before comparing.
+    const monthsEn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const backToEnglish = (line: string) => monthsEn.reduce((text, month, at) => text.replace(new RegExp(`(?<![\\p{L}])${recordsMonthShort('xh', at + 1)}(?![\\p{L}])`, 'gu'), month), line);
+    for (const [at, line] of actual.entries()) if (backToEnglish(line) !== english[at]) assert.match(line, /English/, `unlabelled difference: ${line}`);
+  }
+  assert.equal(preparedExampleNote('xh'), preparedExampleNote('en'));
+  assert.equal(reportSummaryText('report basis', 'xh'), 'report basis');
+});
+
+test('preparedExampleNote reads in isiXhosa once its draft loads; English, isiZulu and the other languages are unchanged', () => {
+  const english = 'Prepared example of saved records. It is not a comprehensive site assessment, design report or evidence of progress. No new AI analysis.';
+  const zulu = 'Isibonelo esilungiselelwe samarekhodi agciniwe. Akusikho ukuhlolwa okuphelele kwendawo, umbiko womklamo noma ubufakazi benqubekela-phambili. Akukho ukuhlaziywa okusha kwe-AI.';
+  withXhosa(() => {
+    assert.equal(preparedExampleNote('xh'), 'Umzekelo olungiselelweyo weerekhodi ezigciniweyo. Ayingovavanyo olubanzi lwendawo, ingxelo yoyilo okanye ubungqina benkqubela. Akukho hlalutyo lutsha lwe-AI.');
+    assert.equal(preparedExampleNote('en'), english);
+    assert.equal(preparedExampleNote(), english);
+    assert.equal(preparedExampleNote('zu'), zulu);
+    for (const language of ['st', 'ts', 've', 'fr']) assert.equal(preparedExampleNote(language), english);
+  });
+  assert.equal(preparedExampleNote('xh'), english, 'English until the drafts load');
+});
+
+test('preparedSampleReport keeps isiXhosa once its drafts are loaded, and never labels English text as a translation', () => {
+  const row = fixture.cases.find(row => row.name === 'saved demo plan')!;
+  const input = (lang: string) => ({ id: `prepared-${lang}`, name: 'Example', savedAt: '2026-11-02T08:00:00.000Z', lang, location: row.location, facts: row.facts ?? undefined }) as unknown as Parameters<typeof preparedSampleReport>[0];
+  const zuReport = sampleFullSiteReport(row.facts, row.location, 'zu');
+  withXhosa(() => {
+    const xh = preparedSampleReport(input('xh'));
+    assert.equal(xh.lang, 'xh');
+    assert.equal(xh.origin, 'prepared-example');
+    assert.equal(xh.report, sampleFullSiteReport(row.facts, row.location, 'xh'));
+    assert.deepEqual(xh.analysedMapIds, []);
+    assert.equal(xh.settings, undefined);
+    assert.equal(preparedSampleReport(input('zu')).lang, 'zu');
+    assert.equal(preparedSampleReport(input('zu')).report, zuReport);
+    for (const lang of ['en', 'st', 'ts', 've', 'af', 'fr']) assert.equal(preparedSampleReport(input(lang)).lang, 'en', `${lang} stays English`);
+    assert.equal(preparedSampleReport(input('en')).report, row.expected.en.full);
+  });
+  const early = preparedSampleReport(input('xh'));
+  assert.equal(early.lang, 'en', 'drafts not loaded: English text is labelled English');
+  assert.equal(early.report, row.expected.en.full);
+});
+
+test('the sample-mode report picker offers isiXhosa and every inline-draft language, in LANGUAGE_OPTIONS order, and real reports in a draft language carry the AI notice', () => {
+  const view = read('components/ReportView.tsx');
+  assert.match(view, /LANGUAGE_OPTIONS\.filter\(l => !sampleMode \|\| l\.code === 'en' \|\| l\.code === 'zu' \|\| isInlineDraftLang\(l\.code\)\)\.map/, 'the picker is filtered, never reordered');
+  assert.match(view, /import \{[^}]*\bisInlineDraftLang\b[^}]*\} from '@\/lib\/xh-inline';/, 'the draft-language check comes from the shared helper');
+  const order = [...(/const LANGUAGE_OPTIONS = \[([\s\S]*?)\] as const;/.exec(view)![1].matchAll(/code: '(\w+)'/g))].map(match => match[1]);
+  assert.deepEqual(order, ['en', 'zu', 'xh', 'af', 'st', 'nso', 'tn', 'ts', 've', 'ss', 'nr']);
+  const notice = 'This report was written by AI in {language}. It has not been reviewed by a fluent speaker; check figures against the English source.';
+  assert.ok(view.includes(`const AI_DRAFT_LANGUAGE_NOTICE = '${notice}';`));
+  assert.match(view, /\{report && reading === 'full' && !preparedExample && isInlineDraftLang\(contentLanguage\) && <p role="note"/, 'a prepared example has its own note; a real report in a draft language carries the AI notice');
+  assert.match(view, /xhDraft\(AI_DRAFT_LANGUAGE_NOTICE\) \?\? AI_DRAFT_LANGUAGE_NOTICE/);
+  withXhosa(() => {
+    const draft = XH_INLINE_SOURCE[notice];
+    assert.ok(draft && draft !== notice);
+    assert.deepEqual(draft.match(/\{\w+\}/g), ['{language}'], 'the language name placeholder survives');
+  });
+});
+
+test('Afrikaans: the prepared example keeps af once its drafts load, its note reads in Afrikaans, and the AI-report notice has an Afrikaans draft', async () => {
+  const { registerInlineDrafts } = await import('../lib/xh-inline.ts');
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index.ts');
+  const english = preparedExampleNote('en');
+  registerInlineDrafts('af', {});
+  assert.equal(preparedExampleNote('af'), english, 'before the drafts load, Afrikaans is the English');
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  try {
+    assert.equal(preparedExampleNote('af'), "Voorbereide voorbeeld van gestoorde rekords. Dit is nie 'n volledige terreinassessering, ontwerpverslag of bewys van vordering nie. Geen nuwe AI-ontleding nie.");
+    assert.equal(preparedExampleNote('en'), english);
+    assert.ok(AF_INLINE_SOURCE['This report was written by AI in {language}. It has not been reviewed by a fluent speaker; check figures against the English source.']?.includes('{language}'));
+  } finally { registerInlineDrafts('af', {}); }
 });

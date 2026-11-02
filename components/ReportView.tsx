@@ -106,6 +106,9 @@ const LANGUAGE_OPTIONS = [
   { code: 'nr', label: 'isiNdebele' },
 ] as const;
 
+// Shown above an AI-written report in a draft language; keyed by this exact English (lib/locales/xh-inline).
+const AI_DRAFT_LANGUAGE_NOTICE = 'This report was written by AI in {language}. It has not been reviewed by a fluent speaker; check figures against the English source.';
+
 const REPORT_SIDEBAR_QUERY = '(min-width: 1100px)';
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const BIOME_COLORS: Record<string, string> = {
@@ -1063,6 +1066,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       {(isWide || viewOptionsOpen) && <p className={`${styles.languageNote} no-print`}>{tr('Screen, print and summary controls change the view or export without a new AI call.', 'Izilawuli zesikrini, zokuphrinta nezifinyezo zishintsha indlela yokubuka noma yokukhipha umbiko ngaphandle kokusebenzisa i-AI futhi.')}</p>}
       {(isWide || viewOptionsOpen) && sampleMode && <p className={`${styles.languageNote} no-print`}>{tr('Refresh updates this prepared example from saved records. It does not write new advice. Sample history clears when you restart the workspace.', 'Ukuvuselela kusebenzisa amarekhodi agciniwe kulesi sibonelo. Akubhali izeluleko ezintsha. Umlando wesibonelo uyasulwa uma uqala kabusha indawo yokusebenza.')}</p>}
       {uiLanguage !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{label('This report keeps its original {language} text. Controls use your app language. Choose a report language before generating a new version.').replace('{language}', LANGUAGE_OPTIONS.find(option => option.code === contentLanguage)?.label ?? contentLanguage)}</p>}
+      {report && reading === 'full' && !preparedExample && isInlineDraftLang(contentLanguage) && <p role="note" className={`${styles.languageNote} no-print`}>{(xhDraft(AI_DRAFT_LANGUAGE_NOTICE) ?? AI_DRAFT_LANGUAGE_NOTICE).replace('{language}', LANGUAGE_OPTIONS.find(option => option.code === contentLanguage)?.label ?? contentLanguage)}</p>}
       {sampleMode && language !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Refresh prepared example to apply this language.', 'Vuselela isibonelo esilungiselelwe ukuze usebenzise lolu limi.')}</p>}
       <div className="no-print px-3"><LanguageDraftNote lang={uiLanguage} scope="report-viewer" /></div>
       <div className="flex-1 flex overflow-hidden">
@@ -1126,7 +1130,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             className="min-h-11 w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--report-panel)]"
             style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-ink)' }}
           >
-            {LANGUAGE_OPTIONS.filter(l => !sampleMode || l.code === 'en' || l.code === 'zu').map((l) => <option key={l.code} value={l.code} lang={l.code}>{l.label}</option>)}
+            {LANGUAGE_OPTIONS.filter(l => !sampleMode || l.code === 'en' || l.code === 'zu' || isInlineDraftLang(l.code)).map((l) => <option key={l.code} value={l.code} lang={l.code}>{l.label}</option>)}
           </select>
           {!sampleMode && <>
           {language !== 'en' && (

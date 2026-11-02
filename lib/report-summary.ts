@@ -6,21 +6,24 @@ import { buildBillOfQuantities } from './report-boq';
 import { registerReportPdfFont, reportPdfText } from './report-pdf-font.ts';
 import { recordsReportMonthShort } from './records-months.ts';
 import type { BoqLine } from './report-boq';
-import { inlineDraft, inlineDraftsLoaded } from '@/lib/xh-inline';
+import { inlineDraft, inlineDraftsLoaded, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import type { SavedReport } from './saved-reports';
 
 export type ReportSummaryPage = { title: string; lines: string[] };
 
-/** A prepared example has no AI settings: those choices never produced its text. */
+/** A prepared example has no AI settings: those choices never produced its text.
+ * It is written in isiZulu, or in a draft language (isiXhosa, and any later inline-draft language) once that
+ * language's drafts are loaded; any other request, or a draft language whose drafts have not loaded, is English
+ * so fixed English text is never labelled as a translation. */
 export function preparedSampleReport(input: Omit<SavedReport, 'report' | 'origin' | 'settings' | 'analysedMapIds'>): SavedReport {
-  const lang = input.lang === 'zu' ? 'zu' : 'en';
+  const lang = input.lang === 'zu' ? 'zu' : isInlineDraftLang(input.lang) && inlineDraftsLoaded(input.lang) ? input.lang : 'en';
   return { ...input, lang, origin: 'prepared-example', report: sampleFullSiteReport(input.facts ?? null, input.location, lang), analysedMapIds: [] };
 }
 
 export function preparedExampleNote(language = 'en'): string {
   return language === 'zu'
     ? 'Isibonelo esilungiselelwe samarekhodi agciniwe. Akusikho ukuhlolwa okuphelele kwendawo, umbiko womklamo noma ubufakazi benqubekela-phambili. Akukho ukuhlaziywa okusha kwe-AI.'
-    : 'Prepared example of saved records. It is not a comprehensive site assessment, design report or evidence of progress. No new AI analysis.';
+    : inlineText(language, 'Prepared example of saved records. It is not a comprehensive site assessment, design report or evidence of progress. No new AI analysis.');
 }
 export function reportSummaryPages(facts: ReportSiteFacts | null, location: LocationData, pageCount: 1 | 5, language = 'en'): ReportSummaryPage[] {
   const t = (en: string, zulu: string) => reportSummaryText(en, language, {}, zulu);

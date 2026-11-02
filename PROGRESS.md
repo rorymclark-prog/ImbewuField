@@ -184,6 +184,9 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   English", but it uses `DOCUMENT_COPY.xh`. The note now says so (fixed on #1090).
 - **Staff and map screens:** the M&E dashboard and overview, sector overlay compass words, rainfall chart
   and photo viewer now use the Afrikaans drafts and notices that isiXhosa already had.
+- **Report language picker (2 Nov):** the prepared example now offers Afrikaans as well as English and isiZulu; its
+  note and body follow the Afrikaans drafts (`af-inline/g53-prepared-example.ts`). AI-written reports in a draft
+  language say they were written by AI and not reviewed by a fluent speaker.
 
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English
@@ -223,6 +226,12 @@ and isiZulu output are unchanged.
   `isInlineDraftLang` (new in `lib/xh-inline.ts`) so Afrikaans gets the same notices. `/invoice` was checked
   and left as it is: its draft notice is English on purpose and the paid / unpaid instruction deliberately
   keeps the English beside the draft.
+- **Report picker (2 Nov):** the sample-mode (prepared example) language picker now offers every inline-draft
+  language beside English and isiZulu, in `LANGUAGE_OPTIONS` order. `preparedSampleReport` keeps isiXhosa once its
+  drafts are loaded (English otherwise, so English text is never labelled a translation); `preparedExampleNote` has an
+  isiXhosa draft (`xh-inline/g51-prepared-example.ts`); a real AI-written report in a draft language shows a short
+  "written by AI ... not reviewed by a fluent speaker" notice. English, isiZulu, Sesotho, Xitsonga and Tshivenda output
+  is unchanged; Afrikaans follows by adding `af` to `INLINE_DRAFT_LANGS` with its drafts.
 - **Blind review of the 1 Nov drafts:** 435 strings, 11 repairs ("Berm" had read as a gun; "drawn" as
   "counted") — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-01/`.
 - **Crops and production:**
