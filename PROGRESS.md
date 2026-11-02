@@ -103,6 +103,12 @@ and isiZulu output are unchanged.
   `isInlineDraftLang` (new in `lib/xh-inline.ts`) so Afrikaans gets the same notices. `/invoice` was checked
   and left as it is: its draft notice is English on purpose and the paid / unpaid instruction deliberately
   keeps the English beside the draft.
+- **Report picker (2 Nov):** the sample-mode (prepared example) language picker now offers every inline-draft
+  language beside English and isiZulu, in `LANGUAGE_OPTIONS` order. `preparedSampleReport` keeps isiXhosa once its
+  drafts are loaded (English otherwise, so English text is never labelled a translation); `preparedExampleNote` has an
+  isiXhosa draft (`xh-inline/g51-prepared-example.ts`); a real AI-written report in a draft language shows a short
+  "written by AI ... not reviewed by a fluent speaker" notice. English, isiZulu, Sesotho, Xitsonga and Tshivenda output
+  is unchanged; Afrikaans follows by adding `af` to `INLINE_DRAFT_LANGS` with its drafts.
 - **Blind review of the 1 Nov drafts:** 435 strings, 11 repairs ("Berm" had read as a gun; "drawn" as
   "counted") — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-01/`.
 - **Crops and production:**
