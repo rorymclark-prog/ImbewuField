@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
+  "Explore international reference drafts; local farming advice remains unavailable.": "Hlahloba meralo ya mehlodi ya dinaha; keletso ya temo ya lehae ha e eso fumanehe.",
+  "Review international references": "Hlahloba mehlodi ya dinaha",
+  "International foundation": "Motheo wa dinaha",
+  "Compare country evidence, language drafts and fictional project examples.": "Bapisa bopaki ba dinaha, meralo ya dipuo le mehlala ya diprojeke e iqapetsweng.",
   // Nursery: docs/audits/2026-11-01/nursery-release-drafts.json; unreviewed.
   "Plan seedlings, trays and nursery space with your own equipment and estimates.": "Rala dipeo tse melang, diterei le sebaka sa sebaka sa ho hodisa dimela ho ya ka moralo wa dijalo, o sebedisa thepa le dikgakanyo tsa hao.",
   "Check nursery space": "Hlahloba sebaka sa ho hodisa dimela",

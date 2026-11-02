@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
+  "Explore international reference drafts; local farming advice remains unavailable.": "Ṱolani mvetamveto dza zwiko zwa mashango; nyeletshedzo ya vhulimi ya henefho a i athu u vha hone.",
+  "Review international references": "Ṱolani zwiko zwa mashango",
+  "International foundation": "Mutheo wa mashango",
+  "Compare country evidence, language drafts and fictional project examples.": "Vhambedzani vhuṱanzi ha mashango, mvetamveto dza nyambo na tsumbo dza thandela dzo tou humbulelwaho.",
   // Nursery: docs/audits/2026-11-01/nursery-release-drafts.json; unreviewed.
   "Plan seedlings, trays and nursery space with your own equipment and estimates.": "Pulanani zwiraba, thireyi na tshikhala tsha nesari u bva kha pulane ya zwiliṅwa ni tshi shumisa zwishumiswa na nyelekanyo dzaṋu.",
   "Check nursery space": "Ṱolani tshikhala tsha nesari",
