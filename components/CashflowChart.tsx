@@ -116,7 +116,7 @@ export default function CashflowChart({
           ))}
         </div>
       </div>
-      <IsiZuluDraftSource className="text-xs font-sans mt-1" style={{ color: FAINT }} lang={lang}
+      <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="text-xs font-sans mt-1" style={{ color: FAINT }} lang={lang}
         english="Money in against money out, month by month, from what you have recorded."
         zulu="Imali engenayo iqhathaniswa nemali ephumayo, inyanga ngayinye, ngokwalokho okurekhodile." />
     </div>
@@ -139,7 +139,7 @@ export default function CashflowChart({
           <p className="font-display font-semibold" style={{ fontSize: 13.5, color: INK }}>
             {series.earlierRecords ? text('Nothing recorded in these months', 'Akukho okurekhodiwe kulezi zinyanga') : text('No money recorded yet', 'Ayikho imali erekhodiwe okwamanje')}
           </p>
-          <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
+          <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
             template={series.earlierRecords ? 'Your records start in {month}. Try a longer window above to reach them.' : undefined}
             vars={{ month: series.firstRecordMonth && series.firstRecordYear ? recordsMonthYear(lang, series.firstRecordMonth, series.firstRecordYear) : '' }}
             english={series.earlierRecords
@@ -171,7 +171,7 @@ export default function CashflowChart({
         />
       </div>
 
-      <IsiZuluDraftSource className="px-4 pb-3 font-sans" style={{ fontSize: 14, color: MUTED }} lang={lang}
+      <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="px-4 pb-3 font-sans" style={{ fontSize: 14, color: MUTED }} lang={lang}
         english="Money received minus recorded spending for these months. Unrecorded costs are not included."
         zulu="Imali engenile kususwe imali esetshenzisiwe erekhodiwe kulezi zinyanga. Izindleko ezingarekhodiwe azifakiwe." />
 
@@ -182,10 +182,10 @@ export default function CashflowChart({
       <ClipNote months={series.months} lang={lang} />
 
       <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: 'var(--bg-2)' }}>
-        <IsiZuluDraftSource className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+        <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
           english="The lower band is the running total across these months only, starting from zero — not a bank balance."
           zulu="Ibhendi engezansi ibonisa isamba esiqhubekayo salezi zinyanga kuphela, siqala kuziro — akusona isaldo yasebhange." />
-        <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+        <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
           english="Entries land in the month you recorded them. There is no date field on the logging forms yet, so a month you caught up on later will sit in the month you typed it."
           zulu="Okufakile kubalwa enyangeni owakurekhoda ngayo. Amafomu awanayo inkambu yosuku okwamanje, ngakho amarekhodi owagcwalisa kamuva azobonakala enyangeni owawabhala ngayo." />
       </div>
@@ -373,7 +373,7 @@ function ClipNote({ months, lang }: { months: FinanceMonthPoint[]; lang: string 
     <div className="px-4 py-2" style={{ borderTop: '1px solid var(--border)' }}>
       <div className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
         {lang === 'zu' || isRecordsRegionalLang(lang) ? (
-          <IsiZuluDraftSource lang={lang} zulu={`Amanani aphezulu kunendawo yawo eshadini anqanyulwe ophawini ukuze ezinye izinyanga zihlale zibonakala: ${cutZulu.join('; ')}.`}
+          <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} lang={lang} zulu={`Amanani aphezulu kunendawo yawo eshadini anqanyulwe ophawini ukuze ezinye izinyanga zihlale zibonakala: ${cutZulu.join('; ')}.`}
             template="Too tall for this chart, and cut off at the mark so the other months stay readable: {list}."
             vars={{ list: cutLocal.join('; ') }}
             english={`Too tall for this chart, and cut off at the mark so the other months stay readable: ${cutEnglish.join('; ')}.`} />

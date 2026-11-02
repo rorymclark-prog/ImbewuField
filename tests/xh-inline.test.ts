@@ -696,3 +696,14 @@ test('g53: the Layers panel layer name wraps on word boundaries and never switch
   assert.doesNotMatch(helper![0], /anywhere/);
   assert.equal([...palette.matchAll(/style=\{layerNameStyle\(t\(lt\.labelKey\), cardsUi\)\}/g)].length, 2, 'the expandable and the plain layer-name cell');
 });
+
+test('records charts: the shared /records LanguageDraftNote is the one isiXhosa notice, so chart captions drop their per-caption draft label (English source line stays; isiZulu unchanged)', () => {
+  for (const file of ['components/AreaReturnCards.tsx', 'components/CashflowChart.tsx', 'components/ComingUpHarvests.tsx', 'components/FinanceGraphs.tsx', 'components/HarvestReconciliation.tsx']) {
+    const src = read(file);
+    const all = src.match(/<IsiZuluDraftSource /g) ?? [];
+    const quiet = src.match(/<IsiZuluDraftSource draftLabel=\{!\['xh', 'af'\]\.includes\(lang\)\} /g) ?? [];
+    assert.ok(all.length > 0, `${file} renders draft sources`);
+    assert.equal(quiet.length, all.length, `${file}: every caption defers to the page-level note`);
+  }
+  assert.match(read('app/records/page.tsx'), /<LanguageDraftNote lang=\{lang\} scope="records" \/>/);
+});
