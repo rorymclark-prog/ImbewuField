@@ -1,0 +1,22 @@
+{
+  "source_video": "../professional-v3/sources/flow-documentary-original.mp4",
+  "source_video_tool": "Google Flow / Veo 3.1 Fast, 720p, 190 frames at 24fps",
+  "overhead_image": "Built-in imagegen, two extracted frames as references",
+  "overhead_identity": "Reconstructed visual match; not an exact surveyed or 3D projection",
+  "overlay": "Native Apple Motion opacity animation, Apple Compressor renderer",
+  "zone": "Illustrative Zone 1 garden/door-side path footprint; not a measured boundary",
+  "course_source": "lib/course-modules.ts intro-permaculture zones/sectors lesson (read only)",
+  "sequence": "Original clean moving approach, cut to overhead, then one teal colour-zone fade",
+  "audio": "Silent style review; no new audio",
+  "checks": {
+    "width": 1920,
+    "height": 1080,
+    "frames": 382,
+    "duration_seconds": 15.916666666666666,
+    "full_decode": "passed",
+    "roof_background_mean_pixel_difference": 1.4330909090909092,
+    "five_pixel_displacement_negative_control": 9.32139393939394,
+    "highlighted_garden_mean_pixel_difference": 49.59489166666667
+  },
+  "production_app_changed": false
+}

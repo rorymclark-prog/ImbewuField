@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kitchen garden · overhead colour zone</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#101b17;color:#f3efe5;font:17px/1.6 system-ui}main{max-width:1160px;margin:auto;padding:40px 24px}h1{font-size:clamp(30px,5vw,52px);line-height:1.15;font-weight:550}p{max-width:850px;color:#d1d8cc}video,img{width:100%;display:block;border-radius:8px}a{color:#a3f6e5}.links{display:flex;gap:24px;flex-wrap:wrap;margin:20px 0}button{border:1px solid #567368;border-radius:8px;background:#1e382e;color:#fff;padding:12px 20px;cursor:pointer;font:inherit;margin:0 10px 20px 0}button[aria-pressed=true]{background:#c5f1e4;color:#10271e}small{color:#a8bdb0}h2{margin-top:44px}</style>
+<main><small>IMBEWUFIELD · 2 NOVEMBER 2026 · STYLE REVIEW</small>
+<h1>The kitchen garden, from above.</h1>
+<p>The original clean fly-through cuts to an overhead companion view. One translucent teal area marks the door-side garden and daily path as an illustrative Zone 1. The only graphic movement is a quiet fade.</p>
+<video controls preload="metadata" poster="overhead-zone-1.jpg" src="flythrough-to-overhead-zone.mp4"></video>
+<div class="links"><a href="flythrough-to-overhead-zone.mp4">Open 16-second sequence</a><a href="overhead-zone-reveal.mp4">Overhead reveal only</a><a href="sources/Same-Property-Overhead-Zone-Apple-Motion.motn">Editable Apple Motion project</a></div>
+<h2>Compare the overhead view</h2>
+<button id="clean" aria-pressed="false" onclick="showZone(false)">Clean property</button><button id="zone" aria-pressed="true" onclick="showZone(true)">Show colour zone</button>
+<img id="comparison" src="overhead-zone-1.jpg" alt="Overhead homestead with teal Zone 1 over the kitchen garden next to the door">
+<p>The moving shot was generated from a cinematography prompt in Google Flow using Veo 3.1 Fast. Its original resolution is 720p. The overhead image was reconstructed using built-in imagegen with two frames from that shot as references; it is a visual match, not an exact 3D projection or surveyed plan. Native Apple Motion supplies the colour area and fade, rendered by Apple Compressor at 1080p.</p>
+<p>This is a silent visual review, separate from the live course. No lesson body, saved site geometry or plant species was changed. <a href="sources/overhead-image-prompt.txt">Exact overhead image prompt</a> · <a href="provenance.json">Provenance and checks</a> · <a href="../review.html">Earlier experiments</a></p></main>
+<script>function showZone(on){document.getElementById('comparison').src=on?'overhead-zone-1.jpg':'overhead-clean.jpg';document.getElementById('comparison').alt=on?'Overhead homestead with teal Zone 1 over the kitchen garden next to the door':'Clean overhead homestead without graphics';document.getElementById('clean').setAttribute('aria-pressed',String(!on));document.getElementById('zone').setAttribute('aria-pressed',String(on))}</script>
+</html>
