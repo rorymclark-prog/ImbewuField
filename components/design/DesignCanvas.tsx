@@ -51,6 +51,7 @@ import { PLAIN_HARD_SURFACE_PAINT } from '@/lib/sheet-base-mute';
 import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { useLanguage } from '@/lib/i18n';
 import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
+import { sectorNoteText, windConfirmedNoteText } from '@/lib/sector-note-display';
 import { designItemDisplayLabel } from '@/lib/design-element-display';
 import SectorOverlay from './SectorOverlay';
 
@@ -1963,8 +1964,8 @@ export default function DesignCanvas({
     if (!effective || effective.provenance !== 'observed on site') return null;
     const recorded = new Date(state.localWind.recordedAt);
     const when = Number.isFinite(recorded.getTime()) ? recorded.toLocaleDateString() : null;
-    return `Wind confirmed on site: ${effective.fromLabel}${when ? ` (recorded ${when})` : ''}`;
-  }, [sectorModel, state.localWind]);
+    return windConfirmedNoteText(lang, effective.fromLabel, when);
+  }, [sectorModel, state.localWind, lang]);
 
   // GROUND LABEL DE-COLLISION. Ground features nest, so their centroids sit almost on top of each
   // other — "Property boundary", "Lawn" and "House" traced one inside the next all land within a
@@ -4328,7 +4329,7 @@ export default function DesignCanvas({
           }}
         >
           {effectiveWindNote && <Check size={12} aria-hidden />}
-          {effectiveWindNote ?? (isInlineDraftLang(lang) ? inlineText(lang, sectorModel.dataNotes[0]) : sectorModel.dataNotes[0])}
+          {effectiveWindNote ?? sectorNoteText(lang, sectorModel.dataNotes[0])}
         </div>
       )}
 

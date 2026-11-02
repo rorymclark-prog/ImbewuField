@@ -133,6 +133,14 @@ and isiZulu output are unchanged.
   while the palette says "Ibhedi"; left as is because `farm-memory-task-controls` pins it.
 - **Blind review of g52 + g53 (2 Nov):** 203 strings, 7 repairs ("pollinator" had read as exploiting insects; swale
   "level" lost; "downwind" read as "beyond the wind") — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-02b/`.
+- **Design Studio leftovers (2 Nov):** `xh-inline/g54-design-leftovers.ts` (101 drafts, unreviewed machine drafts). The
+  one-line tip shown for each of the 79 palette elements (`tip` in `lib/design-elements.ts`, also the last line of the
+  element lesson) and the hint's element name read isiXhosa at render, with sizes, ratios and botanical names kept; the
+  Layers panel's Show / Hide, Select all, Lock, Expand and "n of m selected" button names and the Water layer's five
+  groups are templates with the layer name filled in (English, isiZulu, Sesotho, Xitsonga and Tshivenda read the same
+  words as before); the three sector notes that carry a figure (`lib/sector-note-display.ts`, figure cut from the
+  model's English and put back untouched) and the farmer's "Wind confirmed on site" note. Left English on purpose:
+  `SectorSummary` (compiled by the `control-icon-renderers` module-stub harness, which has no isiXhosa lookup in scope).
 - **Report picker (2 Nov):** the sample-mode (prepared example) language picker now offers every inline-draft
   language beside English and isiZulu, in `LANGUAGE_OPTIONS` order. `preparedSampleReport` keeps isiXhosa once its
   drafts are loaded (English otherwise, so English text is never labelled a translation); `preparedExampleNote` has an
