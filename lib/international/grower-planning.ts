@@ -91,17 +91,19 @@ function text(value: unknown): value is string {
     && !/[\u0000-\u001f\u007f]/.test(value);
 }
 
-function instant(value: unknown): value is string {
+export function isGrowerRecordedAt(value: unknown): value is string {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value)) return false;
   const ms = Date.parse(value);
   return Number.isFinite(ms) && new Date(ms).toISOString() === value;
 }
+const instant = isGrowerRecordedAt;
 
-function utcDate(value: unknown): value is string {
+export function isGrowerUtcDate(value: unknown): value is string {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value) || value.startsWith('0000')) return false;
   const ms = Date.parse(`${value}T00:00:00.000Z`);
   return Number.isFinite(ms) && new Date(ms).toISOString().slice(0, 10) === value;
 }
+const utcDate = isGrowerUtcDate;
 
 function freeze<T>(value: T): T {
   if (value && typeof value === 'object') {
@@ -143,7 +145,7 @@ function provenance(value: unknown): GrowerInputProvenance | null {
   return { kind: value.kind, recordedAt: value.recordedAt, reference: value.reference, sourceUrl: value.sourceUrl };
 }
 
-function input<T, U extends string>(value: unknown, unit: U, valid: (v: unknown) => v is T): GrowerInput<T, U> | null {
+export function normaliseGrowerInput<T, U extends string>(value: unknown, unit: U, valid: (v: unknown) => v is T): GrowerInput<T, U> | null {
   if (!record(value)) return null;
   if (value.state === 'missing') {
     // A recorded zero cannot disappear just because an importer also marks it missing.
@@ -156,6 +158,7 @@ function input<T, U extends string>(value: unknown, unit: U, valid: (v: unknown)
   if (!source) return null;
   return { state: 'provided', value: value.value, unit, provenance: source };
 }
+const input = normaliseGrowerInput;
 
 const nonNegative = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v) && v >= 0;
 const days = (v: unknown): v is number => nonNegative(v) && Number.isSafeInteger(v);
@@ -203,7 +206,8 @@ export function normaliseGrowerPlanningProfiles(value: unknown): GrowerPlanningP
   return result;
 }
 
-function addDays(date: string, count: number): string | null {
+export function addGrowerUtcDays(date: string, count: number): string | null {
+  if (!isGrowerUtcDate(date) || !Number.isSafeInteger(count)) return null;
   const ms = Date.parse(`${date}T00:00:00.000Z`) + count * 86_400_000;
   if (!Number.isSafeInteger(ms)) return null;
   const result = new Date(ms);
@@ -211,6 +215,7 @@ function addDays(date: string, count: number): string | null {
   const iso = result.toISOString().slice(0, 10);
   return utcDate(iso) ? iso : null;
 }
+const addDays = addGrowerUtcDays;
 
 const basis: AssessmentBasis = { basis: 'grower-input-arithmetic', sourceVerification: 'not-verified' };
 
