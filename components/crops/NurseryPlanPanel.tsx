@@ -20,6 +20,8 @@ export interface NurseryPlanPanelProps {
   beds: PlanBed[];
   now: { year: number; month: number };
   showBuyingCalendar?: boolean;
+  /** Equipment remains useful before this site's catalogue planning basis is supported. */
+  allowCatalogueForecast?: boolean;
   onSettings: (settings: NurserySettings) => void;
 }
 
@@ -40,12 +42,14 @@ export default function NurseryPlanPanel(props: NurseryPlanPanelProps) {
   return <NurseryPlanEditor key={props.siteId} {...props} />;
 }
 
-function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, showBuyingCalendar = false, onSettings }: NurseryPlanPanelProps) {
+function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, showBuyingCalendar = false, allowCatalogueForecast = true, onSettings }: NurseryPlanPanelProps) {
   const saved = useMemo(() => sanitiseNurserySettings(settings), [settings]);
   const spaces = saved.spaces.filter((s) => s.siteId === siteId);
   const containers = saved.containers.filter((c) => c.siteId === siteId);
   const profiles = saved.profiles.filter((p) => p.siteId === siteId);
-  const forecast = useMemo(() => buildNurseryForecast(plantings, beds, siteId, saved, now), [plantings, beds, siteId, saved, now]);
+  const forecast = useMemo(() => allowCatalogueForecast
+    ? buildNurseryForecast(plantings, beds, siteId, saved, now)
+    : null, [allowCatalogueForecast, plantings, beds, siteId, saved, now]);
   const [space, setSpace] = useState(emptySpace);
   const [container, setContainer] = useState(emptyContainer);
   const [profile, setProfile] = useState(emptyProfile);
@@ -57,7 +61,7 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
   useEffect(() => { setSample(isSampleMode()); }, [siteId]);
 
   async function exportCsv() {
-    if (exporting) return;
+    if (exporting || !allowCatalogueForecast || !forecast) return;
     setExporting(true); setExportStatus('');
     try {
       const demo = isSampleMode();
@@ -123,7 +127,10 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
       <span className="ml-2 font-sans text-xs font-normal text-[var(--text-secondary)]">This site’s trays and growing surface</span>
     </summary>
     <div className="space-y-4 px-4 pb-4 font-sans">
-      <p className="text-sm text-[var(--text-secondary)]">Plan nursery demand from accepted crop sowings. Add your own equipment and crop estimates below. Blank values stay unknown; the app does not choose germination rates, tray sizes or nursery losses for you.</p>
+      <p className="text-sm text-[var(--text-secondary)]">{allowCatalogueForecast
+        ? 'Plan nursery demand from accepted crop sowings. Add your own equipment and crop estimates below. Blank values stay unknown; the app does not choose germination rates, tray sizes or nursery losses for you.'
+        : 'Keep your own nursery equipment and crop estimates here. Demand forecasts are unavailable until this site has a supported local planning basis. Saving these inputs does not approve local crop timing, spacing or suitability.'}</p>
+      {forecast && <>
       <div id="nursery-seed-needs" className="scroll-mt-24"><NurseryForecastSummary forecast={forecast} beds={beds} /></div>
       <div className="space-y-2">
         <button type="button" disabled={exporting} className={`${secondary} disabled:opacity-50`} onClick={exportCsv}>{exporting ? 'Preparing nursery CSV…' : 'Download nursery CSV'}</button>
@@ -135,6 +142,7 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
         </nav>
         <p className={hint}>Nursery checks leave your field-task calendar unchanged. Review the crop plan before changing field dates.</p>
       </div>
+      </>}
 
       <details className="rounded-xl border border-[var(--border)] p-3">
         <summary className="min-h-11 cursor-pointer font-semibold">1. Net nursery growing surface · {spaces.length}</summary>
@@ -186,7 +194,9 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
       <details className="rounded-xl border border-[var(--border)] p-3">
         <summary className="min-h-11 cursor-pointer font-semibold">3. Your crop nursery recipes · {profiles.length}</summary>
         <div className="space-y-3 pt-2">
-          <p className={hint}>One recipe per transplant crop for this site. Your nursery duration checks readiness against the working field calendar; it does not move the field date. Missing values remain saved for later.</p>
+          <p className={hint}>{allowCatalogueForecast
+            ? 'One recipe per transplant crop for this site. Your nursery duration checks readiness against the working field calendar; it does not move the field date. Missing values remain saved for later.'
+            : 'Keep one grower-entered recipe per transplant crop for this site. Missing values remain unknown. These saved inputs do not calculate demand or set field dates.'}</p>
           {profiles.map((p) => <div key={p.id} className="flex flex-wrap items-start justify-between gap-2 rounded-lg border border-[var(--border)] p-2">
             <div className="min-w-0 flex-1 text-sm"><strong>{cropByKey(p.cropKey)?.name ?? p.cropKey}</strong> · {p.model === 'seed-cell' ? 'One seed / one transplant per cell' : 'Measured usable starts per tray'}
               <p className={hint}>{p.containerId ? containers.find((c) => c.id === p.containerId)?.name ?? 'Container removed or unavailable' : 'Container not selected'} · {p.spaceId ? spaces.find((s) => s.id === p.spaceId)?.name ?? 'Space removed or unavailable' : 'Space not selected'}</p>
@@ -221,7 +231,7 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
               <p className={`${hint} sm:col-span-2 lg:col-span-3`}>Use your observed usable seedling output for a tray, including nursery losses. Suitable for your multi-sown or pricked-out method; no extra germination or nursery-loss allowance is applied.</p>
             </>}
             <label className="text-sm">Your field survival (%, optional)<input type="number" min="0" max="100" step="any" inputMode="decimal" value={profile.fieldSurvivalPercent} placeholder="No extra allowance" onChange={(e) => setProfile({ ...profile, fieldSurvivalPercent: e.target.value })} className={field} /></label>
-            <label className="text-sm">Your nursery duration (weeks, optional)<input type="number" min="0" max="52" step="any" inputMode="decimal" value={profile.nurseryWeeks} placeholder="Use source timing envelope" onChange={(e) => setProfile({ ...profile, nurseryWeeks: e.target.value })} className={field} /></label>
+            <label className="text-sm">Your nursery duration (weeks, optional)<input type="number" min="0" max="52" step="any" inputMode="decimal" value={profile.nurseryWeeks} placeholder={allowCatalogueForecast ? 'Use source timing envelope' : 'Unknown'} onChange={(e) => setProfile({ ...profile, nurseryWeeks: e.target.value })} className={field} /></label>
             <p className={`${hint} sm:col-span-2 lg:col-span-3`}>Field survival is separate from nursery losses. Blank applies no extra field allowance. Entering 0% keeps the observation but cannot produce a finite planting requirement.</p>
             <div className="flex flex-wrap gap-2 sm:col-span-2 lg:col-span-3"><button type="submit" className={primary}>{profile.id ? 'Save recipe changes' : 'Save crop recipe'}</button>{profile.cropKey && <button type="button" className={secondary} onClick={() => { setProfile(emptyProfile); setError(null); }}>Clear form</button>}</div>
             {error?.section === 'profile' && <p role="alert" className="text-sm text-[var(--gold)] sm:col-span-2 lg:col-span-3">{error.message}</p>}
@@ -229,7 +239,9 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
         </div>
       </details>
       {status && <p role="status" className="text-sm">{status}</p>}
-      <p className={hint}>Settings belong to this site’s crop plan on this device. Removing equipment leaves its dependent recipes visibly incomplete. This is a planning forecast, not observed live nursery stock. Net surface does not guarantee rectangular tray packing or include up-pot stage scheduling.</p>
+      <p className={hint}>{allowCatalogueForecast
+        ? 'Settings belong to this site’s crop plan on this device. Removing equipment leaves its dependent recipes visibly incomplete. This is a planning forecast, not observed live nursery stock. Net surface does not guarantee rectangular tray packing or include up-pot stage scheduling.'
+        : 'Settings belong to this site’s crop plan on this device. Removing equipment leaves dependent recipes incomplete. Equipment entries are your inputs, not live stock counts. No nursery demand, field timing, purchasing forecast or tray-packing result is supplied here.'}</p>
     </div>
   </details>;
 }

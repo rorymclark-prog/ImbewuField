@@ -9,7 +9,9 @@ import type { CropPlanPdfInput } from './crop-export-pdf';
 import { placedTreeGroups } from './perennial-harvest';
 import { placedAnimalGroups, ANIMAL_ENTERPRISES, PRODUCT_LABEL, HOUSING_LABEL, enterprisesForHousing, isFoodProduct } from './animal-enterprises';
 import { calendarProduceByMonth, treeLineText, animalLineText } from './calendar-produce';
-import type { FactCropPlan } from './report-site-facts';
+import type { FactCropPlan, ReportSiteFacts } from './report-site-facts';
+import { currentPlanningSupport } from './international/planning-support';
+import { canonicalCoordinateSiteId } from './site-id';
 
 export interface ReportCropSnapshot {
   annualProduction?: ReportProductionYear;
@@ -39,7 +41,7 @@ export function captureReportCropPlan(canvas: DesignCanvasState, plan: CropPlanS
   }
   for (const zone of canvas.zones.filter(z => ids.has(z.id))) outlines.push({ bedId: zone.id, points: zone.points.map(([x, y]) => [x * wMetres, y * hMetres]) });
   const plantings = plan.plantings.filter(p => ids.has(p.bedId)).map(p => ({ ...p }));
-  return { annualProduction: reportProductionYear({ capturedAt: now.toISOString(), beds, plantings }, canvas.items, production), siteId, capturedAt: now.toISOString(), planUpdatedAt: plan.updatedAt, planNotes: plan.planNotes?.filter(n => n.bedIds?.length ? n.bedIds.every(id => ids.has(id)) : plan.plantings.every(p => ids.has(p.bedId))).map(n => ({ ...n, bedIds: n.bedIds ? [...n.bedIds] : undefined })), planNotesAt: plan.planNotesAt, beds, plantings, outlines };
+  return { annualProduction: production.allowCataloguePlanning === false ? undefined : reportProductionYear({ capturedAt: now.toISOString(), beds, plantings }, canvas.items, production), siteId, capturedAt: now.toISOString(), planUpdatedAt: plan.updatedAt, planNotes: production.allowCataloguePlanning === false ? undefined : plan.planNotes?.filter(n => n.bedIds?.length ? n.bedIds.every(id => ids.has(id)) : plan.plantings.every(p => ids.has(p.bedId))).map(n => ({ ...n, bedIds: n.bedIds ? [...n.bedIds] : undefined })), planNotesAt: plan.planNotesAt, beds, plantings, outlines };
 }
 
 /** A malformed new attachment must not discard a readable legacy report. */
@@ -108,6 +110,21 @@ export function reportCropMapSvg(s: ReportCropSnapshot, offset: number): string 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="410" viewBox="0 0 800 410"><title>${xml(`Saved growing spaces - ${reportCropMonths(s)[offset]}`)}</title><rect width="800" height="410" fill="white"/>${body}</svg>`;
 }
 
+/** A report's independent location must match its attachment. The snapshot cannot
+ * approve itself by claiming another saved site's country. Re-read at action time. */
+export function currentReportCropSupport(snapshot: Pick<ReportCropSnapshot, 'siteId'> | undefined, reportSiteId: string | null) {
+  const canonical = canonicalCoordinateSiteId(reportSiteId);
+  return currentPlanningSupport(canonical && snapshot?.siteId === canonical ? canonical : 'invalid-report-site');
+}
+
+/** A screen/export projection, never a mutation of the archived report. Saved
+ * rows and outlines survive; derived advice is withheld when its current basis is absent. */
+export function projectReportPlanningFacts(facts: ReportSiteFacts | null, allowCataloguePlanning: boolean): ReportSiteFacts | null {
+  if (allowCataloguePlanning || !facts?.crop?.snapshot) return facts;
+  return { ...facts, crop: { ...facts.crop, snapshot: { ...facts.crop.snapshot,
+    annualProduction: undefined, planNotes: undefined, planNotesAt: undefined } } };
+}
+
 export function reportCropWorkingInput(s: ReportCropSnapshot, title: string): CropPlanPdfInput {
   const now = new Date(s.capturedAt);
   return { plantings: s.plantings, beds: s.beds, tasks: tasksForPlan(s.plantings, s.beds, now.getMonth() + 1), now, planNotes: s.planNotes, planNotesAt: s.planNotesAt, sections: ['calendar', 'plan', 'buying', 'fieldsheets', 'record'], meta: { planTitle: title, siteLine: 'Saved site report crop plan', locationLine: title, climateLine: '', bedsSummary: `${s.beds.length} beds / plots`, dateLabel: now.toLocaleDateString('en-ZA'), estimatedKgPerYear: null, lossPercent: 0, lossAllowanceConfirmed: false } };
@@ -155,6 +172,8 @@ export interface ReportProductionRow {
 }
 export interface ReportProductionYear { months: string[]; rows: ReportProductionRow[] }
 export interface ReportProductionContext {
+  /** Collector-provided gate; arithmetic-only builders retain their existing inputs. */
+  allowCataloguePlanning?: boolean;
   treeSeasons?: import('./perennial-harvest').TreeSeasonChoices;
   animalSeasons?: import('./animal-enterprises').AnimalSeasonChoices;
   animalChoices?: Partial<Record<import('./animal-enterprises').HousingKind, string>>;

@@ -19,6 +19,7 @@
 
 import { loadAnimalSeasonChoices, loadEnterpriseChoices } from './animal-enterprises';
 import { captureReportCropPlan } from './report-crop-plan';
+import { currentPlanningSupport } from './international/planning-support';
 import { loadTreeSeasonChoices, placedTreeGroups } from './perennial-harvest';
 import { planningTreeSeasons } from './production-product-guidance';
 import { growingZonesForClimate } from './growing-zones';
@@ -414,6 +415,10 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
 
 /** Capture the same site-specific choices the crop planner reads, without publishing draft survey answers. */
 export function collectReportCropSnapshot(canvas: DesignCanvasState, plan: CropPlanState, siteId: string, now = new Date(), location?: LocationData, survey?: SiteSurvey) {
+  const support = currentPlanningSupport(siteId);
+  // Keep the raw saved rows and measured outlines, without manufacturing a
+  // local product year from inherited catalogue assumptions.
+  if (!support.allowCataloguePlanning) return captureReportCropPlan(canvas, plan, siteId, now, { allowCataloguePlanning: false });
   const treeSeasons = loadTreeSeasonChoices(siteId);
   const matchingLocation = location && designSiteIdFromLocation(location) === siteId ? location : undefined;
   const zones = matchingLocation ? growingZonesForClimate(matchingLocation.climate.monthlyTemp, matchingLocation.rainfall.monthly, matchingLocation.lat) : [];

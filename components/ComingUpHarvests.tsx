@@ -61,11 +61,11 @@ export default function ComingUpHarvests({
   // elsewhere on the page; the month is what this card actually depends on.
   const now = useMemo(() => new Date(), []);
   const book = useMemo(
-    () => buildForwardHarvests(source.plantings, source.beds, now, horizonMonths),
-    [source.plantings, source.beds, now, horizonMonths],
+    () => source.forecastAvailable === true ? buildForwardHarvests(source.forecastPlantings ?? [], source.beds, now, horizonMonths) : null,
+    [source.forecastAvailable, source.forecastPlantings, source.beds, now, horizonMonths],
   );
   const value = useMemo(
-    () => planValue(forwardValueRows(book), prices, channel, settings),
+    () => book ? planValue(forwardValueRows(book), prices, channel, settings) : null,
     [book, prices, channel, settings],
   );
 
@@ -75,10 +75,10 @@ export default function ComingUpHarvests({
         <CalendarClock size={13} /> {text('Coming up', 'Okuzayo')}
       </p>
       <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
-        <IsiZuluDraftSource lang={lang}
+        {book ? <IsiZuluDraftSource lang={lang}
           template={book.horizonMonths === 1 ? 'What your crop plan says is due to be picked over the next {n} month.' : 'What your crop plan says is due to be picked over the next {n} months.'} vars={{ n: book.horizonMonths }}
           english={`What your crop plan says is due to be picked over the next ${book.horizonMonths} ${book.horizonMonths === 1 ? 'month' : 'months'}.`}
-          zulu={`Uhlelo lwakho lwezitshalo lubonisa okulindeleke ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} />
+          zulu={`Uhlelo lwakho lwezitshalo lubonisa okulindeleke ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} /> : recordsFill(lang, 'Crop-plan harvest forecast')}
       </div>
     </div>
   );
@@ -90,6 +90,15 @@ export default function ComingUpHarvests({
         <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{text('Reading your crop plan…', 'Kufundwa uhlelo lwezitshalo…')}</div>
       </section>
     );
+  }
+
+  if (source.forecastAvailable !== true || !book || !value) {
+    return <section className="rounded-2xl overflow-hidden" style={CARD}>
+      {header}
+      <Empty title={recordsFill(lang, 'Harvest forecast unavailable')}
+        body={recordsFill(lang, source.forecastReason ?? 'Confirm the planning basis before using local crop forecasts. Your recorded harvests and sales remain available.')}
+        href={source.origin === 'none' ? '/design' : '/facilitator/crops'} cta={recordsFill(lang, source.origin === 'none' ? 'Open the Design Studio' : 'Review planning basis')} />
+    </section>;
   }
 
   // Three genuinely different kinds of nothing. Saying "no harvests coming up"

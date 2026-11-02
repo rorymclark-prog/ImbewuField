@@ -105,8 +105,8 @@ export default function FinanceGraphs({
   // season have no defensible answer — lib/plan-vs-actual.ts refuses them, and
   // asking for one here would only surface that refusal as an empty card.
   const plan = useMemo(
-    () => buildPlanVsActual(source.plantings, source.beds, production, sales, 'year', now, settings),
-    [source.plantings, source.beds, production, sales, now, settings],
+    () => source.forecastAvailable === true ? buildPlanVsActual(source.forecastPlantings ?? [], source.beds, production, sales, 'year', now, settings) : null,
+    [source.forecastAvailable, source.forecastPlantings, source.beds, production, sales, now, settings],
   );
 
   // Named so the plan view can explain an absence instead of leaving one. Only computed from what
@@ -445,7 +445,7 @@ function MeasuredView({
 /* ── View 2: plan vs actual ────────────────────────────────────────────────── */
 
 function PlanView({ plan, source, wide, orchard, lang }: {
-  plan: ReturnType<typeof buildPlanVsActual>; source: FinancePlanSource; wide: boolean;
+  plan: ReturnType<typeof buildPlanVsActual> | null; source: FinancePlanSource; wide: boolean;
   lang: string;
   /** Orchard produce this farm has actually recorded, so its absence below can be explained. */
   orchard: string[];
@@ -453,6 +453,15 @@ function PlanView({ plan, source, wide, orchard, lang }: {
   const tx = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
   if (!source.loaded) {
     return <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: FAINT }}>{tx('Reading your crop plan…', 'Kufundwa uhlelo lwezitshalo…')}</div>;
+  }
+
+  if (source.forecastAvailable !== true || !plan) {
+    return <div className="px-4 py-5">
+      <p className="font-display font-semibold" style={{ fontSize: 13.5, color: INK }}>{recordsFill(lang, 'Plan comparison unavailable')}</p>
+      <p className="mt-1 font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>{recordsFill(lang, source.forecastReason ?? 'Confirm the planning basis before using local crop benchmarks.')}</p>
+      <p className="mt-2 font-sans" style={{ fontSize: 12, color: MUTED }}>{recordsFill(lang, 'Picked & sold still shows your recorded quantities. No forecast is counted as a recorded harvest.')}</p>
+      <Link href={source.origin === 'none' ? '/design' : '/facilitator/crops'} className="mt-2 inline-block font-sans underline" style={{ fontSize: 12, color: SOLD_TEXT }}>{recordsFill(lang, source.origin === 'none' ? 'Open the Design Studio' : 'Review planning basis')}</Link>
+    </div>;
   }
 
   if (plan.rows.length === 0) {

@@ -133,7 +133,15 @@ test('real saved-report controls switch app language while saved text and the ne
   const { act, create } = await import('react-test-renderer');
   const ReportView = (await import('../components/ReportView.tsx')).default;
   const { collectReportSiteFacts } = await import('../lib/report-site-facts-collect.ts');
-  const crop = collectReportSiteFacts({ siteId: 'translation-check', lat: DEMO_LOCATION.lat, lon: DEMO_LOCATION.lon, canvas: buildDemoDesignCanvasState(), cropPlan: buildDemoCropPlan() }).crop!;
+  const { createSiteCountryContext, coordinateSiteIdForPlace } = await import('../lib/international/site-context.ts');
+  const { updateSiteCountryContext } = await import('../lib/saved-places.ts');
+  // The native-control test needs an enabled reference plan. A report id is not
+  // a site identity, and language must never supply its country implicitly.
+  const siteId = coordinateSiteIdForPlace(DEMO_LOCATION)!;
+  local.setItem('permamap_saved_places', JSON.stringify([{ id:'translation-site',name:'Translation control fixture',
+    lat:DEMO_LOCATION.lat,lon:DEMO_LOCATION.lon,biome:'',rainfall:0,elevation:0,savedAt:'2026-10-21T08:00:00Z' }]));
+  assert.equal(updateSiteCountryContext(siteId, createSiteCountryContext({siteId,countryCode:'ZA',confirmed:true})).status, 'local-saved');
+  const crop = collectReportSiteFacts({ siteId, lat: DEMO_LOCATION.lat, lon: DEMO_LOCATION.lon, canvas: buildDemoDesignCanvasState(), cropPlan: buildDemoCropPlan() }).crop!;
   crop.snapshot!.capturedAt = '2026-10-21T08:00:00Z';
   const original: SavedReport = {
     id: 'translation-check', name: 'Original site name', savedAt: '2026-10-21T08:00:00Z', lang: 'en',
@@ -145,9 +153,11 @@ test('real saved-report controls switch app language while saved text and the ne
   const realFetch = globalThis.fetch;
   let request: Record<string, unknown> | undefined;
   let rejectNext = false;
+  let responseGate: (() => Promise<Response>) | undefined;
   globalThis.fetch = async (_url, init) => {
     request = JSON.parse(String(init?.body));
     if (rejectNext) { rejectNext = false; throw new TypeError('Failed to fetch'); }
+    if (responseGate) { const gate = responseGate; responseGate = undefined; return gate(); }
     return new Response('# New report\n\nA separate generated version.');
   };
   const textOf = (node: any): string => typeof node === 'string' ? node : node?.children?.map(textOf).join('') ?? '';
@@ -188,6 +198,18 @@ test('real saved-report controls switch app language while saved text and the ne
         const summaryBody = () => view!.root.findAll(n => n.props.className?.includes?.('report-body'))[0];
         assert.equal(summaryBody().props.lang, lang, 'new summary text follows app language, independently of the next generation picker');
         assert.ok(textOf(summaryBody()).includes(reportSummaryText('Crop plan', lang)));
+        assert.match(textOf(summaryBody()), /Annual food and product plan/);
+        await act(async () => {
+          assert.equal(updateSiteCountryContext(siteId, createSiteCountryContext({siteId,countryCode:'KE',confirmed:true})).status, 'local-saved');
+        });
+        assert.doesNotMatch(textOf(summaryBody()), /Annual food and product plan/,
+          'a country change withholds inherited production notes in the actual summary');
+        assert.deepEqual(loadReports().find(r => r.id === before.id), storedBefore,
+          'the current unsupported projection never rewrites archived facts or report text');
+        await act(async () => {
+          assert.equal(updateSiteCountryContext(siteId, createSiteCountryContext({siteId,countryCode:'ZA',confirmed:true})).status, 'local-saved');
+        });
+        assert.match(textOf(summaryBody()), /Annual food and product plan/);
         const summaryLanguage = lang === 'zu' ? 'st' : 'zu';
         await loadLocale(summaryLanguage);
         await act(async () => view!.update(element(summaryLanguage)));
@@ -238,6 +260,38 @@ test('real saved-report controls switch app language while saved text and the ne
         await act(async () => view!.update(element(lang)));
         assert.ok(view!.root.findAllByProps({ role: 'alert' }).some(n => textOf(n).includes(copy(networkError))), 'an existing error must repaint and be announced after switching app language');
         assert.deepEqual(loadReports().find(r => r.id === before.id), storedBefore);
+
+        // A real unsupported-country preflight must preserve the archived report
+        // and stop before another paid report request is sent.
+        const action = () => view!.root.findAllByType('button').find(n =>
+          [copy('Generate report'), copy('Generate new report')].includes(textOf(n)))!;
+        const requestBeforeHold = request;
+        await act(async () => { updateSiteCountryContext(siteId, createSiteCountryContext({siteId,countryCode:'KE',confirmed:true})); });
+        await act(async () => { await action().props.onClick(); });
+        assert.equal(request, requestBeforeHold, 'country preflight cannot issue another paid report request');
+        assert.ok(view!.root.findAllByProps({ role: 'alert' }).some(n => textOf(n).includes('Local farming report generation is unavailable')));
+        assert.deepEqual(loadReports().find(r => r.id === before.id), storedBefore);
+        await act(async () => { updateSiteCountryContext(siteId, createSiteCountryContext({siteId,countryCode:'ZA',confirmed:true})); });
+
+        // Hold the actual response boundary, correct the country in another
+        // account-scoped store event, then deliver an obsolete generated body.
+        let release!: (response: Response) => void, reached!: () => void;
+        let didReach = false;
+        const arrived = new Promise<void>(resolve => { reached = resolve; });
+        const held = new Promise<Response>(resolve => { release = resolve; });
+        responseGate = () => { didReach = true; reached(); return held; };
+        await act(async () => {
+          const pending = action().props.onClick();
+          await Promise.race([arrived, pending.then(() => { assert.ok(didReach, 'the positive supported control reaches the actual response boundary'); })]);
+          updateSiteCountryContext(siteId, createSiteCountryContext({siteId,countryCode:'KE',confirmed:true}));
+          release(new Response('# OBSOLETE_RESPONSE_SENTINEL'));
+          await pending;
+        });
+        assert.equal(didReach, true);
+        assert.ok(view!.root.findAllByProps({ role: 'alert' }).some(n => textOf(n).includes('This draft is withheld')));
+        assert.doesNotMatch(textOf(view!.toJSON()), /OBSOLETE_RESPONSE_SENTINEL/);
+        assert.deepEqual(loadReports().find(r => r.id === before.id), storedBefore);
+        await act(async () => { updateSiteCountryContext(siteId, createSiteCountryContext({siteId,countryCode:'ZA',confirmed:true})); });
 
       } finally {
         await act(async () => view!.unmount());

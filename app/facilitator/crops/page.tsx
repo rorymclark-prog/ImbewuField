@@ -60,7 +60,13 @@ import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecord
 import { buildYearOfFood, suggestGapFills, type GapFillSuggestion } from '@/lib/year-of-food';
 import { climateGateFrom } from '@/lib/crop-climate-gate';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
-import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
+import { loadPlaces, resolveMainSite, type SavedPlace } from '@/lib/saved-places';
+import { currentPlanningSupport, resolvePlanningSupport } from '@/lib/international/planning-support';
+import { resolveWorkspacePlanningReference, replaceWorkspacePlanningReference, sanitiseWorkspacePlanningReferences, workspacePlanningIdForDesign, type WorkspacePlanningReference } from '@/lib/international/workspace-context';
+import WorkspaceReferencePanel from '@/components/international/countries/WorkspaceReferencePanel';
+import SavedSiteUpdates from '@/components/international/countries/SavedSiteUpdates';
+import SiteCountryPanel, { type CountrySaveNotice } from '@/components/international/countries/SiteCountryPanel';
+import PlannerSupportHold from '@/components/international/countries/PlannerSupportHold';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
@@ -713,7 +719,9 @@ function FacilitatorCropsPageInner() {
       if (bedsFromDesignCanvas(loadCanvasState(sid)).length > 0) setFallbackCanvasSite(sid);
     } catch { /* corrupt cache — legacy behaviour stands */ }
   }, [canvasSiteParam, switchParam]);
-  const canvasSite = canvasSiteParam ?? fallbackCanvasSite;
+  const rawCanvasSite = canvasSiteParam ?? fallbackCanvasSite;
+  const canvasSite = canonicalCoordinateSiteId(rawCanvasSite);
+  const invalidCanvasSite = canvasSiteParam !== null && !canonicalCoordinateSiteId(canvasSiteParam);
 
   // The saved place's own name, for the printed plan's cover. Beds coming from
   // the Design Studio canvas carry no design title at all, so without this a
@@ -825,7 +833,7 @@ function FacilitatorCropsPageInner() {
   const [autoGenerating, setAutoGenerating] = useState(false);
 
   function openAutoSuggest() {
-    if (beds.length === 0) return;
+    if (!currentPlanningScopeAllowed() || beds.length === 0) return;
     setAGoal('family');
     setAFocusCount(1);
     applyGoalMix('family');
@@ -870,7 +878,8 @@ function FacilitatorCropsPageInner() {
     setACropKeys((prev) => prev.includes(cropKey) ? prev.filter((key) => key !== cropKey) : [...prev, cropKey]);
   }
   function runAutoSuggest() {
-    if (beds.length === 0) return;
+    if (!currentPlanningScopeAllowed() || beds.length === 0) return;
+    suggestionScopeRef.current = planningScopeKey;
     const answers: AutoSuggestAnswers = {
       goal: aGoal,
       focusCropCount: aGoal !== 'family' ? aFocusCount : undefined,
@@ -905,6 +914,7 @@ function FacilitatorCropsPageInner() {
       // guards a double tap while the sweep runs.
       setAutoGenerating(true);
       setTimeout(() => {
+        if (!currentPlanningScopeAllowed() || suggestionScopeRef.current !== planningScopeKey) return;
         const ideal = suggestIdealYearPlan(answers, pattern, beds, plantings, currentMonth, new Date().getFullYear());
         setIdealMeta(ideal);
         setAutoResult({
@@ -940,7 +950,7 @@ function FacilitatorCropsPageInner() {
     setPlanHistory((prev) => prev.slice(0, -1));
   }
   function acceptAutoSuggest() {
-    if (!autoResult || beds.length === 0) return;
+    if (!currentPlanningScopeAllowed() || suggestionScopeRef.current !== planningScopeKey || !autoResult || beds.length === 0) return;
     pushPlanHistory();
     setPlan((prev) => {
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
@@ -1209,9 +1219,7 @@ function FacilitatorCropsPageInner() {
     return Number.isFinite(lat) && Number.isFinite(lon) ? { lat, lon } : null;
   }, [canvasSite]);
 
-  const region = canvasLatLon
-    ? nearestRainfall(canvasLatLon.lat, canvasLatLon.lon)
-    : (design?.bgSite ? nearestRainfall(design.bgSite.lat, design.bgSite.lon) : null);
+
 
   // Per-site climate (Task: climatically correct plans for ANY SA site). When the
   // site has coordinates, the pattern comes from the site's OWN monthly climate —
@@ -1221,10 +1229,71 @@ function FacilitatorCropsPageInner() {
   // fallback: it put the demo farm's frost-free Mkuze-valley coordinates on
   // Durban's mild-frost profile from 255 km away, which is exactly the mistake
   // this path exists to stop.
-  const siteLat = canvasLatLon?.lat ?? design?.bgSite?.lat;
-  const siteLon = canvasLatLon?.lon ?? design?.bgSite?.lon;
+  const siteLat = invalidCanvasSite ? undefined : canvasLatLon?.lat ?? design?.bgSite?.lat;
+  const siteLon = invalidCanvasSite ? undefined : canvasLatLon?.lon ?? design?.bgSite?.lon;
   const hasSiteCoords = typeof siteLat === 'number' && typeof siteLon === 'number';
   const surveySiteId = hasSiteCoords ? canonicalCoordinateSiteId(`site:${siteLat!.toFixed(5)},${siteLon!.toFixed(5)}`) : null;
+  const [countryPlaces, setCountryPlaces] = useState<SavedPlace[]>([]);
+  const [countrySaveNotice, setCountrySaveNotice] = useState<CountrySaveNotice | null>(null);
+  const receiveCountrySaveNotice = useCallback((notice: CountrySaveNotice) => {
+    setCountrySaveNotice(previous => notice.phase === 'local' || previous?.attempt === notice.attempt ? notice : previous);
+  }, []);
+  const refreshCountryPlaces = useCallback(() => setCountryPlaces(loadPlaces()), []);
+  useEffect(() => {
+    refreshCountryPlaces();
+    window.addEventListener('permamap-places-changed', refreshCountryPlaces);
+    window.addEventListener('storage', refreshCountryPlaces);
+    return () => {
+      window.removeEventListener('permamap-places-changed', refreshCountryPlaces);
+      window.removeEventListener('storage', refreshCountryPlaces);
+    };
+  }, [refreshCountryPlaces]);
+  const planningWorkspaceId = surveySiteId || invalidCanvasSite ? null
+    : design ? workspacePlanningIdForDesign(design, chosenDesignId) : useVirtual ? 'virtual-bed' : null;
+  const planningSupport = resolvePlanningSupport({ places: countryPlaces, siteId: surveySiteId,
+    workspaceId: planningWorkspaceId, workspaceReferences: plan?.workspaceReferences });
+  const siteCountry = planningSupport.siteCountry;
+  const allowCataloguePlanning = planningSupport.allowCataloguePlanning;
+  const planningGeometryKey = JSON.stringify([canvasSite, chosenDesignId, beds]);
+  const planningScopeKey = JSON.stringify([planningGeometryKey, planningSupport.fingerprint]);
+  const workspaceReference = resolveWorkspacePlanningReference(plan?.workspaceReferences, planningWorkspaceId);
+  useEffect(() => {
+    if (!hasSiteCoords && !design && resolveWorkspacePlanningReference(plan?.workspaceReferences, 'virtual-bed')) setUseVirtual(true);
+  }, [hasSiteCoords, design, plan?.workspaceReferences]);
+  function saveWorkspaceReference(reference: WorkspacePlanningReference | null): boolean {
+    if (!plan || surveySiteId || !planningWorkspaceId) return false;
+    // A reference acknowledgement is not permission to overwrite a newer plan
+    // received from another tab while this form was open.
+    if (loadCropPlan().updatedAt > plan.updatedAt) return false;
+    const workspaceReferences = reference
+      ? replaceWorkspacePlanningReference(plan.workspaceReferences, reference)
+      : sanitiseWorkspacePlanningReferences(plan.workspaceReferences).filter(row => row.workspaceId !== planningWorkspaceId);
+    const next = { ...plan, workspaceReferences, updatedAt: Date.now() };
+    const saved = saveCropPlan(next);
+    setPlanSaveFailed(!saved);
+    if (saved) setPlan(next);
+    return saved;
+  }
+  const planningScopeRef = useRef({ key: planningScopeKey, allowed: allowCataloguePlanning });
+  planningScopeRef.current = { key: planningScopeKey, allowed: allowCataloguePlanning };
+  const suggestionScopeRef = useRef<string | null>(null);
+  // A queued callback or a second tab can outlive the country shown when it opened.
+  // Re-read the existing site store at mutation time as well as checking this render.
+  function currentPlanningScopeAllowed() {
+    if (!planningScopeRef.current.allowed || planningScopeRef.current.key !== planningScopeKey) return false;
+    const fresh = currentPlanningSupport(surveySiteId, planningWorkspaceId);
+    return fresh.allowCataloguePlanning
+      && JSON.stringify([planningGeometryKey, fresh.fingerprint]) === planningScopeKey;
+  }
+  useEffect(() => {
+    setAutoPhase('idle'); setAutoResult(null); setIdealMeta(null); setAutoGenerating(false);
+    setPickerBedId(null); setPickerCrop(null); setActivePlanting(null);
+    suggestionScopeRef.current = null;
+  }, [planningScopeKey]);
+  const region = allowCataloguePlanning
+    ? canvasLatLon ? nearestRainfall(canvasLatLon.lat, canvasLatLon.lon)
+      : design?.bgSite ? nearestRainfall(design.bgSite.lat, design.bgSite.lon) : null
+    : null;
   const [surveySnapshot, setSurveySnapshot] = useState<{ siteId: string; survey: SiteSurvey | null } | null>(null);
   const siteSurvey = surveySnapshot?.siteId === surveySiteId ? surveySnapshot?.survey ?? null : null;
   const [siteSurveyOpen, setSiteSurveyOpen] = useState(false);
@@ -1242,9 +1311,9 @@ function FacilitatorCropsPageInner() {
   }, [surveySiteId]);
   const climateSiteKey = hasSiteCoords ? `${siteLat},${siteLon}` : null;
   const [climateSnapshot, setClimateSnapshot] = useState<{ siteKey: string; climate: SiteClimate | null } | null>(null);
-  const siteClimate = climateSnapshot?.siteKey === climateSiteKey ? climateSnapshot?.climate ?? null : null;
+  const siteClimate = allowCataloguePlanning && climateSnapshot?.siteKey === climateSiteKey ? climateSnapshot?.climate ?? null : null;
   useEffect(() => {
-    if (!climateSiteKey) { setClimateSnapshot(null); return; }
+    if (!allowCataloguePlanning || !climateSiteKey) { setClimateSnapshot(null); return; }
     let cancelled = false;
     // The render guard also blocks the old site's climate before this effect runs.
     setClimateSnapshot(null);
@@ -1252,7 +1321,7 @@ function FacilitatorCropsPageInner() {
       if (!cancelled) setClimateSnapshot({ siteKey: climateSiteKey, climate: sc });
     });
     return () => { cancelled = true; };
-  }, [climateSiteKey, siteLat, siteLon]);
+  }, [allowCataloguePlanning, climateSiteKey, siteLat, siteLon]);
 
   // ?canvasSite&auto=1 → open the auto-suggest questionnaire once, as soon as at
   // least one bed has loaded. Ref-guarded so a bed refresh (canvas-change event)
@@ -1260,11 +1329,11 @@ function FacilitatorCropsPageInner() {
   const autoParamHandled = useRef(false);
   useEffect(() => {
     if (autoParamHandled.current) return;
-    if (!mounted || autoParam !== '1' || beds.length < 1) return;
+    if (!mounted || !allowCataloguePlanning || autoParam !== '1' || beds.length < 1) return;
     autoParamHandled.current = true;
     openAutoSuggest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mounted, autoParam, beds.length]);
+  }, [mounted, autoParam, beds.length, allowCataloguePlanning]);
   // A region flagged 'mild' frostRisk (e.g. Durban's coastal hinterland) uses
   // KZN DARD's warm/light-frost sowing column rather than treating coast and
   // frost-prone interior as interchangeable. This mapped result is shown to
@@ -1537,8 +1606,8 @@ function FacilitatorCropsPageInner() {
     siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
   }, !aReliableIrrigation), [siteClimate, hasSiteCoords, siteLat, aReliableIrrigation]);
   const gapFills = useMemo(
-    () => suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate, observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined }),
-    [yearOfFood, beds, plantings, pattern, currentMonth, yearGate, siteSurvey],
+    () => allowCataloguePlanning ? suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate, observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined }) : [],
+    [allowCataloguePlanning, yearOfFood, beds, plantings, pattern, currentMonth, yearGate, siteSurvey],
   );
   function chooseAnimalEnterprise(housing: HousingKind, enterpriseId: string | null) {
     if (!canvasSite) return;
@@ -1618,9 +1687,9 @@ function FacilitatorCropsPageInner() {
   // farm produced it; records without a site remain saved outside this site's totals.
   const productionSiteId = canvasSite ?? (chosenDesignId && chosenDesignId !== 'local' ? `design:${chosenDesignId}`
     : surveySiteId ?? (design ? 'design:local' : useVirtual ? 'virtual-bed' : null));
-  const nurseryPlanningForecast = useMemo(() => mounted && productionSiteId
+  const nurseryPlanningForecast = useMemo(() => allowCataloguePlanning && mounted && productionSiteId
     ? buildNurseryForecast(plantings, beds, productionSiteId, sanitiseNurserySettings(plan?.nursery), { year: currentYear, month: currentMonth })
-    : null, [mounted, productionSiteId, plantings, beds, plan?.nursery, currentYear, currentMonth]);
+    : null, [allowCataloguePlanning, mounted, productionSiteId, plantings, beds, plan?.nursery, currentYear, currentMonth]);
   const siteProductionRecords = useMemo(() => productionRecordsForSite(plan?.productionRecords, productionSiteId), [plan?.productionRecords, productionSiteId]);
   const sitePreservedProducts = useMemo(() => preservedFoodRecordsForSite(plan?.preservedProducts, productionSiteId), [plan?.preservedProducts, productionSiteId]);
   const unassignedProductionRecords = useMemo(() => sanitiseProductionRecords(plan?.productionRecords).filter(record => !record.siteId), [plan?.productionRecords]);
@@ -1642,6 +1711,11 @@ function FacilitatorCropsPageInner() {
   const productionAvailabilityGraphs = useMemo(() => buildProductionAvailabilityGraphs(productionGraphInput), [productionGraphInput]);
   const recordProducts = useMemo(() => {
     const options = new Map<string, { iconKey: string; label: string }>();
+    // Choosing the identity of an actual recorded crop supplies no sowing calendar,
+    // planting permission or yield assumption. New growers need not accept a plan first.
+    if (!allowCataloguePlanning) for (const crop of CROPS) {
+      options.set(`crop:${crop.key}`, { iconKey: `crop:${crop.key}`, label: crop.name });
+    }
     for (const planting of plantings) {
       const crop = cropByKey(planting.cropKey);
       if (crop && crop.yieldKgPerM2 !== 0) options.set(`crop:${crop.key}`, { iconKey: `crop:${crop.key}`, label: crop.name });
@@ -1652,7 +1726,7 @@ function FacilitatorCropsPageInner() {
       if (enterprise && HOUSING_ANIMALS[group.housing].includes(enterprise.animal) && enterprise.product !== 'wool') options.set(`animal:${enterprise.enterpriseId}`, { iconKey: `animal:${enterprise.enterpriseId}`, label: `${enterprise.name} · ${PRODUCT_LABEL[enterprise.product]}` });
     }
     return [...options.values()];
-  }, [plantings, canvasTrees, canvasAnimals, animalChoices]);
+  }, [allowCataloguePlanning, plantings, canvasTrees, canvasAnimals, animalChoices]);
   function updateProductionRecords(productionRecords: DatedProductionRecord[]) {
     if (!productionSiteId) return;
     pushPlanHistory();
@@ -1665,12 +1739,14 @@ function FacilitatorCropsPageInner() {
   }
 
   function shareTasks() {
+    if (!currentPlanningScopeAllowed()) return;
     const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${treePickingPhrase(line)}`).join('');
     const text = `🌱 Production plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}${picking(0)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}${picking(1)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
 
   function openPicker(bedId: string) {
+    if (!currentPlanningScopeAllowed()) return;
     setEditingPlantingId(null);
     setPickerBedId(bedId);
     setPickerSearch('');
@@ -1685,6 +1761,7 @@ function FacilitatorCropsPageInner() {
   // "pick a crop" step. confirmAdd below detects editingPlantingId and
   // updates in place instead of creating a new planting.
   function openEditPicker(p: Planting) {
+    if (!currentPlanningScopeAllowed()) return;
     const crop = cropByKey(p.cropKey);
     if (!crop) return;
     setEditingPlantingId(p.id);
@@ -1699,6 +1776,7 @@ function FacilitatorCropsPageInner() {
   // A gap-fill suggestion opens the ordinary picker already filled in, so the farmer sees the
   // same sowing-window note and overlap warning as any other planting before it is added.
   function planGapFill(s: GapFillSuggestion) {
+    if (!currentPlanningScopeAllowed()) return;
     openPicker(s.bed.id);
     setPickerCrop(s.crop);
     setPickerMonth(s.sowMonth);
@@ -1718,7 +1796,7 @@ function FacilitatorCropsPageInner() {
     setPickerFraction(isSpaceHungry(crop) ? 1 : pickerFraction);
   }
   function confirmAdd() {
-    if (!pickerBedId || !pickerCrop) return;
+    if (!currentPlanningScopeAllowed() || !pickerBedId || !pickerCrop) return;
     if (pickerCrop.timingVerified === false) return;
     if (editingPlantingId) {
       updatePlanting(editingPlantingId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting, pickerVariety);
@@ -1861,7 +1939,7 @@ function FacilitatorCropsPageInner() {
           </button>
         )}
         {!simple && <LessonLink id="crops:planner" label={cropUi(lang, 'Learn', 'Funda')} />}
-        {!simple && (climateSource === 'site' ? (
+        {!simple && allowCataloguePlanning && (climateSource === 'site' ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
             title="Rainfall pattern derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
@@ -1923,10 +2001,18 @@ function FacilitatorCropsPageInner() {
         </div>
       )}
 
+      <SavedSiteUpdates onPlaces={refreshCountryPlaces} />
+      {countrySaveNotice?.siteId === surveySiteId && <p role={countrySaveNotice.rejected ? 'alert' : 'status'} className="flex-shrink-0 px-3 py-2 font-sans text-sm md:px-5">{countrySaveNotice.message}</p>}
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
           <span className="font-display text-sm" style={{ color: 'var(--text-muted)' }}>{cropUi(lang, 'Loading production plan…', 'Kulayishwa uhlelo lokukhiqiza…')}</span>
         </div>
+      ) : invalidCanvasSite ? (
+        <section className="flex-1 overflow-y-auto p-5 font-sans" aria-label="Invalid site link">
+          <h1 className="font-display text-xl font-semibold">This site link is not valid</h1>
+          <p className="mt-2">Open a saved mapped site to plan its crops. No other site’s planning context has been substituted.</p>
+          <Link href="/facilitator/crops?switch=1" className="mt-3 inline-block underline">Choose a saved site</Link>
+        </section>
       ) : needsSitePicker ? (
         <div className="flex-1 overflow-y-auto py-7 px-4">
           <div className="mx-auto w-full" style={{ maxWidth: 760 }}>
@@ -1995,11 +2081,32 @@ function FacilitatorCropsPageInner() {
         </div>
       // An orchard, unresolved food layout or animal housing is still a production plan.
       // Requiring a crop bed here hid its confirmation controls and printed inventory.
+      ) : !allowCataloguePlanning ? (
+        <div className="flex-1 overflow-y-auto">
+          <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+            {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
+              : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}
+            {!surveySiteId && !planningWorkspaceId && <button type="button" onClick={() => setUseVirtual(true)} className="mb-4 min-h-11 rounded-xl border border-[var(--border)] bg-[var(--bg-1)] px-4 py-2 font-sans">Try a virtual reference bed</button>}
+            <PlannerSupportHold resolution={siteCountry} unmapped={!surveySiteId} beds={beds} plantings={plantings} />
+            {productionSiteId && <NurseryPlanPanel key={`nursery-equipment:${productionSiteId}`} siteId={productionSiteId}
+              siteName={placeName || designTitle} settings={plan?.nursery} beds={beds} plantings={plantings}
+              now={{ year: currentYear, month: currentMonth }} allowCatalogueForecast={false}
+              onSettings={(nursery) => {
+                pushPlanHistory();
+                setPlan(previous => ({ ...(previous ?? { version: 1 as const, plantings: [] }), nursery, updatedAt: Date.now() }));
+              }} />}
+            <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []}
+              dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts}
+              onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
+          </div>
+        </div>
       ) : beds.length === 0 && canvasTrees.length === 0 && unidentifiedPlants.length === 0 && canvasAnimals.length === 0 ? (
         <EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
       ) : (
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+            {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
+              : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}
             {useVirtual && designBeds.length === 0 && (
               <div className="mb-3 px-3 py-2 rounded-xl font-sans" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold)' }}>
                 Planning without a map — one virtual 10 m² bed.{' '}
@@ -2068,7 +2175,7 @@ function FacilitatorCropsPageInner() {
             </p>}
 
             {productionSiteId && beds.length > 0 && <HarvestTargetsPanel
-              key={`harvest-targets:${productionSiteId}`}
+              key={`harvest-targets:${productionSiteId}:${planningScopeKey}`}
               siteId={productionSiteId}
               targets={plan?.harvestTargets ?? []}
               nurserySettings={plan?.nursery}
@@ -2084,6 +2191,7 @@ function FacilitatorCropsPageInner() {
                 setPlan((previous) => ({ ...(previous ?? { version: 1 as const, plantings: [] }), harvestTargets, updatedAt: Date.now() }));
               }}
               onAccept={(result) => {
+                if (!currentPlanningScopeAllowed()) return;
                 pushPlanHistory();
                 setPlan((previous) => {
                   const base = previous ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
@@ -2786,7 +2894,7 @@ function FacilitatorCropsPageInner() {
       )}
 
       {/* Crop picker modal */}
-      {pickerBedId && (
+      {allowCataloguePlanning && pickerBedId && (
         <CropPickerModal
           search={pickerSearch}
           onSearch={setPickerSearch}
@@ -2825,7 +2933,7 @@ function FacilitatorCropsPageInner() {
         onSaved={(survey) => { setSurveySnapshot({ siteId: surveySiteId, survey }); setSiteSurveyOpen(false); }}
         onClose={() => setSiteSurveyOpen(false)}
       />}
-      {activePlanting && (
+      {allowCataloguePlanning && activePlanting && (
         <PlantingPopover
           planting={activePlanting}
           bedAreaM2={bedAreaFor(activePlanting.bedId)}
@@ -2837,7 +2945,7 @@ function FacilitatorCropsPageInner() {
       )}
 
       {/* Auto-suggest: questionnaire + review */}
-      {autoPhase !== 'idle' && beds.length > 0 && (
+      {allowCataloguePlanning && autoPhase !== 'idle' && beds.length > 0 && (
         <AutoSuggestModal
           phase={autoPhase}
           goal={aGoal} onGoal={chooseGoal}

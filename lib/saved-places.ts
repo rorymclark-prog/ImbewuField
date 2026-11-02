@@ -1,8 +1,16 @@
-import { upsertPlace, removePlace, mergeItems } from './user-sync';
+import {
+  upsertPlace, removePlace, mergePlaces, upsertPlaceContextResult, DEFINITIVE_CONTEXT_REJECTIONS,
+  type PlaceContextOutcome,
+} from './user-sync';
 import { getFirebase } from './firebase/init';
 import { isSampleMode, getSandboxPlaces, upsertSandboxPlace, deleteSandboxPlace } from './sample-mode';
 import { addTombstone, readTombstones } from './local-tombstones';
-import { activeAccountLocalStorageKey } from './account-local-storage';
+import { accountLocalStorageKey, activeAccountLocalStorageKey, activeAccountUid } from './account-local-storage';
+import {
+  bindSiteContext, coordinateSiteIdForPlace, isContextBoundToPlace, normaliseSiteCountryContext, type SiteCountryContext,
+} from './international/site-context';
+import { placeRevision, sameSiteContext, withoutStaleSiteContext } from './international/place-context-merge';
+import { canonicalCoordinateSiteId } from './site-id';
 
 export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
 
@@ -29,6 +37,8 @@ export interface SavedPlace {
   label?: PlaceLabel;
   color?: string;  // custom hex — overrides label colour when set
   notes?: string;
+  /** Explicit grower context; absent on legacy places and never inferred from language. */
+  siteCountryContext?: SiteCountryContext;
 }
 
 export const resolveColor = (p: { label?: PlaceLabel; color?: string }): string =>
@@ -73,12 +83,163 @@ export function normalisePlaces(value: unknown): SavedPlace[] {
   const byId = new Map<string, SavedPlace>();
   for (const candidate of value) {
     if (!isValidSavedPlace(candidate)) continue;
+    const { siteCountryContext: rawContext, ...rest } = candidate;
+    const siteCountryContext = normaliseSiteCountryContext(rawContext);
+    // Corrupt optional metadata must not make the farmer's original place disappear.
+    const safeCandidate = rawContext === undefined ? candidate
+      : { ...rest, ...(siteCountryContext ? { siteCountryContext } : {}) };
     const current = byId.get(candidate.id);
     if (!current || placeTimestamp(candidate) >= placeTimestamp(current)) {
-      byId.set(candidate.id, candidate);
+      byId.set(candidate.id, safeCandidate);
     }
   }
   return [...byId.values()];
+}
+
+export type SiteContextSaveResult =
+  | { status: 'local-saved'; places: SavedPlace[] }
+  | { status: 'missing-site' | 'invalid-context' | 'storage-unavailable' };
+
+/** Later cloud outcome of one saved place's context-only update (see user-sync.ts's
+ *  PlaceContextOutcome). Reported separately because a local save is not a cloud acknowledgement.
+ *  `localConfirmation` says what happened to the local confirmation: 'rolled-back' after a
+ *  DEFINITIVE rejection (the cloud row is a different place), 'replaced' when the cloud already
+ *  held a later confirmation of the same base and that authoritative one was adopted locally, and
+ *  'kept' for offline/pending outcomes, which leave an unacknowledged local description. */
+export type SiteContextCloudReport = {
+  placeId: string;
+  outcome: PlaceContextOutcome;
+  localConfirmation: 'kept' | 'rolled-back' | 'replaced';
+};
+
+// Remove or replace exactly the confirmation this operation wrote, and only while it is still
+// current: same mounted account, same row identity (id, revision, savedAt) and the very same
+// confirmation. A newer confirmation, a whole-place edit or another account is left alone. The
+// RAW stored array is edited row-by-row so every other row — including ones the readable
+// projection would drop — is written back untouched.
+function swapLocalContext(uid: string, confirmed: SiteCountryContext, replacement: SiteCountryContext | null): boolean {
+  const base = confirmed.base;
+  if (!base || activeAccountUid() !== uid) return false;
+  try {
+    const storageKey = accountLocalStorageKey(KEY, uid);
+    const raw: unknown = JSON.parse(localStorage.getItem(storageKey) ?? '[]');
+    if (!Array.isArray(raw)) return false;
+    let changed = false;
+    const next = raw.map((row: unknown) => {
+      if (!isRecord(row) || row.id !== base.placeId) return row;
+      const current = normaliseSiteCountryContext(row.siteCountryContext);
+      if (!current || !sameSiteContext(current, confirmed)
+        || placeRevision(row as unknown as SavedPlace) !== base.revision || row.savedAt !== base.savedAt) return row;
+      const { siteCountryContext: _superseded, ...rest } = row;
+      if (replacement && !isContextBoundToPlace(replacement, row as unknown as SavedPlace)) return row;
+      changed = true;
+      return replacement ? { ...rest, siteCountryContext: replacement } : rest;
+    });
+    if (!changed) return false;
+    localStorage.setItem(storageKey, JSON.stringify(next));
+    notify();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Deletion markers decide whether a site still exists, so an unreadable marker map must stop a
+// metadata write rather than read as "nothing was deleted" (local-tombstones' own reader fails open
+// by design for its merge callers).
+function readTombstonesStrict(storageKey: string): Record<string, number> | null {
+  const raw = localStorage.getItem(storageKey);
+  if (raw === null) return {};
+  let parsed: unknown;
+  try { parsed = JSON.parse(raw); } catch { return null; }
+  if (!isRecord(parsed)) return null;
+  for (const value of Object.values(parsed)) {
+    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) return null;
+  }
+  return readTombstones(storageKey);
+}
+
+/** Read the current account's places at the moment of confirmation. Never accept an
+ * old place object from the editor: it could recreate a deletion or overwrite a move.
+ *
+ * Context is a metadata edit: it keeps each place's `updatedAt`, so it can never outrank a
+ * deletion or a newer move/notes edit made elsewhere, and the cloud copy is changed only by the
+ * context-only transaction (never by a whole-place upsert). Each alias is bound independently to
+ * its own (id, revision, savedAt) — the form's transient context is never stored unbound. It is
+ * not a cleanup or migration: the raw stored array is updated row-by-row, so unrelated rows
+ * (even malformed ones the readable projection hides) survive byte-for-byte in meaning, and a
+ * stored value that is not an array is refused rather than rewritten.
+ * `onCloudReport`, when given, receives each place's later cloud outcome — 'applied'/'unchanged'
+ * are the only acknowledgements, 'unavailable' etc. are pending, a definitive rejection rolls
+ * back the still-current local confirmation and a superseded one adopts the cloud's later winner.
+ * Reports are dropped unless the mounted owner AND the Firebase user still equal the captured one. */
+export function updateSiteCountryContext(
+  siteId: string, value: unknown, onCloudReport?: (report: SiteContextCloudReport) => void,
+): SiteContextSaveResult {
+  const canonical = canonicalCoordinateSiteId(siteId);
+  const context = normaliseSiteCountryContext(value);
+  if (!canonical || !context || context.siteId !== canonical) return { status: 'invalid-context' };
+  if (typeof window === 'undefined') return { status: 'storage-unavailable' };
+  try {
+    const sample = isSampleMode();
+    const raw: unknown = sample ? null : JSON.parse(localStorage.getItem(activeAccountLocalStorageKey(KEY)) ?? '[]');
+    if (!sample && !Array.isArray(raw)) return { status: 'storage-unavailable' };
+    const current = sample ? normalisePlaces(getSandboxPlaces()) : normalisePlaces(raw);
+    const tombstones = sample ? {} : readTombstonesStrict(activeAccountLocalStorageKey(DELETED_KEY));
+    if (!tombstones) return { status: 'storage-unavailable' };
+    const aliases = current.filter(place => coordinateSiteIdForPlace(place) === canonical);
+    if (!aliases.length || aliases.some(place => tombstones[place.id]
+      && tombstones[place.id] > placeTimestamp(place))) return { status: 'missing-site' };
+    const bound = new Map<string, SiteCountryContext>();
+    for (const place of aliases) {
+      const own = bindSiteContext(context, place);
+      if (!own) return { status: 'storage-unavailable' };
+      bound.set(place.id, own);
+    }
+    let updated: SavedPlace[];
+    if (sample) {
+      updated = current.map(place => bound.has(place.id)
+        ? { ...place, siteCountryContext: bound.get(place.id) } : place);
+      for (const place of updated) if (bound.has(place.id)) upsertSandboxPlace(place);
+    } else {
+      // Only the row whose identity the confirmation was bound to is touched; every other raw
+      // row (other sites, stale duplicates of the same id, malformed rows) is kept as stored.
+      const next = (raw as unknown[]).map(row => {
+        if (!isValidSavedPlace(row)) return row;
+        const own = bound.get(row.id);
+        return own && own.base?.revision === placeRevision(row) && own.base.savedAt === row.savedAt
+          ? { ...row, siteCountryContext: own } : row;
+      });
+      localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(next));
+      updated = normalisePlaces(next);
+    }
+    notify();
+    // Use the same mounted owner as the local namespace during an auth transition.
+    // Existing sync owns transport, conflict handling and retry; this is not a cloud ack.
+    const uid = sample ? null : activeAccountUid();
+    if (uid) {
+      for (const [placeId, confirmed] of bound) {
+        upsertPlaceContextResult(uid, confirmed)
+          .then(({ outcome, authoritative }) => {
+            // A late result for a previous account must neither mutate nor report into the new
+            // one. Both guards matter: a transition where only the mounted owner or only the
+            // Firebase user has moved is not this operation's account any more.
+            if (outcome === 'account-changed' || activeAccountUid() !== uid || currentUid() !== uid) return;
+            let localConfirmation: SiteContextCloudReport['localConfirmation'] = 'kept';
+            if (DEFINITIVE_CONTEXT_REJECTIONS.includes(outcome) && swapLocalContext(uid, confirmed, null)) {
+              localConfirmation = 'rolled-back';
+            } else if (outcome === 'superseded' && authoritative && swapLocalContext(uid, confirmed, authoritative)) {
+              localConfirmation = 'replaced';
+            }
+            onCloudReport?.({ placeId, outcome, localConfirmation });
+          })
+          .catch(() => {});
+      }
+    }
+    return { status: 'local-saved', places: updated };
+  } catch {
+    return { status: 'storage-unavailable' };
+  }
 }
 
 export function loadPlaces(): SavedPlace[] {
@@ -101,7 +262,10 @@ function currentUid(): string | undefined {
 
 export function savePlace(place: SavedPlace): SavedPlace[] {
   if (!isValidSavedPlace(place)) throw new Error('Invalid saved place');
-  const stamped: SavedPlace = { ...place, updatedAt: Date.now() };
+  // A whole-place save is a deliberate edit that mints a NEW revision. A country confirmation is
+  // bound to the exact revision it described, so a copy carried in from the old row (including a
+  // deliberate re-add of the same id) is dropped and the grower must confirm the place again.
+  const stamped: SavedPlace = withoutStaleSiteContext({ ...place, updatedAt: Date.now() });
   if (isSampleMode()) {
     const updated = upsertSandboxPlace(stamped);
     notify();
@@ -165,14 +329,13 @@ export function mergeIncomingPlaces(incoming: SavedPlace[]): SavedPlace[] {
   if (typeof window === 'undefined') return safeIncoming;
   const local = loadPlaces();
   const localDel = readTombstones(activeAccountLocalStorageKey(DELETED_KEY));
-  const { items } = mergeItems(
+  const { items } = mergePlaces(
     safeIncoming,
     local,
     {},
     localDel,
-    (p) => p.id,
-    placeTimestamp,
     Date.now(),
+    placeTimestamp,
   );
   localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(items));
   notify();
@@ -188,14 +351,17 @@ export function updatePlacePosition(id: string, lat: number, lon: number): Saved
     const current = normalisePlaces(getSandboxPlaces());
     const existing = current.find(p => p.id === id);
     if (!existing || (existing.lat === lat && existing.lon === lon)) return current;
-    const updated = upsertSandboxPlace({ ...existing, lat, lon, updatedAt: Date.now() });
+    const updated = upsertSandboxPlace(withoutStaleSiteContext({ ...existing, lat, lon, updatedAt: Date.now() }));
     notify();
     return updated;
   }
   const current = loadPlaces();
   const existing = current.find((place) => place.id === id);
   if (!existing || (existing.lat === lat && existing.lon === lon)) return current;
-  const moved: SavedPlace = { ...existing, lat, lon, updatedAt: Date.now() };
+  // Moving the pin mints a new revision at new coordinates: the old confirmation described a
+  // different place, so it is dropped here (the resolver would ignore it anyway) and cannot
+  // re-bind if the pin is later moved back.
+  const moved: SavedPlace = withoutStaleSiteContext({ ...existing, lat, lon, updatedAt: Date.now() });
   const updated = current.map(p => {
     if (p.id !== id) return p;
     return moved;
