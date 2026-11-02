@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import MenuButton from '@/components/MenuButton';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { T_en } from '@/lib/i18n';
 import { DRAFT_LANGUAGES } from '@/lib/international/locales/metadata';
@@ -35,8 +36,8 @@ export default function InternationalLocaleReviewPage() {
 
   return <main className="min-h-screen bg-[var(--bg-0)] p-4 text-[var(--text-primary)] sm:p-6">
     <div className="mx-auto max-w-5xl space-y-5 font-sans">
-      <Link href="/international" className="inline-flex min-h-11 items-center text-sm underline">International reference tools</Link>
       <header className="space-y-2">
+        <div className="flex flex-wrap items-center gap-3"><MenuButton /><Link href="/international" className="inline-flex min-h-11 items-center text-sm underline">International reference tools</Link></div>
         <h1 className="font-display text-2xl font-semibold">Language draft review</h1>
         <p className={note}>French, Spanish, Portuguese and Swahili drafts for {SOURCE_MESSAGES.length} existing interface messages. Every draft needs fluent human review. This route compares them with the current English source.</p>
         <p className="rounded-xl border border-[var(--border)] bg-[var(--bg-1)] p-3 text-sm">Review workspace only. The app’s existing language choices, lessons, reports and offline packs retain their current support. Translated labels do not establish locally reviewed farming guidance.</p>

@@ -34,6 +34,10 @@ export type PageTitleLanguage='zu'|'st'|'ts'|'ve';
 export interface PageTitleDraft {english:string;zu?:string;st?:string;ts?:string;ve?:string}
 /** Unreviewed machine drafts. The packet records exact source metadata and reused UI authorities. */
 export const PAGE_TITLE_DRAFTS:readonly PageTitleDraft[]=[
+ // International review metadata: source-paired UNREVIEWED drafts; no fluent review claimed.
+ {"english":"Country evidence review — ImbewuField","zu":"Ukubuyekeza ubufakazi bamazwe — ImbewuField","st":"Tlhahlobo ya bopaki ba dinaha — ImbewuField","ts":"Nkambisiso wa vumbhoni bya matiko — ImbewuField","ve":"U ṱola vhuṱanzi ha mashango — ImbewuField"},
+ {"english":"Language draft review — ImbewuField","zu":"Ukubuyekeza izinhlaka zezilimi — ImbewuField","st":"Tlhahlobo ya meralo ya dipuo — ImbewuField","ts":"Nkambisiso wa mipfapfarhuto ya tindzimi — ImbewuField","ve":"U ṱola mvetamveto dza nyambo — ImbewuField"},
+ {"english":"Project workflow review — ImbewuField","zu":"Ukubuyekeza ukuhamba komsebenzi wephrojekthi — ImbewuField","st":"Tlhahlobo ya tatelano ya mosebetsi wa projeke — ImbewuField","ts":"Nkambisiso wa mafambiselo ya phurojeke — ImbewuField","ve":"U ṱola matshimbidzele a thandela — ImbewuField"},
  {english:'Printable plan — ImbewuField',zu:'Uhlelo oluphrintekayo — ImbewuField',st:'Moralo o ka printwang — ImbewuField',ts:'Pulani leyi nga printiwaka — ImbewuField',ve:'Pulane ine ya nga gandiswa — ImbewuField'},
  {english:'Invoice — ImbewuField',zu:'I-invoyisi — ImbewuField',st:'Invoese — ImbewuField',ts:'Invhoyisi — ImbewuField',ve:'Invhoisi — ImbewuField'},
  {english:'Farm Finance — ImbewuField teaching preview',zu:'Izimali zepulazi — umbukiso wokufundisa we-ImbewuField',st:'Ditjhelete tsa polasi — ponelopele ya ho ruta ya ImbewuField',ts:'Timali ta purasi — nkombiso wo dyondzisa wa ImbewuField',ve:'Masheleni a bulasi — mbonelaphanḓa ya u funza ya ImbewuField'},

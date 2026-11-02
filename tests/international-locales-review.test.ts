@@ -5,16 +5,25 @@ import { registerHooks } from 'node:module';
 import React from 'react';
 import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
 import ts from 'typescript';
+import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime.js';
+import { PathnameContext } from 'next/dist/shared/lib/hooks-client-context.shared-runtime.js';
 
 async function loadReviewRoute() {
   const root = new URL('../', import.meta.url).href;
-  const hooks = registerHooks({ load(url, context, nextLoad) {
-    if (url.startsWith(root) && url.endsWith('.tsx')) return { format: 'module', shortCircuit: true,
+  const hooks = registerHooks({
+    // The shared menu brings CSS modules; Node needs class names, while browser QA checks styling.
+    resolve(specifier, context, nextResolve) {
+      if (specifier.endsWith('.css')) return { url: 'data:text/javascript,' + encodeURIComponent('export default new Proxy({}, { get: (_, key) => key });'), shortCircuit: true };
+      return nextResolve(specifier, context);
+    },
+    load(url, context, nextLoad) {
+      if (url.startsWith(root) && url.endsWith('.tsx')) return { format: 'module', shortCircuit: true,
       source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
         target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
       } }).outputText };
-    return nextLoad(url, context);
-  } });
+      return nextLoad(url, context);
+    },
+  });
   try { return (await import('../app/international/locales/page.tsx')).default; }
   finally { hooks.deregister(); }
 }
@@ -28,12 +37,23 @@ function label(renderer: ReactTestRenderer, prefix: string) {
 
 test('the real review route keeps draft selection separate from formatting and English fallback until preview is requested', async () => {
   const Review = await loadReviewRoute();
-  const originalSelf = Object.getOwnPropertyDescriptor(globalThis, 'self');
-  // Next's real Link schedules browser idle work; give the Node renderer that browser global.
-  Object.defineProperty(globalThis, 'self', { configurable: true, value: globalThis });
+  const originalGlobals = new Map(['self', 'window', 'document', 'navigator', 'localStorage', 'sessionStorage'].map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  const storage = () => {
+    const rows = new Map<string, string>();
+    return { getItem: (key: string) => rows.get(key) ?? null, setItem: (key: string, value: string) => { rows.set(key, value); }, removeItem: (key: string) => { rows.delete(key); } };
+  };
+  const localStorage = storage(), sessionStorage = storage();
+  // Real menu chrome subscribes to browser events/stores, locks body scroll and reads Next's router.
+  const browser = Object.assign(new EventTarget(), { localStorage, sessionStorage });
+  const document = Object.assign(new EventTarget(), { body: { style: { overflow: '' } } });
+  for (const [key, value] of Object.entries({ self: globalThis, window: browser, document, navigator: { onLine: true }, localStorage, sessionStorage })) {
+    Object.defineProperty(globalThis, key, { configurable: true, value });
+  }
+  const router = { back() {}, forward() {}, refresh() {}, push() {}, replace() {}, prefetch() {} };
   let renderer: ReactTestRenderer;
-  act(() => { renderer = create(React.createElement(Review)); });
   try {
+    act(() => { renderer = create(React.createElement(AppRouterContext.Provider, { value: router },
+      React.createElement(PathnameContext.Provider, { value: '/international/locales' }, React.createElement(Review)))); });
     const article = (key: string) => renderer.root.findAllByType('article').find((node) => node.findAllByType('h2').some((heading) => text(heading) === key))!;
     assert.match(text(renderer!.root), /0 human reviewed/);
     assert.match(text(renderer!.root), /32 structurally valid drafts/);
@@ -57,8 +77,10 @@ test('the real review route keeps draft selection separate from formatting and E
     assert.ok(fixture); assert.equal(fixture.findAllByType('bdi').length, 2);
     assert.match(text(renderer!.root), /Arabic is not one of the four draft dictionaries/);
   } finally {
-    act(() => renderer!.unmount());
-    if (originalSelf) Object.defineProperty(globalThis, 'self', originalSelf);
-    else Reflect.deleteProperty(globalThis, 'self');
+    act(() => renderer?.unmount());
+    for (const [key, descriptor] of originalGlobals) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
+      else Reflect.deleteProperty(globalThis, key);
+    }
   }
 });

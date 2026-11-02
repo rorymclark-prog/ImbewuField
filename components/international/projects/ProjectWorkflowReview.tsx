@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import MenuButton from '@/components/MenuButton';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { useState } from 'react';
 import { PROJECT_TEMPLATES } from '@/lib/international/projects/templates';
@@ -45,7 +46,7 @@ export default function ProjectWorkflowReview() {
     <main className="h-[100dvh] overflow-y-auto px-4 py-6 sm:px-8" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
       <div className="mx-auto max-w-5xl space-y-6 pb-28">
         <header className="space-y-3">
-          <Link href="/international" className="inline-flex min-h-[44px] items-center underline">International foundation</Link>
+          <div className="flex flex-wrap items-center gap-3"><MenuButton /><Link href="/international" className="inline-flex min-h-[44px] items-center underline">International foundation</Link></div>
           <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Grower project references · English review draft</p>
           <h1 className="text-3xl font-semibold">Build the evidence around the grower’s work</h1>
           <p>Choose a workflow, inspect the records it needs and try the evidence checks. Country-specific farming support requires separate review.</p>

@@ -1,6 +1,11 @@
 # Verified Shortlist (provisional)
 
-**Status: needs-review.** Seven public official sources whose primary page, or for one source an API response, was fetched on **2026-11-01 at about 20:06 UTC**. Fetch facts (HTTP status, bytes, SHA-256, requested and effective URL) come **only** from the coordinator's machine-written [`verified-receipts.json`](verified-receipts.json), which I did not write. Capability, licence, authentication and cadence come from the page bodies referenced by those receipts. The relevant fetched bodies were inspected during research; temporary local paths have been omitted from the publication receipts. Anything the fetched page does not state is **UNKNOWN**.
+**Coordinator review, 2 November 2026:** accepted for limited publication as a dated
+source-discovery handoff. Source fit, current service status, dataset reuse and
+local agronomy still require separate review before implementation. The original
+researcher's first-person provenance below records that research pass.
+
+Seven public official sources whose primary page, or for one source an API response, was fetched on **2026-11-01 at about 20:06 UTC**. Fetch facts (HTTP status, bytes, SHA-256, requested and effective URL) come **only** from the coordinator's machine-written [`verified-receipts.json`](verified-receipts.json), which I did not write. Capability, licence, authentication and cadence come from the page bodies referenced by those receipts. The relevant fetched bodies were inspected during research; temporary local paths have been omitted from the publication receipts. Anything the fetched page does not state is **UNKNOWN**.
 
 ## What "verified" means here
 

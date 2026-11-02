@@ -1,6 +1,10 @@
 # Regional research publication index
 
-Status: needs review. The [shortlist](VERIFIED-SHORTLIST.md) covers seven official
+Status: coordinator reviewed for limited source-discovery publication on
+2 November 2026. This accepts the dated research handoff, not a source integration,
+reuse permission, country launch or local agronomy approval.
+
+The [shortlist](VERIFIED-SHORTLIST.md) covers seven official
 source families with nine [machine-written HTTP receipts](verified-receipts.json).
 The coordinator independently checked the original bodies against their exact UTC
 timestamps, status, byte counts and hashes. The publication copy removes only

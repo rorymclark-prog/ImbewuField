@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import MenuButton from '@/components/MenuButton';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { COUNTRY_PROFILES, COUNTRY_RESEARCH_QUEUE, EUROPE_RESEARCH_NOTE } from '@/lib/international/countries/registry';
 import { evaluateCountryReadiness, sourceEvidenceState } from '@/lib/international/countries/readiness';
@@ -40,8 +41,9 @@ export default function CountryReview() {
     finally { setLoading(false); }
   }
   return <div className={styles.page}><main className={styles.main}>
-    <Link href="/home" className={styles.link}>← ImbewuField home</Link>
-    <header className={styles.header}><p className={styles.eyebrow}>International foundation · English review draft</p>
+    <header className={styles.header}>
+      <div className="flex flex-wrap items-center gap-3"><MenuButton /><Link href="/home" className={styles.link}>← ImbewuField home</Link></div>
+      <p className={styles.eyebrow}>International foundation · English review draft</p>
       <h1>Local evidence comes first.</h1>
       <p>Explore provisional country dossiers and try a public climate reference. Growers remain the primary users. These pilots do not enable locally reviewed crop recommendations.</p>
     </header>

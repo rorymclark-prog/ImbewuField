@@ -1,7 +1,8 @@
 # International foundations integration review — 2 November 2026
 
-This additive milestone integrates the country, localization and project reference
-lanes from the existing production baseline `0f34e3043`. Codex implemented the
+This additive milestone initially integrated the country, localization and project reference
+lanes from production baseline `0f34e3043`; the continuation below includes the
+released nursery planner. Codex implemented the
 three source lanes and this integration; AGY supplied only the separate regional
 research leads. No AGY implementation or successful native coding swarm is claimed.
 
@@ -39,7 +40,7 @@ files; every prior test, script and dependency remains unchanged. The new releas
 line is within 90 characters and the existing update guide opens `/international`.
 Source-paired notice/tour drafts in zu/st/ts/ve are **UNREVIEWED AI drafts**; their
 packet is `docs/audits/2026-11-02/international-foundations-release-drafts.json`.
-The release note is stamped from the existing baseline HEAD, never PLAN_VERSION.
+The release note is stamped from the integrated coordinator HEAD, never PLAN_VERSION.
 
 The regional publication bundle contains only the compact shortlist, sanitized
 receipts and short index. All nine original receipt timestamps, statuses, byte
@@ -95,7 +96,60 @@ they are not hosted-preview or production evidence.
 
 ## Remaining release gates
 
-Current-head full-suite/security CI and hosted-preview verification remain pending.
-The coordinator owns those gates and merge decisions. The rendered observations
-above were made by the coordinator; this integration writer did not inspect images.
-No production build, paid request, merge or production deployment was performed.
+These are historical local observations from the first delivery. The coordinator
+later verified the hosted preview at `231a561`: all three routes loaded at desktop
+and 390-pixel phone widths, the public NASA demonstration returned twelve months,
+Other cleared it, Portuguese singular draft preview required opt-in, and the
+commercial market-garden workflow rejected estimated-only evidence. Screenshots
+were actually inspected and remain excluded from commits.
+
+## Continuation — full-CI findings and nursery integration
+
+The first full PR run at `231a561` reported 6,294 passes, three failures and one
+pre-existing TODO. The failures identified real omissions: the locale header had
+no shared menu control, the locale route had no distinct server title, and new
+static country/project titles were missing their source-bound native title rows.
+No failed assertion or route exemption was removed.
+
+All three new headers now use the existing `MenuButton`, while retaining their
+in-flow return controls. A thin locale layout provides its server metadata, and
+the three new titles use the existing em-dash convention and exact registry and
+UNREVIEWED zu/st/ts/ve source pairs. Every earlier title source/draft row remains.
+
+The real locale interaction test initially failed to load the shared menu's CSS
+under Node, then exposed its missing Next router context. Its fixture now supplies
+the established CSS class-name loader, real Next context providers and isolated
+browser events/stores; the actual menu is still mounted. All 17 original locale
+assertions are unchanged. The implementation reviewer reports a clean typecheck
+and 193/193 affected tests, including all three failed contracts, all international
+and nursery tests, and update/release/Back/navigation checks.
+
+Local merge `41def1087` brings released nursery production `83e0e30a9` into the
+international branch. Both release notices, both native draft sets and all ten
+new nursery/international test files were retained. No prior test registration,
+script or dependency was removed. The source-discovery publication index now
+records the coordinator's bounded research review; the receipts remain unchanged.
+
+The [next-country rollout backlog](NEXT-COUNTRY-ROLLOUT.md) separates region/source,
+human-review, storage, provider, language, evidence and release gates. It also
+defines a bounded future AGY research assignment; AGY is currently finished and
+stopped, not an active implementation writer.
+
+The coordinator opened the actual shared menu from each corrected route locally,
+confirmed all three distinct browser titles, and inspected the locale menu and
+project header at a 390-pixel phone viewport. The project document and viewport
+both measured 390 pixels. The return links remained unobscured. These checks are
+local evidence for the correction, alongside the earlier hosted functional checks.
+
+After the final release-note stamp and rollout-document changes, the coordinator
+reran typecheck and a 24-file affected set: 174/174 tests passed, with no failures,
+cancellations, skips or TODOs. This set includes all international and nursery
+files, the three original failing contracts and release/menu/navigation checks.
+Whitespace was clean. Its overlap with the implementer's 193-test run is not
+counted as additional unique coverage.
+
+The combined final head still requires fresh hosted menu/title checks, full
+current-head CI, security and preview gates before
+merge and production verification. Issue #35 and the PR carry the exact final SHA
+and release evidence. No paid request or international production deployment is
+claimed by this document.
