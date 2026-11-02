@@ -165,14 +165,15 @@ test('server-rendered study copy renders as English until its component has moun
 
 test('/student shows one isiXhosa draft banner, not the generic note stacked on the dedicated one', () => {
   const page = read('app/student/page.tsx');
-  assert.match(page, /\{lang !== 'xh' && <LanguageDraftNote lang=\{lang\} scope="student" \/>\}/);
+  // Widened for Afrikaans, which has its own dedicated note too (tests/af-inline.test.ts pins that side).
+  assert.match(page, /\{lang !== 'xh' && (?:lang !== 'af' && )?<LanguageDraftNote lang=\{lang\} scope="student" \/>\}/);
   assert.match(page, /<span lang="xh">\{t\('xhosaUiDraftNotice'\)\}<\/span>/, 'the dedicated isiXhosa note stays');
 });
 
 test('/prices and /atlas label the English duplicate as the English source for isiXhosa and leave isiZulu and English alone', () => {
   const prices = read('app/prices/page.tsx');
   assert.match(prices, /lang === 'zu' \? <>\{t\('pricesChooseCrop'\)\}<span className="block mt-1">\{translate\('en', 'pricesChooseCrop'\)\}<\/span><\/>/, 'isiZulu unchanged');
-  assert.match(prices, /lang === 'xh' && t\('pricesChooseCrop'\) !== translate\('en', 'pricesChooseCrop'\)/, 'no pair when there is no draft');
+  assert.match(prices, /(?:lang === 'xh'|\(lang === 'xh' \|\| lang === 'af'\)) && t\('pricesChooseCrop'\) !== translate\('en', 'pricesChooseCrop'\)/, 'no pair when there is no draft');
   assert.match(prices, /<span lang="en" className="block mt-1">\{inlineText\(lang, 'English source:'\)\} \{translate\('en', 'pricesChooseCrop'\)\}<\/span>/);
   const atlas = read('components/atlas/AtlasExplorer.tsx');
   assert.equal((atlas.match(/\{isXhosa \? `\$\{inlineText\(lang, 'English source:'\)\} ` : ''\}/g) ?? []).length, 2, 'both English duplicates are labelled');
@@ -200,14 +201,15 @@ test('the planner names the month once in isiXhosa counts and messages (the head
 test('the funder cohort month axis uses the isiXhosa short month names for isiXhosa only', async () => {
   const { recordsMonthShort } = await import('@/lib/records-months');
   const charts = read('components/funder/CohortCharts.tsx');
-  assert.match(charts, /lang === 'xh'\s*\n\s*\? series\.months\.map\(\(m\) => \(\{ \.\.\.m, label: recordsMonthShort\(lang, m\.month\), longLabel: `\$\{recordsMonthShort\(lang, m\.month\)\} \$\{m\.year\}` \}\)\)\s*\n\s*: series\.months/);
+  // Widened for Afrikaans: an extra branch between the isiXhosa one and the untouched English labels.
+  assert.match(charts, /lang === 'xh'\s*\n\s*\? series\.months\.map\(\(m\) => \(\{ \.\.\.m, label: recordsMonthShort\(lang, m\.month\), longLabel: `\$\{recordsMonthShort\(lang, m\.month\)\} \$\{m\.year\}` \}\)\)\s*\n\s*: (?:lang === 'af'[\s\S]*?\}\)\)\s*\n\s*: )?series\.months/);
   assert.deepEqual([12, 1, 10].map((m) => recordsMonthShort('xh', m)), ['Dis', 'Jan', 'Okt']);
   assert.deepEqual([12, 1, 10].map((m) => recordsMonthShort('en', m)), ['Dec', 'Jan', 'Oct']);
 });
 
 test('pages that showed isiXhosa drafts with no notice now carry the shared draft note, for isiXhosa only', () => {
   const note = read('components/XhosaDraftNote.tsx');
-  assert.match(note, /if \(lang !== 'xh'\) return null;/);
+  assert.match(note, /if \(lang !== 'xh'(?: && lang !== 'af')?\) return null;/);
   assert.match(note, /<LanguageDraftNote lang=\{lang\} scope=\{scope\} \/>/);
   const pages: Array<[string, string]> = [
     ['app/contact/page.tsx', 'contact'], ['app/design/page.tsx', 'design'], ['app/network/page.tsx', 'network'],

@@ -154,6 +154,24 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   `zu-11-ux-18-produce-label`, `report-ui-localization`.
 - **Blind review of the 1 Nov drafts:** 858 money book, site report and release-note drafts back-translated
   before seeing the English; 24 repairs (`docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-2026-11-01/`).
+- **Second browser-sweep fixes (2 Nov):** the Afrikaans mirror of the isiXhosa fixes in `fb3a8d7`, merged in.
+  `lib/task-title-draft.ts` now serves both languages (the Afrikaans verb table moved out of
+  `app/cropplan/page.tsx`), so Home's upcoming tasks and the planner read the same ("Oes Uie",
+  "Bedding 1 · Hierdie maand te doen"; a bed the farmer named stays as typed). The planner's count line, month
+  buttons and empty message name the month once in Afrikaans. The Studies Design notice shows one Afrikaans
+  notice (its sentence was never drafted, so it used to show the English twice) and `/student` shows one banner,
+  not two. `XhosaDraftNote` (name kept for the pinned type-floor entry) now covers Afrikaans on /contact,
+  /design, /network, /partners, /vision, the sample gardens and the guide pages. `/prices` labels the English
+  line "Engelse bron:"; `CohortTimeline` uses `recordsBookMonthShort('af', …)` for its month axis (the shared
+  month tables stay English for Afrikaans). New shard `af-inline/g51-ui-gaps-2.ts` (8 drafts: the six
+  isiXhosa `g49` keys plus "Afrikaans draft." and the Design notice sentence). 95 Afrikaans Manual figure
+  captions in `content/manual/figures.json` (ids, paths, figure numbers and Latin names unchanged) and the
+  credit "Illustrasie: met AI vir hierdie handleiding gemaak" (`figureCredit`). The `/records` tab notice only
+  ever rendered for Sesotho, Tshivenda, Xitsonga and isiXhosa, so it makes no English-tabs claim for Afrikaans.
+  `tests/af-studies-history-checks.ts` moved to the new isiXhosa predecessor bytes
+  (`tests/fixtures/student-page-before-af-studies.tsx.txt`) and the new live page hash. Tests: `af-inline`,
+  `farm-memory-task-controls`, `manual`, `crop-plan-page-ux`; the isiXhosa pins on `/student`, `/prices`, the
+  cohort axis and the draft note were widened, not weakened.
 - **isiXhosa fix found on the way:** the invoice page told isiXhosa farmers the buyer's invoice "stays in
   English", but it uses `DOCUMENT_COPY.xh`. The note now says so (fixed on #1090).
 - **Staff and map screens:** the M&E dashboard and overview, sector overlay compass words, rainfall chart

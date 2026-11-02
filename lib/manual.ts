@@ -252,16 +252,21 @@ export function figureCaption(figure: ManualFigure, lang: ManualLang): { text: s
   return own && own.trim() ? { text: own, lang } : { text: figure.caption.en, lang: 'en' };
 }
 
-// The one credit line every picture carries is stored in English in figures.json. isiXhosa readers get it
-// in isiXhosa (an unreviewed machine draft, like the xh chapters); every other language keeps the stored text
-// exactly, and a credit with no entry here (a photo credit, a permission line) is shown as stored.
+// The one credit line every picture carries is stored in English in figures.json. isiXhosa and Afrikaans readers
+// get it in their language (unreviewed machine drafts, like the xh and af chapters); every other language keeps the
+// stored text exactly, and a credit with no entry here (a photo credit, a permission line) is shown as stored.
 const FIGURE_CREDIT_XH: Record<string, string> = {
   'Illustration: made with AI for this manual': 'Umfanekiso: wenziwe nge-AI kule ncwadi',
+};
+const FIGURE_CREDIT_AF: Record<string, string> = {
+  'Illustration: made with AI for this manual': 'Illustrasie: met AI vir hierdie handleiding gemaak',
 };
 
 export function figureCredit(figure: ManualFigure, lang: ManualLang): string | undefined {
   if (!figure.credit) return figure.credit;
-  return lang === 'xh' ? FIGURE_CREDIT_XH[figure.credit] ?? figure.credit : figure.credit;
+  if (lang === 'xh') return FIGURE_CREDIT_XH[figure.credit] ?? figure.credit;
+  if (lang === 'af') return FIGURE_CREDIT_AF[figure.credit] ?? figure.credit;
+  return figure.credit;
 }
 
 /** Figures for one chapter, grouped by the section they follow. */

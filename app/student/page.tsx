@@ -826,9 +826,9 @@ export default function StudentPage() {
         {/* zu-04: the one shared language-draft note (components/LanguageDraftNote.tsx), once under
             the header, never inside a card or button; the course-specific line below it says which
             lessons carry isiZulu drafts. */}
-        {/* isiXhosa carries its own dedicated note just below (xhosaUiDraftNotice, with its English line), so the
+        {/* isiXhosa and Afrikaans carry their own dedicated note just below (with its English line), so the
             generic note would stack a second draft banner under the first. */}
-        {lang !== 'xh' && <LanguageDraftNote lang={lang} scope="student" />}
+        {lang !== 'xh' && lang !== 'af' && <LanguageDraftNote lang={lang} scope="student" />}
         {lang === 'zu' && (
           <p className="font-sans" role="note" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
             {t('studentZuluCourseLanguageNote')}

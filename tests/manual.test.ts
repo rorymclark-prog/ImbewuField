@@ -248,8 +248,38 @@ test('the picture credit is isiXhosa for isiXhosa readers and stored text for ev
   for (const f of figures) {
     assert.equal(f.credit, 'Illustration: made with AI for this manual');
     assert.equal(figureCredit(f, 'xh'), 'Umfanekiso: wenziwe nge-AI kule ncwadi');
-    for (const lang of MANUAL_LANGS.filter((l) => l !== 'xh')) assert.equal(figureCredit(f, lang), f.credit, `${lang}: credit unchanged`);
+    // Widened for Afrikaans, which has its own credit line (pinned in the Afrikaans test below).
+    for (const lang of MANUAL_LANGS.filter((l) => l !== 'xh' && l !== 'af')) assert.equal(figureCredit(f, lang), f.credit, `${lang}: credit unchanged`);
   }
   assert.equal(figureCredit({ ...figures[0], credit: 'Photo: Imbewu' }, 'xh'), 'Photo: Imbewu', 'an unlisted credit is shown as stored');
   assert.equal(figureCredit({ ...figures[0], credit: undefined }, 'xh'), undefined);
+});
+
+// Afrikaans figure captions and the shared credit line (an unreviewed machine draft, like the af chapters).
+test('every figure has an Afrikaans caption that keeps the English caption\'s numbers and Latin names', () => {
+  assert.equal(figures.length, 95);
+  for (const f of figures) {
+    const af = f.caption.af;
+    assert.ok(typeof af === 'string' && af.trim(), `${f.id}: missing Afrikaans caption`);
+    assert.notEqual(af, f.caption.en, `${f.id}: Afrikaans caption is still the English one`);
+    assert.deepEqual(figureCaption(f, 'af'), { text: af, lang: 'af' });
+    const keep = (text: string) => (text.match(/\d+(?: \d{3})?|\(([A-Z][a-z]+ [a-z]+)\)/g) ?? []).map((m) => m.replace(/^\(|\)$/g, ''));
+    for (const token of keep(f.caption.en)) assert.ok(af!.includes(token), `${f.id}: Afrikaans caption lost "${token}"`);
+    // The digits are the same set, so nothing was invented or dropped.
+    assert.deepEqual((af!.match(/\d+/g) ?? []).sort(), (f.caption.en.match(/\d+/g) ?? []).sort(), `${f.id}: digits differ`);
+    // English, isiZulu and isiXhosa are untouched.
+    assert.equal(figureCaption(f, 'en').text, f.caption.en);
+    assert.equal(figureCaption(f, 'zu').text, f.caption.zu);
+    assert.equal(figureCaption(f, 'xh').text, f.caption.xh);
+  }
+});
+
+test('the picture credit is Afrikaans for Afrikaans readers, isiXhosa for isiXhosa readers and stored text for every other language', () => {
+  for (const f of figures) {
+    assert.equal(figureCredit(f, 'af'), 'Illustrasie: met AI vir hierdie handleiding gemaak');
+    assert.equal(figureCredit(f, 'xh'), 'Umfanekiso: wenziwe nge-AI kule ncwadi');
+    for (const lang of MANUAL_LANGS.filter((l) => l !== 'xh' && l !== 'af')) assert.equal(figureCredit(f, lang), f.credit, `${lang}: credit unchanged`);
+  }
+  assert.equal(figureCredit({ ...figures[0], credit: 'Photo: Imbewu' }, 'af'), 'Photo: Imbewu', 'an unlisted credit is shown as stored');
+  assert.equal(figureCredit({ ...figures[0], credit: undefined }, 'af'), undefined);
 });
