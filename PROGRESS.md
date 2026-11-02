@@ -65,6 +65,9 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2 Nov 2026 — Afrikaans: blind review of the Design Studio leftovers shard (g56)
+All 101 drafts back-translated blind; 1 repair (pig "wallow" had become "drinking place"), 6 minor. Record: `docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-g56-2026-11-02/`.
+
 ### 31 Oct 2026 — Afrikaans: the whole app as a labelled machine draft (PR #1161, stacked on #1090)
 All unreviewed machine drafts; English is the authority and is shown beside each draft where isiXhosa
 shows it. English, isiZulu and isiXhosa output are unchanged.

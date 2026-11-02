@@ -99,7 +99,7 @@ const drafts: Record<string, string> = {
   "Plant on-contour with slips 10-15 cm apart to stop erosion on slopes. Use the sterile, non-seeding cultivar so the line holds ground rather than spreading as a seeding grass.": "Plant op die kontoer met lote 10-15 cm uitmekaar om erosie op hellings te stop. Gebruik die steriele kultivar wat nie saad maak nie, sodat die lyn die grond vashou eerder as om te versprei as 'n gras wat saad maak.",
   "Face entrance east, away from foot traffic; keep 5-10 m clear approach path.": "Laat die ingang oos kyk, weg van voetverkeer; hou 'n oop toegangspad van 5-10 m.",
   "Sturdy fencing essential — goats browse anything reachable, keep away from young trees.": "Stewige heinings is noodsaaklik — bokke vreet alles wat hulle kan bykom, hou weg van jong bome.",
-  "Downhill of water sources, with shade and a wallow; strong odour control needed near house.": "Afdraand van waterbronne, met skaduwee en 'n suiplek; sterk reukbeheer is nodig naby die huis.",
+  "Downhill of water sources, with shade and a wallow; strong odour control needed near house.": "Afdraand van waterbronne, met skaduwee en 'n modderbad om in te wentel; sterk reukbeheer is nodig naby die huis.",
   "Pair with the orchard for natural snail and pest control.": "Koppel aan die boord vir natuurlike slak- en plaagbeheer.",
   "Raise off ground; manure drops straight to a compost or worm bin below.": "Verhoog van die grond af; mis val reguit in 'n kompos- of wurmbak daaronder.",
   "Place at the kraal fence line for easy refilling without entering the pen.": "Plaas by die kraalheining sodat dit maklik gevul kan word sonder om die kraal binne te gaan.",
