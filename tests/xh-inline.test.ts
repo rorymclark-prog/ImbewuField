@@ -419,7 +419,9 @@ test('g52: the Design canvas zoom, fit and base controls and the sector notes ov
   assert.match(canvas, /inlineTemplate\(lang, 'Base: \{mode\}\. Switch base\.', null, \{ mode: inlineText\(lang, basePhoto\.mode\) \}\)/);
   assert.match(canvas, /: `Base: \$\{basePhoto\.mode\}\. Switch base\.`\}/, 'the English aria-label is the same template as before');
   assert.match(canvas, /inlineTemplate\(lang, 'Base: \{mode\}\. Switch to \{next\}\.'/);
-  assert.match(canvas, /\{effectiveWindNote \?\? \(isInlineDraftLang\(lang\) \? inlineText\(lang, sectorModel\.dataNotes\[0\]\) : sectorModel\.dataNotes\[0\]\)\}/);
+  // Widened, not weakened: the chip still reads the on-site wind note first, then the strongest sector note; the note now goes through
+  // sectorNoteText, which looks the whole note up exactly as before (inlineText) and also fills the figure into the three notes that carry one.
+  assert.match(canvas, /\{effectiveWindNote \?\? sectorNoteText\(lang, sectorModel\.dataNotes\[0\]\)\}/);
   assert.equal(inlineText('xh', 'Zoom in'), 'Sondeza kufuphi');
   assert.equal(inlineTemplate('xh', 'Base: {mode}. Switch base.', null, { mode: inlineText('xh', 'satellite') }), 'Isiseko: isathelayithi. Tshintsha isiseko.');
   assert.equal(inlineTemplate('en', 'Base: {mode}. Switch base.', null, { mode: 'satellite' }), 'Base: satellite. Switch base.');
@@ -722,4 +724,144 @@ test('records charts: the shared /records LanguageDraftNote is the one isiXhosa 
     assert.equal(quiet.length, all.length, `${file}: every caption defers to the page-level note`);
   }
   assert.match(read('app/records/page.tsx'), /<LanguageDraftNote lang=\{lang\} scope="records" \/>/);
+});
+
+
+// ── g54: Design Studio leftovers (palette tips, Layers panel labels, sector notes with figures) ────────────────
+test('g54: every palette element tip has an isiXhosa draft that keeps its figures and botanical names; English tips are unchanged for every other language', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const { ELEMENT_CATALOG } = await import('@/lib/design-elements');
+  const tips = [...new Set(ELEMENT_CATALOG.map((def) => def.tip))];
+  assert.ok(tips.length >= 79, 'the palette still has its tips');
+  const figures = (text: string) => (text.match(/[~]?\d+(?:[.,:\-x×]\d+)*/g) ?? []).map((f) => f.replace(/^~/, '')).sort().join(',');
+  for (const tip of tips) {
+    const draft = xhInlineDraft(tip);
+    assert.ok(draft && draft !== tip, `no isiXhosa draft for the tip ${JSON.stringify(tip)}`);
+    assert.equal(figures(draft!), figures(tip), `figures changed in the draft of ${JSON.stringify(tip)}`);
+    assert.equal(inlineText('xh', tip), draft);
+    for (const lang of ['en', 'zu', 'st', 'ts', 've']) assert.equal(inlineText(lang, tip), tip, `${lang} keeps the English tip`);
+    // Latin species names in the English stay in the draft, whole.
+    for (const botanical of tip.match(/\([A-Z][a-z]+ [a-z]+\)/g) ?? []) assert.ok(draft!.includes(botanical), `${botanical} is kept in the draft`);
+  }
+  assert.ok(xhInlineDraft(ELEMENT_CATALOG.find((def) => def.id === 'tree_wild_plum')!.tip)!.includes('umgwenya'));
+  // Same vocabulary as the existing drafts: swale -> umsele, level -> -linganayo, downwind -> ngakwicala lapho umoya uya khona.
+  const tip = (id: string) => xhInlineDraft(ELEMENT_CATALOG.find((def) => def.id === id)!.tip)!;
+  assert.match(tip('jojo_1000'), /esilinganayo/);
+  assert.match(tip('chicken_coop'), /ngakwicala lapho umoya uya khona/);
+  assert.match(tip('kraal'), /ngakwicala lapho umoya uya khona/);
+  assert.match(tip('pollinator_strip'), /ukunyusa ukuthwala kweziqhamo/);
+  assert.match(tip('berm'), /umsele obhuliweyo/);
+  // The hint line and the element lesson both read the same English tip through the same lookup.
+  const palette = read('components/design/DesignPalette.tsx');
+  assert.match(palette, /<strong>\{designElementDisplayName\(hintDef, lang\)\}:<\/strong> \{inlineText\(lang, hintDef\.tip\)\}/);
+  assert.match(read('lib/lesson-registry.ts'), /tip: def\.tip,/);
+  assert.match(read('components/design/LessonPanel.tsx'), /const tip = read\(lesson\.tip\)/);
+});
+
+test('g54: the Layers panel button names read isiXhosa for a draft language and the exact same English as before for every other language', () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const NON_DRAFT = ['en', 'zu', 'st', 'ts', 've'];
+  const cases: Array<[string, Record<string, string | number>, string, string]> = [
+    ['Hide {name}', { name: 'Water' }, 'Fihla Water', 'Hide Water'],
+    ['Show {name}', { name: 'Water' }, 'Bonisa Water', 'Show Water'],
+    ['{name} has no editable objects on this step', { name: 'Zones' }, 'Zones: akukho zinto zinokuhlelwa kweli nyathelo', 'Zones has no editable objects on this step'],
+    ['Deselect all {n} objects on {name}', { n: 7, name: 'Water' }, 'Susa ukukhetha zonke izinto (7): Water', 'Deselect all 7 objects on Water'],
+    ['Select all {n} objects on {name}', { n: 7, name: 'Water' }, 'Khetha zonke izinto (7): Water', 'Select all 7 objects on Water'],
+    ['Deselect all {n} {name} objects', { n: 2, name: 'Tap points' }, 'Susa ukukhetha zonke izinto (2): Tap points', 'Deselect all 2 Tap points objects'],
+    ['Select all {n} {name} objects', { n: 2, name: 'Tap points' }, 'Khetha zonke izinto (2): Tap points', 'Select all 2 Tap points objects'],
+    ['Lock {name} on the map', { name: 'Water' }, 'Thintela ukushukunyiswa kwimephu: Water', 'Lock Water on the map'],
+    ['Allow moving {name} on the map', { name: 'Water' }, 'Vumela ukushukunyiswa kwimephu: Water', 'Allow moving Water on the map'],
+    ['Collapse {name} controls', { name: 'Water' }, 'Vala izilawuli: Water', 'Collapse Water controls'],
+    ['Expand {name} controls', { name: 'Water' }, 'Vula izilawuli: Water', 'Expand Water controls'],
+    ['{n} of {total} selected', { n: 3, total: 12 }, '3 kwezi-12 zikhethiwe', '3 of 12 selected'],
+  ];
+  for (const [template, vars, xhosa, english] of cases) {
+    assert.equal(inlineTemplate('xh', template, null, vars), xhosa, template);
+    for (const lang of NON_DRAFT) assert.equal(inlineTemplate(lang, template, null, vars), english, `${lang}: ${template}`);
+  }
+  // The water layer's own groups.
+  for (const [english, xhosa] of [['JoJo tanks & rain barrels', 'Iitanki ze-JoJo neebhareli zemvula'], ['Tap points', 'Iindawo zamathepi'], ['Pipes & lines', 'Imibhobho nemigca'], ['Drip irrigation', 'Ukunkcenkceshela ngamathontsi'], ['Swales', 'Imisele']] as const) {
+    assert.equal(inlineText('xh', english), xhosa);
+    for (const lang of NON_DRAFT) assert.equal(inlineText(lang, english), english);
+  }
+  const palette = read('components/design/DesignPalette.tsx');
+  // Every old English template literal is gone from the panel, replaced by the same words as an inlineTemplate key.
+  assert.doesNotMatch(palette, /\$\{[a-zA-Z]+ \? 'Hide' : 'Show'\}/);
+  assert.doesNotMatch(palette, /has no editable objects on this step`/);
+  assert.equal([...palette.matchAll(/inlineTemplate\(lang, childOn \? 'Hide \{name\}' : 'Show \{name\}', null, \{ name: childName \}\)/g)].length, 6, 'the eye of each group / element row, spoken twice per row');
+  assert.match(palette, /inlineTemplate\(lang, on \? 'Hide \{name\}' : 'Show \{name\}', null, \{ name: layerName \}\)/);
+  assert.match(palette, /inlineTemplate\(lang, movable \? 'Lock \{name\} on the map' : 'Allow moving \{name\} on the map', null, \{ name: layerName \}\)/);
+  assert.match(palette, /inlineTemplate\(lang, expanded \? 'Collapse \{name\} controls' : 'Expand \{name\} controls', null, \{ name: layerName \}\)/);
+  assert.match(palette, /inlineTemplate\(lang, '\{n\} of \{total\} selected', null, \{ n: selection\.selected, total: selection\.total \}\)/);
+  assert.equal([...palette.matchAll(/inlineTemplate\(lang, 'Select all \{n\} \{name\} objects'/g)].length, 3);
+  assert.match(palette, /\{childName\}<\/span>/);
+  assert.match(palette, /\{designGroupDisplayLabel\(label, lang\)\}/, 'the planting sub-heading is unchanged');
+});
+
+test('g54: sector notes that carry a figure read isiXhosa with the figure kept exactly; every other language and every note that does not fit stays English', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const { sectorNoteText, windConfirmedNoteText } = await import('@/lib/sector-note-display');
+  const { deriveSectorModel } = await import('@/lib/sector');
+  const NON_DRAFT = ['en', 'zu', 'st', 'ts', 've'];
+  // The three notes lib/sector.ts builds with a figure, produced by the real model so the sentence shape cannot drift from the helper.
+  const site = (extra: Record<string, unknown>) => ({ biome: 'Savanna', ...extra }) as never;
+  const indicative = deriveSectorModel(site({ elevation: { slopeDeg: 4, slopePct: 7, aspectDeg: 200, directionConfidence: 'site-local-indicative', sampleBaselineM: 150 } }), -26.2, 28.0);
+  const flat = deriveSectorModel(site({ elevation: { slopeDeg: 0.4, slopePct: 0.7, aspectDeg: 200, sampleBaselineM: 90 } }), -26.2, 28.0);
+  const flatDefault = deriveSectorModel(site({ elevation: { slopeDeg: 0.4, slopePct: 0.7, aspectDeg: 200 } }), -26.2, 28.0);
+  const withNote = (model: { dataNotes: string[] }, startsWith: string) => {
+    const note = model.dataNotes.find((n) => n.startsWith(startsWith));
+    assert.ok(note, `lib/sector.ts wrote a note starting ${startsWith}`);
+    return note!;
+  };
+  const slopeNote = withNote(indicative, 'Slope direction is estimated');
+  const flatNote = withNote(flat, 'Site reads ~flat');
+  const flatDefaultNote = withNote(flatDefault, 'Site reads ~flat');
+  assert.match(slopeNote, /about 150 m/);
+  assert.match(flatNote, /at this 90 m sampling/);
+  assert.match(flatDefaultNote, /at this 120 m sampling/);
+  assert.equal(sectorNoteText('xh', slopeNote), 'Icala lethambeka lilinganiselwa ngomzekelo we-SRTM wale ndawo ojikeleza malunga ne-150 m — isalathiso kuphela, alikalelwanga ngabalinganisi.');
+  assert.equal(sectorNoteText('xh', flatNote), 'Indawo ibonakala ~ityaba kwesi sikali sokuthatha umzekelo se-90 m — qinisekisa ukuhla kwayo kwindawo.');
+  assert.match(sectorNoteText('xh', flatDefaultNote), /se-120 m/);
+  // The cross-check note: the model only writes it when the site's own wind disagrees with the regional table by more than 45 degrees.
+  const windNote = 'This site’s own wind data reads 137° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.';
+  const lib = readFileSync(join(ROOT, 'lib/sector.ts'), 'utf8');
+  assert.ok(lib.includes('This site’s own wind data reads ${Math.round(disagreesDeg)}° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.'), 'lib/sector.ts still writes this sentence with the rounded bearing in the slot');
+  assert.match(sectorNoteText('xh', windNote), /^Idatha yomoya yale ndawo ibonisa umahluko we-137° kwindlela yengingqi/);
+  // Figures survive exactly, and nothing else numeric appears.
+  const figures = (text: string) => (text.match(/\d+(?:\.\d+)?/g) ?? []).join(',');
+  for (const note of [slopeNote, flatNote, flatDefaultNote, windNote]) assert.equal(figures(sectorNoteText('xh', note)), figures(note) , note);
+  // Every other language: byte-identical. A note with no draft shape, or a figure the slot cannot hold, stays English.
+  for (const note of [slopeNote, flatNote, windNote, 'Cold air settles in low spots on still, clear nights.']) {
+    for (const lang of NON_DRAFT) assert.equal(sectorNoteText(lang, note), note, `${lang} keeps the note`);
+  }
+  assert.equal(sectorNoteText('xh', 'Slope direction is estimated from a site-local SRTM sample across about many m — indicative, not surveyed.'), 'Slope direction is estimated from a site-local SRTM sample across about many m — indicative, not surveyed.');
+  assert.equal(sectorNoteText('xh', 'A note nobody drafted.'), 'A note nobody drafted.');
+  // The whole-note lookup still works for the fixed notes.
+  assert.equal(sectorNoteText('xh', 'Cold air settles in low spots on still, clear nights.'), 'Umoya obandayo uhlala kwiindawo eziphantsi ebusuku obuzolileyo, obucacileyo.');
+  // The farmer's on-site wind confirmation: direction label and date as given.
+  assert.equal(windConfirmedNoteText('xh', 'SW', '2/11/2026'), 'Umoya uqinisekisiwe kwindawo: SW (kurekhodwe 2/11/2026)');
+  assert.equal(windConfirmedNoteText('xh', 'SW', null), 'Umoya uqinisekisiwe kwindawo: SW');
+  for (const lang of NON_DRAFT) {
+    assert.equal(windConfirmedNoteText(lang, 'SW', '2/11/2026'), 'Wind confirmed on site: SW (recorded 2/11/2026)');
+    assert.equal(windConfirmedNoteText(lang, 'SW', null), 'Wind confirmed on site: SW');
+  }
+  const canvas = read('components/design/DesignCanvas.tsx');
+  assert.match(canvas, /return windConfirmedNoteText\(lang, effective\.fromLabel, when\);/);
+  assert.match(canvas, /\}, \[sectorModel, state\.localWind, lang\]\);/);
+  // SectorSummary is compiled by a module-stub test with no isiXhosa lookup in scope, so it keeps showing the model's English.
+  const summary = read('components/design/SectorSummary.tsx');
+  assert.doesNotMatch(summary, /xh-inline|sector-note-display/);
+  assert.ok(read('tests/control-icon-renderers.ts').includes("components/design/SectorSummary.tsx"), 'SectorSummary is still compiled by the module-stub harness');
+});
+
+test('g54: no English key is drafted twice with different wording across the shards', () => {
+  const seen = new Map<string, string>();
+  const g54 = readFileSync(join(SHARD_DIR, 'g54-design-leftovers.ts'), 'utf8');
+  for (const file of readdirSync(SHARD_DIR).filter((n) => n.endsWith('.ts') && n !== 'index.ts' && n !== 'g54-design-leftovers.ts')) {
+    const text = readFileSync(join(SHARD_DIR, file), 'utf8');
+    for (const line of text.split('\n')) { const m = /^\s*("(?:[^"\\]|\\.)*"):\s*"/.exec(line); if (m) seen.set(JSON.parse(m[1]), file); }
+  }
+  const clashes: string[] = [];
+  for (const line of g54.split('\n')) { const m = /^\s*("(?:[^"\\]|\\.)*"):\s*"/.exec(line); if (m && seen.has(JSON.parse(m[1]))) clashes.push(`${JSON.parse(m[1])} (also in ${seen.get(JSON.parse(m[1]))})`); }
+  assert.deepEqual(clashes, [], 'g54 must not shadow an existing draft');
 });
