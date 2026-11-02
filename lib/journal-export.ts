@@ -11,7 +11,7 @@ export interface JournalExportOptions {
   includePhotos?: boolean;
 }
 
-function csvCell(value: string | number): string {
+export function csvCell(value: string | number): string {
   let text = String(value);
   // Quoting alone does not prevent a spreadsheet from executing a farmer's free-text note.
   // A leading apostrophe is the export-only escape; the stored observation stays untouched.

@@ -1,0 +1,42 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "Nursery update notice and guide only; no fluent review claimed. No lesson or quiz changes.",
+  "entries": [
+    {
+      "source": "Plan seedlings, trays and nursery space with your own equipment and estimates.",
+      "drafts": {
+        "zu": "Hlela izithombo, amathileyi nendawo yenkulisa ngohlelo lwakho lwezitshalo usebenzisa izinto nezilinganiso zakho.",
+        "st": "Rala dipeo tse melang, diterei le sebaka sa sebaka sa ho hodisa dimela ho ya ka moralo wa dijalo, o sebedisa thepa le dikgakanyo tsa hao.",
+        "ts": "Kunguhata swimilana, tithireyi ni ndhawu ya nesari hi kungu ra wena ra swibyariwa u tirhisa switirhisiwa ni minkanyeto ya wena.",
+        "ve": "Pulanani zwiraba, thireyi na tshikhala tsha nesari u bva kha pulane ya zwiliṅwa ni tshi shumisa zwishumiswa na nyelekanyo dzaṋu."
+      }
+    },
+    {
+      "source": "Check nursery space",
+      "drafts": {
+        "zu": "Hlola indawo yenkulisa",
+        "st": "Hlahloba sebaka sa ho hodisa dimela",
+        "ts": "Kambisisa ndhawu ya nesari",
+        "ve": "Ṱolani tshikhala tsha nesari"
+      }
+    },
+    {
+      "source": "Crop planner → Nursery planner",
+      "drafts": {
+        "zu": "Umhleli wezitshalo → Umhleli wenkulisa",
+        "st": "Moralo wa dijalo → Moralo wa sebaka sa ho hodisa dimela",
+        "ts": "Mukungu wa swibyariwa → Mukungu wa nesari",
+        "ve": "Mupulani wa zwiliṅwa → Mupulani wa nesari"
+      }
+    },
+    {
+      "source": "Add your tray sizes, usable nursery surface and crop estimates. Review overlapping demand and missing information before adding automatic sowings.",
+      "drafts": {
+        "zu": "Faka osayizi bamathileyi akho, indawo yenkulisa engasetshenziswa nezilinganiso zezitshalo. Hlola izidingo ezihlangana ngesikhathi nolwazi olungekho ngaphambi kokwengeza ukuhlwanyela okuzenzakalelayo.",
+        "st": "Kenya boholo ba diterei, sebaka se ka sebediswang ho hodisa dimela le dikgakanyo tsa dijalo. Hlahloba ditlhoko tse kopanang le tlhahisoleseding e haellang pele o eketsa ho jala ho iketsang.",
+        "ts": "Nghenisa tisayizi ta tithireyi, ndhawu ya nesari leyi tirhisiwaka ni minkanyeto ya swibyariwa. Kambisisa swilaveko leswi hlanganaka ni vuxokoxoko lowu kayivelaka u nga si engetela ku byala loku kunguhatiwaka hi app.",
+        "ve": "Dzhenisani saizi dza thireyi, tshikhala tshi shumiseaho tsha nesari na nyelekanyo dza zwiliṅwa. Ṱolani ṱhoḓea dzi no khou itea nga tshifhinga tshithihi na mafhungo a no khou ṱahela ni sa athu u engedza u zwala ho pulaniwaho nga app."
+      }
+    }
+  ]
+}

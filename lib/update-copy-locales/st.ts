@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Nursery: docs/audits/2026-11-01/nursery-release-drafts.json; unreviewed.
+  "Plan seedlings, trays and nursery space with your own equipment and estimates.": "Rala dipeo tse melang, diterei le sebaka sa sebaka sa ho hodisa dimela ho ya ka moralo wa dijalo, o sebedisa thepa le dikgakanyo tsa hao.",
+  "Check nursery space": "Hlahloba sebaka sa ho hodisa dimela",
+  "Crop planner → Nursery planner": "Moralo wa dijalo → Moralo wa sebaka sa ho hodisa dimela",
+  "Add your tray sizes, usable nursery surface and crop estimates. Review overlapping demand and missing information before adding automatic sowings.": "Kenya boholo ba diterei, sebaka se ka sebediswang ho hodisa dimela le dikgakanyo tsa dijalo. Hlahloba ditlhoko tse kopanang le tlhahisoleseding e haellang pele o eketsa ho jala ho iketsang.",
+
   // Sales-unit targets: docs/audits/2026-11-01/market-garden-sales-release-drafts.json; unreviewed.
   "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Rala dipheo tsa kotulo ka diphutheloana tsa dihlahiswa o sebedisa boima ba diphutheloana le karolo e rekisehang eo o e kentseng.",
 

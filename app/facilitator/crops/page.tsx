@@ -24,6 +24,9 @@ import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabilityGraphs';
 import ProductionRecordsEditor from '@/components/crops/ProductionRecordsEditor';
 import HarvestTargetsPanel from '@/components/crops/HarvestTargetsPanel';
+import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
+import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
+import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
 import ProductionGuideCard from '@/components/crops/ProductionGuideCard';
 import PoultryGuidanceCard from '@/components/crops/PoultryGuidanceCard';
 import SiteSurveySheet from '@/components/SiteSurveySheet';
@@ -94,7 +97,7 @@ import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format
 // and three copies of that sentence is how they stop doing so.
 import type { BuyingMonth } from '@/lib/crop-export-schedule';
 import {
-  buildBuyingSchedule, buildProductionGuide, MONTH_NAMES, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
+  buildBuyingSchedule, buildProductionGuide, buildNurseryForecast, MONTH_NAMES, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
   taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE, weightRangeLabel,
 } from '@/lib/crop-export-schedule';
 
@@ -1615,6 +1618,9 @@ function FacilitatorCropsPageInner() {
   // farm produced it; records without a site remain saved outside this site's totals.
   const productionSiteId = canvasSite ?? (chosenDesignId && chosenDesignId !== 'local' ? `design:${chosenDesignId}`
     : surveySiteId ?? (design ? 'design:local' : useVirtual ? 'virtual-bed' : null));
+  const nurseryPlanningForecast = useMemo(() => mounted && productionSiteId
+    ? buildNurseryForecast(plantings, beds, productionSiteId, sanitiseNurserySettings(plan?.nursery), { year: currentYear, month: currentMonth })
+    : null, [mounted, productionSiteId, plantings, beds, plan?.nursery, currentYear, currentMonth]);
   const siteProductionRecords = useMemo(() => productionRecordsForSite(plan?.productionRecords, productionSiteId), [plan?.productionRecords, productionSiteId]);
   const sitePreservedProducts = useMemo(() => preservedFoodRecordsForSite(plan?.preservedProducts, productionSiteId), [plan?.preservedProducts, productionSiteId]);
   const unassignedProductionRecords = useMemo(() => sanitiseProductionRecords(plan?.productionRecords).filter(record => !record.siteId), [plan?.productionRecords]);
@@ -2065,6 +2071,7 @@ function FacilitatorCropsPageInner() {
               key={`harvest-targets:${productionSiteId}`}
               siteId={productionSiteId}
               targets={plan?.harvestTargets ?? []}
+              nurserySettings={plan?.nursery}
               beds={beds} plantings={plantings} pattern={pattern}
               climate={{
                 siteMonthlyTempC: siteClimate?.monthlyTempC,
@@ -2085,6 +2092,20 @@ function FacilitatorCropsPageInner() {
                     plantings: [...base.plantings, ...result.plantings.filter((p) => !savedIds.has(p.id))],
                     planNotes: result.notes, planNotesAt: Date.now(), updatedAt: Date.now() };
                 });
+              }}
+            />}
+
+            {productionSiteId && beds.length > 0 && <NurseryPlanPanel
+              key={`nursery-plan:${productionSiteId}`}
+              siteId={productionSiteId}
+              siteName={placeName || designTitle}
+              settings={plan?.nursery}
+              showBuyingCalendar={!simple}
+              beds={beds} plantings={plantings}
+              now={{ year: new Date().getFullYear(), month: currentMonth }}
+              onSettings={(nursery) => {
+                pushPlanHistory();
+                setPlan((previous) => ({ ...(previous ?? { version: 1 as const, plantings: [] }), nursery, updatedAt: Date.now() }));
               }}
             />}
 
@@ -2633,7 +2654,7 @@ function FacilitatorCropsPageInner() {
 
             {/* Seed BOQ + year-ahead report */}
             <div className="grid gap-4 mt-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-              <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+              <div id="nursery-purchasing" className="scroll-mt-24 rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                 <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Sprout size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Seeds &amp; seedlings — what to buy, and when{lang === 'zu' && <small className="block" lang="zu" style={{ fontSize: 12 }}>Imbewu nezithombo — okuthengwayo nesikhathi</small>}</div>
                 <p className="font-sans mb-2 mt-0.5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
                   {/* The subtitle must not promise which month comes first:
@@ -2683,6 +2704,12 @@ function FacilitatorCropsPageInner() {
                     axes are verified. Where a row layout is not verified, confirm it locally before buying material.
                   </p>
                 </details>
+                {nurseryPlanningForecast && nurseryPlanningForecast.cohorts.length > 0 && <details className="mb-3 rounded-xl border border-[var(--border)] p-3">
+                  <summary className="min-h-11 cursor-pointer py-2 font-sans text-sm font-semibold">Raising your own: seeds and equipment to source</summary>
+                  <p className="my-2 font-sans text-xs text-[var(--text-secondary)]">Use seeds to sow for planned cohorts and the named resource shortages below. These are your nursery estimates, separate from the field-position references in the buying calendar. Already confirmed sowings show historical seed requirements, not a new seed order. No packet size, price or procurement lead time is assumed.</p>
+                  <NurseryForecastSummary forecast={nurseryPlanningForecast} beds={beds} compact title="Nursery estimates for sourcing" />
+                  <a href="/cropplan" className="mt-3 inline-flex min-h-11 items-center font-sans text-sm underline">Open the existing task planner</a>
+                </details>}
               </div>
 
               <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
@@ -2831,6 +2858,10 @@ function FacilitatorCropsPageInner() {
           siteClimate={siteClimate}
           siteObservationNotes={productionGuide.siteObservations.slice(0, 2).flatMap((item) => item.lines)}
           beds={beds}
+          siteId={productionSiteId}
+          nurserySettings={plan?.nursery}
+          currentPlantings={plantings}
+          now={{ year: new Date().getFullYear(), month: currentMonth }}
           result={autoResult}
           onGenerate={runAutoSuggest}
           onAccept={acceptAutoSuggest}
@@ -5032,7 +5063,7 @@ function AutoSuggestModal({
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
   pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
-  siteClimate, siteObservationNotes, beds, result, onGenerate, onAccept, onBackToQuestions, onClose,
+  siteClimate, siteObservationNotes, beds, siteId, nurserySettings, currentPlantings, now, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
   phase: 'questions' | 'review';
   goal: GardenGoal; onGoal: (g: GardenGoal) => void;
@@ -5064,11 +5095,18 @@ function AutoSuggestModal({
   siteObservationNotes?: string[];
   /** Beds in the parent's scope, used to label each suggested planting with its bed. */
   beds: PlanBed[];
+  siteId: string | null;
+  nurserySettings?: NurserySettings;
+  currentPlantings: Planting[];
+  now: { year: number; month: number };
   result: AutoSuggestResult | null;
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
   const { lang } = useLanguage();
   const [cropSearch, setCropSearch] = useState('');
+  const nurseryForecast = useMemo(() => siteId && result
+    ? buildNurseryForecast([...currentPlantings, ...result.plantings], beds, siteId, sanitiseNurserySettings(nurserySettings), now)
+    : null, [currentPlantings, result, beds, siteId, nurserySettings, now]);
   const tileStyle = (active: boolean): CSSProperties => ({
     background: active ? '#1F4D2B' : 'var(--bg-1)', color: active ? '#F7F2E9' : 'var(--text-secondary)',
     border: `1px solid ${active ? '#1F4D2B' : 'var(--border)'}`, cursor: 'pointer',
@@ -5506,6 +5544,9 @@ function AutoSuggestModal({
               </>
             )}
             {result && result.notes.length > 0 && <PlanNoteGroups notes={result.notes} />}
+            {result && result.plantings.length > 0 && (nurseryForecast ? <NurseryForecastSummary
+              forecast={nurseryForecast} beds={beds} compact title="Nursery check before adding sowings"
+            /> : <p className="font-sans text-sm text-[var(--gold)]">Nursery availability is unverified without a site. Select a site to use its saved equipment and crop estimates.</p>)}
             {result && result.laterThisYear.length > 0 && (
               <div className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
                 <div className="font-display font-semibold" style={{ fontSize: 11.5, color: 'var(--text-primary)' }}>{PLAN_NOTES_PANEL_COPY.laterHeading}</div>

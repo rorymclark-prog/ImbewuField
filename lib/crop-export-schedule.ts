@@ -27,11 +27,14 @@ import { productionNeedsReview } from '@/lib/site-survey';
 import { cropVarietyRecord, varietiesForSite, type VarietySource } from '@/lib/crop-varieties';
 import { growingZoneLabel, type GrowingZoneId } from '@/lib/growing-zones';
 import { observedFrostConflictsForPlanting } from '@/lib/crop-autosuggest';
+import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
 import {
   bedEntryMonth,
+  datedPlantingSowIndex,
   estimatedYieldKgAdjusted,
   harvestMonthForCrop,
   latestBedEntryMonth,
+  plannedBedEntryMonth,
   seedBoqBatchesForPlan,
   taskMonthsFromNow,
 } from '@/lib/crop-plan';
@@ -746,4 +749,291 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
     ], sources: links }];
   });
   return { area: zones.length ? growingZoneLabel(zones) : 'Growing area not resolved', siteObservations, recordedProduction, cropChoices, ...(products ? buildProductGuidance(products, zones, conditions) : {}) };
+}
+
+/** Grower estimates retain the source spacing range all the way to the space budget. */
+export type NurseryRange = readonly [number, number] | null;
+export interface NurseryCohort {
+  id: string;
+  cropKey: string;
+  cropName: string;
+  variety?: string;
+  phase: 'planned' | 'in-nursery' | 'confirmed-sowing';
+  plantingIds: string[];
+  bedIds: string[];
+  sowMonth: string | null;
+  fieldMonth: string | null;
+  startDate: string | null;
+  endDateExclusive: string | null;
+  readinessStartDate: string | null;
+  readinessEndDateExclusive: string | null;
+  readinessSource: 'grower' | 'published-calendar';
+  readinessConflict: boolean;
+  positions: NurseryRange;
+  starts: NurseryRange;
+  seeds: NurseryRange;
+  trays: NurseryRange;
+  areaM2: NurseryRange;
+  trayFootprintM2: number | null;
+  model: 'seed-cell' | 'measured-tray' | null;
+  containerId?: string;
+  spaceId?: string;
+  basis: string[];
+  issues: string[];
+  incomplete: boolean;
+}
+export interface NurseryResourceWeek {
+  startDate: string;
+  endDateExclusive: string;
+  demand: NurseryRange;
+  shortage: number | null;
+  incomplete: boolean;
+}
+export interface NurseryResourceForecast {
+  id: string;
+  name: string;
+  capacity: number | null;
+  peak: NurseryRange;
+  shortage: number | null;
+  incomplete: boolean;
+  weeks: NurseryResourceWeek[];
+}
+export interface NurseryForecast {
+  cohorts: NurseryCohort[];
+  weeks: { startDate: string; endDateExclusive: string; trays: NurseryRange; areaM2: NurseryRange; incomplete: boolean }[];
+  containers: NurseryResourceForecast[];
+  spaces: NurseryResourceForecast[];
+  peakTrays: NurseryRange;
+  peakAreaM2: NurseryRange;
+  cumulativeTrayUses: NurseryRange;
+  incomplete: boolean;
+  issues: string[];
+  guidance: string;
+}
+
+const NURSERY_DAY = 86_400_000;
+const nurseryMonthStart = (index: number) => Date.UTC(Math.floor(index / 12), index % 12, 1);
+const nurseryDate = (time: number) => new Date(time).toISOString().slice(0, 10);
+const nurseryMonth = (index: number) => nurseryDate(nurseryMonthStart(index)).slice(0, 7);
+const nurseryRangeMap = (range: NurseryRange, f: (n: number) => number): NurseryRange => {
+  if (!range) return null;
+  const result = [f(range[0]), f(range[1])] as const;
+  return result.every((n) => Number.isFinite(n) && n >= 0 && n <= Number.MAX_SAFE_INTEGER) ? result : null;
+};
+
+/** Entered decimal rates are exact planning inputs. Binary division can turn
+ * exactly 200 seeds into 200.00000000000003 and demand a second 200-cell tray.
+ * An epsilon would also discard genuinely positive fractions at that boundary. */
+function nurseryCeilRatio(numerators: number[], denominators: number[]): number {
+  const one = BigInt(1); const ten = BigInt(10);
+  const fraction = (value: number): readonly [bigint, bigint] => {
+    const [coefficient, exponent = '0'] = value.toString().split('e');
+    const decimals = coefficient.split('.')[1]?.length ?? 0;
+    const power = Number(exponent) - decimals;
+    const digits = BigInt(coefficient.replace('.', ''));
+    return power >= 0 ? [digits * ten ** BigInt(power), one] : [digits, ten ** BigInt(-power)];
+  };
+  let numerator = one; let denominator = one;
+  for (const value of numerators) {
+    const [top, bottom] = fraction(value);
+    numerator *= top; denominator *= bottom;
+  }
+  for (const value of denominators) {
+    const [top, bottom] = fraction(value);
+    numerator *= bottom; denominator *= top;
+  }
+  const rounded = (numerator + denominator - one) / denominator;
+  return rounded <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(rounded) : Infinity;
+}
+
+type NurseryInterval = { start: number; end: number; value: NurseryRange; incomplete: boolean };
+/** A week can contain two successive uses of the same tray. Summing everything
+ * touching that week would incorrectly require two trays; sweep actual envelopes
+ * instead, releasing a tray before reserving its next use at the same instant. */
+function nurseryPeak(intervals: NurseryInterval[], start: number, end: number): { value: NurseryRange; incomplete: boolean } {
+  const events: { time: number; low: number; high: number; direction: number }[] = [];
+  let incomplete = false;
+  let unknown = false;
+  for (const interval of intervals) {
+    if (interval.end <= start || interval.start >= end) continue;
+    incomplete ||= interval.incomplete;
+    if (!interval.value) { unknown = true; incomplete = true; continue; }
+    events.push({ time: Math.max(start, interval.start), low: interval.value[0], high: interval.value[1], direction: 1 },
+      { time: Math.min(end, interval.end), low: -interval.value[0], high: -interval.value[1], direction: -1 });
+  }
+  events.sort((a, b) => a.time - b.time || a.direction - b.direction);
+  let low = 0; let high = 0; let peakLow = 0; let peakHigh = 0;
+  for (const event of events) {
+    low += event.low; high += event.high;
+    peakLow = Math.max(peakLow, low); peakHigh = Math.max(peakHigh, high);
+  }
+  return { value: events.length || !unknown ? [peakLow, peakHigh] : null, incomplete };
+}
+
+/** Coarse nursery reservations only: field entry, tasks and yields remain under
+ * the existing crop calendar. No inferred aisle factor or tray-packing promise
+ * is made from a grower's net usable surface. */
+export function buildNurseryForecast(
+  plantings: Planting[], beds: PlanBed[], siteId: string, settings: NurserySettings,
+  now: { year: number; month: number },
+): NurseryForecast {
+  if (!Number.isInteger(now.year) || now.year < 100 || now.year > 9997
+    || !Number.isInteger(now.month) || now.month < 1 || now.month > 12) throw new RangeError('A valid nursery forecast year and month are required.');
+  const origin = now.year * 12 + now.month - 1;
+  const start = nurseryMonthStart(origin); const end = nurseryMonthStart(origin + 12);
+  const saved = sanitiseNurserySettings(settings);
+  const containers = saved.containers.filter((c) => c.siteId === siteId);
+  const spaces = saved.spaces.filter((s) => s.siteId === siteId);
+  const profiles = saved.profiles.filter((p) => p.siteId === siteId);
+  const groups = new Map<string, { sowIndex: number | null; phase: NurseryCohort['phase']; plantings: Planting[] }>();
+  for (const planting of plantings) {
+    const crop = cropByKey(planting.cropKey);
+    const confirmedReservation = planting.existing && crop?.transplant
+      && planting.confirmedOnceSowing !== undefined && datedPlantingSowIndex(planting, origin) !== null;
+    if ((crop && !crop.transplant) || planting.finishedOnceSowing
+      || (planting.existing && planting.inNursery === undefined && !confirmedReservation)) continue;
+    // The in-nursery stamp is the dated observation, including for legacy rows
+    // that predate confirmedOnceSowing. It cannot recur a year later.
+    const dated = planting.inNursery === undefined || planting.confirmedOnceSowing !== undefined ? planting
+      : { ...planting, confirmedOnceSowing: planting.inNursery };
+    const sowIndex = planting.inNursery !== undefined && planting.confirmedOnceSowing !== undefined
+      && planting.inNursery !== planting.confirmedOnceSowing ? null : datedPlantingSowIndex(dated, origin);
+    if (sowIndex !== null && sowIndex >= origin + 12) continue;
+    const phase: NurseryCohort['phase'] = planting.inNursery !== undefined ? 'in-nursery'
+      : confirmedReservation ? 'confirmed-sowing' : 'planned';
+    const groupKey = JSON.stringify([sowIndex, planting.cropKey, planting.variety ?? '', phase]);
+    const group = groups.get(groupKey) ?? { sowIndex, phase, plantings: [] };
+    group.plantings.push(planting); groups.set(groupKey, group);
+  }
+  const cohorts: NurseryCohort[] = [];
+  for (const [id, group] of groups) {
+    const first = group.plantings[0]; const crop = cropByKey(first.cropKey);
+    const profile = profiles.find((p) => p.cropKey === first.cropKey);
+    const container = containers.find((c) => c.id === profile?.containerId);
+    const space = spaces.find((s) => s.id === profile?.spaceId);
+    const issues: string[] = [];
+    const basis = ['Coarse monthly planning envelope, not exact sowing dates.'];
+    const sow = group.sowIndex;
+    const working = sow === null || !crop ? null : sow + (plannedBedEntryMonth(first.sowMonth, crop) - first.sowMonth + 12) % 12;
+    const latest = sow === null || !crop ? null : sow + (latestBedEntryMonth(first.sowMonth, crop) - first.sowMonth + 12) % 12;
+    const ownDays = profile?.nurseryWeeks === undefined ? null : Math.ceil(profile.nurseryWeeks * 7);
+    const readyStart = sow === null ? null : ownDays === null
+      ? nurseryMonthStart(sow + (crop ? (bedEntryMonth(first.sowMonth, crop) - first.sowMonth + 12) % 12 : 0))
+      : nurseryMonthStart(sow) + ownDays * NURSERY_DAY;
+    const readyEnd = sow === null || latest === null ? null : ownDays === null
+      ? nurseryMonthStart(latest + 1) : nurseryMonthStart(sow + 1) + ownDays * NURSERY_DAY;
+    const fieldEnd = working === null ? null : nurseryMonthStart(working + 1);
+    const intervalEnd = fieldEnd === null || readyEnd === null ? null : Math.max(fieldEnd, readyEnd);
+    // Settled historical trays that have left the envelope are not new demand.
+    if (group.phase !== 'planned' && intervalEnd !== null && intervalEnd <= start) continue;
+    if (!crop) issues.push('This crop is unknown; confirm whether it needs nursery space.');
+    if (sow === null) issues.push('The sowing date is invalid; confirm its month and year.');
+    const pending = group.plantings.some((p) => p.awaitingSowingConfirmation || (!p.existing && sow !== null && sow < origin));
+    if (pending) issues.push('This past sowing needs confirmation before nursery demand can be planned.');
+    if (crop?.timingVerified === false) issues.push('The crop timing is unverified; confirm nursery and field dates.');
+    if (crop?.fieldSpacingVerified === false) issues.push('The field spacing is unverified; a seedling quantity cannot be promised.');
+    const invalidBed = group.plantings.some((p) => {
+      const bed = beds.find((b) => b.id === p.bedId); const fraction = p.areaFraction ?? 1;
+      return !bed || !Number.isFinite(bed.areaM2) || bed.areaM2 <= 0
+        || !Number.isFinite(fraction) || fraction <= 0 || fraction > 1;
+    });
+    if (invalidBed) issues.push('A planting has missing or invalid bed area; confirm its measured area.');
+    // Call the shared BOQ once per dated variety/phase group. Rounding each
+    // split bed first would invent extra seedlings before the grower's losses.
+    // The field calendar expires its nursery flag before the conservative
+    // reservation ends. Recover only the dated forecast's quantity; a local
+    // projection must not turn the saved field state back into a pending crop.
+    const quantityRows = group.phase === 'confirmed-sowing'
+      ? group.plantings.map((planting) => ({ ...planting, existing: false })) : group.plantings;
+    const batch = seedBoqBatchesForPlan(quantityRows, beds)[0];
+    const positions: NurseryRange = !pending && !invalidBed && sow !== null && batch
+      && ['counted-pieces', 'counted-piece-range'].includes(batch.quantityStatus)
+      ? nurseryRangeMap(batch.finalPlantPositionsRange, (n) => n) : null;
+    if (!positions && !issues.length) issues.push('The shared field plan cannot yet supply a verified transplant quantity.');
+    if (!profile) issues.push('Add this site’s own nursery profile for this crop.');
+    if (!container) issues.push('Choose a container belonging to this site; its capacity is unknown.');
+    if (!space) issues.push('Choose a nursery space belonging to this site; its usable surface is unknown.');
+    const fieldSurvival = profile?.fieldSurvivalPercent;
+    basis.push(fieldSurvival === undefined ? 'No extra field-establishment allowance is included.'
+      : `Grower field survival: ${fieldSurvival}%.`);
+    if (fieldSurvival === 0) issues.push('Zero field survival cannot produce a usable planting quantity.');
+    const starts = fieldSurvival === 0 ? null : nurseryRangeMap(positions, (n) => nurseryCeilRatio([n, 100], [fieldSurvival ?? 100]));
+    let seeds: NurseryRange = null; let trays: NurseryRange = null;
+    if (profile?.model === 'seed-cell') {
+      basis.push('One seed per cell, one transplant per cell.',
+        `Grower germination: ${profile.germinationPercent ?? 'unknown'}%; nursery survival: ${profile.nurserySurvivalPercent ?? 'unknown'}%.`);
+      if (profile.germinationPercent === undefined || profile.nurserySurvivalPercent === undefined) {
+        issues.push('Enter both germination and nursery survival for the one-seed-per-cell model.');
+      } else if (!profile.germinationPercent || !profile.nurserySurvivalPercent) {
+        issues.push('Zero germination or nursery survival cannot produce usable transplants.');
+      } else {
+        seeds = nurseryRangeMap(starts, (n) => nurseryCeilRatio([n, 10_000], [profile.germinationPercent!, profile.nurserySurvivalPercent!]));
+        if (container) trays = nurseryRangeMap(seeds, (n) => nurseryCeilRatio([n], [container.cells]));
+      }
+    } else if (profile?.model === 'measured-tray') {
+      basis.push(`Grower measured usable starts per tray: ${profile.usableStartsPerTray ?? 'unknown'}. Germination and nursery losses are already included.`);
+      basis.push(`Grower seeds per tray: ${profile.seedsPerTray ?? 'unknown'}.`);
+      if (profile.usableStartsPerTray === undefined) issues.push('Enter measured usable starts per tray.');
+      else trays = nurseryRangeMap(starts, (n) => nurseryCeilRatio([n], [profile.usableStartsPerTray!]));
+      if (profile.seedsPerTray === undefined) issues.push('Seeds per tray are unknown; tray and space estimates can still be shown.');
+      else seeds = nurseryRangeMap(trays, (n) => n * profile.seedsPerTray!);
+    }
+    const trayFootprintM2 = container?.widthCm !== undefined && container.lengthCm !== undefined
+      ? container.widthCm * container.lengthCm / 10_000 : null;
+    const areaM2 = trayFootprintM2 === null ? null : nurseryRangeMap(trays, (n) => n * trayFootprintM2);
+    if (trayFootprintM2 === null) issues.push('Container dimensions are unknown; nursery surface demand cannot be calculated.');
+    if (container) basis.push(`Grower container: ${container.cells} cells; ${container.widthCm ?? 'unknown'} × ${container.lengthCm ?? 'unknown'} cm footprint.`);
+    if (container && container.owned === undefined) issues.push('Owned container stock is unknown; a stock shortage cannot be calculated.');
+    if ((!starts || !seeds || !trays || !areaM2) && !issues.length) {
+      issues.push('The recorded quantities exceed a finite planning range; check the area and nursery estimates.');
+    }
+    const readinessConflict = readyEnd !== null && fieldEnd !== null && ownDays !== null && readyEnd > fieldEnd;
+    if (readinessConflict) issues.push('Your latest nursery readiness is after the working field month. Replan the planting explicitly; field dates have not moved.');
+    basis.push(ownDays === null ? 'Reservation uses the existing latest field-entry month; no grower nursery duration was entered.'
+      : `Grower nursery readiness estimate: ${profile!.nurseryWeeks} weeks. Reservation extends through the later of latest readiness and the working field-month end.`);
+    cohorts.push({ id, cropKey: first.cropKey, cropName: crop?.name ?? first.cropKey,
+      ...(first.variety !== undefined ? { variety: first.variety } : {}), phase: group.phase,
+      plantingIds: group.plantings.map((p) => p.id), bedIds: [...new Set(group.plantings.map((p) => p.bedId))],
+      sowMonth: sow === null ? null : nurseryMonth(sow), fieldMonth: working === null ? null : nurseryMonth(working),
+      startDate: sow === null ? null : nurseryDate(nurseryMonthStart(sow)), endDateExclusive: intervalEnd === null ? null : nurseryDate(intervalEnd),
+      readinessStartDate: readyStart === null ? null : nurseryDate(readyStart), readinessEndDateExclusive: readyEnd === null ? null : nurseryDate(readyEnd),
+      readinessSource: ownDays === null ? 'published-calendar' : 'grower', readinessConflict,
+      positions, starts, seeds, trays, areaM2, trayFootprintM2, model: profile?.model ?? null,
+      ...(container ? { containerId: container.id } : {}), ...(space ? { spaceId: space.id } : {}),
+      basis, issues, incomplete: issues.length > 0 });
+  }
+  cohorts.sort((a, b) => (a.sowMonth ?? '').localeCompare(b.sowMonth ?? '') || a.cropName.localeCompare(b.cropName) || (a.variety ?? '').localeCompare(b.variety ?? ''));
+  const intervals = (rows: NurseryCohort[], quantity: 'trays' | 'areaM2'): NurseryInterval[] => rows.map((row) => ({
+    start: row.startDate ? Date.parse(`${row.startDate}T00:00:00Z`) : start,
+    end: row.endDateExclusive ? Date.parse(`${row.endDateExclusive}T00:00:00Z`) : end,
+    value: row[quantity], incomplete: row.incomplete,
+  }));
+  const trayIntervals = intervals(cohorts, 'trays'); const areaIntervals = intervals(cohorts, 'areaM2');
+  const buckets: { start: number; end: number }[] = [];
+  for (let time = start; time < end; time += 7 * NURSERY_DAY) buckets.push({ start: time, end: Math.min(end, time + 7 * NURSERY_DAY) });
+  const resource = (id: string, name: string, capacity: number | null, rows: NurseryCohort[], quantity: 'trays' | 'areaM2'): NurseryResourceForecast => {
+    // Unassigned work cannot be allocated to every bench or tray type, but
+    // neither can its absence certify spare capacity on any of them.
+    const unassigned = cohorts.filter((row) => quantity === 'trays' ? !row.containerId : !row.spaceId);
+    const demands = [...intervals(rows, quantity), ...intervals(unassigned, quantity).map((interval) => ({ ...interval, value: null, incomplete: true }))];
+    const overall = nurseryPeak(demands, start, end);
+    const shortage = (value: NurseryRange) => value && capacity !== null ? Math.max(0, value[1] - capacity) : null;
+    return { id, name, capacity, peak: overall.value, shortage: shortage(overall.value), incomplete: overall.incomplete || capacity === null,
+      weeks: buckets.map((bucket) => { const peak = nurseryPeak(demands, bucket.start, bucket.end); return {
+        startDate: nurseryDate(bucket.start), endDateExclusive: nurseryDate(bucket.end), demand: peak.value,
+        shortage: shortage(peak.value), incomplete: peak.incomplete || capacity === null,
+      }; }) };
+  };
+  const knownUses = cohorts.filter((row) => row.trays !== null);
+  const cumulativeTrayUses: NurseryRange = !knownUses.length && cohorts.length ? null
+    : [knownUses.reduce((n, row) => n + row.trays![0], 0), knownUses.reduce((n, row) => n + row.trays![1], 0)];
+  return { cohorts, weeks: buckets.map((bucket) => {
+    const trays = nurseryPeak(trayIntervals, bucket.start, bucket.end); const area = nurseryPeak(areaIntervals, bucket.start, bucket.end);
+    return { startDate: nurseryDate(bucket.start), endDateExclusive: nurseryDate(bucket.end), trays: trays.value, areaM2: area.value,
+      incomplete: trays.incomplete || area.incomplete };
+  }), containers: containers.map((c) => resource(c.id, c.name, c.owned ?? null, cohorts.filter((row) => row.containerId === c.id), 'trays')),
+  spaces: spaces.map((s) => resource(s.id, s.name, s.usableM2, cohorts.filter((row) => row.spaceId === s.id), 'areaM2')),
+  peakTrays: nurseryPeak(trayIntervals, start, end).value, peakAreaM2: nurseryPeak(areaIntervals, start, end).value,
+  cumulativeTrayUses, incomplete: cohorts.some((row) => row.incomplete), issues: [...new Set(cohorts.flatMap((row) => row.issues))],
+  guidance: 'Coarse monthly planning envelopes, not exact sowing dates. Upper range ends budget nursery space against the grower’s net usable surface. No aisle allowance or geometric packing guarantee is inferred. Incomplete estimates show known assigned demand only; unknown or unassigned demand is not zero and prevents a spare-capacity claim. Shortages on incomplete budgets are known lower bounds. Seasonal tray uses are separate from peak simultaneous stock. Field dates, tasks and yields stay unchanged.' };
 }
