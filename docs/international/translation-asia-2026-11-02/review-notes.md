@@ -1,7 +1,7 @@
 # Asian Languages (Hindi, Bengali, Indonesian) — AI Draft Review Packet
 
-Date: 2 November 2026  
-Scope: 59 exact quoted UI messages from `docs/international/translation-followup-source-2026-11-02.json`.  
+Date: 2 November 2026
+Scope: 59 exact quoted UI messages from `docs/international/translation-followup-source-2026-11-02.json`.
 Status: **Unreviewed AI draft**. Not approved for production release, agricultural advice, or runtime enablement.
 
 ---
