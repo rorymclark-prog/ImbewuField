@@ -101,7 +101,7 @@ const drafts: Record<string, string> = {
   "Sturdy fencing essential — goats browse anything reachable, keep away from young trees.": "Uthango oluqinileyo luyimfuneko — iibhokhwe zidla nantoni na ezifikelela kuyo, zigcine kude nemithi emincinci.",
   "Downhill of water sources, with shade and a wallow; strong odour control needed near house.": "Ezantsi kwethambeka kwemithombo yamanzi, inesithunzi nendawo yokuzigaqa ebudakeni; kufuneka ulawule kakhulu ivumba ukuba kufuphi nendlu.",
   "Pair with the orchard for natural snail and pest control.": "Yidibanise negadi yeziqhamo ukulawula ngokwendalo ii-snail nezinye izinambuzane ezonakalisayo.",
-  "Raise off ground; manure drops straight to a compost or worm bin below.": "Phakamisa emhlabeni; ubulongwe wehla ngqo uye kumgquba okanye kwingqayi yeentshulube engezantsi.",
+  "Raise off ground; manure drops straight to a compost or worm bin below.": "Phakamisa emhlabeni; ubulongwe buhla ngqo buye kumgquba okanye kwingqayi yeentshulube engezantsi.",
   "Place at the kraal fence line for easy refilling without entering the pen.": "Sibeke emgceni wothango lwesibaya ukuze sizaliswe lula ungangeni ekholweni.",
   "Site near the kraal/pig pen for manure feedstock; pipe gas to the kitchen.": "Yibeke kufuphi nesibaya/nekhola yehagu ukuze ufumane ubulongwe bokuyondla; hambisa igesi ngombhobho uye ekhitshini.",
   "Anchor over seating or nursery areas; orient to block harsh afternoon sun.": "Yibophe ngaphezu kweendawo zokuhlala okanye iindawo zeempandla; yijongise ukuze ivale ilanga elishushu kakhulu emva kwemini.",
