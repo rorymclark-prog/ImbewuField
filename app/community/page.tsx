@@ -321,7 +321,7 @@ function BoardTab({
   return (
     <div>
       {actionError&&<p role="alert" style={{color:'var(--text-primary)',borderInlineStart:'3px solid var(--danger)',paddingInlineStart:8}}><CommunitySource id={actionError}/></p>}
-      <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
+      <div className="flex flex-wrap items-center justify-between gap-2" style={{ marginBottom: 14 }}>
         <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 18, color: 'var(--text-primary)' }}>{tr('communityBoardTitle')}</h1>
         <button
           onClick={onToggleNewPost}
@@ -342,7 +342,7 @@ function BoardTab({
         <div className={workspace.cards}>
           {posts.map((p) => (
             <div key={p.id} className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-              <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1" style={{ marginBottom: 6 }}>
                 <span className="font-sans font-bold" style={{ fontSize: 12, padding: '2px 8px', borderRadius: 100, background: KIND_COLOR[p.kind], color: KIND_TEXT[p.kind], textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   {kindLabel(p.kind,t)}
                 </span>
@@ -562,7 +562,7 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
               <span style={{ color: 'var(--color-canvas)', fontWeight: 700, fontSize: 15 }}>{(otherName?.[0] ?? '?').toUpperCase()}</span>
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div className="flex items-baseline justify-between gap-2">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-2">
                 <span lang={ownedOtherName===undefined?lang:''} className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>{otherName}</span>
                 <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', flexShrink: 0 }}>{lang === 'xh' ? xhCommunityDate(th.last_message_at, communityTimeAgo(th.last_message_at,lang,t)) : communityTimeAgo(th.last_message_at,lang,t)}</span>
               </div>

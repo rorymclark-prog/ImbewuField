@@ -202,3 +202,81 @@ test('pages that showed isiXhosa drafts with no notice now carry the shared draf
   ];
   for (const [path, scope] of pages) assert.match(read(path), new RegExp(`<XhosaDraftNote scope="${scope}"`), `${path} carries the note`);
 });
+
+// ── The third isiXhosa sample-mode sweep (2 Nov 2026) ─────────────────────────────────────────────
+test('g50: the scale exercise notice and the words on the scale diagram have isiXhosa drafts with their figures intact', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const { SCALE_NOTICE } = await import('@/lib/design-scale');
+  const keys = [
+    SCALE_NOTICE,
+    'MODEL ONLY · not site measurements',
+    'No gap',
+    'Outer width: {width} m',
+  ];
+  for (const english of keys) {
+    const draft = xhInlineDraft(english);
+    assert.ok(draft && draft !== english, `no isiXhosa draft for ${JSON.stringify(english)}`);
+    assert.equal(inlineText('en', english), english, 'English is untouched');
+    assert.equal(inlineText('zu', english), english, 'isiZulu without its own wording stays English');
+    for (const lang of ['st', 'ts', 've']) assert.equal(inlineText(lang, english), english, `${lang} stays English`);
+  }
+  assert.equal(placeholdersOf(xhInlineDraft('Outer width: {width} m')!), 'width');
+  assert.equal(inlineTemplate('xh', 'Outer width: {width} m', null, { width: '4,5' }), 'Ububanzi bangaphandle: 4,5 m');
+  assert.equal(inlineTemplate('en', 'Outer width: {width} m', null, { width: '4,5' }), 'Outer width: 4,5 m');
+  // The notice is the one DesignDraftCopy already looks up by exact English, so no new wiring is needed there.
+  assert.match(read('components/studies/DesignScalePractice.tsx'), /<DesignDraftCopy en=\{SCALE_NOTICE\} zu="Umsebenzi wesikali olingiswayo\./);
+  const diagram = read('components/studies/DesignScaleDiagram.tsx');
+  assert.match(diagram, /\{inlineText\(lang, 'MODEL ONLY · not site measurements'\)\}/);
+  assert.match(diagram, /\{inlineText\(lang, 'No gap'\)\}/);
+  assert.match(diagram, /inlineTemplate\(lang, 'Outer width: \{width\} m', null, \{ width: n\(model\.outerWidthM\) \}\)/);
+  assert.match(diagram, /\{inlineText\(lang, scenario\)\.toUpperCase\(\)\}/);
+  assert.match(diagram, /\{inlineText\(lang, bed\.label\)\}/);
+  assert.match(read('components/studies/DesignScalePractice.tsx'), /<DesignScaleDiagram [^>]*lang=\{lang\} \/>/);
+});
+
+test('the "English source" line under a Design eyebrow is the shared DesignDraftCopy source, rendered once under the draft', () => {
+  const copy = read('components/studies/DesignDraftCopy.tsx');
+  // One source line per draft heading, never a second one: the isiXhosa branch returns before the isiZulu one.
+  assert.equal((copy.match(/<small lang="en" className=\{styles\.source\}>English source: \{stripArrow\(en\)\}<\/small>/g) ?? []).length, 1);
+  assert.match(copy, /if \(xhosa\) return <span lang="xh"/);
+});
+
+test('long isiXhosa titles and rows wrap instead of cutting off at phone width, with the desktop header unchanged', () => {
+  const header = read('components/layout/AppHeader.tsx');
+  // Below lg the title wraps to two lines inside the 52px bar; from lg it is the same nowrap single line as before.
+  assert.match(header, /text-xs font-display min-w-0 break-words leading-tight line-clamp-2 lg:whitespace-nowrap/);
+  assert.doesNotMatch(header, /\btruncate\b/, 'the title no longer ellipsises');
+  assert.match(header, /lg:shrink-0 lg:overflow-visible lg:line-clamp-none/);
+  assert.match(header, /' lg:hidden'/);
+  const community = read('app/community/page.tsx');
+  assert.match(community, /<div className="flex flex-wrap items-center justify-between gap-2" style=\{\{ marginBottom: 14 \}\}>\s*<h1/);
+  assert.match(community, /<div className="flex flex-wrap items-center gap-x-2 gap-y-1" style=\{\{ marginBottom: 6 \}\}>/);
+  assert.match(community, /<div className="flex flex-wrap items-baseline justify-between gap-x-2">/);
+});
+
+test('the Manual chapter link back to English is read from the draft language ui.json for any inline-draft language, and stays English for the others', async () => {
+  const { INLINE_DRAFT_LANGS, isInlineDraftLang } = await import('@/lib/xh-inline');
+  assert.ok(INLINE_DRAFT_LANGS.includes('xh'));
+  for (const lang of ['en', 'zu', 'st', 've', 'ts']) assert.equal(isInlineDraftLang(lang), false);
+  const page = read('app/manual/[lang]/[slug]/page.tsx');
+  assert.match(page, /import \{ isInlineDraftLang \} from '@\/lib\/xh-inline';/);
+  assert.match(page, /\{isInlineDraftLang\(lang\)\s*\n\s*\? <Link href=\{`\/manual\/en\/\$\{slug\}`\} hrefLang="en" lang=\{lang\}[^>]*>\{ui\.readInEnglish\}<\/Link>\s*\n\s*: <Link href=\{`\/manual\/en\/\$\{slug\}`\} lang="en"[^>]*>\{manualUi\('en'\)\.readInEnglish\}<\/Link>\}/);
+  const xh = JSON.parse(read('content/manual/xh/ui.json')) as Record<string, string>;
+  assert.equal(xh.readInEnglish, 'Funda esi sahluko ngesiNgesi');
+  assert.notEqual(xh.readInEnglish, JSON.parse(read('content/manual/en/ui.json')).readInEnglish);
+});
+
+test('the Atlas draft notice is shown for any inline-draft language, not just a literal isiXhosa', () => {
+  const page = read('app/atlas/page.tsx');
+  assert.match(page, /import \{ inlineText, isInlineDraftLang \} from '@\/lib\/xh-inline';/);
+  assert.match(page, /\{\(\['zu','st','ts','ve'\]\.includes\(lang\)\|\|isInlineDraftLang\(lang\)\)&&<div className="px-3 py-2"><LanguageDraftNote lang=\{lang\} scope="atlas" \/><\/div>\}/);
+});
+
+test('/invoice keeps its deliberate English draft notice and English-beside-draft money instructions', () => {
+  const page = read('app/invoice/page.tsx');
+  // Unchanged on purpose: the notice is a status line for the reader of the draft language, and a sentence
+  // a farmer acts on (paid / unpaid) keeps the English beside the draft.
+  assert.match(page, /<p role="note" lang="en" data-records-draft-notice=\{lang\}/);
+  assert.match(page, /'Choose paid or unpaid to continue\.',\n/);
+  assert.match(page, /INVOICE_PAIRED_COPY\.has\(english\) \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/);
+});

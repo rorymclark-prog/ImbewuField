@@ -253,3 +253,14 @@ test('the picture credit is isiXhosa for isiXhosa readers and stored text for ev
   assert.equal(figureCredit({ ...figures[0], credit: 'Photo: Imbewu' }, 'xh'), 'Photo: Imbewu', 'an unlisted credit is shown as stored');
   assert.equal(figureCredit({ ...figures[0], credit: undefined }, 'xh'), undefined);
 });
+
+test('the chapter page links back to English in the reader\'s own draft language for isiXhosa, and in English for the rest', () => {
+  const route = readFileSync(path.join(ROOT, 'app', 'manual', '[lang]', '[slug]', 'page.tsx'), 'utf8');
+  assert.match(route, /isInlineDraftLang\(lang\)/);
+  assert.match(route, /\{ui\.readInEnglish\}/);
+  assert.match(route, /manualUi\('en'\)\.readInEnglish/);
+  const read = (lang: string) => JSON.parse(readFileSync(path.join(ROOT, 'content', 'manual', lang, 'ui.json'), 'utf8')) as Record<string, string>;
+  assert.equal(manualUi('xh').readInEnglish, read('xh').readInEnglish);
+  assert.equal(manualUi('xh').readInEnglish, 'Funda esi sahluko ngesiNgesi');
+  assert.equal(manualUi('en').readInEnglish, 'Read this chapter in English');
+});

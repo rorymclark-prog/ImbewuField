@@ -1,7 +1,7 @@
 import { sampleWorkspaceDraft } from './sample-workspace-copy';
 import { REGIONAL_TOUR } from './sample-tour-regional';
 import { PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, type ProductTourStep, type TourFeature } from './sample-tour';
-import { fillInline, inlineText, xhInlineDraft } from '@/lib/xh-inline';
+import { fillInline, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 const regionalTour=(language:string)=>Object.hasOwn(REGIONAL_TOUR,language)?REGIONAL_TOUR[language]:undefined;
 
@@ -110,7 +110,7 @@ export const PRODUCT_TOUR_FEATURES_ZU: Record<TourFeatureId, readonly LocalizedT
 export function productTourStepCopy(step: ProductTourStep, language: string): LocalizedTourStep {
   // isiXhosa: the draft for each exact English string, keyed in lib/locales/xh-inline; anything
   // without a draft keeps its English.
-  if (language === 'xh') {
+  if (isInlineDraftLang(language)) {
     return {
       ...step,
       title: inlineText(language, step.title),
@@ -128,7 +128,7 @@ export function productTourFeatureCopy(
   language: string,
   fallback: TourFeature | undefined,
 ): TourFeature | undefined {
-  if (language === 'xh') {
+  if (isInlineDraftLang(language)) {
     return fallback && { title: inlineText(language, fallback.title), text: inlineText(language, fallback.text) };
   }
   const table=language==='zu'?PRODUCT_TOUR_FEATURES_ZU:regionalTour(language)?.features;
@@ -165,19 +165,32 @@ const UI_EN: Record<TourUiKey, string> = {
   draftDisclosure: 'Unreviewed isiXhosa draft: titles, tasks and tips are translated to match the English text. They need review by a good isiXhosa speaker who knows how this app is used.',
 };
 
-/** The provider hands over an isiZulu duration; give isiXhosa readers their own. */
-function xhDuration(duration: string | number): string {
+/** The provider hands over an isiZulu duration; give a draft language's readers their own. */
+function draftDuration(language: string, duration: string | number): string {
   const text = String(duration);
-  if (text === 'umzuzu') return inlineText('xh', '1 minute');
+  if (text === 'umzuzu') return inlineText(language, '1 minute');
   const minutes = /^imizuzu engu-(\d+)$/.exec(text)?.[1];
-  return minutes ? fillInline(inlineText('xh', '{n} minutes'), { n: minutes }) : text;
+  return minutes ? fillInline(inlineText(language, '{n} minutes'), { n: minutes }) : text;
+}
+
+const DRAFT_LANGUAGE_NAMES: Record<string, string> = { xh: 'isiXhosa', af: 'Afrikaans' };
+
+/**
+ * The English the draft-disclosure notice is bound to, with the draft language's own name in it. isiXhosa's
+ * wording is the sentence it has always had, byte for byte; a language added to isInlineDraftLang later keys its
+ * draft by the same sentence with its name ("Unreviewed Afrikaans draft: titles, ...") instead of showing no notice.
+ */
+export function tourDraftDisclosureEnglish(language: string): string {
+  const name = DRAFT_LANGUAGE_NAMES[language] ?? language;
+  return UI_EN.draftDisclosure.replaceAll('isiXhosa', name);
 }
 
 export function productTourUi(key: TourUiKey, language: string, values: Record<string, string | number> = {}): string | undefined {
-  if (language === 'xh') {
-    const draft = xhInlineDraft(UI_EN[key]);
-    if (!draft) return undefined;
-    const filled = key === 'aboutMinutes' && values.duration !== undefined ? { ...values, duration: xhDuration(values.duration) } : values;
+  if (isInlineDraftLang(language)) {
+    const english = key === 'draftDisclosure' ? tourDraftDisclosureEnglish(language) : UI_EN[key];
+    const draft = inlineText(language, english);
+    if (draft === english) return undefined;
+    const filled = key === 'aboutMinutes' && values.duration !== undefined ? { ...values, duration: draftDuration(language, values.duration) } : values;
     return Object.entries(filled).reduce((text, [name, value]) => text.replaceAll(`{${name}}`, String(value)), draft);
   }
   const template=language === 'zu' ? UI_ZU[key] : regionalTour(language)?.ui[key];
@@ -194,7 +207,7 @@ export const PRODUCT_TOUR_ERRORS_ZU:Readonly<Record<string,string>> = {
 };
 
 export function productTourError(message: string, language: string): string {
-  if (language === 'xh') return inlineText(language, message);
+  if (isInlineDraftLang(language)) return inlineText(language, message);
   const errors=language==='zu'?PRODUCT_TOUR_ERRORS_ZU:regionalTour(language)?.errors;
   return errors&&Object.hasOwn(errors,message)?errors[message]:message;
 }
@@ -221,6 +234,6 @@ export function productTourDuration(minutes:number,language:string):string {
 /** Raw shell copy shares one source identity; supplied isiZulu clauses keep their exact original wording. */
 export function sampleWorkspaceText(language:string,english:string,zulu:string,values:Record<string,string|number>={}):string {
   // isiXhosa: the draft keyed by the exact English template (lib/locales/xh-inline).
-  const template=language==='zu'?zulu:language==='xh'?inlineText(language,english):sampleWorkspaceDraft(english,language)??english;
+  const template=language==='zu'?zulu:isInlineDraftLang(language)?inlineText(language,english):sampleWorkspaceDraft(english,language)??english;
   return template.replace(/\{([^{}]+)\}/g,(match,name)=>Object.hasOwn(values,name)?String(values[name]):match);
 }

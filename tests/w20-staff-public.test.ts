@@ -8,6 +8,8 @@ test('w20-37: nav never clips, title and divider only when set and hidden at lg 
   const h = read('components/layout/AppHeader.tsx');
   assert.doesNotMatch(h, /overflow-hidden whitespace-nowrap/);
   assert.match(h, /ml-2 shrink-0 whitespace-nowrap/);
+  // Below lg the title wraps (two lines in the 52px bar) instead of ellipsising; from lg it is one nowrap line.
+  assert.match(h, /min-w-0 break-words leading-tight line-clamp-2 lg:whitespace-nowrap/);
   assert.match(h, /\{title && \(/);
   assert.match(h, /lg:hidden/);
   assert.match(read('app/ngo/page.tsx'), /hidden sm:inline-flex lg:hidden/);

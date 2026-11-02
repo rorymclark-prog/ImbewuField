@@ -19,6 +19,16 @@
 
 let XH_INLINE: Record<string, string> = {};
 
+// The languages whose drafts arrive through this English-keyed lookup. Only isiXhosa on this branch; the
+// Afrikaans branch lists 'af' here too. A screen that decides "is this a draft language?" (a draft notice,
+// a source line) asks this instead of comparing against 'xh', so the next draft language only needs adding here.
+export const INLINE_DRAFT_LANGS = ['xh'] as const;
+export type InlineDraftLang = typeof INLINE_DRAFT_LANGS[number];
+
+export function isInlineDraftLang(lang: string): lang is InlineDraftLang {
+  return (INLINE_DRAFT_LANGS as readonly string[]).includes(lang);
+}
+
 /** Called once by the xh locale chunk. */
 export function registerXhInline(drafts: Record<string, string>): void {
   XH_INLINE = drafts;
