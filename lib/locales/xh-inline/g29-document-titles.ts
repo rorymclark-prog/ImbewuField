@@ -23,6 +23,10 @@ const drafts: Record<string, string> = {
   "Saved on this phone": "Kugcinwe kule fowuni",
   "Example production": "Umzekelo wemveliso",
   "Example gardens": "Umzekelo weegadi",
+  // main's staff review pages (#1166)
+  "Language draft review": "Uphononongo lweedrafti zolwimi",
+  "Country evidence review": "Uphononongo lobungqina belizwe",
+  "Project workflow review": "Uphononongo lwendlela yomsebenzi weprojekthi",
   "Your design learning folder": "Ifolda yakho yokufunda uyilo",
   // whole titles
   "ImbewuField — permaculture planning for South African farmers": "ImbewuField — ucwangciso lwe-permaculture lwabafama baseMzantsi Afrika",
