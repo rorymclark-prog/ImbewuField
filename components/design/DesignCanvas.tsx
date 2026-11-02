@@ -51,6 +51,7 @@ import { PLAIN_HARD_SURFACE_PAINT } from '@/lib/sheet-base-mute';
 import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { useLanguage } from '@/lib/i18n';
 import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
+import { designItemDisplayLabel } from '@/lib/design-element-display';
 import SectorOverlay from './SectorOverlay';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -3626,7 +3627,7 @@ export default function DesignCanvas({
           // seven bed icons drowned the beds themselves (Rory: "maybe icons too?").
           const iconDiscR = chrome(clamp(6, Math.min(wPx, hPx) * 0.28, 11)) * mapTextScale;
           const fontSize = iconDiscR * 1.05;
-          const labelText = item.label ?? def.name;
+          const labelText = designItemDisplayLabel(item, def, lang);
           const labelFull = item.note ? `${labelText} · ${item.note}` : labelText;
           // Rotation applies to rect strips/beds/rows only (circles are rotation-invariant).
           const isRotatingThis = item.id === dragRotateId.current && rotPreview !== null;
@@ -3814,7 +3815,7 @@ export default function DesignCanvas({
                   <text textAnchor="middle" dominantBaseline="central" fontSize={9.5} fontWeight={700} fill={GOLD}>
                     {isRotatingThis
                       ? `${Math.round(rot)}°`
-                      : isGate ? `${wM.toFixed(1)} m long`
+                      : isGate ? inlineTemplate(lang, '{length} m long', null, { length: wM.toFixed(1) })
                       : def.shape === 'circle'
                         ? `⌀ ${wM.toFixed(1)} m`
                         : `${wM.toFixed(1)} × ${hM.toFixed(1)} m`}
@@ -3860,8 +3861,8 @@ export default function DesignCanvas({
               const wPx = wM / mPerPx;
               const hPx = hM / mPerPx;
               const text = item.note
-                ? `${item.label ?? def.name} · ${item.note}`
-                : item.label ?? def.name;
+                ? `${designItemDisplayLabel(item, def, lang)} · ${item.note}`
+                : designItemDisplayLabel(item, def, lang);
               // Gap is measured off the ICON DISC, not the footprint. It used to be hPx/2 + 9 —
               // half of THIS plant's own canopy — so a 9 m macadamia's pill sat ~29 units below its
               // icon while a 2.5 m pawpaw's sat ~9 below, and pills from icons at different heights

@@ -3482,7 +3482,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                   fontSize: 12, fontWeight: 800, textTransform: 'capitalize',
                 }}
               >
-                {layout === 'docked' ? 'Dock' : layout === 'floating' ? 'Float' : 'Tray'}
+                {inlineText(lang, layout === 'docked' ? 'Dock' : layout === 'floating' ? 'Float' : 'Tray')}
               </button>
             ))}
           </div>

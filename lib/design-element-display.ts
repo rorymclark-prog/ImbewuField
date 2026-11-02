@@ -9,7 +9,7 @@
 // named after a crop ("Mango Tree", "Spekboom Hedge"), keep their English name. The few growing defs whose
 // name is generic, not a species ("Vegetable Bed", "Other Tree"), are listed by id.
 
-import { inlineText, isInlineDraftLang } from './xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from './xh-inline';
 
 /** Growing-category defs whose name describes a kind of planting, not a crop or species. */
 const GENERIC_PLANTING_IDS: ReadonlySet<string> = new Set([
@@ -31,4 +31,22 @@ export function designElementDisplayName(def: DisplayNamedDef, lang: string): st
 /** A group or layer heading ("Beds & strips"): generic words, so always the draft when there is one. */
 export function designGroupDisplayLabel(label: string, lang: string): string {
   return isInlineDraftLang(lang) ? inlineText(lang, label) : label;
+}
+
+/** Sample-farm item labels that are generic words and a figure, not a name the farmer typed (lib/demo-farm.ts). */
+const GENERIC_ITEM_LABELS: ReadonlySet<string> = new Set(['Rainwater tank (2500 L)', 'Compost bays']);
+
+/**
+ * The text drawn on the map for a placed item. A saved item keeps `it.label ?? def.name` everywhere else (print set,
+ * AI prompt, saved maps), so only this render-time reading changes: an item with no label of its own, or whose label is
+ * just the catalogue name, reads the translated element name; the sample farm's default "Bed 3" and a few generic labels
+ * read their draft with the figure kept exactly. Anything the farmer typed, and every species name, is shown as saved.
+ */
+export function designItemDisplayLabel(item: { label?: string }, def: DisplayNamedDef, lang: string): string {
+  if (!isInlineDraftLang(lang)) return item.label ?? def.name;
+  const label = item.label;
+  if (label === undefined || label === def.name) return designElementDisplayName(def, lang);
+  const bed = /^Bed (\d+)$/.exec(label);
+  if (bed) return inlineTemplate(lang, 'Bed {n}', null, { n: bed[1] });
+  return GENERIC_ITEM_LABELS.has(label) ? inlineText(lang, label) : label;
 }

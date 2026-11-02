@@ -120,6 +120,17 @@ and isiZulu output are unchanged.
   bottom bar, offline-canvas note, share-result line, boundary Cancel, offline pill, drop-mode hint, survey card
   legend. Not done: the Export step (`DesignGlossy.tsx`, Codex-owned), the sector note shown in `SectorSummary`,
   and the dynamic sector notes that carry figures.
+- **Fifth sweep (2 Nov), Design Studio and invoice:** `xh-inline/g53-design-tabs.ts` (37 drafts). The desktop step tabs
+  now read the locale's step names for a draft language (as the phone dropdown does); the "Why this step?" lesson
+  titles, bodies, principles and tips (`lib/design-lessons.ts`) are read through `inlineText` in `LessonPanel`, with
+  speech keeping the English source; the desktop Dock / Float / Tray control; a gate's whole length label
+  ("{length} m long", figure kept); and the names drawn on the map for placed items (`designItemDisplayLabel`: no
+  label or the catalogue name reads the translated element name, the sample farm's "Bed n", rainwater tank and compost
+  labels read drafts, species names and anything the farmer typed stay as saved). The invoice sale card's five money
+  instructions pair the draft with the English source for a draft language only (isiZulu, Sesotho, Tshivenda and
+  Xitsonga unchanged). The Layers panel layer name wraps on word boundaries and a long word drops to the panel's 12 px
+  size instead of splitting. Open question: the shared "Bed {n}" draft reads "Umbhede {n}" (Home task lines, now the map)
+  while the palette says "Ibhedi"; left as is because `farm-memory-task-controls` pins it.
 - **Report picker (2 Nov):** the sample-mode (prepared example) language picker now offers every inline-draft
   language beside English and isiZulu, in `LANGUAGE_OPTIONS` order. `preparedSampleReport` keeps isiXhosa once its
   drafts are loaded (English otherwise, so English text is never labelled a translation); `preparedExampleNote` has an
