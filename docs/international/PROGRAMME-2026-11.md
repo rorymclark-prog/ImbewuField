@@ -91,3 +91,24 @@ All outputs remain AI drafts requiring fluent human review. This extends the
 existing 32-message-per-language foundation without replacing it or rewriting
 calibrated lessons. UK source research continues in its separate existing CLI
 conversation. No language/country launch follows from draft completion.
+
+## Stage-one review checkpoint
+
+Draft PR #1167 contains the saved-context milestone at dfa7ac49e. A partial
+local full-suite run exposed five stale source-contract assertions: they pinned
+the former automatic summer default, Simple-only syntax or handler fixtures
+without a country-scope predicate. The unchanged behavioral requirements now
+exercise actual supported/unsupported/loading conditions and missing-bed guards.
+The combined affected recheck passes 137/137, with clean typecheck. The local
+full run was explicitly stopped during critical disk pressure and is not a pass.
+Current-head full CI, preview and browser/persistence checks remain release gates.
+
+AGY has returned 388 source-bound language draft entries. Independent structural
+checks pass all four 97-segment files after three literal DEMO/cm repairs; fluent
+review is still absent. Original regional terminology assertions were quarantined,
+and compact candidate glossaries identify the required human checks. The main
+translation CLI exited with code 2 after partial handoff. The UK research process
+and old tool handle were no longer present after the interrupted turn; its final
+compact files were not delivered to the authorised path. Do not describe either
+lane as still running. A concrete follow-up assignment must verify existing files
+and resume the proper existing conversation before further work.

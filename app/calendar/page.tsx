@@ -91,8 +91,8 @@ const CROP_BASE: { name: string; catalogKey: string; harvestMonths: number[] }[]
   { name: 'Pumpkin', catalogKey: CATALOG_KEY_FOR_CROP.Pumpkin, harvestMonths: [1, 2, 3] },
 ];
 
-/** Builds CROPS for whichever RainPattern the farmer's saved plan actually uses, rather than
- * always assuming 'summer'. ux-18: `name` now comes from the shared produceLabel() helper
+/** Builds CROPS for the explicitly chosen reference pattern after context approval.
+ * ux-18: `name` now comes from the shared produceLabel() helper
  * (lib/produce-label.ts) instead of CROP_BASE's own hardcoded string, so this grid spells a
  * crop the same way MyRecords, Home and /prices do, in whichever language is active — this was
  * the 'Sweet Potato' on /calendar vs 'Sweet potato' everywhere else the audit flagged. */
