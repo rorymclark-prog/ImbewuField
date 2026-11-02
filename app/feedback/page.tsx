@@ -4,7 +4,7 @@ import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { useAppLevel } from '@/lib/app-level';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -20,7 +20,10 @@ export default function FeedbackPage(){
   const label=(en:string,zu:string)=>inlineText(lang,en,zu);
   // Keep exact English visible for decisions about sending personal information. isiXhosa readers
   // get the isiXhosa draft followed by the English, like isiZulu (no draft yet: the English alone).
-  const paired=(en:string,zu:string)=>{if(lang==='zu')return `${zu} / ${en}`;const xh=inlineText(lang,en);return lang==='xh'&&xh!==en?`${xh} / ${en}`:en;};
+  const paired=(en:string,zu:string)=>{if(lang==='zu')return `${zu} / ${en}`;const xh=inlineText(lang,en);return isInlineDraftLang(lang)&&xh!==en?`${xh} / ${en}`:en;};
+  // A button names one action, so a draft language shows only its draft (the sentences around it keep the English beside).
+  // isiZulu keeps its existing "isiZulu / English" pair, and English is the English.
+  const buttonLabel=(en:string,zu:string)=>lang==='zu'?paired(en,zu):inlineText(lang,en);
   const [id,setId]=useState('');
   // Simple has no separate Title field, so the single "Tell us" box drives both — the title is
   // just the start of what was typed, silently kept valid for validFeedback's 3-char floor.
@@ -56,12 +59,14 @@ export default function FeedbackPage(){
       <p className={styles.meta}>{paired('Only this form, your name and your role are sent. No screenshot, GPS position or farm record is attached automatically.','Kuthunyelwa leli fomu kuphela, igama lakho nendima yakho. Akunamathiselwa isithombe sesikrini, indawo ye-GPS noma irekhodi lepulazi ngokuzenzakalelayo.')}</p>
       <label className={styles.check}><input type="checkbox" checked={agree} onChange={e=>setAgree(e.target.checked)}/>{paired('Send this feedback, including from the practice version.','Thumela lo mbiko, ngisho nasendaweni yokuzijwayeza.')}</label>
       <div className={styles.actions}>
-        <button className={styles.primary} disabled={!user||!agree||busy} type="submit">{busy?label('Sending…','Kuyathunyelwa…'):paired('Send','Thumela')}</button>
+        <button className={styles.primary} disabled={!user||!agree||busy} type="submit">{busy?label('Sending…','Kuyathunyelwa…'):buttonLabel('Send','Thumela')}</button>
         <button type="button" onClick={()=>{const data=input();if(!validFeedback(data)){setError(paired('Please add a title, details and a valid page path first.','Qala ngokufaka isihloko, imininingwane nendlela yekhasi evumelekile.'));return;}downloadFile(new Blob([feedbackText(data)],{type:'text/plain'}),'ImbewuField-feedback.txt');}}>{label('Download a copy','Landa ikhophi')}</button>
       </div>
-      {!user&&<p><Link href="/login?from=%2Ffeedback">{label('Sign in','Ngena ngemvume')}</Link> {paired('to send, or download your draft first. Signing in may reload this page.','ukuze uthumele, noma landa uhlaka lwakho kuqala. Ukungena ngemvume kungase kulayishe leli khasi kabusha.')}</p>}
+      {!user&&<p><Link href="/login?from=%2Ffeedback">{label('Sign in','Ngena ngemvume')}</Link> {isInlineDraftLang(lang)&&inlineText(lang,'to send, or download your draft first. Signing in may reload this page.')!=='to send, or download your draft first. Signing in may reload this page.'
+        ?<>{inlineText(lang,'to send, or download your draft first. Signing in may reload this page.')}<span lang="en" className={styles.meta} style={{display:'block'}}>{inlineText(lang,'English source:')} Sign in to send, or download your draft first. Signing in may reload this page.</span></>
+        :paired('to send, or download your draft first. Signing in may reload this page.','ukuze uthumele, noma landa uhlaka lwakho kuqala. Ukungena ngemvume kungase kulayishe leli khasi kabusha.')}</p>}
     </fieldset></form>}
-    {error&&<p role="alert" className={styles.notice}>{lang==='zu'?'Iphutha / Error: ':lang==='xh'?`${inlineText(lang,'Error')} / Error: `:''}{error}</p>}
+    {error&&<p role="alert" className={styles.notice}>{lang==='zu'?'Iphutha / Error: ':isInlineDraftLang(lang)?`${inlineText(lang,'Error')} / Error: `:''}{error}</p>}
     {role==='admin'&&<section className={styles.card}>
       <h2>{label('Developer inbox','Ibhokisi lomthuthukisi')}</h2>
       <button disabled={busy} onClick={()=>void inbox()}>{label('Load latest 100 submissions','Layisha imibiko eyi-100 yakamuva')}</button>

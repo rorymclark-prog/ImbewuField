@@ -19,6 +19,12 @@ export interface NetworkFailureOptions {
    * returns a developer-facing error body, not farmer copy, so it is never passed through.
    */
   serverMessage?: string | null;
+  /**
+   * Whether the browser was offline WHEN THE REQUEST FAILED. A screen that keeps the failure and
+   * words it at render time (so it follows a language chunk that loads after the request) sets this
+   * through networkFailure(); left out, the current navigator.onLine decides, as before.
+   */
+  offline?: boolean;
 }
 
 /** True when the browser itself reports no connection — checked before the status, since a
@@ -28,7 +34,17 @@ export function isOffline(): boolean {
 }
 
 export function networkFailureMessage(t: (key: string) => string, opts: NetworkFailureOptions = {}): string {
-  if (isOffline()) return t('networkOffline');
+  if (opts.offline ?? isOffline()) return t('networkOffline');
   if (opts.status === 429) return opts.serverMessage || t('networkBusy');
   return t('networkFailed');
+}
+
+/**
+ * The failure itself, to keep in state instead of its wording. A message built when the request fails
+ * is fixed in whatever language was loaded THEN: an isiXhosa reader whose locale chunk arrives a moment
+ * later keeps the English. Keep this, and word it with networkFailureMessage(t, ...)
+ * when rendering, so the text follows the language that is showing.
+ */
+export function networkFailure(opts: NetworkFailureOptions = {}): NetworkFailureOptions {
+  return { ...opts, offline: isOffline() };
 }

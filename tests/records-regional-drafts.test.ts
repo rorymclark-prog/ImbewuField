@@ -248,7 +248,9 @@ test('useRecordsT wraps useLanguage and never itself — a self-call crashed the
 
 test('validation text and the draft notice reach the screen for the regional languages', () => {
   const page = read('app/records/page.tsx');
-  assert.match(page, /isRecordsRegionalLang\(lang\) && <p role="note" lang="en" data-records-draft-notice=\{lang\}/, 'the unreviewed-draft notice must render above the tabs');
+  // Sesotho, Tshivenda and Xitsonga keep their English status line above the tabs; isiXhosa (a draft language with the shared
+  // LanguageDraftNote) no longer stacks a second, English one.
+  assert.match(page, /isRecordsRegionalLang\(lang\) && !isInlineDraftLang\(lang\) && <p role="note" lang="en" data-records-draft-notice=\{lang\}/, 'the unreviewed-draft notice must render above the tabs');
   assert.match(page, /recordsPaired\(lang, 'Product, quantity and amount are required\.'\)/);
   assert.match(page, /recordsPaired\(lang, 'Item and amount are required\.'\)/);
   // The saved form must still validate exactly as before: the rule is untouched, only the words moved.

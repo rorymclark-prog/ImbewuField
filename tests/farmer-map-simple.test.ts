@@ -82,7 +82,7 @@ test('a saved-site survey stays open when location data is unavailable in sample
 
 test('the Design Studio pill and the survey photo tip use Lucide icons, not emoji', () => {
   assert.doesNotMatch(FARMER_PAGE, /aria-hidden>🎨</, 'the palette emoji is still in the Design Studio pill');
-  assert.match(FARMER_PAGE, /<Palette size=\{15\} aria-hidden \/>/, 'the Design Studio pill must use the Lucide Palette icon');
+  assert.match(FARMER_PAGE, /<Palette size=\{15\} aria-hidden( className="flex-shrink-0")? \/>/, 'the Design Studio pill must use the Lucide Palette icon (it may carry flex-shrink-0 now that the pill itself shrinks)');
   assert.doesNotMatch(SURVEY_SHEET, /📷/, 'the camera emoji is still in the photo tip');
   assert.match(SURVEY_SHEET, /<Camera size=\{14\} aria-hidden \/>/, 'the photo tip must use the Lucide Camera icon');
 });

@@ -103,6 +103,23 @@ and isiZulu output are unchanged.
   `isInlineDraftLang` (new in `lib/xh-inline.ts`) so Afrikaans gets the same notices. `/invoice` was checked
   and left as it is: its draft notice is English on purpose and the paid / unpaid instruction deliberately
   keeps the English beside the draft.
+- **Fourth browser sweep fixes (2 Nov), interactive screens:** `xh-inline/g52-interactive.ts` (166 drafts) covers
+  the Design Studio palette element names and planting group headings (rendered through the new
+  `lib/design-element-display.ts`; the English catalogue is data and unchanged, crop and species names are never
+  translated), the step guide's 27 sub-steps (`lib/design-substeps.ts`, shown through `inlineText` in `StepGuide`),
+  the field blocks panel and the errors `lib/bed-block.ts` throws into it, the canvas zoom / fit / base-map labels,
+  the fixed sector notes shown over the map, the survey's water-for-production and local-market blocks, and the
+  annual production overview. Map drop-mode "Cancel" is translated for a draft language. One draft notice per
+  surface: the results sheet Water, Photos and Lima-read lines, the navigation drawer and `/records` no longer add a
+  second notice beside the shared `LanguageDraftNote` for isiXhosa (isiZulu and Sesotho/Tshivenda/Xitsonga unchanged).
+  Records validation errors and hints now lead with the draft and label the English as its source
+  (`recordsPaired`); `/feedback` shows only the draft on its Send button and no longer splits the sign-in sentence.
+  Network failures are stored as the failure and worded at render (`/farmer`, Area, Atlas, Site design) so they
+  follow the language that is showing. 390 px layout fixes for every language: nested-button hydration error in the
+  Places accordion, Design Studio header pill, Reports tab spacing and equal-width tabs, sheet clears the measured
+  bottom bar, offline-canvas note, share-result line, boundary Cancel, offline pill, drop-mode hint, survey card
+  legend. Not done: the Export step (`DesignGlossy.tsx`, Codex-owned), the sector note shown in `SectorSummary`,
+  and the dynamic sector notes that carry figures.
 - **Report picker (2 Nov):** the sample-mode (prepared example) language picker now offers every inline-draft
   language beside English and isiZulu, in `LANGUAGE_OPTIONS` order. `preparedSampleReport` keeps isiXhosa once its
   drafts are loaded (English otherwise, so English text is never labelled a translation); `preparedExampleNote` has an

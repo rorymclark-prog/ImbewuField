@@ -121,6 +121,9 @@ test('error.tsx links to /offline when offline and still never prints the raw er
 test('/farmer shows its own words, not the browser\'s, when a site load cannot reach the network', () => {
   const page = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
   assert.match(page, /throw Error\(SITE_MISMATCH\)/);
-  assert.match(page, /err instanceof Error && err\.message === SITE_MISMATCH \? err\.message : networkFailureMessage\(t\)/);
+  // The banner keeps WHAT failed and words it when it renders (so it follows a language chunk that loads after the
+  // request): the page's own mismatch message as written, anything else as a stored network failure.
+  assert.match(page, /err instanceof Error && err\.message === SITE_MISMATCH \? \{ text: err\.message \} : \{ network: networkFailure\(\) \}/);
+  assert.match(page, /'network' in error \? networkFailureMessage\(t, error\.network\)/);
   assert.doesNotMatch(page, /setError\(err instanceof Error \? err\.message/);
 });

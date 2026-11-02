@@ -21,6 +21,7 @@
 // (RECORDS_DRAFT_NOTICE below) wherever a draft can appear.
 
 import { kgPreciseLabel } from '@/lib/format-figures';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { RECORDS_DRAFTS } from '@/lib/records-regional-drafts-data';
 import { recordQuantity, recordUnit, type RecordQuantityRow, type RecordUnit } from '@/lib/farm-records';
 
@@ -56,11 +57,15 @@ export function recordsFill(lang: string, english: string, existing: string = en
 /**
  * English first, the draft after it — the pairing the isiZulu money instructions already use
  * ("Keep the English beside isiZulu when a farmer may act on money or saved records"), extended
- * to the regional drafts. With no draft the English stands alone, never paired with itself.
+ * to the regional drafts. A draft language (isiXhosa) reads the draft first with the English labelled as its
+ * source. With no draft the English stands alone, never paired with itself.
  */
 export function recordsPaired(lang: string, english: string, existing?: string): string {
   const local = existing !== undefined && existing !== english ? existing : recordsDraft(lang, english);
-  return local && local !== english ? `${english} — ${local}` : english;
+  if (!local || local === english) return english;
+  // A draft language (lib/xh-inline.ts isInlineDraftLang) leads with its own wording and labels the English as the
+  // source, the order the lender card already uses. Sesotho, Tshivenda and Xitsonga keep English first.
+  return isInlineDraftLang(lang) ? `${local} — ${inlineText(lang, 'English source:')} ${english}` : `${english} — ${local}`;
 }
 
 /** Substitute {name} placeholders. Placeholders absent from `vars` are left visible on purpose. */
@@ -130,5 +135,6 @@ export function recordsLabel(lang: string, englishTemplate: string, isiZuluTempl
       : english;
   }
   const local = recordsTemplate(lang, englishTemplate, null, vars);
-  return local !== english ? `${english} — ${local}` : english;
+  if (local === english) return english;
+  return isInlineDraftLang(lang) ? `${local} — ${inlineText(lang, 'English source:')} ${english}` : `${english} — ${local}`;
 }

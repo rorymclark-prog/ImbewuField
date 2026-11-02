@@ -227,7 +227,7 @@ export default function StepGuide({
             {doneCount}/{subSteps.length}
           </span>
           <span style={{ fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
-            {allResolved ? t(DESIGN_CHROME_KEYS.guideAllDone) : current?.title}
+            {allResolved ? t(DESIGN_CHROME_KEYS.guideAllDone) : current ? inlineText(lang, current.title) : undefined}
           </span>
           <ChevronDown size={16} color={accentText} style={{ flexShrink: 0 }} />
         </button>
@@ -255,7 +255,10 @@ export default function StepGuide({
   }
 
   // ── Expanded: the walked checklist ──────────────────────────────────────────
-  const narration = current ? `${current.title}. ${current.instruction} ${current.where}` : '';
+  // The sub-step wording is English data (lib/design-substeps.ts); a draft language reads it translated at render.
+  // The spoken text is the draft with the English as the voice fallback; English and isiZulu are unchanged.
+  const englishNarration = current ? `${current.title}. ${current.instruction} ${current.where}` : '';
+  const narration = current ? `${inlineText(lang, current.title)}. ${inlineText(lang, current.instruction)} ${inlineText(lang, current.where)}` : '';
 
   return (
     <div style={{ padding: '6px 12px 0' }}>
@@ -315,7 +318,7 @@ export default function StepGuide({
                   </span>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 13, fontWeight: isCurrent ? 800 : 600, color: done ? 'rgba(11,18,11,0.45)' : 'var(--text-primary)', textDecoration: done ? 'line-through' : 'none' }}>
-                      {ss.title}
+                      {inlineText(lang, ss.title)}
                       {ss.optional && !done && (
                         <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: 'var(--gold-dim)', textTransform: 'uppercase', letterSpacing: 0.3 }}>{t(DESIGN_CHROME_KEYS.guideOptional)}</span>
                       )}
@@ -326,10 +329,10 @@ export default function StepGuide({
 
                     {isCurrent && (
                       <div style={{ marginTop: 4, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        <div style={{ fontSize: 12.5, lineHeight: 1.45, color: 'var(--text-primary)' }}>{ss.instruction}</div>
+                        <div style={{ fontSize: 12.5, lineHeight: 1.45, color: 'var(--text-primary)' }}>{inlineText(lang, ss.instruction)}</div>
                         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
                           <MapPin size={13} color="var(--gold-dim)" style={{ flexShrink: 0, marginTop: 2 }} />
-                          <div style={{ fontSize: 12, lineHeight: 1.4, color: 'rgba(11,18,11,0.75)' }}>{ss.where}</div>
+                          <div style={{ fontSize: 12, lineHeight: 1.4, color: 'rgba(11,18,11,0.75)' }}>{inlineText(lang, ss.where)}</div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                           {ss.arm && (
@@ -348,7 +351,7 @@ export default function StepGuide({
                           >
                             {ss.optional ? t(DESIGN_CHROME_KEYS.guideSkip) : t(DESIGN_CHROME_KEYS.guideLater)}
                           </button>
-                          <SpeakButton text={narration} englishText={narration} size={16} color="var(--color-forest-800)" />
+                          <SpeakButton text={narration} englishText={englishNarration} size={16} color="var(--color-forest-800)" />
                         </div>
                       </div>
                     )}

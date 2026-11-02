@@ -128,6 +128,7 @@ import {
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { translate, useLanguage } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
+import { designElementDisplayName, designGroupDisplayLabel } from '@/lib/design-element-display';
 import { uiVersion, DEFAULT_UI_VERSION, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
 import {
@@ -1061,7 +1062,7 @@ export default function DesignPalette({
 
   const armedHintLabel =
     tool === 'place' && armedDef
-      ? formatDesignTranslation(t('designPaletteTapPlace'), { name: armedDef.name })
+      ? formatDesignTranslation(t('designPaletteTapPlace'), { name: designElementDisplayName(armedDef, lang) })
       : tool === 'zone' && areaFeature
         ? formatDesignTranslation(t('designPaletteDrawFeature'), { feature: GROUND_FEATURES[areaFeature].label })
         : tool === 'zone'
@@ -1980,7 +1981,7 @@ export default function DesignPalette({
                                     plantingSublayers.onVisibilityChange({ ...plantingSublayers.visibility, [key]: !childOn });
                                   }}
                                   style={{ minWidth: 0, minHeight: 24, padding: 0, border: 'none', background: 'transparent', color: 'inherit', cursor: 'pointer', textAlign: 'left' }}>
-                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{label}</span>
+                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{designGroupDisplayLabel(label, lang)}</span>
                                 </button>
                               </div>
                             );
@@ -2309,7 +2310,7 @@ export default function DesignPalette({
             key={def.id}
             type="button"
             onClick={() => pickElement(def)}
-            title={checkFrost ? t('designPaletteFrostCheckTitle') : suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
+            title={checkFrost ? t('designPaletteFrostCheckTitle') : suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: designElementDisplayName(def, lang) })}
             // The photograph seam stays optional. Until an illustrator supplies a real asset the
             // farmer sees the exact emoji she saw before; fake generated symbols would make a
             // tool look more finished while saying less clearly what it places.
@@ -2385,7 +2386,7 @@ export default function DesignPalette({
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: cardsUi || (desktopAside && workspaceMode !== 'tray') ? 'center' : 'flex-start', minWidth: 0 }}>
               {/* Cards get room for two lines, so 'Indigenous Shade Tree' stops truncating —
                   whiteSpace stays nowrap only in chip mode, where a wrap would grow the strip. */}
-              <span style={{ fontSize: 11.5, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{def.name}</span>
+              <span style={{ fontSize: 11.5, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{designElementDisplayName(def, lang)}</span>
               <span style={{ fontSize: cardsUi ? 10 : 9.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
                 {def.id === 'gate' ? `${def.wM} m long` : def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
               </span>
@@ -2415,7 +2416,7 @@ export default function DesignPalette({
               {!chipsWrap && (
                 <span aria-hidden style={{ width: 1, height: 24, background: 'rgba(0,0,0,0.14)' }} />
               )}
-              {PLANTING_GROUP_LABEL[heading]}
+              {designGroupDisplayLabel(PLANTING_GROUP_LABEL[heading], lang)}
               {chipsWrap && (
                 <span aria-hidden style={{ flex: '1 1 auto', height: 1, background: 'rgba(0,0,0,0.14)' }} />
               )}

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { PenLine, Sprout, GraduationCap, Loader2, Check, PencilRuler } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { paidApiHeaders } from '@/lib/api-client-auth';
-import { networkFailureMessage } from '@/lib/network-failure';
+import { networkFailure, networkFailureMessage, type NetworkFailureOptions } from '@/lib/network-failure';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { useLanguage } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
@@ -74,6 +74,8 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
   const [design, setDesign] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  // A network failure is kept as the failure and worded at render, so it follows the language that is showing.
+  const [failure, setFailure] = useState<NetworkFailureOptions | null>(null);
   const [language, setLanguage] = useState(appLang ?? 'en');
   const [tone, setTone] = useState<'simple' | 'professional'>('simple');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -85,6 +87,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
       const resized = await resizeImage(file);
       setImageData(resized);
     } catch (err: unknown) {
+      setFailure(null);
       setError(inlineText(lang, userFacingMessage(err, 'Could not process image', t)));
       return;
     }
@@ -101,14 +104,14 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
 
   async function generate() {
     if (!locationData || !imageData) return;
-    setLoading(true); setError(''); setDesign('');
+    setLoading(true); setError(''); setFailure(null); setDesign('');
     try {
       const res = await fetch('/api/design', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ images: [imageData], locationData, photoAnalysis, language, tone }),
       });
-      if (!res.ok) { setError(networkFailureMessage(t, { status: res.status })); return; }
+      if (!res.ok) { setFailure(networkFailure({ status: res.status })); return; }
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
@@ -119,7 +122,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         setDesign(text);
       }
     } catch {
-      setError(networkFailureMessage(t));
+      setFailure(networkFailure());
     } finally {
       setLoading(false);
     }
@@ -220,7 +223,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         </div>
       )}
 
-      {error && <p className="text-xs" style={{ color: '#C0531E' }}>{error}</p>}
+      {(failure || error) && <p className="text-xs" style={{ color: '#C0531E' }}>{failure ? networkFailureMessage(t, failure) : error}</p>}
 
       {/* Design output */}
       {design && (

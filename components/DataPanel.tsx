@@ -954,9 +954,18 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <button
               key={tabName}
               onClick={() => setTab(tabName)}
-              className="flex flex-1 items-center justify-center gap-1.5 font-sans transition-all duration-150"
+              // Equal-width tabs that fit five to a row at 390px: the label sits under its icon and may take two
+              // lines (a longer language such as isiXhosa), instead of a nowrap row that pushed the fifth tab
+              // onto a second line of its own. Twelve-plus tabs still wrap, as before.
+              className="flex items-center justify-center font-sans transition-all duration-150"
               style={{
-                padding: '9px 12px',
+                flex: '1 1 0',
+                minWidth: 64,
+                flexDirection: 'column',
+                gap: 2,
+                padding: '8px 3px',
+                textAlign: 'center',
+                lineHeight: 1.15,
                 minHeight: 44,
                 borderBottom: tab === tabName ? '2px solid var(--ochre)' : '2px solid transparent',
                 borderTop: 'none', borderLeft: 'none', borderRight: 'none',
@@ -964,7 +973,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 color: tab === tabName ? 'var(--gold-dim)' : 'var(--text-muted)',
                 fontSize: 12.5,
                 fontWeight: tab === tabName ? 600 : 400,
-                whiteSpace: 'nowrap',
                 cursor: 'pointer',
               }}
             >
@@ -983,7 +991,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           const y = e.currentTarget.scrollTop;
           setHeaderCollapsed((prev) => (y > 64 ? true : y < 24 ? false : prev));
         }}
-        style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}>
+        style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain', paddingBottom: 'calc(28px + env(safe-area-inset-bottom, 0px))' }}>
 
         {/* OVERVIEW */}
         {tab === 'Overview' && (
@@ -1177,7 +1185,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {lang === 'zu' || lang === 'xh' ? (
                   <>
                     <span>{limaRead}</span>
-                    <span className="block mt-1 text-xs text-[var(--text-muted)]">{t('siteSummaryZuluDraftNotice')}</span>
+                    {lang === 'zu' && <span className="block mt-1 text-xs text-[var(--text-muted)]">{t('siteSummaryZuluDraftNotice')}</span>}
                     <span className="block mt-1 text-xs text-[var(--text-muted)]" lang="en">{lang === 'xh' ? <span lang="xh">{inlineText(lang, 'English source:')}</span> : 'English source:'} {limaReadParts.english}</span>
                   </>
                 ) : limaRead}
@@ -1818,11 +1826,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               };
               return (
                 <div style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 13, padding: '13px 14px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-                    <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                  {/* Wraps with a gap: the heading and its "{n} of {total} key checks recorded" count ran together on one
+                      line at 390px in a longer language. */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px 12px', marginBottom: 8 }}>
+                    <span style={{ font: '700 12px/1.2 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                       {t('surveySectionLabel')}
                     </span>
-                    <span style={{ font: '600 12px/1 var(--font-sans), sans-serif', color: done === SURVEY_TOTAL_FIELDS ? 'var(--emerald)' : 'var(--gold-dim)' }}>
+                    <span style={{ font: '600 12px/1.2 var(--font-sans), sans-serif', color: done === SURVEY_TOTAL_FIELDS ? 'var(--emerald)' : 'var(--gold-dim)' }}>
                       {t('surveyKeyChecks').replace('{n}', String(done)).replace('{total}', String(SURVEY_TOTAL_FIELDS))}
                     </span>
                   </div>
@@ -1851,8 +1861,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
             {/* Report completeness bar */}
             <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
-                <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '4px 12px', marginBottom: 7 }}>
+                <span style={{ font: '700 12px/1.2 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                   {t('reportCompletenessLabel')}
                 </span>
                 <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', color: completeness >= 60 ? 'var(--emerald)' : 'var(--gold-dim)' }}>
@@ -1865,8 +1875,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </div>
 
             {/* Evidence & Documents label + catalogue link */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px 12px' }}>
+              <span style={{ font: '700 12px/1.2 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                 {t('reportEvidenceDocsLabel')}
               </span>
               <button

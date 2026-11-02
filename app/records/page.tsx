@@ -56,7 +56,7 @@ import { countsWithScope, loadIncludePerennials, DEFAULT_INCLUDE_PERENNIALS } fr
 import { produceDisplayName } from '@/lib/perennial-produce';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage, translate } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { userFacingMessage } from '@/lib/user-facing-error';
 import { activeAccountUid } from '@/lib/account-local-storage';
 import {
@@ -1719,7 +1719,11 @@ export default function RecordsPage() {
                 );
               })}
             </div>
-            {isRecordsRegionalLang(lang) && <p role="note" lang="en" data-records-draft-notice={lang} className="mt-1 text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsDraftNotice(lang)} {lang === 'xh' ? 'The tabs are shown in isiXhosa; English names:' : 'English tabs:'} {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</p>}
+            {/* One draft notice per surface: a draft language (isiXhosa) already has the shared LanguageDraftNote above, so
+                this English status line stays for Sesotho, Tshivenda and Xitsonga only. The draft language keeps just the
+                English tab names, labelled as the English source. */}
+            {isRecordsRegionalLang(lang) && !isInlineDraftLang(lang) && <p role="note" lang="en" data-records-draft-notice={lang} className="mt-1 text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsDraftNotice(lang)} English tabs: {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</p>}
+            {isInlineDraftLang(lang) && <p lang="en" data-records-tab-source={lang} className="mt-1 text-xs" style={{ color: 'var(--color-muted-strong)' }}><span lang={lang}>{inlineText(lang, 'English source:')}</span> {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</p>}
 
             {/* bug-02: a failed read keeps showing the last-loaded rows instead of an empty
                 ledger, so this banner — not a blank list — is what says the data may be stale. */}
