@@ -275,6 +275,89 @@ test('g55: the Afrikaans Design Studio tabs and lessons shard mirrors the isiXho
   assert.equal(afShard['Rainwater tank (2500 L)'].includes('2500 L'), true);
 });
 
+/* ── Sixth sweep parity (2 Nov): g56 mirrors the isiXhosa g54 ─────────────── */
+
+test('g56: the Afrikaans Design Studio leftovers shard mirrors the isiXhosa g54 key for key, with placeholders and figures intact', async () => {
+  const { default: xhShard } = await import('@/lib/locales/xh-inline/g54-design-leftovers');
+  const { default: afShard } = await import('@/lib/locales/af-inline/g56-design-leftovers');
+  assert.equal(Object.keys(afShard).length, 101);
+  assert.deepEqual(Object.keys(afShard), Object.keys(xhShard));
+  for (const english of Object.keys(xhShard)) {
+    assert.equal(AF_INLINE_SOURCE[english], afShard[english], `${english} is served from g56`);
+    assert.notEqual(afShard[english], english, `${english} has a real draft`);
+    assert.equal(placeholdersOf(afShard[english]), placeholdersOf(english), `${english} keeps its placeholders`);
+    // Every figure the English carries (3 m, ~2.5 t, 1.85 m, 30-50 cm, ~1:5 ...) is in the draft unchanged; decimals keep the English full stop.
+    for (const figure of ungroup(english).match(/\d[\d,.]*/g) ?? []) assert.ok(ungroup(afShard[english]).includes(figure.replace(/[.,]$/, '')), `${english}: ${figure} survives`);
+  }
+  // The same vocabulary as the earlier Afrikaans shards, and every safety caveat survives.
+  const g = (english: string) => afShard[english];
+  assert.match(g('Swales'), /Kontoerslote/);
+  assert.match(g('Close enough for daily egg collection, downwind of the house.'), /aan die kant waarheen die wind van die huis af waai/);
+  assert.match(g('Site downhill and downwind of the house; capture runoff for a manure compost pit.'), /aan die kant waarheen die wind van die huis af waai/);
+  assert.match(g('Tap points'), /Kraanpunte/);
+  assert.match(g('Drip irrigation'), /Drupbesproeiing/);
+  const outlet = g('Where greywater LEAVES the house — the bath, shower, basin or laundry drain you are tapping. Put it on that wall, then run the line to a banana circle or tree basin. Never tap the toilet (that is blackwater), and use plant-safe soap.');
+  assert.match(outlet, /Moet nooit die toilet aftap nie \(dit is swartwater\)/);
+  assert.match(outlet, /plantveilige seep/);
+  assert.match(g('A shallow flat-bottomed dish (30-50 cm deep) that ponds runoff so it soaks away. Site where water already collects, but keep 5 m clear of foundations.'), /hou 5 m weg van fondamente/);
+  assert.match(g('Get a hydrogeological siting survey before drilling — avoid septic/kraal runoff zones.'), /voordat daar geboor word/);
+  assert.match(g('Plant the tree on a low raised mound, then ring it with a mulch-filled moat — roof or greywater runoff soaks in through the ring, at the feeder roots, while the trunk and crown stay high and dry. Never plant a fruit tree standing in the dip.'), /Moet nooit 'n vrugteboom plant wat in die laagte staan nie/);
+  for (const vetiver of ['A living bank of vetiver you cut again and again for mulch and compost. Use the sterile, non-seeding cultivar — not a seeding local relative — so it stays a mulch bank and not a spreading grass. Slash it a few times a season, drop the leaf straight onto beds and tree basins. Its deep roots also hold the soil where it stands.',
+    'Plant on-contour with slips 10-15 cm apart to stop erosion on slopes. Use the sterile, non-seeding cultivar so the line holds ground rather than spreading as a seeding grass.']) {
+    assert.match(g(vetiver), /steriele kultivar wat nie saad maak nie/);
+  }
+  assert.match(g('Hidden from new designs because guava can be invasive in warm coastal areas. Kept so old saved designs still render.'), /indringer/);
+  for (const female of ['Big savanna shade tree — give it 12 m and keep it well back from buildings. Only female trees fruit, so plant several seedlings if you want a crop.', 'Thorny and very hardy — takes frost, drought and wind. Grown as a stock-proof edible hedge as often as a single tree. Only female plants fruit.']) {
+    assert.match(g(female), /Net vroulike (bome|plante) dra vrugte/);
+  }
+  assert.match(g('Needs a solid concrete ring base — full tank weighs ~2.5 t.'), /~2\.5 t/);
+  assert.match(g('1.85 m diameter — check eave clearance and allow space to walk around for maintenance.'), /1\.85 m/);
+  // Species and botanical names, JoJo, DWS and SA stay as written.
+  assert.match(g('This is the coastal/subtropical Wild Plum (Harpephyllum caffrum), umgwenya — not the drier-region Wild Plum (Pappea capensis), which is a smaller tree not yet in this catalog. Give it room away from beds and buildings.'), /\(Harpephyllum caffrum\).*\(Pappea capensis\)/);
+  assert.match(g('Good starter option under a small downpipe before investing in a JoJo.'), /JoJo/);
+  assert.match(g('Site on-contour below a catchment area; check DWS licensing thresholds for dam size.'), /DWS/);
+  assert.match(g('Use 40-50% shade netting for SA summer sun; site near the nursery table.'), /SA somerson/);
+});
+
+test('g56: every palette element tip reads an Afrikaans draft; the layer-panel templates and the sector notes fill their figures untouched, and other languages stay English', async () => {
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  const { ELEMENT_CATALOG } = await import('@/lib/design-elements');
+  const { sectorNoteText, windConfirmedNoteText } = await import('@/lib/sector-note-display');
+  const tips = [...new Set(ELEMENT_CATALOG.map((def) => def.tip))];
+  assert.ok(tips.length >= 79, 'the palette still has its tips');
+  for (const tip of tips) {
+    assert.ok(AF_INLINE_SOURCE[tip] && AF_INLINE_SOURCE[tip] !== tip, `no Afrikaans draft for the tip ${JSON.stringify(tip)}`);
+    assert.equal(inlineText('af', tip), AF_INLINE_SOURCE[tip]);
+    for (const lang of ['en', 'zu', 'st', 'ts', 've']) assert.equal(inlineText(lang, tip), tip, `${lang} keeps the English tip`);
+    for (const botanical of tip.match(/\([A-Z][a-z]+ [a-z]+\)/g) ?? []) assert.ok(AF_INLINE_SOURCE[tip].includes(botanical), `${botanical} is kept in the draft`);
+  }
+  assert.equal(inlineTemplate('af', 'Hide {name}', null, { name: 'Water' }), 'Versteek Water');
+  assert.equal(inlineTemplate('af', '{n} of {total} selected', null, { n: 3, total: 12 }), '3 van 12 gekies');
+  assert.equal(inlineTemplate('af', 'Select all {n} {name} objects', null, { n: 2, name: 'Tap points' }), 'Kies al 2 Tap points-voorwerpe');
+  assert.equal(inlineTemplate('en', '{n} of {total} selected', null, { n: 3, total: 12 }), '3 of 12 selected');
+  // Sector notes: the figure is cut from the English and put back exactly; any other language, or a note that fits no shape, stays English.
+  const slope = 'Slope direction is estimated from a site-local SRTM sample across about 150 m — indicative, not surveyed.';
+  const flat = 'Site reads ~flat at this 90 m sampling scale — confirm fall on site.';
+  const wind = 'This site’s own wind data reads 137° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.';
+  assert.equal(sectorNoteText('af', slope), 'Die hellingrigting word beraam uit \'n terreinplaaslike SRTM-steekproef oor ongeveer 150 m — \'n aanduiding, nie opgemeet nie.');
+  assert.equal(sectorNoteText('af', flat), 'Die terrein lyk ~plat by hierdie steekproefskaal van 90 m — bevestig die afloop ter plaatse.');
+  assert.match(sectorNoteText('af', wind), /^Hierdie terrein se eie winddata wyk 137° af van die streekspatroon/);
+  const figures = (text: string) => (text.match(/\d+(?:\.\d+)?/g) ?? []).join(',');
+  for (const note of [slope, flat, wind]) {
+    assert.equal(figures(sectorNoteText('af', note)), figures(note));
+    for (const lang of ['en', 'zu', 'st', 'ts', 've']) assert.equal(sectorNoteText(lang, note), note);
+  }
+  assert.equal(sectorNoteText('af', 'A note nobody drafted.'), 'A note nobody drafted.');
+  assert.equal(windConfirmedNoteText('af', 'SW', '2/11/2026'), 'Wind ter plaatse bevestig: SW (aangeteken 2/11/2026)');
+  assert.equal(windConfirmedNoteText('af', 'SW', null), 'Wind ter plaatse bevestig: SW');
+  assert.equal(windConfirmedNoteText('en', 'SW', '2/11/2026'), 'Wind confirmed on site: SW (recorded 2/11/2026)');
+  // The shared Design files decide by the draft-language predicate, never by a literal language code.
+  for (const file of ['lib/sector-note-display.ts', 'components/design/DesignPalette.tsx', 'components/design/DesignCanvas.tsx']) {
+    assert.doesNotMatch(read(file), /lang\s*[!=]==?\s*'xh'/, `${file} compares the language to 'xh' literally`);
+  }
+  assert.match(read('lib/sector-note-display.ts'), /if \(!isInlineDraftLang\(lang\)\) return note;/);
+});
+
 test('ProductionYearOverview: Afrikaans reads the drafts; English, isiZulu, Sesotho, Xitsonga and Tshivenda stay English', async () => {
   registerInlineDrafts('af', AF_INLINE_SOURCE);
   const overview = read('components/report/ProductionYearOverview.tsx');

@@ -216,6 +216,15 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   unchanged). The invoice sale card pairs its five money instructions with "Engelse bron:" as isiXhosa does. The retired
   isiXhosa Sold-card notice is gone from the Afrikaans shard too. The palette's armed-tool hint now shows its English
   source for Afrikaans. Tests: `af-inline` (g55 mirror); the `draftLabel` pin now reads the shared expression.
+- **Design Studio leftovers parity (2 Nov):** the Afrikaans mirror of isiXhosa g54, merged in. New shard
+  `af-inline/g56-design-leftovers.ts` (101 drafts, the same keys as `xh-inline/g54-design-leftovers.ts`): the tip under
+  each of the 79 palette elements, the Layers panel button names (templates with `{name}`/`{n}`/`{total}`), the Water
+  layer's five groups, the three sector notes that carry a figure (`lib/sector-note-display.ts`) and "Wind confirmed on
+  site". Same vocabulary as the earlier shards (kontoersloot, wal, windskerm, gryswater, "aan die kant waarheen die wind
+  van die huis af waai"). Figures are kept as the English writes them, decimals with a full stop (`2.5 t`, `1.85 m`),
+  as the other Afrikaans shards do. Every safety caveat is kept (never tap the toilet, plant-safe soap, 5 m from
+  foundations, siting survey before drilling, never a fruit tree in the dip, sterile vetiver, guava, female trees).
+  Tests: two new `af-inline` tests (g56 mirror; tips, templates and sector notes through the shared draft-language check).
 
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English
