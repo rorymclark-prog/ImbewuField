@@ -172,6 +172,14 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   (`tests/fixtures/student-page-before-af-studies.tsx.txt`) and the new live page hash. Tests: `af-inline`,
   `farm-memory-task-controls`, `manual`, `crop-plan-page-ux`; the isiXhosa pins on `/student`, `/prices`, the
   cohort axis and the draft note were widened, not weakened.
+- **Third browser-sweep fixes (2 Nov):** the Afrikaans mirror of the isiXhosa fixes in `37a4800`, merged in.
+  New shard `af-inline/g52-ui-gaps-3.ts` (the same 4 keys as `xh-inline/g50`: the scale exercise notice and
+  "MODEL ONLY", "No gap", "Outer width"). The Manual chapter link reads `content/manual/af/ui.json`
+  ("Lees hierdie hoofstuk in Engels"). The `/tour` page, the Tour guide dialog and `/atlas` use
+  `isInlineDraftLang`, so Afrikaans shows its drafted tour notice (the disclosure sentence is keyed in
+  `af-inline/g43-notices.ts`; the minutes line now reads the Afrikaans minutes) and the Atlas draft note.
+  `lib/xh-inline.ts` keeps the one `['xh', 'af']` definition. The `INLINE_DRAFT_LANGS` pin in
+  `tests/product-tour.test.ts` was widened to include `af`, not weakened.
 - **isiXhosa fix found on the way:** the invoice page told isiXhosa farmers the buyer's invoice "stays in
   English", but it uses `DOCUMENT_COPY.xh`. The note now says so (fixed on #1090).
 - **Staff and map screens:** the M&E dashboard and overview, sector overlay compass words, rainfall chart

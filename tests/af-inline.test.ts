@@ -12,7 +12,7 @@ import test from 'node:test';
 
 import { AF_INLINE_SOURCE } from '@/lib/locales/af-inline/index';
 import { XH_INLINE_SOURCE } from '@/lib/locales/xh-inline/index';
-import { inlineDraft, inlineTemplate, inlineText, placeholdersOf, registerInlineDrafts, registerXhInline } from '@/lib/xh-inline';
+import { inlineDraft, inlineTemplate, inlineText, isInlineDraftLang, placeholdersOf, registerInlineDrafts, registerXhInline } from '@/lib/xh-inline';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const SHARD_DIR = join(ROOT, 'lib/locales/af-inline');
@@ -163,4 +163,65 @@ test('the shared draft note now covers Afrikaans on the seven pages that had non
     ['app/partners/page.tsx', 'partners'], ['app/vision/page.tsx', 'vision'], ['app/samples/gardens/page.tsx', 'sample-gardens'],
     ['components/studies/AppGuidePage.tsx', 'student-guides'],
   ]) assert.match(read(path), new RegExp(`<XhosaDraftNote scope="${scope}"`), `${path} carries the note`);
+});
+
+// ── The third sample-mode sweep (2 Nov 2026): the Afrikaans mirror of xh-inline's g50 test ──────────
+test('g52: the scale exercise notice and the words on the scale diagram have Afrikaans drafts with their figures intact', async () => {
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  registerXhInline(XH_INLINE_SOURCE);
+  const { SCALE_NOTICE } = await import('@/lib/design-scale');
+  const keys = [
+    SCALE_NOTICE,
+    'MODEL ONLY · not site measurements',
+    'No gap',
+    'Outer width: {width} m',
+  ];
+  // The Afrikaans shard has exactly the keys the isiXhosa shard has: the curly apostrophe in the notice is kept.
+  const g52 = (await import('@/lib/locales/af-inline/g52-ui-gaps-3')).default;
+  const g50 = (await import('@/lib/locales/xh-inline/g50-ui-gaps-3')).default;
+  assert.deepEqual(Object.keys(g52).sort(), Object.keys(g50).sort());
+  assert.deepEqual(Object.keys(g52).sort(), [...keys].sort());
+  for (const english of keys) {
+    const draft = inlineDraft('af', english);
+    assert.ok(draft && draft !== english, `no Afrikaans draft for ${JSON.stringify(english)}`);
+    assert.equal(placeholdersOf(draft), placeholdersOf(english), 'placeholders are kept');
+    assert.equal(numbers(draft), numbers(english), 'figures are kept');
+    assert.equal(inlineText('en', english), english, 'English is untouched');
+    assert.equal(inlineText('zu', english), english, 'isiZulu without its own wording stays English');
+    for (const lang of ['st', 'ts', 've']) assert.equal(inlineText(lang, english), english, `${lang} stays English`);
+    // isiXhosa keeps its own wording, byte for byte.
+    assert.equal(inlineDraft('xh', english), g50[english]);
+  }
+  assert.equal(placeholdersOf(inlineDraft('af', 'Outer width: {width} m')!), 'width');
+  assert.equal(inlineTemplate('af', 'Outer width: {width} m', null, { width: '4,5' }), 'Buitewydte: 4,5 m');
+  assert.equal(inlineTemplate('xh', 'Outer width: {width} m', null, { width: '4,5' }), 'Ububanzi bangaphandle: 4,5 m');
+  assert.equal(inlineTemplate('en', 'Outer width: {width} m', null, { width: '4,5' }), 'Outer width: 4,5 m');
+  // Afrikaans reads the very call sites isiXhosa does: the lookup is per language.
+  const diagram = read('components/studies/DesignScaleDiagram.tsx');
+  assert.match(diagram, /\{inlineText\(lang, 'MODEL ONLY · not site measurements'\)\}/);
+  assert.match(diagram, /\{inlineText\(lang, 'No gap'\)\}/);
+  assert.match(diagram, /inlineTemplate\(lang, 'Outer width: \{width\} m', null, \{ width: n\(model\.outerWidthM\) \}\)/);
+  assert.match(read('components/studies/DesignDraftCopy.tsx'), /const xhosa = isInlineDraftLang\(lang\) \? inlineDraft\(lang, en\) : null;/);
+});
+
+test('Afrikaans is an inline-draft language, so the Manual link, /atlas, /tour and the Tour guide dialog pick it up with no literal list', () => {
+  assert.equal(isInlineDraftLang('af'), true);
+  assert.equal(isInlineDraftLang('xh'), true);
+  for (const other of ['en', 'zu', 'st', 'ts', 've']) assert.equal(isInlineDraftLang(other), false);
+  // Exactly one definition of the draft-language list and check.
+  const lib = read('lib/xh-inline.ts');
+  assert.equal((lib.match(/export const INLINE_DRAFT_LANGS/g) ?? []).length, 1);
+  assert.equal((lib.match(/export function isInlineDraftLang/g) ?? []).length, 1);
+  assert.match(lib, /INLINE_DRAFT_LANGS = \['xh', 'af'\] as const/);
+  // The Manual chapter's English link reads content/manual/af/ui.json.
+  const af = JSON.parse(read('content/manual/af/ui.json')) as Record<string, string>;
+  assert.equal(af.readInEnglish, 'Lees hierdie hoofstuk in Engels');
+  assert.notEqual(af.readInEnglish, JSON.parse(read('content/manual/en/ui.json')).readInEnglish);
+  assert.match(read('app/manual/[lang]/[slug]/page.tsx'), /\{isInlineDraftLang\(lang\)\s*\n\s*\? <Link href=\{`\/manual\/en\/\$\{slug\}`\} hrefLang="en" lang=\{lang\}[^>]*>\{ui\.readInEnglish\}/);
+  // /atlas shows the shared draft note for Afrikaans, and that note covers Afrikaans.
+  assert.match(read('app/atlas/page.tsx'), /\|\|isInlineDraftLang\(lang\)\)&&<div className="px-3 py-2"><LanguageDraftNote lang=\{lang\} scope="atlas" \/>/);
+  assert.match(read('components/LanguageDraftNote.tsx'), /lang !== 'xh' && lang !== 'af' && !\['zu', 'st', 'ts', 've'\]\.includes\(lang\)/);
+  // /tour and the guide dialog share one condition.
+  assert.match(read('app/tour/page.tsx'), /const draftLang = \['zu','st','ts','ve'\]\.includes\(lang\) \|\| isInlineDraftLang\(lang\)/);
+  assert.match(read('components/ProductTourProvider.tsx'), /const draftLang = \['zu','st','ts','ve'\]\.includes\(lang\) \|\| isInlineDraftLang\(lang\)/);
 });

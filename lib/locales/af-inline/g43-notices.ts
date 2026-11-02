@@ -35,6 +35,7 @@ const drafts: Record<string, string> = {
   "English source narration selected. Afrikaans narration is not available for this module yet.": "Vertelling in die Engelse bron is gekies. Afrikaanse vertelling is nog nie vir hierdie module beskikbaar nie.",
   "No Afrikaans narration is available. Select English source narration or No narration.": "Geen Afrikaanse vertelling is beskikbaar nie. Kies vertelling in die Engelse bron of Geen vertelling.",
   "Slides: Afrikaans AI draft + English source": "Skyfies: Afrikaanse AI-konsep + Engelse bron",
+  "Unreviewed Afrikaans draft: titles, tasks and tips are translated to match the English text. They need review by a good Afrikaans speaker who knows how this app is used.": "Onhersiene Afrikaanse konsep: titels, take en wenke is vertaal om by die Engelse teks te pas. Hulle moet nagegaan word deur 'n goeie Afrikaanse spreker wat weet hoe hierdie app gebruik word.",
   "Unreviewed Afrikaans draft": "Onhersiene Afrikaanse konsep",
   "The Afrikaans text in assessments has not yet been reviewed by a fluent Afrikaans speaker. Do not treat it as fully translated and approved.": "Die Afrikaanse teks in assesserings is nog nie deur 'n vlot Afrikaanse spreker hersien nie. Moenie dit as volledig vertaal en goedgekeur beskou nie.",
   "Some Afrikaans wording in this assessment is an unreviewed draft; the English source text is shown below it.": "Sommige Afrikaanse bewoording in hierdie assessering is 'n onhersiene konsep; die Engelse bronteks word daaronder gewys.",

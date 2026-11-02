@@ -3,6 +3,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import { isInlineDraftLang } from '@/lib/xh-inline';
 import {
   MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, figureCaption, figureCredit, isManualChapter, isManualLang, manualUi,
   parseInline, parseManual, type ManualFigure,
@@ -292,5 +293,9 @@ test('the chapter page links back to English in the reader\'s own draft language
   const read = (lang: string) => JSON.parse(readFileSync(path.join(ROOT, 'content', 'manual', lang, 'ui.json'), 'utf8')) as Record<string, string>;
   assert.equal(manualUi('xh').readInEnglish, read('xh').readInEnglish);
   assert.equal(manualUi('xh').readInEnglish, 'Funda esi sahluko ngesiNgesi');
+  // Afrikaans reads its own link text too (it is an inline-draft language); the regional languages stay English.
+  assert.equal(manualUi('af').readInEnglish, read('af').readInEnglish);
+  assert.equal(manualUi('af').readInEnglish, 'Lees hierdie hoofstuk in Engels');
+  for (const lang of ['zu', 'st', 'ts', 've']) assert.equal(isInlineDraftLang(lang), false, `${lang} keeps the English link`);
   assert.equal(manualUi('en').readInEnglish, 'Read this chapter in English');
 });

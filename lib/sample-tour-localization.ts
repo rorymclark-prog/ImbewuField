@@ -181,6 +181,8 @@ const DRAFT_LANGUAGE_NAMES: Record<string, string> = { xh: 'isiXhosa', af: 'Afri
  * draft by the same sentence with its name ("Unreviewed Afrikaans draft: titles, ...") instead of showing no notice.
  */
 export function tourDraftDisclosureEnglish(language: string): string {
+  // Afrikaans spells its sentence out so its draft key (af-inline/g43-notices.ts) stays a sentence some source file shows.
+  if (language === 'af') return 'Unreviewed Afrikaans draft: titles, tasks and tips are translated to match the English text. They need review by a good Afrikaans speaker who knows how this app is used.';
   const name = DRAFT_LANGUAGE_NAMES[language] ?? language;
   return UI_EN.draftDisclosure.replaceAll('isiXhosa', name);
 }

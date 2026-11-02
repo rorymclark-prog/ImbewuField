@@ -16,7 +16,8 @@ import {
   productTourLocalizationIsComplete, productTourStepCopy, productTourUi, productTourError, tourDraftDisclosureEnglish,
 } from '../lib/sample-tour-localization';
 import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index';
-import { INLINE_DRAFT_LANGS, isInlineDraftLang, registerXhInline } from '../lib/xh-inline';
+import { AF_INLINE_SOURCE } from '../lib/locales/af-inline/index';
+import { INLINE_DRAFT_LANGS, isInlineDraftLang, registerInlineDrafts, registerXhInline } from '../lib/xh-inline';
 
 test('isiZulu tour copy covers every source stop and tip while preserving the English destinations', () => {
   assert.equal(productTourLocalizationIsComplete(), true);
@@ -204,8 +205,9 @@ test('draft-language stop cards visibly carry disclosure and native primary inst
 });
 test('isiXhosa /tour shows its own drafted disclosure and a collapsed English source on every stop, chosen by the draft-language check not a literal list', () => {
   registerXhInline(XH_INLINE_SOURCE);
-  assert.deepEqual([...INLINE_DRAFT_LANGS], ['xh']);
+  assert.deepEqual([...INLINE_DRAFT_LANGS], ['xh', 'af']);
   assert.equal(isInlineDraftLang('xh'), true);
+  assert.equal(isInlineDraftLang('af'), true);
   for (const other of ['en', 'zu', 'st', 'ts', 've']) assert.equal(isInlineDraftLang(other), false, `${other} is not an inline-draft language`);
   // The notice is bound to the English sentence carrying the language's own name, so a second draft language gets its own.
   assert.equal(tourDraftDisclosureEnglish('xh'), 'Unreviewed isiXhosa draft: titles, tasks and tips are translated to match the English text. They need review by a good isiXhosa speaker who knows how this app is used.');
@@ -233,6 +235,30 @@ test('isiXhosa /tour shows its own drafted disclosure and a collapsed English so
   const page = readFileSync(new URL('../app/tour/page.tsx', import.meta.url), 'utf8');
   assert.match(page, /const draftLang = \['zu','st','ts','ve'\]\.includes\(lang\) \|\| isInlineDraftLang\(lang\)/);
   assert.doesNotMatch(page, /lang\s*===\s*'xh'/, 'no literal isiXhosa comparison left on /tour');
+});
+
+test('Afrikaans /tour shows its own drafted disclosure and a collapsed English source on every stop, with isiXhosa unchanged', () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  const english = tourDraftDisclosureEnglish('af');
+  assert.equal(english, 'Unreviewed Afrikaans draft: titles, tasks and tips are translated to match the English text. They need review by a good Afrikaans speaker who knows how this app is used.');
+  const disclosure = productTourUi('draftDisclosure', 'af');
+  assert.ok(disclosure && disclosure !== english && disclosure.startsWith('Onhersiene Afrikaanse konsep'), 'the Afrikaans disclosure is the draft, not the English');
+  // isiXhosa keeps its own sentence.
+  assert.ok(productTourUi('draftDisclosure', 'xh')!.startsWith('Idrafti yesiXhosa'));
+  // The minutes line reads the Afrikaans minutes, not the isiZulu duration the provider hands over.
+  assert.equal(productTourUi('aboutMinutes', 'af', { duration: 'imizuzu engu-5' }), 'Ongeveer 5 minute');
+  const renderer = renderTour(tourState(), 'af');
+  try {
+    const notes = renderer.root.findAllByProps({ role: 'note' }).map((n) => tourNodeText(n)).join('\n');
+    assert.ok(notes.includes(disclosure!), 'the disclosure note is on the page');
+    const details = renderer.root.findAllByType('details');
+    assert.equal(details.length, PRODUCT_TOUR.length, 'every stop keeps its exact English source');
+    for (const step of PRODUCT_TOUR) {
+      const own = details.find((n) => tourNodeText(n).includes(step.task));
+      assert.ok(own && own.props.open !== true, `${step.id}: English source starts collapsed`);
+    }
+  } finally { act(() => renderer.unmount()); }
 });
 
 test('tour setup errors stay native while their exact English source is separately labelled', () => {
