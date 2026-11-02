@@ -45,6 +45,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Explore international reference drafts; local farming advice remains unavailable.',
   ], tour: [{ title: 'Review international references', where: 'International foundation', href: '/international',
     detail: 'Compare country evidence, language drafts and fictional project examples.' }] },
+  { when: '1 November 2026', sha: '30554e740', changes: [
+    'Plan seedlings, trays and nursery space with your own equipment and estimates.',
+  ], tour: [{ title: 'Check nursery space', where: 'Crop planner → Nursery planner', href: '/facilitator/crops',
+    detail: 'Add your tray sizes, usable nursery surface and crop estimates. Review overlapping demand and missing information before adding automatic sowings.' }] },
   { when: '1 November 2026', sha: '256c67dd9', changes: [
     'Plan harvest targets in produce packs with your own pack weights and saleable share.',
   ] },
