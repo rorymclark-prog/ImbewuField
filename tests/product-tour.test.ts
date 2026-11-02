@@ -13,8 +13,10 @@ import {
 import { Ctx, type LangCtx } from '../lib/i18n-context';
 import {
   PRODUCT_TOUR_FEATURES_ZU, PRODUCT_TOUR_ZU, productTourFeatureCopy,
-  productTourLocalizationIsComplete, productTourStepCopy, productTourUi, productTourError,
+  productTourLocalizationIsComplete, productTourStepCopy, productTourUi, productTourError, tourDraftDisclosureEnglish,
 } from '../lib/sample-tour-localization';
+import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index';
+import { INLINE_DRAFT_LANGS, isInlineDraftLang, registerXhInline } from '../lib/xh-inline';
 
 test('isiZulu tour copy covers every source stop and tip while preserving the English destinations', () => {
   assert.equal(productTourLocalizationIsComplete(), true);
@@ -200,6 +202,39 @@ test('draft-language stop cards visibly carry disclosure and native primary inst
   }finally{act(()=>renderer.unmount());}
  }
 });
+test('isiXhosa /tour shows its own drafted disclosure and a collapsed English source on every stop, chosen by the draft-language check not a literal list', () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  assert.deepEqual([...INLINE_DRAFT_LANGS], ['xh']);
+  assert.equal(isInlineDraftLang('xh'), true);
+  for (const other of ['en', 'zu', 'st', 'ts', 've']) assert.equal(isInlineDraftLang(other), false, `${other} is not an inline-draft language`);
+  // The notice is bound to the English sentence carrying the language's own name, so a second draft language gets its own.
+  assert.equal(tourDraftDisclosureEnglish('xh'), 'Unreviewed isiXhosa draft: titles, tasks and tips are translated to match the English text. They need review by a good isiXhosa speaker who knows how this app is used.');
+  assert.match(tourDraftDisclosureEnglish('af'), /^Unreviewed Afrikaans draft: titles, tasks and tips .* a good Afrikaans speaker /);
+  const disclosure = productTourUi('draftDisclosure', 'xh');
+  assert.ok(disclosure && disclosure !== tourDraftDisclosureEnglish('xh') && disclosure.startsWith('Idrafti yesiXhosa'), 'the isiXhosa disclosure is the draft, not the English');
+  const renderer = renderTour(tourState(), 'xh');
+  try {
+    const notes = renderer.root.findAllByProps({ role: 'note' }).map((n) => tourNodeText(n)).join('\n');
+    assert.ok(notes.includes(disclosure!), 'the disclosure note is on the page');
+    const details = renderer.root.findAllByType('details');
+    assert.equal(details.length, PRODUCT_TOUR.length, 'every stop keeps its exact English source');
+    for (const step of PRODUCT_TOUR) {
+      const own = details.find((n) => tourNodeText(n).includes(step.task));
+      assert.ok(own && own.props.open !== true, `${step.id}: English source starts collapsed`);
+    }
+  } finally { act(() => renderer.unmount()); }
+  const english = renderTour(tourState(), 'en');
+  try { assert.equal(english.root.findAllByType('details').length, 0, 'English shows no draft source'); } finally { act(() => english.unmount()); }
+  // The in-flow guide dialog and the page share one condition; the dialog used to leave isiXhosa out.
+  const provider = readFileSync(new URL('../components/ProductTourProvider.tsx', import.meta.url), 'utf8');
+  assert.match(provider, /const draftLang = \['zu','st','ts','ve'\]\.includes\(lang\) \|\| isInlineDraftLang\(lang\)/);
+  assert.equal((provider.match(/\{draftLang&&</g) ?? []).length, 2, 'the dialog notice and its English source (the error line shares the condition too)');
+  assert.match(provider, /\{draftLang&&<p className=\{styles\.notice\} role="note">\{tourUi\('draftDisclosure', ''\)\}<\/p>\}/);
+  const page = readFileSync(new URL('../app/tour/page.tsx', import.meta.url), 'utf8');
+  assert.match(page, /const draftLang = \['zu','st','ts','ve'\]\.includes\(lang\) \|\| isInlineDraftLang\(lang\)/);
+  assert.doesNotMatch(page, /lang\s*===\s*'xh'/, 'no literal isiXhosa comparison left on /tour');
+});
+
 test('tour setup errors stay native while their exact English source is separately labelled', () => {
  const source='The example farm could not load. Please try again.';
  for(const lang of ['zu','st','ts','ve']){

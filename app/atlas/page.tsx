@@ -10,7 +10,7 @@ import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 function AtlasLoading() {
   const { lang } = useLanguage();
@@ -36,7 +36,7 @@ export default function AtlasPage() {
           has no room for a visible heading above it. */}
       <h1 className="sr-only">{inlineText(lang, 'Atlas · global garden explorer')}</h1>
 
-      {['zu','xh','st','ts','ve'].includes(lang)&&<div className="px-3 py-2"><LanguageDraftNote lang={lang} scope="atlas" /></div>}
+      {(['zu','st','ts','ve'].includes(lang)||isInlineDraftLang(lang))&&<div className="px-3 py-2"><LanguageDraftNote lang={lang} scope="atlas" /></div>}
       <AtlasExplorer />
 
       <TabBar hideAtDesktop />

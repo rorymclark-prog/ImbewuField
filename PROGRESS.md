@@ -207,6 +207,14 @@ and isiZulu output are unchanged.
   server rendered it, the survey picker, labelled English source lines on /prices and /atlas, the records
   tab notice, chart month axes, draft notices on seven pages (`XhosaDraftNote`), and 95 Manual figure
   captions plus the AI-illustration credit (`content/manual/figures.json`, `lib/manual.ts`).
+- **Third browser sweep fixes (2 Nov):** the Design scale exercise notice and the words written on its
+  diagram ("MODEL ONLY", "No gap", "Outer width") draft (`xh-inline/g50-ui-gaps-3.ts`, 4 drafts); the shared
+  app header title, the Community board rows and the message-list rows wrap at 390 px instead of cutting off
+  (all languages; desktop unchanged); the Manual chapter's "read in English" link reads the draft language's
+  own `ui.json`; the Atlas, `/tour` page and Tour guide dialog decide "show the draft notice" with
+  `isInlineDraftLang` (new in `lib/xh-inline.ts`) so Afrikaans gets the same notices. `/invoice` was checked
+  and left as it is: its draft notice is English on purpose and the paid / unpaid instruction deliberately
+  keeps the English beside the draft.
 - **Blind review of the 1 Nov drafts:** 435 strings, 11 repairs ("Berm" had read as a gun; "drawn" as
   "counted") — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-01/`.
 - **Crops and production:**

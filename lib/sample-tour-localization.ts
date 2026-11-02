@@ -1,7 +1,7 @@
 import { sampleWorkspaceDraft } from './sample-workspace-copy';
 import { REGIONAL_TOUR } from './sample-tour-regional';
 import { PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, type ProductTourStep, type TourFeature } from './sample-tour';
-import { fillInline, inlineDraft, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
+import { fillInline, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 const regionalTour=(language:string)=>Object.hasOwn(REGIONAL_TOUR,language)?REGIONAL_TOUR[language]:undefined;
 
@@ -109,7 +109,7 @@ export const PRODUCT_TOUR_FEATURES_ZU: Record<TourFeatureId, readonly LocalizedT
 
 export function productTourStepCopy(step: ProductTourStep, language: string): LocalizedTourStep {
   // isiXhosa: the draft for each exact English string, keyed in lib/locales/xh-inline; anything
-  // without a draft keeps its English. Afrikaans reads its drafts the same way.
+  // without a draft keeps its English.
   if (isInlineDraftLang(language)) {
     return {
       ...step,
@@ -150,8 +150,6 @@ const UI_ZU: Record<TourUiKey, string> = {
   gettingReady: 'Kuyalungiswa…', draftDisclosure: 'Uhlaka lwesiZulu olungakabuyekezwa: izihloko, imisebenzi namacebiso kuhunyushwe ngokuhambisana nombhalo wesiNgisi. Kudinga ukubuyekezwa umuntu okhuluma isiZulu kahle futhi owazi ukusetshenziswa kwalolu hlelo.',
 };
 
-const AF_TOUR_DRAFT_DISCLOSURE = 'Unreviewed Afrikaans draft: titles, tasks and tips are translated to match the English text. They need review by a good Afrikaans speaker who knows how this app is used.';
-
 // The English each tour label shows (the callers pass the same words as their fallback), so the
 // isiXhosa draft is bound to the English sentence in lib/locales/xh-inline.
 const UI_EN: Record<TourUiKey, string> = {
@@ -167,22 +165,32 @@ const UI_EN: Record<TourUiKey, string> = {
   draftDisclosure: 'Unreviewed isiXhosa draft: titles, tasks and tips are translated to match the English text. They need review by a good isiXhosa speaker who knows how this app is used.',
 };
 
-/** The provider hands over an isiZulu duration; give isiXhosa readers their own. */
-function xhDuration(duration: string | number): string {
+/** The provider hands over an isiZulu duration; give a draft language's readers their own. */
+function draftDuration(language: string, duration: string | number): string {
   const text = String(duration);
-  if (text === 'umzuzu') return inlineText('xh', '1 minute');
+  if (text === 'umzuzu') return inlineText(language, '1 minute');
   const minutes = /^imizuzu engu-(\d+)$/.exec(text)?.[1];
-  return minutes ? fillInline(inlineText('xh', '{n} minutes'), { n: minutes }) : text;
+  return minutes ? fillInline(inlineText(language, '{n} minutes'), { n: minutes }) : text;
+}
+
+const DRAFT_LANGUAGE_NAMES: Record<string, string> = { xh: 'isiXhosa', af: 'Afrikaans' };
+
+/**
+ * The English the draft-disclosure notice is bound to, with the draft language's own name in it. isiXhosa's
+ * wording is the sentence it has always had, byte for byte; a language added to isInlineDraftLang later keys its
+ * draft by the same sentence with its name ("Unreviewed Afrikaans draft: titles, ...") instead of showing no notice.
+ */
+export function tourDraftDisclosureEnglish(language: string): string {
+  const name = DRAFT_LANGUAGE_NAMES[language] ?? language;
+  return UI_EN.draftDisclosure.replaceAll('isiXhosa', name);
 }
 
 export function productTourUi(key: TourUiKey, language: string, values: Record<string, string | number> = {}): string | undefined {
   if (isInlineDraftLang(language)) {
-    // The disclosure names its language, so Afrikaans has its own English source sentence; it is
-    // shown in English until its draft exists rather than leaving the notice empty.
-    const english = language === 'af' && key === 'draftDisclosure' ? AF_TOUR_DRAFT_DISCLOSURE : UI_EN[key];
-    const draft = inlineDraft(language, english) ?? (english === AF_TOUR_DRAFT_DISCLOSURE ? english : null);
-    if (!draft) return undefined;
-    const filled = key === 'aboutMinutes' && values.duration !== undefined && language === 'xh' ? { ...values, duration: xhDuration(values.duration) } : values;
+    const english = key === 'draftDisclosure' ? tourDraftDisclosureEnglish(language) : UI_EN[key];
+    const draft = inlineText(language, english);
+    if (draft === english) return undefined;
+    const filled = key === 'aboutMinutes' && values.duration !== undefined ? { ...values, duration: draftDuration(language, values.duration) } : values;
     return Object.entries(filled).reduce((text, [name, value]) => text.replaceAll(`{${name}}`, String(value)), draft);
   }
   const template=language === 'zu' ? UI_ZU[key] : regionalTour(language)?.ui[key];

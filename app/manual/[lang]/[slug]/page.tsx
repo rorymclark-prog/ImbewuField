@@ -9,6 +9,7 @@ import {
   MANUAL_CHAPTERS, MANUAL_LANGS, chapterTitle, figuresBySection, isManualChapter, isManualLang, manualUi, parseManual, readingMinutes,
 } from '@/lib/manual';
 import { manualFigures, readChapter } from '@/lib/manual-content';
+import { isInlineDraftLang } from '@/lib/xh-inline';
 
 // One chapter in one language, generated at build time. A language whose chapter file does not
 // exist yet shows the English chapter (marked lang="en") rather than a 404, so the contents list
@@ -67,7 +68,13 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
           {lang !== 'en' && (
             <p role="note" lang={lang} style={{ fontSize: 15, lineHeight: 1.55, color: 'var(--text-primary)', background: 'var(--bg-2)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', margin: '0 0 24px' }}>
               {ui.draftNotice}{' '}
-              <Link href={`/manual/en/${slug}`} lang="en" style={{ textDecoration: 'underline', fontWeight: 600 }}>{manualUi('en').readInEnglish}</Link>
+              {/* The link text is the English "Read this chapter in English" (lang="en") for isiZulu, Sesotho, Tshivenda
+                  and Xitsonga, as it always was. A draft language (isiXhosa, and Afrikaans when it lands) reads it from its
+                  own content/manual/<lang>/ui.json instead: this page is built on the server, where the inline-draft
+                  lookup has no drafts loaded, and ui.json already carries the reviewed-as-draft wording. */}
+              {isInlineDraftLang(lang)
+                ? <Link href={`/manual/en/${slug}`} hrefLang="en" lang={lang} style={{ textDecoration: 'underline', fontWeight: 600 }}>{ui.readInEnglish}</Link>
+                : <Link href={`/manual/en/${slug}`} lang="en" style={{ textDecoration: 'underline', fontWeight: 600 }}>{manualUi('en').readInEnglish}</Link>}
             </p>
           )}
           <ManualBlocks blocks={body} figures={figuresBySection(manualFigures(), slug)} lang={contentLang} />

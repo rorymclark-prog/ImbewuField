@@ -21,7 +21,9 @@ const STOP_ICONS: Record<string, LucideIcon> = {
 export default function TourPage() {
   const { lang, t } = useLanguage();
   // isiXhosa: the unreviewed draft keyed by the exact English template (lib/locales/xh-inline).
-  const ui = (english:string,zulu:string,values:Record<string,string|number>={})=>(lang==='xh'||lang==='af')?inlineTemplate(lang,english,null,values):sampleWorkspaceText(lang,english,zulu,values);
+  // Every language whose wording is an unreviewed draft (isiZulu, the regional languages, and each inline-draft language) shows the notice and the English source.
+  const draftLang = ['zu','st','ts','ve'].includes(lang) || isInlineDraftLang(lang);
+  const ui = (english:string,zulu:string,values:Record<string,string|number>={})=>isInlineDraftLang(lang)?inlineTemplate(lang,english,null,values):sampleWorkspaceText(lang,english,zulu,values);
   const tour = useProductTour();
   const tourUi = (key: Parameters<typeof productTourUi>[0], fallback: string, values: Record<string, string | number> = {}) =>
     productTourUi(key, lang, values) ?? fallback;
@@ -54,9 +56,9 @@ export default function TourPage() {
       </div>
       <figure><img src="/demo/harvest.webp" width={512} height={512} loading="lazy" alt={ui('Illustrated example of a garden harvest', 'Umdwebo wesibonelo sesivuno sengadi')}/><figcaption>{ui('Garden harvest · AI-generated illustration', 'Isivuno sengadi · umdwebo owenziwe nge-AI')}</figcaption></figure>
     </section>
-    {tour?.error && <p role="alert" lang={productTourError(tour.error,lang)===tour.error?'':lang}>{productTourError(tour.error, lang)}{['zu','xh','st','ts','ve'].includes(lang)&&productTourError(tour.error,lang)!==tour.error&&<small lang="en" style={{display:'block',fontSize:12}}><span lang={lang}>{lang==='xh'?inlineText(lang,'English source'):t('offlineSourceLabel')}: </span>{tour.error}</small>}</p>}
+    {tour?.error && <p role="alert" lang={productTourError(tour.error,lang)===tour.error?'':lang}>{productTourError(tour.error, lang)}{draftLang&&productTourError(tour.error,lang)!==tour.error&&<small lang="en" style={{display:'block',fontSize:12}}><span lang={lang}>{isInlineDraftLang(lang)?inlineText(lang,'English source'):t('offlineSourceLabel')}: </span>{tour.error}</small>}</p>}
     <p className={styles.notice}>{ui('Try the app with prepared records. Your own project stays unchanged.', 'Zama uhlelo ngamarekhodi alungisiwe. Iphrojekthi yakho ayishintshi.')}</p>
-    {['zu','xh','af','st','ts','ve'].includes(lang) && <p className={styles.notice} role="note">{tourUi('draftDisclosure', '')}</p>}
+    {draftLang && <p className={styles.notice} role="note">{tourUi('draftDisclosure', '')}</p>}
     {tried > 0 && !tour?.active && <section className={styles.complete}><h2>{tried === PRODUCT_TOUR.length ? ui('You’ve explored the whole tour.', 'Usuhlole lonke uhambo.') : ui('Keep exploring at your own pace.', 'Qhubeka uhlole ngejubane lakho.')}</h2><p>{ui("{tried} of {total} stops marked as explored. These are your checklist choices, not a training certificate.", "Izindawo ezingu-{tried} kwezingu-{total} zimakwe njengezihloliwe. Lokhu kuwuhlu lokuzihlola kwakho, akusona isitifiketi sokuqeqeshwa.", {tried: tried, total: PRODUCT_TOUR.length})}</p><div className={styles.controls}><Link href="/samples">{ui('Explore another role', 'Hlola enye indima')}</Link><Link href="/feedback">{ui('Request a feature or ask about customisation', 'Cela isici noma ubuze ngokwenza uhlelo lufanele wena')}</Link></div></section>}
     <h2>{ui('Nine stops, one connected story.', 'Izindawo eziyisishiyagalolunye, indaba eyodwa exhunyiwe.')}</h2>
     <p className={styles.hint}>{ui('Choose any stop below to open its screen and guide. Use the Tour button beside the menu to return to the tips or move to another stop.', 'Khetha noma iyiphi indawo ngezansi ukuze uvule isikrini nomhlahlandlela wayo. Sebenzisa inkinobho ethi Tour eduze kwemenyu ukuze ubuyele emacebisweni noma uye kwenye indawo.')}</p>
@@ -73,7 +75,7 @@ export default function TourPage() {
         <div className={cards.top}><span className={cards.icon} aria-hidden="true"><Icon size={26} strokeWidth={1.75}/></span><span className={styles.cardMeta}>{String(index+1).padStart(2,'0')} · {duration}{tour?.done.includes(step.id) ? ui(' · Explored', ' · Kuhloliwe') : ''}</span></div>
         <h2><button type="button" className={cards.open} data-tour-stop={step.id} aria-label={tourUi('stopAria', `Open stop ${index + 1}: ${step.title}`, { current: index + 1, title: copy.title })} aria-describedby={`tour-${step.id}-description`} aria-current={current ? 'step' : undefined} disabled={!allowed || pendingStop !== null} onClick={()=>openStop(index)}>{copy.title}</button></h2>
         <p id={`tour-${step.id}-description`} className={cards.description}>{copy.task}</p>
-        {['zu','xh','st','ts','ve'].includes(lang)&&<details className={cards.source}><summary>{t('languageDraftNoticeEnglishToggle')}</summary><div lang="en"><strong>{step.title}</strong><p>{step.task}</p></div></details>}
+        {draftLang&&<details className={cards.source}><summary>{t('languageDraftNoticeEnglishToggle')}</summary><div lang="en"><strong>{step.title}</strong><p>{step.task}</p></div></details>}
         <span className={cards.action} aria-hidden="true">{pendingStop === index ? tourUi('opening', 'Opening…') : !tour?.ready ? tourUi('gettingReady', 'Getting ready…') : allowed ? ui('Open stop', 'Vula indawo') : tourUi('unavailable', 'Unavailable for this account')}{allowed && <ArrowRight size={16}/>}</span>
       </article>;
     })}</div>

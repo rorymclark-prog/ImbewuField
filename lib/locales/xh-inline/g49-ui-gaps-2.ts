@@ -9,7 +9,7 @@ const drafts: Record<string, string> = {
   // Site survey picker
   "What are you preparing?": "Uwulungiselela ntoni?",
   "Choose the purpose, then the questionnaire length. Your maps and production plan remain linked to this site.": "Khetha injongo, uze ukhethe ubude bemibuzo. Iimephu zakho nesicwangciso semveliso zihlala zidityaniswe nale ndawo.",
-  "Understand the site, constraints and possibilities before detailed design.": "Qonda indawo, izithintelo neenkalo ezinokwenzeka phambi komklamo oneenkcukacha.",
+  "Understand the site, constraints and possibilities before detailed design.": "Qonda indawo, izithintelo neenkalo ezinokwenzeka phambi koyilo oluneenkcukacha.",
   "Bring the site survey, saved maps and whole-year production plan together. Missing evidence stays visible.": "Dibanisa uphando lwendawo, iimephu ezigciniweyo nesicwangciso semveliso sonyaka wonke. Ubungqina obungekhoyo buhlala bubonakala.",
   // Programme assessments
   "Share this summary with funders": "Yabelana ngesishwankathelo esi nabaxhasi-mali",
