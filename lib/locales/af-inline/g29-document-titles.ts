@@ -16,6 +16,10 @@ const drafts: Record<string, string> = {
   "Saved on this phone": "Gestoor op hierdie foon",
   "Example production": "Voorbeeldproduksie",
   "Example gardens": "Voorbeeldtuine",
+  // main's staff review pages (#1166)
+  "Language draft review": "Hersiening van taalkonsepte",
+  "Country evidence review": "Hersiening van landbewyse",
+  "Project workflow review": "Hersiening van projekwerkvloei",
   "Your design learning folder": "Jou ontwerpleerlêer",
   "ImbewuField — permaculture planning for South African farmers": "ImbewuField — permakultuurbeplanning vir Suid-Afrikaanse boere",
   "ImbewuField — partner deck": "ImbewuField — vennootaanbieding",
