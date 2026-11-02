@@ -10,7 +10,7 @@ const drafts: Record<string, string> = {
   "Tree Basin": "Boomkom",
   "Vegetable Bed": "Groentebedding",
   "Other Tree": "Ander boom",
-  "Indigenous Shade Tree": "Inheemse skadubboom",
+  "Indigenous Shade Tree": "Inheemse skaduboom",
   "Other planting": "Ander aanplanting",
   "Pollinator Strip": "Bestuiwerstrook",
   "Beds & strips": "Beddings en stroke",
