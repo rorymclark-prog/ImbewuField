@@ -2,7 +2,6 @@
 // Keyed by the exact English the screen shows (see lib/xh-inline.ts). Unreviewed machine drafts.
 const drafts: Record<string, string> = {
   "Unreviewed isiXhosa draft.": "Idrafti yesiXhosa engekahlolwa.",
-  "ISIXHOSA MACHINE DRAFT — This wording has not been reviewed by a fluent isiXhosa speaker. The exact English source appears under each line.": "IDRAFTI YESIXHOSA YOMATSHINI — Lo mbhalo awukahlolwa ngumntu othetha isiXhosa kakuhle. Umthombo wesiNgesi ochanekileyo ubonakala phantsi komgca nomgca.",
   "isiXhosa translation pending — English source:": "Inguqulelo yesiXhosa isalindile — umthombo wesiNgesi:",
   "Unreviewed isiXhosa drafts with English sources; some farming instructions remain in English for review.": "Amadrafti esiXhosa angekahlolwa anemithombo yesiNgesi; ezinye iingcebiso zokulima zihlala zisesiNgesini ukuze zihlolwe.",
   "Monthly chores and Lima advice have unreviewed isiXhosa drafts beside English sources. Some farming instructions remain in English for review.": "Imisebenzi yenyanga nganye neengcebiso zikaLima zinamadrafti esiXhosa angekahlolwa ecaleni kwemithombo yesiNgesi. Ezinye iingcebiso zokulima zihlala zisesiNgesini ukuze zihlolwe.",

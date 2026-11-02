@@ -494,6 +494,10 @@ test('g52: one draft notice per surface - the results sheet tabs and the navigat
   assert.match(drawer, /<LanguageDraftNote lang=\{lang\} scope="navigation-drawer"\/>/);
   assert.doesNotMatch(drawer, /ISIXHOSA MACHINE DRAFT/, 'the second, differently worded isiXhosa notice is gone');
   assert.equal(xhInlineDraft('ISIXHOSA MACHINE DRAFT.'), null, 'its retired draft is gone too');
+  const records = read('components/MyRecords.tsx');
+  assert.match(records, /ISIZULU MACHINE DRAFT — This wording has not been reviewed/, 'the isiZulu Sold-card line is untouched by this isiXhosa change');
+  assert.doesNotMatch(records, /ISIXHOSA MACHINE DRAFT/, 'the Sold card no longer repeats the shared /records isiXhosa notice');
+  assert.equal(xhInlineDraft('ISIXHOSA MACHINE DRAFT — This wording has not been reviewed by a fluent isiXhosa speaker. The exact English source appears under each line.'), null, 'its retired draft is gone too');
 });
 
 test('g52: records validation errors and hints lead with the isiXhosa draft and label the English as its source; Sesotho, Tshivenda and Xitsonga keep English first', async () => {
