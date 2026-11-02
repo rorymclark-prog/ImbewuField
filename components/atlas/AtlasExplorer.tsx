@@ -215,7 +215,7 @@ export default function AtlasExplorer() {
                 </button>
               )}
             </div>
-            {(isZulu || isXhosa) && <span className="font-sans pl-6" style={{ fontSize: 9.5, lineHeight: 1.1, color: 'var(--text-muted)' }}>Search anywhere on Earth</span>}
+            {(isZulu || isXhosa) && <span lang="en" className="font-sans pl-6" style={{ fontSize: 9.5, lineHeight: 1.1, color: 'var(--text-muted)' }}>{isXhosa ? `${inlineText(lang, 'English source:')} ` : ''}Search anywhere on Earth</span>}
           </div>
           {suggestions.length > 0 && (
             <div
@@ -257,7 +257,7 @@ export default function AtlasExplorer() {
               {isZulu || isXhosa ? (
                 <>
                   <span className="block">{isZulu ? 'Thinta noma kuphi emhlabeni ukuze ubone isimo sezulu, imvula nomhlabathi.' : inlineText(lang, 'Tap anywhere on Earth to read its climate, rain and soil')}</span>
-                  <span className="block mt-0.5 font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>Tap anywhere on Earth to read its climate, rain and soil</span>
+                  <span lang="en" className="block mt-0.5 font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>{isXhosa ? `${inlineText(lang, 'English source:')} ` : ''}Tap anywhere on Earth to read its climate, rain and soil</span>
                 </>
               ) : 'Tap anywhere on Earth to read its climate, rain and soil'}
             </span>

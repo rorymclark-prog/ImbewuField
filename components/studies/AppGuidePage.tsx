@@ -20,6 +20,7 @@ import GuideScreenSlides from './GuideScreenSlides';
 import ArrowLabel from './ArrowLabel';
 import Tx from './Tx';
 import { useLanguage } from '@/lib/i18n';
+import XhosaDraftNote from '@/components/XhosaDraftNote';
 import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 
 function GuideAudio({ guideId, section, title, onPlay }: {
@@ -63,6 +64,7 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
       <OfflinePageLink href="/student" className={styles.back}><ArrowLeft size={17} /> <Tx en="My Studies" /></OfflinePageLink>
       <SettingsButton />
     </header>
+    <XhosaDraftNote scope="student-guides" className="mx-auto w-full max-w-5xl px-4 pt-2" />
     <main className={styles.main}>
       <section className={styles.hero} aria-labelledby="guide-title">
         <div className={styles.heroText}>

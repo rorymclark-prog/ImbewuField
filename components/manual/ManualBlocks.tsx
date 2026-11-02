@@ -1,5 +1,5 @@
 import { Fragment, type CSSProperties, type ReactNode } from 'react';
-import { figureCaption, inlineText, type Block, type Inline, type ManualFigure, type ManualLang } from '@/lib/manual';
+import { figureCaption, figureCredit, inlineText, type Block, type Inline, type ManualFigure, type ManualLang } from '@/lib/manual';
 
 // Renders lib/manual.ts's parsed blocks. No hooks and no HTML strings, so it runs inside the
 // statically generated chapter page and a translation can only ever produce text.
@@ -57,7 +57,7 @@ export function ManualFigureView({ figure, lang, grouped = false }: { figure: Ma
       <img src={figure.src} alt={caption.text} width={figure.width} height={figure.height} loading="lazy" style={figureImageStyle(figure)} />
       <figcaption lang={caption.lang} style={{ fontSize: 14, lineHeight: 1.5, color: 'var(--text-secondary)', marginTop: 8 }}>
         {caption.text}
-        {figure.credit && <span style={{ display: 'block', fontSize: 12, marginTop: 2 }}>{figure.credit}</span>}
+        {figure.credit && <span lang={lang === 'xh' && figureCredit(figure, lang) !== figure.credit ? 'xh' : undefined} style={{ display: 'block', fontSize: 12, marginTop: 2 }}>{figureCredit(figure, lang)}</span>}
       </figcaption>
     </figure>
   );

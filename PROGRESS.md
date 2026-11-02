@@ -90,6 +90,11 @@ and isiZulu output are unchanged.
   (`xh-inline/g48-ui-gaps.ts`, 84 drafts). The crop planner shows its draft notice once, not per row, and
   no longer pairs a month with an identical English. The facilitator crops header wraps at 390 px.
   Journal CSV/printable copies stay English (the notice says so).
+- **Second browser sweep fixes (2 Nov):** home upcoming tasks (shared `lib/task-title-draft.ts`), the plan
+  header at 390 px, one Studies banner instead of two, `useHydratedLang` so course copy hydrates as the
+  server rendered it, the survey picker, labelled English source lines on /prices and /atlas, the records
+  tab notice, chart month axes, draft notices on seven pages (`XhosaDraftNote`), and 95 Manual figure
+  captions plus the AI-illustration credit (`content/manual/figures.json`, `lib/manual.ts`).
 - **Blind review of the 1 Nov drafts:** 435 strings, 11 repairs ("Berm" had read as a gun; "drawn" as
   "counted") — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-01/`.
 - **Crops and production:**

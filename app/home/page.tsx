@@ -40,6 +40,7 @@ import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
 import { useLanguage, translate } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
+import { taskTitleXh, taskSubtitleXh } from '@/lib/task-title-draft';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
@@ -247,9 +248,9 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
                 className="font-display imf-task-title"
                 style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-ink)', letterSpacing: '-0.01em', lineHeight: 1.2, textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.5 : 1, transition: 'opacity 220ms ease' }}
               >
-                {task.title}
+                {taskTitleXh(task, lang) ?? task.title}
               </div>
-              <div className="font-sans truncate" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 1, lineHeight: 1.4 }}>{task.subtitle}</div>
+              <div className="font-sans truncate" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 1, lineHeight: 1.4 }}>{taskSubtitleXh(task, lang) ?? task.subtitle}</div>
             </div>
             <button
               onClick={() => downloadTaskIcs(task)}

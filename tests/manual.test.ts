@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import {
-  MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, isManualChapter, isManualLang, manualUi,
+  MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, figureCaption, figureCredit, isManualChapter, isManualLang, manualUi,
   parseInline, parseManual, type ManualFigure,
 } from '@/lib/manual';
 
@@ -226,4 +226,30 @@ test('every file in public/manual/figures/ is listed in figures.json', () => {
     if (name.startsWith('.')) continue;
     assert.ok(listed.has(name), `public/manual/figures/${name} is not in content/manual/figures.json`);
   }
+});
+
+// isiXhosa figure captions and the shared credit line (an unreviewed machine draft, like the xh chapters).
+test('every figure has an isiXhosa caption that keeps the English caption\'s numbers and Latin names', () => {
+  for (const f of figures) {
+    const xh = f.caption.xh;
+    assert.ok(typeof xh === 'string' && xh.trim(), `${f.id}: missing isiXhosa caption`);
+    assert.notEqual(xh, f.caption.en, `${f.id}: isiXhosa caption is still the English one`);
+    assert.deepEqual(figureCaption(f, 'xh'), { text: xh, lang: 'xh' });
+    // Every figure, count and Latin name in the English caption survives in the draft.
+    const keep = (text: string) => (text.match(/\d+(?: \d{3})?|\(([A-Z][a-z]+ [a-z]+)\)/g) ?? []).map((m) => m.replace(/^\(|\)$/g, ''));
+    for (const token of keep(f.caption.en)) assert.ok(xh!.includes(token), `${f.id}: isiXhosa caption lost "${token}"`);
+    // English and the other captioned languages are untouched.
+    assert.equal(figureCaption(f, 'en').text, f.caption.en);
+    assert.equal(figureCaption(f, 'zu').text, f.caption.zu);
+  }
+});
+
+test('the picture credit is isiXhosa for isiXhosa readers and stored text for every other language', () => {
+  for (const f of figures) {
+    assert.equal(f.credit, 'Illustration: made with AI for this manual');
+    assert.equal(figureCredit(f, 'xh'), 'Umfanekiso: wenziwe nge-AI kule ncwadi');
+    for (const lang of MANUAL_LANGS.filter((l) => l !== 'xh')) assert.equal(figureCredit(f, lang), f.credit, `${lang}: credit unchanged`);
+  }
+  assert.equal(figureCredit({ ...figures[0], credit: 'Photo: Imbewu' }, 'xh'), 'Photo: Imbewu', 'an unlisted credit is shown as stored');
+  assert.equal(figureCredit({ ...figures[0], credit: undefined }, 'xh'), undefined);
 });

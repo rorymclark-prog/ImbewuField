@@ -785,3 +785,12 @@ test('the production-plan header wraps on a phone instead of clipping the title 
   assert.match(header[1], /\bmd:h-14\b/, 'a wide header is still 56px tall');
   assert.doesNotMatch(header[1], /(^|\s)overflow-x-auto/, 'no horizontal scroll on a phone');
 });
+
+test('the production-plan title block shrinks on a phone instead of ending off-screen (isiXhosa titles are longer)', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  assert.doesNotMatch(page, /maxWidth: 220 \}/, 'no fixed 220px subtitle width that overflows a 390px header');
+  assert.equal((page.match(/maxWidth: 'min\(220px, 100%\)'/g) ?? []).length, 2, 'both subtitles cap at 220px but shrink with their container');
+  assert.doesNotMatch(page, /<div className="flex flex-col min-w-0 flex-shrink-0">/, 'the title block may shrink below its content width');
+  assert.equal((page.match(/md:flex-shrink-0/g) ?? []).length, 2, 'wide screens keep the unshrunk, scrollable single row');
+  assert.equal((page.match(/font-display font-semibold truncate" style=\{\{ fontSize: 'clamp\(15px, 1\.15vw, 18px\)'/g) ?? []).length, 2, 'the title truncates rather than overflowing');
+});

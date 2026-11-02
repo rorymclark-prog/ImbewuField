@@ -1,7 +1,7 @@
 'use client';
 
 import type { ElementType, HTMLAttributes } from 'react';
-import { useLanguage } from '@/lib/i18n';
+import { useHydratedLang } from '@/lib/use-hydrated-lang';
 import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 
 /**
@@ -14,7 +14,7 @@ import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 export default function TxLabelled({ as: Tag = 'div', en, values, lookup, ...rest }: {
   as?: ElementType; en: string; values?: Record<string, string | number>; lookup?: string[];
 } & Omit<HTMLAttributes<HTMLElement>, 'aria-label'>) {
-  const { lang } = useLanguage();
+  const lang = useHydratedLang();
   const filled = values && lookup?.length
     ? Object.fromEntries(Object.entries(values).map(([key, value]) => [key, lookup.includes(key) ? inlineText(lang, String(value)) : value]))
     : values;
