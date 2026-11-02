@@ -1,6 +1,17 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
+  "Explore international reference drafts; local farming advice remains unavailable.": "Kambisisa mpfapfarhuto wa swihlovo swa matiko; switsundzuxo swa vurimi bya ndhawu a swi si kumeka.",
+  "Review international references": "Kambisisa swihlovo swa matiko",
+  "International foundation": "Masungulo ya matiko",
+  "Compare country evidence, language drafts and fictional project examples.": "Pimanisa vumbhoni bya matiko, mipfapfarhuto ya tindzimi ni swikombiso swa tiphurojeke leswi nga riki swa xiviri.",
+  // Nursery: docs/audits/2026-11-01/nursery-release-drafts.json; unreviewed.
+  "Plan seedlings, trays and nursery space with your own equipment and estimates.": "Kunguhata swimilana, tithireyi ni ndhawu ya nesari hi kungu ra wena ra swibyariwa u tirhisa switirhisiwa ni minkanyeto ya wena.",
+  "Check nursery space": "Kambisisa ndhawu ya nesari",
+  "Crop planner → Nursery planner": "Mukungu wa swibyariwa → Mukungu wa nesari",
+  "Add your tray sizes, usable nursery surface and crop estimates. Review overlapping demand and missing information before adding automatic sowings.": "Nghenisa tisayizi ta tithireyi, ndhawu ya nesari leyi tirhisiwaka ni minkanyeto ya swibyariwa. Kambisisa swilaveko leswi hlanganaka ni vuxokoxoko lowu kayivelaka u nga si engetela ku byala loku kunguhatiwaka hi app.",
+
   // Sales-unit targets: docs/audits/2026-11-01/market-garden-sales-release-drafts.json; unreviewed.
   "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Kunguhata swikongomelo swa ntshovelo hi tiphakiti ta swikumiwa u tirhisa mintiko ya tiphakiti ni xiphemu lexi xavisekaka lexi u xi ngheniseke.",
 

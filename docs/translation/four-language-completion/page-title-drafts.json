@@ -209,6 +209,18 @@
     {
       "file": "app/facilitator/print/layout.tsx",
       "english": "Printable plan — ImbewuField"
+    },
+    {
+      "file": "app/international/page.tsx",
+      "english": "Country evidence review — ImbewuField"
+    },
+    {
+      "file": "app/international/locales/layout.tsx",
+      "english": "Language draft review — ImbewuField"
+    },
+    {
+      "file": "app/international/projects/page.tsx",
+      "english": "Project workflow review — ImbewuField"
     }
   ],
   "dynamicOwners": [
@@ -545,6 +557,27 @@
     }
   ],
   "entries": [
+    {
+      "english": "Country evidence review — ImbewuField",
+      "zu": "Ukubuyekeza ubufakazi bamazwe — ImbewuField",
+      "st": "Tlhahlobo ya bopaki ba dinaha — ImbewuField",
+      "ts": "Nkambisiso wa vumbhoni bya matiko — ImbewuField",
+      "ve": "U ṱola vhuṱanzi ha mashango — ImbewuField"
+    },
+    {
+      "english": "Language draft review — ImbewuField",
+      "zu": "Ukubuyekeza izinhlaka zezilimi — ImbewuField",
+      "st": "Tlhahlobo ya meralo ya dipuo — ImbewuField",
+      "ts": "Nkambisiso wa mipfapfarhuto ya tindzimi — ImbewuField",
+      "ve": "U ṱola mvetamveto dza nyambo — ImbewuField"
+    },
+    {
+      "english": "Project workflow review — ImbewuField",
+      "zu": "Ukubuyekeza ukuhamba komsebenzi wephrojekthi — ImbewuField",
+      "st": "Tlhahlobo ya tatelano ya mosebetsi wa projeke — ImbewuField",
+      "ts": "Nkambisiso wa mafambiselo ya phurojeke — ImbewuField",
+      "ve": "U ṱola matshimbidzele a thandela — ImbewuField"
+    },
     {
       "english": "Printable plan — ImbewuField",
       "zu": "Uhlelo oluphrintekayo — ImbewuField",

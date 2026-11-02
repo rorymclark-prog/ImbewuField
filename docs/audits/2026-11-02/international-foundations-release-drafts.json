@@ -1,0 +1,42 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "International reference update notice and tour only. AI drafts; no fluent human review or local farming support claimed. No lesson or quiz changes.",
+  "entries": [
+    {
+      "source": "Explore international reference drafts; local farming advice remains unavailable.",
+      "drafts": {
+        "zu": "Hlola izinhlaka zolwazi zamazwe; izeluleko zendawo zokulima azikatholakali.",
+        "st": "Hlahloba meralo ya mehlodi ya dinaha; keletso ya temo ya lehae ha e eso fumanehe.",
+        "ts": "Kambisisa mpfapfarhuto wa swihlovo swa matiko; switsundzuxo swa vurimi bya ndhawu a swi si kumeka.",
+        "ve": "Ṱolani mvetamveto dza zwiko zwa mashango; nyeletshedzo ya vhulimi ya henefho a i athu u vha hone."
+      }
+    },
+    {
+      "source": "Review international references",
+      "drafts": {
+        "zu": "Buyekeza imithombo yamazwe",
+        "st": "Hlahloba mehlodi ya dinaha",
+        "ts": "Kambisisa swihlovo swa matiko",
+        "ve": "Ṱolani zwiko zwa mashango"
+      }
+    },
+    {
+      "source": "International foundation",
+      "drafts": {
+        "zu": "Isisekelo samazwe",
+        "st": "Motheo wa dinaha",
+        "ts": "Masungulo ya matiko",
+        "ve": "Mutheo wa mashango"
+      }
+    },
+    {
+      "source": "Compare country evidence, language drafts and fictional project examples.",
+      "drafts": {
+        "zu": "Qhathanisa ubufakazi bamazwe, izinhlaka zezilimi nezibonelo zamaphrojekthi eziqanjiwe.",
+        "st": "Bapisa bopaki ba dinaha, meralo ya dipuo le mehlala ya diprojeke e iqapetsweng.",
+        "ts": "Pimanisa vumbhoni bya matiko, mipfapfarhuto ya tindzimi ni swikombiso swa tiphurojeke leswi nga riki swa xiviri.",
+        "ve": "Vhambedzani vhuṱanzi ha mashango, mvetamveto dza nyambo na tsumbo dza thandela dzo tou humbulelwaho."
+      }
+    }
+  ]
+}

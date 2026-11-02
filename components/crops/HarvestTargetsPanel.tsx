@@ -1,12 +1,15 @@
 'use client';
 
-import { useRef, useState, type FormEvent } from 'react';
+import { useMemo, useRef, useState, type FormEvent } from 'react';
 import { Target, Trash2 } from 'lucide-react';
 import { CROPS, cropByKey, hasPlanningYield, MONTHS_SHORT, type RainPattern } from '@/lib/crop-catalog';
 import { HARVEST_TARGET_UNITS, sanitiseHarvestTargets, type HarvestTarget, type PlanBed, type Planting, type HarvestPackUnit } from '@/lib/crop-plan';
 import { suggestHarvestTargets, type AutoSuggestAnswers, type AutoSuggestResult } from '@/lib/crop-autosuggest';
 import { assessHarvestTarget, HARVEST_TARGET_BASIS, targetMonthStamp } from '@/lib/harvest-targets';
 import { numberLabel } from '@/lib/format-figures';
+import { buildNurseryForecast } from '@/lib/crop-export-schedule';
+import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
+import NurseryForecastSummary from './NurseryForecastSummary';
 
 interface Props {
   siteId: string;
@@ -15,6 +18,7 @@ interface Props {
   plantings: Planting[];
   pattern: RainPattern;
   climate: Pick<AutoSuggestAnswers, 'siteMonthlyTempC' | 'siteMonthlyRainMm' | 'siteLatitude' | 'observedFrostMonths'>;
+  nurserySettings?: NurserySettings;
   onTargets: (targets: HarvestTarget[]) => void;
   onAccept: (result: AutoSuggestResult) => void;
 }
@@ -34,7 +38,7 @@ const targetAmount = (kg: number | null, target: HarvestTarget) => kg === null ?
     : amount(kg);
 const monthName = (stamp: string) => `${MONTHS_SHORT[Number(stamp.slice(5)) - 1]} ${stamp.slice(0, 4)}`;
 
-export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, pattern, climate, onTargets, onAccept }: Props) {
+export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, pattern, climate, nurserySettings, onTargets, onAccept }: Props) {
   const today = new Date();
   const now = { year: today.getFullYear(), month: today.getMonth() + 1 };
   const current = now.year * 12 + now.month - 1;
@@ -62,6 +66,9 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
   };
   const key = JSON.stringify([siteId, ownTargets, beds, plantings, pattern, answers, now]);
   const result = review?.key === key ? review.result : null;
+  const nurseryForecast = useMemo(() => result
+    ? buildNurseryForecast([...plantings, ...result.plantings], beds, siteId, sanitiseNurserySettings(nurserySettings), now)
+    : null, [plantings, result, beds, siteId, nurserySettings, now]);
   const assessments = ownTargets.map((target) => assessHarvestTarget(target, beds, plantings)!);
 
   function saveTarget(event: FormEvent) {
@@ -190,6 +197,9 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
           <tbody>{result.plantings.map((p) => <tr key={p.id} className="border-t border-[var(--border)]"><td className="py-2 pr-3">{beds.find((b) => b.id === p.bedId)?.label}</td><td className="py-2 pr-3">{cropByKey(p.cropKey)?.name}</td><td className="py-2 pr-3 whitespace-nowrap">{monthName(p.once!)}</td><td className="py-2">{p.areaFraction ? `${numberLabel(p.areaFraction * 100, 1)}%` : 'Whole area'}</td></tr>)}</tbody>
         </table></div>}
         <ul className="text-xs space-y-2 text-[var(--text-secondary)]">{result.notes.map((note, i) => <li key={i}>{note.text}</li>)}</ul>
+        {nurseryForecast && result.plantings.length > 0 && <NurseryForecastSummary
+          forecast={nurseryForecast} beds={beds} compact title="Nursery check before adding target sowings"
+        />}
         {result.plantings.length > 0 && <button type="button" className={primary} onClick={() => {
           if (accepting.current) return;
           accepting.current = true; onAccept(result); setReview(null); setAccepted(true);
