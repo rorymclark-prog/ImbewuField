@@ -29,7 +29,10 @@ function sourceFiles(dir: string, out: string[] = []): string[] {
 const SOURCE = ['app', 'components', 'lib'].flatMap((d) => sourceFiles(join(ROOT, d))).map((f) => readFileSync(f, 'utf8')).join('\n');
 const inSource = (english: string) => [english, english.replace(/'/g, "\\'"), english.replace(/"/g, '\\"'), english.replace(/’/g, "\\u2019"), JSON.stringify(english).slice(1, -1)]
   .some((form) => SOURCE.includes(form));
-const numbers = (text: string) => (text.match(/\d+(?:[.,]\d+)?/g) ?? []).sort().join('|');
+// Afrikaans groups thousands with a space ('1 000'), because a comma is its decimal mark and
+// '1,000' would read as one. Grouping is normalised away so the same figures must still survive.
+const ungroup = (text: string) => text.replace(/(\d)[ ,](?=\d{3}(?!\d))/g, '$1');
+const numbers = (text: string) => (ungroup(text).match(/\d+(?:[.,]\d+)?/g) ?? []).sort().join('|');
 
 test('every Afrikaans shard is spread into the index', () => {
   const index = readFileSync(join(SHARD_DIR, 'index.ts'), 'utf8');
@@ -264,8 +267,8 @@ test('g55: the Afrikaans Design Studio tabs and lessons shard mirrors the isiXho
     assert.equal(AF_INLINE_SOURCE[english], afShard[english], `${english} is served from g55`);
     assert.notEqual(afShard[english], english, `${english} has a real draft`);
     assert.equal(placeholdersOf(afShard[english]), placeholdersOf(english), `${english} keeps its placeholders`);
-    // Every figure the English carries (3 m, 10 mm, 100 m², 1,000, 2500 L, 20 steps) is in the draft unchanged.
-    for (const figure of english.match(/\d[\d,.]*/g) ?? []) assert.ok(afShard[english].includes(figure), `${english}: ${figure} survives`);
+    // Every figure the English carries (3 m, 10 mm, 100 m², 1,000, 2500 L, 20 steps) is in the draft unchanged (thousands grouped the Afrikaans way).
+    for (const figure of ungroup(english).match(/\d[\d,.]*/g) ?? []) assert.ok(ungroup(afShard[english]).includes(figure), `${english}: ${figure} survives`);
   }
   assert.match(afShard['Stand at your kitchen door and count 20 steps. What you can reach is Zone 1 — keep your daily harvest inside it.'], /Sone 1/);
   assert.match(afShard['Plant tall trees on the south or west of veg beds so winter sun still reaches them. A mango grows 10 m wide — measure that out before you dig.'], /Mango/);
