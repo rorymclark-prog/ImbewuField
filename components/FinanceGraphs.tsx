@@ -257,7 +257,7 @@ function MeasuredView({
       <p className="font-display font-semibold">{recordsTemplate(lang, 'Recorded produce, {n} months', null, { n: series.windowMonths })}</p>
       <p className="text-sm">{recordsTemplate(lang, 'Picked: {qty}', null, { qty: quantityText(series.productionQuantities) || recordsFill(lang, 'Quantity not recorded') })}</p>
       <p className="text-sm">{recordsTemplate(lang, 'Sold: {qty}', null, { qty: quantityText(series.salesQuantities) || recordsFill(lang, 'Quantity not recorded') })}</p>
-      <IsiZuluDraftSource className="text-xs" style={{ color: MUTED }} lang={lang} zulu="" english="No produce weights recorded in these months. Egg and package counts keep their own units; kilogram totals and kept weight are unknown." />
+      <IsiZuluDraftSource draftLabel={lang !== 'af'} className="text-xs" style={{ color: MUTED }} lang={lang} zulu="" english="No produce weights recorded in these months. Egg and package counts keep their own units; kilogram totals and kept weight are unknown." />
       <Link href="/records" className="inline-block text-sm underline" style={{ color: SOLD_TEXT }}>{recordsFill(lang, 'View your records')}</Link>
     </div>;
   }
@@ -273,7 +273,7 @@ function MeasuredView({
         <p className="font-display font-semibold" style={{ fontSize: 13.5, color: INK }}>
           {lang === 'zu' ? (series.earlierRecords ? 'Akukho okuvunyiwe noma okudayisiwe kulezi zinyanga' : 'Asikho isivuno esirekhodiwe okwamanje') : recordsFill(lang, series.earlierRecords ? 'Nothing picked or sold in these months' : 'No harvest recorded yet')}
         </p>
-        <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang} english={emptyEnglish} zulu={emptyZulu}
+        <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang} english={emptyEnglish} zulu={emptyZulu}
           template={series.earlierRecords ? 'Your records start in {month}. Try a longer window above to reach them.' : undefined} vars={{ month: series.firstRecordMonth && series.firstRecordYear ? recordsBookMonthYear(lang, series.firstRecordMonth, series.firstRecordYear) : '' }} />
         <Link href="/records" className="inline-block mt-2.5 font-sans font-semibold"
           style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
@@ -334,7 +334,7 @@ function MeasuredView({
           : <Figure label={recordsFill(lang, 'Weighed produce kept on the farm')} value={kgLabel(series.totalKeptKg)} tone={KEPT} />}
       </div>
       <div className="px-4 pb-3 text-xs space-y-1" style={{ color: MUTED }}>
-        <IsiZuluDraftSource lang={lang} zulu="" english="This chart shows recorded kilograms only. Counted produce stays in its recorded units." />
+        <IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang} zulu="" english="This chart shows recorded kilograms only. Counted produce stays in its recorded units." />
         {series.productionQuantities.some(total => total.unit !== 'kg') && <p>{recordsTemplate(lang, 'Also picked: {qty}', null, { qty: quantityText(series.productionQuantities.filter(total => total.unit !== 'kg')) })}</p>}
         {series.salesQuantities.some(total => total.unit !== 'kg') && <p>{recordsTemplate(lang, 'Also sold: {qty}', null, { qty: quantityText(series.salesQuantities.filter(total => total.unit !== 'kg')) })}</p>}
       </div>
@@ -418,7 +418,7 @@ function MeasuredView({
           /* Picked and sold said separately, because the card's own figures are separate and their
              sum is not a quantity of fruit — 40 kg picked of which 25 were sold is 40 kg, and a
              single "65 kg" would match none of picked, sold or kept. */
-          <IsiZuluDraftSource className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
+          <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
             template={series.excludedProducedKg > 0 && series.excludedSoldKg > 0
               ? 'Orchard is switched off, so this card leaves out {picked} picked and {sold} sold: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.'
               : series.excludedProducedKg > 0
@@ -428,15 +428,15 @@ function MeasuredView({
             english={`Orchard is switched off, so this card leaves out${series.excludedProducedKg > 0 ? ` ${kgLabel(series.excludedProducedKg)} picked` : ''}${series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' and' : ''}${series.excludedSoldKg > 0 ? ` ${kgLabel(series.excludedSoldKg)} sold` : ''}: ${series.excludedNames.join(', ')}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.`}
             zulu={`Ingadi yezithelo icishiwe, ngakho leli khadi alifaki${series.excludedProducedKg > 0 ? ` ukuvunwa okungu-${kgLabel(series.excludedProducedKg)}` : ''}${series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' kanye' : ''}${series.excludedSoldKg > 0 ? ` ukuthengiswa okungu-${kgLabel(series.excludedSoldKg)}` : ''}: ${series.excludedNames.join(', ')}. Imali yalokho kuthengisa isabalwa kwenye indawo kuleli khasi — lapha kususwa amakhilogremu kuphela.`} />
         )}
-        <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={keptExplanationEnglish} zulu={keptExplanationZulu} />
+        <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={keptExplanationEnglish} zulu={keptExplanationZulu} />
         {anyShort && (
-          <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={mismatchExplanationEnglish} zulu={mismatchExplanationZulu} />
+          <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={mismatchExplanationEnglish} zulu={mismatchExplanationZulu} />
         )}
         {clipped.length > 0 && (
-          <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={clippedExplanationEnglish} zulu={clippedExplanationZulu}
+          <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={clippedExplanationEnglish} zulu={clippedExplanationZulu}
             template="Too tall for this chart, and cut off at the mark so the other months stay readable: {list}." vars={{ list: clippedLocal.join('; ') }} />
         )}
-        <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={dateExplanationEnglish} zulu={dateExplanationZulu} />
+        <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={dateExplanationEnglish} zulu={dateExplanationZulu} />
       </div>
     </>
   );
@@ -469,7 +469,7 @@ function PlanView({ plan, source, wide, orchard, lang }: {
     return (
       <div className="px-4 py-5">
         <p className="font-display font-semibold" style={{ fontSize: 13.5, color: INK }}>{tx('Nothing to compare yet', 'Akukho okuqhathaniswayo okwamanje')}</p>
-        <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang} english={reason} zulu={reasonZulu}
+        <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang} english={reason} zulu={reasonZulu}
           template={source.origin === 'none' ? undefined : plan.unbenchmarkedCropNames.length > 0 ? 'Nothing in your plan has a verified yield figure to compare against yet — {names}.' : undefined}
           vars={{ names: plan.unbenchmarkedCropNames.join(', ') }} />
         <Link href={source.origin === 'none' ? '/design' : '/facilitator/crops'}
@@ -494,7 +494,7 @@ function PlanView({ plan, source, wide, orchard, lang }: {
 
   return (
     <>
-      <IsiZuluDraftSource className="px-4 pt-3 font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
+      <IsiZuluDraftSource draftLabel={lang !== 'af'} className="px-4 pt-3 font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
         english="Each crop’s plan benchmark, with what you have logged picking this year on top of it."
         zulu="Isilinganiso sohlelo sesitshalo ngasinye, kanye nesivuno osirekhodile salo nyaka esiboniswe phezu kwaso." />
 
@@ -515,7 +515,7 @@ function PlanView({ plan, source, wide, orchard, lang }: {
           : (
             <Link href="/facilitator/crops" className="font-sans"
               style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
-              <IsiZuluDraftSource lang={lang} english="Set your loss allowance to mark it on these bars" zulu="Faka isilinganiso sakho sokulahleka ukuze usibone kule migqa." />
+              <IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang} english="Set your loss allowance to mark it on these bars" zulu="Faka isilinganiso sakho sokulahleka ukuze usibone kule migqa." />
             </Link>
           )}
       </div>
@@ -525,27 +525,27 @@ function PlanView({ plan, source, wide, orchard, lang }: {
             a farm with fruit trees this paragraph and that one would otherwise say the same word
             twice, three lines apart. This one carries the reason; that one carries the list. */}
         {orchard.length > 0 && (
-          <IsiZuluDraftSource className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+          <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
             english="Nothing from the orchard is compared here. A tree is not planted into a bed for a season, so there is no plan benchmark to hold it against. Its harvests and sales still count everywhere else on this page."
             zulu="Akukho sivuno sengadi yezithelo esiqhathaniswa lapha. Isihlahla asitshalwa embhedeni wesizini eyodwa, ngakho asikho isilinganiso sohlelo sokuqhathanisa naso. Isivuno nokuthengisa kwaso kusabalwa kwezinye izindawo kuleli khasi." />
         )}
-        <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+        <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
           english="The benchmark is what one complete crop cycle on that much ground is worth in kilograms — not a target for this calendar year. A short green bar can mean the cycle is not finished, or that picking was not written down. It is not proof of a lost harvest."
           zulu="Isilinganiso sibonisa ukuthi umjikelezo owodwa ophelele wesitshalo kuleyo ndawo ungakhiqiza amakhilogremu amangaki — akusona isivuno esihlosiwe salo nyaka wekhalenda. Umugqa oluhlaza omfushane ungasho ukuthi umjikelezo awukapheli noma ukuvunwa akubhalwanga. Awufakazeli ukuthi isivuno silahlekile." />
         {clippedRows.length > 0 && (
-          <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+          <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
             template="Too long for these bars, and cut off at the mark so the smaller crops still have one: {list}." vars={{ list: clippedRows.join('; ') }}
             english={`Too long for these bars, and cut off at the mark so the smaller crops still have one: ${clippedRows.join('; ')}.`}
             zulu={`Ezinye izibalo zinde kakhulu kule migqa; zinophawu lokunqamuka ukuze kubonakale nemigqa yezitshalo ezincane: ${clippedRows.join('; ')}.`} />
         )}
         {plan.unbenchmarkedCropNames.length > 0 && (
-          <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+          <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
             template="Left out — no verified yield figure yet: {names}." vars={{ names: plan.unbenchmarkedCropNames.join(', ') }}
             english={`Left out — no verified yield figure yet: ${plan.unbenchmarkedCropNames.join(', ')}.`}
             zulu={`Akufakwanga — alikho inani lesivuno eliqinisekisiwe okwamanje: ${plan.unbenchmarkedCropNames.join(', ')}.`} />
         )}
         {plan.offPlanNames.length > 0 && (
-          <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+          <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
             template="Harvested but not in the plan, so not compared: {names}." vars={{ names: plan.offPlanNames.join(', ') }}
             english={`Harvested but not in the plan, so not compared: ${plan.offPlanNames.join(', ')}.`}
             zulu={`Kuvuniwe kodwa akukho ohlelweni, ngakho akuqhathaniswa: ${plan.offPlanNames.join(', ')}.`} />
@@ -590,7 +590,7 @@ function PlanRow({ row, pct, lossPercent, clipped, lang }: {
       </div>
 
       {row.soldExceedsHarvested && (
-        <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: SHORT }} lang={lang}
+        <IsiZuluDraftSource draftLabel={lang !== 'af'} className="font-sans mt-1" style={{ fontSize: 12, color: SHORT }} lang={lang}
           template="Sold {kg} — more than was logged picked, so the green bar is short of what really came off." vars={{ kg: kgLabel(row.soldKg) }}
           english={`Sold ${kgLabel(row.soldKg)} — more than was logged picked, so the green bar is short of what really came off.`}
           zulu={`Kudayiswe ${kgLabel(row.soldKg)} — kungaphezu kwalokho okurekhodwe njengokuvuniwe, ngakho umugqa oluhlaza mfushane kunesivuno sangempela.`} />

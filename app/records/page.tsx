@@ -21,7 +21,7 @@ import { loadInvoices, paymentMethodLabel, type SavedInvoice } from '@/lib/invoi
 // A sample R12.50 cost appeared as R13 here while its receipt kept the cents.
 // The ledger must use the same exact-money formatter as the buyer's document.
 import { formatInvoiceZar } from '@/lib/invoice-document';
-import { randForLang } from '@/lib/format-figures';
+import { invoiceQtyForLang, randForLang } from '@/lib/format-figures';
 import {
   isSampleMode, enterSampleMode,
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
@@ -380,7 +380,7 @@ function toPhoneRows(sales: SalesLog[], expenses: ExpenseLog[], invoices: SavedI
     .map((i) => ({
       kind: 'invoice', id: i.id, iso: i.paidAt ?? i.dateISO,
       title: i.items.map((item) => item.desc).join(', '),
-      subtitle: `${i.billTo || recordsText(lang, 'Farm gate', 'Epulazini')} · ${i.items.map((item) => `${item.qty} ${item.unit}`).join(', ')} · ${recordsText(lang, 'Paid', 'Ikhokhiwe')}`,
+      subtitle: `${i.billTo || recordsText(lang, 'Farm gate', 'Epulazini')} · ${i.items.map((item) => invoiceQtyForLang(lang, item.qty, item.unit)).join(', ')} · ${recordsText(lang, 'Paid', 'Ikhokhiwe')}`,
       amount: i.total ?? 0, positive: true,
     }));
   return [...saleRows, ...expenseRows, ...paidInvoiceRows].sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
@@ -1047,7 +1047,7 @@ function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: 
     .map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at, lang), desc: `${p.crop} ${recordsText(lang, 'harvested', 'kuvunyiwe')}`, qty: recordsQuantityLabel(p, lang), inAmt: null, source: recordsText(lang, 'Yield log', 'Irekhodi lesivuno'), outAmt: null }));
   const invoiceRows: LedgerRow[] = invoices
     .filter((i) => i.status === 'paid' && isInFinancePeriod(i.paidAt, period, now))
-    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO, lang), desc: i.items.map(item => item.desc).join(', '), qty: i.items.map(item => `${item.qty} ${item.unit}`).join(', '), inAmt: i.total ?? 0, source: i.paymentMethod ? `${recordsText(lang, 'Invoice', 'I-invoyisi')} · ${recordsFill(lang, paymentMethodLabel(i.paymentMethod))}` : recordsText(lang, 'Invoice', 'I-invoyisi'), outAmt: null }));
+    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO, lang), desc: i.items.map(item => item.desc).join(', '), qty: i.items.map(item => invoiceQtyForLang(lang, item.qty, item.unit)).join(', '), inAmt: i.total ?? 0, source: i.paymentMethod ? `${recordsText(lang, 'Invoice', 'I-invoyisi')} · ${recordsFill(lang, paymentMethodLabel(i.paymentMethod))}` : recordsText(lang, 'Invoice', 'I-invoyisi'), outAmt: null }));
   // Invoice-generated crop rows carry invoice_id and are deliberately absent from saleRows above:
   // the invoice is the money entry while its linked sale rows supply crop/kg evidence to harvest
   // reconciliation. This remaining heuristic catches a farmer manually entering the same sale as

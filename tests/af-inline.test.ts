@@ -7,6 +7,7 @@
 
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import test from 'node:test';
 
@@ -340,4 +341,90 @@ test('rand amounts on /records: Afrikaans uses one convention (R7 470,00); every
   assert.equal((receipt.match(/randForLang\(lang, expense\.amount, `R \$\{expense\.amount\.toFixed\(2\)\}`\)/g) ?? []).length, 2);
   assert.match(read('app/records/page.tsx'), /randForLang\(lang, 0, 'R 0'\)/);
   assert.doesNotMatch(card.replace(/randForLang\([^\n]*\n?/g, ''), /\bR \{[a-zA-Z.]+\.toFixed\(2\)\}/, 'no bare "R {x.toFixed(2)}" is left');
+});
+
+test('Charts tab: Afrikaans repeats no per-caption draft label and names the English source in Afrikaans; English and the other languages are unchanged', async () => {
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  registerXhInline(XH_INLINE_SOURCE);
+  const { renderToStaticMarkup } = await import('react-dom/server');
+  const React = await import('react');
+  const ts = (await import('typescript')).default;
+  const compiled = ts.transpileModule(read('components/IsiZuluDraftSource.tsx'), { compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText;
+  const mod = { exports: {} as any };
+  new Function('require', 'module', 'exports', compiled)((name: string) => {
+    if (name === '@/lib/records-regional-drafts') return { isRecordsRegionalLang: () => false, recordsDraft: () => null, recordsTemplate: (_l: string, e: string) => e };
+    if (name === '@/lib/xh-inline') return { fillInline: (t: string) => t, inlineText, isInlineDraftLang, inlineDraft };
+    return createRequire(import.meta.url)(name);
+  }, mod, mod.exports);
+  const Source = mod.exports.default as React.ComponentType<any>;
+  const english = 'Entries land in the month you recorded them; the logging forms have no date field yet.';
+  const html = (props: Record<string, unknown>) => renderToStaticMarkup(React.createElement(Source, { english, zulu: '', ...props }));
+  // The chart components pass draftLabel={lang !== 'af'}: Afrikaans drops the label, every other language keeps its default.
+  const afQuiet = html({ lang: 'af', draftLabel: false });
+  assert.doesNotMatch(afQuiet, /Onhersiene Afrikaanse konsep|Unreviewed Afrikaans draft/);
+  assert.match(afQuiet, /Engelse bron: <\/span><span lang="en">Entries land in the month/);
+  assert.doesNotMatch(afQuiet, /English source:/);
+  // Where a screen does not switch it off, the Afrikaans label still leads the source line.
+  assert.match(html({ lang: 'af' }), /Onhersiene Afrikaanse konsep\./);
+  // English source wording is unchanged for isiXhosa (its own label rule is untouched) and shows nothing for English.
+  assert.match(html({ lang: 'xh', xhosa: 'Okufakiweyo' }), /Okufakiweyo.*<span lang="en">English source: Entries land/);
+  assert.equal(html({ lang: 'en' }), `<p class="">${english}</p>`);
+  for (const file of ['FinanceGraphs', 'CashflowChart', 'AreaReturnCards', 'HarvestReconciliation', 'ComingUpHarvests']) {
+    const src = read(`components/${file}.tsx`);
+    const total = (src.match(/<IsiZuluDraftSource /g) ?? []).length;
+    assert.ok(total > 0);
+    assert.equal((src.match(/<IsiZuluDraftSource draftLabel=\{lang !== 'af'\} /g) ?? []).length, total, `${file}: every caption drops the repeated Afrikaans label (the shared note is the one notice)`);
+  }
+  assert.equal((read('app/records/page.tsx').match(/<LanguageDraftNote /g) ?? []).length, 1, 'the one shared notice on /records');
+});
+
+test('Sold card lines: Afrikaans pairs the draft with "Engelse bron:", every other language keeps "English source:"', async () => {
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  const { renderToStaticMarkup } = await import('react-dom/server');
+  const React = await import('react');
+  const ts = (await import('typescript')).default;
+  const card = read('components/MyRecords.tsx');
+  const start = card.indexOf('function RecordZuluDraft(');
+  const body = card.slice(start, card.indexOf('\n}\n', start) + 3);
+  const compiled = ts.transpileModule(body, { compilerOptions: { jsx: ts.JsxEmit.React, module: ts.ModuleKind.None, target: ts.ScriptTarget.ES2022 } }).outputText;
+  const Draft = new Function('React', 'recordsDraft', 'inlineText', `${compiled}; return RecordZuluDraft;`)(React, (lang: string, e: string) => inlineDraft(lang, e), inlineText);
+  const html = (lang: string) => renderToStaticMarkup(React.createElement(Draft, { lang, english: 'Record a sale', isiZulu: 'Qopha ukuthengisa' }));
+  const af = html('af');
+  assert.match(af, /Engelse bron: <\/span><span lang="en">Record a sale<\/span>/);
+  assert.doesNotMatch(af, /English source:/);
+  assert.match(html('zu'), /<span lang="en" class="text-xs font-normal" style="color:inherit">English source: Record a sale<\/span>/);
+  assert.equal(html('en'), 'Record a sale');
+  // The longer pairings (lender card, tooltips) already use the same Afrikaans label.
+  assert.equal(inlineText('af', 'English source:'), 'Engelse bron:');
+});
+
+test('Afrikaans kg and axis formats: comma decimal on the invoice rows and the Charts axis; English and the other languages are byte-identical', async () => {
+  const { invoiceQtyForLang, randTickForLang, randTick, kgPreciseLabel } = await import('@/lib/format-figures');
+  // Before: the Sold and Spent tables read '2.5 kg', '14.4 kg', '8 kg' beside the mobile rows' '8,0 kg'; the Charts axis read 'R2.6k', '−R5.7k'.
+  assert.equal(invoiceQtyForLang('af', 2.5, 'kg'), '2,5 kg');
+  assert.equal(invoiceQtyForLang('af', 14.4, 'kg'), '14,4 kg');
+  assert.equal(invoiceQtyForLang('af', 8, 'kg'), '8,0 kg');
+  assert.equal(invoiceQtyForLang('af', 1203.6, 'kg'), kgPreciseLabel(1203.6));
+  assert.equal(invoiceQtyForLang('af', 2.5, 'KG'), '2,5 kg');
+  assert.equal(invoiceQtyForLang('af', 2.5, 'bunches'), '2,5 bunches');
+  assert.equal(invoiceQtyForLang('af', 12, 'bunches'), '12 bunches');
+  assert.equal(invoiceQtyForLang('af', '3.25', 'bags'), '3,25 bags');
+  for (const lang of ['en', 'zu', 'xh', 'st', 'ts', 've']) {
+    assert.equal(invoiceQtyForLang(lang, 2.5, 'kg'), '2.5 kg', lang);
+    assert.equal(invoiceQtyForLang(lang, 8, 'kg'), '8 kg', lang);
+    assert.equal(invoiceQtyForLang(lang, 14.4, 'bunches'), '14.4 bunches', lang);
+  }
+  assert.equal(randTickForLang('af', 2600), 'R2,6k');
+  assert.equal(randTickForLang('af', -5700), '−R5,7k');
+  assert.equal(randTickForLang('af', 11000), 'R11k');
+  assert.equal(randTickForLang('af', 450), 'R450');
+  for (const lang of ['en', 'zu', 'xh', 'st', 'ts', 've']) {
+    for (const amount of [2600, -5700, 11000, 450, 0]) assert.equal(randTickForLang(lang, amount), randTick(amount), `${lang} ${amount}`);
+  }
+  assert.equal(randTick(2600), 'R2.6k');
+  // The call sites go through the helpers.
+  assert.equal((read('app/records/page.tsx').match(/invoiceQtyForLang\(lang, item\.qty, item\.unit\)/g) ?? []).length, 2);
+  assert.doesNotMatch(read('app/records/page.tsx'), /`\$\{item\.qty\} \$\{item\.unit\}`/);
+  assert.equal((read('components/CashflowChart.tsx').match(/randTickForLang\(lang, /g) ?? []).length, 4);
+  assert.doesNotMatch(read('components/CashflowChart.tsx'), /[^a-zA-Z]randTick\(/);
 });

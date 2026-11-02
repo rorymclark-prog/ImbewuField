@@ -75,7 +75,7 @@ export default function ComingUpHarvests({
         <CalendarClock size={13} /> {text('Coming up', 'Okuzayo')}
       </p>
       <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
-        <IsiZuluDraftSource lang={lang}
+        <IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang}
           template={book.horizonMonths === 1 ? 'What your crop plan says is due to be picked over the next {n} month.' : 'What your crop plan says is due to be picked over the next {n} months.'} vars={{ n: book.horizonMonths }}
           english={`What your crop plan says is due to be picked over the next ${book.horizonMonths} ${book.horizonMonths === 1 ? 'month' : 'months'}.`}
           zulu={`Uhlelo lwakho lwezitshalo lubonisa okulindeleke ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} />
@@ -100,7 +100,7 @@ export default function ComingUpHarvests({
         {header}
         <Empty
           title={text('No growing area mapped yet', 'Akukho ndawo yokulima ebaliwe okwamanje')}
-          body={<IsiZuluDraftSource lang={lang} english="Trace your beds in the Design Studio and this card will show what is due to be picked, and roughly what it is worth." zulu="Dweba imibhede yakho e-Design Studio; leli khadi lizobonisa okulindeleke ukuvunwa nenani laso elilinganisiwe." />}
+          body={<IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang} english="Trace your beds in the Design Studio and this card will show what is due to be picked, and roughly what it is worth." zulu="Dweba imibhede yakho e-Design Studio; leli khadi lizobonisa okulindeleke ukuvunwa nenani laso elilinganisiwe." />}
           href="/design"
           cta={text('Open the Design Studio', 'Vula i-Design Studio')}
         />
@@ -114,7 +114,7 @@ export default function ComingUpHarvests({
         {header}
         <Empty
           title={text('Two crops are booked into the same ground', 'Izitshalo ezimbili zihlelelwe indawo efanayo')}
-          body={<IsiZuluDraftSource lang={lang}
+          body={<IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang}
             template="{beds} — until that is resolved, any harvest figure here would be a guess about which crop loses the space." vars={{ beds: book.areaConflictBedLabels.join(', ') }}
             english={`${book.areaConflictBedLabels.join(', ')} — until that is resolved, any harvest figure here would be a guess about which crop loses the space.`}
             zulu={`${book.areaConflictBedLabels.join(', ')} — kuze kulungiswe lokhu, noma yisiphi isibalo sesivuno lapha singaba ukuqagela ukuthi yisiphi isitshalo esizolahlekelwa yileyo ndawo.`} />}
@@ -133,8 +133,8 @@ export default function ComingUpHarvests({
           title={text('Nothing due to be picked yet', 'Akukho okulindeleke ukuba kuvunwe okwamanje')}
           body={
             source.plantings.length === 0
-              ? <IsiZuluDraftSource lang={lang} english="Your crop plan is empty. Plan a season and this card fills itself in." zulu="Uhlelo lwakho lwezitshalo alunalutho. Hlela isizini ukuze leli khadi libonise okulindelekile." />
-              : <IsiZuluDraftSource lang={lang} template="Nothing in the plan starts picking in the next {n} months." vars={{ n: book.horizonMonths }} english={`Nothing in the plan starts picking in the next ${book.horizonMonths} months.`} zulu={`Akukho ohlelweni okuzoqala ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} />
+              ? <IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang} english="Your crop plan is empty. Plan a season and this card fills itself in." zulu="Uhlelo lwakho lwezitshalo alunalutho. Hlela isizini ukuze leli khadi libonise okulindelekile." />
+              : <IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang} template="Nothing in the plan starts picking in the next {n} months." vars={{ n: book.horizonMonths }} english={`Nothing in the plan starts picking in the next ${book.horizonMonths} months.`} zulu={`Akukho ohlelweni okuzoqala ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} />
           }
           href="/facilitator/crops"
           cta={source.plantings.length === 0 ? text('Plan your crops', 'Hlela izitshalo zakho') : text('Open the production plan', 'Vula uhlelo lokukhiqiza')}
@@ -161,12 +161,12 @@ export default function ComingUpHarvests({
             className="font-sans"
             style={{ fontSize: 12, color: 'var(--color-forest-800)', textDecoration: 'underline', alignSelf: 'center' }}
           >
-            <IsiZuluDraftSource lang={lang} english="Set your loss and sale assumptions to see what it is worth" zulu="Faka izilinganiso zakho zokulahleka nokudayisa ukuze ubone inani elilinganisiwe." />
+            <IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang} english="Set your loss and sale assumptions to see what it is worth" zulu="Faka izilinganiso zakho zokulahleka nokudayisa ukuze ubone inani elilinganisiwe." />
           </Link>
         )}
       </div>
 
-      <IsiZuluDraftSource className="px-4 pb-3 font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }} lang={lang}
+      <IsiZuluDraftSource draftLabel={lang !== 'af'} className="px-4 pb-3 font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }} lang={lang}
         english="Each figure is a whole crop’s harvest counted in the month its picking starts — not what you pick during that month. Planning estimates, not promises."
         zulu="Isibalo ngasinye siyisivuno sonke sesitshalo esibalwa enyangeni okuqala ukuvunwa ngayo — asisho okuzovunwa kuleyo nyanga kuphela. Lezi izilinganiso zokuhlela, akuzona izithembiso." />
 
@@ -286,7 +286,7 @@ function Exclusions({
   return (
     <div className="px-4 py-2.5" style={{ borderTop: '1px solid var(--border)', background: 'var(--bg-2)' }}>
       {lines.map((line) => (
-        <IsiZuluDraftSource key={line.english} className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }} lang={lang}
+        <IsiZuluDraftSource draftLabel={lang !== 'af'} key={line.english} className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }} lang={lang}
           english={line.english} zulu={line.zulu} template={line.template} vars={{ names: line.names }} />
       ))}
     </div>

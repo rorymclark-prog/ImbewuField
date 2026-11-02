@@ -32,6 +32,15 @@ export function randTick(amount: number): string {
 }
 
 /**
+ * {@link randTick} for the language that is showing. Afrikaans writes the decimal mark as a comma, like the rest of the
+ * records book ('R2,6k', '−R5,7k'); the k abbreviation and every other language are unchanged, byte for byte.
+ */
+export function randTickForLang(lang: string, amount: number): string {
+  const tick = randTick(amount);
+  return lang === 'af' ? tick.replace('.', ',') : tick;
+}
+
+/**
  * '27 090 kg' — whole kilograms, space-grouped, for a figure that adds up a whole cohort.
  *
  * {@link kgLabel} above is the per-farm figure and keeps a tenth of a kilogram below 100, which is
@@ -117,6 +126,19 @@ export function kgPreciseLabel(kg: number): string {
   const whole = Math.floor(tenths / 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   const frac = (tenths % 10).toString();
   return `${sign}${whole},${frac} kg`;
+}
+
+/**
+ * An invoice line's quantity as the ledger prints it ('2.5 kg'). Afrikaans reads the app's one kilogram format
+ * ('2,5 kg', '8,0 kg' — {@link kgPreciseLabel}, the one the sale and harvest rows already use) and a comma decimal on any
+ * other unit; every other language returns the raw `${qty} ${unit}` it always did, byte for byte.
+ */
+export function invoiceQtyForLang(lang: string, qty: number | string, unit: string): string {
+  const raw = `${qty} ${unit}`;
+  if (lang !== 'af') return raw;
+  const n = typeof qty === 'number' ? qty : Number(qty);
+  if (unit.trim().toLowerCase() === 'kg' && Number.isFinite(n) && String(qty).trim() !== '') return kgPreciseLabel(n);
+  return `${String(qty).replace(/^(-?\d+)\.(\d+)$/, '$1,$2')} ${unit}`;
 }
 
 export function numberLabel(n: number, maximumFractionDigits = 3): string {

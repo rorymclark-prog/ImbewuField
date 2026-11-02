@@ -97,7 +97,9 @@ function RecordZuluDraft({ lang, english, isiZulu }: { lang: string; english: st
   return (
     <span className="inline-flex min-w-0 flex-col" style={{ textTransform: 'none', letterSpacing: 'normal', lineHeight: 1.25 }}>
       <span lang={lang}>{local}</span>
-      <span lang="en" className="text-xs font-normal" style={{ color: 'inherit' }}>English source: {english}</span>
+      {lang === 'af'
+        ? <span className="text-xs font-normal" style={{ color: 'inherit' }}><span lang="af">{`${inlineText(lang, 'English source:')} `}</span><span lang="en">{english}</span></span>
+        : <span lang="en" className="text-xs font-normal" style={{ color: 'inherit' }}>English source: {english}</span>}
     </span>
   );
 }

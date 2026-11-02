@@ -201,6 +201,12 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   `randForLang` in `lib/format-figures.ts` returns the caller's own English string for every other language. Tests:
   `af-inline` (g54 mirror, overview render, one notice, rand format); `records-regional-drafts` now expects
   `Kanselleer — Engelse bron: Cancel` for Afrikaans (the draft-first order isiXhosa already had) and no Sold card note.
+- **Records polish (2 Nov):** Afrikaans only; English and the other languages are byte for byte as before. The Charts tab
+  showed 22 per-caption "Onhersiene Afrikaanse konsep." labels; the five chart cards now pass `draftLabel={lang !== 'af'}`
+  to `IsiZuluDraftSource`, so the shared `LanguageDraftNote` is the page's one notice and each caption keeps its source line.
+  That line, and the Sold card's per-label lines, read "Engelse bron:" (they said "English source:"). The Sold/Spent ledger's
+  invoice rows read `2,5 kg`, `8,0 kg` (they said `2.5 kg`, `8 kg`) through `invoiceQtyForLang`, and the cashflow axis reads
+  `R2,6k`, `−R5,7k` through `randTickForLang` (both in `lib/format-figures.ts`). Tests: three new `af-inline` tests.
 
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English

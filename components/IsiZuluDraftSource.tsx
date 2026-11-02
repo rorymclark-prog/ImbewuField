@@ -30,7 +30,7 @@ export default function IsiZuluDraftSource({
   /** English with {placeholders}; omit for a fixed sentence (the lookup then uses `english`). */
   template?: string;
   vars?: Record<string, string | number>;
-  /** isiXhosa only: false drops the "Unreviewed isiXhosa draft." label for a screen that already says so once (the English source line stays). */
+  /** isiXhosa and Afrikaans: false drops the "Unreviewed … draft." label for a screen that already says so once (the English source line stays). */
   draftLabel?: boolean;
   className?: string;
   style?: React.CSSProperties;
@@ -59,7 +59,9 @@ export default function IsiZuluDraftSource({
         {lang === 'zu' && <span>Unreviewed isiZulu draft. </span>}
         {lang === 'xh' && draftLabel && <span>{inlineText(lang, 'Unreviewed isiXhosa draft.')} </span>}
         {lang === 'af' && draftLabel && <span>{inlineText(lang, 'Unreviewed Afrikaans draft.')} </span>}
-        <span lang="en">English source: {english}</span>
+        {lang === 'af'
+          ? <><span lang="af">{`${inlineText(lang, 'English source:')} `}</span><span lang="en">{english}</span></>
+          : <span lang="en">English source: {english}</span>}
       </p>
     </div>
   );
