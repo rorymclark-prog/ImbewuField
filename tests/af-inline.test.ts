@@ -253,6 +253,25 @@ test('g54: the Afrikaans interactive-screen shard mirrors the isiXhosa g52 key f
   assert.match(afShard['Tap a JoJo tank size, then tap the map next to a roof.'], /JoJo/);
 });
 
+/* ── Fifth sweep parity (2 Nov): g55 mirrors the isiXhosa g53 ─────────────── */
+
+test('g55: the Afrikaans Design Studio tabs and lessons shard mirrors the isiXhosa g53 key for key, with placeholders and figures intact', async () => {
+  const { default: xhShard } = await import('@/lib/locales/xh-inline/g53-design-tabs');
+  const { default: afShard } = await import('@/lib/locales/af-inline/g55-design-tabs');
+  assert.equal(Object.keys(afShard).length, 37);
+  assert.deepEqual(Object.keys(afShard), Object.keys(xhShard));
+  for (const english of Object.keys(xhShard)) {
+    assert.equal(AF_INLINE_SOURCE[english], afShard[english], `${english} is served from g55`);
+    assert.notEqual(afShard[english], english, `${english} has a real draft`);
+    assert.equal(placeholdersOf(afShard[english]), placeholdersOf(english), `${english} keeps its placeholders`);
+    // Every figure the English carries (3 m, 10 mm, 100 m², 1,000, 2500 L, 20 steps) is in the draft unchanged.
+    for (const figure of english.match(/\d[\d,.]*/g) ?? []) assert.ok(afShard[english].includes(figure), `${english}: ${figure} survives`);
+  }
+  assert.match(afShard['Stand at your kitchen door and count 20 steps. What you can reach is Zone 1 — keep your daily harvest inside it.'], /Sone 1/);
+  assert.match(afShard['Plant tall trees on the south or west of veg beds so winter sun still reaches them. A mango grows 10 m wide — measure that out before you dig.'], /Mango/);
+  assert.equal(afShard['Rainwater tank (2500 L)'].includes('2500 L'), true);
+});
+
 test('ProductionYearOverview: Afrikaans reads the drafts; English, isiZulu, Sesotho, Xitsonga and Tshivenda stay English', async () => {
   registerInlineDrafts('af', AF_INLINE_SOURCE);
   const overview = read('components/report/ProductionYearOverview.tsx');
@@ -359,7 +378,7 @@ test('Charts tab: Afrikaans repeats no per-caption draft label and names the Eng
   const Source = mod.exports.default as React.ComponentType<any>;
   const english = 'Entries land in the month you recorded them; the logging forms have no date field yet.';
   const html = (props: Record<string, unknown>) => renderToStaticMarkup(React.createElement(Source, { english, zulu: '', ...props }));
-  // The chart components pass draftLabel={lang !== 'af'}: Afrikaans drops the label, every other language keeps its default.
+  // The chart components pass draftLabel={!['xh', 'af'].includes(lang)} (isiXhosa and Afrikaans both drop the per-caption label): Afrikaans drops the label, every other language keeps its default.
   const afQuiet = html({ lang: 'af', draftLabel: false });
   assert.doesNotMatch(afQuiet, /Onhersiene Afrikaanse konsep|Unreviewed Afrikaans draft/);
   assert.match(afQuiet, /Engelse bron: <\/span><span lang="en">Entries land in the month/);
@@ -373,7 +392,7 @@ test('Charts tab: Afrikaans repeats no per-caption draft label and names the Eng
     const src = read(`components/${file}.tsx`);
     const total = (src.match(/<IsiZuluDraftSource /g) ?? []).length;
     assert.ok(total > 0);
-    assert.equal((src.match(/<IsiZuluDraftSource draftLabel=\{lang !== 'af'\} /g) ?? []).length, total, `${file}: every caption drops the repeated Afrikaans label (the shared note is the one notice)`);
+    assert.equal((src.match(/<IsiZuluDraftSource draftLabel=\{!\['xh', 'af'\]\.includes\(lang\)\} /g) ?? []).length, total, `${file}: every caption drops the repeated Afrikaans label (the shared note is the one notice)`);
   }
   assert.equal((read('app/records/page.tsx').match(/<LanguageDraftNote /g) ?? []).length, 1, 'the one shared notice on /records');
 });

@@ -202,11 +202,19 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   `af-inline` (g54 mirror, overview render, one notice, rand format); `records-regional-drafts` now expects
   `Kanselleer — Engelse bron: Cancel` for Afrikaans (the draft-first order isiXhosa already had) and no Sold card note.
 - **Records polish (2 Nov):** Afrikaans only; English and the other languages are byte for byte as before. The Charts tab
-  showed 22 per-caption "Onhersiene Afrikaanse konsep." labels; the five chart cards now pass `draftLabel={lang !== 'af'}`
+  showed 22 per-caption "Onhersiene Afrikaanse konsep." labels; the five chart cards now pass `draftLabel={!['xh', 'af'].includes(lang)}`
   to `IsiZuluDraftSource`, so the shared `LanguageDraftNote` is the page's one notice and each caption keeps its source line.
   That line, and the Sold card's per-label lines, read "Engelse bron:" (they said "English source:"). The Sold/Spent ledger's
   invoice rows read `2,5 kg`, `8,0 kg` (they said `2.5 kg`, `8 kg`) through `invoiceQtyForLang`, and the cashflow axis reads
   `R2,6k`, `−R5,7k` through `randTickForLang` (both in `lib/format-figures.ts`). Tests: three new `af-inline` tests.
+- **Fifth sweep parity (2 Nov):** the Afrikaans mirror of the isiXhosa fixes in `5a84a70`, merged in. New shard
+  `af-inline/g55-design-tabs.ts` (37 drafts, the same keys as `xh-inline/g53-design-tabs.ts`): the Design Studio step-tab
+  names, the "Why this step?" lessons (titles, bodies, principles, tips), Tray, a gate's length, and the sample farm's
+  rainwater tank and compost bays. Figures, `{placeholders}`, Sone 1 and mango are kept. The chart cards now share the
+  isiXhosa `draftLabel` expression, which drops the per-caption label for both languages (Afrikaans behaviour is
+  unchanged). The invoice sale card pairs its five money instructions with "Engelse bron:" as isiXhosa does. The retired
+  isiXhosa Sold-card notice is gone from the Afrikaans shard too. The palette's armed-tool hint now shows its English
+  source for Afrikaans. Tests: `af-inline` (g55 mirror); the `draftLabel` pin now reads the shared expression.
 
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English
@@ -263,6 +271,17 @@ and isiZulu output are unchanged.
   bottom bar, offline-canvas note, share-result line, boundary Cancel, offline pill, drop-mode hint, survey card
   legend. Not done: the Export step (`DesignGlossy.tsx`, Codex-owned), the sector note shown in `SectorSummary`,
   and the dynamic sector notes that carry figures.
+- **Fifth sweep (2 Nov), Design Studio and invoice:** `xh-inline/g53-design-tabs.ts` (37 drafts). The desktop step tabs
+  now read the locale's step names for a draft language (as the phone dropdown does); the "Why this step?" lesson
+  titles, bodies, principles and tips (`lib/design-lessons.ts`) are read through `inlineText` in `LessonPanel`, with
+  speech keeping the English source; the desktop Dock / Float / Tray control; a gate's whole length label
+  ("{length} m long", figure kept); and the names drawn on the map for placed items (`designItemDisplayLabel`: no
+  label or the catalogue name reads the translated element name, the sample farm's "Bed n", rainwater tank and compost
+  labels read drafts, species names and anything the farmer typed stay as saved). The invoice sale card's five money
+  instructions pair the draft with the English source for a draft language only (isiZulu, Sesotho, Tshivenda and
+  Xitsonga unchanged). The Layers panel layer name wraps on word boundaries and a long word drops to the panel's 12 px
+  size instead of splitting. Open question: the shared "Bed {n}" draft reads "Umbhede {n}" (Home task lines, now the map)
+  while the palette says "Ibhedi"; left as is because `farm-memory-task-controls` pins it.
 - **Report picker (2 Nov):** the sample-mode (prepared example) language picker now offers every inline-draft
   language beside English and isiZulu, in `LANGUAGE_OPTIONS` order. `preparedSampleReport` keeps isiXhosa once its
   drafts are loaded (English otherwise, so English text is never labelled a translation); `preparedExampleNote` has an

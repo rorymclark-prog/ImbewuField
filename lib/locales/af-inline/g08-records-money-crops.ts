@@ -1,7 +1,6 @@
 // Unreviewed Afrikaans machine drafts keyed by the exact English (see index.ts).
 const drafts: Record<string, string> = {
   "Unreviewed isiXhosa draft.": "Onhersiene isiXhosa-konsep.",
-  "ISIXHOSA MACHINE DRAFT — This wording has not been reviewed by a fluent isiXhosa speaker. The exact English source appears under each line.": "ISIXHOSA-MASJIENKONSEP — Hierdie bewoording is nie deur 'n vlot isiXhosa-spreker nagegaan nie. Die presiese Engelse bron verskyn onder elke reël.",
   "isiXhosa translation pending — English source:": "isiXhosa-vertaling hangende — Engelse bron:",
   "Unreviewed isiXhosa drafts with English sources; some farming instructions remain in English for review.": "Onhersiene isiXhosa-konsepte met Engelse bronne; sommige boerdery-instruksies bly in Engels vir hersiening.",
   "Monthly chores and Lima advice have unreviewed isiXhosa drafts beside English sources. Some farming instructions remain in English for review.": "Maandelikse take en Lima-advies het onhersiene isiXhosa-konsepte langs Engelse bronne. Sommige boerdery-instruksies bly in Engels vir hersiening.",

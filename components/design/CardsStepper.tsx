@@ -21,7 +21,8 @@ import { useEffect, useRef } from 'react';
 import type { WizardStep } from '@/lib/design-canvas';
 import { STEP_ORDER, STEP_LABELS } from './DesignWizard';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { translatedDesignStepLabel } from '@/lib/design-studio-i18n';
+import { inlineTemplate, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 const GREEN = '#1F4D2B';
 const PAPER = '#FFFEFA';
@@ -32,7 +33,11 @@ interface CardsStepperProps {
 }
 
 export default function CardsStepper({ step, onStep }: CardsStepperProps) {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
+  // The tab names follow the mobile step dropdown in app/design/page.tsx: a draft language reads the locale's own step
+  // names (designStepBase ...); English and the regional languages keep the English labels, byte for byte.
+  const draftLang = isInlineDraftLang(lang);
+  const stepLabel = (s: WizardStep) => (draftLang ? translatedDesignStepLabel(t, s) : STEP_LABELS[s]);
   const stripRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<HTMLButtonElement | null>(null);
 
@@ -62,11 +67,11 @@ export default function CardsStepper({ step, onStep }: CardsStepperProps) {
             type="button"
             role="tab"
             aria-selected={active}
-            aria-label={`Step ${String(i + 1).padStart(2, '0')} — ${STEP_LABELS[s]}`}
+            aria-label={inlineTemplate(lang, 'Step {n} — {label}', null, { n: String(i + 1).padStart(2, '0'), label: stepLabel(s) })}
             onClick={() => onStep(s)}
             style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-              flex: '1 0 108px', maxWidth: 150,
+              flex: '1 0 108px', maxWidth: draftLang ? 'none' : 150,
               minHeight: 34, padding: active ? '3px 12px' : '3px 9px',
               borderRadius: 999, border: 'none', cursor: active ? 'default' : 'pointer',
               background: active ? GREEN : 'transparent',
@@ -86,7 +91,7 @@ export default function CardsStepper({ step, onStep }: CardsStepperProps) {
             >
               {String(i + 1).padStart(2, '0')}
             </span>
-            {STEP_LABELS[s]}
+            {stepLabel(s)}
           </button>
         );
       })}

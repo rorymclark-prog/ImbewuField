@@ -1443,7 +1443,6 @@ export default function MyRecords({
       {showSold && (
         <Card accent="#315939">
           {lang === 'zu' && <p role="note" className="mb-3 text-xs" style={{ color: 'var(--color-muted-strong)' }}>ISIZULU MACHINE DRAFT — This wording has not been reviewed by a fluent isiZulu speaker. The exact English source appears under each line.</p>}
-          {lang === 'xh' && <p role="note" lang="xh" className="mb-3 text-xs" style={{ color: 'var(--color-muted-strong)' }}>{inlineText(lang, 'ISIXHOSA MACHINE DRAFT — This wording has not been reviewed by a fluent isiXhosa speaker. The exact English source appears under each line.')}</p>}
           {/* Afrikaans gets no second notice here: the shared <LanguageDraftNote> at the top of /records is its one draft notice. */}
           <SectionLabel><RecordZuluDraft lang={lang} english="Record a sale" isiZulu="Qopha ukuthengisa" /></SectionLabel>
           <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Create an invoice to keep the buyer, produce, quantity and payment together." isiZulu="Dala i-invoyisi ukuze ugcine umthengi, isivuno, inani kanye nenkokhelo ndawonye." /></p>

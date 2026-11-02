@@ -299,7 +299,7 @@ test('/invoice keeps its deliberate English draft notice and English-beside-draf
   // a farmer acts on (paid / unpaid) keeps the English beside the draft.
   assert.match(page, /<p role="note" lang="en" data-records-draft-notice=\{lang\}/);
   assert.match(page, /'Choose paid or unpaid to continue\.',\n/);
-  assert.match(page, /INVOICE_PAIRED_COPY\.has\(english\) \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/);
+  assert.match(page, /INVOICE_PAIRED_COPY\.has\(english\)( \|\| \(isInlineDraftLang\(lang\) && INVOICE_DRAFT_PAIRED_COPY\.has\(english\)\))? \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/);
 });
 
 // ── The fourth isiXhosa sample-mode sweep (2 Nov 2026): interactive screens ───────────────────────
@@ -510,6 +510,10 @@ test('g52: one draft notice per surface - the results sheet tabs and the navigat
   assert.match(drawer, /<LanguageDraftNote lang=\{lang\} scope="navigation-drawer"\/>/);
   assert.doesNotMatch(drawer, /ISIXHOSA MACHINE DRAFT/, 'the second, differently worded isiXhosa notice is gone');
   assert.equal(xhInlineDraft('ISIXHOSA MACHINE DRAFT.'), null, 'its retired draft is gone too');
+  const records = read('components/MyRecords.tsx');
+  assert.match(records, /ISIZULU MACHINE DRAFT — This wording has not been reviewed/, 'the isiZulu Sold-card line is untouched by this isiXhosa change');
+  assert.doesNotMatch(records, /ISIXHOSA MACHINE DRAFT/, 'the Sold card no longer repeats the shared /records isiXhosa notice');
+  assert.equal(xhInlineDraft('ISIXHOSA MACHINE DRAFT — This wording has not been reviewed by a fluent isiXhosa speaker. The exact English source appears under each line.'), null, 'its retired draft is gone too');
 });
 
 test('g52: records validation errors and hints lead with the isiXhosa draft and label the English as its source; Sesotho, Tshivenda and Xitsonga keep English first', async () => {
@@ -530,7 +534,7 @@ test('g52: records validation errors and hints lead with the isiXhosa draft and 
   const label = recordsLabel('xh', english, null);
   assert.ok(label.startsWith(draft) && label.endsWith(english), 'tooltips and accessible names follow the same order');
   const invoice = read('app/invoice/page.tsx');
-  assert.match(invoice, /INVOICE_PAIRED_COPY\.has\(english\) \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/, 'money instructions keep the English beside the draft');
+  assert.match(invoice, /INVOICE_PAIRED_COPY\.has\(english\)( \|\| \(isInlineDraftLang\(lang\) && INVOICE_DRAFT_PAIRED_COPY\.has\(english\)\))? \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/, 'money instructions keep the English beside the draft');
   const source = read('lib/records-regional-drafts.ts');
   assert.match(source, /return isInlineDraftLang\(lang\) \? `\$\{local\} — \$\{inlineText\(lang, 'English source:'\)\} \$\{english\}` : `\$\{english\} — \$\{local\}`;/);
 });
@@ -609,4 +613,113 @@ test('g52: a network failure is kept as the failure and worded when it renders, 
   const farmer = read('app/farmer/page.tsx');
   assert.match(farmer, /setError\(\{ key: 'savedSiteUnavailable' \}\)/);
   assert.match(farmer, /'key' in error \? t\(error\.key\)/);
+});
+
+test('g53: the "Why this step?" lessons read isiXhosa drafts for every step; English, isiZulu and the other languages read the unchanged English', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const { DESIGN_STEP_LESSONS } = await import('@/lib/design-lessons');
+  let n = 0;
+  for (const [step, lesson] of Object.entries(DESIGN_STEP_LESSONS)) {
+    for (const english of [lesson.title, lesson.body, lesson.principle, lesson.tip]) {
+      n += 1;
+      const draft = xhInlineDraft(english);
+      assert.ok(draft && draft !== english, `${step}: no isiXhosa draft for ${JSON.stringify(english)}`);
+      for (const lang of NON_DRAFT_LANGS) assert.equal(inlineText(lang, english), english, `${step}: ${lang} stays English`);
+    }
+  }
+  assert.equal(n, 32, 'eight steps, four strings each (the did-you-know card is not rendered, so it has no draft)');
+  assert.equal(inlineText('xh', DESIGN_STEP_LESSONS.water.title), 'Amanzi kuqala, yonke enye into yesibini');
+  // Figures survive exactly.
+  const tip = inlineText('xh', DESIGN_STEP_LESSONS.water.tip);
+  for (const figure of ['3 m', '10 mm', '100 m²', '1,000']) assert.ok(tip.includes(figure), `water tip keeps ${figure}`);
+  assert.ok(inlineText('xh', DESIGN_STEP_LESSONS.planting.tip).includes('10 m'));
+  assert.ok(inlineText('xh', DESIGN_STEP_LESSONS.zones.tip).includes('Mimandla 1'));
+  const panel = read('components/design/LessonPanel.tsx');
+  assert.match(panel, /isInlineDraftLang\(lang\) \? inlineText\(lang, english\) : english/, 'the panel reads drafts for a draft language only');
+  assert.match(panel, /englishText=\{englishNarration\}/, 'speech keeps the English source');
+  assert.equal([...panel.matchAll(/lesson\.(title|body|principle|tip)\b/g)].length, 4 + 4, 'each field is read once for the draft and once for the English narration');
+});
+
+test('g53: the desktop step tabs use the locale step names for a draft language and the English labels for everyone else', () => {
+  const stepper = read('components/design/CardsStepper.tsx');
+  assert.match(stepper, /draftLang \? translatedDesignStepLabel\(t, s\) : STEP_LABELS\[s\]/);
+  assert.match(stepper, /\{stepLabel\(s\)\}/);
+  assert.doesNotMatch(stepper, /\{STEP_LABELS\[s\]\}/, 'the tab text no longer reads the English label directly');
+  assert.equal(inlineTemplate('en', 'Step {n} — {label}', null, { n: '03', label: 'Water' }), 'Step 03 — Water');
+  assert.equal(inlineTemplate('zu', 'Step {n} — {label}', null, { n: '03', label: 'Water' }), 'Step 03 — Water');
+  registerXhInline(XH_INLINE_SOURCE);
+  assert.equal(inlineTemplate('xh', 'Step {n} — {label}', null, { n: '03', label: 'Amanzi' }), 'Inyathelo 03 — Amanzi');
+});
+
+test('g53: Dock / Float / Tray, the gate length and the map labels of placed items read isiXhosa, with figures kept; other languages keep the exact English', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  for (const [english, draft] of [['Dock', 'Qhoboshela'], ['Float', 'Phaphisa'], ['Tray', 'Ngezantsi']] as const) {
+    assert.equal(inlineText('xh', english), draft);
+    for (const lang of NON_DRAFT_LANGS) assert.equal(inlineText(lang, english), english);
+  }
+  assert.match(read('app/design/page.tsx'), /inlineText\(lang, layout === 'docked' \? 'Dock' : layout === 'floating' \? 'Float' : 'Tray'\)/);
+  // The whole gate label, figure kept exactly.
+  assert.equal(inlineTemplate('xh', '{length} m long', null, { length: 1.5 }), '1.5 m ubude');
+  for (const lang of NON_DRAFT_LANGS) assert.equal(inlineTemplate(lang, '{length} m long', null, { length: 1.5 }), '1.5 m long');
+  assert.match(read('components/design/DesignPalette.tsx'), /inlineTemplate\(lang, '\{length\} m long', null, \{ length: def\.wM \}\)/);
+  assert.match(read('components/design/DesignCanvas.tsx'), /inlineTemplate\(lang, '\{length\} m long', null, \{ length: wM\.toFixed\(1\) \}\)/);
+
+  const { ELEMENTS_BY_ID } = await import('@/lib/design-elements');
+  const { designItemDisplayLabel } = await import('@/lib/design-element-display');
+  const mango = ELEMENTS_BY_ID.tree_mango;
+  const tank = ELEMENTS_BY_ID.jojo_2500;
+  const bed = ELEMENTS_BY_ID.veg_bed;
+  const cases: Array<[{ label?: string }, typeof mango, string]> = [
+    [{ label: 'Bed 1' }, bed, 'Umbhede 1'],
+    [{ label: 'Bed 5' }, bed, 'Umbhede 5'],
+    [{ label: 'Rainwater tank (2500 L)' }, tank, 'Itanki yamanzi emvula (2500 L)'],
+    [{ label: 'Compost bays' }, ELEMENTS_BY_ID.compost_bay, 'Iindawo zomgquba'],
+    [{}, bed, 'Ibhedi yemifuno'],
+    [{ label: bed.name }, bed, 'Ibhedi yemifuno'],
+  ];
+  for (const [item, def, expected] of cases) {
+    assert.equal(designItemDisplayLabel(item, def, 'xh'), expected, JSON.stringify(item));
+    for (const lang of NON_DRAFT_LANGS) assert.equal(designItemDisplayLabel(item, def, lang), item.label ?? def.name, `${lang} keeps the saved label or catalogue name`);
+  }
+  // Species names, and a name the farmer typed, are shown as saved.
+  assert.equal(designItemDisplayLabel({}, mango, 'xh'), mango.name);
+  assert.equal(designItemDisplayLabel({ label: 'Gogo’s favourite' }, bed, 'xh'), 'Gogo’s favourite');
+  assert.equal(designItemDisplayLabel({ label: 'Bed 1 east' }, bed, 'xh'), 'Bed 1 east', 'only the exact default "Bed n" is a generic label');
+  const canvas = read('components/design/DesignCanvas.tsx');
+  assert.equal([...canvas.matchAll(/designItemDisplayLabel\(item, def, lang\)/g)].length, 3, 'the label, and the pill text with and without a note');
+});
+
+test('g53: the invoice sale card pairs its money instructions with the English source for a draft language only', () => {
+  const invoice = read('app/invoice/page.tsx');
+  const set = /const INVOICE_DRAFT_PAIRED_COPY = new Set\(\[([\s\S]*?)\]\);/.exec(invoice);
+  assert.ok(set, 'the draft-only pairing set exists');
+  for (const english of [
+    'Record the sale once', 'Keep the invoice, payment and quantity together.', 'Is this sale already in My Records?',
+    'No — record it with this invoice', 'Yes — link the existing sale',
+  ]) {
+    assert.ok(set![1].includes(`'${english}'`), `${english} is paired`);
+    assert.ok(invoice.includes(`ui('${english}'`), `${english} is still shown through ui()`);
+  }
+  assert.match(invoice, /INVOICE_PAIRED_COPY\.has\(english\) \|\| \(isInlineDraftLang\(lang\) && INVOICE_DRAFT_PAIRED_COPY\.has\(english\)\) \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/);
+});
+
+test('g53: the Layers panel layer name wraps on word boundaries and never switches to break-anywhere', () => {
+  const palette = read('components/design/DesignPalette.tsx');
+  const helper = /function layerNameStyle\([\s\S]*?\n}\n/.exec(palette);
+  assert.ok(helper, 'layerNameStyle exists');
+  assert.match(helper![0], /overflowWrap: 'break-word'/);
+  assert.match(helper![0], /hyphens: 'auto'/);
+  assert.doesNotMatch(helper![0], /anywhere/);
+  assert.equal([...palette.matchAll(/style=\{layerNameStyle\(t\(lt\.labelKey\), cardsUi\)\}/g)].length, 2, 'the expandable and the plain layer-name cell');
+});
+
+test('records charts: the shared /records LanguageDraftNote is the one isiXhosa notice, so chart captions drop their per-caption draft label (English source line stays; isiZulu unchanged)', () => {
+  for (const file of ['components/AreaReturnCards.tsx', 'components/CashflowChart.tsx', 'components/ComingUpHarvests.tsx', 'components/FinanceGraphs.tsx', 'components/HarvestReconciliation.tsx']) {
+    const src = read(file);
+    const all = src.match(/<IsiZuluDraftSource /g) ?? [];
+    const quiet = src.match(/<IsiZuluDraftSource draftLabel=\{!\['xh', 'af'\]\.includes\(lang\)\} /g) ?? [];
+    assert.ok(all.length > 0, `${file} renders draft sources`);
+    assert.equal(quiet.length, all.length, `${file}: every caption defers to the page-level note`);
+  }
+  assert.match(read('app/records/page.tsx'), /<LanguageDraftNote lang=\{lang\} scope="records" \/>/);
 });

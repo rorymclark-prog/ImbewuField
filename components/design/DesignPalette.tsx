@@ -127,7 +127,7 @@ import {
 } from '@/lib/design-layer-membership';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { translate, useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 import { designElementDisplayName, designGroupDisplayLabel } from '@/lib/design-element-display';
 import { uiVersion, DEFAULT_UI_VERSION, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
@@ -466,6 +466,19 @@ function toolLabel(label: string): string {
  * contrast — including in direct sun, where hue differences go first. It rides in box-shadow, so
  * nothing reflows when the selection moves.
  */
+// The layer-name cell of the Layers panel. It wraps on WORD boundaries (hyphenating where the browser knows the language
+// -- `lang` is set on the span) and breaks inside a word only as a last resort (`break-word`, never `anywhere`, which
+// would also shrink the cell's min-content and break words that did fit). A translated name with a long word (Afrikaans
+// "Terreinverwysings") used to split mid-word at the roomy 13.5 px card size, so such a word drops to the panel's 12 px
+// size instead; short names, English included, are unchanged.
+function layerNameStyle(label: string, cardsUi: boolean): React.CSSProperties {
+  const longestWord = Math.max(0, ...label.split(/\s+/).map((word) => word.length));
+  return {
+    minWidth: 0, whiteSpace: 'normal', overflowWrap: 'break-word', wordBreak: 'normal', hyphens: 'auto',
+    lineHeight: 1.15, fontSize: cardsUi && longestWord <= 13 ? 13.5 : 12, fontWeight: 650,
+  };
+}
+
 function selectionRing(active: boolean): React.CSSProperties {
   return active
     ? { border: `2px solid ${GOLD}`, boxShadow: `0 0 0 2px ${PAPER}, 0 0 0 4px ${DARK}` }
@@ -1071,7 +1084,7 @@ export default function DesignPalette({
             ? t('designPaletteTapCorners')
             : null;
 
-  const armedHintSource = tool === 'line' && ['zu','xh','st','ts','ve'].includes(lang)
+  const armedHintSource = tool === 'line' && ['zu','xh','af','st','ts','ve'].includes(lang)
     ? translate('en','designPaletteTapCorners') : null;
 
   // Identity of the tip currently on screen. A NEW tip is a new key, so closing one never
@@ -1829,13 +1842,13 @@ export default function DesignPalette({
                               gap: 4, cursor: 'pointer', textAlign: 'left',
                             }}
                           >
-                            <span style={{ minWidth: 0, whiteSpace: 'normal', overflowWrap: 'break-word', lineHeight: 1.15, fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                            <span lang={lang} style={layerNameStyle(t(lt.labelKey), cardsUi)}>
                               {t(lt.labelKey)}
                             </span>
                             {expanded ? <ChevronDown size={16} aria-hidden /> : <ChevronRight size={16} aria-hidden />}
                           </button>
                         ) : (
-                          <span style={{ minWidth: 0, whiteSpace: 'normal', overflowWrap: 'break-word', lineHeight: 1.15, fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                          <span lang={lang} style={layerNameStyle(t(lt.labelKey), cardsUi)}>
                             {t(lt.labelKey)}
                           </span>
                         )}
@@ -2388,7 +2401,7 @@ export default function DesignPalette({
                   whiteSpace stays nowrap only in chip mode, where a wrap would grow the strip. */}
               <span style={{ fontSize: 11.5, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{designElementDisplayName(def, lang)}</span>
               <span style={{ fontSize: cardsUi ? 10 : 9.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
-                {def.id === 'gate' ? `${def.wM} m long` : def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
+                {def.id === 'gate' ? inlineTemplate(lang, '{length} m long', null, { length: def.wM }) : def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
               </span>
               {checkFrost && <span style={{ fontSize: 9, fontWeight: 700, color: active ? GOLD : '#9A5E12' }}>{t('designPaletteFrostCheck')}</span>}
             </span>

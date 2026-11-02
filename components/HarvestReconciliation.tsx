@@ -48,13 +48,13 @@ function MatchedRow({ row }: { row: CropRow }) {
         </p>
       </div>
       {row.intendedKg !== null && (
-        <IsiZuluDraftSource draftLabel={lang !== 'af'} className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-muted)' }} lang={lang}
+        <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-muted)' }} lang={lang}
           template="Plan context: {kg} is the benchmark for one complete crop-plan cycle, not an expectation for this calendar year." vars={{ kg: fmtKg(row.intendedKg) }}
           english={`Plan context: ${fmtKg(row.intendedKg)} is the benchmark for one complete crop-plan cycle, not an expectation for this calendar year.`}
           zulu={`Ngokohlelo: ${fmtKg(row.intendedKg)} kuyisilinganiso sesivuno somjikelezo owodwa ophelele wohlelo lwezitshalo; akusona isivuno esilindelekile salo nyaka wekhalenda.`} />
       )}
       {row.keptGap && row.keptKg !== null && (
-        <IsiZuluDraftSource draftLabel={lang !== 'af'} className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-secondary)' }} lang={lang}
+        <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-secondary)' }} lang={lang}
           template="Harvested {harvested}, sold {sold} — {kept} kept: eaten at home, given away, fed out, saved for seed or spoiled." vars={{ harvested: fmtKg(row.harvestedKg), sold: fmtKg(row.soldKg), kept: fmtKg(row.keptKg) }}
           english={`Harvested ${fmtKg(row.harvestedKg)}, sold ${fmtKg(row.soldKg)} — ${fmtKg(row.keptKg)} kept: eaten at home, given away, fed out, saved for seed or spoiled.`}
           zulu={`Kuvunyiwe ${fmtKg(row.harvestedKg)}, kwathengiswa ${fmtKg(row.soldKg)} — okungadayiswanga okungu-${fmtKg(row.keptKg)}: kungenzeka kudliwe ekhaya, kuphiwe abanye, kondliwe izilwane, kugcinelwe imbewu noma konakele.`} />
@@ -65,7 +65,7 @@ function MatchedRow({ row }: { row: CropRow }) {
           causes are named because the app genuinely cannot tell them apart, and naming only the
           farmer's omission would blame her for the app's blind spot. */}
       {row.soldExceedsHarvested && (
-        <IsiZuluDraftSource draftLabel={lang !== 'af'} className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-secondary)' }} lang={lang}
+        <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-secondary)' }} lang={lang}
           template="Sold {sold} but only {harvested} logged as harvested, so how much you kept is not known — either some picking was not written down, or these sales came from an earlier harvest." vars={{ sold: fmtKg(row.soldKg), harvested: fmtKg(row.harvestedKg) }}
           english={`Sold ${fmtKg(row.soldKg)} but only ${fmtKg(row.harvestedKg)} logged as harvested, so how much you kept is not known — either some picking was not written down, or these sales came from an earlier harvest.`}
           zulu={`Kudayiswe ${fmtKg(row.soldKg)}, kodwa kurekhodwe ukuvunwa kuka-${fmtKg(row.harvestedKg)} kuphela. Ngakho asazi ukuthi kungakanani okusele: kungenzeka ukuthi okunye ukuvunwa akubhalwanga, noma lokhu kudayisa kuvela esivunweni sangaphambilini.`} />
@@ -87,7 +87,7 @@ function SoftRow({ row }: { row: CropRow }) {
         {row.cropName}
       </p>
       <div className="text-xs font-sans text-right" style={{ color: 'var(--text-muted)' }}>
-        <IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang}
+        <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} lang={lang}
           template={row.intendedKg !== null ? 'No harvest logged this year · {kg} one-cycle benchmark' : 'No harvest logged this year'} vars={{ kg: row.intendedKg !== null ? fmtKg(row.intendedKg) : '' }}
           english={`No harvest logged this year${row.intendedKg !== null ? ` · ${fmtKg(row.intendedKg)} one-cycle benchmark` : ''}`}
           zulu={`Asikho isivuno esirekhodiwe kulo nyaka${row.intendedKg !== null ? ` · ${fmtKg(row.intendedKg)} kuyisilinganiso somjikelezo owodwa` : ''}`} />
@@ -113,7 +113,7 @@ function UnplannedRowView({ row }: { row: UnplannedRow }) {
           <AlertTriangle size={12} style={{ flexShrink: 0, marginTop: 2 }} />
           <span>{lang === 'zu'
             ? <>“{row.label}” kungaba izitshalo eziningana — rekhoda igama eligcwele ukuze kubalwe ngaphansi kwesitshalo esifanele. <small className="block text-xs text-[var(--text-muted)]">Unreviewed isiZulu draft. English source: “{row.label}” could be several crops — log a fuller name to count it against the right one.</small></>
-            : <IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang} template="“{label}” could be several crops — log a fuller name to count it against the right one." vars={{ label: row.label }} zulu="" english={`“${row.label}” could be several crops — log a fuller name to count it against the right one.`} />}</span>
+            : <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} lang={lang} template="“{label}” could be several crops — log a fuller name to count it against the right one." vars={{ label: row.label }} zulu="" english={`“${row.label}” could be several crops — log a fuller name to count it against the right one.`} />}</span>
         </p>
       )}
     </div>
@@ -165,12 +165,12 @@ export default function HarvestReconciliation({ production, sales, period, now, 
         <div className="flex flex-col items-center justify-center gap-2 py-8 px-4 text-center">
           <Sprout size={20} style={{ color: 'var(--color-forest-800)' }} />
           <div className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>
-            <IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang} zulu="Alukho uhlelo lwezitshalo okwamanje. Dala uhlelo ku-Design & Plan ukuze uqhathanise ukuhlelile namarekhodi okuvunwa kwangempela." english="No crop plan yet — build one in Design & Plan to view the plan beside actual harvest records." />
+            <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} lang={lang} zulu="Alukho uhlelo lwezitshalo okwamanje. Dala uhlelo ku-Design & Plan ukuze uqhathanise ukuhlelile namarekhodi okuvunwa kwangempela." english="No crop plan yet — build one in Design & Plan to view the plan beside actual harvest records." />
           </div>
         </div>
       ) : !hasAnything ? (
         <div className="px-4 py-6 text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-          <IsiZuluDraftSource draftLabel={lang !== 'af'} lang={lang} zulu={`Akukho okurekhodiwe ${periodLabel}. Asenzi izinhloso zenyanga noma zesizini ngokuthatha isilinganiso somjikelezo wezitshalo njengesisekelo.`} english={NOTHING_LOGGED[period]} />
+          <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} lang={lang} zulu={`Akukho okurekhodiwe ${periodLabel}. Asenzi izinhloso zenyanga noma zesizini ngokuthatha isilinganiso somjikelezo wezitshalo njengesisekelo.`} english={NOTHING_LOGGED[period]} />
         </div>
       ) : (
         <div className="divide-y" style={{ borderColor: 'var(--border)' }}>

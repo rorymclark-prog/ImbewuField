@@ -394,9 +394,8 @@ test('every English sentence the invoice page renders has a draft or an explicit
 });
 
 test('invoice page ui(): regional languages read the English-keyed lookup, English is untouched, isiZulu keeps its wording', () => {
-  assert.match(INVOICE_PAGE, /if \(!isRecordsRegionalLang\(lang\)(?: && lang !== 'af')?\) return english;/, 'any other language keeps English');
   assert.match(INVOICE_PAGE, /if \(!isRecordsRegionalLang\(lang\) && lang !== 'af'\) return english;/, 'Afrikaans reads the same lookup as isiXhosa; every other language keeps English');
-  assert.match(INVOICE_PAGE, /INVOICE_PAIRED_COPY\.has\(english\) \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/, 'sentences a farmer acts on keep the English beside the draft');
+  assert.match(INVOICE_PAGE, /INVOICE_PAIRED_COPY\.has\(english\)( \|\| \(isInlineDraftLang\(lang\) && INVOICE_DRAFT_PAIRED_COPY\.has\(english\)\))? \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/, 'sentences a farmer acts on keep the English beside the draft');
   assert.match(INVOICE_PAGE, /recordsFill\('zu', english, isiZulu \?\? INVOICE_ZU\[english\] \?\? english\)/, 'existing isiZulu wording wins; a draft only fills an English fallback');
   assert.match(INVOICE_PAGE, /INVOICE_PAIRED_COPY\.has\(english\) && zulu !== english/, 'a paired sentence is paired only when there is a translation to pair (it used to print the English twice)');
   assert.match(INVOICE_PAGE, /recordsFill\(lang, paymentMethodLabel\(method\)\)/);
@@ -448,7 +447,9 @@ test('Afrikaans reaches the money book wherever isiXhosa does: crop picker langu
   assert.doesNotMatch(records, /AFRIKAANS MACHINE DRAFT/);
   assert.ok(read('lib/locales/af-inline/g43-notices.ts').includes(`"${notice}"`), 'the Afrikaans notice draft is missing');
   assert.match(read('app/invoice/page.tsx'), /AFRIKAANS MACHINE DRAFT — This wording/, 'the /invoice notice still uses the draft');
-  assert.match(records, /\{lang === 'xh' && <p role="note" lang="xh"/, 'the isiXhosa notice must still be there');
+  // isiXhosa follows the same one-notice rule (5a84a70 retired its Sold-card line too): the shared /records notice is its only one.
+  assert.doesNotMatch(records, /ISIXHOSA MACHINE DRAFT/, 'the Sold card no longer repeats the shared /records isiXhosa notice');
+  assert.doesNotMatch(records, /lang === 'xh' && <p role="note"/, 'no second isiXhosa notice in the Sold card');
   // The "English source:" tooltips follow the same languages as isiZulu and isiXhosa.
   const graphs = read('components/FinanceGraphs.tsx');
   assert.equal((graphs.match(/lang === 'zu' \|\| lang === 'xh' \|\| lang === 'af' \?/g) ?? []).length, 4);
