@@ -130,7 +130,11 @@ test('the /records tab notice belongs to the regional languages only; Afrikaans 
   const { isRecordsRegionalLang } = await import('@/lib/records-regional-drafts');
   assert.equal(isRecordsRegionalLang('af'), false, 'Afrikaans never reaches the English-tabs sentence');
   const records = read('app/records/page.tsx');
-  assert.match(records, /\{lang === 'xh' \? 'The tabs are shown in isiXhosa; English names:' : 'English tabs:'\}/);
+  // The old fully-English "The tabs are shown in ...; English names:" sentence is gone for every draft language: the draft
+  // languages get one small "English source:" line naming the tabs, and the three regional languages keep "English tabs:".
+  assert.doesNotMatch(records, /The tabs are shown in isiXhosa; English names:/);
+  assert.match(records, /\{isRecordsRegionalLang\(lang\) && !isInlineDraftLang\(lang\) && <p role="note" lang="en" data-records-draft-notice=/);
+  assert.match(records, /\{isInlineDraftLang\(lang\) && <p lang="en" data-records-tab-source=\{lang\}[^>]*><span lang=\{lang\}>\{inlineText\(lang, 'English source:'\)\}<\/span> /);
   assert.match(records, /<LanguageDraftNote lang=\{lang\} scope="records" \/>/, 'Afrikaans keeps the shared draft note');
 });
 
@@ -224,4 +228,116 @@ test('Afrikaans is an inline-draft language, so the Manual link, /atlas, /tour a
   // /tour and the guide dialog share one condition.
   assert.match(read('app/tour/page.tsx'), /const draftLang = \['zu','st','ts','ve'\]\.includes\(lang\) \|\| isInlineDraftLang\(lang\)/);
   assert.match(read('components/ProductTourProvider.tsx'), /const draftLang = \['zu','st','ts','ve'\]\.includes\(lang\) \|\| isInlineDraftLang\(lang\)/);
+});
+
+/* ── Fourth sweep parity (2 Nov): g54 mirrors the isiXhosa g52, one notice, consistent rand format ─────────────── */
+
+test('g54: the Afrikaans interactive-screen shard mirrors the isiXhosa g52 key for key, with placeholders and figures intact', async () => {
+  const { default: xhShard } = await import('@/lib/locales/xh-inline/g52-interactive');
+  const { default: afShard } = await import('@/lib/locales/af-inline/g54-interactive');
+  assert.equal(Object.keys(afShard).length, 166);
+  assert.deepEqual(Object.keys(afShard), Object.keys(xhShard));
+  for (const english of Object.keys(xhShard)) {
+    assert.equal(AF_INLINE_SOURCE[english], afShard[english], `${english} is served from g54`);
+    assert.notEqual(afShard[english], english, `${english} has a real draft`);
+  }
+  // The two isiXhosa navigation-note keys were retired with the duplicate drawer notice; Afrikaans drops its copies too.
+  for (const retired of ['ISIXHOSA MACHINE DRAFT.', 'Navigation wording has not been reviewed by a fluent isiXhosa speaker.',
+    'AFRIKAANS MACHINE DRAFT.', 'Navigation wording has not been reviewed by a fluent Afrikaans speaker.']) {
+    assert.equal(retired in AF_INLINE_SOURCE, false, retired);
+  }
+  // Compass emphasis and product names survive.
+  assert.match(afShard['The gold arc across the top of the map is the sun. In South Africa it swings across the NORTH, so that side gets the most light.'], /NOORDE/);
+  assert.match(afShard['See the downhill water arrow — swales will go ACROSS it'], /DWARS/);
+  assert.match(afShard['Tap a JoJo tank size, then tap the map next to a roof.'], /JoJo/);
+});
+
+test('ProductionYearOverview: Afrikaans reads the drafts; English, isiZulu, Sesotho, Xitsonga and Tshivenda stay English', async () => {
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  const overview = read('components/report/ProductionYearOverview.tsx');
+  const { renderToStaticMarkup } = await import('react-dom/server');
+  const React = await import('react');
+  const ts = (await import('typescript')).default;
+  const compiled = ts.transpileModule(overview.replace(/^import .*$/gm, '').replace('export default function', 'function'), {
+    compilerOptions: { jsx: ts.JsxEmit.React, module: ts.ModuleKind.None, target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+  const Overview = new Function('React', 'pdfIconUrl', 'styles', 'inlineText', 'inlineTemplate', 'isInlineDraftLang', `${compiled}; return ProductionYearOverview;`)(
+    React, () => null, {}, inlineText, inlineTemplate, isInlineDraftLang);
+  const html = (language: string) => renderToStaticMarkup(React.createElement(Overview, { language }));
+  const af = html('af');
+  assert.match(af, /<section lang="af" aria-label="Jaarlikse voedsel- en produkplan">/);
+  assert.match(af, /<h3>Voedsel en produkte deur die jaar<\/h3>/);
+  assert.match(af, /Die produknaam en aantekeninge in hierdie tabel word in Engels gewys\./);
+  assert.doesNotMatch(af, /This production overview is currently in English/);
+  assert.doesNotMatch(af, /Food and products through the year/);
+  // Every other language keeps the English markup exactly as before.
+  const english = html('en');
+  assert.match(english, /<h3>Food and products through the year<\/h3>/);
+  assert.match(english, /aria-label="Annual food and product plan"/);
+  for (const language of ['zu', 'st', 'ts', 've']) {
+    const shown = html(language);
+    assert.equal(shown.replace('<p>This production overview is currently in English.</p>', ''), english, `${language} is the English overview apart from its one notice`);
+    assert.match(shown, /This production overview is currently in English\./);
+    assert.doesNotMatch(shown, /lang="(af|xh)"/);
+  }
+  assert.equal(inlineTemplate('af', '{name}: planning window in {month}', null, { name: 'Maize', month: 'Jan' }), 'Maize: beplanningsvenster in Jan');
+  // With a saved plan: the table headings, kind labels and cell labels read Afrikaans; the plan's own names stay as saved, marked English.
+  const production = { months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], rows: [
+    { id: 'animal:eggs', name: 'Eggs', product: 'Eggs', kind: 'animal', note: 'Housing does not set numbers.', months: [0, 1], reference: false },
+    { id: 'crop:maize:1', name: 'Maize', product: 'Grain', kind: 'crop', note: '', months: [2], reference: true },
+  ] };
+  const withRows = (language: string) => renderToStaticMarkup(React.createElement(Overview, { language, production }));
+  const afRows = withRows('af');
+  assert.match(afRows, /<strong>P<\/strong> Plan of plaaslik aangetekende seisoen · <strong>R<\/strong> Verwysing uit bronne/);
+  assert.match(afRows, /<th scope="col">Produk<\/th>/);
+  assert.match(afRows, /<span lang="af">Dierlike produk<\/span>/);
+  assert.match(afRows, /<span lang="af">Gewas<\/span>/);
+  assert.match(afRows, /aria-label="Eggs: beplanningsvenster in Jan"/);
+  assert.match(afRows, /aria-label="Maize: verwysingseisoen in Mar"/);
+  assert.match(afRows, /<span lang="en">Eggs<small>/);
+  assert.match(withRows('en'), /<strong>P<\/strong> Plan or locally recorded season · <strong>R<\/strong> Sourced reference/);
+  assert.match(withRows('en'), /<th scope="col">Product<\/th>/);
+  assert.match(withRows('en'), /Eggs · Animal product<\/small>/);
+  assert.match(withRows('zu'), /aria-label="Eggs: planning window in Jan"/);
+});
+
+test('Sold tab: Afrikaans gets exactly one draft notice (the shared one), the English tab names as a source line, and no second card note', () => {
+  const records = read('app/records/page.tsx');
+  const card = read('components/MyRecords.tsx');
+  assert.equal((records.match(/<LanguageDraftNote /g) ?? []).length, 1, 'one shared notice on /records');
+  assert.doesNotMatch(card, /lang === 'af' && <p role="note"/, 'the Sold card adds no Afrikaans notice of its own');
+  assert.doesNotMatch(card, /AFRIKAANS MACHINE DRAFT/);
+  // The tab-source line is the only other draft line, and it is a label, not a second notice.
+  assert.equal((records.match(/data-records-tab-source=\{lang\}/g) ?? []).length, 1);
+  assert.equal((records.match(/data-records-draft-notice=/g) ?? []).length, 1);
+  // The draft-first pairing works for Afrikaans, reusing the existing "English source:" draft.
+  assert.equal(inlineText('af', 'English source:'), 'Engelse bron:');
+});
+
+test('rand amounts on /records: Afrikaans uses one convention (R7 470,00); every other language is unchanged', async () => {
+  const { randForLang, randAmountForLang, randCentsLabel } = await import('@/lib/format-figures');
+  // Before: the Sold tab's total read 'R18800', the sale rows 'R 280.00' and the receipt 'R 280.00' beside 'R7 470,00'.
+  assert.equal(randForLang('af', 18800, 'R18800'), 'R18 800,00');
+  assert.equal(randForLang('af', 280, 'R 280.00'), 'R280,00');
+  assert.equal(randForLang('af', 7470, 'R 7470.00'), 'R7 470,00');
+  assert.equal(randForLang('af', 0, 'R 0'), 'R0,00');
+  assert.equal(randForLang('af', 1234.5, 'R1234.50'), randCentsLabel(1234.5));
+  assert.equal(randAmountForLang('af', 37.5, '37.50'), '37,50');
+  assert.equal(randAmountForLang('af', 12345.6, '12345.60'), '12 345,60');
+  // English and the other languages return the caller's own string, byte for byte.
+  for (const lang of ['en', 'zu', 'xh', 'st', 'ts', 've']) {
+    assert.equal(randForLang(lang, 18800, 'R18800'), 'R18800', lang);
+    assert.equal(randForLang(lang, 280, 'R 280.00'), 'R 280.00', lang);
+    assert.equal(randAmountForLang(lang, 37.5, '37.50'), '37.50', lang);
+  }
+  // Every hand-formatted rand figure on the records surfaces goes through the helper, with its English expression intact.
+  const card = read('components/MyRecords.tsx');
+  assert.match(card, /randForLang\(lang, EXAMPLE_SALE\.amount, `R \$\{EXAMPLE_SALE\.amount\.toFixed\(2\)\}`\)/);
+  assert.match(card, /randForLang\(lang, item\.amount, `R \$\{item\.amount\.toFixed\(2\)\}`\)/);
+  assert.match(card, /randForLang\(lang, totalRev, `R\$\{totalRev % 1 === 0 \? totalRev : totalRev\.toFixed\(2\)\}`\)/);
+  assert.match(card, /randAmountForLang\(lang, guideLow \* saleKg, \(guideLow \* saleKg\)\.toFixed\(2\)\)/);
+  const receipt = read('components/records/ReceiptPreview.tsx');
+  assert.equal((receipt.match(/randForLang\(lang, expense\.amount, `R \$\{expense\.amount\.toFixed\(2\)\}`\)/g) ?? []).length, 2);
+  assert.match(read('app/records/page.tsx'), /randForLang\(lang, 0, 'R 0'\)/);
+  assert.doesNotMatch(card.replace(/randForLang\([^\n]*\n?/g, ''), /\bR \{[a-zA-Z.]+\.toFixed\(2\)\}/, 'no bare "R {x.toFixed(2)}" is left');
 });

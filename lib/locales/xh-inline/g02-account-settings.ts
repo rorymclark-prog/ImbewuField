@@ -145,8 +145,6 @@ const drafts: Record<string, string> = {
   "Practice workspace": "Indawo yokuziqhelisa",
   "You are viewing demonstration records. Your account permissions stay unchanged.": "Ubona iirekhodi zomzekelo. Iimvume ze-akhawunti yakho azitshintshi.",
   "Page controls": "Izilawuli zephepha",
-  "ISIXHOSA MACHINE DRAFT.": "IDRAFTI YESIXHOSA ENGUQULELWE NGOMATSHINI.",
-  "Navigation wording has not been reviewed by a fluent isiXhosa speaker.": "Amagama okukhetha asetyenziswa kwimenyu awakahlolwa ngumntu othetha isiXhosa kakuhle.",
 };
 
 export default drafts;

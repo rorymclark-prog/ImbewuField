@@ -45,6 +45,7 @@ import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { CONTOUR_CASING, CONTOUR_CASING_EXTRA, CONTOUR_CORE, CONTOUR_CORE_MAJOR, CONTOUR_LABEL, CONTOUR_LABEL_HALO } from '@/lib/contour-cartography';
 import SpeakButton from './SpeakButton';
 import { useLanguage, translate } from '@/lib/i18n';
+import { isInlineDraftLang } from '@/lib/xh-inline';
 import { useAuth } from '@/lib/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { subscribeUserMapData, pushShapes } from '@/lib/user-sync';
@@ -344,6 +345,9 @@ interface Props {
 // catalog offers directly on the map (a tree and a water tank) — every other element type
 // (borehole, beehive, compost, gate, nursery, tap, pond/dam) stays reachable in All tools.
 const SIMPLE_ELEMENT_TYPES: SiteElementType[] = ['tree', 'jojo_tank'];
+
+// Drop-mode action bar sits at bottom: 72px + safe area + 12px and is 48px tall; the hint pill rides 10px above it.
+const DROP_HINT_BOTTOM = 'calc(72px + env(safe-area-inset-bottom) + 12px + 48px + 10px)';
 
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
@@ -2169,7 +2173,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   return (
     <div className="relative w-full h-full">
-      {offlineCanvas&&<div role="status" style={{position:'absolute',bottom:80,left:12,maxWidth:'calc(100% - 24px)',zIndex:10,padding:'8px 12px',borderRadius:10,background:'var(--bg-1)',color:'var(--text-primary)',fontSize:14,pointerEvents:'none'}}>{t('mapOfflineCanvasStatus')}</div>}
+      {/* Bottom-RIGHT, not bottom-left: the Lima launcher and the "+ Add" pill own the left corner on /farmer, and the note sat on top of both. */}
+      {offlineCanvas&&<div role="status" style={{position:'absolute',bottom:80,right:12,maxWidth:'calc(100% - 170px)',zIndex:10,padding:'8px 12px',borderRadius:10,background:'var(--bg-1)',color:'var(--text-primary)',fontSize:14,pointerEvents:'none'}}>{t('mapOfflineCanvasStatus')}</div>}
       <ReactMapGL
         ref={mapRef}
         mapboxAccessToken={TOKEN}
@@ -2624,10 +2629,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               }}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={cancelArmed
-                ? { flex: '0 1 52px', minWidth: 0, padding: '9px 0', background: 'rgba(212,110,66,0.95)', border: '1.5px solid rgba(212,110,66,0.9)', color: '#fff' }
-                : { flex: '0 1 52px', minWidth: 0, padding: '9px 0', background: 'rgba(28,14,10,0.94)', border: '1.5px solid rgba(212,110,66,0.85)', color: 'var(--orange)' }}>
+                ? { flex: '0 0 auto', minWidth: 52, padding: '9px 6px', background: 'rgba(212,110,66,0.95)', border: '1.5px solid rgba(212,110,66,0.9)', color: '#fff' }
+                : { flex: '0 0 auto', minWidth: 52, padding: '9px 6px', background: 'rgba(28,14,10,0.94)', border: '1.5px solid rgba(212,110,66,0.85)', color: 'var(--orange)' }}>
               <X size={17} />
-              <span style={{ fontSize: 12.5, marginTop: 3 }}>{cancelArmed ? t('mapDrawDiscard') : t('drawCancelButton')}</span>
+              <span style={{ fontSize: 12.5, marginTop: 3, whiteSpace: 'nowrap' }}>{cancelArmed ? t('mapDrawDiscard') : t('drawCancelButton')}</span>
             </button>
 
             <button onClick={undoPin} disabled={draftPoints.length === 0}
@@ -2673,9 +2678,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       {/* ── Water point drop mode: crosshair + Place here ── */}
       {droppingWaterPoint && (
         <>
-          {/* Top hint */}
+          {/* Hint — sits just above the action bar, not at the top, where at phone width it covered the
+              Tools panel title (the panel stays open in drop mode). */}
           <div role="status" aria-live="polite" className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
-            style={{ top: 14, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
+            style={{ bottom: DROP_HINT_BOTTOM, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
               background: 'rgba(6,16,10,0.88)', border: '1px solid rgba(35,94,134,0.5)', backdropFilter: 'blur(8px)' }}>
             <span className="font-display" style={{ fontSize: 12, color: '#8FC7E8' }}>
               {t('waterDropHint')}
@@ -2699,7 +2705,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <button onClick={() => setDroppingWaterPoint(false)}
               className="flex items-center justify-center gap-1.5 font-sans font-semibold"
               style={{ flex: '0 0 auto', minWidth: 72, padding: '10px 14px', borderRadius: 13, background: 'rgba(6,16,10,0.88)', border: '1px solid rgba(234,243,226,0.16)', color: '#EAF3E2', fontSize: 14, cursor: 'pointer' }}>
-              <X size={15} />Cancel
+              <X size={15} />{isInlineDraftLang(lang) ? t('drawCancelButton') : 'Cancel'}
             </button>
             <button onClick={() => {
               const map = mapRef.current?.getMap();
@@ -2730,9 +2736,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       {/* ── Site element drop mode: crosshair + Place here (mirrors water point drop mode exactly) ── */}
       {droppingElement && (
         <>
-          {/* Top hint */}
-          <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
-            style={{ top: 14, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
+          {/* Hint — above the action bar (see the water point hint above) */}
+          <div role="status" aria-live="polite" className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
+            style={{ bottom: DROP_HINT_BOTTOM, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
               background: 'rgba(6,16,10,0.88)', border: `1px solid ${getElementMeta(droppingElement).color}80`, backdropFilter: 'blur(8px)' }}>
             <span className="font-display" style={{ fontSize: 12, color: getElementMeta(droppingElement).color }}>
               {t('waterDropHint')}
@@ -2756,7 +2762,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <button onClick={() => setDroppingElement(null)}
               className="flex items-center justify-center gap-1.5 font-sans font-semibold"
               style={{ flex: '0 0 auto', minWidth: 72, padding: '10px 14px', borderRadius: 13, background: 'rgba(6,16,10,0.88)', border: '1px solid rgba(234,243,226,0.16)', color: '#EAF3E2', fontSize: 14, cursor: 'pointer' }}>
-              <X size={15} />Cancel
+              <X size={15} />{isInlineDraftLang(lang) ? t('drawCancelButton') : 'Cancel'}
             </button>
             <button onClick={() => {
               const map = mapRef.current?.getMap();
@@ -2808,9 +2814,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             style={{ bottom: 'calc(78px + env(safe-area-inset-bottom))', zIndex: 45, width: 'min(480px, calc(100vw - 20px))' }}>
             <button onClick={cancelReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
+              style={{ flex: '0 0 auto', minWidth: 50, padding: '9px 6px', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
               <X size={17} />
-              <span style={{ fontSize: 11, marginTop: 3 }}>{t('drawCancelButton')}</span>
+              <span style={{ fontSize: 11, marginTop: 3, whiteSpace: 'nowrap' }}>{t('drawCancelButton')}</span>
             </button>
             <button onClick={removeEditCorner} disabled={selCorner == null || editPoints.length <= 3}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
@@ -2955,28 +2961,6 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               {shareState === 'saving'
                 ? <Loader2 size={15} className="animate-spin" style={{ color: 'rgba(234,243,226,0.55)' }} />
                 : <Share2 size={15} style={{ color: shareState === 'copied' ? MAP_COLOR_BOUNDARY_STROKE : 'rgba(234,243,226,0.55)' }} />}
-              {shareState === 'copied' && (
-                <span className="absolute pointer-events-none font-sans font-bold whitespace-nowrap"
-                  style={{
-                    top: 44, right: 0,
-                    background: 'var(--bg-0)', color: 'var(--text-primary)',
-                    fontSize: 12, borderRadius: 8, padding: '5px 10px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.35)', zIndex: 20,
-                  }}>
-                  {t('shareCopiedToast')}
-                </span>
-              )}
-              {shareState === 'error' && (
-                <span className="absolute pointer-events-none font-sans font-bold whitespace-nowrap"
-                  style={{
-                    top: 44, right: 0,
-                    background: 'var(--bg-0)', color: MAP_COLOR_ALERT,
-                    fontSize: 12, borderRadius: 8, padding: '5px 10px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.35)', zIndex: 20,
-                  }}>
-                  {t('shareFailedToast')}
-                </span>
-              )}
             </button>
             {/* Lima quick-guide — reopen the coach-marks any time */}
             <button
@@ -2998,6 +2982,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </button>
           </div>
         </div>
+
+        {/* Share result — a line in the panel's own flow under the header. It used to float 44px below the Share
+            button, which is exactly where the search field sits, so a failed share hid the field. */}
+        {(shareState === 'copied' || shareState === 'error') && (
+          <div role="status" aria-live="polite" className="font-sans font-bold self-end"
+            style={{
+              background: 'var(--bg-0)', color: shareState === 'error' ? MAP_COLOR_ALERT : 'var(--text-primary)',
+              fontSize: 12, borderRadius: 8, padding: '5px 10px', maxWidth: '100%',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.35)',
+            }}>
+            {shareState === 'error' ? t('shareFailedToast') : t('shareCopiedToast')}
+          </div>
+        )}
 
         {/* Search row */}
         <div className="relative">
@@ -3238,19 +3235,22 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
           {/* ── Places section — collapsible ── */}
           <div className="w-full">
+            {/* Two sibling buttons in one row (a <button> may not contain a <button>): the accordion toggle takes the
+                free width, the labels switch keeps its own size and wraps below it when a long language needs the room. */}
+            <div className="w-full flex flex-wrap items-center justify-between gap-x-2 gap-y-1" style={{ padding: '3px 2px' }}>
             <button
               onClick={() => setPlacesOpen((o) => !o)}
-              className="w-full flex items-center justify-between active:opacity-70 transition-all"
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '3px 2px' }}>
-              <div className="flex items-center gap-1.5">
+              aria-expanded={placesOpen}
+              className="flex items-center gap-1.5 active:opacity-70 transition-all text-left"
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, flex: '1 1 auto', minWidth: 0 }}>
                 <ChevronDown size={13} style={{ color: 'rgba(234,243,226,0.4)', transition: 'transform 0.2s', transform: placesOpen ? 'rotate(0deg)' : 'rotate(-90deg)', flexShrink: 0 }} />
                 <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
                   {t('placesSectionLabel')}{savedPins.length ? ` · ${savedPins.length}` : ''}
                 </span>
-              </div>
-              <button onClick={(e) => { e.stopPropagation(); setShowPlaceLabels((v) => !v); }}
+            </button>
+              <button onClick={() => setShowPlaceLabels((v) => !v)}
                 className="flex items-center gap-1 active:scale-95 transition-all"
-                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px', flex: '0 0 auto' }}>
                 <MapPin size={11} style={{ color: showPlaceLabels ? MAP_COLOR_BOUNDARY_STROKE : 'rgba(234,243,226,0.3)' }} />
                 <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showPlaceLabels ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('placesLabelsToggle')}</span>
                 <span className="flex items-center rounded-full flex-shrink-0"
@@ -3258,7 +3258,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   <span style={{ width: 11, height: 11, borderRadius: '50%', background: showPlaceLabels ? MAP_COLOR_BOUNDARY_STROKE : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
                 </span>
               </button>
-            </button>
+            </div>
             {placesOpen && (
               <div className="w-full flex flex-col gap-1 mt-1.5">
                 {savedPins.length === 0 ? (

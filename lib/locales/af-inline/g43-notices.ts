@@ -1,7 +1,6 @@
 // Unreviewed Afrikaans machine drafts keyed by the exact English (see index.ts).
 // The Afrikaans-only draft notices: what each screen says about its own unreviewed Afrikaans.
 const drafts: Record<string, string> = {
-  "AFRIKAANS MACHINE DRAFT.": "AFRIKAANSE MASJIENKONSEP.",
   "AFRIKAANS MACHINE DRAFT — This wording has not been reviewed by a fluent Afrikaans speaker. Text not yet drafted stays in English.": "AFRIKAANSE MASJIENKONSEP — Hierdie bewoording is nie deur 'n vlot Afrikaanse spreker hersien nie. Teks wat nog nie opgestel is nie, bly in Engels.",
   "The report analysis and tables are an unreviewed Afrikaans draft. Recorded names and units stay as recorded.": "Die verslag se ontleding en tabelle is 'n onhersiene Afrikaanse konsep. Aangetekende name en eenhede bly soos aangeteken.",
   "Afrikaans interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.": "Die Afrikaanse bewoording van die koppelvlak is 'n onhersiene konsep. Engels word onder vertaalde etikette gewys. Data, plek- en spesiename, verduidelikings, bronne en boerderywaarskuwings bly soos verskaf.",
@@ -10,7 +9,6 @@ const drafts: Record<string, string> = {
   "Afrikaans translation pending": "Afrikaanse vertaling hangende",
   "Afrikaans translation pending — English source:": "Afrikaanse vertaling hangende — Engelse bron:",
   "Monthly chores and Lima advice have unreviewed Afrikaans drafts beside English sources. Some farming instructions remain in English for review.": "Maandelikse take en Lima se raad het onhersiene Afrikaanse konsepte langs Engelse bronne. Sommige boerdery-instruksies bly in Engels vir hersiening.",
-  "Navigation wording has not been reviewed by a fluent Afrikaans speaker.": "Navigasiebewoording is nie deur 'n vlot Afrikaanse spreker hersien nie.",
   "Some saved reports have full English text. The controls here are in Afrikaans.": "Sommige gestoorde verslae het volledige Engelse teks. Die kontroles hier is in Afrikaans.",
   "The Afrikaans text here is an unreviewed draft.": "Die Afrikaanse teks hier is 'n onhersiene konsep.",
   "The Afrikaans text is a draft awaiting review by a fluent Afrikaans speaker.": "Die Afrikaanse teks is 'n konsep wat wag op hersiening deur 'n vlot Afrikaanse spreker.",

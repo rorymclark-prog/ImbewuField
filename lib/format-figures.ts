@@ -90,6 +90,20 @@ export function randCentsLabel(amount: number): string {
 }
 
 /**
+ * The rand label for the language that is showing. Afrikaans reads the South African convention the rest of the
+ * records book already uses ('R7 470,00': space-grouped thousands, comma decimal, always cents), so a stray 'R18800'
+ * or 'R 280.00' does not sit beside it. Every other language returns `english` untouched, byte for byte.
+ */
+export function randForLang(lang: string, amount: number, english: string): string {
+  return lang === 'af' ? randCentsLabel(amount) : english;
+}
+
+/** {@link randForLang} without the leading 'R', for a translated template that already carries it ('R{low}–R{high}'). */
+export function randAmountForLang(lang: string, amount: number, english: string): string {
+  return lang === 'af' ? randCentsLabel(amount).replace(/^(-?)R/, '$1') : english;
+}
+
+/**
  * '1 203,6 kg' — space-grouped thousands with a comma decimal, one decimal place, matching the
  * money figures' convention above instead of `quantity.toLocaleString('en-ZA')`: that call renders
  * differently across ICU builds and between server and client (the hydration-mismatch class

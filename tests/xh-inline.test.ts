@@ -11,7 +11,7 @@ import { join } from 'node:path';
 import test from 'node:test';
 
 import { XH_INLINE_SOURCE } from '@/lib/locales/xh-inline/index';
-import { inlineDraftsLoaded, inlineTemplate, inlineText, placeholdersOf, registerInlineDrafts, registerXhInline, xhInlineDraft } from '@/lib/xh-inline';
+import { inlineDraftsLoaded, inlineTemplate, inlineText, isInlineDraftLang, placeholdersOf, registerInlineDrafts, registerXhInline, xhInlineDraft } from '@/lib/xh-inline';
 import { REPORT_DOCUMENT_COPY } from '@/lib/report-localisation';
 import { PLAN_ASSURANCE_COPY } from '@/lib/plan-assurance';
 import { REPORT_VISUAL_COPY } from '@/lib/report-visuals';
@@ -181,10 +181,15 @@ test('/prices and /atlas label the English duplicate as the English source for i
   assert.equal(inlineText('xh', 'English source:'), 'Umthombo wesiNgesi:');
 });
 
-test('the /records draft notice stops calling the isiXhosa tabs English; the other regional languages keep their sentence', () => {
+test('the /records draft notice: Sesotho, Tshivenda and Xitsonga keep their English status line; isiXhosa gets one notice (the shared one) plus the English tab names as a source line', () => {
   const records = read('app/records/page.tsx');
-  assert.match(records, /\{lang === 'xh' \? 'The tabs are shown in isiXhosa; English names:' : 'English tabs:'\} \{simple \? 'Picked · Sold · Spent\.' : 'Picked · Sold · Spent · Charts\.'\}/);
-  assert.doesNotMatch(records, /\} English tabs: \{simple/);
+  // The three regional languages: unchanged sentence ("English tabs: Picked · Sold · Spent[ · Charts].").
+  assert.match(records, /\{isRecordsRegionalLang\(lang\) && !isInlineDraftLang\(lang\) && <p role="note" lang="en" data-records-draft-notice=\{lang\} className="mt-1 text-xs" style=\{\{ color: 'var\(--color-muted-strong\)' \}\}>\{recordsDraftNotice\(lang\)\} English tabs: \{simple \? 'Picked · Sold · Spent\.' : 'Picked · Sold · Spent · Charts\.'\}<\/p>\}/);
+  // (The old guard against an unconditional "} English tabs: {simple" is now the !isInlineDraftLang gate asserted above.)
+  assert.doesNotMatch(records, /The tabs are shown in isiXhosa; English names:/, 'the fully English isiXhosa notice is gone');
+  // A draft language: no second notice, only the English tab names labelled as the English source.
+  assert.match(records, /\{isInlineDraftLang\(lang\) && <p lang="en" data-records-tab-source=\{lang\}[^>]*><span lang=\{lang\}>\{inlineText\(lang, 'English source:'\)\}<\/span> \{simple \? 'Picked · Sold · Spent\.' : 'Picked · Sold · Spent · Charts\.'\}<\/p>\}/);
+  assert.match(records, /<LanguageDraftNote lang=\{lang\} scope="records" \/>/, 'the one shared notice stays');
 });
 
 test('the planner names the month once in isiXhosa counts and messages (the heading keeps the pair)', () => {
@@ -295,4 +300,313 @@ test('/invoice keeps its deliberate English draft notice and English-beside-draf
   assert.match(page, /<p role="note" lang="en" data-records-draft-notice=\{lang\}/);
   assert.match(page, /'Choose paid or unpaid to continue\.',\n/);
   assert.match(page, /INVOICE_PAIRED_COPY\.has\(english\) \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/);
+});
+
+// ── The fourth isiXhosa sample-mode sweep (2 Nov 2026): interactive screens ───────────────────────
+const NON_DRAFT_LANGS = ['en', 'zu', 'st', 'ts', 've'];
+
+test('g52: every new draft keeps its figures and leaves English, isiZulu, Sesotho, Xitsonga and Tshivenda alone', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const { default: shard } = await import('@/lib/locales/xh-inline/g52-interactive');
+  assert.ok(Object.keys(shard).length >= 150, 'the shard holds the sweep drafts');
+  for (const [english, draft] of Object.entries(shard)) {
+    assert.equal(XH_INLINE_SOURCE[english], draft, `${english}: a later shard overrides the g52 draft`);
+    assert.equal(placeholdersOf(draft), placeholdersOf(english));
+    assert.notEqual(draft, english);
+    for (const lang of NON_DRAFT_LANGS) assert.equal(inlineText(lang, english), english, `${lang} stays English for ${english}`);
+  }
+  // Figures that must survive exactly.
+  assert.match(shard['Within 3 m of a roof downpipe, on level, compacted ground.'], /\b3\b/);
+  assert.match(shard['Paint the area you can reach in about 20 steps from the door.'], /\b20\b/);
+  assert.match(shard['More than 500 beds fit. Divide this field into smaller blocks.'], /500/);
+  assert.match(shard['{n} full-size beds fit. Paths separate rows and bed ends; unused edges stay unplanted. 0° runs east–west on the map.'], /0°/);
+  assert.equal(inlineTemplate('xh', 'Field blocks · {n}', null, { n: 3 }), 'Iibhloko zeentsimi · 3');
+  assert.equal(inlineTemplate('en', 'Field blocks · {n}', null, { n: 3 }), 'Field blocks · 3');
+});
+
+test('g52: the Design palette names an element in isiXhosa at render only; the English catalogue, species names and every other language are untouched', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const { ELEMENTS_BY_ID, PLANTING_GROUP_LABEL } = await import('@/lib/design-elements');
+  const { PLANTING_SUBLAYER_LABEL } = await import('@/lib/design-layer-membership');
+  const { designElementDisplayName, designGroupDisplayLabel } = await import('@/lib/design-element-display');
+  // The lib English is data and does not move.
+  assert.equal(ELEMENTS_BY_ID.raised_bed.name, 'Raised Bed');
+  assert.equal(ELEMENTS_BY_ID.veg_bed.name, 'Vegetable Bed');
+  assert.equal(PLANTING_GROUP_LABEL.beds, 'Beds & strips');
+  assert.equal(PLANTING_SUBLAYER_LABEL.beds, 'Beds & strips');
+  const shown = (id: string, lang: string) => designElementDisplayName(ELEMENTS_BY_ID[id], lang);
+  for (const [id, draft] of [
+    ['jojo_1000', 'Itanki ye-JoJo 1000L'], ['tap_point', 'Indawo yethepi'], ['raised_bed', 'Ibhedi ephakanyisiweyo'],
+    ['veg_bed', 'Ibhedi yemifuno'], ['tree_other', 'Omnye umthi'], ['chicken_coop', 'Ikheyji yeenkukhu'],
+  ] as const) {
+    assert.equal(shown(id, 'xh'), draft, id);
+    for (const lang of NON_DRAFT_LANGS) assert.equal(shown(id, lang), ELEMENTS_BY_ID[id].name, `${id} stays English for ${lang}`);
+  }
+  // Crop and species names are never translated, drafts or not.
+  for (const id of ['tree_mango', 'tree_orange', 'tree_wild_plum', 'tree_marula', 'mulch_bank', 'vetiver_row', 'spekboom_hedge', 'banana_circle', 'banana_clump']) {
+    assert.equal(shown(id, 'xh'), ELEMENTS_BY_ID[id].name, `${id} keeps its crop or species name`);
+  }
+  for (const label of [...Object.values(PLANTING_GROUP_LABEL), ...Object.values(PLANTING_SUBLAYER_LABEL)]) {
+    assert.notEqual(designGroupDisplayLabel(label, 'xh'), label, `${label} has an isiXhosa heading`);
+    for (const lang of NON_DRAFT_LANGS) assert.equal(designGroupDisplayLabel(label, lang), label);
+  }
+  assert.equal(designGroupDisplayLabel('Beds & strips', 'xh'), 'Iibhedi nemigca');
+  const helper = read('lib/design-element-display.ts');
+  assert.match(helper, /if \(!isInlineDraftLang\(lang\)\) return def\.name;/);
+  const palette = read('components/design/DesignPalette.tsx');
+  assert.match(palette, /\{designElementDisplayName\(def, lang\)\}<\/span>/, 'the chip name');
+  assert.match(palette, /designGroupDisplayLabel\(PLANTING_GROUP_LABEL\[heading\], lang\)/, 'the group heading');
+  assert.match(palette, /\{designGroupDisplayLabel\(label, lang\)\}/, 'the layer sub-heading');
+  assert.match(palette, /\{ name: designElementDisplayName\(armedDef, lang\) \}/, 'the "tap to place" hint');
+});
+
+test('g52: the step guide shows every sub-step in isiXhosa through inlineText, and English, isiZulu and the other languages read the unchanged English', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const { STEP_SUBSTEPS } = await import('@/lib/design-substeps');
+  let n = 0;
+  for (const steps of Object.values(STEP_SUBSTEPS)) {
+    for (const sub of steps) {
+      for (const english of [sub.title, sub.instruction, sub.where]) {
+        n += 1;
+        const draft = xhInlineDraft(english);
+        assert.ok(draft && draft !== english, `no isiXhosa draft for ${JSON.stringify(english)}`);
+        for (const lang of NON_DRAFT_LANGS) assert.equal(inlineText(lang, english), english);
+      }
+    }
+  }
+  assert.ok(n >= 78, `${n} sub-step strings checked`);
+  assert.equal(inlineText('xh', 'Build the berm on the downhill side'), 'Akha induli yomhlaba kwicala elihla');
+  const guide = read('components/design/StepGuide.tsx');
+  assert.match(guide, /\{inlineText\(lang, ss\.title\)\}/);
+  assert.match(guide, /\{inlineText\(lang, ss\.instruction\)\}/);
+  assert.match(guide, /\{inlineText\(lang, ss\.where\)\}/);
+  assert.match(guide, /current \? inlineText\(lang, current\.title\) : undefined/, 'the collapsed bar');
+  assert.match(guide, /<SpeakButton text=\{narration\} englishText=\{englishNarration\}/, 'the spoken English source stays English');
+  assert.match(read('lib/design-substeps.ts'), /title: 'Build the berm on the downhill side'/, 'the lib English is untouched');
+});
+
+test('g52: the field blocks panel is fully translated at render, with its lib errors and figures intact', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const panel = read('components/design/FieldBlocksPanel.tsx');
+  assert.match(panel, /const \{ lang \} = useLanguage\(\);/);
+  for (const english of [
+    'Draw a field, then fill it with beds or keep it as open growing ground.', 'Draw field polygon', 'Select a field', 'Field name',
+    'Growing layout', 'Fill with beds', 'Open field (no beds)', 'Save field layout', 'Open automatic crop planner →',
+    'The polygon becomes one field-sized crop-planning area.', 'Saved: open field. Saving again replaces this field’s generated layout.',
+  ]) {
+    assert.ok(panel.includes(`'${english}'`), `${english} is rendered through the panel`);
+    assert.ok(xhInlineDraft(english), `${english} has a draft`);
+  }
+  for (const label of ['Bed length (m)', 'Bed width (m)', 'Path width (m)', 'Direction (degrees)']) assert.ok(xhInlineDraft(label) && panel.includes(`'${label}'`));
+  assert.match(panel, /inlineTemplate\(lang, 'Field blocks · \{n\}', null, \{ n: fields\.length \}\)/);
+  assert.match(panel, /ui\(\(e as Error\)\.message\)/, 'thrown lib messages are translated where they are shown');
+  assert.match(panel, /\{isInlineDraftLang\(lang\) \? ui\('Field block'\) : 'Field'\}/, 'the plain "Field" key belongs to another screen');
+  // Every message lib/bed-block.ts throws has a draft.
+  const lib = read('lib/bed-block.ts');
+  const thrown = [...lib.matchAll(/throw new Error\('((?:[^'\\]|\\.)*)'\)/g)].map((m) => m[1]);
+  assert.ok(thrown.length >= 12);
+  for (const english of thrown) assert.ok(xhInlineDraft(english), `no draft for the thrown message ${english}`);
+  assert.equal(inlineTemplate('xh', '{n} full-size beds fit. Paths separate rows and bed ends; unused edges stay unplanted. 0° runs east–west on the map.', null, { n: 12 }).startsWith('Iibhedi ezipheleleyo ezingu-12 '), true);
+  assert.equal(inlineTemplate('en', '{n} full-size beds fit. Paths separate rows and bed ends; unused edges stay unplanted. 0° runs east–west on the map.', null, { n: 12 }), '12 full-size beds fit. Paths separate rows and bed ends; unused edges stay unplanted. 0° runs east–west on the map.');
+});
+
+test('g52: the Design canvas zoom, fit and base controls and the sector notes over the map read the isiXhosa drafts; other languages keep the exact English', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const canvas = read('components/design/DesignCanvas.tsx');
+  assert.match(canvas, /ariaLabel: inlineText\(lang, 'Zoom in'\)/);
+  assert.match(canvas, /ariaLabel: inlineText\(lang, 'Zoom out'\)/);
+  assert.match(canvas, /ariaLabel: inlineText\(lang, 'Fit map to view'\)/);
+  assert.match(canvas, /inlineTemplate\(lang, 'Base: \{mode\}\. Switch base\.', null, \{ mode: inlineText\(lang, basePhoto\.mode\) \}\)/);
+  assert.match(canvas, /: `Base: \$\{basePhoto\.mode\}\. Switch base\.`\}/, 'the English aria-label is the same template as before');
+  assert.match(canvas, /inlineTemplate\(lang, 'Base: \{mode\}\. Switch to \{next\}\.'/);
+  assert.match(canvas, /\{effectiveWindNote \?\? \(isInlineDraftLang\(lang\) \? inlineText\(lang, sectorModel\.dataNotes\[0\]\) : sectorModel\.dataNotes\[0\]\)\}/);
+  assert.equal(inlineText('xh', 'Zoom in'), 'Sondeza kufuphi');
+  assert.equal(inlineTemplate('xh', 'Base: {mode}. Switch base.', null, { mode: inlineText('xh', 'satellite') }), 'Isiseko: isathelayithi. Tshintsha isiseko.');
+  assert.equal(inlineTemplate('en', 'Base: {mode}. Switch base.', null, { mode: 'satellite' }), 'Base: satellite. Switch base.');
+  // The two notes the sweep named, and the other fixed notes lib/sector.ts writes, are drafted from the lib's own English.
+  const sector = read('lib/sector.ts');
+  for (const english of [
+    'No regional fire-wind pattern for this area — walk the boundary and ask neighbours which side fires come from.',
+    'Fire sector not shown: this site’s fire season doesn’t match the region’s sourced berg-wind pattern — confirm the fire approach locally before siting a firebreak.',
+    'Site not analysed yet — open this place on the map to fetch climate & slope, then redraw.',
+    'No terrain data yet — open this place on the map to fetch slope & aspect.',
+    'No wind/temperature data yet — open this place on the map to fetch climate.',
+    'Cold air settles in low spots on still, clear nights.',
+    'Local DEM relief is too small to confirm a downhill direction — use neighbouring contours or measure the fall on site.',
+  ]) {
+    assert.ok(sector.includes(english), `lib/sector.ts still writes: ${english}`);
+    assert.ok(xhInlineDraft(english), `no draft for ${english}`);
+  }
+  // lib/sector.ts itself is untouched: its English output feeds pinned tests and the Glossy renderer.
+  const { deriveSectorModel } = await import('@/lib/sector');
+  assert.ok(typeof deriveSectorModel === 'function');
+});
+
+test('g52: Cancel beside "Place here" is translated for a draft language and stays "Cancel" for every other language', async () => {
+  const map = read('components/Map.tsx');
+  assert.equal((map.match(/<X size=\{15\} \/>\{isInlineDraftLang\(lang\) \? t\('drawCancelButton'\) : 'Cancel'\}/g) ?? []).length, 2, 'the water point and element drop bars');
+  assert.doesNotMatch(map, /<X size=\{15\} \/>Cancel\n/);
+  const xhDictionary = (await import('@/lib/locales/xh')).default as Record<string, string>;
+  assert.equal(xhDictionary.drawCancelButton, 'Rhoxisa');
+  assert.equal(xhDictionary.waterDropPlaceButton, 'Beka apha');
+});
+
+test('g52: the Places accordion no longer nests a <button> inside a <button>', () => {
+  const map = read('components/Map.tsx');
+  const from = map.indexOf('{/* ── Places section — collapsible ── */}');
+  const to = map.indexOf('{placesOpen && (', from);
+  const block = map.slice(from, to).replace(/\{\/\*[\s\S]*?\*\/\}/g, ''); // comments may mention <button>
+  const opens = [...block.matchAll(/<button\b/g)].map((m) => m.index!);
+  const closes = [...block.matchAll(/<\/button>/g)].map((m) => m.index!);
+  assert.equal(opens.length, 2);
+  assert.equal(closes.length, 2);
+  assert.ok(closes[0] < opens[1], 'the accordion toggle is closed before the labels switch opens: siblings, not nested');
+  assert.match(block, /aria-expanded=\{placesOpen\}/);
+  assert.match(block, /onClick=\{\(\) => setPlacesOpen\(\(o\) => !o\)\}/);
+  assert.match(block, /onClick=\{\(\) => setShowPlaceLabels\(\(v\) => !v\)\}/, 'no stopPropagation is needed once they are siblings');
+  assert.doesNotMatch(block, /stopPropagation/);
+});
+
+test('g52: phone-width overlaps are separated by position, for every language', () => {
+  const map = read('components/Map.tsx');
+  // Tree/tank/water drop hint rides above the action bar instead of covering the Tools panel title.
+  assert.equal((map.match(/bottom: DROP_HINT_BOTTOM/g) ?? []).length, 2);
+  assert.match(map, /const DROP_HINT_BOTTOM = 'calc\(72px \+ env\(safe-area-inset-bottom\) \+ 12px \+ 48px \+ 10px\)';/);
+  // Offline-canvas note moved off the bottom-left corner (Lima FAB + Add pill).
+  assert.match(map, /\{offlineCanvas&&<div role="status" style=\{\{position:'absolute',bottom:80,right:12,maxWidth:'calc\(100% - 170px\)'/);
+  // Share result is a line in the panel, not a toast floating over the search field.
+  assert.doesNotMatch(map, /top: 44, right: 0/);
+  assert.match(map, /\{\(shareState === 'copied' \|\| shareState === 'error'\) && \(\s*<div role="status" aria-live="polite" className="font-sans font-bold self-end"/);
+  // The boundary-drawing Cancel sizes to its label instead of a fixed 52px.
+  assert.match(map, /flex: '0 0 auto', minWidth: 52, padding: '9px 6px', background: 'rgba\(212,110,66,0\.95\)'/);
+  assert.match(map, /fontSize: 12\.5, marginTop: 3, whiteSpace: 'nowrap' \}\}>\{cancelArmed/);
+  const badge = read('components/FieldSyncBadge.tsx');
+  assert.match(badge, /flex:'0 1 auto',minWidth:0,maxWidth:'min\(40vw, 190px\)'/, 'the offline pill shrinks and wraps instead of squeezing the back button');
+  const farmer = read('app/farmer/page.tsx');
+  assert.match(farmer, /rounded-full font-sans font-bold transition-all min-w-0 shrink"/, 'the Design Studio pill shrinks');
+  assert.match(farmer, /<span className="min-w-0 break-words text-left">\{t\('designStudioLabel'\)\}<\/span>/);
+  assert.match(farmer, /bottom: 'var\(--bottom-nav-height, calc\(60px \+ env\(safe-area-inset-bottom, 0px\)\)\)'/, 'the sheet rides the measured bottom bar');
+  const css = read('components/SiteSurveySheet.module.css');
+  assert.match(css, /\.reviewCard>legend \{ float:left; width:100%;/, 'a fieldset legend no longer straddles the card border');
+  assert.match(css, /\.reviewCard>legend\+\* \{ clear:both; \}/);
+});
+
+test('g52: the Reports tab heading and its count have a gap, the tabs are equal width and the sheet content clears the bottom bar', () => {
+  const panel = read('components/DataPanel.tsx');
+  assert.match(panel, /justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px 12px', marginBottom: 8 \}\}>/);
+  assert.match(panel, /flex: '1 1 0',\s*minWidth: 64,\s*flexDirection: 'column'/);
+  assert.match(panel, /paddingBottom: 'calc\(28px \+ env\(safe-area-inset-bottom, 0px\)\)'/);
+});
+
+test('g52: one draft notice per surface - the results sheet tabs and the navigation drawer rely on the shared LanguageDraftNote for isiXhosa; isiZulu keeps its per-tab lines', () => {
+  const water = read('components/WaterBalance.tsx');
+  assert.match(water, /\{lang === 'zu' && \(\s*<p className="text-xs font-display" style=\{\{ color: 'var\(--text-muted\)' \}\}>\{t\('siteSummaryZuluDraftNotice'\)\}<\/p>/);
+  const photos = read('components/PhotoUpload.tsx');
+  assert.match(photos, /\{lang === 'zu' && \(\s*<p role="note" className="text-xs" style=\{\{ color: 'var\(--text-muted\)' \}\}>\{t\('photoZuluDraftNotice'\)\}<\/p>/);
+  const panel = read('components/DataPanel.tsx');
+  assert.match(panel, /\{lang === 'zu' && <span className="block mt-1 text-xs text-\[var\(--text-muted\)\]">\{t\('siteSummaryZuluDraftNotice'\)\}<\/span>\}/);
+  assert.match(panel, /<LanguageDraftNote lang=\{lang\} scope="farmer" \/>/);
+  const drawer = read('components/NavDrawer.tsx');
+  assert.match(drawer, /<LanguageDraftNote lang=\{lang\} scope="navigation-drawer"\/>/);
+  assert.doesNotMatch(drawer, /ISIXHOSA MACHINE DRAFT/, 'the second, differently worded isiXhosa notice is gone');
+  assert.equal(xhInlineDraft('ISIXHOSA MACHINE DRAFT.'), null, 'its retired draft is gone too');
+});
+
+test('g52: records validation errors and hints lead with the isiXhosa draft and label the English as its source; Sesotho, Tshivenda and Xitsonga keep English first', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const { recordsPaired, recordsLabel, recordsDraft } = await import('@/lib/records-regional-drafts');
+  const english = 'Item and amount are required.';
+  const draft = recordsDraft('xh', english);
+  assert.ok(draft && draft !== english, 'the validation message has an isiXhosa draft');
+  assert.equal(recordsPaired('xh', english), `${draft} — Umthombo wesiNgesi: ${english}`);
+  assert.ok(recordsPaired('xh', english).startsWith(draft), 'the draft comes first');
+  assert.equal(recordsPaired('xh', 'A sentence nobody has drafted yet.'), 'A sentence nobody has drafted yet.', 'with no draft the English stands alone');
+  assert.equal(recordsPaired('en', english), english);
+  for (const lang of ['st', 've', 'ts']) {
+    const local = recordsDraft(lang, english);
+    assert.equal(recordsPaired(lang, english), local ? `${english} — ${local}` : english, `${lang} keeps English first`);
+  }
+  assert.equal(recordsPaired('st', 'Cancel', 'ALREADY TRANSLATED'), 'Cancel — ALREADY TRANSLATED');
+  const label = recordsLabel('xh', english, null);
+  assert.ok(label.startsWith(draft) && label.endsWith(english), 'tooltips and accessible names follow the same order');
+  const invoice = read('app/invoice/page.tsx');
+  assert.match(invoice, /INVOICE_PAIRED_COPY\.has\(english\) \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/, 'money instructions keep the English beside the draft');
+  const source = read('lib/records-regional-drafts.ts');
+  assert.match(source, /return isInlineDraftLang\(lang\) \? `\$\{local\} — \$\{inlineText\(lang, 'English source:'\)\} \$\{english\}` : `\$\{english\} — \$\{local\}`;/);
+});
+
+test('g52: /feedback shows a draft language only the draft on its Send button, keeps the draft/English pairs for sentences, and no longer splits the sign-in sentence', () => {
+  const page = read('app/feedback/page.tsx');
+  assert.match(page, /const buttonLabel=\(en:string,zu:string\)=>lang==='zu'\?paired\(en,zu\):inlineText\(lang,en\);/);
+  assert.match(page, /buttonLabel\('Send','Thumela'\)/);
+  assert.doesNotMatch(page, /paired\('Send','Thumela'\)/);
+  assert.match(page, /return isInlineDraftLang\(lang\)&&xh!==en\?`\$\{xh\} \/ \$\{en\}`:en;/, 'sentences keep the pair, draft first');
+  // The sentence "Sign in to send, or download your draft first..." is one draft sentence plus one complete English source line.
+  assert.match(page, /Sign in to send, or download your draft first\. Signing in may reload this page\.<\/span>/);
+  assert.match(page, /paired\('to send, or download your draft first\. Signing in may reload this page\.','ukuze uthumele/, 'isiZulu pairing is unchanged');
+  assert.equal(inlineText('xh', 'Send'), 'Thumela');
+  assert.equal(inlineText('en', 'Send'), 'Send');
+});
+
+test('g52: the survey blocks and the annual production overview read isiXhosa drafts and stay English for every other language', async () => {
+  registerXhInline(XH_INLINE_SOURCE);
+  const sheet = read('components/SiteSurveySheet.tsx');
+  for (const english of [
+    'Water for the production plan (optional)', 'Can you water the growing area through the dry season?', 'Local market notes (optional)',
+    'Product, buyer or outlet, quantity and unit, price and date, transport or other conditions',
+    'For example: a buyer discussion, market visit or document reference', 'What did you learn?', 'Where did this information come from?',
+  ]) {
+    assert.ok(sheet.includes(`inlineText(lang, '${english}')`), `${english} is rendered through inlineText`);
+    assert.ok(xhInlineDraft(english));
+  }
+  assert.match(sheet, /placeholder=\{inlineText\(lang, 'Product, buyer or outlet,/);
+  assert.match(sheet, /placeholder=\{inlineText\(lang, 'For example: a buyer discussion/);
+  assert.match(sheet, /lang !== 'en' && !isInlineDraftLang\(lang\) \? ' · English' : ''/, 'the "· English" marker stays for the other languages');
+  const overview = read('components/report/ProductionYearOverview.tsx');
+  assert.match(overview, /const draft = isInlineDraftLang\(language\);/);
+  assert.match(overview, /<p className=\{styles\.key\}><strong>P<\/strong> Plan or locally recorded season · <strong>R<\/strong> Sourced reference/, 'the English key paragraph is the original markup');
+  for (const english of ['Food and products through the year', 'Annual food and product plan', 'Timing not established.', 'Sourced reference', 'No annual production snapshot is attached. Open the current crop plan to record product choices and timing; older reports keep their original evidence.']) {
+    assert.ok(xhInlineDraft(english), english);
+    assert.equal(inlineText('zu', english), english);
+  }
+  assert.equal(inlineTemplate('xh', '{name}: planning window in {month}', null, { name: 'Maize', month: 'Jan' }), 'Maize: ixesha lokucwangcisa ngo-Jan');
+  assert.equal(inlineTemplate('en', '{name}: planning window in {month}', null, { name: 'Maize', month: 'Jan' }), 'Maize: planning window in Jan');
+  // Render the real component source (plain node cannot import .tsx), with its imports supplied.
+  const { renderToStaticMarkup } = await import('react-dom/server');
+  const React = await import('react');
+  const ts = (await import('typescript')).default;
+  const compiled = ts.transpileModule(overview.replace(/^import .*$/gm, '').replace('export default function', 'function'), {
+    compilerOptions: { jsx: ts.JsxEmit.React, module: ts.ModuleKind.None, target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+  const Overview = new Function('React', 'pdfIconUrl', 'styles', 'inlineText', 'inlineTemplate', 'isInlineDraftLang', `${compiled}; return ProductionYearOverview;`)(
+    React, () => null, {}, inlineText, inlineTemplate, isInlineDraftLang);
+  const html = (language: string) => renderToStaticMarkup(React.createElement(Overview, { language }));
+  assert.match(html('en'), /<h3>Food and products through the year<\/h3>/);
+  assert.doesNotMatch(html('en'), /This production overview is currently in English/);
+  for (const language of ['zu', 'st', 'ts', 've']) assert.match(html(language), /This production overview is currently in English\./, `${language} keeps its English notice`);
+  assert.match(html('xh'), /<h3>Ukutya neemveliso unyaka wonke<\/h3>/);
+  assert.match(html('xh'), /Amagama eemveliso namanqaku akule theyibhile abonisiwe ngesiNgesi\./);
+  assert.doesNotMatch(html('xh'), /This production overview is currently in English/);
+});
+
+test('g52: a network failure is kept as the failure and worded when it renders, so it follows the language that is showing', async () => {
+  const { networkFailure, networkFailureMessage } = await import('@/lib/network-failure');
+  const en = (key: string) => ({ networkOffline: 'Offline', networkBusy: 'Busy', networkFailed: 'Failed' } as Record<string, string>)[key];
+  const xh = (key: string) => ({ networkOffline: 'Ngaphandle kwe-intanethi', networkBusy: 'Kutshixiwe', networkFailed: 'Kusilele' } as Record<string, string>)[key];
+  const failure = networkFailure({ status: 500 });
+  assert.equal(failure.status, 500);
+  assert.equal(networkFailureMessage(en, failure), 'Failed');
+  assert.equal(networkFailureMessage(xh, failure), 'Kusilele', 'the same stored failure reads in whichever language renders it');
+  assert.equal(networkFailureMessage(en, networkFailure({ status: 429, serverMessage: 'Please wait 30 s.' })), 'Please wait 30 s.');
+  assert.equal(networkFailureMessage(xh, { offline: true }), 'Ngaphandle kwe-intanethi', 'offline is decided when the request failed');
+  assert.equal(networkFailureMessage(xh, { offline: false, status: 429 }), 'Kutshixiwe');
+  for (const path of ['app/farmer/page.tsx', 'components/AreaPanel.tsx', 'components/SiteDesign.tsx', 'components/atlas/AtlasExplorer.tsx']) {
+    const source = read(path);
+    assert.match(source, /networkFailure\(/, `${path} stores the failure`);
+    assert.match(source, /networkFailureMessage\(t, /, `${path} words it at render`);
+    assert.doesNotMatch(source, /set(Error|State)\([^)]*networkFailureMessage\(/, `${path} no longer caches the wording`);
+  }
+  const farmer = read('app/farmer/page.tsx');
+  assert.match(farmer, /setError\(\{ key: 'savedSiteUnavailable' \}\)/);
+  assert.match(farmer, /'key' in error \? t\(error\.key\)/);
 });

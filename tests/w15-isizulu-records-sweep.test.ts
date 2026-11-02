@@ -31,7 +31,9 @@ test('outline-none is always paired with a focus-visible ring in owned files', (
 test('farmer page saved-site error names the Site reports destination', () => {
   // w16 copy-05: the sentence moved behind t('savedSiteUnavailable') in the English dictionary.
   const src = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
-  assert.match(src, /setError\(t\('savedSiteUnavailable'\)\)/);
+  // The page stores the dictionary KEY and words it when it renders (so it follows a language chunk that loads late).
+  assert.match(src, /setError\(\{ key: 'savedSiteUnavailable' \}\)/);
+  assert.match(src, /'key' in error \? t\(error\.key\)/);
   assert.doesNotMatch(src, /Return to Site reports/);
   const dict = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
   assert.match(dict, /savedSiteUnavailable: '[^']*Go back to Site reports and choose another site\./);

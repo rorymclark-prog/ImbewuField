@@ -254,7 +254,9 @@ test('useRecordsT wraps useLanguage and never itself — a self-call crashed the
 
 test('validation text and the draft notice reach the screen for the regional languages', () => {
   const page = read('app/records/page.tsx');
-  assert.match(page, /isRecordsRegionalLang\(lang\) && <p role="note" lang="en" data-records-draft-notice=\{lang\}/, 'the unreviewed-draft notice must render above the tabs');
+  // Sesotho, Tshivenda and Xitsonga keep their English status line above the tabs; isiXhosa (a draft language with the shared
+  // LanguageDraftNote) no longer stacks a second, English one.
+  assert.match(page, /isRecordsRegionalLang\(lang\) && !isInlineDraftLang\(lang\) && <p role="note" lang="en" data-records-draft-notice=\{lang\}/, 'the unreviewed-draft notice must render above the tabs');
   assert.match(page, /recordsPaired\(lang, 'Product, quantity and amount are required\.'\)/);
   assert.match(page, /recordsPaired\(lang, 'Item and amount are required\.'\)/);
   // The saved form must still validate exactly as before: the rule is untouched, only the words moved.
@@ -438,10 +440,14 @@ test('Afrikaans reaches the money book wherever isiXhosa does: crop picker langu
   const passes = records.match(/language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : lang === 'af' \? 'af' : 'en'\}/g) ?? [];
   assert.equal(passes.length, 2);
   assert.match(read('components/CropSelect.tsx'), /language\?: 'en' \| 'zu' \| 'xh' \| 'af';/);
-  // The Afrikaans machine-draft notice sits beside the isiXhosa one, in Afrikaans, and its draft exists.
+  // One draft notice per surface (2 Nov fourth sweep): the Sold card no longer adds an Afrikaans machine-draft note under the
+  // shared <LanguageDraftNote> at the top of /records, which already covers Afrikaans. The notice draft itself is still
+  // used by /invoice, so it stays in the Afrikaans shard.
   const notice = 'AFRIKAANS MACHINE DRAFT — This wording has not been reviewed by a fluent Afrikaans speaker. Text not yet drafted stays in English.';
-  assert.match(records, /\{lang === 'af' && <p role="note" lang="af" className="mb-3 text-xs"[^\n]*inlineText\(lang, 'AFRIKAANS MACHINE DRAFT — /);
+  assert.doesNotMatch(records, /lang === 'af' && <p role="note"/, 'no second Afrikaans notice in the Sold card');
+  assert.doesNotMatch(records, /AFRIKAANS MACHINE DRAFT/);
   assert.ok(read('lib/locales/af-inline/g43-notices.ts').includes(`"${notice}"`), 'the Afrikaans notice draft is missing');
+  assert.match(read('app/invoice/page.tsx'), /AFRIKAANS MACHINE DRAFT — This wording/, 'the /invoice notice still uses the draft');
   assert.match(records, /\{lang === 'xh' && <p role="note" lang="xh"/, 'the isiXhosa notice must still be there');
   // The "English source:" tooltips follow the same languages as isiZulu and isiXhosa.
   const graphs = read('components/FinanceGraphs.tsx');
@@ -464,7 +470,8 @@ test('Afrikaans row words: recordsDraft/recordsFill/recordsPaired/recordsTemplat
   // An existing translation still beats a draft, and English still stands alone when nothing is drafted.
   assert.equal(recordsFill('af', 'Cancel', 'ALREADY TRANSLATED'), 'ALREADY TRANSLATED');
   assert.equal(recordsFill('af', 'A sentence nobody has drafted yet.'), 'A sentence nobody has drafted yet.');
-  assert.equal(recordsPaired('af', 'Cancel'), 'Cancel — Kanselleer');
+  // A draft language (isiXhosa and Afrikaans) leads with its own wording and labels the English as the source.
+  assert.equal(recordsPaired('af', 'Cancel'), 'Kanselleer — Engelse bron: Cancel');
   assert.equal(recordsPaired('af', 'A sentence nobody has drafted yet.'), 'A sentence nobody has drafted yet.');
   // Templates bind to the English sentence and keep every figure.
   assert.equal(recordsTemplate('af', 'Sold: {qty}', null, { qty: '12 eiers' }), 'Verkoop: 12 eiers');

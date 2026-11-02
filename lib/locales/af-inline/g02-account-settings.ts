@@ -143,8 +143,6 @@ const drafts: Record<string, string> = {
   "Practice workspace": "Oefenwerkruimte",
   "You are viewing demonstration records. Your account permissions stay unchanged.": "Jy kyk na demonstrasierekords. Jou rekening se toestemmings bly onveranderd.",
   "Page controls": "Bladkontroles",
-  "ISIXHOSA MACHINE DRAFT.": "ISIXHOSA-MASJIENKONSEP.",
-  "Navigation wording has not been reviewed by a fluent isiXhosa speaker.": "Navigasiebewoording is nie deur 'n vlot isiXhosa-spreker hersien nie.",
 };
 
 export default drafts;

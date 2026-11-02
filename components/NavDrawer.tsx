@@ -23,7 +23,7 @@ import { useDialogFocus } from '@/lib/use-dialog-focus';
 import SettingsButton from './SettingsButton';
 import LessonLink from './design/LessonLink';
 import RoleSwitcher from './RoleSwitcher';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineTemplate } from '@/lib/xh-inline';
 import { useEscapeClose } from '@/lib/use-escape-close';
 
 interface NavDrawerProps {
@@ -227,16 +227,8 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
 
         <div style={{margin:'10px 16px 0'}}><LanguageDraftNote lang={lang} scope="navigation-drawer"/></div>
 
-        {lang === 'xh' && (
-          <p role="note" lang="xh" style={{ margin: '10px 16px 0', padding: '8px 10px', borderRadius: 9, background: 'color-mix(in srgb, var(--color-harvest) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--color-harvest) 28%, transparent)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.4 }}>
-            <strong>{inlineText(lang, 'ISIXHOSA MACHINE DRAFT.')}</strong> {inlineText(lang, 'Navigation wording has not been reviewed by a fluent isiXhosa speaker.')}
-          </p>
-        )}
-        {lang === 'af' && (
-          <p role="note" lang="af" style={{ margin: '10px 16px 0', padding: '8px 10px', borderRadius: 9, background: 'color-mix(in srgb, var(--color-harvest) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--color-harvest) 28%, transparent)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.4 }}>
-            <strong>{inlineText(lang, 'AFRIKAANS MACHINE DRAFT.')}</strong> {inlineText(lang, 'Navigation wording has not been reviewed by a fluent Afrikaans speaker.')}
-          </p>
-        )}
+        {/* The shared LanguageDraftNote above is the one draft notice for every draft language (isiXhosa used to add a
+            second, differently worded one here). */}
 
         <nav aria-label={ui('Main navigation', 'Ukuzulazula okuyinhloko')} style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
           {/* A real fill under fixed white type, not var(--color-harvest) (the text-only dim-ochre

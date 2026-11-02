@@ -11,7 +11,7 @@ const drafts: Record<string, string> = {
   "Simulated scale exercise. These dimensions come from the app’s illustrative sample model, not a ground survey. They are not recommended bed or access widths. This is separate from the unmeasured busy-yard case.": "Umsebenzi wokuziqhelisa wesikali olingiswayo. Le milinganiselo ivela kwimodeli yomzekelo ye-app, ayivelanga kuphando lomhlaba. Ayiyiyo ububanzi obucetyiswayo bebhedi okanye bendlela yokungena. Oku kwahlukile kwimeko yegceke elixakekileyo elingalinganiswanga.",
   // Scale diagram text
   "MODEL ONLY · not site measurements": "IMODELI KUPHELA · ayiyiyo imilinganiselo yendawo",
-  "No gap": "Akukho msantsi",
+  "No gap": "Akukho msantsa",
   "Outer width: {width} m": "Ububanzi bangaphandle: {width} m",
 };
 

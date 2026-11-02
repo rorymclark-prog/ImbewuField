@@ -30,7 +30,7 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_SITE } from '@/lib/demo-farm';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { paidApiHeaders } from '@/lib/api-client-auth';
-import { networkFailureMessage } from '@/lib/network-failure';
+import { networkFailure, networkFailureMessage, type NetworkFailureOptions } from '@/lib/network-failure';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
@@ -79,7 +79,10 @@ function HomeInner() {
   const [selected, setSelected] = useState<{ lat: number; lon: number } | null>(null);
   const [data, setData] = useState<LocationData | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  // The banner holds WHAT failed and is worded at render (below), not the wording made when the request failed: that
+  // wording was fixed in whatever language had loaded by then, so an isiXhosa reader whose locale chunk arrived a
+  // moment later kept the English.
+  const [error, setError] = useState<{ network: NetworkFailureOptions } | { key: string } | { text: string } | null>(null);
   const [mapCapture, setMapCapture] = useState<string | null>(null);
   const [siteData, setSiteData] = useState<SiteData | null>(null);
   const [waterData, setWaterData] = useState<WaterData | null>(null);
@@ -270,7 +273,7 @@ function HomeInner() {
     setLoading(true);
     setMapCapture(null);
     setReportPhotoAnalysis(undefined);
-    setError('');
+    setError(null);
     setSheetOpen(true);
 
     // Check localStorage cache. MUST key at 5 dp (~1.1 m) to match designSiteIdFromLocation —
@@ -304,7 +307,7 @@ function HomeInner() {
         headers: await paidApiHeaders(),
       });
       if (!res.ok) {
-        if (request === locationRequest.current) setError(networkFailureMessage(t, { status: res.status }));
+        if (request === locationRequest.current) setError({ network: networkFailure({ status: res.status }) });
         return;
       }
       const json = await res.json();
@@ -313,7 +316,7 @@ function HomeInner() {
       setData(json);
       try { localStorage.setItem(cacheKey, JSON.stringify(json)); } catch { /* quota exceeded */ }
     } catch (err: unknown) {
-      if (request === locationRequest.current) setError(err instanceof Error && err.message === SITE_MISMATCH ? err.message : networkFailureMessage(t));
+      if (request === locationRequest.current) setError(err instanceof Error && err.message === SITE_MISMATCH ? { text: err.message } : { network: networkFailure() });
     } finally {
       if (request === locationRequest.current) setLoading(false);
     }
@@ -334,7 +337,7 @@ function HomeInner() {
     if (!siteId || siteParamHandled.current === siteId) return;
     siteParamHandled.current = siteId;
     const p = loadPlaces().find((pl) => pl.id === siteId);
-    if (!p) { setError(t('savedSiteUnavailable')); return; }
+    if (!p) { setError({ key: 'savedSiteUnavailable' }); return; }
     handlePlaceSelect({ name: p.name, id: p.id });
     handleLocationSelect(p.lat, p.lon);
     const jumpTimer = setTimeout(() => setJumpTo({ lat: p.lat, lon: p.lon }), 800);
@@ -545,6 +548,8 @@ function HomeInner() {
       photoUrl: p.photo_url,
     }));
 
+  const errorText = !error ? '' : 'network' in error ? networkFailureMessage(t, error.network) : 'key' in error ? t(error.key) : error.text;
+
   // Render nothing while auth resolves (or while redirecting to /login) —
   // except in sample mode, where there's no real user to wait for.
   if (isBackendConfigured() && (authLoading || !user) && !isSampleMode()) return null;
@@ -603,16 +608,18 @@ function HomeInner() {
               the AI producer) stays reachable via the burger menu; role switcher stays desktop-only. */}
           <Link
             href={selected ? `/design?lat=${selected.lat.toFixed(5)}&lon=${selected.lon.toFixed(5)}` : '/design'}
-            className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
-            style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--color-forest-800)' }}
+            // Shrinks and wraps to two lines (all languages) instead of being clipped by the header's overflow-hidden:
+            // "Isitudiyo soyilo" does not fit beside the menu, back, logo and Learn at 390px on one line.
+            className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all min-w-0 shrink"
+            style={{ fontSize: 15, lineHeight: 1.15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--color-forest-800)' }}
           >
-            <Palette size={15} aria-hidden />
+            <Palette size={15} aria-hidden className="flex-shrink-0" />
             {/* zu-04: this pill used to grow a second English line here whenever lang === 'zu'
                 ('Isitudiyo Sokuklama' / 'Uhlaka olungakabuyekezwa · English: Design Studio'),
                 turning a one-line nav pill into two. The draft disclosure now lives once, under
                 the header, in the shared <LanguageDraftNote /> (see DataPanel.tsx) — this pill is
                 just its label, in either language. */}
-            <span>{t('designStudioLabel')}</span>
+            <span className="min-w-0 break-words text-left">{t('designStudioLabel')}</span>
           </Link>
           {buildInfo?.sha && (
             <div
@@ -665,14 +672,14 @@ function HomeInner() {
         {error && (
           <div role="alert" className="flex items-start gap-2 px-3 md:px-5 py-2 font-sans"
                style={{ background: 'var(--bg-2)', color: 'var(--text-primary)', borderBottom: '1px solid var(--border)', fontSize: 14 }}>
-            <AlertTriangle size={16} aria-hidden className="flex-shrink-0 mt-0.5" /> <span>{error}</span>
+            <AlertTriangle size={16} aria-hidden className="flex-shrink-0 mt-0.5" /> <span>{errorText}</span>
           </div>
         )}
 
         {reportSiteFlow && !showReport && <div style={{padding:'12px 20px',background:'var(--bg-1)',borderBottom:'1px solid var(--border)',fontSize:14}}>
           <strong>{searchParams.get('reportSite') === 'new' ? (lang === 'zu' ? 'Khetha indawo yombiko wakho' : inlineText(lang, 'Choose a site for your report')) : (lang === 'zu' ? 'Kuvulwa umbiko wendawo yakho' : inlineText(lang, 'Opening your site report'))}</strong>
           <p style={{margin:'6px 0'}}>{loading ? (lang === 'zu' ? 'Kulayishwa izimo zendawo ekhethiwe…' : inlineText(lang, 'Loading the selected site’s conditions…')) : (lang === 'zu' ? 'Sesha indawo noma thepha kuyo emephini. Umbiko wokuhlaziywa kwendawo uzovuleka uma isilungile.' : inlineText(lang, 'Search for a place or tap its position on the map. Its Site Analysis Report will open when the site is ready.'))}</p>
-          {error && <p role="alert">{error}</p>}
+          {error && <p role="alert">{errorText}</p>}
           <Link href="/reports" style={{display:'inline-flex',alignItems:'center',minHeight:44,fontWeight:600}}>{lang === 'zu' ? 'Buyela ezindaweni ezilondoloziwe' : inlineText(lang, 'Back to saved sites')}</Link>
         </div>}
 
@@ -871,7 +878,9 @@ function HomeInner() {
           <div
             className="lg:hidden fixed left-0 right-0 z-30 flex flex-col overflow-hidden"
             style={{
-              bottom: 'calc(60px + env(safe-area-inset-bottom, 0px))',
+              // Sits on the bottom bar's MEASURED height (TabBar publishes --bottom-nav-height), not a fixed 60px: a longer
+              // language wraps the bar's labels, the bar grew past 60px and covered the sheet's last links.
+              bottom: 'var(--bottom-nav-height, calc(60px + env(safe-area-inset-bottom, 0px)))',
               height: sheetOpen ? '85dvh' : 0,
               maxHeight: '90dvh',
               background: 'var(--bg-0)',

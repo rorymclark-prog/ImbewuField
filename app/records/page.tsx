@@ -21,6 +21,7 @@ import { loadInvoices, paymentMethodLabel, type SavedInvoice } from '@/lib/invoi
 // A sample R12.50 cost appeared as R13 here while its receipt kept the cents.
 // The ledger must use the same exact-money formatter as the buyer's document.
 import { formatInvoiceZar } from '@/lib/invoice-document';
+import { randForLang } from '@/lib/format-figures';
 import {
   isSampleMode, enterSampleMode,
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
@@ -56,7 +57,7 @@ import { countsWithScope, loadIncludePerennials, DEFAULT_INCLUDE_PERENNIALS } fr
 import { produceDisplayName } from '@/lib/perennial-produce';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage, translate } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { userFacingMessage } from '@/lib/user-facing-error';
 import { activeAccountUid } from '@/lib/account-local-storage';
 import {
@@ -238,7 +239,7 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
     {
       icon: <Receipt size={16} />,
       label: recordsText(lang, 'Spent this month', 'Okusetshenzisiwe kule nyanga'),
-      value: totalSpent ? fmtZAR(totalSpent) : 'R 0',
+      value: totalSpent ? fmtZAR(totalSpent) : randForLang(lang, 0, 'R 0'),
       color: 'var(--record-negative)',
       bg: 'rgba(192,122,30,0.08)',
       border: 'rgba(192,122,30,0.18)',
@@ -1725,7 +1726,11 @@ export default function RecordsPage() {
                 );
               })}
             </div>
-            {isRecordsRegionalLang(lang) && <p role="note" lang="en" data-records-draft-notice={lang} className="mt-1 text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsDraftNotice(lang)} {lang === 'xh' ? 'The tabs are shown in isiXhosa; English names:' : 'English tabs:'} {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</p>}
+            {/* One draft notice per surface: a draft language (isiXhosa) already has the shared LanguageDraftNote above, so
+                this English status line stays for Sesotho, Tshivenda and Xitsonga only. The draft language keeps just the
+                English tab names, labelled as the English source. */}
+            {isRecordsRegionalLang(lang) && !isInlineDraftLang(lang) && <p role="note" lang="en" data-records-draft-notice={lang} className="mt-1 text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsDraftNotice(lang)} English tabs: {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</p>}
+            {isInlineDraftLang(lang) && <p lang="en" data-records-tab-source={lang} className="mt-1 text-xs" style={{ color: 'var(--color-muted-strong)' }}><span lang={lang}>{inlineText(lang, 'English source:')}</span> {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</p>}
 
             {/* bug-02: a failed read keeps showing the last-loaded rows instead of an empty
                 ledger, so this banner — not a blank list — is what says the data may be stale. */}

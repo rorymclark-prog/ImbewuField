@@ -175,14 +175,16 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 // New observation questions stay in English until first-language reviewers supply drafts.
 // They are optional and cannot borrow a translated label with a different farming meaning.
-function ObservationChoices<T extends string>({ label, value, options, onChange }: {
+function ObservationChoices<T extends string>({ label, labelLang, value, options, onChange }: {
   label: string;
+  /** Set when the question is in a draft language while the options below it stay English. */
+  labelLang?: string;
   value: T | undefined;
   options: readonly { value: T; label: string }[];
   onChange: (value: T) => void;
 }) {
   return <div lang="en">
-    <SectionLabel>{label}</SectionLabel>
+    <SectionLabel>{labelLang ? <span lang={labelLang}>{label}</span> : label}</SectionLabel>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
       {options.map(option => <Radio key={option.value} label={option.label} on={value === option.value} onClick={() => onChange(option.value)}/>)}
     </div>
@@ -845,10 +847,10 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
               </div>
             </div>
             <details lang="en" style={{ padding: '8px 14px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--surface-2)' }}>
-              <summary className="font-sans font-semibold" style={{ minHeight: 48, cursor: 'pointer', paddingTop: 12 }}>Water for the production plan (optional)</summary>
+              <summary className="font-sans font-semibold" lang={isInlineDraftLang(lang) ? lang : undefined} style={{ minHeight: 48, cursor: 'pointer', paddingTop: 12 }}>{inlineText(lang, 'Water for the production plan (optional)')}</summary>
               <div className="space-y-3 pb-3">
-                <p className="text-sm" style={{ color: 'var(--text-2)' }}>Record what happens here in the dry season. A tap, tank or irrigation pipe alone does not tell us whether water lasts.</p>
-                <ObservationChoices label="Can you water the growing area through the dry season?" value={productionConditions.drySeasonWater} options={DRY_WATER_OPTIONS} onChange={drySeasonWater => setProductionConditions(previous => ({ ...previous, drySeasonWater }))}/>
+                <p className="text-sm" lang={isInlineDraftLang(lang) ? lang : undefined} style={{ color: 'var(--text-2)' }}>{inlineText(lang, 'Record what happens here in the dry season. A tap, tank or irrigation pipe alone does not tell us whether water lasts.')}</p>
+                <ObservationChoices label={inlineText(lang, 'Can you water the growing area through the dry season?')} labelLang={isInlineDraftLang(lang) ? lang : undefined} value={productionConditions.drySeasonWater} options={DRY_WATER_OPTIONS} onChange={drySeasonWater => setProductionConditions(previous => ({ ...previous, drySeasonWater }))}/>
               </div>
             </details>
           </div>
@@ -1167,22 +1169,22 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
                 </div>
               </div>
             )}
-            <details className={styles.marketEvidence} lang="en">
-              <summary>Local market notes (optional){lang !== 'en' ? ' · English' : ''}</summary>
-              <p>Record what you found out about selling. Leave unknown details blank. These notes help the report show what still needs checking.</p>
+            <details className={styles.marketEvidence} lang={isInlineDraftLang(lang) ? lang : 'en'}>
+              <summary>{inlineText(lang, 'Local market notes (optional)')}{lang !== 'en' && !isInlineDraftLang(lang) ? ' · English' : ''}</summary>
+              <p>{inlineText(lang, 'Record what you found out about selling. Leave unknown details blank. These notes help the report show what still needs checking.')}</p>
               <label>
-                What did you learn?
-                <textarea value={marketNotes} maxLength={2000} rows={4} onChange={event => setMarketNotes(event.target.value)} placeholder="Product, buyer or outlet, quantity and unit, price and date, transport or other conditions" />
+                {inlineText(lang, 'What did you learn?')}
+                <textarea value={marketNotes} maxLength={2000} rows={4} onChange={event => setMarketNotes(event.target.value)} placeholder={inlineText(lang, 'Product, buyer or outlet, quantity and unit, price and date, transport or other conditions')} />
               </label>
               <label>
-                Where did this information come from?
-                <input value={marketSource} maxLength={240} onChange={event => setMarketSource(event.target.value)} placeholder="For example: a buyer discussion, market visit or document reference" />
+                {inlineText(lang, 'Where did this information come from?')}
+                <input value={marketSource} maxLength={240} onChange={event => setMarketSource(event.target.value)} placeholder={inlineText(lang, 'For example: a buyer discussion, market visit or document reference')} />
               </label>
               <label>
-                When did you observe or discuss it?
+                {inlineText(lang, 'When did you observe or discuss it?')}
                 <input type="date" value={marketObservedOn} onChange={event => setMarketObservedOn(event.target.value)} />
               </label>
-              <p>A note is not a confirmed sale. Check the details again before spending money to supply a buyer.</p>
+              <p>{inlineText(lang, 'A note is not a confirmed sale. Check the details again before spending money to supply a buyer.')}</p>
             </details>
             <div className="font-sans" style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(31,77,43,0.06)', color: 'var(--text-2)', fontSize: 12.5, lineHeight: 1.5 }}>
               {paired('surveyIncomeSalesNote', 'You can record what was sold and income earned against each item in the Current Production step.')}

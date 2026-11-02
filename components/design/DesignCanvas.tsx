@@ -50,7 +50,7 @@ import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { PLAIN_HARD_SURFACE_PAINT } from '@/lib/sheet-base-mute';
 import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import SectorOverlay from './SectorOverlay';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -4327,7 +4327,7 @@ export default function DesignCanvas({
           }}
         >
           {effectiveWindNote && <Check size={12} aria-hidden />}
-          {effectiveWindNote ?? sectorModel.dataNotes[0]}
+          {effectiveWindNote ?? (isInlineDraftLang(lang) ? inlineText(lang, sectorModel.dataNotes[0]) : sectorModel.dataNotes[0])}
         </div>
       )}
 
@@ -4445,8 +4445,14 @@ export default function DesignCanvas({
         <button
           type="button"
           aria-pressed={basePhoto.mode !== 'satellite'}
-          aria-label={`Base: ${basePhoto.mode}. Switch base.`}
-          title={`Base: ${basePhoto.mode}. Switch to ${basePhoto.mode === 'satellite' ? (basePhoto.hasPhoto ? 'drone photo' : 'blank') : basePhoto.mode === 'photo' ? 'blank' : 'satellite'}.`}
+          // English and the regional languages keep the exact English string; a draft language reads it
+          // through the English-keyed drafts, with the mode words translated one by one.
+          aria-label={isInlineDraftLang(lang)
+            ? inlineTemplate(lang, 'Base: {mode}. Switch base.', null, { mode: inlineText(lang, basePhoto.mode) })
+            : `Base: ${basePhoto.mode}. Switch base.`}
+          title={isInlineDraftLang(lang)
+            ? inlineTemplate(lang, 'Base: {mode}. Switch to {next}.', null, { mode: inlineText(lang, basePhoto.mode), next: inlineText(lang, basePhoto.mode === 'satellite' ? (basePhoto.hasPhoto ? 'drone photo' : 'blank') : basePhoto.mode === 'photo' ? 'blank' : 'satellite') })
+            : `Base: ${basePhoto.mode}. Switch to ${basePhoto.mode === 'satellite' ? (basePhoto.hasPhoto ? 'drone photo' : 'blank') : basePhoto.mode === 'photo' ? 'blank' : 'satellite'}.`}
           onClick={() => basePhoto.onSelect(
             basePhoto.mode === 'satellite' ? (basePhoto.hasPhoto ? 'photo' : 'blank') : basePhoto.mode === 'photo' ? 'blank' : 'satellite',
           )}
@@ -4617,9 +4623,9 @@ export default function DesignCanvas({
         }}
       >
         {[
-          { label: '+', ariaLabel: 'Zoom in', onClick: () => zoomAbout(imgW / 2, imgH / 2, 1.3) },
-          { label: '−', ariaLabel: 'Zoom out', onClick: () => zoomAbout(imgW / 2, imgH / 2, 1 / 1.3) },
-          { label: '⤢', ariaLabel: 'Fit map to view', onClick: runAutoFit },
+          { label: '+', ariaLabel: inlineText(lang, 'Zoom in'), onClick: () => zoomAbout(imgW / 2, imgH / 2, 1.3) },
+          { label: '−', ariaLabel: inlineText(lang, 'Zoom out'), onClick: () => zoomAbout(imgW / 2, imgH / 2, 1 / 1.3) },
+          { label: '⤢', ariaLabel: inlineText(lang, 'Fit map to view'), onClick: runAutoFit },
         ].map(({ label, ariaLabel, onClick }) => (
           <button
             key={label}

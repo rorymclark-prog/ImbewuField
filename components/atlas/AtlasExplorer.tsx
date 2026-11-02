@@ -27,7 +27,7 @@ import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
 import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { paidApiHeaders } from '@/lib/api-client-auth';
-import { networkFailureMessage } from '@/lib/network-failure';
+import { networkFailure, networkFailureMessage, type NetworkFailureOptions } from '@/lib/network-failure';
 import EmptyState from '@/components/EmptyState';
 import AtlasPanel from './AtlasPanel';
 
@@ -39,7 +39,7 @@ type FetchState =
   | { status: 'idle' }
   | { status: 'loading'; lat: number; lon: number; placeName?: string }
   | { status: 'ready'; data: LocationData; placeName?: string }
-  | { status: 'error'; lat: number; lon: number; placeName?: string; message?: string };
+  | { status: 'error'; lat: number; lon: number; placeName?: string; failure?: NetworkFailureOptions };
 
 export default function AtlasExplorer() {
   const { lang, t } = useLanguage();
@@ -80,7 +80,7 @@ export default function AtlasExplorer() {
         if (requestSeq.current !== seq) return;
         setState({
           status: 'error', lat, lon, placeName,
-          message: networkFailureMessage(t, { status: res.status, serverMessage: typeof serverMessage === 'string' ? serverMessage : undefined }),
+          failure: networkFailure({ status: res.status, serverMessage: typeof serverMessage === 'string' ? serverMessage : undefined }),
         });
         return;
       }
@@ -89,7 +89,7 @@ export default function AtlasExplorer() {
       setState({ status: 'ready', data, placeName });
     } catch {
       if (requestSeq.current !== seq) return;
-      setState({ status: 'error', lat, lon, placeName, message: networkFailureMessage(t) });
+      setState({ status: 'error', lat, lon, placeName, failure: networkFailure() });
     }
   }, []);
 
@@ -307,8 +307,9 @@ export default function AtlasExplorer() {
             {state.status === 'error' && (
               <div className="flex flex-col items-center gap-3 py-12 text-center px-4">
                 <span className="font-display" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
-                  {state.message
-                    ?? (isZulu ? 'Ayikwazanga ukuthola idatha yale ndawo. / Could not fetch data for this point.' : isXhosa ? bi('Could not fetch data for this point.') : 'Could not fetch data for this point.')}
+                  {state.failure
+                    ? networkFailureMessage(t, state.failure)
+                    : (isZulu ? 'Ayikwazanga ukuthola idatha yale ndawo. / Could not fetch data for this point.' : isXhosa ? bi('Could not fetch data for this point.') : 'Could not fetch data for this point.')}
                 </span>
                 <button
                   onClick={() => selectPoint(state.lat, state.lon, state.placeName)}

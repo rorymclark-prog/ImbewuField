@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Loader2, RefreshCw } from 'lucide-react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
-import { networkFailureMessage } from '@/lib/network-failure';
+import { networkFailure, networkFailureMessage, type NetworkFailureOptions } from '@/lib/network-failure';
 import { useLanguage } from '@/lib/i18n';
 
 interface Props { coords: { lat: number; lon: number } | null }
@@ -68,7 +68,8 @@ export default function AreaPanel({ coords }: Props) {
   const { t } = useLanguage();
   const [profile, setProfile] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  // The failure, not its wording: the text is made at render so it follows the language that is showing.
+  const [error, setError] = useState<NetworkFailureOptions | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
   const [lastUpdated, setLastUpdated] = useState<number | null>(null);
@@ -82,13 +83,13 @@ export default function AreaPanel({ coords }: Props) {
     abortRef.current?.abort();
     const ac = new AbortController();
     abortRef.current = ac;
-    setError(''); setProfile(''); setLoading(true);
+    setError(null); setProfile(''); setLoading(true);
     try {
       const res = await fetch('/api/area-profile', {
         method: 'POST', headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ lat: c.lat, lon: c.lon }), signal: ac.signal,
       });
-      if (!res.ok) { setError(networkFailureMessage(t, { status: res.status })); return; }
+      if (!res.ok) { setError(networkFailure({ status: res.status })); return; }
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
@@ -100,7 +101,7 @@ export default function AreaPanel({ coords }: Props) {
       }
       if (text.trim()) { setCached(k, text); setLastUpdated(Date.now()); }
     } catch (err: unknown) {
-      if (err instanceof Error && err.name !== 'AbortError') setError(networkFailureMessage(t));
+      if (err instanceof Error && err.name !== 'AbortError') setError(networkFailure());
     } finally {
       if (abortRef.current === ac) setLoading(false);
     }
@@ -153,7 +154,7 @@ export default function AreaPanel({ coords }: Props) {
       {error && (
         <div className="text-xs px-3 py-2 rounded-lg mb-3"
           style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: 'var(--orange)' }}>
-          {error}{t('networkTapRefreshToRetry')}
+          {networkFailureMessage(t, error)}{t('networkTapRefreshToRetry')}
         </div>
       )}
 

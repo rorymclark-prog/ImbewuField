@@ -149,7 +149,9 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
         <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('waterBalanceEstimateLabel')}</span>
       </div>
 
-      {(lang === 'zu' || lang === 'xh' || lang === 'af') && (
+      {/* One notice per surface: a draft language (isiXhosa) already has the shared <LanguageDraftNote> at the top
+          of the results sheet, so only isiZulu keeps this per-tab line. */}
+      {lang === 'zu' && (
         <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>{t('siteSummaryZuluDraftNotice')}</p>
       )}
 
