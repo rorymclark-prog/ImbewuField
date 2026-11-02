@@ -2100,6 +2100,7 @@ function FacilitatorCropsPageInner() {
               siteId={productionSiteId}
               siteName={placeName || designTitle}
               settings={plan?.nursery}
+              showBuyingCalendar={!simple}
               beds={beds} plantings={plantings}
               now={{ year: new Date().getFullYear(), month: currentMonth }}
               onSettings={(nursery) => {

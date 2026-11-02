@@ -32,6 +32,7 @@ Sources were opened on 1 November 2026. These are design evidence and limitation
 | NUR-006 | A forecast can be mistaken for observed stock, packing capacity, a potting-up schedule or a weekly food guarantee. | Scope limit | None of these are established by nursery arithmetic. Appearance, wording and save/reopen evidence need separate integration review. |
 | NUR-007 | Reloading in a later month removed a confirmed sowing's nursery flag before its forecast reservation ended, falsely freeing tray and surface capacity. | Reproduced and corrected; two regression tests pass | Execute `confirmOnceSowing`, then the actual `settleOnceRows` used on load, then forecast again. The original implementation returned no cohorts. The correction retains a `confirmed-sowing` forecast reservation until its computed end, using a local BOQ projection without changing saved field state or tasks. Tests cover the existing calendar envelope and a longer grower duration, expiry, malformed dates and completed rows. |
 | NUR-008 | Binary rounding could turn an exact 200-seed requirement into 201, adding an entire tray and a false stock shortage. | Reproduced and corrected; two regression tests pass | Grower rates of 50% germination and 57% nursery survival with 57 required starts need exactly 200 seeds. Exact decimal-rational ceiling now sizes field survival, nursery success and measured tray output; nearby genuinely larger requirements still round upward. Decimal and exponent-form inputs are covered; no blanket epsilon is used. |
+| NUR-009 | Simple mode's nursery sourcing link targeted the buying calendar that Simple mode hides. | Reproduced in hosted review; correction and two navigation regression tests pass locally | Simple now targets the nursery's own always-present needs section. All tools retains the existing buying-calendar destination. The real page supplies the visibility flag; no appearance preference or saved farm state is changed by navigation. |
 
 These IDs record new-feature failure modes and their verification, rather than claiming that every listed defect was reproduced on the baseline before the feature existed.
 
@@ -140,3 +141,41 @@ screenshots above show the eventually rendered styles; neither message was
 claimed resolved by this nursery review. Typecheck, full tests and current-head
 CI/publication are owned by the integration reviewer. `git diff --check` passed
 after this reviewer's UI and evidence changes.
+
+## Hosted release continuation — 2 November 2026
+
+Browser access became available after the owner resumed the goal. The hosted
+preview at `imbewufield-nursery-crop-planner.vercel.app` reported SHA `30554e7`.
+Its full push and pull-request CI passed: 6,295 passes, zero failures and one
+pre-existing TODO out of 6,296 tests; both rules and focused-render jobs passed,
+and the preview build succeeded. The interrupted local full run remains
+incomplete, not a pass. The unchanged cancelled crop-plan-notes suite separately
+passed 20/20.
+
+Actual hosted controls and screenshots were inspected at 1440×1000 and 390×844,
+in Earth light and dark modes. At phone width the measured page width remained
+390px. A fictional 20-cell 30×40cm tray, stock one, 0.05m² allocated bench and
+80%/75% success recipe for an existing sample Broccoli cohort produced 19–35
+seeds, one–two tray fills and 0.12–0.24m². The interface exposed at least one
+missing tray and 0.19m² shortage while the other crops remained unknown. An
+entered 20-week duration exposed the late-readiness conflict without moving the
+April field month. Fixture figures are checks, not recommendations.
+
+The buying calendar in All tools showed the same forecast. Removing the
+fictional container kept the crop recipe with its rates and made its missing
+container explicit. A commercial proposal showed eleven combined nursery
+cohorts before acceptance, while the saved plan still had three; accepting its
+fifteen fictional sowings updated the saved forecast to eleven cohorts.
+
+Normal signed-out persistence was checked separately from the resetting tour:
+a 1.25m² bench and 72-cell 30×50cm tray with stock four survived hard reload and
+reselecting the same virtual site. A recipe with missing rates remained explicitly
+unknown. The existing virtual-bed view itself is not remembered across reload;
+reselecting it does not erase its saved nursery resources. Tour data is a separate
+resetting sandbox, so it was not used as evidence of account persistence.
+
+Hosted inspection reproduced NUR-009. The correction changes navigation only;
+its clean typecheck and 218 affected checks include two new navigation tests.
+That changed head needs a fresh preview and the required current-head CI before
+merge. Captured JPEGs remain local in `output/playwright/nursery-release/`; no
+private farm information or screenshots are included in the source commit.

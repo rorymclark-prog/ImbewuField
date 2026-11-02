@@ -19,6 +19,7 @@ export interface NurseryPlanPanelProps {
   plantings: Planting[];
   beds: PlanBed[];
   now: { year: number; month: number };
+  showBuyingCalendar?: boolean;
   onSettings: (settings: NurserySettings) => void;
 }
 
@@ -39,7 +40,7 @@ export default function NurseryPlanPanel(props: NurseryPlanPanelProps) {
   return <NurseryPlanEditor key={props.siteId} {...props} />;
 }
 
-function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, onSettings }: NurseryPlanPanelProps) {
+function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, showBuyingCalendar = false, onSettings }: NurseryPlanPanelProps) {
   const saved = useMemo(() => sanitiseNurserySettings(settings), [settings]);
   const spaces = saved.spaces.filter((s) => s.siteId === siteId);
   const containers = saved.containers.filter((c) => c.siteId === siteId);
@@ -123,13 +124,13 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, o
     </summary>
     <div className="space-y-4 px-4 pb-4 font-sans">
       <p className="text-sm text-[var(--text-secondary)]">Plan nursery demand from accepted crop sowings. Add your own equipment and crop estimates below. Blank values stay unknown; the app does not choose germination rates, tray sizes or nursery losses for you.</p>
-      <NurseryForecastSummary forecast={forecast} beds={beds} />
+      <div id="nursery-seed-needs" className="scroll-mt-24"><NurseryForecastSummary forecast={forecast} beds={beds} /></div>
       <div className="space-y-2">
         <button type="button" disabled={exporting} className={`${secondary} disabled:opacity-50`} onClick={exportCsv}>{exporting ? 'Preparing nursery CSV…' : 'Download nursery CSV'}</button>
         {sample && <p className={hint}>Sample farm: this export is marked DEMO and contains example planning data.</p>}
         {exportStatus && <p role="status" className="text-sm">{exportStatus}</p>}
         <nav aria-label="Nursery planning next steps" className="flex flex-wrap gap-2">
-          <a href="#nursery-purchasing" className={`${secondary} inline-flex items-center`}>Review seeds and equipment to source</a>
+          <a href={showBuyingCalendar ? '#nursery-purchasing' : '#nursery-seed-needs'} className={`${secondary} inline-flex items-center`}>Review seeds and equipment to source</a>
           <a href="/cropplan" className={`${secondary} inline-flex items-center`}>Open task planner</a>
         </nav>
         <p className={hint}>Nursery checks leave your field-task calendar unchanged. Review the crop plan before changing field dates.</p>
