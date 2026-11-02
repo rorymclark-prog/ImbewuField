@@ -1,0 +1,48 @@
+{
+  "sourceFileSha256": "1fdb6e2bb095f026c30dba552b6a717c3fbf9a16c2eade252cc6ea75663d29a2",
+  "boundedSourceSegments": 59,
+  "sourcePlaceholderCount": 0,
+  "translationQualityOrReleaseApproval": false,
+  "locales": [
+    {
+      "locale": "hi-IN",
+      "file": "docs/international/translation-asia-2026-11-02/hi-IN.json",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "messages": 59,
+      "fileSha256": "6ae3fa9b1108590200e0e38a68acf4145162a160c2b755bbcdbfa61d5665e429"
+    },
+    {
+      "locale": "bn-BD",
+      "file": "docs/international/translation-asia-2026-11-02/bn-BD.json",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "messages": 59,
+      "fileSha256": "24e9f992a660bd97fe7e994a25e4166d70b82c6b924da89be2de7dde4eb6148f"
+    },
+    {
+      "locale": "id-ID",
+      "file": "docs/international/translation-asia-2026-11-02/id-ID.json",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "messages": 59,
+      "fileSha256": "2c13fa8453d9f6e77b94ddc1c9bc468326d49811224d061958db62f50d724d70"
+    }
+  ],
+  "reviewedOn": "2026-11-02",
+  "executor": "Codex independent structural review",
+  "deliberateInvalidControlsRejected": 17,
+  "meaningFluencyLayoutReviewed": false,
+  "humanReviewers": null,
+  "runtimeIntegration": false,
+  "coordinatorRepairs": [
+    {
+      "locale": "id-ID",
+      "key": "Supplement.FieldBlocksPanel.007",
+      "change": "Preserve the source literal degrees; translated label remains an unreviewed draft."
+    }
+  ]
+}

@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 1,
+  "locale": "hi-IN",
+  "scope": "Second bounded UI batch: exact quoted full messages, warnings, field dimensions and accessibility strings omitted by the first JSX segment inventory. UI text only; no lesson, species or agronomy edits.",
+  "provenance": {
+    "executor": "AGY",
+    "method": "AI draft",
+    "createdOn": "2026-11-02"
+  },
+  "review": {
+    "status": "unreviewed"
+  },
+  "messages": [
+    {
+      "key": "Supplement.SiteCountryPanel.001",
+      "sourceEnglish": "Your account did not accept these country details. The saved site changed or is unavailable; reopen its current details before confirming again.",
+      "sourceSha256": "1e4ff6a7937b11e15e391fa00847c7484a3d935f6c2825f3d0a92b5b35332de8",
+      "text": "आपके खाते ने देश के इन विवरणों को स्वीकार नहीं किया। सहेजी गई साइट में बदलाव हुआ है या वह उपलब्ध नहीं है; दोबारा पुष्टि करने से पहले इसके वर्तमान विवरण फिर से खोलें।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.002",
+      "sourceEnglish": "Your account confirmed these country details for this saved site.",
+      "sourceSha256": "127983503c3b68af55e8a6552601a9e5b52f561799c8e120f7c60ae8ebf4f4f4",
+      "text": "आपके खाते ने इस सहेजी गई साइट के लिए देश के इन विवरणों की पुष्टि कर दी है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.003",
+      "sourceEnglish": "Country details are saved here. Account confirmation is still pending or unavailable.",
+      "sourceSha256": "be91ffac47a21dced2e46db2a20d31efc7f4f03362f635eed0b0055cd237a32c",
+      "text": "देश के विवरण यहाँ सहेज लिए गए हैं। खाते से पुष्टि अभी लंबित है या उपलब्ध नहीं है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.004",
+      "sourceEnglish": "This saved site is no longer available. Reopen it before saving.",
+      "sourceSha256": "e94ba674c504a4dbef96f0232afa9e2cf0ad62aba09652864dce6a63667c0c0d",
+      "text": "यह सहेजी गई साइट अब उपलब्ध नहीं है। सहेजने से पहले इसे फिर से खोलें।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.005",
+      "sourceEnglish": "Country details could not be saved. Your previous saved details remain in place.",
+      "sourceSha256": "be82c667b63d5e4ae287a5f217d3db5c456d1fd2538681cead5b05d12ad294e7",
+      "text": "देश के विवरण सहेजे नहीं जा सके। आपके पहले से सहेजे गए विवरण वैसे ही बने रहेंगे।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.006",
+      "sourceEnglish": "Country details saved for this sample session only.",
+      "sourceSha256": "57d5bef1bd64c9e09cb0a21ac0de45ce9120c8ec9977110fefdd1bc0a612153f",
+      "text": "देश के विवरण केवल इस सैंपल सत्र के लिए सहेजे गए हैं।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.007",
+      "sourceEnglish": "Country details saved on this device. Account confirmation is separate.",
+      "sourceSha256": "b2b3b6922ca565a5c6a43190422923d6ddde7d1493457c4bc60cad98637aa773",
+      "text": "देश के विवरण इस डिवाइस पर सहेज लिए गए हैं। खाते की पुष्टि अलग से होती है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.009",
+      "sourceEnglish": "Saved entries for this same mapped site disagree. Confirm one description for all of them.",
+      "sourceSha256": "208e2bed44fe7b974854e26e873ee498ebfe0cae8140b0771a1d57fd33f64168",
+      "text": "इसी नक्शांकित साइट की सहेजी गई प्रविष्टियों में मेल नहीं है। उन सभी के लिए एक विवरण की पुष्टि करें।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.010",
+      "sourceEnglish": "The country for this site has not been confirmed. Existing plans and measured maps stay saved.",
+      "sourceSha256": "71e722a36fe3998a70b93b53143e56ed1cfc701e31457b961e6d87cee0588f7a",
+      "text": "इस साइट के लिए देश की पुष्टि नहीं की गई है। मौजूदा योजनाएं और मापे गए नक्शे सुरक्षित रहेंगे।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.011",
+      "sourceEnglish": "Review or change country details",
+      "sourceSha256": "e8db3218bc44a91458bddde91e41583e6de13a22d068c45feeec59d9fd80494c",
+      "text": "देश के विवरण देखें या बदलें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.012",
+      "sourceEnglish": "Confirm country details",
+      "sourceSha256": "2c3357984ceda5d45ab6ed1f87393d7442c9f38a53b6e6203326938403acd219",
+      "text": "देश के विवरण की पुष्टि करें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.PlannerSupportHold.002",
+      "sourceEnglish": "Choose a reference basis for this unmapped workspace",
+      "sourceSha256": "cb01cad63093287ba4af42da78f34af5b5427fc34b3511cf84b8f56f16b3b20f",
+      "text": "इस बिना नक्शे वाले कार्यक्षेत्र के लिए संदर्भ आधार चुनें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.PlannerSupportHold.003",
+      "sourceEnglish": "Local crop planning is not available for this country yet",
+      "sourceSha256": "0fce6bc6eec66898105901245843369bd3a1a7701aaa19fb5d7c08ad675ef0ad",
+      "text": "इस देश के लिए स्थानीय फसल योजना अभी उपलब्ध नहीं है",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.PlannerSupportHold.004",
+      "sourceEnglish": "Confirm the site country before crop planning",
+      "sourceSha256": "3228f1f34f8a0b3411ab25e1f38cc7e4780c00a98fb06827dc91585b68e2f61a",
+      "text": "फसल योजना बनाने से पहले साइट के देश की पुष्टि करें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.PlannerSupportHold.005",
+      "sourceEnglish": "Saved bed",
+      "sourceSha256": "5c564d2d209705acbf955fad91899f925ce905cdbc0f8f21be9af1ca58d3a7a2",
+      "text": "सहेजी गई क्यारी",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.PlannerSupportHold.006",
+      "sourceEnglish": "Unknown",
+      "sourceSha256": "b764cdc0eab7137467211272fa539f1260d1bf2e71bcf6ff3bdc960f5c16aa14",
+      "text": "अज्ञात",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.001",
+      "sourceEnglish": "unknown",
+      "sourceSha256": "b23a6a8439c0dde5515893e7c90c1e3233b8616e634470f20dc4928bcf3609bc",
+      "text": "अज्ञात",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.002",
+      "sourceEnglish": "ImbewuField nursery planning forecast",
+      "sourceSha256": "4ac81e84122aff20ffa21674aa636b4e39b8925afbf216f9128458844617c2b8",
+      "text": "ImbewuField नर्सरी योजना पूर्वानुमान",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.003",
+      "sourceEnglish": "Sharing cancelled; no file was sent.",
+      "sourceSha256": "5ce3fb6f09dd9ef394425bbe132aa186bf99b595cfb7dd4bf3c7eebcfa0f1b0a",
+      "text": "साझा करना रद्द किया गया; कोई फ़ाइल नहीं भेजी गई।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.005",
+      "sourceEnglish": "Demo nursery",
+      "sourceSha256": "09619eea46f59c03d46973ba52b5431d06a9f3af16ac3b9054e070d059ac35e5",
+      "text": "डेमो नर्सरी",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.006",
+      "sourceEnglish": "Nursery",
+      "sourceSha256": "8efe9605ccce4ede012563b42c9b11c9bb037bbae6cf771f87cfeb15166bbeff",
+      "text": "नर्सरी",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.008",
+      "sourceEnglish": "Enter a name and a net usable growing area of zero or more square metres.",
+      "sourceSha256": "23747210a6bc46dfe90cc4ce5d5e6c60757135538c09a3ec767234559bd39b8c",
+      "text": "एक नाम और शून्य या अधिक वर्ग मीटर का शुद्ध उपयोगी रोपण क्षेत्र दर्ज करें।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.009",
+      "sourceEnglish": "Nursery space saved for this site.",
+      "sourceSha256": "db1804a90ba639a8f41412f6922111677476845881996c6a176f2a9233743943",
+      "text": "इस साइट के लिए नर्सरी क्षेत्र सहेज लिया गया है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.010",
+      "sourceEnglish": "Enter a name and a positive whole cell count. Known dimensions must be positive; owned stock can be zero or a whole number. Leave unknown values blank.",
+      "sourceSha256": "253256c8ab20908ec976566fbf37d6e591479d1f40c10870abe61d3428841915",
+      "text": "एक नाम और सेल की धनात्मक पूर्ण संख्या दर्ज करें। ज्ञात माप धनात्मक होने चाहिए; उपलब्ध स्टॉक शून्य या पूर्ण संख्या हो सकता है। अज्ञात मानों को खाली छोड़ दें।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.011",
+      "sourceEnglish": "Nursery container saved for this site.",
+      "sourceSha256": "e8116407cd7f42192e9a1bfd00137d78e70eea227cbeb9e3f90c04bc999fcfc9",
+      "text": "इस साइट के लिए नर्सरी कंटेनर सहेज लिया गया है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.012",
+      "sourceEnglish": "Choose a transplant crop. Use percentages from 0–100, positive usable starts, a whole seed count of zero or more, and nursery weeks above zero up to 52. Leave unknown estimates blank.",
+      "sourceSha256": "ecaca873d5a8a77e96bef081670503cadf43fed812f85bdacd37d8231e6d6578",
+      "text": "रोपाई वाली फसल चुनें। 0–100 के बीच प्रतिशत, उपयोग योग्य तैयार पौधों की धनात्मक संख्या, शून्य या अधिक बीजों की पूर्ण संख्या, और शून्य से अधिक व 52 तक नर्सरी सप्ताह का उपयोग करें। अज्ञात अनुमानों को खाली छोड़ दें।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.013",
+      "sourceEnglish": "Crop nursery recipe saved for this site.",
+      "sourceSha256": "1d7f2d653e4f97c63a5459a519fe517fe2794a8ee3a16c0def8abc77018b05f3",
+      "text": "इस साइट के लिए फसल की नर्सरी रेसिपी सहेज ली गई है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.014",
+      "sourceEnglish": "Plan nursery demand from accepted crop sowings. Add your own equipment and crop estimates below. Blank values stay unknown; the app does not choose germination rates, tray sizes or nursery losses for you.",
+      "sourceSha256": "2db9f7655b3e0194d44783d25bd31f0cad52f6bc3374a01cb1d933307ab5e613",
+      "text": "स्वीकृत फसल बुवाई से नर्सरी की मांग की योजना बनाएं। नीचे अपने उपकरण और फसल के अनुमान जोड़ें। खाली मान अज्ञात रहेंगे; यह ऐप आपके लिए अंकुरण दर, ट्रे का आकार या नर्सरी के नुकसान का चयन नहीं करता है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.015",
+      "sourceEnglish": "Keep your own nursery equipment and crop estimates here. Demand forecasts are unavailable until this site has a supported local planning basis. Saving these inputs does not approve local crop timing, spacing or suitability.",
+      "sourceSha256": "0202eb811b72eca58e6fe96302376ead0ca13e698424811e1eb04626d95b4641",
+      "text": "अपने नर्सरी उपकरण और फसल के अनुमान यहाँ रखें। मांग का पूर्वानुमान तब तक उपलब्ध नहीं है जब तक इस साइट के पास समर्थित स्थानीय योजना आधार न हो। इन प्रविष्टियों को सहेजने से स्थानीय फसल समय, दूरी या उपयुक्तता स्वीकृत नहीं होती है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.016",
+      "sourceEnglish": "Preparing nursery CSV…",
+      "sourceSha256": "83c5418b7705760f50cb4cc55e6d36095636cb07427c0ba07d3a3d18bd4c7c3b",
+      "text": "नर्सरी CSV तैयार की जा रही है…",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.017",
+      "sourceEnglish": "Download nursery CSV",
+      "sourceSha256": "6b91eee31afeccef6fdf3bec36b6d94c4c73e21e3ea18f24366d240ea05fbf9f",
+      "text": "नर्सरी CSV डाउनलोड करें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.020",
+      "sourceEnglish": "Space removed. Dependent crop recipes remain saved and their space allocation is unknown.",
+      "sourceSha256": "96c0be214eabc49da330a8aa605010b331dc52b76a66e18500b4c00958877c46",
+      "text": "स्थान हटा दिया गया। इस पर निर्भर फसल रेसिपी सहेजी रहेंगी और उनका स्थान आवंटन अज्ञात है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.021",
+      "sourceEnglish": "Save space changes",
+      "sourceSha256": "1bc55657b176c47e5d7eba167783ce58669fb55f47855c73985dc06702713ac0",
+      "text": "स्थान में किए गए बदलाव सहेजें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.022",
+      "sourceEnglish": "Add nursery space",
+      "sourceSha256": "63737b9dc87f2263716aa1aec9e78213660602c638857a7e4a400e43564a40b4",
+      "text": "नर्सरी स्थान जोड़ें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.023",
+      "sourceEnglish": "width unknown",
+      "sourceSha256": "7ca4bfe1625368e6121bfc52fa2ebf182229def91ba27efd4479143d1584ea52",
+      "text": "चौड़ाई अज्ञात",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.025",
+      "sourceEnglish": "length unknown",
+      "sourceSha256": "2d81c62aba0008116b7e501f5db40c0ef62c4f63b9d5eb594198c28bc08f6d45",
+      "text": "लंबाई अज्ञात",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.028",
+      "sourceEnglish": "Container removed. Dependent crop recipes remain saved and container sizing is now unknown.",
+      "sourceSha256": "fef18b9f1f73640a990f8539b56642a2f477e9c5ca8925bbc2594224f64231e3",
+      "text": "कंटेनर हटा दिया गया। इस पर निर्भर फसल रेसिपी सहेजी रहेंगी और कंटेनर का आकार अब अज्ञात है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.030",
+      "sourceEnglish": "Save container changes",
+      "sourceSha256": "9e18bd6f0ee3d0f5323c5e68bb5afbfe36be5bbf8a93fc8c0377d90467d3c4b3",
+      "text": "कंटेनर में किए गए बदलाव सहेजें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.031",
+      "sourceEnglish": "Add container type",
+      "sourceSha256": "ad2e1ebadf709271b325960e2939aa2b0a76dd4819d78b168ca26d7466a5bc82",
+      "text": "कंटेनर का प्रकार जोड़ें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.032",
+      "sourceEnglish": "One recipe per transplant crop for this site. Your nursery duration checks readiness against the working field calendar; it does not move the field date. Missing values remain saved for later.",
+      "sourceSha256": "ddb2ff8962ca2292dfed9b065d565e8e9c87d26163c9b0f83c5f1d33dd602fb4",
+      "text": "इस साइट के लिए प्रति रोपाई फसल एक रेसिपी। आपकी नर्सरी की अवधि चालू खेत कैलेंडर के अनुसार तैयारी की जांच करती है; यह खेत की तारीख को बदलती नहीं है। छूटे हुए मान बाद के लिए सहेजे रहते हैं।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.033",
+      "sourceEnglish": "Keep one grower-entered recipe per transplant crop for this site. Missing values remain unknown. These saved inputs do not calculate demand or set field dates.",
+      "sourceSha256": "36bbaf2b482d0600cdaa7bf49d104e0aa9a7e8b87f75aee2e5bfe4a4cd482b9f",
+      "text": "इस साइट के लिए प्रति रोपाई फसल किसान द्वारा दर्ज की गई एक रेसिपी रखें। छूटे हुए मान अज्ञात रहेंगे। ये सहेजी गई प्रविष्टियां मांग की गणना नहीं करती हैं और न ही खेत की तारीखें तय करती हैं।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.034",
+      "sourceEnglish": "Container removed or unavailable",
+      "sourceSha256": "1825c4d5b2a33902a36af7cce0789d032d4b0def79404ec777763aa4f99c3ac4",
+      "text": "कंटेनर हटा दिया गया या अनुपलब्ध है",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.035",
+      "sourceEnglish": "Container not selected",
+      "sourceSha256": "6ae67c995cc8d20890c228a88558a795cbb252837eb5429219c93b84176105eb",
+      "text": "कंटेनर चुना नहीं गया",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.036",
+      "sourceEnglish": "Space removed or unavailable",
+      "sourceSha256": "13c88fc4435261fbaef15d74ffdca0b3fee5f0c137098cf57dc7386e68531f3c",
+      "text": "स्थान हटा दिया गया या अनुपलब्ध है",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.037",
+      "sourceEnglish": "Space not selected",
+      "sourceSha256": "614ba9452238899a311d8c5fd749985672b71f313dc14e6cb7d74fe0fc236a8c",
+      "text": "स्थान चुना नहीं गया",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.040",
+      "sourceEnglish": "no extra allowance",
+      "sourceSha256": "767a7159b46be02968f9163843fef1a5111d917f347e4d0058b43d559721e4a8",
+      "text": "कोई अतिरिक्त गुंजाइश नहीं",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.041",
+      "sourceEnglish": "not entered",
+      "sourceSha256": "8103c336a69d876187a6a92c53ee9dd9d6f120856ba58175a33248fb6be61c6e",
+      "text": "दर्ज नहीं किया गया",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.044",
+      "sourceEnglish": "Crop nursery recipe removed for this site. Its crop sowings remain in the field plan.",
+      "sourceSha256": "7fadbfece1f02551c59dcfb6ffe44ca3ceaefbd43e93693f15ee7f7d460d6505",
+      "text": "इस साइट के लिए फसल की नर्सरी रेसिपी हटा दी गई है। इसकी फसल बुवाई खेत की योजना में बनी रहेगी।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.046",
+      "sourceEnglish": "Use source timing envelope",
+      "sourceSha256": "2cf9fd0e8c63a4870451018beefe0974057075af90c1fef22200aaa6d195de7f",
+      "text": "स्रोत की समय-सीमा का उपयोग करें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.047",
+      "sourceEnglish": "Save recipe changes",
+      "sourceSha256": "0f46f2580c9df9067c14fd410aa771afe03ed76bdaddf3cad4b20571e8dfe439",
+      "text": "रेसिपी में किए गए बदलाव सहेजें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.048",
+      "sourceEnglish": "Save crop recipe",
+      "sourceSha256": "fa4033c77f2e844bc177158fc9eb53737f63b380f3a9f58592cf3ba582de5803",
+      "text": "फसल की रेसिपी सहेजें",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.049",
+      "sourceEnglish": "Settings belong to this site’s crop plan on this device. Removing equipment leaves its dependent recipes visibly incomplete. This is a planning forecast, not observed live nursery stock. Net surface does not guarantee rectangular tray packing or include up-pot stage scheduling.",
+      "sourceSha256": "d64a6e4f1dcfa92eb6ff1d4cad1d9ac757d34196dcc91f74a4a94fe510133382",
+      "text": "सेटिंग्स इस डिवाइस पर मौजूद इस साइट की फसल योजना से संबंधित हैं। उपकरण हटाने से उस पर निर्भर रेसिपी स्पष्ट रूप से अधूरी रह जाती हैं। यह एक योजना पूर्वानुमान है, नर्सरी में देखा गया वास्तविक स्टॉक नहीं। शुद्ध सतह आयताकार ट्रे की जमावट की गारंटी नहीं देती है और न ही इसमें बड़े बर्तनों में रोपने (अप-पॉट) का समय शामिल है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.050",
+      "sourceEnglish": "Settings belong to this site’s crop plan on this device. Removing equipment leaves dependent recipes incomplete. Equipment entries are your inputs, not live stock counts. No nursery demand, field timing, purchasing forecast or tray-packing result is supplied here.",
+      "sourceSha256": "63cd768a49092d5476b17da0f8c362cb269d5b82d72e58cece1add4976a7fe6f",
+      "text": "सेटिंग्स इस डिवाइस पर मौजूद इस साइट की फसल योजना से संबंधित हैं। उपकरण हटाने से निर्भर रेसिपी अधूरी रह जाती हैं। उपकरण की प्रविष्टियां आपके द्वारा दर्ज मान हैं, वास्तविक स्टॉक की गिनती नहीं। यहाँ नर्सरी की मांग, खेत का समय, खरीद का पूर्वानुमान या ट्रे जमावट का कोई परिणाम नहीं दिया जाता है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.004",
+      "sourceEnglish": "Bed length (m)",
+      "sourceSha256": "4561fb5adb560767db8a818b5e95adb70858b904350bcce5d676d61658bc66b9",
+      "text": "क्यारी की लंबाई (m)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.005",
+      "sourceEnglish": "Bed width (m)",
+      "sourceSha256": "9fb867f614b41d32ab913658a5ddfec49d3450cd3e77cf9066f3ac08741198db",
+      "text": "क्यारी की चौड़ाई (m)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.006",
+      "sourceEnglish": "Path width (m)",
+      "sourceSha256": "75b3cde7c79de1d861e42c63f9e0f4098e2ce296464bbae42e810fd3227368e3",
+      "text": "रास्ते की चौड़ाई (m)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.007",
+      "sourceEnglish": "Direction (degrees)",
+      "sourceSha256": "b5d16c05c5ff0765b2cb590a053baa29b9556e47fcd20ed62f701e372379148a",
+      "text": "दिशा (degrees)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.008",
+      "sourceEnglish": "The polygon becomes one field-sized crop-planning area.",
+      "sourceSha256": "d249607799855c067b437e8ec73ee1bba9fa37ea133e9c7f63807869f9b1daeb",
+      "text": "यह बहुभुज पूरे खेत के आकार का एक फसल योजना क्षेत्र बन जाता है।",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.010",
+      "sourceEnglish": "open field",
+      "sourceSha256": "835fb48d83aaf9f6a2b851db5e49ac184ff17ba8f4548f3d4e4023e8b9775295",
+      "text": "खुला खेत",
+      "review": {
+        "status": "unreviewed"
+      }
+    }
+  ]
+}

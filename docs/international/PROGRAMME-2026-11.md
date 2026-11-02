@@ -86,15 +86,17 @@ Portuguese and Kenyan Swahili. Independent structure/hash/protected-token checks
 pass; named fluent human review and runtime language enablement remain absent.
 The second batch's main AGY CLI exited successfully after its workers stopped.
 
-A new bounded translation assignment is now active in the existing translation
-conversation, using Gemini 3.8 Flash High. Two AI workers handle Hindi (India)
-and Bengali (Bangladesh); the main AI handles Indonesian. These countries are
-already in the expansion queue. The assignment is exactly the frozen 59-message
-full-warning/status inventory per locale, with separate output ownership. Startup
-and two workers were observed; delivery is not yet claimed. All outputs must
-remain unreviewed drafts, with no lesson/species edits or production language
-activation. Optional interaction-data sharing remains off. No raw conversation
-handles or transcripts belong in publication bundles.
+The additional bounded Hindi (India), Bengali (Bangladesh) and Indonesian
+assignment has now delivered 59 full UI messages per locale: 177 more entries,
+801 across the three batches and seven languages. Two AI workers and the main
+AI completed the files; worker stop was observed, then the CLI exited successfully.
+Independent source/key/hash/numeric/protected-token checks pass after preserving
+one required Indonesian literal unit; 17 corruption controls are rejected.
+Unsupported regional terminology assertions and private worker IDs were removed
+from handoff notes before publication. No native-speaker/human review is implied
+by an AI worker's role. Different languages have different bounded coverage;
+none of these deliveries is a complete app or lesson translation. All remain
+unreviewed and disabled in runtime. Optional interaction-data sharing stays off.
 
 ## Invariants throughout
 
