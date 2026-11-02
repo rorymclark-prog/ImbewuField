@@ -1,0 +1,8 @@
+Mode: built-in imagegen edit. Input: ../inspiring-v5/sources/inspiring-garden-start.png. Output visually inspected. Still concept only; continuous camera flight remains unfinished.
+
+Use case: precise-object-edit.
+Input image: edit target, the latest fictional homestead and lush kitchen garden.
+Primary request: make the HOUSE nicer, more welcoming and cared-for while retaining a modest, believable rural South African home.
+Change only the house finishes and small entrance details. Keep the same single-storey building footprint, roof geometry, kitchen extension, door position, outdoor sink position, perspective and scale. Give walls beautifully maintained smooth warm cream limewash over subtle plaster texture; a neat deep charcoal corrugated-metal roof with understated natural weathering, straight tidy edges and matching tidy fascia; a handsome natural timber kitchen door standing open, simple dark trim, and a clean warm terracotta entrance stoop. Make the outdoor sink and its tiled splashback look clean and integrated. The home should feel loved, practical, warm and achievable, with understated contemporary rural character. Avoid luxury mansion, glossy resort, extravagant veranda or enlarged building.
+Preserve the existing inspiring garden EXACTLY: curving lush beds, mulch, red-earth paths, rustic timber trellis, plant positions and existing foliage. Keep all surrounding trees, dry fields, fence, warm late afternoon sunlight, camera framing and photographic documentary realism unchanged. No new plant species or identifiable species claims. No additional buildings, people, vehicles, pools, water infrastructure, text, graphics or watermark.
+Output one landscape 16:9 photorealistic frame.
