@@ -154,6 +154,7 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   `zu-11-ux-18-produce-label`, `report-ui-localization`.
 - **Blind review of the 1 Nov drafts:** 858 money book, site report and release-note drafts back-translated
   before seeing the English; 24 repairs (`docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-2026-11-01/`).
+- **Blind review of g54 and g55 (2 Nov):** 203 Design Studio guide, field-block and lesson drafts back-translated; 4 repairs (downwind placement wording, "bank" read as bench) (`docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-g54-g55-2026-11-02/`).
 - **Second browser-sweep fixes (2 Nov):** the Afrikaans mirror of the isiXhosa fixes in `fb3a8d7`, merged in.
   `lib/task-title-draft.ts` now serves both languages (the Afrikaans verb table moved out of
   `app/cropplan/page.tsx`), so Home's upcoming tasks and the planner read the same ("Oes Uie",
