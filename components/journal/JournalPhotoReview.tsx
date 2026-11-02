@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Camera, Columns2, X } from 'lucide-react';
 import type { JournalEntry } from '@/lib/field-journal';
 import { farmMemoryText, type FarmMemoryKey } from '@/lib/farm-memory-copy';
-import { isInlineDraftLang } from '@/lib/xh-inline';
 import styles from './JournalPhotoReview.module.css';
 
 /** Compare the farmer's own dated observations, without inferring crop health or yields. */
@@ -38,7 +37,7 @@ export default function JournalPhotoReview({ entries, lang = 'en' }: { entries: 
 
   const optionLabel = (photo: typeof photos[number]) => `${photo.date} · ${photo.title || fm('untitledNote')}${photo.context ? ` · ${photo.context}` : ''} · ${fm('photoNumber', { n: photo.number })}`;
   return (
-    <section className={styles.review} lang={lang === 'zu' || isInlineDraftLang(lang) ? lang : 'en'} aria-label={fm('photos')}>
+    <section className={styles.review} lang={lang === 'zu' || lang === 'xh' || lang === 'af' ? lang : 'en'} aria-label={fm('photos')}>
       <div className={styles.heading}><Camera size={16} aria-hidden /><h2>{fm('photosHeading')}</h2></div>
       <p>{fm('photosHelp')}</p>
       <div className={styles.strip}>
