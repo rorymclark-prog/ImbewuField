@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
+  "Explore international reference drafts; local farming advice remains unavailable.": "Hlola izinhlaka zolwazi zamazwe; izeluleko zendawo zokulima azikatholakali.",
+  "Review international references": "Buyekeza imithombo yamazwe",
+  "International foundation": "Isisekelo samazwe",
+  "Compare country evidence, language drafts and fictional project examples.": "Qhathanisa ubufakazi bamazwe, izinhlaka zezilimi nezibonelo zamaphrojekthi eziqanjiwe.",
+
   // Sales-unit targets: docs/audits/2026-11-01/market-garden-sales-release-drafts.json; unreviewed.
   "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Hlela imigomo yesivuno ngamaphakethe omkhiqizo usebenzisa izisindo zamaphakethe nengxenye ethengisekayo oyifakile.",
 

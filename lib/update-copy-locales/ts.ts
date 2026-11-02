@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
+  "Explore international reference drafts; local farming advice remains unavailable.": "Kambisisa mpfapfarhuto wa swihlovo swa matiko; switsundzuxo swa vurimi bya ndhawu a swi si kumeka.",
+  "Review international references": "Kambisisa swihlovo swa matiko",
+  "International foundation": "Masungulo ya matiko",
+  "Compare country evidence, language drafts and fictional project examples.": "Pimanisa vumbhoni bya matiko, mipfapfarhuto ya tindzimi ni swikombiso swa tiphurojeke leswi nga riki swa xiviri.",
+
   // Sales-unit targets: docs/audits/2026-11-01/market-garden-sales-release-drafts.json; unreviewed.
   "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Kunguhata swikongomelo swa ntshovelo hi tiphakiti ta swikumiwa u tirhisa mintiko ya tiphakiti ni xiphemu lexi xavisekaka lexi u xi ngheniseke.",
 

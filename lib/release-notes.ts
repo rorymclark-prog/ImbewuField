@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 November 2026', sha: '0f34e3043', changes: [
+    'Explore international reference drafts; local farming advice remains unavailable.',
+  ], tour: [{ title: 'Review international references', where: 'International foundation', href: '/international',
+    detail: 'Compare country evidence, language drafts and fictional project examples.' }] },
   { when: '1 November 2026', sha: '256c67dd9', changes: [
     'Plan harvest targets in produce packs with your own pack weights and saleable share.',
   ] },

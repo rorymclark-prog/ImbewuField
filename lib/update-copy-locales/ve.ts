@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
+  "Explore international reference drafts; local farming advice remains unavailable.": "Ṱolani mvetamveto dza zwiko zwa mashango; nyeletshedzo ya vhulimi ya henefho a i athu u vha hone.",
+  "Review international references": "Ṱolani zwiko zwa mashango",
+  "International foundation": "Mutheo wa mashango",
+  "Compare country evidence, language drafts and fictional project examples.": "Vhambedzani vhuṱanzi ha mashango, mvetamveto dza nyambo na tsumbo dza thandela dzo tou humbulelwaho.",
+
   // Sales-unit targets: docs/audits/2026-11-01/market-garden-sales-release-drafts.json; unreviewed.
   "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Pulanani zwipikwa zwa khaṋo nga phakhethe dza zwibveledzwa ni tshi shumisa zwileme zwa phakhethe na tshipiḓa tshine tsha rengisea zwe na dzhenisa.",
 
