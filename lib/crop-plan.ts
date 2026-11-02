@@ -3,6 +3,7 @@ import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPe
 import { normaliseRecordUnit, validRecordQuantity, type RecordUnit } from './farm-records';
 import { sanitiseNurserySettings, type NurserySettings } from './nursery-settings';
 import { sanitiseWorkspacePlanningReferences, type WorkspacePlanningReference } from './international/workspace-context';
+import { normaliseGrowerPlanningProfiles, type GrowerPlanningProfile } from './international/grower-planning';
 import { foodGroupOf, nutritionGroupOf } from './crop-groups';
 import {
   isSampleMode,
@@ -103,6 +104,9 @@ export interface CropPlanState {
   plantings: Planting[];
   /** An explicit reference basis for an unmapped workspace, never a country declaration. */
   workspaceReferences?: WorkspacePlanningReference[];
+  /** Grower-supplied assumptions stay with this account's existing plan book.
+   * They never approve a country or supply missing catalogue recommendations. */
+  growerPlanningProfiles?: GrowerPlanningProfile[];
   /** Buyer demand belongs to a site, even when two farms use the same crop. */
   harvestTargets?: HarvestTarget[];
   /** Grower-owned nursery equipment and estimates, scoped to their sites. */
@@ -415,6 +419,8 @@ export function loadCropPlan(): CropPlanState {
   if (isSampleMode()) {
     const sandbox = getSandboxCropPlan();
     return { ...sandbox, plantings: settle(sandbox.plantings),
+      ...(sandbox.growerPlanningProfiles !== undefined
+        ? { growerPlanningProfiles: normaliseGrowerPlanningProfiles(sandbox.growerPlanningProfiles) } : {}),
       ...(sandbox.workspaceReferences !== undefined
         ? { workspaceReferences: sanitiseWorkspacePlanningReferences(sandbox.workspaceReferences) } : {}) };
   }
@@ -430,6 +436,8 @@ export function loadCropPlan(): CropPlanState {
     return {
       version: 1,
       plantings: settle(parsed.plantings),
+      ...(parsed.growerPlanningProfiles !== undefined
+        ? { growerPlanningProfiles: normaliseGrowerPlanningProfiles(parsed.growerPlanningProfiles) } : {}),
       ...(parsed.workspaceReferences !== undefined
         ? { workspaceReferences: sanitiseWorkspacePlanningReferences(parsed.workspaceReferences) } : {}),
       ...(Array.isArray(parsed.harvestTargets) ? { harvestTargets: sanitiseHarvestTargets(parsed.harvestTargets) } : {}),
@@ -501,6 +509,49 @@ function isRainPattern(value: unknown): value is RainPattern {
     || value === 'mild-frost';
 }
 
+/** Opaque, account-bound device revision for delayed writers. Keep this token
+ * inside the current page: it contains private plan data, not analytics. Missing
+ * storage is stable; corrupt/unreadable storage has no write authority. */
+export function cropPlanWriteToken(): string | null {
+  try {
+    if (isSampleMode()) return JSON.stringify(['sample', getSandboxCropPlan()]);
+    if (typeof window === 'undefined' || !window.localStorage) return null;
+    const key = activeAccountLocalStorageKey(STORAGE_KEY);
+    const raw = window.localStorage.getItem(key);
+    if (raw !== null) {
+      const parsed: unknown = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object' || !Array.isArray((parsed as { plantings?: unknown }).plantings)) return null;
+    }
+    return JSON.stringify([key, raw]);
+  } catch { return null; }
+}
+
+export type CropPlanWriteReceipt = { saved: true; token: string } | { saved: false; token: null };
+
+/** Return the exact bytes this writer stored, rather than blessing whatever
+ * another tab may have written before a later read. Tokens stay device-private. */
+export function saveCropPlanWithReceipt(s: CropPlanState): CropPlanWriteReceipt {
+  try {
+    let saved = s.workspaceReferences === undefined ? s
+      : { ...s, workspaceReferences: sanitiseWorkspacePlanningReferences(s.workspaceReferences) };
+    if (s.growerPlanningProfiles !== undefined) {
+      saved = { ...saved, growerPlanningProfiles: normaliseGrowerPlanningProfiles(s.growerPlanningProfiles) };
+    }
+    if (isSampleMode()) {
+      const token = JSON.stringify(['sample', saved]);
+      setSandboxCropPlan(saved);
+      if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
+      return { saved: true, token };
+    }
+    if (typeof window === 'undefined' || !window.localStorage) return { saved: false, token: null };
+    const key = activeAccountLocalStorageKey(STORAGE_KEY), raw = JSON.stringify(saved);
+    const token = JSON.stringify([key, raw]);
+    window.localStorage.setItem(key, raw);
+    window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
+    return { saved: true, token };
+  } catch { return { saved: false, token: null }; }
+}
+
 /**
  * Persist the crop plan. Returns whether it actually reached storage.
  *
@@ -514,24 +565,9 @@ function isRainPattern(value: unknown): value is RainPattern {
  * but they are equally not a save, and a function that answers "did this persist" must not say yes
  * about a write it never attempted.
  */
+
 export function saveCropPlan(s: CropPlanState): boolean {
-  const saved = s.workspaceReferences === undefined ? s
-    : { ...s, workspaceReferences: sanitiseWorkspacePlanningReferences(s.workspaceReferences) };
-  if (isSampleMode()) {
-    setSandboxCropPlan(saved);
-    if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
-    return true; // the sandbox IS the demo's real store, so this genuinely did persist
-  }
-  if (typeof window === 'undefined' || !window.localStorage) return false;
-  try {
-    window.localStorage.setItem(activeAccountLocalStorageKey(STORAGE_KEY), JSON.stringify(saved));
-    window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
-    return true;
-  } catch {
-    // Quota exceeded or storage unavailable. The CALLER must surface this — returning false is
-    // the entire point of this signature. See the planner's saveFailed banner.
-    return false;
-  }
+  return saveCropPlanWithReceipt(s).saved;
 }
 
 // A personal shortlist of crop keys — purely a UI convenience (quick access

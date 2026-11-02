@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 November 2026', sha: '12b0acba4', changes: [
+    'Save your own growing estimates and review capacity and dates for measured beds.',
+  ], tour: [{ title: 'Review your growing estimates', where: 'Crop planner → Your growing estimates', href: '/facilitator/crops',
+    detail: 'Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.' }] },
   { when: '2 November 2026', sha: 'dfa7ac49e', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
     'Keep your sowing records and nursery equipment while local planning is unavailable.',
