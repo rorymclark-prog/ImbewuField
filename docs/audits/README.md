@@ -141,6 +141,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Nursery forecast source and verification — 1 November 2026](2026-11-01/nursery-source-and-verification.md).
+
 - [White Water sheets, retained AI roofs and reachable styling — 31 October 2026](2026-10-31/paper-map-finish-codex.md).
 
 - [Complete Oblique style picker across sheets — 30 October 2026](2026-10-30/oblique-style-picker-codex.md).
