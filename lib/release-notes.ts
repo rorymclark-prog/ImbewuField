@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 November 2026', sha: '8fb7283c2', changes: [
+  { when: '3 November 2026', sha: '6e184d251', changes: [
     'Keep newer crop plans safe when an older app session saves its copy.',
     'Review retained copies before continuing with your current crop plan.',
     'Retry interrupted guest crop transfers without replacing saved account work.',

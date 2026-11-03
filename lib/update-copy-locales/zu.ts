@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Gcina izinhlelo zezitshalo ezintsha ziphephile lapho iseshini endala yohlelo igcina ikhophi yayo.",
+  "Review retained copies before continuing with your current crop plan.": "Bukeza amakhophi agciniwe ngaphambi kokuba uqhubeke nohlelo lwakho lwamanje lwezitshalo.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Phinda uzame ukudlulisa umsebenzi wezitshalo wesivakashi onqanyuliwe ngaphandle kokushintsha umsebenzi we-akhawunti ogciniwe.",
+  "Review crop-plan storage": "Bukeza indawo yokugcina uhlelo lwezitshalo",
+  "Production plan → Crop-plan storage": "Uhlelo lokukhiqiza → Indawo yokugcina uhlelo lwezitshalo",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Hlola isaziso sendawo yokugcina. Uma iseshini endala ishintshe ikhophi yayo, dawuniloda amakhophi omabili uwabukeze ngaphambi kokukhetha ukugcina uhlelo lwakho lwamanje.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Gcina uhlelo olubukeziwe olusuka ezilinganisweni zakho zokulima.",
+  "Check unresolved crop records before using a finance forecast.": "Hlola amarekhodi ezitshalo angakaxazululwa ngaphambi kokusebenzisa isibikezelo sezimali.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Gcina izilinganiso zokulima ezigciniwe nezilungiselelo zendawo yokukhulisela izithombo lapho ungena ku-akhawunti.",
+  "Save your reviewed plan": "Gcina uhlelo lwakho olubukeziwe",
+  "Production plan → Automatic plan from your estimates": "Uhlelo lokukhiqiza → Uhlelo oluzenzakalelayo olusuka ezilinganisweni zakho",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Bukeza isiphakamiso esiphelele, ugcine yonke imijikelezo yaso ehleliwe, bese uvula umsebenzi onosuku.",
   // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/zu.json; UNREVIEWED Codex AI candidates.
   "Follow saved grower cycles on their exact planned dates.": "Landela imijikelezo yokutshala egciniwe ngezinsuku zayo ezihleliwe eziqondile.",
   "Check current designs before ticking work or exporting dates.": "Hlola imiklamo yamanje ngaphambi kokumaka umsebenzi noma ukukhipha izinsuku.",
