@@ -1,0 +1,15 @@
+{
+  "fetch": {
+    "requestedUrl": "https://cati.sp.gov.br/portal/institucional/enderecos/cati-regional-de-campinas",
+    "effectiveUrl": "https://cati.sp.gov.br/portal/institucional/enderecos/cati-regional-de-campinas",
+    "httpStatus": 200,
+    "fetchedAtUtc": "2026-11-03T22:57:04.328929+00:00",
+    "bytes": 36253,
+    "sha256": "55c9449e2e91c660915bcf32356f074a85a4d91b2b7c2cd2ea4cb9884244c05c"
+  },
+  "scope": "CATI regional office directory with a Campinas office listing",
+  "directorySearchExecuted": false,
+  "servicePageWebFetchStatus": 502,
+  "serviceAccessVerified": false,
+  "localAgronomyReviewed": false
+}

@@ -139,3 +139,31 @@ test('Brazil exposes the checked catalogue link without treating soil documentat
     assert.ok(review.evidence.every(entry => entry.sources.every(item => item.url !== receipt.requestedUrl)));
   }
 });
+
+test('the Campinas office directory remains Brazil background and cannot satisfy local extension review', () => {
+  const date = '2026-11-03';
+  const result = evaluateCountryReadiness({ countryCode: 'BR' }, date);
+  const extension = result.evidence.find(entry => entry.category === 'agricultural-extension')!;
+  const source = extension.sources.find(candidate => candidate.id === 'br-extension-cati-campinas')!;
+  assert.equal(source.url, 'https://cati.sp.gov.br/portal/institucional/enderecos/cati-regional-de-campinas');
+  assert.equal(source.publishedOn, null);
+  assert.equal(source.licence.status, 'unknown');
+  assert.equal(extension.availableCount, 0);
+  assert.equal(result.productionPlanSupported, false);
+  for (const countryCode of ['KE', 'GB', 'US']) {
+    assert.ok(evaluateCountryReadiness({ countryCode }, date).evidence
+      .every(entry => entry.sources.every(candidate => candidate.id !== source.id)));
+  }
+
+  const profile = reviewedFixture();
+  profile.sources = profile.sources.filter(candidate => candidate.category !== 'agricultural-extension');
+  const dated = { ...source, publishedOn: date };
+  profile.sources.push(dated);
+  profile.agronomyReview.sourceIds = profile.sources.map(candidate => candidate.id);
+  const context = { countryCode: profile.code, agriculturalRegionId: 'test-region' };
+  assert.equal(sourceEvidenceState(dated, date), 'background-reference');
+  assert.equal(evaluateCountryReadiness(context, date, [profile]).localReviewComplete, false);
+  // Positive control. The same otherwise complete fixture passes if the reference qualifies.
+  delete dated.backgroundOnly;
+  assert.equal(evaluateCountryReadiness(context, date, [profile]).localReviewComplete, true);
+});
