@@ -17,6 +17,7 @@ import { getElementArt2 } from '@/lib/element-art-2';
 import {
   JOURNAL_CATEGORIES,
   JOURNAL_CHANGED_EVENT,
+  captureJournalExportContext,
   createJournalEntry,
   editJournalEntry,
   formatJournalDate,
@@ -49,7 +50,7 @@ import motion from './JournalMotion.module.css';
 import explore from './JournalExplore.module.css';
 import { filterJournalEntries, journalFilterOptions, journalDateRangeError, journalBedFilterValue } from '@/lib/journal-view';
 import { downloadJournalCsv, downloadJournalHtml } from '@/lib/journal-export';
-import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
+import { SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import { FIELD_JOURNAL_CANONICAL_KEY, FIELD_JOURNAL_LEGACY_KEY, readAccountLocalSampleState } from '@/lib/account-local-storage';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { downloadFile } from '@/lib/file-delivery';
@@ -126,7 +127,10 @@ export default function FieldJournal() {
   const memory = (key: FarmMemoryKey, vars?: Record<string, string | number>) => farmMemoryText(lang, key, vars);
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
   const simple = useAppLevel() === 'simple';
-  const [entries, setEntries] = useState<JournalEntry[]>([]);
+  const [{ entries, exportContext }, setJournal] = useState<{
+    entries: JournalEntry[];
+    exportContext: ReturnType<typeof captureJournalExportContext>;
+  }>({ entries: [], exportContext: null });
   const [ready, setReady] = useState(false);
   const [filter, setFilter] = useState<Filter>('all');
   const [query, setQuery] = useState('');
@@ -161,12 +165,18 @@ export default function FieldJournal() {
 
   const refresh = useCallback(async (initialise = false) => {
     const generation = ++loadGeneration.current;
+    const mode = modeGeneration.current;
+    const captured = captureJournalExportContext();
+    const exportContext = captured && {
+      sample: captured.sample,
+      isCurrent: () => mode === modeGeneration.current && captured.isCurrent(),
+    };
     const sample = readAccountLocalSampleState();
     // The signed-in/guest cutover also needs mixed-version transfer review.
     if (isBackendConfigured() || sample === true) {
       setBook(undefined);
       setRecovery(null);
-      setEntries(loadJournal());
+      setJournal({ entries: loadJournal(), exportContext });
       setReady(true);
       return;
     }
@@ -175,7 +185,7 @@ export default function FieldJournal() {
     const candidates = review && readJournalLegacyCandidates(review);
     if (generation !== loadGeneration.current) return;
     setBook(view);
-    setEntries(view.status === 'ready' ? [...view.entries] : []);
+    setJournal({ entries: view.status === 'ready' ? [...view.entries] : [], exportContext });
     setReady(view.status === 'ready');
     setRecovery(review && candidates ? { review, candidates } : null);
     setSelection([]);
@@ -191,8 +201,10 @@ export default function FieldJournal() {
     const onSampleChanged = () => {
       modeGeneration.current++;
       setSheet({ open: false, entry: null });
-      setEntries([]);
+      setJournal({ entries: [], exportContext: null });
       setReady(false);
+      setExporting(false);
+      setExportNotice(null);
       setRecovery(null);
       setRecoveryNotice('');
       void refresh(true);
@@ -312,6 +324,8 @@ export default function FieldJournal() {
 
   async function exportSelection(format: 'csv' | 'html') {
     if (exporting || !visible.length || dateError) return;
+    if (!exportContext?.isCurrent()) { setExportNotice('exportFailed'); return; }
+    const mode = modeGeneration.current;
     setExporting(true);
     setExportNotice(null);
     const selection = [
@@ -322,25 +336,29 @@ export default function FieldJournal() {
       crop ? memory('cropScope', { value: crop }) : '',
     ].filter(Boolean).join(' · ') || memory('allEntries');
     try {
-      const options = { sample: isSampleMode(), selection, lang, ...(format === 'html' ? { includePhotos } : {}) };
+      const options = {
+        sample: exportContext.sample, contextCurrent: exportContext.isCurrent,
+        selection, lang, ...(format === 'html' ? { includePhotos } : {}),
+      };
       const result = format === 'csv'
         ? await downloadJournalCsv(visible, options)
         : await downloadJournalHtml(visible, options);
+      if (!exportContext.isCurrent()) return;
       if (result === 'downloaded') setExportNotice(format === 'html'
         ? 'downloadedHtml'
         : 'downloadedCsv');
       else if (result === 'shared') setExportNotice('shared');
     } catch {
-      setExportNotice('exportFailed');
+      if (exportContext.isCurrent()) setExportNotice('exportFailed');
     } finally {
-      setExporting(false);
+      if (mode === modeGeneration.current) setExporting(false);
     }
   }
 
   function persist(next: JournalEntry[]): boolean {
     const result = saveJournal(next);
     if (result.ok) {
-      setEntries(result.entries);
+      setJournal({ entries: result.entries, exportContext });
       setSheetError(null);
       setNotice(result.trimmed ? ui('Storage was nearly full, so photos on the oldest entries were removed. The notes are kept.', 'Isikhala sokugcina besesizogcwala, ngakho izithombe kokudala kakhulu zisusiwe. Amanothi agciniwe.') : null);
     } else {
