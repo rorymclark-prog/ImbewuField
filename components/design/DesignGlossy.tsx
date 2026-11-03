@@ -40,6 +40,7 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
 import { fetchSheetContours, type SheetContourResult } from '@/lib/sheet-contours';
+import { sectorOverviewContours, sectorTerrainProfile, type SectorTerrainProfile } from '@/lib/sheet-terrain-profile';
 import {
   gateBoundaryBreaks,
   boundarySegmentsWithBreaks,
@@ -9047,7 +9048,7 @@ function drawSectorAnalysis(
       if (middleLine) {
         const midpoint = middleLine.points[Math.floor(middleLine.points.length / 2)];
         labelAt(px(midpoint[0]), py(midpoint[1]), 'REAL TERRAIN CONTOUR — SWALES FOLLOW THIS CURVE', '#B7E8A6');
-        labelAt(px(midpoint[0]), py(midpoint[1]) + rowH * 0.6, `CONTOUR INTERVAL ${sheetContours.intervalM} m`, '#B7E8A6');
+        labelAt(px(midpoint[0]), py(midpoint[1]) + rowH * 0.6, `REGIONAL DEM · ${sheetContours.intervalM} m · INDICATIVE`, '#B7E8A6');
       }
     }
   }
@@ -9265,7 +9266,7 @@ function drawSectorAnalysis(
   // computed geometry.
   if (model.driveway) rows.push({ color: DRIVEWAY_COLOR, label: `Driveway access — dust & noise — ${model.driveway.fromLabel}`, style: 'line', icon: markerIcon('driveway'), sectorIcon: 'driveway' });
   if (model.water) rows.push({ color: '#3A8EC4', label: `Site slope estimate falls ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}% (five-point SRTM · indicative)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
-  if (model.water && sheetContours?.status === 'ok' && contourIntervalM != null) rows.push({ color: '#7ED46B', label: `Terrain-RGB contour — ${contourIntervalM} m interval`, style: 'dashline', sectorIcon: 'water' });
+  if (model.water && sheetContours?.status === 'ok' && contourIntervalM != null) rows.push({ color: '#7ED46B', label: `Regional DEM contour — ${contourIntervalM} m overview`, style: 'dashline', sectorIcon: 'water' });
   // Gated on drawTerraceFallAnnotations (above) having actually drawn at least one pair — never a
   // placeholder row for a design with no terraces (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md
   // §4b). A different row from the whole-site "Terrace fall ~X% (uniform-fall model)" row above:
@@ -9293,7 +9294,7 @@ function drawSectorAnalysis(
   const contourEvidenceNote = !model.water
     ? ''
     : sheetContours?.status === 'ok'
-      ? ' CONTOURS — Mapbox Terrain-RGB marching-squares geometry. The slope arrow and percentage remain a separate five-point SRTM plane estimate and are indicative.'
+      ? ' REGIONAL DEM CONTOURS — Mapbox Terrain-RGB overview, not a ground survey. Local horizontal/vertical accuracy and height datum are unverified; no excavation set-out. The separate five-point SRTM slope is indicative.'
       : sheetContours?.status === 'too-flat' && sheetContours.source === 'mapbox-terrain-rgb'
         ? ` TERRAIN-RGB CONTOURS — no ${sheetContours.intervalM} m contour crosses the traced property; no contour lines drawn.`
         : sheetContours?.status === 'too-flat'
@@ -9371,6 +9372,64 @@ function drawSectorContextLabels(
   }
 }
 
+async function fetchSectorPresentationContours(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],site:SectorSite|null):Promise<SheetContourResult> {
+  const elevation=site?.elevation;
+  // A presentation crop changes image coordinates but intentionally keeps the saved geographic
+  // frame intact. Query the original frame; otherwise resized dimensions move the DEM lookup.
+  const raw=await fetchSheetContours(frame,refs.boundary,
+    elevation?.directionConfidence==='unconfirmed'?Number.NaN:elevation?.slopeDeg??Number.NaN,
+    elevation?.directionConfidence==='unconfirmed'?Number.NaN:elevation?.aspectDeg??Number.NaN,
+    async url=>fetch(url,{headers:await paidApiHeaders(),signal:AbortSignal.timeout(15_000)}));
+  const overview=sectorOverviewContours(raw);
+  const layout=calculateBoundaryPresentationLayout(presentationExtentRing(state,frame,refs.boundary),frame,SCALE);
+  return layout?{...overview,lines:overview.lines.map(line=>({...line,points:line.points.map(([x,y])=>[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight] as [number,number])}))}:overview;
+}
+
+async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],site:SectorSite|null,placeName?:string):Promise<string|null>{
+  const p=await boundaryPresentationContext(state,frame,refs);
+  const contours=await fetchSectorPresentationContours(state,frame,refs,site);
+  const profile=sectorTerrainProfile(contours,p.refLayers.boundary,p.frame);
+  if(!profile)return null;
+  const canvas=document.createElement('canvas');canvas.width=1800;canvas.height=1273;
+  const ctx=canvas.getContext('2d');if(!ctx){releaseCanvas(canvas);throw new Error('Terrain profile canvas unavailable');}
+  ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,1800,1273);ctx.fillStyle='#183425';ctx.font=`800 36px ${SHEET_BODY_FONT}`;ctx.fillText('REGIONAL TERRAIN PROFILE · A–B',48,58);
+  ctx.font=`600 24px ${SHEET_BODY_FONT}`;ctx.fillStyle='#5B665E';ctx.fillText(placeName??'Your site',48,98);
+  const fit=Math.min(810/p.frame.imgW,990/p.frame.imgH),w=p.frame.imgW*fit,h=p.frame.imgH*fit,mx=48+(810-w)/2,my=150+(990-h)/2;
+  if(p.frame.satDataUrl){const image=await loadImage(p.frame.satDataUrl);try{ctx.drawImage(image,mx,my,w,h);}finally{releaseImageSource(image);}}
+  const project=([x,y]:[number,number]):[number,number]=>[mx+x*w,my+y*h];
+  ctx.save();ctx.strokeStyle='#77914C';ctx.lineWidth=2;ctx.setLineDash([6,5]);ctx.beginPath();p.refLayers.boundary.forEach((point,i)=>{const [x,y]=project(point);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x,y);});ctx.closePath();ctx.stroke();
+  const a=project(profile.a),b=project(profile.b);ctx.strokeStyle='#973D72';ctx.lineWidth=3;ctx.setLineDash([12,8]);ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke();ctx.restore();
+  for(const [text,point] of [['A',a],['B',b]] as const){ctx.fillStyle='#FFFFFF';ctx.beginPath();ctx.arc(point[0],point[1],19,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#973D72';ctx.stroke();ctx.fillStyle='#702454';ctx.font=`800 24px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,point[0],point[1]);}
+  ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.font=`700 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#183425';ctx.fillText('N ↑',mx+w-48,my+30);
+  drawBlueprintScaleBar(ctx,w,h,0,0,fit/p.frame.mPerPx,{x:mx+20,y:my+h-20});
+  const gx=970,gy=230,gw=740,gh=400,values=profile.points.map(point=>point.elevationM);
+  const low=Math.floor(Math.min(...values)/5)*5-5,high=Math.ceil(Math.max(...values)/5)*5+5;
+  const X=(d:number)=>gx+d/profile.lengthM*gw,Y=(z:number)=>gy+gh-(z-low)/(high-low)*gh;
+  ctx.font=`700 26px ${SHEET_BODY_FONT}`;ctx.fillStyle='#183425';ctx.fillText('A · north → B · south',gx,gy-65);
+  ctx.font=`500 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Provider height (m) · vertical datum unverified',gx,gy-25);
+  const tickStep=Math.max(5,Math.ceil((high-low)/30)*5);
+  for(let tick=0;tick<8;tick++){const z=low+tick*tickStep;if(z>high)break;ctx.strokeStyle='#DFE5DF';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,Y(z));ctx.lineTo(gx+gw,Y(z));ctx.stroke();ctx.fillStyle='#536357';ctx.textAlign='right';ctx.fillText(String(z),gx-15,Y(z)+7);}
+  ctx.textAlign='left';ctx.strokeStyle='#536357';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx,gy+gh);ctx.lineTo(gx+gw,gy+gh);ctx.stroke();
+  ctx.strokeStyle='#973D72';ctx.lineWidth=3;ctx.setLineDash([10,7]);ctx.beginPath();profile.points.forEach((point,i)=>(i===0?ctx.moveTo:ctx.lineTo).call(ctx,X(point.distanceM),Y(point.elevationM)));ctx.stroke();ctx.setLineDash([]);
+  for(const point of profile.points){ctx.fillStyle='#315A40';ctx.beginPath();ctx.arc(X(point.distanceM),Y(point.elevationM),5,0,Math.PI*2);ctx.fill();}
+  ctx.fillStyle='#536357';ctx.font=`600 21px ${SHEET_BODY_FONT}`;ctx.fillText('A · 0 m',gx,gy+gh+35);ctx.textAlign='right';ctx.fillText(`B · ~${Math.round(profile.lengthM)} m`,gx+gw,gy+gh+35);ctx.textAlign='left';
+  const exaggeration=(gh/(high-low))/(gw/profile.lengthM);
+  const notes=[
+    `${contours.intervalM} m regional DEM contours · approximate ground distance.`,
+    `Vertical exaggeration: ${exaggeration.toFixed(1)}×. End heights are unknown.`,
+    'Dots are contour crossings; dashed joins are straight interpolation.',
+    'Terrain between those crossings has not been measured here.',
+    'Mapbox terrain · local horizontal/vertical accuracy unverified.',
+    'Mixed source height datums; not a surveyed ground profile.',
+    'Do not use this overview for excavation, drainage or building set-out.',
+    'The photo and DEM may describe different dates and surface heights.',
+  ];
+  ctx.font=`600 21px ${SHEET_BODY_FONT}`;let ny=740;
+  for(const note of notes){ctx.fillStyle='#43574A';const words=note.split(' ');let line='';for(const word of words){const next=line?line+' '+word:word;if(ctx.measureText(next).width>740&&line){ctx.fillText(line,gx,ny);ny+=30;line=word;}else line=next;}if(line){ctx.fillText(line,gx,ny);ny+=30;}ny+=12;}
+  ctx.font=`italic 20px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Plan and profile are app drawings. No AI-generated heights.',48,1230);
+  return drainCanvasToDataUrl(canvas,'image/png');
+}
+
 async function composeSectorSheet(
   baseImage: string | null,
   state: DesignCanvasState,
@@ -9384,13 +9443,7 @@ async function composeSectorSheet(
   const renderState = presentation.state;
   const renderFrame = presentation.frame;
   const renderRefLayers = presentation.refLayers;
-  const elevation = site?.elevation;
-  const sheetContours = await fetchSheetContours(
-    renderFrame,
-    renderRefLayers.boundary,
-    elevation?.directionConfidence === 'unconfirmed' ? Number.NaN : elevation?.slopeDeg ?? Number.NaN,
-    elevation?.directionConfidence === 'unconfirmed' ? Number.NaN : elevation?.aspectDeg ?? Number.NaN,
-  );
+  const sheetContours = await fetchSectorPresentationContours(state,frame,refLayers,site);
   const W = renderFrame.imgW * SCALE;
   const H = renderFrame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -9524,7 +9577,7 @@ async function composeSectorSheet(
         'Photo coverage ends before the northeast and southwest tips; those areas stay blank.',
         'Sun paths are computed from latitude, referenced to true north. Wind and fire arrows are regional assumptions, not local measurements. Confirm them on site.',
         'Any slope shown is an indicative terrain estimate. No surveyed ground heights are supplied.',
-        sheetContours.status === 'ok' ? 'Contours are derived from Mapbox terrain data, not a ground survey.' : 'No terrain contours are shown: suitable contour data was unavailable for this sheet.',
+        sheetContours.status === 'ok' ? 'Regional DEM contours are indicative. Local horizontal/vertical accuracy and height datum are unverified; never use them for excavation set-out.' : 'No terrain contours are shown: suitable contour data was unavailable for this sheet.',
       ].join('\n\n') : analysis.noteText,
       footerBox: true,
     },
@@ -13314,6 +13367,19 @@ export default function DesignGlossy({
     }
   }, [state, frame, refLayers, site, mapKey, pushGallery, placeName]);
 
+  const renderTerrainProfile = useCallback(async()=>{
+    if(loading!==null)return;
+    setLoading('exact');setError(null);setNotice(null);
+    try{
+      const sourceFrame=historicalActive&&availableHistoricalBaseline?await buildHistoricalBaselineFrame(frame,availableHistoricalBaseline):frame;
+      const image=await buildSectorTerrainProfileSheet(state,sourceFrame,refLayers,site,placeName);
+      if(!image){setNotice('A terrain profile is unavailable: fewer than two usable regional contour levels cross this site. No endpoint heights have been invented.');return;}
+      const id=pushGallery('Sector terrain profile · regional DEM · indicative',image,{resultKind:'exact',provider:'exact',geometryLock:true});
+      setGalleryViewId(id);setGalleryOpen(true);
+    }catch(err){setError(userFacingMessage(err,'Terrain profile unavailable. No surveyed elevations have been supplied.',t));}
+    finally{setLoading(null);}
+  },[loading,historicalActive,availableHistoricalBaseline,frame,state,refLayers,site,placeName,pushGallery,t]);
+
   // Deterministic SECTOR ANALYSIS sheet (plan-set 02) — the RULES-ENGINE render (lib/sector). Never
   // refuses: the sun is always real content and the sheet degrades honestly when slope/climate data
   // is missing, so it can't block the print set on a device-local cache.
@@ -15968,6 +16034,10 @@ export default function DesignGlossy({
         {!simple && (
         <>
         <WorkflowHeading number={2} title="Underlay" />
+        {selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='sector' && <div style={{marginBottom:10}}>
+          <button type="button" disabled={loading!==null} onClick={renderTerrainProfile}>Terrain profile · regional overview</button>
+          <p style={{fontSize:11,lineHeight:1.4}}>A–B side view from regional DEM contour crossings. Approximate; not a ground survey.</p>
+        </div>}
         {historicalSheet && availableHistoricalBaseline && <div style={{fontSize:12,lineHeight:1.5,marginBottom:10}}>
           <strong>{historicalActive ? 'Before-works archive photo' : 'Current imagery'}</strong>
           {historicalActive && selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='base' && <div role="group" aria-label="Photo labels" style={{display:'flex',gap:8,marginTop:8}}>
