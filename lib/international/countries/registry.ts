@@ -102,6 +102,15 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
       limitations: 'The linked reference does not establish site coverage, soil measurements or crop recommendations. No map, fact sheet, layer or data service was accessed.',
     }),
   ] },
+  { code: 'IN', name: 'India', stage: 'research-queue', jurisdictionNote: 'The IMD index is organised by state and union territory. Local agricultural regions and guidance need separate review.', regions: [], agronomyReview: unreviewed(), sources: [
+    source('in-imd-district-agromet', 'weather-frost', 'India Meteorological Department (IMD)', 'https://mausam.imd.gov.in/responsive/agromet_adv_ser_district_current_en.php', 'District agrometeorological bulletin index with a state and union territory selector', 'The official English-language index displays a selector and document viewer for district bulletins.', {
+      title: 'District Agromet Current Bulletins in English',
+      accessedOn: '2026-11-03',
+      attribution: 'India Meteorological Department, Ministry of Earth Sciences, Government of India.',
+      accessRequirements: known('Public index read without an account. Individual bulletins and automated access were not tested.'),
+      limitations: 'District coverage, bulletin publication and forecast validity remain unverified. The index does not establish local crop recommendations.',
+    }),
+  ] },
 ];
 
 export function countryProfile(code: string): CountryProfile | undefined {
