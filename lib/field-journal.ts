@@ -11,7 +11,8 @@
 // grouping, normalisation and trimming rules can be tested directly.
 
 import { Sprout, ShoppingBasket, CloudSun, Bug, Wrench, Users, NotebookPen, type LucideIcon } from 'lucide-react';
-import { activeAccountLocalStorageKey } from './account-local-storage';
+import { activeAccountLocalStorageKey, activeAccountUid, readAccountLocalSampleState } from './account-local-storage';
+import { getFirebase, isBackendConfigured } from './firebase/init';
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
 
@@ -410,5 +411,91 @@ export function saveJournal(entries: JournalEntry[]): JournalSaveResult {
     } catch {
       return { ok: false, entries: trimmed, trimmed: didTrim };
     }
+  }
+}
+
+export type JournalLinkWriteReceipt =
+  | { readonly status: 'ready' }
+  | { readonly status: 'held'; readonly reason: 'journal-unavailable' | 'journal-changed' | 'normalisation-loss' };
+
+interface JournalLinkBinding {
+  readonly key: string;
+  readonly storage: Storage;
+  readonly raw: string | null;
+  readonly owner: string | null;
+  readonly sample: boolean;
+}
+const journalLinkBindings = new WeakMap<JournalLinkWriteReceipt, JournalLinkBinding>();
+
+function journalActorMatches({ owner, sample }: Pick<JournalLinkBinding, 'owner' | 'sample'>): boolean {
+  if (readAccountLocalSampleState() !== sample || activeAccountUid() !== owner) return false;
+  if (sample || !isBackendConfigured()) return true;
+  const auth = getFirebase()?.auth;
+  if (!auth) return false;
+  const user = auth.currentUser;
+  return user === null ? owner === null : typeof user?.uid === 'string' && user.uid === owner;
+}
+
+function journalBindingMatches(binding: JournalLinkBinding): boolean {
+  const current = () => journalActorMatches(binding) && window.localStorage === binding.storage
+    && activeAccountLocalStorageKey(STORAGE_KEY) === binding.key;
+  return current() && binding.storage.getItem(binding.key) === binding.raw && current();
+}
+
+function journalNormalisationIsLossless(raw: string): boolean {
+  const rows: unknown = JSON.parse(raw);
+  if (!Array.isArray(rows)) return false;
+  if (!rows.length) return true;
+  // The existing writer emits JSON.stringify output. Holding other nonempty
+  // byte shapes prevents JSON.parse from hiding duplicate or overflowed values.
+  if (JSON.stringify(rows) !== raw) return false;
+  const normalised = normaliseJournal(rows);
+  if (normalised.length !== rows.length) return false;
+  const byId = new Map(normalised.map(row => [row.id, Object.fromEntries(Object.entries(row))]));
+  const required = ['date', 'title', 'notes', 'category', 'createdAt', 'updatedAt'] as const;
+  return rows.every(row => {
+    if (!record(row) || required.some(key => !Object.hasOwn(row, key)) || typeof row.id !== 'string') return false;
+    const projected = byId.get(row.id);
+    // Allow old entries to omit optional fields. Never discard or replace a
+    // field that was actually stored, even if the journal display ignores it.
+    return !!projected && Object.entries(row).every(([key, value]) => {
+      if (!Object.hasOwn(projected, key)) return false;
+      const after = projected[key];
+      return Array.isArray(value)
+        ? Array.isArray(after) && value.length === after.length && value.every((item, index) => Object.is(item, after[index]))
+        : Object.is(after, value);
+    });
+  });
+}
+
+/** Capture a private comparison receipt for a future linked note. The raw
+ * value and the account key never leave this store. This grants no write. */
+export function readJournalLinkWriteReceipt(): JournalLinkWriteReceipt {
+  try {
+    if (typeof window === 'undefined') return { status: 'held', reason: 'journal-unavailable' };
+    const sample = readAccountLocalSampleState();
+    if (sample === null) return { status: 'held', reason: 'journal-unavailable' };
+    const actor = { owner: activeAccountUid(), sample };
+    if (!journalActorMatches(actor)) return { status: 'held', reason: 'journal-changed' };
+    const key = activeAccountLocalStorageKey(STORAGE_KEY);
+    const storage = window.localStorage;
+    const raw = storage.getItem(key);
+    if (raw !== null && !journalNormalisationIsLossless(raw)) return { status: 'held', reason: 'normalisation-loss' };
+    const binding = { ...actor, storage, key, raw };
+    if (!journalBindingMatches(binding)) return { status: 'held', reason: 'journal-changed' };
+    const receipt = Object.freeze({ status: 'ready' } as const);
+    journalLinkBindings.set(receipt, binding);
+    return receipt;
+  } catch {
+    return { status: 'held', reason: 'journal-unavailable' };
+  }
+}
+
+export function journalLinkWriteReceiptMatches(receipt: JournalLinkWriteReceipt): boolean {
+  try {
+    const binding = journalLinkBindings.get(receipt);
+    return !!binding && journalBindingMatches(binding);
+  } catch {
+    return false;
   }
 }

@@ -23,16 +23,20 @@ export function bindMountedAccountLocalStorageUid(uid: string | null): void {
   mountedAccountUid = uid;
 }
 
-function sampleModeActive(): boolean {
-  if (typeof window === 'undefined') return false;
+/** Strict read for an admission guard. An unreadable flag is not a live namespace. */
+export function readAccountLocalSampleState(): boolean | null {
+  if (typeof window === 'undefined') return null;
   try {
-    // Keep this tiny check local instead of importing sample-mode.ts. That module imports
-    // demo-farm, which imports storage-backed design modules; importing it here would create
-    // a runtime cycle at the storage boundary itself.
-    return window.sessionStorage.getItem(SAMPLE_MODE_FLAG) === '1';
+    // The heavier sample module imports storage-backed design modules.
+    const flag = window.sessionStorage.getItem(SAMPLE_MODE_FLAG);
+    return flag === '1' ? true : flag === null ? false : null;
   } catch {
-    return false;
+    return null;
   }
+}
+
+function sampleModeActive(): boolean {
+  return readAccountLocalSampleState() === true;
 }
 
 export function accountLocalStorageKey(baseKey: string, uid: string | null | undefined): string {
