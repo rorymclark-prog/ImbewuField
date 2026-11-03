@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '5755417d7', changes: [
+    'Find India’s IMD district bulletin index in the country review.',
+  ], tour: [{ title: 'Find India’s district advisory index', where: 'International → Country review', href: '/international',
+    detail: 'Choose India to open the official index and see what still needs review.' }] },
   { when: '3 November 2026', sha: '58043df0b', changes: [
     'Find New Zealand’s S-map soil reference in the country review.',
   ] },
