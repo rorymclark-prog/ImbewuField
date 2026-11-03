@@ -10,6 +10,8 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Tsedzulusani tsumbo i songo mapiwaho",
   "Crop planner → Planning without a mapped site": "Mupulani wa zwilimwa → U pulana hu si na fhethu ho mapiwaho",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Kha mbethe wa maitele kana vhuvhambadzi ha henefho, nangani kana ni bvise mutheo wa tsumbo wa Afurika Tshipembe nga ho livhaho. Khetho i sala henefho kha vhupo ha u shumela.",
+  // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
+  "Open Terrain & Sections for the two cuts and extra contour detail.": "Vulani Terrain & Sections u vhona khethekanyo mbili na miṅwe mitalo ya vhulapfu.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
   "Sector illustrations have lighter arrows, clearer contours and a shorter map key.": "Zwifanyiso zwa Sector zwi na misevhe i leluwaho, mitalo ya vhulapfu i vhonalaho zwavhuḓi na ṱhalutshedzo pfufhi ya mapa.",
   // Raw profile: docs/audits/2026-11-03/raw-profile-release-drafts.json; UNREVIEWED AI draft.
