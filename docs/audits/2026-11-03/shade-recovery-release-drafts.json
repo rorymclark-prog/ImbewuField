@@ -1,0 +1,32 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "entries": [
+    {
+      "source": "Structures maps show recorded shade cloth over the illustrated beds.",
+      "drafts": {
+        "zu": "Amamephu eStructures abonisa indwangu yomthunzi erekhodiwe phezu kwemibhede edwetshiwe.",
+        "st": "Dimmapa tsa Structures di bontsha lesela la moriti le rekotilweng hodima dibethe tse takilweng.",
+        "ts": "Mimepe ya Structures yi komba lapi ra ndzhuti leri rhekhodiweke ehenhla ka mibedo leyi dirowiweke.",
+        "ve": "Mapa a Structures a sumbedza laphu ḽa murunzi ḽo rekhodiwaho nṱha ha mibhedzi yo olwaho."
+      }
+    },
+    {
+      "source": "Review the shade cover",
+      "drafts": {
+        "zu": "Hlola isembozo somthunzi",
+        "st": "Hlahloba sekoahelo sa moriti",
+        "ts": "Kambela xifunengeto xa ndzhuti",
+        "ve": "Ṱolani tshitsireledzi tsha murunzi"
+      }
+    },
+    {
+      "source": "Open Structures, then reassemble the saved AI artwork to show its shade cover.",
+      "drafts": {
+        "zu": "Vula iStructures, bese uhlanganisa futhi umdwebo we-AI ogciniwe ukuze ubonise isembozo somthunzi.",
+        "st": "Bula Structures, ebe o kopanya botjha setshwantsho sa AI se bolokilweng ho bontsha sekoahelo sa moriti.",
+        "ts": "Pfula Structures, kutani u tlhela u hlanganisa xifaniso xa AI lexi hlayisiweke ku komba xifunengeto xa ndzhuti.",
+        "ve": "Vulani Structures, ni kone u dovha na kuvhanganya tshifanyiso tsha AI tsho vhulungwaho uri tshi sumbedze tshitsireledzi tsha murunzi."
+      }
+    }
+  ]
+}

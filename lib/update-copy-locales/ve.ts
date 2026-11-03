@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Review the shade cover": "Ṱolani tshitsireledzi tsha murunzi",
+  "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Vulani Structures, ni kone u dovha na kuvhanganya tshifanyiso tsha AI tsho vhulungwaho uri tshi sumbedze tshitsireledzi tsha murunzi.",
+
+  // Shade recovery: docs/audits/2026-11-03/shade-recovery-release-drafts.json; UNREVIEWED AI draft.
+  "Structures maps show recorded shade cloth over the illustrated beds.": "Mapa a Structures a sumbedza laphu ḽa murunzi ḽo rekhodiwaho nṱha ha mibhedzi yo olwaho.",
   // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
   "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Mapa a Sector a shumisa mitalo ya vhuimo ha nṱha ya dzingu nga u angaredza, na khetho ya phurofaili ya mavu A–B.",
   // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.

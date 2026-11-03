@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'fe520c58e', changes: [
+    "Structures maps show recorded shade cloth over the illustrated beds.",
+  ], tour: [{title: 'Review the shade cover', where: 'Site design → Glossy', href: '/design',
+    detail: 'Open Structures, then reassemble the saved AI artwork to show its shade cover.'},
+  {title: 'Compare with your exact plan', where: 'Site design → Saved maps', href: '/design',
+    detail: 'Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.'}] },
   { when: '3 November 2026', sha: '7acc4a319', changes: [
     "Sector maps use regional overview contours, with an optional A–B terrain profile.",
   ] },
