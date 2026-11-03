@@ -44,6 +44,7 @@ const state = {
   consent: null as Record<string, unknown> | null,
   consentTransactions: false,
   revokeBeforeRetry: false,
+  moveOrgBeforeRetry: null as string | null,
   readProfileGate: null as null | Promise<void>,
   uid: 'mentor-uid' as string | null,
   sample: false as boolean | null,
@@ -73,6 +74,11 @@ export const runTransaction = async (_db, action) => {
   if (state.revokeBeforeRetry) {
     state.revokeBeforeRetry = false;
     state.consent = { ...state.consent, revoked_at: '2026-11-03T00:00:00.000Z' };
+    next = undefined;
+    result = await action(tx);
+  } else if (state.moveOrgBeforeRetry) {
+    state.profile = { ...state.profile, data: { ...state.profile.data, org_id: state.moveOrgBeforeRetry } };
+    state.moveOrgBeforeRetry = null;
     next = undefined;
     result = await action(tx);
   }
@@ -355,5 +361,34 @@ test('scope writes do not carry a grant to another organisation or restore withd
     state.consent = null;
     state.consentTransactions = false;
     state.revokeBeforeRetry = false;
+  }
+});
+
+test('a scope grant transaction retried after an organisation change rejects and preserves the original record', async () => {
+  state.consentTransactions = true;
+  const original = Object.freeze({
+    uid: state.uid,
+    org_id: 'org-1',
+    scopes: { production: true },
+    granted_at: '2026-11-01T00:00:00.000Z',
+    revoked_at: null,
+    updated_at: '2026-11-01T00:00:00.000Z',
+  });
+  state.consent = { ...original };
+  state.profile = { path: `profiles/${state.uid}`, data: { org_id: 'org-1', role: 'farmer' } };
+  state.moveOrgBeforeRetry = 'org-2';
+
+  try {
+    await assert.rejects(
+      setMyConsentScope('sales', true),
+      /Your account changed|organisation changed|profile changed|org_id/i,
+    );
+    assert.deepEqual(state.consent, original);
+    assert.notEqual(state.consent?.org_id, 'org-2');
+  } finally {
+    state.consent = null;
+    state.consentTransactions = false;
+    state.moveOrgBeforeRetry = null;
+    state.profile = { path: 'profiles/mentor-uid', data: { org_id: 'org-1', role: 'mentor' } };
   }
 });

@@ -724,13 +724,18 @@ async function writeMyConsent(change: { scope: ConsentScope; value: boolean } | 
   const target = doc(f.db, 'farmer_consents', u);
   const profile = doc(f.db, 'profiles', u);
   // Re-read on transaction retry so an older tab cannot restore a grant
-  // withdrawn by another tab while it was editing a different scope.
+  // withdrawn by another tab. A retry must keep the original recipient.
+  let originalOrg: string | null | undefined;
   return runTransaction(f.db, async transaction => {
     requireCurrent();
     const [snapshot, owner] = await Promise.all([transaction.get(target), transaction.get(profile)]);
     requireCurrent();
-    if (!snapshot.exists() && !change) return null;
     const org = (owner.data() as Profile | undefined)?.org_id ?? null;
+    if (originalOrg !== undefined && org !== originalOrg) {
+      throw new UserFacingError('Your organisation changed. Open sharing preferences again.');
+    }
+    originalOrg = org;
+    if (!snapshot.exists() && !change) return null;
     const now = new Date().toISOString();
     const current = consentForOwnerAndOrg(snapshot.exists() ? snapshot.data() as FarmerConsent : null, u, org)
       ?? emptyConsent(u, org, now);
