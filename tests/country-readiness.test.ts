@@ -283,3 +283,25 @@ test('New Zealand shows the S-map overview without treating conflicting terms as
   assert.equal(soil.resolution.status, 'unknown');
   assert.match(soil.missingDataBehavior, /No adapter/);
 });
+
+
+test('India’s undated district advisory index stays outside local crop planning', () => {
+  const date = '2026-11-03';
+  const result = evaluateCountryReadiness({ countryCode: 'IN', agriculturalRegionId: 'district' }, date);
+  assert.equal(result.country?.stage, 'research-queue');
+  assert.equal(result.status, 'reference-only');
+  assert.equal(result.region, null);
+  assert.equal(result.localReviewComplete, false);
+  assert.equal(result.productionPlanSupported, false);
+  assert.equal(result.southAfricanFallbackAllowed, false);
+  const weather = result.evidence.find(entry => entry.category === 'weather-frost')!;
+  assert.equal(weather.availableCount, 0);
+  assert.equal(weather.sources.length, 1);
+  const [index] = weather.sources;
+  assert.equal(index.url, 'https://mausam.imd.gov.in/responsive/agromet_adv_ser_district_current_en.php');
+  assert.equal(index.publishedOn, null);
+  assert.equal(sourceEvidenceState(index, date), 'undated');
+  assert.equal(index.licence.status, 'unknown');
+  assert.equal(index.updateCadence.status, 'unknown');
+  assert.match(index.missingDataBehavior, /No adapter/);
+});
