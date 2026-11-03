@@ -27,5 +27,5 @@
 .about p { padding: 8px 0; line-height: 1.6; }
 .about a { color: var(--text-primary); text-decoration: underline; }
 .imageError { padding: 20px; font-size: 14px; }
-@media (max-width: 480px) { .content { padding: 0 10px 14px; gap: 12px; } .switches { gap: 6px; } .switches button { flex: 1 1 140px; } .marker { width: 24px; height: 24px; font-size: 12px; } }
+@media (max-width: 480px) { .content { padding: 0 10px 14px; gap: 12px; } .switches { gap: 6px; } .switches button { flex: 1 1 110px; min-width: 0; } .marker { width: 24px; height: 24px; font-size: 12px; } }
 @media (prefers-reduced-motion: reduce) { .camera, .marker, .camera polygon { transition: none; } }
