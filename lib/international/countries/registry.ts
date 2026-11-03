@@ -92,6 +92,16 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
       limitations: 'The model does not measure individual fields or beds. Raster downloads and map services were not tested, and this reference does not approve crop recommendations.',
     }),
   ] },
+  { code: 'NZ', name: 'New Zealand', stage: 'research-queue', jurisdictionNote: 'S-map has incomplete coverage. Field conditions, local agricultural regions and planting requirements need separate review.', regions: [], agronomyReview: unreviewed(), sources: [
+    source('nz-mwlr-smap', 'soils', 'Manaaki Whenua – Landcare Research', 'https://soils.landcareresearch.co.nz/tools/s-map-online', 'Mapped parts of New Zealand; coverage varies by location', 'The provider describes S-map Online as an interactive soil map with location-specific fact sheets. Its overview shows incomplete coverage and conflicting descriptions of farmable-land coverage.', {
+      title: 'S-map Online',
+      accessedOn: '2026-11-03',
+      licence: unknown('The overview gives different licence descriptions. The S-map Online terms describe noncommercial, no-derivatives use and a separate commercial arrangement. Individual layer rights remain unverified.'),
+      attribution: 'Manaaki Whenua – Landcare Research, S-map Online. Check the provider’s terms for any proposed reuse.',
+      accessRequirements: known('Public overview. The provider describes a free login for map and fact-sheet access. The LRIS layer page did not expose layer access requirements.'),
+      limitations: 'The linked reference does not establish site coverage, soil measurements or crop recommendations. No map, fact sheet, layer or data service was accessed.',
+    }),
+  ] },
 ];
 
 export function countryProfile(code: string): CountryProfile | undefined {

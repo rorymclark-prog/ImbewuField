@@ -261,3 +261,25 @@ test('Australia exposes the dated modelled soil reference without admitting a re
   assert.match(soil.attribution, /10\.25919\/djdn-5x77/);
   assert.match(soil.missingDataBehavior, /No adapter/);
 });
+
+
+test('New Zealand shows the S-map overview without treating conflicting terms as reusable soil data', () => {
+  const date = '2026-11-03';
+  const result = evaluateCountryReadiness({ countryCode: 'NZ', agriculturalRegionId: 'new-zealand' }, date);
+  assert.equal(result.country?.stage, 'research-queue');
+  assert.equal(result.status, 'reference-only');
+  assert.equal(result.region, null);
+  assert.equal(result.localReviewComplete, false);
+  assert.equal(result.productionPlanSupported, false);
+  assert.equal(result.southAfricanFallbackAllowed, false);
+  const evidence = result.evidence.find(entry => entry.category === 'soils')!;
+  assert.equal(evidence.availableCount, 0);
+  assert.equal(evidence.sources.length, 1);
+  const [soil] = evidence.sources;
+  assert.equal(soil.url, 'https://soils.landcareresearch.co.nz/tools/s-map-online');
+  assert.equal(soil.publishedOn, null);
+  assert.equal(sourceEvidenceState(soil, date), 'undated');
+  assert.equal(soil.licence.status, 'unknown');
+  assert.equal(soil.resolution.status, 'unknown');
+  assert.match(soil.missingDataBehavior, /No adapter/);
+});
