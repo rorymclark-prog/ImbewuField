@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '05a789938', changes: [
+    "Compare English and draft wording for the Kenya, UK and US reference cards.",
+  ] },
   { when: '3 November 2026', sha: '59f169812', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
     'Keep your sowing records and nursery equipment while local planning is unavailable.',

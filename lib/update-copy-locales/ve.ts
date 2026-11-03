@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Pilot wording review: docs/international/reference-card-language-packets/release-copy.json; UNREVIEWED AI draft.
+  "Compare English and draft wording for the Kenya, UK and US reference cards.": "Vhambedzani maipfi a Luisimane na maipfi a sa athu u fhela kha magaraṱa a tshumiso a Kenya, UK na US.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Khwathisedzani shango ḽa fhethu ho mapiwaho musi ni sa athu shumisa vhulangeli ha u pulana zwilimwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Vhulungani rekhodo dzaṋu dza u zwala na zwishumiswa zwa nese musi pulane ya henefho i sa athu vha hone.",

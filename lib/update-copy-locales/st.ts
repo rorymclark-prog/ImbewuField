@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Pilot wording review: docs/international/reference-card-language-packets/release-copy.json; UNREVIEWED AI draft.
+  "Compare English and draft wording for the Kenya, UK and US reference cards.": "Bapisa mantsoe a Senyesemane le mantsoe a ntseng a lokisoa likareteng tsa litšupiso tsa Kenya, UK le US.",
   // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Netefatsa naha ea sebaka se mmepiloeng pele u sebelisa tataiso ea sona ea moralo oa lijalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Boloka lirekoto tsa hao tsa ho jala le lisebelisoa tsa nesari ea limela ha moralo oa sebaka o ntse o sa fumanehe.",

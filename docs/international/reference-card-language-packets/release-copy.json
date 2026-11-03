@@ -1,0 +1,14 @@
+{
+  "sourceEnglish": "Compare English and draft wording for the Kenya, UK and US reference cards.",
+  "sourceSha256": "e7cba37d602c93864ad039267cae3b6415aed7e1c92df2e731629580e6e52de3",
+  "implementationCommit": "05a789938e85b2f2d7a945386e72235e0dbce37a",
+  "provenance": "Codex AI draft for existing update notice languages",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeLanguagesAdded": [],
+  "drafts": {
+    "zu": "Qhathanisa umbhalo wesiNgisi nombhalo osalungiswa wamakhadi ezinkomba aseKenya, e-UK nase-US.",
+    "st": "Bapisa mantsoe a Senyesemane le mantsoe a ntseng a lokisoa likareteng tsa litšupiso tsa Kenya, UK le US.",
+    "ts": "Pimanisa marito ya Xinghezi ni marito lama ha lulamisiwaka eka makhadi ya swikombo swa Kenya, UK na US.",
+    "ve": "Vhambedzani maipfi a Luisimane na maipfi a sa athu u fhela kha magaraṱa a tshumiso a Kenya, UK na US."
+  }
+}
