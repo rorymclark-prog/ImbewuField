@@ -67,5 +67,24 @@
     ],
     "reviewedByHuman": false,
     "runtimeActivation": false
+  },
+  "ontario-soil": {
+    "sourceSha256": "731603992337c087fdf9ea1945c1c985018436839a9711c9b38d23705b4b1e84",
+    "draftsSha256": "ac834b10cf3cf74a61b1e30eba5686397ff6ad1bfe94bc5e7ac2669ed2689873",
+    "literals": [
+      "Open Government Licence \u2013 Ontario"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
+  },
+  "australia-soil": {
+    "sourceSha256": "0dc14102ca7283ab50900076c592e3575d9d7ef25cfa8a4843474f3e2277bbce",
+    "draftsSha256": "73a31c29369347fa1ec34de1e59439480d2d983f4621eb1646b24f04a4009396",
+    "literals": [
+      "Soil Depth Release 2",
+      "Creative Commons Attribution 4.0 International"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
   }
 }

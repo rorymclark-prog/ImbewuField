@@ -31,7 +31,8 @@ test('all four choices use the checked wording for the selected pilot and remain
       counts[pilot] = (counts[pilot] ?? 0) + rows.length;
     }
   }
-  assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16, colombia: 16, canada: 16 });
+  assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16, colombia: 16, canada: 16,
+    'ontario-soil': 16, 'australia-soil': 16 });
 });
 
 test('Colombian wording keeps the linked publication date and falls back if its year is lost', () => {
@@ -90,4 +91,17 @@ test('the Canada climate draft falls back to English when its historical period 
   const rows = referenceReviewRows(packet, 'sw');
   assert.deepEqual(rows.filter(row => row.origin === 'fallback').map(row => row.key), [climate.key]);
   assert.equal(rows.find(row => row.key === climate.key)?.text, climate.english);
+});
+
+
+test('a changed soil catalogue licence falls back only for the affected row', () => {
+  for (const id of ['ontario-soil', 'australia-soil'] as const) {
+    const packet = structuredClone(REFERENCE_REVIEW_PACKETS[id]);
+    const literal = packet.binding.literals.at(-1)!;
+    const row = packet.drafts.locales.fr.find(candidate => candidate.english.includes(literal))!;
+    row.translation = row.translation.replace(literal, '');
+    const rows = referenceReviewRows(packet, 'fr');
+    assert.deepEqual(rows.filter(candidate => candidate.origin === 'fallback').map(candidate => candidate.key), [row.key]);
+    assert.equal(rows.find(candidate => candidate.key === row.key)?.text, row.english);
+  }
 });

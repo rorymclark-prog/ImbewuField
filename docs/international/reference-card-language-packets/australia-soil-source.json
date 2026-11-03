@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "d32b24f4c1246d0515cc75c27698e4578680553e",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "787c8aa938796a4df33f8d4ff9c461713ca8413b6a95127fafac331920851480",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "australiaSoilClaim",
+      "english": "The official catalogue describes Soil Depth Release 2, a national model of soil-profile depth. It links raster downloads and map services.",
+      "sha256": "098761828b187727148ba57d10910afd516bf2c8c41ea05926055a17a17019c1"
+    },
+    {
+      "key": "australiaSoilCadence",
+      "english": "The catalogue lists updates as not planned for this release.",
+      "sha256": "0c0eed953039155c83bda8840056aa7ee78f24ff2274dcffe0b75e3c470bea89"
+    },
+    {
+      "key": "australiaSoilLicence",
+      "english": "The Soil Depth Release 2 dataset record lists Creative Commons Attribution 4.0 International.",
+      "sha256": "2077ba17c3f8e585183692f033e3c909d71c29b60540c715e30366a1d06df8ac"
+    },
+    {
+      "key": "australiaSoilLimits",
+      "english": "The model does not measure individual fields or beds. Raster downloads and map services were not tested, and this reference does not approve crop recommendations.",
+      "sha256": "8f270d57fa4aa42b518ee9ef9efb92a573c55e6863fd7d2643681bf5f22011e1"
+    }
+  ]
+}
