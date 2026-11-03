@@ -79,6 +79,8 @@ export interface GardenMember {
 export interface ProductionLog {
   id: string; profile_id: string; garden_id: string | null; crop: string; kg: number | null;
   quantity?: number; unit?: import('../farm-records').RecordUnit;
+  /** Calendar date explicitly entered by the grower; legacy logging time cannot fill it. */
+  observed_on?: string;
   photo_url: string | null; logged_at: string; created_at: string;
 }
 

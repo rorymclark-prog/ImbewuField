@@ -23,7 +23,10 @@ import {
   getMyProfile,
   WriteTimeoutError,
 } from '@/lib/db/queries';
-import { isSampleMode } from '@/lib/sample-mode';
+import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
+import { activeAccountUid, readAccountLocalSampleState } from '@/lib/account-local-storage';
+import { validProjectDate } from '@/lib/international/projects/evaluate';
+import { localTodayISODate } from '@/lib/field-teams';
 import {
   Sprout,
   ArrowRight,
@@ -291,6 +294,7 @@ interface ProdFormState {
   crop: string;
   cropKey: string | null;
   quantity: string;
+  observedOn: string;
   unit: RecordUnit;
   photoFile: File | null;
   photoPreview: string;
@@ -304,13 +308,23 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   const [form, setForm] = useState<ProdFormState>({
     crop: '',
     cropKey: null,
-    quantity: '', unit: 'kg',
+    quantity: '', unit: 'kg', observedOn: '',
     photoFile: null,
     photoPreview: '',
     loading: false,
     error: '',
   });
   const fileRef = useRef<HTMLInputElement>(null);
+  const writeGeneration = useRef(0);
+
+  useEffect(() => {
+    const revoke = () => { writeGeneration.current++; };
+    window.addEventListener(SAMPLE_MODE_EVENT, revoke);
+    return () => {
+      revoke();
+      window.removeEventListener(SAMPLE_MODE_EVENT, revoke);
+    };
+  }, []);
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -348,26 +362,44 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
       setForm((f) => ({ ...f, error: 'Enter a product and a quantity greater than zero.' }));
       return;
     }
+    const observedOn = form.observedOn;
+    if (observedOn && (!validProjectDate(observedOn) || observedOn > localTodayISODate())) {
+      setForm((f) => ({ ...f, error: 'Enter a valid harvest date that is today or earlier.' }));
+      return;
+    }
+    const sample = readAccountLocalSampleState(), owner = activeAccountUid(), generation = writeGeneration.current;
+    const isCurrent = () => writeGeneration.current === generation && sample !== null && readAccountLocalSampleState() === sample
+      && (sample || (!!owner && activeAccountUid() === owner && getFirebase()?.auth.currentUser?.uid === owner));
+    const requireCurrent = () => {
+      if (!isCurrent()) throw new Error('Your account or workspace changed. Reopen your harvest records before saving.');
+    };
     setForm((f) => ({ ...f, loading: true, error: '' }));
     try {
+      requireCurrent();
       const quantityFields = recordQuantityPayload(quantity, form.unit);
       let photo_url: string | null = null;
       if (form.photoFile) {
         const resized = await resizeFileForUpload(form.photoFile);
+        requireCurrent();
         photo_url = await uploadPhoto(resized, 'produce');
       }
       await addProduction({
         crop,
         ...quantityFields,
         logged_at: new Date().toISOString(),
+        ...(observedOn ? { observed_on: observedOn } : {}),
         ...(photo_url ? { photo_url } : {}),
-      });
+      }, isCurrent);
+      if (!isCurrent()) {
+        setForm((f) => ({ ...f, loading: false }));
+        return;
+      }
       setForm((f) => {
         if (f.photoPreview) URL.revokeObjectURL(f.photoPreview);
         return {
           crop: '',
           cropKey: null,
-          quantity: '', unit: 'kg',
+          quantity: '', unit: 'kg', observedOn: '',
           photoFile: null,
           photoPreview: '',
           loading: false,
@@ -388,7 +420,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           return {
             crop: '',
             cropKey: null,
-            quantity: '', unit: 'kg',
+            quantity: '', unit: 'kg', observedOn: '',
             photoFile: null,
             photoPreview: '',
             loading: false,
@@ -396,7 +428,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           };
         });
         if (fileRef.current) fileRef.current.value = '';
-        onSaved();
+        if (isCurrent()) onSaved();
         return;
       }
       setForm((f) => ({ ...f, loading: false, error: err instanceof Error ? err.message : t('myRecordsSaveError') }));
@@ -418,6 +450,12 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           />
         </div>
         <RecordQuantityFields idPrefix="picked" label="Quantity picked" quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} />
+        <label className="block">
+          <FieldLabel>{recordsFill(lang, 'Harvest date (optional)')}</FieldLabel>
+          <input type="date" value={form.observedOn} disabled={form.loading}
+            className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-1)] px-3 py-2 text-sm"
+            onChange={(event) => setForm((current) => ({ ...current, observedOn: event.target.value }))} />
+        </label>
         <div>
           <FieldLabel>{t('myRecordsPhotoLabel')}</FieldLabel>
           {form.photoPreview && (
@@ -830,7 +868,9 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
               {harvestCropLabel(item.crop, lang)}
             </p>
             <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-              {fmtDate(item.logged_at, lang)}
+              {validProjectDate(item.observed_on)
+                ? <>{recordsFill(lang, 'Picked on')} <time dateTime={item.observed_on}>{item.observed_on}</time></>
+                : <>{recordsFill(lang, 'Recorded on')} {fmtDate(item.logged_at, lang)}</>}
             </p>
           </div>
           <div
