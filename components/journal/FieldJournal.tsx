@@ -20,14 +20,25 @@ import {
   createJournalEntry,
   editJournalEntry,
   formatJournalDate,
+  exportJournalLegacyReview,
   groupJournalByMonth,
+  initialiseJournalCutover,
   journalCategory,
   journalSummary,
   loadJournal,
+  keepCurrentJournalAfterLegacyReview,
+  readCanonicalJournal,
+  readJournalLegacyCandidates,
+  readJournalLegacyReview,
+  recoverJournalLegacyNotes,
   removeJournalEntry,
   saveJournal,
   todayISODate,
   upsertJournalEntry,
+  writeCanonicalJournal,
+  type CanonicalJournalChange,
+  type CanonicalJournalView,
+  type JournalLegacyReview,
   type JournalCategory,
   type JournalEntry,
   type JournalEntryInput,
@@ -38,7 +49,11 @@ import motion from './JournalMotion.module.css';
 import explore from './JournalExplore.module.css';
 import { filterJournalEntries, journalFilterOptions, journalDateRangeError, journalBedFilterValue } from '@/lib/journal-view';
 import { downloadJournalCsv, downloadJournalHtml } from '@/lib/journal-export';
-import { isSampleMode } from '@/lib/sample-mode';
+import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
+import { FIELD_JOURNAL_CANONICAL_KEY, FIELD_JOURNAL_LEGACY_KEY, readAccountLocalSampleState } from '@/lib/account-local-storage';
+import { isBackendConfigured } from '@/lib/firebase/init';
+import { downloadFile } from '@/lib/file-delivery';
+import { JournalLegacyReviewPanel, type JournalLegacyCandidate } from './JournalLegacyReviewPanel';
 import { parseTaskJournalQuery } from '@/lib/task-record-link';
 import JournalPhotoReview from './JournalPhotoReview';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
@@ -121,7 +136,7 @@ export default function FieldJournal() {
   const [exporting, setExporting] = useState(false);
   const [includePhotos, setIncludePhotos] = useState(true);
   const [exportNotice, setExportNotice] = useState<FarmMemoryKey | null>(null);
-  const [sheet, setSheet] = useState<{ open: boolean; entry: JournalEntry | null; draft?: Partial<JournalEntryInput> }>({ open: false, entry: null });
+  const [sheet, setSheet] = useState<{ open: boolean; entry: JournalEntry | null; draft?: Partial<JournalEntryInput>; view?: CanonicalJournalView }>({ open: false, entry: null });
   const [notice, setNotice] = useState<string | null>(null);
   // bug-03: shown INSIDE the sheet (which overlays everything below it), because a storage-full
   // failure used to close the sheet on the farmer, taking the typed note with it. Kept separate
@@ -132,14 +147,68 @@ export default function FieldJournal() {
   const resultsRef = useRef<HTMLDivElement>(null);
   const [historyScrollRequest, setHistoryScrollRequest] = useState(0);
 
-  const refresh = useCallback(() => setEntries(loadJournal()), []);
+  const [book, setBook] = useState<CanonicalJournalView>();
+  const [recovery, setRecovery] = useState<{ review: JournalLegacyReview; candidates: readonly JournalLegacyCandidate[] } | null>(null);
+  const [selection, setSelection] = useState<readonly string[]>([]);
+  const [backupRequested, setBackupRequested] = useState(false);
+  const [working, setWorking] = useState(false);
+  const [recoveryNotice, setRecoveryNotice] = useState('');
+  const pending = useRef(false);
+  const loadGeneration = useRef(0);
+  const modeGeneration = useRef(0);
+
+  const refresh = useCallback(async (initialise = false) => {
+    const generation = ++loadGeneration.current;
+    const sample = readAccountLocalSampleState();
+    // The signed-in/guest cutover also needs mixed-version transfer review.
+    if (isBackendConfigured() || sample === true) {
+      setBook(undefined);
+      setRecovery(null);
+      setEntries(loadJournal());
+      setReady(true);
+      return;
+    }
+    let view = await readCanonicalJournal();
+    if (initialise && view.status === 'held' && view.reason === 'upgrade-required') {
+      const cutover = await initialiseJournalCutover();
+      view = cutover.status === 'ready' ? await readCanonicalJournal() : cutover;
+    }
+    const review = view.status === 'held' && view.reason === 'legacy-diverged' ? await readJournalLegacyReview() : null;
+    const candidates = review && readJournalLegacyCandidates(review);
+    if (generation !== loadGeneration.current) return;
+    setBook(view);
+    setEntries(view.status === 'ready' ? [...view.entries] : []);
+    setReady(view.status === 'ready');
+    setRecovery(review && candidates ? { review, candidates } : null);
+    setSelection([]);
+    setBackupRequested(false);
+  }, []);
 
   useEffect(() => {
-    refresh();
-    setReady(true);
-    const onChanged = () => refresh();
+    void refresh(true);
+    const onChanged = () => { void refresh(); };
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === FIELD_JOURNAL_LEGACY_KEY || event.key === FIELD_JOURNAL_CANONICAL_KEY || event.key === null) onChanged();
+    };
+    const onSampleChanged = () => {
+      modeGeneration.current++;
+      setSheet({ open: false, entry: null });
+      setEntries([]);
+      setReady(false);
+      setRecovery(null);
+      setRecoveryNotice('');
+      void refresh(true);
+    };
     window.addEventListener(JOURNAL_CHANGED_EVENT, onChanged);
-    return () => window.removeEventListener(JOURNAL_CHANGED_EVENT, onChanged);
+    window.addEventListener('storage', onStorage);
+    window.addEventListener(SAMPLE_MODE_EVENT, onSampleChanged);
+    return () => {
+      loadGeneration.current++;
+      modeGeneration.current++;
+      window.removeEventListener(JOURNAL_CHANGED_EVENT, onChanged);
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener(SAMPLE_MODE_EVENT, onSampleChanged);
+    };
   }, [refresh]);
 
   useEffect(() => {
@@ -149,7 +218,7 @@ export default function FieldJournal() {
     if (!draft) return;
     // The plan gives context, not proof that work happened. Only saving the
     // editable sheet creates an observation, dated today rather than a plan month.
-    setSheet({ open: true, entry: null, draft: {
+    setSheet({ open: true, entry: null, view: book, draft: {
       date: todayISODate(), title: draft.title, category: draft.category,
       cropName: draft.cropName, bedId: draft.bedId ?? null,
       bedLabel: draft.bedLabel ?? null, notes: '',
@@ -158,7 +227,7 @@ export default function FieldJournal() {
     // Keep the app router's URL in step with browser history so returning to
     // this page cannot replay a draft that was already saved or cancelled.
     router.replace(`${url.pathname}${url.search}${url.hash}`, { scroll: false });
-  }, [ready, router]);
+  }, [book, ready, router]);
 
   // Bed/plot options come from the SAME source the crop planner uses (main saved
   // place → Design-Studio canvas → bridge), so a journal entry tagged "Bed 4"
@@ -269,11 +338,49 @@ export default function FieldJournal() {
   }
 
   function openSheet(entry: JournalEntry | null) {
+    if (!ready || pending.current) return;
     setSheetError(null);
-    setSheet({ open: true, entry });
+    setSheet({ open: true, entry, view: book });
+  }
+
+  async function runJournalAction(action: (isCurrent: () => boolean) => Promise<void>) {
+    if (pending.current) return;
+    pending.current = true;
+    setWorking(true);
+    const generation = modeGeneration.current;
+    const isCurrent = () => generation === modeGeneration.current;
+    try { await action(isCurrent); }
+    finally { pending.current = false; setWorking(false); }
+  }
+
+  function persistCanonical(change: CanonicalJournalChange) {
+    const view = sheet.view;
+    if (view?.status !== 'ready') return;
+    void runJournalAction(async isCurrent => {
+      const result = await writeCanonicalJournal(view, change);
+      if (!isCurrent()) return;
+      if (result.status === 'saved') {
+        setSheetError(null);
+        setSheet({ open: false, entry: null });
+        await refresh();
+        return;
+      }
+      setSheetError(result.status === 'unconfirmed'
+        ? 'The save could not be confirmed. Check the journal before trying again.'
+        : result.reason === 'journal-full'
+          ? 'The journal is full. Your existing notes and photos are kept.'
+          : result.reason === 'invalid-note'
+            ? 'Check the date and wording before saving this note.'
+            : 'The journal changed or is busy. Your draft is still here. Open the current journal before saving again.');
+      await refresh();
+    });
   }
 
   function handleSave(input: JournalEntryInput) {
+    if (sheet.view) {
+      persistCanonical(sheet.entry ? { kind: 'edit', id: sheet.entry.id, input } : { kind: 'add', input });
+      return;
+    }
     const entry = sheet.entry ? editJournalEntry(sheet.entry, input) : createJournalEntry(input);
     const ok = persist(upsertJournalEntry(entries, entry));
     // bug-03: only close (and so only discard the sheet's own draft state) once the save actually
@@ -282,9 +389,44 @@ export default function FieldJournal() {
   }
 
   function handleDelete(id: string) {
+    if (sheet.view) {
+      persistCanonical({ kind: 'delete', id });
+      return;
+    }
     persist(removeJournalEntry(entries, id));
     setSheetError(null);
     setSheet({ open: false, entry: null });
+  }
+
+  function downloadRecoveryCopy() {
+    if (!recovery || pending.current) return;
+    try {
+      const copy = exportJournalLegacyReview(recovery.review);
+      if (copy) {
+        downloadFile(new Blob([copy.json], { type: 'application/json' }), copy.filename);
+        setBackupRequested(true);
+        setRecoveryNotice('Check that your private backup downloaded before continuing.');
+        return;
+      }
+    } catch { /* Keep acknowledgement disabled when download could not start. */ }
+    setBackupRequested(false);
+    setRecoveryNotice('The backup could not start. Check the current journal and try again.');
+  }
+
+  function resolveRecovery(recoverSelected: boolean) {
+    if (!recovery || !backupRequested) return;
+    void runJournalAction(async isCurrent => {
+      const result = recoverSelected
+        ? await recoverJournalLegacyNotes(recovery.review, selection)
+        : await keepCurrentJournalAfterLegacyReview(recovery.review);
+      if (!isCurrent()) return;
+      setRecoveryNotice(result.status === 'recovered'
+        ? `Recovered notes: ${result.count}.`
+        : result.status === 'kept'
+          ? 'The current journal is ready.'
+          : 'The journal could not confirm that change. Check the current copies before trying again.');
+      await refresh();
+    });
   }
 
   return (<>
@@ -319,6 +461,7 @@ export default function FieldJournal() {
           type="button"
           className={motion.newEntry}
           onClick={() => openSheet(null)}
+          disabled={!ready || working}
           style={{
             width: '100%', minHeight: 50, borderRadius: 14, border: 'none', cursor: 'pointer',
             background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', font: '700 15px/1 var(--font-sans), sans-serif',
@@ -414,6 +557,30 @@ export default function FieldJournal() {
 
       </aside>
       <div className={`${workspace.journalTimeline} ${explore.timeline}`}>
+      {book?.status === 'held' && (recovery ? (
+        <JournalLegacyReviewPanel review={recovery.review} candidates={recovery.candidates} selectedIds={selection}
+          busy={working} canKeep={backupRequested}
+          onToggleCandidate={id => setSelection(previous => previous.includes(id) ? previous.filter(selected => selected !== id) : [...previous, id])}
+          onRecoverSelected={() => resolveRecovery(true)} onDownload={downloadRecoveryCopy} onKeepCurrent={() => resolveRecovery(false)}
+          labels={{
+            heading: 'Review the older journal',
+            description: 'Another version changed the older copy. Save a private backup of both copies before choosing what to keep.',
+            currentCount: `Notes in the current journal: ${recovery.review.currentCount}`,
+            olderCount: `Notes in the older copy: ${recovery.review.olderCount}`,
+            olderUnreadable: 'The older copy could not be read. The backup still preserves it.',
+            download: 'Download both copies',
+            keepCurrent: 'Keep the current journal',
+            chooseNotes: 'Choose older notes to recover',
+            noCandidates: 'There are no older-only notes available to recover.',
+            recoverSelected: 'Recover selected notes',
+          }} />
+      ) : (
+        <div className={explore.exports}>
+          <p role="status">The journal is held. Check the browser storage and close older journal tabs before trying again.</p>
+          <div className={explore.exportButtons}><button type="button" onClick={() => void refresh(true)} disabled={working}>Check again</button></div>
+        </div>
+      ))}
+      {recoveryNotice && <p role="status" className={explore.help}>{recoveryNotice}</p>}
       {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
         Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
       </div>}
@@ -646,7 +813,7 @@ export default function FieldJournal() {
           error={sheetError}
           onSave={handleSave}
           onDelete={handleDelete}
-          onClose={() => { setSheetError(null); setSheet({ open: false, entry: null }); }}
+          onClose={() => { if (!pending.current) { setSheetError(null); setSheet({ open: false, entry: null }); } }}
         />
       )}
     </div>

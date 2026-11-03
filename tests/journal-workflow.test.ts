@@ -93,3 +93,32 @@ test('journal exports contain exactly the searched and date-filtered entries, an
     assert.match(text(app.renderer.root), /No matching entries/);
   } finally { await app.close(); }
 });
+
+test('a device-only draft stays bound to the copy that opened it, even after a journal refresh', async () => {
+  const original: journal.CanonicalJournalView = { status: 'ready', entries: [] };
+  const newer: journal.CanonicalJournalView = { status: 'ready', entries: [entry('newer', 'Newer note', '2026-11-03', '')] };
+  let current: journal.CanonicalJournalView = { status: 'held', reason: 'upgrade-required' };
+  let copies = 0;
+  const offered: journal.CanonicalJournalView[] = [];
+  const app = await mount({ simple: true, canonical: {
+    readCanonicalJournal: async () => current,
+    initialiseJournalCutover: async () => { copies++; current = original; return { status: 'ready' }; },
+    writeCanonicalJournal: async view => {
+      offered.push(view);
+      return view === current ? { status: 'saved', noteId: 'synthetic' } : { status: 'held', reason: 'context-changed' };
+    },
+  } });
+  try {
+    assert.equal(copies, 1);
+    await act(async () => button(app.renderer, 'Add a note').props.onClick());
+    await act(async () => app.renderer.root.findByType('textarea').props.onChange({ target: { value: 'Keep this draft.' } }));
+    current = newer;
+    await act(async () => { app.browser.dispatchEvent(new Event(journal.JOURNAL_CHANGED_EVENT)); });
+    await act(async () => app.renderer.root.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.deepEqual(offered, [original]);
+    assert.equal(offered[0], original);
+    assert.equal(app.writes.length, 0);
+    assert.equal(app.renderer.root.findByType('textarea').props.value, 'Keep this draft.');
+    assert.match(text(app.renderer.root.findByType(app.Sheet)), /draft is still here/);
+  } finally { await app.close(); }
+});
