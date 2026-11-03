@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
+  "Open Terrain & Sections for the two cuts and extra contour detail.": "Bula Terrain & Sections ho bona dikarolo tse pedi le mela e meng ya bophahamo.",
+  // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
+  "Sector illustrations have lighter arrows, clearer contours and a shorter map key.": "Ditshwantsho tsa Sector di na le metsu e bobebe, mela e hlakileng ya bophahamo le senotlolo se sekgutshwane sa mmapa.",
+  // Raw profile: docs/audits/2026-11-03/raw-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Terrain profiles show sampled elevation and classroom positions at the plan scale.": "Diprofaele tsa sebaka di bontsha bophahamo bo nkilweng disampoleng le dibaka tsa ditlelase sekaleng sa moralo.",
   "Review the shade cover": "Hlahloba sekoahelo sa moriti",
   "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Bula Structures, ebe o kopanya botjha setshwantsho sa AI se bolokilweng ho bontsha sekoahelo sa moriti.",
 

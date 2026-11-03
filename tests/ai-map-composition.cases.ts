@@ -6,7 +6,9 @@ import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtwo
 import { PHASING_ARTWORK_PROMPT_MARKER, buildPhasingRestylePrompt } from '../lib/producer-prompt.ts';
 import { UBHEJANE_BEFORE_WORKS, historicalBaselineForSite, historicalBaselineFromPrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, historicalBaselinePrompt } from '../lib/historical-map-baseline.ts';
 import { createHash } from 'node:crypto';
-import { sectorOverviewContours, sectorTerrainProfile } from '../lib/sheet-terrain-profile.ts';
+import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, rasterTerrainContours, fetchProfileTerrain, TERRAIN_CONTOUR_INK } from '../lib/sheet-terrain-profile.ts';
+import { terrainPixel, terrainRasterWindow, extractTerrainRaster, sampleTerrainRaster, type TerrainRaster } from '../lib/terrain-raster.ts';
+import { makeMercatorUnprojector } from '../lib/design-canvas.ts';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
@@ -481,7 +483,7 @@ test('Sector keeps paid colour and contrast while exact analysis still uses its 
     fetchSectorPresentationContours:async()=>({lines:[]}),loadImage:async(src:string)=>({src}),
     drawPaperWash:()=>{throw Error('a paid illustration must not receive the photo veil');},
     drawAnalysisBase:async()=>{quiet++;},authoritativeHouseFootprints:()=>[],drawBlueprintBoundary:()=>{},
-    BOUNDARY_LINE_GREEN:'#95B34F',
+    BOUNDARY_LINE_GREEN:'#95B34F', TERRAIN_CONTOUR_INK,
     drawSectorAnalysis:()=>({rows:[{color:'#95B34F',label:'Site boundary',style:'line'}],contextLabel:'Evidence',noteText:'Real analysis'}),
     drainCanvasToDataUrl:()=> 'map-art',composeStyleSheet:async(...args:any[])=>{options=args.at(-1);return 'sheet';},
   });
@@ -725,4 +727,82 @@ test('Structures recovery adds only recorded permeable shade covers while retain
   assert.equal(draw(state,{imgW:100,mPerPx:1},'structures',300,300),'net-only');assert.equal(symbols.length,1);assert.deepEqual(symbols[0].slice(2,4),[30,45]);
   assert.ok(probe.calls.some(v=>v[0]==='set'&&v[1]==='globalAlpha'&&v[2]===.5),'beds must remain visible through the net');
   assert.ok(probe.calls.some(v=>v[0]==='rotate'&&v[1]===4*Math.PI/180));assert.equal(JSON.stringify(state),before);
+});
+
+
+test('raw terrain sampling honours pixel centres and retains a real raster peak instead of fitting a straight slope',()=>{
+  const size=256*2**14;
+  const lon=(x:number)=>x/size*360-180,lat=(y:number)=>180/Math.PI*Math.atan(Math.sinh(Math.PI-2*Math.PI*y/size));
+  const r:TerrainRaster={source:'mapbox.terrain-rgb',zoom:14,tileSize:256,originX:100,originY:100,width:3,height:3,elevations:[0,0,0,0,12,0,0,0,0],verticalDatum:'mixed-unverified'};
+  const peak=sampleTerrainRaster(r,lon(101.5),lat(101.5))!;assert.ok(Math.abs(peak.elevationM-12)<1e-6);
+  assert.ok(Math.abs(sampleTerrainRaster(r,lon(101),lat(101))!.elevationM-3)<1e-6,'a half pixel shift must be visible');
+  assert.equal(sampleTerrainRaster(r,lon(99),lat(100)),null,'outside coverage is unknown, never zero metres');
+  assert.equal(terrainRasterWindow(-180,-86,180,86),null);assert.equal(terrainRasterWindow(30,-28,31,-27),null,'raw payload has its own strict pixel budget');
+  assert.equal(extractTerrainRaster([[1]],0,0,{originX:0,originY:0,width:2,height:2}),null);
+});
+
+test('sampled section crosses both saved classrooms, plots actual varying raster values and preserves plan geometry',()=>{
+  const frame:any={centerLng:31.96317,centerLat:-27.72619,zoom:18,imgW:200,imgH:200,mPerPx:.5};
+  const unproject=makeMercatorUnprojector(frame.centerLng,frame.centerLat,frame.zoom,frame.imgW,frame.imgH);
+  const boundary:Point[]=[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],ll=boundary.map(unproject),window=terrainRasterWindow(Math.min(...ll.map(p=>p[0])),Math.min(...ll.map(p=>p[1])),Math.max(...ll.map(p=>p[0])),Math.max(...ll.map(p=>p[1])))!;
+  const r:TerrainRaster={source:'mapbox.terrain-rgb',zoom:14,tileSize:256,...window,elevations:Array.from({length:window.width*window.height},(_,i)=>300+(i%window.width)**2),verticalDatum:'mixed-unverified'};
+  const buildings=[{label:'Classroom 1',ring:[[.25,.4],[.35,.4],[.35,.6],[.25,.6]] as Point[]},{label:'Classroom 2',ring:[[.65,.4],[.75,.4],[.75,.6],[.65,.6]] as Point[]}];
+  const before=JSON.stringify({frame,boundary,buildings,r}),p=rasterTerrainProfile(r,boundary,buildings,frame)!;
+  assert.ok(p);assert.ok(Math.abs(p.lengthM-80)<1e-8);assert.equal(p.buildings.length,2);
+  assert.ok(Math.abs(p.buildings[0].startM-15)<1e-8);assert.ok(Math.abs(p.buildings[0].endM-25)<1e-8);
+  assert.ok(Math.abs(p.buildings[1].startM-55)<1e-8);assert.ok(Math.abs(p.buildings[1].endM-65)<1e-8);
+  assert.ok(p.points.length>30);assert.ok(p.supportingPixelCount<p.points.length,'interpolation is not independent samples');
+  const mid=p.points[Math.floor(p.points.length/2)];assert.ok(Math.abs(mid.elevationM-(p.points[0].elevationM+p.points.at(-1)!.elevationM)/2)>.01,'real nonlinearity must survive');
+  assert.equal(JSON.stringify({frame,boundary,buildings,r}),before);
+  assert.equal(rasterTerrainProfile({...r,elevations:[]},boundary,buildings,frame),null);
+});
+
+test('profile fetch requests original-frame posted pixels and rejects contour-only or incomplete responses',async()=>{
+  const f:any={centerLng:31.9,centerLat:-27.7,zoom:18,imgW:960,imgH:640,mPerPx:.24},b:Point[]=[[.3,.3],[.7,.3],[.7,.7],[.3,.7]];
+  let requested='';assert.equal(await fetchProfileTerrain(f,b,async url=>{requested=url;return{ok:true,json:async()=>({type:'FeatureCollection',features:[]})};}),null);
+  const params=new URL(requested,'https://example.test').searchParams,unproject=makeMercatorUnprojector(f.centerLng,f.centerLat,f.zoom,f.imgW,f.imgH);
+  assert.equal(params.get('terrain'),'pixels');assert.equal(Number(params.get('minLon')),unproject(b[0])[0]);
+  assert.equal(await fetchProfileTerrain(f,b,async()=>({ok:false,json:async()=>{throw Error('must not parse failure');}})),null);
+  const route=readFileSync(new URL('../app/api/contours/route.ts',import.meta.url),'utf8');
+  assert.ok(route.indexOf("guardPaidApiRequest(req, 'contours')")<route.indexOf('CACHE.get(cacheKey)'),'raw pixels share the existing authenticated gate before any cache read');
+  assert.match(route,/pixels:\$\{rasterWindow.originX\},\$\{rasterWindow.originY\},\$\{rasterWindow.width\},\$\{rasterWindow.height\}/,'raster cache identity must include the actual returned window');
+});
+
+
+test('profile raster uses the supported unbuffered tileset and refuses unexpected tile dimensions',async()=>{
+  const route=readFileSync(new URL('../app/api/contours/route.ts',import.meta.url),'utf8'),ast=ts.createSourceFile('route.ts',route,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS);
+  const fn=ast.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='fetchTileElevations')!;
+  const js=ts.transpileModule(fn.getText(ast),{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+  let requested='',width=256;const data=new Uint8Array(256*256*4);for(let i=0;i<data.length;i+=4){data[i]=1;data[i+1]=150;data[i+2]=160;data[i+3]=255;}
+  const get=new Function('fetch','PNG','TILE_SIZE','Buffer',js+';return fetchTileElevations;')(async(url:string)=>{requested=url;return{ok:true,arrayBuffer:async()=>new ArrayBuffer(0)};},{sync:{read:()=>({width,height:256,data})}},256,Buffer);
+  const rows=await get(14,9646,9506,'fixture-token',true);assert.match(requested,/\/mapbox\.terrain-rgb\/14\/9646\/9506\.pngraw/);assert.ok(rows?.length===256);assert.ok(Math.abs(rows[0][0]-409.6)<1e-6);
+  width=258;assert.equal(await get(14,9646,9506,'fixture-token',true),null,'SDK buffered pixels cannot masquerade as a 256-pixel georeferenced tile');
+});
+
+
+test('main section follows the property-wide downhill fit separately from the two-classroom cut',()=>{
+  const frame:any={centerLng:31.96317,centerLat:-27.72619,zoom:18,imgW:200,imgH:200,mPerPx:.5};
+  const b:Point[]=[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],ll=b.map(makeMercatorUnprojector(frame.centerLng,frame.centerLat,frame.zoom,frame.imgW,frame.imgH));
+  const win=terrainRasterWindow(Math.min(...ll.map(p=>p[0])),Math.min(...ll.map(p=>p[1])),Math.max(...ll.map(p=>p[0])),Math.max(...ll.map(p=>p[1])))!;
+  const r:TerrainRaster={source:'mapbox.terrain-rgb',zoom:14,tileSize:256,...win,elevations:Array.from({length:win.width*win.height},(_,i)=>350-2*Math.floor(i/win.width)+(i===Math.floor(win.width*win.height/2)?1.4:0)),verticalDatum:'mixed-unverified'};
+  const buildings=[{label:'Classroom 1',ring:[[.25,.4],[.35,.4],[.35,.6],[.25,.6]] as Point[]},{label:'Classroom 2',ring:[[.65,.4],[.75,.4],[.75,.6],[.65,.6]] as Point[]}];
+  const out=rasterTerrainSections(r,b,buildings,frame)!;
+  assert.ok(out&&out.fitPosts>=6);assert.ok(out.downhill.a[1]<.2&&out.downhill.b[1]>.8);assert.ok(Math.abs(out.downhill.a[0]-out.downhill.b[0])<.05,'one pixel cannot turn the site axis sideways');
+  assert.ok(out.downhill.points[0].elevationM>out.downhill.points.at(-1)!.elevationM);assert.equal(out.downhill.buildings.length,0,'off-line footprints must not appear on the downhill cut');
+  assert.equal(out.buildingsSection?.buildings.length,2);assert.ok(Math.abs(out.buildingsSection!.a[1]-out.buildingsSection!.b[1])<1e-8);
+  assert.equal(rasterTerrainSections({...r,elevations:r.elevations.map(()=>330)},b,buildings,frame),null,'flat data cannot invent a main fall');
+});
+
+
+test('Terrain & Sections supplementary contours use the same posted grid and clip to the saved field',()=>{
+  const frame:any={centerLng:31.96317,centerLat:-27.72619,zoom:18,imgW:200,imgH:200,mPerPx:.5};
+  const b:Point[]=[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],unproject=makeMercatorUnprojector(frame.centerLng,frame.centerLat,frame.zoom,frame.imgW,frame.imgH),ll=b.map(unproject);
+  const win=terrainRasterWindow(Math.min(...ll.map(p=>p[0])),Math.min(...ll.map(p=>p[1])),Math.max(...ll.map(p=>p[0])),Math.max(...ll.map(p=>p[1])))!;
+  const r:TerrainRaster={source:'mapbox.terrain-rgb',zoom:14,tileSize:256,...win,elevations:Array.from({length:win.width*win.height},(_,i)=>350-1.5*Math.floor(i/win.width)),verticalDatum:'mixed-unverified'};
+  const lines=rasterTerrainContours(r,b,frame);assert.ok(lines.some(line=>line.major));assert.ok(lines.some(line=>!line.major));
+  for(const line of lines){
+    assert.equal(line.major,line.elevM%5===0);assert.equal(line.elevM%2.5,0);
+    for(const point of line.points){assert.ok(point.every(n=>n>=.1-1e-8&&n<=.9+1e-8),'must stop at the actual boundary');assert.ok(Math.abs(sampleTerrainRaster(r,...unproject(point))!.elevationM-line.elevM)<1e-6,'half-pixel displacement must fail on a known gradient');}
+  }
+  assert.deepEqual(rasterTerrainContours({...r,elevations:r.elevations.map(()=>330)},b,frame),[]);
 });

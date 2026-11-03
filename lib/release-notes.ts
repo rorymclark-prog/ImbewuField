@@ -50,6 +50,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'Review connected assistants, selected sites and imported originals.' },
   { title: 'Check your saved map', where: 'Site design', href: '/design',
     detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
+  { when: '3 November 2026', sha: '80eb2f0b5', changes: [
+    "Open Terrain & Sections for the two cuts and extra contour detail.",
+  ] },
+  { when: '3 November 2026', sha: '3d0f89c1e', changes: [
+    "Terrain profiles show sampled elevation and classroom positions at the plan scale.",
+    "Sector illustrations have lighter arrows, clearer contours and a shorter map key.",
+  ] },
   { when: '3 November 2026', sha: 'fe520c58e', changes: [
     "Structures maps show recorded shade cloth over the illustrated beds.",
   ], tour: [{title: 'Review the shade cover', where: 'Site design → Glossy', href: '/design',
