@@ -103,7 +103,7 @@ export default function CountryReview() {
       </dl><a href={NASA_REFERENCE_PROVIDER.docsUrl} target="_blank" rel="noreferrer" className={styles.link}>Official API documentation ↗</a></details>
     </section>
     <section className={styles.card} aria-labelledby="queue-heading"><h2 id="queue-heading">Research priorities, not launch approvals</h2>
-      <p>The four engineering pilots have separate dossiers. Ghana has an initial weather reference. Colombia has weather and biodiversity references. Other entries are still queued for discovery.</p>
+      <p>The four engineering pilots have separate dossiers. Ghana has an initial weather reference. Colombia has weather and biodiversity references. Canada has a historical climate index and an Ontario guide reference. Other entries are still queued for discovery.</p>
       {COUNTRY_RESEARCH_QUEUE.map((group) => <p key={group.group}><strong>{group.group}:</strong> {group.countries.join(', ')}.</p>)}
       <p>{EUROPE_RESEARCH_NOTE}</p>
     </section>
