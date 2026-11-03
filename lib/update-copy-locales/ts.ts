@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
+  "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Mimepe ya AI ya Site na Sector yi hlayisa vuxokoxoko byo dirowiwa, hi mitila mitsongo ya swifaniso.",
+  "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "Phasing yi hlayisa xifaniso lexi dirowiweke; app yi engetela xiyimiso, swikombiso na xikalo.",
+  "Paper-friendly map styles start on white and keep your chosen background.": "Switayele swa mepe leswi faneleke phepha swi sungula hi ku basa naswona swi hlayisa le ndzhaku loku u ku hlawuleke.",
+  "Review the AI map finish": "Kambela ku languteka ka mepe wa AI",
+  "Site design → Glossy": "Dizayini ya ndhawu → Glossy",
+  "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.": "Hlawula phepha na xitayele. Switayele leswi faneleke phepha swi sungula hi ku basa handle ka loko u hlawula le ndzhaku kun’wana.",
+  "Compare with your exact plan": "Fananisa na pulani ya wena leyi kongomeke",
+  "Site design → Saved maps": "Dizayini ya ndhawu → Mimepe leyi hlayisiweke",
+  "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.": "Pfula pulani leyi kongomeke leyi hlayisiweke etlhelo ka xifaniso xa yona xa AI. Kambela tikhona ta mibedo, miako na swimilana u nga si tirhisa xifaniso.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Kambisisa mpfapfarhuto wa swihlovo swa matiko; switsundzuxo swa vurimi bya ndhawu a swi si kumeka.",
   "Review international references": "Kambisisa swihlovo swa matiko",

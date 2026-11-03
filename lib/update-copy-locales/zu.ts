@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
+  "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Amamephu e-AI eSite neSector agcina imininingwane edwetshiwe, enemigqa yezithombe embalwa.",
+  "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "I-Phasing igcina umdwebo; i-app ingeza uhlelo, izimpawu nesikali.",
+  "Paper-friendly map styles start on white and keep your chosen background.": "Izitayela zemephu ezifanele iphepha ziqala kokumhlophe futhi zigcina ingemuva olikhethile.",
+  "Review the AI map finish": "Hlola ukubukeka kwemephu ye-AI",
+  "Site design → Glossy": "Ukwakhiwa kwesiza → Glossy",
+  "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.": "Khetha ishidi nesitayela. Izitayela ezifanele iphepha ziqala kokumhlophe ngaphandle uma ukhetha elinye ingemuva.",
+  "Compare with your exact plan": "Qhathanisa nohlelo lwakho olunembile",
+  "Site design → Saved maps": "Ukwakhiwa kwesiza → Amamephu agciniwe",
+  "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.": "Vula uhlelo olunembile olugciniwe eduze komdwebo walo we-AI. Hlola amakhona emibhede, izakhiwo nezitshalo ngaphambi kokusebenzisa umdwebo.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Hlola izinhlaka zolwazi zamazwe; izeluleko zendawo zokulima azikatholakali.",
   "Review international references": "Buyekeza imithombo yamazwe",

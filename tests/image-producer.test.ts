@@ -980,13 +980,13 @@ test('the sector restyle prompt forbids the analysis and carries no marker/legen
   assert.doesNotMatch(p, /element list/i);
   assert.doesNotMatch(p, /marked feature/i);
   assert.doesNotMatch(p, /legend row/i);
-  // composeSectorSheet draws the true boundary/roof/driveway from refLayers over this image, so
-  // this prompt must NOT promise the model will hold them at exact position/scale — that promise
-  // is what 967c345 found the model breaking. It should say the opposite: their exact geometry is
-  // drawn separately and does not matter here.
+  // App-owned overlays cannot hide a moved building painted beside its recorded roof.
+  // Keep the same photographed layout without claiming the prompt proves registration.
   assert.match(p, /RESTYLE ONLY/);
   assert.match(p, /drawn separately afterwards, at measured positions/);
-  assert.match(p, /do not matter and are not graded/);
+  // The real output moved roofs under the measured overlays. Do not invite a redesign.
+  assert.doesNotMatch(p, /do not matter and are not graded/);
+  assert.match(p, /retain their photographed outline, position and scale/);
   assert.doesNotMatch(p, /KEEP EXACT/);
   assert.doesNotMatch(p, /in exactly their photographed shape, position and scale/);
 });
@@ -1771,4 +1771,26 @@ test('every pixel-extraction canvas in the producer is released, not leaked', ()
   const extractions = src.match(/getImageData\(0, 0, [^)]*\)\.data;\n\s*releaseCanvas\(/g) ?? [];
   assert.ok(extractions.length >= 3,
     `expected the measure/restore/blank-detector scratch canvases to be released; found ${extractions.length}`);
+});
+
+
+test('a saved shade tunnel requests mesh over crops rather than an uncovered bed or solid roof', () => {
+  for(const name of ['Shade Tunnel','Shade House']) {
+    for(const prompt of [
+      buildLockedIllustrationPrompt('Structures','precision_atlas',`${name} ×1`),
+      buildShowcasePrompt('Structures','precision_atlas',`${name} ×1`),
+      buildSatelliteOverlayPrompt({layerLabel:'Structures',stylePreset:'satellite_overlay',elementsText:`${name} ×1`,sheetKind:'structures'}),
+    ]) {
+      assert.match(prompt,/porous dark shade mesh/);
+      assert.match(prompt,/crop beds faintly visible/);
+    }
+  }
+});
+
+
+test('Earthworks does not turn symbolic pit locations into dimensions or invent bed kerbs', () => {
+  const prompt=buildLockedIllustrationPrompt('Earthworks','precision_atlas','Vegetable Bed ×9; Tree pit ×32');
+  assert.match(prompt,/never infer an excavation diameter, depth or bank height/);
+  assert.match(prompt,/add no masonry, timber framing or pale kerbs unless explicitly recorded/);
+  assert.match(prompt,/invented stone retaining walls/);
 });

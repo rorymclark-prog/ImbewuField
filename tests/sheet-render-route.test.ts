@@ -91,7 +91,7 @@ for (const { label: sheetLabel, spec } of SHEETS) {
         // Site/Sector/Phasing composite their own labels and legend back over the model output, so
         // a style whose premise is that the MODEL letters the page would put two legends on one
         // sheet. Every other combination must pass the selected style through untouched.
-        const expectedStyle = 'exact' in spec && isModelChromeStyle(selectedStyle)
+        const expectedStyle = ('exact' in spec || spec.filter === 'zones') && isModelChromeStyle(selectedStyle)
           ? DEFAULT_PRODUCER_STYLE
           : selectedStyle;
         assert.equal(route.styleUsed, expectedStyle, `styleUsed for ${sheetLabel}/${styleLabel}`);
@@ -148,7 +148,7 @@ test('one question, one answer: the router never disagrees with render-policy', 
       const route = sheetRenderRoute({ filter }, 'hybrid', style);
       assert.deepEqual(
         route.hybridFlags,
-        renderAuthorityFlagsForStyle(style),
+        renderAuthorityFlagsForStyle(route.styleUsed!),
         `${style} on ${filter}: router and render-policy must agree`,
       );
     }
@@ -163,10 +163,11 @@ test('an analysis sheet never runs a model-chrome style, in either AI mode', () 
       assert.equal(isModelChromeStyle(route.styleUsed!), false);
     }
   }
-  // And it must NOT block the five design-layer sheets, where model-chrome is the whole point —
-  // over-applying this rule is what caused the Full Treatment dead-end of e0bf17a.
+  // Other design layers retain their model-chrome experiment. Zones now joins the
+  // app-owned group because its paid comparison invented a scale.
   for (const filter of LAYER_FILTERS) {
-    assert.equal(sheetRenderRoute({ filter }, 'full', 'satellite_overlay').styleUsed, 'satellite_overlay');
+    // The paid Zones comparison invented its scale; like analysis sheets, its facts must be app-owned.
+    assert.equal(sheetRenderRoute({ filter }, 'full', 'satellite_overlay').styleUsed, filter === 'zones' ? DEFAULT_PRODUCER_STYLE : 'satellite_overlay');
   }
 });
 

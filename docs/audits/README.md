@@ -1,5 +1,10 @@
 # ImbewuField audit archive
 
+Latest implementation: [Nine-layer AI fidelity corrections — 3 November 2026](2026-11-03/ai-layer-fidelity-corrections-codex.md). Local output and contract evidence are separate from pending fresh-provider checks.
+
+Previous AI output review: [Nine actual AI layer versions and rejected oblique — 2 November 2026](2026-11-02/ai-layer-output-review-codex.md). Availability is verified; the recorded fidelity and provenance failures remain open.
+
+
 This is the shared starting point for Rory, Claude and Codex. Read the latest
 record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
