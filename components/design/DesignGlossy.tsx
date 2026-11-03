@@ -7882,11 +7882,7 @@ async function buildReferenceBlueprintMap(
       gutterLayout,
       includeLabelGutters: filter !== 'all',
       ...(filter === 'water'
-        ? {
-            footerHeading: 'WATER BUDGET',
-            footerText: waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site),
-            footerBox: true,
-          }
+        ? waterReferenceFooter(renderState, renderFrame, renderRefLayers, site)
         : {}),
       // NOTHING IS DRAWN WITHOUT A ROW, and the converse: the row exists only when the arrows do.
       // The flow field is computed from site elevation, which sheetLegendRows never sees, so it
@@ -10879,6 +10875,7 @@ async function composeStyleSheet(
     extraLegendRows?: StyleLegendRow[];
     footerHeading?: string;
     footerText?: string;
+    footerFacts?: string[];
     footerBox?: boolean;
     /** Keep short Sector groups together; spreading them over columns duplicated headings. */
     legendPresentation?: 'compact-sector';
@@ -10941,6 +10938,7 @@ async function composeStyleSheet(
   const titleSize = Math.round(typeW * SHEET_LEGEND_TYPE.title);
   ctx.font = `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`;
   const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
+  const waterUnderReview = filter === 'water' && options.aiArtwork;
   const titleLines: string[] = [];
   let titleLine = '';
   for (const word of titleWords) {
@@ -10984,6 +10982,13 @@ async function composeStyleSheet(
   ctx.fillStyle = '#8A8172';
   ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.detail)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', lx, y);
+  if (waterUnderReview) {
+    const reviewFs = Math.round(typeW * SHEET_LEGEND_TYPE.detail);
+    y += Math.round(reviewFs * 1.4);
+    ctx.fillStyle = '#87431F';
+    ctx.font = `800 ${reviewFs}px ${SHEET_BODY_FONT}`;
+    ctx.fillText('AI WATER · UNDER REVIEW', lx, y);
+  }
   y += Math.round(legendW * 0.035);
   ctx.strokeStyle = 'rgba(11,18,11,0.25)';
   ctx.lineWidth = 1.5;
@@ -11015,10 +11020,12 @@ async function composeStyleSheet(
   const footerBoxPad = options.footerBox ? Math.max(6, Math.round(legendW * 0.024)) : 0;
   const footerTextX = lx + footerBoxPad;
   const footerTextW = maxX - lx - footerBoxPad * 2;
-  const wrapFooterText = (value: string): string[] => {
-    ctx.font = options.footerHeading
+  const footerFactFont = `800 ${Math.round(footerFs * 1.25)}px ${SHEET_BODY_FONT}`;
+  const footerFactLineH = Math.round(footerLineH * 1.25);
+  const wrapFooterText = (value: string, font?: string): string[] => {
+    ctx.font = font ?? (options.footerHeading
       ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
-      : `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`;
+      : `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`);
     // A NEWLINE IS A HARD BREAK, NOT A SPACE.
     //
     // This wrapped on /\s+/, which treats "\n" as whitespace like any other. The Water sheet's
@@ -11047,8 +11054,9 @@ async function composeStyleSheet(
     }
     return lines;
   };
+  const footerFactLines = (options.footerFacts ?? []).flatMap(fact => wrapFooterText(fact, footerFactFont));
   const footerText = options.aiArtwork
-    ? [options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : ''), footerStyleLabel].filter(Boolean).join('\n')
+    ? [waterUnderReview ? 'Use the exact Water map to verify pipe locations and features.' : options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : ''), footerStyleLabel].filter(Boolean).join('\n')
     : options.footerText ? [options.footerText, footerStyleLabel].filter(Boolean).join('\n') : undefined;
   const customFooterLines = footerText ? wrapFooterText(footerText) : [];
   const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
@@ -11070,8 +11078,9 @@ async function composeStyleSheet(
     attributionLine,
     footerStyleLabel,
   ].filter(Boolean).join('\n'));
-  const footerBlockH = customFooterLines.length
+  const footerBlockH = customFooterLines.length || footerFactLines.length
     ? customFooterLines.length * footerLineH
+      + footerFactLines.length * footerFactLineH
       + footerHeadingH
       + Math.round(legendW * 0.035)
       + footerBoxPad * 2
@@ -11410,7 +11419,7 @@ async function composeStyleSheet(
   // illustrative caveat while confirming that geometry and placed elements are deterministic.
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#8A8172';
-  if (customFooterLines.length) {
+  if (customFooterLines.length || footerFactLines.length) {
     if (options.footerBox) {
       ctx.strokeStyle = 'rgba(31,77,43,0.46)';
       ctx.lineWidth = 1;
@@ -11438,11 +11447,19 @@ async function composeStyleSheet(
       ctx.font = `800 ${Math.round(legendW * 0.04)}px ${REFERENCE_LABEL_FONT}`;
       ctx.fillText(options.footerHeading, footerTextX, footerY);
       footerY += footerHeadingH;
-      ctx.fillStyle = '#6C6457';
-      ctx.font = `600 ${footerFs}px ${SHEET_BODY_FONT}`;
-    } else {
-      ctx.font = `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
     }
+    if (footerFactLines.length) {
+      ctx.fillStyle = '#20190F';
+      ctx.font = footerFactFont;
+      for (const line of footerFactLines) {
+        ctx.fillText(line, footerTextX, footerY);
+        footerY += footerFactLineH;
+      }
+    }
+    ctx.fillStyle = '#6C6457';
+    ctx.font = options.footerHeading
+      ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
+      : `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
     for (const line of customFooterLines) {
       ctx.fillText(line, footerTextX, footerY);
       footerY += footerLineH;
@@ -11616,12 +11633,7 @@ async function composeSheetChromeOverMapArt(opts: {
       labelMode,
       gutterLayout: labelled.gutterLayout,
       includeLabelGutters: filter !== 'all',
-      ...(filter === 'water'
-        ? {
-            footerHeading: 'NOTES',
-            footerText: waterReferenceFooterText(state, frame, refLayers, opts.site),
-          }
-        : {}),
+      ...(filter === 'water' ? waterReferenceFooter(state, frame, refLayers, opts.site) : {}),
     },
   );
   return { sheet, mapArt };
@@ -11875,17 +11887,23 @@ interface SavedGlossy {
 
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
-function waterReferenceFooterText(
+function waterReferenceFooter(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   site: SectorSite | null | undefined,
-): string {
-  const storageNotes = deriveWaterSystem({ ...state, frame }, refLayers, {
+  roofCredit?: string,
+) {
+  const { storageFacts, storageNotes } = deriveWaterSystem({ ...state, frame }, refLayers, {
     rainfallMm: site?.rainfallMm,
     monthlyRainfallMm: site?.monthlyRainfallMm,
-  }).storageNotes;
-  return [...storageNotes, WATER_REFERENCE_NOTES].join(' ');
+  });
+  return {
+    footerHeading: 'WATER BUDGET',
+    footerBox: true,
+    footerFacts: storageFacts,
+    footerText: [...storageNotes, WATER_REFERENCE_NOTES, roofCredit].filter(Boolean).join(' '),
+  };
 }
 
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
@@ -13323,12 +13341,7 @@ export default function DesignGlossy({
           ? {
               aiArtwork: true,
               includeLabelGutters: filter !== 'all',
-              ...(filter === 'water'
-                ? {
-                    footerHeading: 'NOTES',
-                    footerText: waterReferenceFooterText(state, frame, refLayers, site),
-                  }
-                : {}),
+              ...(filter === 'water' ? waterReferenceFooter(state, frame, refLayers, site) : {}),
             }
           : {},
       );
@@ -13705,12 +13718,7 @@ export default function DesignGlossy({
             ? {
                 aiArtwork: true,
                 includeLabelGutters: f !== 'all',
-                ...(f === 'water'
-                  ? {
-                      footerHeading: 'NOTES',
-                      footerText: waterReferenceFooterText(state, frame, refLayers, site),
-                    }
-                  : {}),
+                ...(f === 'water' ? waterReferenceFooter(state, frame, refLayers, site) : {}),
               }
             : {},
         );
@@ -14070,6 +14078,7 @@ export default function DesignGlossy({
       const labelled = exactMapOwnsLabels
         ? await burnExactLabelLayer(final, renderState, renderFrame, renderRefLayers, f, W, H, labelMode)
         : { map: final, gutterLayout: undefined };
+      const roofCredit = sourceRoof?.credit ?? (legacyPaperRoof ? 'Approximate roof symbol; roof sections are not recorded.' : undefined);
       return composeStyleSheet(
         labelled.map,
         renderState,
@@ -14090,16 +14099,12 @@ export default function DesignGlossy({
               labelMode,
               gutterLayout: labelled.gutterLayout,
               includeLabelGutters: f !== 'all',
-              footerText: [f === 'water' ? waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site) : '',
-                sourceRoof?.credit ?? (legacyPaperRoof ? 'Approximate roof symbol; roof sections are not recorded.' : '')]
-                .filter(Boolean).join(' '),
               ...(f === 'water'
                 ? {
-                    footerHeading: 'WATER BUDGET',
-                    footerBox: true,
+                    ...waterReferenceFooter(renderState, renderFrame, renderRefLayers, site, roofCredit),
                     extraLegendRows: waterFlowLegendRows(flowArrows, site),
                   }
-                : {}),
+                : { footerText: roofCredit ?? '' }),
             }
           : {},
       );

@@ -54,8 +54,10 @@ export interface WaterSystem {
   runs: WaterRun[];
   nodes: WaterNode[];
   notes: string[];
-  /** The subset printed in the Water sheet footer; kept separate from routing/site notes. */
+  /** Budget assumptions and sizing notes, kept separate from routing/site notes. */
   storageNotes: string[];
+  /** The separate roof, yield and storage facts shown at the top of the budget box. */
+  storageFacts: string[];
 }
 
 /** `proposed: false` means the FARMER put it there; `proposed: true` means WE inferred it. The
@@ -514,7 +516,8 @@ export function deriveWaterSystem(
   const nodes: WaterNode[] = [];
   const notes: string[] = [];
   const storageNotes: string[] = [];
-  const empty: WaterSystem = { runs: [], nodes: [], notes: [], storageNotes: [] };
+  const storageFacts: string[] = [];
+  const empty: WaterSystem = { runs: [], nodes: [], notes: [], storageNotes: [], storageFacts: [] };
   const addStorageNote = (note: string): void => {
     storageNotes.push(note);
     notes.push(note);
@@ -787,14 +790,19 @@ export function deriveWaterSystem(
   const rainfallMm = typeof site?.rainfallMm === 'number' && Number.isFinite(site.rainfallMm) && site.rainfallMm > 0
     ? site.rainfallMm
     : monthlyRainfallMm?.reduce((sum, mm) => sum + (Number.isFinite(mm) && mm > 0 ? mm : 0), 0);
+  const roofM2 = ringAreaM2(house, frame);
+  const capacities = tanks.map((tank) => statedTankCapacityLitres(tank.def));
+  const unknownCount = capacities.filter((capacity) => capacity == null).length;
+  const statedCapacityL = capacities.reduce<number>((sum, capacity) => sum + (capacity ?? 0), 0);
+  if (roofM2 >= 1) storageFacts.push(`Primary traced roof: ~${numberLabel(roofM2, 0)} m²`);
   if (typeof rainfallMm === 'number' && Number.isFinite(rainfallMm) && rainfallMm > 0) {
     const mm = Math.round(rainfallMm);
-    const roofM2 = ringAreaM2(house, frame);
     if (roofM2 >= 1) {
       // 1 mm on 1 m² = 1 L; the shared coefficient covers collection losses.
       const annualHarvestL = annualRoofHarvestLitres(roofM2, rainfallMm);
+      storageFacts.push(`Estimated annual yield: ~${formatLitres(annualHarvestL)}/year`);
       addStorageNote(
-        `~${mm} mm/yr on the ~${Math.round(roofM2)} m² primary traced roof gives ~${formatLitres(annualHarvestL)}/yr at ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} runoff. Confirm the connected roof area on site.`,
+        `Estimate = traced roof area × site rainfall (~${mm} mm/year) × ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} runoff. Confirm the connected roof area on site.`,
       );
 
       const dailyUseL = state.dailyWaterUseL;
@@ -814,30 +822,26 @@ export function deriveWaterSystem(
       }
 
       if (tanks.length === 0) {
-        addStorageNote(`No rainwater storage is placed, so none of the estimated ${formatLitres(annualHarvestL)}/yr can be stored.`);
+        addStorageNote('No rainwater storage is placed.');
       } else {
-        const capacities = tanks.map((tank) => statedTankCapacityLitres(tank.def));
-        const unknownCount = capacities.filter((capacity) => capacity == null).length;
-        const statedCapacityL = capacities.reduce<number>((sum, capacity) => sum + (capacity ?? 0), 0);
-        const placedCapacity = `${numberLabel(statedCapacityL, 0)} L`;
         if (unknownCount > 0) {
           addStorageNote(
             `${unknownCount} placed storage ${unknownCount === 1 ? 'item has' : 'items have'} no stated capacity, so total storage cannot be checked against the monthly balance.`,
           );
         } else if (sizing?.ok && sizing.waterNegative) {
           addStorageNote(
-            `Placed storage totals ${placedCapacity}. The monthly balance is water-negative, so more tank capacity alone cannot close the annual catchment gap.`,
+            'The monthly balance is water-negative, so more tank capacity alone cannot close the annual catchment gap.',
           );
         } else if (sizing?.ok) {
           const recommended = sizing.recommendedStorageL;
           addStorageNote(
             statedCapacityL >= recommended
-              ? `Placed storage totals ${placedCapacity} and meets the monthly-balance recommendation of ${formatLitres(recommended)}.`
-              : `Placed storage totals ${placedCapacity}, which is ${formatLitres(recommended - statedCapacityL)} below the monthly-balance recommendation of ${formatLitres(recommended)}.`,
+              ? `Placed storage meets the monthly-balance recommendation of ${formatLitres(recommended)}.`
+              : `Placed storage is ${formatLitres(recommended - statedCapacityL)} below the monthly-balance recommendation of ${formatLitres(recommended)}.`,
           );
         } else {
           addStorageNote(
-            `Placed storage totals ${placedCapacity}, but adequacy cannot be judged until the missing sizing input above is supplied.`,
+            'Storage adequacy needs the missing sizing input above.',
           );
         }
         addStorageNote('Always route the overflow to a swale, basin or soakaway rather than against a wall or path.');
@@ -848,8 +852,10 @@ export function deriveWaterSystem(
   } else {
     addStorageNote('Seasonal storage sizing needs the site rainfall record.');
   }
+  if (tanks.length && !unknownCount) storageFacts.push(`Placed storage: ${numberLabel(statedCapacityL, 0)} L`);
+  notes.unshift(...storageFacts);
   if (!lines.some((l) => l.kind === 'swale')) notes.push('No swale proposed.');
   notes.push('Confirm pipe sizes, greywater source and levels on site.');
 
-  return { runs, nodes, notes, storageNotes };
+  return { runs, nodes, notes, storageNotes, storageFacts };
 }
