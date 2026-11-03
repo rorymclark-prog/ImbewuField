@@ -11,7 +11,8 @@ import { readSampleProgramme } from './SampleProgramme';
 import { completeSampleFieldWorkspace, freshFieldWorkspace, localTodayISODate, projectFieldWorkspace } from '@/lib/field-teams';
 import { sampleAssessments } from '@/lib/sample-programme';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
-import { cleanDonorIndicator, completeSampleEvidence, freshEvidenceData, milestoneAt, publishedTraining, trainingTotals, validTrainingRecord, validProgrammeMilestone, type EvidenceData, type TrainingRecord, type ProgrammeMilestone } from '@/lib/programme-evidence';
+import ProgrammeObservationCutoffPanel from '@/components/ProgrammeObservationCutoffPanel';
+import { programmeObservationCutoff, cleanDonorIndicator, completeSampleEvidence, freshEvidenceData, milestoneAt, publishedTraining, trainingTotals, validTrainingRecord, validProgrammeMilestone, type EvidenceData, type TrainingRecord, type ProgrammeMilestone } from '@/lib/programme-evidence';
 import ReportComposer from './ReportComposer';
 import FacilitatorReport from './FacilitatorReport';
 import ProgrammeProgress from './ProgrammeProgress';
@@ -136,7 +137,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
     <FieldDataStatus data={data} />
     {lang==='zu'&&<p role="note">{statusCopy('This interface is an unreviewed isiZulu draft. Indicator names, values, reports and evidence notes are kept exactly as entered and may be in English.','Lesi sixhumi siwuhlaka lwesiZulu olungakabuyekezwa. Amagama ezinkomba, amanani, imibiko namanothi obufakazi agcinwa njengoba efakiwe futhi angase abe ngesiNgisi.')}</p>}
     {initialTab!=='branding'&&<div className={styles.hero}><h1>{funder?ui('Project progress & evidence','Inqubekelaphambili nobufakazi bephrojekthi'):ui('Programme evidence & progress','Ubufakazi nenqubekelaphambili yohlelo')}</h1><p>{ui('Growing, water, land, livelihoods, participation, learning and delivery. Follow the recorded results and the evidence behind them.','Ukulima, amanzi, umhlaba, izindlela zokuziphilisa, ukubamba iqhaza, ukufunda nokulethwa kwezinsiza. Landela imiphumela eqoshiwe nobufakazi bayo.')}</p></div>}
-    {orgs.length>1&&<label>{ui('Organisation','Inhlangano')}<select disabled={busy||photosBusy} value={org} onChange={e=>setOrg(e.target.value)}>{orgs.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
+    {orgs.length>1&&<label>{ui('Organisation','Inhlangano')}<select disabled={busy||photosBusy} value={org} onChange={e=>{setProject('');setOrg(e.target.value);}}>{orgs.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
     {error&&<p role="alert" className={styles.error}>{ERROR_DRAFTS[error]&&lang==='zu'?<>{ERROR_DRAFTS[error]}<small style={{display:'block',fontSize:12,lineHeight:1.45}}>English source: {error}</small></>:error}</p>}{notice&&<p role="status" className={styles.notice}>{lang==='zu'&&notice===DEVICE_SAVE_NOTICE?statusCopy(notice,'Kulondolozwe kule divayisi, kuhlanganise nezithombe namasiginesha anamathiselwe. Kulindwe ukuthunyelwa uma sekuxhunyiwe ku-inthanethi.'):lang==='zu'&&notice==='Saved. Reports now include the updated record.'?statusCopy(notice,'Kulondoloziwe. Imibiko isifaka irekhodi elibuyekeziwe.'):notice}</p>}
     {!data&&!error&&<p>{ui('Loading authorised programme evidence…','Kusalayishwa ubufakazi bohlelo obugunyaziwe…')}</p>}
     {data&&<>
@@ -144,6 +145,10 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
       {tab!=='branding'&&!data.brandingOnly&&<label>{ui('Project','Iphrojekthi')}<select value={project} onChange={e=>setProject(e.target.value)}><option value="">{ui('All visible projects','Wonke amaphrojekthi abonakalayo')}</option>{projects.map(p=><option key={p}>{p}</option>)}</select></label>}
       {!data.brandingOnly&&tab==='progress'&&<>
         <div className={styles.card}><label>{ui('Progress as of','Inqubekelaphambili kusukela')}<input type="date" value={asOf} max={today()} onChange={e=>{if(e.target.value)setAsOf(e.target.value);}} /></label><label>{ui('Timeline · recorded dates','Umugqa wesikhathi · izinsuku eziqoshiwe')}<input aria-label={ui('Progress timeline','Umugqa wesikhathi wenqubekelaphambili')} style={{accentColor:'var(--emerald)'}} type="range" min={0} max={Math.max(0,dates.length-1)} value={Math.max(0,dates.findLastIndex(d=>d<=asOf))} onChange={e=>setAsOf(dates[+e.target.value])} /></label><p>Shows observations dated on or before {asOf}, using the latest corrected records. This is not a reconstruction of what had been entered at that time.</p></div>
+        {data.canManage && !funder && !mentor && project && projects.includes(project) && (
+          <ProgrammeObservationCutoffPanel cutoff={asOf} sample={data.sample}
+            review={programmeObservationCutoff(selectedTargets, asOf)} />
+        )}
         <ProgrammeProgress records={records} targets={targets} asOf={asOf} category={category} onCategory={setCategory} onAdd={data.canManage?addIndicator:undefined} currentScope={currentScope} showCurrentRecords={!mentor}/>
         {showTraining&&<section className={styles.card}><h2>{ui('Training delivery','Ukuqhutshwa kokuqeqeshwa')}</h2><div className={styles.grid}>{[[ui('Sessions delivered','Izikhathi zokuqeqesha ezenziwe'),totals.sessions],[ui('Attendances','Ababekhona'),totals.attendances],[ui('Distinct participants','Abahlanganyeli abahlukene'),totals.uniqueParticipants??'Not included in funder projection']].map(([l,n])=><div key={l}><h3>{l}</h3><strong className={styles.stat}>{n}</strong></div>)}</div><p>Repeat attendance counts as another attendance, not another person. Attendance and satisfaction are delivery evidence; they do not alone establish skills gained or impact.</p></section>}
         <ReportComposer deviceData={data} title="Project progress report" sample={data.sample} branding={data.branding} reportDate={asOf}

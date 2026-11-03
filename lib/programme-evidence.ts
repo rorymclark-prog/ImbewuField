@@ -112,6 +112,41 @@ export function milestoneAt(m: ProgrammeMilestone, date: string) {
   const actual=observation?.actual ?? null;
   return { actual, percent: actual===null || m.target===null ? null : actual/m.target*100, remaining: actual===null || m.target===null ? null : Math.max(0,m.target-actual), status: m.target===null ? (actual===null ? 'Awaiting evidence' : 'Reported · no target') : actual!==null && actual>=m.target ? 'Target met' : m.due<date ? 'Overdue' : 'In progress', evidence: observation?.evidence ?? 'No observation by this date', observedOn: observation?.date ?? null };
 }
+export interface ProgrammeObservationCutoff {
+  byCutoff: number;
+  recordedLater: number;
+  observedLater: number;
+  unknownDate: number;
+}
+
+/** Inspect the current saved observations. Replaced observations are not available here. */
+export function programmeObservationCutoff(
+  milestones: readonly Pick<ProgrammeMilestone, 'observations'>[],
+  cutoff: string,
+): ProgrammeObservationCutoff | null {
+  if (!validEvidenceDate(cutoff)) return null;
+  const review = { byCutoff: 0, recordedLater: 0, observedLater: 0, unknownDate: 0 };
+  for (const milestone of milestones) {
+    for (const observation of milestone.observations) {
+      const recorded = observation?.recordedAt;
+      const timestamp = typeof recorded === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/.test(recorded)
+        ? new Date(recorded) : null;
+      // Only the route's UTC timestamp shape can supply a recorded day.
+      if (!validEvidenceDate(observation?.date) || !timestamp || !Number.isFinite(timestamp.getTime())
+        || timestamp.toISOString() !== (recorded.length === 20 ? recorded.replace('Z', '.000Z') : recorded)) {
+        review.unknownDate++;
+      } else if (observation.date > cutoff) {
+        review.observedLater++;
+      } else if (recorded.slice(0, 10) > cutoff) {
+        review.recordedLater++;
+      } else {
+        review.byCutoff++;
+      }
+    }
+  }
+  return review;
+}
+
 /** Never send attendee names, private next steps, staff IDs or precise venue coordinates to a funder. */
 export function publishedTraining(r: TrainingRecord): TrainingRecord {
   const photos=sharedTrainingPhotos(r.photos);
