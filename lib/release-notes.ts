@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: '575c24a11', changes: [
+    'Keep the nursery and harvest unit controls available after the same plan is saved again.',
+    'See when you can reload saved settings or need to reopen the crop plan.',
+  ] },
   { when: '3 November 2026', sha: '22f1408d5', changes: [
     'Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.',
     'Keep buyer entries when a save cannot be confirmed.',
