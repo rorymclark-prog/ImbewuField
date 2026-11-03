@@ -1,8 +1,8 @@
 # Brazil Source-Fit Dossier: Campinas & São Paulo Agroecology Investigation
 
-**Date:** 2026-11-03  
-**Investigation Target:** Campinas / São Paulo evaluated strictly as a provisional engineering investigation target. Not an approved rollout zone, operational baseline, or real farm recommendation.  
-**Jurisdiction Note:** Federal, state (São Paulo), and municipal responsibilities are distinct and non-interchangeable. Federal introductory guidance confers no state agricultural defense approvals or municipal land-use permits.  
+**Date:** 2026-11-03
+**Investigation Target:** Campinas / São Paulo evaluated strictly as a provisional engineering investigation target. Not an approved rollout zone, operational baseline, or real farm recommendation.
+**Jurisdiction Note:** Federal, state (São Paulo), and municipal responsibilities are distinct and non-interchangeable. Federal introductory guidance confers no state agricultural defense approvals or municipal land-use permits.
 **Evidence Baseline:** Five official primary documentation HTTP responses fetched on 2026-11-02 UTC (3 November locally) and reviewed on 3 November in `coordinator-receipts-2026-11-03.json`. Underlying product data endpoints fetched: 0 / 5. Product integrations implemented: 0 / 5.
 
 ---

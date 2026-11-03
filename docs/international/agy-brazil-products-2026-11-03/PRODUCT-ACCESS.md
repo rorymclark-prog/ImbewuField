@@ -1,18 +1,18 @@
 # Brazil Product Access and Reuse Verification
 
-**Review Date:** 2026-11-03  
-**Fetch Start (UTC):** 2026-11-03T00:16:07Z (exact receipts: Redape completed 00:16:32Z; INMET completed 00:16:12Z)  
-**Scope:** Bounded verification of two exact official links identified in previous introductory inventories: the persistent Redape soil dataset DOI and the INMET automatic station catalog.  
+**Review Date:** 2026-11-03
+**Fetch Start (UTC):** 2026-11-03T00:16:07Z (exact receipts: Redape completed 00:16:32Z; INMET completed 00:16:12Z)
+**Scope:** Bounded verification of two exact official links identified in previous introductory inventories: the persistent Redape soil dataset DOI and the INMET automatic station catalog.
 **Operational Status:** Documentation fetched = 1; failed fetch attempts = 1; data payloads downloaded = 0; integrations implemented = 0.
 
 ---
 
 ## 1. Embrapa Redape Soil Profile Dataset Documentation
 
-* **Requested Link:** `https://doi.org/10.48432/DDBVFO`  
-* **Effective URL:** `https://www.redape.dados.embrapa.br/dataset.xhtml?persistentId=doi:10.48432/DDBVFO`  
-* **Receipt ID:** `br-redape-doi` (HTTP 200, 188,341 bytes, SHA-256: `e51ef6d032a7495edad36070168c898ac3d3a8e3f9ed876f1d68de4d4370b481`).  
-* **Actual Fetch Window (UTC):** 2026-11-03T00:16:07.246415+00:00 to 2026-11-03T00:16:32.080694+00:00.  
+* **Requested Link:** `https://doi.org/10.48432/DDBVFO`
+* **Effective URL:** `https://www.redape.dados.embrapa.br/dataset.xhtml?persistentId=doi:10.48432/DDBVFO`
+* **Receipt ID:** `br-redape-doi` (HTTP 200, 188,341 bytes, SHA-256: `e51ef6d032a7495edad36070168c898ac3d3a8e3f9ed876f1d68de4d4370b481`).
+* **Actual Fetch Window (UTC):** 2026-11-03T00:16:07.246415+00:00 to 2026-11-03T00:16:32.080694+00:00.
 * **Evidence Level:** Dataset documentation read only. Raw tabular data files were not downloaded; no API integration was implemented.
 
 ### 1.1 Provenance, Releases, and Dates
@@ -40,10 +40,10 @@ The repository page exposes two public CSV data files:
 
 ## 2. INMET Automatic Station Catalog Link Attempt
 
-* **Requested Link:** `https://portal.inmet.gov.br/paginas/catalogoaut`  
-* **Effective URL:** `https://portal.inmet.gov.br/paginas/catalogoaut`  
-* **Receipt ID:** `br-inmet-catalog` (HTTP 0, curl exit 56, 0 bytes, `curl: (56) Recv failure: Connection reset by peer`).  
-* **Actual Fetch Window (UTC):** 2026-11-03T00:16:07.245582+00:00 to 2026-11-03T00:16:12.017646+00:00.  
+* **Requested Link:** `https://portal.inmet.gov.br/paginas/catalogoaut`
+* **Effective URL:** `https://portal.inmet.gov.br/paginas/catalogoaut`
+* **Receipt ID:** `br-inmet-catalog` (HTTP 0, curl exit 56, 0 bytes, `curl: (56) Recv failure: Connection reset by peer`).
+* **Actual Fetch Window (UTC):** 2026-11-03T00:16:07.245582+00:00 to 2026-11-03T00:16:12.017646+00:00.
 * **Evidence Level:** Failed fetch attempt.
 
 ### 2.1 Technical Evaluation

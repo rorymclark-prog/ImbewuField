@@ -1,7 +1,7 @@
 # Grower UI Automatic-Plan & Nursery Workflow — AI Draft Review Packet
 
-Date: 2026-11-03  
-Scope: 32 frozen UI strings from `docs/international/agy-grower-ui-2026-11-03/source.json` (source packet SHA256: `d7f072d7bc1e1d26e67b8e2525f575fdcefc6293824b62daed801f636479314b`).  
+Date: 2026-11-03
+Scope: 32 frozen UI strings from `docs/international/agy-grower-ui-2026-11-03/source.json` (source packet SHA256: `d7f072d7bc1e1d26e67b8e2525f575fdcefc6293824b62daed801f636479314b`).
 Status: **Unreviewed AI draft**. Not approved for production release, agricultural advice, or runtime enablement.
 
 ---
