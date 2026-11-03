@@ -7,6 +7,7 @@ import * as journal from '../lib/field-journal.ts';
 import * as view from '../lib/journal-view.ts';
 import * as taskLinks from '../lib/task-record-link.ts';
 import * as copy from '../lib/farm-memory-copy.ts';
+import * as journalLinks from '../lib/international/grower-field-note-link.ts';
 
 const require = createRequire(import.meta.url);
 const css = new Proxy({}, { get: (_target, key) => key === '__esModule' ? false : String(key) });
@@ -29,12 +30,16 @@ function component(path: string, dependencies: Record<string, unknown>, exportNa
 }
 
 type CanonicalJournalBoundary = Pick<typeof journal, 'readCanonicalJournal' | 'openCanonicalJournal' | 'writeCanonicalJournal'>;
+type LinkSources = ReturnType<typeof import('../components/crops/useGrowerOperations.ts').useGrowerOperations>;
 
-export async function mountJournal(options: { url?: string; entries?: journal.JournalEntry[]; simple?: boolean; failSave?: boolean; beds?: Array<{ id: string; label: string }>; lang?: string; delivery?: 'downloaded' | 'shared' | 'cancelled'; exportError?: boolean; canonical?: CanonicalJournalBoundary } = {}) {
+export async function mountJournal(options: { url?: string; entries?: journal.JournalEntry[]; simple?: boolean; failSave?: boolean; beds?: Array<{ id: string; label: string }>; lang?: string; delivery?: 'downloaded' | 'shared' | 'cancelled'; exportError?: boolean; canonical?: CanonicalJournalBoundary; linkSources?: LinkSources } = {}) {
   let stored = options.entries ?? [];
   const writes: journal.JournalEntry[][] = [];
   const exports: Array<{ format: string; entries: journal.JournalEntry[]; options: Record<string, unknown> }> = [];
   const historyScrolls: ScrollIntoViewOptions[] = [];
+  const checkedLinks: boolean[] = [];
+  const inactiveLinks: LinkSources = { status: 'loading', book: null, contexts: [], heldSources: [],
+    refresh: async () => {}, checkCurrent: async () => false, isCurrent: () => false };
   const originalWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
   let url = new URL(options.url ?? 'https://farm.example/journal');
   const location = { get href() { return url.href; } };
@@ -68,6 +73,11 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
     '@/lib/account-local-storage': { readAccountLocalSampleState: () => false, FIELD_JOURNAL_LEGACY_KEY: 'imbewu_field_journal_v1', FIELD_JOURNAL_CANONICAL_KEY: 'imbewu_field_journal_v2' },
     '@/lib/firebase/init': { isBackendConfigured: () => !options.canonical },
     '@/lib/file-delivery': { downloadFile: () => 'downloaded' },
+    '@/components/crops/useGrowerOperations': { useGrowerOperations(enabled: boolean) {
+      checkedLinks.push(enabled);
+      return options.linkSources ?? inactiveLinks;
+    } },
+    '@/lib/international/grower-field-note-link': journalLinks,
     '@/lib/journal-export': {
       downloadJournalCsv: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'csv', entries, options: exportOptions }); return options.delivery ?? 'downloaded'; },
       downloadJournalHtml: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'html', entries, options: exportOptions }); return options.delivery ?? 'downloaded'; },
@@ -97,7 +107,7 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
     throw error;
   }
   return {
-    renderer, Sheet, writes, exports, historyScrolls, browser,
+    renderer, Sheet, writes, exports, historyScrolls, browser, checkedLinks,
     get url() { return url; },
     get stored() { return stored; },
     async close() {

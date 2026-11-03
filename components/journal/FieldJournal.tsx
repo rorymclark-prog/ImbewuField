@@ -54,6 +54,8 @@ import { FIELD_JOURNAL_CANONICAL_KEY, FIELD_JOURNAL_LEGACY_KEY, readAccountLocal
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { downloadFile } from '@/lib/file-delivery';
 import { JournalLegacyReviewPanel, type JournalLegacyCandidate } from './JournalLegacyReviewPanel';
+import { useGrowerOperations } from '@/components/crops/useGrowerOperations';
+import { projectJournalFieldNoteLinks } from '@/lib/international/grower-field-note-link';
 import { parseTaskJournalQuery } from '@/lib/task-record-link';
 import JournalPhotoReview from './JournalPhotoReview';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
@@ -254,6 +256,22 @@ export default function FieldJournal() {
   const summary = useMemo(() => journalSummary(entries), [entries]);
   const viewFilters = useMemo(() => ({ query, category: filter, from, to, bed, crop }), [query, filter, from, to, bed, crop]);
   const visible = useMemo(() => filterJournalEntries(entries, viewFilters), [entries, viewFilters]);
+  const checkLinks = book?.status === 'ready' && visible.some(entry => Object.hasOwn(entry, 'growerCycleLink'));
+  const linkSources = useGrowerOperations(checkLinks);
+  const [linkRead, setLinkRead] = useState<{
+    source: typeof linkSources;
+    entries: typeof visible;
+    statuses: ReturnType<typeof projectJournalFieldNoteLinks>;
+  } | null>(null);
+  useEffect(() => {
+    if (!checkLinks || linkSources.status !== 'ready' || !linkSources.book || !linkSources.isCurrent()) {
+      setLinkRead(null);
+      return;
+    }
+    const statuses = projectJournalFieldNoteLinks(visible, linkSources.book.plantings, linkSources.contexts);
+    setLinkRead(linkSources.isCurrent() ? { source: linkSources, entries: visible, statuses } : null);
+  }, [checkLinks, linkSources, visible]);
+  const checkedLinks = linkRead?.source === linkSources && linkRead.entries === visible ? linkRead.statuses : null;
   const filterOptions = useMemo(() => journalFilterOptions(entries, lang), [entries, lang]);
   const dateError = journalDateRangeError(viewFilters, lang);
   const advancedFilterCount = Number(filter !== 'all') + Number(Boolean(from)) + Number(Boolean(to)) + Number(Boolean(bed)) + Number(Boolean(crop));
@@ -713,6 +731,10 @@ export default function FieldJournal() {
             <div style={{ position: 'absolute', left: 5, top: 6, bottom: 6, width: 2, background: 'var(--border)', borderRadius: 1 }} />
             {group.entries.map((entry) => {
               const cat = journalCategory(entry.category);
+              const linkLabel = checkLinks && Object.hasOwn(entry, 'growerCycleLink')
+                ? checkedLinks?.get(entry.id) === 'matched' ? 'Linked to the checked crop plan'
+                  : linkSources.status === 'loading' ? 'Checking crop-plan link…' : 'Crop-plan link needs review'
+                : null;
               return (
                 <article
                   key={entry.id}
@@ -743,6 +765,7 @@ export default function FieldJournal() {
                           )}{' '}
                           {isZulu ? journalCategoryLabel(cat.key) : cat.label}
                         </span>
+                        {linkLabel && <span lang="en" className={explore.help}>{linkLabel}</span>}
                       </div>
 
                       {entry.title && (

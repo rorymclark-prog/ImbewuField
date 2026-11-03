@@ -185,3 +185,28 @@ test('closing a task draft or changing its design prevents a linked save', async
     assert.equal(loadCompletedTaskIds().size, 0);
   });
 });
+
+test('the private journal distinguishes matching links from held links without changing authored observations', async () => {
+  await withDeviceFieldNote(async ({ task, source }) => {
+    const { getGrowerTaskJournalLink } = await import('../lib/task-board.ts');
+    const { projectJournalFieldNoteLinks } = await import('../lib/international/grower-field-note-link.ts');
+    const link = getGrowerTaskJournalLink(task);
+    assert.ok(link);
+    const first = { id: 'note-a', date: '2028-11-22', title: 'A synthetic observation', notes: '',
+      category: 'other' as const, createdAt: 1, updatedAt: 1, bedId: link.bedId };
+    const rows = [
+      { ...first, growerCycleLink: link },
+      { ...first, id: 'note-b', growerCycleLink: { ...link, plantingId: 'different' } },
+      { ...first, id: 'note-c', bedId: 'different', growerCycleLink: link },
+      { ...first, id: 'note-d', growerCycleLink: null },
+      { ...first, id: 'ordinary' },
+    ];
+    const before = JSON.stringify(rows);
+    const expected = [['note-a', 'matched'], ['note-b', 'held'], ['note-c', 'held'], ['note-d', 'held']];
+    assert.deepEqual([...projectJournalFieldNoteLinks(rows, source.book.plantings, source.contexts)], expected);
+    const held = expected.map(([id]) => [id, 'held']);
+    assert.deepEqual([...projectJournalFieldNoteLinks(rows, source.book.plantings, [...source.contexts, ...source.contexts])], held);
+    assert.deepEqual([...projectJournalFieldNoteLinks(rows, [...source.book.plantings, ...source.book.plantings], source.contexts)], held);
+    assert.equal(JSON.stringify(rows), before);
+  });
+});

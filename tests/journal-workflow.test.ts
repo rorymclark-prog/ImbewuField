@@ -156,3 +156,25 @@ test('the linked note sheet starts with no date and shows a checked bed without 
     await app.close();
   }
 });
+
+test('a held crop-plan link stays private and leaves the journal note readable', async () => {
+  const marked = { ...entry('marked', 'Authored observation', '2026-11-03', ''), growerCycleLink: { plantingId: 'hidden-plan-id' } };
+  const checked: journal.CanonicalJournalView = { status: 'ready', entries: [marked, entry('ordinary', 'Ordinary note', '2026-11-02', '')] };
+  const app = await mount({ canonical: {
+    readCanonicalJournal: async () => checked,
+    openCanonicalJournal: async () => checked,
+    writeCanonicalJournal: async () => ({ status: 'held', reason: 'context-changed' }),
+  }, linkSources: { status: 'held', book: null, contexts: [], heldSources: [],
+    refresh: async () => {}, checkCurrent: async () => false, isCurrent: () => false } });
+  try {
+    assert.ok(app.checkedLinks.includes(true));
+    const cards = app.renderer.root.findAllByType('article');
+    const authored = cards.find(card => text(card).includes('Authored observation'));
+    const ordinary = cards.find(card => text(card).includes('Ordinary note'));
+    assert.ok(authored && ordinary);
+    assert.match(text(authored), /Crop-plan link needs review/);
+    assert.doesNotMatch(text(ordinary), /Crop-plan link/);
+    assert.doesNotMatch(text(app.renderer.root), /hidden-plan-id|Linked to the checked crop plan/);
+    assert.equal(app.writes.length, 0);
+  } finally { await app.close(); }
+});

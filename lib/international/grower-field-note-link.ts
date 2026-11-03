@@ -1,5 +1,6 @@
 import type { GrowerCycleContext } from './grower-cycle';
-import { projectGrowerCycles } from './grower-cycle-projection';
+import { projectGrowerCycles, type ProjectedGrowerCycle } from './grower-cycle-projection';
+import type { JournalEntry } from '../field-journal';
 import { growerPlanningScopeKey, normaliseGrowerPlanningScope, type GrowerPlanningScope } from './grower-planning';
 
 export interface GrowerFieldNoteLink {
@@ -103,6 +104,15 @@ export function resolveGrowerFieldNoteLink(
   context: GrowerCycleContext | null,
   selection: unknown,
 ): GrowerFieldNoteLinkResult {
+  return resolveFieldNoteChoice(context, selection, (admitted, plantingId) =>
+    projectGrowerCycles(rows, admitted).ownCycles.find(row => row.plantingId === plantingId));
+}
+
+function resolveFieldNoteChoice(
+  context: GrowerCycleContext | null,
+  selection: unknown,
+  findOwnCycle: (context: GrowerCycleContext, plantingId: string) => ProjectedGrowerCycle | undefined,
+): GrowerFieldNoteLinkResult {
   const fields = readOwnFields(selection, ['plantingId', 'cycleId', 'bedId', 'scope']);
   if (!fields) return { status: 'held', reason: 'invalid-selection' };
   const { plantingId, cycleId, bedId, scope } = fields;
@@ -115,11 +125,45 @@ export function resolveGrowerFieldNoteLink(
 
   // A proposal ordinal can repeat. Membership starts with the persistent row
   // ID and the shared projection holds duplicates, overlaps and stale geometry.
-  const cycle = projectGrowerCycles(rows, context).ownCycles.find(row => row.plantingId === plantingId);
+  const cycle = findOwnCycle(context, plantingId);
   if (!cycle) return { status: 'held', reason: 'cycle-unavailable' };
   if (cycle.cycleId !== cycleId || cycle.bedId !== bedId) return { status: 'held', reason: 'selection-changed' };
 
   return { status: 'resolved', link: Object.freeze({
     version: 1, plantingId: cycle.plantingId, cycleId: cycle.cycleId, bedId: cycle.bedId, scope: cycle.scope,
   }) };
+}
+
+/** Journal-only display status. The caller supplies the freshly checked
+ * source. Reuse one whole-book projection for all notes in a scope. */
+export function projectJournalFieldNoteLinks(
+  entries: readonly JournalEntry[],
+  rows: unknown,
+  contexts: readonly GrowerCycleContext[],
+): ReadonlyMap<string, 'matched' | 'held'> {
+  const byScope = new Map<string, GrowerCycleContext | null>();
+  for (const context of contexts) {
+    const key = growerPlanningScopeKey(context.scope);
+    if (key) byScope.set(key, byScope.has(key) ? null : context);
+  }
+  const projections = new Map<GrowerCycleContext, Map<string, ProjectedGrowerCycle>>();
+  const statuses = new Map<string, 'matched' | 'held'>();
+  for (const entry of entries) {
+    const property = Object.getOwnPropertyDescriptor(entry, 'growerCycleLink');
+    if (!property) continue;
+    const link = normaliseGrowerFieldNoteLink(property.value);
+    const key = link && growerPlanningScopeKey(link.scope);
+    const context = key ? byScope.get(key) : null;
+    if (!link || !context || entry.bedId !== link.bedId) { statuses.set(entry.id, 'held'); continue; }
+    const result = resolveFieldNoteChoice(context, link, (admitted, plantingId) => {
+      let own = projections.get(admitted);
+      if (!own) {
+        own = new Map(projectGrowerCycles(rows, admitted).ownCycles.map(cycle => [cycle.plantingId, cycle]));
+        projections.set(admitted, own);
+      }
+      return own.get(plantingId);
+    });
+    statuses.set(entry.id, result.status === 'resolved' ? 'matched' : 'held');
+  }
+  return statuses;
 }
