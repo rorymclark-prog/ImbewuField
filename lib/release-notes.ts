@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'd364d769f', changes: [
+    'Open Kenya’s historical soil catalogue from the country review.',
+  ], tour: [{ title: 'Review Kenya’s historical soil reference', where: 'International → Country review', href: '/international',
+    detail: 'Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.' }] },
   { when: '3 November 2026', sha: '4305e07aa6', changes: [
     'Open checked Kiambu weather bulletin links from the country review.',
     'Keep bulletin dates separate from live weather and crop-planning approval.',
