@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Hlayisa tipulani letintshwa ta swimilana ti hlayisekile loko xiphemu xa khale xa apu xi hlayisa khopi ya xona.",
+  "Review retained copies before continuing with your current crop plan.": "Kambisisa tikhopi leti hlayisiweke u nga si ya emahlweni hi pulani ya wena ya sweswi ya swimilana.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Ringeta nakambe ku hundzisela ntirho wa swimilana wa muendzi lowu kavanyetiweke handle ko siva ntirho wa akhawunti lowu hlayisiweke.",
+  "Review crop-plan storage": "Kambisisa vuhlayiselo bya pulani ya swimilana",
+  "Production plan → Crop-plan storage": "Pulani ya vuhumelerisi → Vuhlayiselo bya pulani ya swimilana",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Kambela xitiviso xa vuhlayiselo. Loko xiphemu xa khale xi cincile khopi ya xona, dawuniloda tikhopi hatimbirhi u ti kambisisa u nga si hlawula ku hlayisa pulani ya wena ya sweswi.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Hlayisa pulani leyi kambisisiweke leyi humaka eka swipimanyeto swa wena swo byala.",
+  "Check unresolved crop records before using a finance forecast.": "Kambisisa tirhekhodo ta swimilana leti nga si tlhantlhiwaka u nga si tirhisa xipimanyeto xa timali.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Hlayisa swipimanyeto swo byala leswi hlayisiweke na malulamisele ya vuhlayiselo bya swimilana loko u nghena eka akhawunti.",
+  "Save your reviewed plan": "Hlayisa pulani ya wena leyi kambisisiweke",
+  "Production plan → Automatic plan from your estimates": "Pulani ya vuhumelerisi → Pulani yo tiendlekela hi ku ya hi swipimanyeto swa wena",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Kambisisa xiringanyeto lexi heleleke, hlayisa mindzhendzheleko hinkwayo ya xona leyi kunguhatiweke, kutani u pfula ntirho lowu nga na masiku.",
   // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/ts.json; UNREVIEWED Codex AI candidates.
   "Follow saved grower cycles on their exact planned dates.": "Landzela mirhendzeleko yo rima leyi hlayisiweke hi masiku ya yona lama kunguhatiweke hi ku kongoma.",
   "Check current designs before ticking work or exporting dates.": "Kambela tidizayini ta sweswi u nga si fungha mintirho kumbe ku humesa masiku.",
