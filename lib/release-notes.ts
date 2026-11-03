@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '63640fb54', changes: [
+    'Review draft soil-reference wording for Ontario and Australia.',
+  ] },
   { when: '3 November 2026', sha: 'adb021515', changes: [
     'Review draft wording for Canada’s historical climate and Ontario guide links.',
   ], tour: [{ title: 'Review Canada reference wording', where: 'International → Language drafts', href: '/international/locales',
