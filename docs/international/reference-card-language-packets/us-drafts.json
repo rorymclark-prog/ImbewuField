@@ -1,0 +1,471 @@
+{
+  "sourceSha256": "135bcc1c95267f5a388a33df13f54ec0a4ca8810e49f244d30abc85286b7ffe5",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "station01",
+        "english": "US public station reference",
+        "sha256": "6359d924fea769596fcfcda04b9681a358b9b20a9b3f48b50960d269be406258",
+        "translation": "Référence de station publique des US"
+      },
+      {
+        "key": "station02",
+        "english": "Observe a public weather station",
+        "sha256": "9d938093ea65a84e42f60fb8d5c07509c179c4cdb8743adba503a15f1dd20692",
+        "translation": "Observer une station météorologique publique"
+      },
+      {
+        "key": "station03",
+        "english": "Load its latest published observations. These are separate from monthly climate averages; they do not change the crop planner or approve local growing guidance.",
+        "sha256": "fdbee11ae3ab54742a247fd06f4150940b7115e6fcfbebcf7c4a25cf4d3f16cf",
+        "translation": "Charger ses dernières observations publiées. Celles-ci sont distinctes des moyennes climatiques mensuelles ; elles ne modifient pas le planificateur de cultures ni n'approuvent les conseils locaux de culture."
+      },
+      {
+        "key": "station04",
+        "english": "Loading station observations…",
+        "sha256": "58364ace49d4ec3915b7d693c436fe8678fb48da6e88f4e133ad973f3bba9aa4",
+        "translation": "Chargement des observations de la station…"
+      },
+      {
+        "key": "station05",
+        "english": "Load public station observations",
+        "sha256": "95daa81c2f38df642e4c057fc2d3f05172712df8d115711d3fa2b29ce3035720",
+        "translation": "Charger les observations de la station publique"
+      },
+      {
+        "key": "station06",
+        "english": "Sign in to load this public station reference.",
+        "sha256": "c1bfb68fe14067f4aee07da0edec4653f7d7c92de756c10d39cbbe6de50b46a1",
+        "translation": "Connectez-vous pour charger cette référence de station publique."
+      },
+      {
+        "key": "station07",
+        "english": "This request was rate-limited. Try later; no automatic retry is made.",
+        "sha256": "069cb1afbd55f0020ce2098c30033ffcbf29e4683e728444373b1fffefbeb6ad",
+        "translation": "Cette requête a été limitée en débit. Réessayez plus tard ; aucune nouvelle tentative automatique n'est effectuée."
+      },
+      {
+        "key": "station08",
+        "english": "The station reference could not be loaded. No replacement readings were supplied.",
+        "sha256": "be0e0ceb3dcc835a50fba410d41179f01955b351732635b395c21067d64ee98e",
+        "translation": "La référence de station n'a pas pu être chargée. Aucun relevé de remplacement n'a été fourni."
+      },
+      {
+        "key": "station09",
+        "english": "Loading the station reference timed out. No replacement readings were supplied.",
+        "sha256": "73eaec97f357d208fe2bffc41c54c403fd31ef415cfc6559b2e3c610524db5c4",
+        "translation": "Le chargement de la référence de station a expiré. Aucun relevé de remplacement n'a été fourni."
+      },
+      {
+        "key": "station10",
+        "english": "The provider supplied no usable station reference. No replacement readings were supplied.",
+        "sha256": "4be2d000f81797b38946bd5ad63c0c217da55fc8ee60cb70049f64a66063e8dd",
+        "translation": "Le fournisseur n'a fourni aucune référence de station utilisable. Aucun relevé de remplacement n'a été fourni."
+      },
+      {
+        "key": "station11",
+        "english": "Partial station observations",
+        "sha256": "b090c22be7eb65afccdaa6c9f9718bc0247198d0feed7045a9a1dee499fefd6a",
+        "translation": "Observations partielles de la station"
+      },
+      {
+        "key": "station12",
+        "english": "Station observations received",
+        "sha256": "a9fd200333427c66acb19056a3c1ff93ab11c417c70ad3be81c1d684cf61dc37",
+        "translation": "Observations de la station reçues"
+      },
+      {
+        "key": "station13",
+        "english": "Freshness has not been assessed. A successful request does not establish current conditions on your farm.",
+        "sha256": "da6bc07023af576fea2168fcd2100cb2d21aacdb2003617b3efab324e3739187",
+        "translation": "La fraîcheur n'a pas été évaluée. Une requête réussie n'établit pas les conditions actuelles sur votre exploitation."
+      },
+      {
+        "key": "station14",
+        "english": "The published observation time is after the retrieval time. Check the source before relying on it.",
+        "sha256": "5b4039f5240a679be9706da5467990329dc78aad386035bfc0883591c4e7ec83",
+        "translation": "L'heure d'observation publiée est postérieure à l'heure de récupération. Vérifiez la source avant de vous y fier."
+      },
+      {
+        "key": "station15",
+        "english": "Missing, invalid or unsupported measurements remain unknown. Zero is shown only when the source supplies zero.",
+        "sha256": "296073528959bce944312ce9f9f1fdb0713be6e9355277b4754ab027763ad6e2",
+        "translation": "Les mesures manquantes, invalides ou non prises en charge restent inconnues. Zéro n'est affiché que lorsque la source fournit zéro."
+      },
+      {
+        "key": "station16",
+        "english": "Published source metadata",
+        "sha256": "ea555c92ff61721fb97214f776289ab42f6c8d0c4996c86590623f134a3d43f9",
+        "translation": "Métadonnées sources publiées"
+      },
+      {
+        "key": "station17",
+        "english": "Source QC flags are retained without treating them as independent field verification.",
+        "sha256": "155d6324c30f56ac1eb38a1160fecc14d844bf6a3967f3fc5747a87f5fce1349",
+        "translation": "Les indicateurs de QC de la source sont conservés sans les traiter comme une vérification de terrain indépendante."
+      },
+      {
+        "key": "station18",
+        "english": "Provider scope and access",
+        "sha256": "3b6a968f8e738b0a5f0b2766cd8a664807e9b2825244b420d8c1af819e81e8e1",
+        "translation": "Périmètre et accès du fournisseur"
+      },
+      {
+        "key": "station19",
+        "english": "Official NWS API documentation ↗",
+        "sha256": "67257247fde5c9571e84f15be5ff6bee7c3190012b783c3dbd224340ed925bfa",
+        "translation": "Documentation officielle de l'API NWS ↗"
+      }
+    ],
+    "es": [
+      {
+        "key": "station01",
+        "english": "US public station reference",
+        "sha256": "6359d924fea769596fcfcda04b9681a358b9b20a9b3f48b50960d269be406258",
+        "translation": "Referencia de estación pública de US"
+      },
+      {
+        "key": "station02",
+        "english": "Observe a public weather station",
+        "sha256": "9d938093ea65a84e42f60fb8d5c07509c179c4cdb8743adba503a15f1dd20692",
+        "translation": "Observar una estación meteorológica pública"
+      },
+      {
+        "key": "station03",
+        "english": "Load its latest published observations. These are separate from monthly climate averages; they do not change the crop planner or approve local growing guidance.",
+        "sha256": "fdbee11ae3ab54742a247fd06f4150940b7115e6fcfbebcf7c4a25cf4d3f16cf",
+        "translation": "Cargar sus últimas observaciones publicadas. Estas son independientes de los promedios climáticos mensuales; no modifican el planificador de cultivos ni aprueban asesoramiento agrícola local."
+      },
+      {
+        "key": "station04",
+        "english": "Loading station observations…",
+        "sha256": "58364ace49d4ec3915b7d693c436fe8678fb48da6e88f4e133ad973f3bba9aa4",
+        "translation": "Cargando observaciones de la estación…"
+      },
+      {
+        "key": "station05",
+        "english": "Load public station observations",
+        "sha256": "95daa81c2f38df642e4c057fc2d3f05172712df8d115711d3fa2b29ce3035720",
+        "translation": "Cargar observaciones de la estación pública"
+      },
+      {
+        "key": "station06",
+        "english": "Sign in to load this public station reference.",
+        "sha256": "c1bfb68fe14067f4aee07da0edec4653f7d7c92de756c10d39cbbe6de50b46a1",
+        "translation": "Inicie sesión para cargar esta referencia de estación pública."
+      },
+      {
+        "key": "station07",
+        "english": "This request was rate-limited. Try later; no automatic retry is made.",
+        "sha256": "069cb1afbd55f0020ce2098c30033ffcbf29e4683e728444373b1fffefbeb6ad",
+        "translation": "Esta solicitud fue limitada por frecuencia. Intente más tarde; no se realiza ningún reintento automático."
+      },
+      {
+        "key": "station08",
+        "english": "The station reference could not be loaded. No replacement readings were supplied.",
+        "sha256": "be0e0ceb3dcc835a50fba410d41179f01955b351732635b395c21067d64ee98e",
+        "translation": "No se pudo cargar la referencia de la estación. No se proporcionaron lecturas de reemplazo."
+      },
+      {
+        "key": "station09",
+        "english": "Loading the station reference timed out. No replacement readings were supplied.",
+        "sha256": "73eaec97f357d208fe2bffc41c54c403fd31ef415cfc6559b2e3c610524db5c4",
+        "translation": "Se agotó el tiempo de espera al cargar la referencia de la estación. No se proporcionaron lecturas de reemplazo."
+      },
+      {
+        "key": "station10",
+        "english": "The provider supplied no usable station reference. No replacement readings were supplied.",
+        "sha256": "4be2d000f81797b38946bd5ad63c0c217da55fc8ee60cb70049f64a66063e8dd",
+        "translation": "El proveedor no facilitó ninguna referencia de estación utilizable. No se proporcionaron lecturas de reemplazo."
+      },
+      {
+        "key": "station11",
+        "english": "Partial station observations",
+        "sha256": "b090c22be7eb65afccdaa6c9f9718bc0247198d0feed7045a9a1dee499fefd6a",
+        "translation": "Observaciones parciales de la estación"
+      },
+      {
+        "key": "station12",
+        "english": "Station observations received",
+        "sha256": "a9fd200333427c66acb19056a3c1ff93ab11c417c70ad3be81c1d684cf61dc37",
+        "translation": "Observaciones de la estación recibidas"
+      },
+      {
+        "key": "station13",
+        "english": "Freshness has not been assessed. A successful request does not establish current conditions on your farm.",
+        "sha256": "da6bc07023af576fea2168fcd2100cb2d21aacdb2003617b3efab324e3739187",
+        "translation": "La actualidad no ha sido evaluada. Una solicitud exitosa no establece las condiciones actuales en su granja."
+      },
+      {
+        "key": "station14",
+        "english": "The published observation time is after the retrieval time. Check the source before relying on it.",
+        "sha256": "5b4039f5240a679be9706da5467990329dc78aad386035bfc0883591c4e7ec83",
+        "translation": "La hora de observación publicada es posterior a la hora de recuperación. Verifique la fuente antes de confiar en ella."
+      },
+      {
+        "key": "station15",
+        "english": "Missing, invalid or unsupported measurements remain unknown. Zero is shown only when the source supplies zero.",
+        "sha256": "296073528959bce944312ce9f9f1fdb0713be6e9355277b4754ab027763ad6e2",
+        "translation": "Las mediciones faltantes, no válidas o no compatibles permanecen desconocidas. Se muestra cero únicamente cuando la fuente proporciona cero."
+      },
+      {
+        "key": "station16",
+        "english": "Published source metadata",
+        "sha256": "ea555c92ff61721fb97214f776289ab42f6c8d0c4996c86590623f134a3d43f9",
+        "translation": "Metadatos publicados de la fuente"
+      },
+      {
+        "key": "station17",
+        "english": "Source QC flags are retained without treating them as independent field verification.",
+        "sha256": "155d6324c30f56ac1eb38a1160fecc14d844bf6a3967f3fc5747a87f5fce1349",
+        "translation": "Los indicadores de QC de la fuente se conservan sin tratarlos como verificación de campo independiente."
+      },
+      {
+        "key": "station18",
+        "english": "Provider scope and access",
+        "sha256": "3b6a968f8e738b0a5f0b2766cd8a664807e9b2825244b420d8c1af819e81e8e1",
+        "translation": "Alcance y acceso del proveedor"
+      },
+      {
+        "key": "station19",
+        "english": "Official NWS API documentation ↗",
+        "sha256": "67257247fde5c9571e84f15be5ff6bee7c3190012b783c3dbd224340ed925bfa",
+        "translation": "Documentación oficial de la API de NWS ↗"
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "station01",
+        "english": "US public station reference",
+        "sha256": "6359d924fea769596fcfcda04b9681a358b9b20a9b3f48b50960d269be406258",
+        "translation": "Referência de estação pública dos US"
+      },
+      {
+        "key": "station02",
+        "english": "Observe a public weather station",
+        "sha256": "9d938093ea65a84e42f60fb8d5c07509c179c4cdb8743adba503a15f1dd20692",
+        "translation": "Observar uma estação meteorológica pública"
+      },
+      {
+        "key": "station03",
+        "english": "Load its latest published observations. These are separate from monthly climate averages; they do not change the crop planner or approve local growing guidance.",
+        "sha256": "fdbee11ae3ab54742a247fd06f4150940b7115e6fcfbebcf7c4a25cf4d3f16cf",
+        "translation": "Carregar suas últimas observações publicadas. Estas são separadas das médias climáticas mensais; não alteram o planejador de cultivos nem aprovam orientações locais de cultivo."
+      },
+      {
+        "key": "station04",
+        "english": "Loading station observations…",
+        "sha256": "58364ace49d4ec3915b7d693c436fe8678fb48da6e88f4e133ad973f3bba9aa4",
+        "translation": "Carregando observações da estação…"
+      },
+      {
+        "key": "station05",
+        "english": "Load public station observations",
+        "sha256": "95daa81c2f38df642e4c057fc2d3f05172712df8d115711d3fa2b29ce3035720",
+        "translation": "Carregar observações da estação pública"
+      },
+      {
+        "key": "station06",
+        "english": "Sign in to load this public station reference.",
+        "sha256": "c1bfb68fe14067f4aee07da0edec4653f7d7c92de756c10d39cbbe6de50b46a1",
+        "translation": "Entre para carregar esta referência de estação pública."
+      },
+      {
+        "key": "station07",
+        "english": "This request was rate-limited. Try later; no automatic retry is made.",
+        "sha256": "069cb1afbd55f0020ce2098c30033ffcbf29e4683e728444373b1fffefbeb6ad",
+        "translation": "Esta solicitação foi limitada por taxa. Tente mais tarde; nenhuma nova tentativa automática é feita."
+      },
+      {
+        "key": "station08",
+        "english": "The station reference could not be loaded. No replacement readings were supplied.",
+        "sha256": "be0e0ceb3dcc835a50fba410d41179f01955b351732635b395c21067d64ee98e",
+        "translation": "Não foi possível carregar a referência da estação. Nenhuma leitura de substituição foi fornecida."
+      },
+      {
+        "key": "station09",
+        "english": "Loading the station reference timed out. No replacement readings were supplied.",
+        "sha256": "73eaec97f357d208fe2bffc41c54c403fd31ef415cfc6559b2e3c610524db5c4",
+        "translation": "O carregamento da referência da estação expirou. Nenhuma leitura de substituição foi fornecida."
+      },
+      {
+        "key": "station10",
+        "english": "The provider supplied no usable station reference. No replacement readings were supplied.",
+        "sha256": "4be2d000f81797b38946bd5ad63c0c217da55fc8ee60cb70049f64a66063e8dd",
+        "translation": "O provedor não forneceu nenhuma referência de estação utilizável. Nenhuma leitura de substituição foi fornecida."
+      },
+      {
+        "key": "station11",
+        "english": "Partial station observations",
+        "sha256": "b090c22be7eb65afccdaa6c9f9718bc0247198d0feed7045a9a1dee499fefd6a",
+        "translation": "Observações parciais da estação"
+      },
+      {
+        "key": "station12",
+        "english": "Station observations received",
+        "sha256": "a9fd200333427c66acb19056a3c1ff93ab11c417c70ad3be81c1d684cf61dc37",
+        "translation": "Observações da estação recebidas"
+      },
+      {
+        "key": "station13",
+        "english": "Freshness has not been assessed. A successful request does not establish current conditions on your farm.",
+        "sha256": "da6bc07023af576fea2168fcd2100cb2d21aacdb2003617b3efab324e3739187",
+        "translation": "A atualidade não foi avaliada. Uma solicitação bem-sucedida não estabelece as condições atuais em sua fazenda."
+      },
+      {
+        "key": "station14",
+        "english": "The published observation time is after the retrieval time. Check the source before relying on it.",
+        "sha256": "5b4039f5240a679be9706da5467990329dc78aad386035bfc0883591c4e7ec83",
+        "translation": "O horário de observação publicado é posterior ao horário de recuperação. Verifique a fonte antes de confiar nela."
+      },
+      {
+        "key": "station15",
+        "english": "Missing, invalid or unsupported measurements remain unknown. Zero is shown only when the source supplies zero.",
+        "sha256": "296073528959bce944312ce9f9f1fdb0713be6e9355277b4754ab027763ad6e2",
+        "translation": "Medições ausentes, inválidas ou não suportadas permanecem desconhecidas. Zero é exibido apenas quando a fonte fornece zero."
+      },
+      {
+        "key": "station16",
+        "english": "Published source metadata",
+        "sha256": "ea555c92ff61721fb97214f776289ab42f6c8d0c4996c86590623f134a3d43f9",
+        "translation": "Metadados publicados da fonte"
+      },
+      {
+        "key": "station17",
+        "english": "Source QC flags are retained without treating them as independent field verification.",
+        "sha256": "155d6324c30f56ac1eb38a1160fecc14d844bf6a3967f3fc5747a87f5fce1349",
+        "translation": "Os sinalizadores de QC da fonte são mantidos sem tratá-los como verificação de campo independente."
+      },
+      {
+        "key": "station18",
+        "english": "Provider scope and access",
+        "sha256": "3b6a968f8e738b0a5f0b2766cd8a664807e9b2825244b420d8c1af819e81e8e1",
+        "translation": "Escopo e acesso do provedor"
+      },
+      {
+        "key": "station19",
+        "english": "Official NWS API documentation ↗",
+        "sha256": "67257247fde5c9571e84f15be5ff6bee7c3190012b783c3dbd224340ed925bfa",
+        "translation": "Documentação oficial da API do NWS ↗"
+      }
+    ],
+    "sw": [
+      {
+        "key": "station01",
+        "english": "US public station reference",
+        "sha256": "6359d924fea769596fcfcda04b9681a358b9b20a9b3f48b50960d269be406258",
+        "translation": "Rejea ya kituo cha umma cha US"
+      },
+      {
+        "key": "station02",
+        "english": "Observe a public weather station",
+        "sha256": "9d938093ea65a84e42f60fb8d5c07509c179c4cdb8743adba503a15f1dd20692",
+        "translation": "Tazama kituo cha umma cha hali ya hewa"
+      },
+      {
+        "key": "station03",
+        "english": "Load its latest published observations. These are separate from monthly climate averages; they do not change the crop planner or approve local growing guidance.",
+        "sha256": "fdbee11ae3ab54742a247fd06f4150940b7115e6fcfbebcf7c4a25cf4d3f16cf",
+        "translation": "Pakia vipimo vyake vya hivi karibuni vilivyochapishwa. Hivi ni tofauti na wastani wa hali ya hewa wa kila mwezi; havibadilishi mpangaji wa mazao wala kuidhinisha mwongozo wa kilimo wa eneo husika."
+      },
+      {
+        "key": "station04",
+        "english": "Loading station observations…",
+        "sha256": "58364ace49d4ec3915b7d693c436fe8678fb48da6e88f4e133ad973f3bba9aa4",
+        "translation": "Inapakia vipimo vya kituo…"
+      },
+      {
+        "key": "station05",
+        "english": "Load public station observations",
+        "sha256": "95daa81c2f38df642e4c057fc2d3f05172712df8d115711d3fa2b29ce3035720",
+        "translation": "Pakia vipimo vya kituo cha umma"
+      },
+      {
+        "key": "station06",
+        "english": "Sign in to load this public station reference.",
+        "sha256": "c1bfb68fe14067f4aee07da0edec4653f7d7c92de756c10d39cbbe6de50b46a1",
+        "translation": "Ingia ili kupakia rejea hii ya kituo cha umma."
+      },
+      {
+        "key": "station07",
+        "english": "This request was rate-limited. Try later; no automatic retry is made.",
+        "sha256": "069cb1afbd55f0020ce2098c30033ffcbf29e4683e728444373b1fffefbeb6ad",
+        "translation": "Ombi hili limewekewa kikomo cha mara ngapi linaweza kutumwa. Jaribu tena baadaye; hakuna jaribio la kiotomatiki litakalofanywa."
+      },
+      {
+        "key": "station08",
+        "english": "The station reference could not be loaded. No replacement readings were supplied.",
+        "sha256": "be0e0ceb3dcc835a50fba410d41179f01955b351732635b395c21067d64ee98e",
+        "translation": "Rejea ya kituo haikuweza kupakiwa. Hakuna vipimo mbadala vilivyotolewa."
+      },
+      {
+        "key": "station09",
+        "english": "Loading the station reference timed out. No replacement readings were supplied.",
+        "sha256": "73eaec97f357d208fe2bffc41c54c403fd31ef415cfc6559b2e3c610524db5c4",
+        "translation": "Muda wa kupakia rejea ya kituo umekwisha. Hakuna vipimo mbadala vilivyotolewa."
+      },
+      {
+        "key": "station10",
+        "english": "The provider supplied no usable station reference. No replacement readings were supplied.",
+        "sha256": "4be2d000f81797b38946bd5ad63c0c217da55fc8ee60cb70049f64a66063e8dd",
+        "translation": "Mtoa huduma hakutoa rejea ya kituo inayoweza kutumika. Hakuna vipimo mbadala vilivyotolewa."
+      },
+      {
+        "key": "station11",
+        "english": "Partial station observations",
+        "sha256": "b090c22be7eb65afccdaa6c9f9718bc0247198d0feed7045a9a1dee499fefd6a",
+        "translation": "Vipimo vya sehemu vya kituo"
+      },
+      {
+        "key": "station12",
+        "english": "Station observations received",
+        "sha256": "a9fd200333427c66acb19056a3c1ff93ab11c417c70ad3be81c1d684cf61dc37",
+        "translation": "Vipimo vya kituo vimepokelewa"
+      },
+      {
+        "key": "station13",
+        "english": "Freshness has not been assessed. A successful request does not establish current conditions on your farm.",
+        "sha256": "da6bc07023af576fea2168fcd2100cb2d21aacdb2003617b3efab324e3739187",
+        "translation": "Usasisho haujatathminiwa. Ombi lililofanikiwa halithibitishi hali halisi ya sasa kwenye shamba lako."
+      },
+      {
+        "key": "station14",
+        "english": "The published observation time is after the retrieval time. Check the source before relying on it.",
+        "sha256": "5b4039f5240a679be9706da5467990329dc78aad386035bfc0883591c4e7ec83",
+        "translation": "Wakati wa kipimo uliotangazwa ni baada ya wakati wa kupakua. Kagua chanzo kabla ya kukiamini."
+      },
+      {
+        "key": "station15",
+        "english": "Missing, invalid or unsupported measurements remain unknown. Zero is shown only when the source supplies zero.",
+        "sha256": "296073528959bce944312ce9f9f1fdb0713be6e9355277b4754ab027763ad6e2",
+        "translation": "Vipimo vinavyokosekana, visivyo sahihi au visivyoauniwa vinabaki bila kujulikana. Sifuri huonyeshwa pale tu chanzo kinapotoa sifuri."
+      },
+      {
+        "key": "station16",
+        "english": "Published source metadata",
+        "sha256": "ea555c92ff61721fb97214f776289ab42f6c8d0c4996c86590623f134a3d43f9",
+        "translation": "Data meta za chanzo zilizochapishwa"
+      },
+      {
+        "key": "station17",
+        "english": "Source QC flags are retained without treating them as independent field verification.",
+        "sha256": "155d6324c30f56ac1eb38a1160fecc14d844bf6a3967f3fc5747a87f5fce1349",
+        "translation": "Alama za QC za chanzo zimehifadhiwa bila kuzichukulia kama uthibitisho huru wa shambani."
+      },
+      {
+        "key": "station18",
+        "english": "Provider scope and access",
+        "sha256": "3b6a968f8e738b0a5f0b2766cd8a664807e9b2825244b420d8c1af819e81e8e1",
+        "translation": "Upeo na ufikiaji wa mtoa huduma"
+      },
+      {
+        "key": "station19",
+        "english": "Official NWS API documentation ↗",
+        "sha256": "67257247fde5c9571e84f15be5ff6bee7c3190012b783c3dbd224340ed925bfa",
+        "translation": "Nyaraka rasmi za API ya NWS ↗"
+      }
+    ]
+  }
+}

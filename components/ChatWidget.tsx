@@ -202,7 +202,8 @@ export default function ChatWidget() {
     // LimaBar, or gains a LimaBar without being excluded here.
     pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
     pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||
-    pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')
+    pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops') ||
+    pathname === '/international/locales'
   ) return null;
 
   // WHERE THE FAB PARKS WHEN NOBODY HAS MOVED IT.
@@ -377,6 +378,7 @@ function isLimaFabHiddenRoute(pathname: string): boolean {
     pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
     pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
     pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||
-    pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')
+    pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops') ||
+    pathname === '/international/locales'
   );
 }

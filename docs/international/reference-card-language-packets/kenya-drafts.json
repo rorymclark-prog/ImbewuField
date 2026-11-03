@@ -1,0 +1,399 @@
+{
+  "sourceSha256": "651ba3ac2620fb3e806fb61e5a67214ae8e795bed6df0b219ce857a7274d807b",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "kiambuCard01",
+        "english": "Official dated reference",
+        "sha256": "08bd5ec6c985da6d9c27f25f0bcdb6b2d3176f6d2fb0a012873bdb3dea82c1d9",
+        "translation": "Référence officielle datée"
+      },
+      {
+        "key": "kiambuCard02",
+        "english": "County weather bulletin",
+        "sha256": "0f936a31a7cb678092268383dfc661fc142cb0aa845a932928107f48a7320687",
+        "translation": "Bulletin météorologique de comté"
+      },
+      {
+        "key": "kiambuCard03",
+        "english": "Choose a county to see a recorded official reference. This does not select an agricultural region or approve crop-planning advice.",
+        "sha256": "9d170e19b55d2bdffd0554e7a8e9bc4a8f7675a5ff8dd601e1ba9b1f5f276d82",
+        "translation": "Choisissez un comté pour consulter une référence officielle enregistrée. Cela ne sélectionne pas une région agricole et n'approuve pas de conseils de planification des cultures."
+      },
+      {
+        "key": "kiambuCard04",
+        "english": "County",
+        "sha256": "136c87dec4695cefef030fd6dc7c32faeb6280a795fda70b017197b60e3b7873",
+        "translation": "Comté"
+      },
+      {
+        "key": "kiambuCard05",
+        "english": "County bulletin county",
+        "sha256": "66fb2cf97682b497289eea7bc6ab42c8236e258ef1fed7c6c4728125bf899e20",
+        "translation": "Comté du bulletin de comté"
+      },
+      {
+        "key": "kiambuCard06",
+        "english": "Choose a county",
+        "sha256": "eb081e7d2ef0dc06d00d4978a178df7a90c4c02a08281bb6f03572c1f82e8e14",
+        "translation": "Choisir un comté"
+      },
+      {
+        "key": "kiambuCard07",
+        "english": "Freshness has not been assessed.",
+        "sha256": "73ab26112527d8d061226b928d490745467cf57cef123f6298045887758103c7",
+        "translation": "La fraîcheur n'a pas été évaluée."
+      },
+      {
+        "key": "kiambuCard08",
+        "english": "This is not a live feed. Check the Kenya Meteorological Department for its newest bulletin.",
+        "sha256": "ef52d515f0108e1dd0e1835538a65105de689355feccc2defbeed052c7ed995d",
+        "translation": "Il ne s'agit pas d'un flux en direct. Consultez le Département météorologique du Kenya pour son bulletin le plus récent."
+      },
+      {
+        "key": "kiambuCard09",
+        "english": "Open official dated page ↗",
+        "sha256": "e7ad4c4269243812dbf126a7c26c7a5589854146c58d95dee70b270dbba097a7",
+        "translation": "Ouvrir la page officielle datée ↗"
+      },
+      {
+        "key": "kiambuCard10",
+        "english": "Open dated bulletin PDF ↗",
+        "sha256": "8cc1892678ff49e6e93e3644c6b2c47f676f12f9d244c7e9fc0c8b02f3f838ab",
+        "translation": "Ouvrir le PDF du bulletin daté ↗"
+      },
+      {
+        "key": "kiambuCard11",
+        "english": "Check KMD’s county bulletin index ↗",
+        "sha256": "ae149312493b3bc9b3bb9f5c13454875e5e8b9b62cb4c4a4b1f08938523d6633",
+        "translation": "Consulter l'index des bulletins de comté du KMD ↗"
+      },
+      {
+        "key": "kiambuCard12",
+        "english": "About this reference",
+        "sha256": "a09d84110cb9c94cc9cb8fa3ff9e93040588193cc7b6db3c7ba9d24f00a50f83",
+        "translation": "À propos de cette référence"
+      },
+      {
+        "key": "kiambuCard13",
+        "english": "Time zone: unknown. The advertised calendar dates have not been established as exact validity times.",
+        "sha256": "9ec1351458cccebc78d36b2294c18da12a865bf33b51290a978df3ce262f0fcd",
+        "translation": "Fuseau horaire : inconnu. Les dates calendaires annoncées n'ont pas été établies comme heures de validité exactes."
+      },
+      {
+        "key": "kiambuCard14",
+        "english": "Reuse licence: unknown. This reference does not establish permission to reuse its contents or approval for local crop planning.",
+        "sha256": "9a86d96a56de98281882102390f40384569b4a509364a5c9234f945028971951",
+        "translation": "Licence de réutilisation : inconnue. Cette référence n'établit pas d'autorisation de réutiliser son contenu ni d'approbation pour la planification locale des cultures."
+      },
+      {
+        "key": "kiambuCard15",
+        "english": "No county selected. Choose a county to open its dated reference.",
+        "sha256": "c8045c0e6a48adbf4c15106095862ec8bd4d256e09feb0f07a8ffc494d6878bc",
+        "translation": "Aucun comté sélectionné. Choisissez un comté pour ouvrir sa référence datée."
+      },
+      {
+        "key": "kiambuCard16",
+        "english": "There is no verified reference for this county selection.",
+        "sha256": "4e17de1beded18814b75bb7c9f1558e5e5d932cec1577ab9813354594086a4db",
+        "translation": "Il n'y a pas de référence vérifiée pour cette sélection de comté."
+      }
+    ],
+    "es": [
+      {
+        "key": "kiambuCard01",
+        "english": "Official dated reference",
+        "sha256": "08bd5ec6c985da6d9c27f25f0bcdb6b2d3176f6d2fb0a012873bdb3dea82c1d9",
+        "translation": "Referencia oficial fechada"
+      },
+      {
+        "key": "kiambuCard02",
+        "english": "County weather bulletin",
+        "sha256": "0f936a31a7cb678092268383dfc661fc142cb0aa845a932928107f48a7320687",
+        "translation": "Boletín meteorológico del condado"
+      },
+      {
+        "key": "kiambuCard03",
+        "english": "Choose a county to see a recorded official reference. This does not select an agricultural region or approve crop-planning advice.",
+        "sha256": "9d170e19b55d2bdffd0554e7a8e9bc4a8f7675a5ff8dd601e1ba9b1f5f276d82",
+        "translation": "Elija un condado para ver una referencia oficial registrada. Esto no selecciona una región agrícola ni aprueba asesoramiento de planificación de cultivos."
+      },
+      {
+        "key": "kiambuCard04",
+        "english": "County",
+        "sha256": "136c87dec4695cefef030fd6dc7c32faeb6280a795fda70b017197b60e3b7873",
+        "translation": "Condado"
+      },
+      {
+        "key": "kiambuCard05",
+        "english": "County bulletin county",
+        "sha256": "66fb2cf97682b497289eea7bc6ab42c8236e258ef1fed7c6c4728125bf899e20",
+        "translation": "Condado del boletín del condado"
+      },
+      {
+        "key": "kiambuCard06",
+        "english": "Choose a county",
+        "sha256": "eb081e7d2ef0dc06d00d4978a178df7a90c4c02a08281bb6f03572c1f82e8e14",
+        "translation": "Elegir un condado"
+      },
+      {
+        "key": "kiambuCard07",
+        "english": "Freshness has not been assessed.",
+        "sha256": "73ab26112527d8d061226b928d490745467cf57cef123f6298045887758103c7",
+        "translation": "La actualidad no ha sido evaluada."
+      },
+      {
+        "key": "kiambuCard08",
+        "english": "This is not a live feed. Check the Kenya Meteorological Department for its newest bulletin.",
+        "sha256": "ef52d515f0108e1dd0e1835538a65105de689355feccc2defbeed052c7ed995d",
+        "translation": "Esta no es una transmisión en vivo. Consulte al Departamento Meteorológico de Kenia para ver su boletín más reciente."
+      },
+      {
+        "key": "kiambuCard09",
+        "english": "Open official dated page ↗",
+        "sha256": "e7ad4c4269243812dbf126a7c26c7a5589854146c58d95dee70b270dbba097a7",
+        "translation": "Abrir página oficial fechada ↗"
+      },
+      {
+        "key": "kiambuCard10",
+        "english": "Open dated bulletin PDF ↗",
+        "sha256": "8cc1892678ff49e6e93e3644c6b2c47f676f12f9d244c7e9fc0c8b02f3f838ab",
+        "translation": "Abrir PDF del boletín fechado ↗"
+      },
+      {
+        "key": "kiambuCard11",
+        "english": "Check KMD’s county bulletin index ↗",
+        "sha256": "ae149312493b3bc9b3bb9f5c13454875e5e8b9b62cb4c4a4b1f08938523d6633",
+        "translation": "Consultar índice de boletines de condados de KMD ↗"
+      },
+      {
+        "key": "kiambuCard12",
+        "english": "About this reference",
+        "sha256": "a09d84110cb9c94cc9cb8fa3ff9e93040588193cc7b6db3c7ba9d24f00a50f83",
+        "translation": "Acerca de esta referencia"
+      },
+      {
+        "key": "kiambuCard13",
+        "english": "Time zone: unknown. The advertised calendar dates have not been established as exact validity times.",
+        "sha256": "9ec1351458cccebc78d36b2294c18da12a865bf33b51290a978df3ce262f0fcd",
+        "translation": "Zona horaria: desconocida. Las fechas de calendario anunciadas no han sido establecidas como horarios de validez exactos."
+      },
+      {
+        "key": "kiambuCard14",
+        "english": "Reuse licence: unknown. This reference does not establish permission to reuse its contents or approval for local crop planning.",
+        "sha256": "9a86d96a56de98281882102390f40384569b4a509364a5c9234f945028971951",
+        "translation": "Licencia de reutilización: desconocida. Esta referencia no establece permiso para reutilizar su contenido ni aprobación para la planificación local de cultivos."
+      },
+      {
+        "key": "kiambuCard15",
+        "english": "No county selected. Choose a county to open its dated reference.",
+        "sha256": "c8045c0e6a48adbf4c15106095862ec8bd4d256e09feb0f07a8ffc494d6878bc",
+        "translation": "Ningún condado seleccionado. Elija un condado para abrir su referencia fechada."
+      },
+      {
+        "key": "kiambuCard16",
+        "english": "There is no verified reference for this county selection.",
+        "sha256": "4e17de1beded18814b75bb7c9f1558e5e5d932cec1577ab9813354594086a4db",
+        "translation": "No hay referencia verificada para esta selección de condado."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "kiambuCard01",
+        "english": "Official dated reference",
+        "sha256": "08bd5ec6c985da6d9c27f25f0bcdb6b2d3176f6d2fb0a012873bdb3dea82c1d9",
+        "translation": "Referência oficial datada"
+      },
+      {
+        "key": "kiambuCard02",
+        "english": "County weather bulletin",
+        "sha256": "0f936a31a7cb678092268383dfc661fc142cb0aa845a932928107f48a7320687",
+        "translation": "Boletim meteorológico do condado"
+      },
+      {
+        "key": "kiambuCard03",
+        "english": "Choose a county to see a recorded official reference. This does not select an agricultural region or approve crop-planning advice.",
+        "sha256": "9d170e19b55d2bdffd0554e7a8e9bc4a8f7675a5ff8dd601e1ba9b1f5f276d82",
+        "translation": "Escolha um condado para ver uma referência oficial registrada. Isso não seleciona uma região agrícola nem aprova orientações de planejamento de cultivo."
+      },
+      {
+        "key": "kiambuCard04",
+        "english": "County",
+        "sha256": "136c87dec4695cefef030fd6dc7c32faeb6280a795fda70b017197b60e3b7873",
+        "translation": "Condado"
+      },
+      {
+        "key": "kiambuCard05",
+        "english": "County bulletin county",
+        "sha256": "66fb2cf97682b497289eea7bc6ab42c8236e258ef1fed7c6c4728125bf899e20",
+        "translation": "Condado do boletim do condado"
+      },
+      {
+        "key": "kiambuCard06",
+        "english": "Choose a county",
+        "sha256": "eb081e7d2ef0dc06d00d4978a178df7a90c4c02a08281bb6f03572c1f82e8e14",
+        "translation": "Escolha um condado"
+      },
+      {
+        "key": "kiambuCard07",
+        "english": "Freshness has not been assessed.",
+        "sha256": "73ab26112527d8d061226b928d490745467cf57cef123f6298045887758103c7",
+        "translation": "A atualidade não foi avaliada."
+      },
+      {
+        "key": "kiambuCard08",
+        "english": "This is not a live feed. Check the Kenya Meteorological Department for its newest bulletin.",
+        "sha256": "ef52d515f0108e1dd0e1835538a65105de689355feccc2defbeed052c7ed995d",
+        "translation": "Esta não é uma transmissão ao vivo. Consulte o Departamento Meteorológico do Quênia para obter o boletim mais recente."
+      },
+      {
+        "key": "kiambuCard09",
+        "english": "Open official dated page ↗",
+        "sha256": "e7ad4c4269243812dbf126a7c26c7a5589854146c58d95dee70b270dbba097a7",
+        "translation": "Abrir página oficial datada ↗"
+      },
+      {
+        "key": "kiambuCard10",
+        "english": "Open dated bulletin PDF ↗",
+        "sha256": "8cc1892678ff49e6e93e3644c6b2c47f676f12f9d244c7e9fc0c8b02f3f838ab",
+        "translation": "Abrir PDF do boletim datado ↗"
+      },
+      {
+        "key": "kiambuCard11",
+        "english": "Check KMD’s county bulletin index ↗",
+        "sha256": "ae149312493b3bc9b3bb9f5c13454875e5e8b9b62cb4c4a4b1f08938523d6633",
+        "translation": "Consultar índice de boletins de condados do KMD ↗"
+      },
+      {
+        "key": "kiambuCard12",
+        "english": "About this reference",
+        "sha256": "a09d84110cb9c94cc9cb8fa3ff9e93040588193cc7b6db3c7ba9d24f00a50f83",
+        "translation": "Sobre esta referência"
+      },
+      {
+        "key": "kiambuCard13",
+        "english": "Time zone: unknown. The advertised calendar dates have not been established as exact validity times.",
+        "sha256": "9ec1351458cccebc78d36b2294c18da12a865bf33b51290a978df3ce262f0fcd",
+        "translation": "Fuso horário: desconhecido. As datas de calendário anunciadas não foram estabelecidas como horários de validade exatos."
+      },
+      {
+        "key": "kiambuCard14",
+        "english": "Reuse licence: unknown. This reference does not establish permission to reuse its contents or approval for local crop planning.",
+        "sha256": "9a86d96a56de98281882102390f40384569b4a509364a5c9234f945028971951",
+        "translation": "Licença de reutilização: desconhecida. Esta referência não estabelece permissão para reutilizar seu conteúdo nem aprovação para planejamento local de cultivos."
+      },
+      {
+        "key": "kiambuCard15",
+        "english": "No county selected. Choose a county to open its dated reference.",
+        "sha256": "c8045c0e6a48adbf4c15106095862ec8bd4d256e09feb0f07a8ffc494d6878bc",
+        "translation": "Nenhum condado selecionado. Escolha um condado para abrir sua referência datada."
+      },
+      {
+        "key": "kiambuCard16",
+        "english": "There is no verified reference for this county selection.",
+        "sha256": "4e17de1beded18814b75bb7c9f1558e5e5d932cec1577ab9813354594086a4db",
+        "translation": "Não há referência verificada para esta seleção de condado."
+      }
+    ],
+    "sw": [
+      {
+        "key": "kiambuCard01",
+        "english": "Official dated reference",
+        "sha256": "08bd5ec6c985da6d9c27f25f0bcdb6b2d3176f6d2fb0a012873bdb3dea82c1d9",
+        "translation": "Rejea rasmi yenye tarehe"
+      },
+      {
+        "key": "kiambuCard02",
+        "english": "County weather bulletin",
+        "sha256": "0f936a31a7cb678092268383dfc661fc142cb0aa845a932928107f48a7320687",
+        "translation": "Jarida la hali ya hewa la kaunti"
+      },
+      {
+        "key": "kiambuCard03",
+        "english": "Choose a county to see a recorded official reference. This does not select an agricultural region or approve crop-planning advice.",
+        "sha256": "9d170e19b55d2bdffd0554e7a8e9bc4a8f7675a5ff8dd601e1ba9b1f5f276d82",
+        "translation": "Chagua kaunti ili kuona rejea rasmi iliyorekodiwa. Hii haichagui eneo la kilimo wala kuidhinisha ushauri wa kupanga mazao."
+      },
+      {
+        "key": "kiambuCard04",
+        "english": "County",
+        "sha256": "136c87dec4695cefef030fd6dc7c32faeb6280a795fda70b017197b60e3b7873",
+        "translation": "Kaunti"
+      },
+      {
+        "key": "kiambuCard05",
+        "english": "County bulletin county",
+        "sha256": "66fb2cf97682b497289eea7bc6ab42c8236e258ef1fed7c6c4728125bf899e20",
+        "translation": "Kaunti ya jarida la kaunti"
+      },
+      {
+        "key": "kiambuCard06",
+        "english": "Choose a county",
+        "sha256": "eb081e7d2ef0dc06d00d4978a178df7a90c4c02a08281bb6f03572c1f82e8e14",
+        "translation": "Chagua kaunti"
+      },
+      {
+        "key": "kiambuCard07",
+        "english": "Freshness has not been assessed.",
+        "sha256": "73ab26112527d8d061226b928d490745467cf57cef123f6298045887758103c7",
+        "translation": "Usasisho haujatathminiwa."
+      },
+      {
+        "key": "kiambuCard08",
+        "english": "This is not a live feed. Check the Kenya Meteorological Department for its newest bulletin.",
+        "sha256": "ef52d515f0108e1dd0e1835538a65105de689355feccc2defbeed052c7ed995d",
+        "translation": "Huu si mpasho wa moja kwa moja. Angalia Idara ya Hali ya Hewa ya Kenya kwa jarida lake jipya zaidi."
+      },
+      {
+        "key": "kiambuCard09",
+        "english": "Open official dated page ↗",
+        "sha256": "e7ad4c4269243812dbf126a7c26c7a5589854146c58d95dee70b270dbba097a7",
+        "translation": "Fungua ukurasa rasmi wenye tarehe ↗"
+      },
+      {
+        "key": "kiambuCard10",
+        "english": "Open dated bulletin PDF ↗",
+        "sha256": "8cc1892678ff49e6e93e3644c6b2c47f676f12f9d244c7e9fc0c8b02f3f838ab",
+        "translation": "Fungua PDF ya jarida lenye tarehe ↗"
+      },
+      {
+        "key": "kiambuCard11",
+        "english": "Check KMD’s county bulletin index ↗",
+        "sha256": "ae149312493b3bc9b3bb9f5c13454875e5e8b9b62cb4c4a4b1f08938523d6633",
+        "translation": "Angalia faharisi ya majarida ya kaunti ya KMD ↗"
+      },
+      {
+        "key": "kiambuCard12",
+        "english": "About this reference",
+        "sha256": "a09d84110cb9c94cc9cb8fa3ff9e93040588193cc7b6db3c7ba9d24f00a50f83",
+        "translation": "Kuhusu rejea hii"
+      },
+      {
+        "key": "kiambuCard13",
+        "english": "Time zone: unknown. The advertised calendar dates have not been established as exact validity times.",
+        "sha256": "9ec1351458cccebc78d36b2294c18da12a865bf33b51290a978df3ce262f0fcd",
+        "translation": "Saa za ukanda: hazijulikani. Tarehe za kalenda zilizotangazwa hazijathibitishwa kama nyakati kamili za uhalali."
+      },
+      {
+        "key": "kiambuCard14",
+        "english": "Reuse licence: unknown. This reference does not establish permission to reuse its contents or approval for local crop planning.",
+        "sha256": "9a86d96a56de98281882102390f40384569b4a509364a5c9234f945028971951",
+        "translation": "Leseni ya kutumia tena: haijulikani. Rejea hii haitoi idhini ya kutumia tena maudhui yake wala idhini ya kupanga mazao ya eneo husika."
+      },
+      {
+        "key": "kiambuCard15",
+        "english": "No county selected. Choose a county to open its dated reference.",
+        "sha256": "c8045c0e6a48adbf4c15106095862ec8bd4d256e09feb0f07a8ffc494d6878bc",
+        "translation": "Hakuna kaunti iliyochaguliwa. Chagua kaunti ili kufungua rejea yake yenye tarehe."
+      },
+      {
+        "key": "kiambuCard16",
+        "english": "There is no verified reference for this county selection.",
+        "sha256": "4e17de1beded18814b75bb7c9f1558e5e5d932cec1577ab9813354594086a4db",
+        "translation": "Hakuna rejea iliyothibitishwa kwa uchaguzi huu wa kaunti."
+      }
+    ]
+  }
+}

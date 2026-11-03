@@ -1,0 +1,111 @@
+{
+  "sourceSha256": "8c1f9889e881d3253bb2a7871d4e999d7d7d45c904cb765b4e44f888219cf790",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "colombiaSibClaim",
+        "english": "The portal describes dated occurrence records, checklists and species information sheets. Its publication policy lists different licence options by data type. Check the publisher and terms for each dataset before reuse.",
+        "sha256": "95fefe31e5ee5ee73fd2e17a3bf2a72f33b750b5c1f134afd5c18419f66d8417",
+        "translation": "Le portail décrit des données d'occurrence datées, des listes de contrôle et des fiches d'information sur les espèces. Sa politique de publication indique différentes options de licence selon le type de données. Vérifiez l'éditeur et les conditions de chaque jeu de données avant toute réutilisation."
+      },
+      {
+        "key": "colombiaSibLicence",
+        "english": "Individual dataset and record terms were not checked. The publication policy lists several options, including noncommercial licences.",
+        "sha256": "97c95a550ea70428b326a1967270206f1d8f9c4d0279a499ad4755bc378c7ab9",
+        "translation": "Les conditions des jeux de données et enregistrements individuels n'ont pas été vérifiées. La politique de publication répertorie plusieurs options, notamment des licences non commerciales."
+      },
+      {
+        "key": "colombiaSibLimits",
+        "english": "An occurrence records a reported presence in a place and time. Local suitability and planting permission require separate review.",
+        "sha256": "9b70b2ae16aeebf0d96757e922e3d6e9b5d4129d65be7c67a6ca924f34cf7b5d",
+        "translation": "Une occurrence enregistre une présence signalée dans un lieu et à une date donnés. L'adéquation locale et l'autorisation de plantation nécessitent un examen distinct."
+      },
+      {
+        "key": "colombiaIdeamClaim",
+        "english": "The index describes rainfall forecasts by department and natural region, recent weather conditions and national water availability. Its first linked issue displays a publication date of 26 October 2026. Forecast validity, bulletin contents, reliable cadence and machine access remain unverified.",
+        "sha256": "f04f14f8266e648d28fdb1170d8811449a6272667a2b14bbedb55035d38204dd",
+        "translation": "L'index décrit des prévisions pluviométriques par département et région naturelle, les conditions météorologiques récentes et la disponibilité nationale en eau. Son premier numéro lié affiche une date de publication du 26 octobre 2026. La validité des prévisions, le contenu des bulletins, la régularité de parution et l'accès automatisé demeurent non vérifiés."
+      }
+    ],
+    "es": [
+      {
+        "key": "colombiaSibClaim",
+        "english": "The portal describes dated occurrence records, checklists and species information sheets. Its publication policy lists different licence options by data type. Check the publisher and terms for each dataset before reuse.",
+        "sha256": "95fefe31e5ee5ee73fd2e17a3bf2a72f33b750b5c1f134afd5c18419f66d8417",
+        "translation": "El portal describe registros biológicos fechados, listas de chequeo y fichas de especies. Su política de publicación enumera distintas opciones de licencia según el tipo de datos. Verifique el publicador y las condiciones de cada conjunto de datos antes de su reutilización."
+      },
+      {
+        "key": "colombiaSibLicence",
+        "english": "Individual dataset and record terms were not checked. The publication policy lists several options, including noncommercial licences.",
+        "sha256": "97c95a550ea70428b326a1967270206f1d8f9c4d0279a499ad4755bc378c7ab9",
+        "translation": "No se verificaron los términos de cada conjunto de datos ni de cada registro individual. La política de publicación enumera varias opciones, incluidas licencias no comerciales."
+      },
+      {
+        "key": "colombiaSibLimits",
+        "english": "An occurrence records a reported presence in a place and time. Local suitability and planting permission require separate review.",
+        "sha256": "9b70b2ae16aeebf0d96757e922e3d6e9b5d4129d65be7c67a6ca924f34cf7b5d",
+        "translation": "Un registro biológico documenta una presencia reportada en un lugar y momento determinados. La idoneidad local y el permiso de siembra requieren una revisión independiente."
+      },
+      {
+        "key": "colombiaIdeamClaim",
+        "english": "The index describes rainfall forecasts by department and natural region, recent weather conditions and national water availability. Its first linked issue displays a publication date of 26 October 2026. Forecast validity, bulletin contents, reliable cadence and machine access remain unverified.",
+        "sha256": "f04f14f8266e648d28fdb1170d8811449a6272667a2b14bbedb55035d38204dd",
+        "translation": "El índice describe predicciones de precipitación por departamento y región natural, condiciones meteorológicas recientes y disponibilidad hídrica nacional. Su primer número enlazado muestra una fecha de publicación del 26 de octubre de 2026. La validez de las predicciones, el contenido de los boletines, la frecuencia confiable y el acceso automatizado siguen sin verificarse."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "colombiaSibClaim",
+        "english": "The portal describes dated occurrence records, checklists and species information sheets. Its publication policy lists different licence options by data type. Check the publisher and terms for each dataset before reuse.",
+        "sha256": "95fefe31e5ee5ee73fd2e17a3bf2a72f33b750b5c1f134afd5c18419f66d8417",
+        "translation": "O portal descreve registros de ocorrência datados, listas de verificação e fichas informativas de espécies. Sua política de publicação lista diferentes opções de licença por tipo de dado. Verifique o publicador e os termos de cada conjunto de dados antes de reutilizar."
+      },
+      {
+        "key": "colombiaSibLicence",
+        "english": "Individual dataset and record terms were not checked. The publication policy lists several options, including noncommercial licences.",
+        "sha256": "97c95a550ea70428b326a1967270206f1d8f9c4d0279a499ad4755bc378c7ab9",
+        "translation": "Os termos individuais dos conjuntos de dados e registros não foram verificados. A política de publicação lista várias opções, incluindo licenças não comerciais."
+      },
+      {
+        "key": "colombiaSibLimits",
+        "english": "An occurrence records a reported presence in a place and time. Local suitability and planting permission require separate review.",
+        "sha256": "9b70b2ae16aeebf0d96757e922e3d6e9b5d4129d65be7c67a6ca924f34cf7b5d",
+        "translation": "Uma ocorrência documenta uma presença relatada em determinado local e momento. A adequação local e a permissão de plantio exigem avaliação separada."
+      },
+      {
+        "key": "colombiaIdeamClaim",
+        "english": "The index describes rainfall forecasts by department and natural region, recent weather conditions and national water availability. Its first linked issue displays a publication date of 26 October 2026. Forecast validity, bulletin contents, reliable cadence and machine access remain unverified.",
+        "sha256": "f04f14f8266e648d28fdb1170d8811449a6272667a2b14bbedb55035d38204dd",
+        "translation": "O índice descreve previsões de chuva por departamento e região natural, condições meteorológicas recentes e disponibilidade hídrica nacional. Seu primeiro fascículo vinculado exibe data de publicação de 26 de outubro de 2026. A validade das previsões, o conteúdo dos boletins, a frequência confiável e o acesso automatizado permanecem não verificados."
+      }
+    ],
+    "sw": [
+      {
+        "key": "colombiaSibClaim",
+        "english": "The portal describes dated occurrence records, checklists and species information sheets. Its publication policy lists different licence options by data type. Check the publisher and terms for each dataset before reuse.",
+        "sha256": "95fefe31e5ee5ee73fd2e17a3bf2a72f33b750b5c1f134afd5c18419f66d8417",
+        "translation": "Tovuti inaeleza rekodi zenye tarehe za uwepo wa viumbe, orodha hakiki na kurasa za maelezo ya spishi. Sera yake ya uchapishaji inaorodhesha chaguzi mbalimbali za leseni kulingana na aina ya data. Kagua mchapishaji na masharti ya kila seti ya data kabla ya kuitumia tena."
+      },
+      {
+        "key": "colombiaSibLicence",
+        "english": "Individual dataset and record terms were not checked. The publication policy lists several options, including noncommercial licences.",
+        "sha256": "97c95a550ea70428b326a1967270206f1d8f9c4d0279a499ad4755bc378c7ab9",
+        "translation": "Masharti ya seti binafsi za data na rekodi mahususi hayakukaguliwa. Sera ya uchapishaji inaorodhesha chaguzi kadhaa, zikiwemo leseni zisizo za kibiashara."
+      },
+      {
+        "key": "colombiaSibLimits",
+        "english": "An occurrence records a reported presence in a place and time. Local suitability and planting permission require separate review.",
+        "sha256": "9b70b2ae16aeebf0d96757e922e3d6e9b5d4129d65be7c67a6ca924f34cf7b5d",
+        "translation": "Uwepo uliorekodiwa unaonyesha taarifa ya kuwepo mahali fulani na kwa wakati fulani. Ufaafu wa eneo husika na kibali cha kupanda vinahitaji tathmini tofauti."
+      },
+      {
+        "key": "colombiaIdeamClaim",
+        "english": "The index describes rainfall forecasts by department and natural region, recent weather conditions and national water availability. Its first linked issue displays a publication date of 26 October 2026. Forecast validity, bulletin contents, reliable cadence and machine access remain unverified.",
+        "sha256": "f04f14f8266e648d28fdb1170d8811449a6272667a2b14bbedb55035d38204dd",
+        "translation": "Kielezo kinaeleza utabiri wa mvua kwa idara za kiutawala na kanda za asili, hali ya hewa ya hivi karibuni na upatikanaji wa maji kitaifa. Toleo lake la kwanza lililounganishwa linaonyesha tarehe ya kuchapishwa ya 26 Oktoba 2026. Kipindi ambacho utabiri unatumika, yaliyomo kwenye jarida, mpangilio wa kutolewa unaotegemewa na ufikiaji wa kiotomatiki bado havijathibitishwa."
+      }
+    ]
+  }
+}

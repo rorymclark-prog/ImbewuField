@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "90c4c310407260fa7b04decd292b67674c7730f5",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "77c167fa022aa36782984a5094ac64a2a5db94a1ba7c49186bff3c8822ae50a2",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "redape01",
+      "english": "Embrapa: Banco de Dados de Solos do Brasil (BDSolos) / Redape",
+      "sha256": "a91c33b4a08d5ef38b6c27de9ede31dd21325fec989c44e5e690891be3906f09"
+    },
+    {
+      "key": "redape02",
+      "english": "Brazil national morphological and analytical soil-profile catalogue",
+      "sha256": "c862fc58296d1c273509745647ebf5d4083d6807f729a3bc626a70775e7f7f13"
+    },
+    {
+      "key": "redape03",
+      "english": "The official Redape catalogue entry describes national morphological and analytical soil-profile records (BDSolos); this documentation was read without downloading raw datasets or analyzing individual farm soils.",
+      "sha256": "ad1bf1bfeff54c32b19039eff73889f526ba276a2142ad8f5ed28ed228b4f6fb"
+    },
+    {
+      "key": "redape04",
+      "english": "Catalogue displays an Embrapa CC BY-NC 4.0 label; commercial reuse clearance, file access, API authentication, measurement units, and update cadence remain unverified.",
+      "sha256": "5d25f3a7050f10e5a91dc67b2b1c7908005a7f1bb654b8810475ea81175d6249"
+    }
+  ]
+}

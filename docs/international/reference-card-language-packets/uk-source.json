@@ -1,0 +1,80 @@
+{
+  "sourceCommit": "f23f2dce9c5c9bfb61369646e90a84a2d2a26898",
+  "sourcePath": "components/international/countries/UkStationReference.tsx",
+  "sourceFileSha256": "31e5a2dafe98372525d3685906d98fc24f7367c7ccd38f16bd27e4cdf28828a8",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "station01",
+      "english": "Official historical reference",
+      "sha256": "44b7078d96938531b177c245012a99c67ec9326bce705ac1373d6d61ac9eb182"
+    },
+    {
+      "key": "station02",
+      "english": "UK climate station data",
+      "sha256": "32443cce43309adfddc7581ff161e82e7ab7c0653600608f3542da2e2aa3d121"
+    },
+    {
+      "key": "station03",
+      "english": "Choose a station to open its past monthly weather records from the Met Office.",
+      "sha256": "bca327f1f50633f10aa68dfb4dac05a78d251efabc05c3d49a2416ad9974b7ca"
+    },
+    {
+      "key": "station04",
+      "english": "Historical weather station",
+      "sha256": "27c20901acfb59932d8630c7d2ab1becda6ead26ad0b08ae8f3e6552206b698a"
+    },
+    {
+      "key": "station05",
+      "english": "Choose a station",
+      "sha256": "68fd177f28c5621b795aedbab5f0c9646308fd14be971347a0bbbafeaac11adc"
+    },
+    {
+      "key": "station06",
+      "english": "Yeovilton",
+      "sha256": "c447d7d1fd6901d34af6b282bd97ff1dc97b66af548b0bc421fc2c67a758e482"
+    },
+    {
+      "key": "station07",
+      "english": "Yeovilton historical weather reference",
+      "sha256": "11b149a161dcc8672d7fe9c370fe98d8a4cc350ca960e1c99110706541e2f484"
+    },
+    {
+      "key": "station08",
+      "english": "Yeovilton · Met Office",
+      "sha256": "b493b788f6d4d3527f00bb37b54e0c07b183e3274c4a632085ddabe30616d2e9"
+    },
+    {
+      "key": "station09",
+      "english": "These past monthly records describe one station. Use a local forecast and check conditions at your own site before making planting decisions.",
+      "sha256": "a726f65de08bb7d8422430cf0ec33d138de8d7a38bcfe752ec586b0e62fd5396"
+    },
+    {
+      "key": "station10",
+      "english": "Monthly frost day counts cannot tell you the first or last frost date.",
+      "sha256": "960a6b55ca07b313a3ef178b8c33f9ac81df7111084d5ec7406fbeb1009631b8"
+    },
+    {
+      "key": "station11",
+      "english": "Open the Met Office station directory ↗",
+      "sha256": "e92b52fc4330378b4cc53596a7b4ad512f03edbe5c7950c03d94d419acd52958"
+    },
+    {
+      "key": "station12",
+      "english": "Open Yeovilton monthly records (text file) ↗",
+      "sha256": "101a6c7c5df9d1e1d78542a35dce6f9e1d184e28242a12b5fb7430d7ecb9c2df"
+    },
+    {
+      "key": "station13",
+      "english": "No station selected.",
+      "sha256": "7ae39cf4b028bf833b80d6f1669300309f25695a62f76247d60991a05f08416e"
+    }
+  ]
+}

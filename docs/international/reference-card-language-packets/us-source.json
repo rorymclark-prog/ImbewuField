@@ -1,0 +1,110 @@
+{
+  "sourceCommit": "14e00f344a692c08a8a7e5fa70548b754505ea40",
+  "sourcePath": "components/international/countries/NwsStationReference.tsx",
+  "sourceFileSha256": "523c0e74fe0be201b4772252e01ba5b64705779bd9f074af2fec7565bd24cfec",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "station01",
+      "english": "US public station reference",
+      "sha256": "6359d924fea769596fcfcda04b9681a358b9b20a9b3f48b50960d269be406258"
+    },
+    {
+      "key": "station02",
+      "english": "Observe a public weather station",
+      "sha256": "9d938093ea65a84e42f60fb8d5c07509c179c4cdb8743adba503a15f1dd20692"
+    },
+    {
+      "key": "station03",
+      "english": "Load its latest published observations. These are separate from monthly climate averages; they do not change the crop planner or approve local growing guidance.",
+      "sha256": "fdbee11ae3ab54742a247fd06f4150940b7115e6fcfbebcf7c4a25cf4d3f16cf"
+    },
+    {
+      "key": "station04",
+      "english": "Loading station observations…",
+      "sha256": "58364ace49d4ec3915b7d693c436fe8678fb48da6e88f4e133ad973f3bba9aa4"
+    },
+    {
+      "key": "station05",
+      "english": "Load public station observations",
+      "sha256": "95daa81c2f38df642e4c057fc2d3f05172712df8d115711d3fa2b29ce3035720"
+    },
+    {
+      "key": "station06",
+      "english": "Sign in to load this public station reference.",
+      "sha256": "c1bfb68fe14067f4aee07da0edec4653f7d7c92de756c10d39cbbe6de50b46a1"
+    },
+    {
+      "key": "station07",
+      "english": "This request was rate-limited. Try later; no automatic retry is made.",
+      "sha256": "069cb1afbd55f0020ce2098c30033ffcbf29e4683e728444373b1fffefbeb6ad"
+    },
+    {
+      "key": "station08",
+      "english": "The station reference could not be loaded. No replacement readings were supplied.",
+      "sha256": "be0e0ceb3dcc835a50fba410d41179f01955b351732635b395c21067d64ee98e"
+    },
+    {
+      "key": "station09",
+      "english": "Loading the station reference timed out. No replacement readings were supplied.",
+      "sha256": "73eaec97f357d208fe2bffc41c54c403fd31ef415cfc6559b2e3c610524db5c4"
+    },
+    {
+      "key": "station10",
+      "english": "The provider supplied no usable station reference. No replacement readings were supplied.",
+      "sha256": "4be2d000f81797b38946bd5ad63c0c217da55fc8ee60cb70049f64a66063e8dd"
+    },
+    {
+      "key": "station11",
+      "english": "Partial station observations",
+      "sha256": "b090c22be7eb65afccdaa6c9f9718bc0247198d0feed7045a9a1dee499fefd6a"
+    },
+    {
+      "key": "station12",
+      "english": "Station observations received",
+      "sha256": "a9fd200333427c66acb19056a3c1ff93ab11c417c70ad3be81c1d684cf61dc37"
+    },
+    {
+      "key": "station13",
+      "english": "Freshness has not been assessed. A successful request does not establish current conditions on your farm.",
+      "sha256": "da6bc07023af576fea2168fcd2100cb2d21aacdb2003617b3efab324e3739187"
+    },
+    {
+      "key": "station14",
+      "english": "The published observation time is after the retrieval time. Check the source before relying on it.",
+      "sha256": "5b4039f5240a679be9706da5467990329dc78aad386035bfc0883591c4e7ec83"
+    },
+    {
+      "key": "station15",
+      "english": "Missing, invalid or unsupported measurements remain unknown. Zero is shown only when the source supplies zero.",
+      "sha256": "296073528959bce944312ce9f9f1fdb0713be6e9355277b4754ab027763ad6e2"
+    },
+    {
+      "key": "station16",
+      "english": "Published source metadata",
+      "sha256": "ea555c92ff61721fb97214f776289ab42f6c8d0c4996c86590623f134a3d43f9"
+    },
+    {
+      "key": "station17",
+      "english": "Source QC flags are retained without treating them as independent field verification.",
+      "sha256": "155d6324c30f56ac1eb38a1160fecc14d844bf6a3967f3fc5747a87f5fce1349"
+    },
+    {
+      "key": "station18",
+      "english": "Provider scope and access",
+      "sha256": "3b6a968f8e738b0a5f0b2766cd8a664807e9b2825244b420d8c1af819e81e8e1"
+    },
+    {
+      "key": "station19",
+      "english": "Official NWS API documentation ↗",
+      "sha256": "67257247fde5c9571e84f15be5ff6bee7c3190012b783c3dbd224340ed925bfa"
+    }
+  ]
+}

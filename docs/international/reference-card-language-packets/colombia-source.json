@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "6189b8658229f5844d237849d9bfbe7c5f804f6c",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "fe64a2b4e5d1f7bc285fb5880c21c0be4310739d8ee9cfcc79b1a56169b68a5e",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "colombiaSibClaim",
+      "english": "The portal describes dated occurrence records, checklists and species information sheets. Its publication policy lists different licence options by data type. Check the publisher and terms for each dataset before reuse.",
+      "sha256": "95fefe31e5ee5ee73fd2e17a3bf2a72f33b750b5c1f134afd5c18419f66d8417"
+    },
+    {
+      "key": "colombiaSibLicence",
+      "english": "Individual dataset and record terms were not checked. The publication policy lists several options, including noncommercial licences.",
+      "sha256": "97c95a550ea70428b326a1967270206f1d8f9c4d0279a499ad4755bc378c7ab9"
+    },
+    {
+      "key": "colombiaSibLimits",
+      "english": "An occurrence records a reported presence in a place and time. Local suitability and planting permission require separate review.",
+      "sha256": "9b70b2ae16aeebf0d96757e922e3d6e9b5d4129d65be7c67a6ca924f34cf7b5d"
+    },
+    {
+      "key": "colombiaIdeamClaim",
+      "english": "The index describes rainfall forecasts by department and natural region, recent weather conditions and national water availability. Its first linked issue displays a publication date of 26 October 2026. Forecast validity, bulletin contents, reliable cadence and machine access remain unverified.",
+      "sha256": "f04f14f8266e648d28fdb1170d8811449a6272667a2b14bbedb55035d38204dd"
+    }
+  ]
+}
