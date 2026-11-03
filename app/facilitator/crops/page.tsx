@@ -23,6 +23,8 @@ import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabilityGraphs';
 import ProductionRecordsEditor from '@/components/crops/ProductionRecordsEditor';
+import ProjectMonthlyProductionPreview from '@/components/crops/ProjectMonthlyProductionPreview';
+import { previewMonthlyProduction } from '@/lib/international/projects/monthly-production-preview';
 import HarvestTargetsPanel from '@/components/crops/HarvestTargetsPanel';
 import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
 import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
@@ -34,9 +36,9 @@ import { hasGrowerCycleMarker, isProvenForeignGrowerCycle } from '@/lib/internat
 import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
-import { activeAccountUid } from '@/lib/account-local-storage';
+import { activeAccountUid, readAccountLocalSampleState } from '@/lib/account-local-storage';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
-import { isSampleMode } from '@/lib/sample-mode';
+import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
 import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
@@ -1366,7 +1368,7 @@ function FacilitatorCropsPageInner() {
       if (saveTimer.current) clearTimeout(saveTimer.current);
       setPlanStorageRevision(value => value + 1);
     };
-    const events = [CROP_PLAN_CHANGED_EVENT, CROP_PLAN_STORAGE_EVENT, 'storage', 'focus'];
+    const events = [CROP_PLAN_CHANGED_EVENT, CROP_PLAN_STORAGE_EVENT, SAMPLE_MODE_EVENT, 'storage', 'focus'];
     events.forEach(event => window.addEventListener(event, changed));
     return () => events.forEach(event => window.removeEventListener(event, changed));
   }, []);
@@ -2184,6 +2186,17 @@ function FacilitatorCropsPageInner() {
     ? buildNurseryForecast(plantings, beds, productionSiteId, sanitiseNurserySettings(plan?.nursery), { year: currentYear, month: currentMonth })
     : null, [allowCataloguePlanning, mounted, productionSiteId, plantings, beds, plan?.nursery, currentYear, currentMonth]);
   const siteProductionRecords = useMemo(() => productionRecordsForSite(plan?.productionRecords, productionSiteId), [plan?.productionRecords, productionSiteId]);
+  const monthlyProjectPreview = productionSiteId && growerScope?.kind === 'mapped-site'
+    && selectedGrowerSource && !growerSample && !planSaveConflict && (
+      <ProjectMonthlyProductionPreview
+        key={JSON.stringify([growerOwner, growerScopeKey, productionSiteId, growerWorkflow.contextRevision, planStorageRevision])}
+        readPreview={() => {
+          if (readAccountLocalSampleState() !== false) return { status: 'held' };
+          const receipt = readCurrentGrowerBook();
+          if (receipt.status !== 'ready' || !receipt.isCurrent?.()) return { status: 'held' };
+          return previewMonthlyProduction(receipt.book.productionRecords, productionSiteId);
+        }} />
+    );
   const sitePreservedProducts = useMemo(() => preservedFoodRecordsForSite(plan?.preservedProducts, productionSiteId), [plan?.preservedProducts, productionSiteId]);
   const unassignedProductionRecords = useMemo(() => sanitiseProductionRecords(plan?.productionRecords).filter(record => !record.siteId), [plan?.productionRecords]);
   const unassignedPreservedProducts = useMemo(() => sanitisePreservedFoodRecords(plan?.preservedProducts).filter(record => !record.siteId), [plan?.preservedProducts]);
@@ -2611,6 +2624,7 @@ function FacilitatorCropsPageInner() {
               siteName={placeName || designTitle} settings={plan?.nursery} beds={beds} plantings={plantings}
               now={{ year: currentYear, month: currentMonth }} allowCatalogueForecast={false}
               saveContext={nurserySaveContext} onSettings={saveNurserySettings} />}
+            {monthlyProjectPreview}
             <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []}
               dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts}
               onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
@@ -2964,6 +2978,7 @@ function FacilitatorCropsPageInner() {
             {animalSaveFailed && <p role="alert" className="font-sans mt-2" style={{ color: 'var(--gold)', fontSize: 13 }}>Animal products and production months could not be saved on this device. Keep this page open and download the plan before leaving.</p>}
             <details className="rounded-2xl p-4 mt-4" style={{ border: '1px solid var(--border)', background: 'var(--bg-1)' }}><summary className="font-display font-semibold" style={{ cursor: 'pointer', minHeight: 32 }}>Food, production kg and growing space graphs</summary><ProductionAvailabilityGraphs series={productionAvailabilityGraphs} input={productionGraphInput} preservedProducts={sitePreservedProducts} /><p className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>The map supplies growing areas and plant counts. Record monthly quantities below. For crop R/m², use All tools → Food, field &amp; value → Plan-cycle value and review prices, losses and the amount sold.</p></details>
             {(unassignedProductionRecords.length > 0 || unassignedPreservedProducts.length > 0) && <p className="font-sans text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Earlier records without a site are retained outside this site's totals: {unassignedProductionRecords.length} production records and {unassignedPreservedProducts.length} stock records.</p>}
+            {monthlyProjectPreview}
             <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []} dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
             {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} productionProjection={productionProjection} poultryGuidance={includeAnimals ? chickenGuide : undefined} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} />}
 

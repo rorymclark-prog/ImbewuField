@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { previewMonthlyProduction } from '@/lib/international/projects/monthly-production-preview';
+import type { DatedProductionRecord } from '@/lib/production-records';
 import { PROJECT_TEMPLATES, projectTemplate } from '@/lib/international/projects/templates';
 import { reviewProjectIndicator, validProjectDate } from '@/lib/international/projects/evaluate';
 import { existingProjectReference, productionProjectEvidence } from '@/lib/international/projects/sources';
@@ -173,4 +175,33 @@ test('invalid counts and impossible result magnitudes cannot pass as complete ev
   assert.equal(reviewProjectIndicator(survival, fractional, context).value, null);
   const huge = reviewProjectIndicator(harvest, [row({ quantity: Number.MAX_VALUE }), row({ reference: { authority: 'farm-records', id: 'huge2' }, quantity: Number.MAX_VALUE })], context);
   assert.equal(huge.value, null);
+});
+
+const monthlyRecord = (patch: Partial<DatedProductionRecord> = {}): DatedProductionRecord => ({
+  id: 'private-row', siteId: 'mapped-site', sourceIconKey: 'crop:fixture', label: 'Fixture harvest',
+  date: { year: 2026, month: 3 }, quantity: 0, unit: 'kg', status: 'actual',
+  note: 'Private observation', pricePerUnit: 3, ...patch,
+});
+
+test('private monthly review preserves genuine zeros and estimates without filling gaps or exposing private fields', () => {
+  const preview = previewMonthlyProduction([
+    monthlyRecord(),
+    monthlyRecord({ id: 'expected', date: { year: 2026, month: 5 }, status: 'expected', unit: 'items', quantity: 7 }),
+    monthlyRecord({ siteId: 'other-site', label: 'Other site' }),
+    monthlyRecord({ siteId: undefined, label: 'Unassigned' }),
+    monthlyRecord({ id: 'example', date: { year: 2026, month: 4 }, provenance: 'fictional-example' }),
+  ], 'mapped-site');
+  assert.deepEqual(preview, { status: 'ready', rows: [
+    { month: '2026-05', label: 'Fixture harvest', quantity: 7, unit: 'items', status: 'expected' },
+    { month: '2026-03', label: 'Fixture harvest', quantity: 0, unit: 'kg', status: 'actual' },
+  ] });
+});
+
+test('an unreadable or conflicting saved monthly record cannot appear as a clean empty preview', () => {
+  for (const records of [null, {}, [null], [monthlyRecord({ quantity: NaN })],
+    [monthlyRecord(), monthlyRecord({ id: 'same-month', quantity: 2 })],
+    [monthlyRecord(), monthlyRecord({ date: { year: 2026, month: 4 } })]]) {
+    assert.deepEqual(previewMonthlyProduction(records, 'mapped-site'), { status: 'held' });
+  }
+  assert.deepEqual(previewMonthlyProduction(undefined, 'mapped-site'), { status: 'ready', rows: [] });
 });
