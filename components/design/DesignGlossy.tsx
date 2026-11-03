@@ -151,8 +151,7 @@ import {
   type CropRowLayout,
 } from '@/lib/crop-row-cartography';
 import { overlayElementsText } from '@/lib/overlay-elements';
-import { annualRoofHarvestLitres, deriveWaterSystem, ringAreaM2, statedTankCapacityLitres } from '@/lib/water-system';
-import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
+import { deriveWaterSystem } from '@/lib/water-system';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import {
@@ -7575,6 +7574,74 @@ async function boundaryPresentationContext(
   };
 }
 
+// The same indicative ground-flow field belongs on both finishes. Its interceptors are the
+// saved swales and bed footprints, so the arrows stop where the plan says water spreads.
+function waterTerrainFlowArrows(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  site: SectorSite | null | undefined,
+): FlowArrow[] {
+  return interceptFlowArrows(
+    overlandFlowArrows({
+      boundary: refLayers.boundary,
+      aspectDeg: site?.elevation?.aspectDeg ?? Number.NaN,
+      slopeDeg: site?.elevation?.slopeDeg ?? Number.NaN,
+      directionConfidence: site?.elevation?.directionConfidence,
+    }),
+    // Everything whose JOB is stopping runoff, in the arrows' own normalised space. Bed
+    // footprints convert metres to normalised through the frame; a rotated bed keeps its
+    // rotation so the arrow is cut at the bed's true edge, not its bounding box.
+    {
+      polylines: state.lines
+        .filter((line) => line.kind === 'swale' && line.points.length >= 2)
+        .map((line) => line.points),
+      rects: state.items
+        .filter((it) => (BED_DEF_IDS as readonly string[]).includes(it.defId))
+        .map((it) => {
+          const def = ELEMENTS_BY_ID[it.defId];
+          return {
+            cx: it.x,
+            cy: it.y,
+            w: (it.wM ?? def?.wM ?? 1) / (frame.imgW * frame.mPerPx),
+            h: (it.hM ?? def?.hM ?? 1) / (frame.imgH * frame.mPerPx),
+            rotDeg: it.rot ?? 0,
+          };
+        }),
+      rings: state.zones
+        .filter((z) => z.feature === 'staple_garden' && z.points.length >= 3)
+        .map((z) => z.points),
+    },
+  );
+}
+
+function waterFlowLegendRows(arrows: FlowArrow[], site: SectorSite | null | undefined): StyleLegendRow[] {
+  if (!arrows.length) return [];
+  return [{
+    swatch: '#1C608C',
+    visual: 'flow-arrow',
+    text: overlandFlowLegendText(site?.elevation?.slopeDeg ?? Number.NaN, site?.elevation?.aspectLabel ?? 'downhill'),
+  }];
+}
+
+function buildWaterPlanOverlay(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  W: number,
+  H: number,
+  flowArrows: FlowArrow[],
+): string | undefined {
+  if (!flowArrows.length && !state.lines.some(line => waterRouteStyleFor(line.kind) && line.points.length >= 2)) return;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) { releaseCanvas(canvas); throw new Error('Water plan overlay unavailable'); }
+  drawOverlandFlowArrows(ctx, flowArrows, W, H);
+  drawWaterRoutes(ctx, state, frame, W, H);
+  return drainCanvasToDataUrl(canvas, 'image/png');
+}
+
 /**
  * One deterministic sheet pipeline for every design layer.
  *
@@ -7589,7 +7656,7 @@ async function buildReferenceBlueprintMap(
   filter: GlossyLayerFilter,
   placeName?: string,
   /** Only the Water sheet uses this today, for its harvest block. Optional everywhere else, and
-   *  the block simply does not print without it — see roofHarvestFooterLines. */
+   *  missing rainfall is stated explicitly in the shared budget. */
   site?: DesignGlossyProps['site'],
   /** Codes on every plant, or named callouts on one plant per kind — see SheetLabelMode. Optional
    *  so DesignPrint's per-layer render table keeps the default without a signature change. */
@@ -7687,47 +7754,7 @@ async function buildReferenceBlueprintMap(
     drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, filter === 'structures', onPaper);
   }
 
-  // WHERE THE RAIN GOES ONCE IT IS ON THE GROUND — under the plumbing, because it is the condition
-  // the plumbing answers, not a thing the farmer placed. Rory: "show arrows of where the rain
-  // drains on the roof and ground?"
-  //
-  // Only the ground half is drawn, and only when the app actually knows: aspectDeg comes from a real
-  // elevation sample and arrives with a confidence flag that is 'unconfirmed' on ground too flat to
-  // call. A roof's fall is NOT known — a traced outline says nothing about ridge, pitch or which
-  // wall the gutter is on — so no arrow is drawn off a roof. See lib/overland-flow.ts.
-  const flowArrows = filter === 'water'
-    ? interceptFlowArrows(
-      overlandFlowArrows({
-        boundary: renderRefLayers.boundary,
-        aspectDeg: site?.elevation?.aspectDeg ?? Number.NaN,
-        slopeDeg: site?.elevation?.slopeDeg ?? Number.NaN,
-        directionConfidence: site?.elevation?.directionConfidence,
-      }),
-      // Everything whose JOB is stopping runoff, in the arrows' own normalised space. Bed
-      // footprints convert metres to normalised through the frame; a rotated bed keeps its
-      // rotation so the arrow is cut at the bed's true edge, not its bounding box.
-      {
-        polylines: renderState.lines
-          .filter((line) => line.kind === 'swale' && line.points.length >= 2)
-          .map((line) => line.points),
-        rects: renderState.items
-          .filter((it) => (BED_DEF_IDS as readonly string[]).includes(it.defId))
-          .map((it) => {
-            const def = ELEMENTS_BY_ID[it.defId];
-            return {
-              cx: it.x,
-              cy: it.y,
-              w: (it.wM ?? def?.wM ?? 1) / (renderFrame.imgW * renderFrame.mPerPx),
-              h: (it.hM ?? def?.hM ?? 1) / (renderFrame.imgH * renderFrame.mPerPx),
-              rotDeg: it.rot ?? 0,
-            };
-          }),
-        rings: renderState.zones
-          .filter((z) => z.feature === 'staple_garden' && z.points.length >= 3)
-          .map((z) => z.points),
-      },
-    )
-    : [];
+  const flowArrows = filter === 'water' ? waterTerrainFlowArrows(renderState, renderFrame, renderRefLayers, site) : [];
   drawOverlandFlowArrows(ctx, flowArrows, W, H);
 
   // THE WATER STORY — roof → gutter → tank → swale. Rory: "arrows of water running down roof, and
@@ -7807,19 +7834,6 @@ async function buildReferenceBlueprintMap(
     ? sheetGutterLayout(renderState, renderRefLayers, W, H, filter, labelMode)
     : undefined;
 
-  // THE WATER SHEET CARRIES ITS OWN SIZING CALCULATION. That is how real rainwater-harvesting
-  // drawings work: the sheet that shows the tanks also shows the arithmetic that says whether they
-  // are big enough, so a farmer or a funder can check it without a second document. Rory: "should
-  // you show info like how rain can be harvested on the roof?"
-  //
-  // Every figure is measured or sourced — traced roof area, the site's own annual rainfall, and
-  // the runoff coefficient from lib/roof-runoff.ts (0.80, cited to the CSIR Red Book). Nothing
-  // here is estimated into existence: when the roof is untraced or the rainfall unknown the block
-  // simply does not print, because a harvest figure resting on a guessed roof is worse than none.
-  const waterBudget = filter === 'water'
-    ? roofHarvestFooterLines(renderState, renderFrame, renderRefLayers, site ?? null)
-    : [];
-
   // NOTHING IS DRAWN WITHOUT A ROW. A dashed canopy edge is meaningless to a reader who has not
   // been told what it means, so the row appears only when at least one canopy has actually earned
   // the dash — recomputed here from the same printed geometry drawFilteredItems uses.
@@ -7867,8 +7881,12 @@ async function buildReferenceBlueprintMap(
       labelMode,
       gutterLayout,
       includeLabelGutters: filter !== 'all',
-      ...(waterBudget.length
-        ? { footerHeading: 'WATER BUDGET', footerText: waterBudget.join('\n'), footerBox: true }
+      ...(filter === 'water'
+        ? {
+            footerHeading: 'WATER BUDGET',
+            footerText: waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site),
+            footerBox: true,
+          }
         : {}),
       // NOTHING IS DRAWN WITHOUT A ROW, and the converse: the row exists only when the arrows do.
       // The flow field is computed from site elevation, which sheetLegendRows never sees, so it
@@ -7882,73 +7900,9 @@ async function buildReferenceBlueprintMap(
           }],
         }
         : {}),
-      ...(flowArrows.length
-        ? {
-          extraLegendRows: [{
-            swatch: '#1C608C',
-            visual: 'flow-arrow' as const,
-            text: overlandFlowLegendText(
-              site?.elevation?.slopeDeg ?? Number.NaN,
-              site?.elevation?.aspectLabel ?? 'downhill',
-            ),
-            // No section, deliberately. The headed sections on this sheet name what the farmer has
-            // PLACED — rainwater, filtered greywater, irrigation. Overland flow is not placed and
-            // cannot be moved; it is the condition all of that responds to. Filing it under a
-            // "WATER" heading of its own put a heading on the sheet that read as a fourth system.
-          }]
-        }
-        : {}),
+      ...(flowArrows.length ? { extraLegendRows: waterFlowLegendRows(flowArrows, site) } : {}),
     },
   );
-}
-
-/**
- * The Water sheet's rainwater-harvest block: roof area × annual rainfall × runoff coefficient,
- * against the storage actually placed.
- *
- * Returns an EMPTY list rather than a partial block whenever a term is missing. A harvest figure
- * is only as good as the roof it is measured from, and a farmer sizing tanks off an invented roof
- * area would be worse served than by no number at all — the same rule statedTankCapacityLitres
- * already follows when a tank's name does not state its size.
- */
-function roofHarvestFooterLines(
-  state: DesignCanvasState,
-  frame: CanvasFrame,
-  refLayers: DesignGlossyProps['refLayers'],
-  site: DesignGlossyProps['site'],
-): string[] {
-  const metrics = { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx };
-  const roofRings: Array<Array<[number, number]>> = [];
-  if (refLayers.house.length >= 3) roofRings.push(refLayers.house);
-  for (const zone of state.zones) {
-    if (zone.feature === 'house' && zone.points.length >= 3) roofRings.push(zone.points);
-  }
-  const roofM2 = roofRings.reduce((sum, ring) => sum + ringAreaM2(ring, metrics), 0);
-  const rainfallMm = site?.rainfallMm;
-  if (!(roofM2 > 1) || !Number.isFinite(rainfallMm ?? NaN) || !((rainfallMm ?? 0) > 0)) return [];
-
-  const harvestL = annualRoofHarvestLitres(roofM2, rainfallMm as number);
-  if (!(harvestL > 0)) return [];
-  const storedL = state.items.reduce((sum, item) => {
-    const def = ELEMENTS_BY_ID[item.defId];
-    if (!def || !itemInFilter(def.category, 'water', def.id)) return sum;
-    return sum + (statedTankCapacityLitres(def) ?? 0);
-  }, 0);
-
-  const lines = [
-    `Roof catchment traced: ${numberLabel(Math.round(roofM2))} m²`,
-    `Annual rainfall: ${numberLabel(Math.round(rainfallMm as number))} mm`,
-    `Runoff coefficient: ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} (generic roof)`,
-    `Harvestable: ~${numberLabel(Math.round(harvestL))} L a year`,
-  ];
-  // Storage is stated only when the catalog actually knows the capacities. A "Rain Barrel" with no
-  // size in its name contributes nothing, so a total built from those would understate the storage
-  // and make it look inadequate.
-  if (storedL > 0) {
-    lines.push(`Storage placed: ${numberLabel(Math.round(storedL))} L`);
-    lines.push(`That is ${Math.round((storedL / harvestL) * 100)}% of one year's harvest.`);
-  }
-  return lines;
 }
 
 export function buildBlueprintZoneMap(
@@ -11127,8 +11081,11 @@ async function composeStyleSheet(
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const contentW = maxX - lx;
   const compactSector=options.legendPresentation==='compact-sector';
+  // A normal Water register reads by system. Splitting it into columns to gain a few pixels
+  // of font size wrapped every pipe label and made the budget harder to compare with the map.
+  const compactWater = filter === 'water' && rows.length <= 12;
   const normalFs = legendRowFontSize(typeW, availableRowsH, rows.length);
-  const maxColumns=Math.min(compactSector?1:3,rows.length);
+  const maxColumns=Math.min(compactSector || compactWater ? 1 : 3, rows.length);
   const baseSw = Math.round(legendW * 0.064);
   const columnGap = Math.max(10, Math.round(legendW * 0.025));
   const singleColumnTextGap = Math.round(legendW * 0.03);
@@ -11329,7 +11286,7 @@ async function composeStyleSheet(
   // Searching per column count fixes both symptoms at once, and they were always one bug: the
   // space that became gaps is the space the type should have grown into. Fewest columns wins on a
   // tie, so a sparse legend still stays a single readable list.
-  const growthCeiling = Math.round(legendMaxFontSize(typeW)*(compactSector ? .72 : 1));
+  const growthCeiling = Math.round(legendMaxFontSize(typeW)*(compactSector || compactWater ? .72 : 1));
   const fitForColumns = (columnCount: number): number => fitLegendFontSize(
     (fontSize) => {
       const candidate = planColumns(columnCount, fontSize);
@@ -11922,9 +11879,9 @@ function waterReferenceFooterText(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
-  site: SectorSite | null,
+  site: SectorSite | null | undefined,
 ): string {
-  const storageNotes = deriveWaterSystem(state, refLayers, {
+  const storageNotes = deriveWaterSystem({ ...state, frame }, refLayers, {
     rainfallMm: site?.rainfallMm,
     monthlyRainfallMm: site?.monthlyRainfallMm,
   }).storageNotes;
@@ -14071,11 +14028,14 @@ export default function DesignGlossy({
       // stay exact. Photo Plan keeps the factual photo; painted styles keep continuous property
       // artwork. A plain-input existing roof can use its factual aerial reference instead of a
       // guessed ridge layout; no garden ground or driveway is restored with that roof.
+      const flowArrows = locked && f === 'water' ? waterTerrainFlowArrows(renderState, renderFrame, renderRefLayers, site) : [];
       const overlayImage = f === 'zones'
         // Zones are saved polygons, not model artwork. The general locked-sheet rule below must
         // not suppress them: that shipped a paid Zones sheet with only Gemini's faint impression
         // of the bands and no exact badges. Burn the real regions after every model pass.
         ? buildZoneOverlay(renderState, renderRefLayers, W, H)
+        : locked && f === 'water'
+          ? buildWaterPlanOverlay(renderState, renderFrame, W, H, flowArrows)
         : locked
           ? buildRecordedShadeCoverOverlay(renderState,renderFrame,f,W,H)
           : f === 'water' ? buildWaterOverlay(renderState, renderFrame, renderRefLayers, W, H, true, false)
@@ -14135,7 +14095,9 @@ export default function DesignGlossy({
                 .filter(Boolean).join(' '),
               ...(f === 'water'
                 ? {
-                    footerHeading: 'NOTES',
+                    footerHeading: 'WATER BUDGET',
+                    footerBox: true,
+                    extraLegendRows: waterFlowLegendRows(flowArrows, site),
                   }
                 : {}),
             }

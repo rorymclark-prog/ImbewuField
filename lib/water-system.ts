@@ -29,6 +29,7 @@ import {
   roofHarvestLitres,
 } from '@/lib/roof-runoff';
 import { computeTankSizing } from '@/lib/tank-sizing';
+import { numberLabel } from '@/lib/format-figures';
 
 // ── Public contract ───────────────────────────────────────────────────────────
 
@@ -366,11 +367,10 @@ function findCovering(a: Pt, b: Pt, candidates: ExistingLine[], frame: FrameMetr
   return null;
 }
 
-/** 62 400 → "62 kL". Hand-rolled rather than toLocaleString, which is locale-dependent and would
- *  make this engine's output differ between the farmer's phone and the server. kL also happens to
- *  be the unit SA water bills use. */
+/** Annual estimates and recommendations can use compact billing units. Placed capacity below
+ * retains its catalogue litres so a 12,500 L inventory cannot read as a different 13 kL tank set. */
 function formatLitres(litres: number): string {
-  return litres >= 1000 ? `${Math.round(litres / 1000)} kL` : `${Math.round(litres)} L`;
+  return litres >= 1000 ? `${numberLabel(litres / 1000, 1)} kL` : `${numberLabel(litres, 0)} L`;
 }
 
 /** Where a tank cluster's overflow should soak away.
@@ -792,9 +792,9 @@ export function deriveWaterSystem(
     const roofM2 = ringAreaM2(house, frame);
     if (roofM2 >= 1) {
       // 1 mm on 1 m² = 1 L; the shared coefficient covers collection losses.
-      const annualHarvestL = annualRoofHarvestLitres(roofM2, mm);
+      const annualHarvestL = annualRoofHarvestLitres(roofM2, rainfallMm);
       addStorageNote(
-        `~${mm} mm/yr on the ~${Math.round(roofM2)} m² traced roof ≈ ${formatLitres(annualHarvestL)}/yr — size tanks and first-flush against that catchment.`,
+        `~${mm} mm/yr on the ~${Math.round(roofM2)} m² primary traced roof gives ~${formatLitres(annualHarvestL)}/yr at ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} runoff. Confirm the connected roof area on site.`,
       );
 
       const dailyUseL = state.dailyWaterUseL;
@@ -819,24 +819,25 @@ export function deriveWaterSystem(
         const capacities = tanks.map((tank) => statedTankCapacityLitres(tank.def));
         const unknownCount = capacities.filter((capacity) => capacity == null).length;
         const statedCapacityL = capacities.reduce<number>((sum, capacity) => sum + (capacity ?? 0), 0);
+        const placedCapacity = `${numberLabel(statedCapacityL, 0)} L`;
         if (unknownCount > 0) {
           addStorageNote(
             `${unknownCount} placed storage ${unknownCount === 1 ? 'item has' : 'items have'} no stated capacity, so total storage cannot be checked against the monthly balance.`,
           );
         } else if (sizing?.ok && sizing.waterNegative) {
           addStorageNote(
-            `Placed storage totals ${formatLitres(statedCapacityL)}. The monthly balance is water-negative, so more tank capacity alone cannot close the annual catchment gap.`,
+            `Placed storage totals ${placedCapacity}. The monthly balance is water-negative, so more tank capacity alone cannot close the annual catchment gap.`,
           );
         } else if (sizing?.ok) {
           const recommended = sizing.recommendedStorageL;
           addStorageNote(
             statedCapacityL >= recommended
-              ? `Placed storage totals ${formatLitres(statedCapacityL)} and meets the monthly-balance recommendation of ${formatLitres(recommended)}.`
-              : `Placed storage totals ${formatLitres(statedCapacityL)}, which is ${formatLitres(recommended - statedCapacityL)} below the monthly-balance recommendation of ${formatLitres(recommended)}.`,
+              ? `Placed storage totals ${placedCapacity} and meets the monthly-balance recommendation of ${formatLitres(recommended)}.`
+              : `Placed storage totals ${placedCapacity}, which is ${formatLitres(recommended - statedCapacityL)} below the monthly-balance recommendation of ${formatLitres(recommended)}.`,
           );
         } else {
           addStorageNote(
-            `Placed storage totals ${formatLitres(statedCapacityL)}, but adequacy cannot be judged until the missing sizing input above is supplied.`,
+            `Placed storage totals ${placedCapacity}, but adequacy cannot be judged until the missing sizing input above is supplied.`,
           );
         }
         addStorageNote('Always route the overflow to a swale, basin or soakaway rather than against a wall or path.');

@@ -335,6 +335,9 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
       burnExactLabelLayer:async(map:string)=>({map}),
       composeStyleSheet:async(...args:unknown[])=>{calls.push(['chrome',...args]);return 'sheet';},
       REFERENCE_SHEET_LABEL:{all:'Whole',water:'Water'},waterReferenceFooterText:()=> 'Water notes',
+      waterTerrainFlowArrows:()=>['saved-terrain-flow'],
+      buildWaterPlanOverlay:(...args:unknown[])=>{calls.push(['water-overlay',...args]);return 'saved-water-overlay';},
+      waterFlowLegendRows:(arrows:unknown[])=>arrows.map(()=>({text:'Terrain flow'})),
     });
     assert.equal(await finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false),'sheet',engine);
     const restore=calls.find(c=>c[0]==='restore')!;
@@ -369,6 +372,10 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
     await finish('model','water',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,
       scene,()=>false,'new illustrated-property contract',reference);
     const waterComposite=calls.find(c=>c[0]==='composite')![1] as any;
+    assert.deepEqual(calls.find(c=>c[0]==='water-overlay')?.at(-1),['saved-terrain-flow'],
+      'the illustration draws the saved routes and the same terrain-flow field as the exact plan');
+    assert.deepEqual((calls.find(c=>c[0]==='chrome')?.at(-1) as any).extraLegendRows,[{text:'Terrain flow'}],
+      'the key explains the flow arrows drawn over the painting');
     assert.equal(waterComposite.contextTreatment,hasPhoto?'precision_atlas':'original',
       'plain paper must not receive the photographic palette treatment');
     assert.equal(Boolean(waterComposite.focusBoundaryPx),hasPhoto,
