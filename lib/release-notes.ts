@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '3aba48759', changes: [
+    'Explore farm zones in Study with tap-to-show highlights and a guided map tour.',
+    'Find the food forest, fruit trees, maize field and livestock kraal in the example.',
+  ], tour: [{ title: 'Explore the farm zones', where: 'Study → Zones and Sectors', href: '/student/zones',
+    detail: 'Turn highlights on or off, then follow the map tour around the example holding.' }] },
   { when: '3 November 2026', sha: '0e9fd5a26', changes: [
     "Choose area names or a numbered key on the historical Existing Site map.",
   ] },

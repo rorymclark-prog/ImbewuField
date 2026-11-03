@@ -37,6 +37,7 @@ const DeckPlayer = dynamic(() => import('@/components/course/DeckPlayer'), {
     </div>
   ),
 });
+const ZoneExplorer = dynamic(() => import('@/components/studies/ZoneExplorer'), { ssr: false });
 import OfflineDownload from '@/components/course/OfflineDownload';
 import { hasDeck, deckFor, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
 import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
@@ -347,6 +348,10 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
                 </div>
               )}
             </div>
+          )}
+
+          {(lesson.id === 'intro-permaculture-l3' || lesson.id === 'food-forest-l1') && (
+            <ZoneExplorer lang={lang} initialFeature={lesson.id === 'food-forest-l1' ? 'food-forest' : undefined} />
           )}
 
           {/* Body */}
