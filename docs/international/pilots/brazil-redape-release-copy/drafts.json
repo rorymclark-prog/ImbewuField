@@ -1,0 +1,39 @@
+{
+  "sourceSha256": "dc9c68cfcf2803c813dead209f9d76261c974a827723ef941bec0ee029def512",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "zu": [
+      {
+        "key": "redapeRelease01",
+        "english": "Open the Embrapa BDSolos catalogue from the Brazil soil references.",
+        "sha256": "eb2645a62629cede162d23070661e97a57f8b09af9f2b4449912effe0c94a6af",
+        "translation": "Vula ikhathalogi ye-Embrapa BDSolos ezinkombeni zomhlabathi zase-Brazil."
+      }
+    ],
+    "st": [
+      {
+        "key": "redapeRelease01",
+        "english": "Open the Embrapa BDSolos catalogue from the Brazil soil references.",
+        "sha256": "eb2645a62629cede162d23070661e97a57f8b09af9f2b4449912effe0c94a6af",
+        "translation": "Bula lethathamo la Embrapa BDSolos litšupisong tsa mobu tsa Brazil."
+      }
+    ],
+    "ts": [
+      {
+        "key": "redapeRelease01",
+        "english": "Open the Embrapa BDSolos catalogue from the Brazil soil references.",
+        "sha256": "eb2645a62629cede162d23070661e97a57f8b09af9f2b4449912effe0c94a6af",
+        "translation": "Pfula khathaloko ya Embrapa BDSolos eka swikombo swa misava swa Brazil."
+      }
+    ],
+    "ve": [
+      {
+        "key": "redapeRelease01",
+        "english": "Open the Embrapa BDSolos catalogue from the Brazil soil references.",
+        "sha256": "eb2645a62629cede162d23070661e97a57f8b09af9f2b4449912effe0c94a6af",
+        "translation": "Vhulani khathalogo ya Embrapa BDSolos kha zwisumbedzo zwa mavu zwa Brazil."
+      }
+    ]
+  }
+}

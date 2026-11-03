@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { evaluateCountryReadiness } from '@/lib/international/countries/readiness';
 
@@ -40,7 +41,10 @@ test('all engineering pilots preserve separate evidence roles and remain unrevie
     assert.equal(profile.stage, 'engineering-pilot'); assert.equal(profile.agronomyReview.status, 'not-reviewed');
     for (const category of EVIDENCE_CATEGORIES) assert.ok(profile.sources.some((source) => source.category === category));
     for (const source of profile.sources) {
-      assert.match(source.url, /^https:\/\//); assert.equal(source.accessedOn, AS_OF);
+      assert.match(source.url, /^https:\/\//);
+      // Source checks occur on different days. Require a real receipt date rather than the initial dossier date.
+      assert.match(source.accessedOn ?? '', /^\d{4}-\d{2}-\d{2}$/);
+      assert.equal(new Date(`${source.accessedOn}T00:00:00Z`).toISOString().slice(0, 10), source.accessedOn);
       assert.ok(source.verifiedClaim && source.limitations && source.missingDataBehavior);
       assert.ok(['known', 'unknown'].includes(source.licence.status));
     }
@@ -108,4 +112,30 @@ test('page modification metadata never supplies a missing publication date', () 
   const source = reviewedFixture().sources[0];
   assert.equal(sourceEvidenceState({ ...source, publishedOn: null, lastModifiedOn: AS_OF }, AS_OF), 'undated');
   assert.equal(sourceEvidenceState({ ...source, lastModifiedOn: null }, AS_OF), 'available-reference');
+});
+
+
+test('Brazil exposes the checked catalogue link without treating soil documentation as site approval', () => {
+  const receipt = JSON.parse(readFileSync(new URL('../docs/international/pilots/brazil-redape-catalogue-receipt.json', import.meta.url), 'utf8'));
+  const checkedOn = receipt.completedAt.slice(0, 10);
+  const brazil = evaluateCountryReadiness({ countryCode: 'BR', agriculturalRegionId: 'Campinas', interfaceLanguage: 'pt-BR' }, checkedOn);
+  const soils = brazil.evidence.find(entry => entry.category === 'soils')!;
+  const source = soils.sources.find(entry => entry.id === 'br-embrapa-soils')!;
+  assert.equal(source.url, receipt.requestedUrl);
+  assert.equal(source.accessedOn, checkedOn);
+  assert.equal(source.verification, 'content-read');
+  assert.equal(source.publishedOn, null);
+  assert.equal(sourceEvidenceState(source, checkedOn), 'undated');
+  assert.equal(soils.availableCount, 0);
+  assert.equal(source.units.status, 'unknown');
+  assert.equal(source.updateCadence.status, 'unknown');
+  assert.ok(source.licence.status === 'known' && /CC BY-NC 4\.0.*commercial reuse/.test(source.licence.value));
+  assert.equal(brazil.region, null);
+  assert.equal(brazil.localReviewComplete, false);
+  assert.equal(brazil.productionPlanSupported, false);
+  assert.equal(brazil.southAfricanFallbackAllowed, false);
+  for (const countryCode of ['GB', 'KE', 'US', 'OTHER']) {
+    const review = evaluateCountryReadiness({ countryCode }, checkedOn);
+    assert.ok(review.evidence.every(entry => entry.sources.every(item => item.url !== receipt.requestedUrl)));
+  }
 });
