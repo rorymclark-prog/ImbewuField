@@ -96,14 +96,31 @@ const GUEST_LOCAL_STORAGE_MIGRATIONS: readonly GuestLocalStorageMigration[] = [
   {
     baseKey: 'imbewu_crop_plan_v1', // lib/crop-plan.ts STORAGE_KEY
     isEmpty: (raw) => {
-      if (!raw) return true;
+      if (raw === null) return true;
       try {
-        const parsed = JSON.parse(raw) as { plantings?: unknown; productionRecords?: unknown; preservedProducts?: unknown };
-        // An orchard or animal plan can have no beds. Its dated observations and
-        // stock still belong to the farmer and must neither vanish nor be overwritten.
-        return (!Array.isArray(parsed?.plantings) || parsed.plantings.length === 0)
-          && (!Array.isArray(parsed?.productionRecords) || parsed.productionRecords.length === 0)
-          && (!Array.isArray(parsed?.preservedProducts) || parsed.preservedProducts.length === 0);
+        const parsed: unknown = JSON.parse(raw);
+        // No beds does not mean no work: estimates, buyer targets, nursery
+        // evidence and reference choices still belong to the farmer. Recognize
+        // only a known empty scaffold; unknown metadata is never ours to erase.
+        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return false;
+        const book = parsed as Record<string, unknown>;
+        const collections = ['plantings', 'productionRecords', 'preservedProducts', 'growerPlanningProfiles',
+          'harvestTargets', 'workspaceReferences', 'planNotes'];
+        const known = ['version', 'updatedAt', 'nursery', ...collections];
+        if (book.version !== 1 || !Array.isArray(book.plantings)
+          || Object.keys(book).some(key => !known.includes(key))
+          || (book.updatedAt !== undefined && (typeof book.updatedAt !== 'number' || !Number.isFinite(book.updatedAt) || book.updatedAt < 0))
+          || collections.some(key => book[key] !== undefined && (!Array.isArray(book[key]) || book[key].length > 0))) return false;
+        if (book.nursery !== undefined) {
+          if (!book.nursery || typeof book.nursery !== 'object' || Array.isArray(book.nursery)) return false;
+          const nursery = book.nursery as Record<string, unknown>;
+          const resources = ['spaces', 'containers', 'profiles'];
+          const evidence = ['sourceIssues', 'heldInputs'];
+          if (nursery.version !== 1 || Object.keys(nursery).some(key => !['version', ...resources, ...evidence].includes(key))
+            || resources.some(key => !Array.isArray(nursery[key]) || nursery[key].length > 0)
+            || evidence.some(key => nursery[key] !== undefined && (!Array.isArray(nursery[key]) || nursery[key].length > 0))) return false;
+        }
+        return true;
       } catch {
         return false;
       }

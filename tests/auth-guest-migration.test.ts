@@ -299,3 +299,84 @@ test('genuinely empty crop and record lists remain empty for migration while an 
     'explicit empty production and stock lists must not block the existing crop-plan migration');
   assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), null);
 });
+
+const emptyNursery = () => ({ version: 1, spaces: [], containers: [], profiles: [] });
+// Migration preserves opaque authored rows; it is not a second profile/crop
+// validator. Even incomplete or zero-valued work must survive this boundary.
+const metadataOnlyPlans: Array<[string, Record<string, unknown>]> = [
+  ['growing-estimate', { growerPlanningProfiles: [{ profileId: 'saved-estimate', inputs: { note: 'Still gathering measurements' } }] }],
+  ['buyer-target', { harvestTargets: [{ id: 'saved-target' }] }],
+  ['workspace-reference', { workspaceReferences: [{ workspaceId: 'virtual-bed', basis: 'south-african-reference', acknowledgedAt: '2026-11-03T00:00:00.000Z' }] }],
+  ['plan-notes', { planNotes: [{ kind: 'gap', text: 'Missing inputs were recorded here.' }] }],
+  ['nursery-space-zero', { nursery: { ...emptyNursery(), spaces: [{ id: 'saved-space', siteId: 'site:0.00000,0.00000', name: 'Recorded surface', usableM2: 0 }] } }],
+  ['nursery-container', { nursery: { ...emptyNursery(), containers: [{ id: 'saved-container', siteId: 'site:0.00000,0.00000', name: 'Unmeasured container', owned: 0 }] } }],
+  ['nursery-recipe', { nursery: { ...emptyNursery(), profiles: [{ id: 'saved-recipe' }] } }],
+  ['nursery-source-issues', { nursery: { ...emptyNursery(), sourceIssues: ['nursery-held-inputs-unresolved'] } }],
+  ['nursery-held-evidence', { nursery: { ...emptyNursery(), heldInputs: [{ collection: 'containers', reason: 'ambiguous-identities', rows: [{ id: 'conflicting-identity', name: 'First saved claim' }, { id: 'conflicting-identity', name: 'Second saved claim' }] }] } }],
+  ['climate-choice', { rainPattern: 'winter' }],
+  ['dated-note-metadata', { planNotesAt: 1 }],
+  ['future-metadata', { futurePlannerMetadata: { note: 'Unknown does not mean disposable' } }],
+];
+
+test('sign-in preserves metadata-only account plans and leaves the unrelated guest draft available', async () => {
+  for (const [kind, metadata] of metadataOnlyPlans) {
+    localStorageMock.clear(); const owner = `protected-${kind}`;
+    const accountRaw = JSON.stringify({ version: 1, plantings: [], updatedAt: 1, ...metadata });
+    const guestRaw = '{"version":1,"plantings":[{"id":"separate-guest-crop"}],"updatedAt":2}';
+    localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', owner), accountRaw);
+    localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
+    await withSignIn(async signIn => { assert.equal(await signIn(owner, 'irrelevant'), null); });
+    assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', owner)), accountRaw, `${kind} must remain byte-identical`);
+    assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), guestRaw, `${kind} refusal cannot consume the guest copy`);
+  }
+});
+
+test('metadata-only guest plans transfer byte for byte into genuinely empty accounts without inventing plantings', async () => {
+  for (const [kind, metadata] of metadataOnlyPlans) {
+    localStorageMock.clear(); const owner = `new-${kind}`;
+    const guestRaw = JSON.stringify({ version: 1, plantings: [], updatedAt: 1, ...metadata });
+    localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
+    localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', owner), emptyProductionPlan);
+    await withSignIn(async signIn => { assert.equal(await signIn(owner, 'irrelevant'), null); });
+    assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', owner)), guestRaw, `${kind} guest metadata is authored work`);
+    assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), null, `${kind} successful transfer must clear the shared guest namespace`);
+  }
+});
+
+test('malformed scaffolds and unknown authored fields never provide permission to overwrite an account book', async () => {
+  const damaged = [
+    '', 'null', '[]', '{}', '{broken',
+    JSON.stringify({ version: 99, plantings: [], updatedAt: 1 }),
+    JSON.stringify({ version: 1, plantings: null, updatedAt: 1 }),
+    JSON.stringify({ version: 1, plantings: [], updatedAt: null }),
+    JSON.stringify({ version: 1, plantings: [], futurePlannerMetadata: [] }),
+    ...['productionRecords', 'preservedProducts', 'growerPlanningProfiles', 'harvestTargets', 'workspaceReferences', 'planNotes'].map(key => JSON.stringify({ version: 1, plantings: [], [key]: {} })),
+    ...[null, { version: 1 }, { ...emptyNursery(), spaces: null }, { ...emptyNursery(), sourceIssues: null },
+      { ...emptyNursery(), heldInputs: {} }, { ...emptyNursery(), futureNurseryMetadata: [] }].map(nursery => JSON.stringify({ version: 1, plantings: [], nursery })),
+  ];
+  for (const [index, accountRaw] of damaged.entries()) {
+    localStorageMock.clear(); const owner = `unresolved-${index}`;
+    const guestRaw = '{"version":1,"plantings":[{"id":"separate-guest-crop"}],"updatedAt":2}';
+    localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', owner), accountRaw);
+    localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
+    await withSignIn(async signIn => { assert.equal(await signIn(owner, 'irrelevant'), null); });
+    assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', owner)), accountRaw, `unresolved case ${index}`);
+    assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), guestRaw, `unresolved case ${index} retains guest work`);
+  }
+});
+
+test('recognized empty optional collections and nursery scaffolds retain the existing guest migration behavior', async () => {
+  const empty = JSON.stringify({ version: 1, plantings: [], updatedAt: 1, productionRecords: [], preservedProducts: [],
+    growerPlanningProfiles: [], harvestTargets: [], workspaceReferences: [], planNotes: [],
+    nursery: { ...emptyNursery(), sourceIssues: [], heldInputs: [] } });
+  localStorageMock.clear(); localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), empty);
+  await withSignIn(async signIn => { assert.equal(await signIn('empty-metadata-guest', 'irrelevant'), null); });
+  assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', 'empty-metadata-guest')), null);
+
+  localStorageMock.clear(); const guestRaw = '{"version":1,"plantings":[{"id":"legacy-guest-crop"}],"updatedAt":2}';
+  localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
+  localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', 'empty-metadata-account'), empty);
+  await withSignIn(async signIn => { assert.equal(await signIn('empty-metadata-account', 'irrelevant'), null); });
+  assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', 'empty-metadata-account')), guestRaw);
+  assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), null);
+});
