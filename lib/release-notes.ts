@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '562b57d0c', changes: [
+    'Open Kenya’s national and Kiambu extension referral pages from the country review.',
+  ], tour: [{ title: 'Find Kenya extension references', where: 'International → Country review', href: '/international',
+    detail: 'Choose Kenya and open Agricultural extension to find the ministry and county links.' }] },
   { when: '3 November 2026', sha: 'd364d769f', changes: [
     'Open Kenya’s historical soil catalogue from the country review.',
   ], tour: [{ title: 'Review Kenya’s historical soil reference', where: 'International → Country review', href: '/international',
