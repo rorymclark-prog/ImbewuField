@@ -95,3 +95,26 @@ test('the station card rejects the UK alias and other country codes', () => {
   try { assert.equal(screen.toJSON(), null); }
   finally { act(() => screen.unmount()); }
 });
+
+test('the UK country review exposes the England advice link only as background', () => {
+  let screen!: ReactTestRenderer;
+  act(() => { screen = create(React.createElement(CountryReview)); });
+  const href = 'https://www.gov.uk/government/groups/farming-advice-service';
+  const links = () => screen.root.findAllByType('a').filter(node => node.props.href === href);
+  const choose = (value: string) => act(() => screen.root.findAllByType('select')[0].props.onChange({ target: { value } }));
+  try {
+    assert.equal(links().length, 0);
+    choose('GB');
+    assert.equal(links().length, 1);
+    const card = screen.root.findAllByType('details').find(node => node.findAllByType('a').includes(links()[0]))!;
+    const copy = JSON.stringify(card.findAll(node => ['small', 'p', 'dd'].includes(String(node.type)))
+      .map(node => node.children.filter(child => typeof child === 'string')));
+    assert.match(copy, /Background reference only/);
+    assert.match(copy, /network based across England/);
+    assert.match(copy, /Service reach in Somerset and elsewhere in the UK remains unverified/);
+    assert.equal(links()[0].props.onClick, undefined);
+    choose('US');
+    assert.equal(links().length, 0);
+    assert.deepEqual(activity, []);
+  } finally { act(() => screen.unmount()); }
+});
