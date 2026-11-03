@@ -40,6 +40,10 @@ const read = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8'
 
 type FakeDoc = { path: string; data: Record<string, unknown> };
 const state = {
+  harvestWrites: [] as Record<string, unknown>[],
+  readProfileGate: null as null | Promise<void>,
+  uid: 'mentor-uid' as string | null,
+  sample: false as boolean | null,
   profile: { path: 'profiles/mentor-uid', data: { org_id: 'org-1', role: 'mentor' } } as FakeDoc,
   // collection name -> rows seeded in it
   collections: new Map<string, { id: string; data: Record<string, unknown> }[]>(),
@@ -59,12 +63,16 @@ export const serverTimestamp = () => 'SERVER_TIMESTAMP';
 export const writeBatch = () => ({ delete(){}, set(){}, commit: async () => {} });
 // Invoice linking imports transactions; these read-only cohort probes must never invoke one.
 export const runTransaction = async () => { throw new Error('Unexpected transaction in a cohort read'); };
-export const addDoc = async () => ({ id: 'fake-id' });
+export const addDoc = async (base, row) => {
+  if (base.path === 'production_logs') state.harvestWrites.push(row);
+  return { id: 'fake-id' };
+};
 export const setDoc = async () => {};
 export const updateDoc = async () => {};
 export const deleteDoc = async () => {};
 export const getCountFromServer = async () => ({ data: () => ({ count: 0 }) });
 export const getDoc = async (ref) => {
+  if (state.readProfileGate) await state.readProfileGate;
   const found = ref.path === state.profile.path ? state.profile : null;
   return {
     exists: () => found !== null,
@@ -85,7 +93,10 @@ export const getDocs = async (q) => {
 `);
 
 const fakeFirebaseInitModule = moduleUrl(`
-export const getFirebase = () => ({ db: {}, auth: { currentUser: { uid: 'mentor-uid' } } });
+export const getFirebase = () => {
+  const uid = globalThis.__queryScaleProbeState.uid;
+  return { db: {}, auth: { currentUser: uid ? { uid } : null } };
+};
 `);
 
 const fakeSampleModeModule = moduleUrl(`
@@ -124,6 +135,9 @@ const hooks = registerHooks({
     if (fromQueries && specifier === '@/lib/firebase/init') {
       return { url: fakeFirebaseInitModule, shortCircuit: true };
     }
+    if (fromQueries && specifier === '@/lib/account-local-storage') {
+      return { url: moduleUrl('export const readAccountLocalSampleState = () => globalThis.__queryScaleProbeState.sample;'), shortCircuit: true };
+    }
     if (fromQueries && specifier === '@/lib/sample-mode') {
       return { url: fakeSampleModeModule, shortCircuit: true };
     }
@@ -131,7 +145,7 @@ const hooks = registerHooks({
   },
 });
 
-const { chunkIds, IN_QUERY_CHUNK, getCourseProgressForProfiles, getAssignmentsForProfiles } =
+const { addProduction, WRITE_TIMEOUT_MS, WriteTimeoutError, chunkIds, IN_QUERY_CHUNK, getCourseProgressForProfiles, getAssignmentsForProfiles } =
   await import('../lib/db/queries.ts');
 hooks.deregister();
 
@@ -237,4 +251,68 @@ test('countSurveyResponses uses an aggregation query, not getDocs(...).length', 
   const fn = src.slice(src.indexOf('export async function countSurveyResponses('), src.indexOf('export async function myRespondedSurveyIds('));
   assert.match(fn, /getCountFromServer\(/);
   assert.doesNotMatch(fn, /getDocs\(/, 'countSurveyResponses must not fall back to fetching full documents');
+});
+
+
+test('harvest writes preserve an explicit observation day without borrowing the logging timestamp', async () => {
+  const row = { crop: 'Fixture crop', kg: 2, logged_at: '2026-11-03T07:00:00.000Z' };
+  await addProduction({ ...row, observed_on: '2026-10-31' }, () => true);
+  await addProduction(row, () => true);
+  assert.equal(state.harvestWrites[0]?.observed_on, '2026-10-31');
+  assert.equal(state.harvestWrites[0]?.logged_at, row.logged_at);
+  assert.equal(state.harvestWrites[0]?.profile_id, state.uid);
+  assert.equal(Object.hasOwn(state.harvestWrites[1], 'observed_on'), false);
+  await assert.rejects(addProduction({ ...row, observed_on: '2026-02-31' }, () => true), /valid harvest date/);
+  assert.equal(state.harvestWrites.length, 2);
+});
+
+test('a harvest awaiting its profile cannot write after the account or workspace changes', async () => {
+  const row = { crop: 'Fixture crop', kg: 2 };
+  const before = state.harvestWrites.length;
+  let resume!: () => void;
+  state.readProfileGate = new Promise<void>((resolve) => { resume = resolve; });
+  try {
+    const saving = addProduction(row, () => true);
+    state.uid = 'other-account';
+    resume();
+    await assert.rejects(saving, /account or workspace changed/);
+    assert.equal(state.harvestWrites.length, before);
+    state.uid = 'mentor-uid';
+    state.sample = null;
+    await assert.rejects(addProduction(row, () => true), /account or workspace changed/);
+    state.sample = false;
+    state.uid = null;
+    await assert.rejects(addProduction(row, () => true), /Sign in/);
+    assert.equal(state.harvestWrites.length, before);
+  } finally {
+    state.readProfileGate = null;
+    state.uid = 'mentor-uid';
+    state.sample = false;
+  }
+});
+
+
+test('an unanswered profile read keeps the harvest unsent and cannot later dispatch it', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const before = state.harvestWrites.length;
+  let resume!: () => void;
+  state.readProfileGate = new Promise<void>(resolve => { resume = resolve; });
+  try {
+    const saving = addProduction({ crop: 'Fixture crop', kg: 2 }, () => true);
+    const checked = assert.rejects(saving, error => {
+      assert.ok(error instanceof Error);
+      assert.ok(!(error instanceof WriteTimeoutError));
+      assert.match(error.message, /Your harvest draft is still here/);
+      return true;
+    });
+    t.mock.timers.tick(WRITE_TIMEOUT_MS);
+    await checked;
+    resume();
+    await state.readProfileGate;
+    await Promise.resolve();
+    assert.equal(state.harvestWrites.length, before);
+  } finally {
+    resume();
+    state.readProfileGate = null;
+  }
 });

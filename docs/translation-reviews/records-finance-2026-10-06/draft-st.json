@@ -7975,5 +7975,47 @@
   "status": "held",
   "draft": "",
   "decision": "held until a fluent drafter and reviewer supply it; English shows meanwhile"
- }
+ },
+  {
+    "id": "INT-HARVEST-DATE-01",
+    "english": "Harvest date (optional)",
+    "drafterDraft": "",
+    "drafterStatus": "none",
+    "drafterNote": "Harvest observation date label. Keep the captured English until fluent source-bound review.",
+    "reviewerVerdict": "",
+    "reviewerProblem": "",
+    "reviewerSeverity": "",
+    "reviewerRepair": "",
+    "status": "held",
+    "draft": "",
+    "decision": "held until a fluent drafter and reviewer supply it; English shows meanwhile"
+  },
+  {
+    "id": "INT-HARVEST-DATE-02",
+    "english": "Picked on",
+    "drafterDraft": "",
+    "drafterStatus": "none",
+    "drafterNote": "Harvest observation date label. Keep the captured English until fluent source-bound review.",
+    "reviewerVerdict": "",
+    "reviewerProblem": "",
+    "reviewerSeverity": "",
+    "reviewerRepair": "",
+    "status": "held",
+    "draft": "",
+    "decision": "held until a fluent drafter and reviewer supply it; English shows meanwhile"
+  },
+  {
+    "id": "INT-HARVEST-DATE-03",
+    "english": "Recorded on",
+    "drafterDraft": "",
+    "drafterStatus": "none",
+    "drafterNote": "Harvest observation date label. Keep the captured English until fluent source-bound review.",
+    "reviewerVerdict": "",
+    "reviewerProblem": "",
+    "reviewerSeverity": "",
+    "reviewerRepair": "",
+    "status": "held",
+    "draft": "",
+    "decision": "held until a fluent drafter and reviewer supply it; English shows meanwhile"
+  }
 ]

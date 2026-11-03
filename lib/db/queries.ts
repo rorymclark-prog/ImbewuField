@@ -34,6 +34,8 @@ import { saveSaleInvoice } from '@/lib/sale-invoice';
 import { invoiceSaleDocumentId, invoiceSalesForPaidInvoice } from '@/lib/invoice-sales';
 import { recordedSaleInvoiceError } from '@/lib/invoice-entry';
 import { recordQuantity } from '@/lib/farm-records';
+import { readAccountLocalSampleState } from '@/lib/account-local-storage';
+import { validProjectDate } from '@/lib/international/projects/evaluate';
 import { UserFacingError } from '@/lib/user-facing-error';
 
 // Every function below is a real Firestore/Storage writer or a reader that could
@@ -198,14 +200,24 @@ export async function getGardenerProfile(profileId: string): Promise<GardenerPro
 }
 
 // ---- production / sales ----
-export async function addProduction(row: Partial<ProductionLog>): Promise<void> {
+export async function addProduction(row: Partial<ProductionLog>, isCurrent: () => boolean): Promise<void> {
   if (recordQuantity(row) === null) throw new UserFacingError('Check the produce quantity and unit.');
-  if (isSampleMode()) { addSandboxProduction(row); return; }
-  const f = fb(); const u = uid(); if (!f || !u) return;
-  await withWriteTimeout((async () => {
-    const me = await getMyProfile();
-    await addDoc(collection(f.db, 'production_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
-  })());
+  if (row.observed_on !== undefined && !validProjectDate(row.observed_on)) throw new UserFacingError('Enter a valid harvest date.');
+  const sample = readAccountLocalSampleState();
+  const changed = () => new UserFacingError('Your account or workspace changed. Reopen your harvest records before saving.');
+  if (sample === null || !isCurrent()) throw changed();
+  if (sample) { addSandboxProduction(row); return; }
+  const f = fb(); const u = uid();
+  if (!f || !u) throw new UserFacingError('Sign in before saving a harvest.');
+  // A profile read that times out cannot be reported as a queued harvest.
+  const me = await withWriteTimeout(getMyProfile()).catch(error => {
+    if (error instanceof WriteTimeoutError) {
+      throw new UserFacingError('Could not check your profile. Your harvest draft is still here. Try again.');
+    }
+    throw error;
+  });
+  if (!isCurrent() || uid() !== u || readAccountLocalSampleState() !== false) throw changed();
+  await withWriteTimeout(addDoc(collection(f.db, 'production_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() }));
 }
 export async function addSale(row: Partial<SalesLog>): Promise<SavedInvoice> {
   if (!isSampleMode() && (!fb() || !uid())) throw new UserFacingError('Sign in before saving a sale.');
