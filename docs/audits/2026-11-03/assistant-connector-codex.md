@@ -101,6 +101,40 @@ Firestore access to its synthetic server-side client document is denied. This is
 backend evidence only; canonical app publication and native plugin linking remain
 separate gates. No real farmer/site record, paid render or security rule changed.
 
+## Live synthetic verification and current-main integration
+
+A normal Firebase self-service signup created one explicitly synthetic farmer
+account with no organisation. Its own profile, two clearly labelled test places
+and a synthetic canvas were written through the existing client security rules,
+without Admin SDK impersonation or changes to any real farm account.
+
+The deployed function passed **33 live assertions** using the official MCP SDK:
+DCR, S256 code exchange and state; stable profile identity; all 17 customer tools
+with no operator tools; one explicitly selected site and denial of the unselected
+site; incomplete-upload rejection; the packaged helper's original-byte transfer;
+verified finish and repeat finish; exact 6,026,629-byte original readback with
+SHA-256 `7ad1313428b8b3968c44b71866655db29bddae5cc4480257a96b697f80f179bc`;
+persisted, explicitly synthetic historical registration draft; unchanged saved
+design revision; app-account visibility; disconnect; immediate bearer denial and
+revocation of the previously issued download URL. Source authorisation remains
+attached to that synthetic asset. This was a direct-backend protocol probe, not
+native host linking or a real Ubhejane import. Synthetic credentials remain only
+in a mode-0600 temporary file, never in the repository or plugin.
+
+The current branch preview reports build `8fe6511`. A fresh 390 × 844 visual
+inspection confirmed that the connection sign-in screen has its own title,
+readable controls, one Back link and no overlapping Lima widget. The temporary
+browser tab and viewport override were released after that inspection.
+
+Main then advanced through historical-area-labels PR #1182. That change was
+integrated unchanged, resolving only the release-note conflict and preserving
+both the map note and the assistant note. Outdated local/CI full-suite runs were
+stopped explicitly before restarting final-head verification; interrupted tests
+are not recorded as passes. This connector still does not modify map drawing
+implementation. Native desktop automation of the Codex app itself is denied by
+the host's computer-use safety boundary; supported plugin tools/browser and the
+official CLI remain the appropriate installation/test paths.
+
 ## Real limits
 
 - Linking ImbewuField does not link Drive, Gmail, an archive or a local filesystem.
