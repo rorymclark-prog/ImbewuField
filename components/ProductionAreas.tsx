@@ -3,12 +3,13 @@ import { numberLabel } from '@/lib/format-figures';
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { translate, useLanguage } from '@/lib/i18n';
-import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
+import { userFacingMessage } from '@/lib/user-facing-error';
 import { fieldApi } from '@/lib/field-api';
 import { DEVICE_SAVE_NOTICE } from '@/lib/field-request-model';
 import { useFieldSync } from '@/lib/use-field-sync';
 import FieldDraft, { clearFieldDraft } from './FieldDraft';
-import { isSampleMode } from '@/lib/sample-mode';
+import { readAccountLocalSampleState } from '@/lib/account-local-storage';
+import { SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import { type ProductionSite, productionAreaSummary } from '@/lib/production-sites';
 import { localTodayISODate } from '@/lib/field-teams';
 import styles from './MelDashboard.module.css';
@@ -18,54 +19,94 @@ import { sampleSitePhoto } from '@/lib/sample-gardens';
 import ReportComposer from './ReportComposer';
 import { readSampleProgramme } from './SampleProgramme';
 type Summary = ReturnType<typeof productionAreaSummary>;
+type LoadedAreas = {
+  org: string;
+  publishedOnly: boolean;
+  source: unknown;
+  summary: Summary;
+  sites: ProductionSite[];
+  manage: boolean;
+};
 const blank = () => ({ code: '', name: '', observedOn: localTodayISODate(), vegetableM2: '', stapleM2: '', boundaryM2: '', evidence: '', published: false, updatedAt: '' });
 async function request(url: string, body?: unknown) {
   return fieldApi(url,body);
 }
 export default function ProductionAreas({ publishedOnly = false }: { publishedOnly?: boolean }) {
-  const { user, role } = useAuth();
-  return <ProductionAreaContent key={`${user?.uid ?? 'guest'}:${role}`} publishedOnly={publishedOnly} />;
+  const { user, role, profile } = useAuth();
+  const [sample, setSample] = useState<boolean | null>(null);
+  useEffect(() => {
+    const update = () => setSample(readAccountLocalSampleState());
+    window.addEventListener(SAMPLE_MODE_EVENT, update);
+    update();
+    return () => window.removeEventListener(SAMPLE_MODE_EVENT, update);
+  }, []);
+  if (sample === null) return null;
+  return <ProductionAreaContent key={JSON.stringify([user?.uid, role, profile?.org_id, sample])} publishedOnly={publishedOnly} sample={sample} />;
 }
-function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
+function ProductionAreaContent({ publishedOnly, sample }: { publishedOnly: boolean; sample: boolean }) {
   const { user } = useAuth();
   const { lang } = useLanguage();
   const failure = (e: unknown) => userFacingMessage(e, translate(lang, 'networkFailed'), k => translate(lang, k));
-  const [source,setSource]=useState<unknown>(null);
+  const [loaded, setLoaded] = useState<LoadedAreas | null>(null);
   const [orgs, setOrgs] = useState<{ id: string; name: string }[]>([]), [org, setOrg] = useState('');
-  const [summary, setSummary] = useState<Summary | null>(null), [sites, setSites] = useState<ProductionSite[]>([]);
-  const [manage, setManage] = useState(false), [sample, setSample] = useState(false), [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  // A scope change must hide the earlier rows during render, before effect cleanup.
+  const visibleAreas = loaded?.org === org && loaded.publishedOnly === publishedOnly ? loaded : null;
+  const source = visibleAreas?.source ?? null;
+  const summary = visibleAreas?.summary ?? null;
+  const sites = visibleAreas?.sites ?? [];
+  const manage = visibleAreas?.manage ?? false;
   const [form, setForm] = useState(blank), [editing, setEditing] = useState(false), [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState(''), [notice, setNotice] = useState(''), [saving, setSaving] = useState(false);
   const version = useRef(0);
   useEffect(() => {
-    let cancelled = false; setSample(isSampleMode());
-    if (isSampleMode()) { setOrgs([{ id: 'sample-ngo', name: "Imbewu KZN" }]); setOrg('sample-ngo'); return; }
+    let cancelled = false;
+    if (sample) { setOrgs([{ id: 'sample-ngo', name: "Imbewu KZN" }]); setOrg('sample-ngo'); return; }
     if (!user) return;
     void request('/api/network/orgs').then(d => { if (!cancelled) { setOrgs(d.orgs); setOrg(d.orgs[0]?.id ?? ''); } }).catch(e => { if (!cancelled) setError(failure(e)); });
     return () => { cancelled = true; };
-  }, [user]);
+  }, [user, sample]);
   async function reload() {
-    const current = ++version.current; setLoading(true); setError('');
-    try { if (isSampleMode()) { const rows = completeSampleAreas(sampleRead('areas', freshSampleAreas)); const visible = publishedOnly ? (readSampleProgramme().funderAccess ? rows.filter(s => s.published) : []) : rows; setSummary(productionAreaSummary(visible)); setSites(visible); setManage(!publishedOnly); return; } const d = await request(`/api/production-sites?org=${encodeURIComponent(org)}${publishedOnly ? '&published=true' : ''}`); if (current === version.current) { setSource(d);setSummary(d.summary); setSites(d.sites ?? []); setManage(d.canManage ?? false); } }
-    catch (e) { if (current === version.current) setError(failure(e)); }
-    finally { if (current === version.current) setLoading(false); }
+    if (!org || readAccountLocalSampleState() !== sample) return;
+    const current = ++version.current;
+    setLoading(true); setError('');
+    try {
+      if (sample) {
+        const rows = completeSampleAreas(sampleRead('areas', freshSampleAreas));
+        const sites = publishedOnly ? (readSampleProgramme().funderAccess ? rows.filter(s => s.published) : []) : rows;
+        setLoaded({ org, publishedOnly, source: null, summary: productionAreaSummary(sites), sites, manage: !publishedOnly });
+      } else {
+        const d = await request(`/api/production-sites?org=${encodeURIComponent(org)}${publishedOnly ? '&published=true' : ''}`);
+        if (current === version.current && readAccountLocalSampleState() === sample) {
+          setLoaded({ org, publishedOnly, source: d, summary: d.summary, sites: publishedOnly ? [] : d.sites ?? [], manage: !publishedOnly && (d.canManage ?? false) });
+        }
+      }
+    } catch (e) {
+      if (current === version.current) {
+        const status = (e as { status?: number } | null)?.status;
+        if (status === 401 || status === 403) setLoaded(null);
+        setError(failure(e));
+      }
+    } finally {
+      if (current === version.current) setLoading(false);
+    }
   }
   useEffect(() => {
-    setSummary(null); setSites([]); setManage(false); setForm(blank()); setEditing(false); setConfirmed(false); setNotice('');
+    setLoaded(null); setForm(blank()); setEditing(false); setConfirmed(false); setNotice('');
     if (org) void reload();
     return () => { version.current++; };
     // reload uses this exact organisation and projection.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [org, publishedOnly]);
   async function save() {
-    if (saving || !confirmed) return;
+    if (saving || !confirmed || !manage || readAccountLocalSampleState() !== sample) return;
     setSaving(true); setError(''); setNotice(''); const current = version.current;
     try {
       let queued=false;
       const numeric = (v: string) => v.trim() ? Number(v) : null;
       const site = { ...form, vegetableM2: numeric(form.vegetableM2), stapleM2: numeric(form.stapleM2), boundaryM2: numeric(form.boundaryM2) };
-      if (isSampleMode()) { sampleWrite('areas', upsertSampleArea(completeSampleAreas(sampleRead('areas', freshSampleAreas)), { ...site, updatedAt: new Date().toISOString(), updatedBy: 'sample-organisation' } as ProductionSite, localTodayISODate())); }
-      else { if (sample) throw new UserFacingError('This practice workspace has ended. Reopen production areas.'); const result=await request(`/api/production-sites?org=${encodeURIComponent(org)}`, { confirmed, site, expectedUpdatedAt:form.updatedAt });queued=result.queued===true; }
+      if (sample) { sampleWrite('areas', upsertSampleArea(completeSampleAreas(sampleRead('areas', freshSampleAreas)), { ...site, updatedAt: new Date().toISOString(), updatedBy: 'sample-organisation' } as ProductionSite, localTodayISODate())); }
+      else { const result=await request(`/api/production-sites?org=${encodeURIComponent(org)}`, { confirmed, site, expectedUpdatedAt:form.updatedAt });queued=result.queued===true; }
       if (current !== version.current) return;
       void clearFieldDraft(`areas:${org}`).catch(()=>{});
       setNotice(queued?DEVICE_SAVE_NOTICE:form.published ? 'Saved and included in the funder total.' : 'Saved privately for the organisation.'); setForm(blank()); setConfirmed(false); setEditing(false); await reload();
@@ -82,7 +123,7 @@ function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
     {summary && <><div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))', gap: 16, margin: '20px 0' }}>{[['Vegetable beds', summary.vegetableM2], ['Staple plots', summary.stapleM2], ['Total planted area', summary.combinedM2]].map(([label, area]) => <article key={label} className={styles.card}><h2>{label}</h2><strong style={{ fontSize: 28 }}>{summary.sites ? `${numberLabel((area as number))} m²` : 'Not recorded'}</strong><p>{summary.sites ? `${numberLabel(((area as number) / 10000), 4)} hectares` : 'No published measurements yet'}</p></article>)}</div>
       <p>{summary.sites} distinct gardens · observations {summary.firstObserved ?? 'not recorded'} to {summary.lastObserved ?? 'not recorded'}. {publishedOnly ? 'Published records only.' : 'Includes private records; funders see published records only.'}</p>
       <p className={styles.muted}>This is a sum of each garden’s latest recorded observation, not necessarily an area planted on one common date. Recheck at each reporting period. Organisation-checked does not mean independently audited. Crop cycles and multiple farmers do not add extra hectares.</p></>}
-    {(manage || sample) && !publishedOnly && <form className={styles.card} style={{ marginTop: 24 }} onSubmit={e => { e.preventDefault(); void save(); }}><fieldset disabled={saving} style={{ minWidth: 0 }}><FieldDraft name={`areas:${org}`} value={form.code?form:null} onRestore={value=>{setForm(value);setEditing(!!value.updatedAt);setConfirmed(false);}} /><h2>{editing ? 'Update this garden' : 'Add a garden observation'}</h2>
+    {manage && !publishedOnly && <form className={styles.card} style={{ marginTop: 24 }} onSubmit={e => { e.preventDefault(); void save(); }}><fieldset disabled={saving} style={{ minWidth: 0 }}><FieldDraft name={`areas:${org}`} value={form.code?form:null} onRestore={value=>{setForm(value);setEditing(!!value.updatedAt);setConfirmed(false);}} /><h2>{editing ? 'Update this garden' : 'Add a garden observation'}</h2>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: 16 }}>
         <label>Stable site code<input required disabled={editing || saving} pattern="[a-z0-9][a-z0-9_-]{1,63}" placeholder="e.g. ubhejane-01" value={form.code} onChange={e => field('code', e.target.value)} /></label>
         <label>Garden name<input required maxLength={160} value={form.name} onChange={e => field('name', e.target.value)} /></label>
@@ -98,7 +139,7 @@ function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
       <div className={styles.row}><button type="submit" disabled={saving || !confirmed}>{saving ? 'Saving…' : 'Save observation'}</button><button type="button" disabled={saving} onClick={() => { setForm(blank()); setEditing(false); setConfirmed(false); }}>Clear</button></div>
     </fieldset></form>}
     {sites.length > 0 && <div className={styles.card} style={{ marginTop: 24 }}><h2>Where the planted area comes from</h2><p>One row per garden. Vegetable beds and staple plots add up to the total above.</p>{sites.map(s => <div key={s.code} style={{ borderTop: '1px solid #cbd5ca', padding: '16px 0' }}><div className={styles.row}>{sample && sampleSitePhoto(s.code) && <img data-photo-preview src={sampleSitePhoto(s.code)} alt={`AI-generated reference for ${s.name}`} loading="lazy" style={{width:120,height:80,objectFit:'cover',borderRadius:10}}/>}<div><strong>{s.name}</strong><p>Vegetables {numberLabel(s.vegetableM2)} m² · Staples {numberLabel(s.stapleM2)} m²</p>{s.boundaryM2 !== null && <small>Total site: {numberLabel(Math.round(s.boundaryM2))} m²</small>}</div></div><p>{numberLabel((s.vegetableM2 + s.stapleM2))} m² · {s.observedOn} · {s.published ? 'Shared total' : 'Organisation only'}</p><details><summary>Area basis</summary><p>{s.evidence}</p></details>{manage && <button type="button" disabled={saving} onClick={() => { setEditing(true); setConfirmed(false); setForm({ ...s, vegetableM2: String(s.vegetableM2), stapleM2: String(s.stapleM2), boundaryM2: s.boundaryM2 === null ? '' : String(s.boundaryM2) }); }}>{'Update / change sharing'}</button>}</div>)}</div>}
-    {summary && sites.length > 0 && <ReportComposer deviceData={source} title="Production area overview" sample={sample} sections={[
+    {summary && sites.length > 0 && <ReportComposer orgId={org} deviceData={source} title="Production area overview" sample={sample} sections={[
       {title:'Coverage',lines:[`${summary.sites} gardens; ${numberLabel(summary.combinedM2)} m² planted`, `Vegetables: ${numberLabel(summary.vegetableM2)} m²; staples: ${numberLabel(summary.stapleM2)} m²`, sample ? 'Tour edition · Prepared growing-area records.' : 'Latest recorded area for each garden in this view.']},
       {title:'Garden breakdown',lines:sites.map(s=>`${s.name}: vegetables ${s.vegetableM2} m²; staples ${s.stapleM2} m²; observed ${s.observedOn}`)},
     ]}/>}
