@@ -806,6 +806,22 @@ export interface JournalLegacyReview {
 
 const journalLegacyReviews = new WeakMap<JournalLegacyReview, JournalBookBinding>();
 
+function readLosslessOlderJournal(raw: string | null): JournalEntry[] | null {
+  try {
+    if (raw === null) return [];
+    return journalNormalisationIsLossless(raw) ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function olderOnlyJournalNotes(binding: JournalBookBinding): JournalEntry[] {
+  const older = readLosslessOlderJournal(binding.snapshot.legacy);
+  if (!older) return [];
+  const current: JournalEntry[] = JSON.parse(binding.envelope.journalRaw);
+  const currentIds = new Set(current.map(row => row.id));
+  // A stored link from the older book does not establish current membership.
+  return older.filter(row => !currentIds.has(row.id) && !Object.hasOwn(row, 'growerCycleLink'));
+}
+
 /** Open a review for these exact two copies. The review carries no account
  * key, journal bytes or write permission outside this storage module. */
 export async function readJournalLegacyReview(): Promise<JournalLegacyReview | null> {
@@ -817,14 +833,19 @@ export async function readJournalLegacyReview(): Promise<JournalLegacyReview | n
     if (!envelope || (await journalLegacyDigest(snapshot.legacy)) === envelope.legacyDigest) return null;
     const binding = { context, snapshot, envelope };
     if (!journalBookBindingIsCurrent(binding)) return null;
-    let olderCount: number | null = null;
-    try {
-      if (snapshot.legacy === null) olderCount = 0;
-      else if (journalNormalisationIsLossless(snapshot.legacy)) olderCount = JSON.parse(snapshot.legacy).length;
-    } catch { /* Offer a private backup even when the older copy is unreadable. */ }
+    const olderCount = readLosslessOlderJournal(snapshot.legacy)?.length ?? null;
     const review = Object.freeze({ currentCount: JSON.parse(envelope.journalRaw).length, olderCount });
     journalLegacyReviews.set(review, binding);
     return review;
+  } catch { return null; }
+}
+
+/** Show older-only notes for explicit selection, without photos or link data. */
+export function readJournalLegacyCandidates(review: JournalLegacyReview): readonly Pick<JournalEntry, 'id' | 'date' | 'title' | 'notes'>[] | null {
+  try {
+    const binding = journalLegacyReviews.get(review);
+    if (!binding || !journalBookBindingIsCurrent(binding)) return null;
+    return sortJournal(olderOnlyJournalNotes(binding)).map(({ id, date, title, notes }) => ({ id, date, title, notes }));
   } catch { return null; }
 }
 
@@ -842,17 +863,40 @@ export function exportJournalLegacyReview(review: JournalLegacyReview): { filena
   } catch { return null; }
 }
 
-export type JournalLegacyKeepResult =
+export type JournalLegacyResolution =
   | { readonly status: 'kept' }
-  | { readonly status: 'held'; readonly reason: 'context-changed' | 'lock-unavailable' }
+  | { readonly status: 'recovered'; readonly count: number }
+  | { readonly status: 'held'; readonly reason: 'context-changed' | 'lock-unavailable' | 'invalid-selection' | 'journal-full' }
   | { readonly status: 'unconfirmed' };
 
 /** Acknowledge the reviewed older copy. Neither journal's entries are
  * overwritten. A later legacy edit will require another explicit review. */
-export async function keepCurrentJournalAfterLegacyReview(
+export function keepCurrentJournalAfterLegacyReview(
   review: JournalLegacyReview,
   locks?: CropPlanStorageLocks | null,
-): Promise<JournalLegacyKeepResult> {
+): Promise<JournalLegacyResolution> {
+  return resolveJournalLegacyReview(review, null, locks);
+}
+
+/** Recover selected older-only notes. Same-ID edits stay in the backup for
+ * manual review, and selection never revives an older link. */
+export function recoverJournalLegacyNotes(
+  review: JournalLegacyReview,
+  selectedIds: readonly string[],
+  locks?: CropPlanStorageLocks | null,
+): Promise<JournalLegacyResolution> {
+  const selection = new Set(selectedIds);
+  if (!selection.size || selection.size !== selectedIds.length) {
+    return Promise.resolve({ status: 'held', reason: 'invalid-selection' });
+  }
+  return resolveJournalLegacyReview(review, selection, locks);
+}
+
+async function resolveJournalLegacyReview(
+  review: JournalLegacyReview,
+  selection: ReadonlySet<string> | null,
+  locks?: CropPlanStorageLocks | null,
+): Promise<JournalLegacyResolution> {
   const changed = { status: 'held', reason: 'context-changed' } as const;
   const binding = journalLegacyReviews.get(review);
   if (!binding) return changed;
@@ -862,17 +906,26 @@ export async function keepCurrentJournalAfterLegacyReview(
     if (!current()) return changed;
     const writer = journalLocks(locks);
     if (!writer) return { status: 'held', reason: 'lock-unavailable' };
-    return await writer.request<JournalLegacyKeepResult>(journalLockName(context), { mode: 'exclusive', ifAvailable: true }, async lock => {
+    return await writer.request<JournalLegacyResolution>(journalLockName(context), { mode: 'exclusive', ifAvailable: true }, async lock => {
       if (!lock) return { status: 'held', reason: 'lock-unavailable' };
       if (!current()) return changed;
+      let journalRaw = envelope.journalRaw;
+      if (selection) {
+        const selected = olderOnlyJournalNotes(binding).filter(row => selection.has(row.id));
+        if (selected.length !== selection.size) return { status: 'held', reason: 'invalid-selection' };
+        const currentRows: JournalEntry[] = JSON.parse(journalRaw);
+        if (currentRows.length + selected.length > MAX_ENTRIES) return { status: 'held', reason: 'journal-full' };
+        journalRaw = JSON.stringify([...currentRows, ...selected]);
+        if (journalRaw.length > JOURNAL_BYTE_BUDGET) return { status: 'held', reason: 'journal-full' };
+      }
       const legacyDigest = await journalLegacyDigest(snapshot.legacy);
       if (!current() || legacyDigest === envelope.legacyDigest) return changed;
-      const canonical = JSON.stringify({ ...envelope, legacyDigest });
+      const canonical = JSON.stringify({ ...envelope, legacyDigest, journalRaw });
       journalLegacyReviews.delete(review);
       if (!writeJournalEnvelope(context, snapshot, canonical)) return { status: 'unconfirmed' };
       try { window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT)); }
       catch { /* The confirmed acknowledgement survives a notification error. */ }
-      return { status: 'kept' };
+      return selection ? { status: 'recovered', count: selection.size } : { status: 'kept' };
     });
   } catch { return changed; }
 }

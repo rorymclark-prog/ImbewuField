@@ -31,8 +31,8 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
 } });
 const { accountLocalStorageKey, bindMountedAccountLocalStorageUid } = await import('../lib/account-local-storage.ts');
 const { appendLinkedJournalNote, exportJournalLegacyReview, initialiseJournalCutover, keepCurrentJournalAfterLegacyReview,
-  loadJournal, MAX_ENTRIES, readCanonicalJournal, readJournalCutoverStatus, readJournalLegacyReview, readJournalLinkWriteReceipt,
-  journalLinkWriteReceiptMatches, saveJournal, writeCanonicalJournal } = await import('../lib/field-journal.ts');
+  loadJournal, MAX_ENTRIES, readCanonicalJournal, readJournalCutoverStatus, readJournalLegacyCandidates, readJournalLegacyReview, readJournalLinkWriteReceipt,
+  journalLinkWriteReceiptMatches, recoverJournalLegacyNotes, saveJournal, writeCanonicalJournal } = await import('../lib/field-journal.ts');
 hooks.deregister();
 const key = accountLocalStorageKey('imbewu_field_journal_v1', 'account-a');
 const entry = { id: 'test-note', date: '2026-11-03', title: 'Synthetic note', notes: 'Read-only fixture',
@@ -501,5 +501,61 @@ test('older-tab acknowledgement with uncertain readback cannot be replayed', asy
   assert.deepEqual(await keepCurrentJournalAfterLegacyReview(review, exclusive), { status: 'held', reason: 'context-changed' });
   assert.deepEqual(await readJournalCutoverStatus(), { status: 'held', reason: 'legacy-diverged' });
   assert.equal(state.writes, 2);
+  assert.equal(state.events, 0);
+});
+
+test('selected recovery restores only explicitly chosen older-only notes without replacing current edits', async () => {
+  rows.set(key, JSON.stringify([entry]));
+  assert.equal((await initialiseJournalCutover(exclusive)).status, 'ready');
+  assert.equal((await writeCanonicalJournal(await readCanonicalJournal(), {
+    kind: 'edit', id: entry.id, input: { ...noteInput, title: 'Current correction' },
+  }, exclusive)).status, 'saved');
+
+  const one = { ...entry, id: 'older-one', title: '', notes: 'Older notes-only entry' };
+  const two = { ...entry, id: 'older-two' };
+  const linked = { ...entry, id: 'older-linked', growerCycleLink: noteLink };
+  const older = JSON.stringify([entry, one, two, linked]);
+  rows.set(key, older);
+  const review = await readJournalLegacyReview();
+  assert.ok(review);
+  const candidates = readJournalLegacyCandidates(review);
+  assert.deepEqual(candidates, [one, two].map(({ id, date, title, notes }) => ({ id, date, title, notes })));
+  assert.equal(readJournalLegacyCandidates({ ...review }), null);
+
+  for (const ids of [[], [one.id, one.id], [one.id, entry.id], [one.id, linked.id], ['unknown']]) {
+    assert.deepEqual(await recoverJournalLegacyNotes(review, ids, exclusive), { status: 'held', reason: 'invalid-selection' });
+  }
+  assert.equal(state.writes, 2);
+  assert.deepEqual(await recoverJournalLegacyNotes(review, [one.id], exclusive), { status: 'recovered', count: 1 });
+  assert.equal(readJournalLegacyCandidates(review), null);
+  assert.deepEqual(await recoverJournalLegacyNotes(review, [two.id], exclusive), { status: 'held', reason: 'context-changed' });
+  const view = await readCanonicalJournal();
+  assert.ok(view.status === 'ready');
+  assert.equal(view.entries.find(row => row.id === entry.id)?.title, 'Current correction');
+  assert.deepEqual(JSON.parse(JSON.parse(rows.get(canonicalKey)!).journalRaw)[1], one);
+  assert.equal(view.entries.length, 2);
+  assert.equal(rows.get(key), older);
+  assert.equal(state.events, 2);
+});
+
+test('selected recovery holds an overfull book and a changed older snapshot without partial writes', async () => {
+  const current = JSON.stringify(Array.from({ length: MAX_ENTRIES }, (_, i) => ({ ...entry, id: `current-${i}` })));
+  rows.set(key, current);
+  assert.equal((await initialiseJournalCutover(exclusive)).status, 'ready');
+  const canonical = rows.get(canonicalKey);
+  rows.set(key, JSON.stringify([entry]));
+  const review = await readJournalLegacyReview();
+  assert.ok(review);
+  assert.deepEqual(await recoverJournalLegacyNotes(review, [entry.id], exclusive), { status: 'held', reason: 'journal-full' });
+  rows.set(key, '{damaged');
+  assert.equal(readJournalLegacyCandidates(review), null);
+  assert.deepEqual(await recoverJournalLegacyNotes(review, [entry.id], exclusive), { status: 'held', reason: 'context-changed' });
+  const damaged = await readJournalLegacyReview();
+  assert.ok(damaged);
+  assert.deepEqual(readJournalLegacyCandidates(damaged), []);
+  assert.deepEqual(await recoverJournalLegacyNotes(damaged, [entry.id], exclusive), { status: 'held', reason: 'invalid-selection' });
+  assert.equal(rows.get(canonicalKey), canonical);
+  assert.equal(rows.get(key), '{damaged');
+  assert.equal(state.writes, 1);
   assert.equal(state.events, 0);
 });
