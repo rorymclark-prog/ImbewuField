@@ -42,7 +42,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '3 November 2026', sha: 'b2bb5bb00', changes: [
-    "Find Colombia’s agricultural bulletin index and biodiversity portal in the international reference review.",
+    "Find Colombia’s farm bulletin and biodiversity links in the country review.",
   ] },
   { when: '3 November 2026', sha: 'd76d58d1a', changes: [
     "Find Ghana’s bulletin index in the international reference review.",
