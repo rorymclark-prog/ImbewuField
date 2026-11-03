@@ -8,7 +8,8 @@ import { UBHEJANE_BEFORE_WORKS, historicalBaselineForSite, historicalBaselineFro
 import { createHash } from 'node:crypto';
 import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, rasterTerrainContours, fetchProfileTerrain, TERRAIN_CONTOUR_INK } from '../lib/sheet-terrain-profile.ts';
 import { terrainPixel, terrainRasterWindow, extractTerrainRaster, sampleTerrainRaster, type TerrainRaster } from '../lib/terrain-raster.ts';
-import { makeMercatorUnprojector } from '../lib/design-canvas.ts';
+import { clampBaseNudge, clampBaseRotation, clampBaseScale, designBaseMode, makeMercatorUnprojector, pointInRing } from '../lib/design-canvas.ts';
+import { resolveBaseAlign } from '../lib/base-photo-align.ts';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
@@ -690,6 +691,52 @@ test('named historical areas have readable leader labels and keep the photo fact
   assert.equal(pins,0,'names must not leave misleading number-only pins behind');
   assert.equal(probe.calls.filter(v=>v[0]==='strokeRect').length,8,'every name has a light backing, not lettering lost against grass');
   assert.equal(JSON.stringify(b),before,'moving label placement cannot move source facts');
+});
+
+test('Zones can hide fallback photo strips only when the same registered crop holds every plotted point', () => {
+  const crop = { cropX: 0.2, cropY: 0, cropWidth: 0.6, cropHeight: 1, imgH: 1000 };
+  const boundary: Point[] = [[0.3, 0.2], [0.7, 0.2], [0.7, 0.8], [0.3, 0.8]];
+  const refs = { boundary, house: [], driveway: [] };
+  const frame = { imgW: 1000, imgH: 1000, satDataUrl: 'photo', underlayDataUrl: 'satellite' };
+  const state = { baseMode: 'photo', customBase: { scale: 0.8 }, zones: [], lines: [] };
+  const matte = helper('zonePhotoMatte', {
+    SCALE: 2, clampBaseNudge, clampBaseRotation, clampBaseScale, designBaseMode, resolveBaseAlign,
+    presentationExtentRing: () => boundary,
+    calculateBoundaryPresentationLayout: () => crop,
+  });
+  const before = JSON.stringify({ state, frame, refs });
+  const result = matte(state, frame, refs);
+  assert.ok(Math.abs(result.top - 0.101) < 1e-9 && Math.abs(result.bottom - 0.899) < 1e-9);
+  assert.deepEqual(matte(state, { ...frame, underlayDataUrl: undefined }, refs, 'photo'), result,
+    'the frozen job carries the source choice even after its underlay URL is detached');
+  assert.equal(matte(state, { ...frame, satDataUrl: 'satellite' }, refs), undefined);
+  assert.equal(matte(state, frame, refs, 'satellite'), undefined);
+  assert.equal(matte({ ...state, zones: [{ points: [[0.4, 0.08]] }] }, frame, refs), undefined,
+    'the matte must never hide a saved zone vertex');
+  assert.equal(matte({ ...state, customBase: { scale: 1 } }, frame, refs), undefined,
+    'an entirely covered frame keeps its full image');
+  assert.equal(JSON.stringify({ state, frame, refs }), before);
+});
+
+test('Zone 0 uses the case-study wording only when its saved area contains both named features', () => {
+  const box = (x: number, y: number, d: number): Point[] => [[x, y], [x + d, y], [x + d, y + d], [x, y + d]];
+  const classroom = { feature: 'house', name: 'Classroom', points: box(0.2, 0.2, 0.1) };
+  const play = { feature: 'patio', name: 'Slab & Flat Play Area', points: box(0.5, 0.5, 0.1) };
+  const zone = { zone: 0, points: box(0.1, 0.1, 0.6) };
+  const label = helper('caseStudyZoneZeroLabel', { UBHEJANE_BEFORE_WORKS, pointInRing, centroidOf: helper('centroidOf', {}) });
+  const state = { siteId: UBHEJANE_BEFORE_WORKS.siteId, zones: [classroom, play, zone] };
+  assert.equal(label(state), 'Zone 0 — Classroom & play courtyard');
+  assert.equal(label({ ...state, siteId: 'another-farm' }), undefined);
+  assert.equal(label({ ...state, zones: [classroom, play, { ...zone, points: box(0.1, 0.1, 0.3) }] }), undefined);
+});
+
+test('the Zones north arrow clears the photo matte with room for the N', () => {
+  let arrow: number[] = [];
+  const paint = helper('drawSheetNorthArrow', { drawImplNorthArrow: (_ctx: unknown, ...args: number[]) => { arrow = args; } });
+  paint({}, 0, 1000, 1100, 0.065);
+  assert.ok(arrow[1] - arrow[2] * 0.75 > 1100 * 0.065, 'the letter must not straddle the photo edge');
+  paint({}, 0, 1000, 1100);
+  assert.equal(arrow[1], 88, 'unmatted sheets retain their north-arrow placement');
 });
 
 test('regional Sector overview does not advertise fine encoded height steps as ground accuracy', () => {
