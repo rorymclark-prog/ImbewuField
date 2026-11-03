@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '58043df0b', changes: [
+    'Find New Zealand’s S-map soil reference in the country review.',
+  ] },
   { when: '3 November 2026', sha: '86a84487c', changes: [
     'Find Australia’s national soil-depth reference in the country review.',
   ], tour: [{ title: 'Find Australia’s soil-depth reference', where: 'International → Country review', href: '/international',
