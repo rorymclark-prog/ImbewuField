@@ -145,3 +145,99 @@ test('w23-07: changing the selected participant retires the in-flight field repo
   assert.notEqual(keyFor(first, from, to, false), keyFor(second, from, to, false));
   assert.equal(keyFor(second, from, to, false), keyFor(second, from, to, false));
 });
+
+test('w23-08: changing production scope never renders the previous private PDF rows', async () => {
+  const { registerHooks } = await import('node:module');
+  const ts = await import('typescript');
+  const React = await import('react');
+  const { act, create } = await import('react-test-renderer');
+  const reports: unknown[] = [];
+  let resolvePublished!: (value: unknown) => void;
+  const published = new Promise(resolve => { resolvePublished = resolve; });
+  const privateSummary = { sites: 1, vegetableM2: 5, stapleM2: 0, combinedM2: 5 };
+  const privateRows = [{ code: 'synthetic', name: 'Synthetic private garden', vegetableM2: 5, stapleM2: 0, boundaryM2: null }];
+  let resolveOtherOrg!: (value: unknown) => void;
+  const otherOrg = new Promise(resolve => { resolveOtherOrg = resolve; });
+  let denied = false;
+  let refresh = () => {};
+  const runtime = {
+    auth: { user: { uid: 'synthetic-owner' }, role: 'ngo' },
+    sync: (fn: () => void) => { refresh = fn; },
+    read: async (url: string) => {
+      if (url.includes('/network/orgs')) {
+        return { orgs: [{ id: 'synthetic-org', name: 'Synthetic organisation' }, { id: 'other-org', name: 'Other organisation' }] };
+      }
+      if (denied) throw Object.assign(new Error('Access refused'), { status: 403 });
+      if (url.includes('published=true')) return published;
+      return url.includes('org=other-org') ? otherOrg : { summary: privateSummary, sites: privateRows };
+    },
+    report: (props: unknown) => { reports.push(props); return null; },
+  };
+  const globalKey = '__productionAreaReportTest';
+  const fixture = `globalThis.${globalKey}`;
+  Object.defineProperty(globalThis, globalKey, { value: runtime, configurable: true });
+  const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  Object.defineProperty(globalThis, 'window', {
+    configurable: true,
+    value: Object.assign(new EventTarget(), { sessionStorage: { getItem: () => null } }),
+  });
+  const stubs: Record<string, string> = {
+    '@/lib/auth': `export const useAuth=()=>${fixture}.auth;`,
+    '@/lib/i18n': "export const useLanguage=()=>({lang:'en'}), translate=(_, key)=>key;",
+    '@/lib/field-api': `export const fieldApi=(url)=>${fixture}.read(url);`,
+    '@/lib/use-field-sync': `export const useFieldSync=(fn)=>${fixture}.sync(fn);`,
+    '@/lib/sample-mode': "export const isSampleMode=()=>false, SAMPLE_MODE_EVENT='sample';",
+    '@/lib/sample-operations': 'export const sampleRead=()=>[], sampleWrite=()=>{}, freshSampleAreas=()=>[], completeSampleAreas=()=>[], upsertSampleArea=()=>[];',
+    '@/lib/sample-gardens': 'export const sampleSitePhoto=()=>null;',
+    './FieldDraft': 'export const clearFieldDraft=()=>{}; export default function FieldDraft(){return null;}',
+    './FieldDataStatus': 'export default function FieldDataStatus(){return null;}',
+    './SampleProgramme': 'export const readSampleProgramme=()=>({});',
+    './ReportComposer': `export default function Report(props){return ${fixture}.report(props);}`,
+    './MelDashboard.module.css': 'export default {};',
+  };
+  const hooks = registerHooks({
+    resolve(specifier, context, next) {
+      const stub = context.parentURL?.endsWith('/components/ProductionAreas.tsx') && stubs[specifier];
+      return stub ? { url: `data:text/javascript,${encodeURIComponent(stub)}`, shortCircuit: true } : next(specifier, context);
+    },
+    load(url, context, next) {
+      if (!url.endsWith('/components/ProductionAreas.tsx')) return next(url, context);
+      const { outputText } = ts.transpileModule(read('components/ProductionAreas.tsx'), {
+        compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext },
+      });
+      return { format: 'module', source: outputText, shortCircuit: true };
+    },
+  });
+  let view: import('react-test-renderer').ReactTestRenderer | undefined;
+  try {
+    const { default: Panel } = await import('../components/ProductionAreas.tsx');
+    await act(async () => { view = create(React.createElement(Panel, { publishedOnly: false })); });
+    assert.ok(reports.some(report => JSON.stringify(report).includes('Synthetic private garden')));
+    reports.length = 0;
+    await act(async () => view!.update(React.createElement(Panel, { publishedOnly: true })));
+    assert.equal(reports.length, 0, 'the old PDF composer must be absent even during the first commit');
+    assert.doesNotMatch(JSON.stringify(view!.toJSON()), /Synthetic private garden/);
+    await act(async () => resolvePublished({ summary: privateSummary }));
+    assert.equal(reports.length, 0, 'an aggregate-only response must not create a garden breakdown PDF');
+    assert.match(JSON.stringify(view!.toJSON()), /Published records only/);
+
+    await act(async () => view!.update(React.createElement(Panel, { publishedOnly: false })));
+    assert.match(JSON.stringify(view!.toJSON()), /Synthetic private garden/);
+    reports.length = 0;
+    await act(async () => view!.root.findByType('select').props.onChange({ target: { value: 'other-org' } }));
+    assert.equal(reports.length, 0, 'switching organisations must hide the first report during the first commit');
+    assert.doesNotMatch(JSON.stringify(view!.toJSON()), /Synthetic private garden/);
+    await act(async () => resolveOtherOrg({ summary: privateSummary, sites: [{ ...privateRows[0], name: 'Other synthetic garden' }] }));
+    assert.match(JSON.stringify(reports.at(-1)), /Other synthetic garden/);
+    denied = true;
+    await act(async () => refresh());
+    assert.doesNotMatch(JSON.stringify(view!.toJSON()), /Other synthetic garden/);
+    assert.equal(view!.root.findAllByProps({ role: 'alert' }).length, 1);
+  } finally {
+    if (view) await act(async () => view?.unmount());
+    hooks.deregister();
+    Reflect.deleteProperty(globalThis, globalKey);
+    if (previousWindow) Object.defineProperty(globalThis, 'window', previousWindow);
+    else Reflect.deleteProperty(globalThis, 'window');
+  }
+});
