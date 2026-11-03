@@ -242,6 +242,12 @@ nine new note and guide strings. The historical copy and test assertions
 remain intact. The older full run stays separate from the verification
 of this combined revision.
 
+The Sector composer now has distinct paid and exact reading treatments.
+The typography test locates the real function and evaluates both footer
+branches. The complete exact qualifications and padded box remain covered,
+and the paid archive must retain its coverage disclosure and exact-sheet
+reference. All 56 affected checks passed on the combined source snapshot.
+
 ## Real limits
 
 - Linking ImbewuField does not link Drive, Gmail, an archive or a local filesystem.
