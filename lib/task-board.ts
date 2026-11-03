@@ -17,6 +17,10 @@ import { produceLabel } from './produce-label';
 import { resolvePlanningSupport } from './international/planning-support';
 import { coordinateSiteIdForPlace } from './international/site-context';
 import { workspacePlanningIdForDesign } from './international/workspace-context';
+import { hasGrowerCycleMarker, type GrowerCycleContext } from './international/grower-cycle';
+import { projectGrowerCycles, type GrowerCycleEventKind } from './international/grower-cycle-projection';
+import { addGrowerUtcDays, growerPlanningScopeKey } from './international/grower-planning';
+import { resolveAbsoluteTaskDate, escapeIcsText, foldIcsLine } from './crop-calendar-ics';
 
 // zu-03 (wave 13 audit): the task board was entirely hard-coded English — verbs, the default
 // "Bed {n}" label and "Due this month" — regardless of the farmer's chosen language. lib/i18n.tsx
@@ -48,6 +52,16 @@ const EN_TASK_BOARD_STRINGS: Record<string, string> = {
   taskDueThisMonth: 'Due this month',
   taskDueNextMonth: 'Due next month',
   taskDueInMonths: 'Due in {n} months',
+  taskGrowerNurseryStart: 'Planned nursery start for {crop}',
+  taskGrowerFieldEntry: 'Planned field entry for {crop}',
+  taskGrowerFirstPick: 'Planned first pick for {crop}',
+  taskGrowerPickingEnd: 'Planned picking end boundary for {crop}',
+  taskGrowerFieldClear: 'Planned field-clear boundary for {crop}',
+  taskGrowerNextEntry: 'Planned next-entry boundary for {crop}',
+  taskGrowerPlannedEstimate: 'Planned from your own estimates · {date}',
+  taskGrowerExclusiveBoundary: 'Exclusive end boundary · not recorded work',
+  taskGrowerAvailabilityBoundary: 'Availability boundary only · not a new planting or confirmation that the bed is free',
+  taskGrowerMeasuredBed: 'Measured bed',
 };
 
 function defaultBoardTranslate(key: string, vars?: Record<string, string>): string {
@@ -153,7 +167,7 @@ export const TASK_BOARD_CHANGED_EVENTS = [
   'permamap-places-changed',
 ] as const;
 
-export type BoardTaskKind = 'crop' | 'survey' | 'lesson';
+export type BoardTaskKind = 'crop' | 'grower-cycle' | 'survey' | 'lesson';
 
 export interface BoardTask {
   /** Namespaced per producer (crop ids start `${planting.id}:${action}` and a
@@ -166,11 +180,12 @@ export interface BoardTask {
   /** Emoji, e.g. crop.icon — the fallback the renderer shows when no real art
    *  exists for this task yet (see cropKey below). */
   icon: string;
-  /** CropDef.key (lib/crop-catalog.ts), set only for kind 'crop' tasks. Lets
+  /** CropDef.key (lib/crop-catalog.ts), retained for crop and own-cycle identity. Lets
    *  the renderer resolve real illustrated art via lib/crop-art.ts's
    *  CROP_ART — the same lookup the veg-bed row renderer and design canvas's
    *  ItemEditSheet use — instead of rendering `icon` as raw emoji text.
-   *  Undefined for non-crop kinds (survey/lesson), which have no art system. */
+   *  Own-cycle identity grants no catalogue instruction. Undefined for
+   *  survey/lesson kinds, which have no art system. */
   cropKey?: string;
   /** Keep the actual bed reference for a draft journal handoff; subtitles are translated text. */
   bedId?: string;
@@ -180,9 +195,13 @@ export interface BoardTask {
    *  Task Planner screen (app/cropplan), which used to invent its own day-of-week rota
    *  instead of reading real tasks. */
   action?: CropTask['action'];
+  /** Own cycles retain their exact one-time UTC calendar day, including its year. */
+  dueDate?: string;
+  growerEventKind?: GrowerCycleEventKind;
   /** Real calendar month, 1-12, consistent with monthsAway — needed to emit a concrete .ics date. */
   dueMonth: number;
-  /** Months until due; can exceed 11 for the harvest of a crop planned nearly a year out. */
+  /** Months until due; own cycles may be negative when overdue. Their dueDate
+   *  remains the authority; this offset is display metadata only. */
   monthsAway: number;
   completed: boolean;
 }
@@ -280,6 +299,106 @@ export function buildCropBoardTasks(
     a.monthsAway - b.monthsAway
     || a.dueMonth - b.dueMonth
     || a.id.localeCompare(b.id));
+}
+
+const GROWER_VERB_KEY: Record<GrowerCycleEventKind, string> = {
+  'nursery-start': 'taskGrowerNurseryStart', 'field-entry': 'taskGrowerFieldEntry', 'first-pick': 'taskGrowerFirstPick',
+  'picking-end': 'taskGrowerPickingEnd', 'field-clear': 'taskGrowerFieldClear', 'next-entry': 'taskGrowerNextEntry',
+};
+
+function opaqueGrowerTaskDigest(value: string): string {
+  // This deterministic 128-bit identifier is not cryptography or anonymisation.
+  // Raw persistent IDs need not travel into a calendar. Collisions are held by
+  // the allocator below, never accepted as another task's completion identity.
+  let left = BigInt('14695981039346656037'), right = BigInt('7809847782465536322');
+  const prime = BigInt('1099511628211');
+  for (const byte of new TextEncoder().encode(value)) {
+    left = BigInt.asUintN(64, (left ^ BigInt(byte)) * prime);
+    right = BigInt.asUintN(64, (right ^ BigInt(byte)) * prime);
+  }
+  return left.toString(16).padStart(16, '0') + right.toString(16).padStart(16, '0');
+}
+
+/** One pure allocation authority, with a digest seam so collision protection can
+ * actually fail in a test. No date, source geometry or coordinate scope enters
+ * identity: the whole-book projector already requires unique planting IDs.
+ * Completion remains in the existing account-scoped store, not this function. */
+export function resolveGrowerTaskIdentities(
+  events: readonly { rowIndex: number; plantingId: string; kind: GrowerCycleEventKind }[],
+  digest: (value: string) => string = opaqueGrowerTaskDigest,
+): { ids: readonly (string | null)[]; heldRows: ReadonlySet<number> } {
+  const groups = new Map<string, number[]>(); const heldRows = new Set<number>();
+  const ids = events.map((event, index): string | null => {
+    try {
+      const hash = digest(JSON.stringify(['grower-cycle-task-v1', event.plantingId, event.kind]));
+      if (!/^[a-f0-9]{32}$/.test(hash)) { heldRows.add(event.rowIndex); return null; }
+      const id = `grower-cycle-v1-${hash}`;
+      groups.set(id, [...(groups.get(id) ?? []), index]);
+      return id;
+    } catch { heldRows.add(event.rowIndex); return null; }
+  });
+  for (const indexes of groups.values()) if (indexes.length > 1) {
+    for (const index of indexes) heldRows.add(events[index].rowIndex);
+  }
+  return { ids: ids.map((id, index) => heldRows.has(events[index].rowIndex) ? null : id), heldRows };
+}
+
+/** The full book reaches each shared projection: filtering rows by site first
+ * would hide duplicate IDs in another site or a legacy row. Same-bed names in
+ * different scopes remain independent; ambiguous contexts never choose a winner. */
+export function buildGrowerBoardTasks(
+  rows: unknown,
+  contexts: readonly GrowerCycleContext[],
+  now: Date,
+  completedIds: Set<string>,
+  translateFn: BoardTranslate = defaultBoardTranslate,
+  lang: string = 'en',
+): { tasks: BoardTask[]; heldPlantings: number } {
+  if (!Array.isArray(rows)) return { tasks: [], heldPlantings: 1 };
+  const ownRows = rows.filter(hasGrowerCycleMarker);
+  if (!(now instanceof Date) || !Number.isFinite(now.getTime())) return { tasks: [], heldPlantings: ownRows.length };
+  const byScope = new Map<string, GrowerCycleContext[]>();
+  for (const context of contexts) {
+    const key = growerPlanningScopeKey(context?.scope);
+    if (key) byScope.set(key, [...(byScope.get(key) ?? []), context]);
+  }
+  const translated = (key: string, vars?: Record<string, string>): string => {
+    const label = translateFn(key, vars);
+    return typeof label === 'string' && label.trim() && label !== key ? label : defaultBoardTranslate(key, vars);
+  };
+  const projectedRows = new Set<number>();
+  const candidates: { rowIndex: number; plantingId: string; kind: GrowerCycleEventKind; task: Omit<BoardTask, 'id' | 'completed'> }[] = [];
+  for (const matches of byScope.values()) {
+    if (matches.length !== 1) continue;
+    const context = matches[0];
+    for (const cycle of projectGrowerCycles(rows, context).ownCycles) {
+      projectedRows.add(cycle.rowIndex);
+      const bed = context.beds.find(bed => bed.id === cycle.bedId)!;
+      const bedLabel = typeof bed.label === 'string' && bed.label.trim() ? bed.label : translated('taskGrowerMeasuredBed');
+      for (const event of cycle.plannedEvents) {
+        const parts = resolveAbsoluteTaskDate(event.date);
+        if (!parts) continue;
+        const explanation = event.kind === 'next-entry' ? translated('taskGrowerAvailabilityBoundary')
+          : event.endExclusive ? translated('taskGrowerExclusiveBoundary') : null;
+        candidates.push({ rowIndex: cycle.rowIndex, plantingId: cycle.plantingId, kind: event.kind,
+          task: { kind: 'grower-cycle', growerEventKind: event.kind, dueDate: event.date,
+          title: translated(GROWER_VERB_KEY[event.kind], { crop: produceLabel(cycle.cropKey, lang) }),
+          subtitle: [boardBedLabel(bedLabel, translated), translated('taskGrowerPlannedEstimate', { date: event.date }), explanation].filter(Boolean).join(' · '),
+          icon: '📅', cropKey: cycle.cropKey, bedId: cycle.bedId, bedLabel,
+          dueMonth: parts.month, monthsAway: (parts.year - now.getUTCFullYear()) * 12 + parts.month - now.getUTCMonth() - 1 } });
+      }
+    }
+  }
+  const identities = resolveGrowerTaskIdentities(candidates);
+  for (const rowIndex of identities.heldRows) projectedRows.delete(rowIndex);
+  const tasks = candidates.flatMap((candidate, index): BoardTask[] => {
+    const id = identities.ids[index];
+    return id ? [{ ...candidate.task, id, completed: completedIds.has(id) }] : [];
+  });
+  return { tasks: tasks.sort((a, b) => a.dueDate!.localeCompare(b.dueDate!)
+    || Object.keys(GROWER_VERB_KEY).indexOf(a.growerEventKind!) - Object.keys(GROWER_VERB_KEY).indexOf(b.growerEventKind!)
+    || a.id.localeCompare(b.id)),
+    heldPlantings: ownRows.length - projectedRows.size };
 }
 
 /**
@@ -463,6 +582,9 @@ export function setCompletedTaskState(id: string, completed: boolean): Set<strin
  *  is only consulted to recover which 12-month cycle a far-out (> 11 months)
  *  task belongs to. */
 export function resolveTaskDate(task: BoardTask, now = new Date()): Date {
+  if (task.kind === 'grower-cycle') {
+    return resolveAbsoluteTaskDate(task.dueDate) ? new Date(`${task.dueDate}T00:00:00.000Z`) : new Date(NaN);
+  }
   const origin = Number.isFinite(now.getTime()) ? now : new Date();
   const currentMonth = origin.getMonth() + 1;
   const dueMonth = Number.isSafeInteger(task.dueMonth) && task.dueMonth >= 1 && task.dueMonth <= 12
@@ -494,22 +616,28 @@ function icsEscape(s: string): string {
 export function buildTaskIcs(task: BoardTask, now = new Date()): string {
   const clock = Number.isFinite(now.getTime()) ? now : new Date();
   const start = resolveTaskDate(task, clock);
+  if (!Number.isFinite(start.getTime())) return '';
+  const own = task.kind === 'grower-cycle';
+  const ownEnd = own ? addGrowerUtcDays(task.dueDate!, 1) : null;
+  if (own && !ownEnd) return '';
   const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1); // DTEND is exclusive for all-day events
-  return [
+  const escape = own ? escapeIcsText : icsEscape;
+  const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
     'PRODID:-//ImbewuField//Task//EN',
     'BEGIN:VEVENT',
-    `UID:${icsEscape(task.id)}@imbewufield.app`,
+    `UID:${escape(task.id)}@imbewufield.app`,
     `DTSTAMP:${icsDateStamp(clock)}`,
-    `DTSTART;VALUE=DATE:${icsAllDayDate(start)}`,
-    `DTEND;VALUE=DATE:${icsAllDayDate(end)}`,
-    `SUMMARY:${icsEscape(task.title)}`,
-    `DESCRIPTION:${icsEscape(`ImbewuField crop plan — ${task.subtitle}`)}`,
+    `DTSTART;VALUE=DATE:${own ? task.dueDate!.replace(/-/g, '') : icsAllDayDate(start)}`,
+    `DTEND;VALUE=DATE:${own ? ownEnd!.replace(/-/g, '') : icsAllDayDate(end)}`,
+    `SUMMARY:${escape(task.title)}`,
+    `DESCRIPTION:${escape(`${own ? 'ImbewuField planned cycle from your own estimates; not recorded work' : 'ImbewuField crop plan'} — ${task.subtitle}`)}`,
     'END:VEVENT',
     'END:VCALENDAR',
     '',
-  ].join('\r\n');
+  ];
+  return (own ? lines.map(foldIcsLine) : lines).join('\r\n');
 }
 
 export function downloadTaskIcs(task: BoardTask): boolean {
@@ -519,7 +647,9 @@ export function downloadTaskIcs(task: BoardTask): boolean {
   if (task.kind === 'crop' && !loadCropBoardTasks(new Set()).some(current =>
     current.id === task.id && current.action === task.action && current.cropKey === task.cropKey
     && current.bedId === task.bedId && current.dueMonth === task.dueMonth)) return false;
-  const blob = new Blob([buildTaskIcs(task)], { type: 'text/calendar' });
+  const content = buildTaskIcs(task);
+  if (!content) return false;
+  const blob = new Blob([content], { type: 'text/calendar' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;

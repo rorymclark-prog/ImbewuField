@@ -1,6 +1,13 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/ts.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Landzela mirhendzeleko yo rima leyi hlayisiweke hi masiku ya yona lama kunguhatiweke hi ku kongoma.",
+  "Check current designs before ticking work or exporting dates.": "Kambela tidizayini ta sweswi u nga si fungha mintirho kumbe ku humesa masiku.",
+  "Keep own crop estimates separate from catalogue print advice.": "Hlayisa mimpimo ya wena ya swibyariwa yi hambanile ni switsundzuxo leswi kandziyisiwaka swa khathalogo.",
+  "Review your dated work": "Kambela mintirho ya wena leyi nga ni masiku",
+  "Task Planner → Dated work from your estimates": "Mupulani wa Mintirho → Mintirho leyi nga ni masiku ku suka eka mimpimo ya wena",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Pfula Mupulani wa Mintirho leswaku u kambela masiku ya mintirho ku suka eka mimpimo ya wena yo rima leyi hlayisiweke.",
   // Grower review: docs/international/agy-grower-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
   "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Kambela maendlelo ya swibyariwa lama tiendlelaka kusuka eka mimpimo ya wena ya matirhele na swikongomelo swa vaxavi leswi hlayisiweke.",
   "Check dated nursery tray and surface needs before downloading your review.": "Kambisisa switreyi swa nersari leswi nga na masiku na swilaveko swa xitsandza u nga si kopa nkambisiso wa wena.",

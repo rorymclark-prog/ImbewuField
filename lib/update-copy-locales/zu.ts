@@ -1,6 +1,13 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/zu.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Landela imijikelezo yokutshala egciniwe ngezinsuku zayo ezihleliwe eziqondile.",
+  "Check current designs before ticking work or exporting dates.": "Hlola imiklamo yamanje ngaphambi kokumaka umsebenzi noma ukukhipha izinsuku.",
+  "Keep own crop estimates separate from catalogue print advice.": "Gcina izilinganiso zakho zezitshalo zihlukene nezeluleko zekhathalogi eziphrintiwe.",
+  "Review your dated work": "Buyekeza umsebenzi wakho onezinsuku",
+  "Task Planner → Dated work from your estimates": "Umhleli Wemisebenzi → Umsebenzi onezinsuku ovela ezilinganisweni zakho",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Vula Umhleli Wemisebenzi ukuze uhlole izinsuku zomsebenzi ezisuselwa ezilinganisweni zakho zokutshala ezigciniwe.",
   // Grower review: docs/international/agy-grower-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
   "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Buyekeza izinhlelo zezitshalo ezizenzakalelayo ezisuselwa ezilinganisweni zakho siqu zokutshala kanye nemigomo yabathengi egciniwe.",
   "Check dated nursery tray and surface needs before downloading your review.": "Hlola ugqoko lwezithombo nezidingo zendawo ezinezinsuku ngaphambi kokulanda ukubuyekeza kwakho.",

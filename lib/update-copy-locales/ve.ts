@@ -1,6 +1,13 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/ve.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Tevhelani mitingatingo ya vhulimi yo vhulungwaho nga madatumu ayo o pulaniwaho nga ho livhaho.",
+  "Check current designs before ticking work or exporting dates.": "Tolani pulane dza zwino musi ni sa athu swaya mushumo kana u bvisa madatumu.",
+  "Keep own crop estimates separate from catalogue print advice.": "Vhulungani ndinganyelo dzaṋu dza zwilimwa dzo fhambana na nyeletshedzo ya khathalogo yo gandiswaho.",
+  "Review your dated work": "Tsedzulusani mushumo waṋu u re na madatumu",
+  "Task Planner → Dated work from your estimates": "Mupulani wa Mishumo → Mushumo u re na madatumu u bvaho kha ndinganyelo dzaṋu",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Vulani Mupulani wa Mishumo u itela u tola madatumu a mushumo a bvaho kha ndinganyelo dzaṋu dza vhulimi dzo vhulungwaho.",
   // Grower review: docs/international/agy-grower-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
   "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Tsedzulusani pulane dza zwilimwa dza othomethiki dzi tshi bva kha mbalo dzaṋu dza u alusa na zwipikwa zwo vhulungwaho zwa vharengi.",
   "Check dated nursery tray and surface needs before downloading your review.": "Tolani thirei dza nese dzi re na datumu na zwidodombedzwa zwa vhupo musi ni sa athu daunilouda tsedzuluso yaṋu.",

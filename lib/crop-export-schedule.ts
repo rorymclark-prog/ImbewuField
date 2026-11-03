@@ -1,3 +1,4 @@
+import { hasGrowerCycleMarker } from './international/grower-cycle';
 import { buildProductGuidance, type ProductGuideContext, type ExpectedSeason } from './production-product-guidance';
 // ── Crop plan → the things a farmer takes away from the screen ──────────────
 //
@@ -346,6 +347,8 @@ export interface BedPlanRow {
   kind: 'bed' | 'plot';
   areaM2: number;
   crops: BedPlanCrop[];
+  /** Retained records are not an empty bed or a catalogue schedule. */
+  heldGrowerPlantingIds?: string[];
 }
 
 /** Plain-words share of a bed — no ½/⅓ glyphs, which not every PDF font can draw. */
@@ -367,7 +370,7 @@ export function buildBedPlanRows(plantings: Planting[], beds: PlanBed[]): BedPla
   return beds.map((bed) => {
     const crops: BedPlanCrop[] = [];
     for (const p of plantings) {
-      if (p.bedId !== bed.id || p.awaitingSowingConfirmation || p.finishedOnceSowing) continue;
+      if (p.bedId !== bed.id || hasGrowerCycleMarker(p) || p.awaitingSowingConfirmation || p.finishedOnceSowing) continue;
       const crop = cropByKey(p.cropKey);
       if (!crop) continue;
       const fraction = p.areaFraction ?? 1;
@@ -398,6 +401,8 @@ export function buildBedPlanRows(plantings: Planting[], beds: PlanBed[]): BedPla
       kind: bed.kind ?? 'bed',
       areaM2: bed.areaM2,
       crops,
+      ...(plantings.some(p => p.bedId === bed.id && hasGrowerCycleMarker(p))
+        ? { heldGrowerPlantingIds: plantings.filter(p => p.bedId === bed.id && hasGrowerCycleMarker(p)).map(p => p.id) } : {}),
     };
   });
 }
@@ -679,7 +684,8 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
   const drainage = conditions?.drainage;
   const sunlight = conditions?.sunlight;
   const frostMonths = reportedMonths(conditions?.frostMonths);
-  const active = plantings.filter((p) => !p.awaitingSowingConfirmation && !p.finishedOnceSowing);
+  const ownRows = plantings.filter(hasGrowerCycleMarker);
+  const active = plantings.filter((p) => !hasGrowerCycleMarker(p) && !p.awaitingSowingConfirmation && !p.finishedOnceSowing);
   const siteObservations: ProductionGuideItem[] = [
     { title: 'Water through the dry season', lines: [
       water === 'reliable' ? 'Farmer reports reliable growing water. Confirm that the supply can carry each planned crop cycle.'
@@ -749,6 +755,7 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
         : 'This site\'s climate has not resolved, so no local shortlist is claimed. Open the crop card to see sources and record your choice.',
     ], sources: links }];
   });
+  if (ownRows.length) cropChoices.push({ title: 'Own dated records retained', lines: ['Catalogue variety and planting advice is withheld for these records. Open the Task Planner and check their saved source and dated estimates.'] });
   return { area: zones.length ? growingZoneLabel(zones) : 'Growing area not resolved', siteObservations, recordedProduction, cropChoices, ...(products ? buildProductGuidance(products, zones, conditions) : {}) };
 }
 
