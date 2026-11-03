@@ -1,7 +1,7 @@
 import type { CropPlanState } from '../crop-plan';
 import { generateGrowerAutoPlan, GROWER_AUTOPLAN_MAX_ASSESSMENTS, type GrowerAutoPlanRequest, type GrowerAutoPlanProposal } from './grower-autoplan';
 import { growerDemandFromHarvestTarget } from './grower-harvest-demand';
-import { hasGrowerCycleMarker, normaliseGrowerCycleAttachment, preserveGrowerCycleMarker, resolvePlantingBasis } from './grower-cycle';
+import { createGrowerCyclePlanting, type GrowerCyclePlanting, isProvenForeignGrowerCycle, resolvePlantingBasis } from './grower-cycle';
 import { projectGrowerCycles, type ProjectedGrowerCycle } from './grower-cycle-projection';
 import { growerPlanningScopeKey, isGrowerRecordedAt, isGrowerUtcDate, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope,
   type GrowerInput, type GrowerInputProvenance, type GrowerPlanningScope } from './grower-planning';
@@ -117,14 +117,7 @@ export function assembleGrowerWorkflowReview(input: AssembleGrowerWorkflowReview
     for (const held of projection.heldRows) {
       const row = held.row;
       if (record(row) && identity(row.bedId) && allSourceBedIds.has(row.bedId)) { block(row.bedId, held.reasons); continue; }
-      // This proves only an explicit different scope and intact row identity.
-      // Never invent foreign current geometry from its archived attachment.
-      const structural = resolvePlantingBasis(row);
-      const attachment = hasGrowerCycleMarker(row) && structural.kind === 'held' && structural.reasons.length === 1
-        && structural.reasons[0] === 'current-geometry-context-required'
-        ? normaliseGrowerCycleAttachment(preserveGrowerCycleMarker(row).growerCycle) : null;
-      if (attachment && growerPlanningScopeKey(attachment.assessmentSnapshot.scope) !== growerPlanningScopeKey(scope)
-        && !allSourceBedIds.has(attachment.bedId)) continue;
+      if (isProvenForeignGrowerCycle(row, scope, allSourceBedIds)) continue;
       return hold('unresolved-row-association');
     }
     if (!draft || draft.assumptionsConfirmed !== true) return hold('assumptions-confirmation-required');
@@ -189,4 +182,104 @@ export function assembleGrowerWorkflowReview(input: AssembleGrowerWorkflowReview
     return freeze({ status: 'review', recordedAt: input.recordedAt, request, proposal,
       issues: [...proposal.issues], blockedBeds: blockedBeds(), targetMetadata, existingOwnCycles });
   } catch { return hold('unreadable-workflow-input'); }
+}
+
+
+export interface PrepareGrowerWorkflowAcceptanceInput {
+  readonly review: Extract<GrowerWorkflowReview, { status: 'review' }>;
+  /** The controller must retrieve this binding from its private review identity. */
+  readonly binding: { readonly source: GrowerWorkflowSource; readonly draft: GrowerWorkflowDraft; readonly recordedAt: string };
+  readonly scope: GrowerPlanningScope | null;
+  readonly source: GrowerWorkflowSource | null;
+  readonly book: CropPlanState;
+  readonly acceptedAt: string;
+  /** Full proposal only: engine ordinals identify mappings, never persistent rows. */
+  readonly plantingIds: readonly { readonly cycleId: string; readonly plantingId: string }[];
+}
+export type GrowerWorkflowAcceptancePreparation =
+  | { readonly status: 'held'; readonly reasons: readonly string[] }
+  | { readonly status: 'prepared'; readonly book: CropPlanState; readonly rows: readonly GrowerCyclePlanting[] };
+
+// Acceptance must not turn a corrupt held nursery record into an empty/default
+// record through JSON serialization, or evaluate accessors while copying a book.
+function acceptanceJsonData(value: unknown, parents = new Set<object>()): boolean {
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') return true;
+  if (typeof value === 'number') return Number.isFinite(value);
+  if (!value || typeof value !== 'object' || parents.has(value)) return false;
+  const prototype = Object.getPrototypeOf(value);
+  if (!Array.isArray(value) && prototype !== Object.prototype && prototype !== null) return false;
+  parents.add(value);
+  const keys = Reflect.ownKeys(value);
+  const safe = (!Array.isArray(value) || (keys.length === value.length + 1
+    && keys.every(key => key === 'length' || (typeof key === 'string' && /^(0|[1-9]\d*)$/.test(key) && Number(key) < value.length)))) && keys.every(key => {
+    if (Array.isArray(value) && key === 'length') return true;
+    const property = Object.getOwnPropertyDescriptor(value, key);
+    return typeof key === 'string' && !!property && property.enumerable && 'value' in property
+      && acceptanceJsonData(property.value, parents);
+  });
+  parents.delete(value);
+  return safe;
+}
+function acceptanceEqual(left: unknown, right: unknown): boolean {
+  // Object spelling order carries no meaning; array order is target priority and
+  // must remain exact. Both sides have already passed the lossless-data gate.
+  const ordered = (_key: string, value: unknown) => record(value)
+    ? Object.fromEntries(Object.keys(value).sort().map(key => [key, value[key]])) : value;
+  return JSON.stringify(left, ordered) === JSON.stringify(right, ordered);
+}
+
+/** Prepare detached canonical rows without acquiring any save permission. The
+ * controller still owns private review identity, actual account/sample checks,
+ * raw source/book receipts after awaits, and a final check before its real write. */
+export function prepareGrowerWorkflowAcceptance(input: PrepareGrowerWorkflowAcceptanceInput): GrowerWorkflowAcceptancePreparation {
+  const held = (...reasons: string[]): GrowerWorkflowAcceptancePreparation => freeze({ status: 'held', reasons: [...new Set(reasons)] });
+  try {
+    if (!acceptanceJsonData(input)) return held('unsafe-acceptance-input');
+    const detached = structuredClone(input), { review, binding, source, scope, book, acceptedAt, plantingIds } = detached;
+    if (!review || review.status !== 'review' || !binding || review.recordedAt !== binding.recordedAt
+      || !isGrowerRecordedAt(binding.recordedAt)) return held('review-binding-mismatch');
+    if (!isGrowerRecordedAt(acceptedAt) || acceptedAt < binding.recordedAt) return held('acceptance-time-invalid');
+    if (!scope || !normaliseGrowerPlanningScope(scope) || !binding.source || binding.source.status !== 'ready'
+      || growerPlanningScopeKey(scope) !== growerPlanningScopeKey(binding.source.scope)) return held('acceptance-scope-mismatch');
+    if (!source || source.status !== 'ready') return held('source-unavailable');
+    if (!acceptanceEqual(source, binding.source)) return held('source-changed');
+    if (!book || book.version !== 1 || !Array.isArray(book.plantings)
+      || typeof book.updatedAt !== 'number' || !Number.isFinite(book.updatedAt)) return held('crop-book-invalid');
+    if (book.plantings.some(row => !record(row) || !identity(row.id))) return held('planting-identity-invalid');
+    if ([...counts(book.plantings, 'id').values()].some(count => count > 1)) return held('ambiguous-planting-identities');
+    const proposal = review.proposal;
+    if (!proposal || proposal.status !== 'ready' || proposal.issues.length
+      || !proposal.demandResults.length || proposal.demandResults.some(result => !['capacity-covered', 'zero-demand'].includes(result.status)
+        || result.unmetKg !== 0)) return held('proposal-not-complete');
+    if (!proposal.cycles.length) return held('no-proposed-cycles');
+    const current = assembleGrowerWorkflowReview({ scope, source, book, draft: binding.draft, recordedAt: binding.recordedAt });
+    // Ordinals repeat between proposals. Replay evidence needs the same actual
+    // dated assessment and bed/demand/scope/geometry, not just "grower-cycle:1".
+    const replay = book.plantings.some(row => {
+      const basis = resolvePlantingBasis(row, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint });
+      return basis.kind === 'grower-dated-cycle' && proposal.cycles.some(cycle =>
+        basis.attachment.cycleId === cycle.cycleId && basis.attachment.demandId === cycle.demandId
+        && basis.attachment.bedId === cycle.bedId && basis.attachment.assessmentFingerprint === cycle.assessment.fingerprint);
+    });
+    if (replay) return held('proposal-already-recorded');
+    if (current.status !== 'review') return held('review-no-longer-current', ...current.issues);
+    if (!acceptanceEqual(current, review)) return held('review-no-longer-current');
+    if (!Array.isArray(plantingIds) || plantingIds.length !== proposal.cycles.length
+      || new Set(plantingIds.map(row => row.cycleId)).size !== proposal.cycles.length
+      || plantingIds.some(row => !proposal.cycles.some(cycle => cycle.cycleId === row.cycleId))) return held('planting-id-mapping-incomplete');
+    const knownIds = new Set(book.plantings.map(row => row.id));
+    for (const row of plantingIds) {
+      if (!identity(row.plantingId) || row.plantingId.length > 200 || row.plantingId !== row.plantingId.trim()) return held('planting-id-invalid');
+      if (knownIds.has(row.plantingId)) return held('planting-id-duplicate');
+      knownIds.add(row.plantingId);
+    }
+    const rows: GrowerCyclePlanting[] = [];
+    for (const cycle of proposal.cycles) {
+      const row = createGrowerCyclePlanting(cycle, { plantingId: plantingIds.find(row => row.cycleId === cycle.cycleId)!.plantingId,
+        acceptedAt, geometryFingerprint: source.geometryFingerprint });
+      if (!row) return held('cycle-creation-held');
+      rows.push({ ...row, harvestTargetId: cycle.demandId });
+    }
+    return freeze({ status: 'prepared', rows, book: { ...book, plantings: [...book.plantings, ...rows], updatedAt: Date.parse(acceptedAt) } });
+  } catch { return held('unreadable-acceptance-input'); }
 }

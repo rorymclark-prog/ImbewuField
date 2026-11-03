@@ -13,7 +13,7 @@ import {
   getSandboxAllowBedSharing, setSandboxAllowBedSharing,
   getSandboxCashflowSettings, setSandboxCashflowSettings,
 } from './sample-mode';
-import { activeAccountLocalStorageKey } from './account-local-storage';
+import { activeAccountLocalStorageKey, activeAccountUid } from './account-local-storage';
 import { sanitiseProductionRecords, sanitisePreservedFoodRecords, type DatedProductionRecord, type PreservedFoodRecord } from './production-records';
 // TYPE ONLY, and it has to stay that way: crop-autosuggest imports THIS module
 // at runtime, so a value import here would close the cycle. `import type` is
@@ -425,50 +425,49 @@ function preservePlantingMarker(planting: Planting): Planting {
   return hasGrowerCycleMarker(planting) ? { ...planting, ...preserveGrowerCycleMarker(planting) } : planting;
 }
 
-export function loadCropPlan(): CropPlanState {
-  const settleNow = new Date();
+function projectLoadedCropPlan(parsed: Partial<CropPlanState> | null | undefined, settleNow: Date, sample = false): CropPlanState {
   const settle = (plantings: Planting[]): Planting[] =>
     settleOnceRows(plantings.map(preservePlantingMarker), settleNow.getFullYear(), settleNow.getMonth() + 1);
-  if (isSampleMode()) {
-    const sandbox = getSandboxCropPlan();
+  if (sample) {
+    const sandbox = parsed as CropPlanState;
     return { ...sandbox, plantings: settle(sandbox.plantings),
       ...(sandbox.growerPlanningProfiles !== undefined
         ? { growerPlanningProfiles: normaliseGrowerPlanningProfiles(sandbox.growerPlanningProfiles) } : {}),
       ...(sandbox.workspaceReferences !== undefined
         ? { workspaceReferences: sanitiseWorkspacePlanningReferences(sandbox.workspaceReferences) } : {}) };
   }
-  if (typeof window === 'undefined' || !window.localStorage) {
-    return emptyPlan();
-  }
+  if (!parsed || !Array.isArray(parsed.plantings)) return emptyPlan();
+  const planNotes = sanitisePlanNotes(parsed.planNotes);
+  return {
+    version: 1,
+    plantings: settle(parsed.plantings),
+    ...(parsed.growerPlanningProfiles !== undefined
+      ? { growerPlanningProfiles: normaliseGrowerPlanningProfiles(parsed.growerPlanningProfiles) } : {}),
+    ...(parsed.workspaceReferences !== undefined
+      ? { workspaceReferences: sanitiseWorkspacePlanningReferences(parsed.workspaceReferences) } : {}),
+    ...(Array.isArray(parsed.harvestTargets) ? { harvestTargets: sanitiseHarvestTargets(parsed.harvestTargets) } : {}),
+    ...(parsed.nursery !== undefined ? { nursery: sanitiseNurserySettings(parsed.nursery) } : {}),
+    ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
+    ...(Array.isArray(parsed.productionRecords) ? { productionRecords: sanitiseProductionRecords(parsed.productionRecords) } : {}),
+    ...(Array.isArray(parsed.preservedProducts) ? { preservedProducts: sanitisePreservedFoodRecords(parsed.preservedProducts) } : {}),
+    // The timestamp travels ONLY with notes. A stored date on its own labels
+    // nothing, and notes without a date would have to be shown undated —
+    // which is the dishonesty this pair exists to prevent.
+    ...(planNotes.length && isPlanNotesAt(parsed.planNotesAt)
+      ? { planNotes, planNotesAt: parsed.planNotesAt }
+      : {}),
+    updatedAt: typeof parsed.updatedAt === 'number' ? parsed.updatedAt : Date.now(),
+  };
+}
+
+export function loadCropPlan(): CropPlanState {
+  const settleNow = new Date();
+  if (isSampleMode()) return projectLoadedCropPlan(getSandboxCropPlan(), settleNow, true);
+  if (typeof window === 'undefined' || !window.localStorage) return emptyPlan();
   try {
     const raw = window.localStorage.getItem(activeAccountLocalStorageKey(STORAGE_KEY));
-    if (!raw) return emptyPlan();
-    const parsed = JSON.parse(raw) as Partial<CropPlanState> | null;
-    if (!parsed || !Array.isArray(parsed.plantings)) return emptyPlan();
-    const planNotes = sanitisePlanNotes(parsed.planNotes);
-    return {
-      version: 1,
-      plantings: settle(parsed.plantings),
-      ...(parsed.growerPlanningProfiles !== undefined
-        ? { growerPlanningProfiles: normaliseGrowerPlanningProfiles(parsed.growerPlanningProfiles) } : {}),
-      ...(parsed.workspaceReferences !== undefined
-        ? { workspaceReferences: sanitiseWorkspacePlanningReferences(parsed.workspaceReferences) } : {}),
-      ...(Array.isArray(parsed.harvestTargets) ? { harvestTargets: sanitiseHarvestTargets(parsed.harvestTargets) } : {}),
-      ...(parsed.nursery !== undefined ? { nursery: sanitiseNurserySettings(parsed.nursery) } : {}),
-      ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
-      ...(Array.isArray(parsed.productionRecords) ? { productionRecords: sanitiseProductionRecords(parsed.productionRecords) } : {}),
-      ...(Array.isArray(parsed.preservedProducts) ? { preservedProducts: sanitisePreservedFoodRecords(parsed.preservedProducts) } : {}),
-      // The timestamp travels ONLY with notes. A stored date on its own labels
-      // nothing, and notes without a date would have to be shown undated —
-      // which is the dishonesty this pair exists to prevent.
-      ...(planNotes.length && isPlanNotesAt(parsed.planNotesAt)
-        ? { planNotes, planNotesAt: parsed.planNotesAt }
-        : {}),
-      updatedAt: typeof parsed.updatedAt === 'number' ? parsed.updatedAt : Date.now(),
-    };
-  } catch {
-    return emptyPlan();
-  }
+    return raw ? projectLoadedCropPlan(JSON.parse(raw), settleNow) : emptyPlan();
+  } catch { return emptyPlan(); }
 }
 
 const PLAN_NOTE_KINDS: readonly PlanNoteKind[] = ['warning', 'choice', 'gap', 'basis'];
@@ -525,9 +524,150 @@ function isRainPattern(value: unknown): value is RainPattern {
 /** Opaque, account-bound device revision for delayed writers. Keep this token
  * inside the current page: it contains private plan data, not analytics. Missing
  * storage is stable; corrupt/unreadable storage has no write authority. */
+export type RawCropPlanReceipt =
+  | { readonly status: 'ready'; readonly raw: unknown; readonly token: string }
+  | { readonly status: 'held'; readonly reasons: readonly string[] };
+
+/** Operational projection must see the whole authored row list, including bad
+ * markers and duplicate identities that the projector holds. Never settle or
+ * repair that evidence while reading it. The token stays inside the caller. */
+function copyCropPlanAuthoredData(value: unknown, parents = new Set<object>(), allowUndefined = false): unknown {
+  if (value === undefined && allowUndefined) return undefined;
+  if (value === null || typeof value === 'string' || typeof value === 'boolean'
+    || typeof value === 'number' && Number.isFinite(value)) return value;
+  if (!value || typeof value !== 'object' || parents.has(value)) throw Error('Unreadable book');
+  if (!Array.isArray(value) && Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null) throw Error('Unreadable book');
+  parents.add(value);
+  try {
+    const descriptors = Object.getOwnPropertyDescriptors(value);
+    if (Array.isArray(value)) {
+      if (Reflect.ownKeys(descriptors).some(key => key !== 'length' && (typeof key !== 'string' || !/^(0|[1-9]\d*)$/.test(key)))
+        || Object.keys(descriptors).filter(key => key !== 'length').length !== value.length) throw Error('Unreadable book');
+      return Array.from({ length: value.length }, (_, index) => {
+        const property = descriptors[index]; if (!property || !('value' in property)) throw Error('Unreadable book');
+        if (property.value === undefined) throw Error('Unreadable array entry');
+        return copyCropPlanAuthoredData(property.value, parents, allowUndefined);
+      });
+    }
+    const result: Record<string, unknown> = {};
+    for (const key of Reflect.ownKeys(descriptors)) {
+      const property = typeof key === 'string' ? descriptors[key] : null;
+      if (typeof key !== 'string' || !property || !('value' in property)) throw Error('Unreadable book');
+      if (allowUndefined && !property.enumerable) throw Error('Non-JSON candidate property');
+      Object.defineProperty(result, key, { value: copyCropPlanAuthoredData(property.value, parents, allowUndefined), enumerable: true, configurable: true, writable: true });
+    }
+    return result;
+  } finally { parents.delete(value); }
+}
+// Every sample token reads the same descriptor-safe snapshot. A safe initial
+// load cannot authorize a later getter whose JSON result merely looks unchanged.
+function sampleCropPlanSnapshot(value: unknown = getSandboxCropPlan()): { raw: unknown; token: string } {
+  const raw: unknown = JSON.parse(JSON.stringify(copyCropPlanAuthoredData(value, new Set(), true)));
+  return { raw, token: JSON.stringify(['sample', raw]) };
+}
+export function readRawCropPlanReceipt(): RawCropPlanReceipt {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) return { status: 'held', reasons: ['book-unavailable'] };
+    const owner = activeAccountUid(), sample = isSampleMode(), key = activeAccountLocalStorageKey(STORAGE_KEY);
+
+    let raw: unknown, token: string;
+    if (sample) {
+      // Optional undefined object fields follow the actual sample token's JSON
+      // semantics; malformed/duplicate entries remain intact and unsafe data holds.
+      ({ raw, token } = sampleCropPlanSnapshot());
+    } else {
+      const bytes = window.localStorage.getItem(key);
+      if (bytes === null) {
+        const absent = activeAccountUid() === owner && isSampleMode() === sample && activeAccountLocalStorageKey(STORAGE_KEY) === key
+          && cropPlanWriteToken() === JSON.stringify([key, null]);
+        return { status: 'held', reasons: [absent ? 'missing-book' : 'book-changed'] };
+      }
+      raw = copyCropPlanAuthoredData(JSON.parse(bytes)); token = JSON.stringify([key, bytes]);
+    }
+    if (activeAccountUid() !== owner || isSampleMode() !== sample || activeAccountLocalStorageKey(STORAGE_KEY) !== key
+      || cropPlanWriteToken() !== token) return { status: 'held', reasons: ['book-changed'] };
+    return { status: 'ready', raw, token };
+  } catch { return { status: 'held', reasons: ['book-unreadable'] }; }
+}
+
+export type CropPlanWriteAdmission =
+  | { readonly status: 'ready'; readonly source: 'present' | 'absent' }
+  | { readonly status: 'held'; readonly reasons: readonly string[] };
+export interface CropPlanWriteLoad {
+  readonly book: CropPlanState;
+  readonly token: string | null;
+  readonly admission: CropPlanWriteAdmission;
+}
+const cropPlanAdmissions = new WeakMap<object, { owner: string | null; sample: boolean; token: string; loadedKey: string }>();
+function cropPlanDataKey(value: unknown): string {
+  const detached = copyCropPlanAuthoredData(value, new Set(), true);
+  const ordered = (_key: string, node: unknown) => node && typeof node === 'object' && !Array.isArray(node)
+    ? Object.fromEntries(Object.keys(node).sort().map(key => [key, (node as Record<string, unknown>)[key]])) : node;
+  return JSON.stringify(detached, ordered);
+}
+
+/** The raw receipt and the displayed book come from one captured load. A fresh
+ * token cannot retrospectively grant a lossy or dirty display write authority. */
+export function loadCropPlanWithWriteAdmission(): CropPlanWriteLoad {
+  const held = (book: CropPlanState, token: string | null, reason: string): CropPlanWriteLoad => ({ book, token,
+    admission: Object.freeze({ status: 'held', reasons: Object.freeze([reason]) }) });
+  let book = emptyPlan(), token: string | null = null;
+  try {
+    const owner = activeAccountUid(), sample = isSampleMode(), now = new Date();
+    // A sample is an in-memory object, so only its descriptor-safe raw reader
+    // may establish the first token; JSON must never invoke a sample getter.
+    if (!sample) token = cropPlanWriteToken();
+    const receipt = readRawCropPlanReceipt();
+    if (sample && receipt.status === 'ready') token = receipt.token;
+    const unchanged = () => activeAccountUid() === owner && isSampleMode() === sample && cropPlanWriteToken() === token;
+    let source: 'present' | 'absent';
+    if (receipt.status === 'ready') {
+      if (receipt.token !== token || !unchanged()) return held(book, token, 'book-changed');
+      const raw = receipt.raw as Partial<CropPlanState> | null;
+      try { book = projectLoadedCropPlan(raw, now, sample); } catch { book = emptyPlan(); }
+      if (!raw || raw.version !== 1 || !Array.isArray(raw.plantings)) return held(book, token, 'book-envelope-unreviewed');
+      let expected: unknown;
+      try { expected = { ...raw, plantings: settleOnceRows(raw.plantings.map(preservePlantingMarker), now.getFullYear(), now.getMonth() + 1) }; }
+      catch { return held(book, token, 'raw-book-lossy-display'); }
+      if (cropPlanDataKey(expected) !== cropPlanDataKey(book)) return held(book, token, 'raw-book-lossy-display');
+      source = 'present';
+    } else {
+      if (sample || receipt.reasons.length !== 1 || receipt.reasons[0] !== 'missing-book' || token === null || !unchanged()) {
+        return held(book, token, 'book-unreadable');
+      }
+      source = 'absent';
+    }
+    if (token === null || !unchanged()) return held(book, token, 'book-changed');
+    const admission = Object.freeze({ status: 'ready' as const, source });
+    cropPlanAdmissions.set(admission, { owner, sample, token, loadedKey: cropPlanDataKey(book) });
+    return { book, token, admission };
+  } catch { return held(book, token, 'book-unreadable'); }
+}
+
+/** Private load provenance only; the caller must also check its actual actor,
+ * sample context, live raw token and loaded-base identity before the writer. */
+export function cropPlanWriteAdmissionMatches(admission: CropPlanWriteAdmission | undefined, loadedBaseKey: string, token: string | null): boolean {
+  try {
+    const proof = admission && cropPlanAdmissions.get(admission);
+    return !!proof && token === proof.token && activeAccountUid() === proof.owner && isSampleMode() === proof.sample
+      && cropPlanDataKey(JSON.parse(loadedBaseKey)) === proof.loadedKey;
+  } catch { return false; }
+}
+
+/** Compare the candidate with both any caller preparation and the actual global
+ * writer projection. Standard optional undefined JSON fields and the existing
+ * durable invalid-marker representation keep their established meaning. */
+export function cropPlanWriteCandidateIsLossless(candidate: CropPlanState, prepared: CropPlanState = candidate): boolean {
+  try {
+    copyCropPlanAuthoredData(candidate, new Set(), true); copyCropPlanAuthoredData(prepared, new Set(), true);
+    const meaningful = { ...candidate, plantings: candidate.plantings.map(preservePlantingMarker) };
+    return cropPlanDataKey(meaningful) === cropPlanDataKey(cropPlanStorageValue(prepared));
+  } catch { return false; }
+}
+
 export function cropPlanWriteToken(): string | null {
   try {
-    if (isSampleMode()) return JSON.stringify(['sample', getSandboxCropPlan()]);
+    if (isSampleMode()) return sampleCropPlanSnapshot().token;
     if (typeof window === 'undefined' || !window.localStorage) return null;
     const key = activeAccountLocalStorageKey(STORAGE_KEY);
     const raw = window.localStorage.getItem(key);
@@ -541,17 +681,22 @@ export function cropPlanWriteToken(): string | null {
 
 export type CropPlanWriteReceipt = { saved: true; token: string } | { saved: false; token: null };
 
+function cropPlanStorageValue(s: CropPlanState): CropPlanState {
+  let saved = { ...s, plantings: s.plantings.map(preservePlantingMarker) };
+  if (s.workspaceReferences !== undefined) saved = { ...saved, workspaceReferences: sanitiseWorkspacePlanningReferences(s.workspaceReferences) };
+  if (s.growerPlanningProfiles !== undefined) {
+    saved = { ...saved, growerPlanningProfiles: normaliseGrowerPlanningProfiles(s.growerPlanningProfiles) };
+  }
+  return saved;
+}
 /** Return the exact bytes this writer stored, rather than blessing whatever
  * another tab may have written before a later read. Tokens stay device-private. */
+
 export function saveCropPlanWithReceipt(s: CropPlanState): CropPlanWriteReceipt {
   try {
-    let saved = { ...s, plantings: s.plantings.map(preservePlantingMarker) };
-    if (s.workspaceReferences !== undefined) saved = { ...saved, workspaceReferences: sanitiseWorkspacePlanningReferences(s.workspaceReferences) };
-    if (s.growerPlanningProfiles !== undefined) {
-      saved = { ...saved, growerPlanningProfiles: normaliseGrowerPlanningProfiles(s.growerPlanningProfiles) };
-    }
+    const saved = cropPlanStorageValue(s);
     if (isSampleMode()) {
-      const token = JSON.stringify(['sample', saved]);
+      const { token } = sampleCropPlanSnapshot(saved);
       setSandboxCropPlan(saved);
       if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
       return { saved: true, token };

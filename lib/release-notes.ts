@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'b3bf0f48f', changes: [
+    'Follow saved grower cycles on their exact planned dates.',
+    'Check current designs before ticking work or exporting dates.',
+    'Keep own crop estimates separate from catalogue print advice.',
+  ], tour: [{ title: 'Review your dated work', where: 'Task Planner → Dated work from your estimates', href: '/cropplan',
+    detail: 'Open Task Planner to check work dates from your saved growing estimates.' }] },
   { when: '3 November 2026', sha: '34d527564', changes: [
     'Review automatic crop plans from your own growing estimates and saved buyer targets.',
     'Check dated nursery tray and surface needs before downloading your review.',

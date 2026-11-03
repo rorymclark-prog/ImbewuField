@@ -1,6 +1,13 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/st.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Latela medikoloho ya temo e bolokilweng ka matsatsi a yona a tobileng a rerilweng.",
+  "Check current designs before ticking work or exporting dates.": "Hlahloba meralo ya hajwale pele o tshwaya mosebetsi kapa o ntsha matsatsi.",
+  "Keep own crop estimates separate from catalogue print advice.": "Boloka dikgakanyo tsa hao tsa dijalo di arohane le keletso ya khathaloko e hatiswang.",
+  "Review your dated work": "Hlahloba mosebetsi wa hao o nang le matsatsi",
+  "Task Planner → Dated work from your estimates": "Moralo wa Mesebetsi → Mosebetsi o nang le matsatsi ho tswa dikgakanyong tsa hao",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Bula Moralo wa Mesebetsi ho hlahloba matsatsi a mosebetsi ho tswa dikgakanyong tsa hao tsa temo tse bolokilweng.",
   // Grower review: docs/international/agy-grower-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Hlahloba meralo e iketsang ea lijalo ho tsoa likhakanyong tsa hao tsa temo le lipheo tse bolokiloeng tsa bareki.",
   "Check dated nursery tray and surface needs before downloading your review.": "Hlahloba litlhoko tse nang le matsatsi tsa diterei le tsa bokaholimo tsa setsidifatso sa limela pele u jarolla tlhahlobo ea hao.",

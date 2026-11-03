@@ -133,7 +133,8 @@ function parent() {
   const source = ts.transpileModule([...functions.values(), `const runAutosaveEffect = ${autosave};`].join('\n'),
     { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None } }).outputText;
   const initial = book(); assert.equal(cropBook.saveCropPlan(initial), true);
-  const current = cropBook.loadCropPlan();
+  const initialAdmission = cropBook.loadCropPlanWithWriteAdmission();
+  const current = initialAdmission.book;
   const queued: Array<() => void> = [];
   const state = {
     plan: current, productionSiteId: siteId, growerOwner: 'owner-a' as string | null, growerSample: false,
@@ -141,13 +142,18 @@ function parent() {
     growerScopeKey: growerPlanningScopeKey(scope),
     growerWriteScope: { current: { key: growerPlanningScopeKey(scope), owner: 'owner-a' as string | null, sample: false } },
     growerBookContext: { current: { siteId, owner: 'owner-a' as string | null, sample: false, scopeKey: growerPlanningScopeKey(scope) } },
-    planWriteBase: { current: { owner: 'owner-a' as string | null, sample: false, token: cropBook.cropPlanWriteToken(), planKey: JSON.stringify(current) } },
+    planWriteBase: { current: { owner: 'owner-a' as string | null, sample: false, token: initialAdmission.token, planKey: JSON.stringify(current), admission: initialAdmission.admission } },
     planSaveConflict: false, planSaveFailed: false, saveTimer: { current: null as ReturnType<typeof setTimeout> | null },
     setTimeout(callback: () => void) { queued.push(callback); return 1; },
     clearTimeout() {},
     activeAccountUid, isSampleMode, isBackendConfigured: () => true,
     getFirebase: () => ({ auth: { currentUser: boundary.actorUid ? { uid: boundary.actorUid } : null } }),
     cropPlanWriteToken: cropBook.cropPlanWriteToken, loadCropPlan: cropBook.loadCropPlan,
+    // The actual parent now admits authored rows through the raw receipt authority.
+    readRawCropPlanReceipt: cropBook.readRawCropPlanReceipt,
+    loadCropPlanWithWriteAdmission: cropBook.loadCropPlanWithWriteAdmission,
+    cropPlanWriteAdmissionMatches: cropBook.cropPlanWriteAdmissionMatches,
+    cropPlanWriteCandidateIsLossless: cropBook.cropPlanWriteCandidateIsLossless,
     sanitiseHarvestTargets: cropBook.sanitiseHarvestTargets, sanitiseNurserySettings,
     normaliseGrowerPlanningProfiles, growerPlanningScopeKey, replaceWorkspacePlanningReference, sanitiseWorkspacePlanningReferences,
     saveCropPlanWithReceipt: cropBook.saveCropPlanWithReceipt,
@@ -251,7 +257,7 @@ test('growing estimates and workspace choices reject a changed raw account befor
     boundary.actorUid = 'owner-a';
     const c = parent(), before = JSON.stringify([...local.rows]), writes = local.writes;
     let reads = 0;
-    c.state.loadCropPlan = () => { reads++; throw Error('a changed actor must be rejected before reading the old book'); };
+    c.state.loadCropPlanWithWriteAdmission = () => { reads++; throw Error('a changed actor must be rejected before reading the old book'); };
     c.state.cropPlanWriteToken = () => { reads++; throw Error('a changed actor must be rejected before reading the old revision'); };
     boundary.actorUid = 'owner-b';
     assert.equal(activeAccountUid(), 'owner-a', 'reproduce the observer gap, not a completed remount');
@@ -266,8 +272,9 @@ test('an actor transition or replaced loaded base during a fresh read cannot aut
   for (const writer of ['profiles', 'workspace'] as const) for (const change of ['actor', 'base'] as const) {
     boundary.actorUid = 'owner-a';
     const c = parent(), before = JSON.stringify([...local.rows]), writes = local.writes;
-    c.state.loadCropPlan = () => {
-      const book = cropBook.loadCropPlan();
+    // The fresh read now includes actual raw/display admission, not display-only load.
+    c.state.loadCropPlanWithWriteAdmission = () => {
+      const book = cropBook.loadCropPlanWithWriteAdmission();
       if (change === 'actor') boundary.actorUid = 'owner-b';
       else c.state.planWriteBase.current = { ...c.state.planWriteBase.current };
       return book;
@@ -308,9 +315,10 @@ test('the unchanged account can save profiles, workspace choices and queued ordi
   ] });
   assert.ok(nursery.heldInputs?.length);
   assert.equal(cropBook.saveCropPlan({ ...c.state.plan, nursery }), true);
-  c.state.plan = cropBook.loadCropPlan();
+  const reloadedAdmission = cropBook.loadCropPlanWithWriteAdmission();
+  c.state.plan = reloadedAdmission.book;
   c.state.planWriteBase.current = { ...c.state.planWriteBase.current,
-    token: cropBook.cropPlanWriteToken(), planKey: JSON.stringify(c.state.plan) };
+    token: reloadedAdmission.token, planKey: JSON.stringify(c.state.plan), admission: reloadedAdmission.admission };
   const held = structuredClone(c.state.plan.nursery!.heldInputs);
   const updatedProfiles = c.state.plan.growerPlanningProfiles!.map(row => ({ ...row,
     inputs: { ...row.inputs, yieldKgPerM2: own(3, 'kg/m2/cycle') } }));
@@ -430,9 +438,10 @@ test('equipment-only own saves retain a current crop proposal, while changed pro
     updatedProfile.growerPlanningProfiles = updatedProfile.growerPlanningProfiles!.map(row => ({ ...row,
       inputs: { ...row.inputs, yieldKgPerM2: own(3, 'kg/m2/cycle') } }));
     updatedProfile.updatedAt = Date.now(); assert.equal(cropBook.saveCropPlan(updatedProfile), true);
-    ui.controller.state.plan = cropBook.loadCropPlan();
+    const reloadedAdmission = cropBook.loadCropPlanWithWriteAdmission();
+    ui.controller.state.plan = reloadedAdmission.book;
     ui.controller.state.planWriteBase.current = { ...ui.controller.state.planWriteBase.current,
-      token: cropBook.cropPlanWriteToken(), planKey: JSON.stringify(ui.controller.state.plan) };
+      token: reloadedAdmission.token, planKey: JSON.stringify(ui.controller.state.plan), admission: reloadedAdmission.admission };
     ui.update({ book: ui.controller.state.plan });
     assert.equal(await ui.current(reviewed), false);
     const next = await ui.review(); assert.equal(next.status, 'review');
@@ -449,9 +458,10 @@ test('a genuinely reloaded saved crop occupation invalidates the old automatic p
     const changed: CropPlanState = { ...ui.controller.state.plan,
       plantings: [{ id: 'newly-saved-occupation', bedId: 'bed-a', cropKey: CROPS[0].key, sowMonth: 12 }], updatedAt: Date.now() };
     await act(async () => { assert.equal(cropBook.saveCropPlan(changed), true); });
-    ui.controller.state.plan = cropBook.loadCropPlan();
+    const reloadedAdmission = cropBook.loadCropPlanWithWriteAdmission();
+    ui.controller.state.plan = reloadedAdmission.book;
     ui.controller.state.planWriteBase.current = { ...ui.controller.state.planWriteBase.current,
-      token: cropBook.cropPlanWriteToken(), planKey: JSON.stringify(ui.controller.state.plan) };
+      token: reloadedAdmission.token, planKey: JSON.stringify(ui.controller.state.plan), admission: reloadedAdmission.admission };
     ui.update({ book: ui.controller.state.plan });
     assert.equal(await ui.current(reviewed), false);
     const held = await ui.review(); assert.equal(held.status, 'held');

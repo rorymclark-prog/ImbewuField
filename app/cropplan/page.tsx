@@ -27,6 +27,9 @@ import {
 } from '@/lib/task-board';
 import { taskJournalHref, taskHarvestHref } from '@/lib/task-record-link';
 import { farmMemoryText } from '@/lib/farm-memory-copy';
+import GrowerOperationsPanel from '@/components/crops/GrowerOperationsPanel';
+import { useGrowerOperations } from '@/components/crops/useGrowerOperations';
+import { hasGrowerCycleMarker } from '@/lib/international/grower-cycle';
 
 // ─── Types & data ────────────────────────────────────────────────────────────
 //
@@ -240,6 +243,7 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
 
 export default function CropPlanPage() {
   const { lang, t } = useLanguage();
+  const operations = useGrowerOperations();
   // Simple / All tools (lib/app-level.ts): Simple leads with the current month's jobs — the
   // farmer's own "what to plant/do now or next" — and drops the Season tab, the month-count grid
   // and the map-planner promo. The task list itself (what actually needs doing) is never gated,
@@ -299,7 +303,11 @@ export default function CropPlanPage() {
   // A saved plan that produces no job in any of the twelve months. Kept
   // distinct from "no plan yet" so neither notice can claim the wrong thing.
   const withheldPlantings = year?.withheldPlantings ?? 0;
-  const planYieldsNothing = mounted && savedPlantings > 0 && totalTasks === 0 && withheldPlantings === 0;
+  const hasOwnCycles = operations.book?.plantings.some(hasGrowerCycleMarker) ?? false;
+  // A dated own cycle cannot be diagnosed by the catalogue's month-only job
+  // count. Its checked dates and unresolved sources have their own explanation.
+  const planYieldsNothing = mounted && operations.status === 'ready' && !hasOwnCycles
+    && savedPlantings > 0 && totalTasks === 0 && withheldPlantings === 0;
   const season = saSeason(cursorMonth);
   const seasonLabel = ui(season.name, ({ Spring: 'Intwasahlobo', Summer: 'Ihlobo', Autumn: 'Ikwindla', Winter: 'Ubusika' } as Record<string, string>)[season.name]);
   const monthName = monthNames[cursorMonth - 1];
@@ -359,6 +367,8 @@ export default function CropPlanPage() {
 
       <div className="flex-1 overflow-y-auto">
         <div className={`${workspace.workspace} px-4 py-5 sm:px-6 sm:py-6`}>
+          <GrowerOperationsPanel state={operations} refresh={operations.refresh}
+            checkCurrent={operations.checkCurrent} isCurrent={operations.isCurrent} />
           {withheldPlantings > 0 && <section aria-label="Planning support" className="mb-4 rounded-2xl p-4 font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <p>Catalogue-derived jobs are unavailable for {withheldPlantings} saved sowing {withheldPlantings === 1 ? 'entry' : 'entries'} without a supported country or workspace basis. The saved entries remain in your plan.</p>
             <Link href="/facilitator/crops" className="mt-2 inline-block underline">Review country and planning references</Link>

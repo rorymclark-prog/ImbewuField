@@ -97,7 +97,9 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest: [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
+Latest grower continuation: [Dated work and canonical save admission — 3 November 2026](2026-11-03/grower-operations-codex.md). Full CI, populated-cycle and account browser gates remain open.
+
+Previous: [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
 
 Previous: [Production by plant age and clearer graphics — 4 October 2026](2026-10-04/production-age-visuals-codex.md).
 
@@ -140,6 +142,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- **2026-11-03:** [Dated grower work and canonical save admission](2026-11-03/grower-operations-codex.md).
 
 - [Nursery forecast source and verification — 1 November 2026](2026-11-01/nursery-source-and-verification.md).
 

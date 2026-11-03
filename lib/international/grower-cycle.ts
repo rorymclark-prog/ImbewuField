@@ -1,7 +1,7 @@
 import type { PlanBed, Planting } from '../crop-plan';
 import type { GrowerAutoPlanCycle, GrowerReadyAssessment } from './grower-autoplan';
 import {
-  assessGrowerPlanning, growerPlanningScopeKey, isGrowerRecordedAt,
+  assessGrowerPlanning, growerPlanningScopeKey, isGrowerRecordedAt, normaliseGrowerPlanningScope,
   type GrowerPlanningScope, type GrowerPlanningSnapshot,
 } from './grower-planning';
 
@@ -80,7 +80,8 @@ export function hasGrowerCycleMarker(value: unknown): boolean {
   try { return !!value && typeof value === 'object' && 'growerCycle' in value; }
   catch { return true; }
 }
-function jsonSafe(value: unknown, parents = new Set<object>()): boolean {
+function jsonSafe(value: unknown, parents = new Set<object>(), allowUndefined = false): boolean {
+  if (value === undefined) return allowUndefined;
   if (value === null || typeof value === 'string' || typeof value === 'boolean') return true;
   if (typeof value === 'number') return Number.isFinite(value);
   if (!value || typeof value !== 'object' || parents.has(value)) return false;
@@ -90,7 +91,7 @@ function jsonSafe(value: unknown, parents = new Set<object>()): boolean {
   const safe = Reflect.ownKeys(value).every(key => {
     if (Array.isArray(value) && key === 'length') return true;
     const property = Object.getOwnPropertyDescriptor(value, key);
-    return typeof key === 'string' && !!property && 'value' in property && jsonSafe(property.value, parents);
+    return typeof key === 'string' && !!property && 'value' in property && jsonSafe(property.value, parents, allowUndefined);
   });
   parents.delete(value);
   return safe;
@@ -165,4 +166,21 @@ export function resolvePlantingBasis(value: unknown, context?: GrowerCycleContex
     return freeze({ kind: 'grower-dated-cycle', attachment, assessment,
       reservation: { start: assessment.schedule.fieldEntryDate, endExclusive: assessment.schedule.nextFieldEntryDate } });
   } catch { return held('invalid-grower-cycle'); }
+}
+
+
+/** A foreign claim is not an exemption. Only intact detached row identity and
+ * explicit other scope, disjoint from every eligible/held current bed, prove it.
+ * Optional in-memory row fields may be undefined; getters are never evaluated. */
+export function isProvenForeignGrowerCycle(row: unknown, currentScope: GrowerPlanningScope | null, currentBedIds: ReadonlySet<string>): boolean {
+  try {
+    if (!jsonSafe(currentScope, new Set(), true)) return false;
+    const scope = normaliseGrowerPlanningScope(currentScope);
+    if (!scope || !record(row) || !jsonSafe(row, new Set(), true) || !hasGrowerCycleMarker(row)) return false;
+    const structural = resolvePlantingBasis(row);
+    if (structural.kind !== 'held' || structural.reasons.length !== 1 || structural.reasons[0] !== 'current-geometry-context-required') return false;
+    const attachment = normaliseGrowerCycleAttachment(preserveGrowerCycleMarker(row).growerCycle);
+    return !!attachment && growerPlanningScopeKey(attachment.assessmentSnapshot.scope) !== growerPlanningScopeKey(scope)
+      && !currentBedIds.has(attachment.bedId);
+  } catch { return false; }
 }
