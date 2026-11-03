@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { act } from 'react-test-renderer';
+import React from 'react';
+import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import * as journal from '../lib/field-journal.ts';
 import { mountJournal as mount, renderedText as text, renderedButton as button, journalFixture as entry } from './journal-workflow-renderer.ts';
 
@@ -102,7 +103,7 @@ test('a device-only draft stays bound to the copy that opened it, even after a j
   const offered: journal.CanonicalJournalView[] = [];
   const app = await mount({ simple: true, canonical: {
     readCanonicalJournal: async () => current,
-    initialiseJournalCutover: async () => { copies++; current = original; return { status: 'ready' }; },
+    openCanonicalJournal: async () => { copies++; current = original; return original; },
     writeCanonicalJournal: async view => {
       offered.push(view);
       return view === current ? { status: 'saved', noteId: 'synthetic' } : { status: 'held', reason: 'context-changed' };
@@ -121,4 +122,31 @@ test('a device-only draft stays bound to the copy that opened it, even after a j
     assert.equal(app.renderer.root.findByType('textarea').props.value, 'Keep this draft.');
     assert.match(text(app.renderer.root.findByType(app.Sheet)), /draft is still here/);
   } finally { await app.close(); }
+});
+
+test('the linked note sheet starts with no date and shows a checked bed without a selector', async () => {
+  const app = await mount({ simple: true });
+  const observations: journal.JournalEntryInput[] = [];
+  let sheet!: ReactTestRenderer;
+  try {
+    await act(async () => { sheet = create(React.createElement(app.Sheet, {
+      entry: null, beds: [], crops: [], requireObservationDate: true, linkedBedLabel: 'Checked test bed',
+      onClose() {}, onSave(input: journal.JournalEntryInput) { observations.push(input); },
+    })); });
+    assert.equal(sheet.root.findByProps({ type: 'date' }).props.value, '');
+    assert.equal(sheet.root.findByProps({ type: 'date' }).props.required, true);
+    assert.match(text(sheet.root), /Checked test bed/);
+    assert.equal(sheet.root.findAllByProps({ 'aria-label': 'Bed / plot' }).length, 0);
+    await act(async () => sheet.root.findByType('textarea').props.onChange({ target: { value: 'A real note in this fixture.' } }));
+    await act(async () => sheet.root.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.equal(observations.length, 0);
+    await act(async () => sheet.root.findByProps({ type: 'date' }).props.onChange({ target: { value: '2028-11-22' } }));
+    await act(async () => sheet.root.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.equal(observations.length, 1);
+    assert.equal(observations[0].date, '2028-11-22');
+    assert.equal(observations[0].bedId, null);
+  } finally {
+    if (sheet) await act(async () => sheet.unmount());
+    await app.close();
+  }
 });

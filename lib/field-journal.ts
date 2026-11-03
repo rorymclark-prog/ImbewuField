@@ -798,6 +798,14 @@ export async function readCanonicalJournal(): Promise<CanonicalJournalView> {
   }
 }
 
+/** Open the checked journal, upgrading a valid older copy on first use. */
+export async function openCanonicalJournal(): Promise<CanonicalJournalView> {
+  const view = await readCanonicalJournal();
+  if (view.status !== 'held' || view.reason !== 'upgrade-required') return view;
+  const cutover = await initialiseJournalCutover();
+  return cutover.status === 'ready' ? readCanonicalJournal() : cutover;
+}
+
 export type CanonicalJournalChange =
   | { readonly kind: 'add'; readonly input: JournalEntryInput }
   | { readonly kind: 'edit'; readonly id: string; readonly input: JournalEntryInput }

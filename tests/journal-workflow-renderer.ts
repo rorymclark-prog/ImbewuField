@@ -28,7 +28,7 @@ function component(path: string, dependencies: Record<string, unknown>, exportNa
   return module.exports[exportName];
 }
 
-type CanonicalJournalBoundary = Pick<typeof journal, 'readCanonicalJournal' | 'initialiseJournalCutover' | 'writeCanonicalJournal'>;
+type CanonicalJournalBoundary = Pick<typeof journal, 'readCanonicalJournal' | 'openCanonicalJournal' | 'writeCanonicalJournal'>;
 
 export async function mountJournal(options: { url?: string; entries?: journal.JournalEntry[]; simple?: boolean; failSave?: boolean; beds?: Array<{ id: string; label: string }>; lang?: string; delivery?: 'downloaded' | 'shared' | 'cancelled'; exportError?: boolean; canonical?: CanonicalJournalBoundary } = {}) {
   let stored = options.entries ?? [];

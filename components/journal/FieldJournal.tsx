@@ -22,11 +22,11 @@ import {
   formatJournalDate,
   exportJournalLegacyReview,
   groupJournalByMonth,
-  initialiseJournalCutover,
   journalCategory,
   journalSummary,
   loadJournal,
   keepCurrentJournalAfterLegacyReview,
+  openCanonicalJournal,
   readCanonicalJournal,
   readJournalLegacyCandidates,
   readJournalLegacyReview,
@@ -168,11 +168,7 @@ export default function FieldJournal() {
       setReady(true);
       return;
     }
-    let view = await readCanonicalJournal();
-    if (initialise && view.status === 'held' && view.reason === 'upgrade-required') {
-      const cutover = await initialiseJournalCutover();
-      view = cutover.status === 'ready' ? await readCanonicalJournal() : cutover;
-    }
+    const view = await (initialise ? openCanonicalJournal() : readCanonicalJournal());
     const review = view.status === 'held' && view.reason === 'legacy-diverged' ? await readJournalLegacyReview() : null;
     const candidates = review && readJournalLegacyCandidates(review);
     if (generation !== loadGeneration.current) return;

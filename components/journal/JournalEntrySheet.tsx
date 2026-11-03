@@ -10,6 +10,7 @@ import {
   MAX_NOTES_LEN,
   MAX_PHOTOS_PER_ENTRY,
   MAX_TITLE_LEN,
+  isJournalDate,
   todayISODate,
   type JournalCategory,
   type JournalEntry,
@@ -39,17 +40,21 @@ interface Props {
   onClose: () => void;
   /** A save that failed to persist (e.g. storage full) — shown without closing the sheet. */
   error?: string | null;
+  requireObservationDate?: boolean;
+  linkedBedLabel?: string;
+  saving?: boolean;
 }
 
 /* Bottom sheet, phone-first: 92dvh cap, 22px top radius, safe-area padding —
    the same chrome components/EvidenceSheet.tsx uses, so the journal does not
    introduce a second modal idiom. */
-export default function JournalEntrySheet({ entry, initialDraft, beds, crops, onSave, onDelete, onClose, error }: Props) {
+export default function JournalEntrySheet({ entry, initialDraft, beds, crops, onSave, onDelete, onClose, error,
+  requireObservationDate = false, linkedBedLabel, saving = false }: Props) {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
   const simple = useAppLevel() === 'simple';
-  const [date, setDate] = useState(entry?.date ?? initialDraft?.date ?? todayISODate());
+  const [date, setDate] = useState(entry?.date ?? initialDraft?.date ?? (requireObservationDate ? '' : todayISODate()));
   const [title, setTitle] = useState(entry?.title ?? initialDraft?.title ?? '');
   const [notes, setNotes] = useState(entry?.notes ?? initialDraft?.notes ?? '');
   const [category, setCategory] = useState<JournalCategory>(entry?.category ?? initialDraft?.category ?? 'planting');
@@ -104,25 +109,25 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
     if (fileRef.current) fileRef.current.value = '';
   }
 
+  const canSave = !busy && !saving && Boolean(title.trim() || notes.trim()) && (!requireObservationDate || isJournalDate(date));
+
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title.trim() && !notes.trim()) return;
+    if (!canSave) return;
     const bed = beds.find((b) => b.id === bedId);
     onSave({
       date,
       title: title.trim(),
       notes: notes.trim(),
       category,
-      bedId: bedId || null,
+      bedId: linkedBedLabel === undefined ? bedId || null : null,
       // An old observation keeps the name it had then; the picker changes both
       // fields explicitly when the farmer chooses a different bed.
-      bedLabel: bedLabel.trim() || bed?.label || null,
+      bedLabel: linkedBedLabel === undefined ? bedLabel.trim() || bed?.label || null : null,
       cropName: cropName.trim() || null,
       photos,
     });
   }
-
-  const canSave = Boolean(title.trim() || notes.trim());
 
   return (
     <div
@@ -218,11 +223,12 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
           {/* Date defaults to today (or the entry's own date on edit) whether or not this
               field is shown — Simple keeps that default instead of asking for it. */}
-          {(!simple || initialDraft) && (
+          {(!simple || initialDraft || requireObservationDate) && (
             <div>
               <Label>{ui('Date', 'Usuku')}</Label>
               <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 type="date"
+                required={requireObservationDate}
                 aria-label={ui('Date', 'Usuku')}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
@@ -259,11 +265,13 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
           {/* Bed/plot and crop — extra fields, left unlinked/blank by default in both modes,
               so collapsing them in Simple never changes what gets saved. */}
-          {(!simple || initialDraft) && (
+          {(!simple || initialDraft || linkedBedLabel !== undefined) && (
             <div style={{ display: 'flex', gap: 10 }}>
               <div style={{ flex: 1 }}>
                 <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
-                {beds.length > 0 ? (
+                {linkedBedLabel !== undefined ? (
+                  <p style={{ ...inputStyle, margin: 0 }}>{linkedBedLabel}</p>
+                ) : beds.length > 0 ? (
                   <select className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1" aria-label={ui('Bed / plot', 'Umbhede / isiqephu')} value={bedId} onChange={(e) => {
                     setBedId(e.target.value);
                     setBedLabel(beds.find((bed) => bed.id === e.target.value)?.label ?? '');
@@ -388,11 +396,11 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
           )}
           <button
             type="submit"
-            disabled={!canSave || busy}
+            disabled={!canSave}
             style={{
               flex: 1, minHeight: 48, borderRadius: 12, border: 'none',
-              cursor: canSave && !busy ? 'pointer' : 'not-allowed',
-              background: canSave && !busy ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--color-forest-800) 25%, transparent)',
+              cursor: canSave ? 'pointer' : 'not-allowed',
+              background: canSave ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--color-forest-800) 25%, transparent)',
               color: 'var(--on-forest-800)', font: '700 15px/1 var(--font-sans), sans-serif',
             }}
           >

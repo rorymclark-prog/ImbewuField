@@ -14,6 +14,9 @@ import type { GrowerOperationsPanelProps } from '../components/crops/GrowerOpera
 
 const hooks = registerHooks({
   resolve(specifier, context, next) {
+    if (context.parentURL?.endsWith('/components/crops/GrowerOperationsPanel.tsx') && specifier === '@/components/journal/JournalEntrySheet') return {
+      shortCircuit: true, url: 'data:text/javascript,export default function JournalEntrySheet(){return null}',
+    };
     if (context.parentURL?.endsWith('/lib/account-local-storage.ts') && specifier === './firebase/init') return {
       shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent('export const isBackendConfigured=()=>false; export const getFirebase=()=>null;'),
     };

@@ -105,3 +105,83 @@ test('sample raw book accessors are held without executing them or borrowing rea
   assert.equal((await core.loadGrowerOperationsSources()).status, 'held'); assert.equal(reads, 0); assert.equal(probe.queries, 0);
   samples.exitSampleMode(); assert.equal(JSON.stringify([...local.rows]), original);
 });
+
+const { buildGrowerBoardTasks, loadCompletedTaskIds } = await import('../lib/task-board.ts');
+const { openGrowerFieldNote, saveGrowerFieldNote, closeGrowerFieldNote } = await import('../lib/international/grower-field-note-action.ts');
+const { readCanonicalJournal } = await import('../lib/field-journal.ts');
+
+async function withDeviceFieldNote(run: (fixture: {
+  task: ReturnType<typeof buildGrowerBoardTasks>['tasks'][number];
+  source: Parameters<typeof openGrowerFieldNote>[1];
+}) => Promise<void>) {
+  const oldNavigator = Object.getOwnPropertyDescriptor(globalThis, 'navigator');
+  Object.defineProperty(globalThis, 'navigator', { configurable: true, value: {
+    locks: { async request(_name: string, _options: unknown, action: (lock: object) => unknown) { return await action({}); } },
+  } });
+  try {
+    probe.configured = false;
+    probe.actor = null;
+    account.bindMountedAccountLocalStorageUid(null);
+    await initialiseCropPlanFixture();
+    const { row } = await ownRow();
+    local.setItem(studioKey(), JSON.stringify(studio()));
+    store([row]);
+    const ready = await core.loadGrowerOperationsSources();
+    assert.ok(ready.status === 'ready');
+    const [task] = buildGrowerBoardTasks(ready.book.plantings, ready.contexts, new Date('2028-12-01'), new Set()).tasks;
+    assert.ok(task);
+    await run({ task, source: {
+      book: ready.book,
+      contexts: ready.contexts,
+      checkCurrent: () => core.checkGrowerOperationsCurrent(ready),
+      isCurrent: () => core.isGrowerOperationsCurrent(ready),
+    } });
+  } finally {
+    if (oldNavigator) Object.defineProperty(globalThis, 'navigator', oldNavigator);
+    else Reflect.deleteProperty(globalThis, 'navigator');
+  }
+}
+
+test('a real projected task opens a private draft and only an explicit observation can save a linked note', async () => {
+  await withDeviceFieldNote(async ({ task, source }) => {
+    assert.equal(await openGrowerFieldNote({ ...task }, source), null);
+    assert.equal(await openGrowerFieldNote(task, { ...source, contexts: [...source.contexts, ...source.contexts] }), null);
+    const draft = await openGrowerFieldNote(task, source);
+    assert.ok(draft);
+    assert.deepEqual(Object.keys(draft), ['bedLabel']);
+    const before = await readCanonicalJournal();
+    assert.deepEqual(before, { status: 'ready', entries: [] });
+    const input = { date: '', title: 'Observed note', notes: '', category: 'other' as const, bedId: 'spoof' };
+    assert.deepEqual(await saveGrowerFieldNote(draft, input), { status: 'held', reason: 'invalid-note' });
+    assert.deepEqual(await readCanonicalJournal(), before);
+    const date = '2028-11-22';
+    assert.notEqual(task.dueDate, date);
+    assert.equal((await saveGrowerFieldNote(draft, { ...input, date })).status, 'saved');
+    const saved = await readCanonicalJournal();
+    assert.ok(saved.status === 'ready');
+    assert.equal(saved.entries.length, 1);
+    assert.equal(saved.entries[0].date, date);
+    assert.equal(saved.entries[0].bedId, task.bedId);
+    assert.equal((saved.entries[0].growerCycleLink as { plantingId: string }).plantingId, 'own-row');
+    assert.equal(loadCompletedTaskIds().size, 0);
+    assert.equal((await saveGrowerFieldNote(draft, { ...input, date })).status, 'held');
+  });
+});
+
+test('closing a task draft or changing its design prevents a linked save', async () => {
+  await withDeviceFieldNote(async ({ task, source }) => {
+    const input = { date: '2028-11-22', title: 'Observed note', notes: '', category: 'other' as const };
+    const closed = await openGrowerFieldNote(task, source);
+    assert.ok(closed);
+    closeGrowerFieldNote(closed);
+    assert.equal((await saveGrowerFieldNote(closed, input)).status, 'held');
+    const draft = await openGrowerFieldNote(task, source);
+    assert.ok(draft);
+    const changed = studio();
+    changed.rev++;
+    local.setItem(studioKey(), JSON.stringify(changed));
+    assert.deepEqual(await saveGrowerFieldNote(draft, input), { status: 'held', reason: 'context-changed' });
+    assert.deepEqual(await readCanonicalJournal(), { status: 'ready', entries: [] });
+    assert.equal(loadCompletedTaskIds().size, 0);
+  });
+});
