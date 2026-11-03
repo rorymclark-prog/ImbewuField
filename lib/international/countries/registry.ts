@@ -50,6 +50,9 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
     source('br-embrapa-soils', 'soils', 'Embrapa: Sistema de Informação de Solos Brasileiros', 'https://www.sisolos.cnptia.embrapa.br/', 'Brazil soil-profile data repository link', 'The official page directs morphological and analytical soil-profile data to Redape DOI 10.48432/DDBVFO and states CC BY-NC 4.0; no dataset was copied.', { licence: known('The source page states Embrapa CC BY-NC 4.0 for linked soil-profile data; commercial reuse needs separate review.') }),
     source('br-mapa', 'plant-legality', 'Ministério da Agricultura e Pecuária: Sanidade Vegetal', 'https://www.gov.br/agricultura/pt-br/assuntos/sanidade-animal-e-vegetal/sanidade-vegetal', 'Brazil federal plant-health portal', 'The official page describes plant-health protection and links import/export and risk-analysis functions. This is not a complete state/federal plant-legality register.', { publishedOn: '2016-11-18' }),
   ] },
+  { code: 'GH', name: 'Ghana', stage: 'research-queue', jurisdictionNote: 'National meteorological, agricultural and phytosanitary authorities require separate review; agrometeorological index discovery does not validate regional crop management.', regions: [], agronomyReview: unreviewed(), sources: [
+    source('gh-gmet-agromet', 'weather-frost', 'Ghana Meteorological Agency (GMet)', 'https://www.meteo.gov.gh/product/dekadal-agromet-bulletin/', 'Ghana national agrometeorological bulletin index', 'The official index describes a ten-day bulletin series. Its first entry displays October 1–10, 2026. Publication time, currentness, forecast validity, bulletin contents and machine access remain unverified.', { accessedOn: '2026-11-03' }),
+  ] },
 ];
 
 export function countryProfile(code: string): CountryProfile | undefined {
@@ -57,6 +60,7 @@ export function countryProfile(code: string): CountryProfile | undefined {
 }
 
 export const COUNTRY_RESEARCH_QUEUE = [
+  { group: 'West Africa', countries: ['Ghana'] },
   { group: 'East Africa', countries: ['Kenya', 'Uganda', 'Tanzania', 'Rwanda', 'Ethiopia'] },
   { group: 'South and Southeast Asia', countries: ['India', 'Nepal', 'Bangladesh', 'Indonesia'] },
   { group: 'Latin America', countries: ['Brazil', 'Colombia', 'Peru', 'Mexico'] },

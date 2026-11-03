@@ -45,7 +45,7 @@ export default function CountryReview() {
       <div className="flex flex-wrap items-center gap-3"><MenuButton /><Link href="/home" className={styles.link}>← ImbewuField home</Link></div>
       <p className={styles.eyebrow}>International foundation · English review draft</p>
       <h1>Local evidence comes first.</h1>
-      <p>Explore provisional country dossiers and try a public climate reference. Growers remain the primary users. These pilots do not enable locally reviewed crop recommendations.</p>
+      <p>Explore provisional country dossiers and try a public climate reference. Growers remain the primary users. These references do not enable locally reviewed crop recommendations.</p>
     </header>
     <nav className={styles.card} aria-label="International review workspaces">
       <h2>Review the foundations</h2>
@@ -62,8 +62,8 @@ export default function CountryReview() {
         <option value="OTHER">Other country · no dossier</option>
       </select></label>
       <label>Agricultural region reference<input value={region} onChange={(event) => setRegion(event.target.value)} placeholder="Not yet identified or reviewed" aria-describedby="region-help" /></label></div>
-      <p id="region-help" className={styles.secondary}>No agricultural regions have passed local review in these pilot dossiers. Entering a name does not approve it. Interface language: English prototype.</p>
-      <p className={styles.status}>{readiness.status === 'unsupported-country' ? 'No reviewed dossier' : 'Engineering pilot · reference evidence only'}</p>
+      <p id="region-help" className={styles.secondary}>No agricultural regions have passed local review in these dossiers. Entering a name does not approve it. Interface language: English prototype.</p>
+      <p className={styles.status}>{readiness.status === 'unsupported-country' ? 'No reviewed dossier' : readiness.country?.stage === 'research-queue' ? 'Research discovery · reference evidence only' : 'Engineering pilot · reference evidence only'}</p>
       {readiness.country && <p>{readiness.country.jurisdictionNote}</p>}
       <h3>What still needs review</h3><ul>{readiness.gaps.map((gap) => <li key={gap}>{gap}</li>)}</ul>
     </section>
@@ -103,7 +103,7 @@ export default function CountryReview() {
       </dl><a href={NASA_REFERENCE_PROVIDER.docsUrl} target="_blank" rel="noreferrer" className={styles.link}>Official API documentation ↗</a></details>
     </section>
     <section className={styles.card} aria-labelledby="queue-heading"><h2 id="queue-heading">Research priorities, not launch approvals</h2>
-      <p>Only the four engineering pilots above have source-discovery dossiers. Other entries are an unreviewed research queue; depth and availability differ between pilots.</p>
+      <p>The four engineering pilots have separate dossiers. Ghana has one initial weather reference. Other entries are still queued for discovery.</p>
       {COUNTRY_RESEARCH_QUEUE.map((group) => <p key={group.group}><strong>{group.group}:</strong> {group.countries.join(', ')}.</p>)}
       <p>{EUROPE_RESEARCH_NOTE}</p>
     </section>
