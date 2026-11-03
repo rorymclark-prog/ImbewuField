@@ -9,6 +9,7 @@ import { evaluateCountryReadiness, sourceEvidenceState } from '@/lib/internation
 import type { Known } from '@/lib/international/countries/types';
 import { COUNTRY_CLIMATE_DEMOS, NASA_REFERENCE_PROVIDER, fetchCountryClimateReference, type ClimateReferenceResult, type ClimateDemoCode } from '@/lib/international/providers/nasa-reference';
 import styles from './CountryReview.module.css';
+import UkStationReference from './UkStationReference';
 
 const metadata = (value: Known<string>) => value.status === 'known' ? value.value : `Unknown — ${value.reason}`;
 const CATEGORY_NAMES = { biodiversity: 'Biodiversity & taxonomy', 'agricultural-extension': 'Agricultural extension', 'weather-frost': 'Weather & frost', soils: 'Soils', 'plant-legality': 'Plant legality' };
@@ -85,6 +86,7 @@ export default function CountryReview() {
         </details>)}
       </article>)}</div>
     </section>
+    <UkStationReference countryCode={code} />
     <section className={styles.card} aria-labelledby="provider-heading"><p className={styles.eyebrow}>Executable public reference</p>
       <h2 id="provider-heading">Try NASA POWER temperature data</h2><p>{NASA_REFERENCE_PROVIDER.limitations}</p>
       <p><strong>{demo?.label ?? 'No demo available'}</strong>{demo && ` · coarse point ${demo.latitude}°, ${demo.longitude}°`}</p>

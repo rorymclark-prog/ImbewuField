@@ -1,0 +1,111 @@
+{
+  "sourceSha256": "056ddc9e766484f1a0c25f6312af53cdc10633523ca7b42bcd4c19510686d87a",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "zu": [
+      {
+        "key": "ukStationRelease01",
+        "english": "Open Met Office links to Yeovilton’s monthly weather records from the country review.",
+        "sha256": "dad9cc35b6ebc64f4f189c467b35a15e4eb36f3cdb562dfe3e4a1b042d69f33f",
+        "translation": "Vula izixhumanisi ze-Met Office eziya kumarekhodi wesimo sezulu wanyanga zonke ase-Yeovilton ekubuyekezweni kwezwe."
+      },
+      {
+        "key": "ukStationRelease02",
+        "english": "Review UK historical weather records",
+        "sha256": "d82f849901b34fa2b0967912a1c43dc99a4c109339c0d438e7736dbd774d6617",
+        "translation": "Buyekeza amarekhodi omlando wesimo sezulu ase-UK"
+      },
+      {
+        "key": "ukStationRelease03",
+        "english": "International → Country review",
+        "sha256": "50b7eff02b2b1ce02ed5067e210705fb0e02c22904bc26bc9be187ab491fa6d9",
+        "translation": "Amazwe ngamazwe → Ukubuyekezwa kwezwe"
+      },
+      {
+        "key": "ukStationRelease04",
+        "english": "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions.",
+        "sha256": "24fe66e31501dfd8c161c1ff02bef0e4be95ff5fd799c75e177d7e93bacd920e",
+        "translation": "Khetha i-United Kingdom ne-Yeovilton ukuze uvule amarekhodi asesiteshini esisodwa. Hlola izimo zendawo ngaphambi kokuthatha izinqumo zokutshala."
+      }
+    ],
+    "st": [
+      {
+        "key": "ukStationRelease01",
+        "english": "Open Met Office links to Yeovilton’s monthly weather records from the country review.",
+        "sha256": "dad9cc35b6ebc64f4f189c467b35a15e4eb36f3cdb562dfe3e4a1b042d69f33f",
+        "translation": "Bula lihokelo tsa Met Office ho ea lirekotong tsa boemo ba leholimo tsa khoeli le khoeli tsa Yeovilton tlhahlobisong ea naha."
+      },
+      {
+        "key": "ukStationRelease02",
+        "english": "Review UK historical weather records",
+        "sha256": "d82f849901b34fa2b0967912a1c43dc99a4c109339c0d438e7736dbd774d6617",
+        "translation": "Hlahloba lirekoto tsa nalane ea boemo ba leholimo tsa UK"
+      },
+      {
+        "key": "ukStationRelease03",
+        "english": "International → Country review",
+        "sha256": "50b7eff02b2b1ce02ed5067e210705fb0e02c22904bc26bc9be187ab491fa6d9",
+        "translation": "Lichaba tsa machaba → Tlhahlobo ea naha"
+      },
+      {
+        "key": "ukStationRelease04",
+        "english": "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions.",
+        "sha256": "24fe66e31501dfd8c161c1ff02bef0e4be95ff5fd799c75e177d7e93bacd920e",
+        "translation": "Khetha United Kingdom le Yeovilton ho bula lirekoto tse tsoang setsing se le seng. Hlahloba maemo a lehae pele u nka liqeto tsa ho lema."
+      }
+    ],
+    "ts": [
+      {
+        "key": "ukStationRelease01",
+        "english": "Open Met Office links to Yeovilton’s monthly weather records from the country review.",
+        "sha256": "dad9cc35b6ebc64f4f189c467b35a15e4eb36f3cdb562dfe3e4a1b042d69f33f",
+        "translation": "Pfula swihlanganisi swa Met Office ku ya eka tirhekhodo ta maxelo ta n'hweti na n'hweti ta Yeovilton eka ku kambisisa ka tiko."
+      },
+      {
+        "key": "ukStationRelease02",
+        "english": "Review UK historical weather records",
+        "sha256": "d82f849901b34fa2b0967912a1c43dc99a4c109339c0d438e7736dbd774d6617",
+        "translation": "Kambisisa tirhekhodo ta matimu ta maxelo ta UK"
+      },
+      {
+        "key": "ukStationRelease03",
+        "english": "International → Country review",
+        "sha256": "50b7eff02b2b1ce02ed5067e210705fb0e02c22904bc26bc9be187ab491fa6d9",
+        "translation": "Matiko ya misava → Nkambisiso wa tiko"
+      },
+      {
+        "key": "ukStationRelease04",
+        "english": "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions.",
+        "sha256": "24fe66e31501dfd8c161c1ff02bef0e4be95ff5fd799c75e177d7e93bacd920e",
+        "translation": "Hlawula United Kingdom na Yeovilton ku pfula tirhekhodo leti humaka eka xitichi xin'we. Kamba swiyimo swa kwalaho u nga si teka swiboho swo byala."
+      }
+    ],
+    "ve": [
+      {
+        "key": "ukStationRelease01",
+        "english": "Open Met Office links to Yeovilton’s monthly weather records from the country review.",
+        "sha256": "dad9cc35b6ebc64f4f189c467b35a15e4eb36f3cdb562dfe3e4a1b042d69f33f",
+        "translation": "Vhulani vhuṱanganyi ha Met Office u ya kha rekhodo dza mutsho dza ṅwedzi muṅwe na muṅwe dza Yeovilton u bva kha tsedzuluso ya shango."
+      },
+      {
+        "key": "ukStationRelease02",
+        "english": "Review UK historical weather records",
+        "sha256": "d82f849901b34fa2b0967912a1c43dc99a4c109339c0d438e7736dbd774d6617",
+        "translation": "Sedzulusani rekhodo dza ḓivhazwalo dza mutsho dza UK"
+      },
+      {
+        "key": "ukStationRelease03",
+        "english": "International → Country review",
+        "sha256": "50b7eff02b2b1ce02ed5067e210705fb0e02c22904bc26bc9be187ab491fa6d9",
+        "translation": "Tshaka dza mashango → Tsedzuluso ya shango"
+      },
+      {
+        "key": "ukStationRelease04",
+        "english": "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions.",
+        "sha256": "24fe66e31501dfd8c161c1ff02bef0e4be95ff5fd799c75e177d7e93bacd920e",
+        "translation": "Nangani United Kingdom na Yeovilton u vhula rekhodo dzi bvaho kha tshiṱitshi tshithihi. Tolani zwiimo zwa henefho phanḓa ha u dzhia dzigomelelo dza u ṱavha."
+      }
+    ]
+  }
+}

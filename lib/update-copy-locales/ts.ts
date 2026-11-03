@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // UK station links: docs/international/pilots/uk-station-release-copy/drafts.json; UNREVIEWED AI drafts.
+  "Open Met Office links to Yeovilton’s monthly weather records from the country review.": "Pfula swihlanganisi swa Met Office ku ya eka tirhekhodo ta maxelo ta n'hweti na n'hweti ta Yeovilton eka ku kambisisa ka tiko.",
+  "Review UK historical weather records": "Kambisisa tirhekhodo ta matimu ta maxelo ta UK",
+  "International → Country review": "Matiko ya misava → Nkambisiso wa tiko",
+  "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions.": "Hlawula United Kingdom na Yeovilton ku pfula tirhekhodo leti humaka eka xitichi xin'we. Kamba swiyimo swa kwalaho u nga si teka swiboho swo byala.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",
