@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '291d46ddd', changes: [
+    'A pending journal copy stops if you switch workspaces before it can download.',
+  ] },
   { when: '3 November 2026', sha: 'a0be3be16', changes: [
     'Write a dated field note from a checked crop task in your device journal.',
     'Review older device notes before choosing which entries to recover.',
