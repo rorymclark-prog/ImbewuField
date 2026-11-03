@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '66e2dffc6', changes: [
+    'Open checked Kiambu weather bulletin links from the country review.',
+    'Keep bulletin dates separate from live weather and crop-planning approval.',
+  ], tour: [{ title: 'Review official county bulletin links', where: 'International → Country review', href: '/international',
+    detail: 'Choose Kenya and Kiambu to open dated official source links. Check the source for updates; this reference does not supply live weather or crop advice.' }] },
   { when: '2 November 2026', sha: 'dfa7ac49e', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
     'Keep your sowing records and nursery equipment while local planning is unavailable.',

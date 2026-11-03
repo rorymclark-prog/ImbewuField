@@ -1,0 +1,92 @@
+{
+  "task": "agy-kiambu-dated-link-review-2026-11-03",
+  "status": "documentation-only",
+  "scopeBinding": "snapshot-bound",
+  "identityNote": "coordinator dated-link receipts and first-page visual facts; public fetch receipts have no repo-head identity",
+  "workers": {
+    "active": 0,
+    "state": "stopped",
+    "mode": "main-writer-only"
+  },
+  "interactionSharing": "off",
+  "wordCount": "UNKNOWN",
+  "wordCountCeiling": 400,
+  "wordCountAuthority": "coordinator",
+  "deliverables": [
+    "docs/international/agy-kiambu-dated-link-review-2026-11-03/KIAMBU-LINK-REVIEW.md",
+    "docs/international/agy-kiambu-dated-link-review-2026-11-03/status.json"
+  ],
+  "inspectedSources": [
+    {
+      "file": "dated-page.html",
+      "requestedUrl": "https://meteo.go.ke/our-products/county-forecasts/kiambu-county-weekly-weather-forecast-valid-3rd-to-9th-november-2026/",
+      "fetchedAtUtc": "2026-11-03T15:36:55.074356+00:00",
+      "bytes": 89606,
+      "sha256": "6edf203352719ab3cee09974e29c15a0a1ad16623e4e557619fe6582f3d40acf"
+    },
+    {
+      "file": "dated-page-receipt.json",
+      "curlExit": 0,
+      "httpStatus": 200
+    },
+    {
+      "file": "dated-page-structure.json",
+      "h1": "Kiambu County weekly weather forecast valid 3rd to 9th November 2026",
+      "pdfLinks": [
+        "/documents/5545/Kiambu_County_weekly_weather_forecast_valid_3rd_to_9th_November_2026.pdf"
+      ]
+    },
+    {
+      "file": "dated-document-receipt.json",
+      "requestedUrl": "https://meteo.go.ke/documents/5545/Kiambu_County_weekly_weather_forecast_valid_3rd_to_9th_November_2026.pdf",
+      "fetchedAtUtc": "2026-11-03T15:37:56.219846+00:00",
+      "curlExit": 0,
+      "httpStatus": 200,
+      "bytes": 738997,
+      "sha256": "6d05a3f29a1fbf9f3643a91a5bf1a117170ec5fae1dd3e0b4f658dd1e4a5a4f9"
+    },
+    {
+      "file": "page1-coordinator-visual-facts.json",
+      "provenance": "Only first page visually inspected by coordinator; other pages not visually reviewed; AGY did not inspect PDF/images.",
+      "page1PngSha256": "c5dde136243471153eb874f2ee6a47acbefdab7755e2eb87695250992d792dc8",
+      "timeZone": "not printed in inspected heading/caption",
+      "rights": "UNKNOWN"
+    },
+    {
+      "comparisonSource": "docs/international/agy-kenya-bulletin-contract-2026-11-03/CONTRACT-FIT.md",
+      "role": "historical comparison only"
+    }
+  ],
+  "unknowns": [
+    "Full PDF document pages past page 1 remain visually unreviewed and uninspected (UNKNOWN).",
+    "Timezone for advertised calendar hours and normalization into UTC instants remain UNKNOWN.",
+    "API access, automated retrieval rights, update cadence, and commercial reuse permissions remain UNKNOWN.",
+    "Live application integration, tests, and runtime activations remain UNKNOWN."
+  ],
+  "verification": {
+    "documentationOnly": true,
+    "snapshotBound": true,
+    "commandsRun": 0,
+    "networkCalls": 0,
+    "codeOrTestEdits": false,
+    "gitMutations": false,
+    "testsExecuted": false,
+    "integrationClaimed": false,
+    "runtimeActivationClaimed": false,
+    "fluentOrCustomerApprovalClaimed": false,
+    "proposedNegativesCount": 3,
+    "proposedNegativesStatus": "NOT EXECUTED"
+  },
+  "coordinatorReview": {
+    "reviewedAtUtc": "2026-11-03T15:55:54.408069+00:00",
+    "actualWhitespaceWords": 375,
+    "docSha256": "8ec54ecfb7f8fc258dfb316647f13e3fd3205d1dec85281cbcd62cd5a08cea12",
+    "previousDraftSha256": "3f058a2bbec9adf218eff995679940c84f0dcee2c5e309efc0d5e41ce6205812",
+    "rootEdit": "Paraphrased repeated first-page wording; exact receipt/hash and source limitations retained.",
+    "bothActualBodyBytesAndShaChecked": true,
+    "derivedPage1ImageShaChecked": true,
+    "visualScope": "Coordinator viewed first page only; AGY never inspected PDF/image. Other pages not visually reviewed.",
+    "noCodeOrRuntimeIntegrationByResearch": true,
+    "proposedScenariosUnexecuted": true
+  }
+}

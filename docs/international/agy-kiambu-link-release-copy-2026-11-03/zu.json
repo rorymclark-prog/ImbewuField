@@ -1,0 +1,38 @@
+{
+  "locale": "zu",
+  "sourceSha256": "5eb550ee8605eb341e3d1cbc8405a7b2f7d2396546162941a7bda7b3cec921eb",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "kiambuLinkRelease01",
+      "english": "Open checked Kiambu weather bulletin links from the country review.",
+      "sha256": "31cf69290065240d0123a9cacb935f2021716c04c8132c223705f48adfff52ce",
+      "translation": "Vula izixhumanisi zezaziso zesimo sezulu zase-Kiambu ezihloliwe ekubuyekezweni kwezwe."
+    },
+    {
+      "key": "kiambuLinkRelease02",
+      "english": "Keep bulletin dates separate from live weather and crop-planning approval.",
+      "sha256": "f5d4b5186ec04c6eda79d55405388a9449f3af9524ff415682db1765d01b36db",
+      "translation": "Gcina izinsuku zezaziso zihlukile esimweni sezulu esibukhoma nasekuvunyelweni kokuhlelwa kwezitshalo."
+    },
+    {
+      "key": "kiambuLinkRelease03",
+      "english": "Review official county bulletin links",
+      "sha256": "7a47c740bf9da2bfe3709b9d4bcf3d963f358cdc9e2b13bc243476fe6c79d8a1",
+      "translation": "Buyekeza izixhumanisi zezaziso ezisemthethweni zesifunda"
+    },
+    {
+      "key": "kiambuLinkRelease04",
+      "english": "International → Country review",
+      "sha256": "50b7eff02b2b1ce02ed5067e210705fb0e02c22904bc26bc9be187ab491fa6d9",
+      "translation": "Amazwe ngamazwe → Ukubuyekezwa kwezwe"
+    },
+    {
+      "key": "kiambuLinkRelease05",
+      "english": "Choose Kenya and Kiambu to open dated official source links. Check the source for updates; this reference does not supply live weather or crop advice.",
+      "sha256": "3060b59accd40e025027f83eb2b1e73b10060c765f79d624d01d54ef77744c56",
+      "translation": "Khetha i-Kenya ne-Kiambu ukuze uvule izixhumanisi zemithombo esemthethweni enezinsuku. Bheka umthombo ukuze uthole izibuyekezo; lokhu kubhekisela akuhlinzeki ngesimo sezulu esibukhoma noma ngezeluleko zezitshalo."
+    }
+  ]
+}

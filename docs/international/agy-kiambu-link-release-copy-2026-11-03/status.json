@@ -1,0 +1,47 @@
+{
+  "task": "agy-kiambu-link-release-copy-2026-11-03",
+  "status": "completed-unreviewed-ai-drafts",
+  "sourceCommitBase": "66e2dffc62a197cdca46b1150bc0b105947a6249",
+  "sourceFile": "docs/international/agy-kiambu-link-release-copy-2026-11-03/source.json",
+  "sourceSha256": "5eb550ee8605eb341e3d1cbc8405a7b2f7d2396546162941a7bda7b3cec921eb",
+  "releaseNotesSnapshot": {
+    "path": "lib/release-notes.ts",
+    "bytes": 343423,
+    "sha256": "fdde08842a64cb324a49144a20cb86f84dd126db184e6049098fa9b157b6e40a"
+  },
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "messagesPerLocale": 5,
+  "totalDraftPairs": 20,
+  "workers": {
+    "active": 0,
+    "state": "stopped",
+    "mode": "main-writer-only"
+  },
+  "interactionSharing": "off",
+  "notesWordCountCeiling": 170,
+  "wordCountAuthority": "root",
+  "deliverables": [
+    "docs/international/agy-kiambu-link-release-copy-2026-11-03/zu.json",
+    "docs/international/agy-kiambu-link-release-copy-2026-11-03/st.json",
+    "docs/international/agy-kiambu-link-release-copy-2026-11-03/ts.json",
+    "docs/international/agy-kiambu-link-release-copy-2026-11-03/ve.json",
+    "docs/international/agy-kiambu-link-release-copy-2026-11-03/review-notes.md",
+    "docs/international/agy-kiambu-link-release-copy-2026-11-03/status.json"
+  ],
+  "verification": {
+    "commandsRun": 0,
+    "networkCalls": 0,
+    "codeOrTestEdits": false,
+    "gitMutations": false,
+    "validatorExecuted": false,
+    "humanOrFluentApprovalClaimed": false,
+    "runtimeActivationClaimed": false
+  }
+}
