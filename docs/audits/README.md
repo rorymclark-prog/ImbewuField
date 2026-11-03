@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest Structures recovery: [Recorded permeable shade cover over paid artwork — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md). App-drawn material is distinguished from AI output.
+
 Latest terrain continuation: [Sector DEM alignment, data limits and regional A–B profile — 3 November 2026](2026-11-03/sector-terrain-profile-codex.md). Fresh Earthworks/Structures still have documented visual failures.
 
 Latest area-label follow-up: [Named historical areas and numbered alternative — 3 November 2026](2026-11-03/historical-area-labels-codex.md).
@@ -157,6 +159,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 ## Date index
 
 - [Assistant connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md).
+- [Recorded shade cover recovery — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md).
+
 - [Sector DEM alignment and regional A–B profile — 3 November 2026](2026-11-03/sector-terrain-profile-codex.md).
 - [Named historical areas — 3 November 2026](2026-11-03/historical-area-labels-codex.md).
 - [Approved historical baseline — 3 November 2026](2026-11-03/historical-baseline-codex.md).
@@ -279,7 +283,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
-| 2026-11-03 | [Historical baseline](2026-11-03/historical-baseline-codex.md) · [Area names](2026-11-03/historical-area-labels-codex.md) · [Sector regional profile](2026-11-03/sector-terrain-profile-codex.md) · [AI fidelity](2026-11-03/ai-layer-fidelity-corrections-codex.md) |
+| 2026-11-03 | [Structures shade recovery](2026-11-03/structures-shade-recovery-codex.md) · [Historical baseline](2026-11-03/historical-baseline-codex.md) · [Area names](2026-11-03/historical-area-labels-codex.md) · [Sector regional profile](2026-11-03/sector-terrain-profile-codex.md) · [AI fidelity](2026-11-03/ai-layer-fidelity-corrections-codex.md) |
 | 2026-10-31 | [Nine-sheet AI fidelity and three viewport sizes — Codex](2026-10-31/ai-sheet-fidelity-codex.md) |
 | 2026-10-31 | [Per-sheet AI starting settings — Codex](2026-10-31/map-sheet-defaults-codex.md) |
 | 2026-10-31 | [Live AI map settings/output review — Codex](2026-10-31/live-ai-map-settings-review-codex.md) |
