@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '3d0f89c1e', changes: [
+    "Terrain profiles show sampled elevation and classroom positions at the plan scale.",
+    "Sector illustrations have lighter arrows, clearer contours and a shorter map key.",
+  ] },
   { when: '3 November 2026', sha: 'fe520c58e', changes: [
     "Structures maps show recorded shade cloth over the illustrated beds.",
   ], tour: [{title: 'Review the shade cover', where: 'Site design → Glossy', href: '/design',

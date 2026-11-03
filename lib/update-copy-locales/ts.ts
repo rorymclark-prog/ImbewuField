@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
+  "Sector illustrations have lighter arrows, clearer contours and a shorter map key.": "Swifaniso swa Sector swi na miseve yo vevuka, milayeni ya ku tlakuka leyi vonakaka kahle ni nhlamuselo yo koma ya mepe.",
+  // Raw profile: docs/audits/2026-11-03/raw-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Terrain profiles show sampled elevation and classroom positions at the plan scale.": "Tiphurofayili ta ndhawu ti komba ku tlakuka loku tekiweke eka swikombiso ni tindhawu ta titlilasi hi xikalo xa pulani.",
   "Review the shade cover": "Kambela xifunengeto xa ndzhuti",
   "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Pfula Structures, kutani u tlhela u hlanganisa xifaniso xa AI lexi hlayisiweke ku komba xifunengeto xa ndzhuti.",
 
