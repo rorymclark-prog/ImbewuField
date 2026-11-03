@@ -80,17 +80,21 @@ service cloud.firestore {
     // /farmer_consents/{uid} is written by exactly one screen (ConsentPanel) and read here.
     // ABSENCE IS REFUSAL: no doc, no scopes map, or the scope missing => false, so a farmer who
     // has never answered is treated as having declined, never as a default yes.
-    function consentGranted(profileId, scope) {
-      return exists(/databases/$(database)/documents/farmer_consents/$(profileId))
-        && get(/databases/$(database)/documents/farmer_consents/$(profileId))
-             .data.get('scopes', {}).get(scope, false) == true;
+    function consentGranted(profileId, scope, orgId) {
+      let grant = get(/databases/$(database)/documents/farmer_consents/$(profileId)).data;
+      return orgId != null && grant != null
+        && grant.get('uid', null) == profileId
+        && grant.get('org_id', null) == orgId
+        && grant.get('revoked_at', null) == null
+        && grant.get('scopes', {}).get(scope, false) == true
+        && get(/databases/$(database)/documents/profiles/$(profileId)).data.get('org_id', null) == orgId;
     }
     // isAdmin() bypass + staffOrgAccess(d), gated by the farmer's consent FOR THIS SCOPE — the
     // shape every farmer-identifying collection's staff branch below uses. Each call site passes
     // the scope that collection actually represents, so consenting to share harvest weights does
     // not also hand over income. NOT applied to isMentor(), by design (see consentGranted()).
     function staffConsentedAccess(d, scope) {
-      return isAdmin() || (staffOrgAccess(d) && consentGranted(d.profile_id, scope));
+      return isAdmin() || (staffOrgAccess(d) && consentGranted(d.profile_id, scope, d.get('org_id', null)));
     }
     // Feature-flag scaffold for the NGO dashboard v2 surfaces (admin panel, consent-aware
     // dashboard wiring, aggregate reporting) built on top of this fix — same on/off pattern as

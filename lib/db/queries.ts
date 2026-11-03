@@ -18,7 +18,7 @@ import {
   getSandboxExpenses, addSandboxExpense, updateSandboxExpense, deleteSandboxExpense,
   getSandboxConsent, setSandboxConsentScope, revokeAllSandboxConsent,
 } from '@/lib/sample-mode';
-import { emptyConsent, revokeAll, setScope, type ConsentScope, type FarmerConsent } from '@/lib/consent';
+import { consentForOwnerAndOrg, emptyConsent, revokeAll, setScope, type ConsentScope, type FarmerConsent } from '@/lib/consent';
 import type {
   Profile, Garden, GardenMember, ProductionLog, SalesLog, ExpenseLog, Design, Report,
   CourseProgress, GardenerProfile, MentorVisit,
@@ -700,8 +700,9 @@ export async function getMyConsent(): Promise<FarmerConsent | null> {
   // the instant it is flipped — see lib/sample-mode.ts's consent section for the full story.
   if (isSampleMode()) return getSandboxConsent();
   const f = fb(); const u = uid(); if (!f || !u) return null;
-  const s = await getDoc(doc(f.db, 'farmer_consents', u));
-  return s.exists() ? ({ ...s.data() } as unknown as FarmerConsent) : null;
+  const [s, me] = await Promise.all([getDoc(doc(f.db, 'farmer_consents', u)), getMyProfile()]);
+  if (uid() !== u || readAccountLocalSampleState() !== false) return null;
+  return consentForOwnerAndOrg(s.exists() ? s.data() as FarmerConsent : null, u, me?.org_id ?? null);
 }
 
 /** Read one farmer's consent as staff/mentor — org-scoped by the rules, not by this call. */
@@ -712,34 +713,41 @@ export async function getFarmerConsent(profileId: string): Promise<FarmerConsent
   return s.exists() ? ({ ...s.data() } as unknown as FarmerConsent) : null;
 }
 
-/**
- * Grant or withdraw ONE scope. Reads the current record first so setScope()'s
- * granted_at/revoked_at bookkeeping applies to what is actually stored — a blind write
- * would silently drop the other scopes the farmer had already chosen.
- */
-export async function setMyConsentScope(scope: ConsentScope, value: boolean): Promise<FarmerConsent | null> {
-  if (isSampleMode()) return setSandboxConsentScope(scope, value);
-  const f = fb(); const u = uid(); if (!f || !u) return null;
-  const me = await getMyProfile();
-  const now = new Date().toISOString();
-  const current = (await getMyConsent()) ?? emptyConsent(u, me?.org_id ?? null, now);
-  // org_id is pinned to the farmer's own org by the rules; refresh it in case they were moved
-  // between orgs since the record was written, or the write is simply refused.
-  const next = setScope({ ...current, uid: u, org_id: me?.org_id ?? null }, scope, value, now);
-  await setDoc(doc(f.db, 'farmer_consents', u), next);
-  return next;
+async function writeMyConsent(change: { scope: ConsentScope; value: boolean } | null): Promise<FarmerConsent | null> {
+  const f = fb(); const u = uid();
+  if (!f || !u) return null;
+  const requireCurrent = () => {
+    if (uid() !== u || readAccountLocalSampleState() !== false) {
+      throw new UserFacingError('Your account changed. Open sharing preferences again.');
+    }
+  };
+  const target = doc(f.db, 'farmer_consents', u);
+  const profile = doc(f.db, 'profiles', u);
+  // Re-read on transaction retry so an older tab cannot restore a grant
+  // withdrawn by another tab while it was editing a different scope.
+  return runTransaction(f.db, async transaction => {
+    requireCurrent();
+    const [snapshot, owner] = await Promise.all([transaction.get(target), transaction.get(profile)]);
+    requireCurrent();
+    if (!snapshot.exists() && !change) return null;
+    const org = (owner.data() as Profile | undefined)?.org_id ?? null;
+    const now = new Date().toISOString();
+    const current = consentForOwnerAndOrg(snapshot.exists() ? snapshot.data() as FarmerConsent : null, u, org)
+      ?? emptyConsent(u, org, now);
+    const next = change ? setScope(current, change.scope, change.value, now) : revokeAll(current, now);
+    transaction.set(target, next);
+    return next;
+  });
 }
 
-/** Withdraw everything at once. Deliberately not a six-toggle loop: revocation must be ONE
- *  action a farmer can complete, not a checklist they might half-finish. */
+export async function setMyConsentScope(scope: ConsentScope, value: boolean): Promise<FarmerConsent | null> {
+  if (isSampleMode()) return setSandboxConsentScope(scope, value);
+  return writeMyConsent({ scope, value });
+}
+
 export async function revokeAllMyConsent(): Promise<FarmerConsent | null> {
   if (isSampleMode()) return revokeAllSandboxConsent();
-  const f = fb(); const u = uid(); if (!f || !u) return null;
-  const current = await getMyConsent();
-  if (!current) return null;
-  const next = revokeAll(current, new Date().toISOString());
-  await setDoc(doc(f.db, 'farmer_consents', u), next);
-  return next;
+  return writeMyConsent(null);
 }
 
 // ---- farmer / trainee directory ----

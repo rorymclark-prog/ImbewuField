@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
-  CONSENT_SCOPES, applyConsent, consentState, emptyConsent, grantedScopes,
+  CONSENT_SCOPES, applyConsent, consentForOwnerAndOrg, consentState, emptyConsent, grantedScopes,
   hasConsent, revokeAll, setScope, type FarmerConsent,
 } from '../lib/consent';
 import type { NetworkFarmer, NetworkFarmerMetrics, NetworkFarmerSummary } from '../lib/network';
@@ -55,12 +55,22 @@ test('revocation withdraws every scope regardless of the flags left behind', () 
 });
 
 test('granting a scope again un-revokes, so a re-grant is not silently swallowed', () => {
-  const back = setScope(revokeAll(consent({ sales: true }), NOW), 'sales', true, NOW);
+  const back = setScope(revokeAll(consent({ sales: true, production: true }), NOW), 'sales', true, NOW);
   assert.equal(back.revoked_at, null);
   assert.equal(hasConsent(back, 'sales'), true);
+  assert.equal(hasConsent(back, 'production'), false);
   // and turning the last scope off does not resurrect a revocation that was never made
   const off = setScope(consent({ sales: true }), 'sales', false, NOW);
   assert.equal(hasConsent(off, 'sales'), false);
+});
+
+test('a consent document for another farmer or organisation cannot authorise a projection', () => {
+  const grant = consent({ production: true });
+  assert.equal(consentForOwnerAndOrg(grant, 'f1', 'org-1'), grant);
+  assert.equal(consentForOwnerAndOrg(grant, 'f2', 'org-1'), null);
+  const oldGrant = consentForOwnerAndOrg(grant, 'f1', 'org-2');
+  assert.equal(oldGrant, null);
+  assert.equal(applyConsent(summary(), oldGrant, coarsen).metrics.producedKg, null);
 });
 
 test('emptyConsent starts closed and records the org it is aimed at', () => {

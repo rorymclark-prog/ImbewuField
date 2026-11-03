@@ -41,6 +41,9 @@ const read = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8'
 type FakeDoc = { path: string; data: Record<string, unknown> };
 const state = {
   harvestWrites: [] as Record<string, unknown>[],
+  consent: null as Record<string, unknown> | null,
+  consentTransactions: false,
+  revokeBeforeRetry: false,
   readProfileGate: null as null | Promise<void>,
   uid: 'mentor-uid' as string | null,
   sample: false as boolean | null,
@@ -62,7 +65,20 @@ export const query = (base, ...clauses) => ({ __t: 'query', collectionPath: base
 export const serverTimestamp = () => 'SERVER_TIMESTAMP';
 export const writeBatch = () => ({ delete(){}, set(){}, commit: async () => {} });
 // Invoice linking imports transactions; these read-only cohort probes must never invoke one.
-export const runTransaction = async () => { throw new Error('Unexpected transaction in a cohort read'); };
+export const runTransaction = async (_db, action) => {
+  if (!state.consentTransactions) throw new Error('Unexpected transaction in a cohort read');
+  let next;
+  const tx = { get: getDoc, set: (_ref, row) => { next = row; } };
+  let result = await action(tx);
+  if (state.revokeBeforeRetry) {
+    state.revokeBeforeRetry = false;
+    state.consent = { ...state.consent, revoked_at: '2026-11-03T00:00:00.000Z' };
+    next = undefined;
+    result = await action(tx);
+  }
+  if (next) state.consent = next;
+  return result;
+};
 export const addDoc = async (base, row) => {
   if (base.path === 'production_logs') state.harvestWrites.push(row);
   return { id: 'fake-id' };
@@ -73,7 +89,8 @@ export const deleteDoc = async () => {};
 export const getCountFromServer = async () => ({ data: () => ({ count: 0 }) });
 export const getDoc = async (ref) => {
   if (state.readProfileGate) await state.readProfileGate;
-  const found = ref.path === state.profile.path ? state.profile : null;
+  const found = ref.path === state.profile.path ? state.profile
+    : ref.path === 'farmer_consents/' + state.uid && state.consent ? { path: ref.path, data: state.consent } : null;
   return {
     exists: () => found !== null,
     id: found ? found.path.split('/').pop() : '',
@@ -145,7 +162,7 @@ const hooks = registerHooks({
   },
 });
 
-const { addProduction, WRITE_TIMEOUT_MS, WriteTimeoutError, chunkIds, IN_QUERY_CHUNK, getCourseProgressForProfiles, getAssignmentsForProfiles } =
+const { addProduction, getMyConsent, setMyConsentScope, WRITE_TIMEOUT_MS, WriteTimeoutError, chunkIds, IN_QUERY_CHUNK, getCourseProgressForProfiles, getAssignmentsForProfiles } =
   await import('../lib/db/queries.ts');
 hooks.deregister();
 
@@ -314,5 +331,29 @@ test('an unanswered profile read keeps the harvest unsent and cannot later dispa
   } finally {
     resume();
     state.readProfileGate = null;
+  }
+});
+
+
+test('scope writes do not carry a grant to another organisation or restore withdrawn scopes on retry', async () => {
+  state.consentTransactions = true;
+  state.consent = { uid: state.uid, org_id: 'former-org', scopes: { production: true },
+    granted_at: '2026-11-01T00:00:00.000Z', revoked_at: null };
+  try {
+    assert.equal(await getMyConsent(), null);
+    const newOrg = await setMyConsentScope('sales', true);
+    assert.equal(newOrg?.org_id, 'org-1');
+    assert.deepEqual(newOrg?.scopes, { sales: true });
+
+    state.consent = { ...state.consent, scopes: { production: true, location: true } };
+    state.revokeBeforeRetry = true;
+    const retried = await setMyConsentScope('sales', true);
+    assert.deepEqual(retried?.scopes, { sales: true });
+    assert.equal(retried?.revoked_at, null);
+    assert.deepEqual((await getMyConsent())?.scopes, { sales: true });
+  } finally {
+    state.consent = null;
+    state.consentTransactions = false;
+    state.revokeBeforeRetry = false;
   }
 });

@@ -715,6 +715,42 @@ test('financial logs: consent gates ngo/funder staff reads but not same-org ment
   await assertFails(getDoc(doc(staffDb, 'expense_logs', `${CONSENTED_FARMER}-expense_logs`)));
 });
 
+test('direct staff harvest reads stop when a farmer revokes or changes organisation', async () => {
+  const farmer = 'harvest-consent-transition';
+  const id = 'harvest-consent-transition-log';
+  const grant = { uid: farmer, org_id: 'org-1', scopes: { production: true },
+    revoked_at: null, updated_at: '2026-08-01T00:00:00.000Z' };
+  await env.withSecurityRulesDisabled(async context => {
+    const db = context.firestore();
+    await profile(db, farmer, 'farmer', 'org-1');
+    await setDoc(doc(db, 'farmer_consents', farmer), grant);
+    await setDoc(doc(db, 'production_logs', id), logData(farmer, 'org-1', 'production_logs'));
+  });
+  const staff = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  const mentor = env.authenticatedContext(LINKED_MENTOR).firestore();
+  const owner = env.authenticatedContext(farmer).firestore();
+  await assertSucceeds(getDoc(doc(staff, 'production_logs', id)));
+  await assertSucceeds(updateDoc(doc(owner, 'farmer_consents', farmer), {
+    revoked_at: '2026-08-02T00:00:00.000Z',
+  }));
+  await assertFails(getDoc(doc(staff, 'production_logs', id)));
+  await assertSucceeds(getDoc(doc(owner, 'production_logs', id)));
+  await assertSucceeds(getDoc(doc(mentor, 'production_logs', id)));
+
+  await env.withSecurityRulesDisabled(async context => {
+    const db = context.firestore();
+    await profile(db, farmer, 'farmer', 'org-2');
+    await setDoc(doc(db, 'farmer_consents', farmer), grant);
+    await setDoc(doc(db, 'production_logs', id + '-new-org'), logData(farmer, 'org-2', 'production_logs'));
+  });
+  const newStaff = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  await assertFails(getDoc(doc(staff, 'production_logs', id)));
+  await assertFails(getDoc(doc(newStaff, 'production_logs', id + '-new-org')));
+  await assertSucceeds(setDoc(doc(owner, 'farmer_consents', farmer), { ...grant, org_id: 'org-2' }));
+  await assertSucceeds(getDoc(doc(newStaff, 'production_logs', id + '-new-org')));
+  await assertFails(getDoc(doc(staff, 'production_logs', id)));
+});
+
 test('farmer_consents: only the farmer writes it; staff read it; nobody forges one', async () => {
   const farmerDb = env.authenticatedContext(CONSENTED_FARMER).firestore();
   const staffDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
