@@ -54,6 +54,8 @@ compiler graph. Existing map rendering/paid dispatch is not replaced.
 - Phone output: [390 × 844 consent before chrome cleanup](evidence-connector/consent-phone-before-chrome-cleanup.png). It caught the overlap recorded in MCP-007.
 - First full suite: 5,990 tests, 5,902 passed, 87 failed, one TODO. The failures traced to the historical source-preservation guard rejecting a proposed service-worker cache exclusion. That source edit was removed; no test or historical guard was weakened. A fresh full run is required.
 - The next full run uses Node 24 and places `--test-concurrency=2` before test paths in the canonical command. A trailing option was not limiting workers in the earlier Node 26 invocation; that own test process was gracefully stopped before restarting.
+- Focused affected contracts: 135 passed on Node 24. Current-main integration exposed a release-guide coverage failure: the new note displaced the earlier map guide from the visible five-line window. A second useful guide stop now sends the reader to review the saved map, and the affected tests pass without assertion edits.
+- First preview `7259b19` built and served its exact SHA. Current-head `rules` and `focused-render` passed. The complete updated-head full run and release gates remain required.
 - Release CI, deployed URLs and native plugin/Claude compatibility: pending at this checkpoint; not claimed as passed.
 - No production data was mutated. No paid generation, security-rule deployment or `PLAN_VERSION` edit occurred.
 - This adds connection/evidence screens. It does not change the existing rendered map picture.
