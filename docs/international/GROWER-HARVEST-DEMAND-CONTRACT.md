@@ -6,8 +6,12 @@ accept a crop cycle, verify a source or promise weekly deliveries.
 
 The caller explicitly selects a current mapped-site scope and a matching saved
 estimate profile. Target site and crop identity must match; no nearest farm,
-same-name crop or inferred profile is substituted. Unmapped target bindings are
-held until their identity contract is implemented.
+same-name crop or inferred profile is substituted. An optional current saved-source
+DTO can bind a design-keyed target to that source's exact `resourceSiteId`, scope
+and geometry identity. It does not rewrite target IDs or borrow another design's
+records. The parent must freshly read that source and the book before review.
+Without this binding, targets must name the mapped site itself. Unmapped target
+bindings remain held until their identity contract is implemented.
 
 The existing `targetDemand` authority supplies aggregate kilograms from the
 target's inclusive calendar months and actual day counts. Produce packs still

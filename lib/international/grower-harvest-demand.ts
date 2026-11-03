@@ -1,6 +1,7 @@
 import { sanitiseHarvestTargets } from '../crop-plan';
 import { targetDemand } from '../harvest-targets';
 import type { GrowerAutoPlanDemand } from './grower-autoplan';
+import type { GrowerWorkflowSource } from './grower-workflow-source';
 import {
   growerPlanningScopeKey, isGrowerRecordedAt, normaliseGrowerPlanningProfile,
   normaliseGrowerPlanningScope,
@@ -19,6 +20,8 @@ export type GrowerHarvestDemand =
  * not quietly promise that all estimated produce can be sold. */
 export function growerDemandFromHarvestTarget(request: {
   target: unknown; profile: unknown; scope: unknown; recordedAt: unknown;
+  /** Exact saved-design binding for canonical design-keyed buyer records. */
+  source?: GrowerWorkflowSource | null;
 }): GrowerHarvestDemand {
   const held = (...reasons: string[]): GrowerHarvestDemand => ({ status: 'held', reasons });
   const scope = normaliseGrowerPlanningScope(request.scope);
@@ -26,7 +29,11 @@ export function growerDemandFromHarvestTarget(request: {
   const target = sanitiseHarvestTargets([request.target])[0];
   if (!scope || scope.kind !== 'mapped-site') return held('mapped-site-required');
   if (!profile || !target || !isGrowerRecordedAt(request.recordedAt)) return held('invalid-source');
-  if (target.siteId !== scope.siteId || growerPlanningScopeKey(profile.scope) !== growerPlanningScopeKey(scope)) {
+  const source = request.source;
+  if (source && (source.status !== 'ready' || growerPlanningScopeKey(source.scope) !== growerPlanningScopeKey(scope)
+    || !source.geometryFingerprint || !source.sourceKey || !source.resourceSiteId)) return held('source-scope-mismatch');
+  const targetSiteId = source ? source.resourceSiteId : scope.siteId;
+  if (target.siteId !== targetSiteId || growerPlanningScopeKey(profile.scope) !== growerPlanningScopeKey(scope)) {
     return held('scope-mismatch');
   }
   if (profile.cropKey !== target.cropKey) return held('crop-identity-mismatch');

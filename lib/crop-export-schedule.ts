@@ -19,6 +19,7 @@ import { buildProductGuidance, type ProductGuideContext, type ExpectedSeason } f
 // drift into describing the same task three different ways.
 
 import { numberLabel } from '@/lib/format-figures';
+import { addDecimalQuantity, compareDecimalQuantities, decimalQuantityNumber, decimalQuantityProduct, type DecimalQuantity } from './farm-records';
 import type { CropDef } from '@/lib/crop-catalog';
 import { MONTHS_SHORT, cropByKey, plantSpacingCm, plantSpacingRangeCm } from '@/lib/crop-catalog';
 import type { CropTask, PlanBed, Planting, SeedBoqRow } from '@/lib/crop-plan';
@@ -824,7 +825,7 @@ const nurseryRangeMap = (range: NurseryRange, f: (n: number) => number): Nursery
 /** Entered decimal rates are exact planning inputs. Binary division can turn
  * exactly 200 seeds into 200.00000000000003 and demand a second 200-cell tray.
  * An epsilon would also discard genuinely positive fractions at that boundary. */
-function nurseryCeilRatio(numerators: number[], denominators: number[]): number {
+export function nurseryCeilRatio(numerators: number[], denominators: number[]): number {
   const one = BigInt(1); const ten = BigInt(10);
   const fraction = (value: number): readonly [bigint, bigint] => {
     const [coefficient, exponent = '0'] = value.toString().split('e');
@@ -846,11 +847,11 @@ function nurseryCeilRatio(numerators: number[], denominators: number[]): number 
   return rounded <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(rounded) : Infinity;
 }
 
-type NurseryInterval = { start: number; end: number; value: NurseryRange; incomplete: boolean };
+export type NurseryInterval = { start: number; end: number; value: NurseryRange; incomplete: boolean };
 /** A week can contain two successive uses of the same tray. Summing everything
  * touching that week would incorrectly require two trays; sweep actual envelopes
  * instead, releasing a tray before reserving its next use at the same instant. */
-function nurseryPeak(intervals: NurseryInterval[], start: number, end: number): { value: NurseryRange; incomplete: boolean } {
+export function nurseryPeak(intervals: NurseryInterval[], start: number, end: number, capacity?: number | null): { value: NurseryRange; incomplete: boolean; shortage?: number | null } {
   const events: { time: number; low: number; high: number; direction: number }[] = [];
   let incomplete = false;
   let unknown = false;
@@ -862,12 +863,23 @@ function nurseryPeak(intervals: NurseryInterval[], start: number, end: number): 
       { time: Math.min(end, interval.end), low: -interval.value[0], high: -interval.value[1], direction: -1 });
   }
   events.sort((a, b) => a.time - b.time || a.direction - b.direction);
-  let low = 0; let high = 0; let peakLow = 0; let peakHigh = 0;
+  // These are entered decimal allocations. Binary event sums can turn
+  // 0.1 + 0.2 m² into a false shortage against exactly 0.3 m² of bench.
+  let low: DecimalQuantity | undefined, high: DecimalQuantity | undefined;
+  let peakLow: DecimalQuantity | undefined, peakHigh: DecimalQuantity | undefined;
   for (const event of events) {
-    low += event.low; high += event.high;
-    peakLow = Math.max(peakLow, low); peakHigh = Math.max(peakHigh, high);
+    low = addDecimalQuantity(low, event.low); high = addDecimalQuantity(high, event.high);
+    if (compareDecimalQuantities(low, peakLow) > 0) peakLow = low;
+    if (compareDecimalQuantities(high, peakHigh) > 0) peakHigh = high;
   }
-  return { value: events.length || !unknown ? [peakLow, peakHigh] : null, incomplete };
+  const lowNumber = decimalQuantityNumber(peakLow), highNumber = decimalQuantityNumber(peakHigh);
+  const value: NurseryRange = (events.length || !unknown) && lowNumber !== null && highNumber !== null ? [lowNumber, highNumber] : null;
+  // Subtract before rounding the peak into a JS number: otherwise a small but
+  // genuine excess can also disappear at the same boundary.
+  const difference = value && capacity !== undefined && capacity !== null && Number.isFinite(capacity)
+    ? decimalQuantityNumber(addDecimalQuantity(peakHigh, -capacity)) : null;
+  return { value, incomplete: incomplete || lowNumber === null || highNumber === null,
+    ...(capacity === undefined ? {} : { shortage: difference === null ? null : Math.max(0, difference) }) };
 }
 
 /** Coarse nursery reservations only: field entry, tasks and yields remain under
@@ -968,21 +980,23 @@ export function buildNurseryForecast(
         issues.push('Zero germination or nursery survival cannot produce usable transplants.');
       } else {
         seeds = nurseryRangeMap(starts, (n) => nurseryCeilRatio([n, 10_000], [profile.germinationPercent!, profile.nurserySurvivalPercent!]));
-        if (container) trays = nurseryRangeMap(seeds, (n) => nurseryCeilRatio([n], [container.cells]));
+        if (container && container.cells !== undefined && container.cells > 0) trays = nurseryRangeMap(seeds, (n) => nurseryCeilRatio([n], [container.cells!]));
+        else if (container) issues.push('A positive cell count is required for the one-seed-per-cell model.');
       }
     } else if (profile?.model === 'measured-tray') {
       basis.push(`Grower measured usable starts per tray: ${profile.usableStartsPerTray ?? 'unknown'}. Germination and nursery losses are already included.`);
       basis.push(`Grower seeds per tray: ${profile.seedsPerTray ?? 'unknown'}.`);
       if (profile.usableStartsPerTray === undefined) issues.push('Enter measured usable starts per tray.');
+      else if (profile.usableStartsPerTray === 0) issues.push('Zero measured usable starts cannot produce a usable planting quantity.');
       else trays = nurseryRangeMap(starts, (n) => nurseryCeilRatio([n], [profile.usableStartsPerTray!]));
       if (profile.seedsPerTray === undefined) issues.push('Seeds per tray are unknown; tray and space estimates can still be shown.');
       else seeds = nurseryRangeMap(trays, (n) => n * profile.seedsPerTray!);
     }
     const trayFootprintM2 = container?.widthCm !== undefined && container.lengthCm !== undefined
-      ? container.widthCm * container.lengthCm / 10_000 : null;
-    const areaM2 = trayFootprintM2 === null ? null : nurseryRangeMap(trays, (n) => n * trayFootprintM2);
+      ? decimalQuantityProduct([container.widthCm, container.lengthCm, 0.0001]) : null;
+    const areaM2 = trayFootprintM2 === null ? null : nurseryRangeMap(trays, (n) => decimalQuantityProduct([n, trayFootprintM2]) ?? Infinity);
     if (trayFootprintM2 === null) issues.push('Container dimensions are unknown; nursery surface demand cannot be calculated.');
-    if (container) basis.push(`Grower container: ${container.cells} cells; ${container.widthCm ?? 'unknown'} × ${container.lengthCm ?? 'unknown'} cm footprint.`);
+    if (container) basis.push(`Grower container: ${container.cells ?? 'unknown'} cells; ${container.widthCm ?? 'unknown'} × ${container.lengthCm ?? 'unknown'} cm footprint.`);
     if (container && container.owned === undefined) issues.push('Owned container stock is unknown; a stock shortage cannot be calculated.');
     if ((!starts || !seeds || !trays || !areaM2) && !issues.length) {
       issues.push('The recorded quantities exceed a finite planning range; check the area and nursery estimates.');
@@ -1016,12 +1030,11 @@ export function buildNurseryForecast(
     // neither can its absence certify spare capacity on any of them.
     const unassigned = cohorts.filter((row) => quantity === 'trays' ? !row.containerId : !row.spaceId);
     const demands = [...intervals(rows, quantity), ...intervals(unassigned, quantity).map((interval) => ({ ...interval, value: null, incomplete: true }))];
-    const overall = nurseryPeak(demands, start, end);
-    const shortage = (value: NurseryRange) => value && capacity !== null ? Math.max(0, value[1] - capacity) : null;
-    return { id, name, capacity, peak: overall.value, shortage: shortage(overall.value), incomplete: overall.incomplete || capacity === null,
-      weeks: buckets.map((bucket) => { const peak = nurseryPeak(demands, bucket.start, bucket.end); return {
+    const overall = nurseryPeak(demands, start, end, capacity);
+    return { id, name, capacity, peak: overall.value, shortage: overall.shortage ?? null, incomplete: overall.incomplete || capacity === null,
+      weeks: buckets.map((bucket) => { const peak = nurseryPeak(demands, bucket.start, bucket.end, capacity); return {
         startDate: nurseryDate(bucket.start), endDateExclusive: nurseryDate(bucket.end), demand: peak.value,
-        shortage: shortage(peak.value), incomplete: peak.incomplete || capacity === null,
+        shortage: peak.shortage ?? null, incomplete: peak.incomplete || capacity === null,
       }; }) };
   };
   const knownUses = cohorts.filter((row) => row.trays !== null);

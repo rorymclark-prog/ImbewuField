@@ -47,9 +47,9 @@ export function recordQuantityLabel(row: RecordQuantityRow): string {
   return quantity === null || !unit ? 'Quantity not recorded' : `${quantity.toLocaleString('en-ZA', { maximumSignificantDigits: 21 })} ${unit === 'each' ? 'items' : unit}`;
 }
 
-type DecimalQuantity = { digits: bigint; exponent: number };
+export type DecimalQuantity = { digits: bigint; exponent: number };
 
-function addDecimalQuantity(previous: DecimalQuantity | undefined, quantity: number): DecimalQuantity {
+export function addDecimalQuantity(previous: DecimalQuantity | undefined, quantity: number): DecimalQuantity {
   const [decimal, scientificExponent] = quantity.toString().split('e');
   const [whole, fraction = ''] = decimal.split('.');
   const next = { digits: BigInt(whole + fraction), exponent: Number(scientificExponent ?? 0) - fraction.length };
@@ -62,9 +62,31 @@ function addDecimalQuantity(previous: DecimalQuantity | undefined, quantity: num
   };
 }
 
-function decimalQuantityNumber(total: DecimalQuantity | undefined): number | null {
+export function decimalQuantityNumber(total: DecimalQuantity | undefined): number | null {
   const quantity = total ? Number(`${total.digits}e${total.exponent}`) : 0;
   return Number.isFinite(quantity) ? quantity : null;
+}
+
+/** Compare before conversion so a real tiny excess is not rounded into capacity. */
+export function compareDecimalQuantities(a: DecimalQuantity | undefined, b: DecimalQuantity | undefined): number {
+  const left = a ?? { digits: BigInt(0), exponent: 0 };
+  const right = b ?? { digits: BigInt(0), exponent: 0 };
+  const exponent = Math.min(left.exponent, right.exponent);
+  const difference = left.digits * BigInt(10) ** BigInt(left.exponent - exponent)
+    - right.digits * BigInt(10) ** BigInt(right.exponent - exponent);
+  return difference < 0 ? -1 : difference > 0 ? 1 : 0;
+}
+
+/** Multiply entered decimal quantities, converting only the final product. */
+export function decimalQuantityProduct(values: readonly number[]): number | null {
+  let product: DecimalQuantity = { digits: BigInt(1), exponent: 0 };
+  for (const value of values) {
+    if (typeof value !== 'number' || !Number.isFinite(value)) return null;
+    const factor = addDecimalQuantity(undefined, value);
+    product = { digits: product.digits * factor.digits, exponent: product.exponent + factor.exponent };
+  }
+  const quantity = decimalQuantityNumber(product);
+  return quantity === 0 && product.digits !== BigInt(0) ? null : quantity;
 }
 
 /** Signed observations can derive a balance without introducing decimal noise.

@@ -22,6 +22,7 @@ const probe = { React, query, climateRequests: 0, idealRuns: 0, IDEAL_PLAN_COPY,
 Object.assign(globalThis, { __internationalPlannerContext: probe, IS_REACT_ACT_ENVIRONMENT: true });
 const moduleUrl = (source: string) => `data:text/javascript,${encodeURIComponent(source)}`;
 const routeUrl = new URL('../app/facilitator/crops/page.tsx', import.meta.url).href;
+const workflowHookUrl = new URL('../components/crops/useGrowerWorkflow.ts', import.meta.url).href;
 const rootUrl = new URL('../', import.meta.url).href;
 const boundary = (name: string) => moduleUrl(`
 const React = globalThis.__internationalPlannerContext.React;
@@ -41,7 +42,14 @@ const hooks = registerHooks({
       const React = globalThis.__internationalPlannerContext.React;
       export default function Link({children,...props}) { return React.createElement('a', props, children); }
     `), shortCircuit: true };
+    // The page now mounts a named coordinator hook. Keep that real hook so its
+    // source/book invalidation still runs; only its external cloud query is a
+    // controlled boundary, just like the existing route-level design list.
+    if (context.parentURL === workflowHookUrl && specifier === '@/lib/db/queries') {
+      return { url: moduleUrl('export const myDesigns = async () => [];'), shortCircuit: true };
+    }
     if (context.parentURL === routeUrl) {
+      if (specifier === '@/lib/firebase/init') return { url: moduleUrl('export const getFirebase = () => null; export const isBackendConfigured = () => false;'), shortCircuit: true };
       if (specifier === 'next/navigation') return { url: moduleUrl('export const useSearchParams = () => globalThis.__internationalPlannerContext.query;'), shortCircuit: true };
       if (specifier === '@/lib/i18n') return { url: moduleUrl("export const useLanguage = () => ({lang:'en'});"), shortCircuit: true };
       if (specifier === '@/lib/app-level') return { url: moduleUrl("export const useAppLevel = () => 'simple';"), shortCircuit: true };
@@ -62,7 +70,8 @@ const hooks = registerHooks({
         export const resolveSiteClimate = async () => {globalThis.__internationalPlannerContext.climateRequests++; return null;};
         export const driestMonths = () => [];
       `), shortCircuit: true };
-      if (specifier.startsWith('@/components/') && !specifier.startsWith('@/components/international/') && !specifier.endsWith('.format')) {
+      if (specifier.startsWith('@/components/') && specifier !== '@/components/crops/useGrowerWorkflow'
+        && !specifier.startsWith('@/components/international/') && !specifier.endsWith('.format')) {
         return { url: boundary(specifier), shortCircuit: true };
       }
     }
@@ -205,13 +214,25 @@ async function mount(countryCode?: string, options: {
   };
 }
 
+// Unsupported mapped sites now have a record-only target form. Its presence is
+// intentional: assert its explicit basis and safe save boundary instead of the old
+// blanket absence claim, while keeping catalogue advice and exports held below.
+function assertOwnTargetRecords(screen: Awaited<ReturnType<typeof mount>>) {
+  const targets = screen.boundaries('HarvestTargetsPanel');
+  assert.equal(targets.length, 1);
+  const props = targets[0].props['data-props'];
+  assert.equal(props.basis, 'own-records');
+  assert.equal(typeof props.onSaveTargets, 'function');
+  assert.deepEqual(props.climate, {});
+}
+
 test('the real planner withholds recommendation and export widgets for unknown and foreign sites even with auto=1', async () => {
   for (const code of [undefined, 'KE', 'GB', 'US', 'BR']) {
     const screen = await mount(code);
     try {
       assert.match(screen.text(), code ? /Local crop planning is not available/ : /Confirm the site country/);
       assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
-      assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+      assertOwnTargetRecords(screen);
       assert.equal(screen.boundaries('ProductionAvailabilityGraphs').length, 0);
       assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Planning support' }).length, 1);
       assert.equal(screen.text().includes('Auto-suggest a plan'), false);
@@ -240,6 +261,7 @@ test('the real country form requires renewed confirmation and persists metadata 
     assert.equal(loadPlaces()[0].siteCountryContext?.agriculturalRegionReference, 'Grower description');
     assert.equal(screen.boundaries('CropPlanExportCard').length, 1);
     assert.equal(screen.boundaries('HarvestTargetsPanel').length, 1);
+    assert.notEqual(screen.boundaries('HarvestTargetsPanel')[0].props['data-props'].basis, 'own-records');
     assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Planning support' }).length, 0);
     await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
@@ -260,7 +282,7 @@ test('a stale harvest-target accept callback rereads the current country before 
     await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
     await screen.setStoredCountry('KE');
-    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+    assertOwnTargetRecords(screen);
     assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
     assert.match(screen.text(), /Local crop planning is not available/);
   } finally { await screen.dispose(); }
@@ -305,7 +327,7 @@ test('an unsupported grower can record an existing crop identity without first a
     assert.ok(option);
     const existingKeys = new Set(CROPS.map(value => `crop:${value.key}`));
     assert.ok(editor.products.every((product: { iconKey: string }) => existingKeys.has(product.iconKey)));
-    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+    assertOwnTargetRecords(screen);
     await act(async () => editor.onProductionRecordsChange([{ id: 'own-observation', siteId,
       sourceIconKey: option.iconKey, label: option.label, date: { year: 2026, month: 11 },
       quantity: 0, unit: 'kg', status: 'actual', provenance: 'fictional-example' }]));
@@ -423,7 +445,7 @@ test('a mapped foreign site cannot inherit an unmapped reference choice in the r
   const local = createWorkspacePlanningReference('design:local', true)!;
   const screen = await mount('KE', { auto: false, workspaceReferences: [reference, local] });
   try {
-    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+    assertOwnTargetRecords(screen);
     assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
     assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Unmapped workspace reference basis' }).length, 0);
     assert.match(screen.text(), /Local crop planning is not available/);

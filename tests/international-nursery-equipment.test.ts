@@ -59,13 +59,17 @@ function mount(settings?: NurserySettings, allowCatalogueForecast?: boolean) {
   for (const [key, value] of Object.entries({ window: browser, localStorage, sessionStorage })) Object.defineProperty(globalThis, key, { configurable: true, value });
   let renderer: ReactTestRenderer;
   let currentSettings = settings;
+  let receipt: boolean | undefined = true;
   const saved: NurserySettings[] = [];
   const props: NurseryPlanPanelProps = {
     siteId: 'fictional-site', plantings: [], beds: [], now: { year: 2026, month: 11 },
     settings: currentSettings, allowCatalogueForecast, showBuyingCalendar: true,
     onSettings(next) {
+      if (receipt === false) return false;
       saved.push(structuredClone(next)); currentSettings = next;
       renderer.update(React.createElement(NurseryPlanPanel, { ...props, settings: currentSettings }));
+      // The real editor now distinguishes a device-write receipt from a queued callback.
+      return receipt;
     },
   };
   act(() => { renderer = create(React.createElement(NurseryPlanPanel, props)); });
@@ -76,6 +80,7 @@ function mount(settings?: NurserySettings, allowCatalogueForecast?: boolean) {
   };
   return {
     get renderer() { return renderer; }, saved,
+    set receipt(value: boolean | undefined) { receipt = value; },
     text: () => text(renderer.root),
     field,
     change(prefix: string, value: string) { act(() => field(prefix).props.onChange({ target: { value } })); },
@@ -112,6 +117,58 @@ test('unsupported nursery context never computes catalogue demand or offers fore
   } finally { screen.dispose(); probe.forbidden = false; }
 });
 
+test('a nursery recipe needs an explicit propagation model rather than an assumed seed per cell', () => {
+  const screen = mount(undefined, false);
+  try {
+    assert.equal(screen.field('Nursery model').props.value, '');
+    screen.change('Crop identity for nursery recipe', CROPS[0].key);
+    screen.submit('Save crop recipe');
+    assert.equal(screen.saved.length, 0);
+    assert.match(screen.text(), /Choose your propagation model/);
+  } finally { screen.dispose(); }
+});
+
+test('own propagation records preserve a flat without cells and observed zero output for an existing crop identity', () => {
+  // Synthetic equipment observations, not tray recommendations or crop instructions.
+  const crop = CROPS.find(candidate => !candidate.transplant)!;
+  const screen = mount(undefined, false);
+  try {
+    screen.change('Container name', 'Observed flat'); screen.change('Owned containers', '0'); screen.submit('Add container type');
+    assert.equal(screen.saved.at(-1)!.containers[0].cells, undefined);
+    assert.equal(screen.saved.at(-1)!.containers[0].owned, 0);
+    screen.change('Crop identity for nursery recipe', crop.key); screen.change('Nursery model', 'measured-tray');
+    screen.change('Your usable starts per tray', '0'); screen.submit('Save crop recipe');
+    const recipe = screen.saved.at(-1)!.profiles[0];
+    assert.equal(recipe.cropKey, crop.key); assert.equal(recipe.usableStartsPerTray, 0);
+    assert.equal(recipe.fieldSurvivalPercent, undefined);
+    assert.match(screen.text(), /Field survival: unknown/);
+  } finally { screen.dispose(); }
+});
+
+test('a failed equipment write retains the editor and never reports a completed device save', () => {
+  const screen = mount(undefined, false);
+  try {
+    screen.receipt = false;
+    screen.change('Space name', 'Unsaved bench'); screen.change('Net usable surface', '0'); screen.submit('Add nursery space');
+    assert.equal(screen.saved.length, 0);
+    assert.equal(screen.field('Space name').props.value, 'Unsaved bench');
+    assert.equal(screen.field('Net usable surface').props.value, '0');
+    assert.match(screen.text(), /Could not save on this device/);
+    assert.doesNotMatch(screen.text(), /Nursery space saved for this site|Saved on this device\./);
+  } finally { screen.dispose(); }
+});
+
+test('a callback without a receipt does not certify a device save', () => {
+  const screen = mount(undefined, false);
+  try {
+    screen.receipt = undefined;
+    screen.change('Space name', 'Queued bench'); screen.change('Net usable surface', '0'); screen.submit('Add nursery space');
+    assert.equal(screen.saved.length, 1);
+    assert.match(screen.text(), /Device save is not confirmed/);
+    assert.doesNotMatch(screen.text(), /Saved on this device\./);
+  } finally { screen.dispose(); }
+});
+
 test('unsupported growers can save equipment and their own recipes without inventing demand or overwriting another site', () => {
   const crop = CROPS.find(candidate => candidate.transplant)!;
   const other: NurserySettings = { version: 1,
@@ -126,7 +183,7 @@ test('unsupported growers can save equipment and their own recipes without inven
     assert.match(screen.text(), /Nursery space saved for this site/);
     screen.change('Container name', 'My tray'); screen.change('Cells per container', '24'); screen.change('Owned containers', '0'); screen.submit('Add container type');
     assert.match(screen.text(), /Nursery container saved for this site/);
-    screen.change('Transplant crop', crop.key); screen.change('Nursery model', 'measured-tray');
+    screen.change('Crop identity for nursery recipe', crop.key); screen.change('Nursery model', 'measured-tray');
     screen.change('Your usable starts per tray', '18'); screen.change('Your nursery duration', '4'); screen.submit('Save crop recipe');
     assert.match(screen.text(), /Crop nursery recipe saved for this site/);
     assert.equal(screen.saved.length, 3);
