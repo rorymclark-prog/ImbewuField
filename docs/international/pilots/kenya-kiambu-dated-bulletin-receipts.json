@@ -1,0 +1,44 @@
+{
+  "coordinatorFetchProvenance": "Two independent public HTTPS fetches from coordinator machine. Public response metadata only; raw bodies, PDF, images and text remain excluded from publication.",
+  "receipts": [
+    {
+      "kind": "html",
+      "requestedUrl": "https://meteo.go.ke/our-products/county-forecasts/kiambu-county-weekly-weather-forecast-valid-3rd-to-9th-november-2026/",
+      "effectiveUrl": "https://meteo.go.ke/our-products/county-forecasts/kiambu-county-weekly-weather-forecast-valid-3rd-to-9th-november-2026/",
+      "fetchedAtUtc": "2026-11-03T15:36:55.074356+00:00",
+      "httpStatus": 200,
+      "curlExit": 0,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 89606,
+      "sha256": "6edf203352719ab3cee09974e29c15a0a1ad16623e4e557619fe6582f3d40acf"
+    },
+    {
+      "kind": "pdf",
+      "requestedUrl": "https://meteo.go.ke/documents/5545/Kiambu_County_weekly_weather_forecast_valid_3rd_to_9th_November_2026.pdf",
+      "effectiveUrl": "https://meteo.go.ke/documents/5545/Kiambu_County_weekly_weather_forecast_valid_3rd_to_9th_November_2026.pdf",
+      "fetchedAtUtc": "2026-11-03T15:37:56.219846+00:00",
+      "httpStatus": 200,
+      "curlExit": 0,
+      "contentType": "application/pdf",
+      "bytes": 738997,
+      "sha256": "6d05a3f29a1fbf9f3643a91a5bf1a117170ec5fae1dd3e0b4f658dd1e4a5a4f9"
+    }
+  ],
+  "review": {
+    "htmlHeadingAndLinkChecked": true,
+    "pdfFirstPageVisuallyChecked": true,
+    "advertisedCounty": "Kiambu",
+    "advertisedCalendarDates": {
+      "start": "2026-11-03",
+      "end": "2026-11-09"
+    },
+    "pdfMapLabel": "09am boundaries shown without a time zone; map duration label and weekly date range are not normalized into validity instants.",
+    "timeZone": "UNKNOWN",
+    "verifiedFreshness": "not-assessed",
+    "licence": "UNKNOWN",
+    "apiAuthentication": "UNKNOWN",
+    "publicHtmlAndPdfFetchRequiredCredentials": false,
+    "productionPlanSupported": false,
+    "cropPlanningApproval": false
+  }
+}

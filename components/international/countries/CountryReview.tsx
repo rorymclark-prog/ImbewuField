@@ -9,6 +9,7 @@ import { evaluateCountryReadiness, sourceEvidenceState } from '@/lib/internation
 import type { Known } from '@/lib/international/countries/types';
 import { COUNTRY_CLIMATE_DEMOS, NASA_REFERENCE_PROVIDER, fetchCountryClimateReference, type ClimateReferenceResult, type ClimateDemoCode } from '@/lib/international/providers/nasa-reference';
 import styles from './CountryReview.module.css';
+import CountyBulletinReference from './CountyBulletinReference';
 
 const metadata = (value: Known<string>) => value.status === 'known' ? value.value : `Unknown — ${value.reason}`;
 const CATEGORY_NAMES = { biodiversity: 'Biodiversity & taxonomy', 'agricultural-extension': 'Agricultural extension', 'weather-frost': 'Weather & frost', soils: 'Soils', 'plant-legality': 'Plant legality' };
@@ -67,6 +68,7 @@ export default function CountryReview() {
       {readiness.country && <p>{readiness.country.jurisdictionNote}</p>}
       <h3>What still needs review</h3><ul>{readiness.gaps.map((gap) => <li key={gap}>{gap}</li>)}</ul>
     </section>
+    <CountyBulletinReference key={code} countryCode={code} />
     <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">Evidence by purpose</h2>
       <p className={styles.secondary}>A source page read is distinct from a dated dataset or approved farming guidance. Unknown publication dates remain undated evidence.</p>
       <div className={styles.evidenceGrid}>{readiness.evidence.map((entry) => <article key={entry.category} className={styles.card}>

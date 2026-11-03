@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Kiambu link descriptions: docs/international/agy-kiambu-link-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
+  "Open checked Kiambu weather bulletin links from the country review.": "Vula izixhumanisi zezaziso zesimo sezulu zase-Kiambu ezihloliwe ekubuyekezweni kwezwe.",
+  "Keep bulletin dates separate from live weather and crop-planning approval.": "Gcina izinsuku zezaziso zihlukile esimweni sezulu esibukhoma nasekuvunyelweni kokuhlelwa kwezitshalo.",
+  "Review official county bulletin links": "Buyekeza izixhumanisi zezaziso ezisemthethweni zesifunda",
+  "International → Country review": "Amazwe ngamazwe → Ukubuyekezwa kwezwe",
+  "Choose Kenya and Kiambu to open dated official source links. Check the source for updates; this reference does not supply live weather or crop advice.": "Khetha i-Kenya ne-Kiambu ukuze uvule izixhumanisi zemithombo esemthethweni enezinsuku. Bheka umthombo ukuze uthole izibuyekezo; lokhu kubhekisela akuhlinzeki ngesimo sezulu esibukhoma noma ngezeluleko zezitshalo.",
   // Country context: docs/international/agy-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Qinisekisa izwe lesayithi edwetshiwe ngaphambi kokusebenzisa isiqondiso sayo sokuhlela izitshalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Gcina amarekhodi akho okuhlwanyela nezinto zokusebenza zenkulisa yezitshalo ngenkathi ukuhlela kwendawo kungatholakali.",

@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Kiambu link descriptions: docs/international/agy-kiambu-link-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
+  "Open checked Kiambu weather bulletin links from the country review.": "Vhulani vhuṱanganyi ha zwiṋwalwa zwa mutsho zwa Kiambu zwo tolwaho u bva kha tsedzuluso ya shango.",
+  "Keep bulletin dates separate from live weather and crop-planning approval.": "Vhulungani maduvha a zwiṋwalwa o fhambana na mutsho wa zwino na thendelo ya u pulana zwoṱowaho.",
+  "Review official county bulletin links": "Sedzulusani vhuṱanganyi ha zwiṋwalwa zwa tshiofisi zwa vundu",
+  "International → Country review": "Tshaka dza mashango → Tsedzuluso ya shango",
+  "Choose Kenya and Kiambu to open dated official source links. Check the source for updates; this reference does not supply live weather or crop advice.": "Nangani Kenya na Kiambu u vhula vhuṱanganyi ha zwisima zwa tshiofisi zwi re na maduvha. Tolani tshisima u wana zwiswa; tshisumbedzo itshi a tshi ṋetshedzi mutsho wa zwino kana nyeletshedzo ya zwoṱowaho.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Khwathisedzani shango ḽa fhethu ho mapiwaho musi ni sa athu shumisa vhulangeli ha u pulana zwilimwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Vhulungani rekhodo dzaṋu dza u zwala na zwishumiswa zwa nese musi pulane ya henefho i sa athu vha hone.",

@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Kiambu link descriptions: docs/international/agy-kiambu-link-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
+  "Open checked Kiambu weather bulletin links from the country review.": "Pfula swihlanganisi swa switiviso swa maxelo swa Kiambu leswi kamberiweke eka ku kambisisa ka tiko.",
+  "Keep bulletin dates separate from live weather and crop-planning approval.": "Hlayisa masiku ya switiviso ma hambanile ni maxelo ya nkarhi wolowo ni ku pfumeleriwa ka makunguhato ya swibyariwa.",
+  "Review official county bulletin links": "Kambisisa swihlanganisi swa switiviso swa le nawini swa xifundzantsongo",
+  "International → Country review": "Matiko ya misava → Nkambisiso wa tiko",
+  "Choose Kenya and Kiambu to open dated official source links. Check the source for updates; this reference does not supply live weather or crop advice.": "Hlawula Kenya na Kiambu ku pfula swihlanganisi swa swihlovo swa le nawini leswi nga na masiku. Kamba xihlovo ku kuma swintshuxo; xikombo lexi a xi nyiki maxelo ya nkarhi wolowo kumbe switsundzuxo swa swibyariwa.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",
