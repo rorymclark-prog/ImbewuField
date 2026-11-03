@@ -473,6 +473,55 @@ test('a legacy harvest garden label does not prevent editing or clearing the rec
   await assertFails(updateDoc(target, { garden_id: 'old-unverified-label' }));
 });
 
+test('revoked garden membership rejects new links and reassociation, but preserves editing existing records', async () => {
+  const gardenId = 'garden-org1-revocation';
+  const harvestId = 'harvest-garden-pre-revocation';
+  const memberDocPath = `gardens/${gardenId}/members/${FARMER_WITH_LINK}`;
+
+  await env.withSecurityRulesDisabled(async context => {
+    const seedDb = context.firestore();
+    await setDoc(doc(seedDb, 'gardens', gardenId), {
+      name: 'Revocation Test Garden',
+      org_id: 'org-1',
+    });
+    await setDoc(doc(seedDb, memberDocPath), {
+      garden_id: gardenId,
+      profile_id: FARMER_WITH_LINK,
+    });
+  });
+
+  const member = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  const harvestRef = doc(member, 'production_logs', harvestId);
+  const row = logData(FARMER_WITH_LINK, 'org-1', 'production_logs');
+
+  // Save one linked harvest while still an active member
+  await assertSucceeds(setDoc(harvestRef, { ...row, garden_id: gardenId }));
+
+  // Remove the membership via fixture admin (simulating membership revocation)
+  await env.withSecurityRulesDisabled(async context => {
+    await deleteDoc(doc(context.firestore(), memberDocPath));
+  });
+
+  // A new linked write must now be rejected
+  await assertFails(setDoc(doc(member, 'production_logs', 'harvest-garden-post-revocation'), {
+    ...row, garden_id: gardenId,
+  }));
+
+  // A no-link harvest must still succeed
+  await assertSucceeds(setDoc(doc(member, 'production_logs', 'harvest-garden-no-link'), {
+    ...row, garden_id: null,
+  }));
+
+  // The pre-existing linked record can still be edited without changing the association
+  await assertSucceeds(updateDoc(harvestRef, { kg: 3 }));
+
+  // The pre-existing record can be cleared
+  await assertSucceeds(updateDoc(harvestRef, { garden_id: null }));
+
+  // After clearing, reassociation to the revoked garden must fail
+  await assertFails(updateDoc(harvestRef, { garden_id: gardenId }));
+});
+
 test('counted produce is stored with unknown weight and retains the same owner gates', async () => {
   const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
   const other = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();
