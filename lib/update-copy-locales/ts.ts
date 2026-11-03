@@ -10,6 +10,10 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Kambisisa xisekelo lexi nga mepiwangiki",
   "Crop planner → Planning without a mapped site": "Mukunguhati wa swibyariwa → Ku kunguhata handle ka ndhawu leyi mepiweke",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Eka bedi ro vumbiwa kumbe dizayini ya laha kaya, hlawula kumbe u susa xisekelo xo komba xa Afrika-Dzonga hi ku kongoma. Nhlawulo wu ta sala na ndhawu yoleyo yo tirhela.",
+  // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
+  "Sector illustrations have lighter arrows, clearer contours and a shorter map key.": "Swifaniso swa Sector swi na miseve yo vevuka, milayeni ya ku tlakuka leyi vonakaka kahle ni nhlamuselo yo koma ya mepe.",
+  // Raw profile: docs/audits/2026-11-03/raw-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Terrain profiles show sampled elevation and classroom positions at the plan scale.": "Tiphurofayili ta ndhawu ti komba ku tlakuka loku tekiweke eka swikombiso ni tindhawu ta titlilasi hi xikalo xa pulani.",
   "Review the shade cover": "Kambela xifunengeto xa ndzhuti",
   "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Pfula Structures, kutani u tlhela u hlanganisa xifaniso xa AI lexi hlayisiweke ku komba xifunengeto xa ndzhuti.",
 

@@ -48,6 +48,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.' },
   { title: 'Review an unmapped reference', where: 'Crop planner → Planning without a mapped site', href: '/facilitator/crops',
     detail: 'For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.' }] },
+  { when: '3 November 2026', sha: '3d0f89c1e', changes: [
+    "Terrain profiles show sampled elevation and classroom positions at the plan scale.",
+    "Sector illustrations have lighter arrows, clearer contours and a shorter map key.",
+  ] },
   { when: '3 November 2026', sha: 'fe520c58e', changes: [
     "Structures maps show recorded shade cloth over the illustrated beds.",
   ], tour: [{title: 'Review the shade cover', where: 'Site design → Glossy', href: '/design',

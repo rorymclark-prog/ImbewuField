@@ -447,21 +447,19 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
     /cropStyleSheetToMap\(hybridInput, mapWidth, mapHeight\)/,
     'the polish stage must send the map column, never the composed Hybrid page',
   );
-  assert.match(
-    queue,
-    /const protectMaskDataUrl = kind === 'sector' && !polishStage/,
-    'a protect mask promises a byte-restore; the polish stage restores nothing, so it must not send one',
-  );
-  assert.match(
-    completion,
-    /sheet\.key === 'sector' && sourceImage && protectMask && !isPolishedResult/,
-    'the HYBRID stage (and only it) restores protected source pixels',
-  );
-  assert.match(
-    completion,
-    /: sheet\.key === 'sector'\s*\n\s*\? await finishSectorRef\.current\(factualModelImage, frozenScene\)/,
-    'both Sector stages must recompose the app-owned analysis — a raw model return has no legend on it',
-  );
+  // The archive adds a separate coverage mask even to polished artwork: the model must never
+  // invent landscape beyond the photographed tips. Ordinary house/photo restore is Hybrid-only.
+  assert.match(queue, /(?:let|const) protectMaskDataUrl = kind === 'sector' && !polishStage[\s\S]*?buildProtectMask\([\s\S]*?: undefined;/,
+    'only the Hybrid Sector path may add the ordinary photo/house protect mask');
+  assert.match(queue, /if\(historicalActive && availableHistoricalBaseline\)[\s\S]*?buildHistoricalCoverageMask\(/,
+    'historical no-photo areas need a distinct coverage mask');
+  assert.match(completion, /if \(\(sheet\.key === 'sector' && !isPolishedResult \|\| historicalSource\) && sourceImage && protectMask\)/,
+    'restore only the ordinary Hybrid or an actual historical archive coverage mask');
+  assert.match(completion, /currentMask = sheet\.key === 'sector' && !isPolishedResult \? await buildProtectMask/,
+    'the historical exception must not reintroduce ordinary photo patches on polished artwork');
+  assert.match(completion, /if\(historicalSource\)\{const coverage=await buildHistoricalCoverageMask/);
+  assert.match(completion, /: sheet\.key === 'sector'\s*\n\s*\? await finishSectorRef\.current\(factualModelImage, frozenScene, historicalSource\)/,
+    'both Sector stages recompose app-owned analysis and keep the correct historical source');
   assert.doesNotMatch(
     completion,
     /sectorPolishOwnsPage/,

@@ -10,6 +10,10 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Hlahloba tšupiso e sa mmepiloeng",
   "Crop planner → Planning without a mapped site": "Moralo oa lijalo → Ho rera ntle le sebaka se mmepiloeng",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Bakeng sa bethe e bōpiloeng kapa moralo oa sebaka, khetha kapa u tlose motheo oa tšupiso oa Afrika Boroa ka ho hlaka. Khetho ena e sala le sebaka seo sa mosebetsi.",
+  // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
+  "Sector illustrations have lighter arrows, clearer contours and a shorter map key.": "Ditshwantsho tsa Sector di na le metsu e bobebe, mela e hlakileng ya bophahamo le senotlolo se sekgutshwane sa mmapa.",
+  // Raw profile: docs/audits/2026-11-03/raw-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Terrain profiles show sampled elevation and classroom positions at the plan scale.": "Diprofaele tsa sebaka di bontsha bophahamo bo nkilweng disampoleng le dibaka tsa ditlelase sekaleng sa moralo.",
   "Review the shade cover": "Hlahloba sekoahelo sa moriti",
   "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Bula Structures, ebe o kopanya botjha setshwantsho sa AI se bolokilweng ho bontsha sekoahelo sa moriti.",
 
