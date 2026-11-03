@@ -16,8 +16,8 @@ export default function ReferenceCardLanguageReview() {
   const fallbacks = rows.filter(row => row.origin === 'fallback').length;
 
   return <section aria-labelledby="reference-card-language-heading" className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-1)] p-3">
-    <h2 id="reference-card-language-heading" className="font-display text-lg font-semibold">Pilot reference card wording</h2>
-    <p className={muted}>Compare wording captured from the pilot cards. These AI drafts need fluent human review. This preview applies only to the examples on this page.</p>
+    <h2 id="reference-card-language-heading" className="font-display text-lg font-semibold">Country reference card wording</h2>
+    <p className={muted}>Compare wording captured from country references. These AI drafts need fluent human review. This preview applies only to the examples on this page.</p>
     <div className="grid gap-3 sm:grid-cols-2">
       <label className="text-sm">Reference card<select className={field} value={pilot} onChange={event => {
         const choice = event.target.value;

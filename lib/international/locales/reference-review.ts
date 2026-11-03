@@ -6,6 +6,8 @@ import usSource from '@/docs/international/reference-card-language-packets/us-so
 import usDrafts from '@/docs/international/reference-card-language-packets/us-drafts.json' with { type: 'json' };
 import brazilSource from '@/docs/international/reference-card-language-packets/brazil-source.json' with { type: 'json' };
 import brazilDrafts from '@/docs/international/reference-card-language-packets/brazil-drafts.json' with { type: 'json' };
+import colombiaSource from '@/docs/international/reference-card-language-packets/colombia-source.json' with { type: 'json' };
+import colombiaDrafts from '@/docs/international/reference-card-language-packets/colombia-drafts.json' with { type: 'json' };
 import manifest from '@/docs/international/reference-card-language-packets/manifest.json' with { type: 'json' };
 
 export const REFERENCE_REVIEW_LANGUAGES = [
@@ -28,6 +30,7 @@ export const REFERENCE_REVIEW_PACKETS = {
   uk: { label: 'United Kingdom · Yeovilton records', source: ukSource, drafts: ukDrafts, binding: manifest.uk },
   us: { label: 'United States · public station observations', source: usSource, drafts: usDrafts, binding: manifest.us },
   brazil: { label: 'Brazil · Redape soil-profile catalogue', source: brazilSource, drafts: brazilDrafts, binding: manifest.brazil },
+  colombia: { label: 'Colombia · SiB and IDEAM references', source: colombiaSource, drafts: colombiaDrafts, binding: manifest.colombia },
 } satisfies Record<string, ReferenceReviewPacket>;
 
 /** Only this review surface can display these candidates. A damaged binding

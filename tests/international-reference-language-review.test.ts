@@ -31,7 +31,22 @@ test('all four choices use the checked wording for the selected pilot and remain
       counts[pilot] = (counts[pilot] ?? 0) + rows.length;
     }
   }
-  assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16 });
+  assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16, colombia: 16 });
+});
+
+test('Colombian wording keeps the linked publication date and falls back if its year is lost', () => {
+  const packet = structuredClone(REFERENCE_REVIEW_PACKETS.colombia);
+  const dates = { fr: '26 octobre 2026', es: '26 de octubre de 2026', 'pt-BR': '26 de outubro de 2026', sw: '26 Oktoba 2026' };
+  for (const language of ['fr', 'es', 'pt-BR', 'sw'] as const) {
+    const row = referenceReviewRows(packet, language).find(entry => entry.key === 'colombiaIdeamClaim');
+    assert.equal(row?.origin, 'draft');
+    assert.ok(row.text.includes(dates[language]));
+  }
+  const draft = packet.drafts.locales.sw.find(row => row.key === 'colombiaIdeamClaim')!;
+  draft.translation = draft.translation.replace('2026', '2025');
+  const rows = referenceReviewRows(packet, 'sw');
+  assert.deepEqual(rows.filter(row => row.origin === 'fallback').map(row => row.key), ['colombiaIdeamClaim']);
+  assert.equal(rows.at(-1)?.text, draft.english);
 });
 
 test('the Brazilian licence wording falls back when the recorded label is missing', () => {

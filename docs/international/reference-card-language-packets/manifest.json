@@ -47,5 +47,14 @@
     ],
     "reviewedByHuman": false,
     "runtimeActivation": false
+  },
+  "colombia": {
+    "sourceSha256": "8c1f9889e881d3253bb2a7871d4e999d7d7d45c904cb765b4e44f888219cf790",
+    "draftsSha256": "d98c35b899fea4208c0579746c7dd867738128919c14fd09c56da1e7be0e6206",
+    "literals": [
+      "2026"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
   }
 }
