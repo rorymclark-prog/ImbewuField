@@ -1,6 +1,13 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/st.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Kenya litekanyo tsa literei tsa sebaka sa lipeo ka lisenthimithara (cm) kapa ka li-inch (in).",
+  "Enter usable nursery surface in square metres or square feet.": "Kenya bokaholimo bo sebelisehang ba sebaka sa lipeo ka limithara tsa sekwere (m²) kapa ka maoto a sekwere (ft²).",
+  "Keep nursery entries until their save is confirmed.": "Tlohela lintlha tse kenyelitsoeng tsa sebaka sa lipeo li ntse li le teng ho fihlela ho bolokoa ha tsona ho netefatsoa.",
+  "Choose nursery units": "Khetha li-unit tsa sebaka sa lipeo",
+  "Production plan → Nursery planner": "Moralo oa tlhahiso → Moralo oa sebaka sa lipeo",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Khetha li-unit tsa hau, kenya boholo ba literei le bokaholimo bo sebelisehang ba ho melisa, ebe oa boloka. Litekanyo tsa thepa tse sa tsejoeng li lula li se na letho; palo ea thepa ea lefeela e lula e le lefeela.",
   // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/st.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
   "Enter field-block bed and path dimensions in metres or feet.": "Kenya litekanyo tsa libethe tsa temo (beds) le litselana tsa boloko ea tšimo ka limithara kapa maoto.",
   "Keep saved measurements unchanged when switching the displayed unit.": "Boloka litekanyo tse bolokiloeng li sa fetohe ha u fetola yuniti e bontšitsoeng.",
