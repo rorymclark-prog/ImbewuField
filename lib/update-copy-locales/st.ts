@@ -1,6 +1,15 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
+  "Confirm a mapped site’s country before using its crop-planning guidance.": "Netefatsa naha ea sebaka se mmepiloeng pele u sebelisa tataiso ea sona ea moralo oa lijalo.",
+  "Keep your sowing records and nursery equipment while local planning is unavailable.": "Boloka lirekoto tsa hao tsa ho jala le lisebelisoa tsa nesari ea limela ha moralo oa sebaka o ntse o sa fumanehe.",
+  "Confirm your site country": "Netefatsa naha ea sebaka sa hao",
+  "Crop planner → Site country and region": "Moralo oa lijalo → Naha ea sebaka le lebatowa",
+  "Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.": "Bula sebaka sa hao se mmepiloeng mme u netefatse lintlha tsa naha ea sona. Ho netefatsa naha ha ho lumelle keletso ea temo bakeng sa lebatowa le letšha.",
+  "Review an unmapped reference": "Hlahloba tšupiso e sa mmepiloeng",
+  "Crop planner → Planning without a mapped site": "Moralo oa lijalo → Ho rera ntle le sebaka se mmepiloeng",
+  "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Bakeng sa bethe e bōpiloeng kapa moralo oa sebaka, khetha kapa u tlose motheo oa tšupiso oa Afrika Boroa ka ho hlaka. Khetho ena e sala le sebaka seo sa mosebetsi.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Hlahloba meralo ya mehlodi ya dinaha; keletso ya temo ya lehae ha e eso fumanehe.",
   "Review international references": "Hlahloba mehlodi ya dinaha",
