@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Hlahloba meralo e iketsang ea lijalo ho tsoa likhakanyong tsa hao tsa temo le lipheo tse bolokiloeng tsa bareki.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Hlahloba litlhoko tse nang le matsatsi tsa diterei le tsa bokaholimo tsa setsidifatso sa limela pele u jarolla tlhahlobo ea hao.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Boloka likhakanyo tsa hao tsa temo mme u hlahlobe bokhoni le matsatsi bakeng sa libethe tsa temo tse lekantsoeng.",
+  "Review a crop plan from your estimates": "Hlahloba moralo oa lijalo ho tsoa likhakanyong tsa hao",
+  "Crop planner → Automatic plan from your estimates": "Moralo oa lijalo → Moralo o iketsang ho tsoa likhakanyong tsa hao",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Hlahloba moralo oa hao o bolokiloeng, netefatsa boteng mme u bapisanye lipheo tsa bareki le likhakanyo tsa hao tsa temo. Hlahloba mekoloko e sisintsoeng le litlhoko tsa setsidifatso sa limela; ho jala ha hao ho bolokiloeng ho sala ho sa fetohe.",
+  "Review your growing estimates": "Hlahloba likhakanyo tsa hao tsa temo",
+  "Crop planner → Your growing estimates": "Moralo oa lijalo → Likhakanyo tsa hao tsa temo",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Kenya likhopolo tsa hao, khetha bethe ea temo e lekantsoeng mme u hlahlobe palo. Litekanyetso tse se nang letho li sala li le sieo; sephetho ke khakanyo, eseng tumello ea temo ea lehae.",
   // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Netefatsa naha ea sebaka se mmepiloeng pele u sebelisa tataiso ea sona ea moralo oa lijalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Boloka lirekoto tsa hao tsa ho jala le lisebelisoa tsa nesari ea limela ha moralo oa sebaka o ntse o sa fumanehe.",

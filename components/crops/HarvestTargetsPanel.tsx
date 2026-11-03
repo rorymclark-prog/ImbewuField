@@ -12,6 +12,8 @@ import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-set
 import NurseryForecastSummary from './NurseryForecastSummary';
 
 interface Props {
+  /** Records remain useful where catalogue crop-plan assumptions are held. */
+  basis?: 'catalogue' | 'own-records';
   siteId: string;
   targets: HarvestTarget[];
   beds: PlanBed[];
@@ -20,6 +22,7 @@ interface Props {
   climate: Pick<AutoSuggestAnswers, 'siteMonthlyTempC' | 'siteMonthlyRainMm' | 'siteLatitude' | 'observedFrostMonths'>;
   nurserySettings?: NurserySettings;
   onTargets: (targets: HarvestTarget[]) => void;
+  onSaveTargets?: (targets: HarvestTarget[]) => boolean;
   onAccept: (result: AutoSuggestResult) => void;
 }
 
@@ -38,7 +41,7 @@ const targetAmount = (kg: number | null, target: HarvestTarget) => kg === null ?
     : amount(kg);
 const monthName = (stamp: string) => `${MONTHS_SHORT[Number(stamp.slice(5)) - 1]} ${stamp.slice(0, 4)}`;
 
-export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, pattern, climate, nurserySettings, onTargets, onAccept }: Props) {
+export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, pattern, climate, nurserySettings, onTargets, onSaveTargets, onAccept, basis = 'catalogue' }: Props) {
   const today = new Date();
   const now = { year: today.getFullYear(), month: today.getMonth() + 1 };
   const current = now.year * 12 + now.month - 1;
@@ -48,13 +51,14 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
   const [kgPerUnit, setKgPerUnit] = useState('');
   const [marketablePercent, setMarketablePercent] = useState('');
   const [outlet, setOutlet] = useState('');
-  const [startMonth, setStartMonth] = useState(targetMonthStamp(current));
-  const [endMonth, setEndMonth] = useState(targetMonthStamp(current + 11));
+  const [startMonth, setStartMonth] = useState(basis === 'catalogue' ? targetMonthStamp(current) : '');
+  const [endMonth, setEndMonth] = useState(basis === 'catalogue' ? targetMonthStamp(current + 11) : '');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [irrigated, setIrrigated] = useState(false);
   const [sharing, setSharing] = useState(false);
   const [vines, setVines] = useState(false);
   const [error, setError] = useState('');
+  const [saveStatus, setSaveStatus] = useState('');
   const [review, setReview] = useState<{ key: string; result: AutoSuggestResult } | null>(null);
   const [accepted, setAccepted] = useState(false);
   const accepting = useRef(false);
@@ -65,14 +69,37 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
     allowVinesInBeds: vines, ...climate,
   };
   const key = JSON.stringify([siteId, ownTargets, beds, plantings, pattern, answers, now]);
-  const result = review?.key === key ? review.result : null;
+  const result = basis === 'catalogue' && review?.key === key ? review.result : null;
   const nurseryForecast = useMemo(() => result
     ? buildNurseryForecast([...plantings, ...result.plantings], beds, siteId, sanitiseNurserySettings(nurserySettings), now)
     : null, [plantings, result, beds, siteId, nurserySettings, now]);
-  const assessments = ownTargets.map((target) => assessHarvestTarget(target, beds, plantings)!);
+  const assessments = basis === 'catalogue' ? ownTargets.map((target) => assessHarvestTarget(target, beds, plantings)!) : [];
+
+  function persist(next: HarvestTarget[]) {
+    setSaveStatus('');
+    try {
+      if (onSaveTargets && !onSaveTargets(next)) { setError('Could not save these targets on this device. Reopen the current plan before trying again.'); return false; }
+      if (!onSaveTargets) onTargets(next);
+      if (onSaveTargets) setSaveStatus('Buyer targets saved on this device.');
+      return true;
+    } catch { setError('Could not save these targets on this device. Your saved targets remain unchanged.'); return false; }
+  }
+  function editTarget(target: HarvestTarget) {
+    setEditingId(target.id); setCropKey(target.cropKey);
+    setWeeklyQuantity(String(target.weeklyKg ?? target.weeklyQuantity)); setUnit(target.unit ?? 'kg');
+    setKgPerUnit(target.kgPerUnit === undefined ? '' : String(target.kgPerUnit));
+    setMarketablePercent(target.marketablePercent === undefined ? '' : String(target.marketablePercent)); setOutlet(target.outlet ?? '');
+    setStartMonth(target.startMonth); setEndMonth(target.endMonth); setError(''); setSaveStatus('');
+  }
+  function removeTarget(target: HarvestTarget) {
+    if (!persist(targets.filter(row => row.id !== target.id))) return;
+    if (editingId === target.id) resetForm();
+    setAccepted(false);
+  }
 
   function saveTarget(event: FormEvent) {
     event.preventDefault();
+    setSaveStatus('');
     const base = { id: editingId ?? crypto.randomUUID(), siteId, cropKey, startMonth, endMonth,
       ...(outlet.trim() ? { outlet: outlet.trim() } : {}),
       ...(marketablePercent.trim() ? { marketablePercent: Number(marketablePercent) } : {}),
@@ -85,28 +112,31 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
       setError('Choose a crop, positive quantity and 1–12 harvest months. Items need whole numbers. Enter a positive pack weight when known and a saleable share from 0–100%.');
       return;
     }
-    onTargets([...targets.filter((t) => t.id !== saved.id), saved]);
+    if (!persist([...targets.filter((t) => t.id !== saved.id), saved])) return;
     resetForm(); setAccepted(false);
   }
 
   function resetForm() {
     setEditingId(null); setWeeklyQuantity(''); setCropKey(''); setUnit('kg');
     setKgPerUnit(''); setMarketablePercent(''); setOutlet(''); setError('');
+    if (basis === 'own-records') { setStartMonth(''); setEndMonth(''); }
   }
 
   return <details className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] text-[var(--text-primary)]">
     <summary className="min-h-12 cursor-pointer px-4 py-3 font-display font-semibold">
       <Target size={17} aria-hidden className="inline mr-2 align-text-bottom" />
       Harvest targets{ownTargets.length > 0 ? ` · ${ownTargets.length}` : ''}{' '}
-      <span className="ml-2 text-xs font-sans font-normal text-[var(--text-secondary)]">Plan from weekly demand</span>
+      <span className="ml-2 text-xs font-sans font-normal text-[var(--text-secondary)]">{basis === 'catalogue' ? 'Plan from weekly demand' : 'Your buyer-demand records'}</span>
     </summary>
     <div className="px-4 pb-4 space-y-4 font-sans">
-      <p className="text-sm text-[var(--text-secondary)]">Plan the produce you want each week for a market, restaurant or box scheme. Review the growing space and dated sowings before adding them to your saved beds.</p>
-      <form onSubmit={saveTarget} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <p className="text-sm text-[var(--text-secondary)]">{basis === 'catalogue'
+        ? 'Plan the produce you want each week for a market, restaurant or box scheme. Review the growing space and dated sowings before adding them to your saved beds.'
+        : 'Record what a market, restaurant or box scheme wants. Crop names identify your records. Use your own growing estimates below to review capacity; saving a target does not approve local farming advice or promise supply.'}</p>
+      <form onSubmit={saveTarget} onChange={() => setSaveStatus('')} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         <label className="text-sm">Crop
           <select required value={cropKey} onChange={(e) => { setCropKey(e.target.value); setKgPerUnit(''); setMarketablePercent(''); }} className={field}>
             <option value="">Choose a crop</option>
-            {CROPS.filter((c) => hasPlanningYield(c) || c.yieldKgPerM2 === null).map((crop) => <option key={crop.key} value={crop.key}>{crop.name}</option>)}
+            {CROPS.filter((c) => basis === 'own-records' || hasPlanningYield(c) || c.yieldKgPerM2 === null).map((crop) => <option key={crop.key} value={crop.key}>{crop.name}</option>)}
           </select>
         </label>
         <label className="text-sm">Weekly quantity
@@ -132,7 +162,9 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
         <label className="text-sm">Saleable share (%) (optional)
           <input type="number" min="0" max="100" step="any" inputMode="decimal" value={marketablePercent} onChange={(e) => setMarketablePercent(e.target.value)} placeholder="Your own estimate" className={field} />
         </label>
-        <p className="sm:col-span-2 lg:col-span-4 text-xs text-[var(--text-secondary)]">Use your measured harvest weight for one produce pack. A target without its pack weight stays saved; growing space waits for that conversion. The saleable share is a percentage of the catalogue benchmark; leave it blank to apply no allowance. Trays here contain harvested produce; nursery starts need their own planning.</p>
+        <p className="sm:col-span-2 lg:col-span-4 text-xs text-[var(--text-secondary)]">{basis === 'catalogue'
+          ? 'Use your measured harvest weight for one produce pack. A target without its pack weight stays saved; growing space waits for that conversion. The saleable share is a percentage of the catalogue benchmark; leave it blank to apply no allowance. Trays here contain harvested produce; nursery starts need their own planning.'
+          : 'Use your own harvest weight per sales unit and saleable share. Blank values stay saved as unknown; own-cycle capacity waits for them. Trays here contain harvested produce, not nursery seedlings.'}</p>
         <div className="sm:col-span-2 lg:col-span-4 flex flex-wrap items-center gap-2">
           <button type="submit" className={primary}>{editingId ? 'Save target changes' : 'Save harvest target'}</button>
           {editingId && <button type="button" className={secondary} onClick={resetForm}>Cancel edit</button>}
@@ -140,6 +172,13 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
         </div>
         {error && <p role="alert" className="sm:col-span-2 lg:col-span-4 text-sm text-[var(--gold)]">{error}</p>}
       </form>
+      {saveStatus && <p role="status">{saveStatus}</p>}
+      {basis === 'own-records' && ownTargets.map(target => <article key={target.id} className="space-y-2 rounded-xl border border-[var(--border)] p-3 text-sm">
+        <h3 className="font-semibold">{cropByKey(target.cropKey)?.name ?? target.cropKey} · {weeklyLabel(target)}</h3>
+        <p>{monthName(target.startMonth)} – {monthName(target.endMonth)}. Saleable share: {target.marketablePercent === undefined ? 'unknown' : `${target.marketablePercent}%`}.</p>
+        <div className="flex gap-2"><button type="button" className={secondary} onClick={() => editTarget(target)}>Edit</button>
+          <button type="button" className={secondary} onClick={() => removeTarget(target)} aria-label={`Remove ${cropByKey(target.cropKey)?.name} target`}>Remove</button></div>
+      </article>)}
 
       {assessments.map((a) => <article key={a.target.id} className="rounded-xl border border-[var(--border)] p-3 space-y-2">
         <div className="flex items-start justify-between gap-2">
@@ -175,7 +214,7 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
         <p className="text-xs text-[var(--text-secondary)]">Area is summed across crop cycles; successive crops may reuse ground. Weekly supply remains unverified.</p>
       </article>)}
 
-      {ownTargets.length > 0 && <>
+      {basis === 'catalogue' && ownTargets.length > 0 && <>
         <fieldset className="flex flex-col gap-2 text-sm"><legend className="mb-2 font-semibold">Before suggesting sowings</legend>
           <label className="flex gap-2 items-start min-h-8"><input type="checkbox" checked={irrigated} onChange={(e) => setIrrigated(e.target.checked)} className="mt-1" />Reliable irrigation for every crop cycle</label>
           <label className="flex gap-2 items-start min-h-8"><input type="checkbox" checked={sharing} onChange={(e) => setSharing(e.target.checked)} className="mt-1" />Allow standard bed shares (whole open fields stay whole)</label>
@@ -206,7 +245,7 @@ export default function HarvestTargetsPanel({ siteId, targets, beds, plantings, 
         }}>Add {result.plantings.length} dated sowing{result.plantings.length === 1 ? '' : 's'} to my plan</button>}
       </section>}
       {accepted && <p role="status" className="text-sm">Dated sowings added. Review their preparation, sowing and harvest tasks in the calendar below. They do not repeat next year.</p>}
-      <p className="text-xs text-[var(--text-secondary)]">{HARVEST_TARGET_BASIS} Removing a target keeps its plantings.</p>
+      <p className="text-xs text-[var(--text-secondary)]">{basis === 'catalogue' ? HARVEST_TARGET_BASIS : 'Buyer demand is separate from crop capacity, observed harvests and sales.'} Removing a target keeps its plantings.</p>
     </div>
   </details>;
 }
