@@ -168,7 +168,7 @@ const hooks = registerHooks({
   },
 });
 
-const { addProduction, getMyConsent, setMyConsentScope, WRITE_TIMEOUT_MS, WriteTimeoutError, chunkIds, IN_QUERY_CHUNK, getCourseProgressForProfiles, getAssignmentsForProfiles } =
+const { addProduction, getMyConsent, revokeAllMyConsent, setMyConsentScope, WRITE_TIMEOUT_MS, WriteTimeoutError, chunkIds, IN_QUERY_CHUNK, getCourseProgressForProfiles, getAssignmentsForProfiles } =
   await import('../lib/db/queries.ts');
 hooks.deregister();
 
@@ -390,5 +390,34 @@ test('a scope grant transaction retried after an organisation change rejects and
     state.consentTransactions = false;
     state.moveOrgBeforeRetry = null;
     state.profile = { path: 'profiles/mentor-uid', data: { org_id: 'org-1', role: 'mentor' } };
+  }
+});
+
+test('a sharing screen cannot act on a different account, organisation or sample workspace', async () => {
+  const recipient = { uid: state.uid!, org_id: 'org-1' };
+  const original = {
+    ...recipient, scopes: { production: true },
+    granted_at: '2026-11-01T00:00:00.000Z', revoked_at: null,
+    updated_at: '2026-11-01T00:00:00.000Z',
+  };
+  const before = { profile: state.profile, uid: state.uid, sample: state.sample,
+    consent: state.consent, consentTransactions: state.consentTransactions };
+  state.consentTransactions = true;
+  state.consent = original;
+  try {
+    assert.deepEqual(await getMyConsent(recipient), original);
+    state.profile = { ...state.profile, data: { ...state.profile.data, org_id: 'org-2' } };
+    await assert.rejects(getMyConsent(recipient), /organisation changed/);
+    await assert.rejects(setMyConsentScope('sales', true, recipient), /organisation changed/);
+    await assert.rejects(revokeAllMyConsent(recipient), /organisation changed/);
+    state.profile = before.profile;
+    state.uid = 'other-account';
+    await assert.rejects(setMyConsentScope('sales', true, recipient), /account changed/);
+    state.uid = before.uid;
+    state.sample = true;
+    await assert.rejects(setMyConsentScope('sales', true, recipient), /account changed/);
+    assert.deepEqual(state.consent, original);
+  } finally {
+    Object.assign(state, before);
   }
 });

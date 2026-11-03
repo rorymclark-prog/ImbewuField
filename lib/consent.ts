@@ -100,6 +100,9 @@ export interface FarmerConsent {
   updated_at: string;
 }
 
+/** Account and organisation displayed when the grower makes a sharing choice. */
+export type ConsentRecipient = Pick<FarmerConsent, 'uid' | 'org_id'>;
+
 /** A fresh record granting nothing. What a farmer starts with. */
 export function emptyConsent(uid: string, orgId: string | null, now: string): FarmerConsent {
   return { uid, org_id: orgId, scopes: {}, granted_at: null, revoked_at: null, updated_at: now };

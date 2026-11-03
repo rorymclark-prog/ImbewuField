@@ -18,7 +18,7 @@ import {
   getSandboxExpenses, addSandboxExpense, updateSandboxExpense, deleteSandboxExpense,
   getSandboxConsent, setSandboxConsentScope, revokeAllSandboxConsent,
 } from '@/lib/sample-mode';
-import { consentForOwnerAndOrg, emptyConsent, revokeAll, setScope, type ConsentScope, type FarmerConsent } from '@/lib/consent';
+import { consentForOwnerAndOrg, emptyConsent, revokeAll, setScope, type ConsentRecipient, type ConsentScope, type FarmerConsent } from '@/lib/consent';
 import type {
   Profile, Garden, GardenMember, ProductionLog, SalesLog, ExpenseLog, Design, Report,
   CourseProgress, GardenerProfile, MentorVisit,
@@ -694,15 +694,23 @@ export async function getOrganizationName(orgId: string): Promise<string | null>
 // and staff read it without ever being able to create or amend one. Policy and projection
 // live in lib/consent.ts; this is only the Firestore edge.
 
-export async function getMyConsent(): Promise<FarmerConsent | null> {
+export async function getMyConsent(recipient?: ConsentRecipient): Promise<FarmerConsent | null> {
   // A working sandbox, not a dead one: serve the in-memory demo record instead of null, or
   // ConsentPanel.tsx's toggle() assigns `null` to state and every switch reverts to unchecked
   // the instant it is flipped — see lib/sample-mode.ts's consent section for the full story.
-  if (isSampleMode()) return getSandboxConsent();
-  const f = fb(); const u = uid(); if (!f || !u) return null;
+  if (!recipient && isSampleMode()) return getSandboxConsent();
+  const f = fb(); const u = uid();
+  if (recipient && (!f || u !== recipient.uid || readAccountLocalSampleState() !== false)) {
+    throw new UserFacingError('Your account changed. Open sharing preferences again.');
+  }
+  if (!f || !u) return null;
   const [s, me] = await Promise.all([getDoc(doc(f.db, 'farmer_consents', u)), getMyProfile()]);
-  if (uid() !== u || readAccountLocalSampleState() !== false) return null;
-  return consentForOwnerAndOrg(s.exists() ? s.data() as FarmerConsent : null, u, me?.org_id ?? null);
+  const org = me?.org_id ?? null;
+  const current = uid() === u && readAccountLocalSampleState() === false;
+  if (recipient && (!current || org !== recipient.org_id)) {
+    throw new UserFacingError('Your account or organisation changed. Open sharing preferences again.');
+  }
+  return current ? consentForOwnerAndOrg(s.exists() ? s.data() as FarmerConsent : null, u, org) : null;
 }
 
 /** Read one farmer's consent as staff/mentor — org-scoped by the rules, not by this call. */
@@ -713,8 +721,14 @@ export async function getFarmerConsent(profileId: string): Promise<FarmerConsent
   return s.exists() ? ({ ...s.data() } as unknown as FarmerConsent) : null;
 }
 
-async function writeMyConsent(change: { scope: ConsentScope; value: boolean } | null): Promise<FarmerConsent | null> {
+async function writeMyConsent(
+  change: { scope: ConsentScope; value: boolean } | null,
+  recipient?: ConsentRecipient,
+): Promise<FarmerConsent | null> {
   const f = fb(); const u = uid();
+  if (recipient && (!f || u !== recipient.uid || readAccountLocalSampleState() !== false)) {
+    throw new UserFacingError('Your account changed. Open sharing preferences again.');
+  }
   if (!f || !u) return null;
   const requireCurrent = () => {
     if (uid() !== u || readAccountLocalSampleState() !== false) {
@@ -725,7 +739,7 @@ async function writeMyConsent(change: { scope: ConsentScope; value: boolean } | 
   const profile = doc(f.db, 'profiles', u);
   // Re-read on transaction retry so an older tab cannot restore a grant
   // withdrawn by another tab. A retry must keep the original recipient.
-  let originalOrg: string | null | undefined;
+  let originalOrg = recipient?.org_id;
   return runTransaction(f.db, async transaction => {
     requireCurrent();
     const [snapshot, owner] = await Promise.all([transaction.get(target), transaction.get(profile)]);
@@ -745,14 +759,14 @@ async function writeMyConsent(change: { scope: ConsentScope; value: boolean } | 
   });
 }
 
-export async function setMyConsentScope(scope: ConsentScope, value: boolean): Promise<FarmerConsent | null> {
-  if (isSampleMode()) return setSandboxConsentScope(scope, value);
-  return writeMyConsent({ scope, value });
+export async function setMyConsentScope(scope: ConsentScope, value: boolean, recipient?: ConsentRecipient): Promise<FarmerConsent | null> {
+  if (!recipient && isSampleMode()) return setSandboxConsentScope(scope, value);
+  return writeMyConsent({ scope, value }, recipient);
 }
 
-export async function revokeAllMyConsent(): Promise<FarmerConsent | null> {
-  if (isSampleMode()) return revokeAllSandboxConsent();
-  return writeMyConsent(null);
+export async function revokeAllMyConsent(recipient?: ConsentRecipient): Promise<FarmerConsent | null> {
+  if (!recipient && isSampleMode()) return revokeAllSandboxConsent();
+  return writeMyConsent(null, recipient);
 }
 
 // ---- farmer / trainee directory ----
