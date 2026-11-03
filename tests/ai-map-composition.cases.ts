@@ -6,6 +6,7 @@ import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtwo
 import { PHASING_ARTWORK_PROMPT_MARKER, buildPhasingRestylePrompt } from '../lib/producer-prompt.ts';
 import { UBHEJANE_BEFORE_WORKS, historicalBaselineForSite, historicalBaselineFromPrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, historicalBaselinePrompt } from '../lib/historical-map-baseline.ts';
 import { createHash } from 'node:crypto';
+import { sectorOverviewContours, sectorTerrainProfile } from '../lib/sheet-terrain-profile.ts';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
@@ -477,7 +478,7 @@ test('Sector keeps paid colour and contrast while exact analysis still uses its 
   let quiet=0,options:any;
   const compose=helper('composeSectorSheet',{
     SCALE:1,document:{createElement:()=>probe.canvas},boundaryPresentationContext:async()=>p,
-    fetchSheetContours:async()=>({lines:[]}),loadImage:async(src:string)=>({src}),
+    fetchSectorPresentationContours:async()=>({lines:[]}),loadImage:async(src:string)=>({src}),
     drawPaperWash:()=>{throw Error('a paid illustration must not receive the photo veil');},
     drawAnalysisBase:async()=>{quiet++;},authoritativeHouseFootprints:()=>[],drawBlueprintBoundary:()=>{},
     BOUNDARY_LINE_GREEN:'#95B34F',
@@ -687,4 +688,28 @@ test('named historical areas have readable leader labels and keep the photo fact
   assert.equal(pins,0,'names must not leave misleading number-only pins behind');
   assert.equal(probe.calls.filter(v=>v[0]==='strokeRect').length,8,'every name has a light backing, not lettering lost against grass');
   assert.equal(JSON.stringify(b),before,'moving label placement cannot move source facts');
+});
+
+test('regional Sector overview does not advertise fine encoded height steps as ground accuracy', () => {
+  const raw:any={status:'ok',source:'mapbox-terrain-rgb',intervalM:1,tooFlat:false,lines:[101,102,105,110].map(elevM=>({elevM,points:[[0,.2],[1,.2]],major:false}))},before=JSON.stringify(raw);
+  const overview=sectorOverviewContours(raw);assert.equal(overview.intervalM,5);assert.deepEqual(overview.lines.map(line=>line.elevM),[105,110]);assert.equal(JSON.stringify(raw),before);
+  assert.equal(sectorOverviewContours({...raw,intervalM:0}).status,'unavailable');
+  assert.equal(sectorOverviewContours({...raw,lines:raw.lines.slice(0,2)}).status,'too-flat');
+});
+
+test('regional profile plots actual contour crossings and never invents north or south endpoint heights', () => {
+  const result:any={status:'ok',source:'mapbox-terrain-rgb',intervalM:5,lines:[{elevM:110,points:[[0,.25],[1,.25]]},{elevM:105,points:[[0,.75],[1,.75]]}]};
+  const boundary:any=[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],frame={imgW:100,imgH:100,mPerPx:2},before=JSON.stringify({result,boundary,frame});
+  const p=sectorTerrainProfile(result,boundary,frame)!;assert.deepEqual(p.a,[.5,.1]);assert.deepEqual(p.b,[.5,.9]);assert.equal(p.lengthM,160);
+  assert.deepEqual(p.points,[{distanceM:30,elevationM:110},{distanceM:130,elevationM:105}]);assert.equal(JSON.stringify({result,boundary,frame}),before);
+  assert.equal(sectorTerrainProfile({...result,lines:result.lines.slice(0,1)},boundary,frame),null,'a lone level cannot describe a hillside');
+  assert.equal(sectorTerrainProfile({...result,source:null},boundary,frame),null);
+});
+
+test('Sector contour geography uses the original saved frame and only crops the paint coordinates', async () => {
+  const frame={imgW:960,imgH:640,mPerPx:.24},refs={boundary:[[.3,.3],[.7,.3],[.7,.8],[.3,.8]]},state={items:[],lines:[],zones:[]};let queried=false;
+  const run=helper('fetchSectorPresentationContours',{SCALE:3,sectorOverviewContours,presentationExtentRing:()=>refs.boundary,
+    calculateBoundaryPresentationLayout:()=>({cropX:.2,cropY:.1,cropWidth:.5,cropHeight:.6}),paidApiHeaders:async()=>({Authorization:'owner'}),
+    fetchSheetContours:async(f:any,b:any)=>{assert.equal(f,frame);assert.equal(b,refs.boundary);queried=true;return{status:'ok',source:'mapbox-terrain-rgb',intervalM:1,lines:[{elevM:105,points:[[.3,.4],[.6,.7]]}]};}});
+  const out=await run(state,frame,refs,null);assert.equal(queried,true);assert.equal(out.intervalM,5);assert.deepEqual(out.lines[0].points,[[.19999999999999996,.5000000000000001],[.7999999999999999,1]]);
 });
