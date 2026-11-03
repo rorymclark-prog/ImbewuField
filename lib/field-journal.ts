@@ -11,7 +11,7 @@
 // grouping, normalisation and trimming rules can be tested directly.
 
 import { Sprout, ShoppingBasket, CloudSun, Bug, Wrench, Users, NotebookPen, type LucideIcon } from 'lucide-react';
-import { activeAccountLocalStorageKey, activeAccountUid, readAccountLocalSampleState } from './account-local-storage';
+import { activeAccountLocalStorageKey, activeAccountUid, guestAccountLocalStorageKey, readAccountLocalSampleState } from './account-local-storage';
 import { getFirebase, isBackendConfigured } from './firebase/init';
 import { normaliseGrowerFieldNoteLink } from './international/grower-field-note-link';
 import type { CropPlanStorageLocks } from './crop-plan-storage';
@@ -594,7 +594,7 @@ interface JournalCutoverContext {
   readonly canonicalKey: string;
 }
 interface JournalCutoverSnapshot { legacy: string | null; canonical: string | null }
-interface JournalEnvelope { version: 2; legacyDigest: string | null; journalRaw: string }
+interface JournalEnvelope { version: 2; legacyDigest: string | null; journalRaw: string; guestImportDigest?: string }
 const journalCutoverHeld = (reason: JournalCutoverReason): JournalCutoverStatus => ({ status: 'held', reason });
 
 function journalLocks(locks: CropPlanStorageLocks | null | undefined): CropPlanStorageLocks | null | undefined {
@@ -644,11 +644,79 @@ async function journalLegacyDigest(raw: string | null): Promise<string | null> {
 function readJournalEnvelope(raw: string): JournalEnvelope | null {
   try {
     const value: unknown = JSON.parse(raw);
-    if (!record(value) || value.version !== 2 || Object.keys(value).length !== 3 || JSON.stringify(value) !== raw
+    if (!record(value) || value.version !== 2 || JSON.stringify(value) !== raw
+      || Object.keys(value).length !== (Object.hasOwn(value, 'guestImportDigest') ? 4 : 3)
       || (value.legacyDigest !== null && (typeof value.legacyDigest !== 'string' || !/^[a-f0-9]{64}$/.test(value.legacyDigest)))
+      || (value.guestImportDigest !== undefined && (typeof value.guestImportDigest !== 'string' || !/^[a-f0-9]{64}$/.test(value.guestImportDigest)))
       || typeof value.journalRaw !== 'string' || !journalNormalisationIsLossless(value.journalRaw)) return null;
-    return { version: 2, legacyDigest: value.legacyDigest, journalRaw: value.journalRaw };
+    return { version: 2, legacyDigest: value.legacyDigest, journalRaw: value.journalRaw,
+      ...(typeof value.guestImportDigest === 'string' ? { guestImportDigest: value.guestImportDigest } : {}) };
   } catch { return null; }
+}
+
+export type GuestJournalCopyResult =
+  | { readonly status: 'nothing-to-copy' }
+  | { readonly status: 'copied'; readonly count: number }
+  | { readonly status: 'already-copied' }
+  | { readonly status: 'held'; readonly reason: 'context-changed' | 'lock-unavailable' | 'invalid-guest'
+      | 'guest-claimed' | 'account-journal-exists' | 'write-unconfirmed' };
+
+/** Stage an explicit guest handoff after the destination account is mounted.
+ * The claim binds a retry to one account and one exact guest copy. Keep the
+ * guest bytes until old writers can be excluded during cleanup. */
+export async function copyGuestJournalToAccount(locks?: CropPlanStorageLocks | null): Promise<GuestJournalCopyResult> {
+  const changed = { status: 'held', reason: 'context-changed' } as const;
+  const unconfirmed = { status: 'held', reason: 'write-unconfirmed' } as const;
+  try {
+    const context = journalCutoverContext();
+    if (!context?.owner || !isBackendConfigured()) return changed;
+    const writer = journalLocks(locks);
+    if (!writer) return { status: 'held', reason: 'lock-unavailable' };
+    const guestKey = guestAccountLocalStorageKey(STORAGE_KEY);
+    const claimKey = guestAccountLocalStorageKey('imbewu_field_journal_transfer_claim');
+    const options = { mode: 'exclusive', ifAvailable: true } as const;
+    // Every transfer takes the common guest lock before its destination lock.
+    return await writer.request<GuestJournalCopyResult>(`imbewu-journal:${guestAccountLocalStorageKey(CANONICAL_JOURNAL_KEY)}`, options, guestLock => {
+      if (!guestLock) return { status: 'held', reason: 'lock-unavailable' };
+      return writer.request<GuestJournalCopyResult>(journalLockName(context), options, async accountLock => {
+        if (!accountLock) return { status: 'held', reason: 'lock-unavailable' };
+        const before = captureJournalCutover(context);
+        if (!before) return changed;
+        const raw = context.storage.getItem(guestKey);
+        const claim = context.storage.getItem(claimKey);
+        const current = (expectedClaim: string | null) => context.storage.getItem(guestKey) === raw
+          && context.storage.getItem(claimKey) === expectedClaim && sameJournalCutover(before, captureJournalCutover(context));
+        if (!current(claim)) return changed;
+        const rows = readLosslessOlderJournal(raw);
+        if (!rows || rows.some(row => Object.hasOwn(row, 'growerCycleLink'))) return { status: 'held', reason: 'invalid-guest' };
+        if (!rows.length || raw === null) return { status: 'nothing-to-copy' };
+        if (raw.length > JOURNAL_BYTE_BUDGET) return { status: 'held', reason: 'invalid-guest' };
+        const guestImportDigest = await journalLegacyDigest(raw);
+        const ownerDigest = await journalLegacyDigest(context.canonicalKey);
+        const legacyDigest = await journalLegacyDigest(before.legacy);
+        const nextClaim = JSON.stringify({ version: 1, ownerDigest, guestImportDigest });
+        if (!guestImportDigest || !current(claim)) return changed;
+        if (claim !== null && claim !== nextClaim) return { status: 'held', reason: 'guest-claimed' };
+        if (before.canonical !== null) {
+          const envelope = readJournalEnvelope(before.canonical);
+          if (claim === nextClaim && envelope?.guestImportDigest === guestImportDigest && envelope.legacyDigest === legacyDigest) {
+            return { status: 'already-copied' };
+          }
+          return { status: 'held', reason: 'account-journal-exists' };
+        }
+        if (readLosslessOlderJournal(before.legacy)?.length !== 0) return { status: 'held', reason: 'account-journal-exists' };
+        try {
+          if (claim === null) context.storage.setItem(claimKey, nextClaim);
+          if (!current(nextClaim)) return unconfirmed;
+          const canonical = JSON.stringify({ version: 2, legacyDigest, journalRaw: raw, guestImportDigest } satisfies JournalEnvelope);
+          if (!writeJournalEnvelope(context, before, canonical) || context.storage.getItem(guestKey) !== raw
+            || context.storage.getItem(claimKey) !== nextClaim
+            || !sameJournalCutover({ ...before, canonical }, captureJournalCutover(context))) return unconfirmed;
+          return { status: 'copied', count: rows.length };
+        } catch { return unconfirmed; }
+      });
+    });
+  } catch { return changed; }
 }
 
 async function inspectJournalCutover(context: JournalCutoverContext, snapshot: JournalCutoverSnapshot): Promise<JournalCutoverStatus> {

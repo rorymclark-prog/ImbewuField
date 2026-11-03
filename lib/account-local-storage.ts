@@ -45,6 +45,10 @@ export function accountLocalStorageKey(baseKey: string, uid: string | null | und
     : baseKey;
 }
 
+export function guestAccountLocalStorageKey(baseKey: string): string {
+  return `${baseKey}${OWNER_SEPARATOR}${SIGNED_OUT_OWNER}`;
+}
+
 export function activeAccountUid(): string | null {
   // Sample mode's root storage shim is intentionally seeded with historical bare keys.
   // Returning no owner preserves that isolated in-memory namespace even if a real user
@@ -63,7 +67,7 @@ export function activeAccountLocalStorageKey(baseKey: string): string {
   // drafts usable without treating an unknown legacy owner as public data. Builds
   // with no backend configured retain their original local-only bare-key behaviour.
   return isBackendConfigured()
-    ? `${baseKey}${OWNER_SEPARATOR}${SIGNED_OUT_OWNER}`
+    ? guestAccountLocalStorageKey(baseKey)
     : baseKey;
 }
 
@@ -146,7 +150,7 @@ export function migrateGuestLocalStorageRows(
   if (typeof window === 'undefined' || !window.localStorage) return;
   for (const { baseKey, isEmpty } of migrations) {
     try {
-      const guestKey = `${baseKey}${OWNER_SEPARATOR}${SIGNED_OUT_OWNER}`;
+      const guestKey = guestAccountLocalStorageKey(baseKey);
       const guestRaw = window.localStorage.getItem(guestKey);
       if (guestRaw === null || isEmpty(guestRaw)) continue; // nothing worth copying
       const uidKey = accountLocalStorageKey(baseKey, uid);

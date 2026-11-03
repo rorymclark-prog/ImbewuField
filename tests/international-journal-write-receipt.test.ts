@@ -29,8 +29,8 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
   }
   return next(specifier, context);
 } });
-const { accountLocalStorageKey, bindMountedAccountLocalStorageUid } = await import('../lib/account-local-storage.ts');
-const { appendLinkedJournalNote, exportJournalLegacyReview, initialiseJournalCutover, keepCurrentJournalAfterLegacyReview,
+const { accountLocalStorageKey, bindMountedAccountLocalStorageUid, guestAccountLocalStorageKey } = await import('../lib/account-local-storage.ts');
+const { appendLinkedJournalNote, copyGuestJournalToAccount, exportJournalLegacyReview, initialiseJournalCutover, keepCurrentJournalAfterLegacyReview,
   loadJournal, MAX_ENTRIES, readCanonicalJournal, readJournalCutoverStatus, readJournalLegacyCandidates, readJournalLegacyReview, readJournalLinkWriteReceipt,
   journalLinkWriteReceiptMatches, recoverJournalLegacyNotes, saveJournal, writeCanonicalJournal } = await import('../lib/field-journal.ts');
 hooks.deregister();
@@ -557,5 +557,94 @@ test('selected recovery holds an overfull book and a changed older snapshot with
   assert.equal(rows.get(canonicalKey), canonical);
   assert.equal(rows.get(key), '{damaged');
   assert.equal(state.writes, 1);
+  assert.equal(state.events, 0);
+});
+
+const guestJournalKey = guestAccountLocalStorageKey('imbewu_field_journal_v1');
+const guestClaimKey = guestAccountLocalStorageKey('imbewu_field_journal_transfer_claim');
+
+test('verified guest copy binds the exact source to one account and preserves later journal edits', async () => {
+  const guest = JSON.stringify([entry]);
+  rows.set(guestJournalKey, guest);
+  rows.set(key, '[ ]');
+  const names: string[] = [];
+  const locks: CropPlanStorageLocks = { async request(name, options, action) {
+    names.push(name);
+    assert.deepEqual(options, { mode: 'exclusive', ifAvailable: true });
+    return await action({});
+  } };
+  assert.deepEqual(await copyGuestJournalToAccount(locks), { status: 'copied', count: 1 });
+  assert.deepEqual(names, [`imbewu-journal:${guestAccountLocalStorageKey('imbewu_field_journal_v2')}`, `imbewu-journal:${canonicalKey}`]);
+  assert.equal(rows.get(guestJournalKey), guest);
+  assert.equal(rows.get(key), '[ ]');
+  assert.ok(rows.get(guestClaimKey));
+  assert.deepEqual(JSON.parse(rows.get(canonicalKey)!), {
+    version: 2, legacyDigest: createHash('sha256').update(JSON.stringify('[ ]')).digest('hex'),
+    journalRaw: guest, guestImportDigest: createHash('sha256').update(JSON.stringify(guest)).digest('hex'),
+  });
+  const view = await readCanonicalJournal();
+  assert.equal((await writeCanonicalJournal(view, { kind: 'delete', id: entry.id }, exclusive)).status, 'saved');
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'already-copied' });
+  assert.equal(JSON.parse(rows.get(canonicalKey)!).journalRaw, '[]');
+  state.uid = 'account-b';
+  bindMountedAccountLocalStorageUid('account-b');
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'held', reason: 'guest-claimed' });
+  assert.equal(rows.has(accountLocalStorageKey('imbewu_field_journal_v2', 'account-b')), false);
+  assert.equal(state.writes, 3);
+});
+
+test('guest copy holds an existing or invalid destination, sample mode, and malformed or linked sources', async () => {
+  const guest = JSON.stringify([entry]);
+  rows.set(guestJournalKey, guest);
+  rows.set(key, 'null');
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'held', reason: 'account-journal-exists' });
+  rows.set(key, guest);
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'held', reason: 'account-journal-exists' });
+  rows.delete(key);
+  state.sample = true;
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'held', reason: 'context-changed' });
+  state.sample = false;
+  rows.set(guestJournalKey, JSON.stringify([{ ...entry, growerCycleLink: noteLink }]));
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'held', reason: 'invalid-guest' });
+  rows.set(guestJournalKey, '{damaged');
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'held', reason: 'invalid-guest' });
+  assert.equal(rows.get(guestJournalKey), '{damaged');
+  assert.equal(rows.has(guestClaimKey), false);
+  assert.equal(state.writes, 0);
+});
+
+test('guest copy retries a failed destination only for the claimed account and exact source', async () => {
+  const guest = JSON.stringify([entry]);
+  rows.set(guestJournalKey, guest);
+  state.afterWrite = () => { state.refuseWrite = true; };
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'held', reason: 'write-unconfirmed' });
+  assert.ok(rows.has(guestClaimKey));
+  assert.equal(rows.has(canonicalKey), false);
+  assert.equal(rows.get(guestJournalKey), guest);
+  state.afterWrite = null;
+  state.refuseWrite = false;
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'copied', count: 1 });
+  assert.equal(state.writes, 3);
+  rows.set(guestJournalKey, JSON.stringify([{ ...entry, title: 'Old tab wrote again' }]));
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'held', reason: 'guest-claimed' });
+  assert.equal(JSON.parse(rows.get(canonicalKey)!).journalRaw, guest);
+  assert.equal(state.writes, 3);
+});
+
+test('an account change or an older guest write during copy cannot confirm the handoff', async () => {
+  const guest = JSON.stringify([entry]);
+  rows.set(guestJournalKey, guest);
+  const changed: CropPlanStorageLocks = { async request(name, _options, action) {
+    if (name.endsWith(canonicalKey)) state.uid = 'account-b';
+    return await action({});
+  } };
+  assert.deepEqual(await copyGuestJournalToAccount(changed), { status: 'held', reason: 'context-changed' });
+  assert.equal(state.writes, 0);
+  state.uid = 'account-a';
+  const newer = JSON.stringify([{ ...entry, title: 'Changed during copy' }]);
+  state.afterWrite = () => { if (rows.has(canonicalKey)) rows.set(guestJournalKey, newer); };
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'held', reason: 'write-unconfirmed' });
+  assert.equal(rows.get(guestJournalKey), newer);
+  assert.equal(JSON.parse(rows.get(canonicalKey)!).journalRaw, guest);
   assert.equal(state.events, 0);
 });
