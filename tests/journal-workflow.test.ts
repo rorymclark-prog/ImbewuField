@@ -151,6 +151,12 @@ test('the linked note sheet starts with no date and shows a checked bed without 
     assert.equal(sheet.root.findByType('form').props['aria-busy'], true);
     await act(async () => sheet.root.findByType('form').props.onSubmit({ preventDefault() {} }));
     assert.equal(observations.length, 1);
+
+    await act(async () => { sheet.update(React.createElement(app.Sheet, { ...props, saveBlocked: true })); });
+    assert.equal(sheet.root.findByProps({ type: 'submit' }).props.disabled, true);
+    assert.equal(sheet.root.findByProps({ 'aria-label': 'Close' }).props.disabled, false);
+    await act(async () => sheet.root.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.equal(observations.length, 1);
   } finally {
     if (sheet) await act(async () => sheet.unmount());
     await app.close();

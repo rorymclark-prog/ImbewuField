@@ -43,13 +43,14 @@ interface Props {
   requireObservationDate?: boolean;
   linkedBedLabel?: string;
   saving?: boolean;
+  saveBlocked?: boolean;
 }
 
 /* Bottom sheet, phone-first: 92dvh cap, 22px top radius, safe-area padding —
    the same chrome components/EvidenceSheet.tsx uses, so the journal does not
    introduce a second modal idiom. */
 export default function JournalEntrySheet({ entry, initialDraft, beds, crops, onSave, onDelete, onClose, error,
-  requireObservationDate = false, linkedBedLabel, saving = false }: Props) {
+  requireObservationDate = false, linkedBedLabel, saving = false, saveBlocked = false }: Props) {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
@@ -109,7 +110,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
     if (fileRef.current) fileRef.current.value = '';
   }
 
-  const canSave = !busy && !saving && Boolean(title.trim() || notes.trim()) && (!requireObservationDate || isJournalDate(date));
+  const canSave = !busy && !saving && !saveBlocked && Boolean(title.trim() || notes.trim()) && (!requireObservationDate || isJournalDate(date));
 
   function submit(e: React.FormEvent) {
     e.preventDefault();

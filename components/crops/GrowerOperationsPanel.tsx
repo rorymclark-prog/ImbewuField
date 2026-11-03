@@ -30,8 +30,8 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
   const [notesEnabled, setNotesEnabled] = useState(false);
   const [note, setNote] = useState<GrowerFieldNoteDraft | null>(null);
   const [noteBusy, setNoteBusy] = useState(false);
-  const [noteError, setNoteError] = useState<string | null>(null);
-  const activeNote = useRef<GrowerFieldNoteDraft | null>(null);
+  const [noteError, setNoteError] = useState<{ message: string; saveBlocked?: true } | null>(null);
+  const activeNote = useRef<{ draft: GrowerFieldNoteDraft; saveBlocked: boolean } | null>(null);
   const notePending = useRef(false);
   const noteEpoch = useRef(0);
   const generation = useRef(0), live = useRef(props); live.current = props;
@@ -46,7 +46,7 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
       setNotesEnabled(enabled);
       if (!enabled) {
         noteEpoch.current++;
-        if (activeNote.current) closeGrowerFieldNote(activeNote.current);
+        if (activeNote.current) closeGrowerFieldNote(activeNote.current.draft);
         activeNote.current = null;
         setNote(null);
       }
@@ -55,7 +55,7 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     window.addEventListener(SAMPLE_MODE_EVENT, update);
     return () => {
       noteEpoch.current++;
-      if (activeNote.current) closeGrowerFieldNote(activeNote.current);
+      if (activeNote.current) closeGrowerFieldNote(activeNote.current.draft);
       window.removeEventListener(SAMPLE_MODE_EVENT, update);
     };
   }, []);
@@ -108,37 +108,40 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
         return;
       }
       if (!draft) { setMessage('The current plan or journal could not be checked. Open the journal or refresh the saved cycles.'); return; }
-      activeNote.current = draft;
+      activeNote.current = { draft, saveBlocked: false };
       setNote(draft);
     } finally { notePending.current = false; setNoteBusy(false); }
   }
 
   function closeNote() {
-    if (notePending.current || !activeNote.current) return;
-    closeGrowerFieldNote(activeNote.current);
+    if (notePending.current) return;
+    if (activeNote.current) closeGrowerFieldNote(activeNote.current.draft);
     activeNote.current = null;
     setNote(null);
   }
 
   async function saveNote(input: JournalEntryInput) {
-    const draft = activeNote.current;
-    if (!draft || notePending.current) return;
+    const current = activeNote.current;
+    if (!current || current.saveBlocked || notePending.current) return;
     notePending.current = true;
     setNoteBusy(true);
     setNoteError(null);
     try {
-      const result = await saveGrowerFieldNote(draft, input);
-      if (activeNote.current !== draft) return;
+      const result = await saveGrowerFieldNote(current.draft, input);
+      if (activeNote.current !== current) return;
       if (result.status === 'saved') {
         activeNote.current = null;
         setNote(null);
         setMessage('Field note saved to the journal.');
+      } else if (result.status === 'unconfirmed') {
+        // The note may already exist. Retire this draft while leaving its
+        // contents and the check-the-journal instruction on screen.
+        current.saveBlocked = true;
+        setNoteError({ message: 'The save could not be confirmed. Check the journal before trying again.', saveBlocked: true });
       } else {
-        setNoteError(result.status === 'unconfirmed'
-          ? 'The save could not be confirmed. Check the journal before trying again.'
-          : result.reason === 'invalid-note' ? 'Enter the date and what you observed.'
-            : result.reason === 'journal-full' ? 'The journal is full. Your draft is still here.'
-              : 'The plan or journal changed, or storage is busy. Your draft is still here.');
+        setNoteError({ message: result.reason === 'invalid-note' ? 'Enter the date and what you observed.'
+          : result.reason === 'journal-full' ? 'The journal is full. Your draft is still here.'
+            : 'The plan or journal changed, or storage is busy. Your draft is still here.' });
       }
     } finally { notePending.current = false; setNoteBusy(false); }
   }
@@ -173,6 +176,6 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     {message && <p role="status">{message}</p>}
     {note && <JournalEntrySheet entry={null} beds={[]} crops={[]} requireObservationDate
       initialDraft={{ category: 'other' }} linkedBedLabel={note.bedLabel ?? 'Checked plan bed'}
-      saving={noteBusy} error={noteError} onClose={closeNote} onSave={input => { void saveNote(input); }} />}
+      saving={noteBusy} saveBlocked={noteError?.saveBlocked} error={noteError?.message} onClose={closeNote} onSave={input => { void saveNote(input); }} />}
   </section>;
 }

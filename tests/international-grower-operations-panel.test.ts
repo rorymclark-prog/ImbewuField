@@ -231,3 +231,43 @@ test('the dated task button opens an observation and a source change holds its s
     else Reflect.deleteProperty(globalThis, 'navigator');
   }
 });
+
+test('an ambiguous linked write preserves its warning and cannot submit the same draft again', async () => {
+  const navigatorBefore = Object.getOwnPropertyDescriptor(globalThis, 'navigator');
+  Object.defineProperty(globalThis, 'navigator', { configurable: true, value: {
+    locks: { async request(_name: string, _options: unknown, action: (lock: object) => unknown) { return await action({}); } },
+  } });
+  const screen = mount();
+  const sheet = () => screen.renderer.root.findAll(node => typeof node.type === 'function' && node.type.name === 'JournalEntrySheet')[0];
+  const write = local.setItem;
+  try {
+    await act(async () => { screen.click('Write field note'); });
+    const input = { date: '2028-12-01', title: 'A synthetic observation', notes: '', category: 'other' };
+    let writes = 0;
+    local.setItem = (key, value) => {
+      writes++;
+      write.call(local, key, value);
+      throw Error('stored but confirmation unavailable');
+    };
+    await act(async () => { sheet().props.onSave(input); });
+    assert.equal(writes, 1);
+    assert.equal(sheet().props.saveBlocked, true);
+    const warning = sheet().props.error;
+    assert.match(warning, /Check the journal before trying again/);
+    await act(async () => { sheet().props.onSave(input); });
+    assert.equal(writes, 1);
+    assert.equal(sheet().props.error, warning);
+
+    local.setItem = write;
+    const saved = await readCanonicalJournal();
+    assert.ok(saved.status === 'ready');
+    assert.deepEqual(saved.entries.map(entry => entry.title), [input.title]);
+    await act(async () => { sheet().props.onClose(); });
+    assert.equal(sheet(), undefined);
+  } finally {
+    local.setItem = write;
+    screen.dispose();
+    if (navigatorBefore) Object.defineProperty(globalThis, 'navigator', navigatorBefore);
+    else Reflect.deleteProperty(globalThis, 'navigator');
+  }
+});
