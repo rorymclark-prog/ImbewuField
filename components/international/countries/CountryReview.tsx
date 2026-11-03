@@ -75,7 +75,7 @@ export default function CountryReview() {
         <h3>{CATEGORY_NAMES[entry.category]}</h3>
         {!entry.sources.length && <p>No source dossier recorded.</p>}
         {entry.sources.map((source) => <details key={source.id} className={styles.details}>
-          <summary><span>{source.authority}</span><small>{source.verification === 'content-read' ? 'Full source page read' : 'Source unavailable in this review'} · {sourceEvidenceState(source, asOf)}</small></summary>
+          <summary><span>{source.authority}</span><small>{source.verification === 'content-read' ? 'Full source page read' : 'Source unavailable in this review'} · {source.backgroundOnly ? 'Background reference only' : sourceEvidenceState(source, asOf)}</small></summary>
           <p><a href={source.url} target="_blank" rel="noreferrer" className={styles.link}>Open official source ↗</a></p>
           <p>{source.verifiedClaim}</p><p>{source.limitations}</p>
           <dl><dt>Coverage</dt><dd>{source.coverage}</dd><dt>Resolution</dt><dd>{metadata(source.resolution)}</dd>

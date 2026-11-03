@@ -26,6 +26,14 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
     source('ke-kalro', 'agricultural-extension', 'Kenya Agricultural & Livestock Research Organisation (KALRO)', 'https://kalro.ecitizen.go.ke/', 'Kenya agricultural research', 'The official eCitizen page identifies KALRO’s research and information role; services use eCitizen. No crop production guide was imported.', { accessRequirements: known('Public introduction; service applications and payments require eCitizen. No account was opened.') }),
     source('ke-kmd', 'weather-frost', 'Kenya Meteorological Department', 'https://meteo.go.ke/', 'Kenya weather and climate services', 'The official portal links forecasts, agrometeorology, climate data and stations; a frost-data contract was not verified.'),
     source('ke-soil-nrf', 'soils', 'National Research Fund: Rongo University soil laboratory listing', 'https://risp.nrf.go.ke/facility/1', 'Listed facility in Kisii, Kenya; not a national soil map', 'The official facility page describes soil analysis; equipment information is absent. This is a service lead, not a spatial soil dataset.'),
+    source('ke-isric-sotwis', 'soils', 'ISRIC - World Soil Information', 'https://data.isric.org/srv/api/records/4648929a-8031-49cc-9d56-9f3aeff2f8d9', 'National assessment of historical soil parameter estimates across Kenya', 'The official catalogue record describes historical soil estimates for national studies at a map scale of 1:1,000,000.', {
+      title: 'SOTER-based soil parameter estimates (SOTWIS) for Kenya',
+      accessedOn: '2026-11-03', publishedOn: '2004-02-01', backgroundOnly: true,
+      resolution: known('Published map scale 1:1,000,000. Grid resolution is unknown.'),
+      licence: known('The catalogue lists CC BY 3.0. Reuse of the download awaits review.'),
+      accessRequirements: known('Public catalogue record. The advertised ZIP and its access requirements are unverified.'),
+      limitations: 'These historical estimates include inferred values. Soil measurements for Kiambu and individual farms remain unverified.',
+    }),
     source('ke-kephis', 'plant-legality', 'Kenya Plant Health Inspectorate Service (KEPHIS)', 'https://kephis.go.ke/', 'Kenya plant health, seed certification and phytosanitary services', 'The official page identifies plant-health regulatory functions and services; it is not a complete invasive-species or propagation-permission register.'),
   ] },
   { code: 'GB', name: 'United Kingdom', stage: 'engineering-pilot', jurisdictionNote: 'England, Scotland, Wales and Northern Ireland require jurisdiction-specific legal and agricultural review. Great Britain evidence does not automatically cover Northern Ireland.', regions: [], agronomyReview: unreviewed(), sources: [
