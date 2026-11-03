@@ -7209,24 +7209,37 @@ function historicalPresentationPhotoPoint(state:DesignCanvasState,frame:CanvasFr
   return layout?[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight]:[x,y];
 }
 
-function drawHistoricalPhotoFacts(ctx: CanvasRenderingContext2D,state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],W:number,H:number,baseline:HistoricalBaseline,labels=true):void {
+function drawHistoricalPhotoFacts(ctx: CanvasRenderingContext2D,state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],W:number,H:number,baseline:HistoricalBaseline,labels=true, names=false):void {
   ctx.save();ctx.strokeStyle='#79583B';ctx.lineWidth=Math.max(2,W*.001);ctx.setLineDash([]);ctx.beginPath();
   baseline.fence.forEach((point,i)=>{const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,point,baseline);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x*W,y*H);});ctx.stroke();ctx.restore();
   if(!labels)return;
-  // Eight long plaques hid the starting infrastructure. A numbered photo key is legible at
-  // the actual feature and carries its full name once, in the matching right-hand inventory.
-  baseline.features.forEach((feature,index)=>{const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,feature.point,baseline);drawHistoricalPhotoPin(ctx,x*W,y*H,Math.max(21,W*.011),index+1);});
+  // Rory asked to read the area names on the photograph. Short leaders leave the roofs/play
+  // equipment visible; the compact numbered key remains a separate presentation choice.
+  const offsets:Record<string,[number,number]>={'classroom-1':[-.14,-.035],'classroom-2':[.13,-.04],slab:[.09,.045],play:[-.02,.11],toilet:[-.12,.025],tank:[-.14,.015],road:[.08,.045],fence:[.13,-.005]};
+  baseline.features.forEach((feature,index)=>{
+    const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,feature.point,baseline);
+    if(!names){drawHistoricalPhotoPin(ctx,x*W,y*H,Math.max(21,W*.011),index+1);return;}
+    const [dx,dy]=offsets[feature.id]??[.09,0];
+    const text=feature.label.replace(/^Existing /,'').replace(/ — visible portion/,'').replace(/^./,c=>c.toUpperCase());
+    const font=Math.max(24,Math.round(W*.016));ctx.save();ctx.font=`700 ${font}px ${SHEET_BODY_FONT}`;
+    const width=ctx.measureText(text).width+font*1.1,height=font*1.7;
+    const cx=Math.max(width/2+8,Math.min(W-width/2-8,(x+dx)*W)),cy=Math.max(height/2+8,Math.min(H-height/2-8,(y+dy)*H));
+    ctx.strokeStyle='#315A40';ctx.lineWidth=Math.max(1.5,W*.0008);ctx.beginPath();ctx.moveTo(x*W,y*H);ctx.lineTo(cx,cy);ctx.stroke();
+    ctx.beginPath();ctx.arc(x*W,y*H,font*.12,0,Math.PI*2);ctx.fillStyle='#315A40';ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,.96)';ctx.fillRect(cx-width/2,cy-height/2,width,height);ctx.strokeStyle='#78927E';ctx.strokeRect(cx-width/2,cy-height/2,width,height);
+    ctx.fillStyle='#183425';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,cx,cy);ctx.restore();
+  });
 }
 
-async function composeHistoricalBaseSheet(baseImage:string|null,state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName:string|undefined,baseline:HistoricalBaseline,aiArtwork=false,styleLabel='Archive photograph'):Promise<string> {
+async function composeHistoricalBaseSheet(baseImage:string|null,state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName:string|undefined,baseline:HistoricalBaseline,aiArtwork=false,styleLabel='Archive photograph',labelMode:SheetLabelMode='names'):Promise<string> {
   const p=await boundaryPresentationContext(state,frame,refs),W=p.frame.imgW*SCALE,H=p.frame.imgH*SCALE;
   const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext('2d');if(!ctx){releaseCanvas(canvas);throw new Error('Historical sheet unavailable');}
   const image=await loadImage(baseImage??p.frame.satDataUrl!);
   try{ctx.drawImage(image,0,0,W,H);}finally{releaseImageSource(image);}
   drawHistoricalDesignExtent(ctx,p.refLayers,W,H);
-  drawHistoricalPhotoFacts(ctx,state,frame,refs,W,H,baseline);
-  const legendRows:StyleLegendRow[]=baseline.features.map((feature,index)=>({swatch:'#244F36',text:feature.label.replace(/^Existing /,'').replace(/^./,c=>c.toUpperCase()),photoNumber:index+1}));
+  drawHistoricalPhotoFacts(ctx,state,frame,refs,W,H,baseline,true,labelMode!=='codes');
+  const legendRows:StyleLegendRow[]=baseline.features.map((feature,index)=>({swatch:'#FFFFFF',text:feature.label.replace(/^Existing /,'').replace(/^./,c=>c.toUpperCase()),...(labelMode==='codes'?{photoNumber:index+1}:{visual:'historical-name' as const})}));
   legendRows.push({swatch:BOUNDARY_LINE_GREEN,text:'Current design extent — not the historic fence',visual:'historical-extent'});
   return composeStyleSheet(drainCanvasToDataUrl(canvas,'image/png'),p.state,p.frame,p.refLayers,'all',placeName,styleLabel,'Existing Site — before works',false,true,
     {sheetNumber:'01',legendRows,aiArtwork,imageAttribution:'Historic drone photograph: Imbewu project archive.',footerHeading:'HISTORICAL PHOTO',footerText:[baseline.provenance,baseline.alignment,baseline.coverage].join('\n'),footerBox:true});
@@ -7238,8 +7251,9 @@ export async function buildBlueprintBaseMap(
   refLayers: DesignGlossyProps['refLayers'],
   placeName?: string,
   baseline: HistoricalBaseline | null = historicalBaselineForSite(state.siteId),
+  photoLabelMode:SheetLabelMode='names',
 ): Promise<string> {
-  if (baseline) return composeHistoricalBaseSheet(null,state,await buildHistoricalBaselineFrame(frame,baseline),refLayers,placeName,baseline);
+  if (baseline) return composeHistoricalBaseSheet(null,state,await buildHistoricalBaselineFrame(frame,baseline),refLayers,placeName,baseline,false,'Archive photograph',photoLabelMode);
   const presentation = await boundaryPresentationContext(state, frame, refLayers);
   const renderState = presentation.state;
   const renderFrame = presentation.frame;
@@ -10125,7 +10139,7 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above';
+  visual?: 'historical-name' | 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above';
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
@@ -10352,6 +10366,7 @@ function drawStyleLegendSymbol(
   w: number,
   h: number,
 ): void {
+  if(row.visual==='historical-name')return;
   if(row.visual==='historical-extent'){ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(1.5,h*.05);ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;}
   if(row.photoNumber!==undefined){drawHistoricalPhotoPin(ctx,x+w/2,y,Math.min(w,h)*.36,row.photoNumber);return;}
   if (row.sectorIcon) {
@@ -12507,7 +12522,7 @@ export default function DesignGlossy({
   // cached CREAM one without rendering anything — which reads as "the change did nothing", and is
   // exactly what the r-token exists to prevent.
   const underlaySuffix = (historicalActive ? `:${availableHistoricalBaseline!.id}` : underlayCacheSuffix(underlay, frameProp))
-    + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
+    + ((sheetHasPlantCodes || (historicalActive && selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='base')) ? labelModeCacheSuffix(labelMode) : '')
     + `:${SHEET_RENDER_RECIPE}`
     // A sheet drawn at SCALE 3 is a different picture from the same sheet at 2 — re-serving a
     // 1920px cache under a High setting would look like the setting did nothing (the exact
@@ -13335,7 +13350,7 @@ export default function DesignGlossy({
     setLoading('exact');
     setError(null);
     try {
-      const composite = await buildBlueprintBaseMap(state, frame, refLayers, placeName, historicalActive ? availableHistoricalBaseline : null);
+      const composite = await buildBlueprintBaseMap(state, frame, refLayers, placeName, historicalActive ? availableHistoricalBaseline : null,labelMode);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
@@ -13356,7 +13371,7 @@ export default function DesignGlossy({
     } finally {
       setLoading(null);
     }
-  }, [state, frame, refLayers, mapKey, pushGallery, placeName, historicalActive, availableHistoricalBaseline]);
+  }, [state, frame, refLayers, mapKey, pushGallery, placeName, historicalActive, availableHistoricalBaseline,labelMode]);
 
   // "Generate all sheets" — Rory's ask: one tap for the WHOLE plan set, not one map at a time.
   // Uses the DETERMINISTIC exact renders (accurate by construction, instant, and — unlike
@@ -14380,9 +14395,9 @@ export default function DesignGlossy({
   // Site shares the design layers' material policy: painted styles retain their roofs and ground,
   // Photo Plan preserves factual source materials. Boundary, labels and inventory stay app-owned.
   const finishSiteSheet = useCallback(
-    async (modelImage: string, styleKey: StylePreset, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, baseline: HistoricalBaseline | null = null): Promise<string> => {
+    async (modelImage: string, styleKey: StylePreset, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, baseline: HistoricalBaseline | null = null,photoLabelMode:SheetLabelMode='names'): Promise<string> => {
       const { state, frame, refLayers, site, placeName } = snapshot;
-      if(baseline) return composeHistoricalBaseSheet(modelImage,state,frame,refLayers,placeName,baseline,true,PRODUCER_STYLES.find(style=>style.key===styleKey)?.label ?? 'AI illustration');
+      if(baseline) return composeHistoricalBaseSheet(modelImage,state,frame,refLayers,placeName,baseline,true,PRODUCER_STYLES.find(style=>style.key===styleKey)?.label ?? 'AI illustration',photoLabelMode);
       const presentation = await boundaryPresentationContext(state, frame, refLayers);
       const renderState = presentation.state;
       const renderFrame = presentation.frame;
@@ -15345,7 +15360,7 @@ export default function DesignGlossy({
                   : sheet.key === 'sector'
                   ? await finishSectorRef.current(sourceImage, frozenScene, historicalSource)
                   : sheet.key === 'base'
-                  ? await finishSiteRef.current(sourceImage, styleKey, frozenScene, historicalSource)
+                  ? await finishSiteRef.current(sourceImage, styleKey, frozenScene, historicalSource,frozenScene.labelMode)
                   : styleDef
                     ? await finishRef.current(sourceImage, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt, roofReference)
                     : undefined;
@@ -15358,7 +15373,7 @@ export default function DesignGlossy({
                 : sheet.key === 'sector'
                 ? await finishSectorRef.current(factualModelImage, frozenScene, historicalSource)
                 : sheet.key === 'base'
-                ? await finishSiteRef.current(factualModelImage, styleKey, frozenScene, historicalSource)
+                ? await finishSiteRef.current(factualModelImage, styleKey, frozenScene, historicalSource,frozenScene.labelMode)
                 : styleDef
                   ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt, roofReference)
                   : raw;
@@ -15955,6 +15970,9 @@ export default function DesignGlossy({
         <WorkflowHeading number={2} title="Underlay" />
         {historicalSheet && availableHistoricalBaseline && <div style={{fontSize:12,lineHeight:1.5,marginBottom:10}}>
           <strong>{historicalActive ? 'Before-works archive photo' : 'Current imagery'}</strong>
+          {historicalActive && selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='base' && <div role="group" aria-label="Photo labels" style={{display:'flex',gap:8,marginTop:8}}>
+            {(['names','codes'] as const).map(value=><button type="button" key={value} disabled={loading!==null} aria-pressed={labelMode===value} onClick={()=>{setLabelMode(value);setResultImage(null);}}>{value==='names'?'Area names':'Numbered key'}</button>)}
+          </div>}
           <p style={{margin:'4px 0'}}>Site and Sector share the early photograph. Later design sheets keep your current imagery. Alignment is approximate; the two uncovered tips stay blank.</p>
           <button type="button" disabled={loading!==null} aria-pressed={historicalActive} onClick={()=>{setHistoricalEnabled(!historicalEnabled);if(!historicalEnabled)setUnderlay('photo');setResultImage(null);}}>
             {historicalActive ? 'Use current background instead' : 'Use before-works photo'}

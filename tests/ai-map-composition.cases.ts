@@ -678,3 +678,13 @@ test('the paid historical coverage mask uses the same crop as photo annotations'
     historicalPresentationPhotoPoint:(s:any,f:any,r:any,p:any)=>{assert.equal(s,source.state);assert.equal(f,source.frame);assert.equal(r,source.refLayers);calls++;return[p[0]/4000*.4+.3,p[1]/3000*.4+.3];}});
   assert.deepEqual(await build({imgW:100,imgH:100},UBHEJANE_BEFORE_WORKS,source),[255,0,255]);assert.equal(calls,4);
 });
+
+test('named historical areas have readable leader labels and keep the photo facts and geometry unchanged', () => {
+  const probe=artProbe(),b=UBHEJANE_BEFORE_WORKS,before=JSON.stringify(b);let pins=0;probe.ctx.measureText=(text:string)=>({width:text.length*20});
+  const draw=helper('drawHistoricalPhotoFacts',{SHEET_BODY_FONT:'Arial',historicalPresentationPhotoPoint:(_s:any,_f:any,_r:any,p:any)=>[p[0]/4000,p[1]/3000],drawHistoricalPhotoPin:()=>{pins++;}});
+  draw(probe.ctx,{},{},{},1200,1000,b,true,true);
+  const text=probe.calls.filter(v=>v[0]==='fillText').map(v=>v[1]);assert.deepEqual(text,['Classroom 1','Classroom 2','Bare slab','Play area','Toilet','Water tank','Dirt road','Fence']);
+  assert.equal(pins,0,'names must not leave misleading number-only pins behind');
+  assert.equal(probe.calls.filter(v=>v[0]==='strokeRect').length,8,'every name has a light backing, not lettering lost against grass');
+  assert.equal(JSON.stringify(b),before,'moving label placement cannot move source facts');
+});

@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Choose area names or a numbered key on the historical Existing Site map.": "Hlawula mavito ya tindhawu kumbe xikombo xa tinomboro eka mepe wa khale wa Existing Site.",
   // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
   "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Mimepe ya Site na Sector ya Ubhejane yi nga komba xifaniso xa khale xa le mahlweni ka mintirho.",
   "AI maps start with available aerial imagery; you can still choose plain paper.": "Mimepe ya AI yi sungula hi swifaniso leswi kumekaka swa le henhla; wa ha nga hlawula phepha ro basa.",

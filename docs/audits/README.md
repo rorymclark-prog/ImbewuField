@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest area-label follow-up: [Named historical areas and numbered alternative — 3 November 2026](2026-11-03/historical-area-labels-codex.md).
+
 Latest historical baseline: [Approved before-works photo, numbered facts and evidence-based defaults — 3 November 2026](2026-11-03/historical-baseline-codex.md). Exact photographic previews are separate from pending historical AI Sector verification.
 
 Latest implementation: [Nine-layer AI fidelity corrections — 3 November 2026](2026-11-03/ai-layer-fidelity-corrections-codex.md). Local output and contract evidence are separate from pending fresh-provider checks.
