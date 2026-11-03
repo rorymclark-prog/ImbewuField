@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
+import LimaBar from '@/components/LimaBar';
 import ReferenceCardLanguageReview from '@/components/international/ReferenceCardLanguageReview';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { T_en } from '@/lib/i18n';
@@ -44,6 +45,8 @@ export default function InternationalLocaleReviewPage() {
         <p className="rounded-xl border border-[var(--border)] bg-[var(--bg-1)] p-3 text-sm">Review workspace only. The app’s existing language choices, lessons, reports and offline packs retain their current support. Translated labels do not establish locally reviewed farming guidance.</p>
       </header>
       <ReferenceCardLanguageReview />
+      {/* The floating launcher covered the wording comparison on phones. */}
+      <LimaBar />
       <section className="grid gap-3 rounded-xl border border-[var(--border)] p-3 sm:grid-cols-2">
         <label className="text-sm">Draft language<select className={field} value={language} onChange={(event) => setLanguage(event.target.value as DraftLanguage)}>{DRAFT_LANGUAGES.map((item) => <option key={item.language} value={item.language}>{item.nativeName} · {item.englishName}</option>)}</select></label>
         <label className="text-sm">Formatting locale (independent choice)<input className={field} value={locale} onChange={(event) => setLocale(event.target.value)} placeholder="For example fr-CA or es-ES" spellCheck={false} /></label>

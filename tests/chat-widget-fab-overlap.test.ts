@@ -168,3 +168,13 @@ test('the /facilitator/crops right-dock offset is gone, not just overridden', ()
   const table = widget.slice(posAt, widget.indexOf(';', posAt));
   assert.doesNotMatch(table, /facilitator\/crops/, 'the offset branch for an excluded route is dead code');
 });
+
+test('international language reviewers can read the phone comparison without losing access to Lima', () => {
+  const widget = source('../components/ChatWidget.tsx');
+  const review = source('../app/international/locales/page.tsx');
+  const skipBlock = widget.slice(widget.indexOf("pathname.startsWith('/login')"), widget.indexOf(') return null;', widget.indexOf("pathname.startsWith('/login')")));
+  assert.match(skipBlock, /pathname === '\/international\/locales'/);
+  assert.match(widget.slice(widget.indexOf('function isLimaFabHiddenRoute')), /pathname === '\/international\/locales'/,
+    'clear the floating launcher reservation on this route too');
+  assert.match(review, /<ReferenceCardLanguageReview \/>[\s\S]*<LimaBar \/>/);
+});
