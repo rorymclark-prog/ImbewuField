@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 November 2026', sha: 'f5dfaf0df', changes: [
+  { when: '3 November 2026', sha: '8fe651196', changes: [
     'Choose which saved sites an assistant can use, and disconnect it in Settings.',
     'Keep original site photos and PDFs with their source and import history.',
     'Review historical photo registration drafts without moving saved map features.',
@@ -50,6 +50,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'Review connected assistants, selected sites and imported originals.' },
   { title: 'Check your saved map', where: 'Site design', href: '/design',
     detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
+  { when: '3 November 2026', sha: '0e9fd5a26', changes: [
+    "Choose area names or a numbered key on the historical Existing Site map.",
+  ] },
   { when: '3 November 2026', sha: 'a337ff345', changes: [
     "Ubhejane Site and Sector maps can show the before-works archive photograph.",
     "AI maps start with available aerial imagery; you can still choose plain paper.",
