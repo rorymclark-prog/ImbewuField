@@ -1,0 +1,11 @@
+{
+  "coordinatorReconciledAtUtc": "2026-11-03T07:32:43.892910+00:00",
+  "reason": "Restamp existing release coverage after the completed operations commit and Simple-view follow-up; frozen English/message hashes remain unchanged.",
+  "frozenSourceSha256": "ea662c644d50f4703b548e55165ae4e765e51a3317173d6cc9df1b5d35940daa",
+  "originalReleaseFileSha256": "de8996bcef6021916108c3868dbbb2318ee0c144a707ad14708069198b8f04c4",
+  "currentReleaseFileSha256": "bffeb9b17c62ff0a1e8d4a57445b931caff14dd8a4928ebfa4599e3cd4f711a2",
+  "releaseCoverageSha": "e63ffe17a",
+  "messagesChecked": 6,
+  "englishUnchanged": true,
+  "humanFluentApproval": false
+}
