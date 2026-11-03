@@ -14,6 +14,7 @@ import { Sprout, ShoppingBasket, CloudSun, Bug, Wrench, Users, NotebookPen, type
 import { activeAccountLocalStorageKey, activeAccountUid, readAccountLocalSampleState } from './account-local-storage';
 import { getFirebase, isBackendConfigured } from './firebase/init';
 import { normaliseGrowerFieldNoteLink } from './international/grower-field-note-link';
+import type { CropPlanStorageLocks } from './crop-plan-storage';
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
 
@@ -565,4 +566,106 @@ export function appendLinkedJournalNote(
   try { window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT)); }
   catch { /* A notification error cannot undo an observed storage write. */ }
   return { status: 'saved', noteId: note.id };
+}
+
+// Older bundles can still write v1 directly. They never receive the new key.
+const CANONICAL_JOURNAL_KEY = 'imbewu_field_journal_v2';
+type JournalCutoverReason = 'context-unavailable' | 'context-changed' | 'upgrade-required' | 'invalid-legacy'
+  | 'invalid-canonical' | 'legacy-diverged' | 'lock-unavailable' | 'write-unconfirmed';
+export type JournalCutoverStatus = { readonly status: 'ready' }
+  | { readonly status: 'held'; readonly reason: JournalCutoverReason };
+interface JournalCutoverContext {
+  readonly storage: Storage;
+  readonly owner: string | null;
+  readonly sample: false;
+  readonly legacyKey: string;
+  readonly canonicalKey: string;
+}
+interface JournalCutoverSnapshot { legacy: string | null; canonical: string | null }
+interface JournalEnvelope { version: 2; legacyDigest: string | null; journalRaw: string }
+const journalCutoverHeld = (reason: JournalCutoverReason): JournalCutoverStatus => ({ status: 'held', reason });
+
+function journalCutoverContext(): JournalCutoverContext | null {
+  if (typeof window === 'undefined' || readAccountLocalSampleState() !== false) return null;
+  const owner = activeAccountUid(), actor = { owner, sample: false as const };
+  // Guest transfer and the isolated sample need their own cutover admission.
+  if (!journalActorMatches(actor) || (!owner && isBackendConfigured())) return null;
+  return { ...actor, storage: window.localStorage, legacyKey: activeAccountLocalStorageKey(STORAGE_KEY),
+    canonicalKey: activeAccountLocalStorageKey(CANONICAL_JOURNAL_KEY) };
+}
+
+function captureJournalCutover(context: JournalCutoverContext): JournalCutoverSnapshot | null {
+  const current = () => journalActorMatches(context) && window.localStorage === context.storage
+    && activeAccountLocalStorageKey(STORAGE_KEY) === context.legacyKey
+    && activeAccountLocalStorageKey(CANONICAL_JOURNAL_KEY) === context.canonicalKey;
+  if (!current()) return null;
+  const snapshot = { legacy: context.storage.getItem(context.legacyKey), canonical: context.storage.getItem(context.canonicalKey) };
+  return current() ? snapshot : null;
+}
+
+function sameJournalCutover(before: JournalCutoverSnapshot, after: JournalCutoverSnapshot | null): boolean {
+  return !!after && before.legacy === after.legacy && before.canonical === after.canonical;
+}
+
+async function journalLegacyDigest(raw: string | null): Promise<string | null> {
+  if (raw === null) return null;
+  // Encode the JS string losslessly, including an unpaired surrogate in old data.
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(raw)));
+  return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function readJournalEnvelope(raw: string): JournalEnvelope | null {
+  try {
+    const value: unknown = JSON.parse(raw);
+    if (!record(value) || value.version !== 2 || Object.keys(value).length !== 3 || JSON.stringify(value) !== raw
+      || (value.legacyDigest !== null && (typeof value.legacyDigest !== 'string' || !/^[a-f0-9]{64}$/.test(value.legacyDigest)))
+      || typeof value.journalRaw !== 'string' || !journalNormalisationIsLossless(value.journalRaw)) return null;
+    return { version: 2, legacyDigest: value.legacyDigest, journalRaw: value.journalRaw };
+  } catch { return null; }
+}
+
+async function inspectJournalCutover(context: JournalCutoverContext, snapshot: JournalCutoverSnapshot): Promise<JournalCutoverStatus> {
+  if (snapshot.canonical === null) return journalCutoverHeld('upgrade-required');
+  const envelope = readJournalEnvelope(snapshot.canonical);
+  if (!envelope) return journalCutoverHeld('invalid-canonical');
+  const digest = await journalLegacyDigest(snapshot.legacy);
+  if (!sameJournalCutover(snapshot, captureJournalCutover(context))) return journalCutoverHeld('context-changed');
+  return digest === envelope.legacyDigest ? { status: 'ready' } : journalCutoverHeld('legacy-diverged');
+}
+
+/** Review the versioned journal without exposing either storage key or raw bytes. */
+export async function readJournalCutoverStatus(): Promise<JournalCutoverStatus> {
+  try {
+    const context = journalCutoverContext();
+    const snapshot = context && captureJournalCutover(context);
+    return context && snapshot ? await inspectJournalCutover(context, snapshot) : journalCutoverHeld('context-unavailable');
+  } catch { return journalCutoverHeld('context-unavailable'); }
+}
+
+/** Copy the checked old journal once under its account-scoped writer lock.
+ * The old key stays intact for comparison and recovery. No live caller yet. */
+export async function initialiseJournalCutover(locks?: CropPlanStorageLocks | null): Promise<JournalCutoverStatus> {
+  try {
+    const context = journalCutoverContext();
+    if (!context) return journalCutoverHeld('context-unavailable');
+    const writer = locks === undefined && typeof navigator !== 'undefined' ? navigator.locks : locks;
+    if (!writer) return journalCutoverHeld('lock-unavailable');
+    return await writer.request(`imbewu-journal:${context.canonicalKey}`, { mode: 'exclusive', ifAvailable: true }, async lock => {
+      if (!lock) return journalCutoverHeld('lock-unavailable');
+      const before = captureJournalCutover(context);
+      if (!before) return journalCutoverHeld('context-changed');
+      if (before.canonical !== null) return inspectJournalCutover(context, before);
+      const journalRaw = before.legacy ?? '[]';
+      try { if (!journalNormalisationIsLossless(journalRaw)) return journalCutoverHeld('invalid-legacy'); }
+      catch { return journalCutoverHeld('invalid-legacy'); }
+      const legacyDigest = await journalLegacyDigest(before.legacy);
+      const canonical = JSON.stringify({ version: 2, legacyDigest, journalRaw } satisfies JournalEnvelope);
+      if (!sameJournalCutover(before, captureJournalCutover(context))) return journalCutoverHeld('context-changed');
+      try {
+        context.storage.setItem(context.canonicalKey, canonical);
+        if (!sameJournalCutover({ ...before, canonical }, captureJournalCutover(context))) return journalCutoverHeld('write-unconfirmed');
+        return { status: 'ready' };
+      } catch { return journalCutoverHeld('write-unconfirmed'); }
+    });
+  } catch { return journalCutoverHeld('context-unavailable'); }
 }

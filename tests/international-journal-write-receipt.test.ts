@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import type { CropPlanStorageLocks } from '../lib/crop-plan-storage.ts';
 import { registerHooks } from 'node:module';
 import test, { after, beforeEach } from 'node:test';
 
@@ -28,7 +30,7 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
   return next(specifier, context);
 } });
 const { accountLocalStorageKey, bindMountedAccountLocalStorageUid } = await import('../lib/account-local-storage.ts');
-const { appendLinkedJournalNote, loadJournal, MAX_ENTRIES, readJournalLinkWriteReceipt, journalLinkWriteReceiptMatches } = await import('../lib/field-journal.ts');
+const { appendLinkedJournalNote, initialiseJournalCutover, loadJournal, MAX_ENTRIES, readJournalCutoverStatus, readJournalLinkWriteReceipt, journalLinkWriteReceiptMatches, saveJournal } = await import('../lib/field-journal.ts');
 hooks.deregister();
 const key = accountLocalStorageKey('imbewu_field_journal_v1', 'account-a');
 const entry = { id: 'test-note', date: '2026-11-03', title: 'Synthetic note', notes: 'Read-only fixture',
@@ -224,4 +226,68 @@ test('readback is required even when a storage write returns without throwing', 
   assert.equal(state.writes, 1);
   assert.equal(state.events, 0);
   assert.equal(journalLinkWriteReceiptMatches(receipt), false);
+});
+
+const canonicalKey = accountLocalStorageKey('imbewu_field_journal_v2', 'account-a');
+const exclusive: CropPlanStorageLocks = { async request(_name, _options, action) { return await action({}); } };
+
+test('the journal cutover copies checked bytes once and preserves both books when an old tab writes', async () => {
+  const original = JSON.stringify([entry]);
+  rows.set(key, original);
+  assert.deepEqual(await readJournalCutoverStatus(), { status: 'held', reason: 'upgrade-required' });
+  assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'ready' });
+  const copied = rows.get(canonicalKey)!;
+  assert.deepEqual(JSON.parse(copied), { version: 2, legacyDigest: createHash('sha256').update(JSON.stringify(original)).digest('hex'), journalRaw: original });
+  assert.equal(rows.get(key), original);
+  assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'ready' });
+  assert.equal(state.writes, 1, 'opening an existing canonical journal does not recopy');
+
+  const ordinary = loadJournal()[0];
+  assert.equal(saveJournal([{ ...ordinary, title: 'Older tab changed this note' }]).ok, true);
+  assert.notEqual(rows.get(key), original);
+  assert.deepEqual(await readJournalCutoverStatus(), { status: 'held', reason: 'legacy-diverged' });
+  assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'held', reason: 'legacy-diverged' });
+  assert.equal(rows.get(canonicalKey), copied);
+  assert.equal(state.writes, 2);
+});
+
+test('cutover holds unavailable locks, malformed evidence and quota failure without deleting old data', async () => {
+  rows.set(key, 'null');
+  assert.deepEqual(await initialiseJournalCutover(null), { status: 'held', reason: 'lock-unavailable' });
+  assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'held', reason: 'invalid-legacy' });
+  assert.equal(rows.get(key), 'null');
+  assert.equal(rows.has(canonicalKey), false);
+  rows.set(key, JSON.stringify([entry]));
+  state.refuseWrite = true;
+  assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'held', reason: 'write-unconfirmed' });
+  assert.equal(rows.get(key), JSON.stringify([entry]));
+  assert.equal(rows.has(canonicalKey), false);
+});
+
+test('cutover rechecks the account when a queued lock is acquired and holds a legacy race after copy', async () => {
+  const changed: CropPlanStorageLocks = { async request(_name, _options, action) {
+    state.uid = 'account-b';
+    return await action({});
+  } };
+  assert.deepEqual(await initialiseJournalCutover(changed), { status: 'held', reason: 'context-changed' });
+  assert.equal(state.writes, 0);
+  state.uid = 'account-a';
+  const legacyBefore = JSON.stringify([entry]);
+  const lateLegacy = JSON.stringify([{ ...entry, notes: 'Late change from old tab' }]);
+  rows.set(key, legacyBefore);
+  state.afterWrite = () => { rows.set(key, lateLegacy); };
+  assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'held', reason: 'write-unconfirmed' });
+  assert.equal(JSON.parse(rows.get(canonicalKey)!).journalRaw, legacyBefore);
+  assert.equal(rows.get(key), lateLegacy);
+  assert.deepEqual(await readJournalCutoverStatus(), { status: 'held', reason: 'legacy-diverged' });
+});
+
+test('a corrupt canonical journal and a guest namespace cannot be overwritten by cutover', async () => {
+  rows.set(canonicalKey, '{bad');
+  assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'held', reason: 'invalid-canonical' });
+  assert.equal(rows.get(canonicalKey), '{bad');
+  state.uid = null;
+  bindMountedAccountLocalStorageUid(null);
+  assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'held', reason: 'context-unavailable' });
+  assert.equal(state.writes, 0);
 });
