@@ -5,6 +5,7 @@
 // phrasing, so a refactor cannot quietly turn a slab back into a building.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import ts from 'typescript';
 import { readFile } from 'node:fs/promises';
 import { structureRegisterText } from '../lib/structure-register.ts';
 import type { ZoneShape } from '../lib/design-canvas.ts';
@@ -113,15 +114,19 @@ test('every paid polish prompt is actually GIVEN the structure register', async 
     new URL('../components/design/DesignGlossy.tsx', import.meta.url),
     'utf8',
   );
-  const calls = source.match(/buildFinishedSheetPolishPrompt\(([^;]*?)\)\s*$/gm)
-    ?? source.split('buildFinishedSheetPolishPrompt(').slice(1).map((tail) => tail.split('\n')[0]);
-  assert.ok(calls.length >= 3, `expected the known polish call sites, found ${calls.length}`);
-  for (const call of calls) {
-    if (call.includes('import') || call.includes('function ')) continue;
-    assert.ok(
-      call.includes('structureRegisterText'),
-      `a polish prompt is built without the structure register, so the model will guess which '
-      + 'shapes are buildings: ${call.trim().slice(0, 160)}`,
-    );
+  // The old line-end regex missed the Phasing call inside a template interpolation and failed
+  // despite all three callers supplying the register. Inspect each actual call and its argument.
+  const tree=ts.createSourceFile('DesignGlossy.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  const calls:ts.CallExpression[]=[];
+  function visit(node:ts.Node){
+    if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression)&&node.expression.text==='buildFinishedSheetPolishPrompt')calls.push(node);
+    ts.forEachChild(node,visit);
+  }
+  visit(tree);
+  assert.ok(calls.length>=3,'cover the design-layer, Existing Site and Phasing polish prompts');
+  for(const call of calls){
+    const register=call.arguments[3];
+    assert.ok(register&&ts.isCallExpression(register)&&register.expression.getText(tree)==='structureRegisterText',
+      `a polish prompt must receive the saved structure register: ${call.getText(tree).slice(0,160)}`);
   }
 });

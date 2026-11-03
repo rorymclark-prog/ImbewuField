@@ -25,7 +25,7 @@ import {
 import polygonClipping from 'polygon-clipping';
 
 import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { groundFeatureLayer, statusOf, buildSatelliteUrl, fetchImageAsDataUrl } from '@/lib/design-canvas';
+import { groundFeatureLayer, statusOf, buildSatelliteUrl, fetchImageAsDataUrl, pointInRing } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
@@ -40,7 +40,7 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
 import { fetchSheetContours, type SheetContourResult } from '@/lib/sheet-contours';
-import { sectorOverviewContours, sectorTerrainProfile, type SectorTerrainProfile } from '@/lib/sheet-terrain-profile';
+import { sectorOverviewContours, fetchProfileTerrain, rasterTerrainSections, rasterTerrainContours, TERRAIN_CONTOUR_INK, TERRAIN_SUPPLEMENTAL_INK, type RasterTerrainProfile } from '@/lib/sheet-terrain-profile';
 import {
   gateBoundaryBreaks,
   boundarySegmentsWithBreaks,
@@ -8089,6 +8089,8 @@ function drawSectorAnalysis(
   externalLegend = false,
   sheetContours?: SheetContourResult,
 ): SectorAnalysisComposition {
+  const artFinish = isAiBase && externalLegend;
+  const artInk = { summer:'#B76F20', winter:'#4A7698', cooling:'#247D75', cold:'#426D9B', berg:'#AA622F', fire:'#A04435', fall:'#396A82' };
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
 
@@ -8403,11 +8405,11 @@ function drawSectorAnalysis(
     // this canvas — so contrast is guaranteed by what's UNDER the label, never by what's under the
     // photo. Font bumped alongside it: 18px-min/×0.0115 was sized before this sheet carried a real
     // photo at phone-viewing scale.
-    const fs = Math.max(21, Math.round(W * 0.0135));
+    const fs = Math.max(21, Math.round(W * (artFinish ? 0.0125 : 0.0135)));
     const lineH = Math.round(fs * 1.1);
     for (const request of directLabelRequests) {
       ctx.save();
-      ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
+      ctx.font = `${artFinish ? 650 : 800} ${fs}px ${REFERENCE_LABEL_FONT}`;
       const halfW = Math.max(...request.lines.map((line) => ctx.measureText(line).width)) / 2 + fs * 0.55;
       const halfH = (lineH * request.lines.length) / 2 + fs * 0.42;
       // Wider escape net than the original seven: with two benchmark-mass arrows, both sun arcs
@@ -8452,8 +8454,8 @@ function drawSectorAnalysis(
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.lineJoin = 'round';
-      ctx.lineWidth = Math.max(5, fs * 0.22);
-      ctx.strokeStyle = 'rgba(8,12,10,0.92)';
+      ctx.lineWidth = artFinish ? Math.max(2.4,fs*.11) : Math.max(5, fs * 0.22);
+      ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.96)' : 'rgba(8,12,10,0.92)';
       request.lines.forEach((line, index) => ctx.strokeText(line, lx, ly + index * lineH));
       ctx.fillStyle = request.color;
       request.lines.forEach((line, index) => ctx.fillText(line, lx, ly + index * lineH));
@@ -8464,11 +8466,11 @@ function drawSectorAnalysis(
   // Regional-assumption palette (§4 mechanism 1: these energies are ALWAYS dashed — solid is
   // reserved for computed geometry). Colours match design/benchmark/README.md's transcribed icons
   // (teal / blue / orange wavy wind lines) so the legend and the reference read as the same sheet.
-  const SUMMER_COOLING_COLOR = SECTOR_STYLES['summer-cooling-wind'].color;
+  const SUMMER_COOLING_COLOR = artFinish ? artInk.cooling : SECTOR_STYLES['summer-cooling-wind'].color;
   const SUMMER_COOLING_LBL = SECTOR_STYLES['summer-cooling-wind'].labelColor;
-  const COLD_FRONT_COLOR = SECTOR_STYLES['cold-front-wind'].color;
+  const COLD_FRONT_COLOR = artFinish ? artInk.cold : SECTOR_STYLES['cold-front-wind'].color;
   const COLD_FRONT_LBL = SECTOR_STYLES['cold-front-wind'].labelColor;
-  const BERG_COLOR = SECTOR_STYLES['berg-wind'].color;
+  const BERG_COLOR = artFinish ? artInk.berg : SECTOR_STYLES['berg-wind'].color;
   const BERG_LBL = SECTOR_STYLES['berg-wind'].labelColor;
 
   // A translucent wedge — the shared shape for every regional-assumption wind/fire sector
@@ -8505,7 +8507,8 @@ function drawSectorAnalysis(
     ctx.lineTo(cx + v1[0] * rr, cy + v1[1] * rr);
     ctx.lineTo(cx + v2[0] * rr, cy + v2[1] * rr);
     ctx.closePath();
-    ctx.fillStyle = sectorFillColor(kind);
+    const color=kind==='fire'?artInk.fire:kind==='berg-wind'?artInk.berg:kind==='cold-front-wind'?artInk.cold:artInk.cooling;
+    ctx.fillStyle = artFinish ? `${color}13` : sectorFillColor(kind);
     ctx.fill();
     ctx.restore();
     return { centerVec, rr, tipX, tipY };
@@ -8552,10 +8555,10 @@ function drawSectorAnalysis(
     const uy = dy / len;
     const nx = -uy;
     const ny = ux;
-    const tailHalf = Math.max(18, W * 0.017) * emphasis;
-    const shaftHalf = Math.max(11, W * 0.0105) * emphasis;
+    const tailHalf = Math.max(18, W * 0.017) * emphasis * (artFinish ? .65 : 1);
+    const shaftHalf = Math.max(11, W * 0.0105) * emphasis * (artFinish ? .6 : 1);
     const headHalf = shaftHalf * 2.1;
-    const headLen = Math.max(40, W * 0.046) * emphasis;
+    const headLen = Math.max(40, W * 0.046) * emphasis * (artFinish ? .64 : 1);
     const headBaseX = tipX - ux * headLen;
     const headBaseY = tipY - uy * headLen;
     ctx.save();
@@ -8568,6 +8571,16 @@ function drawSectorAnalysis(
     ctx.lineTo(headBaseX - nx * shaftHalf, headBaseY - ny * shaftHalf);
     ctx.lineTo(tailX - nx * tailHalf, tailY - ny * tailHalf);
     ctx.closePath();
+    if(artFinish){
+      // The painted site stays visible beneath a directional wash. Its centreline and tip use the
+      // same derived endpoints as the exact sheet; feathered colour is presentation only.
+      const tint=ctx.createLinearGradient(tailX,tailY,tipX,tipY);
+      tint.addColorStop(0,`${color}0D`);tint.addColorStop(.46,`${color}96`);tint.addColorStop(1,`${color}EF`);
+      ctx.fillStyle=tint;ctx.fill();
+      ctx.strokeStyle='rgba(255,253,248,.9)';ctx.lineWidth=Math.max(2,W*.0014);ctx.lineCap='round';ctx.setLineDash([10,8]);
+      ctx.beginPath();ctx.moveTo(tailX+dx*.3,tailY+dy*.3);ctx.lineTo(headBaseX,headBaseY);ctx.stroke();
+      ctx.restore();claimArrowBox(tailX,tailY,tipX,tipY,headHalf);return {sxp:tailX,syp:tailY};
+    }
     // ROUTE-CASING TREATMENT, not a tint. The previous pass (30%-alpha fill, 76%-alpha edge, a
     // half-strength dark halo) was three translucent layers stacked on a photograph whose foliage
     // is often darker AND more saturated than the arrow colour — Rory, on the shipped Hybrid:
@@ -8641,7 +8654,7 @@ function drawSectorAnalysis(
     if (!externalLegend) return;
     // A few drops identify the sourced cold-front sector. A previous 6x7 field obscured the house
     // and lawn and falsely read as 42 separate observations.
-    const radii = [0.88, 1.08, 1.27];
+    const radii = artFinish ? [1.08,1.27] : [0.88, 1.08, 1.27];
     const angular = [-0.5, 0, 0.5];
     ctx.save();
     ctx.fillStyle = color;
@@ -8691,8 +8704,8 @@ function drawSectorAnalysis(
     directLabelAt(
       cx + lp[0] * R * 0.72 + fireTangentX * rowH * 2.2,
       cy + lp[1] * R * 0.72 + fireTangentY * rowH * 2.2,
-      ['FIRE APPROACH', model.fire.fromLabel],
-      '#F0A58C',
+      artFinish ? [`Fire approach · ${model.fire.fromLabel}`] : ['FIRE APPROACH', model.fire.fromLabel],
+      artFinish ? artInk.fire : '#F0A58C',
     );
   }
 
@@ -8703,7 +8716,7 @@ function drawSectorAnalysis(
   const bearingToCanvasAngle = (bearingDeg: number) => ((bearingDeg - 90) * Math.PI) / 180;
   const drawSunIcon = (x: number, y: number, r: number, color: string): void => {
     ctx.save();
-    ctx.strokeStyle = 'rgba(14,20,13,0.82)';
+    ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.92)' : 'rgba(14,20,13,0.82)';
     ctx.fillStyle = color;
     ctx.lineWidth = Math.max(2, W * 0.0012);
     ctx.beginPath();
@@ -8732,8 +8745,8 @@ function drawSectorAnalysis(
     // any tone at all is the same failure the labels had before their solid plate — this is that
     // same fix applied to a LINE instead of text: a dark halo stroke first, the real colour on top.
     if (externalLegend) {
-      ctx.strokeStyle = 'rgba(6,10,8,0.55)';
-      ctx.lineWidth = Math.max(2.5, W * 0.0022) + Math.max(3, W * 0.0026);
+      ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.82)' : 'rgba(6,10,8,0.55)';
+      ctx.lineWidth = Math.max(2.5, W * 0.0022) + Math.max(3, W * (artFinish ? 0.0014 : 0.0026));
       ctx.lineCap = 'round';
       ctx.beginPath();
       ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
@@ -8773,15 +8786,15 @@ function drawSectorAnalysis(
       const caption = (ax: number, ay: number, text: string) => {
         const tx = cx + Math.cos(ax) * r;
         const ty = cy + Math.sin(ax) * r + sunR * 1.9;
-        ctx.lineWidth = Math.max(3.5, capFs * 0.24);
-        ctx.strokeStyle = 'rgba(8,12,10,0.9)';
+        ctx.lineWidth = artFinish ? Math.max(2,capFs*.12) : Math.max(3.5, capFs * 0.24);
+        ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.96)' : 'rgba(8,12,10,0.9)';
         ctx.strokeText(text, tx, ty);
-        ctx.fillStyle = 'rgba(252,250,240,0.98)';
+        ctx.fillStyle = artFinish ? '#324737' : 'rgba(252,250,240,0.98)';
         ctx.fillText(text, tx, ty);
         void ay;
       };
-      caption(startAngle, 0, 'SUNRISE');
-      caption(endAngle, 0, 'SUNSET');
+      caption(startAngle, 0, artFinish?'Sunrise':'SUNRISE');
+      caption(endAngle, 0, artFinish?'Sunset':'SUNSET');
     }
     ctx.restore();
     return apexVec;
@@ -8799,8 +8812,8 @@ function drawSectorAnalysis(
   // The encoding is not arbitrary: the high summer arc IS the heat you shade against, and the low
   // winter arc IS the light you must not block. Colour carries that before a number does. The
   // winter blue is kept clear of the water arrow's blue so a sun path never reads as drainage.
-  const summerApex = drawSunArc(model.solar.summer, summerR, SUN_SUMMER_COLOR);
-  const winterApex = drawSunArc(model.solar.winter, winterR, SUN_WINTER_COLOR, true);
+  const summerApex = drawSunArc(model.solar.summer, summerR, artFinish ? artInk.summer : SUN_SUMMER_COLOR);
+  const winterApex = drawSunArc(model.solar.winter, winterR, artFinish ? artInk.winter : SUN_WINTER_COLOR, true);
   if (summerApex) {
     labelAt(
       cx + summerApex[0] * (summerR + rowH * 0.7),
@@ -8815,9 +8828,9 @@ function drawSectorAnalysis(
     // the on-canvas twin: "put the winter sun as well properly with angle."
     directLabelAt(
       cx,
-      H * 0.08,
-      [`SUMMER SUN · ${model.solar.summer.riseLabel16} → ${model.solar.summer.noonSide} → ${model.solar.summer.setLabel16} · NOON ${Math.round(model.solar.summer.noonAltitudeDeg)}°`],
-      SECTOR_STYLES['summer-sun'].labelColor,
+      H * (artFinish ? 0.048 : 0.08),
+      artFinish ? [`Summer sun · noon ${Math.round(model.solar.summer.noonAltitudeDeg)}°`] : [`SUMMER SUN · ${model.solar.summer.riseLabel16} → ${model.solar.summer.noonSide} → ${model.solar.summer.setLabel16} · NOON ${Math.round(model.solar.summer.noonAltitudeDeg)}°`],
+      artFinish ? artInk.summer : SECTOR_STYLES['summer-sun'].labelColor,
       0,
       true,
     );
@@ -8833,8 +8846,8 @@ function drawSectorAnalysis(
     directLabelAt(
       cx,
       H * 0.125,
-      [`WINTER SUN · ${model.solar.winter.riseLabel16} → ${model.solar.winter.noonSide} → ${model.solar.winter.setLabel16} · NOON ${Math.round(model.solar.winter.noonAltitudeDeg)}°`],
-      SECTOR_STYLES['winter-sun'].labelColor,
+      artFinish ? [`Winter sun · noon ${Math.round(model.solar.winter.noonAltitudeDeg)}°`] : [`WINTER SUN · ${model.solar.winter.riseLabel16} → ${model.solar.winter.noonSide} → ${model.solar.winter.setLabel16} · NOON ${Math.round(model.solar.winter.noonAltitudeDeg)}°`],
+      artFinish ? artInk.winter : SECTOR_STYLES['winter-sun'].labelColor,
       0,
       true,
     );
@@ -8869,7 +8882,7 @@ function drawSectorAnalysis(
     if (w.id === 'summer_cooling') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, 'summer-cooling-wind');
     if (w.id === 'cold_front') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, 'cold-front-wind');
     const kind: SectorVisualKind = w.id === 'berg' ? 'berg-wind' : w.id === 'cold_front' ? 'cold-front-wind' : 'summer-cooling-wind';
-    const color = SECTOR_STYLES[kind].color;
+    const color = artFinish ? (w.id==='berg'?artInk.berg:w.id==='cold_front'?artInk.cold:artInk.cooling) : SECTOR_STYLES[kind].color;
     const lblColor = w.id === 'berg' ? BERG_LBL : w.id === 'cold_front' ? COLD_FRONT_LBL : SUMMER_COOLING_LBL;
     const v = bearingToUnitVector(w.bearingDeg);
     const directLines = w.id === 'berg'
@@ -8881,8 +8894,13 @@ function drawSectorAnalysis(
     // floating label to queue and nothing left to collide with the arrow (the old tangent-shifted
     // directLabelAt pills were exactly what kept landing on top of the arrows they named).
     const marker = externalLegend
-      ? drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1, directLines)
+      ? drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1, artFinish ? undefined : directLines)
       : drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], R * 0.4);
+    if(artFinish){
+      const name=w.id==='berg'?'Berg wind':w.id==='cold_front'?'Cold front':'Cooling wind';
+      const radius=R+arrowLen*1.48;
+      directLabelAt(cx+v[0]*radius,cy+v[1]*radius,[`${name} · ${w.fromLabel}`],color);
+    }
     if (w.id === 'cold_front') drawDrivingRain(w.bearingDeg, w.halfWidthDeg, color);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
     drawSectorMarker(`wind:${w.id}`, marker.sxp, marker.syp, color);
@@ -8891,7 +8909,10 @@ function drawSectorAnalysis(
   // created lets the later berg arrow erase it, so the fire legend's red dashed swatch describes
   // no visible red dash. One final centreline after the wind arrows keeps both registers honest
   // without restoring the wedge's two long edge rays.
-  if (fireWedge) drawRegionalCenterline(fireWedge, SECTOR_STYLES.fire.color);
+  if (fireWedge) {
+    if(artFinish)drawRegionalCenterline(fireWedge,artInk.fire);
+    else drawRegionalCenterline(fireWedge, SECTOR_STYLES.fire.color);
+  }
 
   // 6b. DRIVEWAY ACCESS — dust & noise arriving from vehicle access (SECTOR-MODEL-SPEC deferred
   // item, finished 2026-07-21). UNLIKE the regional wedges above, this has a REAL geometric data
@@ -8923,8 +8944,8 @@ function drawSectorAnalysis(
     directLabelAt(
       accessBaseX + outwardSign * accessTangent[0] * rowH * 3.4,
       accessBaseY + outwardSign * accessTangent[1] * rowH * 3.4,
-      ['ACCESS · DUST · NOISE', model.driveway.fromLabel],
-      DRIVEWAY_LBL,
+      artFinish ? [`Access · ${model.driveway.fromLabel}`] : ['ACCESS · DUST · NOISE', model.driveway.fromLabel],
+      artFinish ? '#536060' : DRIVEWAY_LBL,
     );
   }
 
@@ -8952,8 +8973,8 @@ function drawSectorAnalysis(
     // flat tint and vanishes into a busy AI-painted ground. One dark halo pass under the real line
     // and arrowhead first — same path, wider, dark — then the actual colour on top.
     if (externalLegend) {
-      ctx.strokeStyle = 'rgba(6,10,8,0.5)';
-      ctx.fillStyle = 'rgba(6,10,8,0.5)';
+      ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.7)' : 'rgba(6,10,8,0.5)';
+      ctx.fillStyle = ctx.strokeStyle;
       ctx.lineWidth = Math.max(4, W * 0.0048) + Math.max(3, W * 0.0026);
       ctx.setLineDash(model.water.indicative ? [8, 6] : []);
       ctx.lineCap = 'round';
@@ -8978,8 +8999,8 @@ function drawSectorAnalysis(
         ctx.setLineDash(model.water.indicative ? [8, 6] : []);
       }
     }
-    ctx.strokeStyle = '#3A8EC4';
-    ctx.fillStyle = '#3A8EC4';
+    ctx.strokeStyle = artFinish ? artInk.fall : '#3A8EC4';
+    ctx.fillStyle = ctx.strokeStyle;
     ctx.globalAlpha = externalLegend ? 0.76 : 1;
     ctx.lineWidth = externalLegend ? Math.max(4, W * 0.0048) : Math.max(3, W * 0.004);
     ctx.setLineDash(model.water.indicative ? [8, 6] : []);
@@ -9010,8 +9031,8 @@ function drawSectorAnalysis(
     directLabelAt(
       centerEndX,
       centerEndY + rowH * 1.1,
-      ['SLOPE / TERRACE FALL', `${site?.elevation?.aspectLabel ?? 'DOWNHILL'} · ${model.water.slopePct.toFixed(0)}%${model.water.indicative ? ' · INDICATIVE' : ''}`],
-      '#8FD0F0',
+      artFinish ? [`Site fall · ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}%`] : ['SLOPE / TERRACE FALL', `${site?.elevation?.aspectLabel ?? 'DOWNHILL'} · ${model.water.slopePct.toFixed(0)}%${model.water.indicative ? ' · INDICATIVE' : ''}`],
+      artFinish ? artInk.fall : '#8FD0F0',
     );
 
     // Terrain-RGB marching-squares paths, fetched through the same API as the interactive map.
@@ -9045,10 +9066,10 @@ function drawSectorAnalysis(
           if (index === 0) ctx.moveTo(px(x), py(y));
           else ctx.lineTo(px(x), py(y));
         });
-        ctx.strokeStyle = 'rgba(10,22,10,0.55)';
-        ctx.lineWidth = core + 2.4;
+        ctx.strokeStyle = externalLegend ? 'rgba(255,255,255,.88)' : 'rgba(10,22,10,0.55)';
+        ctx.lineWidth = core + (externalLegend ? 3.0 : 2.4);
         ctx.stroke();
-        ctx.strokeStyle = line.major ? 'rgba(160,235,140,0.98)' : 'rgba(126,212,107,0.95)';
+        ctx.strokeStyle = externalLegend ? TERRAIN_CONTOUR_INK : line.major ? 'rgba(160,235,140,0.98)' : 'rgba(126,212,107,0.95)';
         ctx.lineWidth = core;
         ctx.stroke();
       }
@@ -9064,6 +9085,11 @@ function drawSectorAnalysis(
         ctx.fillText(`${line.elevM}m`, px(midpoint[0]), py(midpoint[1]));
       });
       ctx.restore();
+      if(externalLegend)for(const line of sheetContours.lines){
+        const points=line.points.filter(point=>pointInRing(point,bnd));
+        const at=points[Math.floor(points.length*.32)];
+        if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,px(at[0]),py(at[1])-W*.006,Math.max(16,W*.009));
+      }
       const middleLine = sheetContours.lines[Math.floor(sheetContours.lines.length / 2)];
       if (middleLine) {
         const midpoint = middleLine.points[Math.floor(middleLine.points.length / 2)];
@@ -9264,8 +9290,8 @@ function drawSectorAnalysis(
   // Gated on the SAME `summerApex`/`winterApex` the arcs above returned — null only inside the
   // polar circles (never reachable at a South African latitude, but honoured anyway per the
   // HARD INVARIANT: no legend row for geometry that wasn't drawn).
-  if (summerApex) rows.push({ color: '#F7C97E', label: sectorPresentationByKey.get('summer-sun')?.label ?? 'Summer sun', style: 'line', icon: markerIcon('summer-sun'), sectorIcon: 'sun' });
-  if (winterApex) rows.push({ color: SUN_WINTER_COLOR, label: sectorPresentationByKey.get('winter-sun')?.label ?? 'Winter sun', style: 'line', icon: markerIcon('winter-sun'), sectorIcon: 'sun' });
+  if (summerApex) rows.push({ color: artFinish ? artInk.summer : '#F7C97E', label: sectorPresentationByKey.get('summer-sun')?.label ?? 'Summer sun', style: 'line', icon: markerIcon('summer-sun'), sectorIcon: 'sun' });
+  if (winterApex) rows.push({ color: artFinish ? artInk.winter : SUN_WINTER_COLOR, label: sectorPresentationByKey.get('winter-sun')?.label ?? 'Winter sun', style: 'line', icon: markerIcon('winter-sun'), sectorIcon: 'sun' });
   if (!externalLegend) {
     rows.push({ color: '#F7C97E', label: `Midday sun (${middayLabel})`, style: 'line', icon: markerIcon('midday-sun'), sectorIcon: 'sun' });
   }
@@ -9277,16 +9303,16 @@ function drawSectorAnalysis(
   const summerCoolingWind = model.namedWind.find((w) => w.id === 'summer_cooling');
   const coldFrontWind = model.namedWind.find((w) => w.id === 'cold_front');
   const bergWind = model.namedWind.find((w) => w.id === 'berg');
-  if (summerCoolingWind) rows.push({ color: SUMMER_COOLING_COLOR, label: `Regional summer cooling wind — ${summerCoolingWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${summerCoolingWind.id}`), sectorIcon: 'wind' });
-  if (coldFrontWind) rows.push({ color: COLD_FRONT_COLOR, label: `Regional cold front — driving rain — ${coldFrontWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${coldFrontWind.id}`), sectorIcon: 'wind' });
-  if (bergWind) rows.push({ color: BERG_COLOR, label: `Regional berg wind — ${bergWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${bergWind.id}`), sectorIcon: 'wind' });
-  if (model.fire) rows.push({ color: '#D64A2A', label: `Regional fire approach (${model.fire.fromLabel}) ᴬ`, style: 'dashline', icon: markerIcon('fire'), sectorIcon: 'fire' });
+  if (summerCoolingWind) rows.push({ color: SUMMER_COOLING_COLOR, label: artFinish ? `Summer cooling wind · ${summerCoolingWind.fromLabel}` : `Regional summer cooling wind — ${summerCoolingWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${summerCoolingWind.id}`), sectorIcon: 'wind' });
+  if (coldFrontWind) rows.push({ color: COLD_FRONT_COLOR, label: artFinish ? `Cold front · driving rain · ${coldFrontWind.fromLabel}` : `Regional cold front — driving rain — ${coldFrontWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${coldFrontWind.id}`), sectorIcon: 'wind' });
+  if (bergWind) rows.push({ color: BERG_COLOR, label: artFinish ? `Hot berg wind · ${bergWind.fromLabel}` : `Regional berg wind — ${bergWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${bergWind.id}`), sectorIcon: 'wind' });
+  if (model.fire) rows.push({ color: artFinish ? artInk.fire : '#D64A2A', label: artFinish ? `Fire approach · ${model.fire.fromLabel}` : `Regional fire approach (${model.fire.fromLabel}) ᴬ`, style: 'dashline', icon: markerIcon('fire'), sectorIcon: 'fire' });
   // No ᴬ — computed from the traced driveway, not a regional assumption (see the draw-call
   // comment above). 'line' not 'dashline' for the same reason: solid is this sheet's register for
   // computed geometry.
   if (model.driveway) rows.push({ color: DRIVEWAY_COLOR, label: `Driveway access — dust & noise — ${model.driveway.fromLabel}`, style: 'line', icon: markerIcon('driveway'), sectorIcon: 'driveway' });
-  if (model.water) rows.push({ color: '#3A8EC4', label: `Site slope estimate falls ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}% (five-point SRTM · indicative)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
-  if (model.water && sheetContours?.status === 'ok' && contourIntervalM != null) rows.push({ color: '#7ED46B', label: `Regional DEM contour — ${contourIntervalM} m overview`, style: 'dashline', sectorIcon: 'water' });
+  if (model.water) rows.push({ color: artFinish ? artInk.fall : '#3A8EC4', label: artFinish ? `Site fall · ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}%` : `Site slope estimate falls ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}% (five-point SRTM · indicative)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
+  if (model.water && sheetContours?.status === 'ok' && contourIntervalM != null) rows.push({ color: externalLegend ? TERRAIN_CONTOUR_INK : '#7ED46B', label: artFinish ? `Regional contours · ${contourIntervalM} m` : `Regional DEM contour — ${contourIntervalM} m overview`, style: 'dashline', sectorIcon: 'water' });
   // Gated on drawTerraceFallAnnotations (above) having actually drawn at least one pair — never a
   // placeholder row for a design with no terraces (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md
   // §4b). A different row from the whole-site "Terrace fall ~X% (uniform-fall model)" row above:
@@ -9329,7 +9355,13 @@ function drawSectorAnalysis(
     drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
     drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
   }
-  return { rows, noteText, contextLabel: evidence.headline };
+  const compactNote=[
+    'Sun paths calculated from latitude · true north.',
+    model.namedWind.length||model.fire?'Wind and fire show regional patterns. Check directions on site.':'Regional wind/fire evidence unavailable.',
+    model.water?'Slope and any contours are regional estimates. Datum and local accuracy unverified; no set-out.':'Local terrain evidence unavailable.',
+    evidence.missingEvidence.length?`Missing: ${evidence.missingEvidence.join(', ')}.`:'',
+  ].filter(Boolean).join('\n');
+  return { rows, noteText:artFinish?compactNote:noteText, contextLabel:artFinish?'Sun · wind · fire · terrain':evidence.headline };
 }
 
 // Deterministic SECTOR ANALYSIS sheet — plan-set 02 (analysis precedes design: the sector energies
@@ -9405,48 +9437,109 @@ async function fetchSectorPresentationContours(state:DesignCanvasState,frame:Can
   return layout?{...overview,lines:overview.lines.map(line=>({...line,points:line.points.map(([x,y])=>[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight] as [number,number])}))}:overview;
 }
 
-async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],site:SectorSite|null,placeName?:string):Promise<string|null>{
+function drawOverviewContourCaption(ctx:CanvasRenderingContext2D,label:string,x:number,y:number,size:number):void{
+  ctx.save();ctx.font=`700 ${Math.round(size)}px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';
+  ctx.strokeStyle='#FFFFFF';ctx.lineWidth=Math.max(2,size*.15);ctx.strokeText(label,x,y);ctx.fillStyle=TERRAIN_CONTOUR_INK;ctx.fillText(label,x,y);ctx.restore();
+}
+
+async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName?:string):Promise<string|null>{
+  // Fetch and intersect in the original saved coordinate system. Cropping is paint-time only.
+  const raster=await fetchProfileTerrain(frame,refs.boundary,async url=>fetch(url,{headers:await paidApiHeaders(),signal:AbortSignal.timeout(15_000)}));
+  if(!raster)return null;
+  const baseline=historicalBaselineForSite(state.siteId);
+  const buildings=authoritativeHouseFootprints(state,refs).map((ring,index)=>{
+    const centre=centroidOf(ring);
+    const archive=baseline?.features.filter(feature=>feature.id.startsWith('classroom')).map(feature=>({feature,point:historicalPhotoPoint(frame,feature.point,baseline)})).sort((a,b)=>Math.hypot((a.point[0]-centre[0])*frame.imgW,(a.point[1]-centre[1])*frame.imgH)-Math.hypot((b.point[0]-centre[0])*frame.imgW,(b.point[1]-centre[1])*frame.imgH))[0];
+    const zone=state.zones.find(zone=>zone.feature==='house'&&sameFootprint(zone.points,ring));
+    return {ring,label:archive?.feature.label.replace('Existing ','').replace(/^./,c=>c.toUpperCase())??zone?.name??`Building ${index+1}`};
+  });
+  const sections=rasterTerrainSections(raster,refs.boundary,buildings,frame);
+  if(!sections)return null;
   const p=await boundaryPresentationContext(state,frame,refs);
-  const contours=await fetchSectorPresentationContours(state,frame,refs,site);
-  const profile=sectorTerrainProfile(contours,p.refLayers.boundary,p.frame);
-  if(!profile)return null;
+  const contours=rasterTerrainContours(raster,refs.boundary,frame);
+  const layout=calculateBoundaryPresentationLayout(presentationExtentRing(state,frame,refs.boundary),frame,SCALE);
+  const normalized=([x,y]:[number,number]):[number,number]=>layout?[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight]:[x,y];
   const canvas=document.createElement('canvas');canvas.width=1800;canvas.height=1273;
-  const ctx=canvas.getContext('2d');if(!ctx){releaseCanvas(canvas);throw new Error('Terrain profile canvas unavailable');}
-  ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,1800,1273);ctx.fillStyle='#183425';ctx.font=`800 36px ${SHEET_BODY_FONT}`;ctx.fillText('REGIONAL TERRAIN PROFILE · A–B',48,58);
-  ctx.font=`600 24px ${SHEET_BODY_FONT}`;ctx.fillStyle='#5B665E';ctx.fillText(placeName??'Your site',48,98);
-  const fit=Math.min(810/p.frame.imgW,990/p.frame.imgH),w=p.frame.imgW*fit,h=p.frame.imgH*fit,mx=48+(810-w)/2,my=150+(990-h)/2;
+  const ctx=canvas.getContext('2d');if(!ctx){releaseCanvas(canvas);throw new Error('Terrain sections canvas unavailable');}
+  ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,1800,1273);ctx.fillStyle='#183425';ctx.font=`800 38px ${SHEET_BODY_FONT}`;ctx.fillText('TERRAIN & SECTIONS',48,62);
+  ctx.font=`500 24px ${SHEET_BODY_FONT}`;ctx.fillStyle='#66736A';ctx.fillText(`${placeName??'Your site'} · regional elevation overview · equal horizontal and vertical scale`,48,104);
+  const fit=Math.min(800/p.frame.imgW,900/p.frame.imgH),w=p.frame.imgW*fit,h=p.frame.imgH*fit,mx=48+(800-w)/2,my=176+(900-h)/2;
   if(p.frame.satDataUrl){const image=await loadImage(p.frame.satDataUrl);try{ctx.drawImage(image,mx,my,w,h);}finally{releaseImageSource(image);}}
-  const project=([x,y]:[number,number]):[number,number]=>[mx+x*w,my+y*h];
-  ctx.save();ctx.strokeStyle='#77914C';ctx.lineWidth=2;ctx.setLineDash([6,5]);ctx.beginPath();p.refLayers.boundary.forEach((point,i)=>{const [x,y]=project(point);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x,y);});ctx.closePath();ctx.stroke();
-  const a=project(profile.a),b=project(profile.b);ctx.strokeStyle='#973D72';ctx.lineWidth=3;ctx.setLineDash([12,8]);ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke();ctx.restore();
-  for(const [text,point] of [['A',a],['B',b]] as const){ctx.fillStyle='#FFFFFF';ctx.beginPath();ctx.arc(point[0],point[1],19,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#973D72';ctx.stroke();ctx.fillStyle='#702454';ctx.font=`800 24px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,point[0],point[1]);}
+  const displayPoint=([x,y]:[number,number]):[number,number]=>[mx+x*w,my+y*h];
+  const project=(point:[number,number]):[number,number]=>displayPoint(normalized(point));
+  const trace=(ring:Array<[number,number]>,mapper=project)=>{ctx.beginPath();ring.forEach((point,i)=>{const [x,y]=mapper(point);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x,y);});};
+  ctx.save();trace(refs.boundary);ctx.closePath();ctx.clip();
+  for(const line of contours){
+    trace(line.points);ctx.setLineDash(line.major?[]:[8,7]);ctx.strokeStyle='rgba(255,255,255,.94)';ctx.lineWidth=line.major?6:4;ctx.stroke();
+    ctx.strokeStyle=line.major?TERRAIN_CONTOUR_INK:TERRAIN_SUPPLEMENTAL_INK;ctx.lineWidth=line.major?3.3:1.9;ctx.stroke();
+  }
+  ctx.restore();
+  ctx.save();ctx.strokeStyle='#88A076';ctx.lineWidth=1.5;ctx.setLineDash([6,5]);trace(refs.boundary);ctx.closePath();ctx.stroke();ctx.setLineDash([]);
+  for(const building of buildings){ctx.strokeStyle='#147D86';ctx.lineWidth=2.2;ctx.fillStyle='rgba(20,125,134,.12)';trace(building.ring);ctx.closePath();ctx.fill();ctx.stroke();}
+  ctx.restore();
+  const cuts=[{profile:sections.downhill,ends:['A','B'] as const,color:'#8C4F76'},...(sections.buildingsSection?[{profile:sections.buildingsSection,ends:['C','D'] as const,color:'#147D86'}]:[])];
+  for(const cut of cuts){
+    const a=project(cut.profile.a),b=project(cut.profile.b);
+    ctx.save();ctx.lineCap='round';trace([a,b],point=>point);ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=6;ctx.stroke();ctx.strokeStyle=cut.color;ctx.lineWidth=3;ctx.setLineDash([10,6]);ctx.stroke();ctx.restore();
+    for(const [text,point] of [[cut.ends[0],a],[cut.ends[1],b]] as const){ctx.fillStyle='#FFFFFF';ctx.beginPath();ctx.arc(point[0],point[1],17,0,Math.PI*2);ctx.fill();ctx.strokeStyle=cut.color;ctx.lineWidth=2;ctx.stroke();ctx.fillStyle=cut.color;ctx.font=`800 22px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,point[0],point[1]);}
+  }
+  const longestMain=new Map<number,{line:(typeof contours)[number];length:number}>();
+  for(const line of contours){
+    if(!line.major)continue;
+    const points=line.points.map(project),length=points.slice(1).reduce((sum,at,i)=>sum+Math.hypot(at[0]-points[i][0],at[1]-points[i][1]),0);
+    if(length>(longestMain.get(line.elevM)?.length??0))longestMain.set(line.elevM,{line,length});
+  }
+  for(const {line} of longestMain.values()){
+    const inside=line.points.map(project);
+    const clearance=([x,y]:[number,number])=>Math.min(...cuts.map(cut=>{const [ax,ay]=project(cut.profile.a),[bx,by]=project(cut.profile.b);return Math.abs((bx-ax)*(ay-y)-(ax-x)*(by-ay))/Math.hypot(bx-ax,by-ay);}));
+    const at=inside.filter((_,i)=>i>=inside.length*.15&&i<=inside.length*.85).sort((a,b)=>clearance(b)-clearance(a))[0]??inside[Math.floor(inside.length/2)];
+    if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,at[0],at[1]-12,18);
+  }
   ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.font=`700 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#183425';ctx.fillText('N ↑',mx+w-48,my+30);
+  for(const building of buildings){const [x,y]=project(centroidOf(building.ring));drawReferenceMapText(ctx,building.label,x,y-22,20,700,'center');}
   drawBlueprintScaleBar(ctx,w,h,0,0,fit/p.frame.mPerPx,{x:mx+20,y:my+h-20});
-  const gx=970,gy=230,gw=740,gh=400,values=profile.points.map(point=>point.elevationM);
-  const low=Math.floor(Math.min(...values)/5)*5-5,high=Math.ceil(Math.max(...values)/5)*5+5;
-  const X=(d:number)=>gx+d/profile.lengthM*gw,Y=(z:number)=>gy+gh-(z-low)/(high-low)*gh;
-  ctx.font=`700 26px ${SHEET_BODY_FONT}`;ctx.fillStyle='#183425';ctx.fillText('A · north → B · south',gx,gy-65);
-  ctx.font=`500 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Provider height (m) · vertical datum unverified',gx,gy-25);
-  const tickStep=Math.max(5,Math.ceil((high-low)/30)*5);
-  for(let tick=0;tick<8;tick++){const z=low+tick*tickStep;if(z>high)break;ctx.strokeStyle='#DFE5DF';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,Y(z));ctx.lineTo(gx+gw,Y(z));ctx.stroke();ctx.fillStyle='#536357';ctx.textAlign='right';ctx.fillText(String(z),gx-15,Y(z)+7);}
-  ctx.textAlign='left';ctx.strokeStyle='#536357';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx,gy+gh);ctx.lineTo(gx+gw,gy+gh);ctx.stroke();
-  ctx.strokeStyle='#973D72';ctx.lineWidth=3;ctx.setLineDash([10,7]);ctx.beginPath();profile.points.forEach((point,i)=>(i===0?ctx.moveTo:ctx.lineTo).call(ctx,X(point.distanceM),Y(point.elevationM)));ctx.stroke();ctx.setLineDash([]);
-  for(const point of profile.points){ctx.fillStyle='#315A40';ctx.beginPath();ctx.arc(X(point.distanceM),Y(point.elevationM),5,0,Math.PI*2);ctx.fill();}
-  ctx.fillStyle='#536357';ctx.font=`600 21px ${SHEET_BODY_FONT}`;ctx.fillText('A · 0 m',gx,gy+gh+35);ctx.textAlign='right';ctx.fillText(`B · ~${Math.round(profile.lengthM)} m`,gx+gw,gy+gh+35);ctx.textAlign='left';
-  const exaggeration=(gh/(high-low))/(gw/profile.lengthM);
-  const notes=[
-    `${contours.intervalM} m regional DEM contours · approximate ground distance.`,
-    `Vertical exaggeration: ${exaggeration.toFixed(1)}×. End heights are unknown.`,
-    'Dots are contour crossings; dashed joins are straight interpolation.',
-    'Terrain between those crossings has not been measured here.',
-    'Mapbox terrain · local horizontal/vertical accuracy unverified.',
-    'Mixed source height datums; not a surveyed ground profile.',
-    'Do not use this overview for excavation, drainage or building set-out.',
-    'The photo and DEM may describe different dates and surface heights.',
-  ];
-  ctx.font=`600 21px ${SHEET_BODY_FONT}`;let ny=740;
-  for(const note of notes){ctx.fillStyle='#43574A';const words=note.split(' ');let line='';for(const word of words){const next=line?line+' '+word:word;if(ctx.measureText(next).width>740&&line){ctx.fillText(line,gx,ny);ny+=30;line=word;}else line=next;}if(line){ctx.fillText(line,gx,ny);ny+=30;}ny+=12;}
-  ctx.font=`italic 20px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Plan and profile are app drawings. No AI-generated heights.',48,1230);
+  ctx.font=`600 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#536357';
+  const keyLine=(y:number,text:string,color:string,dash:number[])=>{ctx.save();ctx.strokeStyle=color;ctx.lineWidth=3;ctx.setLineDash(dash);trace([[48,y-6],[88,y-6]],point=>point);ctx.stroke();ctx.restore();ctx.fillText(text,102,y);};
+  if(contours.some(line=>line.major))keyLine(1117,'5 m main contours',TERRAIN_CONTOUR_INK,[]);
+  if(contours.some(line=>!line.major))keyLine(1148,'2.5 m supplemental interval',TERRAIN_SUPPLEMENTAL_INK,[8,6]);
+  if(!contours.length)ctx.fillText('Terrain contours unavailable for this sheet',48,1122);
+  keyLine(1180,'Current design extent','#88A076',[6,5]);
+
+  const vertical=(profile:RasterTerrainProfile)=>{
+    const values=profile.points.map(point=>point.elevationM);
+    return {low:Math.floor(Math.min(...values)/2)*2-2,high:Math.ceil(Math.max(...values)/2)*2+2};
+  };
+  const ppm=Math.min(740/Math.max(...cuts.map(cut=>cut.profile.lengthM)),245/Math.max(...cuts.map(cut=>{const v=vertical(cut.profile);return v.high-v.low;})));
+  const paintSection=(cut:(typeof cuts)[number],gy:number,downhill:boolean)=>{
+    const {profile,color,ends}=cut,{low,high}=vertical(profile),gx=975,gw=profile.lengthM*ppm,gh=(high-low)*ppm;
+    const X=(d:number)=>gx+d*ppm,Y=(z:number)=>gy+gh-(z-low)*ppm;
+    ctx.font=`750 26px ${SHEET_BODY_FONT}`;ctx.fillStyle=color;
+    ctx.fillText(downhill?'A–B · Main downhill section':baseline?'C–D · Classroom section':'C–D · Building section',gx,gy-(downhill?66:110));
+    ctx.font=`500 19px ${SHEET_BODY_FONT}`;ctx.fillStyle='#66736A';
+    ctx.fillText(downhill?`Direction fitted across ${sections.fitPosts} native site pixels`:'Traced roof widths · building heights unknown',gx,gy-(downhill?37:82));
+    for(const [index,building] of profile.buildings.entries()){
+      const y=gy-48+(index%2)*25;
+      ctx.fillStyle=color;ctx.fillRect(X(building.startM),y,Math.max(1,(building.endM-building.startM)*ppm),7);
+      ctx.font=`650 17px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.fillText(building.label,X((building.startM+building.endM)/2),y-5);
+      ctx.strokeStyle='#9EBDBC';ctx.lineWidth=1;ctx.setLineDash([3,5]);ctx.beginPath();ctx.moveTo(X(building.startM),y+7);ctx.lineTo(X(building.startM),gy+gh);ctx.moveTo(X(building.endM),y+7);ctx.lineTo(X(building.endM),gy+gh);ctx.stroke();ctx.setLineDash([]);
+    }
+    ctx.font=`500 18px ${SHEET_BODY_FONT}`;ctx.textAlign='left';ctx.fillStyle='#66736A';
+    if(downhill)ctx.fillText('Provider height (m) · datum unverified',gx,gy-12);
+    const tick=Math.max(2,Math.ceil((high-low)/16)*2);
+    for(let z=low;z<=high;z+=tick){ctx.strokeStyle='#E4EAE5';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,Y(z));ctx.lineTo(gx+gw,Y(z));ctx.stroke();ctx.fillStyle='#66736A';ctx.textAlign='right';ctx.fillText(String(z),gx-12,Y(z)+6);}
+    const step=Math.max(10,Math.ceil(profile.lengthM/80)*10);
+    for(let d=0;d<=profile.lengthM;d+=step){ctx.strokeStyle='#E4EAE5';ctx.beginPath();ctx.moveTo(X(d),gy);ctx.lineTo(X(d),gy+gh);ctx.stroke();ctx.fillStyle='#66736A';ctx.textAlign='center';ctx.fillText(String(d),X(d),gy+gh+24);}
+    ctx.fillStyle='#E3EBDF';ctx.beginPath();ctx.moveTo(gx,gy+gh);profile.points.forEach(point=>ctx.lineTo(X(point.distanceM),Y(point.elevationM)));ctx.lineTo(gx+gw,gy+gh);ctx.closePath();ctx.fill();
+    ctx.strokeStyle=color;ctx.lineWidth=3;ctx.beginPath();profile.points.forEach((point,i)=>(i===0?ctx.moveTo:ctx.lineTo).call(ctx,X(point.distanceM),Y(point.elevationM)));ctx.stroke();
+    ctx.textAlign='left';ctx.fillStyle='#536357';ctx.font=`650 19px ${SHEET_BODY_FONT}`;ctx.fillText(`${ends[0]} · 0 m${downhill?' · uphill':''}`,gx,gy+gh+51);ctx.textAlign='right';ctx.fillText(`${ends[1]} · ${profile.lengthM.toFixed(1)} m${downhill?' · downhill':''}`,gx+gw,gy+gh+51);ctx.textAlign='left';
+  };
+  paintSection(cuts[0],240,true);if(cuts[1])paintSection(cuts[1],704,false);
+  ctx.font=`500 19px ${SHEET_BODY_FONT}`;ctx.fillStyle='#536357';
+  ctx.fillText(`Mapbox Terrain-RGB · ~${sections.downhill.gridSpacingM.toFixed(1)} m grid · interpolated profiles`,975,1074);
+  ctx.fillText('Horizontal and vertical distance use the same scale (1×).',975,1103);
+  ctx.fillText('Contour spacing adds detail without improving accuracy.',975,1132);
+  ctx.fillText('Survey/drone ground data needed for drainage or construction.',975,1161);
+  ctx.font=`italic 19px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Same section lines on plan and charts. No classroom heights or new ground measurements inferred.',48,1230);
   return drainCanvasToDataUrl(canvas,'image/png');
 }
 
@@ -9564,15 +9657,22 @@ async function composeSectorSheet(
   );
   // Keep sheet 02 focused on sector energies. The base fabric stays as quiet orientation, while
   // labels are reserved for sun, wind, fire, access, fall and the legend.
+  const artFinish=baseImage!==null;
   const legendRows: StyleLegendRow[] = analysis.rows.map((row, index) => ({
     swatch: row.color,
-    text: `${index + 1}. ${baseline && row.label === 'Site boundary' ? 'Current design extent' : row.label}`,
+    text: `${artFinish?'':`${index + 1}. `}${baseline && row.label === 'Site boundary' ? 'Current design extent' : row.label}`,
+    ...(artFinish ? {section:row.sectorIcon==='sun'?'SUN PATH':row.sectorIcon==='wind'||row.sectorIcon==='fire'?'REGIONAL WIND & FIRE':row.sectorIcon==='water'||row.sectorIcon==='frost'||row.label.startsWith('Terrace fall')?'TERRAIN':'SITE REFERENCE'} as const : {}),
     lineKind: row.color === BOUNDARY_LINE_GREEN ? (baseline ? 'path' : 'fence') : row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
     kind: row.style === 'fill' ? 'surface' : undefined,
-    sectorIcon: row.sectorIcon,
+    sectorIcon: row.color===TERRAIN_CONTOUR_INK?undefined:row.sectorIcon,
+    ...(row.color===TERRAIN_CONTOUR_INK?{visual:'terrain-contour' as const}:{}),
   }));
 
-  if(baseline) legendRows.push({swatch:'#79583B',text:'Existing fence — visible portion',lineKind:'pipe'});
+  if(baseline) legendRows.push({swatch:'#79583B',text:'Existing fence — visible portion',lineKind:'pipe',...(artFinish?{section:'SITE REFERENCE' as const}:{})});
+  if(artFinish){
+    const order=['SUN PATH','REGIONAL WIND & FIRE','TERRAIN','SITE REFERENCE'];
+    legendRows.sort((a,b)=>order.indexOf(a.section??'')-order.indexOf(b.section??''));
+  }
   const mapDataUrl = drainCanvasToDataUrl(canvas, 'image/png');
   return composeStyleSheet(
     mapDataUrl,
@@ -9590,8 +9690,8 @@ async function composeSectorSheet(
       aiArtwork: baseImage !== null,
       ...(baseline ? {imageAttribution:'Historic drone photograph: Imbewu project archive.'} : {}),
       legendRows,
-      footerHeading: 'NOTES & PROVENANCE',
-      footerText: baseline ? [
+      footerHeading: artFinish?'READING THIS MAP':'NOTES & PROVENANCE',
+      footerText: artFinish ? [analysis.noteText,baseline?'Archive photo aligned to roofs; unphotographed tips left blank. See the exact Sector sheet for source details.':''].filter(Boolean).join('\n') : baseline ? [
         'Before-works archive photo, published as July 2019; camera date unverified.',
         'Aligned to classroom roofs, not a survey. Dashed green shows the current design extent; brown marks the visible historic fence.',
         'Photo coverage ends before the northeast and southwest tips; those areas stay blank.',
@@ -9599,14 +9699,14 @@ async function composeSectorSheet(
         'Any slope shown is an indicative terrain estimate. No surveyed ground heights are supplied.',
         sheetContours.status === 'ok' ? 'Regional DEM contours are indicative. Local horizontal/vertical accuracy and height datum are unverified; never use them for excavation set-out.' : 'No terrain contours are shown: suitable contour data was unavailable for this sheet.',
       ].join('\n\n') : analysis.noteText,
-      footerBox: true,
+      footerBox: !artFinish,
+      ...(artFinish?{legendPresentation:'compact-sector' as const}:{}),
     },
   );
 }
 
-// The exact sheet is composeSectorSheet with no AI base — everything else is identical, which is
-// what guarantees the exact and AI sheets are pixel-identical outside their ground texture,
-// including the legend: there is only one place drawSectorAnalysis's rows are ever assembled.
+// Both sheets use the same bearing/geometry painter. Only the paid artwork has the lighter
+// visual finish; the exact reference retains its technical symbols and full source notes.
 export async function buildBlueprintSectorMap(
   state: DesignCanvasState,
   frame: CanvasFrame,
@@ -10212,10 +10312,10 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'historical-name' | 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above';
+  visual?: 'historical-name' | 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour';
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
-    | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
+    | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE' | 'SUN PATH' | 'REGIONAL WIND & FIRE' | 'TERRAIN' | 'SITE REFERENCE';
   sectorIcon?: SectorLegendIcon;
 }
 
@@ -10439,6 +10539,9 @@ function drawStyleLegendSymbol(
   w: number,
   h: number,
 ): void {
+  if(row.visual==='terrain-contour'){
+    ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(2,h*.07);ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;
+  }
   if(row.visual==='historical-name')return;
   if(row.visual==='historical-extent'){ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(1.5,h*.05);ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;}
   if(row.photoNumber!==undefined){drawHistoricalPhotoPin(ctx,x+w/2,y,Math.min(w,h)*.36,row.photoNumber);return;}
@@ -10823,6 +10926,8 @@ async function composeStyleSheet(
     footerHeading?: string;
     footerText?: string;
     footerBox?: boolean;
+    /** Keep short Sector groups together; spreading them over columns duplicated headings. */
+    legendPresentation?: 'compact-sector';
     /** Whether this sheet's map carries plant codes. The legend keys them, so it must only print
      *  them in the mode that draws them — see SheetLabelMode. */
     labelMode?: SheetLabelMode;
@@ -11021,7 +11126,9 @@ async function composeStyleSheet(
   const footerTop = panelBottom - pad - footerBlockH;
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const contentW = maxX - lx;
+  const compactSector=options.legendPresentation==='compact-sector';
   const normalFs = legendRowFontSize(typeW, availableRowsH, rows.length);
+  const maxColumns=Math.min(compactSector?1:3,rows.length);
   const baseSw = Math.round(legendW * 0.064);
   const columnGap = Math.max(10, Math.round(legendW * 0.025));
   const singleColumnTextGap = Math.round(legendW * 0.03);
@@ -11222,7 +11329,7 @@ async function composeStyleSheet(
   // Searching per column count fixes both symptoms at once, and they were always one bug: the
   // space that became gaps is the space the type should have grown into. Fewest columns wins on a
   // tie, so a sparse legend still stays a single readable list.
-  const growthCeiling = legendMaxFontSize(typeW);
+  const growthCeiling = Math.round(legendMaxFontSize(typeW)*(compactSector ? .72 : 1));
   const fitForColumns = (columnCount: number): number => fitLegendFontSize(
     (fontSize) => {
       const candidate = planColumns(columnCount, fontSize);
@@ -11239,7 +11346,7 @@ async function composeStyleSheet(
   let desiredColumns = 1;
   if (rows.length) {
     desiredFs = 0;
-    for (let columnCount = 1; columnCount <= Math.min(3, rows.length); columnCount += 1) {
+    for (let columnCount = 1; columnCount <= maxColumns; columnCount += 1) {
       const fitted = fitForColumns(columnCount);
       if (fitted > desiredFs) {
         desiredFs = fitted;
@@ -11271,7 +11378,7 @@ async function composeStyleSheet(
       for (let fontSize = desiredFs; fontSize >= 9; fontSize -= 1) {
         for (const columnCount of [
           desiredColumns,
-          ...Array.from({ length: Math.min(3, rows.length) }, (_, i) => i + 1),
+          ...Array.from({ length: maxColumns }, (_, i) => i + 1),
         ]) {
           const candidate = planColumns(columnCount, fontSize);
           if (!candidate.length) continue;
@@ -13392,13 +13499,13 @@ export default function DesignGlossy({
     setLoading('exact');setError(null);setNotice(null);
     try{
       const sourceFrame=historicalActive&&availableHistoricalBaseline?await buildHistoricalBaselineFrame(frame,availableHistoricalBaseline):frame;
-      const image=await buildSectorTerrainProfileSheet(state,sourceFrame,refLayers,site,placeName);
-      if(!image){setNotice('A terrain profile is unavailable: fewer than two usable regional contour levels cross this site. No endpoint heights have been invented.');return;}
-      const id=pushGallery('Sector terrain profile · regional DEM · indicative',image,{resultKind:'exact',provider:'exact',geometryLock:true});
+      const image=await buildSectorTerrainProfileSheet(state,sourceFrame,refLayers,placeName);
+      if(!image){setNotice('A downhill section needs usable terrain pixels and a consistent fall across the property. No heights have been invented.');return;}
+      const id=pushGallery('Terrain & Sections · downhill A–B and buildings C–D',image,{resultKind:'exact',provider:'exact',geometryLock:true});
       setGalleryViewId(id);setGalleryOpen(true);
     }catch(err){setError(userFacingMessage(err,'Terrain profile unavailable. No surveyed elevations have been supplied.',t));}
     finally{setLoading(null);}
-  },[loading,historicalActive,availableHistoricalBaseline,frame,state,refLayers,site,placeName,pushGallery,t]);
+  },[loading,historicalActive,availableHistoricalBaseline,frame,state,refLayers,placeName,pushGallery,t]);
 
   // Deterministic SECTOR ANALYSIS sheet (plan-set 02) — the RULES-ENGINE render (lib/sector). Never
   // refuses: the sun is always real content and the sheet degrades honestly when slope/climate data
@@ -16055,8 +16162,14 @@ export default function DesignGlossy({
         <>
         <WorkflowHeading number={2} title="Underlay" />
         {selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='sector' && <div style={{marginBottom:10}}>
-          <button type="button" disabled={loading!==null} onClick={renderTerrainProfile}>Terrain profile · regional overview</button>
-          <p style={{fontSize:11,lineHeight:1.4}}>A–B side view from regional DEM contour crossings. Approximate; not a ground survey.</p>
+          <button type="button" disabled={loading!==null} onClick={renderTerrainProfile}>Terrain &amp; Sections</button>
+          <p style={{fontSize:11,lineHeight:1.4}}>Opens a separate sheet with A–B downhill, C–D through traced buildings and more contours when the data supports them. The Sector map keeps its 5 m overview.</p>
+          <details style={{fontSize:11,lineHeight:1.5}}><summary>Terrain source &amp; scale</summary>
+            <p>The sheet uses Mapbox Terrain-RGB. Supplemental contours interpolate the same raster as the profiles; closer lines do not make the ground data more accurate. Interpolated plotting points do not improve the underlying resolution. Source dates, local accuracy and mixed height datums are unverified. The archive photograph is aligned to roof corners, not surveyed ground control. Roof footprint widths use your saved plan scale; building heights are not supplied.</p>
+            <p>Google Earth Pro can show a profile of a drawn path. Its terrain is a comparison source, not a site survey. A controlled drone ground model or measured levels are needed for drainage or construction.</p>
+            <a href="https://docs.mapbox.com/data/tilesets/reference/mapbox-terrain-rgb-v1/" target="_blank" rel="noreferrer">Mapbox source details</a>{' · '}
+            <a href="https://support.google.com/earth/answer/148134" target="_blank" rel="noreferrer">Google Earth profile guide</a>
+          </details>
         </div>}
         {historicalSheet && availableHistoricalBaseline && <div style={{fontSize:12,lineHeight:1.5,marginBottom:10}}>
           <strong>{historicalActive ? 'Before-works archive photo' : 'Current imagery'}</strong>
