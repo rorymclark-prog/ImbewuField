@@ -41,6 +41,15 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'e138c7cff', changes: [
+    'Choose which saved sites an assistant can use, and disconnect it in Settings.',
+    'Keep original site photos and PDFs with their source and import history.',
+    'Review historical photo registration drafts without moving saved map features.',
+  ], tour: [{ title: 'Manage assistant access', where: 'Settings → Assistant connections',
+    href: '/connect/imbewu',
+    detail: 'Review connected assistants, selected sites and imported originals.' },
+  { title: 'Check your saved map', where: 'Site design', href: '/design',
+    detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
   { when: '3 November 2026', sha: '80eb2f0b5', changes: [
     "Open Terrain & Sections for the two cuts and extra contour detail.",
   ] },

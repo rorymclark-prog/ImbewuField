@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Kgetha dibaka tse bolokilweng tseo mothusi a ka di sebedisang. O ka kgaola kgokahano ho Ditlhophiso.",
+  "Keep original site photos and PDFs with their source and import history.": "Boloka dinepe tsa pele tsa sebaka le di-PDF hammoho le mohlodi wa tsona le nalane ya ho di kenya.",
+  "Review historical photo registration drafts without moving saved map features.": "Hlahloba meralo ya ho nyalanya dinepe tsa kgale le mmapa ntle le ho suthisa dintho tse bolokilweng mmapeng.",
+  "Manage assistant access": "Laola phihlello ya bathusi",
+  "Settings → Assistant connections": "Ditlhophiso → Dikgokahano le bathusi",
+  "Review connected assistants, selected sites and imported originals.": "Hlahloba bathusi ba hoketsweng, dibaka tse kgethilweng le difaele tsa pele tse kentsweng.",
+  "Check your saved map": "Lekola mmapa wa hao o bolokilweng",
+  "Site design": "Moralo wa sebaka",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlahloba sebaka sona seo pele o kenya diphetoho tsa mothusi kapa o bapisa senepe sa kgale.",
   // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
   "Open Terrain & Sections for the two cuts and extra contour detail.": "Bula Terrain & Sections ho bona dikarolo tse pedi le mela e meng ya bophahamo.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
