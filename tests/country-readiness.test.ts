@@ -41,7 +41,8 @@ test('all engineering pilots preserve separate evidence roles and remain unrevie
     for (const category of EVIDENCE_CATEGORIES) assert.ok(profile.sources.some((source) => source.category === category));
     for (const source of profile.sources) {
       assert.match(source.url, /^https:\/\//);
-      assert.equal(source.accessedOn, source.id === 'ke-isric-sotwis' ? '2026-11-03' : AS_OF);
+      const addedOnNovemberThird = ['ke-isric-sotwis', 'ke-extension-ministry-referral', 'ke-extension-kiambu-department'];
+      assert.equal(source.accessedOn, addedOnNovemberThird.includes(source.id) ? '2026-11-03' : AS_OF);
       assert.ok(source.verifiedClaim && source.limitations && source.missingDataBehavior);
       assert.ok(['known', 'unknown'].includes(source.licence.status));
     }
@@ -133,4 +134,24 @@ test('Kenya’s historical soils catalogue appears in the dossier without satisf
   assert.equal(evaluateCountryReadiness(context, date, [profile]).localReviewComplete, true);
   profile.regions[0].definitionSourceId = historical.id;
   assert.equal(evaluateCountryReadiness(context, date, [profile]).localReviewComplete, false);
+});
+
+test('Kenya extension referrals cannot substitute for reviewed local extension evidence', () => {
+  const context = { countryCode: 'KE', agriculturalRegionId: 'test-region' };
+  const asOf = '2026-11-03';
+  const result = evaluateCountryReadiness(context, asOf);
+  const extension = result.evidence.find(entry => entry.category === 'agricultural-extension')!;
+  const referrals = extension.sources.filter(source => source.id.startsWith('ke-extension-'));
+  assert.deepEqual(referrals.map(source => source.id), ['ke-extension-ministry-referral', 'ke-extension-kiambu-department']);
+  assert.ok(referrals.every(source => source.publishedOn === null && source.licence.status === 'unknown'));
+  assert.equal(extension.availableCount, 0);
+
+  const profile = reviewedFixture();
+  profile.sources = profile.sources.filter(source => source.category !== 'agricultural-extension');
+  // Even if a publication date is established, institutional referrals remain background.
+  profile.sources.push(...referrals.map(source => ({ ...source, publishedOn: asOf })));
+  profile.agronomyReview.sourceIds = profile.sources.map(source => source.id);
+  const reviewed = evaluateCountryReadiness(context, asOf, [profile]);
+  assert.ok(reviewed.gaps.includes('Current verified agricultural-extension reference evidence is missing.'));
+  assert.equal(reviewed.localReviewComplete, false);
 });

@@ -24,6 +24,20 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
   { code: 'KE', name: 'Kenya', stage: 'engineering-pilot', jurisdictionNote: 'National and county responsibilities require separate review; forestry, seed and phytosanitary authorities are not interchangeable.', regions: [], agronomyReview: unreviewed(), sources: [
     source('ke-kefri', 'biodiversity', 'Kenya Forestry Research Institute (KEFRI)', 'https://www.kefri.org/home.html', 'Kenya forestry research', 'The official page links forestry biodiversity research, a GBIF publishing toolkit and eco-region programmes; none is an approval to plant.'),
     source('ke-kalro', 'agricultural-extension', 'Kenya Agricultural & Livestock Research Organisation (KALRO)', 'https://kalro.ecitizen.go.ke/', 'Kenya agricultural research', 'The official eCitizen page identifies KALRO’s research and information role; services use eCitizen. No crop production guide was imported.', { accessRequirements: known('Public introduction; service applications and payments require eCitizen. No account was opened.') }),
+    source('ke-extension-ministry-referral', 'agricultural-extension', 'Ministry of Agriculture and Livestock Development', 'https://kilimo.go.ke/frequently-asked-questions/', 'National referral for agricultural extension in Kenya', 'The ministry FAQ lists county agriculture and livestock officers, training institutions and commodity boards as routes to extension support.', {
+      title: 'Frequently Asked Questions - MoALD',
+      accessedOn: '2026-11-03', publishedOn: null, backgroundOnly: true,
+      licence: unknown('Website reuse terms have not been verified from the public FAQ page.'),
+      accessRequirements: known('Public ministry FAQ page read without an account. Local office contacts and service procedures are unverified.'),
+      limitations: 'Current officer directories, appointment procedures and crop recommendations remain unverified.',
+    }),
+    source('ke-extension-kiambu-department', 'agricultural-extension', 'Kiambu County Government: Agriculture, Livestock & Irrigation', 'https://kiambu.go.ke/departments/agriculture-livestock-irrigation/', 'Kiambu County agriculture department', 'The county department includes extension and skills development in its mission.', {
+      title: 'Agriculture, Livestock & Irrigation – Kiambu County Government',
+      accessedOn: '2026-11-03', publishedOn: null, backgroundOnly: true,
+      licence: unknown('Website reuse terms have not been verified from the public department page.'),
+      accessRequirements: known('Public county departmental landing page read without an account. Specific sub-county office locations and services remain unverified.'),
+      limitations: 'Current officer contacts, fees, application forms and local crop guidance remain unverified.',
+    }),
     source('ke-kmd', 'weather-frost', 'Kenya Meteorological Department', 'https://meteo.go.ke/', 'Kenya weather and climate services', 'The official portal links forecasts, agrometeorology, climate data and stations; a frost-data contract was not verified.'),
     source('ke-soil-nrf', 'soils', 'National Research Fund: Rongo University soil laboratory listing', 'https://risp.nrf.go.ke/facility/1', 'Listed facility in Kisii, Kenya; not a national soil map', 'The official facility page describes soil analysis; equipment information is absent. This is a service lead, not a spatial soil dataset.'),
     source('ke-isric-sotwis', 'soils', 'ISRIC - World Soil Information', 'https://data.isric.org/srv/api/records/4648929a-8031-49cc-9d56-9f3aeff2f8d9', 'National assessment of historical soil parameter estimates across Kenya', 'The official catalogue record describes historical soil estimates for national studies at a map scale of 1:1,000,000.', {

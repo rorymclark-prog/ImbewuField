@@ -172,3 +172,26 @@ test('the historical Kenya soil entry links only to the catalogue and disappears
     unchangedGlobalActivity();
   } finally { act(() => screen.unmount()); }
 });
+
+test('Kenya shows public extension referrals without service actions or cross-country links', () => {
+  let screen!: ReactTestRenderer;
+  act(() => { screen = create(React.createElement(CountryReview)); });
+  const hrefs = [
+    'https://kilimo.go.ke/frequently-asked-questions/',
+    'https://kiambu.go.ke/departments/agriculture-livestock-irrigation/',
+  ];
+  try {
+    for (const href of hrefs) {
+      const links = screen.root.findAllByType('a').filter(link => link.props.href === href);
+      assert.equal(links.length, 1);
+      assert.equal(links[0].props.onClick, undefined);
+      const card = screen.root.findAllByType('details').find(item => item.findAllByType('a').includes(links[0]))!;
+      assert.match(text(card), /Background reference only/);
+      assert.equal(card.findAllByType('button').length, 0);
+    }
+    const selector = screen.root.findAllByType('select').find(item => item.props.value === 'KE')!;
+    act(() => selector.props.onChange({ target: { value: 'GB' } }));
+    assert.ok(screen.root.findAllByType('a').every(link => !hrefs.includes(link.props.href)));
+    unchangedGlobalActivity();
+  } finally { act(() => screen.unmount()); }
+});
