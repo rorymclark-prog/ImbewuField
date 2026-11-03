@@ -1,5 +1,7 @@
 import type { CanvasFrame } from '@/lib/design-canvas';
+import { makeMercatorUnprojector } from '@/lib/design-canvas';
 import type { SheetContourResult } from '@/lib/sheet-contours';
+import { sampleTerrainRaster, terrainGridSpacingM, validTerrainRaster, type TerrainRaster } from '@/lib/terrain-raster';
 
 export interface SectorTerrainProfile {
   a: [number,number];
@@ -55,4 +57,67 @@ export function sectorTerrainProfile(result:SheetContourResult,boundary:Array<[n
     }
   }
   return best;
+}
+
+type Point = [number,number];
+export interface ProfileBuilding { label:string; ring:Point[] }
+export interface RasterTerrainProfile extends SectorTerrainProfile {
+  gridSpacingM:number;
+  supportingPixelCount:number;
+  buildings:Array<{label:string;ring:Point[];startM:number;endM:number}>;
+}
+
+/** Original geographic frame ONLY. A cropped display frame retains the old centre/zoom, so
+ * unprojecting it silently samples a different hillside. No state or measurements are changed. */
+export async function fetchProfileTerrain(frame:CanvasFrame,boundary:Point[],fetcher:(url:string)=>Promise<{ok:boolean;json:()=>Promise<unknown>}>):Promise<TerrainRaster|null> {
+  if(boundary.length<3||boundary.some(p=>p.some(n=>!Number.isFinite(n))))return null;
+  const unproject=makeMercatorUnprojector(frame.centerLng,frame.centerLat,frame.zoom,frame.imgW,frame.imgH);
+  const geo=boundary.map(unproject),xs=geo.map(p=>p[0]),ys=geo.map(p=>p[1]);
+  const params=new URLSearchParams({minLon:String(Math.min(...xs)),maxLon:String(Math.max(...xs)),minLat:String(Math.min(...ys)),maxLat:String(Math.max(...ys)),terrain:'pixels'});
+  try{const response=await fetcher(`/api/contours?${params}`);if(!response.ok)return null;const raster=await response.json();return validTerrainRaster(raster)?raster:null;}catch{return null;}
+}
+
+/** A straight section through the two principal saved buildings, not a screen-vertical line that
+ * misses the classrooms. Positions and footprint widths use the plan's existing metric scale;
+ * height/roof shape is deliberately absent because no measured building heights were supplied. */
+export function rasterTerrainProfile(raster:TerrainRaster,boundary:Point[],buildings:ProfileBuilding[],frame:CanvasFrame):RasterTerrainProfile|null {
+  if(!validTerrainRaster(raster)||boundary.length<3||boundary.some(p=>p.some(n=>!Number.isFinite(n)))
+    ||![frame.imgW,frame.imgH,frame.mPerPx].every(n=>Number.isFinite(n)&&n>0))return null;
+  const toM=([x,y]:Point):Point=>[x*frame.imgW*frame.mPerPx,y*frame.imgH*frame.mPerPx];
+  const fromM=([x,y]:Point):Point=>[x/(frame.imgW*frame.mPerPx),y/(frame.imgH*frame.mPerPx)];
+  const centre=(ring:Point[]):Point=>[ring.reduce((s,p)=>s+p[0],0)/ring.length,ring.reduce((s,p)=>s+p[1],0)/ring.length];
+  const area=(ring:Point[])=>Math.abs(ring.reduce((s,p,i)=>{const q=ring[(i+1)%ring.length];return s+p[0]*q[1]-q[0]*p[1];},0));
+  const structures=buildings.filter(b=>b.ring.length>=3&&b.ring.every(p=>p.every(Number.isFinite))).map(b=>({...b,ring:b.ring.map(toM)})).sort((a,b)=>area(b.ring)-area(a.ring));
+  const ring=boundary.map(toM),origin=centre(structures[0]?.ring??ring),other=structures[1]?centre(structures[1].ring):[origin[0],origin[1]+1];
+  let dx=other[0]-origin[0],dy=other[1]-origin[1],norm=Math.hypot(dx,dy);
+  if(norm<.001){dx=0;dy=1;norm=1;}
+  dx/=norm;dy/=norm;if(dy<0||(Math.abs(dy)<1e-8&&dx<0)){dx=-dx;dy=-dy;}
+  const hits=(polygon:Point[])=>{
+    const ts:number[]=[];
+    for(let i=0;i<polygon.length;i++){
+      const a=polygon[i],b=polygon[(i+1)%polygon.length],ex=b[0]-a[0],ey=b[1]-a[1],den=dx*ey-dy*ex;
+      if(Math.abs(den)<1e-9)continue;
+      const ax=a[0]-origin[0],ay=a[1]-origin[1],u=(ax*dy-ay*dx)/den;
+      if(u<0||u>=1)continue;
+      ts.push((ax*ey-ay*ex)/den);
+    }
+    return ts.sort((a,b)=>a-b).filter((t,i,all)=>i===0||Math.abs(t-all[i-1])>.001);
+  };
+  const edges=hits(ring);let start=0,end=0;
+  for(let i=0;i+1<edges.length;i+=2){if(edges[i]<=0&&edges[i+1]>=0){start=edges[i];end=edges[i+1];break;}}
+  const lengthM=end-start;if(!Number.isFinite(lengthM)||lengthM<=0||lengthM>10000)return null;
+  const point=(t:number):Point=>fromM([origin[0]+dx*t,origin[1]+dy*t]);
+  const a=point(start),b=point(end),unproject=makeMercatorUnprojector(frame.centerLng,frame.centerLat,frame.zoom,frame.imgW,frame.imgH);
+  const points:RasterTerrainProfile['points']=[],cells=new Set<string>();
+  // Approximately 1 m plotting steps interpolate the posted raster; the caption reports both
+  // that spacing and the coarser native grid. These are not 1 m survey observations.
+  const steps=Math.max(2,Math.min(500,Math.ceil(lengthM)));
+  for(let i=0;i<=steps;i++){
+    const distanceM=lengthM*i/steps,[lon,lat]=unproject(point(start+distanceM));
+    const sample=sampleTerrainRaster(raster,lon,lat);if(!sample)return null;
+    points.push({distanceM,elevationM:sample.elevationM});sample.cells.forEach(cell=>cells.add(cell));
+  }
+  const bands:RasterTerrainProfile['buildings']=[];
+  for(const building of structures){const ts=hits(building.ring);for(let i=0;i+1<ts.length;i+=2){const lo=Math.max(start,ts[i]),hi=Math.min(end,ts[i+1]);if(hi>lo)bands.push({label:building.label,ring:building.ring.map(fromM),startM:lo-start,endM:hi-start});}}
+  return {a,b,lengthM,points,buildings:bands,gridSpacingM:terrainGridSpacingM(frame.centerLat),supportingPixelCount:cells.size};
 }

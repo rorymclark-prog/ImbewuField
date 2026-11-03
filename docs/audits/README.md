@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest raw section continuation: [Raw terrain pixels and scaled classroom section — 3 November 2026](2026-11-03/raw-terrain-classroom-profile-codex.md). The earlier sparse profile was rejected; Sector overlay polish remains open.
+
 Latest Structures recovery: [Recorded permeable shade cover over paid artwork — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md). App-drawn material is distinguished from AI output.
 
 Latest terrain continuation: [Sector DEM alignment, data limits and regional A–B profile — 3 November 2026](2026-11-03/sector-terrain-profile-codex.md). Fresh Earthworks/Structures still have documented visual failures.

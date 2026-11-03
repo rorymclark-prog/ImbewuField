@@ -40,7 +40,7 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
 import { fetchSheetContours, type SheetContourResult } from '@/lib/sheet-contours';
-import { sectorOverviewContours, sectorTerrainProfile, type SectorTerrainProfile } from '@/lib/sheet-terrain-profile';
+import { sectorOverviewContours, fetchProfileTerrain, rasterTerrainProfile } from '@/lib/sheet-terrain-profile';
 import {
   gateBoundaryBreaks,
   boundarySegmentsWithBreaks,
@@ -9406,47 +9406,61 @@ async function fetchSectorPresentationContours(state:DesignCanvasState,frame:Can
 }
 
 async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],site:SectorSite|null,placeName?:string):Promise<string|null>{
-  const p=await boundaryPresentationContext(state,frame,refs);
-  const contours=await fetchSectorPresentationContours(state,frame,refs,site);
-  const profile=sectorTerrainProfile(contours,p.refLayers.boundary,p.frame);
+  // Fetch and intersect in the original saved coordinate system. Cropping is paint-time only.
+  const raster=await fetchProfileTerrain(frame,refs.boundary,async url=>fetch(url,{headers:await paidApiHeaders(),signal:AbortSignal.timeout(15_000)}));
+  if(!raster)return null;
+  const baseline=historicalBaselineForSite(state.siteId);
+  const buildings=authoritativeHouseFootprints(state,refs).map((ring,index)=>{
+    const centre=centroidOf(ring);
+    const archive=baseline?.features.filter(feature=>feature.id.startsWith('classroom')).map(feature=>({feature,point:historicalPhotoPoint(frame,feature.point,baseline)})).sort((a,b)=>Math.hypot((a.point[0]-centre[0])*frame.imgW,(a.point[1]-centre[1])*frame.imgH)-Math.hypot((b.point[0]-centre[0])*frame.imgW,(b.point[1]-centre[1])*frame.imgH))[0];
+    const zone=state.zones.find(zone=>zone.feature==='house'&&sameFootprint(zone.points,ring));
+    return {ring,label:archive?.feature.label.replace('Existing ','').replace(/^./,c=>c.toUpperCase())??zone?.name??`Building ${index+1}`};
+  });
+  const profile=rasterTerrainProfile(raster,refs.boundary,buildings,frame);
   if(!profile)return null;
+  const p=await boundaryPresentationContext(state,frame,refs);
+  const layout=calculateBoundaryPresentationLayout(presentationExtentRing(state,frame,refs.boundary),frame,SCALE);
+  const normalized=([x,y]:[number,number]):[number,number]=>layout?[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight]:[x,y];
   const canvas=document.createElement('canvas');canvas.width=1800;canvas.height=1273;
   const ctx=canvas.getContext('2d');if(!ctx){releaseCanvas(canvas);throw new Error('Terrain profile canvas unavailable');}
-  ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,1800,1273);ctx.fillStyle='#183425';ctx.font=`800 36px ${SHEET_BODY_FONT}`;ctx.fillText('REGIONAL TERRAIN PROFILE · A–B',48,58);
-  ctx.font=`600 24px ${SHEET_BODY_FONT}`;ctx.fillStyle='#5B665E';ctx.fillText(placeName??'Your site',48,98);
-  const fit=Math.min(810/p.frame.imgW,990/p.frame.imgH),w=p.frame.imgW*fit,h=p.frame.imgH*fit,mx=48+(810-w)/2,my=150+(990-h)/2;
+  ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,1800,1273);ctx.fillStyle='#183425';ctx.font=`800 38px ${SHEET_BODY_FONT}`;ctx.fillText('TERRAIN & CLASSROOM SECTION',48,62);
+  ctx.font=`500 24px ${SHEET_BODY_FONT}`;ctx.fillStyle='#66736A';ctx.fillText(`${placeName??'Your site'} · raw regional elevation pixels · section A–B`,48,104);
+  const fit=Math.min(800/p.frame.imgW,950/p.frame.imgH),w=p.frame.imgW*fit,h=p.frame.imgH*fit,mx=48+(800-w)/2,my=174+(950-h)/2;
   if(p.frame.satDataUrl){const image=await loadImage(p.frame.satDataUrl);try{ctx.drawImage(image,mx,my,w,h);}finally{releaseImageSource(image);}}
-  const project=([x,y]:[number,number]):[number,number]=>[mx+x*w,my+y*h];
-  ctx.save();ctx.strokeStyle='#77914C';ctx.lineWidth=2;ctx.setLineDash([6,5]);ctx.beginPath();p.refLayers.boundary.forEach((point,i)=>{const [x,y]=project(point);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x,y);});ctx.closePath();ctx.stroke();
-  const a=project(profile.a),b=project(profile.b);ctx.strokeStyle='#973D72';ctx.lineWidth=3;ctx.setLineDash([12,8]);ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke();ctx.restore();
-  for(const [text,point] of [['A',a],['B',b]] as const){ctx.fillStyle='#FFFFFF';ctx.beginPath();ctx.arc(point[0],point[1],19,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#973D72';ctx.stroke();ctx.fillStyle='#702454';ctx.font=`800 24px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,point[0],point[1]);}
+  const project=(point:[number,number]):[number,number]=>{const [x,y]=normalized(point);return [mx+x*w,my+y*h];};
+  ctx.save();ctx.strokeStyle='#88A076';ctx.lineWidth=1.5;ctx.setLineDash([6,5]);ctx.beginPath();refs.boundary.forEach((point,i)=>{const [x,y]=project(point);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x,y);});ctx.closePath();ctx.stroke();ctx.setLineDash([]);
+  for(const building of buildings){ctx.strokeStyle='#147D86';ctx.lineWidth=2.5;ctx.fillStyle='rgba(20,125,134,.12)';ctx.beginPath();building.ring.forEach((point,i)=>{const [x,y]=project(point);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x,y);});ctx.closePath();ctx.fill();ctx.stroke();const c=project(centroidOf(building.ring));drawReferenceMapText(ctx,building.label,c[0],c[1]-20,20,700,'center');}
+  const a=project(profile.a),b=project(profile.b);ctx.strokeStyle='#8C4F76';ctx.lineWidth=3;ctx.setLineDash([12,8]);ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke();ctx.restore();
+  for(const [text,point] of [['A',a],['B',b]] as const){ctx.fillStyle='#FFFFFF';ctx.beginPath();ctx.arc(point[0],point[1],19,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#8C4F76';ctx.stroke();ctx.fillStyle='#794466';ctx.font=`800 24px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,point[0],point[1]);}
   ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.font=`700 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#183425';ctx.fillText('N ↑',mx+w-48,my+30);
   drawBlueprintScaleBar(ctx,w,h,0,0,fit/p.frame.mPerPx,{x:mx+20,y:my+h-20});
-  const gx=970,gy=230,gw=740,gh=400,values=profile.points.map(point=>point.elevationM);
+  const gx=975,gy=360,values=profile.points.map(point=>point.elevationM);
   const low=Math.floor(Math.min(...values)/5)*5-5,high=Math.ceil(Math.max(...values)/5)*5+5;
-  const X=(d:number)=>gx+d/profile.lengthM*gw,Y=(z:number)=>gy+gh-(z-low)/(high-low)*gh;
-  ctx.font=`700 26px ${SHEET_BODY_FONT}`;ctx.fillStyle='#183425';ctx.fillText('A · north → B · south',gx,gy-65);
-  ctx.font=`500 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Provider height (m) · vertical datum unverified',gx,gy-25);
-  const tickStep=Math.max(5,Math.ceil((high-low)/30)*5);
-  for(let tick=0;tick<8;tick++){const z=low+tick*tickStep;if(z>high)break;ctx.strokeStyle='#DFE5DF';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,Y(z));ctx.lineTo(gx+gw,Y(z));ctx.stroke();ctx.fillStyle='#536357';ctx.textAlign='right';ctx.fillText(String(z),gx-15,Y(z)+7);}
-  ctx.textAlign='left';ctx.strokeStyle='#536357';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx,gy+gh);ctx.lineTo(gx+gw,gy+gh);ctx.stroke();
-  ctx.strokeStyle='#973D72';ctx.lineWidth=3;ctx.setLineDash([10,7]);ctx.beginPath();profile.points.forEach((point,i)=>(i===0?ctx.moveTo:ctx.lineTo).call(ctx,X(point.distanceM),Y(point.elevationM)));ctx.stroke();ctx.setLineDash([]);
-  for(const point of profile.points){ctx.fillStyle='#315A40';ctx.beginPath();ctx.arc(X(point.distanceM),Y(point.elevationM),5,0,Math.PI*2);ctx.fill();}
-  ctx.fillStyle='#536357';ctx.font=`600 21px ${SHEET_BODY_FONT}`;ctx.fillText('A · 0 m',gx,gy+gh+35);ctx.textAlign='right';ctx.fillText(`B · ~${Math.round(profile.lengthM)} m`,gx+gw,gy+gh+35);ctx.textAlign='left';
-  const exaggeration=(gh/(high-low))/(gw/profile.lengthM);
+  const ppm=Math.min(740/profile.lengthM,430/(high-low)),gw=profile.lengthM*ppm,gh=(high-low)*ppm;
+  const X=(d:number)=>gx+d*ppm,Y=(z:number)=>gy+gh-(z-low)*ppm;
+  ctx.font=`700 27px ${SHEET_BODY_FONT}`;ctx.fillStyle='#183425';ctx.fillText('A–B · equal horizontal & vertical scale',gx,189);
+  ctx.font=`500 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#66736A';ctx.fillText('Roof footprint widths · building heights unknown',gx,226);
+  profile.buildings.forEach((building,index)=>{
+    const y=267+(index%2)*40;
+    ctx.fillStyle='#147D86';ctx.fillRect(X(building.startM),y,Math.max(1,(building.endM-building.startM)*ppm),9);
+    ctx.font=`600 20px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.fillText(building.label,X((building.startM+building.endM)/2),y-9);
+    ctx.strokeStyle='#A6C6C6';ctx.lineWidth=1;ctx.setLineDash([3,5]);ctx.beginPath();ctx.moveTo(X(building.startM),y+9);ctx.lineTo(X(building.startM),gy+gh);ctx.moveTo(X(building.endM),y+9);ctx.lineTo(X(building.endM),gy+gh);ctx.stroke();ctx.setLineDash([]);
+  });
+  ctx.font=`500 20px ${SHEET_BODY_FONT}`;ctx.textAlign='left';ctx.fillStyle='#66736A';ctx.fillText('Provider height (m) · datum unverified',gx,gy-18);
+  for(let z=low;z<=high;z+=5){ctx.strokeStyle='#E4EAE5';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,Y(z));ctx.lineTo(gx+gw,Y(z));ctx.stroke();ctx.fillStyle='#66736A';ctx.textAlign='right';ctx.fillText(String(z),gx-12,Y(z)+6);}
+  for(let d=0;d<=profile.lengthM;d+=10){ctx.strokeStyle='#E4EAE5';ctx.beginPath();ctx.moveTo(X(d),gy);ctx.lineTo(X(d),gy+gh);ctx.stroke();ctx.fillStyle='#66736A';ctx.textAlign='center';ctx.fillText(String(d),X(d),gy+gh+29);}
+  ctx.fillStyle='#E3EBDF';ctx.beginPath();ctx.moveTo(gx,gy+gh);profile.points.forEach(point=>ctx.lineTo(X(point.distanceM),Y(point.elevationM)));ctx.lineTo(gx+gw,gy+gh);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#41634A';ctx.lineWidth=3;ctx.beginPath();profile.points.forEach((point,i)=>(i===0?ctx.moveTo:ctx.lineTo).call(ctx,X(point.distanceM),Y(point.elevationM)));ctx.stroke();
+  ctx.textAlign='left';ctx.fillStyle='#536357';ctx.font=`600 21px ${SHEET_BODY_FONT}`;ctx.fillText('A · 0 m',gx,gy+gh+65);ctx.textAlign='right';ctx.fillText(`B · ${profile.lengthM.toFixed(1)} m`,gx+gw,gy+gh+65);ctx.textAlign='left';
   const notes=[
-    `${contours.intervalM} m regional DEM contours · approximate ground distance.`,
-    `Vertical exaggeration: ${exaggeration.toFixed(1)}×. End heights are unknown.`,
-    'Dots are contour crossings; dashed joins are straight interpolation.',
-    'Terrain between those crossings has not been measured here.',
-    'Mapbox terrain · local horizontal/vertical accuracy unverified.',
-    'Mixed source height datums; not a surveyed ground profile.',
-    'Do not use this overview for excavation, drainage or building set-out.',
-    'The photo and DEM may describe different dates and surface heights.',
+    `~${profile.gridSpacingM.toFixed(1)} m DEM grid · ${profile.supportingPixelCount} supporting pixels.`,
+    `${profile.points.length} plotted points interpolate the grid; no extra measurements.`,
+    'Regional surface only · local accuracy and datum unverified.',
+    'Survey/drone ground data needed for drainage or construction.',
   ];
-  ctx.font=`600 21px ${SHEET_BODY_FONT}`;let ny=740;
-  for(const note of notes){ctx.fillStyle='#43574A';const words=note.split(' ');let line='';for(const word of words){const next=line?line+' '+word:word;if(ctx.measureText(next).width>740&&line){ctx.fillText(line,gx,ny);ny+=30;line=word;}else line=next;}if(line){ctx.fillText(line,gx,ny);ny+=30;}ny+=12;}
-  ctx.font=`italic 20px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Plan and profile are app drawings. No AI-generated heights.',48,1230);
+  ctx.font=`500 21px ${SHEET_BODY_FONT}`;let ny=875;
+  for(const note of notes){ctx.fillStyle='#536357';const words=note.split(' ');let line='';for(const word of words){const next=line?line+' '+word:word;if(ctx.measureText(next).width>750&&line){ctx.fillText(line,gx,ny);ny+=29;line=word;}else line=next;}if(line){ctx.fillText(line,gx,ny);ny+=29;}ny+=10;}
+  ctx.font=`italic 20px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Mapbox Terrain-RGB · same A–B path on plan and section · no inferred building heights.',48,1230);
   return drainCanvasToDataUrl(canvas,'image/png');
 }
 
@@ -13393,8 +13407,8 @@ export default function DesignGlossy({
     try{
       const sourceFrame=historicalActive&&availableHistoricalBaseline?await buildHistoricalBaselineFrame(frame,availableHistoricalBaseline):frame;
       const image=await buildSectorTerrainProfileSheet(state,sourceFrame,refLayers,site,placeName);
-      if(!image){setNotice('A terrain profile is unavailable: fewer than two usable regional contour levels cross this site. No endpoint heights have been invented.');return;}
-      const id=pushGallery('Sector terrain profile · regional DEM · indicative',image,{resultKind:'exact',provider:'exact',geometryLock:true});
+      if(!image){setNotice('Raw terrain pixels are unavailable for this section. No heights have been invented.');return;}
+      const id=pushGallery('Sector terrain profile · sampled DEM · classroom section',image,{resultKind:'exact',provider:'exact',geometryLock:true});
       setGalleryViewId(id);setGalleryOpen(true);
     }catch(err){setError(userFacingMessage(err,'Terrain profile unavailable. No surveyed elevations have been supplied.',t));}
     finally{setLoading(null);}
@@ -16056,7 +16070,13 @@ export default function DesignGlossy({
         <WorkflowHeading number={2} title="Underlay" />
         {selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='sector' && <div style={{marginBottom:10}}>
           <button type="button" disabled={loading!==null} onClick={renderTerrainProfile}>Terrain profile · regional overview</button>
-          <p style={{fontSize:11,lineHeight:1.4}}>A–B side view from regional DEM contour crossings. Approximate; not a ground survey.</p>
+          <p style={{fontSize:11,lineHeight:1.4}}>A–B side view from raw elevation pixels, through the principal traced buildings. Approximate; not a ground survey.</p>
+          <details style={{fontSize:11,lineHeight:1.5}}><summary>Terrain source &amp; scale</summary>
+            <p>The section samples Mapbox Terrain-RGB at z14/256 (about 8.5 m grid spacing here). Interpolated plotting points do not improve the underlying resolution. Source dates, local accuracy and mixed height datums are unverified. The archive photograph is aligned to roof corners, not surveyed ground control. Roof footprint widths use your saved plan scale; building heights are not supplied.</p>
+            <p>Google Earth Pro can show a profile of a drawn path. Its terrain is a comparison source, not a site survey. A controlled drone ground model or measured levels are needed for drainage or construction.</p>
+            <a href="https://docs.mapbox.com/data/tilesets/reference/mapbox-terrain-rgb-v1/" target="_blank" rel="noreferrer">Mapbox source details</a>{' · '}
+            <a href="https://support.google.com/earth/answer/148134" target="_blank" rel="noreferrer">Google Earth profile guide</a>
+          </details>
         </div>}
         {historicalSheet && availableHistoricalBaseline && <div style={{fontSize:12,lineHeight:1.5,marginBottom:10}}>
           <strong>{historicalActive ? 'Before-works archive photo' : 'Current imagery'}</strong>
