@@ -30,7 +30,7 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
   return next(specifier, context);
 } });
 const { accountLocalStorageKey, bindMountedAccountLocalStorageUid } = await import('../lib/account-local-storage.ts');
-const { appendLinkedJournalNote, initialiseJournalCutover, loadJournal, MAX_ENTRIES, readJournalCutoverStatus, readJournalLinkWriteReceipt, journalLinkWriteReceiptMatches, saveJournal } = await import('../lib/field-journal.ts');
+const { appendLinkedJournalNote, initialiseJournalCutover, loadJournal, MAX_ENTRIES, readCanonicalJournal, readJournalCutoverStatus, readJournalLinkWriteReceipt, journalLinkWriteReceiptMatches, saveJournal, writeCanonicalJournal } = await import('../lib/field-journal.ts');
 hooks.deregister();
 const key = accountLocalStorageKey('imbewu_field_journal_v1', 'account-a');
 const entry = { id: 'test-note', date: '2026-11-03', title: 'Synthetic note', notes: 'Read-only fixture',
@@ -290,4 +290,144 @@ test('a corrupt canonical journal and a guest namespace cannot be overwritten by
   bindMountedAccountLocalStorageUid(null);
   assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'held', reason: 'context-unavailable' });
   assert.equal(state.writes, 0);
+});
+
+test('concurrent cutovers for same account hold second call without write while first completes once', async () => {
+  const original = JSON.stringify([entry]);
+  rows.set(key, original);
+  let releaseFirst!: () => void, enteredFirst!: () => void;
+  const releaseGate = new Promise<void>(res => { releaseFirst = res; });
+  const enteredGate = new Promise<void>(res => { enteredFirst = res; });
+  let held = false;
+  const recordedCalls: Array<{ name: string; options: unknown }> = [];
+  const racingLocks: CropPlanStorageLocks = {
+    async request(name, options, action) {
+      recordedCalls.push({ name, options });
+      if (!held) {
+        held = true;
+        enteredFirst();
+        try {
+          await releaseGate;
+          return await action({});
+        } finally {
+          held = false;
+        }
+      }
+      return await action(null);
+    },
+  };
+  const firstPromise = initialiseJournalCutover(racingLocks);
+  await enteredGate;
+  assert.equal(state.writes, 0);
+  assert.deepEqual(await initialiseJournalCutover(racingLocks), { status: 'held', reason: 'lock-unavailable' });
+  assert.equal(state.writes, 0);
+  releaseFirst();
+  assert.deepEqual(await firstPromise, { status: 'ready' });
+  assert.equal(state.writes, 1);
+  assert.deepEqual(await initialiseJournalCutover(racingLocks), { status: 'ready' });
+  assert.equal(state.writes, 1);
+  assert.equal(rows.get(key), original);
+  assert.equal(recordedCalls.length, 3);
+  for (const call of recordedCalls) {
+    assert.equal(call.name, `imbewu-journal:${canonicalKey}`);
+    assert.deepEqual(call.options, { mode: 'exclusive', ifAvailable: true });
+  }
+});
+
+test('a legacy write between snapshot and guarded cutover write holds on context-changed without writing', async () => {
+  const original = JSON.stringify([entry]);
+  const newer = JSON.stringify([{ ...entry, title: 'Updated legacy note' }]);
+  rows.set(key, original);
+  state.afterRead = () => {
+    if (state.reads === 2) {
+      rows.set(key, newer);
+      state.afterRead = null;
+    }
+  };
+  assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'held', reason: 'context-changed' });
+  assert.equal(state.writes, 0);
+  assert.equal(state.events, 0);
+  assert.equal(rows.get(key), newer);
+  assert.equal(rows.has(canonicalKey), false);
+});
+
+test('ordinary and linked actions share the canonical book without rewriting the old journal', async () => {
+  const original = JSON.stringify([entry]);
+  rows.set(key, original);
+  assert.deepEqual(await initialiseJournalCutover(exclusive), { status: 'ready' });
+  const first = await readCanonicalJournal();
+  const add = { kind: 'add', input: { ...noteInput, title: 'Ordinary note' } } as const;
+  assert.deepEqual(await writeCanonicalJournal({ ...first }, add, exclusive), { status: 'held', reason: 'context-changed' });
+  const added = await writeCanonicalJournal(first, add, exclusive);
+  assert.equal(added.status, 'saved');
+  assert.deepEqual(await writeCanonicalJournal(first, add, exclusive), { status: 'held', reason: 'context-changed' });
+  const beforeLinked = await readCanonicalJournal();
+  const linked = await writeCanonicalJournal(beforeLinked, {
+    kind: 'append-linked', input: noteInput, selection: noteLink, sourceIsCurrent: () => true,
+  }, exclusive);
+  assert.equal(linked.status, 'saved');
+  if (added.status !== 'saved' || linked.status !== 'saved') return;
+  const both = await readCanonicalJournal();
+  assert.equal(both.status, 'ready');
+  if (both.status !== 'ready') return;
+  assert.deepEqual(both.entries.find(row => row.id === linked.noteId)?.growerCycleLink, noteLink);
+  assert.deepEqual(await writeCanonicalJournal(both, {
+    kind: 'edit', id: linked.noteId, input: { ...noteInput, bedId: 'another-bed' },
+  }, exclusive), { status: 'held', reason: 'invalid-note' });
+  assert.equal((await writeCanonicalJournal(both, {
+    kind: 'edit', id: linked.noteId, input: { ...noteInput, title: 'Edited linked note' },
+  }, exclusive)).status, 'saved');
+  assert.deepEqual(await writeCanonicalJournal(both, { kind: 'delete', id: added.noteId }, exclusive),
+    { status: 'held', reason: 'context-changed' });
+  assert.equal((await writeCanonicalJournal(await readCanonicalJournal(), { kind: 'delete', id: added.noteId }, exclusive)).status, 'saved');
+  const current = await readCanonicalJournal();
+  assert.equal(current.status, 'ready');
+  if (current.status !== 'ready') return;
+  assert.equal(current.entries.length, 2);
+  assert.deepEqual(current.entries.find(row => row.id === linked.noteId)?.growerCycleLink, noteLink);
+  assert.equal(current.entries.find(row => row.id === linked.noteId)?.title, 'Edited linked note');
+  assert.deepEqual(JSON.parse(JSON.parse(rows.get(canonicalKey)!).journalRaw)[0], entry);
+  assert.equal(rows.get(key), original);
+  assert.equal(state.events, 4);
+});
+
+test('canonical writes hold a stale source, legacy divergence, and a changed account', async () => {
+  const original = JSON.stringify([entry]);
+  rows.set(key, original);
+  assert.equal((await initialiseJournalCutover(exclusive)).status, 'ready');
+  const copied = rows.get(canonicalKey);
+  const view = await readCanonicalJournal();
+  let checks = 0;
+  assert.deepEqual(await writeCanonicalJournal(view, {
+    kind: 'append-linked', input: noteInput, selection: noteLink, sourceIsCurrent: () => ++checks === 1,
+  }, exclusive), { status: 'held', reason: 'context-changed' });
+  const switched: CropPlanStorageLocks = { async request(_name, _options, action) {
+    state.uid = 'account-b';
+    return await action({});
+  } };
+  const deletion = { kind: 'delete', id: entry.id } as const;
+  assert.deepEqual(await writeCanonicalJournal(view, deletion, switched), { status: 'held', reason: 'context-changed' });
+  state.uid = 'account-a';
+  assert.deepEqual(await writeCanonicalJournal(view, deletion, null), { status: 'held', reason: 'lock-unavailable' });
+  const newer = JSON.stringify([{ ...entry, title: 'Late old-tab change' }]);
+  rows.set(key, newer);
+  assert.deepEqual(await readCanonicalJournal(), { status: 'held', reason: 'legacy-diverged' });
+  assert.deepEqual(await writeCanonicalJournal(view, deletion, exclusive), { status: 'held', reason: 'context-changed' });
+  assert.equal(rows.get(key), newer);
+  assert.equal(rows.get(canonicalKey), copied);
+  assert.equal(state.writes, 1);
+  assert.equal(state.events, 0);
+});
+
+test('an uncertain canonical write cannot be replayed or announce a save', async () => {
+  assert.equal((await initialiseJournalCutover(exclusive)).status, 'ready');
+  const view = await readCanonicalJournal();
+  const copied = rows.get(canonicalKey);
+  state.refuseWrite = true;
+  const add = { kind: 'add', input: noteInput } as const;
+  assert.deepEqual(await writeCanonicalJournal(view, add, exclusive), { status: 'unconfirmed' });
+  assert.deepEqual(await writeCanonicalJournal(view, add, exclusive), { status: 'held', reason: 'context-changed' });
+  assert.equal(rows.get(canonicalKey), copied);
+  assert.equal(state.writes, 2);
+  assert.equal(state.events, 0);
 });

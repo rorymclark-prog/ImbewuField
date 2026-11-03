@@ -15,3 +15,5 @@ The live write needs one journal authority for ordinary saves, deletes and linke
 
 
 The cutover prerequisite can initialize a separate account-scoped v2 journal under the existing Web Locks pattern. It validates and copies the v1 raw journal, retains the original key, and stores a SHA-256 comparison of the exact legacy string in the new envelope. Later writes to v1 are reported as divergence without replacing v2. Missing locks, quota or unreadable state hold the operation. Guest transfer and the built-in sample remain separate admission cases. This prerequisite has no production caller. Canonical ordinary edits, deletes and linked writes still need to use the same authority, and divergence needs a grower-visible recovery flow.
+
+The canonical store now reads a checked journal view and applies one action at a time under the same account lock. Ordinary add, edit, delete and linked append all use the exact view as their comparison receipt. A stale view or changed legacy bytes hold the action, and a full journal keeps existing notes and photos. The live journal and task form still require integration, explicit older-tab recovery and safe guest transfer.

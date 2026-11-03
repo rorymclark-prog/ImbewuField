@@ -522,6 +522,21 @@ export type LinkedJournalAppendResult =
   | { readonly status: 'held'; readonly reason: 'invalid-note' | 'context-changed' | 'journal-full' }
   | { readonly status: 'unconfirmed' };
 
+function explicitlyDatedJournalInput(input: JournalEntryInput): JournalEntryInput | null {
+  const date = Object.getOwnPropertyDescriptor(input, 'date')?.value;
+  if (!isJournalDate(date)) return null;
+  const { bedId, title, notes, category, bedLabel, cropName, photos } = input;
+  return { date, bedId, title, notes, category, bedLabel, cropName, photos };
+}
+
+function createLinkedJournalEntry(input: JournalEntryInput, selection: unknown): JournalEntry | null {
+  const link = normaliseGrowerFieldNoteLink(selection);
+  const dated = explicitlyDatedJournalInput(input);
+  if (!link || !dated || dated.bedId !== link.bedId) return null;
+  const note = { ...createJournalEntry(dated), growerCycleLink: link };
+  return (note.title || note.notes) && note.bedId === link.bedId ? note : null;
+}
+
 /** The confirmation controller must recheck the admitted grower book before
  * calling this. Its synchronous guard must still bind that same source and
  * live form. There is no await or retry between admission and this write. */
@@ -539,12 +554,9 @@ export function appendLinkedJournalNote(
   let note: JournalEntry, bytes: string;
   try {
     if (!sourceIsCurrent() || !journalBindingMatches(binding)) return changed;
-    const link = normaliseGrowerFieldNoteLink(selection);
-    const date = Object.getOwnPropertyDescriptor(input, 'date')?.value;
-    const { bedId, title, notes, category, bedLabel, cropName, photos } = input;
-    if (!link || !isJournalDate(date) || bedId !== link.bedId) return invalid;
-    note = { ...createJournalEntry({ date, bedId, title, notes, category, bedLabel, cropName, photos }), growerCycleLink: link };
-    if ((!note.title && !note.notes) || note.bedId !== link.bedId) return invalid;
+    const linked = createLinkedJournalEntry(input, selection);
+    if (!linked) return invalid;
+    note = linked;
     const prior: JournalEntry[] = binding.raw === null ? [] : JSON.parse(binding.raw);
     if (prior.length >= MAX_ENTRIES || prior.some(row => row.id === note.id)) return full;
     bytes = JSON.stringify([...prior, note]);
@@ -584,6 +596,14 @@ interface JournalCutoverContext {
 interface JournalCutoverSnapshot { legacy: string | null; canonical: string | null }
 interface JournalEnvelope { version: 2; legacyDigest: string | null; journalRaw: string }
 const journalCutoverHeld = (reason: JournalCutoverReason): JournalCutoverStatus => ({ status: 'held', reason });
+
+function journalLocks(locks: CropPlanStorageLocks | null | undefined) {
+  return locks === undefined && typeof navigator !== 'undefined' ? navigator.locks : locks;
+}
+
+function journalLockName(context: JournalCutoverContext): string {
+  return `imbewu-journal:${context.canonicalKey}`;
+}
 
 function journalCutoverContext(): JournalCutoverContext | null {
   if (typeof window === 'undefined' || readAccountLocalSampleState() !== false) return null;
@@ -648,9 +668,9 @@ export async function initialiseJournalCutover(locks?: CropPlanStorageLocks | nu
   try {
     const context = journalCutoverContext();
     if (!context) return journalCutoverHeld('context-unavailable');
-    const writer = locks === undefined && typeof navigator !== 'undefined' ? navigator.locks : locks;
+    const writer = journalLocks(locks);
     if (!writer) return journalCutoverHeld('lock-unavailable');
-    return await writer.request(`imbewu-journal:${context.canonicalKey}`, { mode: 'exclusive', ifAvailable: true }, async lock => {
+    return await writer.request(journalLockName(context), { mode: 'exclusive', ifAvailable: true }, async lock => {
       if (!lock) return journalCutoverHeld('lock-unavailable');
       const before = captureJournalCutover(context);
       if (!before) return journalCutoverHeld('context-changed');
@@ -668,4 +688,109 @@ export async function initialiseJournalCutover(locks?: CropPlanStorageLocks | nu
       } catch { return journalCutoverHeld('write-unconfirmed'); }
     });
   } catch { return journalCutoverHeld('context-unavailable'); }
+}
+
+type HeldJournalCutover = Extract<JournalCutoverStatus, { status: 'held' }>;
+export type CanonicalJournalView = { readonly status: 'ready'; readonly entries: readonly JournalEntry[] } | HeldJournalCutover;
+const canonicalJournalViews = new WeakMap<CanonicalJournalView, {
+  context: JournalCutoverContext;
+  snapshot: JournalCutoverSnapshot;
+  envelope: JournalEnvelope;
+}>();
+
+/** A view binds a subsequent action to the exact book the grower saw. */
+export async function readCanonicalJournal(): Promise<CanonicalJournalView> {
+  try {
+    const context = journalCutoverContext();
+    const snapshot = context && captureJournalCutover(context);
+    if (!context || !snapshot) return { status: 'held', reason: 'context-unavailable' };
+    const status = await inspectJournalCutover(context, snapshot);
+    if (status.status === 'held') return status;
+    if (!sameJournalCutover(snapshot, captureJournalCutover(context))) return { status: 'held', reason: 'context-changed' };
+    const envelope = readJournalEnvelope(snapshot.canonical!);
+    if (!envelope) return { status: 'held', reason: 'invalid-canonical' };
+    const view = Object.freeze({ status: 'ready' as const, entries: normaliseJournal(JSON.parse(envelope.journalRaw)) });
+    canonicalJournalViews.set(view, { context, snapshot, envelope });
+    return view;
+  } catch {
+    return { status: 'held', reason: 'context-unavailable' };
+  }
+}
+
+export type CanonicalJournalChange =
+  | { readonly kind: 'add'; readonly input: JournalEntryInput }
+  | { readonly kind: 'edit'; readonly id: string; readonly input: JournalEntryInput }
+  | { readonly kind: 'delete'; readonly id: string }
+  | { readonly kind: 'append-linked'; readonly input: JournalEntryInput; readonly selection: unknown; readonly sourceIsCurrent: () => boolean };
+
+export type CanonicalJournalWriteResult =
+  | { readonly status: 'saved'; readonly noteId: string }
+  | { readonly status: 'held'; readonly reason: 'invalid-note' | 'context-changed' | 'journal-full' | 'lock-unavailable' }
+  | { readonly status: 'unconfirmed' };
+
+/** Apply a single user action to the admitted book. Unchanged rows retain
+ * their stored shape, and a full journal cannot evict notes or photos. */
+export async function writeCanonicalJournal(
+  view: CanonicalJournalView,
+  change: CanonicalJournalChange,
+  locks?: CropPlanStorageLocks | null,
+): Promise<CanonicalJournalWriteResult> {
+  const changed = { status: 'held', reason: 'context-changed' } as const;
+  const invalid = { status: 'held', reason: 'invalid-note' } as const;
+  const full = { status: 'held', reason: 'journal-full' } as const;
+  const binding = canonicalJournalViews.get(view);
+  if (!binding) return changed;
+  const { context, snapshot, envelope } = binding;
+  try {
+    const writer = journalLocks(locks);
+    if (!writer) return { status: 'held', reason: 'lock-unavailable' };
+    return await writer.request<CanonicalJournalWriteResult>(journalLockName(context), { mode: 'exclusive', ifAvailable: true }, lock => {
+      if (!lock) return { status: 'held', reason: 'lock-unavailable' };
+      const current = () => canonicalJournalViews.get(view) === binding
+        && sameJournalCutover(snapshot, captureJournalCutover(context));
+      if (!current()) return changed;
+      const rows: JournalEntry[] = JSON.parse(envelope.journalRaw);
+      let noteId: string;
+      if (change.kind === 'delete' || change.kind === 'edit') {
+        const index = rows.findIndex(row => row.id === change.id);
+        if (index < 0) return changed;
+        noteId = rows[index].id;
+        if (change.kind === 'delete') rows.splice(index, 1);
+        else {
+          const input = explicitlyDatedJournalInput(change.input);
+          if (!input) return invalid;
+          const edited = editJournalEntry(rows[index], input);
+          if ((!edited.title && !edited.notes)
+            || (Object.hasOwn(rows[index], 'growerCycleLink') && rows[index].bedId !== edited.bedId)) return invalid;
+          rows[index] = edited;
+        }
+      } else {
+        if (change.kind === 'append-linked' && !change.sourceIsCurrent()) return changed;
+        const input = explicitlyDatedJournalInput(change.input);
+        if (!input) return invalid;
+        const note = change.kind === 'append-linked' ? createLinkedJournalEntry(input, change.selection) : createJournalEntry(input);
+        if (!note || (!note.title && !note.notes)) return invalid;
+        if (rows.length >= MAX_ENTRIES || rows.some(row => row.id === note.id)) return full;
+        noteId = note.id;
+        rows.push(note);
+      }
+      const journalRaw = JSON.stringify(rows);
+      if (journalRaw.length > JOURNAL_BYTE_BUDGET) return full;
+      if (!journalNormalisationIsLossless(journalRaw)) return invalid;
+      const canonical = JSON.stringify({ ...envelope, journalRaw });
+      if ((change.kind === 'append-linked' && !change.sourceIsCurrent()) || !current()) return changed;
+      canonicalJournalViews.delete(view);
+      try {
+        context.storage.setItem(context.canonicalKey, canonical);
+        if (!sameJournalCutover({ ...snapshot, canonical }, captureJournalCutover(context))) return { status: 'unconfirmed' };
+      } catch {
+        return { status: 'unconfirmed' };
+      }
+      try { window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT)); }
+      catch { /* The confirmed write survives a notification error. */ }
+      return { status: 'saved', noteId };
+    });
+  } catch {
+    return changed;
+  }
 }
