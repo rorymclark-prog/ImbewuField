@@ -95,7 +95,12 @@ test('the wider research queue is distinct from verified pilot dossiers and Euro
   const names = COUNTRY_RESEARCH_QUEUE.flatMap((group) => [...group.countries]);
   for (const name of ['Uganda', 'Tanzania', 'Rwanda', 'Ethiopia', 'India', 'Nepal', 'Bangladesh', 'Indonesia', 'Colombia', 'Peru', 'Mexico', 'Canada', 'Australia', 'New Zealand']) {
     assert.ok(names.includes(name as typeof names[number]));
-    assert.equal(COUNTRY_PROFILES.some((profile) => profile.name === name), false);
+    const profile = COUNTRY_PROFILES.find((entry) => entry.name === name);
+    if (profile) {
+      assert.equal(profile.stage, 'research-queue', 'a discovery card must preserve its research stage');
+      assert.equal(profile.agronomyReview.status, 'not-reviewed');
+      assert.equal(evaluateCountryReadiness({ countryCode: profile.code }, AS_OF).productionPlanSupported, false);
+    }
   }
   assert.match(EUROPE_RESEARCH_NOTE, /not a country/); assert.match(EUROPE_RESEARCH_NOTE, /national and subnational/);
 });
@@ -136,4 +141,51 @@ test('Ghana public discovery cannot turn a bulletin period into dated regional f
     assert.equal(field.status, 'unknown');
   }
   assert.ok(COUNTRY_RESEARCH_QUEUE.some(group => group.group === 'West Africa' && group.countries.includes('Ghana')));
+});
+
+test('a Colombian index listing date cannot date its source or enable local planning', () => {
+  const date = '2026-11-03';
+  const result = evaluateCountryReadiness({ countryCode: 'CO', agriculturalRegionId: 'unreviewed', interfaceLanguage: 'es' }, date);
+  assert.equal(result.country?.stage, 'research-queue');
+  assert.equal(result.country?.agronomyReview.status, 'not-reviewed');
+  assert.deepEqual(result.country?.regions, []);
+  assert.equal(result.region, null);
+  assert.equal(result.status, 'reference-only');
+  assert.equal(result.productionPlanSupported, false);
+  assert.equal(result.localReviewComplete, false);
+  assert.equal(result.southAfricanFallbackAllowed, false);
+  const evidence = result.evidence.find(entry => entry.category === 'weather-frost');
+  assert.ok(evidence);
+  assert.equal(evidence.availableCount, 0);
+  assert.deepEqual(evidence.sources.map(source => source.id), ['co-ideam-bsa']);
+  const [source] = evidence.sources;
+  assert.equal(source.url, 'https://www.ideam.gov.co/sala-de-prensa/boletines/Bolet%C3%ADn-Semanal-para-el-Sector-Agr%C3%ADcola-%28BSA%29');
+  assert.equal(source.verification, 'content-read');
+  assert.equal(source.accessedOn, date);
+  assert.equal(source.publishedOn, null);
+  assert.equal(source.reviewDueOn, null);
+  assert.equal(sourceEvidenceState(source, date), 'undated');
+  for (const field of [source.licence, source.updateCadence, source.resolution, source.units]) {
+    assert.equal(field.status, 'unknown');
+  }
+});
+
+test('the SiB Colombia portal does not establish dataset reuse terms or planting permission', () => {
+  const date = '2026-11-03';
+  const result = evaluateCountryReadiness({ countryCode: 'CO', agriculturalRegionId: 'unreviewed' }, date);
+  const evidence = result.evidence.find(entry => entry.category === 'biodiversity');
+  assert.ok(evidence);
+  assert.deepEqual(evidence.sources.map(source => source.id), ['co-sib-portal']);
+  const [source] = evidence.sources;
+  assert.equal(source.url, 'https://biodiversidad.co/consultar');
+  assert.equal(source.verification, 'content-read');
+  assert.equal(source.accessedOn, date);
+  assert.equal(sourceEvidenceState(source, date), 'undated');
+  assert.equal(source.licence.status, 'unknown');
+  assert.equal(source.updateCadence.status, 'unknown');
+  assert.equal(evidence.availableCount, 0);
+  assert.equal(result.evidence.find(entry => entry.category === 'plant-legality')?.sources.length, 0);
+  assert.equal(result.localReviewComplete, false);
+  assert.equal(result.productionPlanSupported, false);
+  assert.equal(result.southAfricanFallbackAllowed, false);
 });
