@@ -103,5 +103,17 @@
     "literals": [],
     "reviewedByHuman": false,
     "runtimeActivation": false
+  },
+  "kenya-soil": {
+    "sourceSha256": "5cb7490b64839c6e1d9d8a5400ebe373b0c7a26d939273dd832525608b046ee5",
+    "draftsSha256": "5c375c1202614bad04a925db89a24b9c558c931d7fea04d4a4beaa906484ca9c",
+    "literals": [
+      "1:1,000,000",
+      "CC BY 3.0",
+      "ZIP",
+      "Kiambu"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
   }
 }

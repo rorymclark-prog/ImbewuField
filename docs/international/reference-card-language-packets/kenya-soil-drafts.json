@@ -1,0 +1,111 @@
+{
+  "sourceSha256": "5cb7490b64839c6e1d9d8a5400ebe373b0c7a26d939273dd832525608b046ee5",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "kenyaSoilClaim",
+        "english": "The official catalogue record describes historical soil estimates for national studies at a map scale of 1:1,000,000.",
+        "sha256": "51dd0dc4424bdf81766b2260e6411a2d66439e7b026dddfdd102053dc504b732",
+        "translation": "La notice officielle du catalogue décrit des estimations historiques des sols pour des études nationales à une échelle cartographique de 1:1,000,000."
+      },
+      {
+        "key": "kenyaSoilLicence",
+        "english": "The catalogue lists CC BY 3.0. Reuse of the download awaits review.",
+        "sha256": "9b2186f37a6d843d5d1598ec457f3b64406225cad25a76b303478f8bc2cd57de",
+        "translation": "Le catalogue indique CC BY 3.0. La réutilisation du téléchargement est en attente d’examen."
+      },
+      {
+        "key": "kenyaSoilAccess",
+        "english": "Public catalogue record. The advertised ZIP and its access requirements are unverified.",
+        "sha256": "10a0b663b5dccdbbd2f9c498ff8a8e97e5c74915cd57e1ba300ff6364ee15aeb",
+        "translation": "Notice de catalogue publique. Le fichier ZIP annoncé et ses conditions d’accès ne sont pas vérifiés."
+      },
+      {
+        "key": "kenyaSoilLimits",
+        "english": "These historical estimates include inferred values. Soil measurements for Kiambu and individual farms remain unverified.",
+        "sha256": "bcea3c9f71d2a1d1b4de2a9bfd8cd543effc67d70e69f3c2419e83988a7beaaf",
+        "translation": "Ces estimations historiques comprennent des valeurs déduites. Les mesures de sol pour Kiambu et pour les exploitations individuelles demeurent non vérifiées."
+      }
+    ],
+    "es": [
+      {
+        "key": "kenyaSoilClaim",
+        "english": "The official catalogue record describes historical soil estimates for national studies at a map scale of 1:1,000,000.",
+        "sha256": "51dd0dc4424bdf81766b2260e6411a2d66439e7b026dddfdd102053dc504b732",
+        "translation": "El registro oficial del catálogo describe estimaciones históricas del suelo para estudios nacionales a una escala cartográfica de 1:1,000,000."
+      },
+      {
+        "key": "kenyaSoilLicence",
+        "english": "The catalogue lists CC BY 3.0. Reuse of the download awaits review.",
+        "sha256": "9b2186f37a6d843d5d1598ec457f3b64406225cad25a76b303478f8bc2cd57de",
+        "translation": "El catálogo indica CC BY 3.0. La reutilización de la descarga está pendiente de revisión."
+      },
+      {
+        "key": "kenyaSoilAccess",
+        "english": "Public catalogue record. The advertised ZIP and its access requirements are unverified.",
+        "sha256": "10a0b663b5dccdbbd2f9c498ff8a8e97e5c74915cd57e1ba300ff6364ee15aeb",
+        "translation": "Registro público del catálogo. El archivo ZIP anunciado y sus requisitos de acceso no están verificados."
+      },
+      {
+        "key": "kenyaSoilLimits",
+        "english": "These historical estimates include inferred values. Soil measurements for Kiambu and individual farms remain unverified.",
+        "sha256": "bcea3c9f71d2a1d1b4de2a9bfd8cd543effc67d70e69f3c2419e83988a7beaaf",
+        "translation": "Estas estimaciones históricas incluyen valores inferidos. Las mediciones del suelo para Kiambu y para fincas individuales permanecen sin verificar."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "kenyaSoilClaim",
+        "english": "The official catalogue record describes historical soil estimates for national studies at a map scale of 1:1,000,000.",
+        "sha256": "51dd0dc4424bdf81766b2260e6411a2d66439e7b026dddfdd102053dc504b732",
+        "translation": "O registro oficial do catálogo descreve estimativas históricas do solo para estudos nacionais em escala cartográfica de 1:1,000,000."
+      },
+      {
+        "key": "kenyaSoilLicence",
+        "english": "The catalogue lists CC BY 3.0. Reuse of the download awaits review.",
+        "sha256": "9b2186f37a6d843d5d1598ec457f3b64406225cad25a76b303478f8bc2cd57de",
+        "translation": "O catálogo lista CC BY 3.0. A reutilização do download aguarda revisão."
+      },
+      {
+        "key": "kenyaSoilAccess",
+        "english": "Public catalogue record. The advertised ZIP and its access requirements are unverified.",
+        "sha256": "10a0b663b5dccdbbd2f9c498ff8a8e97e5c74915cd57e1ba300ff6364ee15aeb",
+        "translation": "Registro público de catálogo. O arquivo ZIP anunciado e seus requisitos de acesso não foram verificados."
+      },
+      {
+        "key": "kenyaSoilLimits",
+        "english": "These historical estimates include inferred values. Soil measurements for Kiambu and individual farms remain unverified.",
+        "sha256": "bcea3c9f71d2a1d1b4de2a9bfd8cd543effc67d70e69f3c2419e83988a7beaaf",
+        "translation": "Estas estimativas históricas incluem valores inferidos. As medições de solo para Kiambu e propriedades individuais permanecem não verificadas."
+      }
+    ],
+    "sw": [
+      {
+        "key": "kenyaSoilClaim",
+        "english": "The official catalogue record describes historical soil estimates for national studies at a map scale of 1:1,000,000.",
+        "sha256": "51dd0dc4424bdf81766b2260e6411a2d66439e7b026dddfdd102053dc504b732",
+        "translation": "Kumbukumbu rasmi ya katalogi inaeleza makadirio ya kihistoria ya udongo kwa ajili ya tafiti za kitaifa katika kipimo cha ramani cha 1:1,000,000."
+      },
+      {
+        "key": "kenyaSoilLicence",
+        "english": "The catalogue lists CC BY 3.0. Reuse of the download awaits review.",
+        "sha256": "9b2186f37a6d843d5d1598ec457f3b64406225cad25a76b303478f8bc2cd57de",
+        "translation": "Katalogi inaorodhesha CC BY 3.0. Matumizi tena ya upakuaji yanasubiri uhakiki."
+      },
+      {
+        "key": "kenyaSoilAccess",
+        "english": "Public catalogue record. The advertised ZIP and its access requirements are unverified.",
+        "sha256": "10a0b663b5dccdbbd2f9c498ff8a8e97e5c74915cd57e1ba300ff6364ee15aeb",
+        "translation": "Kumbukumbu ya umma ya katalogi. Faili ya ZIP iliyotangazwa na mahitaji yake ya ufikiaji hayajathibitishwa."
+      },
+      {
+        "key": "kenyaSoilLimits",
+        "english": "These historical estimates include inferred values. Soil measurements for Kiambu and individual farms remain unverified.",
+        "sha256": "bcea3c9f71d2a1d1b4de2a9bfd8cd543effc67d70e69f3c2419e83988a7beaaf",
+        "translation": "Makadirio haya ya kihistoria yanajumuisha thamani zilizokadiriwa kutokana na taarifa nyingine. Vipimo vya udongo kwa ajili ya Kiambu na mashamba binafsi vinabaki bila kuthibitishwa."
+      }
+    ]
+  }
+}
