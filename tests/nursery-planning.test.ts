@@ -22,13 +22,16 @@ test('saving nursery equipment never invents germination, survival, dimensions o
 });
 
 test('corrupt equipment cannot turn an overflowing footprint or fractional tray count into capacity', () => {
-  for (const patch of [{ cells: 0 }, { cells: 1.5 }, { widthCm: 0 }, { lengthCm: Infinity },
+  for (const patch of [{ cells: -1 }, { cells: 1.5 }, { widthCm: 0 }, { lengthCm: Infinity },
     { widthCm: Number.MAX_VALUE, lengthCm: Number.MAX_VALUE }, { owned: -1 }, { owned: 0.5 }, { siteId: '' }]) {
     assert.equal(sanitiseNurserySettings({ ...settings, containers: [{ ...settings.containers[0], ...patch }] }).containers.length, 0);
   }
   assert.equal(sanitiseNurserySettings({ ...settings, spaces: [{ ...settings.spaces[0], usableM2: NaN }] }).spaces.length, 0);
   assert.equal(sanitiseNurserySettings({ ...settings, spaces: [{ ...settings.spaces[0], usableM2: 0 }] }).spaces[0].usableM2, 0);
   assert.equal(sanitiseNurserySettings({ ...settings, containers: [{ ...settings.containers[0], owned: 0 }] }).containers[0].owned, 0);
+  // A recorded zero is evidence, not a positive seed-cell capacity. The dated
+  // nursery pipeline separately holds that denominator instead of deleting it.
+  assert.equal(sanitiseNurserySettings({ ...settings, containers: [{ ...settings.containers[0], cells: 0 }] }).containers[0].cells, 0);
 });
 
 test('measured tray output retains its own evidence without applying seed-cell losses a second time', () => {
@@ -43,14 +46,19 @@ test('measured tray output retains its own evidence without applying seed-cell l
   assert.equal(sanitiseNurserySettings({ ...settings, profiles: [{ ...measured, seedsPerTray: 0 }] }).profiles[0].seedsPerTray, 0);
 });
 
-test('zero observed success is saved honestly while impossible rates and unsupported crop methods are rejected', () => {
+test('own propagation records retain zero success and existing crop identity without borrowing a catalogue method', () => {
   const profile = settings.profiles[0];
   assert.equal(sanitiseNurserySettings({ ...settings, profiles: [{ ...profile, germinationPercent: 0 }] }).profiles[0].germinationPercent, 0);
   for (const patch of [{ germinationPercent: 101 }, { nurserySurvivalPercent: -1 },
-    { fieldSurvivalPercent: NaN }, { nurseryWeeks: 0 }, { nurseryWeeks: 53 }, { cropKey: 'carrots' },
+    { fieldSurvivalPercent: NaN }, { nurseryWeeks: 0 }, { nurseryWeeks: 53 }, { cropKey: 'not-a-known-crop-identity' },
     { model: 'unknown' }, { containerId: '' }]) {
     assert.equal(sanitiseNurserySettings({ ...settings, profiles: [{ ...profile, ...patch }] }).profiles.length, 0);
   }
+  // The saved recipe records the grower's selected method. A catalogue's
+  // transplant flag cannot invalidate an own-input nursery observation.
+  const ownMethod = { ...profile, cropKey: 'carrots' };
+  assert.deepEqual(sanitiseNurserySettings({ ...settings, profiles: [ownMethod] }).profiles, [ownMethod]);
+  assert.deepEqual(sanitiseNurserySettings(settings).profiles, settings.profiles, 'existing supported recipes retain their exact legacy inputs');
 });
 
 test('deleting equipment keeps dependent methods visible and site-specific crop recipes remain distinct', () => {
@@ -58,7 +66,12 @@ test('deleting equipment keeps dependent methods visible and site-specific crop 
   assert.deepEqual(sanitiseNurserySettings(dangling).profiles, settings.profiles);
   const second = { ...settings.profiles[0], id: 'other-method', siteId: 'other-garden' };
   assert.equal(sanitiseNurserySettings({ ...settings, profiles: [...settings.profiles, second] }).profiles.length, 2);
-  assert.equal(sanitiseNurserySettings({ ...settings, profiles: [...settings.profiles, { ...second, siteId: 'garden' }] }).profiles.length, 1);
+  // Selecting the first duplicate would quietly certify one contradictory
+  // recipe. Every member now stays unavailable, with a durable review issue.
+  const ambiguous = sanitiseNurserySettings({ ...settings, profiles: [...settings.profiles, { ...second, siteId: 'garden' }] });
+  assert.equal(ambiguous.profiles.length, 0);
+  assert.ok(ambiguous.sourceIssues?.includes('ambiguous-nursery-recipe-identities'));
+  assert.deepEqual(sanitiseNurserySettings(JSON.parse(JSON.stringify(ambiguous))), ambiguous);
 });
 
 test('nursery settings round-trip in the existing account store and do not change old saved plans', () => {

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "locale": "ts",
+  "provenance": {
+    "executor": "AGY",
+    "method": "AI draft",
+    "createdOn": "2026-11-03"
+  },
+  "review": {
+    "status": "unreviewed"
+  },
+  "messages": [
+    {
+      "key": "GrowerRelease.34d527564.change.1",
+      "sourceEnglish": "Review automatic crop plans from your own growing estimates and saved buyer targets.",
+      "sourceSha256": "217d012ccdcb05cefd52c5ccbe6410a03572e491341a50054381a4a5fb0b39eb",
+      "text": "Kambela maendlelo ya swibyariwa lama tiendlelaka kusuka eka mimpimo ya wena ya matirhele na swikongomelo swa vaxavi leswi hlayisiweke.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.34d527564.change.2",
+      "sourceEnglish": "Check dated nursery tray and surface needs before downloading your review.",
+      "sourceSha256": "be12af623defb34b23000edce3617e7386479a1e58367340432372ccc649704b",
+      "text": "Kambisisa switreyi swa nersari leswi nga na masiku na swilaveko swa xitsandza u nga si kopa nkambisiso wa wena.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.change.1",
+      "sourceEnglish": "Save your own growing estimates and review capacity and dates for measured beds.",
+      "sourceSha256": "00490e50ff48b8b20c8ad54b89a67c5de8915e9683ca3e5204f731253aed6344",
+      "text": "Hlayisa mimpimo ya wena n'wini ya matirhele u tlhela u kambela vuswikoti na masiku ya mibhedhi leyi pimiweke.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.34d527564.tour.1.title",
+      "sourceEnglish": "Review a crop plan from your estimates",
+      "sourceSha256": "fcca4eb4a9a4c420028742610cc74194d8f96c88d6531588286b6cc5e4df7597",
+      "text": "Kambela pulani ya swibyariwa kusuka eka mimpimo ya wena",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.34d527564.tour.1.where",
+      "sourceEnglish": "Crop planner → Automatic plan from your estimates",
+      "sourceSha256": "51efed31c4af73b4e217bd6521d73da4455d6d72c13bd6b00b423a0bd570ba94",
+      "text": "Mupulani wa swibyariwa → Pulani leyi tiendlelaka kusuka eka mimpimo ya wena",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.34d527564.tour.1.detail",
+      "sourceEnglish": "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.",
+      "sourceSha256": "5d33bbe66317fb6dcf6987c22c81f26204a99ca1162a135c9e01ba0a28a9708a",
+      "text": "Kambela dizayini ya wena leyi hlayisiweke, tiyisisa vukona u tlhela u fambisanisa swikongomelo swa vaxavi na mimpimo ya wena ya matirhele. Kambela mirhendzeleko leyi ringanyetiweke na swilaveko swa nersari; swibyariwa swa wena leswi hlayisiweke a swi cinciwi.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.tour.1.title",
+      "sourceEnglish": "Review your growing estimates",
+      "sourceSha256": "017f92fe0feeec6a26911d358288cc22a3d640f2aef1cc30112fad3a409beca7",
+      "text": "Kambela mimpimo ya wena ya matirhele",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.tour.1.where",
+      "sourceEnglish": "Crop planner → Your growing estimates",
+      "sourceSha256": "363978bbad660ad1b4df5ef0b08ac457f8368c34f23619c5d78f9e3eca392643",
+      "text": "Mupulani wa swibyariwa → Mimpimo ya wena ya matirhele",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.tour.1.detail",
+      "sourceEnglish": "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.",
+      "sourceSha256": "2ca853dbe96887d43b513090863a0cee7c1f5d7a4c57e4349429a24558bb4ae6",
+      "text": "Nghenisa mianakanyo ya wena n'wini, hlawula mubhedhi lowu pimiweke u tlhela u kambela nhlayo. Mintsengo leyi nga hava nchumu yi tshama yi kayivela; mbuyelo i mpimo ntsena, ku nga ri mpfumelelo wa vurimi bya le ndhawini.",
+      "review": {
+        "status": "unreviewed"
+      }
+    }
+  ]
+}

@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Buyekeza izinhlelo zezitshalo ezizenzakalelayo ezisuselwa ezilinganisweni zakho siqu zokutshala kanye nemigomo yabathengi egciniwe.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Hlola ugqoko lwezithombo nezidingo zendawo ezinezinsuku ngaphambi kokulanda ukubuyekeza kwakho.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Gcina izilinganiso zakho siqu zokutshala bese ubuyekeza umthamo nezinsuku zemibhede yokutshala ekaliwe.",
+  "Review a crop plan from your estimates": "Buyekeza uhlelo lwezitshalo olususelwa ezilinganisweni zakho",
+  "Crop planner → Automatic plan from your estimates": "Umhleli wezitshalo → Uhlelo oluzenzakalelayo olususelwa ezilinganisweni zakho",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Hlola umklamo wakho owugcinile, uqinisekise ukutholakala bese ufanisa imigomo yabathengi nezilinganiso zakho zokutshala. Buyekeza imijikelezo ehlongozwayo nezidingo zenkulisa yezitshalo; ukuhlwanyela kwakho okugciniwe kuhlala kungashintshile.",
+  "Review your growing estimates": "Buyekeza izilinganiso zakho zokutshala",
+  "Crop planner → Your growing estimates": "Umhleli wezitshalo → Izilinganiso zakho zokutshala",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Faka imicabango yakho siqu, ukhethe umbhede wokutshala okaliwe bese ubuyekeza izibalo. Amanani angenalutho ahlala engekho; umphumela uyisilinganiso, hhayi ukugunyazwa kokulima kwendawo.",
   // Country context: docs/international/agy-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Qinisekisa izwe lesayithi edwetshiwe ngaphambi kokusebenzisa isiqondiso sayo sokuhlela izitshalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Gcina amarekhodi akho okuhlwanyela nezinto zokusebenza zenkulisa yezitshalo ngenkathi ukuhlela kwendawo kungatholakali.",

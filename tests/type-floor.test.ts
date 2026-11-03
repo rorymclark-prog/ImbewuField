@@ -78,6 +78,10 @@ const ROUTES = [
 // this whole file exists because 375×812 is where tiny type disappears), but ratcheted, not
 // held to a zero floor.
 const STAFF_ROUTES = [
+  // Growers reach the full production planner directly from Home/Records. Href
+  // links are not import edges, so seed this actual route to keep its panels
+  // in the graph; their own new input/review surfaces retain the zero-debt floor.
+  'app/facilitator/crops/page.tsx',
   'app/funder/page.tsx',
   'app/ngo/page.tsx',
   'app/partners/page.tsx',
@@ -92,8 +96,19 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  // Direct crop-route traversal exposes these existing record/confirmation forms.
+  // Each is already at zero debt in HEAD; keep the phone-readable floor, not a ratchet.
+  'components/crops/HarvestTargetsPanel.tsx': 'growers enter buyer targets and own records; zero-debt 12px floor',
+  'components/crops/NurseryForecastSummary.tsx': 'growers read seedling and space quantities before acting; zero-debt 12px floor',
+  'components/crops/NurseryPlanPanel.tsx': 'growers enter their own nursery settings; zero-debt 12px floor',
+  'components/crops/TreeAgeEditor.tsx': 'growers record their own tree ages; zero-debt 12px floor',
+  'components/international/countries/PlannerSupportHold.tsx': 'growers must read why local advice is held; zero-debt 12px floor',
+  'components/international/countries/SiteCountryPanel.tsx': 'growers confirm their own country details; zero-debt 12px floor',
   'components/international/countries/SavedSiteUpdates.tsx': 'farmers read account delivery and offline status before trusting saved country details; zero-debt 12px floor',
   'components/international/countries/WorkspaceReferencePanel.tsx': 'farmers must read and explicitly confirm a workspace reference basis; zero-debt 12px floor',
+  'components/crops/GrowerPlanningPanel.tsx': 'growers enter their own density, yield and date assumptions; no small-print exemption',
+  'components/crops/GrowerAutoPlanPanel.tsx': 'growers review buyer priorities and dated whole-bed proposals before acting; no small-print exemption',
+  'components/crops/GrowerNurseryReviewPanel.tsx': 'growers review seed, tray and surface requirements and incomplete budgets; no small-print exemption',
   'components/AiMapSettings.tsx': 'farmers must read their own paid-map switch and service-access status in Settings; enforce the zero-debt 12px floor',
   // Added with wave 15 (code-10): the exchange, community, contact and prices captions.
   'app/community/messages/[threadId]/page.tsx': 'wave 15 code-10: the community message thread; no sub-12px type',
@@ -304,6 +319,18 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
       + 'its sub-floor captions were raised to 12px in wave 16 (w16-06).',
     budget: 0,
   },
+  // Adding the actual /facilitator/crops seed reveals legacy dense planner cards
+  // that href navigation never traversed. Counts below were checked against HEAD
+  // 104155365584b4baca6bc15b0f418f22e0e964f3 and are unchanged in this worktree:
+  // this records existing debt, never an allowance for the new grower surfaces.
+  'app/facilitator/crops/page.tsx': { reason: 'legacy full production planner timeline, reference tables and expert controls; unchanged HEAD debt', budget: 146 },
+  'components/crops/AnimalEnterprisesCard.tsx': { reason: 'legacy livestock enterprise reference details; unchanged HEAD debt', budget: 6 },
+  'components/crops/PoultryGuidanceCard.tsx': { reason: 'legacy poultry reference qualifier; unchanged HEAD debt', budget: 1 },
+  'components/crops/ProductionGuideCard.tsx': { reason: 'legacy production reference citations; unchanged HEAD debt', budget: 1 },
+  'components/crops/ProductionProjectionCard.tsx': { reason: 'legacy projection table and subtotal qualifier; unchanged HEAD debt', budget: 2 },
+  'components/crops/TreeSeasonsCard.tsx': { reason: 'legacy device-only tree season qualifier; unchanged HEAD debt', budget: 1 },
+  'components/crops/VarietyGuidance.tsx': { reason: 'legacy variety research labels and source notes; unchanged HEAD debt', budget: 6 },
+  'components/crops/YearOfFoodCard.tsx': { reason: 'legacy household food reference labels and legend; unchanged HEAD debt', budget: 2 },
   // w16-05: the worked-example farm at /samples/production mounts Codex-owned crop components.
   // They are classified at their current counts so the ratchet holds; this track does not edit them.
   'app/samples/production/page.tsx': { reason: 'the worked-example farm page; no sub-12px type', budget: 0 },
