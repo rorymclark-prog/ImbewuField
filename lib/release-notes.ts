@@ -43,7 +43,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '3 November 2026', sha: '2d6e6fb9c', changes: [
     "Compare English and draft wording for the Kenya, UK and US reference cards.",
-    "Review draft wording for Brazil’s soil catalogue and Colombia’s biodiversity and weather references.",
+    "Review draft wording for Brazil’s soil and Colombia’s biodiversity and weather links.",
   ] },
   { when: '3 November 2026', sha: '58a25f4bc', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
