@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "70977293a1afcb32dbeca8494844e6ac00af05f8",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "8dae976c4d0e4a6b9fddd74754b0d7832afc333d3aa1301f8c4657af2d9fff08",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "ontarioGuideClaim",
+      "english": "The publication page describes the Ontario vegetable production guide and links its PDF. This review covers the publication page and its displayed dates.",
+      "sha256": "25a54150df9f47974cb25ba4679ab896ae7bf18cbd2b34a5625fdf57e5217bcb"
+    },
+    {
+      "key": "ontarioGuideLimits",
+      "english": "The guide PDF, dataset reuse rights and local growing recommendations require separate review.",
+      "sha256": "72aff4d3ca26e95245ec36c4d913fa0e44ef1b1dc0af935df8fc1509a420c4a2"
+    },
+    {
+      "key": "canadaNormalsClaim",
+      "english": "The official index describes 1991–2020 historical climate normals and offers station searches and bulk CSV downloads.",
+      "sha256": "b4ce4482e4c39747ba17962e009dee70d2fd3d97935f0e911b0df1a8451c114a"
+    },
+    {
+      "key": "canadaNormalsLimits",
+      "english": "Station records, frost dates and dataset terms remain unverified. Historical station summaries provide context for a location and time period.",
+      "sha256": "a9646db683c876cb9a76f2e3e474dc7eef375e4afa3f124dc8e32b5e14935e5e"
+    }
+  ]
+}

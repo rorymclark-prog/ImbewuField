@@ -1,0 +1,111 @@
+{
+  "sourceSha256": "c02787a78d68a7f1989476bb3fde1a50a233cad899921b4fd8f887371101937d",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "ontarioGuideClaim",
+        "english": "The publication page describes the Ontario vegetable production guide and links its PDF. This review covers the publication page and its displayed dates.",
+        "sha256": "25a54150df9f47974cb25ba4679ab896ae7bf18cbd2b34a5625fdf57e5217bcb",
+        "translation": "La page de publication décrit le guide ontarien de production maraîchère et lie son PDF. Cet examen couvre la page de publication et ses dates affichées."
+      },
+      {
+        "key": "ontarioGuideLimits",
+        "english": "The guide PDF, dataset reuse rights and local growing recommendations require separate review.",
+        "sha256": "72aff4d3ca26e95245ec36c4d913fa0e44ef1b1dc0af935df8fc1509a420c4a2",
+        "translation": "Le guide PDF, les droits de réutilisation du jeu de données et les recommandations locales de culture nécessitent un examen distinct."
+      },
+      {
+        "key": "canadaNormalsClaim",
+        "english": "The official index describes 1991–2020 historical climate normals and offers station searches and bulk CSV downloads.",
+        "sha256": "b4ce4482e4c39747ba17962e009dee70d2fd3d97935f0e911b0df1a8451c114a",
+        "translation": "L'indice officiel décrit les normales climatiques historiques 1991–2020 et propose des recherches de stations ainsi que des téléchargements CSV en bloc."
+      },
+      {
+        "key": "canadaNormalsLimits",
+        "english": "Station records, frost dates and dataset terms remain unverified. Historical station summaries provide context for a location and time period.",
+        "sha256": "a9646db683c876cb9a76f2e3e474dc7eef375e4afa3f124dc8e32b5e14935e5e",
+        "translation": "Les relevés de station, les dates de gel et les modalités du jeu de données demeurent non vérifiés. Les résumés historiques de station fournissent un contexte pour un lieu et une période."
+      }
+    ],
+    "es": [
+      {
+        "key": "ontarioGuideClaim",
+        "english": "The publication page describes the Ontario vegetable production guide and links its PDF. This review covers the publication page and its displayed dates.",
+        "sha256": "25a54150df9f47974cb25ba4679ab896ae7bf18cbd2b34a5625fdf57e5217bcb",
+        "translation": "La página de la publicación describe la guía de producción de hortalizas de Ontario y enlaza su PDF. Esta revisión cubre la página de la publicación y las fechas mostradas."
+      },
+      {
+        "key": "ontarioGuideLimits",
+        "english": "The guide PDF, dataset reuse rights and local growing recommendations require separate review.",
+        "sha256": "72aff4d3ca26e95245ec36c4d913fa0e44ef1b1dc0af935df8fc1509a420c4a2",
+        "translation": "El PDF de la guía, los derechos de reutilización del conjunto de datos y las recomendaciones locales de cultivo requieren una revisión independiente."
+      },
+      {
+        "key": "canadaNormalsClaim",
+        "english": "The official index describes 1991–2020 historical climate normals and offers station searches and bulk CSV downloads.",
+        "sha256": "b4ce4482e4c39747ba17962e009dee70d2fd3d97935f0e911b0df1a8451c114a",
+        "translation": "El índice oficial describe las normales climáticas históricas 1991–2020 y ofrece búsquedas de estaciones y descargas masivas en CSV."
+      },
+      {
+        "key": "canadaNormalsLimits",
+        "english": "Station records, frost dates and dataset terms remain unverified. Historical station summaries provide context for a location and time period.",
+        "sha256": "a9646db683c876cb9a76f2e3e474dc7eef375e4afa3f124dc8e32b5e14935e5e",
+        "translation": "Los registros de estación, las fechas de heladas y los términos del conjunto de datos permanecen sin verificar. Los resúmenes históricos de estación proporcionan contexto para una ubicación y período."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "ontarioGuideClaim",
+        "english": "The publication page describes the Ontario vegetable production guide and links its PDF. This review covers the publication page and its displayed dates.",
+        "sha256": "25a54150df9f47974cb25ba4679ab896ae7bf18cbd2b34a5625fdf57e5217bcb",
+        "translation": "A página da publicação descreve o guia de produção de hortaliças de Ontário e vincula seu PDF. Esta revisão cobre a página da publicação e suas datas exibidas."
+      },
+      {
+        "key": "ontarioGuideLimits",
+        "english": "The guide PDF, dataset reuse rights and local growing recommendations require separate review.",
+        "sha256": "72aff4d3ca26e95245ec36c4d913fa0e44ef1b1dc0af935df8fc1509a420c4a2",
+        "translation": "O PDF do guia, os direitos de reutilização do conjunto de dados e as recomendações locais de cultivo exigem revisão separada."
+      },
+      {
+        "key": "canadaNormalsClaim",
+        "english": "The official index describes 1991–2020 historical climate normals and offers station searches and bulk CSV downloads.",
+        "sha256": "b4ce4482e4c39747ba17962e009dee70d2fd3d97935f0e911b0df1a8451c114a",
+        "translation": "O índice oficial descreve as normais climatológicas históricas de 1991–2020 e oferece pesquisas de estações e downloads em lote em CSV."
+      },
+      {
+        "key": "canadaNormalsLimits",
+        "english": "Station records, frost dates and dataset terms remain unverified. Historical station summaries provide context for a location and time period.",
+        "sha256": "a9646db683c876cb9a76f2e3e474dc7eef375e4afa3f124dc8e32b5e14935e5e",
+        "translation": "Os registros de estação, as datas de geada e os termos do conjunto de dados permanecem não verificados. Os resumos históricos de estação fornecem contexto para uma localização e período."
+      }
+    ],
+    "sw": [
+      {
+        "key": "ontarioGuideClaim",
+        "english": "The publication page describes the Ontario vegetable production guide and links its PDF. This review covers the publication page and its displayed dates.",
+        "sha256": "25a54150df9f47974cb25ba4679ab896ae7bf18cbd2b34a5625fdf57e5217bcb",
+        "translation": "Ukurasa wa chapisho unaeleza mwongozo wa uzalishaji wa mbogamboga wa Ontario na kuweka kiungo cha PDF yake. Uhakiki huu unahusu ukurasa wa chapisho na tarehe zilizoonyeshwa."
+      },
+      {
+        "key": "ontarioGuideLimits",
+        "english": "The guide PDF, dataset reuse rights and local growing recommendations require separate review.",
+        "sha256": "72aff4d3ca26e95245ec36c4d913fa0e44ef1b1dc0af935df8fc1509a420c4a2",
+        "translation": "PDF ya mwongozo, haki za kutumia tena seti ya data na mapendekezo ya uzalishaji ya eneo yanahitaji uhakiki tofauti."
+      },
+      {
+        "key": "canadaNormalsClaim",
+        "english": "The official index describes 1991–2020 historical climate normals and offers station searches and bulk CSV downloads.",
+        "sha256": "b4ce4482e4c39747ba17962e009dee70d2fd3d97935f0e911b0df1a8451c114a",
+        "translation": "Fahirisi rasmi inaeleza kawaida za kihistoria za tabianchi za 1991–2020 na inatoa utafutaji wa vituo pamoja na upakuaji wa jumla wa CSV."
+      },
+      {
+        "key": "canadaNormalsLimits",
+        "english": "Station records, frost dates and dataset terms remain unverified. Historical station summaries provide context for a location and time period.",
+        "sha256": "a9646db683c876cb9a76f2e3e474dc7eef375e4afa3f124dc8e32b5e14935e5e",
+        "translation": "Kumbukumbu za vituo, tarehe za barafu na masharti ya seti ya data yanabaki bila kuthibitishwa. Muhtasari wa kihistoria wa vituo unatoa muktadha wa eneo na kipindi cha wakati."
+      }
+    ]
+  }
+}

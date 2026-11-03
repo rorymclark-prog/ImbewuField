@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'adb021515', changes: [
+    'Review draft wording for Canada’s historical climate and Ontario guide links.',
+  ], tour: [{ title: 'Review Canada reference wording', where: 'International → Language drafts', href: '/international/locales',
+    detail: 'Choose Canada and compare the draft with the English source before review.' }] },
   { when: '3 November 2026', sha: '2d6e6fb9c', changes: [
     "Compare English and draft wording for the Kenya, UK and US reference cards.",
     "Review draft wording for Brazil’s soil and Colombia’s biodiversity and weather links.",

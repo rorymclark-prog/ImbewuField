@@ -31,7 +31,7 @@ test('all four choices use the checked wording for the selected pilot and remain
       counts[pilot] = (counts[pilot] ?? 0) + rows.length;
     }
   }
-  assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16, colombia: 16 });
+  assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16, colombia: 16, canada: 16 });
 });
 
 test('Colombian wording keeps the linked publication date and falls back if its year is lost', () => {
@@ -81,4 +81,13 @@ test('a mismatched English line or missing reference literal only falls back for
   assert.deepEqual(rows.filter(row => row.origin === 'fallback').map(row => row.key), [rows[0].key, rows.at(-1)!.key]);
   assert.ok(rows.filter(row => row.origin === 'fallback').every(row => row.text === row.english));
   assert.equal(referenceReviewRows(packet, 'sw').filter(row => row.origin === 'draft').length, rows.length);
+});
+
+test('the Canada climate draft falls back to English when its historical period is lost', () => {
+  const packet = structuredClone(REFERENCE_REVIEW_PACKETS.canada);
+  const climate = packet.drafts.locales.sw.find(row => row.key === 'canadaNormalsClaim')!;
+  climate.translation = climate.translation.replace('1991–2020', '');
+  const rows = referenceReviewRows(packet, 'sw');
+  assert.deepEqual(rows.filter(row => row.origin === 'fallback').map(row => row.key), [climate.key]);
+  assert.equal(rows.find(row => row.key === climate.key)?.text, climate.english);
 });
