@@ -54,6 +54,11 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
     source('gh-gmet-agromet', 'weather-frost', 'Ghana Meteorological Agency (GMet)', 'https://www.meteo.gov.gh/product/dekadal-agromet-bulletin/', 'Ghana national agrometeorological bulletin index', 'The official index describes a ten-day bulletin series. Its first entry displays October 1–10, 2026. Publication time, currentness, forecast validity, bulletin contents and machine access remain unverified.', { accessedOn: '2026-11-03' }),
   ] },
   { code: 'CO', name: 'Colombia', stage: 'research-queue', jurisdictionNote: 'National hydrology, meteorology, agricultural and phytosanitary authorities require separate review; agrometeorological index discovery does not validate regional crop management.', regions: [], agronomyReview: unreviewed(), sources: [
+    source('co-sib-portal', 'biodiversity', 'Sistema de Información sobre Biodiversidad de Colombia (SiB Colombia)', 'https://biodiversidad.co/consultar', 'Colombian biodiversity data discovery', 'The portal describes dated occurrence records, checklists and species information sheets. Its publication policy lists different licence options by data type. Check the publisher and terms for each dataset before reuse.', {
+      accessedOn: '2026-11-03',
+      licence: unknown('Individual dataset and record terms were not checked. The publication policy lists several options, including noncommercial licences.'),
+      limitations: 'An occurrence records a reported presence in a place and time. Local suitability and planting permission require separate review.',
+    }),
     source('co-ideam-bsa', 'weather-frost', 'Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)', 'https://www.ideam.gov.co/sala-de-prensa/boletines/Bolet%C3%ADn-Semanal-para-el-Sector-Agr%C3%ADcola-%28BSA%29', 'Colombia national weekly agricultural bulletin index', 'The index describes rainfall forecasts by department and natural region, recent weather conditions and national water availability. Its first linked issue displays a publication date of 26 October 2026. Forecast validity, bulletin contents, reliable cadence and machine access remain unverified.', { accessedOn: '2026-11-03' }),
   ] },
 ];

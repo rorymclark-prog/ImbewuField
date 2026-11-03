@@ -169,3 +169,23 @@ test('a Colombian index listing date cannot date its source or enable local plan
     assert.equal(field.status, 'unknown');
   }
 });
+
+test('the SiB Colombia portal does not establish dataset reuse terms or planting permission', () => {
+  const date = '2026-11-03';
+  const result = evaluateCountryReadiness({ countryCode: 'CO', agriculturalRegionId: 'unreviewed' }, date);
+  const evidence = result.evidence.find(entry => entry.category === 'biodiversity');
+  assert.ok(evidence);
+  assert.deepEqual(evidence.sources.map(source => source.id), ['co-sib-portal']);
+  const [source] = evidence.sources;
+  assert.equal(source.url, 'https://biodiversidad.co/consultar');
+  assert.equal(source.verification, 'content-read');
+  assert.equal(source.accessedOn, date);
+  assert.equal(sourceEvidenceState(source, date), 'undated');
+  assert.equal(source.licence.status, 'unknown');
+  assert.equal(source.updateCadence.status, 'unknown');
+  assert.equal(evidence.availableCount, 0);
+  assert.equal(result.evidence.find(entry => entry.category === 'plant-legality')?.sources.length, 0);
+  assert.equal(result.localReviewComplete, false);
+  assert.equal(result.productionPlanSupported, false);
+  assert.equal(result.southAfricanFallbackAllowed, false);
+});
