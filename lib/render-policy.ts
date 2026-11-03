@@ -21,6 +21,8 @@ export interface SheetPresentationSettings {
 /** Zones need a clean page; illustrated physical-system sheets need the site's real context.
  * A paid plain Earthworks test invented a roof over paving despite a correct digging register.
  * Prefer available imagery for that sheet too; a white page alone cannot supply building context.
+ * Ledger/technical styles can start with a white surrounding page on design sheets.
+ * Site and Sector retain their factual aerial context; explicit manual choices always win.
  * These are starting choices, not a claim that a model's returned geometry has been verified.
  * The caller supplies the routing authority's default style; selecting settings never spends. */
 export function recommendedSheetSettings(
@@ -32,7 +34,8 @@ export function recommendedSheetSettings(
     ? hasFarmerPhoto(frame) ? 'photo' : 'satellite'
     : frame.underlayDataUrl ? 'satellite' : 'plain';
   return {
-    underlay: sheet === 'zones' ? 'plain' : aerial,
+    underlay: sheet === 'zones' || (['field_ledger', 'extension_blueprint'].includes(defaultStyle)
+      && !['base', 'sector'].includes(sheet)) ? 'plain' : aerial,
     style: defaultStyle,
     labelMode: sheet === 'earthworks' || sheet === 'planting' || sheet === 'all' ? 'codes' : 'names',
     view: 'top-down',
@@ -95,7 +98,7 @@ export function hybridProtectionPolicy(filter: GlossyLayerFilter, style: StylePr
   return {
     protectOutside: true,
     protectBoundary: !painted,
-    protectZones: filter === 'zones',
+    protectZones: filter === 'zones' && !painted,
     allowCanopyOverhang: painted,
     protectLines: false,
     protectItems: false,

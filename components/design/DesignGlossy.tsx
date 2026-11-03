@@ -49,7 +49,7 @@ import {
   type FrameLike as BoundaryFrameGeom,
 } from '@/lib/boundary-geometry';
 import { structureRegisterText } from '@/lib/structure-register';
-import { bedFootprintRegister, buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
+import { bedFootprintRegister, buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, PHASING_ARTWORK_PROMPT_MARKER, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
@@ -574,7 +574,7 @@ const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; l
   // Satellite Overlay keeps it but hands the lettering to the model.
   { key: 'photo_plan',          label: 'Photo Plan',          blurb: 'your real aerial photo · design drawn on top · exact labels', labelStyle: 'reference', swatch: 'linear-gradient(135deg,#2B3A24 0%,#4E8B3A 50%,#B4E000 100%)', recommended: true },
   { key: 'satellite_overlay',   label: 'Satellite Overlay',   blurb: 'experimental · AI controls the labels and layout', labelStyle: 'clean', swatch: 'linear-gradient(135deg,#12140F 0%,#2F4A2A 55%,#B4E000 100%)' },
-  { key: 'precision_atlas',      label: 'Reference Blueprint', blurb: 'benchmark look · exact geometry, labels and layout', labelStyle: 'reference', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
+  { key: 'precision_atlas',      label: 'Reference Blueprint', blurb: 'illustrated site · your labels and legend', labelStyle: 'reference', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
   { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink',       swatch: '#E4D8B8' },
   { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook', swatch: '#8FAE62' },
   { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint', swatch: '#69819B' },
@@ -760,13 +760,14 @@ function lockedProtectMaskOptions(
 
 /**
  * Sector analysis protects factual existing fabric without freezing the plot interior. This leaves
- * room for an illustrated sector underlayer while keeping every house, access route and site edge
- * byte-exact after the model returns.
+ * room for an illustrated sector underlayer while preserving photographed roofs and access.
+ * The app redraws the measured site edge over the painted landscape.
  */
 function sectorProtectMaskOptions(): ProtectMaskOptions {
   return {
-    protectOutside: true,
-    protectBoundary: true,
+    protectOutside: false,
+    protectBoundary: false,
+    protectZones: false,
     protectDriveway: true,
     protectLines: false,
     protectItems: false,
@@ -3535,7 +3536,7 @@ function drawPaperWash(ctx: CanvasRenderingContext2D, W: number, H: number): voi
   // A pale neutral veil separates analytical colour from busy aerial texture without hiding the
   // actual site. The previous dark-green scrim amplified dense foliage and made every overlay
   // compete for attention, especially on phone-sized Sector sheets.
-  ctx.fillStyle = 'rgba(238, 234, 218, 0.2)';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
   ctx.fillRect(0, 0, W, H);
   ctx.restore();
 }
@@ -9182,7 +9183,7 @@ function drawSectorAnalysis(
   // the phantom-row defect from the layer audit, fixed on Zones, Planting, Structures and print
   // sheet 01 in that pass, with sheet 02 out of scope and missed. Site boundary is NOT one of the
   // 9 numbered energies (SECTOR-MODEL-SPEC §6) — it stays a plain, unnumbered fixed row.
-  if (bnd.length >= 3) rows.push({ color: BOUNDARY_BONE, label: 'Site boundary', style: 'line' });
+  if (bnd.length >= 3) rows.push({ color: BOUNDARY_LINE_GREEN, label: 'Site boundary', style: 'line' });
   // Footer: the REGIONAL SECTOR ASSUMPTIONS disclosure is MANDATORY, verbatim, whenever any
   // regional-assumption sector is on the sheet (SECTOR-AI-LEGEND-PLAN §4) — it always wins over a
   // generic data-quality caveat, because a farmer must never read a regional wind/fire bearing
@@ -9311,16 +9312,15 @@ async function composeSectorSheet(
   // 1. The base. Exact (baseImage null): real satellite, desaturated/lightened + paper wash — an
   //    analysis sheet is arrows and arcs over ground, and over dense KZN bush a dark scrim leaves a
   //    near-black field the sun arc, wind arrows and frost ellipse have to fight. AI (baseImage
-  //    set): the model's own illustrated ground, already stylised — no desaturate/brighten filter
-  //    (that belongs to a raw photo, not art the model already toned), just the same paper wash so
-  //    both bases share one tone. Either way, nothing about this base is trusted for geometry.
+  //    set): keep the model's painted palette without a second filter or wash.
+  //    Neither background is the authority for measured geometry.
   if (baseImage) {
     const img = await loadImage(baseImage);
     ctx.save();
-    if ('filter' in ctx) ctx.filter = 'saturate(0.68) brightness(0.94) contrast(0.92)';
     ctx.drawImage(img, 0, 0, W, H);
     ctx.restore();
-    drawPaperWash(ctx, W, H);
+    // Paid artwork already has its own palette. A second photo filter and cream veil
+    // erased the illustration Rory paid for, leaving Sector looking like its exact master.
   } else {
     await drawAnalysisBase(ctx, renderFrame, W, H);
   }
@@ -9395,7 +9395,7 @@ async function composeSectorSheet(
   const legendRows: StyleLegendRow[] = analysis.rows.map((row, index) => ({
     swatch: row.color,
     text: `${index + 1}. ${row.label}`,
-    lineKind: row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
+    lineKind: row.color === BOUNDARY_LINE_GREEN ? 'fence' : row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
     kind: row.style === 'fill' ? 'surface' : undefined,
     sectorIcon: row.sectorIcon,
   }));
@@ -9414,6 +9414,7 @@ async function composeSectorSheet(
     true,
     {
       sheetNumber: '02',
+      aiArtwork: baseImage !== null,
       legendRows,
       footerHeading: 'NOTES & PROVENANCE',
       footerText: analysis.noteText,
@@ -9490,36 +9491,41 @@ async function drawPhasingExactContent(
   plan: ReturnType<typeof buildPhasePlan>,
   W: number,
   H: number,
+  paintedArtwork = false,
 ): Promise<void> {
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
   const pxPerM = W / (frame.imgW * frame.mPerPx);
 
-  const groundOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'ground');
-  if (groundOverlay) {
-    ctx.save();
-    ctx.globalAlpha = 0.82;
-    ctx.drawImage(await loadImage(groundOverlay), 0, 0, W, H);
-    ctx.restore();
-  }
-  const sourceStructures = frame.satDataUrl
-    ? await buildLockedStructureOverlay(frame.satDataUrl, state, frame, refLayers, W, H, 'precision_atlas')
-    : undefined;
-  if (sourceStructures) {
-    ctx.save();
-    ctx.globalAlpha = EXACT_CONTEXT_ALPHA.implementation;
-    ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
-    ctx.restore();
-  } else {
-    drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
-    drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
-  }
-  const featureOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'features');
-  if (featureOverlay) {
-    ctx.save();
-    ctx.globalAlpha = EXACT_CONTEXT_ALPHA.implementation;
-    ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
-    ctx.restore();
+  // Exact plans keep their measured symbols. New AI jobs retain their painted garden;
+  // the app still owns the boundary, phase anchors and the complete schedule below.
+  if (!paintedArtwork) {
+    const groundOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'ground');
+    if (groundOverlay) {
+      ctx.save();
+      ctx.globalAlpha = 0.82;
+      ctx.drawImage(await loadImage(groundOverlay), 0, 0, W, H);
+      ctx.restore();
+    }
+    const sourceStructures = frame.satDataUrl
+      ? await buildLockedStructureOverlay(frame.satDataUrl, state, frame, refLayers, W, H, 'precision_atlas')
+      : undefined;
+    if (sourceStructures) {
+      ctx.save();
+      ctx.globalAlpha = EXACT_CONTEXT_ALPHA.implementation;
+      ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
+      ctx.restore();
+    } else {
+      drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
+      drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+    }
+    const featureOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'features');
+    if (featureOverlay) {
+      ctx.save();
+      ctx.globalAlpha = EXACT_CONTEXT_ALPHA.implementation;
+      ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
+      ctx.restore();
+    }
   }
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
 
@@ -9583,18 +9589,9 @@ async function drawPhasingExactContent(
   }
 }
 
-// Composite the Phasing (08) AI result — Hybrid OR Full Treatment polish — back over exact content.
-// The model NEVER sees the schedule text at any stage (buildPhasingHybridInput blanks it for the
-// Hybrid input; the polish stage separately re-blanks the Hybrid's own output before sending it on,
-// see generatePhasingViaQueue). This function is the one place that puts the real facts back: ground,
-// structures, boundary and phase pins (drawPhasingExactContent) are redrawn on top of the model's
-// art — not merely copied from a side region — and the schedule panel + scale bar + north arrow are
-// drawn as exact vector/copied content, never left as whatever the model painted underneath.
-//
-// baseImage null → exact mode: returns buildImplementationMap directly (zero AI involvement).
-// baseImage set → composites the model's decorative art with 100% exact facts on top, for either
-// the Hybrid stage or the polish stage — same treatment both times, so a poorly-behaved polish pass
-// cannot ship AI-authored geometry or schedule content under an honest 'hybrid'/'ai-polished' label.
+// The schedule never enters either model input. Legacy jobs retain their exact symbol overlay;
+// artwork-v2 jobs keep the painted garden, with app-owned pins, boundary, scale and schedule.
+// A null base still builds the exact plan without AI.
 async function composePhasingSheet(
   baseImage: string | null,
   state: DesignCanvasState,
@@ -9602,6 +9599,7 @@ async function composePhasingSheet(
   refLayers: DesignGlossyProps['refLayers'],
   site: DesignGlossyProps['site'],
   placeName?: string,
+  paintedArtwork = false,
 ): Promise<string> {
   if (!baseImage) return buildImplementationMap(state, frame, refLayers, site, placeName);
 
@@ -9631,11 +9629,11 @@ async function composePhasingSheet(
   const modelImg = await loadImage(baseImage);
   ctx.drawImage(modelImg, mapX, 0, mapW, H);
 
-  // 2. Every exact fact — ground, structures, boundary, phase pins — redrawn on top from saved
-  //    design data into the map column only, never copied from (or left as) the model's paint.
+  // 2. App-owned boundary and phase pins stay at saved coordinates. Legacy jobs also
+  //    receive their original ground/feature symbols; new jobs retain the painted materials.
   ctx.save();
   ctx.translate(mapX, 0);
-  await drawPhasingExactContent(ctx, renderState, renderFrame, renderRefLayers, plan, mapW, mapH);
+  await drawPhasingExactContent(ctx, renderState, renderFrame, renderRefLayers, plan, mapW, mapH, paintedArtwork);
 
   // 3. Scale bar and north arrow, drawn as exact vector chrome (not a photographic strip copied
   //    from a separately rendered sheet, which risked a hard seam and could clip the north arrow).
@@ -9651,13 +9649,16 @@ async function composePhasingSheet(
   const exactImg = await loadImage(exactSheet);
   // The whole right-hand column, full height, is app-owned schedule content.
   ctx.drawImage(exactImg, lgX, 0, W - lgX, H, lgX, 0, W - lgX, H);
+  if (paintedArtwork) {
+    ctx.fillStyle = '#59645A'; ctx.font = `${Math.max(14, Math.round(mapW * 0.009))}px ${SHEET_BODY_FONT}`;
+    ctx.fillText('AI illustration — review against exact plan.', lgX + pad, H - pad * 2, W - lgX - pad * 2);
+  }
 
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
-// Build the input image sent to the model for the Phasing Hybrid stage — the complete exact sheet
-// with the schedule panel ERASED (opaque blank rectangle, zero text) so the model structurally
-// cannot see any date, task or hold point at any stage — not just told not to touch them.
+// Unlettered guides encourage painted materials instead of copied SVG symbols.
+// The opaque blank panel and later map-column crop keep schedule text out of the upload.
 async function buildPhasingHybridInput(
   state: DesignCanvasState,
   frame: CanvasFrame,
@@ -9665,11 +9666,20 @@ async function buildPhasingHybridInput(
   site: DesignGlossyProps['site'],
   placeName?: string,
 ): Promise<string> {
-  // The same size buildImplementationMap just drew at — otherwise the blank-out lands somewhere
-  // the panel is not and the model is shown real dates.
+  const presentation = await boundaryPresentationContext(state, frame, refLayers);
   const size = phasingSheetSize(frame, refLayers);
-  const exactSheet = await buildImplementationMap(state, frame, refLayers, site, placeName);
-  return blankPhasingPanel(exactSheet, size);
+  // The old input already contained finished SVG trees and numbered pins. The model
+  // copied that visual language. Give it the same unlettered guides as Whole instead.
+  const guide = await buildComposite(presentation.state, presentation.frame, presentation.refLayers,
+    'all', true, polishModelInputMarks('all'));
+  const canvas = document.createElement('canvas'); canvas.width = size.W; canvas.height = size.H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) { releaseCanvas(canvas); throw new Error('Canvas unavailable'); }
+  ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, size.W, size.H);
+  const image = await loadImage(guide);
+  try { ctx.drawImage(image, phasingPanelRect(size).mapX, 0, size.mapW, size.mapH); }
+  finally { releaseImageSource(image); }
+  return blankPhasingPanel(drainCanvasToDataUrl(canvas, 'image/png'), size);
 }
 
 // Erases the schedule panel region on an ARBITRARY already-rendered Phasing sheet with a fully
@@ -12066,7 +12076,7 @@ export default function DesignGlossy({
       setFilter(sheet.filter);
       setExactSheet(null);
       setAnalysisStyle(null);
-      setProducerStyle(m === 'ai' ? (cur) => cur ?? DEFAULT_PRODUCER_STYLE : null);
+      setProducerStyle(m === 'ai' ? (cur) => sheetRenderRoute({ filter: sheet.filter }, 'hybrid', cur).styleUsed : null);
     }
   }, []);
 
@@ -12075,6 +12085,18 @@ export default function DesignGlossy({
   // Style), and exact mode uses no AI at all.
   const selectedSheet = DESIGN_SHEETS.find((s) => s.no === selectedNo);
   const sheetSettingsRef = useRef(new Map<string, SheetPresentationSettings>());
+  const manualUnderlaysRef = useRef(new Set<string>());
+  const chooseStyle = (style: StylePreset) => {
+    if (!selectedSheet || loading !== null) return;
+    const spec = selectedSheet;
+    const selected = aiView === 'oblique' ? style : sheetRenderRoute(spec, 'hybrid', style).styleUsed ?? DEFAULT_PRODUCER_STYLE;
+    if (!manualUnderlaysRef.current.has(`${state.siteId}:${selectedSheet.no}`)) {
+      setUnderlay(recommendedSheetSettings('exact' in spec ? spec.exact : spec.filter, frameProp, selected).underlay);
+    }
+    setProducerStyle(selected); setAnalysisStyle(null); setExactSheet(null);
+    if ('exact' in spec) { setMode('ai'); applySheet(spec, 'ai'); setProducerStyle(selected); }
+    setResultImage(null);
+  };
   // Only explicit sheet navigation applies recommendations. applySheet also runs during the
   // exact → AI handoff; resetting there would discard the farmer's chosen photo/style mid-job.
   const chooseSheet = useCallback((sheet: DesignSheet, m: 'ai' | 'exact') => {
@@ -12133,8 +12155,9 @@ export default function DesignGlossy({
   // The style picker is how an approved user leaves Exact mode; hiding it there stranded
   // Water on steps 1, 2, 3, 5 with no way to choose step 4. Selection itself never renders.
   const aiLayerMode = aiRenderOn && !!selectedSheet;
-  const topDownStyleChoices = selectedSheet && 'exact' in selectedSheet
-    && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector' || selectedSheet.exact === 'implementation') ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES;
+  const topDownStyleChoices = selectedSheet && (('exact' in selectedSheet
+    && ['base', 'sector', 'implementation'].includes(selectedSheet.exact))
+    || ('filter' in selectedSheet && selectedSheet.filter === 'zones')) ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES;
   const availableStyleChoices = aiView === 'oblique' ? PRODUCER_STYLES : topDownStyleChoices;
   // `initialFilter` chooses which sheet Preview map opens on; it must not choose a second, retired
   // layout. That coupling is what made the modal fall back to the old full-width control dump while
@@ -13986,14 +14009,14 @@ export default function DesignGlossy({
   // the OLD synchronous /api/image-producer path went through fal.ai, which 403s on an empty balance
   // and then silently fell back to a rate-limited Gemini ("Gemini error 429" even though gpt was
   // chosen). Renders only the currently-chosen layer; the subscription effect above finishes it into
-  // the gallery. Zones is never routed here (it's satellite-only → produced deterministically in
-  // generateProducer), so `filter` is always a model layer.
+  // the gallery. Zones also paints its context here, then receives saved regions and app-owned scale.
   const generateOneViaQueue = useCallback(async () => {
     if (!aiRenderOn) {
       setError('AI rendering is available only to approved testers. Design Map is available to everyone.');
       return;
     }
-    const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
+    const styleKey = sheetRenderRoute({ filter }, 'hybrid', producerStyle).styleUsed ?? DEFAULT_PRODUCER_STYLE;
+    const lockedStyle = renderAuthorityFlagsForStyle(styleKey).geometryLock;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     if (layerContentCount(state, refLayers, filter) === 0) {
@@ -14053,16 +14076,16 @@ export default function DesignGlossy({
         renderFrame,
         renderRefLayers,
         filter,
-        true,
+        filter !== 'zones',
         isModelChromeStyle(styleKey)
           ? OVERLAY_COMPOSITE_MARKS
-          : lockActive
+          : lockedStyle
             ? polishModelInputMarks(filter)
             : undefined,
       );
       const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
         ? overlayElementsText(renderState, renderRefLayers, filter)
-        : { elements: producerElementsText(renderState, renderRefLayers, filter, !lockActive), fabric: '' };
+        : { elements: producerElementsText(renderState, renderRefLayers, filter, !lockedStyle), fabric: '' };
       const sheetInput = fullSheetPolish
         ? composite
         : isModelChromeStyle(styleKey)
@@ -14115,7 +14138,7 @@ export default function DesignGlossy({
         ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName, structureRegisterText(renderState, renderRefLayers), bedFootprintRegister(renderState.items, renderFrame, filter))
         : isModelChromeStyle(styleKey)
         ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(renderState), placeName, sheetKind: filter, hasDriveway: renderRefLayers.driveway.length >= 2, items: renderState.items })
-        : lockActive
+        : lockedStyle
         // THE GROUND IS A FACT ABOUT THE SOURCE, NOT A STYLE. renderFrame.satDataUrl is null only on
         // the plain underlay, and there the prompt must be told there is no photograph — see
         // groundContractFor. Sending 'photo' there asked the model to preserve pixels that do not
@@ -14232,32 +14255,24 @@ export default function DesignGlossy({
     }
   }, [aiRenderOn, loading, queueJobId, gallerySiteId, state, frameProp, refLayers, site, placeName, labelMode, producerStyle, queueEngine, quality, t]);
 
-  // Compatibility finisher for older queued Sector jobs, which contain a ground-only AI pass.
-  // New paid Sector jobs persist showcase:true and return the model's complete polished sheet
-  // directly; old in-flight jobs remain safe and still receive deterministic analysis geometry.
+  // Both Sector stages return map artwork; measured analysis and page furniture belong to the app.
   const finishSectorSheet = useCallback(
     (modelImage: string, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }): Promise<string> =>
       composeSectorSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName),
     [state, frame, refLayers, site, placeName],
   );
 
-  // Finisher for BOTH Phasing (08) stages — Hybrid and Full Treatment polish. The model painted a
-  // decorative background over the map area (and, for polish, over an already-blanked hybrid); this
-  // composites every exact fact — ground, structures, boundary, phase pins, the real schedule panel
-  // — back on top, regardless of which stage produced the input. Unlike every other sheet, Phasing's
-  // polish stage does NOT ship the model's raw output (see handleSnapshot below): a build calendar
-  // must never be AI-authored even under a well-worded polish prompt.
+  // Both Phasing stages keep their painted map. The frozen prompt distinguishes the new
+  // artwork contract from legacy jobs whose symbols still need the original composite-back.
+  // Measured pins, scale and schedule remain app-owned in both contracts.
   const finishPhasingSheet = useCallback(
-    (modelImage: string, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }): Promise<string> =>
-      composePhasingSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName),
+    (modelImage: string, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, sourcePrompt?: string): Promise<string> =>
+      composePhasingSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName, sourcePrompt?.includes(PHASING_ARTWORK_PROMPT_MARKER) ?? false),
     [state, frame, refLayers, site, placeName],
   );
 
-  // Finisher for Site 01 Hybrid jobs (geometryLock:true). The model paints ground texture; this
-  // composites the app's exact house, driveway and boundary back on top — the same "AI owns the
-  // fabric, app owns the facts" contract every other sheet's Hybrid mode already enforces.
-  // Mirrors buildBlueprintBaseMap's recipe: buildLockedStructureOverlay for source-pixel-derived
-  // structures, then drawBlueprintBoundary for vector-exact boundary. Never touches geometry.
+  // Site shares the design layers' material policy: painted styles retain their roofs and ground,
+  // Photo Plan preserves factual source materials. Boundary, labels and inventory stay app-owned.
   const finishSiteSheet = useCallback(
     async (modelImage: string, styleKey: StylePreset, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }): Promise<string> => {
       const { state, frame, refLayers, site, placeName } = snapshot;
@@ -14280,34 +14295,19 @@ export default function DesignGlossy({
       const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
       // Model's painted ground is the underlayer.
       ctx.drawImage(await loadImage(modelImage), 0, 0, W, H);
-      // Exact existing ground, then house + driveway from source pixels. The AI is texture only:
-      // it cannot turn a lawn, slab or terrace into a different saved feature.
-      const exactGround = await buildExactLayerOverlay(
-        renderState,
-        renderFrame,
-        renderRefLayers,
-        'all',
-        W,
-        H,
-        'ground',
-      );
-      if (exactGround) ctx.drawImage(await loadImage(exactGround), 0, 0, W, H);
-      if (cleanSource) {
-        const structureOverlay = await buildLockedStructureOverlay(
-          cleanSource,
-          renderState,
-          renderFrame,
-          renderRefLayers,
-          W,
-          H,
-          styleKey,
-        );
-        if (structureOverlay) ctx.drawImage(await loadImage(structureOverlay), 0, 0, W, H);
+      // Site used a second, older composition policy: opaque ground and building symbols covered
+      // the paid roofs even after the design layers stopped doing that. Share their material rule.
+      const composition = geometryLockCompositionPolicy(styleKey, renderFrame.satDataUrl ? 'photo' : 'paper');
+      if (composition.useExactGroundOverlay) {
+        const exactGround = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, 'all', W, H, 'ground');
+        if (exactGround) ctx.drawImage(await loadImage(exactGround), 0, 0, W, H);
       }
-      // Property boundary — vector data, always exact regardless of what the model painted.
+      const structureOverlay = await buildGeometryLockStructureOverlay(
+        cleanSource ?? undefined, renderState, renderFrame, renderRefLayers, W, H, styleKey, composition.useSourceStructurePixels,
+      );
+      if (structureOverlay) ctx.drawImage(await loadImage(structureOverlay), 0, 0, W, H);
       drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
-      // Keep the Site Hybrid's discrete existing-item facts identical to the free exact Site map.
-      drawExistingSiteItems(ctx, renderState, px, py, pxPerM);
+      if (composition.useExactGroundOverlay) drawExistingSiteItems(ctx, renderState, px, py, pxPerM);
       // Ground-feature label pills (patio, lawn, veg garden, ...) — same call buildBlueprintBaseMap
       // makes on the exact sheet. Without this the Hybrid result had no labels at all (adversarial
       // review, 2026-07-25, noted this as an acknowledged follow-up rather than a safety gap).
@@ -14375,7 +14375,7 @@ export default function DesignGlossy({
         'Existing Site',
         false,
         true,
-        { sheetNumber: '01', legendRows },
+        { sheetNumber: '01', legendRows, aiArtwork: true },
       );
     },
     [frame, refLayers, state, placeName],
@@ -14509,7 +14509,7 @@ export default function DesignGlossy({
 
   // Phasing (08) AI Hybrid + Full Treatment — mirrors generateSectorViaQueue's two-stage pattern.
   //
-  // Hybrid stage:  build the exact sheet, blank nothing, and upload its MAP COLUMN — the schedule
+  // Hybrid stage:  build unlettered guides and upload their MAP COLUMN — the schedule
   //                panel, the critical-order list and the site rules are simply not in the image.
   //                On completion, composePhasingSheet (via finishPhasingRef) draws the REAL
   //                schedule panel back on top. showcase:false, geometryLock:true.
@@ -14618,8 +14618,8 @@ export default function DesignGlossy({
       const protectMaskDataUrl: string | undefined = undefined;
 
       const prompt = polishStage
-        ? buildFinishedSheetPolishPrompt('Implementation & Phasing', styleKey, placeName, structureRegisterText(state, refLayers))
-        : buildPhasingRestylePrompt(styleKey, placeName);
+        ? `${PHASING_ARTWORK_PROMPT_MARKER}.\n${buildFinishedSheetPolishPrompt('Implementation & Phasing', styleKey, placeName, structureRegisterText(state, refLayers))}`
+        : buildPhasingRestylePrompt(styleKey, placeName, [buildDesignBrief(state, refLayers, placeName, site), producerElementsText(state, refLayers, 'all', false), bedFootprintRegister(state.items, frame, 'all')].join('\n'), frame.satDataUrl ? 'photo' : 'paper');
 
       const jobId = await enqueueRenderJobCapped({
         sceneSnapshot, attemptId, outputMode,
@@ -15186,7 +15186,11 @@ export default function DesignGlossy({
               let factualModelImage = raw;
               if (sheet.key === 'sector' && sourceImage && protectMask && !isPolishedResult) {
                 try {
-                  factualModelImage = await restoreProtectedPixels(sourceImage, raw, protectMask);
+                  // Legacy jobs froze the exterior photograph, contradicting the edge-to-edge
+                  // illustration prompt. Rebuild from this job's frozen scene for free recovery too.
+                  const p = await boundaryPresentationContext(frozenScene.state, frozenScene.frame, frozenScene.refLayers);
+                  const currentMask = await buildProtectMask(p.state, p.frame, p.refLayers, 'all', sectorProtectMaskOptions());
+                  factualModelImage = await restoreProtectedPixels(sourceImage, raw, currentMask);
                 } catch (restoreError) {
                   console.error('[glossy] Sector protected-pixel restore failed; using factual source', restoreError);
                   factualModelImage = sourceImage;
@@ -15222,7 +15226,7 @@ export default function DesignGlossy({
               }
               try {
                 baselineSheet = sheet.key === 'implementation'
-                  ? await finishPhasingRef.current(sourceImage, frozenScene)
+                  ? await finishPhasingRef.current(sourceImage, frozenScene, sheet.prompt)
                   : sheet.key === 'sector'
                   ? await finishSectorRef.current(sourceImage, frozenScene)
                   : sheet.key === 'base'
@@ -15235,7 +15239,7 @@ export default function DesignGlossy({
                 console.warn('[glossy] comparison composition unavailable', comparisonError);
               }
               const finalSheet = sheet.key === 'implementation'
-                ? await finishPhasingRef.current(raw, frozenScene)
+                ? await finishPhasingRef.current(raw, frozenScene, sheet.prompt)
                 : sheet.key === 'sector'
                 ? await finishSectorRef.current(factualModelImage, frozenScene)
                 : sheet.key === 'base'
@@ -15842,7 +15846,7 @@ export default function DesignGlossy({
               <button
                 key={key}
                 type="button"
-                onClick={() => (needsImport ? onImportPhoto?.() : setUnderlay(key))}
+                onClick={() => { if (needsImport) onImportPhoto?.(); else { manualUnderlaysRef.current.add(`${state.siteId}:${selectedNo}`); setUnderlay(key); } }}
                 disabled={loading !== null || (needsImport && !onImportPhoto)}
                 aria-pressed={active}
                 title={needsImport ? 'Import a drone or phone aerial to draw your sheets on it' : undefined}
@@ -15944,7 +15948,7 @@ export default function DesignGlossy({
         <>
         <WorkflowHeading number={4} title={t('designGlossyStyle')} />
         <div lang={aiView === 'oblique' ? 'en' : undefined} style={{ fontSize: 10.5, opacity: 0.6, margin: '-5px 0 7px 34px' }}>
-          {aiView === 'oblique' ? 'For the whole oblique view' : `${t('designGlossyStyle')} (on your ${restyleAiKind === 'base' ? 'Existing Site' : restyleAiKind === 'sector' ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
+          {aiView === 'oblique' ? 'For the whole oblique view' : `${t('designGlossyStyle')} (on your ${selectedSheet?.label ?? 'design'} map)`}
         </div>
         <div style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'calc((100% - 16px) / 3)', gap: 8, overflowX: 'auto', padding: '2px 1px 7px', scrollSnapType: 'x proximity', scrollbarWidth: 'thin' }}>
           {availableStyleChoices.map((s) => {
@@ -15955,24 +15959,7 @@ export default function DesignGlossy({
                 type="button"
                 // Selecting only — tapping the active card keeps it (deselecting used to leave
                 // "AI mode with no style", which silently fell back to the exact renderer).
-                onClick={() => {
-                  setProducerStyle(s.key);
-                  setAnalysisStyle(null);
-                  setExactSheet(null);
-                  // PICKING A STYLE MEANS "RENDER IT THIS WAY". On Sector and Site the sheet could
-                  // be sitting in EXACT mode, and clearing exactSheet without switching mode left
-                  // restyleAiKind null — so runCurrentSheet fell through to the generic producer
-                  // branch and rendered whatever `filter` happened to be, not the sheet on screen.
-                  // From the farmer's side: tap a style, press the button, nothing changes.
-                  // (Rory: "the style selector is not working i select the satelite overlay and
-                  // nothing".)
-                  if (selectedSheet && 'exact' in selectedSheet) {
-                    setMode('ai');
-                    applySheet(selectedSheet, 'ai');
-                    setProducerStyle(s.key); // applySheet seeds a default; the farmer's pick wins
-                  }
-                  setResultImage(null);
-                }}
+                onClick={() => chooseStyle(s.key)}
                 disabled={loading !== null}
                 aria-pressed={active}
                 title={aiView === 'oblique' ? obliqueStyleDescription(s.key) : `${s.blurb}${s.recommended ? t('designGlossyRecommendedSuffix') : ''}`}
@@ -16155,9 +16142,11 @@ export default function DesignGlossy({
             : restyleAiKind === 'base'
             ? `Generate an AI-styled Existing Site sheet (plan-set 01) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the model repaints the ground only; your boundary, roof and access stay exactly where they are, and nothing is designed onto it. Renders in the background (~mins).`
             : sectorAiMode
-            ? `Create a paid AI-polished Sector Analysis sheet (plan-set 02) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. The exact computed sheet is saved first, then GPT Image polishes the complete page — aerial, arrows, labels and legend — as a separate visual copy. All visible Sector styles support this route; Satellite Overlay is intentionally unavailable here.`
+            ? `Create a paid AI-polished Sector Analysis sheet (plan-set 02) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. The exact computed sheet is saved first, then GPT Image paints the site artwork. The app adds the measured analysis, labels and legend afterwards. All visible Sector styles support this route; Satellite Overlay is intentionally unavailable here.`
+            : phasingAiMode
+            ? `Generate the Phasing artwork in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. The app adds the saved phase pins, scale and complete schedule after painting; the exact plan remains the measurement reference.`
             : exactSheet === 'implementation'
-            ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Review the schedule against your site survey and available resources.'
+            ? 'Draw your Implementation & Phasing sheet (plan-set 09) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Review the schedule against your site survey and available resources.'
             : producerStyle
             ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? `${OPENAI_MAP_MODEL_LABEL} paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.` : `${OPENAI_MAP_MODEL_LABEL} paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration.`) : 'Gemini paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration. It lands in your gallery.'}`
             : analysisStyle
