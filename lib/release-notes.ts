@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 November 2026', sha: '8d2458ceef', changes: [
+  { when: '3 November 2026', sha: '2ae643d77', changes: [
     "Open Met Office links to Yeovilton’s monthly weather records from the country review.",
   ], tour: [{ title: "Review UK historical weather records", where: "International → Country review", href: '/international',
     detail: "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions." }] },
