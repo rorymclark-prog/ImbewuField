@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // NWS reference: docs/international/agy-nws-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
+  "Compare a fixed US station’s weather observations with clear dates and missing readings.": "Qhathanisa okubonwe yisiteshi sezulu esingaguquki sase-US nezinsuku ezicacile kanye nokufundwa okushodayo.",
+  "Review a public US weather station": "Buyekeza isiteshi sezulu somphakathi sase-US",
+  "International foundation → United States": "Isisekelo samazwe ngamazwe → United States",
+  "Choose United States, then load the fixed public station example. Observation and retrieval times stay separate; this does not supply farm weather or planting advice.": "Khetha i-United States, bese ulayisha isibonelo sesiteshi somphakathi esingaguquki. Izikhathi zokubuka kanye nezokulanda zihlala zihlukene; lokhu akunikezi isimo sezulu sasepulazini noma iseluleko sokutshala.",
   // Country context: docs/international/agy-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Qinisekisa izwe lesayithi edwetshiwe ngaphambi kokusebenzisa isiqondiso sayo sokuhlela izitshalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Gcina amarekhodi akho okuhlwanyela nezinto zokusebenza zenkulisa yezitshalo ngenkathi ukuhlela kwendawo kungatholakali.",

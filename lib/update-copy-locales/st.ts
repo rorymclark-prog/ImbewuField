@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // NWS reference: docs/international/agy-nws-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
+  "Compare a fixed US station’s weather observations with clear dates and missing readings.": "Bapisa litebello tsa boemo ba leholimo tsa seteishene se sa fetoheng sa US ka matsatsi a hlakileng le lipalo tse sieo.",
+  "Review a public US weather station": "Hlahloba seteishene sa boemo ba leholimo sa sechaba sa US",
+  "International foundation → United States": "Motheo oa machaba → United States",
+  "Choose United States, then load the fixed public station example. Observation and retrieval times stay separate; this does not supply farm weather or planting advice.": "Khetha United States, ebe u kenya mohlala oa seteishene sa sechaba se sa fetoheng. Linako tsa ho shebella le tsa ho lata li lula li arohane; sena ha se fane ka boemo ba leholimo ba polasi kapa keletso ea ho jala.",
   // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Netefatsa naha ea sebaka se mmepiloeng pele u sebelisa tataiso ea sona ea moralo oa lijalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Boloka lirekoto tsa hao tsa ho jala le lisebelisoa tsa nesari ea limela ha moralo oa sebaka o ntse o sa fumanehe.",

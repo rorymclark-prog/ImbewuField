@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // NWS reference: docs/international/agy-nws-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
+  "Compare a fixed US station’s weather observations with clear dates and missing readings.": "Vhambedzani thaluso dza mutsho dza tshititshi tshi sa shandukiho tsha US dzi re na madatumu o khwathaho na zwivhalo zwi siho.",
+  "Review a public US weather station": "Tsedzulusani tshititshi tsha mutsho tsha tshitshavha tsha US",
+  "International foundation → United States": "Mutheo wa dzitshakha → United States",
+  "Choose United States, then load the fixed public station example. Observation and retrieval times stay separate; this does not supply farm weather or planting advice.": "Nangani United States, nahone ni layishe tsumbo ya tshititshi tsha tshitshavha tshi sa shandukiho. Zwifhinga zwa u vhona na zwa u dzhia zwi dzula zwo fhambana; hezwi a zwi nei mutsho wa bulasi kana nyeletshedzo ya u zwala.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Khwathisedzani shango ḽa fhethu ho mapiwaho musi ni sa athu shumisa vhulangeli ha u pulana zwilimwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Vhulungani rekhodo dzaṋu dza u zwala na zwishumiswa zwa nese musi pulane ya henefho i sa athu vha hone.",

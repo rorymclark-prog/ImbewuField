@@ -198,6 +198,7 @@ test('the route → cost class table reads both spellings and defaults to the ch
   assert.equal(costClassFor('/api/image-producer'), 'image');
   assert.equal(costClassFor('/api/ai-render/poll'), 'poll');
   assert.equal(costClassFor('network/farmers'), 'data');
+  assert.equal(costClassFor('/api/international/weather-reference'), 'data', 'the public weather reference uses the existing data budget');
   assert.equal(costClassFor('/api/chat'), 'ai');
   assert.equal(costClassFor('/api/a-route-invented-in-2027'), 'ai', 'an unlisted route must still be counted');
 });

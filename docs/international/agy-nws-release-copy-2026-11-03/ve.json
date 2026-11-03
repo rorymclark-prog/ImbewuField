@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "locale": "ve",
+  "provenance": {
+    "executor": "AGY",
+    "method": "AI draft",
+    "createdOn": "2026-11-03"
+  },
+  "review": {
+    "status": "unreviewed"
+  },
+  "messages": [
+    {
+      "key": "NwsRelease.66e2dffc6.change.1",
+      "sourceEnglish": "Compare a fixed US station’s weather observations with clear dates and missing readings.",
+      "sourceSha256": "d21911490e0d63049e24594251434048c71878574df699e37694041979623ebf",
+      "text": "Vhambedzani thaluso dza mutsho dza tshititshi tshi sa shandukiho tsha US dzi re na madatumu o khwathaho na zwivhalo zwi siho.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NwsRelease.66e2dffc6.tour.1.title",
+      "sourceEnglish": "Review a public US weather station",
+      "sourceSha256": "0a684d837596c8ef26fd2f22e796a53e509d0bb45702c3bb4d965c26c9dad051",
+      "text": "Tsedzulusani tshititshi tsha mutsho tsha tshitshavha tsha US",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NwsRelease.66e2dffc6.tour.1.where",
+      "sourceEnglish": "International foundation → United States",
+      "sourceSha256": "65dfc4338e5f7fd1ea7faff1abae49caea7b54b00fc9743d553aa17a25be0a67",
+      "text": "Mutheo wa dzitshakha → United States",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NwsRelease.66e2dffc6.tour.1.detail",
+      "sourceEnglish": "Choose United States, then load the fixed public station example. Observation and retrieval times stay separate; this does not supply farm weather or planting advice.",
+      "sourceSha256": "a210568d6c4050278156445d39a6cb1a9e1c851ba3e30a2867ce04345dd3043f",
+      "text": "Nangani United States, nahone ni layishe tsumbo ya tshititshi tsha tshitshavha tshi sa shandukiho. Zwifhinga zwa u vhona na zwa u dzhia zwi dzula zwo fhambana; hezwi a zwi nei mutsho wa bulasi kana nyeletshedzo ya u zwala.",
+      "review": {
+        "status": "unreviewed"
+      }
+    }
+  ]
+}
