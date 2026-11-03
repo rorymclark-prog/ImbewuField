@@ -95,6 +95,26 @@ test('journal exports contain exactly the searched and date-filtered entries, an
   } finally { await app.close(); }
 });
 
+test('the journal gives a pending copy the context of its displayed notes and withdraws it on workspace change', async () => {
+  let finish!: (result: 'downloaded') => void;
+  const app = await mount({
+    entries: [entry('synthetic', 'Synthetic note', '2026-03-15', '')],
+    deliverExport: () => new Promise(resolve => { finish = resolve; }),
+  });
+  try {
+    await act(async () => { void button(app.renderer, 'CSV').props.onClick(); });
+    assert.equal(app.exports.length, 1);
+    const current = app.exports[0].options.contextCurrent as () => boolean;
+    assert.equal(current(), true);
+    assert.equal(button(app.renderer, 'CSV').props.disabled, true);
+    await act(async () => { app.browser.dispatchEvent(new Event('imbewu-sample-mode-changed')); });
+    assert.equal(current(), false);
+    assert.equal(button(app.renderer, 'CSV').props.disabled, false);
+    await act(async () => { finish('downloaded'); });
+    assert.doesNotMatch(text(app.renderer.root), /CSV downloaded/);
+  } finally { await app.close(); }
+});
+
 test('a device-only draft stays bound to the copy that opened it, even after a journal refresh', async () => {
   const original: journal.CanonicalJournalView = { status: 'ready', entries: [] };
   const newer: journal.CanonicalJournalView = { status: 'ready', entries: [entry('newer', 'Newer note', '2026-11-03', '')] };
