@@ -35,9 +35,10 @@ test('unsupported countries and Europe cannot acquire a South African or nearby-
 });
 
 test('all engineering pilots preserve separate evidence roles and remain unreviewed', () => {
-  assert.deepEqual(COUNTRY_PROFILES.map((profile) => profile.code), ['KE', 'GB', 'US', 'BR']);
-  for (const profile of COUNTRY_PROFILES) {
-    assert.equal(profile.stage, 'engineering-pilot'); assert.equal(profile.agronomyReview.status, 'not-reviewed');
+  const engineeringPilots = COUNTRY_PROFILES.filter(profile => profile.stage === 'engineering-pilot');
+  assert.deepEqual(engineeringPilots.map(profile => profile.code), ['KE', 'GB', 'US', 'BR']);
+  for (const profile of engineeringPilots) {
+    assert.equal(profile.agronomyReview.status, 'not-reviewed');
     for (const category of EVIDENCE_CATEGORIES) assert.ok(profile.sources.some((source) => source.category === category));
     for (const source of profile.sources) {
       assert.match(source.url, /^https:\/\//); assert.equal(source.accessedOn, AS_OF);
@@ -108,4 +109,31 @@ test('page modification metadata never supplies a missing publication date', () 
   const source = reviewedFixture().sources[0];
   assert.equal(sourceEvidenceState({ ...source, publishedOn: null, lastModifiedOn: AS_OF }, AS_OF), 'undated');
   assert.equal(sourceEvidenceState({ ...source, lastModifiedOn: null }, AS_OF), 'available-reference');
+});
+
+
+test('Ghana public discovery cannot turn a bulletin period into dated regional farming evidence', () => {
+  const result = evaluateCountryReadiness({ countryCode: 'GH', agriculturalRegionId: 'invented-region' }, '2026-11-03');
+  assert.equal(result.country?.stage, 'research-queue');
+  assert.equal(result.country?.agronomyReview.status, 'not-reviewed');
+  assert.deepEqual(result.country?.regions, []);
+  assert.equal(result.region, null);
+  assert.equal(result.status, 'reference-only');
+  assert.equal(result.localReviewComplete, false);
+  assert.equal(result.productionPlanSupported, false);
+  assert.equal(result.southAfricanFallbackAllowed, false);
+  const evidence = result.evidence.find(entry => entry.category === 'weather-frost');
+  assert.ok(evidence);
+  assert.equal(evidence.sources.length, 1);
+  const [source] = evidence.sources;
+  assert.equal(source.url, 'https://www.meteo.gov.gh/product/dekadal-agromet-bulletin/');
+  assert.equal(source.verification, 'content-read');
+  assert.equal(source.accessedOn, '2026-11-03');
+  assert.equal(source.publishedOn, null);
+  assert.equal(sourceEvidenceState(source, '2026-11-03'), 'undated');
+  assert.equal(evidence.availableCount, 0);
+  for (const field of [source.licence, source.updateCadence, source.resolution, source.units]) {
+    assert.equal(field.status, 'unknown');
+  }
+  assert.ok(COUNTRY_RESEARCH_QUEUE.some(group => group.group === 'West Africa' && group.countries.includes('Ghana')));
 });
