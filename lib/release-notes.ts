@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 November 2026', sha: 'a48eba29e', changes: [
+  { when: '3 November 2026', sha: '117bb5b1b', changes: [
     "Open the Embrapa BDSolos catalogue from the Brazil soil references.",
   ] },
   { when: '3 November 2026', sha: '58a25f4bc', changes: [
