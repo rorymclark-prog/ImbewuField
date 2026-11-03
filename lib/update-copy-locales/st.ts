@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/st.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Kenya litekanyo tsa libethe tsa temo (beds) le litselana tsa boloko ea tšimo ka limithara kapa maoto.",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Boloka litekanyo tse bolokiloeng li sa fetohe ha u fetola yuniti e bontšitsoeng.",
+  "Choose field-block units": "Khetha liyuniti tsa boloko ea tšimo",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Khetha tšimo, khetha limithara kapa maoto, kenya litekanyo tsa hau 'me u hlahlobe libethe tsa temo (beds) pele u boloka. Masimo a bulehileng a boloka sebaka sa 'ona sa polygon ntle le ho etsa libethe tsa temo (beds).",
   // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/st.json; selected UNREVIEWED AGY AI drafts.
   "Keep newer crop plans safe when an older app session saves its copy.": "Boloka meralo e metjha ya dijalo e sireletsehile ha seshene ya kgale ya sesebediswa e boloka kopi ya yona.",
   "Review retained copies before continuing with your current crop plan.": "Hlahloba dikopi tse bolokilweng pele o tswela pele ka moralo wa hao wa hona jwale wa dijalo.",

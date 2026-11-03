@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/ts.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Nghenisa mimpimo ya timbhedwa to byala (beds) ni tindlela ta buloko ya nsimu hi timitara kumbe hi swikondzo (feet).",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Tshika mimpimo leyi hlayisiweke yi nga cincangi loko u cinca yuniti leyi kombiwaka.",
+  "Choose field-block units": "Hlawula tiyuniti ta buloko ya nsimu",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Hlawula nsimu, hlawula timitara kumbe swikondzo (feet), nghenisa mimpimo ya wena kutani u kambisisa timbhedwa to byala (beds) u nga si hlayisa. Masimu lama pfulekeke ma hlayisa ndhawu ya wona ya polygon handle ko endla timbhedwa to byala (beds).",
   // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI drafts.
   "Keep newer crop plans safe when an older app session saves its copy.": "Hlayisa tipulani letintshwa ta swimilana ti hlayisekile loko xiphemu xa khale xa apu xi hlayisa khopi ya xona.",
   "Review retained copies before continuing with your current crop plan.": "Kambisisa tikhopi leti hlayisiweke u nga si ya emahlweni hi pulani ya wena ya sweswi ya swimilana.",

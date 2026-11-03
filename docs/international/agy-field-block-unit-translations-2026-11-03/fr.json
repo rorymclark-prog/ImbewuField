@@ -1,0 +1,128 @@
+{
+  "locale": "fr",
+  "sourceSha256": "b60a09754ec9965e7110d7ecaa690222077821f2495a4d9f8e01233691f8a321",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "fieldBlockUnits01",
+      "english": "Length unit",
+      "sha256": "e17875227ae805ef370cf61edbabdd2627ed0d852b683cd50ad29bd25f2f2366",
+      "translation": "Unité de longueur"
+    },
+    {
+      "key": "fieldBlockUnits02",
+      "english": "Metres (m)",
+      "sha256": "bfc523cc656ff81500a7aa966eb1bc0f2427a051f0e894b9505823c419fa9b01",
+      "translation": "Mètres (m)"
+    },
+    {
+      "key": "fieldBlockUnits03",
+      "english": "Feet (ft)",
+      "sha256": "edfdb5a87b358af95686144ba2d07e16e464f046e1a637723e001af2c14f6815",
+      "translation": "Pieds (ft)"
+    },
+    {
+      "key": "fieldBlockUnits04",
+      "english": "Use decimal numbers with a dot or comma; either is a decimal separator. No digit grouping, fractions or unit suffixes. Direction stays in degrees. Switching units changes entry and display only; saved dimensions remain in metres.",
+      "sha256": "ef4e0a3a39490e24ddab5cf548d607c84648d7f2e56fa894a86ec1fc62e7d384",
+      "translation": "Utilisez des nombres décimaux avec un point ou une virgule ; chacun sert de séparateur décimal. Pas de séparateur de milliers, de fractions ni de suffixes d'unité. L'orientation reste en degrés. Le changement d'unité modifie uniquement la saisie et l'affichage ; les dimensions enregistrées restent en mètres."
+    },
+    {
+      "key": "fieldBlockUnits05",
+      "english": "Your current entries keep their original unit. Choose a unit explicitly to change it.",
+      "sha256": "32e2b9d504b67c9b8373b0836174db87ec71927c81bcb20c2fb5128e3ca010f0",
+      "translation": "Vos saisies actuelles conservent leur unité d'origine. Choisissez explicitement une unité pour la modifier."
+    },
+    {
+      "key": "fieldBlockUnits06",
+      "english": "Unit choice remembered on this device.",
+      "sha256": "31ad810b60c4f79e830b11d5dc7b7b3597420e3099397202d719aa90dc3de788",
+      "translation": "Choix d'unité mémorisé sur cet appareil."
+    },
+    {
+      "key": "fieldBlockUnits07",
+      "english": "Unit choice applies only to this sample session.",
+      "sha256": "78c8f1dc68597f5d5976d3f6fcafe07d5529717be46321fe5e0c500d3cbfe2e0",
+      "translation": "Le choix d'unité s'applique uniquement à cette session d'exemple."
+    },
+    {
+      "key": "fieldBlockUnits08",
+      "english": "Unit choice works here, but could not be remembered on this device.",
+      "sha256": "663df0992a7886033371f55cee166cb44ae9654583bf11f51f19932ed8c89107",
+      "translation": "Le choix d'unité fonctionne ici, mais n'a pas pu être mémorisé sur cet appareil."
+    },
+    {
+      "key": "fieldBlockUnits09",
+      "english": "Complete valid decimal dimensions before changing units. Your entries and their current unit have been kept.",
+      "sha256": "90db71349c5b12637eb73005d7475f9866a05db6a44dd0fd7bcca5f756e5010f",
+      "translation": "Complétez des dimensions décimales valides avant de changer d'unité. Vos saisies et leur unité actuelle ont été conservées."
+    },
+    {
+      "key": "fieldBlockUnits10",
+      "english": "The account or sample context changed. Reopen the design to load its field settings.",
+      "sha256": "473afc42a8964b00f9b75e1546b24b6b7691a26865a72cc38ed71694329387ce",
+      "translation": "Le contexte du compte ou de l'exemple a changé. Rouvrez le design pour charger les paramètres de sa parcelle."
+    },
+    {
+      "key": "fieldBlockUnits11",
+      "english": "Checking the account or sample context before showing field settings.",
+      "sha256": "1461ab8a94fd8344e34921306d2bc3255cad6f01a22c1c7ea2f5bcc3f4d84ce2",
+      "translation": "Vérification du contexte du compte ou de l'exemple avant d'afficher les paramètres de la parcelle."
+    },
+    {
+      "key": "fieldBlockUnits12",
+      "english": "The saved field, map scale or account context changed. Your draft has been kept. Reload the field settings before applying.",
+      "sha256": "8afb928bff00caa4aa7d6ca041118167e144d6f76c530164d0ebf1e078f82c73",
+      "translation": "La parcelle enregistrée, l'échelle de la carte ou le contexte du compte a changé. Votre brouillon a été conservé. Rechargez les paramètres de la parcelle avant d'appliquer."
+    },
+    {
+      "key": "fieldBlockUnits13",
+      "english": "Complete valid decimal bed and path dimensions before applying.",
+      "sha256": "f1909981eb2c185a873407272fb33341f13388b7d584b7e3862312add7a41227",
+      "translation": "Complétez des dimensions décimales valides pour les planches et les allées avant d'appliquer."
+    },
+    {
+      "key": "fieldBlockUnits14",
+      "english": "Reload field settings",
+      "sha256": "182dd9951bbe5e88c4a8fa3da9f4bc3c210412107574e4c11b68ec2d5850f06c",
+      "translation": "Recharger les paramètres de la parcelle"
+    },
+    {
+      "key": "fieldBlockUnits15",
+      "english": "The field or account context changed. Reload the field settings before applying.",
+      "sha256": "5dabaf1abbe555ec2586ffd1e3bcbaa9046731271610a52a9e5b4fde3a164093",
+      "translation": "Le contexte de la parcelle ou du compte a changé. Rechargez les paramètres de la parcelle avant d'appliquer."
+    },
+    {
+      "key": "fieldBlockUnits16",
+      "english": "Enter field-block bed and path dimensions in metres or feet.",
+      "sha256": "4750137de473c585e33cb80d9fcb66e19c97f1fac51d440191404e7cf29ed37f",
+      "translation": "Saisissez les dimensions des planches et des allées du bloc de parcelle en mètres ou en pieds."
+    },
+    {
+      "key": "fieldBlockUnits17",
+      "english": "Keep saved measurements unchanged when switching the displayed unit.",
+      "sha256": "f7814cfe29ded6054b131888567a292319a741d0d66caebc23d3ef4270469370",
+      "translation": "Conservez les mesures enregistrées inchangées lors du changement de l'unité affichée."
+    },
+    {
+      "key": "fieldBlockUnits18",
+      "english": "Choose field-block units",
+      "sha256": "1802bf45b6cf6f527acdc795ca1ff3dcba5cf9613a43b30ed154e70fbce7a56b",
+      "translation": "Choisir les unités du bloc de parcelle"
+    },
+    {
+      "key": "fieldBlockUnits19",
+      "english": "Site design → Planting → Field blocks",
+      "sha256": "0b555005f1a1cf18971aa731c4a5910c45c9d20c8b37f395d822f74f79f477e7",
+      "translation": "Design du site → Plantation → Blocs de parcelle"
+    },
+    {
+      "key": "fieldBlockUnits20",
+      "english": "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.",
+      "sha256": "9c7147ed0184cb417a1756199cf08a1387307982f30662557b286721e71cdb56",
+      "translation": "Sélectionnez une parcelle, choisissez les mètres ou les pieds, saisissez vos dimensions et examinez les planches avant d'enregistrer. Les parcelles ouvertes conservent la surface de leur polygone sans générer de planches."
+    }
+  ]
+}

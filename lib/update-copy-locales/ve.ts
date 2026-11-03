@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/ve.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Dzhenisani mielo ya mmbete ya u ṱavha (beds) na dziḽila dza buḽoko ya tsimu nga dzimithara kana dzifithi (feet).",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Vhulungani mielo yo vhulungwaho i songo shanduka musi ni tshi shandukisa yuniti i sumbedzwaho.",
+  "Choose field-block units": "Nangani dziyuniti dza buḽoko ya tsimu",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Nangani tsimu, nangani dzimithara kana dzifithi (feet), dzhenisani mielo yaṋu uri ni sedzuluse mmbete ya u ṱavha (beds) ni sa athu vhulunga. Masimu o vuleaho a vhulunga vhupo hao ha polygon hu si na u bveledza mmbete ya u ṱavha (beds).",
   // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI drafts.
   "Keep newer crop plans safe when an older app session saves its copy.": "Vhulungani pulane ntswa dza zwimela dzi tshi tsireledzea musi sesheni ya kale ya app i tshi vhulunga khophi yayo.",
   "Review retained copies before continuing with your current crop plan.": "Sedzulusani khophi dzo vhulungwaho ni sa athu bvela phanḓa na pulane yaṋu ya zwino ya zwimela.",
