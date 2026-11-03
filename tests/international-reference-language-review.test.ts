@@ -32,7 +32,7 @@ test('all four choices use the checked wording for the selected pilot and remain
     }
   }
   assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16, colombia: 16, canada: 16,
-    'ontario-soil': 16, 'australia-soil': 16 });
+    'ontario-soil': 16, 'australia-soil': 16, 'new-zealand-smap': 16 });
 });
 
 test('Colombian wording keeps the linked publication date and falls back if its year is lost', () => {
@@ -104,4 +104,17 @@ test('a changed soil catalogue licence falls back only for the affected row', ()
     assert.deepEqual(rows.filter(candidate => candidate.origin === 'fallback').map(candidate => candidate.key), [row.key]);
     assert.equal(rows.find(candidate => candidate.key === row.key)?.text, row.english);
   }
+});
+
+
+test('New Zealand drafts fall back if a provider or layer reference is lost', () => {
+  const packet = structuredClone(REFERENCE_REVIEW_PACKETS['new-zealand-smap']);
+  const drafts = packet.drafts.locales.sw;
+  const terms = drafts.find(row => row.key === 'newZealandSmapLicence')!;
+  const access = drafts.find(row => row.key === 'newZealandSmapAccess')!;
+  terms.translation = terms.translation.replace('S-map Online', '');
+  access.translation = access.translation.replace('LRIS', '');
+  const rows = referenceReviewRows(packet, 'sw');
+  assert.deepEqual(rows.filter(row => row.origin === 'fallback').map(row => row.key), [terms.key, access.key]);
+  assert.ok(rows.filter(row => row.origin === 'fallback').every(row => row.text === row.english));
 });

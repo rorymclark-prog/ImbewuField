@@ -86,5 +86,15 @@
     ],
     "reviewedByHuman": false,
     "runtimeActivation": false
+  },
+  "new-zealand-smap": {
+    "sourceSha256": "9283cf24edb16e9730b1a37d8e29b7fe6786cae2bd9bdbf7019890eadb1d07e0",
+    "draftsSha256": "83b44914c7812330dde595bc5ac8a2e29f41cdd8b1ebe3a06182db4ed2f5d4ec",
+    "literals": [
+      "S-map Online",
+      "LRIS"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
   }
 }
