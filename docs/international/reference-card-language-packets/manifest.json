@@ -96,5 +96,12 @@
     ],
     "reviewedByHuman": false,
     "runtimeActivation": false
+  },
+  "india-imd": {
+    "sourceSha256": "28149f74c354db8ea9bf489df46b34e0a1a4693521322173b032cfa6bc2a6407",
+    "draftsSha256": "26e0c713717e507ee2e741be416ef2739512a4eb68aa7c3063fd978d7b166109",
+    "literals": [],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
   }
 }

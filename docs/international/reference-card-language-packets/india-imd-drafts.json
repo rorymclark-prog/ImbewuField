@@ -1,0 +1,111 @@
+{
+  "sourceSha256": "28149f74c354db8ea9bf489df46b34e0a1a4693521322173b032cfa6bc2a6407",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "indiaImdCoverage",
+        "english": "District agrometeorological bulletin index with a state and union territory selector",
+        "sha256": "d054c8f76c866da1a197df0c8a207f0cbdf91111ba407189bbbe2e7baeb5efea",
+        "translation": "Index des bulletins agrométéorologiques de district avec sélecteur d’États et de territoires de l’Union"
+      },
+      {
+        "key": "indiaImdClaim",
+        "english": "The official English-language index displays a selector and document viewer for district bulletins.",
+        "sha256": "460dbc96491d1ec1c9d54aa3183614c25e831ca3aae3015b0a3ff7b1a26e076e",
+        "translation": "L’index officiel en langue anglaise affiche un sélecteur et une visionneuse de documents pour les bulletins de district."
+      },
+      {
+        "key": "indiaImdAccess",
+        "english": "Public index read without an account. Individual bulletins and automated access were not tested.",
+        "sha256": "3e4d82ffa6cbad98954ecabf77f24d83ccf826acd5fe9ab9e26aa6517896a088",
+        "translation": "Index public consulté sans compte. Les bulletins individuels et l’accès automatisé n’ont pas été testés."
+      },
+      {
+        "key": "indiaImdLimits",
+        "english": "District coverage, bulletin publication and forecast validity remain unverified. The index does not establish local crop recommendations.",
+        "sha256": "71a0b5bf3a71abc575c0dd5972ffaff3e7b0c03aea0c2feff25a5547ff55eb5d",
+        "translation": "La couverture des districts, la publication des bulletins et la validité des prévisions demeurent non vérifiées. L’index n’établit pas de recommandations de cultures locales."
+      }
+    ],
+    "es": [
+      {
+        "key": "indiaImdCoverage",
+        "english": "District agrometeorological bulletin index with a state and union territory selector",
+        "sha256": "d054c8f76c866da1a197df0c8a207f0cbdf91111ba407189bbbe2e7baeb5efea",
+        "translation": "Índice de boletines agrometeorológicos de distrito con selector de estados y territorios de la unión"
+      },
+      {
+        "key": "indiaImdClaim",
+        "english": "The official English-language index displays a selector and document viewer for district bulletins.",
+        "sha256": "460dbc96491d1ec1c9d54aa3183614c25e831ca3aae3015b0a3ff7b1a26e076e",
+        "translation": "El índice oficial en idioma inglés muestra un selector y un visor de documentos para los boletines de distrito."
+      },
+      {
+        "key": "indiaImdAccess",
+        "english": "Public index read without an account. Individual bulletins and automated access were not tested.",
+        "sha256": "3e4d82ffa6cbad98954ecabf77f24d83ccf826acd5fe9ab9e26aa6517896a088",
+        "translation": "Índice público consultado sin una cuenta. Los boletines individuales y el acceso automatizado no fueron probados."
+      },
+      {
+        "key": "indiaImdLimits",
+        "english": "District coverage, bulletin publication and forecast validity remain unverified. The index does not establish local crop recommendations.",
+        "sha256": "71a0b5bf3a71abc575c0dd5972ffaff3e7b0c03aea0c2feff25a5547ff55eb5d",
+        "translation": "La cobertura de distritos, la publicación de boletines y la validez de los pronósticos permanecen sin verificar. El índice no establece recomendaciones de cultivo locales."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "indiaImdCoverage",
+        "english": "District agrometeorological bulletin index with a state and union territory selector",
+        "sha256": "d054c8f76c866da1a197df0c8a207f0cbdf91111ba407189bbbe2e7baeb5efea",
+        "translation": "Índice de boletins agrometeorológicos distritais com seletor de estados e territórios da união"
+      },
+      {
+        "key": "indiaImdClaim",
+        "english": "The official English-language index displays a selector and document viewer for district bulletins.",
+        "sha256": "460dbc96491d1ec1c9d54aa3183614c25e831ca3aae3015b0a3ff7b1a26e076e",
+        "translation": "O índice oficial em língua inglesa exibe um seletor e um visualizador de documentos para boletins distritais."
+      },
+      {
+        "key": "indiaImdAccess",
+        "english": "Public index read without an account. Individual bulletins and automated access were not tested.",
+        "sha256": "3e4d82ffa6cbad98954ecabf77f24d83ccf826acd5fe9ab9e26aa6517896a088",
+        "translation": "Índice público lido sem conta. Boletins individuais e acesso automatizado não foram testados."
+      },
+      {
+        "key": "indiaImdLimits",
+        "english": "District coverage, bulletin publication and forecast validity remain unverified. The index does not establish local crop recommendations.",
+        "sha256": "71a0b5bf3a71abc575c0dd5972ffaff3e7b0c03aea0c2feff25a5547ff55eb5d",
+        "translation": "A cobertura distrital, a publicação de boletins e a validade das previsões permanecem não verificadas. O índice não estabelece recomendações locais de cultivo."
+      }
+    ],
+    "sw": [
+      {
+        "key": "indiaImdCoverage",
+        "english": "District agrometeorological bulletin index with a state and union territory selector",
+        "sha256": "d054c8f76c866da1a197df0c8a207f0cbdf91111ba407189bbbe2e7baeb5efea",
+        "translation": "Fahirisi ya majarida ya agrometeorolojia ya wilaya yenye kiteuzi cha majimbo na maeneo ya muungano"
+      },
+      {
+        "key": "indiaImdClaim",
+        "english": "The official English-language index displays a selector and document viewer for district bulletins.",
+        "sha256": "460dbc96491d1ec1c9d54aa3183614c25e831ca3aae3015b0a3ff7b1a26e076e",
+        "translation": "Fahirisi rasmi ya lugha ya Kiingereza inaonyesha kiteuzi na kionyeshi cha nyaraka kwa majarida ya wilaya."
+      },
+      {
+        "key": "indiaImdAccess",
+        "english": "Public index read without an account. Individual bulletins and automated access were not tested.",
+        "sha256": "3e4d82ffa6cbad98954ecabf77f24d83ccf826acd5fe9ab9e26aa6517896a088",
+        "translation": "Fahirisi ya umma iliyosomwa bila akaunti. Taarifa za kila wilaya na ufikiaji wa kiotomatiki havikujaribiwa."
+      },
+      {
+        "key": "indiaImdLimits",
+        "english": "District coverage, bulletin publication and forecast validity remain unverified. The index does not establish local crop recommendations.",
+        "sha256": "71a0b5bf3a71abc575c0dd5972ffaff3e7b0c03aea0c2feff25a5547ff55eb5d",
+        "translation": "Eneo la wilaya linalofunikwa, uchapishaji wa taarifa na uhalali wa utabiri vinabaki bila kuthibitishwa. Fahirisi haithibitishi mapendekezo ya mazao ya eneo husika."
+      }
+    ]
+  }
+}
