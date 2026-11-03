@@ -41,6 +41,16 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'a0be3be16', changes: [
+    'Write a dated field note from a checked crop task in your device journal.',
+    'Review older device notes before choosing which entries to recover.',
+    'Preview saved monthly production with actual records and estimates labelled.',
+  ], tour: [
+    { title: 'Review your field journal', where: 'Field journal', href: '/journal',
+      detail: 'Open your device journal to write a note or review older copies when the app offers recovery.' },
+    { title: 'Preview saved monthly production', where: 'Production plan → Production and food stock records', href: '/facilitator/crops',
+      detail: 'Open a checked mapped site and preview its saved monthly records. Actual records and estimates stay separate.' },
+  ] },
   { when: '3 November 2026', sha: '7833c0ac4a', changes: [
     'Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.',
     'Keep buyer entries when a save cannot be confirmed.',
