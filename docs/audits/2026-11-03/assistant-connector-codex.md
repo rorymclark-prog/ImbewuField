@@ -208,6 +208,24 @@ phase. The owned emulator-only environment file and current-session raw browser
 artifacts were removed. Older tracked browser artifacts were restored unchanged;
 they are not part of this connector diff.
 
+## Structures shade recovery integration
+
+Main subsequently merged [the recorded shade-cover recovery](structures-shade-recovery-codex.md)
+in PR #1187 at `a602ee78ba094ae10b4f4a764c1cbf2536c407ed`. The combined connector
+merge `41e92179d687ec1fd1812ef30c9b75d9ccebc1d0` retains that renderer, its added
+checks and its release drafts byte for byte; `DesignGlossy.tsx` now matches main
+blob `4ddc52562d9ceede8060fd2ed0f9e0fec9573247`. Both release-note entries and
+audit-index links are retained. The map owner's separately recorded visual
+evidence remains authoritative; this connector did not paint or spend on a new
+map. `PLAN_VERSION`, connector permission/transfer code and plugin bytes are
+unchanged by this integration.
+
+The local Node 24 `a70667fee` full run remains on its unchanged checkout. This
+new candidate was assembled with a separate Git index so no test source was
+switched under the live process and no duplicate heavy local suite was started.
+The combined revision still requires its own full current-head CI and rules
+result before production merge.
+
 ## Real limits
 
 - Linking ImbewuField does not link Drive, Gmail, an archive or a local filesystem.
