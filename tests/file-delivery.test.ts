@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import React from 'react';
+import { act, create } from 'react-test-renderer';
+import ts from 'typescript';
 import { deliverFile, shareFile, openFileInTab } from '@/lib/file-delivery';
 
 // Synthetic browser stubs test real outcomes, including the cancelled share
@@ -55,6 +59,51 @@ test('an opened print tab is detached before navigation and a blocked popup stay
   assert.equal(state.downloads, 0);
   state.blocked = true; state.navigated = '';
   assert.equal(openFileInTab(blob), false); assert.equal(state.navigated, '');
+}));
+
+test('the planner does not open a pending print after its original workspace changes', async () => device(async state => {
+  const source = readFileSync(new URL('../components/crops/CropPlanExportCard.tsx', import.meta.url), 'utf8');
+  const code = ts.transpileModule(source, { compilerOptions: {
+    module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX,
+  } }).outputText;
+  const require = createRequire(import.meta.url);
+  let resumeIcons!: () => void;
+  const iconGate = new Promise<void>(resolve => { resumeIcons = resolve; });
+  let built = 0;
+  const dependencies: Record<string, unknown> = {
+    '@/lib/i18n': { useLanguage: () => ({ lang: 'en', t: (key: string) => key }) },
+    '@/lib/user-facing-error': { userFacingMessage: () => 'Could not build' },
+    '@/lib/crop-calendar-ics': {},
+    '@/lib/pdf-icons': { loadPdfIcons: () => iconGate },
+    '@/lib/crop-export-pdf': {
+      FARMER_SECTIONS: ['calendar'], availabilityIconKeys: () => [],
+      buildCropPlanPdf: async () => { built++; return blob; },
+      cropPlanPdfFilename: () => 'plan.pdf',
+    },
+    '@/lib/crop-export-deliver': { deliverFile, shareFile, openFileInTab, prefersShareSheet: () => false, canShareFiles: () => false },
+  };
+  const module = { exports: {} as { default: React.ComponentType<{
+    plantings: never[]; beds: never[]; tasks: never[]; meta: { planTitle: string }; contextCurrent: () => boolean;
+  }> } };
+  new Function('require', 'module', 'exports', code)((name: string) => dependencies[name] ?? require(name), module, module.exports);
+  let current = true;
+  let renderer!: ReturnType<typeof create>;
+  await act(async () => {
+    renderer = create(React.createElement(module.exports.default, {
+      plantings: [], beds: [], tasks: [], meta: { planTitle: 'Synthetic plan' }, contextCurrent: () => current,
+    }));
+  });
+  try {
+    const print = renderer.root.findAllByType('button').find(node => /pinning on a wall/.test(node.props.title ?? ''));
+    assert.ok(print);
+    let operation!: Promise<void>;
+    await act(async () => { operation = print.props.onClick(); });
+    current = false;
+    await act(async () => { resumeIcons(); await operation; });
+    assert.equal(state.navigated, '');
+    assert.equal(state.downloads, 0);
+    assert.equal(built, 0, 'a withdrawn workspace stops before constructing the PDF');
+  } finally { await act(async () => { renderer.unmount(); }); }
 }));
 
 

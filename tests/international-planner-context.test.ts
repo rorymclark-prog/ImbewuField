@@ -540,6 +540,22 @@ test('a late grower save cannot write into another mounted account or claim a fa
   } finally { bindMountedAccountLocalStorageUid(null); await screen.dispose(); }
 });
 
+test('the actual planner gives exports a live check for their original account and workspace', async () => {
+  const screen = await mount('ZA', { auto: false });
+  try {
+    const exports = screen.boundaries('CropPlanExportCard');
+    assert.equal(exports.length, 1);
+    const current = exports[0].props['data-props'].contextCurrent as () => boolean;
+    assert.equal(current(), true);
+    sessionStorage.setItem('imbewu_sample_mode', 'unreadable-mode');
+    assert.equal(current(), false);
+    sessionStorage.removeItem('imbewu_sample_mode');
+    assert.equal(current(), true);
+    bindMountedAccountLocalStorageUid('other-owner');
+    assert.equal(current(), false);
+  } finally { bindMountedAccountLocalStorageUid(null); await screen.dispose(); }
+});
+
 test('a grower profile edit preserves newer records and profiles from another scope', async () => {
   const screen = await mount('KE', { auto: false });
   try {
