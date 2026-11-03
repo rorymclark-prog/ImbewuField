@@ -4,6 +4,7 @@ import { CROPS } from '../lib/crop-catalog.ts';
 import { generateGrowerAutoPlan, type GrowerAutoPlanCycle, type GrowerAutoPlanRequest } from '../lib/international/grower-autoplan.ts';
 import { createGrowerCyclePlanting, type GrowerCycleContext } from '../lib/international/grower-cycle.ts';
 import { projectGrowerCycles } from '../lib/international/grower-cycle-projection.ts';
+import { resolveGrowerFieldNoteLink } from '../lib/international/grower-field-note-link.ts';
 import { assessGrowerPlanning, type GrowerInput, type GrowerPlanningInputs, type GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
 
 // Synthetic engineering fixtures: none of these numbers are farming instructions.
@@ -185,4 +186,55 @@ test('catalogue agronomy poisoning cannot change own projection or assign a sche
     const result = projectGrowerCycles([row, legacy], context);
     assert.deepEqual(result, before); assert.equal('plannedEvents' in result.legacyRows[0], false);
   } finally { Object.defineProperties(crop, descriptors); }
+});
+
+
+test('a field note links to the current saved planting, without inheriting planned dates or yields', () => {
+  const row = structuredClone(fixture().row);
+  const choice = { plantingId: row.id, cycleId: row.growerCycle.cycleId, bedId: bed.id, scope };
+  const before = structuredClone(row);
+  const result = resolveGrowerFieldNoteLink([row], context, { ...choice, date: '2028-02-29', actualKg: 12 });
+  assert.deepEqual(result, { status: 'resolved', link: { version: 1, ...choice } });
+  assert.deepEqual(row, before);
+  assert.equal(Object.isFrozen(row), false);
+  assert.notEqual(result.status === 'resolved' && result.link.scope, scope);
+});
+
+test('an ordinal, the wrong bed or the wrong site cannot authorize a field note link', () => {
+  const { row } = fixture();
+  const choice = { plantingId: row.id, cycleId: row.growerCycle.cycleId, bedId: bed.id, scope };
+  assert.deepEqual(resolveGrowerFieldNoteLink([row], context, { cycleId: choice.cycleId, bedId: bed.id, scope }),
+    { status: 'held', reason: 'invalid-selection' });
+  assert.deepEqual(resolveGrowerFieldNoteLink([row], context, { ...choice, plantingId: 'unknown-row' }),
+    { status: 'held', reason: 'cycle-unavailable' });
+  assert.deepEqual(resolveGrowerFieldNoteLink([row], context, { ...choice, bedId: 'other-bed' }),
+    { status: 'held', reason: 'selection-changed' });
+  assert.deepEqual(resolveGrowerFieldNoteLink([row], context, { ...choice, cycleId: 'other-ordinal' }),
+    { status: 'held', reason: 'selection-changed' });
+  assert.deepEqual(resolveGrowerFieldNoteLink([row], context, { ...choice, scope: { kind: 'mapped-site', siteId: 'site:0.00000,1.00000' } }),
+    { status: 'held', reason: 'scope-changed' });
+});
+
+test('duplicate planting IDs, reservation conflicts and changed geometry hold a link even when the chosen row still exists', () => {
+  const { row, create, cycles } = fixture();
+  const choice = { plantingId: row.id, cycleId: row.growerCycle.cycleId, bedId: bed.id, scope };
+  const expected = { status: 'held', reason: 'cycle-unavailable' };
+  assert.deepEqual(resolveGrowerFieldNoteLink([row, { id: row.id }], context, choice), expected);
+  assert.deepEqual(resolveGrowerFieldNoteLink([row, create(cycles[0], 'other-reservation')], context, choice), expected);
+  assert.deepEqual(resolveGrowerFieldNoteLink([row], { ...context, geometryFingerprint: 'changed' }, choice), expected);
+  assert.deepEqual(resolveGrowerFieldNoteLink([row], { ...context, beds: [] }, choice), expected);
+});
+
+
+test('proposal-local ordinals can repeat without redirecting a note to a different saved planting', () => {
+  const later = fixture().row;
+  const earlier = fixture('transplant', true);
+  const other = earlier.create(earlier.cycles[0], 'other-saved-planting');
+  assert.equal(later.growerCycle.cycleId, other.growerCycle.cycleId, 'fixture repeats the ordinal across two proposals');
+  const rows = [other, later];
+  assert.equal(projectGrowerCycles(rows, context).ownCycles.length, 2);
+  const result = resolveGrowerFieldNoteLink(rows, context,
+    { plantingId: later.id, cycleId: later.growerCycle.cycleId, bedId: bed.id, scope });
+  assert.equal(result.status, 'resolved');
+  assert.equal(result.link.plantingId, later.id);
 });

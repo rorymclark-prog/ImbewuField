@@ -1,0 +1,7 @@
+# Linking a field note to a saved grower cycle
+
+The pure resolver uses the existing whole crop-plan projection. It checks a grower's explicit planting, bed, proposal ordinal and scope against the current saved book and geometry. The persistent planting ID selects the row. A repeated proposal ordinal can never select a different row. Duplicate IDs, overlapping reservations and stale or absent geometry keep the link on hold. The returned link contains identity only. Planned dates and quantities cannot become observations by passing through the resolver.
+
+The journal remains the record of what happened. Before writing, the confirmation flow must establish the current actor and selected workspace, obtain the canonical book and source through `loadGrowerOperationsSources`, and verify that the original admitted sources still match with `checkGrowerOperationsCurrent`. Immediately before the synchronous journal save, it must check `isGrowerOperationsCurrent` and the journal's own actor and revision. A changed or unavailable link holds the form. The grower can retry, cancel or explicitly choose an unlinked note. The observed date comes from the journal form. A planning date, task tick or query parameter cannot supply it.
+
+Journal persistence, reconciliation of old or malformed link fields, and authorized export remain separate consumers. The resolver is not wired to a write path and adds no sharing or consent grant.
