@@ -1,0 +1,68 @@
+{
+  "task": "agy-harvest-target-parent-receipt-2026-11-03",
+  "status": "completed-handoff-contract",
+  "sourceHead": "b1df0d1ac441b36f515029ed4e902cc8720041e5",
+  "capturedAtUtc": "2026-11-03T12:40:54.360Z",
+  "workers": {
+    "active": 0,
+    "state": "stopped",
+    "mode": "main-writer-only"
+  },
+  "interactionSharing": "off",
+  "deliverables": [
+    "docs/international/agy-harvest-target-parent-receipt-2026-11-03/HARVEST-PARENT-RECEIPT.md",
+    "docs/international/agy-harvest-target-parent-receipt-2026-11-03/status.json"
+  ],
+  "wordCountCeiling": 450,
+  "wordCountAuthority": "root",
+  "priorContract": "docs/international/agy-harvest-target-mass-entry-2026-11-03/HARVEST-MASS-ENTRY.md",
+  "inspectedSources": [
+    {
+      "sourcePath": "components/crops/HarvestTargetsPanel.tsx",
+      "scope": "complete source",
+      "sourceBytes": 22052,
+      "sourceSha256": "b24ee3565cb1c0fd7bcf620715c22a688cb4c6563e6238513d24029cd2c92c94"
+    },
+    {
+      "sourcePath": "lib/nursery-save-receipt.ts",
+      "scope": "complete source",
+      "sourceBytes": 14942,
+      "sourceSha256": "77da0056c80c66d1adce4a086f2b6d4cddb19ba876e3eac4f4dfbb8726ffa56f"
+    },
+    {
+      "sourcePath": "app/facilitator/crops/page.tsx",
+      "scope": "five named function bodies, three nursery lifecycle variable statements, two authority/context effects, and two actual HarvestTargetsPanel callers only; not whole source",
+      "sourceBytes": 407590,
+      "sourceSha256": "0b3151207da4ed9599a489f43b0e253987abf7ab6509b3abf91c053a0595b6b9",
+      "extractBytes": 11483,
+      "extractSha256": "47b70d6fa900a711a787dc32523e6c988f5fd7ea8277ac3ee3af9118cbdaee2f"
+    }
+  ],
+  "unknowns": [
+    "Unshown app/facilitator/crops/page.tsx autosave scheduling, storage-readiness effects, and helper implementations outside the 11483-byte AST extract remain UNKNOWN.",
+    "lib/nursery-save-receipt.ts is implemented source for nursery settings only and is not yet integrated into HarvestTargetsPanel.tsx or saveScopedGrowerInputs('harvestTargets', ...)."
+  ],
+  "verification": {
+    "commandsRun": 0,
+    "networkCalls": 0,
+    "codeOrTestEdits": false,
+    "gitMutations": false,
+    "executedTestsClaimed": false,
+    "schemaValidatorClaimed": false,
+    "humanOrFluentApprovalClaimed": false,
+    "targetIntegrationClaimed": false,
+    "globalReadinessClaimed": false,
+    "proposedNegativesCount": 3,
+    "proposedNegativesStatus": "NOT EXECUTED"
+  },
+  "coordinatorCompactReview": {
+    "reviewedAtUtc": "2026-11-03T13:02:43.475947+00:00",
+    "actualWhitespaceWords": 443,
+    "allThreeSnapshotSourceAndExtractBytesSha256Checked": true,
+    "privateMetadataExcludedFromPublication": true,
+    "countGuardDistinctFromLosslessRawPayloadAndReceiptEvidence": true,
+    "pristineContextAndOriginalLeaseSourceAuthorityDistinguished": true,
+    "proposedNegativesNotExecuted": 3,
+    "implementationByResearch": false
+  }
+}

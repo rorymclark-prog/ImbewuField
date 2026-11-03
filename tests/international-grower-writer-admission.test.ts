@@ -10,6 +10,7 @@ import { createWorkspacePlanningReference, replaceWorkspacePlanningReference, sa
 import { hasGrowerCycleMarker } from '../lib/international/grower-cycle.ts';
 import { CROPS } from '../lib/crop-catalog.ts';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
+const { harvestTargetsSourceKey } = await import('../lib/nursery-save-receipt.ts');
 beforeEach(reset); after(cleanup);
 
 // All quantities, dates and identities here are synthetic engineering fixtures,
@@ -68,7 +69,7 @@ function parent(raw?: unknown) {
     loadCropPlanWithWriteAdmission:crop.loadCropPlanWithWriteAdmission,cropPlanWriteAdmissionMatches:crop.cropPlanWriteAdmissionMatches,
     cropPlanWriteCandidateIsLossless:crop.cropPlanWriteCandidateIsLossless,cropPlanWriteToken:crop.cropPlanWriteToken,
     saveCropPlanWithReceipt:crop.saveCropPlanWithReceipt,hasGrowerCycleMarker,
-    normaliseGrowerPlanningProfiles,growerPlanningScopeKey,sanitiseHarvestTargets:crop.sanitiseHarvestTargets,sanitiseNurserySettings,
+    normaliseGrowerPlanningProfiles,growerPlanningScopeKey,sanitiseHarvestTargets:crop.sanitiseHarvestTargets,sanitiseNurserySettings,harvestTargetsSourceKey,
     replaceWorkspacePlanningReference,sanitiseWorkspacePlanningReferences,currentPlanningScopeAllowed:()=>true,
     setPlan(value:any){state.plan=typeof value==='function'?value(state.plan):value;},setPlanHistory(fn:any){state.planHistory=fn(state.planHistory);},
     setPlanSaveConflict(value:boolean){state.planSaveConflict=value;},setPlanSaveFailed(value:boolean){state.planSaveFailed=value;},

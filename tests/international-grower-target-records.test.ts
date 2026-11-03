@@ -6,6 +6,7 @@ import React from 'react';
 import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
 import ts from 'typescript';
 import { CROPS, hasAutomaticPlanningBasis } from '../lib/crop-catalog.ts';
+import { initialiseCropPlanFixture, releaseCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import type { HarvestTarget } from '../lib/crop-plan.ts';
 
 const probe = { forbidden: true, assessments: 0, suggestions: 0, forecasts: 0, dateDefaults: 0, catalogueFilters: 0 };
@@ -43,6 +44,7 @@ const hooks = registerHooks({
   },
 });
 const { default: Panel } = await import('../components/crops/HarvestTargetsPanel.tsx');
+const { createHarvestSaveFixture } = await import('./nursery-save-fixture.ts');
 type Props = React.ComponentProps<typeof Panel>;
 after(() => { hooks.deregister(); if (prior) Object.defineProperty(globalThis, '__growerTargetRecords', prior); else Reflect.deleteProperty(globalThis, '__growerTargetRecords'); });
 test.beforeEach(() => { Object.assign(probe, { forbidden: true, assessments: 0, suggestions: 0, forecasts: 0, dateDefaults: 0, catalogueFilters: 0 }); });
@@ -56,20 +58,34 @@ const target = (id = 'own-target', site = siteId): HarvestTarget => ({ id, siteI
 function text(node: ReactTestInstance | string): string {
   return typeof node === 'string' ? node : node.children.map(child => text(child as ReactTestInstance | string)).join('');
 }
-function mount(initial: HarvestTarget[] = [], basis: Props['basis'] | 'default' = 'own-records') {
+async function mount(initial: HarvestTarget[] = [], basis: Props['basis'] | 'default' = 'own-records') {
+  const originals = new Map(['window', 'localStorage', 'sessionStorage'].map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  const storage = () => { const rows = new Map<string, string>(); return { getItem: (key: string) => rows.get(key) ?? null, setItem: (key: string, value: string) => rows.set(key, String(value)), removeItem: (key: string) => rows.delete(key) }; };
+  const localStorage = storage(), sessionStorage = storage();
+  for (const [key, value] of Object.entries({ window: Object.assign(new EventTarget(), { localStorage, sessionStorage }), localStorage, sessionStorage }))
+    Object.defineProperty(globalThis, key, { configurable: true, value });
+  // A positive receipt now runs the actual canonical lease, parent namespace
+  // merge and write/readback. Boolean controls deliberately withhold that proof.
+  await initialiseCropPlanFixture();
+  replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ version: 1, plantings: [], updatedAt: 1, harvestTargets: initial }));
+  const parent = createHarvestSaveFixture(siteId);
   let renderer!: ReactTestRenderer, records = structuredClone(initial), receipt = true, throwSave = false;
   const attempts: HarvestTarget[][] = [], accepts: unknown[] = [];
   let fallbackCalls = 0;
   const props: Props = { basis: basis === 'default' ? undefined : basis, siteId, targets: records, beds: [{ id: 'bed-a', label: 'Fixture bed', areaM2: 12 }],
-    plantings: [], pattern: 'mild-frost', climate: {}, onTargets(next) {
+    plantings: [], pattern: 'mild-frost', climate: {}, saveContext: parent.context(), onTargets(next, request) {
       fallbackCalls++;
       if (basis === 'own-records') throw Error('Own records used an unconfirmed legacy writer');
-      records = structuredClone(next); props.targets = records; renderer.update(React.createElement(Panel, props));
-    }, onSaveTargets(next) {
+      const result = parent.submit(next, request);
+      if (result.status === 'confirmed') { records = structuredClone(parent.state.plan.harvestTargets); props.targets = records; props.saveContext = parent.context(); renderer.update(React.createElement(Panel, props)); }
+      return result;
+    }, onSaveTargets(next, request) {
       attempts.push(structuredClone(next));
       if (throwSave) throw Error('synthetic save failure');
       if (!receipt) return false;
-      records = structuredClone(next); props.targets = records; renderer.update(React.createElement(Panel, props)); return true;
+      const result = parent.submit(next, request);
+      if (result.status === 'confirmed') { records = structuredClone(parent.state.plan.harvestTargets); props.targets = records; props.saveContext = parent.context(); renderer.update(React.createElement(Panel, props)); }
+      return result;
     }, onAccept(result) { accepts.push(result); } };
   if (basis !== 'own-records') delete props.onSaveTargets;
   act(() => { renderer = create(React.createElement(Panel, props)); });
@@ -92,9 +108,10 @@ function mount(initial: HarvestTarget[] = [], basis: Props['basis'] | 'default' 
       renderer.root.findByType('form').props.onChange?.(event);
     }); },
     submit() { act(() => renderer.root.findByType('form').props.onSubmit({ preventDefault() {} })); },
-    dispose() { act(() => renderer.unmount()); } };
+    dispose() { act(() => renderer.unmount()); parent.dispose(); releaseCropPlanFixture();
+      for (const [key, descriptor] of originals) { if (descriptor) Object.defineProperty(globalThis, key, descriptor); else Reflect.deleteProperty(globalThis, key); } } };
 }
-function fill(ui: ReturnType<typeof mount>, key = crop.key, unit = 'kg') {
+function fill(ui: Awaited<ReturnType<typeof mount>>, key = crop.key, unit = 'kg') {
   ui.change('Crop', key); ui.change('Weekly quantity', '7'); ui.change('Sales unit', unit);
   ui.change('First harvest month', '2028-02'); ui.change('Last harvest month', '2028-02');
 }
@@ -104,8 +121,8 @@ function noCatalogueCalls() {
   { assessments: 0, suggestions: 0, forecasts: 0, dateDefaults: 0, catalogueFilters: 0 });
 }
 
-test('own-record targets start with blank crop, quantity, harvest months and allowance without any catalogue calculation', () => {
-  const ui = mount(); try {
+test('own-record targets start with blank crop, quantity, harvest months and allowance without any catalogue calculation', async () => {
+  const ui = await mount(); try {
     for (const label of ['Crop', 'Weekly quantity', 'First harvest month', 'Last harvest month', 'Saleable share']) assert.equal(ui.field(label).props.value, '');
     assert.equal(ui.field('Sales unit').props.value, 'kg', 'the visible sales unit is not an agronomic rate');
     assert.equal(ui.renderer.root.findAllByType('input').filter(node => node.props.type === 'checkbox').length, 0);
@@ -116,8 +133,8 @@ test('own-record targets start with blank crop, quantity, harvest months and all
   } finally { ui.dispose(); }
 });
 
-test('foreign-site own records create, edit and remove canonical targets through a positive device receipt while preserving other sites', () => {
-  const other = target('other-target', otherSite), ui = mount([other]); try {
+test('foreign-site own records create, edit and remove canonical targets through a positive device receipt while preserving other sites', async () => {
+  const other = target('other-target', otherSite), ui = await mount([other]); try {
     fill(ui); ui.change('For', 'Synthetic buyer'); ui.submit();
     assert.equal(ui.records.length, 2); assert.deepEqual(ui.records.find(row => row.id === other.id), other);
     const created = ui.records.find(row => row.siteId === siteId)!; assert.ok(created.id); assert.equal(created.weeklyKg, 7);
@@ -131,23 +148,23 @@ test('foreign-site own records create, edit and remove canonical targets through
   } finally { ui.dispose(); }
 });
 
-test('blank pack weight and saleable share remain absent on save and reload instead of becoming conversion or success defaults', () => {
-  const first = mount(); let records: HarvestTarget[] = []; try {
+test('blank pack weight and saleable share remain absent on save and reload instead of becoming conversion or success defaults', async () => {
+  const first = await mount(); let records: HarvestTarget[] = []; try {
     fill(first, crop.key, 'bunches'); assert.equal(first.field('Harvest kg per').props.value, '');
     first.submit(); records = structuredClone(first.records);
     assert.equal(records.length, 1); assert.equal(records[0].unit, 'bunches');
     assert.equal(records[0].kgPerUnit, undefined); assert.equal(records[0].marketablePercent, undefined);
     assert.equal(records[0].weeklyQuantity, 7); assert.equal(records[0].weeklyKg, undefined); noCatalogueCalls();
   } finally { first.dispose(); }
-  const reloaded = mount(records); try {
+  const reloaded = await mount(records); try {
     assert.match(reloaded.text(), /Saleable share: unknown/); reloaded.click('Edit');
     assert.equal(reloaded.field('Harvest kg per').props.value, ''); assert.equal(reloaded.field('Saleable share').props.value, '');
     noCatalogueCalls();
   } finally { reloaded.dispose(); }
 });
 
-test('entered zero saleable share is retained as zero while an invalid zero pack weight stays unsaved', () => {
-  const ui = mount(); try {
+test('entered zero saleable share is retained as zero while an invalid zero pack weight stays unsaved', async () => {
+  const ui = await mount(); try {
     fill(ui, crop.key, 'bunches'); ui.change('Saleable share', '0'); ui.change('Harvest kg per', '0'); ui.submit();
     assert.equal(ui.attempts.length, 0); assert.match(ui.text(), /positive pack weight/);
     ui.change('Harvest kg per', ''); ui.submit(); assert.equal(ui.records[0].marketablePercent, 0);
@@ -155,11 +172,11 @@ test('entered zero saleable share is retained as zero while an invalid zero pack
   } finally { ui.dispose(); }
 });
 
-test('direct and zero-catalogue-yield identities stay selectable without importing their catalogue method or food status', () => {
+test('direct and zero-catalogue-yield identities stay selectable without importing their catalogue method or food status', async () => {
   const direct = CROPS.find(candidate => !candidate.transplant && candidate.yieldKgPerM2 !== 0)!;
   const cover = CROPS.find(candidate => candidate.yieldKgPerM2 === 0)!;
   assert.ok(direct); assert.ok(cover);
-  const ui = mount(); try {
+  const ui = await mount(); try {
     const options = ui.field('Crop').findAllByType('option').map(node => node.props.value);
     assert.ok(options.includes(direct.key)); assert.ok(options.includes(cover.key));
     for (const identity of [direct, cover]) { fill(ui, identity.key); ui.submit(); }
@@ -169,36 +186,40 @@ test('direct and zero-catalogue-yield identities stay selectable without importi
   } finally { ui.dispose(); }
 });
 
-test('failed target saves retain the edited form and previous records and withdraw any earlier success status', () => {
+test('failed target saves retain the edited form and previous records and withdraw any earlier success status', async () => {
   for (const failure of ['false', 'throw'] as const) {
-    const own = target(), other = target('other-target', otherSite), ui = mount([own, other]);
+    const own = target(), other = target('other-target', otherSite), ui = await mount([own, other]);
     try {
       ui.click('Edit'); ui.change('Weekly quantity', '14');
       if (failure === 'false') ui.receipt = false; else ui.throwSave = true;
       ui.submit(); assert.deepEqual(ui.records, [own, other]); assert.equal(ui.field('Weekly quantity').props.value, '14');
       assert.equal(ui.field('First harvest month').props.value, own.startMonth);
-      assert.match(ui.text(), /Could not save these targets/); assert.equal(ui.status(), '');
+      assert.match(ui.status(), /Save outcome is not confirmed/);
+      assert.doesNotMatch(ui.text(), /saved targets remain unchanged|Buyer targets saved on this device/);
       assert.ok(ui.renderer.root.findAllByType('button').some(node => text(node) === 'Save target changes'));
-      ui.receipt = true; ui.throwSave = false; ui.submit();
+      // A failed callback does not prove rollback, so an immediate retry remains held.
+      const attempted = ui.attempts.length; ui.receipt = true; ui.throwSave = false; ui.submit(); assert.equal(ui.attempts.length, attempted);
+      ui.click('Reload saved harvest targets'); ui.click('Edit'); ui.change('Weekly quantity', '14'); ui.submit();
       assert.equal(ui.records.find(row => row.id === own.id)!.weeklyKg, 14); assert.match(ui.status(), /saved on this device/);
       noCatalogueCalls();
     } finally { ui.dispose(); }
   }
 });
 
-test('a rejected stale removal retains the related unsaved editor and other-site records', () => {
-  const own = target(), other = target('other-target', otherSite), ui = mount([own, other]); try {
+test('a rejected stale removal retains the related unsaved editor and other-site records', async () => {
+  const own = target(), other = target('other-target', otherSite), ui = await mount([own, other]); try {
     ui.click('Edit'); ui.change('Weekly quantity', '21');
     const remove = ui.renderer.root.findAllByType('button').find(node => node.props['aria-label'] === `Remove ${crop.name} target`)!.props.onClick;
     ui.receipt = false; act(() => remove());
     assert.deepEqual(ui.records, [own, other]); assert.equal(ui.field('Weekly quantity').props.value, '21');
-    assert.equal(ui.status(), ''); assert.match(ui.text(), /Could not save these targets/);
+    assert.match(ui.status(), /Save outcome is not confirmed/); assert.doesNotMatch(ui.text(), /saved targets remain unchanged|Buyer targets saved on this device/);
+    const attempted = ui.attempts.length; act(() => remove()); assert.equal(ui.attempts.length, attempted, 'A retained removal must not replay an uncertain request');
     assert.ok(ui.renderer.root.findAllByType('button').some(node => text(node) === 'Save target changes')); noCatalogueCalls();
   } finally { ui.dispose(); }
 });
 
-test('a later invalid target does not retain a success receipt for the previous saved buyer', () => {
-  const ui = mount(); try {
+test('a later invalid target does not retain a success receipt for the previous saved buyer', async () => {
+  const ui = await mount(); try {
     fill(ui); ui.submit(); assert.match(ui.status(), /saved on this device/);
     const saved = structuredClone(ui.records);
     ui.submit(); assert.equal(ui.status(), '', 'submitting the untouched blank next form is not another successful save');
@@ -209,8 +230,8 @@ test('a later invalid target does not retain a success receipt for the previous 
   } finally { ui.dispose(); }
 });
 
-test('typing a new buyer draft clears the previous receipt before any further save attempt', () => {
-  const ui = mount(); try {
+test('typing a new buyer draft clears the previous receipt before any further save attempt', async () => {
+  const ui = await mount(); try {
     fill(ui); ui.submit(); assert.match(ui.status(), /saved on this device/);
     const saved = structuredClone(ui.records); ui.change('For', 'Uncommitted fixture buyer');
     assert.equal(ui.status(), ''); assert.equal(ui.attempts.length, 1); assert.deepEqual(ui.records, saved);
@@ -218,8 +239,8 @@ test('typing a new buyer draft clears the previous receipt before any further sa
   } finally { ui.dispose(); }
 });
 
-test('starting another own-record target never silently inherits the previous buyer harvest dates', () => {
-  const ui = mount(); try {
+test('starting another own-record target never silently inherits the previous buyer harvest dates', async () => {
+  const ui = await mount(); try {
     fill(ui); ui.submit(); assert.equal(ui.records.length, 1);
     assert.equal(ui.field('Crop').props.value, ''); assert.equal(ui.field('First harvest month').props.value, '');
     assert.equal(ui.field('Last harvest month').props.value, '');
@@ -228,9 +249,9 @@ test('starting another own-record target never silently inherits the previous bu
   } finally { ui.dispose(); }
 });
 
-test('omitted basis retains the existing catalogue path and its real assessment, suggestion and nursery checks', () => {
+test('omitted basis retains the existing catalogue path and its real assessment, suggestion and nursery checks', async () => {
   probe.forbidden = false;
-  const ui = mount([target()], 'default'); try {
+  const ui = await mount([target()], 'default'); try {
     assert.ok(probe.assessments > 0); assert.ok(probe.catalogueFilters > 0); assert.ok(probe.dateDefaults >= 2);
     assert.notEqual(ui.field('First harvest month').props.value, '');
     assert.match(ui.text(), /South African calendar/); assert.ok(ui.renderer.root.findAllByType('input').some(node => node.props.type === 'checkbox'));

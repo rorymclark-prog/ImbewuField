@@ -56,6 +56,7 @@ const hooks = registerHooks({
     return next(url, context);
   },
 });
+const { harvestTargetsSourceKey } = await import('../lib/nursery-save-receipt.ts');
 const cropBook = await import('../lib/crop-plan.ts');
 const { sanitiseNurserySettings } = await import('../lib/nursery-settings.ts');
 const { activeAccountUid, activeAccountLocalStorageKey, bindMountedAccountLocalStorageUid } = await import('../lib/account-local-storage.ts');
@@ -158,7 +159,7 @@ function parent() {
     loadCropPlanWithWriteAdmission: cropBook.loadCropPlanWithWriteAdmission,
     cropPlanWriteAdmissionMatches: cropBook.cropPlanWriteAdmissionMatches,
     cropPlanWriteCandidateIsLossless: cropBook.cropPlanWriteCandidateIsLossless,
-    sanitiseHarvestTargets: cropBook.sanitiseHarvestTargets, sanitiseNurserySettings,
+    sanitiseHarvestTargets: cropBook.sanitiseHarvestTargets, sanitiseNurserySettings, harvestTargetsSourceKey,
     normaliseGrowerPlanningProfiles, growerPlanningScopeKey, replaceWorkspacePlanningReference, sanitiseWorkspacePlanningReferences,
     saveCropPlanWithReceipt: cropBook.saveCropPlanWithReceipt,
     setPlanSaveConflict(value: boolean) { state.planSaveConflict = value; },

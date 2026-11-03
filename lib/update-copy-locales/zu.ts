@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/zu.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Faka izinhloso zokuvuna zamasonto onke nesisindo sakho samaphakethe ezivuno ngamakhilogremu (kg) noma ngamaphawundi esisindo (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Gcina imininingwane yezidingo zabathengi oyifakile isekhona lapho ukulondolozwa kwayo kungakwazi ukuqinisekiswa.",
+  "Choose harvest weight units": "Khetha amayunithi esisindo sesivuno",
+  "Production plan → Harvest targets": "Uhlelo lokukhiqiza → Izinhloso zokuvuna",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Khetha amakhilogremu (kg) noma amaphawundi esisindo (lb), faka inhloso yakho yokuvuna noma isisindo sakho sephakethe lesivuno, bese uyalondoloza. Isisindo samaphakethe esingaziwa sihlala singekho; izibalo zezinhloso zizilinganiso zokuhlela kuphela.",
   // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI draft descriptions only.
   "Enter nursery tray dimensions in centimetres or inches.": "Faka izilinganiso zamathileyi ezithombo ngamasentimitha noma ngamayintshi.",
   "Enter usable nursery surface in square metres or square feet.": "Faka indawo yokukhulisa izithombo esebenzisekayo ngamamitha-skwele noma ngamafithi-skwele.",

@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '7833c0ac4a', changes: [
+    'Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.',
+    'Keep buyer entries when a save cannot be confirmed.',
+  ], tour: [{ title: 'Choose harvest weight units', where: 'Production plan → Harvest targets', href: '/facilitator/crops',
+    detail: 'Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.' }] },
   { when: '3 November 2026', sha: 'e9d2ee956', changes: [
     'Enter nursery tray dimensions in centimetres or inches.',
     'Enter usable nursery surface in square metres or square feet.',

@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/ve.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Dzhenisani zwipikwa zwa khaṋo zwa vhege na vhege na tshileme tshaṋu tsha zwipaki zwa khaṋo nga dzikhilogiramu (kg) kana dziphaundu dza tshileme (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Vhulungani zwidodombedzwa zwa zwilavhelelwa zwa vharengi zwe na dzhenisa zwi tshi kha ḓi vha hone musi u vhulungwa hazwo hu sa koni u khwaṱhisedzwa.",
+  "Choose harvest weight units": "Nangani dziyuniti dza tshileme tsha khaṋo",
+  "Production plan → Harvest targets": "Pulane ya mveledziso → Zwipikwa zwa khaṋo",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Nangani dzikhilogiramu (kg) kana dziphaundu dza tshileme (lb), dzhenisani tshipikwa tshaṋu tsha khaṋo kana tshileme tshaṋu tsha tshipaki tsha khaṋo, u bva afho ni vhulunge. Tshileme tsha zwipaki tshi sa ḓivhei tshi dzula tshi siho; dziṱhanganyelo dza zwipikwa ndi anganyelo dza u pulana fhedzi.",
   // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI draft descriptions only.
   "Enter nursery tray dimensions in centimetres or inches.": "Dzhenisani mielo ya dzithirei dza tsimu ya zwimela zwiṱuku nga dzisentimitha kana dziintshi.",
   "Enter usable nursery surface in square metres or square feet.": "Dzhenisani vhupo vhu shumisekaho ha tsimu ya zwimela zwiṱuku nga dzimitha dza tshikwere kana dziṋayo dza tshikwere.",
