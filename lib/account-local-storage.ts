@@ -1,6 +1,7 @@
 'use client';
 
 import { getFirebase, isBackendConfigured } from './firebase/init';
+import type { CropPlanStorageLocks } from './crop-plan-storage';
 
 // Account-local browser data must never use one shared physical key while a user is
 // signed in. The suffix deliberately keeps the historical base key readable in logs
@@ -116,6 +117,58 @@ export interface GuestLocalStorageMigration {
   /** True when `raw` (the uid-scoped row, or null if it doesn't exist yet) has no
    *  farmer-entered content — i.e. it is safe to overwrite with the guest draft. */
   isEmpty: (raw: string | null) => boolean;
+  mayCopy?: (storage: Storage, uid: string) => boolean;
+}
+
+export const FIELD_JOURNAL_LEGACY_KEY = 'imbewu_field_journal_v1';
+export const FIELD_JOURNAL_CANONICAL_KEY = 'imbewu_field_journal_v2';
+export const FIELD_JOURNAL_GUEST_CLAIM_KEY = guestAccountLocalStorageKey('imbewu_field_journal_transfer_claim');
+
+export function fieldJournalStorageLockName(canonicalKey: string): string {
+  return `imbewu-journal:${canonicalKey}`;
+}
+
+export const FIELD_JOURNAL_GUEST_LOCK = fieldJournalStorageLockName(guestAccountLocalStorageKey(FIELD_JOURNAL_CANONICAL_KEY));
+
+const FIELD_JOURNAL_GUEST_MIGRATION = {
+  baseKey: FIELD_JOURNAL_LEGACY_KEY,
+  isEmpty(raw) {
+    if (raw === null) return true;
+    try {
+      const rows: unknown = JSON.parse(raw);
+      return Array.isArray(rows) && rows.length === 0;
+    } catch { return false; }
+  },
+  mayCopy(storage, uid) {
+    // A claimed guest draft belongs to the guarded handoff. A canonical
+    // account must also review older notes instead of receiving a v1 copy.
+    return storage.getItem(FIELD_JOURNAL_GUEST_CLAIM_KEY) === null
+      && storage.getItem(accountLocalStorageKey(FIELD_JOURNAL_CANONICAL_KEY, uid)) === null;
+  },
+} satisfies GuestLocalStorageMigration;
+
+/** Use the same order as the staged canonical handoff. Legacy bundles that
+ * predate this path can still write their own keys without these locks. */
+export async function migrateLegacyFieldJournalGuest(
+  uid: string,
+  isCurrent: () => boolean,
+  locks?: CropPlanStorageLocks | null,
+): Promise<void> {
+  const writer = locks === undefined && typeof navigator !== 'undefined' ? navigator.locks : locks;
+  const current = () => isCurrent() && readAccountLocalSampleState() === false;
+  if (!writer || !current()) return;
+  const options = { mode: 'exclusive', ifAvailable: true } as const;
+  const accountLock = fieldJournalStorageLockName(accountLocalStorageKey(FIELD_JOURNAL_CANONICAL_KEY, uid));
+  await writer.request(FIELD_JOURNAL_GUEST_LOCK, options, guest => {
+    if (!guest || !current()) return;
+    return writer.request(accountLock, options, account => {
+      if (!account || !current()) return;
+      migrateGuestLocalStorageRows([{
+        ...FIELD_JOURNAL_GUEST_MIGRATION,
+        mayCopy: (storage, owner) => current() && FIELD_JOURNAL_GUEST_MIGRATION.mayCopy(storage, owner),
+      }], uid);
+    });
+  });
 }
 
 /**
@@ -139,7 +192,7 @@ export interface GuestLocalStorageMigration {
  * row's migration throws (corrupt guest JSON, a full origin, anything). Each row is
  * handled independently so one bad row can't block another.
  *
- * The guest row is deleted after a successful copy. Leaving it behind would mean
+ * The guest row is deleted after a confirmed copy. Leaving it behind would mean
  * the next guest session on a shared family phone opens straight into the previous
  * person's journal — worse than the data loss this function exists to fix.
  */
@@ -148,15 +201,20 @@ export function migrateGuestLocalStorageRows(
   uid: string,
 ): void {
   if (typeof window === 'undefined' || !window.localStorage) return;
-  for (const { baseKey, isEmpty } of migrations) {
+  for (const { baseKey, isEmpty, mayCopy } of migrations) {
     try {
+      const storage = window.localStorage;
+      const permitted = () => window.localStorage === storage && (!mayCopy || mayCopy(storage, uid));
+      if (!permitted()) continue;
       const guestKey = guestAccountLocalStorageKey(baseKey);
-      const guestRaw = window.localStorage.getItem(guestKey);
+      const guestRaw = storage.getItem(guestKey);
       if (guestRaw === null || isEmpty(guestRaw)) continue; // nothing worth copying
       const uidKey = accountLocalStorageKey(baseKey, uid);
-      if (!isEmpty(window.localStorage.getItem(uidKey))) continue; // never clobber real data
-      window.localStorage.setItem(uidKey, guestRaw);
-      window.localStorage.removeItem(guestKey);
+      if (!isEmpty(storage.getItem(uidKey)) || storage.getItem(guestKey) !== guestRaw || !permitted()) continue;
+      storage.setItem(uidKey, guestRaw);
+      if (storage.getItem(uidKey) === guestRaw && storage.getItem(guestKey) === guestRaw && permitted()) {
+        storage.removeItem(guestKey);
+      }
     } catch {
       // One row's migration must never break sign-in. See the function-level note.
     }

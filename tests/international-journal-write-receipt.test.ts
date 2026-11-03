@@ -10,6 +10,7 @@ const rows = new Map<string, string>();
 const storage = {
   getItem(key: string) { state.reads++; const value = rows.get(key) ?? null; state.afterRead?.(); return value; },
   setItem(key: string, value: string) { state.writes++; if (!state.refuseWrite) rows.set(key, value); state.afterWrite?.(); },
+  removeItem(key: string) { rows.delete(key); },
 };
 const session = { getItem(key: string) { if (state.sampleThrows) throw Error('Sample flag unavailable'); return key === 'imbewu_sample_mode' && state.sample ? '1' : null; } };
 let activeStorage = storage;
@@ -29,7 +30,7 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
   }
   return next(specifier, context);
 } });
-const { accountLocalStorageKey, bindMountedAccountLocalStorageUid, guestAccountLocalStorageKey } = await import('../lib/account-local-storage.ts');
+const { accountLocalStorageKey, bindMountedAccountLocalStorageUid, guestAccountLocalStorageKey, migrateLegacyFieldJournalGuest } = await import('../lib/account-local-storage.ts');
 const { appendLinkedJournalNote, copyGuestJournalToAccount, exportJournalLegacyReview, initialiseJournalCutover, keepCurrentJournalAfterLegacyReview,
   loadJournal, MAX_ENTRIES, readCanonicalJournal, readJournalCutoverStatus, readJournalLegacyCandidates, readJournalLegacyReview, readJournalLinkWriteReceipt,
   journalLinkWriteReceiptMatches, recoverJournalLegacyNotes, saveJournal, writeCanonicalJournal } = await import('../lib/field-journal.ts');
@@ -647,4 +648,68 @@ test('an account change or an older guest write during copy cannot confirm the h
   assert.equal(rows.get(guestJournalKey), newer);
   assert.equal(JSON.parse(rows.get(canonicalKey)!).journalRaw, guest);
   assert.equal(state.events, 0);
+});
+
+test('the sign-in migration honors a claimed guest journal and the same lock order', async () => {
+  const raw = JSON.stringify([entry]);
+  rows.set(guestJournalKey, raw);
+  assert.equal((await copyGuestJournalToAccount(exclusive)).status, 'copied');
+  const claim = rows.get(guestClaimKey);
+  const other = accountLocalStorageKey('imbewu_field_journal_v1', 'account-b');
+  const names: string[] = [];
+  const locks: CropPlanStorageLocks = { async request(name, options, action) {
+    names.push(name);
+    assert.deepEqual(options, { mode: 'exclusive', ifAvailable: true });
+    return await action({});
+  } };
+  state.uid = 'account-b';
+  await migrateLegacyFieldJournalGuest('account-b', () => state.uid === 'account-b', locks);
+  assert.deepEqual(names, [`imbewu-journal:${guestAccountLocalStorageKey('imbewu_field_journal_v2')}`,
+    `imbewu-journal:${accountLocalStorageKey('imbewu_field_journal_v2', 'account-b')}`]);
+  assert.equal(rows.get(guestJournalKey), raw);
+  assert.equal(rows.get(guestClaimKey), claim);
+  assert.equal(rows.has(other), false);
+  assert.equal(state.writes, 2);
+
+  // An older login can still remove the v1 source outside these locks.
+  rows.delete(guestJournalKey);
+  state.uid = 'account-a';
+  assert.deepEqual(await copyGuestJournalToAccount(exclusive), { status: 'held', reason: 'claimed-source-missing' });
+  assert.equal(rows.get(guestClaimKey), claim);
+  assert.equal(JSON.parse(rows.get(canonicalKey)!).journalRaw, raw);
+});
+
+test('sign-in preserves the guest until an unclaimed legacy destination is verified', async () => {
+  const raw = JSON.stringify([entry]);
+  rows.set(guestJournalKey, raw);
+  rows.set(key, '{}');
+  await migrateLegacyFieldJournalGuest('account-a', () => true, exclusive);
+  assert.equal(rows.get(key), '{}');
+  rows.delete(key);
+  await migrateLegacyFieldJournalGuest('account-a', () => true, null);
+  assert.equal(state.writes, 0);
+  state.refuseWrite = true;
+  await migrateLegacyFieldJournalGuest('account-a', () => true, exclusive);
+  assert.equal(rows.get(guestJournalKey), raw);
+  assert.equal(rows.has(key), false);
+  state.refuseWrite = false;
+  await migrateLegacyFieldJournalGuest('account-a', () => true, exclusive);
+  assert.equal(rows.get(key), raw);
+  assert.equal(rows.has(guestJournalKey), false);
+});
+
+test('sign-in keeps the guest when a current journal exists or the auth actor changes', async () => {
+  const raw = JSON.stringify([entry]);
+  rows.set(guestJournalKey, raw);
+  assert.equal((await initialiseJournalCutover(exclusive)).status, 'ready');
+  await migrateLegacyFieldJournalGuest('account-a', () => true, exclusive);
+  assert.equal(rows.get(guestJournalKey), raw);
+  assert.equal(rows.has(key), false);
+  rows.delete(canonicalKey);
+  const newer = JSON.stringify([{ ...entry, title: 'Newer guest text' }]);
+  state.afterWrite = () => { state.uid = 'account-b'; rows.set(guestJournalKey, newer); };
+  await migrateLegacyFieldJournalGuest('account-a', () => state.uid === 'account-a', exclusive);
+  assert.equal(rows.get(key), raw);
+  assert.equal(rows.get(guestJournalKey), newer);
+  assert.equal(rows.has(accountLocalStorageKey('imbewu_field_journal_v1', 'account-b')), false);
 });

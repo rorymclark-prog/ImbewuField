@@ -11,7 +11,11 @@
 // grouping, normalisation and trimming rules can be tested directly.
 
 import { Sprout, ShoppingBasket, CloudSun, Bug, Wrench, Users, NotebookPen, type LucideIcon } from 'lucide-react';
-import { activeAccountLocalStorageKey, activeAccountUid, guestAccountLocalStorageKey, readAccountLocalSampleState } from './account-local-storage';
+import {
+  activeAccountLocalStorageKey, activeAccountUid, guestAccountLocalStorageKey, readAccountLocalSampleState,
+  FIELD_JOURNAL_LEGACY_KEY as STORAGE_KEY, FIELD_JOURNAL_CANONICAL_KEY as CANONICAL_JOURNAL_KEY,
+  FIELD_JOURNAL_GUEST_CLAIM_KEY, FIELD_JOURNAL_GUEST_LOCK, fieldJournalStorageLockName,
+} from './account-local-storage';
 import { getFirebase, isBackendConfigured } from './firebase/init';
 import { normaliseGrowerFieldNoteLink } from './international/grower-field-note-link';
 import type { CropPlanStorageLocks } from './crop-plan-storage';
@@ -382,7 +386,6 @@ export function trimJournalForStorage(
 
 /* ── Storage ─────────────────────────────────────────────────────────────── */
 
-const STORAGE_KEY = 'imbewu_field_journal_v1';
 export const JOURNAL_CHANGED_EVENT = 'imbewu-field-journal-changed';
 
 export function loadJournal(): JournalEntry[] {
@@ -581,7 +584,6 @@ export function appendLinkedJournalNote(
 }
 
 // Older bundles can still write v1 directly. They never receive the new key.
-const CANONICAL_JOURNAL_KEY = 'imbewu_field_journal_v2';
 type JournalCutoverReason = 'context-unavailable' | 'context-changed' | 'upgrade-required' | 'invalid-legacy'
   | 'invalid-canonical' | 'legacy-diverged' | 'lock-unavailable' | 'write-unconfirmed';
 export type JournalCutoverStatus = { readonly status: 'ready' }
@@ -602,7 +604,7 @@ function journalLocks(locks: CropPlanStorageLocks | null | undefined): CropPlanS
 }
 
 function journalLockName(context: JournalCutoverContext): string {
-  return `imbewu-journal:${context.canonicalKey}`;
+  return fieldJournalStorageLockName(context.canonicalKey);
 }
 
 function journalCutoverContext(): JournalCutoverContext | null {
@@ -659,7 +661,7 @@ export type GuestJournalCopyResult =
   | { readonly status: 'copied'; readonly count: number }
   | { readonly status: 'already-copied' }
   | { readonly status: 'held'; readonly reason: 'context-changed' | 'lock-unavailable' | 'invalid-guest'
-      | 'guest-claimed' | 'account-journal-exists' | 'write-unconfirmed' };
+      | 'guest-claimed' | 'claimed-source-missing' | 'account-journal-exists' | 'write-unconfirmed' };
 
 /** Stage an explicit guest handoff after the destination account is mounted.
  * The claim binds a retry to one account and one exact guest copy. Keep the
@@ -673,10 +675,10 @@ export async function copyGuestJournalToAccount(locks?: CropPlanStorageLocks | n
     const writer = journalLocks(locks);
     if (!writer) return { status: 'held', reason: 'lock-unavailable' };
     const guestKey = guestAccountLocalStorageKey(STORAGE_KEY);
-    const claimKey = guestAccountLocalStorageKey('imbewu_field_journal_transfer_claim');
+    const claimKey = FIELD_JOURNAL_GUEST_CLAIM_KEY;
     const options = { mode: 'exclusive', ifAvailable: true } as const;
     // Every transfer takes the common guest lock before its destination lock.
-    return await writer.request<GuestJournalCopyResult>(`imbewu-journal:${guestAccountLocalStorageKey(CANONICAL_JOURNAL_KEY)}`, options, guestLock => {
+    return await writer.request<GuestJournalCopyResult>(FIELD_JOURNAL_GUEST_LOCK, options, guestLock => {
       if (!guestLock) return { status: 'held', reason: 'lock-unavailable' };
       return writer.request<GuestJournalCopyResult>(journalLockName(context), options, async accountLock => {
         if (!accountLock) return { status: 'held', reason: 'lock-unavailable' };
@@ -689,7 +691,9 @@ export async function copyGuestJournalToAccount(locks?: CropPlanStorageLocks | n
         if (!current(claim)) return changed;
         const rows = readLosslessOlderJournal(raw);
         if (!rows || rows.some(row => Object.hasOwn(row, 'growerCycleLink'))) return { status: 'held', reason: 'invalid-guest' };
-        if (!rows.length || raw === null) return { status: 'nothing-to-copy' };
+        if (!rows.length || raw === null) {
+          return claim === null ? { status: 'nothing-to-copy' } : { status: 'held', reason: 'claimed-source-missing' };
+        }
         if (raw.length > JOURNAL_BYTE_BUDGET) return { status: 'held', reason: 'invalid-guest' };
         const guestImportDigest = await journalLegacyDigest(raw);
         const ownerDigest = await journalLegacyDigest(context.canonicalKey);

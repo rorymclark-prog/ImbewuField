@@ -36,8 +36,7 @@ import {
   bindMountedAccountLocalStorageUid,
   accountLocalStorageKey,
   ACCOUNT_LOCAL_STORAGE_OWNER_SEPARATOR,
-  migrateGuestLocalStorageRows,
-  type GuestLocalStorageMigration,
+  migrateLegacyFieldJournalGuest,
 } from '@/lib/account-local-storage';
 import {
   CROP_PLAN_LEGACY_KEY, CROP_PLAN_STORAGE_KEY, CROP_PLAN_CUTOVER_KEY,
@@ -82,24 +81,6 @@ const AuthContext = createContext<AuthContextValue>({
 });
 
 // ─── Guest → account localStorage migration ─────────────────────────────────
-
-// Keep auth's data boundary light: importing the crop catalogue here makes every
-// login load farming data. The shared storage module owns the schema and pair
-// transfer; only the journal still uses the generic single-row migration.
-const GUEST_LOCAL_STORAGE_MIGRATIONS: readonly GuestLocalStorageMigration[] = [
-  {
-    baseKey: 'imbewu_field_journal_v1', // lib/field-journal.ts STORAGE_KEY
-    isEmpty: (raw) => {
-      if (!raw) return true;
-      try {
-        const parsed = JSON.parse(raw);
-        return !Array.isArray(parsed) || parsed.length === 0;
-      } catch {
-        return false; // unparseable is not proof there's nothing worth protecting
-      }
-    },
-  },
-];
 
 const isEmptyCropPlanMigrationSource = (raw: string | null): boolean => {
   if (raw === null) return true;
@@ -172,7 +153,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!isCurrent() || typeof window === 'undefined') return;
       try {
         releaseAllDocumentCropPlanLeases();
-        migrateGuestLocalStorageRows(GUEST_LOCAL_STORAGE_MIGRATIONS, uid);
+        // A denied journal lock cannot block the separate crop-plan transfer.
+        await migrateLegacyFieldJournalGuest(uid, isCurrent).catch(() => {});
         if (!isCurrent()) return;
         const target = cropMigrationContext(uid, isCurrent);
         await transferCropPlanStoragePair(cropMigrationContext(null, isCurrent), target, {
