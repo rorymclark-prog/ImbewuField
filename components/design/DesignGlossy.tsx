@@ -49,6 +49,7 @@ import {
   type FrameLike as BoundaryFrameGeom,
 } from '@/lib/boundary-geometry';
 import { structureRegisterText } from '@/lib/structure-register';
+import { historicalBaselineForSite, historicalBaselineFromPrompt, historicalBaselinePrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, type HistoricalBaseline } from '@/lib/historical-map-baseline';
 import { bedFootprintRegister, buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, PHASING_ARTWORK_PROMPT_MARKER, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
@@ -7154,12 +7155,91 @@ async function buildExactLayerOverlay(
 
 /** Sheet 01 uses the same measured editorial composition as the design layers but contains only
  * existing traced fabric. It is the authoritative before-state every later sheet builds upon. */
+// Registration is paint-time only. The saved design and the later design-sheet source stay intact.
+const historicalFrameCache = new WeakMap<CanvasFrame, Promise<CanvasFrame>>();
+async function buildHistoricalBaselineFrame(frame: CanvasFrame, baseline: HistoricalBaseline): Promise<CanvasFrame> {
+  const cached = historicalFrameCache.get(frame);
+  if (cached) return cached;
+  const pending = (async () => {
+    const image = await loadImage(baseline.image);
+    const canvas = document.createElement('canvas');
+    canvas.width = frame.imgW * SCALE; canvas.height = frame.imgH * SCALE;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) { releaseCanvas(canvas); releaseImageSource(image); throw new Error('Historical image preparation unavailable'); }
+    try {
+      ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.setTransform(...historicalPhotoTransform(frame,SCALE,baseline));
+      ctx.drawImage(image,0,0);
+      return { ...frame, satDataUrl: drainCanvasToDataUrl(canvas,'image/png') };
+    } finally { releaseImageSource(image); releaseCanvas(canvas); }
+  })();
+  historicalFrameCache.set(frame,pending);
+  try { return await pending; } catch(error) { historicalFrameCache.delete(frame); throw error; }
+}
+
+async function buildHistoricalCoverageMask(frame: CanvasFrame, baseline: HistoricalBaseline, source?: Pick<RenderSceneSnapshot,'state'|'frame'|'refLayers'>): Promise<string> {
+  const canvas=document.createElement('canvas');canvas.width=frame.imgW*SCALE;canvas.height=frame.imgH*SCALE;
+  const ctx=canvas.getContext('2d');
+  if(!ctx){releaseCanvas(canvas);throw new Error('Historical coverage unavailable');}
+  ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.globalCompositeOperation='destination-out';ctx.beginPath();
+  const extent = source ? [[0,0],[baseline.width,0],[baseline.width,baseline.height],[0,baseline.height]].map(point=>historicalPresentationPhotoPoint(source.state,source.frame,source.refLayers,point as [number,number],baseline)) : historicalPhotoExtent(frame,baseline);
+  extent.forEach(([x,y],i)=>(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x*canvas.width,y*canvas.height));
+  ctx.closePath();ctx.fill();
+  return drainCanvasToDataUrl(canvas,'image/png');
+}
+
+function drawHistoricalDesignExtent(ctx: CanvasRenderingContext2D, refs: DesignGlossyProps['refLayers'], W:number,H:number): void {
+  if(refs.boundary.length<3)return;
+  ctx.save();blueprintRing(ctx,refs.boundary,n=>n*W,n=>n*H);
+  ctx.strokeStyle=BOUNDARY_LINE_GREEN;ctx.lineWidth=Math.max(2,W*.0009);ctx.setLineDash([W*.004,W*.003]);ctx.stroke();ctx.restore();
+}
+
+function drawHistoricalPhotoPin(ctx:CanvasRenderingContext2D,x:number,y:number,r:number,n:number):void {
+  ctx.save();ctx.setLineDash([]);ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+  ctx.fillStyle='#FFFFFF';ctx.fill();ctx.strokeStyle='#244F36';ctx.lineWidth=Math.max(1.5,r*.13);ctx.stroke();
+  ctx.fillStyle='#183425';ctx.font=`800 ${Math.round(r*1.2)}px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(n),x,y);ctx.restore();
+}
+
+function historicalPresentationPhotoPoint(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],point:readonly [number,number],baseline:HistoricalBaseline):[number,number] {
+  const [x,y]=historicalPhotoPoint(frame,point,baseline);
+  // Presentation crops change image coordinates, not geographic frame metadata. Apply the same
+  // crop as the photograph, rather than projecting against its resized width a second time.
+  const layout=calculateBoundaryPresentationLayout(presentationExtentRing(state,frame,refs.boundary),frame,SCALE);
+  return layout?[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight]:[x,y];
+}
+
+function drawHistoricalPhotoFacts(ctx: CanvasRenderingContext2D,state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],W:number,H:number,baseline:HistoricalBaseline,labels=true):void {
+  ctx.save();ctx.strokeStyle='#79583B';ctx.lineWidth=Math.max(2,W*.001);ctx.setLineDash([]);ctx.beginPath();
+  baseline.fence.forEach((point,i)=>{const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,point,baseline);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x*W,y*H);});ctx.stroke();ctx.restore();
+  if(!labels)return;
+  // Eight long plaques hid the starting infrastructure. A numbered photo key is legible at
+  // the actual feature and carries its full name once, in the matching right-hand inventory.
+  baseline.features.forEach((feature,index)=>{const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,feature.point,baseline);drawHistoricalPhotoPin(ctx,x*W,y*H,Math.max(21,W*.011),index+1);});
+}
+
+async function composeHistoricalBaseSheet(baseImage:string|null,state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName:string|undefined,baseline:HistoricalBaseline,aiArtwork=false,styleLabel='Archive photograph'):Promise<string> {
+  const p=await boundaryPresentationContext(state,frame,refs),W=p.frame.imgW*SCALE,H=p.frame.imgH*SCALE;
+  const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext('2d');if(!ctx){releaseCanvas(canvas);throw new Error('Historical sheet unavailable');}
+  const image=await loadImage(baseImage??p.frame.satDataUrl!);
+  try{ctx.drawImage(image,0,0,W,H);}finally{releaseImageSource(image);}
+  drawHistoricalDesignExtent(ctx,p.refLayers,W,H);
+  drawHistoricalPhotoFacts(ctx,state,frame,refs,W,H,baseline);
+  const legendRows:StyleLegendRow[]=baseline.features.map((feature,index)=>({swatch:'#244F36',text:feature.label.replace(/^Existing /,'').replace(/^./,c=>c.toUpperCase()),photoNumber:index+1}));
+  legendRows.push({swatch:BOUNDARY_LINE_GREEN,text:'Current design extent — not the historic fence',visual:'historical-extent'});
+  return composeStyleSheet(drainCanvasToDataUrl(canvas,'image/png'),p.state,p.frame,p.refLayers,'all',placeName,styleLabel,'Existing Site — before works',false,true,
+    {sheetNumber:'01',legendRows,aiArtwork,imageAttribution:'Historic drone photograph: Imbewu project archive.',footerHeading:'HISTORICAL PHOTO',footerText:[baseline.provenance,baseline.alignment,baseline.coverage].join('\n'),footerBox:true});
+}
+
 export async function buildBlueprintBaseMap(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   placeName?: string,
+  baseline: HistoricalBaseline | null = historicalBaselineForSite(state.siteId),
 ): Promise<string> {
+  if (baseline) return composeHistoricalBaseSheet(null,state,await buildHistoricalBaselineFrame(frame,baseline),refLayers,placeName,baseline);
   const presentation = await boundaryPresentationContext(state, frame, refLayers);
   const renderState = presentation.state;
   const renderFrame = presentation.frame;
@@ -9284,6 +9364,7 @@ async function composeSectorSheet(
   refLayers: DesignGlossyProps['refLayers'],
   site: SectorSite | null,
   placeName?: string,
+  baseline: HistoricalBaseline | null = null,
 ): Promise<string> {
   const presentation = await boundaryPresentationContext(state, frame, refLayers);
   const renderState = presentation.state;
@@ -9321,6 +9402,9 @@ async function composeSectorSheet(
     ctx.restore();
     // Paid artwork already has its own palette. A second photo filter and cream veil
     // erased the illustration Rory paid for, leaving Sector looking like its exact master.
+  } else if (baseline && renderFrame.satDataUrl) {
+    const image=await loadImage(renderFrame.satDataUrl);
+    try{ctx.drawImage(image,0,0,W,H);}finally{releaseImageSource(image);}
   } else {
     await drawAnalysisBase(ctx, renderFrame, W, H);
   }
@@ -9372,7 +9456,8 @@ async function composeSectorSheet(
     }
     ctx.restore();
   }
-  drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
+  if(baseline){drawHistoricalDesignExtent(ctx,renderRefLayers,W,H);drawHistoricalPhotoFacts(ctx,state,frame,refLayers,W,H,baseline,false);}
+  else drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
 
   const analysis = drawSectorAnalysis(
     ctx,
@@ -9394,12 +9479,13 @@ async function composeSectorSheet(
   // labels are reserved for sun, wind, fire, access, fall and the legend.
   const legendRows: StyleLegendRow[] = analysis.rows.map((row, index) => ({
     swatch: row.color,
-    text: `${index + 1}. ${row.label}`,
-    lineKind: row.color === BOUNDARY_LINE_GREEN ? 'fence' : row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
+    text: `${index + 1}. ${baseline && row.label === 'Site boundary' ? 'Current design extent' : row.label}`,
+    lineKind: row.color === BOUNDARY_LINE_GREEN ? (baseline ? 'path' : 'fence') : row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
     kind: row.style === 'fill' ? 'surface' : undefined,
     sectorIcon: row.sectorIcon,
   }));
 
+  if(baseline) legendRows.push({swatch:'#79583B',text:'Existing fence — visible portion',lineKind:'pipe'});
   const mapDataUrl = drainCanvasToDataUrl(canvas, 'image/png');
   return composeStyleSheet(
     mapDataUrl,
@@ -9415,9 +9501,17 @@ async function composeSectorSheet(
     {
       sheetNumber: '02',
       aiArtwork: baseImage !== null,
+      ...(baseline ? {imageAttribution:'Historic drone photograph: Imbewu project archive.'} : {}),
       legendRows,
       footerHeading: 'NOTES & PROVENANCE',
-      footerText: analysis.noteText,
+      footerText: baseline ? [
+        'Before-works archive photo, published as July 2019; camera date unverified.',
+        'Aligned to classroom roofs, not a survey. Dashed green shows the current design extent; brown marks the visible historic fence.',
+        'Photo coverage ends before the northeast and southwest tips; those areas stay blank.',
+        'Sun paths are computed from latitude, referenced to true north. Wind and fire arrows are regional assumptions, not local measurements. Confirm them on site.',
+        'Any slope shown is an indicative terrain estimate. No surveyed ground heights are supplied.',
+        sheetContours.status === 'ok' ? 'Contours are derived from Mapbox terrain data, not a ground survey.' : 'No terrain contours are shown: suitable contour data was unavailable for this sheet.',
+      ].join('\n\n') : analysis.noteText,
       footerBox: true,
     },
   );
@@ -9432,8 +9526,9 @@ export async function buildBlueprintSectorMap(
   refLayers: DesignGlossyProps['refLayers'],
   site: SectorSite | null,
   placeName?: string,
+  baseline: HistoricalBaseline | null = historicalBaselineForSite(state.siteId),
 ): Promise<string> {
-  return composeSectorSheet(null, state, frame, refLayers, site, placeName);
+  return composeSectorSheet(null, state, baseline ? await buildHistoricalBaselineFrame(frame,baseline) : frame, refLayers, site, placeName,baseline);
 }
 
 // Single source of truth for sheet 09's complete map-plus-schedule envelope. The exact sheet, both
@@ -9600,6 +9695,7 @@ async function composePhasingSheet(
   site: DesignGlossyProps['site'],
   placeName?: string,
   paintedArtwork = false,
+  styleLabel = 'AI illustration',
 ): Promise<string> {
   if (!baseImage) return buildImplementationMap(state, frame, refLayers, site, placeName);
 
@@ -9645,7 +9741,7 @@ async function composePhasingSheet(
   // 4. The schedule panel itself — copied pixel-for-pixel from a freshly built exact sheet, so the
   //    text is guaranteed byte-identical to buildImplementationMap's own render rather than a second,
   //    independently laid-out copy that could drift from it under a future font/wrap change.
-  const exactSheet = await buildImplementationMap(state, frame, refLayers, site, placeName);
+  const exactSheet = await buildImplementationMap(state, frame, refLayers, site, placeName, paintedArtwork ? `${styleLabel} · AI illustration` : undefined);
   const exactImg = await loadImage(exactSheet);
   // The whole right-hand column, full height, is app-owned schedule content.
   ctx.drawImage(exactImg, lgX, 0, W - lgX, H, lgX, 0, W - lgX, H);
@@ -9737,6 +9833,7 @@ export async function buildImplementationMap(
   refLayers: DesignGlossyProps['refLayers'],
   site: DesignGlossyProps['site'],
   placeName?: string,
+  artworkCredit?: string,
 ): Promise<string> {
   // FRAMED TO THE BOUNDARY, with a separate schedule column like sheets 01–08.
   //
@@ -10001,7 +10098,7 @@ export async function buildImplementationMap(
 
   ctx.fillStyle = '#8A8172';
   ctx.font = `500 ${styleFooterFs}px ${SHEET_BODY_FONT}`;
-  ctx.fillText('Reference Blueprint', innerX, panel.contentBottom - Math.ceil(styleFooterFs * 0.25));
+  ctx.fillText(artworkCredit ?? 'Reference Blueprint', innerX, panel.contentBottom - Math.ceil(styleFooterFs * 0.25), innerW);
 
   // The compass occupies the same map corner as the other eight sheets.
   drawSheetNorthArrow(ctx, mapX, mapW, mapH);
@@ -10022,12 +10119,13 @@ export async function buildImplementationMap(
 interface StyleLegendRow {
   swatch: string;
   text: string;
+  photoNumber?: number;
   defId?: string;
   lineKind?: string;
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above';
+  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above';
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
@@ -10254,6 +10352,8 @@ function drawStyleLegendSymbol(
   w: number,
   h: number,
 ): void {
+  if(row.visual==='historical-extent'){ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(1.5,h*.05);ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;}
+  if(row.photoNumber!==undefined){drawHistoricalPhotoPin(ctx,x+w/2,y,Math.min(w,h)*.36,row.photoNumber);return;}
   if (row.sectorIcon) {
     const cx = x + w / 2;
     const r = Math.max(5, Math.min(w, h) * 0.24);
@@ -10620,6 +10720,8 @@ async function composeStyleSheet(
   exactGeometry = false,
   options: {
     aiArtwork?: boolean;
+    /** An archive photo must not acquire the current basemap provider's credit. */
+    imageAttribution?: string;
     /** Perspective art cannot carry a metric bar or the top-down north marker. */
     obliqueArtwork?: boolean;
     /** Old paid artwork can contain a guide already painted by the model. Keep its old inventory. */
@@ -10799,7 +10901,7 @@ async function composeStyleSheet(
     return lines;
   };
   const footerText = options.aiArtwork
-    ? [options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, frame.satDataUrl ? basemapAttribution() : '', footerStyleLabel].filter(Boolean).join('\n')
+    ? [options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : ''), footerStyleLabel].filter(Boolean).join('\n')
     : options.footerText ? [options.footerText, footerStyleLabel].filter(Boolean).join('\n') : undefined;
   const customFooterLines = footerText ? wrapFooterText(footerText) : [];
   const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
@@ -10813,7 +10915,7 @@ async function composeStyleSheet(
   // plan a farmer may hand to a funder it is the more embarrassing of the two. The absence of
   // satDataUrl is the same condition drawBlueprintBase uses to lay paper instead of a photo, so the
   // credit and the picture can never disagree.
-  const attributionLine = frame.satDataUrl ? basemapAttribution() : '';
+  const attributionLine = options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : '');
   const defaultFooterLines = wrapFooterText([
     exactGeometry
       ? 'Exact plan — geometry and counts\ncome from your saved design.\nNo unsaved features added.'
@@ -12084,6 +12186,10 @@ export default function DesignGlossy({
   // case that needs the Style/engine pickers. AI on 01/02/08 uses the Gemini analysis path (no
   // Style), and exact mode uses no AI at all.
   const selectedSheet = DESIGN_SHEETS.find((s) => s.no === selectedNo);
+  const [historicalEnabled,setHistoricalEnabled] = useState(true);
+  const availableHistoricalBaseline = historicalBaselineForSite(state.siteId);
+  const historicalSheet = !!selectedSheet && 'exact' in selectedSheet && ['base','sector'].includes(selectedSheet.exact);
+  const historicalActive = historicalEnabled && historicalSheet && availableHistoricalBaseline !== null;
   const sheetSettingsRef = useRef(new Map<string, SheetPresentationSettings>());
   const manualUnderlaysRef = useRef(new Set<string>());
   const chooseStyle = (style: StylePreset) => {
@@ -12108,15 +12214,15 @@ export default function DesignGlossy({
       sheetSettingsRef.current.set(key(previous.no), { underlay, style: retainedStyle, labelMode, view: aiView });
     }
     const next = sheetSettingsRef.current.get(key(sheet.no))
-      ?? recommendedSheetSettings('exact' in sheet ? sheet.exact : sheet.filter, frameProp, DEFAULT_PRODUCER_STYLE);
+      ?? recommendedSheetSettings('exact' in sheet ? sheet.exact : sheet.filter, frameProp, DEFAULT_PRODUCER_STYLE, m);
     sheetSettingsRef.current.set(key(sheet.no), next);
-    setUnderlay(next.underlay);
+    setUnderlay(historicalEnabled && historicalBaselineForSite(state.siteId) && 'exact' in sheet && ['base','sector'].includes(sheet.exact) ? 'photo' : next.underlay);
     setLabelMode(next.labelMode);
     setAiView(next.view);
     applySheet(sheet, m);
     if (m === 'ai') setProducerStyle(next.view === 'oblique'
       ? next.style : sheetRenderRoute(sheet, 'hybrid', next.style).styleUsed);
-  }, [loading, selectedNo, state.siteId, producerStyle, underlay, labelMode, aiView, frameProp, applySheet]);
+  }, [loading, selectedNo, state.siteId, producerStyle, underlay, labelMode, aiView, frameProp, applySheet, historicalEnabled]);
   useEffect(() => {
     if (aiRenderOn || !selectedSheet) return;
     setMode('exact');
@@ -12400,7 +12506,7 @@ export default function DesignGlossy({
   // WHITE and lost its veil (2026-08-10). Without this bump the farmer opens the sheet and sees the
   // cached CREAM one without rendering anything — which reads as "the change did nothing", and is
   // exactly what the r-token exists to prevent.
-  const underlaySuffix = underlayCacheSuffix(underlay, frameProp)
+  const underlaySuffix = (historicalActive ? `:${availableHistoricalBaseline!.id}` : underlayCacheSuffix(underlay, frameProp))
     + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
     + `:${SHEET_RENDER_RECIPE}`
     // A sheet drawn at SCALE 3 is a different picture from the same sheet at 2 — re-serving a
@@ -13200,12 +13306,12 @@ export default function DesignGlossy({
     setLoading('exact');
     setError(null);
     try {
-      const composite = await buildBlueprintSectorMap(state, frame, refLayers, site, placeName);
+      const composite = await buildBlueprintSectorMap(state, frame, refLayers, site, placeName, historicalActive ? availableHistoricalBaseline : null);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Sector analysis · Design Map', composite, {
+      pushGallery(historicalActive ? 'Sector analysis · before works · Design Map' : 'Sector analysis · Design Map', composite, {
         resultKind: 'exact',
         provider: 'exact',
         geometryLock: true,
@@ -13221,7 +13327,7 @@ export default function DesignGlossy({
     } finally {
       setLoading(null);
     }
-  }, [state, frame, refLayers, site, mapKey, pushGallery, placeName]);
+  }, [state, frame, refLayers, site, mapKey, pushGallery, placeName, historicalActive, availableHistoricalBaseline]);
 
   // Deterministic EXISTING-SITE sheet (plan-set 01) — the plain satellite + boundary with NO design
   // drawn (drawDesign=false). The honest "before" the whole plan builds on; exact, never invented.
@@ -13229,12 +13335,12 @@ export default function DesignGlossy({
     setLoading('exact');
     setError(null);
     try {
-      const composite = await buildBlueprintBaseMap(state, frame, refLayers, placeName);
+      const composite = await buildBlueprintBaseMap(state, frame, refLayers, placeName, historicalActive ? availableHistoricalBaseline : null);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Existing site & base · Design Map', composite, {
+      pushGallery(historicalActive ? 'Existing Site · before works · Design Map' : 'Existing site & base · Design Map', composite, {
         resultKind: 'exact',
         provider: 'exact',
         geometryLock: true,
@@ -13250,7 +13356,7 @@ export default function DesignGlossy({
     } finally {
       setLoading(null);
     }
-  }, [state, frame, refLayers, mapKey, pushGallery, placeName]);
+  }, [state, frame, refLayers, mapKey, pushGallery, placeName, historicalActive, availableHistoricalBaseline]);
 
   // "Generate all sheets" — Rory's ask: one tap for the WHOLE plan set, not one map at a time.
   // Uses the DETERMINISTIC exact renders (accurate by construction, instant, and — unlike
@@ -14257,8 +14363,8 @@ export default function DesignGlossy({
 
   // Both Sector stages return map artwork; measured analysis and page furniture belong to the app.
   const finishSectorSheet = useCallback(
-    (modelImage: string, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }): Promise<string> =>
-      composeSectorSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName),
+    (modelImage: string, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, baseline: HistoricalBaseline | null = null): Promise<string> =>
+      composeSectorSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName, baseline),
     [state, frame, refLayers, site, placeName],
   );
 
@@ -14266,16 +14372,17 @@ export default function DesignGlossy({
   // artwork contract from legacy jobs whose symbols still need the original composite-back.
   // Measured pins, scale and schedule remain app-owned in both contracts.
   const finishPhasingSheet = useCallback(
-    (modelImage: string, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, sourcePrompt?: string): Promise<string> =>
-      composePhasingSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName, sourcePrompt?.includes(PHASING_ARTWORK_PROMPT_MARKER) ?? false),
+    (modelImage: string, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, sourcePrompt?: string, styleKey?: StylePreset): Promise<string> =>
+      composePhasingSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName, sourcePrompt?.includes(PHASING_ARTWORK_PROMPT_MARKER) ?? false, PRODUCER_STYLES.find((style) => style.key === styleKey)?.label),
     [state, frame, refLayers, site, placeName],
   );
 
   // Site shares the design layers' material policy: painted styles retain their roofs and ground,
   // Photo Plan preserves factual source materials. Boundary, labels and inventory stay app-owned.
   const finishSiteSheet = useCallback(
-    async (modelImage: string, styleKey: StylePreset, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }): Promise<string> => {
+    async (modelImage: string, styleKey: StylePreset, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, baseline: HistoricalBaseline | null = null): Promise<string> => {
       const { state, frame, refLayers, site, placeName } = snapshot;
+      if(baseline) return composeHistoricalBaseSheet(modelImage,state,frame,refLayers,placeName,baseline,true,PRODUCER_STYLES.find(style=>style.key===styleKey)?.label ?? 'AI illustration');
       const presentation = await boundaryPresentationContext(state, frame, refLayers);
       const renderState = presentation.state;
       const renderFrame = presentation.frame;
@@ -14397,8 +14504,9 @@ export default function DesignGlossy({
     setLoading('falgpt');
     try {
       const outputMode = requestedModeRef.current === 'full' ? 'full' : 'hybrid';
+      const sourceFrame = historicalActive && availableHistoricalBaseline ? await buildHistoricalBaselineFrame(frame,availableHistoricalBaseline) : frame;
       const sceneSnapshot = await createRenderSceneSnapshot({
-        state, frame, refLayers, site, placeName, labelMode, underlay,
+        state, frame:sourceFrame, refLayers, site, placeName, labelMode, underlay:historicalActive ? 'photo' : underlay,
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
@@ -14424,7 +14532,7 @@ export default function DesignGlossy({
       // analysis sheets — Site, Sector and Phasing — kept paying for an unverified pass on exactly
       // the sheets where the app redraws the most on top and a near-copy is hardest to spot.
       // (The baseline itself is captured below, once the map column has been cut out.)
-      const presentation = await boundaryPresentationContext(state, frame, refLayers);
+      const presentation = await boundaryPresentationContext(state, sourceFrame, refLayers);
       const renderFrame = presentation.frame;
       const mapWidth = renderFrame.imgW * SCALE;
       const mapHeight = renderFrame.imgH * SCALE;
@@ -14456,7 +14564,7 @@ export default function DesignGlossy({
       // stage where the model is free to (and does) repaint it. Scoring the whole map is stricter.
       // (extendProtectMaskToStyleSheet is gone from this path with it: it built a sheet-shaped
       // mask — map at x=0, no gutters — that no composed page ever matched.)
-      const protectMaskDataUrl = kind === 'sector' && !polishStage
+      let protectMaskDataUrl = kind === 'sector' && !polishStage
         ? await buildProtectMask(
           presentation.state,
           renderFrame,
@@ -14465,6 +14573,10 @@ export default function DesignGlossy({
           sectorProtectMaskOptions(),
         )
         : undefined;
+      if(historicalActive && availableHistoricalBaseline){
+        const coverage = await buildHistoricalCoverageMask(renderFrame,availableHistoricalBaseline,{state,frame:sourceFrame,refLayers});
+        protectMaskDataUrl = protectMaskDataUrl ? await stackOverlayImages(coverage,protectMaskDataUrl,mapWidth,mapHeight) : coverage;
+      }
       const prompt = polishStage
         ? kind === 'sector'
           ? buildSectorSheetPolishPrompt(styleKey, placeName)
@@ -14478,7 +14590,7 @@ export default function DesignGlossy({
         sheets: [{
           key: kind,
           label: kind === 'sector' ? 'Sector analysis' : 'Existing site',
-          prompt,
+          prompt: historicalActive ? `${prompt}\n\n${historicalBaselinePrompt()}` : prompt,
           compositeDataUrl: composite,
           ...(protectMaskDataUrl ? { protectMaskDataUrl, useProtectMaskForEdit: false } : {}),
           // showcase:true on the polish stage records that the model, not the app, painted the
@@ -14505,7 +14617,7 @@ export default function DesignGlossy({
       setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn, historicalActive, availableHistoricalBaseline]);
 
   // Phasing (08) AI Hybrid + Full Treatment — mirrors generateSectorViaQueue's two-stage pattern.
   //
@@ -14933,10 +15045,11 @@ export default function DesignGlossy({
 
   // Finishing always uses the job's saved scene. The live scene is used only to decide whether
   // that old result may replace the currently open preview or advance into another paid pass.
-  const captureCurrentRenderScene = useCallback(() => createRenderSceneSnapshot({
-    state, frame, refLayers, site, placeName, labelMode, underlay,
+  const captureCurrentRenderScene = useCallback(async () => createRenderSceneSnapshot({
+    state, frame:historicalActive && availableHistoricalBaseline ? await buildHistoricalBaselineFrame(frame,availableHistoricalBaseline) : frame,
+    refLayers, site, placeName, labelMode, underlay:historicalActive ? 'photo' : underlay,
     outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
-  }), [state, frame, refLayers, site, placeName, labelMode, underlay, underlaySuffix]);
+  }), [state, frame, refLayers, site, placeName, labelMode, underlay, underlaySuffix, historicalActive, availableHistoricalBaseline]);
   const currentRenderSceneRef = useRef(captureCurrentRenderScene);
   currentRenderSceneRef.current = captureCurrentRenderScene;
   const pushGalleryRef = useRef(pushGallery);
@@ -15183,14 +15296,16 @@ export default function DesignGlossy({
               // repainted artwork punches photographic patches through it, and the restored
               // element then reads as a mark stamped on the picture rather than part of it. The
               // Hybrid stage remains the geometry-restored tier.
+              const historicalSource = historicalBaselineForSite(frozenScene.state.siteId) && historicalBaselineFromPrompt(sheet.prompt);
               let factualModelImage = raw;
-              if (sheet.key === 'sector' && sourceImage && protectMask && !isPolishedResult) {
+              if ((sheet.key === 'sector' && !isPolishedResult || historicalSource) && sourceImage && protectMask) {
                 try {
                   // Legacy jobs froze the exterior photograph, contradicting the edge-to-edge
                   // illustration prompt. Rebuild from this job's frozen scene for free recovery too.
                   const p = await boundaryPresentationContext(frozenScene.state, frozenScene.frame, frozenScene.refLayers);
-                  const currentMask = await buildProtectMask(p.state, p.frame, p.refLayers, 'all', sectorProtectMaskOptions());
-                  factualModelImage = await restoreProtectedPixels(sourceImage, raw, currentMask);
+                  let currentMask = sheet.key === 'sector' && !isPolishedResult ? await buildProtectMask(p.state,p.frame,p.refLayers,'all',sectorProtectMaskOptions()) : undefined;
+                  if(historicalSource){const coverage=await buildHistoricalCoverageMask(p.frame,historicalSource,frozenScene);currentMask=currentMask ? await stackOverlayImages(coverage,currentMask,p.frame.imgW*SCALE,p.frame.imgH*SCALE) : coverage;}
+                  factualModelImage = await restoreProtectedPixels(sourceImage, raw, currentMask ?? protectMask);
                 } catch (restoreError) {
                   console.error('[glossy] Sector protected-pixel restore failed; using factual source', restoreError);
                   factualModelImage = sourceImage;
@@ -15226,11 +15341,11 @@ export default function DesignGlossy({
               }
               try {
                 baselineSheet = sheet.key === 'implementation'
-                  ? await finishPhasingRef.current(sourceImage, frozenScene, sheet.prompt)
+                  ? await finishPhasingRef.current(sourceImage, frozenScene, sheet.prompt, styleKey)
                   : sheet.key === 'sector'
-                  ? await finishSectorRef.current(sourceImage, frozenScene)
+                  ? await finishSectorRef.current(sourceImage, frozenScene, historicalSource)
                   : sheet.key === 'base'
-                  ? await finishSiteRef.current(sourceImage, styleKey, frozenScene)
+                  ? await finishSiteRef.current(sourceImage, styleKey, frozenScene, historicalSource)
                   : styleDef
                     ? await finishRef.current(sourceImage, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt, roofReference)
                     : undefined;
@@ -15239,11 +15354,11 @@ export default function DesignGlossy({
                 console.warn('[glossy] comparison composition unavailable', comparisonError);
               }
               const finalSheet = sheet.key === 'implementation'
-                ? await finishPhasingRef.current(raw, frozenScene, sheet.prompt)
+                ? await finishPhasingRef.current(raw, frozenScene, sheet.prompt, styleKey)
                 : sheet.key === 'sector'
-                ? await finishSectorRef.current(factualModelImage, frozenScene)
+                ? await finishSectorRef.current(factualModelImage, frozenScene, historicalSource)
                 : sheet.key === 'base'
-                ? await finishSiteRef.current(factualModelImage, styleKey, frozenScene)
+                ? await finishSiteRef.current(factualModelImage, styleKey, frozenScene, historicalSource)
                 : styleDef
                   ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt, roofReference)
                   : raw;
@@ -15838,6 +15953,15 @@ export default function DesignGlossy({
         {!simple && (
         <>
         <WorkflowHeading number={2} title="Underlay" />
+        {historicalSheet && availableHistoricalBaseline && <div style={{fontSize:12,lineHeight:1.5,marginBottom:10}}>
+          <strong>{historicalActive ? 'Before-works archive photo' : 'Current imagery'}</strong>
+          <p style={{margin:'4px 0'}}>Site and Sector share the early photograph. Later design sheets keep your current imagery. Alignment is approximate; the two uncovered tips stay blank.</p>
+          <button type="button" disabled={loading!==null} aria-pressed={historicalActive} onClick={()=>{setHistoricalEnabled(!historicalEnabled);if(!historicalEnabled)setUnderlay('photo');setResultImage(null);}}>
+            {historicalActive ? 'Use current background instead' : 'Use before-works photo'}
+          </button>
+        </div>}
+        {!historicalActive && <>
+
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           {underlayOptions.map((key) => {
             const needsImport = key === 'photo' && !hasFarmerPhoto(frameProp);
@@ -15872,6 +15996,7 @@ export default function DesignGlossy({
               : UNDERLAY_HINT[underlay]}
           </span>
         </div>
+        </>}
         {/* SHEET QUALITY — the option Rory asked for ("imagine when this is printed on even A3").
             Standard is the 1920px master everything has always used; High renders the same
             drawing at 2880px (~90 dpi on A2, ~128 on A3). It reloads on change: SCALE is read at
@@ -15936,7 +16061,7 @@ export default function DesignGlossy({
           </>
         )}
 
-        {sheetHasPlantCodes && sheetElementNaming(filter) === 'grouped' && !simple && (
+        {sheetHasPlantCodes && selectedSheet && 'filter' in selectedSheet && sheetElementNaming(filter) === 'grouped' && !simple && (
           <p style={{ fontSize: 11, opacity: 0.75 }}>
             Whole design groups plants in the legend. Open the Planting sheet for individual names or codes.
           </p>
