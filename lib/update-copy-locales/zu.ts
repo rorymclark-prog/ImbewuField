@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/zu.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Faka izilinganiso zemibhede yokutshala (beds) nezindlela zebhulokhi yensimu ngamamitha noma ngamafuthi.",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Gcina izilinganiso ezilondoloziwe zingashintshiwe lapho ushintsha iyunithi eboniswayo.",
+  "Choose field-block units": "Khetha amayunithi ebhulokhi yensimu",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Khetha insimu, khetha amamitha noma amafuthi, faka izilinganiso zakho bese ubukeza imibhede yokutshala (beds) ngaphambi kokulondoloza. Amasimu avulekile agcina indawo yawo ye-polygon ngaphandle kokukhiqiza imibhede yokutshala (beds).",
   // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI drafts.
   "Keep newer crop plans safe when an older app session saves its copy.": "Gcina izinhlelo zezitshalo ezintsha ziphephile lapho iseshini endala yohlelo igcina ikhophi yayo.",
   "Review retained copies before continuing with your current crop plan.": "Bukeza amakhophi agciniwe ngaphambi kokuba uqhubeke nohlelo lwakho lwamanje lwezitshalo.",

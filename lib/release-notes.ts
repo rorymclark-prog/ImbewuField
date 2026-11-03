@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 November 2026', sha: '6e184d251', changes: [
+  { when: '3 November 2026', sha: 'af9ff00cb', changes: [
     'Enter field-block bed and path dimensions in metres or feet.',
     'Keep saved measurements unchanged when switching the displayed unit.',
   ], tour: [{ title: 'Choose field-block units', where: 'Site design → Planting → Field blocks', href: '/design',

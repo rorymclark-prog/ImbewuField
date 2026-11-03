@@ -66,3 +66,41 @@ It must inherit these parent pairs through coordinator integration. Duplicate
 English identities must reuse the existing table authority rather than overwriting
 or adding a second key. That later selection is not part of this parent repair.
 `PLAN_VERSION`, species and calibrated lesson/quiz bodies remain unchanged.
+
+## Child field-block unit release selection
+
+The field-unit child selects only messages `fieldBlockUnits16`–`20`, in their
+frozen order: two release descriptions followed by the tour title, location and
+detail. Their shared source is
+`docs/international/agy-field-block-unit-translations-2026-11-03/source.json`,
+SHA256 `b60a09754ec9965e7110d7ecaa690222077821f2495a4d9f8e01233691f8a321`.
+The four South African candidate files are under
+`docs/international/agy-field-block-unit-sa-translations-2026-11-03/`.
+The source's original locale list describes the earlier global job; the separate
+South African follow-on candidates bind the same frozen English source.
+
+All 20 selected candidate pairs were checked. **16 exact candidate pairs are
+added; four existing location pairs are reused.** The English identity
+`Site design → Planting → Field blocks` already has one translation authority in
+each table. Its existing wording is retained even though all four new packet
+variants differ. No duplicate English key or replacement translation is added.
+Removing only the new field-unit group restores each inherited table byte for
+byte, including all 48 parent acceptance/storage pairs and earlier history.
+
+The five English messages match the current top release entry in exact order.
+The frozen release-file hash is generation provenance, not the identity of the
+later merged/restamped complete release file. Packet source/status files remain
+unchanged. Their `runtimeActivation: false` records the original handoff; this
+later coordinator selection displays only these chosen descriptions in the
+existing disclosed, English-backed unreviewed draft surface. Rows 1–15 and the
+other packet languages are not selected by this change. No fluent or human
+approval, new runtime language, unit logic or farming guidance is claimed.
+
+Child verification checks exact source/message digests, keys, English, order,
+locale, placeholders/numbers/literals, selected counts and prior pair preservation.
+All 60 damaged-packet controls were rejected. Ordered Node 24 typecheck passed,
+followed by 65/65 tests across eight affected update/localization/UI files
+(including mounted field-block unit entry), with no failures, skips or TODOs;
+all five complete owned files are whitespace-clean. Full current-head CI,
+preview/browser and release decisions remain coordinator gates; this selection
+does not extend the parent repair's validation claim to those gates.

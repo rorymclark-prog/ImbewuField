@@ -11,8 +11,8 @@
     {
       "path": "lib/release-notes.ts",
       "frozenSnapshotSha256": "7b311fd25f8d51992c8ad047eedf31765cbbd2c69f0c5f50e8acbdca75cb6dd2",
-      "currentSha256": "7b311fd25f8d51992c8ad047eedf31765cbbd2c69f0c5f50e8acbdca75cb6dd2"
+      "currentSha256": "0a3482b1026eab75b622d214f4592b05084d4a31f006b99782a4324f7ba3633b"
     }
   ],
-  "reason": "Panel code/comment corrections after packet freeze preserve every selected English message; frozen packet source is unchanged. This is coordinator provenance, not an AGY validation or human review."
+  "reason": "Coordinator coverage restamp after parent merge and code-only panel corrections preserve all20 selected English messages; frozen source packet remains unchanged."
 }
