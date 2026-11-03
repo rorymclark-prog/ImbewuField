@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 November 2026', sha: '7833c0ac4a', changes: [
+  { when: '3 November 2026', sha: '22f1408d5', changes: [
     'Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.',
     'Keep buyer entries when a save cannot be confirmed.',
   ], tour: [{ title: 'Choose harvest weight units', where: 'Production plan → Harvest targets', href: '/facilitator/crops',
