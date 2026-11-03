@@ -34,7 +34,7 @@ The original 2019 hydrology/earthworks PDF was text-extracted and rendered at 18
 ## Verification
 
 - Typecheck: clean before final verification; final ordered checks recorded on PR/issue #35.
-- Focused render: 631 passed before the additional supported-endpoint decoding contract; final count recorded at release.
+- Focused render: 632 passed, including the supported-endpoint decoding contract.
 - Full suite: continues separately; no pass claimed. This is a bounded map-rendering/data presentation change, not AI-provider dispatch or saved measured geometry. Existing unrelated full-suite failure is not described as a pass or used to waive an affected test.
 - Native output inspected: landscape 1800×1273 actual compositor plus stored actual Terrain-RGB tile, both classroom bands, A/B and equal H/V scale visible. Serialized frozen scene unchanged. This does not verify the live authenticated endpoint.
 - Whitespace: final result recorded at release.
