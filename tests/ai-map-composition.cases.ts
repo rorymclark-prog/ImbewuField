@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, AI_MAP_REVIEW_NOTICE, recommendedSheetSettings } from '../lib/render-policy.ts';
 import { PHASING_ARTWORK_PROMPT_MARKER, buildPhasingRestylePrompt } from '../lib/producer-prompt.ts';
+import { UBHEJANE_BEFORE_WORKS, historicalBaselineForSite, historicalBaselineFromPrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, historicalBaselinePrompt } from '../lib/historical-map-baseline.ts';
+import { createHash } from 'node:crypto';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
@@ -43,7 +45,7 @@ test('switching maps applies recommendations once and remembers manual choices w
   const remembered={current:new Map()},state={siteId:'test-site'},frameProp={satDataUrl:'drone',underlayDataUrl:'satellite'};
   const setter=(key:string)=>(value:any)=>{ui[key]=typeof value==='function'?value(ui[key]):value;};
   const scope=()=>({...ui,state,frameProp,loading:null,sheetSettingsRef:remembered,DESIGN_SHEETS:sheets,recommendedSheetSettings,DEFAULT_PRODUCER_STYLE,sheetRenderRoute,
-    setUnderlay:setter('underlay'),setLabelMode:setter('labelMode'),setAiView:setter('aiView'),setProducerStyle:setter('producerStyle'),
+    historicalEnabled:true,historicalBaselineForSite,setUnderlay:setter('underlay'),setLabelMode:setter('labelMode'),setAiView:setter('aiView'),setProducerStyle:setter('producerStyle'),
     enqueueRenderJobCapped:()=>{throw Error('selection must never spend');}});
   const apply=()=>helper('applySheet',{...scope(),setSelectedNo:setter('selectedNo'),setExactSheet:setter('exactSheet'),setAnalysisStyle:setter('analysisStyle'),setFilter:setter('filter')});
   const choose=(sheet:any,mode='ai',loading:any=null)=>helper('chooseSheet',{...scope(),loading,applySheet:apply()})(sheet,mode);
@@ -527,15 +529,15 @@ test('Phasing model input contains unlettered feature guides and no phase pins o
   assert.equal(blanked,true,'the separate panel erasure defence remains');
 });
 
-test('line illustration styles select white paper until the farmer explicitly overrides that sheet', () => {
-  for(const style of ['field_ledger','extension_blueprint'] as const) {
-    for(const sheet of ['water','earthworks','planting','structures','all','implementation'] as const) {
-      assert.equal(recommendedSheetSettings(sheet,{satDataUrl:'aerial'},style).underlay,'plain');
+test('AI defaults preserve aerial evidence after plain Phasing invented a courtyard roof, while manual paper still wins', () => {
+  for(const style of ['precision_atlas','field_ledger','extension_blueprint'] as const) {
+    for(const sheet of ['base','sector','zones','water','earthworks','planting','structures','all','implementation'] as const) {
+      assert.equal(recommendedSheetSettings(sheet,{satDataUrl:'aerial'},style).underlay,'satellite');
+      assert.equal(recommendedSheetSettings(sheet,{satDataUrl:'own-aerial',underlayDataUrl:'satellite'},style).underlay,'photo');
+      assert.equal(recommendedSheetSettings(sheet,{satDataUrl:null},style).underlay,'plain','without evidence no photo may be invented');
     }
-    for(const sheet of ['base','sector'] as const) {
-      assert.equal(recommendedSheetSettings(sheet,{satDataUrl:'aerial'},style).underlay,'satellite',
-        'existing-site analysis must retain factual context rather than invent unseen land');
-    }
+    assert.equal(recommendedSheetSettings('zones',{satDataUrl:'aerial'},style,'exact').underlay,'plain',
+      'the no-AI numbered zone drawing still benefits from clean paper');
   }
   const current:any={underlay:'photo',style:null};
   const manualUnderlaysRef={current:new Set<string>()};
@@ -543,9 +545,9 @@ test('line illustration styles select white paper until the farmer explicitly ov
     manualUnderlaysRef,recommendedSheetSettings,sheetRenderRoute,DEFAULT_PRODUCER_STYLE,
     setUnderlay:(v:string)=>current.underlay=v,setProducerStyle:(v:string)=>current.style=v,setAnalysisStyle:()=>{},setExactSheet:()=>{},setResultImage:()=>{},
     enqueueRenderJobCapped:()=>{throw Error('a style change must not spend');}};
-  helper('chooseStyle',scope)('field_ledger');assert.equal(current.underlay,'plain');
-  current.underlay='photo';manualUnderlaysRef.current.add('test:07');
-  helper('chooseStyle',scope)('extension_blueprint');assert.equal(current.underlay,'photo','manual background survives style changes');
+  helper('chooseStyle',scope)('field_ledger');assert.equal(current.underlay,'satellite');
+  current.underlay='plain';manualUnderlaysRef.current.add('test:07');
+  helper('chooseStyle',scope)('extension_blueprint');assert.equal(current.underlay,'plain','manual white-paper choice survives style changes');
 });
 
 
@@ -565,11 +567,12 @@ test('Sector restoration preserves roofs and access without bringing effort-zone
 
 test('Phasing recovery uses the frozen artwork contract instead of changing old paid copies', async () => {
   const calls:any[]=[];
-  const finish=helper('finishPhasingSheet',{PHASING_ARTWORK_PROMPT_MARKER,composePhasingSheet:(...args:any[])=>{calls.push(args);return Promise.resolve('sheet');}});
+  const finish=helper('finishPhasingSheet',{PRODUCER_STYLES:[{key:'field_ledger',label:'Field Ledger'}],PHASING_ARTWORK_PROMPT_MARKER,composePhasingSheet:(...args:any[])=>{calls.push(args);return Promise.resolve('sheet');}});
   const snapshot={state:{},frame:{},refLayers:{},site:{},placeName:'Test'};
   for(const prompt of ['old job',buildPhasingRestylePrompt('precision_atlas'),PHASING_ARTWORK_PROMPT_MARKER+'. polish']) {
-    await finish('art',snapshot,prompt);
+    await finish('art',snapshot,prompt,'field_ledger');
   }
+  assert.deepEqual(calls.map(args=>args[7]),['Field Ledger','Field Ledger','Field Ledger'],'credit must name the selected style, never a hard-coded Reference Blueprint');
   assert.deepEqual(calls.map(args=>args[6]),[false,true,true],
     'both new stages retain painted materials, legacy jobs retain the original symbol contract');
 });
@@ -602,4 +605,76 @@ test('Site keeps paid painted roofs visible while Photo Plan retains its factual
   assert.equal(options.aiArtwork,true,'AI Site must never say Exact Plan in its footer');
   await finish('paid-art','photo_plan',snapshot);
   assert.deepEqual([ground,source,items],[1,1,1],'Photo Plan must preserve its distinct factual photograph contract');
+});
+
+
+test('the historical baseline is the byte-identical approved archive image and never attaches to a schematic sample', () => {
+  const b=UBHEJANE_BEFORE_WORKS;
+  const bytes=readFileSync(new URL('../public'+b.image,import.meta.url));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'),b.sha256,'preserve the approved extraction, do not replace it with AI artwork');
+  assert.equal(historicalBaselineForSite(b.siteId),b);
+  for(const id of ['site:-27.72623,31.96304','demo-place-ubhejane','other-farm'])assert.equal(historicalBaselineForSite(id),null);
+  assert.equal(historicalBaselineFromPrompt('old paid job'),null,'past completed artwork cannot silently receive a new historical source');
+  assert.equal(historicalBaselineFromPrompt(historicalBaselinePrompt()),b);
+  assert.match(b.provenance,/capture date is unverified/);assert.match(b.alignment,/not a survey/);
+});
+
+test('classroom control points align at both quality scales without moving any saved coordinate', () => {
+  const b=UBHEJANE_BEFORE_WORKS,f={...b.referenceFrame,satDataUrl:'current-photo'};
+  const frozen=JSON.stringify(f);
+  for(const scale of [2,3]) {
+    const [a,bb,c,d,e,ff]=historicalPhotoTransform(f,scale);
+    for(const point of b.controls) {
+      const actual=[a*point.source[0]+c*point.source[1]+e,bb*point.source[0]+d*point.source[1]+ff];
+      const expected=point.target.map(v=>v*scale/3);
+      assert.ok(Math.hypot(actual[0]-expected[0],actual[1]-expected[1])<5*scale/3,
+        'a mirrored, transposed or differently-scaled source must fail the real landmark check');
+    }
+  }
+  assert.equal(JSON.stringify(f),frozen);
+});
+
+test('historical coverage leaves both unphotographed tips protected instead of extending invented terrain', async () => {
+  const b=UBHEJANE_BEFORE_WORKS,f={...b.referenceFrame,satDataUrl:'historical-photo'};
+  const roof=historicalPhotoPoint(f,b.features[0].point),tips:Point[]=[[.5963126359966395,.32016613775290137],[.38536477725973095,.690637586082968]];
+  const points=[roof,...tips].map(([x,y])=>[x*f.imgW*3,y*f.imgH*3] as Point),canvas=probeCanvas(points);
+  const build=helper('buildHistoricalCoverageMask',{SCALE:3,historicalPhotoExtent,document:{createElement:()=>canvas},releaseCanvas:()=>{},drainCanvasToDataUrl:()=>canvas.snapshot()});
+  assert.deepEqual(await build(f,b),[0,255,255],'the classrooms are editable; the northeast and southwest missing areas stay factual white');
+  assert.match(historicalBaselinePrompt(),/Add no later vegetable beds, swales, food forest, insectary/);
+  assert.match(historicalBaselinePrompt(),/never extend or invent the landscape/);
+});
+
+test('preparing the historical photo is cached presentation work and leaves the proposed design source intact', async () => {
+  const b=UBHEJANE_BEFORE_WORKS,f={...b.referenceFrame,satDataUrl:'current-garden'},before=JSON.stringify(f),probe=artProbe();let reads=0;
+  const build=helper('buildHistoricalBaselineFrame',{historicalFrameCache:new WeakMap(),SCALE:3,historicalPhotoTransform,
+    loadImage:async(src:string)=>{reads++;assert.equal(src,b.image);return {src};},document:{createElement:()=>probe.canvas},
+    releaseCanvas:()=>{},releaseImageSource:()=>{},drainCanvasToDataUrl:()=> 'historic-registered'});
+  const first=await build(f,b),second=await build(f,b);
+  assert.equal(first,second);assert.equal(reads,1);
+  assert.equal(first.satDataUrl,'historic-registered');assert.equal(f.satDataUrl,'current-garden');assert.equal(JSON.stringify(f),before);
+});
+
+test('historical photo markers follow the photograph crop instead of projecting against resized frame metadata', () => {
+  const b=UBHEJANE_BEFORE_WORKS,f={...b.referenceFrame,satDataUrl:'archive'},state={items:[],lines:[],zones:[]},refs={boundary:[[.3,.3],[.7,.3],[.7,.8],[.3,.8]]};
+  const point=helper('historicalPresentationPhotoPoint',{SCALE:3,historicalPhotoPoint,
+    presentationExtentRing:()=>refs.boundary,calculateBoundaryPresentationLayout:()=>({cropX:.25,cropY:.2,cropWidth:.5,cropHeight:.6})});
+  for(const feature of b.features){const [x,y]=historicalPhotoPoint(f,feature.point,b);assert.deepEqual(point(state,f,refs,feature.point,b),[(x-.25)/.5,(y-.2)/.6]);}
+});
+
+test('historical photo inventory and map use the same eight numbered landmarks without covering them with long plaques', () => {
+  const probe=artProbe(),pins:any[]=[];
+  const draw=helper('drawHistoricalPhotoFacts',{historicalPresentationPhotoPoint:(_s:any,_f:any,_r:any,p:any)=>p,
+    drawHistoricalPhotoPin:(...args:any[])=>pins.push(args)});
+  const b={features:UBHEJANE_BEFORE_WORKS.features.map((v,i)=>({...v,point:[i/10,i/20]})),fence:[[0,0],[1,1]]};
+  draw(probe.ctx,{}, {},{},100,200,b);assert.deepEqual(pins.map(v=>[v[1],v[2],v[4]]),b.features.map((v,i)=>[v.point[0]*100,v.point[1]*200,i+1]));
+  assert.equal(probe.calls.filter(v=>v[0]==='fillText').length,0,'the compositor must not add long overlapping feature names');
+  draw(probe.ctx,{},{},{},100,200,b,false);assert.equal(pins.length,8,'Sector analysis does not duplicate the Site inventory');
+});
+
+test('the paid historical coverage mask uses the same crop as photo annotations', async () => {
+  const canvas=probeCanvas([[25,50],[150,150],[275,250]]),source={state:{},frame:{},refLayers:{}};let calls=0;
+  const build=helper('buildHistoricalCoverageMask',{SCALE:3,document:{createElement:()=>canvas},releaseCanvas:()=>{},
+    drainCanvasToDataUrl:()=>canvas.snapshot(),historicalPhotoExtent:()=>{throw Error('a cropped frame is not a geographic source');},
+    historicalPresentationPhotoPoint:(s:any,f:any,r:any,p:any)=>{assert.equal(s,source.state);assert.equal(f,source.frame);assert.equal(r,source.refLayers);calls++;return[p[0]/4000*.4+.3,p[1]/3000*.4+.3];}});
+  assert.deepEqual(await build({imgW:100,imgH:100},UBHEJANE_BEFORE_WORKS,source),[255,0,255]);assert.equal(calls,4);
 });
