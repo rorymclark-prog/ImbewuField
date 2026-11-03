@@ -1,6 +1,15 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
+  "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
+  "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",
+  "Confirm your site country": "Tiyisisa tiko ra ndhawu ya wena",
+  "Crop planner → Site country and region": "Mukunguhati wa swibyariwa → Tiko ra ndhawu na xifundzha",
+  "Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.": "Pfula ndhawu ya wena leyi mepiweke kutani u tiyisisa vuxokoxoko bya tiko ra yona. Ku tiyisisa tiko a swi pasisi switsundzuxo swo rima swa xifundzha lexintshwa.",
+  "Review an unmapped reference": "Kambisisa xisekelo lexi nga mepiwangiki",
+  "Crop planner → Planning without a mapped site": "Mukunguhati wa swibyariwa → Ku kunguhata handle ka ndhawu leyi mepiweke",
+  "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Eka bedi ro vumbiwa kumbe dizayini ya laha kaya, hlawula kumbe u susa xisekelo xo komba xa Afrika-Dzonga hi ku kongoma. Nhlawulo wu ta sala na ndhawu yoleyo yo tirhela.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Kambisisa mpfapfarhuto wa swihlovo swa matiko; switsundzuxo swa vurimi bya ndhawu a swi si kumeka.",
   "Review international references": "Kambisisa swihlovo swa matiko",

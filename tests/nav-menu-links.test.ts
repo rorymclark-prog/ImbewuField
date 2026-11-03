@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import ts from 'typescript';
 
 // TWO ENTRIES THAT LIED ABOUT WHERE THEY WENT.
 //
@@ -74,11 +75,49 @@ test('the Planting Calendar has a translated door in Farm Tools for every target
   }
 });
 
-test('the calendar page it links to renders real content on its own', () => {
-  // Static seasonal data (CROPS/MONTHLY_DATA) plus an optional localStorage read that
-  // is wrapped in try/catch and falls back to showing everything — no required props,
-  // no auth gate, no site selection needed before something useful is on screen.
+test('the calendar opens its own readable context while empty or unreadable storage cannot approve farming advice', async () => {
+  // The old page-level catch/comment disappeared when storage readers became
+  // shared and an unconfirmed site stopped inheriting a summer guide. Readable
+  // context controls and safe reads are the rule, not that old source spelling.
   const page = read('../app/calendar/page.tsx');
   assert.match(page, /const CROP_BASE: \{[^}]*\}\[\] = \[/, 'the calendar must ship its own crop data, not expect it from a prop');
-  assert.match(page, /catch \{ \/\* ignore \*\/ \}/, 'the localStorage read must degrade gracefully with no saved planner crops');
+  assert.match(page, /export default function CalendarPage\(\)/, 'the route must not require external component props');
+  assert.match(page, /aria-label="Calendar reference context"/);
+  assert.match(page, /aria-label="Calendar unavailable"/);
+  assert.doesNotMatch(page, /useState<RainPattern>\('summer'\)|plan\.rainPattern\s*\?\?\s*'summer'/,
+    'missing site context must not silently select the South African summer guide');
+  const tree = ts.createSourceFile('calendar.tsx', page, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const guards: ts.Expression[] = [];
+  const visit = (node: ts.Node) => {
+    if (ts.isVariableDeclaration(node) && node.name.getText(tree) === 'allowCalendar' && node.initializer) guards.push(node.initializer);
+    ts.forEachChild(node, visit);
+  };
+  visit(tree); assert.equal(guards.length, 1, 'one authority must decide whether reference instructions may appear');
+  const allowed = new Function('support', 'rainPattern', `return (${guards[0].getText(tree)});`) as (support: { allowCataloguePlanning: boolean }, pattern: string | null) => boolean;
+  assert.equal(allowed({ allowCataloguePlanning: false }, null), false);
+  assert.equal(allowed({ allowCataloguePlanning: false }, 'summer'), false);
+  assert.equal(allowed({ allowCataloguePlanning: true }, null), false);
+  assert.equal(allowed({ allowCataloguePlanning: true }, 'summer'), true);
+  const keys = ['window', 'localStorage', 'sessionStorage'] as const;
+  const originals = new Map(keys.map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  let mode: 'empty' | 'corrupt' | 'unavailable' = 'empty', writes = 0;
+  const storage = { getItem() { if (mode === 'unavailable') throw Error('storage unavailable'); return mode === 'corrupt' ? '{invalid JSON' : null; },
+    setItem() { writes++; }, removeItem() { writes++; }, key() { return null; }, length: 0 };
+  const session = { getItem() { return null; } };
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: { localStorage: storage, sessionStorage: session } });
+  Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: storage });
+  Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value: session });
+  try {
+    const { loadCropPlan } = await import('../lib/crop-plan.ts');
+    const { loadPlaces } = await import('../lib/saved-places.ts');
+    const { resolvePlanningSupport } = await import('../lib/international/planning-policy.ts');
+    for (mode of ['empty', 'corrupt', 'unavailable'] as const) {
+      const plan = loadCropPlan(), places = loadPlaces();
+      assert.deepEqual(plan.plantings, [], mode); assert.deepEqual(places, [], mode);
+      assert.equal(resolvePlanningSupport({ places, siteId: 'calendar-context-not-selected', workspaceReferences: plan.workspaceReferences }).allowCataloguePlanning, false, mode);
+    }
+    assert.equal(writes, 0, 'opening the calendar must not rewrite unreadable saved data');
+  } finally {
+    for (const key of keys) { const original = originals.get(key); if (original) Object.defineProperty(globalThis, key, original); else Reflect.deleteProperty(globalThis, key); }
+  }
 });
