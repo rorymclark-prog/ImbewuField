@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
+  "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Mapa a Site na Sector a Ubhejane a nga sumbedza tshifanyiso tsha kale tsha musi mishumo i sa athu thoma.",
+  "AI maps start with available aerial imagery; you can still choose plain paper.": "Mapa a AI a thoma nga zwifanyiso zwi re hone zwa nṱha; ni kha ḓi nga nanga bammbiri ḽitshena.",
+
   // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
   "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Mapa a AI a Site na Sector a vhulunga zwidodombedzwa zwo olwa, a na mitalo miṱuku ya zwifanyiso.",
   "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "Phasing i vhulunga tshifanyiso tsho olwaho; app i engedza shedulu, zwiga na tshikalo.",

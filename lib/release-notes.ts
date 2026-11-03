@@ -41,12 +41,15 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'a337ff345', changes: [
+    "Ubhejane Site and Sector maps can show the before-works archive photograph.",
+    "AI maps start with available aerial imagery; you can still choose plain paper.",
+  ] },
   { when: '3 November 2026', sha: '74c7bf21b', changes: [
     'AI Site and Sector maps keep their painted detail, with fewer photo strips.',
     'Phasing keeps painted artwork; the app adds its schedule, pins and scale.',
-    'Paper-friendly map styles start on white and keep your chosen background.',
   ], tour: [{ title: 'Review the AI map finish', where: 'Site design → Glossy', href: '/design',
-    detail: 'Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.' },
+    detail: 'AI maps start with available aerial imagery; you can still choose plain paper.' },
   { title: 'Compare with your exact plan', where: 'Site design → Saved maps', href: '/design',
     detail: 'Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.' }] },
   { when: '2 November 2026', sha: '41def1087', changes: [
