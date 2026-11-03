@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
 import type { GrowerWorkflowSourceKind } from '../lib/international/grower-workflow-source.ts';
@@ -41,7 +42,7 @@ const { generateGrowerAutoPlan } = await import('../lib/international/grower-aut
 const { createGrowerCyclePlanting } = await import('../lib/international/grower-cycle.ts');
 const { CROPS } = await import('../lib/crop-catalog.ts');
 export const siteId = 'site:0.00000,0.00000', stamp = '2026-11-04T12:00:00.000Z';
-export const bookKey = () => account.activeAccountLocalStorageKey('imbewu_crop_plan_v1');
+export const bookKey = () => account.activeAccountLocalStorageKey('imbewu_crop_plan_v2');
 export const studioKey = () => account.activeAccountLocalStorageKey(`imbewu_design_canvas_${siteId}`);
 export const localKey = () => account.activeAccountLocalStorageKey('imbewu_facilitator_design_v1');
 export function studio() {
@@ -72,14 +73,17 @@ export async function ownRow(raw: unknown = studio(), kind: GrowerWorkflowSource
   const row = createGrowerCyclePlanting(proposal.cycles[0], { plantingId, acceptedAt: stamp, geometryFingerprint: source.geometryFingerprint });
   assert.ok(row); return { row, source };
 }
-export function store(rows: unknown[]) { local.setItem(bookKey(), JSON.stringify({ version: 1, plantings: rows, updatedAt: 1, notes: 'Preserve raw book metadata' })); }
-export function reset() {
+export function store(rows: unknown[]) { replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ version: 1, plantings: rows, updatedAt: 1, notes: 'Preserve raw book metadata' })); }
+export async function reset() {
+  releaseCropPlanFixture();
   probe.initThrows = false;
   samples.exitSampleMode(); local.clear(); session.clear(); account.bindMountedAccountLocalStorageUid('owner-a');
   probe.actor = 'owner-a'; probe.configured = true; probe.queries = 0; probe.initCalls = 0; probe.cloud = async () => [];
   Object.defineProperty(globalThis, 'crypto', { configurable: true, value: nativeCrypto });
+  await initialiseCropPlanFixture();
 }
 export function cleanup() {
+  releaseCropPlanFixture();
   probe.initThrows = false;
   samples.exitSampleMode(); hooks.deregister(); account.bindMountedAccountLocalStorageUid(null);
   for (const [key, descriptor] of original) { if (descriptor) Object.defineProperty(globalThis, key, descriptor); else Reflect.deleteProperty(globalThis, key); }

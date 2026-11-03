@@ -1,0 +1,85 @@
+{
+  "workorder": "docs/international/agy-grower-storage-review-translations-2026-11-03/WORKORDER.md",
+  "status": "ready-for-root-review",
+  "sourceFile": "docs/international/agy-grower-storage-review-translations-2026-11-03/source.json",
+  "sourceSha256": "8322365bc622e772fbdde3bd277b2f680158d7024b2b46ab94e3e8da0ca4570e",
+  "snapshotIdentity": {
+    "sourceFile": "components/CropPlanStorageStatus.tsx",
+    "sourceFileSha256": "9819ac5e711895174e367bf9612a5b672ee89a852e998a2bd430a475c64f03f6",
+    "baseCommit": "8fb7283c23d902ca891199a55c2c323cf21ae6cb",
+    "provenance": "coordinator-frozen-uncommitted-UI-snapshot",
+    "identityBasis": "frozen-ui-snapshot-file-hash"
+  },
+  "nature": "documentation-only",
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "ownership": {
+    "fr.json": "main",
+    "es.json": "main",
+    "pt-BR.json": "main",
+    "sw.json": "main",
+    "review-notes.md": "main",
+    "status.json": "main"
+  },
+  "deliverables": [
+    {
+      "path": "docs/international/agy-grower-storage-review-translations-2026-11-03/fr.json",
+      "locale": "fr",
+      "rowCount": 12,
+      "sourceSha256": "8322365bc622e772fbdde3bd277b2f680158d7024b2b46ab94e3e8da0ca4570e",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-storage-review-translations-2026-11-03/es.json",
+      "locale": "es",
+      "rowCount": 12,
+      "sourceSha256": "8322365bc622e772fbdde3bd277b2f680158d7024b2b46ab94e3e8da0ca4570e",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-storage-review-translations-2026-11-03/pt-BR.json",
+      "locale": "pt-BR",
+      "rowCount": 12,
+      "sourceSha256": "8322365bc622e772fbdde3bd277b2f680158d7024b2b46ab94e3e8da0ca4570e",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-storage-review-translations-2026-11-03/sw.json",
+      "locale": "sw",
+      "rowCount": 12,
+      "sourceSha256": "8322365bc622e772fbdde3bd277b2f680158d7024b2b46ab94e3e8da0ca4570e",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-storage-review-translations-2026-11-03/review-notes.md",
+      "measuredWhitespaceWordCount": 234,
+      "maxWordCap": 250
+    },
+    {
+      "path": "docs/international/agy-grower-storage-review-translations-2026-11-03/status.json"
+    }
+  ],
+  "totalDraftsProduced": 48,
+  "inspectionScope": {
+    "filesRead": 2,
+    "testsExecuted": 0,
+    "validatorsExecuted": 0,
+    "sourceWrites": 0,
+    "gitWrites": 0,
+    "networkCalls": 0,
+    "shellCommands": 0,
+    "runtimeActivation": false
+  },
+  "coordinatorReview": {
+    "checkedAtUtc": "2026-11-03T09:27:20.818449+00:00",
+    "exactPairs": 48,
+    "damagedControlsRejected": 12,
+    "notesWhitespaceWords": 234,
+    "fluentCertification": false,
+    "runtimeActivation": false
+  }
+}

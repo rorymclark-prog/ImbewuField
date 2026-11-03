@@ -1,0 +1,23 @@
+{
+  "sourceSha256": "995635430ac2753284e1e264194f6a0e12657fa60bf4984258b8ffd1606cdcf1",
+  "pairs": 48,
+  "damagedControlsRejected": 12,
+  "notesWords": 210,
+  "sourceSnapshotFileSha256": "0548cb767a748f1a82d182e24bb21a96837d4f7f701a614679854d6b3e775156",
+  "currentFileSha256": "0548cb767a748f1a82d182e24bb21a96837d4f7f701a614679854d6b3e775156",
+  "allSixEnglishPairsUnchanged": true,
+  "runtimeActivation": false,
+  "files": {
+    "st.json": "1892697a7f1fc2c0d48fc92a006e6be9a3af23d5ea786ee7ee48cd34609cd018",
+    "ts.json": "5b4c7390d24fce81a158e340f40d9d95111cc8779a23dfb6933b1e410c1289ad",
+    "source.json": "995635430ac2753284e1e264194f6a0e12657fa60bf4984258b8ffd1606cdcf1",
+    "review-notes.md": "769bb586f2329909e949fd837faadf0ee4ac11c27c458e10e03e3479c7a3e741",
+    "zu.json": "af1d7602d105a86a811058aca26a4ea07a78c6160c34c26c6abb8e7722a27784",
+    "fr.json": "98da3b5b811dce6184c8b9ecb87b05fdbde4b9e7f96040a5b6827287cb7be9f6",
+    "pt-BR.json": "75f58a2058cf4d45efe3ad758fde5f5a0b2aae21d980066b192713620f967f34",
+    "ve.json": "38133ee18ecba54ecf51e72114c9f7b982d6b85dfa24b01d870f0c1dca85b224",
+    "sw.json": "cf723d3ffa410487cf6adcf6f377e05681a99a1d7ce0c0e5952e7a1427a688b1",
+    "status.json": "a925f2bfffb3dda908ae006f93861c685d4fb1bcb09af9fc025ba961c8628b61",
+    "es.json": "adff2c39a0bc1f8c62b83f109c45c39194a5ecfedc2fa5569326e450edc83e08"
+  }
+}

@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import test, { beforeEach, after } from 'node:test';
 import React from 'react';
@@ -36,7 +37,7 @@ test('the actual hook loads a stable whole book and preserves the original ready
 
 test('source, book, places, storage and focus events withdraw prior ready data immediately while the new source check waits', async () => {
   for (const event of ['imbewu-design-canvas-changed', crop.CROP_PLAN_CHANGED_EVENT, 'permamap-places-changed', 'storage', 'focus']) {
-    reset(); const { row } = await ownRow(); store([row]); local.setItem(studioKey(), JSON.stringify(studio()));
+    await reset(); const { row } = await ownRow(); store([row]); local.setItem(studioKey(), JSON.stringify(studio()));
     const ui = mount(); try {
       await ui.flush(); assert.equal(ui.current().status, 'ready', event);
       const gate = pauseHashes(); act(() => { events.dispatchEvent(new Event(event)); }); await gate.started;
@@ -50,7 +51,7 @@ test('the final synchronous action guard sees raw book and source edits without 
   const { row } = await ownRow(); store([row]); local.setItem(studioKey(), JSON.stringify(studio()));
   const ui = mount(); try {
     await ui.flush(); assert.equal(ui.current().isCurrent(), true);
-    local.setItem(bookKey(), JSON.stringify({ version: 1, plantings: [row, row], updatedAt: 2 }));
+    replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ version: 1, plantings: [row, row], updatedAt: 2 }));
     assert.equal(ui.current().isCurrent(), false);
     let valid = true; await act(async () => { valid = await ui.current().checkCurrent(); });
     assert.equal(valid, false); assert.equal(ui.current().status, 'held'); assert.equal(ui.current().book, null);
@@ -93,9 +94,11 @@ test('changed cloud copies fail asynchronous action checks without blessing fres
 });
 
 test('an explicit empty book is ready while absent, corrupt or unreadable books cannot become an invented operational book', async () => {
+  releaseCropPlanFixture(); local.clear();
   const ui = mount(); try {
-    await ui.flush(); assert.equal(ui.current().status, 'held'); assert.deepEqual(ui.current().heldSources, [{ reason: 'no-saved-plan' }]);
-    local.setItem(bookKey(), 'null'); await ui.refresh(); assert.equal(ui.current().status, 'held'); assert.notEqual(ui.current().heldSources[0]?.reason, 'no-saved-plan');
+    await ui.flush(); assert.equal(ui.current().status, 'held'); assert.deepEqual(ui.current().heldSources, [{ reason: 'book-unavailable' }]);
+    await initialiseCropPlanFixture();
+    replaceCanonicalCropPlanFixtureRaw('null'); await ui.refresh(); assert.equal(ui.current().status, 'held'); assert.notEqual(ui.current().heldSources[0]?.reason, 'no-saved-plan');
     store([]); await ui.refresh(); assert.equal(ui.current().status, 'ready'); assert.deepEqual(ui.current().contexts, []);
     local.fail = true; await ui.refresh(); assert.equal(ui.current().status, 'held'); assert.equal(ui.current().book, null);
   } finally { local.fail = false; ui.dispose(); }

@@ -77,6 +77,8 @@ import { currentPlanningSupport, resolvePlanningSupport } from '@/lib/internatio
 import { resolveWorkspacePlanningReference, replaceWorkspacePlanningReference, sanitiseWorkspacePlanningReferences, workspacePlanningIdForDesign, type WorkspacePlanningReference } from '@/lib/international/workspace-context';
 import WorkspaceReferencePanel from '@/components/international/countries/WorkspaceReferencePanel';
 import SavedSiteUpdates from '@/components/international/countries/SavedSiteUpdates';
+import { CropPlanStorageNotice } from '@/components/CropPlanStorageStatus';
+import { CROP_PLAN_STORAGE_EVENT } from '@/lib/crop-plan-storage';
 import SiteCountryPanel, { type CountrySaveNotice } from '@/components/international/countries/SiteCountryPanel';
 import PlannerSupportHold from '@/components/international/countries/PlannerSupportHold';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
@@ -96,6 +98,7 @@ import {
   buildFieldUtilizationByMonth, totalGrowingAreaM2, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
   restampEditedOnce, confirmOnceSowing,
+  CROP_PLAN_CHANGED_EVENT,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
@@ -870,6 +873,11 @@ function FacilitatorCropsPageInner() {
   function openAutoSuggest() {
     if (hasOwnRecords) return;
     if (!currentPlanningScopeAllowed() || beds.length === 0) return;
+    const suggestionBase = planWriteBase.current;
+    if (!plan || planSaveConflict || !suggestionBase || suggestionBase.planKey !== JSON.stringify(plan)
+      || !plannerActorIsCurrent(suggestionBase.owner, suggestionBase.sample)
+      || !cropPlanWriteAdmissionMatches(suggestionBase.admission, suggestionBase.planKey, suggestionBase.token)
+      || cropPlanWriteToken() !== suggestionBase.token) return;
     setAGoal('family');
     setAFocusCount(1);
     applyGoalMix('family');
@@ -916,6 +924,11 @@ function FacilitatorCropsPageInner() {
   function runAutoSuggest() {
     if (hasOwnRecords) return;
     if (!currentPlanningScopeAllowed() || beds.length === 0) return;
+    const suggestionBase = planWriteBase.current;
+    if (!plan || planSaveConflict || !suggestionBase || suggestionBase.planKey !== JSON.stringify(plan)
+      || !plannerActorIsCurrent(suggestionBase.owner, suggestionBase.sample)
+      || !cropPlanWriteAdmissionMatches(suggestionBase.admission, suggestionBase.planKey, suggestionBase.token)
+      || cropPlanWriteToken() !== suggestionBase.token) return;
     suggestionScopeRef.current = planningScopeKey;
     const answers: AutoSuggestAnswers = {
       goal: aGoal,
@@ -1033,6 +1046,11 @@ function FacilitatorCropsPageInner() {
   function acceptAutoSuggest() {
     if (!currentPlanningScopeAllowed() || suggestionScopeRef.current !== planningScopeKey || !autoResult || beds.length === 0) return;
     if (hasOwnRecords) return;
+    const suggestionBase = planWriteBase.current;
+    if (!plan || planSaveConflict || !suggestionBase || suggestionBase.planKey !== JSON.stringify(plan)
+      || !plannerActorIsCurrent(suggestionBase.owner, suggestionBase.sample)
+      || !cropPlanWriteAdmissionMatches(suggestionBase.admission, suggestionBase.planKey, suggestionBase.token)
+      || cropPlanWriteToken() !== suggestionBase.token) return;
     // The reasons the farmer just read replace earlier explanations: suggestions
     // run months apart describe different plans and cannot share one date label.
     const authoredMetadata = { rainPattern: pattern, planNotes: autoResult.notes, planNotesAt: Date.now() };
@@ -1308,6 +1326,57 @@ function FacilitatorCropsPageInner() {
     }, 400);
     return () => { if (saveTimer.current) clearTimeout(saveTimer.current); };
   }, [plan, planSaveConflict]);
+
+  const [planStorageRevision, setPlanStorageRevision] = useState(0);
+  const handledPlanStorageRevision = useRef(0);
+  function refreshAdmittedStoredPlan() {
+    const base = planWriteBase.current;
+    if (!plan || !base) return;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    // A newly acquired lease can refresh a clean view. It cannot turn edits
+    // based on an older or unreadable book into authorised current records.
+    if (!plannerActorIsCurrent(base.owner, base.sample) || !cropPlanWriteCandidateIsLossless(plan)
+      || JSON.stringify(plan) !== base.planKey) { setPlanSaveConflict(true); return; }
+    const loaded = loadCropPlanWithWriteAdmission(), fresh = loaded.book, key = JSON.stringify(fresh);
+    if (loaded.token === null || loaded.admission.status !== 'ready'
+      || !cropPlanWriteAdmissionMatches(loaded.admission, key, loaded.token)
+      || !plannerActorIsCurrent(base.owner, base.sample) || planWriteBase.current !== base
+      || cropPlanWriteToken() !== loaded.token) { setPlanSaveConflict(true); return; }
+    if (base.token !== loaded.token || base.planKey !== key
+      || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) {
+      if (base.planKey !== key) {
+        // These transient actions were reviewed against different occupancy.
+        // A clean saved-view refresh does not carry their old write intent.
+        suggestionScopeRef.current = null;
+        setAutoPhase('idle'); setAutoResult(null); setIdealMeta(null); setAutoGenerating(false);
+        setPickerBedId(null); setPickerCrop(null); setActivePlanting(null);
+        setPlanHistory([]);
+        planHistoryContext.current = new WeakMap();
+        suggestedPlanHistory.current = new WeakMap();
+      }
+      planWriteBase.current = { owner: base.owner, sample: base.sample, token: loaded.token, planKey: key, admission: loaded.admission };
+      if (JSON.stringify(plan) !== key) setPlan(fresh);
+    }
+    setPlanSaveConflict(false);
+    setPlanSaveFailed(false);
+  }
+  useEffect(() => {
+    const changed = () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      setPlanStorageRevision(value => value + 1);
+    };
+    const events = [CROP_PLAN_CHANGED_EVENT, CROP_PLAN_STORAGE_EVENT, 'storage', 'focus'];
+    events.forEach(event => window.addEventListener(event, changed));
+    return () => events.forEach(event => window.removeEventListener(event, changed));
+  }, []);
+  useEffect(() => {
+    if (handledPlanStorageRevision.current === planStorageRevision) return;
+    if (!plan || !planWriteBase.current) return;
+    handledPlanStorageRevision.current = planStorageRevision;
+    // A writer emits before returning its receipt. Wait for the committed
+    // React plan/base, including pending local edits, before classifying it.
+    refreshAdmittedStoredPlan();
+  }, [planStorageRevision, plan]);
 
   const designBeds = useMemo(() => computeDesignBeds(design ?? null), [design]);
   const beds = canvasSite
@@ -2372,6 +2441,7 @@ function FacilitatorCropsPageInner() {
         </div>
       ) : invalidCanvasSite ? (
         <section className="flex-1 overflow-y-auto p-5 font-sans" aria-label="Invalid site link">
+          <CropPlanStorageNotice />
           <h1 className="font-display text-xl font-semibold">This site link is not valid</h1>
           <p className="mt-2">Open a saved mapped site to plan its crops. No other site’s planning context has been substituted.</p>
           <Link href="/facilitator/crops?switch=1" className="mt-3 inline-block underline">Choose a saved site</Link>
@@ -2379,6 +2449,7 @@ function FacilitatorCropsPageInner() {
       ) : needsSitePicker ? (
         <div className="flex-1 overflow-y-auto py-7 px-4">
           <div className="mx-auto w-full" style={{ maxWidth: 760 }}>
+            <CropPlanStorageNotice />
             <div className="flex items-start justify-between gap-3">
               <h1 className="font-display font-semibold" style={{ fontSize: 'clamp(19px, 1.7vw, 23px)', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>{cropUi(lang, 'Which site are you planning?', 'Uhlela siphi isiza?')}</h1>
               {chosenDesignId !== null && (
@@ -2447,6 +2518,7 @@ function FacilitatorCropsPageInner() {
       ) : !allowCataloguePlanning ? (
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+            <CropPlanStorageNotice />
             {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
               : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}
             {!surveySiteId && !planningWorkspaceId && <button type="button" onClick={() => setUseVirtual(true)} className="mb-4 min-h-11 rounded-xl border border-[var(--border)] bg-[var(--bg-1)] px-4 py-2 font-sans">Try a virtual reference bed</button>}
@@ -2463,11 +2535,13 @@ function FacilitatorCropsPageInner() {
         </div>
       ) : beds.length === 0 && canvasTrees.length === 0 && unidentifiedPlants.length === 0 && canvasAnimals.length === 0 ? (
         <div className="flex-1 overflow-y-auto"><div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+          <CropPlanStorageNotice />
           {growerPlanningPanel}<EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
         </div></div>
       ) : (
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+            <CropPlanStorageNotice />
             {growerPlanningPanel}
             {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
               : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}

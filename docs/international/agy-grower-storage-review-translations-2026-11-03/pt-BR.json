@@ -1,0 +1,80 @@
+{
+  "locale": "pt-BR",
+  "sourceSha256": "8322365bc622e772fbdde3bd277b2f680158d7024b2b46ab94e3e8da0ca4570e",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "cropPlanStorage01",
+      "english": "Checking crop-plan storage",
+      "sha256": "5ebe27f6151e025b63fbf59de0043960645c2592c9958b58542f25ef6cb2b63b",
+      "translation": "Verificando o armazenamento do plano de cultivo"
+    },
+    {
+      "key": "cropPlanStorage02",
+      "english": "Crop plan is read-only",
+      "sha256": "80264c088f356e4130bc9f7f1e50cd4fb5d43a4283e4a6b946418bb40bc91461",
+      "translation": "O plano de cultivo está somente para leitura"
+    },
+    {
+      "key": "cropPlanStorage03",
+      "english": "Saved records are being checked before crop-plan editing is enabled.",
+      "sha256": "cf40f9fff392ee329f00db8822d8bd2125ae0d8f1fd489e567660a0e9c9b3ed4",
+      "translation": "Os registros salvos estão sendo verificados antes de habilitar a edição do plano de cultivo."
+    },
+    {
+      "key": "cropPlanStorage04",
+      "english": "An older app session changed its previous copy. Your protected crop plan has been kept, and the two copies need review.",
+      "sha256": "ba2437fc274eb2319a0c1872dd1477ecaf137c20f89a1c8244c0a9eb1bdb1354",
+      "translation": "Uma sessão anterior do aplicativo alterou sua cópia prévia. Seu plano de cultivo protegido foi mantido, e as duas cópias precisam ser revisadas."
+    },
+    {
+      "key": "cropPlanStorage05",
+      "english": "Review the copy conflict",
+      "sha256": "9351a46e20199028f73888b382cffdab3ff9ac074b27f966e33a1bd2ccd3e1ba",
+      "translation": "Revisar o conflito de cópias"
+    },
+    {
+      "key": "cropPlanStorage06",
+      "english": "Download both copies",
+      "sha256": "161aa3ad2ccb0c71c39af78fe90c0a0cc353405172b8b24da9ad7f0b010eaaa7",
+      "translation": "Baixar ambas as cópias"
+    },
+    {
+      "key": "cropPlanStorage07",
+      "english": "Keep current plan; retain older copy for later review",
+      "sha256": "be57e8d8bf0e144b536f07b6d9af3b3da7ca2900b3da7a557f2555ec4e4f7de8",
+      "translation": "Manter o plano atual; reter a cópia mais antiga para revisão posterior"
+    },
+    {
+      "key": "cropPlanStorage08",
+      "english": "Retry crop-plan check",
+      "sha256": "28381d51a873ba3c97c49519a8a470a4522047a2519ba8395ec8efb14fda007d",
+      "translation": "Tentar novamente a verificação do plano de cultivo"
+    },
+    {
+      "key": "cropPlanStorage09",
+      "english": "Recover interrupted setup",
+      "sha256": "61c85ef9370679759eeb8d6fc15e4673489e728db8c82bf59b56639e451eaf26",
+      "translation": "Recuperar a configuração interrompida"
+    },
+    {
+      "key": "cropPlanStorage10",
+      "english": "Your signed-out crop work is still being preserved. Retry its transfer before starting a different account plan; neither copy has been replaced.",
+      "sha256": "11fe249e30b6dcf5a28c07d16bd83523f4a7b799c4af41a6802b14a75b6b4684",
+      "translation": "Seu trabalho de cultivo feito sem entrar na conta continua preservado. Tente novamente a transferência antes de iniciar um plano em outra conta; nenhuma das duas cópias foi substituída."
+    },
+    {
+      "key": "cropPlanStorage11",
+      "english": "These counts do not verify planting records. Matching row counts do not mean the dates, quantities or settings match. The download contains your exact saved copies. This app does not upload them; keep the file private.",
+      "sha256": "31a9f15f6d03bfd4c20007a7ef7f8dbe676e6fd423c0a048e0ae02bf61749c2a",
+      "translation": "Essas contagens não verificam os registros de plantio. Quantidades iguais de linhas não significam que as datas, as quantidades ou as configurações coincidam. O download contém suas cópias salvas exatas. Este aplicativo não faz upload delas; mantenha o arquivo privado."
+    },
+    {
+      "key": "cropPlanStorage12",
+      "english": "Your protected plan is kept. The reviewed older copy is retained for later review; no older changes were merged.",
+      "sha256": "83dfa475e767e326014753aa280f07878efe50babc1e5d500fbefdc350c75ce9",
+      "translation": "Seu plano protegido foi mantido. A cópia mais antiga revisada permanece retida para revisão posterior; nenhuma alteração anterior foi mesclada."
+    }
+  ]
+}

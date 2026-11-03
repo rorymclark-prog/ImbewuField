@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
 import test from 'node:test';
+import { initialiseCropPlanFixture, releaseCropPlanFixture, canonicalCropPlanFixtureKey, readCanonicalCropPlanFixtureRaw, readCanonicalCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import { CROPS } from '../lib/crop-catalog.ts';
 import type { CropPlanState } from '../lib/crop-plan.ts';
 import { createWorkspacePlanningReference } from '../lib/international/workspace-context.ts';
@@ -84,26 +85,30 @@ function switchAccount(uid: string | null) {
 }
 
 test.beforeEach(() => {
+  releaseCropPlanFixture();
   exitSampleMode(); local.clear(); session.clear(); account.backend = true;
   switchAccount('grower-owner-a');
 });
-test.after(() => { exitSampleMode(); bindMountedAccountLocalStorageUid(null); Reflect.deleteProperty(globalThis, '__growerStorageAccount'); });
+test.after(() => { releaseCropPlanFixture(); exitSampleMode(); bindMountedAccountLocalStorageUid(null); Reflect.deleteProperty(globalThis, '__growerStorageAccount'); });
 
-test('a legacy crop book remains readable and saving it invents no grower assumptions or new ledger', () => {
+test('a legacy crop book remains readable and saving it invents no grower assumptions or new ledger', async () => {
   const original = legacyPlan();
   local.setItem(activeAccountLocalStorageKey(storageKey), JSON.stringify(original));
+  await initialiseCropPlanFixture();
   assert.deepEqual(loadCropPlan(), original);
   assert.equal(Object.hasOwn(loadCropPlan(), 'growerPlanningProfiles'), false);
   assert.equal(saveCropPlan(loadCropPlan()), true);
   assert.deepEqual(JSON.parse(local.getItem(activeAccountLocalStorageKey(storageKey))!), original);
-  assert.deepEqual([...local.rows.keys()], [accountLocalStorageKey(storageKey, 'grower-owner-a')]);
+  assert.deepEqual(readCanonicalCropPlanFixture(), original);
+  assert.deepEqual(new Set(local.rows.keys()), new Set([accountLocalStorageKey(storageKey, 'grower-owner-a'), canonicalCropPlanFixtureKey(), activeAccountLocalStorageKey('imbewu_crop_plan_cutover_v2')]), 'one canonical book plus frozen migration evidence; no profile-specific ledger');
 });
 
-test('partial own assumptions reload with provided zero and explicit empty months while every existing plan field survives', () => {
+test('partial own assumptions reload with provided zero and explicit empty months while every existing plan field survives', async () => {
   const partial = profile();
   assert.deepEqual(normaliseGrowerPlanningProfile(partial), partial, 'the fixture itself must pass the real profile authority');
   const original = { ...legacyPlan(), growerPlanningProfiles: [partial] };
   const untouched = structuredClone(original);
+  await initialiseCropPlanFixture();
   assert.equal(saveCropPlan(original), true);
   assert.deepEqual(loadCropPlan(), untouched);
   assert.deepEqual(original, untouched, 'saving cannot rewrite the supplied plan or source assumptions');
@@ -112,17 +117,18 @@ test('partial own assumptions reload with provided zero and explicit empty month
   assert.deepEqual(loadCropPlan().growerPlanningProfiles?.[0].inputs.turnaroundDays, provided(0, 'days'));
   assert.deepEqual(loadCropPlan().growerPlanningProfiles?.[0].inputs.allowedEntryMonths, provided([], 'utc-months'));
   assert.deepEqual(loadCropPlan().growerPlanningProfiles?.[0].inputs.establishment, missing);
-  assert.equal(local.length, 1);
+  assert.deepEqual(new Set(local.rows.keys()), new Set([canonicalCropPlanFixtureKey(), activeAccountLocalStorageKey('imbewu_crop_plan_cutover_v2')]), 'fresh account uses only its canonical book and frozen cutover receipt');
   assert.equal(saveCropPlan({ ...loadCropPlan(), growerPlanningProfiles: [] }), true);
   assert.deepEqual(loadCropPlan(), { ...legacyPlan(), growerPlanningProfiles: [] });
 });
 
-test('two accounts and a signed-out guest each keep their own assumptions without inheriting legacy owner-unknown data', () => {
+test('two accounts and a signed-out guest each keep their own assumptions without inheriting legacy owner-unknown data', async () => {
   local.setItem(storageKey, JSON.stringify({ ...legacyPlan(), growerPlanningProfiles: [profile('unknown-owner')] }));
   assert.equal(loadCropPlan().growerPlanningProfiles, undefined);
   const owners = ['grower-owner-a', 'grower-owner-b', null] as const;
   for (const owner of owners) {
     switchAccount(owner);
+    await initialiseCropPlanFixture();
     assert.equal(loadCropPlan().growerPlanningProfiles, undefined, 'a new owner cannot inherit another profile list');
     assert.equal(saveCropPlan({ ...legacyPlan(), growerPlanningProfiles: [profile(owner ?? 'guest-own')] }), true);
   }
@@ -131,21 +137,25 @@ test('two accounts and a signed-out guest each keep their own assumptions withou
     assert.deepEqual(loadCropPlan(), { ...legacyPlan(), growerPlanningProfiles: [profile(owner ?? 'guest-own')] });
   }
   assert.equal(JSON.parse(local.getItem(storageKey)!).growerPlanningProfiles[0].profileId, 'unknown-owner');
-  assert.equal(local.length, 4, 'three existing owner namespaces plus the untouched legacy row; no profile ledger');
+  assert.equal([...local.rows.keys()].filter(key => key.startsWith('imbewu_crop_plan_v2')).length, owners.length, 'each owner has one canonical book');
+  assert.equal([...local.rows.keys()].filter(key => key.startsWith('imbewu_crop_plan_cutover_v2')).length, owners.length, 'each canonical book retains its migration evidence');
+  assert.equal([...local.rows.keys()].filter(key => key.startsWith(storageKey)).length, 1, 'only the untouched owner-unknown legacy row remains');
 });
 
-test('failed storage reports failure and leaves the previous complete plan and assumptions intact', () => {
+test('failed storage reports failure and leaves the previous complete plan and assumptions intact', async () => {
   const original = { ...legacyPlan(), growerPlanningProfiles: [profile('persisted')] };
+  await initialiseCropPlanFixture();
   assert.equal(saveCropPlan(original), true);
-  const oldBytes = local.getItem(activeAccountLocalStorageKey(storageKey));
+  const oldBytes = local.getItem(canonicalCropPlanFixtureKey());
   local.failWrite = true;
   assert.equal(saveCropPlan({ ...original, growerPlanningProfiles: [profile('unsaved')], plantings: [] }), false);
-  assert.equal(local.getItem(activeAccountLocalStorageKey(storageKey)), oldBytes);
+  assert.equal(local.getItem(canonicalCropPlanFixtureKey()), oldBytes);
   assert.deepEqual(loadCropPlan(), original);
 });
 
-test('sample assumptions are temporary, preserve sample plan content and never overwrite the signed-in crop book', () => {
+test('sample assumptions are temporary, preserve sample plan content and never overwrite the signed-in crop book', async () => {
   const original = { ...legacyPlan(), growerPlanningProfiles: [profile('real-account')] };
+  await initialiseCropPlanFixture();
   assert.equal(saveCropPlan(original), true);
   const physicalBefore = [...local.rows.entries()];
   assert.equal(enterSampleMode(), true);
@@ -164,7 +174,7 @@ test('sample assumptions are temporary, preserve sample plan content and never o
   assert.deepEqual(loadCropPlan(), original);
 });
 
-test('the sample save path rejects ambiguous or corrupt assumptions before they reach its temporary store', () => {
+test('the sample save path rejects ambiguous or corrupt assumptions before they reach its temporary store', async () => {
   assert.equal(enterSampleMode(), true);
   const sampleBefore = loadCropPlan();
   const duplicate = profile('ambiguous-sample');
@@ -172,13 +182,15 @@ test('the sample save path rejects ambiguous or corrupt assumptions before they 
   const invalid = { ...profile('bad-unit-sample'), inputs: { ...profile().inputs,
     yieldKgPerM2: { ...provided(0, 'kg/m2/cycle'), unit: 'kg/acre' } } };
   const raw = { ...sampleBefore, growerPlanningProfiles: [duplicate, { ...duplicate, version: 2 }, invalid, unique] };
-  assert.equal(saveCropPlan(raw as CropPlanState), true);
-  assert.deepEqual(getSandboxCropPlan().growerPlanningProfiles, [unique], 'sample persistence itself must project safely, not only hide bad rows at display time');
-  assert.deepEqual(loadCropPlan(), { ...sampleBefore, growerPlanningProfiles: [unique] });
+  // A persistence boundary must retain evidence, not silently delete invalid candidates.
+  assert.equal(saveCropPlan(raw as CropPlanState), false);
+  assert.deepEqual(getSandboxCropPlan(), sampleBefore, 'rejecting lossy sample input preserves the actual temporary book');
+  assert.deepEqual(loadCropPlan(), sampleBefore);
   assert.equal(local.rows.size, 0, 'temporary sample writes cannot create a physical profile ledger');
 });
 
-test('corrupt stored profile fields cannot become valid missing/default assumptions or erase unrelated plan content', () => {
+test('corrupt stored profile fields cannot become valid missing/default assumptions or erase unrelated plan content', async () => {
+  await initialiseCropPlanFixture();
   const valid = profile('unique-valid');
   const bad = profile('corrupt');
   const corruptions: unknown[] = [
@@ -194,52 +206,59 @@ test('corrupt stored profile fields cannot become valid missing/default assumpti
     assert.equal(normaliseGrowerPlanningProfile(corruption), null, 'invalid fixture must reach the real rejection rule');
     const raw = { ...legacyPlan(), growerPlanningProfiles: [corruption, valid] };
     const bytes = JSON.stringify(raw);
-    local.setItem(activeAccountLocalStorageKey(storageKey), bytes);
+    replaceCanonicalCropPlanFixtureRaw(bytes);
     assert.deepEqual(loadCropPlan(), { ...legacyPlan(), growerPlanningProfiles: [valid] });
-    assert.equal(local.getItem(activeAccountLocalStorageKey(storageKey)), bytes, 'reading may project safely but cannot mutate saved records');
-    assert.equal(saveCropPlan(raw as CropPlanState), true);
-    assert.deepEqual(JSON.parse(local.getItem(activeAccountLocalStorageKey(storageKey))!), { ...legacyPlan(), growerPlanningProfiles: [valid] });
+    assert.equal(readCanonicalCropPlanFixtureRaw(), bytes, 'reading may project safely but cannot mutate saved records');
+    // The old true-save assertion encoded destructive cleanup; keep its projection
+    // check above, but require the writer to hold and retain every authored byte.
+    assert.equal(saveCropPlan(raw as CropPlanState), false);
+    assert.equal(readCanonicalCropPlanFixtureRaw(), bytes);
   }
   for (const value of [null, {}, 'not-a-profile-list']) {
-    local.setItem(activeAccountLocalStorageKey(storageKey), JSON.stringify({ ...legacyPlan(), growerPlanningProfiles: value }));
+    replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ ...legacyPlan(), growerPlanningProfiles: value }));
     assert.deepEqual(loadCropPlan(), { ...legacyPlan(), growerPlanningProfiles: [] });
   }
 });
 
-test('duplicate profile identities never choose a winner by array order, scope or whether one duplicate is corrupt', () => {
+test('duplicate profile identities never choose a winner by array order, scope or whether one duplicate is corrupt', async () => {
+  await initialiseCropPlanFixture();
   const original = profile('duplicate');
   const otherScope = { ...original, scope: { kind: 'mapped-site', siteId: 'site:0.00000,0.00000' } };
   const corrupt = { ...original, version: 999 };
   const unique = profile('unambiguous');
   for (const duplicates of [[original, original], [original, otherScope], [otherScope, original], [original, corrupt], [corrupt, original]]) {
     const raw = { ...legacyPlan(), growerPlanningProfiles: [...duplicates, unique] };
-    local.setItem(activeAccountLocalStorageKey(storageKey), JSON.stringify(raw));
+    const bytes = JSON.stringify(raw);
+    replaceCanonicalCropPlanFixtureRaw(bytes);
     assert.deepEqual(loadCropPlan(), { ...legacyPlan(), growerPlanningProfiles: [unique] });
-    assert.equal(saveCropPlan(raw as CropPlanState), true);
+    assert.equal(saveCropPlan(raw as CropPlanState), false, 'ambiguous source rows must survive rather than be silently discarded');
+    assert.equal(readCanonicalCropPlanFixtureRaw(), bytes);
     assert.deepEqual(loadCropPlan(), { ...legacyPlan(), growerPlanningProfiles: [unique] });
   }
 });
 
 
-test('delayed-write tokens are stable for an empty book, account-bound, and unavailable for corrupt storage', () => {
+test('delayed-write tokens are stable for an empty book, account-bound, and unavailable for corrupt storage', async () => {
+  await initialiseCropPlanFixture();
   const empty = cropPlanWriteToken();
   assert.equal(typeof empty, 'string');
   loadCropPlan(); loadCropPlan();
   assert.equal(cropPlanWriteToken(), empty, 'loading a missing book must not invent a changed stored revision');
   switchAccount('grower-owner-b');
   assert.notEqual(cropPlanWriteToken(), empty);
-  const key = activeAccountLocalStorageKey(storageKey);
+  await initialiseCropPlanFixture();
+  const key = canonicalCropPlanFixtureKey();
   local.setItem(key, '{broken JSON');
   assert.equal(cropPlanWriteToken(), null);
   assert.equal(local.getItem(key), '{broken JSON', 'checking authority never rewrites corrupt data');
 });
 
 
-test('a write receipt identifies this write even when a synchronous observer stores a newer book', () => {
+test('a write receipt identifies this write even when a synchronous observer stores a newer book', async () => {
+  await initialiseCropPlanFixture();
   const first = legacyPlan();
   const newer = { ...legacyPlan(), updatedAt: 500, plantings: [] };
-  const key = activeAccountLocalStorageKey(storageKey);
-  const observe = () => local.setItem(key, JSON.stringify(newer));
+  const observe = () => replaceCanonicalCropPlanFixtureRaw(JSON.stringify(newer));
   browser.addEventListener(CROP_PLAN_CHANGED_EVENT, observe, { once: true });
   const receipt = saveCropPlanWithReceipt(first);
   assert.equal(receipt.saved, true);

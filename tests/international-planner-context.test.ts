@@ -13,6 +13,7 @@ import { IDEAL_PLAN_COPY, suggestIdealYearPlan } from '@/lib/crop-plan-ideal';
 import type { PlanBed, Planting } from '@/lib/crop-plan';
 import { createWorkspacePlanningReference, type WorkspacePlanningReference } from '@/lib/international/workspace-context';
 import { normaliseGrowerPlanningProfile, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
+import { initialiseCropPlanFixture, releaseCropPlanFixture, canonicalCropPlanFixtureKey, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 
 const siteId = 'site:0.00000,0.00000';
 const query = new URLSearchParams({ canvasSite: siteId, auto: '1' });
@@ -30,6 +31,9 @@ function Boundary(props) { return React.createElement('div', { 'data-boundary': 
 export default Boundary;
 export const PRODUCT_ICON = {};
 export const VarietyGuidance = Boundary;
+// This is only the independent notice presentation. The real page, storage
+// initializer/admission and country policy below are never replaced by it.
+export const CropPlanStorageNotice = Boundary;
 `);
 // Keep the real page, its state/mutation handlers, country form, storage and hold
 // view. Stub independent UI widgets and geometry/network inputs, never the policy.
@@ -151,6 +155,18 @@ async function mount(countryCode?: string, options: {
     lines: [], sectors: [], pxPerM: 1, activeLayer: 'planting', hiddenLayers: [], savedAt: 100,
   }));
   probe.climateRequests = 0; probe.idealRuns = 0;
+  // v1 is retained import evidence after the schema cutover. Acquire the real
+  // lease and inspect the actual canonical book, rather than making old-key
+  // assertions accidentally validate a copy that current writers never touch.
+  const legacyBytes = localStorage.getItem('imbewu_crop_plan_v1');
+  await initialiseCropPlanFixture();
+  const canonicalKey = canonicalCropPlanFixtureKey();
+  const savedRaw = () => {
+    const envelope = JSON.parse(localStorage.getItem(canonicalKey)!);
+    assert.equal(envelope.storageVersion, 2);
+    assert.equal(typeof envelope.bookRaw, 'string');
+    return envelope.bookRaw as string;
+  };
   let renderer: ReactTestRenderer;
   await act(async () => { renderer = create(React.createElement(Planner)); });
   const field = (prefix: string) => {
@@ -162,7 +178,7 @@ async function mount(countryCode?: string, options: {
     for (const [id, timer] of [...timers]) if (timer.delay === 400) { timers.delete(id); timer.callback(); }
   };
   return {
-    get renderer() { return renderer; }, localStorage, timers, field,
+    get renderer() { return renderer; }, localStorage, timers, field, savedRaw, replaceSavedRaw: replaceCanonicalCropPlanFixtureRaw,
     text: () => text(renderer.root),
     boundaries(name: string) { return renderer.root.findAll(node => node.props['data-boundary'] === `@/components/crops/${name}`); },
     async change(prefix: string, value: string) { await act(async () => field(prefix).props.onChange({ target: { value } })); },
@@ -209,6 +225,8 @@ async function mount(countryCode?: string, options: {
     async remount() { await act(async () => { renderer.unmount(); }); await act(async () => { renderer = create(React.createElement(Planner)); }); },
     async dispose() {
       await act(async () => { renderer.unmount(); });
+      releaseCropPlanFixture();
+      assert.equal(localStorage.getItem('imbewu_crop_plan_v1'), legacyBytes, 'current planner actions must leave retired import evidence unchanged');
       for (const [key, original] of originals) { if (original) Object.defineProperty(globalThis, key, original); else Reflect.deleteProperty(globalThis, key); }
     },
   };
@@ -242,7 +260,7 @@ test('the real planner withholds recommendation and export widgets for unknown a
       assert.equal(nursery[0].props['data-props'].allowCatalogueForecast, false);
       assert.equal(screen.boundaries('ProductionRecordsEditor').length, 1);
       await screen.flushSave();
-      assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+      assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
     } finally { await screen.dispose(); }
   }
 });
@@ -264,11 +282,11 @@ test('the real country form requires renewed confirmation and persists metadata 
     assert.notEqual(screen.boundaries('HarvestTargetsPanel')[0].props['data-props'].basis, 'own-records');
     assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Planning support' }).length, 0);
     await screen.flushSave();
-    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+    assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
     await screen.remount();
     assert.match(screen.text(), /Saved country: South Africa/);
     assert.equal(reloadPlaces()[0].siteCountryContext?.countryCode, 'ZA');
-    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+    assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
   } finally { await screen.dispose(); }
 });
 
@@ -280,7 +298,7 @@ test('a stale harvest-target accept callback rereads the current country before 
     const result = { plantings: [{ ...fixturePlan.plantings[0], id: 'stale-suggestion' }], notes: [] } as unknown as AutoSuggestResult;
     await act(async () => accept(result));
     await screen.flushSave();
-    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+    assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
     await screen.setStoredCountry('KE');
     assertOwnTargetRecords(screen);
     assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
@@ -298,7 +316,7 @@ test('an already-open auto-suggest cannot queue generation after another tab cha
     await act(async () => generate.props.onClick());
     assert.equal([...screen.timers.values()].filter(timer => timer.delay === 30).length, 0);
     await screen.flushSave();
-    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+    assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
   } finally { await screen.dispose(); }
 });
 
@@ -314,7 +332,7 @@ test('invalid and noncanonical deep links cannot borrow a confirmed saved site o
       assert.equal(screen.text().includes('Auto-suggest a plan'), false);
       assert.equal(probe.climateRequests, 0);
       await screen.flushSave();
-      assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+      assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
     } finally { await screen.dispose(); }
   }
 });
@@ -332,7 +350,7 @@ test('an unsupported grower can record an existing crop identity without first a
       sourceIconKey: option.iconKey, label: option.label, date: { year: 2026, month: 11 },
       quantity: 0, unit: 'kg', status: 'actual', provenance: 'fictional-example' }]));
     await screen.flushSave();
-    const saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    const saved = JSON.parse(screen.savedRaw());
     assert.deepEqual(saved.plantings, []);
     assert.equal(saved.productionRecords.length, 1);
     assert.equal(saved.productionRecords[0].status, 'actual');
@@ -356,7 +374,7 @@ test('the queued ideal producer runs for its supported scope but cannot run afte
     await run();
     assert.equal(probe.idealRuns, 0);
     await changed.flushSave();
-    assert.deepEqual(JSON.parse(changed.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+    assert.deepEqual(JSON.parse(changed.savedRaw()).plantings, fixturePlan.plantings);
   } finally { await changed.dispose(); }
 });
 
@@ -371,7 +389,7 @@ test('a same-coordinate bed-kind change invalidates queued production and stale 
     const result = { plantings: [{ ...fixturePlan.plantings[0], id: 'old-bed-kind-suggestion' }], notes: [] } as unknown as AutoSuggestResult;
     await act(async () => accept(result));
     await screen.flushSave();
-    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+    assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
   } finally { await screen.dispose(); }
 });
 
@@ -384,7 +402,7 @@ test('the unmapped virtual planner needs an explicit reference choice, reloads i
     await screen.click('Try a virtual reference bed');
     assert.equal(screen.renderer.root.findAllByType('button').find(node => text(node) === 'Save reference choice')!.props.disabled, true);
     await screen.submitReference();
-    assert.equal(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).workspaceReferences, undefined);
+    assert.equal(JSON.parse(screen.savedRaw()).workspaceReferences, undefined);
     assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
     await screen.acknowledgeReference(); await screen.submitReference();
     assert.equal(screen.boundaries('HarvestTargetsPanel').length, 1);
@@ -399,7 +417,7 @@ test('the unmapped virtual planner needs an explicit reference choice, reloads i
     assert.ok(close, 'Close the proposal before using the workspace controls again');
     await act(async () => close.props.onClick());
     await screen.flushSave();
-    let saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    let saved = JSON.parse(screen.savedRaw());
     assert.equal(saved.workspaceReferences[0].workspaceId, 'virtual-bed');
     assert.deepEqual(saved.plantings, sowings);
     assert.deepEqual(JSON.parse(screen.localStorage.getItem('permamap_saved_places')!), []);
@@ -410,7 +428,7 @@ test('the unmapped virtual planner needs an explicit reference choice, reloads i
     assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
     assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
     await screen.flushSave();
-    saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    saved = JSON.parse(screen.savedRaw());
     assert.deepEqual(saved.workspaceReferences, []);
     assert.deepEqual(saved.plantings, sowings);
   } finally { await screen.dispose(); }
@@ -427,14 +445,14 @@ test('an unmapped local design keeps its own reference choice separate from a sa
     await screen.acknowledgeReference(); await screen.submitReference();
     assert.equal(screen.boundaries('HarvestTargetsPanel').length, 1);
     await screen.flushSave();
-    let saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    let saved = JSON.parse(screen.savedRaw());
     assert.equal(saved.workspaceReferences.length, 2);
     assert.deepEqual(saved.workspaceReferences.find((row: WorkspacePlanningReference) => row.workspaceId === 'virtual-bed'), virtual);
     assert.ok(saved.workspaceReferences.some((row: WorkspacePlanningReference) => row.workspaceId === 'design:local'));
     assert.deepEqual(saved.plantings, fixturePlan.plantings);
     await screen.click('Remove reference choice');
     await screen.flushSave();
-    saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    saved = JSON.parse(screen.savedRaw());
     assert.deepEqual(saved.workspaceReferences, [virtual]);
     assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
   } finally { await screen.dispose(); }
@@ -451,7 +469,7 @@ test('a mapped foreign site cannot inherit an unmapped reference choice in the r
     assert.match(screen.text(), /Local crop planning is not available/);
     assert.equal(probe.climateRequests, 0);
     await screen.flushSave();
-    const saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    const saved = JSON.parse(screen.savedRaw());
     assert.deepEqual(saved.workspaceReferences, [reference, local]);
     assert.deepEqual(saved.plantings, fixturePlan.plantings);
   } finally { await screen.dispose(); }
@@ -484,7 +502,7 @@ test('a foreign grower saves partial own estimates in the real plan without enab
     savedProfile = ownProfile();
     await act(async () => { assert.equal(props.onSaveProfiles([savedProfile]), true); });
     await screen.flushSave();
-    const saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    const saved = JSON.parse(screen.savedRaw());
     assert.deepEqual(saved.growerPlanningProfiles, [savedProfile]);
     assert.deepEqual(saved.plantings, fixturePlan.plantings);
     assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
@@ -510,14 +528,14 @@ test('a late grower save cannot write into another mounted account or claim a fa
   const screen = await mount('KE', { auto: false });
   try {
     const save = growerProps(screen).onSaveProfiles;
-    const before = screen.localStorage.getItem('imbewu_crop_plan_v1');
+    const before = screen.savedRaw();
     bindMountedAccountLocalStorageUid('other-owner');
     await act(async () => { assert.equal(save([ownProfile()]), false); });
-    assert.equal(screen.localStorage.getItem('imbewu_crop_plan_v1'), before);
+    assert.equal(screen.savedRaw(), before);
     bindMountedAccountLocalStorageUid(null);
     screen.localStorage.failWrite = true;
     await act(async () => { assert.equal(save([ownProfile()]), false); });
-    assert.equal(screen.localStorage.getItem('imbewu_crop_plan_v1'), before);
+    assert.equal(screen.savedRaw(), before);
     assert.match(screen.text(), /Not saving[\s\S]*not being kept/);
   } finally { bindMountedAccountLocalStorageUid(null); await screen.dispose(); }
 });
@@ -528,11 +546,11 @@ test('a grower profile edit preserves newer records and profiles from another sc
     const save = growerProps(screen).onSaveProfiles;
     const foreign = ownProfile('other-workspace', { kind: 'unmapped-workspace', workspaceId: 'design:other' });
     const newerRows = [{ ...fixturePlan.plantings[0], id: 'newer-sowing' }];
-    screen.localStorage.setItem('imbewu_crop_plan_v1', JSON.stringify({ ...fixturePlan, updatedAt: 200,
+    screen.replaceSavedRaw(JSON.stringify({ ...fixturePlan, updatedAt: 200,
       plantings: newerRows, growerPlanningProfiles: [foreign] }));
     await act(async () => { assert.equal(save([ownProfile()]), true); });
     await screen.flushSave();
-    const saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    const saved = JSON.parse(screen.savedRaw());
     assert.deepEqual(saved.plantings, newerRows);
     assert.deepEqual(saved.growerPlanningProfiles, [foreign, ownProfile()]);
   } finally { await screen.dispose(); }
@@ -543,10 +561,10 @@ test('another tab’s newer assumptions in this scope cannot be overwritten by t
   try {
     const save = growerProps(screen).onSaveProfiles;
     const newer = { ...fixturePlan, updatedAt: 200, growerPlanningProfiles: [ownProfile('newer-profile')] };
-    screen.localStorage.setItem('imbewu_crop_plan_v1', JSON.stringify(newer));
+    screen.replaceSavedRaw(JSON.stringify(newer));
     await act(async () => { assert.equal(save([ownProfile()]), false); });
     await screen.flushSave();
-    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!), newer);
+    assert.deepEqual(JSON.parse(screen.savedRaw()), newer);
   } finally { await screen.dispose(); }
 });
 
@@ -554,13 +572,13 @@ test('an already queued autosave cannot erase another tab’s assumptions even b
   const screen = await mount('KE', { auto: false });
   try {
     const newer = { ...fixturePlan, updatedAt: 200, growerPlanningProfiles: [ownProfile('other-tab')] };
-    screen.localStorage.setItem('imbewu_crop_plan_v1', JSON.stringify(newer));
+    screen.replaceSavedRaw(JSON.stringify(newer));
     await screen.flushSave();
-    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!), newer);
+    assert.deepEqual(JSON.parse(screen.savedRaw()), newer);
     assert.match(screen.text(), /The saved plan changed or could not be checked/);
     await act(async () => { assert.equal(growerProps(screen).onSaveProfiles([ownProfile()]), false); });
     await screen.flushSave();
-    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!), newer);
+    assert.deepEqual(JSON.parse(screen.savedRaw()), newer);
   } finally { await screen.dispose(); }
 });
 
@@ -568,9 +586,9 @@ test('a queued autosave preserves newer sowings even when both books have no gro
   const screen = await mount('KE', { auto: false });
   try {
     const newer = { ...fixturePlan, updatedAt: 200, plantings: [{ ...fixturePlan.plantings[0], id: 'newer-real-sowing' }] };
-    screen.localStorage.setItem('imbewu_crop_plan_v1', JSON.stringify(newer));
+    screen.replaceSavedRaw(JSON.stringify(newer));
     await screen.flushSave();
-    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!), newer);
+    assert.deepEqual(JSON.parse(screen.savedRaw()), newer);
     assert.match(screen.text(), /The saved plan changed or could not be checked/);
   } finally { await screen.dispose(); }
 });
@@ -580,12 +598,14 @@ test('a queued autosave is abandoned before reading or writing a different mount
   try {
     const otherKey = 'imbewu_crop_plan_v1::imbewu-owner::uid:other-owner';
     const other = { ...fixturePlan, updatedAt: 200, plantings: [{ ...fixturePlan.plantings[0], id: 'other-owner-sowing' }] };
-    const original = screen.localStorage.getItem('imbewu_crop_plan_v1');
+    const original = screen.savedRaw();
     screen.localStorage.setItem(otherKey, JSON.stringify(other));
     bindMountedAccountLocalStorageUid('other-owner');
     await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.localStorage.getItem(otherKey)!), other);
-    assert.equal(screen.localStorage.getItem('imbewu_crop_plan_v1'), original);
+    assert.equal(screen.localStorage.getItem('imbewu_crop_plan_v2::imbewu-owner::uid:other-owner'), null,
+      'an old account callback must not create a new canonical book for the different mounted owner');
+    assert.equal(screen.savedRaw(), original);
   } finally { bindMountedAccountLocalStorageUid(null); await screen.dispose(); }
 });
 
@@ -593,14 +613,14 @@ test('a local record edit cannot bless stale assumptions merely by queueing a ne
   const screen = await mount('KE', { auto: false, growerPlanningProfiles: [ownProfile('old-profile')] });
   try {
     const newer = { ...fixturePlan, updatedAt: 200, growerPlanningProfiles: [ownProfile('newer-profile')] };
-    screen.localStorage.setItem('imbewu_crop_plan_v1', JSON.stringify(newer));
+    screen.replaceSavedRaw(JSON.stringify(newer));
     const editor = screen.boundaries('ProductionRecordsEditor')[0].props['data-props'];
     const product = editor.products.find((item: { iconKey: string }) => item.iconKey === `crop:${crop.key}`);
     assert.ok(product);
     await act(async () => editor.onProductionRecordsChange([{ id: 'local-observation', siteId, sourceIconKey: product.iconKey,
       label: product.label, date: { year: 2026, month: 11 }, quantity: 0, unit: 'kg', status: 'actual', provenance: 'fictional-example' }]));
     await screen.flushSave();
-    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!), newer);
+    assert.deepEqual(JSON.parse(screen.savedRaw()), newer);
     assert.equal(screen.boundaries('ProductionRecordsEditor')[0].props['data-props'].productionRecords[0].id, 'local-observation',
       'the unsaved observation remains visible for recovery');
     assert.match(screen.text(), /The saved plan changed or could not be checked/);

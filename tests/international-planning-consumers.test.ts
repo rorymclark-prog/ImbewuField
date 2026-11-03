@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -62,12 +63,14 @@ const canvas = (id=siteId, bedId='fixture-bed'):DesignCanvasState => ({siteId:id
   frame:{centerLng:0,centerLat:0,zoom:18,imgW:960,imgH:640,mPerPx:0.4},
   items:[{id:bedId,defId:'veg_bed',x:0.5,y:0.5,label:'Fixture bed'}],zones:[],lines:[],step:'review',updatedAt:'2026-01-01T00:00:00.000Z',rev:1});
 const place=(id='fixture-site',lat=0):SavedPlace=>({id,name:'Fictional test site',lat,lon:0,biome:'',rainfall:0,elevation:0,savedAt:'2026-01-01T00:00:00.000Z',updatedAt:100});
-function browser() {
+async function browser() {
+  releaseCropPlanFixture();
   const local=new Storage(), session=new Storage(); const target=Object.assign(new EventTarget(),{localStorage:local,sessionStorage:session});
   Object.assign(globalThis,{window:target,localStorage:local,sessionStorage:session});
   local.setItem('permamap_saved_places',JSON.stringify([place()]));
   local.setItem('imbewu_design_canvas_'+siteId,JSON.stringify(canvas()));
-  saveCropPlan({version:1,updatedAt:1,plantings:[{id:'fixture-sowing',bedId:'fixture-bed',cropKey:crop.key,sowMonth:1}]});
+  await initialiseCropPlanFixture();
+  assert.equal(saveCropPlan({version:1,updatedAt:1,plantings:[{id:'fixture-sowing',bedId:'fixture-bed',cropKey:crop.key,sowMonth:1}]}),true);
   return {local,target};
 }
 function country(code:string,id=siteId) {
@@ -86,8 +89,8 @@ async function pdfText(blob:Blob) {
   }).join('\n');
 }
 
-test('task storage consumers withhold unsupported sowings without deleting their saved rows',()=>{
-  browser(); const before=JSON.stringify(loadCropPlan());
+test('task storage consumers withhold unsupported sowings without deleting their saved rows',async()=>{
+  await browser(); const before=JSON.stringify(loadCropPlan());
   assert.equal(loadCropBoardTasks(new Set()).length,0);
   assert.equal(loadCropBoardYear(new Set()).withheldPlantings,1);
   for(const code of ['KE','GB','US','BR']) { country(code); assert.equal(loadCropBoardTasks(new Set()).length,0,code); }
@@ -96,8 +99,8 @@ test('task storage consumers withhold unsupported sowings without deleting their
   country('US'); assert.equal(loadCropBoardTasks(new Set()).length,0);
 });
 
-test('a shared bed id cannot borrow an allowed calendar from another physical site',()=>{
-  const {local}=browser(); const otherId='site:1.00000,0.00000';
+test('a shared bed id cannot borrow an allowed calendar from another physical site',async()=>{
+  const {local}=await browser(); const otherId='site:1.00000,0.00000';
   local.setItem('permamap_saved_places',JSON.stringify([place(),place('other',1)]));
   local.setItem('imbewu_design_canvas_'+otherId,JSON.stringify(canvas(otherId)));
   country('ZA');country('ZA',otherId);
@@ -105,8 +108,8 @@ test('a shared bed id cannot borrow an allowed calendar from another physical si
   assert.equal(loadCropBoardYear(new Set()).withheldPlantings,1);
 });
 
-test('explicit unmapped reference planning keeps its tasks but never approves a mapped foreign site',()=>{
-  const {local}=browser(); local.setItem('permamap_saved_places','[]');
+test('explicit unmapped reference planning keeps its tasks but never approves a mapped foreign site',async()=>{
+  const {local}=await browser(); local.setItem('permamap_saved_places','[]');
   const plan=loadCropPlan(); plan.plantings[0].bedId='virtual-bed-1';
   plan.workspaceReferences=[{workspaceId:'virtual-bed',basis:'south-african-reference',acknowledgedAt:new Date().toISOString()}];
   saveCropPlan(plan);
@@ -116,24 +119,24 @@ test('explicit unmapped reference planning keeps its tasks but never approves a 
   assert.equal(loadCropBoardTasks(new Set()).length,0);
 });
 
-test('a report snapshot cannot approve its own planning basis or another report location',()=>{
-  browser(); const cropFact=fact();
+test('a report snapshot cannot approve its own planning basis or another report location',async()=>{
+  await browser(); const cropFact=fact();
   assert.equal(currentReportCropSupport(cropFact.snapshot,siteId).allowCataloguePlanning,false);
   country('ZA'); assert.equal(currentReportCropSupport(cropFact.snapshot,siteId).allowCataloguePlanning,true);
   assert.equal(currentReportCropSupport(cropFact.snapshot,'site:1.00000,0.00000').allowCataloguePlanning,false);
   country('KE'); assert.equal(currentReportCropSupport(cropFact.snapshot,siteId).allowCataloguePlanning,false);
 });
 
-test('unsupported collection keeps raw sowings and outlines while withholding derived annual production',()=>{
-  browser(); const plan=loadCropPlan(), before=JSON.stringify(plan), mapped=canvas();
+test('unsupported collection keeps raw sowings and outlines while withholding derived annual production',async()=>{
+  await browser(); const plan=loadCropPlan(), before=JSON.stringify(plan), mapped=canvas();
   const held=collectReportCropSnapshot(mapped,plan,siteId,new Date('2026-11-02T12:00:00.000Z'));
   assert.deepEqual(held.plantings,plan.plantings);assert.equal(held.beds.length,1);assert.equal(held.outlines.length,1);
   assert.equal(held.annualProduction,undefined);assert.equal(held.planNotes,undefined);assert.equal(JSON.stringify(plan),before);
   country('ZA');assert.ok(collectReportCropSnapshot(mapped,plan,siteId).annualProduction);
 });
 
-test('unsupported crop PDF contains saved records and no regenerated sowing or production calendar',()=>{
-  browser(); const cropFact=fact(), doc=new jsPDF({unit:'pt',format:'a4'});
+test('unsupported crop PDF contains saved records and no regenerated sowing or production calendar',async()=>{
+  await browser(); const cropFact=fact(), doc=new jsPDF({unit:'pt',format:'a4'});
   drawReportCropSummary(doc,cropFact,0,'en',false);
   const output=doc.output();assert.match(output,/Saved sowing records/);assert.match(output,/Local crop guidance/);
   assert.doesNotMatch(output,/Seasonal sowing calendar|SITE REPORT \/ ANNUAL PRODUCTION|Check seedlings/);
@@ -142,7 +145,7 @@ test('unsupported crop PDF contains saved records and no regenerated sowing or p
 });
 
 test('whole report PDF checks current site identity before adding working crop instructions',async()=>{
-  browser();const cropFact=fact();
+  await browser();const cropFact=fact();
   const meta={biome:'Fixture',lat:0,lon:0,rainfallMm:0,meanTempC:0,dateLabel:'Fixture date',cropPlan:cropFact,includeCropWorkingPlan:true};
   const before=JSON.stringify(cropFact);
   const held=await pdfText(await buildReportPdf('# Fixture report\n\nSaved document.',meta));
@@ -155,7 +158,7 @@ test('whole report PDF checks current site identity before adding working crop i
 });
 
 test('report UI rejects both stale country changes and changes while its PDF is being prepared',async()=>{
-  const {target}=browser();country('ZA');const cropFact=fact();external.builds=0;external.deliveries=0;external.delay=false;
+  const {target}=await browser();country('ZA');const cropFact=fact();external.builds=0;external.deliveries=0;external.delay=false;
   let renderer!:ReactTestRenderer;
   act(()=>{renderer=create(React.createElement(ReportCropPlan,{crop:cropFact,siteName:'Fixture',siteId,includeWorking:false,onIncludeWorking:()=>{}}));});
   const button=renderer.root.findAllByType('button')[0];assert.ok(button);
@@ -173,8 +176,8 @@ test('report UI rejects both stale country changes and changes while its PDF is 
 });
 
 
-test('unsupported summary projections preserve saved report bytes and raw sowings without product forecasts',()=>{
-  browser();const cropFact=fact(), facts={crop:cropFact}, before=JSON.stringify(facts);
+test('unsupported summary projections preserve saved report bytes and raw sowings without product forecasts',async()=>{
+  await browser();const cropFact=fact(), facts={crop:cropFact}, before=JSON.stringify(facts);
   assert.ok(cropFact.snapshot?.annualProduction);
   const projected=projectReportPlanningFacts(facts,false)!;
   assert.equal(projected.crop?.snapshot?.annualProduction,undefined);
@@ -186,8 +189,8 @@ test('unsupported summary projections preserve saved report bytes and raw sowing
 });
 
 
-test('a long saved-record allocation wraps over real PDF pages without dropping its final bed',()=>{
-  browser();const cropFact=fact();
+test('a long saved-record allocation wraps over real PDF pages without dropping its final bed',async()=>{
+  await browser();const cropFact=fact();
   cropFact.snapshot=undefined;
   cropFact.crops[0].bedLabels=Array.from({length:500},(_,index)=>`Fixture growing space ${index+1}`);
   const doc=new jsPDF({unit:'pt',format:'a4'});
@@ -198,8 +201,8 @@ test('a long saved-record allocation wraps over real PDF pages without dropping 
 });
 
 
-test('a cached Home task cannot create an ICS after its country becomes unsupported',()=>{
-  browser();country('ZA');const task=loadCropBoardTasks(new Set())[0];assert.ok(task);
+test('a cached Home task cannot create an ICS after its country becomes unsupported',async()=>{
+  await browser();country('ZA');const task=loadCropBoardTasks(new Set())[0];assert.ok(task);
   const previous=Object.getOwnPropertyDescriptor(globalThis,'document');let downloads=0;
   Object.defineProperty(globalThis,'document',{configurable:true,value:{
     createElement:()=>({click(){downloads++;}}),body:{appendChild(){},removeChild(){}},
@@ -211,8 +214,8 @@ test('a cached Home task cannot create an ICS after its country becomes unsuppor
 });
 
 
-test('task references use the persisted design identity and cannot borrow the generic local workspace',()=>{
-  const {local}=browser();local.setItem('permamap_saved_places','[]');
+test('task references use the persisted design identity and cannot borrow the generic local workspace',async()=>{
+  const {local}=await browser();local.setItem('permamap_saved_places','[]');
   const {bgSite:_site,...design}=buildDemoFacilitatorState();design.designId='stable-reference';
   local.setItem('imbewu_facilitator_design_v1',JSON.stringify(design));
   const bed=design.items.find(item=>item.type==='bed')!;assert.ok(bed);

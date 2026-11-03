@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Vhulungani pulane ntswa dza zwimela dzi tshi tsireledzea musi sesheni ya kale ya app i tshi vhulunga khophi yayo.",
+  "Review retained copies before continuing with your current crop plan.": "Sedzulusani khophi dzo vhulungwaho ni sa athu bvela phanḓa na pulane yaṋu ya zwino ya zwimela.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Lingedzani hafhu u fhirisela mushumo wa zwimela wa mueni wo thithiswaho hu si na u dzhia vhudzulo ha mushumo wa akhaunthu wo vhulungwaho.",
+  "Review crop-plan storage": "Sedzulusani vhuvhulungelo ha pulane ya zwimela",
+  "Production plan → Crop-plan storage": "Pulane ya mveledziso → Vhuvhulungelo ha pulane ya zwimela",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Sedzani nḓivhadzo ya vhuvhulungelo. Arali sesheni ya kale yo shandula khophi yayo, dzhenisani khophi dzoṱhe mbili ni dzi sedzuluse ni sa athu nanga u fara pulane yaṋu ya zwino.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Vhulungani pulane yo sedzuluswaho i bvaho kha u anganyela haṋu ha u tavha.",
+  "Check unresolved crop records before using a finance forecast.": "Sedzani rekhodo dza zwimela dzi sa athu tandululwa phanḓa ha u shumisa u anganyela ha masheleni.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Farani u anganyela ha u tavha ho vhulungwaho na ndudzanyo dza vhurerelo ha zwimela musi ni tshi dzhena kha akhaunthu.",
+  "Save your reviewed plan": "Vhulungani pulane yaṋu yo sedzuluswaho",
+  "Production plan → Automatic plan from your estimates": "Pulane ya mveledziso → Pulane i shumaho nga yoṱhe i bvaho kha u anganyela haṋu",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Sedzulusani dzinginyo ḽo fhelelaho, ni vhulunge mitevhe yaḽo yoṱhe yo dzudzanywaho, u bva afho ni vule mushumo u re na maḓuvha.",
   // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/ve.json; UNREVIEWED Codex AI candidates.
   "Follow saved grower cycles on their exact planned dates.": "Tevhelani mitingatingo ya vhulimi yo vhulungwaho nga madatumu ayo o pulaniwaho nga ho livhaho.",
   "Check current designs before ticking work or exporting dates.": "Tolani pulane dza zwino musi ni sa athu swaya mushumo kana u bvisa madatumu.",

@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/st.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Boloka meralo e metjha ya dijalo e sireletsehile ha seshene ya kgale ya sesebediswa e boloka kopi ya yona.",
+  "Review retained copies before continuing with your current crop plan.": "Hlahloba dikopi tse bolokilweng pele o tswela pele ka moralo wa hao wa hona jwale wa dijalo.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Leka hape phetisetso e sitisehileng ya mosebetsi wa dijalo wa moeti ntle le ho nkela mosebetsi o bolokilweng wa akhaonte sebaka.",
+  "Review crop-plan storage": "Hlahloba polokelo ya moralo wa dijalo",
+  "Production plan → Crop-plan storage": "Moralo wa tlhahiso → Polokelo ya moralo wa dijalo",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Sheba tsebiso ya polokelo. Haeba seshene ya kgale e fetotse kopi ya yona, jarolla dikopi ka bobedi mme o di hlahlobe pele o kgetha ho boloka moralo wa hao wa hona jwale.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/st.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Boloka moralo o hlahlobilweng o tswang dikhakanyong tsa hao tsa temo.",
+  "Check unresolved crop records before using a finance forecast.": "Hlahloba direkoto tsa dijalo tse sa rarollwang pele o sebedisa ponelopele ya ditjhelete.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Boloka dikhakanyo tsa temo tse bolokilweng le ditlhophiso tsa sethopo sa dijalo ha o kena akhaonteng.",
+  "Save your reviewed plan": "Boloka moralo wa hao o hlahlobilweng",
+  "Production plan → Automatic plan from your estimates": "Moralo wa tlhahiso → Moralo o iketsahallang ho tswa dikhakanyong tsa hao",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Hlahloba tlhahiso e feletseng, boloka medikoloho yohle ya yona e rerilweng, ebe o bula mosebetsi o nang le matsatsi.",
   // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/st.json; UNREVIEWED Codex AI candidates.
   "Follow saved grower cycles on their exact planned dates.": "Latela medikoloho ya temo e bolokilweng ka matsatsi a yona a tobileng a rerilweng.",
   "Check current designs before ticking work or exporting dates.": "Hlahloba meralo ya hajwale pele o tshwaya mosebetsi kapa o ntsha matsatsi.",

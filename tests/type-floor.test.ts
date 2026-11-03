@@ -96,6 +96,7 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/CropPlanStorageStatus.tsx': 'farmers read storage recovery and retained-copy choices on their crop and records screens',
   'components/crops/GrowerOperationsPanel.tsx': 'growers read exact planned dates and operate checklists on phones; zero-debt 12px floor',
   // Direct crop-route traversal exposes these existing record/confirmation forms.
   // Each is already at zero debt in HEAD; keep the phone-readable floor, not a ratchet.

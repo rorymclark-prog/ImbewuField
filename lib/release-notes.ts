@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '6e184d251', changes: [
+    'Keep newer crop plans safe when an older app session saves its copy.',
+    'Review retained copies before continuing with your current crop plan.',
+    'Retry interrupted guest crop transfers without replacing saved account work.',
+  ], tour: [{ title: 'Review crop-plan storage', where: 'Production plan → Crop-plan storage', href: '/facilitator/crops',
+    detail: 'Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.' }] },
   { when: '3 November 2026', sha: '0ab6f9ea2', changes: [
     'Save a reviewed plan from your own growing estimates.',
     'Check unresolved crop records before using a finance forecast.',
