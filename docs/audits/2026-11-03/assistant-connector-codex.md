@@ -248,6 +248,14 @@ branches. The complete exact qualifications and padded box remain covered,
 and the paid archive must retain its coverage disclosure and exact-sheet
 reference. All 56 affected checks passed on the combined source snapshot.
 
+PR #1192 merged to main as `c06b77bbf16308dea620551b9ff27f1812b8f35c`. Its tree matches the
+contour source revision used for the combined checks. The preserved Node 24
+full run on `a70667fee` finished with 6,364 passes, five failures and one TODO
+across 6,370 tests. Four failures came from the missing update drafts and one
+from the old structure-register source check. All five passed in the 56-test
+targeted run after integrating the fixes. The combined revision still needs
+its own full-suite result.
+
 ## Real limits
 
 - Linking ImbewuField does not link Drive, Gmail, an archive or a local filesystem.
