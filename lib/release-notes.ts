@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '6b44a8de1', changes: [
+    'A pending crop calendar or PDF stops if you switch workspaces before it opens or downloads.',
+  ] },
   { when: '3 November 2026', sha: '2819ce7d0', changes: [
     'Record the day you picked a harvest separately from the day you saved it.',
   ], tour: [{ title: 'Add a harvest date', where: 'Records → Picked', href: '/records',
