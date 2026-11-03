@@ -3,11 +3,11 @@ import { registerHooks } from 'node:module';
 import test, { after, beforeEach } from 'node:test';
 
 const state = { uid: 'account-a' as string | null, firebaseAvailable: true, sample: false, sampleThrows: false, storageThrows: false,
-  reads: 0, writes: 0, events: 0, afterRead: null as (() => void) | null };
+  reads: 0, writes: 0, events: 0, refuseWrite: false, afterRead: null as (() => void) | null, afterWrite: null as (() => void) | null };
 const rows = new Map<string, string>();
 const storage = {
   getItem(key: string) { state.reads++; const value = rows.get(key) ?? null; state.afterRead?.(); return value; },
-  setItem() { state.writes++; },
+  setItem(key: string, value: string) { state.writes++; if (!state.refuseWrite) rows.set(key, value); state.afterWrite?.(); },
 };
 const session = { getItem(key: string) { if (state.sampleThrows) throw Error('Sample flag unavailable'); return key === 'imbewu_sample_mode' && state.sample ? '1' : null; } };
 let activeStorage = storage;
@@ -28,7 +28,7 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
   return next(specifier, context);
 } });
 const { accountLocalStorageKey, bindMountedAccountLocalStorageUid } = await import('../lib/account-local-storage.ts');
-const { readJournalLinkWriteReceipt, journalLinkWriteReceiptMatches } = await import('../lib/field-journal.ts');
+const { appendLinkedJournalNote, loadJournal, MAX_ENTRIES, readJournalLinkWriteReceipt, journalLinkWriteReceiptMatches } = await import('../lib/field-journal.ts');
 hooks.deregister();
 const key = accountLocalStorageKey('imbewu_field_journal_v1', 'account-a');
 const entry = { id: 'test-note', date: '2026-11-03', title: 'Synthetic note', notes: 'Read-only fixture',
@@ -38,7 +38,7 @@ beforeEach(() => {
   rows.clear();
   activeStorage = storage;
   Object.assign(state, { uid: 'account-a', firebaseAvailable: true, sample: false, sampleThrows: false, storageThrows: false,
-    reads: 0, writes: 0, events: 0, afterRead: null });
+    reads: 0, writes: 0, events: 0, refuseWrite: false, afterRead: null, afterWrite: null });
   bindMountedAccountLocalStorageUid('account-a');
 });
 after(() => {
@@ -143,4 +143,85 @@ test('unreadable sample state prevents journal reads, and replacing the backing 
   assert.equal(readJournalLinkWriteReceipt().status, 'held');
   assert.equal(journalLinkWriteReceiptMatches(receipt), false);
   assert.equal(state.reads, 0);
+});
+
+const noteLink = { version: 1, plantingId: 'persisted-planting', cycleId: 'proposal-ordinal', bedId: 'bed-test',
+  scope: { kind: 'mapped-site', siteId: 'site:0.00000,0.00000' } };
+const noteInput = { date: '2026-11-02', title: 'Synthetic confirmed note', notes: 'Grower entered this date.',
+  category: 'other' as const, bedId: 'bed-test' };
+
+test('a linked append preserves existing fields, writes the explicit note date and uses a receipt once', () => {
+  rows.set(key, JSON.stringify([entry]));
+  const receipt = readJournalLinkWriteReceipt();
+  const result = appendLinkedJournalNote(receipt, noteInput, noteLink, () => true);
+  assert.equal(result.status, 'saved');
+  const written = JSON.parse(rows.get(key)!);
+  assert.equal(JSON.stringify(written[0]), JSON.stringify(entry));
+  assert.equal(written[1].date, noteInput.date);
+  assert.deepEqual(written[1].growerCycleLink, noteLink);
+  assert.deepEqual(loadJournal().find(row => row.title === noteInput.title)?.growerCycleLink, noteLink);
+  assert.equal(appendLinkedJournalNote(receipt, noteInput, noteLink, () => true).status, 'held');
+  assert.equal(state.writes, 1);
+  assert.equal(state.events, 1);
+});
+
+test('a linked append holds changed sources, stale journals, invalid dates and full journals without evicting notes', () => {
+  const receipt = readJournalLinkWriteReceipt();
+  assert.deepEqual(appendLinkedJournalNote(receipt, { ...noteInput, date: '2026-02-30' }, noteLink, () => true),
+    { status: 'held', reason: 'invalid-note' });
+  let checks = 0;
+  assert.deepEqual(appendLinkedJournalNote(receipt, noteInput, noteLink, () => ++checks === 1),
+    { status: 'held', reason: 'context-changed' });
+  rows.set(key, '[]');
+  assert.equal(appendLinkedJournalNote(receipt, noteInput, noteLink, () => true).status, 'held');
+  const bytes = JSON.stringify(Array.from({ length: MAX_ENTRIES }, (_, index) => ({ ...entry, id: `note-${index}` })));
+  rows.set(key, bytes);
+  assert.deepEqual(appendLinkedJournalNote(readJournalLinkWriteReceipt(), noteInput, noteLink, () => true),
+    { status: 'held', reason: 'journal-full' });
+  assert.equal(rows.get(key), bytes);
+  assert.equal(state.writes, 0);
+});
+
+test('a journal change during the final source check cannot be overwritten', () => {
+  const receipt = readJournalLinkWriteReceipt();
+  const competing = JSON.stringify([entry]);
+  let checks = 0;
+  const result = appendLinkedJournalNote(receipt, noteInput, noteLink, () => {
+    if (++checks === 2) rows.set(key, competing);
+    return true;
+  });
+  assert.deepEqual(result, { status: 'held', reason: 'context-changed' });
+  assert.equal(rows.get(key), competing);
+  assert.equal(state.writes, 0);
+});
+
+test('an uncertain linked write does not retry or announce success', () => {
+  const receipt = readJournalLinkWriteReceipt();
+  state.afterWrite = () => { throw Error('Write acknowledgement lost'); };
+  assert.deepEqual(appendLinkedJournalNote(receipt, noteInput, noteLink, () => true), { status: 'unconfirmed' });
+  assert.equal(appendLinkedJournalNote(receipt, noteInput, noteLink, () => true).status, 'held');
+  assert.equal(state.writes, 1);
+  assert.equal(state.events, 0);
+});
+
+
+test('an accessor cannot turn an explicitly dated note into today’s note', () => {
+  let reads = 0;
+  const input = Object.defineProperty({ ...noteInput }, 'date', { get: () => { reads++; return reads === 1 ? noteInput.date : ''; } });
+  assert.deepEqual(appendLinkedJournalNote(readJournalLinkWriteReceipt(), input, noteLink, () => true),
+    { status: 'held', reason: 'invalid-note' });
+  assert.equal(reads, 0);
+  assert.equal(state.writes, 0);
+});
+
+test('readback is required even when a storage write returns without throwing', () => {
+  const raw = JSON.stringify([entry]);
+  rows.set(key, raw);
+  state.refuseWrite = true;
+  const receipt = readJournalLinkWriteReceipt();
+  assert.deepEqual(appendLinkedJournalNote(receipt, noteInput, noteLink, () => true), { status: 'unconfirmed' });
+  assert.equal(rows.get(key), raw);
+  assert.equal(state.writes, 1);
+  assert.equal(state.events, 0);
+  assert.equal(journalLinkWriteReceiptMatches(receipt), false);
 });

@@ -4,7 +4,7 @@ import { CROPS } from '../lib/crop-catalog.ts';
 import { generateGrowerAutoPlan, type GrowerAutoPlanCycle, type GrowerAutoPlanRequest } from '../lib/international/grower-autoplan.ts';
 import { createGrowerCyclePlanting, type GrowerCycleContext } from '../lib/international/grower-cycle.ts';
 import { projectGrowerCycles } from '../lib/international/grower-cycle-projection.ts';
-import { resolveGrowerFieldNoteLink } from '../lib/international/grower-field-note-link.ts';
+import { normaliseGrowerFieldNoteLink, resolveGrowerFieldNoteLink } from '../lib/international/grower-field-note-link.ts';
 import { assessGrowerPlanning, type GrowerInput, type GrowerPlanningInputs, type GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
 
 // Synthetic engineering fixtures: none of these numbers are farming instructions.
@@ -253,4 +253,30 @@ test('runtime accessors cannot substitute a planting or site identity for a fiel
     assert.deepEqual(resolveGrowerFieldNoteLink([row], context, input), { status: 'held', reason: 'invalid-selection' });
   }
   assert.equal(getterCalls, 0);
+});
+
+
+test('stored field-note identity decodes to a detached link and does not prove current membership', () => {
+  const input = { version: 1, plantingId: 'missing-from-book', cycleId: 'ordinal', bedId: 'bed', scope: { ...scope } };
+  const link = normaliseGrowerFieldNoteLink(input);
+  assert.deepEqual(link, input);
+  assert.notEqual(link, input);
+  assert.notEqual(link!.scope, input.scope);
+  assert.equal(Object.isFrozen(link), true);
+  assert.equal(Object.isFrozen(link!.scope), true);
+  assert.deepEqual(resolveGrowerFieldNoteLink([], context, link), { status: 'held', reason: 'cycle-unavailable' });
+});
+
+test('stored links reject mixed or extra fields, inherited identities and nested getters', () => {
+  const input = { version: 1, plantingId: 'persisted', cycleId: 'ordinal', bedId: 'bed', scope: { ...scope } };
+  let reads = 0;
+  const trap = () => { reads++; throw Error('Unexpected scope getter'); };
+  const { plantingId, ...withoutPlanting } = input;
+  for (const bad of [{ ...input, version: 2 }, { ...input, date: '2026-11-03' }, { ...input, [Symbol('extra')]: true },
+    { ...input, scope: { ...scope, workspaceId: 'virtual:qa' } }, { ...input, scope: { ...scope, [Symbol('extra')]: true } },
+    { ...input, bedId: 'unsafe\u0000id' }, Object.assign(Object.create({ plantingId }), withoutPlanting),
+    { ...input, scope: Object.defineProperty({ ...scope }, 'siteId', { get: trap }) }]) {
+    assert.equal(normaliseGrowerFieldNoteLink(bad), null);
+  }
+  assert.equal(reads, 0);
 });

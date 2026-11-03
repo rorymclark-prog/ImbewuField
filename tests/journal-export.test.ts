@@ -157,3 +157,14 @@ test('isiZulu exports keep formula and HTML protections, sample markers and orig
   assert.ok(empty.includes('okungu-0'));
   assert.match(buildJournalHtml([], { lang: 'xh' }), /<html lang="en">/);
 });
+
+test('existing journal copies omit private grower-cycle links and their mapped scope', () => {
+  const row = entry('linked', { growerCycleLink: { version: 1, plantingId: 'private-planting-marker',
+    cycleId: 'private-cycle-marker', bedId: 'bed-1', scope: { kind: 'mapped-site', siteId: 'site:0.00000,0.00000' } } });
+  for (const copy of [buildJournalCsv([row]), buildJournalHtml([row])]) {
+    assert.ok(copy.includes('Checked the bed'));
+    for (const privateValue of ['private-planting-marker', 'private-cycle-marker', 'site:0.00000,0.00000']) {
+      assert.ok(!copy.includes(privateValue));
+    }
+  }
+});

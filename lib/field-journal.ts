@@ -13,6 +13,7 @@
 import { Sprout, ShoppingBasket, CloudSun, Bug, Wrench, Users, NotebookPen, type LucideIcon } from 'lucide-react';
 import { activeAccountLocalStorageKey, activeAccountUid, readAccountLocalSampleState } from './account-local-storage';
 import { getFirebase, isBackendConfigured } from './firebase/init';
+import { normaliseGrowerFieldNoteLink } from './international/grower-field-note-link';
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
 
@@ -73,6 +74,8 @@ export interface JournalEntry {
   cropName?: string | null;
   /** Resized thumbnails (data URLs, ≤400px via resizeForStorage). */
   photos?: string[];
+  /** Private link marker. Reading or preserving it does not resolve membership. */
+  growerCycleLink?: unknown;
   createdAt: number;
   updatedAt: number;
 }
@@ -202,6 +205,13 @@ export function sortJournal(entries: JournalEntry[]): JournalEntry[] {
   });
 }
 
+// Keep the stored marker even if its shape needs review. An unrelated edit
+// must not silently turn a linked note into an ordinary note.
+function preserveJournalCycleLink(entry: object): Pick<JournalEntry, 'growerCycleLink'> {
+  const property = Object.getOwnPropertyDescriptor(entry, 'growerCycleLink');
+  return property ? { growerCycleLink: Object.hasOwn(property, 'value') ? property.value ?? null : null } : {};
+}
+
 /**
  * Turn anything that came out of storage into a trustworthy entry list.
  * Drops non-objects, unusable ids/dates, unknown categories and entries with
@@ -231,6 +241,7 @@ export function normaliseJournal(value: unknown): JournalEntry[] {
       bedLabel: cleanTag(raw.bedLabel),
       cropName: cleanTag(raw.cropName),
       photos: cleanPhotos(raw.photos),
+      ...preserveJournalCycleLink(raw),
       createdAt,
       updatedAt: finiteTime(raw.updatedAt, createdAt),
     });
@@ -290,6 +301,7 @@ export function editJournalEntry(
 ): JournalEntry {
   return {
     ...createJournalEntry(input, now),
+    ...preserveJournalCycleLink(entry),
     id: entry.id,
     createdAt: entry.createdAt,
     updatedAt: now,
@@ -436,10 +448,14 @@ function journalActorMatches({ owner, sample }: Pick<JournalLinkBinding, 'owner'
   return user === null ? owner === null : typeof user?.uid === 'string' && user.uid === owner;
 }
 
-function journalBindingMatches(binding: JournalLinkBinding): boolean {
-  const current = () => journalActorMatches(binding) && window.localStorage === binding.storage
+function journalNamespaceMatches(binding: JournalLinkBinding): boolean {
+  return journalActorMatches(binding) && window.localStorage === binding.storage
     && activeAccountLocalStorageKey(STORAGE_KEY) === binding.key;
-  return current() && binding.storage.getItem(binding.key) === binding.raw && current();
+}
+
+function journalBindingMatches(binding: JournalLinkBinding): boolean {
+  return journalNamespaceMatches(binding) && binding.storage.getItem(binding.key) === binding.raw
+    && journalNamespaceMatches(binding);
 }
 
 function journalNormalisationIsLossless(raw: string): boolean {
@@ -498,4 +514,55 @@ export function journalLinkWriteReceiptMatches(receipt: JournalLinkWriteReceipt)
   } catch {
     return false;
   }
+}
+
+export type LinkedJournalAppendResult =
+  | { readonly status: 'saved'; readonly noteId: string }
+  | { readonly status: 'held'; readonly reason: 'invalid-note' | 'context-changed' | 'journal-full' }
+  | { readonly status: 'unconfirmed' };
+
+/** The confirmation controller must recheck the admitted grower book before
+ * calling this. Its synchronous guard must still bind that same source and
+ * live form. There is no await or retry between admission and this write. */
+export function appendLinkedJournalNote(
+  receipt: JournalLinkWriteReceipt,
+  input: JournalEntryInput,
+  selection: unknown,
+  sourceIsCurrent: () => boolean,
+): LinkedJournalAppendResult {
+  const changed = { status: 'held', reason: 'context-changed' } as const;
+  const invalid = { status: 'held', reason: 'invalid-note' } as const;
+  const full = { status: 'held', reason: 'journal-full' } as const;
+  const binding = journalLinkBindings.get(receipt);
+  if (!binding) return changed;
+  let note: JournalEntry, bytes: string;
+  try {
+    if (!sourceIsCurrent() || !journalBindingMatches(binding)) return changed;
+    const link = normaliseGrowerFieldNoteLink(selection);
+    const date = Object.getOwnPropertyDescriptor(input, 'date')?.value;
+    const { bedId, title, notes, category, bedLabel, cropName, photos } = input;
+    if (!link || !isJournalDate(date) || bedId !== link.bedId) return invalid;
+    note = { ...createJournalEntry({ date, bedId, title, notes, category, bedLabel, cropName, photos }), growerCycleLink: link };
+    if ((!note.title && !note.notes) || note.bedId !== link.bedId) return invalid;
+    const prior: JournalEntry[] = binding.raw === null ? [] : JSON.parse(binding.raw);
+    if (prior.length >= MAX_ENTRIES || prior.some(row => row.id === note.id)) return full;
+    bytes = JSON.stringify([...prior, note]);
+    if (bytes.length > JOURNAL_BYTE_BUDGET) return full;
+    if (!sourceIsCurrent() || !journalBindingMatches(binding)
+      || journalLinkBindings.get(receipt) !== binding) return changed;
+  } catch {
+    return changed;
+  }
+  // Consume the original receipt before attempting the write. If the result
+  // is uncertain the caller reloads; it must never silently append a second note.
+  journalLinkBindings.delete(receipt);
+  try {
+    binding.storage.setItem(binding.key, bytes);
+    if (!journalBindingMatches({ ...binding, raw: bytes })) return { status: 'unconfirmed' };
+  } catch {
+    return { status: 'unconfirmed' };
+  }
+  try { window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT)); }
+  catch { /* A notification error cannot undo an observed storage write. */ }
+  return { status: 'saved', noteId: note.id };
 }
