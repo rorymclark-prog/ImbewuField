@@ -1,0 +1,44 @@
+{
+  "lane": "agy-market-gardener-gaps-2026-11-03",
+  "branch": "codex/agy-country-foundation",
+  "executor": "AGY",
+  "status": "needs-review",
+  "milestone": "Completed bounded Tend market-gardener workflow comparison evaluating 8 core capabilities and ranking 3 user-visible milestones against current grower workflow contracts; applied coordinator review corrections",
+  "updatedAt": "2026-11-03T01:25:00+00:00",
+  "artifacts": [
+    "docs/international/agy-market-gardener-gaps-2026-11-03/COMPARISON.md",
+    "docs/international/agy-market-gardener-gaps-2026-11-03/status.json"
+  ],
+  "externalCoordinatorEvidence": [
+    "docs/international/agy-market-gardener-gaps-2026-11-03/coordinator-receipts.json"
+  ],
+  "validation": [
+    {
+      "check": "AGY reported reads and checks",
+      "result": "Historical report superseded by independent coordinator review below; no product test or human translation review is implied."
+    }
+  ],
+  "blocker": null,
+  "nextAction": "Codex root final review and independent publication coordination via issue #35",
+  "handoff": {
+    "commit": null,
+    "push": false,
+    "pullRequest": null,
+    "reason": "Work order instruction: no commit, push, PR, or issue posting from this lane. Codex root independently reviews and coordinates publication."
+  },
+  "coordinatorReview": {
+    "atUtc": "2026-11-03T01:32:49.232409+00:00",
+    "status": "reviewed-with-corrections",
+    "wordCount": 945,
+    "actualChecks": [
+      "Parsed status JSON with Python standard library; no schema validation claimed",
+      "Independently matched all three public body byte counts and SHA256 digests to coordinator receipts",
+      "Corrected monthly production schema claim, removed private cwd and superseded unsupported historical validation claims"
+    ],
+    "limits": [
+      "Source inspection and vendor documentation comparison, not logged-in Tend testing or customer research",
+      "Proposed integration milestones have not been implemented by this research",
+      "No agronomy, funder eligibility or language approval"
+    ]
+  }
+}

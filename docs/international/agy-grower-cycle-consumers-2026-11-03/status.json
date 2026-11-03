@@ -1,0 +1,62 @@
+{
+  "workorder": "docs/international/agy-grower-cycle-consumers-2026-11-03/WORKORDER.md",
+  "status": "ready-for-coordinator-review",
+  "head": "fbe546d6c30c79e584981bbdf82d7cfada5b6363",
+  "generatedAt": "2026-11-03T01:43:00Z",
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "deliverables": [
+    {
+      "path": "docs/international/agy-grower-cycle-consumers-2026-11-03/CONSUMER-MAP.md",
+      "wordCount": 710,
+      "maxWordCap": 800,
+      "consumersMapped": 6,
+      "negativeTestsSpecified": 3
+    }
+  ],
+  "authoritiesInspected": [
+    "lib/crop-plan.ts",
+    "lib/task-board.ts",
+    "lib/task-record-link.ts",
+    "lib/crop-calendar-ics.ts",
+    "lib/harvest-reconciliation.ts",
+    "lib/production-records.ts",
+    "lib/international/grower-cycle.ts",
+    "lib/international/grower-cycle-projection.ts",
+    "lib/international/grower-workflow.ts",
+    "docs/international/GROWER-WORKFLOW-CONTRACT.md"
+  ],
+  "inspectionScope": {
+    "method": "static-code-and-type-inspection",
+    "sourceReadsCount": 10,
+    "testsExecuted": 0,
+    "sourceWrites": 0,
+    "gitWrites": 0,
+    "networkCalls": 0
+  },
+  "coordinatorCorrectionsApplied": [
+    "Bound inspection strictly to grower-workflow head fbe546d6c30c79e584981bbdf82d7cfada5b6363 across the 10 named authorities without recursive scans.",
+    "Removed unsupported custom crop/species key assertions; confirmed own profiles reuse existing crop identity keys.",
+    "Corrected buildPlanYieldBenchmark/intendedKgByCropCycle analysis: marked rows deliberately hold benchmarks as unknown/null (knownKg: null), distinguishing withheld benchmark safety gates from unexecuted bug claims.",
+    "Clarified loadCropPlan persistence: preserves own raw attachments by design; identified missing derived-context admission rather than alleging cross-account leakage.",
+    "Used exact export buildCropPlanIcs in crop-calendar-ics; distinguished direct phase events from catalogue prep/maintenance tasks.",
+    "Recognised that live Firebase account binding is a controller responsibility; recommended extending existing createGrowerCyclePlanting/assembler authorities rather than inventing an overlapping acceptance constructor.",
+    "Clarified that monthly production summaries are not dated sowing/transplant records, and future journal linkage is a proposal rather than a validated implementation."
+  ],
+  "coordinatorReview": {
+    "atUtc": "2026-11-03T01:48:58.496638+00:00",
+    "status": "reviewed-with-corrections",
+    "wordCount": 790,
+    "checkedSourceHead": "fbe546d6c30c79e584981bbdf82d7cfada5b6363",
+    "checks": [
+      "Checked marked benchmark null gate and reconciliation null fallback in named source",
+      "Checked exact calendar export function name and attachment preservation boundary",
+      "Retained actual account-switch controller requirement separately from pure mapped-scope validation",
+      "Parsed publication JSON; scanned compact files for private paths/metadata"
+    ],
+    "limits": [
+      "No tests or implementation delivered by AGY research",
+      "Recommendations do not supersede current code review or future human/country approval"
+    ]
+  }
+}

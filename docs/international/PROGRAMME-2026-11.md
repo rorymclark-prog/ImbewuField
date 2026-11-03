@@ -45,8 +45,9 @@ The released baseline remains `8a12b3e`; these new milestones are under review.
   head `66e2dffc6`, holds site-country context and guarded consumers. The old full
   run failed ten related checks. Coordinator baseline comparison and repairs
   preserved the behavior assertions, added actual rejection controls and supplied
-  the missing disclosed release-copy candidates. The new full run remains pending;
-  repaired focused checks are not a substitute for that result.
+  the missing disclosed release-copy candidates. Its actual full Node24 run finished
+  with6460pass, zero failures and one existing TODO; process exit0. Current-head
+  hosted/account/security checks remain separate release requirements.
 - Draft [PR #1171](https://github.com/rorymclark-prog/ImbewuField/pull/1171),
   head `fbe546d6c`, consolidates the preserved implementation ancestors from #1168
   and #1169 into the complete grower-input/proposal/nursery review flow above
@@ -60,16 +61,20 @@ The released baseline remains `8a12b3e`; these new milestones are under review.
   target and growing estimate, then produced two ready cycles while holding
   unresolved existing sowings. Native date controls work through their accessible
   date interface. Desktop/390px empty controls fit without horizontal overflow.
-  Finished proposal/nursery visual capture, current hosted preview, real-account
-  persistence, older-client metadata preservation and current-head full/security
-  checks remain release gates. Temporary practice changes reset on reload.
-- A separate US NWS observation implementation is in isolated branch
+  Finished proposal and missing-input nursery states were inspected on desktop;
+  unknown quantities stayed unknown. Current hosted preview, populated phone
+  review, real-account persistence, older-client metadata preservation and
+  current-head full/security checks remain release gates. Temporary practice changes reset on reload.
+- Draft [PR #1172](https://github.com/rorymclark-prog/ImbewuField/pull/1172),
+  head `14e00f344`, contains the separate US NWS observation implementation in
   `codex/international-weather-reference`. Actual official documentation, schema,
   station metadata and observation responses were fetched. The bounded adapter,
   existing-guard/data-budget route and opt-in US country-review screen preserve
   units, missingness, QC flags, separate points and observation/retrieval times.
-  Focused provider/route/UI/auth/readiness and phone-type checks pass. It is not
-  merged or browser-certified; it does not supply farm weather or crop advice.
+  Typecheck and202 selected checks pass. Actual desktop/390px phone partial
+  observations and country-switch clearing were inspected. Current-head rules,
+  focused-render and Vercel checks are green; full CI/account/hosted behavior gates
+  remain. It is not merged and does not supply farm weather or crop advice.
 
 ## AGY deliveries and current work
 
@@ -89,19 +94,33 @@ Spanish, Brazilian Portuguese and Swahili. Frozen source/keys/hashes/tokens and
 are not interchangeable; no named fluent review or new runtime language approval
 is present. These remain review packets, not a translated app or lessons.
 
-Two existing-language release-copy batches supply 32 and 36 exact candidates for
+Three existing-language release-copy batches supply32,36 and16 exact candidates for
 isiZulu, Sesotho, Xitsonga and Tshivenda. They are wired only through the existing
 explicitly unreviewed source-paired mechanism, preserving old chunk bytes, English
 fallback and review notices. Structural/runtime checks and recent-history coverage
 pass; no fluent approval is implied by AI worker names or roles.
 
-AGY's completed CLI jobs exited successfully after worker handoff. Its next
-bounded job compares three freshly fetched official Tend pages with the actual
-current implementation, ranking three useful market-gardener workflows. Vendor
-public-page claims are distinct from logged-in product testing or validated
-customer research. Root reviews compact outputs and actual receipts before any
-publication. Optional interaction sharing remains off; supervision checks actual
-process/artifacts and normal scoped approvals, never a Working label alone.
+The bounded Tend comparison is now coordinator-reviewed with corrections. Its
+three fresh official-page bodies match the exact machine receipts. Existing legacy
+tasks, monthly actuals and reconciliation were distinguished from missing new-cycle
+integration; monthly summaries were not relabelled as dated sowing observations.
+The compact945word comparison is source inspection, not logged-in Tend testing or
+customer research. No production capability was implemented by that research.
+
+AGY completed a source-bound consumer map against #1171. Coordinator review
+corrected withheld benchmarks versus false-zero claims and retained the live
+account-switch requirement separately from pure scope validation. This map
+prepared code work but did not implement it. A broader recursive scan was declined.
+Its existing CLI is now assigned124 source-bound French, Spanish, Brazilian
+Portuguese and Swahili drafts for31 exact work-date/checklist messages. The two
+source files are frozen by hash; runtime activation and fluent review remain false.
+Normal scoped permissions and optional-sharing OFF remain.
+
+Codex implementation continues in `codex/international-grower-operations`, based
+on #1171: exact-date task/calendar work, fresh account-bound saved-source loading,
+pure full-proposal acceptance preparation and actual task-screen integration.
+These are uncommitted work in progress. Acceptance remains disabled; no release or
+new-country farming/language approval is implied.
 
 ## Invariants throughout
 

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "tend-crop-planner",
+    "requestedUrl": "https://www.tend.com/feature/visual-crop-planner",
+    "effectiveUrl": "https://www.tend.com/feature/visual-crop-planner",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "curlExit": 0,
+    "startedAt": "2026-11-03T00:48:25.788146+00:00",
+    "completedAt": "2026-11-03T00:48:27.052335+00:00",
+    "bytes": 741295,
+    "sha256": "7e6e0352834105ad7eeee810515116a7230636962a4b01feaea26f14ddf49781",
+    "receiptAuthor": "Codex coordinator machine",
+    "error": null
+  },
+  {
+    "id": "tend-task-management",
+    "requestedUrl": "https://www.tend.com/feature/task-management",
+    "effectiveUrl": "https://www.tend.com/feature/task-management",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "curlExit": 0,
+    "startedAt": "2026-11-03T00:48:25.788444+00:00",
+    "completedAt": "2026-11-03T00:48:27.741112+00:00",
+    "bytes": 740794,
+    "sha256": "b2fe0b25f2eaf30105a524f8748e9fb0f99c68a7e181efdd71b7ad60ce48ceba",
+    "receiptAuthor": "Codex coordinator machine",
+    "error": null
+  },
+  {
+    "id": "tend-fresh-features",
+    "requestedUrl": "https://www.tend.com/freshfeatures",
+    "effectiveUrl": "https://www.tend.com/freshfeatures",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "curlExit": 0,
+    "startedAt": "2026-11-03T00:48:25.788584+00:00",
+    "completedAt": "2026-11-03T00:48:27.055549+00:00",
+    "bytes": 844755,
+    "sha256": "a027ab41bad7e723fe3ef3e0c78aefc763ba464811f9b5f966d147843813c2ee",
+    "receiptAuthor": "Codex coordinator machine",
+    "error": null
+  }
+]
