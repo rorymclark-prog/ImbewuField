@@ -1,11 +1,13 @@
 // Minimal ambient typings for the `marchingsquares` package (no upstream @types package exists).
-// Only the `isoLines` entry point used by app/api/contours/route.ts is declared.
+// Only the `isoLines` entry point used by contour rendering is declared.
 declare module 'marchingsquares' {
   export interface IsoLinesOptions {
     successCallback?: (contours: number[][][], threshold: number) => void;
     noQuadTree?: boolean;
     verbose?: boolean;
     polygons?: boolean;
+    noFrame?: boolean;
+    linearRing?: boolean;
   }
 
   /**
