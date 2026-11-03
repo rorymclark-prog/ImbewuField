@@ -1,3 +1,4 @@
+import { replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -46,9 +47,9 @@ const sales: SalesLog[] = [{ id: 'sold-fixture', profile_id: 'fixture-owner', ga
 const settings = { lossPercent: 0, sellPercent: 100, confirmed: true };
 const legacy = { id: 'legacy-measured', bedId: 'bed-a', cropKey: cropDef.key, sowMonth: now.getMonth() + 1 };
 const orphan = { id: 'unresolved-own', bedId: 'removed-bed', cropKey: cropDef.key, sowMonth: 1, growerCycle: null };
-function saveBook(plantings: unknown[]) { local.setItem(bookKey(), JSON.stringify({ version: 1, plantings, updatedAt: 7 })); }
-beforeEach(() => {
-  reset();
+function saveBook(plantings: unknown[]) { replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ version: 1, plantings, updatedAt: 7 })); }
+beforeEach(async () => {
+  await reset();
   local.setItem(account.activeAccountLocalStorageKey('permamap_saved_places'), JSON.stringify([{ id: 'finance-main', name: 'Fictional finance source',
     lat: 0, lon: 0, biome: 'Recorded', rainfall: 0, elevation: 0, savedAt: stamp, updatedAt: 100 }]));
   local.setItem(studioKey(), JSON.stringify(studio()));
@@ -65,7 +66,7 @@ function graph(source = loadFinancePlanSource()) {
     close() { act(() => renderer.unmount()); } };
 }
 
-test('an orphan own marker cannot disappear into an empty finance plan while its actual picking and sales stay available', () => {
+test('an orphan own marker cannot disappear into an empty finance plan while its actual picking and sales stay available',async()=>{
   saveBook([orphan]); const source = loadFinancePlanSource(); const rendered = graph(source);
   try {
     assert.match(rendered.text(), /5(?:\.0)?\s*kg/); assert.match(rendered.text(), /2(?:\.0)?\s*kg/);
@@ -76,7 +77,7 @@ test('an orphan own marker cannot disappear into an empty finance plan while its
   } finally { rendered.close(); }
 });
 
-test('a surviving legacy row cannot turn unresolved orphan own evidence into a complete finance forecast', () => {
+test('a surviving legacy row cannot turn unresolved orphan own evidence into a complete finance forecast',async()=>{
   saveBook([legacy, orphan]); const source = loadFinancePlanSource(); const rendered = graph(source);
   try {
     rendered.plan(); assert.match(rendered.text(), /Plan comparison unavailable/);
@@ -146,10 +147,14 @@ test('an ambiguous authored source cannot lend its normalized display a foreign/
   assert.equal(source.forecastAvailable, false); assert.deepEqual(source.forecastPlantings, []);
 });
 
-test('missing, unreadable and null-row raw books cannot become a certified empty forecast through display fallback', () => {
+test('missing, unreadable and null-row raw books cannot become a certified empty forecast through display fallback',async()=>{
+  const initializedEnvelope = local.getItem(bookKey()); assert.ok(initializedEnvelope);
   for (const bytes of [null, '', '{bad-json', JSON.stringify({ version: 9, plantings: [], updatedAt: 7 }),
     JSON.stringify({ version: 1, plantings: [null, orphan], updatedAt: 7 })]) {
-    if (bytes === null) local.removeItem(bookKey()); else local.setItem(bookKey(), bytes);
+    // Each corruption starts from the same real initialized envelope, not the
+    // previous iteration's removed destination. The frozen receipt stays intact.
+    local.setItem(bookKey(), initializedEnvelope);
+    if (bytes === null) local.removeItem(bookKey()); else replaceCanonicalCropPlanFixtureRaw(bytes);
     const source = loadFinancePlanSource(); assert.equal(source.forecastAvailable, false); assert.deepEqual(source.forecastPlantings, []);
     assert.match(source.forecastReason!, /missing or cannot be fully read/);
     const rendered = graph(source);
@@ -158,8 +163,8 @@ test('missing, unreadable and null-row raw books cannot become a certified empty
   }
 });
 
-test('the forecast hold preserves actual logs, measured area allocations and every byte of the authored book', () => {
-  local.setItem(bookKey(), JSON.stringify({ version: 1, plantings: [legacy, orphan], updatedAt: 7, unknownEvidence: { keep: true } }));
+test('the forecast hold preserves actual logs, measured area allocations and every byte of the authored book',async()=>{
+  replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ version: 1, plantings: [legacy, orphan], updatedAt: 7, unknownEvidence: { keep: true } }));
   const bytes = local.getItem(bookKey()), writes = local.writes, observations = structuredClone({ production, sales });
   const source = loadFinancePlanSource();
   const recorded = buildFinanceSeries(production, sales, [], [], now, 12);
@@ -170,7 +175,7 @@ test('the forecast hold preserves actual logs, measured area allocations and eve
   assert.deepEqual({ production, sales }, observations); assert.equal(local.getItem(bookKey()), bytes); assert.equal(local.writes, writes);
 });
 
-test('supported legacy and genuinely empty canonical books retain their existing forecast behavior', () => {
+test('supported legacy and genuinely empty canonical books retain their existing forecast behavior',async()=>{
   saveBook([legacy]); let source = loadFinancePlanSource(); assert.equal(source.forecastAvailable, true); assert.deepEqual(source.forecastPlantings, [legacy]);
   saveBook([]); source = loadFinancePlanSource(); assert.equal(source.forecastAvailable, true);
   const rendered = graph(source);

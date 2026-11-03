@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture, canonicalCropPlanFixtureKey } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -14,6 +15,8 @@ const hooks=registerHooks({
   resolve(specifier,context,next){
     if (context.parentURL?.endsWith('/app/calendar/page.tsx')) {
       if(specifier==='@/lib/i18n')return{shortCircuit:true,url:moduleUrl("export const useLanguage=()=>({lang:'en',t:key=>key});")};
+      // Storage readiness itself is covered by mounted storage integration tests.
+      if(specifier==='@/components/CropPlanStorageStatus')return{shortCircuit:true,url:moduleUrl('export function CropPlanStorageNotice(){return null;}')};
       if(specifier==='@/lib/app-level')return{shortCircuit:true,url:moduleUrl("export const useAppLevel=()=> 'all';")};
       if(specifier==='@/lib/crop-calendar')return{shortCircuit:true,url:moduleUrl(`export function sowMarksForPattern(key,pattern){const p=globalThis.__internationalCalendar;p.patterns.push(pattern);return p.sowMarksForPattern(key,pattern);}`)};
       // The shared account subscription has its own runtime tests. This screen
@@ -47,12 +50,14 @@ class Storage{
   removeItem(key:string){this.rows.delete(key);}
 }
 const siteId='site:0.00000,0.00000';
-function browser(){
+async function browser(){
+  releaseCropPlanFixture();
   const local=new Storage(),session=new Storage(),target=Object.assign(new EventTarget(),{localStorage:local,sessionStorage:session});
   Object.assign(globalThis,{window:target,localStorage:local,sessionStorage:session});
   local.setItem('permamap_saved_places',JSON.stringify([{id:'fixture-site',name:'Fictional calendar site',lat:0,lon:0,biome:'',rainfall:0,elevation:0,savedAt:'2026-01-01T00:00:00.000Z',updatedAt:100}]));
   const plan:CropPlanState={version:1,plantings:[{id:'fixture-sowing',bedId:'fixture-bed',cropKey:CROPS[0].key,sowMonth:1}],updatedAt:1,rainPattern:'summer'};
-  saveCropPlan(plan);probe.patterns=[];probe.scrolls=0;
+  await initialiseCropPlanFixture();
+  assert.equal(saveCropPlan(plan),true);probe.patterns=[];probe.scrolls=0;
   return{local,target};
 }
 function country(code:string){assert.equal(updateSiteCountryContext(siteId,createSiteCountryContext({siteId,countryCode:code,confirmed:true})).status,'local-saved');}
@@ -76,15 +81,15 @@ function held(ui:ReturnType<typeof screen>){
   assert.doesNotMatch(ui.text(),/Plant now|No planting recommended this month|12-Month Planting Grid|Lima says/);
 }
 
-test('a saved global summer pattern never chooses a calendar site, reference or planting window',()=>{
-  browser();country('ZA');const ui=screen();try{
+test('a saved global summer pattern never chooses a calendar site, reference or planting window',async()=>{
+  await browser();country('ZA');const ui=screen();try{
     held(ui);assert.equal(ui.select('Calendar context').props.value,'');assert.deepEqual(probe.patterns,[]);
     ui.choose('Calendar context',siteId);held(ui);assert.equal(ui.select('South African reference pattern').props.value,'');assert.deepEqual(probe.patterns,[]);
   }finally{ui.dispose();}
 });
 
-test('explicit supported site and reference pattern retain the same South African reference arithmetic',()=>{
-  browser();country('ZA');const ui=screen();try{
+test('explicit supported site and reference pattern retain the same South African reference arithmetic',async()=>{
+  await browser();country('ZA');const ui=screen();try{
     ui.choose('Calendar context',siteId);
     for(const pattern of ['summer','winter','all-year','mild-frost']){
       probe.patterns=[];ui.choose('South African reference pattern',pattern);
@@ -95,8 +100,8 @@ test('explicit supported site and reference pattern retain the same South Africa
   }finally{ui.dispose();}
 });
 
-test('foreign or unknown sites cannot inherit an acknowledged unmapped guide or a previously selected pattern',()=>{
-  browser();const plan=loadCropPlan();plan.workspaceReferences=[createWorkspacePlanningReference('design:calendar-reference',true)!];saveCropPlan(plan);
+test('foreign or unknown sites cannot inherit an acknowledged unmapped guide or a previously selected pattern',async()=>{
+  await browser();const plan=loadCropPlan();plan.workspaceReferences=[createWorkspacePlanningReference('design:calendar-reference',true)!];saveCropPlan(plan);
   const ui=screen();try{
     ui.choose('Calendar context','reference:calendar');ui.choose('South African reference pattern','winter');assert.ok(ui.renderer.root.findAllByType('table').length>0);
     for(const code of ['KE','GB','US','BR']){
@@ -106,8 +111,8 @@ test('foreign or unknown sites cannot inherit an acknowledged unmapped guide or 
   }finally{ui.dispose();}
 });
 
-test('a country change or removed site immediately withholds the guide without selecting another saved site',()=>{
-  const {local,target}=browser();country('ZA');const ui=screen();try{
+test('a country change or removed site immediately withholds the guide without selecting another saved site',async()=>{
+  const {local,target}=await browser();country('ZA');const ui=screen();try{
     ui.choose('Calendar context',siteId);ui.choose('South African reference pattern','summer');
     act(()=>country('KE'));held(ui);
     act(()=>country('ZA'));assert.equal(ui.select('South African reference pattern').props.value,'');held(ui);
@@ -117,8 +122,8 @@ test('a country change or removed site immediately withholds the guide without s
   }finally{ui.dispose();}
 });
 
-test('separate guide acknowledgement saves only that reference in the existing plan and survives reload without auto-selection',()=>{
-  const {local}=browser();const before=structuredClone(loadCropPlan()),places=local.getItem('permamap_saved_places');
+test('separate guide acknowledgement saves only that reference in the existing plan and survives reload without auto-selection',async()=>{
+  const {local}=await browser();const before=structuredClone(loadCropPlan()),places=local.getItem('permamap_saved_places');
   let ui=screen();try{
     ui.choose('Calendar context','reference:calendar');held(ui);ui.acknowledge();held(ui);
     const saved=loadCropPlan();assert.deepEqual(saved.plantings,before.plantings);assert.equal(saved.rainPattern,before.rainPattern);
@@ -129,18 +134,18 @@ test('separate guide acknowledgement saves only that reference in the existing p
   }finally{ui.dispose();}
 });
 
-test('failed acknowledgement preserves prior data and a stale guide callback cannot write after choosing a mapped site',()=>{
-  const {local}=browser();const before=local.getItem('imbewu_crop_plan_v1');const ui=screen();try{
+test('failed acknowledgement preserves prior data and a stale guide callback cannot write after choosing a mapped site',async()=>{
+  const {local}=await browser();const before=local.getItem(canonicalCropPlanFixtureKey());const ui=screen();try{
     ui.choose('Calendar context','reference:calendar');local.fail=true;ui.acknowledge();held(ui);
-    assert.match(ui.text(),/could not be saved/);assert.equal(local.getItem('imbewu_crop_plan_v1'),before);local.fail=false;
+    assert.match(ui.text(),/could not be saved/);assert.equal(local.getItem(canonicalCropPlanFixtureKey()),before);local.fail=false;
     const form=ui.renderer.root.findByType('form');const staleSubmit=form.props.onSubmit;
     ui.choose('Calendar context',siteId);act(()=>staleSubmit({preventDefault(){}}));held(ui);
-    assert.equal(local.getItem('imbewu_crop_plan_v1'),before);
+    assert.equal(local.getItem(canonicalCropPlanFixtureKey()),before);
   }finally{local.fail=false;ui.dispose();}
 });
 
-test('conflicting aliases never allow the calendar to choose the first country record',()=>{
-  const {local,target}=browser();country('ZA');const original=loadPlaces()[0];
+test('conflicting aliases never allow the calendar to choose the first country record',async()=>{
+  const {local,target}=await browser();country('ZA');const original=loadPlaces()[0];
   const alias={...original,id:'other-alias'};
   // Each confirmed alias must name its own saved-place base; otherwise this
   // would test an unbound record rather than two genuinely conflicting ones.
@@ -151,8 +156,8 @@ test('conflicting aliases never allow the calendar to choose the first country r
 });
 
 
-test('an empty plan shows the named general guide only after supported context and pattern are explicitly chosen',()=>{
-  browser();saveCropPlan({version:1,plantings:[],updatedAt:1});country('ZA');const ui=screen();try{
+test('an empty plan shows the named general guide only after supported context and pattern are explicitly chosen',async()=>{
+  await browser();saveCropPlan({version:1,plantings:[],updatedAt:1});country('ZA');const ui=screen();try{
     held(ui);assert.doesNotMatch(ui.text(),/Showing the general planting guide/);
     ui.choose('Calendar context',siteId);held(ui);
     ui.choose('South African reference pattern','winter');

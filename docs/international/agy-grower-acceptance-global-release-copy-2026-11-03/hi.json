@@ -1,0 +1,44 @@
+{
+  "locale": "hi",
+  "sourceSha256": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "growerAcceptanceRelease01",
+      "english": "Save a reviewed plan from your own growing estimates.",
+      "sha256": "1a61c6bb5bcfce019202994e5b6c5f3eda948cc0a355a48e76f1f1187c18b281",
+      "translation": "अपने खेती के अनुमानों से समीक्षा की गई योजना सहेजें।"
+    },
+    {
+      "key": "growerAcceptanceRelease02",
+      "english": "Check unresolved crop records before using a finance forecast.",
+      "sha256": "8968315fb290f7c1aed88ef6c8b1050c8513596ffe7139c5db2d256ccb0b0d06",
+      "translation": "वित्तीय पूर्वानुमान का उपयोग करने से पहले अनसुलझे फसल रिकॉर्ड की जाँच करें।"
+    },
+    {
+      "key": "growerAcceptanceRelease03",
+      "english": "Keep saved growing estimates and nursery settings when signing in.",
+      "sha256": "e56c384716e03c13e0d65f48b16e47d8404de3d127633cb2a5df98520347ba9a",
+      "translation": "साइन इन करते समय सहेजे गए खेती के अनुमान और पौधशाला (नर्सरी) की सेटिंग्स बनाए रखें।"
+    },
+    {
+      "key": "growerAcceptanceRelease04",
+      "english": "Save your reviewed plan",
+      "sha256": "4cf295c01382aefdf3cbde2401cf7c6f9574740a3b868388a60ec58084373d22",
+      "translation": "अपनी समीक्षा की गई योजना सहेजें"
+    },
+    {
+      "key": "growerAcceptanceRelease05",
+      "english": "Production plan → Automatic plan from your estimates",
+      "sha256": "a42cc4ccc786917de834efdbe8caeb85c2727d839fb9fa877cd59c375417c18d",
+      "translation": "उत्पादन योजना → आपके अनुमानों से स्वचालित योजना"
+    },
+    {
+      "key": "growerAcceptanceRelease06",
+      "english": "Review a complete proposal, save all its planned cycles, then open dated work.",
+      "sha256": "79804bcafa1ec218f22264c6097cce66b483b8b7961d7a0b95428a01d676dd9f",
+      "translation": "एक पूरे प्रस्ताव की समीक्षा करें, उसके सभी नियोजित चक्रों को सहेजें, फिर तारीख वाले कार्य खोलें।"
+    }
+  ]
+}

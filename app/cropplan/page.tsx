@@ -28,6 +28,7 @@ import {
 import { taskJournalHref, taskHarvestHref } from '@/lib/task-record-link';
 import { farmMemoryText } from '@/lib/farm-memory-copy';
 import GrowerOperationsPanel from '@/components/crops/GrowerOperationsPanel';
+import { CropPlanStorageNotice } from '@/components/CropPlanStorageStatus';
 import { useGrowerOperations } from '@/components/crops/useGrowerOperations';
 import { hasGrowerCycleMarker } from '@/lib/international/grower-cycle';
 
@@ -367,6 +368,7 @@ export default function CropPlanPage() {
 
       <div className="flex-1 overflow-y-auto">
         <div className={`${workspace.workspace} px-4 py-5 sm:px-6 sm:py-6`}>
+          <CropPlanStorageNotice />
           <GrowerOperationsPanel state={operations} refresh={operations.refresh}
             checkCurrent={operations.checkCurrent} isCurrent={operations.isCurrent} />
           {withheldPlantings > 0 && <section aria-label="Planning support" className="mb-4 rounded-2xl p-4 font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>

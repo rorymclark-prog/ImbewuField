@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
@@ -11,7 +12,7 @@ const settings: NurserySettings = {
   profiles: [{ id: 'method', siteId: 'garden', cropKey: 'lettuce', model: 'seed-cell', containerId: 'tray', spaceId: 'bench' }],
 };
 
-test('saving nursery equipment never invents germination, survival, dimensions or stock', () => {
+test('saving nursery equipment never invents germination, survival, dimensions or stock',async()=>{
   assert.deepEqual(sanitiseNurserySettings(settings), settings);
   const minimal: NurserySettings = { ...settings,
     containers: [{ id: 'tray', siteId: 'garden', name: 'Unmeasured tray', cells: 72 }],
@@ -21,7 +22,7 @@ test('saving nursery equipment never invents germination, survival, dimensions o
   assert.deepEqual(sanitiseNurserySettings({ ...settings, version: 2 }), { version: 1, spaces: [], containers: [], profiles: [] });
 });
 
-test('corrupt equipment cannot turn an overflowing footprint or fractional tray count into capacity', () => {
+test('corrupt equipment cannot turn an overflowing footprint or fractional tray count into capacity',async()=>{
   for (const patch of [{ cells: -1 }, { cells: 1.5 }, { widthCm: 0 }, { lengthCm: Infinity },
     { widthCm: Number.MAX_VALUE, lengthCm: Number.MAX_VALUE }, { owned: -1 }, { owned: 0.5 }, { siteId: '' }]) {
     assert.equal(sanitiseNurserySettings({ ...settings, containers: [{ ...settings.containers[0], ...patch }] }).containers.length, 0);
@@ -34,7 +35,7 @@ test('corrupt equipment cannot turn an overflowing footprint or fractional tray 
   assert.equal(sanitiseNurserySettings({ ...settings, containers: [{ ...settings.containers[0], cells: 0 }] }).containers[0].cells, 0);
 });
 
-test('measured tray output retains its own evidence without applying seed-cell losses a second time', () => {
+test('measured tray output retains its own evidence without applying seed-cell losses a second time',async()=>{
   const measured = { ...settings.profiles[0], model: 'measured-tray' as const, usableStartsPerTray: 60.5,
     seedsPerTray: 100, germinationPercent: 80, nurserySurvivalPercent: 90, fieldSurvivalPercent: 95 };
   const saved = sanitiseNurserySettings({ ...settings, profiles: [measured] }).profiles[0];
@@ -46,7 +47,7 @@ test('measured tray output retains its own evidence without applying seed-cell l
   assert.equal(sanitiseNurserySettings({ ...settings, profiles: [{ ...measured, seedsPerTray: 0 }] }).profiles[0].seedsPerTray, 0);
 });
 
-test('own propagation records retain zero success and existing crop identity without borrowing a catalogue method', () => {
+test('own propagation records retain zero success and existing crop identity without borrowing a catalogue method',async()=>{
   const profile = settings.profiles[0];
   assert.equal(sanitiseNurserySettings({ ...settings, profiles: [{ ...profile, germinationPercent: 0 }] }).profiles[0].germinationPercent, 0);
   for (const patch of [{ germinationPercent: 101 }, { nurserySurvivalPercent: -1 },
@@ -61,7 +62,7 @@ test('own propagation records retain zero success and existing crop identity wit
   assert.deepEqual(sanitiseNurserySettings(settings).profiles, settings.profiles, 'existing supported recipes retain their exact legacy inputs');
 });
 
-test('deleting equipment keeps dependent methods visible and site-specific crop recipes remain distinct', () => {
+test('deleting equipment keeps dependent methods visible and site-specific crop recipes remain distinct',async()=>{
   const dangling = { ...settings, containers: [], spaces: [] };
   assert.deepEqual(sanitiseNurserySettings(dangling).profiles, settings.profiles);
   const second = { ...settings.profiles[0], id: 'other-method', siteId: 'other-garden' };
@@ -74,7 +75,7 @@ test('deleting equipment keeps dependent methods visible and site-specific crop 
   assert.deepEqual(sanitiseNurserySettings(JSON.parse(JSON.stringify(ambiguous))), ambiguous);
 });
 
-test('nursery settings round-trip in the existing account store and do not change old saved plans', () => {
+test('nursery settings round-trip in the existing account store and do not change old saved plans',async()=>{
   const original = Object.getOwnPropertyDescriptor(globalThis, 'window');
   const values = new Map<string, string>();
   Object.defineProperty(globalThis, 'window', { configurable: true, value: {
@@ -83,15 +84,19 @@ test('nursery settings round-trip in the existing account store and do not chang
   } });
   bindMountedAccountLocalStorageUid('nursery-owner');
   try {
+    await initialiseCropPlanFixture();
     assert.equal(saveCropPlan({ version: 1, plantings: [], nursery: settings, updatedAt: 1 }), true);
     assert.deepEqual(loadCropPlan().nursery, settings);
     bindMountedAccountLocalStorageUid('other-account');
+    await initialiseCropPlanFixture();
     assert.equal(loadCropPlan().nursery, undefined);
     bindMountedAccountLocalStorageUid('nursery-owner');
+    await initialiseCropPlanFixture();
     assert.deepEqual(loadCropPlan().nursery, settings);
     assert.equal(saveCropPlan({ version: 1, plantings: [], updatedAt: 2 }), true);
     assert.equal(loadCropPlan().nursery, undefined);
   } finally {
+    releaseCropPlanFixture();
     bindMountedAccountLocalStorageUid(null);
     if (original) Object.defineProperty(globalThis, 'window', original);
     else Reflect.deleteProperty(globalThis, 'window');

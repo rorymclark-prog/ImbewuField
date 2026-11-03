@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import test, { after, beforeEach } from 'node:test';
 import { account, samples, core, crop, local, session, probe, siteId, bookKey, studioKey, localKey,
@@ -18,10 +19,13 @@ test('a real account helper fallback into a failing Firebase initializer resolve
 });
 
 test('raw book authority distinguishes missing/corrupt from explicit empty and preserves null rows, duplicates and metadata without writes', async () => {
+  // Before explicit initialization there is no writable canonical receipt.
+  releaseCropPlanFixture(); local.clear();
   assert.equal(crop.readRawCropPlanReceipt().status, 'held');
-  assert.deepEqual((await core.loadGrowerOperationsSources()).heldSources, [{ reason: 'no-saved-plan' }]);
+  assert.deepEqual((await core.loadGrowerOperationsSources()).heldSources, [{ reason: 'book-unavailable' }]);
+  await initialiseCropPlanFixture();
   for (const bytes of ['null', '{broken', '{"version":1,"plantings":null}', '{"version":99,"plantings":[]}']) {
-    local.setItem(bookKey(), bytes); const result = await core.loadGrowerOperationsSources();
+    replaceCanonicalCropPlanFixtureRaw(bytes); const result = await core.loadGrowerOperationsSources();
     assert.equal(result.status, 'held'); assert.notEqual(result.heldSources[0].reason, 'no-saved-plan'); assert.equal(result.book, null);
   }
   store([]); assert.equal((await core.loadGrowerOperationsSources()).status, 'ready');
@@ -73,7 +77,7 @@ test('actual Firebase B cannot read cloud data for still-mounted A and late book
   probe.actor = 'owner-b'; assert.equal(account.activeAccountUid(), 'owner-a');
   const denied = await core.loadGrowerOperationsSources(); assert.equal(denied.status, 'held'); assert.equal(denied.book, null); assert.equal(probe.queries, 0);
   for (const change of ['book', 'source', 'owner', 'sample'] as const) {
-    reset(); local.setItem(studioKey(), JSON.stringify(studio())); store([row]);
+    await reset(); local.setItem(studioKey(), JSON.stringify(studio())); store([row]);
     const gate = pauseHashes(), pending = core.loadGrowerOperationsSources(); await gate.started;
     if (change === 'book') store([row, row]);
     if (change === 'source') { const changed = studio(); changed.items[0].x = 0.6; local.setItem(studioKey(), JSON.stringify(changed)); }

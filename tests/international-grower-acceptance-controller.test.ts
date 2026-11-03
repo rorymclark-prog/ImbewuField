@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, readCanonicalCropPlanFixtureRaw, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -58,7 +59,7 @@ function visit(node: ts.Node) {
 visit(page); assert.equal(bodies.size,names.length); assert.ok(mount);
 const compiled=ts.transpileModule([...bodies.values(),`const runMount=${mount};`].join('\n'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
 function parent(book: unknown, resourceSiteId=siteId) {
-  if(samples.isSampleMode()) samples.setSandboxCropPlan(book as CropPlanState); else local.setItem(bookKey(),JSON.stringify(book));
+  if(samples.isSampleMode()) samples.setSandboxCropPlan(book as CropPlanState); else replaceCanonicalCropPlanFixtureRaw(JSON.stringify(book));
   let notify=()=>{};
   const state:any={plan:null,planWriteBase:{current:null},planSaveConflict:false,planSaveFailed:false,saveTimer:{current:null},
     growerOwner:account.activeAccountUid(),growerSample:samples.isSampleMode(),growerScope:scope,growerScopeKey:growerPlanningScopeKey(scope),productionSiteId:resourceSiteId,
@@ -105,7 +106,7 @@ function fill(ui:ReturnType<typeof mounted>){ui.check(`Include ${CROPS[0].name}`
 test('actual mounted review save appends every canonical cycle once and preserves foreign evidence, nursery claims and observed records',async()=>{
   const {ui,c,book,foreign}=await ready();try{fill(ui);await ui.click('Review automatic crop plan');const save=ui.renderer.root.findAllByType('button').find(node=>text(node).startsWith('Save all '));assert.ok(save);const writes=local.writes;
    await act(async()=>{save.props.onClick();save.props.onClick();await ui.pending;});
-   const saved=JSON.parse(local.getItem(bookKey())!);assert.ok(saved.plantings.length>2);assert.equal(local.writes,writes+1);assert.deepEqual(saved.plantings[0],foreign);
+   const saved=JSON.parse(readCanonicalCropPlanFixtureRaw());assert.ok(saved.plantings.length>2);assert.equal(local.writes,writes+1);assert.deepEqual(saved.plantings[0],foreign);
    assert.equal(new Set(saved.plantings.map((row:any)=>row.id)).size,saved.plantings.length);for(const row of saved.plantings.slice(1)){assert.ok(row.id.startsWith('persistent-'));assert.equal(row.existing,undefined);assert.equal(row.confirmedOnceSowing,undefined);assert.equal(row.harvestTargetId,'buyer');}
    for(const key of ['nursery','productionRecords','preservedProducts','planNotes','planNotesAt','rainPattern'])assert.deepEqual(saved[key],book[key as keyof CropPlanState],key);
    assert.match(ui.text(),/planned crop cycles saved on this device/);assert.match(ui.text(),/No sowing, harvest, stock or sales have been recorded/);assert.doesNotMatch(ui.text(),/No crop cycle has been added/);assert.equal(c.state.planSaveConflict,false);
@@ -121,12 +122,12 @@ test('copied or altered review identities and foreign/new persistent-ID collisio
 
 test('a raw Firebase transition and an identical later account cannot adopt the original private review',async()=>{
  const {ui,book}=await ready();try{const review=await ui.review(),retainedSource=ui.latest.source;assert.ok(retainedSource);ui.rerender();assert.equal(ui.latest.source,retainedSource,'new inline actor callbacks alone must not revoke a checked source');probe.actor='owner-b';const old=local.getItem(bookKey()),writes=local.writes;assert.equal((await ui.accept(review)).status,'held');assert.equal(local.writes,writes);assert.equal(local.getItem(bookKey()),old);
-  account.bindMountedAccountLocalStorageUid('owner-b');local.setItem(studioKey(),JSON.stringify(studio()));const next=parent(book);ui.replace(next);assert.equal(ui.latest.source,null,'the same selection cannot retain the earlier account’s checked source');assert.match(ui.text(),/No current design has been checked/);assert.match(ui.text(),/No eligible saved bed or field-plot measurements/);await ui.refresh();const nextWrites=local.writes,nextBytes=local.getItem(bookKey());assert.equal((await ui.accept(review)).status,'held');assert.equal(local.writes,nextWrites);assert.equal(local.getItem(bookKey()),nextBytes);
+  account.bindMountedAccountLocalStorageUid('owner-b');await initialiseCropPlanFixture();local.setItem(studioKey(),JSON.stringify(studio()));const next=parent(book);ui.replace(next);assert.equal(ui.latest.source,null,'the same selection cannot retain the earlier account’s checked source');assert.match(ui.text(),/No current design has been checked/);assert.match(ui.text(),/No eligible saved bed or field-plot measurements/);await ui.refresh();const nextWrites=local.writes,nextBytes=local.getItem(bookKey());assert.equal((await ui.accept(review)).status,'held');assert.equal(local.writes,nextWrites);assert.equal(local.getItem(bookKey()),nextBytes);
  }finally{ui.dispose();}
 });
 
 test('source movement, dismissed draft and unmount while actual hashing waits cannot write a withdrawn proposal',async()=>{
- for(const change of ['source','draft','unmount']){reset();const {ui}=await ready();let disposed=false;try{fill(ui);await ui.click('Review automatic crop plan');const node=ui.renderer.root.findAllByType('button').find(item=>text(item).startsWith('Save all '));assert.ok(node);const bytes=local.getItem(bookKey()),writes=local.writes,gate=pauseHashes();
+ for(const change of ['source','draft','unmount']){await reset();const {ui}=await ready();let disposed=false;try{fill(ui);await ui.click('Review automatic crop plan');const node=ui.renderer.root.findAllByType('button').find(item=>text(item).startsWith('Save all '));assert.ok(node);const bytes=local.getItem(bookKey()),writes=local.writes,gate=pauseHashes();
   let pending!:Promise<void>;act(()=>{node.props.onClick();pending=ui.pending as Promise<void>;});await gate.started;
   if(change==='source'){const moved=studio();moved.items[0].x+=0.1;local.setItem(studioKey(),JSON.stringify(moved));}
   if(change==='draft')ui.change('Search work limit','500');if(change==='unmount'){ui.dispose();disposed=true;}
@@ -135,16 +136,16 @@ test('source movement, dismissed draft and unmount while actual hashing waits ca
 });
 
 test('final source revocation, dirty book, fresh occupancy and save-event overwrite retain truthful write outcomes',async()=>{
- for(const change of ['final-source','final-actor','final-base','final-token','dirty','external','superseded']){reset();const {ui,c,book}=await ready();try{const review=await ui.review(),before=local.getItem(bookKey()),writes=local.writes;
+ for(const change of ['final-source','final-actor','final-base','final-token','dirty','external','superseded']){await reset();const {ui,c,book}=await ready();try{const review=await ui.review(),before=local.getItem(bookKey()),writes=local.writes;
   let changed=false,id=0;
   if(change.startsWith('final-'))ui.setIds(()=>{if(!changed){changed=true;
    if(change==='final-source'){const moved=studio();moved.items[0].x+=0.1;local.setItem(studioKey(),JSON.stringify(moved));}
    if(change==='final-actor')probe.actor='owner-b';if(change==='final-base')c.state.planWriteBase.current={...c.state.planWriteBase.current};
-   if(change==='final-token')local.setItem(bookKey(),JSON.stringify({...book,updatedAt:1234}));
+   if(change==='final-token')replaceCanonicalCropPlanFixtureRaw(JSON.stringify({...book,updatedAt:1234}));
   }return `new-id-${++id}`;});
   if(change==='dirty')c.state.plan={...c.state.plan,updatedAt:99};
-  if(change==='external')local.setItem(bookKey(),JSON.stringify({...book,plantings:[...book.plantings,{id:'late-legacy',bedId:'bed-a',cropKey:CROPS[0].key,sowMonth:12}]}));
-  const overwrite=()=>local.setItem(bookKey(),JSON.stringify({...book,updatedAt:1234}));if(change==='superseded')events.addEventListener(crop.CROP_PLAN_CHANGED_EVENT,overwrite,{once:true});
+  if(change==='external')replaceCanonicalCropPlanFixtureRaw(JSON.stringify({...book,plantings:[...book.plantings,{id:'late-legacy',bedId:'bed-a',cropKey:CROPS[0].key,sowMonth:12}]}));
+  const overwrite=()=>replaceCanonicalCropPlanFixtureRaw(JSON.stringify({...book,updatedAt:1234}));if(change==='superseded')events.addEventListener(crop.CROP_PLAN_CHANGED_EVENT,overwrite,{once:true});
   const result=await ui.accept(review);assert.equal(result.status,change==='superseded'?'superseded':'held',change);if(change==='final-source')assert.equal(ui.latest.source,null);
   if(change==='dirty')assert.equal(local.getItem(bookKey()),before);if(change==='superseded'){assert.equal(c.state.planSaveConflict,true);assert.match(ui.text(),/write completed, but the current saved plan could not be confirmed/);assert.equal((await ui.accept(review)).status,'held');}
   else assert.ok(local.writes===writes+(['external','final-source','final-token'].includes(change)?1:0),change);
@@ -161,7 +162,7 @@ test('failed real storage retains the review for a manual retry and a successful
 
 
 test('sample acceptance stays in its example book and late unsafe replacement or exit cannot inherit its original review',async()=>{
- for(const change of ['save','unsafe','exit']){reset();const real=await fixture();local.setItem(bookKey(),JSON.stringify(real.book));const physical=JSON.stringify([...local.rows]);assert.equal(samples.enterSampleMode(),true);
+ for(const change of ['save','unsafe','exit']){await reset();const real=await fixture();replaceCanonicalCropPlanFixtureRaw(JSON.stringify(real.book));const physical=JSON.stringify([...local.rows]);assert.equal(samples.enterSampleMode(),true);
   const {ui,c}=await ready();try{const review=await ui.review();
    if(change==='unsafe'){let calls=0;const unsafe:any={...samples.getSandboxCropPlan()};Object.defineProperty(unsafe,'hiddenEvidence',{enumerable:true,get(){calls++;return undefined;}});samples.setSandboxCropPlan(unsafe);assert.equal((await ui.accept(review)).status,'held');assert.equal(calls,0);assert.equal(samples.getSandboxCropPlan(),unsafe);}
    else if(change==='exit'){const gate=pauseHashes();let pending!:ReturnType<typeof ui.latest.onAccept>;act(()=>{pending=ui.latest.onAccept(review);});await gate.started;samples.exitSampleMode();await act(async()=>{gate.resume();assert.equal((await pending).status,'held');});}
@@ -172,9 +173,9 @@ test('sample acceptance stays in its example book and late unsafe replacement or
 });
 
 test('acceptance installs the legitimately settled display and preserves an admitted newer nursery namespace without recreating an old book',async()=>{
- for(const change of ['settlement','equipment']){reset();const f=await fixture(),legacy={id:'old-unconfirmed',bedId:'outside-selected-beds',cropKey:CROPS[0].key,sowMonth:1,once:'2020-01'};
+ for(const change of ['settlement','equipment']){await reset();const f=await fixture(),legacy={id:'old-unconfirmed',bedId:'outside-selected-beds',cropKey:CROPS[0].key,sowMonth:1,once:'2020-01'};
   local.setItem(studioKey(),JSON.stringify(studio()));const c=parent({...f.book,plantings:[...f.book.plantings,legacy]}),ui=mounted(c);try{await ui.refresh();const review=await ui.review();assert.equal(c.state.plan.plantings[1].awaitingSowingConfirmation,true);
-   if(change==='equipment'){const external={...JSON.parse(local.getItem(bookKey())!),nursery:{...c.state.plan.nursery,spaces:[{id:'new-foreign-space',siteId:otherSite,name:'New independent fixture',usableM2:4}]},updatedAt:Date.now()};assert.equal(crop.saveCropPlan(external),true);
+   if(change==='equipment'){const external={...JSON.parse(readCanonicalCropPlanFixtureRaw()),nursery:{...c.state.plan.nursery,spaces:[{id:'new-foreign-space',siteId:otherSite,name:'New independent fixture',usableM2:4}]},updatedAt:Date.now()};assert.equal(crop.saveCropPlan(external),true);
     const own={...c.state.plan.nursery,spaces:[{id:'own-new-space',siteId,name:'Own fixture',usableM2:2}]};let saved=false;await act(async()=>{saved=c.saveScopedGrowerInputs('nursery',own);});assert.equal(saved,true);}
    const nursery=structuredClone(c.state.plan.nursery);assert.equal((await ui.accept(review)).status,'confirmed',change);assert.equal(c.state.planSaveConflict,false);assert.equal(c.state.plan.plantings[1].awaitingSowingConfirmation,true);assert.equal(c.state.plan.plantings[1].existing,undefined);assert.deepEqual(c.state.plan.nursery,nursery);
    assert.equal(crop.cropPlanWriteAdmissionMatches(c.state.planWriteBase.current.admission,c.state.planWriteBase.current.planKey,c.state.planWriteBase.current.token),true);
@@ -183,7 +184,7 @@ test('acceptance installs the legitimately settled display and preserves an admi
 });
 
 test('a late real cloud-source fetch cannot cross raw-account, sample, selection or equal-area source changes',async()=>{
- for(const change of ['account','sample','selection','source']){reset();const f=await fixture(),resource='design:owned-design',cloud={id:'owned-design',owner_id:'owner-a',data:facilitator(true)};
+ for(const change of ['account','sample','selection','source']){await reset();const f=await fixture(),resource='design:owned-design',cloud={id:'owned-design',owner_id:'owner-a',data:facilitator(true)};
   probe.cloud=async()=>[cloud];const c=parent({...f.book,harvestTargets:[target('buyer',resource)]},resource),ui=mounted(c);try{ui.select({kind:'facilitator-cloud',sourceId:'owned-design'});await ui.refresh();const review=await ui.review(),bytes=local.getItem(bookKey()),writes=local.writes;
    let release!:(rows:unknown[])=>void,started!:()=>void;const start=new Promise<void>(done=>{started=done;});probe.cloud=()=>{started();return new Promise(done=>{release=done;});};
    let pending!:ReturnType<typeof ui.latest.onAccept>;act(()=>{pending=ui.latest.onAccept(review);});await start;

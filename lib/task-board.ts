@@ -384,7 +384,8 @@ export function buildGrowerBoardTasks(
           task: { kind: 'grower-cycle', growerEventKind: event.kind, dueDate: event.date,
           title: translated(GROWER_VERB_KEY[event.kind], { crop: produceLabel(cycle.cropKey, lang) }),
           subtitle: [boardBedLabel(bedLabel, translated), translated('taskGrowerPlannedEstimate', { date: event.date }), explanation].filter(Boolean).join(' · '),
-          icon: '📅', cropKey: cycle.cropKey, bedId: cycle.bedId, bedLabel,
+          // The dated panel uses text; crop thumbnail consumers use cropKey's artwork.
+          icon: '', cropKey: cycle.cropKey, bedId: cycle.bedId, bedLabel,
           dueMonth: parts.month, monthsAway: (parts.year - now.getUTCFullYear()) * 12 + parts.month - now.getUTCMonth() - 1 } });
       }
     }

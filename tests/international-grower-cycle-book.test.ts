@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture, readCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
 import test, { after } from 'node:test';
@@ -34,7 +35,7 @@ const bed = { id: 'fixture-bed', label: 'Measured storage fixture', areaM2: 12 }
 const scope = { kind: 'mapped-site', siteId: 'site:1.00000,1.00000' } as const;
 const context = { scope, beds: [bed], geometryFingerprint: 'fixture-source-geometry' };
 const recordedAt = '2024-11-01T00:00:00.000Z';
-const storageKey = 'imbewu_crop_plan_v1';
+const storageKey = 'imbewu_crop_plan_v2';
 const provided = <T, U extends string>(value: T, unit: U): GrowerInput<T, U> => ({ state: 'provided', value, unit,
   provenance: { kind: 'grower-estimate', recordedAt } });
 function ownFixture() {
@@ -57,13 +58,13 @@ function ownFixture() {
 function plan(plantings: Planting[], profiles?: GrowerPlanningProfile[]): CropPlanState {
   return { version: 1, plantings, updatedAt: 7, ...(profiles ? { growerPlanningProfiles: profiles } : {}) };
 }
-function reset() { exitSampleMode(); local.clear(); session.clear(); }
+async function reset() { releaseCropPlanFixture(); exitSampleMode(); local.clear(); session.clear(); await initialiseCropPlanFixture(); }
 const legacy = (): Planting => ({ id: 'legacy-fixture', bedId: bed.id, cropKey: crop.key, sowMonth: crop.sowMonths.summer[0] ?? 1 });
 
-test('actual canonical save/load retains an old own cycle without confirming, finishing or retiming it', () => {
-  reset(); const { row, profile } = ownFixture(); const before = JSON.stringify(row);
+test('actual canonical save/load retains an old own cycle without confirming, finishing or retiming it',async()=>{
+  await reset(); const { row, profile } = ownFixture(); const before = JSON.stringify(row);
   assert.equal(book.saveCropPlan(plan([row], [profile])), true);
-  const stored = JSON.parse(local.getItem(storageKey)!); assert.deepEqual(stored.plantings[0], row);
+  const stored = JSON.parse(readCanonicalCropPlanFixtureRaw()); assert.deepEqual(stored.plantings[0], row);
   const loaded = book.loadCropPlan(); assert.equal(JSON.stringify(loaded.plantings[0]), before);
   assert.equal(resolvePlantingBasis(loaded.plantings[0], context).kind, 'grower-dated-cycle');
   for (const flag of ['existing', 'inNursery', 'confirmedOnceSowing', 'finishedOnceSowing', 'awaitingSowingConfirmation']) assert.equal(flag in loaded.plantings[0], false);
@@ -74,12 +75,12 @@ test('actual canonical save/load retains an old own cycle without confirming, fi
   assert.equal(JSON.stringify(book.loadCropPlan().plantings[0]), before); assert.equal(JSON.stringify(row), before);
 });
 
-test('malformed and undefined own markers survive real JSON writes and never reload as catalogue rows', () => {
-  reset();
+test('malformed and undefined own markers survive real JSON writes and never reload as catalogue rows',async()=>{
+  await reset();
   for (const marker of [undefined, null, false, {}, { kind: 'grower-dated-cycle', version: 99 }]) {
     const row = { ...legacy(), once: '2024-01', growerCycle: marker };
     assert.equal(book.saveCropPlan(plan([row])), true);
-    const stored = JSON.parse(local.getItem(storageKey)!); assert.equal(hasGrowerCycleMarker(stored.plantings[0]), true);
+    const stored = JSON.parse(readCanonicalCropPlanFixtureRaw()); assert.equal(hasGrowerCycleMarker(stored.plantings[0]), true);
     const loaded = book.loadCropPlan().plantings[0]; assert.equal(hasGrowerCycleMarker(loaded), true);
     assert.equal(resolvePlantingBasis(loaded, context).kind, 'held'); assert.equal(loaded.awaitingSowingConfirmation, undefined);
     assert.equal(loaded.once, '2024-01'); assert.equal(row.growerCycle, marker, 'the writer must not mutate the supplied row');
@@ -89,8 +90,8 @@ test('malformed and undefined own markers survive real JSON writes and never rel
   }
 });
 
-test('sample book saves and reads preserve own markers without touching the real device book', () => {
-  reset(); const { row } = ownFixture(); assert.equal(book.saveCropPlan(plan([row])), true);
+test('sample book saves and reads preserve own markers without touching the real device book',async()=>{
+  await reset(); const { row } = ownFixture(); assert.equal(book.saveCropPlan(plan([row])), true);
   const realBytes = local.getItem(storageKey), physicalBefore = [...local.rows.entries()]; assert.equal(enterSampleMode(), true);
   try {
     const malformed = { ...row, id: 'sample-held-row', growerCycle: undefined };
@@ -108,8 +109,8 @@ test('sample book saves and reads preserve own markers without touching the real
   assert.equal(local.getItem(storageKey), realBytes); assert.deepEqual(book.loadCropPlan().plantings[0], row);
 });
 
-test('legacy settlement, manual confirmation and restamping leave every tagged lifecycle untouched', () => {
-  reset(); const { row } = ownFixture();
+test('legacy settlement, manual confirmation and restamping leave every tagged lifecycle untouched',async()=>{
+  await reset(); const { row } = ownFixture();
   for (const tagged of [row, { ...row, growerCycle: null, existing: true, inNursery: '2024-12', confirmedOnceSowing: '2024-12' }]) {
     const before = JSON.stringify(tagged);
     assert.equal(book.settleOnceRows([tagged], 2035, 6)[0], tagged);
@@ -123,8 +124,8 @@ test('legacy settlement, manual confirmation and restamping leave every tagged l
   const confirmed = book.confirmOnceSowing(old, 2035, 6); assert.equal(confirmed.existing, true); assert.equal(confirmed.once, undefined);
 });
 
-test('all contextless catalogue arithmetic excludes tagged rows, while real legacy calculations keep their behavior', () => {
-  reset(); const { row } = ownFixture(); const old = legacy();
+test('all contextless catalogue arithmetic excludes tagged rows, while real legacy calculations keep their behavior',async()=>{
+  await reset(); const { row } = ownFixture(); const old = legacy();
   assert.ok(book.tasksForPlan([old], [bed]).length > 0); assert.ok(book.estimatedYieldKg(old, bed.areaM2) > 0);
   assert.ok(book.occupiedMonthsForPlanting(old).length > 0); assert.ok(book.seedBoqBatchesForPlan([old], [bed]).length > 0);
   assert.ok(book.buildFoodAvailability([old], [bed]).flat().length > 0); assert.ok(book.buildFieldUtilizationByMonth([old], [bed]).some(value => value > 0));
@@ -149,8 +150,8 @@ test('all contextless catalogue arithmetic excludes tagged rows, while real lega
   }
 });
 
-test('mixed-book benchmark totals remain unknown with explicit own diagnostics, never a partial or zero harvest claim', () => {
-  reset(); const { row } = ownFixture(); const old = legacy();
+test('mixed-book benchmark totals remain unknown with explicit own diagnostics, never a partial or zero harvest claim',async()=>{
+  await reset(); const { row } = ownFixture(); const old = legacy();
   const legacyOnly = book.buildPlanYieldBenchmark([old], [bed]); assert.ok(legacyOnly.knownKg! > 0);
   for (const rows of [[row], [old, row]]) {
     const result = book.buildPlanYieldBenchmark(rows, [bed], 1);
@@ -165,8 +166,8 @@ test('mixed-book benchmark totals remain unknown with explicit own diagnostics, 
   assert.deepEqual(book.nonFoodCropNames([{ ...coverRow, growerCycle: null }]), []);
 });
 
-test('failed canonical writes preserve the previous stored basis and receipt rather than claiming success', () => {
-  reset(); const { row } = ownFixture(); assert.equal(book.saveCropPlan(plan([row])), true);
+test('failed canonical writes preserve the previous stored basis and receipt rather than claiming success',async()=>{
+  await reset(); const { row } = ownFixture(); assert.equal(book.saveCropPlan(plan([row])), true);
   const bytes = local.getItem(storageKey), token = book.cropPlanWriteToken(); local.fail = true;
   try {
     assert.deepEqual(book.saveCropPlanWithReceipt(plan([{ ...row, growerCycle: undefined }])), { saved: false, token: null });

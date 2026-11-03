@@ -23,6 +23,7 @@ import { resolvePlanningSupport } from '@/lib/international/planning-support';
 import { resolveWorkspacePlanningReference, replaceWorkspacePlanningReference, removeWorkspacePlanningReference, type WorkspacePlanningReference } from '@/lib/international/workspace-context';
 import WorkspaceReferencePanel from '@/components/international/countries/WorkspaceReferencePanel';
 import SavedSiteUpdates from '@/components/international/countries/SavedSiteUpdates';
+import { CropPlanStorageNotice } from '@/components/CropPlanStorageStatus';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
@@ -521,6 +522,7 @@ export default function CalendarPage() {
         <h1 className="t-h1 m-0" style={{ padding: '14px 14px 0', color: 'var(--text-primary)' }}>
           {localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}
         </h1>
+        <div className="mx-3 mt-3"><CropPlanStorageNotice /></div>
         {lang === 'zu' && (
           <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 12 }}>
             Imisebenzi yanyanga zonke neseluleko sikaLima sinombhalo wesiZulu ongakabuyekezwa nomthombo wesiNgisi. Eminye imiyalo yokulima isasele ngesiNgisi ukuze ibuyekezwe.

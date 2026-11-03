@@ -57,6 +57,19 @@ class MemoryStorage {
   }
 }
 
+// Auth now transfers a canonical crop-book/evidence pair under Web Locks. The
+// fixture supplies the real lock contract rather than bypassing that boundary.
+class MemoryLocks {
+  private held = new Set<string>();
+  async request<T>(name: string, _options: unknown, run: (lock: unknown | null) => T | PromiseLike<T>): Promise<T> {
+    if (this.held.has(name)) return await run(null);
+    this.held.add(name);
+    try { return await run({ name, mode: 'exclusive' }); }
+    finally { this.held.delete(name); }
+  }
+}
+Object.defineProperty(globalThis, 'navigator', { configurable: true, value: { userAgent: 'auth-test', locks: new MemoryLocks() } });
+
 const localStorageMock = new MemoryStorage();
 const sessionStorageMock = new MemoryStorage();
 
@@ -146,6 +159,17 @@ hooks.deregister();
 const guestKey = (baseKey: string) => `${baseKey}::imbewu-owner::guest`;
 const uidKey = (baseKey: string, uid: string) => accountLocalStorageKey(baseKey, uid);
 
+function canonicalCropRaw(uid: string): string | null {
+  const raw = localStorageMock.getItem(uidKey('imbewu_crop_plan_v2', uid));
+  if (raw === null) return null;
+  const book = JSON.parse(raw);
+  const receipt = JSON.parse(localStorageMock.getItem(uidKey('imbewu_crop_plan_cutover_v2', uid)) ?? 'null');
+  assert.equal(book.storageVersion, 2, 'the transferred book must use the current canonical schema');
+  assert.equal(receipt?.canonicalKey, uidKey('imbewu_crop_plan_v2', uid), 'evidence binds the destination account');
+  assert.equal(receipt?.cutoverId, book.cutoverId, 'partial or unrelated evidence is not a completed transfer');
+  return book.bookRaw;
+}
+
 async function withSignIn(
   run: (signIn: (email: string, password: string) => Promise<string | null>) => Promise<void>,
 ): Promise<void> {
@@ -177,7 +201,7 @@ async function withSignIn(
   act(() => renderer.unmount());
 }
 
-test('a successful sign-in migrates guest Field Journal and Crop Planner rows into the account, and clears the guest rows', async () => {
+test('a successful sign-in migrates journal work and the canonical crop-book pair, and clears the transferred guest rows', async () => {
   localStorageMock.clear();
   localStorageMock.setItem(guestKey('imbewu_field_journal_v1'), '[{"id":"je_1"}]');
   localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), '{"version":1,"plantings":[{"id":"p1"}],"updatedAt":1}');
@@ -194,7 +218,7 @@ test('a successful sign-in migrates guest Field Journal and Crop Planner rows in
   assert.equal(localStorageMock.getItem(guestKey('imbewu_field_journal_v1')), null);
 
   assert.equal(
-    localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', 'farmer-a')),
+    canonicalCropRaw('farmer-a'),
     '{"version":1,"plantings":[{"id":"p1"}],"updatedAt":1}',
   );
   assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), null);
@@ -276,10 +300,12 @@ test('production-only and stock-only guest work migrates into an empty account w
     localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
     localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', owner), emptyProductionPlan);
     await withSignIn(async (signIn) => { assert.equal(await signIn(owner, 'irrelevant'), null); });
-    assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', owner)), guestRaw,
+    assert.equal(canonicalCropRaw(owner), guestRaw,
       `${kind} work is real guest work even with no crop beds; migration must preserve its native units, zero and provenance`);
     assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), null,
       'a successfully transferred production or stock record must leave the shared guest namespace');
+    assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', owner)), emptyProductionPlan,
+      'new clients must leave the target old-client copy untouched after canonical cutover');
   }
 });
 
@@ -287,7 +313,7 @@ test('genuinely empty crop and record lists remain empty for migration while an 
   localStorageMock.clear();
   localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), emptyProductionPlan);
   await withSignIn(async (signIn) => { assert.equal(await signIn('empty-guest-owner', 'irrelevant'), null); });
-  assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', 'empty-guest-owner')), null,
+  assert.equal(canonicalCropRaw('empty-guest-owner'), null,
     'an unanswered guest plan must not create an account record');
 
   localStorageMock.clear();
@@ -295,7 +321,7 @@ test('genuinely empty crop and record lists remain empty for migration while an 
   localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
   localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', 'empty-account-owner'), emptyProductionPlan);
   await withSignIn(async (signIn) => { assert.equal(await signIn('empty-account-owner', 'irrelevant'), null); });
-  assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', 'empty-account-owner')), guestRaw,
+  assert.equal(canonicalCropRaw('empty-account-owner'), guestRaw,
     'explicit empty production and stock lists must not block the existing crop-plan migration');
   assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), null);
 });
@@ -338,7 +364,7 @@ test('metadata-only guest plans transfer byte for byte into genuinely empty acco
     localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
     localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', owner), emptyProductionPlan);
     await withSignIn(async signIn => { assert.equal(await signIn(owner, 'irrelevant'), null); });
-    assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', owner)), guestRaw, `${kind} guest metadata is authored work`);
+    assert.equal(canonicalCropRaw(owner), guestRaw, `${kind} guest metadata is authored work`);
     assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), null, `${kind} successful transfer must clear the shared guest namespace`);
   }
 });
@@ -371,12 +397,12 @@ test('recognized empty optional collections and nursery scaffolds retain the exi
     nursery: { ...emptyNursery(), sourceIssues: [], heldInputs: [] } });
   localStorageMock.clear(); localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), empty);
   await withSignIn(async signIn => { assert.equal(await signIn('empty-metadata-guest', 'irrelevant'), null); });
-  assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', 'empty-metadata-guest')), null);
+  assert.equal(canonicalCropRaw('empty-metadata-guest'), null);
 
   localStorageMock.clear(); const guestRaw = '{"version":1,"plantings":[{"id":"legacy-guest-crop"}],"updatedAt":2}';
   localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
   localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', 'empty-metadata-account'), empty);
   await withSignIn(async signIn => { assert.equal(await signIn('empty-metadata-account', 'irrelevant'), null); });
-  assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', 'empty-metadata-account')), guestRaw);
+  assert.equal(canonicalCropRaw('empty-metadata-account'), guestRaw);
   assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), null);
 });

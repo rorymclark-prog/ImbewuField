@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture, readCanonicalCropPlanFixtureRaw, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -6,7 +7,10 @@ import { act, create, type ReactTestInstance } from 'react-test-renderer';
 import ts from 'typescript';
 import { CROPS, cropByKey } from '../lib/crop-catalog.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
-import { buildPlanYieldBenchmark, readRawCropPlanReceipt, cropPlanWriteToken, confirmOnceSowing, restampEditedOnce, tasksForPlan, type CropPlanState, type HarvestTarget, type Planting } from '../lib/crop-plan.ts';
+import { buildPlanYieldBenchmark, readRawCropPlanReceipt, cropPlanWriteToken, loadCropPlanWithWriteAdmission, cropPlanWriteAdmissionMatches, confirmOnceSowing, restampEditedOnce, tasksForPlan, type CropPlanState, type HarvestTarget, type Planting } from '../lib/crop-plan.ts';
+import { activeAccountUid, activeAccountLocalStorageKey } from '../lib/account-local-storage.ts';
+import { isSampleMode } from '../lib/sample-mode.ts';
+import { getFirebase, isBackendConfigured } from '../lib/firebase/init.ts';
 import { hasGrowerCycleMarker, isProvenForeignGrowerCycle, createGrowerCyclePlanting } from '../lib/international/grower-cycle.ts';
 import { projectGrowerCycles } from '../lib/international/grower-cycle-projection.ts';
 import { growerPlanningScopeKey, type GrowerInput, type GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
@@ -60,13 +64,15 @@ const transpile=(s:string,jsx=false)=>ts.transpileModule(s,{compilerOptions:{tar
 // Execute the current page's actual mutation bodies and derived row partition.
 // Only its state writer/history/navigation admission are controlled boundaries;
 // this catches removal of the fresh setter guard as well as visual-only guards.
-function handlers(book:CropPlanState,beds:any[]){
+function handlers(book:CropPlanState,beds:any[],binding?:{owner:string|null;sample:boolean;token:string|null;planKey:string;admission:ReturnType<typeof loadCropPlanWithWriteAdmission>['admission']}){
   let current=book;const snapshot=structuredClone(book),state:any={plan:snapshot,beds,useMemo:(f:()=>unknown)=>f(),hasGrowerCycleMarker,
     growerScopeKey:'',growerScope:null,selectedGrowerSource:null,growerPlanningScopeKey,isProvenForeignGrowerCycle,
-    currentPlanningScopeAllowed:()=>true,pushPlanHistory(){},setPlan(fn:any){current=typeof fn==='function'?fn(current):fn;},
+    currentPlanningScopeAllowed:()=>true,pushPlanHistory(){},setterCalls:0,setPlan(fn:any){state.setterCalls++;current=typeof fn==='function'?fn(current):fn;},
+    planWriteBase:{current:binding??null},planSaveConflict:false,activeAccountUid,isSampleMode,getFirebase,isBackendConfigured,cropPlanWriteToken,cropPlanWriteAdmissionMatches,
+    suggestedPlanHistory:{current:new WeakMap()},
     genId:()=> 'new-legacy-id',restampEditedOnce,confirmOnceSowing,currentMonth:2,currentYear:2028,
     setAutoResult(){},setAutoPhase(){},setConfirmingClear(){},hasOwnRecords:false,suggestionScopeRef:{current:'same'},planningScopeKey:'same',autoResult:{plantings:[],notes:[]},pattern:'summer'};
-  const names=['addPlanting','updatePlanting','removePlanting','confirmPastSowing','clearAllPlantings','acceptAutoSuggest'];
+  const names=['addPlanting','updatePlanting','removePlanting','confirmPastSowing','clearAllPlantings','acceptAutoSuggest','plannerActorIsCurrent','stageSuggestedPlanHistory','planHistoryMetadataKey'];
   const source=transpile(['currentBedIds','plantings','legacyPlantings','legacyAddBlocked'].map(variableText).join('\n')+'\n'+names.map(functionText).join('\n'));
   const result=Function('state',`with(state){${source};return {${names.join(',')}};}`)(state);
   return{...result,state,get book(){return current;},replaceBook(book:CropPlanState){current=book;}};
@@ -92,9 +98,27 @@ test('actual stale callbacks recheck fresh rows before deleting, overwriting or 
   if(action==='updatePlanting')h[action](legacy.id,legacy.cropKey,3,1,true,'changed');else h[action](legacy.id);
   assert.equal(h.book,now,action+' must preserve the fresh own row');
  }
- const h=handlers(old,f.beds);h.replaceBook({...old,plantings:[legacy,f.row]});const before=h.book;
- h.addPlanting(f.row.bedId,f.row.cropKey,3,1,false,'');assert.equal(h.book,before);
- h.state.autoResult.plantings=[{...legacy,id:'suggested'}];h.acceptAutoSuggest();assert.equal(h.book,before);
+ // A missing new admission must not let this regression pass at the outer
+ // guard. Establish the real saved base, then simulate a fresher pending React
+ // setter value while durable bytes/lease still match that original render.
+ const originalWindow=Object.getOwnPropertyDescriptor(globalThis,'window'),rows=new Map<string,string>();
+ const memory={getItem:(key:string)=>rows.get(key)??null,setItem:(key:string,value:string)=>{rows.set(key,value);},removeItem:(key:string)=>{rows.delete(key);}};
+ Object.defineProperty(globalThis,'window',{configurable:true,value:{localStorage:memory,sessionStorage:memory}});
+ try{
+  memory.setItem(activeAccountLocalStorageKey('imbewu_crop_plan_v1'),JSON.stringify(old));
+  await initialiseCropPlanFixture();const loaded=loadCropPlanWithWriteAdmission();assert.equal(loaded.admission.status,'ready');assert.ok(loaded.token);
+  const binding={owner:activeAccountUid(),sample:isSampleMode(),token:loaded.token,planKey:JSON.stringify(loaded.book),admission:loaded.admission};
+  assert.equal(cropPlanWriteAdmissionMatches(binding.admission,binding.planKey,binding.token),true);
+  const h=handlers(loaded.book,f.beds,binding);h.replaceBook({...old,plantings:[legacy,f.row]});const before=h.book;
+  h.addPlanting(f.row.bedId,f.row.cropKey,3,1,false,'');assert.equal(h.book,before);
+  const calls=h.state.setterCalls;
+  h.state.autoResult.plantings=[{...legacy,id:'suggested'}];h.acceptAutoSuggest();assert.equal(h.book,before);
+  assert.equal(h.state.setterCalls,calls+1,'a valid original admission must reach the actual fresh-row setter guard');
+  assert.equal(cropPlanWriteToken(),binding.token,'the hold must come from fresh pending rows, not a stale durable token');
+  const positive=handlers(loaded.book,f.beds,binding);positive.state.autoResult.plantings=[{...legacy,id:'allowed-suggestion'}];positive.acceptAutoSuggest();
+  assert.equal(positive.book.plantings.length,loaded.book.plantings.length+1,'the same real admitted context still accepts a supported ordinary proposal');
+  assert.equal(positive.state.suggestedPlanHistory.current.has(positive.book),true);
+ }finally{releaseCropPlanFixture();if(originalWindow)Object.defineProperty(globalThis,'window',originalWindow);else Reflect.deleteProperty(globalThis,'window');}
 });
 
 test('duplicate identities and changed foreign rows are never cleared by a stale bed-id selection',async()=>{
@@ -193,16 +217,17 @@ test('actual parent review reader retains null rows, reservations and duplicate 
  const rows=new Map<string,string>();const storage={getItem:(k:string)=>rows.get(k)??null,setItem:(k:string,v:string)=>{rows.set(k,v);},removeItem:(k:string)=>{rows.delete(k);},get length(){return rows.size;},key:(i:number)=>[...rows.keys()][i]??null};
  Object.defineProperty(globalThis,'window',{configurable:true,value:{localStorage:storage,sessionStorage:storage}});
  try{
+  await initialiseCropPlanFixture();
   const read=Function('state',`with(state){${transpile(functionText('readCurrentGrowerBook'))};return readCurrentGrowerBook;}`);
   for(const plantings of [[null,f.row],[f.row,{...f.row,id:f.row.id}]]){
-   const raw={...f.book,plantings},bytes=JSON.stringify(raw);rows.set('imbewu_crop_plan_v1',bytes);
+   const raw={...f.book,plantings},bytes=JSON.stringify(raw);replaceCanonicalCropPlanFixtureRaw(bytes);
    const token=cropPlanWriteToken();assert.ok(token);
    const display={...f.book,plantings:[]};const base={owner:null,sample:false,planKey:JSON.stringify(display),token};
    const env={plan:display,growerActorIsCurrent:()=>true,planWriteBase:{current:base},growerOwner:null,growerSample:false,planSaveConflict:false,cropPlanWriteToken,readRawCropPlanReceipt,loadCropPlan(){throw Error('display normalizer must not grant review admission');}};
    const result=read(env)();assert.equal(result.status,'ready');assert.deepEqual(result.book.plantings,plantings);
-   assert.equal(rows.get('imbewu_crop_plan_v1'),bytes);
+   assert.equal(readCanonicalCropPlanFixtureRaw(),bytes);
    const recheck=assembleGrowerWorkflowReview({...f,book:result.book});assert.equal(recheck.status,'held','retained invalid rows cannot become reviewable empty occupancy');
-   result.book.plantings.pop();assert.equal(rows.get('imbewu_crop_plan_v1'),bytes,'returned raw book is detached');
+   result.book.plantings.pop();assert.equal(readCanonicalCropPlanFixtureRaw(),bytes,'returned raw book is detached');
   }
- }finally{if(original)Object.defineProperty(globalThis,'window',original);else Reflect.deleteProperty(globalThis,'window');}
+ }finally{releaseCropPlanFixture();if(original)Object.defineProperty(globalThis,'window',original);else Reflect.deleteProperty(globalThis,'window');}
 });

@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -65,14 +66,17 @@ const { createWorkspacePlanningReference, replaceWorkspacePlanningReference, san
 const { useGrowerWorkflow } = await import('../components/crops/useGrowerWorkflow.ts');
 
 after(() => {
+  releaseCropPlanFixture();
   hooks.deregister(); bindMountedAccountLocalStorageUid(null);
   for (const [key, descriptor] of originals) {
     if (descriptor) Object.defineProperty(globalThis, key, descriptor); else Reflect.deleteProperty(globalThis, key);
   }
 });
-test.beforeEach(() => {
+test.beforeEach(async () => {
+  releaseCropPlanFixture();
   local.clear(); session.clear(); bindMountedAccountLocalStorageUid('owner-a');
   boundary.actorUid = 'owner-a'; boundary.sourceReads = 0; boundary.cloudReads = 0; boundary.cloud = async () => [];
+  await initialiseCropPlanFixture();
 });
 
 // Dates, geometry and quantities are engineering fixtures, not farming advice.
@@ -338,7 +342,8 @@ test('the unchanged account can save profiles, workspace choices and queued ordi
 
 test('late cloud source replies cannot cross an account, sample or selection transition', async () => {
   for (const transition of ['account', 'sample', 'selection'] as const) {
-    local.clear(); session.clear(); bindMountedAccountLocalStorageUid('owner-a'); boundary.actorUid = 'owner-a';
+    releaseCropPlanFixture(); local.clear(); session.clear(); bindMountedAccountLocalStorageUid('owner-a'); boundary.actorUid = 'owner-a';
+    await initialiseCropPlanFixture();
     const ui = mount(); const pending = deferred<unknown[]>(); boundary.cloud = () => pending.promise;
     try {
       ui.update({ selection: { kind: 'facilitator-cloud', sourceId: 'cloud-fixture' }, resourceSiteId: 'design:cloud-fixture' });
@@ -413,7 +418,7 @@ test('a write-event overwrite cannot become the successful writer receipt or aut
     events.removeEventListener(cropBook.CROP_PLAN_CHANGED_EVENT, overwrite);
     const saved = cropBook.loadCropPlan();
     const replacement = { ...saved, harvestTargets: saved.harvestTargets!.map(row => row.siteId === siteId ? { ...row, weeklyKg: 28 } : row), updatedAt: Date.now() };
-    local.setItem(activeAccountLocalStorageKey('imbewu_crop_plan_v1'), JSON.stringify(replacement));
+    replaceCanonicalCropPlanFixtureRaw(JSON.stringify(replacement));
   };
   events.addEventListener(cropBook.CROP_PLAN_CHANGED_EVENT, overwrite);
   try {

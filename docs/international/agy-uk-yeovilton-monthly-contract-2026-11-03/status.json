@@ -1,0 +1,152 @@
+{
+  "workorder": "docs/international/agy-uk-yeovilton-monthly-contract-2026-11-03/WORKORDER.md",
+  "coordinatorReview": {
+    "reviewedAtUtc": "2026-11-03T09:11:14.007017+00:00",
+    "words": 441,
+    "fourActualBodyBytesAndHashesChecked": true,
+    "actualRows": 746,
+    "actualProvisionalRows": 10,
+    "termsScopeQualified": true,
+    "automatedAdapterPermission": "unresolved",
+    "adapterImplemented": false,
+    "testsExecuted": 0
+  },
+  "status": "ready-for-root-review",
+  "nature": "documentation-only-specification",
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "ownership": {
+    "UK-STATION-CONTRACT.md": "main",
+    "status.json": "main"
+  },
+  "milestoneState": {
+    "documentationFetched": true,
+    "stationEndpointFetched": true,
+    "coordinatorUnauthenticatedFetch": true,
+    "productApiAuthRequirements": "unknown",
+    "automatedAdapterPermission": "unresolved",
+    "adapterImplemented": false,
+    "legalClearanceGranted": false,
+    "farmingSuitabilityApproved": false
+  },
+  "coordinatorReviewCorrectionsApplied": {
+    "removedUnsupportedAccountClaim": "Removed unsupported blanket claim that website terms require accounts for all Met Office Products",
+    "separatedFetchFromAuthAndGate": "Recorded unauthenticated coordinator HTTPS 200 fetch separately from UNKNOWN product/API auth rules and UNRESOLVED recurring automated-use permission",
+    "rollingCadenceAndProvisionalBoundary": "Included directory rolling monthly update cadence and Provisional quality-control boundary",
+    "trailingMonthCoverageBoundary": "Distinguished detectable malformed/truncated rows from undetectable omitted complete trailing months; file grammar alone cannot prove freshness or latest-month coverage",
+    "primaryMarkdownLinks": "Formatted all four primary receipt URLs as clickable Markdown links while retaining exact timestamps, bytes, and SHA256 digests",
+    "coordinatorCheckProvenance": "Attributed byte/SHA and 753-line/746-row verification strictly to root/coordinator, separate from zero AGY commands or tests"
+  },
+  "coordinatorReceipts": [
+    {
+      "source": "directory",
+      "url": "https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data",
+      "fetchedAtUtc": "2026-11-03T08:47:24.759897+00:00",
+      "httpStatus": 200,
+      "bytes": 164649,
+      "sha256": "f96dee75e5999b9fd0860fe1cc14ad2501185c19c9b4428554eae1d8df084211",
+      "provenance": "independent coordinator-machine public HTTPS curl fetch"
+    },
+    {
+      "source": "station",
+      "url": "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/yeoviltondata.txt",
+      "fetchedAtUtc": "2026-11-03T08:47:24.979488+00:00",
+      "httpStatus": 200,
+      "bytes": 39641,
+      "sha256": "4cc4286694a3330df589f6045c215111fc62cdea249f5eca976399ecf8c830ea",
+      "provenance": "independent coordinator-machine public HTTPS curl fetch"
+    },
+    {
+      "source": "legal",
+      "url": "https://www.metoffice.gov.uk/policies/legal",
+      "fetchedAtUtc": "2026-11-03T08:47:25.264548+00:00",
+      "httpStatus": 200,
+      "bytes": 89302,
+      "sha256": "86798fe18d85f44a89d7f86301f0511691ea5d29521ef8df6f5902ecb0848c4e",
+      "provenance": "independent coordinator-machine public HTTPS curl fetch"
+    },
+    {
+      "source": "terms",
+      "url": "https://www.metoffice.gov.uk/policies/tandc",
+      "fetchedAtUtc": "2026-11-03T08:47:25.427303+00:00",
+      "httpStatus": 200,
+      "bytes": 108896,
+      "sha256": "51a50016c9d5f6d8d4e088fa76058dd704d9205ce539b056db51b99385678dfb",
+      "provenance": "independent coordinator-machine public HTTPS curl fetch"
+    }
+  ],
+  "printedStationSummary": {
+    "stationName": "Yeovilton",
+    "openedYear": 1964,
+    "updateCadence": "rolling-monthly",
+    "totalLines": 753,
+    "preambleLines": 5,
+    "headerLines": 2,
+    "monthlyDataRows": 746,
+    "dateRange": "1964-09 to 2026-10",
+    "provisionalRowCount": 10,
+    "provisionalRange": "2026-01 to 2026-10",
+    "columns": [
+      {
+        "name": "yyyy",
+        "unit": "year"
+      },
+      {
+        "name": "mm",
+        "unit": "month (1-12)"
+      },
+      {
+        "name": "tmax",
+        "unit": "degC"
+      },
+      {
+        "name": "tmin",
+        "unit": "degC"
+      },
+      {
+        "name": "af",
+        "unit": "days (integer)"
+      },
+      {
+        "name": "rain",
+        "unit": "mm"
+      },
+      {
+        "name": "sun",
+        "unit": "hours"
+      }
+    ],
+    "markers": {
+      "missing": "---",
+      "estimated": "*",
+      "kippZonenSensor": "#",
+      "provisional": "Provisional"
+    },
+    "validationProvenance": "coordinator-verified-753-lines-746-rows"
+  },
+  "deliverables": [
+    {
+      "path": "docs/international/agy-uk-yeovilton-monthly-contract-2026-11-03/UK-STATION-CONTRACT.md",
+      "measuredWhitespaceWordCount": 441,
+      "maxWordCap": 450
+    },
+    {
+      "path": "docs/international/agy-uk-yeovilton-monthly-contract-2026-11-03/status.json"
+    }
+  ],
+  "proposedNegativeRequirementsCount": 3,
+  "executedTestsCount": 0,
+  "inspectionScope": {
+    "workorderAndCoordinatorReviewRead": 2,
+    "frozenCoordinatorReceiptsRead": 4,
+    "extraNetworkCalls": 0,
+    "testsExecuted": 0,
+    "validatorsExecuted": 0,
+    "sourceWrites": 0,
+    "gitWrites": 0,
+    "shellCommands": 0,
+    "runtimeActivation": false,
+    "derivedHtmlTextFilesRead": 3,
+    "rawStationTextFilesRead": 1
+  }
+}

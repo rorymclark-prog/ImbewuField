@@ -1,0 +1,21 @@
+{
+  "sourceSha256": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+  "pairs": 42,
+  "damagedControlsRejected": 12,
+  "checkedAtUtc": "2026-11-03T08:43:23.771420+00:00",
+  "files": {
+    "bn.json": "813bd78443776a3c2ac5486f3a50f9fd3a5e6affea4dc602e580eb243471dd03",
+    "source.json": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+    "review-notes.md": "c6678c2cec181d8eddda66791fb6129021e7a9b9f6d68b0387612c3faa33fefc",
+    "fr.json": "09476dc16c1c3ab7d56ed01493748ec931ad3a26d78a2832e1e01b0db857ad6a",
+    "hi.json": "b34d6ce8c6888405b00d7dd9afd6e61a3b5a483d7686ad933302aedc5ca26bf7",
+    "pt-BR.json": "4355a0541e4184b87384a81612a69849a363e1078a73ba0057284c5bb4e2b167",
+    "id.json": "56a18f9e00a7d23bd59eba18ceddebc27cc7c6827f2e936c5c3a246fe69436c5",
+    "sw.json": "bde592c87cb060a8042f838cd980ca89a701842c4f32d19c41b3ab43fd9d0c8f",
+    "status.json": "5b8e2f61a79580840560e8fc18314161d39f9602084e4cdfb1818bd9783ab78f",
+    "es.json": "b937a6e57eb1878c2ccd351bbf05140d2cf674369f4a30c10e0325593aa4a3fc"
+  },
+  "semanticApproval": false,
+  "runtimeActivation": false,
+  "notesWords": 220
+}

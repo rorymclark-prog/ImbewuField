@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { CROPS } from '../lib/crop-catalog.ts';
@@ -347,7 +348,7 @@ test('exact entered surface allocations do not invent a shortage at a decimal bo
   assert.equal(fullBench.headroom, 'within-budget');
 });
 
-test('unrepresentable positive surface products stay unknown rather than becoming zero or infinity', () => {
+test('unrepresentable positive surface products stay unknown rather than becoming zero or infinity',async()=>{
   assert.equal(decimalQuantityProduct([0.1, 3]), 0.3);
   assert.equal(decimalQuantityProduct([Number.MAX_VALUE, Number.MAX_VALUE]), null);
   assert.equal(decimalQuantityProduct([Number.MIN_VALUE, Number.MIN_VALUE]), null);
@@ -394,7 +395,12 @@ test('canonical device reload and another field edit preserve held inventory byt
   }});
   bindMountedAccountLocalStorageUid('synthetic-nursery-owner');
   try{
-    assert.equal(saveCropPlan({version:1,plantings:[],nursery:ambiguous,updatedAt:1}),true);
+    await initialiseCropPlanFixture();
+    // The actual nursery editor applies the shared evidence-preserving sanitizer
+    // before a canonical save; use that authored held-input representation here.
+    const canonicalSettings = sanitiseNurserySettings(ambiguous)!;
+    assert.equal(JSON.stringify(canonicalSettings.heldInputs?.find(group => group.collection === 'containers')?.rows), inventoryBytes);
+    assert.equal(saveCropPlan({version:1,plantings:[],nursery:canonicalSettings,updatedAt:1}),true);
     const first=loadCropPlan().nursery;assert.ok(first);assert.deepEqual(first.containers,[]);
     assert.ok(first.sourceIssues?.includes('ambiguous-nursery-container-identities'));
     assert.equal(first.profiles[0].usableStartsPerTray,0);assert.equal(first.profiles[0].seedsPerTray,0);

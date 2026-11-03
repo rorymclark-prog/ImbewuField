@@ -25,7 +25,7 @@ Guest sign-in recognises a genuinely empty destination scaffold without treating
 
 ## Verification
 
-After merging the corrected operations parent and registering both added suites exactly once, Node 24 typecheck passed, then **642/642 affected tests across 36 files** passed, then `git diff --check` passed. The first typecheck overlapped a Next development-server regeneration and reported missing generated `.next/types` paths; after the server was ready the unchanged source typecheck passed. The registration retains all existing test paths. Owner runs of 614, 86 and 35 tests overlap and are not added to this unique total.
+After merging the corrected operations parent and registering both added suites exactly once, Node 24 typecheck passed, then **642/642 affected tests across 37 files** passed, then `git diff --check` passed. The first typecheck overlapped a Next development-server regeneration and reported missing generated `.next/types` paths; after the server was ready the unchanged source typecheck passed. The registration retains all existing test paths. The coordinator originally reported 36 files; the actual saved command contains 37, with the same 642 tests. Owner runs of 614, 86 and 35 tests overlap and are not added to this unique total.
 
 Full current-head tests, security/rules checks, hosted preview, populated browser and account save/reload remain release gates. Existing tests were not weakened. The English release note describes the actual child behavior. Source-bound AGY release-copy packets remain unreviewed drafts without runtime activation or fluent certification.
 
