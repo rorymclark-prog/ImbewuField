@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'c4389a45b', changes: [
+    'Production area reports clear while you switch organisations or views.',
+  ], tour: [{ title: 'Review production areas', where: 'Organisation workspace', href: '/ngo',
+    detail: 'Open Production area. Wait for the selected organisation’s records before opening its report.' }] },
   { when: '3 November 2026', sha: 'a0596723d', changes: [
     'A pending report PDF stops if you leave the report before it downloads.',
   ] },
