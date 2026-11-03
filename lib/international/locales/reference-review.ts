@@ -8,6 +8,8 @@ import brazilSource from '@/docs/international/reference-card-language-packets/b
 import brazilDrafts from '@/docs/international/reference-card-language-packets/brazil-drafts.json' with { type: 'json' };
 import colombiaSource from '@/docs/international/reference-card-language-packets/colombia-source.json' with { type: 'json' };
 import colombiaDrafts from '@/docs/international/reference-card-language-packets/colombia-drafts.json' with { type: 'json' };
+import canadaSource from '@/docs/international/reference-card-language-packets/canada-source.json' with { type: 'json' };
+import canadaDrafts from '@/docs/international/reference-card-language-packets/canada-drafts.json' with { type: 'json' };
 import manifest from '@/docs/international/reference-card-language-packets/manifest.json' with { type: 'json' };
 
 export const REFERENCE_REVIEW_LANGUAGES = [
@@ -31,6 +33,7 @@ export const REFERENCE_REVIEW_PACKETS = {
   us: { label: 'United States · public station observations', source: usSource, drafts: usDrafts, binding: manifest.us },
   brazil: { label: 'Brazil · Redape soil-profile catalogue', source: brazilSource, drafts: brazilDrafts, binding: manifest.brazil },
   colombia: { label: 'Colombia · SiB and IDEAM references', source: colombiaSource, drafts: colombiaDrafts, binding: manifest.colombia },
+  canada: { label: 'Canada · Ontario guide and climate normals', source: canadaSource, drafts: canadaDrafts, binding: manifest.canada },
 } satisfies Record<string, ReferenceReviewPacket>;
 
 /** Only this review surface can display these candidates. A damaged binding

@@ -56,5 +56,16 @@
     ],
     "reviewedByHuman": false,
     "runtimeActivation": false
+  },
+  "canada": {
+    "sourceSha256": "c02787a78d68a7f1989476bb3fde1a50a233cad899921b4fd8f887371101937d",
+    "draftsSha256": "4c1eef435c854b178975f21d25919e2db701696567a6238387749979732a0d03",
+    "literals": [
+      "1991\u20132020",
+      "PDF",
+      "CSV"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
   }
 }
