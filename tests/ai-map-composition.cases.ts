@@ -6,7 +6,7 @@ import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtwo
 import { PHASING_ARTWORK_PROMPT_MARKER, buildPhasingRestylePrompt } from '../lib/producer-prompt.ts';
 import { UBHEJANE_BEFORE_WORKS, historicalBaselineForSite, historicalBaselineFromPrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, historicalBaselinePrompt } from '../lib/historical-map-baseline.ts';
 import { createHash } from 'node:crypto';
-import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, fetchProfileTerrain } from '../lib/sheet-terrain-profile.ts';
+import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, rasterTerrainContours, fetchProfileTerrain, TERRAIN_CONTOUR_INK } from '../lib/sheet-terrain-profile.ts';
 import { terrainPixel, terrainRasterWindow, extractTerrainRaster, sampleTerrainRaster, type TerrainRaster } from '../lib/terrain-raster.ts';
 import { makeMercatorUnprojector } from '../lib/design-canvas.ts';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
@@ -483,7 +483,7 @@ test('Sector keeps paid colour and contrast while exact analysis still uses its 
     fetchSectorPresentationContours:async()=>({lines:[]}),loadImage:async(src:string)=>({src}),
     drawPaperWash:()=>{throw Error('a paid illustration must not receive the photo veil');},
     drawAnalysisBase:async()=>{quiet++;},authoritativeHouseFootprints:()=>[],drawBlueprintBoundary:()=>{},
-    BOUNDARY_LINE_GREEN:'#95B34F',
+    BOUNDARY_LINE_GREEN:'#95B34F', TERRAIN_CONTOUR_INK,
     drawSectorAnalysis:()=>({rows:[{color:'#95B34F',label:'Site boundary',style:'line'}],contextLabel:'Evidence',noteText:'Real analysis'}),
     drainCanvasToDataUrl:()=> 'map-art',composeStyleSheet:async(...args:any[])=>{options=args.at(-1);return 'sheet';},
   });
@@ -791,4 +791,18 @@ test('main section follows the property-wide downhill fit separately from the tw
   assert.ok(out.downhill.points[0].elevationM>out.downhill.points.at(-1)!.elevationM);assert.equal(out.downhill.buildings.length,0,'off-line footprints must not appear on the downhill cut');
   assert.equal(out.buildingsSection?.buildings.length,2);assert.ok(Math.abs(out.buildingsSection!.a[1]-out.buildingsSection!.b[1])<1e-8);
   assert.equal(rasterTerrainSections({...r,elevations:r.elevations.map(()=>330)},b,buildings,frame),null,'flat data cannot invent a main fall');
+});
+
+
+test('Terrain & Sections supplementary contours use the same posted grid and clip to the saved field',()=>{
+  const frame:any={centerLng:31.96317,centerLat:-27.72619,zoom:18,imgW:200,imgH:200,mPerPx:.5};
+  const b:Point[]=[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],unproject=makeMercatorUnprojector(frame.centerLng,frame.centerLat,frame.zoom,frame.imgW,frame.imgH),ll=b.map(unproject);
+  const win=terrainRasterWindow(Math.min(...ll.map(p=>p[0])),Math.min(...ll.map(p=>p[1])),Math.max(...ll.map(p=>p[0])),Math.max(...ll.map(p=>p[1])))!;
+  const r:TerrainRaster={source:'mapbox.terrain-rgb',zoom:14,tileSize:256,...win,elevations:Array.from({length:win.width*win.height},(_,i)=>350-1.5*Math.floor(i/win.width)),verticalDatum:'mixed-unverified'};
+  const lines=rasterTerrainContours(r,b,frame);assert.ok(lines.some(line=>line.major));assert.ok(lines.some(line=>!line.major));
+  for(const line of lines){
+    assert.equal(line.major,line.elevM%5===0);assert.equal(line.elevM%2.5,0);
+    for(const point of line.points){assert.ok(point.every(n=>n>=.1-1e-8&&n<=.9+1e-8),'must stop at the actual boundary');assert.ok(Math.abs(sampleTerrainRaster(r,...unproject(point))!.elevationM-line.elevM)<1e-6,'half-pixel displacement must fail on a known gradient');}
+  }
+  assert.deepEqual(rasterTerrainContours({...r,elevations:r.elevations.map(()=>330)},b,frame),[]);
 });

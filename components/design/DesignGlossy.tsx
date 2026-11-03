@@ -40,7 +40,7 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
 import { fetchSheetContours, type SheetContourResult } from '@/lib/sheet-contours';
-import { sectorOverviewContours, fetchProfileTerrain, rasterTerrainSections, type RasterTerrainProfile } from '@/lib/sheet-terrain-profile';
+import { sectorOverviewContours, fetchProfileTerrain, rasterTerrainSections, rasterTerrainContours, TERRAIN_CONTOUR_INK, TERRAIN_SUPPLEMENTAL_INK, type RasterTerrainProfile } from '@/lib/sheet-terrain-profile';
 import {
   gateBoundaryBreaks,
   boundarySegmentsWithBreaks,
@@ -9066,11 +9066,11 @@ function drawSectorAnalysis(
           if (index === 0) ctx.moveTo(px(x), py(y));
           else ctx.lineTo(px(x), py(y));
         });
-        ctx.strokeStyle = artFinish ? 'rgba(255,255,255,.93)' : 'rgba(10,22,10,0.55)';
-        ctx.lineWidth = core + (artFinish ? 4.0 : 2.4);
+        ctx.strokeStyle = externalLegend ? 'rgba(255,255,255,.88)' : 'rgba(10,22,10,0.55)';
+        ctx.lineWidth = core + (externalLegend ? 3.0 : 2.4);
         ctx.stroke();
-        ctx.strokeStyle = artFinish ? '#5B6737' : line.major ? 'rgba(160,235,140,0.98)' : 'rgba(126,212,107,0.95)';
-        ctx.lineWidth = artFinish ? core+1.2 : core;
+        ctx.strokeStyle = externalLegend ? TERRAIN_CONTOUR_INK : line.major ? 'rgba(160,235,140,0.98)' : 'rgba(126,212,107,0.95)';
+        ctx.lineWidth = core;
         ctx.stroke();
       }
       // Absolute elevations come from Terrain-RGB thresholds, not relative offsets on a plane.
@@ -9085,7 +9085,7 @@ function drawSectorAnalysis(
         ctx.fillText(`${line.elevM}m`, px(midpoint[0]), py(midpoint[1]));
       });
       ctx.restore();
-      if(artFinish)for(const line of sheetContours.lines){
+      if(externalLegend)for(const line of sheetContours.lines){
         const points=line.points.filter(point=>pointInRing(point,bnd));
         const at=points[Math.floor(points.length*.32)];
         if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,px(at[0]),py(at[1])-W*.006,Math.max(16,W*.009));
@@ -9312,7 +9312,7 @@ function drawSectorAnalysis(
   // computed geometry.
   if (model.driveway) rows.push({ color: DRIVEWAY_COLOR, label: `Driveway access — dust & noise — ${model.driveway.fromLabel}`, style: 'line', icon: markerIcon('driveway'), sectorIcon: 'driveway' });
   if (model.water) rows.push({ color: artFinish ? artInk.fall : '#3A8EC4', label: artFinish ? `Site fall · ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}%` : `Site slope estimate falls ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}% (five-point SRTM · indicative)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
-  if (model.water && sheetContours?.status === 'ok' && contourIntervalM != null) rows.push({ color: artFinish ? '#5B6737' : '#7ED46B', label: artFinish ? `Regional contours · ${contourIntervalM} m` : `Regional DEM contour — ${contourIntervalM} m overview`, style: 'dashline', sectorIcon: 'water' });
+  if (model.water && sheetContours?.status === 'ok' && contourIntervalM != null) rows.push({ color: externalLegend ? TERRAIN_CONTOUR_INK : '#7ED46B', label: artFinish ? `Regional contours · ${contourIntervalM} m` : `Regional DEM contour — ${contourIntervalM} m overview`, style: 'dashline', sectorIcon: 'water' });
   // Gated on drawTerraceFallAnnotations (above) having actually drawn at least one pair — never a
   // placeholder row for a design with no terraces (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md
   // §4b). A different row from the whole-site "Terrace fall ~X% (uniform-fall model)" row above:
@@ -9439,10 +9439,10 @@ async function fetchSectorPresentationContours(state:DesignCanvasState,frame:Can
 
 function drawOverviewContourCaption(ctx:CanvasRenderingContext2D,label:string,x:number,y:number,size:number):void{
   ctx.save();ctx.font=`700 ${Math.round(size)}px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';
-  ctx.strokeStyle='#FFFFFF';ctx.lineWidth=Math.max(2,size*.15);ctx.strokeText(label,x,y);ctx.fillStyle='#49532C';ctx.fillText(label,x,y);ctx.restore();
+  ctx.strokeStyle='#FFFFFF';ctx.lineWidth=Math.max(2,size*.15);ctx.strokeText(label,x,y);ctx.fillStyle=TERRAIN_CONTOUR_INK;ctx.fillText(label,x,y);ctx.restore();
 }
 
-async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],site:SectorSite|null,placeName?:string):Promise<string|null>{
+async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName?:string):Promise<string|null>{
   // Fetch and intersect in the original saved coordinate system. Cropping is paint-time only.
   const raster=await fetchProfileTerrain(frame,refs.boundary,async url=>fetch(url,{headers:await paidApiHeaders(),signal:AbortSignal.timeout(15_000)}));
   if(!raster)return null;
@@ -9455,12 +9455,13 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
   });
   const sections=rasterTerrainSections(raster,refs.boundary,buildings,frame);
   if(!sections)return null;
-  const [p,contours]=await Promise.all([boundaryPresentationContext(state,frame,refs),fetchSectorPresentationContours(state,frame,refs,site)]);
+  const p=await boundaryPresentationContext(state,frame,refs);
+  const contours=rasterTerrainContours(raster,refs.boundary,frame);
   const layout=calculateBoundaryPresentationLayout(presentationExtentRing(state,frame,refs.boundary),frame,SCALE);
   const normalized=([x,y]:[number,number]):[number,number]=>layout?[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight]:[x,y];
   const canvas=document.createElement('canvas');canvas.width=1800;canvas.height=1273;
   const ctx=canvas.getContext('2d');if(!ctx){releaseCanvas(canvas);throw new Error('Terrain sections canvas unavailable');}
-  ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,1800,1273);ctx.fillStyle='#183425';ctx.font=`800 38px ${SHEET_BODY_FONT}`;ctx.fillText('SITE TERRAIN SECTIONS',48,62);
+  ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,1800,1273);ctx.fillStyle='#183425';ctx.font=`800 38px ${SHEET_BODY_FONT}`;ctx.fillText('TERRAIN & SECTIONS',48,62);
   ctx.font=`500 24px ${SHEET_BODY_FONT}`;ctx.fillStyle='#66736A';ctx.fillText(`${placeName??'Your site'} · regional elevation overview · equal horizontal and vertical scale`,48,104);
   const fit=Math.min(800/p.frame.imgW,900/p.frame.imgH),w=p.frame.imgW*fit,h=p.frame.imgH*fit,mx=48+(800-w)/2,my=176+(900-h)/2;
   if(p.frame.satDataUrl){const image=await loadImage(p.frame.satDataUrl);try{ctx.drawImage(image,mx,my,w,h);}finally{releaseImageSource(image);}}
@@ -9468,7 +9469,10 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
   const project=(point:[number,number]):[number,number]=>displayPoint(normalized(point));
   const trace=(ring:Array<[number,number]>,mapper=project)=>{ctx.beginPath();ring.forEach((point,i)=>{const [x,y]=mapper(point);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x,y);});};
   ctx.save();trace(refs.boundary);ctx.closePath();ctx.clip();
-  for(const line of contours.lines){trace(line.points,displayPoint);ctx.setLineDash([9,6]);ctx.strokeStyle='rgba(255,255,255,.92)';ctx.lineWidth=5;ctx.stroke();ctx.strokeStyle='#5B6737';ctx.lineWidth=2.5;ctx.stroke();}
+  for(const line of contours){
+    trace(line.points);ctx.setLineDash(line.major?[]:[8,7]);ctx.strokeStyle='rgba(255,255,255,.94)';ctx.lineWidth=line.major?6:4;ctx.stroke();
+    ctx.strokeStyle=line.major?TERRAIN_CONTOUR_INK:TERRAIN_SUPPLEMENTAL_INK;ctx.lineWidth=line.major?3.3:1.9;ctx.stroke();
+  }
   ctx.restore();
   ctx.save();ctx.strokeStyle='#88A076';ctx.lineWidth=1.5;ctx.setLineDash([6,5]);trace(refs.boundary);ctx.closePath();ctx.stroke();ctx.setLineDash([]);
   for(const building of buildings){ctx.strokeStyle='#147D86';ctx.lineWidth=2.2;ctx.fillStyle='rgba(20,125,134,.12)';trace(building.ring);ctx.closePath();ctx.fill();ctx.stroke();}
@@ -9479,8 +9483,14 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
     ctx.save();ctx.lineCap='round';trace([a,b],point=>point);ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=6;ctx.stroke();ctx.strokeStyle=cut.color;ctx.lineWidth=3;ctx.setLineDash([10,6]);ctx.stroke();ctx.restore();
     for(const [text,point] of [[cut.ends[0],a],[cut.ends[1],b]] as const){ctx.fillStyle='#FFFFFF';ctx.beginPath();ctx.arc(point[0],point[1],17,0,Math.PI*2);ctx.fill();ctx.strokeStyle=cut.color;ctx.lineWidth=2;ctx.stroke();ctx.fillStyle=cut.color;ctx.font=`800 22px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,point[0],point[1]);}
   }
-  for(const line of contours.lines){
-    const inside=line.points.filter(point=>pointInRing(point,p.refLayers.boundary)).map(displayPoint);
+  const longestMain=new Map<number,{line:(typeof contours)[number];length:number}>();
+  for(const line of contours){
+    if(!line.major)continue;
+    const points=line.points.map(project),length=points.slice(1).reduce((sum,at,i)=>sum+Math.hypot(at[0]-points[i][0],at[1]-points[i][1]),0);
+    if(length>(longestMain.get(line.elevM)?.length??0))longestMain.set(line.elevM,{line,length});
+  }
+  for(const {line} of longestMain.values()){
+    const inside=line.points.map(project);
     const clearance=([x,y]:[number,number])=>Math.min(...cuts.map(cut=>{const [ax,ay]=project(cut.profile.a),[bx,by]=project(cut.profile.b);return Math.abs((bx-ax)*(ay-y)-(ax-x)*(by-ay))/Math.hypot(bx-ax,by-ay);}));
     const at=inside.filter((_,i)=>i>=inside.length*.15&&i<=inside.length*.85).sort((a,b)=>clearance(b)-clearance(a))[0]??inside[Math.floor(inside.length/2)];
     if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,at[0],at[1]-12,18);
@@ -9489,8 +9499,11 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
   for(const building of buildings){const [x,y]=project(centroidOf(building.ring));drawReferenceMapText(ctx,building.label,x,y-22,20,700,'center');}
   drawBlueprintScaleBar(ctx,w,h,0,0,fit/p.frame.mPerPx,{x:mx+20,y:my+h-20});
   ctx.font=`600 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#536357';
-  ctx.fillText(contours.lines.length?`Dashed olive · Sector Analysis ${contours.intervalM} m overview contours`:'Sector overview contours unavailable for this sheet',48,1122);
-  ctx.fillText(cuts.length>1?'A–B follows the main fall. C–D crosses the traced buildings.':'A–B follows the main fall.',48,1155);
+  const keyLine=(y:number,text:string,color:string,dash:number[])=>{ctx.save();ctx.strokeStyle=color;ctx.lineWidth=3;ctx.setLineDash(dash);trace([[48,y-6],[88,y-6]],point=>point);ctx.stroke();ctx.restore();ctx.fillText(text,102,y);};
+  if(contours.some(line=>line.major))keyLine(1117,'5 m main contours',TERRAIN_CONTOUR_INK,[]);
+  if(contours.some(line=>!line.major))keyLine(1148,'2.5 m supplemental interval',TERRAIN_SUPPLEMENTAL_INK,[8,6]);
+  if(!contours.length)ctx.fillText('Terrain contours unavailable for this sheet',48,1122);
+  keyLine(1180,'Current design extent','#88A076',[6,5]);
 
   const vertical=(profile:RasterTerrainProfile)=>{
     const values=profile.points.map(point=>point.elevationM);
@@ -9524,7 +9537,7 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
   ctx.font=`500 19px ${SHEET_BODY_FONT}`;ctx.fillStyle='#536357';
   ctx.fillText(`Mapbox Terrain-RGB · ~${sections.downhill.gridSpacingM.toFixed(1)} m grid · interpolated profiles`,975,1074);
   ctx.fillText('Horizontal and vertical distance use the same scale (1×).',975,1103);
-  ctx.fillText('Regional surface estimate; confirm the fall on site.',975,1132);
+  ctx.fillText('Contour spacing adds detail without improving accuracy.',975,1132);
   ctx.fillText('Survey/drone ground data needed for drainage or construction.',975,1161);
   ctx.font=`italic 19px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Same section lines on plan and charts. No classroom heights or new ground measurements inferred.',48,1230);
   return drainCanvasToDataUrl(canvas,'image/png');
@@ -9651,7 +9664,8 @@ async function composeSectorSheet(
     ...(artFinish ? {section:row.sectorIcon==='sun'?'SUN PATH':row.sectorIcon==='wind'||row.sectorIcon==='fire'?'REGIONAL WIND & FIRE':row.sectorIcon==='water'||row.sectorIcon==='frost'||row.label.startsWith('Terrace fall')?'TERRAIN':'SITE REFERENCE'} as const : {}),
     lineKind: row.color === BOUNDARY_LINE_GREEN ? (baseline ? 'path' : 'fence') : row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
     kind: row.style === 'fill' ? 'surface' : undefined,
-    sectorIcon: row.sectorIcon,
+    sectorIcon: row.color===TERRAIN_CONTOUR_INK?undefined:row.sectorIcon,
+    ...(row.color===TERRAIN_CONTOUR_INK?{visual:'terrain-contour' as const}:{}),
   }));
 
   if(baseline) legendRows.push({swatch:'#79583B',text:'Existing fence — visible portion',lineKind:'pipe',...(artFinish?{section:'SITE REFERENCE' as const}:{})});
@@ -10298,7 +10312,7 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'historical-name' | 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above';
+  visual?: 'historical-name' | 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour';
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE' | 'SUN PATH' | 'REGIONAL WIND & FIRE' | 'TERRAIN' | 'SITE REFERENCE';
@@ -10525,6 +10539,9 @@ function drawStyleLegendSymbol(
   w: number,
   h: number,
 ): void {
+  if(row.visual==='terrain-contour'){
+    ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(2,h*.07);ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;
+  }
   if(row.visual==='historical-name')return;
   if(row.visual==='historical-extent'){ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(1.5,h*.05);ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;}
   if(row.photoNumber!==undefined){drawHistoricalPhotoPin(ctx,x+w/2,y,Math.min(w,h)*.36,row.photoNumber);return;}
@@ -13482,13 +13499,13 @@ export default function DesignGlossy({
     setLoading('exact');setError(null);setNotice(null);
     try{
       const sourceFrame=historicalActive&&availableHistoricalBaseline?await buildHistoricalBaselineFrame(frame,availableHistoricalBaseline):frame;
-      const image=await buildSectorTerrainProfileSheet(state,sourceFrame,refLayers,site,placeName);
+      const image=await buildSectorTerrainProfileSheet(state,sourceFrame,refLayers,placeName);
       if(!image){setNotice('A downhill section needs usable terrain pixels and a consistent fall across the property. No heights have been invented.');return;}
-      const id=pushGallery('Sector terrain sections · downhill A–B and buildings C–D',image,{resultKind:'exact',provider:'exact',geometryLock:true});
+      const id=pushGallery('Terrain & Sections · downhill A–B and buildings C–D',image,{resultKind:'exact',provider:'exact',geometryLock:true});
       setGalleryViewId(id);setGalleryOpen(true);
     }catch(err){setError(userFacingMessage(err,'Terrain profile unavailable. No surveyed elevations have been supplied.',t));}
     finally{setLoading(null);}
-  },[loading,historicalActive,availableHistoricalBaseline,frame,state,refLayers,site,placeName,pushGallery,t]);
+  },[loading,historicalActive,availableHistoricalBaseline,frame,state,refLayers,placeName,pushGallery,t]);
 
   // Deterministic SECTOR ANALYSIS sheet (plan-set 02) — the RULES-ENGINE render (lib/sector). Never
   // refuses: the sun is always real content and the sheet degrades honestly when slope/climate data
@@ -16145,10 +16162,10 @@ export default function DesignGlossy({
         <>
         <WorkflowHeading number={2} title="Underlay" />
         {selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='sector' && <div style={{marginBottom:10}}>
-          <button type="button" disabled={loading!==null} onClick={renderTerrainProfile}>Terrain sections · downhill &amp; buildings</button>
-          <p style={{fontSize:11,lineHeight:1.4}}>A–B follows the main fall; C–D crosses the principal traced buildings. Sector overview contours appear automatically when available.</p>
+          <button type="button" disabled={loading!==null} onClick={renderTerrainProfile}>Terrain &amp; Sections</button>
+          <p style={{fontSize:11,lineHeight:1.4}}>Opens a separate sheet with A–B downhill, C–D through traced buildings and more contours when the data supports them. The Sector map keeps its 5 m overview.</p>
           <details style={{fontSize:11,lineHeight:1.5}}><summary>Terrain source &amp; scale</summary>
-            <p>The section samples Mapbox Terrain-RGB at z14/256 (about 8.5 m grid spacing here). Interpolated plotting points do not improve the underlying resolution. Source dates, local accuracy and mixed height datums are unverified. The archive photograph is aligned to roof corners, not surveyed ground control. Roof footprint widths use your saved plan scale; building heights are not supplied.</p>
+            <p>The sheet uses Mapbox Terrain-RGB. Supplemental contours interpolate the same raster as the profiles; closer lines do not make the ground data more accurate. Interpolated plotting points do not improve the underlying resolution. Source dates, local accuracy and mixed height datums are unverified. The archive photograph is aligned to roof corners, not surveyed ground control. Roof footprint widths use your saved plan scale; building heights are not supplied.</p>
             <p>Google Earth Pro can show a profile of a drawn path. Its terrain is a comparison source, not a site survey. A controlled drone ground model or measured levels are needed for drainage or construction.</p>
             <a href="https://docs.mapbox.com/data/tilesets/reference/mapbox-terrain-rgb-v1/" target="_blank" rel="noreferrer">Mapbox source details</a>{' · '}
             <a href="https://support.google.com/earth/answer/148134" target="_blank" rel="noreferrer">Google Earth profile guide</a>
