@@ -32,7 +32,7 @@ test('all four choices use the checked wording for the selected pilot and remain
     }
   }
   assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16, colombia: 16, canada: 16,
-    'ontario-soil': 16, 'australia-soil': 16, 'new-zealand-smap': 16, 'india-imd': 16 });
+    'ontario-soil': 16, 'australia-soil': 16, 'new-zealand-smap': 16, 'india-imd': 16, 'kenya-soil': 16 });
 });
 
 test('Colombian wording keeps the linked publication date and falls back if its year is lost', () => {
@@ -117,4 +117,17 @@ test('New Zealand drafts fall back if a provider or layer reference is lost', ()
   const rows = referenceReviewRows(packet, 'sw');
   assert.deepEqual(rows.filter(row => row.origin === 'fallback').map(row => row.key), [terms.key, access.key]);
   assert.ok(rows.filter(row => row.origin === 'fallback').every(row => row.text === row.english));
+});
+
+test('Kenya historical soil drafts keep the scale, catalogue licence, archive format and county name', () => {
+  const packet = structuredClone(REFERENCE_REVIEW_PACKETS['kenya-soil']);
+  for (const literal of ['1:1,000,000', 'CC BY 3.0', 'ZIP', 'Kiambu']) {
+    const draft = packet.drafts.locales.sw.find(row => row.english.includes(literal))!;
+    const saved = draft.translation;
+    draft.translation = saved.replace(literal, '');
+    const rows = referenceReviewRows(packet, 'sw');
+    const fallback = rows.filter(row => row.origin === 'fallback');
+    assert.deepEqual(fallback.map(row => [row.key, row.text]), [[draft.key, draft.english]]);
+    draft.translation = saved;
+  }
 });

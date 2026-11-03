@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "8bb7b85ba81b7ee2b6095a583f9009d8038ea2f1",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "00ae72c739b0f291b01821b77f082bdd77c65279af51e6f76b6399ebb70b10ac",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "kenyaSoilClaim",
+      "english": "The official catalogue record describes historical soil estimates for national studies at a map scale of 1:1,000,000.",
+      "sha256": "51dd0dc4424bdf81766b2260e6411a2d66439e7b026dddfdd102053dc504b732"
+    },
+    {
+      "key": "kenyaSoilLicence",
+      "english": "The catalogue lists CC BY 3.0. Reuse of the download awaits review.",
+      "sha256": "9b2186f37a6d843d5d1598ec457f3b64406225cad25a76b303478f8bc2cd57de"
+    },
+    {
+      "key": "kenyaSoilAccess",
+      "english": "Public catalogue record. The advertised ZIP and its access requirements are unverified.",
+      "sha256": "10a0b663b5dccdbbd2f9c498ff8a8e97e5c74915cd57e1ba300ff6364ee15aeb"
+    },
+    {
+      "key": "kenyaSoilLimits",
+      "english": "These historical estimates include inferred values. Soil measurements for Kiambu and individual farms remain unverified.",
+      "sha256": "bcea3c9f71d2a1d1b4de2a9bfd8cd543effc67d70e69f3c2419e83988a7beaaf"
+    }
+  ]
+}

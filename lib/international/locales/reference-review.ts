@@ -18,6 +18,8 @@ import nzSmapSource from '@/docs/international/reference-card-language-packets/n
 import nzSmapDrafts from '@/docs/international/reference-card-language-packets/new-zealand-smap-drafts.json' with { type: 'json' };
 import indiaImdSource from '@/docs/international/reference-card-language-packets/india-imd-source.json' with { type: 'json' };
 import indiaImdDrafts from '@/docs/international/reference-card-language-packets/india-imd-drafts.json' with { type: 'json' };
+import kenyaSoilSource from '@/docs/international/reference-card-language-packets/kenya-soil-source.json' with { type: 'json' };
+import kenyaSoilDrafts from '@/docs/international/reference-card-language-packets/kenya-soil-drafts.json' with { type: 'json' };
 import manifest from '@/docs/international/reference-card-language-packets/manifest.json' with { type: 'json' };
 
 export const REFERENCE_REVIEW_LANGUAGES = [
@@ -46,6 +48,7 @@ export const REFERENCE_REVIEW_PACKETS = {
   'australia-soil': { label: 'Australia · TERN soil depth', source: australiaSoilSource, drafts: australiaSoilDrafts, binding: manifest['australia-soil'] },
   'new-zealand-smap': { label: 'New Zealand · S-map soil reference', source: nzSmapSource, drafts: nzSmapDrafts, binding: manifest['new-zealand-smap'] },
   'india-imd': { label: 'India · IMD district bulletin index', source: indiaImdSource, drafts: indiaImdDrafts, binding: manifest['india-imd'] },
+  'kenya-soil': { label: 'Kenya · Historical soil catalogue', source: kenyaSoilSource, drafts: kenyaSoilDrafts, binding: manifest['kenya-soil'] },
 } satisfies Record<string, ReferenceReviewPacket>;
 
 /** Only this review surface can display these candidates. A damaged binding
