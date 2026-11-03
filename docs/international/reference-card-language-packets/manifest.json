@@ -34,5 +34,18 @@
     ],
     "reviewedByHuman": false,
     "runtimeActivation": false
+  },
+  "brazil": {
+    "sourceSha256": "b1043f5add8d56bc018861927781e0647c3fecb5d36c880721a01a44afe8d3bc",
+    "draftsSha256": "f801d1e29e812bbbaa5896f8ec09d55c140a15e6dcee3abc0c29722c4127d820",
+    "literals": [
+      "Embrapa",
+      "BDSolos",
+      "Redape",
+      "CC BY-NC 4.0",
+      "API"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
   }
 }

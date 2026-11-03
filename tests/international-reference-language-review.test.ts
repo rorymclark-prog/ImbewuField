@@ -17,7 +17,7 @@ test('the review workspace preserves captured English before a reviewer chooses 
 
 test('all four choices use the checked wording for the selected pilot and remain drafts', () => {
   const manifest = JSON.parse(readFileSync(new URL('manifest.json', receiptPath), 'utf8'));
-  let count = 0;
+  const counts: Record<string, number> = {};
   for (const [pilot, packet] of Object.entries(REFERENCE_REVIEW_PACKETS)) {
     const binding = manifest[pilot];
     assert.equal(hash(readFileSync(new URL(`${pilot}-source.json`, receiptPath))), binding.sourceSha256);
@@ -28,10 +28,19 @@ test('all four choices use the checked wording for the selected pilot and remain
       const rows = referenceReviewRows(packet, language);
       assert.ok(rows.every(row => row.origin === 'draft' && hash(row.english) === row.sha256));
       assert.deepEqual(rows.map(row => row.text), packet.drafts.locales[language].map(row => row.translation));
-      count += rows.length;
+      counts[pilot] = (counts[pilot] ?? 0) + rows.length;
     }
   }
-  assert.equal(count, 192);
+  assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16 });
+});
+
+test('the Brazilian licence wording falls back when the recorded label is missing', () => {
+  const packet = structuredClone(REFERENCE_REVIEW_PACKETS.brazil);
+  const licence = packet.drafts.locales['pt-BR'].at(-1)!;
+  licence.translation = licence.translation.replace('CC BY-NC 4.0', '');
+  const rows = referenceReviewRows(packet, 'pt-BR');
+  assert.deepEqual(rows.filter(row => row.origin === 'fallback').map(row => row.key), ['redape04']);
+  assert.equal(rows.at(-1)?.text, licence.english);
 });
 
 test('a stale source binding, absent language or unexpected activation keeps every row in English', () => {

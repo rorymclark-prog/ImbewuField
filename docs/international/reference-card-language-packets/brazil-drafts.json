@@ -1,0 +1,111 @@
+{
+  "sourceSha256": "b1043f5add8d56bc018861927781e0647c3fecb5d36c880721a01a44afe8d3bc",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "redape01",
+        "english": "Embrapa: Banco de Dados de Solos do Brasil (BDSolos) / Redape",
+        "sha256": "a91c33b4a08d5ef38b6c27de9ede31dd21325fec989c44e5e690891be3906f09",
+        "translation": "Embrapa : Banco de Dados de Solos do Brasil (BDSolos) / Redape"
+      },
+      {
+        "key": "redape02",
+        "english": "Brazil national morphological and analytical soil-profile catalogue",
+        "sha256": "c862fc58296d1c273509745647ebf5d4083d6807f729a3bc626a70775e7f7f13",
+        "translation": "Catalogue national brésilien des profils pédologiques morphologiques et analytiques"
+      },
+      {
+        "key": "redape03",
+        "english": "The official Redape catalogue entry describes national morphological and analytical soil-profile records (BDSolos); this documentation was read without downloading raw datasets or analyzing individual farm soils.",
+        "sha256": "ad1bf1bfeff54c32b19039eff73889f526ba276a2142ad8f5ed28ed228b4f6fb",
+        "translation": "La notice officielle du catalogue Redape décrit les enregistrements nationaux de profils pédologiques morphologiques et analytiques (BDSolos) ; cette documentation a été consultée sans télécharger de jeux de données bruts ni analyser les sols d'exploitations individuelles."
+      },
+      {
+        "key": "redape04",
+        "english": "Catalogue displays an Embrapa CC BY-NC 4.0 label; commercial reuse clearance, file access, API authentication, measurement units, and update cadence remain unverified.",
+        "sha256": "5d25f3a7050f10e5a91dc67b2b1c7908005a7f1bb654b8810475ea81175d6249",
+        "translation": "Le catalogue affiche une mention Embrapa CC BY-NC 4.0 ; l'autorisation de réutilisation commerciale, l'accès aux fichiers, l'authentification API, les unités de mesure et la fréquence de mise à jour demeurent non vérifiés."
+      }
+    ],
+    "es": [
+      {
+        "key": "redape01",
+        "english": "Embrapa: Banco de Dados de Solos do Brasil (BDSolos) / Redape",
+        "sha256": "a91c33b4a08d5ef38b6c27de9ede31dd21325fec989c44e5e690891be3906f09",
+        "translation": "Embrapa: Banco de Dados de Solos do Brasil (BDSolos) / Redape"
+      },
+      {
+        "key": "redape02",
+        "english": "Brazil national morphological and analytical soil-profile catalogue",
+        "sha256": "c862fc58296d1c273509745647ebf5d4083d6807f729a3bc626a70775e7f7f13",
+        "translation": "Catálogo nacional brasileño de perfiles de suelo morfológicos y analíticos"
+      },
+      {
+        "key": "redape03",
+        "english": "The official Redape catalogue entry describes national morphological and analytical soil-profile records (BDSolos); this documentation was read without downloading raw datasets or analyzing individual farm soils.",
+        "sha256": "ad1bf1bfeff54c32b19039eff73889f526ba276a2142ad8f5ed28ed228b4f6fb",
+        "translation": "La entrada oficial del catálogo Redape describe registros nacionales de perfiles de suelo morfológicos y analíticos (BDSolos); esta documentación se leyó sin descargar conjuntos de datos sin procesar ni analizar suelos de fincas individuales."
+      },
+      {
+        "key": "redape04",
+        "english": "Catalogue displays an Embrapa CC BY-NC 4.0 label; commercial reuse clearance, file access, API authentication, measurement units, and update cadence remain unverified.",
+        "sha256": "5d25f3a7050f10e5a91dc67b2b1c7908005a7f1bb654b8810475ea81175d6249",
+        "translation": "El catálogo muestra una etiqueta Embrapa CC BY-NC 4.0; la autorización de reutilización comercial, el acceso a archivos, la autenticación de API, las unidades de medida y la cadencia de actualización siguen sin verificarse."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "redape01",
+        "english": "Embrapa: Banco de Dados de Solos do Brasil (BDSolos) / Redape",
+        "sha256": "a91c33b4a08d5ef38b6c27de9ede31dd21325fec989c44e5e690891be3906f09",
+        "translation": "Embrapa: Banco de Dados de Solos do Brasil (BDSolos) / Redape"
+      },
+      {
+        "key": "redape02",
+        "english": "Brazil national morphological and analytical soil-profile catalogue",
+        "sha256": "c862fc58296d1c273509745647ebf5d4083d6807f729a3bc626a70775e7f7f13",
+        "translation": "Catálogo nacional brasileiro de perfis de solo morfológicos e analíticos"
+      },
+      {
+        "key": "redape03",
+        "english": "The official Redape catalogue entry describes national morphological and analytical soil-profile records (BDSolos); this documentation was read without downloading raw datasets or analyzing individual farm soils.",
+        "sha256": "ad1bf1bfeff54c32b19039eff73889f526ba276a2142ad8f5ed28ed228b4f6fb",
+        "translation": "A entrada oficial do catálogo Redape descreve registros nacionais de perfis de solo morfológicos e analíticos (BDSolos); esta documentação foi lida sem download de bases brutas nem análise de solos de propriedades individuais."
+      },
+      {
+        "key": "redape04",
+        "english": "Catalogue displays an Embrapa CC BY-NC 4.0 label; commercial reuse clearance, file access, API authentication, measurement units, and update cadence remain unverified.",
+        "sha256": "5d25f3a7050f10e5a91dc67b2b1c7908005a7f1bb654b8810475ea81175d6249",
+        "translation": "O catálogo exibe um rótulo Embrapa CC BY-NC 4.0; autorização de reutilização comercial, acesso a arquivos, autenticação de API, unidades de medida e cadência de atualização permanecem não verificados."
+      }
+    ],
+    "sw": [
+      {
+        "key": "redape01",
+        "english": "Embrapa: Banco de Dados de Solos do Brasil (BDSolos) / Redape",
+        "sha256": "a91c33b4a08d5ef38b6c27de9ede31dd21325fec989c44e5e690891be3906f09",
+        "translation": "Embrapa: Banco de Dados de Solos do Brasil (BDSolos) / Redape"
+      },
+      {
+        "key": "redape02",
+        "english": "Brazil national morphological and analytical soil-profile catalogue",
+        "sha256": "c862fc58296d1c273509745647ebf5d4083d6807f729a3bc626a70775e7f7f13",
+        "translation": "Katalogi ya kitaifa ya Brazili ya maumbo na uchanganuzi wa tabaka za udongo"
+      },
+      {
+        "key": "redape03",
+        "english": "The official Redape catalogue entry describes national morphological and analytical soil-profile records (BDSolos); this documentation was read without downloading raw datasets or analyzing individual farm soils.",
+        "sha256": "ad1bf1bfeff54c32b19039eff73889f526ba276a2142ad8f5ed28ed228b4f6fb",
+        "translation": "Ingizo rasmi la katalogi ya Redape linaeleza kumbukumbu za kitaifa za maumbo na uchanganuzi wa tabaka za udongo (BDSolos); waraka huu ulisomwa bila kupakua seti ghafi za data wala kuchanganua udongo wa shamba lolote mahususi."
+      },
+      {
+        "key": "redape04",
+        "english": "Catalogue displays an Embrapa CC BY-NC 4.0 label; commercial reuse clearance, file access, API authentication, measurement units, and update cadence remain unverified.",
+        "sha256": "5d25f3a7050f10e5a91dc67b2b1c7908005a7f1bb654b8810475ea81175d6249",
+        "translation": "Katalogi inaonyesha lebo ya Embrapa CC BY-NC 4.0; kibali cha matumizi ya kibiashara, ufikiaji wa faili, uthibitishaji wa API, vipimo, na marudio ya masasisho bado havijathibitishwa."
+      }
+    ]
+  }
+}

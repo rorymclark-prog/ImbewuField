@@ -4,6 +4,8 @@ import ukSource from '@/docs/international/reference-card-language-packets/uk-so
 import ukDrafts from '@/docs/international/reference-card-language-packets/uk-drafts.json' with { type: 'json' };
 import usSource from '@/docs/international/reference-card-language-packets/us-source.json' with { type: 'json' };
 import usDrafts from '@/docs/international/reference-card-language-packets/us-drafts.json' with { type: 'json' };
+import brazilSource from '@/docs/international/reference-card-language-packets/brazil-source.json' with { type: 'json' };
+import brazilDrafts from '@/docs/international/reference-card-language-packets/brazil-drafts.json' with { type: 'json' };
 import manifest from '@/docs/international/reference-card-language-packets/manifest.json' with { type: 'json' };
 
 export const REFERENCE_REVIEW_LANGUAGES = [
@@ -25,6 +27,7 @@ export const REFERENCE_REVIEW_PACKETS = {
   kenya: { label: 'Kenya · Kiambu bulletin', source: kenyaSource, drafts: kenyaDrafts, binding: manifest.kenya },
   uk: { label: 'United Kingdom · Yeovilton records', source: ukSource, drafts: ukDrafts, binding: manifest.uk },
   us: { label: 'United States · public station observations', source: usSource, drafts: usDrafts, binding: manifest.us },
+  brazil: { label: 'Brazil · Redape soil-profile catalogue', source: brazilSource, drafts: brazilDrafts, binding: manifest.brazil },
 } satisfies Record<string, ReferenceReviewPacket>;
 
 /** Only this review surface can display these candidates. A damaged binding
