@@ -1,0 +1,17 @@
+{
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "messages": [
+    {
+      "key": "redapeRelease01",
+      "english": "Open the Embrapa BDSolos catalogue from the Brazil soil references.",
+      "sha256": "eb2645a62629cede162d23070661e97a57f8b09af9f2b4449912effe0c94a6af"
+    }
+  ]
+}

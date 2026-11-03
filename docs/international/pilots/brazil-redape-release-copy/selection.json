@@ -1,0 +1,10 @@
+{
+  "reviewStatus": "unreviewed-ai-draft",
+  "sourceSha256": "dc9c68cfcf2803c813dead209f9d76261c974a827723ef941bec0ee029def512",
+  "draftsSha256": "d914ea65f4c71a619c0362c125e0144922cad164214acfa8ac1a4c2d160cb097",
+  "pairCount": 4,
+  "rejectedDamagedControls": 9,
+  "selectedFor": "Existing update notice languages only",
+  "runtimeLanguagesAdded": [],
+  "fluentReview": "pending"
+}
