@@ -226,6 +226,22 @@ switched under the live process and no duplicate heavy local suite was started.
 The combined revision still requires its own full current-head CI and rules
 result before production merge.
 
+## Terrain integration and update copy
+
+The combined revision includes the two terrain sections from PR #1188 and the
+contour detail from PR #1192 through source revision `88bdad20a3eb56fb65a39cdd5cf20400223063e6`.
+The renderer, terrain route and helpers match that source. The Sector test
+keeps its executable restoration checks where the two branches covered the
+same contract. The map branch's separate checks and structure-register
+correction are preserved.
+
+The full local `a70667fee` run exposed missing native update descriptions.
+The existing update catalogue now carries four
+[unreviewed machine drafts](assistant-release-drafts.json) for each of the
+nine new note and guide strings. The historical copy and test assertions
+remain intact. The older full run stays separate from the verification
+of this combined revision.
+
 ## Real limits
 
 - Linking ImbewuField does not link Drive, Gmail, an archive or a local filesystem.
