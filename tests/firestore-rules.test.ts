@@ -431,6 +431,48 @@ test('a farmer can read and write their own production, sales, and expense logs'
   }
 });
 
+test('new harvest garden links require current membership in the same organisation', async () => {
+  await env.withSecurityRulesDisabled(async context => {
+    const seedDb = context.firestore();
+    // Deliberate inconsistent roster entries exercise the parent garden check.
+    await setDoc(doc(seedDb, 'gardens', 'garden-org2', 'members', FARMER_WITH_LINK), {
+      garden_id: 'garden-org2', profile_id: FARMER_WITH_LINK,
+    });
+    await setDoc(doc(seedDb, 'gardens', 'harvest-missing-parent', 'members', FARMER_WITH_LINK), {
+      garden_id: 'harvest-missing-parent', profile_id: FARMER_WITH_LINK,
+    });
+  });
+  const member = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  const other = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();
+  const row = logData(FARMER_WITH_LINK, 'org-1', 'production_logs');
+  const target = doc(member, 'production_logs', 'harvest-garden-verified');
+  for (const garden_id of ['garden-org2', 'harvest-missing-parent', 'missing-garden', '', 'a/b', 7]) {
+    await assertFails(setDoc(target, { ...row, garden_id }));
+  }
+  await assertFails(setDoc(doc(other, 'production_logs', 'harvest-not-member'), {
+    ...logData(FARMER_WITHOUT_LINK, 'org-1', 'production_logs'), garden_id: 'garden-org1',
+  }));
+  await assertSucceeds(setDoc(target, { ...row, garden_id: 'garden-org1' }));
+  await assertFails(updateDoc(target, { garden_id: 'garden-org2' }));
+  await assertSucceeds(updateDoc(target, { garden_id: null }));
+  await assertSucceeds(updateDoc(target, { garden_id: 'garden-org1' }));
+});
+
+test('a legacy harvest garden label does not prevent editing or clearing the record', async () => {
+  const id = 'harvest-garden-legacy';
+  await env.withSecurityRulesDisabled(async context => {
+    await setDoc(doc(context.firestore(), 'production_logs', id), {
+      ...logData(FARMER_WITH_LINK, 'org-1', 'production_logs'), garden_id: 'old-unverified-label',
+    });
+  });
+  const member = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  const target = doc(member, 'production_logs', id);
+  await assertSucceeds(updateDoc(target, { kg: 2 }));
+  await assertFails(updateDoc(target, { garden_id: 'another-unverified-label' }));
+  await assertSucceeds(updateDoc(target, { garden_id: null }));
+  await assertFails(updateDoc(target, { garden_id: 'old-unverified-label' }));
+});
+
 test('counted produce is stored with unknown weight and retains the same owner gates', async () => {
   const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
   const other = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();
