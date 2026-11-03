@@ -3,6 +3,11 @@ import { makeMercatorUnprojector, pointInRing, projectorForFrame } from '@/lib/d
 import { polygonAreaCentroid } from '@/lib/boundary-geometry';
 import type { SheetContourResult } from '@/lib/sheet-contours';
 import { sampleTerrainRaster, terrainGridSpacingM, terrainPixelLonLat, validTerrainRaster, type TerrainRaster } from '@/lib/terrain-raster';
+import { isoLines } from 'marchingsquares';
+import { buildThresholds } from '@/lib/contour-thresholds';
+
+export const TERRAIN_CONTOUR_INK='#815138';
+export const TERRAIN_SUPPLEMENTAL_INK='#A97653';
 
 export interface SectorTerrainProfile {
   a: [number,number];
@@ -156,4 +161,73 @@ export function rasterTerrainSections(raster:TerrainRaster,boundary:Point[],buil
   const cross=buildings.length>=2?rasterTerrainProfile(raster,boundary,buildings,frame):null;
   const buildingsSection=cross&&new Set(cross.buildings.map(b=>b.label)).size>=2?cross:null;
   return {downhill,buildingsSection,fitPosts:fall.posts};
+}
+
+/** Return only actual in-property runs. Clipping segments, rather than testing their vertices,
+ * keeps a real contour that crosses a narrow field between two DEM grid posts. */
+function clipTerrainContour(points:Point[],boundary:Point[]):Point[][] {
+  const runs:Point[][]=[];
+  for(let i=1;i<points.length;i++){
+    const a=points[i-1],b=points[i],dx=b[0]-a[0],dy=b[1]-a[1],ts=[0,1];
+    for(let edge=0;edge<boundary.length;edge++){
+      const p=boundary[edge],q=boundary[(edge+1)%boundary.length],ex=q[0]-p[0],ey=q[1]-p[1],det=dx*ey-dy*ex;
+      if(Math.abs(det)<1e-14)continue;
+      const x=p[0]-a[0],y=p[1]-a[1],t=(x*ey-y*ex)/det,u=(x*dy-y*dx)/det;
+      if(t>0&&t<1&&u>=0&&u<=1)ts.push(t);
+    }
+    ts.sort((a,b)=>a-b);
+    const at=(t:number):Point=>[a[0]+t*dx,a[1]+t*dy];
+    for(let j=1;j<ts.length;j++){
+      if(ts[j]-ts[j-1]<1e-9||!pointInRing(at((ts[j]+ts[j-1])/2),boundary))continue;
+      const start=at(ts[j-1]),end=at(ts[j]),last=runs.at(-1),prev=last?.at(-1);
+      if(last&&prev&&Math.hypot(start[0]-prev[0],start[1]-prev[1])<1e-8)last.push(end);
+      else runs.push([start,end]);
+    }
+  }
+  return runs;
+}
+
+// Open marching-squares output can arrive as cell runs. Join only matching endpoints before
+// judging a line's length; closing the paths would invent long edges along the raster window.
+function joinTerrainContourRuns(runs:number[][][]):number[][][] {
+  const key=([x,y]:number[])=>`${Math.round(x*1e8)},${Math.round(y*1e8)}`;
+  const byEnd=new Map<string,number[]>(),used=new Set<number>();
+  const paths=runs.filter(run=>run.length>=2);
+  paths.forEach((run,i)=>{for(const end of new Set([key(run[0]),key(run.at(-1)!)]))byEnd.set(end,[...(byEnd.get(end)??[]),i]);});
+  const extend=(line:number[][])=>{
+    while(true){
+      const end=key(line.at(-1)!),next=(byEnd.get(end)??[]).filter(i=>!used.has(i));
+      if(next.length!==1)return;
+      const i=next[0];used.add(i);const run=paths[i];
+      const ordered=key(run[0])===end?run:[...run].reverse();
+      line.push(...ordered.slice(1));
+    }
+  };
+  const result:number[][][]=[];
+  paths.forEach((run,i)=>{if(used.has(i))return;used.add(i);const line=[...run];extend(line);line.reverse();extend(line);result.push(line.reverse());});
+  return result;
+}
+
+/** Same raw pixel centres as the section plot. Finer contour intervals describe interpolated
+ * relief only; short supplemental slivers below the posted spacing are omitted as visual noise. */
+export function rasterTerrainContours(raster:TerrainRaster,boundary:Point[],frame:CanvasFrame){
+  const lines:SheetContourResult['lines']=[];
+  if(!validTerrainRaster(raster)||boundary.length<3||boundary.some(point=>point.some(n=>!Number.isFinite(n))))return lines;
+  const grid=Array.from({length:raster.height},(_,row)=>raster.elevations.slice(row*raster.width,(row+1)*raster.width));
+  const min=Math.min(...raster.elevations),max=Math.max(...raster.elevations),interval=2.5;
+  if(max-min<interval||Math.ceil((max-min)/interval)>80)return lines;
+  const project=projectorForFrame(frame),spacing=terrainGridSpacingM(frame.centerLat);
+  for(const level of buildThresholds(min,max,interval,84)){
+    if(level<=min||level>=max)continue;
+    const major=level%5===0;
+    for(const path of joinTerrainContourRuns(isoLines(grid,level,{noQuadTree:true,noFrame:true,linearRing:false}))){
+      const points=path.map(([x,y])=>project(terrainPixelLonLat(raster.originX+x+.5,raster.originY+y+.5)));
+      for(const run of clipTerrainContour(points,boundary)){
+        const length=run.slice(1).reduce((sum,p,i)=>sum+Math.hypot((p[0]-run[i][0])*frame.imgW,(p[1]-run[i][1])*frame.imgH)*frame.mPerPx,0);
+        if(length<(major?spacing*.2:spacing))continue;
+        lines.push({points:run,elevM:level,major});
+      }
+    }
+  }
+  return lines;
 }

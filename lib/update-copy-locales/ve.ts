@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
+  "Open Terrain & Sections for the two cuts and extra contour detail.": "Vulani Terrain & Sections u vhona khethekanyo mbili na miṅwe mitalo ya vhulapfu.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
   "Sector illustrations have lighter arrows, clearer contours and a shorter map key.": "Zwifanyiso zwa Sector zwi na misevhe i leluwaho, mitalo ya vhulapfu i vhonalaho zwavhuḓi na ṱhalutshedzo pfufhi ya mapa.",
   // Raw profile: docs/audits/2026-11-03/raw-profile-release-drafts.json; UNREVIEWED AI draft.
