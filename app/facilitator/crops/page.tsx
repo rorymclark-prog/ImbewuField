@@ -788,8 +788,14 @@ function FacilitatorCropsPageInner() {
     const key = JSON.stringify(value);
     const admission: CropPlanWriteAdmission = loaded.token === token ? loaded.admission
       : { status: 'held', reasons: ['written-receipt-no-longer-current'] };
-    planWriteBase.current = { owner: activeAccountUid(), sample: isSampleMode(), token, planKey: key, admission };
-    if (!cropPlanWriteAdmissionMatches(admission, key, token)) setPlanSaveConflict(true);
+    const owner = activeAccountUid(), sample = isSampleMode();
+    const previous = planWriteBase.current;
+    const admitted = cropPlanWriteAdmissionMatches(admission, key, token);
+    // A no-op autosave must not revoke open editors still bound to this exact book and lease.
+    if (admitted && previous?.owner === owner && previous.sample === sample && previous.token === token
+      && previous.planKey === key && cropPlanWriteAdmissionMatches(previous.admission, key, token)) return;
+    planWriteBase.current = { owner, sample, token, planKey: key, admission };
+    if (!admitted) setPlanSaveConflict(true);
   }
   // One-level-per-action undo, mirroring FacilitatorCanvas's own pushHistory
   // pattern — mainly for undoing a whole auto-suggested batch in one tap

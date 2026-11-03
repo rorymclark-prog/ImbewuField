@@ -110,8 +110,9 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
     });
   }, [sourceKey, saveContext]);
   const actorCurrent = !authorityChanged && nurseryUnitPreferenceContextIsCurrent(editor.context);
-  const current = actorCurrent && !!sourceKey && editor.sourceKey === sourceKey && !editor.uncertain
-    && (!producerExpected || !!editor.saveContext && nurserySaveContextIsCurrent(editor.saveContext));
+  const sourceUnsettled = !sourceKey || editor.sourceKey !== sourceKey || editor.uncertain;
+  const producerHeld = actorCurrent && !sourceUnsettled && producerExpected && !nurserySaveContextIsCurrent(editor.saveContext);
+  const current = actorCurrent && !sourceUnsettled && !producerHeld;
   function isCurrent(captured: Editor, requireSource = true) {
     const latest = live.current;
     return active.current && !authorityChanged && nurseryUnitPreferenceContextIsCurrent(captured.context)
@@ -289,8 +290,12 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
       </select></label>
       <p className={hint}>Units change entry and display only. Saved tray sizes stay in centimetres and net surface stays in square metres. Use decimal numbers with a dot or comma; no grouping, fractions or unit suffixes. Counts, percentages and dates keep their own units.</p>
       {preferenceNote && <p role="status" className={hint}>{preferenceNote}</p>}
-      {producerExpected && !editor.saveContext ? <p role="status">{saveContext ? 'The nursery save context arrived after these entries. Reload saved nursery settings before continuing.' : 'Preparing the nursery save context before editing.'}</p> : null}
-      {!sourceKey || editor.sourceKey !== sourceKey || editor.uncertain ? <p role="alert">Saved nursery settings changed or a save outcome is unconfirmed. Your entries are retained. Reload saved settings before continuing.</p> : null}
+      {producerHeld && <p role="status">{
+        nurserySaveContextIsCurrent(saveContext) ? 'Reload saved nursery settings to continue editing.'
+          : editor.saveContext || saveContext ? 'Editing is on hold. Reopen the crop plan to check saved nursery settings.'
+            : 'Preparing the nursery save context before editing.'
+      }</p>}
+      {sourceUnsettled ? <p role="alert">Saved nursery settings changed or a save outcome is unconfirmed. Your entries are retained. Reload saved settings before continuing.</p> : null}
       <button type="button" className={secondary} onClick={reload} disabled={!actorCurrent || pending.current}>Reload saved nursery settings</button>
       <details className="rounded-xl border border-[var(--border)] p-3">
         <summary className="min-h-11 cursor-pointer font-semibold">1. Net nursery growing surface · {spaces.length}</summary>

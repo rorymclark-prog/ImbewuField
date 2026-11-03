@@ -118,8 +118,9 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
     });
   }, [sourceKey, saveContext]);
   const actorCurrent = !authorityChanged && harvestMassUnitPreferenceContextIsCurrent(editor.context);
-  const current = actorCurrent && !!sourceKey && editor.sourceKey === sourceKey && !editor.uncertain
-    && (!producerExpected || !!editor.saveContext && harvestSaveContextIsCurrent(editor.saveContext));
+  const sourceUnsettled = !sourceKey || editor.sourceKey !== sourceKey || editor.uncertain;
+  const producerHeld = actorCurrent && !sourceUnsettled && producerExpected && !harvestSaveContextIsCurrent(editor.saveContext);
+  const current = actorCurrent && !sourceUnsettled && !producerHeld;
   function isCurrent(captured: Editor) {
     const latest = live.current;
     return active.current && !authorityChanged && harvestMassUnitPreferenceContextIsCurrent(captured.context)
@@ -249,8 +250,12 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
       </select></label>
       <p className="text-xs text-[var(--text-secondary)]">Weight units change entry and display only. Saved weights stay in kilograms. Use decimals with a dot or comma; no grouping, fractions or unit suffixes. Pack counts, sales units, dates and saleable share are unchanged.</p>
       {preferenceNote && <p role="status" className="text-xs">{preferenceNote}</p>}
-      {producerExpected && !editor.saveContext && <p role="status">{saveContext ? 'The target save context arrived after these entries. Reload saved harvest targets before continuing.' : 'Preparing the harvest target save context before editing.'}</p>}
-      {!sourceKey || editor.sourceKey !== sourceKey || editor.uncertain ? <p role="alert">Saved harvest targets changed or a save outcome is unconfirmed. Your entries are retained. Reload saved targets before continuing.</p> : null}
+      {producerHeld && <p role="status">{
+        harvestSaveContextIsCurrent(saveContext) ? 'Reload saved harvest targets to continue editing.'
+          : editor.saveContext || saveContext ? 'Editing is on hold. Reopen the crop plan to check saved harvest targets.'
+            : 'Preparing the harvest target save context before editing.'
+      }</p>}
+      {sourceUnsettled ? <p role="alert">Saved harvest targets changed or a save outcome is unconfirmed. Your entries are retained. Reload saved targets before continuing.</p> : null}
       <button type="button" className={secondary} onClick={reload} disabled={!actorCurrent || pending.current}>Reload saved harvest targets</button>
       <form onSubmit={saveTarget} onChange={() => setSaveStatus('')} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         <label className="text-sm">Crop

@@ -312,7 +312,13 @@ test('a previous confirmed source key cannot bless a later dirty draft after an 
     state.plan = fresh.book; state.nurseryProducerLive.current = { plan: fresh.book, conflict: false };
     state.planWriteBase.current = { owner: account.activeAccountUid(), sample: samples.isSampleMode(), token: fresh.token,
       planKey: JSON.stringify(fresh.book), admission: fresh.admission };
+    ui.update({ saveContext: null });
+    assert.ok(ui.text().includes('Editing is on hold. Reopen the crop plan to check saved harvest targets.'));
+    assert.ok(!ui.text().includes('Reload saved harvest targets to continue editing.'));
+    ui.click('Reload saved harvest targets');
+    assert.equal(ui.field('Weekly quantity').props.value, '24');
     parent.reissue(); assert.equal(ui.field('Weekly quantity').props.value, '24');
+    assert.ok(ui.text().includes('Reload saved harvest targets to continue editing.'));
     assert.equal(ui.button('Save target changes').props.disabled, true, 'Historical success cannot grant a new source/lease to this unfinished edit');
     const before = crop.cropPlanWriteToken(); ui.submit(); assert.equal(crop.cropPlanWriteToken(), before); assert.equal(crop.loadCropPlan().harvestTargets?.[0].weeklyKg, 23);
     ui.click('Reload saved harvest targets'); ui.edit(); ui.change('Weekly quantity', '25'); ui.submit(); assert.equal(crop.loadCropPlan().harvestTargets?.[0].weeklyKg, 25);

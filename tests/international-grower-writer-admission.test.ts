@@ -10,7 +10,8 @@ import { createWorkspacePlanningReference, replaceWorkspacePlanningReference, sa
 import { hasGrowerCycleMarker } from '../lib/international/grower-cycle.ts';
 import { CROPS } from '../lib/crop-catalog.ts';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
-const { harvestTargetsSourceKey } = await import('../lib/nursery-save-receipt.ts');
+const receipts = await import('../lib/nursery-save-receipt.ts');
+const { harvestTargetsSourceKey } = receipts;
 beforeEach(reset); after(cleanup);
 
 // All quantities, dates and identities here are synthetic engineering fixtures,
@@ -313,4 +314,47 @@ test('actual abandoned or replayed suggestion updaters cannot create history for
   const guarded=parent({version:1,plantings:[{...row,growerCycle:{}}],updatedAt:7}),before=guarded.state.plan;acceptSuggestion(guarded,kind,result);assert.equal(guarded.state.plan,before,kind);assert.equal(guarded.state.planHistory.length,0,kind);
  }
  await reset();const duplicateOnly=parent({version:1,plantings:[row],updatedAt:7});const before=duplicateOnly.state.plan;acceptSuggestion(duplicateOnly,'targets',result);assert.equal(duplicateOnly.state.plan,before);assert.equal(duplicateOnly.state.planHistory.length,0);
+});
+
+test('an unchanged sample autosave keeps both open unit editors attached to the same saved plan', () => {
+  assert.equal(samples.enterSampleMode(), true);
+  const configured = probe.configured;
+  probe.configured = false;
+  try {
+    const controller = parent();
+    const { state } = controller;
+    assert.equal(state.planWriteBase.current.admission.status, 'ready');
+    const authority = receipts.createNurserySaveAuthority({
+      siteId,
+      scopeKey: state.growerScopeKey,
+      current: () => ({ book: state.plan, base: state.planWriteBase.current }),
+      isCurrent: () => !state.planSaveConflict && controller.growerActorIsCurrent(),
+    });
+    assert.ok(authority);
+    try {
+      const nursery = receipts.createNurserySaveContext(authority);
+      const harvest = receipts.createHarvestSaveContext(authority);
+      assert.ok(nursery);
+      assert.ok(harvest);
+      const originalToken = crop.cropPlanWriteToken();
+      controller.runAutosave();
+      controller.flush();
+      assert.equal(state.planSaveFailed, false);
+      assert.equal(crop.cropPlanWriteToken(), originalToken);
+      assert.deepEqual(
+        [receipts.nurserySaveContextIsCurrent(nursery), receipts.harvestSaveContextIsCurrent(harvest)],
+        [true, true], 'the unchanged autosave must keep both unit editors enabled',
+      );
+
+      state.plan = { ...state.plan, updatedAt: state.plan.updatedAt + 1 };
+      controller.runAutosave();
+      controller.flush();
+      assert.notEqual(crop.cropPlanWriteToken(), originalToken);
+      assert.equal(receipts.nurserySaveContextIsCurrent(nursery), false);
+      assert.equal(receipts.harvestSaveContextIsCurrent(harvest), false);
+    } finally { receipts.revokeNurserySaveAuthority(authority); }
+  } finally {
+    probe.configured = configured;
+    samples.exitSampleMode();
+  }
 });

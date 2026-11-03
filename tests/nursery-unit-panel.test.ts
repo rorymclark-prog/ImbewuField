@@ -364,7 +364,13 @@ test('a previous confirmed source key cannot bless a later dirty nursery draft a
     parent.state.plan = fresh.book; parent.state.nurseryProducerLive.current = { plan: fresh.book, conflict: false };
     parent.state.planWriteBase.current = { owner: account.activeAccountUid(), sample: samples.isSampleMode(), token: fresh.token,
       planKey: JSON.stringify(fresh.book), admission: fresh.admission };
+    ui.update({ saveContext: null });
+    assert.ok(ui.text().includes('Editing is on hold. Reopen the crop plan to check saved nursery settings.'));
+    assert.ok(!ui.text().includes('Reload saved nursery settings to continue editing.'));
+    ui.click('Reload saved nursery settings');
+    assert.equal(ui.field('Outer width').props.value, '32');
     parent.reissueContext(); assert.equal(ui.field('Outer width').props.value, '32');
+    assert.ok(ui.text().includes('Reload saved nursery settings to continue editing.'));
     assert.equal(ui.button('Save container changes').props.disabled, true, 'Historical success cannot grant a new source/lease to this unfinished nursery edit');
     const before = crop.cropPlanWriteToken(); ui.submit('Save container changes'); assert.equal(crop.cropPlanWriteToken(), before);
     assert.equal(crop.loadCropPlan().nursery?.containers[0].widthCm, 31);
