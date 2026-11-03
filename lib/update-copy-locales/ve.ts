@@ -15,6 +15,7 @@ const copy:UpdateCopy={
   // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
   "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Mapa a Sector a shumisa mitalo ya vhuimo ha nṱha ya dzingu nga u angaredza, na khetho ya phurofaili ya mavu A–B.",
   // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Existing Site labels and legend now use matching symbols.": "Mapa wa kale wa Existing Site zwino u shumisa zwiga zwi fanaho kha madzina a fhethu na kha khii ya mapa.",
   "Choose area names or a numbered key on the historical Existing Site map.": "Nangani madzina a fhethu kana khii ya nomboro kha mapa wa kale wa Existing Site.",
   // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
   "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Mapa a Site na Sector a Ubhejane a nga sumbedza tshifanyiso tsha kale tsha musi mishumo i sa athu thoma.",

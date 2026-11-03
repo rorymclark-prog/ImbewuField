@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest Existing Site follow-up is [Matching area and legend symbols — 3 November 2026](2026-11-03/existing-site-symbol-key-codex.md).
+
 Latest Terrain & Sections continuation: [Separate detail sheet and contour hierarchy — 3 November 2026](2026-11-03/terrain-section-contour-detail-codex.md). Map 02 remains the overview.
 
 Latest Sector continuation: [Downhill and classroom sections, lighter paid Sector finish — 3 November 2026](2026-11-03/downhill-sections-sector-finish-codex.md). Separates A–B downhill from C–D classroom cut.

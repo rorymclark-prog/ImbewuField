@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'f5dec9d85', changes: [
+    "Existing Site labels and legend now use matching symbols.",
+  ] },
   { when: '3 November 2026', sha: '80eb2f0b5', changes: [
     "Open Terrain & Sections for the two cuts and extra contour detail.",
   ] },
