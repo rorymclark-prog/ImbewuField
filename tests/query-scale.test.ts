@@ -145,7 +145,7 @@ const hooks = registerHooks({
   },
 });
 
-const { addProduction, chunkIds, IN_QUERY_CHUNK, getCourseProgressForProfiles, getAssignmentsForProfiles } =
+const { addProduction, WRITE_TIMEOUT_MS, WriteTimeoutError, chunkIds, IN_QUERY_CHUNK, getCourseProgressForProfiles, getAssignmentsForProfiles } =
   await import('../lib/db/queries.ts');
 hooks.deregister();
 
@@ -288,5 +288,31 @@ test('a harvest awaiting its profile cannot write after the account or workspace
     state.readProfileGate = null;
     state.uid = 'mentor-uid';
     state.sample = false;
+  }
+});
+
+
+test('an unanswered profile read keeps the harvest unsent and cannot later dispatch it', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const before = state.harvestWrites.length;
+  let resume!: () => void;
+  state.readProfileGate = new Promise<void>(resolve => { resume = resolve; });
+  try {
+    const saving = addProduction({ crop: 'Fixture crop', kg: 2 }, () => true);
+    const checked = assert.rejects(saving, error => {
+      assert.ok(error instanceof Error);
+      assert.ok(!(error instanceof WriteTimeoutError));
+      assert.match(error.message, /Your harvest draft is still here/);
+      return true;
+    });
+    t.mock.timers.tick(WRITE_TIMEOUT_MS);
+    await checked;
+    resume();
+    await state.readProfileGate;
+    await Promise.resolve();
+    assert.equal(state.harvestWrites.length, before);
+  } finally {
+    resume();
+    state.readProfileGate = null;
   }
 });

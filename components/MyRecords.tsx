@@ -316,6 +316,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   });
   const fileRef = useRef<HTMLInputElement>(null);
   const writeGeneration = useRef(0);
+  const writePending = useRef(false);
 
   useEffect(() => {
     const revoke = () => { writeGeneration.current++; };
@@ -355,7 +356,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (form.loading) return;
+    if (writePending.current) return;
     const crop = form.crop.trim();
     const quantity = parseDecimalInput(form.quantity);
     if (!crop || !Number.isFinite(quantity) || quantity <= 0) {
@@ -373,6 +374,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
     const requireCurrent = () => {
       if (!isCurrent()) throw new Error('Your account or workspace changed. Reopen your harvest records before saving.');
     };
+    writePending.current = true;
     setForm((f) => ({ ...f, loading: true, error: '' }));
     try {
       requireCurrent();
@@ -432,6 +434,8 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         return;
       }
       setForm((f) => ({ ...f, loading: false, error: err instanceof Error ? err.message : t('myRecordsSaveError') }));
+    } finally {
+      writePending.current = false;
     }
   }
 

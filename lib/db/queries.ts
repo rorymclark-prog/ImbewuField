@@ -209,8 +209,13 @@ export async function addProduction(row: Partial<ProductionLog>, isCurrent: () =
   if (sample) { addSandboxProduction(row); return; }
   const f = fb(); const u = uid();
   if (!f || !u) throw new UserFacingError('Sign in before saving a harvest.');
-  // A timeout is only a queued write once Firestore has actually received it.
-  const me = await getMyProfile();
+  // A profile read that times out cannot be reported as a queued harvest.
+  const me = await withWriteTimeout(getMyProfile()).catch(error => {
+    if (error instanceof WriteTimeoutError) {
+      throw new UserFacingError('Could not check your profile. Your harvest draft is still here. Try again.');
+    }
+    throw error;
+  });
   if (!isCurrent() || uid() !== u || readAccountLocalSampleState() !== false) throw changed();
   await withWriteTimeout(addDoc(collection(f.db, 'production_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() }));
 }
