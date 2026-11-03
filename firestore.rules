@@ -250,6 +250,19 @@ service cloud.firestore {
     // exposed every garden's member list to any signed-in user. listGardeners reads members
     // by explicit garden id, which the scoped per-garden rule above already permits.
 
+    // A new harvest link uses an existing roster entry. Older unverified links
+    // can be kept or removed without requiring a new membership decision.
+    function validHarvestGarden(d) {
+      let gardenId = d.get('garden_id', null);
+      let org = d.get('org_id', null);
+      return gardenId == null || (
+        gardenId is string && gardenId.matches('^[A-Za-z0-9_-]{1,128}$')
+        && org != null && org == prof().get('org_id', null)
+        && exists(/databases/$(database)/documents/gardens/$(gardenId)/members/$(request.auth.uid))
+        && get(/databases/$(database)/documents/gardens/$(gardenId)).data.get('org_id', null) == org
+      );
+    }
+
     match /production_logs/{id} {
       allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'production') || (isMentor() && inMyOrg(resource.data));
       // sec-06: org_id is pinned to the WRITER'S OWN org (never the client's choice) — without
@@ -263,6 +276,7 @@ service cloud.firestore {
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.get('org_id', null) == prof().get('org_id', null)
+        && validHarvestGarden(request.resource.data)
         && validProduceQuantity(request.resource.data)
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
       // UPDATE MUST PIN OWNERSHIP AND RE-VALIDATE. `owns(resource.data)` only inspects the document
@@ -276,6 +290,8 @@ service cloud.firestore {
       allow update: if owns(resource.data)
         && request.resource.data.profile_id == resource.data.profile_id
         && request.resource.data.org_id == resource.data.org_id
+        && (request.resource.data.get('garden_id', null) == resource.data.get('garden_id', null)
+          || validHarvestGarden(request.resource.data))
         && validProduceQuantity(request.resource.data)
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
       allow delete: if owns(resource.data);
