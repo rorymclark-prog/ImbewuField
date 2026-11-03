@@ -1,0 +1,32 @@
+{
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "messages": [
+    {
+      "key": "ukStationRelease01",
+      "english": "Open Met Office links to Yeovilton’s monthly weather records from the country review.",
+      "sha256": "dad9cc35b6ebc64f4f189c467b35a15e4eb36f3cdb562dfe3e4a1b042d69f33f"
+    },
+    {
+      "key": "ukStationRelease02",
+      "english": "Review UK historical weather records",
+      "sha256": "d82f849901b34fa2b0967912a1c43dc99a4c109339c0d438e7736dbd774d6617"
+    },
+    {
+      "key": "ukStationRelease03",
+      "english": "International → Country review",
+      "sha256": "50b7eff02b2b1ce02ed5067e210705fb0e02c22904bc26bc9be187ab491fa6d9"
+    },
+    {
+      "key": "ukStationRelease04",
+      "english": "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions.",
+      "sha256": "24fe66e31501dfd8c161c1ff02bef0e4be95ff5fd799c75e177d7e93bacd920e"
+    }
+  ]
+}
