@@ -1,0 +1,41 @@
+{
+  "sourceCommit": "cfc6631421bfba320b6025a32691ba47fa4e6b5f",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "cbe3aae417984032a60c7ab481a088cfb23ee39e12f09de56877a4b97b9230f8",
+  "referenceUrl": "https://www.gov.uk/government/groups/farming-advice-service",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "coverage",
+      "english": "Defra-funded adviser network based across England",
+      "sha256": "1cc4ab11585240764be47ff64ff84991d48b8686803244de3686d4d7dfdce442"
+    },
+    {
+      "key": "claim",
+      "english": "GOV.UK describes technical and business advice about farming regulations and links to newsletters and events.",
+      "sha256": "27cc60551ae8059affac61b839fa13f60a52c84560c3a476d86b0c4add243539"
+    },
+    {
+      "key": "licence",
+      "english": "The GOV.UK footer cites Open Government Licence v3.0 with exceptions. Reuse terms for linked material remain unverified.",
+      "sha256": "a7f014ee8277d81b8003964613b9f7b27f2fae220d0fdbd30763cdd380d399af"
+    },
+    {
+      "key": "access",
+      "english": "Public GOV.UK service information. Booking procedures and automated access remain unverified.",
+      "sha256": "c463dd22a1da8f997a3f2d37d7affe015ab2d902f997791360b9b3d04822a202"
+    },
+    {
+      "key": "limits",
+      "english": "Service reach in Somerset and elsewhere in the UK remains unverified. Local crop planning still requires its own review.",
+      "sha256": "d9de88de9b0fa1de648bd7326e8dba2715289464d7593be02046ef105d06393e"
+    }
+  ]
+}
