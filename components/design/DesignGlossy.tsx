@@ -7210,10 +7210,17 @@ async function buildHistoricalCoverageMask(frame: CanvasFrame, baseline: Histori
   return drainCanvasToDataUrl(canvas,'image/png');
 }
 
+function strokeHistoricalLine(ctx: CanvasRenderingContext2D, kind: 'fence' | 'extent', width: number): void {
+  ctx.strokeStyle = kind === 'fence' ? '#79583B' : BOUNDARY_LINE_GREEN;
+  ctx.lineWidth = width;
+  ctx.setLineDash(kind === 'extent' ? [width * 4, width * 3] : []);
+  ctx.stroke();
+}
+
 function drawHistoricalDesignExtent(ctx: CanvasRenderingContext2D, refs: DesignGlossyProps['refLayers'], W:number,H:number): void {
   if(refs.boundary.length<3)return;
   ctx.save();blueprintRing(ctx,refs.boundary,n=>n*W,n=>n*H);
-  ctx.strokeStyle=BOUNDARY_LINE_GREEN;ctx.lineWidth=Math.max(2,W*.0009);ctx.setLineDash([W*.004,W*.003]);ctx.stroke();ctx.restore();
+  strokeHistoricalLine(ctx,'extent',Math.max(2,W*.0009));ctx.restore();
 }
 
 function drawHistoricalPhotoPin(ctx:CanvasRenderingContext2D,x:number,y:number,r:number,n:number):void {
@@ -7230,25 +7237,80 @@ function historicalPresentationPhotoPoint(state:DesignCanvasState,frame:CanvasFr
   return layout?[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight]:[x,y];
 }
 
+type HistoricalFeatureId = HistoricalBaseline['features'][number]['id'];
+
+function drawHistoricalFeatureSymbol(ctx: CanvasRenderingContext2D, id: HistoricalFeatureId, x: number, y: number, size: number): void {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(size / 20, size / 20);
+  ctx.setLineDash([]);
+  ctx.strokeStyle = '#315A40';
+  ctx.lineWidth = 1.6;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  switch (id) {
+    case 'classroom-1':
+    case 'classroom-2':
+      ctx.moveTo(-8, 0); ctx.lineTo(0, -7); ctx.lineTo(8, 0);
+      ctx.moveTo(-6, -1); ctx.lineTo(-6, 7); ctx.lineTo(6, 7); ctx.lineTo(6, -1);
+      break;
+    case 'slab':
+      ctx.rect(-7, -5, 14, 10);
+      ctx.moveTo(-4, 2); ctx.lineTo(1, -2);
+      ctx.moveTo(0, 2); ctx.lineTo(5, -2);
+      break;
+    case 'play':
+      ctx.moveTo(-8, 7); ctx.lineTo(-4, -6); ctx.lineTo(4, -6); ctx.lineTo(8, 7);
+      ctx.moveTo(0, -6); ctx.lineTo(0, 3);
+      ctx.moveTo(-2, 3); ctx.lineTo(2, 3);
+      break;
+    case 'toilet':
+      ctx.rect(-5, -7, 10, 14);
+      ctx.moveTo(1, 0); ctx.lineTo(2, 0);
+      break;
+    case 'tank':
+      ctx.ellipse(0, -4, 6, 2.5, 0, 0, 2 * Math.PI);
+      ctx.moveTo(-6, -4); ctx.lineTo(-6, 4);
+      ctx.ellipse(0, 4, 6, 2.5, 0, Math.PI, 0, true);
+      ctx.lineTo(6, -4);
+      break;
+    case 'road':
+      ctx.moveTo(-7, 7); ctx.lineTo(-3, -7);
+      ctx.moveTo(2, 7); ctx.lineTo(6, -7);
+      break;
+    case 'fence':
+      ctx.moveTo(-9, 0); ctx.lineTo(9, 0);
+      strokeHistoricalLine(ctx, 'fence', 1.6);
+      ctx.restore();
+      return;
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
 function drawHistoricalPhotoFacts(ctx: CanvasRenderingContext2D,state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],W:number,H:number,baseline:HistoricalBaseline,labels=true, names=false):void {
-  ctx.save();ctx.strokeStyle='#79583B';ctx.lineWidth=Math.max(2,W*.001);ctx.setLineDash([]);ctx.beginPath();
-  baseline.fence.forEach((point,i)=>{const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,point,baseline);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x*W,y*H);});ctx.stroke();ctx.restore();
+  ctx.save();ctx.beginPath();
+  baseline.fence.forEach((point,i)=>{const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,point,baseline);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x*W,y*H);});
+  strokeHistoricalLine(ctx,'fence',Math.max(2,W*.001));ctx.restore();
   if(!labels)return;
   // Rory asked to read the area names on the photograph. Short leaders leave the roofs/play
   // equipment visible; the compact numbered key remains a separate presentation choice.
-  const offsets:Record<string,[number,number]>={'classroom-1':[-.14,-.035],'classroom-2':[.13,-.04],slab:[.09,.045],play:[-.02,.11],toilet:[-.12,.025],tank:[-.14,.015],road:[.08,.045],fence:[.13,-.005]};
+  const offsets:Record<HistoricalFeatureId,[number,number]>={'classroom-1':[-.14,-.035],'classroom-2':[.13,-.04],slab:[.09,.065],play:[-.02,.11],toilet:[-.12,.025],tank:[-.14,.015],road:[.08,.045],fence:[.15,-.035]};
   baseline.features.forEach((feature,index)=>{
     const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,feature.point,baseline);
     if(!names){drawHistoricalPhotoPin(ctx,x*W,y*H,Math.max(21,W*.011),index+1);return;}
-    const [dx,dy]=offsets[feature.id]??[.09,0];
+    const [dx,dy]=offsets[feature.id];
     const text=feature.label.replace(/^Existing /,'').replace(/ — visible portion/,'').replace(/^./,c=>c.toUpperCase());
     const font=Math.max(24,Math.round(W*.016));ctx.save();ctx.font=`700 ${font}px ${SHEET_BODY_FONT}`;
-    const width=ctx.measureText(text).width+font*1.1,height=font*1.7;
+    const symbolSlot=font*1.4;
+    const width=ctx.measureText(text).width+font*1.1+symbolSlot,height=font*1.7;
     const cx=Math.max(width/2+8,Math.min(W-width/2-8,(x+dx)*W)),cy=Math.max(height/2+8,Math.min(H-height/2-8,(y+dy)*H));
     ctx.strokeStyle='#315A40';ctx.lineWidth=Math.max(1.5,W*.0008);ctx.beginPath();ctx.moveTo(x*W,y*H);ctx.lineTo(cx,cy);ctx.stroke();
     ctx.beginPath();ctx.arc(x*W,y*H,font*.12,0,Math.PI*2);ctx.fillStyle='#315A40';ctx.fill();
     ctx.fillStyle='rgba(255,255,255,.96)';ctx.fillRect(cx-width/2,cy-height/2,width,height);ctx.strokeStyle='#78927E';ctx.strokeRect(cx-width/2,cy-height/2,width,height);
-    ctx.fillStyle='#183425';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,cx,cy);ctx.restore();
+    drawHistoricalFeatureSymbol(ctx,feature.id,cx-width/2+font*.95,cy,font*1.1);
+    ctx.fillStyle='#183425';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,cx+symbolSlot/2,cy);ctx.restore();
   });
 }
 
@@ -7260,7 +7322,7 @@ async function composeHistoricalBaseSheet(baseImage:string|null,state:DesignCanv
   try{ctx.drawImage(image,0,0,W,H);}finally{releaseImageSource(image);}
   drawHistoricalDesignExtent(ctx,p.refLayers,W,H);
   drawHistoricalPhotoFacts(ctx,state,frame,refs,W,H,baseline,true,labelMode!=='codes');
-  const legendRows:StyleLegendRow[]=baseline.features.map((feature,index)=>({swatch:'#FFFFFF',text:feature.label.replace(/^Existing /,'').replace(/^./,c=>c.toUpperCase()),...(labelMode==='codes'?{photoNumber:index+1}:{visual:'historical-name' as const})}));
+  const legendRows:StyleLegendRow[]=baseline.features.map((feature,index)=>({swatch:'#FFFFFF',text:feature.label.replace(/^Existing /,'').replace(/^./,c=>c.toUpperCase()),...(labelMode==='codes'?{photoNumber:index+1}:{historicalFeature:feature.id})}));
   legendRows.push({swatch:BOUNDARY_LINE_GREEN,text:'Current design extent — not the historic fence',visual:'historical-extent'});
   return composeStyleSheet(drainCanvasToDataUrl(canvas,'image/png'),p.state,p.frame,p.refLayers,'all',placeName,styleLabel,'Existing Site — before works',false,true,
     {sheetNumber:'01',legendRows,aiArtwork,imageAttribution:'Historic drone photograph: Imbewu project archive.',footerHeading:'HISTORICAL PHOTO',footerText:[baseline.provenance,baseline.alignment,baseline.coverage].join('\n'),footerBox:true});
@@ -10312,7 +10374,8 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'historical-name' | 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour';
+  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour';
+  historicalFeature?: HistoricalFeatureId;
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE' | 'SUN PATH' | 'REGIONAL WIND & FIRE' | 'TERRAIN' | 'SITE REFERENCE';
@@ -10542,8 +10605,8 @@ function drawStyleLegendSymbol(
   if(row.visual==='terrain-contour'){
     ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(2,h*.07);ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;
   }
-  if(row.visual==='historical-name')return;
-  if(row.visual==='historical-extent'){ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(1.5,h*.05);ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;}
+  if(row.historicalFeature){drawHistoricalFeatureSymbol(ctx,row.historicalFeature,x+w/2,y,Math.min(w,h));return;}
+  if(row.visual==='historical-extent'){ctx.save();ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);strokeHistoricalLine(ctx,'extent',Math.max(1.5,h*.05));ctx.restore();return;}
   if(row.photoNumber!==undefined){drawHistoricalPhotoPin(ctx,x+w/2,y,Math.min(w,h)*.36,row.photoNumber);return;}
   if (row.sectorIcon) {
     const cx = x + w / 2;
@@ -16173,8 +16236,19 @@ export default function DesignGlossy({
         </div>}
         {historicalSheet && availableHistoricalBaseline && <div style={{fontSize:12,lineHeight:1.5,marginBottom:10}}>
           <strong>{historicalActive ? 'Before-works archive photo' : 'Current imagery'}</strong>
-          {historicalActive && selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='base' && <div role="group" aria-label="Photo labels" style={{display:'flex',gap:8,marginTop:8}}>
-            {(['names','codes'] as const).map(value=><button type="button" key={value} disabled={loading!==null} aria-pressed={labelMode===value} onClick={()=>{setLabelMode(value);setResultImage(null);}}>{value==='names'?'Area names':'Numbered key'}</button>)}
+          {historicalActive && selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='base' && <div role="group" aria-label="Photo labels" style={{display:'flex',flexWrap:'wrap',gap:8,marginTop:8}}>
+            {(['names','codes'] as const).map(value=>{
+              const active=labelMode===value;
+              return <button type="button" key={value} disabled={loading!==null} aria-pressed={active}
+                style={{padding:'6px 12px',borderRadius:999,border:`1px solid ${active ? DARK : '#E2D8C4'}`,background:active ? DARK : PAPER,color:active ? PAPER : DARK,fontWeight:700}}
+                onClick={()=>{
+                  if(active)return;
+                  autoPreviewHandledKeyRef.current=`${gallerySiteId}:${selectedNo}`;
+                  setGalleryViewId(null);
+                  setLabelMode(value);
+                  setResultImage(null);
+                }}>{value==='names'?'Area names':'Numbered key'}</button>;
+            })}
           </div>}
           <p style={{margin:'4px 0'}}>Site and Sector share the early photograph. Later design sheets keep your current imagery. Alignment is approximate; the two uncovered tips stay blank.</p>
           <button type="button" disabled={loading!==null} aria-pressed={historicalActive} onClick={()=>{setHistoricalEnabled(!historicalEnabled);if(!historicalEnabled)setUnderlay('photo');setResultImage(null);}}>
