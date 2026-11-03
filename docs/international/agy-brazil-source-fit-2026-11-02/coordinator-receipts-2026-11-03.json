@@ -1,0 +1,62 @@
+[
+  {
+    "id": "br-inmet",
+    "requestedUrl": "https://portal.inmet.gov.br/",
+    "effectiveUrl": "https://portal.inmet.gov.br/",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T23:21:12.064366+00:00",
+    "completedAt": "2026-11-02T23:21:14.867015+00:00",
+    "bytes": 76456,
+    "sha256": "76f8db7f66cc77319d132a2bc2c9e2955261aef91179e51c877acb5bbf4e19b7",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "br-embrapa",
+    "requestedUrl": "https://www.embrapa.br/",
+    "effectiveUrl": "https://www.embrapa.br/",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T23:21:12.064717+00:00",
+    "completedAt": "2026-11-02T23:21:14.310751+00:00",
+    "bytes": 313471,
+    "sha256": "6273f2cb18c232f643915f79075c120724fc42936d219c7e2e212121e24c6b72",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "br-embrapa-soils",
+    "requestedUrl": "https://www.sisolos.cnptia.embrapa.br/",
+    "effectiveUrl": "https://www.sisolos.cnptia.embrapa.br/",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T23:21:12.064845+00:00",
+    "completedAt": "2026-11-02T23:21:12.843510+00:00",
+    "bytes": 1572,
+    "sha256": "cd50c5d3d455046dcbb3bce3a26eb258d1244629f316e73df123f697bc0063d9",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "br-sibbr",
+    "requestedUrl": "https://sibbr.gov.br/",
+    "effectiveUrl": "https://sibbr.gov.br/",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T23:21:12.068365+00:00",
+    "completedAt": "2026-11-02T23:21:12.852084+00:00",
+    "bytes": 59313,
+    "sha256": "0e8dc617b63f3daf518fb3b36c10381a5149d86cc20331ff9b84cf61cf3c9443",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "br-mapa",
+    "requestedUrl": "https://www.gov.br/agricultura/pt-br/assuntos/sanidade-animal-e-vegetal/sanidade-vegetal",
+    "effectiveUrl": "https://www.gov.br/agricultura/pt-br/assuntos/sanidade-animal-e-vegetal/sanidade-vegetal",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T23:21:12.068666+00:00",
+    "completedAt": "2026-11-02T23:21:14.034351+00:00",
+    "bytes": 294021,
+    "sha256": "f89716db80d4a9d9be9aeb2bbb4a4f42844a470c23833352eb7c40f644493caf",
+    "receiptAuthor": "Codex coordinator machine"
+  }
+]

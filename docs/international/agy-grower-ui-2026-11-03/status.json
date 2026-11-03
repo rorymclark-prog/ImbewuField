@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-11-03",
+  "status": "needs-human-review",
+  "source": "source.json",
+  "sourceSha256": "d7f072d7bc1e1d26e67b8e2525f575fdcefc6293824b62daed801f636479314b",
+  "messagesPerLocale": 32,
+  "totalDraftMessages": 128,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "files": {
+    "fr": "docs/international/agy-grower-ui-2026-11-03/fr.json",
+    "es": "docs/international/agy-grower-ui-2026-11-03/es.json",
+    "pt-BR": "docs/international/agy-grower-ui-2026-11-03/pt-BR.json",
+    "sw": "docs/international/agy-grower-ui-2026-11-03/sw.json"
+  },
+  "sourceSha256Binding": "All 32 messages per locale match source keys, sourceEnglish, and sourceSha256 exactly from source.json (source file SHA d7f072d7bc1e1d26e67b8e2525f575fdcefc6293824b62daed801f636479314b)",
+  "executor": "AGY coordinator (Brazilian Portuguese, Swahili, review notes, status, and single-file-writer materialisation) with 2 native AI subagents (French, Spanish)",
+  "nativeWorkerStates": {
+    "fr": "stopped (cleanly terminated via manage_subagents after delivering complete 32-message array)",
+    "es": "stopped (cleanly terminated via manage_subagents after delivering complete 32-message array)",
+    "activeSubagents": 0
+  },
+  "humanReviewGates": {
+    "fr": "unreviewed - requires named fluent-human French grower / agronomist review",
+    "es": "unreviewed - requires named fluent-human Spanish grower / agronomist review",
+    "pt-BR": "unreviewed - requires named fluent-human Brazilian Portuguese grower / agronomist review",
+    "sw": "unreviewed - requires named fluent-human Swahili grower / agronomist review"
+  },
+  "review": {
+    "status": "unreviewed",
+    "assignedReviewers": null
+  },
+  "productionLanguageEnablement": false,
+  "runtimeActivation": false,
+  "validationProvenance": {
+    "validator": "Coordinator independent actual-file structural validator",
+    "verified": [
+      "All four locale files (fr.json, es.json, pt-BR.json, sw.json) parsed with valid JSON",
+      "Exactly 32 matching distinct keys per locale (128 total draft messages)",
+      "Source file SHA d7f072d7bc1e1d26e67b8e2525f575fdcefc6293824b62daed801f636479314b preserved and bound to each locale",
+      "Per-message sourceEnglish and sourceSha256 exact match with source.json",
+      "Nonempty translated text in all 128 messages",
+      "Every review status explicitly unreviewed at file and message levels",
+      "UTC and CSV uppercase ASCII tokens retained verbatim where required"
+    ],
+    "humanApproval": false,
+    "namedHumanReviewRequired": true
+  }
+}

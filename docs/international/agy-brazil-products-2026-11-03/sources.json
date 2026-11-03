@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "country": "Brazil",
+  "investigationTarget": "Brazil product access and reuse verification (soil profiles and station catalog)",
+  "investigationNote": "Bounded verification of two specific links from prior official inventories. Redape is dataset documentation only; soil data-file payloads were not downloaded. INMET catalog connection reset represents a failed attempt on this endpoint, not service downtime. Campinas suitability is not inferred.",
+  "compiledDate": "2026-11-03",
+  "receiptReference": "docs/international/agy-brazil-products-2026-11-03/coordinator-receipts.json",
+  "sources": [
+    {
+      "id": "br-redape-doi",
+      "sourceFamily": "Embrapa / Redape (soil profile dataset documentation)",
+      "requestedUrl": "https://doi.org/10.48432/DDBVFO",
+      "effectiveUrl": "https://www.redape.dados.embrapa.br/dataset.xhtml?persistentId=doi:10.48432/DDBVFO",
+      "receiptId": "br-redape-doi",
+      "evidenceLevel": "documentation read",
+      "fetchStartedAtUtc": "2026-11-03T00:16:07.246415+00:00",
+      "fetchCompletedAtUtc": "2026-11-03T00:16:32.080694+00:00",
+      "documentationReviewDate": "2026-11-03",
+      "datasetReleaseDate": "2025-02-20",
+      "version": "Versão 2.0",
+      "filesExposed": [
+        {
+          "name": "bd_solos_para_redape.csv",
+          "format": "CSV",
+          "size": "93.0 MB",
+          "published": "2025-02-20",
+          "md5": "ccefdacb8d61cde2dcc8889919c759e2",
+          "metadataAccessLabel": "Public"
+        },
+        {
+          "name": "Template.csv",
+          "format": "CSV",
+          "size": "11.2 KB",
+          "published": "2026-06-24",
+          "md5": "94af06c7a3e4c1a29da184ab6c09ad8f",
+          "metadataAccessLabel": "Public"
+        }
+      ],
+      "dataFormatAndSchema": "CSV tabular files containing morphological, physical, and chemical soil profile records adhering to Brazilian Soil Classification System (SiBCS) guidelines; data payloads were not downloaded.",
+      "coverage": "National coverage across the five geographic regions of Brazil (derived from BDSolos database).",
+      "geographicResolution": "Soil profile collection points (point locations; spatial density and representation for Campinas or specific catchments are not established on this metadata page).",
+      "units": "UNKNOWN",
+      "unitsNote": "Measurement units are not established from this response.",
+      "licenceReuseTerms": "Embrapa (CC BY-NC 4.0)",
+      "licenceNote": "Observed label is 'Embrapa (CC BY-NC 4.0)' linking to /licenses/embrapa-by-nc-4.0.xhtml. Commercial and AI reuse clearance is not established; no broader legal conclusion is drawn.",
+      "attribution": "Embrapa, 2025, 'Dados morfológicos e analíticos de solos do Brasil:', https://doi.org/10.48432/DDBVFO, Redape, V2",
+      "authentication": "UNKNOWN",
+      "authenticationNote": "Catalogue metadata page is viewable without credentials. A login link and Dataverse /api/access/datafile/ href are present on the page, and metadata displays 'Public (2)' labels, but these describe catalogue metadata only. Actual datafile download and API endpoint authentication remain UNKNOWN because neither was fetched.",
+      "cadence": "Versioned repository release (deposit 2024-09-04; v2.0 published 2025-02-20; template published 2026-06-24; operational refresh cadence is UNKNOWN).",
+      "dataFileFetched": false,
+      "apiImplemented": false
+    },
+    {
+      "id": "br-inmet-catalog",
+      "sourceFamily": "INMET (automatic weather station catalog link)",
+      "requestedUrl": "https://portal.inmet.gov.br/paginas/catalogoaut",
+      "effectiveUrl": "https://portal.inmet.gov.br/paginas/catalogoaut",
+      "receiptId": "br-inmet-catalog",
+      "evidenceLevel": "failed attempt",
+      "fetchStartedAtUtc": "2026-11-03T00:16:07.245582+00:00",
+      "fetchCompletedAtUtc": "2026-11-03T00:16:12.017646+00:00",
+      "documentationReviewDate": "2026-11-03",
+      "datasetReleaseDate": "UNKNOWN",
+      "httpStatus": 0,
+      "curlExit": 56,
+      "error": "curl: (56) Recv failure: Connection reset by peer",
+      "bytes": 0,
+      "attemptNote": "Connection reset by peer during attempted unauthenticated GET of exact official station catalog link. Delivers 0 bytes. Represents a failed fetch attempt on this specific endpoint, not proof that the provider is down.",
+      "coverage": "UNKNOWN",
+      "geographicResolution": "UNKNOWN",
+      "units": "UNKNOWN",
+      "licenceReuseTerms": "UNKNOWN",
+      "attribution": "UNKNOWN",
+      "authentication": "UNKNOWN",
+      "cadence": "UNKNOWN",
+      "dataFileFetched": false,
+      "apiImplemented": false
+    }
+  ]
+}
