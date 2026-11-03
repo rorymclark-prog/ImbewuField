@@ -8,6 +8,7 @@ import ts from 'typescript';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { buildNurseryForecast } from '../lib/crop-export-schedule.ts';
 import type { NurserySettings } from '../lib/nursery-settings.ts';
+import { initialiseCropPlanFixture, releaseCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import type { NurseryPlanPanelProps } from '../components/crops/NurseryPlanPanel.tsx';
 
 const probe = { forecasts: 0, deliveries: 0, forbidden: false, buildNurseryForecast };
@@ -42,13 +43,14 @@ const hooks = registerHooks({
   },
 });
 const { default: NurseryPlanPanel } = await import('../components/crops/NurseryPlanPanel.tsx');
+const { createNurserySaveFixture } = await import('./nursery-save-fixture.ts');
 after(() => { hooks.deregister(); Reflect.deleteProperty(globalThis, '__internationalNurseryEquipment'); });
 
 function text(node: ReactTestInstance | string): string {
   return typeof node === 'string' ? node : node.children.map(child => text(child as ReactTestInstance | string)).join('');
 }
 
-function mount(settings?: NurserySettings, allowCatalogueForecast?: boolean) {
+async function mount(settings?: NurserySettings, allowCatalogueForecast?: boolean) {
   const originals = new Map(['window', 'localStorage', 'sessionStorage'].map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
   const storage = () => {
     const rows = new Map<string, string>();
@@ -57,19 +59,29 @@ function mount(settings?: NurserySettings, allowCatalogueForecast?: boolean) {
   const localStorage = storage(), sessionStorage = storage();
   const browser = Object.assign(new EventTarget(), { localStorage, sessionStorage });
   for (const [key, value] of Object.entries({ window: browser, localStorage, sessionStorage })) Object.defineProperty(globalThis, key, { configurable: true, value });
+  // Successful paths now use the real canonical lease, namespace merge and
+  // opaque readback receipt. A boolean fixture must not certify persistence.
+  await initialiseCropPlanFixture();
+  replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ version: 1, plantings: [], updatedAt: 1, nursery: settings }));
+  const parent = createNurserySaveFixture('fictional-site');
   let renderer: ReactTestRenderer;
   let currentSettings = settings;
   let receipt: boolean | undefined = true;
   const saved: NurserySettings[] = [];
+  let submissions = 0;
   const props: NurseryPlanPanelProps = {
     siteId: 'fictional-site', plantings: [], beds: [], now: { year: 2026, month: 11 },
-    settings: currentSettings, allowCatalogueForecast, showBuyingCalendar: true,
-    onSettings(next) {
+    settings: currentSettings, allowCatalogueForecast, showBuyingCalendar: true, saveContext: parent.context(),
+    onSettings(next, request) {
+      ++submissions;
       if (receipt === false) return false;
-      saved.push(structuredClone(next)); currentSettings = next;
-      renderer.update(React.createElement(NurseryPlanPanel, { ...props, settings: currentSettings }));
-      // The real editor now distinguishes a device-write receipt from a queued callback.
-      return receipt;
+      const result = parent.submit(next, request);
+      if (result.status === 'confirmed') {
+        saved.push(structuredClone(next)); currentSettings = parent.state.plan.nursery; props.saveContext = parent.context();
+        renderer.update(React.createElement(NurseryPlanPanel, { ...props, settings: currentSettings }));
+      }
+      // The deliberate void case withholds even a performed real receipt.
+      return receipt === undefined ? undefined : result;
     },
   };
   act(() => { renderer = create(React.createElement(NurseryPlanPanel, props)); });
@@ -79,7 +91,7 @@ function mount(settings?: NurserySettings, allowCatalogueForecast?: boolean) {
     return label.findAll(node => node.type === 'input' || node.type === 'select')[0];
   };
   return {
-    get renderer() { return renderer; }, saved,
+    get renderer() { return renderer; }, saved, get submissions() { return submissions; },
     set receipt(value: boolean | undefined) { receipt = value; },
     text: () => text(renderer.root),
     field,
@@ -94,7 +106,7 @@ function mount(settings?: NurserySettings, allowCatalogueForecast?: boolean) {
       act(() => renderer.update(React.createElement(NurseryPlanPanel, { ...props, settings: currentSettings })));
     },
     dispose() {
-      act(() => renderer.unmount());
+      act(() => renderer.unmount()); parent.dispose(); releaseCropPlanFixture();
       for (const [key, original] of originals) {
         if (original) Object.defineProperty(globalThis, key, original); else Reflect.deleteProperty(globalThis, key);
       }
@@ -102,9 +114,9 @@ function mount(settings?: NurserySettings, allowCatalogueForecast?: boolean) {
   };
 }
 
-test('unsupported nursery context never computes catalogue demand or offers forecast exports and task links', () => {
+test('unsupported nursery context never computes catalogue demand or offers forecast exports and task links', async () => {
   probe.forecasts = 0; probe.deliveries = 0; probe.forbidden = true;
-  const screen = mount(undefined, false);
+  const screen = await mount(undefined, false);
   try {
     assert.equal(probe.forecasts, 0);
     assert.match(screen.text(), /Demand forecasts are unavailable until this site has a supported local planning basis/);
@@ -117,8 +129,8 @@ test('unsupported nursery context never computes catalogue demand or offers fore
   } finally { screen.dispose(); probe.forbidden = false; }
 });
 
-test('a nursery recipe needs an explicit propagation model rather than an assumed seed per cell', () => {
-  const screen = mount(undefined, false);
+test('a nursery recipe needs an explicit propagation model rather than an assumed seed per cell', async () => {
+  const screen = await mount(undefined, false);
   try {
     assert.equal(screen.field('Nursery model').props.value, '');
     screen.change('Crop identity for nursery recipe', CROPS[0].key);
@@ -128,10 +140,10 @@ test('a nursery recipe needs an explicit propagation model rather than an assume
   } finally { screen.dispose(); }
 });
 
-test('own propagation records preserve a flat without cells and observed zero output for an existing crop identity', () => {
+test('own propagation records preserve a flat without cells and observed zero output for an existing crop identity', async () => {
   // Synthetic equipment observations, not tray recommendations or crop instructions.
   const crop = CROPS.find(candidate => !candidate.transplant)!;
-  const screen = mount(undefined, false);
+  const screen = await mount(undefined, false);
   try {
     screen.change('Container name', 'Observed flat'); screen.change('Owned containers', '0'); screen.submit('Add container type');
     assert.equal(screen.saved.at(-1)!.containers[0].cells, undefined);
@@ -145,31 +157,38 @@ test('own propagation records preserve a flat without cells and observed zero ou
   } finally { screen.dispose(); }
 });
 
-test('a failed equipment write retains the editor and never reports a completed device save', () => {
-  const screen = mount(undefined, false);
+test('a failed equipment write retains the editor and never reports a completed device save', async () => {
+  const screen = await mount(undefined, false);
   try {
     screen.receipt = false;
     screen.change('Space name', 'Unsaved bench'); screen.change('Net usable surface', '0'); screen.submit('Add nursery space');
     assert.equal(screen.saved.length, 0);
     assert.equal(screen.field('Space name').props.value, 'Unsaved bench');
     assert.equal(screen.field('Net usable surface').props.value, '0');
-    assert.match(screen.text(), /Could not save on this device/);
+    // False may follow a performed write; retain uncertainty instead of asserting rollback.
+    assert.match(screen.text(), /Save outcome is not confirmed/);
+    assert.doesNotMatch(screen.text(), /settings remain unchanged/);
+    screen.submit('Add nursery space'); assert.equal(screen.submissions, 1, 'An unconfirmed callback must not be automatically retried');
     assert.doesNotMatch(screen.text(), /Nursery space saved for this site|Saved on this device\./);
   } finally { screen.dispose(); }
 });
 
-test('a callback without a receipt does not certify a device save', () => {
-  const screen = mount(undefined, false);
+test('a callback without a receipt does not certify a device save', async () => {
+  const screen = await mount(undefined, false);
   try {
     screen.receipt = undefined;
     screen.change('Space name', 'Queued bench'); screen.change('Net usable surface', '0'); screen.submit('Add nursery space');
     assert.equal(screen.saved.length, 1);
-    assert.match(screen.text(), /Device save is not confirmed/);
+    assert.match(screen.text(), /Save outcome is not confirmed/);
+    assert.equal(screen.field('Space name').props.value, 'Queued bench');
+    assert.equal(screen.field('Net usable surface').props.value, '0');
+    assert.doesNotMatch(screen.text(), /settings remain unchanged/);
+    screen.submit('Add nursery space'); assert.equal(screen.submissions, 1, 'Withholding a real receipt cannot permit a duplicate retry');
     assert.doesNotMatch(screen.text(), /Saved on this device\./);
   } finally { screen.dispose(); }
 });
 
-test('unsupported growers can save equipment and their own recipes without inventing demand or overwriting another site', () => {
+test('unsupported growers can save equipment and their own recipes without inventing demand or overwriting another site', async () => {
   const crop = CROPS.find(candidate => candidate.transplant)!;
   const other: NurserySettings = { version: 1,
     spaces: [{ id: 'other-space', siteId: 'other-site', name: 'Other surface', usableM2: 7 }],
@@ -177,7 +196,7 @@ test('unsupported growers can save equipment and their own recipes without inven
     profiles: [{ id: 'other-recipe', siteId: 'other-site', cropKey: crop.key, model: 'measured-tray', usableStartsPerTray: 12 }],
   };
   probe.forecasts = 0; probe.forbidden = true;
-  const screen = mount(other, false);
+  const screen = await mount(other, false);
   try {
     screen.change('Space name', 'My bench'); screen.change('Net usable surface', '2.5'); screen.submit('Add nursery space');
     assert.match(screen.text(), /Nursery space saved for this site/);
@@ -204,7 +223,7 @@ test('unsupported growers can save equipment and their own recipes without inven
 
 test('supported default retains the existing forecast and navigation while losing support removes them immediately', async () => {
   probe.forecasts = 0; probe.deliveries = 0;
-  const screen = mount();
+  const screen = await mount();
   try {
     assert.ok(probe.forecasts > 0, 'the existing default still computes its nursery forecast');
     assert.equal(screen.renderer.root.findAllByType('a').find(node => text(node) === 'Open task planner')?.props.href, '/cropplan');

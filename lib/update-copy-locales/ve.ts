@@ -1,6 +1,13 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Dzhenisani mielo ya dzithirei dza tsimu ya zwimela zwiṱuku nga dzisentimitha kana dziintshi.",
+  "Enter usable nursery surface in square metres or square feet.": "Dzhenisani vhupo vhu shumisekaho ha tsimu ya zwimela zwiṱuku nga dzimitha dza tshikwere kana dziṋayo dza tshikwere.",
+  "Keep nursery entries until their save is confirmed.": "Litshani zwidodombedzwa zwo dzheniswaho zwa tsimu ya zwimela zwiṱuku zwi tshi kha ḓi vha hone u swika u vhulungwa hazwo hu tshi khwaṱhisedzwa.",
+  "Choose nursery units": "Nangani dziyuniti dza tsimu ya zwimela zwiṱuku",
+  "Production plan → Nursery planner": "Pulane ya mveledziso → Mupulani wa tsimu ya zwimela zwiṱuku",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Nangani dziyuniti dzaṋu, dzhenisani vhuhulu ha dzithirei na vhupo vhu shumisekaho ha u aluwa ha zwimela, u bva afho ni vhulunge. Mielo ya zwishumiswa i sa ḓivhei i dzula i si na tshithu; tshiṱoko tsha zwishumiswa tsha zero tshi dzula tshi zero.",
   // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/ve.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
   "Enter field-block bed and path dimensions in metres or feet.": "Dzhenisani mielo ya mmbete ya u ṱavha (beds) na dziḽila dza buḽoko ya tsimu nga dzimithara kana dzifithi (feet).",
   "Keep saved measurements unchanged when switching the displayed unit.": "Vhulungani mielo yo vhulungwaho i songo shanduka musi ni tshi shandukisa yuniti i sumbedzwaho.",

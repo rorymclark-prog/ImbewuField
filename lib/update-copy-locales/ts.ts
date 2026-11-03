@@ -1,6 +1,13 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Nghenisa mimpimo ya tithireyi ta xirhapa xa swimilana hi tisentimitara (cm) kumbe ti-inch (in).",
+  "Enter usable nursery surface in square metres or square feet.": "Nghenisa ndhawu leyi tirhisekaka ya xirhapa xa swimilana hi timitara ta xikwere (m²) kumbe tifiti ta xikwere (ft²).",
+  "Keep nursery entries until their save is confirmed.": "Tshika leswi nghenisiweke swa xirhapa xa swimilana swi ri kona ku fikela loko ku hlayisiwa ka swona ku tiyisisiwa.",
+  "Choose nursery units": "Hlawula tiyuniti ta xirhapa xa swimilana",
+  "Production plan → Nursery planner": "Kunguhato wa vuhumelerisi → Xikunguhati xa xirhapa xa swimilana",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Hlawula tiyuniti ta wena, nghenisa vukulu bya tithireyi ni ndhawu yo mirisa leyi tirhisekaka, kutani u hlayisa. Mimpimo ya switirhisiwa leyi nga tiviwiki yi tshama yi nga tsariwanga nchumu; nhlayo ya switirhisiwa ya zero yi tshama yi ri zero.",
   // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/ts.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
   "Enter field-block bed and path dimensions in metres or feet.": "Nghenisa mimpimo ya timbhedwa to byala (beds) ni tindlela ta buloko ya nsimu hi timitara kumbe hi swikondzo (feet).",
   "Keep saved measurements unchanged when switching the displayed unit.": "Tshika mimpimo leyi hlayisiweke yi nga cincangi loko u cinca yuniti leyi kombiwaka.",

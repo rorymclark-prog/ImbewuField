@@ -1,6 +1,13 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Faka izilinganiso zamathileyi ezithombo ngamasentimitha noma ngamayintshi.",
+  "Enter usable nursery surface in square metres or square feet.": "Faka indawo yokukhulisa izithombo esebenzisekayo ngamamitha-skwele noma ngamafithi-skwele.",
+  "Keep nursery entries until their save is confirmed.": "Shiya imininingwane yezithombo oyifakile isekhona kuze kuqinisekiswe ukulondolozwa kwayo.",
+  "Choose nursery units": "Khetha amayunithi endawo yezithombo",
+  "Production plan → Nursery planner": "Uhlelo lokukhiqiza → Umhleli wendawo yezithombo",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Khetha amayunithi akho, faka osayizi bamathileyi nendawo yokukhulisa esebenzisekayo, bese uyalondoloza. Amanani ezinto zokusebenza angaziwa ahlala engenalutho; isitoko sezinto esiyiqanda sihlala siyiqanda.",
   // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/zu.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
   "Enter field-block bed and path dimensions in metres or feet.": "Faka izilinganiso zemibhede yokutshala (beds) nezindlela zebhulokhi yensimu ngamamitha noma ngamafuthi.",
   "Keep saved measurements unchanged when switching the displayed unit.": "Gcina izilinganiso ezilondoloziwe zingashintshiwe lapho ushintsha iyunithi eboniswayo.",

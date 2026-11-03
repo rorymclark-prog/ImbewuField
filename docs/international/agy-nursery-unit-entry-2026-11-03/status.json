@@ -1,0 +1,76 @@
+{
+  "job": "agy-nursery-unit-entry-2026-11-03",
+  "status": "complete",
+  "sourceHead": "df8899f28ec5b07bf55c8c9fc68712da1ce9efad",
+  "inspectedSources": [
+    {
+      "sourcePath": "components/crops/NurseryPlanPanel.tsx",
+      "bytes": 26761,
+      "sha256": "adc8f08f46c45032c99cac001010c13d6eac6dc129b39c5fc64f9e295aa8df63"
+    },
+    {
+      "sourcePath": "lib/nursery-settings.ts",
+      "bytes": 16063,
+      "sha256": "a55f9f7e926f806f80e8fb0783a5fa838664095557124694ff30848af011a88d"
+    },
+    {
+      "sourcePath": "lib/international/grower-nursery.ts",
+      "bytes": 33506,
+      "sha256": "95691dd58f6d1b6c099b7fccbe9cc23ebd63383da0bc41fb1b220459c116c535"
+    },
+    {
+      "sourcePath": "lib/length-units.ts",
+      "bytes": 8329,
+      "sha256": "476dc2484376f03b179909e397724605db481b90beab872965a64b7b78433892"
+    },
+    {
+      "sourcePath": "tests/international-nursery-equipment.test.ts",
+      "bytes": 13190,
+      "sha256": "86d3185b2938ba0be1c57f7ec87ea0e9b4ad5d7c72b517b14ca4ce9bfb697163"
+    }
+  ],
+  "nistSources": {
+    "sourceDocument": "docs/international/agy-grower-unit-standards-2026-11-03/CONVERSION-FACTS.md",
+    "appendixB8Sha256": "be7334086bcb574317dd1f78a7822adb699670b7f2bece6ca8a252884158eb5f",
+    "appendixB9Sha256": "0197b5ee24ad88a42cabb9f58a2a08bbda25431dc9182c222e66c09390583396",
+    "footnotesSha256": "20a953aad34582d88d50b099b9b3d4ed9d069787cbfe32b4220f965f21967bd5",
+    "printedExactFactors": {
+      "inchToMetre": "2.54 E-02",
+      "squareFootToSquareMetre": "9.290 304 E-02",
+      "inchToCentimetre": "2.54 E+00"
+    },
+    "derivedArithmetic": {
+      "centimetreToInch": "cm / 2.54",
+      "squareMetreToSquareFoot": "m2 / 0.09290304"
+    }
+  },
+  "outputs": [
+    "docs/international/agy-nursery-unit-entry-2026-11-03/NURSERY-UNIT-ENTRY.md",
+    "docs/international/agy-nursery-unit-entry-2026-11-03/status.json"
+  ],
+  "uninspectedAreas": {
+    "parentOnSettingsPersistenceAndReadback": "UNKNOWN"
+  },
+  "constraints": {
+    "mainWriterOnly": true,
+    "workers": 0,
+    "shellCommandsRun": 0,
+    "networkCalls": 0,
+    "codeOrTestEdits": 0,
+    "runtimeOrSettingsChanges": 0,
+    "optionalInteractionSharing": "OFF"
+  },
+  "coordinatorReview": {
+    "reviewedAtUtc": "2026-11-03T11:32:18.199476+00:00",
+    "actualWhitespaceWords": 469,
+    "allFiveSnapshotBytesAndSha256Checked": true,
+    "privatePathsAndLinksRemoved": true,
+    "nonzeroSafeFormattingRequired": true,
+    "loneDecimalMarkIncompleteButTrailingDecimalNumbersFollowExistingParser": true,
+    "proposedNegativeRequirements": 3,
+    "runtimeImplementation": false,
+    "researchTestsExecuted": 0,
+    "printedInchCentimetreRowsIndependentlyCheckedInBothBodies": true,
+    "pristineRequiredBlankUnitChoiceDistinguishedFromSave": true
+  }
+}

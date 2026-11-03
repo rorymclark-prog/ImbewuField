@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'e9d2ee956', changes: [
+    'Enter nursery tray dimensions in centimetres or inches.',
+    'Enter usable nursery surface in square metres or square feet.',
+    'Keep nursery entries until their save is confirmed.',
+  ], tour: [{ title: 'Choose nursery units', where: 'Production plan → Nursery planner', href: '/facilitator/crops',
+    detail: 'Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.' }] },
   { when: '3 November 2026', sha: 'af9ff00cb', changes: [
     'Enter field-block bed and path dimensions in metres or feet.',
     'Keep saved measurements unchanged when switching the displayed unit.',

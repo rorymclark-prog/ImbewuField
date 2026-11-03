@@ -6,15 +6,19 @@ import { getFirebase, isBackendConfigured } from './firebase/init';
 import type { LengthUnit } from './length-units';
 
 const KEY = 'imbewu_length_unit_v1';
+const NURSERY_KEY = 'imbewu_nursery_unit_v1';
+export type NurseryUnitChoice = 'metric' | 'imperial';
+export interface NurseryUnitPreferenceContext { readonly kind: 'nursery-unit-preference' }
+type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext;
 const SAMPLE_EVENT = 'imbewu-sample-mode-changed';
 export interface LengthUnitPreferenceContext { readonly kind: 'length-unit-preference' }
 type Result = { unit: LengthUnit; remembered: boolean; destination: 'device' | 'sample' | 'unavailable' };
 interface Scope {
-  epoch: number; users: number; sampleUnit: LengthUnit; observedUid: string | null; failed: boolean;
+  epoch: number; users: number; sampleUnit: LengthUnit; sampleNurseryUnit: NurseryUnitChoice; observedUid: string | null; failed: boolean;
   proofs: Set<Proof>; stop: () => void;
 }
 interface Proof {
-  win: Window; scope: Scope; epoch: number; owner: string | null; sample: boolean;
+  purpose: 'field' | 'nursery'; win: Window; scope: Scope; epoch: number; owner: string | null; sample: boolean;
   storage: Storage | null; key: string; revoked: boolean; listeners: Set<() => void>;
 }
 const scopes = new WeakMap<Window, Scope>();
@@ -27,13 +31,13 @@ function actorMatches(owner: string | null, inSample: boolean): boolean {
   return !!auth && (auth.currentUser?.uid ?? null) === owner;
 }
 function changed(scope: Scope) {
-  ++scope.epoch; scope.sampleUnit = 'm';
+  ++scope.epoch; scope.sampleUnit = 'm'; scope.sampleNurseryUnit = 'metric';
   for (const proof of scope.proofs) for (const listener of proof.listeners) listener();
 }
 function scopeFor(win: Window): Scope {
   const found = scopes.get(win); if (found) return found;
   const auth = isBackendConfigured() ? getFirebase()?.auth : null;
-  const scope: Scope = { epoch: 0, users: 0, sampleUnit: 'm', observedUid: auth?.currentUser?.uid ?? null, failed: false, proofs: new Set(), stop: () => {} };
+  const scope: Scope = { epoch: 0, users: 0, sampleUnit: 'm', sampleNurseryUnit: 'metric', observedUid: auth?.currentUser?.uid ?? null, failed: false, proofs: new Set(), stop: () => {} };
   const sampleChanged = () => changed(scope);
   win.addEventListener(SAMPLE_EVENT, sampleChanged);
   let stopAuth: (() => void) | undefined;
@@ -46,33 +50,33 @@ function scopeFor(win: Window): Scope {
   scope.stop = () => { win.removeEventListener(SAMPLE_EVENT, sampleChanged); stopAuth?.(); scopes.delete(win); };
   scopes.set(win, scope); return scope;
 }
-export function captureLengthUnitPreferenceContext(): LengthUnitPreferenceContext | null {
+function capturePreferenceContext(purpose: 'field' | 'nursery'): PreferenceContext | null {
   try {
     if (typeof window === 'undefined') return null;
     const win = window, inSample = sample(win), owner = activeAccountUid();
     if (!actorMatches(owner, inSample)) return null;
-    const scope = scopeFor(win), context: LengthUnitPreferenceContext = Object.freeze({ kind: 'length-unit-preference' });
-    const proof: Proof = { win, scope, epoch: scope.epoch, owner, sample: inSample, storage: local(win),
-      key: activeAccountLocalStorageKey(KEY), revoked: false, listeners: new Set() };
+    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : 'nursery-unit-preference' });
+    const proof: Proof = { purpose, win, scope, epoch: scope.epoch, owner, sample: inSample, storage: local(win),
+      key: activeAccountLocalStorageKey(purpose === 'field' ? KEY : NURSERY_KEY), revoked: false, listeners: new Set() };
     ++scope.users; scope.proofs.add(proof); proofs.set(context, proof); return context;
   } catch { return null; }
 }
-export function lengthUnitPreferenceContextIsCurrent(context: LengthUnitPreferenceContext | null): boolean {
+function contextIsCurrent(context: PreferenceContext | null): boolean {
   const proof = context && proofs.get(context);
   try {
     const current = !!proof && !proof.revoked && !proof.scope.failed && proof.scope.epoch === proof.epoch && typeof window !== 'undefined' && window === proof.win
       && activeAccountUid() === proof.owner && sample(window) === proof.sample && local(window) === proof.storage
-      && activeAccountLocalStorageKey(KEY) === proof.key && actorMatches(proof.owner, proof.sample);
+      && activeAccountLocalStorageKey(proof.purpose === 'field' ? KEY : NURSERY_KEY) === proof.key && actorMatches(proof.owner, proof.sample);
     if (proof && !current) proof.revoked = true;
     return current;
   } catch { if (proof) proof.revoked = true; return false; }
 }
-export function subscribeLengthUnitPreferenceContext(context: LengthUnitPreferenceContext | null, listener: () => void): () => void {
+function subscribeContext(context: PreferenceContext | null, listener: () => void): () => void {
   const proof = context && proofs.get(context);
   if (!proof) return () => {};
   proof.listeners.add(listener); return () => proof.listeners.delete(listener);
 }
-export function revokeLengthUnitPreferenceContext(context: LengthUnitPreferenceContext | null): void {
+function revokeContext(context: PreferenceContext | null): void {
   const proof = context && proofs.get(context); if (!proof) return;
   proof.revoked = true; proof.listeners.clear(); proof.scope.proofs.delete(proof); proofs.delete(context!);
   if (--proof.scope.users === 0) proof.scope.stop();
@@ -104,6 +108,48 @@ export function writeLengthUnitPreference(context: LengthUnitPreferenceContext |
     const raw = JSON.stringify({ version: 1, unit });
     proof.storage.setItem(proof.key, raw);
     return lengthUnitPreferenceContextIsCurrent(context) && proof.storage.getItem(proof.key) === raw
+      ? { remembered: true, destination: 'device' } : { remembered: false, destination: 'unavailable' };
+  } catch { return { remembered: false, destination: 'unavailable' }; }
+}
+
+// Both closed purposes share the same private actor/sample epoch authority, but
+// nursery choice never reads or overwrites the field editor's remembered unit.
+export function captureLengthUnitPreferenceContext(): LengthUnitPreferenceContext | null {
+  return capturePreferenceContext('field') as LengthUnitPreferenceContext | null;
+}
+export function lengthUnitPreferenceContextIsCurrent(context: LengthUnitPreferenceContext | null): boolean {
+  return !!context && proofs.get(context)?.purpose === 'field' && contextIsCurrent(context);
+}
+export const subscribeLengthUnitPreferenceContext = (context: LengthUnitPreferenceContext | null, listener: () => void) => subscribeContext(context, listener);
+export const revokeLengthUnitPreferenceContext = (context: LengthUnitPreferenceContext | null) => revokeContext(context);
+export function captureNurseryUnitPreferenceContext(): NurseryUnitPreferenceContext | null {
+  return capturePreferenceContext('nursery') as NurseryUnitPreferenceContext | null;
+}
+export function nurseryUnitPreferenceContextIsCurrent(context: NurseryUnitPreferenceContext | null): boolean {
+  return !!context && proofs.get(context)?.purpose === 'nursery' && contextIsCurrent(context);
+}
+export const subscribeNurseryUnitPreferenceContext = (context: NurseryUnitPreferenceContext | null, listener: () => void) => subscribeContext(context, listener);
+export const revokeNurseryUnitPreferenceContext = (context: NurseryUnitPreferenceContext | null) => revokeContext(context);
+export function readNurseryUnitPreference(context: NurseryUnitPreferenceContext | null): { unit: NurseryUnitChoice; remembered: boolean; destination: 'device' | 'sample' | 'unavailable' } {
+  try {
+    if (!nurseryUnitPreferenceContextIsCurrent(context)) return { unit: 'metric', remembered: false, destination: 'unavailable' };
+    const proof = proofs.get(context!)!;
+    if (proof.sample) return { unit: proof.scope.sampleNurseryUnit, remembered: false, destination: 'sample' };
+    const raw = proof.storage?.getItem(proof.key), value = raw ? JSON.parse(raw) : null;
+    if (!nurseryUnitPreferenceContextIsCurrent(context)) return { unit: 'metric', remembered: false, destination: 'unavailable' };
+    return value && typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 2 && value.version === 1 && ['metric', 'imperial'].includes(value.unit)
+      ? { unit: value.unit, remembered: true, destination: 'device' }
+      : { unit: 'metric', remembered: false, destination: proof.storage ? 'device' : 'unavailable' };
+  } catch { return { unit: 'metric', remembered: false, destination: 'unavailable' }; }
+}
+export function writeNurseryUnitPreference(context: NurseryUnitPreferenceContext | null, unit: NurseryUnitChoice): { remembered: boolean; destination: 'device' | 'sample' | 'unavailable' } {
+  try {
+    if (!['metric', 'imperial'].includes(unit) || !nurseryUnitPreferenceContextIsCurrent(context)) return { remembered: false, destination: 'unavailable' };
+    const proof = proofs.get(context!)!;
+    if (proof.sample) { proof.scope.sampleNurseryUnit = unit; return { remembered: false, destination: 'sample' }; }
+    if (!proof.storage) return { remembered: false, destination: 'unavailable' };
+    const raw = JSON.stringify({ version: 1, unit }); proof.storage.setItem(proof.key, raw);
+    return nurseryUnitPreferenceContextIsCurrent(context) && proof.storage.getItem(proof.key) === raw
       ? { remembered: true, destination: 'device' } : { remembered: false, destination: 'unavailable' };
   } catch { return { remembered: false, destination: 'unavailable' }; }
 }
