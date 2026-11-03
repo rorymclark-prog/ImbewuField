@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Kambela maendlelo ya swibyariwa lama tiendlelaka kusuka eka mimpimo ya wena ya matirhele na swikongomelo swa vaxavi leswi hlayisiweke.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Kambisisa switreyi swa nersari leswi nga na masiku na swilaveko swa xitsandza u nga si kopa nkambisiso wa wena.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Hlayisa mimpimo ya wena n'wini ya matirhele u tlhela u kambela vuswikoti na masiku ya mibhedhi leyi pimiweke.",
+  "Review a crop plan from your estimates": "Kambela pulani ya swibyariwa kusuka eka mimpimo ya wena",
+  "Crop planner → Automatic plan from your estimates": "Mupulani wa swibyariwa → Pulani leyi tiendlelaka kusuka eka mimpimo ya wena",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Kambela dizayini ya wena leyi hlayisiweke, tiyisisa vukona u tlhela u fambisanisa swikongomelo swa vaxavi na mimpimo ya wena ya matirhele. Kambela mirhendzeleko leyi ringanyetiweke na swilaveko swa nersari; swibyariwa swa wena leswi hlayisiweke a swi cinciwi.",
+  "Review your growing estimates": "Kambela mimpimo ya wena ya matirhele",
+  "Crop planner → Your growing estimates": "Mupulani wa swibyariwa → Mimpimo ya wena ya matirhele",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Nghenisa mianakanyo ya wena n'wini, hlawula mubhedhi lowu pimiweke u tlhela u kambela nhlayo. Mintsengo leyi nga hava nchumu yi tshama yi kayivela; mbuyelo i mpimo ntsena, ku nga ri mpfumelelo wa vurimi bya le ndhawini.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",

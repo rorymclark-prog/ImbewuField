@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Tsedzulusani pulane dza zwilimwa dza othomethiki dzi tshi bva kha mbalo dzaṋu dza u alusa na zwipikwa zwo vhulungwaho zwa vharengi.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Tolani thirei dza nese dzi re na datumu na zwidodombedzwa zwa vhupo musi ni sa athu daunilouda tsedzuluso yaṋu.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Vhulungani mbalo dzaṋu dza u alusa nahone ni tsedzuluso vhukoni na madatumu a mibethe yo pimiwaho.",
+  "Review a crop plan from your estimates": "Tsedzulusani pulane ya zwilimwa i tshi bva kha mbalo dzaṋu",
+  "Crop planner → Automatic plan from your estimates": "Mupulani wa zwilimwa → Pulane ya othomethiki i tshi bva kha mbalo dzaṋu",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Tolani ndinganyo yo vhulungwaho, khwathisedzani u vha hone nahone ni fanyise zwipikwa zwa vharengi na mbalo dzaṋu dza u alusa. Tsedzulusani mitingatingo yo dzinginywaho na zwidodombedzwa zwa nese; nyalo dzaṋu dzo vhulungwaho a dzi shanduki.",
+  "Review your growing estimates": "Tsedzulusani mbalo dzaṋu dza u alusa",
+  "Crop planner → Your growing estimates": "Mupulani wa zwilimwa → Mbalo dzaṋu dza u alusa",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Dzhenisani mihumbulo yaṋu, nangani mbethe wo pimiwaho nahone ni tsedzuluso mbalelo. Mbalo dzi siho dzi dzula dzi siho; mvelelo ndi mbalo fhedzi, a si thendelo ya vhulimi ha henefho.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Khwathisedzani shango ḽa fhethu ho mapiwaho musi ni sa athu shumisa vhulangeli ha u pulana zwilimwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Vhulungani rekhodo dzaṋu dza u zwala na zwishumiswa zwa nese musi pulane ya henefho i sa athu vha hone.",

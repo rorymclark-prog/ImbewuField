@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { cropByKey } from '@/lib/crop-catalog';
+import { estimateNumberLabel as quantity } from '@/lib/format-figures';
 import type { HarvestTarget } from '@/lib/crop-plan';
 import { growerPlanningScopeKey, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
@@ -160,15 +161,15 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
         {review.status === 'held' ? <ul>{review.issues.map((issue, index) => <li key={index}>{issueText(issue)}</li>)}</ul>
           : <><p>Search result: {review.proposal.status.replace(/-/g, ' ')}.</p>
             {!usable && <ul>{review.proposal.issues.map((issue, index) => <li key={index}>{issueText(issue)}</li>)}</ul>}
-            {review.targetMetadata.map(target => <p key={target.targetId}>Buyer demand: {target.buyerTotalKg} kg over {target.days} days. Gross estimated cycle capacity needed: {target.grossCapacityRequiredKg} kg. Weekly delivery quantities remain unverified.</p>)}
+            {review.targetMetadata.map(target => <p key={target.targetId}>Buyer demand: {quantity(target.buyerTotalKg)} kg over {target.days} days. Gross estimated cycle capacity needed: {quantity(target.grossCapacityRequiredKg)} kg. Weekly delivery quantities remain unverified.</p>)}
             {usable && review.proposal.cycles.map(cycle => <article key={cycle.cycleId} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
               <h4 className="font-semibold">{beds.find(bed => bed.id === cycle.bedId)?.label ?? 'Saved growing space'} · {cropByKey(cycle.cropKey)?.name ?? cycle.cropKey}</h4>
-              <p>{cycle.assessment.capacity.estimatedPlantCount} estimated plants; {cycle.assessment.capacity.estimatedYieldKg} kg for this whole cycle.</p>
+              <p>{quantity(cycle.assessment.capacity.estimatedPlantCount)} estimated plants; {quantity(cycle.assessment.capacity.estimatedYieldKg)} kg for this whole cycle.</p>
               <dl>{Object.entries({ 'Nursery start': cycle.assessment.schedule.nurseryStartDate ?? 'No nursery phase', 'Field entry': cycle.assessment.schedule.fieldEntryDate,
                 'First harvest': cycle.assessment.schedule.firstHarvestDate, 'Picking ends (exclusive)': cycle.assessment.schedule.harvestEndExclusiveDate,
                 'Field clear': cycle.assessment.schedule.fieldClearDate, 'Next field entry': cycle.assessment.schedule.nextFieldEntryDate }).map(([label, value]) => <div key={label} className="flex flex-wrap gap-x-2"><dt>{label}:</dt><dd>{value}</dd></div>)}</dl>
             </article>)}
-            {usable && review.proposal.demandResults.map(target => <p key={target.demandId}>Estimated gross capacity: {target.estimatedAllocatedKg ?? 'unknown'} kg; remaining: {target.unmetKg ?? 'unknown'} kg; excess: {target.excessEstimatedKg ?? 'unknown'} kg.</p>)}
+            {usable && review.proposal.demandResults.map(target => <p key={target.demandId}>Estimated gross capacity: {quantity(target.estimatedAllocatedKg)} kg; remaining: {quantity(target.unmetKg)} kg; excess: {quantity(target.excessEstimatedKg)} kg.</p>)}
           </>}
         {review.blockedBeds.length > 0 && <ul>{review.blockedBeds.map(bed => <li key={bed.bedId}>{beds.find(item => item.id === bed.bedId)?.label ?? 'Growing space'} held: {bed.reasons.map(issueText).join('; ')}</li>)}</ul>}
         <p>These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.</p>

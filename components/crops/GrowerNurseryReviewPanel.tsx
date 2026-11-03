@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { estimateNumberLabel as quantity } from '@/lib/format-figures';
 import type { NurserySettings } from '@/lib/nursery-settings';
 import { sanitiseNurserySettings } from '@/lib/nursery-settings';
 import type { GrowerWorkflowReview } from '@/lib/international/grower-workflow';
@@ -30,8 +31,6 @@ const blank = (): Controls => ({ settingsConfirmed: false, availabilityConfirmed
   fieldUsesConfirmed: false, availability: [], otherUses: [], contextKey: '' });
 const field = 'mt-1 min-h-11 w-full rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-sm';
 const button = 'min-h-11 rounded-lg border border-[var(--border)] px-3 py-2 text-sm disabled:opacity-50';
-const quantity = (value: number | null) => value === null ? 'Unknown' : String(value);
-
 
 /** The review is transient. Equipment remains in the existing canonical book. */
 export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanelProps) {
@@ -166,7 +165,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
         {batch.issues.length > 0 && <ul>{batch.issues.map((issue, i) => <li key={i}>{issueText(issue)}</li>)}</ul>}
       </article>)}
       {shown.result.resources.map(resource => <article key={`${resource.resourceKind}:${resource.id}`} className="rounded-lg border border-[var(--border)] p-3">
-        <h6 className="font-semibold">{resource.name}</h6><p>Known simultaneous demand: {resource.peak ? `${resource.peak[0]}–${resource.peak[1]}` : 'Unknown'} {resource.resourceKind === 'container' ? 'containers' : 'm²'}. Known shortage: {quantity(resource.shortage)} {resource.resourceKind === 'container' ? 'containers' : 'm²'}. {resource.headroom === 'unknown' || !resource.availabilityComplete ? 'This capacity comparison remains unknown.' : resource.incomplete ? 'The container or surface comparison is known; other nursery inputs remain incomplete.' : 'Dated supplied inputs checked.'}</p>
+        <h6 className="font-semibold">{resource.name}</h6><p>Known simultaneous demand: {resource.peak ? `${quantity(resource.peak[0])}–${quantity(resource.peak[1])}` : 'Unknown'} {resource.resourceKind === 'container' ? 'containers' : 'm²'}. Known shortage: {quantity(resource.shortage)} {resource.resourceKind === 'container' ? 'containers' : 'm²'}. {resource.headroom === 'unknown' || !resource.availabilityComplete ? 'This capacity comparison remains unknown.' : resource.incomplete ? 'The container or surface comparison is known; other nursery inputs remain incomplete.' : 'Dated supplied inputs checked.'}</p>
       </article>)}
       {shown.result.issues.length > 0 && <ul>{shown.result.issues.map((issue, i) => <li key={i}>{issueText(issue)}</li>)}</ul>}
       <p>These are raising estimates, not observed stock or local crop instructions. Unknown requirements are not zero. Surface totals do not prove tray packing, paths, hardening or up-pot space.</p>

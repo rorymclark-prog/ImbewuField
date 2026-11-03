@@ -78,6 +78,25 @@ function fill(screen: ReturnType<typeof mount>) {
   screen.check('I supply these planning dates and availability as my estimates.');
 }
 
+test('recurring buyer-demand decimals stay readable while the reviewed request and calculations remain exact', async () => {
+  const screen = mount();
+  try {
+    const fractionalTarget = { ...target, weeklyKg: 1 };
+    screen.update({ targets: [fractionalTarget] });
+    let reviewed: GrowerWorkflowReview | undefined, before = '';
+    screen.defer(async draft => {
+      reviewed = assembleGrowerWorkflowReview({ scope, source, book: { ...book, harvestTargets: [fractionalTarget] }, draft, recordedAt });
+      before = JSON.stringify(reviewed);
+      return reviewed;
+    });
+    fill(screen); await screen.click('Review automatic crop plan');
+    assert.match(screen.text(), /Buyer demand: ≈4\.143 kg/);
+    assert.match(screen.text(), /Gross estimated cycle capacity needed: ≈8\.286 kg/);
+    assert.equal(JSON.stringify(reviewed), before, 'formatting must never round the actual request, dates, capacities or proposal');
+    assert.doesNotMatch(screen.text(), /4\.142857142857143/);
+  } finally { screen.dispose(); }
+});
+
 test('automatic own-plan controls start without dates, budgets, profile selections or assumed free beds', async () => {
   const screen = mount(); try {
     for (const input of screen.renderer.root.findAllByType('input')) {
