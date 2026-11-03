@@ -80,6 +80,18 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
       limitations: 'Station records, frost dates and dataset terms remain unverified. Historical station summaries provide context for a location and time period.',
     }),
   ] },
+  { code: 'AU', name: 'Australia', stage: 'research-queue', jurisdictionNote: 'The national soil-depth map is modelled. Local agricultural regions, field conditions and state or territory requirements need separate review.', regions: [], agronomyReview: unreviewed(), sources: [
+    source('au-tern-soil-depth-v2', 'soils', 'Terrestrial Ecosystem Research Network (TERN)', 'https://portal.tern.org.au/metadata/TERN/fa8f70ba-4134-4678-b5f6-e51d0628c35d', 'Modelled national soil-profile depth across Australia', 'The official catalogue describes Soil Depth Release 2, a national model of soil-profile depth. It links raster downloads and map services.', {
+      title: 'Soil and Landscape Grid of Australia: Soil Depth, Release 2',
+      accessedOn: '2026-11-03', publishedOn: '2022-10-28', lastModifiedOn: '2026-11-02',
+      resolution: known('The catalogue reports 3 arc seconds, approximately 90 metres.'),
+      units: known('Metres of soil-profile depth, as described in the catalogue.'),
+      updateCadence: known('The catalogue lists updates as not planned for this release.'),
+      licence: known('The Soil Depth Release 2 dataset record lists Creative Commons Attribution 4.0 International.'),
+      attribution: 'Malone, B. and Searle, R. (2022). Soil Depth, Release 2, version 2.0. Terrestrial Ecosystem Research Network. DOI 10.25919/djdn-5x77. Credit the original source and nominated parties when reusing data.',
+      limitations: 'The model does not measure individual fields or beds. Raster downloads and map services were not tested, and this reference does not approve crop recommendations.',
+    }),
+  ] },
 ];
 
 export function countryProfile(code: string): CountryProfile | undefined {

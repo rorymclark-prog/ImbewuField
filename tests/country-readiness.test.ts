@@ -238,3 +238,26 @@ test('Ontario soil catalogue modification and licence preserve the regional revi
   assert.equal(result.productionPlanSupported, false);
   assert.equal(result.southAfricanFallbackAllowed, false);
 });
+
+
+test('Australia exposes the dated modelled soil reference without admitting a region or crop planning', () => {
+  const date = '2026-11-03';
+  const result = evaluateCountryReadiness({ countryCode: 'AU', agriculturalRegionId: 'australia' }, date);
+  assert.equal(result.country?.stage, 'research-queue');
+  assert.equal(result.status, 'reference-only');
+  assert.equal(result.region, null);
+  assert.equal(result.localReviewComplete, false);
+  assert.equal(result.productionPlanSupported, false);
+  assert.equal(result.southAfricanFallbackAllowed, false);
+  assert.deepEqual(result.evidence.filter(entry => entry.availableCount).map(entry => entry.category), ['soils']);
+  const [soil] = result.evidence.find(entry => entry.category === 'soils')!.sources;
+  assert.equal(soil.id, 'au-tern-soil-depth-v2');
+  assert.equal(soil.url, 'https://portal.tern.org.au/metadata/TERN/fa8f70ba-4134-4678-b5f6-e51d0628c35d');
+  assert.equal(soil.publishedOn, '2022-10-28');
+  assert.equal(soil.lastModifiedOn, '2026-11-02');
+  assert.equal(sourceEvidenceState(soil, '2026-11-02'), 'undated');
+  assert.equal(sourceEvidenceState(soil, date), 'available-reference');
+  assert.deepEqual(soil.updateCadence, { status: 'known', value: 'The catalogue lists updates as not planned for this release.' });
+  assert.match(soil.attribution, /10\.25919\/djdn-5x77/);
+  assert.match(soil.missingDataBehavior, /No adapter/);
+});
