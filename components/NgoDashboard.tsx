@@ -669,7 +669,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     {!isDemo && <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{ui('This register does not include the farmer’s private design.','Le rejista ayifaki umklamo wangasese womlimi.')}</p>}
                     {lang === 'zu' && <p className="text-xs leading-relaxed" style={{color:'var(--text-muted)'}}>{ui('', 'Umbiko we-PDF ongezansi usalokhu unombhalo wesiNgisi. Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo; izindleko azifakiwe, ngakho lo mbiko awubonisi inzuzo.')}</p>}
                     <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>{ui('Preview & download this garden record','Buka bese ulanda irekhodi lale ngadi')}</summary>
-                      <ReportComposer title="Garden production record" sample={isDemo} photos={isDemo ? sampleSitePhotos(garden.id) : []} photosByDefault={isDemo} sections={[
+                      <ReportComposer title="Garden production record" key={JSON.stringify([garden.id, gardener.id])} sample={isDemo} photos={isDemo ? sampleSitePhotos(garden.id) : []} photosByDefault={isDemo} sections={[
                         { title: 'Garden record', lines: [garden.name, `${gardener.name} · ${gardener.plot}`, `Plot size recorded: ${gardener.sizeM2} m². This is not a verified active production area.`] },
                         { title: 'Production entries', lines: gardener.production.map(p => `${p.date}: ${p.crop.n}, ${recordQuantityLabel(p)}`) },
                         { title: 'Sales entries', lines: gardener.sales.map(p => `${p.date}: ${p.crop.n}, ${recordQuantityLabel(p)}; R${p.rand}`) },

@@ -1,12 +1,14 @@
 'use client';
 import { numberLabel } from '@/lib/format-figures';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { deliverFile } from '@/lib/file-delivery';
 import { useAuth } from '@/lib/auth';
+import { activeAccountUid, readAccountLocalSampleState } from '@/lib/account-local-storage';
+import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { useLanguage } from '@/lib/i18n';
 import { fieldApi } from '@/lib/field-api';
 import { fieldDataReportNote } from '@/lib/field-request-model';
-import { isSampleMode } from '@/lib/sample-mode';
+import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import { sampleRead } from '@/lib/sample-operations';
 import { freshEvidenceData, aggregateProgrammeBranding, trainingFeedbackSummary, TRAINING_PHOTO_KINDS, type TrainingRecord, type ProgrammeBranding, type VenuePhoto } from '@/lib/programme-evidence';
 import styles from './MelDashboard.module.css';
@@ -27,7 +29,39 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
   const localizedPhotoHeading = photoHeading === 'Site photographs' ? ui(photoHeading,'Izithombe zesayithi') : photoHeading;
   const note=fieldDataReportNote(deviceData);
   const sections=note?[{title:'Data availability',lines:[note]},...suppliedSections]:suppliedSections;
-  const { profile } = useAuth();
+  const { user, profile } = useAuth();
+  const owner = user?.uid ?? null;
+  const reportScope = JSON.stringify([owner, profile?.org_id, profile?.role, orgId, sample,
+    funder, aggregate, title, session?.id, reportDate, filenameBase]);
+  const deliveryScope = useRef({ key: reportScope, generation: 0 });
+  if (deliveryScope.current.key !== reportScope) {
+    deliveryScope.current = { key: reportScope, generation: deliveryScope.current.generation + 1 };
+  }
+  // Invalidate during unmount so an old PDF cannot finish before passive cleanup.
+  useLayoutEffect(() => {
+    const invalidate = () => { deliveryScope.current.generation++; };
+    window.addEventListener(SAMPLE_MODE_EVENT, invalidate);
+    return () => {
+      invalidate();
+      window.removeEventListener(SAMPLE_MODE_EVENT, invalidate);
+    };
+  }, []);
+
+  function captureReportDeliveryContext() {
+    const { generation } = deliveryScope.current;
+    const mode = readAccountLocalSampleState();
+    return () => {
+      try {
+        if (deliveryScope.current.key !== reportScope || deliveryScope.current.generation !== generation
+          || mode === null || readAccountLocalSampleState() !== mode) return false;
+        if (sample) return true;
+        if (mode || activeAccountUid() !== owner) return false;
+        if (!isBackendConfigured()) return true;
+        const auth = getFirebase()?.auth;
+        return !!auth && (auth.currentUser?.uid ?? null) === owner;
+      } catch { return false; }
+    };
+  }
   const [loadedBranding, setLoadedBranding] = useState<ProgrammeBranding>();
   const sourceBranding = suppliedBranding ?? loadedBranding;
   const branding = aggregate && sourceBranding ? aggregateProgrammeBranding(sourceBranding) : sourceBranding;
@@ -57,6 +91,8 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
   const visible = sections.filter(s=>!session||!['Attendance register','Attendance summary'].includes(s.title)).map(s => ({ ...s, lines: format === 'summary' ? (s.summaryLines ?? s.lines.slice(0, 5)) : s.lines }));
   const evidenceTables = tables.filter(t=>format==='full'||t.includeInSummary!==false).map(table => { const rows = programmeReportTableRows(table, format); return <section className={reportStyles.evidenceTable} key={table.title}><h3>{table.title}</h3><p>{table.note}</p><p className={reportStyles.tableHint}>{ui('Swipe the table to see all columns.','Shelelezisa ithebula ukuze ubone wonke amakholomu.')}</p><div className={reportStyles.tableWrap} tabIndex={0} role="region" aria-label={`${table.title} table`}><table className={reportStyles.table} style={{minWidth:Math.max(480,table.columns.length*160)}}><caption className={reportStyles.tableCaption}>{table.title}</caption><colgroup>{programmeReportColumnWidths(table).map((width,i)=><col key={i} style={{width:`${width/174*100}%`}}/>)}</colgroup><thead><tr>{table.columns.map(c=><th key={c} scope="col">{c}</th>)}</tr></thead><tbody>{rows.map((row,i)=><tr key={i}>{row.map((cell,j)=>j===0?<th key={j} scope="row">{cell}</th>:<td key={j}>{cell}</td>)}</tr>)}</tbody></table></div>{!rows.length&&<p>{ui('No records available for this selection.','Awekho amarekhodi atholakalayo kulokhu okukhethiwe.')}</p>}{rows.length<table.rows.length&&<p>{table.rows.length-rows.length} {ui('further rows in the full report.','eminye imigqa embikweni ogcwele.')}</p>}</section>; });
   async function download() {
+    const current = captureReportDeliveryContext();
+    if (!current()) return;
     setBusy(true); setError('');
     try {
       const attached = includePhotos ? await Promise.all(photos.map(async photo => {
@@ -67,10 +103,13 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
         const image = await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = reject; reader.readAsDataURL(blob); });
         return { ...photo, image };
       })) : [];
+      if (!current()) return;
       const visual = visuals && presentation !== 'ink' ? { visuals, assets: await prepareVisualPdfAssets(visuals, attached), date: reportDate ?? new Date().toISOString().slice(0, 10) } : undefined;
+      if (!current()) return;
       const doc = await buildProgrammePdf(title, sample, sections, format, branding, attached, localizedPhotoHeading, visual, {metrics:reportMetrics,chart:reportChart,session,funder,ink:presentation==='ink',language:zu?'zu':'en',tables,subtitle,date:reportDate,reportLabel,ownerLabel});
-      await deliverFile(doc.output('blob'), filenameBase ? `${filenameBase}-${format}${presentation === 'ink' ? '-ink' : ''}.pdf` : `ImbewuField-${title.replace(/[^a-zA-Z0-9]+/g, '-')}.pdf`, title);
-    } catch { setError('The PDF could not be created. Your records have not changed.'); }
+      if (!current()) return;
+      await deliverFile(doc.output('blob'), filenameBase ? `${filenameBase}-${format}${presentation === 'ink' ? '-ink' : ''}.pdf` : `ImbewuField-${title.replace(/[^a-zA-Z0-9]+/g, '-')}.pdf`, title, current);
+    } catch { if (current()) setError('The PDF could not be created. Your records have not changed.'); }
     finally { setBusy(false); }
   }
   if (visuals) return <article className={`${visualStyles.report} ${presentation === 'ink' ? visualStyles.ink : ''}`} aria-label={title} data-report-print={presentation === 'ink' ? 'ink' : 'colour'}>
