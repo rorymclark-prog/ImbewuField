@@ -913,6 +913,7 @@ function FacilitatorCropsPageInner() {
     setACropKeys((prev) => prev.includes(cropKey) ? prev.filter((key) => key !== cropKey) : [...prev, cropKey]);
   }
   function runAutoSuggest() {
+    if (hasOwnRecords) return;
     if (!currentPlanningScopeAllowed() || beds.length === 0) return;
     suggestionScopeRef.current = planningScopeKey;
     const answers: AutoSuggestAnswers = {
