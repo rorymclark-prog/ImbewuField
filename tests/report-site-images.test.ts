@@ -161,8 +161,12 @@ test('every batch is shown the sheets, images before text', () => {
   // anti-invention rule is a system prompt. A picture attached to the first batch only would
   // inform one or two sections and leave every other one writing blind.
   const route = readFileSync(new URL('../app/api/generate-report/route.ts', import.meta.url), 'utf8');
-  assert.match(route, /const siteImages = normaliseSiteAnalysisImages\(body\.siteImages\)/,
+  // The guest reference replaces client images with the server-owned profile;
+  // a mutable binding is needed for that privacy rule, without losing validation.
+  assert.match(route, /\b(?:const|let) siteImages = normaliseSiteAnalysisImages\(body\.siteImages\)/,
     'the API takes the client\'s images without validating them');
+  const demoBranch = route.slice(route.indexOf('if (demoReference) {'), route.indexOf('const messageContent ='));
+  assert.match(demoBranch, /siteImages = \[\]/, 'a fixed public demo must discard private submitted maps');
   assert.match(route, /messages: \[\{ role: 'user', content: messageContent\(buildPrompt\(/,
     'the batch call no longer carries the sheets');
   const start = route.indexOf('const messageContent =');

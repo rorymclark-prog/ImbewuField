@@ -5,6 +5,7 @@ import test from 'node:test';
 import React from 'react';
 import typescript from 'typescript';
 import { DEMO_LOCATION } from '../lib/demo-site.ts';
+import { bindSiteContext, coordinateSiteIdForPlace, createSiteCountryContext } from '../lib/international/site-context.ts';
 import { groundPhotoSnapshotGallery, MAX_GROUND_PHOTOS, normaliseGroundPhotos, prepareGroundPhotos } from '../lib/report-ground-photos.ts';
 import { emptyMapReview, savedReportMapSelection, selectedReportMaps } from '../lib/report-map-selection.ts';
 import type { SavedReport } from '../lib/saved-reports.ts';
@@ -78,6 +79,14 @@ const ReportView = (await import('../components/ReportView.tsx')).default;
 
 function reset() { local.clear(); session.clear(); pdfHarness.options = undefined; pdfHarness.covers = undefined; }
 const textOf = (node: any): string => typeof node === 'string' ? node : node?.children?.map(textOf).join('') ?? '';
+function countryPlace(countryCode?: string): SavedPlace {
+  const place: SavedPlace = { id: 'holding', name: 'Original site', lat: DEMO_LOCATION.lat, lon: DEMO_LOCATION.lon,
+    biome: '', rainfall: 0, elevation: 0, savedAt: '2026-11-01T00:00:00.000Z' };
+  if (countryCode) place.siteCountryContext = bindSiteContext(createSiteCountryContext({
+    siteId: coordinateSiteIdForPlace(place)!, countryCode, confirmed: true,
+  }, '2026-11-02T12:00:00.000Z')!, place)!;
+  return place;
+}
 
 test('saved photograph bytes, captions and advice survive replacement of the live site evidence', () => {
   reset();
@@ -174,7 +183,10 @@ test('a legacy report exposes unknown attachments without selecting current maps
 
 test('generation freezes the submitted photographs even if another tab changes evidence before the reply finishes', async () => {
   reset();
-  const place = { id: 'holding', name: 'Original site', lat: DEMO_LOCATION.lat, lon: DEMO_LOCATION.lon } as SavedPlace;
+  // Freeze behavior is tested after real admission, not by bypassing the shared
+  // country policy. The stored confirmation must belong to this exact place.
+  const place = countryPlace('ZA');
+  local.setItem('permamap_saved_places', JSON.stringify([place]));
   assert.ok(addEvidenceItem(place.id, 'soil_erosion', { type: 'photo', dataUrl: jpeg('AAAA'), note: 'Before repairs' }));
   const originalFetch = globalThis.fetch;
   let submitted: { groundPhotos?: unknown } | undefined;
@@ -202,6 +214,36 @@ test('generation freezes the submitted photographs even if another tab changes e
     globalThis.fetch = originalFetch;
     await act(async () => { view?.unmount(); });
   }
+});
+
+test('unknown, foreign and stale country bindings cannot submit photos or create saved advice', async () => {
+  const stale = countryPlace('ZA');
+  stale.updatedAt = Date.parse(stale.savedAt) + 1;
+  const originalFetch = globalThis.fetch;
+  let requests = 0;
+  globalThis.fetch = async () => { requests++; throw Error('country rejection must precede every network request'); };
+  try {
+    for (const place of [countryPlace(), countryPlace('KE'), stale]) {
+      reset();
+      local.setItem('permamap_saved_places', JSON.stringify([place]));
+      assert.ok(addEvidenceItem(place.id, 'soil_erosion', { type: 'photo', dataUrl: jpeg('AAAA'), note: 'Before repairs' }));
+      const before = local.getItem('permamap_saved_places');
+      const photos = structuredClone(getSiteEvidence(place.id));
+      let view: ReturnType<typeof create> | undefined;
+      try {
+        await act(async () => { view = create(React.createElement(Ctx.Provider, { value: { lang: 'en', t: key => key, setLang() {}, onboarded: true, completeOnboarding() {} } },
+          React.createElement(ReportView, { locationData: DEMO_LOCATION, savedPlaces: [place], appLang: 'en', onClose() {} }))); });
+        const generate = view!.root.findAllByType('button').find(node => textOf(node) === 'Generate report')!;
+        assert.ok(generate && !generate.props.disabled);
+        await act(async () => { await generate.props.onClick(); });
+        assert.match(textOf(view!.toJSON()), /Local farming report generation is unavailable for this site’s current country context/);
+        assert.equal(requests, 0, 'a rejected local context must not submit private photos or consume a provider call');
+        assert.deepEqual(loadReports(), []);
+        assert.equal(local.getItem('permamap_saved_places'), before);
+        assert.deepEqual(getSiteEvidence(place.id), photos);
+      } finally { if (view) await act(async () => { view!.unmount(); }); }
+    }
+  } finally { globalThis.fetch = originalFetch; }
 });
 
 test.after(() => { hooks.deregister(); });
