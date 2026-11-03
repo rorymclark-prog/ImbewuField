@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '9f515a7b5', changes: [
+    'Record the day you picked a harvest separately from the day you saved it.',
+  ], tour: [{ title: 'Add a harvest date', where: 'Records → Picked', href: '/records',
+    detail: 'When logging a harvest, enter the day you picked it. Leave it blank if you are unsure.' }] },
   { when: '3 November 2026', sha: 'a0be3be16', changes: [
     'Write a dated field note from a checked crop task in your device journal.',
     'Review older device notes before choosing which entries to recover.',
