@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
+  "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Mapa a AI a Site na Sector a vhulunga zwidodombedzwa zwo olwa, a na mitalo miṱuku ya zwifanyiso.",
+  "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "Phasing i vhulunga tshifanyiso tsho olwaho; app i engedza shedulu, zwiga na tshikalo.",
+  "Paper-friendly map styles start on white and keep your chosen background.": "Zwitaila zwa mapa zwo teaho bammbiri zwi thoma nga hutshena zwa vhulunga murahu we na nanga.",
+  "Review the AI map finish": "Ṱolani mbonalo ya mapa wa AI",
+  "Site design → Glossy": "Nzudzanyo ya fhethu → Glossy",
+  "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.": "Nangani siaṱari na tshitaila. Zwitaila zwo teaho bammbiri zwi thoma nga hutshena nga nnḓa ha musi ni tshi nanga muṅwe murahu.",
+  "Compare with your exact plan": "Vhambedzani na pulane yaṋu yo teaho",
+  "Site design → Saved maps": "Nzudzanyo ya fhethu → Mapa o vhulungwaho",
+  "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.": "Vulani pulane yo teaho yo vhulungwaho tsini na tshifanyiso tshayo tsha AI. Ṱolani khuḓa dza mibete, zwifhaṱo na zwimela musi ni sa athu u shumisa tshifanyiso.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Ṱolani mvetamveto dza zwiko zwa mashango; nyeletshedzo ya vhulimi ya henefho a i athu u vha hone.",
   "Review international references": "Ṱolani zwiko zwa mashango",

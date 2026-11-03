@@ -46,7 +46,7 @@ The earlier gallery proves nine outputs exist; it does not prove they are all sa
 
 ## Verification
 
-- Ordered typecheck clean. Focused render checks: 616 pass. Additional Phasing/Sector/shade-cloth/canvas/simple/export checks: 64 pass. Whitespace clean. Full suite runs independently in CI; no full-suite pass claimed here.
+- Ordered typecheck clean. Focused render checks: 616 pass. Additional Phasing/Sector/shade-cloth/canvas/simple/export checks: 64 pass. Release-note/notice-localization checks: 49 pass. Four announcement translations are explicitly unreviewed [machine drafts](ai-map-release-drafts.json). Whitespace clean. Full suite runs independently in CI; no full-suite pass claimed here.
 - Local native recomposition uses the actual production helper bodies, actual already-paid output and each job's frozen scene. Assertions confirm serialized scene equality before/after. Site/Sector revised outputs inspected; Phasing new guide input inspected without schedule/pins. Historical Phasing recomposition is explicitly not a new provider result.
 - Prior 390×844, 820×1180 and 1440×900 viewer checks remain historical evidence. New live viewport/provider checks belong to the release continuation, not an implied physical phone/iPad pass.
 - Tests revised upward from obsolete contracts: inviting Sector roof drift; freezing Zones photo strips; offering model-owned Zones scale; style-click inline implementation. New tests execute actual callbacks/mask painters. No paid gate, assertion strength, access rule or security workflow removed.

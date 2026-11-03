@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
+  "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Dimmapa tsa AI tsa Site le Sector di boloka dintlha tse takilweng, ka mela e mmalwa ya difoto.",
+  "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "Phasing e boloka setshwantsho se takilweng; app e eketsa kemiso, matshwao le sekala.",
+  "Paper-friendly map styles start on white and keep your chosen background.": "Ditaele tsa mmapa tse loketseng pampiri di qala ka bosweu mme di boloka bokamorao boo o bo kgethileng.",
+  "Review the AI map finish": "Hlahloba ponahalo ya mmapa wa AI",
+  "Site design → Glossy": "Moralo wa sebaka → Glossy",
+  "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.": "Kgetha leqephe le setaele. Ditaele tse loketseng pampiri di qala ka bosweu ntle le ha o kgetha bokamorao bo bong.",
+  "Compare with your exact plan": "Bapisa le moralo wa hao o nepahetseng",
+  "Site design → Saved maps": "Moralo wa sebaka → Dimmapa tse bolokilweng",
+  "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.": "Bula moralo o nepahetseng o bolokilweng pela setshwantsho sa ona sa AI. Hlahloba dikgutlo tsa dibethe, meaho le dimela pele o sebedisa setshwantsho.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Hlahloba meralo ya mehlodi ya dinaha; keletso ya temo ya lehae ha e eso fumanehe.",
   "Review international references": "Hlahloba mehlodi ya dinaha",
