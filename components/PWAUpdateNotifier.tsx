@@ -287,7 +287,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   // A new build can deliberately leave a description in English; never restore an older draft.
   const copy = publishedCopy ?? nativeCopy.copy;
   const draftLocale = isUpdateCopyLanguage(lang);
-  if (!updateAvailable || dismissed || onPitchDeck) return null;
+  if (!updateAvailable || dismissed || onPitchDeck || pathname.startsWith('/connect/')) return null;
   // The NEW build's notes when the server could supply them; ours only as a fallback (a
   // service-worker-triggered update never hits /api/build-info, and an offline tab cannot ask).
   // Null (rather than []) until that fallback chunk has actually loaded, so the list below can

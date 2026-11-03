@@ -144,7 +144,13 @@ This convention applies to both Claude and Codex. The source lives in Git, so it
 is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
+## Assistant connector: start here
+
+[ImbewuField connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md). Native linking and production deployment are separate gates from the verified emulator and browser journey.
+
 ## Date index
+
+- [Assistant connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md).
 
 - [Nursery forecast source and verification — 1 November 2026](2026-11-01/nursery-source-and-verification.md).
 
