@@ -1,0 +1,19 @@
+{
+  "fetch": {
+    "source": "isric",
+    "requestedUrl": "https://data.isric.org/geonetwork/srv/api/records/4648929a-8031-49cc-9d56-9f3aeff2f8d9",
+    "effectiveUrl": "https://data.isric.org/srv/api/records/4648929a-8031-49cc-9d56-9f3aeff2f8d9",
+    "httpStatus": 200,
+    "fetchedAtUtc": "2026-11-03T22:39:33.386219+00:00",
+    "bytes": 66872,
+    "sha256": "b3bc14a42209f4af1b8a720120bf9431f844730190e0f81eaccf465bf73ce9b2"
+  },
+  "artifact": "HTML catalogue record",
+  "publishedOn": "2004-02-01",
+  "catalogueMapScale": "1:1000000",
+  "catalogueLicence": "CC BY 3.0",
+  "scope": "Historical national-scale soil parameter estimates with inferred values",
+  "advertisedZip": "https://files.isric.org/public/sotwis/SOTWIS_KEN.zip",
+  "downloadFetched": false,
+  "readinessEvidence": false
+}

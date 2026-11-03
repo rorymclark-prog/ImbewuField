@@ -152,3 +152,23 @@ test('offline rendering keeps ordinary reference links available without fetchin
     unchangedGlobalActivity();
   } finally { ui.dispose(); }
 });
+
+test('the historical Kenya soil entry links only to the catalogue and disappears from the Brazil dossier', () => {
+  let screen!: ReactTestRenderer;
+  act(() => { screen = create(React.createElement(CountryReview)); });
+  const link = () => screen.root.findAllByType('a').filter(a =>
+    a.props.href === 'https://data.isric.org/srv/api/records/4648929a-8031-49cc-9d56-9f3aeff2f8d9');
+  try {
+    assert.equal(link().length, 1);
+    const details = screen.root.findAllByType('details').find(item => item.findAllByType('a').includes(link()[0]))!;
+    assert.match(text(details), /Background reference only/);
+    assert.match(text(details), /Soil measurements for Kiambu and individual farms remain unverified/);
+    assert.equal(details.findAllByType('a').length, 1);
+    assert.equal(link()[0].props.onClick, undefined);
+    assert.ok(screen.root.findAllByType('li').some(item => text(item).includes('Current verified soils reference evidence is missing.')));
+    const selector = screen.root.findAllByType('select').find(item => item.props.value === 'KE')!;
+    act(() => selector.props.onChange({ target: { value: 'BR' } }));
+    assert.equal(link().length, 0);
+    unchangedGlobalActivity();
+  } finally { act(() => screen.unmount()); }
+});
