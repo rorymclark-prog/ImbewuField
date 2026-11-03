@@ -219,3 +219,22 @@ test('Ontario guide and Canadian climate links leave regional planning and fallb
     assert.equal(source.units.status, 'unknown');
   }
 });
+
+test('Ontario soil catalogue modification and licence preserve the regional review hold', () => {
+  const date = '2026-11-03';
+  const result = evaluateCountryReadiness({ countryCode: 'CA', agriculturalRegionId: 'ontario' }, date);
+  const evidence = result.evidence.find(entry => entry.category === 'soils');
+  assert.ok(evidence);
+  assert.equal(evidence.sources.length, 1);
+  const [soil] = evidence.sources;
+  assert.equal(soil.url, 'https://data.ontario.ca/en/dataset/soil-survey');
+  assert.equal(soil.publishedOn, null);
+  assert.equal(soil.lastModifiedOn, '2022-01-10');
+  assert.equal(sourceEvidenceState(soil, date), 'undated');
+  assert.equal(evidence.availableCount, 0);
+  assert.equal(soil.licence.status, 'known');
+  assert.equal(soil.resolution.status, 'unknown');
+  assert.equal(result.region, null);
+  assert.equal(result.productionPlanSupported, false);
+  assert.equal(result.southAfricanFallbackAllowed, false);
+});

@@ -67,6 +67,13 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
       accessedOn: '2026-11-03', publishedOn: '2024-02-15', lastModifiedOn: '2026-10-19',
       limitations: 'The guide PDF, dataset reuse rights and local growing recommendations require separate review.',
     }),
+    source('ca-on-soil-survey', 'soils', 'Ontario Data Catalogue · Soil survey', 'https://data.ontario.ca/en/dataset/soil-survey', 'Historic soil surveys compiled across Southern Ontario and parts of Northern Ontario', 'The catalogue describes the Soil Survey Complex as a digital compilation of historic surveys made at different map scales.', {
+      title: 'Soil survey',
+      accessedOn: '2026-11-03', lastModifiedOn: '2022-01-10',
+      licence: known('The catalogue links Open Government Licence – Ontario for this record. Its attribution requirements apply to reuse.'),
+      attribution: 'Use the provider’s specified credit and link to the licence where possible. The licence gives default wording for cases without a specific credit or where multiple credits are impractical.',
+      limitations: 'Coverage and map scale vary. Individual layers, downloadable data and field conditions need separate verification.',
+    }),
     source('ca-eccc-climate-normals', 'weather-frost', 'Environment and Climate Change Canada', 'https://climate.weather.gc.ca/climate_normals/', 'Canadian climate station composites, searchable by province and territory', 'The official index describes 1991–2020 historical climate normals and offers station searches and bulk CSV downloads.', {
       title: 'Canadian Climate Normals',
       accessedOn: '2026-11-03', lastModifiedOn: '2026-10-22',

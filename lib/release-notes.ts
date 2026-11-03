@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '70d2b2488', changes: [
+    'Find the Ontario soil survey catalogue in Canada’s country review.',
+  ], tour: [{ title: 'Find the Ontario soil survey', where: 'International → Country review', href: '/international',
+    detail: 'Choose Canada and open the soil survey entry to see its coverage and source.' }] },
   { when: '3 November 2026', sha: '6cbdca798', changes: [
     'Find the Ontario vegetable guide and Canadian climate normals in the country review.',
   ] },
