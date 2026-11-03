@@ -41,6 +41,9 @@ const FLOOR = 12;
 // old tab, a bookmark, the Journal's link), so if anyone ever puts markup back on it, the floor
 // should apply from the first line rather than from whenever someone remembers this file.
 const ROUTES = [
+  // Country evidence is opened by a route link, not an import from Home. Seed
+  // its real page so new reference panels cannot disappear from this audit.
+  'app/international/page.tsx',
   'app/offline/page.tsx',
   'app/tips/page.tsx',
   'app/home/page.tsx',
@@ -92,6 +95,11 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  // Both existing route surfaces have zero sub-floor declarations in parent
+  // HEAD; keep readable evidence and held-advice notices under the strict floor.
+  'app/international/page.tsx': 'growers open country evidence and reference checks here; zero-debt 12px floor',
+  'components/international/countries/CountryReview.tsx': 'growers distinguish public references from approved local advice; zero-debt 12px floor',
+  'components/international/countries/NwsStationReference.tsx': 'growers must read observation dates, missing measurements and reference scope on phones; zero-debt 12px floor',
   'components/international/countries/SavedSiteUpdates.tsx': 'farmers read account delivery and offline status before trusting saved country details; zero-debt 12px floor',
   'components/international/countries/WorkspaceReferencePanel.tsx': 'farmers must read and explicitly confirm a workspace reference basis; zero-debt 12px floor',
   'components/AiMapSettings.tsx': 'farmers must read their own paid-map switch and service-access status in Settings; enforce the zero-debt 12px floor',

@@ -132,6 +132,24 @@ const FLOW_HELP_ROUTES: { route: string; page: string }[] = [
   { route: '/facilitator/crops', page: '../app/facilitator/crops/page.tsx' },
 ];
 
+test('the public country observation view keeps help in flow without hiding it on other international workspaces', () => {
+  // A real 390px observation result put the floating circle over temperature.
+  // Exercise the actual route predicate, then require its paired help surface.
+  const widget = source('../components/ChatWidget.tsx');
+  const helper = widget.slice(widget.indexOf('function isLimaFabHiddenRoute'));
+  const expression = helper.match(/return\s*(\([\s\S]*?\));/);
+  assert.ok(expression);
+  const hidden = new Function('pathname', `return ${expression[1]};`) as (pathname: string) => boolean;
+  assert.equal(hidden('/international'), true);
+  assert.equal(hidden('/international/locales'), false);
+  assert.equal(hidden('/international/projects'), false);
+  const skipAt = widget.indexOf("pathname.startsWith('/login')");
+  assert.match(widget.slice(skipAt, widget.indexOf(') return null;', skipAt)), /pathname === '\/international'/);
+  const page = source('../components/international/countries/CountryReview.tsx');
+  assert.match(page, /import LimaBar from '@\/components\/LimaBar';/);
+  assert.match(page, /<\/main><LimaBar \/>/, 'help follows the reading flow instead of floating over measurements');
+});
+
 test('every route that drops the floating FAB mounts LimaBar in its place', () => {
   const widget = source('../components/ChatWidget.tsx');
 

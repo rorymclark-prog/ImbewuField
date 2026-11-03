@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '66e2dffc6', changes: [
+    'Compare a fixed US station’s weather observations with clear dates and missing readings.',
+  ], tour: [{ title: 'Review a public US weather station', where: 'International foundation → United States', href: '/international',
+    detail: 'Choose United States, then load the fixed public station example. Observation and retrieval times stay separate; this does not supply farm weather or planting advice.' }] },
   { when: '2 November 2026', sha: 'dfa7ac49e', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
     'Keep your sowing records and nursery equipment while local planning is unavailable.',

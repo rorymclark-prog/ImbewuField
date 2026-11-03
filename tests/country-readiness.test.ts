@@ -35,12 +35,18 @@ test('unsupported countries and Europe cannot acquire a South African or nearby-
 });
 
 test('all engineering pilots preserve separate evidence roles and remain unreviewed', () => {
+  const registryAsOf = new Date().toISOString().slice(0, 10);
   assert.deepEqual(COUNTRY_PROFILES.map((profile) => profile.code), ['KE', 'GB', 'US', 'BR']);
   for (const profile of COUNTRY_PROFILES) {
     assert.equal(profile.stage, 'engineering-pilot'); assert.equal(profile.agronomyReview.status, 'not-reviewed');
     for (const category of EVIDENCE_CATEGORIES) assert.ok(profile.sources.some((source) => source.category === category));
     for (const source of profile.sources) {
-      assert.match(source.url, /^https:\/\//); assert.equal(source.accessedOn, AS_OF);
+      assert.match(source.url, /^https:\/\//);
+      // Sources are reviewed independently. A later verified source must not
+      // rewrite every historical access date to the foundation's first date.
+      // Synthetic publication metadata isolates the access-date rule without
+      // falsely claiming that an undated/unavailable real source is reviewed.
+      assert.equal(sourceEvidenceState({ ...source, verification: 'content-read', publishedOn: AS_OF, reviewDueOn: null }, registryAsOf), 'available-reference');
       assert.ok(source.verifiedClaim && source.limitations && source.missingDataBehavior);
       assert.ok(['known', 'unknown'].includes(source.licence.status));
     }
@@ -88,6 +94,18 @@ test('source presence, stale evidence and unknown publication dates retain diffe
   assert.equal(sourceEvidenceState({ ...source, reviewDueOn: '2026-10-31' }, AS_OF), 'stale');
   assert.throws(() => sourceEvidenceState(source, 'not-a-date'), RangeError);
   assert.throws(() => evaluateCountryReadiness({ countryCode: 'KE' }, '2026-02-30'), RangeError);
+});
+
+test('historical access dates remain valid while missing, noncanonical, impossible and future dates cannot pass evidence review', () => {
+  const source = { ...reviewedFixture().sources[0], publishedOn: '2024-01-01' };
+  for (const accessedOn of [AS_OF, '2026-10-31', '2024-02-29']) {
+    assert.equal(sourceEvidenceState({ ...source, accessedOn }, AS_OF), 'available-reference');
+  }
+  for (const accessedOn of [null, 'not-a-date', '2026-1-01', '2026-11-01T00:00:00Z', '2026-02-30', '2025-02-29', '2026-11-02']) {
+    assert.equal(sourceEvidenceState({ ...source, accessedOn }, AS_OF), 'undated');
+    const profile = reviewedFixture(); profile.sources[0].accessedOn = accessedOn;
+    assert.equal(evaluateCountryReadiness({ countryCode: 'KE', agriculturalRegionId: 'test-region' }, AS_OF, [profile]).localReviewComplete, false);
+  }
 });
 
 test('the wider research queue is distinct from verified pilot dossiers and Europe is not one jurisdiction', () => {

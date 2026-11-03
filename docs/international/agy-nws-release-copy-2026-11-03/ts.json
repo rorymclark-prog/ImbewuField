@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "locale": "ts",
+  "provenance": {
+    "executor": "AGY",
+    "method": "AI draft",
+    "createdOn": "2026-11-03"
+  },
+  "review": {
+    "status": "unreviewed"
+  },
+  "messages": [
+    {
+      "key": "NwsRelease.66e2dffc6.change.1",
+      "sourceEnglish": "Compare a fixed US station’s weather observations with clear dates and missing readings.",
+      "sourceSha256": "d21911490e0d63049e24594251434048c71878574df699e37694041979623ebf",
+      "text": "Pimanisa swivonelo swa maxelo swa xitichi lexi nga cenciki xa US na masiku lama nga erivaleni na tinhlayo leti kayivelaka.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NwsRelease.66e2dffc6.tour.1.title",
+      "sourceEnglish": "Review a public US weather station",
+      "sourceSha256": "0a684d837596c8ef26fd2f22e796a53e509d0bb45702c3bb4d965c26c9dad051",
+      "text": "Kambela xitichi xa maxelo xa le rivaleni xa US",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NwsRelease.66e2dffc6.tour.1.where",
+      "sourceEnglish": "International foundation → United States",
+      "sourceSha256": "65dfc4338e5f7fd1ea7faff1abae49caea7b54b00fc9743d553aa17a25be0a67",
+      "text": "Masungulo ya matiko ya misava → United States",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NwsRelease.66e2dffc6.tour.1.detail",
+      "sourceEnglish": "Choose United States, then load the fixed public station example. Observation and retrieval times stay separate; this does not supply farm weather or planting advice.",
+      "sourceSha256": "a210568d6c4050278156445d39a6cb1a9e1c851ba3e30a2867ce04345dd3043f",
+      "text": "Hlawula United States, kutani u layicha xikombiso xa xitichi xa le rivaleni lexi nga cenciki. Mikarhi yo vona na yo kuma yi tshama yi hambanile; leswi a swi nyiki maxelo ya purasi kumbe switsundzuxo swo byala.",
+      "review": {
+        "status": "unreviewed"
+      }
+    }
+  ]
+}

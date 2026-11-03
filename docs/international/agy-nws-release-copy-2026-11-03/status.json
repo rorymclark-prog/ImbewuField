@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-11-03",
+  "status": "needs-human-review",
+  "candidateOnly": true,
+  "source": "source.json",
+  "sourceSha256": "a095a99ad9d895ace2876cc7f27ff3be337aaf3bc091fcc774092d9759e106d6",
+  "messagesPerLocale": 4,
+  "totalCandidateMessages": 16,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "files": {
+    "zu": "docs/international/agy-nws-release-copy-2026-11-03/zu.json",
+    "st": "docs/international/agy-nws-release-copy-2026-11-03/st.json",
+    "ts": "docs/international/agy-nws-release-copy-2026-11-03/ts.json",
+    "ve": "docs/international/agy-nws-release-copy-2026-11-03/ve.json"
+  },
+  "sourceSha256Binding": "All 4 messages per locale match source keys, sourceEnglish, and sourceSha256 (hash of UTF-8 sourceEnglish) exactly from source.json",
+  "executor": "AGY coordinator (single main writer across zu, st, ts, ve, notes, status, and materialisation)",
+  "nativeWorkerStates": {
+    "activeSubagents": 0,
+    "state": "stopped"
+  },
+  "humanReviewGates": {
+    "zu": "unreviewed - requires named fluent-human isiZulu grower / agronomist review",
+    "st": "unreviewed - requires named fluent-human Sesotho grower / agronomist review",
+    "ts": "unreviewed - requires named fluent-human Xitsonga grower / agronomist review",
+    "ve": "unreviewed - requires named fluent-human Tshivenda grower / agronomist review"
+  },
+  "review": {
+    "status": "unreviewed",
+    "assignedReviewers": null
+  },
+  "productionLanguageEnablement": false,
+  "runtimeActivation": {
+    "executorDelivery": false,
+    "coordinatorBranchCandidateWiring": true,
+    "productionDeployment": false
+  },
+  "validationProvenance": {
+    "validator": "Independent coordinator-machine structural validation plus exercised corruptions; fluent human review not performed",
+    "verified": [
+      "All four locale files (zu.json, st.json, ts.json, ve.json) parsed with valid JSON",
+      "Exactly 4 matching distinct keys per locale in source order (16 total candidate messages)",
+      "Source file SHA a095a99ad9d895ace2876cc7f27ff3be337aaf3bc091fcc774092d9759e106d6 confirmed as authority",
+      "Per-message sourceEnglish and sourceSha256 exact match with source.json",
+      "Nonempty translated text in all 16 messages",
+      "Every review status explicitly unreviewed at file and message levels",
+      "Navigation arrow → and destination United States preserved verbatim"
+    ],
+    "humanApproval": false,
+    "namedHumanReviewRequired": true,
+    "runtimeValidation": "Fresh-process actual loadUpdateCopy/updateDescription matched all 16 packet texts; current banner/tour and default/Simple history have zero gaps in every locale; removal of exact insertion restores committed prior chunks byte-for-byte. English fallback, damaged-number, inherited-value and wrong-language controls passed."
+  },
+  "executorHandoff": {
+    "scope": "Historical AGY delivery: standalone candidate files only; no runtime integration was performed by AGY.",
+    "activeWorkers": 0
+  },
+  "coordinatorIntegration": {
+    "status": "candidate-only-branch-integration",
+    "runtimeFiles": [
+      "lib/update-copy-locales/zu.ts",
+      "lib/update-copy-locales/st.ts",
+      "lib/update-copy-locales/ts.ts",
+      "lib/update-copy-locales/ve.ts"
+    ],
+    "entries": 16,
+    "mechanism": "Existing explicitly unreviewed source-paired update copy with English fallback and human-review notices",
+    "structuralValidation": "structural-validation.json",
+    "fluentHumanApproval": false,
+    "newLanguageEnablement": false,
+    "agronomicApproval": false,
+    "productionDeployment": false
+  }
+}
