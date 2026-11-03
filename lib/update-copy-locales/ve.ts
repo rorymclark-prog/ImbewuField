@@ -10,6 +10,29 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Tsedzulusani tsumbo i songo mapiwaho",
   "Crop planner → Planning without a mapped site": "Mupulani wa zwilimwa → U pulana hu si na fhethu ho mapiwaho",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Kha mbethe wa maitele kana vhuvhambadzi ha henefho, nangani kana ni bvise mutheo wa tsumbo wa Afurika Tshipembe nga ho livhaho. Khetho i sala henefho kha vhupo ha u shumela.",
+  "Review the shade cover": "Ṱolani tshitsireledzi tsha murunzi",
+  "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Vulani Structures, ni kone u dovha na kuvhanganya tshifanyiso tsha AI tsho vhulungwaho uri tshi sumbedze tshitsireledzi tsha murunzi.",
+
+  // Shade recovery: docs/audits/2026-11-03/shade-recovery-release-drafts.json; UNREVIEWED AI draft.
+  "Structures maps show recorded shade cloth over the illustrated beds.": "Mapa a Structures a sumbedza laphu ḽa murunzi ḽo rekhodiwaho nṱha ha mibhedzi yo olwaho.",
+  // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Mapa a Sector a shumisa mitalo ya vhuimo ha nṱha ya dzingu nga u angaredza, na khetho ya phurofaili ya mavu A–B.",
+  // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Choose area names or a numbered key on the historical Existing Site map.": "Nangani madzina a fhethu kana khii ya nomboro kha mapa wa kale wa Existing Site.",
+  // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
+  "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Mapa a Site na Sector a Ubhejane a nga sumbedza tshifanyiso tsha kale tsha musi mishumo i sa athu thoma.",
+  "AI maps start with available aerial imagery; you can still choose plain paper.": "Mapa a AI a thoma nga zwifanyiso zwi re hone zwa nṱha; ni kha ḓi nga nanga bammbiri ḽitshena.",
+
+  // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
+  "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Mapa a AI a Site na Sector a vhulunga zwidodombedzwa zwo olwa, a na mitalo miṱuku ya zwifanyiso.",
+  "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "Phasing i vhulunga tshifanyiso tsho olwaho; app i engedza shedulu, zwiga na tshikalo.",
+  "Paper-friendly map styles start on white and keep your chosen background.": "Zwitaila zwa mapa zwo teaho bammbiri zwi thoma nga hutshena zwa vhulunga murahu we na nanga.",
+  "Review the AI map finish": "Ṱolani mbonalo ya mapa wa AI",
+  "Site design → Glossy": "Nzudzanyo ya fhethu → Glossy",
+  "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.": "Nangani siaṱari na tshitaila. Zwitaila zwo teaho bammbiri zwi thoma nga hutshena nga nnḓa ha musi ni tshi nanga muṅwe murahu.",
+  "Compare with your exact plan": "Vhambedzani na pulane yaṋu yo teaho",
+  "Site design → Saved maps": "Nzudzanyo ya fhethu → Mapa o vhulungwaho",
+  "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.": "Vulani pulane yo teaho yo vhulungwaho tsini na tshifanyiso tshayo tsha AI. Ṱolani khuḓa dza mibete, zwifhaṱo na zwimela musi ni sa athu u shumisa tshifanyiso.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Ṱolani mvetamveto dza zwiko zwa mashango; nyeletshedzo ya vhulimi ya henefho a i athu u vha hone.",
   "Review international references": "Ṱolani zwiko zwa mashango",

@@ -1,5 +1,18 @@
 # ImbewuField audit archive
 
+Latest Structures recovery: [Recorded permeable shade cover over paid artwork — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md). App-drawn material is distinguished from AI output.
+
+Latest terrain continuation: [Sector DEM alignment, data limits and regional A–B profile — 3 November 2026](2026-11-03/sector-terrain-profile-codex.md). Fresh Earthworks/Structures still have documented visual failures.
+
+Latest area-label follow-up: [Named historical areas and numbered alternative — 3 November 2026](2026-11-03/historical-area-labels-codex.md).
+
+Latest historical baseline: [Approved before-works photo, numbered facts and evidence-based defaults — 3 November 2026](2026-11-03/historical-baseline-codex.md). Exact photographic previews are separate from pending historical AI Sector verification.
+
+Latest implementation: [Nine-layer AI fidelity corrections — 3 November 2026](2026-11-03/ai-layer-fidelity-corrections-codex.md). Local output and contract evidence are separate from pending fresh-provider checks.
+
+Previous AI output review: [Nine actual AI layer versions and rejected oblique — 2 November 2026](2026-11-02/ai-layer-output-review-codex.md). Availability is verified; the recorded fidelity and provenance failures remain open.
+
+
 This is the shared starting point for Rory, Claude and Codex. Read the latest
 record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
@@ -141,6 +154,13 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Recorded shade cover recovery — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md).
+
+- [Sector DEM alignment and regional A–B profile — 3 November 2026](2026-11-03/sector-terrain-profile-codex.md).
+- [Named historical areas — 3 November 2026](2026-11-03/historical-area-labels-codex.md).
+- [Approved historical baseline — 3 November 2026](2026-11-03/historical-baseline-codex.md).
+- [Nine-layer AI fidelity corrections — 3 November 2026](2026-11-03/ai-layer-fidelity-corrections-codex.md).
+
 - [Nursery forecast source and verification — 1 November 2026](2026-11-01/nursery-source-and-verification.md).
 
 - [White Water sheets, retained AI roofs and reachable styling — 31 October 2026](2026-10-31/paper-map-finish-codex.md).
@@ -258,6 +278,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-11-03 | [Structures shade recovery](2026-11-03/structures-shade-recovery-codex.md) · [Historical baseline](2026-11-03/historical-baseline-codex.md) · [Area names](2026-11-03/historical-area-labels-codex.md) · [Sector regional profile](2026-11-03/sector-terrain-profile-codex.md) · [AI fidelity](2026-11-03/ai-layer-fidelity-corrections-codex.md) |
 | 2026-10-31 | [Nine-sheet AI fidelity and three viewport sizes — Codex](2026-10-31/ai-sheet-fidelity-codex.md) |
 | 2026-10-31 | [Per-sheet AI starting settings — Codex](2026-10-31/map-sheet-defaults-codex.md) |
 | 2026-10-31 | [Live AI map settings/output review — Codex](2026-10-31/live-ai-map-settings-review-codex.md) |

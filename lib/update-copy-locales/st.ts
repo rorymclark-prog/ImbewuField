@@ -10,6 +10,29 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Hlahloba tšupiso e sa mmepiloeng",
   "Crop planner → Planning without a mapped site": "Moralo oa lijalo → Ho rera ntle le sebaka se mmepiloeng",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Bakeng sa bethe e bōpiloeng kapa moralo oa sebaka, khetha kapa u tlose motheo oa tšupiso oa Afrika Boroa ka ho hlaka. Khetho ena e sala le sebaka seo sa mosebetsi.",
+  "Review the shade cover": "Hlahloba sekoahelo sa moriti",
+  "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Bula Structures, ebe o kopanya botjha setshwantsho sa AI se bolokilweng ho bontsha sekoahelo sa moriti.",
+
+  // Shade recovery: docs/audits/2026-11-03/shade-recovery-release-drafts.json; UNREVIEWED AI draft.
+  "Structures maps show recorded shade cloth over the illustrated beds.": "Dimmapa tsa Structures di bontsha lesela la moriti le rekotilweng hodima dibethe tse takilweng.",
+  // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Dimmapa tsa Sector di sebedisa mela ya bophahamo ya kakaretso ya sebaka, ka kgetho ya profaele ya naha A–B.",
+  // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Choose area names or a numbered key on the historical Existing Site map.": "Kgetha mabitso a dibaka kapa senotlolo sa dinomoro mmapeng wa kgale wa Existing Site.",
+  // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
+  "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Dimmapa tsa Site le Sector tsa Ubhejane di ka bontsha foto ya polokelo ya pele ho mesebetsi.",
+  "AI maps start with available aerial imagery; you can still choose plain paper.": "Dimmapa tsa AI di qala ka ditshwantsho tse teng tsa moyeng; o ntse o ka kgetha pampiri e tshweu.",
+
+  // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
+  "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Dimmapa tsa AI tsa Site le Sector di boloka dintlha tse takilweng, ka mela e mmalwa ya difoto.",
+  "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "Phasing e boloka setshwantsho se takilweng; app e eketsa kemiso, matshwao le sekala.",
+  "Paper-friendly map styles start on white and keep your chosen background.": "Ditaele tsa mmapa tse loketseng pampiri di qala ka bosweu mme di boloka bokamorao boo o bo kgethileng.",
+  "Review the AI map finish": "Hlahloba ponahalo ya mmapa wa AI",
+  "Site design → Glossy": "Moralo wa sebaka → Glossy",
+  "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.": "Kgetha leqephe le setaele. Ditaele tse loketseng pampiri di qala ka bosweu ntle le ha o kgetha bokamorao bo bong.",
+  "Compare with your exact plan": "Bapisa le moralo wa hao o nepahetseng",
+  "Site design → Saved maps": "Moralo wa sebaka → Dimmapa tse bolokilweng",
+  "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.": "Bula moralo o nepahetseng o bolokilweng pela setshwantsho sa ona sa AI. Hlahloba dikgutlo tsa dibethe, meaho le dimela pele o sebedisa setshwantsho.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Hlahloba meralo ya mehlodi ya dinaha; keletso ya temo ya lehae ha e eso fumanehe.",
   "Review international references": "Hlahloba mehlodi ya dinaha",

@@ -10,6 +10,29 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Buyekeza isisekelo sokubhekisela esingadwetshiwe",
   "Crop planner → Planning without a mapped site": "Umhleli wezitshalo → Ukuhlela ngaphandle kwesayithi edwetshiwe",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Kumbhede wokutshala owenziwe noma kumklamo wendawo, khetha ngokucacile noma ususe isisekelo sokubhekisela saseNingizimu Afrika. Ukukhetha kuhlala kuleyo ndawo yokusebenzela.",
+  "Review the shade cover": "Hlola isembozo somthunzi",
+  "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Vula iStructures, bese uhlanganisa futhi umdwebo we-AI ogciniwe ukuze ubonise isembozo somthunzi.",
+
+  // Shade recovery: docs/audits/2026-11-03/shade-recovery-release-drafts.json; UNREVIEWED AI draft.
+  "Structures maps show recorded shade cloth over the illustrated beds.": "Amamephu eStructures abonisa indwangu yomthunzi erekhodiwe phezu kwemibhede edwetshiwe.",
+  // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Amamephu eSector asebenzisa imigqa yokuphakama yesifunda, enenketho yephrofayili yomhlaba A–B.",
+  // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Choose area names or a numbered key on the historical Existing Site map.": "Khetha amagama ezindawo noma ukhiye onezinombolo ebalazweni lomlando le-Existing Site.",
+  // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
+  "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Amamephu eSite neSector ase-Ubhejane angabonisa isithombe senqolobane sangaphambi komsebenzi.",
+  "AI maps start with available aerial imagery; you can still choose plain paper.": "Amamephu e-AI aqala ngezithombe zasemoyeni ezikhona; usengakhetha iphepha elimhlophe.",
+
+  // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
+  "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Amamephu e-AI eSite neSector agcina imininingwane edwetshiwe, enemigqa yezithombe embalwa.",
+  "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "I-Phasing igcina umdwebo; i-app ingeza uhlelo, izimpawu nesikali.",
+  "Paper-friendly map styles start on white and keep your chosen background.": "Izitayela zemephu ezifanele iphepha ziqala kokumhlophe futhi zigcina ingemuva olikhethile.",
+  "Review the AI map finish": "Hlola ukubukeka kwemephu ye-AI",
+  "Site design → Glossy": "Ukwakhiwa kwesiza → Glossy",
+  "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.": "Khetha ishidi nesitayela. Izitayela ezifanele iphepha ziqala kokumhlophe ngaphandle uma ukhetha elinye ingemuva.",
+  "Compare with your exact plan": "Qhathanisa nohlelo lwakho olunembile",
+  "Site design → Saved maps": "Ukwakhiwa kwesiza → Amamephu agciniwe",
+  "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.": "Vula uhlelo olunembile olugciniwe eduze komdwebo walo we-AI. Hlola amakhona emibhede, izakhiwo nezitshalo ngaphambi kokusebenzisa umdwebo.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Hlola izinhlaka zolwazi zamazwe; izeluleko zendawo zokulima azikatholakali.",
   "Review international references": "Buyekeza imithombo yamazwe",

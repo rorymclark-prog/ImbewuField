@@ -41,13 +41,36 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '2 November 2026', sha: 'dfa7ac49e', changes: [
+  { when: '3 November 2026', sha: 'dfa7ac49e', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
     'Keep your sowing records and nursery equipment while local planning is unavailable.',
   ], tour: [{ title: 'Confirm your site country', where: 'Crop planner → Site country and region', href: '/facilitator/crops',
     detail: 'Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.' },
   { title: 'Review an unmapped reference', where: 'Crop planner → Planning without a mapped site', href: '/facilitator/crops',
     detail: 'For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.' }] },
+  { when: '3 November 2026', sha: 'fe520c58e', changes: [
+    "Structures maps show recorded shade cloth over the illustrated beds.",
+  ], tour: [{title: 'Review the shade cover', where: 'Site design → Glossy', href: '/design',
+    detail: 'Open Structures, then reassemble the saved AI artwork to show its shade cover.'},
+  {title: 'Compare with your exact plan', where: 'Site design → Saved maps', href: '/design',
+    detail: 'Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.'}] },
+  { when: '3 November 2026', sha: '7acc4a319', changes: [
+    "Sector maps use regional overview contours, with an optional A–B terrain profile.",
+  ] },
+  { when: '3 November 2026', sha: '0e9fd5a26', changes: [
+    "Choose area names or a numbered key on the historical Existing Site map.",
+  ] },
+  { when: '3 November 2026', sha: 'a337ff345', changes: [
+    "Ubhejane Site and Sector maps can show the before-works archive photograph.",
+    "AI maps start with available aerial imagery; you can still choose plain paper.",
+  ] },
+  { when: '3 November 2026', sha: '74c7bf21b', changes: [
+    'AI Site and Sector maps keep their painted detail, with fewer photo strips.',
+    'Phasing keeps painted artwork; the app adds its schedule, pins and scale.',
+  ], tour: [{ title: 'Review the AI map finish', where: 'Site design → Glossy', href: '/design',
+    detail: 'AI maps start with available aerial imagery; you can still choose plain paper.' },
+  { title: 'Compare with your exact plan', where: 'Site design → Saved maps', href: '/design',
+    detail: 'Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.' }] },
   { when: '2 November 2026', sha: '41def1087', changes: [
     'Explore international reference drafts; local farming advice remains unavailable.',
   ], tour: [{ title: 'Review international references', where: 'International foundation', href: '/international',
