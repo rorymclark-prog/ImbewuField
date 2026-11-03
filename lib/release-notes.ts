@@ -47,7 +47,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Keep saved growing estimates and nursery settings when signing in.',
   ], tour: [{ title: 'Save your reviewed plan', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
     detail: 'Review a complete proposal, save all its planned cycles, then open dated work.' }] },
-  { when: '3 November 2026', sha: 'e63ffe17a', changes: [
+  { when: '3 November 2026', sha: 'b3bf0f48f', changes: [
     'Follow saved grower cycles on their exact planned dates.',
     'Check current designs before ticking work or exporting dates.',
     'Keep own crop estimates separate from catalogue print advice.',
