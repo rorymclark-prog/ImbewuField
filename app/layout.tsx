@@ -16,6 +16,7 @@ import LocalizedPageTitle from '@/components/LocalizedPageTitle';
 import ProductTourProvider from '@/components/ProductTourProvider';
 import AccountOnboardingGates from '@/components/AccountOnboardingGates';
 import { SavedSiteUpdatesProvider } from '@/components/international/countries/SavedSiteUpdates';
+import CropPlanStorageProvider from '@/components/CropPlanStorageStatus';
 
 const newsreader = Newsreader({
   subsets: ['latin'],
@@ -121,6 +122,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <AuthProvider>
             <LanguageProvider>
+              <CropPlanStorageProvider>
               <SavedSiteUpdatesProvider>
               {/* AppConfirm replaces window.confirm app-wide: embedded webviews suppress native
                   dialogs and auto-return false, silently killing (or inverting) every
@@ -140,6 +142,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </ProductTourProvider>
               </AppConfirmProvider>
               </SavedSiteUpdatesProvider>
+              </CropPlanStorageProvider>
             </LanguageProvider>
           </AuthProvider>
         </ThemeProvider>

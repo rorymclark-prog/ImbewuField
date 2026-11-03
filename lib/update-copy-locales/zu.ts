@@ -1,6 +1,55 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/zu.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Faka izinhloso zokuvuna zamasonto onke nesisindo sakho samaphakethe ezivuno ngamakhilogremu (kg) noma ngamaphawundi esisindo (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Gcina imininingwane yezidingo zabathengi oyifakile isekhona lapho ukulondolozwa kwayo kungakwazi ukuqinisekiswa.",
+  "Choose harvest weight units": "Khetha amayunithi esisindo sesivuno",
+  "Production plan → Harvest targets": "Uhlelo lokukhiqiza → Izinhloso zokuvuna",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Khetha amakhilogremu (kg) noma amaphawundi esisindo (lb), faka inhloso yakho yokuvuna noma isisindo sakho sephakethe lesivuno, bese uyalondoloza. Isisindo samaphakethe esingaziwa sihlala singekho; izibalo zezinhloso zizilinganiso zokuhlela kuphela.",
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Faka izilinganiso zamathileyi ezithombo ngamasentimitha noma ngamayintshi.",
+  "Enter usable nursery surface in square metres or square feet.": "Faka indawo yokukhulisa izithombo esebenzisekayo ngamamitha-skwele noma ngamafithi-skwele.",
+  "Keep nursery entries until their save is confirmed.": "Shiya imininingwane yezithombo oyifakile isekhona kuze kuqinisekiswe ukulondolozwa kwayo.",
+  "Choose nursery units": "Khetha amayunithi endawo yezithombo",
+  "Production plan → Nursery planner": "Uhlelo lokukhiqiza → Umhleli wendawo yezithombo",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Khetha amayunithi akho, faka osayizi bamathileyi nendawo yokukhulisa esebenzisekayo, bese uyalondoloza. Amanani ezinto zokusebenza angaziwa ahlala engenalutho; isitoko sezinto esiyiqanda sihlala siyiqanda.",
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/zu.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Faka izilinganiso zemibhede yokutshala (beds) nezindlela zebhulokhi yensimu ngamamitha noma ngamafuthi.",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Gcina izilinganiso ezilondoloziwe zingashintshiwe lapho ushintsha iyunithi eboniswayo.",
+  "Choose field-block units": "Khetha amayunithi ebhulokhi yensimu",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Khetha insimu, khetha amamitha noma amafuthi, faka izilinganiso zakho bese ubukeza imibhede yokutshala (beds) ngaphambi kokulondoloza. Amasimu avulekile agcina indawo yawo ye-polygon ngaphandle kokukhiqiza imibhede yokutshala (beds).",
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Gcina izinhlelo zezitshalo ezintsha ziphephile lapho iseshini endala yohlelo igcina ikhophi yayo.",
+  "Review retained copies before continuing with your current crop plan.": "Bukeza amakhophi agciniwe ngaphambi kokuba uqhubeke nohlelo lwakho lwamanje lwezitshalo.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Phinda uzame ukudlulisa umsebenzi wezitshalo wesivakashi onqanyuliwe ngaphandle kokushintsha umsebenzi we-akhawunti ogciniwe.",
+  "Review crop-plan storage": "Bukeza indawo yokugcina uhlelo lwezitshalo",
+  "Production plan → Crop-plan storage": "Uhlelo lokukhiqiza → Indawo yokugcina uhlelo lwezitshalo",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Hlola isaziso sendawo yokugcina. Uma iseshini endala ishintshe ikhophi yayo, dawuniloda amakhophi omabili uwabukeze ngaphambi kokukhetha ukugcina uhlelo lwakho lwamanje.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Gcina uhlelo olubukeziwe olusuka ezilinganisweni zakho zokulima.",
+  "Check unresolved crop records before using a finance forecast.": "Hlola amarekhodi ezitshalo angakaxazululwa ngaphambi kokusebenzisa isibikezelo sezimali.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Gcina izilinganiso zokulima ezigciniwe nezilungiselelo zendawo yokukhulisela izithombo lapho ungena ku-akhawunti.",
+  "Save your reviewed plan": "Gcina uhlelo lwakho olubukeziwe",
+  "Production plan → Automatic plan from your estimates": "Uhlelo lokukhiqiza → Uhlelo oluzenzakalelayo olusuka ezilinganisweni zakho",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Bukeza isiphakamiso esiphelele, ugcine yonke imijikelezo yaso ehleliwe, bese uvula umsebenzi onosuku.",
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/zu.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Landela imijikelezo yokutshala egciniwe ngezinsuku zayo ezihleliwe eziqondile.",
+  "Check current designs before ticking work or exporting dates.": "Hlola imiklamo yamanje ngaphambi kokumaka umsebenzi noma ukukhipha izinsuku.",
+  "Keep own crop estimates separate from catalogue print advice.": "Gcina izilinganiso zakho zezitshalo zihlukene nezeluleko zekhathalogi eziphrintiwe.",
+  "Review your dated work": "Buyekeza umsebenzi wakho onezinsuku",
+  "Task Planner → Dated work from your estimates": "Umhleli Wemisebenzi → Umsebenzi onezinsuku ovela ezilinganisweni zakho",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Vula Umhleli Wemisebenzi ukuze uhlole izinsuku zomsebenzi ezisuselwa ezilinganisweni zakho zokutshala ezigciniwe.",
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Buyekeza izinhlelo zezitshalo ezizenzakalelayo ezisuselwa ezilinganisweni zakho siqu zokutshala kanye nemigomo yabathengi egciniwe.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Hlola ugqoko lwezithombo nezidingo zendawo ezinezinsuku ngaphambi kokulanda ukubuyekeza kwakho.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Gcina izilinganiso zakho siqu zokutshala bese ubuyekeza umthamo nezinsuku zemibhede yokutshala ekaliwe.",
+  "Review a crop plan from your estimates": "Buyekeza uhlelo lwezitshalo olususelwa ezilinganisweni zakho",
+  "Crop planner → Automatic plan from your estimates": "Umhleli wezitshalo → Uhlelo oluzenzakalelayo olususelwa ezilinganisweni zakho",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Hlola umklamo wakho owugcinile, uqinisekise ukutholakala bese ufanisa imigomo yabathengi nezilinganiso zakho zokutshala. Buyekeza imijikelezo ehlongozwayo nezidingo zenkulisa yezitshalo; ukuhlwanyela kwakho okugciniwe kuhlala kungashintshile.",
+  "Review your growing estimates": "Buyekeza izilinganiso zakho zokutshala",
+  "Crop planner → Your growing estimates": "Umhleli wezitshalo → Izilinganiso zakho zokutshala",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Faka imicabango yakho siqu, ukhethe umbhede wokutshala okaliwe bese ubuyekeza izibalo. Amanani angenalutho ahlala engekho; umphumela uyisilinganiso, hhayi ukugunyazwa kokulima kwendawo.",
   // Country context: docs/international/agy-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Qinisekisa izwe lesayithi edwetshiwe ngaphambi kokusebenzisa isiqondiso sayo sokuhlela izitshalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Gcina amarekhodi akho okuhlwanyela nezinto zokusebenza zenkulisa yezitshalo ngenkathi ukuhlela kwendawo kungatholakali.",

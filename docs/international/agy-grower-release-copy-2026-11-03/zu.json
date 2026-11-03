@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "locale": "zu",
+  "provenance": {
+    "executor": "AGY",
+    "method": "AI draft",
+    "createdOn": "2026-11-03"
+  },
+  "review": {
+    "status": "unreviewed"
+  },
+  "messages": [
+    {
+      "key": "GrowerRelease.34d527564.change.1",
+      "sourceEnglish": "Review automatic crop plans from your own growing estimates and saved buyer targets.",
+      "sourceSha256": "217d012ccdcb05cefd52c5ccbe6410a03572e491341a50054381a4a5fb0b39eb",
+      "text": "Buyekeza izinhlelo zezitshalo ezizenzakalelayo ezisuselwa ezilinganisweni zakho siqu zokutshala kanye nemigomo yabathengi egciniwe.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.34d527564.change.2",
+      "sourceEnglish": "Check dated nursery tray and surface needs before downloading your review.",
+      "sourceSha256": "be12af623defb34b23000edce3617e7386479a1e58367340432372ccc649704b",
+      "text": "Hlola ugqoko lwezithombo nezidingo zendawo ezinezinsuku ngaphambi kokulanda ukubuyekeza kwakho.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.change.1",
+      "sourceEnglish": "Save your own growing estimates and review capacity and dates for measured beds.",
+      "sourceSha256": "00490e50ff48b8b20c8ad54b89a67c5de8915e9683ca3e5204f731253aed6344",
+      "text": "Gcina izilinganiso zakho siqu zokutshala bese ubuyekeza umthamo nezinsuku zemibhede yokutshala ekaliwe.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.34d527564.tour.1.title",
+      "sourceEnglish": "Review a crop plan from your estimates",
+      "sourceSha256": "fcca4eb4a9a4c420028742610cc74194d8f96c88d6531588286b6cc5e4df7597",
+      "text": "Buyekeza uhlelo lwezitshalo olususelwa ezilinganisweni zakho",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.34d527564.tour.1.where",
+      "sourceEnglish": "Crop planner → Automatic plan from your estimates",
+      "sourceSha256": "51efed31c4af73b4e217bd6521d73da4455d6d72c13bd6b00b423a0bd570ba94",
+      "text": "Umhleli wezitshalo → Uhlelo oluzenzakalelayo olususelwa ezilinganisweni zakho",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.34d527564.tour.1.detail",
+      "sourceEnglish": "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.",
+      "sourceSha256": "5d33bbe66317fb6dcf6987c22c81f26204a99ca1162a135c9e01ba0a28a9708a",
+      "text": "Hlola umklamo wakho owugcinile, uqinisekise ukutholakala bese ufanisa imigomo yabathengi nezilinganiso zakho zokutshala. Buyekeza imijikelezo ehlongozwayo nezidingo zenkulisa yezitshalo; ukuhlwanyela kwakho okugciniwe kuhlala kungashintshile.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.tour.1.title",
+      "sourceEnglish": "Review your growing estimates",
+      "sourceSha256": "017f92fe0feeec6a26911d358288cc22a3d640f2aef1cc30112fad3a409beca7",
+      "text": "Buyekeza izilinganiso zakho zokutshala",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.tour.1.where",
+      "sourceEnglish": "Crop planner → Your growing estimates",
+      "sourceSha256": "363978bbad660ad1b4df5ef0b08ac457f8368c34f23619c5d78f9e3eca392643",
+      "text": "Umhleli wezitshalo → Izilinganiso zakho zokutshala",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.tour.1.detail",
+      "sourceEnglish": "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.",
+      "sourceSha256": "2ca853dbe96887d43b513090863a0cee7c1f5d7a4c57e4349429a24558bb4ae6",
+      "text": "Faka imicabango yakho siqu, ukhethe umbhede wokutshala okaliwe bese ubuyekeza izibalo. Amanani angenalutho ahlala engekho; umphumela uyisilinganiso, hhayi ukugunyazwa kokulima kwendawo.",
+      "review": {
+        "status": "unreviewed"
+      }
+    }
+  ]
+}

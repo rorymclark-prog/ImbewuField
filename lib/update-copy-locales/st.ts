@@ -1,6 +1,55 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/st.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Kenya lipakane tsa kotulo tsa beke le beke le boima ba hau ba liphuthelwana tsa kotulo ka lik'hilograma (kg) kapa liponto tsa boima (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Boloka lintlha tsa litlhoko tsa bareki tseo u li kentseng li ntse li le teng ha ho boloka ho sa khone ho netefatsoa.",
+  "Choose harvest weight units": "Khetha li-unit tsa boima ba kotulo",
+  "Production plan → Harvest targets": "Moralo oa tlhahiso → Lipakane tsa kotulo",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Khetha lik'hilograma (kg) kapa liponto tsa boima (lb), kenya pakane ea hau ea kotulo kapa boima boo u bo lekantseng ba sephuthelwana sa kotulo, ebe u a boloka. Boima ba liphuthelwana bo sa tsejoeng bo lula bo le sieo; kakaretso ea lipakane ke likhakanyo tsa moralo feela.",
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/st.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Kenya litekanyo tsa literei tsa sebaka sa lipeo ka lisenthimithara (cm) kapa ka li-inch (in).",
+  "Enter usable nursery surface in square metres or square feet.": "Kenya bokaholimo bo sebelisehang ba sebaka sa lipeo ka limithara tsa sekwere (m²) kapa ka maoto a sekwere (ft²).",
+  "Keep nursery entries until their save is confirmed.": "Tlohela lintlha tse kenyelitsoeng tsa sebaka sa lipeo li ntse li le teng ho fihlela ho bolokoa ha tsona ho netefatsoa.",
+  "Choose nursery units": "Khetha li-unit tsa sebaka sa lipeo",
+  "Production plan → Nursery planner": "Moralo oa tlhahiso → Moralo oa sebaka sa lipeo",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Khetha li-unit tsa hau, kenya boholo ba literei le bokaholimo bo sebelisehang ba ho melisa, ebe oa boloka. Litekanyo tsa thepa tse sa tsejoeng li lula li se na letho; palo ea thepa ea lefeela e lula e le lefeela.",
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/st.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Kenya litekanyo tsa libethe tsa temo (beds) le litselana tsa boloko ea tšimo ka limithara kapa maoto.",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Boloka litekanyo tse bolokiloeng li sa fetohe ha u fetola yuniti e bontšitsoeng.",
+  "Choose field-block units": "Khetha liyuniti tsa boloko ea tšimo",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Khetha tšimo, khetha limithara kapa maoto, kenya litekanyo tsa hau 'me u hlahlobe libethe tsa temo (beds) pele u boloka. Masimo a bulehileng a boloka sebaka sa 'ona sa polygon ntle le ho etsa libethe tsa temo (beds).",
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/st.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Boloka meralo e metjha ya dijalo e sireletsehile ha seshene ya kgale ya sesebediswa e boloka kopi ya yona.",
+  "Review retained copies before continuing with your current crop plan.": "Hlahloba dikopi tse bolokilweng pele o tswela pele ka moralo wa hao wa hona jwale wa dijalo.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Leka hape phetisetso e sitisehileng ya mosebetsi wa dijalo wa moeti ntle le ho nkela mosebetsi o bolokilweng wa akhaonte sebaka.",
+  "Review crop-plan storage": "Hlahloba polokelo ya moralo wa dijalo",
+  "Production plan → Crop-plan storage": "Moralo wa tlhahiso → Polokelo ya moralo wa dijalo",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Sheba tsebiso ya polokelo. Haeba seshene ya kgale e fetotse kopi ya yona, jarolla dikopi ka bobedi mme o di hlahlobe pele o kgetha ho boloka moralo wa hao wa hona jwale.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/st.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Boloka moralo o hlahlobilweng o tswang dikhakanyong tsa hao tsa temo.",
+  "Check unresolved crop records before using a finance forecast.": "Hlahloba direkoto tsa dijalo tse sa rarollwang pele o sebedisa ponelopele ya ditjhelete.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Boloka dikhakanyo tsa temo tse bolokilweng le ditlhophiso tsa sethopo sa dijalo ha o kena akhaonteng.",
+  "Save your reviewed plan": "Boloka moralo wa hao o hlahlobilweng",
+  "Production plan → Automatic plan from your estimates": "Moralo wa tlhahiso → Moralo o iketsahallang ho tswa dikhakanyong tsa hao",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Hlahloba tlhahiso e feletseng, boloka medikoloho yohle ya yona e rerilweng, ebe o bula mosebetsi o nang le matsatsi.",
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/st.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Latela medikoloho ya temo e bolokilweng ka matsatsi a yona a tobileng a rerilweng.",
+  "Check current designs before ticking work or exporting dates.": "Hlahloba meralo ya hajwale pele o tshwaya mosebetsi kapa o ntsha matsatsi.",
+  "Keep own crop estimates separate from catalogue print advice.": "Boloka dikgakanyo tsa hao tsa dijalo di arohane le keletso ya khathaloko e hatiswang.",
+  "Review your dated work": "Hlahloba mosebetsi wa hao o nang le matsatsi",
+  "Task Planner → Dated work from your estimates": "Moralo wa Mesebetsi → Mosebetsi o nang le matsatsi ho tswa dikgakanyong tsa hao",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Bula Moralo wa Mesebetsi ho hlahloba matsatsi a mosebetsi ho tswa dikgakanyong tsa hao tsa temo tse bolokilweng.",
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Hlahloba meralo e iketsang ea lijalo ho tsoa likhakanyong tsa hao tsa temo le lipheo tse bolokiloeng tsa bareki.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Hlahloba litlhoko tse nang le matsatsi tsa diterei le tsa bokaholimo tsa setsidifatso sa limela pele u jarolla tlhahlobo ea hao.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Boloka likhakanyo tsa hao tsa temo mme u hlahlobe bokhoni le matsatsi bakeng sa libethe tsa temo tse lekantsoeng.",
+  "Review a crop plan from your estimates": "Hlahloba moralo oa lijalo ho tsoa likhakanyong tsa hao",
+  "Crop planner → Automatic plan from your estimates": "Moralo oa lijalo → Moralo o iketsang ho tsoa likhakanyong tsa hao",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Hlahloba moralo oa hao o bolokiloeng, netefatsa boteng mme u bapisanye lipheo tsa bareki le likhakanyo tsa hao tsa temo. Hlahloba mekoloko e sisintsoeng le litlhoko tsa setsidifatso sa limela; ho jala ha hao ho bolokiloeng ho sala ho sa fetohe.",
+  "Review your growing estimates": "Hlahloba likhakanyo tsa hao tsa temo",
+  "Crop planner → Your growing estimates": "Moralo oa lijalo → Likhakanyo tsa hao tsa temo",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Kenya likhopolo tsa hao, khetha bethe ea temo e lekantsoeng mme u hlahlobe palo. Litekanyetso tse se nang letho li sala li le sieo; sephetho ke khakanyo, eseng tumello ea temo ea lehae.",
   // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Netefatsa naha ea sebaka se mmepiloeng pele u sebelisa tataiso ea sona ea moralo oa lijalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Boloka lirekoto tsa hao tsa ho jala le lisebelisoa tsa nesari ea limela ha moralo oa sebaka o ntse o sa fumanehe.",

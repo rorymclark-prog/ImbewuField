@@ -1,0 +1,19 @@
+{
+  "reviewedAtUtc": "2026-11-03T11:23:02.284719+00:00",
+  "reason": "Coordinator restamped coverage after original storage publication; all selected acceptance and cutover English/message hashes remain unchanged. AI packet generation metadata is historical.",
+  "currentReleaseNotesSha256": "16bccca806d4346c5f0310f9e6f3a2b4f4824605fa50f4cef1c647489b7b80b2",
+  "packets": [
+    {
+      "folder": "docs/international/agy-grower-acceptance-release-copy-2026-11-03",
+      "wholeSourceSha256": "563f7debc7acced18fb79b3bdae79eadbab7df6a433576447fbfd943db13e03b",
+      "selectedEnglishPairsUnchanged": 6,
+      "currentWholeFileMatchesGeneration": false
+    },
+    {
+      "folder": "docs/international/agy-grower-cutover-release-copy-2026-11-03",
+      "wholeSourceSha256": "995635430ac2753284e1e264194f6a0e12657fa60bf4984258b8ffd1606cdcf1",
+      "selectedEnglishPairsUnchanged": 6,
+      "currentWholeFileMatchesGeneration": false
+    }
+  ]
+}

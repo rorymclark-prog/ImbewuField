@@ -1,0 +1,56 @@
+{
+  "workorder": "docs/international/agy-grower-operations-translations-2026-11-03/WORKORDER.md",
+  "status": "complete-unreviewed-ai-drafts",
+  "sourceSha256": "f03dd7b45de73a2996c52478483a0ae68bdbe5081f2e8bc267641faa76b071f6",
+  "sourceCommitBase": "fbe546d6c30c79e584981bbdf82d7cfada5b6363",
+  "messagesCount": 31,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "deliverables": [
+    {
+      "path": "docs/international/agy-grower-operations-translations-2026-11-03/fr.json",
+      "locale": "fr",
+      "messagesCount": 31
+    },
+    {
+      "path": "docs/international/agy-grower-operations-translations-2026-11-03/es.json",
+      "locale": "es",
+      "messagesCount": 31
+    },
+    {
+      "path": "docs/international/agy-grower-operations-translations-2026-11-03/pt-BR.json",
+      "locale": "pt-BR",
+      "messagesCount": 31
+    },
+    {
+      "path": "docs/international/agy-grower-operations-translations-2026-11-03/sw.json",
+      "locale": "sw",
+      "messagesCount": 31
+    },
+    {
+      "path": "docs/international/agy-grower-operations-translations-2026-11-03/review-notes.md",
+      "wordCount": 240,
+      "maxCap": 300
+    }
+  ],
+  "verificationSummary": {
+    "placeholdersPreserved": [
+      "{crop}",
+      "{date}"
+    ],
+    "markersPreserved": [
+      "DEMO —",
+      "UTC"
+    ],
+    "boundariesPreserved": "Exclusive end boundaries and availability thresholds maintained without implying completed work, automatic plantings, or free beds.",
+    "stateDistinctions": "Checklist actions explicitly separated from verified production, stock, and sales logs; planning estimates distinguished from observed field records."
+  }
+}

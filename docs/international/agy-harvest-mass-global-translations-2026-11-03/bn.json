@@ -1,0 +1,116 @@
+{
+  "locale": "bn",
+  "sourceSha256": "b66aea500317293ef523972b154170e39b056b288b9446394d3ce7646ddf7e21",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "harvestMass01",
+      "english": "Harvest weight unit",
+      "sha256": "f6b53120ec4a665b8645d6cb21925ebbb4678ebdd3d627911962b687cec26fe7",
+      "translation": "ফসল তোলার ওজনের একক"
+    },
+    {
+      "key": "harvestMass02",
+      "english": "Kilograms (kg)",
+      "sha256": "7c066ab3b46ec7c8dc585e809174fae3732def2471fb43308ebc98b769160263",
+      "translation": "কিলোগ্রাম (kg)"
+    },
+    {
+      "key": "harvestMass03",
+      "english": "Pounds (lb)",
+      "sha256": "499322ae749ca536047d6f8bde107102d61861b2c9eed423e2bd7e447e97eadc",
+      "translation": "পাউন্ড ওজন (lb)"
+    },
+    {
+      "key": "harvestMass04",
+      "english": "Reload saved harvest targets",
+      "sha256": "96c9b8895822e894ad27ccfbd1f5253e090cc29cd3f9bc877fe95ae9fd0e4383",
+      "translation": "সংরক্ষিত ফসল তোলার লক্ষ্যগুলি পুনরায় লোড করুন"
+    },
+    {
+      "key": "harvestMass05",
+      "english": "Harvest weight unit remembered on this device.",
+      "sha256": "462087ef42f5dc37f49563d7ea65b3e46c6e12b5ae361080e8eda8666248c1b1",
+      "translation": "ফসল তোলার ওজনের একক এই ডিভাইসে মনে রাখা হয়েছে।"
+    },
+    {
+      "key": "harvestMass06",
+      "english": "Harvest weight unit applies only to this sample session.",
+      "sha256": "10a44e8ffa3352368698acf45592acc2b4b135d09fb2822a9b39c418567908d5",
+      "translation": "ফসল তোলার ওজনের একক শুধুমাত্র এই নমুনা সেশনে প্রযোজ্য।"
+    },
+    {
+      "key": "harvestMass07",
+      "english": "Harvest weight unit works here, but could not be remembered on this device.",
+      "sha256": "de691f5521026fca6ab3c4ae9b7d7196f8b05dd0d4c6c01cb7d6de50e1dee2fd",
+      "translation": "ফসল তোলার ওজনের একক এখানে কাজ করছে, কিন্তু এই ডিভাইসে মনে রাখা যায়নি।"
+    },
+    {
+      "key": "harvestMass08",
+      "english": "Saved harvest targets reloaded.",
+      "sha256": "452ec4f8a80e6ffd6b1129dfdd6cad72667f7631093076f60ec85d5fea115fa3",
+      "translation": "সংরক্ষিত ফসল তোলার লক্ষ্যগুলি পুনরায় লোড করা হয়েছে।"
+    },
+    {
+      "key": "harvestMass09",
+      "english": "Buyer targets kept in this sample session.",
+      "sha256": "ded75c3bad61f544d2a31693a02b699b4e9ea924e7eb9afd5df41e18e1dc2f83",
+      "translation": "ক্রেতার লক্ষ্যগুলি এই নমুনা সেশনে রাখা হয়েছে।"
+    },
+    {
+      "key": "harvestMass10",
+      "english": "Buyer targets saved on this device.",
+      "sha256": "6090f94eb444e8b961ff3ea4dd9409240b45080b320ff66e3948b0e837c69931",
+      "translation": "ক্রেতার লক্ষ্যগুলি এই ডিভাইসে সংরক্ষিত হয়েছে।"
+    },
+    {
+      "key": "harvestMass11",
+      "english": "Save outcome is not confirmed. Your entries are retained. Reload saved harvest targets before trying again.",
+      "sha256": "cb1364bbdfa23c2c514b16fe7cbeb05842fc9e530d3fe3512df41271609d0d25",
+      "translation": "সংরক্ষণের ফলাফল নিশ্চিত হয়নি। আপনার এন্ট্রিগুলি রাখা হয়েছে। আবার চেষ্টা করার আগে সংরক্ষিত ফসল তোলার লক্ষ্যগুলি পুনরায় লোড করুন।"
+    },
+    {
+      "key": "harvestMass12",
+      "english": "Sales unit",
+      "sha256": "26fa0df04f6cfcfe5c664c6f7bd209a80991f89cce2f26ea69de35eb39a05b58",
+      "translation": "বিক্রয়ের পরিমাপ একক"
+    },
+    {
+      "key": "harvestMass13",
+      "english": "For (optional)",
+      "sha256": "de2ffb311eb29633b3eab716392fde1aade8acfb0d0331a2c1f279f322922185",
+      "translation": "কার জন্য (ঐচ্ছিক)"
+    },
+    {
+      "key": "harvestMass14",
+      "english": "First harvest month",
+      "sha256": "a72a01d1f446b5b049ea2a4ebccb131aa60c88d55a40e19e21201eb804c563ed",
+      "translation": "ফসল তোলার প্রথম মাস"
+    },
+    {
+      "key": "harvestMass15",
+      "english": "Last harvest month (included)",
+      "sha256": "dfc11919d87e762960ff7547b2f9137fb9cc1ead4a0232347cc9be70a84daf41",
+      "translation": "ফসল তোলার শেষ মাস (অন্তর্ভুক্ত)"
+    },
+    {
+      "key": "harvestMass16",
+      "english": "Saleable share (%) (optional)",
+      "sha256": "b2e275ceb292064d48fe2a1beaff9d0da015c4abfdb01053f5cfcd45fd7748ed",
+      "translation": "বিক্রয়যোগ্য অংশ (%) (ঐচ্ছিক)"
+    },
+    {
+      "key": "harvestMass17",
+      "english": "Save target changes",
+      "sha256": "1c4b787df8198f07a32b85c11080001fc4bdb03353d2e90e597a73632930732a",
+      "translation": "লক্ষ্যের পরিবর্তন সংরক্ষণ করুন"
+    },
+    {
+      "key": "harvestMass18",
+      "english": "Save harvest target",
+      "sha256": "681743bb9fb9ae47ecda4ddca3423cc33162fe4151975af8a9f2a55cea0c12d2",
+      "translation": "ফসল তোলার লক্ষ্য সংরক্ষণ করুন"
+    }
+  ]
+}

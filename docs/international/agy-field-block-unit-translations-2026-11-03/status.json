@@ -1,0 +1,57 @@
+{
+  "workorder": "docs/international/agy-field-block-unit-translations-2026-11-03/WORKORDER.md",
+  "status": "completed-awaiting-root-review",
+  "sourceSha256": "b60a09754ec9965e7110d7ecaa690222077821f2495a4d9f8e01233691f8a321",
+  "sourceCommitBase": "6e184d251234566a94f1c61f0ddd925805ac66cc",
+  "baseCommitIdentifiesSnapshot": false,
+  "sourceFiles": [
+    {
+      "path": "components/design/FieldBlocksPanel.tsx",
+      "sha256": "ebc3ae23f446c852d4b89f3551b7c4d5c33a8b507892c967982359880ae7b021"
+    },
+    {
+      "path": "lib/release-notes.ts",
+      "sha256": "7b311fd25f8d51992c8ad047eedf31765cbbd2c69f0c5f50e8acbdca75cb6dd2"
+    }
+  ],
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw",
+    "hi",
+    "bn",
+    "id"
+  ],
+  "messagesPerLocale": 20,
+  "totalDrafts": 140,
+  "reviewNotesWordCount": 237,
+  "reviewNotesMaxWords": 250,
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "commandsExecuted": 0,
+  "testsExecuted": 0,
+  "selfValidatorsExecuted": 0,
+  "networkRequests": 0,
+  "outputs": [
+    "fr.json",
+    "es.json",
+    "pt-BR.json",
+    "sw.json",
+    "hi.json",
+    "bn.json",
+    "id.json",
+    "review-notes.md",
+    "status.json"
+  ],
+  "coordinatorStructuralReview": {
+    "checkedAtUtc": "2026-11-03T10:42:58.305164+00:00",
+    "pairs": 140,
+    "damagedControlsRejected": 12,
+    "humanFluentReview": false,
+    "swahiliBedTerminologyFlagged": true,
+    "sourceEnglishMessagesStillPresentInFinalFiles": true
+  }
+}

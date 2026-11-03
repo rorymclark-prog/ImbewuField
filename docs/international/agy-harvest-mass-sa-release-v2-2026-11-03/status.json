@@ -1,0 +1,59 @@
+{
+  "task": "agy-harvest-mass-sa-release-v2-2026-11-03",
+  "version": 2,
+  "supersedes": "agy-harvest-mass-sa-release-copy-2026-11-03 (20 candidates never selected)",
+  "status": "completed-unreviewed-ai-drafts",
+  "sourceCommitBase": "b1df0d1ac441b36f515029ed4e902cc8720041e5",
+  "sourceFile": "docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/source.json",
+  "sourceSha256": "7acc221092b084ffe654d908777f38e41a2166d582800e254425de4c61467f8b",
+  "releaseNotesSnapshot": {
+    "path": "lib/release-notes.ts",
+    "bytes": 347051,
+    "sha256": "521d15a2dd1cc25bff6f4808000488912a78d15c308a58301693bc63a93235e8"
+  },
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "messagesPerLocale": 5,
+  "totalDraftPairs": 20,
+  "workers": {
+    "active": 0,
+    "state": "stopped",
+    "mode": "main-writer-only"
+  },
+  "interactionSharing": "off",
+  "notesWordCountCeiling": 180,
+  "wordCountAuthority": "root",
+  "deliverables": [
+    "docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/zu.json",
+    "docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/st.json",
+    "docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/ts.json",
+    "docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/ve.json",
+    "docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/review-notes.md",
+    "docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/status.json"
+  ],
+  "verification": {
+    "commandsRun": 0,
+    "networkCalls": 0,
+    "codeOrTestEdits": false,
+    "gitMutations": false,
+    "validatorExecuted": false,
+    "humanOrFluentApprovalClaimed": false,
+    "runtimeActivationClaimed": false
+  },
+  "coordinatorReview": {
+    "reviewedAtUtc": "2026-11-03T15:09:38.303472+00:00",
+    "exactPairsChecked": 20,
+    "damagedPacketControlsRejected": 14,
+    "actualNotesWhitespaceWords": 171,
+    "clarifiedHarvestDemandRatherThanPersonWeight": true,
+    "privateMetadataExcluded": true,
+    "fluentOrSemanticCertification": false,
+    "generationPacketRuntimeActivation": false
+  }
+}

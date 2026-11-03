@@ -9,6 +9,7 @@ import { CROPS, hasPlanningYield } from '@/lib/crop-catalog';
 import type { CropPlanState, PlanBed } from '@/lib/crop-plan';
 import type { SavedPlace } from '@/lib/saved-places';
 import type { ProductionLog, SalesLog } from '@/lib/db/types';
+import { initialiseCropPlanFixture, releaseCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 
 const sourceUrl = new URL('../lib/finance-plan-source.ts', import.meta.url).href;
 const rootUrl = new URL('../', import.meta.url).href;
@@ -70,7 +71,7 @@ const { createWorkspacePlanningReference } = await import('../lib/international/
 const { activeAccountLocalStorageKey, bindMountedAccountLocalStorageUid } = await import('../lib/account-local-storage.ts');
 const { buildFarmMetrics } = await import('../lib/farm-metrics.ts');
 const { buildFinanceSeries } = await import('../lib/finance-series.ts');
-after(() => { hooks.deregister(); Reflect.deleteProperty(globalThis, '__internationalFinanceContext'); Reflect.deleteProperty(globalThis, '__internationalFinanceValueRows'); });
+after(() => { releaseCropPlanFixture(); hooks.deregister(); Reflect.deleteProperty(globalThis, '__internationalFinanceContext'); Reflect.deleteProperty(globalThis, '__internationalFinanceValueRows'); });
 
 class MemoryStorage {
   rows = new Map<string, string>();
@@ -96,7 +97,7 @@ const plan = (): CropPlanState => ({ version: 1, plantings: [{ id: 'own-sowing',
 const place = (id = 'main-place', lat = 0, lon = 0): SavedPlace => ({ id, name: 'Fictional source boundary', lat, lon,
   biome: 'Recorded', rainfall: 0, elevation: 0, savedAt: '2026-11-01T00:00:00.000Z', updatedAt: id === 'main-place' ? 100 : 50 });
 
-function savePlan(value: CropPlanState) { local.setItem(activeAccountLocalStorageKey('imbewu_crop_plan_v1'), JSON.stringify(value)); }
+function savePlan(value: CropPlanState) { replaceCanonicalCropPlanFixtureRaw(JSON.stringify(value)); }
 function savePlaces(rows: SavedPlace[]) { local.setItem(activeAccountLocalStorageKey('permamap_saved_places'), JSON.stringify(rows)); }
 function confirm(code: string) {
   const context = createSiteCountryContext({ siteId, countryCode: code, confirmed: true })!;
@@ -104,11 +105,17 @@ function confirm(code: string) {
 }
 function text(node: ReactTestInstance | string): string { return typeof node === 'string' ? node : node.children.map(child => text(child as ReactTestInstance | string)).join(''); }
 
-test.beforeEach(() => {
+test.beforeEach(async () => {
+  releaseCropPlanFixture();
   probe.uid = 'finance-a'; bindMountedAccountLocalStorageUid(probe.uid);
   local.rows.clear(); session.rows.clear(); probe.canvases.clear(); probe.legacy = null;
   probe.forwardCalls = 0; probe.comparisonCalls = 0; probe.geometryReads = 0; probe.forbidden = false;
-  savePlaces([place()]); savePlan(plan()); probe.canvases.set(siteId, [bed]);
+  savePlaces([place()]); probe.canvases.set(siteId, [bed]);
+  // Import the existing account's legacy plan through the actual cutover/lease.
+  // Later fixture edits target canonical evidence; writing v1 would instead
+  // simulate an old app's divergent save and correctly withhold the forecast.
+  local.setItem(activeAccountLocalStorageKey('imbewu_crop_plan_v1'), JSON.stringify(plan()));
+  await initialiseCropPlanFixture();
 });
 
 test('finance withholds unknown and foreign forecasts while retaining raw measured allocations and unchanged actual books', () => {

@@ -7,7 +7,8 @@
 // coach guides the farmer from one to the next.
 
 import { isSampleMode, getSandboxFacilitatorState, setSandboxFacilitatorState, clearSandboxFacilitatorState } from './sample-mode';
-import { activeAccountLocalStorageKey } from './account-local-storage';
+import { activeAccountLocalStorageKey, activeAccountUid } from './account-local-storage';
+import type { RawGrowerSourceReceipt } from './international/grower-workflow-source';
 
 export type ElType =
   | 'tank' | 'pond' | 'well' | 'reedbed'
@@ -582,6 +583,22 @@ export function loadFacilitatorState(): FacilitatorDesignState | null {
   } catch {
     return null;
   }
+}
+
+/** Keep authored rows intact for a planning review, even when the legacy loader
+ * would filter them. Raw receipts remain private and never re-authorise a writer. */
+export function readFacilitatorSourceReceipt(): RawGrowerSourceReceipt {
+  try {
+    if (typeof window === 'undefined') return { status: 'held', reasons: ['source-unavailable'] };
+    const ownerUid = activeAccountUid(), sample = isSampleMode();
+    const key = activeAccountLocalStorageKey(STORE_KEY);
+    const raw = sample ? JSON.stringify(getSandboxFacilitatorState()) : window.localStorage.getItem(key);
+    if (activeAccountUid() !== ownerUid || isSampleMode() !== sample || activeAccountLocalStorageKey(STORE_KEY) !== key) {
+      return { status: 'held', reasons: ['source-owner-changed'] };
+    }
+    if (raw === null || raw === undefined || raw === 'null') return { status: 'held', reasons: ['missing-source'] };
+    return { status: 'ready', raw: JSON.parse(raw), revision: JSON.stringify([sample, key, raw]), ownerUid, sample };
+  } catch { return { status: 'held', reasons: ['source-unreadable'] }; }
 }
 
 export function clearFacilitatorState(): void {

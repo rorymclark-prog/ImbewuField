@@ -41,6 +41,49 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '7833c0ac4a', changes: [
+    'Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.',
+    'Keep buyer entries when a save cannot be confirmed.',
+  ], tour: [{ title: 'Choose harvest weight units', where: 'Production plan → Harvest targets', href: '/facilitator/crops',
+    detail: 'Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.' }] },
+  { when: '3 November 2026', sha: 'e9d2ee956', changes: [
+    'Enter nursery tray dimensions in centimetres or inches.',
+    'Enter usable nursery surface in square metres or square feet.',
+    'Keep nursery entries until their save is confirmed.',
+  ], tour: [{ title: 'Choose nursery units', where: 'Production plan → Nursery planner', href: '/facilitator/crops',
+    detail: 'Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.' }] },
+  { when: '3 November 2026', sha: 'af9ff00cb', changes: [
+    'Enter field-block bed and path dimensions in metres or feet.',
+    'Keep saved measurements unchanged when switching the displayed unit.',
+  ], tour: [{ title: 'Choose field-block units', where: 'Site design → Planting → Field blocks', href: '/design',
+    detail: 'Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.' }] },
+  { when: '3 November 2026', sha: '6e184d251', changes: [
+    'Keep newer crop plans safe when an older app session saves its copy.',
+    'Review retained copies before continuing with your current crop plan.',
+    'Retry interrupted guest crop transfers without replacing saved account work.',
+  ], tour: [{ title: 'Review crop-plan storage', where: 'Production plan → Crop-plan storage', href: '/facilitator/crops',
+    detail: 'Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.' }] },
+  { when: '3 November 2026', sha: '0ab6f9ea2', changes: [
+    'Save a reviewed plan from your own growing estimates.',
+    'Check unresolved crop records before using a finance forecast.',
+    'Keep saved growing estimates and nursery settings when signing in.',
+  ], tour: [{ title: 'Save your reviewed plan', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Review a complete proposal, save all its planned cycles, then open dated work.' }] },
+  { when: '3 November 2026', sha: 'b3bf0f48f', changes: [
+    'Follow saved grower cycles on their exact planned dates.',
+    'Check current designs before ticking work or exporting dates.',
+    'Keep own crop estimates separate from catalogue print advice.',
+  ], tour: [{ title: 'Review your dated work', where: 'Task Planner → Dated work from your estimates', href: '/cropplan',
+    detail: 'Open Task Planner to check work dates from your saved growing estimates.' }] },
+  { when: '3 November 2026', sha: '34d527564', changes: [
+    'Review automatic crop plans from your own growing estimates and saved buyer targets.',
+    'Check dated nursery tray and surface needs before downloading your review.',
+  ], tour: [{ title: 'Review a crop plan from your estimates', where: 'Crop planner → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.' }] },
+  { when: '2 November 2026', sha: '12b0acba4', changes: [
+    'Save your own growing estimates and review capacity and dates for measured beds.',
+  ], tour: [{ title: 'Review your growing estimates', where: 'Crop planner → Your growing estimates', href: '/facilitator/crops',
+    detail: 'Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.' }] },
   { when: '3 November 2026', sha: '58a25f4bc', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
     'Keep your sowing records and nursery equipment while local planning is unavailable.',

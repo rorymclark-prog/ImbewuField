@@ -1,0 +1,11 @@
+{
+  "coordinatorReconciledAtUtc": "2026-11-03T09:17:39.942098+00:00",
+  "reason": "Restamp release coverage for the concrete full-suite task-icon correction; all six frozen English/message hashes remain unchanged.",
+  "frozenSourceSha256": "ea662c644d50f4703b548e55165ae4e765e51a3317173d6cc9df1b5d35940daa",
+  "originalReleaseFileSha256": "de8996bcef6021916108c3868dbbb2318ee0c144a707ad14708069198b8f04c4",
+  "currentReleaseFileSha256": "5d32bde665c93eef86fec0c3bd03978e74def57274c61df7c9168eb44fe45844",
+  "releaseCoverageSha": "b3bf0f48f",
+  "messagesChecked": 6,
+  "englishUnchanged": true,
+  "humanFluentApproval": false
+}
