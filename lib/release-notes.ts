@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 November 2026', sha: '66e2dffc6', changes: [
+  { when: '3 November 2026', sha: '4305e07aa6', changes: [
     'Open checked Kiambu weather bulletin links from the country review.',
     'Keep bulletin dates separate from live weather and crop-planning approval.',
   ], tour: [{ title: 'Review official county bulletin links', where: 'International → Country review', href: '/international',
