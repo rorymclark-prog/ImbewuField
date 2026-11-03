@@ -61,6 +61,18 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
     }),
     source('co-ideam-bsa', 'weather-frost', 'Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)', 'https://www.ideam.gov.co/sala-de-prensa/boletines/Bolet%C3%ADn-Semanal-para-el-Sector-Agr%C3%ADcola-%28BSA%29', 'Colombia national weekly agricultural bulletin index', 'The index describes rainfall forecasts by department and natural region, recent weather conditions and national water availability. Its first linked issue displays a publication date of 26 October 2026. Forecast validity, bulletin contents, reliable cadence and machine access remain unverified.', { accessedOn: '2026-11-03' }),
   ] },
+  { code: 'CA', name: 'Canada', stage: 'research-queue', jurisdictionNote: 'The extension reference covers Ontario. Canada’s climate normals index lists station data by province and territory. A local agricultural region still needs review.', regions: [], agronomyReview: unreviewed(), sources: [
+    source('ca-on-vegetable-guide', 'agricultural-extension', 'Ontario Ministry of Agriculture, Food and Agribusiness', 'https://www.ontario.ca/page/publication-839-guide-vegetable-production-ontario', 'Ontario commercial field vegetable production', 'The publication page describes the Ontario vegetable production guide and links its PDF. This review covers the publication page and its displayed dates.', {
+      title: 'Publication 839: Guide to Vegetable Production in Ontario',
+      accessedOn: '2026-11-03', publishedOn: '2024-02-15', lastModifiedOn: '2026-10-19',
+      limitations: 'The guide PDF, dataset reuse rights and local growing recommendations require separate review.',
+    }),
+    source('ca-eccc-climate-normals', 'weather-frost', 'Environment and Climate Change Canada', 'https://climate.weather.gc.ca/climate_normals/', 'Canadian climate station composites, searchable by province and territory', 'The official index describes 1991–2020 historical climate normals and offers station searches and bulk CSV downloads.', {
+      title: 'Canadian Climate Normals',
+      accessedOn: '2026-11-03', lastModifiedOn: '2026-10-22',
+      limitations: 'Station records, frost dates and dataset terms remain unverified. Historical station summaries provide context for a location and time period.',
+    }),
+  ] },
 ];
 
 export function countryProfile(code: string): CountryProfile | undefined {

@@ -189,3 +189,33 @@ test('the SiB Colombia portal does not establish dataset reuse terms or planting
   assert.equal(result.productionPlanSupported, false);
   assert.equal(result.southAfricanFallbackAllowed, false);
 });
+
+test('Ontario guide and Canadian climate links leave regional planning and fallback disabled', () => {
+  const date = '2026-11-03';
+  const result = evaluateCountryReadiness({ countryCode: 'CA', agriculturalRegionId: 'ontario' }, date);
+  assert.equal(result.country?.stage, 'research-queue');
+  assert.equal(result.region, null);
+  assert.equal(result.status, 'reference-only');
+  assert.equal(result.localReviewComplete, false);
+  assert.equal(result.productionPlanSupported, false);
+  assert.equal(result.southAfricanFallbackAllowed, false);
+  const extension = result.evidence.find(entry => entry.category === 'agricultural-extension');
+  const weather = result.evidence.find(entry => entry.category === 'weather-frost');
+  assert.ok(extension && weather);
+  assert.equal(extension.sources.length, 1);
+  assert.equal(weather.sources.length, 1);
+  const [guide] = extension.sources;
+  const [normals] = weather.sources;
+  assert.equal(guide.publishedOn, '2024-02-15');
+  assert.equal(guide.lastModifiedOn, '2026-10-19');
+  assert.equal(normals.publishedOn, null, 'the historical period does not date the source page');
+  assert.equal(normals.lastModifiedOn, '2026-10-22');
+  assert.equal(sourceEvidenceState(normals, date), 'undated');
+  assert.equal(weather.availableCount, 0);
+  for (const source of [guide, normals]) {
+    assert.equal(source.verification, 'content-read');
+    assert.equal(source.accessedOn, date);
+    assert.equal(source.licence.status, 'unknown');
+    assert.equal(source.units.status, 'unknown');
+  }
+});
