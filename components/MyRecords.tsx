@@ -294,7 +294,6 @@ interface ProdFormState {
   crop: string;
   cropKey: string | null;
   quantity: string;
-  observedOn: string;
   unit: RecordUnit;
   photoFile: File | null;
   photoPreview: string;
@@ -308,18 +307,22 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   const [form, setForm] = useState<ProdFormState>({
     crop: '',
     cropKey: null,
-    quantity: '', unit: 'kg', observedOn: '',
+    quantity: '', unit: 'kg',
     photoFile: null,
     photoPreview: '',
     loading: false,
     error: '',
   });
   const fileRef = useRef<HTMLInputElement>(null);
+  const harvestDateRef = useRef<HTMLInputElement>(null);
   const writeGeneration = useRef(0);
   const writePending = useRef(false);
 
   useEffect(() => {
-    const revoke = () => { writeGeneration.current++; };
+    const revoke = () => {
+      writeGeneration.current++;
+      if (harvestDateRef.current) harvestDateRef.current.value = '';
+    };
     window.addEventListener(SAMPLE_MODE_EVENT, revoke);
     return () => {
       revoke();
@@ -363,7 +366,9 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
       setForm((f) => ({ ...f, error: 'Enter a product and a quantity greater than zero.' }));
       return;
     }
-    const observedOn = form.observedOn;
+    // Read the native date field when saving so picker input survives other
+    // edits even on browsers that defer the date change event.
+    const observedOn = harvestDateRef.current?.value ?? '';
     if (observedOn && (!validProjectDate(observedOn) || observedOn > localTodayISODate())) {
       setForm((f) => ({ ...f, error: 'Enter a valid harvest date that is today or earlier.' }));
       return;
@@ -401,7 +406,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         return {
           crop: '',
           cropKey: null,
-          quantity: '', unit: 'kg', observedOn: '',
+          quantity: '', unit: 'kg',
           photoFile: null,
           photoPreview: '',
           loading: false,
@@ -409,6 +414,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         };
       });
       if (fileRef.current) fileRef.current.value = '';
+      if (harvestDateRef.current) harvestDateRef.current.value = '';
       onSaved();
     } catch (err) {
       if (err instanceof WriteTimeoutError) {
@@ -422,7 +428,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           return {
             crop: '',
             cropKey: null,
-            quantity: '', unit: 'kg', observedOn: '',
+            quantity: '', unit: 'kg',
             photoFile: null,
             photoPreview: '',
             loading: false,
@@ -430,6 +436,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           };
         });
         if (fileRef.current) fileRef.current.value = '';
+        if (harvestDateRef.current) harvestDateRef.current.value = '';
         if (isCurrent()) onSaved();
         return;
       }
@@ -456,9 +463,8 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         <RecordQuantityFields idPrefix="picked" label="Quantity picked" quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} />
         <label className="block">
           <FieldLabel>{recordsFill(lang, 'Harvest date (optional)')}</FieldLabel>
-          <input type="date" value={form.observedOn} disabled={form.loading}
-            className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-1)] px-3 py-2 text-sm"
-            onChange={(event) => setForm((current) => ({ ...current, observedOn: event.target.value }))} />
+          <input ref={harvestDateRef} type="date" disabled={form.loading}
+            className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-1)] px-3 py-2 text-sm" />
         </label>
         <div>
           <FieldLabel>{t('myRecordsPhotoLabel')}</FieldLabel>
