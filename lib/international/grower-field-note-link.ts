@@ -14,6 +14,23 @@ export type GrowerFieldNoteLinkResult =
   | { readonly status: 'resolved'; readonly link: GrowerFieldNoteLink }
   | { readonly status: 'held'; readonly reason: 'invalid-selection' | 'scope-changed' | 'cycle-unavailable' | 'selection-changed' };
 
+// Read only the expected own data properties. Accessors and inherited values
+// are not part of a grower's confirmed selection.
+function readOwnFields(value: unknown, keys: readonly string[]): Record<string, unknown> | null {
+  try {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+    const fields: Record<string, unknown> = Object.create(null);
+    for (const key of keys) {
+      const property = Object.getOwnPropertyDescriptor(value, key);
+      if (property && !Object.hasOwn(property, 'value')) return null;
+      fields[key] = property?.value;
+    }
+    return fields;
+  } catch {
+    return null;
+  }
+}
+
 /** Resolve a grower's explicit choice against the whole current book. The
  * caller must establish the actor, fresh source and current journal write
  * context before using the link. A resolved link carries no observed facts. */
@@ -22,11 +39,10 @@ export function resolveGrowerFieldNoteLink(
   context: GrowerCycleContext | null,
   selection: unknown,
 ): GrowerFieldNoteLinkResult {
-  if (!selection || typeof selection !== 'object' || Array.isArray(selection)) {
-    return { status: 'held', reason: 'invalid-selection' };
-  }
-  const { plantingId, cycleId, bedId, scope } = selection as Record<string, unknown>;
-  const scopeKey = growerPlanningScopeKey(scope);
+  const fields = readOwnFields(selection, ['plantingId', 'cycleId', 'bedId', 'scope']);
+  if (!fields) return { status: 'held', reason: 'invalid-selection' };
+  const { plantingId, cycleId, bedId, scope } = fields;
+  const scopeKey = growerPlanningScopeKey(readOwnFields(scope, ['kind', 'siteId', 'workspaceId']));
   if (!scopeKey || typeof plantingId !== 'string' || !plantingId.trim()
     || typeof cycleId !== 'string' || !cycleId.trim() || typeof bedId !== 'string' || !bedId.trim()) {
     return { status: 'held', reason: 'invalid-selection' };

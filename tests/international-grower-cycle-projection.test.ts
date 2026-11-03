@@ -238,3 +238,19 @@ test('proposal-local ordinals can repeat without redirecting a note to a differe
   assert.equal(result.status, 'resolved');
   assert.equal(result.link.plantingId, later.id);
 });
+
+
+test('runtime accessors cannot substitute a planting or site identity for a field note', () => {
+  const { row } = fixture();
+  const choice = { plantingId: row.id, cycleId: row.growerCycle.cycleId, bedId: bed.id, scope };
+  let getterCalls = 0;
+  const getter = () => { getterCalls++; throw new Error('Selection getter'); };
+  const ownAccessor = Object.defineProperty({ ...choice }, 'plantingId', { get: getter });
+  const { plantingId: _plantingId, ...otherFields } = choice;
+  const inheritedAccessor = Object.assign(Object.create(Object.defineProperty({}, 'plantingId', { get: getter })), otherFields);
+  const nestedAccessor = { ...choice, scope: Object.defineProperty({ ...scope }, 'siteId', { get: getter }) };
+  for (const input of [ownAccessor, inheritedAccessor, nestedAccessor]) {
+    assert.deepEqual(resolveGrowerFieldNoteLink([row], context, input), { status: 'held', reason: 'invalid-selection' });
+  }
+  assert.equal(getterCalls, 0);
+});
