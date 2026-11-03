@@ -6666,6 +6666,26 @@ function drawContextItems(
   ctx.restore();
 }
 
+function buildRecordedShadeCoverOverlay(state:DesignCanvasState,frame:CanvasFrame,filter:GlossyLayerFilter,W:number,H:number):string|undefined {
+  if(filter!=='structures')return undefined;
+  const covers=state.items.filter(item=>isShadeClothStructure(item.defId));
+  if(!covers.length)return undefined;
+  // A fresh paid result still left the tunnel as uncovered rows. Reuse the existing factual
+  // cloth symbol only; restoring all exact features would cover the paid garden with SVG again.
+  const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext('2d');if(!ctx){releaseCanvas(canvas);return undefined;}
+  const pxPerM=W/(frame.imgW*frame.mPerPx);
+  for(const item of covers){
+    const def=ELEMENTS_BY_ID[item.defId];if(!def)continue;
+    const w=(item.wM??def.wM)*pxPerM,h=(item.hM??def.hM)*pxPerM;
+    if(![w,h,item.x,item.y].every(Number.isFinite)||w<=0||h<=0)continue;
+    ctx.save();ctx.translate(item.x*W,item.y*H);ctx.rotate((item.rot??0)*Math.PI/180);
+    ctx.beginPath();ctx.rect(-w/2,-h/2,w,h);ctx.clip();ctx.globalAlpha=SHADE_CLOTH_ALPHA;
+    drawCartographicStructureSymbol(ctx,def,w,h,Math.max(1,W*.0008));ctx.restore();
+  }
+  return drainCanvasToDataUrl(canvas,'image/png');
+}
+
 function drawFilteredItems(
   ctx: CanvasRenderingContext2D,
   state: DesignCanvasState,
@@ -13950,7 +13970,7 @@ export default function DesignGlossy({
         // of the bands and no exact badges. Burn the real regions after every model pass.
         ? buildZoneOverlay(renderState, renderRefLayers, W, H)
         : locked
-          ? undefined
+          ? buildRecordedShadeCoverOverlay(renderState,renderFrame,f,W,H)
           : f === 'water' ? buildWaterOverlay(renderState, renderFrame, renderRefLayers, W, H, true, false)
             : undefined;
       // Photo-preserving styles retain their exact ground/source structures. Painted styles skip

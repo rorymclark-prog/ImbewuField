@@ -316,7 +316,7 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
     const scene={state,frame:renderFrame,refLayers:refs,site:null,placeName:'Fictional test',labelMode:'onplant'};
     const frozen=JSON.stringify(scene);
     const finish=helper('finishStyledSheet',{
-      glossyArtworkState,
+      glossyArtworkState,buildRecordedShadeCoverOverlay:()=>undefined,
       state,frame:renderFrame,refLayers:refs,site:null,placeName:scene.placeName,labelMode:'codes',SCALE:3,
       boundaryPresentationContext:async(...args:unknown[])=>{calls.push(['scene',...args]);return {state,frame:renderFrame,refLayers:refs};},
       isModelChromeStyle:()=>false,paidPolishNeedsChromePass:()=>false,
@@ -712,4 +712,17 @@ test('Sector contour geography uses the original saved frame and only crops the 
     calculateBoundaryPresentationLayout:()=>({cropX:.2,cropY:.1,cropWidth:.5,cropHeight:.6}),paidApiHeaders:async()=>({Authorization:'owner'}),
     fetchSheetContours:async(f:any,b:any)=>{assert.equal(f,frame);assert.equal(b,refs.boundary);queried=true;return{status:'ok',source:'mapbox-terrain-rgb',intervalM:1,lines:[{elevM:105,points:[[.3,.4],[.6,.7]]}]};}});
   const out=await run(state,frame,refs,null);assert.equal(queried,true);assert.equal(out.intervalM,5);assert.deepEqual(out.lines[0].points,[[.19999999999999996,.5000000000000001],[.7999999999999999,1]]);
+});
+
+test('Structures recovery adds only recorded permeable shade covers while retaining painted beds and saved dimensions', () => {
+  const probe=artProbe(),symbols:any[]=[];let allocated=0;
+  const state={items:[{id:'net',defId:'shade_house',x:.3,y:.4,wM:10,hM:15,rot:4},{id:'bed',defId:'raised_bed',x:.3,y:.4}],zones:[],lines:[]};
+  const before=JSON.stringify(state),draw=helper('buildRecordedShadeCoverOverlay',{ELEMENTS_BY_ID:{shade_house:{id:'shade_house',wM:3,hM:3}},SHADE_CLOTH_ALPHA:.5,
+    isShadeClothStructure:(id:string)=>id==='shade_house',document:{createElement:()=>{allocated++;return probe.canvas;}},releaseCanvas:()=>{},drainCanvasToDataUrl:()=> 'net-only',
+    drawCartographicStructureSymbol:(...args:any[])=>symbols.push(args)});
+  assert.equal(draw(state,{imgW:100,mPerPx:1},'planting',300,300),undefined);assert.equal(allocated,0);
+  assert.equal(draw({...state,items:[]},{imgW:100,mPerPx:1},'structures',300,300),undefined);assert.equal(allocated,0);
+  assert.equal(draw(state,{imgW:100,mPerPx:1},'structures',300,300),'net-only');assert.equal(symbols.length,1);assert.deepEqual(symbols[0].slice(2,4),[30,45]);
+  assert.ok(probe.calls.some(v=>v[0]==='set'&&v[1]==='globalAlpha'&&v[2]===.5),'beds must remain visible through the net');
+  assert.ok(probe.calls.some(v=>v[0]==='rotate'&&v[1]===4*Math.PI/180));assert.equal(JSON.stringify(state),before);
 });
