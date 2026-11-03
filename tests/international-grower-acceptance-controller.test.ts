@@ -24,6 +24,7 @@ const hooks = registerHooks({
     return next(url, context);
   },
 });
+const { harvestTargetsSourceKey } = await import('../lib/nursery-save-receipt.ts');
 const { useGrowerWorkflow } = await import('../components/crops/useGrowerWorkflow.ts');
 const { default: Panel } = await import('../components/crops/GrowerAutoPlanPanel.tsx');
 beforeEach(reset); after(() => { hooks.deregister(); cleanup(); });
@@ -68,7 +69,7 @@ function parent(book: unknown, resourceSiteId=siteId) {
     activeAccountUid:account.activeAccountUid,isSampleMode:samples.isSampleMode,isBackendConfigured:()=>probe.configured,getFirebase:()=>({auth:{currentUser:probe.actor?{uid:probe.actor}:null}}),
     readRawCropPlanReceipt:crop.readRawCropPlanReceipt,loadCropPlanWithWriteAdmission:crop.loadCropPlanWithWriteAdmission,cropPlanWriteAdmissionMatches:crop.cropPlanWriteAdmissionMatches,
     cropPlanWriteCandidateIsLossless:crop.cropPlanWriteCandidateIsLossless,cropPlanWriteToken:crop.cropPlanWriteToken,saveCropPlanWithReceipt:crop.saveCropPlanWithReceipt,
-    prepareGrowerWorkflowAcceptance,growerPlanningScopeKey,normaliseGrowerPlanningProfiles,sanitiseHarvestTargets:crop.sanitiseHarvestTargets,sanitiseNurserySettings,
+    prepareGrowerWorkflowAcceptance,growerPlanningScopeKey,normaliseGrowerPlanningProfiles,sanitiseHarvestTargets:crop.sanitiseHarvestTargets,sanitiseNurserySettings,harvestTargetsSourceKey,
     clearTimeout(){},setPlan(value:any){state.plan=typeof value==='function'?value(state.plan):value;notify();},setPlanSaveConflict(value:boolean){state.planSaveConflict=value;},setPlanSaveFailed(value:boolean){state.planSaveFailed=value;},
     setDesign(){},loadFacilitatorState:()=>null,setCurrentMonth(){},setCurrentYear(){},setFavouriteCropKeys(){},loadFavouriteCropKeys:()=>new Set(),
     setAllowBedSharing(){},loadAllowBedSharing:()=>false,setPriceOverrides(){},loadCropPriceOverrides:()=>({}),setCashflowSettings(){},loadCashflowSettings:()=>({}),setMounted(){},

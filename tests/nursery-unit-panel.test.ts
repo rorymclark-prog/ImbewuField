@@ -7,7 +7,7 @@ import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'rea
 import { renderToString } from 'react-dom/server';
 import ts from 'typescript';
 import { reset, cleanup, probe, local, session, events, account, crop, ownRow, studio, studioKey, siteId, samples } from './international-grower-operations-fixture.ts';
-import { replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
+import { replaceCanonicalCropPlanFixtureRaw, initialiseCropPlanFixture, releaseCropPlanFixture } from './crop-plan-storage-fixture.ts';
 import type { NurserySettings } from '../lib/nursery-settings.ts';
 import type { NurseryPlanPanelProps } from '../components/crops/NurseryPlanPanel.tsx';
 
@@ -153,10 +153,10 @@ function boundMount(settings = initial(), deferContext = false, legacyBeforeCont
   if (samples.isSampleMode()) samples.setSandboxCropPlan({ version: 1, plantings: [], updatedAt: 1, nursery: settings });
   else replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ version: 1, plantings: [], updatedAt: 1, nursery: settings }));
   const parent = createNurserySaveFixture(siteId);
-  let ui!: ReturnType<typeof mount>, delay = false, release: (() => void) | null = null;
+  let ui!: ReturnType<typeof mount>, delay = false, postContextDelayed = false, release: (() => void) | null = null;
   function commit(next: NurserySettings, request?: import('../lib/nursery-save-receipt.ts').NurserySaveRequest) {
     const result = parent.submit(next, request);
-    if (result?.status === 'confirmed') ui.update({ settings: parent.state.plan.nursery, saveContext: parent.context() });
+    if (result?.status === 'confirmed') ui.update({ settings: parent.state.plan.nursery, ...(postContextDelayed ? {} : { saveContext: parent.context() }) });
     return result;
   }
   ui = mount(settings, { saveContext: legacyBeforeContext ? undefined : null, onSettings(next, request) {
@@ -164,7 +164,7 @@ function boundMount(settings = initial(), deferContext = false, legacyBeforeCont
     return commit(next, request);
   } });
   if (!deferContext) ui.update({ saveContext: parent.context() });
-  return { ui, state: parent.state, reissueContext() { ui.update({ settings: structuredClone(parent.state.plan.nursery), saveContext: parent.reissueContext() }); }, ready() { ui.update({ saveContext: parent.context() }); }, delay() { delay = true; }, release() { assert.ok(release); release(); },
+  return { ui, state: parent.state, reissueContext() { ui.update({ settings: structuredClone(parent.state.plan.nursery), saveContext: parent.reissueContext() }); }, ready() { ui.update({ saveContext: parent.context() }); }, delayPostContext() { postContextDelayed = true; }, flushPostContext() { postContextDelayed = false; ui.update({ saveContext: parent.context() }); }, delay() { delay = true; }, release() { assert.ok(release); release(); },
     dispose() { ui.dispose(); parent.dispose(); } };
 }
 
@@ -350,5 +350,36 @@ test('an equivalent parent context reissue keeps the original dirty request usab
     ui.edit('container'); ui.change('Outer width', '44'); parent.reissueContext();
     assert.equal(ui.field('Outer width').props.value, '44'); ui.submit('Save container changes');
     assert.match(ui.text(), /Saved on this device/); assert.equal(crop.loadCropPlan().nursery?.containers[0].widthCm, 44);
+  } finally { parent.dispose(); }
+});
+
+test('a previous confirmed source key cannot bless a later dirty nursery draft after an actual same-bytes lease replacement', async () => {
+  const parent = boundMount(), ui = parent.ui;
+  try {
+    ui.edit('container'); ui.change('Outer width', '31'); ui.submit('Save container changes');
+    assert.equal(crop.loadCropPlan().nursery?.containers[0].widthCm, 31);
+    ui.edit('container'); ui.change('Outer width', '32');
+    releaseCropPlanFixture(); await initialiseCropPlanFixture();
+    const fresh = crop.loadCropPlanWithWriteAdmission(); assert.equal(fresh.admission.status, 'ready');
+    parent.state.plan = fresh.book; parent.state.nurseryProducerLive.current = { plan: fresh.book, conflict: false };
+    parent.state.planWriteBase.current = { owner: account.activeAccountUid(), sample: samples.isSampleMode(), token: fresh.token,
+      planKey: JSON.stringify(fresh.book), admission: fresh.admission };
+    parent.reissueContext(); assert.equal(ui.field('Outer width').props.value, '32');
+    assert.equal(ui.button('Save container changes').props.disabled, true, 'Historical success cannot grant a new source/lease to this unfinished nursery edit');
+    const before = crop.cropPlanWriteToken(); ui.submit('Save container changes'); assert.equal(crop.cropPlanWriteToken(), before);
+    assert.equal(crop.loadCropPlan().nursery?.containers[0].widthCm, 31);
+    ui.click('Reload saved nursery settings'); ui.edit('container'); ui.change('Outer width', '33'); ui.submit('Save container changes');
+    assert.equal(crop.loadCropPlan().nursery?.containers[0].widthCm, 33);
+  } finally { parent.dispose(); }
+});
+
+test('the exact completed nursery result hands a retained second form to its delayed current parent context once', () => {
+  const parent = boundMount(), ui = parent.ui; parent.delayPostContext();
+  try {
+    ui.change('Space name', 'Retained bench'); ui.change('Net usable surface', '4');
+    ui.edit('container'); ui.change('Outer width', '34'); ui.submit('Save container changes'); assert.match(ui.text(), /Saved on this device/);
+    assert.equal(ui.field('Space name').props.value, 'Retained bench'); assert.equal(ui.field('Space name').props.disabled, true);
+    parent.flushPostContext(); assert.notEqual(ui.field('Space name').props.disabled, true);
+    ui.submit('Add nursery space'); assert.equal(crop.loadCropPlan().nursery?.spaces.find(row => row.name === 'Retained bench')?.usableM2, 4);
   } finally { parent.dispose(); }
 });

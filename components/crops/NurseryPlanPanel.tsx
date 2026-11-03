@@ -75,7 +75,9 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
   const [exporting, setExporting] = useState(false), [exportStatus, setExportStatus] = useState('');
   const [sample, setSample] = useState(false), [authorityChanged, setAuthorityChanged] = useState(false);
   const active = useRef(false), interacted = useRef(false), pending = useRef(false);
-  const lastConfirmedKey = useRef<string | null>(null);
+  // Equal source values can return under a new lease. Only this exact verified
+  // write may hand its cleared/retained forms to delayed parent props once.
+  const confirmedHandoff = useRef<{ result: unknown; request: NurserySaveRequest; sourceKey: string } | null>(null);
   const producerExpected = saveContext !== undefined;
   const live = useRef({ sourceKey, editor, onSettings, saveContext, producerExpected, forecast, allowCatalogueForecast, beds, siteName });
   live.current = { sourceKey, editor, onSettings, saveContext, producerExpected, forecast, allowCatalogueForecast, beds, siteName };
@@ -94,9 +96,16 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
   }, []);
   useEffect(() => {
     setEditor(previous => {
-      if (previous.sourceKey === sourceKey) return saveContext && nurserySaveContextIsCurrent(saveContext) && previous.saveContext !== saveContext
-        && (lastConfirmedKey.current === sourceKey || !previous.saveContext && !previous.dirty && !previous.uncertain && !interacted.current)
-        ? { ...previous, saveContext } : previous;
+      if (previous.sourceKey === sourceKey) {
+        const handoff = confirmedHandoff.current;
+        const confirmsThisWrite = !!handoff && handoff.sourceKey === sourceKey
+          && nurserySaveResultSourceKey(handoff.result, handoff.request) === sourceKey;
+        if (saveContext && nurserySaveContextIsCurrent(saveContext) && previous.saveContext !== saveContext
+          && (confirmsThisWrite || !previous.saveContext && !previous.dirty && !previous.uncertain && !interacted.current)) {
+          confirmedHandoff.current = null; return { ...previous, saveContext };
+        }
+        return previous;
+      }
       return previous.dirty || previous.uncertain ? previous : freshEditor(sourceKey, previous.unit, previous.context, saveContext ?? null);
     });
   }, [sourceKey, saveContext]);
@@ -156,6 +165,7 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
   function reload() {
     if (!active.current || !actorCurrent || !sourceKey || pending.current) return;
     if (producerExpected && (!saveContext || !nurserySaveContextIsCurrent(saveContext))) { setStatus('Reopen the crop plan to check its saved nursery settings before retrying.'); return; }
+    confirmedHandoff.current = null;
     setEditor(freshEditor(sourceKey, editor.unit, editor.context, saveContext ?? null)); setError(null);
     setStatus(saveContext ? 'Saved nursery settings reloaded.' : 'Nursery entries reloaded from the current plan. Device save is not confirmed.');
   }
@@ -182,7 +192,7 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
     if (!isCurrent(captured) || captured.uncertain || pending.current) { setStatus('The nursery settings or account context changed. Reload saved settings before continuing.'); return; }
     const canonical = sanitiseNurserySettings(next), request = captured.saveContext ? createNurserySaveRequest(captured.saveContext, canonical) : null;
     if (captured.saveContext && !request) { setStatus('The nursery save context changed. Reload saved settings before continuing.'); return; }
-    pending.current = true; setStatus('Checking nursery save…');
+    confirmedHandoff.current = null; pending.current = true; setStatus('Checking nursery save…');
     const finish = (result: boolean | void | NurserySaveResult) => {
       pending.current = false;
       if (!active.current || !nurseryUnitPreferenceContextIsCurrent(captured.context) || live.current.editor !== captured) return;
@@ -193,7 +203,8 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
           setEditor(previous => previous !== captured ? previous : { ...previous, uncertain: true, dirty: true });
           setStatus('Save outcome is not confirmed. Your entries are retained. Reload saved nursery settings before trying again.'); return;
         }
-        lastConfirmedKey.current = key;
+        confirmedHandoff.current = request && !(live.current.saveContext && nurserySaveContextIsCurrent(live.current.saveContext))
+          ? { result, request, sourceKey: key } : null;
         setEditor(previous => {
           if (previous !== captured) return previous;
           const cleared = clear({ ...previous, sourceKey: key, saveContext: live.current.saveContext ?? null,

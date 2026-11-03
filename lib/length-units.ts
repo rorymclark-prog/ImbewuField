@@ -160,87 +160,121 @@ export function formatNurseryDimension(value: number, unit: NurseryDimensionUnit
   const converted = canonicalToNurseryDimension(value, unit);
   return converted === null ? null : formatFiniteDimension(converted);
 }
-export type NurseryDimensionDraftField = Readonly<{
-  text: string; inputUnit: NurseryDimensionUnit; edited: boolean;
+/** A closed unit facade supplies conversion facts and family/blank policy.
+ * Drafts remain numeric entry evidence, never actor or write authorisation. */
+export interface CanonicalUnitSpec<U extends string, F extends string> {
+  readonly kind: (unit: unknown) => F | null;
+  readonly toCanonical: (value: number, unit: U) => number | null;
+  readonly fromCanonical: (value: number, unit: U) => number | null;
+  readonly optional: (kind: F | null) => boolean;
+  readonly nonnegative: (kind: F | null) => boolean;
+  readonly pristineBlankSwitch: (kind: F | null) => boolean;
+}
+export type CanonicalUnitDraftField<U extends string> = Readonly<{
+  text: string; inputUnit: U; edited: boolean;
 } & ({ status: 'ready'; canonicalValue: number | undefined }
   | { status: 'incomplete' | 'invalid'; canonicalValue: null; reason: string })>;
-export interface NurseryDimensionDraft<K extends string> {
+export interface CanonicalUnitDraft<K extends string, U extends string, F extends string> {
   readonly sourceKey: string;
-  readonly kind: NurseryDimensionKind | null;
-  readonly unit: NurseryDimensionUnit;
+  readonly kind: F | null;
+  readonly unit: U;
   readonly originalCanonical: Readonly<Record<K, number | undefined>>;
   readonly optionalFields: readonly K[];
-  readonly fields: Readonly<Record<K, NurseryDimensionDraftField>>;
+  readonly fields: Readonly<Record<K, CanonicalUnitDraftField<U>>>;
 }
-export type NurseryDimensionDraftRead<K extends string> =
+export type CanonicalUnitDraftRead<K extends string> =
   | { readonly status: 'ready'; readonly values: Readonly<Record<K, number | undefined>> }
   | { readonly status: 'held'; readonly reason: string; readonly fields?: readonly K[] };
-export type NurseryDimensionDraftSwitch<K extends string> =
-  | { readonly status: 'ready'; readonly draft: NurseryDimensionDraft<K> }
-  | { readonly status: 'held'; readonly reason: string; readonly draft: NurseryDimensionDraft<K> };
-function nurseryField(value: number | undefined, unit: NurseryDimensionUnit, optional: boolean, edited: boolean): NurseryDimensionDraftField {
-  if (value === undefined && optional && nurseryKind(unit) === 'tray-length') return Object.freeze({ text: '', inputUnit: unit, edited, status: 'ready', canonicalValue: undefined });
-  const text = value === undefined ? null : formatNurseryDimension(value, unit);
-  if (text === null || nurseryKind(unit) === 'surface-area' && value! < 0) return Object.freeze({ text: '', inputUnit: unit, edited, status: 'invalid', canonicalValue: null, reason: value === undefined ? 'required-dimension' : 'outside-finite-range' });
+export type CanonicalUnitDraftSwitch<D> =
+  | { readonly status: 'ready'; readonly draft: D }
+  | { readonly status: 'held'; readonly reason: string; readonly draft: D };
+export function representableUnitValue(before: number, after: number): number | null { return representable(before, after); }
+export function formatCanonicalUnitValue<U extends string, F extends string>(spec: CanonicalUnitSpec<U, F>, value: number, unit: U): string | null {
+  const converted = spec.fromCanonical(value, unit);
+  return converted === null ? null : formatFiniteDimension(converted);
+}
+function canonicalField<U extends string, F extends string>(spec: CanonicalUnitSpec<U, F>, value: number | undefined, unit: U, optional: boolean, edited: boolean): CanonicalUnitDraftField<U> {
+  const kind = spec.kind(unit);
+  if (value === undefined && optional && spec.optional(kind)) return Object.freeze({ text: '', inputUnit: unit, edited, status: 'ready', canonicalValue: undefined });
+  const text = value === undefined ? null : formatCanonicalUnitValue(spec, value, unit);
+  if (text === null || spec.nonnegative(kind) && value! < 0) return Object.freeze({ text: '', inputUnit: unit, edited, status: 'invalid', canonicalValue: null, reason: value === undefined ? 'required-dimension' : 'outside-finite-range' });
   return Object.freeze({ text, inputUnit: unit, edited, status: 'ready', canonicalValue: value });
 }
-function frozenNurseryDraft<K extends string>(draft: NurseryDimensionDraft<K>): NurseryDimensionDraft<K> {
+function frozenCanonicalDraft<D extends { readonly fields: object }>(draft: D): D {
   return Object.freeze({ ...draft, fields: Object.freeze(draft.fields) });
 }
-/** Optional blanks are unknown tray dimensions, never manufactured zeroes.
- * A required surface may be zero but cannot be absent or negative. */
-export function createNurseryDimensionDraft<K extends string>({ sourceKey, unit, values, optionalFields = [] }: {
-  sourceKey: string; unit: NurseryDimensionUnit; values: Readonly<Record<K, number | undefined>>; optionalFields?: readonly K[];
-}): NurseryDimensionDraft<K> {
+export function createCanonicalUnitDraft<K extends string, U extends string, F extends string>(spec: CanonicalUnitSpec<U, F>, { sourceKey, unit, values, optionalFields = [] }: {
+  sourceKey: string; unit: U; values: Readonly<Record<K, number | undefined>>; optionalFields?: readonly K[];
+}): CanonicalUnitDraft<K, U, F> {
   const originalCanonical = Object.freeze({ ...values }), optional = Object.freeze([...optionalFields]);
-  const fields = Object.fromEntries((Object.keys(originalCanonical) as K[]).map(key => [key, nurseryField(originalCanonical[key], unit, optional.includes(key), false)])) as Record<K, NurseryDimensionDraftField>;
-  return frozenNurseryDraft({ sourceKey, kind: nurseryKind(unit), unit, originalCanonical, optionalFields: optional, fields });
+  const fields = Object.fromEntries((Object.keys(originalCanonical) as K[]).map(key => [key, canonicalField(spec, originalCanonical[key], unit, optional.includes(key), false)])) as Record<K, CanonicalUnitDraftField<U>>;
+  return frozenCanonicalDraft({ sourceKey, kind: spec.kind(unit), unit, originalCanonical, optionalFields: optional, fields });
 }
-export function editNurseryDimensionDraft<K extends string>(draft: NurseryDimensionDraft<K>, key: NoInfer<K>, text: string): NurseryDimensionDraft<K> {
+export function editCanonicalUnitDraft<K extends string, U extends string, F extends string>(spec: CanonicalUnitSpec<U, F>, draft: CanonicalUnitDraft<K, U, F>, key: NoInfer<K>, text: string): CanonicalUnitDraft<K, U, F> {
   if (!Object.hasOwn(draft.fields, key)) throw Error('Unknown nursery dimension field');
   if (text === draft.fields[key].text) return draft;
-  const staged = stageDimension(text, value => nurseryDimensionToCanonical(value, draft.unit),
-    draft.kind === 'tray-length' && draft.optionalFields.includes(key), draft.kind === 'surface-area');
-  const field: NurseryDimensionDraftField = Object.freeze(staged.status !== 'ready'
+  const staged = stageDimension(text, value => spec.toCanonical(value, draft.unit),
+    spec.optional(draft.kind) && draft.optionalFields.includes(key), spec.nonnegative(draft.kind));
+  const field: CanonicalUnitDraftField<U> = Object.freeze(staged.status !== 'ready'
     ? { text, inputUnit: draft.unit, edited: true, status: staged.status, canonicalValue: null, reason: staged.reason }
     : { text, inputUnit: draft.unit, edited: true, status: 'ready', canonicalValue: staged.canonical });
-  return frozenNurseryDraft({ ...draft, fields: { ...draft.fields, [key]: field } });
+  return frozenCanonicalDraft({ ...draft, fields: { ...draft.fields, [key]: field } });
 }
-export function readNurseryDimensionDraft<K extends string>(draft: NurseryDimensionDraft<K>, currentSourceKey: string): NurseryDimensionDraftRead<K> {
+export function readCanonicalUnitDraft<K extends string, U extends string, F extends string>(spec: CanonicalUnitSpec<U, F>, draft: CanonicalUnitDraft<K, U, F>, currentSourceKey: string): CanonicalUnitDraftRead<K> {
   if (draft.sourceKey !== currentSourceKey) return { status: 'held', reason: 'source-changed' };
-  if (!nurseryKind(draft.unit)) return { status: 'held', reason: 'unsupported-unit' };
-  if (draft.kind !== nurseryKind(draft.unit)) return { status: 'held', reason: 'mixed-dimensions' };
+  if (!spec.kind(draft.unit)) return { status: 'held', reason: 'unsupported-unit' };
+  if (draft.kind !== spec.kind(draft.unit)) return { status: 'held', reason: 'mixed-dimensions' };
   const keys = Object.keys(draft.originalCanonical) as K[];
   if (keys.length !== Object.keys(draft.fields).length || keys.some(key => !Object.hasOwn(draft.fields, key))
     || draft.optionalFields.some(key => !keys.includes(key)) || new Set(draft.optionalFields).size !== draft.optionalFields.length
-    || draft.kind === 'surface-area' && draft.optionalFields.length > 0) return { status: 'held', reason: 'fields-changed' };
+    || !spec.optional(draft.kind) && draft.optionalFields.length > 0) return { status: 'held', reason: 'fields-changed' };
   const mixed = keys.filter(key => draft.fields[key].inputUnit !== draft.unit);
   if (mixed.length) return { status: 'held', reason: 'mixed-units', fields: Object.freeze(mixed) };
   const invalid = keys.filter(key => {
     const field = draft.fields[key];
     if (field.status !== 'ready') return true;
-    if (field.canonicalValue === undefined) return draft.kind !== 'tray-length' || !draft.optionalFields.includes(key);
-    return !Number.isFinite(field.canonicalValue) || draft.kind === 'surface-area' && field.canonicalValue < 0;
+    if (field.canonicalValue === undefined) return !spec.optional(draft.kind) || !draft.optionalFields.includes(key);
+    return !Number.isFinite(field.canonicalValue) || spec.nonnegative(draft.kind) && field.canonicalValue < 0;
   });
   if (invalid.length) return { status: 'held', reason: 'unfinished-dimensions', fields: Object.freeze(invalid) };
   return { status: 'ready', values: Object.freeze(Object.fromEntries(keys.map(key => [key, draft.fields[key].canonicalValue])) as Record<K, number | undefined>) };
 }
-export function switchNurseryDimensionDraftUnit<K extends string>(draft: NurseryDimensionDraft<K>, nextUnit: NurseryDimensionUnit, currentSourceKey: string): NurseryDimensionDraftSwitch<K> {
-  if (!nurseryKind(nextUnit)) return { status: 'held', reason: 'unsupported-unit', draft };
-  if (nurseryKind(nextUnit) !== draft.kind) return { status: 'held', reason: 'mixed-dimensions', draft };
-  const read = readNurseryDimensionDraft(draft, currentSourceKey), keys = Object.keys(draft.fields) as K[];
+export function switchCanonicalUnitDraft<K extends string, U extends string, F extends string>(spec: CanonicalUnitSpec<U, F>, draft: CanonicalUnitDraft<K, U, F>, nextUnit: U, currentSourceKey: string): CanonicalUnitDraftSwitch<CanonicalUnitDraft<K, U, F>> {
+  if (!spec.kind(nextUnit)) return { status: 'held', reason: 'unsupported-unit', draft };
+  if (spec.kind(nextUnit) !== draft.kind) return { status: 'held', reason: 'mixed-dimensions', draft };
+  const read = readCanonicalUnitDraft(spec, draft, currentSourceKey), keys = Object.keys(draft.fields) as K[];
   // Unit choice precedes entry on a new form. This exception changes only the
   // label of an untouched blank, never converts absence into a saved measurement.
-  const pristineBlank = (key: K) => draft.kind === 'surface-area' && draft.originalCanonical[key] === undefined
+  const pristineBlank = (key: K) => spec.pristineBlankSwitch(draft.kind) && draft.originalCanonical[key] === undefined
     && !draft.fields[key].edited && draft.fields[key].text === '' && draft.fields[key].status === 'invalid'
     && draft.fields[key].reason === 'required-dimension';
   const unenteredOnly = read.status === 'held' && read.reason === 'unfinished-dimensions'
     && keys.every(key => draft.fields[key].status === 'ready' || pristineBlank(key));
   if (read.status !== 'ready' && !unenteredOnly) return { status: 'held', reason: read.reason, draft };
   if (nextUnit === draft.unit) return { status: 'ready', draft };
-  const fields = Object.fromEntries(keys.map(key => [key, nurseryField(
+  const fields = Object.fromEntries(keys.map(key => [key, canonicalField(spec,
     read.status === 'ready' ? read.values[key] : pristineBlank(key) ? undefined : draft.fields[key].canonicalValue!,
-    nextUnit, draft.optionalFields.includes(key), draft.fields[key].edited)])) as Record<K, NurseryDimensionDraftField>;
+    nextUnit, draft.optionalFields.includes(key), draft.fields[key].edited)])) as Record<K, CanonicalUnitDraftField<U>>;
   if (keys.some(key => fields[key].status !== 'ready' && !pristineBlank(key))) return { status: 'held', reason: 'outside-finite-range', draft };
-  return { status: 'ready', draft: frozenNurseryDraft({ ...draft, unit: nextUnit, fields }) };
+  return { status: 'ready', draft: frozenCanonicalDraft({ ...draft, unit: nextUnit, fields }) };
+}
+const nurseryUnits = Object.freeze<CanonicalUnitSpec<NurseryDimensionUnit, NurseryDimensionKind>>({
+  kind: nurseryKind, toCanonical: nurseryDimensionToCanonical, fromCanonical: canonicalToNurseryDimension,
+  optional: kind => kind === 'tray-length', nonnegative: kind => kind === 'surface-area', pristineBlankSwitch: kind => kind === 'surface-area',
+});
+export type NurseryDimensionDraftField = CanonicalUnitDraftField<NurseryDimensionUnit>;
+export interface NurseryDimensionDraft<K extends string> extends CanonicalUnitDraft<K, NurseryDimensionUnit, NurseryDimensionKind> {}
+export type NurseryDimensionDraftRead<K extends string> = CanonicalUnitDraftRead<K>;
+export type NurseryDimensionDraftSwitch<K extends string> = CanonicalUnitDraftSwitch<NurseryDimensionDraft<K>>;
+export function createNurseryDimensionDraft<K extends string>(input: {
+  sourceKey: string; unit: NurseryDimensionUnit; values: Readonly<Record<K, number | undefined>>; optionalFields?: readonly K[];
+}): NurseryDimensionDraft<K> { return createCanonicalUnitDraft(nurseryUnits, input); }
+export function editNurseryDimensionDraft<K extends string>(draft: NurseryDimensionDraft<K>, key: NoInfer<K>, text: string): NurseryDimensionDraft<K> {
+  return editCanonicalUnitDraft(nurseryUnits, draft, key, text);
+}
+export function readNurseryDimensionDraft<K extends string>(draft: NurseryDimensionDraft<K>, currentSourceKey: string): NurseryDimensionDraftRead<K> {
+  return readCanonicalUnitDraft(nurseryUnits, draft, currentSourceKey);
+}
+export function switchNurseryDimensionDraftUnit<K extends string>(draft: NurseryDimensionDraft<K>, nextUnit: NurseryDimensionUnit, currentSourceKey: string): NurseryDimensionDraftSwitch<K> {
+  return switchCanonicalUnitDraft(nurseryUnits, draft, nextUnit, currentSourceKey);
 }

@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/ts.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Nghenisa swikongomelo swa ntshovelo swa vhiki na vhiki ni ntiko wa wena wa maphakete ya ntshovelo hi tikilograma (kg) kumbe tiphawundi ta ntiko (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Hlayisa vuxokoxoko bya swilaveko swa vaxavi lebyi u byi ngheniseke byi tshama byi ri kona loko ku hlayisiwa ka byona ku nga koteki ku tiyisisiwa.",
+  "Choose harvest weight units": "Hlawula tiyuniti ta ntiko wa ntshovelo",
+  "Production plan → Harvest targets": "Kunguhato ra vuhumelerisi → Swikongomelo swa ntshovelo",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Hlawula tikilograma (kg) kumbe tiphawundi ta ntiko (lb), nghenisa xikongomelo xa wena xa ntshovelo kumbe ntiko wa wena wa phakete ya ntshovelo, kutani u hlayisa. Mintiko ya maphakete leyi nga tiviwiki yi tshama yi nga ri kona; nhlayo hinkwayo ya swikongomelo i vupimanyisi byo kunguhata ntsena.",
   // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI draft descriptions only.
   "Enter nursery tray dimensions in centimetres or inches.": "Nghenisa mimpimo ya tithireyi ta xirhapa xa swimilana hi tisentimitara (cm) kumbe ti-inch (in).",
   "Enter usable nursery surface in square metres or square feet.": "Nghenisa ndhawu leyi tirhisekaka ya xirhapa xa swimilana hi timitara ta xikwere (m²) kumbe tifiti ta xikwere (ft²).",

@@ -25,7 +25,7 @@ import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabil
 import ProductionRecordsEditor from '@/components/crops/ProductionRecordsEditor';
 import HarvestTargetsPanel from '@/components/crops/HarvestTargetsPanel';
 import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
-import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
+import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
 import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
 import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
@@ -2053,6 +2053,8 @@ function FacilitatorCropsPageInner() {
   // The parent lifecycle survives its own successful base replacement. A form
   // still binds one original context; a later render cannot grant old drafts a
   // fresh actor, site or source merely by passing a new settings prop.
+  // The legacy nursery names retain fixture/API compatibility; this is the
+  // single actor/site/sample/scope authority for both closed input purposes.
   const nurseryProducerLive = useRef({ plan, conflict: planSaveConflict });
   nurseryProducerLive.current = { plan, conflict: planSaveConflict };
   const [nurserySaveAuthority, setNurserySaveAuthority] = useState<NurserySaveAuthority | null>(null);
@@ -2074,18 +2076,34 @@ function FacilitatorCropsPageInner() {
     // changing any saved values. Capture only after that actual revalidation.
     setNurserySaveContext(createNurserySaveContext(nurserySaveAuthority));
   }, [nurserySaveAuthority, plan, planSaveConflict, planStorageRevision]);
+  const [harvestSaveContext, setHarvestSaveContext] = useState<HarvestSaveContext | null>(null);
+  useEffect(() => {
+    setHarvestSaveContext(createHarvestSaveContext(nurserySaveAuthority));
+  }, [nurserySaveAuthority, plan, planSaveConflict, planStorageRevision]);
+  function saveHarvestTargets(value: HarvestTarget[], request?: HarvestSaveRequest): HarvestSaveResult | false {
+    if (!request) return { status: 'held', reason: 'original-context-required' };
+    return saveScopedGrowerInputs('harvestTargets', value, request);
+  }
   function saveNurserySettings(value: NurserySettings, request?: NurserySaveRequest): NurserySaveResult | false {
     if (!request) return { status: 'held', reason: 'original-context-required' };
     return saveScopedGrowerInputs('nursery', value, request);
   }
   function saveScopedGrowerInputs(fieldName: 'harvestTargets' | 'nursery', value: HarvestTarget[] | NurserySettings): boolean;
-  function saveScopedGrowerInputs(fieldName: 'nursery', value: NurserySettings, nurseryRequest: NurserySaveRequest): NurserySaveResult | false;
-  function saveScopedGrowerInputs(fieldName: 'harvestTargets' | 'nursery', value: HarvestTarget[] | NurserySettings, nurseryRequest?: NurserySaveRequest): boolean | NurserySaveResult {
-    if (nurseryRequest) {
-      if (fieldName !== 'nursery' || Array.isArray(value)) return false;
-      const bound = beginNurserySaveRequest(nurseryRequest, nurserySaveContext, value);
-      if (!bound) return { status: 'held', reason: 'original-context-changed' };
-      value = bound;
+  function saveScopedGrowerInputs(fieldName: 'nursery', value: NurserySettings, inputRequest: NurserySaveRequest): NurserySaveResult | false;
+  function saveScopedGrowerInputs(fieldName: 'harvestTargets', value: HarvestTarget[], inputRequest: HarvestSaveRequest): HarvestSaveResult | false;
+  function saveScopedGrowerInputs(fieldName: 'harvestTargets' | 'nursery', value: HarvestTarget[] | NurserySettings, inputRequest?: NurserySaveRequest | HarvestSaveRequest): boolean | NurserySaveResult | HarvestSaveResult {
+    if (inputRequest) {
+      if (fieldName === 'nursery') {
+        if (Array.isArray(value)) return false;
+        const bound = beginNurserySaveRequest(inputRequest as NurserySaveRequest, nurserySaveContext, value);
+        if (!bound) return { status: 'held', reason: 'original-context-changed' };
+        value = bound;
+      } else {
+        if (!Array.isArray(value)) return false;
+        const bound = beginHarvestSaveRequest(inputRequest as HarvestSaveRequest, harvestSaveContext, value);
+        if (!bound) return { status: 'held', reason: 'original-context-changed' };
+        value = bound;
+      }
     }
     if (!plan || !productionSiteId || !growerActorIsCurrent() || planSaveConflict) return false;
     const base = planWriteBase.current;
@@ -2104,8 +2122,14 @@ function FacilitatorCropsPageInner() {
       const own = (items: readonly HarvestTarget[]) => items.filter(row => row.siteId === productionSiteId);
       const other = (items: readonly HarvestTarget[]) => items.filter(row => row.siteId !== productionSiteId);
       const expected = plan.harvestTargets ?? [], current = fresh.harvestTargets ?? [];
-      if (JSON.stringify(other(rows)) !== JSON.stringify(other(expected))) return false;
-      if (JSON.stringify(own(current)) !== JSON.stringify(own(expected))) { setPlanSaveConflict(true); return false; }
+      const sameTargetData = (a: readonly HarvestTarget[], b: readonly HarvestTarget[]) => {
+        // Sample books retain authored object key order. Compare every raw
+        // value and array position without turning key order into permission.
+        const key = harvestTargetsSourceKey(productionSiteId, a);
+        return key !== null && key === harvestTargetsSourceKey(productionSiteId, b);
+      };
+      if (!sameTargetData(other(rows), other(expected))) return false;
+      if (!sameTargetData(own(current), own(expected))) { setPlanSaveConflict(true); return false; }
       next = { ...fresh, harvestTargets: [...other(current), ...own(rows)], updatedAt: Date.now() };
     } else {
       if (Array.isArray(value)) return false;
@@ -2129,11 +2153,15 @@ function FacilitatorCropsPageInner() {
     if (!cropPlanWriteCandidateIsLossless(next) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
       || !growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== token) { setPlanSaveConflict(true); return false; }
     if (saveTimer.current) clearTimeout(saveTimer.current);
-    if (nurseryRequest) {
-      const result = commitNurserySaveRequest(nurseryRequest, next, token);
+    if (inputRequest) {
+      const result = fieldName === 'nursery'
+        ? commitNurserySaveRequest(inputRequest as NurserySaveRequest, next, token)
+        : commitHarvestSaveRequest(inputRequest as HarvestSaveRequest, next, token);
       setPlanSaveFailed(result.status !== 'confirmed');
       if (result.status === 'confirmed') {
-        const confirmed = readNurserySaveConfirmation(result, nurseryRequest);
+        const confirmed = fieldName === 'nursery'
+          ? readNurserySaveConfirmation(result, inputRequest as NurserySaveRequest)
+          : readHarvestSaveConfirmation(result, inputRequest as HarvestSaveRequest);
         if (!confirmed || !growerActorIsCurrent()) {
           setPlanSaveConflict(true); return { status: 'performed-unconfirmed', reason: 'confirmation-no-longer-current' };
         }
@@ -2302,8 +2330,8 @@ function FacilitatorCropsPageInner() {
     {!allowCataloguePlanning && productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
       key={`own-targets:${productionSiteId}:${growerScopeKey}`} basis="own-records" siteId={productionSiteId}
       targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
-      onTargets={targets => { saveScopedGrowerInputs('harvestTargets', targets); }}
-      onSaveTargets={targets => saveScopedGrowerInputs('harvestTargets', targets)} onAccept={() => {}} />}
+      saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
+      onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
     <GrowerPlanningPanel scope={growerScope} beds={canvasSite ? canvasBeds : designBeds}
       profiles={plan?.growerPlanningProfiles ?? []} onSaveProfiles={saveGrowerProfiles} />
     <GrowerAutoPlanPanel key={`own-review:${growerScopeKey}:${productionSiteId}`} scope={growerScope}
@@ -2679,8 +2707,8 @@ function FacilitatorCropsPageInner() {
                 siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
                 observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined,
               }}
-              onTargets={targets => { saveScopedGrowerInputs('harvestTargets', targets); }}
-              onSaveTargets={targets => saveScopedGrowerInputs('harvestTargets', targets)}
+              saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
+              onSaveTargets={saveHarvestTargets}
               onAccept={(result) => {
                 if (!currentPlanningScopeAllowed() || hasOwnRecords) return;
                 const authoredMetadata = { rainPattern: pattern, planNotes: result.notes, planNotesAt: Date.now() };

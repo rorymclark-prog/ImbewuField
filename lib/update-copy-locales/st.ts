@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/st.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Kenya lipakane tsa kotulo tsa beke le beke le boima ba hau ba liphuthelwana tsa kotulo ka lik'hilograma (kg) kapa liponto tsa boima (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Boloka lintlha tsa litlhoko tsa bareki tseo u li kentseng li ntse li le teng ha ho boloka ho sa khone ho netefatsoa.",
+  "Choose harvest weight units": "Khetha li-unit tsa boima ba kotulo",
+  "Production plan → Harvest targets": "Moralo oa tlhahiso → Lipakane tsa kotulo",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Khetha lik'hilograma (kg) kapa liponto tsa boima (lb), kenya pakane ea hau ea kotulo kapa boima boo u bo lekantseng ba sephuthelwana sa kotulo, ebe u a boloka. Boima ba liphuthelwana bo sa tsejoeng bo lula bo le sieo; kakaretso ea lipakane ke likhakanyo tsa moralo feela.",
   // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/st.json; selected UNREVIEWED AGY AI draft descriptions only.
   "Enter nursery tray dimensions in centimetres or inches.": "Kenya litekanyo tsa literei tsa sebaka sa lipeo ka lisenthimithara (cm) kapa ka li-inch (in).",
   "Enter usable nursery surface in square metres or square feet.": "Kenya bokaholimo bo sebelisehang ba sebaka sa lipeo ka limithara tsa sekwere (m²) kapa ka maoto a sekwere (ft²).",
