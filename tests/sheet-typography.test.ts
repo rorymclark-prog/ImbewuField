@@ -160,15 +160,63 @@ test('sector labels sit directly on the photograph with a dark halo, never an op
 });
 
 test('sector provenance keeps its complete wording in a padded hairline box at the shared reading size', () => {
-  const sectorStart = SOURCE.indexOf('async function composeSectorSheet(');
-  const sectorEnd = SOURCE.indexOf('// The exact sheet is composeSectorSheet', sectorStart);
-  assert.ok(sectorStart >= 0 && sectorEnd > sectorStart, 'sector sheet composer exists');
-  const sectorComposer = SOURCE.slice(sectorStart, sectorEnd);
-
-  assert.match(sectorComposer, /footerHeading: 'NOTES & PROVENANCE'/);
-  assert.match(sectorComposer, /footerText: analysis\.noteText/);
-  assert.match(sectorComposer, /footerBox: true/);
-
+  const sectorTree = ts.createSourceFile('DesignGlossy.tsx', SOURCE, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const sectorComposer = sectorTree.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'composeSectorSheet');
+  assert.ok(sectorComposer, 'sector sheet composer exists');
+  // Historical sheets now need their own full source/coverage qualifications, rather than
+  // current-ground wording. Execute the actual footer expression in both modes: the prior
+  // assertion pinned a property assignment and rejected the legitimate new provenance branch.
+  const footers = new Map<string, ts.Expression>();
+  function findFooter(node: ts.Node) {
+    if (ts.isPropertyAssignment(node)) {
+      const key = node.name.getText(sectorTree);
+      if (['footerText', 'footerHeading', 'footerBox'].includes(key)) {
+        assert.ok(!footers.has(key), `the Sector composer owns one ${key}`);
+        footers.set(key, node.initializer);
+      }
+    }
+    ts.forEachChild(node, findFooter);
+  }
+  findFooter(sectorComposer);
+  function expression(key: string) {
+    const value = footers.get(key);
+    assert.ok(value, `the Sector composer supplies ${key}`);
+    return value.getText(sectorTree);
+  }
+  // The paid finish has a compact reading key. Keep the complete technical footer and its
+  // box on the exact reference, and make sure paid archive art still discloses its coverage.
+  const heading = new Function('artFinish', `return (${expression('footerHeading')});`);
+  const box = new Function('artFinish', `return (${expression('footerBox')});`);
+  assert.equal(heading(false), 'NOTES & PROVENANCE');
+  assert.equal(box(false), true);
+  assert.equal(heading(true), 'READING THIS MAP');
+  assert.equal(box(true), false);
+  const footer = new Function('baseline', 'analysis', 'sheetContours', 'artFinish', `return (${expression('footerText')});`) as
+    (baseline: object|null, analysis: {noteText:string}, contours: {status:string}, artFinish: boolean) => string;
+  const completeAnalysis = 'Unabridged first analysis paragraph.\n\nUnabridged final analysis qualification.';
+  assert.equal(footer(null, {noteText:completeAnalysis}, {status:'ok'}, false), completeAnalysis, 'current-site notes must survive in full');
+  assert.equal(footer(null, {noteText:completeAnalysis}, {status:'ok'}, true), completeAnalysis);
+  const paidArchive = footer({}, {noteText:completeAnalysis}, {status:'ok'}, true);
+  assert.ok(paidArchive.startsWith(completeAnalysis));
+  assert.match(paidArchive, /unphotographed tips left blank/i);
+  assert.match(paidArchive, /exact Sector sheet for source details/i);
+  for (const status of ['ok', 'unavailable']) {
+    const historical = footer({}, {noteText:completeAnalysis}, {status}, false);
+    assert.match(historical, /camera date unverified/i);
+    assert.match(historical, /not a survey/i);
+    assert.match(historical, /coverage.*stay blank/i);
+    assert.match(historical, /latitude.*true north/i);
+    assert.match(historical, /regional assumptions, not local measurements/i);
+    assert.match(historical, /No surveyed ground heights/i);
+    if (status === 'ok') {
+      // The regional overview release states accuracy/datum limits and an explicit set-out
+      // prohibition. Preserve those stronger qualifications rather than its earlier wording.
+      assert.match(historical, /Regional DEM contours are indicative/i);
+      assert.match(historical, /horizontal\/vertical accuracy and height datum are unverified/i);
+      assert.match(historical, /never use them for excavation set-out/i);
+    }
+    else assert.match(historical, /No terrain contours.*unavailable/i);
+  }
   const footerStart = SOURCE.indexOf('const footerFs =');
   const footerEnd = SOURCE.indexOf('// ── Scale bar', footerStart);
   assert.ok(footerStart >= 0 && footerEnd > footerStart, 'style-sheet footer painter exists');
@@ -180,7 +228,7 @@ test('sector provenance keeps its complete wording in a padded hairline box at t
   assert.match(footerPainter, /footerBoxPad = options\.footerBox \? Math\.max\(6,/);
   assert.match(footerPainter, /footerTextX = lx \+ footerBoxPad/);
   assert.match(footerPainter, /ctx\.lineWidth = 1;\s+roundRectPath\(/);
-  assert.doesNotMatch(sectorComposer, /analysis\.noteText\.(?:slice|replace|split|substring)/);
+  assert.doesNotMatch(sectorComposer.getText(sectorTree), /analysis\.noteText\.(?:slice|replace|split|substring)/);
 });
 
 // A paint refactor must preserve the physical distance even when the sheet has side gutters.
