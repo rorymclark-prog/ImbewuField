@@ -151,7 +151,22 @@ async function tool(client, name, args = {}, expectError = false) {
   }
   const deniedOperator = await oauth(users['connector-a'], 'field:read field:operator'); ok(deniedOperator.decision.res.status === 403, 'profile cannot grant operator scope');
   const owner = await oauth(users['connector-owner'], 'field:read field:operator'); const operator = await connect(owner);
-  try { const tools = await operator.listTools(); ok(tools.tools.some(t => t.name === 'get_platform_health'), 'custom-claim owner discovers diagnostics'); await tool(operator, 'get_platform_health'); } finally { await operator.close(); }
+  try {
+    const tools = await operator.listTools(); ok(tools.tools.some(t => t.name === 'get_platform_health'), 'custom-claim owner discovers diagnostics');
+    const initial = await tool(operator, 'get_platform_health');
+    const change = { enabled: !initial.enabled, expectedEnabled: initial.enabled, retryKey: 'owner-switch', apply: false };
+    await tool(operator, 'set_ai_map_kill_switch', change);
+    ok(((await db.doc('app_config/renders').get()).data()?.enabled === true) === initial.enabled, 'owner preview cannot change the global switch');
+    const saved = await tool(operator, 'set_ai_map_kill_switch', { ...change, apply: true });
+    const replay = await tool(operator, 'set_ai_map_kill_switch', { ...change, apply: true });
+    ok(JSON.stringify(saved) === JSON.stringify(replay), 'owner retry returns the same receipt rather than applying twice');
+    ok((await tool(operator, 'get_platform_health')).enabled === !initial.enabled, 'the applied owner switch is read back from app configuration');
+    await tool(operator, 'set_ai_map_kill_switch', { ...change, retryKey: 'stale-owner-switch', apply: true }, true);
+    await tool(operator, 'set_ai_map_kill_switch', { enabled: initial.enabled, expectedEnabled: !initial.enabled, retryKey: 'restore-owner-switch', apply: true });
+    ok((await tool(operator, 'get_platform_health')).enabled === initial.enabled, 'the test restores its initial emulator switch state');
+  } finally { await operator.close(); }
+  const ownerReadOnly = await oauth(users['connector-owner'], 'field:read'); const ownerReader = await connect(ownerReadOnly);
+  try { await tool(ownerReader, 'get_platform_health', {}, true); } finally { await ownerReader.close(); }
   const readonly = await oauth(users['connector-a'], 'field:read'); const reader = await connect(readonly);
   try { await tool(reader, 'update_site_notes', { siteId: fixture.siteA, notes: 'Forbidden', expectedUpdatedAt: 1, apply: true, retryKey: 'readonly' }, true); } finally { await reader.close(); }
   const wide = await oauth(users['connector-a']);

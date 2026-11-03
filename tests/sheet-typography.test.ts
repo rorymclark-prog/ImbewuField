@@ -189,7 +189,13 @@ test('sector provenance keeps its complete wording in a padded hairline box at t
     assert.match(historical, /latitude.*true north/i);
     assert.match(historical, /regional assumptions, not local measurements/i);
     assert.match(historical, /No surveyed ground heights/i);
-    if (status === 'ok') assert.match(historical, /Contours are derived.*terrain data, not a ground survey/i);
+    if (status === 'ok') {
+      // The regional overview release states accuracy/datum limits and an explicit set-out
+      // prohibition. Preserve those stronger qualifications rather than its earlier wording.
+      assert.match(historical, /Regional DEM contours are indicative/i);
+      assert.match(historical, /horizontal\/vertical accuracy and height datum are unverified/i);
+      assert.match(historical, /never use them for excavation set-out/i);
+    }
     else assert.match(historical, /No terrain contours.*unavailable/i);
   }
   assert.match(sectorComposer, /footerBox: true/);

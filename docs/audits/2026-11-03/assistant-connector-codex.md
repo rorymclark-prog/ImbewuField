@@ -1,7 +1,7 @@
 # Assistant connector audit — 2026-11-03
 
 - Auditor: Codex, chat `01a1a14e-971d-70d3-abdc-2efcaf61d2ef`.
-- Reviewed revision: base `a4fdf7afa`, isolated branch `codex/imbewu-mcp-connector`, plus the connector implementation recorded with this audit. Current main `56d6ebad0` and the completed historical-baseline release were merged without changing their map implementation.
+- Reviewed revision: implementation began at `a4fdf7afa` on `codex/imbewu-mcp-connector` (PR #1181). Its `f1a53e262` checkpoint has now been integrated with main `2583801ee3cad1c191e33e257df0af6891eda601` in the separate `codex/imbewu-mcp-integration` checkout, merge `4ea7d5816`, with the corrections below. Historical baseline, named areas, geographic-frame correction and regional A–B profile are retained unchanged.
 - Deployment inspected: local emulator backend and actual Next app browser journey; production release and native plugin verification remain pending at this checkpoint.
 - Previous audit: no prior connector audit exists. Mapping context is retained from [the current fidelity audit](ai-layer-fidelity-corrections-codex.md); ongoing historical-baseline implementation in the separate map worktree was inspected read-only.
 - Scope: account/site consent, personal saved places/surveys/designs, original evidence, historical registration drafts, render progress, organisation production observations and bounded operator controls.
@@ -32,8 +32,10 @@ compiler graph. Existing map rendering/paid dispatch is not replaced.
 | MCP-004 | Organisation membership could accidentally expose another person's maps or funder-private evidence. | Verified in emulators | Personal maps remain bound to the connected UID and explicit site IDs. Other-user assets, unselected sites, other organisations and operator escalation were rejected. Funders received only published aggregates. |
 | MCP-005 | Retries, expired credentials and asynchronous jobs can create duplicates or false completion claims. | Verified in emulators | Receipt replay, conflicting retry keys/revisions, pre-upload finalisation, wrong bytes, content dedup, code reuse, wrong PKCE, access expiry, refresh replay, downscoping, disabled accounts and tenant moves were exercised. Worker `complete` remains explicitly visually unverified. |
 | MCP-006 | An assistant needs a useful way to prepare historical-photo alignment without altering saved measurements. | Draft preparation and preview verified | Observed control pairs produce an affine fit and pixel residuals. Original/source facts persist; current design revision stays identical. The app preview draws historical evidence and saved outlines. This is a registration draft, not an applied Existing Site/Sector map. |
-| MCP-007 | Phone consent content can be covered by global app chrome. | Implemented; final visual recheck pending | Browser evidence caught Lima overlapping scope text. Connection routes now suppress Lima/update chrome and register their own Back link. All account reads and consent decisions use the existing uncached `/api/` lane; stale page HTML cannot authorise a grant. The screenshot below predates chrome cleanup and is labelled accordingly. |
+| MCP-007 | Phone consent content can be covered by global app chrome. | Cleaned phone consent visually verified | The new phone evidence shows readable scope text, one explicit site selection, one Back link and no Lima overlay. The original overlapping view is retained as historical evidence. Account reads and consent decisions use the existing uncached `/api/` lane; stale page HTML cannot authorise a grant. |
 | MCP-008 | Operators need useful access without a production shell or secrets. | Verified in emulators | Current `aiMapMaster` claim plus separate operator OAuth scope is required. Health reads are bounded; the AI kill switch uses preview, expected-value checks, a receipt and audit entry. Tests did not change a live switch or start paid generation. |
+| MCP-009 | Buffered original transfers can overlap beyond the small instance's practical memory budget. | Configuration tightened; deployment verification pending | This was a configuration review, not an observed outage: twenty allowed 25 MiB bodies nearly fill a 512 MiB instance before ordinary runtime and readback overhead. Only this new handler now limits concurrency to two, retaining three maximum instances. Compiled endpoint metadata confirms those limits; no load-test or existing-worker change is claimed. |
+| MCP-010 | The new static tab title has no source-bound native-language catalogue entry. | Corrected; focused checks pass | The live `f1a53e262` full run reported this exact missing metadata identity. Its source row and four explicitly unreviewed machine drafts were added to the existing title authority and packet. Old identities, source SHA, review status and unknown/private-title guards remain intact. No assertion was weakened. |
 
 ## Capability and permission mapping
 
@@ -57,7 +59,7 @@ compiler graph. Existing map rendering/paid dispatch is not replaced.
 - Focused affected contracts: 135 passed on Node 24. Current-main integration exposed a release-guide coverage failure: the new note displaced the earlier map guide from the visible five-line window. A second useful guide stop now sends the reader to review the saved map, and the affected tests pass without assertion edits.
 - First preview `7259b19` built and served its exact SHA. Current-head `rules` and `focused-render` passed. The complete updated-head full run and release gates remain required.
 - Release CI, deployed URLs and native plugin/Claude compatibility: pending at this checkpoint; not claimed as passed.
-- No production data was mutated. No paid generation, security-rule deployment or `PLAN_VERSION` edit occurred.
+- This initial emulator/browser phase did not mutate production data. Later bounded live synthetic verification is recorded below. No real farm record, paid generation, security-rule deployment or `PLAN_VERSION` edit occurred.
 - This adds connection/evidence screens. It does not change the existing rendered map picture.
 
 Temporary Next, emulator backend, callback and isolated Playwright processes were
@@ -134,6 +136,77 @@ are not recorded as passes. This connector still does not modify map drawing
 implementation. Native desktop automation of the Codex app itself is denied by
 the host's computer-use safety boundary; supported plugin tools/browser and the
 official CLI remain the appropriate installation/test paths.
+
+## Latest integration and interrupted local environment
+
+The geographic-frame and regional terrain-profile release is main merge
+`2583801ee3cad1c191e33e257df0af6891eda601` (PR #1184), not just the earlier
+named-area release. This integration's `DesignGlossy.tsx` has the exact same Git
+blob `35e6678d0d75c528eee69d3faf80550ef2f6214a` as that main revision; its new
+`sheet-terrain-profile.ts`, native release drafts and audit are also retained.
+The separate map chat's shade-tunnel correction is still active and is not
+claimed as completed by this connector. No map implementation was edited here.
+
+The historical footer test now preserves the newer release's stronger regional
+DEM qualifications: indicative contours, unverified horizontal/vertical accuracy
+and height datum, and an explicit excavation set-out prohibition. Its ordinary
+complete-note, historical date/coverage/assumption, typography and layout checks
+remain. The earlier phrase was retired with its reason, not deleted as coverage.
+
+Ordered integration typecheck and 47 affected tests pass. Functions compilation
+and entry verification pass, with compiled metadata reporting concurrency 2,
+512 MiB, maximum instances 3 and timeout 120 seconds. These are development
+checks; they do not establish final release or native linking.
+
+The old local `f1a53e262` run has no terminal result: its process/session and
+temporary logs were no longer present when the runtime was rechecked. Last
+observed output contained the related title-catalogue failure. It is not a pass.
+Its remote PR run [41657925217](https://github.com/rorymclark-prog/ImbewuField/actions/runs/41657925217)
+was independently confirmed still running, with rules and focused-render green;
+it was not restarted or cancelled because observation expired. Final source was
+prepared in a separate checkout so that live run's source remained unchanged.
+New verification files and owned-process records now use a private persistent
+local QA directory rather than relying on disposable temporary logs.
+
+The deployed backend also passed separate live Storage checks: anonymous and
+owner direct Storage reads were denied, while the owner's account attachment
+still returned the exact original after assistant disconnect. Disconnect removes
+assistant access without deleting the imported evidence.
+
+Codex's supported native app-server API successfully listed its private-plugin
+catalogue without errors or an existing ImbewuField match. That is a feasible
+installation path, not proof of installation. Claude Desktop 4.4212.0 exposed
+Settings → Customize → Connectors → Add custom connector, with Name and MCP
+server URL fields. Nothing was saved there. The app had been closed before this
+inspection and was quit afterwards; no user draft was entered. No new chat was
+created to force tool refresh. Canonical app publication and native OAuth/tool
+verification remain mandatory next steps.
+
+The fresh isolated Auth/Firestore/Storage probe now passes **106 checks**. Its
+added operator cases verify that preview leaves configuration untouched, an
+applied switch is read back, retry returns the same receipt, a stale expected
+value is refused, the initial emulator state is restored, and an owner claim
+without operator scope cannot read platform health. No live switch changed.
+
+A fresh browser journey then signed in through the existing app onboarding,
+selected one of two sites and completed the real callback exchange. The SDK
+read the expected profile, one site and 17 customer tools. The phone consent
+view was inspected at a measured 390 × 664 CSS viewport, with content width 390
+and no horizontal overflow or overlapping Lima widget:
+[cleaned phone consent](evidence-connector/phone-consent-clean.png). The test
+connection was disconnected through the app, and its imported original still
+opened with successful byte verification in the
+[phone registration draft](evidence-connector/synthetic-registration-phone.png).
+Its synthetic fit and lack of survey/terrain/current-map claims remain visible.
+This local development session reported dependency-link stylesheet/font
+warnings; the actual consent and draft views were inspected as rendered.
+Canonical published-host inspection is still a release gate.
+
+The callback exited itself after verification. The isolated browser, Next
+preview, backend and emulators were all confirmed stopped before the full-suite
+phase. The owned emulator-only environment file and current-session raw browser
+artifacts were removed. Older tracked browser artifacts were restored unchanged;
+they are not part of this connector diff.
 
 ## Real limits
 

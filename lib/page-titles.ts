@@ -59,6 +59,8 @@ export const PAGE_TITLE_DRAFTS:readonly PageTitleDraft[]=[
  {english:'Read the scale, check the space — design practice',zu:'Funda isikali, hlola indawo — ukuzijwayeza ukuklama',st:'Bala sekala, hlahloba sebaka — boitlwaetso ba ho rala',ts:'Hlaya xikalo, kambela ndhawu — ku titoloveta ku dizayina',ve:'Vhalani tshikalo, ṱolani tshikhala — u ḓiḓowedza u pulana'},
  {english:'Example farm — ImbewuField',st:'Polasi ya mohlala — ImbewuField',ts:'Purasi ra xikombiso — ImbewuField',ve:'Bulasi ḽa tsumbo — ImbewuField'},
  {english:'Farm-gate prices — ImbewuField',st:'Ditheko hekeng ya polasi — ImbewuField',ts:'Minxavo ya le nyangweni wa purasi — ImbewuField',ve:'Mitengo ya khoroni ya bulasi — ImbewuField'},
+ // Account-linking metadata is source-bound too; these are unreviewed machine drafts.
+ {english:'Assistant connections — ImbewuField',zu:'Ukuxhuma kubasizi — ImbewuField',st:'Dikgokahano le bathusi — ImbewuField',ts:'Vuhlanganisi ni vapfuni — ImbewuField',ve:'Vhuṱumanyi ha vhathusi — ImbewuField'},
 ];
 const drafts=new Map(PAGE_TITLE_DRAFTS.map(row=>[row.english,row]));
 export const PAGE_TITLE_SOURCES=Array.from(new Set([...Object.keys(PAGE_TITLE_CONTROLS),...drafts.keys()]));

@@ -3,7 +3,8 @@ import { createConnectorApp } from './http';
 
 // Firebase owns credentials and original files. Vercel never forwards a service key.
 let service: ReturnType<typeof createConnectorApp> | undefined;
-export const imbewuConnector = onRequest({ region: 'europe-west1', invoker: 'public', maxInstances: 3, concurrency: 20, timeoutSeconds: 120, memory: '512MiB' }, (req, res) => {
+// Original transfers and readback hold whole files; limit their overlap in a 512 MiB instance.
+export const imbewuConnector = onRequest({ region: 'europe-west1', invoker: 'public', maxInstances: 3, concurrency: 2, timeoutSeconds: 120, memory: '512MiB' }, (req, res) => {
   if (!service) service = createConnectorApp({ issuer: 'https://imbewufield.vercel.app/api/assistant', appOrigin: 'https://imbewufield.vercel.app', transferOrigin: 'https://europe-west1-fieldproof-sa.cloudfunctions.net/imbewuConnector' });
   const route = req.query.connector_path;
   if (typeof route === 'string') {
