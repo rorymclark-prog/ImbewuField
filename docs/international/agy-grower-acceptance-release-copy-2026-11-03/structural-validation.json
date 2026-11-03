@@ -1,0 +1,16 @@
+{
+  "sourceSha256": "563f7debc7acced18fb79b3bdae79eadbab7df6a433576447fbfd943db13e03b",
+  "pairs": 24,
+  "damagedControlsRejected": 12,
+  "notesWords": 177,
+  "scope": "structural source binding only; no fluent certification or runtime activation",
+  "files": {
+    "st.json": "4796ac85d87afdde1ac7a6200c95b2d0244b6153af1605d28684f5ed4403261a",
+    "ts.json": "751ed81dc464d7ecd81f84893b551063f3453f671a99be98ecad66fb2e7ca936",
+    "source.json": "563f7debc7acced18fb79b3bdae79eadbab7df6a433576447fbfd943db13e03b",
+    "review-notes.md": "31735630dc565c13f60fed4f2ddb6559dfff4f48685b9a2bcb05f57431315682",
+    "zu.json": "abaf2bfc8386ce95e8ece7cb4fe8c0cc72b26a5688fd243118d2ebcdf69d03e8",
+    "ve.json": "d5a6d683b825cb1ac1f7d35f6a966d0d6c216b70cde28cd6540d9aa5e4b33ec6",
+    "status.json": "b11113bde9422d0e0f9ef80d1bd85838e0a21e39d6070ca4274891c707d40c6a"
+  }
+}

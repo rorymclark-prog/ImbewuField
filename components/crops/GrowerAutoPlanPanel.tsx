@@ -7,6 +7,7 @@ import type { HarvestTarget } from '@/lib/crop-plan';
 import { growerPlanningScopeKey, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import type { GrowerWorkflowDraft, GrowerWorkflowReview } from '@/lib/international/grower-workflow';
+import type { GrowerWorkflowAcceptanceResult, GrowerWorkflowAcceptanceState } from './useGrowerWorkflow';
 
 export interface GrowerAutoPlanPanelProps {
   scope: GrowerPlanningScope | null;
@@ -21,6 +22,8 @@ export interface GrowerAutoPlanPanelProps {
   targetSiteId: string | null;
   onRefresh: () => Promise<void>;
   onReview: (draft: GrowerWorkflowDraft) => Promise<GrowerWorkflowReview>;
+  onAccept?: (review: Extract<GrowerWorkflowReview, { status: 'review' }>, displayedReviewIsCurrent: () => boolean) => Promise<GrowerWorkflowAcceptanceResult>;
+  acceptance?: GrowerWorkflowAcceptanceState;
   nurseryReview?: (review: Extract<GrowerWorkflowReview, { status: 'review' }>) => ReactNode;
 }
 
@@ -68,13 +71,15 @@ const issueLabels: Record<string, string> = {
 const issueText = (code: string) => issueLabels[code] ?? issueLabels[code.replace(/^target-/, '')]
   ?? issueLabels[code.split(':').at(-1) ?? ''] ?? 'Check the saved source and entered assumptions before using this review.';
 
-/** Unsaved review controls only. The parent owns all current-source reads. */
+/** Review and receipt UI. The parent owns current-source reads and guarded writes. */
 export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   const [draft, setDraft] = useState(emptyDraft);
   const [review, setReview] = useState<GrowerWorkflowReview | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
-  const generation = useRef(0);
+  const [receiptHidden, setReceiptHidden] = useState(false);
+  const generation = useRef(0), accepting = useRef(false);
+  const reviewRef = useRef(review); reviewRef.current = review;
   const live = useRef(props); live.current = props;
   useEffect(() => { generation.current++; setReview(null); setError(''); setBusy(false); }, [props.contextRevision]);
   useEffect(() => () => { generation.current++; }, []);
@@ -83,7 +88,7 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
     ? props.targets.filter(target => target.siteId === props.targetSiteId) : [];
   const profiles = props.profiles.filter(profile => growerPlanningScopeKey(profile.scope) === scopeKey);
   const beds = props.source?.beds ?? [];
-  function change(next: GrowerWorkflowDraft) { generation.current++; setDraft(next); setReview(null); setError(''); setBusy(false); }
+  function change(next: GrowerWorkflowDraft) { generation.current++; setReceiptHidden(true); setDraft(next); setReview(null); setError(''); setBusy(false); }
   async function run() {
     const turn = ++generation.current, revision = props.contextRevision;
     setBusy(true); setReview(null); setError('');
@@ -93,19 +98,31 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
     } catch { if (generation.current === turn) setError('Could not check the current saved inputs. Your plan has not changed.'); }
     finally { if (generation.current === turn) setBusy(false); }
   }
+  async function save() {
+    if (accepting.current || !props.onAccept || review?.status !== 'review') return;
+    const expected = review, turn = ++generation.current, revision = props.contextRevision;
+    accepting.current = true; setReceiptHidden(false); setError('');
+    try {
+      await props.onAccept(expected, () => generation.current === turn && reviewRef.current === expected
+        && live.current.contextRevision === revision);
+    } catch { if (generation.current === turn) setError('Could not confirm this save. Review the current saved records before trying again.'); }
+    finally { accepting.current = false; }
+  }
   function move(index: number, direction: number) {
     const rows = [...draft.targetProfiles], other = index + direction;
     if (other < 0 || other >= rows.length) return;
     [rows[index], rows[other]] = [rows[other], rows[index]];
     change({ ...draft, targetProfiles: rows });
   }
+  const saving = props.acceptance?.status === 'saving';
+  const saved = props.acceptance?.status === 'confirmed';
   const usable = review?.status === 'review' && (review.proposal.status === 'ready' || review.proposal.status === 'with-gaps');
   return <details className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] text-[var(--text-primary)]">
     <summary className="min-h-12 cursor-pointer px-4 py-3 font-display font-semibold">Automatic plan from your estimates</summary>
     <section aria-label="Grower automatic plan review" className="space-y-4 px-4 pb-4 text-sm">
       <p>Match your saved buyer targets to whole beds or field plots using your own growing estimates. This does not choose a local crop calendar or promise weekly deliveries.</p>
       <p>{props.sourceName}. Areas come from the saved design; check them against your ground measurements.</p>
-      <button type="button" className={button} disabled={props.checking || busy || !scopeKey} onClick={() => {
+      <button type="button" className={button} disabled={props.checking || busy || saving || !scopeKey} onClick={() => {
         generation.current++; setReview(null); setError(''); void props.onRefresh().catch(() => setError('Could not check this saved design.'));
       }}>{props.checking ? 'Checking saved design…' : 'Check saved design'}</button>
       {props.sourceIssue && <p role="status">{props.sourceIssue}</p>}
@@ -154,7 +171,7 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
         })}
       </fieldset>
       <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={draft.assumptionsConfirmed} onChange={event => change({ ...draft, assumptionsConfirmed: event.target.checked })} />I supply these planning dates and availability as my estimates.</label>
-      <button type="button" className={button} disabled={!props.source || props.checking || busy || !scopeKey} onClick={() => void run()}>{busy ? 'Checking current inputs…' : 'Review automatic crop plan'}</button>
+      <button type="button" className={button} disabled={!props.source || props.checking || busy || saving || !scopeKey} onClick={() => void run()}>{busy ? 'Checking current inputs…' : 'Review automatic crop plan'}</button>
       {error && <p role="alert">{error}</p>}
       {review && <section aria-label="Automatic grower proposal" className="space-y-3 rounded-xl border border-[var(--border)] p-3">
         <h3 className="font-semibold">{usable ? 'Proposed whole-bed crop cycles' : 'Review inputs before planning'}</h3>
@@ -172,9 +189,17 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
             {usable && review.proposal.demandResults.map(target => <p key={target.demandId}>Estimated gross capacity: {quantity(target.estimatedAllocatedKg)} kg; remaining: {quantity(target.unmetKg)} kg; excess: {quantity(target.excessEstimatedKg)} kg.</p>)}
           </>}
         {review.blockedBeds.length > 0 && <ul>{review.blockedBeds.map(bed => <li key={bed.bedId}>{beds.find(item => item.id === bed.bedId)?.label ?? 'Growing space'} held: {bed.reasons.map(issueText).join('; ')}</li>)}</ul>}
-        <p>These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.</p>
+        {!saved && <p>These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.</p>}
+        {props.onAccept && review.status === 'review' && review.proposal.status === 'ready' && review.proposal.cycles.length > 0 && <button
+          type="button" className={button} disabled={saving || saved || props.checking || busy} onClick={() => void save()}>
+          {saving ? 'Checking and saving planned cycles…' : `Save all ${review.proposal.cycles.length} planned crop cycles`}
+        </button>}
         {usable && review.status === 'review' && props.nurseryReview?.(review)}
       </section>}
+      {!receiptHidden && props.acceptance?.status === 'confirmed' && <p role="status">{props.acceptance.sample ? 'DEMO — ' : ''}{props.acceptance.rows} planned crop cycles saved {props.acceptance.sample ? 'in the example workspace' : 'on this device'}. No sowing, harvest, stock or sales have been recorded. Nursery resource availability remains a separate check. <a className="underline" href="/cropplan">Open dated work in the Task Planner</a>.</p>}
+      {props.acceptance?.status === 'failed' && <p role="alert">The crop cycles could not be saved. Keep this review open and try again when storage is available.</p>}
+      {props.acceptance?.status === 'held' && <p role="alert">No crop cycles were saved. {props.acceptance.reasons.map(issueText).join(' ')}</p>}
+      {props.acceptance?.status === 'superseded' && <p role="alert">The write completed, but the current saved plan could not be confirmed. Reopen its saved records before continuing. Do not repeat this save from the old review.</p>}
     </section>
   </details>;
 }

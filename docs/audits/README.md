@@ -97,7 +97,9 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest grower continuation: [Dated work and canonical save admission — 3 November 2026](2026-11-03/grower-operations-codex.md). Full CI, populated-cycle and account browser gates remain open.
+Latest grower continuation: [Reviewed proposal saves, Finance evidence and sign-in preservation — 3 November 2026](2026-11-03/grower-acceptance-codex.md). Full CI, cached-client migration, populated-cycle and account browser gates remain open.
+
+Previous grower continuation: [Dated work and canonical save admission — 3 November 2026](2026-11-03/grower-operations-codex.md).
 
 Previous: [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
 
@@ -143,6 +145,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- **2026-11-03:** [Reviewed proposal saves, Finance evidence and sign-in preservation](2026-11-03/grower-acceptance-codex.md).
 - **2026-11-03:** [Dated grower work and canonical save admission](2026-11-03/grower-operations-codex.md).
 
 - [Nursery forecast source and verification — 1 November 2026](2026-11-01/nursery-source-and-verification.md).

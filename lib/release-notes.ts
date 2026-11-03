@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '0ab6f9ea2', changes: [
+    'Save a reviewed plan from your own growing estimates.',
+    'Check unresolved crop records before using a finance forecast.',
+    'Keep saved growing estimates and nursery settings when signing in.',
+  ], tour: [{ title: 'Save your reviewed plan', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Review a complete proposal, save all its planned cycles, then open dated work.' }] },
   { when: '3 November 2026', sha: 'b3bf0f48f', changes: [
     'Follow saved grower cycles on their exact planned dates.',
     'Check current designs before ticking work or exporting dates.',

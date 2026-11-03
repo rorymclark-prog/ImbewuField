@@ -1,0 +1,11 @@
+{
+  "checkedAtUtc": "2026-11-03T09:22:08.421082+00:00",
+  "reason": "Parent task-icon correction merged; English acceptance release messages remain unchanged despite release-file coverage restamp.",
+  "frozenSourceSha256": "563f7debc7acced18fb79b3bdae79eadbab7df6a433576447fbfd943db13e03b",
+  "originalSnapshotFileSha256": "5c0faf0f22b7799721a787234f6310e47c4e071744560258718100cc2c631a1a",
+  "currentReleaseFileSha256": "f3c47df086909fc28783232bedaf611e9171b955c60dbfcd671f7649402405d6",
+  "messagesChecked": 6,
+  "englishUnchanged": true,
+  "runtimeActivation": false,
+  "fluentHumanApproval": false
+}
