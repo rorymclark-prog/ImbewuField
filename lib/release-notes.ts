@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 November 2026', sha: '7259b196b', changes: [
+  { when: '3 November 2026', sha: 'f5dfaf0df', changes: [
     'Choose which saved sites an assistant can use, and disconnect it in Settings.',
     'Keep original site photos and PDFs with their source and import history.',
     'Review historical photo registration drafts without moving saved map features.',

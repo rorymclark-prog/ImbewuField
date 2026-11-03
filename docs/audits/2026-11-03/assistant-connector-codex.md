@@ -64,6 +64,43 @@ Temporary Next, emulator backend, callback and isolated Playwright processes wer
 recorded in `/tmp/imbewu-connector-processes.md` and stopped after this verification
 phase. Other chats' previews and the unrelated listener on port 5001 were left alone.
 
+## Full-suite integration follow-up
+
+The next complete run exposed three real integration misses in the new screens:
+original byte counts used the runtime locale, the new route lacked its own tab
+title, and combining the connection-screen condition into the existing update
+render guard broke the presentation deck's guarded contract. The screen now uses
+`numberLabel`, has server metadata and retains the exact deck guard before its
+separate connection-screen guard. No test was changed for those fixes.
+
+Two failures were already present in current main's newly merged historical map
+release. Both `DesignGlossy.tsx` and the affected test source had identical Git
+blob IDs in this branch and `origin/main`. The old assertions assumed all polish
+passes restore no pixels and every provenance footer equals `analysis.noteText`.
+Historical output legitimately restores its unphotographed-coverage mask even
+after polish and carries its own complete source/coverage/terrain qualifications.
+
+Those claims were rewritten upward, with their reasons in the tests. The tests
+now execute the actual queue roof-mask, completion restoration and footer
+expressions. They independently verify ordinary Hybrid roofs, polish without a
+photographic roof mask, historical blank-coverage preservation, required source
+and mask, frozen image/source delivery to the finisher, complete normal notes,
+and all historical confidence/coverage/terrain qualifications. Existing font,
+padding, hairline box and house/chrome checks remain. No map renderer or picture
+was changed to satisfy these checks, and no assertion was simply removed.
+
+The affected group now passes **178 tests** on Node 24. Fresh complete current-head
+CI remains mandatory before merge. Local full runs are recorded honestly as failed
+or stopped after known failures; long source-preservation checks are not a reason
+to label the complete suite as passed.
+
+The isolated Firebase connector function has now been deployed. Live SDK discovery
+returns all 17 customer tools, every tool advertises scopes, unauthenticated profile
+calls return the actual linking challenge, DCR succeeds, and unauthenticated direct
+Firestore access to its synthetic server-side client document is denied. This is
+backend evidence only; canonical app publication and native plugin linking remain
+separate gates. No real farmer/site record, paid render or security rule changed.
+
 ## Real limits
 
 - Linking ImbewuField does not link Drive, Gmail, an archive or a local filesystem.

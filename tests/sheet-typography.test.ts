@@ -166,7 +166,32 @@ test('sector provenance keeps its complete wording in a padded hairline box at t
   const sectorComposer = SOURCE.slice(sectorStart, sectorEnd);
 
   assert.match(sectorComposer, /footerHeading: 'NOTES & PROVENANCE'/);
-  assert.match(sectorComposer, /footerText: analysis\.noteText/);
+  // Historical sheets now need their own full source/coverage qualifications, rather than
+  // current-ground wording. Execute the actual footer expression in both modes: the prior
+  // assertion pinned a property assignment and rejected the legitimate new provenance branch.
+  const sectorTree = ts.createSourceFile('sector-composer.ts', sectorComposer, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const footers: ts.PropertyAssignment[] = [];
+  function findFooter(node: ts.Node) {
+    if (ts.isPropertyAssignment(node) && node.name.getText(sectorTree) === 'footerText') footers.push(node);
+    ts.forEachChild(node, findFooter);
+  }
+  findFooter(sectorTree);
+  assert.equal(footers.length, 1, 'the Sector composer owns one complete provenance footer');
+  const footer = new Function('baseline', 'analysis', 'sheetContours', `return (${footers[0].initializer.getText(sectorTree)});`) as
+    (baseline: object|null, analysis: {noteText:string}, contours: {status:string}) => string;
+  const completeAnalysis = 'Unabridged first analysis paragraph.\n\nUnabridged final analysis qualification.';
+  assert.equal(footer(null, {noteText:completeAnalysis}, {status:'ok'}), completeAnalysis, 'current-site notes must survive in full');
+  for (const status of ['ok', 'unavailable']) {
+    const historical = footer({}, {noteText:completeAnalysis}, {status});
+    assert.match(historical, /camera date unverified/i);
+    assert.match(historical, /not a survey/i);
+    assert.match(historical, /coverage.*stay blank/i);
+    assert.match(historical, /latitude.*true north/i);
+    assert.match(historical, /regional assumptions, not local measurements/i);
+    assert.match(historical, /No surveyed ground heights/i);
+    if (status === 'ok') assert.match(historical, /Contours are derived.*terrain data, not a ground survey/i);
+    else assert.match(historical, /No terrain contours.*unavailable/i);
+  }
   assert.match(sectorComposer, /footerBox: true/);
 
   const footerStart = SOURCE.indexOf('const footerFs =');
