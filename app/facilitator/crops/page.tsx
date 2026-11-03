@@ -1979,6 +1979,9 @@ function FacilitatorCropsPageInner() {
       || live.scopeKey !== growerScopeKey) return false;
     return plannerActorIsCurrent(growerOwner, growerSample);
   }
+  function cropExportContextIsCurrent() {
+    return readAccountLocalSampleState() === growerSample && growerActorIsCurrent();
+  }
   function readCurrentGrowerBook(): GrowerWorkflowBookReceipt {
     if (!plan || !growerActorIsCurrent()) return { status: 'held', reason: 'context-changed' };
     const base = planWriteBase.current;
@@ -2980,7 +2983,7 @@ function FacilitatorCropsPageInner() {
             {(unassignedProductionRecords.length > 0 || unassignedPreservedProducts.length > 0) && <p className="font-sans text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Earlier records without a site are retained outside this site's totals: {unassignedProductionRecords.length} production records and {unassignedPreservedProducts.length} stock records.</p>}
             {monthlyProjectPreview}
             <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []} dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
-            {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} productionProjection={productionProjection} poultryGuidance={includeAnimals ? chickenGuide : undefined} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} />}
+            {simple && <CropPlanExportCard contextCurrent={cropExportContextIsCurrent} plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} productionProjection={productionProjection} poultryGuidance={includeAnimals ? chickenGuide : undefined} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} />}
 
             {!simple && (
             <>
@@ -3279,6 +3282,7 @@ function FacilitatorCropsPageInner() {
                 between the task list it exports and the seed BOQ it prints,
                 so it is next to both things it is about. */}
             <CropPlanExportCard
+              contextCurrent={cropExportContextIsCurrent}
               plantings={plantings}
               beds={beds}
               tasks={allTasks}

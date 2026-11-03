@@ -142,6 +142,7 @@ for (const action of ['exportCalendar', 'withPdf']) {
     for (const error of [new Error('Missing or insufficient permissions.'), new TypeError('Failed to fetch'), new UserFacingError('Keep this screen open and retry.')] as unknown[]) {
       let status = '', busy: string | null = null;
       const scope = {
+        captureDeliveryContext: () => () => true,
         busy: null, setBusy: (value: string | null) => { busy = value; },
         setStatus: (value: string) => { status = value; }, t, userFacingMessage,
         tasks: [], meta: { planTitle: 'My plan' }, now: undefined,

@@ -11,7 +11,7 @@
 // The heavy work (jsPDF) is behind a dynamic import inside the builder, so
 // opening the crop plan does not pay for a document nobody asked for.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/lib/i18n';
 import { userFacingMessage } from '@/lib/user-facing-error';
 import { Share2, CalendarPlus, Hourglass, Download, ClipboardList } from 'lucide-react';
@@ -37,6 +37,8 @@ export interface CropPlanExportCardProps {
   beds: PlanBed[];
   tasks: CropTask[];
   meta: CropPlanPdfMeta;
+  /** The workspace that supplied this plan, captured by its private caller. */
+  contextCurrent?: () => boolean;
   /** A dated example must keep its calendar axis when exported on another day. */
   now?: Date;
   /** Example farms can start with a concise booklet and keep the full reference as a separate export. */
@@ -63,15 +65,27 @@ export interface CropPlanExportCardProps {
 type Busy = 'ics' | 'pdf' | null;
 const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
 
-export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, sections, availabilityDetails, preservedProducts, productionRecords, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance }: CropPlanExportCardProps) {
+export default function CropPlanExportCard({ plantings, beds, tasks, meta, contextCurrent, now, sections, availabilityDetails, preservedProducts, productionRecords, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance }: CropPlanExportCardProps) {
   const { lang, t } = useLanguage();
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [quickPrintFormat, setQuickPrintFormat] = useState<CropPlanPageFormat>('a4');
   const empty = tasks.length === 0;
+  const lifecycle = useRef(0);
+  useEffect(() => () => { lifecycle.current++; }, []);
+
+  function captureDeliveryContext() {
+    const generation = lifecycle.current;
+    return () => {
+      try { return lifecycle.current === generation && (contextCurrent?.() ?? true); }
+      catch { return false; }
+    };
+  }
 
   async function exportCalendar() {
     if (busy) return;
+    const current = captureDeliveryContext();
+    if (!current()) return;
     setBusy('ics');
     setStatus(null);
     try {
@@ -80,7 +94,8 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
       // carry 'ü' (Hügel). Without it some clients guess Latin-1 and the
       // farmer sees mojibake in every event title.
       const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-      const how = await deliverFile(blob, cropPlanIcsFilename(meta.planTitle), 'ImbewuField production plan');
+      const how = await deliverFile(blob, cropPlanIcsFilename(meta.planTitle), 'ImbewuField production plan', current);
+      if (!current()) return;
       setStatus(
         how === 'cancelled'
           ? 'Sharing cancelled — no file was sent.'
@@ -89,7 +104,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
           : `Downloaded ${tasks.length} tasks — open the .ics file to add them to your calendar.`,
       );
     } catch (err) {
-      setStatus(userFacingMessage(err, t('reportUiCouldNotExportTheCropPlanPleaseTry'), t));
+      if (current()) setStatus(userFacingMessage(err, t('reportUiCouldNotExportTheCropPlanPleaseTry'), t));
     } finally {
       setBusy(null);
     }
@@ -111,10 +126,12 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
   }, []);
 
   async function withPdf(
-    run: (blob: Blob) => string | Promise<string>,
+    run: (blob: Blob, current: () => boolean) => string | null | Promise<string | null>,
     overrides?: Pick<CropPlanPdfInput, 'sections' | 'pageFormat' | 'availabilityDetails'>,
   ) {
     if (busy) return;
+    const current = captureDeliveryContext();
+    if (!current()) return;
     setBusy('pdf');
     setStatus(null);
     try {
@@ -122,10 +139,13 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
       // Both month views reuse the app's pictures: crops growing in beds, and food to pick.
       const wantsIcons = !input.sections || input.sections.includes('availability') || input.sections.includes('calendar') || input.sections.includes('projection');
       const icons = wantsIcons ? await loadPdfIcons(availabilityIconKeys(input)) : undefined;
+      if (!current()) return;
       const blob = await buildCropPlanPdf({ ...input, icons });
-      setStatus(await run(blob));
+      if (!current()) return;
+      const result = await run(blob, current);
+      if (current()) setStatus(result);
     } catch (err) {
-      setStatus(userFacingMessage(err, t('reportUiCouldNotBuildThePDF'), t));
+      if (current()) setStatus(userFacingMessage(err, t('reportUiCouldNotBuildThePDF'), t));
     } finally {
       setBusy(null);
     }
@@ -133,8 +153,8 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
 
   const downloadedStatus = 'Plan saved to your downloads — open it to print.';
   const openedStatus = "Opened in a new tab — use your browser's Print button there.";
-  const exportPdf = () => withPdf(async (blob) => {
-    const how = await deliverFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField production plan');
+  const exportPdf = () => withPdf(async (blob, current) => {
+    const how = await deliverFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField production plan', current);
     return how === 'cancelled' ? 'Sharing cancelled — no file was sent.'
       : how === 'shared' ? 'Plan shared — save it to your files or send it on.' : downloadedStatus;
   });
@@ -144,10 +164,11 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
     return downloadedStatus;
   });
 
-  const sharePdf = () => withPdf(async (blob) => {
+  const sharePdf = () => withPdf(async (blob, current) => {
     const how = await shareFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField production plan');
     if (how === 'cancelled') return 'Sharing cancelled — no file was sent.';
     if (how === 'shared') return 'Plan shared.';
+    if (!current()) return null;
     downloadFile(blob, cropPlanPdfFilename(meta.planTitle));
     return 'Sharing was unavailable — the plan was saved to your downloads.';
   });
