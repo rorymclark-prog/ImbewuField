@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '56a9da70a', changes: [
+    'Review draft wording for New Zealand’s S-map reference.',
+  ], tour: [{ title: 'Review New Zealand’s S-map wording', where: 'International → Language drafts', href: '/international/locales',
+    detail: 'Choose the New Zealand S-map card and compare a draft with the captured English source.' }] },
   { when: '3 November 2026', sha: '63640fb54', changes: [
     'Review draft soil-reference wording for Ontario and Australia.',
   ] },
