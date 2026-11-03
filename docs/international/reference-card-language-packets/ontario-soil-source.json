@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "0a2da8088614a67b39e8de433a0d5c3b2ea666b8",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "c66784b0a57440e17734965fe89222826f7b8bb8427cd31a382512accdadf0b7",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "ontarioSoilClaim",
+      "english": "The catalogue describes the Soil Survey Complex as a digital compilation of historic surveys made at different map scales.",
+      "sha256": "ba769e0ec18aa3aad794e2b33f27cc07d4827acb5bd018803b52f8a9027ecec3"
+    },
+    {
+      "key": "ontarioSoilLicence",
+      "english": "The catalogue links Open Government Licence – Ontario for this record. Its attribution requirements apply to reuse.",
+      "sha256": "a8cd25b078ddac447b5440abd5d95f38689aedc5b4e74d9a48ce5931772fcbab"
+    },
+    {
+      "key": "ontarioSoilAttribution",
+      "english": "Use the provider’s specified credit and link to the licence where possible. The licence gives default wording for cases without a specific credit or where multiple credits are impractical.",
+      "sha256": "fe3402278e8a7e75302c0159f5296a773fa9cac98841cb4618041bd38a288946"
+    },
+    {
+      "key": "ontarioSoilLimits",
+      "english": "Coverage and map scale vary. Individual layers, downloadable data and field conditions need separate verification.",
+      "sha256": "dabbd59b13bd077a40e2911668a00808728ed2ae68b88b2fec3fde667393e698"
+    }
+  ]
+}
