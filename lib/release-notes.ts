@@ -46,6 +46,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Find the food forest, fruit trees, maize field and livestock kraal in the example.',
   ], tour: [{ title: 'Explore the farm zones', where: 'Study → Zones and Sectors', href: '/student/zones',
     detail: 'Turn highlights on or off, then follow the map tour around the example holding.' }] },
+  { when: '3 November 2026', sha: '0e9fd5a26', changes: [
+    "Choose area names or a numbered key on the historical Existing Site map.",
+  ] },
   { when: '3 November 2026', sha: 'a337ff345', changes: [
     "Ubhejane Site and Sector maps can show the before-works archive photograph.",
     "AI maps start with available aerial imagery; you can still choose plain paper.",
