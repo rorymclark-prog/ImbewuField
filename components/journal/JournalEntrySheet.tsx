@@ -72,12 +72,12 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
   const [confirmDelete, setConfirmDelete] = useState(false);
   const confirmTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEscapeClose(true, onClose);
+  useEscapeClose(!saving, onClose);
 
   useEffect(() => () => { if (confirmTimer.current) clearTimeout(confirmTimer.current); }, []);
 
   function requestDelete() {
-    if (!entry || !onDelete) return;
+    if (!entry || !onDelete || saving) return;
     if (confirmTimer.current) clearTimeout(confirmTimer.current);
     if (confirmDelete) {
       setConfirmDelete(false);
@@ -133,12 +133,13 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
     <div
       className={`fixed inset-0 z-50 flex items-end justify-center ${motion.overlay}`}
       style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(3px)' }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      onClick={(e) => { if (!saving && e.target === e.currentTarget) onClose(); }}
     >
       <form
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
+        aria-busy={saving}
         aria-label={entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
         onSubmit={submit}
         className={`w-full max-w-md font-sans overflow-y-auto ${motion.sheet}`}
@@ -170,6 +171,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
             <button
               type="button"
               onClick={onClose}
+              disabled={saving}
               aria-label={ui('Close', 'Vala')}
               style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, minWidth: 44, minHeight: 44, color: 'var(--text-muted)' }}
             >
@@ -178,7 +180,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
           </div>
         </div>
 
-        <div style={{ padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <fieldset disabled={saving} style={{ margin: 0, border: 0, minWidth: 0, padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
           {initialDraft && !entry && (
             <p role="note" lang={isZulu ? 'zu' : 'en'} style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
               {farmMemoryText(lang, 'taskDraftNotice')}
@@ -361,10 +363,10 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
               onChange={(e) => handleFiles(e.target.files)}
             />
           </div>
-        </div>
+        </fieldset>
 
         {error && (
-          <div style={{
+          <div role="alert" style={{
             margin: '16px 20px 0', padding: '10px 13px', borderRadius: 11,
             background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', border: '1px solid color-mix(in srgb, var(--gold) 30%, transparent)',
             font: '500 12.5px/1.45 var(--font-sans), sans-serif', color: 'var(--gold-dim)',
@@ -379,6 +381,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
             <button
               type="button"
               onClick={requestDelete}
+              disabled={saving}
               aria-label={confirmDelete ? ui('Confirm delete', 'Qinisekisa ukususa') : ui('Delete', 'Susa')}
               style={confirmDelete ? {
                 minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',

@@ -128,11 +128,12 @@ test('the linked note sheet starts with no date and shows a checked bed without 
   const app = await mount({ simple: true });
   const observations: journal.JournalEntryInput[] = [];
   let sheet!: ReactTestRenderer;
+  const props = {
+    entry: null, beds: [], crops: [], requireObservationDate: true, linkedBedLabel: 'Checked test bed',
+    onClose() {}, onSave(input: journal.JournalEntryInput) { observations.push(input); },
+  };
   try {
-    await act(async () => { sheet = create(React.createElement(app.Sheet, {
-      entry: null, beds: [], crops: [], requireObservationDate: true, linkedBedLabel: 'Checked test bed',
-      onClose() {}, onSave(input: journal.JournalEntryInput) { observations.push(input); },
-    })); });
+    await act(async () => { sheet = create(React.createElement(app.Sheet, props)); });
     assert.equal(sheet.root.findByProps({ type: 'date' }).props.value, '');
     assert.equal(sheet.root.findByProps({ type: 'date' }).props.required, true);
     assert.match(text(sheet.root), /Checked test bed/);
@@ -145,6 +146,11 @@ test('the linked note sheet starts with no date and shows a checked bed without 
     assert.equal(observations.length, 1);
     assert.equal(observations[0].date, '2028-11-22');
     assert.equal(observations[0].bedId, null);
+    await act(async () => { sheet.update(React.createElement(app.Sheet, { ...props, saving: true })); });
+    assert.equal(sheet.root.findByType('fieldset').props.disabled, true);
+    assert.equal(sheet.root.findByType('form').props['aria-busy'], true);
+    await act(async () => sheet.root.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.equal(observations.length, 1);
   } finally {
     if (sheet) await act(async () => sheet.unmount());
     await app.close();

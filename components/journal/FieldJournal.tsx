@@ -807,6 +807,7 @@ export default function FieldJournal() {
           beds={beds}
           crops={crops}
           error={sheetError}
+          saving={working}
           onSave={handleSave}
           onDelete={handleDelete}
           onClose={() => { if (!pending.current) { setSheetError(null); setSheet({ open: false, entry: null }); } }}

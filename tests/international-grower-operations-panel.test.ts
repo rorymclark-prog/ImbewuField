@@ -17,7 +17,8 @@ const hooks = registerHooks({
     if (context.parentURL?.endsWith('/components/crops/GrowerOperationsPanel.tsx') && specifier === '@/components/journal/JournalEntrySheet') return {
       shortCircuit: true, url: 'data:text/javascript,export default function JournalEntrySheet(){return null}',
     };
-    if (context.parentURL?.endsWith('/lib/account-local-storage.ts') && specifier === './firebase/init') return {
+    if (/(?:\/lib\/(?:account-local-storage|field-journal)\.ts|\/lib\/international\/grower-field-note-action\.ts)$/.test(context.parentURL ?? '')
+      && specifier.endsWith('/firebase/init')) return {
       shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent('export const isBackendConfigured=()=>false; export const getFirebase=()=>null;'),
     };
     return next(specifier, context);
@@ -44,6 +45,7 @@ Object.assign(globalThis, { Storage, localStorage: local, sessionStorage: sessio
   window: Object.assign(new EventTarget(), { localStorage: local, sessionStorage: session }) });
 const { default: Panel } = await import('../components/crops/GrowerOperationsPanel.tsx');
 const { loadCompletedTaskIds } = await import('../lib/task-board.ts');
+const { readCanonicalJournal } = await import('../lib/field-journal.ts');
 const { enterSampleMode, exitSampleMode } = await import('../lib/sample-mode.ts');
 after(() => hooks.deregister());
 beforeEach(() => { exitSampleMode(); local.clear(); session.clear(); });
@@ -192,4 +194,40 @@ test('the actual task-planner route mounts checked own work separately from mont
   assert.match(source, /const operations = useGrowerOperations\(\)/);
   assert.match(source, /<GrowerOperationsPanel state=\{operations\} refresh=\{operations.refresh\}[\s\S]*checkCurrent=\{operations.checkCurrent\} isCurrent=\{operations.isCurrent\}/);
   assert.match(source, /operations.status === 'ready' && !hasOwnCycles/);
+});
+
+test('the dated task button opens an observation and a source change holds its save in the form', async () => {
+  const navigatorBefore = Object.getOwnPropertyDescriptor(globalThis, 'navigator');
+  Object.defineProperty(globalThis, 'navigator', { configurable: true, value: {
+    locks: { async request(_name: string, _options: unknown, action: (lock: object) => unknown) { return await action({}); } },
+  } });
+  const screen = mount();
+  const sheet = () => screen.renderer.root.findAll(node => typeof node.type === 'function' && node.type.name === 'JournalEntrySheet')[0];
+  try {
+    await act(async () => { screen.click('Write field note'); });
+    const open = sheet();
+    assert.ok(open);
+    assert.equal(open.props.requireObservationDate, true);
+    assert.equal(open.props.initialDraft.date, undefined);
+    assert.equal(open.props.linkedBedLabel, bed.label);
+    assert.equal(loadCompletedTaskIds().size, 0);
+    screen.update({ state: { ...ready } });
+    const input = { date: '2028-12-01', title: 'A synthetic observation', notes: '', category: 'other' };
+    await act(async () => { open.props.onSave(input); });
+    assert.match(sheet().props.error, /draft is still here/);
+    assert.deepEqual(await readCanonicalJournal(), { status: 'ready', entries: [] });
+
+    await act(async () => { sheet().props.onClose(); screen.click('Write field note'); });
+    assert.ok(sheet());
+    await act(async () => { sheet().props.onSave(input); });
+    assert.equal(sheet(), undefined);
+    const saved = await readCanonicalJournal();
+    assert.ok(saved.status === 'ready');
+    assert.equal(saved.entries[0].date, input.date);
+    assert.equal(loadCompletedTaskIds().size, 0);
+  } finally {
+    screen.dispose();
+    if (navigatorBefore) Object.defineProperty(globalThis, 'navigator', navigatorBefore);
+    else Reflect.deleteProperty(globalThis, 'navigator');
+  }
 });
