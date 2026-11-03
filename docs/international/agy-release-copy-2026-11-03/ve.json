@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "locale": "ve",
+  "provenance": {
+    "executor": "AGY",
+    "method": "AI draft",
+    "createdOn": "2026-11-03"
+  },
+  "review": {
+    "status": "unreviewed"
+  },
+  "messages": [
+    {
+      "key": "CountryRelease.change.1",
+      "sourceEnglish": "Confirm a mapped site’s country before using its crop-planning guidance.",
+      "sourceSha256": "aa6c852923c12fb325a84947016d3822b3d9265dd243522bf35cb70e1cb9bd37",
+      "text": "Khwathisedzani shango ḽa fhethu ho mapiwaho musi ni sa athu shumisa vhulangeli ha u pulana zwilimwa.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "CountryRelease.change.2",
+      "sourceEnglish": "Keep your sowing records and nursery equipment while local planning is unavailable.",
+      "sourceSha256": "b9de6e72e7d45b9eee6b0aceb0c56f9bfe620fe6972de3482b514f016e0aee6c",
+      "text": "Vhulungani rekhodo dzaṋu dza u zwala na zwishumiswa zwa nese musi pulane ya henefho i sa athu vha hone.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "CountryRelease.tour.1.title",
+      "sourceEnglish": "Confirm your site country",
+      "sourceSha256": "7fe4d2124d836f76393efe2f11df4b2683672658dd35c0c56770c06a00fe1ae9",
+      "text": "Khwathisedzani shango ḽa fhethu haṋu",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "CountryRelease.tour.1.where",
+      "sourceEnglish": "Crop planner → Site country and region",
+      "sourceSha256": "919e2d5b851046038ac9979b2993e6751b830fef8d3601da47c0df6904b5c762",
+      "text": "Mupulani wa zwilimwa → Shango ḽa fhethu na vhupo",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "CountryRelease.tour.1.detail",
+      "sourceEnglish": "Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.",
+      "sourceSha256": "caf0e38ca440a933de636b252221a2d27932441bce8336854021c9a6f906a243",
+      "text": "Vulani fhethu haṋu ho mapiwaho nahone ni khwathisedze zwidodombedzwa zwa shango ḽaho. U khwathisedza shango a zwi tendeli nyeletshedzo dza vhulimi dza vhupo vhuswa.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "CountryRelease.tour.2.title",
+      "sourceEnglish": "Review an unmapped reference",
+      "sourceSha256": "952484b0e1672ae07710633e8c64fc312904bd0bf4e3b809212f5bce949710bd",
+      "text": "Tsedzulusani tsumbo i songo mapiwaho",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "CountryRelease.tour.2.where",
+      "sourceEnglish": "Crop planner → Planning without a mapped site",
+      "sourceSha256": "d1f8c55a9fa4b641459d0bda6123fdb72ef92ec1622ea135ee6b183fd041ae71",
+      "text": "Mupulani wa zwilimwa → U pulana hu si na fhethu ho mapiwaho",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "CountryRelease.tour.2.detail",
+      "sourceEnglish": "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.",
+      "sourceSha256": "fad0f51ff33d7ee50f36467b21434d01ffdefddd3d72ef51678db4571f3f5d75",
+      "text": "Kha mbethe wa maitele kana vhuvhambadzi ha henefho, nangani kana ni bvise mutheo wa tsumbo wa Afurika Tshipembe nga ho livhaho. Khetho i sala henefho kha vhupo ha u shumela.",
+      "review": {
+        "status": "unreviewed"
+      }
+    }
+  ]
+}

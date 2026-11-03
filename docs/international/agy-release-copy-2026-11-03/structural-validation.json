@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "validatedOn": "2026-11-03",
+  "source": "source.json",
+  "sourceSha256": "4df26d99a699f568d62f4d92e1def27689b397770dae834b2840a5cd38dae7ab",
+  "sourceMessages": 8,
+  "integratedEntries": 32,
+  "review": {
+    "status": "unreviewed"
+  },
+  "fluentHumanApproval": false,
+  "newLanguageEnablement": false,
+  "scope": "Source-bound AI candidates for the existing disclosed unreviewed update-copy mechanism only. English fallback, provenance disclosures and human-review gates remain unchanged.",
+  "checks": {
+    "sourceKeysEnglishAndHashesExact": true,
+    "allDraftStatusesUnreviewed": true,
+    "placeholderAndNumberTokensPreserved": true,
+    "navigationArrowsPreserved": true,
+    "noExistingKeyCollisions": true,
+    "noUuidLikePrivateIds": true,
+    "oldChunkBytesPreserved": true
+  },
+  "locales": [
+    {
+      "locale": "zu",
+      "packet": "docs/international/agy-release-copy-2026-11-03/zu.json",
+      "packetSha256": "5322a1a65a59ba3f17e39d2dc51735a03653d0ab932eae2581fd0e4c842522a6",
+      "runtimeFile": "lib/update-copy-locales/zu.ts",
+      "entries": 8,
+      "previousChunkSha256": "cc9251769287cebd868a3c3f2e11e3e05f021a8d6800dde0d58cc44076e87e3d",
+      "integratedChunkSha256": "bd8d4ea3e8001cbadc7ad96fafd1f5cb09a570bf587e5d9871f4233bfdd93827",
+      "existingChunkBytesPreserved": true
+    },
+    {
+      "locale": "st",
+      "packet": "docs/international/agy-release-copy-2026-11-03/st.json",
+      "packetSha256": "e8ec7e959f4eb419c9b2d2beff78d378037942c33e5e10fbe5be300e02dbf6c1",
+      "runtimeFile": "lib/update-copy-locales/st.ts",
+      "entries": 8,
+      "previousChunkSha256": "75b7f0a7dfb210b22f3508ebb83992206bb8fa2da25bf911870e8d6138f87ba4",
+      "integratedChunkSha256": "0d089c9674bcdc21d5369ca4557ba99bb1a2c8c52bdca7dadf45ae34fc8a79d8",
+      "existingChunkBytesPreserved": true
+    },
+    {
+      "locale": "ts",
+      "packet": "docs/international/agy-release-copy-2026-11-03/ts.json",
+      "packetSha256": "051f267d1f1568d944ce4dcadbad0e07c139f4b025fd87cd7930ac84d70e3a74",
+      "runtimeFile": "lib/update-copy-locales/ts.ts",
+      "entries": 8,
+      "previousChunkSha256": "5262c546d13f16d4ce1a15f8a7591b9786072d8f71b3e1f3aaeac65209c9611e",
+      "integratedChunkSha256": "bdb40d6790b5760dea0ae8437cf8566bffb9f3689a16a418877cf3c3cda65c00",
+      "existingChunkBytesPreserved": true
+    },
+    {
+      "locale": "ve",
+      "packet": "docs/international/agy-release-copy-2026-11-03/ve.json",
+      "packetSha256": "2a5795bbb889d142b8e83e027462db2d223ae43cf5d04e8f5b9ac941d8a9c45f",
+      "runtimeFile": "lib/update-copy-locales/ve.ts",
+      "entries": 8,
+      "previousChunkSha256": "d6cfa8ef212e1d8741d41e5e3dee84f92f1db930cbc1c289d024afbfc8a59d4d",
+      "integratedChunkSha256": "3c2dc299139bb065f838af705312fb01ba5796eff47042987b3cdba59a82f039",
+      "existingChunkBytesPreserved": true
+    }
+  ],
+  "negativeControls": [
+    {
+      "name": "missing-entry",
+      "rejected": true
+    },
+    {
+      "name": "duplicate-key",
+      "rejected": true
+    },
+    {
+      "name": "different-source",
+      "rejected": true
+    },
+    {
+      "name": "different-source-hash",
+      "rejected": true
+    },
+    {
+      "name": "wrong-locale",
+      "rejected": true
+    },
+    {
+      "name": "claimed-fluent-review",
+      "rejected": true
+    },
+    {
+      "name": "claimed-message-review",
+      "rejected": true
+    },
+    {
+      "name": "blank-text",
+      "rejected": true
+    },
+    {
+      "name": "changed-number",
+      "rejected": true
+    },
+    {
+      "name": "missing-arrow",
+      "rejected": true
+    },
+    {
+      "name": "private-id",
+      "rejected": true
+    },
+    {
+      "name": "existing-key-collision",
+      "rejected": true
+    }
+  ]
+}

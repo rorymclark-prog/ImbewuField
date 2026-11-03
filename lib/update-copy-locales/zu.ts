@@ -1,6 +1,15 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Country context: docs/international/agy-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
+  "Confirm a mapped site’s country before using its crop-planning guidance.": "Qinisekisa izwe lesayithi edwetshiwe ngaphambi kokusebenzisa isiqondiso sayo sokuhlela izitshalo.",
+  "Keep your sowing records and nursery equipment while local planning is unavailable.": "Gcina amarekhodi akho okuhlwanyela nezinto zokusebenza zenkulisa yezitshalo ngenkathi ukuhlela kwendawo kungatholakali.",
+  "Confirm your site country": "Qinisekisa izwe lesayithi yakho",
+  "Crop planner → Site country and region": "Umhleli wezitshalo → Izwe nesifunda sesayithi",
+  "Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.": "Vula isayithi yakho edwetshiwe bese uqinisekisa imininingwane yezwe layo. Ukuqinisekisa izwe akugunyazi iseluleko sokulima sesifunda esisha.",
+  "Review an unmapped reference": "Buyekeza isisekelo sokubhekisela esingadwetshiwe",
+  "Crop planner → Planning without a mapped site": "Umhleli wezitshalo → Ukuhlela ngaphandle kwesayithi edwetshiwe",
+  "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Kumbhede wokutshala owenziwe noma kumklamo wendawo, khetha ngokucacile noma ususe isisekelo sokubhekisela saseNingizimu Afrika. Ukukhetha kuhlala kuleyo ndawo yokusebenzela.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Hlola izinhlaka zolwazi zamazwe; izeluleko zendawo zokulima azikatholakali.",
   "Review international references": "Buyekeza imithombo yamazwe",
