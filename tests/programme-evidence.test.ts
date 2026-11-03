@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { completeSampleEvidence, freshEvidenceData, trainingTotals, milestoneAt, publishedTraining, validTrainingRecord, validProgrammeMilestone, validProgrammeBranding, validEvidenceImage, trainingForStorage, trainingFromStorage, sharedTrainingPhotos, trainingFeedbackSummary } from '../lib/programme-evidence';
+import { completeSampleEvidence, freshEvidenceData, trainingTotals, milestoneAt, programmeObservationCutoff, publishedTraining, validTrainingRecord, validProgrammeMilestone, validProgrammeBranding, validEvidenceImage, trainingForStorage, trainingFromStorage, sharedTrainingPhotos, trainingFeedbackSummary } from '../lib/programme-evidence';
 import { melCan, memberAccessSummary, programmeCapabilities } from '../lib/mel';
 import { programmeRecordMetrics, PROGRESS_TEMPLATES, progressValue, progressRecordSections } from '../lib/programme-progress';
 import { DEMO_NETWORK } from '../lib/network-demo';
@@ -198,4 +198,27 @@ test('attendance signatures and feedback reject malformed, absent, duplicate and
   assert.equal(validTrainingRecord(legacy,'2026-09-08'),true,'old unsigned records remain editable');
   const edited={...s,title:'My saved title',updatedAt:'2026-09-08T10:00:00Z',photos:[],photoCount:0,feedback:undefined};
   assert.equal(completeSampleEvidence({...freshEvidenceData(),sessions:[edited]}).sessions[0].title,'My saved title');
+});
+
+
+test('the private cutoff counts dates without treating a later entry or target as observed by the cutoff', () => {
+  const observation = (date: string, recordedAt: string) => ({ date, recordedAt, actual: 0, evidence: 'Synthetic fixture' });
+  const milestones = [
+    { observations: [
+      observation('2026-10-30', '2026-10-31T23:59:59.999Z'),
+      observation('2026-10-31', '2026-11-01T00:00:00.000Z'),
+      observation('2026-11-01', '2026-11-01T11:00:00Z'),
+      observation('2026-10-30', ''),
+      observation('2026-10-30', '2026-10-31T24:00:00Z'),
+      observation('2026-10-30', '2026-10-31T12:00:00+02:00'),
+      observation('2026-02-31', '2026-10-31T00:00:00Z'),
+    ] },
+    { target: 10, observations: [] },
+  ];
+  const before = structuredClone(milestones);
+  assert.deepEqual(programmeObservationCutoff(milestones, '2026-10-31'), {
+    byCutoff: 1, recordedLater: 1, observedLater: 1, unknownDate: 4,
+  });
+  assert.deepEqual(milestones, before);
+  assert.equal(programmeObservationCutoff(milestones, '2026-02-31'), null);
 });
