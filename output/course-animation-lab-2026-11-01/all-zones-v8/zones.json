@@ -1,0 +1,418 @@
+{
+  "image_size": [
+    1672,
+    941
+  ],
+  "source": "lib/course-modules.ts: zones/sectors lesson",
+  "meaning": "Illustrative areas based on use/visit frequency, not mandatory rings or measured boundaries.",
+  "zones": [
+    {
+      "zone": 0,
+      "name": "House",
+      "course_sentence": "Zone 0 is the house.",
+      "colour": "#e68d82",
+      "polygon": [
+        [
+          1000,
+          488
+        ],
+        [
+          1403,
+          494
+        ],
+        [
+          1420,
+          678
+        ],
+        [
+          1283,
+          676
+        ],
+        [
+          1283,
+          630
+        ],
+        [
+          989,
+          621
+        ]
+      ],
+      "marker": [
+        1204,
+        555
+      ]
+    },
+    {
+      "zone": 1,
+      "name": "Picking garden",
+      "course_sentence": "In this example, Zone 1 is near the house and holds what you pick often \u2014 herbs, salad greens.",
+      "colour": "#48c6b0",
+      "polygon": [
+        [
+          985,
+          541
+        ],
+        [
+          944,
+          547
+        ],
+        [
+          854,
+          596
+        ],
+        [
+          827,
+          651
+        ],
+        [
+          826,
+          752
+        ],
+        [
+          823,
+          810
+        ],
+        [
+          915,
+          895
+        ],
+        [
+          1335,
+          894
+        ],
+        [
+          1342,
+          679
+        ],
+        [
+          1284,
+          679
+        ],
+        [
+          1281,
+          631
+        ],
+        [
+          989,
+          623
+        ]
+      ],
+      "marker": [
+        1104,
+        772
+      ]
+    },
+    {
+      "zone": 2,
+      "name": "Main garden + chicken run",
+      "course_sentence": "Zone 2 is the main garden and chicken run, visited once or twice a day.",
+      "colour": "#91c264",
+      "polygon": [
+        [
+          42,
+          551
+        ],
+        [
+          141,
+          514
+        ],
+        [
+          287,
+          466
+        ],
+        [
+          436,
+          425
+        ],
+        [
+          549,
+          443
+        ],
+        [
+          581,
+          476
+        ],
+        [
+          621,
+          508
+        ],
+        [
+          681,
+          533
+        ],
+        [
+          731,
+          589
+        ],
+        [
+          746,
+          645
+        ],
+        [
+          773,
+          724
+        ],
+        [
+          771,
+          811
+        ],
+        [
+          744,
+          854
+        ],
+        [
+          629,
+          868
+        ],
+        [
+          503,
+          857
+        ],
+        [
+          361,
+          874
+        ],
+        [
+          177,
+          842
+        ],
+        [
+          36,
+          816
+        ],
+        [
+          4,
+          738
+        ],
+        [
+          17,
+          627
+        ]
+      ],
+      "marker": [
+        401,
+        640
+      ]
+    },
+    {
+      "zone": 3,
+      "name": "Main field",
+      "course_sentence": "Zone 3 is the main field, visited weekly.",
+      "colour": "#efba63",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          855,
+          0
+        ],
+        [
+          824,
+          85
+        ],
+        [
+          759,
+          157
+        ],
+        [
+          697,
+          251
+        ],
+        [
+          652,
+          316
+        ],
+        [
+          620,
+          375
+        ],
+        [
+          577,
+          428
+        ],
+        [
+          550,
+          435
+        ],
+        [
+          432,
+          422
+        ],
+        [
+          292,
+          465
+        ],
+        [
+          143,
+          511
+        ],
+        [
+          0,
+          546
+        ]
+      ],
+      "marker": [
+        385,
+        188
+      ]
+    },
+    {
+      "zone": 4,
+      "name": "Semi-wild",
+      "course_sentence": "Zone 4 is semi-wild \u2014 fruit trees and fodder needing occasional attention.",
+      "colour": "#ba9ade",
+      "polygon": [
+        [
+          855,
+          0
+        ],
+        [
+          1120,
+          0
+        ],
+        [
+          1125,
+          93
+        ],
+        [
+          1215,
+          160
+        ],
+        [
+          1335,
+          247
+        ],
+        [
+          1475,
+          287
+        ],
+        [
+          1608,
+          354
+        ],
+        [
+          1672,
+          365
+        ],
+        [
+          1672,
+          538
+        ],
+        [
+          1535,
+          535
+        ],
+        [
+          1433,
+          488
+        ],
+        [
+          1405,
+          475
+        ],
+        [
+          1000,
+          475
+        ],
+        [
+          975,
+          529
+        ],
+        [
+          840,
+          582
+        ],
+        [
+          750,
+          631
+        ],
+        [
+          730,
+          588
+        ],
+        [
+          675,
+          526
+        ],
+        [
+          623,
+          499
+        ],
+        [
+          575,
+          440
+        ],
+        [
+          620,
+          376
+        ],
+        [
+          661,
+          307
+        ],
+        [
+          702,
+          241
+        ],
+        [
+          761,
+          156
+        ],
+        [
+          826,
+          80
+        ]
+      ],
+      "marker": [
+        1003,
+        282
+      ]
+    },
+    {
+      "zone": 5,
+      "name": "Wild",
+      "course_sentence": "Zone 5 is left wild.",
+      "colour": "#7abedf",
+      "polygon": [
+        [
+          1120,
+          0
+        ],
+        [
+          1672,
+          0
+        ],
+        [
+          1672,
+          365
+        ],
+        [
+          1608,
+          354
+        ],
+        [
+          1475,
+          287
+        ],
+        [
+          1335,
+          247
+        ],
+        [
+          1215,
+          160
+        ],
+        [
+          1125,
+          93
+        ]
+      ],
+      "marker": [
+        1471,
+        132
+      ]
+    }
+  ]
+}

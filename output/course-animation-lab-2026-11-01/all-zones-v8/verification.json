@@ -1,0 +1,42 @@
+{
+  "controls": "all 6 selected through browser UI; only matching area highlighted; matching source sentence displayed",
+  "phone_preview_width": 360,
+  "checks": [
+    {
+      "zone": 0,
+      "transparent_overlay": "passed",
+      "marker_inside": "passed",
+      "study_dimensions": "passed"
+    },
+    {
+      "zone": 1,
+      "transparent_overlay": "passed",
+      "marker_inside": "passed",
+      "study_dimensions": "passed"
+    },
+    {
+      "zone": 2,
+      "transparent_overlay": "passed",
+      "marker_inside": "passed",
+      "study_dimensions": "passed"
+    },
+    {
+      "zone": 3,
+      "transparent_overlay": "passed",
+      "marker_inside": "passed",
+      "study_dimensions": "passed"
+    },
+    {
+      "zone": 4,
+      "transparent_overlay": "passed",
+      "marker_inside": "passed",
+      "study_dimensions": "passed"
+    },
+    {
+      "zone": 5,
+      "transparent_overlay": "passed",
+      "marker_inside": "passed",
+      "study_dimensions": "passed"
+    }
+  ]
+}
