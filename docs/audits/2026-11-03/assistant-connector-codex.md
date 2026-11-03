@@ -1,7 +1,7 @@
 # Assistant connector audit — 2026-11-03
 
 - Auditor: Codex, chat `01a1a14e-971d-70d3-abdc-2efcaf61d2ef`.
-- Reviewed revision: base `a4fdf7afa`, isolated branch `codex/imbewu-mcp-connector`, plus the connector implementation recorded with this audit.
+- Reviewed revision: base `a4fdf7afa`, isolated branch `codex/imbewu-mcp-connector`, plus the connector implementation recorded with this audit. Current main `56d6ebad0` and the completed historical-baseline release were merged without changing their map implementation.
 - Deployment inspected: local emulator backend and actual Next app browser journey; production release and native plugin verification remain pending at this checkpoint.
 - Previous audit: no prior connector audit exists. Mapping context is retained from [the current fidelity audit](ai-layer-fidelity-corrections-codex.md); ongoing historical-baseline implementation in the separate map worktree was inspected read-only.
 - Scope: account/site consent, personal saved places/surveys/designs, original evidence, historical registration drafts, render progress, organisation production observations and bounded operator controls.
