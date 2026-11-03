@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest Sector continuation: [Downhill and classroom sections, lighter paid Sector finish — 3 November 2026](2026-11-03/downhill-sections-sector-finish-codex.md). Separates A–B downhill from C–D classroom cut.
+
 Latest raw section continuation: [Raw terrain pixels and scaled classroom section — 3 November 2026](2026-11-03/raw-terrain-classroom-profile-codex.md). The earlier sparse profile was rejected; Sector overlay polish remains open.
 
 Latest Structures recovery: [Recorded permeable shade cover over paid artwork — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md). App-drawn material is distinguished from AI output.

@@ -1,7 +1,8 @@
 import type { CanvasFrame } from '@/lib/design-canvas';
-import { makeMercatorUnprojector } from '@/lib/design-canvas';
+import { makeMercatorUnprojector, pointInRing, projectorForFrame } from '@/lib/design-canvas';
+import { polygonAreaCentroid } from '@/lib/boundary-geometry';
 import type { SheetContourResult } from '@/lib/sheet-contours';
-import { sampleTerrainRaster, terrainGridSpacingM, validTerrainRaster, type TerrainRaster } from '@/lib/terrain-raster';
+import { sampleTerrainRaster, terrainGridSpacingM, terrainPixelLonLat, validTerrainRaster, type TerrainRaster } from '@/lib/terrain-raster';
 
 export interface SectorTerrainProfile {
   a: [number,number];
@@ -80,7 +81,7 @@ export async function fetchProfileTerrain(frame:CanvasFrame,boundary:Point[],fet
 /** A straight section through the two principal saved buildings, not a screen-vertical line that
  * misses the classrooms. Positions and footprint widths use the plan's existing metric scale;
  * height/roof shape is deliberately absent because no measured building heights were supplied. */
-export function rasterTerrainProfile(raster:TerrainRaster,boundary:Point[],buildings:ProfileBuilding[],frame:CanvasFrame):RasterTerrainProfile|null {
+export function rasterTerrainProfile(raster:TerrainRaster,boundary:Point[],buildings:ProfileBuilding[],frame:CanvasFrame,axis?:{origin:Point;vector:Point}):RasterTerrainProfile|null {
   if(!validTerrainRaster(raster)||boundary.length<3||boundary.some(p=>p.some(n=>!Number.isFinite(n)))
     ||![frame.imgW,frame.imgH,frame.mPerPx].every(n=>Number.isFinite(n)&&n>0))return null;
   const toM=([x,y]:Point):Point=>[x*frame.imgW*frame.mPerPx,y*frame.imgH*frame.mPerPx];
@@ -88,10 +89,10 @@ export function rasterTerrainProfile(raster:TerrainRaster,boundary:Point[],build
   const centre=(ring:Point[]):Point=>[ring.reduce((s,p)=>s+p[0],0)/ring.length,ring.reduce((s,p)=>s+p[1],0)/ring.length];
   const area=(ring:Point[])=>Math.abs(ring.reduce((s,p,i)=>{const q=ring[(i+1)%ring.length];return s+p[0]*q[1]-q[0]*p[1];},0));
   const structures=buildings.filter(b=>b.ring.length>=3&&b.ring.every(p=>p.every(Number.isFinite))).map(b=>({...b,ring:b.ring.map(toM)})).sort((a,b)=>area(b.ring)-area(a.ring));
-  const ring=boundary.map(toM),origin=centre(structures[0]?.ring??ring),other=structures[1]?centre(structures[1].ring):[origin[0],origin[1]+1];
-  let dx=other[0]-origin[0],dy=other[1]-origin[1],norm=Math.hypot(dx,dy);
+  const ring=boundary.map(toM),origin=axis?toM(axis.origin):centre(structures[0]?.ring??ring),other=structures[1]?centre(structures[1].ring):[origin[0],origin[1]+1];
+  let [dx,dy]=axis?.vector??[other[0]-origin[0],other[1]-origin[1]],norm=Math.hypot(dx,dy);
   if(norm<.001){dx=0;dy=1;norm=1;}
-  dx/=norm;dy/=norm;if(dy<0||(Math.abs(dy)<1e-8&&dx<0)){dx=-dx;dy=-dy;}
+  dx/=norm;dy/=norm;if(!axis&&(dy<0||(Math.abs(dy)<1e-8&&dx<0))){dx=-dx;dy=-dy;}
   const hits=(polygon:Point[])=>{
     const ts:number[]=[];
     for(let i=0;i<polygon.length;i++){
@@ -104,7 +105,10 @@ export function rasterTerrainProfile(raster:TerrainRaster,boundary:Point[],build
     return ts.sort((a,b)=>a-b).filter((t,i,all)=>i===0||Math.abs(t-all[i-1])>.001);
   };
   const edges=hits(ring);let start=0,end=0;
-  for(let i=0;i+1<edges.length;i+=2){if(edges[i]<=0&&edges[i+1]>=0){start=edges[i];end=edges[i+1];break;}}
+  for(let i=0;i+1<edges.length;i+=2){
+    if(edges[i]<=0&&edges[i+1]>=0){start=edges[i];end=edges[i+1];break;}
+    if(axis&&edges[i+1]-edges[i]>end-start){start=edges[i];end=edges[i+1];}
+  }
   const lengthM=end-start;if(!Number.isFinite(lengthM)||lengthM<=0||lengthM>10000)return null;
   const point=(t:number):Point=>fromM([origin[0]+dx*t,origin[1]+dy*t]);
   const a=point(start),b=point(end),unproject=makeMercatorUnprojector(frame.centerLng,frame.centerLat,frame.zoom,frame.imgW,frame.imgH);
@@ -120,4 +124,36 @@ export function rasterTerrainProfile(raster:TerrainRaster,boundary:Point[],build
   const bands:RasterTerrainProfile['buildings']=[];
   for(const building of structures){const ts=hits(building.ring);for(let i=0;i+1<ts.length;i+=2){const lo=Math.max(start,ts[i]),hi=Math.min(end,ts[i+1]);if(hi>lo)bands.push({label:building.label,ring:building.ring.map(fromM),startM:lo-start,endM:hi-start});}}
   return {a,b,lengthM,points,buildings:bands,gridSpacingM:terrainGridSpacingM(frame.centerLat),supportingPixelCount:cells.size};
+}
+
+/** Fit the broad fall across native in-site DEM posts. A noisy local derivative (roof/tree or one
+ * interpolated pixel) must not turn the whole-property section around. The fit selects direction
+ * only; every plotted height still comes directly from the raster. */
+export function terrainFallAxis(raster:TerrainRaster,boundary:Point[],frame:CanvasFrame):{origin:Point;vector:Point;posts:number}|null {
+  if(!validTerrainRaster(raster)||boundary.length<3)return null;
+  const project=projectorForFrame(frame),posts:Array<[number,number,number]>=[];
+  for(let row=0;row<raster.height;row++)for(let col=0;col<raster.width;col++){
+    const coord=terrainPixelLonLat(raster.originX+col+.5,raster.originY+row+.5),p=project(coord);
+    if(pointInRing(p,boundary))posts.push([p[0]*frame.imgW*frame.mPerPx,p[1]*frame.imgH*frame.mPerPx,raster.elevations[row*raster.width+col]]);
+  }
+  if(posts.length<6)return null;
+  const [mx,my,mz]=[0,1,2].map(i=>posts.reduce((s,p)=>s+p[i],0)/posts.length);
+  let xx=0,xy=0,yy=0,xz=0,yz=0;
+  for(const [px,py,pz] of posts){const x=px-mx,y=py-my,z=pz-mz;xx+=x*x;xy+=x*y;yy+=y*y;xz+=x*z;yz+=y*z;}
+  const determinant=xx*yy-xy*xy;
+  if(!Number.isFinite(determinant)||determinant<=1e-8)return null;
+  const dx=-(yy*xz-xy*yz)/determinant,dy=-(xx*yz-xy*xz)/determinant;
+  if(![dx,dy].every(Number.isFinite)||Math.hypot(dx,dy)<1e-6)return null;
+  return {origin:polygonAreaCentroid(boundary),vector:[dx,dy],posts:posts.length};
+}
+
+export function rasterTerrainSections(raster:TerrainRaster,boundary:Point[],buildings:ProfileBuilding[],frame:CanvasFrame){
+  const fall=terrainFallAxis(raster,boundary,frame);
+  const downhill=fall?rasterTerrainProfile(raster,boundary,[],frame,fall):null;
+  // A low-confidence/discordant axis should not be labelled "uphill to downhill" if its actual
+  // end samples contradict that label. It is better to return unavailable than quietly swap it.
+  if(!fall||!downhill||downhill.points[0].elevationM<=downhill.points.at(-1)!.elevationM)return null;
+  const cross=buildings.length>=2?rasterTerrainProfile(raster,boundary,buildings,frame):null;
+  const buildingsSection=cross&&new Set(cross.buildings.map(b=>b.label)).size>=2?cross:null;
+  return {downhill,buildingsSection,fitPosts:fall.posts};
 }

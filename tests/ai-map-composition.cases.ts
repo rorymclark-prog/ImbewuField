@@ -6,7 +6,7 @@ import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtwo
 import { PHASING_ARTWORK_PROMPT_MARKER, buildPhasingRestylePrompt } from '../lib/producer-prompt.ts';
 import { UBHEJANE_BEFORE_WORKS, historicalBaselineForSite, historicalBaselineFromPrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, historicalBaselinePrompt } from '../lib/historical-map-baseline.ts';
 import { createHash } from 'node:crypto';
-import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, fetchProfileTerrain } from '../lib/sheet-terrain-profile.ts';
+import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, fetchProfileTerrain } from '../lib/sheet-terrain-profile.ts';
 import { terrainPixel, terrainRasterWindow, extractTerrainRaster, sampleTerrainRaster, type TerrainRaster } from '../lib/terrain-raster.ts';
 import { makeMercatorUnprojector } from '../lib/design-canvas.ts';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
@@ -777,4 +777,18 @@ test('profile raster uses the supported unbuffered tileset and refuses unexpecte
   const get=new Function('fetch','PNG','TILE_SIZE','Buffer',js+';return fetchTileElevations;')(async(url:string)=>{requested=url;return{ok:true,arrayBuffer:async()=>new ArrayBuffer(0)};},{sync:{read:()=>({width,height:256,data})}},256,Buffer);
   const rows=await get(14,9646,9506,'fixture-token',true);assert.match(requested,/\/mapbox\.terrain-rgb\/14\/9646\/9506\.pngraw/);assert.ok(rows?.length===256);assert.ok(Math.abs(rows[0][0]-409.6)<1e-6);
   width=258;assert.equal(await get(14,9646,9506,'fixture-token',true),null,'SDK buffered pixels cannot masquerade as a 256-pixel georeferenced tile');
+});
+
+
+test('main section follows the property-wide downhill fit separately from the two-classroom cut',()=>{
+  const frame:any={centerLng:31.96317,centerLat:-27.72619,zoom:18,imgW:200,imgH:200,mPerPx:.5};
+  const b:Point[]=[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],ll=b.map(makeMercatorUnprojector(frame.centerLng,frame.centerLat,frame.zoom,frame.imgW,frame.imgH));
+  const win=terrainRasterWindow(Math.min(...ll.map(p=>p[0])),Math.min(...ll.map(p=>p[1])),Math.max(...ll.map(p=>p[0])),Math.max(...ll.map(p=>p[1])))!;
+  const r:TerrainRaster={source:'mapbox.terrain-rgb',zoom:14,tileSize:256,...win,elevations:Array.from({length:win.width*win.height},(_,i)=>350-2*Math.floor(i/win.width)+(i===Math.floor(win.width*win.height/2)?1.4:0)),verticalDatum:'mixed-unverified'};
+  const buildings=[{label:'Classroom 1',ring:[[.25,.4],[.35,.4],[.35,.6],[.25,.6]] as Point[]},{label:'Classroom 2',ring:[[.65,.4],[.75,.4],[.75,.6],[.65,.6]] as Point[]}];
+  const out=rasterTerrainSections(r,b,buildings,frame)!;
+  assert.ok(out&&out.fitPosts>=6);assert.ok(out.downhill.a[1]<.2&&out.downhill.b[1]>.8);assert.ok(Math.abs(out.downhill.a[0]-out.downhill.b[0])<.05,'one pixel cannot turn the site axis sideways');
+  assert.ok(out.downhill.points[0].elevationM>out.downhill.points.at(-1)!.elevationM);assert.equal(out.downhill.buildings.length,0,'off-line footprints must not appear on the downhill cut');
+  assert.equal(out.buildingsSection?.buildings.length,2);assert.ok(Math.abs(out.buildingsSection!.a[1]-out.buildingsSection!.b[1])<1e-8);
+  assert.equal(rasterTerrainSections({...r,elevations:r.elevations.map(()=>330)},b,buildings,frame),null,'flat data cannot invent a main fall');
 });

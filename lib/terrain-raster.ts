@@ -18,6 +18,11 @@ export function terrainPixel(lon:number,lat:number):[number,number] {
   return [(lon+180)/360*size,(1-Math.log(Math.tan(rad)+1/Math.cos(rad))/Math.PI)/2*size];
 }
 
+export function terrainPixelLonLat(x:number,y:number):[number,number] {
+  const size=TILE_SIZE*2**TILE_ZOOM;
+  return [x/size*360-180,180/Math.PI*Math.atan(Math.sinh(Math.PI-2*Math.PI*y/size))];
+}
+
 /** One surrounding pixel supports interpolation at the requested edge. A raw response is capped
  * independently of the existing contour budget so a large bbox cannot return megabytes of pixels. */
 export function terrainRasterWindow(minLon:number,minLat:number,maxLon:number,maxLat:number) {

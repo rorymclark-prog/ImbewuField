@@ -7,3 +7,4 @@
 - [Sector DEM alignment and rejected sparse profile — Codex](sector-terrain-profile-codex.md)
 - [Named historical areas — Codex](historical-area-labels-codex.md)
 - [Historical baseline — Codex](historical-baseline-codex.md)
+- [Downhill sections and Sector art finish — Codex](downhill-sections-sector-finish-codex.md)
