@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '7acc4a319', changes: [
+    "Sector maps use regional overview contours, with an optional A–B terrain profile.",
+  ] },
   { when: '3 November 2026', sha: '0e9fd5a26', changes: [
     "Choose area names or a numbered key on the historical Existing Site map.",
   ] },
