@@ -452,9 +452,25 @@ function journalActorMatches({ owner, sample }: Pick<JournalLinkBinding, 'owner'
   return user === null ? owner === null : typeof user?.uid === 'string' && user.uid === owner;
 }
 
-function journalNamespaceMatches(binding: JournalLinkBinding): boolean {
+function journalNamespaceMatches(binding: Omit<JournalLinkBinding, 'raw'>): boolean {
   return journalActorMatches(binding) && window.localStorage === binding.storage
     && activeAccountLocalStorageKey(STORAGE_KEY) === binding.key;
+}
+
+/** Keep a selected journal copy in the workspace that supplied its notes. */
+export function captureJournalExportContext(): { sample: boolean; isCurrent: () => boolean } | null {
+  try {
+    const sample = readAccountLocalSampleState();
+    if (sample === null) return null;
+    const binding = {
+      sample, owner: activeAccountUid(), storage: window.localStorage,
+      key: activeAccountLocalStorageKey(STORAGE_KEY),
+    };
+    const isCurrent = () => {
+      try { return journalNamespaceMatches(binding); } catch { return false; }
+    };
+    return isCurrent() ? { sample, isCurrent } : null;
+  } catch { return null; }
 }
 
 function journalBindingMatches(binding: JournalLinkBinding): boolean {

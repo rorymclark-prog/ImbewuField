@@ -45,10 +45,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Check when your programme observations were recorded.',
   ], tour: [{ title: 'Check programme observation dates', where: 'Organisation → Programme evidence', href: '/ngo',
     detail: 'Choose a project and a date in the progress view, then open Check observation dates.' }] },
-  { when: '3 November 2026', sha: '9f515a7b5', changes: [
+  { when: '3 November 2026', sha: '2819ce7d0', changes: [
     'Record the day you picked a harvest separately from the day you saved it.',
   ], tour: [{ title: 'Add a harvest date', where: 'Records → Picked', href: '/records',
     detail: 'When logging a harvest, enter the day you picked it. Leave it blank if you are unsure.' }] },
+  { when: '3 November 2026', sha: '291d46ddd', changes: [
+    'A pending journal copy stops if you switch workspaces before it can download.',
+  ] },
   { when: '3 November 2026', sha: 'a0be3be16', changes: [
     'Write a dated field note from a checked crop task in your device journal.',
     'Review older device notes before choosing which entries to recover.',

@@ -32,7 +32,9 @@ function component(path: string, dependencies: Record<string, unknown>, exportNa
 type CanonicalJournalBoundary = Pick<typeof journal, 'readCanonicalJournal' | 'openCanonicalJournal' | 'writeCanonicalJournal'>;
 type LinkSources = ReturnType<typeof import('../components/crops/useGrowerOperations.ts').useGrowerOperations>;
 
-export async function mountJournal(options: { url?: string; entries?: journal.JournalEntry[]; simple?: boolean; failSave?: boolean; beds?: Array<{ id: string; label: string }>; lang?: string; delivery?: 'downloaded' | 'shared' | 'cancelled'; exportError?: boolean; canonical?: CanonicalJournalBoundary; linkSources?: LinkSources } = {}) {
+type ExportDelivery = 'downloaded' | 'shared' | 'cancelled';
+
+export async function mountJournal(options: { url?: string; entries?: journal.JournalEntry[]; simple?: boolean; failSave?: boolean; beds?: Array<{ id: string; label: string }>; lang?: string; delivery?: ExportDelivery; exportError?: boolean; deliverExport?: () => Promise<ExportDelivery>; canonical?: CanonicalJournalBoundary; linkSources?: LinkSources } = {}) {
   let stored = options.entries ?? [];
   const writes: journal.JournalEntry[][] = [];
   const exports: Array<{ format: string; entries: journal.JournalEntry[]; options: Record<string, unknown> }> = [];
@@ -46,6 +48,8 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
   const router = { replace: (target: string) => { url = new URL(target, url); } };
   const browser = Object.assign(new EventTarget(), {
     location,
+    localStorage: {},
+    sessionStorage: { getItem: () => null },
     history: { state: {}, replaceState: (_state: unknown, _title: string, target: string) => { url = new URL(target, url); } },
   });
   Object.defineProperty(globalThis, 'window', { configurable: true, value: browser });
@@ -79,8 +83,8 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
     } },
     '@/lib/international/grower-field-note-link': journalLinks,
     '@/lib/journal-export': {
-      downloadJournalCsv: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'csv', entries, options: exportOptions }); return options.delivery ?? 'downloaded'; },
-      downloadJournalHtml: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'html', entries, options: exportOptions }); return options.delivery ?? 'downloaded'; },
+      downloadJournalCsv: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'csv', entries, options: exportOptions }); return options.deliverExport?.() ?? options.delivery ?? 'downloaded'; },
+      downloadJournalHtml: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'html', entries, options: exportOptions }); return options.deliverExport?.() ?? options.delivery ?? 'downloaded'; },
     },
     '@/lib/use-escape-close': { useEscapeClose: () => {} },
     '@/lib/use-dialog-focus': { useDialogFocus: () => {} },

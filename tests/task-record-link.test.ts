@@ -7,6 +7,7 @@ import {
 import { CROPS } from '../lib/crop-catalog.ts';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
+import { validProjectDate } from '../lib/international/projects/evaluate.ts';
 
 const task: BoardTask = {
   id: 'planting:with:colons:harvest:1', kind: 'crop', title: 'Harvest Lettuce',
@@ -160,4 +161,38 @@ test('the harvest form consumes a task once, preserving other query state and le
   assert.equal(new URL(href).hash, target.hash, 'consuming a task must retain its form destination');
   assert.equal(navigations.at(-1)?.options.scroll, true, 'resolve the form anchor after it mounts so the phone exposes the empty quantity');
   assert.equal(state.quantity, '');
+});
+
+test('harvest submission uses the native date even when the picker has not sent a change event', async () => {
+  const source = readFileSync(new URL('../components/MyRecords.tsx', import.meta.url), 'utf8');
+  const tree = ts.createSourceFile('MyRecords.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const form = tree.statements.find((statement): statement is ts.FunctionDeclaration =>
+    ts.isFunctionDeclaration(statement) && statement.name?.text === 'LogProductionForm');
+  const submit = form?.body?.statements.find((statement): statement is ts.FunctionDeclaration =>
+    ts.isFunctionDeclaration(statement) && statement.name?.text === 'handleSubmit');
+  assert.ok(submit);
+  const code = ts.transpileModule(`${submit.getText(tree)}\nreturn handleSubmit;`, {
+    compilerOptions: { target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+  const rows: Record<string, unknown>[] = [];
+  const harvestDateRef = { current: { value: '2026-10-28' } };
+  const state = { crop: 'Fixture crop', quantity: '1.5', unit: 'kg', photoFile: null, observedOn: '' };
+  const scope = {
+    form: state, harvestDateRef, parseDecimalInput: Number, validProjectDate,
+    localTodayISODate: () => '2026-11-03', readAccountLocalSampleState: () => true,
+    activeAccountUid: () => null, writeGeneration: { current: 0 }, writePending: { current: false },
+    setForm: () => {}, recordQuantityPayload: (kg: number) => ({ kg }),
+    addProduction: async (row: Record<string, unknown>) => { rows.push(row); },
+    fileRef: { current: null }, onSaved: () => {},
+  };
+  const handleSubmit = new Function(...Object.keys(scope), code)(...Object.values(scope));
+  await handleSubmit({ preventDefault() {} });
+  assert.equal(rows[0].observed_on, '2026-10-28');
+  assert.equal(harvestDateRef.current.value, '');
+  await handleSubmit({ preventDefault() {} });
+  assert.equal(Object.hasOwn(rows[1], 'observed_on'), false);
+  harvestDateRef.current.value = '2026-11-04';
+  await handleSubmit({ preventDefault() {} });
+  assert.equal(rows.length, 2, 'a future day must not be saved');
+  assert.equal(harvestDateRef.current.value, '2026-11-04', 'invalid input stays visible for correction');
 });
