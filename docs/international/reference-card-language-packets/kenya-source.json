@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "scope": "16 exact static visible and accessible English messages from the Kiambu reference card; dynamic dates and authority names excluded",
+  "sourceCommit": "92e63d061879859d9dc4bc76f49276e8cbd6c25c",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "files": [
+    {
+      "path": "components/international/countries/CountyBulletinReference.tsx",
+      "bytes": 3781,
+      "sha256": "417fd9dea6f4e7399d7dad79cf64398e1657797f71fc485c95a397bb06c4341e"
+    }
+  ],
+  "messages": [
+    {
+      "key": "kiambuCard01",
+      "english": "Official dated reference",
+      "sha256": "08bd5ec6c985da6d9c27f25f0bcdb6b2d3176f6d2fb0a012873bdb3dea82c1d9",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard02",
+      "english": "County weather bulletin",
+      "sha256": "0f936a31a7cb678092268383dfc661fc142cb0aa845a932928107f48a7320687",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard03",
+      "english": "Choose a county to see a recorded official reference. This does not select an agricultural region or approve crop-planning advice.",
+      "sha256": "9d170e19b55d2bdffd0554e7a8e9bc4a8f7675a5ff8dd601e1ba9b1f5f276d82",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard04",
+      "english": "County",
+      "sha256": "136c87dec4695cefef030fd6dc7c32faeb6280a795fda70b017197b60e3b7873",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard05",
+      "english": "County bulletin county",
+      "sha256": "66fb2cf97682b497289eea7bc6ab42c8236e258ef1fed7c6c4728125bf899e20",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard06",
+      "english": "Choose a county",
+      "sha256": "eb081e7d2ef0dc06d00d4978a178df7a90c4c02a08281bb6f03572c1f82e8e14",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard07",
+      "english": "Freshness has not been assessed.",
+      "sha256": "73ab26112527d8d061226b928d490745467cf57cef123f6298045887758103c7",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard08",
+      "english": "This is not a live feed. Check the Kenya Meteorological Department for its newest bulletin.",
+      "sha256": "ef52d515f0108e1dd0e1835538a65105de689355feccc2defbeed052c7ed995d",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard09",
+      "english": "Open official dated page ↗",
+      "sha256": "e7ad4c4269243812dbf126a7c26c7a5589854146c58d95dee70b270dbba097a7",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard10",
+      "english": "Open dated bulletin PDF ↗",
+      "sha256": "8cc1892678ff49e6e93e3644c6b2c47f676f12f9d244c7e9fc0c8b02f3f838ab",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard11",
+      "english": "Check KMD’s county bulletin index ↗",
+      "sha256": "ae149312493b3bc9b3bb9f5c13454875e5e8b9b62cb4c4a4b1f08938523d6633",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard12",
+      "english": "About this reference",
+      "sha256": "a09d84110cb9c94cc9cb8fa3ff9e93040588193cc7b6db3c7ba9d24f00a50f83",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard13",
+      "english": "Time zone: unknown. The advertised calendar dates have not been established as exact validity times.",
+      "sha256": "9ec1351458cccebc78d36b2294c18da12a865bf33b51290a978df3ce262f0fcd",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard14",
+      "english": "Reuse licence: unknown. This reference does not establish permission to reuse its contents or approval for local crop planning.",
+      "sha256": "9a86d96a56de98281882102390f40384569b4a509364a5c9234f945028971951",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard15",
+      "english": "No county selected. Choose a county to open its dated reference.",
+      "sha256": "c8045c0e6a48adbf4c15106095862ec8bd4d256e09feb0f07a8ffc494d6878bc",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    },
+    {
+      "key": "kiambuCard16",
+      "english": "There is no verified reference for this county selection.",
+      "sha256": "4e17de1beded18814b75bb7c9f1558e5e5d932cec1577ab9813354594086a4db",
+      "source": "components/international/countries/CountyBulletinReference.tsx"
+    }
+  ]
+}

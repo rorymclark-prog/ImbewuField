@@ -1,0 +1,327 @@
+{
+  "sourceSha256": "29dc97d49624bb4aca6a7db94f3c40599001fd81cce145eb54c1fc7ab76babac",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "station01",
+        "english": "Official historical reference",
+        "sha256": "44b7078d96938531b177c245012a99c67ec9326bce705ac1373d6d61ac9eb182",
+        "translation": "Référence historique officielle"
+      },
+      {
+        "key": "station02",
+        "english": "UK climate station data",
+        "sha256": "32443cce43309adfddc7581ff161e82e7ab7c0653600608f3542da2e2aa3d121",
+        "translation": "Données des stations climatiques du UK"
+      },
+      {
+        "key": "station03",
+        "english": "Choose a station to open its past monthly weather records from the Met Office.",
+        "sha256": "bca327f1f50633f10aa68dfb4dac05a78d251efabc05c3d49a2416ad9974b7ca",
+        "translation": "Choisissez une station pour ouvrir ses relevés météorologiques mensuels passés auprès du Met Office."
+      },
+      {
+        "key": "station04",
+        "english": "Historical weather station",
+        "sha256": "27c20901acfb59932d8630c7d2ab1becda6ead26ad0b08ae8f3e6552206b698a",
+        "translation": "Station météorologique historique"
+      },
+      {
+        "key": "station05",
+        "english": "Choose a station",
+        "sha256": "68fd177f28c5621b795aedbab5f0c9646308fd14be971347a0bbbafeaac11adc",
+        "translation": "Choisir une station"
+      },
+      {
+        "key": "station06",
+        "english": "Yeovilton",
+        "sha256": "c447d7d1fd6901d34af6b282bd97ff1dc97b66af548b0bc421fc2c67a758e482",
+        "translation": "Yeovilton"
+      },
+      {
+        "key": "station07",
+        "english": "Yeovilton historical weather reference",
+        "sha256": "11b149a161dcc8672d7fe9c370fe98d8a4cc350ca960e1c99110706541e2f484",
+        "translation": "Référence météorologique historique de Yeovilton"
+      },
+      {
+        "key": "station08",
+        "english": "Yeovilton · Met Office",
+        "sha256": "b493b788f6d4d3527f00bb37b54e0c07b183e3274c4a632085ddabe30616d2e9",
+        "translation": "Yeovilton · Met Office"
+      },
+      {
+        "key": "station09",
+        "english": "These past monthly records describe one station. Use a local forecast and check conditions at your own site before making planting decisions.",
+        "sha256": "a726f65de08bb7d8422430cf0ec33d138de8d7a38bcfe752ec586b0e62fd5396",
+        "translation": "Ces relevés mensuels passés décrivent une seule station. Utilisez des prévisions locales et vérifiez les conditions sur votre propre site avant de prendre des décisions de plantation."
+      },
+      {
+        "key": "station10",
+        "english": "Monthly frost day counts cannot tell you the first or last frost date.",
+        "sha256": "960a6b55ca07b313a3ef178b8c33f9ac81df7111084d5ec7406fbeb1009631b8",
+        "translation": "Le nombre mensuel de jours de gel ne peut pas vous indiquer la date du premier ou du dernier gel."
+      },
+      {
+        "key": "station11",
+        "english": "Open the Met Office station directory ↗",
+        "sha256": "e92b52fc4330378b4cc53596a7b4ad512f03edbe5c7950c03d94d419acd52958",
+        "translation": "Ouvrir le répertoire des stations du Met Office ↗"
+      },
+      {
+        "key": "station12",
+        "english": "Open Yeovilton monthly records (text file) ↗",
+        "sha256": "101a6c7c5df9d1e1d78542a35dce6f9e1d184e28242a12b5fb7430d7ecb9c2df",
+        "translation": "Ouvrir les relevés mensuels de Yeovilton (fichier texte) ↗"
+      },
+      {
+        "key": "station13",
+        "english": "No station selected.",
+        "sha256": "7ae39cf4b028bf833b80d6f1669300309f25695a62f76247d60991a05f08416e",
+        "translation": "Aucune station sélectionnée."
+      }
+    ],
+    "es": [
+      {
+        "key": "station01",
+        "english": "Official historical reference",
+        "sha256": "44b7078d96938531b177c245012a99c67ec9326bce705ac1373d6d61ac9eb182",
+        "translation": "Referencia histórica oficial"
+      },
+      {
+        "key": "station02",
+        "english": "UK climate station data",
+        "sha256": "32443cce43309adfddc7581ff161e82e7ab7c0653600608f3542da2e2aa3d121",
+        "translation": "Datos de estaciones climáticas del UK"
+      },
+      {
+        "key": "station03",
+        "english": "Choose a station to open its past monthly weather records from the Met Office.",
+        "sha256": "bca327f1f50633f10aa68dfb4dac05a78d251efabc05c3d49a2416ad9974b7ca",
+        "translation": "Elija una estación para abrir sus registros meteorológicos mensuales pasados de la Met Office."
+      },
+      {
+        "key": "station04",
+        "english": "Historical weather station",
+        "sha256": "27c20901acfb59932d8630c7d2ab1becda6ead26ad0b08ae8f3e6552206b698a",
+        "translation": "Estación meteorológica histórica"
+      },
+      {
+        "key": "station05",
+        "english": "Choose a station",
+        "sha256": "68fd177f28c5621b795aedbab5f0c9646308fd14be971347a0bbbafeaac11adc",
+        "translation": "Elegir una estación"
+      },
+      {
+        "key": "station06",
+        "english": "Yeovilton",
+        "sha256": "c447d7d1fd6901d34af6b282bd97ff1dc97b66af548b0bc421fc2c67a758e482",
+        "translation": "Yeovilton"
+      },
+      {
+        "key": "station07",
+        "english": "Yeovilton historical weather reference",
+        "sha256": "11b149a161dcc8672d7fe9c370fe98d8a4cc350ca960e1c99110706541e2f484",
+        "translation": "Referencia meteorológica histórica de Yeovilton"
+      },
+      {
+        "key": "station08",
+        "english": "Yeovilton · Met Office",
+        "sha256": "b493b788f6d4d3527f00bb37b54e0c07b183e3274c4a632085ddabe30616d2e9",
+        "translation": "Yeovilton · Met Office"
+      },
+      {
+        "key": "station09",
+        "english": "These past monthly records describe one station. Use a local forecast and check conditions at your own site before making planting decisions.",
+        "sha256": "a726f65de08bb7d8422430cf0ec33d138de8d7a38bcfe752ec586b0e62fd5396",
+        "translation": "Estos registros mensuales pasados describen una sola estación. Use un pronóstico local y verifique las condiciones en su propio terreno antes de tomar decisiones de siembra."
+      },
+      {
+        "key": "station10",
+        "english": "Monthly frost day counts cannot tell you the first or last frost date.",
+        "sha256": "960a6b55ca07b313a3ef178b8c33f9ac81df7111084d5ec7406fbeb1009631b8",
+        "translation": "El conteo mensual de días de helada no puede indicarle la fecha de la primera o la última helada."
+      },
+      {
+        "key": "station11",
+        "english": "Open the Met Office station directory ↗",
+        "sha256": "e92b52fc4330378b4cc53596a7b4ad512f03edbe5c7950c03d94d419acd52958",
+        "translation": "Abrir el directorio de estaciones de la Met Office ↗"
+      },
+      {
+        "key": "station12",
+        "english": "Open Yeovilton monthly records (text file) ↗",
+        "sha256": "101a6c7c5df9d1e1d78542a35dce6f9e1d184e28242a12b5fb7430d7ecb9c2df",
+        "translation": "Abrir registros mensuales de Yeovilton (archivo de texto) ↗"
+      },
+      {
+        "key": "station13",
+        "english": "No station selected.",
+        "sha256": "7ae39cf4b028bf833b80d6f1669300309f25695a62f76247d60991a05f08416e",
+        "translation": "Ninguna estación seleccionada."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "station01",
+        "english": "Official historical reference",
+        "sha256": "44b7078d96938531b177c245012a99c67ec9326bce705ac1373d6d61ac9eb182",
+        "translation": "Referência histórica oficial"
+      },
+      {
+        "key": "station02",
+        "english": "UK climate station data",
+        "sha256": "32443cce43309adfddc7581ff161e82e7ab7c0653600608f3542da2e2aa3d121",
+        "translation": "Dados de estações climáticas do UK"
+      },
+      {
+        "key": "station03",
+        "english": "Choose a station to open its past monthly weather records from the Met Office.",
+        "sha256": "bca327f1f50633f10aa68dfb4dac05a78d251efabc05c3d49a2416ad9974b7ca",
+        "translation": "Escolha uma estação para abrir seus registros meteorológicos mensais anteriores do Met Office."
+      },
+      {
+        "key": "station04",
+        "english": "Historical weather station",
+        "sha256": "27c20901acfb59932d8630c7d2ab1becda6ead26ad0b08ae8f3e6552206b698a",
+        "translation": "Estação meteorológica histórica"
+      },
+      {
+        "key": "station05",
+        "english": "Choose a station",
+        "sha256": "68fd177f28c5621b795aedbab5f0c9646308fd14be971347a0bbbafeaac11adc",
+        "translation": "Escolha uma estação"
+      },
+      {
+        "key": "station06",
+        "english": "Yeovilton",
+        "sha256": "c447d7d1fd6901d34af6b282bd97ff1dc97b66af548b0bc421fc2c67a758e482",
+        "translation": "Yeovilton"
+      },
+      {
+        "key": "station07",
+        "english": "Yeovilton historical weather reference",
+        "sha256": "11b149a161dcc8672d7fe9c370fe98d8a4cc350ca960e1c99110706541e2f484",
+        "translation": "Referência meteorológica histórica de Yeovilton"
+      },
+      {
+        "key": "station08",
+        "english": "Yeovilton · Met Office",
+        "sha256": "b493b788f6d4d3527f00bb37b54e0c07b183e3274c4a632085ddabe30616d2e9",
+        "translation": "Yeovilton · Met Office"
+      },
+      {
+        "key": "station09",
+        "english": "These past monthly records describe one station. Use a local forecast and check conditions at your own site before making planting decisions.",
+        "sha256": "a726f65de08bb7d8422430cf0ec33d138de8d7a38bcfe752ec586b0e62fd5396",
+        "translation": "Estes registros mensais anteriores descrevem uma única estação. Use uma previsão local e verifique as condições em sua própria área antes de tomar decisões de plantio."
+      },
+      {
+        "key": "station10",
+        "english": "Monthly frost day counts cannot tell you the first or last frost date.",
+        "sha256": "960a6b55ca07b313a3ef178b8c33f9ac81df7111084d5ec7406fbeb1009631b8",
+        "translation": "A contagem mensal de dias de geada não pode indicar a data da primeira ou da última geada."
+      },
+      {
+        "key": "station11",
+        "english": "Open the Met Office station directory ↗",
+        "sha256": "e92b52fc4330378b4cc53596a7b4ad512f03edbe5c7950c03d94d419acd52958",
+        "translation": "Abrir o diretório de estações do Met Office ↗"
+      },
+      {
+        "key": "station12",
+        "english": "Open Yeovilton monthly records (text file) ↗",
+        "sha256": "101a6c7c5df9d1e1d78542a35dce6f9e1d184e28242a12b5fb7430d7ecb9c2df",
+        "translation": "Abrir registros mensais de Yeovilton (arquivo de texto) ↗"
+      },
+      {
+        "key": "station13",
+        "english": "No station selected.",
+        "sha256": "7ae39cf4b028bf833b80d6f1669300309f25695a62f76247d60991a05f08416e",
+        "translation": "Nenhuma estação selecionada."
+      }
+    ],
+    "sw": [
+      {
+        "key": "station01",
+        "english": "Official historical reference",
+        "sha256": "44b7078d96938531b177c245012a99c67ec9326bce705ac1373d6d61ac9eb182",
+        "translation": "Rejea rasmi ya kihistoria"
+      },
+      {
+        "key": "station02",
+        "english": "UK climate station data",
+        "sha256": "32443cce43309adfddc7581ff161e82e7ab7c0653600608f3542da2e2aa3d121",
+        "translation": "Data za vituo vya hali ya hewa vya UK"
+      },
+      {
+        "key": "station03",
+        "english": "Choose a station to open its past monthly weather records from the Met Office.",
+        "sha256": "bca327f1f50633f10aa68dfb4dac05a78d251efabc05c3d49a2416ad9974b7ca",
+        "translation": "Chagua kituo ili kufungua rekodi zake za kila mwezi zilizopita za hali ya hewa kutoka Met Office."
+      },
+      {
+        "key": "station04",
+        "english": "Historical weather station",
+        "sha256": "27c20901acfb59932d8630c7d2ab1becda6ead26ad0b08ae8f3e6552206b698a",
+        "translation": "Kituo cha hali ya hewa cha kihistoria"
+      },
+      {
+        "key": "station05",
+        "english": "Choose a station",
+        "sha256": "68fd177f28c5621b795aedbab5f0c9646308fd14be971347a0bbbafeaac11adc",
+        "translation": "Chagua kituo"
+      },
+      {
+        "key": "station06",
+        "english": "Yeovilton",
+        "sha256": "c447d7d1fd6901d34af6b282bd97ff1dc97b66af548b0bc421fc2c67a758e482",
+        "translation": "Yeovilton"
+      },
+      {
+        "key": "station07",
+        "english": "Yeovilton historical weather reference",
+        "sha256": "11b149a161dcc8672d7fe9c370fe98d8a4cc350ca960e1c99110706541e2f484",
+        "translation": "Rejea ya kihistoria ya hali ya hewa ya Yeovilton"
+      },
+      {
+        "key": "station08",
+        "english": "Yeovilton · Met Office",
+        "sha256": "b493b788f6d4d3527f00bb37b54e0c07b183e3274c4a632085ddabe30616d2e9",
+        "translation": "Yeovilton · Met Office"
+      },
+      {
+        "key": "station09",
+        "english": "These past monthly records describe one station. Use a local forecast and check conditions at your own site before making planting decisions.",
+        "sha256": "a726f65de08bb7d8422430cf0ec33d138de8d7a38bcfe752ec586b0e62fd5396",
+        "translation": "Rekodi hizi za kila mwezi zilizopita zinaeleza kituo kimoja. Tumia utabiri wa eneo lako na uangalie hali ya eneo lako kabla ya kufanya maamuzi ya kupanda."
+      },
+      {
+        "key": "station10",
+        "english": "Monthly frost day counts cannot tell you the first or last frost date.",
+        "sha256": "960a6b55ca07b313a3ef178b8c33f9ac81df7111084d5ec7406fbeb1009631b8",
+        "translation": "Idadi ya siku za barafu kwa mwezi haiwezi kukuambia tarehe ya kwanza au ya mwisho ya barafu."
+      },
+      {
+        "key": "station11",
+        "english": "Open the Met Office station directory ↗",
+        "sha256": "e92b52fc4330378b4cc53596a7b4ad512f03edbe5c7950c03d94d419acd52958",
+        "translation": "Fungua orodha ya vituo vya Met Office ↗"
+      },
+      {
+        "key": "station12",
+        "english": "Open Yeovilton monthly records (text file) ↗",
+        "sha256": "101a6c7c5df9d1e1d78542a35dce6f9e1d184e28242a12b5fb7430d7ecb9c2df",
+        "translation": "Fungua rekodi za kila mwezi za Yeovilton (faili ya maandishi) ↗"
+      },
+      {
+        "key": "station13",
+        "english": "No station selected.",
+        "sha256": "7ae39cf4b028bf833b80d6f1669300309f25695a62f76247d60991a05f08416e",
+        "translation": "Hakuna kituo kilichochaguliwa."
+      }
+    ]
+  }
+}

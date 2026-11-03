@@ -1,0 +1,38 @@
+{
+  "kenya": {
+    "sourceSha256": "651ba3ac2620fb3e806fb61e5a67214ae8e795bed6df0b219ce857a7274d807b",
+    "draftsSha256": "551bc6d90c9658387971ae2469168de4297d6b7d75e0a38e4e93a837cdc91b58",
+    "literals": [
+      "PDF",
+      "KMD",
+      "\u2197"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
+  },
+  "uk": {
+    "sourceSha256": "29dc97d49624bb4aca6a7db94f3c40599001fd81cce145eb54c1fc7ab76babac",
+    "draftsSha256": "3618425a99c63fffaed18f3e64bff1690c8328ebe6cb96adbf94caf29b1fd83d",
+    "literals": [
+      "UK",
+      "Met Office",
+      "Yeovilton",
+      "\u2197"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
+  },
+  "us": {
+    "sourceSha256": "135bcc1c95267f5a388a33df13f54ec0a4ca8810e49f244d30abc85286b7ffe5",
+    "draftsSha256": "7d7e9d5e5ec5689a5b506c951621c3cf578dc796153d2c7a164da10f663c9d49",
+    "literals": [
+      "US",
+      "NWS",
+      "API",
+      "QC",
+      "\u2197"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
+  }
+}
