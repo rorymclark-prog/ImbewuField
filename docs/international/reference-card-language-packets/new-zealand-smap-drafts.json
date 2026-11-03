@@ -1,0 +1,111 @@
+{
+  "sourceSha256": "9283cf24edb16e9730b1a37d8e29b7fe6786cae2bd9bdbf7019890eadb1d07e0",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "newZealandSmapClaim",
+        "english": "The provider describes S-map Online as an interactive soil map with location-specific fact sheets. Its overview shows incomplete coverage and conflicting descriptions of farmable-land coverage.",
+        "sha256": "f16434a8bb0bc30f1c26c7ccb4a0f36379025c66bf573e0bb2275645b8dcc4b1",
+        "translation": "Le fournisseur décrit S-map Online comme une carte interactive des sols accompagnée de fiches d’information par emplacement. Sa vue d’ensemble présente une couverture incomplète et des descriptions contradictoires de la couverture des terres arables."
+      },
+      {
+        "key": "newZealandSmapLicence",
+        "english": "The overview gives different licence descriptions. The S-map Online terms describe noncommercial, no-derivatives use and a separate commercial arrangement. Individual layer rights remain unverified.",
+        "sha256": "3e537e7124886a5dd181ac23a5043916495e50407bdbaba8d6a0a84a988be681",
+        "translation": "La vue d’ensemble donne différentes descriptions de licence. Les conditions de S-map Online décrivent une utilisation non commerciale et sans travaux dérivés ainsi qu’un accord commercial distinct. Les droits relatifs aux couches individuelles demeurent non vérifiés."
+      },
+      {
+        "key": "newZealandSmapAccess",
+        "english": "Public overview. The provider describes a free login for map and fact-sheet access. The LRIS layer page did not expose layer access requirements.",
+        "sha256": "0726ccc33353e920717a1bd59f220ec4d395b7f06956c3e0ebfb6adc34d3d771",
+        "translation": "Vue d’ensemble publique. Le fournisseur décrit une connexion gratuite pour accéder aux cartes et aux fiches d’information. La page de la couche LRIS n’a pas exposé les exigences d’accès à la couche."
+      },
+      {
+        "key": "newZealandSmapLimits",
+        "english": "The linked reference does not establish site coverage, soil measurements or crop recommendations. No map, fact sheet, layer or data service was accessed.",
+        "sha256": "fa1c9bd6cde19767c03b441122ea83e5a4fd8af332d88840440774aca27cfc94",
+        "translation": "La référence liée n’établit pas la couverture du site, les mesures de sol ou les recommandations de cultures. Aucune carte, fiche d’information, couche ou service de données n’a été consulté."
+      }
+    ],
+    "es": [
+      {
+        "key": "newZealandSmapClaim",
+        "english": "The provider describes S-map Online as an interactive soil map with location-specific fact sheets. Its overview shows incomplete coverage and conflicting descriptions of farmable-land coverage.",
+        "sha256": "f16434a8bb0bc30f1c26c7ccb4a0f36379025c66bf573e0bb2275645b8dcc4b1",
+        "translation": "El proveedor describe S-map Online como un mapa de suelos interactivo con fichas informativas por ubicación. Su descripción general muestra una cobertura incompleta y descripciones contradictorias sobre la cobertura de tierras cultivables."
+      },
+      {
+        "key": "newZealandSmapLicence",
+        "english": "The overview gives different licence descriptions. The S-map Online terms describe noncommercial, no-derivatives use and a separate commercial arrangement. Individual layer rights remain unverified.",
+        "sha256": "3e537e7124886a5dd181ac23a5043916495e50407bdbaba8d6a0a84a988be681",
+        "translation": "La descripción general ofrece diferentes descripciones de licencia. Los términos de S-map Online describen un uso no comercial y sin obras derivadas, así como un acuerdo comercial independiente. Los derechos de las capas individuales permanecen sin verificar."
+      },
+      {
+        "key": "newZealandSmapAccess",
+        "english": "Public overview. The provider describes a free login for map and fact-sheet access. The LRIS layer page did not expose layer access requirements.",
+        "sha256": "0726ccc33353e920717a1bd59f220ec4d395b7f06956c3e0ebfb6adc34d3d771",
+        "translation": "Descripción general pública. El proveedor describe un inicio de sesión gratuito para acceder a mapas y fichas informativas. La página de la capa LRIS no expuso los requisitos de acceso a la capa."
+      },
+      {
+        "key": "newZealandSmapLimits",
+        "english": "The linked reference does not establish site coverage, soil measurements or crop recommendations. No map, fact sheet, layer or data service was accessed.",
+        "sha256": "fa1c9bd6cde19767c03b441122ea83e5a4fd8af332d88840440774aca27cfc94",
+        "translation": "La referencia vinculada no establece cobertura del sitio, mediciones del suelo o recomendaciones de cultivo. No se accedió a ningún mapa, ficha informativa, capa o servicio de datos."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "newZealandSmapClaim",
+        "english": "The provider describes S-map Online as an interactive soil map with location-specific fact sheets. Its overview shows incomplete coverage and conflicting descriptions of farmable-land coverage.",
+        "sha256": "f16434a8bb0bc30f1c26c7ccb4a0f36379025c66bf573e0bb2275645b8dcc4b1",
+        "translation": "O provedor descreve o S-map Online como um mapa interativo de solos com fichas informativas específicas por localidade. Sua visão geral mostra cobertura incompleta e descrições conflitantes sobre a cobertura de terras agricultáveis."
+      },
+      {
+        "key": "newZealandSmapLicence",
+        "english": "The overview gives different licence descriptions. The S-map Online terms describe noncommercial, no-derivatives use and a separate commercial arrangement. Individual layer rights remain unverified.",
+        "sha256": "3e537e7124886a5dd181ac23a5043916495e50407bdbaba8d6a0a84a988be681",
+        "translation": "A visão geral apresenta descrições de licença divergentes. Os termos do S-map Online descrevem uso não comercial e sem derivações, além de um acordo comercial separado. Os direitos das camadas individuais permanecem não verificados."
+      },
+      {
+        "key": "newZealandSmapAccess",
+        "english": "Public overview. The provider describes a free login for map and fact-sheet access. The LRIS layer page did not expose layer access requirements.",
+        "sha256": "0726ccc33353e920717a1bd59f220ec4d395b7f06956c3e0ebfb6adc34d3d771",
+        "translation": "Visão geral pública. O provedor descreve login gratuito para acesso a mapas e fichas informativas. A página da camada LRIS não exibiu requisitos de acesso à camada."
+      },
+      {
+        "key": "newZealandSmapLimits",
+        "english": "The linked reference does not establish site coverage, soil measurements or crop recommendations. No map, fact sheet, layer or data service was accessed.",
+        "sha256": "fa1c9bd6cde19767c03b441122ea83e5a4fd8af332d88840440774aca27cfc94",
+        "translation": "A referência vinculada não estabelece cobertura do local, medições de solo ou recomendações de cultivo. Nenhum mapa, ficha informativa, camada ou serviço de dados foi acessado."
+      }
+    ],
+    "sw": [
+      {
+        "key": "newZealandSmapClaim",
+        "english": "The provider describes S-map Online as an interactive soil map with location-specific fact sheets. Its overview shows incomplete coverage and conflicting descriptions of farmable-land coverage.",
+        "sha256": "f16434a8bb0bc30f1c26c7ccb4a0f36379025c66bf573e0bb2275645b8dcc4b1",
+        "translation": "Mtoa huduma anaeleza S-map Online kama ramani shirikishi ya udongo yenye kurasa za ukweli mahususi kwa eneo. Muhtasari wake unaonyesha ufikiaji usio kamili na maelezo yanayogongana kuhusu ufikiaji wa ardhi inayofaa kwa kilimo."
+      },
+      {
+        "key": "newZealandSmapLicence",
+        "english": "The overview gives different licence descriptions. The S-map Online terms describe noncommercial, no-derivatives use and a separate commercial arrangement. Individual layer rights remain unverified.",
+        "sha256": "3e537e7124886a5dd181ac23a5043916495e50407bdbaba8d6a0a84a988be681",
+        "translation": "Muhtasari unatoa maelezo tofauti ya leseni. Masharti ya S-map Online yanaeleza matumizi yasiyo ya kibiashara, bila kusambaza kazi zilizotokana na nyenzo asilia, na mpangilio tofauti wa kibiashara. Haki za tabaka binafsi zinabaki bila kuthibitishwa."
+      },
+      {
+        "key": "newZealandSmapAccess",
+        "english": "Public overview. The provider describes a free login for map and fact-sheet access. The LRIS layer page did not expose layer access requirements.",
+        "sha256": "0726ccc33353e920717a1bd59f220ec4d395b7f06956c3e0ebfb6adc34d3d771",
+        "translation": "Muhtasari wa umma. Mtoa huduma anaeleza kuingia bila malipo kwa ajili ya kufikia ramani na kurasa za ukweli. Ukurasa wa tabaka wa LRIS haukuweka wazi mahitaji ya ufikiaji wa tabaka."
+      },
+      {
+        "key": "newZealandSmapLimits",
+        "english": "The linked reference does not establish site coverage, soil measurements or crop recommendations. No map, fact sheet, layer or data service was accessed.",
+        "sha256": "fa1c9bd6cde19767c03b441122ea83e5a4fd8af332d88840440774aca27cfc94",
+        "translation": "Rejeleo lililounganishwa halithibitishi ufikiaji wa eneo, vipimo vya udongo au mapendekezo ya mazao. Hakuna ramani, ukurasa wa ukweli, tabaka au huduma ya data iliyofikiwa."
+      }
+    ]
+  }
+}

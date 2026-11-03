@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "e0514751e667ad2d94d34d3e1a81ee063d5a45b0",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "7904983a59019030fb6edbfa839380e8f5864a730651ccb3c2d42043d4773310",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "newZealandSmapClaim",
+      "english": "The provider describes S-map Online as an interactive soil map with location-specific fact sheets. Its overview shows incomplete coverage and conflicting descriptions of farmable-land coverage.",
+      "sha256": "f16434a8bb0bc30f1c26c7ccb4a0f36379025c66bf573e0bb2275645b8dcc4b1"
+    },
+    {
+      "key": "newZealandSmapLicence",
+      "english": "The overview gives different licence descriptions. The S-map Online terms describe noncommercial, no-derivatives use and a separate commercial arrangement. Individual layer rights remain unverified.",
+      "sha256": "3e537e7124886a5dd181ac23a5043916495e50407bdbaba8d6a0a84a988be681"
+    },
+    {
+      "key": "newZealandSmapAccess",
+      "english": "Public overview. The provider describes a free login for map and fact-sheet access. The LRIS layer page did not expose layer access requirements.",
+      "sha256": "0726ccc33353e920717a1bd59f220ec4d395b7f06956c3e0ebfb6adc34d3d771"
+    },
+    {
+      "key": "newZealandSmapLimits",
+      "english": "The linked reference does not establish site coverage, soil measurements or crop recommendations. No map, fact sheet, layer or data service was accessed.",
+      "sha256": "fa1c9bd6cde19767c03b441122ea83e5a4fd8af332d88840440774aca27cfc94"
+    }
+  ]
+}
