@@ -10,7 +10,9 @@ import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
 import FieldBlocksPanel from '@/components/design/FieldBlocksPanel';
 import { configureFieldBlock, reconcileFieldBlockEdit } from '@/lib/bed-block';
-import { loadCropPlan } from '@/lib/crop-plan';
+import { readFieldBlockAllocations, fieldBlockAllocatedIds, assertFieldBlockAllocationsCurrent,
+  assertFieldBlockLayoutReadable, fieldBlockSourceKey } from '@/lib/field-block-allocations';
+import { isSampleMode } from '@/lib/sample-mode';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
 import { ArrowLeft, ArrowRight, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
@@ -610,6 +612,9 @@ function DesignStudioInner() {
   const simple = useAppLevel() === 'simple';
   const appConfirm = useAppConfirm();
   const { user, loading: authLoading } = useAuth();
+  const fieldEditSample = isSampleMode();
+  const fieldEditActor = useMemo(() => ({ owner: fieldEditSample ? null : user?.uid ?? null, sample: fieldEditSample, loading: authLoading }),
+    [authLoading, user?.uid, fieldEditSample]);
   const params = useSearchParams();
   const latRaw = params.get('lat');
   const lonRaw = params.get('lon');
@@ -730,6 +735,7 @@ function DesignStudioInner() {
   const [tracedLayers, setTracedLayers] = useState<TracedLayer[]>([]);
   const [houseXY, setHouseXY] = useState<[number, number] | null>(null);
   const [frame, setFrame] = useState<CanvasFrame | null>(null);
+  const fieldFrameRef = useRef(frame); fieldFrameRef.current = frame;
   const [canvasState, setCanvasState] = useState<DesignCanvasState | null>(null);
   // "Import your own photo" (Base step) — which Storage URL's bytes are currently loaded into
   // frame.satDataUrl, so the effects below never refetch a custom photo they've already fetched,
@@ -1734,30 +1740,38 @@ function DesignStudioInner() {
   // Persist canvas state on change (with undo history), and re-run the advisor.
   const handleChange = useCallback(
     (updater: (prev: DesignCanvasState) => DesignCanvasState) => {
+      const intent = readFieldBlockAllocations(fieldEditActor);
       setCanvasState((prev) => {
         if (!prev) return prev;
         // A genuinely new edit invalidates whatever future we might have redone back to —
         // standard undo/redo semantics. Without this, undo → edit → redo would silently
         // resurrect a stale future state the farmer never asked for.
         let next: DesignCanvasState;
+        const allocations = readFieldBlockAllocations(fieldEditActor);
         try {
-          next = reconcileFieldBlockEdit(prev, updater(prev), new Set(loadCropPlan().plantings.map(p => p.bedId)));
+          assertFieldBlockAllocationsCurrent(intent);
+          next = reconcileFieldBlockEdit(prev, updater(prev), fieldBlockAllocatedIds(allocations, prev));
+          assertFieldBlockAllocationsCurrent(allocations);
         } catch (e) {
           setEditError((e as Error).message);
           return prev;
         }
         setSaved(false);
         setEditError(null);
+        let stamped: DesignCanvasState | null;
+        try {
+          assertFieldBlockAllocationsCurrent(allocations);
+          stamped = persistCanvasState(next);
+        } catch (e) { setEditError((e as Error).message); return prev; }
         undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         redoStack.current = [];
-        const stamped = persistCanvasState(next);
         setSaved(!!stamped);
         setSaveError(stamped ? null : t('designStorageFull'));
         // Hold the STAMPED state so the next edit counts rev up from what was actually saved.
         return stamped ?? next;
       });
     },
-    [t],
+    [t, fieldEditActor],
   );
 
   // "Import your own photo" (Base step) — apply the farmer's calibrated photo as the base image
@@ -2158,6 +2172,7 @@ function DesignStudioInner() {
   }, [handleChange, revertToSatellite, appConfirm, t]);
 
   const handleUndo = useCallback(() => {
+    const intent = readFieldBlockAllocations(fieldEditActor);
     setCanvasState((prev) => {
       let popped = undoStack.current[undoStack.current.length - 1];
       if (!popped || !prev) {
@@ -2166,21 +2181,26 @@ function DesignStudioInner() {
       }
       // Crop allocations can arrive after this history snapshot was recorded.
       // Restoring history must protect the same measured ground as a fresh edit.
-      try { popped = reconcileFieldBlockEdit(prev, popped, new Set(loadCropPlan().plantings.map(p => p.bedId))); }
+      const allocations = readFieldBlockAllocations(fieldEditActor);
+      try { assertFieldBlockAllocationsCurrent(intent); popped = reconcileFieldBlockEdit(prev, popped, fieldBlockAllocatedIds(allocations, prev)); }
       catch (e) { setEditError((e as Error).message); return prev; }
       setSaved(false);
       setEditError(null);
-      undoStack.current.pop();
       // Stash what we're undoing FROM so redo can bring it back — this is the only place
       // the pre-undo state is available; once we restore `popped` below it's gone otherwise.
-      redoStack.current = [...redoStack.current, prev].slice(-MAX_UNDO);
       // An undo restores OLD CONTENT but is itself a NEW edit, so it must count rev forward from
       // where we are now (`prev`) — not from the stale rev the popped snapshot was saved with.
       // Bumping the popped rev instead makes consecutive undos emit DESCENDING revs (…13, 12,
       // 11…): the cloud copy would then out-rank each undo, reject the push, and the live
       // listener would apply the cloud copy straight back over it — an undo that visibly undoes
       // itself. Restoring content is never a reason to move the counter backwards.
-      const stamped = persistCanvasState({ ...popped, rev: prev.rev });
+      let stamped: DesignCanvasState | null;
+      try {
+        assertFieldBlockAllocationsCurrent(allocations);
+        stamped = persistCanvasState({ ...popped, rev: prev.rev });
+      } catch (e) { setEditError((e as Error).message); return prev; }
+      undoStack.current.pop();
+      redoStack.current = [...redoStack.current, prev].slice(-MAX_UNDO);
       // Same rule handleChange follows: only claim "Saved" when the write actually landed, and
       // tell the farmer when it didn't. This used to say setSaved(true) unconditionally, so an
       // undo made while storage was full showed a calm "Saved" over a design that had just
@@ -2190,35 +2210,41 @@ function DesignStudioInner() {
       setSaveError(stamped ? null : t('designStorageFull'));
       return stamped ?? popped;
     });
-  }, [t]);
+  }, [t, fieldEditActor]);
 
   const handleRedo = useCallback(() => {
+    const intent = readFieldBlockAllocations(fieldEditActor);
     setCanvasState((prev) => {
       let popped = redoStack.current[redoStack.current.length - 1];
       if (!popped || !prev) {
         setSaved(true);
         return prev;
       }
-      try { popped = reconcileFieldBlockEdit(prev, popped, new Set(loadCropPlan().plantings.map(p => p.bedId))); }
+      const allocations = readFieldBlockAllocations(fieldEditActor);
+      try { assertFieldBlockAllocationsCurrent(intent); popped = reconcileFieldBlockEdit(prev, popped, fieldBlockAllocatedIds(allocations, prev)); }
       catch (e) { setEditError((e as Error).message); return prev; }
       setSaved(false);
       setEditError(null);
-      redoStack.current.pop();
       // Mirror of handleUndo: put the pre-redo state back on the undo stack so undo can
       // reverse this redo, same as any other edit.
-      undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
       // Same rev reasoning as handleUndo: a redo is itself a NEW edit and must count rev
       // forward from `prev`, not from the stale rev the popped (redone) snapshot was saved
       // with — otherwise consecutive redos emit descending revs, the cloud copy out-ranks
       // them, and the live listener silently reverts the redo the farmer just asked for.
-      const stamped = persistCanvasState({ ...popped, rev: prev.rev });
+      let stamped: DesignCanvasState | null;
+      try {
+        assertFieldBlockAllocationsCurrent(allocations);
+        stamped = persistCanvasState({ ...popped, rev: prev.rev });
+      } catch (e) { setEditError((e as Error).message); return prev; }
+      redoStack.current.pop();
+      undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
       // Mirror of handleUndo's fix above — a redo is a save like any other and must not claim
       // "Saved" when persistCanvasState just reported it couldn't write.
       setSaved(!!stamped);
       setSaveError(stamped ? null : t('designStorageFull'));
       return stamped ?? popped;
     });
-  }, [t]);
+  }, [t, fieldEditActor]);
 
   // Delete whatever is selected (one or many items/zones/lines) — palette Delete + keyboard.
   const onDeleteSelected = selectedIds.length
@@ -4213,6 +4239,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             state={canvasState}
             frame={frame}
             selectedId={selectedId}
+            applyError={editError}
             onDraw={() => {
               setAreaFeature('staple_garden');
               setZoneDraw(3);
@@ -4221,11 +4248,23 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             }}
             onSelect={id => { handleSetTool('select'); setSelectedIds([id]); }}
             onApply={(id, name, config) => {
-              const allocations = new Set(loadCropPlan().plantings.map(p => p.bedId));
-              // Validate before the state updater: failures belong beside the form,
-              // not in React's render/update cycle.
-              configureFieldBlock(canvasState, id, name, config, frame, allocations);
-              handleChange(prev => configureFieldBlock(prev, id, name, config, frame, allocations));
+              const expectedSource = fieldBlockSourceKey(canvasState, id, frame);
+              const allocations = readFieldBlockAllocations(fieldEditActor);
+              // Validate beside the form, then repeat against the actual queued
+              // state/frame: a once-valid preview cannot adopt a replacement field.
+              assertFieldBlockLayoutReadable(allocations);
+              configureFieldBlock(canvasState, id, name, config, frame, fieldBlockAllocatedIds(allocations, canvasState));
+              handleChange(prev => {
+                assertFieldBlockAllocationsCurrent(allocations);
+                const currentFrame = fieldFrameRef.current;
+                if (!currentFrame || fieldBlockSourceKey(prev, id, currentFrame) !== expectedSource)
+                  throw Error('The field or map scale changed. Reload its settings before applying this layout.');
+                const current = readFieldBlockAllocations(fieldEditActor);
+                assertFieldBlockLayoutReadable(current);
+                const next = configureFieldBlock(prev, id, name, config, currentFrame, fieldBlockAllocatedIds(current, prev));
+                assertFieldBlockAllocationsCurrent(current);
+                return next;
+              });
               handleSetTool('select');
               setActiveLayers(a => ({ ...a, planting: true }));
             }}

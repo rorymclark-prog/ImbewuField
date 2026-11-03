@@ -1,0 +1,18 @@
+{
+  "checkedAtUtc": "2026-11-03T10:44:06.770912+00:00",
+  "sourceSha256": "b60a09754ec9965e7110d7ecaa690222077821f2495a4d9f8e01233691f8a321",
+  "all20EnglishAndMessageHashesUnchanged": true,
+  "files": [
+    {
+      "path": "components/design/FieldBlocksPanel.tsx",
+      "frozenSnapshotSha256": "ebc3ae23f446c852d4b89f3551b7c4d5c33a8b507892c967982359880ae7b021",
+      "currentSha256": "98ae887f1f68759c997a33e298efd4a4cb538810f7ad35eb782c317ea35808f9"
+    },
+    {
+      "path": "lib/release-notes.ts",
+      "frozenSnapshotSha256": "7b311fd25f8d51992c8ad047eedf31765cbbd2c69f0c5f50e8acbdca75cb6dd2",
+      "currentSha256": "7b311fd25f8d51992c8ad047eedf31765cbbd2c69f0c5f50e8acbdca75cb6dd2"
+    }
+  ],
+  "reason": "Panel code/comment corrections after packet freeze preserve every selected English message; frozen packet source is unchanged. This is coordinator provenance, not an AGY validation or human review."
+}
