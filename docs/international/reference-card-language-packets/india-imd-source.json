@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "f1e15a76f5e43b005ec3cfa5062690131d0eb137",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "69afeff671b58c40e4b1f8005f04dabc05d19e28c2dba9ab89e1a1aa62699a65",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "indiaImdCoverage",
+      "english": "District agrometeorological bulletin index with a state and union territory selector",
+      "sha256": "d054c8f76c866da1a197df0c8a207f0cbdf91111ba407189bbbe2e7baeb5efea"
+    },
+    {
+      "key": "indiaImdClaim",
+      "english": "The official English-language index displays a selector and document viewer for district bulletins.",
+      "sha256": "460dbc96491d1ec1c9d54aa3183614c25e831ca3aae3015b0a3ff7b1a26e076e"
+    },
+    {
+      "key": "indiaImdAccess",
+      "english": "Public index read without an account. Individual bulletins and automated access were not tested.",
+      "sha256": "3e4d82ffa6cbad98954ecabf77f24d83ccf826acd5fe9ab9e26aa6517896a088"
+    },
+    {
+      "key": "indiaImdLimits",
+      "english": "District coverage, bulletin publication and forecast validity remain unverified. The index does not establish local crop recommendations.",
+      "sha256": "71a0b5bf3a71abc575c0dd5972ffaff3e7b0c03aea0c2feff25a5547ff55eb5d"
+    }
+  ]
+}

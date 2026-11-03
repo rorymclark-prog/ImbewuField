@@ -32,7 +32,7 @@ test('all four choices use the checked wording for the selected pilot and remain
     }
   }
   assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16, colombia: 16, canada: 16,
-    'ontario-soil': 16, 'australia-soil': 16, 'new-zealand-smap': 16 });
+    'ontario-soil': 16, 'australia-soil': 16, 'new-zealand-smap': 16, 'india-imd': 16 });
 });
 
 test('Colombian wording keeps the linked publication date and falls back if its year is lost', () => {
