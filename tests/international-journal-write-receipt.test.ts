@@ -30,7 +30,9 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
   return next(specifier, context);
 } });
 const { accountLocalStorageKey, bindMountedAccountLocalStorageUid } = await import('../lib/account-local-storage.ts');
-const { appendLinkedJournalNote, initialiseJournalCutover, loadJournal, MAX_ENTRIES, readCanonicalJournal, readJournalCutoverStatus, readJournalLinkWriteReceipt, journalLinkWriteReceiptMatches, saveJournal, writeCanonicalJournal } = await import('../lib/field-journal.ts');
+const { appendLinkedJournalNote, exportJournalLegacyReview, initialiseJournalCutover, keepCurrentJournalAfterLegacyReview,
+  loadJournal, MAX_ENTRIES, readCanonicalJournal, readJournalCutoverStatus, readJournalLegacyReview, readJournalLinkWriteReceipt,
+  journalLinkWriteReceiptMatches, saveJournal, writeCanonicalJournal } = await import('../lib/field-journal.ts');
 hooks.deregister();
 const key = accountLocalStorageKey('imbewu_field_journal_v1', 'account-a');
 const entry = { id: 'test-note', date: '2026-11-03', title: 'Synthetic note', notes: 'Read-only fixture',
@@ -428,6 +430,76 @@ test('an uncertain canonical write cannot be replayed or announce a save', async
   assert.deepEqual(await writeCanonicalJournal(view, add, exclusive), { status: 'unconfirmed' });
   assert.deepEqual(await writeCanonicalJournal(view, add, exclusive), { status: 'held', reason: 'context-changed' });
   assert.equal(rows.get(canonicalKey), copied);
+  assert.equal(state.writes, 2);
+  assert.equal(state.events, 0);
+});
+
+test('older-tab review preserves both copies, and a new older-tab edit requires another review', async () => {
+  const original = JSON.stringify([entry]);
+  rows.set(key, original);
+  assert.equal((await initialiseJournalCutover(exclusive)).status, 'ready');
+  assert.equal(await readJournalLegacyReview(), null);
+  const before = await readCanonicalJournal();
+  assert.equal((await writeCanonicalJournal(before, { kind: 'append-linked',
+    input: noteInput, selection: noteLink, sourceIsCurrent: () => true }, exclusive)).status, 'saved');
+  const currentRaw = JSON.parse(rows.get(canonicalKey)!).journalRaw;
+  const older = JSON.stringify([{ ...entry, title: 'Written in an older tab' }]);
+  rows.set(key, older);
+
+  const review = await readJournalLegacyReview();
+  assert.deepEqual(review, { currentCount: 2, olderCount: 1 });
+  assert.ok(review);
+  assert.equal(exportJournalLegacyReview({ ...review }), null);
+  const backup = exportJournalLegacyReview(review);
+  assert.equal(backup?.filename, 'journal-copies.json');
+  assert.deepEqual(JSON.parse(backup!.json), { exportVersion: 1, currentJournalRaw: currentRaw, olderJournalRaw: older });
+
+  assert.deepEqual(await keepCurrentJournalAfterLegacyReview(review, null), { status: 'held', reason: 'lock-unavailable' });
+  assert.deepEqual(await keepCurrentJournalAfterLegacyReview(review, exclusive), { status: 'kept' });
+  assert.equal(exportJournalLegacyReview(review), null);
+  assert.equal(JSON.parse(rows.get(canonicalKey)!).journalRaw, currentRaw);
+  assert.equal(rows.get(key), older);
+  assert.deepEqual(await readJournalCutoverStatus(), { status: 'ready' });
+  assert.equal(state.events, 2);
+
+  rows.set(key, original);
+  assert.deepEqual(await readJournalCutoverStatus(), { status: 'held', reason: 'legacy-diverged' });
+  assert.deepEqual(await keepCurrentJournalAfterLegacyReview(review, exclusive), { status: 'held', reason: 'context-changed' });
+  assert.equal(JSON.parse(rows.get(canonicalKey)!).journalRaw, currentRaw);
+});
+
+test('older-tab review is bound to the account and both exact copies, including unreadable evidence', async () => {
+  assert.equal((await initialiseJournalCutover(exclusive)).status, 'ready');
+  const canonical = rows.get(canonicalKey);
+  rows.set(key, '{malformed');
+  const review = await readJournalLegacyReview();
+  assert.deepEqual(review, { currentCount: 0, olderCount: null });
+  assert.ok(review);
+  assert.equal(JSON.parse(exportJournalLegacyReview(review)!.json).olderJournalRaw, '{malformed');
+  const switched: CropPlanStorageLocks = { async request(_name, _options, action) {
+    state.uid = 'account-b';
+    assert.equal(exportJournalLegacyReview(review), null);
+    return await action({});
+  } };
+  assert.deepEqual(await keepCurrentJournalAfterLegacyReview(review, switched), { status: 'held', reason: 'context-changed' });
+  state.uid = 'account-a';
+  rows.set(key, '[]');
+  assert.equal(exportJournalLegacyReview(review), null);
+  assert.deepEqual(await keepCurrentJournalAfterLegacyReview(review, exclusive), { status: 'held', reason: 'context-changed' });
+  assert.equal(rows.get(canonicalKey), canonical);
+  assert.equal(state.writes, 1);
+  assert.equal(state.events, 0);
+});
+
+test('older-tab acknowledgement with uncertain readback cannot be replayed', async () => {
+  assert.equal((await initialiseJournalCutover(exclusive)).status, 'ready');
+  rows.set(key, '[]');
+  const review = await readJournalLegacyReview();
+  assert.ok(review);
+  state.afterWrite = () => { rows.set(key, '[ ]'); };
+  assert.deepEqual(await keepCurrentJournalAfterLegacyReview(review, exclusive), { status: 'unconfirmed' });
+  assert.deepEqual(await keepCurrentJournalAfterLegacyReview(review, exclusive), { status: 'held', reason: 'context-changed' });
+  assert.deepEqual(await readJournalCutoverStatus(), { status: 'held', reason: 'legacy-diverged' });
   assert.equal(state.writes, 2);
   assert.equal(state.events, 0);
 });
