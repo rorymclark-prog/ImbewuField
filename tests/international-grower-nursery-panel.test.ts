@@ -234,3 +234,62 @@ test('own CSV preserves zero versus unknown and escapes user labels without expo
   assert.match(csv, /"48","60","0","3","unknown"/); assert.match(csv, /'=synthetic label/);
   assert.doesNotMatch(csv, /private-|geometryFingerprint|sourceRevision/);
 });
+
+test('transplant preparation uses the actual proposal batches and checks the source again before delivering its worksheet', async () => {
+  deliveries.length = 0;
+  const data = await fixture(); let checks = 0;
+  const screen = mount({ ...data, contextRevision: 1, sample: true, onCheckCurrent: async () => { ++checks; return true; } });
+  try {
+    allocations(screen); await screen.press('Review own nursery requirements');
+    const summary = screen.renderer.root.findByProps({ 'aria-label': 'Planned transplant preparation' });
+    assert.match(text(summary), /Final field positions48Starts to raise60Seeds to sow160/);
+    assert.match(text(summary), /2028-02-09/);
+    assert.match(text(summary), /before 2028-02-19/);
+    assert.match(text(summary), /represented transplant batches only/i);
+    assert.match(text(summary), /not observed sowing, stock or seedling readiness/i);
+    await screen.press('Download transplant preparation CSV');
+    assert.equal(checks, 2); assert.equal(deliveries.length, 1);
+    assert.equal(deliveries[0].filename, 'ImbewuField-demo-transplant-preparation.csv');
+    const csv = await deliveries[0].blob.text();
+    assert.match(csv, /DEMO — planned grower-estimated transplant preparation/);
+    assert.match(csv, /"field_positions","complete","48","48"/);
+    assert.match(csv, /"starts_to_raise","complete","60","60"/);
+    assert.match(csv, /"seeds_to_sow","complete","160","160"/);
+    assert.doesNotMatch(csv, /private-|geometryFingerprint|sourceRevision|acceptedAt/);
+  } finally { screen.dispose(); }
+});
+
+test('a missing seed estimate keeps the worksheet subtotal unknown without hiding known starts or claiming a full purchase list', async () => {
+  const data = await fixture();
+  data.settings.profiles[0] = { ...data.settings.profiles[0], model: 'measured-tray', usableStartsPerTray: 20 };
+  const screen = mount({ ...data, contextRevision: 1, onCheckCurrent: async () => true });
+  try {
+    allocations(screen); await screen.press('Review own nursery requirements');
+    const summary = screen.renderer.root.findByProps({ 'aria-label': 'Planned transplant preparation' });
+    assert.match(text(summary), /Starts to raise60/);
+    assert.match(text(summary), /Seeds to sowUnknown total; known subtotal Unknown/);
+    assert.match(text(summary), /This preparation worksheet is incomplete/);
+    assert.doesNotMatch(text(summary), /Seeds to sow0/);
+  } finally { screen.dispose(); }
+});
+
+test('a pending preparation download is withdrawn when the source changes and a failed fresh check delivers nothing', async () => {
+  deliveries.length = 0;
+  const data = await fixture(); let pending = false, allow = true, resolve!: (value: boolean) => void;
+  const screen = mount({ ...data, contextRevision: 1, onCheckCurrent: async () => pending ? new Promise(answer => { resolve = answer; }) : allow });
+  try {
+    allocations(screen); await screen.press('Review own nursery requirements');
+    pending = true; screen.click('Download transplant preparation CSV');
+    screen.update({ contextRevision: 2 });
+    await act(async () => { resolve(true); await Promise.resolve(); });
+    assert.equal(deliveries.length, 0);
+    assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Planned transplant preparation' }).length, 0);
+    pending = false;
+    // The old rows remain visible for editing but their area draft belongs to
+    // the previous source. Explicitly replace them before the fresh review.
+    screen.click('Remove available resource 1'); screen.click('Remove available resource 1');
+    allocations(screen); await screen.press('Review own nursery requirements');
+    allow = false; await screen.press('Download transplant preparation CSV');
+    assert.equal(deliveries.length, 0); assert.match(screen.text(), /No file was delivered/);
+  } finally { screen.dispose(); }
+});

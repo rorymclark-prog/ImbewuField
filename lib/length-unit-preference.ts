@@ -25,6 +25,7 @@ interface Scope {
 interface Proof {
   purpose: Purpose; win: Window; scope: Scope; epoch: number; owner: string | null; sample: boolean;
   storage: Storage | null; key: string; revoked: boolean; listeners: Set<() => void>;
+  nurseryValueListeners?: Set<(unit: NurseryUnitChoice) => void>;
 }
 const scopes = new WeakMap<Window, Scope>();
 const proofs = new WeakMap<object, Proof>();
@@ -62,12 +63,12 @@ function capturePreferenceContext(purpose: Purpose): PreferenceContext | null {
     if (!actorMatches(owner, inSample)) return null;
     const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : 'harvest-mass-unit-preference' });
     const proof: Proof = { purpose, win, scope, epoch: scope.epoch, owner, sample: inSample, storage: local(win),
-      key: activeAccountLocalStorageKey(purposeKey(purpose)), revoked: false, listeners: new Set() };
+      key: activeAccountLocalStorageKey(purposeKey(purpose)), revoked: false, listeners: new Set(),
+      ...(purpose === 'nursery' ? { nurseryValueListeners: new Set() } : {}) };
     ++scope.users; scope.proofs.add(proof); proofs.set(context, proof); return context;
   } catch { return null; }
 }
-function contextIsCurrent(context: PreferenceContext | null): boolean {
-  const proof = context && proofs.get(context);
+function proofIsCurrent(proof: Proof | null | undefined): boolean {
   try {
     const current = !!proof && !proof.revoked && !proof.scope.failed && proof.scope.epoch === proof.epoch && typeof window !== 'undefined' && window === proof.win
       && activeAccountUid() === proof.owner && sample(window) === proof.sample && local(window) === proof.storage
@@ -76,6 +77,9 @@ function contextIsCurrent(context: PreferenceContext | null): boolean {
     return current;
   } catch { if (proof) proof.revoked = true; return false; }
 }
+function contextIsCurrent(context: PreferenceContext | null): boolean {
+  return proofIsCurrent(context && proofs.get(context));
+}
 function subscribeContext(context: PreferenceContext | null, listener: () => void): () => void {
   const proof = context && proofs.get(context);
   if (!proof) return () => {};
@@ -83,7 +87,7 @@ function subscribeContext(context: PreferenceContext | null, listener: () => voi
 }
 function revokeContext(context: PreferenceContext | null): void {
   const proof = context && proofs.get(context); if (!proof) return;
-  proof.revoked = true; proof.listeners.clear(); proof.scope.proofs.delete(proof); proofs.delete(context!);
+  proof.revoked = true; proof.listeners.clear(); proof.nurseryValueListeners?.clear(); proof.scope.proofs.delete(proof); proofs.delete(context!);
   if (--proof.scope.users === 0) proof.scope.stop();
 }
 export function readLengthUnitPreference(context: LengthUnitPreferenceContext | null): Result {
@@ -134,6 +138,12 @@ export function nurseryUnitPreferenceContextIsCurrent(context: NurseryUnitPrefer
   return !!context && proofs.get(context)?.purpose === 'nursery' && contextIsCurrent(context);
 }
 export const subscribeNurseryUnitPreferenceContext = (context: NurseryUnitPreferenceContext | null, listener: () => void) => subscribeContext(context, listener);
+export function subscribeNurseryUnitPreferenceValue(context: NurseryUnitPreferenceContext | null, listener: (unit: NurseryUnitChoice) => void): () => void {
+  const proof = context && proofs.get(context);
+  if (!proof || proof.purpose !== 'nursery' || !proof.nurseryValueListeners) return () => {};
+  proof.nurseryValueListeners.add(listener);
+  return () => proof.nurseryValueListeners?.delete(listener);
+}
 export const revokeNurseryUnitPreferenceContext = (context: NurseryUnitPreferenceContext | null) => revokeContext(context);
 export function readNurseryUnitPreference(context: NurseryUnitPreferenceContext | null): { unit: NurseryUnitChoice; remembered: boolean; destination: 'device' | 'sample' | 'unavailable' } {
   try {
@@ -147,15 +157,42 @@ export function readNurseryUnitPreference(context: NurseryUnitPreferenceContext 
       : { unit: 'metric', remembered: false, destination: proof.storage ? 'device' : 'unavailable' };
   } catch { return { unit: 'metric', remembered: false, destination: 'unavailable' }; }
 }
+function notifyNurseryValue(origin: Proof, unit: NurseryUnitChoice) {
+  for (const p of origin.scope.proofs) {
+    if (p.purpose === 'nursery' && p.nurseryValueListeners) {
+      for (const listener of [...p.nurseryValueListeners]) {
+        try {
+          if (
+            proofIsCurrent(p) &&
+            p.owner === origin.owner &&
+            p.sample === origin.sample &&
+            p.key === origin.key &&
+            p.storage === origin.storage
+          ) {
+            listener(unit);
+          }
+        } catch {
+          // Prevent broken listener from aborting write outcome or suppressing other listeners
+        }
+      }
+    }
+  }
+}
+
 export function writeNurseryUnitPreference(context: NurseryUnitPreferenceContext | null, unit: NurseryUnitChoice): { remembered: boolean; destination: 'device' | 'sample' | 'unavailable' } {
   try {
     if (!['metric', 'imperial'].includes(unit) || !nurseryUnitPreferenceContextIsCurrent(context)) return { remembered: false, destination: 'unavailable' };
     const proof = proofs.get(context!)!;
-    if (proof.sample) { proof.scope.sampleNurseryUnit = unit; return { remembered: false, destination: 'sample' }; }
+    if (proof.sample) {
+      proof.scope.sampleNurseryUnit = unit;
+      notifyNurseryValue(proof, unit);
+      return { remembered: false, destination: 'sample' };
+    }
     if (!proof.storage) return { remembered: false, destination: 'unavailable' };
     const raw = JSON.stringify({ version: 1, unit }); proof.storage.setItem(proof.key, raw);
-    return nurseryUnitPreferenceContextIsCurrent(context) && proof.storage.getItem(proof.key) === raw
-      ? { remembered: true, destination: 'device' } : { remembered: false, destination: 'unavailable' };
+    const success = nurseryUnitPreferenceContextIsCurrent(context) && proof.storage.getItem(proof.key) === raw;
+    if (success) notifyNurseryValue(proof, unit);
+    return success ? { remembered: true, destination: 'device' } : { remembered: false, destination: 'unavailable' };
   } catch { return { remembered: false, destination: 'unavailable' }; }
 }
 

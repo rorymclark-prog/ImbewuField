@@ -392,3 +392,142 @@ export function isGrowerNurseryForecastCurrent(result: GrowerNurseryResult, requ
     return JSON.stringify(reviewed(fresh)) === JSON.stringify(reviewed(result));
   } catch { return false; }
 }
+
+
+export interface GrowerNurseryPreparationMetric {
+  readonly status: 'complete' | 'unknown' | 'overflow';
+  /** Subtotal of represented batches with known counts; not a whole-farm lower bound. */
+  readonly knownSubtotal: number | null;
+  /** Complete only for the represented members of this group. */
+  readonly total: number | null;
+  readonly knownBatchCount: number;
+  readonly unknownBatchCount: number;
+  readonly unknownBatchIds: readonly string[];
+}
+export interface GrowerNurseryPreparationGroup {
+  /** Private grouping/membership keys stay inside the review, never in shareable files. */
+  readonly key: string;
+  readonly cropKey: string;
+  readonly cropName: string;
+  readonly profileId: string;
+  readonly startDate: string;
+  readonly batchIds: readonly string[];
+  readonly members: readonly {
+    readonly batchId: string;
+    readonly cycleId: string;
+    readonly plantingIds: readonly string[];
+    readonly bedIds: readonly string[];
+    readonly endDateExclusive: string;
+  }[];
+  readonly fieldPositions: GrowerNurseryPreparationMetric;
+  readonly startsToRaise: GrowerNurseryPreparationMetric;
+  readonly seedsToSow: GrowerNurseryPreparationMetric;
+  readonly outsideReviewHorizon: boolean;
+  readonly incomplete: boolean;
+  readonly issues: readonly string[];
+}
+export interface GrowerNurseryPreparation {
+  readonly status: 'available' | 'unavailable';
+  readonly basis: 'grower-nursery-estimates';
+  readonly sourceStatus: GrowerNurseryResult['sourceStatus'];
+  readonly sourceVerification: 'not-verified';
+  readonly fingerprint: string | null;
+  readonly reviewStatus: GrowerNurseryResult['status'] | 'unavailable';
+  readonly reviewIncomplete: boolean;
+  readonly projectionIncomplete: boolean;
+  readonly horizon: GrowerUtcWindow | null;
+  readonly sourceContext: Pick<GrowerWorkflowSource, 'sourceKey' | 'sourceRevision' | 'geometryFingerprint' | 'resourceSiteId' | 'scope'> | null;
+  readonly coverage: 'represented-transplant-raising-batches-only';
+  readonly representedBatchCount: number;
+  readonly groups: readonly GrowerNurseryPreparationGroup[];
+  readonly issues: readonly string[];
+  readonly guidance: string;
+}
+const preparationGuidance = 'Planned grower estimates from represented transplant raising batches only, not observed sowings, stock or seedling readiness. Direct sowings and unresolved or omitted work are not included. Known subtotals cover only represented batches with known counts; unknown or overflowing counts never become complete totals. Complete group counts do not establish whole-farm seed demand or resource availability. Varieties and seed lots are not identified, so grouped counts do not establish interchangeability. No purchasing quantities, pack sizes, seed weights, prices or local crop instructions are inferred. All dates are UTC; field-entry end dates are exclusive.';
+const preparationCount = (value: unknown): value is number => finite(value) && Number.isSafeInteger(value);
+type PreparationBatch = Pick<GrowerNurseryBatch, 'id' | 'cycleId' | 'demandId' | 'profileId' | 'cropKey' | 'sourceStatus'
+  | 'startDate' | 'endDateExclusive' | 'targetPositions' | 'starts' | 'seeds' | 'plantingIds' | 'bedIds' | 'incomplete' | 'issues'>;
+function preparationBatch(value: unknown, sourceStatus: GrowerNurseryResult['sourceStatus']): value is PreparationBatch {
+  return record(value) && [value.id, value.cycleId, value.demandId, value.profileId, value.cropKey].every(identity)
+    && sourceStatus !== null && value.sourceStatus === sourceStatus
+    && isGrowerUtcDate(value.startDate) && isGrowerUtcDate(value.endDateExclusive) && value.startDate <= value.endDateExclusive
+    && preparationCount(value.targetPositions) && [value.starts, value.seeds].every(count => count === null || preparationCount(count))
+    && Array.isArray(value.plantingIds) && Array.isArray(value.bedIds)
+    && [value.plantingIds, value.bedIds].every(values => values.every(identity) && new Set(values).size === values.length)
+    && typeof value.incomplete === 'boolean' && Array.isArray(value.issues) && value.issues.every(identity);
+}
+function preparationMetric(batches: readonly PreparationBatch[], field: 'targetPositions' | 'starts' | 'seeds'): GrowerNurseryPreparationMetric {
+  let sum = 0, knownBatchCount = 0, overflow = false;
+  const unknownBatchIds: string[] = [];
+  for (const batch of batches) {
+    const value = batch[field];
+    if (value === null) { unknownBatchIds.push(batch.id); continue; }
+    ++knownBatchCount;
+    // Check before addition: an already-rounded unsafe sum cannot be repaired.
+    if (value > Number.MAX_SAFE_INTEGER - sum) overflow = true;
+    else if (!overflow) sum = safe(sum + value)!;
+  }
+  const status = overflow ? 'overflow' : unknownBatchIds.length ? 'unknown' : 'complete';
+  return { status, knownSubtotal: overflow || knownBatchCount === 0 ? null : sum,
+    total: status === 'complete' ? sum : null, knownBatchCount, unknownBatchCount: unknownBatchIds.length, unknownBatchIds };
+}
+
+/** Aggregate the existing calculated batch counts once. This is a detached view,
+ * not source authentication: callers retain their original current-result check
+ * before display/delivery, including full-output equality, not just a fingerprint. */
+export function projectGrowerNurseryPreparation(result: GrowerNurseryResult): GrowerNurseryPreparation {
+  let header: Omit<GrowerNurseryPreparation, 'status' | 'representedBatchCount' | 'groups' | 'issues'> = {
+    basis: 'grower-nursery-estimates', sourceStatus: null, sourceVerification: 'not-verified', fingerprint: null,
+    reviewStatus: 'unavailable', reviewIncomplete: true, projectionIncomplete: true, horizon: null, sourceContext: null,
+    coverage: 'represented-transplant-raising-batches-only', guidance: preparationGuidance,
+  };
+  let sourceIssues: string[] = [];
+  const fail = (issue: string): GrowerNurseryPreparation => freeze({ ...header, status: 'unavailable',
+    reviewIncomplete: true, projectionIncomplete: true, representedBatchCount: 0, groups: [], issues: unique([...sourceIssues, issue]) });
+  try {
+    if (record(result)) {
+      if (Array.isArray(result.issues) && result.issues.every(identity)) sourceIssues = [...result.issues];
+      header = { ...header, fingerprint: identity(result.fingerprint) ? result.fingerprint : null,
+        sourceStatus: result.sourceStatus === 'proposed' || result.sourceStatus === 'saved-planned' ? result.sourceStatus : null,
+        reviewStatus: ['ready', 'partial', 'invalid-inputs', 'missing-inputs', 'stale-source'].includes(result.status) ? result.status : 'unavailable' };
+    }
+    if (!record(result) || result.basis !== 'grower-nursery-estimates' || result.sourceVerification !== 'not-verified'
+      || !['ready', 'partial'].includes(result.status) || !identity(result.fingerprint)
+      || !['proposed', 'saved-planned'].includes(result.sourceStatus ?? '') || !record(result.snapshot)
+      || !Array.isArray(result.batches) || !Array.isArray(result.issues) || !result.issues.every(identity)) return fail('preparation-review-unavailable');
+    sourceIssues = [...result.issues];
+    const horizon = windowInput(result.snapshot.horizon), context = result.snapshot.resourceContext;
+    if (horizon?.state !== 'provided' || !growerWorkflowResourceSiteId(context)) return fail('preparation-review-context-invalid');
+    header = { ...header, sourceStatus: result.sourceStatus, fingerprint: result.fingerprint,
+      reviewStatus: result.status, reviewIncomplete: result.status === 'partial' || sourceIssues.length > 0,
+      horizon: { ...horizon.value }, sourceContext: {
+        sourceKey: context.sourceKey, sourceRevision: context.sourceRevision, geometryFingerprint: context.geometryFingerprint,
+        resourceSiteId: context.resourceSiteId, scope: structuredClone(context.scope),
+      } };
+    const ids = new Set<string>(), grouped = new Map<string, PreparationBatch[]>();
+    for (const batch of result.batches) {
+      if (!preparationBatch(batch, result.sourceStatus) || ids.has(batch.id)) return fail('preparation-batch-invalid-or-ambiguous');
+      ids.add(batch.id);
+      const key = JSON.stringify([batch.cropKey, batch.profileId, batch.startDate]);
+      if (!grouped.has(key)) grouped.set(key, []);
+      grouped.get(key)!.push(batch);
+    }
+    const groups = [...grouped.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([key, batches]): GrowerNurseryPreparationGroup => {
+      const first = batches[0];
+      const outsideReviewHorizon = batches.some(batch => batch.startDate < horizon.value.start || batch.endDateExclusive > horizon.value.endExclusive);
+      const intervalUnresolved = batches.some(batch => batch.targetPositions > 0 && batch.startDate === batch.endDateExclusive);
+      const issues = unique([...batches.flatMap(batch => [...batch.issues]),
+        ...(outsideReviewHorizon ? ['nursery-cycle-outside-review-horizon'] : []),
+        ...(intervalUnresolved ? ['positive-target-zero-nursery-interval'] : [])]);
+      const fieldPositions = preparationMetric(batches, 'targetPositions'), startsToRaise = preparationMetric(batches, 'starts'), seedsToSow = preparationMetric(batches, 'seeds');
+      return { key, cropKey: first.cropKey, cropName: cropByKey(first.cropKey)?.name ?? 'Crop name unavailable', profileId: first.profileId,
+        startDate: first.startDate, batchIds: batches.map(batch => batch.id), members: batches.map(batch => ({
+          batchId: batch.id, cycleId: batch.cycleId, plantingIds: [...batch.plantingIds], bedIds: [...batch.bedIds], endDateExclusive: batch.endDateExclusive,
+        })), fieldPositions, startsToRaise, seedsToSow, outsideReviewHorizon,
+        incomplete: batches.some(batch => batch.incomplete) || issues.length > 0
+          || [fieldPositions, startsToRaise, seedsToSow].some(metric => metric.status !== 'complete'), issues };
+    });
+    return freeze({ ...header, status: 'available', projectionIncomplete: header.reviewIncomplete || groups.some(group => group.incomplete),
+      representedBatchCount: result.batches.length, groups, issues: sourceIssues });
+  } catch { return fail('preparation-review-unreadable'); }
+}

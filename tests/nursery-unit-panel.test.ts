@@ -156,7 +156,9 @@ test('nursery remembering is independent of field choice, actor scoped, sample-o
 
 test('an unapproved nursery context never executes the catalogue producer or offers its export', () => {
   observations.forbidden = true; const ui = mount(initial(), { allowCatalogueForecast: false });
-  try { assert.equal(observations.forecasts, 0); assert.equal(ui.button('Download nursery CSV'), undefined); assert.match(ui.text(), /Demand forecasts are unavailable/); } finally { ui.dispose(); }
+  // The separate own-estimate review can calculate requirements. This hold applies
+  // to the catalogue producer; a blanket claim would hide that grower workflow.
+  try { assert.equal(observations.forecasts, 0); assert.equal(ui.button('Download nursery CSV'), undefined); assert.match(ui.text(), /catalogue demand forecast is unavailable/); assert.match(ui.text(), /Automatic plan from your estimates/); } finally { ui.dispose(); }
 });
 
 function boundMount(settings = initial(), deferContext = false, legacyBeforeContext = false) {
