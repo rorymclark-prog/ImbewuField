@@ -7,13 +7,13 @@ function validDate(value: unknown): value is string {
   return Number.isFinite(time) && new Date(time).toISOString().slice(0, 10) === value;
 }
 
-export function sourceEvidenceState(source: CountrySource, asOf: string): 'available-reference' | 'missing' | 'stale' | 'undated' {
+export function sourceEvidenceState(source: CountrySource, asOf: string): 'available-reference' | 'background-reference' | 'missing' | 'stale' | 'undated' {
   if (!validDate(asOf)) throw new RangeError('A real assessment date is required.');
   if (source.verification !== 'content-read') return 'missing';
   if (!validDate(source.accessedOn) || source.accessedOn > asOf || !validDate(source.publishedOn)
     || source.publishedOn > asOf || (source.reviewDueOn !== null && !validDate(source.reviewDueOn))) return 'undated';
   if (source.reviewDueOn !== null && source.reviewDueOn < asOf) return 'stale';
-  return 'available-reference';
+  return source.backgroundOnly ? 'background-reference' : 'available-reference';
 }
 
 export function evaluateCountryReadiness(context: CountryContext, asOf: string, profiles: readonly CountryProfile[] = COUNTRY_PROFILES) {

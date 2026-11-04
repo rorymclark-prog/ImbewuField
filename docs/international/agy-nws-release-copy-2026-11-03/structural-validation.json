@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "validatedOn": "2026-11-03",
+  "source": "source.json",
+  "sourceSha256": "a095a99ad9d895ace2876cc7f27ff3be337aaf3bc091fcc774092d9759e106d6",
+  "workorderSha256": "f2ecface2b334146997bbd88d696f4032cb8d9cc9a8b59e63e919bf8b231390b",
+  "sourceMessages": 4,
+  "integratedEntries": 16,
+  "review": {
+    "status": "unreviewed"
+  },
+  "fluentHumanApproval": false,
+  "newLanguageEnablement": false,
+  "productionDeployment": false,
+  "scope": "Coordinator branch integration of exact source-bound AI candidates through the existing disclosed unreviewed update-copy mechanism only. No language, agronomic or fluent approval. English fallback and notices remain unchanged.",
+  "checks": {
+    "sourceKeysEnglishAndHashesExact": true,
+    "allDraftStatusesUnreviewed": true,
+    "placeholderAndNumberTokensPreserved": true,
+    "navigationArrowsAndRoutesPreserved": true,
+    "noExistingKeyCollisions": true,
+    "noUuidLikePrivateIds": true,
+    "oldChunkBytesPreserved": true,
+    "sourceAndWorkorderUnchanged": true
+  },
+  "locales": [
+    {
+      "locale": "zu",
+      "packet": "docs/international/agy-nws-release-copy-2026-11-03/zu.json",
+      "packetSha256": "55c4c941b593be559414df6f70a0aae32648b1f54a1a2430dbe9d99770d1f3f1",
+      "runtimeFile": "lib/update-copy-locales/zu.ts",
+      "entries": 4,
+      "previousChunkSha256": "bd8d4ea3e8001cbadc7ad96fafd1f5cb09a570bf587e5d9871f4233bfdd93827",
+      "integratedChunkSha256": "3698cafbc3b01ab3d0c61feddc3adb8f9066061aa1acfe7880eb02d91d15c955",
+      "existingChunkBytesPreserved": true
+    },
+    {
+      "locale": "st",
+      "packet": "docs/international/agy-nws-release-copy-2026-11-03/st.json",
+      "packetSha256": "3801893bd53f8ad036377f7aeb5a441b93535461c991dae0b9d3ada7621f102d",
+      "runtimeFile": "lib/update-copy-locales/st.ts",
+      "entries": 4,
+      "previousChunkSha256": "0d089c9674bcdc21d5369ca4557ba99bb1a2c8c52bdca7dadf45ae34fc8a79d8",
+      "integratedChunkSha256": "4cf5b369a6a7d0868691fe6cfff361356f7c3239f2de2a372fc405c4ec84b513",
+      "existingChunkBytesPreserved": true
+    },
+    {
+      "locale": "ts",
+      "packet": "docs/international/agy-nws-release-copy-2026-11-03/ts.json",
+      "packetSha256": "a9da75255bf4fbde81a536d490ee8b9279ced786a3998d3cf8cd721cea3e8cea",
+      "runtimeFile": "lib/update-copy-locales/ts.ts",
+      "entries": 4,
+      "previousChunkSha256": "bdb40d6790b5760dea0ae8437cf8566bffb9f3689a16a418877cf3c3cda65c00",
+      "integratedChunkSha256": "54c1a789b8aca27181f5eb9f29b4511adbd192116487a743b76df1e17f40dee5",
+      "existingChunkBytesPreserved": true
+    },
+    {
+      "locale": "ve",
+      "packet": "docs/international/agy-nws-release-copy-2026-11-03/ve.json",
+      "packetSha256": "687ab71c1005f3df6d56b38269cbb00d2ac45f4642f1c6237388171da56eaaff",
+      "runtimeFile": "lib/update-copy-locales/ve.ts",
+      "entries": 4,
+      "previousChunkSha256": "3c2dc299139bb065f838af705312fb01ba5796eff47042987b3cdba59a82f039",
+      "integratedChunkSha256": "7cc4aae72175c308bea5160d02b0da73b951d2ff527b7a40077e3f025f771729",
+      "existingChunkBytesPreserved": true
+    }
+  ],
+  "negativeControls": [
+    {
+      "name": "missing-entry",
+      "rejected": true
+    },
+    {
+      "name": "duplicate-key",
+      "rejected": true
+    },
+    {
+      "name": "reordered-entries",
+      "rejected": true
+    },
+    {
+      "name": "different-source",
+      "rejected": true
+    },
+    {
+      "name": "different-source-hash",
+      "rejected": true
+    },
+    {
+      "name": "wrong-locale",
+      "rejected": true
+    },
+    {
+      "name": "claimed-fluent-review",
+      "rejected": true
+    },
+    {
+      "name": "claimed-message-review",
+      "rejected": true
+    },
+    {
+      "name": "blank-text",
+      "rejected": true
+    },
+    {
+      "name": "changed-number",
+      "rejected": true
+    },
+    {
+      "name": "missing-arrow",
+      "rejected": true
+    },
+    {
+      "name": "changed-destination",
+      "rejected": true
+    },
+    {
+      "name": "invented-route",
+      "rejected": true
+    },
+    {
+      "name": "private-id",
+      "rejected": true
+    },
+    {
+      "name": "existing-key-collision",
+      "rejected": true
+    }
+  ],
+  "runtimeChecks": {
+    "actualRuntimePairsEqualPackets": 16,
+    "currentBannerAndTourCoverage": [
+      {
+        "locale": "zu",
+        "currentSources": 20,
+        "currentGaps": 0,
+        "recentHistory": [
+          {
+            "days": 5,
+            "descriptions": 21,
+            "gaps": 0
+          },
+          {
+            "days": 3,
+            "descriptions": 7,
+            "gaps": 0
+          }
+        ]
+      },
+      {
+        "locale": "st",
+        "currentSources": 20,
+        "currentGaps": 0,
+        "recentHistory": [
+          {
+            "days": 5,
+            "descriptions": 21,
+            "gaps": 0
+          },
+          {
+            "days": 3,
+            "descriptions": 7,
+            "gaps": 0
+          }
+        ]
+      },
+      {
+        "locale": "ts",
+        "currentSources": 20,
+        "currentGaps": 0,
+        "recentHistory": [
+          {
+            "days": 5,
+            "descriptions": 21,
+            "gaps": 0
+          },
+          {
+            "days": 3,
+            "descriptions": 7,
+            "gaps": 0
+          }
+        ]
+      },
+      {
+        "locale": "ve",
+        "currentSources": 20,
+        "currentGaps": 0,
+        "recentHistory": [
+          {
+            "days": 5,
+            "descriptions": 21,
+            "gaps": 0
+          },
+          {
+            "days": 3,
+            "descriptions": 7,
+            "gaps": 0
+          }
+        ]
+      }
+    ],
+    "oldChunkBytesEqualCommittedHead": true,
+    "releaseAuthorityHashUnchanged": true,
+    "coreLocaleAndNoticeBytesEqualHead": true,
+    "englishFallbackAndDamagedNumberInheritedAndWrongLanguageControlsPassed": true,
+    "fluentHumanReviewPerformed": false
+  }
+}

@@ -11,6 +11,13 @@ const copy:UpdateCopy={
   "Check your saved map": "Kambela mepe wa wena lowu hlayisiweke",
   "Site design": "Dizayini ya ndhawu",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Kambela ndhawu yoleyo u nga si tirhisa mindzulamiso ya mupfuni kumbe ku pimanisa xifaniso xa khale.",
+  // US directory notice. AGY draft reviewed for institutional terminology; fluent review pending.
+  "Find US land-grant institutions through the USDA directory.": "Kuma swivandla swa dyondzo swa US swa land-grant eka nxaxamelo wa USDA.",
+  // NWS reference: docs/international/agy-nws-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
+  "Compare a fixed US station’s weather observations with clear dates and missing readings.": "Pimanisa swivonelo swa maxelo swa xitichi lexi nga cenciki xa US na masiku lama nga erivaleni na tinhlayo leti kayivelaka.",
+  "Review a public US weather station": "Kambela xitichi xa maxelo xa le rivaleni xa US",
+  "International foundation → United States": "Masungulo ya matiko ya misava → United States",
+  "Choose United States, then load the fixed public station example. Observation and retrieval times stay separate; this does not supply farm weather or planting advice.": "Hlawula United States, kutani u layicha xikombiso xa xitichi xa le rivaleni lexi nga cenciki. Mikarhi yo vona na yo kuma yi tshama yi hambanile; leswi a swi nyiki maxelo ya purasi kumbe switsundzuxo swo byala.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",

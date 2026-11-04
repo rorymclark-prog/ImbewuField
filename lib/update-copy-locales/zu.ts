@@ -11,6 +11,13 @@ const copy:UpdateCopy={
   "Check your saved map": "Hlola imephu yakho egciniwe",
   "Site design": "Ukwakheka kwendawo",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlola yona leyo ndawo ngaphambi kokwamukela izinguquko zomsizi noma ukuqhathanisa isithombe sakudala.",
+  // US directory notice. AGY draft reviewed for institutional terminology; fluent review pending.
+  "Find US land-grant institutions through the USDA directory.": "Thola izikhungo zemfundo ze-US ze-land-grant ohlwini lwe-USDA.",
+  // NWS reference: docs/international/agy-nws-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
+  "Compare a fixed US station’s weather observations with clear dates and missing readings.": "Qhathanisa okubonwe yisiteshi sezulu esingaguquki sase-US nezinsuku ezicacile kanye nokufundwa okushodayo.",
+  "Review a public US weather station": "Buyekeza isiteshi sezulu somphakathi sase-US",
+  "International foundation → United States": "Isisekelo samazwe ngamazwe → United States",
+  "Choose United States, then load the fixed public station example. Observation and retrieval times stay separate; this does not supply farm weather or planting advice.": "Khetha i-United States, bese ulayisha isibonelo sesiteshi somphakathi esingaguquki. Izikhathi zokubuka kanye nezokulanda zihlala zihlukene; lokhu akunikezi isimo sezulu sasepulazini noma iseluleko sokutshala.",
   // Country context: docs/international/agy-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Qinisekisa izwe lesayithi edwetshiwe ngaphambi kokusebenzisa isiqondiso sayo sokuhlela izitshalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Gcina amarekhodi akho okuhlwanyela nezinto zokusebenza zenkulisa yezitshalo ngenkathi ukuhlela kwendawo kungatholakali.",
