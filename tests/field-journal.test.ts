@@ -282,3 +282,15 @@ test('the sample-mode storage seed carries the journal under the real storage ke
   const parsed = normaliseJournal(JSON.parse(seeds.imbewu_field_journal_v1));
   assert.deepEqual(parsed.map((e) => e.id).sort(), buildDemoJournal().map((e) => e.id).sort());
 });
+
+test('ordinary journal reads and edits retain an existing linked-note marker even if it needs review', () => {
+  const before = entry();
+  for (const marker of [null, { version: 99, unknown: 'retained' }, { version: 1, plantingId: 'saved-cycle' }]) {
+    const loaded = normaliseJournal(JSON.parse(JSON.stringify([{ ...before, growerCycleLink: marker }])))[0];
+    assert.ok(Object.hasOwn(loaded, 'growerCycleLink'));
+    assert.deepEqual(loaded.growerCycleLink, marker);
+    const edited = editJournalEntry(loaded, { ...loaded, title: 'Corrected note' });
+    assert.deepEqual(edited.growerCycleLink, marker);
+  }
+  assert.equal(Object.hasOwn(normaliseJournal([before])[0], 'growerCycleLink'), false);
+});

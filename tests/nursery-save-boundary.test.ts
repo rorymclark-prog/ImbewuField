@@ -62,6 +62,7 @@ function parent(raw?: CropPlanState) {
     saveCropPlanWithReceipt: crop.saveCropPlanWithReceipt, sanitiseNurserySettings, sanitiseHarvestTargets: crop.sanitiseHarvestTargets,
     createNurserySaveAuthority: api.createNurserySaveAuthority, revokeNurserySaveAuthority: api.revokeNurserySaveAuthority, createNurserySaveContext: api.createNurserySaveContext,
     CROP_PLAN_CHANGED_EVENT: crop.CROP_PLAN_CHANGED_EVENT, CROP_PLAN_STORAGE_EVENT: storage.CROP_PLAN_STORAGE_EVENT,
+    SAMPLE_MODE_EVENT: samples.SAMPLE_MODE_EVENT,
     planStorageRevision: 0, handledPlanStorageRevision: { current: 0 },
     beginNurserySaveRequest: api.beginNurserySaveRequest, commitNurserySaveRequest: api.commitNurserySaveRequest, readNurserySaveConfirmation: api.readNurserySaveConfirmation,
     setPlan(value: CropPlanState) { state.plan = value; }, setPlanSaveConflict(value: boolean) { state.planSaveConflict = value; }, setPlanSaveFailed(value: boolean) { state.planSaveFailed = value; } };

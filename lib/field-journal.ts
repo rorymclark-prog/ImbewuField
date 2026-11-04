@@ -11,7 +11,14 @@
 // grouping, normalisation and trimming rules can be tested directly.
 
 import { Sprout, ShoppingBasket, CloudSun, Bug, Wrench, Users, NotebookPen, type LucideIcon } from 'lucide-react';
-import { activeAccountLocalStorageKey } from './account-local-storage';
+import {
+  activeAccountLocalStorageKey, activeAccountUid, guestAccountLocalStorageKey, readAccountLocalSampleState,
+  FIELD_JOURNAL_LEGACY_KEY as STORAGE_KEY, FIELD_JOURNAL_CANONICAL_KEY as CANONICAL_JOURNAL_KEY,
+  FIELD_JOURNAL_GUEST_CLAIM_KEY, FIELD_JOURNAL_GUEST_LOCK, fieldJournalStorageLockName,
+} from './account-local-storage';
+import { getFirebase, isBackendConfigured } from './firebase/init';
+import { normaliseGrowerFieldNoteLink } from './international/grower-field-note-link';
+import type { CropPlanStorageLocks } from './crop-plan-storage';
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
 
@@ -72,6 +79,8 @@ export interface JournalEntry {
   cropName?: string | null;
   /** Resized thumbnails (data URLs, ≤400px via resizeForStorage). */
   photos?: string[];
+  /** Private link marker. Reading or preserving it does not resolve membership. */
+  growerCycleLink?: unknown;
   createdAt: number;
   updatedAt: number;
 }
@@ -201,6 +210,13 @@ export function sortJournal(entries: JournalEntry[]): JournalEntry[] {
   });
 }
 
+// Keep the stored marker even if its shape needs review. An unrelated edit
+// must not silently turn a linked note into an ordinary note.
+function preserveJournalCycleLink(entry: object): Pick<JournalEntry, 'growerCycleLink'> {
+  const property = Object.getOwnPropertyDescriptor(entry, 'growerCycleLink');
+  return property ? { growerCycleLink: Object.hasOwn(property, 'value') ? property.value ?? null : null } : {};
+}
+
 /**
  * Turn anything that came out of storage into a trustworthy entry list.
  * Drops non-objects, unusable ids/dates, unknown categories and entries with
@@ -230,6 +246,7 @@ export function normaliseJournal(value: unknown): JournalEntry[] {
       bedLabel: cleanTag(raw.bedLabel),
       cropName: cleanTag(raw.cropName),
       photos: cleanPhotos(raw.photos),
+      ...preserveJournalCycleLink(raw),
       createdAt,
       updatedAt: finiteTime(raw.updatedAt, createdAt),
     });
@@ -289,6 +306,7 @@ export function editJournalEntry(
 ): JournalEntry {
   return {
     ...createJournalEntry(input, now),
+    ...preserveJournalCycleLink(entry),
     id: entry.id,
     createdAt: entry.createdAt,
     updatedAt: now,
@@ -368,7 +386,6 @@ export function trimJournalForStorage(
 
 /* ── Storage ─────────────────────────────────────────────────────────────── */
 
-const STORAGE_KEY = 'imbewu_field_journal_v1';
 export const JOURNAL_CHANGED_EVENT = 'imbewu-field-journal-changed';
 
 export function loadJournal(): JournalEntry[] {
@@ -411,4 +428,600 @@ export function saveJournal(entries: JournalEntry[]): JournalSaveResult {
       return { ok: false, entries: trimmed, trimmed: didTrim };
     }
   }
+}
+
+export type JournalLinkWriteReceipt =
+  | { readonly status: 'ready' }
+  | { readonly status: 'held'; readonly reason: 'journal-unavailable' | 'journal-changed' | 'normalisation-loss' };
+
+interface JournalLinkBinding {
+  readonly key: string;
+  readonly storage: Storage;
+  readonly raw: string | null;
+  readonly owner: string | null;
+  readonly sample: boolean;
+}
+const journalLinkBindings = new WeakMap<JournalLinkWriteReceipt, JournalLinkBinding>();
+
+function journalActorMatches({ owner, sample }: Pick<JournalLinkBinding, 'owner' | 'sample'>): boolean {
+  if (readAccountLocalSampleState() !== sample || activeAccountUid() !== owner) return false;
+  if (sample || !isBackendConfigured()) return true;
+  const auth = getFirebase()?.auth;
+  if (!auth) return false;
+  const user = auth.currentUser;
+  return user === null ? owner === null : typeof user?.uid === 'string' && user.uid === owner;
+}
+
+function journalNamespaceMatches(binding: Omit<JournalLinkBinding, 'raw'>): boolean {
+  return journalActorMatches(binding) && window.localStorage === binding.storage
+    && activeAccountLocalStorageKey(STORAGE_KEY) === binding.key;
+}
+
+/** Keep a selected journal copy in the workspace that supplied its notes. */
+export function captureJournalExportContext(): { sample: boolean; isCurrent: () => boolean } | null {
+  try {
+    const sample = readAccountLocalSampleState();
+    if (sample === null) return null;
+    const binding = {
+      sample, owner: activeAccountUid(), storage: window.localStorage,
+      key: activeAccountLocalStorageKey(STORAGE_KEY),
+    };
+    const isCurrent = () => {
+      try { return journalNamespaceMatches(binding); } catch { return false; }
+    };
+    return isCurrent() ? { sample, isCurrent } : null;
+  } catch { return null; }
+}
+
+function journalBindingMatches(binding: JournalLinkBinding): boolean {
+  return journalNamespaceMatches(binding) && binding.storage.getItem(binding.key) === binding.raw
+    && journalNamespaceMatches(binding);
+}
+
+function journalNormalisationIsLossless(raw: string): boolean {
+  const rows: unknown = JSON.parse(raw);
+  if (!Array.isArray(rows)) return false;
+  if (!rows.length) return true;
+  // The existing writer emits JSON.stringify output. Holding other nonempty
+  // byte shapes prevents JSON.parse from hiding duplicate or overflowed values.
+  if (JSON.stringify(rows) !== raw) return false;
+  const normalised = normaliseJournal(rows);
+  if (normalised.length !== rows.length) return false;
+  const byId = new Map(normalised.map(row => [row.id, Object.fromEntries(Object.entries(row))]));
+  const required = ['date', 'title', 'notes', 'category', 'createdAt', 'updatedAt'] as const;
+  return rows.every(row => {
+    if (!record(row) || required.some(key => !Object.hasOwn(row, key)) || typeof row.id !== 'string') return false;
+    const projected = byId.get(row.id);
+    // Allow old entries to omit optional fields. Never discard or replace a
+    // field that was actually stored, even if the journal display ignores it.
+    return !!projected && Object.entries(row).every(([key, value]) => {
+      if (!Object.hasOwn(projected, key)) return false;
+      const after = projected[key];
+      return Array.isArray(value)
+        ? Array.isArray(after) && value.length === after.length && value.every((item, index) => Object.is(item, after[index]))
+        : Object.is(after, value);
+    });
+  });
+}
+
+/** Capture a private comparison receipt for a future linked note. The raw
+ * value and the account key never leave this store. This grants no write. */
+export function readJournalLinkWriteReceipt(): JournalLinkWriteReceipt {
+  try {
+    if (typeof window === 'undefined') return { status: 'held', reason: 'journal-unavailable' };
+    const sample = readAccountLocalSampleState();
+    if (sample === null) return { status: 'held', reason: 'journal-unavailable' };
+    const actor = { owner: activeAccountUid(), sample };
+    if (!journalActorMatches(actor)) return { status: 'held', reason: 'journal-changed' };
+    const key = activeAccountLocalStorageKey(STORAGE_KEY);
+    const storage = window.localStorage;
+    const raw = storage.getItem(key);
+    if (raw !== null && !journalNormalisationIsLossless(raw)) return { status: 'held', reason: 'normalisation-loss' };
+    const binding = { ...actor, storage, key, raw };
+    if (!journalBindingMatches(binding)) return { status: 'held', reason: 'journal-changed' };
+    const receipt = Object.freeze({ status: 'ready' } as const);
+    journalLinkBindings.set(receipt, binding);
+    return receipt;
+  } catch {
+    return { status: 'held', reason: 'journal-unavailable' };
+  }
+}
+
+export function journalLinkWriteReceiptMatches(receipt: JournalLinkWriteReceipt): boolean {
+  try {
+    const binding = journalLinkBindings.get(receipt);
+    return !!binding && journalBindingMatches(binding);
+  } catch {
+    return false;
+  }
+}
+
+export type LinkedJournalAppendResult =
+  | { readonly status: 'saved'; readonly noteId: string }
+  | { readonly status: 'held'; readonly reason: 'invalid-note' | 'context-changed' | 'journal-full' }
+  | { readonly status: 'unconfirmed' };
+
+function explicitlyDatedJournalInput(input: JournalEntryInput): JournalEntryInput | null {
+  const date = Object.getOwnPropertyDescriptor(input, 'date')?.value;
+  if (!isJournalDate(date)) return null;
+  const { bedId, title, notes, category, bedLabel, cropName, photos } = input;
+  return { date, bedId, title, notes, category, bedLabel, cropName, photos };
+}
+
+function createLinkedJournalEntry(input: JournalEntryInput, selection: unknown): JournalEntry | null {
+  const link = normaliseGrowerFieldNoteLink(selection);
+  const dated = explicitlyDatedJournalInput(input);
+  if (!link || !dated || dated.bedId !== link.bedId) return null;
+  const note = { ...createJournalEntry(dated), growerCycleLink: link };
+  return (note.title || note.notes) && note.bedId === link.bedId ? note : null;
+}
+
+/** The confirmation controller must recheck the admitted grower book before
+ * calling this. Its synchronous guard must still bind that same source and
+ * live form. There is no await or retry between admission and this write. */
+export function appendLinkedJournalNote(
+  receipt: JournalLinkWriteReceipt,
+  input: JournalEntryInput,
+  selection: unknown,
+  sourceIsCurrent: () => boolean,
+): LinkedJournalAppendResult {
+  const changed = { status: 'held', reason: 'context-changed' } as const;
+  const invalid = { status: 'held', reason: 'invalid-note' } as const;
+  const full = { status: 'held', reason: 'journal-full' } as const;
+  const binding = journalLinkBindings.get(receipt);
+  if (!binding) return changed;
+  let note: JournalEntry, bytes: string;
+  try {
+    if (!sourceIsCurrent() || !journalBindingMatches(binding)) return changed;
+    const linked = createLinkedJournalEntry(input, selection);
+    if (!linked) return invalid;
+    note = linked;
+    const prior: JournalEntry[] = binding.raw === null ? [] : JSON.parse(binding.raw);
+    if (prior.length >= MAX_ENTRIES || prior.some(row => row.id === note.id)) return full;
+    bytes = JSON.stringify([...prior, note]);
+    if (bytes.length > JOURNAL_BYTE_BUDGET) return full;
+    if (!sourceIsCurrent() || !journalBindingMatches(binding)
+      || journalLinkBindings.get(receipt) !== binding) return changed;
+  } catch {
+    return changed;
+  }
+  // Consume the original receipt before attempting the write. If the result
+  // is uncertain the caller reloads; it must never silently append a second note.
+  journalLinkBindings.delete(receipt);
+  try {
+    binding.storage.setItem(binding.key, bytes);
+    if (!journalBindingMatches({ ...binding, raw: bytes })) return { status: 'unconfirmed' };
+  } catch {
+    return { status: 'unconfirmed' };
+  }
+  try { window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT)); }
+  catch { /* A notification error cannot undo an observed storage write. */ }
+  return { status: 'saved', noteId: note.id };
+}
+
+// Older bundles can still write v1 directly. They never receive the new key.
+type JournalCutoverReason = 'context-unavailable' | 'context-changed' | 'upgrade-required' | 'invalid-legacy'
+  | 'invalid-canonical' | 'legacy-diverged' | 'lock-unavailable' | 'write-unconfirmed';
+export type JournalCutoverStatus = { readonly status: 'ready' }
+  | { readonly status: 'held'; readonly reason: JournalCutoverReason };
+interface JournalCutoverContext {
+  readonly storage: Storage;
+  readonly owner: string | null;
+  readonly sample: false;
+  readonly legacyKey: string;
+  readonly canonicalKey: string;
+}
+interface JournalCutoverSnapshot { legacy: string | null; canonical: string | null }
+interface JournalEnvelope { version: 2; legacyDigest: string | null; journalRaw: string; guestImportDigest?: string }
+const journalCutoverHeld = (reason: JournalCutoverReason): JournalCutoverStatus => ({ status: 'held', reason });
+
+function journalLocks(locks: CropPlanStorageLocks | null | undefined): CropPlanStorageLocks | null | undefined {
+  return locks === undefined && typeof navigator !== 'undefined' ? navigator.locks : locks;
+}
+
+function journalLockName(context: JournalCutoverContext): string {
+  return fieldJournalStorageLockName(context.canonicalKey);
+}
+
+function journalCutoverContext(): JournalCutoverContext | null {
+  if (typeof window === 'undefined' || readAccountLocalSampleState() !== false) return null;
+  const owner = activeAccountUid(), actor = { owner, sample: false as const };
+  // Guest transfer and the isolated sample need their own cutover admission.
+  if (!journalActorMatches(actor) || (!owner && isBackendConfigured())) return null;
+  return { ...actor, storage: window.localStorage, legacyKey: activeAccountLocalStorageKey(STORAGE_KEY),
+    canonicalKey: activeAccountLocalStorageKey(CANONICAL_JOURNAL_KEY) };
+}
+
+function captureJournalCutover(context: JournalCutoverContext): JournalCutoverSnapshot | null {
+  const current = () => journalActorMatches(context) && window.localStorage === context.storage
+    && activeAccountLocalStorageKey(STORAGE_KEY) === context.legacyKey
+    && activeAccountLocalStorageKey(CANONICAL_JOURNAL_KEY) === context.canonicalKey;
+  if (!current()) return null;
+  const snapshot = { legacy: context.storage.getItem(context.legacyKey), canonical: context.storage.getItem(context.canonicalKey) };
+  return current() ? snapshot : null;
+}
+
+function sameJournalCutover(before: JournalCutoverSnapshot, after: JournalCutoverSnapshot | null): boolean {
+  return !!after && before.legacy === after.legacy && before.canonical === after.canonical;
+}
+
+function writeJournalEnvelope(context: JournalCutoverContext, snapshot: JournalCutoverSnapshot, canonical: string): boolean {
+  try {
+    context.storage.setItem(context.canonicalKey, canonical);
+    return sameJournalCutover({ ...snapshot, canonical }, captureJournalCutover(context));
+  } catch { return false; }
+}
+
+async function journalLegacyDigest(raw: string | null): Promise<string | null> {
+  if (raw === null) return null;
+  // Encode the JS string losslessly, including an unpaired surrogate in old data.
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(raw)));
+  return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function readJournalEnvelope(raw: string): JournalEnvelope | null {
+  try {
+    const value: unknown = JSON.parse(raw);
+    if (!record(value) || value.version !== 2 || JSON.stringify(value) !== raw
+      || Object.keys(value).length !== (Object.hasOwn(value, 'guestImportDigest') ? 4 : 3)
+      || (value.legacyDigest !== null && (typeof value.legacyDigest !== 'string' || !/^[a-f0-9]{64}$/.test(value.legacyDigest)))
+      || (value.guestImportDigest !== undefined && (typeof value.guestImportDigest !== 'string' || !/^[a-f0-9]{64}$/.test(value.guestImportDigest)))
+      || typeof value.journalRaw !== 'string' || !journalNormalisationIsLossless(value.journalRaw)) return null;
+    return { version: 2, legacyDigest: value.legacyDigest, journalRaw: value.journalRaw,
+      ...(typeof value.guestImportDigest === 'string' ? { guestImportDigest: value.guestImportDigest } : {}) };
+  } catch { return null; }
+}
+
+export type GuestJournalCopyResult =
+  | { readonly status: 'nothing-to-copy' }
+  | { readonly status: 'copied'; readonly count: number }
+  | { readonly status: 'already-copied' }
+  | { readonly status: 'held'; readonly reason: 'context-changed' | 'lock-unavailable' | 'invalid-guest'
+      | 'guest-claimed' | 'claimed-source-missing' | 'account-journal-exists' | 'write-unconfirmed' };
+
+/** Stage an explicit guest handoff after the destination account is mounted.
+ * The claim binds a retry to one account and one exact guest copy. Keep the
+ * guest bytes until old writers can be excluded during cleanup. */
+export async function copyGuestJournalToAccount(locks?: CropPlanStorageLocks | null): Promise<GuestJournalCopyResult> {
+  const changed = { status: 'held', reason: 'context-changed' } as const;
+  const unconfirmed = { status: 'held', reason: 'write-unconfirmed' } as const;
+  try {
+    const context = journalCutoverContext();
+    if (!context?.owner || !isBackendConfigured()) return changed;
+    const writer = journalLocks(locks);
+    if (!writer) return { status: 'held', reason: 'lock-unavailable' };
+    const guestKey = guestAccountLocalStorageKey(STORAGE_KEY);
+    const claimKey = FIELD_JOURNAL_GUEST_CLAIM_KEY;
+    const options = { mode: 'exclusive', ifAvailable: true } as const;
+    // Every transfer takes the common guest lock before its destination lock.
+    return await writer.request<GuestJournalCopyResult>(FIELD_JOURNAL_GUEST_LOCK, options, guestLock => {
+      if (!guestLock) return { status: 'held', reason: 'lock-unavailable' };
+      return writer.request<GuestJournalCopyResult>(journalLockName(context), options, async accountLock => {
+        if (!accountLock) return { status: 'held', reason: 'lock-unavailable' };
+        const before = captureJournalCutover(context);
+        if (!before) return changed;
+        const raw = context.storage.getItem(guestKey);
+        const claim = context.storage.getItem(claimKey);
+        const current = (expectedClaim: string | null) => context.storage.getItem(guestKey) === raw
+          && context.storage.getItem(claimKey) === expectedClaim && sameJournalCutover(before, captureJournalCutover(context));
+        if (!current(claim)) return changed;
+        const rows = readLosslessOlderJournal(raw);
+        if (!rows || rows.some(row => Object.hasOwn(row, 'growerCycleLink'))) return { status: 'held', reason: 'invalid-guest' };
+        if (!rows.length || raw === null) {
+          return claim === null ? { status: 'nothing-to-copy' } : { status: 'held', reason: 'claimed-source-missing' };
+        }
+        if (raw.length > JOURNAL_BYTE_BUDGET) return { status: 'held', reason: 'invalid-guest' };
+        const guestImportDigest = await journalLegacyDigest(raw);
+        const ownerDigest = await journalLegacyDigest(context.canonicalKey);
+        const legacyDigest = await journalLegacyDigest(before.legacy);
+        const nextClaim = JSON.stringify({ version: 1, ownerDigest, guestImportDigest });
+        if (!guestImportDigest || !current(claim)) return changed;
+        if (claim !== null && claim !== nextClaim) return { status: 'held', reason: 'guest-claimed' };
+        if (before.canonical !== null) {
+          const envelope = readJournalEnvelope(before.canonical);
+          if (claim === nextClaim && envelope?.guestImportDigest === guestImportDigest && envelope.legacyDigest === legacyDigest) {
+            return { status: 'already-copied' };
+          }
+          return { status: 'held', reason: 'account-journal-exists' };
+        }
+        if (readLosslessOlderJournal(before.legacy)?.length !== 0) return { status: 'held', reason: 'account-journal-exists' };
+        try {
+          if (claim === null) context.storage.setItem(claimKey, nextClaim);
+          if (!current(nextClaim)) return unconfirmed;
+          const canonical = JSON.stringify({ version: 2, legacyDigest, journalRaw: raw, guestImportDigest } satisfies JournalEnvelope);
+          if (!writeJournalEnvelope(context, before, canonical) || context.storage.getItem(guestKey) !== raw
+            || context.storage.getItem(claimKey) !== nextClaim
+            || !sameJournalCutover({ ...before, canonical }, captureJournalCutover(context))) return unconfirmed;
+          return { status: 'copied', count: rows.length };
+        } catch { return unconfirmed; }
+      });
+    });
+  } catch { return changed; }
+}
+
+async function inspectJournalCutover(context: JournalCutoverContext, snapshot: JournalCutoverSnapshot): Promise<JournalCutoverStatus> {
+  if (snapshot.canonical === null) return journalCutoverHeld('upgrade-required');
+  const envelope = readJournalEnvelope(snapshot.canonical);
+  if (!envelope) return journalCutoverHeld('invalid-canonical');
+  const digest = await journalLegacyDigest(snapshot.legacy);
+  if (!sameJournalCutover(snapshot, captureJournalCutover(context))) return journalCutoverHeld('context-changed');
+  return digest === envelope.legacyDigest ? { status: 'ready' } : journalCutoverHeld('legacy-diverged');
+}
+
+/** Review the versioned journal without exposing either storage key or raw bytes. */
+export async function readJournalCutoverStatus(): Promise<JournalCutoverStatus> {
+  try {
+    const context = journalCutoverContext();
+    const snapshot = context && captureJournalCutover(context);
+    return context && snapshot ? await inspectJournalCutover(context, snapshot) : journalCutoverHeld('context-unavailable');
+  } catch { return journalCutoverHeld('context-unavailable'); }
+}
+
+/** Copy the checked old journal once under its account-scoped writer lock.
+ * The old key stays intact for comparison and recovery. No live caller yet. */
+export async function initialiseJournalCutover(locks?: CropPlanStorageLocks | null): Promise<JournalCutoverStatus> {
+  try {
+    const context = journalCutoverContext();
+    if (!context) return journalCutoverHeld('context-unavailable');
+    const writer = journalLocks(locks);
+    if (!writer) return journalCutoverHeld('lock-unavailable');
+    return await writer.request(journalLockName(context), { mode: 'exclusive', ifAvailable: true }, async lock => {
+      if (!lock) return journalCutoverHeld('lock-unavailable');
+      const before = captureJournalCutover(context);
+      if (!before) return journalCutoverHeld('context-changed');
+      if (before.canonical !== null) return inspectJournalCutover(context, before);
+      const journalRaw = before.legacy ?? '[]';
+      try { if (!journalNormalisationIsLossless(journalRaw)) return journalCutoverHeld('invalid-legacy'); }
+      catch { return journalCutoverHeld('invalid-legacy'); }
+      const legacyDigest = await journalLegacyDigest(before.legacy);
+      const canonical = JSON.stringify({ version: 2, legacyDigest, journalRaw } satisfies JournalEnvelope);
+      if (!sameJournalCutover(before, captureJournalCutover(context))) return journalCutoverHeld('context-changed');
+      return writeJournalEnvelope(context, before, canonical) ? { status: 'ready' } : journalCutoverHeld('write-unconfirmed');
+    });
+  } catch { return journalCutoverHeld('context-unavailable'); }
+}
+
+interface JournalBookBinding {
+  context: JournalCutoverContext;
+  snapshot: JournalCutoverSnapshot;
+  envelope: JournalEnvelope;
+}
+
+type HeldJournalCutover = Extract<JournalCutoverStatus, { status: 'held' }>;
+export type CanonicalJournalView = { readonly status: 'ready'; readonly entries: readonly JournalEntry[] } | HeldJournalCutover;
+const canonicalJournalViews = new WeakMap<CanonicalJournalView, JournalBookBinding>();
+
+function journalBookBindingIsCurrent({ context, snapshot }: JournalBookBinding): boolean {
+  return sameJournalCutover(snapshot, captureJournalCutover(context));
+}
+
+/** A view binds a subsequent action to the exact book the grower saw. */
+export async function readCanonicalJournal(): Promise<CanonicalJournalView> {
+  try {
+    const context = journalCutoverContext();
+    const snapshot = context && captureJournalCutover(context);
+    if (!context || !snapshot) return { status: 'held', reason: 'context-unavailable' };
+    const status = await inspectJournalCutover(context, snapshot);
+    if (status.status === 'held') return status;
+    if (!sameJournalCutover(snapshot, captureJournalCutover(context))) return { status: 'held', reason: 'context-changed' };
+    const envelope = readJournalEnvelope(snapshot.canonical!);
+    if (!envelope) return { status: 'held', reason: 'invalid-canonical' };
+    const view = Object.freeze({ status: 'ready' as const, entries: normaliseJournal(JSON.parse(envelope.journalRaw)) });
+    canonicalJournalViews.set(view, { context, snapshot, envelope });
+    return view;
+  } catch {
+    return { status: 'held', reason: 'context-unavailable' };
+  }
+}
+
+/** Open the checked journal, upgrading a valid older copy on first use. */
+export async function openCanonicalJournal(): Promise<CanonicalJournalView> {
+  const view = await readCanonicalJournal();
+  if (view.status !== 'held' || view.reason !== 'upgrade-required') return view;
+  const cutover = await initialiseJournalCutover();
+  return cutover.status === 'ready' ? readCanonicalJournal() : cutover;
+}
+
+export type CanonicalJournalChange =
+  | { readonly kind: 'add'; readonly input: JournalEntryInput }
+  | { readonly kind: 'edit'; readonly id: string; readonly input: JournalEntryInput }
+  | { readonly kind: 'delete'; readonly id: string }
+  | { readonly kind: 'append-linked'; readonly input: JournalEntryInput; readonly selection: unknown; readonly sourceIsCurrent: () => boolean };
+
+export type CanonicalJournalWriteResult =
+  | { readonly status: 'saved'; readonly noteId: string }
+  | { readonly status: 'held'; readonly reason: 'invalid-note' | 'context-changed' | 'journal-full' | 'lock-unavailable' }
+  | { readonly status: 'unconfirmed' };
+
+/** Apply a single user action to the admitted book. Unchanged rows retain
+ * their stored shape, and a full journal cannot evict notes or photos. */
+export async function writeCanonicalJournal(
+  view: CanonicalJournalView,
+  change: CanonicalJournalChange,
+  locks?: CropPlanStorageLocks | null,
+): Promise<CanonicalJournalWriteResult> {
+  const changed = { status: 'held', reason: 'context-changed' } as const;
+  const invalid = { status: 'held', reason: 'invalid-note' } as const;
+  const full = { status: 'held', reason: 'journal-full' } as const;
+  const binding = canonicalJournalViews.get(view);
+  if (!binding) return changed;
+  const { context, snapshot, envelope } = binding;
+  try {
+    const writer = journalLocks(locks);
+    if (!writer) return { status: 'held', reason: 'lock-unavailable' };
+    return await writer.request<CanonicalJournalWriteResult>(journalLockName(context), { mode: 'exclusive', ifAvailable: true }, lock => {
+      if (!lock) return { status: 'held', reason: 'lock-unavailable' };
+      const current = () => canonicalJournalViews.get(view) === binding && journalBookBindingIsCurrent(binding);
+      if (!current()) return changed;
+      const rows: JournalEntry[] = JSON.parse(envelope.journalRaw);
+      let noteId: string;
+      if (change.kind === 'delete' || change.kind === 'edit') {
+        const index = rows.findIndex(row => row.id === change.id);
+        if (index < 0) return changed;
+        noteId = rows[index].id;
+        if (change.kind === 'delete') rows.splice(index, 1);
+        else {
+          const input = explicitlyDatedJournalInput(change.input);
+          if (!input) return invalid;
+          const edited = editJournalEntry(rows[index], input);
+          if ((!edited.title && !edited.notes)
+            || (Object.hasOwn(rows[index], 'growerCycleLink') && rows[index].bedId !== edited.bedId)) return invalid;
+          rows[index] = edited;
+        }
+      } else {
+        if (change.kind === 'append-linked' && !change.sourceIsCurrent()) return changed;
+        const input = explicitlyDatedJournalInput(change.input);
+        if (!input) return invalid;
+        const note = change.kind === 'append-linked' ? createLinkedJournalEntry(input, change.selection) : createJournalEntry(input);
+        if (!note || (!note.title && !note.notes)) return invalid;
+        if (rows.length >= MAX_ENTRIES || rows.some(row => row.id === note.id)) return full;
+        noteId = note.id;
+        rows.push(note);
+      }
+      const journalRaw = JSON.stringify(rows);
+      if (journalRaw.length > JOURNAL_BYTE_BUDGET) return full;
+      if (!journalNormalisationIsLossless(journalRaw)) return invalid;
+      const canonical = JSON.stringify({ ...envelope, journalRaw });
+      if ((change.kind === 'append-linked' && !change.sourceIsCurrent()) || !current()) return changed;
+      canonicalJournalViews.delete(view);
+      if (!writeJournalEnvelope(context, snapshot, canonical)) return { status: 'unconfirmed' };
+      try { window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT)); }
+      catch { /* The confirmed write survives a notification error. */ }
+      return { status: 'saved', noteId };
+    });
+  } catch {
+    return changed;
+  }
+}
+
+export interface JournalLegacyReview {
+  readonly currentCount: number;
+  /** Null means the older copy could not be read losslessly. */
+  readonly olderCount: number | null;
+}
+
+const journalLegacyReviews = new WeakMap<JournalLegacyReview, JournalBookBinding>();
+
+function readLosslessOlderJournal(raw: string | null): JournalEntry[] | null {
+  try {
+    if (raw === null) return [];
+    return journalNormalisationIsLossless(raw) ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function olderOnlyJournalNotes(binding: JournalBookBinding): JournalEntry[] {
+  const older = readLosslessOlderJournal(binding.snapshot.legacy);
+  if (!older) return [];
+  const current: JournalEntry[] = JSON.parse(binding.envelope.journalRaw);
+  const currentIds = new Set(current.map(row => row.id));
+  // A stored link from the older book does not establish current membership.
+  return older.filter(row => !currentIds.has(row.id) && !Object.hasOwn(row, 'growerCycleLink'));
+}
+
+/** Open a review for these exact two copies. The review carries no account
+ * key, journal bytes or write permission outside this storage module. */
+export async function readJournalLegacyReview(): Promise<JournalLegacyReview | null> {
+  try {
+    const context = journalCutoverContext();
+    const snapshot = context && captureJournalCutover(context);
+    if (!context || !snapshot || snapshot.canonical === null) return null;
+    const envelope = readJournalEnvelope(snapshot.canonical);
+    if (!envelope || (await journalLegacyDigest(snapshot.legacy)) === envelope.legacyDigest) return null;
+    const binding = { context, snapshot, envelope };
+    if (!journalBookBindingIsCurrent(binding)) return null;
+    const olderCount = readLosslessOlderJournal(snapshot.legacy)?.length ?? null;
+    const review = Object.freeze({ currentCount: JSON.parse(envelope.journalRaw).length, olderCount });
+    journalLegacyReviews.set(review, binding);
+    return review;
+  } catch { return null; }
+}
+
+/** Show older-only notes for explicit selection, without photos or link data. */
+export function readJournalLegacyCandidates(review: JournalLegacyReview): readonly Pick<JournalEntry, 'id' | 'date' | 'title' | 'notes'>[] | null {
+  try {
+    const binding = journalLegacyReviews.get(review);
+    if (!binding || !journalBookBindingIsCurrent(binding)) return null;
+    return sortJournal(olderOnlyJournalNotes(binding)).map(({ id, date, title, notes }) => ({ id, date, title, notes }));
+  } catch { return null; }
+}
+
+/** Private local recovery file. Keep both exact copies, including a malformed
+ * older copy. Ordinary CSV, HTML and reports still omit private link fields. */
+export function exportJournalLegacyReview(review: JournalLegacyReview): { filename: 'journal-copies.json'; json: string } | null {
+  try {
+    const binding = journalLegacyReviews.get(review);
+    if (!binding || !journalBookBindingIsCurrent(binding)) return null;
+    return { filename: 'journal-copies.json', json: JSON.stringify({
+      exportVersion: 1,
+      currentJournalRaw: binding.envelope.journalRaw,
+      olderJournalRaw: binding.snapshot.legacy,
+    }, null, 2) + '\n' };
+  } catch { return null; }
+}
+
+export type JournalLegacyResolution =
+  | { readonly status: 'kept' }
+  | { readonly status: 'recovered'; readonly count: number }
+  | { readonly status: 'held'; readonly reason: 'context-changed' | 'lock-unavailable' | 'invalid-selection' | 'journal-full' }
+  | { readonly status: 'unconfirmed' };
+
+/** Acknowledge the reviewed older copy. Neither journal's entries are
+ * overwritten. A later legacy edit will require another explicit review. */
+export function keepCurrentJournalAfterLegacyReview(
+  review: JournalLegacyReview,
+  locks?: CropPlanStorageLocks | null,
+): Promise<JournalLegacyResolution> {
+  return resolveJournalLegacyReview(review, null, locks);
+}
+
+/** Recover selected older-only notes. Same-ID edits stay in the backup for
+ * manual review, and selection never revives an older link. */
+export function recoverJournalLegacyNotes(
+  review: JournalLegacyReview,
+  selectedIds: readonly string[],
+  locks?: CropPlanStorageLocks | null,
+): Promise<JournalLegacyResolution> {
+  const selection = new Set(selectedIds);
+  if (!selection.size || selection.size !== selectedIds.length) {
+    return Promise.resolve({ status: 'held', reason: 'invalid-selection' });
+  }
+  return resolveJournalLegacyReview(review, selection, locks);
+}
+
+async function resolveJournalLegacyReview(
+  review: JournalLegacyReview,
+  selection: ReadonlySet<string> | null,
+  locks?: CropPlanStorageLocks | null,
+): Promise<JournalLegacyResolution> {
+  const changed = { status: 'held', reason: 'context-changed' } as const;
+  const binding = journalLegacyReviews.get(review);
+  if (!binding) return changed;
+  const { context, snapshot, envelope } = binding;
+  const current = () => journalLegacyReviews.get(review) === binding && journalBookBindingIsCurrent(binding);
+  try {
+    if (!current()) return changed;
+    const writer = journalLocks(locks);
+    if (!writer) return { status: 'held', reason: 'lock-unavailable' };
+    return await writer.request<JournalLegacyResolution>(journalLockName(context), { mode: 'exclusive', ifAvailable: true }, async lock => {
+      if (!lock) return { status: 'held', reason: 'lock-unavailable' };
+      if (!current()) return changed;
+      let journalRaw = envelope.journalRaw;
+      if (selection) {
+        const selected = olderOnlyJournalNotes(binding).filter(row => selection.has(row.id));
+        if (selected.length !== selection.size) return { status: 'held', reason: 'invalid-selection' };
+        const currentRows: JournalEntry[] = JSON.parse(journalRaw);
+        if (currentRows.length + selected.length > MAX_ENTRIES) return { status: 'held', reason: 'journal-full' };
+        journalRaw = JSON.stringify([...currentRows, ...selected]);
+        if (journalRaw.length > JOURNAL_BYTE_BUDGET) return { status: 'held', reason: 'journal-full' };
+      }
+      const legacyDigest = await journalLegacyDigest(snapshot.legacy);
+      if (!current() || legacyDigest === envelope.legacyDigest) return changed;
+      const canonical = JSON.stringify({ ...envelope, legacyDigest, journalRaw });
+      journalLegacyReviews.delete(review);
+      if (!writeJournalEnvelope(context, snapshot, canonical)) return { status: 'unconfirmed' };
+      try { window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT)); }
+      catch { /* The confirmed acknowledgement survives a notification error. */ }
+      return selection ? { status: 'recovered', count: selection.size } : { status: 'kept' };
+    });
+  } catch { return changed; }
 }

@@ -9,6 +9,7 @@ export interface JournalExportOptions {
   generatedAt?: string;
   selection?: string;
   includePhotos?: boolean;
+  contextCurrent?: () => boolean;
 }
 
 export function csvCell(value: string | number): string {
@@ -68,9 +69,9 @@ ${articles || `<p>${html(t('exportEmpty'))}</p>`}
 }
 
 export function downloadJournalCsv(entries: JournalEntry[], options: JournalExportOptions = {}): Promise<FileDelivery> {
-  return deliverFile(new Blob([buildJournalCsv(entries, options)], { type: 'text/csv;charset=utf-8' }), 'ImbewuField-journal.csv', farmMemoryText(options.lang ?? 'en', 'exportShareTitle'));
+  return deliverFile(new Blob([buildJournalCsv(entries, options)], { type: 'text/csv;charset=utf-8' }), 'ImbewuField-journal.csv', farmMemoryText(options.lang ?? 'en', 'exportShareTitle'), options.contextCurrent);
 }
 
 export function downloadJournalHtml(entries: JournalEntry[], options: JournalExportOptions = {}): Promise<FileDelivery> {
-  return deliverFile(new Blob([buildJournalHtml(entries, options)], { type: 'text/html;charset=utf-8' }), 'ImbewuField-journal.html', farmMemoryText(options.lang ?? 'en', 'exportPrintShareTitle'));
+  return deliverFile(new Blob([buildJournalHtml(entries, options)], { type: 'text/html;charset=utf-8' }), 'ImbewuField-journal.html', farmMemoryText(options.lang ?? 'en', 'exportPrintShareTitle'), options.contextCurrent);
 }

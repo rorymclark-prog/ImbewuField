@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { CROPS } from '../lib/crop-catalog.ts';
-import { buildCropBoardTasks, buildGrowerBoardTasks, buildTaskIcs, resolveTaskDate, resolveGrowerTaskIdentities } from '../lib/task-board.ts';
+import { buildCropBoardTasks, buildGrowerBoardTasks, buildTaskIcs, getGrowerTaskJournalLink, resolveTaskDate, resolveGrowerTaskIdentities } from '../lib/task-board.ts';
 import { resolveAbsoluteTaskDate } from '../lib/crop-calendar-ics.ts';
 import { taskHarvestHref, taskJournalHref } from '../lib/task-record-link.ts';
 import { createGrowerCyclePlanting, type GrowerCycleContext } from '../lib/international/grower-cycle.ts';
@@ -210,4 +210,23 @@ test('own task translations fall back to explicit English estimates, and exact-d
   for (const line of text.split('\r\n')) assert.ok(Buffer.byteLength(line) <= 75);
   const unlabelled = buildGrowerBoardTasks([row], [{ ...context, beds: [{ ...bed, label: '' }] }], now, new Set());
   assert.ok(unlabelled.tasks.every(task => task.bedLabel === 'Measured bed' && !task.subtitle.includes(bed.id)));
+});
+
+
+test('a dated work task keeps its journal identity private and attached only to the exact task', () => {
+  const { row } = fixture();
+  const result = simpleEvents([row]);
+  const task = result.tasks[0];
+  const link = getGrowerTaskJournalLink(task);
+  assert.deepEqual(link, { version: 1, plantingId: row.id, cycleId: row.growerCycle.cycleId, bedId: bed.id, scope });
+  assert.ok(Object.isFrozen(link));
+  assert.ok(Object.isFrozen(link!.scope));
+  assert.equal(getGrowerTaskJournalLink({ ...task }), null);
+  assert.equal(getGrowerTaskJournalLink({ ...task, kind: 'survey' }), null);
+  assert.equal(taskJournalHref(task), null);
+  for (const output of [JSON.stringify(task), buildTaskIcs(task, now)]) {
+    assert.ok(!output.includes(row.id));
+    assert.ok(!output.includes('site:0.00000,0.00000'));
+  }
+  assert.equal(simpleEvents([row, { id: row.id }]).tasks.length, 0);
 });

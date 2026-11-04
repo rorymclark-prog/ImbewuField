@@ -7,13 +7,14 @@ import * as journal from '../lib/field-journal.ts';
 import * as view from '../lib/journal-view.ts';
 import * as taskLinks from '../lib/task-record-link.ts';
 import * as copy from '../lib/farm-memory-copy.ts';
+import * as journalLinks from '../lib/international/grower-field-note-link.ts';
 
 const require = createRequire(import.meta.url);
 const css = new Proxy({}, { get: (_target, key) => key === '__esModule' ? false : String(key) });
 
 // Exercise the shipped component handlers and effects. Only browser/framework
 // boundaries are replaced; parsing, filtering and journal entry creation stay real.
-function component(path: string, dependencies: Record<string, unknown>): React.ComponentType<any> {
+function component(path: string, dependencies: Record<string, unknown>, exportName = 'default'): React.ComponentType<any> {
   const source = readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
   const javascript = ts.transpileModule(source, { compilerOptions: {
     module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022,
@@ -25,27 +26,38 @@ function component(path: string, dependencies: Record<string, unknown>): React.C
     if (name.endsWith('.module.css')) return css;
     return require(name);
   }, module, module.exports);
-  return module.exports.default;
+  return module.exports[exportName];
 }
 
-export async function mountJournal(options: { url?: string; entries?: journal.JournalEntry[]; simple?: boolean; failSave?: boolean; beds?: Array<{ id: string; label: string }>; lang?: string; delivery?: 'downloaded' | 'shared' | 'cancelled'; exportError?: boolean } = {}) {
+type CanonicalJournalBoundary = Pick<typeof journal, 'readCanonicalJournal' | 'openCanonicalJournal' | 'writeCanonicalJournal'>;
+type LinkSources = ReturnType<typeof import('../components/crops/useGrowerOperations.ts').useGrowerOperations>;
+
+type ExportDelivery = 'downloaded' | 'shared' | 'cancelled';
+
+export async function mountJournal(options: { url?: string; entries?: journal.JournalEntry[]; simple?: boolean; failSave?: boolean; beds?: Array<{ id: string; label: string }>; lang?: string; delivery?: ExportDelivery; exportError?: boolean; deliverExport?: () => Promise<ExportDelivery>; canonical?: CanonicalJournalBoundary; linkSources?: LinkSources } = {}) {
   let stored = options.entries ?? [];
   const writes: journal.JournalEntry[][] = [];
   const exports: Array<{ format: string; entries: journal.JournalEntry[]; options: Record<string, unknown> }> = [];
   const historyScrolls: ScrollIntoViewOptions[] = [];
+  const checkedLinks: boolean[] = [];
+  const inactiveLinks: LinkSources = { status: 'loading', book: null, contexts: [], heldSources: [],
+    refresh: async () => {}, checkCurrent: async () => false, isCurrent: () => false };
   const originalWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
   let url = new URL(options.url ?? 'https://farm.example/journal');
   const location = { get href() { return url.href; } };
   const router = { replace: (target: string) => { url = new URL(target, url); } };
-  Object.defineProperty(globalThis, 'window', { configurable: true, value: {
-    location, addEventListener: () => {}, removeEventListener: () => {},
+  const browser = Object.assign(new EventTarget(), {
+    location,
+    localStorage: {},
+    sessionStorage: { getItem: () => null },
     history: { state: {}, replaceState: (_state: unknown, _title: string, target: string) => { url = new URL(target, url); } },
-  } });
+  });
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: browser });
   const dependencies: Record<string, unknown> = {
     'next/navigation': { useRouter: () => router },
     '@/lib/i18n': { useLanguage: () => ({ lang: options.lang ?? 'en', t: (key: string) => key }) },
     '@/lib/app-level': { useAppLevel: () => options.simple ? 'simple' : 'full' },
-    '@/lib/field-journal': { ...journal, loadJournal: () => stored, saveJournal: (entries: journal.JournalEntry[]) => {
+    '@/lib/field-journal': { ...journal, ...options.canonical, loadJournal: () => stored, saveJournal: (entries: journal.JournalEntry[]) => {
       writes.push(entries);
       if (!options.failSave) stored = entries;
       return { ok: !options.failSave, entries, trimmed: false };
@@ -61,10 +73,18 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
     '@/lib/farm-memory-copy': copy,
     '@/components/LanguageDraftNote': { __esModule: true, default: ({ lang }: { lang: string }) => lang === 'zu' ? React.createElement('p', { role: 'note', lang }, copy.farmMemoryText(lang, 'draftNotice')) : null },
     '@/lib/task-record-link': taskLinks,
-    '@/lib/sample-mode': { isSampleMode: () => false },
+    '@/lib/sample-mode': { isSampleMode: () => false, SAMPLE_MODE_EVENT: 'imbewu-sample-mode-changed' },
+    '@/lib/account-local-storage': { readAccountLocalSampleState: () => false, FIELD_JOURNAL_LEGACY_KEY: 'imbewu_field_journal_v1', FIELD_JOURNAL_CANONICAL_KEY: 'imbewu_field_journal_v2' },
+    '@/lib/firebase/init': { isBackendConfigured: () => !options.canonical },
+    '@/lib/file-delivery': { downloadFile: () => 'downloaded' },
+    '@/components/crops/useGrowerOperations': { useGrowerOperations(enabled: boolean) {
+      checkedLinks.push(enabled);
+      return options.linkSources ?? inactiveLinks;
+    } },
+    '@/lib/international/grower-field-note-link': journalLinks,
     '@/lib/journal-export': {
-      downloadJournalCsv: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'csv', entries, options: exportOptions }); return options.delivery ?? 'downloaded'; },
-      downloadJournalHtml: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'html', entries, options: exportOptions }); return options.delivery ?? 'downloaded'; },
+      downloadJournalCsv: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'csv', entries, options: exportOptions }); return options.deliverExport?.() ?? options.delivery ?? 'downloaded'; },
+      downloadJournalHtml: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'html', entries, options: exportOptions }); return options.deliverExport?.() ?? options.delivery ?? 'downloaded'; },
     },
     '@/lib/use-escape-close': { useEscapeClose: () => {} },
     '@/lib/use-dialog-focus': { useDialogFocus: () => {} },
@@ -74,6 +94,9 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
   };
   const Sheet = component('components/journal/JournalEntrySheet.tsx', dependencies);
   dependencies['./JournalEntrySheet'] = { __esModule: true, default: Sheet };
+  dependencies['./JournalLegacyReviewPanel'] = {
+    JournalLegacyReviewPanel: component('components/journal/JournalLegacyReviewPanel.tsx', dependencies, 'JournalLegacyReviewPanel'),
+  };
   const FieldJournal = component('components/journal/FieldJournal.tsx', dependencies);
   let renderer!: ReactTestRenderer;
   try {
@@ -88,7 +111,7 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
     throw error;
   }
   return {
-    renderer, Sheet, writes, exports, historyScrolls,
+    renderer, Sheet, writes, exports, historyScrolls, browser, checkedLinks,
     get url() { return url; },
     get stored() { return stored; },
     async close() {

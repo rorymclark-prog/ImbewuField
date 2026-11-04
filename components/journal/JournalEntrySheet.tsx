@@ -10,6 +10,7 @@ import {
   MAX_NOTES_LEN,
   MAX_PHOTOS_PER_ENTRY,
   MAX_TITLE_LEN,
+  isJournalDate,
   todayISODate,
   type JournalCategory,
   type JournalEntry,
@@ -39,17 +40,22 @@ interface Props {
   onClose: () => void;
   /** A save that failed to persist (e.g. storage full) — shown without closing the sheet. */
   error?: string | null;
+  requireObservationDate?: boolean;
+  linkedBedLabel?: string;
+  saving?: boolean;
+  saveBlocked?: boolean;
 }
 
 /* Bottom sheet, phone-first: 92dvh cap, 22px top radius, safe-area padding —
    the same chrome components/EvidenceSheet.tsx uses, so the journal does not
    introduce a second modal idiom. */
-export default function JournalEntrySheet({ entry, initialDraft, beds, crops, onSave, onDelete, onClose, error }: Props) {
+export default function JournalEntrySheet({ entry, initialDraft, beds, crops, onSave, onDelete, onClose, error,
+  requireObservationDate = false, linkedBedLabel, saving = false, saveBlocked = false }: Props) {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
   const simple = useAppLevel() === 'simple';
-  const [date, setDate] = useState(entry?.date ?? initialDraft?.date ?? todayISODate());
+  const [date, setDate] = useState(entry?.date ?? initialDraft?.date ?? (requireObservationDate ? '' : todayISODate()));
   const [title, setTitle] = useState(entry?.title ?? initialDraft?.title ?? '');
   const [notes, setNotes] = useState(entry?.notes ?? initialDraft?.notes ?? '');
   const [category, setCategory] = useState<JournalCategory>(entry?.category ?? initialDraft?.category ?? 'planting');
@@ -67,12 +73,14 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
   const [confirmDelete, setConfirmDelete] = useState(false);
   const confirmTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEscapeClose(true, onClose);
+  // Keep the shared listener mounted so Escape uses the latest save state.
+  const closeOnEscape = () => { if (!saving) onClose(); };
+  useEscapeClose(true, closeOnEscape);
 
   useEffect(() => () => { if (confirmTimer.current) clearTimeout(confirmTimer.current); }, []);
 
   function requestDelete() {
-    if (!entry || !onDelete) return;
+    if (!entry || !onDelete || saving) return;
     if (confirmTimer.current) clearTimeout(confirmTimer.current);
     if (confirmDelete) {
       setConfirmDelete(false);
@@ -104,36 +112,37 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
     if (fileRef.current) fileRef.current.value = '';
   }
 
+  const canSave = !busy && !saving && !saveBlocked && Boolean(title.trim() || notes.trim()) && (!requireObservationDate || isJournalDate(date));
+
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title.trim() && !notes.trim()) return;
+    if (!canSave) return;
     const bed = beds.find((b) => b.id === bedId);
     onSave({
       date,
       title: title.trim(),
       notes: notes.trim(),
       category,
-      bedId: bedId || null,
+      bedId: linkedBedLabel === undefined ? bedId || null : null,
       // An old observation keeps the name it had then; the picker changes both
       // fields explicitly when the farmer chooses a different bed.
-      bedLabel: bedLabel.trim() || bed?.label || null,
+      bedLabel: linkedBedLabel === undefined ? bedLabel.trim() || bed?.label || null : null,
       cropName: cropName.trim() || null,
       photos,
     });
   }
 
-  const canSave = Boolean(title.trim() || notes.trim());
-
   return (
     <div
       className={`fixed inset-0 z-50 flex items-end justify-center ${motion.overlay}`}
       style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(3px)' }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      onClick={(e) => { if (!saving && e.target === e.currentTarget) onClose(); }}
     >
       <form
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
+        aria-busy={saving}
         aria-label={entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
         onSubmit={submit}
         className={`w-full max-w-md font-sans overflow-y-auto ${motion.sheet}`}
@@ -165,6 +174,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
             <button
               type="button"
               onClick={onClose}
+              disabled={saving}
               aria-label={ui('Close', 'Vala')}
               style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, minWidth: 44, minHeight: 44, color: 'var(--text-muted)' }}
             >
@@ -173,7 +183,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
           </div>
         </div>
 
-        <div style={{ padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <fieldset disabled={saving} style={{ margin: 0, border: 0, minWidth: 0, padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
           {initialDraft && !entry && (
             <p role="note" lang={isZulu ? 'zu' : 'en'} style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
               {farmMemoryText(lang, 'taskDraftNotice')}
@@ -218,11 +228,12 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
           {/* Date defaults to today (or the entry's own date on edit) whether or not this
               field is shown — Simple keeps that default instead of asking for it. */}
-          {(!simple || initialDraft) && (
+          {(!simple || initialDraft || requireObservationDate) && (
             <div>
               <Label>{ui('Date', 'Usuku')}</Label>
               <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 type="date"
+                required={requireObservationDate}
                 aria-label={ui('Date', 'Usuku')}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
@@ -259,11 +270,13 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
           {/* Bed/plot and crop — extra fields, left unlinked/blank by default in both modes,
               so collapsing them in Simple never changes what gets saved. */}
-          {(!simple || initialDraft) && (
+          {(!simple || initialDraft || linkedBedLabel !== undefined) && (
             <div style={{ display: 'flex', gap: 10 }}>
               <div style={{ flex: 1 }}>
                 <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
-                {beds.length > 0 ? (
+                {linkedBedLabel !== undefined ? (
+                  <p style={{ ...inputStyle, margin: 0 }}>{linkedBedLabel}</p>
+                ) : beds.length > 0 ? (
                   <select className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1" aria-label={ui('Bed / plot', 'Umbhede / isiqephu')} value={bedId} onChange={(e) => {
                     setBedId(e.target.value);
                     setBedLabel(beds.find((bed) => bed.id === e.target.value)?.label ?? '');
@@ -353,10 +366,10 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
               onChange={(e) => handleFiles(e.target.files)}
             />
           </div>
-        </div>
+        </fieldset>
 
         {error && (
-          <div style={{
+          <div role="alert" style={{
             margin: '16px 20px 0', padding: '10px 13px', borderRadius: 11,
             background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', border: '1px solid color-mix(in srgb, var(--gold) 30%, transparent)',
             font: '500 12.5px/1.45 var(--font-sans), sans-serif', color: 'var(--gold-dim)',
@@ -371,6 +384,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
             <button
               type="button"
               onClick={requestDelete}
+              disabled={saving}
               aria-label={confirmDelete ? ui('Confirm delete', 'Qinisekisa ukususa') : ui('Delete', 'Susa')}
               style={confirmDelete ? {
                 minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
@@ -388,11 +402,11 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
           )}
           <button
             type="submit"
-            disabled={!canSave || busy}
+            disabled={!canSave}
             style={{
               flex: 1, minHeight: 48, borderRadius: 12, border: 'none',
-              cursor: canSave && !busy ? 'pointer' : 'not-allowed',
-              background: canSave && !busy ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--color-forest-800) 25%, transparent)',
+              cursor: canSave ? 'pointer' : 'not-allowed',
+              background: canSave ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--color-forest-800) 25%, transparent)',
               color: 'var(--on-forest-800)', font: '700 15px/1 var(--font-sans), sans-serif',
             }}
           >

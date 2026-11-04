@@ -55,6 +55,7 @@ function planner() {
     setPlanStorageRevision(value: any) { state.planStorageRevision = typeof value === 'function' ? value(state.planStorageRevision) : value; },
     setTimeout(action: () => void) { const id = ++timerId; timers.set(id, action); return id; }, clearTimeout(id: number) { timers.delete(id); },
     CROP_PLAN_CHANGED_EVENT: crop.CROP_PLAN_CHANGED_EVENT, CROP_PLAN_STORAGE_EVENT: storage.CROP_PLAN_STORAGE_EVENT,
+    SAMPLE_MODE_EVENT: samples.SAMPLE_MODE_EVENT,
     currentPlanningScopeAllowed: () => true, pushPlanHistory() { ++state.history; }, genId: () => `synthetic-row-${state.history}`,
     hasOwnRecords: false, beds: [{ id: 'fixture-bed', areaM2: 1 }], planningScopeKey: 'same-synthetic-scope', suggestionScopeRef: { current: null },
     autoPhase: 'idle', autoResult: null, idealMeta: null, autoGenerating: false, pickerBedId: null, pickerCrop: null, activePlanting: null,

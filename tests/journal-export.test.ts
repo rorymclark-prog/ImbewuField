@@ -1,9 +1,36 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import type { JournalEntry } from '@/lib/field-journal';
-import { buildJournalCsv, buildJournalHtml } from '@/lib/journal-export';
+import { buildJournalCsv, buildJournalHtml, downloadJournalCsv, downloadJournalHtml } from '@/lib/journal-export';
 import { filterJournalEntries } from '@/lib/journal-view';
 import { FARM_MEMORY_ZU, farmMemoryCategoryLabel } from '@/lib/farm-memory-copy';
+
+async function browserHarness(run: (state: { shares: number; downloads: number; share: () => Promise<void> }) => Promise<void>) {
+  const state = { shares: 0, downloads: 0, share: async () => {} };
+  const saved = new Map<string, PropertyDescriptor | undefined>();
+  for (const [key, value] of Object.entries({
+    navigator: { canShare: () => true, share: () => { ++state.shares; return state.share(); } },
+    window: { matchMedia: () => ({ matches: true }) },
+    document: { body: { appendChild() {} }, createElement: () => ({ click() { ++state.downloads; }, remove() {} }) },
+    setTimeout: () => 0,
+  })) {
+    saved.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
+    Object.defineProperty(globalThis, key, { configurable: true, value });
+  }
+  const create = URL.createObjectURL, revoke = URL.revokeObjectURL;
+  URL.createObjectURL = () => 'blob:synthetic-journal-fixture';
+  URL.revokeObjectURL = () => {};
+  try {
+    await run(state);
+  } finally {
+    URL.createObjectURL = create;
+    URL.revokeObjectURL = revoke;
+    for (const [key, descriptor] of saved) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
+      else Reflect.deleteProperty(globalThis, key);
+    }
+  }
+}
 
 function entry(id: string, overrides: Partial<JournalEntry> = {}): JournalEntry {
   return { id, date: '2026-10-12', title: 'Checked the bed', notes: 'Leaves recovered.\nChecked again after rain.', category: 'maintenance', bedId: 'bed-1', bedLabel: 'Old bed name', cropName: 'Recorded crop', createdAt: 1, updatedAt: 1, ...overrides };
@@ -157,3 +184,34 @@ test('isiZulu exports keep formula and HTML protections, sample markers and orig
   assert.ok(empty.includes('okungu-0'));
   assert.match(buildJournalHtml([], { lang: 'xh' }), /<html lang="en">/);
 });
+
+test('existing journal copies omit private grower-cycle links and their mapped scope', () => {
+  const row = entry('linked', { growerCycleLink: { version: 1, plantingId: 'private-planting-marker',
+    cycleId: 'private-cycle-marker', bedId: 'bed-1', scope: { kind: 'mapped-site', siteId: 'site:0.00000,0.00000' } } });
+  for (const copy of [buildJournalCsv([row]), buildJournalHtml([row])]) {
+    assert.ok(copy.includes('Checked the bed'));
+    for (const privateValue of ['private-planting-marker', 'private-cycle-marker', 'site:0.00000,0.00000']) {
+      assert.ok(!copy.includes(privateValue));
+    }
+  }
+});
+
+for (const [format, download] of [['CSV', downloadJournalCsv], ['HTML', downloadJournalHtml]] as const) {
+  test(`a ${format} journal export cancels its delayed fallback when the workspace changes`, async () => browserHarness(async state => {
+    const notes = [entry('synthetic-export-note', { title: 'Synthetic note', notes: 'Synthetic observation' })];
+    let current = true;
+    let reject!: (error: Error) => void;
+    state.share = () => new Promise<void>((_resolve, fail) => { reject = fail; });
+    const delivery = download(notes, { contextCurrent: () => current });
+    assert.equal(state.shares, 1);
+    current = false;
+    reject(new Error('Native share unavailable'));
+
+    assert.equal(await delivery, 'cancelled');
+    assert.equal(state.downloads, 0);
+
+    state.share = async () => { throw new Error('Native share unavailable'); };
+    assert.equal(await download(notes, { contextCurrent: () => true }), 'downloaded');
+    assert.equal(state.downloads, 1);
+  }));
+}

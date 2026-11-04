@@ -16,19 +16,21 @@ const withdrawn = (): GrowerOperationsSources => ({ status: 'held', book: null, 
 
 /** Private source receipts stay in their authority's WeakMap. A ready object is
  * withdrawn before rereading so old tasks cannot look current during I/O. */
-export function useGrowerOperations() {
+export function useGrowerOperations(enabled = true) {
   const [result, setResult] = useState<GrowerOperationsSources | Loading>(loading);
   const live = useRef(result); live.current = result;
+  const active = useRef(enabled); active.current = enabled;
   const epoch = useRef(0), mounted = useRef(false);
   async function refresh() {
-    if (!mounted.current) return;
+    if (!mounted.current || !active.current) return;
     const turn = ++epoch.current;
     live.current = loading(); setResult(live.current);
-    const next = await loadGrowerOperationsSources({ isCurrent: () => mounted.current && epoch.current === turn });
-    if (!mounted.current || epoch.current !== turn) return;
+    const next = await loadGrowerOperationsSources({ isCurrent: () => mounted.current && active.current && epoch.current === turn });
+    if (!mounted.current || !active.current || epoch.current !== turn) return;
     live.current = next; setResult(next);
   }
   useEffect(() => {
+    if (!enabled) return;
     mounted.current = true;
     const changed = () => { void refresh(); };
     const events = [CROP_PLAN_CHANGED_EVENT, DESIGN_CANVAS_CHANGED_EVENT, 'permamap-places-changed', 'storage', 'focus', SAMPLE_MODE_EVENT];
@@ -47,17 +49,17 @@ export function useGrowerOperations() {
     } catch { subscribed = false; live.current = withdrawn(); setResult(live.current); }
     if (subscribed) void refresh();
     return () => { mounted.current = false; epoch.current++; events.forEach(event => window.removeEventListener(event, changed)); unsubscribe?.(); };
-  }, []);
-  function isCurrent(): boolean { return mounted.current && live.current.status === 'ready' && isGrowerOperationsCurrent(live.current); }
+  }, [enabled]);
+  function isCurrent(): boolean { return mounted.current && active.current && live.current.status === 'ready' && isGrowerOperationsCurrent(live.current); }
   async function checkCurrent(): Promise<boolean> {
     const previous = live.current, turn = epoch.current;
-    if (!mounted.current || previous.status !== 'ready') return false;
-    const valid = await checkGrowerOperationsCurrent(previous, { isCurrent: () => mounted.current && epoch.current === turn && live.current === previous });
-    if (!mounted.current || epoch.current !== turn || live.current !== previous) return false;
+    if (!mounted.current || !active.current || previous.status !== 'ready') return false;
+    const valid = await checkGrowerOperationsCurrent(previous, { isCurrent: () => mounted.current && active.current && epoch.current === turn && live.current === previous });
+    if (!mounted.current || !active.current || epoch.current !== turn || live.current !== previous) return false;
     if (!valid) { epoch.current++; live.current = withdrawn(); setResult(live.current); }
     return valid;
   }
   // Parent UI uses this object's identity to withdraw old task actions. An
   // unrelated parent render must not masquerade as a new source snapshot.
-  return useMemo(() => ({ ...result, refresh, checkCurrent, isCurrent }), [result]);
+  return useMemo(() => ({ ...(enabled ? result : loading()), refresh, checkCurrent, isCurrent }), [enabled, result]);
 }

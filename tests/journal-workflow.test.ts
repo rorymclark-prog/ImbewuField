@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { act } from 'react-test-renderer';
+import React from 'react';
+import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import * as journal from '../lib/field-journal.ts';
 import { mountJournal as mount, renderedText as text, renderedButton as button, journalFixture as entry } from './journal-workflow-renderer.ts';
 
@@ -91,5 +92,115 @@ test('journal exports contain exactly the searched and date-filtered entries, an
     assert.equal(button(app.renderer, 'CSV').props.disabled, true);
     assert.equal(button(app.renderer, 'Printable copy').props.disabled, true);
     assert.match(text(app.renderer.root), /No matching entries/);
+  } finally { await app.close(); }
+});
+
+test('the journal gives a pending copy the context of its displayed notes and withdraws it on workspace change', async () => {
+  let finish!: (result: 'downloaded') => void;
+  const app = await mount({
+    entries: [entry('synthetic', 'Synthetic note', '2026-03-15', '')],
+    deliverExport: () => new Promise(resolve => { finish = resolve; }),
+  });
+  try {
+    await act(async () => { void button(app.renderer, 'CSV').props.onClick(); });
+    assert.equal(app.exports.length, 1);
+    const current = app.exports[0].options.contextCurrent as () => boolean;
+    assert.equal(current(), true);
+    assert.equal(button(app.renderer, 'CSV').props.disabled, true);
+    await act(async () => { app.browser.dispatchEvent(new Event('imbewu-sample-mode-changed')); });
+    assert.equal(current(), false);
+    assert.equal(button(app.renderer, 'CSV').props.disabled, false);
+    await act(async () => { finish('downloaded'); });
+    assert.doesNotMatch(text(app.renderer.root), /CSV downloaded/);
+  } finally { await app.close(); }
+});
+
+test('a device-only draft stays bound to the copy that opened it, even after a journal refresh', async () => {
+  const original: journal.CanonicalJournalView = { status: 'ready', entries: [] };
+  const newer: journal.CanonicalJournalView = { status: 'ready', entries: [entry('newer', 'Newer note', '2026-11-03', '')] };
+  let current: journal.CanonicalJournalView = { status: 'held', reason: 'upgrade-required' };
+  let copies = 0;
+  const offered: journal.CanonicalJournalView[] = [];
+  const app = await mount({ simple: true, canonical: {
+    readCanonicalJournal: async () => current,
+    openCanonicalJournal: async () => { copies++; current = original; return original; },
+    writeCanonicalJournal: async view => {
+      offered.push(view);
+      return view === current ? { status: 'saved', noteId: 'synthetic' } : { status: 'held', reason: 'context-changed' };
+    },
+  } });
+  try {
+    assert.equal(copies, 1);
+    await act(async () => button(app.renderer, 'Add a note').props.onClick());
+    await act(async () => app.renderer.root.findByType('textarea').props.onChange({ target: { value: 'Keep this draft.' } }));
+    current = newer;
+    await act(async () => { app.browser.dispatchEvent(new Event(journal.JOURNAL_CHANGED_EVENT)); });
+    await act(async () => app.renderer.root.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.deepEqual(offered, [original]);
+    assert.equal(offered[0], original);
+    assert.equal(app.writes.length, 0);
+    assert.equal(app.renderer.root.findByType('textarea').props.value, 'Keep this draft.');
+    assert.match(text(app.renderer.root.findByType(app.Sheet)), /draft is still here/);
+  } finally { await app.close(); }
+});
+
+test('the linked note sheet starts with no date and shows a checked bed without a selector', async () => {
+  const app = await mount({ simple: true });
+  const observations: journal.JournalEntryInput[] = [];
+  let sheet!: ReactTestRenderer;
+  const props = {
+    entry: null, beds: [], crops: [], requireObservationDate: true, linkedBedLabel: 'Checked test bed',
+    onClose() {}, onSave(input: journal.JournalEntryInput) { observations.push(input); },
+  };
+  try {
+    await act(async () => { sheet = create(React.createElement(app.Sheet, props)); });
+    assert.equal(sheet.root.findByProps({ type: 'date' }).props.value, '');
+    assert.equal(sheet.root.findByProps({ type: 'date' }).props.required, true);
+    assert.match(text(sheet.root), /Checked test bed/);
+    assert.equal(sheet.root.findAllByProps({ 'aria-label': 'Bed / plot' }).length, 0);
+    await act(async () => sheet.root.findByType('textarea').props.onChange({ target: { value: 'A real note in this fixture.' } }));
+    await act(async () => sheet.root.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.equal(observations.length, 0);
+    await act(async () => sheet.root.findByProps({ type: 'date' }).props.onChange({ target: { value: '2028-11-22' } }));
+    await act(async () => sheet.root.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.equal(observations.length, 1);
+    assert.equal(observations[0].date, '2028-11-22');
+    assert.equal(observations[0].bedId, null);
+    await act(async () => { sheet.update(React.createElement(app.Sheet, { ...props, saving: true })); });
+    assert.equal(sheet.root.findByType('fieldset').props.disabled, true);
+    assert.equal(sheet.root.findByType('form').props['aria-busy'], true);
+    await act(async () => sheet.root.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.equal(observations.length, 1);
+
+    await act(async () => { sheet.update(React.createElement(app.Sheet, { ...props, saveBlocked: true })); });
+    assert.equal(sheet.root.findByProps({ type: 'submit' }).props.disabled, true);
+    assert.equal(sheet.root.findByProps({ 'aria-label': 'Close' }).props.disabled, false);
+    await act(async () => sheet.root.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.equal(observations.length, 1);
+  } finally {
+    if (sheet) await act(async () => sheet.unmount());
+    await app.close();
+  }
+});
+
+test('a held crop-plan link stays private and leaves the journal note readable', async () => {
+  const marked = { ...entry('marked', 'Authored observation', '2026-11-03', ''), growerCycleLink: { plantingId: 'hidden-plan-id' } };
+  const checked: journal.CanonicalJournalView = { status: 'ready', entries: [marked, entry('ordinary', 'Ordinary note', '2026-11-02', '')] };
+  const app = await mount({ canonical: {
+    readCanonicalJournal: async () => checked,
+    openCanonicalJournal: async () => checked,
+    writeCanonicalJournal: async () => ({ status: 'held', reason: 'context-changed' }),
+  }, linkSources: { status: 'held', book: null, contexts: [], heldSources: [],
+    refresh: async () => {}, checkCurrent: async () => false, isCurrent: () => false } });
+  try {
+    assert.ok(app.checkedLinks.includes(true));
+    const cards = app.renderer.root.findAllByType('article');
+    const authored = cards.find(card => text(card).includes('Authored observation'));
+    const ordinary = cards.find(card => text(card).includes('Ordinary note'));
+    assert.ok(authored && ordinary);
+    assert.match(text(authored), /Crop-plan link needs review/);
+    assert.doesNotMatch(text(ordinary), /Crop-plan link/);
+    assert.doesNotMatch(text(app.renderer.root), /hidden-plan-id|Linked to the checked crop plan/);
+    assert.equal(app.writes.length, 0);
   } finally { await app.close(); }
 });

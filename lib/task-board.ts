@@ -21,6 +21,7 @@ import { hasGrowerCycleMarker, type GrowerCycleContext } from './international/g
 import { projectGrowerCycles, type GrowerCycleEventKind } from './international/grower-cycle-projection';
 import { addGrowerUtcDays, growerPlanningScopeKey } from './international/grower-planning';
 import { resolveAbsoluteTaskDate, escapeIcsText, foldIcsLine } from './crop-calendar-ics';
+import type { GrowerFieldNoteLink } from './international/grower-field-note-link';
 
 // zu-03 (wave 13 audit): the task board was entirely hard-coded English — verbs, the default
 // "Bed {n}" label and "Due this month" — regardless of the farmer's chosen language. lib/i18n.tsx
@@ -306,6 +307,12 @@ const GROWER_VERB_KEY: Record<GrowerCycleEventKind, string> = {
   'picking-end': 'taskGrowerPickingEnd', 'field-clear': 'taskGrowerFieldClear', 'next-entry': 'taskGrowerNextEntry',
 };
 
+const growerTaskJournalLinks = new WeakMap<object, GrowerFieldNoteLink>();
+
+export function getGrowerTaskJournalLink(task: BoardTask): GrowerFieldNoteLink | null {
+  return growerTaskJournalLinks.get(task) ?? null;
+}
+
 function opaqueGrowerTaskDigest(value: string): string {
   // This deterministic 128-bit identifier is not cryptography or anonymisation.
   // Raw persistent IDs need not travel into a calendar. Collisions are held by
@@ -367,12 +374,19 @@ export function buildGrowerBoardTasks(
     return typeof label === 'string' && label.trim() && label !== key ? label : defaultBoardTranslate(key, vars);
   };
   const projectedRows = new Set<number>();
-  const candidates: { rowIndex: number; plantingId: string; kind: GrowerCycleEventKind; task: Omit<BoardTask, 'id' | 'completed'> }[] = [];
+  const candidates: { rowIndex: number; plantingId: string; kind: GrowerCycleEventKind; link: GrowerFieldNoteLink; task: Omit<BoardTask, 'id' | 'completed'> }[] = [];
   for (const matches of byScope.values()) {
     if (matches.length !== 1) continue;
     const context = matches[0];
     for (const cycle of projectGrowerCycles(rows, context).ownCycles) {
       projectedRows.add(cycle.rowIndex);
+      const link: GrowerFieldNoteLink = Object.freeze({
+        version: 1,
+        plantingId: cycle.plantingId,
+        cycleId: cycle.cycleId,
+        bedId: cycle.bedId,
+        scope: cycle.scope,
+      });
       const bed = context.beds.find(bed => bed.id === cycle.bedId)!;
       const bedLabel = typeof bed.label === 'string' && bed.label.trim() ? bed.label : translated('taskGrowerMeasuredBed');
       for (const event of cycle.plannedEvents) {
@@ -380,7 +394,7 @@ export function buildGrowerBoardTasks(
         if (!parts) continue;
         const explanation = event.kind === 'next-entry' ? translated('taskGrowerAvailabilityBoundary')
           : event.endExclusive ? translated('taskGrowerExclusiveBoundary') : null;
-        candidates.push({ rowIndex: cycle.rowIndex, plantingId: cycle.plantingId, kind: event.kind,
+        candidates.push({ rowIndex: cycle.rowIndex, plantingId: cycle.plantingId, kind: event.kind, link,
           task: { kind: 'grower-cycle', growerEventKind: event.kind, dueDate: event.date,
           title: translated(GROWER_VERB_KEY[event.kind], { crop: produceLabel(cycle.cropKey, lang) }),
           subtitle: [boardBedLabel(bedLabel, translated), translated('taskGrowerPlannedEstimate', { date: event.date }), explanation].filter(Boolean).join(' · '),
@@ -394,7 +408,10 @@ export function buildGrowerBoardTasks(
   for (const rowIndex of identities.heldRows) projectedRows.delete(rowIndex);
   const tasks = candidates.flatMap((candidate, index): BoardTask[] => {
     const id = identities.ids[index];
-    return id ? [{ ...candidate.task, id, completed: completedIds.has(id) }] : [];
+    if (!id) return [];
+    const taskObj: BoardTask = { ...candidate.task, id, completed: completedIds.has(id) };
+    growerTaskJournalLinks.set(taskObj, candidate.link);
+    return [taskObj];
   });
   return { tasks: tasks.sort((a, b) => a.dueDate!.localeCompare(b.dueDate!)
     || Object.keys(GROWER_VERB_KEY).indexOf(a.growerEventKind!) - Object.keys(GROWER_VERB_KEY).indexOf(b.growerEventKind!)

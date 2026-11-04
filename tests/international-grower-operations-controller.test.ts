@@ -7,9 +7,9 @@ import { useGrowerOperations, crop, core, local, session, events, probe, bookKey
   cloud, ownRow, store, reset, cleanup, pauseHashes, deferred } from './international-grower-operations-fixture.ts';
 beforeEach(reset); after(cleanup);
 
-function mount() {
-  let latest!: ReturnType<typeof useGrowerOperations>, renderer!: ReactTestRenderer;
-  function Harness() { latest = useGrowerOperations(); return null; }
+function mount(initialEnabled = true) {
+  let latest!: ReturnType<typeof useGrowerOperations>, renderer!: ReactTestRenderer, active = initialEnabled;
+  function Harness() { latest = useGrowerOperations(active); return null; }
   act(() => { renderer = create(React.createElement(Harness)); });
   return { current() { return latest; }, async flush() {
     // WebCrypto completes on the native I/O queue, not a Promise-only flush.
@@ -19,6 +19,7 @@ function mount() {
     }
     assert.notEqual(latest.status, 'loading', 'the real source check must settle');
   }, rerender() { act(() => { renderer.update(React.createElement(Harness)); }); },
+    setEnabled(next: boolean) { active = next; act(() => { renderer.update(React.createElement(Harness)); }); },
     async refresh() { await act(async () => { await latest.refresh(); }); }, dispose() { act(() => { renderer.unmount(); }); } };
 }
 
@@ -114,5 +115,43 @@ test('manual refresh exits loading with held data when actual Firebase initializ
     assert.equal(ui.current().status, 'held'); assert.equal(ui.current().book, null); assert.deepEqual(ui.current().contexts, []);
     assert.equal(ui.current().isCurrent(), false); assert.equal(probe.queries, 0);
     assert.equal(local.writes, writes); assert.equal(JSON.stringify([...local.rows]), before);
+  } finally { ui.dispose(); }
+});
+
+test('opt-in controller disabling attaches no auth listener and withdraws ready sources and action guards when toggled', async () => {
+  const { row } = await ownRow(); store([row]); local.setItem(studioKey(), JSON.stringify(studio()));
+  const ui = mount(false);
+  try {
+    assert.equal(ui.current().status, 'loading');
+    assert.equal(ui.current().book, null);
+    assert.deepEqual(ui.current().contexts, []);
+    assert.equal(ui.current().isCurrent(), false);
+    assert.equal(probe.auth.size, 0);
+
+    await ui.refresh();
+    assert.equal(ui.current().status, 'loading');
+    assert.equal(ui.current().book, null);
+    assert.equal(ui.current().isCurrent(), false);
+    let valid = true; await act(async () => { valid = await ui.current().checkCurrent(); });
+    assert.equal(valid, false);
+
+    ui.setEnabled(true);
+    assert.equal(probe.auth.size, 1);
+    await ui.flush();
+    assert.equal(ui.current().status, 'ready');
+    assert.ok(ui.current().book);
+    assert.equal(ui.current().contexts.length, 1);
+    assert.equal(ui.current().isCurrent(), true);
+    const readyState = ui.current();
+
+    ui.setEnabled(false);
+    assert.equal(probe.auth.size, 0);
+    assert.equal(ui.current().status, 'loading');
+    assert.equal(ui.current().book, null);
+    assert.deepEqual(ui.current().contexts, []);
+    assert.equal(ui.current().isCurrent(), false);
+    assert.equal(readyState.isCurrent(), false);
+    let rechecked = true; await act(async () => { rechecked = await readyState.checkCurrent(); });
+    assert.equal(rechecked, false);
   } finally { ui.dispose(); }
 });

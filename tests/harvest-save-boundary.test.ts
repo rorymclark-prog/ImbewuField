@@ -240,6 +240,7 @@ test('actual mounted shared parent effects deliver cold contexts after asynchron
   Object.assign(c.state,{createNurserySaveAuthority:api.createNurserySaveAuthority,revokeNurserySaveAuthority:api.revokeNurserySaveAuthority,
     createNurserySaveContext:api.createNurserySaveContext,createHarvestSaveContext:api.createHarvestSaveContext,
     CROP_PLAN_CHANGED_EVENT:crop.CROP_PLAN_CHANGED_EVENT,CROP_PLAN_STORAGE_EVENT:storage.CROP_PLAN_STORAGE_EVENT,
+    SAMPLE_MODE_EVENT: samples.SAMPLE_MODE_EVENT,
     planStorageRevision:0,handledPlanStorageRevision:{current:0}});
   const actual=Function('state',`with(state){${effectCode};return {authorityEffect,nurseryEffect,harvestEffect,readinessEffect,listenersEffect};}`)(c.state);
   let renderer!:ReactTestRenderer,observedContext:import('../lib/nursery-save-receipt.ts').HarvestSaveContext|null=null,destination:string|null=null;
