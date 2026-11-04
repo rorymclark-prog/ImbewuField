@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import ts from 'typescript';
 
 import { bearingToUnitVector, deriveSectorModel, labelToBearing } from '../lib/sector.ts';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth } from '../lib/sector-cartography.ts';
@@ -447,19 +448,55 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
     /cropStyleSheetToMap\(hybridInput, mapWidth, mapHeight\)/,
     'the polish stage must send the map column, never the composed Hybrid page',
   );
-  // The archive adds a separate coverage mask even to polished artwork: the model must never
-  // invent landscape beyond the photographed tips. Ordinary house/photo restore is Hybrid-only.
-  assert.match(queue, /(?:let|const) protectMaskDataUrl = kind === 'sector' && !polishStage[\s\S]*?buildProtectMask\([\s\S]*?: undefined;/,
-    'only the Hybrid Sector path may add the ordinary photo/house protect mask');
-  assert.match(queue, /if\(historicalActive && availableHistoricalBaseline\)[\s\S]*?buildHistoricalCoverageMask\(/,
-    'historical no-photo areas need a distinct coverage mask');
-  assert.match(completion, /if \(\(sheet\.key === 'sector' && !isPolishedResult \|\| historicalSource\) && sourceImage && protectMask\)/,
-    'restore only the ordinary Hybrid or an actual historical archive coverage mask');
-  assert.match(completion, /currentMask = sheet\.key === 'sector' && !isPolishedResult \? await buildProtectMask/,
-    'the historical exception must not reintroduce ordinary photo patches on polished artwork');
-  assert.match(completion, /if\(historicalSource\)\{const coverage=await buildHistoricalCoverageMask/);
-  assert.match(completion, /: sheet\.key === 'sector'\s*\n\s*\? await finishSectorRef\.current\(factualModelImage, frozenScene, historicalSource\)/,
-    'both Sector stages recompose app-owned analysis and keep the correct historical source');
+  // Before-works sheets added a second restoration purpose: keeping unphotographed ground
+  // blank, including after polish. The old regex incorrectly equated that coverage mask with
+  // the Hybrid-only roof mask. Execute the actual gates so both rules remain independently
+  // capable of failing, rather than pinning the order of their Boolean terms.
+  const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const restoreGates: ts.IfStatement[] = [];
+  const roofGates: ts.Expression[] = [];
+  const inputRoofGates: ts.Expression[] = [];
+  const sectorFinishCalls: ts.CallExpression[] = [];
+  function visit(node: ts.Node) {
+    if (ts.isIfStatement(node)) {
+      const condition = node.expression.getText(tree);
+      if (condition.includes('historicalSource') && condition.includes('sourceImage') && condition.includes('protectMask')
+          && node.thenStatement.getText(tree).includes('restoreProtectedPixels(sourceImage, raw,')) restoreGates.push(node);
+    }
+    if (ts.isVariableDeclaration(node) && node.name.getText(tree) === 'currentMask'
+        && node.initializer && ts.isConditionalExpression(node.initializer)
+        && node.initializer.whenTrue.getText(tree).includes('buildProtectMask(')) roofGates.push(node.initializer.condition);
+    if (ts.isVariableDeclaration(node) && node.name.getText(tree) === 'protectMaskDataUrl'
+        && node.getStart(tree) >= queueStart && node.getEnd() <= queueEnd
+        && node.initializer && ts.isConditionalExpression(node.initializer)
+        && node.initializer.whenTrue.getText(tree).includes('buildProtectMask(')) inputRoofGates.push(node.initializer.condition);
+    if (ts.isCallExpression(node) && node.expression.getText(tree) === 'finishSectorRef.current'
+        && node.arguments[0]?.getText(tree) === 'factualModelImage') sectorFinishCalls.push(node);
+    ts.forEachChild(node, visit);
+  }
+  visit(tree);
+  assert.equal(restoreGates.length, 1, 'one actual restore call owns the coverage/Hybrid decision');
+  assert.equal(roofGates.length, 1, 'one ordinary roof-mask decision remains visible');
+  assert.equal(inputRoofGates.length, 1, 'one queue decision promises the ordinary roof mask');
+  const restore = new Function('sheet', 'sourceImage', 'protectMask', 'isPolishedResult', 'historicalSource',
+    `return Boolean(${restoreGates[0].expression.getText(tree)});`) as (sheet: {key:string}, source: string|null, mask: string|null, polished: boolean, historic: object|null) => boolean;
+  const roof = new Function('sheet', 'isPolishedResult', `return Boolean(${roofGates[0].getText(tree)});`) as (sheet: {key:string}, polished: boolean) => boolean;
+  const inputRoof = new Function('kind', 'polishStage', `return Boolean(${inputRoofGates[0].getText(tree)});`) as (kind: string, polish: boolean) => boolean;
+  for (const key of ['sector', 'base', 'water']) for (const polished of [false, true]) {
+    assert.equal(restore({key}, 'source', 'mask', polished, null), key === 'sector' && !polished, 'ordinary photos restore only Sector Hybrid');
+    assert.equal(roof({key}, polished), key === 'sector' && !polished, 'a polished image must never receive the old photographic roof mask');
+    assert.equal(inputRoof(key, polished), roof({key}, polished), 'queue input and completion must agree about the ordinary roof mask');
+    assert.equal(restore({key}, null, 'mask', polished, {}), false, 'coverage cannot restore missing source pixels');
+    assert.equal(restore({key}, 'source', null, polished, {}), false, 'coverage cannot restore without its recorded mask');
+  }
+  assert.match(queue, /if\s*\(historicalActive && availableHistoricalBaseline\)[\s\S]*buildHistoricalCoverageMask/);
+  assert.equal(restore({key:'sector'}, 'source', 'mask', true, {}), true, 'historic polish still preserves genuinely unphotographed ground');
+  assert.equal(restore({key:'base'}, 'source', 'mask', false, {}), true, 'the Existing Site baseline preserves the same coverage');
+  assert.match(restoreGates[0].thenStatement.getText(tree), /if\s*\(historicalSource\)[\s\S]*buildHistoricalCoverageMask/);
+  assert.match(restoreGates[0].thenStatement.getText(tree), /stackOverlayImages\(coverage,currentMask/);
+  assert.equal(sectorFinishCalls.length, 1, 'the retained map still has one Sector finisher');
+  assert.deepEqual(sectorFinishCalls[0].arguments.map(a => a.getText(tree)), ['factualModelImage', 'frozenScene', 'historicalSource'],
+    'Sector recomposes the actual restored image with its frozen geometry and its own historical source');
   assert.doesNotMatch(
     completion,
     /sectorPolishOwnsPage/,

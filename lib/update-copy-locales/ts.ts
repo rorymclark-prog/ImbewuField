@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Hlawula tindhawu leti hlayisiweke leti mupfuni a nga ti tirhisaka. U nga tsema vuhlanganisi eka Swiyimiso.",
+  "Keep original site photos and PDFs with their source and import history.": "Hlayisa swifaniso swa masungulo swa ndhawu ni ti-PDF swin’we ni xihlovo xa swona ni matimu ya ku swi nghenisa.",
+  "Review historical photo registration drafts without moving saved map features.": "Kambela mipfapfarhuto ya ku fambelanisa swifaniso swa khale ni mepe handle ko susa swilo leswi hlayisiweke emepeni.",
+  "Manage assistant access": "Lawula mfikelelo wa vapfuni",
+  "Settings → Assistant connections": "Swiyimiso → Vuhlanganisi ni vapfuni",
+  "Review connected assistants, selected sites and imported originals.": "Kambela vapfuni lava hlanganisiweke, tindhawu leti hlawuriweke ni tifayela ta masungulo leti nghenisiweke.",
+  "Check your saved map": "Kambela mepe wa wena lowu hlayisiweke",
+  "Site design": "Dizayini ya ndhawu",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Kambela ndhawu yoleyo u nga si tirhisa mindzulamiso ya mupfuni kumbe ku pimanisa xifaniso xa khale.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",

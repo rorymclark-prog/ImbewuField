@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "imbewu-field",
+  "version": "1.0.0",
+  "description": "Work with selected ImbewuField sites, original evidence files, historical photo registration drafts, saved designs and map-generation progress.",
+  "author": { "name": "Rory Clark" },
+  "homepage": "https://imbewufield.vercel.app/connect/imbewu",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "ImbewuField",
+        "shortDescription": "Your sites, maps and evidence",
+        "longDescription": "Connect your ImbewuField account and choose sites. Read saved designs and surveys, preview and save guarded feature or note changes, attach original photos and PDFs with provenance, prepare historical photo registration drafts, and follow map jobs. Organisation views retain the app’s role and funder boundaries. Platform controls require a separate owner claim and permission. Files are imported only after original bytes are verified; references alone are not uploads. Paid map generation stays in the app’s existing guarded flow.",
+        "developerName": "Rory Clark",
+        "category": "Business & Operations",
+        "capabilities": [],
+        "logo": "./assets/icon.png",
+        "composerIcon": "./assets/icon.png",
+        "defaultPrompt": "Help me work with my ImbewuField sites and original evidence."
+      }
+    }
+  }
+}

@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Kgetha dibaka tse bolokilweng tseo mothusi a ka di sebedisang. O ka kgaola kgokahano ho Ditlhophiso.",
+  "Keep original site photos and PDFs with their source and import history.": "Boloka dinepe tsa pele tsa sebaka le di-PDF hammoho le mohlodi wa tsona le nalane ya ho di kenya.",
+  "Review historical photo registration drafts without moving saved map features.": "Hlahloba meralo ya ho nyalanya dinepe tsa kgale le mmapa ntle le ho suthisa dintho tse bolokilweng mmapeng.",
+  "Manage assistant access": "Laola phihlello ya bathusi",
+  "Settings → Assistant connections": "Ditlhophiso → Dikgokahano le bathusi",
+  "Review connected assistants, selected sites and imported originals.": "Hlahloba bathusi ba hoketsweng, dibaka tse kgethilweng le difaele tsa pele tse kentsweng.",
+  "Check your saved map": "Lekola mmapa wa hao o bolokilweng",
+  "Site design": "Moralo wa sebaka",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlahloba sebaka sona seo pele o kenya diphetoho tsa mothusi kapa o bapisa senepe sa kgale.",
   // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Netefatsa naha ea sebaka se mmepiloeng pele u sebelisa tataiso ea sona ea moralo oa lijalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Boloka lirekoto tsa hao tsa ho jala le lisebelisoa tsa nesari ea limela ha moralo oa sebaka o ntse o sa fumanehe.",
