@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
+  "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Mimepe ya Sector yi ni xivumbeko xa le ndzhaku lexi nga humeleriki ngopfu ni mimfungho leyi vonakaka kahle ya dyambu, moya ni ndzilo.",
   // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
   "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Hlawula tindhawu leti hlayisiweke leti mupfuni a nga ti tirhisaka. U nga tsema vuhlanganisi eka Swiyimiso.",
   "Keep original site photos and PDFs with their source and import history.": "Hlayisa swifaniso swa masungulo swa ndhawu ni ti-PDF swin’we ni xihlovo xa swona ni matimu ya ku swi nghenisa.",

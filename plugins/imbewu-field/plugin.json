@@ -1,9 +1,11 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "imbewu-field",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Work with selected ImbewuField sites, original evidence files, historical photo registration drafts, saved designs and map-generation progress.",
-  "author": { "name": "Rory Clark" },
+  "author": {
+    "name": "Rory Clark"
+  },
   "homepage": "https://imbewufield.vercel.app/connect/imbewu",
   "extensions": {
     "com.openai": {
@@ -16,7 +18,9 @@
         "capabilities": [],
         "logo": "./assets/icon.png",
         "composerIcon": "./assets/icon.png",
-        "defaultPrompt": "Help me work with my ImbewuField sites and original evidence."
+        "defaultPrompt": "Help me work with my ImbewuField sites and original evidence.",
+        "websiteURL": "https://imbewufield.vercel.app/connect/imbewu",
+        "brandColor": "#1F4D2B"
       }
     }
   }

@@ -10,6 +10,14 @@ resource metadata, per-tool OAuth requirements, HTTP challenges and tool-level
 `mcp/www_authenticate` errors. Do not send users repeatedly to a settings gear
 unless the actual current host shows an applicable connection action there.
 
+In Claude Desktop, open Settings → Customize → Connectors → Add connector →
+Add custom connector. Enter the endpoint above, choose Sign in now, then
+Register automatically (DCR). Complete consent in ImbewuField.
+
+Standard discovery offers `field:read`, `field:write` and `field:org`. Owner
+controls require a separate explicit `field:operator` request and the current
+platform-owner claim.
+
 For a host with direct MCP configuration, use its documented remote HTTP and
 OAuth flow. Claude Code's documented registration is:
 

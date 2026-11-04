@@ -10,7 +10,7 @@ import { ConnectorStorage, type Context } from './storage';
 import { ConnectorMedia } from './media';
 import { ConnectorRegistrations } from './registrations';
 import { connectorTools } from './tools';
-import { SCOPES, fail, identifier, hash } from './policy';
+import { SCOPES, CUSTOMER_SCOPES, fail, identifier, hash } from './policy';
 
 const asyncRoute = (fn: (req: Request, res: Response) => Promise<void>) => (req: Request, res: Response, next: NextFunction) => { void fn(req, res).catch(next); };
 export function createConnectorApp(options: { issuer: string; appOrigin: string; transferOrigin: string; store?: ConnectorStorage }) {
@@ -33,7 +33,7 @@ export function createConnectorApp(options: { issuer: string; appOrigin: string;
   app.use(express.urlencoded({ extended: false, limit: '32kb' }));
   app.get('/health', (_req, res) => { res.json({ service: 'ImbewuField connector', version: '1.0.0', transport: 'streamable-http', resource: provider.resource }); });
   app.get('/authorization-metadata', (_req, res) => { res.json(provider.metadata()); });
-  app.get('/resource-metadata', (_req, res) => { res.json({ resource: provider.resource, authorization_servers: [provider.issuer], scopes_supported: Object.keys(SCOPES), resource_name: 'ImbewuField', resource_documentation: `${options.appOrigin}/connect/imbewu` }); });
+  app.get('/resource-metadata', (_req, res) => { res.json({ resource: provider.resource, authorization_servers: [provider.issuer], scopes_supported: CUSTOMER_SCOPES, resource_name: 'ImbewuField', resource_documentation: `${options.appOrigin}/connect/imbewu` }); });
   app.use('/register', clientRegistrationHandler({ clientsStore: provider.clientsStore, clientSecretExpirySeconds: 0 }));
   app.use('/authorize', authorizationHandler({ provider }));
   app.use('/token', tokenHandler({ provider }));

@@ -4,7 +4,9 @@ export async function assistantProxy(req: Request, path: string): Promise<Respon
   const upstream = process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR === '1'
     ? new URL(process.env.ASSISTANT_EMULATOR_ORIGIN ?? 'http://127.0.0.1:5001/fieldproof-sa/europe-west1/imbewuConnector')
     : new URL('https://europe-west1-fieldproof-sa.cloudfunctions.net/imbewuConnector');
-  const input = new URL(req.url);
+  // NextRequest normalises loopback hosts even inside query values. OAuth must
+  // preserve the registered callback, so read the underlying web Request URL.
+  const input = new URL(Reflect.get(Request.prototype, 'url', req));
   for (const [key, value] of input.searchParams) if (key !== 'connector_path') upstream.searchParams.append(key, value);
   upstream.searchParams.set('connector_path', `/${path}`);
   const headers = new Headers();

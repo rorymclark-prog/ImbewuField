@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
+  "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Limmapa tsa Sector li na le bokamorao bo sa hlahelleng haholo le matshwao a hlakileng a letsatsi, moya le mollo.",
   // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
   "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Kgetha dibaka tse bolokilweng tseo mothusi a ka di sebedisang. O ka kgaola kgokahano ho Ditlhophiso.",
   "Keep original site photos and PDFs with their source and import history.": "Boloka dinepe tsa pele tsa sebaka le di-PDF hammoho le mohlodi wa tsona le nalane ya ho di kenya.",

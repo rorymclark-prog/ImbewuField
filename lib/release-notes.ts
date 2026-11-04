@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '4 November 2026', sha: 'c7e222ef2', changes: [
+  { when: '4 November 2026', sha: '0475b9af8', changes: [
     "Sector maps use a quieter background and clearer sun, wind and fire marks.",
   ] },
   { when: '4 November 2026', sha: '1b083437b', changes: [
@@ -53,7 +53,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '4 November 2026', sha: 'e5a41e808', changes: [
     "Existing Site labels and legend now use matching symbols.",
   ] },
-  { when: '3 November 2026', sha: 'e138c7cff', changes: [
+  { when: '4 November 2026', sha: 'be34f3601', changes: [
     'Choose which saved sites an assistant can use, and disconnect it in Settings.',
     'Keep original site photos and PDFs with their source and import history.',
     'Review historical photo registration drafts without moving saved map features.',

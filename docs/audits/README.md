@@ -1,5 +1,11 @@
 # ImbewuField audit archive
 
+Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Required release checks and normal published-host login remain open.
+
+Latest assistant identity continuation — [MCP display name, published sprout and private listing — 4 November 2026](2026-11-04/assistant-connector-branding-codex.md). Native authentication follows the separate callback release.
+
+Latest assistant connector continuation — [Production release and desktop callback preservation — 4 November 2026](2026-11-04/assistant-connector-loopback-codex.md). Native plugin verification remains open.
+
 Latest Water follow-up is [Budget figures and illustrated route review — 4 November 2026](2026-11-04/water-budget-route-review-codex.md).
 
 Latest Water review is [One budget for exact and illustrated maps — 3 November 2026](2026-11-03/water-shared-budget-codex.md).
