@@ -41,9 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '4 November 2026', sha: 'd5ec4cb3c', changes: [
+  { when: '4 November 2026', sha: '1427bc824', changes: [
     'Keep editing nursery equipment and buyer targets after a confirmed save.',
-  ] },
+  ], tour: [{ title: 'Continue nursery editing', where: 'Production plan → Nursery planner', href: '/facilitator/crops',
+    detail: 'After a confirmed equipment save, continue entering your next container. Unknown sizes and stock stay unknown.' },
+  { title: 'Continue buyer-target editing', where: 'Production plan → Harvest targets', href: '/facilitator/crops',
+    detail: 'After a confirmed target save, continue entering your next buyer target. Targets remain planned demand, not recorded sales or harvest.' }] },
   { when: '4 November 2026', sha: '575c24a11', changes: [
     'Keep the nursery and harvest unit controls available after the same plan is saved again.',
     'See when you can reload saved settings or need to reopen the crop plan.',
