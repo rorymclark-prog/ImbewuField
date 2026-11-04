@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '4 November 2026', sha: '87bb0366f', changes: [
+  { when: '4 November 2026', sha: '1b083437b', changes: [
     "Exact and illustrated Water maps now show the same water budget.",
   ] },
   { when: '4 November 2026', sha: '8f4314fb7', changes: [
