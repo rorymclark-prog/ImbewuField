@@ -33,8 +33,8 @@ const publicSans = Public_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://imbewufield.vercel.app'),
-  title: 'ImbewuField — permaculture planning for South African farmers',
-  description: 'Tap any spot in South Africa for a full, location-specific permaculture plan — climate, soil, water, planting calendar and AI garden design, in your language.',
+  title: 'ImbewuField — crop, nursery and garden planning',
+  description: 'Plan measured growing spaces, crop cycles and nursery resources using your own estimates. Keep site and crop records together; regional reference guidance varies.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,

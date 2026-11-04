@@ -998,6 +998,9 @@ export const SETTINGS_ENGLISH_PENDING: Dict = {
 
 // Home and report controls share their exact English source while local drafts are reviewed.
 export const CORE_ENTRY_ENGLISH_PENDING: Dict = {
+  // The broader product identity cannot inherit the former South Africa-only translations.
+  welcomeGrowerSub: 'Planning tools for small growers, market gardens and community projects.',
+  loginGrowerFooter: 'For small growers, market gardens and community projects.',
   // Shared photo controls retain the original source text.
   photoViewerOpen: "Open photo: {caption}",
   photoViewerTriggerFallback: "profile or site photograph",
