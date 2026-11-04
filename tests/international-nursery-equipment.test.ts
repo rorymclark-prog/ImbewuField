@@ -119,7 +119,9 @@ test('unsupported nursery context never computes catalogue demand or offers fore
   const screen = await mount(undefined, false);
   try {
     assert.equal(probe.forecasts, 0);
-    assert.match(screen.text(), /Demand forecasts are unavailable until this site has a supported local planning basis/);
+    // The copy distinguishes unavailable catalogue forecasts from conditional own-estimate review.
+    assert.match(screen.text(), /The catalogue demand forecast is unavailable for this planning context/);
+    assert.match(screen.text(), /Automatic plan from your estimates to review proposed seedling requirements/);
     assert.equal(screen.renderer.root.findAllByType('a').length, 0);
     assert.equal(screen.renderer.root.findAllByType('button').some(node => /CSV/.test(text(node))), false);
     assert.equal(screen.renderer.root.findAll(node => node.props.id === 'nursery-seed-needs').length, 0);
@@ -238,6 +240,8 @@ test('supported default retains the existing forecast and navigation while losin
     assert.equal(screen.renderer.root.findAllByType('a').length, 0);
     assert.equal(screen.renderer.root.findAllByType('button').some(node => /CSV/.test(text(node))), false);
     assert.doesNotMatch(screen.text(), /CSV downloaded/);
-    assert.match(screen.text(), /Demand forecasts are unavailable/);
+    // Losing catalogue support removes catalogue demand but directs to conditional own-estimate review.
+    assert.match(screen.text(), /The catalogue demand forecast is unavailable for this planning context/);
+    assert.match(screen.text(), /Automatic plan from your estimates/);
   } finally { screen.dispose(); probe.forbidden = false; }
 });
