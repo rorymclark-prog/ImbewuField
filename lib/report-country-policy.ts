@@ -21,7 +21,7 @@ function requestSiteId(location: unknown): string | null {
 
 /** Only this verified caller's existing saved-site document is read. No client
  * owner ID, country flag, workspace exception or review claim selects a path. */
-async function readOwnSavedPlaces(verifiedUid: string): Promise<unknown> {
+export async function readOwnSavedPlaces(verifiedUid: string): Promise<unknown> {
   const { getApps, getApp, initializeApp } = await import('firebase-admin/app');
   const { getFirestore } = await import('firebase-admin/firestore');
   const db = getFirestore(getApps().length ? getApp() : initializeApp());

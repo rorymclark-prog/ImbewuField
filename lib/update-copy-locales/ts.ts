@@ -1,6 +1,27 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
+  "Keep editing nursery equipment and buyer targets after a confirmed save.": "Yana mahlweni u hlela switirhisiwa swa xirhapa xa swimilana ni swikongomelo swa vaxavi endzhaku ka loko ku hlayisiwa ku tiyisisiwile.",
+  "Continue nursery editing": "Yana mahlweni u hlela xirhapa xa swimilana",
+  "After a confirmed equipment save, continue entering your next container. Unknown sizes and stock stay unknown.": "Endzhaku ka loko ku hlayisiwa ka switirhisiwa ku tiyisisiwile, yana mahlweni u nghenisa xibye xa wena lexi landzelaka. Vukulu ni nhlayo ya switirhisiwa leswi nga tiviwiki swi ya mahlweni swi nga tiviwi.",
+  "Continue buyer-target editing": "Yana mahlweni u hlela swikongomelo swa vaxavi",
+  "After a confirmed target save, continue entering your next buyer target. Targets remain planned demand, not recorded sales or harvest.": "Endzhaku ka loko ku hlayisiwa ka xikongomelo ku tiyisisiwile, yana mahlweni u nghenisa xikongomelo xa wena lexi landzelaka xa muxavi. Swikongomelo swi ya mahlweni swi ri swilaveko leswi kunguhatiweke, ku nga ri ku xavisa kumbe ntshovelo lowu rhekhodiweke.",
+  "See where your own dated crop plan can review nursery requirements.": "Vona laha pulani ya wena ya swibyariwa leyi nga ni masiku yi nga kambisisaka swilaveko swa xirhapa xa swimilana.",
+  "Review nursery requirements": "Kambisisa swilaveko swa xirhapa xa swimilana",
+  "For a saved measured growing space, review proposed batches from your own dates and inputs. Equipment entries alone do not establish dated availability or local crop approval.": "Eka ndhawu yo byala leyi pimiweke ni ku hlayisiwa, kambisisa mintlawa leyi ringanyetiweke hi ku ya hi masiku ya wena ni vuxokoxoko bya wena. Ku nghenisa switirhisiwa ntsena a swi tiyisisi ku kumeka hi masiku yo karhi kumbe ku pfumeleriwa ka swibyariwa endhawini ya ka n’wina.",
+  "See a welcome for small growers, market gardens and community projects.": "Vona ku amukelwa ka varimi lavatsongo, swirhapa swo byala swo xavisa ni tiphurojeke ta vaaki.",
+  "Start with your growing space": "Sungula hi ndhawu ya wena yo byala",
+  "Home → Map and Production plan": "Ekaya → Mepe ni kunguhato wa vuhumelerisi",
+  "Use your measured growing space and your own estimates. Regional reference coverage varies; choosing a country does not approve local crop advice.": "Tirhisa ndhawu ya wena yo byala leyi pimiweke ni swipimanyeto swa wena. Ku kumeka ka swikombiso swa swifundza swa hambana; ku hlawula tiko a swi pfumeleli switsundzuxo swa swibyariwa swa ndhawu ya ka n’wina.",
+  "See when local design advice needs your saved site and current country details.": "Vona leswaku switsundzuxo swa pulani ya ndhawu swi lava rini ndhawu ya wena leyi hlayisiweke ni vuxokoxoko bya tiko bya sweswi.",
+  "Distinguish advice about the original South African sample from your own drawing.": "Hambanisa switsundzuxo leswi khumbaka sampulu yo sungula ya Afrika-Dzonga ni xifaniso xa wena.",
+  "Check the design advice basis": "Kambela xisekelo xa switsundzuxo swa pulani",
+  "Design Studio → Lima": "Xitudiyo xo pulana → Lima",
+  "Open your saved design. Local tips use the existing South African references only when the current saved-site context supports them. Country confirmation does not approve local farming advice; your drawing stays available when advice is held.": "Pfula pulani ya wena leyi hlayisiweke. Switsundzuxo swa ndhawu swi tirhisa swikombiso leswi nga kona swa Afrika-Dzonga ntsena loko vuxokoxoko bya sweswi bya ndhawu leyi hlayisiweke byi swi seketela. Ku tiyisisa tiko a swi pfumeleli switsundzuxo swa vurimi swa ndhawu; xifaniso xa wena xi ya mahlweni xi kumeka loko switsundzuxo swi yimisiwile.",
+  "Review the original sample": "Kambisisa sampulu yo sungula",
+  "Tour → Plan the growing season": "Riendzo → Kunguhata nguva yo byala",
+  "Open the growing-season stop and choose All tools to see the sample advice control. It names the original sample layout; a request does not analyse your sample edits.": "Pfula xiteji xa nguva yo byala kutani u hlawula Switirhisiwa Hinkwaswo (All tools) leswaku u vona vulawuri bya switsundzuxo swa sampulu. Byi boxa pulani ya sampulu yo sungula; xikombelo a xi xopaxopi ku cinca loku u ku endleke eka sampulu.",
   // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
   "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Swilawuri swa tiyuniti ta xirhapa xa swimilana ni ta ntshovelo swi tshamile swi ri kona loko pulani leyi fanaka yi hlayisiwa nakambe.",
   "See when you can reload saved settings or need to reopen the crop plan.": "Vona nkarhi lowu u nga tlhelaka u layicha swiyimiso leswi hlayisiweke kumbe loko u fanele ku pfula pulani ya swibyariwa nakambe.",
