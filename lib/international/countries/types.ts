@@ -23,6 +23,8 @@ export interface CountrySource {
   /** Page modification metadata is not evidence of publication. */
   lastModifiedOn?: string | null;
   reviewDueOn: string | null;
+  /** Historical context can appear in the dossier without satisfying readiness evidence. */
+  backgroundOnly?: true;
   verifiedClaim: string;
   limitations: string;
 }

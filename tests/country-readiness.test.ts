@@ -13,7 +13,7 @@ test('a pilot country and translated interface cannot masquerade as reviewed loc
 
 import { COUNTRY_PROFILES, COUNTRY_RESEARCH_QUEUE, EUROPE_RESEARCH_NOTE } from '@/lib/international/countries/registry';
 import { sourceEvidenceState } from '@/lib/international/countries/readiness';
-import { EVIDENCE_CATEGORIES, type CountryProfile } from '@/lib/international/countries/types';
+import { EVIDENCE_CATEGORIES, type CountryProfile, type CountrySource } from '@/lib/international/countries/types';
 
 const AS_OF = '2026-11-01';
 function reviewedFixture(): CountryProfile {
@@ -46,7 +46,8 @@ test('all engineering pilots preserve separate evidence roles and remain unrevie
       // rewrite every historical access date to the foundation's first date.
       // Synthetic publication metadata isolates the access-date rule without
       // falsely claiming that an undated/unavailable real source is reviewed.
-      assert.equal(sourceEvidenceState({ ...source, verification: 'content-read', publishedOn: AS_OF, reviewDueOn: null }, registryAsOf), 'available-reference');
+      const expected = source.backgroundOnly ? 'background-reference' : 'available-reference';
+      assert.equal(sourceEvidenceState({ ...source, verification: 'content-read', publishedOn: AS_OF, reviewDueOn: null }, registryAsOf), expected);
       assert.ok(source.verifiedClaim && source.limitations && source.missingDataBehavior);
       assert.ok(['known', 'unknown'].includes(source.licence.status));
     }
@@ -141,8 +142,50 @@ test('the US institution directory can be opened as a reference without counting
   assert.equal(directory.publishedOn, null);
   assert.equal(sourceEvidenceState(directory, asOf), 'undated');
   assert.equal(extension.availableCount, 0);
+  assert.equal(directory.backgroundOnly, true);
   assert.ok(extension.sources.some(source => source.id === 'us-extension'), 'the Cooperative Extension overview is still available');
   assert.equal(result.localReviewComplete, false);
   assert.equal(result.productionPlanSupported, false);
   assert.equal(result.southAfricanFallbackAllowed, false);
+});
+
+test('a dated background-only directory remains a background-reference and cannot satisfy category or region readiness', () => {
+  const asOf = '2026-11-04';
+  const usProfile = COUNTRY_PROFILES.find(p => p.code === 'US')!;
+  const rawDirectory = usProfile.sources.find(s => s.id === 'us-nifa-land-grant-directory')!;
+  const datedDirectory: CountrySource = {
+    ...rawDirectory,
+    publishedOn: asOf,
+    accessedOn: asOf,
+    reviewDueOn: null,
+    verification: 'content-read',
+  };
+  assert.equal(sourceEvidenceState(datedDirectory, asOf), 'background-reference');
+
+  const profile = reviewedFixture();
+  const initial = evaluateCountryReadiness({ countryCode: profile.code, agriculturalRegionId: 'test-region' }, asOf, [profile]);
+  assert.equal(initial.localReviewComplete, true);
+  assert.equal(initial.productionPlanSupported, false);
+
+  const nonExtensionSources = profile.sources.filter(s => s.category !== 'agricultural-extension');
+  const validExtensionSource = profile.sources.find(s => s.category === 'agricultural-extension')!;
+
+  profile.sources = [...nonExtensionSources, datedDirectory];
+  profile.agronomyReview.sourceIds = profile.sources.map(s => s.id);
+  const categoryCheck = evaluateCountryReadiness({ countryCode: profile.code, agriculturalRegionId: 'test-region' }, asOf, [profile]);
+  assert.equal(categoryCheck.localReviewComplete, false);
+  assert.equal(categoryCheck.evidence.find(e => e.category === 'agricultural-extension')?.availableCount, 0);
+  assert.ok(categoryCheck.gaps.some(g => g.includes('agricultural-extension')));
+
+  profile.sources = [...nonExtensionSources, validExtensionSource];
+  profile.agronomyReview.sourceIds = profile.sources.map(s => s.id);
+  const restoredCheck = evaluateCountryReadiness({ countryCode: profile.code, agriculturalRegionId: 'test-region' }, asOf, [profile]);
+  assert.equal(restoredCheck.localReviewComplete, true);
+
+  profile.regions[0].definitionSourceId = datedDirectory.id;
+  profile.sources = [...profile.sources, datedDirectory];
+  profile.agronomyReview.sourceIds = profile.sources.map(s => s.id);
+  const regionCheck = evaluateCountryReadiness({ countryCode: profile.code, agriculturalRegionId: 'test-region' }, asOf, [profile]);
+  assert.equal(regionCheck.localReviewComplete, false);
+  assert.equal(regionCheck.evidence.find(e => e.category === 'agricultural-extension')?.availableCount, 1);
 });

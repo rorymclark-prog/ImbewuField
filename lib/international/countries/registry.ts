@@ -43,7 +43,7 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
     source('us-nifa-land-grant-directory', 'agricultural-extension', 'USDA NIFA Land-grant University Website Directory',
       'https://www.nifa.usda.gov/grants/land-grant-university-website-directory', 'US land-grant institutions listed by NIFA',
       'The public directory lists land-grant institutions and links to their websites.', {
-        accessedOn: '2026-11-04', publishedOn: null, lastModifiedOn: '2025-04-23',
+        accessedOn: '2026-11-04', publishedOn: null, lastModifiedOn: '2025-04-23', backgroundOnly: true,
         licence: unknown('Website reuse terms have not been verified from the public directory page.'),
         accessRequirements: known('Public directory read without an account. Access to linked institution sites and automated access remain unverified.'),
         missingDataBehavior: 'The dossier keeps the directory as an external referral link.',
