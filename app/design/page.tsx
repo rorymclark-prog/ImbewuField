@@ -35,6 +35,7 @@ import {
 import { readLocalFarmShapes, MAP_STATE_EVENT } from '@/lib/map-sync';
 import { pickWinner, pushDesignCanvas, reconcileDesignCanvas, subscribeDesignCanvasLive } from '@/lib/design-canvas-sync';
 import { useAuth } from '@/lib/auth';
+import { advisorRegionPresentation, observeDesignAdvisorLayout, type AdvisorVisibleRegion } from '@/lib/design-advisor-layout';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import {
   computeCanvasFrame,
@@ -1173,6 +1174,14 @@ function DesignStudioInner() {
     try { window.localStorage.setItem(DESIGN_WORKSPACE_MODE_KEY, next); } catch { /* view preference only */ }
   }, []);
   const canvasWrapRef = useRef<HTMLDivElement | null>(null);
+  const [phonePaletteElement, setPhonePaletteElement] = useState<HTMLDivElement | null>(null);
+  const [advisorVisibleRegion, setAdvisorVisibleRegion] = useState<AdvisorVisibleRegion | null>(null);
+  useEffect(() => {
+    if (!isPhone || !canvasWrapRef.current) { setAdvisorVisibleRegion(null); return; }
+    return observeDesignAdvisorLayout({ canvas: canvasWrapRef.current, sheet: phonePaletteElement,
+      onChange: next => setAdvisorVisibleRegion(previous => previous?.topInset === next?.topInset
+        && previous?.bottomInset === next?.bottomInset && previous?.availableHeight === next?.availableHeight ? previous : next) });
+  }, [isPhone, phonePaletteElement, hasSite]);
   useEffect(() => {
     if (!isPhone) return;
     const el = canvasWrapRef.current;
@@ -3700,10 +3709,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           </div>
         )}
 
-        {/* Advisor (Lima) — rendered INSIDE the canvas container so it anchors to the canvas's
-            bottom-left, which sits directly above the status bar + element palette. It can never
-            overlap those bottom bars, and taps outside it dismiss it. */}
+        {/* The phone palette is fixed to the viewport, outside the canvas flex flow.
+            Reserve its measured overlap only for this advice overlay, never for plan geometry. */}
         {bottomShow.advisor && canvasState && canvasState.step !== 'glossy' && (
+          <div className={isPhone ? 'phone-advisor-region' : undefined}
+            style={advisorRegionPresentation(isPhone, advisorVisibleRegion)}>
           <DesignAdvisorLazy
             state={canvasState}
             site={site}
@@ -3711,7 +3721,17 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             lastChangeId={canvasState.updatedAt}
             simple={simple}
           />
+          </div>
         )}
+        <style jsx>{`
+          .phone-advisor-region > :global(div) {
+            position: relative !important;
+            min-height: 0;
+            flex-shrink: 1;
+            overflow-y: auto;
+            pointer-events: auto !important;
+          }
+        `}</style>
       </div>
 
       {/* Import your own photo — Base step only. Lets a farmer use a drone/aerial photo of their
@@ -4189,6 +4209,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           component, so the panel comes back exactly where it was parked. */}
       {bottomShow.tools && canvasState && canvasState.step !== 'glossy' && !previewFilter && (
         <DesignPalette
+          phoneSheetRef={setPhonePaletteElement}
           bottomStop={bottomStop}
           onBottomStopChange={setBottomStop}
           hiddenSections={simple ? undefined : { count: dismissed.length, onRestore: showAllSections }}
