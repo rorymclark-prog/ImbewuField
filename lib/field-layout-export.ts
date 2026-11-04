@@ -2,6 +2,7 @@ import { designBaseMode, activeBaseMPerPx, makeMercatorUnprojector, lngLatToWorl
   MIN_SCALE_FACTOR, MAX_SCALE_FACTOR, type CanvasFrame, type DesignCanvasState } from './design-canvas';
 import { fieldBlockRectangleFootprint, MIN_BED_DIM_M, MAX_BED_DIM_M, MAX_PATH_M } from './bed-block';
 import { ELEMENTS_BY_ID } from './design-elements';
+import { isXml10CharacterText } from './xml-character-text';
 
 export type FieldLayoutExportFrame = Pick<CanvasFrame, 'centerLng' | 'centerLat' | 'zoom' | 'imgW' | 'imgH' | 'mPerPx'>;
 export interface FieldLayoutExportRequest {
@@ -39,7 +40,7 @@ const record = (value: unknown): value is Record<string, unknown> => !!value && 
 const identity = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0
   && value.length <= 2000 && !/[\u0000-\u001f\u007f]/.test(value);
 const xmlText = (value: unknown): value is string => typeof value === 'string' && value.length <= 2000
-  && !/[\u0000-\u0008\u000b\u000c\u000e-\u001f\ud800-\udfff\ufffe\uffff]/u.test(value);
+  && isXml10CharacterText(value);
 type Point = [number, number];
 type Row = Record<string, unknown>;
 type Field = { row: Row; points: Point[]; beds: Row[]; paths: Row[] };
