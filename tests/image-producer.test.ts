@@ -1023,16 +1023,21 @@ test('the sector restyle still refuses to draw any analysis', () => {
   assert.match(p, /no lettering of any kind/);
 });
 
-test('the paid sector polish uses the complete exact sheet as its visual blueprint', () => {
-  const p = buildSectorSheetPolishPrompt('master_atlas', 'Some Farm');
-  assert.match(p, /COMPLETE, already-correct Sector Analysis/);
-  assert.match(p, /PRESERVE CONTENT/);
-  assert.match(p, /same position/);
-  assert.match(p, /same directions/);
-  assert.match(p, /same labels and same legend/);
-  assert.match(p, /visibly more polished/);
-  assert.match(p, /Some Farm/);
-  assert.match(p, /formal engraved masterplan/i);
+test('Sector polish improves the actual first-pass artwork without baking a second analysis into it', () => {
+  // A whole-page prompt contradicted the map-only queue and asked the model to reproduce
+  // analysis that the finisher draws again. Assert the actual division of ownership instead.
+  for (const style of ['master_atlas','photo_plan'] as const) {
+    const p = buildSectorSheetPolishPrompt(style, 'Some Farm');
+    assert.match(p, /FIRST-PASS AI artwork/);
+    assert.match(p, /Some Farm/);
+    assert.match(p, /same position/);
+    assert.match(p, /WRITE NOTHING/);
+    assert.match(p, /Draw no sun paths, arrows, arcs, wedges, wind, fire, rain, contours or analysis marks/);
+    assert.match(p, /app draws those once afterwards/);
+    assert.match(p, /UNCHANGED IS A FAILED RESULT/);
+    assert.match(p, /Invent nothing and move none/);
+    assert.doesNotMatch(p, /redraw every label|WHOLE PAGE IS YOURS|COMPLETE, already-correct/);
+  }
 });
 
 // ── The paid second pass ───────────────────────────────────────────────────────

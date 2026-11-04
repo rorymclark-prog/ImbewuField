@@ -310,12 +310,12 @@ test('the design-layer polish uploads the Hybrid MAP, never the Hybrid page', ()
   );
 });
 
-test('Sector and Existing Site upload the map column, at both paid stages', () => {
+test('Sector uploads unannotated artwork while Existing Site retains its map-only crop', () => {
   const flow = callbackBody('generateSectorViaQueue');
   assert.match(
     flow,
-    /const hybridMapInput = hybridInput\s*\n\s*\? await cropStyleSheetToMap\(hybridInput, mapWidth, mapHeight\)/,
-    'the finished Hybrid page must be cut back to its map column before it is sent anywhere',
+    /kind === 'sector'[\s\S]*?hybridMapForPolishRef\.current\.map[\s\S]*?: await cropStyleSheetToMap\(hybridInput, mapWidth, mapHeight\)/,
+    'a Sector crop still contains analysis, so it must use raw artwork; Base keeps its crop',
   );
   assert.match(flow, /compositeDataUrl: composite,/);
   assert.doesNotMatch(
