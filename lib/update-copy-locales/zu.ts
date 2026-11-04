@@ -1,6 +1,24 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // International reference review notices. AGY drafts reconciled to existing wording, pending fluent review.
+  "Compare draft wording for the England advice service and the Campinas office directory.": "Qhathanisa amagama osalungiswa wesevisi yezeluleko yase-England nohla lwamahhovisi ase-Campinas.",
+  "Compare draft wording for Kenya’s historical soil catalogue.": "Qhathanisa amagama osalungiswa ekhathalogi yomlando yenhlabathi yase-Kenya.",
+  "Compare draft wording for India’s public agrometeorology bulletin links.": "Qhathanisa amagama osalungiswa ezixhumanisi zombiko wesimo sezulu sezolimo zomphakathi wase-India.",
+  "Review draft wording for New Zealand’s S-map reference.": "Buyekeza amagama osalungiswa wenkomba ye-S-map yase-New Zealand.",
+  "Review draft soil-reference wording for Ontario and Australia.": "Buyekeza amagama osalungiswa wenkomba yenhlabathi yase-Ontario nase-Australia.",
+  "Compare extension reference wording": "Qhathanisa amagama enkomba yezolimo zokweluleka",
+  "International → Language review": "International → Ukubuyekezwa kolimi",
+  "Choose the England or Campinas reference and compare the captured English with a draft. Drafts still need fluent review.": "Khetha inkomba yase-England noma yase-Campinas bese uqhathanisa umbhalo wesiNgisi orekhodiwe nokusalungiswa. Okusalungiswa kusadinga ukubuyekezwa ngumuntu olukhuluma kahle ulimi.",
+  "Review Kenya’s soil-reference wording": "Buyekeza amagama enkomba yenhlabathi yase-Kenya",
+  "International → Language drafts": "International → Ukuhumusha okusaluhlaka",
+  "Choose the historical soil catalogue and compare a draft with the captured English source.": "Khetha ikhathalogi yomlando yenhlabathi bese uqhathanisa okusalungiswa nomthombo wesiNgisi orekhodiwe.",
+  "Review India’s bulletin-link wording": "Buyekeza amagama ezixhumanisi zombiko wase-India",
+  "Choose the India IMD card and compare a draft with the captured English source.": "Khetha ikhadi le-India IMD bese uqhathanisa okusalungiswa nomthombo wesiNgisi orekhodiwe.",
+  "Review New Zealand’s S-map wording": "Buyekeza amagama e-S-map yase-New Zealand",
+  "Choose the New Zealand S-map card and compare a draft with the captured English source.": "Khetha ikhadi le-New Zealand S-map bese uqhathanisa okusalungiswa nomthombo wesiNgisi orekhodiwe.",
+  "Review draft wording for Canada’s historical climate and Ontario guide links.": "Buyekeza amagama osalungiswa wesimo sezulu somlando sase-Canada nezixhumanisi zomhlahlandlela wase-Ontario.",
+  "Review draft wording for Brazil’s soil and Colombia’s biodiversity and weather links.": "Buyekeza amagama osalungiswa wenhlabathi yase-Brazil kanye nezixhumanisi zenhlobonhlobo yemvelo nesimo sezulu sase-Colombia.",
   // Pilot wording review: docs/international/reference-card-language-packets/release-copy.json; UNREVIEWED AI draft.
   "Compare English and draft wording for the Kenya, UK and US reference cards.": "Qhathanisa umbhalo wesiNgisi nombhalo osalungiswa wamakhadi ezinkomba aseKenya, e-UK nase-US.",
   // Country context: docs/international/agy-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.

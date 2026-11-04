@@ -1,6 +1,24 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // International reference review notices. AGY drafts reconciled to existing wording, pending fluent review.
+  "Compare draft wording for the England advice service and the Campinas office directory.": "Bapisa mongolo oa moralo oa phetolelo bakeng sa tšebeletso ea keletso ea England le bukana ea liofisi tsa Campinas.",
+  "Compare draft wording for Kenya’s historical soil catalogue.": "Bapisa mongolo oa moralo oa phetolelo bakeng sa lethathamo la nalane la mobu la Kenya.",
+  "Compare draft wording for India’s public agrometeorology bulletin links.": "Bapisa mongolo oa moralo oa phetolelo oa lihokelo tsa litsebiso tsa sechaba tsa India tsa boemo ba leholimo ba temo.",
+  "Review draft wording for New Zealand’s S-map reference.": "Hlahloba mongolo oa moralo oa phetolelo bakeng sa tšupiso ea S-map ea New Zealand.",
+  "Review draft soil-reference wording for Ontario and Australia.": "Hlahloba mongolo oa moralo oa phetolelo oa tšupiso ea mobu bakeng sa Ontario le Australia.",
+  "Compare extension reference wording": "Bapisa mongolo oa tšupiso ea keletso ea temo",
+  "International → Language review": "International → Tlhahlobo ea puo",
+  "Choose the England or Campinas reference and compare the captured English with a draft. Drafts still need fluent review.": "Khetha tšupiso ea England kapa Campinas 'me u bapise mongolo oa Senyesemane o bolokiloeng le moralo oa phetolelo. Motho ea tsebang puo hantle o ntse a lokela ho hlahloba moralo.",
+  "Review Kenya’s soil-reference wording": "Hlahloba mongolo oa tšupiso ea mobu oa Kenya",
+  "International → Language drafts": "International → Meralo ea phetolelo",
+  "Choose the historical soil catalogue and compare a draft with the captured English source.": "Kgetha lethathamo la nalane la mobu 'me u bapise moralo oa phetolelo le mohloli o rekotiloeng oa Senyesemane.",
+  "Review India’s bulletin-link wording": "Hlahloba mongolo oa lihokelo tsa litsebiso tsa India",
+  "Choose the India IMD card and compare a draft with the captured English source.": "Kgetha karete ea India IMD 'me u bapise moralo oa phetolelo le mohloli o rekotiloeng oa Senyesemane.",
+  "Review New Zealand’s S-map wording": "Hlahloba mongolo oa S-map oa New Zealand",
+  "Choose the New Zealand S-map card and compare a draft with the captured English source.": "Kgetha karete ea New Zealand S-map 'me u bapise moralo oa phetolelo le mohloli o rekotiloeng oa Senyesemane.",
+  "Review draft wording for Canada’s historical climate and Ontario guide links.": "Hlahloba mongolo oa moralo oa phetolelo bakeng sa tlelaemete ea nalane ea Canada le lihokelo tsa tataiso ea Ontario.",
+  "Review draft wording for Brazil’s soil and Colombia’s biodiversity and weather links.": "Hlahloba mongolo oa moralo oa phetolelo bakeng sa mobu oa Brazil le mefuta-futa ea lihloliloeng le lihokelo tsa boemo ba leholimo tsa Colombia.",
   // Pilot wording review: docs/international/reference-card-language-packets/release-copy.json; UNREVIEWED AI draft.
   "Compare English and draft wording for the Kenya, UK and US reference cards.": "Bapisa mantsoe a Senyesemane le mantsoe a ntseng a lokisoa likareteng tsa litšupiso tsa Kenya, UK le US.",
   // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
