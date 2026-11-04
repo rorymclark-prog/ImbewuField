@@ -140,6 +140,164 @@ export function buildGrowerNurseryCsv(result: GrowerNurseryResult, beds: readonl
 }
 
 
+/** Build printable A4 nursery batch cards, one card per represented preparation group.
+ * These are planning cards for keeping/attaching with a batch, not verified tray labels. */
+export async function buildGrowerNurseryBatchLabelsPdf(result: GrowerNurseryResult, options: NurseryPreparationPdfOptions = {}): Promise<Blob> {
+  const projection = projectGrowerNurseryPreparation(result);
+  if (projection.status !== 'available') throw Error('The preparation worksheet is unavailable for this nursery review.');
+  if (projection.groups.some(group => !/^[\x20-\x7e]+$/.test(group.cropName))) throw Error('The crop identity cannot be printed faithfully with the current PDF font.');
+
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
+  const width = doc.internal.pageSize.getWidth(), height = doc.internal.pageSize.getHeight();
+  const margin = 36, contentWidth = width - 2 * margin, bottom = height - 66;
+  const ink: [number, number, number] = [43, 48, 39];
+  let y = margin;
+
+  const font = (size: number, weight: 'normal' | 'bold' | 'italic' = 'normal') => {
+    doc.setFont('helvetica', weight); doc.setFontSize(size); doc.setTextColor(...ink);
+  };
+
+  function page(continuationGroup = '') {
+    doc.addPage(); y = margin;
+    if (continuationGroup) {
+      font(10, 'bold'); doc.text('PLANNED NURSERY BATCH (continued)', margin, y + 10); y += 18;
+      font(10); const lines = doc.splitTextToSize(continuationGroup, contentWidth) as string[];
+      doc.text(lines, margin, y + 10); y += lines.length * 13 + 6;
+    }
+  }
+
+  function ensure(space: number, continuationGroup = '') {
+    if (y + space > bottom) page(continuationGroup);
+  }
+
+  function paragraph(text: string, size = 10, weight: 'normal' | 'bold' | 'italic' = 'normal', gap = 5, continuationGroup = '') {
+    font(size, weight);
+    const lines = doc.splitTextToSize(preparationPdfCopy(text), contentWidth) as string[];
+    for (const line of lines) {
+      ensure(size * 1.3 + 2, continuationGroup);
+      font(size, weight); doc.text(line, margin, y + size); y += size * 1.3;
+    }
+    y += gap;
+  }
+
+  if (!projection.groups.length) {
+    const overallIncomplete = projection.projectionIncomplete || projection.reviewIncomplete;
+    paragraph('PLANNED NURSERY BATCH', 16, 'bold', 6);
+    paragraph(`Overall review status: ${overallIncomplete ? 'Incomplete review' : 'Reviewed inputs complete'}.`, 10, 'bold', 4);
+    paragraph(`Source: ${projection.sourceStatus === 'saved-planned' ? 'Saved planned crop cycles' : 'Proposed crop cycles'}. Grower estimates; source not verified.`, 9, 'normal', 4);
+    if (projection.horizon) {
+      paragraph(`Review horizon: ${projection.horizon.start} to before ${projection.horizon.endExclusive} (UTC).`, 9, 'normal', 4);
+    }
+    paragraph('No transplant batches are represented in this review. This does not establish a zero requirement for the whole garden.', 10, 'normal', 6);
+    for (const globalIssue of [...new Set(projection.issues.map(growerNurseryIssueText))]) {
+      paragraph(`Review note: ${globalIssue}`, 9, 'normal', 4);
+    }
+    paragraph('Planning card only: Not verified tray labels, observed sowing, nursery stock or seedling readiness.', 9, 'italic');
+  }
+
+  for (const [index, group] of projection.groups.entries()) {
+    if (index > 0) doc.addPage();
+    y = margin;
+    const cardTitle = `${group.cropName} - Preparation Group ${index + 1}`;
+
+    doc.setDrawColor(180, 190, 175);
+    doc.setLineDashPattern([4, 4], 0);
+    doc.roundedRect(margin, y, contentWidth, height - 2 * margin - 14, 4, 4, 'S');
+    doc.setLineDashPattern([], 0);
+
+    y += 16;
+    font(9, 'bold');
+    doc.text('CUT / FOLD GUIDE - ATTACH OR KEEP WITH BATCH', width / 2, y + 4, { align: 'center' });
+    y += 16;
+
+    paragraph('PLANNED NURSERY BATCH', 16, 'bold', 6, cardTitle);
+    paragraph(cardTitle, 13, 'bold', 6, cardTitle);
+    const overallIncomplete = projection.projectionIncomplete || projection.reviewIncomplete;
+    paragraph(`Overall review status: ${overallIncomplete ? 'Incomplete review' : 'Reviewed inputs complete'}.`, 10, 'bold', 4, cardTitle);
+    paragraph(`Source: ${projection.sourceStatus === 'saved-planned' ? 'Saved planned crop cycles' : 'Proposed crop cycles'}. Grower estimates; source not verified.`, 9, 'normal', 4, cardTitle);
+    if (projection.horizon) {
+      paragraph(`Review horizon: ${projection.horizon.start} to before ${projection.horizon.endExclusive} (UTC).`, 9, 'normal', 4, cardTitle);
+    }
+    paragraph(`Batch group status: ${group.incomplete ? 'Incomplete' : 'Included counts complete'}. Represented transplant batches only.`, 10, 'normal', 6, cardTitle);
+
+    paragraph(`Raising starts ${group.startDate} (UTC).`, 10, 'bold', 4, cardTitle);
+    const fieldDates = [...new Set(group.members.map(member => member.endDateExclusive))].sort().join(', ');
+    paragraph(`Raising ends before field entry: ${fieldDates} (exclusive UTC).`, 10, 'normal', 8, cardTitle);
+
+    const metrics = [
+      ['Final field positions', group.fieldPositions],
+      ['Starts to raise', group.startsToRaise],
+      ['Seeds to sow', group.seedsToSow],
+    ] as const;
+    const cellWidth = (contentWidth - 24) / 3;
+    const cells = metrics.map(([label, metric]) => {
+      font(10, 'bold'); const labels = doc.splitTextToSize(label, cellWidth - 14) as string[];
+      font(10); const values = doc.splitTextToSize(preparationMetricText(metric), cellWidth - 14) as string[];
+      return { labels, values };
+    });
+    const blockHeight = Math.max(...cells.map(cell => cell.labels.length + cell.values.length)) * 13 + 18;
+    ensure(blockHeight + 10, cardTitle);
+    for (const [col, cell] of cells.entries()) {
+      const cx = margin + 12 + col * (cellWidth + 4);
+      doc.setFillColor(244, 247, 240);
+      doc.roundedRect(cx, y, cellWidth, blockHeight, 3, 3, 'F');
+      let lineY = y + 14;
+      font(10, 'bold'); for (const l of cell.labels) { doc.text(l, cx + 6, lineY); lineY += 13; }
+      font(10); for (const v of cell.values) { doc.text(v, cx + 6, lineY); lineY += 13; }
+    }
+    y += blockHeight + 10;
+
+    paragraph('Planning card only: Not verified tray labels, observed sowing, nursery stock or seedling readiness.', 9, 'normal', 4, cardTitle);
+    paragraph('Loss estimates: Calculated counts already include supplied loss estimates; do not apply them again.', 9, 'normal', 4, cardTitle);
+    paragraph('Crop identity: Matching crop names do not identify interchangeable varieties or seed lots. Unknown requirements are not zero.', 9, 'normal', 4, cardTitle);
+    paragraph('This card does not establish resource availability, container packing or plant health.', 9, 'normal', 6, cardTitle);
+
+    if (group.outsideReviewHorizon) {
+      paragraph('Some raising dates extend beyond the review horizon.', 9, 'italic', 4, cardTitle);
+    }
+    for (const globalIssue of [...new Set(projection.issues.map(growerNurseryIssueText))]) {
+      paragraph(`Review note: ${globalIssue}`, 9, 'normal', 4, cardTitle);
+    }
+    for (const issue of [...new Set(group.issues.map(growerNurseryIssueText))]) {
+      paragraph(`Note: ${issue}`, 9, 'normal', 4, cardTitle);
+    }
+
+    ensure(95, cardTitle);
+    y += 4;
+    paragraph('Handwritten nursery notes (batch / seed lot / actual sowing - not saved by app):', 9, 'bold', 4, cardTitle);
+    doc.setDrawColor(200, 208, 195);
+    const writeFields = [
+      'Actual sowing date:',
+      'Seed lot / cultivar name:',
+      'Containers sown & notes:',
+    ];
+    for (const wf of writeFields) {
+      y += 14;
+      font(8.5);
+      doc.text(wf, margin + 12, y);
+      doc.line(margin + 125, y, width - margin - 12, y);
+    }
+    y += 10;
+  }
+
+  const pages = doc.getNumberOfPages();
+  for (let pageNumber = 1; pageNumber <= pages; ++pageNumber) {
+    doc.setPage(pageNumber);
+    font(8);
+    if (options.sample) {
+      font(9, 'bold');
+      doc.text('DEMO - EXAMPLE PLANNING DATA', width / 2, 21, { align: 'center' });
+    }
+    font(8);
+    doc.text('PLANNED NURSERY BATCH - planning cards (not verified tray labels)', margin, height - 42);
+    doc.text('Source not verified; not observed sowing or nursery stock', margin, height - 30);
+    doc.text(`Page ${pageNumber} of ${pages}`, width - margin, height - 30, { align: 'right' });
+  }
+
+  return new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
+}
+
 /** A shareable projection of the same nursery review, never another forecast.
  * Membership and source receipts remain private; the caller still checks current
  * source/book/actor and full result equality immediately before delivery. */
