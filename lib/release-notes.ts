@@ -44,6 +44,21 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '4 November 2026', sha: '87bb0366f', changes: [
     "Exact and illustrated Water maps now show the same water budget.",
   ] },
+  { when: '4 November 2026', sha: '8f4314fb7', changes: [
+    "Zone maps trim blurry aerial edges when the photo covers the site.",
+  ] },
+  { when: '4 November 2026', sha: 'e5a41e808', changes: [
+    "Existing Site labels and legend now use matching symbols.",
+  ] },
+  { when: '3 November 2026', sha: 'e138c7cff', changes: [
+    'Choose which saved sites an assistant can use, and disconnect it in Settings.',
+    'Keep original site photos and PDFs with their source and import history.',
+    'Review historical photo registration drafts without moving saved map features.',
+  ], tour: [{ title: 'Manage assistant access', where: 'Settings → Assistant connections',
+    href: '/connect/imbewu',
+    detail: 'Review connected assistants, selected sites and imported originals.' },
+  { title: 'Check your saved map', where: 'Site design', href: '/design',
+    detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
   { when: '3 November 2026', sha: '80eb2f0b5', changes: [
     "Open Terrain & Sections for the two cuts and extra contour detail.",
   ] },

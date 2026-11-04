@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Nangani fhethu ho vhulungwaho hune muthusi a nga hu shumisa. Ni nga fhelisa vhuṱumanyi kha Nzudzanyo.",
+  "Keep original site photos and PDFs with their source and import history.": "Vhulungani zwifanyiso zwa u thoma zwa fhethu na dzi-PDF, khathihi na vhubvo hazwo na ḓivhazwakale ya u zwi dzhenisa.",
+  "Review historical photo registration drafts without moving saved map features.": "Ṱolani mvetamveto ya u livhanyisa zwifanyiso zwa kale na mapa, ni sa sudzulusi zwithu zwo vhulungwaho kha mapa.",
+  "Manage assistant access": "Langulani thendelo dza vhathusi",
+  "Settings → Assistant connections": "Nzudzanyo → Vhuṱumanyi ha vhathusi",
+  "Review connected assistants, selected sites and imported originals.": "Ṱolani vhathusi vho ṱumanywaho, fhethu ho nangiwaho na faela dza u thoma dzo dzheniswaho.",
+  "Check your saved map": "Ṱolani mapa waṋu wo vhulungwaho",
+  "Site design": "Pulane ya fhethu",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Ṱolani henefho fhethu musi ni sa athu shumisa tshanduko dza muthusi kana u vhambedza tshifanyiso tsha kale.",
   // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
   "Open Terrain & Sections for the two cuts and extra contour detail.": "Vulani Terrain & Sections u vhona khethekanyo mbili na miṅwe mitalo ya vhulapfu.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
@@ -16,6 +26,8 @@ const copy:UpdateCopy={
   "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Mapa a Sector a shumisa mitalo ya vhuimo ha nṱha ya dzingu nga u angaredza, na khetho ya phurofaili ya mavu A–B.",
   // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
   "Exact and illustrated Water maps now show the same water budget.": "Mapa wa Maḓi wa pulane na wa tshifanyiso zwino u sumbedza mugaganyagwama muthihi wa maḓi.",
+  "Zone maps trim blurry aerial edges when the photo covers the site.": "Mapa wa zwipiḓa u fhelisa miphetho i sa vhonali zwavhuḓi musi tshifanyiso tsha nṱha tshi tshi khou fukedza fhethu hoṱhe.",
+  "Existing Site labels and legend now use matching symbols.": "Mapa wa kale wa Existing Site zwino u shumisa zwiga zwi fanaho kha madzina a fhethu na kha khii ya mapa.",
   "Choose area names or a numbered key on the historical Existing Site map.": "Nangani madzina a fhethu kana khii ya nomboro kha mapa wa kale wa Existing Site.",
   // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
   "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Mapa a Site na Sector a Ubhejane a nga sumbedza tshifanyiso tsha kale tsha musi mishumo i sa athu thoma.",

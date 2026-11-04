@@ -3,6 +3,8 @@
 Latest Water follow-up is [Budget figures and illustrated route review — 4 November 2026](2026-11-04/water-budget-route-review-codex.md).
 
 Latest Water review is [One budget for exact and illustrated maps — 3 November 2026](2026-11-03/water-shared-budget-codex.md).
+Latest Zone review is [Photo coverage, zone key and the first Water comparison — 3 November 2026](2026-11-03/zone-photo-coverage-codex.md).
+Latest Existing Site follow-up is [Matching area and legend symbols — 3 November 2026](2026-11-03/existing-site-symbol-key-codex.md).
 
 Latest Terrain & Sections continuation: [Separate detail sheet and contour hierarchy — 3 November 2026](2026-11-03/terrain-section-contour-detail-codex.md). Map 02 remains the overview.
 
@@ -162,8 +164,13 @@ This convention applies to both Claude and Codex. The source lives in Git, so it
 is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
+## Assistant connector: start here
+
+[ImbewuField connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md). Native linking and production deployment are separate gates from the verified emulator and browser journey.
+
 ## Date index
 
+- [Assistant connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md).
 - [Recorded shade cover recovery — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md).
 
 - [Sector DEM alignment and regional A–B profile — 3 November 2026](2026-11-03/sector-terrain-profile-codex.md).

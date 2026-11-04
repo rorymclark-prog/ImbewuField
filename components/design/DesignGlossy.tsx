@@ -25,7 +25,8 @@ import {
 import polygonClipping from 'polygon-clipping';
 
 import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { groundFeatureLayer, statusOf, buildSatelliteUrl, fetchImageAsDataUrl, pointInRing } from '@/lib/design-canvas';
+import { clampBaseNudge, clampBaseRotation, clampBaseScale, designBaseMode, groundFeatureLayer, statusOf, buildSatelliteUrl, fetchImageAsDataUrl, pointInRing } from '@/lib/design-canvas';
+import { resolveBaseAlign } from '@/lib/base-photo-align';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
@@ -50,7 +51,7 @@ import {
   type FrameLike as BoundaryFrameGeom,
 } from '@/lib/boundary-geometry';
 import { structureRegisterText } from '@/lib/structure-register';
-import { historicalBaselineForSite, historicalBaselineFromPrompt, historicalBaselinePrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, type HistoricalBaseline } from '@/lib/historical-map-baseline';
+import { historicalBaselineForSite, historicalBaselineFromPrompt, historicalBaselinePrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, UBHEJANE_BEFORE_WORKS, type HistoricalBaseline } from '@/lib/historical-map-baseline';
 import { bedFootprintRegister, buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, PHASING_ARTWORK_PROMPT_MARKER, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
@@ -1366,7 +1367,8 @@ async function burnPaintedBoundary(
   line.width = W; line.height = H;
   const ctx = line.getContext('2d');
   if (!ctx) { releaseCanvas(line); throw new Error('Boundary canvas unavailable'); }
-  drawBlueprintBoundary(ctx, refLayers.boundary, n => n * W, n => n * H, W, state, frame);
+  if (filter === 'zones') drawZoneBoundary(ctx, refLayers.boundary, W, H);
+  else drawBlueprintBoundary(ctx, refLayers.boundary, n => n * W, n => n * H, W, state, frame);
   ctx.save();
   ctx.globalCompositeOperation = 'destination-out';
   const foreground = await buildCanopyForeground(map, state, frame, filter, W, H);
@@ -2355,6 +2357,23 @@ function buildZoneOverlay(
     ctx.fillText(String(z.zone), cx, cy);
   }
   return drainCanvasToDataUrl(canvas, 'image/png');
+}
+
+const ZONE_BOUNDARY_INK = '#49584C';
+
+function strokeZoneBoundary(ctx: CanvasRenderingContext2D, width: number): void {
+  ctx.strokeStyle = ZONE_BOUNDARY_INK;
+  ctx.lineWidth = width;
+  ctx.setLineDash([width * 5, width * 3]);
+  ctx.stroke();
+}
+
+function drawZoneBoundary(ctx: CanvasRenderingContext2D, boundary: Array<[number, number]>, W: number, H: number): void {
+  if (boundary.length < 3) return;
+  ctx.save();
+  blueprintRing(ctx, boundary, n => n * W, n => n * H);
+  strokeZoneBoundary(ctx, Math.max(2, W * 0.001));
+  ctx.restore();
 }
 
 function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
@@ -7091,7 +7110,8 @@ async function buildExactLayerOverlay(
   // phase keeps one stroke, at the same weight, on the same sheets — the planting simply sits
   // over it now. Sheets that stroke the boundary again themselves after compositing this overlay
   // (the phasing sheet, where walking and pegging the boundary IS phase 1) are unaffected.
-  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
+  if (filter === 'zones') drawZoneBoundary(ctx, refLayers.boundary, W, H);
+  else drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
 
   if (filter === 'zones') {
     // Quiet element ghosts make the effort zones falsifiable without claiming those elements as
@@ -7209,10 +7229,17 @@ async function buildHistoricalCoverageMask(frame: CanvasFrame, baseline: Histori
   return drainCanvasToDataUrl(canvas,'image/png');
 }
 
+function strokeHistoricalLine(ctx: CanvasRenderingContext2D, kind: 'fence' | 'extent', width: number): void {
+  ctx.strokeStyle = kind === 'fence' ? '#79583B' : BOUNDARY_LINE_GREEN;
+  ctx.lineWidth = width;
+  ctx.setLineDash(kind === 'extent' ? [width * 4, width * 3] : []);
+  ctx.stroke();
+}
+
 function drawHistoricalDesignExtent(ctx: CanvasRenderingContext2D, refs: DesignGlossyProps['refLayers'], W:number,H:number): void {
   if(refs.boundary.length<3)return;
   ctx.save();blueprintRing(ctx,refs.boundary,n=>n*W,n=>n*H);
-  ctx.strokeStyle=BOUNDARY_LINE_GREEN;ctx.lineWidth=Math.max(2,W*.0009);ctx.setLineDash([W*.004,W*.003]);ctx.stroke();ctx.restore();
+  strokeHistoricalLine(ctx,'extent',Math.max(2,W*.0009));ctx.restore();
 }
 
 function drawHistoricalPhotoPin(ctx:CanvasRenderingContext2D,x:number,y:number,r:number,n:number):void {
@@ -7229,25 +7256,80 @@ function historicalPresentationPhotoPoint(state:DesignCanvasState,frame:CanvasFr
   return layout?[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight]:[x,y];
 }
 
+type HistoricalFeatureId = HistoricalBaseline['features'][number]['id'];
+
+function drawHistoricalFeatureSymbol(ctx: CanvasRenderingContext2D, id: HistoricalFeatureId, x: number, y: number, size: number): void {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(size / 20, size / 20);
+  ctx.setLineDash([]);
+  ctx.strokeStyle = '#315A40';
+  ctx.lineWidth = 1.6;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  switch (id) {
+    case 'classroom-1':
+    case 'classroom-2':
+      ctx.moveTo(-8, 0); ctx.lineTo(0, -7); ctx.lineTo(8, 0);
+      ctx.moveTo(-6, -1); ctx.lineTo(-6, 7); ctx.lineTo(6, 7); ctx.lineTo(6, -1);
+      break;
+    case 'slab':
+      ctx.rect(-7, -5, 14, 10);
+      ctx.moveTo(-4, 2); ctx.lineTo(1, -2);
+      ctx.moveTo(0, 2); ctx.lineTo(5, -2);
+      break;
+    case 'play':
+      ctx.moveTo(-8, 7); ctx.lineTo(-4, -6); ctx.lineTo(4, -6); ctx.lineTo(8, 7);
+      ctx.moveTo(0, -6); ctx.lineTo(0, 3);
+      ctx.moveTo(-2, 3); ctx.lineTo(2, 3);
+      break;
+    case 'toilet':
+      ctx.rect(-5, -7, 10, 14);
+      ctx.moveTo(1, 0); ctx.lineTo(2, 0);
+      break;
+    case 'tank':
+      ctx.ellipse(0, -4, 6, 2.5, 0, 0, 2 * Math.PI);
+      ctx.moveTo(-6, -4); ctx.lineTo(-6, 4);
+      ctx.ellipse(0, 4, 6, 2.5, 0, Math.PI, 0, true);
+      ctx.lineTo(6, -4);
+      break;
+    case 'road':
+      ctx.moveTo(-7, 7); ctx.lineTo(-3, -7);
+      ctx.moveTo(2, 7); ctx.lineTo(6, -7);
+      break;
+    case 'fence':
+      ctx.moveTo(-9, 0); ctx.lineTo(9, 0);
+      strokeHistoricalLine(ctx, 'fence', 1.6);
+      ctx.restore();
+      return;
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
 function drawHistoricalPhotoFacts(ctx: CanvasRenderingContext2D,state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],W:number,H:number,baseline:HistoricalBaseline,labels=true, names=false):void {
-  ctx.save();ctx.strokeStyle='#79583B';ctx.lineWidth=Math.max(2,W*.001);ctx.setLineDash([]);ctx.beginPath();
-  baseline.fence.forEach((point,i)=>{const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,point,baseline);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x*W,y*H);});ctx.stroke();ctx.restore();
+  ctx.save();ctx.beginPath();
+  baseline.fence.forEach((point,i)=>{const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,point,baseline);(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x*W,y*H);});
+  strokeHistoricalLine(ctx,'fence',Math.max(2,W*.001));ctx.restore();
   if(!labels)return;
   // Rory asked to read the area names on the photograph. Short leaders leave the roofs/play
   // equipment visible; the compact numbered key remains a separate presentation choice.
-  const offsets:Record<string,[number,number]>={'classroom-1':[-.14,-.035],'classroom-2':[.13,-.04],slab:[.09,.045],play:[-.02,.11],toilet:[-.12,.025],tank:[-.14,.015],road:[.08,.045],fence:[.13,-.005]};
+  const offsets:Record<HistoricalFeatureId,[number,number]>={'classroom-1':[-.14,-.035],'classroom-2':[.13,-.04],slab:[.09,.065],play:[-.02,.11],toilet:[-.12,.025],tank:[-.14,.015],road:[.08,.045],fence:[.15,-.035]};
   baseline.features.forEach((feature,index)=>{
     const [x,y]=historicalPresentationPhotoPoint(state,frame,refs,feature.point,baseline);
     if(!names){drawHistoricalPhotoPin(ctx,x*W,y*H,Math.max(21,W*.011),index+1);return;}
-    const [dx,dy]=offsets[feature.id]??[.09,0];
+    const [dx,dy]=offsets[feature.id];
     const text=feature.label.replace(/^Existing /,'').replace(/ — visible portion/,'').replace(/^./,c=>c.toUpperCase());
     const font=Math.max(24,Math.round(W*.016));ctx.save();ctx.font=`700 ${font}px ${SHEET_BODY_FONT}`;
-    const width=ctx.measureText(text).width+font*1.1,height=font*1.7;
+    const symbolSlot=font*1.4;
+    const width=ctx.measureText(text).width+font*1.1+symbolSlot,height=font*1.7;
     const cx=Math.max(width/2+8,Math.min(W-width/2-8,(x+dx)*W)),cy=Math.max(height/2+8,Math.min(H-height/2-8,(y+dy)*H));
     ctx.strokeStyle='#315A40';ctx.lineWidth=Math.max(1.5,W*.0008);ctx.beginPath();ctx.moveTo(x*W,y*H);ctx.lineTo(cx,cy);ctx.stroke();
     ctx.beginPath();ctx.arc(x*W,y*H,font*.12,0,Math.PI*2);ctx.fillStyle='#315A40';ctx.fill();
     ctx.fillStyle='rgba(255,255,255,.96)';ctx.fillRect(cx-width/2,cy-height/2,width,height);ctx.strokeStyle='#78927E';ctx.strokeRect(cx-width/2,cy-height/2,width,height);
-    ctx.fillStyle='#183425';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,cx,cy);ctx.restore();
+    drawHistoricalFeatureSymbol(ctx,feature.id,cx-width/2+font*.95,cy,font*1.1);
+    ctx.fillStyle='#183425';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,cx+symbolSlot/2,cy);ctx.restore();
   });
 }
 
@@ -7259,7 +7341,7 @@ async function composeHistoricalBaseSheet(baseImage:string|null,state:DesignCanv
   try{ctx.drawImage(image,0,0,W,H);}finally{releaseImageSource(image);}
   drawHistoricalDesignExtent(ctx,p.refLayers,W,H);
   drawHistoricalPhotoFacts(ctx,state,frame,refs,W,H,baseline,true,labelMode!=='codes');
-  const legendRows:StyleLegendRow[]=baseline.features.map((feature,index)=>({swatch:'#FFFFFF',text:feature.label.replace(/^Existing /,'').replace(/^./,c=>c.toUpperCase()),...(labelMode==='codes'?{photoNumber:index+1}:{visual:'historical-name' as const})}));
+  const legendRows:StyleLegendRow[]=baseline.features.map((feature,index)=>({swatch:'#FFFFFF',text:feature.label.replace(/^Existing /,'').replace(/^./,c=>c.toUpperCase()),...(labelMode==='codes'?{photoNumber:index+1}:{historicalFeature:feature.id})}));
   legendRows.push({swatch:BOUNDARY_LINE_GREEN,text:'Current design extent — not the historic fence',visual:'historical-extent'});
   return composeStyleSheet(drainCanvasToDataUrl(canvas,'image/png'),p.state,p.frame,p.refLayers,'all',placeName,styleLabel,'Existing Site — before works',false,true,
     {sheetNumber:'01',legendRows,aiArtwork,imageAttribution:'Historic drone photograph: Imbewu project archive.',footerHeading:'HISTORICAL PHOTO',footerText:[baseline.provenance,baseline.alignment,baseline.coverage].join('\n'),footerBox:true});
@@ -7464,6 +7546,54 @@ function presentationExtentRing(
     Math.min(1, Math.max(0, x)),
     Math.min(1, Math.max(0, y)),
   ] as [number, number]);
+}
+
+interface ZonePhotoMatte { top: number; bottom: number }
+
+/** The aligned drone photo can end inside the export viewport, exposing the softer satellite
+ * baked beneath it. Cover only the top/bottom strips of a full-width, photo-covered rectangle.
+ * If the rectangle cannot hold the entire plotted site, retain the original imagery. */
+function zonePhotoMatte(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refs: DesignGlossyProps['refLayers'],
+  underlay?: SheetUnderlay,
+): ZonePhotoMatte | undefined {
+  const photo = state.customBase;
+  if (!photo || designBaseMode(state) !== 'photo' || !frame.satDataUrl
+    || (underlay ? underlay !== 'photo' : !frame.underlayDataUrl || frame.satDataUrl === frame.underlayDataUrl)) return;
+  const extent = presentationExtentRing(state, frame, refs.boundary);
+  const layout = calculateBoundaryPresentationLayout(extent, frame, SCALE);
+  if (!layout) return;
+  const { imgW, imgH } = frame;
+  const { cx, cy, tx, ty, rad, scale } = resolveBaseAlign({
+    dx: clampBaseNudge(photo.dx),
+    dy: clampBaseNudge(photo.dy),
+    rotationDeg: clampBaseRotation(photo.rotationDeg),
+    scale: clampBaseScale(photo.scale),
+  }, imgW, imgH);
+  const cos = Math.cos(rad);
+  const sin = Math.sin(rad);
+  const mapX = (x: number) => (x - layout.cropX) / layout.cropWidth;
+  const mapY = (y: number) => (y - layout.cropY) / layout.cropHeight;
+  const corner = (x: number, y: number) => ({
+    x: mapX((cx + tx + scale * (x * cos - y * sin)) / imgW),
+    y: mapY((cy + ty + scale * (x * sin + y * cos)) / imgH),
+  });
+  const [tl, tr, br, bl] = [corner(-cx, -cy), corner(cx, -cy), corner(cx, cy), corner(-cx, cy)];
+  if (Math.max(tl.x, bl.x) > 0 || Math.min(tr.x, br.x) < 1) return;
+  const yAt = (a: typeof tl, b: typeof tl, x: number) => a.y + (b.y - a.y) * (x - a.x) / (b.x - a.x);
+  // Inset by two output pixels to clear the source photo's resampled edge.
+  const pad = 2 / (layout.imgH * SCALE);
+  const photoTop = Math.max(yAt(tl, tr, 0), yAt(tl, tr, 1));
+  const photoBottom = Math.min(yAt(bl, br, 0), yAt(bl, br, 1));
+  const top = photoTop > 0 ? photoTop + pad : 0;
+  const bottom = photoBottom < 1 ? photoBottom - pad : 1;
+  if ((top === 0 && bottom === 1) || bottom - top < 0.75) return;
+  const plotted = [...extent, ...refs.boundary, ...refs.house, ...refs.driveway,
+    ...state.zones.flatMap(zone => zone.points), ...state.lines.flatMap(line => line.points)];
+  if (plotted.some(([, y]) => mapY(y) <= top + pad || mapY(y) >= bottom - pad)) return;
+  return { top, bottom };
 }
 
 async function boundaryPresentationContext(
@@ -7881,6 +8011,7 @@ async function buildReferenceBlueprintMap(
       labelMode,
       gutterLayout,
       includeLabelGutters: filter !== 'all',
+      zoneMatte: filter === 'zones' ? zonePhotoMatte(state, frame, refLayers) : undefined,
       ...(filter === 'water'
         ? waterReferenceFooter(renderState, renderFrame, renderRefLayers, site)
         : {}),
@@ -7996,8 +8127,10 @@ function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: numbe
   ctx.restore();
 }
 
-function drawSheetNorthArrow(ctx: CanvasRenderingContext2D, mapX: number, mapW: number, mapH: number): void {
-  drawImplNorthArrow(ctx, mapX + mapW - Math.round(mapW * 0.04), Math.round(mapH * 0.08), Math.max(30, Math.round(mapW * 0.026)));
+function drawSheetNorthArrow(ctx: CanvasRenderingContext2D, mapX: number, mapW: number, mapH: number, matteTop?: number): void {
+  const size = Math.max(30, Math.round(mapW * 0.026));
+  const y = Math.max(Math.round(mapH * 0.08), matteTop === undefined ? 0 : Math.ceil(matteTop * mapH + size));
+  drawImplNorthArrow(ctx, mapX + mapW - Math.round(mapW * 0.04), y, size);
 }
 
 interface SectorAnalysisComposition {
@@ -10262,11 +10395,22 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'historical-name' | 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour';
+  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour' | 'zone-boundary';
+  historicalFeature?: HistoricalFeatureId;
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE' | 'SUN PATH' | 'REGIONAL WIND & FIRE' | 'TERRAIN' | 'SITE REFERENCE';
   sectorIcon?: SectorLegendIcon;
+}
+
+function caseStudyZoneZeroLabel(state: Pick<DesignCanvasState, 'siteId' | 'zones'>): string | undefined {
+  if (state.siteId !== UBHEJANE_BEFORE_WORKS.siteId) return;
+  const classroom = state.zones.find(zone => zone.feature === 'house' && zone.name === 'Classroom');
+  const playArea = state.zones.find(zone => zone.feature === 'patio' && zone.name === 'Slab & Flat Play Area');
+  if (!classroom || !playArea || classroom.points.length < 3 || playArea.points.length < 3) return;
+  const landmarks = [centroidOf(classroom.points), centroidOf(playArea.points)];
+  if (state.zones.some(zone => !zone.feature && zone.zone === 0 && zone.points.length >= 3
+    && landmarks.every(point => pointInRing(point, zone.points)))) return 'Zone 0 — Classroom & play courtyard';
 }
 
 export function sheetLegendRows(
@@ -10279,6 +10423,7 @@ export function sheetLegendRows(
   /** The legend is the key the map's plant codes are looked up in, so it prints them only in the
    *  mode that draws them — a "MG ·" prefix on a sheet with no MG anywhere keys nothing. */
   labelMode: SheetLabelMode = DEFAULT_SHEET_LABEL_MODE,
+  quietZoneBoundary = false,
 ): StyleLegendRow[] {
   const rows: StyleLegendRow[] = [];
   // Sheet 05 derives a pit for every tree that has no basin of its own (drawEarthworksFeatures).
@@ -10297,7 +10442,8 @@ export function sheetLegendRows(
   }
   if (filter === 'zones') {
     for (const group of exactSheetZoneLegendGroups(state, filter)) {
-      rows.push({ swatch: ZONE_DEFS[group.zone].color, text: group.text, kind: 'zone' });
+      const text = group.zone === 0 ? caseStudyZoneZeroLabel(state) ?? group.text : group.text;
+      rows.push({ swatch: ZONE_DEFS[group.zone].color, text, kind: 'zone' });
     }
   }
   // Ground fabric, register-aware. drawBlueprintGround paints traced house/patio/driveway/lawn/
@@ -10473,7 +10619,9 @@ export function sheetLegendRows(
   // Sheet 08 has already returned by here with its own SITE EDGE section, so this is exactly the
   // six sheets that were missing these rows.
   if (refLayers.boundary.length >= 3) {
-    rows.push({ swatch: BOUNDARY_LINE_GREEN, text: 'Property boundary', lineKind: 'fence' });
+    rows.push(quietZoneBoundary && filter === 'zones'
+      ? { swatch: ZONE_BOUNDARY_INK, text: 'Property boundary', visual: 'zone-boundary' }
+      : { swatch: BOUNDARY_LINE_GREEN, text: 'Property boundary', lineKind: 'fence' });
   }
   if (refLayers.driveway.length >= 2) {
     rows.push({ swatch: '#5A5D57', text: EXACT_DRIVEWAY_LEGEND_TEXT, kind: 'surface' });
@@ -10489,11 +10637,20 @@ function drawStyleLegendSymbol(
   w: number,
   h: number,
 ): void {
+  if (row.visual === 'zone-boundary') {
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + w, y);
+    strokeZoneBoundary(ctx, Math.max(1.5, h * 0.05));
+    ctx.restore();
+    return;
+  }
   if(row.visual==='terrain-contour'){
     ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(2,h*.07);ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;
   }
-  if(row.visual==='historical-name')return;
-  if(row.visual==='historical-extent'){ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(1.5,h*.05);ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;}
+  if(row.historicalFeature){drawHistoricalFeatureSymbol(ctx,row.historicalFeature,x+w/2,y,Math.min(w,h));return;}
+  if(row.visual==='historical-extent'){ctx.save();ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);strokeHistoricalLine(ctx,'extent',Math.max(1.5,h*.05));ctx.restore();return;}
   if(row.photoNumber!==undefined){drawHistoricalPhotoPin(ctx,x+w/2,y,Math.min(w,h)*.36,row.photoNumber);return;}
   if (row.sectorIcon) {
     const cx = x + w / 2;
@@ -10888,6 +11045,7 @@ async function composeStyleSheet(
     gutterLayout?: GutterLayout;
     /** A full masterplan uses its grouped legend and compact map codes, not duplicate side leaders. */
     includeLabelGutters?: boolean;
+    zoneMatte?: ZonePhotoMatte;
   } = {},
 ): Promise<string> {
   if (options.aiArtwork && !options.preserveLegacyPathGuides) state = glossyArtworkState(state, refLayers);
@@ -10922,6 +11080,14 @@ async function composeStyleSheet(
     ctx.drawImage(map, gutter, 0);
   } finally {
     releaseImageSource(map);
+  }
+  const matte = options.zoneMatte;
+  if (matte) {
+    const top = Math.ceil(matte.top * H);
+    const bottom = Math.floor(matte.bottom * H);
+    ctx.fillStyle = PAPER;
+    ctx.fillRect(gutter, 0, mapW, top);
+    ctx.fillRect(gutter, bottom, mapW, H - bottom);
   }
   if (gutter > 0 && options.gutterLayout) drawLabelGutter(ctx, options.gutterLayout, gutter, mapW, H);
 
@@ -11004,7 +11170,7 @@ async function composeStyleSheet(
   y += Math.round(legendW * 0.045);
 
   const rows = [
-    ...(options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame, options.labelMode ?? DEFAULT_SHEET_LABEL_MODE)),
+    ...(options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame, options.labelMode ?? DEFAULT_SHEET_LABEL_MODE, exactGeometry)),
     ...(options.extraLegendRows ?? []),
   ];
   // A resumed paid sheet may never have drawn the exact feature layer in this tab. Load the
@@ -11485,9 +11651,9 @@ async function composeStyleSheet(
     const pxPerM = mapW / (frame.imgW * frame.mPerPx);
     drawBlueprintScaleBar(ctx, mapW, H, 0, 0, pxPerM, {
       x: gutter + Math.round(mapW * 0.03),
-      y: H - Math.round(H * 0.045),
+      y: Math.floor(H * (matte?.bottom ?? 1)) - Math.round(H * 0.045),
     });
-    drawSheetNorthArrow(ctx, gutter, mapW, H);
+    drawSheetNorthArrow(ctx, gutter, mapW, H, matte?.top);
   }
 
   // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
@@ -13794,7 +13960,7 @@ export default function DesignGlossy({
        * nothing to do with who owns the page; when one was, the chrome pass silently did not run.
        */
       polishStage = false,
-      snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName' | 'labelMode'> = { state, frame, refLayers, site, placeName, labelMode },
+      snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName' | 'labelMode'> & Partial<Pick<RenderSceneSnapshot, 'underlay'>> = { state, frame, refLayers, site, placeName, labelMode, underlay },
       canPublish: () => boolean = () => true,
       sourcePrompt?: string,
       roofReference?: PaperRoofReference,
@@ -14068,7 +14234,7 @@ export default function DesignGlossy({
         width: W,
         height: H,
       });
-      final = locked && compositionPolicy.ground === 'paint'
+      final = locked && (compositionPolicy.ground === 'paint' || f === 'zones')
         ? await burnPaintedBoundary(final, renderState, renderFrame, renderRefLayers, f, W, H)
         : final;
       // Full Treatment polishes THIS image — the finished map with exact content burned back and
@@ -14099,6 +14265,7 @@ export default function DesignGlossy({
               labelMode,
               gutterLayout: labelled.gutterLayout,
               includeLabelGutters: f !== 'all',
+              zoneMatte: f === 'zones' ? zonePhotoMatte(state, frame, refLayers, snapshot.underlay) : undefined,
               ...(f === 'water'
                 ? {
                     ...waterReferenceFooter(renderState, renderFrame, renderRefLayers, site, roofCredit),
@@ -14109,7 +14276,7 @@ export default function DesignGlossy({
           : {},
       );
     },
-    [state, frame, refLayers, site, placeName, labelMode],
+    [state, frame, refLayers, site, placeName, labelMode, underlay],
   );
 
   // "AI · ALL sheets" when the engine is gpt-image-2: enqueue a background job for the model sheets
@@ -16140,8 +16307,19 @@ export default function DesignGlossy({
         </div>}
         {historicalSheet && availableHistoricalBaseline && <div style={{fontSize:12,lineHeight:1.5,marginBottom:10}}>
           <strong>{historicalActive ? 'Before-works archive photo' : 'Current imagery'}</strong>
-          {historicalActive && selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='base' && <div role="group" aria-label="Photo labels" style={{display:'flex',gap:8,marginTop:8}}>
-            {(['names','codes'] as const).map(value=><button type="button" key={value} disabled={loading!==null} aria-pressed={labelMode===value} onClick={()=>{setLabelMode(value);setResultImage(null);}}>{value==='names'?'Area names':'Numbered key'}</button>)}
+          {historicalActive && selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='base' && <div role="group" aria-label="Photo labels" style={{display:'flex',flexWrap:'wrap',gap:8,marginTop:8}}>
+            {(['names','codes'] as const).map(value=>{
+              const active=labelMode===value;
+              return <button type="button" key={value} disabled={loading!==null} aria-pressed={active}
+                style={{padding:'6px 12px',borderRadius:999,border:`1px solid ${active ? DARK : '#E2D8C4'}`,background:active ? DARK : PAPER,color:active ? PAPER : DARK,fontWeight:700}}
+                onClick={()=>{
+                  if(active)return;
+                  autoPreviewHandledKeyRef.current=`${gallerySiteId}:${selectedNo}`;
+                  setGalleryViewId(null);
+                  setLabelMode(value);
+                  setResultImage(null);
+                }}>{value==='names'?'Area names':'Numbered key'}</button>;
+            })}
           </div>}
           <p style={{margin:'4px 0'}}>Site and Sector share the early photograph. Later design sheets keep your current imagery. Alignment is approximate; the two uncovered tips stay blank.</p>
           <button type="button" disabled={loading!==null} aria-pressed={historicalActive} onClick={()=>{setHistoricalEnabled(!historicalEnabled);if(!historicalEnabled)setUnderlay('photo');setResultImage(null);}}>

@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Hlawula tindhawu leti hlayisiweke leti mupfuni a nga ti tirhisaka. U nga tsema vuhlanganisi eka Swiyimiso.",
+  "Keep original site photos and PDFs with their source and import history.": "Hlayisa swifaniso swa masungulo swa ndhawu ni ti-PDF swin’we ni xihlovo xa swona ni matimu ya ku swi nghenisa.",
+  "Review historical photo registration drafts without moving saved map features.": "Kambela mipfapfarhuto ya ku fambelanisa swifaniso swa khale ni mepe handle ko susa swilo leswi hlayisiweke emepeni.",
+  "Manage assistant access": "Lawula mfikelelo wa vapfuni",
+  "Settings → Assistant connections": "Swiyimiso → Vuhlanganisi ni vapfuni",
+  "Review connected assistants, selected sites and imported originals.": "Kambela vapfuni lava hlanganisiweke, tindhawu leti hlawuriweke ni tifayela ta masungulo leti nghenisiweke.",
+  "Check your saved map": "Kambela mepe wa wena lowu hlayisiweke",
+  "Site design": "Dizayini ya ndhawu",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Kambela ndhawu yoleyo u nga si tirhisa mindzulamiso ya mupfuni kumbe ku pimanisa xifaniso xa khale.",
   // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
   "Open Terrain & Sections for the two cuts and extra contour detail.": "Pfula Terrain & Sections ku vona swiphemu swimbirhi ni milayeni yo engetela ya ku tlakuka.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
@@ -16,6 +26,8 @@ const copy:UpdateCopy={
   "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Mimepe ya Sector yi tirhisa mitila ya ku tlakuka ya ndhawu hi ku angarhela, hi nhlawulo wa xivumbeko xa misava A–B.",
   // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
   "Exact and illustrated Water maps now show the same water budget.": "Mepe wa Mati wa pulani ni wa xifaniso sweswi yi komba mpimanyeto wun’we wa mati.",
+  "Zone maps trim blurry aerial edges when the photo covers the site.": "Mimepe ya tizoni yi susa makumu lama nga vonakiki kahle loko xifaniso xa le moyeni xi funengeta ndhawu.",
+  "Existing Site labels and legend now use matching symbols.": "Mepe wa khale wa Existing Site sweswi wu tirhisa swikombiso leswi fanaka eka mavito ya tindhawu ni le ka xikombo xa mepe.",
   "Choose area names or a numbered key on the historical Existing Site map.": "Hlawula mavito ya tindhawu kumbe xikombo xa tinomboro eka mepe wa khale wa Existing Site.",
   // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
   "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Mimepe ya Site na Sector ya Ubhejane yi nga komba xifaniso xa khale xa le mahlweni ka mintirho.",

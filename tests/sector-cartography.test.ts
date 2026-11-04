@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import ts from 'typescript';
 
 import { bearingToUnitVector, deriveSectorModel, labelToBearing } from '../lib/sector.ts';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth } from '../lib/sector-cartography.ts';
@@ -447,19 +448,55 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
     /cropStyleSheetToMap\(hybridInput, mapWidth, mapHeight\)/,
     'the polish stage must send the map column, never the composed Hybrid page',
   );
-  // The archive adds a separate coverage mask even to polished artwork: the model must never
-  // invent landscape beyond the photographed tips. Ordinary house/photo restore is Hybrid-only.
-  assert.match(queue, /(?:let|const) protectMaskDataUrl = kind === 'sector' && !polishStage[\s\S]*?buildProtectMask\([\s\S]*?: undefined;/,
-    'only the Hybrid Sector path may add the ordinary photo/house protect mask');
-  assert.match(queue, /if\(historicalActive && availableHistoricalBaseline\)[\s\S]*?buildHistoricalCoverageMask\(/,
-    'historical no-photo areas need a distinct coverage mask');
-  assert.match(completion, /if \(\(sheet\.key === 'sector' && !isPolishedResult \|\| historicalSource\) && sourceImage && protectMask\)/,
-    'restore only the ordinary Hybrid or an actual historical archive coverage mask');
-  assert.match(completion, /currentMask = sheet\.key === 'sector' && !isPolishedResult \? await buildProtectMask/,
-    'the historical exception must not reintroduce ordinary photo patches on polished artwork');
-  assert.match(completion, /if\(historicalSource\)\{const coverage=await buildHistoricalCoverageMask/);
-  assert.match(completion, /: sheet\.key === 'sector'\s*\n\s*\? await finishSectorRef\.current\(factualModelImage, frozenScene, historicalSource\)/,
-    'both Sector stages recompose app-owned analysis and keep the correct historical source');
+  // Before-works sheets added a second restoration purpose: keeping unphotographed ground
+  // blank, including after polish. The old regex incorrectly equated that coverage mask with
+  // the Hybrid-only roof mask. Execute the actual gates so both rules remain independently
+  // capable of failing, rather than pinning the order of their Boolean terms.
+  const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const restoreGates: ts.IfStatement[] = [];
+  const roofGates: ts.Expression[] = [];
+  const inputRoofGates: ts.Expression[] = [];
+  const sectorFinishCalls: ts.CallExpression[] = [];
+  function visit(node: ts.Node) {
+    if (ts.isIfStatement(node)) {
+      const condition = node.expression.getText(tree);
+      if (condition.includes('historicalSource') && condition.includes('sourceImage') && condition.includes('protectMask')
+          && node.thenStatement.getText(tree).includes('restoreProtectedPixels(sourceImage, raw,')) restoreGates.push(node);
+    }
+    if (ts.isVariableDeclaration(node) && node.name.getText(tree) === 'currentMask'
+        && node.initializer && ts.isConditionalExpression(node.initializer)
+        && node.initializer.whenTrue.getText(tree).includes('buildProtectMask(')) roofGates.push(node.initializer.condition);
+    if (ts.isVariableDeclaration(node) && node.name.getText(tree) === 'protectMaskDataUrl'
+        && node.getStart(tree) >= queueStart && node.getEnd() <= queueEnd
+        && node.initializer && ts.isConditionalExpression(node.initializer)
+        && node.initializer.whenTrue.getText(tree).includes('buildProtectMask(')) inputRoofGates.push(node.initializer.condition);
+    if (ts.isCallExpression(node) && node.expression.getText(tree) === 'finishSectorRef.current'
+        && node.arguments[0]?.getText(tree) === 'factualModelImage') sectorFinishCalls.push(node);
+    ts.forEachChild(node, visit);
+  }
+  visit(tree);
+  assert.equal(restoreGates.length, 1, 'one actual restore call owns the coverage/Hybrid decision');
+  assert.equal(roofGates.length, 1, 'one ordinary roof-mask decision remains visible');
+  assert.equal(inputRoofGates.length, 1, 'one queue decision promises the ordinary roof mask');
+  const restore = new Function('sheet', 'sourceImage', 'protectMask', 'isPolishedResult', 'historicalSource',
+    `return Boolean(${restoreGates[0].expression.getText(tree)});`) as (sheet: {key:string}, source: string|null, mask: string|null, polished: boolean, historic: object|null) => boolean;
+  const roof = new Function('sheet', 'isPolishedResult', `return Boolean(${roofGates[0].getText(tree)});`) as (sheet: {key:string}, polished: boolean) => boolean;
+  const inputRoof = new Function('kind', 'polishStage', `return Boolean(${inputRoofGates[0].getText(tree)});`) as (kind: string, polish: boolean) => boolean;
+  for (const key of ['sector', 'base', 'water']) for (const polished of [false, true]) {
+    assert.equal(restore({key}, 'source', 'mask', polished, null), key === 'sector' && !polished, 'ordinary photos restore only Sector Hybrid');
+    assert.equal(roof({key}, polished), key === 'sector' && !polished, 'a polished image must never receive the old photographic roof mask');
+    assert.equal(inputRoof(key, polished), roof({key}, polished), 'queue input and completion must agree about the ordinary roof mask');
+    assert.equal(restore({key}, null, 'mask', polished, {}), false, 'coverage cannot restore missing source pixels');
+    assert.equal(restore({key}, 'source', null, polished, {}), false, 'coverage cannot restore without its recorded mask');
+  }
+  assert.match(queue, /if\s*\(historicalActive && availableHistoricalBaseline\)[\s\S]*buildHistoricalCoverageMask/);
+  assert.equal(restore({key:'sector'}, 'source', 'mask', true, {}), true, 'historic polish still preserves genuinely unphotographed ground');
+  assert.equal(restore({key:'base'}, 'source', 'mask', false, {}), true, 'the Existing Site baseline preserves the same coverage');
+  assert.match(restoreGates[0].thenStatement.getText(tree), /if\s*\(historicalSource\)[\s\S]*buildHistoricalCoverageMask/);
+  assert.match(restoreGates[0].thenStatement.getText(tree), /stackOverlayImages\(coverage,currentMask/);
+  assert.equal(sectorFinishCalls.length, 1, 'the retained map still has one Sector finisher');
+  assert.deepEqual(sectorFinishCalls[0].arguments.map(a => a.getText(tree)), ['factualModelImage', 'frozenScene', 'historicalSource'],
+    'Sector recomposes the actual restored image with its frozen geometry and its own historical source');
   assert.doesNotMatch(
     completion,
     /sectorPolishOwnsPage/,
@@ -467,17 +504,45 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
   );
 });
 
-test('the shared exact-layer stack puts the boundary below every sheet’s canopies', () => {
-  // Sheet 06 was corrected first, but a Structures-only repair would leave sheet 07 drawing a
-  // fence over context trees. The shared overlay owns this order, before any sheet branch.
+test('the shared exact-layer stack puts each boundary treatment below the sheet’s features', async () => {
+  // Zones has a quieter boundary than the other sheets. Exercise paint order rather than
+  // treating the first Zones conditional as the start of feature painting.
   const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
-  const start = source.indexOf('async function buildExactLayerOverlay(');
-  const end = source.indexOf('/** Sheet 01 uses the same measured editorial composition', start);
-  assert.ok(start >= 0 && end > start, 'expected the shared exact-layer overlay');
-  const overlay = source.slice(start, end);
-  const boundary = overlay.indexOf('drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);');
-  const firstSheetBranch = overlay.indexOf("if (filter === 'zones')");
-  assert.ok(boundary >= 0 && boundary < firstSheetBranch, 'boundary must paint before context or content items');
-  const calls = overlay.match(/^\s*drawBlueprintBoundary\(/gm) ?? [];
-  assert.equal(calls.length, 1, 'one shared boundary pass prevents sheet-specific draw-order drift');
+  const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  let declaration: ts.FunctionDeclaration | undefined;
+  tree.forEachChild(node => {
+    if (ts.isFunctionDeclaration(node) && node.name?.text === 'buildExactLayerOverlay') declaration = node;
+  });
+  assert.ok(declaration);
+  const javascript = ts.transpileModule(declaration.getText(tree), {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
+  }).outputText;
+  const events: string[] = [];
+  const feature = () => events.push('feature');
+  const ctx = { save() {}, restore() {}, drawImage() {}, globalAlpha: 1 };
+  const scope = {
+    preloadReferenceFeatureArtwork: async () => {},
+    document: { createElement: () => ({ getContext: () => ctx }) },
+    drawBlueprintBoundary: () => events.push('boundary'),
+    drawZoneBoundary: () => events.push('zone-boundary'),
+    drawExactFeaturesWithPresentation: (_ctx: unknown, _w: number, _h: number, _style: unknown, paint: (ctx: unknown) => void) => paint(ctx),
+    drawFilteredLines: () => {},
+    drawFilteredItems: feature,
+    drawWaterFeatures: feature,
+    drawContextItems: feature,
+    drawWaterRoutes: () => {},
+    drawWaterLeaderLabels: () => {},
+    drawEarthworksFeatures: feature,
+    buildZoneOverlay: () => undefined,
+    EXACT_CONTEXT_ALPHA: { zones: 0.5, structures: 0.5 },
+    drainCanvasToDataUrl: () => 'overlay',
+  };
+  const paint = new Function(...Object.keys(scope), javascript + '; return buildExactLayerOverlay;')(...Object.values(scope));
+  for (const sheet of ['zones', 'water', 'earthworks', 'planting', 'structures', 'all']) {
+    events.length = 0;
+    await paint({}, { imgW: 100, mPerPx: 1, satDataUrl: 'photo' }, {}, sheet, 100, 100);
+    assert.equal(events[0], sheet === 'zones' ? 'zone-boundary' : 'boundary', sheet);
+    assert.ok(events.includes('feature'), sheet + ' must exercise actual feature painting');
+    assert.equal(events.filter(event => event.endsWith('boundary')).length, 1, sheet + ' paints one boundary');
+  }
 });
