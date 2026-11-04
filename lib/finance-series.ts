@@ -43,7 +43,7 @@ import { recordWeightKg, quantityTotals, type RecordUnit } from './farm-records'
 
 import type { ExpenseLog, ProductionLog, SalesLog } from './db/types';
 import type { SavedInvoice } from './invoices';
-import { cashIncomeTotal, cashLedgerSales, invoiceSalesForPaidInvoice } from './invoice-sales';
+import { cashIncomeTotal, cashLedgerSales, invoiceQuantitiesForPaidInvoice, reviewInvoiceRandPeriod, type InvoiceRandReview } from './invoice-sales';
 import { produceDisplayName } from './perennial-produce';
 
 export interface FinanceMonthPoint {
@@ -57,10 +57,11 @@ export interface FinanceMonthPoint {
   /** 'Aug 2026' — for tooltips and anywhere the year is not already obvious. */
   longLabel: string;
 
-  moneyInZar: number;
+  moneyReview: InvoiceRandReview;
+  moneyInZar: number | null;
   moneyOutZar: number;
   /** in − out for this month alone. Negative is a real and common answer. */
-  netZar: number;
+  netZar: number | null;
   /**
    * Net summed from the first month of the window to this one.
    *
@@ -68,7 +69,7 @@ export interface FinanceMonthPoint {
    * figure and no account. It answers "am I ahead or behind across these months",
    * starting from zero at the left edge of the chart.
    */
-  runningZar: number;
+  runningZar: number | null;
 
   producedKg: number;
   soldKg: number;
@@ -82,14 +83,15 @@ export interface FinanceMonthPoint {
 }
 
 export interface FinanceSeries {
+  moneyReview: InvoiceRandReview;
   months: FinanceMonthPoint[];
   windowMonths: number;
   productionQuantities: Array<{ unit: RecordUnit; quantity: number }>;
   salesQuantities: Array<{ unit: RecordUnit; quantity: number }>;
 
-  totalInZar: number;
+  totalInZar: number | null;
   totalOutZar: number;
-  totalNetZar: number;
+  totalNetZar: number | null;
   totalProducedKg: number;
   totalSoldKg: number;
   /**
@@ -242,7 +244,8 @@ export function buildFinanceSeries(
     (invoice) => invoice.status === 'paid' && !!invoice.paidAt && Number.isFinite(Date.parse(invoice.paidAt)),
   );
   const ledgerSales = cashLedgerSales(salesRows, allInvoiceIds);
-  const invoiceKgLines = paidInvoices.flatMap(invoiceSalesForPaidInvoice);
+  const invoiceKgLines = paidInvoices.flatMap(invoiceQuantitiesForPaidInvoice);
+  const moneyReview = reviewInvoiceRandPeriod(invoices, { status: 'paid', dateField: 'paidAt', inPeriod: iso => inWindow.has(monthKeyOf(iso) ?? '') });
 
   type Bucket = {
     moneyInSales: SalesLog[];
@@ -313,15 +316,16 @@ export function buildFinanceSeries(
     b.records += 1;
   }
 
-  let running = 0;
+  let running: number | null = 0;
   const months: FinanceMonthPoint[] = frame.map(({ year, month, key }) => {
     const b = buckets.get(key);
-    const moneyInZar = b ? cashIncomeTotal(b.moneyInSales, b.moneyInInvoices) : 0;
+    const monthReview = reviewInvoiceRandPeriod(invoices, { status: 'paid', dateField: 'paidAt', inPeriod: iso => monthKeyOf(iso) === key });
+    const moneyInZar = monthReview.status === 'held' ? null : b ? cashIncomeTotal(b.moneyInSales, b.moneyInInvoices) : 0;
     const moneyOutZar = b?.moneyOut ?? 0;
     const producedKg = b?.producedKg ?? 0;
     const soldKg = b?.soldKg ?? 0;
-    const netZar = moneyInZar - moneyOutZar;
-    running += netZar;
+    const netZar = moneyInZar === null ? null : moneyInZar - moneyOutZar;
+    running = running === null || netZar === null ? null : running + netZar;
     const soldExceedsProduced = soldKg > producedKg;
     return {
       year,
@@ -330,12 +334,13 @@ export function buildFinanceSeries(
       label: MONTH_SHORT[month - 1],
       longLabel: `${MONTH_SHORT[month - 1]} ${year}`,
       moneyInZar,
+      moneyReview: monthReview,
       moneyOutZar,
       netZar,
       runningZar: running,
       producedKg,
       soldKg,
-      keptKg: soldExceedsProduced ? null : producedKg - soldKg,
+      keptKg: monthReview.dateCoverageUnknown || soldExceedsProduced ? null : producedKg - soldKg,
       soldExceedsProduced,
       hasRecords: (b?.records ?? 0) > 0,
     };
@@ -344,7 +349,7 @@ export function buildFinanceSeries(
   const sum = (pick: (m: FinanceMonthPoint) => number) => months.reduce((total, m) => total + pick(m), 0);
   const totalProducedKg = sum((m) => m.producedKg);
   const totalSoldKg = sum((m) => m.soldKg);
-  const totalInZar = sum((m) => m.moneyInZar);
+  const totalInZar = moneyReview.status === 'held' || months.some(month => month.moneyInZar === null) ? null : sum((m) => m.moneyInZar!);
   const totalOutZar = sum((m) => m.moneyOutZar);
 
   // Keys are '2026-08', so lexicographic order is chronological order.
@@ -354,6 +359,7 @@ export function buildFinanceSeries(
     : null;
 
   return {
+    moneyReview,
     months,
     windowMonths,
     productionQuantities: quantityTotals(productionRows.filter(row => {
@@ -366,13 +372,13 @@ export function buildFinanceSeries(
     })),
     totalInZar,
     totalOutZar,
-    totalNetZar: totalInZar - totalOutZar,
+    totalNetZar: totalInZar === null ? null : totalInZar - totalOutZar,
     totalProducedKg,
     totalSoldKg,
     // Same refusal as the per-month figure: if the window sold more than it logged
     // picking, the window's harvest total is missing rows and the difference is
     // not "what was kept".
-    totalKeptKg: totalSoldKg > totalProducedKg ? null : totalProducedKg - totalSoldKg,
+    totalKeptKg: moneyReview.dateCoverageUnknown || totalSoldKg > totalProducedKg ? null : totalProducedKg - totalSoldKg,
     hasRecords: months.some((m) => m.hasRecords),
     earlierRecords: recordedKeys.some((key) => !inWindow.has(key)),
     firstRecordLabel,

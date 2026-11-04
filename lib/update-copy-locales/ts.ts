@@ -422,5 +422,10 @@ const copy:UpdateCopy={
   "Record a field observation": "Rekhoda leswi u swi voneke ensin’wini",
   "Task Planner → Dated work → Record what happened": "Mupulani wa Mintirho → Mintirho leyi nga ni masiku → Rekhoda leswi humeleleke",
   "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Hlawula siku leri u voneke swo karhi ha rona, tsala notsi kutani u yi tiyisisa. Jenali yi hlayisa xikombo xa ntirho lowu kunguhatiweke hi ku hambana; tirhekhodo ta nxaxamelo wo kambela, ntshovelo, xitoko ni ku xavisa a ti cinci.",
+  // Invoice-currency release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-currency-release-drafts.json.
+  "Choose the currency for each new invoice.": "Hlawula muxaka wa mali eka invoyisi yin’wana ni yin’wana leyintshwa.",
+  "Keep invoice currencies clear": "Endla leswaku mixaka ya mali ya ti-invoyisi yi va erivaleni",
+  "Invoice → Currency for this invoice": "Invoyisi → Muxaka wa mali wa invoyisi leyi",
+  "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Hlawula muxaka wa mali lowu pfumelelaniweke na muxavi. Ti-invoyisi leti hlayisiweke ti hlayisa muxaka wa tona wa mali; mintsengo a yi hundzuluxeriwi eka mali yin’wana, naswona mixaka yin’wana ya mali yi hlayisiwa yi hambanile ni mintsengo ya tirhandi.",
 };
 export default copy;

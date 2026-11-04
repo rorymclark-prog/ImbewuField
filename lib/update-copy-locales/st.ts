@@ -422,5 +422,10 @@ const copy:UpdateCopy={
   "Record a field observation": "Ngola seo o se boneng tshimong",
   "Task Planner → Dated work → Record what happened": "Moralo wa Mesebetsi → Mosebetsi o nang le matsatsi → Ngola se etsahetseng",
   "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Kgetha letsatsi leo o boneng ho hong ka lona, ngola ntlha mme o e netefatse. Jenale e boloka tshupiso ya mosebetsi o rerilweng ka thoko; direkoto tsa lenane la ho hlahloba, kotulo, setoko le thekiso ha di fetohe.",
+  // Invoice-currency release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-currency-release-drafts.json.
+  "Choose the currency for each new invoice.": "Kgetha mofuta wa tjhelete bakeng sa invoice e nngwe le e nngwe e ntjha.",
+  "Keep invoice currencies clear": "Boloka mefuta ya tjhelete ya di-invoice e hlakile",
+  "Invoice → Currency for this invoice": "Invoice → Mofuta wa tjhelete wa invoice ena",
+  "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Kgetha mofuta wa tjhelete oo o dumellaneng le moreki ka wona. Di-invoice tse bolokilweng di boloka mofuta wa tsona wa tjhelete; dipalo tsa tjhelete ha di fetolelwe mofuteng o mong wa tjhelete, mme mefuta e meng ya tjhelete e dula e arohane le dikakaretso tsa diranta.",
 };
 export default copy;

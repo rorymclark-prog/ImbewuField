@@ -47,6 +47,7 @@ import {
   releaseAllDocumentJournalLeases, transferJournalStoragePair, readJournalStorageTransferHold,
   type JournalStorageContext, type JournalStorageLocks,
 } from '@/lib/journal-storage';
+import { releaseAllDocumentInvoiceLeases } from '@/lib/invoice-storage';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -173,6 +174,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         releaseAllDocumentCropPlanLeases();
         releaseAllDocumentJournalLeases();
+        releaseAllDocumentInvoiceLeases();
         if (!isCurrent()) return;
         const target = cropMigrationContext(uid, isCurrent);
         await transferCropPlanStoragePair(cropMigrationContext(null, isCurrent), target, {
@@ -245,6 +247,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const epoch = ++authEpochRef.current;
       releaseAllDocumentCropPlanLeases();
       releaseAllDocumentJournalLeases();
+      releaseAllDocumentInvoiceLeases();
       const nextUid = firebaseUser?.uid ?? null;
       activeUidRef.current = nextUid;
       const isStillCurrent = () =>
@@ -297,6 +300,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       providerAliveRef.current = false;
       releaseAllDocumentCropPlanLeases();
       releaseAllDocumentJournalLeases();
+      releaseAllDocumentInvoiceLeases();
       authEpochRef.current += 1;
       unsub();
     };

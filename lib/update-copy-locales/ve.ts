@@ -422,5 +422,10 @@ const copy:UpdateCopy={
   "Record a field observation": "Rekhodani zwe na zwi vhona tsimuni",
   "Task Planner → Dated work → Record what happened": "Mupulani wa Mishumo → Mushumo u re na madatumu → Rekhodani zwe zwa itea",
   "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Khethani ḓuvha ḽe na vhona tshithu ngaḽo, ṅwalani notsi ni i khwaṱhisedze. Dzhenala i vhulunga ndaedzo ya mushumo wo pulaniwaho nga thungo; rekhodo dza mutevhe wa u sedzulusa, khaṋo, tshitoko na thengiso a dzi shanduki.",
+  // Invoice-currency release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-currency-release-drafts.json.
+  "Choose the currency for each new invoice.": "Khethani lushaka lwa tshelede lwa invoisi iṅwe na iṅwe ntswa.",
+  "Keep invoice currencies clear": "Itani uri tshaka dza tshelede dza dzi-invoisi dzi vhe khagala",
+  "Invoice → Currency for this invoice": "Invoisi → Lushaka lwa tshelede lwa invoisi iyi",
+  "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Khethani lushaka lwa tshelede lwe na tendelana na murengi ngaḽo. Dzi-invoisi dzo vhulungwaho dzi dzula na lushaka lwadzo lwa tshelede; mbalo dza tshelede a dzi shandukiswi dza vha kha luṅwe lushaka lwa tshelede, nahone dziṅwe tshaka dza tshelede dzi dzula dzo fhambana na ṱhanganyelo dza rand.",
 };
 export default copy;

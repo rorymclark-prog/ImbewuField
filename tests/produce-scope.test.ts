@@ -22,6 +22,13 @@ function sale(crop: string, kg: number, amount: number, at: string): SalesLog {
   return { id: `s-${crop}-${at}`, profile_id: 'p', garden_id: null, crop, kg, amount, buyer: null, sold_at: at, created_at: at };
 }
 
+// These existing fixtures contain only established Rand records. A held result
+// must fail their arithmetic checks rather than being treated as zero.
+function knownRand(value: number | null): number {
+  assert.ok(value !== null, 'ordinary Rand evidence must retain a known monetary result');
+  return value;
+}
+
 test('produce scope: an annual, a perennial and a name of the farmer\'s own are told apart', () => {
   assert.equal(produceKindOf('Tomatoes'), 'annual');
   assert.equal(produceKindOf('Avocado'), 'perennial');
@@ -170,7 +177,7 @@ test('produce scope: taking the orchard off that card never moves the farm\'s mo
     sale('Avocados', 40, 800, '2026-08-06T08:00:00.000Z'),
     sale('Tomatoes', 5, 100, '2026-08-07T08:00:00.000Z'),
   ], [], 'year', NOW, []);
-  const total = metrics.gardenMargins.reduce((s, m) => s + m.grossMarginZar, 0);
+  const total = metrics.gardenMargins.reduce((s, m) => s + knownRand(m.grossMarginZar), 0);
   assert.equal(total, 900, 'the avocado sale left the farm margin');
 });
 
@@ -237,8 +244,11 @@ test('an orchard row never gains a per-area figure by any route', () => {
   }
   assert.deepEqual(
     Object.keys(metrics.perennialCrops[0]).sort(),
-    ['cropName', 'harvestedKg', 'hasHarvest', 'hasSale', 'priceZarPerKg', 'soldKg', 'turnoverZar'],
+    // Currency review is not an area measurement. Retain the closed orchard
+    // shape and its PerM2 prohibition while allowing this explicit uncertainty.
+    ['cropName', 'harvestedKg', 'hasHarvest', 'hasSale', 'moneyReview', 'priceZarPerKg', 'soldKg', 'turnoverZar'],
   );
+  assert.equal(metrics.perennialCrops[0].moneyReview.status, 'ready', 'ordinary recorded Rand evidence retains a usable orchard monetary result');
 });
 
 // ── One produce, one row (2026-08-23) ────────────────────────────────────────

@@ -25,7 +25,8 @@ import { recordWeightKg, quantityTotals, recordUnit, type RecordUnit } from './f
 import type { ExpenseCategory, ExpenseLog, ProductionLog, SalesLog } from './db/types';
 import { buildCropAliasIndex, cropIdentityMapKey, cropIdentityOf } from './crop-identity';
 import type { SavedInvoice } from './invoices';
-import { cashIncomeTotal, cashLedgerSales, invoiceSalesForPaidInvoice } from './invoice-sales';
+import { cashIncomeTotal, cashLedgerSales, invoiceSalesForPaidInvoice, invoiceQuantitiesForPaidInvoice, reviewInvoiceRandBasis, reviewInvoiceRandPeriod, mergeInvoiceRandReviews, type InvoiceRandReview } from './invoice-sales';
+import { invoiceRandConsumerEligibility } from './invoice-currency';
 
 /* ── Shared parsing helpers ──────────────────────────────────────────────── */
 
@@ -58,13 +59,14 @@ function median(sortedAscending: readonly number[]): number {
 /* ── Monthly cash flow ───────────────────────────────────────────────────── */
 
 export interface CreditPackMonth {
+  moneyReview?: InvoiceRandReview;
   /** 'YYYY-MM', zero-padded, sortable as a string. */
   monthKey: string;
   /** 'Jan 2026' — for the printed table. */
   label: string;
-  incomeZar: number;
+  incomeZar: number | null;
   expensesZar: number;
-  netZar: number;
+  netZar: number | null;
   saleCount: number;
   expenseCount: number;
 }
@@ -125,7 +127,11 @@ export function buildMonthlyCashFlow(
   for (const row of ledgerSales) noteEarliest(row.sold_at);
   for (const invoice of paidInvoices) noteEarliest(invoice.paidAt);
   for (const row of expenses) noteEarliest(row.spent_at);
-  if (earliestIdx === null) return []; // nothing dated — no window to build
+  if (earliestIdx === null) {
+    const undated = reviewInvoiceRandPeriod(invoices, { status: 'paid', dateField: 'paidAt', inPeriod: () => false });
+    if (undated.status !== 'held') return []; // nothing dated — no window to build
+    earliestIdx = nowIdx; // A disclosure row, not invented income or sale activity.
+  }
 
   const span = Math.max(1, Math.trunc(monthsBack) || CREDIT_PACK_TRAILING_MONTHS);
   const windowStart = Math.max(earliestIdx, nowIdx - span + 1);
@@ -161,10 +167,11 @@ export function buildMonthlyCashFlow(
   for (const invoice of paidInvoices) {
     const bucket = months.get(monthKeyOf(parsedDate(invoice.paidAt)!));
     if (!bucket) continue;
+    bucket.saleCount += 1;
+    if (invoiceRandConsumerEligibility(invoice).status === 'held') continue;
     const rows = invoicesByMonth.get(bucket.monthKey) ?? [];
     rows.push({ ...invoice, total: nonNegative(invoice.total) });
     invoicesByMonth.set(bucket.monthKey, rows);
-    bucket.saleCount += 1;
   }
   for (const row of expenses) {
     const d = parsedDate(row.spent_at);
@@ -177,8 +184,9 @@ export function buildMonthlyCashFlow(
 
   const out = [...months.values()].sort((a, b) => a.monthKey.localeCompare(b.monthKey));
   for (const m of out) {
-    m.incomeZar = cashIncomeTotal(salesByMonth.get(m.monthKey) ?? [], invoicesByMonth.get(m.monthKey) ?? []);
-    m.netZar = m.incomeZar - m.expensesZar;
+    m.moneyReview = reviewInvoiceRandPeriod(invoices, { status: 'paid', dateField: 'paidAt', inPeriod: iso => monthKeyOf(parsedDate(iso)!) === m.monthKey });
+    m.incomeZar = m.moneyReview.status === 'held' ? null : cashIncomeTotal(salesByMonth.get(m.monthKey) ?? [], invoicesByMonth.get(m.monthKey) ?? []);
+    m.netZar = m.incomeZar === null ? null : m.incomeZar - m.expensesZar;
   }
   return out;
 }
@@ -186,14 +194,15 @@ export function buildMonthlyCashFlow(
 /* ── Income consistency ──────────────────────────────────────────────────── */
 
 export interface CreditPackConsistency {
+  moneyReview: InvoiceRandReview;
   monthsCovered: number;
-  monthsWithIncome: number;
+  monthsWithIncome: number | null;
   /** monthsWithIncome / monthsCovered, 0 when there is no window at all. */
-  consistencyRatio: number;
+  consistencyRatio: number | null;
   /** Averaged across every covered month, quiet months included — the honest figure for
    *  "how much do they actually bring in most months", not "how much when they sell something". */
-  avgMonthlyIncomeZar: number;
-  medianMonthlyIncomeZar: number;
+  avgMonthlyIncomeZar: number | null;
+  medianMonthlyIncomeZar: number | null;
   bestMonth: CreditPackMonth | null;
   /** The lowest-income month AMONG months that had a sale — comparing it against a R0 month would
    *  not tell a lender anything about the farmer's leanest active month. */
@@ -205,19 +214,23 @@ export const MIN_MONTHS_WITH_INCOME_FOR_TREND = 2;
 
 export function creditPackIncomeConsistency(months: readonly CreditPackMonth[]): CreditPackConsistency {
   const monthsCovered = months.length;
-  const withIncome = months.filter((m) => m.incomeZar > 0);
+  const moneyReview = mergeInvoiceRandReviews(...months.flatMap(month => month.moneyReview ? [month.moneyReview] : []));
+  if (moneyReview.status === 'held' || months.some(month => month.incomeZar === null)) return { moneyReview, monthsCovered,
+    monthsWithIncome: null, consistencyRatio: null, avgMonthlyIncomeZar: null, medianMonthlyIncomeZar: null, bestMonth: null, leanestActiveMonth: null };
+  const withIncome = months.filter((m) => m.incomeZar! > 0);
   const monthsWithIncome = withIncome.length;
-  const totalIncome = months.reduce((s, m) => s + m.incomeZar, 0);
-  const sortedIncomes = months.map((m) => m.incomeZar).sort((a, b) => a - b);
+  const totalIncome = months.reduce((s, m) => s + m.incomeZar!, 0);
+  const sortedIncomes = months.map((m) => m.incomeZar!).sort((a, b) => a - b);
 
   let bestMonth: CreditPackMonth | null = null;
   let leanestActiveMonth: CreditPackMonth | null = null;
   for (const m of withIncome) {
-    if (!bestMonth || m.incomeZar > bestMonth.incomeZar) bestMonth = m;
-    if (!leanestActiveMonth || m.incomeZar < leanestActiveMonth.incomeZar) leanestActiveMonth = m;
+    if (!bestMonth || m.incomeZar! > bestMonth.incomeZar!) bestMonth = m;
+    if (!leanestActiveMonth || m.incomeZar! < leanestActiveMonth.incomeZar!) leanestActiveMonth = m;
   }
 
   return {
+    moneyReview,
     monthsCovered,
     monthsWithIncome,
     consistencyRatio: monthsCovered > 0 ? monthsWithIncome / monthsCovered : 0,
@@ -231,7 +244,7 @@ export function creditPackIncomeConsistency(months: readonly CreditPackMonth[]):
 export function hasEnoughForConsistencyTrend(
   consistency: Pick<CreditPackConsistency, 'monthsWithIncome'>,
 ): boolean {
-  return consistency.monthsWithIncome >= MIN_MONTHS_WITH_INCOME_FOR_TREND;
+  return consistency.monthsWithIncome !== null && consistency.monthsWithIncome >= MIN_MONTHS_WITH_INCOME_FOR_TREND;
 }
 
 /* ── Cash flow summary ───────────────────────────────────────────────────── */
@@ -243,9 +256,10 @@ export interface CreditPackExpenseCategoryTotal {
 }
 
 export interface CreditPackCashFlowSummary {
-  totalIncomeZar: number;
+  moneyReview: InvoiceRandReview;
+  totalIncomeZar: number | null;
   totalExpensesZar: number;
-  netZar: number;
+  netZar: number | null;
   monthsCovered: number;
   /** Highest total first. Only categories that actually appear in the window are listed. */
   byCategory: CreditPackExpenseCategoryTotal[];
@@ -261,7 +275,8 @@ export function creditPackCashFlowSummary(
   months: readonly CreditPackMonth[],
   expenses: readonly ExpenseLog[],
 ): CreditPackCashFlowSummary {
-  const totalIncomeZar = months.reduce((s, m) => s + m.incomeZar, 0);
+  const moneyReview = mergeInvoiceRandReviews(...months.flatMap(month => month.moneyReview ? [month.moneyReview] : []));
+  const totalIncomeZar = moneyReview.status === 'held' || months.some(month => month.incomeZar === null) ? null : months.reduce((s, m) => s + m.incomeZar!, 0);
   const totalExpensesZar = months.reduce((s, m) => s + m.expensesZar, 0);
   const inWindow = new Set(months.map((m) => m.monthKey));
 
@@ -277,9 +292,10 @@ export function creditPackCashFlowSummary(
   }
 
   return {
+    moneyReview,
     totalIncomeZar,
     totalExpensesZar,
-    netZar: totalIncomeZar - totalExpensesZar,
+    netZar: totalIncomeZar === null ? null : totalIncomeZar - totalExpensesZar,
     monthsCovered: months.length,
     byCategory: [...totals.values()].sort((a, b) => b.zar - a.zar),
   };
@@ -291,20 +307,21 @@ export interface CreditPackCropTotal {
   crop: string;
   harvestedKg: number;
   soldKg: number;
-  revenueZar: number;
+  revenueZar: number | null;
 }
 
 export interface CreditPackTrackRecord {
+  moneyReview: InvoiceRandReview;
   harvestEntryCount: number;
   totalHarvestedKg: number;
   harvestQuantities: Array<{ unit: RecordUnit; quantity: number }>;
   soldQuantities: Array<{ unit: RecordUnit; quantity: number }>;
-  countedProduce: Array<{ crop: string; harvested: Array<{ unit: RecordUnit; quantity: number }>; sold: Array<{ unit: RecordUnit; quantity: number }>; revenueZar: number }>;
+  countedProduce: Array<{ crop: string; harvested: Array<{ unit: RecordUnit; quantity: number }>; sold: Array<{ unit: RecordUnit; quantity: number }>; revenueZar: number | null }>;
   firstHarvestIso: string | null;
   lastHarvestIso: string | null;
   saleEntryCount: number;
   totalSoldKg: number;
-  totalRevenueZar: number;
+  totalRevenueZar: number | null;
   firstSaleIso: string | null;
   lastSaleIso: string | null;
   /** Highest combined harvested+sold weight first, capped for a printed table. */
@@ -321,7 +338,7 @@ export interface CreditPackTrackRecord {
   omittedCrops: string[];
   omittedHarvestedKg: number;
   omittedSoldKg: number;
-  omittedRevenueZar: number;
+  omittedRevenueZar: number | null;
 }
 
 export const MIN_HARVESTS_FOR_TRACK_RECORD = 1;
@@ -336,8 +353,15 @@ export function creditPackTrackRecord(
   sales: readonly SalesLog[],
   invoices: readonly SavedInvoice[] = [],
 ): CreditPackTrackRecord {
-  const crops = new Map<string, CreditPackCropTotal>();
+  type KnownCropTotal = Omit<CreditPackCropTotal, 'revenueZar'> & { revenueZar: number };
+  const crops = new Map<string, KnownCropTotal>();
   const aliases = buildCropAliasIndex();
+  const moneyReview = reviewInvoiceRandBasis(invoices.filter(invoice => invoice.status === 'paid'), invoices);
+  const cropHeld = (name: string) => {
+    const selected = invoices.filter(invoice => invoice.status === 'paid' && invoice.items.some(item =>
+      cropIdentityMapKey(cropIdentityOf(item.desc, aliases)) === cropIdentityMapKey(cropIdentityOf(name, aliases))));
+    return reviewInvoiceRandBasis(selected, invoices).status === 'held';
+  };
   /* WHICH CROP A ROW IS ABOUT — see lib/crop-identity.ts.
      This used to be `display.toLocaleLowerCase('en-ZA')`, i.e. the farmer's raw typing was the
      identity. A harvest arrives from a picker as the catalogue's "Avocado"; the sale of that same
@@ -348,12 +372,12 @@ export function creditPackTrackRecord(
      with "R0,00" printed against fruit the farmer had in fact sold. Both halves are true sums, and
      the file's promise that every number is a direct total of the farmer's own rows held the whole
      time. What was invented was the IDENTITY those true totals were filed under. */
-  const ensureCrop = (name: string): CreditPackCropTotal => {
+  const ensureCrop = (name: string): KnownCropTotal => {
     const identity = cropIdentityOf(name, aliases);
     const key = cropIdentityMapKey(identity);
     const existing = crops.get(key);
     if (existing) return existing;
-    const created: CreditPackCropTotal = { crop: identity.label, harvestedKg: 0, soldKg: 0, revenueZar: 0 };
+    const created: KnownCropTotal = { crop: identity.label, harvestedKg: 0, soldKg: 0, revenueZar: 0 };
     crops.set(key, created);
     return created;
   };
@@ -385,7 +409,9 @@ export function creditPackTrackRecord(
   let lastSaleIso: string | null = null;
   const cropSales = [
     ...cashLedgerSales(sales, invoices.map(invoice => invoice.id)),
-    ...invoices.flatMap(invoiceSalesForPaidInvoice),
+    ...invoices.flatMap(invoice => invoiceRandConsumerEligibility(invoice).status === 'held'
+      ? invoiceQuantitiesForPaidInvoice(invoice).map(quantity => ({ ...quantity, amount: 0 }))
+      : invoiceSalesForPaidInvoice(invoice)),
   ];
   for (const row of cropSales) {
     const d = parsedDate(row.sold_at);
@@ -410,6 +436,7 @@ export function creditPackTrackRecord(
   const omitted = ranked.slice(TOP_CROPS_LIMIT);
 
   return {
+    moneyReview,
     harvestEntryCount,
     totalHarvestedKg,
     harvestQuantities: quantityTotals(production.filter(row => parsedDate(row.logged_at))),
@@ -421,20 +448,20 @@ export function creditPackTrackRecord(
       const harvested = quantityTotals(production.filter(row => row.crop === crop && parsedDate(row.logged_at) && recordUnit(row) !== 'kg'));
       const soldRows = cropSales.filter(row => row.crop === crop && parsedDate(row.sold_at) && recordUnit(row) !== 'kg');
       const sold = quantityTotals(soldRows);
-      return harvested.length || sold.length ? [{ crop, harvested, sold, revenueZar: soldRows.reduce((sum, row) => sum + nonNegative(row.amount), 0) }] : [];
+      return harvested.length || sold.length ? [{ crop, harvested, sold, revenueZar: cropHeld(crop) ? null : soldRows.reduce((sum, row) => sum + nonNegative(row.amount), 0) }] : [];
     }),
     firstHarvestIso,
     lastHarvestIso,
     saleEntryCount,
     totalSoldKg,
-    totalRevenueZar,
+    totalRevenueZar: moneyReview.status === 'held' ? null : totalRevenueZar,
     firstSaleIso,
     lastSaleIso,
-    topCrops,
+    topCrops: topCrops.map(crop => ({ ...crop, revenueZar: cropHeld(crop.crop) ? null : crop.revenueZar })),
     omittedCrops: omitted.map((c) => c.crop),
     omittedHarvestedKg: omitted.reduce((t, c) => t + c.harvestedKg, 0),
     omittedSoldKg: omitted.reduce((t, c) => t + c.soldKg, 0),
-    omittedRevenueZar: omitted.reduce((t, c) => t + c.revenueZar, 0),
+    omittedRevenueZar: omitted.some(crop => cropHeld(crop.crop)) ? null : omitted.reduce((t, c) => t + c.revenueZar, 0),
   };
 }
 

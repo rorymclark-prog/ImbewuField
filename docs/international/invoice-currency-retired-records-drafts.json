@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "status": "retired-unreviewed-ai-drafts",
+  "provenance": "preserved-existing-dictionary",
+  "retiredBy": "Codex",
+  "runtimeActivation": false,
+  "humanApproval": false,
+  "fluentApproval": false,
+  "sourceFile": "lib/records-regional-drafts-data.ts",
+  "sourceFileSha256": "bb727ed3203b546059615cde24943b8d79c07cf2710aa6511639360b2ff8ac6d",
+  "remainingDictionarySha256AtRetirement": "37b6c07a77a9a8206309a4b6d727268e6982b0deed5501724033878d0b64e2d6",
+  "preservedOtherDictionaryBytes": true,
+  "originalReviewPackets": "docs/translation-reviews/records-finance-2026-10-06/draft-{st,ve,ts}.json",
+  "originalReviewPacketsUnchanged": true,
+  "entries": [
+    {
+      "english": "Orchard is switched off, so this card leaves out {picked} picked and {sold} sold: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.",
+      "messageSha256": "3d1d162fe879f5961a23f64c0f9e231b9fbc1df2b664cd25728cab7b031d4127",
+      "translations": {
+        "st": "Serapa sa difate se timilwe, ka hona karete ena e siea {picked} e kotutsweng le {sold} e rekisitsweng: {names}. Diranta tse ding leqepheng lena di ntse di bala dithekiso tseo — ke dikilograma tsa mona feela tse sefilweng.",
+        "ve": "Ngade ya miri ya mitshelo yo dzimwa, ngauralo {picked} zwo kaṋwaho na {sold} zwo rengiswaho a zwi katelwi kha khadi iyi: {names}. Mbalo dza rand dziṅwe kha peji iyi dzi kha ḓi vhala idzo thengiso — ndi kg dza hafha fhedzi dzi sa katelwiho.",
+        "ts": "Ntanga wa mirhi wu timiwile, hikwalaho khadi leri a ri katsi {picked} leswi tshoveriweke ni {sold} leswi xavisiweke: {names}. Tirhandi eka papila leri ti ha hlayela ku xavisa loku — i kg laha ntsena leti nga katsiwiki."
+      },
+      "sourceFile": "lib/records-regional-drafts-data.ts",
+      "sourceFileSha256": "bb727ed3203b546059615cde24943b8d79c07cf2710aa6511639360b2ff8ac6d",
+      "status": "retired",
+      "reason": "The former sentence claimed Rand figures elsewhere counted these sales. Currency and source holds now make that universal claim invalid; the replacement keeps physical filtering separate from invoice-currency review.",
+      "replacementEnglish": "Orchard is switched off, so this card leaves out {picked} picked and {sold} sold: {names}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review."
+    },
+    {
+      "english": "Orchard is switched off, so this card leaves out {picked} picked: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.",
+      "messageSha256": "0e53168744efe9ace73fb45faeb392ef64521ae9d1956aed4fd08631d79daec5",
+      "translations": {
+        "st": "Serapa sa difate se timilwe, ka hona karete ena e siea {picked} e kotutsweng: {names}. Diranta tse ding leqepheng lena di ntse di bala dithekiso tseo — ke dikilograma tsa mona feela tse sefilweng.",
+        "ve": "Ngade ya miri ya mitshelo yo dzimwa, ngauralo {picked} zwo kaṋwaho a zwi katelwi kha khadi iyi: {names}. Mbalo dza rand dziṅwe kha peji iyi dzi kha ḓi vhala idzo thengiso — ndi kg dza hafha fhedzi dzi sa katelwiho.",
+        "ts": "Ntanga wa mirhi wu timiwile, hikwalaho khadi leri a ri katsi {picked} leswi tshoveriweke: {names}. Tirhandi eka papila leri ti ha hlayela ku xavisa loku — i kg laha ntsena leti nga katsiwiki."
+      },
+      "sourceFile": "lib/records-regional-drafts-data.ts",
+      "sourceFileSha256": "bb727ed3203b546059615cde24943b8d79c07cf2710aa6511639360b2ff8ac6d",
+      "status": "retired",
+      "reason": "The former sentence claimed Rand figures elsewhere counted these sales. Currency and source holds now make that universal claim invalid; the replacement keeps physical filtering separate from invoice-currency review.",
+      "replacementEnglish": "Orchard is switched off, so this card leaves out {picked} picked: {names}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review."
+    },
+    {
+      "english": "Orchard is switched off, so this card leaves out {sold} sold: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.",
+      "messageSha256": "c3b74e39035c9fb0c09192025c33c9bb00f6f5628e6f897982abb608650458d8",
+      "translations": {
+        "st": "Serapa sa difate se timilwe, ka hona karete ena e siea {sold} e rekisitsweng: {names}. Diranta tse ding leqepheng lena di ntse di bala dithekiso tseo — ke dikilograma tsa mona feela tse sefilweng.",
+        "ve": "Ngade ya miri ya mitshelo yo dzimwa, ngauralo {sold} zwo rengiswaho a zwi katelwi kha khadi iyi: {names}. Mbalo dza rand dziṅwe kha peji iyi dzi kha ḓi vhala idzo thengiso — ndi kg dza hafha fhedzi dzi sa katelwiho.",
+        "ts": "Ntanga wa mirhi wu timiwile, hikwalaho khadi leri a ri katsi {sold} leswi xavisiweke: {names}. Tirhandi eka papila leri ti ha hlayela ku xavisa loku — i kg laha ntsena leti nga katsiwiki."
+      },
+      "sourceFile": "lib/records-regional-drafts-data.ts",
+      "sourceFileSha256": "bb727ed3203b546059615cde24943b8d79c07cf2710aa6511639360b2ff8ac6d",
+      "status": "retired",
+      "reason": "The former sentence claimed Rand figures elsewhere counted these sales. Currency and source holds now make that universal claim invalid; the replacement keeps physical filtering separate from invoice-currency review.",
+      "replacementEnglish": "Orchard is switched off, so this card leaves out {sold} sold: {names}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review."
+    }
+  ]
+}

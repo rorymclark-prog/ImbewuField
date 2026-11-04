@@ -1,6 +1,7 @@
 import type { SalesLog } from './db/types';
 import type { SavedInvoice } from './invoices';
 import { normaliseRecordUnit, recordQuantity, recordUnit } from './farm-records';
+import { invoiceRandConsumerEligibility } from './invoice-currency';
 
 export type InvoiceEntryKind = 'new' | 'past-sale' | 'paper-copy';
 
@@ -35,6 +36,7 @@ export function invoiceEntryError(invoice: Pick<SavedInvoice, 'entryKind' | 'pap
 /** A stable ID chooses the sale; exact recorded fields then guard against changing that sale.
  * No search by similar crop, date or amount can authorise a link. */
 export function recordedSaleInvoiceError(invoice: SavedInvoice, sale: SalesLog, ownerId: string): string | null {
+  if (invoiceRandConsumerEligibility(invoice).status === 'held') return 'Keep this invoice separate from the rand sale book until its currency can be reconciled.';
   if (!ownerId || sale.profile_id !== ownerId || invoice.sourceSaleId !== sale.id || !sale.id || sale.id.includes('/')) return 'This sale is not available in your records.';
   if (sale.invoice_id && sale.invoice_id !== invoice.id) return 'This sale already belongs to another invoice.';
   if ((invoice.enterprise || undefined) !== (sale.enterprise || undefined)) return 'Keep the recorded growing area for this sale.';

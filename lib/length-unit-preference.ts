@@ -20,13 +20,15 @@ export interface HarvestMassUnitPreferenceContext { readonly kind: 'harvest-mass
 export interface FieldLayoutExportContext { readonly kind: 'field-layout-export-context' }
 export interface FieldLayoutImportContext { readonly kind: 'field-layout-import-context' }
 export interface JournalObservationContext { readonly kind: 'journal-observation-context' }
-type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate' | 'field-layout-export' | 'field-layout-import' | 'journal-observation';
+export interface InvoiceDocumentContext { readonly kind: 'invoice-document-context' }
+type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate' | 'field-layout-export' | 'field-layout-import' | 'journal-observation' | 'invoice-document';
 const purposeKey = (purpose: Purpose) => purpose === 'field' ? KEY : purpose === 'nursery' ? NURSERY_KEY
   : purpose === 'harvest-mass' ? HARVEST_KEY : purpose === 'grower-estimate' ? GROWER_ESTIMATE_KEY
-  : purpose === 'field-layout-import' ? FIELD_IMPORT_CONTEXT_KEY : purpose === 'journal-observation' ? JOURNAL_OBSERVATION_CONTEXT_KEY : FIELD_LAYOUT_CONTEXT_KEY;
+  : purpose === 'field-layout-import' ? FIELD_IMPORT_CONTEXT_KEY : purpose === 'journal-observation' ? JOURNAL_OBSERVATION_CONTEXT_KEY
+  : purpose === 'invoice-document' ? 'imbewu_invoice_document_context_v1' : FIELD_LAYOUT_CONTEXT_KEY;
 export type NurseryUnitChoice = 'metric' | 'imperial';
 export interface NurseryUnitPreferenceContext { readonly kind: 'nursery-unit-preference' }
-type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext | FieldLayoutExportContext | FieldLayoutImportContext | JournalObservationContext;
+type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext | FieldLayoutExportContext | FieldLayoutImportContext | JournalObservationContext | InvoiceDocumentContext;
 const SAMPLE_EVENT = 'imbewu-sample-mode-changed';
 export interface LengthUnitPreferenceContext { readonly kind: 'length-unit-preference' }
 type Result = { unit: LengthUnit; remembered: boolean; destination: 'device' | 'sample' | 'unavailable' };
@@ -74,7 +76,7 @@ function capturePreferenceContext(purpose: Purpose): PreferenceContext | null {
     if (typeof window === 'undefined') return null;
     const win = window, inSample = sample(win), owner = activeAccountUid();
     if (!actorMatches(owner, inSample)) return null;
-    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : purpose === 'grower-estimate' ? 'grower-estimate-unit-preference' : purpose === 'field-layout-import' ? 'field-layout-import-context' : purpose === 'journal-observation' ? 'journal-observation-context' : 'field-layout-export-context' });
+    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : purpose === 'grower-estimate' ? 'grower-estimate-unit-preference' : purpose === 'field-layout-import' ? 'field-layout-import-context' : purpose === 'journal-observation' ? 'journal-observation-context' : purpose === 'invoice-document' ? 'invoice-document-context' : 'field-layout-export-context' });
     const proof: Proof = { purpose, win, scope, epoch: scope.epoch, owner, sample: inSample, storage: local(win),
       key: activeAccountLocalStorageKey(purposeKey(purpose)), revoked: false, listeners: new Set(),
       ...(purpose === 'nursery' ? { nurseryValueListeners: new Set() } : {}),
@@ -173,6 +175,18 @@ export function journalObservationContextIsCurrent(context: JournalObservationCo
   return !!context && proofs.get(context)?.purpose === 'journal-observation' && contextIsCurrent(context);
 }
 export const revokeJournalObservationContext = (context: JournalObservationContext | null) => revokeContext(context);
+
+// Invoice write provenance observes the same actor/sample epochs, without
+// gaining permission to alter any remembered unit preference.
+export function captureInvoiceDocumentContext(): InvoiceDocumentContext | null {
+  return capturePreferenceContext('invoice-document') as InvoiceDocumentContext | null;
+}
+export function invoiceDocumentContextIsCurrent(context: InvoiceDocumentContext | null): boolean {
+  return !!context && proofs.get(context)?.purpose === 'invoice-document' && contextIsCurrent(context);
+}
+export const revokeInvoiceDocumentContext = (context: InvoiceDocumentContext | null) => revokeContext(context);
+export const subscribeInvoiceDocumentContext = (context: InvoiceDocumentContext | null, listener: () => void) => subscribeContext(context, listener);
+
 export function captureNurseryUnitPreferenceContext(): NurseryUnitPreferenceContext | null {
   return capturePreferenceContext('nursery') as NurseryUnitPreferenceContext | null;
 }

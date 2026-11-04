@@ -29,9 +29,10 @@ import { DEFAULT_TRACK, enrollmentDocId, newEnrollment } from '@/lib/course-enro
 import type { CourseAssignment } from '@/lib/course-assignments';
 import { assignmentDocId } from '@/lib/course-assignments';
 import type { CourseSubmission } from '@/lib/course-gating';
-import type { SavedInvoice } from '@/lib/invoices';
+import { invoiceBookIsCurrent, type InvoiceBookRead, type SavedInvoice } from '@/lib/invoices';
 import { saveSaleInvoice } from '@/lib/sale-invoice';
 import { invoiceSaleDocumentId, invoiceSalesForPaidInvoice } from '@/lib/invoice-sales';
+import { invoiceRandConsumerEligibility } from '@/lib/invoice-currency';
 import { recordedSaleInvoiceError } from '@/lib/invoice-entry';
 import { recordQuantity } from '@/lib/farm-records';
 import { UserFacingError } from '@/lib/user-facing-error';
@@ -207,14 +208,32 @@ export async function addProduction(row: Partial<ProductionLog>): Promise<void> 
     await addDoc(collection(f.db, 'production_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
   })());
 }
-export async function addSale(row: Partial<SalesLog>): Promise<SavedInvoice> {
+export async function addSale(row: Partial<SalesLog>, source?: InvoiceBookRead): Promise<SavedInvoice> {
+  if (!source || !invoiceBookIsCurrent(source)) throw new UserFacingError('Reopen the current sale form before saving.');
+  if (invoiceRandConsumerEligibility(row).status === 'held') throw new UserFacingError('Keep this currency separate from the rand sale book.');
   if (!isSampleMode() && (!fb() || !uid())) throw new UserFacingError('Sign in before saving a sale.');
-  return saveSaleInvoice(row, invoice => withWriteTimeout(syncInvoiceSales(invoice)));
+  return saveSaleInvoice(row, (invoice, book) => withWriteTimeout(syncInvoiceSales(invoice, book)), source);
+}
+
+/** A UID can leave and return while Firestore is reading. Keep the exact
+ * admitted row and original form alive until the remote mutation is queued. */
+function requireInvoiceSaleSource(invoice: SavedInvoice, source?: InvoiceBookRead, sourceIsCurrent?: () => boolean): void {
+  if (!source || !invoiceBookIsCurrent(source)
+    || ![...source.invoices, ...source.pendingLinks].includes(invoice)
+    || sourceIsCurrent && !sourceIsCurrent()) {
+    throw new UserFacingError('The invoice records or workspace changed. Reopen the current saved invoice before changing its sale book.');
+  }
 }
 
 /** Keep the crop-sale book in lockstep with one invoice's paid state. */
-export async function syncInvoiceSales(invoice: SavedInvoice): Promise<void> {
-  if (invoice.sourceSaleId) return linkInvoiceToRecordedSale(invoice);
+export async function syncInvoiceSales(invoice: SavedInvoice, source?: InvoiceBookRead, sourceIsCurrent?: () => boolean): Promise<void> {
+  // An empty foreign-currency draft set would delete older generated rows and
+  // falsely report successful rand synchronization. Hold before any side effect.
+  if (invoiceRandConsumerEligibility(invoice).status === 'held') {
+    throw new UserFacingError('This invoice keeps its recorded currency. Its amount cannot be sent to the rand sale book.');
+  }
+  requireInvoiceSaleSource(invoice, source, sourceIsCurrent);
+  if (invoice.sourceSaleId) return linkInvoiceToRecordedSale(invoice, source, sourceIsCurrent);
   const drafts = invoiceSalesForPaidInvoice(invoice);
   if (isSampleMode()) {
     if (getSandboxSales().some(sale => sale.invoice_id === invoice.id && sale.invoice_source_sale)) {
@@ -236,7 +255,9 @@ export async function syncInvoiceSales(invoice: SavedInvoice): Promise<void> {
     where('profile_id', '==', u),
     where('invoice_id', '==', invoice.id),
   ));
+  requireInvoiceSaleSource(invoice, source, sourceIsCurrent);
   const me = await getMyProfile();
+  requireInvoiceSaleSource(invoice, source, sourceIsCurrent);
   if (isSampleMode() || uid() !== u) throw new UserFacingError('Your account changed before the invoice was saved.');
   if (existing.docs.some(row => row.data().invoice_source_sale)) throw new UserFacingError('Open the invoice linked to this recorded sale before changing it.');
   const batch = writeBatch(f.db);
@@ -256,12 +277,17 @@ export async function syncInvoiceSales(invoice: SavedInvoice): Promise<void> {
       created_at: serverTimestamp(),
     });
   });
+  requireInvoiceSaleSource(invoice, source, sourceIsCurrent);
   await batch.commit();
 }
 
 /** Attach a document to the exact sale the farmer selected. The transaction retains the original
  * sale ID, weight, amount and date; retries cannot create another kg row or replace a changed sale. */
-export async function linkInvoiceToRecordedSale(invoice: SavedInvoice): Promise<void> {
+export async function linkInvoiceToRecordedSale(invoice: SavedInvoice, source?: InvoiceBookRead, sourceIsCurrent?: () => boolean): Promise<void> {
+  if (invoiceRandConsumerEligibility(invoice).status === 'held') {
+    throw new UserFacingError('This invoice cannot be linked to a rand sale while its currency needs review.');
+  }
+  requireInvoiceSaleSource(invoice, source, sourceIsCurrent);
   const sourceId = invoice.sourceSaleId;
   if (!sourceId || sourceId.includes('/')) throw new UserFacingError('Choose a sale from your records.');
   if (isSampleMode()) {
@@ -275,14 +301,18 @@ export async function linkInvoiceToRecordedSale(invoice: SavedInvoice): Promise<
   }
   const f = fb(); const u = uid();
   if (!f || !u) throw new UserFacingError('Sign in to link a recorded sale.');
-  const source = doc(f.db, 'sales_logs', sourceId);
+  const saleRef = doc(f.db, 'sales_logs', sourceId);
   // An absent sales document has no owner, so the rules deliberately deny direct reads of it.
   // Discover any earlier generated copy through the same scoped query as normal invoice sync.
   const copies = await getDocs(query(collection(f.db, 'sales_logs'), where('profile_id', '==', u), where('invoice_id', '==', invoice.id)));
+  requireInvoiceSaleSource(invoice, source, sourceIsCurrent);
   const duplicate = copies.docs.find(row => row.id !== sourceId && row.id === invoiceSaleDocumentId(u, invoice.id, 0))?.ref;
   await runTransaction(f.db, async transaction => {
-    const saleSnapshot = await transaction.get(source);
+    requireInvoiceSaleSource(invoice, source, sourceIsCurrent);
+    const saleSnapshot = await transaction.get(saleRef);
+    requireInvoiceSaleSource(invoice, source, sourceIsCurrent);
     const duplicateSnapshot = duplicate ? await transaction.get(duplicate) : null;
+    requireInvoiceSaleSource(invoice, source, sourceIsCurrent);
     if (isSampleMode() || uid() !== u) throw new UserFacingError('Your account changed before the sale was linked.');
     if (!saleSnapshot.exists()) throw new UserFacingError('The recorded sale is no longer available.');
     const sale = { ...saleSnapshot.data(), id: saleSnapshot.id } as SalesLog;
@@ -293,7 +323,7 @@ export async function linkInvoiceToRecordedSale(invoice: SavedInvoice): Promise<
       if (data.profile_id !== u || data.invoice_id !== invoice.id) throw new UserFacingError('The invoice sale could not be reconciled.');
       transaction.delete(duplicate);
     }
-    transaction.update(source, { invoice_id: invoice.id, invoice_line: 0, invoice_source_sale: true });
+    transaction.update(saleRef, { invoice_id: invoice.id, invoice_line: 0, invoice_source_sale: true });
   });
 }
 export async function updateSale(id: string, patch: Partial<SalesLog>): Promise<void> {

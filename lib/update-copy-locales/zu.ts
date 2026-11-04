@@ -422,5 +422,10 @@ const copy:UpdateCopy={
   "Record a field observation": "Rekhoda lokho okubonile ensimini",
   "Task Planner → Dated work → Record what happened": "Umhleli Wemisebenzi → Umsebenzi onezinsuku → Rekhoda okwenzekile",
   "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Khetha usuku obone ngalo okuthile, ubhale inothi bese uliqinisekisa. Ijenali igcina ireferensi yomsebenzi ohleliwe ngokwehlukana; amarekhodi ohlu lokuhlola, okuvuniwe, isitoko nokuthengisa awashintshi.",
+  // Invoice-currency release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-currency-release-drafts.json.
+  "Choose the currency for each new invoice.": "Khetha uhlobo lwemali lwe-invoyisi ngayinye entsha.",
+  "Keep invoice currencies clear": "Gcina izinhlobo zemali zama-invoyisi zicacile",
+  "Invoice → Currency for this invoice": "I-invoyisi → Uhlobo lwemali lwale-invoyisi",
+  "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Khetha uhlobo lwemali ovumelene ngalo nomthengi. Ama-invoyisi agciniwe agcina uhlobo lwawo lwemali; amanani awaguqulelwa kolunye uhlobo lwemali, kanti ezinye izinhlobo zemali zihlala zihlukile ezibalweni eziphelele zerandi.",
 };
 export default copy;
