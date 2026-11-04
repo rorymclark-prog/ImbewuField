@@ -1359,54 +1359,12 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }
 
-/**
- * Paid Sector polish — the input is already the complete deterministic sheet.
- *
- * This is intentionally separate from buildSectorRestylePrompt. That older prompt produces a safe
- * hybrid by painting only the aerial ground before the app redraws every analytical mark. It is a
- * useful fallback, but it cannot create the visibly authored, frame-worthy Sector sheet requested
- * by the paid "AI-polished" action. Here the exact sheet is the reference and the model polishes the
- * whole page. The exact source is saved separately before this runs, so AI typography or styling
- * variation can never destroy the authoritative bearings.
- */
+/** A second pass improves the unannotated site artwork. The app owns every analytical mark. */
 export function buildSectorSheetPolishPrompt(stylePreset: StylePreset, placeName?: string): string {
-  // WHY THIS WAS REWRITTEN (three times — read all three, they are one story).
-  //
-  // First: Full Treatment reverted to Hybrid on almost every attempt. render-difference.ts's gate
-  // needs >=10% of the compared pixels to change visibly, and the old "POLISH, DO NOT REDESIGN /
-  // keep the ground calm" wording asked for exactly the restrained nudge that gate rejects.
-  //
-  // Second: once past the gate, every label came back DOUBLED — the model's half-redrawn overlay
-  // ghosting behind the app's own recomposed one. The interim fix told the model to leave the
-  // overlay pixels alone entirely, because the finisher was going to redraw them anyway.
-  //
-  // Third, the real one: that finisher WAS THE BUG. Rory, after two weeks and a lot of paid
-  // renders: "there's no third AI polish render at all... The second is an AI generated underlay
-  // with elements overdrawn." He was right — the completion handler cropped the model's polished
-  // page back to the map panel and rebuilt the entire overlay deterministically, so the paid third
-  // pass could never look different from the Hybrid no matter what it painted. That crop+recompose
-  // is now gone for this stage (see DesignGlossy's completion handler): the model's page IS the
-  // Full Treatment result, exactly as extendProtectMaskToStyleSheet's docblock always promised
-  // ("deliberately leaves the chrome editable so the second paid pass can produce the richer
-  // typography, pictorial legend and notes layout that distinguish it from Hybrid"). So this
-  // prompt now asks for the whole authored page: ground AND marks AND typography, redrawn
-  // beautifully, with the wording and geometry copied faithfully. The exact master is saved
-  // separately before this runs and remains the factual authority; the difference gate still
-  // rejects a lazy copy; the sheet is captioned as the AI-authored version.
-  const polishClause = isPhotoPreservingStyle(stylePreset)
-    ? `THE GROUND: give the photograph a real, visible correction pass — push exposure, white balance, contrast, dehaze and sharpness hard enough that the ground clearly reads as a better photograph: richer greens, cleaner soil colour, real depth in shadow, crisp texture. The ground stays a photograph, never illustrated. THE MARKS AND TEXT: redraw every label, arrow, arc, wedge, legend row, title, north arrow and scale bar yourself, in clean professional cartographic typography — crisp lettering on well-shaped plates, confident arrowheads, even line weights, a beautifully set legend panel with real hierarchy. The marks should look deliberately designed over the photograph, never pasted on it.`
-    : `THE WHOLE PAGE IS YOURS TO REDRAW: repaint the ground in the requested style with real materials, texture and one consistent light direction, and redraw every label, arrow, arc, wedge, legend row, title, north arrow and scale bar yourself in the same hand — clean professional cartographic typography, confident arrowheads, even line weights, a beautifully set legend panel with real hierarchy. RETURNING THE PAGE LOOKING THE SAME IS A FAILED RESULT, and so is a flat filter or vignette over the top — someone paid for this pass specifically to get an authored sheet the earlier passes could not produce.`;
-  const body = [
-    `TASK: repaint this COMPLETE, already-correct Sector Analysis plan sheet${placeName ? ` for ${placeName}` : ''} as one finished, frame-worthy professional cartographic artwork in the requested style. The supplied image already contains the final map crop, property geometry, title, labels, arrows, sectors, sun paths, slope direction, legend, north arrow and scale bar — it is your complete and only blueprint.`,
-    `USE THE WHOLE INPUT AS THE BLUEPRINT: preserve the same canvas aspect ratio, panel layout, map crop, north-up orientation and top-down view. Do not zoom, crop, rotate, recenter, tilt or replace the site.`,
-    `PRESERVE CONTENT, NOT PIXELS: keep every existing arrow's start, end, direction and colour family; keep every sun arc, sector wedge, slope arrow, boundary, house and driveway in the same position. Keep every legend row and map label. Do not add, remove, merge or rename any analytical feature. Redraw all of them; move none of them.`,
-    polishClause,
-    `NO INVENTION: add no new wind, fire, rain, sun, frost, contour, access, slope or site claim. Add no tree, bed, pond, tank, path, fence or building. Do not infer any new direction from the photograph.`,
-    noZoning,
-    `TEXT: copy the supplied wording exactly, letter for letter — every bearing, every legend row, every note. Never paraphrase, translate, abbreviate or add commentary. If a word cannot be rendered confidently, reproduce the supplied letterforms as closely as you can rather than substituting different text.`,
-    `FINAL CHECK: place this beside the sheet you were given — if a farmer could not tell within two seconds which one is visibly more polished, the pass has failed. It must still be recognisably the same Sector Analysis: same site, same analytical geometry, same directions, same position, same labels and same legend — an unmistakably better-drawn edition of the identical document.`,
-  ].join('\n\n');
-  return `${STYLE_LINES[stylePreset]}\n\n${body}`;
+  // Cropping the old Hybrid page still left sun/wind/fire graphics inside its map. Asking the
+  // model to redraw those and then composing them again produced two competing registrations.
+  // The caller now passes accepted ground-only artwork; never ask for a page or analysis here.
+  return `${buildSectorRestylePrompt(stylePreset, placeName)}\n\nPAID SECOND PASS: the input is the FIRST-PASS AI artwork, a draft, not a finished sheet. Improve its materials, lighting, roof detail and texture visibly while retaining every existing feature in the same position. RETURNING THE SUPPLIED IMAGE UNCHANGED IS A FAILED RESULT; a global filter, grain, warmth or vignette alone is not a finished second pass. WRITE NOTHING: no text, labels, legend, title, north arrow or scale bar. Draw no sun paths, arrows, arcs, wedges, wind, fire, rain, contours or analysis marks. The app draws those once afterwards from the frozen site facts. Invent nothing and move none of the existing features.`;
 }
 
 /**
