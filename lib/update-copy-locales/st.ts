@@ -1,6 +1,27 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
+  "Keep editing nursery equipment and buyer targets after a confirmed save.": "Tsoela pele ho hlophisa lisebelisoa tsa sebaka sa lipeo le lipheo tsa bareki ka mor’a hore ho boloka ho netefatsoe.",
+  "Continue nursery editing": "Tsoela pele ho hlophisa sebaka sa lipeo",
+  "After a confirmed equipment save, continue entering your next container. Unknown sizes and stock stay unknown.": "Ka mor’a hore ho boloka lisebelisoa ho netefatsoe, tsoela pele ho kenya setshelo sa hao se latelang. Boholo le setoko tse sa tsejoeng li lula li sa tsejoe.",
+  "Continue buyer-target editing": "Tsoela pele ho hlophisa lipheo tsa bareki",
+  "After a confirmed target save, continue entering your next buyer target. Targets remain planned demand, not recorded sales or harvest.": "Ka mor’a hore ho boloka pakane ho netefatsoe, tsoela pele ho kenya pakane ea hao e latelang ea moreki. Lipakane li lula e le litlhoko tse reriloeng, eseng thekiso kapa kotulo e rekotiloeng.",
+  "See where your own dated crop plan can review nursery requirements.": "Bona moo moralo oa hao oa lijalo o nang le matsatsi o ka hlahlobang litlhoko tsa sebaka sa lipeo.",
+  "Review nursery requirements": "Hlahloba litlhoko tsa sebaka sa lipeo",
+  "For a saved measured growing space, review proposed batches from your own dates and inputs. Equipment entries alone do not establish dated availability or local crop approval.": "Bakeng sa sebaka sa temo se lekantsoeng le se bolokiloeng, hlahloba lihlopha tse sisintsoeng ho latela matsatsi a hao le lintlha tseo u li kentseng. Lintlha tsa lisebelisoa feela ha li tiise boteng ka matsatsi a itseng kapa tumello ea lijalo sebakeng sa heno.",
+  "See a welcome for small growers, market gardens and community projects.": "Bona kamohelo bakeng sa balemi ba banyenyane, lirapa tsa temo ea thekiso le merero ea sechaba.",
+  "Start with your growing space": "Qala ka sebaka sa hao sa temo",
+  "Home → Map and Production plan": "Lehae → Mmapa le moralo oa tlhahiso",
+  "Use your measured growing space and your own estimates. Regional reference coverage varies; choosing a country does not approve local crop advice.": "Sebelisa sebaka sa hao sa temo se lekantsoeng le likhakanyo tsa hao. Ho fumaneha ha litšupiso tsa libaka hoa fapana; ho khetha naha ha ho lumelle keletso ea lijalo ea lehae.",
+  "See when local design advice needs your saved site and current country details.": "Bona hore na keletso ea moralo ea lehae e hloka neng sebaka sa hao se bolokiloeng le lintlha tsa naha tsa hona joale.",
+  "Distinguish advice about the original South African sample from your own drawing.": "Khetholla keletso ka sampole ea pele ea Afrika Boroa ho setšoantšo sa hao.",
+  "Check the design advice basis": "Hlahloba motheo oa keletso ea moralo",
+  "Design Studio → Lima": "Studio sa moralo → Lima",
+  "Open your saved design. Local tips use the existing South African references only when the current saved-site context supports them. Country confirmation does not approve local farming advice; your drawing stays available when advice is held.": "Bula moralo oa hao o bolokiloeng. Malebela a lehae a sebelisa litšupiso tse teng tsa Afrika Boroa feela ha lintlha tsa hona joale tsa sebaka se bolokiloeng li li tšehetsa. Ho netefatsa naha ha ho lumelle keletso ea temo ea lehae; setšoantšo sa hao se lula se fumaneha ha keletso e emisitsoe.",
+  "Review the original sample": "Hlahloba sampole ea pele",
+  "Tour → Plan the growing season": "Leeto → Rera nako ea temo",
+  "Open the growing-season stop and choose All tools to see the sample advice control. It names the original sample layout; a request does not analyse your sample edits.": "Bula mohato oa nako ea temo ebe u khetha Lisebelisoa tsohle (All tools) ho bona taolo ea keletso ea sampole. E bolela moralo oa sampole ea pele; kopo ha e sekaseke liphetoho tseo u li entseng sampoleng.",
   // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
   "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Tlohela litaolo tsa li-unit tsa sebaka sa lipeo le tsa kotulo li ntse li fumaneha ka mor'a hore moralo o tšoanang o bolokoe hape.",
   "See when you can reload saved settings or need to reopen the crop plan.": "Bona hore na u ka kenya litlhophiso tse bolokiloeng hape neng, kapa u lokela ho bula moralo oa lijalo hape.",
