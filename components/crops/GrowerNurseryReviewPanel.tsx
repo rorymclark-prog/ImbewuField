@@ -11,7 +11,7 @@ import { buildGrowerNurseryForecast, isGrowerNurseryForecastCurrent, nurserySett
   type GrowerNurseryRequest, type GrowerNurseryResult, type GrowerNurseryResourceWindow,
   type GrowerNurseryReservation } from '@/lib/international/grower-nursery';
 import type { GrowerInput } from '@/lib/international/grower-planning';
-import { buildGrowerNurseryCsv, buildGrowerNurseryPreparationCsv, buildGrowerNurseryPreparationPdf, growerNurseryIssueText as issueText } from '@/lib/nursery-export';
+import { buildGrowerNurseryCsv, buildGrowerNurseryPreparationCsv, buildGrowerNurseryPreparationPdf, buildGrowerNurseryBatchLabelsPdf, growerNurseryIssueText as issueText } from '@/lib/nursery-export';
 import { downloadFile } from '@/lib/file-delivery';
 import { isSampleMode } from '@/lib/sample-mode';
 import {
@@ -396,7 +396,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
     }
   }
 
-  async function exportReview(kind: 'resource-review' | 'preparation' | 'preparation-pdf' = 'resource-review') {
+  async function exportReview(kind: 'resource-review' | 'preparation' | 'preparation-pdf' | 'batch-cards-pdf' = 'resource-review') {
     if (!shown || busy || shown.result.fingerprint === null) return;
     if (kind !== 'resource-review' && preparation?.status !== 'available') return;
     const turn = ++generation.current, snapshot = shown, snapshotKey = key, snapshotSample = isSampleMode();
@@ -409,16 +409,19 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       if (!await props.onCheckCurrent(props.review)) throw Error('stale');
       if (!sameDisplay()) return;
       if (!sameInputs()) throw Error('stale');
-      if (kind === 'preparation-pdf') {
-        const pdf = await buildGrowerNurseryPreparationPdf(snapshot.result, { sample });
+      if (kind === 'preparation-pdf' || kind === 'batch-cards-pdf') {
+        const batchCards = kind === 'batch-cards-pdf';
+        const pdf = await (batchCards ? buildGrowerNurseryBatchLabelsPdf : buildGrowerNurseryPreparationPdf)(snapshot.result, { sample });
         if (!sameDisplay()) return;
         // Loading the PDF writer yields. A matching displayed key alone cannot
         // prove that saved source/account records stayed current meanwhile.
         if (!await props.onCheckCurrent(props.review)) throw Error('stale');
         if (!sameDisplay()) return;
         if (!sameInputs()) throw Error('stale');
-        downloadFile(pdf, `ImbewuField${sample ? '-demo' : ''}-transplant-preparation.pdf`);
-        setMessage('Transplant preparation PDF downloaded. Counts remain planned estimates, not observed sowing or stock.');
+        downloadFile(pdf, `ImbewuField${sample ? '-demo' : ''}-${batchCards ? 'planned-nursery-batch-cards' : 'transplant-preparation'}.pdf`);
+        setMessage(batchCards
+          ? 'Planned nursery batch cards downloaded. Counts remain planned estimates, not observed sowing or stock.'
+          : 'Transplant preparation PDF downloaded. Counts remain planned estimates, not observed sowing or stock.');
         return;
       }
       const csv = kind === 'preparation'
@@ -524,6 +527,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
             <div className="flex flex-wrap gap-2">
               <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview('preparation')}>Download transplant preparation CSV</button>
               <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview('preparation-pdf')}>Download preparation PDF</button>
+              <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview('batch-cards-pdf')}>Download planned batch cards</button>
             </div>
           </>}
       </section>}

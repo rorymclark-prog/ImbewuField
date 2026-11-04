@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: '86c23a5f1', changes: [
+    'Print planned nursery batch cards with dates and separate seedling counts.',
+  ], tour: [{ title: 'Print planned batch cards', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.' }] },
   { when: '4 November 2026', sha: '0831af329', changes: [
     'Download a printable nursery preparation sheet from your own crop proposal.',
   ], tour: [{ title: 'Print nursery preparation', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',

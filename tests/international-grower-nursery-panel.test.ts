@@ -347,3 +347,107 @@ test('a source change while the post-PDF check waits withdraws the file and a re
     assert.match(refused.text(), /No file was delivered/);
   } finally { refused.dispose(); }
 });
+
+
+// Inspect PDF text operands rather than layout coordinates, so a missing count
+// cannot accidentally pass because the same digits occur in a drawing position.
+function batchCardPdfText(pdf: string): string {
+  return [...pdf.matchAll(/\(((?:\\.|[^\\)])*)\)\s*Tj/g)].map(match => match[1]
+    .replace(/\\([\\()])/g, '$1').replace(/\\[nr]/g, ' ')).join(' ');
+}
+
+test('planned batch cards use the actual PDF builder, preserve counts and distinguish ordinary and demo delivery', { timeout: 5000 }, async () => {
+  for (const sample of [false, true]) {
+    deliveries.length = 0; const data = await fixture(); let checks = 0;
+    const screen = mount({ ...data, contextRevision: 1, sample, onCheckCurrent: async () => { ++checks; return true; } });
+    try {
+      allocations(screen); await screen.press('Review own nursery requirements');
+      const action = screen.renderer.root.findAllByType('button').find(button => text(button) === 'Download planned batch cards');
+      assert.ok(action); assert.match(action.props.className, /min-h-11/);
+      assert.equal(screen.renderer.root.findByProps({ 'aria-label': 'Own-input nursery review' }).props.lang, 'en');
+      const delivered = new Promise<void>(resolve => { deliverySignal.onDownload = resolve; });
+      screen.click('Download planned batch cards');
+      await act(async () => { await delivered; });
+      assert.equal(checks, 3); assert.equal(deliveries.length, 1);
+      assert.equal(deliveries[0].filename, `ImbewuField${sample ? '-demo' : ''}-planned-nursery-batch-cards.pdf`);
+      assert.equal(deliveries[0].blob.type, 'application/pdf');
+      const raw = Buffer.from(await deliveries[0].blob.arrayBuffer()).toString('latin1');
+      assert.ok(raw.startsWith('%PDF-'));
+      const extracted = batchCardPdfText(raw);
+      for (const count of ['48', '60', '160']) assert.match(extracted, new RegExp(`\\b${count}\\b`));
+      if (sample) assert.match(extracted, /DEMO/); else assert.doesNotMatch(extracted, /DEMO/);
+      assert.doesNotMatch(extracted, /private-|geometryFingerprint|sourceRevision/);
+      assert.match(screen.text(), /Planned nursery batch cards downloaded/);
+      assert.match(screen.text(), /planned estimates, not observed sowing or stock/);
+    } finally { delete deliverySignal.onDownload; screen.dispose(); }
+  }
+});
+
+test('a refused initial batch-card export source check delivers nothing and keeps the same failure handling', { timeout: 5000 }, async () => {
+  deliveries.length = 0; const data = await fixture(); let checks = 0, entered!: () => void;
+  const refusal = new Promise<void>(resolve => { entered = resolve; });
+  const screen = mount({ ...data, contextRevision: 1, onCheckCurrent: async () => {
+    if (++checks === 2) { entered(); return false; } return true;
+  } });
+  try {
+    allocations(screen); await screen.press('Review own nursery requirements');
+    screen.click('Download planned batch cards'); await act(async () => { await refusal; });
+    assert.equal(checks, 2); assert.equal(deliveries.length, 0); assert.match(screen.text(), /No file was delivered/);
+  } finally { screen.dispose(); }
+});
+
+test('batch-card post-build checks reject changed source, actor, sample or same-key input evidence before delivery', { timeout: 5000 }, async () => {
+  for (const change of ['source', 'actor', 'sample', 'inputs']) {
+    deliveries.length = 0; const data = await fixture(); let checks = 0, actorCurrent = true, sample = false;
+    let release!: (value: boolean) => void, entered!: () => void;
+    const waiting = new Promise<void>(resolve => { entered = resolve; });
+    const original = Object.getOwnPropertyDescriptor(globalThis, 'window');
+    if (change === 'sample') Object.defineProperty(globalThis, 'window', { configurable: true,
+      value: { sessionStorage: { getItem: () => sample ? '1' : null } } });
+    const screen = mount({ ...data, contextRevision: 1, onCheckCurrent: async () => {
+      ++checks;
+      if (checks === 3) {
+        entered(); const allowed = await new Promise<boolean>(resolve => { release = resolve; });
+        return allowed && actorCurrent;
+      }
+      return true;
+    } });
+    try {
+      allocations(screen); await screen.press('Review own nursery requirements');
+      screen.click('Download planned batch cards'); await act(async () => { await waiting; });
+      const buttons = screen.renderer.root.findAllByType('button');
+      assert.equal(buttons.find(button => text(button) === 'Download planned batch cards')?.props.disabled, true);
+      assert.equal(buttons.find(button => text(button) === 'Download preparation PDF')?.props.disabled, true);
+      if (change === 'source') screen.update({ contextRevision: 2 });
+      if (change === 'actor') actorCurrent = false;
+      if (change === 'sample') sample = true;
+      // Deliberately no render/key update: the second full-result comparison must
+      // notice changed saved inputs even when parent source approval still passes.
+      if (change === 'inputs') data.settings.profiles[0].fieldSurvivalPercent = 90;
+      await act(async () => { release(true); await Promise.resolve(); });
+      assert.equal(checks, 3, change); assert.equal(deliveries.length, 0, change);
+      // A settings/source/sample revision withdraws the old review and clears
+      // its status through the existing key-change effect. The lasting rule is
+      // no old export or inherited confirmation, not a stale-context message.
+      const currentButtons = screen.renderer.root.findAllByType('button');
+      assert.equal(currentButtons.filter(button => ['Download planned batch cards', 'Download preparation PDF', 'Download transplant preparation CSV'].includes(text(button))).length, 0, change);
+      assert.doesNotMatch(screen.text(), /Dated nursery estimates|Incomplete nursery estimates|Planned nursery batch cards downloaded/, change);
+      const reviewAction = currentButtons.find(button => text(button) === 'Review own nursery requirements');
+      assert.ok(reviewAction, change); assert.equal(reviewAction.props.disabled, false, change);
+      if (change !== 'actor') {
+        const confirmations = screen.renderer.root.findAllByType('input').filter(input => input.props.type === 'checkbox');
+        assert.equal(confirmations.length, 3, change);
+        assert.ok(confirmations.every(input => input.props.checked === false), change);
+      } else {
+        // This fixture changes only the parent's actor approval, not the display
+        // key. Its same-context source refusal still keeps the actionable hold.
+        assert.match(screen.text(), /No file was delivered/);
+      }
+    } finally {
+      release?.(false); screen.dispose();
+      if (change === 'sample') {
+        if (original) Object.defineProperty(globalThis, 'window', original); else Reflect.deleteProperty(globalThis, 'window');
+      }
+    }
+  }
+});

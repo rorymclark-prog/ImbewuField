@@ -397,5 +397,9 @@ const copy:UpdateCopy={
   "Download a printable nursery preparation sheet from your own crop proposal.": "Dawuniloda phepha leri nga kandziyisiwaka ra malunghiselelo ya xirhapa xa swimilana kusuka eka pulani ya wena ya swibyariwa leyi ringanyetiweke.",
   "Print nursery preparation": "Kandziyisa malunghiselelo ya xirhapa xa swimilana",
   "Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.": "Kambisisa leswi u swi ngheniseke sweswi swa xirhapa xa swimilana, kutani u dawuniloda PDF ya malunghiselelo. Yi hambanisa tinhlayo leti kunguhatiweke, swilaveko leswi nga helelangiki ni mintsengo leyi nga tivekiki eka ku byala loku voniweke kumbe xitoko lexi voniweke.",
+  // Planned nursery batch cards release (lib/release-notes.ts): UNREVIEWED Codex AI drafts; exact English source retained.
+  "Print planned nursery batch cards with dates and separate seedling counts.": "Kandziyisa makhadi ya mintlawa leyi kunguhatiweke ya xirhapa xa swimilana, lama nga ni masiku ni tinhlayo ta swimilana leti hambanisiweke.",
+  "Print planned batch cards": "Kandziyisa makhadi ya mintlawa leyi kunguhatiweke",
+  "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Tirhisa xiringanyeto xa xirhapa xa swimilana lexi kambisisiweke ku kandziyisa makhadi ya mintlawa. Tinhlayo ni masiku swi tama swi ri leswi kunguhatiweke; nongonoko a wu hlayisi tinotsi ta ku byala ni ta ntlawa wa mbewu leti tsariweke hi voko.",
 };
 export default copy;
