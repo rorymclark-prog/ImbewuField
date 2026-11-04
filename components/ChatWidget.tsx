@@ -182,7 +182,10 @@ export default function ChatWidget() {
   if (
     // Studies and its task guides use inline help so the floating launcher cannot cover reading.
     pathname === '/student' || pathname.startsWith('/student/guides/') ||
-    pathname.startsWith('/login') ||
+    pathname.startsWith('/login') || pathname.startsWith('/connect/') ||
+    // The 390px country reference view put this circle over air temperature.
+    // Keep help in the reading flow, as on the crop planner.
+    pathname === '/international' ||
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
     pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
@@ -371,7 +374,8 @@ export default function ChatWidget() {
 function isLimaFabHiddenRoute(pathname: string): boolean {
   return (
     pathname === '/student' || pathname.startsWith('/student/guides/') ||
-    pathname.startsWith('/login') ||
+    pathname.startsWith('/login') || pathname.startsWith('/connect/') ||
+    pathname === '/international' ||
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
     pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||

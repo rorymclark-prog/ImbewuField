@@ -288,6 +288,8 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   const copy = publishedCopy ?? nativeCopy.copy;
   const draftLocale = isUpdateCopyLanguage(lang);
   if (!updateAvailable || dismissed || onPitchDeck) return null;
+  // Consent choices need a clear screen, while the update effects above keep running.
+  if (pathname.startsWith('/connect/')) return null;
   // The NEW build's notes when the server could supply them; ours only as a fallback (a
   // service-worker-triggered update never hits /api/build-info, and an offline tab cannot ask).
   // Null (rather than []) until that fallback chunk has actually loaded, so the list below can

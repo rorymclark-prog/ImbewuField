@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // England advice reference: docs/international/agy-england-fas-release-copy-2026-11-04/source.json; UNREVIEWED AI drafts.
+  "Open England’s Farming Advice Service page from the UK country review.": "Vula ikhasi le-Farming Advice Service lase-England kusuka ekubuyekezweni kwezwe lase-UK.",
+  "Find the England advice reference": "Thola inkomba yezeluleko yase-England",
+  "Choose the United Kingdom and open Agricultural extension to find the GOV.UK link.": "Khetha i-United Kingdom bese uvula Ezolimo zokweluleka ukuze uthole isixhumanisi se-GOV.UK.",
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Khetha izindawo ezigciniwe umsizi angazisebenzisa. Unganqamula ukuxhumana kokuthi Izilungiselelo.",
+  "Keep original site photos and PDFs with their source and import history.": "Gcina izithombe zokuqala zendawo nama-PDF kanye nomthombo wawo nomlando wokungeniswa kwawo.",
+  "Review historical photo registration drafts without moving saved map features.": "Hlola okusalungiswa kokuqondanisa izithombe zakudala nemephu ngaphandle kokususa izinto ezigciniwe ezindaweni zazo.",
+  "Manage assistant access": "Phatha ukufinyelela kwabasizi",
+  "Settings → Assistant connections": "Izilungiselelo → Ukuxhuma kubasizi",
+  "Review connected assistants, selected sites and imported originals.": "Hlola abasizi abaxhunyiwe, izindawo ezikhethiwe namafayela okuqala angenisiwe.",
+  "Check your saved map": "Hlola imephu yakho egciniwe",
+  "Site design": "Ukwakheka kwendawo",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlola yona leyo ndawo ngaphambi kokwamukela izinguquko zomsizi noma ukuqhathanisa isithombe sakudala.",
   // UK station links: docs/international/pilots/uk-station-release-copy/drafts.json; UNREVIEWED AI drafts.
   "Open Met Office links to Yeovilton’s monthly weather records from the country review.": "Vula izixhumanisi ze-Met Office eziya kumarekhodi wesimo sezulu wanyanga zonke ase-Yeovilton ekubuyekezweni kwezwe.",
   "Review UK historical weather records": "Buyekeza amarekhodi omlando wesimo sezulu ase-UK",

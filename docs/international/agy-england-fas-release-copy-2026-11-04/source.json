@@ -1,0 +1,23 @@
+{
+  "base": "cfc663142",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "entries": [
+    {
+      "english": "Open England’s Farming Advice Service page from the UK country review.",
+      "messageSha256": "bda2280b55b82fe267fc978120128dfa689ace0e9a9c0de936d8c1e0353e35bb"
+    },
+    {
+      "english": "Find the England advice reference",
+      "messageSha256": "5c812e69afe3ab816a215a261fa8d4b44b00f7d6563af35f9b1c05184ec613dc"
+    },
+    {
+      "english": "Choose the United Kingdom and open Agricultural extension to find the GOV.UK link.",
+      "messageSha256": "ba936b00d87f9db1e49e09a92a0f37b90d6e962bc4fb39f2ed232135f2a12b60"
+    }
+  ]
+}

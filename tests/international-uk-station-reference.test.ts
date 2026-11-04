@@ -23,6 +23,10 @@ const hooks = registerHooks({
     if (context.parentURL?.endsWith('/CountryReview.tsx')) {
       if (specifier === 'next/link' || specifier === '@/components/MenuButton') return stub('export default function Stub(){return null}');
       if (specifier === '@/components/BackControl') return stub('export function useRegisterBackControl(){}');
+      // Shared navigation reads its own display preferences. This probe observes
+      // the country and station data controls, as with the menu and back control.
+      if (specifier === '@/components/LimaBar') return stub('export default function HelpChrome(){return null}');
+
     }
     return next(specifier, context);
   },
