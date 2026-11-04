@@ -140,7 +140,15 @@ test('actual feet edits reach generated metric beds and the automatic planner th
     // The real fingerprint authority hashes the exact source-revision bytes.
     assert.equal(checked.sourceRevision,createHash('sha256').update(bytes).digest('hex'));assert.equal(checked.geometryFingerprint,metricChecked.geometryFingerprint);
     assert.equal(JSON.stringify(parsed),bytes,'inspection cannot edit the saved source bytes');assert.equal(JSON.stringify(saved),bytes);
-    assert.equal(JSON.stringify(metricParsed),metricBytes);assert.deepEqual(checked.beds,beds);
+    assert.equal(JSON.stringify(metricParsed),metricBytes);
+    // The display bridge still rounds to 3.7 m², but that label must not become
+    // the planner's measured input: forty square feet is 3.7161216 m².
+    const measuredBeds = bedsFromDesignCanvas(reloaded, { areaRounding: 'none' });
+    assert.deepEqual(checked.beds, measuredBeds);
+    assert.equal(checked.beds[0].areaM2, 3.7161216);
+    assert.notEqual(checked.beds[0].areaM2, beds[0].areaM2);
+    assert.deepEqual(checked.measuredAreas[0].arithmeticBasis,
+      { kind: 'saved-rectangle-metres-v1', widthM: 1.2192, heightM: 3.048 });
     const scope = checked.scope, recordedAt = '2026-11-03T12:00:00.000Z';
     const own = <T, U extends string>(value: T, unit: U): GrowerInput<T,U> => ({ state: 'provided', value, unit, provenance: { kind: 'grower-estimate', recordedAt } });
     // Synthetic arithmetic inputs only: neither these durations nor capacities are farming instructions.
@@ -148,10 +156,13 @@ test('actual feet edits reach generated metric beds and the automatic planner th
       plantsPerM2: own(1,'plants/m2'), yieldKgPerM2: own(1,'kg/m2/cycle'), establishment: own('direct','method'), nurseryDays: {state:'missing',reason:'not-applicable'},
       fieldEntryToFirstHarvestDays: own(1,'days'), pickingDays: own(1,'days'), fieldOccupancyDays: own(2,'days'), turnaroundDays: own(0,'days'), allowedEntryMonths: own([1],'utc-months') } };
     const result = generateGrowerAutoPlan({ requestedAt: recordedAt, scope, geometryFingerprint: checked.geometryFingerprint, profiles: [profile],
-      beds: [{ bed: beds[0], scope, measuredAreaM2: own(beds[0].areaM2,'m2') }], planningStart: own('2028-01-01','utc-date'), planningEndExclusive: own('2028-01-05','utc-date'),
+      beds: [{ bed: checked.beds[0], scope, measuredAreaM2: { ...own(checked.beds[0].areaM2,'m2'),
+        arithmeticBasis: checked.measuredAreas[0].arithmeticBasis } }], planningStart: own('2028-01-01','utc-date'), planningEndExclusive: own('2028-01-05','utc-date'),
       availability: [{bedId:beds[0].id,scope,window:own({start:'2028-01-01',endExclusive:'2028-01-05'},'utc-date-window')}], reserved: [],
       demands: [{demandId:'unit-demand',profileId:profile.profileId,scope,totalKg:own(1,'kg-total'),harvestWindow:own({start:'2028-01-02',endExclusive:'2028-01-04'},'utc-date-window')}],maxAssessments:100 });
-    assert.equal(result.status, 'ready', JSON.stringify(result)); assert.equal(result.cycles[0].assessment.capacity.measuredAreaM2, beds[0].areaM2);
+    assert.equal(result.status, 'ready', JSON.stringify(result));
+    assert.equal(result.cycles[0].assessment.capacity.measuredAreaM2, 3.7161216);
+    assert.equal(result.cycles[0].assessment.capacity.estimatedPlantCount, 3);
   } finally { ui.dispose(); }
 });
 

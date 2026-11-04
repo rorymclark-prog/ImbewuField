@@ -401,5 +401,11 @@ const copy:UpdateCopy={
   "Print planned nursery batch cards with dates and separate seedling counts.": "Hatisa likarete tsa lihlopha tse reriloeng tsa sebaka sa lipeo, tse nang le matsatsi le lipalo tse arohaneng tsa limela tse nyenyane.",
   "Print planned batch cards": "Hatisa likarete tsa lihlopha tse reriloeng",
   "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Sebelisa tlhahiso ea sebaka sa lipeo e hlahlobiloeng ho hatisa likarete tsa lihlopha. Lipalo le matsatsi li lula li reriloe; lenaneo ha le boloke lintlha tsa ho jala le tsa sehlopha sa peo tse ngotsoeng ka letsoho.",
+  // Own estimate units: UNREVIEWED Codex AI candidates; exact English source remains available.
+  "Enter your crop estimates in metric or imperial units.": "Kenya likhakanyo tsa hao tsa lijalo ka liyuniti tsa metric kapa tsa imperial.",
+  "Check saved bed measurements before reviewing capacity.": "Hlahloba litekanyo tse bolokiloeng tsa libethe tsa temo pele u hlahloba bokhoni ba tsona.",
+  "Reload changed estimates before saving over newer values.": "Laela hape likhakanyo tse fetohileng pele u boloka u nkela litekanyetso tse nchafalitsoeng haufinyane sebaka.",
+  "Choose units for your own estimates": "Khetha liyuniti tsa likhakanyo tsa hao",
+  "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Khetha m² le kg kapa ft² le lb bakeng sa likhakanyo tsa hao tsa bongata ba limela sebakeng le boima ba kotulo. Hlahloba litekanyo tse bolokiloeng, ebe u hlahloba lipalo le matsatsi; tsena ke likhakanyo tse reriloeng, eseng keletso ea temo ea lehae e netefalitsoeng.",
 };
 export default copy;

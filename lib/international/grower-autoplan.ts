@@ -2,6 +2,7 @@ import type { PlanBed } from '../crop-plan';
 import {
   addGrowerUtcDays, assessGrowerPlanning, growerPlanningScopeKey, isGrowerRecordedAt, isGrowerUtcDate,
   normaliseGrowerInput, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope,
+  normaliseGrowerMeasuredAreaInput, GROWER_COUNT_ARITHMETIC, type GrowerMeasuredAreaInput,
   type GrowerInput, type GrowerPlanningAssessment, type GrowerPlanningProfile, type GrowerPlanningScope,
 } from './grower-planning';
 
@@ -18,7 +19,7 @@ export type GrowerWindowInput = GrowerInput<GrowerUtcWindow, 'utc-date-window'>;
 export interface GrowerAutoPlanBed {
   readonly bed: Readonly<PlanBed>;
   readonly scope: GrowerPlanningScope;
-  readonly measuredAreaM2: GrowerInput<number, 'm2'>;
+  readonly measuredAreaM2: GrowerMeasuredAreaInput;
 }
 export interface GrowerBedAvailability {
   readonly bedId: string;
@@ -52,7 +53,7 @@ export interface GrowerAutoPlanRequest {
   /** Explicit search budget, also charging input rows and skipped availability windows. */
   readonly maxAssessments: number;
 }
-export type GrowerAutoPlanSnapshot = GrowerAutoPlanRequest;
+export type GrowerAutoPlanSnapshot = GrowerAutoPlanRequest & { readonly countArithmetic: typeof GROWER_COUNT_ARITHMETIC };
 export type GrowerReadyAssessment = Extract<GrowerPlanningAssessment, { status: 'ready' }>;
 
 export interface GrowerAutoPlanCycle {
@@ -112,7 +113,7 @@ function bedInput(value: unknown): GrowerAutoPlanBed | null {
   if (!record(value) || !record(value.bed)) return null;
   const row = value.bed;
   const scope = normaliseGrowerPlanningScope(value.scope);
-  const measuredAreaM2 = normaliseGrowerInput(value.measuredAreaM2, 'm2', nonNegative);
+  const measuredAreaM2 = normaliseGrowerMeasuredAreaInput(value.measuredAreaM2);
   if (!scope || !measuredAreaM2 || !identity(row.id) || !identity(row.label) || !nonNegative(row.areaM2)
     || (row.minDimM !== undefined && !nonNegative(row.minDimM))
     || (row.kind !== undefined && row.kind !== 'bed' && row.kind !== 'plot')
@@ -191,7 +192,7 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
     return held('invalid-inputs', ['scope-or-source-identity']);
   }
   const canonicalRows = <T>(rows: T[]) => rows.sort((a, b) => compare(JSON.stringify(a), JSON.stringify(b)));
-  snapshot = freeze({ requestedAt: value.requestedAt as string, scope, geometryFingerprint: value.geometryFingerprint as string,
+  snapshot = freeze({ countArithmetic: GROWER_COUNT_ARITHMETIC, requestedAt: value.requestedAt as string, scope, geometryFingerprint: value.geometryFingerprint as string,
     profiles, beds: knownBeds.sort((a, b) => compare(a.bed.id, b.bed.id)), planningStart, planningEndExclusive,
     availability: canonicalRows(knownAvailability), reserved: canonicalRows(knownReserved), demands: knownDemands, maxAssessments: budget });
   fingerprint = JSON.stringify(snapshot);
