@@ -1,5 +1,6 @@
 # Audits — 4 November 2026
 
+- [Assistant production and native host verification — Codex](assistant-production-host-verification-codex.md)
 - [Combined assistant release over live Water and Sector — Codex](assistant-release-main-integration-codex.md)
 
 - [Assistant connector callbacks and production release — Codex](assistant-connector-loopback-codex.md)

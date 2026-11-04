@@ -1,6 +1,8 @@
 # ImbewuField audit archive
 
-Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Required release checks and normal published-host login remain open.
+Latest assistant production verification — [Canonical OAuth, native Codex and remaining host gates — 4 November 2026](2026-11-04/assistant-production-host-verification-codex.md). Production and Codex are verified; private card icon and Claude linking remain separately open.
+
+Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Historical integration checkpoint; final production evidence is linked above.
 
 Latest assistant identity continuation — [MCP display name, published sprout and private listing — 4 November 2026](2026-11-04/assistant-connector-branding-codex.md). Native authentication follows the separate callback release.
 
