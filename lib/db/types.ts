@@ -3,7 +3,8 @@
 
 // Mentor merges the former 'supervisor' (farm visits / design sign-off) and
 // 'trainer' (the 9-month course) into one field role, per the design handoff.
-export type UserRole = 'farmer' | 'mentor' | 'student' | 'ngo' | 'funder' | 'admin';
+import type { UserRole } from '../user-role';
+export type { UserRole } from '../user-role';
 export type GardenStatus = 'thriving' | 'establishing' | 'support';
 
 export interface Organization { id: string; name: string; kind: 'ngo' | 'funder'; created_at: string }

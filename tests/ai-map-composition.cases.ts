@@ -668,6 +668,7 @@ test('historical photo markers follow the photograph crop instead of projecting 
 test('historical photo inventory and map use the same eight numbered landmarks without covering them with long plaques', () => {
   const probe=artProbe(),pins:any[]=[];
   const draw=helper('drawHistoricalPhotoFacts',{historicalPresentationPhotoPoint:(_s:any,_f:any,_r:any,p:any)=>p,
+    strokeHistoricalLine:()=>{},
     drawHistoricalPhotoPin:(...args:any[])=>pins.push(args)});
   const b={features:UBHEJANE_BEFORE_WORKS.features.map((v,i)=>({...v,point:[i/10,i/20]})),fence:[[0,0],[1,1]]};
   draw(probe.ctx,{}, {},{},100,200,b);assert.deepEqual(pins.map(v=>[v[1],v[2],v[4]]),b.features.map((v,i)=>[v.point[0]*100,v.point[1]*200,i+1]));
@@ -685,11 +686,14 @@ test('the paid historical coverage mask uses the same crop as photo annotations'
 
 test('named historical areas have readable leader labels and keep the photo facts and geometry unchanged', () => {
   const probe=artProbe(),b=UBHEJANE_BEFORE_WORKS,before=JSON.stringify(b);let pins=0;probe.ctx.measureText=(text:string)=>({width:text.length*20});
-  const draw=helper('drawHistoricalPhotoFacts',{SHEET_BODY_FONT:'Arial',historicalPresentationPhotoPoint:(_s:any,_f:any,_r:any,p:any)=>[p[0]/4000,p[1]/3000],drawHistoricalPhotoPin:()=>{pins++;}});
+  const marks:string[]=[];
+  const draw=helper('drawHistoricalPhotoFacts',{SHEET_BODY_FONT:'Arial',historicalPresentationPhotoPoint:(_s:any,_f:any,_r:any,p:any)=>[p[0]/4000,p[1]/3000],drawHistoricalPhotoPin:()=>{pins++;},
+    strokeHistoricalLine:()=>{},drawHistoricalFeatureSymbol:(_ctx:any,id:string)=>marks.push(id)});
   draw(probe.ctx,{},{},{},1200,1000,b,true,true);
   const text=probe.calls.filter(v=>v[0]==='fillText').map(v=>v[1]);assert.deepEqual(text,['Classroom 1','Classroom 2','Bare slab','Play area','Toilet','Water tank','Dirt road','Fence']);
   assert.equal(pins,0,'names must not leave misleading number-only pins behind');
   assert.equal(probe.calls.filter(v=>v[0]==='strokeRect').length,8,'every name has a light backing, not lettering lost against grass');
+  assert.deepEqual(marks,b.features.map(feature=>feature.id),'every named callout uses the matching key symbol');
   assert.equal(JSON.stringify(b),before,'moving label placement cannot move source facts');
 });
 
@@ -737,6 +741,24 @@ test('the Zones north arrow clears the photo matte with room for the N', () => {
   assert.ok(arrow[1] - arrow[2] * 0.75 > 1100 * 0.065, 'the letter must not straddle the photo edge');
   paint({}, 0, 1000, 1100);
   assert.equal(arrow[1], 88, 'unmatted sheets retain their north-arrow placement');
+});
+
+test('the historical legend repeats callout symbols and distinguishes the photographed fence from the design extent', () => {
+  const ink='#95B34F';
+  const strokeHistoricalLine=helper('strokeHistoricalLine',{BOUNDARY_LINE_GREEN:ink});
+  const drawHistoricalFeatureSymbol=helper('drawHistoricalFeatureSymbol',{strokeHistoricalLine});
+  const draw=helper('drawStyleLegendSymbol',{drawHistoricalFeatureSymbol,strokeHistoricalLine});
+  const first=artProbe(),second=artProbe(),fence=artProbe(),extent=artProbe();
+  draw(first.ctx,{historicalFeature:'classroom-1'},0,10,20,20);
+  draw(second.ctx,{historicalFeature:'classroom-2'},0,10,20,20);
+  assert.deepEqual(first.calls,second.calls,'the same roof glyph represents both classrooms');
+  assert.ok(first.calls.some(call=>call[0]==='lineTo'),'the classroom symbol must actually draw');
+  draw(fence.ctx,{historicalFeature:'fence'},0,10,20,20);
+  draw(extent.ctx,{visual:'historical-extent'},0,10,20,20);
+  assert.ok(fence.calls.some(call=>call[0]==='set'&&call[1]==='strokeStyle'&&call[2]==='#79583B'));
+  assert.deepEqual(fence.calls.filter(call=>call[0]==='setLineDash').at(-1)?.[1],[]);
+  assert.ok(extent.calls.some(call=>call[0]==='set'&&call[1]==='strokeStyle'&&call[2]===ink));
+  assert.ok(extent.calls.some(call=>call[0]==='setLineDash'&&call[1].length===2));
 });
 
 test('regional Sector overview does not advertise fine encoded height steps as ground accuracy', () => {
