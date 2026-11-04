@@ -393,5 +393,13 @@ const copy:UpdateCopy={
   "Prepare grouped seedling and seed counts from your proposed crop plan.": "Lugisani mbalo dza zwimela zwiṱuku na dza mbeu dzo kuvhanganywaho nga zwigwada, dzi tshi bva kha pulane yaṋu ya zwiliṅwa yo dzinginywaho.",
   "Review nursery preparation": "Ṱolani ndugiselo ya fhethu ha u alusa zwimela zwiṱuku",
   "Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.": "Ṱolani zwishumiswa zwa u alusa zwimela zwiṱuku zwi re na maḓuvha o bulwaho, ṱolani zwigwada zwo sumbedzwaho zwa zwimela zwiṱuku zwine zwa ḓo pfuluselwa tsimuni, ni kone u ḓowniloda siaṱari ḽa ndugiselo. Mbalo ndi nyelekanyo dza u pulana; ṱhoḓea dzi sa ḓivhei dzi dzula dzi sa ḓivhei.",
+  // Own nursery preparation PDF release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Download a printable nursery preparation sheet from your own crop proposal.": "Ḓownilodani siaṱari ḽine ḽa nga gandiswa ḽa ndugiselo ya fhethu ha u alusa zwimela zwiṱuku, ḽi tshi bva kha pulane yaṋu ya zwiliṅwa yo dzinginywaho.",
+  "Print nursery preparation": "Gandisani ndugiselo ya fhethu ha u alusa zwimela zwiṱuku",
+  "Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.": "Sedzulusani zwidodombedzwa zwa zwino zwe na dzhenisa zwa u alusa zwimela zwiṱuku, ni kone u ḓowniloda PDF ya ndugiselo. I fhambanyisa mbalo dzo pulaniwaho, ṱhoḓea dzi songo fhelelaho na ṱhanganyelo dzi sa ḓivhei kha u zwala ho vhoniwaho kana tshitoko tsho vhoniwaho.",
+  // Planned nursery batch cards release (lib/release-notes.ts): UNREVIEWED Codex AI drafts; exact English source retained.
+  "Print planned nursery batch cards with dates and separate seedling counts.": "Gandisani makhadi a zwigwada zwo pulaniwaho zwa u alusa zwimela zwiṱuku, a re na maḓuvha na mbalo dzo fhambanisiwaho dza zwimela zwiṱuku.",
+  "Print planned batch cards": "Gandisani makhadi a zwigwada zwo pulaniwaho",
+  "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Shumisani dzinginyo ḽa u alusa zwimela zwiṱuku ḽo sedzuluswaho u gandisa makhadi a zwigwada. Mbalo na maḓuvha zwi dzula zwo pulaniwa; mbekanyamushumo a i vhulungi notsi dza u zwala na dza tshigwada tsha mbeu dzo ṅwalwaho nga tshanḓa.",
 };
 export default copy;
