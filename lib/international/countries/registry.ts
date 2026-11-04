@@ -40,6 +40,15 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
   { code: 'US', name: 'United States', stage: 'engineering-pilot', jurisdictionNote: 'Federal, state, tribal and local requirements differ; an APHIS contact or federal dataset cannot settle every local permission.', regions: [], agronomyReview: unreviewed(), sources: [
     source('us-itis', 'biodiversity', 'Integrated Taxonomic Information System (ITIS)', 'https://www.itis.gov/', 'North America and world taxonomy', 'The official site provides taxonomic names and relationships, not planting recommendations, occurrence completeness or legal permission.'),
     source('us-extension', 'agricultural-extension', 'USDA National Institute of Food and Agriculture: Cooperative Extension', 'https://www.nifa.usda.gov/about-nifa/how-we-work/extension', 'US federal/state/county extension network', 'The official page describes federal, land-grant and local extension roles. A state-specific production guide remains unreviewed.'),
+    source('us-nifa-land-grant-directory', 'agricultural-extension', 'USDA NIFA Land-grant University Website Directory',
+      'https://www.nifa.usda.gov/grants/land-grant-university-website-directory', 'US land-grant institutions listed by NIFA',
+      'The public directory lists land-grant institutions and links to their websites.', {
+        accessedOn: '2026-11-04', publishedOn: null, lastModifiedOn: '2025-04-23',
+        licence: unknown('Website reuse terms have not been verified from the public directory page.'),
+        accessRequirements: known('Public directory read without an account. Access to linked institution sites and automated access remain unverified.'),
+        missingDataBehavior: 'The dossier keeps the directory as an external referral link.',
+        limitations: 'County office locations, current contacts, appointments, fees, advisory services and local crop guidance remain unverified.',
+      }),
     source('us-noaa', 'weather-frost', 'NOAA National Centers for Environmental Information', 'https://www.ncei.noaa.gov/access/us-climate-normals/', 'US climate normals portal', 'The public portal identifies US Climate Normals. Its dynamic product details, station selection and frost interpretation were not verified.'),
     source('us-nws-observation', 'weather-frost', 'NOAA National Weather Service station observations', NWS_OBSERVATION_PROVIDER.docsUrl,
       NWS_OBSERVATION_PROVIDER.coverage, 'Official documentation, schema and public station/observation responses were read. The opt-in example preserves published station identity, units, quality-control flags and missing readings; it supplies no local farming approval.', {

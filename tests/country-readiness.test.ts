@@ -127,3 +127,22 @@ test('page modification metadata never supplies a missing publication date', () 
   assert.equal(sourceEvidenceState({ ...source, publishedOn: null, lastModifiedOn: AS_OF }, AS_OF), 'undated');
   assert.equal(sourceEvidenceState({ ...source, lastModifiedOn: null }, AS_OF), 'available-reference');
 });
+
+test('the US institution directory can be opened as a reference without counting as local extension readiness', () => {
+  const asOf = '2026-11-04';
+  const result = evaluateCountryReadiness({ countryCode: 'US', agriculturalRegionId: 'unknown' }, asOf);
+  const extension = result.evidence.find(entry => entry.category === 'agricultural-extension');
+  assert.ok(extension);
+  const directory = extension.sources.find(source => source.id === 'us-nifa-land-grant-directory');
+  assert.ok(directory, 'the US dossier includes the independently read public directory');
+  assert.equal(directory.url, 'https://www.nifa.usda.gov/grants/land-grant-university-website-directory');
+  assert.equal(directory.accessedOn, asOf);
+  assert.equal(directory.lastModifiedOn, '2025-04-23');
+  assert.equal(directory.publishedOn, null);
+  assert.equal(sourceEvidenceState(directory, asOf), 'undated');
+  assert.equal(extension.availableCount, 0);
+  assert.ok(extension.sources.some(source => source.id === 'us-extension'), 'the Cooperative Extension overview is still available');
+  assert.equal(result.localReviewComplete, false);
+  assert.equal(result.productionPlanSupported, false);
+  assert.equal(result.southAfricanFallbackAllowed, false);
+});
