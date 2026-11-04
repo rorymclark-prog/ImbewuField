@@ -14,12 +14,22 @@ import type { NurseryPlanPanelProps } from '../components/crops/NurseryPlanPanel
 const root = new URL('../', import.meta.url).href;
 const observations = { forecasts: 0, forbidden: false, deliveries: 0 };
 const actualForecast = await import('../lib/crop-export-schedule.ts');
-Object.assign(globalThis, { __nurseryUnitPanel: { observations, actualForecast, auth: probe.auth } });
+const replay = { stateUpdaters: false };
+Object.assign(globalThis, { __nurseryUnitPanel: { observations, actualForecast, auth: probe.auth, React, replay } });
 const data = (source: string) => ({ shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(source) });
 const hooks = registerHooks({ resolve(specifier, context, next) {
   if ((context.parentURL?.endsWith('/lib/length-unit-preference.ts') || context.parentURL?.endsWith('/lib/nursery-save-receipt.ts')) && specifier === 'firebase/auth') return data(`
     export function onAuthStateChanged(_auth,next){const auth=globalThis.__nurseryUnitPanel.auth;auth.add(next);return()=>auth.delete(next);}`);
   if (context.parentURL?.endsWith('/components/crops/NurseryPlanPanel.tsx')) {
+    // The real browser can replay a state updater before committing its result.
+    // The renderer fixture otherwise misses a confirmation consumed in that discarded call.
+    if (specifier === 'react') return data(`
+      const p=globalThis.__nurseryUnitPanel,React=p.React;
+      export const useEffect=React.useEffect,useMemo=React.useMemo,useRef=React.useRef;
+      export function useState(initial){const [value,set]=React.useState(initial);return [value,action=>set(
+        typeof action==='function'&&p.replay.stateUpdaters
+          ? previous=>{action(previous);return action(previous);} : action)];}`);
+
     if (specifier === '@/lib/crop-export-schedule') return data(`export function buildNurseryForecast(...args){const p=globalThis.__nurseryUnitPanel;p.observations.forecasts++;if(p.observations.forbidden)throw Error('Unapproved catalogue forecast');return p.actualForecast.buildNurseryForecast(...args);}`);
     if (specifier === '@/lib/file-delivery') return data(`export async function deliverFile(_blob,_name,_title,current){if(current&&!current())return 'cancelled';globalThis.__nurseryUnitPanel.observations.deliveries++;return 'downloaded';}`);
   }
@@ -36,7 +46,7 @@ const { createNurserySaveFixture } = await import('./nursery-save-fixture.ts');
 const growerNursery = await import('../lib/international/grower-nursery.ts');
 const { generateGrowerAutoPlan } = await import('../lib/international/grower-autoplan.ts');
 after(() => { hooks.deregister(); cleanup(); Reflect.deleteProperty(globalThis, '__nurseryUnitPanel'); });
-beforeEach(async () => { await reset(); observations.forecasts = 0; observations.forbidden = false; observations.deliveries = 0; });
+beforeEach(async () => { await reset(); observations.forecasts = 0; observations.forbidden = false; observations.deliveries = 0; replay.stateUpdaters = false; });
 const text = (node: ReactTestInstance | string): string => typeof node === 'string' ? node : node.children.map(child => text(child as ReactTestInstance | string)).join('');
 const blank = (): NurserySettings => ({ version: 1, spaces: [], containers: [], profiles: [] });
 const initial = (): NurserySettings => ({ version: 1, spaces: [{ id: 'space-a', siteId, name: 'Private bench A', usableM2: 1.2345678901234567 }],
@@ -388,4 +398,58 @@ test('the exact completed nursery result hands a retained second form to its del
     parent.flushPostContext(); assert.notEqual(ui.field('Space name').props.disabled, true);
     ui.submit('Add nursery space'); assert.equal(crop.loadCropPlan().nursery?.spaces.find(row => row.name === 'Retained bench')?.usableM2, 4);
   } finally { parent.dispose(); }
+});
+
+test('a replayed nursery state update cannot spend the confirmation before a clean saved form becomes editable', () => {
+  replay.stateUpdaters = true;
+  const parent = boundMount(initial()), ui = parent.ui;
+  parent.delayPostContext();
+  try {
+    ui.change('Container name', 'DEMO synthetic tray');
+    ui.change('Outer width', '32');
+    ui.change('Outer length', '48');
+    ui.change('Cells per container', '50');
+    ui.submit('Add container type');
+
+    assert.match(ui.text(), /Saved on this device/);
+    const saved = crop.loadCropPlan().nursery!;
+    const created = saved.containers.find(row => row.name === 'DEMO synthetic tray');
+    assert.ok(created);
+    assert.equal(created.widthCm, 32);
+    assert.equal(created.lengthCm, 48);
+    assert.equal(created.cells, 50);
+
+    // Form is cleared after confirmed save
+    assert.equal(ui.field('Container name').props.value, '');
+
+    // Intentional hold while post-context is delayed: editing disabled until current context arrives
+    assert.equal(ui.field('Container name').props.disabled, true);
+    assert.doesNotMatch(ui.text(), /Reload saved nursery settings to continue editing/);
+
+    // Current context arrives via parent flush
+    parent.flushPostContext();
+
+    // Inputs become editable again without requiring an explicit reload action
+    assert.notEqual(ui.field('Container name').props.disabled, true);
+    assert.doesNotMatch(ui.text(), /Reload saved nursery settings to continue editing/);
+  } finally {
+    parent.dispose(); replay.stateUpdaters = false;
+  }
+});
+
+
+test('replaying a nursery handoff keeps another unfinished form tied to the confirmed saved source', () => {
+  replay.stateUpdaters = true;
+  const parent = boundMount(), ui = parent.ui; parent.delayPostContext();
+  try {
+    ui.change('Space name', 'DEMO retained bench'); ui.change('Net usable surface', '4');
+    ui.edit('container'); ui.change('Outer width', '34'); ui.submit('Save container changes');
+    assert.match(ui.text(), /Saved on this device/);
+    assert.equal(ui.field('Space name').props.value, 'DEMO retained bench');
+    assert.equal(ui.field('Space name').props.disabled, true);
+    parent.flushPostContext();
+    assert.notEqual(ui.field('Space name').props.disabled, true);
+    ui.submit('Add nursery space');
+    assert.equal(crop.loadCropPlan().nursery?.spaces.find(row => row.name === 'DEMO retained bench')?.usableM2, 4);
+  } finally { parent.dispose(); replay.stateUpdaters = false; }
 });

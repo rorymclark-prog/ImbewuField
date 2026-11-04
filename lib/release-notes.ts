@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: 'd5ec4cb3c', changes: [
+    'Keep editing nursery equipment and buyer targets after a confirmed save.',
+  ] },
   { when: '4 November 2026', sha: '575c24a11', changes: [
     'Keep the nursery and harvest unit controls available after the same plan is saved again.',
     'See when you can reload saved settings or need to reopen the crop plan.',
