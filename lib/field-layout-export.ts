@@ -44,7 +44,7 @@ const xmlText = (value: unknown): value is string => typeof value === 'string' &
 type Point = [number, number];
 type Row = Record<string, unknown>;
 type Field = { row: Row; points: Point[]; beds: Row[]; paths: Row[] };
-type Model = { fields: Field[]; frame: FieldLayoutExportFrame; sourceKey: string; includeLabels: boolean; sample: boolean };
+type Model = { fields: Field[]; state: Row; frame: FieldLayoutExportFrame; sourceKey: string; includeLabels: boolean; sample: boolean };
 class ExportHold extends Error {
   readonly reason: FieldLayoutExportReason;
   constructor(reason: FieldLayoutExportReason) { super(reason); this.reason = reason; }
@@ -144,7 +144,7 @@ function pointsFrom(value: unknown, ring: boolean, budget: { points: number; com
 function labelValid(row: Row, key: string): void {
   if (row[key] !== undefined && !xmlText(row[key])) fail('unsafe-source');
 }
-function inspect(request: FieldLayoutExportRequest): Model {
+function inspect(request: FieldLayoutExportRequest, allowEmpty = false): Model {
   // The live frame may also contain large image bytes. They are neither a
   // projection input nor export evidence; capture only its six defined fields.
   const own = (value: unknown, key: string, optional = false): unknown => {
@@ -213,9 +213,9 @@ function inspect(request: FieldLayoutExportRequest): Model {
     if (line.kind !== 'bedpath' || !positive(line.widthM) || line.widthM > MAX_PATH_M) return fail('invalid-path');
     labelValid(line, 'name'); pointsFrom(line.points, false, budget); field.paths.push(line);
   }
-  if (!fields.length) return fail('no-fields');
+  if (!fields.length && !allowEmpty) return fail('no-fields');
   const chosen = selection.kind === 'all' ? fields : fields.filter(field => field.row.id === selection.fieldId);
-  if (!chosen.length) return fail('selected-field-missing');
+  if (!chosen.length && !allowEmpty) return fail('selected-field-missing');
   for (const field of chosen) if (record(field.row.fieldBlock) && field.row.fieldBlock.mode === 'beds' && !field.beds.length) return fail('invalid-field-markers');
   const source = { version: 1, siteId: state.siteId, selection, includeLabels: copied.includeLabels === true, sample: copied.sample,
     savedFrame: saved, effectiveFrame: frame, baseMode: mode, scaleFactor: state.scaleFactor,
@@ -225,7 +225,53 @@ function inspect(request: FieldLayoutExportRequest): Model {
     fields: chosen.map(field => ({ field: field.row, beds: field.beds, paths: field.paths })) };
   const ordered = (_key: string, value: unknown) => record(value)
     ? Object.fromEntries(Object.keys(value).sort().map(key => [key, value[key]])) : value;
-  return { fields: chosen, frame, sourceKey: JSON.stringify(source, ordered), includeLabels: copied.includeLabels === true, sample: copied.sample };
+  return { fields: chosen, state, frame, sourceKey: JSON.stringify(source, ordered), includeLabels: copied.includeLabels === true, sample: copied.sample };
+}
+
+export interface FieldLayoutMapSourceRequest {
+  readonly rawState: unknown;
+  readonly effectiveFrame: FieldLayoutExportFrame;
+}
+export type FieldLayoutMapSourceResult = FieldLayoutExportHold | {
+  readonly status: 'ready';
+  readonly state: DesignCanvasState;
+  readonly frame: FieldLayoutExportFrame;
+  /** Detached comparison material only. Callers still establish live authority. */
+  readonly sourceKey: string;
+};
+
+/** Import needs the same reference and raw-source checks even before the first
+ * field exists. Its comparison also binds every existing exclusion footprint. */
+export function inspectFieldLayoutMapSource(request: FieldLayoutMapSourceRequest): FieldLayoutMapSourceResult {
+  try {
+    const properties = Object.getOwnPropertyDescriptors(request);
+    if (!properties.rawState || !('value' in properties.rawState)
+      || !properties.effectiveFrame || !('value' in properties.effectiveFrame)
+      || properties.effectiveFrame.value === undefined) return fail('unsafe-source');
+    const model = inspect({ rawState: properties.rawState.value, effectiveFrame: properties.effectiveFrame.value,
+      selection: { kind: 'all' }, sample: false }, true);
+    const ordered = (_key: string, value: unknown) => record(value)
+      ? Object.fromEntries(Object.keys(value).sort().map(key => [key, value[key]])) : value;
+    const sourceKey = JSON.stringify({ exportSource: model.sourceKey,
+      zones: model.state.zones, items: model.state.items, lines: model.state.lines }, ordered);
+    return { status: 'ready', state: model.state as unknown as DesignCanvasState, frame: model.frame, sourceKey };
+  } catch (error) {
+    return { status: 'held', reasons: [error instanceof ExportHold ? error.reason : 'unsafe-source'] };
+  }
+}
+
+/** Shared own-data capture for the parsed candidate and append DTOs. */
+export function inspectFieldLayoutData(value: unknown): { readonly status: 'ready'; readonly value: unknown } | FieldLayoutExportHold {
+  try { return { status: 'ready', value: detachedData(value) }; }
+  catch (error) { return { status: 'held', reasons: [error instanceof ExportHold ? error.reason : 'unsafe-source'] }; }
+}
+
+export interface FieldLayoutTopologyBudget { points: number; comparisons: number }
+/** Reuse the saved-field topology rules for projected normalized import rings. */
+export function inspectFieldLayoutRing(value: unknown, budget: FieldLayoutTopologyBudget):
+  { readonly status: 'ready'; readonly points: [number, number][] } | FieldLayoutExportHold {
+  try { return { status: 'ready', points: pointsFrom(value, true, budget) }; }
+  catch (error) { return { status: 'held', reasons: [error instanceof ExportHold ? error.reason : 'unsafe-source'] }; }
 }
 
 /** Private source comparison only. A key is neither live authorization nor a

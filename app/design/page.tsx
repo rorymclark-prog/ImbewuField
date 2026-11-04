@@ -9,8 +9,10 @@ import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState, typ
 import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
 import FieldBlocksPanel from '@/components/design/FieldBlocksPanel';
+import FieldLayoutImportPanel from '@/components/design/FieldLayoutImportPanel';
 import { configureFieldBlock, reconcileFieldBlockEdit } from '@/lib/bed-block';
 import { deliverFieldLayoutExport } from '@/lib/field-layout-delivery';
+import { readFieldLayoutImportFile, beginFieldLayoutImportAppend, discardFieldLayoutImport } from '@/lib/field-layout-import-delivery';
 import { readFieldBlockAllocations, fieldBlockAllocatedIds, assertFieldBlockAllocationsCurrent,
   assertFieldBlockLayoutReadable, fieldBlockSourceKey } from '@/lib/field-block-allocations';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -776,6 +778,11 @@ function DesignStudioInner() {
   const fieldExportMounted = useRef(false);
   const fieldExportView = useRef({ state: canvasState, frame, selectedId, actor: fieldEditActor });
   fieldExportView.current = { state: canvasState, frame, selectedId, actor: fieldEditActor };
+  const fieldImportContextKey = useMemo(() => {
+    try { return canvasState && frame ? JSON.stringify([fieldBlockSourceKey(canvasState, null, frame),
+      canvasState.rev, canvasState.updatedAt, selectedId, fieldEditActor]) : null; }
+    catch { return null; }
+  }, [canvasState, frame, selectedId, fieldEditActor]);
   useEffect(() => {
     fieldExportMounted.current = true;
     return () => { fieldExportMounted.current = false; };
@@ -1756,14 +1763,15 @@ function DesignStudioInner() {
 
   // Persist canvas state on change (with undo history), and re-run the advisor.
   const handleChange = useCallback(
-    (updater: (prev: DesignCanvasState) => DesignCanvasState, applied?: (state: DesignCanvasState) => void) => {
+    (updater: (prev: DesignCanvasState) => DesignCanvasState, applied?: (state: DesignCanvasState) => void,
+      rejected?: (message: string) => void) => {
       const intent = readFieldBlockAllocations(fieldEditActor);
       // React can replay a queued field application. Reuse this action's exact
       // returned state instead of saving it twice or treating its own result as
       // an outside edit. Other canvas callers retain their existing semantics.
       const replay = applied ? new WeakMap<DesignCanvasState, DesignCanvasState>() : null;
       setCanvasState((prev) => {
-        if (!prev) return prev;
+        if (!prev) { rejected?.('The design is not available. Reopen it before adding fields.'); return prev; }
         // A genuinely new edit invalidates whatever future we might have redone back to —
         // standard undo/redo semantics. Without this, undo → edit → redo would silently
         // resurrect a stale future state the farmer never asked for.
@@ -1781,6 +1789,7 @@ function DesignStudioInner() {
           if (applied && next === prev) return prev;
         } catch (e) {
           setEditError((e as Error).message);
+          rejected?.((e as Error).message);
           return prev;
         }
         setSaved(false);
@@ -1789,7 +1798,7 @@ function DesignStudioInner() {
         try {
           assertFieldBlockAllocationsCurrent(allocations);
           stamped = persistCanvasState(next);
-        } catch (e) { setEditError((e as Error).message); return prev; }
+        } catch (e) { setEditError((e as Error).message); rejected?.((e as Error).message); return prev; }
         undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         redoStack.current = [];
         setSaved(!!stamped);
@@ -1799,6 +1808,7 @@ function DesignStudioInner() {
         replay?.set(prev, result);
         replay?.set(result, result);
         if (stamped) applied?.(result);
+        else rejected?.('The field outlines could not be saved. Check the current design and available device space.');
         return result;
       });
     },
@@ -4278,7 +4288,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           selectedIdentity={selectedIdentity}
           areaFillControl={{ value: areaFill, onChange: changeAreaFill }}
           bedBlockControl={bedBlockControl}
-          fieldBlocksPanel={frame && <FieldBlocksPanel
+          fieldBlocksPanel={frame && <div><FieldBlocksPanel
             state={canvasState}
             frame={frame}
             selectedId={selectedId}
@@ -4336,7 +4346,36 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               handleSetTool('select');
               setActiveLayers(a => ({ ...a, planting: true }));
             }}
-          />}
+          /><FieldLayoutImportPanel contextKey={fieldImportContextKey} sample={fieldEditActor.sample}
+            onDiscard={discardFieldLayoutImport}
+            onRead={(file, formCurrent) => {
+              const expected = { state: canvasState, frame, actor: fieldEditActor };
+              return readFieldLayoutImportFile({ ...expected, file, formIsCurrent: formCurrent, isCurrent: () => {
+                const live = fieldExportView.current;
+                return fieldExportMounted.current && live.state === expected.state && live.frame === expected.frame
+                  && live.actor === expected.actor;
+              } });
+            }}
+            onAppend={(review, ids, formCurrent) => new Promise(resolve => {
+              try {
+                const action = beginFieldLayoutImportAppend(review, ids, newId, formCurrent);
+                handleChange(prev => {
+                  const currentFrame = fieldFrameRef.current;
+                  if (!currentFrame) throw Error('The map reference is unavailable. Read the KML again.');
+                  return action.apply(prev, currentFrame);
+                }, written => {
+                  try {
+                    action.written(written);
+                    setActiveLayers(value => ({ ...value, planting: true }));
+                    resolve({ status: 'applied', message: `${ids.length} field outline${ids.length === 1 ? '' : 's'} saved. Select a field to choose beds or open ground.` });
+                  } catch {
+                    action.failed();
+                    resolve({ status: 'held', message: 'The saved map changed during this action. Check its current field outlines before importing again.' });
+                  }
+                }, message => { action.failed(); resolve({ status: 'held', message }); });
+              } catch (error) { resolve({ status: 'held', message: (error as Error).message }); }
+            })}
+          /></div>}
           setActiveLayers={setActiveLayers}
           onUndo={handleUndo}
           canUndo={undoStack.current.length > 0}
