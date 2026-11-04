@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Import field outlines from Google Earth.": "Nghenisa mindzilekano ya masimu leyi humaka eka Google Earth.",
+  "Review imported field outlines": "Kambisisa mindzilekano ya masimu leyi nghenisiweke",
+  "Design Studio → Planting → Import field outlines": "Design Studio → Ku byala → Nghenisa mindzilekano ya masimu",
+  "Choose a local KML file, review and select distinct outlines, then add them as new fields. Configure beds or open ground afterwards; map-reference locations are not surveyed boundaries.": "Hlawula fayili ya KML leyi nga eka xitirhisiwa xa wena, kambisisa kutani u hlawula mindzilekano yo hambana, kutani u yi engetela yi va masimu lamantshwa. Endzhaku lunghisa timbhedwa to byala (beds) kumbe nsimu leyi pfulekeke; tindhawu ta le mepeni a hi mindzilekano leyi pimiweke hi nkambisiso wa misava (survey).",
   // Integrated exact-source candidate descriptions; fluent-review status unchanged.
   "Export saved field layouts for Google Earth.": "Rhumerisa maakanyelo ya masimu lama hlayisiweke eka Google Earth.",
   "Export saved fields": "Rhumerisa masimu lama hlayisiweke",

@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Import field outlines from Google Earth.": "Kenya meedi ea masimo e tsoang ho Google Earth.",
+  "Review imported field outlines": "Hlahloba meedi ea masimo e kentsoeng",
+  "Design Studio → Planting → Import field outlines": "Design Studio → Ho lema → Kenya meedi ea masimo",
+  "Choose a local KML file, review and select distinct outlines, then add them as new fields. Configure beds or open ground afterwards; map-reference locations are not surveyed boundaries.": "Kgetha faele ya KML e sesebedisweng sa hao, hlahloba ebe o kgetha meedi e arohaneng, ebe o e kenya e le masimo a matjha. Ka mora moo lokisa libethe tsa temo (beds) kapa tshimo e bulehileng; dibaka tsa tshehetso ya mmapa hase meedi e lekantsweng ka tlhahlobo ya lefatshe (survey).",
   // Integrated exact-source candidate descriptions; fluent-review status unchanged.
   "Export saved field layouts for Google Earth.": "Romela meralo e bolokiloeng ea masimo bakeng sa Google Earth.",
   "Export saved fields": "Romela masimo a bolokiloeng",

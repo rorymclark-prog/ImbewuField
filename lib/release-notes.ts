@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: 'b908db69f', changes: [
+    'Import field outlines from Google Earth.',
+  ], tour: [{ title: 'Review imported field outlines', where: 'Design Studio → Planting → Import field outlines', href: '/design',
+    detail: 'Choose a local KML file, review and select distinct outlines, then add them as new fields. Configure beds or open ground afterwards; map-reference locations are not surveyed boundaries.' }] },
   { when: '4 November 2026', sha: 'b0ceadb26', changes: [
     'Export saved field layouts for Google Earth.',
   ], tour: [{ title: 'Export saved fields', where: 'Design Studio → Planting → Field blocks', href: '/design',

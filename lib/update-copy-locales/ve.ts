@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Import field outlines from Google Earth.": "Dzhenisani mikano ya masimu i bvaho kha Google Earth.",
+  "Review imported field outlines": "Ṱolani mikano ya masimu yo dzheniswaho",
+  "Design Studio → Planting → Import field outlines": "Design Studio → U lima → Dzhenisani mikano ya masimu",
+  "Choose a local KML file, review and select distinct outlines, then add them as new fields. Configure beds or open ground afterwards; map-reference locations are not surveyed boundaries.": "Nangani faela ya KML i re kha tshishumiswa tshaṋu, ṱolani ni nange mikano yo fhambanaho, ni kone u i dzhenisa sa masimu maswa. Nga murahu dzudzanyani mmbete ya u ṱavha (beds) kana tsimu yo vuleaho; fhethu ha ndaedzo ya mmapa a si mikano yo pimiwaho nga u ela mavu (survey).",
   // Integrated exact-source candidate descriptions; fluent-review status unchanged.
   "Export saved field layouts for Google Earth.": "Bvisani mbumbo dza masimu dzo vhulungwaho dza Google Earth.",
   "Export saved fields": "Bvisani masimu o vhulungwaho",
