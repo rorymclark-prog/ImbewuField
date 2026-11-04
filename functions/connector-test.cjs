@@ -78,9 +78,12 @@ async function tool(client, name, args = {}, expectError = false) {
   }
   const unauth = await request('/mcp'); ok(unauth.res.status === 401 && unauth.res.headers.get('www-authenticate').includes('resource_metadata'), 'auth discovery challenge');
   const metadata = await request('/authorization-metadata'); ok(metadata.value.code_challenge_methods_supported.includes('S256'), 'S256 discovery');
+  ok(!metadata.value.scopes_supported.includes('field:operator'), 'automatic host discovery leaves owner controls for an explicit request');
+  const resourceMetadata = await request('/resource-metadata');
+  ok(JSON.stringify(resourceMetadata.value.scopes_supported) === JSON.stringify(metadata.value.scopes_supported), 'resource and issuer advertise the same customer permissions');
   const evil = await fetch(base + '/mcp', { method: 'POST', headers: { Origin: 'https://evil.example', 'Content-Type': 'application/json' }, body: '{}' }); ok(evil.status === 403, 'browser origin rejected');
   const unauthCall = await request('/mcp', { jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'get_profile', arguments: {} } }); ok(unauthCall.value.result._meta['mcp/www_authenticate'].length === 1, 'native OAuth tool challenge exposed');
-  const a = await oauth(users['connector-a']); const client = await connect(a);
+  const a = await oauth(users['connector-a'], metadata.value.scopes_supported.join(' ')); const client = await connect(a);
   try {
     const list = await client.listTools(); ok(list.tools.length >= 14 && list.tools.every(t => t._meta.securitySchemes?.length), 'discoverable scoped schemas');
     ok(!list.tools.some(t => t.name === 'set_ai_map_kill_switch'), 'ordinary account has no operator tools');

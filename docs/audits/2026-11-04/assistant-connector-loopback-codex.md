@@ -4,7 +4,7 @@
 - Reviewed revision — main `f6a170245c53cc85542ec94ef6d9fc73bc87b85b` and the callback correction on `codex/imbewu-oauth-loopback`.
 - Deployment inspected — `https://imbewufield.vercel.app`, build `2c4100b`. Its Git tree `d11b6d91fe5af330e1f6d1ee98dc1bc7a39b1205` is identical to the merged revision.
 - Previous audit — [initial connector implementation and verification](../2026-11-03/assistant-connector-codex.md). MCP-001 through MCP-010 retain their earlier evidence and host verification limits.
-- Scope — canonical production discovery, native callback transport and targeted function deployment.
+- Scope — canonical production discovery, native callback transport, plugin loading and targeted function deployment.
 - Evidence type — actual deployed HTTP requests, official MCP SDK, source reproduction using the app's NextRequest class, regression checks.
 
 ## What was already done
@@ -31,6 +31,9 @@ finding MCP-009 now has production configuration evidence.
 | MCP-009 | Whole-file buffers could overlap beyond the instance memory budget. | Deployed configuration verified | The successful targeted deployment and subsequent Firebase inventory both confirm concurrency two. This is configuration evidence, with no claimed load test. |
 | MCP-011 | Desktop OAuth registration succeeds but the callback is rejected through the app proxy. | Reproduced, correction awaiting release verification | GET authorization with a registered `127.0.0.1` callback fails through Vercel and succeeds directly against the same backend. HTTPS callbacks and POST authorization succeed. The installed NextRequest class rewrites the loopback address inside its URL query to `localhost`. The underlying web Request retains the exact original. The proxy now reads that URL through the standard Request getter, preserving callback, state and resource bytes. |
 
+| MCP-012 | The private package installs but its tools are absent from the native Codex inventory. | Corrected and native discovery verified | The loader rejected the server-level OAuth `extensions` field. Version 1.0.1 uses standard MCP OAuth discovery. Readback preserves the endpoint, assets and skills. Native inventory now exposes all 17 customer tools with `notLoggedIn` status, and the actual tool call asks for connection. |
+| MCP-013 | Claude requests every advertised scope, including owner controls, during ordinary connection. | Corrected, host reconnection pending | The real DCR journey reached the app consent screen with the operator scope. Claude's setup exposes transport and registration choices but no scope field. Both metadata endpoints now advertise the same customer scope list. Owner requests still explicitly accept `field:operator` and enforce the current claim. The emulator authenticates an ordinary account using the discovered list and separately exercises owner permission. |
+
 ## Verification
 
 The regression uses the actual installed NextRequest class. It checks IPv4,
@@ -46,11 +49,25 @@ The successful earlier backend and emulator original-file checks remain recorded
 in the previous audit. Canonical signed-in persistence, disconnect and native
 installation are still required after this correction.
 
-The ordered Node 24 typecheck passed. The affected group passed 71 tests,
+The ordered Node 24 typecheck and functions compiler passed. The isolated
+Auth/Firestore/Storage integration passed 108 checks, including ordinary
+authorization using the actual discovery scope list and separate owner controls.
+The affected root group passed 71 tests,
 including the new real NextRequest regression. Whitespace is clean. Full CI
 and preview results remain required before merge and will be recorded on the
 PR and issue #35. This change affects connection
 transport. It does not change the map picture. `PLAN_VERSION` is unchanged.
+
+The earlier local full run on `be34f3601` was stopped after the real Claude
+scope-discovery issue required this source change. It has no terminal pass.
+Its runner and temporary emulators/backend were confirmed stopped before the
+new full-suite phase.
+
+Claude Desktop 4.16336.0 completed endpoint checking and DCR through its real
+connector controls. Its browser handoff reached the existing owner's app session.
+The request was cancelled before granting access. The unconnected test connector
+definition was removed and the unused form/tab closed. No user account was signed
+out. A new test after release will use the synthetic app account.
 
 ## Next continuation
 

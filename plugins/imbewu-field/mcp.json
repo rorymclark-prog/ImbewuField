@@ -3,17 +3,7 @@
   "mcpServers": {
     "imbewu-field": {
       "type": "streamable-http",
-      "url": "https://imbewufield.vercel.app/api/assistant/mcp",
-      "extensions": {
-        "com.openai": {
-          "auth": {
-            "type": "oauth",
-            "client": { "mode": "dcr" },
-            "baseScopes": ["field:read"],
-            "defaultScopes": ["field:read", "field:write", "field:org"]
-          }
-        }
-      }
+      "url": "https://imbewufield.vercel.app/api/assistant/mcp"
     }
   }
 }

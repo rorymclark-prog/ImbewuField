@@ -7,6 +7,9 @@ export const SCOPES = {
   'field:operator': 'Read platform health and manage the AI map kill switch (platform owner only)',
 } as const;
 export type Scope = keyof typeof SCOPES;
+// Some hosts request every advertised scope. Owner controls need a separate,
+// explicit request so ordinary accounts can complete their connection.
+export const CUSTOMER_SCOPES = Object.keys(SCOPES).filter(scope => scope !== 'field:operator');
 export const hash = (value: string | Buffer) => createHash('sha256').update(value).digest('hex');
 export const secret = () => randomBytes(32).toString('base64url');
 export function fail(message: string, status = 400): never { throw Object.assign(new Error(message), { status }); }

@@ -4,7 +4,7 @@ import type { OAuthClientInformationFull, OAuthTokenRevocationRequest } from '@m
 import { InvalidClientMetadataError, InvalidGrantError, InvalidScopeError, InvalidTargetError, InvalidTokenError } from '@modelcontextprotocol/sdk/server/auth/errors.js';
 import { ConnectorStorage, type Grant } from './storage';
 import { getAuth } from 'firebase-admin/auth';
-import { SCOPES, scopes, safeRedirect, secret, hash, fail } from './policy';
+import { SCOPES, CUSTOMER_SCOPES, scopes, safeRedirect, secret, hash, fail } from './policy';
 
 export class ConnectorAuth implements OAuthServerProvider {
   readonly resource: string;
@@ -115,6 +115,6 @@ export class ConnectorAuth implements OAuthServerProvider {
     return callback.href;
   }
   metadata() {
-    return { issuer: this.issuer, authorization_endpoint: `${this.issuer}/authorize`, token_endpoint: `${this.issuer}/token`, registration_endpoint: `${this.issuer}/register`, revocation_endpoint: `${this.issuer}/revoke`, response_types_supported: ['code'], grant_types_supported: ['authorization_code', 'refresh_token'], code_challenge_methods_supported: ['S256'], token_endpoint_auth_methods_supported: ['none'], scopes_supported: Object.keys(SCOPES) };
+    return { issuer: this.issuer, authorization_endpoint: `${this.issuer}/authorize`, token_endpoint: `${this.issuer}/token`, registration_endpoint: `${this.issuer}/register`, revocation_endpoint: `${this.issuer}/revoke`, response_types_supported: ['code'], grant_types_supported: ['authorization_code', 'refresh_token'], code_challenge_methods_supported: ['S256'], token_endpoint_auth_methods_supported: ['none'], scopes_supported: CUSTOMER_SCOPES };
   }
 }
