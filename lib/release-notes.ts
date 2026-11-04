@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: 'ad5de27fd', changes: [
+    'Compare draft wording for the England advice service and the Campinas office directory.',
+  ], tour: [{ title: 'Compare extension reference wording', where: 'International → Language review', href: '/international/locales',
+    detail: 'Choose the England or Campinas reference and compare the captured English with a draft. Drafts still need fluent review.' }] },
   { when: '3 November 2026', sha: '38ea2ae93', changes: [
     'Compare draft wording for Kenya’s historical soil catalogue.',
   ], tour: [{ title: 'Review Kenya’s soil-reference wording', where: 'International → Language drafts', href: '/international/locales',

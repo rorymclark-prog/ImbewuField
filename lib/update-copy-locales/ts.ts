@@ -1,6 +1,24 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // International reference review notices. AGY drafts reconciled to existing wording, pending fluent review.
+  "Compare draft wording for the England advice service and the Campinas office directory.": "Pimanisa marito ya mpfapfarhuto ya vukorhokeri bya switsundzuxo swa England na dayirekitari ya tihofisi ta Campinas.",
+  "Compare draft wording for Kenya’s historical soil catalogue.": "Pimanisa marito ya mpfapfarhuto ya khathaloko ya matimu ya misava ya Kenya.",
+  "Compare draft wording for India’s public agrometeorology bulletin links.": "Pimanisa marito ya mpfapfarhuto ya swihlanganisi swa tibuleti ta vutivi bya maxelo ya vurimi bya vaaki bya India.",
+  "Review draft wording for New Zealand’s S-map reference.": "Hlola marito ya mpfapfarhuto ya xikombo xa S-map xa New Zealand.",
+  "Review draft soil-reference wording for Ontario and Australia.": "Hlola marito ya mpfapfarhuto ya xikombo xa misava ya Ontario na Australia.",
+  "Compare extension reference wording": "Pimanisa marito ya xikombo xa switsundzuxo swa vurimi",
+  "International → Language review": "International → Nkambisiso wa ririmi",
+  "Choose the England or Campinas reference and compare the captured English with a draft. Drafts still need fluent review.": "Hlawula xikombo xa England kumbe Campinas u pimanisa tsalwa ra Xinghezi leri tekiweke ni mpfapfarhuto. Mpfapfarhuto wa ha lava ku kamberiwa hi munhu loyi a tivaka ririmi kahle.",
+  "Review Kenya’s soil-reference wording": "Hlola marito ya xikombo xa misava ya Kenya",
+  "International → Language drafts": "International → Mimpfapfarhuto ya vuhundzuluxi",
+  "Choose the historical soil catalogue and compare a draft with the captured English source.": "Hlawula khathaloko ya matimu ya misava kutani u pimanisa mpfapfarhuto na xihlovo xa Xinghezi lexi tekiweke.",
+  "Review India’s bulletin-link wording": "Hlola marito ya swihlanganisi swa tibuleti ta India",
+  "Choose the India IMD card and compare a draft with the captured English source.": "Hlawula khadi ra India IMD kutani u pimanisa mpfapfarhuto na xihlovo xa Xinghezi lexi tekiweke.",
+  "Review New Zealand’s S-map wording": "Hlola marito ya S-map ya New Zealand",
+  "Choose the New Zealand S-map card and compare a draft with the captured English source.": "Hlawula khadi ra New Zealand S-map kutani u pimanisa mpfapfarhuto na xihlovo xa Xinghezi lexi tekiweke.",
+  "Review draft wording for Canada’s historical climate and Ontario guide links.": "Hlola marito ya mpfapfarhuto ya maxelo ya matimu ya Canada na swihlanganisi swa nkongomiso wa Ontario.",
+  "Review draft wording for Brazil’s soil and Colombia’s biodiversity and weather links.": "Hlola marito ya mpfapfarhuto ya misava ya Brazil na swihlanganisi swa vutomi byo hambana-hambana na maxelo swa Colombia.",
   // Pilot wording review: docs/international/reference-card-language-packets/release-copy.json; UNREVIEWED AI draft.
   "Compare English and draft wording for the Kenya, UK and US reference cards.": "Pimanisa marito ya Xinghezi ni marito lama ha lulamisiwaka eka makhadi ya swikombo swa Kenya, UK na US.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.

@@ -115,5 +115,28 @@
     ],
     "reviewedByHuman": false,
     "runtimeActivation": false
+  },
+  "england-fas": {
+    "sourceSha256": "6a16a4abba4c5095be2349b56331e08a48e833ff8245f2ccd6d0d6a25e6907c3",
+    "draftsSha256": "40d479f0acad859386c79bbb6b5915674e1a908ffad2da22de9faee950e511c7",
+    "literals": [
+      "Defra",
+      "GOV.UK",
+      "Open Government Licence v3.0",
+      "Somerset"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
+  },
+  "campinas-cati": {
+    "sourceSha256": "236c65d09ef7e9dcaabacbb75381dfe784b053317d35d0016a08886ab3d4c4ae",
+    "draftsSha256": "e548fdeb50500045ae74789d5df92694818794d2d89c10a983540d904e244f65",
+    "literals": [
+      "Campinas",
+      "CATI",
+      "São Paulo"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
   }
 }

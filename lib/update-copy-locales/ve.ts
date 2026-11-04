@@ -1,6 +1,24 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // International reference review notices. AGY drafts reconciled to existing wording, pending fluent review.
+  "Compare draft wording for the England advice service and the Campinas office directory.": "Vhambedzani maipfi a mvetomveto a tshumelo ya themendelo ya England na bukhutshele ya ofisi dza Campinas.",
+  "Compare draft wording for Kenya’s historical soil catalogue.": "Vhambedzani maipfi a mvetomveto a khathalogo ya mavu ya kale ya Kenya.",
+  "Compare draft wording for India’s public agrometeorology bulletin links.": "Vhambedzani maipfi a mvetomveto a zwitanganyi zwa zwibveledzwa zwa mutsho wa vhulimi ha nnyi na nnyi ha India.",
+  "Review draft wording for New Zealand’s S-map reference.": "Tolani maipfi a mvetomveto a ndaedzo ya S-map ya New Zealand.",
+  "Review draft soil-reference wording for Ontario and Australia.": "Tolani maipfi a mvetomveto a ndaedzo ya mavu a Ontario na Australia.",
+  "Compare extension reference wording": "Vhambedzani maipfi a ndaedzo ya nyeletshedzo ya vhulimi",
+  "International → Language review": "International → Tsedzuluso ya luambo",
+  "Choose the England or Campinas reference and compare the captured English with a draft. Drafts still need fluent review.": "Nangani ndaedzo ya England kana Campinas ni vhambedze maṅwalwa a English o rekhodiwaho na mvetomveto. Muthu ane a kona luambo zwavhuḓi u kha ḓi fanela u ṱola mvetomveto.",
+  "Review Kenya’s soil-reference wording": "Tolani maipfi a ndaedzo ya mavu a Kenya",
+  "International → Language drafts": "International → Mvetomveto ya ṱhalutshedzelo",
+  "Choose the historical soil catalogue and compare a draft with the captured English source.": "Nangani khathalogo ya mavu ya kale ni vhambedze mvetomveto na tshiko tsha English tsho rekhodiwaho.",
+  "Review India’s bulletin-link wording": "Tolani maipfi a zwitanganyi zwa zwibveledzwa zwa India",
+  "Choose the India IMD card and compare a draft with the captured English source.": "Nangani garata ya India IMD ni vhambedze mvetomveto na tshiko tsha English tsho rekhodiwaho.",
+  "Review New Zealand’s S-map wording": "Tolani maipfi a S-map ya New Zealand",
+  "Choose the New Zealand S-map card and compare a draft with the captured English source.": "Nangani garata ya New Zealand S-map ni vhambedze mvetomveto na tshiko tsha English tsho rekhodiwaho.",
+  "Review draft wording for Canada’s historical climate and Ontario guide links.": "Tolani maipfi a mvetomveto a kilimate ya kale ya Canada na zwitanganyi zwa ndaedzo ya Ontario.",
+  "Review draft wording for Brazil’s soil and Colombia’s biodiversity and weather links.": "Tolani maipfi a mvetomveto a mavu a Brazil na zwitanganyi zwa vhutshilo ho fhambanaho na mutsho zwa Colombia.",
   // Pilot wording review: docs/international/reference-card-language-packets/release-copy.json; UNREVIEWED AI draft.
   "Compare English and draft wording for the Kenya, UK and US reference cards.": "Vhambedzani maipfi a Luisimane na maipfi a sa athu u fhela kha magaraṱa a tshumiso a Kenya, UK na US.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.

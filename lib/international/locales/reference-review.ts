@@ -20,6 +20,10 @@ import indiaImdSource from '@/docs/international/reference-card-language-packets
 import indiaImdDrafts from '@/docs/international/reference-card-language-packets/india-imd-drafts.json' with { type: 'json' };
 import kenyaSoilSource from '@/docs/international/reference-card-language-packets/kenya-soil-source.json' with { type: 'json' };
 import kenyaSoilDrafts from '@/docs/international/reference-card-language-packets/kenya-soil-drafts.json' with { type: 'json' };
+import englandFasSource from '@/docs/international/reference-card-language-packets/england-fas-source.json' with { type: 'json' };
+import englandFasDrafts from '@/docs/international/reference-card-language-packets/england-fas-drafts.json' with { type: 'json' };
+import campinasCatiSource from '@/docs/international/reference-card-language-packets/campinas-cati-source.json' with { type: 'json' };
+import campinasCatiDrafts from '@/docs/international/reference-card-language-packets/campinas-cati-drafts.json' with { type: 'json' };
 import manifest from '@/docs/international/reference-card-language-packets/manifest.json' with { type: 'json' };
 
 export const REFERENCE_REVIEW_LANGUAGES = [
@@ -49,6 +53,8 @@ export const REFERENCE_REVIEW_PACKETS = {
   'new-zealand-smap': { label: 'New Zealand · S-map soil reference', source: nzSmapSource, drafts: nzSmapDrafts, binding: manifest['new-zealand-smap'] },
   'india-imd': { label: 'India · IMD district bulletin index', source: indiaImdSource, drafts: indiaImdDrafts, binding: manifest['india-imd'] },
   'kenya-soil': { label: 'Kenya · Historical soil catalogue', source: kenyaSoilSource, drafts: kenyaSoilDrafts, binding: manifest['kenya-soil'] },
+  'england-fas': { label: 'England · Farming Advice Service', source: englandFasSource, drafts: englandFasDrafts, binding: manifest['england-fas'] },
+  'campinas-cati': { label: 'Brazil · Campinas CATI directory', source: campinasCatiSource, drafts: campinasCatiDrafts, binding: manifest['campinas-cati'] },
 } satisfies Record<string, ReferenceReviewPacket>;
 
 /** Only this review surface can display these candidates. A damaged binding

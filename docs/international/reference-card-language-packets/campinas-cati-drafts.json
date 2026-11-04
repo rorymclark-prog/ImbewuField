@@ -1,0 +1,135 @@
+{
+  "sourceSha256": "236c65d09ef7e9dcaabacbb75381dfe784b053317d35d0016a08886ab3d4c4ae",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "coverage",
+        "english": "Campinas regional office directory, São Paulo",
+        "sha256": "977b275c5a0ed6a567545ef16b83064b8b49f73459a06c0bbd403e52418c1936",
+        "translation": "Répertoire du bureau régional de Campinas, São Paulo"
+      },
+      {
+        "key": "claim",
+        "english": "The CATI directory lists the Campinas office under its Campinas regional division.",
+        "sha256": "d4786ed065a8cce0430c0332f4c4cd2bd4a1df32eafb9bd00e4c634b96f1bed2",
+        "translation": "Le répertoire de la CATI répertorie le bureau de Campinas sous sa division régionale de Campinas."
+      },
+      {
+        "key": "licence",
+        "english": "Website reuse terms have not been verified from the public directory page.",
+        "sha256": "528bc759e41c7163418aa47a432f85082db0c690d2470268cec919a5c1bc9083",
+        "translation": "Les conditions de réutilisation du site Web n'ont pas été vérifiées à partir de la page du répertoire public."
+      },
+      {
+        "key": "access",
+        "english": "Public office directory. Access to the linked extension service page is unverified.",
+        "sha256": "5ba8cde799f1e762ef719adf334e25dffe240836f460b247362044c2254f18c6",
+        "translation": "Répertoire public des bureaux. L'accès à la page liée du service de vulgarisation n'est pas vérifié."
+      },
+      {
+        "key": "limits",
+        "english": "Appointment procedures, fees, technical advice and local crop guidance remain unverified.",
+        "sha256": "947c253036152199bd5ba7699592cda91d221b1edd8c6e33479176f65264db54",
+        "translation": "Les procédures de rendez-vous, les frais, les conseils techniques et les directives locales sur les cultures restent non vérifiés."
+      }
+    ],
+    "es": [
+      {
+        "key": "coverage",
+        "english": "Campinas regional office directory, São Paulo",
+        "sha256": "977b275c5a0ed6a567545ef16b83064b8b49f73459a06c0bbd403e52418c1936",
+        "translation": "Directorio de la oficina regional de Campinas, São Paulo"
+      },
+      {
+        "key": "claim",
+        "english": "The CATI directory lists the Campinas office under its Campinas regional division.",
+        "sha256": "d4786ed065a8cce0430c0332f4c4cd2bd4a1df32eafb9bd00e4c634b96f1bed2",
+        "translation": "El directorio de CATI incluye la oficina de Campinas bajo su división regional de Campinas."
+      },
+      {
+        "key": "licence",
+        "english": "Website reuse terms have not been verified from the public directory page.",
+        "sha256": "528bc759e41c7163418aa47a432f85082db0c690d2470268cec919a5c1bc9083",
+        "translation": "Los términos de reutilización del sitio web no se han verificado a partir de la página del directorio público."
+      },
+      {
+        "key": "access",
+        "english": "Public office directory. Access to the linked extension service page is unverified.",
+        "sha256": "5ba8cde799f1e762ef719adf334e25dffe240836f460b247362044c2254f18c6",
+        "translation": "Directorio público de oficinas. El acceso a la página enlazada del servicio de extensión no está verificado."
+      },
+      {
+        "key": "limits",
+        "english": "Appointment procedures, fees, technical advice and local crop guidance remain unverified.",
+        "sha256": "947c253036152199bd5ba7699592cda91d221b1edd8c6e33479176f65264db54",
+        "translation": "Los procedimientos de citas, las tarifas, el asesoramiento técnico y la orientación sobre cultivos locales siguen sin verificarse."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "coverage",
+        "english": "Campinas regional office directory, São Paulo",
+        "sha256": "977b275c5a0ed6a567545ef16b83064b8b49f73459a06c0bbd403e52418c1936",
+        "translation": "Diretório do escritório regional de Campinas, São Paulo"
+      },
+      {
+        "key": "claim",
+        "english": "The CATI directory lists the Campinas office under its Campinas regional division.",
+        "sha256": "d4786ed065a8cce0430c0332f4c4cd2bd4a1df32eafb9bd00e4c634b96f1bed2",
+        "translation": "O diretório da CATI lista o escritório de Campinas sob sua divisão regional de Campinas."
+      },
+      {
+        "key": "licence",
+        "english": "Website reuse terms have not been verified from the public directory page.",
+        "sha256": "528bc759e41c7163418aa47a432f85082db0c690d2470268cec919a5c1bc9083",
+        "translation": "Os termos de reutilização do site não foram verificados a partir da página do diretório público."
+      },
+      {
+        "key": "access",
+        "english": "Public office directory. Access to the linked extension service page is unverified.",
+        "sha256": "5ba8cde799f1e762ef719adf334e25dffe240836f460b247362044c2254f18c6",
+        "translation": "Diretório público de escritórios. O acesso à página do serviço de extensão vinculada não foi verificado."
+      },
+      {
+        "key": "limits",
+        "english": "Appointment procedures, fees, technical advice and local crop guidance remain unverified.",
+        "sha256": "947c253036152199bd5ba7699592cda91d221b1edd8c6e33479176f65264db54",
+        "translation": "Procedimentos de agendamento, taxas, orientações técnicas e diretrizes para cultivos locais permanecem não verificados."
+      }
+    ],
+    "sw": [
+      {
+        "key": "coverage",
+        "english": "Campinas regional office directory, São Paulo",
+        "sha256": "977b275c5a0ed6a567545ef16b83064b8b49f73459a06c0bbd403e52418c1936",
+        "translation": "Orodha ya ofisi ya kikanda ya Campinas, São Paulo"
+      },
+      {
+        "key": "claim",
+        "english": "The CATI directory lists the Campinas office under its Campinas regional division.",
+        "sha256": "d4786ed065a8cce0430c0332f4c4cd2bd4a1df32eafb9bd00e4c634b96f1bed2",
+        "translation": "Orodha ya CATI inaorodhesha ofisi ya Campinas chini ya idara yake ya kikanda ya Campinas."
+      },
+      {
+        "key": "licence",
+        "english": "Website reuse terms have not been verified from the public directory page.",
+        "sha256": "528bc759e41c7163418aa47a432f85082db0c690d2470268cec919a5c1bc9083",
+        "translation": "Masharti ya matumizi tena ya tovuti hayajathibitishwa kutoka kwa ukurasa wa orodha ya umma."
+      },
+      {
+        "key": "access",
+        "english": "Public office directory. Access to the linked extension service page is unverified.",
+        "sha256": "5ba8cde799f1e762ef719adf334e25dffe240836f460b247362044c2254f18c6",
+        "translation": "Orodha ya ofisi inayopatikana kwa umma. Ufikiaji wa ukurasa uliowekewa kiungo wa huduma ya ugani bado haujathibitishwa."
+      },
+      {
+        "key": "limits",
+        "english": "Appointment procedures, fees, technical advice and local crop guidance remain unverified.",
+        "sha256": "947c253036152199bd5ba7699592cda91d221b1edd8c6e33479176f65264db54",
+        "translation": "Taratibu za miadi, ada, ushauri wa kiufundi na mwongozo wa mazao ya eneo husika bado havijathibitishwa."
+      }
+    ]
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "sourceSha256": "6a16a4abba4c5095be2349b56331e08a48e833ff8245f2ccd6d0d6a25e6907c3",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "coverage",
+        "english": "Defra-funded adviser network based across England",
+        "sha256": "1cc4ab11585240764be47ff64ff84991d48b8686803244de3686d4d7dfdce442",
+        "translation": "Réseau de conseillers financé par le Defra et basé dans toute l'Angleterre"
+      },
+      {
+        "key": "claim",
+        "english": "GOV.UK describes technical and business advice about farming regulations and links to newsletters and events.",
+        "sha256": "27cc60551ae8059affac61b839fa13f60a52c84560c3a476d86b0c4add243539",
+        "translation": "GOV.UK décrit des conseils techniques et commerciaux sur les réglementations agricoles et propose des liens vers des bulletins d'information et des événements."
+      },
+      {
+        "key": "licence",
+        "english": "The GOV.UK footer cites Open Government Licence v3.0 with exceptions. Reuse terms for linked material remain unverified.",
+        "sha256": "a7f014ee8277d81b8003964613b9f7b27f2fae220d0fdbd30763cdd380d399af",
+        "translation": "Le pied de page de GOV.UK cite l'Open Government Licence v3.0 avec des exceptions. Les conditions de réutilisation des contenus liés restent non vérifiées."
+      },
+      {
+        "key": "access",
+        "english": "Public GOV.UK service information. Booking procedures and automated access remain unverified.",
+        "sha256": "c463dd22a1da8f997a3f2d37d7affe015ab2d902f997791360b9b3d04822a202",
+        "translation": "Informations publiques de GOV.UK sur le service. Les procédures de réservation et l'accès automatisé restent non vérifiés."
+      },
+      {
+        "key": "limits",
+        "english": "Service reach in Somerset and elsewhere in the UK remains unverified. Local crop planning still requires its own review.",
+        "sha256": "d9de88de9b0fa1de648bd7326e8dba2715289464d7593be02046ef105d06393e",
+        "translation": "La portée du service dans le Somerset et ailleurs au Royaume-Uni reste non vérifiée. La planification locale des cultures nécessite toujours son propre examen."
+      }
+    ],
+    "es": [
+      {
+        "key": "coverage",
+        "english": "Defra-funded adviser network based across England",
+        "sha256": "1cc4ab11585240764be47ff64ff84991d48b8686803244de3686d4d7dfdce442",
+        "translation": "Red de asesores financiada por Defra con base en toda Inglaterra"
+      },
+      {
+        "key": "claim",
+        "english": "GOV.UK describes technical and business advice about farming regulations and links to newsletters and events.",
+        "sha256": "27cc60551ae8059affac61b839fa13f60a52c84560c3a476d86b0c4add243539",
+        "translation": "GOV.UK describe asesoramiento técnico y empresarial sobre normativas agrícolas y enlaces a boletines y eventos."
+      },
+      {
+        "key": "licence",
+        "english": "The GOV.UK footer cites Open Government Licence v3.0 with exceptions. Reuse terms for linked material remain unverified.",
+        "sha256": "a7f014ee8277d81b8003964613b9f7b27f2fae220d0fdbd30763cdd380d399af",
+        "translation": "El pie de página de GOV.UK cita la Open Government Licence v3.0 con excepciones. Los términos de reutilización del material enlazado siguen sin verificarse."
+      },
+      {
+        "key": "access",
+        "english": "Public GOV.UK service information. Booking procedures and automated access remain unverified.",
+        "sha256": "c463dd22a1da8f997a3f2d37d7affe015ab2d902f997791360b9b3d04822a202",
+        "translation": "Información pública de GOV.UK sobre el servicio. Los procedimientos de reserva y el acceso automatizado siguen sin verificarse."
+      },
+      {
+        "key": "limits",
+        "english": "Service reach in Somerset and elsewhere in the UK remains unverified. Local crop planning still requires its own review.",
+        "sha256": "d9de88de9b0fa1de648bd7326e8dba2715289464d7593be02046ef105d06393e",
+        "translation": "El alcance del servicio en Somerset y en otras partes del Reino Unido sigue sin verificarse. La planificación local de cultivos todavía requiere su propia revisión."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "coverage",
+        "english": "Defra-funded adviser network based across England",
+        "sha256": "1cc4ab11585240764be47ff64ff84991d48b8686803244de3686d4d7dfdce442",
+        "translation": "Rede de consultores financiada pelo Defra baseada em toda a Inglaterra"
+      },
+      {
+        "key": "claim",
+        "english": "GOV.UK describes technical and business advice about farming regulations and links to newsletters and events.",
+        "sha256": "27cc60551ae8059affac61b839fa13f60a52c84560c3a476d86b0c4add243539",
+        "translation": "O GOV.UK descreve orientações técnicas e comerciais sobre regulamentações agrícolas e fornece links para boletins informativos e eventos."
+      },
+      {
+        "key": "licence",
+        "english": "The GOV.UK footer cites Open Government Licence v3.0 with exceptions. Reuse terms for linked material remain unverified.",
+        "sha256": "a7f014ee8277d81b8003964613b9f7b27f2fae220d0fdbd30763cdd380d399af",
+        "translation": "O rodapé do GOV.UK cita a Open Government Licence v3.0 com exceções. Os termos de reutilização do material com link continuam não verificados."
+      },
+      {
+        "key": "access",
+        "english": "Public GOV.UK service information. Booking procedures and automated access remain unverified.",
+        "sha256": "c463dd22a1da8f997a3f2d37d7affe015ab2d902f997791360b9b3d04822a202",
+        "translation": "Informações públicas do GOV.UK sobre o serviço. Os procedimentos de agendamento e o acesso automatizado continuam sem verificação."
+      },
+      {
+        "key": "limits",
+        "english": "Service reach in Somerset and elsewhere in the UK remains unverified. Local crop planning still requires its own review.",
+        "sha256": "d9de88de9b0fa1de648bd7326e8dba2715289464d7593be02046ef105d06393e",
+        "translation": "O alcance do serviço em Somerset e em outras partes do Reino Unido continua não verificado. O planejamento local de cultivos ainda requer uma análise própria."
+      }
+    ],
+    "sw": [
+      {
+        "key": "coverage",
+        "english": "Defra-funded adviser network based across England",
+        "sha256": "1cc4ab11585240764be47ff64ff84991d48b8686803244de3686d4d7dfdce442",
+        "translation": "Mtandao wa washauri wenye makao katika maeneo mbalimbali ya England, unaofadhiliwa na Defra"
+      },
+      {
+        "key": "claim",
+        "english": "GOV.UK describes technical and business advice about farming regulations and links to newsletters and events.",
+        "sha256": "27cc60551ae8059affac61b839fa13f60a52c84560c3a476d86b0c4add243539",
+        "translation": "GOV.UK inaeleza ushauri wa kiufundi na kibiashara kuhusu kanuni za kilimo na viungo vya majarida na matukio."
+      },
+      {
+        "key": "licence",
+        "english": "The GOV.UK footer cites Open Government Licence v3.0 with exceptions. Reuse terms for linked material remain unverified.",
+        "sha256": "a7f014ee8277d81b8003964613b9f7b27f2fae220d0fdbd30763cdd380d399af",
+        "translation": "Sehemu ya chini ya ukurasa wa GOV.UK inataja Open Government Licence v3.0, isipokuwa katika baadhi ya hali. Masharti ya kutumia tena nyenzo zilizowekewa viungo bado hayajathibitishwa."
+      },
+      {
+        "key": "access",
+        "english": "Public GOV.UK service information. Booking procedures and automated access remain unverified.",
+        "sha256": "c463dd22a1da8f997a3f2d37d7affe015ab2d902f997791360b9b3d04822a202",
+        "translation": "Taarifa za umma kuhusu huduma kwenye GOV.UK. Taratibu za kuweka nafasi na ufikiaji wa kiotomatiki bado hazijathibitishwa."
+      },
+      {
+        "key": "limits",
+        "english": "Service reach in Somerset and elsewhere in the UK remains unverified. Local crop planning still requires its own review.",
+        "sha256": "d9de88de9b0fa1de648bd7326e8dba2715289464d7593be02046ef105d06393e",
+        "translation": "Iwapo huduma hiyo inawafikia watu huko Somerset na maeneo mengine ya Ufalme wa Muungano (UK) bado haijathibitishwa. Upangaji wa mazao katika eneo husika bado unahitaji uhakiki wake."
+      }
+    ]
+  }
+}
