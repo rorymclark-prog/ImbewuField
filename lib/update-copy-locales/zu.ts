@@ -1,6 +1,27 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
+  "Keep editing nursery equipment and buyer targets after a confirmed save.": "Qhubeka nokuhlela izinto zokusebenza zendawo yezithombo nemigomo yabathengi ngemva kokulondoloza okuqinisekisiwe.",
+  "Continue nursery editing": "Qhubeka nokuhlela indawo yezithombo",
+  "After a confirmed equipment save, continue entering your next container. Unknown sizes and stock stay unknown.": "Ngemva kokuqinisekiswa kokulondolozwa kwezinto zokusebenza, qhubeka ufake isitsha sakho esilandelayo. Osayizi abangaziwa nesitoko esingaziwa kuhlala kungaziwa.",
+  "Continue buyer-target editing": "Qhubeka nokuhlela imigomo yabathengi",
+  "After a confirmed target save, continue entering your next buyer target. Targets remain planned demand, not recorded sales or harvest.": "Ngemva kokuqinisekiswa kokulondolozwa kwenhloso, qhubeka ufake inhloso yakho elandelayo yomthengi. Izinhloso zihlala ziyizidingo ezihleliwe, hhayi ukuthengisa noma ukuvuna okurekhodiwe.",
+  "See where your own dated crop plan can review nursery requirements.": "Bona lapho uhlelo lwakho lwezitshalo olunezinsuku lungabukeza khona izidingo zendawo yezithombo.",
+  "Review nursery requirements": "Bukeza izidingo zendawo yezithombo",
+  "For a saved measured growing space, review proposed batches from your own dates and inputs. Equipment entries alone do not establish dated availability or local crop approval.": "Endaweni yokukhulisa ekaliwe negciniwe, bukeza amaqoqo ahlongozwayo asuselwa ezinsukwini zakho nasemininingwaneni oyifakile. Ukufaka izinto zokusebenza kuphela akuqinisekisi ukutholakala ngezinsuku ezithile noma ukugunyazwa kwezitshalo endaweni.",
+  "See a welcome for small growers, market gardens and community projects.": "Bona ukwamukelwa kwabalimi abancane, izingadi zokulima ngenjongo yokuthengisa namaphrojekthi omphakathi.",
+  "Start with your growing space": "Qala ngendawo yakho yokukhulisa",
+  "Home → Map and Production plan": "Ikhaya → Imephu nohlelo lokukhiqiza",
+  "Use your measured growing space and your own estimates. Regional reference coverage varies; choosing a country does not approve local crop advice.": "Sebenzisa indawo yakho yokukhulisa ekaliwe nezilinganiso zakho. Ukutholakala kwezinkomba zezifunda kuyahluka; ukukhetha izwe akugunyazi izeluleko zezitshalo zendawo.",
+  "See when local design advice needs your saved site and current country details.": "Bona ukuthi izeluleko zomklamo wendawo zidinga nini isayithi lakho eligciniwe nemininingwane yezwe yamanje.",
+  "Distinguish advice about the original South African sample from your own drawing.": "Hlukanisa izeluleko ngesampula yaseNingizimu Afrika yasekuqaleni nomdwebo wakho.",
+  "Check the design advice basis": "Hlola isisekelo sezeluleko zomklamo",
+  "Design Studio → Lima": "I-Design Studio → Lima",
+  "Open your saved design. Local tips use the existing South African references only when the current saved-site context supports them. Country confirmation does not approve local farming advice; your drawing stays available when advice is held.": "Vula umklamo wakho ogciniwe. Izeluleko zendawo zisebenzisa izinkomba zaseNingizimu Afrika ezikhona kuphela uma imininingwane yamanje yesayithi eligciniwe izisekela. Ukuqinisekisa izwe akugunyazi izeluleko zokulima zendawo; umdwebo wakho uhlala utholakala lapho izeluleko zimisiwe.",
+  "Review the original sample": "Bukeza isampula yasekuqaleni",
+  "Tour → Plan the growing season": "Uhambo → Hlela isikhathi sokulima",
+  "Open the growing-season stop and choose All tools to see the sample advice control. It names the original sample layout; a request does not analyse your sample edits.": "Vula isigaba sesikhathi sokulima bese ukhetha Wonke amathuluzi (All tools) ukuze ubone isilawuli sezeluleko zesampula. Sisho ukwakheka kwesampula yasekuqaleni; isicelo asihlaziyi izinguquko ozenze kusampula.",
   // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
   "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Izilawuli zamayunithi endawo yezithombo nezokuvuna zihlala zitholakala uma uhlelo olufanayo lulondolozwa futhi.",
   "See when you can reload saved settings or need to reopen the crop plan.": "Bona ukuthi ungaphinda ulayishe nini izilungiselelo ezigciniwe noma uma kudingeka uvule kabusha ipulani yezitshalo.",
@@ -367,5 +388,10 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Zama imephu ecwebezelayo ye-AI",
   "Design Studio → Glossy": "Isitudiyo sokuklama → Imephu ecwebezelayo",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vula ipulazi elilondoloziwe, khetha ikhasi bese ukhetha i-AI Polished. Ukukhiqiza ngakunye kuyakhokhelwa.",
+  // Own nursery review and preparation release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Review your own nursery space in square metres or square feet.": "Bukeza indawo yakho yokukhulisa izithombo ngamamitha-skwele (m²) noma ngamafithi-skwele (ft²).",
+  "Prepare grouped seedling and seed counts from your proposed crop plan.": "Lungiselela izibalo zezithombo nezembewu ezihlanganiswe ngamaqoqo zisuka ohlelweni lwakho lwezitshalo oluhlongozwayo.",
+  "Review nursery preparation": "Bukeza amalungiselelo endawo yezithombo",
+  "Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.": "Hlola izinto zokusebenza zendawo yezithombo ezinezinsuku ezibekiwe, ubukeze amaqoqo ezithombo ezizotshalwa aboniswe lapha bese ulanda iphepha lokulungiselela. Izibalo ziyizilinganiso zokuhlela; izidingo ezingaziwa zihlala zingaziwa.",
 };
 export default copy;

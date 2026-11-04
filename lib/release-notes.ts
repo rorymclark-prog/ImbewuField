@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: 'e6078a16f', changes: [
+    'Review your own nursery space in square metres or square feet.',
+    'Prepare grouped seedling and seed counts from your proposed crop plan.',
+  ], tour: [{ title: 'Review nursery preparation', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.' }] },
   { when: '4 November 2026', sha: 'ff23dc4d1', changes: [
     'See a welcome for small growers, market gardens and community projects.',
   ], tour: [{ title: 'Start with your growing space', where: 'Home → Map and Production plan', href: '/home',

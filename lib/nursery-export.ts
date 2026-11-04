@@ -1,7 +1,7 @@
 import type { PlanBed } from './crop-plan';
 import type { NurseryForecast, NurseryRange } from './crop-export-schedule';
 import { csvCell } from './journal-export';
-import type { GrowerNurseryResult } from './international/grower-nursery';
+import { projectGrowerNurseryPreparation, type GrowerNurseryResult } from './international/grower-nursery';
 
 export interface NurseryCsvOptions {
   siteName?: string;
@@ -134,6 +134,44 @@ export function buildGrowerNurseryCsv(result: GrowerNurseryResult, beds: readonl
       assumptions: 'Known assigned simultaneous demand. Incomplete quantities are lower bounds, not spare capacity.' });
     for (const available of resource.availability) rows.push({ ...shared, record_type: 'grower_asserted_availability',
       start_date: available.window.start, end_date_exclusive: available.window.endExclusive, availability_quantity: available.quantity });
+  }
+  return `\uFEFF${[columns, ...rows.map(row => columns.map(column => row[column] ?? ''))]
+    .map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
+}
+
+
+/** A shareable projection of the same nursery review, never another forecast.
+ * Membership and source receipts remain private; the caller still checks current
+ * source/book/actor and full result equality immediately before delivery. */
+export function buildGrowerNurseryPreparationCsv(result: GrowerNurseryResult, options: Pick<NurseryCsvOptions, 'sample'> = {}): string {
+  const projection = projectGrowerNurseryPreparation(result);
+  const columns = ['record_type', 'plan_basis', 'source_status', 'source_verification', 'review_status', 'review_incomplete',
+    'projection_status', 'projection_incomplete', 'coverage', 'horizon_start_utc', 'horizon_end_exclusive_utc', 'group_number', 'crop_name',
+    'raising_start_date_utc', 'field_entry_dates_exclusive_utc', 'represented_batch_count', 'metric', 'metric_status',
+    'known_subtotal', 'represented_batch_total', 'known_batch_count', 'unknown_batch_count', 'group_incomplete',
+    'outside_review_horizon', 'issues', 'guidance'] as const;
+  type PreparationRow = Partial<Record<typeof columns[number], string | number>>;
+  const labels = (issues: readonly string[]) => [...new Set(issues.map(growerNurseryIssueText))].join(' | ');
+  const context: PreparationRow = {
+    plan_basis: options.sample ? 'DEMO — planned grower-estimated transplant preparation' : 'Planned grower-estimated transplant preparation',
+    source_status: projection.sourceStatus ?? 'unavailable', source_verification: projection.sourceVerification,
+    review_status: projection.reviewStatus, review_incomplete: projection.reviewIncomplete ? 'yes' : 'no', projection_status: projection.status,
+    projection_incomplete: projection.projectionIncomplete ? 'yes' : 'no',
+    coverage: projection.coverage, horizon_start_utc: projection.horizon?.start ?? 'unknown',
+    horizon_end_exclusive_utc: projection.horizon?.endExclusive ?? 'unknown',
+  };
+  const rows: PreparationRow[] = [{ ...context, record_type: 'guidance', represented_batch_count: projection.status === 'available' ? projection.representedBatchCount : 'unknown',
+    issues: labels(projection.issues), guidance: projection.guidance }];
+  for (const [index, group] of projection.groups.entries()) {
+    for (const [name, metric] of [['field_positions', group.fieldPositions], ['starts_to_raise', group.startsToRaise], ['seeds_to_sow', group.seedsToSow]] as const) {
+      rows.push({ ...context, record_type: 'preparation_group_metric', group_number: index + 1, crop_name: group.cropName,
+        raising_start_date_utc: group.startDate, field_entry_dates_exclusive_utc: group.members.map(member => member.endDateExclusive).join(' | '),
+        represented_batch_count: group.members.length, metric: name, metric_status: metric.status,
+        known_subtotal: metric.knownSubtotal ?? 'unknown', represented_batch_total: metric.total ?? 'unknown',
+        known_batch_count: metric.knownBatchCount, unknown_batch_count: metric.unknownBatchCount,
+        group_incomplete: group.incomplete ? 'yes' : 'no', outside_review_horizon: group.outsideReviewHorizon ? 'yes' : 'no',
+        issues: labels(group.issues), guidance: projection.guidance });
+    }
   }
   return `\uFEFF${[columns, ...rows.map(row => columns.map(column => row[column] ?? ''))]
     .map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
