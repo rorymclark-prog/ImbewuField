@@ -35,6 +35,7 @@ import { decideManagedAiRenderAccess } from '../../lib/ai-render/access';
 import { loadAiMapContext } from './ai-map-access';
 import { OPENAI_MAP_MODEL, openAiMapRequestedSize } from '../../lib/ai-render/model';
 export { aiMapAccess } from './ai-map-access';
+export { imbewuConnector } from './connector';
 import { geminiEdit, geminiAspectRatio, geminiImageSize, geminiModelForQuality } from './gemini';
 import { friendlyProviderError } from './provider-errors';
 import {

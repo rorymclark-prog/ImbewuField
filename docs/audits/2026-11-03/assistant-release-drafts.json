@@ -1,0 +1,86 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "entries": [
+    {
+      "source": "Choose which saved sites an assistant can use, and disconnect it in Settings.",
+      "drafts": {
+        "zu": "Khetha izindawo ezigciniwe umsizi angazisebenzisa. Unganqamula ukuxhumana kokuthi Izilungiselelo.",
+        "st": "Kgetha dibaka tse bolokilweng tseo mothusi a ka di sebedisang. O ka kgaola kgokahano ho Ditlhophiso.",
+        "ts": "Hlawula tindhawu leti hlayisiweke leti mupfuni a nga ti tirhisaka. U nga tsema vuhlanganisi eka Swiyimiso.",
+        "ve": "Nangani fhethu ho vhulungwaho hune muthusi a nga hu shumisa. Ni nga fhelisa vhuṱumanyi kha Nzudzanyo."
+      }
+    },
+    {
+      "source": "Keep original site photos and PDFs with their source and import history.",
+      "drafts": {
+        "zu": "Gcina izithombe zokuqala zendawo nama-PDF kanye nomthombo wawo nomlando wokungeniswa kwawo.",
+        "st": "Boloka dinepe tsa pele tsa sebaka le di-PDF hammoho le mohlodi wa tsona le nalane ya ho di kenya.",
+        "ts": "Hlayisa swifaniso swa masungulo swa ndhawu ni ti-PDF swin’we ni xihlovo xa swona ni matimu ya ku swi nghenisa.",
+        "ve": "Vhulungani zwifanyiso zwa u thoma zwa fhethu na dzi-PDF, khathihi na vhubvo hazwo na ḓivhazwakale ya u zwi dzhenisa."
+      }
+    },
+    {
+      "source": "Review historical photo registration drafts without moving saved map features.",
+      "drafts": {
+        "zu": "Hlola okusalungiswa kokuqondanisa izithombe zakudala nemephu ngaphandle kokususa izinto ezigciniwe ezindaweni zazo.",
+        "st": "Hlahloba meralo ya ho nyalanya dinepe tsa kgale le mmapa ntle le ho suthisa dintho tse bolokilweng mmapeng.",
+        "ts": "Kambela mipfapfarhuto ya ku fambelanisa swifaniso swa khale ni mepe handle ko susa swilo leswi hlayisiweke emepeni.",
+        "ve": "Ṱolani mvetamveto ya u livhanyisa zwifanyiso zwa kale na mapa, ni sa sudzulusi zwithu zwo vhulungwaho kha mapa."
+      }
+    },
+    {
+      "source": "Manage assistant access",
+      "drafts": {
+        "zu": "Phatha ukufinyelela kwabasizi",
+        "st": "Laola phihlello ya bathusi",
+        "ts": "Lawula mfikelelo wa vapfuni",
+        "ve": "Langulani thendelo dza vhathusi"
+      }
+    },
+    {
+      "source": "Settings → Assistant connections",
+      "drafts": {
+        "zu": "Izilungiselelo → Ukuxhuma kubasizi",
+        "st": "Ditlhophiso → Dikgokahano le bathusi",
+        "ts": "Swiyimiso → Vuhlanganisi ni vapfuni",
+        "ve": "Nzudzanyo → Vhuṱumanyi ha vhathusi"
+      }
+    },
+    {
+      "source": "Review connected assistants, selected sites and imported originals.",
+      "drafts": {
+        "zu": "Hlola abasizi abaxhunyiwe, izindawo ezikhethiwe namafayela okuqala angenisiwe.",
+        "st": "Hlahloba bathusi ba hoketsweng, dibaka tse kgethilweng le difaele tsa pele tse kentsweng.",
+        "ts": "Kambela vapfuni lava hlanganisiweke, tindhawu leti hlawuriweke ni tifayela ta masungulo leti nghenisiweke.",
+        "ve": "Ṱolani vhathusi vho ṱumanywaho, fhethu ho nangiwaho na faela dza u thoma dzo dzheniswaho."
+      }
+    },
+    {
+      "source": "Check your saved map",
+      "drafts": {
+        "zu": "Hlola imephu yakho egciniwe",
+        "st": "Lekola mmapa wa hao o bolokilweng",
+        "ts": "Kambela mepe wa wena lowu hlayisiweke",
+        "ve": "Ṱolani mapa waṋu wo vhulungwaho"
+      }
+    },
+    {
+      "source": "Site design",
+      "drafts": {
+        "zu": "Ukwakheka kwendawo",
+        "st": "Moralo wa sebaka",
+        "ts": "Dizayini ya ndhawu",
+        "ve": "Pulane ya fhethu"
+      }
+    },
+    {
+      "source": "Review the same site before applying assistant edits or comparing a historical photograph.",
+      "drafts": {
+        "zu": "Hlola yona leyo ndawo ngaphambi kokwamukela izinguquko zomsizi noma ukuqhathanisa isithombe sakudala.",
+        "st": "Hlahloba sebaka sona seo pele o kenya diphetoho tsa mothusi kapa o bapisa senepe sa kgale.",
+        "ts": "Kambela ndhawu yoleyo u nga si tirhisa mindzulamiso ya mupfuni kumbe ku pimanisa xifaniso xa khale.",
+        "ve": "Ṱolani henefho fhethu musi ni sa athu shumisa tshanduko dza muthusi kana u vhambedza tshifanyiso tsha kale."
+      }
+    }
+  ]
+}

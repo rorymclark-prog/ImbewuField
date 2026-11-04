@@ -1,6 +1,22 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Shared country-review location wording, retained from the reviewed UK draft.
+  "International → Country review": "Tshaka dza mashango → Tsedzuluso ya shango",
+  // Campinas directory: docs/international/agy-campinas-directory-release-copy-2026-11-04/source.json; UNREVIEWED AI drafts.
+  "Open the Campinas agricultural office directory from Brazil’s country review.": "Vulani mutevhe wa ofisi dza vhulimi dza Campinas u bva kha tsedzuluso ya shango la Brazil.",
+  "Find the Campinas office directory": "Wanani mutevhe wa ofisi dza Campinas",
+  "Choose Brazil and open Agricultural extension to find the Campinas directory.": "Nangani Brazil ni vule Nyeletshedzo ya vhulimi u itela u wana mutevhe wa Campinas.",
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Nangani fhethu ho vhulungwaho hune muthusi a nga hu shumisa. Ni nga fhelisa vhuṱumanyi kha Nzudzanyo.",
+  "Keep original site photos and PDFs with their source and import history.": "Vhulungani zwifanyiso zwa u thoma zwa fhethu na dzi-PDF, khathihi na vhubvo hazwo na ḓivhazwakale ya u zwi dzhenisa.",
+  "Review historical photo registration drafts without moving saved map features.": "Ṱolani mvetamveto ya u livhanyisa zwifanyiso zwa kale na mapa, ni sa sudzulusi zwithu zwo vhulungwaho kha mapa.",
+  "Manage assistant access": "Langulani thendelo dza vhathusi",
+  "Settings → Assistant connections": "Nzudzanyo → Vhuṱumanyi ha vhathusi",
+  "Review connected assistants, selected sites and imported originals.": "Ṱolani vhathusi vho ṱumanywaho, fhethu ho nangiwaho na faela dza u thoma dzo dzheniswaho.",
+  "Check your saved map": "Ṱolani mapa waṋu wo vhulungwaho",
+  "Site design": "Pulane ya fhethu",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Ṱolani henefho fhethu musi ni sa athu shumisa tshanduko dza muthusi kana u vhambedza tshifanyiso tsha kale.",
   // Brazil soil reference: docs/international/pilots/brazil-redape-release-copy/drafts.json; UNREVIEWED AI draft.
   "Open the Embrapa BDSolos catalogue from the Brazil soil references.": "Vhulani khathalogo ya Embrapa BDSolos kha zwisumbedzo zwa mavu zwa Brazil.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
