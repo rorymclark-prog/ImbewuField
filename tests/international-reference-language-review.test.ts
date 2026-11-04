@@ -32,7 +32,7 @@ test('all four choices use the checked wording for the selected pilot and remain
     }
   }
   assert.deepEqual(counts, { kenya: 64, uk: 52, us: 76, brazil: 16, colombia: 16, canada: 16,
-    'ontario-soil': 16, 'australia-soil': 16, 'new-zealand-smap': 16, 'india-imd': 16, 'kenya-soil': 16, 'england-fas': 20, 'campinas-cati': 20 });
+    'ontario-soil': 16, 'australia-soil': 16, 'new-zealand-smap': 16, 'india-imd': 16, 'kenya-soil': 16, 'england-fas': 20, 'campinas-cati': 20, 'us-nifa-directory': 20, 'kenya-extension': 24 });
 });
 
 test('Colombian wording keeps the linked publication date and falls back if its year is lost', () => {
@@ -146,4 +146,16 @@ test('extension drafts retain jurisdiction and provider references or fall back 
     const fallbacks = referenceReviewRows(packet, locale).filter(row => row.origin === 'fallback');
     assert.deepEqual(fallbacks.map(row => [row.key, row.text]), [[draft.key, draft.english]]);
   }
+});
+
+test('the US and Kenya extension packets keep their exact scope and fall back for damaged references', () => {
+  const us = structuredClone(REFERENCE_REVIEW_PACKETS['us-nifa-directory']);
+  const coverage = us.drafts.locales.sw.find(row => row.key === 'coverage')!;
+  coverage.translation = coverage.translation.replace('land-grant', 'grants');
+  assert.deepEqual(referenceReviewRows(us, 'sw').filter(row => row.origin === 'fallback').map(row => row.text), [coverage.english]);
+
+  const kenya = structuredClone(REFERENCE_REVIEW_PACKETS['kenya-extension']);
+  assert.deepEqual(kenya.source.messages.map(row => row.key), ['ministry.claim', 'ministry.access', 'ministry.limits', 'kiambu.claim', 'kiambu.access', 'kiambu.limits']);
+  kenya.drafts.locales.fr[3].english = kenya.source.messages[0].english;
+  assert.deepEqual(referenceReviewRows(kenya, 'fr').filter(row => row.origin === 'fallback').map(row => row.key), ['kiambu.claim']);
 });

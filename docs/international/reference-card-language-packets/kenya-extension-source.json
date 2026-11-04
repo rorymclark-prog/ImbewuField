@@ -1,0 +1,49 @@
+{
+  "sourceCommit": "7f7e876a805f7d0b755773c965892e00afbb9784",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "027af302d6af5c922b53fda3da62f954b916086e362ee6360bf24a6dab179300",
+  "referenceUrls": [
+    "https://kilimo.go.ke/frequently-asked-questions/",
+    "https://kiambu.go.ke/departments/agriculture-livestock-irrigation/"
+  ],
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "ministry.claim",
+      "english": "The ministry FAQ lists county agriculture and livestock officers, training institutions and commodity boards as routes to extension support.",
+      "sha256": "59c0a67db90147951cc76a66c98d4b0614039172d4fb06672f6088988ab9686c"
+    },
+    {
+      "key": "ministry.access",
+      "english": "Public ministry FAQ page read without an account. Local office contacts and service procedures are unverified.",
+      "sha256": "63b2020f4b948b4ece3ff4b22470bbf88465649811dbf98c4067b62bcdc1af11"
+    },
+    {
+      "key": "ministry.limits",
+      "english": "Current officer directories, appointment procedures and crop recommendations remain unverified.",
+      "sha256": "169bc03c2a020c5893eeeabca4bf35ff0a88a4eddc3fc2ecce9a278500411dd5"
+    },
+    {
+      "key": "kiambu.claim",
+      "english": "The county department includes extension and skills development in its mission.",
+      "sha256": "6d6162ef108d2dfd7b89bad48223d6785a687a789b33ed0e5b99d750a36ebf6a"
+    },
+    {
+      "key": "kiambu.access",
+      "english": "Public county departmental landing page read without an account. Specific sub-county office locations and services remain unverified.",
+      "sha256": "1fd99b315351006339bf3d155aa24edbb30ad15f1f62fe6e957e5ea089d49db6"
+    },
+    {
+      "key": "kiambu.limits",
+      "english": "Current officer contacts, fees, application forms and local crop guidance remain unverified.",
+      "sha256": "71f57e8dd9bbb41ccb86b4075a74b0af28e7c29b83c3bd97ffdfb04e72930856"
+    }
+  ]
+}

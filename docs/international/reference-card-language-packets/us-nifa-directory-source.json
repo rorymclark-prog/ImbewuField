@@ -1,0 +1,41 @@
+{
+  "sourceCommit": "6867d1898385c0aca7c98b1f12255d9456735d6b",
+  "sourcePath": "lib/international/countries/registry.ts",
+  "sourceFileSha256": "82c2a9e6589e5e3e04efded4d1223707bf894c81305b277c2a6b4148373d277d",
+  "referenceUrl": "https://www.nifa.usda.gov/grants/land-grant-university-website-directory",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messages": [
+    {
+      "key": "coverage",
+      "english": "US land-grant institutions listed by NIFA",
+      "sha256": "93f26cb77b7c5b6deaa20b5cf96da2a2624b85b52393d325be9439567cb1a636"
+    },
+    {
+      "key": "claim",
+      "english": "The public directory lists land-grant institutions and links to their websites.",
+      "sha256": "c7335d092e91178e5f69e9ed6e37f1cc82091a3691f2789c947b0400829d8bd1"
+    },
+    {
+      "key": "licence",
+      "english": "Website reuse terms have not been verified from the public directory page.",
+      "sha256": "528bc759e41c7163418aa47a432f85082db0c690d2470268cec919a5c1bc9083"
+    },
+    {
+      "key": "access",
+      "english": "Public directory read without an account. Access to linked institution sites and automated access remain unverified.",
+      "sha256": "fc7da64bcc91cb875ae32be6197275bdb1c274406c9f0299ecfe295f68f11542"
+    },
+    {
+      "key": "limits",
+      "english": "County office locations, current contacts, appointments, fees, advisory services and local crop guidance remain unverified.",
+      "sha256": "f9f019a463cfeb5f7acd6090aff444a34906da281ddd3b33f35b5c86a8c02382"
+    }
+  ]
+}

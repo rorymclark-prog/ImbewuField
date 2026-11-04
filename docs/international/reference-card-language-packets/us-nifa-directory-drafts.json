@@ -1,0 +1,135 @@
+{
+  "sourceSha256": "56706fb2ac3d0d68480153f713e82743902bb04e72a08f768e7b0a6dde61b91b",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "coverage",
+        "english": "US land-grant institutions listed by NIFA",
+        "sha256": "93f26cb77b7c5b6deaa20b5cf96da2a2624b85b52393d325be9439567cb1a636",
+        "translation": "Établissements land-grant des États-Unis répertoriés par le NIFA"
+      },
+      {
+        "key": "claim",
+        "english": "The public directory lists land-grant institutions and links to their websites.",
+        "sha256": "c7335d092e91178e5f69e9ed6e37f1cc82091a3691f2789c947b0400829d8bd1",
+        "translation": "Le répertoire public recense les établissements land-grant et donne les liens vers leurs sites Web."
+      },
+      {
+        "key": "licence",
+        "english": "Website reuse terms have not been verified from the public directory page.",
+        "sha256": "528bc759e41c7163418aa47a432f85082db0c690d2470268cec919a5c1bc9083",
+        "translation": "Les conditions de réutilisation du site Web n'ont pas été vérifiées à partir de la page du répertoire public."
+      },
+      {
+        "key": "access",
+        "english": "Public directory read without an account. Access to linked institution sites and automated access remain unverified.",
+        "sha256": "fc7da64bcc91cb875ae32be6197275bdb1c274406c9f0299ecfe295f68f11542",
+        "translation": "Répertoire public consulté sans compte. L'accès aux sites des établissements liés et l'accès automatisé restent non vérifiés."
+      },
+      {
+        "key": "limits",
+        "english": "County office locations, current contacts, appointments, fees, advisory services and local crop guidance remain unverified.",
+        "sha256": "f9f019a463cfeb5f7acd6090aff444a34906da281ddd3b33f35b5c86a8c02382",
+        "translation": "Les emplacements des bureaux de comté, les coordonnées actuelles, les rendez-vous, les frais, les services de conseil et les conseils locaux sur les cultures restent à vérifier."
+      }
+    ],
+    "es": [
+      {
+        "key": "coverage",
+        "english": "US land-grant institutions listed by NIFA",
+        "sha256": "93f26cb77b7c5b6deaa20b5cf96da2a2624b85b52393d325be9439567cb1a636",
+        "translation": "Instituciones land-grant de EE. UU. listadas por el NIFA"
+      },
+      {
+        "key": "claim",
+        "english": "The public directory lists land-grant institutions and links to their websites.",
+        "sha256": "c7335d092e91178e5f69e9ed6e37f1cc82091a3691f2789c947b0400829d8bd1",
+        "translation": "El directorio público enumera las instituciones land-grant y enlaza a sus sitios web."
+      },
+      {
+        "key": "licence",
+        "english": "Website reuse terms have not been verified from the public directory page.",
+        "sha256": "528bc759e41c7163418aa47a432f85082db0c690d2470268cec919a5c1bc9083",
+        "translation": "Los términos de reutilización del sitio web no se han verificado a partir de la página del directorio público."
+      },
+      {
+        "key": "access",
+        "english": "Public directory read without an account. Access to linked institution sites and automated access remain unverified.",
+        "sha256": "fc7da64bcc91cb875ae32be6197275bdb1c274406c9f0299ecfe295f68f11542",
+        "translation": "Directorio público consultado sin una cuenta. El acceso a los sitios de las instituciones enlazadas y el acceso automatizado siguen sin verificarse."
+      },
+      {
+        "key": "limits",
+        "english": "County office locations, current contacts, appointments, fees, advisory services and local crop guidance remain unverified.",
+        "sha256": "f9f019a463cfeb5f7acd6090aff444a34906da281ddd3b33f35b5c86a8c02382",
+        "translation": "Las ubicaciones de las oficinas del condado, los contactos actuales, las citas, las tarifas, los servicios de asesoramiento y la orientación sobre cultivos locales siguen sin verificarse."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "coverage",
+        "english": "US land-grant institutions listed by NIFA",
+        "sha256": "93f26cb77b7c5b6deaa20b5cf96da2a2624b85b52393d325be9439567cb1a636",
+        "translation": "Instituições land-grant dos EUA listadas pelo NIFA"
+      },
+      {
+        "key": "claim",
+        "english": "The public directory lists land-grant institutions and links to their websites.",
+        "sha256": "c7335d092e91178e5f69e9ed6e37f1cc82091a3691f2789c947b0400829d8bd1",
+        "translation": "O diretório público lista instituições land-grant e fornece links para seus sites."
+      },
+      {
+        "key": "licence",
+        "english": "Website reuse terms have not been verified from the public directory page.",
+        "sha256": "528bc759e41c7163418aa47a432f85082db0c690d2470268cec919a5c1bc9083",
+        "translation": "Os termos de reutilização do site não foram verificados a partir da página do diretório público."
+      },
+      {
+        "key": "access",
+        "english": "Public directory read without an account. Access to linked institution sites and automated access remain unverified.",
+        "sha256": "fc7da64bcc91cb875ae32be6197275bdb1c274406c9f0299ecfe295f68f11542",
+        "translation": "Diretório público consultado sem conta. O acesso aos sites das instituições vinculadas e o acesso automatizado permanecem não verificados."
+      },
+      {
+        "key": "limits",
+        "english": "County office locations, current contacts, appointments, fees, advisory services and local crop guidance remain unverified.",
+        "sha256": "f9f019a463cfeb5f7acd6090aff444a34906da281ddd3b33f35b5c86a8c02382",
+        "translation": "Locais de escritórios nos condados, contatos atuais, agendamentos, taxas, serviços de consultoria e orientações para cultivos locais permanecem não verificados."
+      }
+    ],
+    "sw": [
+      {
+        "key": "coverage",
+        "english": "US land-grant institutions listed by NIFA",
+        "sha256": "93f26cb77b7c5b6deaa20b5cf96da2a2624b85b52393d325be9439567cb1a636",
+        "translation": "Taasisi za land-grant za Marekani zilizoorodheshwa na NIFA"
+      },
+      {
+        "key": "claim",
+        "english": "The public directory lists land-grant institutions and links to their websites.",
+        "sha256": "c7335d092e91178e5f69e9ed6e37f1cc82091a3691f2789c947b0400829d8bd1",
+        "translation": "Orodha inayopatikana kwa umma inaonyesha taasisi za land-grant na viungo vya tovuti zao."
+      },
+      {
+        "key": "licence",
+        "english": "Website reuse terms have not been verified from the public directory page.",
+        "sha256": "528bc759e41c7163418aa47a432f85082db0c690d2470268cec919a5c1bc9083",
+        "translation": "Masharti ya matumizi tena ya tovuti hayajathibitishwa kutoka kwa ukurasa wa orodha ya umma."
+      },
+      {
+        "key": "access",
+        "english": "Public directory read without an account. Access to linked institution sites and automated access remain unverified.",
+        "sha256": "fc7da64bcc91cb875ae32be6197275bdb1c274406c9f0299ecfe295f68f11542",
+        "translation": "Orodha ya umma imesomwa bila akaunti. Ufikiaji wa tovuti za taasisi zilizounganishwa na ufikiaji wa kiotomatiki bado havijathibitishwa."
+      },
+      {
+        "key": "limits",
+        "english": "County office locations, current contacts, appointments, fees, advisory services and local crop guidance remain unverified.",
+        "sha256": "f9f019a463cfeb5f7acd6090aff444a34906da281ddd3b33f35b5c86a8c02382",
+        "translation": "Maeneo ya ofisi za kaunti, mawasiliano ya sasa, miadi, ada, huduma za ushauri na mwongozo wa mazao ya eneo husika bado havijathibitishwa."
+      }
+    ]
+  }
+}

@@ -24,6 +24,10 @@ import englandFasSource from '@/docs/international/reference-card-language-packe
 import englandFasDrafts from '@/docs/international/reference-card-language-packets/england-fas-drafts.json' with { type: 'json' };
 import campinasCatiSource from '@/docs/international/reference-card-language-packets/campinas-cati-source.json' with { type: 'json' };
 import campinasCatiDrafts from '@/docs/international/reference-card-language-packets/campinas-cati-drafts.json' with { type: 'json' };
+import usNifaDirectorySource from '@/docs/international/reference-card-language-packets/us-nifa-directory-source.json' with { type: 'json' };
+import usNifaDirectoryDrafts from '@/docs/international/reference-card-language-packets/us-nifa-directory-drafts.json' with { type: 'json' };
+import kenyaExtensionSource from '@/docs/international/reference-card-language-packets/kenya-extension-source.json' with { type: 'json' };
+import kenyaExtensionDrafts from '@/docs/international/reference-card-language-packets/kenya-extension-drafts.json' with { type: 'json' };
 import manifest from '@/docs/international/reference-card-language-packets/manifest.json' with { type: 'json' };
 
 export const REFERENCE_REVIEW_LANGUAGES = [
@@ -55,6 +59,8 @@ export const REFERENCE_REVIEW_PACKETS = {
   'kenya-soil': { label: 'Kenya · Historical soil catalogue', source: kenyaSoilSource, drafts: kenyaSoilDrafts, binding: manifest['kenya-soil'] },
   'england-fas': { label: 'England · Farming Advice Service', source: englandFasSource, drafts: englandFasDrafts, binding: manifest['england-fas'] },
   'campinas-cati': { label: 'Brazil · Campinas CATI directory', source: campinasCatiSource, drafts: campinasCatiDrafts, binding: manifest['campinas-cati'] },
+  'us-nifa-directory': { label: 'United States · NIFA institution directory', source: usNifaDirectorySource, drafts: usNifaDirectoryDrafts, binding: manifest['us-nifa-directory'] },
+  'kenya-extension': { label: 'Kenya · Ministry and Kiambu extension references', source: kenyaExtensionSource, drafts: kenyaExtensionDrafts, binding: manifest['kenya-extension'] },
 } satisfies Record<string, ReferenceReviewPacket>;
 
 /** Only this review surface can display these candidates. A damaged binding

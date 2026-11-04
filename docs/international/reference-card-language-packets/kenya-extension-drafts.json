@@ -1,0 +1,159 @@
+{
+  "sourceSha256": "21dafffe42cb519677ba23523b2bd7b2ed81215c6844b827de07b5612a89cd9d",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": {
+    "fr": [
+      {
+        "key": "ministry.claim",
+        "english": "The ministry FAQ lists county agriculture and livestock officers, training institutions and commodity boards as routes to extension support.",
+        "sha256": "59c0a67db90147951cc76a66c98d4b0614039172d4fb06672f6088988ab9686c",
+        "translation": "La FAQ du ministère mentionne les agents agricoles et de l'élevage des comtés, les établissements de formation et les offices de commercialisation comme voies d'accès au soutien de vulgarisation."
+      },
+      {
+        "key": "ministry.access",
+        "english": "Public ministry FAQ page read without an account. Local office contacts and service procedures are unverified.",
+        "sha256": "63b2020f4b948b4ece3ff4b22470bbf88465649811dbf98c4067b62bcdc1af11",
+        "translation": "Page publique de la FAQ du ministère consultée sans compte. Les coordonnées des bureaux locaux et les procédures de service restent à vérifier."
+      },
+      {
+        "key": "ministry.limits",
+        "english": "Current officer directories, appointment procedures and crop recommendations remain unverified.",
+        "sha256": "169bc03c2a020c5893eeeabca4bf35ff0a88a4eddc3fc2ecce9a278500411dd5",
+        "translation": "Les répertoires actuels des agents, les procédures de rendez-vous et les recommandations de cultures restent non vérifiés."
+      },
+      {
+        "key": "kiambu.claim",
+        "english": "The county department includes extension and skills development in its mission.",
+        "sha256": "6d6162ef108d2dfd7b89bad48223d6785a687a789b33ed0e5b99d750a36ebf6a",
+        "translation": "Le département du comté inclut la vulgarisation et le développement des compétences dans sa mission."
+      },
+      {
+        "key": "kiambu.access",
+        "english": "Public county departmental landing page read without an account. Specific sub-county office locations and services remain unverified.",
+        "sha256": "1fd99b315351006339bf3d155aa24edbb30ad15f1f62fe6e957e5ea089d49db6",
+        "translation": "Page d'accueil publique du département du comté consultée sans compte. Les emplacements précis des bureaux de sous-comté et leurs services restent non vérifiés."
+      },
+      {
+        "key": "kiambu.limits",
+        "english": "Current officer contacts, fees, application forms and local crop guidance remain unverified.",
+        "sha256": "71f57e8dd9bbb41ccb86b4075a74b0af28e7c29b83c3bd97ffdfb04e72930856",
+        "translation": "Les coordonnées actuelles des agents, les frais, les formulaires de demande et les conseils locaux sur les cultures restent à vérifier."
+      }
+    ],
+    "es": [
+      {
+        "key": "ministry.claim",
+        "english": "The ministry FAQ lists county agriculture and livestock officers, training institutions and commodity boards as routes to extension support.",
+        "sha256": "59c0a67db90147951cc76a66c98d4b0614039172d4fb06672f6088988ab9686c",
+        "translation": "Las preguntas frecuentes del ministerio indican que los funcionarios de agricultura y ganadería del condado, las instituciones de formación y las juntas de productos básicos son vías de acceso al apoyo de extensión."
+      },
+      {
+        "key": "ministry.access",
+        "english": "Public ministry FAQ page read without an account. Local office contacts and service procedures are unverified.",
+        "sha256": "63b2020f4b948b4ece3ff4b22470bbf88465649811dbf98c4067b62bcdc1af11",
+        "translation": "Página pública de preguntas frecuentes del ministerio consultada sin una cuenta. Los contactos de las oficinas locales y los procedimientos de servicio siguen sin verificarse."
+      },
+      {
+        "key": "ministry.limits",
+        "english": "Current officer directories, appointment procedures and crop recommendations remain unverified.",
+        "sha256": "169bc03c2a020c5893eeeabca4bf35ff0a88a4eddc3fc2ecce9a278500411dd5",
+        "translation": "Los directorios actuales de funcionarios, los procedimientos de citas y las recomendaciones de cultivos siguen sin verificarse."
+      },
+      {
+        "key": "kiambu.claim",
+        "english": "The county department includes extension and skills development in its mission.",
+        "sha256": "6d6162ef108d2dfd7b89bad48223d6785a687a789b33ed0e5b99d750a36ebf6a",
+        "translation": "El departamento del condado incluye la extensión y el desarrollo de habilidades en su misión."
+      },
+      {
+        "key": "kiambu.access",
+        "english": "Public county departmental landing page read without an account. Specific sub-county office locations and services remain unverified.",
+        "sha256": "1fd99b315351006339bf3d155aa24edbb30ad15f1f62fe6e957e5ea089d49db6",
+        "translation": "Página pública de inicio del departamento del condado consultada sin una cuenta. Las ubicaciones específicas de las oficinas de los subcondados y sus servicios siguen sin verificarse."
+      },
+      {
+        "key": "kiambu.limits",
+        "english": "Current officer contacts, fees, application forms and local crop guidance remain unverified.",
+        "sha256": "71f57e8dd9bbb41ccb86b4075a74b0af28e7c29b83c3bd97ffdfb04e72930856",
+        "translation": "Los contactos actuales de los funcionarios, las tarifas, los formularios de solicitud y la orientación sobre cultivos locales siguen sin verificarse."
+      }
+    ],
+    "pt-BR": [
+      {
+        "key": "ministry.claim",
+        "english": "The ministry FAQ lists county agriculture and livestock officers, training institutions and commodity boards as routes to extension support.",
+        "sha256": "59c0a67db90147951cc76a66c98d4b0614039172d4fb06672f6088988ab9686c",
+        "translation": "O FAQ do ministério lista os agentes de agricultura e pecuária dos condados, instituições de capacitação e conselhos de produtos básicos como canais de acesso ao apoio de extensão."
+      },
+      {
+        "key": "ministry.access",
+        "english": "Public ministry FAQ page read without an account. Local office contacts and service procedures are unverified.",
+        "sha256": "63b2020f4b948b4ece3ff4b22470bbf88465649811dbf98c4067b62bcdc1af11",
+        "translation": "Página pública de FAQ do ministério consultada sem conta. Contatos dos escritórios locais e procedimentos de atendimento não foram verificados."
+      },
+      {
+        "key": "ministry.limits",
+        "english": "Current officer directories, appointment procedures and crop recommendations remain unverified.",
+        "sha256": "169bc03c2a020c5893eeeabca4bf35ff0a88a4eddc3fc2ecce9a278500411dd5",
+        "translation": "Diretórios atualizados de agentes, procedimentos de agendamento e recomendações de cultivo permanecem não verificados."
+      },
+      {
+        "key": "kiambu.claim",
+        "english": "The county department includes extension and skills development in its mission.",
+        "sha256": "6d6162ef108d2dfd7b89bad48223d6785a687a789b33ed0e5b99d750a36ebf6a",
+        "translation": "O departamento do condado inclui extensão e desenvolvimento de habilidades em sua missão."
+      },
+      {
+        "key": "kiambu.access",
+        "english": "Public county departmental landing page read without an account. Specific sub-county office locations and services remain unverified.",
+        "sha256": "1fd99b315351006339bf3d155aa24edbb30ad15f1f62fe6e957e5ea089d49db6",
+        "translation": "Página inicial pública do departamento do condado consultada sem conta. Locais específicos de escritórios nos subcondados e seus serviços permanecem não verificados."
+      },
+      {
+        "key": "kiambu.limits",
+        "english": "Current officer contacts, fees, application forms and local crop guidance remain unverified.",
+        "sha256": "71f57e8dd9bbb41ccb86b4075a74b0af28e7c29b83c3bd97ffdfb04e72930856",
+        "translation": "Contatos atuais de agentes, taxas, formulários de solicitação e orientações locais de cultivo permanecem não verificados."
+      }
+    ],
+    "sw": [
+      {
+        "key": "ministry.claim",
+        "english": "The ministry FAQ lists county agriculture and livestock officers, training institutions and commodity boards as routes to extension support.",
+        "sha256": "59c0a67db90147951cc76a66c98d4b0614039172d4fb06672f6088988ab9686c",
+        "translation": "Maswali yanayoulizwa mara kwa mara ya wizara yanataja maafisa wa kilimo na mifugo wa kaunti, taasisi za mafunzo na bodi za bidhaa kama njia za kupata msaada wa ugani."
+      },
+      {
+        "key": "ministry.access",
+        "english": "Public ministry FAQ page read without an account. Local office contacts and service procedures are unverified.",
+        "sha256": "63b2020f4b948b4ece3ff4b22470bbf88465649811dbf98c4067b62bcdc1af11",
+        "translation": "Ukurasa wa umma wa maswali yanayoulizwa mara kwa mara wa wizara umesomwa bila akaunti. Anwani za ofisi za mitaa na taratibu za huduma hazijathibitishwa."
+      },
+      {
+        "key": "ministry.limits",
+        "english": "Current officer directories, appointment procedures and crop recommendations remain unverified.",
+        "sha256": "169bc03c2a020c5893eeeabca4bf35ff0a88a4eddc3fc2ecce9a278500411dd5",
+        "translation": "Orodha za sasa za maafisa, taratibu za miadi na mapendekezo ya mazao bado havijathibitishwa."
+      },
+      {
+        "key": "kiambu.claim",
+        "english": "The county department includes extension and skills development in its mission.",
+        "sha256": "6d6162ef108d2dfd7b89bad48223d6785a687a789b33ed0e5b99d750a36ebf6a",
+        "translation": "Idara ya kaunti inajumuisha ugani na ukuzaji wa ujuzi katika malengo yake."
+      },
+      {
+        "key": "kiambu.access",
+        "english": "Public county departmental landing page read without an account. Specific sub-county office locations and services remain unverified.",
+        "sha256": "1fd99b315351006339bf3d155aa24edbb30ad15f1f62fe6e957e5ea089d49db6",
+        "translation": "Ukurasa wa kwanza wa umma wa idara ya kaunti umesomwa bila akaunti. Maeneo mahususi ya ofisi za kaunti ndogo na huduma zake bado havijathibitishwa."
+      },
+      {
+        "key": "kiambu.limits",
+        "english": "Current officer contacts, fees, application forms and local crop guidance remain unverified.",
+        "sha256": "71f57e8dd9bbb41ccb86b4075a74b0af28e7c29b83c3bd97ffdfb04e72930856",
+        "translation": "Mawasiliano ya sasa ya maafisa, ada, fomu za maombi na mwongozo wa mazao ya eneo husika bado havijathibitishwa."
+      }
+    ]
+  }
+}
