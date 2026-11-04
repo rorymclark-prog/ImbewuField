@@ -25,7 +25,8 @@ import {
 import polygonClipping from 'polygon-clipping';
 
 import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { groundFeatureLayer, statusOf, buildSatelliteUrl, fetchImageAsDataUrl, pointInRing } from '@/lib/design-canvas';
+import { clampBaseNudge, clampBaseRotation, clampBaseScale, designBaseMode, groundFeatureLayer, statusOf, buildSatelliteUrl, fetchImageAsDataUrl, pointInRing } from '@/lib/design-canvas';
+import { resolveBaseAlign } from '@/lib/base-photo-align';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
@@ -50,7 +51,7 @@ import {
   type FrameLike as BoundaryFrameGeom,
 } from '@/lib/boundary-geometry';
 import { structureRegisterText } from '@/lib/structure-register';
-import { historicalBaselineForSite, historicalBaselineFromPrompt, historicalBaselinePrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, type HistoricalBaseline } from '@/lib/historical-map-baseline';
+import { historicalBaselineForSite, historicalBaselineFromPrompt, historicalBaselinePrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, UBHEJANE_BEFORE_WORKS, type HistoricalBaseline } from '@/lib/historical-map-baseline';
 import { bedFootprintRegister, buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, PHASING_ARTWORK_PROMPT_MARKER, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
@@ -1367,7 +1368,8 @@ async function burnPaintedBoundary(
   line.width = W; line.height = H;
   const ctx = line.getContext('2d');
   if (!ctx) { releaseCanvas(line); throw new Error('Boundary canvas unavailable'); }
-  drawBlueprintBoundary(ctx, refLayers.boundary, n => n * W, n => n * H, W, state, frame);
+  if (filter === 'zones') drawZoneBoundary(ctx, refLayers.boundary, W, H);
+  else drawBlueprintBoundary(ctx, refLayers.boundary, n => n * W, n => n * H, W, state, frame);
   ctx.save();
   ctx.globalCompositeOperation = 'destination-out';
   const foreground = await buildCanopyForeground(map, state, frame, filter, W, H);
@@ -2356,6 +2358,23 @@ function buildZoneOverlay(
     ctx.fillText(String(z.zone), cx, cy);
   }
   return drainCanvasToDataUrl(canvas, 'image/png');
+}
+
+const ZONE_BOUNDARY_INK = '#49584C';
+
+function strokeZoneBoundary(ctx: CanvasRenderingContext2D, width: number): void {
+  ctx.strokeStyle = ZONE_BOUNDARY_INK;
+  ctx.lineWidth = width;
+  ctx.setLineDash([width * 5, width * 3]);
+  ctx.stroke();
+}
+
+function drawZoneBoundary(ctx: CanvasRenderingContext2D, boundary: Array<[number, number]>, W: number, H: number): void {
+  if (boundary.length < 3) return;
+  ctx.save();
+  blueprintRing(ctx, boundary, n => n * W, n => n * H);
+  strokeZoneBoundary(ctx, Math.max(2, W * 0.001));
+  ctx.restore();
 }
 
 function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
@@ -7092,7 +7111,8 @@ async function buildExactLayerOverlay(
   // phase keeps one stroke, at the same weight, on the same sheets — the planting simply sits
   // over it now. Sheets that stroke the boundary again themselves after compositing this overlay
   // (the phasing sheet, where walking and pegging the boundary IS phase 1) are unaffected.
-  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
+  if (filter === 'zones') drawZoneBoundary(ctx, refLayers.boundary, W, H);
+  else drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
 
   if (filter === 'zones') {
     // Quiet element ghosts make the effort zones falsifiable without claiming those elements as
@@ -7529,6 +7549,54 @@ function presentationExtentRing(
   ] as [number, number]);
 }
 
+interface ZonePhotoMatte { top: number; bottom: number }
+
+/** The aligned drone photo can end inside the export viewport, exposing the softer satellite
+ * baked beneath it. Cover only the top/bottom strips of a full-width, photo-covered rectangle.
+ * If the rectangle cannot hold the entire plotted site, retain the original imagery. */
+function zonePhotoMatte(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refs: DesignGlossyProps['refLayers'],
+  underlay?: SheetUnderlay,
+): ZonePhotoMatte | undefined {
+  const photo = state.customBase;
+  if (!photo || designBaseMode(state) !== 'photo' || !frame.satDataUrl
+    || (underlay ? underlay !== 'photo' : !frame.underlayDataUrl || frame.satDataUrl === frame.underlayDataUrl)) return;
+  const extent = presentationExtentRing(state, frame, refs.boundary);
+  const layout = calculateBoundaryPresentationLayout(extent, frame, SCALE);
+  if (!layout) return;
+  const { imgW, imgH } = frame;
+  const { cx, cy, tx, ty, rad, scale } = resolveBaseAlign({
+    dx: clampBaseNudge(photo.dx),
+    dy: clampBaseNudge(photo.dy),
+    rotationDeg: clampBaseRotation(photo.rotationDeg),
+    scale: clampBaseScale(photo.scale),
+  }, imgW, imgH);
+  const cos = Math.cos(rad);
+  const sin = Math.sin(rad);
+  const mapX = (x: number) => (x - layout.cropX) / layout.cropWidth;
+  const mapY = (y: number) => (y - layout.cropY) / layout.cropHeight;
+  const corner = (x: number, y: number) => ({
+    x: mapX((cx + tx + scale * (x * cos - y * sin)) / imgW),
+    y: mapY((cy + ty + scale * (x * sin + y * cos)) / imgH),
+  });
+  const [tl, tr, br, bl] = [corner(-cx, -cy), corner(cx, -cy), corner(cx, cy), corner(-cx, cy)];
+  if (Math.max(tl.x, bl.x) > 0 || Math.min(tr.x, br.x) < 1) return;
+  const yAt = (a: typeof tl, b: typeof tl, x: number) => a.y + (b.y - a.y) * (x - a.x) / (b.x - a.x);
+  // Inset by two output pixels to clear the source photo's resampled edge.
+  const pad = 2 / (layout.imgH * SCALE);
+  const photoTop = Math.max(yAt(tl, tr, 0), yAt(tl, tr, 1));
+  const photoBottom = Math.min(yAt(bl, br, 0), yAt(bl, br, 1));
+  const top = photoTop > 0 ? photoTop + pad : 0;
+  const bottom = photoBottom < 1 ? photoBottom - pad : 1;
+  if ((top === 0 && bottom === 1) || bottom - top < 0.75) return;
+  const plotted = [...extent, ...refs.boundary, ...refs.house, ...refs.driveway,
+    ...state.zones.flatMap(zone => zone.points), ...state.lines.flatMap(line => line.points)];
+  if (plotted.some(([, y]) => mapY(y) <= top + pad || mapY(y) >= bottom - pad)) return;
+  return { top, bottom };
+}
+
 async function boundaryPresentationContext(
   state: DesignCanvasState,
   frame: CanvasFrame,
@@ -7929,6 +7997,7 @@ async function buildReferenceBlueprintMap(
       labelMode,
       gutterLayout,
       includeLabelGutters: filter !== 'all',
+      zoneMatte: filter === 'zones' ? zonePhotoMatte(state, frame, refLayers) : undefined,
       ...(waterBudget.length
         ? { footerHeading: 'WATER BUDGET', footerText: waterBudget.join('\n'), footerBox: true }
         : {}),
@@ -8108,8 +8177,10 @@ function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: numbe
   ctx.restore();
 }
 
-function drawSheetNorthArrow(ctx: CanvasRenderingContext2D, mapX: number, mapW: number, mapH: number): void {
-  drawImplNorthArrow(ctx, mapX + mapW - Math.round(mapW * 0.04), Math.round(mapH * 0.08), Math.max(30, Math.round(mapW * 0.026)));
+function drawSheetNorthArrow(ctx: CanvasRenderingContext2D, mapX: number, mapW: number, mapH: number, matteTop?: number): void {
+  const size = Math.max(30, Math.round(mapW * 0.026));
+  const y = Math.max(Math.round(mapH * 0.08), matteTop === undefined ? 0 : Math.ceil(matteTop * mapH + size));
+  drawImplNorthArrow(ctx, mapX + mapW - Math.round(mapW * 0.04), y, size);
 }
 
 interface SectorAnalysisComposition {
@@ -10374,12 +10445,22 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour';
+  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour' | 'zone-boundary';
   historicalFeature?: HistoricalFeatureId;
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE' | 'SUN PATH' | 'REGIONAL WIND & FIRE' | 'TERRAIN' | 'SITE REFERENCE';
   sectorIcon?: SectorLegendIcon;
+}
+
+function caseStudyZoneZeroLabel(state: Pick<DesignCanvasState, 'siteId' | 'zones'>): string | undefined {
+  if (state.siteId !== UBHEJANE_BEFORE_WORKS.siteId) return;
+  const classroom = state.zones.find(zone => zone.feature === 'house' && zone.name === 'Classroom');
+  const playArea = state.zones.find(zone => zone.feature === 'patio' && zone.name === 'Slab & Flat Play Area');
+  if (!classroom || !playArea || classroom.points.length < 3 || playArea.points.length < 3) return;
+  const landmarks = [centroidOf(classroom.points), centroidOf(playArea.points)];
+  if (state.zones.some(zone => !zone.feature && zone.zone === 0 && zone.points.length >= 3
+    && landmarks.every(point => pointInRing(point, zone.points)))) return 'Zone 0 — Classroom & play courtyard';
 }
 
 export function sheetLegendRows(
@@ -10392,6 +10473,7 @@ export function sheetLegendRows(
   /** The legend is the key the map's plant codes are looked up in, so it prints them only in the
    *  mode that draws them — a "MG ·" prefix on a sheet with no MG anywhere keys nothing. */
   labelMode: SheetLabelMode = DEFAULT_SHEET_LABEL_MODE,
+  quietZoneBoundary = false,
 ): StyleLegendRow[] {
   const rows: StyleLegendRow[] = [];
   // Sheet 05 derives a pit for every tree that has no basin of its own (drawEarthworksFeatures).
@@ -10410,7 +10492,8 @@ export function sheetLegendRows(
   }
   if (filter === 'zones') {
     for (const group of exactSheetZoneLegendGroups(state, filter)) {
-      rows.push({ swatch: ZONE_DEFS[group.zone].color, text: group.text, kind: 'zone' });
+      const text = group.zone === 0 ? caseStudyZoneZeroLabel(state) ?? group.text : group.text;
+      rows.push({ swatch: ZONE_DEFS[group.zone].color, text, kind: 'zone' });
     }
   }
   // Ground fabric, register-aware. drawBlueprintGround paints traced house/patio/driveway/lawn/
@@ -10586,7 +10669,9 @@ export function sheetLegendRows(
   // Sheet 08 has already returned by here with its own SITE EDGE section, so this is exactly the
   // six sheets that were missing these rows.
   if (refLayers.boundary.length >= 3) {
-    rows.push({ swatch: BOUNDARY_LINE_GREEN, text: 'Property boundary', lineKind: 'fence' });
+    rows.push(quietZoneBoundary && filter === 'zones'
+      ? { swatch: ZONE_BOUNDARY_INK, text: 'Property boundary', visual: 'zone-boundary' }
+      : { swatch: BOUNDARY_LINE_GREEN, text: 'Property boundary', lineKind: 'fence' });
   }
   if (refLayers.driveway.length >= 2) {
     rows.push({ swatch: '#5A5D57', text: EXACT_DRIVEWAY_LEGEND_TEXT, kind: 'surface' });
@@ -10602,6 +10687,15 @@ function drawStyleLegendSymbol(
   w: number,
   h: number,
 ): void {
+  if (row.visual === 'zone-boundary') {
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + w, y);
+    strokeZoneBoundary(ctx, Math.max(1.5, h * 0.05));
+    ctx.restore();
+    return;
+  }
   if(row.visual==='terrain-contour'){
     ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(2,h*.07);ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;
   }
@@ -11000,6 +11094,7 @@ async function composeStyleSheet(
     gutterLayout?: GutterLayout;
     /** A full masterplan uses its grouped legend and compact map codes, not duplicate side leaders. */
     includeLabelGutters?: boolean;
+    zoneMatte?: ZonePhotoMatte;
   } = {},
 ): Promise<string> {
   if (options.aiArtwork && !options.preserveLegacyPathGuides) state = glossyArtworkState(state, refLayers);
@@ -11034,6 +11129,14 @@ async function composeStyleSheet(
     ctx.drawImage(map, gutter, 0);
   } finally {
     releaseImageSource(map);
+  }
+  const matte = options.zoneMatte;
+  if (matte) {
+    const top = Math.ceil(matte.top * H);
+    const bottom = Math.floor(matte.bottom * H);
+    ctx.fillStyle = PAPER;
+    ctx.fillRect(gutter, 0, mapW, top);
+    ctx.fillRect(gutter, bottom, mapW, H - bottom);
   }
   if (gutter > 0 && options.gutterLayout) drawLabelGutter(ctx, options.gutterLayout, gutter, mapW, H);
 
@@ -11108,7 +11211,7 @@ async function composeStyleSheet(
   y += Math.round(legendW * 0.045);
 
   const rows = [
-    ...(options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame, options.labelMode ?? DEFAULT_SHEET_LABEL_MODE)),
+    ...(options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame, options.labelMode ?? DEFAULT_SHEET_LABEL_MODE, exactGeometry)),
     ...(options.extraLegendRows ?? []),
   ];
   // A resumed paid sheet may never have drawn the exact feature layer in this tab. Load the
@@ -11574,9 +11677,9 @@ async function composeStyleSheet(
     const pxPerM = mapW / (frame.imgW * frame.mPerPx);
     drawBlueprintScaleBar(ctx, mapW, H, 0, 0, pxPerM, {
       x: gutter + Math.round(mapW * 0.03),
-      y: H - Math.round(H * 0.045),
+      y: Math.floor(H * (matte?.bottom ?? 1)) - Math.round(H * 0.045),
     });
-    drawSheetNorthArrow(ctx, gutter, mapW, H);
+    drawSheetNorthArrow(ctx, gutter, mapW, H, matte?.top);
   }
 
   // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
@@ -13892,7 +13995,7 @@ export default function DesignGlossy({
        * nothing to do with who owns the page; when one was, the chrome pass silently did not run.
        */
       polishStage = false,
-      snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName' | 'labelMode'> = { state, frame, refLayers, site, placeName, labelMode },
+      snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName' | 'labelMode'> & Partial<Pick<RenderSceneSnapshot, 'underlay'>> = { state, frame, refLayers, site, placeName, labelMode, underlay },
       canPublish: () => boolean = () => true,
       sourcePrompt?: string,
       roofReference?: PaperRoofReference,
@@ -14163,7 +14266,7 @@ export default function DesignGlossy({
         width: W,
         height: H,
       });
-      final = locked && compositionPolicy.ground === 'paint'
+      final = locked && (compositionPolicy.ground === 'paint' || f === 'zones')
         ? await burnPaintedBoundary(final, renderState, renderFrame, renderRefLayers, f, W, H)
         : final;
       // Full Treatment polishes THIS image — the finished map with exact content burned back and
@@ -14193,6 +14296,7 @@ export default function DesignGlossy({
               labelMode,
               gutterLayout: labelled.gutterLayout,
               includeLabelGutters: f !== 'all',
+              zoneMatte: f === 'zones' ? zonePhotoMatte(state, frame, refLayers, snapshot.underlay) : undefined,
               footerText: [f === 'water' ? waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site) : '',
                 sourceRoof?.credit ?? (legacyPaperRoof ? 'Approximate roof symbol; roof sections are not recorded.' : '')]
                 .filter(Boolean).join(' '),
@@ -14205,7 +14309,7 @@ export default function DesignGlossy({
           : {},
       );
     },
-    [state, frame, refLayers, site, placeName, labelMode],
+    [state, frame, refLayers, site, placeName, labelMode, underlay],
   );
 
   // "AI · ALL sheets" when the engine is gpt-image-2: enqueue a background job for the model sheets
