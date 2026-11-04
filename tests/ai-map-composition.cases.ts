@@ -335,7 +335,11 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
       compositeAccurateMap:async(options:any)=>{calls.push(['composite',options]);return 'composite';},burnPaintedBoundary:async()=> 'bounded',
       burnExactLabelLayer:async(map:string)=>({map}),
       composeStyleSheet:async(...args:unknown[])=>{calls.push(['chrome',...args]);return 'sheet';},
-      REFERENCE_SHEET_LABEL:{all:'Whole',water:'Water'},waterReferenceFooterText:()=> 'Water notes',
+      REFERENCE_SHEET_LABEL:{all:'Whole',water:'Water'},
+      waterReferenceFooter:()=>({footerText:'Water notes',footerFacts:['Roof','Yield','Storage']}),
+      waterTerrainFlowArrows:()=>['saved-terrain-flow'],
+      buildWaterPlanOverlay:(...args:unknown[])=>{calls.push(['water-overlay',...args]);return 'saved-water-overlay';},
+      waterFlowLegendRows:(arrows:unknown[])=>arrows.map(()=>({text:'Terrain flow'})),
     });
     assert.equal(await finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false),'sheet',engine);
     const restore=calls.find(c=>c[0]==='restore')!;
@@ -370,6 +374,10 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
     await finish('model','water',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,
       scene,()=>false,'new illustrated-property contract',reference);
     const waterComposite=calls.find(c=>c[0]==='composite')![1] as any;
+    assert.deepEqual(calls.find(c=>c[0]==='water-overlay')?.at(-1),['saved-terrain-flow'],
+      'the illustration draws the saved routes and the same terrain-flow field as the exact plan');
+    assert.deepEqual((calls.find(c=>c[0]==='chrome')?.at(-1) as any).extraLegendRows,[{text:'Terrain flow'}],
+      'the key explains the flow arrows drawn over the painting');
     assert.equal(waterComposite.contextTreatment,hasPhoto?'precision_atlas':'original',
       'plain paper must not receive the photographic palette treatment');
     assert.equal(Boolean(waterComposite.focusBoundaryPx),hasPhoto,
@@ -475,14 +483,19 @@ function artProbe() {
   return {ctx,canvas,calls};
 }
 
-test('Sector keeps paid colour and contrast while exact analysis still uses its quiet factual base', async () => {
+test('Sector quiets existing artwork without shifting it or changing the exact factual base', async () => {
   const probe=artProbe(),p={state:{items:[],lines:[],zones:[]},frame:{imgW:100,imgH:120,mPerPx:1,satDataUrl:'photo'},
     refLayers:{boundary:[],house:[],driveway:[]}};
-  let quiet=0,options:any;
+  // Rory selected a muted context after viewing both candidates. The old 'no desaturation'
+  // claim is superseded; source registration, blank coverage and exact output remain guarded.
+  const pixels=new Uint8ClampedArray([35,90,45,255,255,255,255,255]);
+  probe.ctx.getImageData=()=>({data:pixels});
+  const before=JSON.stringify(p);
+  let quiet=0,options:any,released=0;
   const compose=helper('composeSectorSheet',{
+    drawSectorArtworkContext:helper('drawSectorArtworkContext',{}),releaseImageSource:()=>{released++;},
     SCALE:1,document:{createElement:()=>probe.canvas},boundaryPresentationContext:async()=>p,
     fetchSectorPresentationContours:async()=>({lines:[]}),loadImage:async(src:string)=>({src}),
-    drawPaperWash:()=>{throw Error('a paid illustration must not receive the photo veil');},
     drawAnalysisBase:async()=>{quiet++;},authoritativeHouseFootprints:()=>[],drawBlueprintBoundary:()=>{},
     BOUNDARY_LINE_GREEN:'#95B34F', TERRAIN_CONTOUR_INK,
     drawSectorAnalysis:()=>({rows:[{color:'#95B34F',label:'Site boundary',style:'line'}],contextLabel:'Evidence',noteText:'Real analysis'}),
@@ -490,12 +503,17 @@ test('Sector keeps paid colour and contrast while exact analysis still uses its 
   });
   await compose('painted-result',p.state,p.frame,p.refLayers,null,'Fictional');
   assert.ok(probe.calls.some(c=>c[0]==='drawImage'&&c[1].src==='painted-result'));
-  assert.ok(!probe.calls.some(c=>c[0]==='set'&&c[1]==='filter'),'AI materials must not be desaturated again');
+  const draw=probe.calls.find(c=>c[0]==='drawImage'&&c[1].src==='painted-result');
+  assert.deepEqual(draw?.slice(2),[0,0,100,120],'same source, frame and scale');
+  assert.ok(pixels[0]>35 && Math.max(...pixels.slice(0,3))-Math.min(...pixels.slice(0,3))<40,'context is lighter and less saturated');
+  assert.deepEqual([...pixels.slice(4)],[255,255,255,255],'unknown archive coverage stays white');
+  assert.equal(released,1,'the source image is released after composition');
   assert.equal(options.aiArtwork,true,'the download must disclose AI artwork');
   assert.equal(options.legendRows[0].lineKind,'fence','the key must match the green survey boundary rather than a beige pipe');
   await compose(null,p.state,p.frame,p.refLayers,null,'Fictional');
   assert.equal(quiet,1,'the exact renderer still owns its factual base');
   assert.equal(options.aiArtwork,false);
+  assert.equal(JSON.stringify(p),before,'presentation must not alter the frozen site');
 });
 
 test('new Phasing artwork keeps model materials, exact phase positions and the saved source unchanged', async () => {

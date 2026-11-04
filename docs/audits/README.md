@@ -1,8 +1,14 @@
 # ImbewuField audit archive
 
+Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Required release checks and normal published-host login remain open.
+
 Latest assistant identity continuation — [MCP display name, published sprout and private listing — 4 November 2026](2026-11-04/assistant-connector-branding-codex.md). Native authentication follows the separate callback release.
 
 Latest assistant connector continuation — [Production release and desktop callback preservation — 4 November 2026](2026-11-04/assistant-connector-loopback-codex.md). Native plugin verification remains open.
+
+Latest Water follow-up is [Budget figures and illustrated route review — 4 November 2026](2026-11-04/water-budget-route-review-codex.md).
+
+Latest Water review is [One budget for exact and illustrated maps — 3 November 2026](2026-11-03/water-shared-budget-codex.md).
 Latest Zone review is [Photo coverage, zone key and the first Water comparison — 3 November 2026](2026-11-03/zone-photo-coverage-codex.md).
 Latest Existing Site follow-up is [Matching area and legend symbols — 3 November 2026](2026-11-03/existing-site-symbol-key-codex.md).
 
@@ -30,6 +36,8 @@ record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
+
+Latest Sector comparison: [Muted context, clearer analytical marks and unannotated polish input — 4 November 2026](2026-11-04/sector-calm-context-codex.md). Local native draft; release evidence is separate.
 
 Latest live output review: [Three fresh AI results and Earthworks starting-image correction — 31 October 2026](2026-10-31/live-ai-map-settings-review-codex.md). Remaining live tests need the owner browser connection restored.
 

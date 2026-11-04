@@ -390,7 +390,7 @@ test('regional wedges keep one dashed provenance mark per energy, not two runawa
   assert.match(legend, /model\.driveway\)[\s\S]*style: 'line'/, 'computed driveway stays in the solid register');
 });
 
-test('wires Sector jobs through authoritative houses and protected-pixel restoration', () => {
+test('wires Sector jobs through authoritative houses and protected-pixel restoration', async () => {
   const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
   const composeStart = source.indexOf('async function composeSectorSheet(');
   const composeEnd = source.indexOf('export async function buildBlueprintSectorMap(', composeStart);
@@ -443,11 +443,28 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
   // legend rows, notes, title â€” back over it at BOTH stages. The stages still genuinely differ,
   // because the polish pass repaints the ground the whole page is built on. See
   // lib/sheet-chrome-pass.ts.
-  assert.match(
-    queue,
-    /cropStyleSheetToMap\(hybridInput, mapWidth, mapHeight\)/,
-    'the polish stage must send the map column, never the composed Hybrid page',
-  );
+  // A crop of the Sector map still contains sun/wind/fire marks. Only its unannotated accepted
+  // artwork may enter the second pass. Base keeps the crop contract on its own route.
+  const queueTree=ts.createSourceFile('queue.ts',queue,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  let mapInput:ts.Expression|undefined;
+  function findInput(node:ts.Node) {
+    if(ts.isVariableDeclaration(node) && node.name.getText(queueTree)==='hybridMapInput')mapInput=node.initializer;
+    ts.forEachChild(node,findInput);
+  }
+  findInput(queueTree);assert.ok(mapInput);
+  const select=new Function('hybridInput','kind','hybridMapForPolishRef','cropStyleSheetToMap','mapWidth','mapHeight',
+    `return (async()=>(${mapInput.getText(queueTree)}))();`);
+  const sourceText=mapInput.getText(queueTree);
+  assert.match(sourceText,/kind === 'sector'/);
+  assert.match(queue,/polishStage && kind === 'sector' && !hybridMapInput/,'missing raw artwork must stop before a paid enqueue');
+  assert.match(completion,/if \(sheet.key === 'sector'\) hybridMapForPolishRef.current = \{key:'sector',map:factualModelImage\}/,
+    'stash restored map artwork, never the finished annotated sheet');
+  const crop=async()=> 'CROPPED WITH MARKS';
+  assert.equal(await select('ANNOTATED PAGE','sector',{current:{key:'sector',map:'RAW ART'}},crop,100,100),'RAW ART');
+  assert.equal(await select('ANNOTATED PAGE','sector',{current:{key:'water',map:'WRONG SHEET'}},crop,100,100),null);
+  assert.equal(await select('ANNOTATED PAGE','sector',{current:null},crop,100,100),null);
+  assert.equal(await select('ANNOTATED PAGE','base',{current:null},crop,100,100),'CROPPED WITH MARKS');
+  assert.equal(await select(null,'sector',{current:{key:'sector',map:'STALE ART'}},crop,100,100),null);
   // Before-works sheets added a second restoration purpose: keeping unphotographed ground
   // blank, including after polish. The old regex incorrectly equated that coverage mask with
   // the Hybrid-only roof mask. Execute the actual gates so both rules remain independently
@@ -544,5 +561,75 @@ test('the shared exact-layer stack puts each boundary treatment below the sheetâ
     assert.equal(events[0], sheet === 'zones' ? 'zone-boundary' : 'boundary', sheet);
     assert.ok(events.includes('feature'), sheet + ' must exercise actual feature painting');
     assert.equal(events.filter(event => event.endsWith('boundary')).length, 1, sheet + ' paints one boundary');
+  }
+});
+
+
+test('muted Sector context retains white archive gaps and never shifts source pixels', () => {
+  const source=readFileSync(new URL('../components/design/DesignGlossy.tsx',import.meta.url),'utf8');
+  const tree=ts.createSourceFile('sheet.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  let paint:ts.FunctionDeclaration|undefined;
+  tree.forEachChild(node=>{if(ts.isFunctionDeclaration(node) && node.name?.text==='drawSectorArtworkContext')paint=node;});
+  assert.ok(paint);
+  const compiled=ts.transpileModule(paint.getText(tree),{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+  const run=new Function(`${compiled};return drawSectorArtworkContext;`)();
+  const original=new Uint8ClampedArray([255,255,255,255,25,65,35,255,110,80,70,0,250,251,252,255]);
+  const data=new Uint8ClampedArray(original),draws:unknown[][]=[],writes:unknown[][]=[];
+  run({drawImage(...args:unknown[]){draws.push(args);},getImageData(){return {data};},putImageData(...args:unknown[]){writes.push(args);}},'art',4,1);
+  assert.deepEqual(draws,[['art',0,0,4,1]]);
+  assert.deepEqual(writes[0].slice(1),[0,0]);
+  assert.deepEqual([...data.slice(0,4)],[...original.slice(0,4)]);
+  assert.deepEqual([...data.slice(8)],[...original.slice(8)],'transparent/white source gaps stay original');
+  assert.equal(data[7],255);
+  assert.ok(data[4]>original[4] && data[5]>original[5] && data[6]>original[6],'the ground visibly lightens');
+  assert.ok(Math.max(...data.slice(4,7))-Math.min(...data.slice(4,7)) < 40,'context is quieter than thematic colours');
+});
+
+
+test('authored Sector wind and solar graphics retain their actual bearings at screen and print scales', () => {
+  const source=readFileSync(new URL('../components/design/DesignGlossy.tsx',import.meta.url),'utf8');
+  const tree=ts.createSourceFile('sheet.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  const arrows=new Map<string,string>();
+  function visit(node:ts.Node) {
+    if(ts.isVariableDeclaration(node) && ['drawBroadEnergyArrow','drawSunArc'].includes(node.name.getText(tree)) && node.initializer)
+      arrows.set(node.name.getText(tree),node.initializer.getText(tree));
+    ts.forEachChild(node,visit);
+  }
+  visit(tree);assert.equal(arrows.size,2);
+  const compile=(name:string,scope:Record<string,unknown>)=>{
+    const js=ts.transpileModule(`const paint=${arrows.get(name)};`,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+    return new Function(...Object.keys(scope),`${js};return paint;`)(...Object.values(scope));
+  };
+  for(const W of [800,2200]) {
+    const moves:number[][]=[],curves:number[][]=[],arcs:number[][]=[],dashes:number[][]=[],suns:number[][]=[];
+    const context=new Proxy({}, {get(_target,key){return (...args:number[])=>{
+      if(key==='moveTo')moves.push(args);if(key==='bezierCurveTo')curves.push(args);
+      if(key==='arc')arcs.push(args);if(key==='setLineDash')dashes.push(args[0] as unknown as number[]);
+    };},set(){return true;}});
+    const common={ctx:context,W,H:W,cx:W*.5,cy:W*.5,R:W*.3,arrowLen:W*.07,artFinish:true,externalLegend:true,
+      SECTOR_ENERGY_TIP:.94,claimArrowBox(){},bearingToUnitVector,bearingToCanvasAngle:(bearing:number)=>(bearing-90)*Math.PI/180,
+      drawSunIcon(...args:number[]){suns.push(args);},REFERENCE_LABEL_FONT:'Arial'};
+    const wind=compile('drawBroadEnergyArrow',common);
+    for(const bearing of [45,225,315]) {
+      moves.length=0;curves.length=0;dashes.length=0;
+      const v=bearingToUnitVector(bearing);wind(v,'#426D9B');
+      const tip=moves.at(-1)!;
+      assert.ok(Math.abs(tip[0]-(W*.5+v[0]*W*.3*.94))<1e-8);
+      assert.ok(Math.abs(tip[1]-(W*.5+v[1]*W*.3*.94))<1e-8);
+      assert.equal(curves.length,3,'wind stays a family of streamlines, not a filled wedge');
+      assert.ok(dashes.some(dash=>dash.length===2 && dash.every(value=>value>0)),'regional wind remains dashed');
+    }
+    const sun=compile('drawSunArc',common);
+    for(const noonSide of ['N','S']) {
+      arcs.length=0;suns.length=0;
+      const path={sunriseAzDeg:65,sunsetAzDeg:295,noonSide};sun(path,W*.4,'#B76F20');
+      assert.ok(arcs.length>=1);
+      for(const arc of arcs) {
+        assert.equal(arc[2],W*.4);
+        assert.equal(arc[3],(65-90)*Math.PI/180);assert.equal(arc[4],(295-90)*Math.PI/180);
+        assert.equal(arc[5],noonSide==='N','the real noon side controls the sweep');
+      }
+      assert.equal(suns.length,3);
+    }
   }
 });

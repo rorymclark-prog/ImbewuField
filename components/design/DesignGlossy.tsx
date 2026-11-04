@@ -152,8 +152,7 @@ import {
   type CropRowLayout,
 } from '@/lib/crop-row-cartography';
 import { overlayElementsText } from '@/lib/overlay-elements';
-import { annualRoofHarvestLitres, deriveWaterSystem, ringAreaM2, statedTankCapacityLitres } from '@/lib/water-system';
-import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
+import { deriveWaterSystem } from '@/lib/water-system';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import {
@@ -7705,6 +7704,74 @@ async function boundaryPresentationContext(
   };
 }
 
+// The same indicative ground-flow field belongs on both finishes. Its interceptors are the
+// saved swales and bed footprints, so the arrows stop where the plan says water spreads.
+function waterTerrainFlowArrows(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  site: SectorSite | null | undefined,
+): FlowArrow[] {
+  return interceptFlowArrows(
+    overlandFlowArrows({
+      boundary: refLayers.boundary,
+      aspectDeg: site?.elevation?.aspectDeg ?? Number.NaN,
+      slopeDeg: site?.elevation?.slopeDeg ?? Number.NaN,
+      directionConfidence: site?.elevation?.directionConfidence,
+    }),
+    // Everything whose JOB is stopping runoff, in the arrows' own normalised space. Bed
+    // footprints convert metres to normalised through the frame; a rotated bed keeps its
+    // rotation so the arrow is cut at the bed's true edge, not its bounding box.
+    {
+      polylines: state.lines
+        .filter((line) => line.kind === 'swale' && line.points.length >= 2)
+        .map((line) => line.points),
+      rects: state.items
+        .filter((it) => (BED_DEF_IDS as readonly string[]).includes(it.defId))
+        .map((it) => {
+          const def = ELEMENTS_BY_ID[it.defId];
+          return {
+            cx: it.x,
+            cy: it.y,
+            w: (it.wM ?? def?.wM ?? 1) / (frame.imgW * frame.mPerPx),
+            h: (it.hM ?? def?.hM ?? 1) / (frame.imgH * frame.mPerPx),
+            rotDeg: it.rot ?? 0,
+          };
+        }),
+      rings: state.zones
+        .filter((z) => z.feature === 'staple_garden' && z.points.length >= 3)
+        .map((z) => z.points),
+    },
+  );
+}
+
+function waterFlowLegendRows(arrows: FlowArrow[], site: SectorSite | null | undefined): StyleLegendRow[] {
+  if (!arrows.length) return [];
+  return [{
+    swatch: '#1C608C',
+    visual: 'flow-arrow',
+    text: overlandFlowLegendText(site?.elevation?.slopeDeg ?? Number.NaN, site?.elevation?.aspectLabel ?? 'downhill'),
+  }];
+}
+
+function buildWaterPlanOverlay(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  W: number,
+  H: number,
+  flowArrows: FlowArrow[],
+): string | undefined {
+  if (!flowArrows.length && !state.lines.some(line => waterRouteStyleFor(line.kind) && line.points.length >= 2)) return;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) { releaseCanvas(canvas); throw new Error('Water plan overlay unavailable'); }
+  drawOverlandFlowArrows(ctx, flowArrows, W, H);
+  drawWaterRoutes(ctx, state, frame, W, H);
+  return drainCanvasToDataUrl(canvas, 'image/png');
+}
+
 /**
  * One deterministic sheet pipeline for every design layer.
  *
@@ -7719,7 +7786,7 @@ async function buildReferenceBlueprintMap(
   filter: GlossyLayerFilter,
   placeName?: string,
   /** Only the Water sheet uses this today, for its harvest block. Optional everywhere else, and
-   *  the block simply does not print without it — see roofHarvestFooterLines. */
+   *  missing rainfall is stated explicitly in the shared budget. */
   site?: DesignGlossyProps['site'],
   /** Codes on every plant, or named callouts on one plant per kind — see SheetLabelMode. Optional
    *  so DesignPrint's per-layer render table keeps the default without a signature change. */
@@ -7817,47 +7884,7 @@ async function buildReferenceBlueprintMap(
     drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, filter === 'structures', onPaper);
   }
 
-  // WHERE THE RAIN GOES ONCE IT IS ON THE GROUND — under the plumbing, because it is the condition
-  // the plumbing answers, not a thing the farmer placed. Rory: "show arrows of where the rain
-  // drains on the roof and ground?"
-  //
-  // Only the ground half is drawn, and only when the app actually knows: aspectDeg comes from a real
-  // elevation sample and arrives with a confidence flag that is 'unconfirmed' on ground too flat to
-  // call. A roof's fall is NOT known — a traced outline says nothing about ridge, pitch or which
-  // wall the gutter is on — so no arrow is drawn off a roof. See lib/overland-flow.ts.
-  const flowArrows = filter === 'water'
-    ? interceptFlowArrows(
-      overlandFlowArrows({
-        boundary: renderRefLayers.boundary,
-        aspectDeg: site?.elevation?.aspectDeg ?? Number.NaN,
-        slopeDeg: site?.elevation?.slopeDeg ?? Number.NaN,
-        directionConfidence: site?.elevation?.directionConfidence,
-      }),
-      // Everything whose JOB is stopping runoff, in the arrows' own normalised space. Bed
-      // footprints convert metres to normalised through the frame; a rotated bed keeps its
-      // rotation so the arrow is cut at the bed's true edge, not its bounding box.
-      {
-        polylines: renderState.lines
-          .filter((line) => line.kind === 'swale' && line.points.length >= 2)
-          .map((line) => line.points),
-        rects: renderState.items
-          .filter((it) => (BED_DEF_IDS as readonly string[]).includes(it.defId))
-          .map((it) => {
-            const def = ELEMENTS_BY_ID[it.defId];
-            return {
-              cx: it.x,
-              cy: it.y,
-              w: (it.wM ?? def?.wM ?? 1) / (renderFrame.imgW * renderFrame.mPerPx),
-              h: (it.hM ?? def?.hM ?? 1) / (renderFrame.imgH * renderFrame.mPerPx),
-              rotDeg: it.rot ?? 0,
-            };
-          }),
-        rings: renderState.zones
-          .filter((z) => z.feature === 'staple_garden' && z.points.length >= 3)
-          .map((z) => z.points),
-      },
-    )
-    : [];
+  const flowArrows = filter === 'water' ? waterTerrainFlowArrows(renderState, renderFrame, renderRefLayers, site) : [];
   drawOverlandFlowArrows(ctx, flowArrows, W, H);
 
   // THE WATER STORY — roof → gutter → tank → swale. Rory: "arrows of water running down roof, and
@@ -7937,19 +7964,6 @@ async function buildReferenceBlueprintMap(
     ? sheetGutterLayout(renderState, renderRefLayers, W, H, filter, labelMode)
     : undefined;
 
-  // THE WATER SHEET CARRIES ITS OWN SIZING CALCULATION. That is how real rainwater-harvesting
-  // drawings work: the sheet that shows the tanks also shows the arithmetic that says whether they
-  // are big enough, so a farmer or a funder can check it without a second document. Rory: "should
-  // you show info like how rain can be harvested on the roof?"
-  //
-  // Every figure is measured or sourced — traced roof area, the site's own annual rainfall, and
-  // the runoff coefficient from lib/roof-runoff.ts (0.80, cited to the CSIR Red Book). Nothing
-  // here is estimated into existence: when the roof is untraced or the rainfall unknown the block
-  // simply does not print, because a harvest figure resting on a guessed roof is worse than none.
-  const waterBudget = filter === 'water'
-    ? roofHarvestFooterLines(renderState, renderFrame, renderRefLayers, site ?? null)
-    : [];
-
   // NOTHING IS DRAWN WITHOUT A ROW. A dashed canopy edge is meaningless to a reader who has not
   // been told what it means, so the row appears only when at least one canopy has actually earned
   // the dash — recomputed here from the same printed geometry drawFilteredItems uses.
@@ -7998,8 +8012,8 @@ async function buildReferenceBlueprintMap(
       gutterLayout,
       includeLabelGutters: filter !== 'all',
       zoneMatte: filter === 'zones' ? zonePhotoMatte(state, frame, refLayers) : undefined,
-      ...(waterBudget.length
-        ? { footerHeading: 'WATER BUDGET', footerText: waterBudget.join('\n'), footerBox: true }
+      ...(filter === 'water'
+        ? waterReferenceFooter(renderState, renderFrame, renderRefLayers, site)
         : {}),
       // NOTHING IS DRAWN WITHOUT A ROW, and the converse: the row exists only when the arrows do.
       // The flow field is computed from site elevation, which sheetLegendRows never sees, so it
@@ -8013,73 +8027,9 @@ async function buildReferenceBlueprintMap(
           }],
         }
         : {}),
-      ...(flowArrows.length
-        ? {
-          extraLegendRows: [{
-            swatch: '#1C608C',
-            visual: 'flow-arrow' as const,
-            text: overlandFlowLegendText(
-              site?.elevation?.slopeDeg ?? Number.NaN,
-              site?.elevation?.aspectLabel ?? 'downhill',
-            ),
-            // No section, deliberately. The headed sections on this sheet name what the farmer has
-            // PLACED — rainwater, filtered greywater, irrigation. Overland flow is not placed and
-            // cannot be moved; it is the condition all of that responds to. Filing it under a
-            // "WATER" heading of its own put a heading on the sheet that read as a fourth system.
-          }]
-        }
-        : {}),
+      ...(flowArrows.length ? { extraLegendRows: waterFlowLegendRows(flowArrows, site) } : {}),
     },
   );
-}
-
-/**
- * The Water sheet's rainwater-harvest block: roof area × annual rainfall × runoff coefficient,
- * against the storage actually placed.
- *
- * Returns an EMPTY list rather than a partial block whenever a term is missing. A harvest figure
- * is only as good as the roof it is measured from, and a farmer sizing tanks off an invented roof
- * area would be worse served than by no number at all — the same rule statedTankCapacityLitres
- * already follows when a tank's name does not state its size.
- */
-function roofHarvestFooterLines(
-  state: DesignCanvasState,
-  frame: CanvasFrame,
-  refLayers: DesignGlossyProps['refLayers'],
-  site: DesignGlossyProps['site'],
-): string[] {
-  const metrics = { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx };
-  const roofRings: Array<Array<[number, number]>> = [];
-  if (refLayers.house.length >= 3) roofRings.push(refLayers.house);
-  for (const zone of state.zones) {
-    if (zone.feature === 'house' && zone.points.length >= 3) roofRings.push(zone.points);
-  }
-  const roofM2 = roofRings.reduce((sum, ring) => sum + ringAreaM2(ring, metrics), 0);
-  const rainfallMm = site?.rainfallMm;
-  if (!(roofM2 > 1) || !Number.isFinite(rainfallMm ?? NaN) || !((rainfallMm ?? 0) > 0)) return [];
-
-  const harvestL = annualRoofHarvestLitres(roofM2, rainfallMm as number);
-  if (!(harvestL > 0)) return [];
-  const storedL = state.items.reduce((sum, item) => {
-    const def = ELEMENTS_BY_ID[item.defId];
-    if (!def || !itemInFilter(def.category, 'water', def.id)) return sum;
-    return sum + (statedTankCapacityLitres(def) ?? 0);
-  }, 0);
-
-  const lines = [
-    `Roof catchment traced: ${numberLabel(Math.round(roofM2))} m²`,
-    `Annual rainfall: ${numberLabel(Math.round(rainfallMm as number))} mm`,
-    `Runoff coefficient: ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} (generic roof)`,
-    `Harvestable: ~${numberLabel(Math.round(harvestL))} L a year`,
-  ];
-  // Storage is stated only when the catalog actually knows the capacities. A "Rain Barrel" with no
-  // size in its name contributes nothing, so a total built from those would understate the storage
-  // and make it look inadequate.
-  if (storedL > 0) {
-    lines.push(`Storage placed: ${numberLabel(Math.round(storedL))} L`);
-    lines.push(`That is ${Math.round((storedL / harvestL) * 100)}% of one year's harvest.`);
-  }
-  return lines;
 }
 
 export function buildBlueprintZoneMap(
@@ -8538,7 +8488,7 @@ function drawSectorAnalysis(
     // this canvas — so contrast is guaranteed by what's UNDER the label, never by what's under the
     // photo. Font bumped alongside it: 18px-min/×0.0115 was sized before this sheet carried a real
     // photo at phone-viewing scale.
-    const fs = Math.max(21, Math.round(W * (artFinish ? 0.0125 : 0.0135)));
+    const fs = Math.max(artFinish ? 23 : 21, Math.round(W * (artFinish ? 0.014 : 0.0135)));
     const lineH = Math.round(fs * 1.1);
     for (const request of directLabelRequests) {
       ctx.save();
@@ -8576,14 +8526,13 @@ function drawSectorAnalysis(
         if (!overlaps) break;
       }
       directClaims.push({ x0: lx - halfW, x1: lx + halfW, y0: ly - halfH, y1: ly + halfH });
-      // BENCHMARK LETTERING, NOT PLATES. design/benchmark/08...Sector_Analysis_Map.png sets every
-      // free-floating label as bold outlined type straight on the artwork — no black pill
-      // anywhere on the sheet. The pills were this renderer's own invention (first translucent,
-      // then opaque), and each step made a different complaint: translucent = "can't see
-      // anything", opaque = "the text blocks the arrows". The reference solves both at once: a
-      // HEAVY dark outline (~0.22em, far past the old 3px halo that failed on this photo) gives
-      // the contrast a plate used to, without hiding a single pixel of arrow, arc or ground —
-      // and the wind names moved inside their own arrows, so what floats here is short.
+      // On the illustrated sheet, light plates separate labels from texture without the old
+      // black slabs. Collision claims keep those plates off the analytical marks. The exact
+      // technical sheet retains its original outlined lettering.
+      if (artFinish) {
+        ctx.fillStyle='rgba(255,255,253,.95)';
+        roundRectPath(ctx,lx-halfW,ly-halfH,halfW*2,halfH*2,fs*.25);ctx.fill();
+      }
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.lineJoin = 'round';
@@ -8642,7 +8591,7 @@ function drawSectorAnalysis(
     ctx.closePath();
     const color=kind==='fire'?artInk.fire:kind==='berg-wind'?artInk.berg:kind==='cold-front-wind'?artInk.cold:artInk.cooling;
     ctx.fillStyle = artFinish ? `${color}13` : sectorFillColor(kind);
-    ctx.fill();
+    if (!artFinish) ctx.fill();
     ctx.restore();
     return { centerVec, rr, tipX, tipY };
   };
@@ -8652,6 +8601,7 @@ function drawSectorAnalysis(
     color: string,
   ): void => {
     ctx.save();
+    if (artFinish) ctx.translate(-wedge.centerVec[1]*W*.035,wedge.centerVec[0]*W*.035);
     ctx.strokeStyle = color;
     ctx.lineWidth = Math.max(1.8, sectorStrokeWidth('fire', W) * (externalLegend ? 0.42 : 0.28));
     ctx.setLineDash([10, 7]);
@@ -8659,6 +8609,13 @@ function drawSectorAnalysis(
     ctx.moveTo(wedge.tipX, wedge.tipY);
     ctx.lineTo(cx + wedge.centerVec[0] * wedge.rr, cy + wedge.centerVec[1] * wedge.rr);
     ctx.stroke();
+    if (artFinish) {
+      const fx=wedge.tipX, fy=wedge.tipY, size=W*.018;
+      ctx.setLineDash([]);ctx.fillStyle=color;ctx.beginPath();
+      ctx.moveTo(fx,fy-size);ctx.bezierCurveTo(fx+size,fy,fx+size*.7,fy+size,fx,fy+size);
+      ctx.bezierCurveTo(fx-size,fy+size,fx-size*.6,fy,fx-size*.15,fy-size*.25);
+      ctx.quadraticCurveTo(fx+size*.05,fy,fx,fy-size);ctx.fill();
+    }
     ctx.restore();
   };
 
@@ -8705,13 +8662,21 @@ function drawSectorAnalysis(
     ctx.lineTo(tailX - nx * tailHalf, tailY - ny * tailHalf);
     ctx.closePath();
     if(artFinish){
-      // The painted site stays visible beneath a directional wash. Its centreline and tip use the
-      // same derived endpoints as the exact sheet; feathered colour is presentation only.
-      const tint=ctx.createLinearGradient(tailX,tailY,tipX,tipY);
-      tint.addColorStop(0,`${color}0D`);tint.addColorStop(.46,`${color}96`);tint.addColorStop(1,`${color}EF`);
-      ctx.fillStyle=tint;ctx.fill();
-      ctx.strokeStyle='rgba(255,253,248,.9)';ctx.lineWidth=Math.max(2,W*.0014);ctx.lineCap='round';ctx.setLineDash([10,8]);
-      ctx.beginPath();ctx.moveTo(tailX+dx*.3,tailY+dy*.3);ctx.lineTo(headBaseX,headBaseY);ctx.stroke();
+      // Three dashed streamlines read as wind; the neighbouring red flame/dash reads as fire.
+      // Both use the original sourced axis. Curvature is graphic rhythm, not a new bearing.
+      ctx.setLineDash([W*.008,W*.005]);ctx.lineCap='round';ctx.lineWidth=Math.max(3,W*.0024);
+      for (const lane of [-1,0,1]) {
+        const shift=lane*W*.012;
+        ctx.globalAlpha=lane===0?1:.7;ctx.strokeStyle=color;
+        ctx.beginPath();ctx.moveTo(tailX+nx*shift,tailY+ny*shift);
+        ctx.bezierCurveTo(tailX+dx*.36+nx*(shift+W*.012),tailY+dy*.36+ny*(shift+W*.012),
+          tailX+dx*.68+nx*(shift-W*.012),tailY+dy*.68+ny*(shift-W*.012),
+          tipX+nx*shift*.4-ux*headLen*.3,tipY+ny*shift*.4-uy*headLen*.3);ctx.stroke();
+      }
+      ctx.globalAlpha=1;ctx.setLineDash([]);ctx.fillStyle=color;
+      ctx.beginPath();ctx.moveTo(tipX,tipY);
+      ctx.lineTo(tipX-ux*headLen*.7+nx*headHalf*.65,tipY-uy*headLen*.7+ny*headHalf*.65);
+      ctx.lineTo(tipX-ux*headLen*.7-nx*headHalf*.65,tipY-uy*headLen*.7-ny*headHalf*.65);ctx.closePath();ctx.fill();
       ctx.restore();claimArrowBox(tailX,tailY,tipX,tipY,headHalf);return {sxp:tailX,syp:tailY};
     }
     // ROUTE-CASING TREATMENT, not a tint. The previous pass (30%-alpha fill, 76%-alpha edge, a
@@ -8784,10 +8749,11 @@ function drawSectorAnalysis(
   // The KZN cold-front record explicitly carries driving rain. Small deterministic drops make
   // that sourced effect readable like the benchmark without inventing a separate storm bearing.
   const drawDrivingRain = (bearingDeg: number, halfWidthDeg: number, color: string): void => {
-    if (!externalLegend) return;
+    if (!externalLegend || artFinish) return;
+    // The art sheet names driving rain beside the wind. Scattered drops read as unrelated points.
     // A few drops identify the sourced cold-front sector. A previous 6x7 field obscured the house
     // and lawn and falsely read as 42 separate observations.
-    const radii = artFinish ? [1.08,1.27] : [0.88, 1.08, 1.27];
+    const radii = [0.88, 1.08, 1.27];
     const angular = [-0.5, 0, 0.5];
     ctx.save();
     ctx.fillStyle = color;
@@ -8879,25 +8845,37 @@ function drawSectorAnalysis(
     // same fix applied to a LINE instead of text: a dark halo stroke first, the real colour on top.
     if (externalLegend) {
       ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.82)' : 'rgba(6,10,8,0.55)';
-      ctx.lineWidth = Math.max(2.5, W * 0.0022) + Math.max(3, W * (artFinish ? 0.0014 : 0.0026));
+      ctx.lineWidth = Math.max(2.5, W * 0.0022) + Math.max(3, W * (artFinish ? 0.0046 : 0.0026));
       ctx.lineCap = 'round';
       ctx.beginPath();
       ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
       ctx.stroke();
     }
     ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(2.5, W * 0.0022);
+    ctx.lineWidth = Math.max(2.5, W * (artFinish ? 0.0034 : 0.0022));
     ctx.lineCap = 'round';
     ctx.beginPath();
     ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
     ctx.stroke();
+    if (artFinish) {
+      let sweep=endAngle-startAngle;
+      if(sweepNorth && sweep>0)sweep-=Math.PI*2;
+      if(!sweepNorth && sweep<0)sweep+=Math.PI*2;
+      for(const fraction of [.28,.72]) {
+        const angle=startAngle+sweep*fraction, tangent=angle+(sweepNorth?-1:1)*Math.PI/2;
+        const x=cx+Math.cos(angle)*r,y=cy+Math.sin(angle)*r,head=W*.015;
+        ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(x,y);
+        ctx.lineTo(x-head*Math.cos(tangent-.48),y-head*Math.sin(tangent-.48));
+        ctx.lineTo(x-head*Math.cos(tangent+.48),y-head*Math.sin(tangent+.48));ctx.closePath();ctx.fill();
+      }
+    }
     const apexVec = bearingToUnitVector(sweepNorth ? 0 : 180);
     // MUCH bigger, and the ARC ENDS especially — Rory: "make the suns bigger at the ends of the
     // arcs, like much bigger." The ends are sunrise and sunset, which is the pair of facts a
     // farmer actually sites a windbreak or a shade tree against; they were drawn at three
     // quarters of the noon sun and vanished into the photograph entirely. They now lead, and the
     // noon marker (which already has the banner and the altitude number carrying it) follows.
-    const sunR = Math.max(14, W * 0.0125);
+    const sunR = Math.max(14, W * (artFinish ? 0.009 : 0.0125));
     drawSunIcon(cx + Math.cos(startAngle) * r, cy + Math.sin(startAngle) * r, sunR, color);
     drawSunIcon(cx + apexVec[0] * r, cy + apexVec[1] * r, sunR * 0.82, color);
     drawSunIcon(cx + Math.cos(endAngle) * r, cy + Math.sin(endAngle) * r, sunR, color);
@@ -9030,7 +9008,7 @@ function drawSectorAnalysis(
       ? drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1, artFinish ? undefined : directLines)
       : drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], R * 0.4);
     if(artFinish){
-      const name=w.id==='berg'?'Berg wind':w.id==='cold_front'?'Cold front':'Cooling wind';
+      const name=w.id==='berg'?'Berg wind':w.id==='cold_front'?'Cold front + rain':'Cooling wind';
       const radius=R+arrowLen*1.48;
       directLabelAt(cx+v[0]*radius,cy+v[1]*radius,[`${name} · ${w.fromLabel}`],color);
     }
@@ -9221,7 +9199,7 @@ function drawSectorAnalysis(
       if(externalLegend)for(const line of sheetContours.lines){
         const points=line.points.filter(point=>pointInRing(point,bnd));
         const at=points[Math.floor(points.length*.32)];
-        if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,px(at[0]),py(at[1])-W*.006,Math.max(16,W*.009));
+        if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,px(at[0]),py(at[1])-W*.006,Math.max(16,W*(artFinish?.013:.009)));
       }
       const middleLine = sheetContours.lines[Math.floor(sheetContours.lines.length / 2)];
       if (middleLine) {
@@ -9676,6 +9654,25 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
   return drainCanvasToDataUrl(canvas,'image/png');
 }
 
+// These are display treatments of existing artwork, never a new AI generation. Pixel positions
+// and blank archive coverage stay untouched while the analysis becomes the foreground.
+function drawSectorArtworkContext(ctx: CanvasRenderingContext2D, image: CanvasImageSource, W: number, H: number): void {
+  ctx.drawImage(image, 0, 0, W, H);
+  const pixels = ctx.getImageData(0, 0, W, H);
+  const data = pixels.data;
+  for (let i = 0; i < data.length; i += 4) {
+    const r=data[i], g=data[i+1], b=data[i+2];
+    // White/transparent pixels are unknown source coverage, not land to illustrate.
+    if (data[i+3] === 0 || Math.min(r,g,b) > 249) continue;
+    const luminance=.2126*r+.7152*g+.0722*b;
+    const tone=119+luminance*.5;
+    data[i]=tone+(r-luminance)*.24;
+    data[i+1]=tone+(g-luminance)*.24;
+    data[i+2]=tone+(b-luminance)*.24;
+  }
+  ctx.putImageData(pixels,0,0);
+}
+
 async function composeSectorSheet(
   baseImage: string | null,
   state: DesignCanvasState,
@@ -9703,18 +9700,11 @@ async function composeSectorSheet(
   const pad = Math.round(W * 0.02);
   const rowH = Math.round(W * 0.026);
 
-  // 1. The base. Exact (baseImage null): real satellite, desaturated/lightened + paper wash — an
-  //    analysis sheet is arrows and arcs over ground, and over dense KZN bush a dark scrim leaves a
-  //    near-black field the sun arc, wind arrows and frost ellipse have to fight. AI (baseImage
-  //    set): keep the model's painted palette without a second filter or wash.
-  //    Neither background is the authority for measured geometry.
+  // The existing painting supplies orientation; computed analysis supplies the information.
   if (baseImage) {
     const img = await loadImage(baseImage);
-    ctx.save();
-    ctx.drawImage(img, 0, 0, W, H);
-    ctx.restore();
-    // Paid artwork already has its own palette. A second photo filter and cream veil
-    // erased the illustration Rory paid for, leaving Sector looking like its exact master.
+    try { drawSectorArtworkContext(ctx,img,W,H); }
+    finally { releaseImageSource(img); }
   } else if (baseline && renderFrame.satDataUrl) {
     const image=await loadImage(renderFrame.satDataUrl);
     try{ctx.drawImage(image,0,0,W,H);}finally{releaseImageSource(image);}
@@ -9798,6 +9788,7 @@ async function composeSectorSheet(
     lineKind: row.color === BOUNDARY_LINE_GREEN ? (baseline ? 'path' : 'fence') : row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
     kind: row.style === 'fill' ? 'surface' : undefined,
     sectorIcon: row.color===TERRAIN_CONTOUR_INK?undefined:row.sectorIcon,
+    ...(artFinish && row.sectorIcon==='wind'?{visual:'sector-streamline' as const}:{}),
     ...(row.color===TERRAIN_CONTOUR_INK?{visual:'terrain-contour' as const}:{}),
   }));
 
@@ -10445,7 +10436,7 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour' | 'zone-boundary';
+  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour' | 'zone-boundary' | 'sector-streamline';
   historicalFeature?: HistoricalFeatureId;
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
@@ -10723,12 +10714,17 @@ function drawStyleLegendSymbol(
         ctx.stroke();
       }
     } else if (row.sectorIcon === 'wind') {
+      if(row.visual==='sector-streamline')ctx.setLineDash([w*.12,w*.09]);
       for (const off of [-r * 0.75, 0, r * 0.75]) {
         ctx.beginPath();
         ctx.moveTo(x, y + off);
         ctx.bezierCurveTo(x + w * 0.25, y + off - r * 0.8, x + w * 0.45, y + off + r * 0.8, x + w * 0.68, y + off);
         ctx.bezierCurveTo(x + w * 0.82, y + off - r * 0.55, x + w * 0.92, y + off - r * 0.2, x + w, y + off);
         ctx.stroke();
+      }
+      if(row.visual==='sector-streamline') {
+        ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(x+w,y);
+        ctx.lineTo(x+w-r*.65,y-r*.45);ctx.lineTo(x+w-r*.65,y+r*.45);ctx.closePath();ctx.fill();
       }
     } else if (row.sectorIcon === 'fire') {
       ctx.beginPath();
@@ -11082,6 +11078,7 @@ async function composeStyleSheet(
     extraLegendRows?: StyleLegendRow[];
     footerHeading?: string;
     footerText?: string;
+    footerFacts?: string[];
     footerBox?: boolean;
     /** Keep short Sector groups together; spreading them over columns duplicated headings. */
     legendPresentation?: 'compact-sector';
@@ -11153,6 +11150,7 @@ async function composeStyleSheet(
   const titleSize = Math.round(typeW * SHEET_LEGEND_TYPE.title);
   ctx.font = `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`;
   const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
+  const waterUnderReview = filter === 'water' && options.aiArtwork;
   const titleLines: string[] = [];
   let titleLine = '';
   for (const word of titleWords) {
@@ -11196,6 +11194,13 @@ async function composeStyleSheet(
   ctx.fillStyle = '#8A8172';
   ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.detail)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', lx, y);
+  if (waterUnderReview) {
+    const reviewFs = Math.round(typeW * SHEET_LEGEND_TYPE.detail);
+    y += Math.round(reviewFs * 1.4);
+    ctx.fillStyle = '#87431F';
+    ctx.font = `800 ${reviewFs}px ${SHEET_BODY_FONT}`;
+    ctx.fillText('AI WATER · UNDER REVIEW', lx, y);
+  }
   y += Math.round(legendW * 0.035);
   ctx.strokeStyle = 'rgba(11,18,11,0.25)';
   ctx.lineWidth = 1.5;
@@ -11227,10 +11232,12 @@ async function composeStyleSheet(
   const footerBoxPad = options.footerBox ? Math.max(6, Math.round(legendW * 0.024)) : 0;
   const footerTextX = lx + footerBoxPad;
   const footerTextW = maxX - lx - footerBoxPad * 2;
-  const wrapFooterText = (value: string): string[] => {
-    ctx.font = options.footerHeading
+  const footerFactFont = `800 ${Math.round(footerFs * 1.25)}px ${SHEET_BODY_FONT}`;
+  const footerFactLineH = Math.round(footerLineH * 1.25);
+  const wrapFooterText = (value: string, font?: string): string[] => {
+    ctx.font = font ?? (options.footerHeading
       ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
-      : `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`;
+      : `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`);
     // A NEWLINE IS A HARD BREAK, NOT A SPACE.
     //
     // This wrapped on /\s+/, which treats "\n" as whitespace like any other. The Water sheet's
@@ -11259,8 +11266,9 @@ async function composeStyleSheet(
     }
     return lines;
   };
+  const footerFactLines = (options.footerFacts ?? []).flatMap(fact => wrapFooterText(fact, footerFactFont));
   const footerText = options.aiArtwork
-    ? [options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : ''), footerStyleLabel].filter(Boolean).join('\n')
+    ? [waterUnderReview ? 'Use the exact Water map to verify pipe locations and features.' : options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : ''), footerStyleLabel].filter(Boolean).join('\n')
     : options.footerText ? [options.footerText, footerStyleLabel].filter(Boolean).join('\n') : undefined;
   const customFooterLines = footerText ? wrapFooterText(footerText) : [];
   const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
@@ -11282,8 +11290,9 @@ async function composeStyleSheet(
     attributionLine,
     footerStyleLabel,
   ].filter(Boolean).join('\n'));
-  const footerBlockH = customFooterLines.length
+  const footerBlockH = customFooterLines.length || footerFactLines.length
     ? customFooterLines.length * footerLineH
+      + footerFactLines.length * footerFactLineH
       + footerHeadingH
       + Math.round(legendW * 0.035)
       + footerBoxPad * 2
@@ -11293,8 +11302,11 @@ async function composeStyleSheet(
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const contentW = maxX - lx;
   const compactSector=options.legendPresentation==='compact-sector';
+  // A normal Water register reads by system. Splitting it into columns to gain a few pixels
+  // of font size wrapped every pipe label and made the budget harder to compare with the map.
+  const compactWater = filter === 'water' && rows.length <= 12;
   const normalFs = legendRowFontSize(typeW, availableRowsH, rows.length);
-  const maxColumns=Math.min(compactSector?1:3,rows.length);
+  const maxColumns=Math.min(compactSector || compactWater ? 1 : 3, rows.length);
   const baseSw = Math.round(legendW * 0.064);
   const columnGap = Math.max(10, Math.round(legendW * 0.025));
   const singleColumnTextGap = Math.round(legendW * 0.03);
@@ -11353,7 +11365,7 @@ async function composeStyleSheet(
     return sourceRows.map((row) => {
       const lines = wrapLegendText(row.text, fontSize, textWidth);
       const contentHeight = Math.max(symbolSize, lines.length * lineH)
-        + Math.max(2, Math.round(fontSize * 0.22));
+        + Math.max(2, Math.round(fontSize * (compactSector ? 0.12 : 0.22)));
       const startsSection = Boolean(row.section && row.section !== previousSection);
       const headingLines = startsSection && row.section
         ? wrapSectionHeading(row.section, sectionFs, columnWidth)
@@ -11361,7 +11373,7 @@ async function composeStyleSheet(
       // One-line headings keep the previous 1.7× block exactly; wrapped headings add one normal
       // heading line at a time and are remeasured by the same column-fit pass as factual rows.
       const headingHeight = startsSection
-        ? sectionLineH * headingLines.length + Math.round(sectionFs * 0.55)
+        ? sectionLineH * headingLines.length + Math.round(sectionFs * (compactSector ? 0.35 : 0.55))
         : 0;
       previousSection = row.section;
       return {
@@ -11423,7 +11435,7 @@ async function composeStyleSheet(
         columnLayout: layoutLegendColumn(
           availableRowsH,
           rowLayout.map((row) => ({ height: row.height })),
-          lineH,
+          compactSector ? lineH*.4 : lineH,
         ),
       };
     });
@@ -11495,7 +11507,7 @@ async function composeStyleSheet(
   // Searching per column count fixes both symptoms at once, and they were always one bug: the
   // space that became gaps is the space the type should have grown into. Fewest columns wins on a
   // tie, so a sparse legend still stays a single readable list.
-  const growthCeiling = Math.round(legendMaxFontSize(typeW)*(compactSector ? .72 : 1));
+  const growthCeiling = Math.round(legendMaxFontSize(typeW)*(compactSector || compactWater ? .72 : 1));
   const fitForColumns = (columnCount: number): number => fitLegendFontSize(
     (fontSize) => {
       const candidate = planColumns(columnCount, fontSize);
@@ -11619,7 +11631,7 @@ async function composeStyleSheet(
   // illustrative caveat while confirming that geometry and placed elements are deterministic.
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#8A8172';
-  if (customFooterLines.length) {
+  if (customFooterLines.length || footerFactLines.length) {
     if (options.footerBox) {
       ctx.strokeStyle = 'rgba(31,77,43,0.46)';
       ctx.lineWidth = 1;
@@ -11647,11 +11659,19 @@ async function composeStyleSheet(
       ctx.font = `800 ${Math.round(legendW * 0.04)}px ${REFERENCE_LABEL_FONT}`;
       ctx.fillText(options.footerHeading, footerTextX, footerY);
       footerY += footerHeadingH;
-      ctx.fillStyle = '#6C6457';
-      ctx.font = `600 ${footerFs}px ${SHEET_BODY_FONT}`;
-    } else {
-      ctx.font = `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
     }
+    if (footerFactLines.length) {
+      ctx.fillStyle = '#20190F';
+      ctx.font = footerFactFont;
+      for (const line of footerFactLines) {
+        ctx.fillText(line, footerTextX, footerY);
+        footerY += footerFactLineH;
+      }
+    }
+    ctx.fillStyle = '#6C6457';
+    ctx.font = options.footerHeading
+      ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
+      : `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
     for (const line of customFooterLines) {
       ctx.fillText(line, footerTextX, footerY);
       footerY += footerLineH;
@@ -11825,12 +11845,7 @@ async function composeSheetChromeOverMapArt(opts: {
       labelMode,
       gutterLayout: labelled.gutterLayout,
       includeLabelGutters: filter !== 'all',
-      ...(filter === 'water'
-        ? {
-            footerHeading: 'NOTES',
-            footerText: waterReferenceFooterText(state, frame, refLayers, opts.site),
-          }
-        : {}),
+      ...(filter === 'water' ? waterReferenceFooter(state, frame, refLayers, opts.site) : {}),
     },
   );
   return { sheet, mapArt };
@@ -12084,17 +12099,23 @@ interface SavedGlossy {
 
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
-function waterReferenceFooterText(
+function waterReferenceFooter(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
-  site: SectorSite | null,
-): string {
-  const storageNotes = deriveWaterSystem(state, refLayers, {
+  site: SectorSite | null | undefined,
+  roofCredit?: string,
+) {
+  const { storageFacts, storageNotes } = deriveWaterSystem({ ...state, frame }, refLayers, {
     rainfallMm: site?.rainfallMm,
     monthlyRainfallMm: site?.monthlyRainfallMm,
-  }).storageNotes;
-  return [...storageNotes, WATER_REFERENCE_NOTES].join(' ');
+  });
+  return {
+    footerHeading: 'WATER BUDGET',
+    footerBox: true,
+    footerFacts: storageFacts,
+    footerText: [...storageNotes, WATER_REFERENCE_NOTES, roofCredit].filter(Boolean).join(' '),
+  };
 }
 
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
@@ -12447,7 +12468,7 @@ export default function DesignGlossy({
    *  for the polish stage. This, not the composed page, is what Full Treatment sends to the model:
    *  a model shown no text can mangle no text. Keyed by filter so a stale map from another sheet
    *  can never be polished by mistake. */
-  const hybridMapForPolishRef = useRef<{ key: GlossyLayerFilter; map: string } | null>(null);
+  const hybridMapForPolishRef = useRef<{ key: GlossyLayerFilter | 'sector'; map: string } | null>(null);
   /** The polished MAP as returned (post-restore, pre-chrome), so the difference gate scores the
    *  model's actual work map-against-map rather than page-against-map. */
   const polishedMapRef = useRef<string | null>(null);
@@ -13532,12 +13553,7 @@ export default function DesignGlossy({
           ? {
               aiArtwork: true,
               includeLabelGutters: filter !== 'all',
-              ...(filter === 'water'
-                ? {
-                    footerHeading: 'NOTES',
-                    footerText: waterReferenceFooterText(state, frame, refLayers, site),
-                  }
-                : {}),
+              ...(filter === 'water' ? waterReferenceFooter(state, frame, refLayers, site) : {}),
             }
           : {},
       );
@@ -13914,12 +13930,7 @@ export default function DesignGlossy({
             ? {
                 aiArtwork: true,
                 includeLabelGutters: f !== 'all',
-                ...(f === 'water'
-                  ? {
-                      footerHeading: 'NOTES',
-                      footerText: waterReferenceFooterText(state, frame, refLayers, site),
-                    }
-                  : {}),
+                ...(f === 'water' ? waterReferenceFooter(state, frame, refLayers, site) : {}),
               }
             : {},
         );
@@ -14237,11 +14248,14 @@ export default function DesignGlossy({
       // stay exact. Photo Plan keeps the factual photo; painted styles keep continuous property
       // artwork. A plain-input existing roof can use its factual aerial reference instead of a
       // guessed ridge layout; no garden ground or driveway is restored with that roof.
+      const flowArrows = locked && f === 'water' ? waterTerrainFlowArrows(renderState, renderFrame, renderRefLayers, site) : [];
       const overlayImage = f === 'zones'
         // Zones are saved polygons, not model artwork. The general locked-sheet rule below must
         // not suppress them: that shipped a paid Zones sheet with only Gemini's faint impression
         // of the bands and no exact badges. Burn the real regions after every model pass.
         ? buildZoneOverlay(renderState, renderRefLayers, W, H)
+        : locked && f === 'water'
+          ? buildWaterPlanOverlay(renderState, renderFrame, W, H, flowArrows)
         : locked
           ? buildRecordedShadeCoverOverlay(renderState,renderFrame,f,W,H)
           : f === 'water' ? buildWaterOverlay(renderState, renderFrame, renderRefLayers, W, H, true, false)
@@ -14276,6 +14290,7 @@ export default function DesignGlossy({
       const labelled = exactMapOwnsLabels
         ? await burnExactLabelLayer(final, renderState, renderFrame, renderRefLayers, f, W, H, labelMode)
         : { map: final, gutterLayout: undefined };
+      const roofCredit = sourceRoof?.credit ?? (legacyPaperRoof ? 'Approximate roof symbol; roof sections are not recorded.' : undefined);
       return composeStyleSheet(
         labelled.map,
         renderState,
@@ -14297,14 +14312,12 @@ export default function DesignGlossy({
               gutterLayout: labelled.gutterLayout,
               includeLabelGutters: f !== 'all',
               zoneMatte: f === 'zones' ? zonePhotoMatte(state, frame, refLayers, snapshot.underlay) : undefined,
-              footerText: [f === 'water' ? waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site) : '',
-                sourceRoof?.credit ?? (legacyPaperRoof ? 'Approximate roof symbol; roof sections are not recorded.' : '')]
-                .filter(Boolean).join(' '),
               ...(f === 'water'
                 ? {
-                    footerHeading: 'NOTES',
+                    ...waterReferenceFooter(renderState, renderFrame, renderRefLayers, site, roofCredit),
+                    extraLegendRows: waterFlowLegendRows(flowArrows, site),
                   }
-                : {}),
+                : { footerText: roofCredit ?? '' }),
             }
           : {},
       );
@@ -14863,9 +14876,7 @@ export default function DesignGlossy({
     [frame, refLayers, state, placeName],
   );
 
-  // Sector's paid path starts with the complete deterministic sheet, not a bare aerial. This makes
-  // the second result a visibly AI-authored page while Step 1 remains the separately saved exact
-  // authority. Site 01 retains its ground-only restyle route.
+  // Sector paints only the existing site fabric. Every analytical mark is app-owned at both stages.
   const generateSectorViaQueue = useCallback(async (kind: 'sector' | 'base' = 'sector') => {
     if (!aiRenderOn) {
       setError('AI rendering is available only to approved testers. Design Map is available to everyone.');
@@ -14891,10 +14902,8 @@ export default function DesignGlossy({
         renderAttemptRef.current = crypto.randomUUID();
       }
       const attemptId = renderAttemptRef.current;
-      // Same two-stage contract as generateOneViaQueue: the polish stage feeds on the FINISHED
-      // Hybrid sheet stashed in hybridResultRef, never a rebuilt ground-only composite — Sector
-      // used to send composeSectorSheet(null,...) (nothing painted yet) straight to the polish
-      // prompt, the same "polish an empty page" bug the 5-sheet path had.
+      // A completed first pass is required for the handoff. Keep its finished sheet for the UI,
+      // but use its unannotated artwork below when Sector enters the paid second pass.
       const polishStage = lockedPolishStage === 'polish';
       if (polishStage && !hybridResultRef.current) {
         throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
@@ -14911,14 +14920,18 @@ export default function DesignGlossy({
       const renderFrame = presentation.frame;
       const mapWidth = renderFrame.imgW * SCALE;
       const mapHeight = renderFrame.imgH * SCALE;
-      // BOTH stages send MAP-AREA ARTWORK, never a composed page. The Hybrid stage always did;
-      // the polish stage used to upload the finished Hybrid PAGE — bearings, legend rows, notes,
-      // title and all — and an image model cannot redraw a page of 9px type, so it erased it. The
-      // finished page is still what the polish stage improves; only its map column is sent, and
-      // composeSectorSheet draws every app-owned mark back over what comes home.
+      // Cropping a composed Sector sheet removes the key, but leaves sun/wind/fire marks in
+      // its map. The raw accepted artwork is the only safe second-pass input: otherwise those
+      // marks are painted by the model and drawn again by the app. Base retains its own route.
       const hybridMapInput = hybridInput
-        ? await cropStyleSheetToMap(hybridInput, mapWidth, mapHeight)
+        ? kind === 'sector'
+          ? hybridMapForPolishRef.current?.key === 'sector' ? hybridMapForPolishRef.current.map : null
+          : await cropStyleSheetToMap(hybridInput, mapWidth, mapHeight)
         : null;
+      if (polishStage && kind === 'sector' && !hybridMapInput) {
+        throw new UserFacingError('The original Sector artwork is unavailable. Reassemble the first AI pass before polishing it.');
+      }
+      if (polishStage && kind === 'sector') hybridMapForPolishRef.current = null;
       const composite = hybridMapInput
         ?? renderFrame.satDataUrl
         ?? await buildComposite(
@@ -15810,6 +15823,7 @@ export default function DesignGlossy({
               if (polishAfterHybridRef.current && isHybridResult) {
                 if (handoffTargetIsCurrent) {
                   hybridResultRef.current = finalSheet;
+                  if (sheet.key === 'sector') hybridMapForPolishRef.current = {key:'sector',map:factualModelImage};
                   hybridReadyRevisionRef.current = job.designRevision ?? null;
                   setHybridHandoffReady(true);
                 } else {
