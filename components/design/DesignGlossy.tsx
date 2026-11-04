@@ -8488,7 +8488,7 @@ function drawSectorAnalysis(
     // this canvas — so contrast is guaranteed by what's UNDER the label, never by what's under the
     // photo. Font bumped alongside it: 18px-min/×0.0115 was sized before this sheet carried a real
     // photo at phone-viewing scale.
-    const fs = Math.max(21, Math.round(W * (artFinish ? 0.0125 : 0.0135)));
+    const fs = Math.max(artFinish ? 23 : 21, Math.round(W * (artFinish ? 0.014 : 0.0135)));
     const lineH = Math.round(fs * 1.1);
     for (const request of directLabelRequests) {
       ctx.save();
@@ -8526,14 +8526,13 @@ function drawSectorAnalysis(
         if (!overlaps) break;
       }
       directClaims.push({ x0: lx - halfW, x1: lx + halfW, y0: ly - halfH, y1: ly + halfH });
-      // BENCHMARK LETTERING, NOT PLATES. design/benchmark/08...Sector_Analysis_Map.png sets every
-      // free-floating label as bold outlined type straight on the artwork — no black pill
-      // anywhere on the sheet. The pills were this renderer's own invention (first translucent,
-      // then opaque), and each step made a different complaint: translucent = "can't see
-      // anything", opaque = "the text blocks the arrows". The reference solves both at once: a
-      // HEAVY dark outline (~0.22em, far past the old 3px halo that failed on this photo) gives
-      // the contrast a plate used to, without hiding a single pixel of arrow, arc or ground —
-      // and the wind names moved inside their own arrows, so what floats here is short.
+      // On the illustrated sheet, light plates separate labels from texture without the old
+      // black slabs. Collision claims keep those plates off the analytical marks. The exact
+      // technical sheet retains its original outlined lettering.
+      if (artFinish) {
+        ctx.fillStyle='rgba(255,255,253,.95)';
+        roundRectPath(ctx,lx-halfW,ly-halfH,halfW*2,halfH*2,fs*.25);ctx.fill();
+      }
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.lineJoin = 'round';
@@ -8592,7 +8591,7 @@ function drawSectorAnalysis(
     ctx.closePath();
     const color=kind==='fire'?artInk.fire:kind==='berg-wind'?artInk.berg:kind==='cold-front-wind'?artInk.cold:artInk.cooling;
     ctx.fillStyle = artFinish ? `${color}13` : sectorFillColor(kind);
-    ctx.fill();
+    if (!artFinish) ctx.fill();
     ctx.restore();
     return { centerVec, rr, tipX, tipY };
   };
@@ -8602,6 +8601,7 @@ function drawSectorAnalysis(
     color: string,
   ): void => {
     ctx.save();
+    if (artFinish) ctx.translate(-wedge.centerVec[1]*W*.035,wedge.centerVec[0]*W*.035);
     ctx.strokeStyle = color;
     ctx.lineWidth = Math.max(1.8, sectorStrokeWidth('fire', W) * (externalLegend ? 0.42 : 0.28));
     ctx.setLineDash([10, 7]);
@@ -8609,6 +8609,13 @@ function drawSectorAnalysis(
     ctx.moveTo(wedge.tipX, wedge.tipY);
     ctx.lineTo(cx + wedge.centerVec[0] * wedge.rr, cy + wedge.centerVec[1] * wedge.rr);
     ctx.stroke();
+    if (artFinish) {
+      const fx=wedge.tipX, fy=wedge.tipY, size=W*.018;
+      ctx.setLineDash([]);ctx.fillStyle=color;ctx.beginPath();
+      ctx.moveTo(fx,fy-size);ctx.bezierCurveTo(fx+size,fy,fx+size*.7,fy+size,fx,fy+size);
+      ctx.bezierCurveTo(fx-size,fy+size,fx-size*.6,fy,fx-size*.15,fy-size*.25);
+      ctx.quadraticCurveTo(fx+size*.05,fy,fx,fy-size);ctx.fill();
+    }
     ctx.restore();
   };
 
@@ -8655,13 +8662,21 @@ function drawSectorAnalysis(
     ctx.lineTo(tailX - nx * tailHalf, tailY - ny * tailHalf);
     ctx.closePath();
     if(artFinish){
-      // The painted site stays visible beneath a directional wash. Its centreline and tip use the
-      // same derived endpoints as the exact sheet; feathered colour is presentation only.
-      const tint=ctx.createLinearGradient(tailX,tailY,tipX,tipY);
-      tint.addColorStop(0,`${color}0D`);tint.addColorStop(.46,`${color}96`);tint.addColorStop(1,`${color}EF`);
-      ctx.fillStyle=tint;ctx.fill();
-      ctx.strokeStyle='rgba(255,253,248,.9)';ctx.lineWidth=Math.max(2,W*.0014);ctx.lineCap='round';ctx.setLineDash([10,8]);
-      ctx.beginPath();ctx.moveTo(tailX+dx*.3,tailY+dy*.3);ctx.lineTo(headBaseX,headBaseY);ctx.stroke();
+      // Three dashed streamlines read as wind; the neighbouring red flame/dash reads as fire.
+      // Both use the original sourced axis. Curvature is graphic rhythm, not a new bearing.
+      ctx.setLineDash([W*.008,W*.005]);ctx.lineCap='round';ctx.lineWidth=Math.max(3,W*.0024);
+      for (const lane of [-1,0,1]) {
+        const shift=lane*W*.012;
+        ctx.globalAlpha=lane===0?1:.7;ctx.strokeStyle=color;
+        ctx.beginPath();ctx.moveTo(tailX+nx*shift,tailY+ny*shift);
+        ctx.bezierCurveTo(tailX+dx*.36+nx*(shift+W*.012),tailY+dy*.36+ny*(shift+W*.012),
+          tailX+dx*.68+nx*(shift-W*.012),tailY+dy*.68+ny*(shift-W*.012),
+          tipX+nx*shift*.4-ux*headLen*.3,tipY+ny*shift*.4-uy*headLen*.3);ctx.stroke();
+      }
+      ctx.globalAlpha=1;ctx.setLineDash([]);ctx.fillStyle=color;
+      ctx.beginPath();ctx.moveTo(tipX,tipY);
+      ctx.lineTo(tipX-ux*headLen*.7+nx*headHalf*.65,tipY-uy*headLen*.7+ny*headHalf*.65);
+      ctx.lineTo(tipX-ux*headLen*.7-nx*headHalf*.65,tipY-uy*headLen*.7-ny*headHalf*.65);ctx.closePath();ctx.fill();
       ctx.restore();claimArrowBox(tailX,tailY,tipX,tipY,headHalf);return {sxp:tailX,syp:tailY};
     }
     // ROUTE-CASING TREATMENT, not a tint. The previous pass (30%-alpha fill, 76%-alpha edge, a
@@ -8734,10 +8749,11 @@ function drawSectorAnalysis(
   // The KZN cold-front record explicitly carries driving rain. Small deterministic drops make
   // that sourced effect readable like the benchmark without inventing a separate storm bearing.
   const drawDrivingRain = (bearingDeg: number, halfWidthDeg: number, color: string): void => {
-    if (!externalLegend) return;
+    if (!externalLegend || artFinish) return;
+    // The art sheet names driving rain beside the wind. Scattered drops read as unrelated points.
     // A few drops identify the sourced cold-front sector. A previous 6x7 field obscured the house
     // and lawn and falsely read as 42 separate observations.
-    const radii = artFinish ? [1.08,1.27] : [0.88, 1.08, 1.27];
+    const radii = [0.88, 1.08, 1.27];
     const angular = [-0.5, 0, 0.5];
     ctx.save();
     ctx.fillStyle = color;
@@ -8829,25 +8845,37 @@ function drawSectorAnalysis(
     // same fix applied to a LINE instead of text: a dark halo stroke first, the real colour on top.
     if (externalLegend) {
       ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.82)' : 'rgba(6,10,8,0.55)';
-      ctx.lineWidth = Math.max(2.5, W * 0.0022) + Math.max(3, W * (artFinish ? 0.0014 : 0.0026));
+      ctx.lineWidth = Math.max(2.5, W * 0.0022) + Math.max(3, W * (artFinish ? 0.0046 : 0.0026));
       ctx.lineCap = 'round';
       ctx.beginPath();
       ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
       ctx.stroke();
     }
     ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(2.5, W * 0.0022);
+    ctx.lineWidth = Math.max(2.5, W * (artFinish ? 0.0034 : 0.0022));
     ctx.lineCap = 'round';
     ctx.beginPath();
     ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
     ctx.stroke();
+    if (artFinish) {
+      let sweep=endAngle-startAngle;
+      if(sweepNorth && sweep>0)sweep-=Math.PI*2;
+      if(!sweepNorth && sweep<0)sweep+=Math.PI*2;
+      for(const fraction of [.28,.72]) {
+        const angle=startAngle+sweep*fraction, tangent=angle+(sweepNorth?-1:1)*Math.PI/2;
+        const x=cx+Math.cos(angle)*r,y=cy+Math.sin(angle)*r,head=W*.015;
+        ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(x,y);
+        ctx.lineTo(x-head*Math.cos(tangent-.48),y-head*Math.sin(tangent-.48));
+        ctx.lineTo(x-head*Math.cos(tangent+.48),y-head*Math.sin(tangent+.48));ctx.closePath();ctx.fill();
+      }
+    }
     const apexVec = bearingToUnitVector(sweepNorth ? 0 : 180);
     // MUCH bigger, and the ARC ENDS especially — Rory: "make the suns bigger at the ends of the
     // arcs, like much bigger." The ends are sunrise and sunset, which is the pair of facts a
     // farmer actually sites a windbreak or a shade tree against; they were drawn at three
     // quarters of the noon sun and vanished into the photograph entirely. They now lead, and the
     // noon marker (which already has the banner and the altitude number carrying it) follows.
-    const sunR = Math.max(14, W * 0.0125);
+    const sunR = Math.max(14, W * (artFinish ? 0.009 : 0.0125));
     drawSunIcon(cx + Math.cos(startAngle) * r, cy + Math.sin(startAngle) * r, sunR, color);
     drawSunIcon(cx + apexVec[0] * r, cy + apexVec[1] * r, sunR * 0.82, color);
     drawSunIcon(cx + Math.cos(endAngle) * r, cy + Math.sin(endAngle) * r, sunR, color);
@@ -8980,7 +9008,7 @@ function drawSectorAnalysis(
       ? drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1, artFinish ? undefined : directLines)
       : drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], R * 0.4);
     if(artFinish){
-      const name=w.id==='berg'?'Berg wind':w.id==='cold_front'?'Cold front':'Cooling wind';
+      const name=w.id==='berg'?'Berg wind':w.id==='cold_front'?'Cold front + rain':'Cooling wind';
       const radius=R+arrowLen*1.48;
       directLabelAt(cx+v[0]*radius,cy+v[1]*radius,[`${name} · ${w.fromLabel}`],color);
     }
@@ -9171,7 +9199,7 @@ function drawSectorAnalysis(
       if(externalLegend)for(const line of sheetContours.lines){
         const points=line.points.filter(point=>pointInRing(point,bnd));
         const at=points[Math.floor(points.length*.32)];
-        if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,px(at[0]),py(at[1])-W*.006,Math.max(16,W*.009));
+        if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,px(at[0]),py(at[1])-W*.006,Math.max(16,W*(artFinish?.013:.009)));
       }
       const middleLine = sheetContours.lines[Math.floor(sheetContours.lines.length / 2)];
       if (middleLine) {
@@ -9626,6 +9654,25 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
   return drainCanvasToDataUrl(canvas,'image/png');
 }
 
+// These are display treatments of existing artwork, never a new AI generation. Pixel positions
+// and blank archive coverage stay untouched while the analysis becomes the foreground.
+function drawSectorArtworkContext(ctx: CanvasRenderingContext2D, image: CanvasImageSource, W: number, H: number): void {
+  ctx.drawImage(image, 0, 0, W, H);
+  const pixels = ctx.getImageData(0, 0, W, H);
+  const data = pixels.data;
+  for (let i = 0; i < data.length; i += 4) {
+    const r=data[i], g=data[i+1], b=data[i+2];
+    // White/transparent pixels are unknown source coverage, not land to illustrate.
+    if (data[i+3] === 0 || Math.min(r,g,b) > 249) continue;
+    const luminance=.2126*r+.7152*g+.0722*b;
+    const tone=119+luminance*.5;
+    data[i]=tone+(r-luminance)*.24;
+    data[i+1]=tone+(g-luminance)*.24;
+    data[i+2]=tone+(b-luminance)*.24;
+  }
+  ctx.putImageData(pixels,0,0);
+}
+
 async function composeSectorSheet(
   baseImage: string | null,
   state: DesignCanvasState,
@@ -9653,18 +9700,11 @@ async function composeSectorSheet(
   const pad = Math.round(W * 0.02);
   const rowH = Math.round(W * 0.026);
 
-  // 1. The base. Exact (baseImage null): real satellite, desaturated/lightened + paper wash — an
-  //    analysis sheet is arrows and arcs over ground, and over dense KZN bush a dark scrim leaves a
-  //    near-black field the sun arc, wind arrows and frost ellipse have to fight. AI (baseImage
-  //    set): keep the model's painted palette without a second filter or wash.
-  //    Neither background is the authority for measured geometry.
+  // The existing painting supplies orientation; computed analysis supplies the information.
   if (baseImage) {
     const img = await loadImage(baseImage);
-    ctx.save();
-    ctx.drawImage(img, 0, 0, W, H);
-    ctx.restore();
-    // Paid artwork already has its own palette. A second photo filter and cream veil
-    // erased the illustration Rory paid for, leaving Sector looking like its exact master.
+    try { drawSectorArtworkContext(ctx,img,W,H); }
+    finally { releaseImageSource(img); }
   } else if (baseline && renderFrame.satDataUrl) {
     const image=await loadImage(renderFrame.satDataUrl);
     try{ctx.drawImage(image,0,0,W,H);}finally{releaseImageSource(image);}
@@ -9748,6 +9788,7 @@ async function composeSectorSheet(
     lineKind: row.color === BOUNDARY_LINE_GREEN ? (baseline ? 'path' : 'fence') : row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
     kind: row.style === 'fill' ? 'surface' : undefined,
     sectorIcon: row.color===TERRAIN_CONTOUR_INK?undefined:row.sectorIcon,
+    ...(artFinish && row.sectorIcon==='wind'?{visual:'sector-streamline' as const}:{}),
     ...(row.color===TERRAIN_CONTOUR_INK?{visual:'terrain-contour' as const}:{}),
   }));
 
@@ -10395,7 +10436,7 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour' | 'zone-boundary';
+  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour' | 'zone-boundary' | 'sector-streamline';
   historicalFeature?: HistoricalFeatureId;
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
@@ -10673,12 +10714,17 @@ function drawStyleLegendSymbol(
         ctx.stroke();
       }
     } else if (row.sectorIcon === 'wind') {
+      if(row.visual==='sector-streamline')ctx.setLineDash([w*.12,w*.09]);
       for (const off of [-r * 0.75, 0, r * 0.75]) {
         ctx.beginPath();
         ctx.moveTo(x, y + off);
         ctx.bezierCurveTo(x + w * 0.25, y + off - r * 0.8, x + w * 0.45, y + off + r * 0.8, x + w * 0.68, y + off);
         ctx.bezierCurveTo(x + w * 0.82, y + off - r * 0.55, x + w * 0.92, y + off - r * 0.2, x + w, y + off);
         ctx.stroke();
+      }
+      if(row.visual==='sector-streamline') {
+        ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(x+w,y);
+        ctx.lineTo(x+w-r*.65,y-r*.45);ctx.lineTo(x+w-r*.65,y+r*.45);ctx.closePath();ctx.fill();
       }
     } else if (row.sectorIcon === 'fire') {
       ctx.beginPath();
@@ -11319,7 +11365,7 @@ async function composeStyleSheet(
     return sourceRows.map((row) => {
       const lines = wrapLegendText(row.text, fontSize, textWidth);
       const contentHeight = Math.max(symbolSize, lines.length * lineH)
-        + Math.max(2, Math.round(fontSize * 0.22));
+        + Math.max(2, Math.round(fontSize * (compactSector ? 0.12 : 0.22)));
       const startsSection = Boolean(row.section && row.section !== previousSection);
       const headingLines = startsSection && row.section
         ? wrapSectionHeading(row.section, sectionFs, columnWidth)
@@ -11327,7 +11373,7 @@ async function composeStyleSheet(
       // One-line headings keep the previous 1.7× block exactly; wrapped headings add one normal
       // heading line at a time and are remeasured by the same column-fit pass as factual rows.
       const headingHeight = startsSection
-        ? sectionLineH * headingLines.length + Math.round(sectionFs * 0.55)
+        ? sectionLineH * headingLines.length + Math.round(sectionFs * (compactSector ? 0.35 : 0.55))
         : 0;
       previousSection = row.section;
       return {
@@ -11389,7 +11435,7 @@ async function composeStyleSheet(
         columnLayout: layoutLegendColumn(
           availableRowsH,
           rowLayout.map((row) => ({ height: row.height })),
-          lineH,
+          compactSector ? lineH*.4 : lineH,
         ),
       };
     });
@@ -12422,7 +12468,7 @@ export default function DesignGlossy({
    *  for the polish stage. This, not the composed page, is what Full Treatment sends to the model:
    *  a model shown no text can mangle no text. Keyed by filter so a stale map from another sheet
    *  can never be polished by mistake. */
-  const hybridMapForPolishRef = useRef<{ key: GlossyLayerFilter; map: string } | null>(null);
+  const hybridMapForPolishRef = useRef<{ key: GlossyLayerFilter | 'sector'; map: string } | null>(null);
   /** The polished MAP as returned (post-restore, pre-chrome), so the difference gate scores the
    *  model's actual work map-against-map rather than page-against-map. */
   const polishedMapRef = useRef<string | null>(null);
@@ -14830,9 +14876,7 @@ export default function DesignGlossy({
     [frame, refLayers, state, placeName],
   );
 
-  // Sector's paid path starts with the complete deterministic sheet, not a bare aerial. This makes
-  // the second result a visibly AI-authored page while Step 1 remains the separately saved exact
-  // authority. Site 01 retains its ground-only restyle route.
+  // Sector paints only the existing site fabric. Every analytical mark is app-owned at both stages.
   const generateSectorViaQueue = useCallback(async (kind: 'sector' | 'base' = 'sector') => {
     if (!aiRenderOn) {
       setError('AI rendering is available only to approved testers. Design Map is available to everyone.');
@@ -14858,10 +14902,8 @@ export default function DesignGlossy({
         renderAttemptRef.current = crypto.randomUUID();
       }
       const attemptId = renderAttemptRef.current;
-      // Same two-stage contract as generateOneViaQueue: the polish stage feeds on the FINISHED
-      // Hybrid sheet stashed in hybridResultRef, never a rebuilt ground-only composite — Sector
-      // used to send composeSectorSheet(null,...) (nothing painted yet) straight to the polish
-      // prompt, the same "polish an empty page" bug the 5-sheet path had.
+      // A completed first pass is required for the handoff. Keep its finished sheet for the UI,
+      // but use its unannotated artwork below when Sector enters the paid second pass.
       const polishStage = lockedPolishStage === 'polish';
       if (polishStage && !hybridResultRef.current) {
         throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
@@ -14878,14 +14920,18 @@ export default function DesignGlossy({
       const renderFrame = presentation.frame;
       const mapWidth = renderFrame.imgW * SCALE;
       const mapHeight = renderFrame.imgH * SCALE;
-      // BOTH stages send MAP-AREA ARTWORK, never a composed page. The Hybrid stage always did;
-      // the polish stage used to upload the finished Hybrid PAGE — bearings, legend rows, notes,
-      // title and all — and an image model cannot redraw a page of 9px type, so it erased it. The
-      // finished page is still what the polish stage improves; only its map column is sent, and
-      // composeSectorSheet draws every app-owned mark back over what comes home.
+      // Cropping a composed Sector sheet removes the key, but leaves sun/wind/fire marks in
+      // its map. The raw accepted artwork is the only safe second-pass input: otherwise those
+      // marks are painted by the model and drawn again by the app. Base retains its own route.
       const hybridMapInput = hybridInput
-        ? await cropStyleSheetToMap(hybridInput, mapWidth, mapHeight)
+        ? kind === 'sector'
+          ? hybridMapForPolishRef.current?.key === 'sector' ? hybridMapForPolishRef.current.map : null
+          : await cropStyleSheetToMap(hybridInput, mapWidth, mapHeight)
         : null;
+      if (polishStage && kind === 'sector' && !hybridMapInput) {
+        throw new UserFacingError('The original Sector artwork is unavailable. Reassemble the first AI pass before polishing it.');
+      }
+      if (polishStage && kind === 'sector') hybridMapForPolishRef.current = null;
       const composite = hybridMapInput
         ?? renderFrame.satDataUrl
         ?? await buildComposite(
@@ -15777,6 +15823,7 @@ export default function DesignGlossy({
               if (polishAfterHybridRef.current && isHybridResult) {
                 if (handoffTargetIsCurrent) {
                   hybridResultRef.current = finalSheet;
+                  if (sheet.key === 'sector') hybridMapForPolishRef.current = {key:'sector',map:factualModelImage};
                   hybridReadyRevisionRef.current = job.designRevision ?? null;
                   setHybridHandoffReady(true);
                 } else {
