@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 November 2026', sha: 'af4a68cb3', changes: [
+  { when: '3 November 2026', sha: 'deaedfb85', changes: [
     'After withdrawing sharing, turn on only the records you want to share again.',
   ], tour: [{ title: 'Review what you share', where: 'Account → What you share', href: '/account',
     detail: 'Review each sharing option for your current organisation.' }] },

@@ -1,0 +1,72 @@
+{
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "entries": [
+    {
+      "english": "After withdrawing sharing, turn on only the records you want to share again.",
+      "messageSha256": "3e535f8b674639b0ec72630556d80a5ff0aa832594b14457c39f392cfc4ad766",
+      "st": "Kamora ho emisa ho arolelana, bulela feela lirekoto tseo o batlang ho li arolelana hape.",
+      "ts": "Endzhaku ko yimisa ku avelana, pfula ntsena tirhekhodo leti u lavaka ku tlhela u ti avelana.",
+      "ve": "Nga murahu ha u litsha u kovhela, fungulani fhedzi rekhodi dzine na tama u dzi kovhela hafhu.",
+      "zu": "Ngemva kokuhoxisa ukwabelana, vula kuphela amarekhodi ofuna ukuwabela futhi."
+    },
+    {
+      "english": "Review what you share",
+      "messageSha256": "251bb8e52c59846e2dd719f9a8e280bfde43211e428677b0dd3b2a271dc150d1",
+      "st": "Hlahloba seo o se arolelanang",
+      "ts": "Hlola leswi u swi avelanaka",
+      "ve": "Tolani zwine na kovhela",
+      "zu": "Buyekeza lokho owabelana ngakho"
+    },
+    {
+      "english": "Account → What you share",
+      "messageSha256": "502e891452b2fcbc4647b39e0559503d58241098991ffe88cf7d74febf08410a",
+      "st": "Akhaonto → Seo o se arolelanang",
+      "ts": "Akhawunti → Leswi u swi avelanaka",
+      "ve": "Akhauthi → Zwine na kovhela",
+      "zu": "I-akhawunti → Lokho owabelana ngakho"
+    },
+    {
+      "english": "Review each sharing option for your current organisation.",
+      "messageSha256": "cc9b7a006e48901e7bb8d4edb3236515ccf9b946429f17d1423dbabd269b7249",
+      "st": "Hlahloba khetho ka 'ngoe ea kabelano bakeng sa mokhatlo oa hau oa hajoale.",
+      "ts": "Hlola hlawulo yin'wana na yin'wana yo avelana ya nhlangano wa wena wa sweswi.",
+      "ve": "Tolani khetho inwe na inwe ya u kovhela ya ndangulo yanu ya zwino.",
+      "zu": "Buyekeza inketho ngayinye yokwabelana yenhlangano yakho yamanje."
+    },
+    {
+      "english": "Record the day you picked a harvest separately from the day you saved it.",
+      "messageSha256": "4d2b4c18de0cf9a23cd8b2e5ebca74a4625af3c95d58d4666fd7cf005ee02c2a",
+      "st": "Tlaleha letsatsi leo o khelleng kotulo ka lona ka thoko ho letsatsi leo o le bolokileng ka lona.",
+      "ts": "Tsala siku leri u tshoveleke hi rona ri hambanile na siku leri u ri hlayiseke hi rona.",
+      "ve": "Nwalani datumu ye na ka ngayo khano yo fhambana na datumu ye na i vhulunga ngayo.",
+      "zu": "Qopha usuku owavuna ngalo ngokwehlukile osukwini owagcina ngalo irekhodi."
+    },
+    {
+      "english": "Add a harvest date",
+      "messageSha256": "3409a142405a63d1fb29bebb86378745ce4b3ff50d9a61a2b96b5cad8527f33f",
+      "st": "Kenya letsatsi la kotulo",
+      "ts": "Engetela siku ra ntshovelo",
+      "ve": "Engedzani datumu ya khano",
+      "zu": "Engeza usuku lokuvuna"
+    },
+    {
+      "english": "Records → Picked",
+      "messageSha256": "58c1e02911da1b04569f8f97868bd305117fe09136374e5127886a982f522667",
+      "st": "Lirekoto → Tse khetloeng",
+      "ts": "Tirhekhodo → Leti tshoveriweke",
+      "ve": "Rekhodi → Dzo kaho",
+      "zu": "Amarekhodi → Okuvuniwe"
+    },
+    {
+      "english": "When logging a harvest, enter the day you picked it. Leave it blank if you are unsure.",
+      "messageSha256": "fd127c6f3ad251eee4c1ec16a8b78548dea905de391e2b1157252e4bb825b4b8",
+      "st": "Ha o tlaleha kotulo, kenya letsatsi leo o khelleng ka lona. Siea ho se na letho haeba o sa tiisehe.",
+      "ts": "Loko u tsala ntshovelo, nghenisa siku leri u ri tshoveleke hi rona. Tshika ku nga ri na nchumu loko u nga tiyisekanga.",
+      "ve": "Musi ni tshi khou nwala khano, dzhenisani datumu ye na ka ngayo. I litsheni i si na tshithu arali ni sa kholwi.",
+      "zu": "Uma uqopha isivuno, faka usuku owavuna ngalo. Lushiye lungenalutho uma ungaqinisekile."
+    }
+  ],
+  "sourceSha256": "827b5129c68cf9fcd3b516638069f511fa95d8cd5a17580f0f6c3b446922b88b",
+  "coordinatorReview": "Exact source and structural checks. Withdrawal terminology clarified and the isiZulu picking route aligned to its existing label. Fluent review pending."
+}
