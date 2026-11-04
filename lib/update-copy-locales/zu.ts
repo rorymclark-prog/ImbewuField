@@ -427,5 +427,9 @@ const copy:UpdateCopy={
   "Keep invoice currencies clear": "Gcina izinhlobo zemali zama-invoyisi zicacile",
   "Invoice → Currency for this invoice": "I-invoyisi → Uhlobo lwemali lwale-invoyisi",
   "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Khetha uhlobo lwemali ovumelene ngalo nomthengi. Ama-invoyisi agciniwe agcina uhlobo lwawo lwemali; amanani awaguqulelwa kolunye uhlobo lwemali, kanti ezinye izinhlobo zemali zihlala zihlukile ezibalweni eziphelele zerandi.",
+  // Recorded-price release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-price-history-release-drafts.json.
+  "Choose a recorded invoice price": "Khetha intengo erekhodiwe ku-invoyisi",
+  "Invoice → Choose a recorded invoice price": "I-invoyisi → Khetha intengo erekhodiwe ku-invoyisi",
+  "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Khetha intengo ekwi-invoyisi egciniwe ngohlobo olufanayo lwemali, bese uyayiqinisekisa kulokhu kuthengisa. Kushintsha intengo yalowo mugqa kuphela; gcina i-invoyisi uma usulungile.",
 };
 export default copy;

@@ -427,5 +427,9 @@ const copy:UpdateCopy={
   "Keep invoice currencies clear": "Boloka mefuta ya tjhelete ya di-invoice e hlakile",
   "Invoice → Currency for this invoice": "Invoice → Mofuta wa tjhelete wa invoice ena",
   "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Kgetha mofuta wa tjhelete oo o dumellaneng le moreki ka wona. Di-invoice tse bolokilweng di boloka mofuta wa tsona wa tjhelete; dipalo tsa tjhelete ha di fetolelwe mofuteng o mong wa tjhelete, mme mefuta e meng ya tjhelete e dula e arohane le dikakaretso tsa diranta.",
+  // Recorded-price release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-price-history-release-drafts.json.
+  "Choose a recorded invoice price": "Kgetha theko e rekotilweng ya invoice",
+  "Invoice → Choose a recorded invoice price": "Invoice → Kgetha theko e rekotilweng ya invoice",
+  "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Kgetha theko ya invoice e bolokilweng ka mofuta o tshwanang wa tjhelete, ebe o e netefatsa bakeng sa thekiso ena. Ho fetoha theko ya mola feela; boloka invoice ha o se o loketse.",
 };
 export default copy;

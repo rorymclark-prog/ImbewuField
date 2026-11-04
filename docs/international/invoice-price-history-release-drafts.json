@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "1cad5855fa301361e4aa04f556598725eacc696187143ebb1bf697749064cbba",
+  "milestoneId": "invoice-price-history",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "reviewNotes": "Existing four update-description languages only; historical saved prices require present-sale confirmation, exact currency/item/unit, no conversion or automatic save. No fluent approval. Separate AGY seven-language packets remain inactive.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "d3be462e1cae3ecff96671f62d4ba5225d12b2c613f32611ac40f71f02e6e735",
+      "selectedFileSha256": "52e9ab56426d2f2791f043fba234a547f05bce60761ba79453ade764475141a6",
+      "historicalBytesPreserved": true
+    },
+    "st": {
+      "originalFileSha256": "2202b6949260c9c08b96befd44f5fd68406781b2cb279931e4c514398225c669",
+      "selectedFileSha256": "0593aebed2183f758c9862cab9642c0c832d45c01c97249adf4375160e04c22d",
+      "historicalBytesPreserved": true
+    },
+    "ve": {
+      "originalFileSha256": "6ca1f1d68b4ddb861b2baaec8919c7bd4a0357faa42004261e35ed777aecdcb1",
+      "selectedFileSha256": "365c6df0eeb1b025d5a0b6be09859be79768c671354d74a2f10a5e367b5e4b94",
+      "historicalBytesPreserved": true
+    },
+    "ts": {
+      "originalFileSha256": "0eb9e0df760733cc40d14c76f9b6ad3a22e1d0d25df35761891704dd74242c9f",
+      "selectedFileSha256": "24022cfbb22a3d78c391a97a88b5c522083f41e612a1410afa2d90d13b02cd24",
+      "historicalBytesPreserved": true
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Choose a recorded invoice price",
+      "messageSha256": "a0fc853d3f1b3b77bba252bc4af942be87a7cba7e719c89b39e9da76442a50b2",
+      "zu": "Khetha intengo erekhodiwe ku-invoyisi",
+      "st": "Kgetha theko e rekotilweng ya invoice",
+      "ve": "Nangani mutengo wo rekhodiwaho kha invoice",
+      "ts": "Hlawula nxavo lowu rhekhodiweke eka invoyisi"
+    },
+    {
+      "english": "Invoice → Choose a recorded invoice price",
+      "messageSha256": "3a721c8c86b2ee6045a25b3d96eaf56c5e5b36b11146d1791cfe8a372b81a53e",
+      "zu": "I-invoyisi → Khetha intengo erekhodiwe ku-invoyisi",
+      "st": "Invoice → Kgetha theko e rekotilweng ya invoice",
+      "ve": "Invoice → Nangani mutengo wo rekhodiwaho kha invoice",
+      "ts": "Invoyisi → Hlawula nxavo lowu rhekhodiweke eka invoyisi"
+    },
+    {
+      "english": "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.",
+      "messageSha256": "3266e4b25d8b9f92173386264ed588138603580e9bc627e3ef560c72f8959398",
+      "zu": "Khetha intengo ekwi-invoyisi egciniwe ngohlobo olufanayo lwemali, bese uyayiqinisekisa kulokhu kuthengisa. Kushintsha intengo yalowo mugqa kuphela; gcina i-invoyisi uma usulungile.",
+      "st": "Kgetha theko ya invoice e bolokilweng ka mofuta o tshwanang wa tjhelete, ebe o e netefatsa bakeng sa thekiso ena. Ho fetoha theko ya mola feela; boloka invoice ha o se o loketse.",
+      "ve": "Nangani mutengo wa invoice yo vhulungwaho kha lushaka luthihi lwa tshelede, ni kone u u khwaṱhisedza kha iyi thengiso. Hu shanduka mutengo wa mutaladzi fhedzi; vhulungani invoice musi no lugela.",
+      "ts": "Hlawula nxavo wa invoyisi leyi hlayisiweke hi muxaka lowu fanaka wa mali, kutani u wu tiyisisa eka ku xavisa loku. Ku cinca nxavo wa layini ntsena; hlayisa invoyisi loko u lunghekile."
+    }
+  ]
+}

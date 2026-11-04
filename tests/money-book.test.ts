@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import ts from 'typescript';
 
 // ONE BOOK, THREE TABS — and the guard that keeps it one.
 //
@@ -399,7 +400,45 @@ test('choosing or cancelling a photo cannot persist it or invoke paid AI; explic
   assert.ok(scan.indexOf('if (isSampleMode())') < scan.indexOf('fetch('), 'sample photos never go to paid AI');
   assert.match(scan, /paidApiHeaders\(requestUser\)/, 'a pending file read must not take a different account’s token');
   assert.match(scan, /currentUser\?\.uid !== requestUser.uid/);
-  assert.match(recordsPage, /disabled=\{form.loading \|\| readingPhoto \|\| scanning\}/, 'a save cannot race an unfinished photo selection');
+  // The quick-sale source hold adds another reason to disable Save. Checking
+  // the old whole expression rejected that stronger guard; exercise its actual
+  // predicate so losing a photo/loading guard still fails after such additions.
+  const ast = ts.createSourceFile('records.tsx', recordsPage, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const form = ast.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'LogSaleForm');
+  assert.ok(form);
+  const predicates: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if ((ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) && node.tagName.getText(ast) === 'button') {
+      const attributes = node.attributes.properties;
+      const submit = attributes.some(attribute => ts.isJsxAttribute(attribute) && attribute.name.getText(ast) === 'type'
+        && attribute.initializer && ts.isStringLiteral(attribute.initializer) && attribute.initializer.text === 'submit');
+      if (submit) {
+        const disabled = attributes.find(attribute => ts.isJsxAttribute(attribute) && attribute.name.getText(ast) === 'disabled');
+        assert.ok(disabled && ts.isJsxAttribute(disabled) && disabled.initializer && ts.isJsxExpression(disabled.initializer)
+          && disabled.initializer.expression, 'the actual submit button needs a disabled predicate');
+        predicates.push(disabled.initializer.expression.getText(ast));
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(form);
+  assert.equal(predicates.length, 1);
+  const assertSaveGuards = (expression: string): void => {
+    const disabled = new Function('form', 'readingPhoto', 'scanning', 'quickSale', 'invoiceSource', `return Boolean(${expression});`);
+    for (const loading of [false, true]) for (const reading of [false, true]) for (const scanning of [false, true]) {
+      for (const quick of [false, true]) for (const ready of [false, true]) {
+        const actual = disabled({ loading }, reading, scanning, quick, { ready });
+        if (loading || reading || scanning) assert.equal(actual, true, 'unfinished photo or save work must prevent submission');
+        else if (quick && !ready) assert.equal(actual, true, 'an unavailable invoice source must hold a quick sale');
+        else assert.equal(actual, false, 'a ready ordinary cost or admitted quick sale remains usable');
+      }
+    }
+  };
+  assertSaveGuards(predicates[0]);
+  for (const missing of ['form.loading', 'readingPhoto', 'scanning', 'quickSale']) {
+    assert.throws(() => assertSaveGuards(predicates[0].replace(missing, 'false')),
+      `removing ${missing} must be caught by the same guard check`);
+  }
   const close = recordsPage.slice(recordsPage.indexOf('function closeForm()'), recordsPage.indexOf('if (!open && !alwaysOpen)'));
   assert.doesNotMatch(close, /addExpense|saveExpenseWithReceipt/);
   const viewer = read('../components/records/ReceiptPreview.tsx');
