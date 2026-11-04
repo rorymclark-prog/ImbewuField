@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: '6327b607e', changes: [
+    'Compare draft wording for the US institution directory and Kenya extension references.',
+  ] },
   { when: '4 November 2026', sha: 'ad5de27fd', changes: [
     'Compare draft wording for the England advice service and the Campinas office directory.',
   ], tour: [{ title: 'Compare extension reference wording', where: 'International → Language review', href: '/international/locales',
