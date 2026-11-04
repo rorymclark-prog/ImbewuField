@@ -1,7 +1,7 @@
 # Sector context and analysis graphics — 2026-11-04
 
 - Auditor: Codex; subsequent visual review by the coordinating chat.
-- Reviewed revision: `codex/sector-calm-context`, based on `cbbce7f1116ff56277aa4b480f293846152aebf0`; local implementation verified below; release pending.
+- Reviewed revision: `codex/sector-calm-context`, based on `cbbce7f1116ff56277aa4b480f293846152aebf0`; implementation `c7e222ef2e07da1638010c80a61655ab1fdc40ce` verified below; release pending.
 - Deployment inspected: none for this change. The native exports below are drafts, not live output.
 - Previous audit: [Downhill sections and Sector finish](../2026-11-03/downhill-sections-sector-finish-codex.md). Carries AI-MAP-058/059 and the open historical coverage/registration qualifications forward.
 - Scope: illustrated Sector background/annotations/key and its unannotated-artwork polish handoff. Existing Site, exact Sector, terrain calculations, providers, worker execution, spending gates and saved geometry are unchanged.
@@ -42,7 +42,7 @@ The design rationale follows [Esri's visual hierarchy guidance](https://www.esri
 - Focused render: 638 passed, 0 failed. Affected Sector/prompt/release tests: 42 passed, 0 failed. Executable probes retain actual solar rise/set/noon sweeps and wind endpoints at screen and print widths, keep unknown coverage white, and refuse a missing/wrong-sheet raw polish input.
 - The first focused run exposed old claims that Sector must retain full contrast and crop its composed Hybrid. Those claims conflict with the approved muted treatment and the reproduced double-mark defect. Their tests now execute the real context painter and assert the raw-Sector-versus-cropped-Base split. No assertions were deleted to hide a defect.
 - Full suite: inherited Water head `cbbce7f11` completed unchanged, 6,381 passed, 0 failed, 1 existing shape-sync TODO, exit 0. No new full result claimed for this Sector head.
-- Whitespace: `git diff --check` clean. Release-note checks run after the note stamp.
+- Whitespace: `git diff --check` clean. 28 release-note/label/tour checks passed; `notes:pending` checked after the note stamp.
 - Output inspected: selected native full sheet, 1123×794 A4-sized digital preview and screen exports; previous exact/native output compared byte-for-byte.
 - This changes the picture. PLAN_VERSION and recipe counters are unchanged. No new provider request, schema, permission or billing change.
 

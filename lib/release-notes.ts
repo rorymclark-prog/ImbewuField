@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '4 November 2026', sha: 'cbbce7f11', changes: [
+  { when: '4 November 2026', sha: 'c7e222ef2', changes: [
     "Sector maps use a quieter background and clearer sun, wind and fire marks.",
   ] },
   { when: '4 November 2026', sha: '8f4314fb7', changes: [
