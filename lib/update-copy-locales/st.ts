@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Field export: source-bound AGY candidates with coordinator terminology reconciliation; fluent review pending.
+  "Export saved field layouts for Google Earth.": "Romela meralo e bolokiloeng ea masimo bakeng sa Google Earth.",
+  "Export saved fields": "Romela masimo a bolokiloeng",
+  "Design Studio → Planting → Field blocks": "Design Studio → Ho lema → Diboloko tsa masimo",
+  "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.": "Kgetha tsimo e le nngwe kapa masimo ohle, ebe o jarolla meedi e bolokiloeng, libethe tsa temo (beds) le mela ya ditsela jwaloka KML. Mengolo ya mabitso ke ya kgetho; dibaka tsa tshehetso ya mmapa hase meedi e lekantsweng ka tlhahlobo ya lefatshe (survey).",
   // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
   "Keep editing nursery equipment and buyer targets after a confirmed save.": "Tsoela pele ho hlophisa lisebelisoa tsa sebaka sa lipeo le lipheo tsa bareki ka mor’a hore ho boloka ho netefatsoe.",
   "Continue nursery editing": "Tsoela pele ho hlophisa sebaka sa lipeo",

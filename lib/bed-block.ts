@@ -128,6 +128,25 @@ export function bedsInsideField(
   return { beds, paths };
 }
 
+function rectangleFootprintAtExtent(
+  item: { x: number; y: number; wM: number; hM: number; rot?: number },
+  w: number, h: number,
+): Point[] {
+  // Saved rotation is relative to the element's natural width/height axes.
+  // Only the generator converts a length bearing to angleDeg - 90.
+  const a = (item.rot ?? 0) * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+  const dx = item.wM / 2, dy = item.hM / 2;
+  return [[-dx,-dy],[dx,-dy],[dx,dy],[-dx,dy]].map(([x,y]): Point => [item.x+(x*c-y*s)/w,item.y+(x*s+y*c)/h]);
+}
+
+/** The same physical footprint used for field exclusions and detached exports. */
+export function fieldBlockRectangleFootprint(
+  item: { x: number; y: number; wM: number; hM: number; rot?: number },
+  frame: Pick<CanvasFrame, 'mPerPx' | 'imgW' | 'imgH'>,
+): Point[] {
+  return rectangleFootprintAtExtent(item, frame.imgW * frame.mPerPx, frame.imgH * frame.mPerPx);
+}
+
 /** Existing physical footprints stay in place; filling a field must not plant
  * over a bed, building or tree already recorded by the farmer. */
 export function fieldBlockExclusions(state: DesignCanvasState, zoneId: string, frame: Pick<CanvasFrame, 'mPerPx' | 'imgW' | 'imgH'>): Point[][] {
@@ -135,9 +154,7 @@ export function fieldBlockExclusions(state: DesignCanvasState, zoneId: string, f
   const rings: Point[][] = state.items.filter(i => i.fieldBlockId !== zoneId).flatMap(item => {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def) return [];
-    const a = (item.rot ?? 0) * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
-    const dx = (item.wM ?? def.wM)/2, dy = (item.hM ?? def.hM)/2;
-    return [[[-dx,-dy],[dx,-dy],[dx,dy],[-dx,dy]].map(([x,y]): Point => [item.x+(x*c-y*s)/w,item.y+(x*s+y*c)/h])];
+    return [rectangleFootprintAtExtent({ x: item.x, y: item.y, wM: item.wM ?? def.wM, hM: item.hM ?? def.hM, rot: item.rot }, w, h)];
   });
   for (const zone of state.zones) if (zone.id !== zoneId && zone.feature && ['house','patio','driveway'].includes(zone.feature)) rings.push(zone.points);
   return rings;

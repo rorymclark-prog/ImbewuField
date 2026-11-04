@@ -1,0 +1,35 @@
+{
+  "taskId": "agy-field-layout-export-sa-release-copy-2026-11-04",
+  "status": "ready_for_review",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "sourceSha256": "7a6da78c7f34533f907bcdc8856c2ad787a5f8d13a2e97168d0c1d35e23da659",
+  "messagesCount": 4,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "totalDraftPairs": 16,
+  "generatedFiles": [
+    "zu.json",
+    "st.json",
+    "ts.json",
+    "ve.json",
+    "review-notes.md",
+    "status.json"
+  ],
+  "authorship": "main_only",
+  "workersActive": 0,
+  "workersStopped": true,
+  "fluentCertificationClaimed": false,
+  "notesWordCount": "UNKNOWN",
+  "coordinatorReview": {
+    "atUtc": "2026-11-04T14:40:43.282075+00:00",
+    "notesWords": 111,
+    "reconciliation": "four detail rows reuse existing growing-bed terms and remove added legal modifiers; English clarifiers retained; exact English/key/hash unchanged",
+    "fluentApproval": false,
+    "runtimeActivation": false
+  }
+}

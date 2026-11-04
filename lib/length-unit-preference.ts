@@ -10,14 +10,18 @@ const KEY = 'imbewu_length_unit_v1';
 const NURSERY_KEY = 'imbewu_nursery_unit_v1';
 const HARVEST_KEY = 'imbewu_harvest_mass_unit_v1';
 const GROWER_ESTIMATE_KEY = 'imbewu_grower_estimate_unit_v1';
+// A namespace proof only: file delivery never reads or writes a preference row.
+const FIELD_LAYOUT_CONTEXT_KEY = 'imbewu_field_layout_export_context_v1';
 export type GrowerEstimateUnitChoice = 'metric' | 'imperial';
 export interface GrowerEstimateUnitPreferenceContext { readonly kind: 'grower-estimate-unit-preference' }
 export interface HarvestMassUnitPreferenceContext { readonly kind: 'harvest-mass-unit-preference' }
-type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate';
-const purposeKey = (purpose: Purpose) => purpose === 'field' ? KEY : purpose === 'nursery' ? NURSERY_KEY : purpose === 'harvest-mass' ? HARVEST_KEY : GROWER_ESTIMATE_KEY;
+export interface FieldLayoutExportContext { readonly kind: 'field-layout-export-context' }
+type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate' | 'field-layout-export';
+const purposeKey = (purpose: Purpose) => purpose === 'field' ? KEY : purpose === 'nursery' ? NURSERY_KEY
+  : purpose === 'harvest-mass' ? HARVEST_KEY : purpose === 'grower-estimate' ? GROWER_ESTIMATE_KEY : FIELD_LAYOUT_CONTEXT_KEY;
 export type NurseryUnitChoice = 'metric' | 'imperial';
 export interface NurseryUnitPreferenceContext { readonly kind: 'nursery-unit-preference' }
-type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext;
+type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext | FieldLayoutExportContext;
 const SAMPLE_EVENT = 'imbewu-sample-mode-changed';
 export interface LengthUnitPreferenceContext { readonly kind: 'length-unit-preference' }
 type Result = { unit: LengthUnit; remembered: boolean; destination: 'device' | 'sample' | 'unavailable' };
@@ -65,7 +69,7 @@ function capturePreferenceContext(purpose: Purpose): PreferenceContext | null {
     if (typeof window === 'undefined') return null;
     const win = window, inSample = sample(win), owner = activeAccountUid();
     if (!actorMatches(owner, inSample)) return null;
-    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : 'grower-estimate-unit-preference' });
+    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : purpose === 'grower-estimate' ? 'grower-estimate-unit-preference' : 'field-layout-export-context' });
     const proof: Proof = { purpose, win, scope, epoch: scope.epoch, owner, sample: inSample, storage: local(win),
       key: activeAccountLocalStorageKey(purposeKey(purpose)), revoked: false, listeners: new Set(),
       ...(purpose === 'nursery' ? { nurseryValueListeners: new Set() } : {}),
@@ -136,6 +140,17 @@ export function lengthUnitPreferenceContextIsCurrent(context: LengthUnitPreferen
 }
 export const subscribeLengthUnitPreferenceContext = (context: LengthUnitPreferenceContext | null, listener: () => void) => subscribeContext(context, listener);
 export const revokeLengthUnitPreferenceContext = (context: LengthUnitPreferenceContext | null) => revokeContext(context);
+
+// Reuse the existing account/window/sample epoch authority without giving a
+// geospatial export access to any of the four remembered unit preferences.
+export function captureFieldLayoutExportContext(): FieldLayoutExportContext | null {
+  return capturePreferenceContext('field-layout-export') as FieldLayoutExportContext | null;
+}
+export function fieldLayoutExportContextIsCurrent(context: FieldLayoutExportContext | null): boolean {
+  return !!context && proofs.get(context)?.purpose === 'field-layout-export' && contextIsCurrent(context);
+}
+export const subscribeFieldLayoutExportContext = (context: FieldLayoutExportContext | null, listener: () => void) => subscribeContext(context, listener);
+export const revokeFieldLayoutExportContext = (context: FieldLayoutExportContext | null) => revokeContext(context);
 export function captureNurseryUnitPreferenceContext(): NurseryUnitPreferenceContext | null {
   return capturePreferenceContext('nursery') as NurseryUnitPreferenceContext | null;
 }

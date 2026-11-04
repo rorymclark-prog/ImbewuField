@@ -97,9 +97,10 @@ function parent(initial = filled(), actor: FieldBlockEditActor = expected) {
   };
   const handlers = new Function('context', `with(context){${executable};return {handleChange,handleUndo,handleRedo,apply};}`)(context) as {
     handleChange: (fn: (state: DesignCanvasState) => DesignCanvasState) => void; handleUndo: () => void; handleRedo: () => void;
-    apply: (id: string, name: string, config: FieldBlockConfig) => void;
+    apply: (id: string, name: string, config: FieldBlockConfig, acknowledge?: (key: string) => void) => void;
   };
-  return { ...handlers, h, context, flush() { while (queue.length) h.current = queue.shift()!(h.current); } };
+  return { ...handlers, h, context, takeQueued() { const fn = queue.shift(); assert.ok(fn); return fn; },
+    flush() { while (queue.length) h.current = queue.shift()!(h.current); } };
 }
 const designWrites = () => local.writes.filter(key => key.includes('imbewu_design_canvas_')).length;
 const resize = (state: DesignCanvasState): DesignCanvasState => ({ ...state, items: state.items.map((item, index) => index === 0 ? { ...item, wM: 1 } : item) });
@@ -343,4 +344,73 @@ test('image bytes, upload timestamps and paint-only alignment do not become a ne
     frame: { ...state.frame, satDataUrl: 'other-paint-bytes', underlayDataUrl: 'another-underlay' },
     customBase: { ...state.customBase, url: 'https://example.test/second-photo.png', uploadedAt: '2026-11-03T00:00:00Z', opacity: 0.5, dx: 0.1, dy: 0.1, rotationDeg: 90 } };
   assert.equal(authority.fieldBlockSourceKey(next, 'field-a', { ...frame, satDataUrl: 'new-live-paint' }), authority.fieldBlockSourceKey(state, 'field-a', frame));
+});
+
+
+test('actual queued layout acknowledges its resulting source only after its allocation checks succeed', () => {
+  raw([]); const ui = parent(), acknowledgements: string[] = [];
+  ui.apply('field-a', 'Accepted layout', { ...config, bedWidthM: 1 }, key => acknowledgements.push(key));
+  assert.deepEqual(acknowledgements, [], 'calling the form callback is not evidence of a queued layout result');
+  ui.flush();
+  assert.equal(acknowledgements.length, 1);
+  assert.equal(acknowledgements[0], authority.fieldBlockSourceKey(ui.h.current, 'field-a', frame));
+  assert.equal(ui.h.error, null);
+});
+
+test('actual queued layout never acknowledges changed allocation or map-scale attempts', () => {
+  for (const change of ['allocation', 'scale'] as const) {
+    raw([]); const ui = parent(), acknowledgements: string[] = [];
+    ui.apply('field-a', 'Rejected layout', { ...config, bedWidthM: 1 }, key => acknowledgements.push(key));
+    if (change === 'allocation') raw([row(ui.h.current.items[0].id)]);
+    else ui.context.fieldFrameRef.current = { ...frame, mPerPx: frame.mPerPx * 2 };
+    const before = ui.h.current; ui.flush();
+    assert.equal(ui.h.current, before);
+    assert.deepEqual(acknowledgements, []);
+    assert.ok(ui.h.error);
+  }
+});
+
+
+test('a real field-save reducer replay reuses its returned revision and preserves newer navigation without a second save', () => {
+  raw([]); const ui = parent(), original = ui.h.current, keys: string[] = [];
+  ui.apply('field-a', 'One deliberate save', { ...config, bedWidthM: 1 }, key => keys.push(key));
+  const reducer = ui.takeQueued(), writesBefore = designWrites();
+  const first = reducer(original); const writes = designWrites();
+  assert.equal(writes, writesBefore + 1);
+  assert.equal(reducer(original), first, 'React double invocation on the same base must reuse this action result');
+  assert.equal(reducer(first), first, 'rebasing onto the actual result must not report its own changed source as a conflict');
+  const newer = { ...first, step: 'review' as const };
+  assert.equal(reducer(newer), newer, 'a cloned result keeps newer navigation instead of restoring cached old metadata');
+  assert.equal(designWrites(), writes);
+  assert.equal(keys.length, 1);
+  assert.equal(ui.context.undoStack.current.length, 1);
+  assert.equal(ui.h.error, null);
+});
+
+test('a completed field-save replay cannot reuse its cache after actor change or overwrite a newer different layout', () => {
+  for (const change of ['actor', 'geometry'] as const) {
+    raw([]); const ui = parent(), original = ui.h.current;
+    ui.apply('field-a', 'One deliberate save', { ...config, bedWidthM: 1 }, () => {});
+    const reducer = ui.takeQueued(), first = reducer(original), writes = designWrites();
+    const newer = change === 'geometry' ? { ...first, scaleFactor: 2 } : first;
+    if (change === 'actor') probe.actor = 'owner-b';
+    assert.equal(reducer(newer), newer);
+    assert.equal(designWrites(), writes);
+    assert.ok(ui.h.error);
+    probe.actor = 'owner-a';
+  }
+});
+
+
+test('cached original and result objects still pass the live map-scale guard on reducer replay', () => {
+  for (const useResult of [false, true]) {
+    raw([]); const ui = parent(), original = ui.h.current;
+    ui.apply('field-a', 'One deliberate save', { ...config, bedWidthM: 1 }, () => {});
+    const reducer = ui.takeQueued(), first = reducer(original), writes = designWrites();
+    ui.context.fieldFrameRef.current = { ...frame, mPerPx: frame.mPerPx * 2 };
+    const before = useResult ? first : original;
+    assert.equal(reducer(before), before);
+    assert.equal(designWrites(), writes);
+    assert.match(ui.h.error!, /field or map scale changed/);
+  }
 });

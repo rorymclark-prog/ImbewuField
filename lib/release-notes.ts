@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: '20948636c', changes: [
+    'Export saved field layouts for Google Earth.',
+  ], tour: [{ title: 'Export saved fields', where: 'Design Studio → Planting → Field blocks', href: '/design',
+    detail: 'Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.' }] },
   { when: '4 November 2026', sha: 'afb197985', changes: [
     'Enter your crop estimates in metric or imperial units.',
     'Check saved bed measurements before reviewing capacity.',
