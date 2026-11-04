@@ -1,6 +1,27 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
+  "Keep editing nursery equipment and buyer targets after a confirmed save.": "Bvelani phanḓa na u dzudzanya zwishumiswa zwa tsimu ya zwimela zwiṱuku na zwipikwa zwa vharengi musi u vhulunga ho no khwaṱhisedzwa.",
+  "Continue nursery editing": "Bvelani phanḓa na u dzudzanya tsimu ya zwimela zwiṱuku",
+  "After a confirmed equipment save, continue entering your next container. Unknown sizes and stock stay unknown.": "Musi u vhulunga zwishumiswa ho no khwaṱhisedzwa, bvelani phanḓa na u dzhenisa tshifaredzi tshaṋu tshi tevhelaho. Vhuhulu na tshiṱoko zwi sa ḓivhei zwi dzula zwi sa ḓivhei.",
+  "Continue buyer-target editing": "Bvelani phanḓa na u dzudzanya zwipikwa zwa vharengi",
+  "After a confirmed target save, continue entering your next buyer target. Targets remain planned demand, not recorded sales or harvest.": "Musi u vhulunga tshipikwa ho no khwaṱhisedzwa, bvelani phanḓa na u dzhenisa tshipikwa tshaṋu tshi tevhelaho tsha murengi. Zwipikwa zwi dzula zwi ṱhoḓea dzo pulaniwaho, a si u rengisa kana khaṋo yo rekhodiwaho.",
+  "See where your own dated crop plan can review nursery requirements.": "Vhonani hune pulane yaṋu ya zwimela i re na maḓuvha ya nga sedzulusa ṱhoḓea dza tsimu ya zwimela zwiṱuku.",
+  "Review nursery requirements": "Sedzulusani ṱhoḓea dza tsimu ya zwimela zwiṱuku",
+  "For a saved measured growing space, review proposed batches from your own dates and inputs. Equipment entries alone do not establish dated availability or local crop approval.": "Kha fhethu ha u alusa ho pimiwaho na u vhulungwa, sedzulusani zwigwada zwo dzinginywaho zwi tshi bva kha maḓuvha aṋu na zwidodombedzwa zwe na dzhenisa. U dzhenisa zwishumiswa fhedzi a zwi khwaṱhisedzi u vha hone nga maḓuvha o tiwaho kana thendelo ya zwimela zwa henefho.",
+  "See a welcome for small growers, market gardens and community projects.": "Vhonani ṱanganedzo ya vhalimi vhaṱuku, ngade dza u lima dza u rengisa na thandela dza tshitshavha.",
+  "Start with your growing space": "Thomani nga fhethu haṋu ha u alusa",
+  "Home → Map and Production plan": "Hayani → Mapa na pulane ya mveledziso",
+  "Use your measured growing space and your own estimates. Regional reference coverage varies; choosing a country does not approve local crop advice.": "Shumisani fhethu haṋu ha u alusa ho pimiwaho na anganyelo dzaṋu. U vha hone ha tsumbo dza zwipiḓa zwa mashango zwi a fhambana; u nanga shango a zwi tendeli nyeletshedzo dza zwimela zwa henefho.",
+  "See when local design advice needs your saved site and current country details.": "Vhonani uri nyeletshedzo ya pulane ya henefho i ṱoḓa lini fhethu haṋu ho vhulungwaho na zwidodombedzwa zwa shango zwa zwino.",
+  "Distinguish advice about the original South African sample from your own drawing.": "Fhambanyani nyeletshedzo nga tsumbo ya u thoma ya Afurika Tshipembe na tshifanyiso tshaṋu.",
+  "Check the design advice basis": "Sedzani mutheo wa nyeletshedzo ya pulane",
+  "Design Studio → Lima": "Studio tsha u pulana → Lima",
+  "Open your saved design. Local tips use the existing South African references only when the current saved-site context supports them. Country confirmation does not approve local farming advice; your drawing stays available when advice is held.": "Vulani pulane yaṋu yo vhulungwaho. Nyeletshedzo dza henefho dzi shumisa tsumbo dza Afurika Tshipembe dzi re hone fhedzi musi zwidodombedzwa zwa zwino zwa fhethu ho vhulungwaho zwi tshi dzi tikedza. U khwaṱhisedza shango a zwi tendeli nyeletshedzo dza vhulimi ha henefho; tshifanyiso tshaṋu tshi dzula tshi tshi wanala musi nyeletshedzo dzo imiswa.",
+  "Review the original sample": "Sedzulusani tsumbo ya u thoma",
+  "Tour → Plan the growing season": "Nyendo → Pulanani tshifhinga tsha u lima",
+  "Open the growing-season stop and choose All tools to see the sample advice control. It names the original sample layout; a request does not analyse your sample edits.": "Vulani tshiteji tsha tshifhinga tsha u lima ni nange Zwishumiswa Zwoṱhe (All tools) uri ni vhone tshilangi tsha nyeletshedzo ya tsumbo. Tshi bula pulane ya tsumbo ya u thoma; khumbelo a i sengulusi tshanduko dze na ita kha tsumbo.",
   // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
   "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Zwilangi zwa dziyuniti dza tsimu ya zwimela zwiṱuku na dza khaṋo zwi dzula zwi tshi wanala musi pulane i fanaho i tshi vhulungwa hafhu.",
   "See when you can reload saved settings or need to reopen the crop plan.": "Vhonani uri ni nga dovha na laisa zwiimiswa zwo vhulungwaho lini, kana ni tshi tea u vula pulane ya zwimela hafhu.",

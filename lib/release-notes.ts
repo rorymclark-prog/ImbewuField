@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: 'ff23dc4d1', changes: [
+    'See when local design advice needs your saved site and current country details.',
+    'Distinguish advice about the original South African sample from your own drawing.',
+  ], tour: [{ title: 'Check the design advice basis', where: 'Design Studio → Lima', href: '/design',
+    detail: 'Open your saved design. Local tips use the existing South African references only when the current saved-site context supports them. Country confirmation does not approve local farming advice; your drawing stays available when advice is held.' },
+  { title: 'Review the original sample', where: 'Tour → Plan the growing season', href: '/tour',
+    detail: 'Open the growing-season stop and choose All tools to see the sample advice control. It names the original sample layout; a request does not analyse your sample edits.' }] },
   { when: '4 November 2026', sha: 'd8b983c7f', changes: [
     'See where your own dated crop plan can review nursery requirements.',
   ], tour: [{ title: 'Review nursery requirements', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
