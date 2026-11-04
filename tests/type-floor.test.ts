@@ -45,6 +45,8 @@ const ROUTES = [
   'app/tips/page.tsx',
   'app/home/page.tsx',
   'app/records/page.tsx',
+  // Records links to invoice editing and saved summaries by href, not an import.
+  'app/invoice/page.tsx',
   'app/finances/page.tsx',
   'app/farmer/page.tsx',
   'app/reports/page.tsx',
@@ -96,6 +98,10 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'app/invoice/page.tsx': 'farmers enter and read their own saved invoice amounts; zero-debt 12px floor',
+  'components/invoice/InvoiceCurrencyChoice.tsx': 'farmers explicitly choose and review the recorded invoice currency; zero-debt 12px floor',
+  'components/invoice/InvoiceDocument.tsx': 'farmers read the shared on-screen and printable invoice document; zero-debt 12px floor',
+  'components/invoice/InvoiceCurrencySummaryPanel.tsx': 'growers read saved invoice amounts, currency choices and source holds on phones; zero-debt 12px floor',
   'components/CropPlanStorageStatus.tsx': 'farmers read storage recovery and retained-copy choices on their crop and records screens',
   'components/JournalStorageStatus.tsx': 'farmers read journal recovery and retained-copy choices before saving field observations; zero-debt 12px floor',
   'components/InvoiceStorageStatus.tsx': 'farmers read invoice recovery and copy-conflict choices on Records and invoice screens; zero-debt 12px floor',

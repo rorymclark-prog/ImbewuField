@@ -33,6 +33,7 @@ import { buildInvoiceDocument, formatInvoiceZar } from '@/lib/invoice-document';
 import { buildInvoicePdf } from '@/lib/invoice-pdf';
 import InvoiceDocumentView from '@/components/invoice/InvoiceDocument';
 import InvoiceCurrencyChoice from '@/components/invoice/InvoiceCurrencyChoice';
+import InvoiceCurrencySummaryPanel from '@/components/invoice/InvoiceCurrencySummaryPanel';
 import { useInvoiceBookSource } from '@/components/invoice/useInvoiceBookSource';
 import { InvoiceStorageNotice, useInvoiceStorageStatus } from '@/components/InvoiceStorageStatus';
 import { inspectInvoiceCurrencyBasis, invoiceRandConsumerEligibility, type InvoicePilotCurrency, type InvoiceCurrencyBasis } from '@/lib/invoice-currency';
@@ -1146,6 +1147,7 @@ export default function InvoicePage() {
             {/* Saved-invoices list — tap to reopen/reprint */}
             {showSaved && (
               <div className="rounded-xl overflow-hidden" style={CARD}>
+                <InvoiceCurrencySummaryPanel language={lang} />
                 <div className="px-3 py-2 text-xs font-sans leading-relaxed" style={{ color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
                   {ui('Marking an invoice paid adds its produce quantities to My Records in their recorded units.')}
                   {' '}{ui('Bags, crates and bunches are not converted because their weight is unknown.')}

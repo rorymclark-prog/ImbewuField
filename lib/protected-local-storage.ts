@@ -74,6 +74,7 @@ export interface ProtectedStorageConfig {
 export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
   interface Lease { context: ProtectedStorageContext; release: () => void; active: boolean; id: string; proof: object }
   const leaseProofs = new WeakMap<object, Lease>();
+  const readReceipts = new WeakMap<object, { context: ProtectedStorageContext; original: ProtectedStorageContext; snapshot: Capture }>();
   const leases = new Map<string, Lease>();
   const unconfirmedWrites = new Map<string, { context: ProtectedStorageContext; expected: Capture }>();
   const transferHolds = new Map<string, { context: ProtectedStorageContext; reason: string }>();
@@ -131,6 +132,34 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
     return snapshot;
   }
   function same(a: Capture, b: Capture): boolean { return a.canonical === b.canonical && a.receipt === b.receipt && a.legacy === b.legacy; }
+  /** Byte provenance only: a read receipt neither validates a payload nor grants
+   * a writer lease. Each model still owns readability and actor authorization. */
+  function captureStorageReadReceipt(context: ProtectedStorageContext | null = makeBrowserStorageContext()): object | null {
+    try {
+      if (!context || context.sample || !context.isCurrent()) return null;
+      const captured: ProtectedStorageContext = { storage: context.storage, legacyKey: context.legacyKey,
+        canonicalKey: context.canonicalKey, receiptKey: context.receiptKey, sample: context.sample,
+        ...(context.legacyKeys ? { legacyKeys: Object.freeze([...context.legacyKeys]) } : {}),
+        isCurrent: context.isCurrent.bind(context) };
+      const snapshot = capture(captured);
+      if (!same(snapshot, capture(captured)) || !sameContext(context, captured)) return null;
+      const receipt = Object.freeze({}); readReceipts.set(receipt, { context: captured, original: context, snapshot }); return receipt;
+    } catch { return null; }
+  }
+  function storageReadReceiptMatches(receipt: object | null | undefined, context?: ProtectedStorageContext | null): boolean {
+    const proof = receipt && readReceipts.get(receipt);
+    if (!proof) return false;
+    const requested = context === undefined ? proof.context : context;
+    try {
+      if (requested && !requested.sample && proof.context.isCurrent() && requested.isCurrent()
+        && sameContext(proof.context, proof.original) && sameContext(proof.context, requested)
+        && same(proof.snapshot, capture(requested)) && same(proof.snapshot, capture(requested))
+        && sameContext(proof.context, proof.original) && proof.context.isCurrent() && requested.isCurrent()
+        && readReceipts.get(receipt!) === proof) return true;
+    } catch { /* Failed evidence never becomes valid again after bytes are restored. */ }
+    readReceipts.delete(receipt!); return false;
+  }
+  function releaseStorageReadReceipt(receipt: object | null | undefined): void { if (receipt) readReceipts.delete(receipt); }
   function object(value: unknown): value is Record<string, unknown> { return !!value && typeof value === 'object' && !Array.isArray(value); }
   function authoredArray(raw: string): boolean {
     try { return typeof raw === 'string' && config.validatePayload(raw); } catch { return false; }
@@ -539,5 +568,6 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
     } catch { return { status: 'held', reason: 'review-write-failed' }; }
   }
 
-return { makeBrowserStorageContext, readStorage, readStorageStatus, initialiseStorage, recoverStorage, captureStorageLease, storageLeaseMatches, releaseAllDocumentLeases, writeStorageRaw, readStorageTransferHold, transferStoragePair, readLegacyReview, legacyReviewIsCurrent, exportLegacyReview, keepCurrentAfterLegacyReview };
+return { makeBrowserStorageContext, readStorage, readStorageStatus, initialiseStorage, recoverStorage, captureStorageLease, storageLeaseMatches, releaseAllDocumentLeases, writeStorageRaw, readStorageTransferHold, transferStoragePair, readLegacyReview, legacyReviewIsCurrent, exportLegacyReview, keepCurrentAfterLegacyReview,
+  captureStorageReadReceipt, storageReadReceiptMatches, releaseStorageReadReceipt };
 }

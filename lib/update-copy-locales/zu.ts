@@ -431,5 +431,9 @@ const copy:UpdateCopy={
   "Choose a recorded invoice price": "Khetha intengo erekhodiwe ku-invoyisi",
   "Invoice → Choose a recorded invoice price": "I-invoyisi → Khetha intengo erekhodiwe ku-invoyisi",
   "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Khetha intengo ekwi-invoyisi egciniwe ngohlobo olufanayo lwemali, bese uyayiqinisekisa kulokhu kuthengisa. Kushintsha intengo yalowo mugqa kuphela; gcina i-invoyisi uma usulungile.",
+  // Invoice-summary release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-summary-release-drafts.json.
+  "Review saved invoice amounts by currency": "Buyekeza imali yama-invoyisi agciniwe ngohlobo lwemali",
+  "Invoice → Saved → Summary currency": "I-invoyisi → Agciniwe → Uhlobo lwemali lwesifinyezo",
+  "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Khetha uhlobo olulodwa lwemali ukuze ubuyekeze imali yama-invoyisi akhishiwe, abhalwe njengakhokhiwe nangakakhokhwa kule divayisi. Lawa amarekhodi ama-invoyisi, hhayi amarisidi asebhange aqinisekisiwe, yonke imali engenayo noma inzuzo.",
 };
 export default copy;

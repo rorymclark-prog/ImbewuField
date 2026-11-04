@@ -14,7 +14,8 @@ import { normaliseRecordUnit, validRecordQuantity } from './farm-records';
 import { inspectInvoiceCurrencyBasis, invoiceRandConsumerEligibility } from './invoice-currency';
 import { detachJsonData, rawJsonIsLossless } from './lossless-json';
 import { readInvoiceStorage, writeInvoiceStorageRaw, makeBrowserInvoiceStorageContext,
-  captureInvoiceStorageLease, invoiceStorageLeaseMatches, parseInvoiceStoragePayload,
+  captureInvoiceStorageLease, invoiceStorageLeaseMatches, parseInvoiceStoragePayload, INVOICE_STORAGE_EVENT,
+  captureInvoiceReadReceipt, invoiceReadReceiptMatches, releaseInvoiceReadReceipt,
   type InvoiceStoragePayload, type InvoiceStorageContext } from './invoice-storage';
 import { captureInvoiceDocumentContext, invoiceDocumentContextIsCurrent, revokeInvoiceDocumentContext,
   subscribeInvoiceDocumentContext, type InvoiceDocumentContext } from './length-unit-preference';
@@ -410,13 +411,20 @@ function setSampleSequence(win: Window, raw: string | null): void {
 }
 function sampleRows(value: unknown): unknown {
   if (!Array.isArray(value)) throw Error('sample-invoices-unreadable');
-  for (const row of value) if (record(row)) {
+  // Audit array descriptors before obtaining rows: iteration would execute an
+  // index getter before the ordinary descriptor-safe clone could reject it.
+  const detached = detachJsonData(value, { allowUndefinedObjectFields: true });
+  for (let index = 0; index < value.length; index++) {
+    const field = Object.getOwnPropertyDescriptor(value, String(index));
+    if (!field || !Object.hasOwn(field, 'value')) throw Error('sample-invoices-unreadable');
+    const row: unknown = field.value;
+    if (!record(row)) continue;
     const currency = Object.getOwnPropertyDescriptor(row, 'currencyCode');
     // JSON omission is harmless for optional form fields, but it would turn
     // an unreadable denomination into a historical Rand claim here.
     if (currency && (!('value' in currency) || currency.value === undefined)) throw Error('currency-needs-review');
   }
-  return detachJsonData(value, { allowUndefinedObjectFields: true });
+  return detached;
 }
 function samplePayload(win: Window): InvoiceStoragePayload {
   return { version: 1, invoicesRaw: JSON.stringify(sampleRows(getSandboxInvoices())),
@@ -491,6 +499,144 @@ export function invoiceBookIsCurrent(book: InvoiceBookRead): boolean {
       && invoiceStorageLeaseMatches(proof.lease, proof.storageContext) && invoiceDocumentContextIsCurrent(proof.context);
   } catch { return false; }
 }
+
+export type InvoiceReadView =
+  | { readonly status: 'ready' | 'sample'; readonly invoices: readonly SavedInvoice[];
+      readonly coverage: { readonly status: 'complete' } }
+  | { readonly status: 'held'; readonly reason: string; readonly retainedUnreadableRows: number };
+interface InvoiceViewProof {
+  context: InvoiceDocumentContext;
+  storageContext: InvoiceStorageContext;
+  win: Window;
+  sample: boolean;
+  rawReceipt: object | null;
+  payloadRaw: string;
+  display: string;
+  checking: boolean;
+  eventChecking: boolean;
+  listeners: Set<() => void>;
+  stopActor: () => void;
+  stopEvents: () => void;
+}
+// Read receipts never enter admissions: a readable book is not permission to edit it.
+const readViews = new WeakMap<InvoiceReadView, InvoiceViewProof>();
+const heldReadView = (reason: string, retainedUnreadableRows = 0): InvoiceReadView =>
+  Object.freeze({ status: 'held', reason, retainedUnreadableRows });
+
+function readViewSource(win: Window, context: InvoiceStorageContext) {
+  const state = readInvoiceStorage(context), sample = state.status === 'sample';
+  const payload = sample ? samplePayload(win) : state.bookRaw === null ? null : parseInvoiceStoragePayload(state.bookRaw);
+  if (!payload) return null;
+  const book = view(payload, sample ? 'sample' : state.status, state.reason);
+  return { sample, book, payloadRaw: sample ? JSON.stringify(payload) : state.bookRaw! };
+}
+function readViewFingerprintMatches(proof: InvoiceViewProof): boolean {
+  if (typeof window === 'undefined' || window !== proof.win || !invoiceDocumentContextIsCurrent(proof.context)) return false;
+  const same = proof.sample ? JSON.stringify(samplePayload(proof.win)) === proof.payloadRaw
+    : invoiceReadReceiptMatches(proof.rawReceipt, proof.storageContext);
+  return same && invoiceDocumentContextIsCurrent(proof.context);
+}
+function withdrawReadView(delivery: InvoiceReadView, notify: boolean): void {
+  const proof = readViews.get(delivery); if (!proof) return;
+  readViews.delete(delivery);
+  releaseInvoiceReadReceipt(proof.rawReceipt);
+  proof.stopEvents(); proof.stopActor(); revokeInvoiceDocumentContext(proof.context);
+  const listeners = [...proof.listeners]; proof.listeners.clear();
+  if (notify) for (const listener of listeners) { try { listener(); } catch { /* One observer cannot retain another's stale delivery. */ } }
+}
+
+/** Capture a coherent private view without acquiring a lock, initializing a store
+ * or manufacturing an empty book when no payload is readable. */
+export function readInvoiceView(): InvoiceReadView {
+  let context: InvoiceDocumentContext | null = null, delivery: InvoiceReadView | null = null, rawReceipt: object | null = null;
+  try {
+    context = captureInvoiceDocumentContext();
+    if (!context || !invoiceDocumentContextIsCurrent(context) || typeof window === 'undefined') {
+      revokeInvoiceDocumentContext(context); return heldReadView('invoice-context-changed');
+    }
+    const win = window, storageContext = makeBrowserInvoiceStorageContext();
+    if (!storageContext) { revokeInvoiceDocumentContext(context); return heldReadView('storage-unavailable'); }
+    rawReceipt = storageContext.sample ? null : captureInvoiceReadReceipt(storageContext);
+    if (!storageContext.sample && !rawReceipt) { revokeInvoiceDocumentContext(context); return heldReadView('invoice-source-changed'); }
+    const source = readViewSource(win, storageContext);
+    if (!source) { releaseInvoiceReadReceipt(rawReceipt); revokeInvoiceDocumentContext(context); return heldReadView('invoice-book-unreadable'); }
+    const coverage = invoiceReadCoverage(source.book.invoices);
+    if (coverage.status === 'held' || source.book.retainedUnreadableRows) {
+      revokeInvoiceDocumentContext(context);
+      releaseInvoiceReadReceipt(rawReceipt);
+      return heldReadView(coverage.status === 'held' ? coverage.reason : 'invoice-rows-needing-review', source.book.retainedUnreadableRows);
+    }
+    if (!invoiceDocumentContextIsCurrent(context) || source.sample !== !!storageContext.sample
+      || !source.sample && !invoiceReadReceiptMatches(rawReceipt, storageContext)) {
+      releaseInvoiceReadReceipt(rawReceipt); revokeInvoiceDocumentContext(context); return heldReadView('invoice-source-changed');
+    }
+    delivery = Object.freeze({ status: source.sample ? 'sample' : 'ready', invoices: source.book.invoices,
+      coverage: Object.freeze({ status: 'complete' as const }) });
+    const proof: InvoiceViewProof = { context, storageContext, win, sample: source.sample, rawReceipt,
+      payloadRaw: source.payloadRaw, display: json(delivery), checking: false, eventChecking: false,
+      listeners: new Set(), stopActor: () => {}, stopEvents: () => {} };
+    readViews.set(delivery, proof);
+    proof.stopActor = subscribeInvoiceDocumentContext(context, () => withdrawReadView(delivery!, true));
+    const inspect = () => {
+      if (readViews.get(delivery!) !== proof) return;
+      if (!proof.checking) { invoiceReadViewIsCurrent(delivery!); return; }
+      // A synchronous event can expose changed bytes that its caller restores
+      // before the outer read returns. Witness those bytes with the same receipt,
+      // but withdraw if witnessing itself reenters rather than recursively reading.
+      if (proof.eventChecking) { withdrawReadView(delivery!, true); return; }
+      proof.eventChecking = true;
+      try { if (!readViewFingerprintMatches(proof)) withdrawReadView(delivery!, true); }
+      catch { withdrawReadView(delivery!, true); }
+      finally { proof.eventChecking = false; }
+    };
+    const storageChanged = (event: StorageEvent) => {
+      if (event.key && ![storageContext.canonicalKey, storageContext.receiptKey, ...storageContext.legacyKeys].includes(event.key)) return;
+      inspect();
+    };
+    const hidden = () => withdrawReadView(delivery!, true);
+    proof.stopEvents = () => {
+      win.removeEventListener('imbewu-invoices-changed', inspect); win.removeEventListener(INVOICE_STORAGE_EVENT, inspect);
+      win.removeEventListener('storage', storageChanged); win.removeEventListener('focus', inspect); win.removeEventListener('pageshow', inspect);
+      win.removeEventListener('pagehide', hidden);
+    };
+    win.addEventListener('imbewu-invoices-changed', inspect); win.addEventListener(INVOICE_STORAGE_EVENT, inspect);
+    win.addEventListener('storage', storageChanged); win.addEventListener('focus', inspect); win.addEventListener('pageshow', inspect);
+    win.addEventListener('pagehide', hidden);
+    if (!invoiceReadViewIsCurrent(delivery)) return heldReadView('invoice-source-changed');
+    return delivery;
+  } catch {
+    if (delivery) withdrawReadView(delivery, false);
+    else { releaseInvoiceReadReceipt(rawReceipt); revokeInvoiceDocumentContext(context); }
+    return heldReadView('invoice-book-unreadable');
+  }
+}
+
+export function invoiceReadViewIsCurrent(delivery: InvoiceReadView): boolean {
+  const proof = readViews.get(delivery);
+  if (!proof || proof.checking) return false;
+  proof.checking = true;
+  let current = false;
+  try {
+    if (json(delivery) === proof.display && readViewFingerprintMatches(proof) && readViews.get(delivery) === proof) {
+      const source = readViewSource(proof.win, proof.storageContext);
+      current = !!source && source.sample === proof.sample && source.payloadRaw === proof.payloadRaw
+        && source.book.retainedUnreadableRows === 0 && invoiceReadCoverage(source.book.invoices).status === 'complete'
+        && readViewFingerprintMatches(proof) && json(delivery) === proof.display
+        && invoiceDocumentContextIsCurrent(proof.context) && readViews.get(delivery) === proof;
+    }
+  } catch { /* Unreadable or executable source evidence cannot retain a receipt. */ }
+  finally { proof.checking = false; }
+  if (!current) withdrawReadView(delivery, true);
+  return current;
+}
+export function subscribeInvoiceReadView(delivery: InvoiceReadView, onWithdrawn: () => void): () => void {
+  const proof = readViews.get(delivery); if (!proof) return () => {};
+  proof.listeners.add(onWithdrawn);
+  invoiceReadViewIsCurrent(delivery);
+  return () => proof.listeners.delete(onWithdrawn);
+}
+export function releaseInvoiceReadView(delivery: InvoiceReadView): void { withdrawReadView(delivery, false); }
+
 function held(reason: string, source?: InvoiceBookRead): InvoiceMutationResult {
   return { status: 'held', reason, book: source ?? inspectBook(false) };
 }

@@ -431,5 +431,9 @@ const copy:UpdateCopy={
   "Choose a recorded invoice price": "Kgetha theko e rekotilweng ya invoice",
   "Invoice → Choose a recorded invoice price": "Invoice → Kgetha theko e rekotilweng ya invoice",
   "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Kgetha theko ya invoice e bolokilweng ka mofuta o tshwanang wa tjhelete, ebe o e netefatsa bakeng sa thekiso ena. Ho fetoha theko ya mola feela; boloka invoice ha o se o loketse.",
+  // Invoice-summary release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-summary-release-drafts.json.
+  "Review saved invoice amounts by currency": "Hlahloba dipalo tsa di-invoice tse bolokilweng ka mofuta wa tjhelete",
+  "Invoice → Saved → Summary currency": "Invoice → Tse bolokilweng → Mofuta wa tjhelete wa kakaretso",
+  "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Kgetha mofuta o le mong wa tjhelete ho hlahloba dipalo tsa di-invoice tse ntshitsweng, tse rekotilweng e le tse lefuweng le tse sa lefuwang sesebedisweng sena. Tsena ke direkoto tsa di-invoice, eseng dirisiti tsa banka tse netefaditsweng, lekeno lohle kapa phaello.",
 };
 export default copy;
