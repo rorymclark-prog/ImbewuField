@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "evidence": "Independent coordinator-machine public HTTP responses; body bytes/SHA256 checked against private actual files.",
+  "receipts": [
+    {
+      "id": "docs",
+      "requestedUrl": "https://www.weather.gov/documentation/services-web-api",
+      "effectiveUrl": "https://www.weather.gov/documentation/services-web-api",
+      "requestedAtUtc": "2026-11-03T00:12:51.026696+00:00",
+      "completedAtUtc": "2026-11-03T00:12:51.259044+00:00",
+      "status": 200,
+      "bytes": 50495,
+      "sha256": "08ce3ca1d9649575ccb31cc8dd29b91b4a28546ef6ce4e5542345832d71a593d",
+      "method": "new urllib HTTPS request, no local cache"
+    },
+    {
+      "id": "openapi",
+      "requestedUrl": "https://api.weather.gov/openapi.json",
+      "effectiveUrl": "https://api.weather.gov/openapi.json",
+      "requestedAtUtc": "2026-11-03T00:12:51.259117+00:00",
+      "completedAtUtc": "2026-11-03T00:12:51.795728+00:00",
+      "status": 200,
+      "bytes": 122897,
+      "sha256": "ae478b69cdac6449e3b834dca636300f830dde552ac6abc180b1d5e82e2f1d35",
+      "method": "new urllib HTTPS request, no local cache"
+    },
+    {
+      "id": "station-query",
+      "requestedUrl": "https://api.weather.gov/stations?id=KSTS&limit=1",
+      "effectiveUrl": "https://api.weather.gov/stations?id=KSTS&limit=1",
+      "requestedAtUtc": "2026-11-03T00:12:51.796069+00:00",
+      "completedAtUtc": "2026-11-03T00:12:52.552397+00:00",
+      "status": 200,
+      "bytes": 2752,
+      "sha256": "b22f4d37f32b5b92ad9872bef69a8ee357c0d0c45e8bf61330cb3efd423e96b5",
+      "method": "new urllib HTTPS request, no local cache"
+    },
+    {
+      "id": "station",
+      "requestedUrl": "https://api.weather.gov/stations/KSTS",
+      "effectiveUrl": "https://api.weather.gov/stations/KSTS",
+      "requestedAtUtc": "2026-11-03T00:12:52.552434+00:00",
+      "completedAtUtc": "2026-11-03T00:12:52.778425+00:00",
+      "status": 200,
+      "bytes": 2144,
+      "sha256": "dd062b60d28c2c7093f96be3e21027c736778673ada95fa97a983e4b7b901126",
+      "method": "new urllib HTTPS request, no local cache"
+    },
+    {
+      "id": "observation",
+      "requestedUrl": "https://api.weather.gov/stations/KSTS/observations/latest?require_qc=true",
+      "effectiveUrl": "https://api.weather.gov/stations/KSTS/observations/latest?require_qc=true",
+      "requestedAtUtc": "2026-11-03T00:12:52.778464+00:00",
+      "completedAtUtc": "2026-11-03T00:12:53.001987+00:00",
+      "status": 200,
+      "bytes": 4322,
+      "sha256": "c9e9b24102aef8253d6bc82c00204a4e2ec89133e98777ead917b79e806da22c",
+      "method": "new urllib HTTPS request, no local cache"
+    }
+  ],
+  "rawBodiesIncluded": false,
+  "locationInput": "Fixed public airport references only; no farmer coordinates.",
+  "farmingApproval": false
+}

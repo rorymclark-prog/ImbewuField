@@ -1,4 +1,5 @@
 import { unknown, type CountryProfile, type CountrySource, type EvidenceCategory, type Known } from './types';
+import { NWS_OBSERVATION_PROVIDER, SONOMA_NWS_REFERENCE } from '../providers/nws-observation';
 
 const DATE = '2026-11-01';
 const unreviewed = () => ({ status: 'not-reviewed' as const, regionId: null, reviewedOn: null, validThrough: null, sourceIds: [], reviewer: null });
@@ -39,7 +40,26 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
   { code: 'US', name: 'United States', stage: 'engineering-pilot', jurisdictionNote: 'Federal, state, tribal and local requirements differ; an APHIS contact or federal dataset cannot settle every local permission.', regions: [], agronomyReview: unreviewed(), sources: [
     source('us-itis', 'biodiversity', 'Integrated Taxonomic Information System (ITIS)', 'https://www.itis.gov/', 'North America and world taxonomy', 'The official site provides taxonomic names and relationships, not planting recommendations, occurrence completeness or legal permission.'),
     source('us-extension', 'agricultural-extension', 'USDA National Institute of Food and Agriculture: Cooperative Extension', 'https://www.nifa.usda.gov/about-nifa/how-we-work/extension', 'US federal/state/county extension network', 'The official page describes federal, land-grant and local extension roles. A state-specific production guide remains unreviewed.'),
+    source('us-nifa-land-grant-directory', 'agricultural-extension', 'USDA NIFA Land-grant University Website Directory',
+      'https://www.nifa.usda.gov/grants/land-grant-university-website-directory', 'US land-grant institutions listed by NIFA',
+      'The public directory lists land-grant institutions and links to their websites.', {
+        accessedOn: '2026-11-04', publishedOn: null, lastModifiedOn: '2025-04-23',
+        licence: unknown('Website reuse terms have not been verified from the public directory page.'),
+        accessRequirements: known('Public directory read without an account. Access to linked institution sites and automated access remain unverified.'),
+        missingDataBehavior: 'The dossier keeps the directory as an external referral link.',
+        limitations: 'County office locations, current contacts, appointments, fees, advisory services and local crop guidance remain unverified.',
+      }),
     source('us-noaa', 'weather-frost', 'NOAA National Centers for Environmental Information', 'https://www.ncei.noaa.gov/access/us-climate-normals/', 'US climate normals portal', 'The public portal identifies US Climate Normals. Its dynamic product details, station selection and frost interpretation were not verified.'),
+    source('us-nws-observation', 'weather-frost', 'NOAA National Weather Service station observations', NWS_OBSERVATION_PROVIDER.docsUrl,
+      NWS_OBSERVATION_PROVIDER.coverage, 'Official documentation, schema and public station/observation responses were read. The opt-in example preserves published station identity, units, quality-control flags and missing readings; it supplies no local farming approval.', {
+        accessedOn: '2026-11-03',
+        resolution: known(`Point reference at ${SONOMA_NWS_REFERENCE.label}; station and observation publish separate geometries, both retained. No farm-scale resolution is established.`),
+        units: known('Provider WMO unit codes are retained. The decoder accepts Celsius, percent, kilometres per hour, angle degrees and millimetres; missing or unsupported units remain unknown.'),
+        updateCadence: unknown(NWS_OBSERVATION_PROVIDER.cadence), licence: known(NWS_OBSERVATION_PROVIDER.licence),
+        attribution: NWS_OBSERVATION_PROVIDER.attribution, accessRequirements: known(NWS_OBSERVATION_PROVIDER.authentication),
+        missingDataBehavior: 'The bounded opt-in adapter preserves missing and invalid measurements as unknown. Errors supply no replacement readings; a successful request does not establish freshness.',
+        limitations: NWS_OBSERVATION_PROVIDER.limitations,
+      }),
     source('us-nrcs', 'soils', 'USDA NRCS Web Soil Survey', 'https://www.nrcs.usda.gov/resources/data-and-reports/web-soil-survey', 'US National Cooperative Soil Survey; available survey coverage must be checked', 'The official page describes downloadable soil survey data and an annual refresh; map interpretation still needs local assessment.', { updateCadence: known('Annual Soils Refresh updates survey data and interpretations once a year, per the source page.'), attribution: 'Soil Survey Staff. Web Soil Survey. USDA Natural Resources Conservation Service; include access date.' }),
     source('us-aphis', 'plant-legality', 'USDA Animal and Plant Health Inspection Service (APHIS)', 'https://www.aphis.usda.gov/contact/plant-health', 'Federal plant health and state contacts', 'The official page directs state plant-health and interstate movement questions to state directors. This does not replace state noxious-weed law or other permissions.', { lastModifiedOn: '2026-10-02' }),
   ] },

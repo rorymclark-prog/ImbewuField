@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
+import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { COUNTRY_PROFILES, COUNTRY_RESEARCH_QUEUE, EUROPE_RESEARCH_NOTE } from '@/lib/international/countries/registry';
 import { evaluateCountryReadiness, sourceEvidenceState } from '@/lib/international/countries/readiness';
 import type { Known } from '@/lib/international/countries/types';
 import { COUNTRY_CLIMATE_DEMOS, NASA_REFERENCE_PROVIDER, fetchCountryClimateReference, type ClimateReferenceResult, type ClimateDemoCode } from '@/lib/international/providers/nasa-reference';
 import styles from './CountryReview.module.css';
+import NwsStationReference from './NwsStationReference';
 
 const metadata = (value: Known<string>) => value.status === 'known' ? value.value : `Unknown — ${value.reason}`;
 const CATEGORY_NAMES = { biodiversity: 'Biodiversity & taxonomy', 'agricultural-extension': 'Agricultural extension', 'weather-frost': 'Weather & frost', soils: 'Soils', 'plant-legality': 'Plant legality' };
@@ -102,10 +104,11 @@ export default function CountryReview() {
         {(['coverage', 'resolution', 'units', 'updateCadence', 'licence', 'attribution', 'authentication', 'limits'] as const).map((key) => <div key={key}><dt>{key}</dt><dd>{NASA_REFERENCE_PROVIDER[key]}</dd></div>)}
       </dl><a href={NASA_REFERENCE_PROVIDER.docsUrl} target="_blank" rel="noreferrer" className={styles.link}>Official API documentation ↗</a></details>
     </section>
+    {code === 'US' && <NwsStationReference key={code} />}
     <section className={styles.card} aria-labelledby="queue-heading"><h2 id="queue-heading">Research priorities, not launch approvals</h2>
       <p>Only the four engineering pilots above have source-discovery dossiers. Other entries are an unreviewed research queue; depth and availability differ between pilots.</p>
       {COUNTRY_RESEARCH_QUEUE.map((group) => <p key={group.group}><strong>{group.group}:</strong> {group.countries.join(', ')}.</p>)}
       <p>{EUROPE_RESEARCH_NOTE}</p>
     </section>
-  </main></div>;
+  </main><LimaBar /></div>;
 }
