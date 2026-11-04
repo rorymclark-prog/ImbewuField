@@ -2,6 +2,42 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { fitPhotoRegistration } from '../lib/assistant-registration.ts';
 import { originalType, assertSite, safeRedirect, provenance, scopes } from '../functions/src/connector/policy.ts';
+import { createRequire } from 'node:module';
+import { assistantProxy } from '../lib/assistant-proxy.ts';
+
+const { NextRequest } = createRequire(import.meta.url)('next/server');
+
+test('desktop OAuth callbacks retain the registered loopback host through NextRequest', async () => {
+  const originalFetch = globalThis.fetch;
+  const callbacks = [
+    'http://127.0.0.1:7777/callback?source=desktop',
+    'http://[::1]:7777/callback',
+    'http://localhost:7777/callback',
+    'https://chatgpt.com/connector/oauth/example',
+  ];
+  try {
+    for (const callback of callbacks) {
+      const url = new URL('https://imbewufield.vercel.app/api/assistant/authorize');
+      url.searchParams.set('redirect_uri', callback);
+      url.searchParams.set('state', 'state-127.0.0.1');
+      url.searchParams.set('resource', 'https://imbewufield.vercel.app/api/assistant/mcp');
+      const request = new NextRequest(url);
+      let upstream: URL | undefined;
+      globalThis.fetch = async input => {
+        upstream = new URL(String(input));
+        return new Response(null, { status: 302, headers: { location: 'https://imbewufield.vercel.app/connect/imbewu?request=synthetic' } });
+      };
+      const response = await assistantProxy(request, 'authorize');
+      assert.equal(response.status, 302);
+      assert.equal(upstream?.searchParams.get('redirect_uri'), callback);
+      assert.equal(upstream?.searchParams.get('state'), 'state-127.0.0.1');
+      assert.equal(upstream?.searchParams.get('resource'), 'https://imbewufield.vercel.app/api/assistant/mcp');
+      assert.equal(upstream?.searchParams.get('connector_path'), '/authorize');
+    }
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
 
 test('photo registration aligns known landmarks without modifying either control array', () => {
   const controls = [{ source: [0,0] as [number,number], target: [10,20] as [number,number] }, { source: [100,0] as [number,number], target: [210,20] as [number,number] }, { source: [0,100] as [number,number], target: [10,220] as [number,number] }, { source: [100,100] as [number,number], target: [210,220] as [number,number] }];
