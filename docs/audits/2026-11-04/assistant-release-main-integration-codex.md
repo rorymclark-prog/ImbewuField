@@ -86,3 +86,5 @@ Playwright artifacts, reusing installed dependencies. Original40e is unchanged
 and its full suite has actually exited before any new local full begins. A new
 candidate full suite and required head CI remain pending. Existing PR branches
 and their CI are retained; this combined candidate is published on a new branch.
+
+After creating merge0475b9af8, the release-note gate correctly counted the new native-copy commit and earlier callback commit as two unstamped changes. The existing newest notice now stamps that combined merge. Its English text, the complete notices/guide and all history remain unchanged. The gate itself is unchanged.
