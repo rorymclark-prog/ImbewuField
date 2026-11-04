@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: 'bbb0848674', changes: [
+    'Plan separate availability windows for each growing space',
+  ], tour: [{ title: 'Plan separate availability windows for each growing space', where: 'Crop plan → Automatic plan from your estimates → Your available growing space', href: '/facilitator/crops',
+    detail: 'Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.' }] },
   { when: '4 November 2026', sha: 'a412b28b7e', changes: [
     'Review saved invoice amounts by currency',
   ], tour: [{ title: 'Review saved invoice amounts by currency', where: 'Invoice → Saved → Summary currency', href: '/invoice',

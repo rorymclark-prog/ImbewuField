@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Additive unreviewed Codex release candidates; source pairs: grower-bed-windows-release-drafts.json.
+  "Plan separate availability windows for each growing space": "Vhekanyani zwifhinga zwo fhambanaho zwa u wanala ha fhethu huṅwe na huṅwe ha u lima",
+  "Crop plan → Automatic plan from your estimates → Your available growing space": "Pulane ya zwimela → Pulane ya othomethikhi i bvaho kha nyanganyelo dzaṋu → Fhethu haṋu ha u lima hu wanalaho",
+  "Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.": "Engedzani ni khwaṱhisedze zwifhinga zwo fhambanaho zwa maḓuvha zwa mubhedzi kana tshipiḓa tsha tsimu tsho vhulungwaho. Pulane a i shumisi zwikhala vhukati ha zwifhinga nahone mutevhe muṅwe na muṅwe wa tshimela u tea u fhelela kha tshifhinga tshithihi; u shumiswa ho no ḓi vhaho hone hu kha ḓi sedzuluswa.",
   "Import field outlines from Google Earth.": "Dzhenisani mikano ya masimu i bvaho kha Google Earth.",
   "Review imported field outlines": "Ṱolani mikano ya masimu yo dzheniswaho",
   "Design Studio → Planting → Import field outlines": "Design Studio → U lima → Dzhenisani mikano ya masimu",

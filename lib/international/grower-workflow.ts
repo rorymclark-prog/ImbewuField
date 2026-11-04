@@ -171,16 +171,25 @@ export function assembleGrowerWorkflowReview(input: AssembleGrowerWorkflowReview
     const estimate: GrowerInputProvenance = { kind: 'grower-estimate', recordedAt: input.recordedAt,
       note: 'Grower-entered dated availability or horizon for this review; not an observed land-use record.' };
     const availability: GrowerAutoPlanRequest['availability'][number][] = [];
-    const selectedAvailabilityBeds = new Set<string>();
+    const intervalsByBed = new Map<string, { start: string; endExclusive: string }[]>();
     for (const available of draft.available) {
       if (!available || typeof available.confirmed !== 'boolean') return hold('availability-invalid');
       if (!available.confirmed) continue;
       if (!identity(available.bedId) || !bedIds.has(available.bedId)) return hold('availability-bed-unavailable');
-      if (selectedAvailabilityBeds.has(available.bedId)) return hold('availability-bed-ambiguous');
-      selectedAvailabilityBeds.add(available.bedId);
       if (blocked.has(available.bedId)) return hold('availability-bed-blocked');
       if (!isGrowerUtcDate(available.start) || !isGrowerUtcDate(available.endExclusive) || available.start >= available.endExclusive) return hold('availability-window-invalid');
-      availability.push({ bedId: available.bedId, scope, window: supplied({ start: available.start, endExclusive: available.endExclusive }, 'utc-date-window', estimate) });
+      const window = { start: available.start, endExclusive: available.endExclusive };
+      const intervals = intervalsByBed.get(available.bedId) ?? [];
+      intervals.push(window); intervalsByBed.set(available.bedId, intervals);
+      availability.push({ bedId: available.bedId, scope, window: supplied(window, 'utc-date-window', estimate) });
+    }
+    for (const intervals of intervalsByBed.values()) {
+      // Sort only a detached inspection list. Touching exclusive ends remain
+      // separate windows: unioning them could grant a cycle across an asserted break.
+      const ordered = [...intervals].sort((a, b) => a.start < b.start ? -1 : a.start > b.start ? 1 : 0);
+      for (let index = 1; index < ordered.length; index++) {
+        if (ordered[index].start < ordered[index - 1].endExclusive) return hold('availability-window-overlap');
+      }
     }
     const request: GrowerAutoPlanRequest = {
       requestedAt: input.recordedAt, scope, geometryFingerprint: source.geometryFingerprint, profiles: [...selectedProfiles.values()],

@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Additive unreviewed Codex release candidates; source pairs: grower-bed-windows-release-drafts.json.
+  "Plan separate availability windows for each growing space": "Hlela izikhathi ezihlukene zokutholakala kwendawo ngayinye yokutshala",
+  "Crop plan → Automatic plan from your estimates → Your available growing space": "Uhlelo lwezitshalo → Uhlelo oluzenzakalelayo olusekelwe ezilinganisweni zakho → Indawo yakho yokutshala etholakalayo",
+  "Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.": "Engeza futhi uqinisekise izikhathi zezinsuku ezihlukene zombhede noma isiqephu sensimu esigciniwe. Uhlelo aluzisebenzisi izikhala phakathi kwezikhathi, futhi umjikelezo ngamunye wesitshalo kufanele ungene esikhathini esisodwa; ukusetshenziswa okukhona kuyaqhubeka nokuhlolwa.",
   "Import field outlines from Google Earth.": "Ngenisa imingcele yamasimu evela ku-Google Earth.",
   "Review imported field outlines": "Hlola imingcele yamasimu engenisiwe",
   "Design Studio → Planting → Import field outlines": "Design Studio → Ukutshala → Ngenisa imingcele yamasimu",

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { cropByKey } from '@/lib/crop-catalog';
 import { estimateNumberLabel as quantity } from '@/lib/format-figures';
 import type { HarvestTarget } from '@/lib/crop-plan';
@@ -29,7 +29,10 @@ export interface GrowerAutoPlanPanelProps {
 
 const field = 'mt-1 min-h-11 w-full rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-sm';
 const button = 'min-h-11 rounded-lg border border-[var(--border)] px-3 py-2 text-sm disabled:opacity-50';
-const emptyDraft = (): GrowerWorkflowDraft => ({ planningStart: '', planningEndExclusive: '', maxAssessments: '',
+type Availability = GrowerWorkflowDraft['available'][number];
+type AvailabilityRow = Availability & { rowKey: string };
+type PanelDraft = Omit<GrowerWorkflowDraft, 'available'> & { available: AvailabilityRow[] };
+const emptyDraft = (): PanelDraft => ({ planningStart: '', planningEndExclusive: '', maxAssessments: '',
   targetProfiles: [], available: [], assumptionsConfirmed: false });
 const issueLabels: Record<string, string> = {
   'mapped-site-required': 'Open a mapped site to use its saved buyer targets.',
@@ -58,6 +61,7 @@ const issueLabels: Record<string, string> = {
   'selected-target-ambiguous': 'A selected buyer target has an ambiguous identity. Review the saved targets.',
   'availability-bed-blocked': 'A selected bed has unresolved occupation or measurements.',
   'availability-window-invalid': 'Enter a valid start and later exclusive end for every checked availability.',
+  'availability-window-overlap': 'Confirmed intervals for the same growing space overlap. Correct or unconfirm the overlapping interval.',
   'plantsPerM2': 'Your plant-density estimate is missing or invalid.',
   'yieldKgPerM2': 'Your cycle harvest-weight estimate is missing or invalid.',
   'establishment': 'Your establishment method is missing or invalid.',
@@ -79,32 +83,82 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   const [error, setError] = useState('');
   const [receiptHidden, setReceiptHidden] = useState(false);
   const generation = useRef(0), accepting = useRef(false);
+  const formId = useId(), rowSequence = useRef(0), virtualRows = useRef(new Map<string, string>());
+  const draftRef = useRef(draft); draftRef.current = draft;
+  const reviewGeneration = useRef<number | null>(null);
+  const reviewContext = useRef<{ revision: number; source: GrowerWorkflowSource | null; scopeKey: string | null } | null>(null);
   const reviewRef = useRef(review); reviewRef.current = review;
   const live = useRef(props); live.current = props;
-  useEffect(() => { generation.current++; setReview(null); setError(''); setBusy(false); }, [props.contextRevision]);
-  useEffect(() => () => { generation.current++; }, []);
   const scopeKey = growerPlanningScopeKey(props.scope);
+  useEffect(() => { generation.current++; reviewGeneration.current = null; reviewContext.current = null; setReview(null); setError(''); setBusy(false); }, [props.contextRevision, props.source, scopeKey]);
+  useEffect(() => () => { generation.current++; }, []);
   const targets = props.scope?.kind === 'mapped-site' && props.targetSiteId
     ? props.targets.filter(target => target.siteId === props.targetSiteId) : [];
   const profiles = props.profiles.filter(profile => growerPlanningScopeKey(profile.scope) === scopeKey);
   const beds = props.source?.beds ?? [];
-  function change(next: GrowerWorkflowDraft) { generation.current++; setReceiptHidden(true); setDraft(next); setReview(null); setError(''); setBusy(false); }
+  const contextCurrent = () => live.current.contextRevision === props.contextRevision && live.current.source === props.source
+    && growerPlanningScopeKey(live.current.scope) === scopeKey;
+  const draftCurrent = () => contextCurrent() && draftRef.current === draft;
+  const reviewMatchesContext = reviewContext.current?.revision === props.contextRevision && reviewContext.current?.source === props.source
+    && reviewContext.current?.scopeKey === scopeKey;
+  function change(next: PanelDraft) {
+    if (!draftCurrent()) return;
+    generation.current++; reviewGeneration.current = null; reviewContext.current = null; draftRef.current = next;
+    setReceiptHidden(true); setDraft(next); setReview(null); setError(''); setBusy(false);
+  }
+  function newRowKey() { return `${formId}-availability-${++rowSequence.current}`; }
+  function virtualKey(bedId: string) {
+    let key = virtualRows.current.get(bedId);
+    if (!key) { key = newRowKey(); virtualRows.current.set(bedId, key); }
+    return key;
+  }
+  const blankRow = (bedId: string, rowKey = newRowKey()): AvailabilityRow => ({ rowKey, bedId, start: '', endExclusive: '', confirmed: false });
+  function updateAvailability(bedId: string, rowKey: string, values: Partial<Omit<Availability, 'bedId'>>) {
+    if (!draftCurrent()) return;
+    const rows = draft.available.filter(row => row.bedId === bedId);
+    if (rows.some(row => row.rowKey === rowKey)) {
+      change({ ...draft, available: draft.available.map(row => row.bedId === bedId && row.rowKey === rowKey ? { ...row, ...values } : row) });
+    } else if (!rows.length && virtualRows.current.get(bedId) === rowKey) {
+      change({ ...draft, available: [...draft.available, { ...blankRow(bedId, rowKey), ...values }] });
+    }
+  }
+  function addAvailability(bedId: string) {
+    if (!draftCurrent()) return;
+    const rows = draft.available.filter(row => row.bedId === bedId);
+    change({ ...draft, available: [...draft.available,
+      ...(!rows.length ? [blankRow(bedId, virtualKey(bedId))] : []), blankRow(bedId)] });
+  }
+  function removeAvailability(bedId: string, rowKey: string) {
+    if (!draftCurrent() || !draft.available.some(row => row.bedId === bedId && row.rowKey === rowKey)) return;
+    const available = draft.available.filter(row => row.bedId !== bedId || row.rowKey !== rowKey);
+    // A removed row must not lend its callbacks or confirmation to the new
+    // empty placeholder, even when it was the last interval for this bed.
+    if (!available.some(row => row.bedId === bedId)) virtualRows.current.set(bedId, newRowKey());
+    change({ ...draft, available });
+  }
   async function run() {
+    if (!draftCurrent()) return;
     const turn = ++generation.current, revision = props.contextRevision;
+    reviewGeneration.current = null; reviewContext.current = null;
     setBusy(true); setReview(null); setError('');
     try {
-      const result = await props.onReview(draft);
-      if (generation.current === turn && live.current.contextRevision === revision) setReview(result);
+      const request: GrowerWorkflowDraft = { ...draft, available: draft.available.map(({ rowKey: _rowKey, ...row }) => row) };
+      const result = await props.onReview(request);
+      if (generation.current === turn && live.current.contextRevision === revision && contextCurrent()) {
+        reviewGeneration.current = turn; reviewContext.current = { revision, source: props.source, scopeKey }; setReview(result);
+      }
     } catch { if (generation.current === turn) setError('Could not check the current saved inputs. Your plan has not changed.'); }
     finally { if (generation.current === turn) setBusy(false); }
   }
   async function save() {
-    if (accepting.current || !props.onAccept || review?.status !== 'review') return;
+    if (accepting.current || !props.onAccept || review?.status !== 'review' || !contextCurrent() || !reviewMatchesContext
+      || reviewRef.current !== review || reviewGeneration.current !== generation.current) return;
     const expected = review, turn = ++generation.current, revision = props.contextRevision;
+    reviewGeneration.current = turn;
     accepting.current = true; setReceiptHidden(false); setError('');
     try {
       await props.onAccept(expected, () => generation.current === turn && reviewRef.current === expected
-        && live.current.contextRevision === revision);
+        && live.current.contextRevision === revision && contextCurrent());
     } catch { if (generation.current === turn) setError('Could not confirm this save. Review the current saved records before trying again.'); }
     finally { accepting.current = false; }
   }
@@ -123,7 +177,8 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
       <p>Match your saved buyer targets to whole beds or field plots using your own growing estimates. This does not choose a local crop calendar or promise weekly deliveries.</p>
       <p>{props.sourceName}. Areas come from the saved design; check them against your ground measurements.</p>
       <button type="button" className={button} disabled={props.checking || busy || saving || !scopeKey} onClick={() => {
-        generation.current++; setReview(null); setError(''); void props.onRefresh().catch(() => setError('Could not check this saved design.'));
+        if (!contextCurrent()) return;
+        generation.current++; reviewGeneration.current = null; reviewContext.current = null; setReview(null); setError(''); void props.onRefresh().catch(() => setError('Could not check this saved design.'));
       }}>{props.checking ? 'Checking saved design…' : 'Check saved design'}</button>
       {props.sourceIssue && <p role="status">{props.sourceIssue}</p>}
       {!props.source && <p>No current design has been checked for this review.</p>}
@@ -157,23 +212,31 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
       <p className="text-xs">The search work limit is a software budget of 1–10,000 checks. Reaching it leaves the result unknown; it does not prove there is no space.</p>
       <fieldset className="space-y-3 rounded-xl border border-[var(--border)] p-3">
         <legend className="px-1 font-semibold">Your available growing space</legend>
-        <p>Nothing is assumed free. Enter each available interval. Known existing occupations are checked separately and cannot be overridden here. End dates are exclusive.</p>
+        <p>Nothing is assumed free. Enter each available interval. Known existing occupations are checked separately and cannot be overridden here. End dates are exclusive: the end day is outside that interval. Gaps are unavailable. Adjacent intervals stay separate; a crop cycle must fit within one interval.</p>
         {!beds.length && <p>No eligible saved bed or field-plot measurements have been checked.</p>}
-        {beds.map(bed => {
-          const available = draft.available.find(row => row.bedId === bed.id);
-          const update = (values: Partial<GrowerWorkflowDraft['available'][number]>) => change({ ...draft, available: [
-            ...draft.available.filter(row => row.bedId !== bed.id), { bedId: bed.id, start: '', endExclusive: '', confirmed: false, ...available, ...values }] });
+        {beds.map((bed, bedIndex) => {
+          const savedRows = draft.available.filter(row => row.bedId === bed.id);
+          const rows = savedRows.length ? savedRows : [blankRow(bed.id, virtualKey(bed.id))];
           return <div key={bed.id} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
-            <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={available?.confirmed ?? false} onChange={event => update({ confirmed: event.target.checked })} />I confirm availability for {bed.label} · {bed.areaM2} m²</label>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2"><label>Available from<input type="date" className={field} value={available?.start ?? ''} onChange={event => update({ start: event.target.value })} /></label>
-              <label>Available until (exclusive)<input type="date" className={field} value={available?.endExclusive ?? ''} onChange={event => update({ endExclusive: event.target.value })} /></label></div>
+            {rows.map((row, index) => {
+              const suffix = `${bed.label}, growing space ${bedIndex + 1}, interval ${index + 1}`;
+              return <div key={row.rowKey} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
+                <label htmlFor={`${row.rowKey}-confirmed`} className="flex min-h-11 items-center gap-2"><input id={`${row.rowKey}-confirmed`} type="checkbox" checked={row.confirmed} onChange={event => updateAvailability(bed.id, row.rowKey, { confirmed: event.target.checked })} />I confirm availability for {bed.label} · {quantity(bed.areaM2)} m² · growing space {bedIndex + 1}, interval {index + 1}</label>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <label htmlFor={`${row.rowKey}-start`}>Available from — {suffix}<input id={`${row.rowKey}-start`} type="date" className={field} value={row.start} onChange={event => updateAvailability(bed.id, row.rowKey, { start: event.target.value })} /></label>
+                  <label htmlFor={`${row.rowKey}-end`}>Available until (exclusive) — {suffix}<input id={`${row.rowKey}-end`} type="date" className={field} value={row.endExclusive} onChange={event => updateAvailability(bed.id, row.rowKey, { endExclusive: event.target.value })} /></label>
+                </div>
+                <button type="button" className={button} disabled={!savedRows.length} aria-label={`Remove interval ${index + 1} for ${bed.label}, growing space ${bedIndex + 1}`} onClick={() => removeAvailability(bed.id, row.rowKey)}>Remove interval</button>
+              </div>;
+            })}
+            <button type="button" className={button} aria-label={`Add availability interval for ${bed.label}, growing space ${bedIndex + 1}`} onClick={() => addAvailability(bed.id)}>Add availability interval</button>
           </div>;
         })}
       </fieldset>
       <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={draft.assumptionsConfirmed} onChange={event => change({ ...draft, assumptionsConfirmed: event.target.checked })} />I supply these planning dates and availability as my estimates.</label>
       <button type="button" className={button} disabled={!props.source || props.checking || busy || saving || !scopeKey} onClick={() => void run()}>{busy ? 'Checking current inputs…' : 'Review automatic crop plan'}</button>
       {error && <p role="alert">{error}</p>}
-      {review && <section aria-label="Automatic grower proposal" className="space-y-3 rounded-xl border border-[var(--border)] p-3">
+      {review && reviewMatchesContext && <section aria-label="Automatic grower proposal" className="space-y-3 rounded-xl border border-[var(--border)] p-3">
         <h3 className="font-semibold">{usable ? 'Proposed whole-bed crop cycles' : 'Review inputs before planning'}</h3>
         {review.status === 'held' ? <ul>{review.issues.map((issue, index) => <li key={index}>{issueText(issue)}</li>)}</ul>
           : <><p>Search result: {review.proposal.status.replace(/-/g, ' ')}.</p>

@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Additive unreviewed Codex release candidates; source pairs: grower-bed-windows-release-drafts.json.
+  "Plan separate availability windows for each growing space": "Rera dinako tse arohaneng tsa ho fumaneha ha sebaka ka seng sa ho lema",
+  "Crop plan → Automatic plan from your estimates → Your available growing space": "Moralo wa dijalo → Moralo o iketsang ho tswa ditekanyetsong tsa hao → Sebaka sa hao se fumanehang sa ho lema",
+  "Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.": "Kenya le ho netefatsa dinako tse arohaneng tsa matsatsi bakeng sa bethe kapa karolo ya tshimo e bolokilweng. Moralo ha o sebedise dikgeo pakeng tsa dinako mme potoloho ka nngwe ya sejalo e lokela ho fella ka hara nako e le nngwe; tshebediso e seng e le teng e ntse e hlahlojwa.",
   "Import field outlines from Google Earth.": "Kenya meedi ea masimo e tsoang ho Google Earth.",
   "Review imported field outlines": "Hlahloba meedi ea masimo e kentsoeng",
   "Design Studio → Planting → Import field outlines": "Design Studio → Ho lema → Kenya meedi ea masimo",
