@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // England advice reference: docs/international/agy-england-fas-release-copy-2026-11-04/source.json; UNREVIEWED AI drafts.
+  "Open England’s Farming Advice Service page from the UK country review.": "Vulani siaṱari la Tshumelo ya Nyeletshedzo ya Vhulimi la England u bva kha tsedzuluso ya shango la UK.",
+  "Find the England advice reference": "Wananani ndaedzo ya nyeletshedzo ya England",
+  "Choose the United Kingdom and open Agricultural extension to find the GOV.UK link.": "Nangani United Kingdom ni vule Nyeletshedzo ya vhulimi u itela u wana tshitanganyi tsha GOV.UK.",
   // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
   "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Nangani fhethu ho vhulungwaho hune muthusi a nga hu shumisa. Ni nga fhelisa vhuṱumanyi kha Nzudzanyo.",
   "Keep original site photos and PDFs with their source and import history.": "Vhulungani zwifanyiso zwa u thoma zwa fhethu na dzi-PDF, khathihi na vhubvo hazwo na ḓivhazwakale ya u zwi dzhenisa.",
@@ -11,6 +15,11 @@ const copy:UpdateCopy={
   "Check your saved map": "Ṱolani mapa waṋu wo vhulungwaho",
   "Site design": "Pulane ya fhethu",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Ṱolani henefho fhethu musi ni sa athu shumisa tshanduko dza muthusi kana u vhambedza tshifanyiso tsha kale.",
+  // UK station links: docs/international/pilots/uk-station-release-copy/drafts.json; UNREVIEWED AI drafts.
+  "Open Met Office links to Yeovilton’s monthly weather records from the country review.": "Vhulani vhuṱanganyi ha Met Office u ya kha rekhodo dza mutsho dza ṅwedzi muṅwe na muṅwe dza Yeovilton u bva kha tsedzuluso ya shango.",
+  "Review UK historical weather records": "Sedzulusani rekhodo dza ḓivhazwalo dza mutsho dza UK",
+  "International → Country review": "Tshaka dza mashango → Tsedzuluso ya shango",
+  "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions.": "Nangani United Kingdom na Yeovilton u vhula rekhodo dzi bvaho kha tshiṱitshi tshithihi. Tolani zwiimo zwa henefho phanḓa ha u dzhia dzigomelelo dza u ṱavha.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Khwathisedzani shango ḽa fhethu ho mapiwaho musi ni sa athu shumisa vhulangeli ha u pulana zwilimwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Vhulungani rekhodo dzaṋu dza u zwala na zwishumiswa zwa nese musi pulane ya henefho i sa athu vha hone.",

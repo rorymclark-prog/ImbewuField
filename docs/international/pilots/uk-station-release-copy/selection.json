@@ -1,0 +1,11 @@
+{
+  "reviewStatus": "unreviewed-ai-draft",
+  "sourceSha256": "056ddc9e766484f1a0c25f6312af53cdc10633523ca7b42bcd4c19510686d87a",
+  "draftsSha256": "4511a92441bf444dbbdd4a3828e2ad6053c10c0462b60b532936cfdb88828dc0",
+  "selectedFor": "Existing update notice languages only",
+  "runtimeLanguagesAdded": [],
+  "pairCount": 16,
+  "rejectedDamagedControls": 12,
+  "fluentReview": "pending",
+  "applicationCommit": "8d2458ceef"
+}

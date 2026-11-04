@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // England advice reference: docs/international/agy-england-fas-release-copy-2026-11-04/source.json; UNREVIEWED AI drafts.
+  "Open England’s Farming Advice Service page from the UK country review.": "Bula leqephe la Tšebeletso ea Keletso ea Temo la England ho tsoa tlhahlobong ea naha ea UK.",
+  "Find the England advice reference": "Fumana tšupiso ea keletso ea England",
+  "Choose the United Kingdom and open Agricultural extension to find the GOV.UK link.": "Kgetha United Kingdom ebe o bula Keletso ea temo ho fumana sehokelo sa GOV.UK.",
   // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
   "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Kgetha dibaka tse bolokilweng tseo mothusi a ka di sebedisang. O ka kgaola kgokahano ho Ditlhophiso.",
   "Keep original site photos and PDFs with their source and import history.": "Boloka dinepe tsa pele tsa sebaka le di-PDF hammoho le mohlodi wa tsona le nalane ya ho di kenya.",
@@ -11,6 +15,11 @@ const copy:UpdateCopy={
   "Check your saved map": "Lekola mmapa wa hao o bolokilweng",
   "Site design": "Moralo wa sebaka",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlahloba sebaka sona seo pele o kenya diphetoho tsa mothusi kapa o bapisa senepe sa kgale.",
+  // UK station links: docs/international/pilots/uk-station-release-copy/drafts.json; UNREVIEWED AI drafts.
+  "Open Met Office links to Yeovilton’s monthly weather records from the country review.": "Bula lihokelo tsa Met Office ho ea lirekotong tsa boemo ba leholimo tsa khoeli le khoeli tsa Yeovilton tlhahlobisong ea naha.",
+  "Review UK historical weather records": "Hlahloba lirekoto tsa nalane ea boemo ba leholimo tsa UK",
+  "International → Country review": "Lichaba tsa machaba → Tlhahlobo ea naha",
+  "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions.": "Khetha United Kingdom le Yeovilton ho bula lirekoto tse tsoang setsing se le seng. Hlahloba maemo a lehae pele u nka liqeto tsa ho lema.",
   // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Netefatsa naha ea sebaka se mmepiloeng pele u sebelisa tataiso ea sona ea moralo oa lijalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Boloka lirekoto tsa hao tsa ho jala le lisebelisoa tsa nesari ea limela ha moralo oa sebaka o ntse o sa fumanehe.",

@@ -31,7 +31,15 @@ export const COUNTRY_PROFILES: readonly CountryProfile[] = [
   { code: 'GB', name: 'United Kingdom', stage: 'engineering-pilot', jurisdictionNote: 'England, Scotland, Wales and Northern Ireland require jurisdiction-specific legal and agricultural review. Great Britain evidence does not automatically cover Northern Ireland.', regions: [], agronomyReview: unreviewed(), sources: [
     source('gb-jncc', 'biodiversity', 'Joint Nature Conservation Committee (JNCC)', 'https://jncc.gov.uk/', 'UK nature conservation evidence and advice', 'The official site describes nature-conservation evidence and advice; species occurrences and conservation status are separate from planting permission.'),
     source('gb-nbn', 'biodiversity', 'National Biodiversity Network (NBN Atlas)', 'https://nbn.org.uk/the-nbn-atlas/', 'Candidate biodiversity portal; coverage unverified', '', unavailable('Full page unavailable through the browsing tool; no NBN dataset, licence or API contract was verified.')),
-    source('gb-extension', 'agricultural-extension', 'Farming Advice Service candidate', 'https://www.gov.uk/guidance/farming-advice-service', 'Candidate England advice route; scope unverified', '', unavailable('The candidate GOV.UK URL could not be read; the current advice provider and devolved equivalents need verification.')),
+    source('gb-extension', 'agricultural-extension', 'Farming Advice Service (Defra)', 'https://www.gov.uk/government/groups/farming-advice-service',
+      'Defra-funded adviser network based across England',
+      'GOV.UK describes technical and business advice about farming regulations and links to newsletters and events.', {
+        title: 'Farming Advice Service',
+        accessedOn: '2026-11-03', publishedOn: null, backgroundOnly: true,
+        licence: known('The GOV.UK footer cites Open Government Licence v3.0 with exceptions. Reuse terms for linked material remain unverified.'),
+        accessRequirements: known('Public GOV.UK service information. Booking procedures and automated access remain unverified.'),
+        limitations: 'Service reach in Somerset and elsewhere in the UK remains unverified. Local crop planning still requires its own review.',
+      }),
     source('gb-metoffice', 'weather-frost', 'Met Office', 'https://www.metoffice.gov.uk/services/data', 'UK and global products, each with its own scope', 'The official page distinguishes open datasets, licensed services and Weather DataHub APIs. This does not verify frost dates or a single licence for every product.'),
     source('gb-ukceh', 'soils', 'UK Centre for Ecology & Hydrology (UKCEH)', 'https://www.ceh.ac.uk/data/web-based-apps', 'Great Britain for the listed soil-health tool', 'The official catalogue links the Countryside Survey Soil Health Tool. Its dataset resolution, terms and API were not reviewed.'),
     source('gb-defra', 'plant-legality', 'UK Plant Health Information Portal / Defra', 'https://planthealthportal.defra.gov.uk/', 'Portal with jurisdiction-specific links; Great Britain import guidance is explicitly linked', 'The portal links legislation, plant health, seeds and import-rule checks. It is not blanket permission to propagate or plant; Northern Ireland needs separate checks.'),

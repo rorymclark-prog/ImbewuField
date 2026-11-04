@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '1281505fe', changes: [
+    'Open England’s Farming Advice Service page from the UK country review.',
+  ], tour: [{ title: 'Find the England advice reference', where: 'International → Country review', href: '/international',
+    detail: 'Choose the United Kingdom and open Agricultural extension to find the GOV.UK link.' }] },
+  { when: '3 November 2026', sha: '2ae643d77', changes: [
+    "Open Met Office links to Yeovilton’s monthly weather records from the country review.",
+  ], tour: [{ title: "Review UK historical weather records", where: "International → Country review", href: '/international',
+    detail: "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions." }] },
   { when: '3 November 2026', sha: '56a2707f9', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
     'Keep your sowing records and nursery equipment while local planning is unavailable.',

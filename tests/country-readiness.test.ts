@@ -40,7 +40,7 @@ test('all engineering pilots preserve separate evidence roles and remain unrevie
     assert.equal(profile.stage, 'engineering-pilot'); assert.equal(profile.agronomyReview.status, 'not-reviewed');
     for (const category of EVIDENCE_CATEGORIES) assert.ok(profile.sources.some((source) => source.category === category));
     for (const source of profile.sources) {
-      assert.match(source.url, /^https:\/\//); assert.equal(source.accessedOn, AS_OF);
+      assert.match(source.url, /^https:\/\//); assert.equal(source.accessedOn, source.id === 'gb-extension' ? '2026-11-03' : AS_OF);
       assert.ok(source.verifiedClaim && source.limitations && source.missingDataBehavior);
       assert.ok(['known', 'unknown'].includes(source.licence.status));
     }
@@ -108,4 +108,24 @@ test('page modification metadata never supplies a missing publication date', () 
   const source = reviewedFixture().sources[0];
   assert.equal(sourceEvidenceState({ ...source, publishedOn: null, lastModifiedOn: AS_OF }, AS_OF), 'undated');
   assert.equal(sourceEvidenceState({ ...source, lastModifiedOn: null }, AS_OF), 'available-reference');
+});
+
+test('an England advice referral remains background even when a publication date is established', () => {
+  const date = '2026-11-03';
+  const result = evaluateCountryReadiness({ countryCode: 'GB' }, date);
+  const extension = result.evidence.find(entry => entry.category === 'agricultural-extension')!;
+  const referral = extension.sources.find(source => source.id === 'gb-extension')!;
+  assert.equal(referral.url, 'https://www.gov.uk/government/groups/farming-advice-service');
+  assert.equal(referral.publishedOn, null);
+  assert.equal(extension.availableCount, 0);
+
+  const dated = { ...referral, publishedOn: date };
+  assert.equal(sourceEvidenceState(dated, date), 'background-reference');
+  const profile = reviewedFixture();
+  profile.sources = profile.sources.filter(source => source.category !== 'agricultural-extension').concat(dated);
+  profile.agronomyReview.sourceIds = profile.sources.map(source => source.id);
+  const context = { countryCode: profile.code, agriculturalRegionId: 'test-region' };
+  assert.equal(evaluateCountryReadiness(context, date, [profile]).localReviewComplete, false);
+  delete dated.backgroundOnly;
+  assert.equal(evaluateCountryReadiness(context, date, [profile]).localReviewComplete, true);
 });

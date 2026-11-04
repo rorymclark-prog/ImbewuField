@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // England advice reference: docs/international/agy-england-fas-release-copy-2026-11-04/source.json; UNREVIEWED AI drafts.
+  "Open England’s Farming Advice Service page from the UK country review.": "Pfula phepha ra Vukorhokeri bya Switsundzuxo swa Vurimi bya England ku suka eka nhlelo wa tiko ra UK.",
+  "Find the England advice reference": "Kuma xikombo xa switsundzuxo swa England",
+  "Choose the United Kingdom and open Agricultural extension to find the GOV.UK link.": "Hlawula United Kingdom kutani u pfula Switsundzuxo swa vurimi ku kuma xihlanganisi xa GOV.UK.",
   // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
   "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Hlawula tindhawu leti hlayisiweke leti mupfuni a nga ti tirhisaka. U nga tsema vuhlanganisi eka Swiyimiso.",
   "Keep original site photos and PDFs with their source and import history.": "Hlayisa swifaniso swa masungulo swa ndhawu ni ti-PDF swin’we ni xihlovo xa swona ni matimu ya ku swi nghenisa.",
@@ -11,6 +15,11 @@ const copy:UpdateCopy={
   "Check your saved map": "Kambela mepe wa wena lowu hlayisiweke",
   "Site design": "Dizayini ya ndhawu",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Kambela ndhawu yoleyo u nga si tirhisa mindzulamiso ya mupfuni kumbe ku pimanisa xifaniso xa khale.",
+  // UK station links: docs/international/pilots/uk-station-release-copy/drafts.json; UNREVIEWED AI drafts.
+  "Open Met Office links to Yeovilton’s monthly weather records from the country review.": "Pfula swihlanganisi swa Met Office ku ya eka tirhekhodo ta maxelo ta n'hweti na n'hweti ta Yeovilton eka ku kambisisa ka tiko.",
+  "Review UK historical weather records": "Kambisisa tirhekhodo ta matimu ta maxelo ta UK",
+  "International → Country review": "Matiko ya misava → Nkambisiso wa tiko",
+  "Choose the United Kingdom and Yeovilton to open records from one station. Check local conditions before making planting decisions.": "Hlawula United Kingdom na Yeovilton ku pfula tirhekhodo leti humaka eka xitichi xin'we. Kamba swiyimo swa kwalaho u nga si teka swiboho swo byala.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",

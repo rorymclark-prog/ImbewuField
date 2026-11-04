@@ -1,0 +1,15 @@
+{
+  "fetch": {
+    "requestedUrl": "https://www.gov.uk/government/groups/farming-advice-service",
+    "effectiveUrl": "https://www.gov.uk/government/groups/farming-advice-service",
+    "httpStatus": 200,
+    "fetchedAtUtc": "2026-11-03T23:01:31.324428+00:00",
+    "bytes": 65899,
+    "sha256": "7b0987ce3e468574a54276535eef59ca6719d00aed63ac524897efe1744652ab"
+  },
+  "scope": "GOV.UK service page describing a Defra-funded adviser network based across England",
+  "pageFooterLicence": "Open Government Licence v3.0 with exceptions",
+  "linkedMaterialReuseVerified": false,
+  "localServiceAccessVerified": false,
+  "localAgronomyReviewed": false
+}

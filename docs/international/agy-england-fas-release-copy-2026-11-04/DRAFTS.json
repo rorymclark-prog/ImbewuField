@@ -1,0 +1,30 @@
+{
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "entries": [
+    {
+      "english": "Open England’s Farming Advice Service page from the UK country review.",
+      "messageSha256": "bda2280b55b82fe267fc978120128dfa689ace0e9a9c0de936d8c1e0353e35bb",
+      "st": "Bula leqephe la Tšebeletso ea Keletso ea Temo la England ho tsoa tlhahlobong ea naha ea UK.",
+      "ts": "Pfula phepha ra Vukorhokeri bya Switsundzuxo swa Vurimi bya England ku suka eka nhlelo wa tiko ra UK.",
+      "ve": "Vulani siaṱari la Tshumelo ya Nyeletshedzo ya Vhulimi la England u bva kha tsedzuluso ya shango la UK.",
+      "zu": "Vula ikhasi le-Farming Advice Service lase-England kusuka ekubuyekezweni kwezwe lase-UK."
+    },
+    {
+      "english": "Find the England advice reference",
+      "messageSha256": "5c812e69afe3ab816a215a261fa8d4b44b00f7d6563af35f9b1c05184ec613dc",
+      "st": "Fumana tšupiso ea keletso ea England",
+      "ts": "Kuma xikombo xa switsundzuxo swa England",
+      "ve": "Wananani ndaedzo ya nyeletshedzo ya England",
+      "zu": "Thola inkomba yezeluleko yase-England"
+    },
+    {
+      "english": "Choose the United Kingdom and open Agricultural extension to find the GOV.UK link.",
+      "messageSha256": "ba936b00d87f9db1e49e09a92a0f37b90d6e962bc4fb39f2ed232135f2a12b60",
+      "st": "Kgetha United Kingdom ebe o bula Keletso ea temo ho fumana sehokelo sa GOV.UK.",
+      "ts": "Hlawula United Kingdom kutani u pfula Switsundzuxo swa vurimi ku kuma xihlanganisi xa GOV.UK.",
+      "ve": "Nangani United Kingdom ni vule Nyeletshedzo ya vhulimi u itela u wana tshitanganyi tsha GOV.UK.",
+      "zu": "Khetha i-United Kingdom bese uvula Ezolimo zokweluleka ukuze uthole isixhumanisi se-GOV.UK."
+    }
+  ]
+}
