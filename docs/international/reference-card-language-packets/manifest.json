@@ -138,5 +138,22 @@
     ],
     "reviewedByHuman": false,
     "runtimeActivation": false
+  },
+  "us-nifa-directory": {
+    "sourceSha256": "56706fb2ac3d0d68480153f713e82743902bb04e72a08f768e7b0a6dde61b91b",
+    "draftsSha256": "36d319ed660d3b934233454e43c24f0e167fe582732a742fdccfc9c4f1ff63dd",
+    "literals": [
+      "NIFA",
+      "land-grant"
+    ],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
+  },
+  "kenya-extension": {
+    "sourceSha256": "21dafffe42cb519677ba23523b2bd7b2ed81215c6844b827de07b5612a89cd9d",
+    "draftsSha256": "e5bd6c7037fdb7262363319d0dd84fea3880c303b9215dced0f6c253efc747a2",
+    "literals": [],
+    "reviewedByHuman": false,
+    "runtimeActivation": false
   }
 }

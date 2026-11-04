@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // US and Kenya review notice. AGY draft reconciled to existing terms; fluent review pending.
+  "Compare draft wording for the US institution directory and Kenya extension references.": "Bapisa mongolo oa moralo oa phetolelo bakeng sa lethathamo la litsi tsa US le litšupiso tsa keletso ea temo tsa Kenya.",
   // International reference review notices. AGY drafts reconciled to existing wording, pending fluent review.
   "Compare draft wording for the England advice service and the Campinas office directory.": "Bapisa mongolo oa moralo oa phetolelo bakeng sa tšebeletso ea keletso ea England le bukana ea liofisi tsa Campinas.",
   "Compare draft wording for Kenya’s historical soil catalogue.": "Bapisa mongolo oa moralo oa phetolelo bakeng sa lethathamo la nalane la mobu la Kenya.",

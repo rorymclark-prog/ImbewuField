@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // US and Kenya review notice. AGY draft reconciled to existing terms; fluent review pending.
+  "Compare draft wording for the US institution directory and Kenya extension references.": "Pimanisa marito ya mpfapfarhuto ya nxaxamelo wa swivandla swa US ni swikombo swa switsundzuxo swa vurimi swa Kenya.",
   // International reference review notices. AGY drafts reconciled to existing wording, pending fluent review.
   "Compare draft wording for the England advice service and the Campinas office directory.": "Pimanisa marito ya mpfapfarhuto ya vukorhokeri bya switsundzuxo swa England na dayirekitari ya tihofisi ta Campinas.",
   "Compare draft wording for Kenya’s historical soil catalogue.": "Pimanisa marito ya mpfapfarhuto ya khathaloko ya matimu ya misava ya Kenya.",
