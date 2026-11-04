@@ -41,11 +41,18 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '4 November 2026', sha: 'e6078a16f', changes: [
+  { when: '4 November 2026', sha: '0831af329', changes: [
     'Review your own nursery space in square metres or square feet.',
     'Prepare grouped seedling and seed counts from your proposed crop plan.',
   ], tour: [{ title: 'Review nursery preparation', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
     detail: 'Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.' }] },
+  { when: '4 November 2026', sha: 'ff23dc4d1', changes: [
+    'See when local design advice needs your saved site and current country details.',
+    'Distinguish advice about the original South African sample from your own drawing.',
+  ], tour: [{ title: 'Check the design advice basis', where: 'Design Studio → Lima', href: '/design',
+    detail: 'Open your saved design. Local tips use the existing South African references only when the current saved-site context supports them. Country confirmation does not approve local farming advice; your drawing stays available when advice is held.' },
+  { title: 'Review the original sample', where: 'Tour → Plan the growing season', href: '/tour',
+    detail: 'Open the growing-season stop and choose All tools to see the sample advice control. It names the original sample layout; a request does not analyse your sample edits.' }] },
   { when: '4 November 2026', sha: 'ff23dc4d1', changes: [
     'See a welcome for small growers, market gardens and community projects.',
   ], tour: [{ title: 'Start with your growing space', where: 'Home → Map and Production plan', href: '/home',

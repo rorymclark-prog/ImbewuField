@@ -34,7 +34,7 @@
 // into a desktop aside (there is room below) and upward from the phone sheet (there is not), with
 // its own scroll cap in either case. Only the BODY region, a sibling of the tool row, may clip.
 
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useRef, useState, type Ref } from 'react';
 import { createPortal } from 'react-dom';
 import dynamic from 'next/dynamic';
 import {
@@ -146,6 +146,9 @@ export type WaterInfrastructureVisibility = Record<WaterInfrastructureLayer, boo
 export type PlantingSublayerVisibility = Record<PlantingSublayer, boolean>;
 
 export interface DesignPaletteProps {
+  /** Exposes the mounted fixed phone sheet so page chrome can reserve its actual
+   * occupied region without changing the canvas or guessing a palette height. */
+  phoneSheetRef?: Ref<HTMLDivElement>;
   step: WizardStep;
   tool: ToolKind;
   setTool: (t: ToolKind) => void;
@@ -570,6 +573,7 @@ export default function DesignPalette({
   hiddenSections,
   onBottomStopChange,
   simple = false,
+  phoneSheetRef,
 }: DesignPaletteProps) {
   const { t, lang } = useLanguage();
   const [hintDefId, setHintDefId] = useState<string | null>(null);
@@ -3082,6 +3086,7 @@ export default function DesignPalette({
   if (isPhone) {
     return (
       <div
+        ref={phoneSheetRef}
         style={{
           // Fixed to the TRUE viewport, not the page's own overflowing flex column — see the
           // module comment at the top of this file for why that distinction is the entire fix.
