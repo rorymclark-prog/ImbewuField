@@ -11,6 +11,15 @@ const copy:UpdateCopy={
   "Check your saved map": "Ṱolani mapa waṋu wo vhulungwaho",
   "Site design": "Pulane ya fhethu",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Ṱolani henefho fhethu musi ni sa athu shumisa tshanduko dza muthusi kana u vhambedza tshifanyiso tsha kale.",
+  // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
+  "Confirm a mapped site’s country before using its crop-planning guidance.": "Khwathisedzani shango ḽa fhethu ho mapiwaho musi ni sa athu shumisa vhulangeli ha u pulana zwilimwa.",
+  "Keep your sowing records and nursery equipment while local planning is unavailable.": "Vhulungani rekhodo dzaṋu dza u zwala na zwishumiswa zwa nese musi pulane ya henefho i sa athu vha hone.",
+  "Confirm your site country": "Khwathisedzani shango ḽa fhethu haṋu",
+  "Crop planner → Site country and region": "Mupulani wa zwilimwa → Shango ḽa fhethu na vhupo",
+  "Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.": "Vulani fhethu haṋu ho mapiwaho nahone ni khwathisedze zwidodombedzwa zwa shango ḽaho. U khwathisedza shango a zwi tendeli nyeletshedzo dza vhulimi dza vhupo vhuswa.",
+  "Review an unmapped reference": "Tsedzulusani tsumbo i songo mapiwaho",
+  "Crop planner → Planning without a mapped site": "Mupulani wa zwilimwa → U pulana hu si na fhethu ho mapiwaho",
+  "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Kha mbethe wa maitele kana vhuvhambadzi ha henefho, nangani kana ni bvise mutheo wa tsumbo wa Afurika Tshipembe nga ho livhaho. Khetho i sala henefho kha vhupo ha u shumela.",
   // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
   "Open Terrain & Sections for the two cuts and extra contour detail.": "Vulani Terrain & Sections u vhona khethekanyo mbili na miṅwe mitalo ya vhulapfu.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.

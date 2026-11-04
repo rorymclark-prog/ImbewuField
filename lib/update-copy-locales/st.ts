@@ -11,6 +11,15 @@ const copy:UpdateCopy={
   "Check your saved map": "Lekola mmapa wa hao o bolokilweng",
   "Site design": "Moralo wa sebaka",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlahloba sebaka sona seo pele o kenya diphetoho tsa mothusi kapa o bapisa senepe sa kgale.",
+  // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
+  "Confirm a mapped site’s country before using its crop-planning guidance.": "Netefatsa naha ea sebaka se mmepiloeng pele u sebelisa tataiso ea sona ea moralo oa lijalo.",
+  "Keep your sowing records and nursery equipment while local planning is unavailable.": "Boloka lirekoto tsa hao tsa ho jala le lisebelisoa tsa nesari ea limela ha moralo oa sebaka o ntse o sa fumanehe.",
+  "Confirm your site country": "Netefatsa naha ea sebaka sa hao",
+  "Crop planner → Site country and region": "Moralo oa lijalo → Naha ea sebaka le lebatowa",
+  "Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.": "Bula sebaka sa hao se mmepiloeng mme u netefatse lintlha tsa naha ea sona. Ho netefatsa naha ha ho lumelle keletso ea temo bakeng sa lebatowa le letšha.",
+  "Review an unmapped reference": "Hlahloba tšupiso e sa mmepiloeng",
+  "Crop planner → Planning without a mapped site": "Moralo oa lijalo → Ho rera ntle le sebaka se mmepiloeng",
+  "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Bakeng sa bethe e bōpiloeng kapa moralo oa sebaka, khetha kapa u tlose motheo oa tšupiso oa Afrika Boroa ka ho hlaka. Khetho ena e sala le sebaka seo sa mosebetsi.",
   // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
   "Open Terrain & Sections for the two cuts and extra contour detail.": "Bula Terrain & Sections ho bona dikarolo tse pedi le mela e meng ya bophahamo.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.

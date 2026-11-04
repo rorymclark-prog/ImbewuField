@@ -2,6 +2,7 @@ import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPerM2Range } from './crop-catalog';
 import { normaliseRecordUnit, validRecordQuantity, type RecordUnit } from './farm-records';
 import { sanitiseNurserySettings, type NurserySettings } from './nursery-settings';
+import { sanitiseWorkspacePlanningReferences, type WorkspacePlanningReference } from './international/workspace-context';
 import { foodGroupOf, nutritionGroupOf } from './crop-groups';
 import {
   isSampleMode,
@@ -100,6 +101,8 @@ export interface Planting {
 export interface CropPlanState {
   version: 1;
   plantings: Planting[];
+  /** An explicit reference basis for an unmapped workspace, never a country declaration. */
+  workspaceReferences?: WorkspacePlanningReference[];
   /** Buyer demand belongs to a site, even when two farms use the same crop. */
   harvestTargets?: HarvestTarget[];
   /** Grower-owned nursery equipment and estimates, scoped to their sites. */
@@ -411,7 +414,9 @@ export function loadCropPlan(): CropPlanState {
     settleOnceRows(plantings, settleNow.getFullYear(), settleNow.getMonth() + 1);
   if (isSampleMode()) {
     const sandbox = getSandboxCropPlan();
-    return { ...sandbox, plantings: settle(sandbox.plantings) };
+    return { ...sandbox, plantings: settle(sandbox.plantings),
+      ...(sandbox.workspaceReferences !== undefined
+        ? { workspaceReferences: sanitiseWorkspacePlanningReferences(sandbox.workspaceReferences) } : {}) };
   }
   if (typeof window === 'undefined' || !window.localStorage) {
     return emptyPlan();
@@ -425,6 +430,8 @@ export function loadCropPlan(): CropPlanState {
     return {
       version: 1,
       plantings: settle(parsed.plantings),
+      ...(parsed.workspaceReferences !== undefined
+        ? { workspaceReferences: sanitiseWorkspacePlanningReferences(parsed.workspaceReferences) } : {}),
       ...(Array.isArray(parsed.harvestTargets) ? { harvestTargets: sanitiseHarvestTargets(parsed.harvestTargets) } : {}),
       ...(parsed.nursery !== undefined ? { nursery: sanitiseNurserySettings(parsed.nursery) } : {}),
       ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
@@ -508,14 +515,16 @@ function isRainPattern(value: unknown): value is RainPattern {
  * about a write it never attempted.
  */
 export function saveCropPlan(s: CropPlanState): boolean {
+  const saved = s.workspaceReferences === undefined ? s
+    : { ...s, workspaceReferences: sanitiseWorkspacePlanningReferences(s.workspaceReferences) };
   if (isSampleMode()) {
-    setSandboxCropPlan(s);
+    setSandboxCropPlan(saved);
     if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
     return true; // the sandbox IS the demo's real store, so this genuinely did persist
   }
   if (typeof window === 'undefined' || !window.localStorage) return false;
   try {
-    window.localStorage.setItem(activeAccountLocalStorageKey(STORAGE_KEY), JSON.stringify(s));
+    window.localStorage.setItem(activeAccountLocalStorageKey(STORAGE_KEY), JSON.stringify(saved));
     window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
     return true;
   } catch {

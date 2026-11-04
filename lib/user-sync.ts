@@ -7,9 +7,14 @@ import { readTombstones, LOCAL_TOMBSTONE_TTL_MS } from './local-tombstones';
 import {
   accountLocalStorageKey,
   accountLocalStorageKeyMatchesPrefix,
+  activeAccountUid,
 } from './account-local-storage';
 import type { SavedPlace } from './saved-places';
 import type { WaterPoint } from './water-points';
+import { coordinateSiteIdForPlace, normaliseSiteCountryContext, type SiteCountryContext } from './international/site-context';
+import {
+  boundSiteContext, mergePlaceContexts, placeRevision, pickSiteContext, sameSiteContext,
+} from './international/place-context-merge';
 
 const FARM_KEY      = 'imbewu_farm_shapes';
 const PLACES_KEY    = 'permamap_saved_places';
@@ -219,6 +224,109 @@ export function isDeleteStale(remoteItemTs: number | undefined, deletedAtMs: num
   return timestampOrZero(remoteItemTs) > deletedAtMs;
 }
 
+// THE places merge — every path that reconciles saved places (initial reconcile, live listener,
+// the shared-site import in lib/saved-places.ts) goes through this one function. Base rows and
+// tombstones are decided by the existing revision authority first; a grower's country context is
+// then re-attached only to a surviving row of the SAME revision (lib/international/place-context-merge.ts),
+// so a context can never revive a deleted site or outrank a newer move/notes edit.
+// ONE revision authority for places: placeRevision (edit time, else the legacy save time). It was
+// previously split — row selection read updatedAt only, so two legacy rows without updatedAt both
+// compared as 0 and the OLDER one could survive a tie and keep its own country. A legacy row that
+// pre-dates its tombstone is still deleted (tomb > savedAt); only a row saved AFTER the deletion now
+// survives, which is the deliberate re-add rule applied to rows that never had an updatedAt.
+// `getTs` stays injectable for tests. Contexts are additionally bound to (id, revision, savedAt),
+// so even a tie cannot attach one row's confirmation to another.
+export function mergePlaces(
+  remote: SavedPlace[], local: SavedPlace[],
+  remoteDel: Tombstones, localDel: Tombstones,
+  now: number, getTs: (p: SavedPlace) => number = placeRevision,
+): { items: SavedPlace[]; deleted: Tombstones } {
+  const merged = mergeItems(remote, local, remoteDel, localDel, placeId, getTs, now);
+  return { items: mergePlaceContexts(merged.items, [remote, local]), deleted: merged.deleted };
+}
+
+type SyncDb = NonNullable<ReturnType<typeof db>>;
+
+// Places reconcile + live listener are shared by the whole-map subscription and the places-only
+// one below, so the two can never grow different merge rules.
+async function reconcilePlacesDoc(d: SyncDb, uid: string, isCurrent: () => boolean, now: number): Promise<void> {
+  const placesKey = accountLocalStorageKey(PLACES_KEY, uid);
+  const placesDeletedKey = accountLocalStorageKey(PLACES_DELETED_KEY, uid);
+  const placesRef = doc(d, COLL, uid, 'data', 'places');
+  await runTransaction(d, async (tx) => {
+    const snap = await tx.get(placesRef);
+    if (!isCurrent()) return;
+    const data = snap.exists() ? snap.data() : {};
+    const remote: SavedPlace[] = data.places ?? [];
+    const remoteDel: Tombstones = data.deleted ?? {};
+    const { items, deleted } = mergePlaces(remote, readLocal<SavedPlace>(placesKey), remoteDel, readTombstones(placesDeletedKey), now);
+    localStorage.setItem(placesKey, JSON.stringify(items));
+    tx.set(placesRef, { places: items, deleted, updatedAt: serverTimestamp() });
+  });
+}
+
+function listenPlacesDoc(
+  d: SyncDb, uid: string, isCurrent: () => boolean, onChange: () => void, onError: (e: unknown) => void,
+): () => void {
+  const placesKey = accountLocalStorageKey(PLACES_KEY, uid);
+  const placesDeletedKey = accountLocalStorageKey(PLACES_DELETED_KEY, uid);
+  return onSnapshot(doc(d, COLL, uid, 'data', 'places'), (snap) => {
+    if (!isCurrent()) return;
+    if (snap.metadata.hasPendingWrites || !snap.exists()) return;
+    const { items } = mergePlaces(snap.data().places ?? [], readLocal<SavedPlace>(placesKey), snap.data().deleted ?? {}, readTombstones(placesDeletedKey), Date.now());
+    localStorage.setItem(placesKey, JSON.stringify(items));
+    onChange();
+  }, onError);
+}
+
+// Truthful delivery state for the places-only subscription. 'live' means the realtime listener is
+// attached, NOT that a particular edit has been acknowledged by the cloud.
+export type PlacesSyncState = 'syncing' | 'live' | 'offline' | 'unavailable';
+
+export interface PlacesSyncHandlers {
+  onPlaces?: () => void;
+  onState?: (state: PlacesSyncState) => void;
+}
+
+// Places-only live sync for a route (the crop planner) that must see cross-device saved-place
+// changes without starting whole-map shape/water/design reconciliation. Same lifecycle contract as
+// subscribeUserMapData: bound to `uid`, every step re-checks that this subscription is still the
+// current signed-in account, and the returned function disposes it (A→B switching = dispose, then
+// subscribe for B). 'unavailable' = no cloud transport (sample mode or no backend): local data only.
+// 'offline' = reconcile or the listener failed: local data kept, no live delivery until resubscribed.
+export function subscribeUserPlaces(uid: string, handlers: PlacesSyncHandlers): () => void {
+  const d = db();
+  if (!d) { handlers.onState?.('unavailable'); return () => {}; }
+
+  let disposed = false;
+  let unsubscribe: (() => void) | null = null;
+  const isCurrent = () => !disposed && getFirebase()?.auth?.currentUser?.uid === uid;
+  const emit = (state: PlacesSyncState) => { if (isCurrent()) handlers.onState?.(state); };
+
+  emit('syncing');
+  (async () => {
+    try {
+      await reconcilePlacesDoc(d, uid, isCurrent, Date.now());
+    } catch (e) {
+      console.error('[sync] places reconcile error (likely offline) — keeping local data', e);
+      emit('offline');
+      return;
+    }
+    if (!isCurrent()) return;
+    handlers.onPlaces?.();
+    if (!isCurrent()) return;
+    const stop = listenPlacesDoc(d, uid, isCurrent, () => handlers.onPlaces?.(), (e) => {
+      console.error('[sync] places listener', e);
+      emit('offline');
+    });
+    if (!isCurrent()) { stop(); return; }
+    unsubscribe = stop;
+    emit('live');
+  })();
+
+  return () => { disposed = true; unsubscribe?.(); unsubscribe = null; };
+}
+
 export interface SyncHandlers {
   onPlaces?: () => void;
   onWater?: () => void;
@@ -245,14 +353,11 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
   // namespaces halfway through an A→B transition. Bare legacy rows have no trustworthy owner,
   // so a signed-in account must never read or silently claim them.
   const farmKey          = accountLocalStorageKey(FARM_KEY, uid);
-  const placesKey        = accountLocalStorageKey(PLACES_KEY, uid);
-  const placesDeletedKey = accountLocalStorageKey(PLACES_DELETED_KEY, uid);
   const waterKey         = accountLocalStorageKey(WATER_KEY, uid);
   const waterDeletedKey  = accountLocalStorageKey(WATER_DELETED_KEY, uid);
   const designKey        = accountLocalStorageKey(DESIGN_STUDIO_KEY, uid);
 
   const shapesRef  = doc(d, COLL, uid, 'data', 'shapes');
-  const placesRef  = doc(d, COLL, uid, 'data', 'places');
   const waterRef   = doc(d, COLL, uid, 'data', 'water');
   const surveysRef = doc(d, COLL, uid, 'data', 'surveys');
   const designRef  = doc(d, COLL, uid, 'data', 'design');
@@ -267,16 +372,7 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
     // ── Phase 1: atomic reconcile ──
     try {
       // Places
-      await runTransaction(d, async (tx) => {
-        const snap = await tx.get(placesRef);
-        if (!isCurrentSubscription()) return;
-        const data = snap.exists() ? snap.data() : {};
-        const remote: SavedPlace[] = data.places ?? [];
-        const remoteDel: Tombstones = data.deleted ?? {};
-        const { items, deleted } = mergeItems(remote, readLocal<SavedPlace>(placesKey), remoteDel, readTombstones(placesDeletedKey), placeId, placeTs, now);
-        localStorage.setItem(placesKey, JSON.stringify(items));
-        tx.set(placesRef, { places: items, deleted, updatedAt: serverTimestamp() });
-      });
+      await reconcilePlacesDoc(d, uid, isCurrentSubscription, now);
       if (!isCurrentSubscription()) return;
       handlers.onPlaces?.();
 
@@ -370,13 +466,8 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       return true;
     };
 
-    if (!addLiveListener(() => onSnapshot(placesRef, (snap) => {
-      if (!isCurrentSubscription()) return;
-      if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const { items } = mergeItems(snap.data().places ?? [], readLocal<SavedPlace>(placesKey), snap.data().deleted ?? {}, readTombstones(placesDeletedKey), placeId, placeTs, Date.now());
-      localStorage.setItem(placesKey, JSON.stringify(items));
-      handlers.onPlaces?.();
-    }, (e) => console.error('[sync] places listener', e)))) return;
+    if (!addLiveListener(() => listenPlacesDoc(d, uid, isCurrentSubscription, () => handlers.onPlaces?.(),
+      (e) => console.error('[sync] places listener', e)))) return;
 
     if (!addLiveListener(() => onSnapshot(waterRef, (snap) => {
       if (!isCurrentSubscription()) return;
@@ -441,6 +532,96 @@ export async function upsertPlace(uid: string, place: SavedPlace): Promise<void>
       }
     });
   } catch (e) { console.error('[sync] upsertPlace', e); }
+}
+
+// What happened to a context-only cloud update. Only 'applied' and 'unchanged' mean the cloud copy
+// carries this context. Every other outcome leaves the cloud untouched; they split into
+//   DEFINITIVE rejections — the cloud row is a different place from the one the grower confirmed,
+//   so the still-current local confirmation must be rolled back (lib/saved-places.ts does that):
+//     missing-remote is NOT one of these (see below);  deleted — a deletion outranks the base;
+//     base-changed — the cloud row was moved/edited/re-added since (its revision or savedAt differs);
+//     site-mismatch — the cloud row sits at another canonical site than the context describes;
+//     unbound — the context carries no base binding, so it can approve nothing;
+//   PENDING outcomes — nothing is wrong with the confirmation, the cloud just cannot take it yet:
+//     missing-remote — the base place is not in the cloud (a country edit must not create it; a
+//       place made offline reaches the cloud through ordinary reconcile, context riding along);
+//     remote-behind — the cloud row is OLDER than the confirmed base: this device is ahead;
+//     superseded — the cloud holds a later confirmation for the same base (reconcile converges);
+//     unavailable — no transport, offline or quota error: nothing was acknowledged;
+//   and account-changed — the mounted owner or the Firebase user no longer equals the account this
+//     operation started for: it was abandoned without touching the cloud and must not report into
+//     the new account's UI.
+export type PlaceContextOutcome =
+  | 'applied' | 'unchanged' | 'missing-remote' | 'deleted' | 'base-changed' | 'remote-behind'
+  | 'site-mismatch' | 'unbound' | 'superseded' | 'unavailable' | 'account-changed';
+
+export const DEFINITIVE_CONTEXT_REJECTIONS: readonly PlaceContextOutcome[] =
+  ['deleted', 'base-changed', 'site-mismatch', 'unbound'];
+
+// Context-only transaction: updates ONLY `siteCountryContext` on the EXISTING remote row, never
+// replacing geometry/notes with the editor's possibly stale copy, never advancing the place
+// revision, never creating a row and never touching a tombstone. A rejected update is deliberately
+// NOT retried as a whole-place upsertPlace(): that would turn a metadata edit into a re-add.
+// `context.base` names the exact place identity it was confirmed against. The captured `uid` must
+// match BOTH the mounted local owner and the Firebase user at start, after the read (every retry)
+// and before the write, so a late callback after an A→B switch — or a transition where only one of
+// the two has moved — writes nothing. The local namespace stays on the mounted owner (that is
+// updateSiteCountryContext's rule); cloud access needs the credentialed user too.
+export interface PlaceContextResult {
+  outcome: PlaceContextOutcome;
+  /** For 'superseded': the later confirmation the cloud already holds for this exact base, so the
+   *  caller can adopt it locally instead of leaving a losing confirmation approved. */
+  authoritative?: SiteCountryContext;
+}
+
+export async function upsertPlaceContext(uid: string, context: SiteCountryContext): Promise<PlaceContextOutcome> {
+  return (await upsertPlaceContextResult(uid, context)).outcome;
+}
+
+export async function upsertPlaceContextResult(
+  uid: string, context: SiteCountryContext,
+): Promise<PlaceContextResult> {
+  const isCurrent = () => activeAccountUid() === uid && getFirebase()?.auth?.currentUser?.uid === uid;
+  if (!isCurrent()) return { outcome: 'account-changed' };
+  const d = db(); if (!d) return { outcome: 'unavailable' };
+  const safe = normaliseSiteCountryContext(context);
+  const base = safe?.base;
+  if (!safe || !base) return { outcome: 'unbound' };
+  const ref = doc(d, COLL, uid, 'data', 'places');
+  let outcome: PlaceContextOutcome = 'unavailable';
+  let authoritative: SiteCountryContext | undefined;
+  try {
+    await runTransaction(d, async (tx) => {
+      authoritative = undefined;
+      const snap = await tx.get(ref);
+      if (!isCurrent()) { outcome = 'account-changed'; return; }
+      const data = snap.exists() ? snap.data() : {};
+      const remote: SavedPlace[] = Array.isArray(data.places) ? data.places : [];
+      const deleted: Tombstones = data.deleted && typeof data.deleted === 'object' ? data.deleted : {};
+      const id = base.placeId;
+      const row = remote.find((p) => p?.id === id);
+      const tomb = timestampOrZero(deleted[id]);
+      if (!row) { outcome = tomb ? 'deleted' : 'missing-remote'; return; }
+      if (tomb > placeRevision(row)) { outcome = 'deleted'; return; }
+      const remoteRevision = placeRevision(row);
+      if (remoteRevision < base.revision) { outcome = 'remote-behind'; return; }
+      if (remoteRevision > base.revision || row.savedAt !== base.savedAt) { outcome = 'base-changed'; return; }
+      if (coordinateSiteIdForPlace(row) !== safe.siteId) { outcome = 'site-mismatch'; return; }
+      const existing = boundSiteContext(row);
+      const winner = pickSiteContext(existing, safe);
+      if (existing && winner && sameSiteContext(existing, safe)) { outcome = 'unchanged'; return; }
+      if (winner !== safe) { outcome = 'superseded'; authoritative = existing ?? undefined; return; }
+      outcome = 'applied';
+      tx.set(ref, {
+        places: remote.map((p) => (p?.id === id ? { ...p, siteCountryContext: safe } : p)),
+        deleted, updatedAt: serverTimestamp(),
+      });
+    });
+    return { outcome, authoritative };
+  } catch (e) {
+    console.error('[sync] upsertPlaceContext', e);
+    return { outcome: 'unavailable' };
+  }
 }
 
 // `deletedAtMs` is the ORIGINAL local delete timestamp (from lib/saved-places.ts's deletePlace(),

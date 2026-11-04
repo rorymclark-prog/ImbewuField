@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { Sprout, Leaf, Droplets, Sun, Snowflake, ChevronDown } from 'lucide-react';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
@@ -16,7 +16,15 @@ import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
 import type { RainPattern } from '@/lib/crop-catalog';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
-import { loadCropPlan } from '@/lib/crop-plan';
+import { loadCropPlan, saveCropPlan, CROP_PLAN_CHANGED_EVENT, type CropPlanState } from '@/lib/crop-plan';
+import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
+import { coordinateSiteIdForPlace } from '@/lib/international/site-context';
+import { resolvePlanningSupport } from '@/lib/international/planning-support';
+import { resolveWorkspacePlanningReference, replaceWorkspacePlanningReference, removeWorkspacePlanningReference, type WorkspacePlanningReference } from '@/lib/international/workspace-context';
+import WorkspaceReferencePanel from '@/components/international/countries/WorkspaceReferencePanel';
+import SavedSiteUpdates from '@/components/international/countries/SavedSiteUpdates';
+import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
+import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import {
   CALENDAR_LIMA_ADVICE_ZU, CALENDAR_LIMA_HOLD_MONTHS,
@@ -63,9 +71,8 @@ interface CropRow {
 }
 
 /** English + isiZulu label for each RainPattern the calendar can be showing —
- * whichever one the farmer's saved crop plan was generated against
- * (CropPlanState.rainPattern, lib/crop-plan.ts), falling back to 'summer'
- * for a plan saved before that field existed or when there is no plan yet. */
+ * explicitly selected for this reference guide. The globally stored plan
+ * pattern is not bound to a physical site and cannot choose this context. */
 const RAIN_PATTERN_LABELS: Record<RainPattern, { en: string; zu: string }> = {
   summer: { en: 'Summer-rainfall pattern', zu: 'Iphethini yemvula yasehlobo' },
   'mild-frost': { en: 'Summer rain, light winter frost', zu: 'Imvula yasehlobo, isithwathwa esincane sasebusika' },
@@ -84,8 +91,8 @@ const CROP_BASE: { name: string; catalogKey: string; harvestMonths: number[] }[]
   { name: 'Pumpkin', catalogKey: CATALOG_KEY_FOR_CROP.Pumpkin, harvestMonths: [1, 2, 3] },
 ];
 
-/** Builds CROPS for whichever RainPattern the farmer's saved plan actually uses, rather than
- * always assuming 'summer'. ux-18: `name` now comes from the shared produceLabel() helper
+/** Builds CROPS for the explicitly chosen reference pattern after context approval.
+ * ux-18: `name` now comes from the shared produceLabel() helper
  * (lib/produce-label.ts) instead of CROP_BASE's own hardcoded string, so this grid spells a
  * crop the same way MyRecords, Home and /prices do, in whichever language is active — this was
  * the 'Sweet Potato' on /calendar vs 'Sweet potato' everywhere else the audit flagged. */
@@ -392,15 +399,52 @@ export default function CalendarPage() {
        t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')]
     : MONTH_ABBR;
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
-  // The crops the farmer actually planted, read from lib/crop-plan.ts's loadCropPlan() — the same
-  // store the crop planner (app/cropplan, app/facilitator/crops) writes to. This used to read
-  // 'imbewu_planner_crops', a key app/survey/page.tsx also only ever READ and nothing in the app
-  // ever wrote — a permanently empty filter that could never once have matched anything.
-  const [plannedCropKeys, setPlannedCropKeys] = useState<Set<string>>(new Set());
-  // The RainPattern the farmer's saved plan was generated against (lib/crop-plan.ts's
-  // CropPlanState.rainPattern) — read alongside plannedCropKeys below so this calendar
-  // follows the same plan rather than always assuming summer rainfall.
-  const [rainPattern, setRainPattern] = useState<RainPattern>('summer');
+  const referenceWorkspace = 'design:calendar-reference';
+  const referenceChoice = 'reference:calendar';
+  const [selectedContext, setSelectedContext] = useState('');
+  const contextRef = useRef(selectedContext); contextRef.current = selectedContext;
+  const [snapshot, setSnapshot] = useState<{places: SavedPlace[]; plan: CropPlanState}>({places:[],plan:{version:1,plantings:[],updatedAt:0}});
+  const refresh = useCallback(() => {
+    const plan = loadCropPlan();
+    setSnapshot({places:loadPlaces(),plan});
+  }, []);
+  useEffect(() => {
+    refresh();
+    const events = ['storage','focus','permamap-places-changed',CROP_PLAN_CHANGED_EVENT,DESIGN_CANVAS_CHANGED_EVENT];
+    events.forEach(event => window.addEventListener(event,refresh));
+    return () => events.forEach(event => window.removeEventListener(event,refresh));
+  }, [refresh]);
+  const siteChoices = useMemo(() => {
+    const choices = new Map<string,string[]>();
+    for (const place of snapshot.places) {
+      const siteId = coordinateSiteIdForPlace(place);
+      if (siteId) choices.set(siteId,[...(choices.get(siteId) ?? []),place.name]);
+    }
+    return [...choices.entries()].map(([id,names])=>({id,name:[...new Set(names)].join(' / ')}));
+  }, [snapshot.places]);
+  const isReference = selectedContext === referenceChoice;
+  const selectedSiteId = isReference ? null : selectedContext || 'calendar-context-not-selected';
+  const support = resolvePlanningSupport({places:snapshot.places,siteId:selectedSiteId,
+    workspaceId:isReference ? referenceWorkspace : null,workspaceReferences:snapshot.plan.workspaceReferences});
+  const [rainPattern, setRainPattern] = useState<RainPattern | null>(null);
+  const patternLabel = rainPattern ? RAIN_PATTERN_LABELS[rainPattern] : null;
+  const allowCalendar = support.allowCataloguePlanning && rainPattern !== null;
+  useEffect(() => { setRainPattern(null); }, [support.fingerprint]);
+  const plannedCropKeys = useMemo(() => {
+    // The general guide does not quietly borrow a foreign farm's crop filter.
+    if (isReference || !selectedContext) return new Set<string>();
+    const bedIds = new Set(bedsFromDesignCanvas(loadCanvasState(selectedContext)).map(bed=>bed.id));
+    return new Set(snapshot.plan.plantings.filter(planting=>bedIds.has(planting.bedId)).map(planting=>planting.cropKey));
+  }, [isReference,selectedContext,snapshot]);
+  function saveReference(reference: WorkspacePlanningReference | null): boolean {
+    if (contextRef.current !== referenceChoice) return false;
+    const current = loadCropPlan();
+    const workspaceReferences = reference ? replaceWorkspacePlanningReference(current.workspaceReferences,reference)
+      : removeWorkspacePlanningReference(current.workspaceReferences,referenceWorkspace);
+    const saved = saveCropPlan({...current,workspaceReferences,updatedAt:Date.now()});
+    if (saved) refresh();
+    return saved;
+  }
   // "Show all" overrides a real plan without touching it — the plan itself is read-only here.
   const [showAllOverride, setShowAllOverride] = useState(false);
   // Simple: the 12-month reference grid is behind this disclosure; All tools always shows it.
@@ -416,24 +460,15 @@ export default function CalendarPage() {
   useEffect(() => {
     // `nearest` on the block axis so centring a chip never scrolls the page itself.
     activeChipRef.current?.scrollIntoView({ inline: 'center', block: 'nearest' });
-  }, [selectedMonth]);
+  }, [selectedMonth, allowCalendar]);
 
   // The month the farmer is actually in, kept apart from the one they are reading. Tapping March
   // in January used to leave nothing on screen saying which month was now — the heading follows
   // the selection, so "this month" had no marker at all once you browsed away from it.
   const currentMonth = new Date().getMonth();
 
-  useEffect(() => {
-    try {
-      const plan = loadCropPlan();
-      setPlannedCropKeys(new Set(plan.plantings.map((p) => p.cropKey)));
-      setRainPattern(plan.rainPattern ?? 'summer');
-    } catch { /* ignore */ }
-  }, []);
-
-  // Rebuilt only when the plan's rain pattern changes — everything below reads
-  // from these, never from a page-wide 'summer' assumption.
-  const crops = useMemo(() => cropsForPattern(rainPattern, lang), [rainPattern, lang]);
+  // Existing reference arithmetic runs only after an explicit pattern choice.
+  const crops = useMemo(() => rainPattern ? cropsForPattern(rainPattern, lang) : [], [rainPattern, lang]);
   const monthlyData = useMemo(() => monthlyDataForCrops(crops), [crops]);
 
   const hasPlan = plannedCropKeys.size > 0;
@@ -473,6 +508,8 @@ export default function CalendarPage() {
         right={<LessonLink id="crops:calendar" label={localUi('Learn', 'Funda', lang)} />}
       />
 
+      <SavedSiteUpdates onPlaces={refresh} />
+
       {/* Scrollable body */}
       <main
         style={{
@@ -490,6 +527,32 @@ export default function CalendarPage() {
             <span lang="en" style={{ display: 'block', marginTop: 4 }}>Monthly chores and Lima advice have unreviewed isiZulu drafts beside English sources. Some farming instructions remain in English for review.</span>
           </p>
         )}
+        <section aria-label="Calendar reference context" className="m-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] p-4 font-sans text-[var(--text-primary)]">
+          <h2 className="font-display text-lg font-semibold">Choose the reference context</h2>
+          <p className="mt-2 text-sm text-[var(--text-secondary)]">This guide uses South African reference material. A country choice, a language or a saved sowing date cannot establish a local planting calendar for another country.</p>
+          <label className="mt-3 block text-sm">Calendar context
+            <select className="mt-1 min-h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-0)] p-2" value={selectedContext}
+              onChange={event=>{setSelectedContext(event.target.value);setRainPattern(null);setShowAllOverride(false);setShowYear(false);}}>
+              <option value="">Choose a saved site or a separate reference guide</option>
+              {siteChoices.map(site=><option key={site.id} value={site.id}>{site.name} · saved site</option>)}
+              <option value={referenceChoice}>South African reference guide · no mapped farm</option>
+            </select>
+          </label>
+          <p className="mt-2 text-sm text-[var(--text-secondary)]">{support.reason}</p>
+          {isReference && <div className="mt-3"><WorkspaceReferencePanel workspaceId={referenceWorkspace}
+            reference={resolveWorkspacePlanningReference(snapshot.plan.workspaceReferences,referenceWorkspace)} onReference={saveReference} /></div>}
+          {support.allowCataloguePlanning && <div className="mt-3">
+            <label className="block text-sm">South African reference pattern
+            <select className="mt-1 min-h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-0)] p-2" value={rainPattern ?? ''}
+              onChange={event=>setRainPattern(Object.hasOwn(RAIN_PATTERN_LABELS,event.target.value) ? event.target.value as RainPattern : null)}>
+              <option value="">Choose a reference pattern</option>
+              {Object.entries(RAIN_PATTERN_LABELS).map(([value,label])=><option key={value} value={value}>{label.en}</option>)}
+            </select>
+            </label>
+            <p className="mt-1 text-xs text-[var(--text-secondary)]">A reference pattern is not an observation of this site’s climate. No pattern is selected from the global saved crop plan.</p>
+          </div>}
+        </section>
+        {allowCalendar ? <>
         {/* ---- Month strip ---- */}
         {/* staff-18: the strip already scrolls the active chip to centre on mount (see the
             activeChipRef effect above), but there was no visual hint that it scrolls at all —
@@ -840,7 +903,7 @@ export default function CalendarPage() {
                     color: 'var(--text-secondary)',
                   }}
                 >
-                  {localUi(RAIN_PATTERN_LABELS[rainPattern].en, RAIN_PATTERN_LABELS[rainPattern].zu, lang)}
+                  {patternLabel && localUi(patternLabel.en, patternLabel.zu, lang)}
                 </span>
               </div>
             </div>
@@ -861,7 +924,7 @@ export default function CalendarPage() {
 
             {/* No planted crops on this device at all — the fallback is the same general grid
                 every farmer used to see, but said out loud rather than left to guesswork. */}
-            {!hasPlan && (
+            {!hasPlan && !isReference && (
               <div style={{ margin: '12px 14px 0', padding: '8px 12px', background: 'var(--bg-0)', border: '1px solid var(--border)', borderRadius: 10, fontSize: 12, fontFamily: 'var(--font-sans)', color: 'var(--text-muted)' }}>
                 {localUi('Showing the general planting guide — plant crops in your crop plan to filter this to just yours', 'Kuboniswa umhlahlandlela wokutshala ojwayelekile — tshala izitshalo ohlelweni lwakho ukuze kucwengwe lokhu kube okwakho kuphela', lang)}
               </div>
@@ -1005,6 +1068,12 @@ export default function CalendarPage() {
           {/* Bottom breathing room */}
           <div style={{ height: 8 }} />
         </div>
+        </> : <section aria-label="Calendar unavailable" className="m-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] p-4 font-sans text-[var(--text-primary)]">
+          <h2 className="font-display text-lg font-semibold">Reference calendar not selected</h2>
+          <p className="mt-2 text-sm">Choose an explicitly supported saved site or acknowledge the separate South African reference guide, then choose a reference pattern. Monthly farming instructions remain unavailable until both choices are complete.</p>
+          <p className="mt-2 text-sm">Saved crops, country details and measured maps remain unchanged.</p>
+          <a href="/facilitator/crops" className="mt-2 inline-block underline">Review site country and crop planning</a>
+        </section>}
       </main>
 
       {/* Lima in the document flow, not floating over the page. The draggable FAB was measured

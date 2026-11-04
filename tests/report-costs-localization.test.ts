@@ -1,3 +1,4 @@
+import { SUPPORTED_REPORT_COUNTRY_FIXTURE_URL } from './report-country-fixture.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -131,7 +132,7 @@ test('the actual API emits the full native cost bill with all measured lines, ev
   const hooks=registerHooks({resolve(s,c,next){
     if(s==='@anthropic-ai/sdk')return{url:url('export default class Anthropic{}'),shortCircuit:true};
     if(s==='next/server')return{url:url('export class NextRequest{}'),shortCircuit:true};
-    if(s==='@/lib/api-auth')return{url:url('export async function guardPaidApiRequest(){return {uid:"costs-test"}}'),shortCircuit:true};
+    if(s==='@/lib/report-country-policy')return {url:SUPPORTED_REPORT_COUNTRY_FIXTURE_URL,shortCircuit:true};if(s==='@/lib/api-auth')return{url:url('export async function guardPaidApiRequest(){return {uid:"costs-test"}}'),shortCircuit:true};
     if(s==='@/lib/metered-ai')return{url:url("export const AI_MODELS={main:'mock'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async()=>({usage:{},stop_reason:'end_turn',content:[{type:'text',text:'## Mocked body\\nMocked body content.'}]})}}}}"),shortCircuit:true};
     return next(s,c);
   }});

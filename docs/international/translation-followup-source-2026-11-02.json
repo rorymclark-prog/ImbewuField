@@ -1,0 +1,1111 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-11-02",
+  "review": {
+    "status": "coordinator-review-required"
+  },
+  "basis": "Private read-only supplement proposal from exact current source. Not dispatched, integrated, translated, or approved.",
+  "boundedOriginalInventorySha256": "917e150dd6a3cd42b7a1e98eb7cc837afdc301d807525e4e91c5a29a4163465d",
+  "scope": "Second bounded UI batch: exact quoted full messages, warnings, field dimensions and accessibility strings omitted by the first JSX segment inventory. Original templates are deferred until whole-message source design.",
+  "sourceEnglishConvention": "String values are exact cooked TS literals. Template strings contain their exact source interior with original ${expression} tokens, which are recorded explicitly. sourceSha256 hashes UTF-8 sourceEnglish; occurrence hashes additionally pin exact TS expression bytes.",
+  "limits": [
+    "JSX sentence fragments in the original 97 still require future whole-message source design.",
+    "Imported country labels, month/catalogue names, forecast child-component text, and propagated lib/bed-block errors are outside this supplement.",
+    "Do not dispatch template entries without reviewing how nested translated branches will be resolved.",
+    "Fifteen raw template interiors were deliberately excluded from this dispatchable subset; no runtime variable-expression names are translator placeholders."
+  ],
+  "messages": [
+    {
+      "key": "Supplement.SiteCountryPanel.001",
+      "sourceEnglish": "Your account did not accept these country details. The saved site changed or is unavailable; reopen its current details before confirming again.",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 51,
+      "sourceSha256": "1e4ff6a7937b11e15e391fa00847c7484a3d935f6c2825f3d0a92b5b35332de8",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 51,
+          "column": 29,
+          "sourceExpression": "'Your account did not accept these country details. The saved site changed or is unavailable; reopen its current details before confirming again.'",
+          "sourceExpressionSha256": "f12fa1a9a189ed16605a66734ad3fab3fa1964d876df9992c049e55ddc4be981"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.002",
+      "sourceEnglish": "Your account confirmed these country details for this saved site.",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 52,
+      "sourceSha256": "127983503c3b68af55e8a6552601a9e5b52f561799c8e120f7c60ae8ebf4f4f4",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 52,
+          "column": 28,
+          "sourceExpression": "'Your account confirmed these country details for this saved site.'",
+          "sourceExpressionSha256": "3741ccf559f7c9fb18139b8865cb1fb9596ed4139c384b24284507776e295346"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.003",
+      "sourceEnglish": "Country details are saved here. Account confirmation is still pending or unavailable.",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 53,
+      "sourceSha256": "be91ffac47a21dced2e46db2a20d31efc7f4f03362f635eed0b0055cd237a32c",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 53,
+          "column": 15,
+          "sourceExpression": "'Country details are saved here. Account confirmation is still pending or unavailable.'",
+          "sourceExpressionSha256": "8327bac2aca10f91257f25c948c03daf748753611a14831f79579d0ffbbd19b8"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.004",
+      "sourceEnglish": "This saved site is no longer available. Reopen it before saving.",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 57,
+      "sourceSha256": "e94ba674c504a4dbef96f0232afa9e2cf0ad62aba09652864dce6a63667c0c0d",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 57,
+          "column": 53,
+          "sourceExpression": "'This saved site is no longer available. Reopen it before saving.'",
+          "sourceExpressionSha256": "ad8f1e205992c0604ab0f881c51de817d79df21655d3dc218bc3483cad9a6654"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.005",
+      "sourceEnglish": "Country details could not be saved. Your previous saved details remain in place.",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 58,
+      "sourceSha256": "be82c667b63d5e4ae287a5f217d3db5c456d1fd2538681cead5b05d12ad294e7",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 58,
+          "column": 11,
+          "sourceExpression": "'Country details could not be saved. Your previous saved details remain in place.'",
+          "sourceExpressionSha256": "e765f419f2da50d9fd308035a07aebcba57bcdca5b93550a787738575b0d7fcc"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.006",
+      "sourceEnglish": "Country details saved for this sample session only.",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 62,
+      "sourceSha256": "57d5bef1bd64c9e09cb0a21ac0de45ce9120c8ec9977110fefdd1bc0a612153f",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 62,
+          "column": 43,
+          "sourceExpression": "'Country details saved for this sample session only.'",
+          "sourceExpressionSha256": "76bae2eb7efb0fc5efee912bf9b9248203e8bd210347539cb9149ce1870be70b"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.007",
+      "sourceEnglish": "Country details saved on this device. Account confirmation is separate.",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 63,
+      "sourceSha256": "b2b3b6922ca565a5c6a43190422923d6ddde7d1493457c4bc60cad98637aa773",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 63,
+          "column": 9,
+          "sourceExpression": "'Country details saved on this device. Account confirmation is separate.'",
+          "sourceExpressionSha256": "9eb5e9643131800c178d27736b11ce05a881b6a71b92a2118c6ed26f76acabae"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.009",
+      "sourceEnglish": "Saved entries for this same mapped site disagree. Confirm one description for all of them.",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 73,
+      "sourceSha256": "208e2bed44fe7b974854e26e873ee498ebfe0cae8140b0771a1d57fd33f64168",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 73,
+          "column": 44,
+          "sourceExpression": "'Saved entries for this same mapped site disagree. Confirm one description for all of them.'",
+          "sourceExpressionSha256": "41dded2bd43894fd59868954ebb6c65db8200897117a4901f4c5500ced15969b"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.010",
+      "sourceEnglish": "The country for this site has not been confirmed. Existing plans and measured maps stay saved.",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 74,
+      "sourceSha256": "71e722a36fe3998a70b93b53143e56ed1cfc701e31457b961e6d87cee0588f7a",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 74,
+          "column": 11,
+          "sourceExpression": "'The country for this site has not been confirmed. Existing plans and measured maps stay saved.'",
+          "sourceExpressionSha256": "a6a9fc079e346fbe38db7e382407a63b5891e8c34c43f6805b9553797b3598b9"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.011",
+      "sourceEnglish": "Review or change country details",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 76,
+      "sourceSha256": "e8db3218bc44a91458bddde91e41583e6de13a22d068c45feeec59d9fd80494c",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 76,
+          "column": 82,
+          "sourceExpression": "'Review or change country details'",
+          "sourceExpressionSha256": "e46c61ff8e032f3660e2d424ec5de1d9941578ab4842f8ddc7402399c65597da"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.SiteCountryPanel.012",
+      "sourceEnglish": "Confirm country details",
+      "sourceFile": "components/international/countries/SiteCountryPanel.tsx",
+      "line": 76,
+      "sourceSha256": "2c3357984ceda5d45ab6ed1f87393d7442c9f38a53b6e6203326938403acd219",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 76,
+          "column": 119,
+          "sourceExpression": "'Confirm country details'",
+          "sourceExpressionSha256": "67eaf60d183e4bda9118a4233176f616fa7af35257919702f3ba608ac01fd9a1"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.PlannerSupportHold.002",
+      "sourceEnglish": "Choose a reference basis for this unmapped workspace",
+      "sourceFile": "components/international/countries/PlannerSupportHold.tsx",
+      "line": 13,
+      "sourceSha256": "cb01cad63093287ba4af42da78f34af5b5427fc34b3511cf84b8f56f16b3b20f",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 13,
+          "column": 68,
+          "sourceExpression": "'Choose a reference basis for this unmapped workspace'",
+          "sourceExpressionSha256": "5f503339da92931735a3a2af117d3d98e0a967865912131ef4f0a5b88be5b18d"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.PlannerSupportHold.003",
+      "sourceEnglish": "Local crop planning is not available for this country yet",
+      "sourceFile": "components/international/countries/PlannerSupportHold.tsx",
+      "line": 13,
+      "sourceSha256": "0fce6bc6eec66898105901245843369bd3a1a7701aaa19fb5d7c08ad675ef0ad",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 13,
+          "column": 161,
+          "sourceExpression": "'Local crop planning is not available for this country yet'",
+          "sourceExpressionSha256": "2b08b44d3b316cbbba4d8ddb55fdaeb1ab30f9e8566a7a446142859410d27867"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.PlannerSupportHold.004",
+      "sourceEnglish": "Confirm the site country before crop planning",
+      "sourceFile": "components/international/countries/PlannerSupportHold.tsx",
+      "line": 13,
+      "sourceSha256": "3228f1f34f8a0b3411ab25e1f38cc7e4780c00a98fb06827dc91585b68e2f61a",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 13,
+          "column": 223,
+          "sourceExpression": "'Confirm the site country before crop planning'",
+          "sourceExpressionSha256": "aa44cbf7b0515ba9dc07ea870bb0e90c46ce545e20b658fca74654566a969b79"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.PlannerSupportHold.005",
+      "sourceEnglish": "Saved bed",
+      "sourceFile": "components/international/countries/PlannerSupportHold.tsx",
+      "line": 21,
+      "sourceSha256": "5c564d2d209705acbf955fad91899f925ce905cdbc0f8f21be9af1ca58d3a7a2",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 21,
+          "column": 139,
+          "sourceExpression": "'Saved bed'",
+          "sourceExpressionSha256": "9bf7215e52f3b215276f644e2f555a73f9d94017ff24b3caa2dcd005ba3853fd"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.PlannerSupportHold.006",
+      "sourceEnglish": "Unknown",
+      "sourceFile": "components/international/countries/PlannerSupportHold.tsx",
+      "line": 21,
+      "sourceSha256": "b764cdc0eab7137467211272fa539f1260d1bf2e71bcf6ff3bdc960f5c16aa14",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 21,
+          "column": 214,
+          "sourceExpression": "'Unknown'",
+          "sourceExpressionSha256": "35b151599e81d88b1c233d2fcf33ecd260db56f2f660728f9f0d51354fbb7c8f"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.001",
+      "sourceEnglish": "unknown",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 38,
+      "sourceSha256": "b23a6a8439c0dde5515893e7c90c1e3233b8616e634470f20dc4928bcf3609bc",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 38,
+          "column": 74,
+          "sourceExpression": "'unknown'",
+          "sourceExpressionSha256": "551b29bdf877b9cb40b917f9879125e93a61d9d82f143793115ea4b1139a95ba"
+        },
+        {
+          "line": 174,
+          "column": 255,
+          "sourceExpression": "'unknown'",
+          "sourceExpressionSha256": "551b29bdf877b9cb40b917f9879125e93a61d9d82f143793115ea4b1139a95ba"
+        },
+        {
+          "line": 203,
+          "column": 252,
+          "sourceExpression": "'unknown'",
+          "sourceExpressionSha256": "551b29bdf877b9cb40b917f9879125e93a61d9d82f143793115ea4b1139a95ba"
+        },
+        {
+          "line": 203,
+          "column": 379,
+          "sourceExpression": "'unknown'",
+          "sourceExpressionSha256": "551b29bdf877b9cb40b917f9879125e93a61d9d82f143793115ea4b1139a95ba"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.002",
+      "sourceEnglish": "ImbewuField nursery planning forecast",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 69,
+      "sourceSha256": "4ac81e84122aff20ffa21674aa636b4e39b8925afbf216f9128458844617c2b8",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 69,
+          "column": 162,
+          "sourceExpression": "'ImbewuField nursery planning forecast'",
+          "sourceExpressionSha256": "6e11ea839efa6111527a2d0fcd8f9e6ee2fc2a42eb27ca622eaeda8f598ac617"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.003",
+      "sourceEnglish": "Sharing cancelled; no file was sent.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 70,
+      "sourceSha256": "5ce3fb6f09dd9ef394425bbe132aa186bf99b595cfb7dd4bf3c7eebcfa0f1b0a",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 70,
+          "column": 50,
+          "sourceExpression": "'Sharing cancelled; no file was sent.'",
+          "sourceExpressionSha256": "0feb0782baa2a17e5dd1d75c14dcd1b1aeaad1008b2c7c9a873e086870318c00"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.005",
+      "sourceEnglish": "Demo nursery",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 71,
+      "sourceSha256": "09619eea46f59c03d46973ba52b5431d06a9f3af16ac3b9054e070d059ac35e5",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 71,
+          "column": 45,
+          "sourceExpression": "'Demo nursery'",
+          "sourceExpressionSha256": "23def66cbc67601baf20917f113e9153191cee6f9f4f7334e1bf54e448edf4f3"
+        },
+        {
+          "line": 72,
+          "column": 23,
+          "sourceExpression": "'Demo nursery'",
+          "sourceExpressionSha256": "23def66cbc67601baf20917f113e9153191cee6f9f4f7334e1bf54e448edf4f3"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.006",
+      "sourceEnglish": "Nursery",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 71,
+      "sourceSha256": "8efe9605ccce4ede012563b42c9b11c9bb037bbae6cf771f87cfeb15166bbeff",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 71,
+          "column": 62,
+          "sourceExpression": "'Nursery'",
+          "sourceExpressionSha256": "69220e088df286431058dcfd1797ac497e5c73f0c882506e284b093907d5f49e"
+        },
+        {
+          "line": 72,
+          "column": 40,
+          "sourceExpression": "'Nursery'",
+          "sourceExpressionSha256": "69220e088df286431058dcfd1797ac497e5c73f0c882506e284b093907d5f49e"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.008",
+      "sourceEnglish": "Enter a name and a net usable growing area of zero or more square metres.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 87,
+      "sourceSha256": "23747210a6bc46dfe90cc4ce5d5e6c60757135538c09a3ec767234559bd39b8c",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 87,
+          "column": 57,
+          "sourceExpression": "'Enter a name and a net usable growing area of zero or more square metres.'",
+          "sourceExpressionSha256": "878c391bc03e79ccf2a03d2894d0eb67d0dbb1782761ded6c5cc96ec5b773ddd"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.009",
+      "sourceEnglish": "Nursery space saved for this site.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 88,
+      "sourceSha256": "db1804a90ba639a8f41412f6922111677476845881996c6a176f2a9233743943",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 88,
+          "column": 117,
+          "sourceExpression": "'Nursery space saved for this site.'",
+          "sourceExpressionSha256": "e927c64ab7b569531d798b4d44bc53fdb484fee090563387921dc71670d2e518"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.010",
+      "sourceEnglish": "Enter a name and a positive whole cell count. Known dimensions must be positive; owned stock can be zero or a whole number. Leave unknown values blank.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 97,
+      "sourceSha256": "253256c8ab20908ec976566fbf37d6e591479d1f40c10870abe61d3428841915",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 97,
+          "column": 61,
+          "sourceExpression": "'Enter a name and a positive whole cell count. Known dimensions must be positive; owned stock can be zero or a whole number. Leave unknown values blank.'",
+          "sourceExpressionSha256": "54b420b4dad250bb3be21f384b541b6f5d0a9952ad08f3fcf16149d006b7c918"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.011",
+      "sourceEnglish": "Nursery container saved for this site.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 98,
+      "sourceSha256": "e8116407cd7f42192e9a1bfd00137d78e70eea227cbeb9e3f90c04bc999fcfc9",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 98,
+          "column": 125,
+          "sourceExpression": "'Nursery container saved for this site.'",
+          "sourceExpressionSha256": "cac2ad411303979e88085beae47a6b2f2aeda5508c21b81088e0a59198293a53"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.012",
+      "sourceEnglish": "Choose a transplant crop. Use percentages from 0–100, positive usable starts, a whole seed count of zero or more, and nursery weeks above zero up to 52. Leave unknown estimates blank.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 111,
+      "sourceSha256": "ecaca873d5a8a77e96bef081670503cadf43fed812f85bdacd37d8231e6d6578",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 111,
+          "column": 59,
+          "sourceExpression": "'Choose a transplant crop. Use percentages from 0–100, positive usable starts, a whole seed count of zero or more, and nursery weeks above zero up to 52. Leave unknown estimates blank.'",
+          "sourceExpressionSha256": "25df1e603ed104165d62fb015473758d841ff1135a91c6666c85054c7e59c100"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.013",
+      "sourceEnglish": "Crop nursery recipe saved for this site.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 112,
+      "sourceSha256": "1d7f2d653e4f97c63a5459a519fe517fe2794a8ee3a16c0def8abc77018b05f3",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 112,
+          "column": 154,
+          "sourceExpression": "'Crop nursery recipe saved for this site.'",
+          "sourceExpressionSha256": "f095229676dbd3ad4e3b8a52fae9d0f9e684e615bea1e4c89cd3c34956a797d2"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.014",
+      "sourceEnglish": "Plan nursery demand from accepted crop sowings. Add your own equipment and crop estimates below. Blank values stay unknown; the app does not choose germination rates, tray sizes or nursery losses for you.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 131,
+      "sourceSha256": "2db9f7655b3e0194d44783d25bd31f0cad52f6bc3374a01cb1d933307ab5e613",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 131,
+          "column": 11,
+          "sourceExpression": "'Plan nursery demand from accepted crop sowings. Add your own equipment and crop estimates below. Blank values stay unknown; the app does not choose germination rates, tray sizes or nursery losses for you.'",
+          "sourceExpressionSha256": "d6a4dfcf111544c1c79cb5d54174a92c36e91f3d8918a0ded81107fd4f97c833"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.015",
+      "sourceEnglish": "Keep your own nursery equipment and crop estimates here. Demand forecasts are unavailable until this site has a supported local planning basis. Saving these inputs does not approve local crop timing, spacing or suitability.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 132,
+      "sourceSha256": "0202eb811b72eca58e6fe96302376ead0ca13e698424811e1eb04626d95b4641",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 132,
+          "column": 11,
+          "sourceExpression": "'Keep your own nursery equipment and crop estimates here. Demand forecasts are unavailable until this site has a supported local planning basis. Saving these inputs does not approve local crop timing, spacing or suitability.'",
+          "sourceExpressionSha256": "5643f91b78183c9c298e9d35695ce5124a27ce1fe98d169cca2f9c01486bbee3"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.016",
+      "sourceEnglish": "Preparing nursery CSV…",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 136,
+      "sourceSha256": "83c5418b7705760f50cb4cc55e6d36095636cb07427c0ba07d3a3d18bd4c7c3b",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 136,
+          "column": 132,
+          "sourceExpression": "'Preparing nursery CSV…'",
+          "sourceExpressionSha256": "c81465ea0a6a545ecf988517afea87ff5172a23f8aebeb295d0addb0e0363b50"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.017",
+      "sourceEnglish": "Download nursery CSV",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 136,
+      "sourceSha256": "6b91eee31afeccef6fdf3bec36b6d94c4c73e21e3ea18f24366d240ea05fbf9f",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 136,
+          "column": 159,
+          "sourceExpression": "'Download nursery CSV'",
+          "sourceExpressionSha256": "d0f886c4d57bb6d572a99ff93a449b3666cae7214e8eda7f5a338e106e52a728"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.020",
+      "sourceEnglish": "Space removed. Dependent crop recipes remain saved and their space allocation is unknown.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 155,
+      "sourceSha256": "96c0be214eabc49da330a8aa605010b331dc52b76a66e18500b4c00958877c46",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 155,
+          "column": 119,
+          "sourceExpression": "'Space removed. Dependent crop recipes remain saved and their space allocation is unknown.'",
+          "sourceExpressionSha256": "51b0becf7bc42443a27f7bc6aff9e803bbc1a8eb68d04641ce32b5029aafed4b"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.021",
+      "sourceEnglish": "Save space changes",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 162,
+      "sourceSha256": "1bc55657b176c47e5d7eba167783ce58669fb55f47855c73985dc06702713ac0",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 162,
+          "column": 115,
+          "sourceExpression": "'Save space changes'",
+          "sourceExpressionSha256": "b4f66fee88f0b464d465d2b2e1e3af37a41952f4ddaf841b463d1b093f431b8e"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.022",
+      "sourceEnglish": "Add nursery space",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 162,
+      "sourceSha256": "63737b9dc87f2263716aa1aec9e78213660602c638857a7e4a400e43564a40b4",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 162,
+          "column": 138,
+          "sourceExpression": "'Add nursery space'",
+          "sourceExpressionSha256": "71e2f115abcb71b44eb612bc5b7aa6aa4dd4c71f123b840cf739f8e5aefc39b8"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.023",
+      "sourceEnglish": "width unknown",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 174,
+      "sourceSha256": "7ca4bfe1625368e6121bfc52fa2ebf182229def91ba27efd4479143d1584ea52",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 174,
+          "column": 74,
+          "sourceExpression": "'width unknown'",
+          "sourceExpressionSha256": "5a6cb855e4e44d29c8bf11ca432f32cbb5f0758ffcaace69a9badcd8df6d5fb3"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.025",
+      "sourceEnglish": "length unknown",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 174,
+      "sourceSha256": "2d81c62aba0008116b7e501f5db40c0ef62c4f63b9d5eb594198c28bc08f6d45",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 174,
+          "column": 162,
+          "sourceExpression": "'length unknown'",
+          "sourceExpressionSha256": "371852ee3106ed38cc5feeb1d96b5b29ef88aad683450e5692544242b0aba7d8"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.028",
+      "sourceEnglish": "Container removed. Dependent crop recipes remain saved and container sizing is now unknown.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 178,
+      "sourceSha256": "fef18b9f1f73640a990f8539b56642a2f477e9c5ca8925bbc2594224f64231e3",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 178,
+          "column": 127,
+          "sourceExpression": "'Container removed. Dependent crop recipes remain saved and container sizing is now unknown.'",
+          "sourceExpressionSha256": "a6da576b806130eac5a30dd1ce55b3f299bfd426c3c93fdcc156c5515f394de4"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.030",
+      "sourceEnglish": "Save container changes",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 188,
+      "sourceSha256": "9e18bd6f0ee3d0f5323c5e68bb5afbfe36be5bbf8a93fc8c0377d90467d3c4b3",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 188,
+          "column": 119,
+          "sourceExpression": "'Save container changes'",
+          "sourceExpressionSha256": "d45b09f9bc8b39ee73c6fa309b0189ce356cc4c723b9607c2964cd8fabca0d66"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.031",
+      "sourceEnglish": "Add container type",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 188,
+      "sourceSha256": "ad2e1ebadf709271b325960e2939aa2b0a76dd4819d78b168ca26d7466a5bc82",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 188,
+          "column": 146,
+          "sourceExpression": "'Add container type'",
+          "sourceExpressionSha256": "7928f296ba4b9268dbd36438e63d3d08a37834dfe555f7099d899a6b81ec72be"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.032",
+      "sourceEnglish": "One recipe per transplant crop for this site. Your nursery duration checks readiness against the working field calendar; it does not move the field date. Missing values remain saved for later.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 198,
+      "sourceSha256": "ddb2ff8962ca2292dfed9b065d565e8e9c87d26163c9b0f83c5f1d33dd602fb4",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 198,
+          "column": 15,
+          "sourceExpression": "'One recipe per transplant crop for this site. Your nursery duration checks readiness against the working field calendar; it does not move the field date. Missing values remain saved for later.'",
+          "sourceExpressionSha256": "bdd7a08f939c702c9f6d7460b75f85950c92e66ddd3b08573cf84a3fd326a675"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.033",
+      "sourceEnglish": "Keep one grower-entered recipe per transplant crop for this site. Missing values remain unknown. These saved inputs do not calculate demand or set field dates.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 199,
+      "sourceSha256": "36bbaf2b482d0600cdaa7bf49d104e0aa9a7e8b87f75aee2e5bfe4a4cd482b9f",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 199,
+          "column": 15,
+          "sourceExpression": "'Keep one grower-entered recipe per transplant crop for this site. Missing values remain unknown. These saved inputs do not calculate demand or set field dates.'",
+          "sourceExpressionSha256": "75b85487fce63d49c74ca26ce30354ec9622c40be7b738d23923ebdc67e60cb3"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.034",
+      "sourceEnglish": "Container removed or unavailable",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 202,
+      "sourceSha256": "1825c4d5b2a33902a36af7cce0789d032d4b0def79404ec777763aa4f99c3ac4",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 202,
+          "column": 108,
+          "sourceExpression": "'Container removed or unavailable'",
+          "sourceExpressionSha256": "6d96ed485d39f106a063405aec75ff91adad2c3bab9854730136a9dc0b3a717b"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.035",
+      "sourceEnglish": "Container not selected",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 202,
+      "sourceSha256": "6ae67c995cc8d20890c228a88558a795cbb252837eb5429219c93b84176105eb",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 202,
+          "column": 145,
+          "sourceExpression": "'Container not selected'",
+          "sourceExpressionSha256": "dc4a7350e058179cdad72ea39382deff96618ae352a7c008f19d88e4c87021f9"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.036",
+      "sourceEnglish": "Space removed or unavailable",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 202,
+      "sourceSha256": "13c88fc4435261fbaef15d74ffdca0b3fee5f0c137098cf57dc7386e68531f3c",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 202,
+          "column": 234,
+          "sourceExpression": "'Space removed or unavailable'",
+          "sourceExpressionSha256": "6827ae60fcea03a2d8f2fab57ae9a337962197c09d44844e1a8e77cd9d5e52e8"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.037",
+      "sourceEnglish": "Space not selected",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 202,
+      "sourceSha256": "614ba9452238899a311d8c5fd749985672b71f313dc14e6cb7d74fe0fc236a8c",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 202,
+          "column": 267,
+          "sourceExpression": "'Space not selected'",
+          "sourceExpressionSha256": "b1e86a75a5644fa421ec8eec877f93f71a1d586bda44986b8e731982b903c770"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.040",
+      "sourceEnglish": "no extra allowance",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 203,
+      "sourceSha256": "767a7159b46be02968f9163843fef1a5111d917f347e4d0058b43d559721e4a8",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 203,
+          "column": 479,
+          "sourceExpression": "'no extra allowance'",
+          "sourceExpressionSha256": "435f886bf7a34d3832dd281c939e2c676f316435fe6d8ee7d19f04ebbfc77fa3"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.041",
+      "sourceEnglish": "not entered",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 203,
+      "sourceSha256": "8103c336a69d876187a6a92c53ee9dd9d6f120856ba58175a33248fb6be61c6e",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 203,
+          "column": 586,
+          "sourceExpression": "'not entered'",
+          "sourceExpressionSha256": "92a11b49442532a1de8ccfd57bfb1c9868893d7d9e4b0a45873c59c9f0a2a98a"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.044",
+      "sourceEnglish": "Crop nursery recipe removed for this site. Its crop sowings remain in the field plan.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 207,
+      "sourceSha256": "7fadbfece1f02551c59dcfb6ffe44ca3ceaefbd43e93693f15ee7f7d460d6505",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 207,
+          "column": 121,
+          "sourceExpression": "'Crop nursery recipe removed for this site. Its crop sowings remain in the field plan.'",
+          "sourceExpressionSha256": "7dbef75fb22c857be2987b0938d16272ed669d4e8f6e63979ab6b6964fc4d547"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.046",
+      "sourceEnglish": "Use source timing envelope",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 234,
+      "sourceSha256": "2cf9fd0e8c63a4870451018beefe0974057075af90c1fef22200aaa6d195de7f",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 234,
+          "column": 215,
+          "sourceExpression": "'Use source timing envelope'",
+          "sourceExpressionSha256": "187581c5bdfeb8716f97feae952e392e8eab4e2f406c922c147854bab66c7907"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.047",
+      "sourceEnglish": "Save recipe changes",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 236,
+      "sourceSha256": "0f46f2580c9df9067c14fd410aa771afe03ed76bdaddf3cad4b20571e8dfe439",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 236,
+          "column": 135,
+          "sourceExpression": "'Save recipe changes'",
+          "sourceExpressionSha256": "95070526783552f027c44e7dd8c7a6cce150c5da5c3fc326b833f9f750e33183"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.048",
+      "sourceEnglish": "Save crop recipe",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 236,
+      "sourceSha256": "fa4033c77f2e844bc177158fc9eb53737f63b380f3a9f58592cf3ba582de5803",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 236,
+          "column": 159,
+          "sourceExpression": "'Save crop recipe'",
+          "sourceExpressionSha256": "5d05fb66dcda61dfd984706c8a278e2746536acb36deffe0b740d61b9f1a6086"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.049",
+      "sourceEnglish": "Settings belong to this site’s crop plan on this device. Removing equipment leaves its dependent recipes visibly incomplete. This is a planning forecast, not observed live nursery stock. Net surface does not guarantee rectangular tray packing or include up-pot stage scheduling.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 243,
+      "sourceSha256": "d64a6e4f1dcfa92eb6ff1d4cad1d9ac757d34196dcc91f74a4a94fe510133382",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 243,
+          "column": 11,
+          "sourceExpression": "'Settings belong to this site’s crop plan on this device. Removing equipment leaves its dependent recipes visibly incomplete. This is a planning forecast, not observed live nursery stock. Net surface does not guarantee rectangular tray packing or include up-pot stage scheduling.'",
+          "sourceExpressionSha256": "ab9fd5d1b41f5e85b4ddff92a77ad9b6230ac8db041baba6d5efe3917dd34c87"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.NurseryPlanPanel.050",
+      "sourceEnglish": "Settings belong to this site’s crop plan on this device. Removing equipment leaves dependent recipes incomplete. Equipment entries are your inputs, not live stock counts. No nursery demand, field timing, purchasing forecast or tray-packing result is supplied here.",
+      "sourceFile": "components/crops/NurseryPlanPanel.tsx",
+      "line": 244,
+      "sourceSha256": "63cd768a49092d5476b17da0f8c362cb269d5b82d72e58cece1add4976a7fe6f",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 244,
+          "column": 11,
+          "sourceExpression": "'Settings belong to this site’s crop plan on this device. Removing equipment leaves dependent recipes incomplete. Equipment entries are your inputs, not live stock counts. No nursery demand, field timing, purchasing forecast or tray-packing result is supplied here.'",
+          "sourceExpressionSha256": "971be87a3f0bd7c30e6209dc0ae8f388b48a61cbfdf1686ed780a22b85faae0f"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.004",
+      "sourceEnglish": "Bed length (m)",
+      "sourceFile": "components/design/FieldBlocksPanel.tsx",
+      "line": 67,
+      "sourceSha256": "4561fb5adb560767db8a818b5e95adb70858b904350bcce5d676d61658bc66b9",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 67,
+          "column": 28,
+          "sourceExpression": "'Bed length (m)'",
+          "sourceExpressionSha256": "73924ddcd1b288edb8922cee336e20a8270a748a8ff9408d1816246eaf7358b0"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.005",
+      "sourceEnglish": "Bed width (m)",
+      "sourceFile": "components/design/FieldBlocksPanel.tsx",
+      "line": 67,
+      "sourceSha256": "9fb867f614b41d32ab913658a5ddfec49d3450cd3e77cf9066f3ac08741198db",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 67,
+          "column": 59,
+          "sourceExpression": "'Bed width (m)'",
+          "sourceExpressionSha256": "67ff7229b07dd279f0e7f25d9a2efddccaff7fcd9498dac1a1064cf0235606fc"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.006",
+      "sourceEnglish": "Path width (m)",
+      "sourceFile": "components/design/FieldBlocksPanel.tsx",
+      "line": 67,
+      "sourceSha256": "75b3cde7c79de1d861e42c63f9e0f4098e2ce296464bbae42e810fd3227368e3",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 67,
+          "column": 90,
+          "sourceExpression": "'Path width (m)'",
+          "sourceExpressionSha256": "f8ebbff08883c60c9ec8d6a42d3516b1d811810dffbcbd918a821ae484e75871"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.007",
+      "sourceEnglish": "Direction (degrees)",
+      "sourceFile": "components/design/FieldBlocksPanel.tsx",
+      "line": 67,
+      "sourceSha256": "b5d16c05c5ff0765b2cb590a053baa29b9556e47fcd20ed62f701e372379148a",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 67,
+          "column": 120,
+          "sourceExpression": "'Direction (degrees)'",
+          "sourceExpressionSha256": "9f27bcaeecf119a07615918f8601ef5da09ac45d845512498dda4112f02045dd"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.008",
+      "sourceEnglish": "The polygon becomes one field-sized crop-planning area.",
+      "sourceFile": "components/design/FieldBlocksPanel.tsx",
+      "line": 71,
+      "sourceSha256": "d249607799855c067b437e8ec73ee1bba9fa37ea133e9c7f63807869f9b1daeb",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 71,
+          "column": 73,
+          "sourceExpression": "'The polygon becomes one field-sized crop-planning area.'",
+          "sourceExpressionSha256": "3a3826fe82318b9d7a6387c5485052b0b90ea198da94405c011b7dfd2658ae54"
+        }
+      ]
+    },
+    {
+      "key": "Supplement.FieldBlocksPanel.010",
+      "sourceEnglish": "open field",
+      "sourceFile": "components/design/FieldBlocksPanel.tsx",
+      "line": 76,
+      "sourceSha256": "835fb48d83aaf9f6a2b851db5e49ac184ff17ba8f4548f3d4e4023e8b9775295",
+      "kind": "exact-string-source",
+      "placeholders": [],
+      "context": "Exact existing quoted string, including conditional branches and status messages. No inferred interpolation.",
+      "occurrences": [
+        {
+          "line": 76,
+          "column": 107,
+          "sourceExpression": "'open field'",
+          "sourceExpressionSha256": "d96dd3a9339f8f39b741a58756dd29643d6607e735f25b00f9501b6756611d6d"
+        }
+      ]
+    }
+  ]
+}

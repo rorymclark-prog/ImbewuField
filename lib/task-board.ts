@@ -14,6 +14,9 @@ import { designSiteIdFromLocation } from './design-studio';
 import type { LocationData } from './types';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { produceLabel } from './produce-label';
+import { resolvePlanningSupport } from './international/planning-support';
+import { coordinateSiteIdForPlace } from './international/site-context';
+import { workspacePlanningIdForDesign } from './international/workspace-context';
 
 // zu-03 (wave 13 audit): the task board was entirely hard-coded English — verbs, the default
 // "Bed {n}" label and "Due this month" — regardless of the farmer's chosen language. lib/i18n.tsx
@@ -301,20 +304,40 @@ export function loadCropBoardTasks(completedIds: Set<string>, translateFn: Board
  *  site's canvas was ever consulted. `savedPlantings` is the UNFILTERED count
  *  straight off the stored plan, so a screen can tell "no plan at all" apart
  *  from "a plan whose plantings all sit on beds that no longer exist". */
-function loadCropBoardSource(): { beds: PlanBed[]; plantings: Planting[]; savedPlantings: number } {
+function loadCropBoardSource(): { beds: PlanBed[]; plantings: Planting[]; savedPlantings: number; withheldPlantings: number; hasPlanningBasis: boolean } {
   const places = loadPlaces();
+  const plan = loadCropPlan();
   const main = resolveMainSite(places);
-  // Main site first — dedup in unionCanvasBeds keeps its bed on an id
-  // collision, and it stays the "primary" source when ordering matters.
-  const ordered = main ? [main, ...places.filter((p) => p.id !== main.id)] : places;
-  const canvases = ordered
-    .filter((p) => Number.isFinite(p.lat) && Number.isFinite(p.lon))
-    .map((p) => loadCanvasState(designSiteIdFromLocation({ lat: p.lat, lon: p.lon } as LocationData)));
-  const beds = taskBoardBedsAcrossPlaces(canvases, loadFacilitatorState());
-  const bedIds = new Set(beds.map((b) => b.id));
-  const saved = loadCropPlan().plantings;
-  const plantings = saved.filter((p) => bedIds.has(p.bedId));
-  return { beds, plantings, savedPlantings: saved.length };
+  const ordered = main ? [main, ...places.filter(p => p.id !== main.id)] : places;
+  const candidates = ordered.flatMap(place => {
+    const siteId = coordinateSiteIdForPlace(place);
+    if (!siteId) return [];
+    const beds = bedsFromDesignCanvas(loadCanvasState(siteId)).filter(usableBed);
+    const support = resolvePlanningSupport({ places, siteId, workspaceReferences: plan.workspaceReferences });
+    return beds.map(bed => ({ bed, origin: siteId, allowed: support.allowCataloguePlanning }));
+  });
+  if (!candidates.length) {
+    const facilitator = loadFacilitatorState();
+    const beds = taskBoardBedsAcrossPlaces([], facilitator);
+    // No mapped site can fall back to an unmapped reference acknowledgement.
+    const siteId = facilitator?.bgSite ? coordinateSiteIdForPlace(facilitator.bgSite) ?? 'invalid-mapped-site' : null;
+    const workspaceId = computeDesignBeds(facilitator).filter(usableBed).length
+      ? workspacePlanningIdForDesign(facilitator) : 'virtual-bed';
+    const support = resolvePlanningSupport({ places, siteId, workspaceId, workspaceReferences: plan.workspaceReferences });
+    candidates.push(...beds.map(bed => ({ bed, origin: siteId ?? workspaceId ?? 'unknown-design-workspace', allowed: support.allowCataloguePlanning })));
+  }
+  const byBed = new Map<string, typeof candidates>();
+  for (const candidate of candidates) byBed.set(candidate.bed.id, [...(byBed.get(candidate.bed.id) ?? []), candidate]);
+  // A global planting row has only a bed id. If two sites use that id, choosing
+  // the supported site first would give the other site's row its calendar.
+  const eligible = [...byBed.values()].filter(rows => rows.every(row => row.allowed && row.origin === rows[0].origin));
+  const beds = eligible.map(rows => rows[0].bed);
+  const bedIds = new Set(beds.map(bed => bed.id));
+  const heldIds = new Set([...byBed.keys()].filter(id => !bedIds.has(id)));
+  const plantings = plan.plantings.filter(planting => bedIds.has(planting.bedId));
+  return { beds, plantings, savedPlantings: plan.plantings.length,
+    withheldPlantings: plan.plantings.filter(planting => heldIds.has(planting.bedId)).length,
+    hasPlanningBasis: eligible.length > 0 };
 }
 
 /** The whole plan laid out over the twelve calendar months, plus the counts a
@@ -329,6 +352,9 @@ export interface CropBoardYear {
   /** Plantings saved in the crop plan before ANY filtering (bed, sow month,
    *  catalog, timing verification). 0 means there is genuinely no plan yet. */
   savedPlantings: number;
+  /** Saved rows retained, but no catalogue instruction is approved for their context. */
+  withheldPlantings?: number;
+  hasPlanningBasis?: boolean;
 }
 
 function emptyMonthBuckets(): Map<number, BoardTask[]> {
@@ -359,7 +385,7 @@ export function loadCropBoardYear(completedIds: Set<string>, now: Date = new Dat
   if (typeof window === 'undefined' || !window.localStorage) {
     return { byMonth: emptyMonthBuckets(), total: 0, savedPlantings: 0 };
   }
-  const { beds, plantings, savedPlantings } = loadCropBoardSource();
+  const { beds, plantings, savedPlantings, withheldPlantings, hasPlanningBasis } = loadCropBoardSource();
   const clock = now instanceof Date && Number.isFinite(now.getTime()) ? now : new Date();
   const tasks = buildCropBoardTasks(plantings, beds, clock.getMonth() + 1, completedIds);
   const byMonth = emptyMonthBuckets();
@@ -367,7 +393,7 @@ export function loadCropBoardYear(completedIds: Set<string>, now: Date = new Dat
     const bucket = byMonth.get(wrapMonth(task.dueMonth));
     if (bucket) bucket.push(task);
   }
-  return { byMonth, total: tasks.length, savedPlantings };
+  return { byMonth, total: tasks.length, savedPlantings, withheldPlantings, hasPlanningBasis };
 }
 
 // ── Completion store ────────────────────────────────────────────────────────
@@ -486,8 +512,13 @@ export function buildTaskIcs(task: BoardTask, now = new Date()): string {
   ].join('\r\n');
 }
 
-export function downloadTaskIcs(task: BoardTask): void {
-  if (typeof window === 'undefined') return;
+export function downloadTaskIcs(task: BoardTask): boolean {
+  if (typeof window === 'undefined') return false;
+  // Home can still hold a task button when another tab changes the country or
+  // removes its source. An old rendered task is not export permission.
+  if (task.kind === 'crop' && !loadCropBoardTasks(new Set()).some(current =>
+    current.id === task.id && current.action === task.action && current.cropKey === task.cropKey
+    && current.bedId === task.bedId && current.dueMonth === task.dueMonth)) return false;
   const blob = new Blob([buildTaskIcs(task)], { type: 'text/calendar' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -497,4 +528,5 @@ export function downloadTaskIcs(task: BoardTask): void {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+  return true;
 }

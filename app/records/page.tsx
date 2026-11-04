@@ -43,6 +43,7 @@ import { buildFinanceSeries, type FinanceSeries } from '@/lib/finance-series';
 import { useAppLevel } from '@/lib/app-level';
 import { loadCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, type CashflowSettings, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { useFinancePlanSource } from '@/lib/finance-plan-source';
+import SavedSiteUpdates from '@/components/international/countries/SavedSiteUpdates';
 import ComingUpHarvests from '@/components/ComingUpHarvests';
 import CashflowChart from '@/components/CashflowChart';
 import FinanceGraphs from '@/components/FinanceGraphs';
@@ -70,6 +71,9 @@ import { recordQuantity, recordUnit, recordQuantityPayload, recordWeightKg, quan
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, isRecordsRegionalLang, recordsDraftNotice } from '@/lib/records-regional-drafts';
 import { recordsDate } from '@/lib/records-months';
+
+// The shared subscriber emits the event read by the finance source hook.
+const onFinancePlacesReceived = () => {};
 
 // w19-12: on screen the thousands separator is a no-break space so "R8 175,00" never splits
 // across lines. lib/invoice-document.ts keeps the plain space because jsPDF's core fonts
@@ -1629,6 +1633,8 @@ export default function RecordsPage() {
         <SettingsButton />
       </header>
 
+      <SavedSiteUpdates onPlaces={onFinancePlacesReceived} />
+
       {/* Content */}
       <main className="flex-1 overflow-y-auto px-4 lg:px-8 py-5 lg:py-8 space-y-4">
         {user === 'loading' ? (
@@ -1867,7 +1873,7 @@ export default function RecordsPage() {
                     <AreaReturnCards sample={sampling} beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading || !planSource.loaded} />
                     <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
                     <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
-                    <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
+                    <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} forecastPlantings={planSource.forecastPlantings} forecastAvailable={planSource.forecastAvailable} forecastReason={planSource.forecastReason} />
                   </>
                 )}
                 {/* Same LogSaleForm as the phone branch, hosted in a modal. Mounted
@@ -1909,7 +1915,7 @@ export default function RecordsPage() {
                   <CashflowChart sales={sales} expenses={expenses} production={production} invoices={invoices} loading={dataLoading} />
                   <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} />
                   <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
-                  <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
+                  <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} forecastPlantings={planSource.forecastPlantings} forecastAvailable={planSource.forecastAvailable} forecastReason={planSource.forecastReason} />
                   <AreaReturnCards sample={sampling} beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading || !planSource.loaded} />
                   <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
                   {/* Never hidden behind a tab switch: "no data" may only mean "not reachable",

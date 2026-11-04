@@ -1,0 +1,433 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { registerHooks } from 'node:module';
+import test, { after } from 'node:test';
+import React from 'react';
+import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
+import ts from 'typescript';
+import { CROPS } from '@/lib/crop-catalog';
+import { bindSiteContext, createSiteCountryContext } from '@/lib/international/site-context';
+import type { SavedPlace } from '@/lib/saved-places';
+import type { AutoSuggestResult } from '@/lib/crop-autosuggest';
+import { IDEAL_PLAN_COPY, suggestIdealYearPlan } from '@/lib/crop-plan-ideal';
+import type { PlanBed, Planting } from '@/lib/crop-plan';
+import { createWorkspacePlanningReference, type WorkspacePlanningReference } from '@/lib/international/workspace-context';
+
+const siteId = 'site:0.00000,0.00000';
+const query = new URLSearchParams({ canvasSite: siteId, auto: '1' });
+const fixtureBed: PlanBed = { id: 'fixture-bed', label: 'Saved bed', areaM2: 1, minDimM: 1 };
+const probe = { React, query, climateRequests: 0, idealRuns: 0, IDEAL_PLAN_COPY, suggestIdealYearPlan,
+  beds: [fixtureBed] as PlanBed[] };
+Object.assign(globalThis, { __internationalPlannerContext: probe, IS_REACT_ACT_ENVIRONMENT: true });
+const moduleUrl = (source: string) => `data:text/javascript,${encodeURIComponent(source)}`;
+const routeUrl = new URL('../app/facilitator/crops/page.tsx', import.meta.url).href;
+const rootUrl = new URL('../', import.meta.url).href;
+const boundary = (name: string) => moduleUrl(`
+const React = globalThis.__internationalPlannerContext.React;
+function Boundary(props) { return React.createElement('div', { 'data-boundary': ${JSON.stringify(name)}, 'data-props': props }); }
+export default Boundary;
+export const PRODUCT_ICON = {};
+export const VarietyGuidance = Boundary;
+`);
+// Keep the real page, its state/mutation handlers, country form, storage and hold
+// view. Stub independent UI widgets and geometry/network inputs, never the policy.
+const hooks = registerHooks({
+  resolve(specifier, context, nextResolve) {
+    if (specifier === './firebase/init' && /\/lib\/(?:saved-places|account-local-storage|user-sync)\.ts/.test(context.parentURL ?? '')) {
+      return { url: moduleUrl('export const getFirebase = () => null; export const isBackendConfigured = () => false;'), shortCircuit: true };
+    }
+    if (specifier === 'next/link') return { url: moduleUrl(`
+      const React = globalThis.__internationalPlannerContext.React;
+      export default function Link({children,...props}) { return React.createElement('a', props, children); }
+    `), shortCircuit: true };
+    if (context.parentURL === routeUrl) {
+      if (specifier === 'next/navigation') return { url: moduleUrl('export const useSearchParams = () => globalThis.__internationalPlannerContext.query;'), shortCircuit: true };
+      if (specifier === '@/lib/i18n') return { url: moduleUrl("export const useLanguage = () => ({lang:'en'});"), shortCircuit: true };
+      if (specifier === '@/lib/app-level') return { url: moduleUrl("export const useAppLevel = () => 'simple';"), shortCircuit: true };
+      if (specifier === '@/components/BackControl') return { url: moduleUrl('export const useRegisterBackControl = () => {};'), shortCircuit: true };
+      if (specifier === '@/lib/db/queries') return { url: moduleUrl('export const myDesigns = async () => [];'), shortCircuit: true };
+      if (specifier === '@/lib/design-canvas') return { url: moduleUrl("export const loadCanvasState = () => ({items:[]}); export const DESIGN_CANVAS_CHANGED_EVENT = 'fixture-canvas-changed';"), shortCircuit: true };
+      if (specifier === '@/lib/design-beds-bridge') return { url: moduleUrl(`
+        export const bedsFromDesignCanvas = () => structuredClone(globalThis.__internationalPlannerContext.beds);
+        export const canvasSiteIdForPlace = () => ${JSON.stringify(siteId)};
+        export const studioPlanChoices = () => [];
+      `), shortCircuit: true };
+      if (specifier === '@/lib/crop-plan-ideal') return { url: moduleUrl(`
+        const probe = globalThis.__internationalPlannerContext;
+        export const IDEAL_PLAN_COPY = probe.IDEAL_PLAN_COPY;
+        export function suggestIdealYearPlan(...args) { probe.idealRuns++; return probe.suggestIdealYearPlan(...args); }
+      `), shortCircuit: true };
+      if (specifier === '@/lib/site-climate') return { url: moduleUrl(`
+        export const resolveSiteClimate = async () => {globalThis.__internationalPlannerContext.climateRequests++; return null;};
+        export const driestMonths = () => [];
+      `), shortCircuit: true };
+      if (specifier.startsWith('@/components/') && !specifier.startsWith('@/components/international/') && !specifier.endsWith('.format')) {
+        return { url: boundary(specifier), shortCircuit: true };
+      }
+    }
+    return nextResolve(specifier, context);
+  },
+  load(url, context, nextLoad) {
+    if (url.startsWith(rootUrl) && url.endsWith('.tsx')) return { format: 'module', shortCircuit: true,
+      source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
+        target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
+      } }).outputText };
+    return nextLoad(url, context);
+  },
+});
+const { default: Planner } = await import('../app/facilitator/crops/page.tsx');
+const { loadPlaces, loadPlaces: reloadPlaces } = await import('../lib/saved-places.ts');
+const { bindMountedAccountLocalStorageUid } = await import('../lib/account-local-storage.ts');
+after(() => { hooks.deregister(); Reflect.deleteProperty(globalThis, '__internationalPlannerContext'); });
+
+function text(node: ReactTestInstance | string): string {
+  return typeof node === 'string' ? node : node.children.map(child => text(child as ReactTestInstance | string)).join('');
+}
+class MemoryStorage {
+  rows = new Map<string, string>();
+  failWrite = false;
+  get length() { return this.rows.size; }
+  key(index: number) { return [...this.rows.keys()][index] ?? null; }
+  getItem(key: string) { return this.rows.get(key) ?? null; }
+  setItem(key: string, value: string) { if (this.failWrite) throw Error('quota'); this.rows.set(key, String(value)); }
+  removeItem(key: string) { this.rows.delete(key); }
+}
+
+const countryContext = (countryCode: string) => createSiteCountryContext({ siteId, countryCode, confirmed: true }, '2026-11-02T12:00:00.000Z')!;
+const fixturePlace = (countryCode?: string): SavedPlace => {
+  const place: SavedPlace = { id: 'fictional-place', name: 'Fictional fixture', lat: 0, lon: 0,
+    biome: 'Recorded value', rainfall: 0, elevation: 0, savedAt: '2026-11-01T12:00:00.000Z' };
+  // Stored confirmations describe an exact place revision; a form's transient input cannot approve it.
+  return { ...place, ...(countryCode ? { siteCountryContext: bindSiteContext(countryContext(countryCode), place)! } : {}) };
+};
+const crop = CROPS.find(candidate => candidate.yieldKgPerM2 !== 0)!;
+const fixturePlan = { version: 1, plantings: [{ id: 'saved-sowing', bedId: 'fixture-bed', cropKey: crop.key, sowMonth: 1 }], updatedAt: 100 };
+
+async function mount(countryCode?: string, options: {
+  querySiteId?: string | null;
+  plantings?: Planting[];
+  designFallback?: boolean;
+  localDesign?: boolean;
+  noSavedPlaces?: boolean;
+  auto?: boolean;
+  workspaceReferences?: WorkspacePlanningReference[];
+} = {}) {
+  const originals = new Map(['self', 'window', 'document', 'navigator', 'localStorage', 'sessionStorage', 'setTimeout', 'clearTimeout'].map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  const localStorage = new MemoryStorage(), sessionStorage = new MemoryStorage();
+  const browser = Object.assign(new EventTarget(), { localStorage, sessionStorage, innerHeight: 844, innerWidth: 390 });
+  const document = Object.assign(new EventTarget(), { body: { style: { overflow: '' } } });
+  const timers = new Map<number, { callback: () => void; delay: number }>();
+  let timerId = 0;
+  for (const [key, value] of Object.entries({ self: globalThis, window: browser, document, navigator: { onLine: true }, localStorage, sessionStorage,
+    setTimeout(callback: () => void, delay: number) { timers.set(++timerId, { callback, delay }); return timerId; },
+    clearTimeout(id: number) { timers.delete(id); },
+  })) Object.defineProperty(globalThis, key, { configurable: true, value });
+  bindMountedAccountLocalStorageUid(null);
+  if (options.querySiteId === null) query.delete('canvasSite');
+  else query.set('canvasSite', options.querySiteId ?? siteId);
+  if (options.auto === false) query.delete('auto'); else query.set('auto', '1');
+  probe.beds = [structuredClone(fixtureBed)];
+  localStorage.setItem('permamap_saved_places', JSON.stringify(options.noSavedPlaces ? [] : [fixturePlace(countryCode)]));
+  localStorage.setItem('imbewu_crop_plan_v1', JSON.stringify({ ...fixturePlan, plantings: options.plantings ?? fixturePlan.plantings,
+    ...(options.workspaceReferences ? { workspaceReferences: options.workspaceReferences } : {}) }));
+  if (options.designFallback) localStorage.setItem('imbewu_facilitator_design_v1', JSON.stringify({
+    version: 1, items: [], lines: [], sectors: [], pxPerM: 1, activeLayer: 'planting', hiddenLayers: [], savedAt: 100,
+    bgSite: { lat: 0, lon: 0, name: 'Existing mapped fixture' },
+  }));
+  if (options.localDesign) localStorage.setItem('imbewu_facilitator_design_v1', JSON.stringify({
+    version: 1, items: [{ id: fixtureBed.id, type: 'bed', x: 0, y: 0, wM: 1, hM: 1, rotation: 0 }],
+    lines: [], sectors: [], pxPerM: 1, activeLayer: 'planting', hiddenLayers: [], savedAt: 100,
+  }));
+  probe.climateRequests = 0; probe.idealRuns = 0;
+  let renderer: ReactTestRenderer;
+  await act(async () => { renderer = create(React.createElement(Planner)); });
+  const field = (prefix: string) => {
+    const label = renderer.root.findAllByType('label').find(node => typeof node.children[0] === 'string' && node.children[0].startsWith(prefix));
+    assert.ok(label, `Missing country control: ${prefix}`);
+    return label.findAll(node => node.type === 'input' || node.type === 'select')[0];
+  };
+  const saveTimers = () => {
+    for (const [id, timer] of [...timers]) if (timer.delay === 400) { timers.delete(id); timer.callback(); }
+  };
+  return {
+    get renderer() { return renderer; }, localStorage, timers, field,
+    text: () => text(renderer.root),
+    boundaries(name: string) { return renderer.root.findAll(node => node.props['data-boundary'] === `@/components/crops/${name}`); },
+    async change(prefix: string, value: string) { await act(async () => field(prefix).props.onChange({ target: { value } })); },
+    async confirm() { await act(async () => renderer.root.findAllByType('input').find(node => node.props.type === 'checkbox' && node.parent?.type === 'label' && text(node.parent).includes('I confirm these details'))!.props.onChange({ target: { checked: true } })); },
+    async submit() { await act(async () => renderer.root.findByType('form').props.onSubmit({ preventDefault() {} })); },
+    async click(label: string) {
+      const button = renderer.root.findAllByType('button').find(node => text(node).trim() === label);
+      assert.ok(button, `Missing action: ${label}`);
+      assert.notEqual(button.props.disabled, true, `Disabled action: ${label}`);
+      await act(async () => button.props.onClick());
+    },
+    async acknowledgeReference() {
+      const checkbox = renderer.root.findAllByType('input').find(node => node.props.type === 'checkbox'
+        && node.parent?.type === 'label' && text(node.parent).includes('I choose South African reference planning'));
+      assert.ok(checkbox, 'The grower must explicitly choose the reference basis');
+      await act(async () => checkbox.props.onChange({ target: { checked: true } }));
+    },
+    async submitReference() {
+      const form = renderer.root.findAllByType('form').find(node => node.findAllByType('button').some(button => text(button) === 'Save reference choice'));
+      assert.ok(form, 'Missing explicit reference-choice form');
+      await act(async () => form.props.onSubmit({ preventDefault() {} }));
+    },
+    async setStoredCountry(code: string, notify = true) {
+      localStorage.setItem('permamap_saved_places', JSON.stringify([fixturePlace(code)]));
+      if (notify) await act(async () => { browser.dispatchEvent(new Event('storage')); });
+    },
+    async changeBedKind(kind: 'plot') {
+      probe.beds = [{ ...fixtureBed, kind }];
+      await act(async () => { browser.dispatchEvent(new Event('fixture-canvas-changed')); });
+    },
+    async queueIdeal() {
+      const irrigation = renderer.root.findAllByType('button').find(node => text(node).includes('Reliable irrigation for every crop cycle'));
+      assert.ok(irrigation, 'The real planning questionnaire still asks about irrigation');
+      await act(async () => irrigation.props.onClick());
+      const generate = renderer.root.findAllByType('button').find(node => text(node).includes('Suggest a plan'));
+      assert.ok(generate);
+      assert.equal(generate.props.disabled, false, 'Generate through a valid questionnaire, not by bypassing its disabled button');
+      await act(async () => generate.props.onClick());
+      const queued = [...timers].find(([, timer]) => timer.delay === 30);
+      assert.ok(queued, 'The ideal-year producer has been queued');
+      return async () => { timers.delete(queued[0]); await act(async () => queued[1].callback()); };
+    },
+    async flushSave() { await act(async () => saveTimers()); },
+    async remount() { await act(async () => { renderer.unmount(); }); await act(async () => { renderer = create(React.createElement(Planner)); }); },
+    async dispose() {
+      await act(async () => { renderer.unmount(); });
+      for (const [key, original] of originals) { if (original) Object.defineProperty(globalThis, key, original); else Reflect.deleteProperty(globalThis, key); }
+    },
+  };
+}
+
+test('the real planner withholds recommendation and export widgets for unknown and foreign sites even with auto=1', async () => {
+  for (const code of [undefined, 'KE', 'GB', 'US', 'BR']) {
+    const screen = await mount(code);
+    try {
+      assert.match(screen.text(), code ? /Local crop planning is not available/ : /Confirm the site country/);
+      assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
+      assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+      assert.equal(screen.boundaries('ProductionAvailabilityGraphs').length, 0);
+      assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Planning support' }).length, 1);
+      assert.equal(screen.text().includes('Auto-suggest a plan'), false);
+      assert.equal(probe.climateRequests, 0);
+      const nursery = screen.boundaries('NurseryPlanPanel');
+      assert.equal(nursery.length, 1);
+      assert.equal(nursery[0].props['data-props'].allowCatalogueForecast, false);
+      assert.equal(screen.boundaries('ProductionRecordsEditor').length, 1);
+      await screen.flushSave();
+      assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+    } finally { await screen.dispose(); }
+  }
+});
+
+test('the real country form requires renewed confirmation and persists metadata while preserving sowings on reload', async () => {
+  const screen = await mount();
+  try {
+    await screen.change('Site country', 'ZA');
+    assert.equal(screen.renderer.root.findAllByType('button').find(node => text(node) === 'Save country details')!.props.disabled, true);
+    await screen.confirm();
+    await screen.change('Agricultural region reference', 'Grower description');
+    assert.equal(screen.renderer.root.findAllByType('button').find(node => text(node) === 'Save country details')!.props.disabled, true);
+    await screen.confirm();
+    await screen.submit();
+    assert.equal(loadPlaces()[0].siteCountryContext?.countryCode, 'ZA');
+    assert.equal(loadPlaces()[0].siteCountryContext?.agriculturalRegionReference, 'Grower description');
+    assert.equal(screen.boundaries('CropPlanExportCard').length, 1);
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 1);
+    assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Planning support' }).length, 0);
+    await screen.flushSave();
+    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+    await screen.remount();
+    assert.match(screen.text(), /Saved country: South Africa/);
+    assert.equal(reloadPlaces()[0].siteCountryContext?.countryCode, 'ZA');
+    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+  } finally { await screen.dispose(); }
+});
+
+test('a stale harvest-target accept callback rereads the current country before mutating the saved plan', async () => {
+  const screen = await mount('ZA');
+  try {
+    const accept = screen.boundaries('HarvestTargetsPanel')[0].props['data-props'].onAccept as (result: AutoSuggestResult) => void;
+    await screen.setStoredCountry('KE', false);
+    const result = { plantings: [{ ...fixturePlan.plantings[0], id: 'stale-suggestion' }], notes: [] } as unknown as AutoSuggestResult;
+    await act(async () => accept(result));
+    await screen.flushSave();
+    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+    await screen.setStoredCountry('KE');
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+    assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
+    assert.match(screen.text(), /Local crop planning is not available/);
+  } finally { await screen.dispose(); }
+});
+
+test('an already-open auto-suggest cannot queue generation after another tab changes the country', async () => {
+  const screen = await mount('ZA');
+  try {
+    assert.match(screen.text(), /Auto-suggest a plan/);
+    const generate = screen.renderer.root.findAllByType('button').find(node => text(node).includes('Suggest a plan'));
+    assert.ok(generate);
+    await screen.setStoredCountry('US', false);
+    await act(async () => generate.props.onClick());
+    assert.equal([...screen.timers.values()].filter(timer => timer.delay === 30).length, 0);
+    await screen.flushSave();
+    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+  } finally { await screen.dispose(); }
+});
+
+test('invalid and noncanonical deep links cannot borrow a confirmed saved site or legacy design context', async () => {
+  for (const querySiteId of ['site:0,0', 'site:91.00000,0.00000', 'design:local', '']) {
+    const screen = await mount('ZA', { querySiteId, designFallback: true });
+    try {
+      assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Invalid site link' }).length, 1, querySiteId);
+      assert.match(screen.text(), /No other site’s planning context has been substituted/);
+      assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
+      assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+      assert.equal(screen.boundaries('ProductionRecordsEditor').length, 0);
+      assert.equal(screen.text().includes('Auto-suggest a plan'), false);
+      assert.equal(probe.climateRequests, 0);
+      await screen.flushSave();
+      assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+    } finally { await screen.dispose(); }
+  }
+});
+
+test('an unsupported grower can record an existing crop identity without first accepting a proposed planting', async () => {
+  const screen = await mount('KE', { plantings: [] });
+  try {
+    const editor = screen.boundaries('ProductionRecordsEditor')[0].props['data-props'];
+    const option = editor.products.find((product: { iconKey: string }) => product.iconKey === `crop:${crop.key}`);
+    assert.ok(option);
+    const existingKeys = new Set(CROPS.map(value => `crop:${value.key}`));
+    assert.ok(editor.products.every((product: { iconKey: string }) => existingKeys.has(product.iconKey)));
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+    await act(async () => editor.onProductionRecordsChange([{ id: 'own-observation', siteId,
+      sourceIconKey: option.iconKey, label: option.label, date: { year: 2026, month: 11 },
+      quantity: 0, unit: 'kg', status: 'actual', provenance: 'fictional-example' }]));
+    await screen.flushSave();
+    const saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    assert.deepEqual(saved.plantings, []);
+    assert.equal(saved.productionRecords.length, 1);
+    assert.equal(saved.productionRecords[0].status, 'actual');
+    assert.equal(saved.productionRecords[0].siteId, siteId);
+    assert.equal(saved.productionRecords[0].quantity, 0);
+  } finally { await screen.dispose(); }
+});
+
+test('the queued ideal producer runs for its supported scope but cannot run after a silent country change', async () => {
+  const positive = await mount('ZA');
+  try {
+    const run = await positive.queueIdeal();
+    assert.equal(probe.idealRuns, 0);
+    await run();
+    assert.equal(probe.idealRuns, 1, 'Positive control reaches the real producer');
+  } finally { await positive.dispose(); }
+  const changed = await mount('ZA');
+  try {
+    const run = await changed.queueIdeal();
+    await changed.setStoredCountry('KE', false);
+    await run();
+    assert.equal(probe.idealRuns, 0);
+    await changed.flushSave();
+    assert.deepEqual(JSON.parse(changed.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+  } finally { await changed.dispose(); }
+});
+
+test('a same-coordinate bed-kind change invalidates queued production and stale harvest-target acceptance', async () => {
+  const screen = await mount('ZA');
+  try {
+    const accept = screen.boundaries('HarvestTargetsPanel')[0].props['data-props'].onAccept as (result: AutoSuggestResult) => void;
+    const run = await screen.queueIdeal();
+    await screen.changeBedKind('plot');
+    await run();
+    assert.equal(probe.idealRuns, 0);
+    const result = { plantings: [{ ...fixturePlan.plantings[0], id: 'old-bed-kind-suggestion' }], notes: [] } as unknown as AutoSuggestResult;
+    await act(async () => accept(result));
+    await screen.flushSave();
+    assert.deepEqual(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).plantings, fixturePlan.plantings);
+  } finally { await screen.dispose(); }
+});
+
+test('the unmapped virtual planner needs an explicit reference choice, reloads it and withholds planning after revocation', async () => {
+  const sowings = [{ ...fixturePlan.plantings[0], bedId: 'virtual-bed-1' }];
+  const screen = await mount(undefined, { querySiteId: null, noSavedPlaces: true, auto: false, plantings: sowings });
+  try {
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+    assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
+    await screen.click('Try a virtual reference bed');
+    assert.equal(screen.renderer.root.findAllByType('button').find(node => text(node) === 'Save reference choice')!.props.disabled, true);
+    await screen.submitReference();
+    assert.equal(JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!).workspaceReferences, undefined);
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+    await screen.acknowledgeReference(); await screen.submitReference();
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 1);
+    assert.equal(screen.boundaries('CropPlanExportCard').length, 1);
+    assert.match(screen.text(), /South African reference planning selected/);
+    assert.equal(probe.climateRequests, 0, 'An unmapped reference does not supply site coordinates');
+    await screen.click('Auto-suggest a plan');
+    const produce = await screen.queueIdeal();
+    await produce();
+    assert.equal(probe.idealRuns, 1, 'The explicit reference basis reaches the actual existing planner');
+    const close = screen.renderer.root.findAllByType('button').find(node => node.props['aria-label'] === 'Close');
+    assert.ok(close, 'Close the proposal before using the workspace controls again');
+    await act(async () => close.props.onClick());
+    await screen.flushSave();
+    let saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    assert.equal(saved.workspaceReferences[0].workspaceId, 'virtual-bed');
+    assert.deepEqual(saved.plantings, sowings);
+    assert.deepEqual(JSON.parse(screen.localStorage.getItem('permamap_saved_places')!), []);
+    await screen.remount();
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 1);
+    assert.equal(screen.boundaries('CropPlanExportCard').length, 1);
+    await screen.click('Remove reference choice');
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+    assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
+    await screen.flushSave();
+    saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    assert.deepEqual(saved.workspaceReferences, []);
+    assert.deepEqual(saved.plantings, sowings);
+  } finally { await screen.dispose(); }
+});
+
+test('an unmapped local design keeps its own reference choice separate from a saved virtual-bed acknowledgement', async () => {
+  const virtual = createWorkspacePlanningReference('virtual-bed', true)!;
+  const screen = await mount(undefined, { querySiteId: null, noSavedPlaces: true, localDesign: true,
+    auto: false, workspaceReferences: [virtual] });
+  try {
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+    assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
+    assert.equal(screen.text().includes('South African reference planning selected'), false);
+    await screen.acknowledgeReference(); await screen.submitReference();
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 1);
+    await screen.flushSave();
+    let saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    assert.equal(saved.workspaceReferences.length, 2);
+    assert.deepEqual(saved.workspaceReferences.find((row: WorkspacePlanningReference) => row.workspaceId === 'virtual-bed'), virtual);
+    assert.ok(saved.workspaceReferences.some((row: WorkspacePlanningReference) => row.workspaceId === 'design:local'));
+    assert.deepEqual(saved.plantings, fixturePlan.plantings);
+    await screen.click('Remove reference choice');
+    await screen.flushSave();
+    saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    assert.deepEqual(saved.workspaceReferences, [virtual]);
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+  } finally { await screen.dispose(); }
+});
+
+test('a mapped foreign site cannot inherit an unmapped reference choice in the real planner', async () => {
+  const reference = createWorkspacePlanningReference('virtual-bed', true)!;
+  const local = createWorkspacePlanningReference('design:local', true)!;
+  const screen = await mount('KE', { auto: false, workspaceReferences: [reference, local] });
+  try {
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 0);
+    assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
+    assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Unmapped workspace reference basis' }).length, 0);
+    assert.match(screen.text(), /Local crop planning is not available/);
+    assert.equal(probe.climateRequests, 0);
+    await screen.flushSave();
+    const saved = JSON.parse(screen.localStorage.getItem('imbewu_crop_plan_v1')!);
+    assert.deepEqual(saved.workspaceReferences, [reference, local]);
+    assert.deepEqual(saved.plantings, fixturePlan.plantings);
+  } finally { await screen.dispose(); }
+});

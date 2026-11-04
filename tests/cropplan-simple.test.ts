@@ -39,7 +39,21 @@ test('Simple drops the secondary header chips but keeps site/bed picking and the
   // secondary technical detail — none of it is needed to use the grid.
   assert.match(header, /\{!simple && beds\.length > 0 && \(\s*<button\s*\n\s*onClick=\{\(\) => setShowBedCheck/);
   assert.match(header, /\{!simple && <LessonLink/);
-  assert.match(header, /\{!simple && \(climateSource === 'site' \? \(/);
+  // Country support now also gates the badge: a technical climate label must not imply
+  // local crop guidance where the catalogue is unavailable. Test the shipped gate,
+  // rather than pinning the previous spelling of its Simple-only condition.
+  const climateBadge = nodesMatching((node): node is ts.BinaryExpression => ts.isBinaryExpression(node)).find(node =>
+    node.pos >= CROPS.indexOf('<header') && node.end <= CROPS.indexOf('</header>')
+      && node.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken
+      && ts.isParenthesizedExpression(node.right) && ts.isConditionalExpression(node.right.expression)
+      && node.right.expression.condition.getText(pageTree) === "climateSource === 'site'");
+  assert.ok(climateBadge, 'the header must retain its site/reference climate badge');
+  for (const simple of [true, false]) {
+    for (const allowCataloguePlanning of [true, false]) {
+      assert.equal(evaluate(climateBadge.left, { simple, allowCataloguePlanning }), !simple && allowCataloguePlanning,
+        'climate details belong only in All tools with supported crop guidance');
+    }
+  }
 });
 
 test('Simple keeps auto-suggest as the one primary action above the grid and drops Undo/Clear all', () => {
@@ -187,8 +201,24 @@ test('a production-only map cannot open generate or accept a bed auto-suggestion
     const calls: string[] = [];
     const source = ts.transpileModule(`function check() ${handler.body.getText(pageTree)}; check();`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
     const setters = [...new Set(handler.body.getText(pageTree).match(/\bset[A-Z]\w+|\bpushPlanHistory|\bapplyGoalMix/g) ?? [])];
-    const values = { beds: [], autoResult: { plantings: [] }, ...Object.fromEntries(setters.map(setter => [setter, () => calls.push(setter)])) };
-    new Function(...Object.keys(values), source)(...Object.values(values));
-    assert.deepEqual(calls, [], `${name} must stop before changing a crop plan with no beds`);
+    // Keep every other precondition satisfied so the no-bed check must do the work.
+    // Also check the new country guard independently: either missing precondition
+    // must stop the actual handler before any state setter or plan-history write.
+    for (const scenario of [
+      { beds: [], allowed: true, reason: 'no beds' },
+      { beds: [{}], allowed: false, reason: 'unsupported crop guidance' },
+    ]) {
+      calls.length = 0;
+      const values = {
+        beds: scenario.beds,
+        currentPlanningScopeAllowed: () => scenario.allowed,
+        suggestionScopeRef: { current: 'same-reviewed-scope' },
+        planningScopeKey: 'same-reviewed-scope',
+        autoResult: { plantings: [] },
+        ...Object.fromEntries(setters.map(setter => [setter, () => calls.push(setter)])),
+      };
+      new Function(...Object.keys(values), source)(...Object.values(values));
+      assert.deepEqual(calls, [], `${name} must stop before changing a crop plan with ${scenario.reason}`);
+    }
   }
 });

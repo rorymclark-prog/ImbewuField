@@ -11,6 +11,15 @@ const copy:UpdateCopy={
   "Check your saved map": "Kambela mepe wa wena lowu hlayisiweke",
   "Site design": "Dizayini ya ndhawu",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Kambela ndhawu yoleyo u nga si tirhisa mindzulamiso ya mupfuni kumbe ku pimanisa xifaniso xa khale.",
+  // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
+  "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
+  "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",
+  "Confirm your site country": "Tiyisisa tiko ra ndhawu ya wena",
+  "Crop planner → Site country and region": "Mukunguhati wa swibyariwa → Tiko ra ndhawu na xifundzha",
+  "Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.": "Pfula ndhawu ya wena leyi mepiweke kutani u tiyisisa vuxokoxoko bya tiko ra yona. Ku tiyisisa tiko a swi pasisi switsundzuxo swo rima swa xifundzha lexintshwa.",
+  "Review an unmapped reference": "Kambisisa xisekelo lexi nga mepiwangiki",
+  "Crop planner → Planning without a mapped site": "Mukunguhati wa swibyariwa → Ku kunguhata handle ka ndhawu leyi mepiweke",
+  "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Eka bedi ro vumbiwa kumbe dizayini ya laha kaya, hlawula kumbe u susa xisekelo xo komba xa Afrika-Dzonga hi ku kongoma. Nhlawulo wu ta sala na ndhawu yoleyo yo tirhela.",
   // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
   "Open Terrain & Sections for the two cuts and extra contour detail.": "Pfula Terrain & Sections ku vona swiphemu swimbirhi ni milayeni yo engetela ya ku tlakuka.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
