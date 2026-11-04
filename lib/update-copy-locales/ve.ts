@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Field export: source-bound AGY candidates with coordinator terminology reconciliation; fluent review pending.
+  "Export saved field layouts for Google Earth.": "Bvisani mbumbo dza masimu dzo vhulungwaho dza Google Earth.",
+  "Export saved fields": "Bvisani masimu o vhulungwaho",
+  "Design Studio → Planting → Field blocks": "Design Studio → U lima → Zwipida zwa masimu",
+  "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.": "Nangani tsimu nthihi kana masimu othe, nahone ni kope mikano yo vhulungwaho, mmbete ya u ṱavha (beds) na mitalo ya dzinḓila sa KML. Zwiga a si zwa khombe-khombe; fhethu ha ndaedzo ya mmapa a si mikano yo pimiwaho nga u ela mavu (survey).",
   // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
   "Keep editing nursery equipment and buyer targets after a confirmed save.": "Bvelani phanḓa na u dzudzanya zwishumiswa zwa tsimu ya zwimela zwiṱuku na zwipikwa zwa vharengi musi u vhulunga ho no khwaṱhisedzwa.",
   "Continue nursery editing": "Bvelani phanḓa na u dzudzanya tsimu ya zwimela zwiṱuku",

@@ -1,0 +1,146 @@
+{
+  "locale": "bn",
+  "sourceSha256": "883ab3ffd0593e2387cda3f5518511ed5fa1ee1281cd83a5f654efa5a4de5afd",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "fieldLayoutCopy01",
+      "english": "Field layout export",
+      "sha256": "0803d1de9fdc33fa8d6fe593770bd95f59f1238970f0b552411408210a13249f",
+      "translation": "জমির বিন্যাস রপ্তানি"
+    },
+    {
+      "key": "fieldLayoutCopy02",
+      "english": "Google Earth field layout",
+      "sha256": "ec5b5b63b6d5329463fbe692e71b2b6f665cfb050fc2ec2a7cd209ef06b13c56",
+      "translation": "Google Earth জমির বিন্যাস"
+    },
+    {
+      "key": "fieldLayoutCopy03",
+      "english": "This file contains map-reference locations and optional field labels from your saved layout. These locations have not been surveyed. Apply layout changes before exporting.",
+      "sha256": "53d20d58ae5604ee22a93445098cbc294e970197924fd4a072d0c34e86bf46f8",
+      "translation": "এই ফাইলটিতে আপনার সংরক্ষিত বিন্যাস থেকে মানচিত্র-রেফারেন্স অবস্থান এবং ঐচ্ছিক জমির লেবেল রয়েছে। এই অবস্থানগুলির কোনো জরিপ করা হয়নি। রপ্তানি করার আগে বিন্যাসের পরিবর্তনগুলি প্রয়োগ করুন।"
+    },
+    {
+      "key": "fieldLayoutCopy04",
+      "english": "Export fields",
+      "sha256": "09822a509deaf85e8e86b6244efb5b772b128bde8781df2d4a8b006a15f846d3",
+      "translation": "জমি রপ্তানি করুন"
+    },
+    {
+      "key": "fieldLayoutCopy05",
+      "english": "Selected field",
+      "sha256": "f924a06aab096a452857c4ae209f681e8d4704f4a01e98e3caabc02b4c2546a9",
+      "translation": "নির্বাচিত জমি"
+    },
+    {
+      "key": "fieldLayoutCopy06",
+      "english": "All fields",
+      "sha256": "b2525b1e37fccd0dff28251cc111418a88744225ad4850262e1f813504aaf0b1",
+      "translation": "সমস্ত জমি"
+    },
+    {
+      "key": "fieldLayoutCopy07",
+      "english": "Include saved field labels",
+      "sha256": "f31982fa537ca5c47fa9d0b542c8f87f8f55a3a0a7da84bb52538bbd0e10b698",
+      "translation": "সংরক্ষিত জমির লেবেল অন্তর্ভুক্ত করুন"
+    },
+    {
+      "key": "fieldLayoutCopy08",
+      "english": "With labels off, the file uses generic numbered labels.",
+      "sha256": "56e85db05d047736311e4bff801a69f0976b07630316d1ad645f92b8432db782",
+      "translation": "লেবেল বন্ধ থাকলে, ফাইলটি সাধারণ সংখ্যাযুক্ত লেবেল ব্যবহার করে।"
+    },
+    {
+      "key": "fieldLayoutCopy09",
+      "english": "Export field layout for Google Earth",
+      "sha256": "82f8400c4bb9cf1df7254e201b00fbf8d01571f3188ccbacddc1dc3244ef574a",
+      "translation": "Google Earth-এর জন্য জমির বিন্যাস রপ্তানি করুন"
+    },
+    {
+      "key": "fieldLayoutCopy10",
+      "english": "Preparing field layout export…",
+      "sha256": "87450d9bc5567960372a8f47e3a263a4bbacde07386de44daa25a4f0d8aaae30",
+      "translation": "জমির বিন্যাস রপ্তানি প্রস্তুত করা হচ্ছে…"
+    },
+    {
+      "key": "fieldLayoutCopy11",
+      "english": "Could not export the field layout. Your field settings have been kept. Try again.",
+      "sha256": "937977e7e9e2838b9b07228ecba517b0af728f624c5a886540978d918eda6998",
+      "translation": "জমির বিন্যাস রপ্তানি করা যায়নি। আপনার জমির সেটিংস অপরিবর্তিত রাখা হয়েছে। আবার চেষ্টা করুন।"
+    },
+    {
+      "key": "fieldLayoutCopy12",
+      "english": "The field layout, account or export choices changed. Check the current layout before exporting again.",
+      "sha256": "f7a25eacea194e79352e65a860d704c859a46d6578b5caa166a91a6702dfd708",
+      "translation": "জমির বিন্যাস, অ্যাকাউন্ট বা রপ্তানির বিকল্প পরিবর্তন হয়েছে। আবার রপ্তানি করার আগে বর্তমান বিন্যাস পরীক্ষা করুন।"
+    },
+    {
+      "key": "fieldLayoutCopy13",
+      "english": "The current field layout is not available in this account’s saved design. Save the layout before exporting.",
+      "sha256": "1e45289a9cbf05e1acead6ec9b2d9af3bb3ce8449ae3afa7dedb6ad7f65ea085",
+      "translation": "বর্তমান জমির বিন্যাস এই অ্যাকাউন্টের সংরক্ষিত নকশায় পাওয়া যাচ্ছে না। রপ্তানি করার আগে বিন্যাসটি সংরক্ষণ করুন।"
+    },
+    {
+      "key": "fieldLayoutCopy14",
+      "english": "Field-layout export cancelled.",
+      "sha256": "f3f017d6ac31e65626f43ba6860fcca1dfefd984a56e0a57743edf53692e3a63",
+      "translation": "জমির বিন্যাস রপ্তানি বাতিল করা হয়েছে।"
+    },
+    {
+      "key": "fieldLayoutCopy15",
+      "english": "Field-layout KML shared. It contains map-reference locations, not surveyed boundaries.",
+      "sha256": "f2ffffb7e1b869f238e06b8d20e62a815d7682ad00a0ffee27542da47763dbf8",
+      "translation": "জমির বিন্যাস KML শেয়ার করা হয়েছে। এতে মানচিত্র-রেফারেন্স অবস্থান রয়েছে, জরিপ করা সীমানা নয়।"
+    },
+    {
+      "key": "fieldLayoutCopy16",
+      "english": "Field-layout KML downloaded. It contains map-reference locations, not surveyed boundaries.",
+      "sha256": "6e9aaf65fb7afbe477f13f4958e0ab3c2ec611cd127943010a992a7fba90eba4",
+      "translation": "জমির বিন্যাস KML ডাউনলোড করা হয়েছে। এতে মানচিত্র-রেফারেন্স অবস্থান রয়েছে, জরিপ করা সীমানা নয়।"
+    },
+    {
+      "key": "fieldLayoutCopy17",
+      "english": "Photo and blank layouts need a verified map reference before Google Earth export.",
+      "sha256": "24fe0c8611f818fdf727126c70ea120f08fbf50987ca4cf4df1a7cff9d9d2fee",
+      "translation": "Google Earth রপ্তানির আগে ছবি এবং ফাঁকা বিন্যাসের জন্য একটি যাচাইকৃত মানচিত্র রেফারেন্স প্রয়োজন।"
+    },
+    {
+      "key": "fieldLayoutCopy18",
+      "english": "This layout crosses the map’s date-line reference, which this export does not yet support.",
+      "sha256": "d6ba9b01e1e10c12a13448fc921e95729dff4db51997f442336bd90e15e1a146",
+      "translation": "এই বিন্যাসটি মানচিত্রের আন্তর্জাতিক তারিখ রেখা অতিক্রম করে, যা এই রপ্তানি এখনও সমর্থন করে না।"
+    },
+    {
+      "key": "fieldLayoutCopy19",
+      "english": "The saved map reference and current measurements do not match. Check and save the current layout before exporting.",
+      "sha256": "042579056e6ab15bec2adc84c399cdf7b2ee46f91ab7d4d94a654a28aba03aba",
+      "translation": "সংরক্ষিত মানচিত্র রেফারেন্স এবং বর্তমান পরিমাপ মিলছে না। রপ্তানি করার আগে বর্তমান বিন্যাস পরীক্ষা করুন এবং সংরক্ষণ করুন।"
+    },
+    {
+      "key": "fieldLayoutCopy20",
+      "english": "Select a saved field, or choose all saved fields, before exporting.",
+      "sha256": "02bebe56a69bcb684355245adaaef6538dd884d2b1086e83c6833190d90e0fa0",
+      "translation": "রপ্তানি করার আগে একটি সংরক্ষিত জমি নির্বাচন করুন, অথবা সমস্ত সংরক্ষিত জমি নির্বাচন করুন।"
+    },
+    {
+      "key": "fieldLayoutCopy21",
+      "english": "A saved field, bed or path is incomplete or ambiguous. Check the layout before exporting.",
+      "sha256": "9df238b2f594f6ce4d95bef8fba2d22f10aa0bff1880575b3b772b983f578535",
+      "translation": "সংরক্ষিত জমি, চাষের বেড বা পথ অসম্পূর্ণ বা অস্পষ্ট। রপ্তানি করার আগে বিন্যাস পরীক্ষা করুন।"
+    },
+    {
+      "key": "fieldLayoutCopy22",
+      "english": "This saved layout exceeds the current KML export limit.",
+      "sha256": "d8d0711d60c2d1985b34b1538d538aa44e42448a06af4ece112102b213e939ba",
+      "translation": "এই সংরক্ষিত বিন্যাসটি বর্তমান KML রপ্তানি সীমা অতিক্রম করেছে।"
+    },
+    {
+      "key": "fieldLayoutCopy23",
+      "english": "The field layout could not be exported. Check the current saved layout and try again.",
+      "sha256": "5bf778c8153dab327a8e6bf70b94b39a4f19c73a72e6d952643590ab9c798f65",
+      "translation": "জমির বিন্যাস রপ্তানি করা যায়নি। বর্তমান সংরক্ষিত বিন্যাস পরীক্ষা করুন এবং আবার চেষ্টা করুন।"
+    }
+  ]
+}

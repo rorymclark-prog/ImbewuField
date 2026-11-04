@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Field export: source-bound AGY candidates with coordinator terminology reconciliation; fluent review pending.
+  "Export saved field layouts for Google Earth.": "Khipha izakhiwo zamasimu ezilondoloziwe ze-Google Earth.",
+  "Export saved fields": "Khipha amasimu alondoloziwe",
+  "Design Studio → Planting → Field blocks": "Design Studio → Ukutshala → Amabhulokhi wamasimu",
+  "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.": "Khetha insimu eyodwa noma wonke amasimu, bese ulanda imingcele elondoloziwe, imibhede yokutshala (beds) nemigqa yezindlela njenge-KML. Amalebula awaphoqelekile; izindawo zereferensi yemephu akuyona imingcele ekalwe ngokuhlola umhlaba (survey).",
   // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
   "Keep editing nursery equipment and buyer targets after a confirmed save.": "Qhubeka nokuhlela izinto zokusebenza zendawo yezithombo nemigomo yabathengi ngemva kokulondoloza okuqinisekisiwe.",
   "Continue nursery editing": "Qhubeka nokuhlela indawo yezithombo",
