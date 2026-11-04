@@ -1,6 +1,8 @@
 # ImbewuField audit archive
 
-Latest assistant production verification — [Canonical OAuth, native Codex and remaining host gates — 4 November 2026](2026-11-04/assistant-production-host-verification-codex.md). Production and Codex are verified; private card icon and Claude linking remain separately open.
+Latest assistant host verification — [Actual Claude web selected-site read — 4 November 2026](2026-11-04/assistant-claude-host-verification-codex.md). Canonical production, native Codex and one actual Claude web read are verified; the private card icon remains open.
+
+Latest assistant production verification — [Canonical OAuth, native Codex and remaining host gates — 4 November 2026](2026-11-04/assistant-production-host-verification-codex.md). Historical checkpoint; the later Claude web audit above records the completed host read.
 
 Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Historical integration checkpoint; final production evidence is linked above.
 
