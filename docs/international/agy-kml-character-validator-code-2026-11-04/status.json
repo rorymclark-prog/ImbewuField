@@ -1,0 +1,44 @@
+{
+  "taskId": "agy-kml-character-validator-code-2026-11-04",
+  "status": "ready_for_review",
+  "checkout": "isolated_agy_kml_import_character_validation",
+  "baseCommit": "1cc148431dec27c488b0f01d3972d95ebd51eb39",
+  "authorship": "main_only",
+  "workersActive": 0,
+  "workersStopped": true,
+  "modifiedSourceFiles": [
+    {
+      "path": "lib/xml-character-text.ts",
+      "action": "created",
+      "exportedFunction": "isXml10CharacterText(value: unknown): value is string",
+      "description": "Shared XML 1.0 character admissibility check without length cap"
+    },
+    {
+      "path": "lib/field-layout-export.ts",
+      "action": "modified",
+      "description": "Imported isXml10CharacterText and delegated character check in xmlText predicate while retaining 2000 character label limit"
+    }
+  ],
+  "contractIntegrity": {
+    "unicodeRegexpPreserved": true,
+    "exporterLabelCapPreserved": true,
+    "noLengthCapOnHelper": true,
+    "noNewDependencies": true,
+    "noCommandsOrTestsRun": true
+  },
+  "coordinatorReview": {
+    "atUtc": "2026-11-04T15:29:32.771011+00:00",
+    "typecheckExit": 0,
+    "affectedTests": 41,
+    "affectedFiles": 3,
+    "fail": 0,
+    "skip": 0,
+    "todo": 0,
+    "whitespaceExit": 0,
+    "releaseGateExit": 0,
+    "sourceProof": "exact pre-existing character regex; every unrelated exporter byte preserved after only import/delegation replacement",
+    "negativeControl": "dropping original forbidden FFFE/FFFF clause makes actual new regression fail true!=false, exit1",
+    "testHarnessCorrection": "BigInt literal1n changed to BigInt(1), same value/assertions, because repository TS compile target predates BigInt literal syntax",
+    "scope": "character-only extraction, no parser/import/XMLsecurity/UI/geometry capability change"
+  }
+}
