@@ -275,7 +275,7 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
     <div className="space-y-4 px-4 pb-4 font-sans">
       <p className="text-sm text-[var(--text-secondary)]">{allowCatalogueForecast
         ? 'Plan nursery demand from accepted crop sowings. Add your own equipment and crop estimates below. Blank values stay unknown; the app does not choose germination rates, tray sizes or nursery losses for you.'
-        : 'Keep your own nursery equipment and crop estimates here. Demand forecasts are unavailable until this site has a supported local planning basis. Saving these inputs does not approve local crop timing, spacing or suitability.'}</p>
+        : 'Keep your own nursery equipment and crop estimates here. The catalogue demand forecast is unavailable for this planning context. For a saved measured growing space, use Automatic plan from your estimates to review proposed seedling requirements from your own dates and inputs. Saving these inputs does not approve local crop timing, spacing or suitability.'}</p>
       {saved.sourceIssues?.length ? <p role="alert" className="text-sm">Some saved nursery settings have ambiguous or invalid identities. Resource headroom remains unknown until those records are reviewed.</p> : null}
       {forecast && <>
       <div id="nursery-seed-needs" className="scroll-mt-24"><NurseryForecastSummary forecast={forecast} beds={beds} /></div>
@@ -397,7 +397,7 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
       {status && <p role="status" className="text-sm">{status}</p>}
       <p className={hint}>{allowCatalogueForecast
         ? 'Settings belong to this site’s crop plan on this device. Removing equipment leaves its dependent recipes visibly incomplete. This is a planning forecast, not observed live nursery stock. Net surface does not guarantee rectangular tray packing or include up-pot stage scheduling.'
-        : 'Settings belong to this site’s crop plan on this device. Removing equipment leaves dependent recipes incomplete. Equipment entries are your inputs, not live stock counts. No nursery demand, field timing, purchasing forecast or tray-packing result is supplied here.'}</p>
+        : 'Settings belong to this site’s crop plan on this device. Removing equipment leaves dependent recipes incomplete. Equipment entries are your inputs, not live stock counts. This equipment form supplies no field timing, purchasing forecast or tray-packing result. Review proposed batch requirements separately in Automatic plan from your estimates, with your own dated resource allocations.'}</p>
     </div>
   </details>;
 }

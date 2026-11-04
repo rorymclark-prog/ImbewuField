@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: 'd8b983c7f', changes: [
+    'See where your own dated crop plan can review nursery requirements.',
+  ], tour: [{ title: 'Review nursery requirements', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'For a saved measured growing space, review proposed batches from your own dates and inputs. Equipment entries alone do not establish dated availability or local crop approval.' }] },
   { when: '4 November 2026', sha: '1427bc824', changes: [
     'Keep editing nursery equipment and buyer targets after a confirmed save.',
   ], tour: [{ title: 'Continue nursery editing', where: 'Production plan → Nursery planner', href: '/facilitator/crops',
