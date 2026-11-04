@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Shared country-review location wording, retained from the reviewed UK draft.
+  "International → Country review": "Lichaba tsa machaba → Tlhahlobo ea naha",
+  // Campinas directory: docs/international/agy-campinas-directory-release-copy-2026-11-04/source.json; UNREVIEWED AI drafts.
+  "Open the Campinas agricultural office directory from Brazil’s country review.": "Bula bukana ea liofisi tsa temo tsa Campinas ho tsoa tlhahlobong ea naha ea Brazil.",
+  "Find the Campinas office directory": "Fumana bukana ea liofisi tsa Campinas",
+  "Choose Brazil and open Agricultural extension to find the Campinas directory.": "Kgetha Brazil ebe o bula Keletso ea temo ho fumana bukana ea Campinas.",
   // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
   "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Kgetha dibaka tse bolokilweng tseo mothusi a ka di sebedisang. O ka kgaola kgokahano ho Ditlhophiso.",
   "Keep original site photos and PDFs with their source and import history.": "Boloka dinepe tsa pele tsa sebaka le di-PDF hammoho le mohlodi wa tsona le nalane ya ho di kenya.",
@@ -11,6 +17,8 @@ const copy:UpdateCopy={
   "Check your saved map": "Lekola mmapa wa hao o bolokilweng",
   "Site design": "Moralo wa sebaka",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlahloba sebaka sona seo pele o kenya diphetoho tsa mothusi kapa o bapisa senepe sa kgale.",
+  // Brazil soil reference: docs/international/pilots/brazil-redape-release-copy/drafts.json; UNREVIEWED AI draft.
+  "Open the Embrapa BDSolos catalogue from the Brazil soil references.": "Bula lethathamo la Embrapa BDSolos litšupisong tsa mobu tsa Brazil.",
   // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Netefatsa naha ea sebaka se mmepiloeng pele u sebelisa tataiso ea sona ea moralo oa lijalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Boloka lirekoto tsa hao tsa ho jala le lisebelisoa tsa nesari ea limela ha moralo oa sebaka o ntse o sa fumanehe.",

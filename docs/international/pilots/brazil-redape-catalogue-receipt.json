@@ -1,0 +1,9 @@
+{
+  "requestedUrl": "https://doi.org/10.48432/DDBVFO",
+  "effectiveUrl": "https://www.redape.dados.embrapa.br/dataset.xhtml?persistentId=doi:10.48432/DDBVFO",
+  "httpStatus": 200,
+  "completedAt": "2026-11-03T00:16:32.080694+00:00",
+  "bytes": 188341,
+  "sha256": "e51ef6d032a7495edad36070168c898ac3d3a8e3f9ed876f1d68de4d4370b481",
+  "scope": "Public catalogue document read. No data file or API checked. Commercial reuse clearance unestablished."
+}

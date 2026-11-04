@@ -1,0 +1,30 @@
+{
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "entries": [
+    {
+      "english": "Open the Campinas agricultural office directory from Brazil’s country review.",
+      "messageSha256": "e4a997e63aec41f32b7692bf5932c490d0b3c434fc057db7fd09b5d52f1d674e",
+      "st": "Bula bukana ea liofisi tsa temo tsa Campinas ho tsoa tlhahlobong ea naha ea Brazil.",
+      "ts": "Pfula dayirekitari ya tihofisi ta vurimi ta Campinas ku suka eka nhlelo wa tiko ra Brazil.",
+      "ve": "Vulani mutevhe wa ofisi dza vhulimi dza Campinas u bva kha tsedzuluso ya shango la Brazil.",
+      "zu": "Vula uhla lwamahhovisi ezolimo ase-Campinas kusuka ekubuyekezweni kwezwe lase-Brazil."
+    },
+    {
+      "english": "Find the Campinas office directory",
+      "messageSha256": "2145ec6179c67fcd13a517d554e5033f9ccc9f161aafc7f5145366e298c41a74",
+      "st": "Fumana bukana ea liofisi tsa Campinas",
+      "ts": "Kuma dayirekitari ya tihofisi ta Campinas",
+      "ve": "Wanani mutevhe wa ofisi dza Campinas",
+      "zu": "Thola uhla lwamahhovisi ase-Campinas"
+    },
+    {
+      "english": "Choose Brazil and open Agricultural extension to find the Campinas directory.",
+      "messageSha256": "9b913870c44cd24cf9456dd26e54ded8603395b30073babefc679299c24912d3",
+      "st": "Kgetha Brazil ebe o bula Keletso ea temo ho fumana bukana ea Campinas.",
+      "ts": "Hlawula Brazil kutani u pfula Switsundzuxo swa vurimi ku kuma dayirekitari ya Campinas.",
+      "ve": "Nangani Brazil ni vule Nyeletshedzo ya vhulimi u itela u wana mutevhe wa Campinas.",
+      "zu": "Khetha i-Brazil bese uvula Ezolimo zokweluleka ukuze uthole uhla lwe-Campinas."
+    }
+  ]
+}

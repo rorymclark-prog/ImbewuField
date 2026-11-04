@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Shared country-review location wording, retained from the reviewed UK draft.
+  "International → Country review": "Amazwe ngamazwe → Ukubuyekezwa kwezwe",
+  // Campinas directory: docs/international/agy-campinas-directory-release-copy-2026-11-04/source.json; UNREVIEWED AI drafts.
+  "Open the Campinas agricultural office directory from Brazil’s country review.": "Vula uhla lwamahhovisi ezolimo ase-Campinas kusuka ekubuyekezweni kwezwe lase-Brazil.",
+  "Find the Campinas office directory": "Thola uhla lwamahhovisi ase-Campinas",
+  "Choose Brazil and open Agricultural extension to find the Campinas directory.": "Khetha i-Brazil bese uvula Ezolimo zokweluleka ukuze uthole uhla lwe-Campinas.",
   // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
   "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Khetha izindawo ezigciniwe umsizi angazisebenzisa. Unganqamula ukuxhumana kokuthi Izilungiselelo.",
   "Keep original site photos and PDFs with their source and import history.": "Gcina izithombe zokuqala zendawo nama-PDF kanye nomthombo wawo nomlando wokungeniswa kwawo.",
@@ -11,6 +17,8 @@ const copy:UpdateCopy={
   "Check your saved map": "Hlola imephu yakho egciniwe",
   "Site design": "Ukwakheka kwendawo",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlola yona leyo ndawo ngaphambi kokwamukela izinguquko zomsizi noma ukuqhathanisa isithombe sakudala.",
+  // Brazil soil reference: docs/international/pilots/brazil-redape-release-copy/drafts.json; UNREVIEWED AI draft.
+  "Open the Embrapa BDSolos catalogue from the Brazil soil references.": "Vula ikhathalogi ye-Embrapa BDSolos ezinkombeni zomhlabathi zase-Brazil.",
   // Country context: docs/international/agy-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Qinisekisa izwe lesayithi edwetshiwe ngaphambi kokusebenzisa isiqondiso sayo sokuhlela izitshalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Gcina amarekhodi akho okuhlwanyela nezinto zokusebenza zenkulisa yezitshalo ngenkathi ukuhlela kwendawo kungatholakali.",

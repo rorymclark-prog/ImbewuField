@@ -1,0 +1,23 @@
+{
+  "base": "bcf23fbc5",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "entries": [
+    {
+      "english": "Open the Campinas agricultural office directory from Brazil’s country review.",
+      "messageSha256": "e4a997e63aec41f32b7692bf5932c490d0b3c434fc057db7fd09b5d52f1d674e"
+    },
+    {
+      "english": "Find the Campinas office directory",
+      "messageSha256": "2145ec6179c67fcd13a517d554e5033f9ccc9f161aafc7f5145366e298c41a74"
+    },
+    {
+      "english": "Choose Brazil and open Agricultural extension to find the Campinas directory.",
+      "messageSha256": "9b913870c44cd24cf9456dd26e54ded8603395b30073babefc679299c24912d3"
+    }
+  ]
+}

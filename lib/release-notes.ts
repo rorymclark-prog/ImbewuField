@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: 'd49922455', changes: [
+    'Open the Campinas agricultural office directory from Brazil’s country review.',
+  ], tour: [{ title: 'Find the Campinas office directory', where: 'International → Country review', href: '/international',
+    detail: 'Choose Brazil and open Agricultural extension to find the Campinas directory.' }] },
+  { when: '3 November 2026', sha: '117bb5b1b', changes: [
+    "Open the Embrapa BDSolos catalogue from the Brazil soil references.",
+  ] },
   { when: '3 November 2026', sha: '56a2707f9', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
     'Keep your sowing records and nursery equipment while local planning is unavailable.',
