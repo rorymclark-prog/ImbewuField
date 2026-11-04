@@ -1,6 +1,18 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Integrated exact-source candidate descriptions; fluent-review status unchanged.
+  "Export saved field layouts for Google Earth.": "Khipha izakhiwo zamasimu ezilondoloziwe ze-Google Earth.",
+  "Export saved fields": "Khipha amasimu alondoloziwe",
+  "Design Studio → Planting → Field blocks": "Design Studio → Ukutshala → Amabhulokhi wamasimu",
+  "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.": "Khetha insimu eyodwa noma wonke amasimu, bese ulanda imingcele elondoloziwe, imibhede yokutshala (beds) nemigqa yezindlela njenge-KML. Amalebula awaphoqelekile; izindawo zereferensi yemephu akuyona imingcele ekalwe ngokuhlola umhlaba (survey).",
+  "Enter your crop estimates in metric or imperial units.": "Faka izilinganiso zakho zezitshalo ngamayunithi emethrikhi noma e-imperial.",
+  "Check saved bed measurements before reviewing capacity.": "Hlola izilinganiso zemibhede yokutshala ezigciniwe ngaphambi kokubukeza umthamo.",
+  "Reload changed estimates before saving over newer values.": "Layisha kabusha izilinganiso ezishintshile ngaphambi kokulondoloza esikhundleni samanani akamuva.",
+  "Choose units for your own estimates": "Khetha amayunithi ezilinganiso zakho",
+  "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Khetha m² kanye no-kg noma ft² kanye no-lb ezilinganisweni zakho zokuminyana kwezitshalo nesisindo sesivuno. Hlola izilinganiso ezigciniwe, bese ubukeza izibalo nezinsuku; lezi yizilinganiso ezihleliwe, hhayi izeluleko zokulima zendawo eziqinisekisiwe.",
+  "New grower accounts can save personal designs without joining an organisation.": "Ama-akhawunti amasha abalimi angagcina imiklamo yawo ngaphandle kokujoyina inhlangano.",
+
   // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
   "Keep editing nursery equipment and buyer targets after a confirmed save.": "Qhubeka nokuhlela izinto zokusebenza zendawo yezithombo nemigomo yabathengi ngemva kokulondoloza okuqinisekisiwe.",
   "Continue nursery editing": "Qhubeka nokuhlela indawo yezithombo",

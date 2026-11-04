@@ -9,23 +9,31 @@ import type { MassUnit } from './mass-units';
 const KEY = 'imbewu_length_unit_v1';
 const NURSERY_KEY = 'imbewu_nursery_unit_v1';
 const HARVEST_KEY = 'imbewu_harvest_mass_unit_v1';
+const GROWER_ESTIMATE_KEY = 'imbewu_grower_estimate_unit_v1';
+// A namespace proof only: file delivery never reads or writes a preference row.
+const FIELD_LAYOUT_CONTEXT_KEY = 'imbewu_field_layout_export_context_v1';
+export type GrowerEstimateUnitChoice = 'metric' | 'imperial';
+export interface GrowerEstimateUnitPreferenceContext { readonly kind: 'grower-estimate-unit-preference' }
 export interface HarvestMassUnitPreferenceContext { readonly kind: 'harvest-mass-unit-preference' }
-type Purpose = 'field' | 'nursery' | 'harvest-mass';
-const purposeKey = (purpose: Purpose) => purpose === 'field' ? KEY : purpose === 'nursery' ? NURSERY_KEY : HARVEST_KEY;
+export interface FieldLayoutExportContext { readonly kind: 'field-layout-export-context' }
+type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate' | 'field-layout-export';
+const purposeKey = (purpose: Purpose) => purpose === 'field' ? KEY : purpose === 'nursery' ? NURSERY_KEY
+  : purpose === 'harvest-mass' ? HARVEST_KEY : purpose === 'grower-estimate' ? GROWER_ESTIMATE_KEY : FIELD_LAYOUT_CONTEXT_KEY;
 export type NurseryUnitChoice = 'metric' | 'imperial';
 export interface NurseryUnitPreferenceContext { readonly kind: 'nursery-unit-preference' }
-type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext;
+type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext | FieldLayoutExportContext;
 const SAMPLE_EVENT = 'imbewu-sample-mode-changed';
 export interface LengthUnitPreferenceContext { readonly kind: 'length-unit-preference' }
 type Result = { unit: LengthUnit; remembered: boolean; destination: 'device' | 'sample' | 'unavailable' };
 interface Scope {
-  epoch: number; users: number; sampleUnit: LengthUnit; sampleNurseryUnit: NurseryUnitChoice; sampleMassUnit: MassUnit; observedUid: string | null; failed: boolean;
+  epoch: number; users: number; sampleUnit: LengthUnit; sampleNurseryUnit: NurseryUnitChoice; sampleMassUnit: MassUnit; sampleGrowerEstimateUnit: GrowerEstimateUnitChoice; observedUid: string | null; failed: boolean;
   proofs: Set<Proof>; stop: () => void;
 }
 interface Proof {
   purpose: Purpose; win: Window; scope: Scope; epoch: number; owner: string | null; sample: boolean;
   storage: Storage | null; key: string; revoked: boolean; listeners: Set<() => void>;
   nurseryValueListeners?: Set<(unit: NurseryUnitChoice) => void>;
+  growerEstimateValueListeners?: Set<(unit: GrowerEstimateUnitChoice) => void>;
 }
 const scopes = new WeakMap<Window, Scope>();
 const proofs = new WeakMap<object, Proof>();
@@ -37,13 +45,13 @@ function actorMatches(owner: string | null, inSample: boolean): boolean {
   return !!auth && (auth.currentUser?.uid ?? null) === owner;
 }
 function changed(scope: Scope) {
-  ++scope.epoch; scope.sampleUnit = 'm'; scope.sampleNurseryUnit = 'metric'; scope.sampleMassUnit = 'kg';
+  ++scope.epoch; scope.sampleUnit = 'm'; scope.sampleNurseryUnit = 'metric'; scope.sampleMassUnit = 'kg'; scope.sampleGrowerEstimateUnit = 'metric';
   for (const proof of scope.proofs) for (const listener of proof.listeners) listener();
 }
 function scopeFor(win: Window): Scope {
   const found = scopes.get(win); if (found) return found;
   const auth = isBackendConfigured() ? getFirebase()?.auth : null;
-  const scope: Scope = { epoch: 0, users: 0, sampleUnit: 'm', sampleNurseryUnit: 'metric', sampleMassUnit: 'kg', observedUid: auth?.currentUser?.uid ?? null, failed: false, proofs: new Set(), stop: () => {} };
+  const scope: Scope = { epoch: 0, users: 0, sampleUnit: 'm', sampleNurseryUnit: 'metric', sampleMassUnit: 'kg', sampleGrowerEstimateUnit: 'metric', observedUid: auth?.currentUser?.uid ?? null, failed: false, proofs: new Set(), stop: () => {} };
   const sampleChanged = () => changed(scope);
   win.addEventListener(SAMPLE_EVENT, sampleChanged);
   let stopAuth: (() => void) | undefined;
@@ -61,10 +69,11 @@ function capturePreferenceContext(purpose: Purpose): PreferenceContext | null {
     if (typeof window === 'undefined') return null;
     const win = window, inSample = sample(win), owner = activeAccountUid();
     if (!actorMatches(owner, inSample)) return null;
-    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : 'harvest-mass-unit-preference' });
+    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : purpose === 'grower-estimate' ? 'grower-estimate-unit-preference' : 'field-layout-export-context' });
     const proof: Proof = { purpose, win, scope, epoch: scope.epoch, owner, sample: inSample, storage: local(win),
       key: activeAccountLocalStorageKey(purposeKey(purpose)), revoked: false, listeners: new Set(),
-      ...(purpose === 'nursery' ? { nurseryValueListeners: new Set() } : {}) };
+      ...(purpose === 'nursery' ? { nurseryValueListeners: new Set() } : {}),
+      ...(purpose === 'grower-estimate' ? { growerEstimateValueListeners: new Set() } : {}) };
     ++scope.users; scope.proofs.add(proof); proofs.set(context, proof); return context;
   } catch { return null; }
 }
@@ -87,7 +96,7 @@ function subscribeContext(context: PreferenceContext | null, listener: () => voi
 }
 function revokeContext(context: PreferenceContext | null): void {
   const proof = context && proofs.get(context); if (!proof) return;
-  proof.revoked = true; proof.listeners.clear(); proof.nurseryValueListeners?.clear(); proof.scope.proofs.delete(proof); proofs.delete(context!);
+  proof.revoked = true; proof.listeners.clear(); proof.nurseryValueListeners?.clear(); proof.growerEstimateValueListeners?.clear(); proof.scope.proofs.delete(proof); proofs.delete(context!);
   if (--proof.scope.users === 0) proof.scope.stop();
 }
 export function readLengthUnitPreference(context: LengthUnitPreferenceContext | null): Result {
@@ -121,7 +130,7 @@ export function writeLengthUnitPreference(context: LengthUnitPreferenceContext |
   } catch { return { remembered: false, destination: 'unavailable' }; }
 }
 
-// All three closed purposes share the same private actor/sample epoch authority, but
+// All closed purposes share the same private actor/sample epoch authority, but
 // nursery choice never reads or overwrites the field editor's remembered unit.
 export function captureLengthUnitPreferenceContext(): LengthUnitPreferenceContext | null {
   return capturePreferenceContext('field') as LengthUnitPreferenceContext | null;
@@ -131,6 +140,17 @@ export function lengthUnitPreferenceContextIsCurrent(context: LengthUnitPreferen
 }
 export const subscribeLengthUnitPreferenceContext = (context: LengthUnitPreferenceContext | null, listener: () => void) => subscribeContext(context, listener);
 export const revokeLengthUnitPreferenceContext = (context: LengthUnitPreferenceContext | null) => revokeContext(context);
+
+// Reuse the existing account/window/sample epoch authority without giving a
+// geospatial export access to any of the four remembered unit preferences.
+export function captureFieldLayoutExportContext(): FieldLayoutExportContext | null {
+  return capturePreferenceContext('field-layout-export') as FieldLayoutExportContext | null;
+}
+export function fieldLayoutExportContextIsCurrent(context: FieldLayoutExportContext | null): boolean {
+  return !!context && proofs.get(context)?.purpose === 'field-layout-export' && contextIsCurrent(context);
+}
+export const subscribeFieldLayoutExportContext = (context: FieldLayoutExportContext | null, listener: () => void) => subscribeContext(context, listener);
+export const revokeFieldLayoutExportContext = (context: FieldLayoutExportContext | null) => revokeContext(context);
 export function captureNurseryUnitPreferenceContext(): NurseryUnitPreferenceContext | null {
   return capturePreferenceContext('nursery') as NurseryUnitPreferenceContext | null;
 }
@@ -225,5 +245,72 @@ export function writeHarvestMassUnitPreference(context: HarvestMassUnitPreferenc
     const raw = JSON.stringify({ version: 1, unit }); proof.storage.setItem(proof.key, raw);
     return harvestMassUnitPreferenceContextIsCurrent(context) && proof.storage.getItem(proof.key) === raw
       ? { remembered: true, destination: 'device' } : { remembered: false, destination: 'unavailable' };
+  } catch { return { remembered: false, destination: 'unavailable' }; }
+}
+
+
+export function captureGrowerEstimateUnitPreferenceContext(): GrowerEstimateUnitPreferenceContext | null {
+  return capturePreferenceContext('grower-estimate') as GrowerEstimateUnitPreferenceContext | null;
+}
+export function growerEstimateUnitPreferenceContextIsCurrent(context: GrowerEstimateUnitPreferenceContext | null): boolean {
+  return !!context && proofs.get(context)?.purpose === 'grower-estimate' && contextIsCurrent(context);
+}
+export const subscribeGrowerEstimateUnitPreferenceContext = (context: GrowerEstimateUnitPreferenceContext | null, listener: () => void) => subscribeContext(context, listener);
+export const revokeGrowerEstimateUnitPreferenceContext = (context: GrowerEstimateUnitPreferenceContext | null) => revokeContext(context);
+export function subscribeGrowerEstimateUnitPreferenceValue(context: GrowerEstimateUnitPreferenceContext | null, listener: (unit: GrowerEstimateUnitChoice) => void): () => void {
+  const proof = context && proofs.get(context);
+  if (!proof || proof.purpose !== 'grower-estimate' || !proof.growerEstimateValueListeners) return () => {};
+  proof.growerEstimateValueListeners.add(listener);
+  return () => proof.growerEstimateValueListeners?.delete(listener);
+}
+type GrowerEstimatePreferenceRead = { unit: GrowerEstimateUnitChoice; remembered: boolean; destination: 'device' | 'sample' | 'unavailable' };
+export function readGrowerEstimateUnitPreference(context: GrowerEstimateUnitPreferenceContext | null): GrowerEstimatePreferenceRead {
+  try {
+    if (!growerEstimateUnitPreferenceContextIsCurrent(context)) return { unit: 'metric', remembered: false, destination: 'unavailable' };
+    const proof = proofs.get(context!)!;
+    if (proof.sample) return { unit: proof.scope.sampleGrowerEstimateUnit, remembered: false, destination: 'sample' };
+    const raw = proof.storage?.getItem(proof.key), value = raw ? JSON.parse(raw) : null;
+    if (!growerEstimateUnitPreferenceContextIsCurrent(context)) return { unit: 'metric', remembered: false, destination: 'unavailable' };
+    return value && typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 2
+      && value.version === 1 && ['metric', 'imperial'].includes(value.unit)
+      ? { unit: value.unit, remembered: true, destination: 'device' }
+      : { unit: 'metric', remembered: false, destination: proof.storage ? 'device' : 'unavailable' };
+  } catch { return { unit: 'metric', remembered: false, destination: 'unavailable' }; }
+}
+function growerEstimateValueMatches(proof: Proof, unit: GrowerEstimateUnitChoice): boolean {
+  try {
+    if (!proofIsCurrent(proof)) return false;
+    if (proof.sample) return proof.scope.sampleGrowerEstimateUnit === unit;
+    const raw = proof.storage?.getItem(proof.key);
+    return proofIsCurrent(proof) && raw === JSON.stringify({ version: 1, unit });
+  } catch { return false; }
+}
+function notifyGrowerEstimateValue(origin: Proof, unit: GrowerEstimateUnitChoice) {
+  for (const proof of origin.scope.proofs) {
+    if (proof.purpose !== 'grower-estimate' || !proof.growerEstimateValueListeners) continue;
+    for (const listener of [...proof.growerEstimateValueListeners]) {
+      // A listener can synchronously write another unit or change actor/sample.
+      // Never deliver the outer write's obsolete value to the next subscriber.
+      if (!growerEstimateValueMatches(origin, unit)) return;
+      if (!proofIsCurrent(proof) || proof.owner !== origin.owner || proof.sample !== origin.sample
+        || proof.key !== origin.key || proof.storage !== origin.storage) continue;
+      try { listener(unit); } catch { /* One broken view does not suppress other current views. */ }
+    }
+  }
+}
+export function writeGrowerEstimateUnitPreference(context: GrowerEstimateUnitPreferenceContext | null, unit: GrowerEstimateUnitChoice): Omit<GrowerEstimatePreferenceRead, 'unit'> {
+  try {
+    if (!['metric', 'imperial'].includes(unit) || !growerEstimateUnitPreferenceContextIsCurrent(context)) return { remembered: false, destination: 'unavailable' };
+    const proof = proofs.get(context!)!;
+    if (proof.sample) proof.scope.sampleGrowerEstimateUnit = unit;
+    else {
+      if (!proof.storage) return { remembered: false, destination: 'unavailable' };
+      proof.storage.setItem(proof.key, JSON.stringify({ version: 1, unit }));
+    }
+    if (!growerEstimateValueMatches(proof, unit)) return { remembered: false, destination: 'unavailable' };
+    notifyGrowerEstimateValue(proof, unit);
+    return growerEstimateValueMatches(proof, unit)
+      ? { remembered: !proof.sample, destination: proof.sample ? 'sample' : 'device' }
+      : { remembered: false, destination: 'unavailable' };
   } catch { return { remembered: false, destination: 'unavailable' }; }
 }

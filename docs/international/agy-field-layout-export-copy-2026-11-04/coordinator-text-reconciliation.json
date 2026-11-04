@@ -1,0 +1,16 @@
+{
+  "scope": "Frozen23English/key/message hashes remain unchanged after additive own-save receipt repair. Whole source packet remains frozen; current file hashes are reconciled separately. No fluent or new-language approval.",
+  "sourceSha256": "883ab3ffd0593e2387cda3f5518511ed5fa1ee1281cd83a5f654efa5a4de5afd",
+  "pairs": 23,
+  "currentSourceFiles": [
+    {
+      "path": "components/design/FieldBlocksPanel.tsx",
+      "sha256": "feebf7be2b37cf7f7b27da622ab6c11ed30e114206629554377623b9986c266b"
+    },
+    {
+      "path": "lib/field-layout-delivery.ts",
+      "sha256": "7b4b85fb482bae5e99a746f607cd1131319f44f576bfce8fbf50aa1295753e65"
+    }
+  ],
+  "runtimeActivation": false
+}

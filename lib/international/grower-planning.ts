@@ -1,6 +1,10 @@
 import { cropByKey } from '../crop-catalog';
 import { canonicalCoordinateSiteId } from '../site-id';
 import { validWorkspacePlanningId } from './workspace-context';
+import { growerEstimateSourceQuantity, normaliseGrowerEstimateSourceReceipt, type GrowerEstimateSourceReceipt,
+  type GrowerEstimateSourceField } from '../grower-estimate-units';
+import { addDecimalQuantity, floorDecimalQuantityRatio, floorExactDecimalQuantityRatio } from '../farm-records';
+import { INTERNATIONAL_SQUARE_FOOT_IN_SQUARE_METRES } from '../length-units';
 
 export type GrowerPlanningScope =
   | { readonly kind: 'mapped-site'; readonly siteId: string }
@@ -15,6 +19,14 @@ export type GrowerInputProvenance =
 export type GrowerInput<T, U extends string> =
   | { readonly state: 'missing'; readonly reason: 'not-entered' | 'not-known' | 'not-applicable' }
   | { readonly state: 'provided'; readonly value: T; readonly unit: U; readonly provenance: GrowerInputProvenance };
+
+/** Canonical saved rectangle dimensions, never inferred original feet or survey accuracy. */
+export interface GrowerAreaArithmeticBasis {
+  readonly kind: 'saved-rectangle-metres-v1';
+  readonly widthM: number;
+  readonly heightM: number;
+}
+export type GrowerMeasuredAreaInput = GrowerInput<number, 'm2'> & { readonly arithmeticBasis?: GrowerAreaArithmeticBasis };
 
 export interface GrowerPlanningInputs {
   readonly plantsPerM2: GrowerInput<number, 'plants/m2'>;
@@ -36,6 +48,8 @@ export interface GrowerPlanningProfile {
   readonly cropKey: string;
   readonly scope: GrowerPlanningScope;
   readonly inputs: GrowerPlanningInputs;
+  /** Optional entered-unit origin, not source verification or measured area. */
+  readonly exactDensitySources?: Readonly<Partial<Record<GrowerEstimateSourceField, GrowerEstimateSourceReceipt>>>;
 }
 
 export interface GrowerPlanningRequest {
@@ -45,10 +59,13 @@ export interface GrowerPlanningRequest {
   readonly fieldEntryDate: unknown;
 }
 
+export const GROWER_COUNT_ARITHMETIC = 'exact-declared-decimal-v1' as const;
 export interface GrowerPlanningSnapshot {
+  /** Old float reviews must be rechecked, including their saved-cycle markers. */
+  readonly countArithmetic: typeof GROWER_COUNT_ARITHMETIC;
   readonly profile: GrowerPlanningProfile;
   readonly scope: GrowerPlanningScope;
-  readonly measuredAreaM2: GrowerInput<number, 'm2'>;
+  readonly measuredAreaM2: GrowerMeasuredAreaInput;
   readonly fieldEntryDate: GrowerInput<string, 'utc-date'>;
 }
 
@@ -161,6 +178,22 @@ export function normaliseGrowerInput<T, U extends string>(value: unknown, unit: 
 const input = normaliseGrowerInput;
 
 const nonNegative = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v) && v >= 0;
+
+/** Validate a supplied arithmetic basis against the existing numeric area
+ * projection. The actual geometry/source authority supplies the dimensions. */
+export function normaliseGrowerMeasuredAreaInput(value: unknown): GrowerMeasuredAreaInput | null {
+  const area = input(value, 'm2', nonNegative);
+  if (!area || !record(value)) return null;
+  const marker = Object.getOwnPropertyDescriptor(value, 'arithmeticBasis');
+  if (!marker) return 'arithmeticBasis' in value ? null : area;
+  if (!('value' in marker) || area.state !== 'provided' || !record(marker.value)) return null;
+  const descriptors = Object.getOwnPropertyDescriptors(marker.value);
+  if (Reflect.ownKeys(descriptors).length !== 3 || !['kind', 'widthM', 'heightM'].every(key => descriptors[key]?.enumerable && 'value' in descriptors[key])) return null;
+  const kind = descriptors.kind.value, widthM = descriptors.widthM.value, heightM = descriptors.heightM.value;
+  if (kind !== 'saved-rectangle-metres-v1' || !nonNegative(widthM) || widthM === 0 || !nonNegative(heightM) || heightM === 0
+    || !Number.isFinite(widthM * heightM) || widthM * heightM <= 0 || widthM * heightM !== area.value) return null;
+  return { ...area, arithmeticBasis: Object.freeze({ kind, widthM, heightM }) };
+}
 const days = (v: unknown): v is number => nonNegative(v) && Number.isSafeInteger(v);
 const method = (v: unknown): v is 'direct' | 'transplant' => v === 'direct' || v === 'transplant';
 const months = (v: unknown): v is number[] => Array.isArray(v)
@@ -185,9 +218,33 @@ export function normaliseGrowerPlanningProfile(value: unknown): GrowerPlanningPr
     || !pickingDays || !fieldOccupancyDays || !turnaroundDays || !allowedEntryMonths) return null;
   const window: GrowerPlanningInputs['allowedEntryMonths'] = allowedEntryMonths.state === 'missing' ? allowedEntryMonths
     : { ...allowedEntryMonths, value: [...allowedEntryMonths.value].sort((a, b) => a - b) };
+  let exactDensitySources: GrowerPlanningProfile['exactDensitySources'];
+  // A malformed present marker must not fall back to legacy arithmetic. The
+  // raw-book writer admission also keeps a display load from erasing it.
+  if (Object.prototype.hasOwnProperty.call(value, 'exactDensitySources')) {
+    if (!record(value.exactDensitySources)) return null;
+    const descriptors = Object.getOwnPropertyDescriptors(value.exactDensitySources);
+    const keys = Reflect.ownKeys(descriptors);
+    if (!keys.length || keys.length > 2 || keys.some(key => typeof key !== 'string'
+      || !['plantsPerM2', 'yieldKgPerM2'].includes(key)
+      || !descriptors[key].enumerable || !('value' in descriptors[key]))) return null;
+    const sources: Partial<Record<GrowerEstimateSourceField, GrowerEstimateSourceReceipt>> = {};
+    for (const key of ['plantsPerM2', 'yieldKgPerM2'] as const) {
+      if (!Object.prototype.hasOwnProperty.call(descriptors, key)) continue;
+      const canonical = key === 'plantsPerM2' ? plantsPerM2 : yieldKgPerM2;
+      if (canonical.state !== 'provided') return null;
+      const receipt = normaliseGrowerEstimateSourceReceipt(descriptors[key].value, {
+        scopeKey: growerPlanningScopeKey(scope)!, profileId: value.profileId, cropKey: value.cropKey, field: key,
+      }, canonical.value);
+      if (!receipt) return null;
+      sources[key] = receipt;
+    }
+    exactDensitySources = sources;
+  }
   return freeze({ version: 1, profileId: value.profileId, cropKey: value.cropKey, scope,
     inputs: { plantsPerM2, yieldKgPerM2, establishment, nurseryDays, fieldEntryToFirstHarvestDays,
-      pickingDays, fieldOccupancyDays, turnaroundDays, allowedEntryMonths: window } });
+      pickingDays, fieldOccupancyDays, turnaroundDays, allowedEntryMonths: window },
+    ...(exactDensitySources ? { exactDensitySources } : {}) });
 }
 
 /** Duplicate identities are ambiguous even across scopes, or when one duplicate is
@@ -224,7 +281,7 @@ const basis: AssessmentBasis = { basis: 'grower-input-arithmetic', sourceVerific
 export function assessGrowerPlanning(request: GrowerPlanningRequest): GrowerPlanningAssessment {
   const profile = normaliseGrowerPlanningProfile(request.profile);
   const scope = normaliseGrowerPlanningScope(request.scope);
-  const measuredAreaM2 = input(request.measuredAreaM2, 'm2', nonNegative);
+  const measuredAreaM2 = normaliseGrowerMeasuredAreaInput(request.measuredAreaM2);
   const fieldEntryDate = input(request.fieldEntryDate, 'utc-date', utcDate);
   const invalid = [!profile && 'profile', !scope && 'scope', !measuredAreaM2 && 'measuredAreaM2', !fieldEntryDate && 'fieldEntryDate'].filter(Boolean) as string[];
   if (!profile || !scope || !measuredAreaM2 || !fieldEntryDate) {
@@ -232,7 +289,7 @@ export function assessGrowerPlanning(request: GrowerPlanningRequest): GrowerPlan
   }
   // Normalisation constructs fresh objects in canonical field order. Unordered month
   // selections are sorted; editing input values/provenance cannot mutate this review.
-  const snapshot = freeze({ profile, scope, measuredAreaM2, fieldEntryDate });
+  const snapshot = freeze({ countArithmetic: GROWER_COUNT_ARITHMETIC, profile, scope, measuredAreaM2, fieldEntryDate });
   const fingerprint = JSON.stringify(snapshot);
   const held = (status: 'missing-inputs' | 'invalid-inputs' | 'scope-mismatch' | 'entry-window-excluded', issues: string[]): GrowerPlanningAssessment =>
     freeze({ ...basis, status, issues, snapshot, fingerprint });
@@ -255,10 +312,22 @@ export function assessGrowerPlanning(request: GrowerPlanningRequest): GrowerPlan
   if (density === 0) invalidArithmetic.push('plantsPerM2');
   if (picking === 0) invalidArithmetic.push('pickingDays');
   if (occupancy === 0 || !Number.isSafeInteger(toFirst + picking) || occupancy < toFirst + picking) invalidArithmetic.push('fieldOccupancyDays');
-  const estimatedPlantCount = Math.floor(area * density), estimatedYieldKg = area * yieldPerM2;
-  if (!Number.isSafeInteger(estimatedPlantCount)) invalidArithmetic.push('estimatedPlantCount');
+  const source = profile.exactDensitySources?.plantsPerM2;
+  const quantity = source ? growerEstimateSourceQuantity(source) : null;
+  const areaFactors = measuredAreaM2.arithmeticBasis
+    ? [measuredAreaM2.arithmeticBasis.widthM, measuredAreaM2.arithmeticBasis.heightM] : [area];
+  // The measured Number is the current area's declared canonical decimal; it
+  // does not certify the feet text or polygon precision that once produced it.
+  // Only the density's validated original source can cancel a density unit.
+  const count = source
+    ? quantity ? floorExactDecimalQuantityRatio({ factors: [...areaFactors.map(value => addDecimalQuantity(undefined, value)), quantity],
+      divisors: source.unit === 'plants/ft2' ? [addDecimalQuantity(undefined, INTERNATIONAL_SQUARE_FOOT_IN_SQUARE_METRES)] : [] })
+      : { status: 'held' as const, reason: 'source-unavailable' }
+    : floorDecimalQuantityRatio({ factors: [...areaFactors, density] });
+  const estimatedPlantCount = count.status === 'ready' ? count.whole : null, estimatedYieldKg = area * yieldPerM2;
+  if (estimatedPlantCount === null) invalidArithmetic.push('estimatedPlantCount');
   if (!Number.isFinite(estimatedYieldKg)) invalidArithmetic.push('estimatedYieldKg');
-  if (invalidArithmetic.length) return held('invalid-inputs', invalidArithmetic);
+  if (invalidArithmetic.length || estimatedPlantCount === null) return held('invalid-inputs', invalidArithmetic);
   const entryDate = supplied(fieldEntryDate);
   if (!supplied(values.allowedEntryMonths).includes(Number(entryDate.slice(5, 7)))) return held('entry-window-excluded', ['allowedEntryMonths']);
   const nurseryStartDate = supplied(values.establishment) === 'transplant' ? addDays(entryDate, -supplied(values.nurseryDays)) : null;

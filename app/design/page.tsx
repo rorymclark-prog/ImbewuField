@@ -10,6 +10,7 @@ import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
 import FieldBlocksPanel from '@/components/design/FieldBlocksPanel';
 import { configureFieldBlock, reconcileFieldBlockEdit } from '@/lib/bed-block';
+import { deliverFieldLayoutExport } from '@/lib/field-layout-delivery';
 import { readFieldBlockAllocations, fieldBlockAllocatedIds, assertFieldBlockAllocationsCurrent,
   assertFieldBlockLayoutReadable, fieldBlockSourceKey } from '@/lib/field-block-allocations';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -772,6 +773,13 @@ function DesignStudioInner() {
   // can be deleted together (Rory's "command-select for multiple + delete" ask).
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const selectedId = selectedIds.length === 1 ? selectedIds[0] : null;
+  const fieldExportMounted = useRef(false);
+  const fieldExportView = useRef({ state: canvasState, frame, selectedId, actor: fieldEditActor });
+  fieldExportView.current = { state: canvasState, frame, selectedId, actor: fieldEditActor };
+  useEffect(() => {
+    fieldExportMounted.current = true;
+    return () => { fieldExportMounted.current = false; };
+  }, []);
 
   // Tidy outline (lib/tidy-outline.ts) preview — set only while previewing a pending tidy of the
   // single selected zone/line; `id` pins the preview to that ONE shape so a selection change or a
@@ -1748,8 +1756,12 @@ function DesignStudioInner() {
 
   // Persist canvas state on change (with undo history), and re-run the advisor.
   const handleChange = useCallback(
-    (updater: (prev: DesignCanvasState) => DesignCanvasState) => {
+    (updater: (prev: DesignCanvasState) => DesignCanvasState, applied?: (state: DesignCanvasState) => void) => {
       const intent = readFieldBlockAllocations(fieldEditActor);
+      // React can replay a queued field application. Reuse this action's exact
+      // returned state instead of saving it twice or treating its own result as
+      // an outside edit. Other canvas callers retain their existing semantics.
+      const replay = applied ? new WeakMap<DesignCanvasState, DesignCanvasState>() : null;
       setCanvasState((prev) => {
         if (!prev) return prev;
         // A genuinely new edit invalidates whatever future we might have redone back to —
@@ -1759,8 +1771,14 @@ function DesignStudioInner() {
         const allocations = readFieldBlockAllocations(fieldEditActor);
         try {
           assertFieldBlockAllocationsCurrent(intent);
+          assertFieldBlockAllocationsCurrent(allocations);
           next = reconcileFieldBlockEdit(prev, updater(prev), fieldBlockAllocatedIds(allocations, prev));
           assertFieldBlockAllocationsCurrent(allocations);
+          // Even a cached action must pass today's frame/source guard. A cache
+          // is a duplicate-work receipt, never permission to reuse an old scale.
+          const replayed = replay?.get(prev);
+          if (replayed) return replayed;
+          if (applied && next === prev) return prev;
         } catch (e) {
           setEditError((e as Error).message);
           return prev;
@@ -1777,7 +1795,11 @@ function DesignStudioInner() {
         setSaved(!!stamped);
         setSaveError(stamped ? null : t('designStorageFull'));
         // Hold the STAMPED state so the next edit counts rev up from what was actually saved.
-        return stamped ?? next;
+        const result = stamped ?? next;
+        replay?.set(prev, result);
+        replay?.set(result, result);
+        if (stamped) applied?.(result);
+        return result;
       });
     },
     [t, fieldEditActor],
@@ -4261,6 +4283,22 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             frame={frame}
             selectedId={selectedId}
             applyError={editError}
+            onExport={(request, formCurrent) => {
+              const expected = { state: canvasState, frame, selectedId, actor: fieldEditActor };
+              if (!expected.state || !expected.frame || typeof request.allFields !== 'boolean'
+                || typeof request.includeLabels !== 'boolean' || !request.allFields && !request.fieldId) {
+                return Promise.resolve({ status: 'held' as const, message: 'Select the current saved field before exporting.' });
+              }
+              return deliverFieldLayoutExport({ state: expected.state, frame: expected.frame, actor: expected.actor,
+                selection: request.allFields ? { kind: 'all' } : { kind: 'selected', fieldId: request.fieldId! },
+                includeLabels: request.includeLabels,
+                isCurrent: () => {
+                  const live = fieldExportView.current;
+                  return fieldExportMounted.current && live.state === expected.state && live.frame === expected.frame
+                    && live.selectedId === expected.selectedId && live.actor.owner === expected.actor.owner
+                    && live.actor.sample === expected.actor.sample && live.actor.loading === expected.actor.loading && formCurrent();
+                } });
+            }}
             onDraw={() => {
               setAreaFeature('staple_garden');
               setZoneDraw(3);
@@ -4268,16 +4306,18 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               setActiveLayers(a => ({ ...a, planting: true }));
             }}
             onSelect={id => { handleSetTool('select'); setSelectedIds([id]); }}
-            onApply={(id, name, config) => {
+            onApply={(id, name, config, acknowledge) => {
               const expectedSource = fieldBlockSourceKey(canvasState, id, frame);
               const allocations = readFieldBlockAllocations(fieldEditActor);
               // Validate beside the form, then repeat against the actual queued
               // state/frame: a once-valid preview cannot adopt a replacement field.
               assertFieldBlockLayoutReadable(allocations);
               configureFieldBlock(canvasState, id, name, config, frame, fieldBlockAllocatedIds(allocations, canvasState));
+              let appliedSource: string | null = null;
               handleChange(prev => {
                 assertFieldBlockAllocationsCurrent(allocations);
                 const currentFrame = fieldFrameRef.current;
+                if (currentFrame && appliedSource && fieldBlockSourceKey(prev, id, currentFrame) === appliedSource) return prev;
                 if (!currentFrame || fieldBlockSourceKey(prev, id, currentFrame) !== expectedSource)
                   throw Error('The field or map scale changed. Reload its settings before applying this layout.');
                 const current = readFieldBlockAllocations(fieldEditActor);
@@ -4285,6 +4325,13 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 const next = configureFieldBlock(prev, id, name, config, currentFrame, fieldBlockAllocatedIds(current, prev));
                 assertFieldBlockAllocationsCurrent(current);
                 return next;
+              }, result => {
+                const currentFrame = fieldFrameRef.current;
+                if (!currentFrame) return;
+                appliedSource = fieldBlockSourceKey(result, id, currentFrame);
+                // A result receipt is not a commit: the form consumes it only
+                // when those exact source values reach its committed props.
+                acknowledge?.(appliedSource);
               });
               handleSetTool('select');
               setActiveLayers(a => ({ ...a, planting: true }));

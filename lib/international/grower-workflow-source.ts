@@ -4,7 +4,8 @@ import { BED_DEF_IDS, bedsFromDesignCanvas } from '../design-beds-bridge';
 import { canonicalCoordinateSiteId } from '../site-id';
 import { coordinateSiteIdForPlace } from './site-context';
 import { workspacePlanningIdForDesign } from './workspace-context';
-import { growerPlanningScopeKey, normaliseGrowerPlanningScope, type GrowerPlanningScope } from './grower-planning';
+import { growerPlanningScopeKey, normaliseGrowerPlanningScope, type GrowerPlanningScope,
+  type GrowerAreaArithmeticBasis } from './grower-planning';
 import type { PlanBed } from '../crop-plan';
 
 export type RawGrowerSourceReceipt =
@@ -21,6 +22,7 @@ export interface GrowerWorkflowMeasuredArea {
   readonly bedId: string;
   readonly areaM2: number;
   readonly basis: 'explicit-saved-dimensions' | 'calibrated-saved-polygon';
+  readonly arithmeticBasis?: GrowerAreaArithmeticBasis;
 }
 export interface GrowerWorkflowHeldBed {
   readonly bedId: string;
@@ -187,9 +189,14 @@ export function inspectGrowerWorkflowSource(request: GrowerWorkflowSourceRequest
         }
         return true;
       });
-      beds = bedsFromDesignCanvas({ ...state, items: eligible });
-      for (const bed of beds) measuredAreas.push({ bedId: bed.id, areaM2: bed.areaM2,
-        basis: state.zones.some(zone => zone.id === bed.id) ? 'calibrated-saved-polygon' : 'explicit-saved-dimensions' });
+      // The shared bridge still owns footprint/calibration. Presentation rounding
+      // must not become an input to whole-plant capacity arithmetic.
+      const measuredBeds = bedsFromDesignCanvas({ ...state, items: eligible }, { areaRounding: 'none' });
+      beds = measuredBeds;
+      for (const bed of measuredBeds) measuredAreas.push({ bedId: bed.id, areaM2: bed.areaM2,
+        basis: state.zones.some(zone => zone.id === bed.id) ? 'calibrated-saved-polygon' : 'explicit-saved-dimensions',
+        ...(bed.savedRectangleM ? { arithmeticBasis: { kind: 'saved-rectangle-metres-v1' as const,
+          widthM: bed.savedRectangleM[0], heightM: bed.savedRectangleM[1] } } : {}) });
       for (const zone of state.zones) if (zone.feature === 'staple_garden' && zone.fieldBlock?.mode !== 'beds' && !beds.some(bed => bed.id === zone.id)) {
         heldBeds.push({ bedId: zone.id, reasons: ['nonpositive-or-degenerate-allocation'] });
       }
@@ -241,7 +248,11 @@ export function inspectGrowerWorkflowSource(request: GrowerWorkflowSourceRequest
       beds = state.items.filter(item => item.type === 'bed' || item.type === 'hugel').map((item, index) => ({
         id: item.id, label: item.label || `Bed ${index + 1}`, areaM2: item.wM * item.hM, minDimM: Math.min(item.wM, item.hM),
       }));
-      for (const bed of beds) measuredAreas.push({ bedId: bed.id, areaM2: bed.areaM2, basis: 'explicit-saved-dimensions' });
+      for (const bed of beds) {
+        const item = state.items.find(item => item.id === bed.id)!;
+        measuredAreas.push({ bedId: bed.id, areaM2: bed.areaM2, basis: 'explicit-saved-dimensions',
+          arithmeticBasis: { kind: 'saved-rectangle-metres-v1', widthM: item.wM, heightM: item.hM } });
+      }
       geometry = detached;
     }
     if (!scope) return held('invalid-source-scope');
@@ -257,7 +268,7 @@ export function inspectGrowerWorkflowSource(request: GrowerWorkflowSourceRequest
       measuredAreas: measuredAreas.filter(row => !excluded.has(row.bedId)), heldBeds,
       freshness: request.kind === 'facilitator-cloud' ? 'cloud-query-copy' : 'device-saved-copy',
       sourceVerification: 'not-verified', sourceRevision: request.sourceRevision,
-      geometryCanonical: JSON.stringify(canonical({ version: 1, sourceKey, geometry, beds })) });
+      geometryCanonical: JSON.stringify(canonical({ version: 2, sourceKey, geometry, beds, measuredAreas })) });
   } catch { return held('invalid-source-geometry'); }
 }
 
