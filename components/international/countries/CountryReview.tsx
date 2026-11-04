@@ -6,7 +6,7 @@ import MenuButton from '@/components/MenuButton';
 import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { COUNTRY_PROFILES, COUNTRY_RESEARCH_QUEUE, EUROPE_RESEARCH_NOTE } from '@/lib/international/countries/registry';
-import { evaluateCountryReadiness, sourceEvidenceState } from '@/lib/international/countries/readiness';
+import { evaluateCountryReadiness, sourceEvidencePresentationLabel } from '@/lib/international/countries/readiness';
 import type { Known } from '@/lib/international/countries/types';
 import { COUNTRY_CLIMATE_DEMOS, NASA_REFERENCE_PROVIDER, fetchCountryClimateReference, type ClimateReferenceResult, type ClimateDemoCode } from '@/lib/international/providers/nasa-reference';
 import styles from './CountryReview.module.css';
@@ -74,7 +74,7 @@ export default function CountryReview() {
         <h3>{CATEGORY_NAMES[entry.category]}</h3>
         {!entry.sources.length && <p>No source dossier recorded.</p>}
         {entry.sources.map((source) => <details key={source.id} className={styles.details}>
-          <summary><span>{source.authority}</span><small>{source.verification === 'content-read' ? 'Full source page read' : 'Source unavailable in this review'} · {source.backgroundOnly ? 'Background reference only' : sourceEvidenceState(source, asOf)}</small></summary>
+          <summary><span>{source.authority}</span><small>{source.verification === 'content-read' ? 'Full source page read' : 'Source unavailable in this review'} · {sourceEvidencePresentationLabel(source, asOf)}{source.backgroundOnly ? ' · Background reference only' : ''}</small></summary>
           <p><a href={source.url} target="_blank" rel="noreferrer" className={styles.link}>Open official source ↗</a></p>
           <p>{source.verifiedClaim}</p><p>{source.limitations}</p>
           <dl><dt>Coverage</dt><dd>{source.coverage}</dd><dt>Resolution</dt><dd>{metadata(source.resolution)}</dd>
