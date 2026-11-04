@@ -417,5 +417,10 @@ const copy:UpdateCopy={
   "Print planned nursery batch cards with dates and separate seedling counts.": "Phrinta amakhadi amaqoqo ahleliwe endawo yezithombo, anezinsuku nezibalo zezithombo ezihlukene.",
   "Print planned batch cards": "Phrinta amakhadi amaqoqo ahleliwe",
   "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Sebenzisa isiphakamiso sendawo yezithombo esibukeziwe ukuze uphrinte amakhadi amaqoqo. Izibalo nezinsuku kuhlala kuhleliwe; uhlelo lokusebenza aluwalondolozi amanothi okuhlwanyela naweqoqo lembewu abhalwe ngesandla.",
+  // Field-observation release: UNREVIEWED Codex AI drafts; exact sources in docs/international/grower-observation-release-drafts.json.
+  "Record your own field observations from planned tasks.": "Rekhoda lokho okubonile ensimini yakho kusukela emisebenzini ehleliwe.",
+  "Record a field observation": "Rekhoda lokho okubonile ensimini",
+  "Task Planner → Dated work → Record what happened": "Umhleli Wemisebenzi → Umsebenzi onezinsuku → Rekhoda okwenzekile",
+  "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Khetha usuku obone ngalo okuthile, ubhale inothi bese uliqinisekisa. Ijenali igcina ireferensi yomsebenzi ohleliwe ngokwehlukana; amarekhodi ohlu lokuhlola, okuvuniwe, isitoko nokuthengisa awashintshi.",
 };
 export default copy;

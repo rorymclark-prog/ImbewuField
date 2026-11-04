@@ -7,12 +7,17 @@ import * as journal from '../lib/field-journal.ts';
 import * as view from '../lib/journal-view.ts';
 import * as taskLinks from '../lib/task-record-link.ts';
 import * as copy from '../lib/farm-memory-copy.ts';
+import { JOURNAL_STORAGE_EVENT } from '../lib/journal-storage.ts';
+import { journalPlanningReferenceText } from '../lib/journal-link-display.ts';
 
 const require = createRequire(import.meta.url);
 const css = new Proxy({}, { get: (_target, key) => key === '__esModule' ? false : String(key) });
 
-// Exercise the shipped component handlers and effects. Only browser/framework
-// boundaries are replaced; parsing, filtering and journal entry creation stay real.
+// Exercise the shipped component handlers/effects, real entry creation, task
+// parsing, reference wording and filtering. This shallow view fixture controls
+// journal load/save outcomes and uses a stable signed-out auth boundary. Writer
+// admission, canonical cutover and actual storage events have separate real-
+// pipeline tests; this fixture does not certify those permissions or receipts.
 function component(path: string, dependencies: Record<string, unknown>): React.ComponentType<any> {
   const source = readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
   const javascript = ts.transpileModule(source, { compilerOptions: {
@@ -37,6 +42,7 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
   let url = new URL(options.url ?? 'https://farm.example/journal');
   const location = { get href() { return url.href; } };
   const router = { replace: (target: string) => { url = new URL(target, url); } };
+  const auth = { user: null, loading: false };
   Object.defineProperty(globalThis, 'window', { configurable: true, value: {
     location, addEventListener: () => {}, removeEventListener: () => {},
     history: { state: {}, replaceState: (_state: unknown, _title: string, target: string) => { url = new URL(target, url); } },
@@ -45,6 +51,10 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
     'next/navigation': { useRouter: () => router },
     '@/lib/i18n': { useLanguage: () => ({ lang: options.lang ?? 'en', t: (key: string) => key }) },
     '@/lib/app-level': { useAppLevel: () => options.simple ? 'simple' : 'full' },
+    '@/lib/auth': { useAuth: () => auth },
+    '@/components/JournalStorageStatus': { JournalStorageNotice: () => React.createElement('div', { 'data-boundary': 'JournalStorageNotice' }) },
+    '@/lib/journal-storage': { JOURNAL_STORAGE_EVENT },
+    '@/lib/journal-link-display': { journalPlanningReferenceText },
     '@/lib/field-journal': { ...journal, loadJournal: () => stored, saveJournal: (entries: journal.JournalEntry[]) => {
       writes.push(entries);
       if (!options.failSave) stored = entries;

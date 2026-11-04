@@ -6,6 +6,8 @@ import { getFirebase } from '@/lib/firebase/init';
 import { CROP_PLAN_CHANGED_EVENT } from '@/lib/crop-plan';
 import { DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
+import { recordGrowerFieldObservation, type GrowerFieldObservationInput } from '@/lib/grower-field-observation';
+import type { BoardTask } from '@/lib/task-board';
 import { loadGrowerOperationsSources, isGrowerOperationsCurrent, checkGrowerOperationsCurrent,
   type GrowerOperationsSources } from '@/lib/international/grower-operations-source';
 
@@ -57,7 +59,14 @@ export function useGrowerOperations() {
     if (!valid) { epoch.current++; live.current = withdrawn(); setResult(live.current); }
     return valid;
   }
+  const observationSource = result, observationEpoch = epoch.current;
+  async function onRecordObservation(task: BoardTask, input: GrowerFieldObservationInput, formIsCurrent: () => boolean) {
+    const previous = observationSource, turn = observationEpoch;
+    return recordGrowerFieldObservation(previous.status === 'loading' ? withdrawn() : previous, task, input, {
+      isCurrent: () => mounted.current && epoch.current === turn && live.current === previous && formIsCurrent(),
+    });
+  }
   // Parent UI uses this object's identity to withdraw old task actions. An
   // unrelated parent render must not masquerade as a new source snapshot.
-  return useMemo(() => ({ ...result, refresh, checkCurrent, isCurrent }), [result]);
+  return useMemo(() => ({ ...result, refresh, checkCurrent, isCurrent, onRecordObservation }), [result]);
 }

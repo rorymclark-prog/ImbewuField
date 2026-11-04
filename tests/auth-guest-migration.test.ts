@@ -159,6 +159,17 @@ hooks.deregister();
 const guestKey = (baseKey: string) => `${baseKey}::imbewu-owner::guest`;
 const uidKey = (baseKey: string, uid: string) => accountLocalStorageKey(baseKey, uid);
 
+function canonicalJournalRaw(uid: string): string | null {
+  const raw = localStorageMock.getItem(uidKey('imbewu_field_journal_v2', uid));
+  if (raw === null) return null;
+  const journal = JSON.parse(raw);
+  const receipt = JSON.parse(localStorageMock.getItem(uidKey('imbewu_field_journal_cutover_v2', uid)) ?? 'null');
+  assert.equal(journal.storageVersion, 2, 'the transferred journal must use protected canonical storage');
+  assert.equal(receipt?.canonicalKey, uidKey('imbewu_field_journal_v2', uid), 'journal evidence belongs to this destination account');
+  assert.equal(receipt?.cutoverId, journal.cutoverId, 'a partial or unrelated receipt is not a completed journal transfer');
+  return journal.journalRaw;
+}
+
 function canonicalCropRaw(uid: string): string | null {
   const raw = localStorageMock.getItem(uidKey('imbewu_crop_plan_v2', uid));
   if (raw === null) return null;
@@ -212,7 +223,7 @@ test('a successful sign-in migrates journal work and the canonical crop-book pai
   });
 
   assert.equal(
-    localStorageMock.getItem(uidKey('imbewu_field_journal_v1', 'farmer-a')),
+    canonicalJournalRaw('farmer-a'),
     '[{"id":"je_1"}]',
   );
   assert.equal(localStorageMock.getItem(guestKey('imbewu_field_journal_v1')), null);
@@ -248,7 +259,9 @@ test('a storage failure during migration does not stop the farmer from signing i
   localStorageMock.clear();
   localStorageMock.setItem(guestKey('imbewu_field_journal_v1'), '[{"id":"je_1"}]');
   // Force the write into the new account's row to throw, simulating a full origin.
-  localStorageMock.throwOnSetKey = uidKey('imbewu_field_journal_v1', 'farmer-c');
+  // Journal v1 remains immutable evidence; failure at the new receipt must
+  // preserve the guest source and still allow successful authentication.
+  localStorageMock.throwOnSetKey = uidKey('imbewu_field_journal_cutover_v2', 'farmer-c');
 
   await withSignIn(async (signIn) => {
     const err = await signIn('farmer-c', 'irrelevant');
@@ -257,7 +270,9 @@ test('a storage failure during migration does not stop the farmer from signing i
 
   // The write failed, so the row was never populated — but nothing propagated
   // out of signIn to say so, which is the whole point of the guarantee.
-  assert.equal(localStorageMock.getItem(uidKey('imbewu_field_journal_v1', 'farmer-c')), null);
+  assert.equal(canonicalJournalRaw('farmer-c'), null);
+  assert.equal(localStorageMock.getItem(guestKey('imbewu_field_journal_v1')), '[{"id":"je_1"}]',
+    'an unconfirmed journal transfer keeps the original guest work');
 });
 
 // An explicit zero is an observation, not an unanswered record or an empty farm.

@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: 'db51792ec', changes: [
+    'Record your own field observations from planned tasks.',
+  ], tour: [{ title: 'Record a field observation', where: 'Task Planner → Dated work → Record what happened', href: '/cropplan',
+    detail: 'Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.' }] },
   { when: '4 November 2026', sha: 'b908db69f', changes: [
     'Import field outlines from Google Earth.',
   ], tour: [{ title: 'Review imported field outlines', where: 'Design Studio → Planting → Import field outlines', href: '/design',

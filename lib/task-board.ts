@@ -1,3 +1,4 @@
+import type { GrowerJournalLink } from './field-journal';
 // Home-page task board — a small, glanceable "what's due soon" list built on
 // top of the crop plan (lib/crop-plan.ts). Deliberately generic (BoardTask
 // carries a `kind`) so a later round can add survey/lesson producers without
@@ -198,6 +199,9 @@ export interface BoardTask {
   /** Own cycles retain their exact one-time UTC calendar day, including its year. */
   dueDate?: string;
   growerEventKind?: GrowerCycleEventKind;
+  /** Planned linkage context only. The journal separately asks what happened
+   * and on which observed day; this reference grants no record or access. */
+  growerJournalLink?: GrowerJournalLink;
   /** Real calendar month, 1-12, consistent with monthsAway — needed to emit a concrete .ics date. */
   dueMonth: number;
   /** Months until due; own cycles may be negative when overdue. Their dueDate
@@ -382,6 +386,8 @@ export function buildGrowerBoardTasks(
           : event.endExclusive ? translated('taskGrowerExclusiveBoundary') : null;
         candidates.push({ rowIndex: cycle.rowIndex, plantingId: cycle.plantingId, kind: event.kind,
           task: { kind: 'grower-cycle', growerEventKind: event.kind, dueDate: event.date,
+          growerJournalLink: { version: 1, scope: cycle.scope, plantingId: cycle.plantingId,
+            bedId: cycle.bedId, eventKind: event.kind, plannedDate: event.date },
           title: translated(GROWER_VERB_KEY[event.kind], { crop: produceLabel(cycle.cropKey, lang) }),
           subtitle: [boardBedLabel(bedLabel, translated), translated('taskGrowerPlannedEstimate', { date: event.date }), explanation].filter(Boolean).join(' · '),
           // The dated panel uses text; crop thumbnail consumers use cropKey's artwork.

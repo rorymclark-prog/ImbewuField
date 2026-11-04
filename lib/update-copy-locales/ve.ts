@@ -417,5 +417,10 @@ const copy:UpdateCopy={
   "Print planned nursery batch cards with dates and separate seedling counts.": "Gandisani makhadi a zwigwada zwo pulaniwaho zwa u alusa zwimela zwiṱuku, a re na maḓuvha na mbalo dzo fhambanisiwaho dza zwimela zwiṱuku.",
   "Print planned batch cards": "Gandisani makhadi a zwigwada zwo pulaniwaho",
   "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Shumisani dzinginyo ḽa u alusa zwimela zwiṱuku ḽo sedzuluswaho u gandisa makhadi a zwigwada. Mbalo na maḓuvha zwi dzula zwo pulaniwa; mbekanyamushumo a i vhulungi notsi dza u zwala na dza tshigwada tsha mbeu dzo ṅwalwaho nga tshanḓa.",
+  // Field-observation release: UNREVIEWED Codex AI drafts; exact sources in docs/international/grower-observation-release-drafts.json.
+  "Record your own field observations from planned tasks.": "Rekhodani zwe na zwi vhona tsimuni yaṋu ni tshi bva kha mishumo yo pulaniwaho.",
+  "Record a field observation": "Rekhodani zwe na zwi vhona tsimuni",
+  "Task Planner → Dated work → Record what happened": "Mupulani wa Mishumo → Mushumo u re na madatumu → Rekhodani zwe zwa itea",
+  "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Khethani ḓuvha ḽe na vhona tshithu ngaḽo, ṅwalani notsi ni i khwaṱhisedze. Dzhenala i vhulunga ndaedzo ya mushumo wo pulaniwaho nga thungo; rekhodo dza mutevhe wa u sedzulusa, khaṋo, tshitoko na thengiso a dzi shanduki.",
 };
 export default copy;

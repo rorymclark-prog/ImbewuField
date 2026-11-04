@@ -36,14 +36,17 @@ import {
   bindMountedAccountLocalStorageUid,
   accountLocalStorageKey,
   ACCOUNT_LOCAL_STORAGE_OWNER_SEPARATOR,
-  migrateGuestLocalStorageRows,
-  type GuestLocalStorageMigration,
 } from '@/lib/account-local-storage';
 import {
   CROP_PLAN_LEGACY_KEY, CROP_PLAN_STORAGE_KEY, CROP_PLAN_CUTOVER_KEY,
   releaseAllDocumentCropPlanLeases, transferCropPlanStoragePair, readCropPlanStorageTransferHold,
   type CropPlanStorageContext, type CropPlanStorageLocks,
 } from '@/lib/crop-plan-storage';
+import {
+  JOURNAL_LEGACY_KEY, JOURNAL_STORAGE_KEY, JOURNAL_CUTOVER_KEY,
+  releaseAllDocumentJournalLeases, transferJournalStoragePair, readJournalStorageTransferHold,
+  type JournalStorageContext, type JournalStorageLocks,
+} from '@/lib/journal-storage';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -54,6 +57,8 @@ interface AuthContextValue {
   loading: boolean;
   cropPlanMigrationHold: string | null;
   retryCropPlanMigration: () => Promise<void>;
+  journalMigrationHold: string | null;
+  retryJournalMigration: () => Promise<void>;
   signIn: (email: string, password: string) => Promise<string | null>;
   signUp: (email: string, password: string, fullName: string, role?: UserRole) => Promise<string | null>;
   signInWithGoogle: () => Promise<string | null>;
@@ -72,6 +77,8 @@ const AuthContext = createContext<AuthContextValue>({
   loading: false,
   cropPlanMigrationHold: null,
   retryCropPlanMigration: async () => {},
+  journalMigrationHold: null,
+  retryJournalMigration: async () => {},
   signIn: async () => 'Backend not configured.',
   signUp: async () => 'Backend not configured.',
   signInWithGoogle: async () => 'Backend not configured.',
@@ -84,22 +91,8 @@ const AuthContext = createContext<AuthContextValue>({
 // ─── Guest → account localStorage migration ─────────────────────────────────
 
 // Keep auth's data boundary light: importing the crop catalogue here makes every
-// login load farming data. The shared storage module owns the schema and pair
-// transfer; only the journal still uses the generic single-row migration.
-const GUEST_LOCAL_STORAGE_MIGRATIONS: readonly GuestLocalStorageMigration[] = [
-  {
-    baseKey: 'imbewu_field_journal_v1', // lib/field-journal.ts STORAGE_KEY
-    isEmpty: (raw) => {
-      if (!raw) return true;
-      try {
-        const parsed = JSON.parse(raw);
-        return !Array.isArray(parsed) || parsed.length === 0;
-      } catch {
-        return false; // unparseable is not proof there's nothing worth protecting
-      }
-    },
-  },
-];
+// login load farming data. Each store owns its canonical pair transfer; neither
+// may use a single-row copy that loses newer links or its import evidence.
 
 const isEmptyCropPlanMigrationSource = (raw: string | null): boolean => {
   if (raw === null) return true;
@@ -143,6 +136,12 @@ function cropMigrationContext(uid: string | null, isCurrent: () => boolean): Cro
   return { storage: window.localStorage, legacyKey: key(CROP_PLAN_LEGACY_KEY),
     canonicalKey: key(CROP_PLAN_STORAGE_KEY), receiptKey: key(CROP_PLAN_CUTOVER_KEY), isCurrent };
 }
+function journalMigrationContext(uid: string | null, isCurrent: () => boolean): JournalStorageContext {
+  const key = (base: string) => uid ? accountLocalStorageKey(base, uid)
+    : `${base}${ACCOUNT_LOCAL_STORAGE_OWNER_SEPARATOR}guest`;
+  return { storage: window.localStorage, legacyKey: key(JOURNAL_LEGACY_KEY),
+    canonicalKey: key(JOURNAL_STORAGE_KEY), receiptKey: key(JOURNAL_CUTOVER_KEY), isCurrent };
+}
 
 // ─── Provider ────────────────────────────────────────────────────────────────
 
@@ -152,6 +151,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState<boolean>(isBackendConfigured());
   const [storageReadyEpoch, setStorageReadyEpoch] = useState<number | null>(null);
   const [cropPlanMigrationHold, setCropPlanMigrationHold] = useState<string | null>(null);
+  const [journalMigrationHold, setJournalMigrationHold] = useState<string | null>(null);
   const authEpochRef = useRef(0);
   const activeUidRef = useRef<string | null>(null);
   const providerAliveRef = useRef(true);
@@ -172,7 +172,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!isCurrent() || typeof window === 'undefined') return;
       try {
         releaseAllDocumentCropPlanLeases();
-        migrateGuestLocalStorageRows(GUEST_LOCAL_STORAGE_MIGRATIONS, uid);
+        releaseAllDocumentJournalLeases();
         if (!isCurrent()) return;
         const target = cropMigrationContext(uid, isCurrent);
         await transferCropPlanStoragePair(cropMigrationContext(null, isCurrent), target, {
@@ -184,6 +184,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } catch {
         // A held or failed migration is not failed authentication. Its source is
         // retained, and the crop storage lifecycle exposes the recovery/read-only gate.
+      }
+      if (!isCurrent()) return;
+      try {
+        const target = journalMigrationContext(uid, isCurrent);
+        await transferJournalStoragePair(journalMigrationContext(null, isCurrent), target, {
+          locks: typeof navigator === 'undefined' ? undefined : navigator.locks as JournalStorageLocks | undefined,
+        });
+        if (isCurrent()) setJournalMigrationHold(readJournalStorageTransferHold(target));
+      } catch {
+        // Retain the journal's own copies and hold independently of crop work;
+        // one store's unavailable migration must not fail authentication.
       }
     });
     guestMigrationRef.current = { uid, epoch, sample, promise: operation };
@@ -233,6 +244,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsub = onAuthStateChanged(fb.auth, async (firebaseUser) => {
       const epoch = ++authEpochRef.current;
       releaseAllDocumentCropPlanLeases();
+      releaseAllDocumentJournalLeases();
       const nextUid = firebaseUser?.uid ?? null;
       activeUidRef.current = nextUid;
       const isStillCurrent = () =>
@@ -248,6 +260,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(true);
       setStorageReadyEpoch(null);
       setCropPlanMigrationHold(null);
+      setJournalMigrationHold(null);
       setProfile(null);
       setUser(firebaseUser);
 
@@ -283,6 +296,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       alive = false;
       providerAliveRef.current = false;
       releaseAllDocumentCropPlanLeases();
+      releaseAllDocumentJournalLeases();
       authEpochRef.current += 1;
       unsub();
     };
@@ -306,6 +320,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const retryExpectedEpoch = authEpochRef.current;
   const retryCropPlanMigration = useCallback(async (): Promise<void> => {
+    const uid = user?.uid;
+    if (!uid || authEpochRef.current !== retryExpectedEpoch || activeUidRef.current !== uid
+      || getFirebase()?.auth.currentUser?.uid !== uid || authSampleActive()) return;
+    await migrateGuestWorkToAccount(uid, true);
+  }, [user?.uid, retryExpectedEpoch, migrateGuestWorkToAccount]);
+  const retryJournalMigration = useCallback(async (): Promise<void> => {
     const uid = user?.uid;
     if (!uid || authEpochRef.current !== retryExpectedEpoch || activeUidRef.current !== uid
       || getFirebase()?.auth.currentUser?.uid !== uid || authSampleActive()) return;
@@ -452,7 +472,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider value={{
-      user, profile, role, loading, cropPlanMigrationHold, retryCropPlanMigration,
+      user, profile, role, loading, cropPlanMigrationHold, retryCropPlanMigration, journalMigrationHold, retryJournalMigration,
       signIn, signUp, signInWithGoogle, resetPassword, changePassword, refreshProfile, signOutUser,
     }}>
       {suspendAccountTree ? (

@@ -1,7 +1,36 @@
 import { cropByKey } from './crop-catalog';
-import { MAX_TITLE_LEN, type JournalCategory } from './field-journal';
+import { MAX_TITLE_LEN, normaliseGrowerJournalLink, type GrowerJournalLink, type JournalCategory } from './field-journal';
 import type { CropTask } from './crop-plan';
 import type { BoardTask } from './task-board';
+import type { GrowerCycleContext } from './international/grower-cycle';
+import { projectGrowerCycles } from './international/grower-cycle-projection';
+import { growerPlanningScopeKey } from './international/grower-planning';
+
+export type GrowerJournalLinkResolution =
+  | { readonly status: 'ready'; readonly link: GrowerJournalLink; readonly cropKey: string; readonly bedId: string }
+  | { readonly status: 'held'; readonly reason: 'invalid-link' | 'scope-unavailable' | 'scope-ambiguous' | 'cycle-unavailable' | 'event-changed' };
+
+/** The caller supplies the current authorized source contexts. This pure
+ * membership review never admits an actor, writes a note or completes a task. */
+export function resolveGrowerJournalLink(rows: unknown, contexts: readonly GrowerCycleContext[], value: unknown): GrowerJournalLinkResolution {
+  const link = normaliseGrowerJournalLink(value);
+  if (!link) return { status: 'held', reason: 'invalid-link' };
+  try {
+    if (!Array.isArray(contexts)) return { status: 'held', reason: 'scope-unavailable' };
+    const key = growerPlanningScopeKey(link.scope);
+    const matching = contexts.filter(context => growerPlanningScopeKey(context?.scope) === key);
+    if (!matching.length) return { status: 'held', reason: 'scope-unavailable' };
+    if (matching.length !== 1) return { status: 'held', reason: 'scope-ambiguous' };
+    // Membership starts with the saved row ID over the whole book, including
+    // malformed duplicate identities and conflicting reservations.
+    const cycle = projectGrowerCycles(rows, matching[0]).ownCycles.find(row => row.plantingId === link.plantingId);
+    if (!cycle || cycle.bedId !== link.bedId) return { status: 'held', reason: 'cycle-unavailable' };
+    if (!cycle.plannedEvents.some(event => event.kind === link.eventKind && event.date === link.plannedDate)) {
+      return { status: 'held', reason: 'event-changed' };
+    }
+    return Object.freeze({ status: 'ready', link, cropKey: cycle.cropKey, bedId: cycle.bedId });
+  } catch { return { status: 'held', reason: 'cycle-unavailable' }; }
+}
 
 const ACTIONS: readonly CropTask['action'][] = [
   'prep', 'sow', 'transplant', 'mulch', 'harvest', 'terminate-cover', 'weed-early', 'weed-mid',

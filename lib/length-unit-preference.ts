@@ -13,18 +13,20 @@ const GROWER_ESTIMATE_KEY = 'imbewu_grower_estimate_unit_v1';
 // A namespace proof only: file delivery never reads or writes a preference row.
 const FIELD_LAYOUT_CONTEXT_KEY = 'imbewu_field_layout_export_context_v1';
 const FIELD_IMPORT_CONTEXT_KEY = 'imbewu_field_layout_import_context_v1';
+const JOURNAL_OBSERVATION_CONTEXT_KEY = 'imbewu_journal_observation_context_v1';
 export type GrowerEstimateUnitChoice = 'metric' | 'imperial';
 export interface GrowerEstimateUnitPreferenceContext { readonly kind: 'grower-estimate-unit-preference' }
 export interface HarvestMassUnitPreferenceContext { readonly kind: 'harvest-mass-unit-preference' }
 export interface FieldLayoutExportContext { readonly kind: 'field-layout-export-context' }
 export interface FieldLayoutImportContext { readonly kind: 'field-layout-import-context' }
-type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate' | 'field-layout-export' | 'field-layout-import';
+export interface JournalObservationContext { readonly kind: 'journal-observation-context' }
+type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate' | 'field-layout-export' | 'field-layout-import' | 'journal-observation';
 const purposeKey = (purpose: Purpose) => purpose === 'field' ? KEY : purpose === 'nursery' ? NURSERY_KEY
   : purpose === 'harvest-mass' ? HARVEST_KEY : purpose === 'grower-estimate' ? GROWER_ESTIMATE_KEY
-  : purpose === 'field-layout-import' ? FIELD_IMPORT_CONTEXT_KEY : FIELD_LAYOUT_CONTEXT_KEY;
+  : purpose === 'field-layout-import' ? FIELD_IMPORT_CONTEXT_KEY : purpose === 'journal-observation' ? JOURNAL_OBSERVATION_CONTEXT_KEY : FIELD_LAYOUT_CONTEXT_KEY;
 export type NurseryUnitChoice = 'metric' | 'imperial';
 export interface NurseryUnitPreferenceContext { readonly kind: 'nursery-unit-preference' }
-type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext | FieldLayoutExportContext | FieldLayoutImportContext;
+type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext | FieldLayoutExportContext | FieldLayoutImportContext | JournalObservationContext;
 const SAMPLE_EVENT = 'imbewu-sample-mode-changed';
 export interface LengthUnitPreferenceContext { readonly kind: 'length-unit-preference' }
 type Result = { unit: LengthUnit; remembered: boolean; destination: 'device' | 'sample' | 'unavailable' };
@@ -72,7 +74,7 @@ function capturePreferenceContext(purpose: Purpose): PreferenceContext | null {
     if (typeof window === 'undefined') return null;
     const win = window, inSample = sample(win), owner = activeAccountUid();
     if (!actorMatches(owner, inSample)) return null;
-    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : purpose === 'grower-estimate' ? 'grower-estimate-unit-preference' : purpose === 'field-layout-import' ? 'field-layout-import-context' : 'field-layout-export-context' });
+    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : purpose === 'grower-estimate' ? 'grower-estimate-unit-preference' : purpose === 'field-layout-import' ? 'field-layout-import-context' : purpose === 'journal-observation' ? 'journal-observation-context' : 'field-layout-export-context' });
     const proof: Proof = { purpose, win, scope, epoch: scope.epoch, owner, sample: inSample, storage: local(win),
       key: activeAccountLocalStorageKey(purposeKey(purpose)), revoked: false, listeners: new Set(),
       ...(purpose === 'nursery' ? { nurseryValueListeners: new Set() } : {}),
@@ -162,6 +164,15 @@ export function fieldLayoutImportContextIsCurrent(context: FieldLayoutImportCont
   return !!context && proofs.get(context)?.purpose === 'field-layout-import' && contextIsCurrent(context);
 }
 export const revokeFieldLayoutImportContext = (context: FieldLayoutImportContext | null) => revokeContext(context);
+// A note form shares the same observed actor/sample epoch as file delivery.
+// Its namespace is only a proof: it never creates a preference or journal row.
+export function captureJournalObservationContext(): JournalObservationContext | null {
+  return capturePreferenceContext('journal-observation') as JournalObservationContext | null;
+}
+export function journalObservationContextIsCurrent(context: JournalObservationContext | null): boolean {
+  return !!context && proofs.get(context)?.purpose === 'journal-observation' && contextIsCurrent(context);
+}
+export const revokeJournalObservationContext = (context: JournalObservationContext | null) => revokeContext(context);
 export function captureNurseryUnitPreferenceContext(): NurseryUnitPreferenceContext | null {
   return capturePreferenceContext('nursery') as NurseryUnitPreferenceContext | null;
 }
