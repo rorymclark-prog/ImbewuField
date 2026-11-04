@@ -407,5 +407,6 @@ const copy:UpdateCopy={
   "Reload changed estimates before saving over newer values.": "Dovhani ni laise anganyelo dzo shandukaho musi ni sa athu u vhulunga ni tshi siva mielo yo shandulwaho zwenezwino.",
   "Choose units for your own estimates": "Nangani dziyuniti dza anganyelo dzaṋu",
   "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Nangani m² na kg kana ft² na lb kha anganyelo dzaṋu dza tshivhalo tsha zwimela fhethu na tshileme tsha khaṋo. Sedzulusani mielo yo vhulungwaho, ni kone u sedzulusa mbalo na maḓuvha; hedzi ndi anganyelo dzo pulaniwaho, a si nyeletshedzo ya u lima ya henefho yo khwaṱhisedzwaho.",
+  "New grower accounts can save personal designs without joining an organisation.": "Akhaunthu ntswa dza vhalimi dzi nga vhulunga pulane dzadzo dzi songo ṱanganela dzangano.",
 };
 export default copy;
