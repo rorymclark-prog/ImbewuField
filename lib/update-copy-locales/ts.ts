@@ -1,6 +1,18 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Integrated exact-source candidate descriptions; fluent-review status unchanged.
+  "Export saved field layouts for Google Earth.": "Rhumerisa maakanyelo ya masimu lama hlayisiweke eka Google Earth.",
+  "Export saved fields": "Rhumerisa masimu lama hlayisiweke",
+  "Design Studio → Planting → Field blocks": "Design Studio → Ku byala → Swiyenge swa masimu",
+  "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.": "Hlawula nsimu yin'we kumbe masimu hinkwawo, kutani u kopa mindzilekano leyi hlayisiweke, timbhedwa to byala (beds) na milayeni ya tindlela tanihi KML. Maswayi a swi bohi; tindhawu ta le mepeni a hi mindzilekano leyi pimiweke hi nkambisiso wa misava (survey).",
+  "Enter your crop estimates in metric or imperial units.": "Nghenisa swipimanyeto swa wena swa swibyariwa hi tiyuniti ta metric kumbe ta imperial.",
+  "Check saved bed measurements before reviewing capacity.": "Kambisisa mimpimo ya timbhedwa to byala leyi hlayisiweke u nga si kambisisa vuswikoti bya tona.",
+  "Reload changed estimates before saving over newer values.": "Layicha nakambe swipimanyeto leswi cinceke u nga si hlayisa u siva mimpimo leyi pfuxetiweke sweswinyana.",
+  "Choose units for your own estimates": "Hlawula tiyuniti ta swipimanyeto swa wena",
+  "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Hlawula m² na kg kumbe ft² na lb eka swipimanyeto swa wena swa ku tala ka swimilana endhawini ni ntiko wa ntshovelo. Kambisisa mimpimo leyi hlayisiweke, kutani u kambisisa tinhlayo ni masiku; leswi i swipimanyeto leswi kunguhatiweke, a hi switsundzuxo swo rima swa le ndhawini leswi tiyisisiweke.",
+  "New grower accounts can save personal designs without joining an organisation.": "Tiakhawunti letintshwa ta varimi ti nga hlayisa tipulani ta tona handle ko joyina nhlangano.",
+
   // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
   "Keep editing nursery equipment and buyer targets after a confirmed save.": "Yana mahlweni u hlela switirhisiwa swa xirhapa xa swimilana ni swikongomelo swa vaxavi endzhaku ka loko ku hlayisiwa ku tiyisisiwile.",
   "Continue nursery editing": "Yana mahlweni u hlela xirhapa xa swimilana",

@@ -1,6 +1,18 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Integrated exact-source candidate descriptions; fluent-review status unchanged.
+  "Export saved field layouts for Google Earth.": "Bvisani mbumbo dza masimu dzo vhulungwaho dza Google Earth.",
+  "Export saved fields": "Bvisani masimu o vhulungwaho",
+  "Design Studio → Planting → Field blocks": "Design Studio → U lima → Zwipida zwa masimu",
+  "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.": "Nangani tsimu nthihi kana masimu othe, nahone ni kope mikano yo vhulungwaho, mmbete ya u ṱavha (beds) na mitalo ya dzinḓila sa KML. Zwiga a si zwa khombe-khombe; fhethu ha ndaedzo ya mmapa a si mikano yo pimiwaho nga u ela mavu (survey).",
+  "Enter your crop estimates in metric or imperial units.": "Dzhenisani anganyelo dzaṋu dza zwimela nga dziyuniti dza metric kana dza imperial.",
+  "Check saved bed measurements before reviewing capacity.": "Sedzulusani mielo ya mibete ya u ṱavha yo vhulungwaho musi ni sa athu u sedzulusa vhukoni hayo.",
+  "Reload changed estimates before saving over newer values.": "Dovhani ni laise anganyelo dzo shandukaho musi ni sa athu u vhulunga ni tshi siva mielo yo shandulwaho zwenezwino.",
+  "Choose units for your own estimates": "Nangani dziyuniti dza anganyelo dzaṋu",
+  "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Nangani m² na kg kana ft² na lb kha anganyelo dzaṋu dza tshivhalo tsha zwimela fhethu na tshileme tsha khaṋo. Sedzulusani mielo yo vhulungwaho, ni kone u sedzulusa mbalo na maḓuvha; hedzi ndi anganyelo dzo pulaniwaho, a si nyeletshedzo ya u lima ya henefho yo khwaṱhisedzwaho.",
+  "New grower accounts can save personal designs without joining an organisation.": "Akhaunthu ntswa dza vhalimi dzi nga vhulunga pulane dzadzo dzi songo ṱanganela dzangano.",
+
   // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
   "Keep editing nursery equipment and buyer targets after a confirmed save.": "Bvelani phanḓa na u dzudzanya zwishumiswa zwa tsimu ya zwimela zwiṱuku na zwipikwa zwa vharengi musi u vhulunga ho no khwaṱhisedzwa.",
   "Continue nursery editing": "Bvelani phanḓa na u dzudzanya tsimu ya zwimela zwiṱuku",

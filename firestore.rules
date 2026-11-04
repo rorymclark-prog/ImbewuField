@@ -9,7 +9,7 @@ service cloud.firestore {
     function signedIn()    { return request.auth != null; }
     function prof()        { return get(/databases/$(database)/documents/profiles/$(request.auth.uid)).data; }
     function myRole()      { return signedIn() ? prof().role : 'none'; }
-    function myOrg()       { return signedIn() ? prof().org_id : null; }
+    function myOrg()       { return signedIn() ? prof().get('org_id', null) : null; }
     function isStaff()     { return myRole() in ['ngo', 'funder', 'admin']; }
     function isMentor()    { return myRole() == 'mentor'; }
     function owns(d)       { return signedIn() && d.profile_id == request.auth.uid; }
@@ -168,10 +168,12 @@ service cloud.firestore {
         && (!('org_id' in request.resource.data) || request.resource.data.org_id == null);
       // role and org_id are IMMUTABLE from the client — pin them to the existing values so a
       // user can edit name/photo/language but can never self-promote to admin or spoof an org.
+      // Safe .get('org_id', null) comparison on both sides admits legacy profiles lacking the
+      // key to perform normal profile edits or explicit null repair without changing membership.
       // Promotion/org assignment must go through a trusted Admin-SDK backend or custom claims.
       allow update: if signedIn() && uid == request.auth.uid
         && request.resource.data.role == resource.data.role
-        && request.resource.data.org_id == resource.data.org_id;
+        && request.resource.data.get('org_id', null) == resource.data.get('org_id', null);
     }
 
     match /organizations/{id} { allow read: if signedIn() && (id == myOrg() || isAdmin() || grantedOrg(id)); }

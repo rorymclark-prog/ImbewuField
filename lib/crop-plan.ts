@@ -3,11 +3,12 @@ import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPe
 import { normaliseRecordUnit, validRecordQuantity, type RecordUnit } from './farm-records';
 import { sanitiseNurserySettings, type NurserySettings } from './nursery-settings';
 import { sanitiseWorkspacePlanningReferences, type WorkspacePlanningReference } from './international/workspace-context';
-import { normaliseGrowerPlanningProfiles, type GrowerPlanningProfile } from './international/grower-planning';
+import { normaliseGrowerPlanningProfile, normaliseGrowerPlanningProfiles, type GrowerPlanningProfile } from './international/grower-planning';
 import { hasGrowerCycleMarker, preserveGrowerCycleMarker } from './international/grower-cycle';
 import { foodGroupOf, nutritionGroupOf } from './crop-groups';
 import {
   isSampleMode,
+  SAMPLE_MODE_EVENT,
   getSandboxCropPlan, setSandboxCropPlan,
   getSandboxFavouriteCropKeys, setSandboxFavouriteCropKeys,
   getSandboxAllowBedSharing, setSandboxAllowBedSharing,
@@ -595,6 +596,37 @@ export interface CropPlanWriteLoad {
   readonly admission: CropPlanWriteAdmission;
 }
 const cropPlanAdmissions = new WeakMap<object, { owner: string | null; sample: boolean; token: string; loadedKey: string; lease: object | null }>();
+export type GrowerProfileChangeRequest =
+  | { readonly kind: 'edit'; readonly profileId: string; readonly expectedProfile: GrowerPlanningProfile | null }
+  | { readonly kind: 'remove'; readonly profileId: string; readonly expectedProfile: GrowerPlanningProfile };
+export interface GrowerProfileChangePermit { readonly kind: 'grower-profile-change-permit' }
+interface GrowerProfileChangeProof {
+  readonly admission: CropPlanWriteAdmission;
+  readonly token: string;
+  readonly loadedKey: string;
+  readonly candidateKey: string;
+  readonly win: Window;
+  revoked: boolean;
+  stop: () => void;
+}
+// This is one attempted profile action under an existing load admission, not a
+// stored permission or another book. Ordinary autosave never obtains a permit.
+const growerProfileChangePermits = new WeakMap<object, GrowerProfileChangeProof>();
+// Parent mint/save is synchronous. Even an abandoned action may retain only one
+// listener per window; a new action, explicit cancel or sample transition ends it.
+const pendingGrowerProfileChanges = new WeakMap<Window, { permit: GrowerProfileChangePermit; proof: GrowerProfileChangeProof }>();
+function releaseGrowerProfileChangePermit(permit: GrowerProfileChangePermit, proof: GrowerProfileChangeProof): void {
+  try { proof.stop(); } catch { /* Optional observer cleanup cannot undo a stored receipt. */ }
+  growerProfileChangePermits.delete(permit);
+  if (pendingGrowerProfileChanges.get(proof.win)?.permit === permit) pendingGrowerProfileChanges.delete(proof.win);
+}
+/** Explicitly cancel an unused action; this never restores a consumed action. */
+export function revokeGrowerProfileChangePermit(permit: GrowerProfileChangePermit): void {
+  const proof = growerProfileChangePermits.get(permit);
+  if (!proof) return;
+  proof.revoked = true;
+  releaseGrowerProfileChangePermit(permit, proof);
+}
 function cropPlanDataKey(value: unknown): string {
   const detached = copyCropPlanAuthoredData(value, new Set(), true);
   const ordered = (_key: string, node: unknown) => node && typeof node === 'object' && !Array.isArray(node)
@@ -683,6 +715,92 @@ export function cropPlanWriteCandidateIsLossless(candidate: CropPlanState, prepa
   } catch { return false; }
 }
 
+function existingExactDensitySourcesPreserved(previous: CropPlanState, candidate: CropPlanState): boolean {
+  const next = candidate.growerPlanningProfiles ?? [];
+  return (previous.growerPlanningProfiles ?? []).every(profile => {
+    if (!profile.exactDensitySources) return true;
+    const retained = next.find(row => row.profileId === profile.profileId);
+    return !!retained && cropPlanDataKey(retained.exactDensitySources ?? null) === cropPlanDataKey(profile.exactDensitySources);
+  });
+}
+
+function growerProfileChangeIsExplicit(previous: CropPlanState, candidate: CropPlanState, request: GrowerProfileChangeRequest): boolean {
+  const before = previous.growerPlanningProfiles ?? [], after = candidate.growerPlanningProfiles ?? [];
+  const prior = before.find(row => row.profileId === request.profileId), next = after.find(row => row.profileId === request.profileId);
+  const unaffected = (rows: readonly GrowerPlanningProfile[]) => rows.filter(row => row.profileId !== request.profileId)
+    .map(row => [row.profileId, cropPlanDataKey(row)] as const).sort(([a], [b]) => a.localeCompare(b));
+  const otherBookData = (book: CropPlanState) => {
+    const { growerPlanningProfiles: _profiles, updatedAt: _updatedAt, ...rest } = book;
+    return rest;
+  };
+  if (cropPlanDataKey(unaffected(before)) !== cropPlanDataKey(unaffected(after))
+    || cropPlanDataKey(otherBookData(previous)) !== cropPlanDataKey(otherBookData(candidate))) return false;
+  if (request.expectedProfile === null) return request.kind === 'edit' && !prior && !!next;
+  const expected = normaliseGrowerPlanningProfile(request.expectedProfile);
+  if (!expected || !prior || expected.profileId !== request.profileId
+    || cropPlanDataKey(request.expectedProfile) !== cropPlanDataKey(expected)
+    || cropPlanDataKey(expected) !== cropPlanDataKey(prior)) return false;
+  if (request.kind === 'remove') return !next;
+  if (!next) return false;
+  // An intentional edit may replace origin with newly validated source, or
+  // explicitly clear the density. A still-provided Number cannot justify
+  // silently falling back from its original source digits to legacy arithmetic.
+  for (const field of ['plantsPerM2', 'yieldKgPerM2'] as const) {
+    if (prior.exactDensitySources?.[field] && next.inputs[field].state === 'provided' && !next.exactDensitySources?.[field]) return false;
+  }
+  return true;
+}
+
+/** The real confirmed profile edit/remove action calls this after its existing
+ * source/scope checks. Array absence by itself is never deletion intent. The
+ * permission covers one exact candidate under this load, not another actor,
+ * scope, stale copy, unrelated edit or a later retry. */
+export function createGrowerProfileChangePermit(
+  admission: CropPlanWriteAdmission, loadedBase: CropPlanState, candidate: CropPlanState, request: GrowerProfileChangeRequest,
+): GrowerProfileChangePermit | null {
+  let issued: { permit: GrowerProfileChangePermit; proof: GrowerProfileChangeProof } | null = null;
+  try {
+    const proof = cropPlanAdmissions.get(admission);
+    if (!proof || typeof window === 'undefined') return null;
+    const win = window;
+    const base = copyCropPlanAuthoredData(loadedBase, new Set(), true) as CropPlanState;
+    if (!cropPlanWriteAdmissionMatches(admission, JSON.stringify(base), proof.token) || cropPlanWriteToken() !== proof.token) return null;
+    const action = copyCropPlanAuthoredData(request, new Set(), true) as GrowerProfileChangeRequest;
+    if (!action || typeof action !== 'object' || Array.isArray(action)
+      || Object.keys(action).length !== 3 || !['kind', 'profileId', 'expectedProfile'].every(key => Object.hasOwn(action, key))
+      || !['edit', 'remove'].includes(action.kind) || typeof action.profileId !== 'string' || !action.profileId.trim()
+      || !cropPlanWriteCandidateIsLossless(candidate)) return null;
+    const saved = cropPlanStorageValue(copyCropPlanAuthoredData(candidate, new Set(), true) as CropPlanState);
+    if (!growerProfileChangeIsExplicit(base, saved, action)
+      || window !== win || !cropPlanWriteAdmissionMatches(admission, JSON.stringify(base), proof.token) || cropPlanWriteToken() !== proof.token) return null;
+    const permit = Object.freeze({ kind: 'grower-profile-change-permit' as const });
+    const operation: GrowerProfileChangeProof = { admission, token: proof.token, win, revoked: false, stop: () => {},
+      loadedKey: cropPlanDataKey(base), candidateKey: cropPlanDataKey(saved) };
+    issued = { permit, proof: operation };
+    const previous = pendingGrowerProfileChanges.get(win);
+    if (previous) {
+      previous.proof.revoked = true;
+      releaseGrowerProfileChangePermit(previous.permit, previous.proof);
+    }
+    const sampleChanged = () => {
+      operation.revoked = true;
+      releaseGrowerProfileChangePermit(permit, operation);
+    };
+    operation.stop = () => win.removeEventListener(SAMPLE_MODE_EVENT, sampleChanged);
+    win.addEventListener(SAMPLE_MODE_EVENT, sampleChanged);
+    if (operation.revoked || window !== win || !cropPlanWriteAdmissionMatches(admission, JSON.stringify(base), proof.token)
+      || cropPlanWriteToken() !== proof.token) {
+      operation.revoked = true; releaseGrowerProfileChangePermit(permit, operation); return null;
+    }
+    growerProfileChangePermits.set(permit, operation);
+    pendingGrowerProfileChanges.set(win, issued);
+    return permit;
+  } catch {
+    if (issued) { issued.proof.revoked = true; releaseGrowerProfileChangePermit(issued.permit, issued.proof); }
+    return null;
+  }
+}
+
 export function cropPlanWriteToken(): string | null {
   try {
     if (isSampleMode()) return sampleCropPlanSnapshot().token;
@@ -705,8 +823,23 @@ function cropPlanStorageValue(s: CropPlanState): CropPlanState {
 /** Return the exact bytes this writer stored, rather than blessing whatever
  * another tab may have written before a later read. Tokens stay device-private. */
 
-export function saveCropPlanWithReceipt(s: CropPlanState): CropPlanWriteReceipt {
+export function saveCropPlanWithReceipt(s: CropPlanState, options?: { readonly growerProfileChange?: GrowerProfileChangePermit }): CropPlanWriteReceipt {
+  let profileChange: GrowerProfileChangeProof | undefined, profileChangePermit: GrowerProfileChangePermit | undefined;
   try {
+    if (options !== undefined) {
+      if (!options || typeof options !== 'object') return { saved: false, token: null };
+      const supplied = Object.getOwnPropertyDescriptor(options, 'growerProfileChange');
+      if (supplied && !('value' in supplied)) return { saved: false, token: null };
+      if (supplied?.value !== undefined) {
+        profileChange = growerProfileChangePermits.get(supplied.value);
+        // Consume before validation/commit: a failed attempt requires a fresh
+        // explicit action to mint another permit, never replay of this object.
+        if (!profileChange) return { saved: false, token: null };
+        profileChangePermit = supplied.value;
+        growerProfileChangePermits.delete(supplied.value);
+        if (profileChange.revoked || typeof window === 'undefined' || window !== profileChange.win) return { saved: false, token: null };
+      }
+    }
     // Reject accessor-bearing candidates before spread/normalisation can execute them.
     const detached = copyCropPlanAuthoredData(s, new Set(), true) as CropPlanState;
     const saved = cropPlanStorageValue(detached);
@@ -715,17 +848,36 @@ export function saveCropPlanWithReceipt(s: CropPlanState): CropPlanWriteReceipt 
     // not erase evidence its display load could not represent losslessly.
     if (loaded.admission.status !== 'ready' || !cropPlanWriteCandidateIsLossless(detached, saved)
       || activeAccountUid() !== owner || isSampleMode() !== sample || cropPlanWriteToken() !== loaded.token) return { saved: false, token: null };
+    if (profileChange) {
+      if (profileChange.revoked || typeof window === 'undefined' || window !== profileChange.win
+        || loaded.token !== profileChange.token || cropPlanDataKey(loaded.book) !== profileChange.loadedKey
+        || cropPlanDataKey(saved) !== profileChange.candidateKey
+        || !cropPlanWriteAdmissionMatches(profileChange.admission, JSON.stringify(loaded.book), profileChange.token)) return { saved: false, token: null };
+    } else if (!existingExactDensitySourcesPreserved(loaded.book, saved)) return { saved: false, token: null };
     if (sample) {
       const { token } = sampleCropPlanSnapshot(saved);
+      if (profileChange && (profileChange.revoked || typeof window === 'undefined' || window !== profileChange.win)) return { saved: false, token: null };
       setSandboxCropPlan(saved);
       try { if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT)); } catch { /* An optional refresh event cannot undo an actual saved receipt. */ }
       return { saved: true, token };
     }
     if (typeof window === 'undefined' || !window.localStorage) return { saved: false, token: null };
-    const receipt = writeCropPlanStorageRaw(JSON.stringify(saved));
+    let receipt: CropPlanWriteReceipt;
+    if (profileChange) {
+      const operation = profileChange, context = makeBrowserCropPlanStorageContext();
+      if (!context) return { saved: false, token: null };
+      const operationIsCurrent = () => !operation.revoked && typeof window !== 'undefined' && window === operation.win;
+      // A storage read inside the underlying context check or raw writer can
+      // dispatch sample enter/exit and return to the same owner/mode/token.
+      // Carry the latched operation boundary into that writer's existing checks,
+      // before and after the underlying check, rather than checking only once.
+      const guarded = { ...context, isCurrent: () => operationIsCurrent() && context.isCurrent() && operationIsCurrent() };
+      receipt = writeCropPlanStorageRaw(JSON.stringify(saved), guarded);
+    } else receipt = writeCropPlanStorageRaw(JSON.stringify(saved));
     try { if (receipt.saved) window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT)); } catch { /* The stored-byte receipt remains authoritative. */ }
     return receipt;
   } catch { return { saved: false, token: null }; }
+  finally { if (profileChange && profileChangePermit) releaseGrowerProfileChangePermit(profileChangePermit, profileChange); }
 }
 
 /**

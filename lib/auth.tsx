@@ -224,7 +224,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const existing = await getMyProfile();
         if (fb.auth.currentUser?.uid !== redirectUid) return;
         if (!existing) {
-          await updateMyProfile({ full_name: result.user.displayName ?? '', role: 'farmer', language: 'en' });
+          await updateMyProfile({ full_name: result.user.displayName ?? '', role: 'farmer', language: 'en', org_id: null });
         }
       })
       .catch((err) => console.error('Google redirect sign-in failed:', err));
@@ -262,7 +262,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // same default-profile write the Google sign-in path already does for a brand-new user.
         if (firebaseUser && !nextProfile) {
           try {
-            await updateMyProfile({ full_name: firebaseUser.displayName ?? '', role: 'farmer', language: 'en' });
+            await updateMyProfile({ full_name: firebaseUser.displayName ?? '', role: 'farmer', language: 'en', org_id: null });
             if (!isStillCurrent()) return;
             nextProfile = await getMyProfile();
             if (!isStillCurrent()) return;
@@ -347,7 +347,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         await updateProfile(cred.user, { displayName: fullName });
         if (fb.auth.currentUser?.uid !== signupUid) return null;
-        await updateMyProfile({ full_name: fullName, role, language: 'en' });
+        await updateMyProfile({ full_name: fullName, role, language: 'en', org_id: null });
       } catch (err) {
         console.error('signUp profile write failed (account created; will retry on next load):', err);
       }
@@ -379,7 +379,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const existing = await getMyProfile();
       if (fb.auth.currentUser?.uid !== popupUid) return null;
       if (!existing) {
-        await updateMyProfile({ full_name: cred.user.displayName ?? '', role: 'farmer', language: 'en' });
+        await updateMyProfile({ full_name: cred.user.displayName ?? '', role: 'farmer', language: 'en', org_id: null });
         if (fb.auth.currentUser?.uid !== popupUid) return null;
       }
       await syncProfile(cred.user);
