@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '56a2707f9', changes: [
+    'Confirm a mapped site’s country before using its crop-planning guidance.',
+    'Keep your sowing records and nursery equipment while local planning is unavailable.',
+  ], tour: [{ title: 'Confirm your site country', where: 'Crop planner → Site country and region', href: '/facilitator/crops',
+    detail: 'Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.' },
+  { title: 'Review an unmapped reference', where: 'Crop planner → Planning without a mapped site', href: '/facilitator/crops',
+    detail: 'For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.' }] },
   { when: '3 November 2026', sha: 'e138c7cff', changes: [
     'Choose which saved sites an assistant can use, and disconnect it in Settings.',
     'Keep original site photos and PDFs with their source and import history.',
@@ -50,13 +57,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'Review connected assistants, selected sites and imported originals.' },
   { title: 'Check your saved map', where: 'Site design', href: '/design',
     detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
-  { when: '3 November 2026', sha: '58a25f4bc', changes: [
-    'Confirm a mapped site’s country before using its crop-planning guidance.',
-    'Keep your sowing records and nursery equipment while local planning is unavailable.',
-  ], tour: [{ title: 'Confirm your site country', where: 'Crop planner → Site country and region', href: '/facilitator/crops',
-    detail: 'Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.' },
-  { title: 'Review an unmapped reference', where: 'Crop planner → Planning without a mapped site', href: '/facilitator/crops',
-    detail: 'For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.' }] },
   { when: '3 November 2026', sha: '80eb2f0b5', changes: [
     "Open Terrain & Sections for the two cuts and extra contour detail.",
   ] },
