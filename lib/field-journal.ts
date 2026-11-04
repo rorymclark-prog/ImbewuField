@@ -1,17 +1,20 @@
 // Field Journal — the dated record of what actually happened on the land.
 //
-// Storage follows lib/crop-plan.ts exactly: ONE bare localStorage key routed
-// through activeAccountLocalStorageKey(), plus a CustomEvent so every mounted
-// view refreshes together. That is deliberate and load-bearing for the demo:
-// lib/sample-mode.ts patches Storage.prototype itself, so a store that only
-// ever touches window.localStorage is sandboxed for free while sampling —
-// no sandbox getter/setter of its own, no second copy of that safety boundary.
+// Protected journal storage retains the exact old copy as cutover evidence.
+// Older loaded JavaScript may still write v1, so v2 is the sole active personal
+// journal. Sample mode keeps its established v1 Storage shim and never writes a
+// real canonical pair. Reads carry actor/sample and raw-storage provenance;
+// display normalization alone never grants permission to replace saved notes.
 //
 // Everything above the STORAGE section is pure (no window, no I/O) so the
 // grouping, normalisation and trimming rules can be tested directly.
 
 import { Sprout, ShoppingBasket, CloudSun, Bug, Wrench, Users, NotebookPen, type LucideIcon } from 'lucide-react';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { readJournalStorage, writeJournalStorageRaw, JOURNAL_LEGACY_KEY } from './journal-storage';
+import { captureJournalObservationContext, journalObservationContextIsCurrent, revokeJournalObservationContext, type JournalObservationContext } from './length-unit-preference';
+import { normaliseGrowerPlanningScope, type GrowerPlanningScope } from './international/grower-planning';
+import type { GrowerCycleEventKind } from './international/grower-cycle-projection';
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
 
@@ -72,8 +75,115 @@ export interface JournalEntry {
   cropName?: string | null;
   /** Resized thumbnails (data URLs, ≤400px via resizeForStorage). */
   photos?: string[];
+  /** Private planned-source reference. A stored marker still needs current membership review. */
+  growerCycleLink?: unknown;
   createdAt: number;
   updatedAt: number;
+}
+
+export interface GrowerJournalLink {
+  readonly version: 1;
+  readonly scope: GrowerPlanningScope;
+  readonly plantingId: string;
+  readonly bedId: string;
+  readonly eventKind: GrowerCycleEventKind;
+  /** The planned event day, separate from the journal's observed date. */
+  readonly plannedDate: string;
+}
+
+export type JournalGrowerLinkInspection =
+  | { readonly status: 'legacy' }
+  | { readonly status: 'linked'; readonly link: GrowerJournalLink }
+  | { readonly status: 'held'; readonly reason: 'invalid-link' | 'bed-changed' };
+
+const GROWER_JOURNAL_EVENTS: readonly GrowerCycleEventKind[] = [
+  'nursery-start', 'field-entry', 'first-pick', 'picking-end', 'field-clear', 'next-entry',
+];
+const LINK_FIELDS = ['version', 'scope', 'plantingId', 'bedId', 'eventKind', 'plannedDate'] as const;
+function ownLinkFields(value: unknown, keys: readonly string[]): Record<string, unknown> | null {
+  if (!record(value)) return null;
+  const prototype = Object.getPrototypeOf(value);
+  if (prototype !== Object.prototype && prototype !== null) return null;
+  const actual = Reflect.ownKeys(value);
+  if (actual.length !== keys.length || actual.some(key => typeof key !== 'string' || !keys.includes(key))) return null;
+  const fields: Record<string, unknown> = Object.create(null);
+  for (const key of keys) {
+    const property = Object.getOwnPropertyDescriptor(value, key);
+    if (!property?.enumerable || !Object.hasOwn(property, 'value')) return null;
+    fields[key] = property.value;
+  }
+  return fields;
+}
+
+/** Decode only the private reference shape. Membership and actor admission are
+ * established separately against the whole current saved crop book. */
+export function normaliseGrowerJournalLink(value: unknown): GrowerJournalLink | null {
+  try {
+    const fields = ownLinkFields(value, LINK_FIELDS);
+    if (!fields || fields.version !== 1) return null;
+    const validId = (id: unknown): id is string => typeof id === 'string' && id.trim().length > 0
+      && !/[\u0000-\u001f\u007f]/.test(id);
+    if (!validId(fields.plantingId) || !validId(fields.bedId)
+      || !GROWER_JOURNAL_EVENTS.includes(fields.eventKind as GrowerCycleEventKind) || !isJournalDate(fields.plannedDate)) return null;
+    if (!record(fields.scope)) return null;
+    const kind = Object.getOwnPropertyDescriptor(fields.scope, 'kind');
+    if (!kind || !Object.hasOwn(kind, 'value')) return null;
+    const scopeFields = ownLinkFields(fields.scope, kind.value === 'mapped-site' ? ['kind', 'siteId'] : ['kind', 'workspaceId']);
+    const scope = normaliseGrowerPlanningScope(scopeFields);
+    if (!scope) return null;
+    return Object.freeze({ version: 1, scope, plantingId: fields.plantingId, bedId: fields.bedId,
+      eventKind: fields.eventKind as GrowerCycleEventKind, plannedDate: fields.plannedDate });
+  } catch { return null; }
+}
+
+export function inspectJournalGrowerLink(entry: unknown): JournalGrowerLinkInspection {
+  const invalid = { status: 'held', reason: 'invalid-link' } as const;
+  try {
+    if (!record(entry)) return invalid;
+    const property = Object.getOwnPropertyDescriptor(entry, 'growerCycleLink');
+    if (!property) return 'growerCycleLink' in entry ? invalid : { status: 'legacy' };
+    if (!property.enumerable || !Object.hasOwn(property, 'value')) return invalid;
+    const link = normaliseGrowerJournalLink(property.value);
+    if (!link) return invalid;
+    const bed = Object.getOwnPropertyDescriptor(entry, 'bedId');
+    if (bed && !Object.hasOwn(bed, 'value')) return invalid;
+    if (bed?.value !== undefined && bed.value !== null && bed.value !== link.bedId) return { status: 'held', reason: 'bed-changed' };
+    return { status: 'linked', link };
+  } catch { return invalid; }
+}
+
+function detachJournalJSON(value: unknown, ancestors = new Set<object>()): unknown {
+  if (value === null || typeof value === 'string' || typeof value === 'boolean'
+    || typeof value === 'number' && Number.isFinite(value)) return value;
+  if (!value || typeof value !== 'object' || ancestors.has(value)) throw Error('Unsafe journal data');
+  const prototype = Object.getPrototypeOf(value);
+  if (!Array.isArray(value) && prototype !== Object.prototype && prototype !== null) throw Error('Unsafe journal data');
+  if (Array.isArray(value) && Reflect.ownKeys(value).length !== value.length + 1) throw Error('Unsafe journal data');
+  ancestors.add(value);
+  try {
+    const output: Record<string, unknown> | unknown[] = Array.isArray(value) ? [] : {};
+    for (const key of Reflect.ownKeys(value)) {
+      if (Array.isArray(value) && key === 'length') continue;
+      const descriptor = Object.getOwnPropertyDescriptor(value, key);
+      if (typeof key !== 'string' || !descriptor?.enumerable || !Object.hasOwn(descriptor, 'value')) throw Error('Unsafe journal data');
+      if (Array.isArray(value) && !/^(0|[1-9]\d*)$/.test(key)) throw Error('Unsafe journal data');
+      Object.defineProperty(output, key, { value: detachJournalJSON(descriptor.value, ancestors), enumerable: true, configurable: true, writable: true });
+    }
+    if (Array.isArray(value) && (output as unknown[]).length !== value.length) throw Error('Unsafe journal data');
+    return output;
+  } finally { ancestors.delete(value); }
+    }
+
+// Stored malformed JSON evidence remains present through ordinary edits. Active
+// runtime descriptors cannot be serialized safely, so retain an explicit hold.
+function preserveJournalGrowerLink(entry: object): Pick<JournalEntry, 'growerCycleLink'> {
+  const held = () => ({ growerCycleLink: { version: 0, held: true } });
+  try {
+    const property = Object.getOwnPropertyDescriptor(entry, 'growerCycleLink');
+    if (!property) return 'growerCycleLink' in entry ? held() : {};
+    if (!Object.hasOwn(property, 'value')) return held();
+    return { growerCycleLink: detachJournalJSON(property.value) };
+  } catch { return held(); }
 }
 
 export interface JournalMonthGroup {
@@ -230,6 +340,7 @@ export function normaliseJournal(value: unknown): JournalEntry[] {
       bedLabel: cleanTag(raw.bedLabel),
       cropName: cleanTag(raw.cropName),
       photos: cleanPhotos(raw.photos),
+      ...preserveJournalGrowerLink(raw),
       createdAt,
       updatedAt: finiteTime(raw.updatedAt, createdAt),
     });
@@ -248,6 +359,7 @@ export interface JournalEntryInput {
   bedLabel?: string | null;
   cropName?: string | null;
   photos?: string[];
+  growerCycleLink?: unknown;
 }
 
 export function newJournalId(now: number = Date.now()): string {
@@ -266,6 +378,7 @@ export function createJournalEntry(input: JournalEntryInput, now: number = Date.
     bedLabel: cleanTag(input.bedLabel),
     cropName: cleanTag(input.cropName),
     photos: cleanPhotos(input.photos),
+    ...preserveJournalGrowerLink(input),
     createdAt: now,
     updatedAt: now,
   };
@@ -289,6 +402,7 @@ export function editJournalEntry(
 ): JournalEntry {
   return {
     ...createJournalEntry(input, now),
+    ...preserveJournalGrowerLink(entry),
     id: entry.id,
     createdAt: entry.createdAt,
     updatedAt: now,
@@ -366,49 +480,172 @@ export function trimJournalForStorage(
   return list;
 }
 
+function journalDecimalIdentity(literal: string): string {
+  const parts = /^(-?)([0-9]+)(?:\.([0-9]+))?(?:[eE]([+-]?[0-9]+))?$/.exec(literal);
+  if (!parts) throw Error('Invalid JSON number');
+  let digits = (parts[2] + (parts[3] ?? '')).replace(/^0+/, '');
+  if (!digits) return '0';
+  const end = digits.length; digits = digits.replace(/0+$/, '');
+  const exponent = BigInt(parts[4] ?? '0') - BigInt((parts[3] ?? '').length) + BigInt(end - digits.length);
+  return `${parts[1]}${digits}e${exponent}`;
+}
+
+/** JSON.parse alone loses duplicate object members and permits numeric overflow.
+ * Inspect the original tokens before any saved evidence can be reconstructed.
+ * Grammar is still owned by JSON.parse; this iterative pass checks only the
+ * ambiguities that its value result can no longer reveal. */
+function journalRawJSONIsLossless(raw: string): boolean {
+  try {
+    JSON.parse(raw);
+    const stack: Array<{ object: boolean; key: boolean; keys: Set<string> }> = [];
+    for (let i = 0; i < raw.length; i++) {
+      const c = raw[i], top = stack.at(-1);
+      if (c === '{' || c === '[') stack.push({ object: c === '{', key: c === '{', keys: new Set() });
+      else if (c === '}' || c === ']') stack.pop();
+      else if (c === ',') { if (top?.object) top.key = true; }
+      else if (c === ':') { if (top?.object) top.key = false; }
+      else if (c === '"') {
+        const start = i++;
+        while (i < raw.length && raw[i] !== '"') { if (raw[i] === '\\') i++; i++; }
+        if (top?.object && top.key) {
+          const key: string = JSON.parse(raw.slice(start, i + 1));
+          if (top.keys.has(key)) return false;
+          top.keys.add(key);
+        }
+      } else if (c === '-' || c >= '0' && c <= '9') {
+        const start = i;
+        while (i + 1 < raw.length && /[0-9eE+.-]/.test(raw[i + 1])) i++;
+        const literal = raw.slice(start, i + 1), number = Number(literal);
+        if (!Number.isFinite(number) || Object.is(number, -0)
+          || journalDecimalIdentity(literal) !== journalDecimalIdentity(JSON.stringify(number))) return false;
+      }
+    }
+    return true;
+  } catch { return false; }
+}
+
+/** Share the existing normalization authority without saving its reconstructed
+ * display list over an unrecognized or partly hidden original record. */
+export function inspectJournalRowsForWrite(raw: string): { rows: Record<string, unknown>[]; entries: JournalEntry[] } | null {
+  try {
+    if (!journalRawJSONIsLossless(raw)) return null;
+    const rows: unknown = JSON.parse(raw);
+    if (!Array.isArray(rows) || rows.length > MAX_ENTRIES) return null;
+    const entries = normaliseJournal(rows);
+    if (entries.length !== rows.length) return null;
+    const byId = new Map(entries.map(row => [row.id, row]));
+    for (const row of rows) {
+      if (!row || typeof row !== 'object' || Array.isArray(row)) return null;
+      const entry = byId.get(row.id);
+      if (!entry || inspectJournalGrowerLink(row).status === 'held') return null;
+      for (const key of ['id', 'date', 'title', 'notes', 'category', 'bedId', 'bedLabel', 'cropName', 'photos', 'createdAt', 'updatedAt'] as const) {
+        if (Object.hasOwn(row, key) && JSON.stringify(row[key]) !== JSON.stringify(entry[key])) return null;
+      }
+    }
+    return { rows, entries };
+  } catch { return null; }
+}
+
 /* ── Storage ─────────────────────────────────────────────────────────────── */
 
-const STORAGE_KEY = 'imbewu_field_journal_v1';
 export const JOURNAL_CHANGED_EVENT = 'imbewu-field-journal-changed';
-
+interface JournalReadAdmission {
+  context: JournalObservationContext | null;
+  token: string;
+  raw: string;
+  sample: boolean;
+  storage: Storage;
+  key: string;
+  display: string;
+}
+const journalReadAdmissions = new WeakMap<JournalEntry[], JournalReadAdmission>();
+export function releaseJournalRead(entries: JournalEntry[]): void {
+  const admission = journalReadAdmissions.get(entries);
+  if (admission) { revokeJournalObservationContext(admission.context); journalReadAdmissions.delete(entries); }
+}
+function notifyJournal(): void {
+  try { window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT)); } catch { /* Storage receipts, not UI events, establish the write. */ }
+}
 export function loadJournal(): JournalEntry[] {
-  if (typeof window === 'undefined' || !window.localStorage) return [];
+  if (typeof window === 'undefined') return [];
+  let context: JournalObservationContext | null = null;
   try {
-    const raw = window.localStorage.getItem(activeAccountLocalStorageKey(STORAGE_KEY));
-    return raw ? normaliseJournal(JSON.parse(raw)) : [];
-  } catch {
-    return [];
-  }
+    context = captureJournalObservationContext();
+    if (!journalObservationContextIsCurrent(context)) { revokeJournalObservationContext(context); return []; }
+    const state = readJournalStorage(), sample = state.status === 'sample';
+    const storage = window.localStorage, key = activeAccountLocalStorageKey(JOURNAL_LEGACY_KEY);
+    const raw = sample ? storage.getItem(key) ?? '[]' : state.journalRaw;
+    const entries = raw === null ? [] : normaliseJournal(JSON.parse(raw));
+    const admission = raw === null ? null : inspectJournalRowsForWrite(raw);
+    if (admission && (sample || state.status === 'ready' && state.writable && state.token)) {
+      journalReadAdmissions.set(entries, { context, token: sample ? raw! : state.token!, raw: raw!, sample,
+        storage, key, display: JSON.stringify(entries) });
+    } else revokeJournalObservationContext(context);
+    return entries;
+  } catch { revokeJournalObservationContext(context); return []; }
 }
 
 export interface JournalSaveResult {
   ok: boolean;
-  /** What actually landed in storage — may have shed photos or old entries. */
   entries: JournalEntry[];
   trimmed: boolean;
+  /** A side effect may have happened. The editor must retain its draft and
+   * direct the grower to inspect the journal rather than repeat the write. */
+  unconfirmed?: boolean;
+  held?: boolean;
 }
 
-export function saveJournal(entries: JournalEntry[]): JournalSaveResult {
-  const trimmed = trimJournalForStorage(entries);
-  const didTrim = trimmed.length !== entries.length
-    || journalByteSize(trimmed) !== journalByteSize(sortJournal(entries).slice(0, MAX_ENTRIES));
-  if (typeof window === 'undefined' || !window.localStorage) {
-    return { ok: false, entries: trimmed, trimmed: didTrim };
-  }
+/** The original loaded list is explicit write provenance. A new actor, stale
+ * editor or display-normalized empty list cannot overwrite the canonical book. */
+export function saveJournal(entries: JournalEntry[], sourceEntries?: JournalEntry[]): JournalSaveResult {
+  const fail = (): JournalSaveResult => ({ ok: false, entries, trimmed: false, held: true });
+  const admission = sourceEntries && journalReadAdmissions.get(sourceEntries);
+  if (!admission || !journalObservationContextIsCurrent(admission.context)
+    ) return fail();
+  try { if (admission.display !== JSON.stringify(detachJournalJSON(sourceEntries))) return fail(); } catch { return fail(); }
+  const before = inspectJournalRowsForWrite(admission.raw);
+  if (!before || typeof window === 'undefined' || window.localStorage !== admission.storage) return fail();
+  let attempted = false;
+  const current = () => journalObservationContextIsCurrent(admission.context)
+    && window.localStorage === admission.storage && activeAccountLocalStorageKey(JOURNAL_LEGACY_KEY) === admission.key
+    && (admission.sample ? admission.storage.getItem(admission.key) === admission.raw : readJournalStorage().token === admission.token);
   try {
-    window.localStorage.setItem(activeAccountLocalStorageKey(STORAGE_KEY), JSON.stringify(trimmed));
-    window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT));
-    return { ok: true, entries: trimmed, trimmed: didTrim };
-  } catch {
-    // Quota exceeded even after trimming (another tenant filled the origin) —
-    // drop every photo and try once more so the words still survive.
-    try {
-      const textOnly = trimmed.map((e) => ({ ...e, photos: [] }));
-      window.localStorage.setItem(activeAccountLocalStorageKey(STORAGE_KEY), JSON.stringify(textOnly));
-      window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT));
-      return { ok: true, entries: textOnly, trimmed: true };
-    } catch {
-      return { ok: false, entries: trimmed, trimmed: didTrim };
+    if (!current()) return fail();
+    const candidate = detachJournalJSON(entries) as JournalEntry[];
+    if (!Array.isArray(candidate) || candidate.length > MAX_ENTRIES || normaliseJournal(candidate).length !== candidate.length) return fail();
+    const rawById = new Map(before.rows.map(row => [row.id, row]));
+    const nextRows = candidate.map(entry => {
+      const original = rawById.get(entry.id);
+      // Ordinary edits may retain a link; only the checked task action creates
+      // a new one. Never silently change or discard an original marker.
+      if (!original && Object.hasOwn(entry, 'growerCycleLink')) throw Error('new-link-requires-current-cycle');
+      if (original && (Object.hasOwn(original, 'growerCycleLink') !== Object.hasOwn(entry, 'growerCycleLink')
+        || JSON.stringify(original.growerCycleLink) !== JSON.stringify(entry.growerCycleLink))) throw Error('link-changed');
+      return { ...original, ...entry };
+    });
+    const next = JSON.stringify(nextRows);
+    if (next.length > JOURNAL_BYTE_BUDGET || !inspectJournalRowsForWrite(next) || !current()) return fail();
+    let unconfirmed = false, writtenToken: string | null = null;
+    if (admission.sample) {
+      attempted = true; admission.storage.setItem(admission.key, next);
+      unconfirmed = !journalObservationContextIsCurrent(admission.context) || admission.storage.getItem(admission.key) !== next;
+    } else {
+      attempted = true;
+      const result = writeJournalStorageRaw(next, admission.token, undefined, () => journalObservationContextIsCurrent(admission.context));
+      if (result.status === 'held') return fail();
+      unconfirmed = result.status === 'unconfirmed';
+      if (result.status === 'written') writtenToken = result.token;
     }
-  }
+    if (!journalObservationContextIsCurrent(admission.context)) unconfirmed = true;
+    if (unconfirmed) return { ok: false, entries, trimmed: false, unconfirmed: true };
+    const ownReceiptMatches = () => admission.sample
+      ? admission.storage.getItem(admission.key) === next
+      : readJournalStorage().token === writtenToken && readJournalStorage().journalRaw === next;
+    if (!ownReceiptMatches()) return { ok: false, entries, trimmed: false, unconfirmed: true };
+    const saved = loadJournal(); notifyJournal();
+    if (!ownReceiptMatches()) { releaseJournalRead(saved); return { ok: false, entries, trimmed: false, unconfirmed: true }; }
+    if (!journalObservationContextIsCurrent(admission.context)) { releaseJournalRead(saved); return { ok: false, entries, trimmed: false, unconfirmed: true }; }
+    releaseJournalRead(sourceEntries!);
+    return { ok: true, entries: saved, trimmed: false };
+  } catch { return attempted ? { ok: false, entries, trimmed: false, unconfirmed: true } : fail(); }
 }

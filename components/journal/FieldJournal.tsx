@@ -1,12 +1,16 @@
 'use client';
 
 import workspace from '@/components/layout/Workspace.module.css';
+import { JournalStorageNotice } from '@/components/JournalStorageStatus';
+import { JOURNAL_STORAGE_EVENT } from '@/lib/journal-storage';
+import { journalPlanningReferenceText } from '@/lib/journal-link-display';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Plus, Pencil, NotebookPen, Sparkles, MapPin, Leaf, Search, SlidersHorizontal, X, Download, Printer, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { useAuth } from '@/lib/auth';
 import { useAppLevel } from '@/lib/app-level';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { loadCanvasState } from '@/lib/design-canvas';
@@ -24,6 +28,7 @@ import {
   journalCategory,
   journalSummary,
   loadJournal,
+  releaseJournalRead,
   removeJournalEntry,
   saveJournal,
   todayISODate,
@@ -102,6 +107,10 @@ const EXAMPLE_JOURNAL_ENTRIES: ReadonlyArray<{
 ];
 
 export default function FieldJournal() {
+  const { user, loading: authLoading } = useAuth();
+  const owner = user?.uid ?? null;
+  const [readOwner, setReadOwner] = useState<string | null | undefined>(undefined);
+
   const router = useRouter();
   const { t, lang } = useLanguage();
   const isZulu = lang === 'zu';
@@ -109,7 +118,8 @@ export default function FieldJournal() {
   const memory = (key: FarmMemoryKey, vars?: Record<string, string | number>) => farmMemoryText(lang, key, vars);
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
   const simple = useAppLevel() === 'simple';
-  const [entries, setEntries] = useState<JournalEntry[]>([]);
+  const [storedEntries, setEntries] = useState<JournalEntry[]>([]);
+  const entries = !authLoading && readOwner === owner ? storedEntries : [];
   const [ready, setReady] = useState(false);
   const [filter, setFilter] = useState<Filter>('all');
   const [query, setQuery] = useState('');
@@ -132,14 +142,24 @@ export default function FieldJournal() {
   const resultsRef = useRef<HTMLDivElement>(null);
   const [historyScrollRequest, setHistoryScrollRequest] = useState(0);
 
-  const refresh = useCallback(() => setEntries(loadJournal()), []);
+  const loadedEntries = useRef<JournalEntry[]>([]);
+  const unconfirmedWrite = useRef(false);
+  const writeInProgress = useRef(false);
+  const refresh = useCallback(() => {
+    if (writeInProgress.current) return;
+    const next = loadJournal(); releaseJournalRead(loadedEntries.current);
+    loadedEntries.current = next; setEntries(next); setReadOwner(owner);
+  }, [owner]);
 
   useEffect(() => {
     refresh();
+    setSheet({ open: false, entry: null }); setSheetError(null);
     setReady(true);
     const onChanged = () => refresh();
     window.addEventListener(JOURNAL_CHANGED_EVENT, onChanged);
-    return () => window.removeEventListener(JOURNAL_CHANGED_EVENT, onChanged);
+    window.addEventListener(JOURNAL_STORAGE_EVENT, onChanged);
+    return () => { window.removeEventListener(JOURNAL_CHANGED_EVENT, onChanged);
+      window.removeEventListener(JOURNAL_STORAGE_EVENT, onChanged); releaseJournalRead(loadedEntries.current); };
   }, [refresh]);
 
   useEffect(() => {
@@ -255,15 +275,23 @@ export default function FieldJournal() {
   }
 
   function persist(next: JournalEntry[]): boolean {
-    const result = saveJournal(next);
+    if (unconfirmedWrite.current) { setSheetError('A previous write could not be confirmed. Check the journal before recording or changing this note again.'); return false; }
+    writeInProgress.current = true;
+    let result: ReturnType<typeof saveJournal>;
+    try { result = saveJournal(next, entries); } finally { writeInProgress.current = false; }
     if (result.ok) {
+      releaseJournalRead(loadedEntries.current); loadedEntries.current = result.entries;
       setEntries(result.entries);
       setSheetError(null);
       setNotice(result.trimmed ? ui('Storage was nearly full, so photos on the oldest entries were removed. The notes are kept.', 'Isikhala sokugcina besesizogcwala, ngakho izithombe kokudala kakhulu zisusiwe. Amanothi agciniwe.') : null);
     } else {
       // Leave `entries` as it was — the attempted save never actually landed in storage, so
       // adding it to the in-memory list would show it as saved until the next reload drops it.
-      setSheetError(ui('Storage is full — this entry could not be saved. Delete an old entry and try again.', 'Isikhala sokugcina sigcwele — lokhu okubhaliwe akugcinwanga. Susa okubhaliwe okudala bese uzama futhi.'));
+      if (result.unconfirmed) {
+        unconfirmedWrite.current = true;
+        setSheetError('A journal write was attempted, but its final receipt could not be confirmed. Check the journal before recording or changing this note again.');
+      } else if (result.held) setSheetError('The journal is read-only or its saved records changed. Keep this draft and review the journal storage check before saving.');
+      else setSheetError(ui('Storage is full — this entry could not be saved. Delete an old entry and try again.', 'Isikhala sokugcina sigcwele — lokhu okubhaliwe akugcinwanga. Susa okubhaliwe okudala bese uzama futhi.'));
     }
     return result.ok;
   }
@@ -288,6 +316,7 @@ export default function FieldJournal() {
   }
 
   return (<>
+    <JournalStorageNotice />
     <div className={explore.draftNotice}><LanguageDraftNote lang={lang} scope="farm-memory" /></div>
     {/* Bottom padding clears the tab bar AND the sample-mode banner stacked above it,
        so the oldest entry is never trapped behind them. */}
@@ -550,6 +579,7 @@ export default function FieldJournal() {
             <div style={{ position: 'absolute', left: 5, top: 6, bottom: 6, width: 2, background: 'var(--border)', borderRadius: 1 }} />
             {group.entries.map((entry) => {
               const cat = journalCategory(entry.category);
+              const planningReference = journalPlanningReferenceText(entry);
               return (
                 <article
                   key={entry.id}
@@ -593,6 +623,9 @@ export default function FieldJournal() {
                         </div>
                       )}
 
+                      {planningReference && <p lang="en" style={{ marginTop: 8, fontSize: 13, color: 'var(--text-secondary)' }}>
+                        {planningReference}
+                      </p>}
                       {(entry.bedLabel || entry.cropName) && (
                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8 }}>
                           {entry.bedLabel && <button type="button" className={explore.historyTag} aria-label={memory('bedHistory', { value: entry.bedLabel })} onClick={() => showBedHistory(entry)}><MapPin size={14} aria-hidden="true" />{entry.bedLabel}</button>}
@@ -637,13 +670,14 @@ export default function FieldJournal() {
       ))}
 
       </div>
-      {sheet.open && (
+      {sheet.open && !authLoading && readOwner === owner && (
         <JournalEntrySheet
           entry={sheet.entry}
           initialDraft={sheet.draft}
           beds={beds}
           crops={crops}
           error={sheetError}
+          readOnly={unconfirmedWrite.current}
           onSave={handleSave}
           onDelete={handleDelete}
           onClose={() => { setSheetError(null); setSheet({ open: false, entry: null }); }}

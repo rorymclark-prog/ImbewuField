@@ -1,3 +1,4 @@
+import { journalPlanningReferenceText } from './journal-link-display';
 import type { JournalEntry } from './field-journal';
 import { deliverFile, type FileDelivery } from './file-delivery';
 import { farmMemoryText, farmMemoryCategoryLabel, type FarmMemoryKey } from './farm-memory-copy';
@@ -24,12 +25,14 @@ export function buildJournalCsv(entries: JournalEntry[], options: JournalExportO
   const t = (key: FarmMemoryKey) => farmMemoryText(lang, key);
   const headerKeys: FarmMemoryKey[] = ['exportDate', 'exportCategory', 'exportTitle', 'exportNotes',
     'exportBed', 'exportBedId', 'exportCrop', 'exportPhotos', 'exportBasisHeading', 'exportSelection'];
-  const rows: Array<Array<string | number>> = [headerKeys.map(t)];
+  const includeReference = entries.some(entry => journalPlanningReferenceText(entry) !== null);
+  const rows: Array<Array<string | number>> = [[...headerKeys.map(t), ...(includeReference ? ['Planning reference (English)'] : [])]];
   for (const entry of entries) rows.push([
     entry.date, farmMemoryCategoryLabel(lang, entry.category), entry.title, entry.notes,
     entry.bedLabel ?? '', entry.bedId ?? '', entry.cropName ?? '', entry.photos?.length ?? 0,
     `${options.sample ? `${t('exportDemo')} ` : ''}${t('exportBasis')}${lang === 'zu' ? ` ${t('draftNotice')}` : ''}`,
     options.selection ?? t('exportDefaultSelection'),
+    ...(includeReference ? [journalPlanningReferenceText(entry) ?? ''] : []),
   ]);
   return `\uFEFF${rows.map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
 }
@@ -50,6 +53,7 @@ export function buildJournalHtml(entries: JournalEntry[], options: JournalExport
   const t = (key: FarmMemoryKey, vars?: Record<string, string | number>) => farmMemoryText(lang, key, vars);
   const title = options.title ?? t('exportHeading');
   const articles = entries.map(entry => {
+    const reference = journalPlanningReferenceText(entry);
     const photos = options.includePhotos === false ? [] : (entry.photos ?? [])
       .map((source, index) => ({ source, number: index + 1 }))
       .filter(photo => safePhoto(photo.source));
@@ -57,7 +61,7 @@ export function buildJournalHtml(entries: JournalEntry[], options: JournalExport
     const omitted = t(excluded === 1 ? 'exportPhotoOmittedOne' : 'exportPhotoOmittedMany', {
       n: excluded, reason: t(options.includePhotos === false ? 'exportOmittedByChoice' : 'exportOmittedUnavailable'),
     });
-    return `<article><header><p class="date">${html(entry.date)} · ${html(farmMemoryCategoryLabel(lang, entry.category))}</p><h2>${html(entry.title || t('exportNote'))}</h2></header>${entry.bedLabel || entry.cropName ? `<p class="tags">${entry.bedLabel ? `${html(t('exportBed'))}: ${html(entry.bedLabel)}` : ''}${entry.bedLabel && entry.cropName ? ' · ' : ''}${entry.cropName ? `${html(t('exportCrop'))}: ${html(entry.cropName)}` : ''}</p>` : ''}<p class="notes">${html(entry.notes)}</p>${photos.length ? `<div class="photos">${photos.map(({ source, number }) => `<figure><img src="${html(source)}" alt="${html(t('exportPhotoAlt', { n: number }))}"><figcaption>${html(entry.date)} · ${html(entry.title || t('exportNote'))} · ${html(t('photoNumber', { n: number }))}</figcaption></figure>`).join('')}</div>` : ''}${excluded > 0 ? `<p class="basis">${html(omitted)}</p>` : ''}</article>`;
+    return `<article><header><p class="date">${html(entry.date)} · ${html(farmMemoryCategoryLabel(lang, entry.category))}</p><h2>${html(entry.title || t('exportNote'))}</h2></header>${entry.bedLabel || entry.cropName ? `<p class="tags">${entry.bedLabel ? `${html(t('exportBed'))}: ${html(entry.bedLabel)}` : ''}${entry.bedLabel && entry.cropName ? ' · ' : ''}${entry.cropName ? `${html(t('exportCrop'))}: ${html(entry.cropName)}` : ''}</p>` : ''}<p class="notes">${html(entry.notes)}</p>${reference ? `<p lang="en" class="basis">${html(reference)}</p>` : ''}${photos.length ? `<div class="photos">${photos.map(({ source, number }) => `<figure><img src="${html(source)}" alt="${html(t('exportPhotoAlt', { n: number }))}"><figcaption>${html(entry.date)} · ${html(entry.title || t('exportNote'))} · ${html(t('photoNumber', { n: number }))}</figcaption></figure>`).join('')}</div>` : ''}${excluded > 0 ? `<p class="basis">${html(omitted)}</p>` : ''}</article>`;
   }).join('\n');
   return `<!doctype html>
 <html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>${html(title)}</title>

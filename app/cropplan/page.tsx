@@ -1,4 +1,5 @@
 'use client';
+import { JournalStorageNotice } from '@/components/JournalStorageStatus';
 
 import workspace from '@/components/layout/Workspace.module.css';
 
@@ -369,8 +370,10 @@ export default function CropPlanPage() {
       <div className="flex-1 overflow-y-auto">
         <div className={`${workspace.workspace} px-4 py-5 sm:px-6 sm:py-6`}>
           <CropPlanStorageNotice />
+          <JournalStorageNotice />
           <GrowerOperationsPanel state={operations} refresh={operations.refresh}
-            checkCurrent={operations.checkCurrent} isCurrent={operations.isCurrent} />
+            checkCurrent={operations.checkCurrent} isCurrent={operations.isCurrent}
+            onRecordObservation={operations.onRecordObservation} />
           {withheldPlantings > 0 && <section aria-label="Planning support" className="mb-4 rounded-2xl p-4 font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <p>Catalogue-derived jobs are unavailable for {withheldPlantings} saved sowing {withheldPlantings === 1 ? 'entry' : 'entries'} without a supported country or workspace basis. The saved entries remain in your plan.</p>
             <Link href="/facilitator/crops" className="mt-2 inline-block underline">Review country and planning references</Link>

@@ -417,5 +417,10 @@ const copy:UpdateCopy={
   "Print planned nursery batch cards with dates and separate seedling counts.": "Hatisa likarete tsa lihlopha tse reriloeng tsa sebaka sa lipeo, tse nang le matsatsi le lipalo tse arohaneng tsa limela tse nyenyane.",
   "Print planned batch cards": "Hatisa likarete tsa lihlopha tse reriloeng",
   "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Sebelisa tlhahiso ea sebaka sa lipeo e hlahlobiloeng ho hatisa likarete tsa lihlopha. Lipalo le matsatsi li lula li reriloe; lenaneo ha le boloke lintlha tsa ho jala le tsa sehlopha sa peo tse ngotsoeng ka letsoho.",
+  // Field-observation release: UNREVIEWED Codex AI drafts; exact sources in docs/international/grower-observation-release-drafts.json.
+  "Record your own field observations from planned tasks.": "Ngola seo o se boneng tshimong ya hao ho tswa mesebetsing e rerilweng.",
+  "Record a field observation": "Ngola seo o se boneng tshimong",
+  "Task Planner → Dated work → Record what happened": "Moralo wa Mesebetsi → Mosebetsi o nang le matsatsi → Ngola se etsahetseng",
+  "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Kgetha letsatsi leo o boneng ho hong ka lona, ngola ntlha mme o e netefatse. Jenale e boloka tshupiso ya mosebetsi o rerilweng ka thoko; direkoto tsa lenane la ho hlahloba, kotulo, setoko le thekiso ha di fetohe.",
 };
 export default copy;

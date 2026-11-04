@@ -417,5 +417,10 @@ const copy:UpdateCopy={
   "Print planned nursery batch cards with dates and separate seedling counts.": "Kandziyisa makhadi ya mintlawa leyi kunguhatiweke ya xirhapa xa swimilana, lama nga ni masiku ni tinhlayo ta swimilana leti hambanisiweke.",
   "Print planned batch cards": "Kandziyisa makhadi ya mintlawa leyi kunguhatiweke",
   "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Tirhisa xiringanyeto xa xirhapa xa swimilana lexi kambisisiweke ku kandziyisa makhadi ya mintlawa. Tinhlayo ni masiku swi tama swi ri leswi kunguhatiweke; nongonoko a wu hlayisi tinotsi ta ku byala ni ta ntlawa wa mbewu leti tsariweke hi voko.",
+  // Field-observation release: UNREVIEWED Codex AI drafts; exact sources in docs/international/grower-observation-release-drafts.json.
+  "Record your own field observations from planned tasks.": "Rekhoda leswi u swi voneke ensin’wini ya wena ku suka eka mintirho leyi kunguhatiweke.",
+  "Record a field observation": "Rekhoda leswi u swi voneke ensin’wini",
+  "Task Planner → Dated work → Record what happened": "Mupulani wa Mintirho → Mintirho leyi nga ni masiku → Rekhoda leswi humeleleke",
+  "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Hlawula siku leri u voneke swo karhi ha rona, tsala notsi kutani u yi tiyisisa. Jenali yi hlayisa xikombo xa ntirho lowu kunguhatiweke hi ku hambana; tirhekhodo ta nxaxamelo wo kambela, ntshovelo, xitoko ni ku xavisa a ti cinci.",
 };
 export default copy;

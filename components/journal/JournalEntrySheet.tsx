@@ -39,12 +39,13 @@ interface Props {
   onClose: () => void;
   /** A save that failed to persist (e.g. storage full) — shown without closing the sheet. */
   error?: string | null;
+  readOnly?: boolean;
 }
 
 /* Bottom sheet, phone-first: 92dvh cap, 22px top radius, safe-area padding —
    the same chrome components/EvidenceSheet.tsx uses, so the journal does not
    introduce a second modal idiom. */
-export default function JournalEntrySheet({ entry, initialDraft, beds, crops, onSave, onDelete, onClose, error }: Props) {
+export default function JournalEntrySheet({ entry, initialDraft, beds, crops, onSave, onDelete, onClose, error, readOnly = false }: Props) {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
@@ -72,7 +73,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
   useEffect(() => () => { if (confirmTimer.current) clearTimeout(confirmTimer.current); }, []);
 
   function requestDelete() {
-    if (!entry || !onDelete) return;
+    if (readOnly || !entry || !onDelete) return;
     if (confirmTimer.current) clearTimeout(confirmTimer.current);
     if (confirmDelete) {
       setConfirmDelete(false);
@@ -106,7 +107,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title.trim() && !notes.trim()) return;
+    if (readOnly || !title.trim() && !notes.trim()) return;
     const bed = beds.find((b) => b.id === bedId);
     onSave({
       date,
@@ -327,7 +328,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
                 <button
                   type="button"
                   onClick={() => fileRef.current?.click()}
-                  disabled={busy}
+                  disabled={busy || readOnly}
                   style={{
                     width: 68, height: 68, borderRadius: 10, cursor: 'pointer',
                     background: 'var(--bg-1)', border: '1.5px dashed var(--border)', color: 'var(--color-forest-700)',
@@ -388,7 +389,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
           )}
           <button
             type="submit"
-            disabled={!canSave || busy}
+            disabled={!canSave || busy || readOnly}
             style={{
               flex: 1, minHeight: 48, borderRadius: 12, border: 'none',
               cursor: canSave && !busy ? 'pointer' : 'not-allowed',
