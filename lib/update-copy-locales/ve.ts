@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Nangani fhethu ho vhulungwaho hune muthusi a nga hu shumisa. Ni nga fhelisa vhuṱumanyi kha Nzudzanyo.",
+  "Keep original site photos and PDFs with their source and import history.": "Vhulungani zwifanyiso zwa u thoma zwa fhethu na dzi-PDF, khathihi na vhubvo hazwo na ḓivhazwakale ya u zwi dzhenisa.",
+  "Review historical photo registration drafts without moving saved map features.": "Ṱolani mvetamveto ya u livhanyisa zwifanyiso zwa kale na mapa, ni sa sudzulusi zwithu zwo vhulungwaho kha mapa.",
+  "Manage assistant access": "Langulani thendelo dza vhathusi",
+  "Settings → Assistant connections": "Nzudzanyo → Vhuṱumanyi ha vhathusi",
+  "Review connected assistants, selected sites and imported originals.": "Ṱolani vhathusi vho ṱumanywaho, fhethu ho nangiwaho na faela dza u thoma dzo dzheniswaho.",
+  "Check your saved map": "Ṱolani mapa waṋu wo vhulungwaho",
+  "Site design": "Pulane ya fhethu",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Ṱolani henefho fhethu musi ni sa athu shumisa tshanduko dza muthusi kana u vhambedza tshifanyiso tsha kale.",
   // Kiambu link descriptions: docs/international/agy-kiambu-link-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
   "Open checked Kiambu weather bulletin links from the country review.": "Vhulani vhuṱanganyi ha zwiṋwalwa zwa mutsho zwa Kiambu zwo tolwaho u bva kha tsedzuluso ya shango.",
   "Keep bulletin dates separate from live weather and crop-planning approval.": "Vhulungani maduvha a zwiṋwalwa o fhambana na mutsho wa zwino na thendelo ya u pulana zwoṱowaho.",
@@ -16,6 +26,35 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Tsedzulusani tsumbo i songo mapiwaho",
   "Crop planner → Planning without a mapped site": "Mupulani wa zwilimwa → U pulana hu si na fhethu ho mapiwaho",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Kha mbethe wa maitele kana vhuvhambadzi ha henefho, nangani kana ni bvise mutheo wa tsumbo wa Afurika Tshipembe nga ho livhaho. Khetho i sala henefho kha vhupo ha u shumela.",
+  // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
+  "Open Terrain & Sections for the two cuts and extra contour detail.": "Vulani Terrain & Sections u vhona khethekanyo mbili na miṅwe mitalo ya vhulapfu.",
+  // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
+  "Sector illustrations have lighter arrows, clearer contours and a shorter map key.": "Zwifanyiso zwa Sector zwi na misevhe i leluwaho, mitalo ya vhulapfu i vhonalaho zwavhuḓi na ṱhalutshedzo pfufhi ya mapa.",
+  // Raw profile: docs/audits/2026-11-03/raw-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Terrain profiles show sampled elevation and classroom positions at the plan scale.": "Phurofaiḽi dza fhethu dzi sumbedza vhulapfu ho sampuliwaho na fhethu ha kiḽasi nga tshikalo tsha pulane.",
+  "Review the shade cover": "Ṱolani tshitsireledzi tsha murunzi",
+  "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Vulani Structures, ni kone u dovha na kuvhanganya tshifanyiso tsha AI tsho vhulungwaho uri tshi sumbedze tshitsireledzi tsha murunzi.",
+
+  // Shade recovery: docs/audits/2026-11-03/shade-recovery-release-drafts.json; UNREVIEWED AI draft.
+  "Structures maps show recorded shade cloth over the illustrated beds.": "Mapa a Structures a sumbedza laphu ḽa murunzi ḽo rekhodiwaho nṱha ha mibhedzi yo olwaho.",
+  // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Mapa a Sector a shumisa mitalo ya vhuimo ha nṱha ya dzingu nga u angaredza, na khetho ya phurofaili ya mavu A–B.",
+  // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Choose area names or a numbered key on the historical Existing Site map.": "Nangani madzina a fhethu kana khii ya nomboro kha mapa wa kale wa Existing Site.",
+  // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
+  "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Mapa a Site na Sector a Ubhejane a nga sumbedza tshifanyiso tsha kale tsha musi mishumo i sa athu thoma.",
+  "AI maps start with available aerial imagery; you can still choose plain paper.": "Mapa a AI a thoma nga zwifanyiso zwi re hone zwa nṱha; ni kha ḓi nga nanga bammbiri ḽitshena.",
+
+  // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
+  "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Mapa a AI a Site na Sector a vhulunga zwidodombedzwa zwo olwa, a na mitalo miṱuku ya zwifanyiso.",
+  "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "Phasing i vhulunga tshifanyiso tsho olwaho; app i engedza shedulu, zwiga na tshikalo.",
+  "Paper-friendly map styles start on white and keep your chosen background.": "Zwitaila zwa mapa zwo teaho bammbiri zwi thoma nga hutshena zwa vhulunga murahu we na nanga.",
+  "Review the AI map finish": "Ṱolani mbonalo ya mapa wa AI",
+  "Site design → Glossy": "Nzudzanyo ya fhethu → Glossy",
+  "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.": "Nangani siaṱari na tshitaila. Zwitaila zwo teaho bammbiri zwi thoma nga hutshena nga nnḓa ha musi ni tshi nanga muṅwe murahu.",
+  "Compare with your exact plan": "Vhambedzani na pulane yaṋu yo teaho",
+  "Site design → Saved maps": "Nzudzanyo ya fhethu → Mapa o vhulungwaho",
+  "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.": "Vulani pulane yo teaho yo vhulungwaho tsini na tshifanyiso tshayo tsha AI. Ṱolani khuḓa dza mibete, zwifhaṱo na zwimela musi ni sa athu u shumisa tshifanyiso.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Ṱolani mvetamveto dza zwiko zwa mashango; nyeletshedzo ya vhulimi ya henefho a i athu u vha hone.",
   "Review international references": "Ṱolani zwiko zwa mashango",
@@ -292,5 +331,12 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Lingani mepe yo nakiswaho nga AI",
   "Design Studio → Glossy": "Studio tsha u pulana → Mepe yo nakiswaho",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vhulani bulasi yo vhulungwaho, khethani siaṱari ni kone u khetha AI Polished. U bveledza mepe iṅwe na iṅwe zwi a badelwa.",
+  // Kenya soil and extension release wording: docs/international/kenya-soil-extension-release-wording-2026-11-04/drafts.json; unreviewed.
+  "Open Kenya’s national and Kiambu extension referral pages from the country review.": "Vulani masiaṱari a ndaedzo dza nyeletshedzo ya vhulimi dza lushaka lwa Kenya na dza Kiambu u bva kha tsedzuluso ya shango.",
+  "Open Kenya’s historical soil catalogue from the country review.": "Vulani khathalogo ya kale ya mavu a Kenya u bva kha tsedzuluso ya shango.",
+  "Find Kenya extension references": "Wanani ndaedzo dza nyeletshedzo ya vhulimi dza Kenya",
+  "Choose Kenya and open Agricultural extension to find the ministry and county links.": "Nangani Kenya ni vule Nyeletshedzo ya vhulimi u itela u wana zwitanganyi zwa muhasho na zwa khauṋthi.",
+  "Review Kenya’s historical soil reference": "Tolani ndaedzo ya kale ya mavu a Kenya",
+  "Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.": "Nangani Kenya ni vule ndaedzo ya Mavu. Khathalogo i ṱalusa dzinganyelo dza kale dza ngudo dza lushaka.",
 };
 export default copy;

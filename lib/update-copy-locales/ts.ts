@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Hlawula tindhawu leti hlayisiweke leti mupfuni a nga ti tirhisaka. U nga tsema vuhlanganisi eka Swiyimiso.",
+  "Keep original site photos and PDFs with their source and import history.": "Hlayisa swifaniso swa masungulo swa ndhawu ni ti-PDF swin’we ni xihlovo xa swona ni matimu ya ku swi nghenisa.",
+  "Review historical photo registration drafts without moving saved map features.": "Kambela mipfapfarhuto ya ku fambelanisa swifaniso swa khale ni mepe handle ko susa swilo leswi hlayisiweke emepeni.",
+  "Manage assistant access": "Lawula mfikelelo wa vapfuni",
+  "Settings → Assistant connections": "Swiyimiso → Vuhlanganisi ni vapfuni",
+  "Review connected assistants, selected sites and imported originals.": "Kambela vapfuni lava hlanganisiweke, tindhawu leti hlawuriweke ni tifayela ta masungulo leti nghenisiweke.",
+  "Check your saved map": "Kambela mepe wa wena lowu hlayisiweke",
+  "Site design": "Dizayini ya ndhawu",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Kambela ndhawu yoleyo u nga si tirhisa mindzulamiso ya mupfuni kumbe ku pimanisa xifaniso xa khale.",
   // Kiambu link descriptions: docs/international/agy-kiambu-link-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
   "Open checked Kiambu weather bulletin links from the country review.": "Pfula swihlanganisi swa switiviso swa maxelo swa Kiambu leswi kamberiweke eka ku kambisisa ka tiko.",
   "Keep bulletin dates separate from live weather and crop-planning approval.": "Hlayisa masiku ya switiviso ma hambanile ni maxelo ya nkarhi wolowo ni ku pfumeleriwa ka makunguhato ya swibyariwa.",
@@ -16,6 +26,35 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Kambisisa xisekelo lexi nga mepiwangiki",
   "Crop planner → Planning without a mapped site": "Mukunguhati wa swibyariwa → Ku kunguhata handle ka ndhawu leyi mepiweke",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Eka bedi ro vumbiwa kumbe dizayini ya laha kaya, hlawula kumbe u susa xisekelo xo komba xa Afrika-Dzonga hi ku kongoma. Nhlawulo wu ta sala na ndhawu yoleyo yo tirhela.",
+  // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
+  "Open Terrain & Sections for the two cuts and extra contour detail.": "Pfula Terrain & Sections ku vona swiphemu swimbirhi ni milayeni yo engetela ya ku tlakuka.",
+  // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
+  "Sector illustrations have lighter arrows, clearer contours and a shorter map key.": "Swifaniso swa Sector swi na miseve yo vevuka, milayeni ya ku tlakuka leyi vonakaka kahle ni nhlamuselo yo koma ya mepe.",
+  // Raw profile: docs/audits/2026-11-03/raw-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Terrain profiles show sampled elevation and classroom positions at the plan scale.": "Tiphurofayili ta ndhawu ti komba ku tlakuka loku tekiweke eka swikombiso ni tindhawu ta titlilasi hi xikalo xa pulani.",
+  "Review the shade cover": "Kambela xifunengeto xa ndzhuti",
+  "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Pfula Structures, kutani u tlhela u hlanganisa xifaniso xa AI lexi hlayisiweke ku komba xifunengeto xa ndzhuti.",
+
+  // Shade recovery: docs/audits/2026-11-03/shade-recovery-release-drafts.json; UNREVIEWED AI draft.
+  "Structures maps show recorded shade cloth over the illustrated beds.": "Mimepe ya Structures yi komba lapi ra ndzhuti leri rhekhodiweke ehenhla ka mibedo leyi dirowiweke.",
+  // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Mimepe ya Sector yi tirhisa mitila ya ku tlakuka ya ndhawu hi ku angarhela, hi nhlawulo wa xivumbeko xa misava A–B.",
+  // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Choose area names or a numbered key on the historical Existing Site map.": "Hlawula mavito ya tindhawu kumbe xikombo xa tinomboro eka mepe wa khale wa Existing Site.",
+  // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
+  "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Mimepe ya Site na Sector ya Ubhejane yi nga komba xifaniso xa khale xa le mahlweni ka mintirho.",
+  "AI maps start with available aerial imagery; you can still choose plain paper.": "Mimepe ya AI yi sungula hi swifaniso leswi kumekaka swa le henhla; wa ha nga hlawula phepha ro basa.",
+
+  // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
+  "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Mimepe ya AI ya Site na Sector yi hlayisa vuxokoxoko byo dirowiwa, hi mitila mitsongo ya swifaniso.",
+  "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "Phasing yi hlayisa xifaniso lexi dirowiweke; app yi engetela xiyimiso, swikombiso na xikalo.",
+  "Paper-friendly map styles start on white and keep your chosen background.": "Switayele swa mepe leswi faneleke phepha swi sungula hi ku basa naswona swi hlayisa le ndzhaku loku u ku hlawuleke.",
+  "Review the AI map finish": "Kambela ku languteka ka mepe wa AI",
+  "Site design → Glossy": "Dizayini ya ndhawu → Glossy",
+  "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.": "Hlawula phepha na xitayele. Switayele leswi faneleke phepha swi sungula hi ku basa handle ka loko u hlawula le ndzhaku kun’wana.",
+  "Compare with your exact plan": "Fananisa na pulani ya wena leyi kongomeke",
+  "Site design → Saved maps": "Dizayini ya ndhawu → Mimepe leyi hlayisiweke",
+  "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.": "Pfula pulani leyi kongomeke leyi hlayisiweke etlhelo ka xifaniso xa yona xa AI. Kambela tikhona ta mibedo, miako na swimilana u nga si tirhisa xifaniso.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Kambisisa mpfapfarhuto wa swihlovo swa matiko; switsundzuxo swa vurimi bya ndhawu a swi si kumeka.",
   "Review international references": "Kambisisa swihlovo swa matiko",
@@ -292,5 +331,12 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Ringeta mepe wa AI lowu sasekisiweke",
   "Design Studio → Glossy": "Xitudiyo xo pulana → Mepe lowu sasekisiweke",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Pfula purasi leri hlayisiweke, hlawula phepha kutani u hlawula AI Polished. Mepe wun’wana ni wun’wana lowu endliwaka wa hakeriwa.",
+  // Kenya soil and extension release wording: docs/international/kenya-soil-extension-release-wording-2026-11-04/drafts.json; unreviewed.
+  "Open Kenya’s national and Kiambu extension referral pages from the country review.": "Pfula maphepha ya xikombo xa switsundzuxo swa vurimi ya tiko ra Kenya na ya Kiambu ku suka eka nhlelo wa tiko.",
+  "Open Kenya’s historical soil catalogue from the country review.": "Pfula khathaloko ya matimu ya misava ya Kenya ku suka eka nhlelo wa tiko.",
+  "Find Kenya extension references": "Kuma swikombo swa switsundzuxo swa vurimi swa Kenya",
+  "Choose Kenya and open Agricultural extension to find the ministry and county links.": "Hlawula Kenya kutani u pfula Switsundzuxo swa vurimi ku kuma swihlanganisi swa vuholobye na swa khawunti.",
+  "Review Kenya’s historical soil reference": "Hlola xikombo xa matimu xa misava ya Kenya",
+  "Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.": "Hlawula Kenya kutani u pfula xikombo xa Misava. Khathaloko yi hlamusela swiringanyeto swa matimu swa tidyondzo ta tiko.",
 };
 export default copy;

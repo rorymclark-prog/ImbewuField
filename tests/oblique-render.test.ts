@@ -30,7 +30,7 @@ test('Oblique exposes every style even when entered from an exact or Sector shee
     if (ts.isJsxElement(node) && node.openingElement.tagName.getText(tree) === 'button') {
       const attribute = node.openingElement.attributes.properties.find((attribute) => ts.isJsxAttribute(attribute)
         && attribute.name.getText(tree) === 'onClick' && attribute.initializer
-        && attribute.initializer.getText(tree).includes('setProducerStyle(s.key)')) as ts.JsxAttribute | undefined;
+        && attribute.initializer.getText(tree).includes('chooseStyle(s.key)')) as ts.JsxAttribute | undefined;
       if (attribute && attribute.initializer && ts.isJsxExpression(attribute.initializer))
         selectStyle = attribute.initializer.expression!.getText(tree);
       const viewAttribute = node.openingElement.attributes.properties.find((attribute) => ts.isJsxAttribute(attribute)
@@ -49,12 +49,12 @@ test('Oblique exposes every style even when entered from an exact or Sector shee
   }
   const styles = execute(initializers.get('PRODUCER_STYLES')!, {});
   const sectorStyles = execute(initializers.get('SECTOR_STYLE_CHOICES')!, { PRODUCER_STYLES: styles });
-  for (const selectedSheet of [{ exact: 'base' }, { exact: 'sector' }, { exact: 'implementation' }, { exact: 'water' }, { filter: 'all' }]) {
+  for (const selectedSheet of [{ exact: 'base' }, { exact: 'sector' }, { exact: 'implementation' }, { exact: 'water' }, { filter: 'all' }, { filter: 'zones' }]) {
     for (const mode of ['exact', 'ai']) {
       const scope: Record<string,any> = { aiRenderOn: true, aiView: 'oblique', selectedSheet, mode, sectorAiMode: 'exact' in selectedSheet,
         phasingAiMode: false, PRODUCER_STYLES: styles, SECTOR_STYLE_CHOICES: sectorStyles };
       scope.topDownStyleChoices = execute(initializers.get('topDownStyleChoices')!, scope);
-      const analytical = 'exact' in selectedSheet && ['base', 'sector', 'implementation'].includes(selectedSheet.exact!);
+      const analytical = ('exact' in selectedSheet && ['base', 'sector', 'implementation'].includes(selectedSheet.exact!)) || selectedSheet.filter === 'zones';
       assert.deepEqual(scope.topDownStyleChoices.map((style:any) => style.key),
         (analytical ? sectorStyles : styles).map((style:any) => style.key),
         'Base, Sector and Phasing must not offer a top-down style that their renderer silently replaces');
@@ -74,9 +74,12 @@ test('Oblique exposes every style even when entered from an exact or Sector shee
   assert.ok(selectStyle);
   for (const style of styles) {
     let selected = 'initial', queued = 0;
-    execute(selectStyle!, { s: style, selectedSheet: { exact: 'sector' },
+    const scope = { s: style, selectedSheet: { no:'02', exact: 'sector' }, aiView:'oblique', loading:null,
+      manualUnderlaysRef:{current:new Set(['test:02'])},state:{siteId:'test'},
       setProducerStyle: (key:string) => { selected=key; }, setAnalysisStyle:()=>{},setExactSheet:()=>{},setMode:()=>{},
-      applySheet:()=>{selected='seeded-default';},setResultImage:()=>{},enqueueRenderJobCapped:()=>{queued++;} })();
+      applySheet:()=>{selected='seeded-default';},setResultImage:()=>{},enqueueRenderJobCapped:()=>{queued++;} };
+    const chooseStyle = execute(initializers.get('chooseStyle')!, scope);
+    execute(selectStyle!, { ...scope, chooseStyle })();
     assert.equal(selected, style.key, 'the selected card must win over applySheet seeding a default');
     assert.equal(queued, 0, 'changing appearance must not purchase an image');
     const description = obliqueStyleDescription(style.key);

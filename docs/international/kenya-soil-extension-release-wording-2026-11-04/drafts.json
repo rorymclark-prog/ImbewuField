@@ -1,0 +1,56 @@
+{
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "entries": [
+    {
+      "english": "Open Kenya’s national and Kiambu extension referral pages from the country review.",
+      "messageSha256": "62e738fd72a40153ac023e3f50f208ff55f62371b71442dbbde17fc963769239",
+      "st": "Bula maqephe a tšupiso a keletso ea temo a naha ea Kenya le a Kiambu ho tsoa tlhahlobong ea naha.",
+      "ts": "Pfula maphepha ya xikombo xa switsundzuxo swa vurimi ya tiko ra Kenya na ya Kiambu ku suka eka nhlelo wa tiko.",
+      "ve": "Vulani masiaṱari a ndaedzo dza nyeletshedzo ya vhulimi dza lushaka lwa Kenya na dza Kiambu u bva kha tsedzuluso ya shango.",
+      "zu": "Vula amakhasi okudlulisela ezolimo zokweluleka zikazwelonke zase-Kenya nezase-Kiambu kusuka ekubuyekezweni kwezwe."
+    },
+    {
+      "english": "Open Kenya’s historical soil catalogue from the country review.",
+      "messageSha256": "0384616d7e70ca9ce943b697c0936cf5a02563aea40a9e303dafb3cbf84318f8",
+      "st": "Bula lethathamo la nalane la mobu la Kenya ho tsoa tlhahlobong ea naha.",
+      "ts": "Pfula khathaloko ya matimu ya misava ya Kenya ku suka eka nhlelo wa tiko.",
+      "ve": "Vulani khathalogo ya kale ya mavu a Kenya u bva kha tsedzuluso ya shango.",
+      "zu": "Vula ikhathalogi yomlando yenhlabathi yase-Kenya kusuka ekubuyekezweni kwezwe."
+    },
+    {
+      "english": "Find Kenya extension references",
+      "messageSha256": "d2cb504d2988ce85009b7ed57c23642b8d26b2c1fb254541bbca01d9a533382b",
+      "st": "Fumana litšupiso tsa keletso ea temo tsa Kenya",
+      "ts": "Kuma swikombo swa switsundzuxo swa vurimi swa Kenya",
+      "ve": "Wanani ndaedzo dza nyeletshedzo ya vhulimi dza Kenya",
+      "zu": "Thola izinkomba zezolimo zokweluleka zase-Kenya"
+    },
+    {
+      "english": "Choose Kenya and open Agricultural extension to find the ministry and county links.",
+      "messageSha256": "d9679c806e51d2c69ec98e17c961acf7cae6bf9888e45e9af3f2cb99b5972f04",
+      "st": "Kgetha Kenya ebe o bula Keletso ea temo ho fumana lihokelo tsa lekala le tsa setereke.",
+      "ts": "Hlawula Kenya kutani u pfula Switsundzuxo swa vurimi ku kuma swihlanganisi swa vuholobye na swa khawunti.",
+      "ve": "Nangani Kenya ni vule Nyeletshedzo ya vhulimi u itela u wana zwitanganyi zwa muhasho na zwa khauṋthi.",
+      "zu": "Khetha i-Kenya bese uvula Ezolimo zokweluleka ukuze uthole izixhumanisi zomnyango nezesezifundeni."
+    },
+    {
+      "english": "Review Kenya’s historical soil reference",
+      "messageSha256": "228d5cb62bde0f4c31926bf28dde629997320444d2cb7094a445eb1b7e5f1980",
+      "st": "Hlahloba tšupiso ea nalane ea mobu ea Kenya",
+      "ts": "Hlola xikombo xa matimu xa misava ya Kenya",
+      "ve": "Tolani ndaedzo ya kale ya mavu a Kenya",
+      "zu": "Buyekeza inkomba yomlando yenhlabathi yase-Kenya"
+    },
+    {
+      "english": "Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.",
+      "messageSha256": "fda1c6878766a0cf8eadc6dee87b3cbe7d7cd7c486f75d40a7be6c082fd7e5ff",
+      "st": "Kgetha Kenya ebe o bula tšupiso ea Mebu. Lethathamo lena le hlalosa likhakanyo tsa nalane bakeng sa lithuto tsa naha.",
+      "ts": "Hlawula Kenya kutani u pfula xikombo xa Misava. Khathaloko yi hlamusela swiringanyeto swa matimu swa tidyondzo ta tiko.",
+      "ve": "Nangani Kenya ni vule ndaedzo ya Mavu. Khathalogo i ṱalusa dzinganyelo dza kale dza ngudo dza lushaka.",
+      "zu": "Khetha i-Kenya bese uvula inkomba yeZinhlabathi. Ikhathalogi ichaza izilinganiso zomlando zezifundo zikazwelonke."
+    }
+  ],
+  "sourceSha256": "612c96ac30082c21604b6fa56f5617194c97f95b0ed3069a1132d25f6e551f6e",
+  "coordinatorReview": "Exact source/hash/order checks. Extension terminology reconciled to existing advice wording. Historical estimates remain historical. Fluent review pending."
+}

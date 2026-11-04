@@ -1,6 +1,16 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Kgetha dibaka tse bolokilweng tseo mothusi a ka di sebedisang. O ka kgaola kgokahano ho Ditlhophiso.",
+  "Keep original site photos and PDFs with their source and import history.": "Boloka dinepe tsa pele tsa sebaka le di-PDF hammoho le mohlodi wa tsona le nalane ya ho di kenya.",
+  "Review historical photo registration drafts without moving saved map features.": "Hlahloba meralo ya ho nyalanya dinepe tsa kgale le mmapa ntle le ho suthisa dintho tse bolokilweng mmapeng.",
+  "Manage assistant access": "Laola phihlello ya bathusi",
+  "Settings → Assistant connections": "Ditlhophiso → Dikgokahano le bathusi",
+  "Review connected assistants, selected sites and imported originals.": "Hlahloba bathusi ba hoketsweng, dibaka tse kgethilweng le difaele tsa pele tse kentsweng.",
+  "Check your saved map": "Lekola mmapa wa hao o bolokilweng",
+  "Site design": "Moralo wa sebaka",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlahloba sebaka sona seo pele o kenya diphetoho tsa mothusi kapa o bapisa senepe sa kgale.",
   // Kiambu link descriptions: docs/international/agy-kiambu-link-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Open checked Kiambu weather bulletin links from the country review.": "Bula lihokelo tsa likoranta tsa boemo ba leholimo tsa Kiambu tse hlahlobiloeng tlhahlobisong ea naha.",
   "Keep bulletin dates separate from live weather and crop-planning approval.": "Boloka matsatsi a likoranta a arohane le boemo ba leholimo ba hona joale le tumello ea ho rala lijalo.",
@@ -16,6 +26,35 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Hlahloba tšupiso e sa mmepiloeng",
   "Crop planner → Planning without a mapped site": "Moralo oa lijalo → Ho rera ntle le sebaka se mmepiloeng",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Bakeng sa bethe e bōpiloeng kapa moralo oa sebaka, khetha kapa u tlose motheo oa tšupiso oa Afrika Boroa ka ho hlaka. Khetho ena e sala le sebaka seo sa mosebetsi.",
+  // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
+  "Open Terrain & Sections for the two cuts and extra contour detail.": "Bula Terrain & Sections ho bona dikarolo tse pedi le mela e meng ya bophahamo.",
+  // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
+  "Sector illustrations have lighter arrows, clearer contours and a shorter map key.": "Ditshwantsho tsa Sector di na le metsu e bobebe, mela e hlakileng ya bophahamo le senotlolo se sekgutshwane sa mmapa.",
+  // Raw profile: docs/audits/2026-11-03/raw-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Terrain profiles show sampled elevation and classroom positions at the plan scale.": "Diprofaele tsa sebaka di bontsha bophahamo bo nkilweng disampoleng le dibaka tsa ditlelase sekaleng sa moralo.",
+  "Review the shade cover": "Hlahloba sekoahelo sa moriti",
+  "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Bula Structures, ebe o kopanya botjha setshwantsho sa AI se bolokilweng ho bontsha sekoahelo sa moriti.",
+
+  // Shade recovery: docs/audits/2026-11-03/shade-recovery-release-drafts.json; UNREVIEWED AI draft.
+  "Structures maps show recorded shade cloth over the illustrated beds.": "Dimmapa tsa Structures di bontsha lesela la moriti le rekotilweng hodima dibethe tse takilweng.",
+  // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Dimmapa tsa Sector di sebedisa mela ya bophahamo ya kakaretso ya sebaka, ka kgetho ya profaele ya naha A–B.",
+  // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Choose area names or a numbered key on the historical Existing Site map.": "Kgetha mabitso a dibaka kapa senotlolo sa dinomoro mmapeng wa kgale wa Existing Site.",
+  // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
+  "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Dimmapa tsa Site le Sector tsa Ubhejane di ka bontsha foto ya polokelo ya pele ho mesebetsi.",
+  "AI maps start with available aerial imagery; you can still choose plain paper.": "Dimmapa tsa AI di qala ka ditshwantsho tse teng tsa moyeng; o ntse o ka kgetha pampiri e tshweu.",
+
+  // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
+  "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Dimmapa tsa AI tsa Site le Sector di boloka dintlha tse takilweng, ka mela e mmalwa ya difoto.",
+  "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "Phasing e boloka setshwantsho se takilweng; app e eketsa kemiso, matshwao le sekala.",
+  "Paper-friendly map styles start on white and keep your chosen background.": "Ditaele tsa mmapa tse loketseng pampiri di qala ka bosweu mme di boloka bokamorao boo o bo kgethileng.",
+  "Review the AI map finish": "Hlahloba ponahalo ya mmapa wa AI",
+  "Site design → Glossy": "Moralo wa sebaka → Glossy",
+  "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.": "Kgetha leqephe le setaele. Ditaele tse loketseng pampiri di qala ka bosweu ntle le ha o kgetha bokamorao bo bong.",
+  "Compare with your exact plan": "Bapisa le moralo wa hao o nepahetseng",
+  "Site design → Saved maps": "Moralo wa sebaka → Dimmapa tse bolokilweng",
+  "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.": "Bula moralo o nepahetseng o bolokilweng pela setshwantsho sa ona sa AI. Hlahloba dikgutlo tsa dibethe, meaho le dimela pele o sebedisa setshwantsho.",
   // International references: docs/audits/2026-11-02/international-foundations-release-drafts.json; UNREVIEWED AI drafts.
   "Explore international reference drafts; local farming advice remains unavailable.": "Hlahloba meralo ya mehlodi ya dinaha; keletso ya temo ya lehae ha e eso fumanehe.",
   "Review international references": "Hlahloba mehlodi ya dinaha",
@@ -292,5 +331,12 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Leka mmapa wa AI o kgabisitsweng",
   "Design Studio → Glossy": "Studio sa moralo → Mmapa o kgabisitsweng",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Bula polasi e bolokilweng, kgetha leqephe ebe o kgetha AI Polished. Ho hlahisa mmapa ka mong ho a lefellwa.",
+  // Kenya soil and extension release wording: docs/international/kenya-soil-extension-release-wording-2026-11-04/drafts.json; unreviewed.
+  "Open Kenya’s national and Kiambu extension referral pages from the country review.": "Bula maqephe a tšupiso a keletso ea temo a naha ea Kenya le a Kiambu ho tsoa tlhahlobong ea naha.",
+  "Open Kenya’s historical soil catalogue from the country review.": "Bula lethathamo la nalane la mobu la Kenya ho tsoa tlhahlobong ea naha.",
+  "Find Kenya extension references": "Fumana litšupiso tsa keletso ea temo tsa Kenya",
+  "Choose Kenya and open Agricultural extension to find the ministry and county links.": "Kgetha Kenya ebe o bula Keletso ea temo ho fumana lihokelo tsa lekala le tsa setereke.",
+  "Review Kenya’s historical soil reference": "Hlahloba tšupiso ea nalane ea mobu ea Kenya",
+  "Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.": "Kgetha Kenya ebe o bula tšupiso ea Mebu. Lethathamo lena le hlalosa likhakanyo tsa nalane bakeng sa lithuto tsa naha.",
 };
 export default copy;

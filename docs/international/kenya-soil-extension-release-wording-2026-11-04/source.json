@@ -1,0 +1,35 @@
+{
+  "base": "7f7e876a805f7d0b755773c965892e00afbb9784",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "entries": [
+    {
+      "english": "Open Kenya’s national and Kiambu extension referral pages from the country review.",
+      "messageSha256": "62e738fd72a40153ac023e3f50f208ff55f62371b71442dbbde17fc963769239"
+    },
+    {
+      "english": "Open Kenya’s historical soil catalogue from the country review.",
+      "messageSha256": "0384616d7e70ca9ce943b697c0936cf5a02563aea40a9e303dafb3cbf84318f8"
+    },
+    {
+      "english": "Find Kenya extension references",
+      "messageSha256": "d2cb504d2988ce85009b7ed57c23642b8d26b2c1fb254541bbca01d9a533382b"
+    },
+    {
+      "english": "Choose Kenya and open Agricultural extension to find the ministry and county links.",
+      "messageSha256": "d9679c806e51d2c69ec98e17c961acf7cae6bf9888e45e9af3f2cb99b5972f04"
+    },
+    {
+      "english": "Review Kenya’s historical soil reference",
+      "messageSha256": "228d5cb62bde0f4c31926bf28dde629997320444d2cb7094a445eb1b7e5f1980"
+    },
+    {
+      "english": "Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.",
+      "messageSha256": "fda1c6878766a0cf8eadc6dee87b3cbe7d7cd7c486f75d40a7be6c082fd7e5ff"
+    }
+  ]
+}
