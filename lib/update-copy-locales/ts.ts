@@ -427,5 +427,9 @@ const copy:UpdateCopy={
   "Keep invoice currencies clear": "Endla leswaku mixaka ya mali ya ti-invoyisi yi va erivaleni",
   "Invoice → Currency for this invoice": "Invoyisi → Muxaka wa mali wa invoyisi leyi",
   "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Hlawula muxaka wa mali lowu pfumelelaniweke na muxavi. Ti-invoyisi leti hlayisiweke ti hlayisa muxaka wa tona wa mali; mintsengo a yi hundzuluxeriwi eka mali yin’wana, naswona mixaka yin’wana ya mali yi hlayisiwa yi hambanile ni mintsengo ya tirhandi.",
+  // Recorded-price release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-price-history-release-drafts.json.
+  "Choose a recorded invoice price": "Hlawula nxavo lowu rhekhodiweke eka invoyisi",
+  "Invoice → Choose a recorded invoice price": "Invoyisi → Hlawula nxavo lowu rhekhodiweke eka invoyisi",
+  "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Hlawula nxavo wa invoyisi leyi hlayisiweke hi muxaka lowu fanaka wa mali, kutani u wu tiyisisa eka ku xavisa loku. Ku cinca nxavo wa layini ntsena; hlayisa invoyisi loko u lunghekile.",
 };
 export default copy;

@@ -36,6 +36,14 @@ export function isRecordsRegionalLang(lang: string): lang is RecordsRegionalLang
 // New financial/source qualifications stay in English until their exact meaning
 // has a paired review. This records a hold, not a translation or approval.
 export const RECORDS_ENGLISH_HOLDS: Readonly<Record<string, string>> = Object.freeze({
+  "Close recorded invoice prices": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Choose a recorded invoice price": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Recorded invoice prices need review. Reopen the current records before choosing a price.": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Prices previously recorded on invoices in {currency} for this exact item and unit. Confirm the price for this sale.": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "No matching recorded invoice prices.": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Recorded amount unavailable": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Invoice #{invoice} · {buyer} · {date}": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Use this recorded price": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
   "Orchard is switched off, so {kg} kg is not in the harvest figure: {names}.": "The held-currency version intentionally makes no complete Rand-income claim. Regional paired wording has not been reviewed; retain the exact English.",
   "Orchard is switched off, so {kg} kg is not in Yield logged: {names}.": "The held-currency version intentionally makes no complete cash-margin claim. Regional paired wording has not been reviewed; retain the exact English.",
   "Orchard is switched off, so this card leaves out {picked} picked and {sold} sold: {names}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review.": "This revised physical-filter explanation follows scoped invoice-currency review. The retired wording made a broader Rand claim; replacement regional drafts require paired review.",

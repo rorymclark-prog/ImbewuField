@@ -2,7 +2,7 @@
 
 import workspace from '@/components/layout/Workspace.module.css';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, type Dispatch, type SetStateAction } from 'react';
 import { Plus, Trash2, Printer, Share2, Download, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save, Sprout } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
@@ -36,6 +36,7 @@ import InvoiceCurrencyChoice from '@/components/invoice/InvoiceCurrencyChoice';
 import { useInvoiceBookSource } from '@/components/invoice/useInvoiceBookSource';
 import { InvoiceStorageNotice, useInvoiceStorageStatus } from '@/components/InvoiceStorageStatus';
 import { inspectInvoiceCurrencyBasis, invoiceRandConsumerEligibility, type InvoicePilotCurrency, type InvoiceCurrencyBasis } from '@/lib/invoice-currency';
+import { invoicePriceHistory, type InvoicePriceChoice, type InvoicePriceHistoryResult } from '@/lib/invoice-price-history';
 import { formatRecordedMoney, formattingContext } from '@/lib/international/locales/formatting';
 import LessonLink from '@/components/design/LessonLink';
 import CropSelect from '@/components/CropSelect';
@@ -255,20 +256,26 @@ export default function InvoicePage() {
 
   // Mirrors profile.farm_name while the field is being typed into, so a half-typed name is
   // never written to the account and never flickers onto the live document preview.
-  const [businessNameDraft, setBusinessNameDraft] = useState('');
+  const [businessNameDraft, setBusinessNameDraftState] = useState('');
   const [seq, setSeq] = useState(44);
-  const [currentNo, setCurrentNo] = useState(44);
+  const [currentNo, setCurrentNoState] = useState(44);
   const [currentId, setCurrentId] = useState<string | null>(null);
   const [viewOnly, setViewOnly] = useState(false);
-  const [currencyCode, setCurrencyCode] = useState<InvoicePilotCurrency | ''>('');
-  const [savedCurrencyBasis, setSavedCurrencyBasis] = useState<InvoiceCurrencyBasis | null>(null);
+  const [currencyCode, setCurrencyCodeState] = useState<InvoicePilotCurrency | ''>('');
+  const [savedCurrencyBasis, setSavedCurrencyBasisState] = useState<InvoiceCurrencyBasis | null>(null);
   const invoiceStorage = useInvoiceStorageStatus();
   const sourceDelivery = useInvoiceBookSource();
   const formGeneration = useRef(0);
-  const [billTo, setBillTo] = useState('');
-  const [buyerDetails, setBuyerDetails] = useState<CustomerDetails>({});
+  const draftIntent = useRef<object>({});
+  const renderedDraftIntent = draftIntent.current;
+  const [, publishDraftIntent] = useState<object>({});
+  const [billTo, setBillToState] = useState('');
+  const [buyerDetails, setBuyerDetailsState] = useState<CustomerDetails>({});
   const [customBuyer, setCustomBuyer] = useState(false);
-  const [items, setItems] = useState<LineItem[]>([{ id: 1, desc: '', qty: 1, unit: 'bags', price: 0 }]);
+  const [items, setItemsState] = useState<LineItem[]>([{ id: 1, desc: '', qty: 1, unit: 'bags', price: 0 }]);
+  const [priceHistoryLine, setPriceHistoryLine] = useState<number | null>(null);
+  const priceHistorySelection = useRef<object | null>(null);
+  const renderedPriceHistorySelection = priceHistorySelection.current;
   const [nextId, setNextId] = useState(2);
 
   // The issue date of the document on screen. Held in state, not recomputed on render: a saved
@@ -276,22 +283,22 @@ export default function InvoicePage() {
   // w22-02: the page is prerendered, so `new Date()` during render froze the BUILD day into the
   // HTML ("Issued 24 October", max="2026-10-24") and threw React #425 on any later day, or where
   // the server's UTC day is not the farmer's. Both start empty and take today after mount.
-  const [issuedISO, setIssuedISO] = useState('');
+  const [issuedISO, setIssuedISOState] = useState('');
   const [today, setToday] = useState('');
   useEffect(() => {
     const now = new Date().toISOString();
     setToday(now);
-    setIssuedISO(prev => prev || now);
+    setIssuedISOState(prev => prev || now);
   }, []);
-  const [termsDays, setTermsDays] = useState<number | null>(null);
-  const [reference, setReference] = useState('');
-  const [entryKind, setEntryKind] = useState<InvoiceEntryKind>('new');
-  const [paperReference, setPaperReference] = useState('');
-  const [paymentStatus, setPaymentStatus] = useState<InvoiceStatus | ''>('');
-  const [paymentISO, setPaymentISO] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | ''>('');
-  const [sourceSaleId, setSourceSaleId] = useState('');
-  const [recordBasis, setRecordBasis] = useState<'new' | 'existing' | ''>('new');
+  const [termsDays, setTermsDaysState] = useState<number | null>(null);
+  const [reference, setReferenceState] = useState('');
+  const [entryKind, setEntryKindState] = useState<InvoiceEntryKind>('new');
+  const [paperReference, setPaperReferenceState] = useState('');
+  const [paymentStatus, setPaymentStatusState] = useState<InvoiceStatus | ''>('');
+  const [paymentISO, setPaymentISOState] = useState('');
+  const [paymentMethod, setPaymentMethodState] = useState<PaymentMethod | ''>('');
+  const [sourceSaleId, setSourceSaleIdState] = useState('');
+  const [recordBasis, setRecordBasisState] = useState<'new' | 'existing' | ''>('new');
   const [recordedSales, setRecordedSales] = useState<SalesLog[]>([]);
   const [salesReady, setSalesReady] = useState(false);
   const [salesError, setSalesError] = useState('');
@@ -300,10 +307,10 @@ export default function InvoicePage() {
   const persistBusy = useRef(false);
   const persistTicket = useRef(0), statusTicket = useRef(0);
   const draftId = useRef<string | null>(null);
-  const [notes, setNotes] = useState('');
-  const [enterprise, setEnterprise] = useState<'vegetables' | 'staples' | 'other' | ''>('');
+  const [notes, setNotesState] = useState('');
+  const [enterprise, setEnterpriseState] = useState<'vegetables' | 'staples' | 'other' | ''>('');
 
-  const [letterhead, setLetterhead] = useState<SellerLetterhead>(EMPTY_LETTERHEAD);
+  const [letterhead, setLetterheadState] = useState<SellerLetterhead>(EMPTY_LETTERHEAD);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [products, setProducts] = useState<{ desc: string; unit: string; price: number }[]>([]);
   const [saved, setSaved] = useState<SavedInvoice[]>([]);
@@ -322,6 +329,31 @@ export default function InvoicePage() {
   const SAVED_PAGE_SIZE = 10;
   const [savedVisibleCount, setSavedVisibleCount] = useState(SAVED_PAGE_SIZE);
   const [editingPaymentFor, setEditingPaymentFor] = useState<string | null>(null);
+  // A queued note/buyer/payment edit can run before the items hook has seen
+  // it. Invalidate old selections at dispatch, rather than waiting for render.
+  function draftSetter<T>(dispatch: Dispatch<SetStateAction<T>>): Dispatch<SetStateAction<T>> {
+    return next => { draftIntent.current = {}; publishDraftIntent({}); dispatch(next); };
+  }
+  const setBusinessNameDraft = draftSetter(setBusinessNameDraftState);
+  const setCurrentNo = draftSetter(setCurrentNoState);
+  const setCurrencyCode = draftSetter(setCurrencyCodeState);
+  const setSavedCurrencyBasis = draftSetter(setSavedCurrencyBasisState);
+  const setBillTo = draftSetter(setBillToState);
+  const setBuyerDetails = draftSetter(setBuyerDetailsState);
+  const setItems = draftSetter(setItemsState);
+  const setIssuedISO = draftSetter(setIssuedISOState);
+  const setTermsDays = draftSetter(setTermsDaysState);
+  const setReference = draftSetter(setReferenceState);
+  const setEntryKind = draftSetter(setEntryKindState);
+  const setPaperReference = draftSetter(setPaperReferenceState);
+  const setPaymentStatus = draftSetter(setPaymentStatusState);
+  const setPaymentISO = draftSetter(setPaymentISOState);
+  const setPaymentMethod = draftSetter(setPaymentMethodState);
+  const setSourceSaleId = draftSetter(setSourceSaleIdState);
+  const setRecordBasis = draftSetter(setRecordBasisState);
+  const setNotes = draftSetter(setNotesState);
+  const setEnterprise = draftSetter(setEnterpriseState);
+  const setLetterhead = draftSetter(setLetterheadState);
   const renderedBook = sourceDelivery.book;
   const renderedGeneration = formGeneration.current;
 
@@ -349,7 +381,7 @@ export default function InvoicePage() {
     seenSourceEpoch.current = sourceDelivery.epoch;
     ++formGeneration.current; ++persistTicket.current; ++statusTicket.current; persistBusy.current = false;
     draftId.current = null;
-    setCurrentId(null); setViewOnly(false); setCurrencyCode(''); setSavedCurrencyBasis(null);
+    setCurrentId(null); setViewOnly(false); setCurrencyCode(''); setSavedCurrencyBasis(null); closePriceHistory();
     setBillTo(''); setBuyerDetails({}); setItems([{ id: 1, desc: '', qty: 1, unit: 'bags', price: 0 }]);
     setSourceSaleId(''); setPaymentStatus(''); setPaymentISO(''); setPaymentMethod('');
     setSaving(false); setSaveError(null); setSaveMessage(''); setSaved([]);
@@ -358,13 +390,14 @@ export default function InvoicePage() {
     if (!sourceDelivery.book) return;
     setSaved(sourceDelivery.book.invoices);
     if (!currentId && !draftId.current && !billTo && items.every(item => !item.desc)) {
-      setSeq(sourceDelivery.book.nextNumber); setCurrentNo(sourceDelivery.book.nextNumber);
+      setSeq(sourceDelivery.book.nextNumber); setCurrentNoState(sourceDelivery.book.nextNumber);
     }
   }, [sourceDelivery.book]);
 
   function changeCurrency(code: InvoicePilotCurrency) {
     if (currentId || sourceSaleId || saving || !currentBook() || code === currencyCode) return;
     ++formGeneration.current; setCurrencyCode(code); setSavedCurrencyBasis(null);
+    closePriceHistory();
     setItems(previous => previous.map(item => ({ ...item, price: 0, priceFromGuide: false })));
     setSaveMessage('Enter the agreed prices in the selected currency. No conversion was made.');
   }
@@ -385,13 +418,13 @@ export default function InvoicePage() {
     if (isSampleMode()) { setSampleProfile(getSandboxProfile()); }
     const nextNumber = loadNextInvoiceNumber();
     setSeq(nextNumber);
-    setCurrentNo(nextNumber);
+    setCurrentNoState(nextNumber);
     const refresh = () => { setCustomers(loadCustomers()); setProducts(loadProducts()); setSaved(loadInvoices()); };
     refresh();
     const stored = loadLetterhead();
-    setLetterhead(stored);
-    setTermsDays(stored.paymentTermsDays);
-    setNotes(stored.notes);
+    setLetterheadState(stored);
+    setTermsDaysState(stored.paymentTermsDays);
+    setNotesState(stored.notes);
     setPriceOverrides(loadCropPriceOverrides());
     setSalesReady(false);
     setSalesError('');
@@ -414,7 +447,7 @@ export default function InvoicePage() {
   // typing when a background profile refresh lands.
   useEffect(() => {
     const stored = profile?.farm_name?.trim() ?? '';
-    if (stored) setBusinessNameDraft((current) => (current ? current : stored));
+    if (stored) setBusinessNameDraftState((current) => (current ? current : stored));
   }, [profile?.farm_name]);
   // Same rule as the farm name: unset draws the app's own mark, never a stand-in logo.
   const sellerLogo = profile?.farm_logo ?? '';
@@ -448,7 +481,7 @@ export default function InvoicePage() {
    * cleared the moment they edit it, and this only ever reads lines that still carry it.
    */
   useEffect(() => {
-    setItems((prev) => {
+    setItemsState((prev) => {
       let changed = false;
       const next = prev.map((item) => {
         if (!item.priceFromGuide || item.unit !== 'kg') return item;
@@ -544,6 +577,7 @@ export default function InvoicePage() {
 
   function chooseCrop(id: number, crop: string, cropKey: string | null) {
     if (financialsLocked) return;
+    closePriceHistory();
     setItems((prev) => prev.map((item) => {
       if (item.id !== id) return item;
       const remembered = randEligible ? products.find(
@@ -561,6 +595,54 @@ export default function InvoicePage() {
         ? { ...item, desc: crop, unit, price: guide, priceFromGuide: true }
         : { ...item, desc: crop, unit, price: 0, priceFromGuide: false };
     }));
+  }
+
+  function closePriceHistory() {
+    priceHistorySelection.current = null; setPriceHistoryLine(null);
+  }
+
+  function recordedPricesForLine(line: LineItem): InvoicePriceHistoryResult {
+    const source = currentBook();
+    if (!source || currencyBasis.status === 'held') return { status: 'held', reason: 'invoice-source-required', choices: [] };
+    // Coverage belongs to the original collection. Filtering first could make
+    // hidden or unreadable saved evidence look like an empty price history.
+    return invoicePriceHistory(source.invoices, { currencyCode: currencyBasis.currency, desc: line.desc, unit: line.unit });
+  }
+
+  function togglePriceHistory(lineId: number) {
+    if (!currentBook() || saving || persistBusy.current || financialsLocked || currencyBasis.status === 'held'
+      || renderedGeneration !== formGeneration.current || liveDraftSnapshot.current !== draftSnapshot
+      || draftIntent.current !== renderedDraftIntent) return;
+    const next = priceHistoryLine === lineId ? null : lineId;
+    priceHistorySelection.current = next === null ? null : {};
+    setPriceHistoryLine(next);
+  }
+
+  function applyRecordedPrice(lineId: number, choice: InvoicePriceChoice) {
+    const source = currentBook(), targets = items.filter(item => item.id === lineId), line = targets[0];
+    if (!source || targets.length !== 1 || !line || currencyBasis.status === 'held' || financialsLocked || saving || persistBusy.current
+      || priceHistoryLine !== lineId || !renderedPriceHistorySelection) return;
+    const lineSnapshot = JSON.stringify(line), choiceSnapshot = JSON.stringify(choice);
+    const selection = { currencyCode: currencyBasis.currency, desc: line.desc, unit: line.unit };
+    const current = (intent: object) => draftIntent.current === intent && currentBook() === source && invoiceBookIsCurrent(source) && sourceDelivery.isActorCurrent()
+      && renderedGeneration === formGeneration.current && liveDraftSnapshot.current === draftSnapshot && !persistBusy.current
+      && priceHistorySelection.current === renderedPriceHistorySelection;
+    const matchingChoice = () => {
+      const history = invoicePriceHistory(source.invoices, selection);
+      return history.status === 'ready' ? history.choices.find(candidate => JSON.stringify(candidate) === choiceSnapshot) : undefined;
+    };
+    if (!current(renderedDraftIntent) || !matchingChoice()) return;
+    // Apply is itself one edit intent. A later queued edit revokes this exact
+    // reservation; publishing it separately also refreshes a same-value choice.
+    const acceptedIntent = {}; draftIntent.current = acceptedIntent; publishDraftIntent({});
+    setItemsState(previous => {
+      // React can evaluate this update later. Neither a new source nor changed
+      // input fields may inherit the explicit selection made for this line.
+      const currentTargets = previous.filter(item => item.id === lineId);
+      if (!current(acceptedIntent) || currentTargets.length !== 1 || JSON.stringify(currentTargets[0]) !== lineSnapshot) return previous;
+      const recorded = matchingChoice(); if (!recorded) return previous;
+      return previous.map(item => item.id === lineId ? { ...item, price: recorded.price, priceFromGuide: false } : item);
+    });
   }
 
   function selectBuyer(name: string) {
@@ -729,7 +811,7 @@ export default function InvoicePage() {
     ++formGeneration.current; ++persistTicket.current; ++statusTicket.current; persistBusy.current = false;
     setSaving(false); setSyncingInvoiceId(null); setSaved(source.invoices);
     draftId.current = null;
-    setCurrentId(null); setViewOnly(false);
+    setCurrentId(null); setViewOnly(false); closePriceHistory();
     setCurrencyCode(''); setSavedCurrencyBasis(null);
     setCurrentNo(source.nextNumber); setSeq(source.nextNumber);
     setIssuedISO(new Date().toISOString());
@@ -758,6 +840,7 @@ export default function InvoicePage() {
     // Acquiring a lease later must not authorize fields loaded without one.
     // Reopen explicitly so this invoice is read from that new admitted book.
     setViewOnly(!source);
+    closePriceHistory();
     const inv = invoices.find(row => row.id === requested.id)
       ?? pending.find(row => row.id === requested.id);
     if (!inv) { setSaveError('This invoice is not available in the current workspace.'); return; }
@@ -1363,6 +1446,40 @@ export default function InvoicePage() {
                       <span className="text-xs font-sans whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{ui('each')}</span>
                     </div>
                   </div>
+                  {!financialsLocked && (
+                    <div lang="en" className="space-y-2">
+                      <button type="button" onClick={() => togglePriceHistory(it.id)}
+                        disabled={!bookReady || currencyBasis.status === 'held' || saving || !it.desc || !it.unit}
+                        aria-expanded={priceHistoryLine === it.id}
+                        className="min-h-11 w-full rounded-lg border px-3 py-2 text-left text-sm"
+                        style={{ borderColor: 'var(--border)', color: 'var(--text-primary)', background: 'var(--bg-1)' }}>
+                        {priceHistoryLine === it.id ? 'Close recorded invoice prices' : 'Choose a recorded invoice price'}
+                      </button>
+                      {priceHistoryLine === it.id && (() => {
+                        const history = recordedPricesForLine(it);
+                        if (history.status === 'held') return <p role="status" className="text-sm" style={{ color: 'var(--text-secondary)' }}>Recorded invoice prices need review. Reopen the current records before choosing a price.</p>;
+                        return (
+                          <div className="space-y-2">
+                            <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>Prices previously recorded on invoices in {currencyBasis.status === 'held' ? '' : currencyBasis.currency} for this exact item and unit. Confirm the price for this sale.</p>
+                            {history.choices.length === 0 && <p role="status" className="text-sm">No matching recorded invoice prices.</p>}
+                            <div className="max-h-72 space-y-2 overflow-y-auto">
+                              {history.choices.map(choice => (
+                                <div key={JSON.stringify([choice.invoiceId, choice.lineIndex])} className="flex min-w-0 flex-wrap items-center gap-2 rounded-lg border p-2" style={{ borderColor: 'var(--border)' }}>
+                                  <div className="min-w-0 flex-1 break-words text-sm">
+                                    <strong>{formatRecordedMoney({ amount: choice.price, currency: choice.currencyCode }, formattingContext(lang))?.text ?? 'Recorded amount unavailable'} / {choice.unit}</strong>
+                                    <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>Invoice #{String(choice.invoiceNo).padStart(4, '0')} · {choice.buyer} · {recordsDate(lang, new Date(choice.issuedISO), true)}</p>
+                                  </div>
+                                  <button type="button" onClick={() => applyRecordedPrice(it.id, choice)} disabled={!bookReady || saving}
+                                    className="min-h-11 rounded-lg border px-3 py-2 text-sm font-semibold"
+                                    style={{ borderColor: 'var(--border)', background: 'var(--bg-1)', color: 'var(--text-primary)' }}>Use this recorded price</button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  )}
                   {!simple && (() => {
                     const crop = cropEntryOption(it.desc);
                     const guide = crop ? priceFor(crop.key, priceOverrides) : null;

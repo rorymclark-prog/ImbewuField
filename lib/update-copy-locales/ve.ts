@@ -427,5 +427,9 @@ const copy:UpdateCopy={
   "Keep invoice currencies clear": "Itani uri tshaka dza tshelede dza dzi-invoisi dzi vhe khagala",
   "Invoice → Currency for this invoice": "Invoisi → Lushaka lwa tshelede lwa invoisi iyi",
   "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Khethani lushaka lwa tshelede lwe na tendelana na murengi ngaḽo. Dzi-invoisi dzo vhulungwaho dzi dzula na lushaka lwadzo lwa tshelede; mbalo dza tshelede a dzi shandukiswi dza vha kha luṅwe lushaka lwa tshelede, nahone dziṅwe tshaka dza tshelede dzi dzula dzo fhambana na ṱhanganyelo dza rand.",
+  // Recorded-price release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-price-history-release-drafts.json.
+  "Choose a recorded invoice price": "Nangani mutengo wo rekhodiwaho kha invoice",
+  "Invoice → Choose a recorded invoice price": "Invoice → Nangani mutengo wo rekhodiwaho kha invoice",
+  "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Nangani mutengo wa invoice yo vhulungwaho kha lushaka luthihi lwa tshelede, ni kone u u khwaṱhisedza kha iyi thengiso. Hu shanduka mutengo wa mutaladzi fhedzi; vhulungani invoice musi no lugela.",
 };
 export default copy;
