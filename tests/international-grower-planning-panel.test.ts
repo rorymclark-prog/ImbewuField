@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
-import test, { after } from 'node:test';
+import test, { after, beforeEach } from 'node:test';
 import React from 'react';
 import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
 import ts from 'typescript';
@@ -10,7 +10,21 @@ import { normaliseGrowerPlanningProfile, type GrowerPlanningProfile, type Grower
 import type { PlanBed } from '../lib/crop-plan.ts';
 import type { GrowerPlanningPanelProps } from '../components/crops/GrowerPlanningPanel.tsx';
 
+// Mounted editor actions now require the same browser/account proof as runtime.
+// Supply that authority in memory instead of bypassing it for this headless suite.
+const preferenceUrl = new URL('../lib/length-unit-preference.ts', import.meta.url).href;
+const actor = { uid: 'planning-owner', auth: new Set<() => void>() };
+Object.assign(globalThis, { __planningActor: actor, IS_REACT_ACT_ENVIRONMENT: true });
+const data = (source: string) => ({ shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(source) });
 const hooks = registerHooks({
+  resolve(specifier, context, next) {
+    if (context.parentURL === preferenceUrl && specifier === './firebase/init') return data(`
+      export const isBackendConfigured=()=>true;
+      export const getFirebase=()=>({auth:{get currentUser(){return {uid:globalThis.__planningActor.uid};}}});`);
+    if (context.parentURL === preferenceUrl && specifier === 'firebase/auth') return data(`
+      export function onAuthStateChanged(_auth,next){const p=globalThis.__planningActor;p.auth.add(next);return()=>p.auth.delete(next);}`);
+    return next(specifier, context);
+  },
   load(url, context, next) {
     if (url.endsWith('/components/crops/GrowerPlanningPanel.tsx')) return { shortCircuit: true, format: 'module',
       source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
@@ -20,7 +34,17 @@ const hooks = registerHooks({
   },
 });
 const { default: Panel } = await import('../components/crops/GrowerPlanningPanel.tsx');
-after(() => hooks.deregister());
+const account = await import('../lib/account-local-storage.ts');
+beforeEach(() => {
+  actor.uid = 'planning-owner'; account.bindMountedAccountLocalStorageUid(actor.uid);
+  const storage = () => {
+    const rows = new Map<string, string>();
+    return { getItem: (key: string) => rows.get(key) ?? null, setItem: (key: string, value: string) => rows.set(key, value), removeItem: (key: string) => rows.delete(key) };
+  };
+  Object.defineProperty(globalThis, 'window', { configurable: true,
+    value: Object.assign(new EventTarget(), { localStorage: storage(), sessionStorage: storage() }) });
+});
+after(() => { hooks.deregister(); account.bindMountedAccountLocalStorageUid(null); delete (globalThis as Record<string, unknown>).__planningActor; });
 const scope: GrowerPlanningScope = { kind: 'mapped-site', siteId: 'site:1.00000,1.00000' };
 const foreignScope: GrowerPlanningScope = { kind: 'mapped-site', siteId: 'site:2.00000,2.00000' };
 const beds: PlanBed[] = [{ id: 'measured-fixture', label: 'Measured fixture', areaM2: 12 }];

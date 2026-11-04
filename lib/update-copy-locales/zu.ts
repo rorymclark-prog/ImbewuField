@@ -401,5 +401,11 @@ const copy:UpdateCopy={
   "Print planned nursery batch cards with dates and separate seedling counts.": "Phrinta amakhadi amaqoqo ahleliwe endawo yezithombo, anezinsuku nezibalo zezithombo ezihlukene.",
   "Print planned batch cards": "Phrinta amakhadi amaqoqo ahleliwe",
   "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Sebenzisa isiphakamiso sendawo yezithombo esibukeziwe ukuze uphrinte amakhadi amaqoqo. Izibalo nezinsuku kuhlala kuhleliwe; uhlelo lokusebenza aluwalondolozi amanothi okuhlwanyela naweqoqo lembewu abhalwe ngesandla.",
+  // Own estimate units: UNREVIEWED Codex AI candidates; exact English source remains available.
+  "Enter your crop estimates in metric or imperial units.": "Faka izilinganiso zakho zezitshalo ngamayunithi emethrikhi noma e-imperial.",
+  "Check saved bed measurements before reviewing capacity.": "Hlola izilinganiso zemibhede yokutshala ezigciniwe ngaphambi kokubukeza umthamo.",
+  "Reload changed estimates before saving over newer values.": "Layisha kabusha izilinganiso ezishintshile ngaphambi kokulondoloza esikhundleni samanani akamuva.",
+  "Choose units for your own estimates": "Khetha amayunithi ezilinganiso zakho",
+  "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Khetha m² kanye no-kg noma ft² kanye no-lb ezilinganisweni zakho zokuminyana kwezitshalo nesisindo sesivuno. Hlola izilinganiso ezigciniwe, bese ubukeza izibalo nezinsuku; lezi yizilinganiso ezihleliwe, hhayi izeluleko zokulima zendawo eziqinisekisiwe.",
 };
 export default copy;

@@ -92,9 +92,9 @@ import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
 import { VarietyGuidance } from '@/components/crops/VarietyGuidance';
 import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedSchedule, MONTHS_SHORT } from '@/lib/crop-catalog';
-import type { CropPlanWriteAdmission, PlanBed, Planting, CropPlanState, HarvestTarget, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning, CropTask } from '@/lib/crop-plan';
+import type { CropPlanWriteAdmission, GrowerProfileChangeRequest, PlanBed, Planting, CropPlanState, HarvestTarget, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning, CropTask } from '@/lib/crop-plan';
 import {
-  loadCropPlan, loadCropPlanWithWriteAdmission, cropPlanWriteAdmissionMatches, cropPlanWriteCandidateIsLossless, readRawCropPlanReceipt, saveCropPlanWithReceipt, cropPlanWriteToken, sanitiseHarvestTargets, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
+  loadCropPlan, loadCropPlanWithWriteAdmission, cropPlanWriteAdmissionMatches, cropPlanWriteCandidateIsLossless, createGrowerProfileChangePermit, readRawCropPlanReceipt, saveCropPlanWithReceipt, cropPlanWriteToken, sanitiseHarvestTargets, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, totalGrowingAreaM2, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
@@ -1456,7 +1456,7 @@ function FacilitatorCropsPageInner() {
         : growerWorkflow.source.kind === 'facilitator-local') ? growerWorkflow.source : null;
   const growerWriteScope = useRef({ key: growerScopeKey, owner: growerOwner, sample: growerSample });
   growerWriteScope.current = { key: growerScopeKey, owner: growerOwner, sample: growerSample };
-  function saveGrowerProfiles(value: GrowerPlanningProfile[]): boolean {
+  function saveGrowerProfiles(value: GrowerPlanningProfile[], request?: GrowerProfileChangeRequest): boolean {
     const live = growerWriteScope.current;
     if (!plan || !growerActorIsCurrent() || planSaveConflict || !growerScopeKey || live.key !== growerScopeKey || live.owner !== growerOwner
       || activeAccountUid() !== growerOwner || live.sample !== growerSample || isSampleMode() !== growerSample) return false;
@@ -1494,7 +1494,9 @@ function FacilitatorCropsPageInner() {
       return false;
     }
     if (saveTimer.current) clearTimeout(saveTimer.current);
-    const receipt = saveCropPlanWithReceipt(next);
+    const profileChange = request ? createGrowerProfileChangePermit(loaded.admission, fresh, next, request) : undefined;
+    if (request && !profileChange) { setPlanSaveConflict(true); return false; }
+    const receipt = saveCropPlanWithReceipt(next, profileChange ? { growerProfileChange: profileChange } : undefined);
     setPlanSaveFailed(!receipt.saved);
     if (receipt.saved) { rememberStoredPlan(next, receipt.token); setPlan(next); }
     return receipt.saved;
@@ -2338,7 +2340,11 @@ function FacilitatorCropsPageInner() {
       targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
       saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
       onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
-    <GrowerPlanningPanel scope={growerScope} beds={canvasSite ? canvasBeds : designBeds}
+    <GrowerPlanningPanel scope={growerScope}
+      beds={selectedGrowerSource?.beds ?? (canvasSite || design ? [] : designBeds)}
+      measuredAreas={selectedGrowerSource?.measuredAreas} measurementsFingerprint={selectedGrowerSource?.geometryFingerprint ?? null}
+      measurementsRequired={!!canvasSite || !!design} measurementsReady={!!selectedGrowerSource}
+      checkingMeasurements={growerWorkflow.checking} onCheckMeasurements={growerWorkflow.onRefresh}
       profiles={plan?.growerPlanningProfiles ?? []} onSaveProfiles={saveGrowerProfiles} />
     <GrowerAutoPlanPanel key={`own-review:${growerScopeKey}:${productionSiteId}`} scope={growerScope}
       source={growerWorkflow.source} sourceName={placeName || designTitle} sourceIssue={growerWorkflow.sourceIssue}

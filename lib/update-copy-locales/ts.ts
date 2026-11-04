@@ -401,5 +401,11 @@ const copy:UpdateCopy={
   "Print planned nursery batch cards with dates and separate seedling counts.": "Kandziyisa makhadi ya mintlawa leyi kunguhatiweke ya xirhapa xa swimilana, lama nga ni masiku ni tinhlayo ta swimilana leti hambanisiweke.",
   "Print planned batch cards": "Kandziyisa makhadi ya mintlawa leyi kunguhatiweke",
   "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Tirhisa xiringanyeto xa xirhapa xa swimilana lexi kambisisiweke ku kandziyisa makhadi ya mintlawa. Tinhlayo ni masiku swi tama swi ri leswi kunguhatiweke; nongonoko a wu hlayisi tinotsi ta ku byala ni ta ntlawa wa mbewu leti tsariweke hi voko.",
+  // Own estimate units: UNREVIEWED Codex AI candidates; exact English source remains available.
+  "Enter your crop estimates in metric or imperial units.": "Nghenisa swipimanyeto swa wena swa swibyariwa hi tiyuniti ta metric kumbe ta imperial.",
+  "Check saved bed measurements before reviewing capacity.": "Kambisisa mimpimo ya timbhedwa to byala leyi hlayisiweke u nga si kambisisa vuswikoti bya tona.",
+  "Reload changed estimates before saving over newer values.": "Layicha nakambe swipimanyeto leswi cinceke u nga si hlayisa u siva mimpimo leyi pfuxetiweke sweswinyana.",
+  "Choose units for your own estimates": "Hlawula tiyuniti ta swipimanyeto swa wena",
+  "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Hlawula m² na kg kumbe ft² na lb eka swipimanyeto swa wena swa ku tala ka swimilana endhawini ni ntiko wa ntshovelo. Kambisisa mimpimo leyi hlayisiweke, kutani u kambisisa tinhlayo ni masiku; leswi i swipimanyeto leswi kunguhatiweke, a hi switsundzuxo swo rima swa le ndhawini leswi tiyisisiweke.",
 };
 export default copy;

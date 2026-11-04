@@ -17,6 +17,11 @@ import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 /** defIds that count as plantable beds for the crop planner. */
 export const BED_DEF_IDS = ['veg_bed', 'raised_bed', 'keyhole_bed', 'herb_spiral'] as const;
 
+export interface DesignPlanBed extends PlanBed {
+  /** Canonical saved rectangle sides, never reconstructed original input units. */
+  readonly savedRectangleM?: readonly [number, number];
+}
+
 const round1 = (n: number): number => Math.round(n * 10) / 10;
 
 /**
@@ -93,9 +98,16 @@ function ringMetrics(
  * so a plot's number never disagrees between the crop plan and the printed sheet —
  * with a zone's own `name` preferred when the farmer set one.
  */
-export function bedsFromDesignCanvas(state: DesignCanvasState | null): PlanBed[] {
+export function bedsFromDesignCanvas(
+  state: DesignCanvasState | null,
+  options?: { readonly areaRounding?: 'none' },
+): DesignPlanBed[] {
   if (!state) return [];
-  const beds: PlanBed[] = [];
+  // Existing consumers retain their one-decimal areas. Own-input arithmetic
+  // needs the same footprint calculation before that presentation rounding;
+  // it must not turn a small positive saved footprint into zero capacity.
+  const areaValue = options?.areaRounding === 'none' ? (value: number) => value : round1;
+  const beds: DesignPlanBed[] = [];
   let n = 0;
   for (const item of state.items) {
     if (!(BED_DEF_IDS as readonly string[]).includes(item.defId)) continue;
@@ -111,8 +123,13 @@ export function bedsFromDesignCanvas(state: DesignCanvasState | null): PlanBed[]
     beds.push({
       id: item.id,
       label: item.label ?? `Bed ${n}`,
-      areaM2: round1(areaM2),
+      areaM2: areaValue(areaM2),
       minDimM: Math.min(wM, hM),
+      // Only this footprint authority knows whether these sides describe the
+      // planted rectangle. An ellipse's bounding box cannot certify its area,
+      // and catalog fallbacks cannot become evidence of saved dimensions.
+      ...(options?.areaRounding === 'none' && def.shape !== 'circle' && item.wM !== undefined && item.hM !== undefined
+        ? { savedRectangleM: Object.freeze([wM, hM] as const) } : {}),
     });
   }
 
@@ -133,7 +150,7 @@ export function bedsFromDesignCanvas(state: DesignCanvasState | null): PlanBed[]
     beds.push({
       id: zone.id,
       label: zone.name ?? `Plot ${plotN}`,
-      areaM2: round1(areaM2),
+      areaM2: areaValue(areaM2),
       minDimM,
       kind: 'plot',
     });

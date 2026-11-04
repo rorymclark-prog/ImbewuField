@@ -401,5 +401,11 @@ const copy:UpdateCopy={
   "Print planned nursery batch cards with dates and separate seedling counts.": "Gandisani makhadi a zwigwada zwo pulaniwaho zwa u alusa zwimela zwiṱuku, a re na maḓuvha na mbalo dzo fhambanisiwaho dza zwimela zwiṱuku.",
   "Print planned batch cards": "Gandisani makhadi a zwigwada zwo pulaniwaho",
   "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Shumisani dzinginyo ḽa u alusa zwimela zwiṱuku ḽo sedzuluswaho u gandisa makhadi a zwigwada. Mbalo na maḓuvha zwi dzula zwo pulaniwa; mbekanyamushumo a i vhulungi notsi dza u zwala na dza tshigwada tsha mbeu dzo ṅwalwaho nga tshanḓa.",
+  // Own estimate units: UNREVIEWED Codex AI candidates; exact English source remains available.
+  "Enter your crop estimates in metric or imperial units.": "Dzhenisani anganyelo dzaṋu dza zwimela nga dziyuniti dza metric kana dza imperial.",
+  "Check saved bed measurements before reviewing capacity.": "Sedzulusani mielo ya mibete ya u ṱavha yo vhulungwaho musi ni sa athu u sedzulusa vhukoni hayo.",
+  "Reload changed estimates before saving over newer values.": "Dovhani ni laise anganyelo dzo shandukaho musi ni sa athu u vhulunga ni tshi siva mielo yo shandulwaho zwenezwino.",
+  "Choose units for your own estimates": "Nangani dziyuniti dza anganyelo dzaṋu",
+  "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Nangani m² na kg kana ft² na lb kha anganyelo dzaṋu dza tshivhalo tsha zwimela fhethu na tshileme tsha khaṋo. Sedzulusani mielo yo vhulungwaho, ni kone u sedzulusa mbalo na maḓuvha; hedzi ndi anganyelo dzo pulaniwaho, a si nyeletshedzo ya u lima ya henefho yo khwaṱhisedzwaho.",
 };
 export default copy;

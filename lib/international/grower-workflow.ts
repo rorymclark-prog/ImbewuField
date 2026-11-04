@@ -4,6 +4,7 @@ import { growerDemandFromHarvestTarget } from './grower-harvest-demand';
 import { createGrowerCyclePlanting, type GrowerCyclePlanting, isProvenForeignGrowerCycle, resolvePlantingBasis } from './grower-cycle';
 import { projectGrowerCycles, type ProjectedGrowerCycle } from './grower-cycle-projection';
 import { growerPlanningScopeKey, isGrowerRecordedAt, isGrowerUtcDate, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope,
+  normaliseGrowerMeasuredAreaInput, type GrowerMeasuredAreaInput,
   type GrowerInput, type GrowerInputProvenance, type GrowerPlanningScope } from './grower-planning';
 import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from './grower-workflow-source';
 
@@ -101,6 +102,20 @@ export function assembleGrowerWorkflowReview(input: AssembleGrowerWorkflowReview
       || source.measuredAreas.length !== source.beds.length || !source.beds.every(bed => identity(bed.id) && identity(bed.label)
         && Number.isFinite(bed.areaM2) && bed.areaM2 > 0 && source.measuredAreas.some(area => area.bedId === bed.id
           && area.areaM2 === bed.areaM2 && ['explicit-saved-dimensions', 'calibrated-saved-polygon'].includes(area.basis)))) return hold('source-measures-invalid');
+    const measuredInputs = new Map<string, GrowerMeasuredAreaInput>();
+    for (const bed of source.beds) {
+      const area = source.measuredAreas.find(row => row.bedId === bed.id)!;
+      const marker = Object.getOwnPropertyDescriptor(area, 'arithmeticBasis');
+      if (marker && !('value' in marker) || !marker && 'arithmeticBasis' in area) return hold('source-measures-invalid');
+      // Preserve marker presence: null/undefined/false must not silently borrow
+      // canonical-only capacity after the exact saved factors were damaged.
+      const measured = normaliseGrowerMeasuredAreaInput({ ...supplied(bed.areaM2, 'm2', {
+        kind: 'grower-record', recordedAt: input.recordedAt,
+        reference: 'Saved design area copied for this review; explicit saved dimensions or calibrated polygon, not independently verified field area.' }),
+        ...(marker ? { arithmeticBasis: marker.value } : {}) });
+      if (!measured) return hold('source-measures-invalid');
+      measuredInputs.set(bed.id, measured);
+    }
     for (const bed of source.heldBeds) {
       if (!identity(bed.bedId) || bedIds.has(bed.bedId)) return hold('source-bed-ambiguity');
       block(bed.bedId, ['source-bed-held']);
@@ -169,9 +184,7 @@ export function assembleGrowerWorkflowReview(input: AssembleGrowerWorkflowReview
     }
     const request: GrowerAutoPlanRequest = {
       requestedAt: input.recordedAt, scope, geometryFingerprint: source.geometryFingerprint, profiles: [...selectedProfiles.values()],
-      beds: source.beds.map(bed => ({ bed: { ...bed }, scope, measuredAreaM2: supplied(bed.areaM2, 'm2', {
-        kind: 'grower-record', recordedAt: input.recordedAt,
-        reference: 'Saved design area copied for this review; explicit saved dimensions or calibrated polygon, not independently verified field area.' }) })),
+      beds: source.beds.map(bed => ({ bed: { ...bed }, scope, measuredAreaM2: measuredInputs.get(bed.id)! })),
       planningStart: supplied(draft.planningStart, 'utc-date', estimate), planningEndExclusive: supplied(draft.planningEndExclusive, 'utc-date', estimate),
       availability, reserved: existingOwnCycles.map(cycle => ({ id: cycle.plantingId, bedId: cycle.bedId, scope,
         window: supplied({ ...cycle.reservation }, 'utc-date-window', { kind: 'grower-record', recordedAt: input.recordedAt,
