@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // US directory notice. AGY draft reviewed for institutional terminology; fluent review pending.
+  "Find US land-grant institutions through the USDA directory.": "Fumana litsi tsa thuto tsa US tsa land-grant lethathamong la USDA.",
   // NWS reference: docs/international/agy-nws-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Compare a fixed US station’s weather observations with clear dates and missing readings.": "Bapisa litebello tsa boemo ba leholimo tsa seteishene se sa fetoheng sa US ka matsatsi a hlakileng le lipalo tse sieo.",
   "Review a public US weather station": "Hlahloba seteishene sa boemo ba leholimo sa sechaba sa US",

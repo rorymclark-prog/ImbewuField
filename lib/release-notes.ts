@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: '3f1b76c94', changes: [
+    'Find US land-grant institutions through the USDA directory.',
+  ] },
   { when: '3 November 2026', sha: '66e2dffc6', changes: [
     'Compare a fixed US station’s weather observations with clear dates and missing readings.',
   ], tour: [{ title: 'Review a public US weather station', where: 'International foundation → United States', href: '/international',

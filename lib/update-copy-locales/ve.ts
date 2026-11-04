@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // US directory notice. AGY draft reviewed for institutional terminology; fluent review pending.
+  "Find US land-grant institutions through the USDA directory.": "Wanani zwiimiswa zwa pfunzo zwa US zwa land-grant kha mutevhe wa USDA.",
   // NWS reference: docs/international/agy-nws-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
   "Compare a fixed US station’s weather observations with clear dates and missing readings.": "Vhambedzani thaluso dza mutsho dza tshititshi tshi sa shandukiho tsha US dzi re na madatumu o khwathaho na zwivhalo zwi siho.",
   "Review a public US weather station": "Tsedzulusani tshititshi tsha mutsho tsha tshitshavha tsha US",

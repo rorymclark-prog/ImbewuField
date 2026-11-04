@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // US directory notice. AGY draft reviewed for institutional terminology; fluent review pending.
+  "Find US land-grant institutions through the USDA directory.": "Thola izikhungo zemfundo ze-US ze-land-grant ohlwini lwe-USDA.",
   // NWS reference: docs/international/agy-nws-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
   "Compare a fixed US station’s weather observations with clear dates and missing readings.": "Qhathanisa okubonwe yisiteshi sezulu esingaguquki sase-US nezinsuku ezicacile kanye nokufundwa okushodayo.",
   "Review a public US weather station": "Buyekeza isiteshi sezulu somphakathi sase-US",
