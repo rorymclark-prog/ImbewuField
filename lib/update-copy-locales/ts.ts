@@ -393,5 +393,9 @@ const copy:UpdateCopy={
   "Prepare grouped seedling and seed counts from your proposed crop plan.": "Lunghiselela tinhlayo ta swimilana ni ta mbewu leti hlengeletiweke hi mintlawa, kusuka eka pulani ya wena ya swibyariwa leyi ringanyetiweke.",
   "Review nursery preparation": "Kambisisa malunghiselelo ya xirhapa xa swimilana",
   "Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.": "Kambisisa switirhisiwa swa xirhapa xa swimilana leswi nga ni masiku lama boxiweke, kambisisa mintlawa leyi kombisiweke ya swimilana swo ya byariwa, kutani u dawuniloda phepha ra malunghiselelo. Tinhlayo i swipimanyeto swa ku pulana; swilaveko leswi nga tivekiki swi sala swi nga tiveki.",
+  // Own nursery preparation PDF release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Download a printable nursery preparation sheet from your own crop proposal.": "Dawuniloda phepha leri nga kandziyisiwaka ra malunghiselelo ya xirhapa xa swimilana kusuka eka pulani ya wena ya swibyariwa leyi ringanyetiweke.",
+  "Print nursery preparation": "Kandziyisa malunghiselelo ya xirhapa xa swimilana",
+  "Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.": "Kambisisa leswi u swi ngheniseke sweswi swa xirhapa xa swimilana, kutani u dawuniloda PDF ya malunghiselelo. Yi hambanisa tinhlayo leti kunguhatiweke, swilaveko leswi nga helelangiki ni mintsengo leyi nga tivekiki eka ku byala loku voniweke kumbe xitoko lexi voniweke.",
 };
 export default copy;
