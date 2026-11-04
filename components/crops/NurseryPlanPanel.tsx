@@ -102,13 +102,19 @@ function NurseryPlanEditor({ siteId, siteName, settings, plantings, beds, now, s
           && nurserySaveResultSourceKey(handoff.result, handoff.request) === sourceKey;
         if (saveContext && nurserySaveContextIsCurrent(saveContext) && previous.saveContext !== saveContext
           && (confirmsThisWrite || !previous.saveContext && !previous.dirty && !previous.uncertain && !interacted.current)) {
-          confirmedHandoff.current = null; return { ...previous, saveContext };
+          return { ...previous, saveContext };
         }
         return previous;
       }
       return previous.dirty || previous.uncertain ? previous : freshEditor(sourceKey, previous.unit, previous.context, saveContext ?? null);
     });
   }, [sourceKey, saveContext]);
+  useEffect(() => {
+    // React may discard and replay the updater above. Consume the matching
+    // handoff only after its current context is actually committed to the editor.
+    if (editor.sourceKey === sourceKey && editor.saveContext === saveContext
+      && nurserySaveContextIsCurrent(saveContext)) confirmedHandoff.current = null;
+  }, [editor.sourceKey, editor.saveContext, sourceKey, saveContext]);
   const actorCurrent = !authorityChanged && nurseryUnitPreferenceContextIsCurrent(editor.context);
   const sourceUnsettled = !sourceKey || editor.sourceKey !== sourceKey || editor.uncertain;
   const producerHeld = actorCurrent && !sourceUnsettled && producerExpected && !nurserySaveContextIsCurrent(editor.saveContext);

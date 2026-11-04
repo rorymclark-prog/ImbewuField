@@ -14,11 +14,21 @@ import type { HarvestTargetsPanelProps } from '../components/crops/HarvestTarget
 
 const root = new URL('../', import.meta.url).href;
 const observations = { forbidden: false, assessments: 0, suggestions: 0, forecasts: 0, defaults: 0 };
-Object.assign(globalThis, { __harvestMassPanel: { observations, auth: probe.auth } });
+const replay = { stateUpdaters: false };
+Object.assign(globalThis, { __harvestMassPanel: { observations, auth: probe.auth, React, replay } });
 const data = (source: string) => ({ shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(source) });
 const hooks = registerHooks({ resolve(specifier, context, next) {
   if ((context.parentURL?.endsWith('/lib/length-unit-preference.ts') || context.parentURL?.endsWith('/lib/nursery-save-receipt.ts')) && specifier === 'firebase/auth') return data(`export function onAuthStateChanged(_auth,next){const auth=globalThis.__harvestMassPanel.auth;auth.add(next);return()=>auth.delete(next);}`);
   if (context.parentURL?.endsWith('/components/crops/HarvestTargetsPanel.tsx')) {
+    // Replay the updater with the same prior state, as the browser may do
+    // before committing. Confirmation consumption belongs after that commit.
+    if (specifier === 'react') return data(`
+      const p=globalThis.__harvestMassPanel,React=p.React;
+      export const useEffect=React.useEffect,useMemo=React.useMemo,useRef=React.useRef;
+      export function useState(initial){const [value,set]=React.useState(initial);return [value,action=>set(
+        typeof action==='function'&&p.replay.stateUpdaters
+          ? previous=>{action(previous);return action(previous);} : action)];}`);
+
     if (specifier === '@/lib/harvest-targets') return data(`import {assessHarvestTarget as assess,targetMonthStamp as stamp,HARVEST_TARGET_BASIS} from ${JSON.stringify(new URL('../lib/harvest-targets.ts', import.meta.url).href)};
 export {HARVEST_TARGET_BASIS};export function assessHarvestTarget(...args){const p=globalThis.__harvestMassPanel.observations;p.assessments++;if(p.forbidden)throw Error('Unapproved catalogue assessment');return assess(...args);}
 export function targetMonthStamp(...args){const p=globalThis.__harvestMassPanel.observations;p.defaults++;if(p.forbidden)throw Error('Own record acquired catalogue month defaults');return stamp(...args);}`);
@@ -41,7 +51,7 @@ const { generateGrowerAutoPlan } = await import('../lib/international/grower-aut
 const { normaliseGrowerCycleAttachment } = await import('../lib/international/grower-cycle.ts');
 const { nurseryCeilRatio } = await import('../lib/crop-export-schedule.ts');
 after(() => { hooks.deregister(); cleanup(); Reflect.deleteProperty(globalThis, '__harvestMassPanel'); });
-beforeEach(async () => { await reset(); Object.assign(observations, { forbidden: false, assessments: 0, suggestions: 0, forecasts: 0, defaults: 0 }); });
+beforeEach(async () => { await reset(); Object.assign(observations, { forbidden: false, assessments: 0, suggestions: 0, forecasts: 0, defaults: 0 }); replay.stateUpdaters = false; });
 const cropDef = CROPS.find(hasAutomaticPlanningBasis)!;
 const otherSite = 'site:2.00000,2.00000';
 const weightTarget = (site = siteId): Extract<HarvestTarget, { weeklyKg: number }> => ({ id: site === siteId ? 'target-a' : 'target-b', siteId: site, cropKey: cropDef.key,
@@ -333,4 +343,21 @@ test('the exact completed target result can hand off once to its delayed current
     parent.flushPostContext(); assert.notEqual(ui.field('Weekly quantity').props.disabled, true);
     ui.edit(); ui.change('Weekly quantity', '27'); ui.submit(); assert.equal(crop.loadCropPlan().harvestTargets?.[0].weeklyKg, 27);
   } finally { parent.dispose(); }
+});
+
+
+test('a replayed target state update cannot spend the confirmation before the saved form becomes editable', () => {
+  replay.stateUpdaters = true;
+  const parent = boundMount(), ui = parent.ui; parent.delayPostContext();
+  try {
+    ui.edit(); ui.change('Weekly quantity', '26'); ui.submit();
+    assert.match(ui.text(), /Buyer targets saved on this device/);
+    assert.equal(crop.loadCropPlan().harvestTargets?.[0].weeklyKg, 26);
+    assert.equal(ui.field('Weekly quantity').props.value, '');
+    assert.equal(ui.field('Weekly quantity').props.disabled, true);
+    parent.flushPostContext();
+    assert.notEqual(ui.field('Weekly quantity').props.disabled, true);
+    ui.edit(); ui.change('Weekly quantity', '27'); ui.submit();
+    assert.equal(crop.loadCropPlan().harvestTargets?.[0].weeklyKg, 27);
+  } finally { parent.dispose(); replay.stateUpdaters = false; }
 });
