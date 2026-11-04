@@ -25,6 +25,7 @@ const copy:UpdateCopy={
   // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
   "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Amamephu eSector asebenzisa imigqa yokuphakama yesifunda, enenketho yephrofayili yomhlaba A–B.",
   // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Exact and illustrated Water maps now show the same water budget.": "Ibalazwe Lamanzi elinembile nelinemidwebo manje abonisa isabelomali samanzi esifanayo.",
   "Zone maps trim blurry aerial edges when the photo covers the site.": "Amabalazwe ezindawo asusa imiphetho yesithombe efiphele uma isithombe siyimboza yonke indawo.",
   "Existing Site labels and legend now use matching symbols.": "Ibalazwe lomlando le-Existing Site manje lisebenzisa izimpawu ezifanayo kumalebula ezindawo nasokhiye webalazwe.",
   "Choose area names or a numbered key on the historical Existing Site map.": "Khetha amagama ezindawo noma ukhiye onezinombolo ebalazweni lomlando le-Existing Site.",

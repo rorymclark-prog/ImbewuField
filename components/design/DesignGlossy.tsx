@@ -152,8 +152,7 @@ import {
   type CropRowLayout,
 } from '@/lib/crop-row-cartography';
 import { overlayElementsText } from '@/lib/overlay-elements';
-import { annualRoofHarvestLitres, deriveWaterSystem, ringAreaM2, statedTankCapacityLitres } from '@/lib/water-system';
-import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
+import { deriveWaterSystem } from '@/lib/water-system';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import {
@@ -7705,6 +7704,74 @@ async function boundaryPresentationContext(
   };
 }
 
+// The same indicative ground-flow field belongs on both finishes. Its interceptors are the
+// saved swales and bed footprints, so the arrows stop where the plan says water spreads.
+function waterTerrainFlowArrows(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  site: SectorSite | null | undefined,
+): FlowArrow[] {
+  return interceptFlowArrows(
+    overlandFlowArrows({
+      boundary: refLayers.boundary,
+      aspectDeg: site?.elevation?.aspectDeg ?? Number.NaN,
+      slopeDeg: site?.elevation?.slopeDeg ?? Number.NaN,
+      directionConfidence: site?.elevation?.directionConfidence,
+    }),
+    // Everything whose JOB is stopping runoff, in the arrows' own normalised space. Bed
+    // footprints convert metres to normalised through the frame; a rotated bed keeps its
+    // rotation so the arrow is cut at the bed's true edge, not its bounding box.
+    {
+      polylines: state.lines
+        .filter((line) => line.kind === 'swale' && line.points.length >= 2)
+        .map((line) => line.points),
+      rects: state.items
+        .filter((it) => (BED_DEF_IDS as readonly string[]).includes(it.defId))
+        .map((it) => {
+          const def = ELEMENTS_BY_ID[it.defId];
+          return {
+            cx: it.x,
+            cy: it.y,
+            w: (it.wM ?? def?.wM ?? 1) / (frame.imgW * frame.mPerPx),
+            h: (it.hM ?? def?.hM ?? 1) / (frame.imgH * frame.mPerPx),
+            rotDeg: it.rot ?? 0,
+          };
+        }),
+      rings: state.zones
+        .filter((z) => z.feature === 'staple_garden' && z.points.length >= 3)
+        .map((z) => z.points),
+    },
+  );
+}
+
+function waterFlowLegendRows(arrows: FlowArrow[], site: SectorSite | null | undefined): StyleLegendRow[] {
+  if (!arrows.length) return [];
+  return [{
+    swatch: '#1C608C',
+    visual: 'flow-arrow',
+    text: overlandFlowLegendText(site?.elevation?.slopeDeg ?? Number.NaN, site?.elevation?.aspectLabel ?? 'downhill'),
+  }];
+}
+
+function buildWaterPlanOverlay(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  W: number,
+  H: number,
+  flowArrows: FlowArrow[],
+): string | undefined {
+  if (!flowArrows.length && !state.lines.some(line => waterRouteStyleFor(line.kind) && line.points.length >= 2)) return;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) { releaseCanvas(canvas); throw new Error('Water plan overlay unavailable'); }
+  drawOverlandFlowArrows(ctx, flowArrows, W, H);
+  drawWaterRoutes(ctx, state, frame, W, H);
+  return drainCanvasToDataUrl(canvas, 'image/png');
+}
+
 /**
  * One deterministic sheet pipeline for every design layer.
  *
@@ -7719,7 +7786,7 @@ async function buildReferenceBlueprintMap(
   filter: GlossyLayerFilter,
   placeName?: string,
   /** Only the Water sheet uses this today, for its harvest block. Optional everywhere else, and
-   *  the block simply does not print without it — see roofHarvestFooterLines. */
+   *  missing rainfall is stated explicitly in the shared budget. */
   site?: DesignGlossyProps['site'],
   /** Codes on every plant, or named callouts on one plant per kind — see SheetLabelMode. Optional
    *  so DesignPrint's per-layer render table keeps the default without a signature change. */
@@ -7817,47 +7884,7 @@ async function buildReferenceBlueprintMap(
     drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, filter === 'structures', onPaper);
   }
 
-  // WHERE THE RAIN GOES ONCE IT IS ON THE GROUND — under the plumbing, because it is the condition
-  // the plumbing answers, not a thing the farmer placed. Rory: "show arrows of where the rain
-  // drains on the roof and ground?"
-  //
-  // Only the ground half is drawn, and only when the app actually knows: aspectDeg comes from a real
-  // elevation sample and arrives with a confidence flag that is 'unconfirmed' on ground too flat to
-  // call. A roof's fall is NOT known — a traced outline says nothing about ridge, pitch or which
-  // wall the gutter is on — so no arrow is drawn off a roof. See lib/overland-flow.ts.
-  const flowArrows = filter === 'water'
-    ? interceptFlowArrows(
-      overlandFlowArrows({
-        boundary: renderRefLayers.boundary,
-        aspectDeg: site?.elevation?.aspectDeg ?? Number.NaN,
-        slopeDeg: site?.elevation?.slopeDeg ?? Number.NaN,
-        directionConfidence: site?.elevation?.directionConfidence,
-      }),
-      // Everything whose JOB is stopping runoff, in the arrows' own normalised space. Bed
-      // footprints convert metres to normalised through the frame; a rotated bed keeps its
-      // rotation so the arrow is cut at the bed's true edge, not its bounding box.
-      {
-        polylines: renderState.lines
-          .filter((line) => line.kind === 'swale' && line.points.length >= 2)
-          .map((line) => line.points),
-        rects: renderState.items
-          .filter((it) => (BED_DEF_IDS as readonly string[]).includes(it.defId))
-          .map((it) => {
-            const def = ELEMENTS_BY_ID[it.defId];
-            return {
-              cx: it.x,
-              cy: it.y,
-              w: (it.wM ?? def?.wM ?? 1) / (renderFrame.imgW * renderFrame.mPerPx),
-              h: (it.hM ?? def?.hM ?? 1) / (renderFrame.imgH * renderFrame.mPerPx),
-              rotDeg: it.rot ?? 0,
-            };
-          }),
-        rings: renderState.zones
-          .filter((z) => z.feature === 'staple_garden' && z.points.length >= 3)
-          .map((z) => z.points),
-      },
-    )
-    : [];
+  const flowArrows = filter === 'water' ? waterTerrainFlowArrows(renderState, renderFrame, renderRefLayers, site) : [];
   drawOverlandFlowArrows(ctx, flowArrows, W, H);
 
   // THE WATER STORY — roof → gutter → tank → swale. Rory: "arrows of water running down roof, and
@@ -7937,19 +7964,6 @@ async function buildReferenceBlueprintMap(
     ? sheetGutterLayout(renderState, renderRefLayers, W, H, filter, labelMode)
     : undefined;
 
-  // THE WATER SHEET CARRIES ITS OWN SIZING CALCULATION. That is how real rainwater-harvesting
-  // drawings work: the sheet that shows the tanks also shows the arithmetic that says whether they
-  // are big enough, so a farmer or a funder can check it without a second document. Rory: "should
-  // you show info like how rain can be harvested on the roof?"
-  //
-  // Every figure is measured or sourced — traced roof area, the site's own annual rainfall, and
-  // the runoff coefficient from lib/roof-runoff.ts (0.80, cited to the CSIR Red Book). Nothing
-  // here is estimated into existence: when the roof is untraced or the rainfall unknown the block
-  // simply does not print, because a harvest figure resting on a guessed roof is worse than none.
-  const waterBudget = filter === 'water'
-    ? roofHarvestFooterLines(renderState, renderFrame, renderRefLayers, site ?? null)
-    : [];
-
   // NOTHING IS DRAWN WITHOUT A ROW. A dashed canopy edge is meaningless to a reader who has not
   // been told what it means, so the row appears only when at least one canopy has actually earned
   // the dash — recomputed here from the same printed geometry drawFilteredItems uses.
@@ -7998,8 +8012,8 @@ async function buildReferenceBlueprintMap(
       gutterLayout,
       includeLabelGutters: filter !== 'all',
       zoneMatte: filter === 'zones' ? zonePhotoMatte(state, frame, refLayers) : undefined,
-      ...(waterBudget.length
-        ? { footerHeading: 'WATER BUDGET', footerText: waterBudget.join('\n'), footerBox: true }
+      ...(filter === 'water'
+        ? waterReferenceFooter(renderState, renderFrame, renderRefLayers, site)
         : {}),
       // NOTHING IS DRAWN WITHOUT A ROW, and the converse: the row exists only when the arrows do.
       // The flow field is computed from site elevation, which sheetLegendRows never sees, so it
@@ -8013,73 +8027,9 @@ async function buildReferenceBlueprintMap(
           }],
         }
         : {}),
-      ...(flowArrows.length
-        ? {
-          extraLegendRows: [{
-            swatch: '#1C608C',
-            visual: 'flow-arrow' as const,
-            text: overlandFlowLegendText(
-              site?.elevation?.slopeDeg ?? Number.NaN,
-              site?.elevation?.aspectLabel ?? 'downhill',
-            ),
-            // No section, deliberately. The headed sections on this sheet name what the farmer has
-            // PLACED — rainwater, filtered greywater, irrigation. Overland flow is not placed and
-            // cannot be moved; it is the condition all of that responds to. Filing it under a
-            // "WATER" heading of its own put a heading on the sheet that read as a fourth system.
-          }]
-        }
-        : {}),
+      ...(flowArrows.length ? { extraLegendRows: waterFlowLegendRows(flowArrows, site) } : {}),
     },
   );
-}
-
-/**
- * The Water sheet's rainwater-harvest block: roof area × annual rainfall × runoff coefficient,
- * against the storage actually placed.
- *
- * Returns an EMPTY list rather than a partial block whenever a term is missing. A harvest figure
- * is only as good as the roof it is measured from, and a farmer sizing tanks off an invented roof
- * area would be worse served than by no number at all — the same rule statedTankCapacityLitres
- * already follows when a tank's name does not state its size.
- */
-function roofHarvestFooterLines(
-  state: DesignCanvasState,
-  frame: CanvasFrame,
-  refLayers: DesignGlossyProps['refLayers'],
-  site: DesignGlossyProps['site'],
-): string[] {
-  const metrics = { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx };
-  const roofRings: Array<Array<[number, number]>> = [];
-  if (refLayers.house.length >= 3) roofRings.push(refLayers.house);
-  for (const zone of state.zones) {
-    if (zone.feature === 'house' && zone.points.length >= 3) roofRings.push(zone.points);
-  }
-  const roofM2 = roofRings.reduce((sum, ring) => sum + ringAreaM2(ring, metrics), 0);
-  const rainfallMm = site?.rainfallMm;
-  if (!(roofM2 > 1) || !Number.isFinite(rainfallMm ?? NaN) || !((rainfallMm ?? 0) > 0)) return [];
-
-  const harvestL = annualRoofHarvestLitres(roofM2, rainfallMm as number);
-  if (!(harvestL > 0)) return [];
-  const storedL = state.items.reduce((sum, item) => {
-    const def = ELEMENTS_BY_ID[item.defId];
-    if (!def || !itemInFilter(def.category, 'water', def.id)) return sum;
-    return sum + (statedTankCapacityLitres(def) ?? 0);
-  }, 0);
-
-  const lines = [
-    `Roof catchment traced: ${numberLabel(Math.round(roofM2))} m²`,
-    `Annual rainfall: ${numberLabel(Math.round(rainfallMm as number))} mm`,
-    `Runoff coefficient: ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} (generic roof)`,
-    `Harvestable: ~${numberLabel(Math.round(harvestL))} L a year`,
-  ];
-  // Storage is stated only when the catalog actually knows the capacities. A "Rain Barrel" with no
-  // size in its name contributes nothing, so a total built from those would understate the storage
-  // and make it look inadequate.
-  if (storedL > 0) {
-    lines.push(`Storage placed: ${numberLabel(Math.round(storedL))} L`);
-    lines.push(`That is ${Math.round((storedL / harvestL) * 100)}% of one year's harvest.`);
-  }
-  return lines;
 }
 
 export function buildBlueprintZoneMap(
@@ -11082,6 +11032,7 @@ async function composeStyleSheet(
     extraLegendRows?: StyleLegendRow[];
     footerHeading?: string;
     footerText?: string;
+    footerFacts?: string[];
     footerBox?: boolean;
     /** Keep short Sector groups together; spreading them over columns duplicated headings. */
     legendPresentation?: 'compact-sector';
@@ -11153,6 +11104,7 @@ async function composeStyleSheet(
   const titleSize = Math.round(typeW * SHEET_LEGEND_TYPE.title);
   ctx.font = `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`;
   const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
+  const waterUnderReview = filter === 'water' && options.aiArtwork;
   const titleLines: string[] = [];
   let titleLine = '';
   for (const word of titleWords) {
@@ -11196,6 +11148,13 @@ async function composeStyleSheet(
   ctx.fillStyle = '#8A8172';
   ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.detail)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', lx, y);
+  if (waterUnderReview) {
+    const reviewFs = Math.round(typeW * SHEET_LEGEND_TYPE.detail);
+    y += Math.round(reviewFs * 1.4);
+    ctx.fillStyle = '#87431F';
+    ctx.font = `800 ${reviewFs}px ${SHEET_BODY_FONT}`;
+    ctx.fillText('AI WATER · UNDER REVIEW', lx, y);
+  }
   y += Math.round(legendW * 0.035);
   ctx.strokeStyle = 'rgba(11,18,11,0.25)';
   ctx.lineWidth = 1.5;
@@ -11227,10 +11186,12 @@ async function composeStyleSheet(
   const footerBoxPad = options.footerBox ? Math.max(6, Math.round(legendW * 0.024)) : 0;
   const footerTextX = lx + footerBoxPad;
   const footerTextW = maxX - lx - footerBoxPad * 2;
-  const wrapFooterText = (value: string): string[] => {
-    ctx.font = options.footerHeading
+  const footerFactFont = `800 ${Math.round(footerFs * 1.25)}px ${SHEET_BODY_FONT}`;
+  const footerFactLineH = Math.round(footerLineH * 1.25);
+  const wrapFooterText = (value: string, font?: string): string[] => {
+    ctx.font = font ?? (options.footerHeading
       ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
-      : `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`;
+      : `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`);
     // A NEWLINE IS A HARD BREAK, NOT A SPACE.
     //
     // This wrapped on /\s+/, which treats "\n" as whitespace like any other. The Water sheet's
@@ -11259,8 +11220,9 @@ async function composeStyleSheet(
     }
     return lines;
   };
+  const footerFactLines = (options.footerFacts ?? []).flatMap(fact => wrapFooterText(fact, footerFactFont));
   const footerText = options.aiArtwork
-    ? [options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : ''), footerStyleLabel].filter(Boolean).join('\n')
+    ? [waterUnderReview ? 'Use the exact Water map to verify pipe locations and features.' : options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : ''), footerStyleLabel].filter(Boolean).join('\n')
     : options.footerText ? [options.footerText, footerStyleLabel].filter(Boolean).join('\n') : undefined;
   const customFooterLines = footerText ? wrapFooterText(footerText) : [];
   const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
@@ -11282,8 +11244,9 @@ async function composeStyleSheet(
     attributionLine,
     footerStyleLabel,
   ].filter(Boolean).join('\n'));
-  const footerBlockH = customFooterLines.length
+  const footerBlockH = customFooterLines.length || footerFactLines.length
     ? customFooterLines.length * footerLineH
+      + footerFactLines.length * footerFactLineH
       + footerHeadingH
       + Math.round(legendW * 0.035)
       + footerBoxPad * 2
@@ -11293,8 +11256,11 @@ async function composeStyleSheet(
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const contentW = maxX - lx;
   const compactSector=options.legendPresentation==='compact-sector';
+  // A normal Water register reads by system. Splitting it into columns to gain a few pixels
+  // of font size wrapped every pipe label and made the budget harder to compare with the map.
+  const compactWater = filter === 'water' && rows.length <= 12;
   const normalFs = legendRowFontSize(typeW, availableRowsH, rows.length);
-  const maxColumns=Math.min(compactSector?1:3,rows.length);
+  const maxColumns=Math.min(compactSector || compactWater ? 1 : 3, rows.length);
   const baseSw = Math.round(legendW * 0.064);
   const columnGap = Math.max(10, Math.round(legendW * 0.025));
   const singleColumnTextGap = Math.round(legendW * 0.03);
@@ -11495,7 +11461,7 @@ async function composeStyleSheet(
   // Searching per column count fixes both symptoms at once, and they were always one bug: the
   // space that became gaps is the space the type should have grown into. Fewest columns wins on a
   // tie, so a sparse legend still stays a single readable list.
-  const growthCeiling = Math.round(legendMaxFontSize(typeW)*(compactSector ? .72 : 1));
+  const growthCeiling = Math.round(legendMaxFontSize(typeW)*(compactSector || compactWater ? .72 : 1));
   const fitForColumns = (columnCount: number): number => fitLegendFontSize(
     (fontSize) => {
       const candidate = planColumns(columnCount, fontSize);
@@ -11619,7 +11585,7 @@ async function composeStyleSheet(
   // illustrative caveat while confirming that geometry and placed elements are deterministic.
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#8A8172';
-  if (customFooterLines.length) {
+  if (customFooterLines.length || footerFactLines.length) {
     if (options.footerBox) {
       ctx.strokeStyle = 'rgba(31,77,43,0.46)';
       ctx.lineWidth = 1;
@@ -11647,11 +11613,19 @@ async function composeStyleSheet(
       ctx.font = `800 ${Math.round(legendW * 0.04)}px ${REFERENCE_LABEL_FONT}`;
       ctx.fillText(options.footerHeading, footerTextX, footerY);
       footerY += footerHeadingH;
-      ctx.fillStyle = '#6C6457';
-      ctx.font = `600 ${footerFs}px ${SHEET_BODY_FONT}`;
-    } else {
-      ctx.font = `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
     }
+    if (footerFactLines.length) {
+      ctx.fillStyle = '#20190F';
+      ctx.font = footerFactFont;
+      for (const line of footerFactLines) {
+        ctx.fillText(line, footerTextX, footerY);
+        footerY += footerFactLineH;
+      }
+    }
+    ctx.fillStyle = '#6C6457';
+    ctx.font = options.footerHeading
+      ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
+      : `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
     for (const line of customFooterLines) {
       ctx.fillText(line, footerTextX, footerY);
       footerY += footerLineH;
@@ -11825,12 +11799,7 @@ async function composeSheetChromeOverMapArt(opts: {
       labelMode,
       gutterLayout: labelled.gutterLayout,
       includeLabelGutters: filter !== 'all',
-      ...(filter === 'water'
-        ? {
-            footerHeading: 'NOTES',
-            footerText: waterReferenceFooterText(state, frame, refLayers, opts.site),
-          }
-        : {}),
+      ...(filter === 'water' ? waterReferenceFooter(state, frame, refLayers, opts.site) : {}),
     },
   );
   return { sheet, mapArt };
@@ -12084,17 +12053,23 @@ interface SavedGlossy {
 
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
-function waterReferenceFooterText(
+function waterReferenceFooter(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
-  site: SectorSite | null,
-): string {
-  const storageNotes = deriveWaterSystem(state, refLayers, {
+  site: SectorSite | null | undefined,
+  roofCredit?: string,
+) {
+  const { storageFacts, storageNotes } = deriveWaterSystem({ ...state, frame }, refLayers, {
     rainfallMm: site?.rainfallMm,
     monthlyRainfallMm: site?.monthlyRainfallMm,
-  }).storageNotes;
-  return [...storageNotes, WATER_REFERENCE_NOTES].join(' ');
+  });
+  return {
+    footerHeading: 'WATER BUDGET',
+    footerBox: true,
+    footerFacts: storageFacts,
+    footerText: [...storageNotes, WATER_REFERENCE_NOTES, roofCredit].filter(Boolean).join(' '),
+  };
 }
 
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
@@ -13532,12 +13507,7 @@ export default function DesignGlossy({
           ? {
               aiArtwork: true,
               includeLabelGutters: filter !== 'all',
-              ...(filter === 'water'
-                ? {
-                    footerHeading: 'NOTES',
-                    footerText: waterReferenceFooterText(state, frame, refLayers, site),
-                  }
-                : {}),
+              ...(filter === 'water' ? waterReferenceFooter(state, frame, refLayers, site) : {}),
             }
           : {},
       );
@@ -13914,12 +13884,7 @@ export default function DesignGlossy({
             ? {
                 aiArtwork: true,
                 includeLabelGutters: f !== 'all',
-                ...(f === 'water'
-                  ? {
-                      footerHeading: 'NOTES',
-                      footerText: waterReferenceFooterText(state, frame, refLayers, site),
-                    }
-                  : {}),
+                ...(f === 'water' ? waterReferenceFooter(state, frame, refLayers, site) : {}),
               }
             : {},
         );
@@ -14237,11 +14202,14 @@ export default function DesignGlossy({
       // stay exact. Photo Plan keeps the factual photo; painted styles keep continuous property
       // artwork. A plain-input existing roof can use its factual aerial reference instead of a
       // guessed ridge layout; no garden ground or driveway is restored with that roof.
+      const flowArrows = locked && f === 'water' ? waterTerrainFlowArrows(renderState, renderFrame, renderRefLayers, site) : [];
       const overlayImage = f === 'zones'
         // Zones are saved polygons, not model artwork. The general locked-sheet rule below must
         // not suppress them: that shipped a paid Zones sheet with only Gemini's faint impression
         // of the bands and no exact badges. Burn the real regions after every model pass.
         ? buildZoneOverlay(renderState, renderRefLayers, W, H)
+        : locked && f === 'water'
+          ? buildWaterPlanOverlay(renderState, renderFrame, W, H, flowArrows)
         : locked
           ? buildRecordedShadeCoverOverlay(renderState,renderFrame,f,W,H)
           : f === 'water' ? buildWaterOverlay(renderState, renderFrame, renderRefLayers, W, H, true, false)
@@ -14276,6 +14244,7 @@ export default function DesignGlossy({
       const labelled = exactMapOwnsLabels
         ? await burnExactLabelLayer(final, renderState, renderFrame, renderRefLayers, f, W, H, labelMode)
         : { map: final, gutterLayout: undefined };
+      const roofCredit = sourceRoof?.credit ?? (legacyPaperRoof ? 'Approximate roof symbol; roof sections are not recorded.' : undefined);
       return composeStyleSheet(
         labelled.map,
         renderState,
@@ -14297,14 +14266,12 @@ export default function DesignGlossy({
               gutterLayout: labelled.gutterLayout,
               includeLabelGutters: f !== 'all',
               zoneMatte: f === 'zones' ? zonePhotoMatte(state, frame, refLayers, snapshot.underlay) : undefined,
-              footerText: [f === 'water' ? waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site) : '',
-                sourceRoof?.credit ?? (legacyPaperRoof ? 'Approximate roof symbol; roof sections are not recorded.' : '')]
-                .filter(Boolean).join(' '),
               ...(f === 'water'
                 ? {
-                    footerHeading: 'NOTES',
+                    ...waterReferenceFooter(renderState, renderFrame, renderRefLayers, site, roofCredit),
+                    extraLegendRows: waterFlowLegendRows(flowArrows, site),
                   }
-                : {}),
+                : { footerText: roofCredit ?? '' }),
             }
           : {},
       );

@@ -25,6 +25,7 @@ const copy:UpdateCopy={
   // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
   "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Dimmapa tsa Sector di sebedisa mela ya bophahamo ya kakaretso ya sebaka, ka kgetho ya profaele ya naha A–B.",
   // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Exact and illustrated Water maps now show the same water budget.": "Mmapa wa Metsi o nepahetseng le o nang le ditshwantsho jwale o bontsha tekanyetso e tshwanang ya metsi.",
   "Zone maps trim blurry aerial edges when the photo covers the site.": "Dimmapa tsa dibaka di tlosa mathoko a lerootho ha setshwantsho sa moyeng se akaretsa sebaka sohle.",
   "Existing Site labels and legend now use matching symbols.": "Mmapa wa kgale wa Existing Site jwale o sebedisa matshwao a tshwanang mabitsong a dibaka le senotlolong sa mmapa.",
   "Choose area names or a numbered key on the historical Existing Site map.": "Kgetha mabitso a dibaka kapa senotlolo sa dinomoro mmapeng wa kgale wa Existing Site.",
