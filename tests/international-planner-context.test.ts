@@ -488,6 +488,9 @@ function growerProps(screen: Awaited<ReturnType<typeof mount>>) {
   assert.equal(panels.length, 1, 'one grower-input editor belongs to the current planner scope');
   return panels[0].props['data-props'] as {
     scope: GrowerPlanningScope | null; beds: PlanBed[]; profiles: GrowerPlanningProfile[];
+    measurementsRequired: boolean; measurementsReady: boolean;
+    measuredAreas?: readonly { bedId: string; areaM2: number; basis: string }[];
+    measurementsFingerprint: string | null; onCheckMeasurements: () => Promise<void>;
     onSaveProfiles: (profiles: GrowerPlanningProfile[]) => boolean;
   };
 }
@@ -496,9 +499,28 @@ test('a foreign grower saves partial own estimates in the real plan without enab
   const screen = await mount('KE', { auto: false });
   let savedProfile: GrowerPlanningProfile;
   try {
-    const props = growerProps(screen);
+    let props = growerProps(screen);
     assert.deepEqual(props.scope, { kind: 'mapped-site', siteId });
-    assert.deepEqual(props.beds, [fixtureBed]);
+    // Display-bridge fixtures are not saved measurement evidence. Exercise the
+    // real source reader and explicit check before allowing area calculations.
+    assert.equal(props.measurementsRequired, true);
+    assert.equal(props.measurementsReady, false);
+    assert.deepEqual(props.beds, []);
+    await act(async () => { await props.onCheckMeasurements(); });
+    assert.equal(growerProps(screen).measurementsReady, false);
+    assert.deepEqual(growerProps(screen).beds, []);
+    screen.localStorage.setItem(`imbewu_design_canvas_${siteId}`, JSON.stringify({
+      siteId, frame: { centerLng: 0, centerLat: 0, zoom: 18, imgW: 100, imgH: 100, mPerPx: 1 },
+      items: [{ id: fixtureBed.id, defId: 'veg_bed', x: .5, y: .5, wM: 1, hM: 1, rot: 0, label: fixtureBed.label }],
+      zones: [], lines: [], step: 'planting', updatedAt: '2026-11-04T00:00:00.000Z', rev: 1,
+    }));
+    await act(async () => { await growerProps(screen).onCheckMeasurements(); });
+    props = growerProps(screen);
+    assert.equal(props.measurementsReady, true);
+    assert.deepEqual(props.beds, [{ ...fixtureBed, savedRectangleM: [1, 1] }]);
+    assert.deepEqual(props.measuredAreas, [{ bedId: fixtureBed.id, areaM2: 1,
+      basis: 'explicit-saved-dimensions', arithmeticBasis: { kind: 'saved-rectangle-metres-v1', widthM: 1, heightM: 1 } }]);
+    assert.match(props.measurementsFingerprint!, /^[a-f0-9]{64}$/);
     savedProfile = ownProfile();
     await act(async () => { assert.equal(props.onSaveProfiles([savedProfile]), true); });
     await screen.flushSave();
