@@ -77,3 +77,58 @@ original-byte transfer, persisted registration and disconnect. Create and inspec
 the private plugin once, then test the supported native installation and OAuth
 journeys. Record any concrete host gate with the observed failure and exact
 remaining action.
+
+
+## Current-main integration and later live verification
+
+Main advanced to `81d696f1800151722e088dea19be572fe6de6781` through the reviewed
+Existing Site and Zone releases. The OAuth candidate integrates that main with
+`02ff1adf4547b7719a6cacbc1fde7391b0bfac69`. The only merge conflicts were the two
+audit indexes and release notes. Both map notices, the three connector notices,
+the connector/map guide stops and all audit links are retained. The renderer,
+map regressions and native map release drafts are preserved from main. This
+integration does not add a map picture change or edit `PLAN_VERSION`.
+
+Later evidence advances the earlier findings without replacing their history:
+
+- MCP-001/002/012: private ImbewuField 1.0.3 is installed and enabled with 17
+  customer tools. Its actual Codex DCR/PKCE callback completed, matching the
+  explicit login ID. Eighteen native authenticated checks verified the synthetic
+  identity, one selected site, denial of the other site and unrelated organisation,
+  saved design, preserved original and registration draft. Only the authorization
+  GET used the corrected deployed preview; consent, token, MCP and storage used
+  canonical production. This is not a normal published-entry OAuth pass.
+- MCP-003/004/005/006: 34 live transfer/persistence/revocation checks verified the
+  authorised 6,026,629-byte original, exact readback, provenance, repeated finish,
+  persisted synthetic corner-fit draft, unchanged design revision and owner access
+  after disconnect. The actual published phone draft was visually inspected at
+  390 pixels with no horizontal overflow. No surveyed or applied map is claimed.
+- MCP-005: 35 further live checks verified note/status previews, applied persistence,
+  receipt retries and stale timestamp/revision refusal. Original synthetic notes
+  and tank status were restored. The complete final design equals its starting
+  data apart from legitimate revision/edit time; all measured geometry is intact.
+- Test cleanup was independently read back: two synthetic sites, zero active grants,
+  original notes/status, one original and one registration draft. Native logout
+  removed the synthetic credentials. No real farm record or paid job changed.
+- MCP-011/013: actual local Next HTTP adapter and deployed Vercel preview return the
+  proper consent redirect for the registered loopback callback. Canonical production
+  still needs this correction and the customer discovery scope release. Ordinary
+  Claude reconnection remains unverified after release.
+
+The original full suite on clean `02ff1adf4` completed in its owning session with
+exit 0: 6,378 tests, 6,377 passed, zero failed/cancelled/skipped, one existing TODO.
+The TODO source is identical to main. This is parent-head baseline evidence, not
+an updated integration-head full-suite pass. Both old heads' rules/focused-render
+and previews passed; their full CI jobs were running when this integration began.
+Fresh required checks apply to the finished updated heads. Detailed live evidence
+and terminal counts are recorded in [issue #35](https://github.com/rorymclark-prog/ImbewuField/issues/35#issuecomment-6623733778).
+
+The resolved integration passed ordered Node 24 typecheck, 90 affected
+connector/title/release/Sector checks, all 638 checks from the shared
+`test:render` file list with two workers, functions compiler/entry verification,
+and whitespace. Release-note validation passed with its existing one-commit
+stamp tolerance. The connector runtime and its tests are unchanged from the
+previous auth head; map runtime/tests and native release data match current main
+byte for byte. The original 108 isolated connector checks remain baseline
+runtime evidence. A new full suite and required current-head CI are still
+pending for this integrated source, not inherited from the old heads.
