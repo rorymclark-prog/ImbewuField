@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
+  "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Izilawuli zamayunithi endawo yezithombo nezokuvuna zihlala zitholakala uma uhlelo olufanayo lulondolozwa futhi.",
+  "See when you can reload saved settings or need to reopen the crop plan.": "Bona ukuthi ungaphinda ulayishe nini izilungiselelo ezigciniwe noma uma kudingeka uvule kabusha ipulani yezitshalo.",
   // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/zu.json; selected UNREVIEWED AGY AI draft descriptions only.
   "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Faka izinhloso zokuvuna zamasonto onke nesisindo sakho samaphakethe ezivuno ngamakhilogremu (kg) noma ngamaphawundi esisindo (lb).",
   "Keep buyer entries when a save cannot be confirmed.": "Gcina imininingwane yezidingo zabathengi oyifakile isekhona lapho ukulondolozwa kwayo kungakwazi ukuqinisekiswa.",

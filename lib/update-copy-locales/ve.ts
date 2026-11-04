@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
+  "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Zwilangi zwa dziyuniti dza tsimu ya zwimela zwiṱuku na dza khaṋo zwi dzula zwi tshi wanala musi pulane i fanaho i tshi vhulungwa hafhu.",
+  "See when you can reload saved settings or need to reopen the crop plan.": "Vhonani uri ni nga dovha na laisa zwiimiswa zwo vhulungwaho lini, kana ni tshi tea u vula pulane ya zwimela hafhu.",
   // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/ve.json; selected UNREVIEWED AGY AI draft descriptions only.
   "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Dzhenisani zwipikwa zwa khaṋo zwa vhege na vhege na tshileme tshaṋu tsha zwipaki zwa khaṋo nga dzikhilogiramu (kg) kana dziphaundu dza tshileme (lb).",
   "Keep buyer entries when a save cannot be confirmed.": "Vhulungani zwidodombedzwa zwa zwilavhelelwa zwa vharengi zwe na dzhenisa zwi tshi kha ḓi vha hone musi u vhulungwa hazwo hu sa koni u khwaṱhisedzwa.",

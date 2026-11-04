@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
+  "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Swilawuri swa tiyuniti ta xirhapa xa swimilana ni ta ntshovelo swi tshamile swi ri kona loko pulani leyi fanaka yi hlayisiwa nakambe.",
+  "See when you can reload saved settings or need to reopen the crop plan.": "Vona nkarhi lowu u nga tlhelaka u layicha swiyimiso leswi hlayisiweke kumbe loko u fanele ku pfula pulani ya swibyariwa nakambe.",
   // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/ts.json; selected UNREVIEWED AGY AI draft descriptions only.
   "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Nghenisa swikongomelo swa ntshovelo swa vhiki na vhiki ni ntiko wa wena wa maphakete ya ntshovelo hi tikilograma (kg) kumbe tiphawundi ta ntiko (lb).",
   "Keep buyer entries when a save cannot be confirmed.": "Hlayisa vuxokoxoko bya swilaveko swa vaxavi lebyi u byi ngheniseke byi tshama byi ri kona loko ku hlayisiwa ka byona ku nga koteki ku tiyisisiwa.",
