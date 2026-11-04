@@ -99,3 +99,26 @@ test('a failed sharing read never pretends every scope is off, and retry/failed 
   const h=await actualAccountUi('ve',{kind:'consent',consent:saved,consentRevokeError:true});try{await h.button(local('ve','Stop sharing everything'));assert.equal(h.renderer.root.findAllByProps({type:'checkbox'})[5].props.checked,true);assert.equal(h.calls.revocations,1);assert.ok(h.text().includes(local('ve','That did not save. Your sharing settings have not changed.')));}finally{await h.dispose();}
   const loading=await actualAccountUi('ts',{kind:'consent',consentLoading:true});try{assert.ok(loading.text().includes(local('ts','Loading…')));assert.equal(loading.renderer.root.findAllByProps({type:'checkbox'}).length,0);}finally{await loading.dispose();}
  });
+
+test('sharing reads, withdrawal and single-scope regrant keep the displayed recipient', async () => {
+ const { emptyConsent, setScope } = await import('../lib/consent.ts');
+ const recipient = { uid: 'qa-account-owner', org_id: 'qa-org' };
+ const now = '2026-01-01T00:00:00Z';
+ const sales = setScope(emptyConsent(recipient.uid, recipient.org_id, now), 'sales', true, now);
+ const saved = setScope(sales, 'training', true, now);
+ const h = await actualAccountUi('en', { kind: 'consent', consent: saved });
+ try {
+  const checked = () => h.renderer.root.findAll(n => n.type === 'input' && n.props.type === 'checkbox')
+   .filter(n => n.props.checked).map(n => n.props['aria-label']);
+  assert.deepEqual(checked(), ['What you sold', 'Your training']);
+  await h.button('Stop sharing everything');
+  assert.deepEqual(checked(), []);
+  await h.consentToggle(0, true);
+  assert.deepEqual(checked(), ['What you sold']);
+  assert.deepEqual(h.calls.consentWrites, [{ scope: 'sales', next: true }]);
+  assert.equal(h.calls.revocations, 1);
+  assert.deepEqual(h.consentRecipients, [recipient, recipient, recipient]);
+ } finally {
+  await h.dispose();
+ }
+});

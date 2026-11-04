@@ -335,5 +335,25 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Zama imephu ecwebezelayo ye-AI",
   "Design Studio → Glossy": "Isitudiyo sokuklama → Imephu ecwebezelayo",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vula ipulazi elilondoloziwe, khetha ikhasi bese ukhetha i-AI Polished. Ukukhiqiza ngakunye kuyakhokhelwa.",
+  // Journal release wording: docs/international/journal-release-wording-2026-11-04/drafts.json; unreviewed.
+  "A pending journal copy stops if you switch workspaces before it can download.": "Ikhophi yencwadi yensimu esalindile iyama uma ushintsha izindawo zokusebenza ngaphambi kokuthi idawunilodeke.",
+  "Write a dated field note from a checked crop task in your device journal.": "Bhala inothi yasensimini enosuku kusuka kumsebenzi wesitshalo ohloliwe ejenalini yasensimini yedivayisi yakho.",
+  "Review older device notes before choosing which entries to recover.": "Buyekeza amanothi amadala edivayisi ngaphambi kokukhetha ukuthi yikuphi okufanele ukubuyise.",
+  "Preview saved monthly production with actual records and estimates labelled.": "Bona kusengaphambili umkhiqizo wenyanga ogciniwe onamarekhodi angempela kanye nezilinganiso ezibhalwe ngokucacile.",
+  "Review your field journal": "Buyekeza ijenali yakho yasensimini",
+  "Field journal": "Ijenali yasensimini",
+  "Open your device journal to write a note or review older copies when the app offers recovery.": "Vula ijenali yasensimini yedivayisi yakho ukuze ubhale inothi noma ubuyekeze amakhophi amadala lapho uhlelo lokusebenza luhlinzeka ngokubuyisela.",
+  "Preview saved monthly production": "Bona kusengaphambili umkhiqizo wenyanga ogciniwe",
+  "Production plan → Production and food stock records": "Uhlelo lokukhiqiza → Amarekhodi omkhiqizo nawesitoko sokudla",
+  "Open a checked mapped site and preview its saved monthly records. Actual records and estimates stay separate.": "Vula isiza esidwetshiwe esihloliwe bese ubona kusengaphambili amarekhodi aso anyanga zonke agciniwe. Amarekhodi angempela nezilinganiso kuhlala kwehlukene.",
+  // Consent and harvest release wording: docs/international/consent-harvest-release-wording-2026-11-04/drafts.json; unreviewed.
+  "After withdrawing sharing, turn on only the records you want to share again.": "Ngemva kokuhoxisa ukwabelana, vula kuphela amarekhodi ofuna ukuwabela futhi.",
+  "Review what you share": "Buyekeza lokho owabelana ngakho",
+  "Account → What you share": "I-akhawunti → Lokho owabelana ngakho",
+  "Review each sharing option for your current organisation.": "Buyekeza inketho ngayinye yokwabelana yenhlangano yakho yamanje.",
+  "Record the day you picked a harvest separately from the day you saved it.": "Qopha usuku owavuna ngalo ngokwehlukile osukwini owagcina ngalo irekhodi.",
+  "Add a harvest date": "Engeza usuku lokuvuna",
+  "Records → Picked": "Amarekhodi → Okuvuniwe",
+  "When logging a harvest, enter the day you picked it. Leave it blank if you are unsure.": "Uma uqopha isivuno, faka usuku owavuna ngalo. Lushiye lungenalutho uma ungaqinisekile.",
 };
 export default copy;

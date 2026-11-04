@@ -335,5 +335,25 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Lingani mepe yo nakiswaho nga AI",
   "Design Studio → Glossy": "Studio tsha u pulana → Mepe yo nakiswaho",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vhulani bulasi yo vhulungwaho, khethani siaṱari ni kone u khetha AI Polished. U bveledza mepe iṅwe na iṅwe zwi a badelwa.",
+  // Journal release wording: docs/international/journal-release-wording-2026-11-04/drafts.json; unreviewed.
+  "A pending journal copy stops if you switch workspaces before it can download.": "Khophi i re kha u lindela ya dzhenala i a ima arali na shandukisa fhethu ha u shumela i sa athu kopololwa.",
+  "Write a dated field note from a checked crop task in your device journal.": "Nwalani notsi ya tsimuni i re na ḓuvha u bva kha mushumo wo sedzwaho wa tshimela kha dzhenala ya tshishumiswa tshanu.",
+  "Review older device notes before choosing which entries to recover.": "Tolani notsi dza kale dza tshishumiswa ni sa athu nanga zwine na tama u zwi vhuedzedza.",
+  "Preview saved monthly production with actual records and estimates labelled.": "Vhonani tsedzuluso ya mbuelo yo vhulungwaho ya nwedzi na nwedzi i re na rekhodi dza vhukuma na dzo anganyelwaho dzo bulwaho.",
+  "Review your field journal": "Tolani dzhenala yanu ya tsimuni",
+  "Field journal": "Dzhenala ya tsimuni",
+  "Open your device journal to write a note or review older copies when the app offers recovery.": "Vulani dzhenala ya tshishumiswa tshanu u itela u nwala notsi kana u tola khophi dza kale musi phurogireme i tshi khou vhuedzedza.",
+  "Preview saved monthly production": "Vhonani tsedzuluso ya mbuelo yo vhulungwaho ya nwedzi na nwedzi",
+  "Production plan → Production and food stock records": "Pulane ya mbuelo → Rekhodi dza mbuelo na zwiliwa zwo vhulungwaho",
+  "Open a checked mapped site and preview its saved monthly records. Actual records and estimates stay separate.": "Vulani fhethu ho sedzwaho ha maepu ni vhone tsedzuluso ya rekhodi dzo vhulungwaho dza nwedzi na nwedzi. Rekhodi dza vhukuma na dzine dza khou anganyelwa zwi dzula zwo fhambana.",
+  // Consent and harvest release wording: docs/international/consent-harvest-release-wording-2026-11-04/drafts.json; unreviewed.
+  "After withdrawing sharing, turn on only the records you want to share again.": "Nga murahu ha u litsha u kovhela, fungulani fhedzi rekhodi dzine na tama u dzi kovhela hafhu.",
+  "Review what you share": "Tolani zwine na kovhela",
+  "Account → What you share": "Akhauthi → Zwine na kovhela",
+  "Review each sharing option for your current organisation.": "Tolani khetho inwe na inwe ya u kovhela ya ndangulo yanu ya zwino.",
+  "Record the day you picked a harvest separately from the day you saved it.": "Nwalani datumu ye na ka ngayo khano yo fhambana na datumu ye na i vhulunga ngayo.",
+  "Add a harvest date": "Engedzani datumu ya khano",
+  "Records → Picked": "Rekhodi → Dzo kaho",
+  "When logging a harvest, enter the day you picked it. Leave it blank if you are unsure.": "Musi ni tshi khou nwala khano, dzhenisani datumu ye na ka ngayo. I litsheni i si na tshithu arali ni sa kholwi.",
 };
 export default copy;

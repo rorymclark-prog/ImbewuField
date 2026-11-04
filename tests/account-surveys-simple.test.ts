@@ -75,12 +75,15 @@ test('account: change password and the redundant Appearance shortcut also gate o
 });
 
 test('account: the POPIA consent panel is never hidden by Simple — it is the farmer\'s own record', () => {
-  const consentAt = ACCOUNT.indexOf("profile?.role === 'farmer' && profile?.org_id && (");
+  const consentAt = ACCOUNT.indexOf("profile?.role === 'farmer' && profile?.org_id && user && (");
   assert.ok(consentAt > 0, 'the consent-gating condition moved — recheck this guard');
   const changePasswordAt = ACCOUNT.indexOf('{/* Change password */}');
   assert.ok(changePasswordAt > consentAt, 'the Change password comment moved — recheck this guard');
   const block = ACCOUNT.slice(consentAt, changePasswordAt);
-  assert.match(block, /<ConsentPanel orgName=\{orgName\} \/>/);
+  assert.match(block, /<ConsentPanel\b/);
+  assert.match(block, /orgName=\{orgName\}/);
+  assert.match(block, /recipient=\{\{ uid: user\.uid, org_id: profile\.org_id \}\}/,
+    'the displayed sharing choice must carry the active owner and recipient to the writer');
   assert.doesNotMatch(block, /!simple|moreOpen/, 'Simple must not additionally hide the consent panel');
 });
 

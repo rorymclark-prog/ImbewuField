@@ -73,7 +73,9 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
   const [confirmDelete, setConfirmDelete] = useState(false);
   const confirmTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEscapeClose(!saving, onClose);
+  // Keep the shared listener mounted so Escape uses the latest save state.
+  const closeOnEscape = () => { if (!saving) onClose(); };
+  useEscapeClose(true, closeOnEscape);
 
   useEffect(() => () => { if (confirmTimer.current) clearTimeout(confirmTimer.current); }, []);
 

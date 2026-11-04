@@ -132,7 +132,12 @@ test('Escape closes overlays through one stable listener (w28-06)', () => {
     'components/ThemePanel.tsx', 'components/NavDrawer.tsx',
   ]) {
     const src = readFileSync(new URL(`../${f}`, import.meta.url), 'utf8');
-    assert.match(src, /useEscapeClose\((open|true), onClose\)/, f);
+    if (f === 'components/journal/JournalEntrySheet.tsx') {
+      assert.match(src, /useEscapeClose\(true, closeOnEscape\)/, f);
+      assert.match(src, /const closeOnEscape = \(\) => \{ if \(!saving\) onClose\(\); \};/, 'Escape cannot close the journal during a pending save');
+    } else {
+      assert.match(src, /useEscapeClose\((open|true), onClose\)/, f);
+    }
     assert.doesNotMatch(src, /e\.key === 'Escape'\) onClose\(\)/, `${f} still has its own Escape listener keyed on onClose`);
   }
 });

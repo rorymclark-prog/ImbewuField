@@ -56,7 +56,7 @@ import { NextRequest } from 'next/server';
 import { runInBatches } from '@/lib/batch';
 import { canSeeOrg } from '@/lib/network-access';
 import { resolveNetworkCaller } from '@/lib/network-caller';
-import { applyConsent, consentState, hasConsent, type FarmerConsent } from '@/lib/consent';
+import { applyConsent, consentForOwnerAndOrg, consentState, hasConsent, type FarmerConsent } from '@/lib/consent';
 import { buildCohortSeries, portfolioHistoryMonths, type CohortLedger } from '@/lib/cohort-series';
 import { buildFarmerMetrics, coarsenFarmerLocation, withServerIdentity } from '@/lib/network';
 import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
@@ -70,7 +70,7 @@ const ROUTE = 'network/farmers';
 const BATCH_SIZE = 50;
 
 function json(body: unknown, status: number) {
-  return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'private, no-store' } });
 }
 
 type FarmerLoadResult =
@@ -107,7 +107,9 @@ export async function GET(req: NextRequest) {
   // farmer rather than becoming a collectionGroup query.
   async function loadFarmer(doc: (typeof farmerSnap.docs)[number]): Promise<FarmerLoadResult> {
     const consentSnap = await db.collection('farmer_consents').doc(doc.id).get();
-    const storedConsent = (consentSnap.exists ? consentSnap.data() : null) as FarmerConsent | null;
+    const storedConsent = consentForOwnerAndOrg(
+      (consentSnap.exists ? consentSnap.data() : null) as FarmerConsent | null, doc.id, orgId,
+    );
     // Legacy survey counts do not imply permission to publish the underlying
     // assessment. Funder MEL data now comes from explicitly approved summaries.
     const consent = storedConsent && access.role === 'funder'

@@ -4,6 +4,7 @@ import * as React from'react';
 import * as Icons from'lucide-react';
 import{act,create,type ReactTestRenderer,type ReactTestInstance}from'react-test-renderer';
 import{CONSENT_PANEL_HEADING,CONSENT_SCOPES,emptyConsent,hasConsent,grantedScopes,setScope,revokeAll}from'../lib/consent.ts';
+import type { ConsentRecipient } from '../lib/consent.ts';
 import{controlT,type ControlLanguage}from'./control-icon-renderers.ts';
 import{accountText,accountRoleName,accountErrorText,allowanceResetLabel,fillAccountText,isAccountDraftLanguage}from'../lib/account-copy.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
@@ -26,6 +27,7 @@ export async function actualAccountUi(initial:ControlLanguage,options:AccountUiO
  const user=options.signedOut?null:{uid:'qa-account-owner',displayName:'QA Name',email:'qa@example.invalid'};
  const profile={role:options.role??'farmer',full_name:'QA Name',phone:'QA phone',farm_name:'QA Farm',language:'en',...options.profile};
  const calls={updates:[]as any[],routes:[]as string[],replace:[]as string[],refresh:0,passwords:[]as string[][],signOut:0,uploads:[]as any[],resize:[]as any[],previews:[]as string[],exit:0,focus:0,consentReads:0,consentWrites:[]as Array<{scope:string;next:boolean}>,revocations:0};
+ const consentRecipients: Array<ConsentRecipient | undefined> = [];
  const storage=new Map<string,string>(),timers=new Map<number,{fn:()=>void;ms:number}>();let id=0;
  const window=Object.assign(new EventTarget(),{setTimeout:(fn:()=>void,ms:number)=>{const n=++id;timers.set(n,{fn,ms});return n;},clearTimeout:(n:number)=>timers.delete(n)});
  const sessionStorage={getItem:(k:string)=>storage.get(k)??null,setItem:(k:string,v:string)=>storage.set(k,v)};
@@ -38,9 +40,9 @@ export async function actualAccountUi(initial:ControlLanguage,options:AccountUiO
   useAuth:()=>({user,profile,loading,signOutUser:async()=>{calls.signOut++;},changePassword:async(...values:string[])=>{calls.passwords.push(values);return options.passwordError??null;},refreshProfile:async()=>{calls.refresh++;if(options.refreshError)throw Error('refresh failure');}}),
   updateMyProfile:async(payload:any)=>{calls.updates.push(payload);if(options.saveError)throw options.saveError;},uploadPhoto:async(file:any,kind:string)=>{calls.uploads.push({file,kind});if(options.photoError)throw options.photoError;return'qa-photo-url';},
   resizeFileForUpload:async(file:any)=>{calls.resize.push({kind:'photo',file});return'qa-resized-photo';},resizeLogoForStorage:async(file:any)=>{calls.resize.push({kind:'logo',file});return'qa-logo-data';},getOrganizationName:async()=>'QA organisation',
-  getMyConsent:async()=>{calls.consentReads++;if(options.consentLoading)return new Promise(()=>{});if(loadFailures-->0)throw Error('consent read failed');return structuredClone(currentConsent);},
-  setMyConsentScope:async(scope:any,next:boolean)=>{calls.consentWrites.push({scope,next});if(options.consentWriteDelay)await new Promise<void>(resolve=>{finishConsentWrite=resolve;});if(options.consentWriteError)throw Error('consent write failed');currentConsent=setScope(currentConsent,scope,next,'2026-01-02T00:00:00Z');return structuredClone(currentConsent);},
-  revokeAllMyConsent:async()=>{calls.revocations++;if(options.consentRevokeError)throw Error('revoke failed');currentConsent=revokeAll(currentConsent,'2026-01-03T00:00:00Z');return structuredClone(currentConsent);},
+  getMyConsent:async(recipient?:ConsentRecipient)=>{consentRecipients.push(recipient);calls.consentReads++;if(options.consentLoading)return new Promise(()=>{});if(loadFailures-->0)throw Error('consent read failed');return structuredClone(currentConsent);},
+  setMyConsentScope:async(scope:any,next:boolean,recipient?:ConsentRecipient)=>{consentRecipients.push(recipient);calls.consentWrites.push({scope,next});if(options.consentWriteDelay)await new Promise<void>(resolve=>{finishConsentWrite=resolve;});if(options.consentWriteError)throw Error('consent write failed');currentConsent=setScope(currentConsent,scope,next,'2026-01-02T00:00:00Z');return structuredClone(currentConsent);},
+  revokeAllMyConsent:async(recipient?:ConsentRecipient)=>{consentRecipients.push(recipient);calls.revocations++;if(options.consentRevokeError)throw Error('revoke failed');currentConsent=revokeAll(currentConsent,'2026-01-03T00:00:00Z');return structuredClone(currentConsent);},
   getSandboxProfile:()=>({...profile,full_name:'QA practice profile'}),exitSampleMode:()=>{calls.exit++;},startRolePreview:(role:string)=>{calls.previews.push(role);return!options.previewFails;},
   paidApiHeaders:async()=>({'X-QA':'isolated'}),fetch:async()=>({ok:true,json:async()=>options.allowance??{kind:'user',capZar:120,spentZar:33,remainingZar:87,capped:false,resetsOn:'2026-11-01'}}),
   workspace:{workspace:'workspace',formWidth:'formWidth',twoColumns:'twoColumns'},styles:{root:'root',card:'card',muted:'muted',row:'row'},
@@ -58,12 +60,12 @@ export async function actualAccountUi(initial:ControlLanguage,options:AccountUiO
   const module=compile('components/AppConfirm.tsx','({AppConfirmProvider,useAppConfirm})',scope);
   function Probe(){ask=module.useAppConfirm();return null;}
   Component=()=>React.createElement(module.AppConfirmProvider,null,React.createElement(Probe));
- }else if(kind==='consent')Component=()=>React.createElement(scope.ConsentPanel as React.ComponentType<any>,{orgName:options.organisation??null});
+ }else if(kind==='consent')Component=()=>React.createElement(scope.ConsentPanel as React.ComponentType<any>,{orgName:options.organisation??null,recipient:{uid:'qa-account-owner',org_id:'qa-org'}});
  else if(kind==='access')Component=scope.AccountAccess as React.ComponentType;
  else if(kind==='allowance'){const Allowance=scope.AiAllowance as React.ComponentType<any>;Component=()=>React.createElement(Allowance,{copy:(en:string,zu:string,values:any)=>accountText(lang,en,zu,controlT(lang),values)});}
  else Component=compile('app/account/page.tsx','AccountPage',scope);
  await act(async()=>{renderer=create(React.createElement(Component),{createNodeMock:()=>({value:'',focus:()=>{calls.focus++;},click:()=>{}})});});
- return{renderer,calls,timers,profile,
+ return{renderer,calls,timers,profile,consentRecipients,
   async finishConsent(){await act(async()=>{finishConsentWrite?.();});},
   async consentToggle(index:number,next:boolean){await act(async()=>{const change=renderer.root.findAll(n=>n.type==='input'&&n.props.type==='checkbox')[index].props.onChange({target:{checked:next}});if(!options.consentWriteDelay)await change;});},text:()=>renderer.toJSON()?accountNodeText(renderer.root):'',
   async language(next:ControlLanguage){lang=next;await act(async()=>renderer.update(React.createElement(Component)));},

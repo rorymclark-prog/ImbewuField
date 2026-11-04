@@ -100,15 +100,26 @@ export interface FarmerConsent {
   updated_at: string;
 }
 
+/** Account and organisation displayed when the grower makes a sharing choice. */
+export type ConsentRecipient = Pick<FarmerConsent, 'uid' | 'org_id'>;
+
 /** A fresh record granting nothing. What a farmer starts with. */
 export function emptyConsent(uid: string, orgId: string | null, now: string): FarmerConsent {
   return { uid, org_id: orgId, scopes: {}, granted_at: null, revoked_at: null, updated_at: now };
 }
 
+export function consentForOwnerAndOrg(
+  consent: FarmerConsent | null | undefined,
+  uid: string,
+  orgId: string | null,
+): FarmerConsent | null {
+  return consent?.uid === uid && consent.org_id === orgId ? consent : null;
+}
+
 /** True only if this exact scope is granted and the record is live. Fails closed. */
 export function hasConsent(consent: FarmerConsent | null | undefined, scope: ConsentScope): boolean {
   if (!consent) return false;
-  if (consent.revoked_at) return false;
+  if (consent.revoked_at != null) return false;
   return consent.scopes?.[scope] === true;
 }
 
@@ -122,7 +133,7 @@ export function grantedScopes(consent: FarmerConsent | null | undefined): Consen
  */
 export function consentState(consent: FarmerConsent | null | undefined): NetworkConsent {
   if (!consent) return 'unknown';
-  if (consent.revoked_at) return 'withheld';
+  if (consent.revoked_at != null) return 'withheld';
   return grantedScopes(consent).length > 0 ? 'granted' : 'withheld';
 }
 
@@ -130,7 +141,8 @@ export function consentState(consent: FarmerConsent | null | undefined): Network
 export function setScope(
   consent: FarmerConsent, scope: ConsentScope, value: boolean, now: string,
 ): FarmerConsent {
-  const scopes = { ...consent.scopes, [scope]: value };
+  // A new grant must not reactivate other scopes from a revoked record.
+  const scopes = { ...(consent.revoked_at != null ? {} : consent.scopes), [scope]: value };
   const anyOn = CONSENT_SCOPES.some((s) => scopes[s.id] === true);
   return {
     ...consent,

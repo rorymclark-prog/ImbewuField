@@ -1,0 +1,51 @@
+{
+  "base": "8f173feb32fa5433edc7c2fb97a8fd8353595397",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "entries": [
+    {
+      "english": "A pending journal copy stops if you switch workspaces before it can download.",
+      "messageSha256": "16782a7e1f8e3ec4ce542cec4f4b25a1fd2e99a1e1e60582a075cec310d678b6"
+    },
+    {
+      "english": "Write a dated field note from a checked crop task in your device journal.",
+      "messageSha256": "56c64ee50a6c045ac509b3ca6ec9d7604d7185a01b27c115a601e43b011eb9bf"
+    },
+    {
+      "english": "Review older device notes before choosing which entries to recover.",
+      "messageSha256": "228fd650a80fe04fbfc51af589920c979cf82b07e6c92b5fa0257e7b8510abad"
+    },
+    {
+      "english": "Preview saved monthly production with actual records and estimates labelled.",
+      "messageSha256": "3addd99ee811cd6c9dc3e8adb06ff0e0540f675dfcea09cedc4ecbfb73d21b9b"
+    },
+    {
+      "english": "Review your field journal",
+      "messageSha256": "7b3e51e35cc5da41dcf82dc0a4481393cdbfb2308be52c7f329af83db367ca2d"
+    },
+    {
+      "english": "Field journal",
+      "messageSha256": "5ddde90361d26104683288f2740230d726ee877a9cc7fa0f9d1157951aeb988b"
+    },
+    {
+      "english": "Open your device journal to write a note or review older copies when the app offers recovery.",
+      "messageSha256": "2453887a8f4fc536bd8750200c8de0df26dbc1e18718605d9aac3440ffab6a9e"
+    },
+    {
+      "english": "Preview saved monthly production",
+      "messageSha256": "e06779aaa08a1de89918786b1b79af1b720d0f852e21379148305b6ca93cf67a"
+    },
+    {
+      "english": "Production plan → Production and food stock records",
+      "messageSha256": "2688728c38f2170dcea3ef8ea9a32ef1cc5d1866a7f9749a887467cd8d0b3ea7"
+    },
+    {
+      "english": "Open a checked mapped site and preview its saved monthly records. Actual records and estimates stay separate.",
+      "messageSha256": "58d1a1966c883bcc93376d0ae91d7ce7d7c0e6bea406898ad5dfd35e4ff1f5f7"
+    }
+  ]
+}

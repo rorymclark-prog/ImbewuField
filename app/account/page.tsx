@@ -96,7 +96,9 @@ export default function AccountPage() {
   const [showPw, setShowPw] = useState(false);
   // Named so the consent screen can say WHICH organisation would see the data, rather than
   // "your organisation" — a person cannot meaningfully consent to an unnamed recipient.
-  const [orgName, setOrgName] = useState<string | null>(null);
+  const orgId = profile?.org_id;
+  const [namedOrg, setNamedOrg] = useState<{ id: string; name: string | null } | null>(null);
+  const orgName = namedOrg?.id === orgId ? namedOrg?.name ?? null : null;
 
   useEffect(() => {
     if (!loading && !user && isBackendConfigured()) router.replace('/login');
@@ -112,8 +114,13 @@ export default function AccountPage() {
   }, [loading]);
 
   useEffect(() => {
-    if (profile?.org_id) getOrganizationName(profile.org_id).then(setOrgName).catch(() => setOrgName(null));
-  }, [profile?.org_id]);
+    if (!orgId) return;
+    let active = true;
+    void getOrganizationName(orgId).catch(() => null).then(name => {
+      if (active) setNamedOrg({ id: orgId, name });
+    });
+    return () => { active = false; };
+  }, [orgId]);
 
   useEffect(() => {
     if (profile) setForm({ name: profile.full_name ?? '', phone: profile.phone ?? '', farmName: profile.farm_name ?? '', language: profile.language ?? 'en' });
@@ -494,11 +501,12 @@ export default function AccountPage() {
           {/* What you share — POPIA consent. Farmers only: it is the farmer's own record, and
               staff/mentor accounts have nothing to consent to. Hidden when the farmer has no
               org, because consent is granted TO an organisation and the rules pin it to theirs. */}
-          {profile?.role === 'farmer' && profile?.org_id && (
-            <>
-
-              <ConsentPanel orgName={orgName} />
-            </>
+          {profile?.role === 'farmer' && profile?.org_id && user && (
+            <ConsentPanel
+              key={JSON.stringify([user.uid, profile.org_id])}
+              orgName={orgName}
+              recipient={{ uid: user.uid, org_id: profile.org_id }}
+            />
           )}
 
           {/* Change password */}

@@ -19,12 +19,15 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { ShieldCheck, Loader2 } from 'lucide-react';
-import { CONSENT_PANEL_HEADING, CONSENT_SCOPES, grantedScopes, hasConsent, type ConsentScope, type FarmerConsent } from '@/lib/consent';
+import { CONSENT_PANEL_HEADING, CONSENT_SCOPES, grantedScopes, hasConsent, type ConsentRecipient, type ConsentScope, type FarmerConsent } from '@/lib/consent';
 import { getMyConsent, revokeAllMyConsent, setMyConsentScope } from '@/lib/db/queries';
 import { accountText,fillAccountText,isAccountDraftLanguage,type AccountValues } from '@/lib/account-copy';
 import { useLanguage } from '@/lib/i18n';
 
-export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
+export default function ConsentPanel({ orgName, recipient: { uid, org_id } }: {
+  orgName?: string | null;
+  recipient: ConsentRecipient;
+}) {
   const { lang,t } = useLanguage();
   const draft=isAccountDraftLanguage(lang);
   const text=(english:string,zulu:string,values:AccountValues={})=>accountText(lang,english,zulu,t,values);
@@ -42,28 +45,28 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
   const load = useCallback(() => {
     setLoading(true);
     setLoadError(false);
-    return getMyConsent()
+    return getMyConsent({ uid, org_id })
       .then((c) => { setConsent(c); setLoading(false); })
       .catch(() => { setLoadError(true); setLoading(false); });
-  }, []);
+  }, [uid, org_id]);
 
   useEffect(() => { void load(); }, [load]);
 
   async function toggle(scope: ConsentScope, next: boolean) {
     setBusy(scope); setError(null);
     try {
-      setConsent(await setMyConsentScope(scope, next));
+      setConsent(await setMyConsentScope(scope, next, { uid, org_id }));
     } catch {
       // Never leave a toggle showing a state that was not saved — on this screen specifically,
       // a switch that looks on but never wrote is a person believing they shared nothing.
       setError('That did not save. Your sharing settings have not changed.');
-      setConsent(await getMyConsent().catch(() => consent));
+      setConsent(await getMyConsent({ uid, org_id }).catch(() => consent));
     } finally { setBusy(null); }
   }
 
   async function stopAll() {
     setBusy('all'); setError(null);
-    try { setConsent(await revokeAllMyConsent()); }
+    try { setConsent(await revokeAllMyConsent({ uid, org_id })); }
     catch { setError('That did not save. Your sharing settings have not changed.'); }
     finally { setBusy(null); }
   }
