@@ -41,10 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '4 November 2026', sha: '7f80c12fc', changes: [
+  { when: '4 November 2026', sha: 'afb197985', changes: [
     'Enter your crop estimates in metric or imperial units.',
     'Check saved bed measurements before reviewing capacity.',
     'Reload changed estimates before saving over newer values.',
+    "New grower accounts can save personal designs without joining an organisation.",
   ], tour: [{ title: 'Choose units for your own estimates', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
     detail: 'Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.' }] },
   { when: '4 November 2026', sha: '86c23a5f1', changes: [

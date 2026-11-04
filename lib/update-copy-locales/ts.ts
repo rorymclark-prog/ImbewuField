@@ -407,5 +407,6 @@ const copy:UpdateCopy={
   "Reload changed estimates before saving over newer values.": "Layicha nakambe swipimanyeto leswi cinceke u nga si hlayisa u siva mimpimo leyi pfuxetiweke sweswinyana.",
   "Choose units for your own estimates": "Hlawula tiyuniti ta swipimanyeto swa wena",
   "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Hlawula m² na kg kumbe ft² na lb eka swipimanyeto swa wena swa ku tala ka swimilana endhawini ni ntiko wa ntshovelo. Kambisisa mimpimo leyi hlayisiweke, kutani u kambisisa tinhlayo ni masiku; leswi i swipimanyeto leswi kunguhatiweke, a hi switsundzuxo swo rima swa le ndhawini leswi tiyisisiweke.",
+  "New grower accounts can save personal designs without joining an organisation.": "Tiakhawunti letintshwa ta varimi ti nga hlayisa tipulani ta tona handle ko joyina nhlangano.",
 };
 export default copy;

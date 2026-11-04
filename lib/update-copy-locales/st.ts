@@ -407,5 +407,6 @@ const copy:UpdateCopy={
   "Reload changed estimates before saving over newer values.": "Laela hape likhakanyo tse fetohileng pele u boloka u nkela litekanyetso tse nchafalitsoeng haufinyane sebaka.",
   "Choose units for your own estimates": "Khetha liyuniti tsa likhakanyo tsa hao",
   "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Khetha m² le kg kapa ft² le lb bakeng sa likhakanyo tsa hao tsa bongata ba limela sebakeng le boima ba kotulo. Hlahloba litekanyo tse bolokiloeng, ebe u hlahloba lipalo le matsatsi; tsena ke likhakanyo tse reriloeng, eseng keletso ea temo ea lehae e netefalitsoeng.",
+  "New grower accounts can save personal designs without joining an organisation.": "Liakhaonto tse ncha tsa balemi li ka boloka meralo ea tsona ntle le ho kena mokhatlong.",
 };
 export default copy;
