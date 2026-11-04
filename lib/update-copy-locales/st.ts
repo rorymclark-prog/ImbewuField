@@ -11,6 +11,12 @@ const copy:UpdateCopy={
   "Check your saved map": "Lekola mmapa wa hao o bolokilweng",
   "Site design": "Moralo wa sebaka",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlahloba sebaka sona seo pele o kenya diphetoho tsa mothusi kapa o bapisa senepe sa kgale.",
+  // Kiambu link descriptions: docs/international/agy-kiambu-link-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
+  "Open checked Kiambu weather bulletin links from the country review.": "Bula lihokelo tsa likoranta tsa boemo ba leholimo tsa Kiambu tse hlahlobiloeng tlhahlobisong ea naha.",
+  "Keep bulletin dates separate from live weather and crop-planning approval.": "Boloka matsatsi a likoranta a arohane le boemo ba leholimo ba hona joale le tumello ea ho rala lijalo.",
+  "Review official county bulletin links": "Hlahloba lihokelo tsa likoranta tsa semmuso tsa setereke",
+  "International → Country review": "Lichaba tsa machaba → Tlhahlobo ea naha",
+  "Choose Kenya and Kiambu to open dated official source links. Check the source for updates; this reference does not supply live weather or crop advice.": "Khetha Kenya le Kiambu ho bula lihokelo tsa mehloli ea semmuso e nang le matsatsi. Hlahloba mohloli bakeng sa lintlafatso; tšupiso ena ha e fane ka boemo ba leholimo ba hona joale kapa keletso ea lijalo.",
   // Country context: docs/international/agy-release-copy-2026-11-03/st.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Netefatsa naha ea sebaka se mmepiloeng pele u sebelisa tataiso ea sona ea moralo oa lijalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Boloka lirekoto tsa hao tsa ho jala le lisebelisoa tsa nesari ea limela ha moralo oa sebaka o ntse o sa fumanehe.",
@@ -325,5 +331,12 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Leka mmapa wa AI o kgabisitsweng",
   "Design Studio → Glossy": "Studio sa moralo → Mmapa o kgabisitsweng",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Bula polasi e bolokilweng, kgetha leqephe ebe o kgetha AI Polished. Ho hlahisa mmapa ka mong ho a lefellwa.",
+  // Kenya soil and extension release wording: docs/international/kenya-soil-extension-release-wording-2026-11-04/drafts.json; unreviewed.
+  "Open Kenya’s national and Kiambu extension referral pages from the country review.": "Bula maqephe a tšupiso a keletso ea temo a naha ea Kenya le a Kiambu ho tsoa tlhahlobong ea naha.",
+  "Open Kenya’s historical soil catalogue from the country review.": "Bula lethathamo la nalane la mobu la Kenya ho tsoa tlhahlobong ea naha.",
+  "Find Kenya extension references": "Fumana litšupiso tsa keletso ea temo tsa Kenya",
+  "Choose Kenya and open Agricultural extension to find the ministry and county links.": "Kgetha Kenya ebe o bula Keletso ea temo ho fumana lihokelo tsa lekala le tsa setereke.",
+  "Review Kenya’s historical soil reference": "Hlahloba tšupiso ea nalane ea mobu ea Kenya",
+  "Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.": "Kgetha Kenya ebe o bula tšupiso ea Mebu. Lethathamo lena le hlalosa likhakanyo tsa nalane bakeng sa lithuto tsa naha.",
 };
 export default copy;

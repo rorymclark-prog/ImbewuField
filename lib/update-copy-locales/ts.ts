@@ -11,6 +11,12 @@ const copy:UpdateCopy={
   "Check your saved map": "Kambela mepe wa wena lowu hlayisiweke",
   "Site design": "Dizayini ya ndhawu",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Kambela ndhawu yoleyo u nga si tirhisa mindzulamiso ya mupfuni kumbe ku pimanisa xifaniso xa khale.",
+  // Kiambu link descriptions: docs/international/agy-kiambu-link-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
+  "Open checked Kiambu weather bulletin links from the country review.": "Pfula swihlanganisi swa switiviso swa maxelo swa Kiambu leswi kamberiweke eka ku kambisisa ka tiko.",
+  "Keep bulletin dates separate from live weather and crop-planning approval.": "Hlayisa masiku ya switiviso ma hambanile ni maxelo ya nkarhi wolowo ni ku pfumeleriwa ka makunguhato ya swibyariwa.",
+  "Review official county bulletin links": "Kambisisa swihlanganisi swa switiviso swa le nawini swa xifundzantsongo",
+  "International → Country review": "Matiko ya misava → Nkambisiso wa tiko",
+  "Choose Kenya and Kiambu to open dated official source links. Check the source for updates; this reference does not supply live weather or crop advice.": "Hlawula Kenya na Kiambu ku pfula swihlanganisi swa swihlovo swa le nawini leswi nga na masiku. Kamba xihlovo ku kuma swintshuxo; xikombo lexi a xi nyiki maxelo ya nkarhi wolowo kumbe switsundzuxo swa swibyariwa.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",
@@ -325,5 +331,12 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Ringeta mepe wa AI lowu sasekisiweke",
   "Design Studio → Glossy": "Xitudiyo xo pulana → Mepe lowu sasekisiweke",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Pfula purasi leri hlayisiweke, hlawula phepha kutani u hlawula AI Polished. Mepe wun’wana ni wun’wana lowu endliwaka wa hakeriwa.",
+  // Kenya soil and extension release wording: docs/international/kenya-soil-extension-release-wording-2026-11-04/drafts.json; unreviewed.
+  "Open Kenya’s national and Kiambu extension referral pages from the country review.": "Pfula maphepha ya xikombo xa switsundzuxo swa vurimi ya tiko ra Kenya na ya Kiambu ku suka eka nhlelo wa tiko.",
+  "Open Kenya’s historical soil catalogue from the country review.": "Pfula khathaloko ya matimu ya misava ya Kenya ku suka eka nhlelo wa tiko.",
+  "Find Kenya extension references": "Kuma swikombo swa switsundzuxo swa vurimi swa Kenya",
+  "Choose Kenya and open Agricultural extension to find the ministry and county links.": "Hlawula Kenya kutani u pfula Switsundzuxo swa vurimi ku kuma swihlanganisi swa vuholobye na swa khawunti.",
+  "Review Kenya’s historical soil reference": "Hlola xikombo xa matimu xa misava ya Kenya",
+  "Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.": "Hlawula Kenya kutani u pfula xikombo xa Misava. Khathaloko yi hlamusela swiringanyeto swa matimu swa tidyondzo ta tiko.",
 };
 export default copy;

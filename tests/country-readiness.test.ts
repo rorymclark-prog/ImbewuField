@@ -40,7 +40,9 @@ test('all engineering pilots preserve separate evidence roles and remain unrevie
     assert.equal(profile.stage, 'engineering-pilot'); assert.equal(profile.agronomyReview.status, 'not-reviewed');
     for (const category of EVIDENCE_CATEGORIES) assert.ok(profile.sources.some((source) => source.category === category));
     for (const source of profile.sources) {
-      assert.match(source.url, /^https:\/\//); assert.equal(source.accessedOn, AS_OF);
+      assert.match(source.url, /^https:\/\//);
+      const addedOnNovemberThird = ['ke-isric-sotwis', 'ke-extension-ministry-referral', 'ke-extension-kiambu-department'];
+      assert.equal(source.accessedOn, addedOnNovemberThird.includes(source.id) ? '2026-11-03' : AS_OF);
       assert.ok(source.verifiedClaim && source.limitations && source.missingDataBehavior);
       assert.ok(['known', 'unknown'].includes(source.licence.status));
     }
@@ -108,4 +110,48 @@ test('page modification metadata never supplies a missing publication date', () 
   const source = reviewedFixture().sources[0];
   assert.equal(sourceEvidenceState({ ...source, publishedOn: null, lastModifiedOn: AS_OF }, AS_OF), 'undated');
   assert.equal(sourceEvidenceState({ ...source, lastModifiedOn: null }, AS_OF), 'available-reference');
+});
+
+test('Kenya’s historical soils catalogue appears in the dossier without satisfying local soil readiness', () => {
+  const date = '2026-11-03';
+  const context = { countryCode: 'KE', agriculturalRegionId: 'test-region' };
+  const reference = evaluateCountryReadiness(context, date);
+  const soils = reference.evidence.find(entry => entry.category === 'soils')!;
+  const historical = soils.sources.find(source => source.id === 'ke-isric-sotwis')!;
+  assert.equal(historical.publishedOn, '2004-02-01');
+  assert.equal(sourceEvidenceState(historical, date), 'background-reference');
+  assert.equal(soils.availableCount, 0);
+  assert.ok(reference.gaps.includes('Current verified soils reference evidence is missing.'));
+
+  const profile = reviewedFixture();
+  profile.sources = profile.sources.filter(source => source.category !== 'soils').concat(historical);
+  profile.agronomyReview.sourceIds = profile.sources.map(source => source.id);
+  assert.equal(evaluateCountryReadiness(context, date, [profile]).localReviewComplete, false);
+
+  // A complete set of other evidence still cannot use historical soil context as the region definition.
+  profile.sources.push({ ...profile.sources[0], id: 'current-soils', category: 'soils' });
+  profile.agronomyReview.sourceIds.push('current-soils');
+  assert.equal(evaluateCountryReadiness(context, date, [profile]).localReviewComplete, true);
+  profile.regions[0].definitionSourceId = historical.id;
+  assert.equal(evaluateCountryReadiness(context, date, [profile]).localReviewComplete, false);
+});
+
+test('Kenya extension referrals cannot substitute for reviewed local extension evidence', () => {
+  const context = { countryCode: 'KE', agriculturalRegionId: 'test-region' };
+  const asOf = '2026-11-03';
+  const result = evaluateCountryReadiness(context, asOf);
+  const extension = result.evidence.find(entry => entry.category === 'agricultural-extension')!;
+  const referrals = extension.sources.filter(source => source.id.startsWith('ke-extension-'));
+  assert.deepEqual(referrals.map(source => source.id), ['ke-extension-ministry-referral', 'ke-extension-kiambu-department']);
+  assert.ok(referrals.every(source => source.publishedOn === null && source.licence.status === 'unknown'));
+  assert.equal(extension.availableCount, 0);
+
+  const profile = reviewedFixture();
+  profile.sources = profile.sources.filter(source => source.category !== 'agricultural-extension');
+  // Even if a publication date is established, institutional referrals remain background.
+  profile.sources.push(...referrals.map(source => ({ ...source, publishedOn: asOf })));
+  profile.agronomyReview.sourceIds = profile.sources.map(source => source.id);
+  const reviewed = evaluateCountryReadiness(context, asOf, [profile]);
+  assert.ok(reviewed.gaps.includes('Current verified agricultural-extension reference evidence is missing.'));
+  assert.equal(reviewed.localReviewComplete, false);
 });

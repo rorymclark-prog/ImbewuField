@@ -1,0 +1,41 @@
+{
+  "receipts": [
+    {
+      "source": "ministry",
+      "requestedUrl": "https://kilimo.go.ke/frequently-asked-questions/",
+      "effectiveUrl": "https://kilimo.go.ke/frequently-asked-questions/",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "fetchedAtUtc": "2026-11-03T22:47:42.919835+00:00",
+      "bytes": 147303,
+      "sha256": "de9d3c2f9ee649f137a30d3b23d3461b5dd0ba2672dcf39f38ab021e04a761a4"
+    },
+    {
+      "source": "county",
+      "requestedUrl": "https://kiambu.go.ke/departments/agriculture-livestock-irrigation/",
+      "effectiveUrl": "https://kiambu.go.ke/departments/agriculture-livestock-irrigation/",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "fetchedAtUtc": "2026-11-03T22:47:42.920153+00:00",
+      "bytes": 59370,
+      "sha256": "2d435ef5259e0fe890322dd40d6e74f9d28dbe1510dc131630fe1e1408a37352"
+    },
+    {
+      "source": "kalro",
+      "requestedUrl": "https://keep.kalro.org/",
+      "effectiveUrl": "https://keep.kalro.org/",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "fetchedAtUtc": "2026-11-03T22:47:42.920286+00:00",
+      "bytes": 50784,
+      "sha256": "4f597b091333282686e88986ca6b683d84f8056b933f01840bdf8115748be9c1"
+    }
+  ],
+  "review": {
+    "ministry": "Public FAQ with national referral routes for extension",
+    "county": "Public department page describing its mission",
+    "kalro": "Application shell only. Service content unverified.",
+    "serviceAccessVerified": false,
+    "localAgronomyReviewed": false
+  }
+}

@@ -41,6 +41,19 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 November 2026', sha: '449ae9e10', changes: [
+    'Open Kenya’s national and Kiambu extension referral pages from the country review.',
+  ], tour: [{ title: 'Find Kenya extension references', where: 'International → Country review', href: '/international',
+    detail: 'Choose Kenya and open Agricultural extension to find the ministry and county links.' }] },
+  { when: '3 November 2026', sha: 'd364d769f', changes: [
+    'Open Kenya’s historical soil catalogue from the country review.',
+  ], tour: [{ title: 'Review Kenya’s historical soil reference', where: 'International → Country review', href: '/international',
+    detail: 'Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.' }] },
+  { when: '3 November 2026', sha: '4305e07aa6', changes: [
+    'Open checked Kiambu weather bulletin links from the country review.',
+    'Keep bulletin dates separate from live weather and crop-planning approval.',
+  ], tour: [{ title: 'Review official county bulletin links', where: 'International → Country review', href: '/international',
+    detail: 'Choose Kenya and Kiambu to open dated official source links. Check the source for updates; this reference does not supply live weather or crop advice.' }] },
   { when: '3 November 2026', sha: '56a2707f9', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
     'Keep your sowing records and nursery equipment while local planning is unavailable.',

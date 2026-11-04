@@ -11,6 +11,12 @@ const copy:UpdateCopy={
   "Check your saved map": "Ṱolani mapa waṋu wo vhulungwaho",
   "Site design": "Pulane ya fhethu",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Ṱolani henefho fhethu musi ni sa athu shumisa tshanduko dza muthusi kana u vhambedza tshifanyiso tsha kale.",
+  // Kiambu link descriptions: docs/international/agy-kiambu-link-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
+  "Open checked Kiambu weather bulletin links from the country review.": "Vhulani vhuṱanganyi ha zwiṋwalwa zwa mutsho zwa Kiambu zwo tolwaho u bva kha tsedzuluso ya shango.",
+  "Keep bulletin dates separate from live weather and crop-planning approval.": "Vhulungani maduvha a zwiṋwalwa o fhambana na mutsho wa zwino na thendelo ya u pulana zwoṱowaho.",
+  "Review official county bulletin links": "Sedzulusani vhuṱanganyi ha zwiṋwalwa zwa tshiofisi zwa vundu",
+  "International → Country review": "Tshaka dza mashango → Tsedzuluso ya shango",
+  "Choose Kenya and Kiambu to open dated official source links. Check the source for updates; this reference does not supply live weather or crop advice.": "Nangani Kenya na Kiambu u vhula vhuṱanganyi ha zwisima zwa tshiofisi zwi re na maduvha. Tolani tshisima u wana zwiswa; tshisumbedzo itshi a tshi ṋetshedzi mutsho wa zwino kana nyeletshedzo ya zwoṱowaho.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Khwathisedzani shango ḽa fhethu ho mapiwaho musi ni sa athu shumisa vhulangeli ha u pulana zwilimwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Vhulungani rekhodo dzaṋu dza u zwala na zwishumiswa zwa nese musi pulane ya henefho i sa athu vha hone.",
@@ -325,5 +331,12 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Lingani mepe yo nakiswaho nga AI",
   "Design Studio → Glossy": "Studio tsha u pulana → Mepe yo nakiswaho",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vhulani bulasi yo vhulungwaho, khethani siaṱari ni kone u khetha AI Polished. U bveledza mepe iṅwe na iṅwe zwi a badelwa.",
+  // Kenya soil and extension release wording: docs/international/kenya-soil-extension-release-wording-2026-11-04/drafts.json; unreviewed.
+  "Open Kenya’s national and Kiambu extension referral pages from the country review.": "Vulani masiaṱari a ndaedzo dza nyeletshedzo ya vhulimi dza lushaka lwa Kenya na dza Kiambu u bva kha tsedzuluso ya shango.",
+  "Open Kenya’s historical soil catalogue from the country review.": "Vulani khathalogo ya kale ya mavu a Kenya u bva kha tsedzuluso ya shango.",
+  "Find Kenya extension references": "Wanani ndaedzo dza nyeletshedzo ya vhulimi dza Kenya",
+  "Choose Kenya and open Agricultural extension to find the ministry and county links.": "Nangani Kenya ni vule Nyeletshedzo ya vhulimi u itela u wana zwitanganyi zwa muhasho na zwa khauṋthi.",
+  "Review Kenya’s historical soil reference": "Tolani ndaedzo ya kale ya mavu a Kenya",
+  "Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.": "Nangani Kenya ni vule ndaedzo ya Mavu. Khathalogo i ṱalusa dzinganyelo dza kale dza ngudo dza lushaka.",
 };
 export default copy;

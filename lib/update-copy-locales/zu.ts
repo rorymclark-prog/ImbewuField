@@ -11,6 +11,12 @@ const copy:UpdateCopy={
   "Check your saved map": "Hlola imephu yakho egciniwe",
   "Site design": "Ukwakheka kwendawo",
   "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlola yona leyo ndawo ngaphambi kokwamukela izinguquko zomsizi noma ukuqhathanisa isithombe sakudala.",
+  // Kiambu link descriptions: docs/international/agy-kiambu-link-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
+  "Open checked Kiambu weather bulletin links from the country review.": "Vula izixhumanisi zezaziso zesimo sezulu zase-Kiambu ezihloliwe ekubuyekezweni kwezwe.",
+  "Keep bulletin dates separate from live weather and crop-planning approval.": "Gcina izinsuku zezaziso zihlukile esimweni sezulu esibukhoma nasekuvunyelweni kokuhlelwa kwezitshalo.",
+  "Review official county bulletin links": "Buyekeza izixhumanisi zezaziso ezisemthethweni zesifunda",
+  "International → Country review": "Amazwe ngamazwe → Ukubuyekezwa kwezwe",
+  "Choose Kenya and Kiambu to open dated official source links. Check the source for updates; this reference does not supply live weather or crop advice.": "Khetha i-Kenya ne-Kiambu ukuze uvule izixhumanisi zemithombo esemthethweni enezinsuku. Bheka umthombo ukuze uthole izibuyekezo; lokhu kubhekisela akuhlinzeki ngesimo sezulu esibukhoma noma ngezeluleko zezitshalo.",
   // Country context: docs/international/agy-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Qinisekisa izwe lesayithi edwetshiwe ngaphambi kokusebenzisa isiqondiso sayo sokuhlela izitshalo.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Gcina amarekhodi akho okuhlwanyela nezinto zokusebenza zenkulisa yezitshalo ngenkathi ukuhlela kwendawo kungatholakali.",
@@ -325,5 +331,12 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Zama imephu ecwebezelayo ye-AI",
   "Design Studio → Glossy": "Isitudiyo sokuklama → Imephu ecwebezelayo",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vula ipulazi elilondoloziwe, khetha ikhasi bese ukhetha i-AI Polished. Ukukhiqiza ngakunye kuyakhokhelwa.",
+  // Kenya soil and extension release wording: docs/international/kenya-soil-extension-release-wording-2026-11-04/drafts.json; unreviewed.
+  "Open Kenya’s national and Kiambu extension referral pages from the country review.": "Vula amakhasi okudlulisela ezolimo zokweluleka zikazwelonke zase-Kenya nezase-Kiambu kusuka ekubuyekezweni kwezwe.",
+  "Open Kenya’s historical soil catalogue from the country review.": "Vula ikhathalogi yomlando yenhlabathi yase-Kenya kusuka ekubuyekezweni kwezwe.",
+  "Find Kenya extension references": "Thola izinkomba zezolimo zokweluleka zase-Kenya",
+  "Choose Kenya and open Agricultural extension to find the ministry and county links.": "Khetha i-Kenya bese uvula Ezolimo zokweluleka ukuze uthole izixhumanisi zomnyango nezesezifundeni.",
+  "Review Kenya’s historical soil reference": "Buyekeza inkomba yomlando yenhlabathi yase-Kenya",
+  "Choose Kenya and open the Soils reference. The catalogue describes historical estimates for national studies.": "Khetha i-Kenya bese uvula inkomba yeZinhlabathi. Ikhathalogi ichaza izilinganiso zomlando zezifundo zikazwelonke.",
 };
 export default copy;
