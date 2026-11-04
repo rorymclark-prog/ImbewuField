@@ -504,17 +504,45 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
   );
 });
 
-test('the shared exact-layer stack puts the boundary below every sheet’s canopies', () => {
-  // Sheet 06 was corrected first, but a Structures-only repair would leave sheet 07 drawing a
-  // fence over context trees. The shared overlay owns this order, before any sheet branch.
+test('the shared exact-layer stack puts each boundary treatment below the sheet’s features', async () => {
+  // Zones has a quieter boundary than the other sheets. Exercise paint order rather than
+  // treating the first Zones conditional as the start of feature painting.
   const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
-  const start = source.indexOf('async function buildExactLayerOverlay(');
-  const end = source.indexOf('/** Sheet 01 uses the same measured editorial composition', start);
-  assert.ok(start >= 0 && end > start, 'expected the shared exact-layer overlay');
-  const overlay = source.slice(start, end);
-  const boundary = overlay.indexOf('drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);');
-  const firstSheetBranch = overlay.indexOf("if (filter === 'zones')");
-  assert.ok(boundary >= 0 && boundary < firstSheetBranch, 'boundary must paint before context or content items');
-  const calls = overlay.match(/^\s*drawBlueprintBoundary\(/gm) ?? [];
-  assert.equal(calls.length, 1, 'one shared boundary pass prevents sheet-specific draw-order drift');
+  const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  let declaration: ts.FunctionDeclaration | undefined;
+  tree.forEachChild(node => {
+    if (ts.isFunctionDeclaration(node) && node.name?.text === 'buildExactLayerOverlay') declaration = node;
+  });
+  assert.ok(declaration);
+  const javascript = ts.transpileModule(declaration.getText(tree), {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
+  }).outputText;
+  const events: string[] = [];
+  const feature = () => events.push('feature');
+  const ctx = { save() {}, restore() {}, drawImage() {}, globalAlpha: 1 };
+  const scope = {
+    preloadReferenceFeatureArtwork: async () => {},
+    document: { createElement: () => ({ getContext: () => ctx }) },
+    drawBlueprintBoundary: () => events.push('boundary'),
+    drawZoneBoundary: () => events.push('zone-boundary'),
+    drawExactFeaturesWithPresentation: (_ctx: unknown, _w: number, _h: number, _style: unknown, paint: (ctx: unknown) => void) => paint(ctx),
+    drawFilteredLines: () => {},
+    drawFilteredItems: feature,
+    drawWaterFeatures: feature,
+    drawContextItems: feature,
+    drawWaterRoutes: () => {},
+    drawWaterLeaderLabels: () => {},
+    drawEarthworksFeatures: feature,
+    buildZoneOverlay: () => undefined,
+    EXACT_CONTEXT_ALPHA: { zones: 0.5, structures: 0.5 },
+    drainCanvasToDataUrl: () => 'overlay',
+  };
+  const paint = new Function(...Object.keys(scope), javascript + '; return buildExactLayerOverlay;')(...Object.values(scope));
+  for (const sheet of ['zones', 'water', 'earthworks', 'planting', 'structures', 'all']) {
+    events.length = 0;
+    await paint({}, { imgW: 100, mPerPx: 1, satDataUrl: 'photo' }, {}, sheet, 100, 100);
+    assert.equal(events[0], sheet === 'zones' ? 'zone-boundary' : 'boundary', sheet);
+    assert.ok(events.includes('feature'), sheet + ' must exercise actual feature painting');
+    assert.equal(events.filter(event => event.endsWith('boundary')).length, 1, sheet + ' paints one boundary');
+  }
 });

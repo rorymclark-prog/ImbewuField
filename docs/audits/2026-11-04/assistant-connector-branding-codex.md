@@ -53,3 +53,42 @@ if the host still substitutes its default image. Continue native OAuth,
 selected-site persistence and original-file readback from the previous audit.
 
 The logo-path and listing fields follow the current [OpenAI listing metadata reference](https://developers.openai.com/plugins/deploy/submission#listing-metadata). The square 512-pixel PNG also meets the documented [image requirements](https://developers.openai.com/plugins/deploy/submission-errors#image-errors). These source checks are recorded separately from the host's observed default image.
+
+
+## Later verification and current-main integration
+
+The callback candidate now integrates map main `81d696f1800151722e088dea19be572fe6de6781`
+at `40e462ce77f5bc683ea4b6fce25ce6a0b00157b6`. This branding candidate follows that
+integration. The sole additional conflict was the dated audit index; all three
+links are retained. Connector functions, package bytes, icon and proxy are
+unchanged from the original branding head `4145296e2`. The map renderer/tests
+remain byte-identical to main, with no new map picture or `PLAN_VERSION` edit.
+
+Later checks supersede only the earlier verification limits:
+
+- MCP-002 now has 18 actual authenticated native Codex checks, with a matching
+  OAuth callback and selected-site original/draft readback. Only authorization
+  GET used the deployed corrected preview; issuer, consent, token, MCP and storage
+  remained canonical. The published-entry and ordinary Claude gates remain open.
+- The callback audit records 34 live transfer checks and 35 live write checks.
+  Original synthetic notes/tank status were restored, geometry stayed intact,
+  all test grants were revoked and the native cached login was removed.
+- The original auth-head `02ff1adf4` full suite finished with exit 0, 6,378 total,
+  6,377 passed, zero failed and one existing TODO. It is baseline evidence for
+  that head, not a full-suite result for this updated integration.
+- A fresh post-full native catalogue read still reports installed/enabled 1.0.3,
+  the correct name, app website and forest colour, but null logo/composer URLs.
+  MCP-014 remains open. No further package update or public submission was made.
+
+Both earlier heads' rules, focused-render and previews passed. Updated heads
+require fresh checks before release. The source-unchanged 110 SDK/emulator
+checks retain their original scope. Native/live and terminal suite evidence is
+linked from [issue #35](https://github.com/rorymclark-prog/ImbewuField/issues/35#issuecomment-6623733778).
+
+The resolved branding integration passed ordered Node 24 typecheck, the 90
+connector/title/release/Sector checks, functions compiler/entry verification
+and whitespace. The inherited map source is the same source that passed 638
+shared rendering checks on the integrated auth parent. Functions and package
+source remain identical to the earlier 110-check SDK/emulator candidate. The
+new integration heads still require their own release CI; no old full-suite
+result is relabelled as a new-head pass.
