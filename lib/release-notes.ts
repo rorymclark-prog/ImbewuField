@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: '1aa3136bb', changes: [
+    'See clear source dates and review limits in each country’s evidence cards.',
+  ] },
   { when: '3 November 2026', sha: 'd49922455', changes: [
     'Open the Campinas agricultural office directory from Brazil’s country review.',
   ], tour: [{ title: 'Find the Campinas office directory', where: 'International → Country review', href: '/international',

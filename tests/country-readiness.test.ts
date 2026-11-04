@@ -13,8 +13,8 @@ test('a pilot country and translated interface cannot masquerade as reviewed loc
 });
 
 import { COUNTRY_PROFILES, COUNTRY_RESEARCH_QUEUE, EUROPE_RESEARCH_NOTE } from '@/lib/international/countries/registry';
-import { sourceEvidenceState } from '@/lib/international/countries/readiness';
-import { EVIDENCE_CATEGORIES, type CountryProfile } from '@/lib/international/countries/types';
+import { sourceEvidenceState, sourceEvidencePresentationLabel } from '@/lib/international/countries/readiness';
+import { EVIDENCE_CATEGORIES, type CountryProfile, type CountrySource } from '@/lib/international/countries/types';
 
 const AS_OF = '2026-11-01';
 function reviewedFixture(): CountryProfile {
@@ -166,4 +166,50 @@ test('the Campinas office directory remains Brazil background and cannot satisfy
   // Positive control. The same otherwise complete fixture passes if the reference qualifies.
   delete dated.backgroundOnly;
   assert.equal(evaluateCountryReadiness(context, date, [profile]).localReviewComplete, true);
+});
+
+test('sourceEvidencePresentationLabel maps canonical states to exact human labels without altering readiness or masking background status', () => {
+  const base = reviewedFixture().sources[0];
+
+  // 1. Available reference => 'Dated source reference'
+  const available: CountrySource = { ...base, publishedOn: AS_OF, accessedOn: AS_OF, reviewDueOn: null, verification: 'content-read' };
+  delete available.backgroundOnly;
+  assert.equal(sourceEvidenceState(available, AS_OF), 'available-reference');
+  assert.equal(sourceEvidencePresentationLabel(available, AS_OF), 'Dated source reference');
+
+  // 2. Background reference (dated) => 'Dated source reference'
+  const backgroundDated: CountrySource = { ...available, backgroundOnly: true };
+  assert.equal(sourceEvidenceState(backgroundDated, AS_OF), 'background-reference');
+  assert.equal(sourceEvidencePresentationLabel(backgroundDated, AS_OF), 'Dated source reference');
+
+  // 3. Missing verification => 'Source evidence missing'
+  const missing: CountrySource = { ...available, verification: 'unavailable' };
+  assert.equal(sourceEvidenceState(missing, AS_OF), 'missing');
+  assert.equal(sourceEvidencePresentationLabel(missing, AS_OF), 'Source evidence missing');
+
+  // 4. Stale/overdue review => 'Source review overdue'
+  const stale: CountrySource = { ...available, reviewDueOn: '2026-10-31' };
+  assert.equal(sourceEvidenceState(stale, AS_OF), 'stale');
+  assert.equal(sourceEvidencePresentationLabel(stale, AS_OF), 'Source review overdue');
+
+  // 5. Undated publication => 'Source date unverified'
+  const undated: CountrySource = { ...available, publishedOn: null };
+  assert.equal(sourceEvidenceState(undated, AS_OF), 'undated');
+  assert.equal(sourceEvidencePresentationLabel(undated, AS_OF), 'Source date unverified');
+
+  // Background qualifier must not mask missing, stale or undated states
+  const backgroundMissing: CountrySource = { ...missing, backgroundOnly: true };
+  assert.equal(sourceEvidenceState(backgroundMissing, AS_OF), 'missing');
+  assert.equal(sourceEvidencePresentationLabel(backgroundMissing, AS_OF), 'Source evidence missing');
+
+  const backgroundStale: CountrySource = { ...stale, backgroundOnly: true };
+  assert.equal(sourceEvidenceState(backgroundStale, AS_OF), 'stale');
+  assert.equal(sourceEvidencePresentationLabel(backgroundStale, AS_OF), 'Source review overdue');
+
+  const backgroundUndated: CountrySource = { ...undated, backgroundOnly: true };
+  assert.equal(sourceEvidenceState(backgroundUndated, AS_OF), 'undated');
+  assert.equal(sourceEvidencePresentationLabel(backgroundUndated, AS_OF), 'Source date unverified');
+
+  // Throws RangeError on invalid date
+  assert.throws(() => sourceEvidencePresentationLabel(available, 'invalid-date'), RangeError);
 });

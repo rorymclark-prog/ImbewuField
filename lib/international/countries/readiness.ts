@@ -16,6 +16,27 @@ export function sourceEvidenceState(source: CountrySource, asOf: string): 'avail
   return source.backgroundOnly ? 'background-reference' : 'available-reference';
 }
 
+export type SourceEvidencePresentationLabel =
+  | 'Dated source reference'
+  | 'Source evidence missing'
+  | 'Source review overdue'
+  | 'Source date unverified';
+
+export function sourceEvidencePresentationLabel(source: CountrySource, asOf: string): SourceEvidencePresentationLabel {
+  const state = sourceEvidenceState(source, asOf);
+  switch (state) {
+    case 'available-reference':
+    case 'background-reference':
+      return 'Dated source reference';
+    case 'missing':
+      return 'Source evidence missing';
+    case 'stale':
+      return 'Source review overdue';
+    case 'undated':
+      return 'Source date unverified';
+  }
+}
+
 export function evaluateCountryReadiness(context: CountryContext, asOf: string, profiles: readonly CountryProfile[] = COUNTRY_PROFILES) {
   if (!validDate(asOf)) throw new RangeError('A real assessment date is required.');
   const country = profiles.find((profile) => profile.code === context.countryCode.toUpperCase());
