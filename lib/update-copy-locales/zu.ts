@@ -393,5 +393,13 @@ const copy:UpdateCopy={
   "Prepare grouped seedling and seed counts from your proposed crop plan.": "Lungiselela izibalo zezithombo nezembewu ezihlanganiswe ngamaqoqo zisuka ohlelweni lwakho lwezitshalo oluhlongozwayo.",
   "Review nursery preparation": "Bukeza amalungiselelo endawo yezithombo",
   "Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.": "Hlola izinto zokusebenza zendawo yezithombo ezinezinsuku ezibekiwe, ubukeze amaqoqo ezithombo ezizotshalwa aboniswe lapha bese ulanda iphepha lokulungiselela. Izibalo ziyizilinganiso zokuhlela; izidingo ezingaziwa zihlala zingaziwa.",
+  // Own nursery preparation PDF release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Download a printable nursery preparation sheet from your own crop proposal.": "Landa iphepha lokulungiselela indawo yezithombo eliphrintekayo elisuselwa ohlelweni lwakho lwezitshalo oluhlongozwayo.",
+  "Print nursery preparation": "Phrinta amalungiselelo endawo yezithombo",
+  "Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.": "Bukeza imininingwane yamanje oyifakile yendawo yezithombo, bese ulanda i-PDF yokulungiselela. Igcina izibalo ezihleliwe, izidingo ezingakapheleli nezamba ezingaziwa zihlukile ekuhlwanyeleni okubonwe ngempela noma esitokweni esibonwe ngempela.",
+  // Planned nursery batch cards release (lib/release-notes.ts): UNREVIEWED Codex AI drafts; exact English source retained.
+  "Print planned nursery batch cards with dates and separate seedling counts.": "Phrinta amakhadi amaqoqo ahleliwe endawo yezithombo, anezinsuku nezibalo zezithombo ezihlukene.",
+  "Print planned batch cards": "Phrinta amakhadi amaqoqo ahleliwe",
+  "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Sebenzisa isiphakamiso sendawo yezithombo esibukeziwe ukuze uphrinte amakhadi amaqoqo. Izibalo nezinsuku kuhlala kuhleliwe; uhlelo lokusebenza aluwalondolozi amanothi okuhlwanyela naweqoqo lembewu abhalwe ngesandla.",
 };
 export default copy;

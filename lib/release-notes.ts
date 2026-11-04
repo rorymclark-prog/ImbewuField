@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: '3eec3c0f0', changes: [
+    'Print planned nursery batch cards with dates and separate seedling counts.',
+  ], tour: [{ title: 'Print planned batch cards', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.' }] },
+  { when: '4 November 2026', sha: '0831af329', changes: [
+    'Download a printable nursery preparation sheet from your own crop proposal.',
+  ], tour: [{ title: 'Print nursery preparation', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.' }] },
   { when: '4 November 2026', sha: '0831af329', changes: [
     'Review your own nursery space in square metres or square feet.',
     'Prepare grouped seedling and seed counts from your proposed crop plan.',

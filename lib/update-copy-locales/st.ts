@@ -393,5 +393,13 @@ const copy:UpdateCopy={
   "Prepare grouped seedling and seed counts from your proposed crop plan.": "Lokisa lipalo tsa limela tse nyenyane le tsa peo, tse hlophisitsoeng ka lihlopha, ho latela moralo oa hao oa lijalo o sisintsoeng.",
   "Review nursery preparation": "Hlahloba tokisetso ea sebaka sa lipeo",
   "Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.": "Hlahloba lisebelisoa tsa sebaka sa lipeo tse nang le matsatsi, hlahloba lihlopha tse bontšitsoeng tsa limela tse tla fetisetsoa tšimong, ’me u jarolle leqephe la tokisetso. Lipalo ke likhakanyo tsa moralo; litlhoko tse sa tsejoeng li lula li sa tsejoe.",
+  // Own nursery preparation PDF release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Download a printable nursery preparation sheet from your own crop proposal.": "Jarolla leqephe le ka hatisoang la tokisetso ea sebaka sa lipeo, le tsoang moralong oa hao oa lijalo o sisintsoeng.",
+  "Print nursery preparation": "Hatisa tokisetso ea sebaka sa lipeo",
+  "Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.": "Hlahloba lintlha tsa hona joale tseo u li kentseng bakeng sa sebaka sa lipeo, ebe u jarolla PDF ea tokisetso. E boloka lipalo tse reriloeng, litlhoko tse sa fellang le likakaretso tse sa tsejoeng li arohane le ho jala ho bonoeng ka sebele kapa setoko se bonoeng ka sebele.",
+  // Planned nursery batch cards release (lib/release-notes.ts): UNREVIEWED Codex AI drafts; exact English source retained.
+  "Print planned nursery batch cards with dates and separate seedling counts.": "Hatisa likarete tsa lihlopha tse reriloeng tsa sebaka sa lipeo, tse nang le matsatsi le lipalo tse arohaneng tsa limela tse nyenyane.",
+  "Print planned batch cards": "Hatisa likarete tsa lihlopha tse reriloeng",
+  "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Sebelisa tlhahiso ea sebaka sa lipeo e hlahlobiloeng ho hatisa likarete tsa lihlopha. Lipalo le matsatsi li lula li reriloe; lenaneo ha le boloke lintlha tsa ho jala le tsa sehlopha sa peo tse ngotsoeng ka letsoho.",
 };
 export default copy;

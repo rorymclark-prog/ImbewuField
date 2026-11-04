@@ -11,7 +11,7 @@ import { buildGrowerNurseryForecast, isGrowerNurseryForecastCurrent, nurserySett
   type GrowerNurseryRequest, type GrowerNurseryResult, type GrowerNurseryResourceWindow,
   type GrowerNurseryReservation } from '@/lib/international/grower-nursery';
 import type { GrowerInput } from '@/lib/international/grower-planning';
-import { buildGrowerNurseryCsv, buildGrowerNurseryPreparationCsv, growerNurseryIssueText as issueText } from '@/lib/nursery-export';
+import { buildGrowerNurseryCsv, buildGrowerNurseryPreparationCsv, buildGrowerNurseryPreparationPdf, buildGrowerNurseryBatchLabelsPdf, growerNurseryIssueText as issueText } from '@/lib/nursery-export';
 import { downloadFile } from '@/lib/file-delivery';
 import { isSampleMode } from '@/lib/sample-mode';
 import {
@@ -396,18 +396,34 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
     }
   }
 
-  async function exportCsv(kind: 'resource-review' | 'preparation' = 'resource-review') {
+  async function exportReview(kind: 'resource-review' | 'preparation' | 'preparation-pdf' | 'batch-cards-pdf' = 'resource-review') {
     if (!shown || busy || shown.result.fingerprint === null) return;
-    if (kind === 'preparation' && preparation?.status !== 'available') return;
+    if (kind !== 'resource-review' && preparation?.status !== 'available') return;
     const turn = ++generation.current, snapshot = shown, snapshotKey = key, snapshotSample = isSampleMode();
+    const sameDisplay = () => generation.current === turn && live.current.key === snapshotKey && isSampleMode() === snapshotSample;
+    const sameInputs = () => isGrowerNurseryForecastCurrent(snapshot.result, makeRequest(snapshot.request.settingsReview.state === 'provided'
+      ? snapshot.request.settingsReview.provenance.recordedAt : snapshot.request.horizon.state === 'provided'
+        ? snapshot.request.horizon.provenance.recordedAt : ''));
     setBusy(true); setMessage('');
     try {
       if (!await props.onCheckCurrent(props.review)) throw Error('stale');
-      if (generation.current !== turn || live.current.key !== snapshotKey || isSampleMode() !== snapshotSample) return;
-      const fresh = makeRequest(snapshot.request.settingsReview.state === 'provided'
-        ? snapshot.request.settingsReview.provenance.recordedAt : snapshot.request.horizon.state === 'provided'
-          ? snapshot.request.horizon.provenance.recordedAt : '');
-      if (!isGrowerNurseryForecastCurrent(snapshot.result, fresh)) throw Error('stale');
+      if (!sameDisplay()) return;
+      if (!sameInputs()) throw Error('stale');
+      if (kind === 'preparation-pdf' || kind === 'batch-cards-pdf') {
+        const batchCards = kind === 'batch-cards-pdf';
+        const pdf = await (batchCards ? buildGrowerNurseryBatchLabelsPdf : buildGrowerNurseryPreparationPdf)(snapshot.result, { sample });
+        if (!sameDisplay()) return;
+        // Loading the PDF writer yields. A matching displayed key alone cannot
+        // prove that saved source/account records stayed current meanwhile.
+        if (!await props.onCheckCurrent(props.review)) throw Error('stale');
+        if (!sameDisplay()) return;
+        if (!sameInputs()) throw Error('stale');
+        downloadFile(pdf, `ImbewuField${sample ? '-demo' : ''}-${batchCards ? 'planned-nursery-batch-cards' : 'transplant-preparation'}.pdf`);
+        setMessage(batchCards
+          ? 'Planned nursery batch cards downloaded. Counts remain planned estimates, not observed sowing or stock.'
+          : 'Transplant preparation PDF downloaded. Counts remain planned estimates, not observed sowing or stock.');
+        return;
+      }
       const csv = kind === 'preparation'
         ? buildGrowerNurseryPreparationCsv(snapshot.result, { sample })
         : buildGrowerNurseryCsv(snapshot.result, props.source.beds, { sample });
@@ -508,7 +524,11 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
               {group.issues.length > 0 && <ul>{group.issues.map((issue, i) => <li key={i}>{issueText(issue)}</li>)}</ul>}
             </article>)}
             <p>This is not a complete purchase list. Matching crop names do not prove interchangeable varieties or seed lots.</p>
-            <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportCsv('preparation')}>Download transplant preparation CSV</button>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview('preparation')}>Download transplant preparation CSV</button>
+              <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview('preparation-pdf')}>Download preparation PDF</button>
+              <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview('batch-cards-pdf')}>Download planned batch cards</button>
+            </div>
           </>}
       </section>}
       {!shown.result.batches.length && <p>This proposal has no transplant raising batch. Other nursery uses still need their own resource accounting.</p>}
@@ -543,7 +563,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       })}
       {shown.result.issues.length > 0 && <ul>{shown.result.issues.map((issue, i) => <li key={i}>{issueText(issue)}</li>)}</ul>}
       <p>These are raising estimates, not observed stock or local crop instructions. Unknown requirements are not zero. Surface totals do not prove tray packing, paths, hardening or up-pot space.</p>
-      <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportCsv()}>Download reviewed nursery CSV</button>
+      <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview()}>Download reviewed nursery CSV</button>
     </section>}
   </section>;
 }
