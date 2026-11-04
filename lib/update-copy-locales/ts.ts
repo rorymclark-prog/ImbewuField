@@ -335,5 +335,16 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Ringeta mepe wa AI lowu sasekisiweke",
   "Design Studio → Glossy": "Xitudiyo xo pulana → Mepe lowu sasekisiweke",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Pfula purasi leri hlayisiweke, hlawula phepha kutani u hlawula AI Polished. Mepe wun’wana ni wun’wana lowu endliwaka wa hakeriwa.",
+  // Journal release wording: docs/international/journal-release-wording-2026-11-04/drafts.json; unreviewed.
+  "A pending journal copy stops if you switch workspaces before it can download.": "Kopi leyi yimelaka ya jenali ya nsimu ya yima loko u cinca tindhawu ta mintirho yi nga si dowlodiwa.",
+  "Write a dated field note from a checked crop task in your device journal.": "Tsala notsi xa le masinwini lexi nga na siku ku suka eka ntirho lowu kamberiweke wa swibyariwa eka jenali ya xitirhisiwa xa wena.",
+  "Review older device notes before choosing which entries to recover.": "Hlola tinotsi swa khale swa xitirhisiwa u nga si hlawula leswaku hi tihi tinotsi leti nga ta tlhela ti vuyisiwa.",
+  "Preview saved monthly production with actual records and estimates labelled.": "Vona ku sungula vuhumelerisi bya n'weti na n'weti lebyi hlayisiweke lebyi nga na tirhekhodo ta xiviri na swiringanyeto leswi vekiweke marito.",
+  "Review your field journal": "Hlola jenali ya wena ya nsimu",
+  "Field journal": "Jenali ya nsimu",
+  "Open your device journal to write a note or review older copies when the app offers recovery.": "Pfula jenali ya xitirhisiwa xa wena ku tsala notsi kumbe ku hlola tikopi ta khale loko tirhiso ri nyika ndlela yo vuyisa.",
+  "Preview saved monthly production": "Vona ku sungula vuhumelerisi bya n'weti na n'weti lebyi hlayisiweke",
+  "Production plan → Production and food stock records": "Pulani ya vuhumelerisi → Tirhekhodo ta vuhumelerisi na switoko swa swakudya",
+  "Open a checked mapped site and preview its saved monthly records. Actual records and estimates stay separate.": "Pfula ndhawu leyi kamberiweke ya mepe u vona ku sungula tirhekhodo ta yona ta n'weti na n'weti leti hlayisiweke. Tirhekhodo ta xiviri na swiringanyeto swi tshama swi hambanile.",
 };
 export default copy;

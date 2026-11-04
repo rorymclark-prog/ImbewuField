@@ -335,5 +335,16 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Leka mmapa wa AI o kgabisitsweng",
   "Design Studio → Glossy": "Studio sa moralo → Mmapa o kgabisitsweng",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Bula polasi e bolokilweng, kgetha leqephe ebe o kgetha AI Polished. Ho hlahisa mmapa ka mong ho a lefellwa.",
+  // Journal release wording: docs/international/journal-release-wording-2026-11-04/drafts.json; unreviewed.
+  "A pending journal copy stops if you switch workspaces before it can download.": "Kopi e ntseng e emetse ea jenale e ea emisa haeba u chencha libaka tsa ts'ebetso pele e ka khoasolla.",
+  "Write a dated field note from a checked crop task in your device journal.": "Ngola ntlha ea tšimo e nang le letsatsi ho tsoa mosebetsing o hlahlobiloeng oa lijalo jenaleng ea sesebelisoa sa hau.",
+  "Review older device notes before choosing which entries to recover.": "Hlahloba lintlha tsa khale tsa sesebelisoa pele u khetha hore na ke lintlha life tseo u lokelang ho li khutlisa.",
+  "Preview saved monthly production with actual records and estimates labelled.": "Bona esale pele tlhahiso e bolokiloeng ea khoeli le khoeli e nang le lirekoto tsa sebele le likhakanyo tse ngotsoeng mabitso.",
+  "Review your field journal": "Hlahloba jenale ea hau ea tšimo",
+  "Field journal": "Jenale ea tšimo",
+  "Open your device journal to write a note or review older copies when the app offers recovery.": "Bula jenale ea sesebelisoa sa hau ho ngola ntlha kapa ho hlahloba likopi tsa khale ha lenaneo le fana ka monyetla oa ho li khutlisa.",
+  "Preview saved monthly production": "Bona esale pele tlhahiso e bolokiloeng ea khoeli le khoeli",
+  "Production plan → Production and food stock records": "Polane ea tlhahiso → Lirekoto tsa tlhahiso le tsa setoko sa lijo",
+  "Open a checked mapped site and preview its saved monthly records. Actual records and estimates stay separate.": "Bula sebaka se 'mapiloeng se hlahlobiloeng 'me u bone esale pele lirekoto tsa sona tse bolokiloeng tsa khoeli le khoeli. Lirekoto tsa sebele le likhakanyo li lula li arohane.",
 };
 export default copy;

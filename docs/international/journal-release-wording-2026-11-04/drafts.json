@@ -1,0 +1,88 @@
+{
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "entries": [
+    {
+      "english": "A pending journal copy stops if you switch workspaces before it can download.",
+      "messageSha256": "16782a7e1f8e3ec4ce542cec4f4b25a1fd2e99a1e1e60582a075cec310d678b6",
+      "st": "Kopi e ntseng e emetse ea jenale e ea emisa haeba u chencha libaka tsa ts'ebetso pele e ka khoasolla.",
+      "ts": "Kopi leyi yimelaka ya jenali ya nsimu ya yima loko u cinca tindhawu ta mintirho yi nga si dowlodiwa.",
+      "ve": "Khophi i re kha u lindela ya dzhenala i a ima arali na shandukisa fhethu ha u shumela i sa athu kopololwa.",
+      "zu": "Ikhophi yencwadi yensimu esalindile iyama uma ushintsha izindawo zokusebenza ngaphambi kokuthi idawunilodeke."
+    },
+    {
+      "english": "Write a dated field note from a checked crop task in your device journal.",
+      "messageSha256": "56c64ee50a6c045ac509b3ca6ec9d7604d7185a01b27c115a601e43b011eb9bf",
+      "st": "Ngola ntlha ea tšimo e nang le letsatsi ho tsoa mosebetsing o hlahlobiloeng oa lijalo jenaleng ea sesebelisoa sa hau.",
+      "ts": "Tsala notsi xa le masinwini lexi nga na siku ku suka eka ntirho lowu kamberiweke wa swibyariwa eka jenali ya xitirhisiwa xa wena.",
+      "ve": "Nwalani notsi ya tsimuni i re na ḓuvha u bva kha mushumo wo sedzwaho wa tshimela kha dzhenala ya tshishumiswa tshanu.",
+      "zu": "Bhala inothi yasensimini enosuku kusuka kumsebenzi wesitshalo ohloliwe ejenalini yasensimini yedivayisi yakho."
+    },
+    {
+      "english": "Review older device notes before choosing which entries to recover.",
+      "messageSha256": "228fd650a80fe04fbfc51af589920c979cf82b07e6c92b5fa0257e7b8510abad",
+      "st": "Hlahloba lintlha tsa khale tsa sesebelisoa pele u khetha hore na ke lintlha life tseo u lokelang ho li khutlisa.",
+      "ts": "Hlola tinotsi swa khale swa xitirhisiwa u nga si hlawula leswaku hi tihi tinotsi leti nga ta tlhela ti vuyisiwa.",
+      "ve": "Tolani notsi dza kale dza tshishumiswa ni sa athu nanga zwine na tama u zwi vhuedzedza.",
+      "zu": "Buyekeza amanothi amadala edivayisi ngaphambi kokukhetha ukuthi yikuphi okufanele ukubuyise."
+    },
+    {
+      "english": "Preview saved monthly production with actual records and estimates labelled.",
+      "messageSha256": "3addd99ee811cd6c9dc3e8adb06ff0e0540f675dfcea09cedc4ecbfb73d21b9b",
+      "st": "Bona esale pele tlhahiso e bolokiloeng ea khoeli le khoeli e nang le lirekoto tsa sebele le likhakanyo tse ngotsoeng mabitso.",
+      "ts": "Vona ku sungula vuhumelerisi bya n'weti na n'weti lebyi hlayisiweke lebyi nga na tirhekhodo ta xiviri na swiringanyeto leswi vekiweke marito.",
+      "ve": "Vhonani tsedzuluso ya mbuelo yo vhulungwaho ya nwedzi na nwedzi i re na rekhodi dza vhukuma na dzo anganyelwaho dzo bulwaho.",
+      "zu": "Bona kusengaphambili umkhiqizo wenyanga ogciniwe onamarekhodi angempela kanye nezilinganiso ezibhalwe ngokucacile."
+    },
+    {
+      "english": "Review your field journal",
+      "messageSha256": "7b3e51e35cc5da41dcf82dc0a4481393cdbfb2308be52c7f329af83db367ca2d",
+      "st": "Hlahloba jenale ea hau ea tšimo",
+      "ts": "Hlola jenali ya wena ya nsimu",
+      "ve": "Tolani dzhenala yanu ya tsimuni",
+      "zu": "Buyekeza ijenali yakho yasensimini"
+    },
+    {
+      "english": "Field journal",
+      "messageSha256": "5ddde90361d26104683288f2740230d726ee877a9cc7fa0f9d1157951aeb988b",
+      "st": "Jenale ea tšimo",
+      "ts": "Jenali ya nsimu",
+      "ve": "Dzhenala ya tsimuni",
+      "zu": "Ijenali yasensimini"
+    },
+    {
+      "english": "Open your device journal to write a note or review older copies when the app offers recovery.",
+      "messageSha256": "2453887a8f4fc536bd8750200c8de0df26dbc1e18718605d9aac3440ffab6a9e",
+      "st": "Bula jenale ea sesebelisoa sa hau ho ngola ntlha kapa ho hlahloba likopi tsa khale ha lenaneo le fana ka monyetla oa ho li khutlisa.",
+      "ts": "Pfula jenali ya xitirhisiwa xa wena ku tsala notsi kumbe ku hlola tikopi ta khale loko tirhiso ri nyika ndlela yo vuyisa.",
+      "ve": "Vulani dzhenala ya tshishumiswa tshanu u itela u nwala notsi kana u tola khophi dza kale musi phurogireme i tshi khou vhuedzedza.",
+      "zu": "Vula ijenali yasensimini yedivayisi yakho ukuze ubhale inothi noma ubuyekeze amakhophi amadala lapho uhlelo lokusebenza luhlinzeka ngokubuyisela."
+    },
+    {
+      "english": "Preview saved monthly production",
+      "messageSha256": "e06779aaa08a1de89918786b1b79af1b720d0f852e21379148305b6ca93cf67a",
+      "st": "Bona esale pele tlhahiso e bolokiloeng ea khoeli le khoeli",
+      "ts": "Vona ku sungula vuhumelerisi bya n'weti na n'weti lebyi hlayisiweke",
+      "ve": "Vhonani tsedzuluso ya mbuelo yo vhulungwaho ya nwedzi na nwedzi",
+      "zu": "Bona kusengaphambili umkhiqizo wenyanga ogciniwe"
+    },
+    {
+      "english": "Production plan → Production and food stock records",
+      "messageSha256": "2688728c38f2170dcea3ef8ea9a32ef1cc5d1866a7f9749a887467cd8d0b3ea7",
+      "st": "Polane ea tlhahiso → Lirekoto tsa tlhahiso le tsa setoko sa lijo",
+      "ts": "Pulani ya vuhumelerisi → Tirhekhodo ta vuhumelerisi na switoko swa swakudya",
+      "ve": "Pulane ya mbuelo → Rekhodi dza mbuelo na zwiliwa zwo vhulungwaho",
+      "zu": "Uhlelo lokukhiqiza → Amarekhodi omkhiqizo nawesitoko sokudla"
+    },
+    {
+      "english": "Open a checked mapped site and preview its saved monthly records. Actual records and estimates stay separate.",
+      "messageSha256": "58d1a1966c883bcc93376d0ae91d7ce7d7c0e6bea406898ad5dfd35e4ff1f5f7",
+      "st": "Bula sebaka se 'mapiloeng se hlahlobiloeng 'me u bone esale pele lirekoto tsa sona tse bolokiloeng tsa khoeli le khoeli. Lirekoto tsa sebele le likhakanyo li lula li arohane.",
+      "ts": "Pfula ndhawu leyi kamberiweke ya mepe u vona ku sungula tirhekhodo ta yona ta n'weti na n'weti leti hlayisiweke. Tirhekhodo ta xiviri na swiringanyeto swi tshama swi hambanile.",
+      "ve": "Vulani fhethu ho sedzwaho ha maepu ni vhone tsedzuluso ya rekhodi dzo vhulungwaho dza nwedzi na nwedzi. Rekhodi dza vhukuma na dzine dza khou anganyelwa zwi dzula zwo fhambana.",
+      "zu": "Vula isiza esidwetshiwe esihloliwe bese ubona kusengaphambili amarekhodi aso anyanga zonke agciniwe. Amarekhodi angempela nezilinganiso kuhlala kwehlukene."
+    }
+  ],
+  "sourceSha256": "e8a29d0bb13e5f1bccc7ad69b44fb000662c224cdcd3c752d0d3208dddd9b906",
+  "coordinatorReview": "Exact source and structural checks. Existing journal terminology and the Tshivenda monthly wording reconciled. Fluent review pending."
+}
