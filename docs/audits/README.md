@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest assistant identity continuation — [MCP display name, published sprout and private listing — 4 November 2026](2026-11-04/assistant-connector-branding-codex.md). Native authentication follows the separate callback release.
+
 Latest assistant connector continuation — [Production release and desktop callback preservation — 4 November 2026](2026-11-04/assistant-connector-loopback-codex.md). Native plugin verification remains open.
 
 Latest Terrain & Sections continuation: [Separate detail sheet and contour hierarchy — 3 November 2026](2026-11-03/terrain-section-contour-detail-codex.md). Map 02 remains the overview.

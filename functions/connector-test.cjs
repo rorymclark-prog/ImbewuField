@@ -85,6 +85,9 @@ async function tool(client, name, args = {}, expectError = false) {
   const unauthCall = await request('/mcp', { jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'get_profile', arguments: {} } }); ok(unauthCall.value.result._meta['mcp/www_authenticate'].length === 1, 'native OAuth tool challenge exposed');
   const a = await oauth(users['connector-a'], metadata.value.scopes_supported.join(' ')); const client = await connect(a);
   try {
+    const identity = client.getServerVersion();
+    ok(identity.title === 'ImbewuField', 'assistants receive the app display name instead of deriving it from the machine ID');
+    ok(identity.websiteUrl === 'http://127.0.0.1:4246/connect/imbewu' && identity.icons.some(icon => icon.src === 'http://127.0.0.1:4246/icon-512.png' && icon.mimeType === 'image/png' && icon.sizes.includes('512x512')), 'assistants receive the app connection page and its published square mark');
     const list = await client.listTools(); ok(list.tools.length >= 14 && list.tools.every(t => t._meta.securitySchemes?.length), 'discoverable scoped schemas');
     ok(!list.tools.some(t => t.name === 'set_ai_map_kill_switch'), 'ordinary account has no operator tools');
     const profile = await tool(client, 'get_profile'); ok(profile.id === 'connector-a', 'stable identity');
