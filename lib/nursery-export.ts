@@ -143,6 +143,120 @@ export function buildGrowerNurseryCsv(result: GrowerNurseryResult, beds: readonl
 /** A shareable projection of the same nursery review, never another forecast.
  * Membership and source receipts remain private; the caller still checks current
  * source/book/actor and full result equality immediately before delivery. */
+export interface NurseryPreparationPdfOptions { sample?: boolean }
+
+/** Keep punctuation supported by the existing PDF font; crop identities are
+ * printed separately and are never renamed to make a glyph fit. */
+function preparationPdfCopy(text: string): string {
+  return text.replace(/[‐-―]/g, '-').replace(/[‘’]/g, "'").replace(/[“”]/g, '"')
+    .replace(/\u00a0/g, ' ');
+}
+
+function preparationMetricText(metric: import('./international/grower-nursery').GrowerNurseryPreparationMetric): string {
+  if (metric.status === 'overflow') return 'Total unavailable; review input counts';
+  if (metric.status === 'complete') return String(metric.total);
+  return `Unknown total; known subtotal ${metric.knownSubtotal === null ? 'Unknown' : metric.knownSubtotal}`;
+}
+
+/** A printable view of the same projection, without delivery or live authority.
+ * The caller still checks the original account/source and complete result. */
+export async function buildGrowerNurseryPreparationPdf(result: GrowerNurseryResult, options: NurseryPreparationPdfOptions = {}): Promise<Blob> {
+  const projection = projectGrowerNurseryPreparation(result);
+  if (projection.status !== 'available') throw Error('The preparation worksheet is unavailable for this nursery review.');
+  // The current canonical English names fit the existing standard font. If the
+  // catalogue later changes, hold rather than silently deleting name glyphs.
+  if (projection.groups.some(group => !/^[\x20-\x7e]+$/.test(group.cropName))) throw Error('The crop identity cannot be printed faithfully with the current PDF font.');
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
+  const width = doc.internal.pageSize.getWidth(), height = doc.internal.pageSize.getHeight();
+  const margin = 36, contentWidth = width - 2 * margin, bottom = height - 66;
+  const ink: [number, number, number] = [43, 48, 39];
+  let y = margin, activeGroup = '';
+  const font = (size: number, weight: 'normal' | 'bold' | 'italic' = 'normal') => {
+    doc.setFont('helvetica', weight); doc.setFontSize(size); doc.setTextColor(...ink);
+  };
+  function page() {
+    doc.addPage(); y = margin;
+    font(10, 'bold'); doc.text('Planned transplant preparation (continued)', margin, y + 10); y += 18;
+    if (activeGroup) {
+      font(10); const lines = doc.splitTextToSize(activeGroup, contentWidth) as string[];
+      doc.text(lines, margin, y + 10); y += lines.length * 13 + 6;
+    }
+  }
+  function ensure(space: number) { if (y + space > bottom) page(); }
+  function paragraph(text: string, size = 10, weight: 'normal' | 'bold' | 'italic' = 'normal', gap = 5) {
+    font(size, weight);
+    const lines = doc.splitTextToSize(preparationPdfCopy(text), contentWidth) as string[];
+    // Dates and issues may run across several pages. Moving a whole oversized
+    // block once would still draw its last lines outside the paper.
+    for (const line of lines) {
+      ensure(size * 1.3 + 2); font(size, weight); doc.text(line, margin, y + size); y += size * 1.3;
+    }
+    y += gap;
+  }
+  paragraph('Planned transplant preparation', 18, 'bold', 10);
+  if (projection.horizon) paragraph(`Planning horizon: ${projection.horizon.start} to before ${projection.horizon.endExclusive} (UTC).`);
+  paragraph(`Overall review status: ${projection.projectionIncomplete || projection.reviewIncomplete ? 'Incomplete review' : 'Reviewed inputs complete'}.`, 10, 'bold');
+  paragraph(`Source: ${projection.sourceStatus === 'saved-planned' ? 'Saved planned crop cycles' : 'Proposed crop cycles'}. Grower estimates; source not verified.`);
+  paragraph('Coverage: Represented transplant raising batches only. Direct sowing and omitted garden work need separate review.');
+  paragraph('Estimates: These are planned estimates, not observed sowing, nursery stock or seedling readiness.');
+  paragraph('This worksheet does not establish resource availability, tray packing or plant health. Review the dated nursery resource comparison separately.');
+  paragraph('Loss estimates: Calculated counts already include supplied loss estimates; do not apply them again.');
+  paragraph('Matching crop names do not identify interchangeable varieties or seed lots. Unknown requirements are not zero.');
+  for (const issue of [...new Set(projection.issues.map(growerNurseryIssueText))]) paragraph(`Review input: ${issue}`);
+  y += 5;
+  if (!projection.groups.length) paragraph('No transplant batches are represented in this review. This does not establish a zero requirement for the whole garden.');
+  for (const [index, group] of projection.groups.entries()) {
+    // Between groups, a new page needs the document heading only. Repeating
+    // the new group as a continuation immediately above its own title is noise.
+    activeGroup = '';
+    ensure(110);
+    activeGroup = `${group.cropName} - preparation group ${index + 1}`;
+    paragraph(activeGroup, 12, 'bold');
+    paragraph(`Status: ${group.incomplete ? 'Incomplete' : 'Included counts complete'}.`);
+    paragraph(`Raising starts ${group.startDate} (UTC). Raising ends before field entry: ${[...new Set(group.members.map(member => member.endDateExclusive))].sort().join(', ')} (exclusive UTC).`);
+    const metrics = [
+      ['Final field positions', group.fieldPositions], ['Starts to raise', group.startsToRaise], ['Seeds to sow', group.seedsToSow],
+    ] as const;
+    const cellWidth = contentWidth / 3;
+    const cells = metrics.map(([label, metric]) => {
+      font(10, 'bold'); const labels = doc.splitTextToSize(label, cellWidth - 18) as string[];
+      font(10); const values = doc.splitTextToSize(preparationMetricText(metric), cellWidth - 18) as string[];
+      return { labels, values };
+    });
+    const blockHeight = Math.max(...cells.map(cell => cell.labels.length + cell.values.length)) * 13 + 18;
+    ensure(blockHeight + 5);
+    for (const [column, cell] of cells.entries()) {
+      const x = margin + column * cellWidth;
+      doc.setFillColor(244, 247, 240); doc.roundedRect(x, y, cellWidth - 6, blockHeight, 4, 4, 'F');
+      let lineY = y + 14;
+      font(10, 'bold'); for (const line of cell.labels) { doc.text(line, x + 7, lineY); lineY += 13; }
+      font(10); for (const line of cell.values) { doc.text(line, x + 7, lineY); lineY += 13; }
+    }
+    y += blockHeight + 7;
+    paragraph(`${group.members.length} represented ${group.members.length === 1 ? 'batch' : 'batches'}.`, 10);
+    if (group.outsideReviewHorizon) paragraph('Some raising dates extend beyond the review horizon.');
+    for (const issue of [...new Set(group.issues.map(growerNurseryIssueText))]) paragraph(`Note: ${issue}`);
+    y += 8;
+  }
+  activeGroup = '';
+  ensure(76); paragraph('Notes (written on sheet - not saved by app):', 10, 'bold');
+  doc.setDrawColor(190, 198, 183);
+  for (let line = 0; line < 3; ++line) { y += 14; doc.line(margin, y, width - margin, y); }
+  const pages = doc.getNumberOfPages();
+  for (let pageNumber = 1; pageNumber <= pages; ++pageNumber) {
+    doc.setPage(pageNumber); font(8);
+    if (options.sample) { font(9, 'bold'); doc.text('DEMO - EXAMPLE PLANNING DATA', width / 2, 21, { align: 'center' }); }
+    font(8); doc.text('Planned estimates - represented transplant batches only', margin, height - 42);
+    doc.text('Source not verified; not observed sowing or nursery stock', margin, height - 30);
+    doc.text(`Page ${pageNumber} of ${pages}`, width - margin, height - 30, { align: 'right' });
+  }
+  return new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
+}
+
+/** A shareable projection of the same nursery review, never another forecast.
+ * Membership and source receipts remain private; the caller still checks current
+ * source/book/actor and full result equality immediately before delivery. */
 export function buildGrowerNurseryPreparationCsv(result: GrowerNurseryResult, options: Pick<NurseryCsvOptions, 'sample'> = {}): string {
   const projection = projectGrowerNurseryPreparation(result);
   const columns = ['record_type', 'plan_basis', 'source_status', 'source_verification', 'review_status', 'review_incomplete',

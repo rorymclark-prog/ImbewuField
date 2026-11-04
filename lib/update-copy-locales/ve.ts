@@ -393,5 +393,9 @@ const copy:UpdateCopy={
   "Prepare grouped seedling and seed counts from your proposed crop plan.": "Lugisani mbalo dza zwimela zwiṱuku na dza mbeu dzo kuvhanganywaho nga zwigwada, dzi tshi bva kha pulane yaṋu ya zwiliṅwa yo dzinginywaho.",
   "Review nursery preparation": "Ṱolani ndugiselo ya fhethu ha u alusa zwimela zwiṱuku",
   "Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.": "Ṱolani zwishumiswa zwa u alusa zwimela zwiṱuku zwi re na maḓuvha o bulwaho, ṱolani zwigwada zwo sumbedzwaho zwa zwimela zwiṱuku zwine zwa ḓo pfuluselwa tsimuni, ni kone u ḓowniloda siaṱari ḽa ndugiselo. Mbalo ndi nyelekanyo dza u pulana; ṱhoḓea dzi sa ḓivhei dzi dzula dzi sa ḓivhei.",
+  // Own nursery preparation PDF release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Download a printable nursery preparation sheet from your own crop proposal.": "Ḓownilodani siaṱari ḽine ḽa nga gandiswa ḽa ndugiselo ya fhethu ha u alusa zwimela zwiṱuku, ḽi tshi bva kha pulane yaṋu ya zwiliṅwa yo dzinginywaho.",
+  "Print nursery preparation": "Gandisani ndugiselo ya fhethu ha u alusa zwimela zwiṱuku",
+  "Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.": "Sedzulusani zwidodombedzwa zwa zwino zwe na dzhenisa zwa u alusa zwimela zwiṱuku, ni kone u ḓowniloda PDF ya ndugiselo. I fhambanyisa mbalo dzo pulaniwaho, ṱhoḓea dzi songo fhelelaho na ṱhanganyelo dzi sa ḓivhei kha u zwala ho vhoniwaho kana tshitoko tsho vhoniwaho.",
 };
 export default copy;

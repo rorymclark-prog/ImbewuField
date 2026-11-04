@@ -393,5 +393,9 @@ const copy:UpdateCopy={
   "Prepare grouped seedling and seed counts from your proposed crop plan.": "Lokisa lipalo tsa limela tse nyenyane le tsa peo, tse hlophisitsoeng ka lihlopha, ho latela moralo oa hao oa lijalo o sisintsoeng.",
   "Review nursery preparation": "Hlahloba tokisetso ea sebaka sa lipeo",
   "Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.": "Hlahloba lisebelisoa tsa sebaka sa lipeo tse nang le matsatsi, hlahloba lihlopha tse bontšitsoeng tsa limela tse tla fetisetsoa tšimong, ’me u jarolle leqephe la tokisetso. Lipalo ke likhakanyo tsa moralo; litlhoko tse sa tsejoeng li lula li sa tsejoe.",
+  // Own nursery preparation PDF release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Download a printable nursery preparation sheet from your own crop proposal.": "Jarolla leqephe le ka hatisoang la tokisetso ea sebaka sa lipeo, le tsoang moralong oa hao oa lijalo o sisintsoeng.",
+  "Print nursery preparation": "Hatisa tokisetso ea sebaka sa lipeo",
+  "Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.": "Hlahloba lintlha tsa hona joale tseo u li kentseng bakeng sa sebaka sa lipeo, ebe u jarolla PDF ea tokisetso. E boloka lipalo tse reriloeng, litlhoko tse sa fellang le likakaretso tse sa tsejoeng li arohane le ho jala ho bonoeng ka sebele kapa setoko se bonoeng ka sebele.",
 };
 export default copy;

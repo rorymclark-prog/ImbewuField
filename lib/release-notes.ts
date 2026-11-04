@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: '0831af329', changes: [
+    'Download a printable nursery preparation sheet from your own crop proposal.',
+  ], tour: [{ title: 'Print nursery preparation', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.' }] },
   { when: '4 November 2026', sha: 'e6078a16f', changes: [
     'Review your own nursery space in square metres or square feet.',
     'Prepare grouped seedling and seed counts from your proposed crop plan.',

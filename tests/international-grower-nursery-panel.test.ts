@@ -17,12 +17,13 @@ import { buildGrowerNurseryCsv } from '../lib/nursery-export.ts';
 import type { GrowerNurseryReviewPanelProps } from '../components/crops/GrowerNurseryReviewPanel.tsx';
 
 const deliveries: { blob: Blob; filename: string }[] = [];
-Object.assign(globalThis, { __growerNurseryPanelDelivery: deliveries, IS_REACT_ACT_ENVIRONMENT: true });
+const deliverySignal: { onDownload?: () => void } = {};
+Object.assign(globalThis, { __growerNurseryPanelDelivery: deliveries, __growerNurseryPanelDeliverySignal: deliverySignal, IS_REACT_ACT_ENVIRONMENT: true });
 const root = new URL('../', import.meta.url).href;
 const hooks = registerHooks({
   resolve(specifier, context, nextResolve) {
     if (context.parentURL?.endsWith('/components/crops/GrowerNurseryReviewPanel.tsx') && specifier === '@/lib/file-delivery') {
-      return { shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent('export function downloadFile(blob, filename) {globalThis.__growerNurseryPanelDelivery.push({blob,filename});return "downloaded";}') };
+      return { shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent('export function downloadFile(blob, filename) {globalThis.__growerNurseryPanelDelivery.push({blob,filename});globalThis.__growerNurseryPanelDeliverySignal.onDownload?.();return "downloaded";}') };
     }
     return nextResolve(specifier, context);
   },
@@ -35,7 +36,7 @@ const hooks = registerHooks({
   },
 });
 const { default: GrowerNurseryReviewPanel } = await import('../components/crops/GrowerNurseryReviewPanel.tsx');
-after(() => { hooks.deregister(); Reflect.deleteProperty(globalThis, '__growerNurseryPanelDelivery'); Reflect.deleteProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT'); });
+after(() => { hooks.deregister(); Reflect.deleteProperty(globalThis, '__growerNurseryPanelDelivery'); Reflect.deleteProperty(globalThis, '__growerNurseryPanelDeliverySignal'); Reflect.deleteProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT'); });
 
 // Synthetic engineering fixtures only; none of these figures is growing advice.
 const stamp = '2026-11-05T12:00:00.000Z';
@@ -292,4 +293,57 @@ test('a pending preparation download is withdrawn when the source changes and a 
     allow = false; await screen.press('Download transplant preparation CSV');
     assert.equal(deliveries.length, 0); assert.match(screen.text(), /No file was delivered/);
   } finally { screen.dispose(); }
+});
+
+test('a printable preparation file contains the same planned counts and checks current source again after building', { timeout: 5000 }, async () => {
+  deliveries.length = 0; const data = await fixture(); let checks = 0;
+  const screen = mount({ ...data, contextRevision: 1, sample: true, onCheckCurrent: async () => { ++checks; return true; } });
+  try {
+    allocations(screen); await screen.press('Review own nursery requirements');
+    // Resolve from the actual delivery call, not a timer guessing when the
+    // dynamic PDF import might finish.
+    const delivered = new Promise<void>(resolve => { deliverySignal.onDownload = resolve; });
+    screen.click('Download preparation PDF');
+    await act(async () => { await delivered; });
+    assert.equal(checks, 3); assert.equal(deliveries.length, 1);
+    assert.equal(deliveries[0].filename, 'ImbewuField-demo-transplant-preparation.pdf');
+    assert.equal(deliveries[0].blob.type, 'application/pdf');
+    const pdf = Buffer.from(await deliveries[0].blob.arrayBuffer()).toString('latin1');
+    assert.ok(pdf.startsWith('%PDF-')); assert.match(pdf, /DEMO - EXAMPLE PLANNING DATA/);
+    for (const count of ['48', '60', '160']) assert.ok(pdf.includes(`(${count}) Tj`));
+    assert.doesNotMatch(pdf, /private-|geometryFingerprint|sourceRevision/);
+    assert.match(screen.text(), /PDF downloaded/);
+  } finally { delete deliverySignal.onDownload; screen.dispose(); }
+});
+
+test('a source change while the post-PDF check waits withdraws the file and a refused second check delivers nothing', { timeout: 5000 }, async () => {
+  deliveries.length = 0; const data = await fixture(); let checks = 0, release!: (value: boolean) => void, entered!: () => void;
+  const waiting = new Promise<void>(resolve => { entered = resolve; });
+  const screen = mount({ ...data, contextRevision: 1, onCheckCurrent: async () => {
+    ++checks;
+    if (checks === 3) { entered(); return new Promise<boolean>(resolve => { release = resolve; }); }
+    return true;
+  } });
+  try {
+    allocations(screen); await screen.press('Review own nursery requirements');
+    screen.click('Download preparation PDF');
+    await act(async () => { await waiting; });
+    screen.update({ contextRevision: 2 });
+    await act(async () => { release(true); await Promise.resolve(); });
+    assert.equal(checks, 3); assert.equal(deliveries.length, 0);
+  } finally { release?.(false); screen.dispose(); }
+
+  checks = 0;
+  let refuseEntered!: () => void;
+  const refusal = new Promise<void>(resolve => { refuseEntered = resolve; });
+  const refused = mount({ ...data, contextRevision: 1, onCheckCurrent: async () => {
+    if (++checks === 3) { refuseEntered(); return false; } return true;
+  } });
+  try {
+    allocations(refused); await refused.press('Review own nursery requirements');
+    refused.click('Download preparation PDF');
+    await act(async () => { await refusal; });
+    assert.equal(checks, 3); assert.equal(deliveries.length, 0);
+    assert.match(refused.text(), /No file was delivered/);
+  } finally { refused.dispose(); }
 });
