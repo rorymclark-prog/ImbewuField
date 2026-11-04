@@ -25,15 +25,20 @@
 
 import { useEffect, useState } from 'react';
 import type { PlanBed, Planting } from '@/lib/crop-plan';
-import { CROP_PLAN_CHANGED_EVENT, loadCropPlan } from '@/lib/crop-plan';
+import { CROP_PLAN_CHANGED_EVENT, loadCropPlan, readRawCropPlanReceipt } from '@/lib/crop-plan';
 import { DESIGN_CANVAS_CHANGED_EVENT, loadCanvasState } from '@/lib/design-canvas';
+import * as canvasReceipts from '@/lib/design-canvas';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { bedsFromDesign } from '@/lib/harvest-reconciliation';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
+import * as facilitatorReceipts from '@/lib/facilitator-design';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { coordinateSiteIdForPlace } from '@/lib/international/site-context';
 import { resolvePlanningSupport } from '@/lib/international/planning-support';
 import { workspacePlanningIdForDesign } from '@/lib/international/workspace-context';
+import { hasGrowerCycleMarker, isProvenForeignGrowerCycle } from '@/lib/international/grower-cycle';
+import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
+import { inspectGrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 
 /**
  * Where the beds came from. A screen can print this, and more importantly a
@@ -126,6 +131,26 @@ export function loadFinanceBeds(): { beds: PlanBed[]; origin: FinanceBedOrigin }
 
 const areaOf = (beds: readonly PlanBed[]): number => beds.reduce((sum, b) => sum + (b.areaM2 || 0), 0);
 
+/** Foreign exclusion requires the authored source, not a display normalizer's
+ * replacement dimensions. Held beds still name current land and must prevent a
+ * same-bed foreign claim from escaping the uncertainty gate. */
+function financeOwnScope(selected: ReturnType<typeof loadFinanceBedContext>) {
+  const currentBedIds = new Set(selected.beds.map(bed => bed.id));
+  try {
+    const raw = selected.origin === 'studio' && selected.siteId && typeof canvasReceipts.readCanvasSourceReceipt === 'function'
+      ? canvasReceipts.readCanvasSourceReceipt(selected.siteId)
+      : selected.origin === 'facilitator' && typeof facilitatorReceipts.readFacilitatorSourceReceipt === 'function'
+        ? facilitatorReceipts.readFacilitatorSourceReceipt() : null;
+    if (!raw || raw.status !== 'ready') return { scope: null, currentBedIds };
+    const inspected = inspectGrowerWorkflowSource({ kind: selected.origin === 'studio' ? 'studio-canvas' : 'facilitator-local',
+      sourceId: selected.origin === 'studio' ? selected.siteId! : 'local', raw: raw.raw, sourceRevision: raw.revision });
+    if (inspected.status !== 'inspected') return { scope: null, currentBedIds };
+    for (const bed of inspected.beds) currentBedIds.add(bed.id);
+    for (const bed of inspected.heldBeds) currentBedIds.add(bed.bedId);
+    return { scope: inspected.scope, currentBedIds };
+  } catch { return { scope: null, currentBedIds }; }
+}
+
 /** Measured books keep their own records and currencies. Only catalogue-derived
  * future harvests and comparisons depend on a confirmed planning reference. */
 export function loadFinancePlanSource(): FinancePlanSource {
@@ -139,14 +164,38 @@ export function loadFinancePlanSource(): FinancePlanSource {
   // designs reuse its bed id would silently lend one farm's plan to another.
   const plantings = selectedPlantings.filter(planting => !selected.ambiguousBedIds.has(planting.bedId));
   const ambiguous = selectedPlantings.length - plantings.length;
-  const forecastAvailable = support.allowCataloguePlanning && selected.origin !== 'none' && ambiguous === 0;
-  const forecastReason = ambiguous ? 'A saved planting has a bed identifier used by more than one design. Its planning source must be resolved before a finance forecast can be shown.'
+  // Filtering by current bed first erased orphan own markers and let the graph
+  // describe a nonempty book as empty (or a legacy subset as the complete plan).
+  // The shared raw receipt/projector retain every authored occurrence instead.
+  const receipt = readRawCropPlanReceipt();
+  const raw = receipt.status === 'ready' && receipt.raw && typeof receipt.raw === 'object' && !Array.isArray(receipt.raw)
+    ? receipt.raw as { version?: unknown; plantings?: unknown } : null;
+  const rows = raw?.version === 1 && Array.isArray(raw.plantings) ? raw.plantings as unknown[] : null;
+  const ownHeld = new Set<number>(), unreadableRows = new Set<number>();
+  if (rows) {
+    const projection = projectGrowerCycles(rows, null);
+    const ambiguousRows = new Set(projection.heldRows.filter(row => row.reasons.includes('ambiguous-planting-id')).map(row => row.rowIndex));
+    for (const held of projection.heldRows) if (held.rowIndex !== null && held.reasons.includes('invalid-row')) unreadableRows.add(held.rowIndex);
+    const hasOwn = rows.some(hasGrowerCycleMarker);
+    const proof = hasOwn ? financeOwnScope(selected) : null;
+    rows.forEach((row, index) => {
+      if (hasGrowerCycleMarker(row) && (!proof || ambiguousRows.has(index)
+        || !isProvenForeignGrowerCycle(row, proof.scope, proof.currentBedIds))) ownHeld.add(index);
+    });
+  }
+  const unreadable = rows === null || unreadableRows.size > 0;
+  const forecastAvailable = !unreadable && ownHeld.size === 0 && support.allowCataloguePlanning && selected.origin !== 'none' && ambiguous === 0;
+  const forecastReason = unreadable ? 'Saved crop-plan evidence is missing or cannot be fully read. Review the saved records before using a finance forecast; recorded picking and sales remain available.'
+    : ownHeld.size ? 'Own dated or unresolved crop records need their checked source and estimates. A complete catalogue finance forecast is unavailable; recorded picking and sales remain available. Review the Task Planner.'
+      : ambiguous ? 'A saved planting has a bed identifier used by more than one design. Its planning source must be resolved before a finance forecast can be shown.'
     : !support.allowCataloguePlanning ? support.reason
       : selected.origin === 'none' ? 'Finance forecasts need measured growing beds. A virtual reference bed is not mapped land.' : support.reason;
+  const relevantCount = rows?.filter((row, index) => ownHeld.has(index) || unreadableRows.has(index)
+    || row && typeof row === 'object' && !Array.isArray(row) && bedIds.has((row as { bedId?: string }).bedId!)).length;
   return { beds: selected.beds, origin: selected.origin, plantings, areaM2: areaOf(selected.beds), loaded: true,
     siteId: selected.siteId, workspaceId: selected.workspaceId,
     forecastPlantings: forecastAvailable ? plantings : [], forecastAvailable, forecastReason,
-    withheldPlantingCount: forecastAvailable ? 0 : selectedPlantings.length };
+    ...(relevantCount === undefined ? {} : { withheldPlantingCount: forecastAvailable ? 0 : relevantCount }) };
 }
 
 /**

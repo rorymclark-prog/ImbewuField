@@ -1,0 +1,194 @@
+{
+  "locale": "id",
+  "sourceSha256": "f03dd7b45de73a2996c52478483a0ae68bdbe5081f2e8bc267641faa76b071f6",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "growerOperations01",
+      "english": "The saved plan or design changed. Check its current records before continuing.",
+      "sha256": "be1572fb000be882ff9944ad4d5ca21f36235ec136bfb522d43fbfeab20d6458",
+      "translation": "Rencana atau desain yang tersimpan telah berubah. Periksa catatan saat ini sebelum melanjutkan."
+    },
+    {
+      "key": "growerOperations02",
+      "english": "Calendar file prepared from this checked planned date.",
+      "sha256": "189c6b20118f86cdd982ee5e27211605a7119abb1060ada695da17af55be1cff",
+      "translation": "Berkas kalender disiapkan dari tanggal terencana yang telah diperiksa ini."
+    },
+    {
+      "key": "growerOperations03",
+      "english": "The calendar file could not be prepared.",
+      "sha256": "2db259654ec4e005e689e90a7add9d19f16ffe7729788e9eafd569a1150d24ad",
+      "translation": "Berkas kalender tidak dapat disiapkan."
+    },
+    {
+      "key": "growerOperations04",
+      "english": "Checklist updated. Production and stock records have not changed.",
+      "sha256": "9ece56f2a64571336781f646e90078a752e6785bf3b453f7552984f029f255f3",
+      "translation": "Daftar periksa diperbarui. Catatan produksi dan stok tidak berubah."
+    },
+    {
+      "key": "growerOperations05",
+      "english": "The checklist could not be saved.",
+      "sha256": "ed8302a883b1f8d4662853b5fbeaa08eff0e8db839fac312882eca3c8dbe6b17",
+      "translation": "Daftar periksa tidak dapat disimpan."
+    },
+    {
+      "key": "growerOperations06",
+      "english": "Could not check the current saved records. Try checking them again.",
+      "sha256": "5e5307a6e013cd36caa4584c241d530567881842629bd03ddd0c62da05e807e1",
+      "translation": "Tidak dapat memeriksa catatan tersimpan saat ini. Coba periksa kembali."
+    },
+    {
+      "key": "growerOperations07",
+      "english": "Dated work from your estimates",
+      "sha256": "c0869db7b4da7a167e2d6da1ec036c5b026519e6dcc74d8ef2d9fa4c80dc76f5",
+      "translation": "Pekerjaan bertanggal dari perkiraan Anda"
+    },
+    {
+      "key": "growerOperations08",
+      "english": "These planned dates come from saved grower cycles and checked design measurements. They are your estimates, not observed work or local farming approval.",
+      "sha256": "2abb3a2b8d04025d109b6fdf0ace9f3c4755bfbb2436c0fea49f5f3a514bc108",
+      "translation": "Tanggal-tanggal terencana ini berasal dari siklus penanam yang tersimpan dan pengukuran desain yang diperiksa. Ini adalah perkiraan Anda, bukan pekerjaan teramati atau persetujuan pertanian setempat."
+    },
+    {
+      "key": "growerOperations09",
+      "english": "DEMO — example planning data",
+      "sha256": "9c444877fee01c7e5c96795b62a897ca22f198d8fa1ed4d5a2c32e8ab87dd775",
+      "translation": "DEMO — data perencanaan contoh"
+    },
+    {
+      "key": "growerOperations10",
+      "english": "Could not check the current saved records.",
+      "sha256": "a98cf55ee1f786a1a48e466f553a2ca0917f61b1b5206a011a9057311202a62e",
+      "translation": "Tidak dapat memeriksa catatan tersimpan saat ini."
+    },
+    {
+      "key": "growerOperations11",
+      "english": "Checking saved cycles…",
+      "sha256": "d443b5c124141e7ceefa6f9faeb8c6a34b2e9dd0912fc2358b249411bbcf7c4b",
+      "translation": "Memeriksa siklus tersimpan…"
+    },
+    {
+      "key": "growerOperations12",
+      "english": "Check saved cycles and designs",
+      "sha256": "0604f00c25eca199c355a3ad806fcba18380937653c8615ba03f05d1548633fa",
+      "translation": "Periksa siklus dan desain yang tersimpan"
+    },
+    {
+      "key": "growerOperations13",
+      "english": "No saved dated plan yet. Save a reviewed crop plan before using its work dates.",
+      "sha256": "2d22ecf141491bf6fd6f16452363a93f8582a81bfc22059c8051e3fff43ff223",
+      "translation": "Belum ada rencana bertanggal yang tersimpan. Simpan rencana tanaman yang telah ditinjau sebelum menggunakan tanggal kerjanya."
+    },
+    {
+      "key": "growerOperations14",
+      "english": "Current saved records could not be checked. No dates have been substituted.",
+      "sha256": "ae8a380729be57d43b0365b8c3758e5bd128ef226145bedf0c4f8b409c134fd3",
+      "translation": "Catatan tersimpan saat ini tidak dapat diperiksa. Tidak ada tanggal yang digantikan."
+    },
+    {
+      "key": "growerOperations15",
+      "english": "Some saved cycles or design measurements need review. Their work remains withheld; the saved records are retained.",
+      "sha256": "4ef4fc680a00a80704590dfaeace9eca3ab59bd83b26c472e17e80813658dd61",
+      "translation": "Beberapa siklus atau pengukuran desain yang tersimpan perlu ditinjau. Pekerjaannya tetap ditahan; catatan tersimpan tetap dipertahankan."
+    },
+    {
+      "key": "growerOperations16",
+      "english": "No saved dated cycles can supply work here. Unaccepted proposals stay in review.",
+      "sha256": "21fc6cca928b254cb1cdfd7ee4727ab16a4763b825e7851f77707cfefcd5f91f",
+      "translation": "Tidak ada siklus bertanggal tersimpan yang dapat menyediakan pekerjaan di sini. Usulan yang belum disetujui tetap dalam peninjauan."
+    },
+    {
+      "key": "growerOperations17",
+      "english": "(UTC date)",
+      "sha256": "f05f8747558b8e74329fc9b4665bed288b3b986559a17ea60ec7f1862e2a5404",
+      "translation": "(tanggal UTC)"
+    },
+    {
+      "key": "growerOperations18",
+      "english": "Reopen checklist item",
+      "sha256": "6b1abd2022a10ef53427e5e3335cd023e5b5f0508823df663c23397e3b889077",
+      "translation": "Buka kembali butir daftar periksa"
+    },
+    {
+      "key": "growerOperations19",
+      "english": "Mark checklist item done",
+      "sha256": "f4fdbc6db9f16b00e20d067f5c1f39bb9da23447cd3783e3a42dab504b7a92fe",
+      "translation": "Tandai butir daftar periksa selesai"
+    },
+    {
+      "key": "growerOperations20",
+      "english": "Download planned-date calendar",
+      "sha256": "0c96bc3e884b884ee380a848f000e943713f2a754839580bb87c776d2a68f8cf",
+      "translation": "Unduh kalender tanggal terencana"
+    },
+    {
+      "key": "growerOperations21",
+      "english": "Checklist ticks do not record sowing, harvest, stock or sales. End boundaries and next-entry dates describe the planned interval; they do not start another planting.",
+      "sha256": "be8d30ea2386b4ca63b77cf459ec4ef7643ed1e08b37eb5acc0ce337cc9880e2",
+      "translation": "Centang daftar periksa tidak mencatat penanaman, panen, stok, atau penjualan. Batas akhir dan tanggal masuk berikutnya menggambarkan interval yang direncanakan; bukan memulai penanaman baru."
+    },
+    {
+      "key": "growerOperations22",
+      "english": "Planned nursery start for {crop}",
+      "sha256": "bbb38fa583a20572b389952dd285cd93159931dca58b6674a443f1f22b3ba5ea",
+      "translation": "Awal pembibitan terencana untuk {crop}"
+    },
+    {
+      "key": "growerOperations23",
+      "english": "Planned field entry for {crop}",
+      "sha256": "19656d34bbc3b2fccbbcd8a081f9aa93d9527bc4268d68dd4d75df38a1d62d70",
+      "translation": "Masuk lahan terencana untuk {crop}"
+    },
+    {
+      "key": "growerOperations24",
+      "english": "Planned first pick for {crop}",
+      "sha256": "4aace6fe6b28fef5b82e4e54789d37ad1704d4b7850dbe0bea2746332de40dd3",
+      "translation": "Petik pertama terencana untuk {crop}"
+    },
+    {
+      "key": "growerOperations25",
+      "english": "Planned picking end boundary for {crop}",
+      "sha256": "c2601201ac6c8e7e4ad2f399c1953117a071afcc94839ad608372b0a9b70299d",
+      "translation": "Batas akhir pemetikan terencana untuk {crop}"
+    },
+    {
+      "key": "growerOperations26",
+      "english": "Planned field-clear boundary for {crop}",
+      "sha256": "c08cddca756857dd3984da28296486244274a0e33c2f098cacf5d0187e4b82fa",
+      "translation": "Batas pembersihan lahan terencana untuk {crop}"
+    },
+    {
+      "key": "growerOperations27",
+      "english": "Planned next-entry boundary for {crop}",
+      "sha256": "9b210fb7848c163a8413d3362c79ad0060c9104e7f3ad1279384c0745edaeea1",
+      "translation": "Batas masuk berikutnya yang terencana untuk {crop}"
+    },
+    {
+      "key": "growerOperations28",
+      "english": "Planned from your own estimates · {date}",
+      "sha256": "950e64326716d263196c0b23b605a8ce971390d60ada93b26ddec817981e679e",
+      "translation": "Direncanakan dari perkiraan Anda sendiri · {date}"
+    },
+    {
+      "key": "growerOperations29",
+      "english": "Exclusive end boundary · not recorded work",
+      "sha256": "edaa33a93879dd79bb9cba6fd7e839ce75a70c73a1c51c0a6b4ef26c84d9f2d9",
+      "translation": "Batas akhir eksklusif (tidak termasuk) · bukan pekerjaan tercatat"
+    },
+    {
+      "key": "growerOperations30",
+      "english": "Availability boundary only · not a new planting or confirmation that the bed is free",
+      "sha256": "6f0fede4adce4a6874bf7e3466ff7fa6b8c2f97565fcd060b8ec223b9354652a",
+      "translation": "Hanya batas ketersediaan · bukan penanaman baru atau konfirmasi bahwa bedengan telah bebas"
+    },
+    {
+      "key": "growerOperations31",
+      "english": "Measured bed",
+      "sha256": "04e3b3feacf9fb7cac882dd195d079607f12bc3d538f649aa8235d5fb0f54e5e",
+      "translation": "Bedengan terukur"
+    }
+  ]
+}

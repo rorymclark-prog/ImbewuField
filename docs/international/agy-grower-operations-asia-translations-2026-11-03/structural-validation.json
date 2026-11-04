@@ -1,0 +1,32 @@
+{
+  "validatedAtUtc": "2026-11-03T04:09:03.078374+00:00",
+  "provenance": "independent-coordinator-structure-source-token-validation",
+  "sourceSha256": "f03dd7b45de73a2996c52478483a0ae68bdbe5081f2e8bc267641faa76b071f6",
+  "locales": [
+    "hi",
+    "bn",
+    "id"
+  ],
+  "pairsChecked": 93,
+  "negativeControlsRejected": [
+    "source-hash",
+    "wrong-locale",
+    "false-review-claim",
+    "runtime-activation",
+    "missing-message",
+    "added-message",
+    "reordered-messages",
+    "wrong-key",
+    "changed-english",
+    "changed-message-hash",
+    "empty-translation",
+    "missing-{crop}",
+    "missing-DEMO",
+    "missing-UTC"
+  ],
+  "reviewNotesWords": 239,
+  "runtimeActivation": false,
+  "fluentReviewPerformed": false,
+  "checksAreStructuralOnly": true,
+  "integrationImplemented": false
+}

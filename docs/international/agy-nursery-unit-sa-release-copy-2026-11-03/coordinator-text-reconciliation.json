@@ -1,0 +1,14 @@
+{
+  "coordinatorRecordedAtUtc": "2026-11-03T12:28:09.363740+00:00",
+  "implementationCommit": "e9d2ee95684a0242dd852b3e4e4a0ba4d072baad",
+  "frozenWholeSourceSha256": "0757135f0b7b1fbb405e0b20378ea9e3519f5981ffa7acb02c217140a045206d",
+  "sourcePath": "lib/release-notes.ts",
+  "originalSnapshotBytes": 346535,
+  "originalSnapshotSha256": "f2c5e662d3476f376ce2dd1bdee38f55587d3f1e9fb1484f91bde2124cf0f259",
+  "currentBytes": 346535,
+  "currentSha256": "06f1ff638a3e57345f5c7f538e7c1167f53482ceafac7933ec2e63c55b8ad249",
+  "exactEnglishKeyMessagePairsUnchanged": 6,
+  "reconciliation": "English messages remain exact; implementation surrounding them and release SHA metadata changed after source freezing. Original packet provenance is retained.",
+  "humanOrFluentApproval": false,
+  "newRuntimeLanguage": false
+}

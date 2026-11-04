@@ -36,79 +36,73 @@ sequence and specific human/source/integration gates. These stages can overlap
 where ownership and dependencies permit; they are not promised calendar weeks.
 Human review cannot be replaced by an AI-authored approval record.
 
-## Current execution and ownership
+## Current execution and ownership — 2 November checkpoint
 
-Codex owns implementation, integration, checks and release decisions. Disjoint
-subtasks may run concurrently; shared source and saved-data contracts require
-coordinator review before integration. Root's original worktree and the old lane
-worktrees retain their unrelated/private work and must not be reset or staged.
+Codex owns implementation, independent review, checks and release coordination.
+Disjoint workers may run concurrently; shared saved-data contracts require root
+review. Preserve the original worktree and old lanes' unrelated/private work.
 
-AGY's 1 November research run finished and its compact reviewed subset shipped.
-On 2 November Codex resumed the existing CLI conversation on a new bounded
-Kenya/Kiambu source-fit assignment limited to KALRO, KMD and KEPHIS. Kiambu is an
-engineering investigation scope, not an approved agricultural region. AGY owns
-only its newly assigned research-document directory; it implements no product
-adapter and approves no launch. Its exact live/stopped state is reported from
-the process and actual artifacts, not this historical paragraph.
+- Draft [PR #1167](https://github.com/rorymclark-prog/ImbewuField/pull/1167),
+  head `12b0acba`, contains site-country context, account-safe metadata sync and
+  guarded catalogue consumers. Typecheck and 137 affected checks pass. Its local
+  full run was stopped during disk pressure; current-head full CI remains a gate.
+- Draft [PR #1168](https://github.com/rorymclark-prog/ImbewuField/pull/1168),
+  head `7cd65415`, stacks grower estimates and safe plan-book writes on #1167.
+  Typecheck, 110 affected checks and seven independent page/storage probes pass.
+  Full current-head CI remains pending. Merge order is #1167 before #1168.
+- This next branch adds pure automatic own-input proposals, immutable canonical
+  cycle attachments, context-aware projections and a saved buyer-demand adapter.
+  Malformed markers survive storage and cannot become catalogue rows. Legacy
+  tasks and report calculations withhold tagged rows; explicit current projections
+  retain own dates, cycle kg, target plants and nursery intervals. Unknown seeds,
+  trays, space and delivery distributions remain unknown. Typecheck and 100
+  focused integration checks pass; the full suite is running. **Live acceptance
+  is not enabled:** remaining UI/task/export/nursery/finance consumers need review
+  before these rows can enter a user's plan. This prerequisite is not a completed
+  international auto-planner release.
 
-Public scoped read-only fetches use normal approvals. Optional interaction-data
-sharing remains OFF under Rory's existing onboarding choice. No permission
-bypass, global allow rules, private conversation IDs, transcripts, credentials
-or farmer coordinates belong in source handoffs or GitHub.
+The built-in browser is now available. The #1168 hosted preview was inspected at
+normal desktop and 390-pixel phone width. A partial profile saved on this device,
+survived reload in its original workspace and was removed after the test. The
+phone document measured 390 pixels with no horizontal overflow. No mapped-site,
+cloud or second-device persistence is certified: the preview currently opens a
+sign-in page for account access. Source probes and local storage checks do not
+replace those release checks. Neither draft milestone is merged or released.
 
-## Open stage-one gates
+## AGY delivery and new parallel language jobs
 
-- Claude-owned sync changes are now drafted through AGY and independently
-  checked against seven actual-helper race/data-preservation probes (all pass).
-  The AGY Claude CLI stopped after a usage limit; it is not still implementing.
-  Codex integration review and full validation remain required. No release yet.
-- Actual browser inspection is required before release. On 2 November the
-  computer-use tool again reported local browser use disabled in Work settings.
-  No browser workaround is authorised. Source tests do not prove the layout.
-- Full current-head checks are required for the saved-data/persistence change.
-  Do not call this stage released merely because focused tests pass.
+The earlier seven-family source shortlist shipped with the foundation. Kenya's
+bounded follow-up is reviewed in #1167; the UK's four-response compact review is
+in #1168. The US research CLI has now handed off and exited successfully with
+its workers stopped. This branch includes a corrected US compact bundle checked
+against four actual public responses across three official source families.
+Documentation fetched is distinct from a tested product-data endpoint or an
+implemented adapter. No pilot product-data integration or local region approval
+has been established by these research deliveries.
+
+Two completed translation batches contain 624 source-bound draft entries:
+97 and 59 entries per locale for French, Latin American Spanish, Brazilian
+Portuguese and Kenyan Swahili. Independent structure/hash/protected-token checks
+pass; named fluent human review and runtime language enablement remain absent.
+The second batch's main AGY CLI exited successfully after its workers stopped.
+
+A new bounded translation assignment is now active in the existing translation
+conversation, using Gemini 3.8 Flash High. Two AI workers handle Hindi (India)
+and Bengali (Bangladesh); the main AI handles Indonesian. These countries are
+already in the expansion queue. The assignment is exactly the frozen 59-message
+full-warning/status inventory per locale, with separate output ownership. Startup
+and two workers were observed; delivery is not yet claimed. All outputs must
+remain unreviewed drafts, with no lesson/species edits or production language
+activation. Optional interaction-data sharing remains off. No raw conversation
+handles or transcripts belong in publication bundles.
 
 ## Invariants throughout
 
 Leave PLAN_VERSION, calibrated lesson/quiz bodies, species names and measured
 saved geometry unchanged. Preserve old plans, account isolation and existing
 permissions. Never silently convert currencies or units, choose default
-germination/yield/spacing values, or turn unknown evidence into zero or approval.
-Quarantined broad research drafts remain outside release bundles. Every shipped
-milestone needs branch/SHA/PR, actual validation, visible-output evidence and
-verified production build identity in issue #35.
-
-## Additional parallel language assignment — 2 November
-
-Rory requested further AGY translation jobs. A separate Gemini 3.8 Flash High
-CLI lane was launched against the fixed 97-segment UI inventory in
-[the translation work order](AGY-TRANSLATION-WORKORDER-2026-11-02.md). Three
-disjoint native worker assignments cover French, Latin American Spanish and
-Brazilian Portuguese; the main translation agent covers Kenyan Swahili. The CLI subsequently confirmed **Spawned 3 subagents** for the disjoint
-French/Spanish/Brazilian-Portuguese jobs. The main agent handles Kenyan Swahili.
-Delivered files and validation must still be verified separately from startup.
-All outputs remain AI drafts requiring fluent human review. This extends the
-existing 32-message-per-language foundation without replacing it or rewriting
-calibrated lessons. UK source research continues in its separate existing CLI
-conversation. No language/country launch follows from draft completion.
-
-## Stage-one review checkpoint
-
-Draft PR #1167 contains the saved-context milestone at dfa7ac49e. A partial
-local full-suite run exposed five stale source-contract assertions: they pinned
-the former automatic summer default, Simple-only syntax or handler fixtures
-without a country-scope predicate. The unchanged behavioral requirements now
-exercise actual supported/unsupported/loading conditions and missing-bed guards.
-The combined affected recheck passes 137/137, with clean typecheck. The local
-full run was explicitly stopped during critical disk pressure and is not a pass.
-Current-head full CI, preview and browser/persistence checks remain release gates.
-
-AGY has returned 388 source-bound language draft entries. Independent structural
-checks pass all four 97-segment files after three literal DEMO/cm repairs; fluent
-review is still absent. Original regional terminology assertions were quarantined,
-and compact candidate glossaries identify the required human checks. The main
-translation CLI exited with code 2 after partial handoff. The UK research process
-and old tool handle were no longer present after the interrupted turn; its final
-compact files were not delivered to the authorised path. Do not describe either
-lane as still running. A concrete follow-up assignment must verify existing files
-and resume the proper existing conversation before further work.
+agronomic values, or turn unknown evidence into zero or approval. Quarantined
+broad research stays outside release bundles. Every release needs exact
+branch/SHA/PR, current-head full checks, visible and persistence verification,
+and verified production identity recorded on issue #35. Completing one milestone
+does not complete this sustained programme or its human review gates.

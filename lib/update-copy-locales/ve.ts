@@ -1,6 +1,58 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
+  "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Zwilangi zwa dziyuniti dza tsimu ya zwimela zwiṱuku na dza khaṋo zwi dzula zwi tshi wanala musi pulane i fanaho i tshi vhulungwa hafhu.",
+  "See when you can reload saved settings or need to reopen the crop plan.": "Vhonani uri ni nga dovha na laisa zwiimiswa zwo vhulungwaho lini, kana ni tshi tea u vula pulane ya zwimela hafhu.",
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/ve.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Dzhenisani zwipikwa zwa khaṋo zwa vhege na vhege na tshileme tshaṋu tsha zwipaki zwa khaṋo nga dzikhilogiramu (kg) kana dziphaundu dza tshileme (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Vhulungani zwidodombedzwa zwa zwilavhelelwa zwa vharengi zwe na dzhenisa zwi tshi kha ḓi vha hone musi u vhulungwa hazwo hu sa koni u khwaṱhisedzwa.",
+  "Choose harvest weight units": "Nangani dziyuniti dza tshileme tsha khaṋo",
+  "Production plan → Harvest targets": "Pulane ya mveledziso → Zwipikwa zwa khaṋo",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Nangani dzikhilogiramu (kg) kana dziphaundu dza tshileme (lb), dzhenisani tshipikwa tshaṋu tsha khaṋo kana tshileme tshaṋu tsha tshipaki tsha khaṋo, u bva afho ni vhulunge. Tshileme tsha zwipaki tshi sa ḓivhei tshi dzula tshi siho; dziṱhanganyelo dza zwipikwa ndi anganyelo dza u pulana fhedzi.",
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Dzhenisani mielo ya dzithirei dza tsimu ya zwimela zwiṱuku nga dzisentimitha kana dziintshi.",
+  "Enter usable nursery surface in square metres or square feet.": "Dzhenisani vhupo vhu shumisekaho ha tsimu ya zwimela zwiṱuku nga dzimitha dza tshikwere kana dziṋayo dza tshikwere.",
+  "Keep nursery entries until their save is confirmed.": "Litshani zwidodombedzwa zwo dzheniswaho zwa tsimu ya zwimela zwiṱuku zwi tshi kha ḓi vha hone u swika u vhulungwa hazwo hu tshi khwaṱhisedzwa.",
+  "Choose nursery units": "Nangani dziyuniti dza tsimu ya zwimela zwiṱuku",
+  "Production plan → Nursery planner": "Pulane ya mveledziso → Mupulani wa tsimu ya zwimela zwiṱuku",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Nangani dziyuniti dzaṋu, dzhenisani vhuhulu ha dzithirei na vhupo vhu shumisekaho ha u aluwa ha zwimela, u bva afho ni vhulunge. Mielo ya zwishumiswa i sa ḓivhei i dzula i si na tshithu; tshiṱoko tsha zwishumiswa tsha zero tshi dzula tshi zero.",
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/ve.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Dzhenisani mielo ya mmbete ya u ṱavha (beds) na dziḽila dza buḽoko ya tsimu nga dzimithara kana dzifithi (feet).",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Vhulungani mielo yo vhulungwaho i songo shanduka musi ni tshi shandukisa yuniti i sumbedzwaho.",
+  "Choose field-block units": "Nangani dziyuniti dza buḽoko ya tsimu",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Nangani tsimu, nangani dzimithara kana dzifithi (feet), dzhenisani mielo yaṋu uri ni sedzuluse mmbete ya u ṱavha (beds) ni sa athu vhulunga. Masimu o vuleaho a vhulunga vhupo hao ha polygon hu si na u bveledza mmbete ya u ṱavha (beds).",
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Vhulungani pulane ntswa dza zwimela dzi tshi tsireledzea musi sesheni ya kale ya app i tshi vhulunga khophi yayo.",
+  "Review retained copies before continuing with your current crop plan.": "Sedzulusani khophi dzo vhulungwaho ni sa athu bvela phanḓa na pulane yaṋu ya zwino ya zwimela.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Lingedzani hafhu u fhirisela mushumo wa zwimela wa mueni wo thithiswaho hu si na u dzhia vhudzulo ha mushumo wa akhaunthu wo vhulungwaho.",
+  "Review crop-plan storage": "Sedzulusani vhuvhulungelo ha pulane ya zwimela",
+  "Production plan → Crop-plan storage": "Pulane ya mveledziso → Vhuvhulungelo ha pulane ya zwimela",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Sedzani nḓivhadzo ya vhuvhulungelo. Arali sesheni ya kale yo shandula khophi yayo, dzhenisani khophi dzoṱhe mbili ni dzi sedzuluse ni sa athu nanga u fara pulane yaṋu ya zwino.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Vhulungani pulane yo sedzuluswaho i bvaho kha u anganyela haṋu ha u tavha.",
+  "Check unresolved crop records before using a finance forecast.": "Sedzani rekhodo dza zwimela dzi sa athu tandululwa phanḓa ha u shumisa u anganyela ha masheleni.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Farani u anganyela ha u tavha ho vhulungwaho na ndudzanyo dza vhurerelo ha zwimela musi ni tshi dzhena kha akhaunthu.",
+  "Save your reviewed plan": "Vhulungani pulane yaṋu yo sedzuluswaho",
+  "Production plan → Automatic plan from your estimates": "Pulane ya mveledziso → Pulane i shumaho nga yoṱhe i bvaho kha u anganyela haṋu",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Sedzulusani dzinginyo ḽo fhelelaho, ni vhulunge mitevhe yaḽo yoṱhe yo dzudzanywaho, u bva afho ni vule mushumo u re na maḓuvha.",
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/ve.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Tevhelani mitingatingo ya vhulimi yo vhulungwaho nga madatumu ayo o pulaniwaho nga ho livhaho.",
+  "Check current designs before ticking work or exporting dates.": "Tolani pulane dza zwino musi ni sa athu swaya mushumo kana u bvisa madatumu.",
+  "Keep own crop estimates separate from catalogue print advice.": "Vhulungani ndinganyelo dzaṋu dza zwilimwa dzo fhambana na nyeletshedzo ya khathalogo yo gandiswaho.",
+  "Review your dated work": "Tsedzulusani mushumo waṋu u re na madatumu",
+  "Task Planner → Dated work from your estimates": "Mupulani wa Mishumo → Mushumo u re na madatumu u bvaho kha ndinganyelo dzaṋu",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Vulani Mupulani wa Mishumo u itela u tola madatumu a mushumo a bvaho kha ndinganyelo dzaṋu dza vhulimi dzo vhulungwaho.",
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Tsedzulusani pulane dza zwilimwa dza othomethiki dzi tshi bva kha mbalo dzaṋu dza u alusa na zwipikwa zwo vhulungwaho zwa vharengi.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Tolani thirei dza nese dzi re na datumu na zwidodombedzwa zwa vhupo musi ni sa athu daunilouda tsedzuluso yaṋu.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Vhulungani mbalo dzaṋu dza u alusa nahone ni tsedzuluso vhukoni na madatumu a mibethe yo pimiwaho.",
+  "Review a crop plan from your estimates": "Tsedzulusani pulane ya zwilimwa i tshi bva kha mbalo dzaṋu",
+  "Crop planner → Automatic plan from your estimates": "Mupulani wa zwilimwa → Pulane ya othomethiki i tshi bva kha mbalo dzaṋu",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Tolani ndinganyo yo vhulungwaho, khwathisedzani u vha hone nahone ni fanyise zwipikwa zwa vharengi na mbalo dzaṋu dza u alusa. Tsedzulusani mitingatingo yo dzinginywaho na zwidodombedzwa zwa nese; nyalo dzaṋu dzo vhulungwaho a dzi shanduki.",
+  "Review your growing estimates": "Tsedzulusani mbalo dzaṋu dza u alusa",
+  "Crop planner → Your growing estimates": "Mupulani wa zwilimwa → Mbalo dzaṋu dza u alusa",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Dzhenisani mihumbulo yaṋu, nangani mbethe wo pimiwaho nahone ni tsedzuluso mbalelo. Mbalo dzi siho dzi dzula dzi siho; mvelelo ndi mbalo fhedzi, a si thendelo ya vhulimi ha henefho.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Khwathisedzani shango ḽa fhethu ho mapiwaho musi ni sa athu shumisa vhulangeli ha u pulana zwilimwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Vhulungani rekhodo dzaṋu dza u zwala na zwishumiswa zwa nese musi pulane ya henefho i sa athu vha hone.",

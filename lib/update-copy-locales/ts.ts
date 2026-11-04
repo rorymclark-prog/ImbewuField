@@ -1,6 +1,58 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
+  "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Swilawuri swa tiyuniti ta xirhapa xa swimilana ni ta ntshovelo swi tshamile swi ri kona loko pulani leyi fanaka yi hlayisiwa nakambe.",
+  "See when you can reload saved settings or need to reopen the crop plan.": "Vona nkarhi lowu u nga tlhelaka u layicha swiyimiso leswi hlayisiweke kumbe loko u fanele ku pfula pulani ya swibyariwa nakambe.",
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/ts.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Nghenisa swikongomelo swa ntshovelo swa vhiki na vhiki ni ntiko wa wena wa maphakete ya ntshovelo hi tikilograma (kg) kumbe tiphawundi ta ntiko (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Hlayisa vuxokoxoko bya swilaveko swa vaxavi lebyi u byi ngheniseke byi tshama byi ri kona loko ku hlayisiwa ka byona ku nga koteki ku tiyisisiwa.",
+  "Choose harvest weight units": "Hlawula tiyuniti ta ntiko wa ntshovelo",
+  "Production plan → Harvest targets": "Kunguhato ra vuhumelerisi → Swikongomelo swa ntshovelo",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Hlawula tikilograma (kg) kumbe tiphawundi ta ntiko (lb), nghenisa xikongomelo xa wena xa ntshovelo kumbe ntiko wa wena wa phakete ya ntshovelo, kutani u hlayisa. Mintiko ya maphakete leyi nga tiviwiki yi tshama yi nga ri kona; nhlayo hinkwayo ya swikongomelo i vupimanyisi byo kunguhata ntsena.",
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Nghenisa mimpimo ya tithireyi ta xirhapa xa swimilana hi tisentimitara (cm) kumbe ti-inch (in).",
+  "Enter usable nursery surface in square metres or square feet.": "Nghenisa ndhawu leyi tirhisekaka ya xirhapa xa swimilana hi timitara ta xikwere (m²) kumbe tifiti ta xikwere (ft²).",
+  "Keep nursery entries until their save is confirmed.": "Tshika leswi nghenisiweke swa xirhapa xa swimilana swi ri kona ku fikela loko ku hlayisiwa ka swona ku tiyisisiwa.",
+  "Choose nursery units": "Hlawula tiyuniti ta xirhapa xa swimilana",
+  "Production plan → Nursery planner": "Kunguhato wa vuhumelerisi → Xikunguhati xa xirhapa xa swimilana",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Hlawula tiyuniti ta wena, nghenisa vukulu bya tithireyi ni ndhawu yo mirisa leyi tirhisekaka, kutani u hlayisa. Mimpimo ya switirhisiwa leyi nga tiviwiki yi tshama yi nga tsariwanga nchumu; nhlayo ya switirhisiwa ya zero yi tshama yi ri zero.",
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/ts.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Nghenisa mimpimo ya timbhedwa to byala (beds) ni tindlela ta buloko ya nsimu hi timitara kumbe hi swikondzo (feet).",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Tshika mimpimo leyi hlayisiweke yi nga cincangi loko u cinca yuniti leyi kombiwaka.",
+  "Choose field-block units": "Hlawula tiyuniti ta buloko ya nsimu",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Hlawula nsimu, hlawula timitara kumbe swikondzo (feet), nghenisa mimpimo ya wena kutani u kambisisa timbhedwa to byala (beds) u nga si hlayisa. Masimu lama pfulekeke ma hlayisa ndhawu ya wona ya polygon handle ko endla timbhedwa to byala (beds).",
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Hlayisa tipulani letintshwa ta swimilana ti hlayisekile loko xiphemu xa khale xa apu xi hlayisa khopi ya xona.",
+  "Review retained copies before continuing with your current crop plan.": "Kambisisa tikhopi leti hlayisiweke u nga si ya emahlweni hi pulani ya wena ya sweswi ya swimilana.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Ringeta nakambe ku hundzisela ntirho wa swimilana wa muendzi lowu kavanyetiweke handle ko siva ntirho wa akhawunti lowu hlayisiweke.",
+  "Review crop-plan storage": "Kambisisa vuhlayiselo bya pulani ya swimilana",
+  "Production plan → Crop-plan storage": "Pulani ya vuhumelerisi → Vuhlayiselo bya pulani ya swimilana",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Kambela xitiviso xa vuhlayiselo. Loko xiphemu xa khale xi cincile khopi ya xona, dawuniloda tikhopi hatimbirhi u ti kambisisa u nga si hlawula ku hlayisa pulani ya wena ya sweswi.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Hlayisa pulani leyi kambisisiweke leyi humaka eka swipimanyeto swa wena swo byala.",
+  "Check unresolved crop records before using a finance forecast.": "Kambisisa tirhekhodo ta swimilana leti nga si tlhantlhiwaka u nga si tirhisa xipimanyeto xa timali.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Hlayisa swipimanyeto swo byala leswi hlayisiweke na malulamisele ya vuhlayiselo bya swimilana loko u nghena eka akhawunti.",
+  "Save your reviewed plan": "Hlayisa pulani ya wena leyi kambisisiweke",
+  "Production plan → Automatic plan from your estimates": "Pulani ya vuhumelerisi → Pulani yo tiendlekela hi ku ya hi swipimanyeto swa wena",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Kambisisa xiringanyeto lexi heleleke, hlayisa mindzhendzheleko hinkwayo ya xona leyi kunguhatiweke, kutani u pfula ntirho lowu nga na masiku.",
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/ts.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Landzela mirhendzeleko yo rima leyi hlayisiweke hi masiku ya yona lama kunguhatiweke hi ku kongoma.",
+  "Check current designs before ticking work or exporting dates.": "Kambela tidizayini ta sweswi u nga si fungha mintirho kumbe ku humesa masiku.",
+  "Keep own crop estimates separate from catalogue print advice.": "Hlayisa mimpimo ya wena ya swibyariwa yi hambanile ni switsundzuxo leswi kandziyisiwaka swa khathalogo.",
+  "Review your dated work": "Kambela mintirho ya wena leyi nga ni masiku",
+  "Task Planner → Dated work from your estimates": "Mupulani wa Mintirho → Mintirho leyi nga ni masiku ku suka eka mimpimo ya wena",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Pfula Mupulani wa Mintirho leswaku u kambela masiku ya mintirho ku suka eka mimpimo ya wena yo rima leyi hlayisiweke.",
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Kambela maendlelo ya swibyariwa lama tiendlelaka kusuka eka mimpimo ya wena ya matirhele na swikongomelo swa vaxavi leswi hlayisiweke.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Kambisisa switreyi swa nersari leswi nga na masiku na swilaveko swa xitsandza u nga si kopa nkambisiso wa wena.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Hlayisa mimpimo ya wena n'wini ya matirhele u tlhela u kambela vuswikoti na masiku ya mibhedhi leyi pimiweke.",
+  "Review a crop plan from your estimates": "Kambela pulani ya swibyariwa kusuka eka mimpimo ya wena",
+  "Crop planner → Automatic plan from your estimates": "Mupulani wa swibyariwa → Pulani leyi tiendlelaka kusuka eka mimpimo ya wena",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Kambela dizayini ya wena leyi hlayisiweke, tiyisisa vukona u tlhela u fambisanisa swikongomelo swa vaxavi na mimpimo ya wena ya matirhele. Kambela mirhendzeleko leyi ringanyetiweke na swilaveko swa nersari; swibyariwa swa wena leswi hlayisiweke a swi cinciwi.",
+  "Review your growing estimates": "Kambela mimpimo ya wena ya matirhele",
+  "Crop planner → Your growing estimates": "Mupulani wa swibyariwa → Mimpimo ya wena ya matirhele",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Nghenisa mianakanyo ya wena n'wini, hlawula mubhedhi lowu pimiweke u tlhela u kambela nhlayo. Mintsengo leyi nga hava nchumu yi tshama yi kayivela; mbuyelo i mpimo ntsena, ku nga ri mpfumelelo wa vurimi bya le ndhawini.",
   // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
   "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
   "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",

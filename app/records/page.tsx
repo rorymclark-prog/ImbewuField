@@ -47,6 +47,7 @@ import SavedSiteUpdates from '@/components/international/countries/SavedSiteUpda
 import ComingUpHarvests from '@/components/ComingUpHarvests';
 import CashflowChart from '@/components/CashflowChart';
 import FinanceGraphs from '@/components/FinanceGraphs';
+import { CropPlanStorageNotice } from '@/components/CropPlanStorageStatus';
 import AreaReturnCards from '@/components/AreaReturnCards';
 import type { GrowingEnterprise } from '@/lib/area-returns';
 import MenuButton from '@/components/MenuButton';
@@ -1714,6 +1715,7 @@ export default function RecordsPage() {
               })}
             </div>
             {isRecordsRegionalLang(lang) && <p role="note" lang="en" data-records-draft-notice={lang} className="mt-1 text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsDraftNotice(lang)} English tabs: {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</p>}
+            {tab === 'charts' && <CropPlanStorageNotice />}
 
             {/* bug-02: a failed read keeps showing the last-loaded rows instead of an empty
                 ledger, so this banner — not a blank list — is what says the data may be stale. */}

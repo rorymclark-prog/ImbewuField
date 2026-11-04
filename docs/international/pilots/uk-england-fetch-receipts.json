@@ -1,0 +1,50 @@
+[
+  {
+    "id": "uk-metoffice-stations",
+    "requestedUrl": "https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data",
+    "effectiveUrl": "https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T19:24:43.157368+00:00",
+    "completedAt": "2026-11-02T19:24:43.333991+00:00",
+    "bytes": 164649,
+    "sha256": "f96dee75e5999b9fd0860fe1cc14ad2501185c19c9b4428554eae1d8df084211",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "uk-bgs-licensing",
+    "requestedUrl": "https://www.bgs.ac.uk/information-hub/licensing/",
+    "effectiveUrl": "https://www.bgs.ac.uk/information-hub/licensing/",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T19:24:43.334297+00:00",
+    "completedAt": "2026-11-02T19:24:44.212977+00:00",
+    "bytes": 204895,
+    "sha256": "a46f08a4b6d87d82169bcdfc33758ab3e690026bc061ab267d31f337e86919b0",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "uk-apha-controls",
+    "requestedUrl": "https://www.gov.uk/guidance/plant-health-controls",
+    "effectiveUrl": "https://www.gov.uk/guidance/plant-health-controls",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T19:24:44.213426+00:00",
+    "completedAt": "2026-11-02T19:24:44.751882+00:00",
+    "bytes": 106679,
+    "sha256": "bf39de76132dda6fda523bee55d735060b9ed93ef015b4ddf89ec1f25f1048bf",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "uk-metoffice-legal",
+    "requestedUrl": "https://www.metoffice.gov.uk/policies/legal",
+    "effectiveUrl": "https://www.metoffice.gov.uk/policies/legal",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T20:58:44.367239+00:00",
+    "completedAt": "2026-11-02T20:58:44.700432+00:00",
+    "bytes": 89302,
+    "sha256": "86798fe18d85f44a89d7f86301f0511691ea5d29521ef8df6f5902ecb0848c4e",
+    "receiptAuthor": "Codex coordinator machine"
+  }
+]

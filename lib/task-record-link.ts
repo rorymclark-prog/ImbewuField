@@ -58,6 +58,8 @@ export function parseTaskJournalQuery(params: URLSearchParams): TaskJournalDraft
 }
 
 export function taskJournalHref(task: BoardTask): string | null {
+  // Dated own-cycle events are not catalogue actions. Reusing their crop identity
+  // here would turn a planned boundary into a different instruction or record.
   if (task.kind !== 'crop' || !task.cropKey || !task.action) return null;
   const params = new URLSearchParams({ task: '1', crop: task.cropKey, action: task.action, title: task.title });
   if (task.bedId) params.set('bed', task.bedId);

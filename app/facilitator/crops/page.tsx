@@ -25,6 +25,19 @@ import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabil
 import ProductionRecordsEditor from '@/components/crops/ProductionRecordsEditor';
 import HarvestTargetsPanel from '@/components/crops/HarvestTargetsPanel';
 import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
+import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
+import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
+import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
+import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
+import { useGrowerWorkflow, type GrowerWorkflowBookReceipt, type GrowerWorkflowAcceptanceCommit, type GrowerWorkflowAcceptanceResult } from '@/components/crops/useGrowerWorkflow';
+import { hasGrowerCycleMarker, isProvenForeignGrowerCycle } from '@/lib/international/grower-cycle';
+import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
+import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
+import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
+import { activeAccountUid } from '@/lib/account-local-storage';
+import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
+import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
 import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
 import ProductionGuideCard from '@/components/crops/ProductionGuideCard';
@@ -65,6 +78,8 @@ import { currentPlanningSupport, resolvePlanningSupport } from '@/lib/internatio
 import { resolveWorkspacePlanningReference, replaceWorkspacePlanningReference, sanitiseWorkspacePlanningReferences, workspacePlanningIdForDesign, type WorkspacePlanningReference } from '@/lib/international/workspace-context';
 import WorkspaceReferencePanel from '@/components/international/countries/WorkspaceReferencePanel';
 import SavedSiteUpdates from '@/components/international/countries/SavedSiteUpdates';
+import { CropPlanStorageNotice } from '@/components/CropPlanStorageStatus';
+import { CROP_PLAN_STORAGE_EVENT } from '@/lib/crop-plan-storage';
 import SiteCountryPanel, { type CountrySaveNotice } from '@/components/international/countries/SiteCountryPanel';
 import PlannerSupportHold from '@/components/international/countries/PlannerSupportHold';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
@@ -77,13 +92,14 @@ import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
 import { VarietyGuidance } from '@/components/crops/VarietyGuidance';
 import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedSchedule, MONTHS_SHORT } from '@/lib/crop-catalog';
-import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning, CropTask } from '@/lib/crop-plan';
+import type { CropPlanWriteAdmission, PlanBed, Planting, CropPlanState, HarvestTarget, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning, CropTask } from '@/lib/crop-plan';
 import {
-  loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
+  loadCropPlan, loadCropPlanWithWriteAdmission, cropPlanWriteAdmissionMatches, cropPlanWriteCandidateIsLossless, readRawCropPlanReceipt, saveCropPlanWithReceipt, cropPlanWriteToken, sanitiseHarvestTargets, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, totalGrowingAreaM2, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
   restampEditedOnce, confirmOnceSowing,
+  CROP_PLAN_CHANGED_EVENT,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
@@ -766,6 +782,21 @@ function FacilitatorCropsPageInner() {
   const [includeAnimals, setIncludeAnimals] = useState(DEFAULT_INCLUDE_ANIMALS);
   useEffect(() => { setIncludeAnimals(loadIncludeAnimals()); }, []);
   const [plan, setPlan] = useState<CropPlanState | null>(null);
+  const planWriteBase = useRef<{ owner: string | null; sample: boolean; token: string | null; planKey: string; admission: CropPlanWriteAdmission } | null>(null);
+  function rememberStoredPlan(value: CropPlanState, token: string) {
+    const loaded = loadCropPlanWithWriteAdmission();
+    const key = JSON.stringify(value);
+    const admission: CropPlanWriteAdmission = loaded.token === token ? loaded.admission
+      : { status: 'held', reasons: ['written-receipt-no-longer-current'] };
+    const owner = activeAccountUid(), sample = isSampleMode();
+    const previous = planWriteBase.current;
+    const admitted = cropPlanWriteAdmissionMatches(admission, key, token);
+    // A no-op autosave must not revoke open editors still bound to this exact book and lease.
+    if (admitted && previous?.owner === owner && previous.sample === sample && previous.token === token
+      && previous.planKey === key && cropPlanWriteAdmissionMatches(previous.admission, key, token)) return;
+    planWriteBase.current = { owner, sample, token, planKey: key, admission };
+    if (!admitted) setPlanSaveConflict(true);
+  }
   // One-level-per-action undo, mirroring FacilitatorCanvas's own pushHistory
   // pattern — mainly for undoing a whole auto-suggested batch in one tap
   // instead of deleting every planting by hand, but it covers manual
@@ -773,6 +804,20 @@ function FacilitatorCropsPageInner() {
   // functions below. Capped so it can't grow unbounded across a long session.
   const [planHistory, setPlanHistory] = useState<CropPlanState[]>([]);
   const PLAN_HISTORY_LIMIT = 10;
+  type PlanHistoryMetadata = { [K in 'rainPattern' | 'planNotes' | 'planNotesAt']: { present: boolean; value?: CropPlanState[K] } };
+  type PlanHistoryBinding = { owner: string | null; sample: boolean; scopeKey: string; authoredMetadata?: { before: string; after: string } };
+  const planHistoryContext = useRef(new WeakMap<object, PlanHistoryBinding>());
+  const suggestedPlanHistory = useRef(new WeakMap<object, { before: CropPlanState; context: PlanHistoryBinding }>());
+  useEffect(() => {
+    if (!plan) return;
+    const committed = suggestedPlanHistory.current.get(plan);
+    if (!committed) return;
+    // Updaters may be replayed or abandoned. Only a committed action receives
+    // undo authority, and deleting first makes effect replay idempotent too.
+    suggestedPlanHistory.current.delete(plan);
+    planHistoryContext.current.set(committed.before, committed.context);
+    setPlanHistory(previous => [...previous.slice(-(PLAN_HISTORY_LIMIT - 1)), committed.before]);
+  }, [plan]);
   const [mounted, setMounted] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(1);
   const [currentYear, setCurrentYear] = useState(2026);
@@ -833,7 +878,13 @@ function FacilitatorCropsPageInner() {
   const [autoGenerating, setAutoGenerating] = useState(false);
 
   function openAutoSuggest() {
+    if (hasOwnRecords) return;
     if (!currentPlanningScopeAllowed() || beds.length === 0) return;
+    const suggestionBase = planWriteBase.current;
+    if (!plan || planSaveConflict || !suggestionBase || suggestionBase.planKey !== JSON.stringify(plan)
+      || !plannerActorIsCurrent(suggestionBase.owner, suggestionBase.sample)
+      || !cropPlanWriteAdmissionMatches(suggestionBase.admission, suggestionBase.planKey, suggestionBase.token)
+      || cropPlanWriteToken() !== suggestionBase.token) return;
     setAGoal('family');
     setAFocusCount(1);
     applyGoalMix('family');
@@ -878,7 +929,13 @@ function FacilitatorCropsPageInner() {
     setACropKeys((prev) => prev.includes(cropKey) ? prev.filter((key) => key !== cropKey) : [...prev, cropKey]);
   }
   function runAutoSuggest() {
+    if (hasOwnRecords) return;
     if (!currentPlanningScopeAllowed() || beds.length === 0) return;
+    const suggestionBase = planWriteBase.current;
+    if (!plan || planSaveConflict || !suggestionBase || suggestionBase.planKey !== JSON.stringify(plan)
+      || !plannerActorIsCurrent(suggestionBase.owner, suggestionBase.sample)
+      || !cropPlanWriteAdmissionMatches(suggestionBase.admission, suggestionBase.planKey, suggestionBase.token)
+      || cropPlanWriteToken() !== suggestionBase.token) return;
     suggestionScopeRef.current = planningScopeKey;
     const answers: AutoSuggestAnswers = {
       goal: aGoal,
@@ -942,31 +999,78 @@ function FacilitatorCropsPageInner() {
   // empty plan (nothing to undo back to).
   function pushPlanHistory() {
     if (!plan) return;
+    planHistoryContext.current.set(plan, { owner: activeAccountUid(), sample: isSampleMode(), scopeKey: planningScopeKey });
     setPlanHistory((prev) => [...prev.slice(-(PLAN_HISTORY_LIMIT - 1)), plan]);
   }
+  function planHistoryMetadataKey(value: Pick<CropPlanState, 'rainPattern' | 'planNotes' | 'planNotesAt'>): string {
+    const metadata: PlanHistoryMetadata = {
+      rainPattern: { present: Object.prototype.hasOwnProperty.call(value, 'rainPattern'), value: value.rainPattern },
+      planNotes: { present: Object.prototype.hasOwnProperty.call(value, 'planNotes'), value: value.planNotes },
+      planNotesAt: { present: Object.prototype.hasOwnProperty.call(value, 'planNotesAt'), value: value.planNotesAt },
+    };
+    return JSON.stringify(metadata);
+  }
+  function stageSuggestedPlanHistory(before: CropPlanState | null, next: CropPlanState): CropPlanState {
+    if (before) suggestedPlanHistory.current.set(next, { before,
+      context: { owner: activeAccountUid(), sample: isSampleMode(), scopeKey: planningScopeKey,
+        authoredMetadata: { before: planHistoryMetadataKey(before), after: planHistoryMetadataKey(next) } } });
+    return next;
+  }
   function undoLastChange() {
-    if (!planHistory.length) return;
-    setPlan(planHistory[planHistory.length - 1]);
-    setPlanHistory((prev) => prev.slice(0, -1));
+    if (!plan || !planHistory.length) return;
+    const base = planWriteBase.current, previous = planHistory[planHistory.length - 1];
+    const context = planHistoryContext.current.get(previous);
+    if (!base || !context || context.owner !== base.owner || context.sample !== base.sample || context.scopeKey !== planningScopeKey
+      || !plannerActorIsCurrent(base.owner, base.sample) || !currentPlanningScopeAllowed()
+      || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token) || cropPlanWriteToken() !== base.token) {
+      setPlanSaveConflict(true); return;
+    }
+    // Undo is scoped to shown legacy plantings. A later profile/target/record
+    // save may have rebased newer foreign facts, which history cannot erase.
+    const shown = new Set(beds.map(bed => bed.id));
+    const preserved = plan.plantings.filter(row => hasGrowerCycleMarker(row) || !shown.has(row.bedId));
+    const restored = previous.plantings.filter(row => !hasGrowerCycleMarker(row) && shown.has(row.bedId));
+    const plantings = [...preserved, ...restored];
+    if (new Set(plantings.map(row => row.id)).size !== plantings.length
+      || JSON.stringify(plantings) === JSON.stringify(plan.plantings)) { setPlanSaveConflict(true); return; }
+    let next = { ...plan, plantings, updatedAt: Date.now() };
+    // A suggestion's explanations belong to its own action. Restore the prior
+    // group only while all three authored values remain current; otherwise a
+    // newer explanation/date/basis must survive this older planting undo.
+    if (context.authoredMetadata && context.authoredMetadata.after === planHistoryMetadataKey(plan)) {
+      const metadata = JSON.parse(context.authoredMetadata.before) as PlanHistoryMetadata;
+      const { rainPattern: _pattern, planNotes: _notes, planNotesAt: _notesAt, ...unrelated } = next;
+      next = { ...unrelated,
+        ...(metadata.rainPattern.present ? { rainPattern: metadata.rainPattern.value } : {}),
+        ...(metadata.planNotes.present ? { planNotes: metadata.planNotes.value } : {}),
+        ...(metadata.planNotesAt.present ? { planNotesAt: metadata.planNotesAt.value } : {}) };
+    }
+    if (!cropPlanWriteCandidateIsLossless(next) || planWriteBase.current !== base || !plannerActorIsCurrent(base.owner, base.sample)
+      || cropPlanWriteToken() !== base.token) { setPlanSaveConflict(true); return; }
+    setPlan(next);
+    setPlanHistory(prev => prev.slice(0, -1));
   }
   function acceptAutoSuggest() {
     if (!currentPlanningScopeAllowed() || suggestionScopeRef.current !== planningScopeKey || !autoResult || beds.length === 0) return;
-    pushPlanHistory();
+    if (hasOwnRecords) return;
+    const suggestionBase = planWriteBase.current;
+    if (!plan || planSaveConflict || !suggestionBase || suggestionBase.planKey !== JSON.stringify(plan)
+      || !plannerActorIsCurrent(suggestionBase.owner, suggestionBase.sample)
+      || !cropPlanWriteAdmissionMatches(suggestionBase.admission, suggestionBase.planKey, suggestionBase.token)
+      || cropPlanWriteToken() !== suggestionBase.token) return;
+    // The reasons the farmer just read replace earlier explanations: suggestions
+    // run months apart describe different plans and cannot share one date label.
+    const authoredMetadata = { rainPattern: pattern, planNotes: autoResult.notes, planNotesAt: Date.now() };
     setPlan((prev) => {
+      if (autoResult.plantings.length === 0 || prev?.plantings.some(p => beds.some(b => b.id === p.bedId) && hasGrowerCycleMarker(p))) return prev;
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
-      return {
+      return stageSuggestedPlanHistory(prev, {
         ...base,
         version: 1,
-        rainPattern: pattern,
+        ...authoredMetadata,
         plantings: [...base.plantings, ...autoResult.plantings],
-        // The reasons the farmer just read stay with the plan. They REPLACE any
-        // earlier set rather than accumulating: two suggestions run months apart
-        // explain two different plans, and stacking them would put contradictory
-        // sentences under one date label.
-        planNotes: autoResult.notes,
-        planNotesAt: Date.now(),
         updatedAt: Date.now(),
-      };
+      });
     });
     // Clear immediately (not just close the modal) — a second click landing
     // before React re-renders would otherwise still see a non-null
@@ -1140,7 +1244,12 @@ function FacilitatorCropsPageInner() {
 
   useEffect(() => {
     setDesign(loadFacilitatorState());
-    setPlan(loadCropPlan());
+    const owner = activeAccountUid(), sample = isSampleMode(), loaded = loadCropPlanWithWriteAdmission();
+    const storedPlan = loaded.book;
+    const base = { owner, sample, token: loaded.token, planKey: JSON.stringify(storedPlan), admission: loaded.admission };
+    planWriteBase.current = base;
+    setPlan(storedPlan);
+    if (!plannerActorIsCurrent(owner, sample) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) setPlanSaveConflict(true);
     setCurrentMonth(new Date().getMonth() + 1);
     setCurrentYear(new Date().getFullYear());
     setFavouriteCropKeys(loadFavouriteCropKeys());
@@ -1194,13 +1303,87 @@ function FacilitatorCropsPageInner() {
   // failure has to announce itself. A farmer whose phone is full otherwise keeps planning into
   // nothing and only finds out after a reload, by which point the session cannot be recovered.
   const [planSaveFailed, setPlanSaveFailed] = useState(false);
+  const [planSaveConflict, setPlanSaveConflict] = useState(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function plannerActorIsCurrent(owner: string | null, sample: boolean): boolean {
+    if (activeAccountUid() !== owner || isSampleMode() !== sample) return false;
+    // Mounted storage ownership can lag Firebase during an account transition.
+    // Every writer must reject that gap, including already queued autosaves.
+    try { return sample || !isBackendConfigured() || (getFirebase()?.auth.currentUser?.uid ?? null) === owner; }
+    catch { return false; }
+  }
   useEffect(() => {
-    if (!plan) return;
+    if (!plan || planSaveConflict) return;
     if (saveTimer.current) clearTimeout(saveTimer.current);
-    saveTimer.current = setTimeout(() => setPlanSaveFailed(!saveCropPlan(plan)), 400);
+    const base = planWriteBase.current;
+    if (!base || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) { setPlanSaveConflict(true); return; }
+    saveTimer.current = setTimeout(() => {
+      if (!base || planWriteBase.current !== base || !plannerActorIsCurrent(base.owner, base.sample)) return;
+      // Local edits cannot re-authorise a stale book: compare the loaded/saved
+      // base, not whatever happens to be stored when a later timer is queued.
+      if (!cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+        || !cropPlanWriteCandidateIsLossless(plan) || base.token === null || cropPlanWriteToken() !== base.token) {
+        setPlanSaveConflict(true);
+        return;
+      }
+      if (planWriteBase.current !== base || !plannerActorIsCurrent(base.owner, base.sample)) return;
+      const receipt = saveCropPlanWithReceipt(plan);
+      setPlanSaveFailed(!receipt.saved);
+      if (receipt.saved) rememberStoredPlan(plan, receipt.token);
+    }, 400);
     return () => { if (saveTimer.current) clearTimeout(saveTimer.current); };
-  }, [plan]);
+  }, [plan, planSaveConflict]);
+
+  const [planStorageRevision, setPlanStorageRevision] = useState(0);
+  const handledPlanStorageRevision = useRef(0);
+  function refreshAdmittedStoredPlan() {
+    const base = planWriteBase.current;
+    if (!plan || !base) return;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    // A newly acquired lease can refresh a clean view. It cannot turn edits
+    // based on an older or unreadable book into authorised current records.
+    if (!plannerActorIsCurrent(base.owner, base.sample) || !cropPlanWriteCandidateIsLossless(plan)
+      || JSON.stringify(plan) !== base.planKey) { setPlanSaveConflict(true); return; }
+    const loaded = loadCropPlanWithWriteAdmission(), fresh = loaded.book, key = JSON.stringify(fresh);
+    if (loaded.token === null || loaded.admission.status !== 'ready'
+      || !cropPlanWriteAdmissionMatches(loaded.admission, key, loaded.token)
+      || !plannerActorIsCurrent(base.owner, base.sample) || planWriteBase.current !== base
+      || cropPlanWriteToken() !== loaded.token) { setPlanSaveConflict(true); return; }
+    if (base.token !== loaded.token || base.planKey !== key
+      || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) {
+      if (base.planKey !== key) {
+        // These transient actions were reviewed against different occupancy.
+        // A clean saved-view refresh does not carry their old write intent.
+        suggestionScopeRef.current = null;
+        setAutoPhase('idle'); setAutoResult(null); setIdealMeta(null); setAutoGenerating(false);
+        setPickerBedId(null); setPickerCrop(null); setActivePlanting(null);
+        setPlanHistory([]);
+        planHistoryContext.current = new WeakMap();
+        suggestedPlanHistory.current = new WeakMap();
+      }
+      planWriteBase.current = { owner: base.owner, sample: base.sample, token: loaded.token, planKey: key, admission: loaded.admission };
+      if (JSON.stringify(plan) !== key) setPlan(fresh);
+    }
+    setPlanSaveConflict(false);
+    setPlanSaveFailed(false);
+  }
+  useEffect(() => {
+    const changed = () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      setPlanStorageRevision(value => value + 1);
+    };
+    const events = [CROP_PLAN_CHANGED_EVENT, CROP_PLAN_STORAGE_EVENT, 'storage', 'focus'];
+    events.forEach(event => window.addEventListener(event, changed));
+    return () => events.forEach(event => window.removeEventListener(event, changed));
+  }, []);
+  useEffect(() => {
+    if (handledPlanStorageRevision.current === planStorageRevision) return;
+    if (!plan || !planWriteBase.current) return;
+    handledPlanStorageRevision.current = planStorageRevision;
+    // A writer emits before returning its receipt. Wait for the committed
+    // React plan/base, including pending local edits, before classifying it.
+    refreshAdmittedStoredPlan();
+  }, [planStorageRevision, plan]);
 
   const designBeds = useMemo(() => computeDesignBeds(design ?? null), [design]);
   const beds = canvasSite
@@ -1250,6 +1433,72 @@ function FacilitatorCropsPageInner() {
   }, [refreshCountryPlaces]);
   const planningWorkspaceId = surveySiteId || invalidCanvasSite ? null
     : design ? workspacePlanningIdForDesign(design, chosenDesignId) : useVirtual ? 'virtual-bed' : null;
+  const growerScope = normaliseGrowerPlanningScope(surveySiteId
+    ? { kind: 'mapped-site', siteId: surveySiteId }
+    : planningWorkspaceId ? { kind: 'unmapped-workspace', workspaceId: planningWorkspaceId } : null);
+  const growerScopeKey = growerPlanningScopeKey(growerScope);
+  const growerOwner = activeAccountUid();
+  const growerSample = isSampleMode();
+  const productionSiteId = canvasSite ?? (chosenDesignId && chosenDesignId !== 'local' ? `design:${chosenDesignId}`
+    : surveySiteId ?? (design ? 'design:local' : useVirtual ? 'virtual-bed' : null));
+  const growerBookContext = useRef({ siteId: productionSiteId, owner: growerOwner, sample: growerSample, scopeKey: growerScopeKey });
+  growerBookContext.current = { siteId: productionSiteId, owner: growerOwner, sample: growerSample, scopeKey: growerScopeKey };
+  const growerWorkflow = useGrowerWorkflow({ scope: growerScope, resourceSiteId: productionSiteId, book: plan,
+    selection: canvasSite ? { kind: 'studio-canvas', sourceId: canvasSite }
+      : design ? chosenDesignId && chosenDesignId !== 'local' ? { kind: 'facilitator-cloud', sourceId: chosenDesignId }
+        : { kind: 'facilitator-local', sourceId: 'local' } : null,
+    actorIsCurrent: growerActorIsCurrent, readCurrentBook: readCurrentGrowerBook,
+    commitAcceptance: commitGrowerAcceptance, createPlantingId: () => genId('grower') });
+  const selectedGrowerSource = growerWorkflow.source && growerWorkflow.source.resourceSiteId === productionSiteId
+    && growerPlanningScopeKey(growerWorkflow.source.scope) === growerScopeKey
+    && (canvasSite ? growerWorkflow.source.kind === 'studio-canvas' && growerWorkflow.source.sourceId === canvasSite
+      : chosenDesignId && chosenDesignId !== 'local' ? growerWorkflow.source.kind === 'facilitator-cloud' && growerWorkflow.source.sourceId === chosenDesignId
+        : growerWorkflow.source.kind === 'facilitator-local') ? growerWorkflow.source : null;
+  const growerWriteScope = useRef({ key: growerScopeKey, owner: growerOwner, sample: growerSample });
+  growerWriteScope.current = { key: growerScopeKey, owner: growerOwner, sample: growerSample };
+  function saveGrowerProfiles(value: GrowerPlanningProfile[]): boolean {
+    const live = growerWriteScope.current;
+    if (!plan || !growerActorIsCurrent() || planSaveConflict || !growerScopeKey || live.key !== growerScopeKey || live.owner !== growerOwner
+      || activeAccountUid() !== growerOwner || live.sample !== growerSample || isSampleMode() !== growerSample) return false;
+    const base = planWriteBase.current;
+    if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)) return false;
+    if (!cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+      || !cropPlanWriteCandidateIsLossless({ ...plan, growerPlanningProfiles: value })) { setPlanSaveConflict(true); return false; }
+    const nextProfiles = normaliseGrowerPlanningProfiles(value);
+    if (nextProfiles.length !== value.length) return false;
+    const expected = normaliseGrowerPlanningProfiles(plan.growerPlanningProfiles);
+    const own = (rows: readonly GrowerPlanningProfile[]) => rows.filter(row => growerPlanningScopeKey(row.scope) === growerScopeKey);
+    const other = (rows: readonly GrowerPlanningProfile[]) => rows.filter(row => growerPlanningScopeKey(row.scope) !== growerScopeKey);
+    if (JSON.stringify(other(nextProfiles)) !== JSON.stringify(other(expected))) return false;
+    const expectedStore = cropPlanWriteToken();
+    if (expectedStore === null) return false;
+    const loaded = loadCropPlanWithWriteAdmission(), fresh = loaded.book;
+    if (loaded.token !== expectedStore || !cropPlanWriteAdmissionMatches(loaded.admission, JSON.stringify(fresh), loaded.token)) {
+      setPlanSaveConflict(true); return false;
+    }
+    // Preserve unrelated changes from another tab, but never overwrite newer
+    // assumptions for this scope or an edit still awaiting this page's autosave.
+    if (JSON.stringify(own(fresh.growerPlanningProfiles ?? [])) !== JSON.stringify(own(expected))) {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      setPlanSaveConflict(true);
+      return false;
+    }
+    if (loaded.admission.status === 'ready' && loaded.admission.source === 'present' && fresh.updatedAt < plan.updatedAt) return false;
+    const next = { ...fresh, growerPlanningProfiles: [...other(fresh.growerPlanningProfiles ?? []), ...own(nextProfiles)], updatedAt: Date.now() };
+    // The mounted owner may still be the old account after Firebase has moved.
+    // Recheck the same actor and loaded base immediately before the writer.
+    if (!cropPlanWriteCandidateIsLossless(next) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+      || !growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== expectedStore) {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      setPlanSaveConflict(true);
+      return false;
+    }
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    const receipt = saveCropPlanWithReceipt(next);
+    setPlanSaveFailed(!receipt.saved);
+    if (receipt.saved) { rememberStoredPlan(next, receipt.token); setPlan(next); }
+    return receipt.saved;
+  }
   const planningSupport = resolvePlanningSupport({ places: countryPlaces, siteId: surveySiteId,
     workspaceId: planningWorkspaceId, workspaceReferences: plan?.workspaceReferences });
   const siteCountry = planningSupport.siteCountry;
@@ -1262,17 +1511,30 @@ function FacilitatorCropsPageInner() {
   }, [hasSiteCoords, design, plan?.workspaceReferences]);
   function saveWorkspaceReference(reference: WorkspacePlanningReference | null): boolean {
     if (!plan || surveySiteId || !planningWorkspaceId) return false;
+    const base = planWriteBase.current;
+    if (!base || !plannerActorIsCurrent(base.owner, base.sample) || base.planKey !== JSON.stringify(plan)) return false;
+    if (!cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token) || base.token === null || cropPlanWriteToken() !== base.token) {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      setPlanSaveConflict(true);
+      return false;
+    }
     // A reference acknowledgement is not permission to overwrite a newer plan
     // received from another tab while this form was open.
-    if (loadCropPlan().updatedAt > plan.updatedAt) return false;
+    const loaded = loadCropPlanWithWriteAdmission(), fresh = loaded.book;
+    if (loaded.token !== base.token || !cropPlanWriteAdmissionMatches(loaded.admission, JSON.stringify(fresh), loaded.token)) { setPlanSaveConflict(true); return false; }
+    if (loaded.admission.status === 'ready' && loaded.admission.source === 'present' && fresh.updatedAt > plan.updatedAt) return false;
+    if (reference && !cropPlanWriteCandidateIsLossless({ ...plan, workspaceReferences: [reference] })) { setPlanSaveConflict(true); return false; }
     const workspaceReferences = reference
       ? replaceWorkspacePlanningReference(plan.workspaceReferences, reference)
       : sanitiseWorkspacePlanningReferences(plan.workspaceReferences).filter(row => row.workspaceId !== planningWorkspaceId);
     const next = { ...plan, workspaceReferences, updatedAt: Date.now() };
-    const saved = saveCropPlan(next);
-    setPlanSaveFailed(!saved);
-    if (saved) setPlan(next);
-    return saved;
+    if (!cropPlanWriteCandidateIsLossless(next) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+      || planWriteBase.current !== base || cropPlanWriteToken() !== base.token || !plannerActorIsCurrent(base.owner, base.sample)) { setPlanSaveConflict(true); return false; }
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    const receipt = saveCropPlanWithReceipt(next);
+    setPlanSaveFailed(!receipt.saved);
+    if (receipt.saved) { rememberStoredPlan(next, receipt.token); setPlan(next); }
+    return receipt.saved;
   }
   const planningScopeRef = useRef({ key: planningScopeKey, allowed: allowCataloguePlanning });
   planningScopeRef.current = { key: planningScopeKey, allowed: allowCataloguePlanning };
@@ -1369,10 +1631,21 @@ function FacilitatorCropsPageInner() {
   // (each BedRow only ever shows plantings matching its OWN bed.id). The
   // underlying plan.plantings array is left untouched, only this derived
   // read is filtered, so nothing is actually deleted.
+  const currentBedIds = new Set([...beds.map(b => b.id), ...(selectedGrowerSource ? [
+    ...selectedGrowerSource.beds.map(b => b.id), ...selectedGrowerSource.heldBeds.map(b => b.bedId),
+  ] : [])]);
   const plantings = useMemo(() => {
-    const bedIds = new Set(beds.map((b) => b.id));
-    return (plan?.plantings ?? []).filter((p) => bedIds.has(p.bedId));
-  }, [plan, beds]);
+    return (plan?.plantings ?? []).filter(p => beds.some(b => b.id === p.bedId) || hasGrowerCycleMarker(p)
+      && !(selectedGrowerSource && isProvenForeignGrowerCycle(p, growerScope, currentBedIds)));
+  }, [plan, beds, selectedGrowerSource, growerScopeKey]);
+  // Marker evidence must reach totals and print even when its old bed is gone.
+  // Only the shared intact foreign/disjoint proof can exclude another source.
+  const legacyPlantings = useMemo(() => plantings.filter(p => !hasGrowerCycleMarker(p)), [plantings]);
+  const markedPlantings = useMemo(() => plantings.filter(hasGrowerCycleMarker), [plantings]);
+  const hasOwnRecords = markedPlantings.length > 0;
+  const legacyAddBlocked = (bedId: string, rows = plan?.plantings ?? []) => rows.some(p => hasGrowerCycleMarker(p)
+    && (p.bedId === bedId || !currentBedIds.has(p.bedId)
+      && !(selectedGrowerSource && isProvenForeignGrowerCycle(p, growerScope, currentBedIds))));
   const productionGuide = useMemo(() => buildProductionGuide(siteSurvey, plantings, growingZones, currentMonth, { bananaCircles, trees: includeTrees ? canvasTrees : [], animals: includeAnimals ? canvasAnimals : [], animalChoices }), [siteSurvey, plantings, growingZones, currentMonth, bananaCircles, canvasTrees, canvasAnimals, animalChoices, includeTrees, includeAnimals]);
   const chickenGuide = useMemo(() => {
     const coop = canvasAnimals.find((group) => group.housing === 'chicken');
@@ -1382,8 +1655,10 @@ function FacilitatorCropsPageInner() {
   const bedAreaFor = (bedId: string) => beds.find((b) => b.id === bedId)?.areaM2 ?? 0;
 
   function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
+    if (!currentPlanningScopeAllowed() || legacyAddBlocked(bedId)) return;
     pushPlanHistory();
     setPlan((prev) => {
+      if (legacyAddBlocked(bedId, prev?.plantings ?? [])) return prev;
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
       const next: Planting = {
         id: genId('pl'), bedId, cropKey, sowMonth,
@@ -1395,9 +1670,13 @@ function FacilitatorCropsPageInner() {
     });
   }
   function updatePlanting(id: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
+    if (!currentPlanningScopeAllowed()) return;
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
+      const matches = prev.plantings.filter(p => p.id === id), shown = legacyPlantings.find(p => p.id === id);
+      if (matches.length !== 1 || !shown || hasGrowerCycleMarker(matches[0]) || legacyAddBlocked(matches[0].bedId, prev.plantings)
+        || JSON.stringify(matches[0]) !== JSON.stringify(shown)) return prev;
       return {
         ...prev,
         version: 1,
@@ -1417,15 +1696,24 @@ function FacilitatorCropsPageInner() {
     });
   }
   function removePlanting(id: string) {
+    if (!currentPlanningScopeAllowed()) return;
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
-      return { ...prev, version: 1, plantings: prev.plantings.filter((p) => p.id !== id), updatedAt: Date.now() };
+      const matches = prev.plantings.filter(p => p.id === id), shown = legacyPlantings.find(p => p.id === id);
+      if (matches.length !== 1 || !shown || hasGrowerCycleMarker(matches[0]) || JSON.stringify(matches[0]) !== JSON.stringify(shown)) return prev;
+      return { ...prev, version: 1, plantings: prev.plantings.filter(p => p.id !== id), updatedAt: Date.now() };
     });
   }
   function confirmPastSowing(id: string) {
+    if (!currentPlanningScopeAllowed()) return;
     pushPlanHistory();
-    setPlan((prev) => prev ? { ...prev, plantings: prev.plantings.map((p) => p.id === id ? confirmOnceSowing(p, currentYear, currentMonth) : p), updatedAt: Date.now() } : prev);
+    setPlan((prev) => {
+      if (!prev) return prev;
+      const matches = prev.plantings.filter(p => p.id === id), shown = legacyPlantings.find(p => p.id === id);
+      if (matches.length !== 1 || !shown || hasGrowerCycleMarker(matches[0]) || JSON.stringify(matches[0]) !== JSON.stringify(shown)) return prev;
+      return { ...prev, plantings: prev.plantings.map(p => p.id === id ? confirmOnceSowing(p, currentYear, currentMonth) : p), updatedAt: Date.now() };
+    });
   }
   // Only drops plantings on beds actually shown right now (matches the
   // `plantings` derived read below) — never touches plantings parked under a
@@ -1438,13 +1726,17 @@ function FacilitatorCropsPageInner() {
   // an inline question instead — no native dialog anywhere in this flow.
   const [confirmingClear, setConfirmingClear] = useState(false);
   function clearAllPlantings() {
-    if (!plantings.length) return;
+    if (!currentPlanningScopeAllowed() || !legacyPlantings.length) return;
     setConfirmingClear(false);
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
-      const bedIds = new Set(beds.map((b) => b.id));
-      return { ...prev, version: 1, plantings: prev.plantings.filter((p) => !bedIds.has(p.bedId)), updatedAt: Date.now() };
+      const next = prev.plantings.filter(p => {
+        const shown = legacyPlantings.find(row => row.id === p.id);
+        return hasGrowerCycleMarker(p) || !shown || prev.plantings.filter(row => row.id === p.id).length !== 1
+          || JSON.stringify(p) !== JSON.stringify(shown);
+      });
+      return next.length === prev.plantings.length ? prev : { ...prev, version: 1, plantings: next, updatedAt: Date.now() };
     });
   }
 
@@ -1489,7 +1781,7 @@ function FacilitatorCropsPageInner() {
     () => benchmarkAreaConflictDetails(plantings, beds, currentMonth),
     [plantings, beds, currentMonth],
   );
-  const totalYieldKg = planYieldBenchmark.knownKg;
+  const totalYieldKg = hasOwnRecords ? null : planYieldBenchmark.knownKg;
   // Share of the VERIFIED kg total — the same number printed above the list, so
   // the bars and the headline cannot disagree. Null whenever there is no total to
   // be a share of (bed space in conflict, nothing planted, no verified crop), and
@@ -1606,8 +1898,8 @@ function FacilitatorCropsPageInner() {
     siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
   }, !aReliableIrrigation), [siteClimate, hasSiteCoords, siteLat, aReliableIrrigation]);
   const gapFills = useMemo(
-    () => allowCataloguePlanning ? suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate, observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined }) : [],
-    [allowCataloguePlanning, yearOfFood, beds, plantings, pattern, currentMonth, yearGate, siteSurvey],
+    () => allowCataloguePlanning && !hasOwnRecords ? suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate, observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined }) : [],
+    [allowCataloguePlanning, hasOwnRecords, yearOfFood, beds, plantings, pattern, currentMonth, yearGate, siteSurvey],
   );
   function chooseAnimalEnterprise(housing: HousingKind, enterpriseId: string | null) {
     if (!canvasSite) return;
@@ -1685,8 +1977,215 @@ function FacilitatorCropsPageInner() {
 
   // One account holds several maps. A shared food name and month cannot tell us which
   // farm produced it; records without a site remain saved outside this site's totals.
-  const productionSiteId = canvasSite ?? (chosenDesignId && chosenDesignId !== 'local' ? `design:${chosenDesignId}`
-    : surveySiteId ?? (design ? 'design:local' : useVirtual ? 'virtual-bed' : null));
+  function growerActorIsCurrent() {
+    const live = growerBookContext.current;
+    if (live.owner !== growerOwner || live.sample !== growerSample || live.siteId !== productionSiteId
+      || live.scopeKey !== growerScopeKey) return false;
+    return plannerActorIsCurrent(growerOwner, growerSample);
+  }
+  function readCurrentGrowerBook(): GrowerWorkflowBookReceipt {
+    if (!plan || !growerActorIsCurrent()) return { status: 'held', reason: 'context-changed' };
+    const base = planWriteBase.current;
+    if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)) {
+      return { status: 'held', reason: 'pending-plan-edits' };
+    }
+    if (planSaveConflict || base.token === null || cropPlanWriteToken() !== base.token) return { status: 'held', reason: 'saved-plan-changed' };
+    // Review the authored whole book, not loadCropPlan's display normalizer:
+    // one corrupt row must not erase reservations into an apparently empty plan.
+    const receipt = readRawCropPlanReceipt();
+    if (receipt.status !== 'ready' || receipt.token !== base.token || !receipt.raw || typeof receipt.raw !== 'object'
+      || Array.isArray(receipt.raw) || (receipt.raw as CropPlanState).version !== 1 || !Array.isArray((receipt.raw as CropPlanState).plantings)) {
+      return { status: 'held', reason: 'saved-plan-changed' };
+    }
+    const book = receipt.raw as CropPlanState;
+    if (!growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== base.token) {
+      return { status: 'held', reason: 'saved-plan-changed' };
+    }
+    return { status: 'ready', book, token: base.token,
+      // This is revocation bound to the actual loaded base, not permission
+      // derived from a token that a later callback might happen to recapture.
+      isCurrent: () => growerActorIsCurrent() && !planSaveConflict && planWriteBase.current === base
+        && base.planKey === JSON.stringify(plan) && cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+        && cropPlanWriteToken() === base.token };
+
+  }
+  function commitGrowerAcceptance(request: GrowerWorkflowAcceptanceCommit): GrowerWorkflowAcceptanceResult {
+    const held = (reason: string): GrowerWorkflowAcceptanceResult => ({ status: 'held', reasons: [reason] });
+    let written = false;
+    try {
+      if (!plan || !growerActorIsCurrent() || planSaveConflict || !request.isCurrent()) return held('context-changed');
+      const base = planWriteBase.current;
+      if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)
+        || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) return held('pending-plan-edits');
+      if (base.token !== request.expectedBookToken || cropPlanWriteToken() !== base.token) return held('saved-plan-changed');
+      if (request.source.resourceSiteId !== productionSiteId || growerPlanningScopeKey(request.source.scope) !== growerScopeKey) return held('source-changed');
+      const current = readCurrentGrowerBook();
+      if (current.status !== 'ready' || current.token !== request.expectedBookToken) return held('saved-plan-changed');
+      const admitted = loadCropPlanWithWriteAdmission();
+      if (admitted.token !== current.token || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)) {
+        setPlanSaveConflict(true); return held('saved-plan-changed');
+      }
+      // Only the hook supplies its private original data binding. The pure
+      // helper receives no functions or reconstructed display fingerprints.
+      const prepared = prepareGrowerWorkflowAcceptance({ review: request.review, binding: request.binding,
+        scope: growerScope, source: request.source, book: current.book, acceptedAt: request.acceptedAt, plantingIds: request.plantingIds });
+      if (prepared.status === 'held') return { status: 'held', reasons: prepared.reasons };
+      if (!cropPlanWriteCandidateIsLossless(prepared.book)) return held('acceptance-write-lossy');
+      if (!request.isCurrent() || !growerActorIsCurrent() || planWriteBase.current !== base
+        || base.planKey !== JSON.stringify(plan) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+        || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)
+        || cropPlanWriteToken() !== current.token) return held('saved-plan-changed');
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      const receipt = saveCropPlanWithReceipt(prepared.book);
+      setPlanSaveFailed(!receipt.saved);
+      if (!receipt.saved) return { status: 'failed' };
+      written = true;
+      if (!growerActorIsCurrent() || planWriteBase.current !== base) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      const confirmed = loadCropPlanWithWriteAdmission(), key = JSON.stringify(confirmed.book);
+      if (confirmed.token !== receipt.token || !cropPlanWriteAdmissionMatches(confirmed.admission, key, receipt.token)
+        || !growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== receipt.token) {
+        setPlanSaveConflict(true); return { status: 'superseded' };
+      }
+      // The raw appended book can legitimately project old once-row settlement.
+      // Install that actual admitted display, bound only to this exact receipt.
+      planWriteBase.current = { owner: base.owner, sample: base.sample, token: receipt.token, planKey: key, admission: confirmed.admission };
+      setPlan(confirmed.book);
+      return { status: 'confirmed', rows: prepared.rows.length, sample: base.sample };
+    } catch {
+      if (written) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      return held('acceptance-check-failed');
+    }
+  }
+  // The parent lifecycle survives its own successful base replacement. A form
+  // still binds one original context; a later render cannot grant old drafts a
+  // fresh actor, site or source merely by passing a new settings prop.
+  // The legacy nursery names retain fixture/API compatibility; this is the
+  // single actor/site/sample/scope authority for both closed input purposes.
+  const nurseryProducerLive = useRef({ plan, conflict: planSaveConflict });
+  nurseryProducerLive.current = { plan, conflict: planSaveConflict };
+  const [nurserySaveAuthority, setNurserySaveAuthority] = useState<NurserySaveAuthority | null>(null);
+  useEffect(() => {
+    if (!productionSiteId || !growerScopeKey) { setNurserySaveAuthority(null); return; }
+    let active = true;
+    const siteId = productionSiteId, scopeKey = growerScopeKey, owner = growerOwner, sample = growerSample;
+    const authority = createNurserySaveAuthority({ siteId, scopeKey,
+      current: () => { const book = nurseryProducerLive.current.plan, base = planWriteBase.current; return book && base ? { book, base } : null; },
+      isCurrent: () => active && !nurseryProducerLive.current.conflict && plannerActorIsCurrent(owner, sample)
+        && growerBookContext.current.owner === owner && growerBookContext.current.sample === sample
+        && growerBookContext.current.siteId === siteId && growerBookContext.current.scopeKey === scopeKey });
+    setNurserySaveAuthority(authority);
+    return () => { active = false; revokeNurserySaveAuthority(authority); };
+  }, [growerOwner, growerSample, productionSiteId, growerScopeKey, planSaveConflict]);
+  const [nurserySaveContext, setNurserySaveContext] = useState<NurserySaveContext | null>(null);
+  useEffect(() => {
+    // The earlier storage-readiness effect may replace a lease/base without
+    // changing any saved values. Capture only after that actual revalidation.
+    setNurserySaveContext(createNurserySaveContext(nurserySaveAuthority));
+  }, [nurserySaveAuthority, plan, planSaveConflict, planStorageRevision]);
+  const [harvestSaveContext, setHarvestSaveContext] = useState<HarvestSaveContext | null>(null);
+  useEffect(() => {
+    setHarvestSaveContext(createHarvestSaveContext(nurserySaveAuthority));
+  }, [nurserySaveAuthority, plan, planSaveConflict, planStorageRevision]);
+  function saveHarvestTargets(value: HarvestTarget[], request?: HarvestSaveRequest): HarvestSaveResult | false {
+    if (!request) return { status: 'held', reason: 'original-context-required' };
+    return saveScopedGrowerInputs('harvestTargets', value, request);
+  }
+  function saveNurserySettings(value: NurserySettings, request?: NurserySaveRequest): NurserySaveResult | false {
+    if (!request) return { status: 'held', reason: 'original-context-required' };
+    return saveScopedGrowerInputs('nursery', value, request);
+  }
+  function saveScopedGrowerInputs(fieldName: 'harvestTargets' | 'nursery', value: HarvestTarget[] | NurserySettings): boolean;
+  function saveScopedGrowerInputs(fieldName: 'nursery', value: NurserySettings, inputRequest: NurserySaveRequest): NurserySaveResult | false;
+  function saveScopedGrowerInputs(fieldName: 'harvestTargets', value: HarvestTarget[], inputRequest: HarvestSaveRequest): HarvestSaveResult | false;
+  function saveScopedGrowerInputs(fieldName: 'harvestTargets' | 'nursery', value: HarvestTarget[] | NurserySettings, inputRequest?: NurserySaveRequest | HarvestSaveRequest): boolean | NurserySaveResult | HarvestSaveResult {
+    if (inputRequest) {
+      if (fieldName === 'nursery') {
+        if (Array.isArray(value)) return false;
+        const bound = beginNurserySaveRequest(inputRequest as NurserySaveRequest, nurserySaveContext, value);
+        if (!bound) return { status: 'held', reason: 'original-context-changed' };
+        value = bound;
+      } else {
+        if (!Array.isArray(value)) return false;
+        const bound = beginHarvestSaveRequest(inputRequest as HarvestSaveRequest, harvestSaveContext, value);
+        if (!bound) return { status: 'held', reason: 'original-context-changed' };
+        value = bound;
+      }
+    }
+    if (!plan || !productionSiteId || !growerActorIsCurrent() || planSaveConflict) return false;
+    const base = planWriteBase.current;
+    if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)) return false;
+    if (!cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) { setPlanSaveConflict(true); return false; }
+    const token = cropPlanWriteToken(); if (token === null) return false;
+    const loaded = loadCropPlanWithWriteAdmission(), fresh = loaded.book;
+    if (loaded.token !== token || !cropPlanWriteAdmissionMatches(loaded.admission, JSON.stringify(fresh), loaded.token)) { setPlanSaveConflict(true); return false; }
+    if (loaded.admission.status === 'ready' && loaded.admission.source === 'present' && fresh.updatedAt < plan.updatedAt) return false;
+    let next: CropPlanState;
+    if (fieldName === 'harvestTargets') {
+      if (!Array.isArray(value)) return false;
+      if (!cropPlanWriteCandidateIsLossless({ ...fresh, harvestTargets: value })) { setPlanSaveConflict(true); return false; }
+      const rows = sanitiseHarvestTargets(value); if (rows.length !== value.length) return false;
+      if (!cropPlanWriteCandidateIsLossless({ ...fresh, harvestTargets: value }, { ...fresh, harvestTargets: rows })) { setPlanSaveConflict(true); return false; }
+      const own = (items: readonly HarvestTarget[]) => items.filter(row => row.siteId === productionSiteId);
+      const other = (items: readonly HarvestTarget[]) => items.filter(row => row.siteId !== productionSiteId);
+      const expected = plan.harvestTargets ?? [], current = fresh.harvestTargets ?? [];
+      const sameTargetData = (a: readonly HarvestTarget[], b: readonly HarvestTarget[]) => {
+        // Sample books retain authored object key order. Compare every raw
+        // value and array position without turning key order into permission.
+        const key = harvestTargetsSourceKey(productionSiteId, a);
+        return key !== null && key === harvestTargetsSourceKey(productionSiteId, b);
+      };
+      if (!sameTargetData(other(rows), other(expected))) return false;
+      if (!sameTargetData(own(current), own(expected))) { setPlanSaveConflict(true); return false; }
+      next = { ...fresh, harvestTargets: [...other(current), ...own(rows)], updatedAt: Date.now() };
+    } else {
+      if (Array.isArray(value)) return false;
+      if (!cropPlanWriteCandidateIsLossless({ ...fresh, nursery: value })) { setPlanSaveConflict(true); return false; }
+      const rows = sanitiseNurserySettings(value), expected = sanitiseNurserySettings(plan.nursery), current = sanitiseNurserySettings(fresh.nursery);
+      if (!cropPlanWriteCandidateIsLossless({ ...fresh, nursery: value }, { ...fresh, nursery: rows })) { setPlanSaveConflict(true); return false; }
+      const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+      if (!same(rows.sourceIssues, expected.sourceIssues) || !same(current.sourceIssues, expected.sourceIssues)
+        || !same(rows.heldInputs, expected.heldInputs) || !same(current.heldInputs, expected.heldInputs)) return false;
+      const merged = { ...current };
+      for (const collection of ['spaces', 'containers', 'profiles'] as const) {
+        const own = (items: readonly { siteId: string }[]) => items.filter(row => row.siteId === productionSiteId);
+        const other = (items: readonly { siteId: string }[]) => items.filter(row => row.siteId !== productionSiteId);
+        if (!same(other(rows[collection]), other(expected[collection]))) return false;
+        if (!same(own(current[collection]), own(expected[collection]))) { setPlanSaveConflict(true); return false; }
+        // Each collection retains its own schema; the guarded union only selects its namespace.
+        (merged[collection] as Array<{ siteId: string }>) = [...other(current[collection]), ...own(rows[collection])];
+      }
+      next = { ...fresh, nursery: merged, updatedAt: Date.now() };
+    }
+    if (!cropPlanWriteCandidateIsLossless(next) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+      || !growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== token) { setPlanSaveConflict(true); return false; }
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    if (inputRequest) {
+      const result = fieldName === 'nursery'
+        ? commitNurserySaveRequest(inputRequest as NurserySaveRequest, next, token)
+        : commitHarvestSaveRequest(inputRequest as HarvestSaveRequest, next, token);
+      setPlanSaveFailed(result.status !== 'confirmed');
+      if (result.status === 'confirmed') {
+        const confirmed = fieldName === 'nursery'
+          ? readNurserySaveConfirmation(result, inputRequest as NurserySaveRequest)
+          : readHarvestSaveConfirmation(result, inputRequest as HarvestSaveRequest);
+        if (!confirmed || !growerActorIsCurrent()) {
+          setPlanSaveConflict(true); return { status: 'performed-unconfirmed', reason: 'confirmation-no-longer-current' };
+        }
+        planWriteBase.current = { owner: base.owner, sample: base.sample, token: confirmed.token,
+          planKey: JSON.stringify(confirmed.book), admission: confirmed.admission };
+        nurseryProducerLive.current = { plan: confirmed.book, conflict: false };
+        setPlan(confirmed.book);
+      } else if (result.status === 'performed-unconfirmed') {
+        setPlanSaveConflict(true);
+        nurseryProducerLive.current = { ...nurseryProducerLive.current, conflict: true };
+      }
+      return result;
+    }
+    const receipt = saveCropPlanWithReceipt(next);
+    setPlanSaveFailed(!receipt.saved);
+    if (receipt.saved) { rememberStoredPlan(next, receipt.token); setPlan(next); }
+    return receipt.saved;
+  }
   const nurseryPlanningForecast = useMemo(() => allowCataloguePlanning && mounted && productionSiteId
     ? buildNurseryForecast(plantings, beds, productionSiteId, sanitiseNurserySettings(plan?.nursery), { year: currentYear, month: currentMonth })
     : null, [allowCataloguePlanning, mounted, productionSiteId, plantings, beds, plan?.nursery, currentYear, currentMonth]);
@@ -1746,7 +2245,7 @@ function FacilitatorCropsPageInner() {
   }
 
   function openPicker(bedId: string) {
-    if (!currentPlanningScopeAllowed()) return;
+    if (!currentPlanningScopeAllowed() || legacyAddBlocked(bedId)) return;
     setEditingPlantingId(null);
     setPickerBedId(bedId);
     setPickerSearch('');
@@ -1761,7 +2260,7 @@ function FacilitatorCropsPageInner() {
   // "pick a crop" step. confirmAdd below detects editingPlantingId and
   // updates in place instead of creating a new planting.
   function openEditPicker(p: Planting) {
-    if (!currentPlanningScopeAllowed()) return;
+    if (!currentPlanningScopeAllowed() || hasGrowerCycleMarker(p) || legacyAddBlocked(p.bedId)) return;
     const crop = cropByKey(p.cropKey);
     if (!crop) return;
     setEditingPlantingId(p.id);
@@ -1797,7 +2296,7 @@ function FacilitatorCropsPageInner() {
   }
   function confirmAdd() {
     if (!currentPlanningScopeAllowed() || !pickerBedId || !pickerCrop) return;
-    if (pickerCrop.timingVerified === false) return;
+    if (pickerCrop.timingVerified === false || legacyAddBlocked(pickerBedId)) return;
     if (editingPlantingId) {
       updatePlanting(editingPlantingId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting, pickerVariety);
     } else {
@@ -1832,6 +2331,25 @@ function FacilitatorCropsPageInner() {
   [pickerBedId, plantings, editingPlantingId]);
 
   const loading = design === undefined || plan === null || !mounted;
+  const growerPlanningPanel = <>
+    <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} />
+    {!allowCataloguePlanning && productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
+      key={`own-targets:${productionSiteId}:${growerScopeKey}`} basis="own-records" siteId={productionSiteId}
+      targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
+      saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
+      onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
+    <GrowerPlanningPanel scope={growerScope} beds={canvasSite ? canvasBeds : designBeds}
+      profiles={plan?.growerPlanningProfiles ?? []} onSaveProfiles={saveGrowerProfiles} />
+    <GrowerAutoPlanPanel key={`own-review:${growerScopeKey}:${productionSiteId}`} scope={growerScope}
+      source={growerWorkflow.source} sourceName={placeName || designTitle} sourceIssue={growerWorkflow.sourceIssue}
+      checking={growerWorkflow.checking} contextRevision={growerWorkflow.contextRevision}
+      targets={plan?.harvestTargets ?? []} targetSiteId={productionSiteId} profiles={plan?.growerPlanningProfiles ?? []}
+      onRefresh={growerWorkflow.onRefresh} onReview={growerWorkflow.onReview}
+      onAccept={growerWorkflow.onAccept} acceptance={growerWorkflow.acceptance}
+      nurseryReview={review => growerWorkflow.source && <GrowerNurseryReviewPanel review={review}
+        source={growerWorkflow.source} settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision}
+        onCheckCurrent={growerWorkflow.onCheckCurrent} sample={growerSample} />} />
+  </>;
 
   return (
     // Every surface on this screen now reads the per-theme tokens (--bg-0 page,
@@ -1842,6 +2360,9 @@ function FacilitatorCropsPageInner() {
     // whatever the body happens to inherit, so it can't go invisible the way the
     // Auto-suggest crop names once did against a dark theme.
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
+      {planSaveConflict && <p role="alert" className="flex-shrink-0 border-b border-[var(--border)] bg-[var(--bg-2)] px-3 py-2 text-sm text-[var(--text-primary)]">
+        The saved plan changed or could not be checked. Its display may omit stored data. Further changes have not been saved. Reopen and review the saved records before continuing.
+      </p>}
       {/* AUTOSAVE FAILED — above the header, because everything below it is now unsaved work.
           It stays until a later autosave succeeds; there is no dismiss, since dismissing it would
           not save anything and the farmer would be back to believing the plan is stored. */}
@@ -2009,6 +2530,7 @@ function FacilitatorCropsPageInner() {
         </div>
       ) : invalidCanvasSite ? (
         <section className="flex-1 overflow-y-auto p-5 font-sans" aria-label="Invalid site link">
+          <CropPlanStorageNotice />
           <h1 className="font-display text-xl font-semibold">This site link is not valid</h1>
           <p className="mt-2">Open a saved mapped site to plan its crops. No other site’s planning context has been substituted.</p>
           <Link href="/facilitator/crops?switch=1" className="mt-3 inline-block underline">Choose a saved site</Link>
@@ -2016,6 +2538,7 @@ function FacilitatorCropsPageInner() {
       ) : needsSitePicker ? (
         <div className="flex-1 overflow-y-auto py-7 px-4">
           <div className="mx-auto w-full" style={{ maxWidth: 760 }}>
+            <CropPlanStorageNotice />
             <div className="flex items-start justify-between gap-3">
               <h1 className="font-display font-semibold" style={{ fontSize: 'clamp(19px, 1.7vw, 23px)', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>{cropUi(lang, 'Which site are you planning?', 'Uhlela siphi isiza?')}</h1>
               {chosenDesignId !== null && (
@@ -2084,27 +2607,31 @@ function FacilitatorCropsPageInner() {
       ) : !allowCataloguePlanning ? (
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+            <CropPlanStorageNotice />
             {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
               : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}
             {!surveySiteId && !planningWorkspaceId && <button type="button" onClick={() => setUseVirtual(true)} className="mb-4 min-h-11 rounded-xl border border-[var(--border)] bg-[var(--bg-1)] px-4 py-2 font-sans">Try a virtual reference bed</button>}
             <PlannerSupportHold resolution={siteCountry} unmapped={!surveySiteId} beds={beds} plantings={plantings} />
+            {growerPlanningPanel}
             {productionSiteId && <NurseryPlanPanel key={`nursery-equipment:${productionSiteId}`} siteId={productionSiteId}
               siteName={placeName || designTitle} settings={plan?.nursery} beds={beds} plantings={plantings}
               now={{ year: currentYear, month: currentMonth }} allowCatalogueForecast={false}
-              onSettings={(nursery) => {
-                pushPlanHistory();
-                setPlan(previous => ({ ...(previous ?? { version: 1 as const, plantings: [] }), nursery, updatedAt: Date.now() }));
-              }} />}
+              saveContext={nurserySaveContext} onSettings={saveNurserySettings} />}
             <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []}
               dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts}
               onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
           </div>
         </div>
       ) : beds.length === 0 && canvasTrees.length === 0 && unidentifiedPlants.length === 0 && canvasAnimals.length === 0 ? (
-        <EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
+        <div className="flex-1 overflow-y-auto"><div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+          <CropPlanStorageNotice />
+          {growerPlanningPanel}<EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
+        </div></div>
       ) : (
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+            <CropPlanStorageNotice />
+            {growerPlanningPanel}
             {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
               : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}
             {useVirtual && designBeds.length === 0 && (
@@ -2114,13 +2641,13 @@ function FacilitatorCropsPageInner() {
               </div>
             )}
 
-            {!simple && confirmingClear && plantings.length > 0 ? (
+            {!simple && confirmingClear && legacyPlantings.length > 0 ? (
               <div
                 className="flex items-center gap-2 mb-3 px-3 py-2 rounded-xl"
                 style={{ background: 'rgba(179,58,58,0.06)', border: '1px solid rgba(179,58,58,0.3)' }}
               >
                 <span className="font-sans flex-1" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
-                  Clear all {plantings.length} planting{plantings.length > 1 ? 's' : ''} from every bed? You can undo once right after.
+                  Clear {legacyPlantings.length} catalogue planting{legacyPlantings.length > 1 ? 's' : ''} shown here? Own dated records remain saved. You can undo once right after.
                 </span>
                 <button
                   onClick={clearAllPlantings}
@@ -2141,8 +2668,8 @@ function FacilitatorCropsPageInner() {
             <div className="flex gap-2 mb-3">
               <button
                 onClick={openAutoSuggest}
-                disabled={beds.length === 0}
-                title={beds.length === 0 ? 'Add a vegetable bed or staple plot to auto-suggest crops.' : undefined}
+                disabled={beds.length === 0 || hasOwnRecords}
+                title={hasOwnRecords ? 'Own dated records need their checked reservations in the Task Planner.' : beds.length === 0 ? 'Add a vegetable bed or staple plot to auto-suggest crops.' : undefined}
                 className="flex-1 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
                 style={{ fontSize: 14, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#F7F2E9', cursor: beds.length === 0 ? 'not-allowed' : 'pointer', opacity: beds.length === 0 ? 0.55 : 1 }}
               >
@@ -2158,12 +2685,12 @@ function FacilitatorCropsPageInner() {
                   <Undo2 size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Undo', 'Buyisela emuva')}
                 </button>
               )}
-              {!simple && plantings.length > 0 && (
+              {!simple && legacyPlantings.length > 0 && (
                 <button
                   onClick={() => setConfirmingClear(true)}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
                   style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
-                  title={cropUi(lang, 'Clear every planting from this plan', 'Susa konke okutshalwe kulolu hlelo')}
+                  title="Clear catalogue plantings shown here; own dated records remain saved"
                 >
                   <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'zu' ? <span style={{ lineHeight: 1.1 }}>Sula konke<br/><small lang="en">Clear all</small></span> : 'Clear all'}
                 </button>
@@ -2186,19 +2713,19 @@ function FacilitatorCropsPageInner() {
                 siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
                 observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined,
               }}
-              onTargets={(harvestTargets) => {
-                pushPlanHistory();
-                setPlan((previous) => ({ ...(previous ?? { version: 1 as const, plantings: [] }), harvestTargets, updatedAt: Date.now() }));
-              }}
+              saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
+              onSaveTargets={saveHarvestTargets}
               onAccept={(result) => {
-                if (!currentPlanningScopeAllowed()) return;
-                pushPlanHistory();
+                if (!currentPlanningScopeAllowed() || hasOwnRecords) return;
+                const authoredMetadata = { rainPattern: pattern, planNotes: result.notes, planNotesAt: Date.now() };
                 setPlan((previous) => {
+                  if (previous?.plantings.some(p => beds.some(b => b.id === p.bedId) && hasGrowerCycleMarker(p))) return previous;
                   const base = previous ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
                   const savedIds = new Set(base.plantings.map((p) => p.id));
-                  return { ...base, rainPattern: pattern,
-                    plantings: [...base.plantings, ...result.plantings.filter((p) => !savedIds.has(p.id))],
-                    planNotes: result.notes, planNotesAt: Date.now(), updatedAt: Date.now() };
+                  const additions = result.plantings.filter((p) => !savedIds.has(p.id));
+                  if (additions.length === 0) return previous;
+                  return stageSuggestedPlanHistory(previous, { ...base, ...authoredMetadata,
+                    plantings: [...base.plantings, ...additions], updatedAt: Date.now() });
                 });
               }}
             />}
@@ -2211,10 +2738,7 @@ function FacilitatorCropsPageInner() {
               showBuyingCalendar={!simple}
               beds={beds} plantings={plantings}
               now={{ year: new Date().getFullYear(), month: currentMonth }}
-              onSettings={(nursery) => {
-                pushPlanHistory();
-                setPlan((previous) => ({ ...(previous ?? { version: 1 as const, plantings: [] }), nursery, updatedAt: Date.now() }));
-              }}
+              saveContext={nurserySaveContext} onSettings={saveNurserySettings}
             />}
 
             {/* Timeline. The month header and the bed-rows body are TWO
@@ -2343,9 +2867,10 @@ function FacilitatorCropsPageInner() {
                         <BedRow
                           key={bed.id}
                           bed={bed}
-                          plantings={plantings.filter((p) => p.bedId === bed.id)}
+                          plantings={legacyPlantings.filter((p) => p.bedId === bed.id)}
                           currentMonth={currentMonth}
                           onAddCrop={() => openPicker(bed.id)}
+                          ownRecordsHeld={legacyAddBlocked(bed.id)}
                           onTapPlanting={(p) => setActivePlanting(p)}
                           simple={simple}
                         />
@@ -2502,14 +3027,14 @@ function FacilitatorCropsPageInner() {
               includeAnimals={includeAnimals}
               onIncludeAnimalsChange={(next) => { setIncludeAnimals(next); saveIncludeAnimals(next); }}
             />
-            <YearOfFoodCard
+            {!hasOwnRecords && <YearOfFoodCard
               year={yearOfFood}
               gapFills={gapFills}
               yearMode={yearMode}
               hasBeds={beds.some((b) => b.kind !== 'plot')}
               climateKnown={!!yearGate?.tempC}
               onPlan={planGapFill}
-            />
+            />}
 
             {/* Tasks + harvest */}
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
@@ -2595,6 +3120,8 @@ function FacilitatorCropsPageInner() {
                 <div className="font-mono font-bold mb-1" style={{ fontSize: 26, color: 'var(--color-forest-800)' }}>
                   {hasAreaConflict ? (
                     <span style={{ fontSize: 18 }}>Resolve overlapping bed space</span>
+                  ) : hasOwnRecords ? (
+                    <span style={{ fontSize: 18 }}>Own dated records · catalogue total withheld</span>
                   ) : hasKnownYield && totalYieldKg !== null ? (
                     <>{totalYieldKg.toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-muted)' }}>kg across active and planned crop cycles</span></>
                   ) : unknownYieldNames.length > 0 ? (
@@ -2713,7 +3240,7 @@ function FacilitatorCropsPageInner() {
                           </HarvestShareRow>
                         );
                       })}
-                      {plantings.length === 0 && (
+                      {legacyPlantings.length === 0 && !hasOwnRecords && (
                         <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')}</div>
                       )}
                     </>
@@ -2730,7 +3257,7 @@ function FacilitatorCropsPageInner() {
                           </span>
                         </HarvestShareRow>
                       ))}
-                      {plantings.length === 0 && (
+                      {legacyPlantings.length === 0 && !hasOwnRecords && (
                         <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')}</div>
                       )}
                     </>
@@ -2933,7 +3460,7 @@ function FacilitatorCropsPageInner() {
         onSaved={(survey) => { setSurveySnapshot({ siteId: surveySiteId, survey }); setSiteSurveyOpen(false); }}
         onClose={() => setSiteSurveyOpen(false)}
       />}
-      {allowCataloguePlanning && activePlanting && (
+      {allowCataloguePlanning && activePlanting && !hasGrowerCycleMarker(activePlanting) && (
         <PlantingPopover
           planting={activePlanting}
           bedAreaM2={bedAreaFor(activePlanting.bedId)}
@@ -2945,7 +3472,7 @@ function FacilitatorCropsPageInner() {
       )}
 
       {/* Auto-suggest: questionnaire + review */}
-      {allowCataloguePlanning && autoPhase !== 'idle' && beds.length > 0 && (
+      {allowCataloguePlanning && !hasOwnRecords && autoPhase !== 'idle' && beds.length > 0 && (
         <AutoSuggestModal
           phase={autoPhase}
           goal={aGoal} onGoal={chooseGoal}
@@ -4472,12 +4999,33 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
   );
 }
 
-function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple }: {
+function SavedGrowerRows({ rows, wholeBookRows, source, scope }: {
+  rows: readonly Planting[]; wholeBookRows: readonly Planting[];
+  source: GrowerWorkflowSource | null; scope: GrowerPlanningScope | null;
+}) {
+  if (!rows.length) return null;
+  const projection = source ? projectGrowerCycles(wholeBookRows, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint }) : null;
+  return <section aria-label="Saved own dated records" className="my-4 rounded-xl border p-4 text-sm" style={{ borderColor: 'var(--border)' }}>
+    <h2 className="font-display text-lg font-semibold">Saved own dated records</h2>
+    <p>These records remain saved. Catalogue dates, quantities and complete food or free-land coverage are withheld for them. Legacy controls cannot edit or clear them.</p>
+    {!source && <p role="status">Current saved source not checked. These records are held until their site, geometry and measured space are checked again.</p>}
+    <ul className="my-2 space-y-2">{rows.map((row, i) => {
+      const cycle = projection?.ownCycles.find(cycle => cycle.plantingId === row.id);
+      return <li key={`${row.id}:${i}`}><strong>{cropByKey(row.cropKey)?.name ?? 'Saved crop record'}</strong> · {cycle
+        ? `Own estimates: field entry ${cycle.assessment.schedule.fieldEntryDate}; next field entry ${cycle.assessment.schedule.nextFieldEntryDate}. Planned, not an observation.`
+        : 'Held: source, scope, geometry or record identity needs review. No replacement catalogue schedule is supplied.'}</li>;
+    })}</ul>
+    <Link href="/cropplan" className="underline">Open Task Planner</Link>
+  </section>;
+}
+
+function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple, ownRecordsHeld }: {
   bed: PlanBed;
   plantings: Planting[];
   currentMonth: number;
   onAddCrop: () => void;
   onTapPlanting: (p: Planting) => void;
+  ownRecordsHeld?: boolean;
   simple: boolean;
 }) {
   // Which food group(s) are currently in this bed — usually just one, but an
@@ -4544,10 +5092,11 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
           <div style={{ padding: '2px 8px' }}>
             <button
               onClick={onAddCrop}
+              disabled={ownRecordsHeld}
               className="font-sans"
               style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.3)', borderRadius: 8, padding: '3px 10px', cursor: 'pointer' }}
             >
-              + crop
+              {ownRecordsHeld ? 'Own dated records · check Task Planner' : '+ crop'}
             </button>
           </div>
         </div>
@@ -4557,6 +5106,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
 }
 
 function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Planting; currentMonth: number; onTap: () => void; simple: boolean }) {
+  if (hasGrowerCycleMarker(planting)) return <p className="px-2 text-sm">Own dated record held from this catalogue calendar. Open the Task Planner.</p>;
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const readinessStart = bedEntryMonth(planting.sowMonth, crop);

@@ -1,0 +1,54 @@
+{
+  "version": 2,
+  "scope": "Five coordinator-clarified exact harvest mass release/update descriptions; existing4 interface locales only",
+  "supersedes": "agy-harvest-mass-sa-release-copy-2026-11-03 (20 candidates never selected)",
+  "sourceCommitBase": "b1df0d1ac441b36f515029ed4e902cc8720041e5",
+  "sourceState": "coordinator-frozen exact uncommitted English; source clarification explicitly means harvest-demand weights rather than a buyer person weight; final SHA-only restamp reconciled separately",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "files": [
+    {
+      "path": "lib/release-notes.ts",
+      "bytes": 347051,
+      "sha256": "521d15a2dd1cc25bff6f4808000488912a78d15c308a58301693bc63a93235e8"
+    }
+  ],
+  "messages": [
+    {
+      "key": "harvestMassRelease01",
+      "english": "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.",
+      "source": "lib/release-notes.ts",
+      "sha256": "3e978fc4a6741970bf0824660ab727ba4cd388c6b95e02ac94868055da7aa78e"
+    },
+    {
+      "key": "harvestMassRelease02",
+      "english": "Keep buyer entries when a save cannot be confirmed.",
+      "source": "lib/release-notes.ts",
+      "sha256": "f22f4e3c44a8daa16ff927cfd9d6729246d75d93a7614fa3a5c6a9f12c1fb811"
+    },
+    {
+      "key": "harvestMassRelease03",
+      "english": "Choose harvest weight units",
+      "source": "lib/release-notes.ts",
+      "sha256": "4e37a4962dd155a0671e77f26f4b7bd2201ad16af2e83d40fc2b9cdc1ec91779"
+    },
+    {
+      "key": "harvestMassRelease04",
+      "english": "Production plan → Harvest targets",
+      "source": "lib/release-notes.ts",
+      "sha256": "9db9cd7863c8a50a79923209647f89331b98e386fb767924c711c42915e7c3a4"
+    },
+    {
+      "key": "harvestMassRelease05",
+      "english": "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.",
+      "source": "lib/release-notes.ts",
+      "sha256": "5c5c475afb8b38fd05961f91419db6eece0435ac4e9c6f484d6f4a8ee06f0a28"
+    }
+  ]
+}

@@ -19,6 +19,14 @@ registerHooks({ load(url, context, nextLoad) {
 
 test('Simple growers can follow the nursery sourcing link to a section that is actually present', async () => {
   const { default: NurseryPlanPanel } = await import('../components/crops/NurseryPlanPanel.tsx');
+  // Navigation is visible only after the real backendless guest context exists;
+  // SSR must not expose another actor's nursery fields while checking identity.
+  const originals = new Map(['window', 'localStorage', 'sessionStorage'].map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  const storage = () => { const rows = new Map<string, string>(); return { getItem: (key: string) => rows.get(key) ?? null,
+    setItem: (key: string, value: string) => rows.set(key, String(value)), removeItem: (key: string) => rows.delete(key) }; };
+  const localStorage = storage(), sessionStorage = storage();
+  for (const [key, value] of Object.entries({ window: Object.assign(new EventTarget(), { localStorage, sessionStorage }), localStorage, sessionStorage }))
+    Object.defineProperty(globalThis, key, { configurable: true, value });
   let screen: ReturnType<typeof create>;
   act(() => { screen = create(createElement(NurseryPlanPanel, {
     siteId: 'fictional-navigation-test', plantings: [], beds: [], now: { year: 2026, month: 11 }, onSettings: () => {},
@@ -30,7 +38,10 @@ test('Simple growers can follow the nursery sourcing link to a section that is a
     assert.equal(screen!.root.findAll((node) => typeof node.type === 'string' && node.props.id === link.props.href.slice(1)).length, 1,
       'Simple mode must not point at the buying calendar that the page hides');
     assert.equal(screen!.root.findAllByType('a').find((node) => node.children[0] === 'Open task planner')?.props.href, '/cropplan');
-  } finally { act(() => screen!.unmount()); }
+  } finally {
+    act(() => screen!.unmount());
+    for (const [key, descriptor] of originals) { if (descriptor) Object.defineProperty(globalThis, key, descriptor); else Reflect.deleteProperty(globalThis, key); }
+  }
 });
 
 test('the real crop page sends All tools growers to its existing buying calendar and keeps Simple local', () => {

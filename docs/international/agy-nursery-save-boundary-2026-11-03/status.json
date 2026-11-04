@@ -1,0 +1,69 @@
+{
+  "job": "agy-nursery-save-boundary-2026-11-03",
+  "status": "complete",
+  "sourceHead": "844e4a1bc",
+  "referencedContract": "docs/international/agy-nursery-unit-entry-2026-11-03/NURSERY-UNIT-ENTRY.md",
+  "inspectedSources": [
+    {
+      "sourcePath": "app/facilitator/crops/page.tsx",
+      "scope": "exact named AST extracts, not complete source",
+      "sourceFileBytes": 403529,
+      "sourceFileSha256": "428277a51d2c23f85629eaf9dbacfd4a289f368435b5eb8aeb2dcd6d18d585db",
+      "extractBytes": 6531,
+      "extractSha256": "260e113f458c4eb7605306d14cf2198fc2736051d96ad705aca18684ee09e634"
+    },
+    {
+      "sourcePath": "lib/crop-plan.ts",
+      "scope": "exact named AST extracts, not complete source",
+      "sourceFileBytes": 131028,
+      "sourceFileSha256": "f12d7df80f066466c2b16fa34c791931333345014327c7da2ae2cdc33553c580",
+      "extractBytes": 1648,
+      "extractSha256": "6ad9895f56487c46e62283c63d818c7b28853fa49d22a1eb89db06233c8f32c4"
+    },
+    {
+      "sourcePath": "lib/crop-plan-storage.ts",
+      "scope": "complete source",
+      "sourceFileBytes": 30732,
+      "sourceFileSha256": "45181754490fb9b962f16883413d4bfcbb31551f2a2ed20c0c2dfdade3cf2a78"
+    }
+  ],
+  "outputs": [
+    "docs/international/agy-nursery-save-boundary-2026-11-03/NURSERY-SAVE-BOUNDARY.md",
+    "docs/international/agy-nursery-save-boundary-2026-11-03/status.json"
+  ],
+  "uninspectedAreas": {
+    "unshownImportsNormalizersAndCallers": [
+      "activeAccountUid",
+      "isSampleMode",
+      "isBackendConfigured",
+      "getFirebase",
+      "loadCropPlanWithWriteAdmission",
+      "cropPlanWriteAdmissionMatches",
+      "cropPlanWriteToken",
+      "cropPlanWriteCandidateIsLossless",
+      "copyCropPlanAuthoredData",
+      "cropPlanStorageValue",
+      "sampleCropPlanSnapshot",
+      "setSandboxCropPlan"
+    ],
+    "status": "UNKNOWN"
+  },
+  "constraints": {
+    "mainWriterOnly": true,
+    "workers": 0,
+    "shellCommandsRun": 0,
+    "networkCalls": 0,
+    "codeOrTestEdits": 0,
+    "runtimeOrSettingsChanges": 0,
+    "optionalInteractionSharing": "OFF"
+  },
+  "coordinatorCompactReview": {
+    "reviewedAtUtc": "2026-11-03T11:58:38.195453+00:00",
+    "actualWhitespaceWords": 336,
+    "allThreeExtractOrCompleteSourceBytesAndSha256Checked": true,
+    "nonExhaustivePostWriteFailureBoundary": true,
+    "sampleConfirmationDistinguishedFromDevicePersistence": true,
+    "proposedNegativesNotExecutedByResearch": 3,
+    "runtimeIntegrationByResearch": false
+  }
+}

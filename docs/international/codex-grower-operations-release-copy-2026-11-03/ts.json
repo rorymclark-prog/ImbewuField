@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "locale": "ts",
+  "provenance": {
+    "executor": "Codex",
+    "method": "AI draft",
+    "createdOn": "2026-11-03"
+  },
+  "reviewStatus": "unreviewed-ai-draft",
+  "fluentHumanApproval": false,
+  "sourcePacketSha256": "ea662c644d50f4703b548e55165ae4e765e51a3317173d6cc9df1b5d35940daa",
+  "messages": [
+    {
+      "key": "growerOperationsRelease1",
+      "english": "Follow saved grower cycles on their exact planned dates.",
+      "sha256": "c26b95b5f9df2ea8d832249903080808c707ad592209c4e77a4217cbd25c3c2d",
+      "text": "Landzela mirhendzeleko yo rima leyi hlayisiweke hi masiku ya yona lama kunguhatiweke hi ku kongoma.",
+      "reviewStatus": "unreviewed-ai-draft"
+    },
+    {
+      "key": "growerOperationsRelease2",
+      "english": "Check current designs before ticking work or exporting dates.",
+      "sha256": "0253e082c05ab48ae5f3d6ded5334831b148c78e3bc98ce1296b559e1ecfeab7",
+      "text": "Kambela tidizayini ta sweswi u nga si fungha mintirho kumbe ku humesa masiku.",
+      "reviewStatus": "unreviewed-ai-draft"
+    },
+    {
+      "key": "growerOperationsRelease3",
+      "english": "Keep own crop estimates separate from catalogue print advice.",
+      "sha256": "eebe817347f357390824042e02c832a2c4a132cbea27706cc31540d8033dabd0",
+      "text": "Hlayisa mimpimo ya wena ya swibyariwa yi hambanile ni switsundzuxo leswi kandziyisiwaka swa khathalogo.",
+      "reviewStatus": "unreviewed-ai-draft"
+    },
+    {
+      "key": "growerOperationsRelease4",
+      "english": "Review your dated work",
+      "sha256": "61b5fb443d23cb6343b377c7346278def5f5de79009922ca666938f204180b57",
+      "text": "Kambela mintirho ya wena leyi nga ni masiku",
+      "reviewStatus": "unreviewed-ai-draft"
+    },
+    {
+      "key": "growerOperationsRelease5",
+      "english": "Task Planner → Dated work from your estimates",
+      "sha256": "6bb6a4dc0e264ac50308327797902dfee066f3fd9159f7071126785746e77a7a",
+      "text": "Mupulani wa Mintirho → Mintirho leyi nga ni masiku ku suka eka mimpimo ya wena",
+      "reviewStatus": "unreviewed-ai-draft"
+    },
+    {
+      "key": "growerOperationsRelease6",
+      "english": "Open Task Planner to check work dates from your saved growing estimates.",
+      "sha256": "f0f30127e017c91d98710e6f5db3be1eec94284ca82b7caabe8568cf7e830de5",
+      "text": "Pfula Mupulani wa Mintirho leswaku u kambela masiku ya mintirho ku suka eka mimpimo ya wena yo rima leyi hlayisiweke.",
+      "reviewStatus": "unreviewed-ai-draft"
+    }
+  ]
+}

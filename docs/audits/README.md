@@ -116,7 +116,15 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest: [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
+Latest field-block continuation: [Metres and international feet, retained drafts and crop allocations — 3 November 2026](2026-11-03/field-block-units-codex.md). Exact-tree checks, populated browser and current-head release gates remain open.
+
+Previous grower continuation: [Protected crop storage, account transfer and retained-copy review — 3 November 2026](2026-11-03/grower-storage-cutover-codex.md). Current-head checks, real two-tab/offline, populated browser and account gates remain open.
+
+Previous acceptance milestone: [Reviewed proposal saves, Finance evidence and sign-in preservation — 3 November 2026](2026-11-03/grower-acceptance-codex.md).
+
+Previous grower continuation: [Dated work and canonical save admission — 3 November 2026](2026-11-03/grower-operations-codex.md).
+
+Previous: [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
 
 Previous: [Production by plant age and clearer graphics — 4 October 2026](2026-10-04/production-age-visuals-codex.md).
 
@@ -166,6 +174,11 @@ or main. Local Downloads packs remain dated reading snapshots.
 - [Named historical areas — 3 November 2026](2026-11-03/historical-area-labels-codex.md).
 - [Approved historical baseline — 3 November 2026](2026-11-03/historical-baseline-codex.md).
 - [Nine-layer AI fidelity corrections — 3 November 2026](2026-11-03/ai-layer-fidelity-corrections-codex.md).
+
+- **2026-11-03:** [Field-block entry in metres and international feet](2026-11-03/field-block-units-codex.md).
+- **2026-11-03:** [Protected crop storage, account transfer and retained-copy review](2026-11-03/grower-storage-cutover-codex.md).
+- **2026-11-03:** [Reviewed proposal saves, Finance evidence and sign-in preservation](2026-11-03/grower-acceptance-codex.md).
+- **2026-11-03:** [Dated grower work and canonical save admission](2026-11-03/grower-operations-codex.md).
 
 - [Nursery forecast source and verification — 1 November 2026](2026-11-01/nursery-source-and-verification.md).
 

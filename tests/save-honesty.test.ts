@@ -80,8 +80,10 @@ test('saveCropPlan reports whether the plan actually reached storage', async () 
 
 test('the planner surfaces an autosave failure instead of swallowing it', () => {
   const src = readFileSync(join(process.cwd(), 'app', 'facilitator', 'crops', 'page.tsx'), 'utf8');
+  // The writer now returns its exact stored revision too. That same receipt must
+  // drive the failure banner; a later read could belong to another tab's write.
   assert.ok(
-    src.includes('setPlanSaveFailed(!saveCropPlan(plan))'),
+    src.includes('const receipt = saveCropPlanWithReceipt(plan);') && src.includes('setPlanSaveFailed(!receipt.saved)'),
     'the debounced autosave discards saveCropPlan\'s result again',
   );
   assert.ok(src.includes('planSaveFailed && ('), 'nothing renders the autosave failure');

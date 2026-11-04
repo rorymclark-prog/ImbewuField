@@ -1,0 +1,63 @@
+{
+  "task": "agy-harvest-mass-global-translations-2026-11-03",
+  "status": "completed-unreviewed-ai-drafts",
+  "sourceCommitBase": "b1df0d1ac441b36f515029ed4e902cc8720041e5",
+  "sourceFile": "docs/international/agy-harvest-mass-global-translations-2026-11-03/source.json",
+  "sourceSha256": "b66aea500317293ef523972b154170e39b056b288b9446394d3ce7646ddf7e21",
+  "panelSnapshot": {
+    "path": "components/crops/HarvestTargetsPanel.tsx",
+    "bytes": 36446,
+    "sha256": "e93170c01c122cf72b375902995a67da040d8703de60f15a86e12a353ebebe97"
+  },
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw",
+    "hi",
+    "bn",
+    "id"
+  ],
+  "messagesPerLocale": 18,
+  "totalDraftPairs": 126,
+  "workers": {
+    "active": 0,
+    "state": "stopped",
+    "mode": "main-writer-only"
+  },
+  "interactionSharing": "off",
+  "notesWordCountCeiling": 250,
+  "wordCountAuthority": "root",
+  "deliverables": [
+    "docs/international/agy-harvest-mass-global-translations-2026-11-03/fr.json",
+    "docs/international/agy-harvest-mass-global-translations-2026-11-03/es.json",
+    "docs/international/agy-harvest-mass-global-translations-2026-11-03/pt-BR.json",
+    "docs/international/agy-harvest-mass-global-translations-2026-11-03/sw.json",
+    "docs/international/agy-harvest-mass-global-translations-2026-11-03/hi.json",
+    "docs/international/agy-harvest-mass-global-translations-2026-11-03/bn.json",
+    "docs/international/agy-harvest-mass-global-translations-2026-11-03/id.json",
+    "docs/international/agy-harvest-mass-global-translations-2026-11-03/review-notes.md",
+    "docs/international/agy-harvest-mass-global-translations-2026-11-03/status.json"
+  ],
+  "verification": {
+    "commandsRun": 0,
+    "networkCalls": 0,
+    "codeOrTestEdits": false,
+    "gitMutations": false,
+    "validatorExecuted": false,
+    "humanOrFluentApprovalClaimed": false,
+    "runtimeActivationClaimed": false
+  },
+  "coordinatorReview": {
+    "reviewedAtUtc": "2026-11-03T14:35:46.139870+00:00",
+    "exactPairsChecked": 126,
+    "damagedPacketControlsRejected": 15,
+    "actualNotesWhitespaceWords": 237,
+    "privateMetadataExcluded": true,
+    "kgLbPercentAndInclusiveMonthMeaningCheckedForIdentifiedIssues": true,
+    "fluentOrFullSemanticCertification": false,
+    "runtimeActivation": false
+  }
+}
