@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 November 2026', sha: 'a412b28b7e', changes: [
+    'Review saved invoice amounts by currency',
+  ], tour: [{ title: 'Review saved invoice amounts by currency', where: 'Invoice → Saved → Summary currency', href: '/invoice',
+    detail: 'Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.' }] },
   { when: '4 November 2026', sha: '57218cb6b1', changes: [
     'Choose a recorded invoice price',
   ], tour: [{ title: 'Choose a recorded invoice price', where: 'Invoice → Choose a recorded invoice price', href: '/invoice',

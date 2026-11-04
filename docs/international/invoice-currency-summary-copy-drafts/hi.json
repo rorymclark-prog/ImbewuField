@@ -1,0 +1,92 @@
+{
+  "locale": "hi",
+  "sourceSha256": "498e348fe37779b82d1804342d2c8e9f34a655f1da375c6c3ef8dc006506adad",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "invoiceCurrencySummary.message.01",
+      "english": "Saved invoice currency summary",
+      "messageSha256": "c1752faf5776ae0e90f9d79e518a0c6a602823352991e9667165557f399a553a",
+      "translation": "सहेजे गए इनवॉइस मुद्रा सारांश"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.02",
+      "english": "Saved invoices on this device, across all loaded dates. Choose one currency to view its recorded amounts.",
+      "messageSha256": "9da884c386956aadf54c0458d7bbba7e6c6731dfe581a179170c9cc8c55ae603",
+      "translation": "इस डिवाइस पर सहेजे गए इनवॉइस, सभी लोड की गई तिथियों में। इसकी दर्ज राशियों को देखने के लिए एक मुद्रा चुनें।"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.03",
+      "english": "Summary currency",
+      "messageSha256": "51b92aab57843c9bc0938db397fdb0f48ad9fd174c37226955cbcfdba593a39d",
+      "translation": "सारांश मुद्रा"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.04",
+      "english": "Choose currency",
+      "messageSha256": "138f4d7fd9000999a6a061ec7cd57546f17cefe20fade3a2a0ad253d65746866",
+      "translation": "मुद्रा चुनें"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.05",
+      "english": "Refresh saved invoices",
+      "messageSha256": "ab8c83ec9e2489941955556b73907a8f14813770144b19eb304a1cf2559e43ef",
+      "translation": "सहेजे गए इनवॉइस रीफ़्रेश करें"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.06",
+      "english": "DEMO — these are sample invoice amounts.",
+      "messageSha256": "64413e8a48da771310a2b5c7d678b8050a203e2f6e9f79639630cb27db1ce610",
+      "translation": "DEMO — ये नमूना इनवॉइस राशियाँ हैं।"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.07",
+      "english": "Saved invoice records changed or need review. Totals are unavailable. Refresh the current records before choosing a currency.",
+      "messageSha256": "5a99aaa96416e99c8a25b701ab172048396625a1cced885394cb1b7cb7b77b71",
+      "translation": "सहेजे गए इनवॉइस रिकॉर्ड बदल गए हैं या उनकी समीक्षा की आवश्यकता है। कुल राशियाँ अनुपलब्ध हैं। मुद्रा चुनने से पहले वर्तमान रिकॉर्ड रीफ़्रेश करें।"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.08",
+      "english": "Choose a currency to view invoice counts and amounts.",
+      "messageSha256": "fcd26729e7183ce9d937fd5d3f1b85852b69a284ea43a2c29667eb02eb1fe7f1",
+      "translation": "इनवॉइस संख्या और राशियाँ देखने के लिए एक मुद्रा चुनें।"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.09",
+      "english": "Issued invoices",
+      "messageSha256": "f6a464a6256839a889a0701685eb8f01d87d9fe671c296efe521df10cceceb83",
+      "translation": "जारी किए गए इनवॉइस"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.10",
+      "english": "Recorded paid invoices",
+      "messageSha256": "bb26daee39a986d4b8fb0ff59f2dba3a3dae5f81e3cd959f81b8d65339494b4a",
+      "translation": "भुगतान किए गए दर्ज इनवॉइस"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.11",
+      "english": "Unpaid invoices",
+      "messageSha256": "8feddd6ee32e3e81477d7f6c77794d36d2a45cd34d6423cb2bb1701ba5243c04",
+      "translation": "गैर-भुगतान इनवॉइस"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.12",
+      "english": "{count} invoice(s)",
+      "messageSha256": "50d9b15e44dd4846ce3daefe734dd0bc1f129aff39867778ceff88eef22a3ff4",
+      "translation": "{count} इनवॉइस"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.13",
+      "english": "Invoice-only amounts exclude pending link drafts, external sales records and costs. Recorded paid reflects the saved invoice status; it is not proof of bank receipt, cash income or profit. No currency conversion is made.",
+      "messageSha256": "9a5ed5b30fe335c29384b798d4685a8de39b94ffab58c7406e30bf8c753c4c0b",
+      "translation": "केवल-इनवॉइस राशियों में लंबित लिंक ड्राफ़्ट, बाहरी बिक्री रिकॉर्ड और लागतें शामिल नहीं हैं। दर्ज भुगतान सहेजे गए इनवॉइस की स्थिति दर्शाता है; यह बैंक रसीद, नकद आय या लाभ का प्रमाण नहीं है। कोई मुद्रा रूपांतरण नहीं किया जाता है।"
+    },
+    {
+      "key": "invoiceCurrencySummary.message.14",
+      "english": "Amount unavailable",
+      "messageSha256": "6ea97c53df001e76387ca3cd2a57c61aa2ffa0e12d752ff4f445556b31edd0b1",
+      "translation": "राशि अनुपलब्ध"
+    }
+  ]
+}

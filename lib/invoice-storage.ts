@@ -85,6 +85,9 @@ export function readInvoiceStorage(context?: InvoiceStorageContext | null): Invo
   const { payloadRaw, ...status } = store.readStorage(context); return { ...status, bookRaw: payloadRaw };
 }
 export const readInvoiceStorageStatus = store.readStorageStatus;
+export const captureInvoiceReadReceipt = store.captureStorageReadReceipt;
+export const invoiceReadReceiptMatches = store.storageReadReceiptMatches;
+export const releaseInvoiceReadReceipt = store.releaseStorageReadReceipt;
 export const initialiseInvoiceStorage = store.initialiseStorage;
 export const recoverInvoiceStorage = store.recoverStorage;
 export const captureInvoiceStorageLease = store.captureStorageLease;

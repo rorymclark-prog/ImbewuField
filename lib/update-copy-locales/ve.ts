@@ -431,5 +431,9 @@ const copy:UpdateCopy={
   "Choose a recorded invoice price": "Nangani mutengo wo rekhodiwaho kha invoice",
   "Invoice → Choose a recorded invoice price": "Invoice → Nangani mutengo wo rekhodiwaho kha invoice",
   "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Nangani mutengo wa invoice yo vhulungwaho kha lushaka luthihi lwa tshelede, ni kone u u khwaṱhisedza kha iyi thengiso. Hu shanduka mutengo wa mutaladzi fhedzi; vhulungani invoice musi no lugela.",
+  // Invoice-summary release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-summary-release-drafts.json.
+  "Review saved invoice amounts by currency": "Sedzulusanani tshelede ya dzi-invoice dzo vhulungwaho nga lushaka lwa tshelede",
+  "Invoice → Saved → Summary currency": "Invoice → Dzo vhulungwaho → Lushaka lwa tshelede lwa manweledzo",
+  "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Nangani lushaka luthihi lwa tshelede u sedzulusa tshelede ya dzi-invoice dzo bviswaho, dzo rekhodiwaho sa dzo badelwaho na dzi sa athu badelwa kha hetshi tshishumiswa. Hedzi ndi rekhodo dza invoice, a si rasithi dza bannga dzo khwaṱhisedzwaho, mbuelo yoṱhe kana phurofithi.",
 };
 export default copy;

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "53b584255b8a116a83ebf292f32aebeefe0cd2158c402781a7b8e619200efc11",
+  "milestoneId": "invoice-currency-summary",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "reviewNotes": "Existing four update languages, separate from AGY seven-language inactive control packets. User-recorded invoice amounts are not bank confirmation, all income, profit or tax compliance. No fluent approval.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "52e9ab56426d2f2791f043fba234a547f05bce60761ba79453ade764475141a6",
+      "selectedFileSha256": "88be505ed1384351c10bf7fe25b073d435c62626f2b4a29947ee3ec06eeead15",
+      "historicalBytesPreserved": true
+    },
+    "st": {
+      "originalFileSha256": "0593aebed2183f758c9862cab9642c0c832d45c01c97249adf4375160e04c22d",
+      "selectedFileSha256": "31d20644b7ddf5beb099bdef09b311931c2cda102d3828bc47216805df435e11",
+      "historicalBytesPreserved": true
+    },
+    "ve": {
+      "originalFileSha256": "365c6df0eeb1b025d5a0b6be09859be79768c671354d74a2f10a5e367b5e4b94",
+      "selectedFileSha256": "b53480e42aa0e063445366725e8d73ad41e6f9a79efb00ae29cac35bc1a33b57",
+      "historicalBytesPreserved": true
+    },
+    "ts": {
+      "originalFileSha256": "24022cfbb22a3d78c391a97a88b5c522083f41e612a1410afa2d90d13b02cd24",
+      "selectedFileSha256": "78d895f96dd5e2377f3aada4729202b68071f49efdaa2111ae84ba1633545add",
+      "historicalBytesPreserved": true
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Review saved invoice amounts by currency",
+      "messageSha256": "061a48dca20a5bf60b87f9283b81ab35143dc88f0036fca434781aa06572b444",
+      "zu": "Buyekeza imali yama-invoyisi agciniwe ngohlobo lwemali",
+      "st": "Hlahloba dipalo tsa di-invoice tse bolokilweng ka mofuta wa tjhelete",
+      "ve": "Sedzulusanani tshelede ya dzi-invoice dzo vhulungwaho nga lushaka lwa tshelede",
+      "ts": "Kambisisa mali ya tiinvoyisi leti hlayisiweke hi muxaka wa mali"
+    },
+    {
+      "english": "Invoice → Saved → Summary currency",
+      "messageSha256": "1b6a420409f0c130669d39a437c9f9c521ae3629bf05b994dbcfa2736644e5fa",
+      "zu": "I-invoyisi → Agciniwe → Uhlobo lwemali lwesifinyezo",
+      "st": "Invoice → Tse bolokilweng → Mofuta wa tjhelete wa kakaretso",
+      "ve": "Invoice → Dzo vhulungwaho → Lushaka lwa tshelede lwa manweledzo",
+      "ts": "Invoyisi → Leti hlayisiweke → Muxaka wa mali wa nkatsakanyo"
+    },
+    {
+      "english": "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.",
+      "messageSha256": "30da961af5bd37a18250322eeaedca117fc125cc5b821fc2be77ec93a6f35b10",
+      "zu": "Khetha uhlobo olulodwa lwemali ukuze ubuyekeze imali yama-invoyisi akhishiwe, abhalwe njengakhokhiwe nangakakhokhwa kule divayisi. Lawa amarekhodi ama-invoyisi, hhayi amarisidi asebhange aqinisekisiwe, yonke imali engenayo noma inzuzo.",
+      "st": "Kgetha mofuta o le mong wa tjhelete ho hlahloba dipalo tsa di-invoice tse ntshitsweng, tse rekotilweng e le tse lefuweng le tse sa lefuwang sesebedisweng sena. Tsena ke direkoto tsa di-invoice, eseng dirisiti tsa banka tse netefaditsweng, lekeno lohle kapa phaello.",
+      "ve": "Nangani lushaka luthihi lwa tshelede u sedzulusa tshelede ya dzi-invoice dzo bviswaho, dzo rekhodiwaho sa dzo badelwaho na dzi sa athu badelwa kha hetshi tshishumiswa. Hedzi ndi rekhodo dza invoice, a si rasithi dza bannga dzo khwaṱhisedzwaho, mbuelo yoṱhe kana phurofithi.",
+      "ts": "Hlawula muxaka wun’we wa mali ku kambisisa mali ya tiinvoyisi leti humesiweke, leti rhekhodiweke ti hakeriwile ni leti nga hakeriwangiki eka xitirhisiwa lexi. Leti i tirhekhodo ta tiinvoyisi, a hi tirhisiti ta le bangi leti tiyisisiweke, mali hinkwato leti ngheneke kumbe mpindzulo."
+    }
+  ]
+}

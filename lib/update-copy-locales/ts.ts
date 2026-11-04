@@ -431,5 +431,9 @@ const copy:UpdateCopy={
   "Choose a recorded invoice price": "Hlawula nxavo lowu rhekhodiweke eka invoyisi",
   "Invoice → Choose a recorded invoice price": "Invoyisi → Hlawula nxavo lowu rhekhodiweke eka invoyisi",
   "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Hlawula nxavo wa invoyisi leyi hlayisiweke hi muxaka lowu fanaka wa mali, kutani u wu tiyisisa eka ku xavisa loku. Ku cinca nxavo wa layini ntsena; hlayisa invoyisi loko u lunghekile.",
+  // Invoice-summary release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-summary-release-drafts.json.
+  "Review saved invoice amounts by currency": "Kambisisa mali ya tiinvoyisi leti hlayisiweke hi muxaka wa mali",
+  "Invoice → Saved → Summary currency": "Invoyisi → Leti hlayisiweke → Muxaka wa mali wa nkatsakanyo",
+  "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Hlawula muxaka wun’we wa mali ku kambisisa mali ya tiinvoyisi leti humesiweke, leti rhekhodiweke ti hakeriwile ni leti nga hakeriwangiki eka xitirhisiwa lexi. Leti i tirhekhodo ta tiinvoyisi, a hi tirhisiti ta le bangi leti tiyisisiweke, mali hinkwato leti ngheneke kumbe mpindzulo.",
 };
 export default copy;
