@@ -17,9 +17,12 @@
 
 import { recordsMonthLong, recordsMonthShort } from './records-months';
 import type { InvoiceItem, InvoiceStatus, PaymentMethod } from './invoices';
+import { inspectInvoiceCurrencyBasis } from './invoice-currency';
+import { formatRecordedMoney, formattingContext } from './international/locales/formatting';
 
 /** Where the app actually lives. `fieldproof.vercel.app` is retired and resolves nowhere. */
 export const INVOICE_FOOTER = 'Generated with ImbewuField · imbewufield.vercel.app';
+export const INVOICE_CURRENCY_REVIEW = 'Currency needs review';
 
 /**
  * Money on a document a buyer pays from.
@@ -118,6 +121,8 @@ export interface InvoiceBanking {
 export interface InvoiceDocumentInput {
   /** The selected app language for generated document labels. User-entered values stay as typed. */
   language?: string;
+  /** Absence preserves historical Rand invoices. Present unreadable metadata must stay visible, not become Rand. */
+  currencyCode?: unknown;
   no: number;
   /** The date the invoice was ISSUED. Not "today" — a reprint must not re-date the document. */
   issuedISO: string;
@@ -211,15 +216,23 @@ const DOCUMENT_COPY = {
 
 export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocument {
   const copy = input.language === 'zu' ? DOCUMENT_COPY.zu : DOCUMENT_COPY.en;
+  const currencyBasis = inspectInvoiceCurrencyBasis(input);
+  const context = currencyBasis.status === 'recorded' ? formattingContext(input.language ?? 'en') : null;
+  const money = (amount: number): string => {
+    if (currencyBasis.status === 'held') return INVOICE_CURRENCY_REVIEW;
+    if (currencyBasis.status === 'legacy-rand') return formatInvoiceZar(amount);
+    // jsPDF's existing font needs ordinary spaces; denomination and amount still come from the shared formatter.
+    return formatRecordedMoney({ amount, currency: currencyBasis.currency }, context!)?.text.replace(/[\u00a0\u202f]/g, ' ') ?? '—';
+  };
   const items = input.items.filter((item) => item.desc.trim().length > 0);
   const total = items.reduce((sum, item) => sum + item.qty * item.price, 0);
 
   const rows: InvoiceDocumentRow[] = items.map((item) => ({
     desc: item.desc.trim(),
-    detail: item.price > 0
-      ? `${formatQuantity(item.qty)} ${unitLabel(item.qty, item.unit, input.language)} × ${formatInvoiceZar(item.price)}`
+    detail: item.price > 0 || currencyBasis.status === 'held'
+      ? `${formatQuantity(item.qty)} ${unitLabel(item.qty, item.unit, input.language)} × ${money(item.price)}`
       : `${formatQuantity(item.qty)} ${unitLabel(item.qty, item.unit, input.language)}`,
-    amount: formatInvoiceZar(item.qty * item.price),
+    amount: money(item.qty * item.price),
   }));
 
   const banking = input.banking ?? {};
@@ -278,7 +291,7 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     rows,
     // A paid copy still showed ‘Total due’, asking the buyer for money already received.
     totalHeading: input.status === 'paid' ? copy.total : copy.totalDue,
-    totalLabel: formatInvoiceZar(total),
+    totalLabel: money(total),
     bankingLines,
     // ux-16: the component that renders this (components/invoice/InvoiceDocument.tsx, not owned
     // by this track) prints `notes` verbatim with no heading of its own, which is how a note

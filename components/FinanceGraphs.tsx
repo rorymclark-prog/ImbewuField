@@ -35,6 +35,7 @@ import { buildFinanceSeries, type FinanceMonthPoint } from '@/lib/finance-series
 import { recordQuantityPayload } from '@/lib/farm-records';
 import { buildPlanVsActual, type PlanVsActualRow } from '@/lib/plan-vs-actual';
 import { kgLabel } from '@/lib/format-figures';
+import { invoiceRandReviewMessage } from '@/lib/invoice-sales';
 import { cappedScale } from '@/lib/chart-scale';
 import { BreakMark, BreakEdge } from '@/components/ChartBreakMark';
 import {
@@ -254,11 +255,18 @@ function MeasuredView({
   const hasWeighedProduce = [...series.productionQuantities, ...series.salesQuantities].some(total => total.unit === 'kg');
   if (series.hasRecords && !hasWeighedProduce) {
     return <div className="px-4 py-5 space-y-2" style={{ color: INK }}>
+      {series.moneyReview.status === 'held' && <p role="status">{invoiceRandReviewMessage(series.moneyReview)}</p>}
       <p className="font-display font-semibold">{recordsTemplate(lang, 'Recorded produce, {n} months', null, { n: series.windowMonths })}</p>
       <p className="text-sm">{recordsTemplate(lang, 'Picked: {qty}', null, { qty: quantityText(series.productionQuantities) || recordsFill(lang, 'Quantity not recorded') })}</p>
       <p className="text-sm">{recordsTemplate(lang, 'Sold: {qty}', null, { qty: quantityText(series.salesQuantities) || recordsFill(lang, 'Quantity not recorded') })}</p>
       <IsiZuluDraftSource className="text-xs" style={{ color: MUTED }} lang={lang} zulu="" english="No produce weights recorded in these months. Egg and package counts keep their own units; kilogram totals and kept weight are unknown." />
       <Link href="/records" className="inline-block text-sm underline" style={{ color: SOLD_TEXT }}>{recordsFill(lang, 'View your records')}</Link>
+    </div>;
+  }
+  if (!series.hasRecords && series.moneyReview.dateCoverageUnknown) {
+    return <div className="px-4 py-5 space-y-2" style={{ color: INK }}>
+      <p role="status">{invoiceRandReviewMessage(series.moneyReview)}</p>
+      <p>Invoice-linked sale quantities cannot be confirmed from the unreadable invoice evidence. No empty sales book or kept quantity is inferred.</p>
     </div>;
   }
   if (!series.hasRecords) {
@@ -326,7 +334,7 @@ function MeasuredView({
     <>
       <div className="px-4 py-3.5 flex flex-wrap items-baseline" style={{ gap: '4px 20px' }}>
         <Figure label={recordsTemplate(lang, 'Weighed produce picked, {n} months', null, { n: series.windowMonths })} value={kgLabel(series.totalProducedKg)} tone={INK} />
-        <Figure label={recordsFill(lang, 'Weighed produce sold')} value={kgLabel(series.totalSoldKg)} tone={SOLD_TEXT} />
+        <Figure label={recordsFill(lang, series.moneyReview.dateCoverageUnknown ? 'Readable weighed produce sold' : 'Weighed produce sold')} value={kgLabel(series.totalSoldKg)} tone={SOLD_TEXT} />
         {/* Null is not zero: when the window sold more than it logged picking, the
             difference is a missing record, not food that stayed on the farm. */}
         {series.totalKeptKg === null
@@ -334,6 +342,8 @@ function MeasuredView({
           : <Figure label={recordsFill(lang, 'Weighed produce kept on the farm')} value={kgLabel(series.totalKeptKg)} tone={KEPT} />}
       </div>
       <div className="px-4 pb-3 text-xs space-y-1" style={{ color: MUTED }}>
+        {series.moneyReview.status === 'held' && <p role="status">{invoiceRandReviewMessage(series.moneyReview)}</p>}
+        {series.moneyReview.dateCoverageUnknown && <p>Invoice-linked sale quantities may be incomplete. Readable quantities remain shown; kept quantity is unavailable.</p>}
         <IsiZuluDraftSource lang={lang} zulu="" english="This chart shows recorded kilograms only. Counted produce stays in its recorded units." />
         {series.productionQuantities.some(total => total.unit !== 'kg') && <p>{recordsTemplate(lang, 'Also picked: {qty}', null, { qty: quantityText(series.productionQuantities.filter(total => total.unit !== 'kg')) })}</p>}
         {series.salesQuantities.some(total => total.unit !== 'kg') && <p>{recordsTemplate(lang, 'Also sold: {qty}', null, { qty: quantityText(series.salesQuantities.filter(total => total.unit !== 'kg')) })}</p>}
@@ -420,13 +430,13 @@ function MeasuredView({
              single "65 kg" would match none of picked, sold or kept. */
           <IsiZuluDraftSource className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
             template={series.excludedProducedKg > 0 && series.excludedSoldKg > 0
-              ? 'Orchard is switched off, so this card leaves out {picked} picked and {sold} sold: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.'
+              ? 'Orchard is switched off, so this card leaves out {picked} picked and {sold} sold: {names}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review.'
               : series.excludedProducedKg > 0
-                ? 'Orchard is switched off, so this card leaves out {picked} picked: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.'
-                : 'Orchard is switched off, so this card leaves out {sold} sold: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.'}
+                ? 'Orchard is switched off, so this card leaves out {picked} picked: {names}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review.'
+                : 'Orchard is switched off, so this card leaves out {sold} sold: {names}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review.'}
             vars={{ picked: kgLabel(series.excludedProducedKg), sold: kgLabel(series.excludedSoldKg), names: series.excludedNames.join(', ') }}
-            english={`Orchard is switched off, so this card leaves out${series.excludedProducedKg > 0 ? ` ${kgLabel(series.excludedProducedKg)} picked` : ''}${series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' and' : ''}${series.excludedSoldKg > 0 ? ` ${kgLabel(series.excludedSoldKg)} sold` : ''}: ${series.excludedNames.join(', ')}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.`}
-            zulu={`Ingadi yezithelo icishiwe, ngakho leli khadi alifaki${series.excludedProducedKg > 0 ? ` ukuvunwa okungu-${kgLabel(series.excludedProducedKg)}` : ''}${series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' kanye' : ''}${series.excludedSoldKg > 0 ? ` ukuthengiswa okungu-${kgLabel(series.excludedSoldKg)}` : ''}: ${series.excludedNames.join(', ')}. Imali yalokho kuthengisa isabalwa kwenye indawo kuleli khasi — lapha kususwa amakhilogremu kuphela.`} />
+            english={`Orchard is switched off, so this card leaves out${series.excludedProducedKg > 0 ? ` ${kgLabel(series.excludedProducedKg)} picked` : ''}${series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' and' : ''}${series.excludedSoldKg > 0 ? ` ${kgLabel(series.excludedSoldKg)} sold` : ''}: ${series.excludedNames.join(', ')}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review.`}
+            zulu={series.moneyReview.status === 'held' ? '' : `Ingadi yezithelo icishiwe, ngakho leli khadi alifaki${series.excludedProducedKg > 0 ? ` ukuvunwa okungu-${kgLabel(series.excludedProducedKg)}` : ''}${series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' kanye' : ''}${series.excludedSoldKg > 0 ? ` ukuthengiswa okungu-${kgLabel(series.excludedSoldKg)}` : ''}: ${series.excludedNames.join(', ')}. Imali yalokho kuthengisa isabalwa kwenye indawo kuleli khasi — lapha kususwa amakhilogremu kuphela.`} />
         )}
         <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={keptExplanationEnglish} zulu={keptExplanationZulu} />
         {anyShort && (

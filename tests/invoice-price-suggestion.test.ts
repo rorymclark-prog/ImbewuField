@@ -71,7 +71,11 @@ test('the suggestion follows the buyer, but only while it is still a suggestion'
     /if \(!item\.priceFromGuide \|\| item\.unit !== 'kg'\) return item;/,
     'the re-price pass does not skip lines the farmer has priced themselves',
   );
-  assert.match(effect, /\}, \[wholesaleBuyer, priceOverrides\]\);/, 'the effect no longer runs when the buyer changes');
+  // The same buyer/price refresh must also observe a currency change. Without
+  // that dependency an old Rand guide can remain live after selecting EUR.
+  assert.match(effect, /\}, \[wholesaleBuyer, priceOverrides, randEligible\]\);/, 'the effect must observe the buyer, guide overrides and Rand eligibility');
+  const guide = PAGE.slice(PAGE.indexOf('function guidePriceFor'), PAGE.indexOf('A suggested price follows the buyer'));
+  assert.match(guide, /if \(!randEligible\) return null;/, 'a foreign recorded currency must not receive a Rand guide');
 });
 
 test('the buyer type picks which side of the guide is suggested', () => {

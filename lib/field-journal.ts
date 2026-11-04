@@ -11,6 +11,7 @@
 
 import { Sprout, ShoppingBasket, CloudSun, Bug, Wrench, Users, NotebookPen, type LucideIcon } from 'lucide-react';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { detachJsonData as detachJournalJSON, rawJsonIsLossless as journalRawJSONIsLossless } from './lossless-json';
 import { readJournalStorage, writeJournalStorageRaw, JOURNAL_LEGACY_KEY } from './journal-storage';
 import { captureJournalObservationContext, journalObservationContextIsCurrent, revokeJournalObservationContext, type JournalObservationContext } from './length-unit-preference';
 import { normaliseGrowerPlanningScope, type GrowerPlanningScope } from './international/grower-planning';
@@ -151,28 +152,6 @@ export function inspectJournalGrowerLink(entry: unknown): JournalGrowerLinkInspe
     return { status: 'linked', link };
   } catch { return invalid; }
 }
-
-function detachJournalJSON(value: unknown, ancestors = new Set<object>()): unknown {
-  if (value === null || typeof value === 'string' || typeof value === 'boolean'
-    || typeof value === 'number' && Number.isFinite(value)) return value;
-  if (!value || typeof value !== 'object' || ancestors.has(value)) throw Error('Unsafe journal data');
-  const prototype = Object.getPrototypeOf(value);
-  if (!Array.isArray(value) && prototype !== Object.prototype && prototype !== null) throw Error('Unsafe journal data');
-  if (Array.isArray(value) && Reflect.ownKeys(value).length !== value.length + 1) throw Error('Unsafe journal data');
-  ancestors.add(value);
-  try {
-    const output: Record<string, unknown> | unknown[] = Array.isArray(value) ? [] : {};
-    for (const key of Reflect.ownKeys(value)) {
-      if (Array.isArray(value) && key === 'length') continue;
-      const descriptor = Object.getOwnPropertyDescriptor(value, key);
-      if (typeof key !== 'string' || !descriptor?.enumerable || !Object.hasOwn(descriptor, 'value')) throw Error('Unsafe journal data');
-      if (Array.isArray(value) && !/^(0|[1-9]\d*)$/.test(key)) throw Error('Unsafe journal data');
-      Object.defineProperty(output, key, { value: detachJournalJSON(descriptor.value, ancestors), enumerable: true, configurable: true, writable: true });
-    }
-    if (Array.isArray(value) && (output as unknown[]).length !== value.length) throw Error('Unsafe journal data');
-    return output;
-  } finally { ancestors.delete(value); }
-    }
 
 // Stored malformed JSON evidence remains present through ordinary edits. Active
 // runtime descriptors cannot be serialized safely, so retain an explicit hold.
@@ -478,50 +457,6 @@ export function trimJournalForStorage(
   }
   while (list.length > 1 && journalByteSize(list) > budgetBytes) list = list.slice(0, -1);
   return list;
-}
-
-function journalDecimalIdentity(literal: string): string {
-  const parts = /^(-?)([0-9]+)(?:\.([0-9]+))?(?:[eE]([+-]?[0-9]+))?$/.exec(literal);
-  if (!parts) throw Error('Invalid JSON number');
-  let digits = (parts[2] + (parts[3] ?? '')).replace(/^0+/, '');
-  if (!digits) return '0';
-  const end = digits.length; digits = digits.replace(/0+$/, '');
-  const exponent = BigInt(parts[4] ?? '0') - BigInt((parts[3] ?? '').length) + BigInt(end - digits.length);
-  return `${parts[1]}${digits}e${exponent}`;
-}
-
-/** JSON.parse alone loses duplicate object members and permits numeric overflow.
- * Inspect the original tokens before any saved evidence can be reconstructed.
- * Grammar is still owned by JSON.parse; this iterative pass checks only the
- * ambiguities that its value result can no longer reveal. */
-function journalRawJSONIsLossless(raw: string): boolean {
-  try {
-    JSON.parse(raw);
-    const stack: Array<{ object: boolean; key: boolean; keys: Set<string> }> = [];
-    for (let i = 0; i < raw.length; i++) {
-      const c = raw[i], top = stack.at(-1);
-      if (c === '{' || c === '[') stack.push({ object: c === '{', key: c === '{', keys: new Set() });
-      else if (c === '}' || c === ']') stack.pop();
-      else if (c === ',') { if (top?.object) top.key = true; }
-      else if (c === ':') { if (top?.object) top.key = false; }
-      else if (c === '"') {
-        const start = i++;
-        while (i < raw.length && raw[i] !== '"') { if (raw[i] === '\\') i++; i++; }
-        if (top?.object && top.key) {
-          const key: string = JSON.parse(raw.slice(start, i + 1));
-          if (top.keys.has(key)) return false;
-          top.keys.add(key);
-        }
-      } else if (c === '-' || c >= '0' && c <= '9') {
-        const start = i;
-        while (i + 1 < raw.length && /[0-9eE+.-]/.test(raw[i + 1])) i++;
-        const literal = raw.slice(start, i + 1), number = Number(literal);
-        if (!Number.isFinite(number) || Object.is(number, -0)
-          || journalDecimalIdentity(literal) !== journalDecimalIdentity(JSON.stringify(number))) return false;
-      }
-    }
-    return true;
-  } catch { return false; }
 }
 
 /** Share the existing normalization authority without saving its reconstructed
