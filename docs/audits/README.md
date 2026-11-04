@@ -28,6 +28,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
+Latest Sector release: [Complete selected Sector separated from inherited Water history — 4 November 2026](2026-11-04/sector-release-main-codex.md). Same visual bytes and full implementation; successor gates remain required.
+
 Latest Sector comparison: [Muted context, clearer analytical marks and unannotated polish input — 4 November 2026](2026-11-04/sector-calm-context-codex.md). Local native draft; release evidence is separate.
 
 Latest live output review: [Three fresh AI results and Earthworks starting-image correction — 31 October 2026](2026-10-31/live-ai-map-settings-review-codex.md). Remaining live tests need the owner browser connection restored.
