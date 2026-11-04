@@ -28,7 +28,11 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
       return p.configured?{auth:{get currentUser(){const id=p.actor;return id?{uid:id}:null;}}}:null;};`);
   if (context.parentURL?.endsWith('/lib/international/grower-operations-source.ts') && specifier === '../db/queries') return data(`
     export async function myDesigns(){const p=globalThis.__growerOperationsFixture;p.queries++;return p.cloud();}`);
-  if (context.parentURL?.endsWith('/components/crops/useGrowerOperations.ts') && specifier === 'firebase/auth') return data(`
+  // The eager operations hook loads field-journal and its preference authority
+  // before leaf suites install hooks. Both observers need this same fake Auth
+  // service; the real SDK cannot subscribe to a currentUser-only fixture object.
+  if (specifier === 'firebase/auth' && (context.parentURL?.endsWith('/components/crops/useGrowerOperations.ts')
+    || context.parentURL?.endsWith('/lib/length-unit-preference.ts'))) return data(`
     export function onAuthStateChanged(_auth,callback){const p=globalThis.__growerOperationsFixture;p.auth.add(callback);return()=>p.auth.delete(callback);}`);
   return next(specifier, context);
 } });
