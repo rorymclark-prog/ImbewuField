@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
+import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { COUNTRY_PROFILES, COUNTRY_RESEARCH_QUEUE, EUROPE_RESEARCH_NOTE } from '@/lib/international/countries/registry';
 import { evaluateCountryReadiness, sourceEvidenceState } from '@/lib/international/countries/readiness';
@@ -109,5 +110,5 @@ export default function CountryReview() {
       {COUNTRY_RESEARCH_QUEUE.map((group) => <p key={group.group}><strong>{group.group}:</strong> {group.countries.join(', ')}.</p>)}
       <p>{EUROPE_RESEARCH_NOTE}</p>
     </section>
-  </main></div>;
+  </main><LimaBar /></div>;
 }

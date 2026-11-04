@@ -13,12 +13,16 @@ const activity = { fetches: 0, storageReads: 0, storageWrites: 0, events: 0 };
 Object.assign(globalThis, { __countyBulletinPanel: { React }, IS_REACT_ACT_ENVIRONMENT: true });
 const data = (source: string) => ({ shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(source) });
 // Real CountryReview state, card and resolver execute. Only unrelated navigation
-// controls, framework Link and CSS/TSX loading are controlled boundaries.
+// controls, shared help chrome, framework Link and CSS/TSX loading are controlled boundaries.
 const hooks = registerHooks({ resolve(specifier, context, next) {
   if (specifier === 'next/link') return data(`const React=globalThis.__countyBulletinPanel.React;export default function Link({children,...props}){return React.createElement('a',props,children);}`);
   if (context.parentURL?.endsWith('/components/international/countries/CountryReview.tsx')) {
     if (specifier === '@/components/MenuButton') return data(`const React=globalThis.__countyBulletinPanel.React;export default function MenuButton(){return React.createElement('button',{type:'button'},'Menu');}`);
     if (specifier === '@/components/BackControl') return data('export function useRegisterBackControl(){}');
+    // The shared help bar reads its own role preference. Keep this probe scoped to
+    // the actual country data controls, as with MenuButton and BackControl above.
+    if (specifier === '@/components/LimaBar') return data(`const React=globalThis.__countyBulletinPanel.React;export default function LimaBar(){return React.createElement('nav',{'aria-label':'Help'},React.createElement('a',{href:'/farmer?chat=1'},'Ask for help'));}`);
+
   }
   return next(specifier, context);
 }, load(url, context, next) {
