@@ -11,3 +11,5 @@
 - [Sector typography and native release-description follow-up — Codex](sector-release-contracts-codex.md)
 
 - [Supplied-reference Sector wind/rain graphics, retaining slope and contours — Codex](sector-reference-flow-codex.md)
+
+- [Zones boundary authority and compact-key source audit — Codex](zones-authority-key-codex.md)
