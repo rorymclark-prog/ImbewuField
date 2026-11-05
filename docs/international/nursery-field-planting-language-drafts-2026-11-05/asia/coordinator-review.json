@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "d645d42a2950cb838d2a7aab634be99dda40d11e",
+  "sourceFile": "../source.json",
+  "sourceSha256": "f2b7aab350df4c7043d7244ca357257bef211a40dd436db7b9465b9958f4a14d",
+  "messages": 26,
+  "pairs": 78,
+  "damagedControlsRejected": 19,
+  "notesActualWhitespaceWords": 189,
+  "files": {
+    "hi.json": {
+      "sha256": "3b7ac69a6d7c7bec7343f0942fd2090604bb8672d8f499d868c5569a9492d5fa",
+      "bytes": 11287
+    },
+    "bn.json": {
+      "sha256": "cf83c557670902ccdd3228f3ff42eff8f7d5faa81102c6be072803a1a3dee39c",
+      "bytes": 11608
+    },
+    "id.json": {
+      "sha256": "16bcee70b5146142b0aebf28eca8c43a7d3421db37663e9a2e3bcfcd90449cde",
+      "bytes": 8934
+    },
+    "review-notes.md": {
+      "sha256": "6f44a06434f7e91e0e58bc7e3da96dd76c03f94956cdab3bdf8428d78faac375",
+      "bytes": 1366
+    },
+    "status.json": {
+      "sha256": "50a80ddc314e9535aa15b89b9f2d527faef802c61dad90755487ec51a031a2e4",
+      "bytes": 994
+    }
+  },
+  "runtimeActivation": false,
+  "fluentHumanApproval": false,
+  "reviewScope": "Named drafting corrections and source/structure/literal checks, not complete semantic approval"
+}
