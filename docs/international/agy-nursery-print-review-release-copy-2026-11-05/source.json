@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "sourceKind": "coordinator-supplied-unpublished-ui-release-sentence",
+  "baseCommit": "3c05ba6b0370364acfc9fd0663aa9a2f800299a9",
+  "requestedSourceBranch": "codex/nursery-review-print-correction",
+  "provenance": "Actual permitted-owner A4 PDF QA found comparison-card page splits. Proposed conditional print description before Git adoption; not proof of fixed printed output or fluent approval.",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "messages": [
+    {
+      "key": "nurseryPrintReviewRelease.message.01",
+      "english": "Printed language reviews keep each comparison together when it fits on a page.",
+      "messageSha256": "1733d5afdcfe53f9edd9bbb1443be2ff275f43b3d16e8fd824b5947f945c6ebc"
+    }
+  ]
+}

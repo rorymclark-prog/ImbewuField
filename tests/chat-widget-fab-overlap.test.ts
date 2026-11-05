@@ -245,6 +245,8 @@ test('both language worksheets retain one in-flow help strip after their unchang
   assert.equal(printStyle.type, 'style');
   assert.match(printStyle.props.children, /^\s*@media print\s*\{/);
   assert.match(printStyle.props.children, /body:has\(\[data-language-draft-review\]\)\s*\{\s*height:\s*auto\s*!important;\s*overflow:\s*visible\s*!important;/);
+  assert.match(printStyle.props.children, /\[data-language-draft-review\]\s+\[data-nursery-draft-comparison\]\s*\{\s*break-inside:\s*avoid;\s*page-break-inside:\s*avoid;\s*\}/,
+    'the whole marked comparison stays together in print when it fits, without a global article rule');
   assert.equal(actualChildren, worksheet, 'the source/draft worksheet must be retained, not replaced by help');
   assert.equal(helpContainer.props.children.type, inlineHelp, 'use the established LimaBar so help remains available');
   assert.equal(helpContainer.props.children.props.inPlace, true, 'help must preserve the current worksheet instead of navigating away');

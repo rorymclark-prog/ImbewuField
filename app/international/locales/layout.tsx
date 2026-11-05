@@ -17,6 +17,10 @@ export default function InternationalLocaleReviewLayout({ children }: { children
     {/* Release the clipping ancestor only when printing a mounted review workspace. */}
     <style>{`@media print {
       body:has([data-language-draft-review]) { height: auto !important; overflow: visible !important; }
+      [data-language-draft-review] [data-nursery-draft-comparison] {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
     }`}</style>
     {children}
     {/* An in-flow help strip cannot cover a translation or its review/export controls. */}
