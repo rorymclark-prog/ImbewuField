@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Reference-led Sector graphics: docs/audits/2026-11-05/sector-reference-flow-release-drafts.json; UNREVIEWED machine draft.
+  "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Limmapa tsa Sector di bontsha matshwao a hlakileng ho feta a moya le pula, ha moepa le mela ya bophahamo di ntse di bonahala.",
   // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.
   "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Ditshwantsho tsa Sector di na le metsu e hlahelletseng, matshwao a maholo a letsatsi le senotlolo sa mmapa se hlakileng ho feta.",
   "Sector illustrations now show bolder terrain contours and matching key lines.": "Ditshwantsho tsa Sector jwale di bontsha mela e hlahelletseng ya bophahamo ba mobu le mela e tsamaellanang le yona senotlolong sa mmapa.",

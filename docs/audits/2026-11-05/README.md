@@ -9,3 +9,5 @@
 - [Broad filled Sector arrows and collision correction — Codex](sector-bold-arrows-codex.md)
 
 - [Sector typography and native release-description follow-up — Codex](sector-release-contracts-codex.md)
+
+- [Supplied-reference Sector wind/rain graphics, retaining slope and contours — Codex](sector-reference-flow-codex.md)

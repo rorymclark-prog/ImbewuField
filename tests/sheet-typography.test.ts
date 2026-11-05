@@ -138,7 +138,7 @@ test('exact Sector labels retain their halo while illustrated cards keep readabl
   assert.ok(legacyPainter.indexOf('fillText(') > legacyPainter.indexOf('strokeText('));
   assert.doesNotMatch(legacyPainter, /(?:fill|stroke)(?:Rect|RoundRect)|roundRect\(/);
 
-  // The previous claim banned plates in every mode. Rory approved illustrated white cards after
+  // The previous claim banned plates in every mode. Rory approved illustrated contrast cards after
   // labels disappeared into foliage on his phone. Execute both branches instead: exact labels
   // still need their halo; illustrated titles/details need contrast and their original wording.
   const tree = ts.createSourceFile('DesignGlossy.tsx', SOURCE, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);

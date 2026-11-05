@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest Sector styling — [Actual supplied-reference wind/rain motifs and retained terrain detail — 5 November 2026](2026-11-05/sector-reference-flow-codex.md). Native imagery inspected; release gates/identity follow on the PR and ledger.
+
 Latest Sector release follow-up — [Typography contracts and native update descriptions — 5 November 2026](2026-11-05/sector-release-contracts-codex.md). Broad-arrow artwork is retained; original-device free AI recovery remains unverified.
 
 Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Required release checks and normal published-host login remain open.
