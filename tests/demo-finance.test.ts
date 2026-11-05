@@ -43,6 +43,13 @@ const monthKey = (iso: string): string => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
 };
 
+// These existing fixtures contain only established Rand records. A held result
+// must fail their arithmetic checks rather than being treated as zero.
+function knownRand(value: number | null): number {
+  assert.ok(value !== null, 'ordinary Rand evidence must retain a known monetary result');
+  return value;
+}
+
 test('sample sales use researched annual prices or explicitly fictional orchard bookkeeping prices', () => {
   const { sales } = buildDemoFinance();
   assert.ok(sales.length >= 24, 'a twelve-month trading record needs a sale in most months');
@@ -102,7 +109,7 @@ test('every planned crop has yield and turnover in the current month without ove
       `${key} must show usable yield, turnover and price figures`);
   }
   const income = cashIncomeTotal(finance.sales, finance.invoices);
-  assert.ok(income > finance.expenses.reduce((sum, row) => sum + row.amount, 0),
+  assert.ok(knownRand(income) > finance.expenses.reduce((sum, row) => sum + row.amount, 0),
     'the complete example must show a positive recorded cash margin');
   for (const sale of finance.sales) {
     const invoice = finance.invoices.find(row => row.id === sale.invoice_id);
@@ -229,6 +236,6 @@ test('sample returns use the mapped beds and plots without losing or duplicating
   assert.equal(result.cards[1].sales, 0);
   assert.ok(result.cards[1].costs > 0);
   const inPeriod = (iso: string) => new Date(iso).getFullYear() === september.getFullYear() && new Date(iso).getMonth() === 8;
-  assert.equal(result.cards[2].sales + result.otherSales, cashIncomeTotal(sales.filter(s => inPeriod(s.sold_at)), invoices.filter(i => i.paidAt && inPeriod(i.paidAt))));
+  assert.equal(knownRand(result.cards[2].sales) + knownRand(result.otherSales), cashIncomeTotal(sales.filter(s => inPeriod(s.sold_at)), invoices.filter(i => i.paidAt && inPeriod(i.paidAt))));
   assert.equal(result.cards[2].costs, expenses.filter(e => inPeriod(e.spent_at)).reduce((n, e) => n + e.amount, 0));
 });

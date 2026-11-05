@@ -1,12 +1,128 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
-  // Reference-led Sector graphics: docs/audits/2026-11-05/sector-reference-flow-release-drafts.json; UNREVIEWED machine draft.
+  // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
+  "Printed language reviews keep each comparison together when it fits on a page.": "Swikambelo swa ririmi leswi gandlisiweke swi hlayisa mfaniso wun'wana na wun'wana wu ri xikan'we loko wu ringanela eka phepha.",
+  "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Matluka yo kambela ririmi ma hlayisa mpfuneto ehansi ka phepha-ntirho leswaku swi nga funengeti matsalo yo sungula.",
+  // Published current-main Sector wording and save-feedback description from docs/international/agy-nursery-save-feedback-maps-2026-11-05/source.json.
   "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Mimepe ya Sector yi komba mimfungho ya moya ni mpfula leyi nga erivaleni swinene, naswona ku voyama ni milayeni yo tlakuka swi tshamaka swi vonaka.",
-  // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.
+  "A warning about unsaved edits clears once the crop plan is saved.": "Xitsundzuxo malunghana ni ku lulamisiwa loku nga hlayisiwangiki xi hela loko pulani ya swibyariwa yi hlayisiwile.",
+  // Published current-main Sector wording from docs/audits/2026-11-05/sector-graphics-release-drafts.json.
   "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Swifaniso swa Sector swi ni miseve leyi vonakaka kahle, mimfungho leyikulu ya dyambu ni xilotlelo xa mepe lexi nga erivaleni swinene.",
   "Sector illustrations now show bolder terrain contours and matching key lines.": "Swifaniso swa Sector sweswi swi komba milayeni yo tlakuka ka misava leyi vonakaka kahle ni milayeni leyi fambelanaka na yona eka xilotlelo xa mepe.",
   "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Swifaniso swa Sector swi hlayisa mihlovo leyi fuweke, swi ni malebulu lamakulu ni milayeni yo tlakuka leyi nga erivaleni swinene.",
+  // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
+  "Saving rechecks this tab’s editing access.": "Ku hlayisa ku kambisisa nakambe mfikelelo wo lulamisa wa thembu leyi.",
+  "Compare nursery wording drafts in seven languages": "Pimanisa matsalo ya marito ya nesari hi tindzimi ta nkombo",
+  "Compare nursery wording drafts": "Pimanisa matsalo ya marito ya nesari",
+  "International reference tools → Language draft review → Nursery field planting": "Switirhisiwa swo kongomisa swa matiko ya misava → Nkambisiso wa matsalo ya tindzimi → Ku byala masin’wini ku suka eka nesari",
+  "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.": "Pimanisa Xinghezi xa nesari na matsalo ya tindzimi ta nkombo kutani u vona loko xihlovo xa swona xi lava nkambisiso wun’wana. Phepha leri ro kambisisa a ri pfumeleli vuhundzuluxi kumbe ku cinca ririmi ra tirhiso ra wena.",
+  // Unreviewed Codex BMKG research-navigation release candidates; source pairs in bmkg-navigation-release-drafts.json.
+  "Find Indonesia’s official BMKG sources": "Kuma swihlovo swa ximfumo swa BMKG swa Indonesia",
+  "Country evidence → Research priorities → Indonesia": "Vumbhoni bya tiko → Swilo leswi rhangisiwaka eka ndzavisiso → Indonesia",
+  "Open the official forecast documentation, open-data description and terms from Indonesia’s research-queue card. Source links do not enable a forecast feed or local crop advice.": "Pfula matsalwa ya ximfumo ya vuprofeta bya maxelo, nhlamuselo ya data leyi pfulekeke ni swipimelo eka khadi ra Indonesia ra ndzavisiso. Swihlanganisi swa swihlovo a swi pfuri data ya vuprofeta bya maxelo kumbe switsundzuxo swa swibyariwa swa ndhawu.",
+  // Additive unreviewed Codex release candidates; source pairs: grower-bed-windows-release-drafts.json.
+  "Plan separate availability windows for each growing space": "Pulana minkarhi yo hambana ya ku kumeka ka ndhawu yin’wana ni yin’wana yo byala",
+  "Crop plan → Automatic plan from your estimates → Your available growing space": "Pulani ya swibyariwa → Pulani ya otomatiki leyi humaka eka mipimanyeto ya wena → Ndhawu ya wena yo byala leyi kumekaka",
+  "Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.": "Engetela u tlhela u tiyisisa minkarhi yo hambana ya masiku ya mubedo kumbe xiphemu xa nsimu lexi hlayisiweke. Pulani a yi tirhisi swivandla leswi nga phakathi ka minkarhi naswona xirhendzevutana xin’wana ni xin’wana xa xibyariwa xi fanele ku helela eka nkarhi wun’we; ku tirhisiwa loku nga kona ka ha kamberiwa.",
+  "Import field outlines from Google Earth.": "Nghenisa mindzilekano ya masimu leyi humaka eka Google Earth.",
+  "Review imported field outlines": "Kambisisa mindzilekano ya masimu leyi nghenisiweke",
+  "Design Studio → Planting → Import field outlines": "Design Studio → Ku byala → Nghenisa mindzilekano ya masimu",
+  "Choose a local KML file, review and select distinct outlines, then add them as new fields. Configure beds or open ground afterwards; map-reference locations are not surveyed boundaries.": "Hlawula fayili ya KML leyi nga eka xitirhisiwa xa wena, kambisisa kutani u hlawula mindzilekano yo hambana, kutani u yi engetela yi va masimu lamantshwa. Endzhaku lunghisa timbhedwa to byala (beds) kumbe nsimu leyi pfulekeke; tindhawu ta le mepeni a hi mindzilekano leyi pimiweke hi nkambisiso wa misava (survey).",
+  // Integrated exact-source candidate descriptions; fluent-review status unchanged.
+  "Export saved field layouts for Google Earth.": "Rhumerisa maakanyelo ya masimu lama hlayisiweke eka Google Earth.",
+  "Export saved fields": "Rhumerisa masimu lama hlayisiweke",
+  "Design Studio → Planting → Field blocks": "Design Studio → Ku byala → Swiyenge swa masimu",
+  "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.": "Hlawula nsimu yin'we kumbe masimu hinkwawo, kutani u kopa mindzilekano leyi hlayisiweke, timbhedwa to byala (beds) na milayeni ya tindlela tanihi KML. Maswayi a swi bohi; tindhawu ta le mepeni a hi mindzilekano leyi pimiweke hi nkambisiso wa misava (survey).",
+  "Enter your crop estimates in metric or imperial units.": "Nghenisa swipimanyeto swa wena swa swibyariwa hi tiyuniti ta metric kumbe ta imperial.",
+  "Check saved bed measurements before reviewing capacity.": "Kambisisa mimpimo ya timbhedwa to byala leyi hlayisiweke u nga si kambisisa vuswikoti bya tona.",
+  "Reload changed estimates before saving over newer values.": "Layicha nakambe swipimanyeto leswi cinceke u nga si hlayisa u siva mimpimo leyi pfuxetiweke sweswinyana.",
+  "Choose units for your own estimates": "Hlawula tiyuniti ta swipimanyeto swa wena",
+  "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Hlawula m² na kg kumbe ft² na lb eka swipimanyeto swa wena swa ku tala ka swimilana endhawini ni ntiko wa ntshovelo. Kambisisa mimpimo leyi hlayisiweke, kutani u kambisisa tinhlayo ni masiku; leswi i swipimanyeto leswi kunguhatiweke, a hi switsundzuxo swo rima swa le ndhawini leswi tiyisisiweke.",
+  "New grower accounts can save personal designs without joining an organisation.": "Tiakhawunti letintshwa ta varimi ti nga hlayisa tipulani ta tona handle ko joyina nhlangano.",
+
+  // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
+  "Keep editing nursery equipment and buyer targets after a confirmed save.": "Yana mahlweni u hlela switirhisiwa swa xirhapa xa swimilana ni swikongomelo swa vaxavi endzhaku ka loko ku hlayisiwa ku tiyisisiwile.",
+  "Continue nursery editing": "Yana mahlweni u hlela xirhapa xa swimilana",
+  "After a confirmed equipment save, continue entering your next container. Unknown sizes and stock stay unknown.": "Endzhaku ka loko ku hlayisiwa ka switirhisiwa ku tiyisisiwile, yana mahlweni u nghenisa xibye xa wena lexi landzelaka. Vukulu ni nhlayo ya switirhisiwa leswi nga tiviwiki swi ya mahlweni swi nga tiviwi.",
+  "Continue buyer-target editing": "Yana mahlweni u hlela swikongomelo swa vaxavi",
+  "After a confirmed target save, continue entering your next buyer target. Targets remain planned demand, not recorded sales or harvest.": "Endzhaku ka loko ku hlayisiwa ka xikongomelo ku tiyisisiwile, yana mahlweni u nghenisa xikongomelo xa wena lexi landzelaka xa muxavi. Swikongomelo swi ya mahlweni swi ri swilaveko leswi kunguhatiweke, ku nga ri ku xavisa kumbe ntshovelo lowu rhekhodiweke.",
+  "See where your own dated crop plan can review nursery requirements.": "Vona laha pulani ya wena ya swibyariwa leyi nga ni masiku yi nga kambisisaka swilaveko swa xirhapa xa swimilana.",
+  "Review nursery requirements": "Kambisisa swilaveko swa xirhapa xa swimilana",
+  "For a saved measured growing space, review proposed batches from your own dates and inputs. Equipment entries alone do not establish dated availability or local crop approval.": "Eka ndhawu yo byala leyi pimiweke ni ku hlayisiwa, kambisisa mintlawa leyi ringanyetiweke hi ku ya hi masiku ya wena ni vuxokoxoko bya wena. Ku nghenisa switirhisiwa ntsena a swi tiyisisi ku kumeka hi masiku yo karhi kumbe ku pfumeleriwa ka swibyariwa endhawini ya ka n’wina.",
+  "See a welcome for small growers, market gardens and community projects.": "Vona ku amukelwa ka varimi lavatsongo, swirhapa swo byala swo xavisa ni tiphurojeke ta vaaki.",
+  "Start with your growing space": "Sungula hi ndhawu ya wena yo byala",
+  "Home → Map and Production plan": "Ekaya → Mepe ni kunguhato wa vuhumelerisi",
+  "Use your measured growing space and your own estimates. Regional reference coverage varies; choosing a country does not approve local crop advice.": "Tirhisa ndhawu ya wena yo byala leyi pimiweke ni swipimanyeto swa wena. Ku kumeka ka swikombiso swa swifundza swa hambana; ku hlawula tiko a swi pfumeleli switsundzuxo swa swibyariwa swa ndhawu ya ka n’wina.",
+  "See when local design advice needs your saved site and current country details.": "Vona leswaku switsundzuxo swa pulani ya ndhawu swi lava rini ndhawu ya wena leyi hlayisiweke ni vuxokoxoko bya tiko bya sweswi.",
+  "Distinguish advice about the original South African sample from your own drawing.": "Hambanisa switsundzuxo leswi khumbaka sampulu yo sungula ya Afrika-Dzonga ni xifaniso xa wena.",
+  "Check the design advice basis": "Kambela xisekelo xa switsundzuxo swa pulani",
+  "Design Studio → Lima": "Xitudiyo xo pulana → Lima",
+  "Open your saved design. Local tips use the existing South African references only when the current saved-site context supports them. Country confirmation does not approve local farming advice; your drawing stays available when advice is held.": "Pfula pulani ya wena leyi hlayisiweke. Switsundzuxo swa ndhawu swi tirhisa swikombiso leswi nga kona swa Afrika-Dzonga ntsena loko vuxokoxoko bya sweswi bya ndhawu leyi hlayisiweke byi swi seketela. Ku tiyisisa tiko a swi pfumeleli switsundzuxo swa vurimi swa ndhawu; xifaniso xa wena xi ya mahlweni xi kumeka loko switsundzuxo swi yimisiwile.",
+  "Review the original sample": "Kambisisa sampulu yo sungula",
+  "Tour → Plan the growing season": "Riendzo → Kunguhata nguva yo byala",
+  "Open the growing-season stop and choose All tools to see the sample advice control. It names the original sample layout; a request does not analyse your sample edits.": "Pfula xiteji xa nguva yo byala kutani u hlawula Switirhisiwa Hinkwaswo (All tools) leswaku u vona vulawuri bya switsundzuxo swa sampulu. Byi boxa pulani ya sampulu yo sungula; xikombelo a xi xopaxopi ku cinca loku u ku endleke eka sampulu.",
+  // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
+  "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Swilawuri swa tiyuniti ta xirhapa xa swimilana ni ta ntshovelo swi tshamile swi ri kona loko pulani leyi fanaka yi hlayisiwa nakambe.",
+  "See when you can reload saved settings or need to reopen the crop plan.": "Vona nkarhi lowu u nga tlhelaka u layicha swiyimiso leswi hlayisiweke kumbe loko u fanele ku pfula pulani ya swibyariwa nakambe.",
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/ts.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Nghenisa swikongomelo swa ntshovelo swa vhiki na vhiki ni ntiko wa wena wa maphakete ya ntshovelo hi tikilograma (kg) kumbe tiphawundi ta ntiko (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Hlayisa vuxokoxoko bya swilaveko swa vaxavi lebyi u byi ngheniseke byi tshama byi ri kona loko ku hlayisiwa ka byona ku nga koteki ku tiyisisiwa.",
+  "Choose harvest weight units": "Hlawula tiyuniti ta ntiko wa ntshovelo",
+  "Production plan → Harvest targets": "Kunguhato ra vuhumelerisi → Swikongomelo swa ntshovelo",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Hlawula tikilograma (kg) kumbe tiphawundi ta ntiko (lb), nghenisa xikongomelo xa wena xa ntshovelo kumbe ntiko wa wena wa phakete ya ntshovelo, kutani u hlayisa. Mintiko ya maphakete leyi nga tiviwiki yi tshama yi nga ri kona; nhlayo hinkwayo ya swikongomelo i vupimanyisi byo kunguhata ntsena.",
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Nghenisa mimpimo ya tithireyi ta xirhapa xa swimilana hi tisentimitara (cm) kumbe ti-inch (in).",
+  "Enter usable nursery surface in square metres or square feet.": "Nghenisa ndhawu leyi tirhisekaka ya xirhapa xa swimilana hi timitara ta xikwere (m²) kumbe tifiti ta xikwere (ft²).",
+  "Keep nursery entries until their save is confirmed.": "Tshika leswi nghenisiweke swa xirhapa xa swimilana swi ri kona ku fikela loko ku hlayisiwa ka swona ku tiyisisiwa.",
+  "Choose nursery units": "Hlawula tiyuniti ta xirhapa xa swimilana",
+  "Production plan → Nursery planner": "Kunguhato wa vuhumelerisi → Xikunguhati xa xirhapa xa swimilana",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Hlawula tiyuniti ta wena, nghenisa vukulu bya tithireyi ni ndhawu yo mirisa leyi tirhisekaka, kutani u hlayisa. Mimpimo ya switirhisiwa leyi nga tiviwiki yi tshama yi nga tsariwanga nchumu; nhlayo ya switirhisiwa ya zero yi tshama yi ri zero.",
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/ts.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Nghenisa mimpimo ya timbhedwa to byala (beds) ni tindlela ta buloko ya nsimu hi timitara kumbe hi swikondzo (feet).",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Tshika mimpimo leyi hlayisiweke yi nga cincangi loko u cinca yuniti leyi kombiwaka.",
+  "Choose field-block units": "Hlawula tiyuniti ta buloko ya nsimu",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Hlawula nsimu, hlawula timitara kumbe swikondzo (feet), nghenisa mimpimo ya wena kutani u kambisisa timbhedwa to byala (beds) u nga si hlayisa. Masimu lama pfulekeke ma hlayisa ndhawu ya wona ya polygon handle ko endla timbhedwa to byala (beds).",
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Hlayisa tipulani letintshwa ta swimilana ti hlayisekile loko xiphemu xa khale xa apu xi hlayisa khopi ya xona.",
+  "Review retained copies before continuing with your current crop plan.": "Kambisisa tikhopi leti hlayisiweke u nga si ya emahlweni hi pulani ya wena ya sweswi ya swimilana.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Ringeta nakambe ku hundzisela ntirho wa swimilana wa muendzi lowu kavanyetiweke handle ko siva ntirho wa akhawunti lowu hlayisiweke.",
+  "Review crop-plan storage": "Kambisisa vuhlayiselo bya pulani ya swimilana",
+  "Production plan → Crop-plan storage": "Pulani ya vuhumelerisi → Vuhlayiselo bya pulani ya swimilana",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Kambela xitiviso xa vuhlayiselo. Loko xiphemu xa khale xi cincile khopi ya xona, dawuniloda tikhopi hatimbirhi u ti kambisisa u nga si hlawula ku hlayisa pulani ya wena ya sweswi.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/ts.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Hlayisa pulani leyi kambisisiweke leyi humaka eka swipimanyeto swa wena swo byala.",
+  "Check unresolved crop records before using a finance forecast.": "Kambisisa tirhekhodo ta swimilana leti nga si tlhantlhiwaka u nga si tirhisa xipimanyeto xa timali.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Hlayisa swipimanyeto swo byala leswi hlayisiweke na malulamisele ya vuhlayiselo bya swimilana loko u nghena eka akhawunti.",
+  "Save your reviewed plan": "Hlayisa pulani ya wena leyi kambisisiweke",
+  "Production plan → Automatic plan from your estimates": "Pulani ya vuhumelerisi → Pulani yo tiendlekela hi ku ya hi swipimanyeto swa wena",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Kambisisa xiringanyeto lexi heleleke, hlayisa mindzhendzheleko hinkwayo ya xona leyi kunguhatiweke, kutani u pfula ntirho lowu nga na masiku.",
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/ts.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Landzela mirhendzeleko yo rima leyi hlayisiweke hi masiku ya yona lama kunguhatiweke hi ku kongoma.",
+  "Check current designs before ticking work or exporting dates.": "Kambela tidizayini ta sweswi u nga si fungha mintirho kumbe ku humesa masiku.",
+  "Keep own crop estimates separate from catalogue print advice.": "Hlayisa mimpimo ya wena ya swibyariwa yi hambanile ni switsundzuxo leswi kandziyisiwaka swa khathalogo.",
+  "Review your dated work": "Kambela mintirho ya wena leyi nga ni masiku",
+  "Task Planner → Dated work from your estimates": "Mupulani wa Mintirho → Mintirho leyi nga ni masiku ku suka eka mimpimo ya wena",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Pfula Mupulani wa Mintirho leswaku u kambela masiku ya mintirho ku suka eka mimpimo ya wena yo rima leyi hlayisiweke.",
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Kambela maendlelo ya swibyariwa lama tiendlelaka kusuka eka mimpimo ya wena ya matirhele na swikongomelo swa vaxavi leswi hlayisiweke.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Kambisisa switreyi swa nersari leswi nga na masiku na swilaveko swa xitsandza u nga si kopa nkambisiso wa wena.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Hlayisa mimpimo ya wena n'wini ya matirhele u tlhela u kambela vuswikoti na masiku ya mibhedhi leyi pimiweke.",
+  "Review a crop plan from your estimates": "Kambela pulani ya swibyariwa kusuka eka mimpimo ya wena",
+  "Crop planner → Automatic plan from your estimates": "Mupulani wa swibyariwa → Pulani leyi tiendlelaka kusuka eka mimpimo ya wena",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Kambela dizayini ya wena leyi hlayisiweke, tiyisisa vukona u tlhela u fambisanisa swikongomelo swa vaxavi na mimpimo ya wena ya matirhele. Kambela mirhendzeleko leyi ringanyetiweke na swilaveko swa nersari; swibyariwa swa wena leswi hlayisiweke a swi cinciwi.",
+  "Review your growing estimates": "Kambela mimpimo ya wena ya matirhele",
+  "Crop planner → Your growing estimates": "Mupulani wa swibyariwa → Mimpimo ya wena ya matirhele",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Nghenisa mianakanyo ya wena n'wini, hlawula mubhedhi lowu pimiweke u tlhela u kambela nhlayo. Mintsengo leyi nga hava nchumu yi tshama yi kayivela; mbuyelo i mpimo ntsena, ku nga ri mpfumelelo wa vurimi bya le ndhawini.",
+  // Country context: docs/international/agy-release-copy-2026-11-03/ts.json; UNREVIEWED AI candidates.
+  "Confirm a mapped site’s country before using its crop-planning guidance.": "Tiyisisa tiko ra ndhawu leyi mepiweke u nga si tirhisa nkongomiso wa yona wo kunguhata swibyariwa.",
+  "Keep your sowing records and nursery equipment while local planning is unavailable.": "Hlayisa matsalwa ya wena yo byala na switirhisiwa swa narsari loko kungu ra laha kaya ri nga si kumeka.",
+  "Confirm your site country": "Tiyisisa tiko ra ndhawu ya wena",
+  "Crop planner → Site country and region": "Mukunguhati wa swibyariwa → Tiko ra ndhawu na xifundzha",
+  "Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.": "Pfula ndhawu ya wena leyi mepiweke kutani u tiyisisa vuxokoxoko bya tiko ra yona. Ku tiyisisa tiko a swi pasisi switsundzuxo swo rima swa xifundzha lexintshwa.",
+  "Review an unmapped reference": "Kambisisa xisekelo lexi nga mepiwangiki",
+  "Crop planner → Planning without a mapped site": "Mukunguhati wa swibyariwa → Ku kunguhata handle ka ndhawu leyi mepiweke",
+  "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Eka bedi ro vumbiwa kumbe dizayini ya laha kaya, hlawula kumbe u susa xisekelo xo komba xa Afrika-Dzonga hi ku kongoma. Nhlawulo wu ta sala na ndhawu yoleyo yo tirhela.",
   // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
   "Important updates include a short animation you can pause and replay.": "Swintshuxeto swa nkoka swi na xifaniso xo koma lexi fambaka lexi u nga xi yimisaka ni ku xi tlanga nakambe.",
   // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
@@ -329,5 +445,67 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Ringeta mepe wa AI lowu sasekisiweke",
   "Design Studio → Glossy": "Xitudiyo xo pulana → Mepe lowu sasekisiweke",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Pfula purasi leri hlayisiweke, hlawula phepha kutani u hlawula AI Polished. Mepe wun’wana ni wun’wana lowu endliwaka wa hakeriwa.",
+  // Own nursery review and preparation release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Review your own nursery space in square metres or square feet.": "Kambisisa ndhawu ya wena ya xirhapa xa swimilana hi timitara ta xikwere (m²) kumbe tifiti ta xikwere (ft²).",
+  "Prepare grouped seedling and seed counts from your proposed crop plan.": "Lunghiselela tinhlayo ta swimilana ni ta mbewu leti hlengeletiweke hi mintlawa, kusuka eka pulani ya wena ya swibyariwa leyi ringanyetiweke.",
+  "Review nursery preparation": "Kambisisa malunghiselelo ya xirhapa xa swimilana",
+  "Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.": "Kambisisa switirhisiwa swa xirhapa xa swimilana leswi nga ni masiku lama boxiweke, kambisisa mintlawa leyi kombisiweke ya swimilana swo ya byariwa, kutani u dawuniloda phepha ra malunghiselelo. Tinhlayo i swipimanyeto swa ku pulana; swilaveko leswi nga tivekiki swi sala swi nga tiveki.",
+  // Own nursery preparation PDF release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Download a printable nursery preparation sheet from your own crop proposal.": "Dawuniloda phepha leri nga kandziyisiwaka ra malunghiselelo ya xirhapa xa swimilana kusuka eka pulani ya wena ya swibyariwa leyi ringanyetiweke.",
+  "Print nursery preparation": "Kandziyisa malunghiselelo ya xirhapa xa swimilana",
+  "Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.": "Kambisisa leswi u swi ngheniseke sweswi swa xirhapa xa swimilana, kutani u dawuniloda PDF ya malunghiselelo. Yi hambanisa tinhlayo leti kunguhatiweke, swilaveko leswi nga helelangiki ni mintsengo leyi nga tivekiki eka ku byala loku voniweke kumbe xitoko lexi voniweke.",
+  // Planned nursery batch cards release (lib/release-notes.ts): UNREVIEWED Codex AI drafts; exact English source retained.
+  "Print planned nursery batch cards with dates and separate seedling counts.": "Kandziyisa makhadi ya mintlawa leyi kunguhatiweke ya xirhapa xa swimilana, lama nga ni masiku ni tinhlayo ta swimilana leti hambanisiweke.",
+  "Print planned batch cards": "Kandziyisa makhadi ya mintlawa leyi kunguhatiweke",
+  "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Tirhisa xiringanyeto xa xirhapa xa swimilana lexi kambisisiweke ku kandziyisa makhadi ya mintlawa. Tinhlayo ni masiku swi tama swi ri leswi kunguhatiweke; nongonoko a wu hlayisi tinotsi ta ku byala ni ta ntlawa wa mbewu leti tsariweke hi voko.",
+  // Field-observation release: UNREVIEWED Codex AI drafts; exact sources in docs/international/grower-observation-release-drafts.json.
+  "Record your own field observations from planned tasks.": "Rekhoda leswi u swi voneke ensin’wini ya wena ku suka eka mintirho leyi kunguhatiweke.",
+  "Record a field observation": "Rekhoda leswi u swi voneke ensin’wini",
+  "Task Planner → Dated work → Record what happened": "Mupulani wa Mintirho → Mintirho leyi nga ni masiku → Rekhoda leswi humeleleke",
+  "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Hlawula siku leri u voneke swo karhi ha rona, tsala notsi kutani u yi tiyisisa. Jenali yi hlayisa xikombo xa ntirho lowu kunguhatiweke hi ku hambana; tirhekhodo ta nxaxamelo wo kambela, ntshovelo, xitoko ni ku xavisa a ti cinci.",
+  // Invoice-currency release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-currency-release-drafts.json.
+  "Choose the currency for each new invoice.": "Hlawula muxaka wa mali eka invoyisi yin’wana ni yin’wana leyintshwa.",
+  "Keep invoice currencies clear": "Endla leswaku mixaka ya mali ya ti-invoyisi yi va erivaleni",
+  "Invoice → Currency for this invoice": "Invoyisi → Muxaka wa mali wa invoyisi leyi",
+  "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Hlawula muxaka wa mali lowu pfumelelaniweke na muxavi. Ti-invoyisi leti hlayisiweke ti hlayisa muxaka wa tona wa mali; mintsengo a yi hundzuluxeriwi eka mali yin’wana, naswona mixaka yin’wana ya mali yi hlayisiwa yi hambanile ni mintsengo ya tirhandi.",
+  // Recorded-price release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-price-history-release-drafts.json.
+  "Choose a recorded invoice price": "Hlawula nxavo lowu rhekhodiweke eka invoyisi",
+  "Invoice → Choose a recorded invoice price": "Invoyisi → Hlawula nxavo lowu rhekhodiweke eka invoyisi",
+  "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Hlawula nxavo wa invoyisi leyi hlayisiweke hi muxaka lowu fanaka wa mali, kutani u wu tiyisisa eka ku xavisa loku. Ku cinca nxavo wa layini ntsena; hlayisa invoyisi loko u lunghekile.",
+  // Invoice-summary release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-summary-release-drafts.json.
+  "Review saved invoice amounts by currency": "Kambisisa mali ya tiinvoyisi leti hlayisiweke hi muxaka wa mali",
+  "Invoice → Saved → Summary currency": "Invoyisi → Leti hlayisiweke → Muxaka wa mali wa nkatsakanyo",
+  "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Hlawula muxaka wun’we wa mali ku kambisisa mali ya tiinvoyisi leti humesiweke, leti rhekhodiweke ti hakeriwile ni leti nga hakeriwangiki eka xitirhisiwa lexi. Leti i tirhekhodo ta tiinvoyisi, a hi tirhisiti ta le bangi leti tiyisisiweke, mali hinkwato leti ngheneke kumbe mpindzulo.",
+  // NWS reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nws-reference-release-drafts.json.
+  "Check a public US forecast reference": "Kambela nkombiso wa maxelo lama rindzeriweke ya US",
+  "Country evidence → United States → Washington forecast": "Vumbhoni bya tiko → United States → Maxelo lama rindzeriweke ya Washington",
+  "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Kombela nkombiso wa mani na mani wa maxelo lama rindzeriweke ya Washington eka National Weather Service. Minkarhi ya xihlovo, mimpimo ya Celsius ni leswi nga tivekiki swi tshamaka swi vonaka; leswi a swi cinci masiku ya swibyariwa kumbe ku pasisa switsundzuxo swa ndhawu.",
+  // Nursery-batch-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-batch-reference-release-drafts.json.
+  "Keep references for saved nursery batches": "Hlayisa tirheferense ta mintlawa ya nursery leyi hlayisiweke",
+  "Crop plan → Saved planned nursery batches": "Pulani ya swibyariwa → Mintlawa ya nursery leyi pulaniweke yi tlhela yi hlayisiwa",
+  "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Engetela mavito ya tinxaka ta wena, tirheferense ta mintlawa ya mbewu ni mintlawa yo kurisa swimilana eka ntlawa wun’wana ni wun’wana lowu pulaniweke wu tlhela wu hlayisiwa, kutani u kambisisa swilaveko swa nursery kumbe u dawuniloda maphepha ya ntirho. Tilebulu leti a ti rhekhodi ku byala loku voniweke kumbe xitoko lexi nga kona.",
+  // KMD-Kiambu-link release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/kmd-kiambu-link-release-drafts.json.
+  "Find official Kiambu bulletin links": "Kuma swihlanganisi swa ximfumo swa swiviko swa Kiambu",
+  "Country evidence → Kenya → County bulletin links": "Vumbhoni bya tiko → Kenya → Swihlanganisi swa swiviko swa county",
+  "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.": "Hlawula Kiambu ku pfula tluka ra ximfumo ra xiviko leri kamberiweke kumbe PDF ya xona ni ku kuma swiviko swin’wana swa KMD. Masiku ya xihlovo ni ku nga tiveki ka leswaku mahungu ma ha ri mantshwa swi sala swi vonaka; swihlanganisi leswi a swi pfuxeti switsundzuxo swa swibyariwa.",
+  // EA-rainfall-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/ea-rainfall-reference-release-drafts.json.
+  "Check an Environment Agency rainfall reference": "Kambela rheferense ya mpfula ya Environment Agency",
+  "Country evidence → United Kingdom → Public rainfall network sample": "Vumbhoni bya tiko → United Kingdom → Nkombiso wa netiweke ya mpfula ya mani na mani",
+  "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.": "Kombela nkombiso wun’we wa netiweke ya mani na mani laha mpfula leyi vikiweke, mimpimo leyi nga riki kona ni minkarhi ya xihlovo swi hlayisiwaka swi hambanile. Rheferense leyi a yi pimi mpfula epurasini ra wena kumbe ku cinca switsundzuxo swa swibyariwa.",
+  // Nursery-sowing release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-sowing-release-drafts.json.
+  "Record nursery sowing in your field journal": "Rhekhoda ku byala eka nursery eka jenali ya wena ya nsimu",
+  "Crop planner → Saved planned nursery batches": "Mupulani wa swibyariwa → Mintlawa ya nursery leyi pulaniweke yi tlhela yi hlayisiwa",
+  "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rhekhoda siku leri ku byala ku humeleleke ha rona ni, loko u lava, nhlayo ya tithireyi leti tirhisiweke hi nomboro leyi heleleke eka ntlawa lowu hlayisiweke. Kambisisa rhekhodo ya leswi u swi voneke ni tilebulu ta tirheferense leti rhekhodiweke na yona eka jenali ya wena ni le ka tifayili leti dawunilodiweke.",
+  // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
+  "Record nursery plant counts in your journal": "Rhekhoda nhlayo ya swimilana swa nursery eka jenali ya wena",
+  "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rhekhoda nhlayo ya swimilana leswi u swi voneke eka ntlawa wa nursery lowu hlayisiweke, xiteji lexi u xi kambeleke ni leswaku u kambele ntlawa hinkwawo kumbe xiphemu xa wona. Hlayisa leswi u swi voneke eka jenali swi hambanile ni swilaveko leswi pulaniweke ni xitoko.",
+  // INMET link release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/inmet-alert-release-drafts.json.
+  "Find official INMET weather-alert sources": "Kuma swihlovo swa ximfumo swa switsundzuxo swa maxelo swa INMET",
+  "Country evidence → Brazil → Official weather-alert links": "Vumbhoni bya tiko → Brazil → Swihlanganisi swa ximfumo swa switsundzuxo swa maxelo",
+  "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Pfula webusayiti ya switsundzuxo swa maxelo ya INMET, portal kumbe xihlanganisi xa RSS. Swihlanganisi swa swihlovo swi kamberiwile; feed, xiyimo xa switsundzuxo swa ndhawu ni swipimelo swa ku tlhela u tirhisa a swi si tiyisisiwa. Swihlanganisi leswi a swi cinci switsundzuxo swa swibyariwa.",
+  // Nursery field-planting release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-field-planting-release-drafts.json.
+  "Record a nursery planting in its field bed": "Rhekhoda ku byala ka nursery eka mubedo wa yona ensinwini",
+  "Crop planner → Saved planned nursery batches → Record field planting": "Mupulani wa swibyariwa → Mintlawa ya nursery leyi kunguhatiweke leyi hlayisiweke → Rhekhoda ku byala ensinwini",
+  "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rhekhoda siku ni nhlayo ya swimilana leswi u swi vekeke eka mubedo lowu averiweke ku byala ka nursery loku kamberiweke. Hlayisa rhekhodo ya leswi voniweke eka jenala yi hambanile ni siku leri kunguhatiweke, xitoko xa nursery ni ku hanya ka swimilana.",
 };
 export default copy;

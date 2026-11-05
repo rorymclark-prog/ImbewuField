@@ -1,3 +1,4 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { mediaSHAForEarlierSoilProof } from './water-reviewed-deck-history-checks.ts';
 import { soilDeckBeforeOrdinary, soilMediaBeforeOrdinary } from './soil-reviewed-ordinary-history-checks.ts';
 import { validateAndRewindSoilOrdinary } from './soil-ordinary-native-history-checks.ts';
@@ -67,7 +68,7 @@ test('Soil deck replacements bind complete current learner paragraphs to exact n
   }
 });
 
-test('only the thirty-four selected Soil frames redraw and all other course media retain exact bytes', () => {
+test('only the thirty-four selected Soil frames redraw and all other course media retain exact bytes', () => withBlindReviewedCorrectionReadScope(() => {
   const media = JSON.parse(readFileSync('docs/media/soil-learner-fuller-2026-10-05/frames.json', 'utf8'));
   assert.equal(media.changed.length, 34);
   assert.equal(media.unchangedSoilRegionalFrames, 26);
@@ -84,4 +85,4 @@ test('only the thirty-four selected Soil frames redraw and all other course medi
   for (const row of media.preserved) {
     assert.equal(mediaSHAForEarlierSoilProof(row.path), row.sha256, `${row.path}: preserve existing offline media or validate its later reviewed Water replacement`);
   }
-});
+}));

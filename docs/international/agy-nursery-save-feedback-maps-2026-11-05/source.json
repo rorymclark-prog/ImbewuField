@@ -1,0 +1,71 @@
+{
+  "base": "4c5304ce81b84f03e935a914918ff0364cb56559",
+  "incomingMain": "06315a74ae03d6cb771c659776e09ce47f1d4a2b",
+  "method": "exact-source-reconciliation",
+  "locales": {
+    "st": {
+      "path": "lib/update-copy-locales/st.ts",
+      "baselineSha256": "fa679971b0894500cb791d576b2fef081d6be4b3044d575c24f3c549bb8e6fbf",
+      "baselinePairs": 430,
+      "additions": [
+        {
+          "english": "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.",
+          "translation": "Limmapa tsa Sector di bontsha matshwao a hlakileng ho feta a moya le pula, ha moepa le mela ya bophahamo di ntse di bonahala."
+        },
+        {
+          "english": "A warning about unsaved edits clears once the crop plan is saved.",
+          "translation": "Temoso e mabapi le diphetoho tse sa bolokwang e a hlakoha hang ha moralo wa dijalo o bolokilwe."
+        }
+      ],
+      "expectedPairs": 432
+    },
+    "ts": {
+      "path": "lib/update-copy-locales/ts.ts",
+      "baselineSha256": "e6ea7559f59fd8192324b87215dbbafcc0102fb7e0beacd5c5c57aa04489e689",
+      "baselinePairs": 430,
+      "additions": [
+        {
+          "english": "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.",
+          "translation": "Mimepe ya Sector yi komba mimfungho ya moya ni mpfula leyi nga erivaleni swinene, naswona ku voyama ni milayeni yo tlakuka swi tshamaka swi vonaka."
+        },
+        {
+          "english": "A warning about unsaved edits clears once the crop plan is saved.",
+          "translation": "Xitsundzuxo malunghana ni ku lulamisiwa loku nga hlayisiwangiki xi hela loko pulani ya swibyariwa yi hlayisiwile."
+        }
+      ],
+      "expectedPairs": 432
+    },
+    "ve": {
+      "path": "lib/update-copy-locales/ve.ts",
+      "baselineSha256": "f206f328c5e8d006aba64880a7d9c217a6cd558be5881961c9e294151d94e87f",
+      "baselinePairs": 430,
+      "additions": [
+        {
+          "english": "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.",
+          "translation": "Mimepe ya Sector i sumbedza zwiga zwa muya na mvula zwi re khagala nga u engedza, ngeno mutevhe na mitalo ya vhulapfu zwi tshi dzula zwi tshi vhonala."
+        },
+        {
+          "english": "A warning about unsaved edits clears once the crop plan is saved.",
+          "translation": "Tsevho nga ha nzudzanyo dzi songo vhulungwaho i a fhela musi pulane ya zwimela yo no vhulungwa."
+        }
+      ],
+      "expectedPairs": 432
+    },
+    "zu": {
+      "path": "lib/update-copy-locales/zu.ts",
+      "baselineSha256": "ea6c42ffeba4168fa46de119b5d9172494fd1b445363afcb6a8262c365c72e1d",
+      "baselinePairs": 430,
+      "additions": [
+        {
+          "english": "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.",
+          "translation": "Amamephu eSector abonisa izimpawu zomoya nezemvula ezicace kakhudlwana, kanti umthambeka nemigqa yokuphakama kuhlala kubonakala."
+        },
+        {
+          "english": "A warning about unsaved edits clears once the crop plan is saved.",
+          "translation": "Isexwayiso mayelana nezinguquko ezingalondoloziwe siyaphela uma uhlelo lwezitshalo selulondoloziwe."
+        }
+      ],
+      "expectedPairs": 432
+    }
+  }
+}

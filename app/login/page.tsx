@@ -393,8 +393,8 @@ function LoginPageInner() {
 
         {/* Trust footer */}
         <div className="text-center mt-3">
-          <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', letterSpacing: '0.01em' }}>
-            {t('loginTrustFooter')}
+          <p lang="en" className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', letterSpacing: '0.01em' }}>
+            {t('loginGrowerFooter')}
           </p>
         </div>
       </div>

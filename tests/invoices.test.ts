@@ -1,9 +1,10 @@
-import test from 'node:test';
+import test, { after, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
 import { readFileSync } from 'node:fs';
 
-import type { SavedInvoice } from '../lib/invoices.ts';
+import type { SavedInvoice, InvoiceBookRead, InvoiceMutationResult } from '../lib/invoices.ts';
+import type { InvoiceStorageLocks } from '../lib/invoice-storage.ts';
 import type { SalesLog } from '../lib/db/types.ts';
 import { invoiceDateInput, invoiceDateFromInput, invoiceEntryError, recordedSaleInvoiceError } from '../lib/invoice-entry.ts';
 
@@ -19,11 +20,14 @@ export const isBackendConfigured = () => Boolean(harness.currentUid);
 const hooks = registerHooks({
   resolve(specifier, context, nextResolve) {
     if (
-      context.parentURL?.includes('/lib/account-local-storage.ts')
+      (context.parentURL?.includes('/lib/account-local-storage.ts') || context.parentURL?.includes('/lib/length-unit-preference.ts'))
       && specifier === './firebase/init'
     ) {
       return { url: fakeFirebaseInit, shortCircuit: true };
     }
+    if (context.parentURL?.includes('/lib/length-unit-preference.ts') && specifier === 'firebase/auth') return {
+      shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent('export const onAuthStateChanged=()=>()=>{};'),
+    };
     return nextResolve(specifier, context);
   },
 });
@@ -42,7 +46,9 @@ const {
   saveNextInvoiceNumber,
   setInvoiceStatus,
   stageInvoiceSaleLink, loadPendingInvoiceLinks, clearPendingInvoiceLink,
+  readInvoiceBook, releaseInvoiceBook, invoiceBookIsCurrent,
 } = await import('../lib/invoices.ts');
+const storage = await import('../lib/invoice-storage.ts');
 const {
   CROP_ENTRY_OPTIONS,
   cropEntryOption,
@@ -59,6 +65,35 @@ const {
 } = await import('../lib/invoice-sales.ts');
 const { accountLocalStorageKey } = await import('../lib/account-local-storage.ts');
 hooks.deregister();
+
+class Locks implements InvoiceStorageLocks {
+  held = new Set<string>();
+  async request<T>(name: string, _options: { mode: 'exclusive'; ifAvailable: true }, run: (lock: unknown | null) => T | PromiseLike<T>): Promise<T> {
+    if (this.held.has(name)) return run(null);
+    this.held.add(name); try { return await run({ name }); } finally { this.held.delete(name); }
+  }
+}
+const loadedBooks = new Set<InvoiceBookRead>();
+const globalsBefore = new Map(['window', 'localStorage', 'navigator'].map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+beforeEach(async () => {
+  for (const book of loadedBooks) releaseInvoiceBook(book); loadedBooks.clear(); storage.releaseAllDocumentInvoiceLeases();
+  await new Promise<void>(resolve => setImmediate(resolve));
+});
+after(() => {
+  for (const book of loadedBooks) releaseInvoiceBook(book); storage.releaseAllDocumentInvoiceLeases();
+  for (const [key, descriptor] of globalsBefore) { if (descriptor) Object.defineProperty(globalThis, key, descriptor); else Reflect.deleteProperty(globalThis, key); }
+  Reflect.deleteProperty(globalThis, '__imbewuInvoiceAccountHarness');
+});
+async function initialise() { assert.equal((await storage.initialiseInvoiceStorage()).writable, true); }
+function source() { const book = readInvoiceBook(); loadedBooks.add(book); assert.equal(invoiceBookIsCurrent(book), true); return book; }
+// Positive cases require the real mutation receipt. No previous list is used as
+// a save signal; negative cases below assert held/unchanged explicitly.
+function written(result: InvoiceMutationResult): SavedInvoice[] {
+  assert.equal(result.status, 'written', result.status === 'held' || result.status === 'unconfirmed' ? result.reason : 'own write required');
+  if (result.status !== 'written') throw Error('Missing own write receipt');
+  loadedBooks.add(result.book); assert.equal(invoiceBookIsCurrent(result.book), true); return result.book.invoices;
+}
+const saveWritten = (invoice: SavedInvoice) => written(saveInvoice(invoice, source()));
 
 class MemoryStorage {
   rows = new Map<string, string>();
@@ -83,6 +118,7 @@ function installBrowser() {
   target.sessionStorage = session;
   Object.defineProperty(globalThis, 'window', { configurable: true, value: target });
   Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: local });
+  Object.defineProperty(globalThis, 'navigator', { configurable: true, value: { locks: new Locks() } });
   return { local, target };
 }
 
@@ -98,6 +134,9 @@ function invoice(overrides: Partial<SavedInvoice> = {}): SavedInvoice {
     ...overrides,
   };
 }
+// Historical fixtures keep genuine currency absence. Newly authored documents
+// now require an explicit recorded basis rather than acquiring Rand by omission.
+const newInvoice = (overrides: Partial<SavedInvoice> = {}) => invoice({ currencyCode: 'ZAR', ...overrides });
 
 const linkedSale = (): SalesLog => ({
   id: 'picked-sale-17', profile_id: 'farmer-a', garden_id: 'garden-1',
@@ -110,17 +149,18 @@ const linkedInvoice = (): SavedInvoice => invoice({
   items: [{ desc: 'Cabbage', qty: 12.5, unit: 'kg', price: 9 }], total: 112.5,
   status: 'paid', paidAt: '2026-06-24T08:37:00.000Z', enterprise: 'vegetables',
 });
+const newLinkedInvoice = () => ({ ...linkedInvoice(), currencyCode: 'ZAR' });
 
-test('retrospective invoice dates preserve the actual payment timestamp and reject impossible calendar dates', () => {
+test('retrospective invoice dates preserve the actual payment timestamp and reject impossible calendar dates', async () => {
   const paid = linkedSale().sold_at;
   assert.equal(invoiceDateFromInput(invoiceDateInput(paid), paid), paid);
   assert.equal(invoiceDateFromInput('2026-02-30'), null);
   assert.equal(invoiceDateFromInput(''), null);
   assert.match(invoiceEntryError({ ...linkedInvoice(), paperReference: '' })!, /paper invoice/);
   assert.match(invoiceEntryError({ ...linkedInvoice(), paidAt: '2099-01-01' })!, /payment/);
-  installBrowser();
-  saveInvoice(invoice());
-  const updated = setInvoiceStatus('invoice-1', 'paid', 'cash', paid)[0];
+  installBrowser(); await initialise();
+  saveWritten(newInvoice());
+  const updated = written(setInvoiceStatus('invoice-1', 'paid', 'cash', paid, source()))[0];
   assert.equal(updated.paidAt, paid);
 });
 
@@ -139,51 +179,55 @@ test('an invoice can only attach to the exact owned sale without moving its weig
   assert.equal(recordedSaleInvoiceError({ ...doc, enterprise: undefined }, { ...sale, enterprise: null }, 'farmer-a'), null);
 });
 
-test('stale edits cannot rewrite or unlink a sale after its invoice is saved', () => {
-  installBrowser();
-  const doc = linkedInvoice();
-  saveInvoice(doc);
+test('stale edits cannot rewrite or unlink a sale after its invoice is saved', async () => {
+  installBrowser(); await initialise();
+  const doc = newLinkedInvoice();
+  saveWritten(doc);
   const original = loadInvoices()[0];
   for (const change of [
     { sourceSaleId: undefined }, { status: 'unpaid' as const },
     { paidAt: '2026-06-25T08:37:00.000Z' }, { enterprise: 'staples' as const },
     { items: [{ ...doc.items[0], qty: 13 }] },
     { items: [{ ...doc.items[0], desc: 'Carrots' }] },
-  ]) assert.deepEqual(saveInvoice({ ...doc, ...change })[0], original);
-  assert.deepEqual(deleteInvoice(doc.id), [original]);
-  assert.deepEqual(setInvoiceStatus(doc.id, 'unpaid'), [original]);
-  assert.equal(saveInvoice({ ...doc, id: 'another-invoice' }).length, 1);
-  const corrected = saveInvoice({ ...doc, paperReference: 'P-092', notes: 'Corrected reference' })[0];
+  ]) {
+    assert.equal(saveInvoice({ ...doc, ...change }, source()).status, 'held');
+    assert.deepEqual(loadInvoices()[0], original);
+  }
+  assert.equal(deleteInvoice(doc.id, source()).status, 'held'); assert.deepEqual(loadInvoices(), [original]);
+  assert.equal(setInvoiceStatus(doc.id, 'unpaid', undefined, undefined, source()).status, 'held'); assert.deepEqual(loadInvoices(), [original]);
+  assert.equal(saveInvoice({ ...doc, id: 'another-invoice' }, source()).status, 'held'); assert.equal(loadInvoices().length, 1);
+  const corrected = saveWritten({ ...doc, paperReference: 'P-092', notes: 'Corrected reference' })[0];
   assert.equal(corrected.paperReference, 'P-092');
   assert.equal(corrected.reference, 'BUYER-5');
 });
 
-test('a failed final invoice save retains a private recoverable draft and counts the existing sale once', () => {
+test('a failed final invoice save retains a private recoverable draft and counts the existing sale once', async () => {
   const { local } = installBrowser();
   accountHarness.currentUid = 'farmer-a';
-  const doc = linkedInvoice();
-  assert.equal(stageInvoiceSaleLink(doc), true);
+  await initialise(); const doc = newLinkedInvoice();
+  written(stageInvoiceSaleLink(doc, source()));
   assert.equal(loadInvoices().length, 0, 'pending documents must never enter invoice cash totals');
   assert.equal(loadNextInvoiceNumber(), 45, 'a pending document reserves its own number');
   const sale = { ...linkedSale(), invoice_id: doc.id, invoice_source_sale: true };
   local.failWrites = true;
-  assert.deepEqual(saveInvoice(doc), []);
+  assert.equal(saveInvoice(doc, source()).status, 'held'); assert.deepEqual(loadInvoices(), []);
   assert.equal(cashIncomeTotal([sale], loadInvoices()), 112.5);
   assert.equal(loadPendingInvoiceLinks()[0].id, doc.id, 'reloading storage must recover the exact document');
   accountHarness.currentUid = 'farmer-b';
   assert.deepEqual(loadPendingInvoiceLinks(), [], 'another account cannot recover a private invoice');
   accountHarness.currentUid = 'farmer-a';
   local.failWrites = false;
-  saveInvoice(loadPendingInvoiceLinks()[0]);
-  assert.equal(clearPendingInvoiceLink(doc.id), true);
+  saveWritten(loadPendingInvoiceLinks()[0]);
+  written(clearPendingInvoiceLink(doc.id, source()));
   assert.deepEqual(loadPendingInvoiceLinks(), []);
   assert.equal(cashIncomeTotal([sale], loadInvoices()), 112.5);
 });
 
-test('a device that cannot stage the pending invoice cannot begin a sale-link workflow', () => {
+test('a device that cannot stage the pending invoice cannot begin a sale-link workflow', async () => {
   const { local } = installBrowser();
+  await initialise();
   local.failWrites = true;
-  assert.equal(stageInvoiceSaleLink(linkedInvoice()), false);
+  assert.equal(stageInvoiceSaleLink(newLinkedInvoice(), source()).status, 'held');
   assert.deepEqual(loadPendingInvoiceLinks(), []);
   assert.deepEqual(loadInvoices(), []);
 });
@@ -194,34 +238,43 @@ test('repeated sample invoice linking retains one original sale and rejects stal
   const { syncInvoiceSales, updateSale, deleteSale } = await import('../lib/db/queries.ts');
   assert.equal(enterSampleMode(), true);
   try {
-    const source = { ...linkedSale(), profile_id: 'demo' };
-    addSandboxSale(source);
-    const doc = linkedInvoice();
-    await syncInvoiceSales(doc);
-    await syncInvoiceSales(doc);
-    const rows = getSandboxSales().filter(sale => sale.id === source.id || sale.invoice_id === doc.id);
+    const sale = { ...linkedSale(), profile_id: 'demo' };
+    addSandboxSale(sale);
+    const book = source();
+    const staged = stageInvoiceSaleLink({ ...newLinkedInvoice(), no: book.nextNumber }, book);
+    assert.equal(staged.status, 'written');
+    if (staged.status !== 'written') throw Error('Missing pending-link receipt');
+    loadedBooks.add(staged.book);
+    const doc = staged.book.pendingLinks.find(row => row.id === newLinkedInvoice().id)!;
+    assert.ok(doc);
+    await syncInvoiceSales(doc, staged.book);
+    await syncInvoiceSales(doc, staged.book);
+    const rows = getSandboxSales().filter(row => row.id === sale.id || row.invoice_id === doc.id);
     assert.equal(rows.length, 1);
-    assert.equal(rows[0].id, source.id);
-    assert.equal(rows[0].kg, source.kg);
-    assert.equal(rows[0].amount, source.amount);
-    assert.equal(rows[0].sold_at, source.sold_at);
-    assert.equal(rows[0].garden_id, source.garden_id);
-    assert.equal(rows[0].enterprise, source.enterprise);
-    assert.equal(cashIncomeTotal(rows, [doc]), source.amount);
-    await assert.rejects(updateSale(source.id, { amount: 999 }), /linked invoice/);
-    await assert.rejects(deleteSale(source.id), /linked invoice/);
-    await assert.rejects(syncInvoiceSales({ ...doc, sourceSaleId: undefined }), /linked/);
-    assert.equal(getSandboxSales().find(sale => sale.id === source.id)?.amount, source.amount);
+    assert.equal(rows[0].id, sale.id);
+    assert.equal(rows[0].kg, sale.kg);
+    assert.equal(rows[0].amount, sale.amount);
+    assert.equal(rows[0].sold_at, sale.sold_at);
+    assert.equal(rows[0].garden_id, sale.garden_id);
+    assert.equal(rows[0].enterprise, sale.enterprise);
+    assert.equal(cashIncomeTotal(rows, [doc]), sale.amount);
+    await assert.rejects(updateSale(sale.id, { amount: 999 }), /linked invoice/);
+    await assert.rejects(deleteSale(sale.id), /linked invoice/);
+    await assert.rejects(syncInvoiceSales({ ...doc, sourceSaleId: undefined }, staged.book), /records or workspace changed/);
+    assert.equal(getSandboxSales().find(row => row.id === sale.id)?.amount, sale.amount);
   } finally { exitSampleMode(); }
 });
 
 test('sample mode never writes a pending invoice-sale link into real storage, and exiting leaves no trace', async () => {
   const { local } = installBrowser();
+  await initialise();
   const { enterSampleMode, exitSampleMode, getSandboxPendingInvoiceLinks } = await import('../lib/sample-mode.ts');
   assert.equal(enterSampleMode(), true);
   try {
-    const doc = linkedInvoice();
-    assert.equal(stageInvoiceSaleLink(doc), true);
+    // The populated DEMO book already owns historical numbers. A new sample
+    // document uses its admitted reservation instead of colliding with no. 44.
+    const book = source(), doc = { ...newLinkedInvoice(), no: book.nextNumber };
+    written(stageInvoiceSaleLink(doc, book));
     assert.equal(loadPendingInvoiceLinks()[0]?.id, doc.id, 'the staged link must read back while sampling');
     assert.equal(
       getSandboxPendingInvoiceLinks()[0]?.id, doc.id,
@@ -231,7 +284,11 @@ test('sample mode never writes a pending invoice-sale link into real storage, an
       local.getItem('imbewu_invoice_pending_links'), null,
       'sample mode must never write the pending link into the device\'s real localStorage',
     );
-    assert.equal(clearPendingInvoiceLink(doc.id), true);
+    // A pending link is retained until its exact final invoice has an own
+    // receipt; a bare clear used to erase the only recoverable document.
+    assert.equal(clearPendingInvoiceLink(doc.id, source()).status, 'held');
+    assert.equal(loadPendingInvoiceLinks()[0]?.id, doc.id);
+    saveWritten(doc); written(clearPendingInvoiceLink(doc.id, source()));
     assert.deepEqual(loadPendingInvoiceLinks(), []);
     assert.equal(local.getItem('imbewu_invoice_pending_links'), null);
   } finally {
@@ -285,28 +342,28 @@ test('issuing a quick invoice does not wipe details captured earlier', () => {
   assert.equal(loadCustomers()[0].phone, '034 271 1111');
 });
 
-test('an invoice keeps the date it was issued, however often it is edited', () => {
+test('an invoice keeps the date it was issued, however often it is edited', async () => {
   // Every save stamped new Date(), so opening #0044 to fix a typo — or marking it paid a month
   // later — moved its date to today. The buyer's printed copy and the farmer's ledger then
   // disagreed about when the debt arose.
-  installBrowser();
+  const { local } = installBrowser();
   const issued = '2026-06-24T08:00:00.000Z';
   const base = invoice({ id: 'inv-date', no: 44, dateISO: issued });
-  saveInvoice(base);
-  saveInvoice({ ...base, dateISO: '2026-08-07T08:00:00.000Z', billTo: 'Corrected buyer' });
+  local.setItem('imbewu_invoices', JSON.stringify([base])); await initialise();
+  saveWritten({ ...base, dateISO: '2026-08-07T08:00:00.000Z', billTo: 'Corrected buyer' });
   const [stored] = loadInvoices();
   assert.equal(stored.dateISO, issued, 'a later edit moved the issue date');
   assert.equal(stored.billTo, 'Corrected buyer', 'the edit itself was not applied');
 });
 
-test('a due date before the issue date is refused, not printed as already overdue', () => {
-  installBrowser();
+test('a due date before the issue date is refused, not printed as already overdue', async () => {
+  installBrowser(); await initialise();
   const issued = '2026-06-24T08:00:00.000Z';
-  saveInvoice(invoice({
+  saveWritten(newInvoice({
     id: 'inv-due', no: 45, dateISO: issued, dueDateISO: '2026-06-01T08:00:00.000Z',
   }));
   assert.equal(loadInvoices()[0].dueDateISO, undefined);
-  saveInvoice(invoice({
+  saveWritten(newInvoice({
     id: 'inv-due-ok', no: 46, dateISO: issued, dueDateISO: '2026-07-24T08:00:00.000Z',
   }));
   assert.equal(loadInvoices()[0].dueDateISO, '2026-07-24T08:00:00.000Z');
@@ -419,7 +476,10 @@ test('the invoice and records screens wire the crop picker, price book and paid-
   const invoicePage = readFileSync(new URL('../app/invoice/page.tsx', import.meta.url), 'utf8');
   const records = readFileSync(new URL('../components/MyRecords.tsx', import.meta.url), 'utf8');
   assert.match(invoicePage, /<CropSelect/);
-  assert.match(invoicePage, /await syncInvoiceSales\(updated\)/);
+  // The status write now retains pending local evidence while the actual sync
+  // is awaited through the timeout guard. The exact admitted book and original
+  // form guard must travel into the remote boundary, not only be checked after it.
+  assert.match(invoicePage, /await\s+withWriteTimeout\(syncInvoiceSales\(updated,\s*writeBook,\s*\(\)\s*=>\s*sourceDelivery\.isActorCurrent\(\)/);
   // The guide-price line must derive its date per crop (a later-priced crop carries its own
   // pricedAt) — the hardcoded "guide price, July 2026" literal this used to assert went stale
   // the first time a crop was priced outside July. tests/crop-prices.test.ts holds the
@@ -431,31 +491,31 @@ test('the invoice and records screens wire the crop picker, price book and paid-
   assert.match(records, /priceFor\(form\.cropKey, priceOverrides\)/);
 });
 
-test('invoice totals are reconciled from valid line items rather than trusted storage', () => {
-  installBrowser();
-  const saved = saveInvoice(invoice({ total: 999_999 }));
+test('invoice totals are reconciled from valid line items rather than trusted storage', async () => {
+  installBrowser(); await initialise();
+  const saved = saveWritten(newInvoice({ total: 999_999 }));
   assert.equal(saved.length, 1);
   assert.equal(saved[0].total, 30);
   assert.equal(loadInvoices()[0].total, 30);
 });
 
-test('one invalid line rejects the whole save instead of silently reducing the bill', () => {
-  installBrowser();
-  const valid = invoice();
-  saveInvoice(valid);
+test('one invalid line rejects the whole save instead of silently reducing the bill', async () => {
+  installBrowser(); await initialise();
+  const valid = newInvoice();
+  saveWritten(valid);
   const before = loadInvoices();
-  const attempted = invoice({
+  const attempted = newInvoice({
     total: Number.NaN,
     items: [
       valid.items[0],
       { desc: 'Unknown-price crop', qty: 1, unit: 'kg', price: Number.NaN },
     ],
   });
-  assert.deepEqual(saveInvoice(attempted), before);
+  assert.equal(saveInvoice(attempted, source()).status, 'held');
   assert.deepEqual(loadInvoices(), before);
 });
 
-test('malformed and duplicate persisted invoices cannot poison or double-count the ledger', () => {
+test('malformed and duplicate persisted invoices cannot poison or double-count the ledger', async () => {
   const { local } = installBrowser();
   const legacy = { ...invoice(), status: undefined };
   local.setItem('imbewu_invoices', JSON.stringify([
@@ -465,41 +525,42 @@ test('malformed and duplicate persisted invoices cannot poison or double-count t
     { ...invoice({ id: 'bad-qty' }), items: [{ desc: 'Crop', qty: -1, unit: 'kg', price: 10 }] },
     null,
   ]));
+  await initialise();
   const rows = loadInvoices();
   assert.equal(rows.length, 1);
   assert.equal(rows[0].status, 'unpaid');
   assert.equal(rows[0].total, 30);
 });
 
-test('paid status records a finite timestamp and unpaid clears payment evidence', () => {
-  installBrowser();
-  saveInvoice(invoice());
-  const paid = setInvoiceStatus('invoice-1', 'paid', 'cash')[0];
+test('paid status records a finite timestamp and unpaid clears payment evidence', async () => {
+  installBrowser(); await initialise();
+  saveWritten(newInvoice());
+  const paid = written(setInvoiceStatus('invoice-1', 'paid', 'cash', undefined, source()))[0];
   assert.equal(paid.status, 'paid');
   assert.equal(paid.paymentMethod, 'cash');
   assert.ok(paid.paidAt && Number.isFinite(Date.parse(paid.paidAt)));
 
-  const unpaid = setInvoiceStatus('invoice-1', 'unpaid')[0];
+  const unpaid = written(setInvoiceStatus('invoice-1', 'unpaid', undefined, undefined, source()))[0];
   assert.equal(unpaid.status, 'unpaid');
   assert.equal(unpaid.paymentMethod, undefined);
   assert.equal(unpaid.paidAt, undefined);
 });
 
-test('changing payment method never moves old paid income into the current month', () => {
-  installBrowser();
+test('changing payment method never moves old paid income into the current month', async () => {
+  const { local } = installBrowser();
   const oldPaidAt = '2025-02-03T04:05:06.000Z';
-  saveInvoice(invoice({ status: 'paid', paidAt: oldPaidAt, paymentMethod: 'cash' }));
+  local.setItem('imbewu_invoices', JSON.stringify([invoice({ status: 'paid', paidAt: oldPaidAt, paymentMethod: 'cash' })])); await initialise();
 
-  const changed = setInvoiceStatus('invoice-1', 'paid', 'eft')[0];
+  const changed = written(setInvoiceStatus('invoice-1', 'paid', 'eft', undefined, source()))[0];
   assert.equal(changed.paymentMethod, 'eft');
   assert.equal(changed.paidAt, oldPaidAt);
 });
 
-test('editing a paid invoice preserves payment evidence that the form did not change', () => {
-  installBrowser();
+test('editing a paid invoice preserves payment evidence that the form did not change', async () => {
+  const { local } = installBrowser();
   const oldPaidAt = '2025-02-03T04:05:06.000Z';
-  saveInvoice(invoice({ status: 'paid', paidAt: oldPaidAt, paymentMethod: 'cash' }));
-  const edited = saveInvoice(invoice({
+  local.setItem('imbewu_invoices', JSON.stringify([invoice({ status: 'paid', paidAt: oldPaidAt, paymentMethod: 'cash' })])); await initialise();
+  const edited = saveWritten(invoice({
     billTo: 'Edited customer',
     status: 'paid',
     paidAt: oldPaidAt,
@@ -512,13 +573,14 @@ test('editing a paid invoice preserves payment evidence that the form did not ch
   assert.equal(edited[0].paymentMethod, 'cash');
 });
 
-test('unpaid or unverifiable paid records never retain payment evidence', () => {
+test('unpaid or unverifiable paid records never retain payment evidence', async () => {
   const { local } = installBrowser();
   local.setItem('imbewu_invoices', JSON.stringify([
     invoice({ id: 'unpaid', status: 'unpaid', paidAt: '2026-01-03T00:00:00Z', paymentMethod: 'cash' }),
     invoice({ id: 'missing-paid-at', no: 2, status: 'paid', paidAt: undefined, paymentMethod: 'eft' }),
     invoice({ id: 'invalid-paid-at', no: 3, status: 'paid', paidAt: 'not-a-date', paymentMethod: 'card' }),
   ]));
+  await initialise();
 
   assert.deepEqual(loadInvoices().map(({ id, status, paidAt, paymentMethod }) => ({
     id, status, paidAt, paymentMethod,
@@ -529,20 +591,20 @@ test('unpaid or unverifiable paid records never retain payment evidence', () => 
   ]);
 });
 
-test('trimmed invoice ids replace one record rather than returning a duplicate', () => {
-  installBrowser();
-  saveInvoice(invoice());
-  const rows = saveInvoice(invoice({ id: ' invoice-1 ', billTo: 'Updated' }));
+test('trimmed invoice ids replace one record rather than returning a duplicate', async () => {
+  installBrowser(); await initialise();
+  saveWritten(newInvoice());
+  const rows = saveWritten(newInvoice({ id: ' invoice-1 ', billTo: 'Updated' }));
   assert.equal(rows.length, 1);
   assert.equal(rows[0].id, 'invoice-1');
   assert.equal(rows[0].billTo, 'Updated');
 });
 
-test('saving another invoice grows history without silently evicting an older accounting record', () => {
-  installBrowser();
+test('saving another invoice grows history without silently evicting an older accounting record', async () => {
+  installBrowser(); await initialise();
   let expectedLength = 0;
   for (let index = 1; index <= 125; index += 1) {
-    const rows = saveInvoice(invoice({ id: `invoice-${index}`, no: index }));
+    const rows = saveWritten(newInvoice({ id: `invoice-${index}`, no: index }));
     expectedLength += 1;
     assert.equal(rows.length, expectedLength);
   }
@@ -551,36 +613,42 @@ test('saving another invoice grows history without silently evicting an older ac
   assert.ok(rows.some((row) => row.id === 'invoice-125'));
 });
 
-test('delete and status events fire only for durable, real changes', () => {
+test('delete and status events fire only for durable, real changes', async () => {
   const { target } = installBrowser();
+  await initialise();
   let changes = 0;
   target.addEventListener('imbewu-invoices-changed', () => { changes += 1; });
-  saveInvoice(invoice());
-  saveInvoice(invoice({ id: 'invoice-2', no: 2 }));
+  saveWritten(newInvoice());
+  saveWritten(newInvoice({ id: 'invoice-2', no: 2 }));
   assert.equal(changes, 2);
-  assert.deepEqual(deleteInvoice('invoice-1').map((row) => row.id), ['invoice-2']);
+  assert.deepEqual(written(deleteInvoice('invoice-1', source())).map((row) => row.id), ['invoice-2']);
   assert.equal(changes, 3);
-  assert.deepEqual(deleteInvoice('missing').map((row) => row.id), ['invoice-2']);
-  assert.deepEqual(setInvoiceStatus('missing', 'paid').map((row) => row.id), ['invoice-2']);
+  const missingDelete = deleteInvoice('missing', source()); assert.equal(missingDelete.status, 'unchanged');
+  assert.deepEqual(loadInvoices().map((row) => row.id), ['invoice-2']);
+  const missingStatus = setInvoiceStatus('missing', 'paid', undefined, undefined, source()); assert.equal(missingStatus.status, 'unchanged');
+  assert.deepEqual(loadInvoices().map((row) => row.id), ['invoice-2']);
   assert.equal(changes, 3);
 });
 
-test('quota failures return the durable ledger and never emit a false saved event', () => {
+test('quota failures explicitly hold without changing the durable ledger or emitting a false saved event', async () => {
   const { local, target } = installBrowser();
-  saveInvoice(invoice());
+  await initialise(); saveWritten(newInvoice());
   const durable = loadInvoices();
   let changes = 0;
   target.addEventListener('imbewu-invoices-changed', () => { changes += 1; });
   local.failWrites = true;
 
-  assert.deepEqual(saveInvoice(invoice({ id: 'invoice-2', no: 2 })), durable);
-  assert.deepEqual(deleteInvoice('invoice-1'), durable);
-  assert.equal(setInvoiceStatus('invoice-1', 'paid')[0].status, 'unpaid');
+  // The old list-return API made failed writes look successful when the old ID
+  // still existed. An explicit held receipt and an independently read ledger
+  // now protect both the rejection signal and the retained accounting facts.
+  assert.equal(saveInvoice(newInvoice({ id: 'invoice-2', no: 2 }), source()).status, 'held'); assert.deepEqual(loadInvoices(), durable);
+  assert.equal(deleteInvoice('invoice-1', source()).status, 'held'); assert.deepEqual(loadInvoices(), durable);
+  assert.equal(setInvoiceStatus('invoice-1', 'paid', undefined, undefined, source()).status, 'held'); assert.equal(loadInvoices()[0].status, 'unpaid');
   assert.equal(changes, 0);
   assert.deepEqual(loadInvoices(), durable);
 });
 
-test("one shared device keeps each farmer's invoice ledger and sequence separate", () => {
+test("one shared device keeps each farmer's invoice ledger and sequence separate", async () => {
   const { local } = installBrowser();
   local.setItem('imbewu_invoice_customers', JSON.stringify(['Unknown legacy customer']));
   local.setItem('imbewu_invoice_products', JSON.stringify([
@@ -596,24 +664,26 @@ test("one shared device keeps each farmer's invoice ledger and sequence separate
   assert.deepEqual(loadProducts(), []);
   assert.deepEqual(loadInvoices(), []);
   assert.equal(loadNextInvoiceNumber(), 44);
+  await initialise();
   addCustomer('Farmer A customer');
   addProduct({ desc: 'Farmer A spinach', unit: 'bunches', price: 15 });
-  saveInvoice(invoice({ id: 'farmer-a-invoice', billTo: 'Farmer A customer' }));
-  assert.equal(saveNextInvoiceNumber(45), true);
+  saveWritten(newInvoice({ id: 'farmer-a-invoice', billTo: 'Farmer A customer' }));
+  written(saveNextInvoiceNumber(45, source()));
 
   accountHarness.currentUid = 'farmer-b';
   assert.deepEqual(loadCustomers(), []);
   assert.deepEqual(loadProducts(), []);
   assert.deepEqual(loadInvoices(), []);
   assert.equal(loadNextInvoiceNumber(), 44);
+  await initialise();
   addCustomer('Farmer B customer');
   addProduct({ desc: 'Farmer B maize', unit: 'bags', price: 25 });
-  saveInvoice(invoice({
+  saveWritten(newInvoice({
     id: 'farmer-b-invoice',
     no: 7,
     billTo: 'Farmer B customer',
   }));
-  assert.equal(saveNextInvoiceNumber(8), true);
+  written(saveNextInvoiceNumber(8, source()));
 
   accountHarness.currentUid = 'farmer-a';
   assert.deepEqual(loadCustomers(), [{ name: 'Farmer A customer' }]);
@@ -621,24 +691,34 @@ test("one shared device keeps each farmer's invoice ledger and sequence separate
   assert.deepEqual(loadInvoices().map((row) => row.id), ['farmer-a-invoice']);
   assert.equal(loadNextInvoiceNumber(), 45);
 
-  assert.ok(local.getItem(accountLocalStorageKey('imbewu_invoices', 'farmer-a')));
-  assert.ok(local.getItem(accountLocalStorageKey('imbewu_invoices', 'farmer-b')));
-  assert.ok(local.getItem(accountLocalStorageKey('imbewu_invoice_seq', 'farmer-a')));
-  assert.ok(local.getItem(accountLocalStorageKey('imbewu_invoice_seq', 'farmer-b')));
+  // Saved, pending and sequence are one canonical payload. The old addresses
+  // remain unchanged evidence and are no longer three separately active ledgers.
+  for (const owner of ['farmer-a', 'farmer-b']) {
+    const envelopeRaw = local.getItem(accountLocalStorageKey(storage.INVOICE_STORAGE_KEY, owner)); assert.ok(envelopeRaw);
+    const receiptRaw = local.getItem(accountLocalStorageKey(storage.INVOICE_CUTOVER_KEY, owner)); assert.ok(receiptRaw);
+    const envelope = JSON.parse(envelopeRaw), receipt = JSON.parse(receiptRaw);
+    assert.equal(envelope.cutoverId, receipt.cutoverId);
+    const payload = storage.parseInvoiceStoragePayload(envelope.bookRaw); assert.ok(payload);
+    assert.equal(JSON.parse(payload.invoicesRaw)[0].id, `${owner}-invoice`);
+    assert.equal(payload.sequenceRaw, owner === 'farmer-a' ? '45' : '8');
+    assert.equal(local.getItem(accountLocalStorageKey('imbewu_invoices', owner)), null);
+    assert.equal(local.getItem(accountLocalStorageKey('imbewu_invoice_seq', owner)), null);
+  }
   assert.ok(local.getItem('imbewu_invoices'), 'unowned legacy ledger remains quarantined');
   assert.equal(local.getItem('imbewu_invoice_seq'), '900');
   accountHarness.currentUid = null;
 });
 
-test('invoice sequence rejects corrupt counters and reports failed persistence', () => {
+test('invoice sequence rejects corrupt counters and reports failed persistence', async () => {
   const { local } = installBrowser();
   local.setItem('imbewu_invoice_seq', 'not-a-number');
+  await initialise();
   assert.equal(loadNextInvoiceNumber(12), 12);
-  assert.equal(saveNextInvoiceNumber(0), false);
-  assert.equal(saveNextInvoiceNumber(Number.NaN), false);
+  assert.equal(saveNextInvoiceNumber(0, source()).status, 'held');
+  assert.equal(saveNextInvoiceNumber(Number.NaN, source()).status, 'held');
 
   local.failWrites = true;
-  assert.equal(saveNextInvoiceNumber(13), false);
+  assert.equal(saveNextInvoiceNumber(13, source()).status, 'held');
   local.failWrites = false;
   assert.equal(loadNextInvoiceNumber(12), 12);
 });
@@ -654,15 +734,25 @@ test('payment labels are total and generated ids remain non-empty and distinct',
   assert.ok([...ids].every((id) => id.length > 5));
 });
 
+test('financial mutations cannot silently capture a fresh source for an unbound caller', async () => {
+  installBrowser(); await initialise();
+  const before = loadInvoices();
+  for (const result of [saveInvoice(newInvoice()), deleteInvoice('invoice-1'), setInvoiceStatus('invoice-1', 'paid'),
+    saveNextInvoiceNumber(45), stageInvoiceSaleLink(newLinkedInvoice()), clearPendingInvoiceLink('linked-invoice')]) {
+    assert.equal(result.status, 'held');
+  }
+  assert.deepEqual(loadInvoices(), before);
+});
+
 // ─────────────────────────────────────────────────────────────────────────────────────────────
 // A KILOGRAM IS NOT AN INTEGER. The invoice quantity field parsed with parseInt while UNITS
 // includes 'kg' and 'crates', so 12.5 kg of tomatoes was billed as 12 — on the document the buyer
 // pays from, and always in the farmer's disfavour. This asserts the persistence contract the input
 // must honour: fractional quantities are legal, survive a save, and total correctly.
-test('a fractional kilogram line survives a save and totals correctly', () => {
-  installBrowser();
-  const list = saveInvoice({
-    id: 'inv-frac', no: 44, billTo: 'Buyer',
+test('a fractional kilogram line survives a save and totals correctly', async () => {
+  installBrowser(); await initialise();
+  const list = saveWritten({
+    id: 'inv-frac', no: 44, billTo: 'Buyer', currencyCode: 'ZAR',
     items: [{ desc: 'Tomatoes', qty: 12.5, unit: 'kg', price: 29 }],
     total: 362.5, dateISO: '2026-08-02T00:00:00.000Z', status: 'unpaid',
   });
@@ -677,37 +767,38 @@ test('a fractional kilogram line survives a save and totals correctly', () => {
 });
 
 // A ZERO-QUANTITY LINE REJECTS THE WHOLE INVOICE — which is correct, and is exactly why the UI
-// must not print when the save was refused. This pins the signal persist() now reads: saveInvoice
-// returns the DURABLE ledger, so a rejected record is absent from what comes back.
-test('a rejected invoice is absent from the returned ledger, which is how the caller knows', () => {
-  installBrowser();
-  const before = saveInvoice({
-    id: 'inv-good', no: 44, billTo: 'Buyer',
+// must not print when the save was refused. A receipt now supplies the rejection
+// signal; a separately loaded durable ledger proves earlier invoices survived.
+test('a rejected invoice returns held and stays absent from the durable ledger while the previous invoice survives', async () => {
+  installBrowser(); await initialise();
+  const before = saveWritten({
+    id: 'inv-good', no: 44, billTo: 'Buyer', currencyCode: 'ZAR',
     items: [{ desc: 'Spinach', qty: 3, unit: 'bunches', price: 10 }],
     total: 30, dateISO: '2026-08-02T00:00:00.000Z', status: 'unpaid',
   });
   assert.ok(before.some((x) => x.id === 'inv-good'));
 
   const after = saveInvoice({
-    id: 'inv-bad', no: 45, billTo: 'Buyer',
+    id: 'inv-bad', no: 45, billTo: 'Buyer', currencyCode: 'ZAR',
     items: [{ desc: 'Chillies', qty: 0, unit: 'kg', price: 80 }],
     total: 0, dateISO: '2026-08-02T00:00:00.000Z', status: 'unpaid',
-  });
-  assert.equal(after.some((x) => x.id === 'inv-bad'), false, 'a zero-quantity line must not be stored');
-  // The prior ledger is preserved, not clobbered — that is the contract persist() relies on.
-  assert.ok(after.some((x) => x.id === 'inv-good'));
+  }, source());
+  assert.equal(after.status, 'held');
+  const durable = loadInvoices();
+  assert.equal(durable.some((x) => x.id === 'inv-bad'), false, 'a zero-quantity line must not be stored');
+  assert.ok(durable.some((x) => x.id === 'inv-good'));
 });
 
 const { saveSaleInvoice } = await import('../lib/sale-invoice.ts');
 
 test('a quick sale saves one paid invoice before syncing its income', async () => {
-  installBrowser();
+  installBrowser(); await initialise();
   let calls = 0;
   const saved = await saveSaleInvoice({ crop: 'Avocado', kg: 3, amount: 60 }, async row => {
     calls++;
     assert.equal(loadInvoices().find(i => i.id === row.id)?.total, 60);
     assert.equal(row.status, 'paid');
-  });
+  }, source());
   assert.equal(calls, 1);
   assert.equal(saved.salesSyncPending, undefined);
   assert.equal(loadInvoices().length, 1);
@@ -715,43 +806,44 @@ test('a quick sale saves one paid invoice before syncing its income', async () =
 });
 
 test('a quick egg sale keeps its unit through the invoice ledger and cloud-sale conversion', async () => {
-  installBrowser();
+  installBrowser(); await initialise();
   const saved = await saveSaleInvoice({ crop: 'Eggs', kg: null, quantity: 12, unit: 'eggs', amount: 36 }, async doc => {
     const rows = invoiceSalesForPaidInvoice(doc);
     assert.equal(rows.length, 1);
     assert.equal(rows[0].kg, null);
     assert.equal(rows[0].quantity, 12);
     assert.equal(rows[0].unit, 'eggs');
-  });
+  }, source());
   assert.deepEqual(saved.items[0], { desc: 'Eggs', qty: 12, unit: 'eggs', price: 3 });
   assert.equal(loadInvoices().length, 1);
   assert.equal(cashIncomeTotal(invoiceSalesForPaidInvoice(saved), [saved]), 36);
 });
 
 test('fractional eggs cannot be saved as an invoice or silently turned into cash-only produce', async () => {
-  installBrowser();
+  installBrowser(); await initialise();
   let syncCalls = 0;
-  await assert.rejects(saveSaleInvoice({ crop: 'Eggs', kg: null, quantity: 1.5, unit: 'eggs', amount: 36 }, async () => { syncCalls++; }));
+  await assert.rejects(saveSaleInvoice({ crop: 'Eggs', kg: null, quantity: 1.5, unit: 'eggs', amount: 36 }, async () => { syncCalls++; }, source()));
   assert.equal(syncCalls, 0);
   assert.equal(loadInvoices().length, 0);
-  saveInvoice(invoice({ id: 'bad-eggs', items: [{ desc: 'Eggs', qty: 1.5, unit: 'eggs', price: 3 }] }));
+  assert.equal(saveInvoice(newInvoice({ id: 'bad-eggs', items: [{ desc: 'Eggs', qty: 1.5, unit: 'eggs', price: 3 }] }), source()).status, 'held');
   assert.equal(loadInvoices().length, 0);
 });
 
 test('failed sales sync leaves the original invoice available for retry', async () => {
-  installBrowser();
-  const saved = await saveSaleInvoice({ crop: 'Lemon', kg: 2, amount: 20 }, async () => { throw Error('offline'); });
+  installBrowser(); await initialise();
+  const saved = await saveSaleInvoice({ crop: 'Lemon', kg: 2, amount: 20 }, async () => { throw Error('offline'); }, source());
   assert.equal(saved.salesSyncPending, true);
   assert.equal(loadInvoices()[0].id, saved.id);
 });
 
 test('storage failure or invalid amounts cannot send an unrecorded sale', async () => {
   const { local } = installBrowser();
+  await initialise();
   let calls = 0;
   const sync = async () => { calls++; };
-  await assert.rejects(saveSaleInvoice({ crop: 'Lemon', kg: 0, amount: 20 }, sync));
+  await assert.rejects(saveSaleInvoice({ crop: 'Lemon', kg: 0, amount: 20 }, sync, source()));
   local.failWrites = true;
-  await assert.rejects(saveSaleInvoice({ crop: 'Lemon', kg: 2, amount: 20 }, sync));
+  await assert.rejects(saveSaleInvoice({ crop: 'Lemon', kg: 2, amount: 20 }, sync, source()));
   assert.equal(calls, 0);
 });
 
@@ -759,10 +851,11 @@ for (const syncFails of [false, true]) {
   test(`a quick sale cannot finish into a different account when sync ${syncFails ? 'fails' : 'succeeds'}`, async () => {
     installBrowser();
     accountHarness.currentUid = 'farmer-a';
+    await initialise();
     await assert.rejects(saveSaleInvoice({ crop: 'Lemon', kg: 2, amount: 20 }, async () => {
       accountHarness.currentUid = 'farmer-b';
       if (syncFails) throw Error('offline');
-    }), /account changed/);
+    }, source()), /records or workspace changed/);
     assert.deepEqual(loadInvoices(), [], 'the next account must never receive the previous invoice');
     accountHarness.currentUid = 'farmer-a';
     assert.equal(loadInvoices().length, 1, 'the original account retains its recoverable invoice');
@@ -770,11 +863,11 @@ for (const syncFails of [false, true]) {
   });
 }
 
-test('a newly entered paper invoice retains distinct historical issue and payment dates after save and reopen', () => {
-  installBrowser();
+test('a newly entered paper invoice retains distinct historical issue and payment dates after save and reopen', async () => {
+  installBrowser(); await initialise();
   const dateISO = invoiceDateFromInput('2026-09-01')!;
   const paidAt = invoiceDateFromInput('2026-09-03')!;
-  saveInvoice(invoice({ entryKind: 'paper-copy', paperReference: 'PAPER-007', dateISO, paidAt, status: 'paid', items: [{ desc: 'Spinach', qty: 2, unit: 'kg', price: 15 }] }));
+  saveWritten(newInvoice({ entryKind: 'paper-copy', paperReference: 'PAPER-007', dateISO, paidAt, status: 'paid', items: [{ desc: 'Spinach', qty: 2, unit: 'kg', price: 15 }] }));
   const reopened = loadInvoices()[0];
   assert.equal(reopened.dateISO, dateISO);
   assert.equal(reopened.paidAt, paidAt);

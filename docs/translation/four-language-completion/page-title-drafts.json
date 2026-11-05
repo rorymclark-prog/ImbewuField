@@ -104,7 +104,7 @@
     },
     {
       "file": "app/layout.tsx",
-      "english": "ImbewuField — permaculture planning for South African farmers"
+      "english": "ImbewuField — crop, nursery and garden planning"
     },
     {
       "file": "app/design/lite/layout.tsx",
@@ -625,11 +625,7 @@
       "ve": "ACT Teach the Teachers | mvusuludzo ya vhatshimbidzi vha ngudo ya maḓuvha mavhili"
     },
     {
-      "english": "ImbewuField — permaculture planning for South African farmers",
-      "zu": "ImbewuField — ukuhlelwa kwe-permaculture kwabalimi baseNingizimu Afrika",
-      "st": "ImbewuField — moralo wa permaculture bakeng sa balemi ba Afrika Borwa",
-      "ts": "ImbewuField — ku pulana ka permaculture ka varimi va Afrika Dzonga",
-      "ve": "ImbewuField — u pulana ha permaculture ha vhalimi vha Afrika Tshipembe"
+      "english": "ImbewuField — crop, nursery and garden planning"
     },
     {
       "english": "Farm Finance practical project — teaching preview",
@@ -754,8 +750,33 @@
         "ve"
       ],
       "reason": "Atlas is retained as the existing feature name; isiZulu follows existing navAtlas."
+    },
+    {
+      "source": "ImbewuField — crop, nursery and garden planning",
+      "languages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ],
+      "reason": "New product-identity source remains English until its changed meaning has reviewed native pairs."
     }
   ],
+  "retiredEntries": [
+    {
+      "english": "ImbewuField — permaculture planning for South African farmers",
+      "zu": "ImbewuField — ukuhlelwa kwe-permaculture kwabalimi baseNingizimu Afrika",
+      "st": "ImbewuField — moralo wa permaculture bakeng sa balemi ba Afrika Borwa",
+      "ts": "ImbewuField — ku pulana ka permaculture ka varimi va Afrika Dzonga",
+      "ve": "ImbewuField — u pulana ha permaculture ha vhalimi vha Afrika Tshipembe"
+    }
+  ],
+  "reconciliation": {
+    "base": "ff23dc4d1286e6e97326980727c7eb4c462d13e7",
+    "oldSource": "ImbewuField — permaculture planning for South African farmers",
+    "newSource": "ImbewuField — crop, nursery and garden planning",
+    "reason": "New product-identity source remains English until its changed meaning has reviewed native pairs."
+  },
   "protectedNames": [
     "ImbewuField",
     "ACT Teach the Teachers",

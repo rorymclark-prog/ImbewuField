@@ -1,0 +1,13 @@
+# Crop plan save feedback and final main reconciliation
+
+The crop plan could save successfully while its earlier unsaved-edits warning remained visible. A later save-related warning could also replace an independent source warning. The workflow now clears only its own pending-save message after a ready book read, and preserves other holds.
+
+Three additive actual-hook regressions retain all sixteen earlier controller test bodies. Running the new tests against the old hook produced two failures: the stale warning did not clear, and the independent warning was replaced. A continuing-held book remained held. The corrected pre-reconciliation tree passed Node24 typechecking and497 affected checks across39files, with clean whitespace. These are bounded checks, not full-suite or browser approval.
+
+This candidate reconciles exactly main06315a74ae03d6cb771c659776e09ce47f1d4a2b once. The current-main Sector renderer is retained byte-for-byte; its existing geometry and PLAN_VERSION are unchanged. This carries the already-published visual change and does not rework that renderer. Nursery source fingerprints stay unchanged. New release descriptions use four existing language maps; the supplied AI drafts remain unreviewed, and no language is activated or certified.
+
+Both parent release histories remain complete. The prior editing-access announcement moves below the first five announcements so the two existing nursery/research guide steps remain visible. A new leading save-feedback announcement describes local crop-plan feedback, not cloud confirmation or cleared independent source holds.
+
+The first reconciled run passed typechecking and496 of497 affected checks. Its remaining failure pinned illustrated cards to white, while newly published main deliberately uses dark contrast cards. That obsolete colour claim now checks a distinct measured backing around both complete text lines instead. All other ten typography tests, including actual contrast and both plain halos, remain; removing the real backing still fails despite the accent remaining. The corrected typography file passed all eleven checks and its damaged controls.
+
+Final reconciled Node24 typechecking,497/497 affected checks across39 files (no failed, cancelled, skipped or TODO checks) and whitespace all pass in order. These remain bounded checks. Current-head full CI and actual fixed-preview browser/account paths are still pending. Earlier print and client language-review evidence remains limited to its recorded source snapshots. The unrelated existing shape-sync TODO remains an explicit strict full-suite gate and is owned separately; no assertion was removed or weakened.

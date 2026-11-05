@@ -1,10 +1,30 @@
 import type { jsPDF } from 'jspdf';
 import { pdfSafe } from './crop-export-pdf';
-import { reportSowingCalendar, type ReportProductionYear } from './report-crop-plan';
+import { reportSowingCalendar, reportCropRows, type ReportProductionYear } from './report-crop-plan';
 import type { FactCropPlan } from './report-site-facts';
 
 /** Product windows and sowing starts accompany the report; bed allocations remain in the working plan. */
-export function drawReportCropSummary(doc: jsPDF, crop: FactCropPlan, _offset = 0, language = 'en'): void {
+export function drawReportCropSummary(doc: jsPDF, crop: FactCropPlan, _offset = 0, language = 'en', allowCataloguePlanning = false): void {
+  if (!allowCataloguePlanning) {
+    doc.addPage('a4', 'portrait'); doc.setFont('helvetica', 'bold'); doc.setFontSize(17);
+    doc.text('Saved sowing records', 40, 48); doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+    const note = 'Local crop guidance, inherited forecasts and derived task calendars are unavailable for the current site context. These are saved entries, not locally reviewed recommendations.';
+    const lines = doc.splitTextToSize(pdfSafe(note), 515) as string[]; doc.text(lines, 40, 76);
+    let y = 76 + lines.length * 13 + 14;
+    for (const row of reportCropRows(crop)) {
+      const text = doc.splitTextToSize(pdfSafe(`${row.name} - saved sowing: ${row.sow || 'Not recorded'} - ${row.where}`), 515) as string[];
+      for (const line of text) {
+        if (y + 13 > 770) {
+          doc.addPage('a4', 'portrait'); doc.setFont('helvetica', 'bold');
+          doc.text('Saved sowing records (continued)', 40, 45);
+          doc.setFont('helvetica', 'normal'); y = 70;
+        }
+        doc.text(line, 40, y); y += 13;
+      }
+      y += 8;
+    }
+    return;
+  }
   if (crop.snapshot?.annualProduction) drawReportProductionYear(doc, crop.snapshot.annualProduction, crop.snapshot.capturedAt, language);
   const margin = 40, width = 515, nameWidth = 167, monthWidth = (width - nameWidth) / 12;
   let y = 0;

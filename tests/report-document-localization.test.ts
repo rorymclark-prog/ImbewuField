@@ -1,3 +1,4 @@
+import { SUPPORTED_REPORT_COUNTRY_FIXTURE_URL } from './report-country-fixture.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
@@ -78,7 +79,7 @@ test('the real generator emits native covers and honest native incomplete, rejec
  const module=(s:string)=>'data:text/javascript,'+encodeURIComponent(s);const hooks=registerHooks({resolve(s,c,next){
   if(s==='@anthropic-ai/sdk')return {url:module('export default class Anthropic {}'),shortCircuit:true};
   if(s==='next/server')return {url:module('export class NextRequest {}'),shortCircuit:true};
-  if(s==='@/lib/api-auth')return {url:module('export async function guardPaidApiRequest(){return {uid:"document-translation-test"};}'),shortCircuit:true};
+  if(s==='@/lib/report-country-policy')return {url:SUPPORTED_REPORT_COUNTRY_FIXTURE_URL,shortCircuit:true};if(s==='@/lib/api-auth')return {url:module('export async function guardPaidApiRequest(){return {uid:"document-translation-test"};}'),shortCircuit:true};
   if(s==='@/lib/metered-ai')return {url:module(`export const AI_MODELS={main:'claude-sonnet-4-6'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async request=>{const c=globalThis[Symbol.for('imbewu-report-document-mock')];c.requests.push(request);if(c.mode==='failure')throw new Error('deliberate provider failure');return {usage:{},stop_reason:c.mode==='limit'?'max_tokens':'end_turn',content:[{type:'text',text:c.mode==='unsafe'?'Guava':'## Mocked source heading\\nOriginal mocked body.'}]};}}}};}`),shortCircuit:true};
   return next(s,c);
  }});const originalFetch=globalThis.fetch;globalThis.fetch=async()=>new Response('{}');

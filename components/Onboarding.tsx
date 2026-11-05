@@ -48,7 +48,7 @@ export default function Onboarding() {
             </div>
           </div>
           <div className="font-display font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>{tp('welcomeTitle')}</div>
-          <div className="font-display text-sm" style={{ color: 'var(--text-secondary)' }}>{tp('welcomeSub')}</div>
+          <div lang="en" className="font-display text-sm" style={{ color: 'var(--text-secondary)' }}>{tp('welcomeGrowerSub')}</div>
         </div>
 
         {/* LANGUAGE FIRST, BUTTON SECOND — this order is the whole point.

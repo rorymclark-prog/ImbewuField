@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
 import test from 'node:test';
@@ -125,8 +126,9 @@ function design(id: string): import('../lib/facilitator-design.ts').FacilitatorD
   };
 }
 
-test('a direct farmer switch keeps planning, progress and facilitator caches with their owner', () => {
+test('a direct farmer switch keeps planning, progress and facilitator caches with their owner',async()=>{
   accountState.currentUid = 'farmer-a';
+  await initialiseCropPlanFixture();
   cropPlan.saveCropPlan(plan('a-plan', 'winter'));
   cropPlan.saveFavouriteCropKeys(new Set(['lettuce']));
   cropPlan.saveAllowBedSharing(true);
@@ -139,6 +141,7 @@ test('a direct farmer switch keeps planning, progress and facilitator caches wit
   facilitatorDesign.saveFacilitatorState(design('a-design'));
 
   accountState.currentUid = 'farmer-b';
+  await initialiseCropPlanFixture();
   assert.deepEqual(cropPlan.loadCropPlan().plantings, []);
   assert.deepEqual([...cropPlan.loadFavouriteCropKeys()], []);
   assert.equal(cropPlan.loadAllowBedSharing(), false);
@@ -168,6 +171,7 @@ test('a direct farmer switch keeps planning, progress and facilitator caches wit
   facilitatorDesign.saveFacilitatorState(design('b-design'));
 
   accountState.currentUid = 'farmer-a';
+  await initialiseCropPlanFixture();
   assert.equal(cropPlan.loadCropPlan().plantings[0]?.id, 'a-plan');
   assert.equal(cropPlan.loadCropPlan().rainPattern, 'winter', 'the climate answer accepted with a crop plan must survive persistence');
   assert.deepEqual([...cropPlan.loadFavouriteCropKeys()], ['lettuce']);
@@ -184,12 +188,14 @@ test('a direct farmer switch keeps planning, progress and facilitator caches wit
 
   // Clearing B's design must never remove A's saved work.
   accountState.currentUid = 'farmer-b';
+  await initialiseCropPlanFixture();
   facilitatorDesign.clearFacilitatorState();
   accountState.currentUid = 'farmer-a';
+  await initialiseCropPlanFixture();
   assert.equal(facilitatorDesign.loadFacilitatorState()?.items[0]?.id, 'a-design');
 });
 
-test('backend-unconfigured local-only mode retains the historical bare storage keys', () => {
+test('backend-unconfigured local-only mode retains the historical bare storage keys',async()=>{
   accountState.backendConfigured = false;
   accountState.currentUid = null;
 

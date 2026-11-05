@@ -186,6 +186,8 @@ export default function ChatWidget() {
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
     pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
+    // Reviewers must be able to read every draft line; these worksheets keep help in flow.
+    pathname === '/international/locales' || pathname.startsWith('/international/locales/') ||
     // MEASURED COLLISIONS, 24 September. The FAB is fixed at 56x56, 130px up, z-60, in the same
     // spot on every route that has not bought its way out of the offset table below — and the
     // table had grown one page at a time while these five kept overlapping. Boxes measured at
@@ -375,6 +377,7 @@ function isLimaFabHiddenRoute(pathname: string): boolean {
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
     pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
+    pathname === '/international/locales' || pathname.startsWith('/international/locales/') ||
     pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
     pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||
     pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')

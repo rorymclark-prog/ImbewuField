@@ -1,0 +1,116 @@
+{
+  "locale": "bn",
+  "sourceSha256": "1ad74cb3f57f231db0e80de9f5fc154f057db42485c628e6510711a79addc6ef",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "nurseryUnits01",
+      "english": "Nursery units",
+      "sha256": "d8f931a5013cb2bbc81c87675c50b6eb628f6ba547c4bf6bde96adde84106954",
+      "translation": "চারাশালার একক"
+    },
+    {
+      "key": "nurseryUnits02",
+      "english": "Centimetres and square metres (cm / m²)",
+      "sha256": "78bc6088dca3ee49ecc9ec36e22408ff579917c3204cedd6cac340cecc72963c",
+      "translation": "সেন্টিমিটার ও বর্গমিটার (cm / m²)"
+    },
+    {
+      "key": "nurseryUnits03",
+      "english": "Inches and square feet (in / ft²)",
+      "sha256": "b451b72f47edd900ecd923ce587f59a7ffba2e5871e6d5464ca72748810c1f0b",
+      "translation": "ইঞ্চি ও বর্গফুট (in / ft²)"
+    },
+    {
+      "key": "nurseryUnits04",
+      "english": "Space name",
+      "sha256": "18aeecdda1d3224378e1f94668364a84dfb18ca90239461b58469c57da022ab7",
+      "translation": "চারা উৎপাদনের স্থানের নাম"
+    },
+    {
+      "key": "nurseryUnits05",
+      "english": "Container name",
+      "sha256": "8d3a5415ee22e30f39114240c191b98b52f67ea8d52a6d8fede1ed76768cba98",
+      "translation": "পাত্রের নাম"
+    },
+    {
+      "key": "nurseryUnits06",
+      "english": "Cells per container (optional)",
+      "sha256": "efe3e1950d552e3a5436f70cd2bc278c1d0ede6bf5ab65b51a799c38c3b4d4aa",
+      "translation": "প্রতি পাত্রে খোপের সংখ্যা (ঐচ্ছিক)"
+    },
+    {
+      "key": "nurseryUnits07",
+      "english": "Owned containers (optional)",
+      "sha256": "f9002da6d77f9ea353bcc69b1fe983f9f69ab42c73b7cf8bdd7319ab2aa9b785",
+      "translation": "নিজস্ব পাত্রের সংখ্যা (ঐচ্ছিক)"
+    },
+    {
+      "key": "nurseryUnits08",
+      "english": "Unknown",
+      "sha256": "b764cdc0eab7137467211272fa539f1260d1bf2e71bcf6ff3bdc960f5c16aa14",
+      "translation": "অজানা"
+    },
+    {
+      "key": "nurseryUnits09",
+      "english": "Add nursery space",
+      "sha256": "63737b9dc87f2263716aa1aec9e78213660602c638857a7e4a400e43564a40b4",
+      "translation": "চারাশালার স্থান যোগ করুন"
+    },
+    {
+      "key": "nurseryUnits10",
+      "english": "Save space changes",
+      "sha256": "1bc55657b176c47e5d7eba167783ce58669fb55f47855c73985dc06702713ac0",
+      "translation": "স্থানের পরিবর্তন সংরক্ষণ করুন"
+    },
+    {
+      "key": "nurseryUnits11",
+      "english": "Add container type",
+      "sha256": "ad2e1ebadf709271b325960e2939aa2b0a76dd4819d78b168ca26d7466a5bc82",
+      "translation": "পাত্রের ধরন যোগ করুন"
+    },
+    {
+      "key": "nurseryUnits12",
+      "english": "Save container changes",
+      "sha256": "9e18bd6f0ee3d0f5323c5e68bb5afbfe36be5bbf8a93fc8c0377d90467d3c4b3",
+      "translation": "পাত্রের পরিবর্তন সংরক্ষণ করুন"
+    },
+    {
+      "key": "nurseryUnits13",
+      "english": "Reload saved nursery settings",
+      "sha256": "e09eb8891d324ad6a3bece7567421d7e1500ecfe8990c4ffac82df23d031d5ca",
+      "translation": "সংরক্ষিত চারাশালার সেটিংস পুনরায় লোড করুন"
+    },
+    {
+      "key": "nurseryUnits14",
+      "english": "Nursery unit choice remembered on this device.",
+      "sha256": "b019eeef9df1a7b58e71eb4d86167c272121d426a8c9a47b9d89702d6ee980d4",
+      "translation": "চারাশালার একক পছন্দ এই ডিভাইসে মনে রাখা হয়েছে।"
+    },
+    {
+      "key": "nurseryUnits15",
+      "english": "Nursery unit choice applies only to this sample session.",
+      "sha256": "c9e188c1cd95abe47749b6e7536c5df31b2034266c441e03d277e2d8ed1b5063",
+      "translation": "চারাশালার একক পছন্দ কেবল এই নমুনা সেশনে প্রযোজ্য।"
+    },
+    {
+      "key": "nurseryUnits16",
+      "english": "Nursery unit choice works here, but could not be remembered on this device.",
+      "sha256": "164da310b150a50d632945d456c3cc5ef871c8695d8760cb862d33672c0f86a5",
+      "translation": "চারাশালার একক পছন্দ এখানে কাজ করছে, কিন্তু এই ডিভাইসে মনে রাখা যায়নি।"
+    },
+    {
+      "key": "nurseryUnits17",
+      "english": "Save outcome is not confirmed. Your entries are retained. Reload saved nursery settings before trying again.",
+      "sha256": "9b9a395a77cad510b6339eb07a4bc14492f3c63533597cf9cfd2e1f17e7d383c",
+      "translation": "সংরক্ষণের ফলাফল নিশ্চিত নয়। আপনার এন্ট্রিগুলো রেখে দেওয়া হয়েছে। আবার চেষ্টা করার আগে সংরক্ষিত চারাশালার সেটিংস পুনরায় লোড করুন।"
+    },
+    {
+      "key": "nurseryUnits18",
+      "english": "Saved nursery settings reloaded.",
+      "sha256": "1dfcbac2ece41774260b34bbbc2a1c504e4d8d97064ca455969891229b35b2f0",
+      "translation": "সংরক্ষিত চারাশালার সেটিংস পুনরায় লোড করা হয়েছে।"
+    }
+  ]
+}

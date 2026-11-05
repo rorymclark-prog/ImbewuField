@@ -2,19 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
+import { resolveDesignAdvicePolicy } from '@/lib/design-advice-policy';
 
-// Advice calls are small and frequent (fired on most canvas edits) — allow up to 30s
-// but keep them cheap: claude-haiku-4-5, short system prompt, short max_tokens.
+// Explicit advice requests remain small: the saved summary needs no image pass.
 export const maxDuration = 30;
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
-
-const SYSTEM_PROMPT = `You are a permaculture design mentor for South African smallholder farmers. Southern Hemisphere: the north side gets the most sun; shadows fall south. Given the farmer's current design layout summary and site data, return the 3 most valuable, specific, actionable suggestions. "groundFeatures" is EXISTING site fabric the farmer already traced (house, patio, driveway, lawn, orchard, veg garden, cleared ground) — context to design around, never something to critique or redesign. "currentStep" is which part of the design the farmer is actively working on right now — weight suggestions toward that step when it's useful, but don't ignore the rest of the design. You may suggest what to place and roughly where; you never place anything yourself. Keep each suggestion under 25 words. Return STRICT JSON: {"suggestions":["...","...","..."]}`;
-
-interface DesignAdviceRequest {
-  designSummary: unknown;
-  site?: unknown;
-}
+const SYSTEM_PROMPT = `You are a permaculture design mentor using the app's existing South African references. This is grower-confirmed reference context, not independently verified geography or local agronomy approval. Southern Hemisphere: the north side gets the most sun; shadows fall south. Given the saved design layout summary, return the 3 most valuable, specific, actionable suggestions. Do not invent missing environmental facts, species, spacings, yields, rainfall or timings. "groundFeatures" is EXISTING site fabric the farmer already traced (house, patio, driveway, lawn, orchard, veg garden, cleared ground) — context to design around, never something to critique or redesign. "currentStep" is which part of the design the farmer is actively working on right now — weight suggestions toward that step when it's useful, but don't ignore the rest of the design. You may suggest roughly where to put existing design elements; you never place anything yourself. Keep each suggestion under 25 words. Return STRICT JSON: {"suggestions":["...","...","..."]}`;
 
 interface DesignAdviceAI {
   suggestions: string[];
@@ -23,9 +16,6 @@ interface DesignAdviceAI {
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/design-advice');
   if (auth.response) return auth.response;
-  const metered = await meteredAi(req, auth, '/api/design-advice', client);
-  if (metered.response) return metered.response;
-  const { ai } = metered;
   let body: unknown;
   try {
     body = await req.json();
@@ -33,12 +23,26 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const b = body as Partial<DesignAdviceRequest>;
-  if (!b || typeof b.designSummary === 'undefined') {
-    return NextResponse.json({ error: 'designSummary is required' }, { status: 400 });
-  }
-
-  const userMessage = JSON.stringify({ designSummary: b.designSummary, site: b.site ?? null });
+  const decision = await resolveDesignAdvicePolicy(req, auth, body);
+  if (!decision.allowed) return NextResponse.json({ code: decision.code, error: decision.error },
+    { status: decision.status, headers: { 'Cache-Control': 'no-store' } });
+  const contextChanged = () => NextResponse.json({ code: 'ADVICE_CONTEXT_CHANGED',
+    error: 'The design or its country details changed or could not be checked. Ask again after the intended site saves. Completed AI work may already have used allowance.' },
+    { status: 409, headers: { 'Cache-Control': 'no-store' } });
+  const stillCurrent = async () => {
+    if (req.signal.aborted) return false;
+    const fresh = await resolveDesignAdvicePolicy(req, auth, body);
+    return !req.signal.aborted && fresh.allowed && fresh.fingerprint === decision.fingerprint;
+  };
+  // Country/source reads and hashing may await account updates. Check again
+  // before allowance setup, before the provider, and before releasing its text.
+  if (!await stillCurrent()) return contextChanged();
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
+  const metered = await meteredAi(req, auth, '/api/design-advice', client);
+  if (metered.response) return metered.response;
+  if (!await stillCurrent()) return contextChanged();
+  const { ai } = metered;
+  const userMessage = JSON.stringify({ designSummary: decision.summary, referenceMode: decision.mode });
 
   let raw: string;
   try {
@@ -56,6 +60,8 @@ export async function POST(req: NextRequest) {
     const msg = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ error: `Claude API error: ${msg}` }, { status: 502 });
   }
+
+  if (!await stillCurrent()) return contextChanged();
 
   // Parse defensively — extract the first {...} block in case Claude wraps it in prose/fences.
   const match = raw.match(/\{[\s\S]*\}/);
@@ -76,5 +82,7 @@ export async function POST(req: NextRequest) {
 
   const suggestions = parsed.suggestions.filter((s): s is string => typeof s === 'string').slice(0, 3);
 
-  return NextResponse.json({ suggestions });
+  return NextResponse.json({ suggestions, mode: decision.mode, siteId: decision.siteId,
+    sourceFingerprint: decision.sourceFingerprint, countryFingerprint: decision.countryFingerprint,
+    currentStep: decision.summary.currentStep }, { headers: { 'Cache-Control': 'no-store' } });
 }

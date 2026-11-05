@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "02a028ba692a99a4da0adf9cc58cf6f5b2073c162238793e4c9c5692559258b1",
+  "milestoneId": "kmd-kiambu-bulletin-links",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "reviewNotes": "Twelve Codex AI release-description candidates for four existing update languages only. Explicit Kiambu official-source links; inspected source dates do not establish currentness or latest status and links do not update crop advice. No fluent or human approval and no new runtime language. Separate from native AGY draft ownership.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "840421b610f5a5bc64724e116f781421c8f5f4d812ba2dd25e9e5f40a3235b53",
+      "selectedFileSha256": "ea2739dd4749de2d7c87dd3b829044911b8de99fb5119eafeaf7c0c4e3e53e92",
+      "historicalBytesPreserved": true
+    },
+    "st": {
+      "originalFileSha256": "1ad51d7d280157f7d8e20b32c0ac6123adf151bffea23752abed2fce74e02dd2",
+      "selectedFileSha256": "88a86a407d7e75e96002ffadb2a8afb058cfd282f4f827d8320ee67dd8673a8a",
+      "historicalBytesPreserved": true
+    },
+    "ve": {
+      "originalFileSha256": "85c416a4925d3d3c9098258b8b2679e1f593bb9d604b07ff3febe1f4d829be48",
+      "selectedFileSha256": "e3f09c09e31270528d68f644e11771977fe8e6b9e81266dbf1f4b92db6b176d2",
+      "historicalBytesPreserved": true
+    },
+    "ts": {
+      "originalFileSha256": "6de11573750000a6303a0db985850302245a20fbad57bb24adb4bf587e86e1fe",
+      "selectedFileSha256": "fd46ad731e5d21587dc21fc155c748c675668f34e438251ba99d6f5f5a347063",
+      "historicalBytesPreserved": true
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Find official Kiambu bulletin links",
+      "zu": "Thola izixhumanisi ezisemthethweni zemibiko yaseKiambu",
+      "st": "Fumana dihokelo tsa semmuso tsa ditlaleho tsa Kiambu",
+      "ve": "Wanani dzi-link dza tshiofisi dza mivhigo ya Kiambu",
+      "ts": "Kuma swihlanganisi swa ximfumo swa swiviko swa Kiambu",
+      "messageSha256": "b57f74ac1dbe956c22f35c18c413f4974017b9db3ce32f22b73f3e28ff95886b"
+    },
+    {
+      "english": "Country evidence → Kenya → County bulletin links",
+      "zu": "Ubufakazi bezwe → Kenya → Izixhumanisi zemibiko yesifunda",
+      "st": "Bopaki ba naha → Kenya → Dihokelo tsa ditlaleho tsa county",
+      "ve": "Vhuṱanzi ha shango → Kenya → Dzi-link dza mivhigo ya county",
+      "ts": "Vumbhoni bya tiko → Kenya → Swihlanganisi swa swiviko swa county",
+      "messageSha256": "7fb7b024c7a6855fda092a5cdbd5b72b8fc52e03f1322e745841aeba986bdb81"
+    },
+    {
+      "english": "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.",
+      "zu": "Khetha i-Kiambu ukuze uvule ikhasi lombiko elisemthethweni elihloliwe noma i-PDF yawo, bese uthola eminye imibiko ye-KMD. Izinsuku zomthombo nokungaziwa kokuthi ulwazi lusha kangakanani kuhlala kubonakala; lezi zixhumanisi azibuyekezi izeluleko zezitshalo.",
+      "st": "Kgetha Kiambu ho bula leqephe la semmuso la tlaleho le hlahlobilweng kapa PDF ya yona le ho fumana ditlaleho tse ding tsa KMD. Matsatsi a mohlodi le ho se tsejwe hore tlhahisoleseding e ntjha hakae di dula di bonahala; dihokelo tsena ha di ntjhafatse keletso ya dijalo.",
+      "ve": "Nangani Kiambu u vula siaṱari ḽa tshiofisi ḽa muvhigo ḽo sedzuluswaho kana PDF yaḽo, na u wana miṅwe mivhigo ya KMD. Maḓuvha a tshiko na u sa ḓivhea uri mafhungo ndi maswa hani zwi dzula zwi tshi vhonala; hedzi dzi-link a dzi shanduli nyeletshedzo ya zwimela.",
+      "ts": "Hlawula Kiambu ku pfula tluka ra ximfumo ra xiviko leri kamberiweke kumbe PDF ya xona ni ku kuma swiviko swin’wana swa KMD. Masiku ya xihlovo ni ku nga tiveki ka leswaku mahungu ma ha ri mantshwa swi sala swi vonaka; swihlanganisi leswi a swi pfuxeti switsundzuxo swa swibyariwa.",
+      "messageSha256": "f30fa2ab73d3dcce6f33ba4c5ea202de6bc6a75becc9d68142a312f374feb806"
+    }
+  ]
+}

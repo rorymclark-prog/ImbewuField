@@ -1,0 +1,98 @@
+{
+  "locale": "bn",
+  "sourceSha256": "44f0468f6d074f854fbe183b23bf2369f8768fa8bffa7e3c05f521779536501e",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "nurseryReviewUi.message.01",
+      "english": "Nursery field-planting language worksheet",
+      "messageSha256": "2b8017ce859ee64d97be996bc64b97695ffca17d82beb242734e0afe7434a38f",
+      "translation": "নার্সারি থেকে জমিতে রোপণের ভাষা বিষয়ক ওয়ার্কশিট"
+    },
+    {
+      "key": "nurseryReviewUi.message.02",
+      "english": "Current source checks",
+      "messageSha256": "88f619d10a2e5ec2d6ed26d7f2dc21798bcfee0040bdebc8a58e82b48a2ed467",
+      "translation": "বর্তমান উৎস পরীক্ষা"
+    },
+    {
+      "key": "nurseryReviewUi.message.03",
+      "english": "These checks compare current component files with the frozen capture. Matching bytes do not verify a translation’s meaning or fluent quality.",
+      "messageSha256": "74ef295d947deee34a126cb606ece24be09c5f8a0df3672677188cd4ee908513",
+      "translation": "এই পরীক্ষাগুলি বর্তমান উপাদান ফাইলগুলির সাথে অপরিবর্তিত ক্যাপচারের তুলনা করে। বাইট মিলে যাওয়া কোনো অনুবাদের অর্থ বা সাবলীল মান যাচাই করে না।"
+    },
+    {
+      "key": "nurseryReviewUi.message.04",
+      "english": "Choose a draft to compare",
+      "messageSha256": "00b2930c0d0d1dce076663665e147b5b0fd1b6b5c45db1f71ca0f1623a3354b7",
+      "translation": "তুলনা করার জন্য একটি খসড়া বেছে নিন"
+    },
+    {
+      "key": "nurseryReviewUi.message.05",
+      "english": "Draft language",
+      "messageSha256": "b67c4fe5f96fc7e7e2eef2c4f1658359e3586649120acb45be040fa08240c7ab",
+      "translation": "খসড়ার ভাষা"
+    },
+    {
+      "key": "nurseryReviewUi.message.06",
+      "english": "Find a key, English wording or draft",
+      "messageSha256": "97774afc46d8903e0571b0abe9a283de0eddccb864a026b49ea442ed07bc1258",
+      "translation": "একটি কী, ইংরেজি শব্দ বা খসড়া খুঁজুন"
+    },
+    {
+      "key": "nurseryReviewUi.message.07",
+      "english": "Download draft review worksheet (CSV)",
+      "messageSha256": "f788be125f5e6ab9c8d761e401a33a16dda697241d3779c1f45233486984fd3a",
+      "translation": "খসড়া পর্যালোচনার ওয়ার্কশিট ডাউনলোড করুন (CSV)"
+    },
+    {
+      "key": "nurseryReviewUi.message.08",
+      "english": "Worksheet download requested. Check your downloads.",
+      "messageSha256": "32ce453ea0127ee23acd47e7024c14addc6d8034719bc224d3e8b0a97074b451",
+      "translation": "ওয়ার্কশিট ডাউনলোডের অনুরোধ করা হয়েছে। আপনার ডাউনলোডগুলি দেখুন।"
+    },
+    {
+      "key": "nurseryReviewUi.message.09",
+      "english": "No messages match this search.",
+      "messageSha256": "9d52d1e80a35e89e9025829d2e9da041d632cf40b29aae2f2c6a956b43c3ea78",
+      "translation": "এই অনুসন্ধানের সাথে কোনো বার্তা মেলেনি।"
+    },
+    {
+      "key": "nurseryReviewUi.message.10",
+      "english": "This frozen wording is not verified as the current English source.",
+      "messageSha256": "fe6669b5058e03fe216ed1827cdb772a50d04d01a3fe0033e10d137ebcbb63bc",
+      "translation": "এই অপরিবর্তিত কথাটি বর্তমান ইংরেজি উৎস হিসেবে যাচাই করা হয়নি।"
+    },
+    {
+      "key": "nurseryReviewUi.message.11",
+      "english": "AI draft, not fluent human approval. This worksheet does not save an approval or publish this wording.",
+      "messageSha256": "b4496d2254e805c653ab84d5efbcac437429ad155e4bbeda98e15547fa7c9865",
+      "translation": "এআই খসড়া, ভাষায় পারদর্শী কোনো মানুষের অনুমোদন নয়। এই ওয়ার্কশিট কোনো অনুমোদন সংরক্ষণ করে না বা এই শব্দ চয়ন প্রকাশ করে না।"
+    },
+    {
+      "key": "nurseryReviewUi.message.12",
+      "english": "No draft text is available for comparison.",
+      "messageSha256": "1826e13638240de15c37db78c87d660e73785f66609eb716cc29a2e21c576b2e",
+      "translation": "তুলনার জন্য কোনো খসড়া পাঠ্য উপলব্ধ নেই।"
+    },
+    {
+      "key": "nurseryReviewUi.message.13",
+      "english": "Current file changed · source binding unavailable",
+      "messageSha256": "ed2ffd745fad5d7f17f3d1a693326dee3879a2538a78183c24ca42da24519cf2",
+      "translation": "বর্তমান ফাইল পরিবর্তিত হয়েছে · উৎসের সংযোগ উপলব্ধ নেই"
+    },
+    {
+      "key": "nurseryReviewUi.message.14",
+      "english": "Current file unavailable · source binding unavailable",
+      "messageSha256": "2aebfa637355a7d11f24c515c36749af03385ec67fa0b1ecfc5c8c4d0822a004",
+      "translation": "বর্তমান ফাইল উপলব্ধ নেই · উৎসের সংযোগ উপলব্ধ নেই"
+    },
+    {
+      "key": "nurseryReviewUi.message.15",
+      "english": "Current file fingerprint matches the frozen capture",
+      "messageSha256": "31c1ed8bb4d566edd1f76afd2404ee1317daa72eb4fe998c6b2dfc439bddeefc",
+      "translation": "বর্তমান ফাইলের ফিঙ্গারপ্রিন্ট অপরিবর্তিত ক্যাপচারের সাথে মিলে গেছে"
+    }
+  ]
+}

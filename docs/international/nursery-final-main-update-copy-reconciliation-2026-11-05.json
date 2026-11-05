@@ -1,0 +1,121 @@
+{
+  "atUtc": "2026-11-05T18:24:12.715211+00:00",
+  "candidateParent": "eff63c3cb90ba78911d7f2dbdedb98a75954e522",
+  "publishedMainParent": "805a5a49621ed4ab46ea0eed6008612c563435a4",
+  "inputSha256": "b977ebd2858bc98442005d2760f38f136ac886a9b03e886691072416a62d22d4",
+  "scope": "Source-bound retention of current-main update descriptions. No new generated translations, human/fluent approval or runtime language. Same-English conflicts choose exact already-published main values; former unreleased candidate alternatives remain recorded below. All other candidate values and all current-main keys/values must be retained.",
+  "locales": [
+    {
+      "locale": "st",
+      "path": "lib/update-copy-locales/st.ts",
+      "baselineSha256": "6b099e52ac8dac6200044760a76fddce2c53424c151bb8b9086d97578241207a",
+      "previousPairs": 429,
+      "mainPairs": 284,
+      "additions": [
+        {
+          "english": "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.",
+          "translation": "Ditshwantsho tsa Sector di na le metsu e hlahelletseng, matshwao a maholo a letsatsi le senotlolo sa mmapa se hlakileng ho feta."
+        }
+      ],
+      "replacements": [
+        {
+          "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+          "previousUnreleasedCandidate": "Ditshwantsho tsa karolo jwale di bontsha mela e motenya ya sebopeho sa mobu le mela e tsamaelanang ya tlhaloso ya mmapa.",
+          "translation": "Ditshwantsho tsa Sector jwale di bontsha mela e hlahelletseng ya bophahamo ba mobu le mela e tsamaellanang le yona senotlolong sa mmapa.",
+          "selectionReason": "Retain exact already-published current-main value for same English key; no fluent approval or newly generated wording."
+        },
+        {
+          "english": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+          "previousUnreleasedCandidate": "Ditshwantsho tsa karolo di boloka mebala e matla haholoanyane, e nang le mangolo a maholwanyane le mela e hlakileng ya sebopeho sa mobu.",
+          "translation": "Ditshwantsho tsa Sector di boloka mebala e nonneng, di na le mabitso a maholo le mela ya bophahamo e hlakileng ho feta.",
+          "selectionReason": "Retain exact already-published current-main value for same English key; no fluent approval or newly generated wording."
+        }
+      ],
+      "expectedPairs": 430
+    },
+    {
+      "locale": "ts",
+      "path": "lib/update-copy-locales/ts.ts",
+      "baselineSha256": "e32434e3b95e08a4bea7680db2d9a92d992f2f77c474f27f4ce86c6699d8654b",
+      "previousPairs": 429,
+      "mainPairs": 284,
+      "additions": [
+        {
+          "english": "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.",
+          "translation": "Swifaniso swa Sector swi ni miseve leyi vonakaka kahle, mimfungho leyikulu ya dyambu ni xilotlelo xa mepe lexi nga erivaleni swinene."
+        }
+      ],
+      "replacements": [
+        {
+          "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+          "previousUnreleasedCandidate": "Swifaniso swa xiyenge sweswi swi kombisa milayeni yo bumbula ya xivumbeko xa misava na milayeni leyi fambelanaka ya nhlamuselo ya mepe.",
+          "translation": "Swifaniso swa Sector sweswi swi komba milayeni yo tlakuka ka misava leyi vonakaka kahle ni milayeni leyi fambelanaka na yona eka xilotlelo xa mepe.",
+          "selectionReason": "Retain exact already-published current-main value for same English key; no fluent approval or newly generated wording."
+        },
+        {
+          "english": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+          "previousUnreleasedCandidate": "Swifaniso swa xiyenge swi hlayisa mihlovo leyi fuweke swinene, hi marito lamakulu na mitsila leyi nga erivaleni ya vuandlalo bya misava.",
+          "translation": "Swifaniso swa Sector swi hlayisa mihlovo leyi fuweke, swi ni malebulu lamakulu ni milayeni yo tlakuka leyi nga erivaleni swinene.",
+          "selectionReason": "Retain exact already-published current-main value for same English key; no fluent approval or newly generated wording."
+        }
+      ],
+      "expectedPairs": 430
+    },
+    {
+      "locale": "ve",
+      "path": "lib/update-copy-locales/ve.ts",
+      "baselineSha256": "5e1c75aa064272518094634e8d1075c6d2d3208364682a43eab706c08f8217a8",
+      "previousPairs": 429,
+      "mainPairs": 284,
+      "additions": [
+        {
+          "english": "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.",
+          "translation": "Zwifanyiso zwa Sector zwi na misevhe i vhonalaho zwavhuḓi, zwiga zwihulwane zwa ḓuvha na ṱhalutshedzo ya mapa i re khagala nga u engedza."
+        }
+      ],
+      "replacements": [
+        {
+          "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+          "previousUnreleasedCandidate": "Zwienziso zwa tshipida zwino zwi sumbedza mitalo yo dziaho ya vhuimo ha mavu na mitalo i yelanaho ya thaluso ya mafulo.",
+          "translation": "Zwifanyiso zwa Sector zwino zwi sumbedza mitalo ya vhulapfu ha mavu i vhonalaho zwavhuḓi na mitalo i elanaho nayo kha ṱhalutshedzo ya mapa.",
+          "selectionReason": "Retain exact already-published current-main value for same English key; no fluent approval or newly generated wording."
+        },
+        {
+          "english": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+          "previousUnreleasedCandidate": "Zwifanyiso zwa sekithara zwi vhulunga mivhala yo natesheaho, i re na madzina mahulwane na mitalo ya mavu i vhonalaho zwavhudi.",
+          "translation": "Zwifanyiso zwa Sector zwi vhulunga mivhala yo pfumaho, zwi na malebulu mahulwane na mitalo ya vhulapfu i re khagala nga u engedza.",
+          "selectionReason": "Retain exact already-published current-main value for same English key; no fluent approval or newly generated wording."
+        }
+      ],
+      "expectedPairs": 430
+    },
+    {
+      "locale": "zu",
+      "path": "lib/update-copy-locales/zu.ts",
+      "baselineSha256": "7fd01a5f2dd056575b8cc6f55f1bcb7d7f55476edd59fdc98a77c153889e6886",
+      "previousPairs": 429,
+      "mainPairs": 284,
+      "additions": [
+        {
+          "english": "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.",
+          "translation": "Imidwebo yeSector inemicibisholo egqamile, izimpawu zelanga ezinkulu nokhiye wemephu ocace kakhudlwana."
+        }
+      ],
+      "replacements": [
+        {
+          "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+          "previousUnreleasedCandidate": "Imifanekiso yesigaba manje ibonisa imigqa egqamile yokuma komhlaba kanye nemigqa efanayo yenkcazelo yemephu.",
+          "translation": "Imidwebo yeSector manje ibonisa imigqa yokuphakama egqamile nemigqa ehambisana nayo kukhiye wemephu.",
+          "selectionReason": "Retain exact already-published current-main value for same English key; no fluent approval or newly generated wording."
+        },
+        {
+          "english": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+          "previousUnreleasedCandidate": "Imifanekiso yomkhakha igcina umbala othe xaxa, enamalebula amakhudlwana nemigqa ecacile yokuma komhlaba.",
+          "translation": "Imidwebo yeSector igcina imibala egqamile, inamalebula amakhulu nemigqa yokuphakama ecace kakhudlwana.",
+          "selectionReason": "Retain exact already-published current-main value for same English key; no fluent approval or newly generated wording."
+        }
+      ],
+      "expectedPairs": 430
+    }
+  ]
+}

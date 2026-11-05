@@ -1,0 +1,114 @@
+{
+  "coordinatorReview": "exact source-text/hash reconciliation only; not fluent or customer review",
+  "checkedAtUtc": "2026-11-03T15:24:59.322828+00:00",
+  "implementationCommit": "7833c0ac4abc74567535bd6e91da71d8b872b4f8",
+  "sourcePacketSha256": "b66aea500317293ef523972b154170e39b056b288b9446394d3ce7646ddf7e21",
+  "originalPacketUnchanged": true,
+  "files": [
+    {
+      "path": "components/crops/HarvestTargetsPanel.tsx",
+      "frozenSnapshot": {
+        "bytes": 36446,
+        "sha256": "e93170c01c122cf72b375902995a67da040d8703de60f15a86e12a353ebebe97"
+      },
+      "currentBytes": 37369,
+      "currentSha256": "d19f40438b644404ab0c5e90f6f9d603d95e066881f2811d1edac2683d7ec3ac"
+    }
+  ],
+  "messages": [
+    {
+      "key": "harvestMass01",
+      "englishSha256": "f6b53120ec4a665b8645d6cb21925ebbb4678ebdd3d627911962b687cec26fe7",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass02",
+      "englishSha256": "7c066ab3b46ec7c8dc585e809174fae3732def2471fb43308ebc98b769160263",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass03",
+      "englishSha256": "499322ae749ca536047d6f8bde107102d61861b2c9eed423e2bd7e447e97eadc",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass04",
+      "englishSha256": "96c9b8895822e894ad27ccfbd1f5253e090cc29cd3f9bc877fe95ae9fd0e4383",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass05",
+      "englishSha256": "462087ef42f5dc37f49563d7ea65b3e46c6e12b5ae361080e8eda8666248c1b1",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass06",
+      "englishSha256": "10a44e8ffa3352368698acf45592acc2b4b135d09fb2822a9b39c418567908d5",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass07",
+      "englishSha256": "de691f5521026fca6ab3c4ae9b7d7196f8b05dd0d4c6c01cb7d6de50e1dee2fd",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass08",
+      "englishSha256": "452ec4f8a80e6ffd6b1129dfdd6cad72667f7631093076f60ec85d5fea115fa3",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass09",
+      "englishSha256": "ded75c3bad61f544d2a31693a02b699b4e9ea924e7eb9afd5df41e18e1dc2f83",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass10",
+      "englishSha256": "6090f94eb444e8b961ff3ea4dd9409240b45080b320ff66e3948b0e837c69931",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass11",
+      "englishSha256": "cb1364bbdfa23c2c514b16fe7cbeb05842fc9e530d3fe3512df41271609d0d25",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass12",
+      "englishSha256": "26fa0df04f6cfcfe5c664c6f7bd209a80991f89cce2f26ea69de35eb39a05b58",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass13",
+      "englishSha256": "de2ffb311eb29633b3eab716392fde1aade8acfb0d0331a2c1f279f322922185",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass14",
+      "englishSha256": "a72a01d1f446b5b049ea2a4ebccb131aa60c88d55a40e19e21201eb804c563ed",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass15",
+      "englishSha256": "dfc11919d87e762960ff7547b2f9137fb9cc1ead4a0232347cc9be70a84daf41",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass16",
+      "englishSha256": "b2e275ceb292064d48fe2a1beaff9d0da015c4abfdb01053f5cfcd45fd7748ed",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass17",
+      "englishSha256": "1c4b787df8198f07a32b85c11080001fc4bdb03353d2e90e597a73632930732a",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMass18",
+      "englishSha256": "681743bb9fb9ae47ecda4ddca3423cc33162fe4151975af8a9f2a55cea0c12d2",
+      "exactEnglishPresent": true
+    }
+  ],
+  "selectedDescriptionPairs": 0,
+  "newRuntimeLanguages": false,
+  "humanApproval": false,
+  "note": "Generation runtimeActivation false remains historical. Global messages remain unselected; clarified SA descriptions use the existing disclosed draft tables. Release SHA-only restamp and subsequent code changes do not alter these exact English messages."
+}

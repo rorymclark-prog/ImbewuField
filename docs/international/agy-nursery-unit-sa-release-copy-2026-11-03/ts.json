@@ -1,0 +1,44 @@
+{
+  "locale": "ts",
+  "sourceSha256": "0757135f0b7b1fbb405e0b20378ea9e3519f5981ffa7acb02c217140a045206d",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "nurseryRelease01",
+      "english": "Enter nursery tray dimensions in centimetres or inches.",
+      "sha256": "d3a7d9692de4a550545a6db23284f4963d7138b66e0cc937205df7fa361db8d0",
+      "translation": "Nghenisa mimpimo ya tithireyi ta xirhapa xa swimilana hi tisentimitara (cm) kumbe ti-inch (in)."
+    },
+    {
+      "key": "nurseryRelease02",
+      "english": "Enter usable nursery surface in square metres or square feet.",
+      "sha256": "a1a2399cd320ab99d9b1bef293b1e571e5ae6217a7d90fb88963742fff4a6846",
+      "translation": "Nghenisa ndhawu leyi tirhisekaka ya xirhapa xa swimilana hi timitara ta xikwere (m²) kumbe tifiti ta xikwere (ft²)."
+    },
+    {
+      "key": "nurseryRelease03",
+      "english": "Keep nursery entries until their save is confirmed.",
+      "sha256": "685c8d76dd8015a7e048b553d3d74ebbdf70fec10d526b968945316c5cd3b1e7",
+      "translation": "Tshika leswi nghenisiweke swa xirhapa xa swimilana swi ri kona ku fikela loko ku hlayisiwa ka swona ku tiyisisiwa."
+    },
+    {
+      "key": "nurseryRelease04",
+      "english": "Choose nursery units",
+      "sha256": "ed0aa0520bba6db48099599e43e3b12cb3372ff7c5e60d163d226d471472e0f7",
+      "translation": "Hlawula tiyuniti ta xirhapa xa swimilana"
+    },
+    {
+      "key": "nurseryRelease05",
+      "english": "Production plan → Nursery planner",
+      "sha256": "363567fb24f40588cfbecfc2d757a4ed01849b82e0c45fa430085eaa9e1aa665",
+      "translation": "Kunguhato wa vuhumelerisi → Xikunguhati xa xirhapa xa swimilana"
+    },
+    {
+      "key": "nurseryRelease06",
+      "english": "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.",
+      "sha256": "f7e04b4cc0657845fe48458355a716e01e256abb1e84fdf9dc875ad28e6f080d",
+      "translation": "Hlawula tiyuniti ta wena, nghenisa vukulu bya tithireyi ni ndhawu yo mirisa leyi tirhisekaka, kutani u hlayisa. Mimpimo ya switirhisiwa leyi nga tiviwiki yi tshama yi nga tsariwanga nchumu; nhlayo ya switirhisiwa ya zero yi tshama yi ri zero."
+    }
+  ]
+}

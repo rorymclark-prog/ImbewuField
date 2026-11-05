@@ -49,9 +49,13 @@ import { parseTaskHarvestQuery } from '@/lib/task-record-link';
 import { getCropArt } from '@/lib/crop-art';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
 import { parseDecimalInput } from '@/lib/decimal-input';
-import { loadInvoices, type SavedInvoice } from '@/lib/invoices';
-import { cashIncomeTotal } from '@/lib/invoice-sales';
-import { creditPackHasAnyRecords, buildMonthlyCashFlow } from '@/lib/credit-pack';
+import { loadInvoices, invoiceBookIsCurrent, type SavedInvoice } from '@/lib/invoices';
+import { useInvoiceBookSource } from '@/components/invoice/useInvoiceBookSource';
+import { InvoiceStorageNotice } from '@/components/InvoiceStorageStatus';
+import { userFacingMessage } from '@/lib/user-facing-error';
+import { cashIncomeTotal, reviewInvoiceRandBasis, mergeInvoiceRandReviews, invoiceRandReviewMessage } from '@/lib/invoice-sales';
+import { inspectInvoiceCurrencyBasis, invoiceRandConsumerEligibility } from '@/lib/invoice-currency';
+import { creditPackHasAnyRecords, buildMonthlyCashFlow, creditPackCashFlowSummary } from '@/lib/credit-pack';
 import {
   countsWithScope,
   loadIncludePerennials,
@@ -68,6 +72,7 @@ import {
   deliverCreditPackPdf,
   creditPackPdfFilename,
   CreditPackSampleModeError,
+  CreditPackCurrencyHeldError,
 } from '@/lib/credit-pack-pdf';
 
 function recordsUi(lang: string, english: string, isiZulu: string, paired = false): string {
@@ -492,6 +497,8 @@ interface SaleFormState {
 function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   const router = useRouter();
   const { t, lang } = useRecordsT();
+  const invoiceSource = useInvoiceBookSource();
+  const salePending = useRef(false), saleSequence = useRef(0);
   const [form, setForm] = useState<SaleFormState>({
     crop: '',
     cropKey: null,
@@ -504,6 +511,10 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   const [priceOverrides, setPriceOverrides] = useState<Record<string, CropPrice>>({});
 
   useEffect(() => setPriceOverrides(loadCropPriceOverrides()), []);
+  useEffect(() => {
+    ++saleSequence.current; salePending.current = false;
+    setForm({ crop: '', cropKey: null, quantity: '', unit: 'kg', amount: '', buyer: '', loading: false, error: '' });
+  }, [invoiceSource.epoch]);
 
   const guide = form.unit === 'kg' && form.cropKey ? priceFor(form.cropKey, priceOverrides) : null;
   const saleKg = form.unit === 'kg' ? parseDecimalInput(form.quantity) : Number.NaN;
@@ -512,7 +523,10 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (form.loading) return;
+    if (form.loading || salePending.current) return;
+    if (!invoiceSource.ready || !invoiceSource.book || !invoiceSource.isActorCurrent() || !invoiceBookIsCurrent(invoiceSource.book)) {
+      setForm(f => ({ ...f, error: 'Check the current invoice records before saving this sale.' })); return;
+    }
     const crop = form.crop.trim();
     const quantity = parseDecimalInput(form.quantity);
     const amount = parseDecimalInput(form.amount);
@@ -523,6 +537,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
       }));
       return;
     }
+    const attempt = ++saleSequence.current; salePending.current = true;
     setForm((f) => ({ ...f, loading: true, error: '' }));
     try {
       const invoice = await addSale({
@@ -532,33 +547,33 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         amount,
         buyer: form.buyer.trim() || null,
         sold_at: new Date().toISOString(),
-      });
+      }, invoiceSource.book);
+      if (attempt !== saleSequence.current || !invoiceSource.isActorCurrent()) return;
       setForm({ crop: '', cropKey: null, quantity: '', unit: 'kg', amount: '', buyer: '', loading: false, error: '' });
+      invoiceSource.reload();
+      if (!invoiceSource.isActorCurrent()) return;
       onSaved();
+      if (!invoiceSource.isActorCurrent()) return;
       router.push(`/invoice?view=${encodeURIComponent(invoice.id)}`);
     } catch (err) {
-      if (err instanceof WriteTimeoutError) {
-        // addSale gave up waiting for the server to confirm, but persistentLocalCache
-        // (lib/firebase/init.ts) means the sale is already durably saved on this phone and
-        // Firestore is still trying to send it in the background — it is NOT lost. Clear the
-        // fields (not just the spinner) so re-reading this message and tapping Save again can't
-        // log the same sale twice.
-        setForm({
-          crop: '', cropKey: null, quantity: '', unit: 'kg', amount: '', buyer: '',
-          loading: false,
-          error: saveQueuedMessage(),
-        });
-        onSaved();
-        return;
-      }
-      setForm((f) => ({ ...f, loading: false, error: err instanceof Error ? err.message : t('myRecordsSaveError') }));
+      if (attempt !== saleSequence.current || !invoiceSource.isActorCurrent()) return;
+      setForm(f => ({ ...f, loading: false, error: userFacingMessage(err,
+        'The sale could not be confirmed. Check the invoice records before saving again.', k => translate(lang, k)) }));
+    } finally {
+      if (attempt === saleSequence.current) salePending.current = false;
     }
   }
 
   return (
     <Card accent="#9E5C08" className="md:max-w-xl">
       <SectionLabel>{t('myRecordsLogSaleHeader')}</SectionLabel>
+      <InvoiceStorageNotice />
+      {!invoiceSource.ready && <button type="button" disabled={form.loading || !invoiceSource.isActorCurrent()} className="min-h-11 rounded-lg border px-3 py-2 text-sm" onClick={() => {
+        if (invoiceSource.reload()) setForm({ crop: '', cropKey: null, quantity: '', unit: 'kg', amount: '', buyer: '', loading: false, error: '' });
+        else setForm(f => ({ ...f, error: 'The invoice records are still unavailable. Check the storage notice before saving.' }));
+      }}>Reload invoice records and clear this draft</button>}
       <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
+        <fieldset disabled={form.loading || !invoiceSource.ready} className="contents">
         <div>
           <div>
             <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>
@@ -635,6 +650,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         )}
         <SubmitBtn loading={form.loading}><Star size={14} /> {t('myRecordsSaveSale')}</SubmitBtn>
         <Link href="/invoice" className="block py-2 text-sm underline">{recordsUi(lang, 'Multiple products or payment later? Create an invoice', 'Imikhiqizo eminingi noma ukukhokha kamuva? Dala i-invoyisi', true)}</Link>
+        </fieldset>
       </form>
     </Card>
   );
@@ -847,7 +863,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
 
 /* ── Sales list ──────────────────────────────────────────────────────────── */
 
-function SalesList({ items }: { items: SalesLog[] }) {
+function SalesList({ items, invoices = [] }: { items: SalesLog[]; invoices?: SavedInvoice[] }) {
   const { t, lang } = useRecordsT();
   if (items.length === 0) {
     if (isSampleMode()) {
@@ -926,7 +942,14 @@ function SalesList({ items }: { items: SalesLog[] }) {
             className="text-sm font-display font-semibold flex-shrink-0"
             style={{ color: 'var(--gold)' }}
           >
-            R {item.amount.toFixed(2)}
+            {(() => {
+              const invoice = item.invoice_id ? invoices.find(row => row.id === item.invoice_id) : undefined;
+              if (invoice && invoiceRandConsumerEligibility(invoice).status === 'held') {
+                const basis = inspectInvoiceCurrencyBasis(invoice);
+                return basis.status === 'recorded' ? `${basis.currency} · See invoice` : 'Currency unavailable';
+              }
+              return `R ${item.amount.toFixed(2)}`;
+            })()}
           </div>
         </div>
       ))}
@@ -1018,10 +1041,15 @@ function CreditPackCard({
   const ready = creditPackHasAnyRecords(production, sales, expenses, invoices);
   const [previewOpen, setPreviewOpen] = useState(false);
   const months = buildMonthlyCashFlow(sales, expenses, new Date(), undefined, invoices);
-  const totals = months.reduce((sum, month) => ({ income: sum.income + month.incomeZar, spent: sum.spent + month.expensesZar }), { income: 0, spent: 0 });
-  const money = (value: number) => randCentsLabel(value);
+  const summary = creditPackCashFlowSummary(months, expenses);
+  // The downloaded pack also includes the all-time track record, not only this monthly table.
+  const moneyReview = mergeInvoiceRandReviews(summary.moneyReview, reviewInvoiceRandBasis(invoices.filter(invoice => invoice.status === 'paid'), invoices));
+  const moneyMessage = invoiceRandReviewMessage(moneyReview);
+  const totals = { income: moneyReview.status === 'held' ? null : summary.totalIncomeZar, spent: summary.totalExpensesZar };
+  const money = (value: number | null) => value === null ? 'Unavailable' : randCentsLabel(value);
 
   async function handleExport() {
+    if (moneyMessage) { setError(moneyMessage); return; }
     setError('');
     setLoading(true);
     try {
@@ -1036,9 +1064,9 @@ function CreditPackCard({
       await deliverCreditPackPdf(blob, creditPackPdfFilename(sampling ? 'Tour-summary' : farmer.farmName ?? farmer.name));
     } catch (err) {
       setError(
-        err instanceof CreditPackSampleModeError
+        moneyMessage ?? (err instanceof CreditPackSampleModeError || err instanceof CreditPackCurrencyHeldError
           ? err.message
-          : recordsUi(lang, 'Could not build the document. Please try again.', 'Ayikwazanga ukwakha idokhumenti. Sicela uzame futhi.'),
+          : recordsUi(lang, 'Could not build the document. Please try again.', 'Ayikwazanga ukwakha idokhumenti. Sicela uzame futhi.')),
       );
     } finally {
       setLoading(false);
@@ -1064,7 +1092,8 @@ function CreditPackCard({
         </div>
       </div>
 
-      {!ready ? (
+      {moneyMessage && <p role="status" className="text-sm my-3" style={{ color: 'var(--text-secondary)' }}>{moneyMessage}</p>}
+      {!ready && !moneyMessage ? (
         <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: 'var(--bg-1)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
           {recordsUi(lang, 'Log at least one harvest, sale or cost first — there is nothing to summarise yet.', 'Rekhoda okungenani isivuno esisodwa, ukuthengisa noma izindleko kuqala — akukho okungafingqwa okwamanje.', true)}
         </p>
@@ -1088,7 +1117,7 @@ function CreditPackCard({
         <button
           type="button"
           onClick={() => { void handleExport(); }}
-          disabled={loading}
+          disabled={loading || moneyReview.status === 'held'}
           className="w-full py-2 rounded-xl text-xs font-sans font-semibold flex items-center justify-center gap-2 transition-all"
           style={{
             // zu-11: a fixed rgba(46,107,58,…) tint stayed dark-green in every theme while
@@ -1097,8 +1126,8 @@ function CreditPackCard({
             // --bg-1 both move with the theme, so this button stays legible in dark mode too.
             background: 'var(--bg-1)',
             border: '1px solid var(--emerald)',
-            color: loading ? 'var(--text-muted)' : 'var(--emerald)',
-            cursor: loading ? 'not-allowed' : 'pointer',
+            color: loading || moneyReview.status === 'held' ? 'var(--text-muted)' : 'var(--emerald)',
+            cursor: loading || moneyReview.status === 'held' ? 'not-allowed' : 'pointer',
           }}
         >
           {loading ? (
@@ -1454,6 +1483,7 @@ export default function MyRecords({
         // Invoice-linked rows and paid invoices represent the same cash. Unit choice
         // must not change the authority that counts that payment once.
         const totalRev = cashIncomeTotal(sales, invoices);
+        const moneyMessage = invoiceRandReviewMessage(reviewInvoiceRandBasis(invoices.filter(invoice => invoice.status === 'paid'), invoices));
         // The rand total is NEVER scoped. An invoice can carry delivery, a discount or crate
         // lines, so splitting it between the beds and the orchard would be a claim the invoice
         // does not make — and cashIncomeTotal is the one place that counts a paid invoice once.
@@ -1479,14 +1509,14 @@ export default function MyRecords({
             <div className="space-y-3 mb-3">
               <div className="min-w-0">
                 <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--gold)', lineHeight: 1 }}>
-                  R{totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}
+                  {totalRev === null ? 'Unavailable' : `R${totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}`}
                 </div>
                 <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                   {t('myRecordsTotalRevenue')}
                 </div>
                 <div className="font-sans mt-2" style={{ color: 'var(--text-secondary)' }}><RecordQuantitySummary compact totals={soldQuantities} /></div>
               </div>
-              <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
+              {totalRev !== null && <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
                 <polyline points={pts} fill="none" stroke="color-mix(in srgb, var(--gold) 30%, var(--bg-1))" strokeWidth="1.5" strokeLinejoin="round" />
                 <polyline points={pts} fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
                 {recent.map((p, i) => {
@@ -1494,10 +1524,11 @@ export default function MyRecords({
                   const y = H - ((p.amount ?? 0) / maxAmt) * H;
                   return <circle key={i} cx={x} cy={y} r="2.5" fill="var(--gold)" />;
                 })}
-              </svg>
+              </svg>}
             </div>
+            {moneyMessage && <p role="status" className="text-sm" style={{ color: 'var(--text-secondary)' }}>{moneyMessage}</p>}
             {soldExcludedKg > 0 && (
-              <OrchardNote kg={soldExcludedKg} names={soldExcludedNames} t={t} money />
+              <OrchardNote kg={soldExcludedKg} names={soldExcludedNames} t={t} money={totalRev !== null} />
             )}
           </Card>
         );
@@ -1507,7 +1538,7 @@ export default function MyRecords({
       {showSold && (
         <Card>
           <SectionLabel>{t('myRecordsSalesHeader')}</SectionLabel>
-          <SalesList items={sales.slice(0, 10)} />
+          <SalesList items={sales.slice(0, 10)} invoices={invoices} />
         </Card>
       )}
 

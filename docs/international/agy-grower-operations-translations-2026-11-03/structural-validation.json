@@ -1,0 +1,31 @@
+{
+  "author": "Codex coordinator machine",
+  "checkedAtUtc": "2026-11-03T01:57:33.492827+00:00",
+  "sourceSha256": "f03dd7b45de73a2996c52478483a0ae68bdbe5081f2e8bc267641faa76b071f6",
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "exactPairs": 124,
+  "negativeControlsRejected": [
+    "missing-message",
+    "duplicated-key",
+    "wrong-locale",
+    "stale-source-hash",
+    "changed-English",
+    "changed-message-hash",
+    "runtime-activation",
+    "false-review-approval",
+    "empty-translation",
+    "missing-{crop}",
+    "missing-{date}",
+    "missing-UTC",
+    "missing-DEMO —",
+    "extra-template-token"
+  ],
+  "runtimeActivation": false,
+  "fluentReview": false,
+  "limits": "Structure, source, markers and placeholders checked; semantic correctness requires named fluent review. See separate coordinator-text-reconciliation for unchanged English after hydration correction."
+}

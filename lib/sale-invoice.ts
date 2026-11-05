@@ -1,43 +1,56 @@
-import { activeAccountLocalStorageKey } from './account-local-storage';
 import type { SalesLog } from './db/types';
 import { recordQuantity, recordUnit } from './farm-records';
-import { invoiceId, loadNextInvoiceNumber, saveInvoice, saveNextInvoiceNumber, type SavedInvoice } from './invoices';
+import {
+  invoiceId, saveInvoice, invoiceBookIsCurrent, releaseInvoiceBook,
+  type InvoiceBookRead, type SavedInvoice,
+} from './invoices';
+import { invoiceRandConsumerEligibility } from './invoice-currency';
+import { UserFacingError } from './user-facing-error';
 
-/** A quick cash sale uses the same invoice ledger as the full invoice editor. */
+/** The existing quick-sale forms explicitly collect rand amounts. Their loaded
+ * invoice source must survive until the write; a fresh read here would adopt
+ * another account for an old form handler. */
 export async function saveSaleInvoice(
   row: Partial<SalesLog>,
-  sync: (invoice: SavedInvoice) => Promise<void>,
+  sync: (invoice: SavedInvoice, book: InvoiceBookRead) => Promise<void>,
+  source?: InvoiceBookRead,
 ): Promise<SavedInvoice> {
-  const crop = row.crop?.trim();
-  const quantity = recordQuantity(row);
-  const unit = recordUnit(row);
-  const amount = row.amount ?? NaN;
-  const dateISO = row.sold_at ?? new Date().toISOString();
+  if (!source || !invoiceBookIsCurrent(source)) throw new UserFacingError('Reopen the current sale form before saving. Its invoice records or workspace changed.');
+  if (invoiceRandConsumerEligibility(row).status === 'held') throw new UserFacingError('Keep this recorded currency separate from the rand sale book.');
+  const crop = row.crop?.trim(), quantity = recordQuantity(row), unit = recordUnit(row);
+  const amount = row.amount ?? NaN, dateISO = row.sold_at ?? new Date().toISOString();
   if (!crop || quantity === null || !unit || !Number.isFinite(amount) || amount < 0
-    || !Number.isFinite(Date.parse(dateISO))) throw Error('Check the produce, quantity, unit, amount and date.');
-  const scope = activeAccountLocalStorageKey('imbewu_invoices');
-  const sample = typeof window !== 'undefined' && window.sessionStorage.getItem('imbewu_sample_mode') === '1';
-  const sameAccount = () => activeAccountLocalStorageKey('imbewu_invoices') === scope
-    && (typeof window !== 'undefined' && window.sessionStorage.getItem('imbewu_sample_mode') === '1') === sample;
+    || !Number.isFinite(Date.parse(dateISO))) throw new UserFacingError('Check the produce, quantity, unit, amount and date.');
   const invoice: SavedInvoice = {
-    id: invoiceId(), no: loadNextInvoiceNumber(), billTo: row.buyer?.trim() || 'Walk-in customer',
-    items: [{ desc: crop, qty: quantity, unit, price: amount / quantity }],
+    id: invoiceId(), no: source.nextNumber, billTo: row.buyer?.trim() || 'Walk-in customer',
+    currencyCode: 'ZAR', items: [{ desc: crop, qty: quantity, unit, price: amount / quantity }],
     total: amount, dateISO, status: 'paid', paidAt: dateISO,
     enterprise: row.enterprise, salesSyncPending: true,
   };
-  const stored = saveInvoice(invoice).find(item => item.id === invoice.id);
-  if (!stored) throw Error('The invoice could not be saved. Check device storage and try again.');
-  // The next-number reader also checks saved invoices, so a failed counter write cannot reuse it.
-  saveNextInvoiceNumber(stored.no + 1);
+  const result = saveInvoice(invoice, source);
+  if (result.status !== 'written') throw new UserFacingError(result.status === 'unconfirmed'
+    ? 'A sale invoice may already be saved. Check the invoice book before recording it again.'
+    : 'The sale invoice could not be confirmed. Check the retained invoice records before retrying.');
+  let book = result.book;
   try {
-    await sync(stored);
-  } catch {
-    if (!sameAccount()) throw Error('Your account changed. Reopen the sale in its original workspace.');
-    // A retry must use THIS invoice's deterministic sale IDs, never create a second cash sale.
-    // The saved invoice remains visible in the money book while its cloud rows need attention.
-    return stored;
-  }
-  // Completion belongs to the workspace that began the sale, including sample sessions.
-  if (!sameAccount()) throw Error('Your account changed. Reopen the sale in its original workspace.');
-  return saveInvoice({ ...stored, salesSyncPending: false }).find(item => item.id === stored.id) ?? stored;
+    const stored = book.invoices.find(item => item.id === invoice.id);
+    if (!stored || !invoiceBookIsCurrent(book)) throw new UserFacingError('Check the saved invoice before recording this sale again.');
+    try { await sync(stored, book); }
+    catch {
+      if (!invoiceBookIsCurrent(book)) throw new UserFacingError('The invoice records or workspace changed. Check the saved invoice before recording this sale again.');
+      // Local payment evidence stays pending. A timeout cannot cancel a queued
+      // cloud write, so neither a rollback nor a second invoice is justified.
+      return stored;
+    }
+    if (!invoiceBookIsCurrent(book)) throw new UserFacingError('The invoice records or workspace changed. Check the saved invoice before recording this sale again.');
+    const confirmed = saveInvoice({ ...stored, salesSyncPending: false }, book);
+    if (confirmed.status === 'unchanged') return stored;
+    if (confirmed.status !== 'written') throw new UserFacingError(confirmed.status === 'unconfirmed'
+      ? 'A sale confirmation may be saved. Check the existing invoice before trying again.'
+      : 'The invoice is kept, but sale-book confirmation needs review. Check before trying again.');
+    book = confirmed.book;
+    const final = book.invoices.find(item => item.id === invoice.id);
+    if (!final || !invoiceBookIsCurrent(book)) throw new UserFacingError('Reopen the saved invoice to check its sale-book confirmation.');
+    return final;
+  } finally { releaseInvoiceBook(book); }
 }

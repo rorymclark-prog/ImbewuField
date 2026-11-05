@@ -1,0 +1,24 @@
+{
+  "atUtc": "2026-11-05T14:20:08.593575+00:00",
+  "sourceSha256": "2eea4c1cdb5493c3e321bb29057916ee83b2b6f41d24233eba56a7399d2a9f3e",
+  "sourceKind": "coordinator-supplied-unpublished-ui-release-sentence",
+  "baseCommit": "f81aa90d3df05625e11abf10e51064187f5feaa5",
+  "pairs": 4,
+  "damagedControlsRejected": 17,
+  "notesWords": 33,
+  "humanFluentApproval": false,
+  "runtimeActivationByAGY": false,
+  "scope": "Exact coordinator-proposed English/source identity and packet controls only; not Git-extracted sentence, verified UI behavior, human fluency or runtime adoption",
+  "files": [
+    {
+      "path": "source.json",
+      "bytes": 805,
+      "sha256": "2eea4c1cdb5493c3e321bb29057916ee83b2b6f41d24233eba56a7399d2a9f3e"
+    },
+    {
+      "path": "drafts.json",
+      "bytes": 2232,
+      "sha256": "65cf362aaa3e4b193080ccd3245ba28a35a261951b776cc5973c15f80977ddd5"
+    }
+  ]
+}

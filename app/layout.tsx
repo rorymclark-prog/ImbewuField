@@ -15,6 +15,10 @@ import PhotoViewer from '@/components/PhotoViewer';
 import LocalizedPageTitle from '@/components/LocalizedPageTitle';
 import ProductTourProvider from '@/components/ProductTourProvider';
 import AccountOnboardingGates from '@/components/AccountOnboardingGates';
+import { SavedSiteUpdatesProvider } from '@/components/international/countries/SavedSiteUpdates';
+import CropPlanStorageProvider from '@/components/CropPlanStorageStatus';
+import JournalStorageProvider from '@/components/JournalStorageStatus';
+import InvoiceStorageProvider from '@/components/InvoiceStorageStatus';
 
 const newsreader = Newsreader({
   subsets: ['latin'],
@@ -31,8 +35,8 @@ const publicSans = Public_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://imbewufield.vercel.app'),
-  title: 'ImbewuField — permaculture planning for South African farmers',
-  description: 'Tap any spot in South Africa for a full, location-specific permaculture plan — climate, soil, water, planting calendar and AI garden design, in your language.',
+  title: 'ImbewuField — crop, nursery and garden planning',
+  description: 'Plan measured growing spaces, crop cycles and nursery resources using your own estimates. Keep site and crop records together; regional reference guidance varies.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -120,6 +124,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <AuthProvider>
             <LanguageProvider>
+              <CropPlanStorageProvider>
+              <JournalStorageProvider>
+              <InvoiceStorageProvider>
+              <SavedSiteUpdatesProvider>
               {/* AppConfirm replaces window.confirm app-wide: embedded webviews suppress native
                   dialogs and auto-return false, silently killing (or inverting) every
                   confirm-gated flow. Inside LanguageProvider so translated surfaces can pass
@@ -137,6 +145,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <LocalizedPageTitle />
                 </ProductTourProvider>
               </AppConfirmProvider>
+              </SavedSiteUpdatesProvider>
+              </InvoiceStorageProvider>
+              </JournalStorageProvider>
+              </CropPlanStorageProvider>
             </LanguageProvider>
           </AuthProvider>
         </ThemeProvider>

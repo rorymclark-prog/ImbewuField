@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import test from 'node:test';
-import { numberLabel, randLabel, kgTotalLabel } from '@/lib/format-figures';
+import { numberLabel, randLabel, kgTotalLabel, estimateNumberLabel } from '@/lib/format-figures';
 
 // A FIGURE THAT CHANGES AFTER THE PAGE LOADS.
 //
@@ -25,6 +25,16 @@ import { numberLabel, randLabel, kgTotalLabel } from '@/lib/format-figures';
 // This file keeps it there.
 
 const ROOT = new URL('..', import.meta.url).pathname;
+
+test('rounded estimate labels disclose their approximation without erasing a small requirement or missing value', () => {
+  assert.equal(estimateNumberLabel(31 / 7), '≈4.429');
+  assert.equal(estimateNumberLabel(3.6), '3.6');
+  assert.equal(estimateNumberLabel(0), '0');
+  for (const value of [0.00001, -0.00001, Number.MIN_VALUE]) {
+    assert.equal(Number(estimateNumberLabel(value)), value, 'a positive or negative requirement must not become a displayed zero');
+  }
+  for (const value of [null, NaN, Infinity]) assert.equal(estimateNumberLabel(value), 'Unknown');
+});
 
 test('a finite entered quantity stays finite when its decimal formatting would overflow', () => {
   for (const quantity of [Number.MAX_VALUE, -Number.MAX_VALUE, 1e307]) {

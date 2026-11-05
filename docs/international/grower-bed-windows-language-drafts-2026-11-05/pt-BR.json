@@ -1,0 +1,80 @@
+{
+  "locale": "pt-BR",
+  "sourceSha256": "96e69ce266789433482899ba88c3d9510f1309c03af3c059c42d6de0b69bb8d5",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "growerBedWindows.message.01",
+      "english": "Your available growing space",
+      "messageSha256": "d9c6e2620441bb95e134f3924ad87f1f7d87699c9a643b76c6560310fd1b1a04",
+      "translation": "Seu espaço de cultivo disponível"
+    },
+    {
+      "key": "growerBedWindows.message.02",
+      "english": "Nothing is assumed free. Enter each available interval. Known existing occupations are checked separately and cannot be overridden here. End dates are exclusive: the end day is outside that interval. Gaps are unavailable. Adjacent intervals stay separate; a crop cycle must fit within one interval.",
+      "messageSha256": "da99894c029d7279557a56079775b110d0a87b861c7d970ae3acdbf42d241d9d",
+      "translation": "Nada é considerado livre por padrão. Insira cada intervalo disponível. Ocupações existentes conhecidas são verificadas separadamente e não podem ser substituídas aqui. As datas de término são exclusivas: o dia final fica fora desse intervalo. Períodos intermediários não estão disponíveis. Intervalos adjacentes permanecem separados; um ciclo de cultivo deve caber em um único intervalo."
+    },
+    {
+      "key": "growerBedWindows.message.03",
+      "english": "No eligible saved bed or field-plot measurements have been checked.",
+      "messageSha256": "dc0d62e88027497240fb9d8665bab4f9c6eb7563eb9ccbb1ae1c7dd123f47b17",
+      "translation": "Nenhuma medida salva elegível de canteiro ou parcela em campo aberto foi verificada."
+    },
+    {
+      "key": "growerBedWindows.message.04",
+      "english": "I confirm availability for {bed} · {area} m² · growing space {space}, interval {interval}",
+      "messageSha256": "05a763f6bc75e5358ff18eba55b0efac83f9cf534346ac9ef1f59bd8de4ad0cb",
+      "translation": "Confirmo disponibilidade para {bed} · {area} m² · espaço de cultivo {space}, intervalo {interval}"
+    },
+    {
+      "key": "growerBedWindows.message.05",
+      "english": "Available from — {bed}, growing space {space}, interval {interval}",
+      "messageSha256": "ed4dbb9a80eba4573f0f3e0b9fcecf1b1e49733ba68bc04f0542dda6f94f4343",
+      "translation": "Disponível a partir de — {bed}, espaço de cultivo {space}, intervalo {interval}"
+    },
+    {
+      "key": "growerBedWindows.message.06",
+      "english": "Available until (exclusive) — {bed}, growing space {space}, interval {interval}",
+      "messageSha256": "500eea18628dce8a69c266b8f40dc17e3c05afeba641366b7cf51f032775f03a",
+      "translation": "Disponível até (exclusivo) — {bed}, espaço de cultivo {space}, intervalo {interval}"
+    },
+    {
+      "key": "growerBedWindows.message.07",
+      "english": "Remove interval {interval} for {bed}, growing space {space}",
+      "messageSha256": "ba29552865c276cf696bd1fb535bce92ae812b2ca6aee7cef05b41bffbc42d23",
+      "translation": "Remover intervalo {interval} para {bed}, espaço de cultivo {space}"
+    },
+    {
+      "key": "growerBedWindows.message.08",
+      "english": "Remove interval",
+      "messageSha256": "a5141f22256d8adc207809bdf70218494f9ebadc057da45ae56cf8709e259b87",
+      "translation": "Remover intervalo"
+    },
+    {
+      "key": "growerBedWindows.message.09",
+      "english": "Add availability interval for {bed}, growing space {space}",
+      "messageSha256": "2c44687cb182828b2b635ae53edd6752ee3adc391889d47f52383a7cba2dfad5",
+      "translation": "Adicionar intervalo de disponibilidade para {bed}, espaço de cultivo {space}"
+    },
+    {
+      "key": "growerBedWindows.message.10",
+      "english": "Add availability interval",
+      "messageSha256": "a07f7d289571c7da304449a34df7f547391208fcf4bfcbec38a31d5132a77070",
+      "translation": "Adicionar intervalo de disponibilidade"
+    },
+    {
+      "key": "growerBedWindows.message.11",
+      "english": "Confirmed intervals for the same growing space overlap. Correct or unconfirm the overlapping interval.",
+      "messageSha256": "6566d7f2514591961c5b45875a3f4d5c0f163b5d00fbfd3b583312735d49d4ce",
+      "translation": "Os intervalos confirmados para o mesmo espaço de cultivo se sobrepõem. Corrija ou desconfirme o intervalo sobreposto."
+    },
+    {
+      "key": "growerBedWindows.message.12",
+      "english": "Enter a valid start and later exclusive end for every checked availability.",
+      "messageSha256": "129bd12732fe3fe98aaa88b8d9bd8490aa72985946002c0b2949f16976774ddc",
+      "translation": "Insira uma data de início válida e uma data de término exclusiva posterior para cada disponibilidade marcada."
+    }
+  ]
+}

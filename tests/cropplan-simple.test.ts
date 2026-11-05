@@ -39,31 +39,81 @@ test('Simple drops the secondary header chips but keeps site/bed picking and the
   // secondary technical detail — none of it is needed to use the grid.
   assert.match(header, /\{!simple && beds\.length > 0 && \(\s*<button\s*\n\s*onClick=\{\(\) => setShowBedCheck/);
   assert.match(header, /\{!simple && <LessonLink/);
-  assert.match(header, /\{!simple && \(climateSource === 'site' \? \(/);
+  // Country support now also gates the badge: a technical climate label must not imply
+  // local crop guidance where the catalogue is unavailable. Test the shipped gate,
+  // rather than pinning the previous spelling of its Simple-only condition.
+  const climateBadge = nodesMatching((node): node is ts.BinaryExpression => ts.isBinaryExpression(node)).find(node =>
+    node.pos >= CROPS.indexOf('<header') && node.end <= CROPS.indexOf('</header>')
+      && node.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken
+      && ts.isParenthesizedExpression(node.right) && ts.isConditionalExpression(node.right.expression)
+      && node.right.expression.condition.getText(pageTree) === "climateSource === 'site'");
+  assert.ok(climateBadge, 'the header must retain its site/reference climate badge');
+  for (const simple of [true, false]) {
+    for (const allowCataloguePlanning of [true, false]) {
+      assert.equal(evaluate(climateBadge.left, { simple, allowCataloguePlanning }), !simple && allowCataloguePlanning,
+        'climate details belong only in All tools with supported crop guidance');
+    }
+  }
 });
 
-test('Simple keeps auto-suggest as the one primary action above the grid and drops Undo/Clear all', () => {
-  const gridStart = CROPS.indexOf("className=\"rounded-2xl mb-5\"");
-  const actionRow = CROPS.slice(CROPS.indexOf('{!simple && confirmingClear && plantings.length > 0'), gridStart);
-  assert.match(actionRow, /\{!simple && confirmingClear && plantings\.length > 0 \? \(/);
-  assert.match(actionRow, /onClick=\{openAutoSuggest\}/);
-  // Auto-suggest itself is never gated on `simple` — the same button both modes reuse.
-  const autoSuggestBlock = actionRow.slice(actionRow.indexOf('onClick={openAutoSuggest}') - 40, actionRow.indexOf('onClick={openAutoSuggest}'));
-  assert.doesNotMatch(autoSuggestBlock, /!simple/, 'Auto-suggest must stay a Simple-mode primary action, not gated off');
-  assert.match(actionRow, /\{!simple && planHistory\.length > 0 && \(\s*<button\s*\n\s*onClick=\{undoLastChange\}/);
-  assert.match(actionRow, /\{!simple && plantings\.length > 0 && \(\s*<button\s*\n\s*onClick=\{\(\) => setConfirmingClear\(true\)\}/);
+// Catalogue controls now use the selected legacy subset. A raw-book variable
+// spelling and a 400-character prop window mistook preservation changes for
+// missing controls. Evaluate the real mode guards and props instead.
+function openingAttribute(node: ts.JsxOpeningElement | ts.JsxSelfClosingElement, name: string): ts.Expression {
+  const attr = node.attributes.properties.find(value => ts.isJsxAttribute(value) && value.name.getText(pageTree) === name);
+  assert.ok(attr && ts.isJsxAttribute(attr) && attr.initializer && ts.isJsxExpression(attr.initializer) && attr.initializer.expression);
+  return attr.initializer.expression;
+}
+function actionButton(handler: string): ts.JsxElement {
+  const button = nodesMatching((node): node is ts.JsxElement => ts.isJsxElement(node)).find(node =>
+    node.openingElement.tagName.getText(pageTree) === 'button' && node.openingElement.attributes.properties.some(value =>
+      ts.isJsxAttribute(value) && value.name.getText(pageTree) === 'onClick'
+        && value.initializer && ts.isJsxExpression(value.initializer) && value.initializer.expression?.getText(pageTree) === handler));
+  assert.ok(button, 'the real action control must remain present: ' + handler);
+  return button;
+}
+function modeAllows(node: ts.Node, values: Record<string, unknown>): boolean {
+  const within = (container: ts.Node) => container.pos <= node.pos && container.end >= node.end;
+  for (let parent = node.parent; parent; parent = parent.parent) {
+    if (ts.isBinaryExpression(parent) && parent.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken
+      && within(parent.right) && /\bsimple\b/.test(parent.left.getText(pageTree)) && !evaluate(parent.left, values)) return false;
+    if (ts.isConditionalExpression(parent) && /\bsimple\b/.test(parent.condition.getText(pageTree))) {
+      if (within(parent.whenTrue) && !evaluate(parent.condition, values)) return false;
+      if (within(parent.whenFalse) && evaluate(parent.condition, values)) return false;
+    }
+  }
+  return true;
+}
+
+test('Simple retains auto-suggest and hides catalogue Undo/Clear without exposing own records to clearing', () => {
+  const auto = actionButton('openAutoSuggest'), undo = actionButton('undoLastChange');
+  const clear = actionButton('() => setConfirmingClear(true)'), confirm = actionButton('clearAllPlantings');
+  for (const simple of [true, false]) {
+    const values = { simple, confirmingClear: false, planHistory: [{}], legacyPlantings: [{}], plantings: [{}] };
+    assert.equal(modeAllows(auto, values), true, 'the primary action remains visible in both modes');
+    assert.equal(modeAllows(undo, values), !simple, 'Undo belongs to All tools');
+    assert.equal(modeAllows(clear, values), !simple, 'Clear belongs to All tools');
+    assert.equal(modeAllows(confirm, { ...values, confirmingClear: true }), !simple, 'confirmation cannot leak into Simple');
+    assert.equal(modeAllows(clear, { ...values, legacyPlantings: [] }), false, 'own-only raw rows do not expose catalogue Clear');
+    assert.equal(modeAllows(confirm, { ...values, confirmingClear: true, legacyPlantings: [] }), false, 'own-only rows cannot enter catalogue clear confirmation');
+    assert.equal(modeAllows(undo, { ...values, planHistory: [] }), false, 'an empty history cannot offer Undo');
+  }
 });
 
-test('the bed×month grid itself renders unconditionally in both modes and threads simple down to it', () => {
-  const gridStart = CROPS.indexOf("className=\"rounded-2xl mb-5\"");
-  const gridBlock = CROPS.slice(gridStart, CROPS.indexOf('<BedRow', gridStart) + 400);
-  assert.doesNotMatch(
-    CROPS.slice(gridStart - 30, gridStart),
-    /\{!?simple/,
-    'the grid container itself must not be gated on the Simple / All tools switch',
-  );
-  assert.match(gridBlock, /<BedRow\s*\n\s*key=\{bed\.id\}/);
-  assert.match(CROPS.slice(CROPS.indexOf('<BedRow'), CROPS.indexOf('<BedRow') + 400), /simple=\{simple\}/);
+test('the actual bed grid renders in both modes and passes Simple to rows regardless of attribute length', () => {
+  const row = nodesMatching((node): node is ts.JsxSelfClosingElement => ts.isJsxSelfClosingElement(node))
+    .find(node => node.tagName.getText(pageTree) === 'BedRow');
+  assert.ok(row);
+  let grid: ts.Node | undefined = row.parent;
+  while (grid && !(ts.isJsxElement(grid) && grid.openingElement.attributes.properties.some(value =>
+    ts.isJsxAttribute(value) && value.name.getText(pageTree) === 'className'
+      && value.initializer && ts.isStringLiteral(value.initializer) && value.initializer.text === 'rounded-2xl mb-5'))) grid = grid.parent;
+  assert.ok(grid, 'the shared measured-bed grid must remain');
+  for (const simple of [true, false]) {
+    assert.equal(modeAllows(grid, { simple }), true, 'a mode switch cannot remove the grid');
+    assert.equal(evaluate(openingAttribute(row, 'simple'), { simple }), simple, 'each row receives the actual mode');
+  }
+  assert.equal(openingAttribute(row, 'key').getText(pageTree), 'bed.id');
 });
 
 test('Simple adds one "Add a crop" action below the grid, reusing the existing add flow', () => {
@@ -176,8 +226,12 @@ test('a production-only map cannot open generate or accept a bed auto-suggestion
   assert.ok(button);
   const disabled = button.openingElement.attributes.properties.find(attribute => ts.isJsxAttribute(attribute) && attribute.name.getText(pageTree) === 'disabled');
   assert.ok(disabled && ts.isJsxAttribute(disabled) && disabled.initializer && ts.isJsxExpression(disabled.initializer) && disabled.initializer.expression);
-  assert.equal(evaluate(disabled.initializer.expression, { beds: [] }), true);
-  assert.equal(evaluate(disabled.initializer.expression, { beds: [{}] }), false);
+  for (const beds of [[], [{}]]) {
+    for (const hasOwnRecords of [true, false]) {
+      assert.equal(evaluate(disabled.initializer.expression, { beds, hasOwnRecords }), beds.length === 0 || hasOwnRecords,
+        'catalogue auto-suggestion needs real beds and must retain own dated reservations');
+    }
+  }
   assert.match(CROPS, /Your mapped plants and animal housing are listed below/);
   assert.match(CROPS, /autoPhase !== 'idle' && beds\.length > 0 &&/,
     'removing the last bed while the modal is open must hide its stale bed-planning actions');
@@ -187,8 +241,26 @@ test('a production-only map cannot open generate or accept a bed auto-suggestion
     const calls: string[] = [];
     const source = ts.transpileModule(`function check() ${handler.body.getText(pageTree)}; check();`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
     const setters = [...new Set(handler.body.getText(pageTree).match(/\bset[A-Z]\w+|\bpushPlanHistory|\bapplyGoalMix/g) ?? [])];
-    const values = { beds: [], autoResult: { plantings: [] }, ...Object.fromEntries(setters.map(setter => [setter, () => calls.push(setter)])) };
-    new Function(...Object.keys(values), source)(...Object.values(values));
-    assert.deepEqual(calls, [], `${name} must stop before changing a crop plan with no beds`);
+    // Keep every other precondition satisfied so the no-bed check must do the work.
+    // Also check the new country guard independently: either missing precondition
+    // must stop the actual handler before any state setter or plan-history write.
+    for (const scenario of [
+      { beds: [], allowed: true, reason: 'no beds' },
+      { beds: [{}], allowed: false, reason: 'unsupported crop guidance' },
+      { beds: [{}], allowed: true, own: true, reason: 'own dated reservations' },
+    ]) {
+      calls.length = 0;
+      const values = {
+        beds: scenario.beds,
+        hasOwnRecords: scenario.own ?? false,
+        currentPlanningScopeAllowed: () => scenario.allowed,
+        suggestionScopeRef: { current: 'same-reviewed-scope' },
+        planningScopeKey: 'same-reviewed-scope',
+        autoResult: { plantings: [] },
+        ...Object.fromEntries(setters.map(setter => [setter, () => calls.push(setter)])),
+      };
+      new Function(...Object.keys(values), source)(...Object.values(values));
+      assert.deepEqual(calls, [], `${name} must stop before changing a crop plan with ${scenario.reason}`);
+    }
   }
 });

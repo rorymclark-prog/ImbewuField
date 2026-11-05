@@ -1,0 +1,32 @@
+{
+  "locale": "st",
+  "sourceSha256": "7a6da78c7f34533f907bcdc8856c2ad787a5f8d13a2e97168d0c1d35e23da659",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "fieldLayoutRelease01",
+      "english": "Export saved field layouts for Google Earth.",
+      "sha256": "84511f317680f2737c40f5122d606bc9e2f907038c1e4cde7fec905abc1de1bf",
+      "translation": "Romela meralo e bolokiloeng ea masimo bakeng sa Google Earth."
+    },
+    {
+      "key": "fieldLayoutRelease02",
+      "english": "Export saved fields",
+      "sha256": "c1d172c045209ef30924c71f4fb3ed834fc567f52ff14e1451cf118f91921bb0",
+      "translation": "Romela masimo a bolokiloeng"
+    },
+    {
+      "key": "fieldLayoutRelease03",
+      "english": "Design Studio → Planting → Field blocks",
+      "sha256": "4a9e6d71ade8484ba4544641089b44af802c2da9d2f74461e30776bdf3f240e5",
+      "translation": "Design Studio → Ho lema → Diboloko tsa masimo"
+    },
+    {
+      "key": "fieldLayoutRelease04",
+      "english": "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.",
+      "sha256": "1a4a6c11df4725bfe49445bcb5957104a0cd4eaf4b3e4139628e4b0de833a638",
+      "translation": "Kgetha tsimo e le nngwe kapa masimo ohle, ebe o jarolla meedi e bolokiloeng, libethe tsa temo (beds) le mela ya ditsela jwaloka KML. Mengolo ya mabitso ke ya kgetho; dibaka tsa tshehetso ya mmapa hase meedi e lekantsweng ka tlhahlobo ya lefatshe (survey)."
+    }
+  ]
+}

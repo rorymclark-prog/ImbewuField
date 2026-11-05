@@ -1,0 +1,17 @@
+# Nursery release account/storage QA — unexecuted source proposal
+
+Coordinator corrected this AI-assisted proposal against four frozen source/test files at `eff63c3cb90ba78911d7f2dbdedb98a75954e522`. Confirm preview build identity first. Use only already-authorized synthetic practice fixtures/test accounts; no real farmer records, credentials, account creation, browser-key edits, storage clearing or locking bypass. Missing fixture access means UNEXECUTED, never passed. Harness assertions are not browser evidence.
+
+1. **Cold clean readiness.** Open the crop planner with an authorized uninitialized fixture. `Checking crop-plan storage` may be brief; controlled delayed setup needs authorized runtime inspection. After successful initialization, deliberately edit through available controls without reloading, then verify the fixture saved value survives reload. A clean readiness refresh itself must not author records. Capture the observed status, edit and fixture-only before/after evidence.
+
+2. **Competing tab.** With protected editing available in tab A, open the same test account/plan in tab B. Expect `Crop plan is read-only`, the another-tab explanation, retained readable records and `Retry crop-plan check`. Close A's editor and retry B. A clean view may acquire fresh editing access; keep screenshots and fixture record comparisons. No lease-acquisition button is implied.
+
+3. **Dirty or stale intent.** An authorized controlled fixture must arrange a queued edit followed by lost lease, changed source or changed actor. Supplied harnesses assert that original dirty inputs survive under hold and cannot automatically save on reacquisition; fresh access cannot authorize stale dirty intent. No UI-only callback/auth recipe is established here. Keep this scenario UNEXECUTED until an authorized fixture provides it; inspect retained input and both synthetic account/source records for unintended writes.
+
+4. **Actual page lifecycle.** Use an authorized navigation/BFCache fixture observing genuine `pagehide`/`pageshow`, then inspect editing/read-only status and unchanged fixture records. Provider source withdraws document leases on hide and reinitializes on show. Ordinary background/focus is not lifecycle proof; event observation alone does not prove lease/record safety. Mark UNEXECUTED without the fixture.
+
+5. **Observed planting inputs.** Open a current ready batch's `Record observed field planting` form. Fill the fixture's actual observed day and note; check confirmation. Blank `Plants you planted` leaves `Save field planting observation` disabled; explicit `0` can enable it. Keep planned UTC reference separate from observation day. DEMO stays sample-only; no stock deduction, completion or survival inference. Capture both states and journal evidence if deliberately saved.
+
+6. **Saved versus uncertain outcome.** A saved outcome offers `Open journal` and `Record another field planting`. Unconfirmed/caught-exception outcomes lock the consumed form, offer journal inspection and no automatic retry or another-record button. Controlled uncertain outcomes require an authorized fixture, not an invented network toggle. Inspect journal evidence before any further observation; disabled controls do not prove exactly-once delivery.
+
+Sources: `components/CropPlanStorageStatus.tsx`, `components/crops/NurseryFieldPlantingObservationForm.tsx`, `tests/crop-plan-storage-readiness.test.ts`, `tests/grower-nursery-field-planting-write.test.ts`. No browser/account test executed or release approval granted.

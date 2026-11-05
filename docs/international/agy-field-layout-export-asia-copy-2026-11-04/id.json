@@ -1,0 +1,146 @@
+{
+  "locale": "id",
+  "sourceSha256": "883ab3ffd0593e2387cda3f5518511ed5fa1ee1281cd83a5f654efa5a4de5afd",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "fieldLayoutCopy01",
+      "english": "Field layout export",
+      "sha256": "0803d1de9fdc33fa8d6fe593770bd95f59f1238970f0b552411408210a13249f",
+      "translation": "Ekspor tata letak lahan"
+    },
+    {
+      "key": "fieldLayoutCopy02",
+      "english": "Google Earth field layout",
+      "sha256": "ec5b5b63b6d5329463fbe692e71b2b6f665cfb050fc2ec2a7cd209ef06b13c56",
+      "translation": "Tata letak lahan Google Earth"
+    },
+    {
+      "key": "fieldLayoutCopy03",
+      "english": "This file contains map-reference locations and optional field labels from your saved layout. These locations have not been surveyed. Apply layout changes before exporting.",
+      "sha256": "53d20d58ae5604ee22a93445098cbc294e970197924fd4a072d0c34e86bf46f8",
+      "translation": "File ini berisi lokasi referensi peta dan label lahan opsional dari tata letak tersimpan Anda. Lokasi ini belum disurvei. Terapkan perubahan tata letak sebelum mengekspor."
+    },
+    {
+      "key": "fieldLayoutCopy04",
+      "english": "Export fields",
+      "sha256": "09822a509deaf85e8e86b6244efb5b772b128bde8781df2d4a8b006a15f846d3",
+      "translation": "Ekspor lahan"
+    },
+    {
+      "key": "fieldLayoutCopy05",
+      "english": "Selected field",
+      "sha256": "f924a06aab096a452857c4ae209f681e8d4704f4a01e98e3caabc02b4c2546a9",
+      "translation": "Lahan terpilih"
+    },
+    {
+      "key": "fieldLayoutCopy06",
+      "english": "All fields",
+      "sha256": "b2525b1e37fccd0dff28251cc111418a88744225ad4850262e1f813504aaf0b1",
+      "translation": "Semua lahan"
+    },
+    {
+      "key": "fieldLayoutCopy07",
+      "english": "Include saved field labels",
+      "sha256": "f31982fa537ca5c47fa9d0b542c8f87f8f55a3a0a7da84bb52538bbd0e10b698",
+      "translation": "Sertakan label lahan tersimpan"
+    },
+    {
+      "key": "fieldLayoutCopy08",
+      "english": "With labels off, the file uses generic numbered labels.",
+      "sha256": "56e85db05d047736311e4bff801a69f0976b07630316d1ad645f92b8432db782",
+      "translation": "Saat label dimatikan, file menggunakan label bernomor generik."
+    },
+    {
+      "key": "fieldLayoutCopy09",
+      "english": "Export field layout for Google Earth",
+      "sha256": "82f8400c4bb9cf1df7254e201b00fbf8d01571f3188ccbacddc1dc3244ef574a",
+      "translation": "Ekspor tata letak lahan untuk Google Earth"
+    },
+    {
+      "key": "fieldLayoutCopy10",
+      "english": "Preparing field layout export…",
+      "sha256": "87450d9bc5567960372a8f47e3a263a4bbacde07386de44daa25a4f0d8aaae30",
+      "translation": "Menyiapkan ekspor tata letak lahan…"
+    },
+    {
+      "key": "fieldLayoutCopy11",
+      "english": "Could not export the field layout. Your field settings have been kept. Try again.",
+      "sha256": "937977e7e9e2838b9b07228ecba517b0af728f624c5a886540978d918eda6998",
+      "translation": "Tidak dapat mengekspor tata letak lahan. Pengaturan lahan Anda tetap tersimpan. Coba lagi."
+    },
+    {
+      "key": "fieldLayoutCopy12",
+      "english": "The field layout, account or export choices changed. Check the current layout before exporting again.",
+      "sha256": "f7a25eacea194e79352e65a860d704c859a46d6578b5caa166a91a6702dfd708",
+      "translation": "Tata letak lahan, akun, atau pilihan ekspor telah berubah. Periksa tata letak saat ini sebelum mengekspor kembali."
+    },
+    {
+      "key": "fieldLayoutCopy13",
+      "english": "The current field layout is not available in this account’s saved design. Save the layout before exporting.",
+      "sha256": "1e45289a9cbf05e1acead6ec9b2d9af3bb3ce8449ae3afa7dedb6ad7f65ea085",
+      "translation": "Tata letak lahan saat ini tidak tersedia dalam rancangan tersimpan akun ini. Simpan tata letak sebelum mengekspor."
+    },
+    {
+      "key": "fieldLayoutCopy14",
+      "english": "Field-layout export cancelled.",
+      "sha256": "f3f017d6ac31e65626f43ba6860fcca1dfefd984a56e0a57743edf53692e3a63",
+      "translation": "Ekspor tata letak lahan dibatalkan."
+    },
+    {
+      "key": "fieldLayoutCopy15",
+      "english": "Field-layout KML shared. It contains map-reference locations, not surveyed boundaries.",
+      "sha256": "f2ffffb7e1b869f238e06b8d20e62a815d7682ad00a0ffee27542da47763dbf8",
+      "translation": "KML tata letak lahan dibagikan. File ini berisi lokasi referensi peta, bukan batas hasil survei."
+    },
+    {
+      "key": "fieldLayoutCopy16",
+      "english": "Field-layout KML downloaded. It contains map-reference locations, not surveyed boundaries.",
+      "sha256": "6e9aaf65fb7afbe477f13f4958e0ab3c2ec611cd127943010a992a7fba90eba4",
+      "translation": "KML tata letak lahan diunduh. File ini berisi lokasi referensi peta, bukan batas hasil survei."
+    },
+    {
+      "key": "fieldLayoutCopy17",
+      "english": "Photo and blank layouts need a verified map reference before Google Earth export.",
+      "sha256": "24fe0c8611f818fdf727126c70ea120f08fbf50987ca4cf4df1a7cff9d9d2fee",
+      "translation": "Tata letak foto dan kosong memerlukan referensi peta terverifikasi sebelum diekspor ke Google Earth."
+    },
+    {
+      "key": "fieldLayoutCopy18",
+      "english": "This layout crosses the map’s date-line reference, which this export does not yet support.",
+      "sha256": "d6ba9b01e1e10c12a13448fc921e95729dff4db51997f442336bd90e15e1a146",
+      "translation": "Tata letak ini melintasi garis penanggalan peta, yang belum didukung oleh ekspor ini."
+    },
+    {
+      "key": "fieldLayoutCopy19",
+      "english": "The saved map reference and current measurements do not match. Check and save the current layout before exporting.",
+      "sha256": "042579056e6ab15bec2adc84c399cdf7b2ee46f91ab7d4d94a654a28aba03aba",
+      "translation": "Referensi peta tersimpan dan pengukuran saat ini tidak cocok. Periksa dan simpan tata letak saat ini sebelum mengekspor."
+    },
+    {
+      "key": "fieldLayoutCopy20",
+      "english": "Select a saved field, or choose all saved fields, before exporting.",
+      "sha256": "02bebe56a69bcb684355245adaaef6538dd884d2b1086e83c6833190d90e0fa0",
+      "translation": "Pilih lahan tersimpan, atau pilih semua lahan tersimpan, sebelum mengekspor."
+    },
+    {
+      "key": "fieldLayoutCopy21",
+      "english": "A saved field, bed or path is incomplete or ambiguous. Check the layout before exporting.",
+      "sha256": "9df238b2f594f6ce4d95bef8fba2d22f10aa0bff1880575b3b772b983f578535",
+      "translation": "Lahan, bedengan, atau jalur tersimpan belum lengkap atau ambigu. Periksa tata letak sebelum mengekspor."
+    },
+    {
+      "key": "fieldLayoutCopy22",
+      "english": "This saved layout exceeds the current KML export limit.",
+      "sha256": "d8d0711d60c2d1985b34b1538d538aa44e42448a06af4ece112102b213e939ba",
+      "translation": "Tata letak tersimpan ini melebihi batas ekspor KML saat ini."
+    },
+    {
+      "key": "fieldLayoutCopy23",
+      "english": "The field layout could not be exported. Check the current saved layout and try again.",
+      "sha256": "5bf778c8153dab327a8e6bf70b94b39a4f19c73a72e6d952643590ab9c798f65",
+      "translation": "Tata letak lahan tidak dapat diekspor. Periksa tata letak tersimpan saat ini dan coba lagi."
+    }
+  ]
+}

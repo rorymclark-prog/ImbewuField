@@ -1,12 +1,128 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
-  // Reference-led Sector graphics: docs/audits/2026-11-05/sector-reference-flow-release-drafts.json; UNREVIEWED machine draft.
+  // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
+  "Printed language reviews keep each comparison together when it fits on a page.": "Ukubuyekezwa kolimi okushicilelwe kugcina uqhathaniso ngalunye ndawonye lapho lulingana ekhasini.",
+  "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Amakhasi okubuyekeza ulimi agcina usizo ngaphansi kwephepha lomsebenzi ukuze lungasibekeli okubhalwayo okusalungiswa.",
+  // Published current-main Sector wording and save-feedback description from docs/international/agy-nursery-save-feedback-maps-2026-11-05/source.json.
   "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Amamephu eSector abonisa izimpawu zomoya nezemvula ezicace kakhudlwana, kanti umthambeka nemigqa yokuphakama kuhlala kubonakala.",
-  // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.
+  "A warning about unsaved edits clears once the crop plan is saved.": "Isexwayiso mayelana nezinguquko ezingalondoloziwe siyaphela uma uhlelo lwezitshalo selulondoloziwe.",
+  // Published current-main Sector wording from docs/audits/2026-11-05/sector-graphics-release-drafts.json.
   "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Imidwebo yeSector inemicibisholo egqamile, izimpawu zelanga ezinkulu nokhiye wemephu ocace kakhudlwana.",
   "Sector illustrations now show bolder terrain contours and matching key lines.": "Imidwebo yeSector manje ibonisa imigqa yokuphakama egqamile nemigqa ehambisana nayo kukhiye wemephu.",
   "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Imidwebo yeSector igcina imibala egqamile, inamalebula amakhulu nemigqa yokuphakama ecace kakhudlwana.",
+  // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
+  "Saving rechecks this tab’s editing access.": "Ukulondoloza kuphinda kuhlolisise imvume yokuhlela yale thebhu.",
+  "Compare nursery wording drafts in seven languages": "Qhathanisa izinhlaka zamagama enkulisa ngezilimi eziyisikhombisa",
+  "Compare nursery wording drafts": "Qhathanisa izinhlaka zamagama enkulisa",
+  "International reference tools → Language draft review → Nursery field planting": "Amathuluzi okubhekisela emazweni omhlaba → Ukubuyekezwa kwezinhlaka zezilimi → Ukutshala ensimini kusuka enkulisa",
+  "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.": "Qhathanisa isiNgisi senkulisa nezinhlaka zezilimi eziyisikhombisa ubone lapho umthombo wazo udinga ukuhlolisiswa kabusha. Leli phepha lokusebenza lokubuyekeza aligunyazi izinguqulo noma lishintshe ulimi lohlelo lwakho lokusebenza.",
+  // Unreviewed Codex BMKG research-navigation release candidates; source pairs in bmkg-navigation-release-drafts.json.
+  "Find Indonesia’s official BMKG sources": "Thola imithombo esemthethweni ye-BMKG yase-Indonesia",
+  "Country evidence → Research priorities → Indonesia": "Ubufakazi bezwe → Izinto ezibalulekile zocwaningo → Indonesia",
+  "Open the official forecast documentation, open-data description and terms from Indonesia’s research-queue card. Source links do not enable a forecast feed or local crop advice.": "Vula imibhalo esemthethweni yesibikezelo, incazelo yedatha evulekile nemigomo ekhadini locwaningo lase-Indonesia. Izixhumanisi zemithombo azivuli idatha yesibikezelo noma izeluleko zezitshalo zendawo.",
+  // Additive unreviewed Codex release candidates; source pairs: grower-bed-windows-release-drafts.json.
+  "Plan separate availability windows for each growing space": "Hlela izikhathi ezihlukene zokutholakala kwendawo ngayinye yokutshala",
+  "Crop plan → Automatic plan from your estimates → Your available growing space": "Uhlelo lwezitshalo → Uhlelo oluzenzakalelayo olusekelwe ezilinganisweni zakho → Indawo yakho yokutshala etholakalayo",
+  "Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.": "Engeza futhi uqinisekise izikhathi zezinsuku ezihlukene zombhede noma isiqephu sensimu esigciniwe. Uhlelo aluzisebenzisi izikhala phakathi kwezikhathi, futhi umjikelezo ngamunye wesitshalo kufanele ungene esikhathini esisodwa; ukusetshenziswa okukhona kuyaqhubeka nokuhlolwa.",
+  "Import field outlines from Google Earth.": "Ngenisa imingcele yamasimu evela ku-Google Earth.",
+  "Review imported field outlines": "Hlola imingcele yamasimu engenisiwe",
+  "Design Studio → Planting → Import field outlines": "Design Studio → Ukutshala → Ngenisa imingcele yamasimu",
+  "Choose a local KML file, review and select distinct outlines, then add them as new fields. Configure beds or open ground afterwards; map-reference locations are not surveyed boundaries.": "Khetha ifayela le-KML elisedivayisini yakho, hlola bese ukhetha imingcele ehlukene, bese uyengeza njengamasimu amasha. Ngemva kwalokho hlela imibhede yokutshala (beds) noma insimu evulekile; izindawo zereferensi yemephu akuyona imingcele ekalwe ngokuhlola umhlaba (survey).",
+  // Integrated exact-source candidate descriptions; fluent-review status unchanged.
+  "Export saved field layouts for Google Earth.": "Khipha izakhiwo zamasimu ezilondoloziwe ze-Google Earth.",
+  "Export saved fields": "Khipha amasimu alondoloziwe",
+  "Design Studio → Planting → Field blocks": "Design Studio → Ukutshala → Amabhulokhi wamasimu",
+  "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.": "Khetha insimu eyodwa noma wonke amasimu, bese ulanda imingcele elondoloziwe, imibhede yokutshala (beds) nemigqa yezindlela njenge-KML. Amalebula awaphoqelekile; izindawo zereferensi yemephu akuyona imingcele ekalwe ngokuhlola umhlaba (survey).",
+  "Enter your crop estimates in metric or imperial units.": "Faka izilinganiso zakho zezitshalo ngamayunithi emethrikhi noma e-imperial.",
+  "Check saved bed measurements before reviewing capacity.": "Hlola izilinganiso zemibhede yokutshala ezigciniwe ngaphambi kokubukeza umthamo.",
+  "Reload changed estimates before saving over newer values.": "Layisha kabusha izilinganiso ezishintshile ngaphambi kokulondoloza esikhundleni samanani akamuva.",
+  "Choose units for your own estimates": "Khetha amayunithi ezilinganiso zakho",
+  "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Khetha m² kanye no-kg noma ft² kanye no-lb ezilinganisweni zakho zokuminyana kwezitshalo nesisindo sesivuno. Hlola izilinganiso ezigciniwe, bese ubukeza izibalo nezinsuku; lezi yizilinganiso ezihleliwe, hhayi izeluleko zokulima zendawo eziqinisekisiwe.",
+  "New grower accounts can save personal designs without joining an organisation.": "Ama-akhawunti amasha abalimi angagcina imiklamo yawo ngaphandle kokujoyina inhlangano.",
+
+  // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
+  "Keep editing nursery equipment and buyer targets after a confirmed save.": "Qhubeka nokuhlela izinto zokusebenza zendawo yezithombo nemigomo yabathengi ngemva kokulondoloza okuqinisekisiwe.",
+  "Continue nursery editing": "Qhubeka nokuhlela indawo yezithombo",
+  "After a confirmed equipment save, continue entering your next container. Unknown sizes and stock stay unknown.": "Ngemva kokuqinisekiswa kokulondolozwa kwezinto zokusebenza, qhubeka ufake isitsha sakho esilandelayo. Osayizi abangaziwa nesitoko esingaziwa kuhlala kungaziwa.",
+  "Continue buyer-target editing": "Qhubeka nokuhlela imigomo yabathengi",
+  "After a confirmed target save, continue entering your next buyer target. Targets remain planned demand, not recorded sales or harvest.": "Ngemva kokuqinisekiswa kokulondolozwa kwenhloso, qhubeka ufake inhloso yakho elandelayo yomthengi. Izinhloso zihlala ziyizidingo ezihleliwe, hhayi ukuthengisa noma ukuvuna okurekhodiwe.",
+  "See where your own dated crop plan can review nursery requirements.": "Bona lapho uhlelo lwakho lwezitshalo olunezinsuku lungabukeza khona izidingo zendawo yezithombo.",
+  "Review nursery requirements": "Bukeza izidingo zendawo yezithombo",
+  "For a saved measured growing space, review proposed batches from your own dates and inputs. Equipment entries alone do not establish dated availability or local crop approval.": "Endaweni yokukhulisa ekaliwe negciniwe, bukeza amaqoqo ahlongozwayo asuselwa ezinsukwini zakho nasemininingwaneni oyifakile. Ukufaka izinto zokusebenza kuphela akuqinisekisi ukutholakala ngezinsuku ezithile noma ukugunyazwa kwezitshalo endaweni.",
+  "See a welcome for small growers, market gardens and community projects.": "Bona ukwamukelwa kwabalimi abancane, izingadi zokulima ngenjongo yokuthengisa namaphrojekthi omphakathi.",
+  "Start with your growing space": "Qala ngendawo yakho yokukhulisa",
+  "Home → Map and Production plan": "Ikhaya → Imephu nohlelo lokukhiqiza",
+  "Use your measured growing space and your own estimates. Regional reference coverage varies; choosing a country does not approve local crop advice.": "Sebenzisa indawo yakho yokukhulisa ekaliwe nezilinganiso zakho. Ukutholakala kwezinkomba zezifunda kuyahluka; ukukhetha izwe akugunyazi izeluleko zezitshalo zendawo.",
+  "See when local design advice needs your saved site and current country details.": "Bona ukuthi izeluleko zomklamo wendawo zidinga nini isayithi lakho eligciniwe nemininingwane yezwe yamanje.",
+  "Distinguish advice about the original South African sample from your own drawing.": "Hlukanisa izeluleko ngesampula yaseNingizimu Afrika yasekuqaleni nomdwebo wakho.",
+  "Check the design advice basis": "Hlola isisekelo sezeluleko zomklamo",
+  "Design Studio → Lima": "I-Design Studio → Lima",
+  "Open your saved design. Local tips use the existing South African references only when the current saved-site context supports them. Country confirmation does not approve local farming advice; your drawing stays available when advice is held.": "Vula umklamo wakho ogciniwe. Izeluleko zendawo zisebenzisa izinkomba zaseNingizimu Afrika ezikhona kuphela uma imininingwane yamanje yesayithi eligciniwe izisekela. Ukuqinisekisa izwe akugunyazi izeluleko zokulima zendawo; umdwebo wakho uhlala utholakala lapho izeluleko zimisiwe.",
+  "Review the original sample": "Bukeza isampula yasekuqaleni",
+  "Tour → Plan the growing season": "Uhambo → Hlela isikhathi sokulima",
+  "Open the growing-season stop and choose All tools to see the sample advice control. It names the original sample layout; a request does not analyse your sample edits.": "Vula isigaba sesikhathi sokulima bese ukhetha Wonke amathuluzi (All tools) ukuze ubone isilawuli sezeluleko zesampula. Sisho ukwakheka kwesampula yasekuqaleni; isicelo asihlaziyi izinguquko ozenze kusampula.",
+  // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
+  "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Izilawuli zamayunithi endawo yezithombo nezokuvuna zihlala zitholakala uma uhlelo olufanayo lulondolozwa futhi.",
+  "See when you can reload saved settings or need to reopen the crop plan.": "Bona ukuthi ungaphinda ulayishe nini izilungiselelo ezigciniwe noma uma kudingeka uvule kabusha ipulani yezitshalo.",
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/zu.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Faka izinhloso zokuvuna zamasonto onke nesisindo sakho samaphakethe ezivuno ngamakhilogremu (kg) noma ngamaphawundi esisindo (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Gcina imininingwane yezidingo zabathengi oyifakile isekhona lapho ukulondolozwa kwayo kungakwazi ukuqinisekiswa.",
+  "Choose harvest weight units": "Khetha amayunithi esisindo sesivuno",
+  "Production plan → Harvest targets": "Uhlelo lokukhiqiza → Izinhloso zokuvuna",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Khetha amakhilogremu (kg) noma amaphawundi esisindo (lb), faka inhloso yakho yokuvuna noma isisindo sakho sephakethe lesivuno, bese uyalondoloza. Isisindo samaphakethe esingaziwa sihlala singekho; izibalo zezinhloso zizilinganiso zokuhlela kuphela.",
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Faka izilinganiso zamathileyi ezithombo ngamasentimitha noma ngamayintshi.",
+  "Enter usable nursery surface in square metres or square feet.": "Faka indawo yokukhulisa izithombo esebenzisekayo ngamamitha-skwele noma ngamafithi-skwele.",
+  "Keep nursery entries until their save is confirmed.": "Shiya imininingwane yezithombo oyifakile isekhona kuze kuqinisekiswe ukulondolozwa kwayo.",
+  "Choose nursery units": "Khetha amayunithi endawo yezithombo",
+  "Production plan → Nursery planner": "Uhlelo lokukhiqiza → Umhleli wendawo yezithombo",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Khetha amayunithi akho, faka osayizi bamathileyi nendawo yokukhulisa esebenzisekayo, bese uyalondoloza. Amanani ezinto zokusebenza angaziwa ahlala engenalutho; isitoko sezinto esiyiqanda sihlala siyiqanda.",
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/zu.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Faka izilinganiso zemibhede yokutshala (beds) nezindlela zebhulokhi yensimu ngamamitha noma ngamafuthi.",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Gcina izilinganiso ezilondoloziwe zingashintshiwe lapho ushintsha iyunithi eboniswayo.",
+  "Choose field-block units": "Khetha amayunithi ebhulokhi yensimu",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Khetha insimu, khetha amamitha noma amafuthi, faka izilinganiso zakho bese ubukeza imibhede yokutshala (beds) ngaphambi kokulondoloza. Amasimu avulekile agcina indawo yawo ye-polygon ngaphandle kokukhiqiza imibhede yokutshala (beds).",
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Gcina izinhlelo zezitshalo ezintsha ziphephile lapho iseshini endala yohlelo igcina ikhophi yayo.",
+  "Review retained copies before continuing with your current crop plan.": "Bukeza amakhophi agciniwe ngaphambi kokuba uqhubeke nohlelo lwakho lwamanje lwezitshalo.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Phinda uzame ukudlulisa umsebenzi wezitshalo wesivakashi onqanyuliwe ngaphandle kokushintsha umsebenzi we-akhawunti ogciniwe.",
+  "Review crop-plan storage": "Bukeza indawo yokugcina uhlelo lwezitshalo",
+  "Production plan → Crop-plan storage": "Uhlelo lokukhiqiza → Indawo yokugcina uhlelo lwezitshalo",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Hlola isaziso sendawo yokugcina. Uma iseshini endala ishintshe ikhophi yayo, dawuniloda amakhophi omabili uwabukeze ngaphambi kokukhetha ukugcina uhlelo lwakho lwamanje.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/zu.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Gcina uhlelo olubukeziwe olusuka ezilinganisweni zakho zokulima.",
+  "Check unresolved crop records before using a finance forecast.": "Hlola amarekhodi ezitshalo angakaxazululwa ngaphambi kokusebenzisa isibikezelo sezimali.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Gcina izilinganiso zokulima ezigciniwe nezilungiselelo zendawo yokukhulisela izithombo lapho ungena ku-akhawunti.",
+  "Save your reviewed plan": "Gcina uhlelo lwakho olubukeziwe",
+  "Production plan → Automatic plan from your estimates": "Uhlelo lokukhiqiza → Uhlelo oluzenzakalelayo olusuka ezilinganisweni zakho",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Bukeza isiphakamiso esiphelele, ugcine yonke imijikelezo yaso ehleliwe, bese uvula umsebenzi onosuku.",
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/zu.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Landela imijikelezo yokutshala egciniwe ngezinsuku zayo ezihleliwe eziqondile.",
+  "Check current designs before ticking work or exporting dates.": "Hlola imiklamo yamanje ngaphambi kokumaka umsebenzi noma ukukhipha izinsuku.",
+  "Keep own crop estimates separate from catalogue print advice.": "Gcina izilinganiso zakho zezitshalo zihlukene nezeluleko zekhathalogi eziphrintiwe.",
+  "Review your dated work": "Buyekeza umsebenzi wakho onezinsuku",
+  "Task Planner → Dated work from your estimates": "Umhleli Wemisebenzi → Umsebenzi onezinsuku ovela ezilinganisweni zakho",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Vula Umhleli Wemisebenzi ukuze uhlole izinsuku zomsebenzi ezisuselwa ezilinganisweni zakho zokutshala ezigciniwe.",
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Buyekeza izinhlelo zezitshalo ezizenzakalelayo ezisuselwa ezilinganisweni zakho siqu zokutshala kanye nemigomo yabathengi egciniwe.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Hlola ugqoko lwezithombo nezidingo zendawo ezinezinsuku ngaphambi kokulanda ukubuyekeza kwakho.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Gcina izilinganiso zakho siqu zokutshala bese ubuyekeza umthamo nezinsuku zemibhede yokutshala ekaliwe.",
+  "Review a crop plan from your estimates": "Buyekeza uhlelo lwezitshalo olususelwa ezilinganisweni zakho",
+  "Crop planner → Automatic plan from your estimates": "Umhleli wezitshalo → Uhlelo oluzenzakalelayo olususelwa ezilinganisweni zakho",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Hlola umklamo wakho owugcinile, uqinisekise ukutholakala bese ufanisa imigomo yabathengi nezilinganiso zakho zokutshala. Buyekeza imijikelezo ehlongozwayo nezidingo zenkulisa yezitshalo; ukuhlwanyela kwakho okugciniwe kuhlala kungashintshile.",
+  "Review your growing estimates": "Buyekeza izilinganiso zakho zokutshala",
+  "Crop planner → Your growing estimates": "Umhleli wezitshalo → Izilinganiso zakho zokutshala",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Faka imicabango yakho siqu, ukhethe umbhede wokutshala okaliwe bese ubuyekeza izibalo. Amanani angenalutho ahlala engekho; umphumela uyisilinganiso, hhayi ukugunyazwa kokulima kwendawo.",
+  // Country context: docs/international/agy-release-copy-2026-11-03/zu.json; UNREVIEWED AI candidates.
+  "Confirm a mapped site’s country before using its crop-planning guidance.": "Qinisekisa izwe lesayithi edwetshiwe ngaphambi kokusebenzisa isiqondiso sayo sokuhlela izitshalo.",
+  "Keep your sowing records and nursery equipment while local planning is unavailable.": "Gcina amarekhodi akho okuhlwanyela nezinto zokusebenza zenkulisa yezitshalo ngenkathi ukuhlela kwendawo kungatholakali.",
+  "Confirm your site country": "Qinisekisa izwe lesayithi yakho",
+  "Crop planner → Site country and region": "Umhleli wezitshalo → Izwe nesifunda sesayithi",
+  "Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.": "Vula isayithi yakho edwetshiwe bese uqinisekisa imininingwane yezwe layo. Ukuqinisekisa izwe akugunyazi iseluleko sokulima sesifunda esisha.",
+  "Review an unmapped reference": "Buyekeza isisekelo sokubhekisela esingadwetshiwe",
+  "Crop planner → Planning without a mapped site": "Umhleli wezitshalo → Ukuhlela ngaphandle kwesayithi edwetshiwe",
+  "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Kumbhede wokutshala owenziwe noma kumklamo wendawo, khetha ngokucacile noma ususe isisekelo sokubhekisela saseNingizimu Afrika. Ukukhetha kuhlala kuleyo ndawo yokusebenzela.",
   // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
   "Important updates include a short animation you can pause and replay.": "Izibuyekezo ezibalulekile zinevidiyo emfushane enyakazayo ongayimisa bese uyidlala futhi.",
   // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
@@ -329,5 +445,67 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Zama imephu ecwebezelayo ye-AI",
   "Design Studio → Glossy": "Isitudiyo sokuklama → Imephu ecwebezelayo",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vula ipulazi elilondoloziwe, khetha ikhasi bese ukhetha i-AI Polished. Ukukhiqiza ngakunye kuyakhokhelwa.",
+  // Own nursery review and preparation release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Review your own nursery space in square metres or square feet.": "Bukeza indawo yakho yokukhulisa izithombo ngamamitha-skwele (m²) noma ngamafithi-skwele (ft²).",
+  "Prepare grouped seedling and seed counts from your proposed crop plan.": "Lungiselela izibalo zezithombo nezembewu ezihlanganiswe ngamaqoqo zisuka ohlelweni lwakho lwezitshalo oluhlongozwayo.",
+  "Review nursery preparation": "Bukeza amalungiselelo endawo yezithombo",
+  "Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.": "Hlola izinto zokusebenza zendawo yezithombo ezinezinsuku ezibekiwe, ubukeze amaqoqo ezithombo ezizotshalwa aboniswe lapha bese ulanda iphepha lokulungiselela. Izibalo ziyizilinganiso zokuhlela; izidingo ezingaziwa zihlala zingaziwa.",
+  // Own nursery preparation PDF release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Download a printable nursery preparation sheet from your own crop proposal.": "Landa iphepha lokulungiselela indawo yezithombo eliphrintekayo elisuselwa ohlelweni lwakho lwezitshalo oluhlongozwayo.",
+  "Print nursery preparation": "Phrinta amalungiselelo endawo yezithombo",
+  "Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.": "Bukeza imininingwane yamanje oyifakile yendawo yezithombo, bese ulanda i-PDF yokulungiselela. Igcina izibalo ezihleliwe, izidingo ezingakapheleli nezamba ezingaziwa zihlukile ekuhlwanyeleni okubonwe ngempela noma esitokweni esibonwe ngempela.",
+  // Planned nursery batch cards release (lib/release-notes.ts): UNREVIEWED Codex AI drafts; exact English source retained.
+  "Print planned nursery batch cards with dates and separate seedling counts.": "Phrinta amakhadi amaqoqo ahleliwe endawo yezithombo, anezinsuku nezibalo zezithombo ezihlukene.",
+  "Print planned batch cards": "Phrinta amakhadi amaqoqo ahleliwe",
+  "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Sebenzisa isiphakamiso sendawo yezithombo esibukeziwe ukuze uphrinte amakhadi amaqoqo. Izibalo nezinsuku kuhlala kuhleliwe; uhlelo lokusebenza aluwalondolozi amanothi okuhlwanyela naweqoqo lembewu abhalwe ngesandla.",
+  // Field-observation release: UNREVIEWED Codex AI drafts; exact sources in docs/international/grower-observation-release-drafts.json.
+  "Record your own field observations from planned tasks.": "Rekhoda lokho okubonile ensimini yakho kusukela emisebenzini ehleliwe.",
+  "Record a field observation": "Rekhoda lokho okubonile ensimini",
+  "Task Planner → Dated work → Record what happened": "Umhleli Wemisebenzi → Umsebenzi onezinsuku → Rekhoda okwenzekile",
+  "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Khetha usuku obone ngalo okuthile, ubhale inothi bese uliqinisekisa. Ijenali igcina ireferensi yomsebenzi ohleliwe ngokwehlukana; amarekhodi ohlu lokuhlola, okuvuniwe, isitoko nokuthengisa awashintshi.",
+  // Invoice-currency release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-currency-release-drafts.json.
+  "Choose the currency for each new invoice.": "Khetha uhlobo lwemali lwe-invoyisi ngayinye entsha.",
+  "Keep invoice currencies clear": "Gcina izinhlobo zemali zama-invoyisi zicacile",
+  "Invoice → Currency for this invoice": "I-invoyisi → Uhlobo lwemali lwale-invoyisi",
+  "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Khetha uhlobo lwemali ovumelene ngalo nomthengi. Ama-invoyisi agciniwe agcina uhlobo lwawo lwemali; amanani awaguqulelwa kolunye uhlobo lwemali, kanti ezinye izinhlobo zemali zihlala zihlukile ezibalweni eziphelele zerandi.",
+  // Recorded-price release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-price-history-release-drafts.json.
+  "Choose a recorded invoice price": "Khetha intengo erekhodiwe ku-invoyisi",
+  "Invoice → Choose a recorded invoice price": "I-invoyisi → Khetha intengo erekhodiwe ku-invoyisi",
+  "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Khetha intengo ekwi-invoyisi egciniwe ngohlobo olufanayo lwemali, bese uyayiqinisekisa kulokhu kuthengisa. Kushintsha intengo yalowo mugqa kuphela; gcina i-invoyisi uma usulungile.",
+  // Invoice-summary release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-summary-release-drafts.json.
+  "Review saved invoice amounts by currency": "Buyekeza imali yama-invoyisi agciniwe ngohlobo lwemali",
+  "Invoice → Saved → Summary currency": "I-invoyisi → Agciniwe → Uhlobo lwemali lwesifinyezo",
+  "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Khetha uhlobo olulodwa lwemali ukuze ubuyekeze imali yama-invoyisi akhishiwe, abhalwe njengakhokhiwe nangakakhokhwa kule divayisi. Lawa amarekhodi ama-invoyisi, hhayi amarisidi asebhange aqinisekisiwe, yonke imali engenayo noma inzuzo.",
+  // NWS reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nws-reference-release-drafts.json.
+  "Check a public US forecast reference": "Hlola isibonelo sesibikezelo sezulu sase-US",
+  "Country evidence → United States → Washington forecast": "Ubufakazi bezwe → United States → Isibikezelo saseWashington",
+  "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Cela isibikezelo sesibonelo somphakathi saseWashington ku-National Weather Service. Izikhathi zomthombo, amanani e-Celsius nokungaziwa kuhlala kubonakala; lokhu akushintshi izinsuku zezitshalo noma kugunyaze izeluleko zendawo.",
+  // Nursery-batch-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-batch-reference-release-drafts.json.
+  "Keep references for saved nursery batches": "Gcina amareferensi amaqoqo e-nursery agciniwe",
+  "Crop plan → Saved planned nursery batches": "Uhlelo lwezitshalo → Amaqoqo e-nursery ahleliwe agciniwe",
+  "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Engeza amagama ezinhlobo zakho, amareferensi amaqoqo embewu namaqoqo okukhulisa izithombo eqoqweni ngalinye elihleliwe neligciniwe, bese uhlola izidingo ze-nursery noma ulande amaphepha okusebenza. Lawa malebula awarekhodi ukuhlwanyela okwenzekile noma isitoko esikhona.",
+  // KMD-Kiambu-link release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/kmd-kiambu-link-release-drafts.json.
+  "Find official Kiambu bulletin links": "Thola izixhumanisi ezisemthethweni zemibiko yaseKiambu",
+  "Country evidence → Kenya → County bulletin links": "Ubufakazi bezwe → Kenya → Izixhumanisi zemibiko yesifunda",
+  "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.": "Khetha i-Kiambu ukuze uvule ikhasi lombiko elisemthethweni elihloliwe noma i-PDF yawo, bese uthola eminye imibiko ye-KMD. Izinsuku zomthombo nokungaziwa kokuthi ulwazi lusha kangakanani kuhlala kubonakala; lezi zixhumanisi azibuyekezi izeluleko zezitshalo.",
+  // EA-rainfall-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/ea-rainfall-reference-release-drafts.json.
+  "Check an Environment Agency rainfall reference": "Hlola ireferensi yemvula ye-Environment Agency",
+  "Country evidence → United Kingdom → Public rainfall network sample": "Ubufakazi bezwe → United Kingdom → Isibonelo senethiwekhi yomphakathi yemvula",
+  "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.": "Cela isibonelo esisodwa senethiwekhi yomphakathi, lapho imvula ebikiwe, amanani angekho nezikhathi zomthombo kugcinwa ngokwehlukana. Le referensi ayikali imvula epulazini lakho noma ishintshe izeluleko zezitshalo.",
+  // Nursery-sowing release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-sowing-release-drafts.json.
+  "Record nursery sowing in your field journal": "Rekhoda ukuhlwanyela e-nursery kujenali yakho yasensimini",
+  "Crop planner → Saved planned nursery batches": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe",
+  "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rekhoda usuku ukuhlwanyela okwenzeke ngalo kanye, uma uthanda, nenani eliyinombolo ephelele lamathileyi asetshenzisiwe eqoqweni eligciniwe. Hlola irekhodi lalokho okubonile namalebula ereferensi agcinwe nalo kujenali yakho nakumafayela owalandayo.",
+  // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
+  "Record nursery plant counts in your journal": "Rekhoda izibalo zezitshalo ze-nursery kujenali yakho",
+  "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rekhoda inani lezitshalo ozibonile eqoqweni le-nursery eligciniwe, isigaba osihlolile nokuthi uhlole lonke iqoqo noma ingxenye yalo. Gcina lokhu okubonile kujenali kuhlukile ezidingweni ezihleliwe nasesitokweni.",
+  // INMET link release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/inmet-alert-release-drafts.json.
+  "Find official INMET weather-alert sources": "Thola imithombo esemthethweni yezixwayiso zezulu ye-INMET",
+  "Country evidence → Brazil → Official weather-alert links": "Ubufakazi bezwe → Brazil → Izixhumanisi ezisemthethweni zezixwayiso zezulu",
+  "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Vula iwebhusayithi yezixwayiso zezulu ye-INMET, ingosi noma isixhumanisi se-RSS. Izixhumanisi zemithombo zihlanganisiwe zahlolwa; okuphakelayo, isimo sezixwayiso sendawo nemigomo yokusetshenziswa kabusha akukaqinisekiswa. Lezi zixhumanisi azishintshi izeluleko zezitshalo.",
+  // Nursery field-planting release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-field-planting-release-drafts.json.
+  "Record a nursery planting in its field bed": "Rekhoda ukutshala kwe-nursery embhedeni wako wasensimini",
+  "Crop planner → Saved planned nursery batches → Record field planting": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe → Rekhoda ukutshala ensimini",
+  "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekhoda usuku nenani lezitshalo ozifake embhedeni owabelwe ukutshala kwe-nursery okuhloliwe. Gcina irekhodi lalokho okubonile kujenali lihlukile osukwini oluhleliwe, esitokweni se-nursery nasekusindeni kwezitshalo.",
 };
 export default copy;
