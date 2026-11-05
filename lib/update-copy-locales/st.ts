@@ -451,5 +451,9 @@ const copy:UpdateCopy={
   "Find official Kiambu bulletin links": "Fumana dihokelo tsa semmuso tsa ditlaleho tsa Kiambu",
   "Country evidence → Kenya → County bulletin links": "Bopaki ba naha → Kenya → Dihokelo tsa ditlaleho tsa county",
   "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.": "Kgetha Kiambu ho bula leqephe la semmuso la tlaleho le hlahlobilweng kapa PDF ya yona le ho fumana ditlaleho tse ding tsa KMD. Matsatsi a mohlodi le ho se tsejwe hore tlhahisoleseding e ntjha hakae di dula di bonahala; dihokelo tsena ha di ntjhafatse keletso ya dijalo.",
+  // EA-rainfall-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/ea-rainfall-reference-release-drafts.json.
+  "Check an Environment Agency rainfall reference": "Hlahloba tshupiso ya pula ya Environment Agency",
+  "Country evidence → United Kingdom → Public rainfall network sample": "Bopaki ba naha → United Kingdom → Mohlala wa marangrang a sechaba a pula",
+  "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.": "Kopa mohlala o le mong wa marangrang a sechaba moo pula e tlalehilweng, dipalo tse siyo le dinako tsa mohlodi di bolokwang di arohane. Tshupiso ena ha e lekanye pula polasing ya hao kapa ho fetola keletso ya dijalo.",
 };
 export default copy;

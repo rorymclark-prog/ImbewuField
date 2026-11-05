@@ -451,5 +451,9 @@ const copy:UpdateCopy={
   "Find official Kiambu bulletin links": "Thola izixhumanisi ezisemthethweni zemibiko yaseKiambu",
   "Country evidence → Kenya → County bulletin links": "Ubufakazi bezwe → Kenya → Izixhumanisi zemibiko yesifunda",
   "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.": "Khetha i-Kiambu ukuze uvule ikhasi lombiko elisemthethweni elihloliwe noma i-PDF yawo, bese uthola eminye imibiko ye-KMD. Izinsuku zomthombo nokungaziwa kokuthi ulwazi lusha kangakanani kuhlala kubonakala; lezi zixhumanisi azibuyekezi izeluleko zezitshalo.",
+  // EA-rainfall-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/ea-rainfall-reference-release-drafts.json.
+  "Check an Environment Agency rainfall reference": "Hlola ireferensi yemvula ye-Environment Agency",
+  "Country evidence → United Kingdom → Public rainfall network sample": "Ubufakazi bezwe → United Kingdom → Isibonelo senethiwekhi yomphakathi yemvula",
+  "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.": "Cela isibonelo esisodwa senethiwekhi yomphakathi, lapho imvula ebikiwe, amanani angekho nezikhathi zomthombo kugcinwa ngokwehlukana. Le referensi ayikali imvula epulazini lakho noma ishintshe izeluleko zezitshalo.",
 };
 export default copy;

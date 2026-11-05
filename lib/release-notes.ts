@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: 'd05dd1faf3', changes: [
+    'Check an Environment Agency rainfall reference',
+  ], tour: [{ title: 'Check an Environment Agency rainfall reference', where: 'Country evidence → United Kingdom → Public rainfall network sample', href: '/international',
+    detail: 'Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.' }] },
   { when: '5 November 2026', sha: 'f7f1a49759', changes: [
     'Find official Kiambu bulletin links',
   ], tour: [{ title: 'Find official Kiambu bulletin links', where: 'Country evidence → Kenya → County bulletin links', href: '/international',
