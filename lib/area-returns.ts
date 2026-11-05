@@ -1,15 +1,18 @@
 import type { PlanBed } from './crop-plan';
 import type { ExpenseLog, SalesLog } from './db/types';
 import type { SavedInvoice } from './invoices';
-import { cashLedgerSales, invoiceSalesForPaidInvoice } from './invoice-sales';
+import { cashLedgerSales, invoiceSalesForPaidInvoice, reviewInvoiceRandPeriod, type InvoiceRandReview } from './invoice-sales';
+import { invoiceRandConsumerEligibility } from './invoice-currency';
 import { isInFinancePeriod, type FinancePeriod } from './farm-metrics';
 
 export type GrowingEnterprise = 'vegetables' | 'staples' | 'shared' | 'other';
-export interface AreaReturn { key: 'vegetables' | 'staples' | 'combined'; areaM2: number; sales: number; costs: number; entries: number; contributionPerM2: number | null }
+export interface AreaReturn { key: 'vegetables' | 'staples' | 'combined'; areaM2: number; sales: number | null; costs: number; entries: number; contributionPerM2: number | null; moneyReview: InvoiceRandReview }
 const validMoney = (n: number) => Number.isFinite(n) && n >= 0;
 /** Explicit record tags only. No crop-name guesses or allocation by area. */
 export function buildAreaReturns(beds: PlanBed[], sales: SalesLog[], expenses: ExpenseLog[], invoices: SavedInvoice[], period: FinancePeriod, now: Date) {
-  const cards: AreaReturn[] = ['vegetables', 'staples', 'combined'].map(key => ({ key: key as AreaReturn['key'], areaM2: 0, sales: 0, costs: 0, entries: 0, contributionPerM2: null }));
+  const review = (rows: SavedInvoice[]) => reviewInvoiceRandPeriod(rows, { status: 'paid', dateField: 'paidAt', inPeriod: iso => isInFinancePeriod(iso, period, now) }, invoices);
+  const moneyReview = review(invoices);
+  const cards: Array<Omit<AreaReturn, 'sales'> & { sales: number }> = ['vegetables', 'staples', 'combined'].map(key => ({ key: key as AreaReturn['key'], areaM2: 0, sales: 0, costs: 0, entries: 0, contributionPerM2: null, moneyReview: review([]) }));
   const seen = new Set<string>();
   for (const bed of beds) {
     if (seen.has(bed.id) || bed.id.startsWith('virtual-bed') || !Number.isFinite(bed.areaM2) || bed.areaM2 <= 0) continue;
@@ -27,6 +30,7 @@ export function buildAreaReturns(beds: PlanBed[], sales: SalesLog[], expenses: E
   }
   for (const sale of cashLedgerSales(sales, invoices.map(i => i.id))) if (isInFinancePeriod(sale.sold_at, period, now)) add(sale.enterprise, sale.amount, false);
   for (const invoice of invoices) {
+    if (invoiceRandConsumerEligibility(invoice).status === 'held') continue;
     if (invoice.status !== 'paid' || !isInFinancePeriod(invoice.paidAt, period, now) || !validMoney(invoice.total)) continue;
     if (invoice.enterprise && invoice.enterprise !== 'shared') { add(invoice.enterprise, invoice.total, false); continue; }
     const lines = invoiceSalesForPaidInvoice(invoice);
@@ -40,6 +44,16 @@ export function buildAreaReturns(beds: PlanBed[], sales: SalesLog[], expenses: E
     if (invoice.total > lineTotal) add(null, invoice.total - lineTotal, false);
   }
   for (const cost of expenses) if (isInFinancePeriod(cost.spent_at, period, now)) add(cost.enterprise, cost.amount, true);
-  for (const card of cards) card.contributionPerM2 = card.areaM2 > 0 && card.entries > 0 ? (card.sales - card.costs) / card.areaM2 : null;
-  return { cards, unassignedSales, unassignedCosts, unassignedEntries, otherSales, otherCosts, sharedCosts };
+  const reviewedCards: AreaReturn[] = cards.map(card => {
+    // Untagged invoice lines may belong to either mapped enterprise; do not guess their allocation.
+    const cardReview = review(invoices.filter(invoice => !invoice.enterprise || invoice.enterprise === 'shared'
+      || invoice.enterprise === card.key || (card.key === 'combined' && invoice.enterprise !== 'other')));
+    return { ...card, moneyReview: cardReview, sales: cardReview.status === 'held' ? null : card.sales,
+      contributionPerM2: cardReview.status === 'held' ? null : card.areaM2 > 0 && card.entries > 0 ? (card.sales - card.costs) / card.areaM2 : null };
+  });
+  return { moneyReview, cards: reviewedCards,
+    unassignedSales: review(invoices.filter(invoice => !invoice.enterprise || invoice.enterprise === 'shared')).status === 'held' ? null : unassignedSales,
+    unassignedCosts, unassignedEntries,
+    otherSales: review(invoices.filter(invoice => invoice.enterprise === 'other')).status === 'held' ? null : otherSales,
+    otherCosts, sharedCosts };
 }

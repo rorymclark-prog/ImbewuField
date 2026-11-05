@@ -1,0 +1,20 @@
+{
+  "sourceSha256": "8322365bc622e772fbdde3bd277b2f680158d7024b2b46ab94e3e8da0ca4570e",
+  "pairs": 48,
+  "damagedControlsRejected": 12,
+  "notesWords": 234,
+  "sourceSnapshotFileSha256": "9819ac5e711895174e367bf9612a5b672ee89a852e998a2bd430a475c64f03f6",
+  "currentFileSha256": "7ed2f4162bcde66d2d4667e3aeb3a2db97c1c546a9b1a84499e4b59d1a8cc327",
+  "allTwelveEnglishPairsUnchangedAfterCodeOnlyReadinessCorrections": true,
+  "runtimeActivation": false,
+  "files": {
+    "source.json": "8322365bc622e772fbdde3bd277b2f680158d7024b2b46ab94e3e8da0ca4570e",
+    "review-notes.md": "7f3e062db33c545608e3cfb5006cd89e9eb79b29601117c53a374dc8e38001c9",
+    "fr.json": "2b4f78d1f1f213157a6abd3c16724c9625ee33424ab3d545280b624dd47d0362",
+    "pt-BR.json": "fa250f16cd2d27e693336ac4e5d7569265dba6e3158d52139286d4ce88430a3c",
+    "sw.json": "9b0eb7f51aad2189cd9bd366e802fb45c62b27eb695e4183a61240c4427a575f",
+    "status.json": "8c7acb7492edea1cffdd482c9a5fa18abbf765dfcb83ebfb1ddfeb8516516cab",
+    "es.json": "db602c8221ca6106a769c74b47dd6547a04e1258e668616cbe64f06f2d0abe26"
+  },
+  "reconciliationReason": "Readiness integration and English lang attribute changed code only; all twelve frozen English/message hash pairs remain exact."
+}

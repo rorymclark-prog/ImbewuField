@@ -45,6 +45,7 @@
 import { taskMonthsFromNow, type CropTask } from '@/lib/crop-plan';
 import { cropByKey } from '@/lib/crop-catalog';
 import { monthLong, resolveMonthYear, sowingInstruction, taskLine, taskTitle, wrapMonth } from '@/lib/crop-export-schedule';
+import { isGrowerUtcDate } from '@/lib/international/grower-planning';
 
 const PRODID = '-//ImbewuField//Crop Plan//EN';
 const UID_DOMAIN = 'imbewufield.app';
@@ -174,6 +175,13 @@ export function resolveTaskYear(month: number, now: Date): number {
 /** The concrete all-day date for a month-precision task: the 1st of its resolved month. */
 export function resolveTaskDate(month: number, now: Date): { year: number; month: number; day: number } {
   return { year: resolveTaskYear(month, now), month: wrapMonth(month), day: 1 };
+}
+
+/** A recorded day has its own year. Never send it through the repeating
+ * month-only resolver or replace a missing day with the first of a month. */
+export function resolveAbsoluteTaskDate(value: unknown): { year: number; month: number; day: number } | null {
+  if (!isGrowerUtcDate(value)) return null;
+  return { year: Number(value.slice(0, 4)), month: Number(value.slice(5, 7)), day: Number(value.slice(8, 10)) };
 }
 
 /** Resolve a generated task as part of its planting cohort, rather than as an

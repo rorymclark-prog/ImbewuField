@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createSiteCountryContext } from '../lib/international/site-context.ts';
+import { updateSiteCountryContext } from '../lib/saved-places.ts';
 import { readFileSync } from 'node:fs';
 
 import type { CropPlanState, PlanBed, Planting } from '../lib/crop-plan.ts';
@@ -17,6 +19,14 @@ import {
   taskBoardBeds,
   type BoardTask,
 } from '../lib/task-board.ts';
+
+
+// These chronology/source tests exercise the established SA planner. A saved
+// coordinate alone no longer chooses its country or permits its instructions.
+function confirmSouthAfricanReference(siteId: string) {
+  const context = createSiteCountryContext({ siteId, countryCode: 'ZA', confirmed: true });
+  assert.equal(updateSiteCountryContext(siteId, context).status, 'local-saved');
+}
 
 class MemoryStorage {
   private rows = new Map<string, string>();
@@ -227,6 +237,7 @@ test('the home loader finds crop tasks on the main site Design Studio canvas', (
     updatedAt: 1,
   };
   local.setItem('imbewu_crop_plan_v1', JSON.stringify(cropPlan));
+  confirmSouthAfricanReference(siteId);
 
   const tasks = loadCropBoardTasks(new Set());
 
@@ -269,6 +280,8 @@ test('a planting on a non-main saved place\'s bed is not dropped from the Task P
     updatedAt: 1,
   };
   local.setItem('imbewu_crop_plan_v1', JSON.stringify(cropPlan));
+  confirmSouthAfricanReference(mainSiteId);
+  confirmSouthAfricanReference(otherSiteId);
 
   const tasks = loadCropBoardTasks(new Set());
 

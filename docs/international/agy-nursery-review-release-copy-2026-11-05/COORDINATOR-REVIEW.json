@@ -1,0 +1,51 @@
+{
+  "sourceSha256": "7c5ef4c342b0d7eeca1da2a279854016e5b245b9eeeb147899a2a4bb8a40f161",
+  "actualPairs": 20,
+  "damagedControlsRejected": 16,
+  "notesActualWords": 133,
+  "runtimeActivation": false,
+  "fluentHumanApproval": false,
+  "scope": "Coordinator source/structure/order/hashes/arrows/negative controls; no fluent or complete semantic certification",
+  "unresolvedHumanReview": [
+    "Confirm horticultural nursery terminology and distinguish it from childcare use.",
+    "Confirm browser-tab and worksheet terms in each language."
+  ],
+  "files": [
+    {
+      "path": "source.json",
+      "bytes": 1844,
+      "sha256": "7c5ef4c342b0d7eeca1da2a279854016e5b245b9eeeb147899a2a4bb8a40f161"
+    },
+    {
+      "path": "st.json",
+      "bytes": 2036,
+      "sha256": "d9a70a09bf56c8d0ec4e14e088c8e35a75b78ab891fe071600a4f4b1b74164f7"
+    },
+    {
+      "path": "ts.json",
+      "bytes": 2078,
+      "sha256": "99e0fa3465bba36fcbab18c9226503a96c9d1b3807aa9bb33a8d643ea4422ce9"
+    },
+    {
+      "path": "ve.json",
+      "bytes": 2057,
+      "sha256": "c51c55059c62c56f33b167291bdd17cbe3909c4128bd6c48399d15fdeb073cd3"
+    },
+    {
+      "path": "zu.json",
+      "bytes": 2075,
+      "sha256": "79900cb7dd324b56e334d0d2e6d701fdf5446362cf350f0179c5c4b16d77351a"
+    },
+    {
+      "path": "review-notes.md",
+      "bytes": 1006,
+      "sha256": "f21f2e61a755874ad5e0a00d71d490ef88495ba7eb4b519226ed43e293991aed"
+    },
+    {
+      "path": "status.json",
+      "bytes": 457,
+      "sha256": "c1bcf4cba486797fbd14f3b8aeb6cdaba5b16b1c41ce0e90338eaa9d7856476a"
+    }
+  ],
+  "reviewer": "Codex coordinator"
+}

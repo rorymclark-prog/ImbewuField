@@ -1,0 +1,118 @@
+{
+  "workorder": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/WORKORDER.md",
+  "status": "ready-for-root-review",
+  "sourceFile": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/source.json",
+  "sourceSha256": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+  "snapshotIdentity": {
+    "sourceFile": "lib/release-notes.ts",
+    "sourceFileSha256": "5c0faf0f22b7799721a787234f6310e47c4e071744560258718100cc2c631a1a",
+    "baseCommit": "0ab6f9ea2a50c43f642344add403d67fdb095613",
+    "identityBasis": "frozen-file-sha256"
+  },
+  "nature": "documentation-only",
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "ownership": {
+    "fr.json": "main",
+    "es.json": "main",
+    "pt-BR.json": "main",
+    "sw.json": "main",
+    "hi.json": "main",
+    "bn.json": "main",
+    "id.json": "main",
+    "review-notes.md": "main",
+    "status.json": "main"
+  },
+  "coordinatorReviewCorrectionsApplied": {
+    "fr_growerAcceptanceRelease01_04_06": "Replaced vérifié / Vérifiez with neutral examiné / Examinez to avoid implying agricultural verification or certification",
+    "bn_growerAcceptanceRelease01_04": "Replaced যাচাইকৃত (verified/certified) with neutral পর্যালোচনা করা (reviewed), consistent with পর্যালোচনা করুন in row 06",
+    "hi_growerAcceptanceRelease01_04": "Aligned rows 01 and 04 to समीक्षा की गई (reviewed), consistent with समीक्षा करें in row 06",
+    "reviewNotes": "Explicitly recorded review-vs-verification wording replacements as tentative candidates requiring native fluent review"
+  },
+  "deliverables": [
+    {
+      "path": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/fr.json",
+      "locale": "fr",
+      "rowCount": 6,
+      "sourceSha256": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/es.json",
+      "locale": "es",
+      "rowCount": 6,
+      "sourceSha256": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/pt-BR.json",
+      "locale": "pt-BR",
+      "rowCount": 6,
+      "sourceSha256": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/sw.json",
+      "locale": "sw",
+      "rowCount": 6,
+      "sourceSha256": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/hi.json",
+      "locale": "hi",
+      "rowCount": 6,
+      "sourceSha256": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/bn.json",
+      "locale": "bn",
+      "rowCount": 6,
+      "sourceSha256": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/id.json",
+      "locale": "id",
+      "rowCount": 6,
+      "sourceSha256": "9ed7ce1f606f313109a68f82c6a90705229c9fdf928538dcfc440d8047efe2f3",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/review-notes.md",
+      "measuredWhitespaceWordCount": 220,
+      "maxWordCap": 250
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-global-release-copy-2026-11-03/status.json"
+    }
+  ],
+  "totalDraftsProduced": 42,
+  "inspectionScope": {
+    "filesRead": 3,
+    "testsExecuted": 0,
+    "validatorsExecuted": 0,
+    "sourceWrites": 0,
+    "gitWrites": 0,
+    "networkCalls": 0,
+    "shellCommands": 0,
+    "runtimeActivation": false
+  },
+  "coordinatorReview": {
+    "checkedAtUtc": "2026-11-03T08:45:04.794663+00:00",
+    "exactSourcePairs": 42,
+    "damagedControlsRejected": 12,
+    "notesWhitespaceWords": 220,
+    "identifiedReviewWordingCorrected": true,
+    "semanticCertification": false,
+    "runtimeActivation": false
+  }
+}

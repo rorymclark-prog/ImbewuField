@@ -22,6 +22,8 @@ import { ensureDocumentArchitecture, stripLeadingNumber } from '@/lib/report-str
 import { drainCanvasToDataUrl } from '@/lib/release-canvas';
 import { ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
 import { pdfSafe } from '@/lib/crop-export-pdf';
+import { currentReportCropSupport } from '@/lib/report-crop-plan';
+import { coordinateSiteIdForPlace } from '@/lib/international/site-context';
 
 export type ReportBlock =
   | { kind: 'title'; text: string }
@@ -642,7 +644,8 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
     footer();
     const first = doc.getNumberOfPages() + 1;
     const { drawReportCropSummary } = await import('./report-crop-pdf');
-    drawReportCropSummary(doc, meta.cropPlan, meta.cropMapMonth ?? 0, meta.language);
+    const support = currentReportCropSupport(meta.cropPlan.snapshot, coordinateSiteIdForPlace(meta));
+    drawReportCropSummary(doc, meta.cropPlan, meta.cropMapMonth ?? 0, meta.language, support.allowCataloguePlanning);
     for (let p = first; p < doc.getNumberOfPages(); p++) { doc.setPage(p); footer(p); }
     doc.setPage(doc.getNumberOfPages());
   }
@@ -753,11 +756,13 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
 
   footer();
   if (meta.cropPlan?.snapshot && meta.includeCropWorkingPlan) {
-    const { drawCropPlanPages } = await import('./crop-export-pdf');
-    const { reportCropWorkingInput } = await import('./report-crop-plan');
-    const input = reportCropWorkingInput(meta.cropPlan.snapshot, meta.siteName ?? 'Site crop plan');
-    // The short sowing calendar is already in the report; the detailed plan is optional.
-    drawCropPlanPages(doc, input, true);
+    if (currentReportCropSupport(meta.cropPlan.snapshot, coordinateSiteIdForPlace(meta)).allowCataloguePlanning) {
+      const { drawCropPlanPages } = await import('./crop-export-pdf');
+      const { reportCropWorkingInput } = await import('./report-crop-plan');
+      const input = reportCropWorkingInput(meta.cropPlan.snapshot, meta.siteName ?? 'Site crop plan');
+      // The short sowing calendar is already in the report; the detailed plan is optional.
+      drawCropPlanPages(doc, input, true);
+    }
   }
   return doc.output('blob');
 }

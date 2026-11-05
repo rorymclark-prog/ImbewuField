@@ -1,0 +1,95 @@
+{
+  "sourceSha256": "498e348fe37779b82d1804342d2c8e9f34a655f1da375c6c3ef8dc006506adad",
+  "validatedPairs": 98,
+  "negativeControls": [
+    {
+      "name": "wrong-locale",
+      "rejected": true
+    },
+    {
+      "name": "wrong-source-hash",
+      "rejected": true
+    },
+    {
+      "name": "false-human-approval",
+      "rejected": true
+    },
+    {
+      "name": "runtime-activation",
+      "rejected": true
+    },
+    {
+      "name": "missing-row",
+      "rejected": true
+    },
+    {
+      "name": "duplicate-row",
+      "rejected": true
+    },
+    {
+      "name": "wrong-order",
+      "rejected": true
+    },
+    {
+      "name": "english-drift",
+      "rejected": true
+    },
+    {
+      "name": "key-drift",
+      "rejected": true
+    },
+    {
+      "name": "message-hash-drift",
+      "rejected": true
+    },
+    {
+      "name": "empty-translation",
+      "rejected": true
+    },
+    {
+      "name": "nonstring-translation",
+      "rejected": true
+    },
+    {
+      "name": "DEMO-loss",
+      "rejected": true
+    },
+    {
+      "name": "count-token-loss",
+      "rejected": true
+    },
+    {
+      "name": "invented-currency",
+      "rejected": true
+    },
+    {
+      "name": "invented-placeholder",
+      "rejected": true
+    },
+    {
+      "name": "invented-number",
+      "rejected": true
+    },
+    {
+      "name": "extra-row-approval",
+      "rejected": true
+    },
+    {
+      "name": "extra-packet-field",
+      "rejected": true
+    }
+  ],
+  "notesActualWhitespaceWords": 182,
+  "fluentApproval": false,
+  "runtimeActivation": false,
+  "packetHashes": {
+    "fr": "e0990a60035434f909d6c2031612d085ca5413368fbec52a9eb50a7ee8843f0a",
+    "es": "6d8e4187955850a0f0eb5ed449dd51757b4d9dc43c695ad185e6aba1f08b0a2f",
+    "pt-BR": "55f5af4cf9c91e0281f13cda84837a26ec45a3db2943e85790de31b2a1079b19",
+    "sw": "314e0cdf7c899e8c6a4a7ed4d094628dff3d55f4c362f4c72e05b8bfb0a299ae",
+    "hi": "f4658420772b06535083df2ee22e49027be17d25b7df633e9a60a88f11eaa52f",
+    "bn": "b4d0b816ff4ed8b08c6b3959c817e0274273f24339874adbdf34fd796f58e66e",
+    "id": "f095955995d99934836abe67c0e6e5c92341b094f7d5f0cf0dbd3dacaa34b548"
+  },
+  "scope": "Independent coordinator structure/source/token and negative-control checks only; no fluent semantic, tax or country approval."
+}

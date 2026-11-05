@@ -1,0 +1,75 @@
+{
+  "scope": "Pure decoder for one bounded public Environment Agency rainfall response. Not a farm reading, country coverage assertion, forecast, currentness/quality assessment or crop-planner input.",
+  "provider": {
+    "id": "ea-rainfall-public-reference",
+    "name": "Environment Agency public rainfall network sample",
+    "endpoint": "https://environment.data.gov.uk/flood-monitoring/data/readings?parameter=rainfall&latest&_view=full&_sorted&_limit=1",
+    "docsUrl": "https://environment.data.gov.uk/flood-monitoring/doc/rainfall",
+    "referenceUrl": "https://environment.data.gov.uk/flood-monitoring/doc/reference",
+    "licenceUrl": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "attribution": "this uses Environment Agency rainfall data from the real-time data API (Beta)",
+    "access": "Product documentation states open data without registration. Exact fetched public endpoint returned HTTP200; no authenticated capability implied.",
+    "licence": "Product-specific Open Government Licence link; OGLv3 permits commercial/noncommercial reuse subject to attribution and exclusions, without endorsement or continued-supply guarantee.",
+    "cadence": "Accumulated precipitation per 15-minute period; commonly transferred once or twice daily. Latest means latest available per measure, not necessarily current.",
+    "coverage": "Rainfall-specific national boundaries not established by inspected documents. No England-only, UK-wide, farm-nearest or complete network coverage claim.",
+    "inspectedOn": "2026-11-05"
+  },
+  "exports": {
+    "constant": "EA_RAINFALL_REFERENCE_PROVIDER",
+    "decoder": "decodeEaRainfallReference(value: unknown, fetchedAt: unknown): EaRainfallReferenceResult",
+    "type": "EaRainfallReferenceResult"
+  },
+  "resultCommon": {
+    "provenance": {
+      "providerId": "ea-rainfall-public-reference",
+      "endpoint": "EXACT provider.endpoint",
+      "fetchedAt": "supplied opaque receipt text, nonblank trimmed-equal string <=100 characters; invalid input produces null and failed/invalid-provenance; never read clock or claim independently verified retrieval",
+      "referenceOnly": true
+    },
+    "sample": {
+      "scope": "bounded-public-network-sample",
+      "itemLimit": 1,
+      "completeCoverage": false,
+      "currentness": "not-assessed",
+      "quality": "unknown",
+      "timeBoundary": "unknown"
+    }
+  },
+  "decodeRules": [
+    "Use existing detachJsonData on unknown payload; catch unsafe descriptors/cycles/functions/reflection errors. No second JSON detacher or caller getter execution; no network/storage/clock/Date operations.",
+    "Root and meta must be objects; meta.limit must exactly equal1. items must be an array length0 or1. More than1, malformed root/meta/items or malformed row => failed/malformed-response; no silent skip/truncation.",
+    "Empty items => unavailable/no-reading, no reading member. No invented zero or previously cached result.",
+    "Single row must be object with object measure parameter exactly rainfall, unitName exactly mm, period exactly900 and valueType exactly total. Unsupported/missing measurement metadata => failed/unsupported-measurement, no reading.",
+    "Row value ABSENT => rainfallMm null and partial. Present value must be finite numeric >=0; preserve genuine0. Null/string/boolean/nonfinite/negative values => failed/malformed-response. Never derive quantity from date/qualifier/text.",
+    "Row dateTime ABSENT => reportedAt null and partial. Present dateTime must be nonblank trimmed-equal string <=100 characters, retained exactly, otherwise failed/malformed-response. It is opaque reported text, NOT independently verified timestamp/calendar/UTC freshness or interval-boundary evidence. No parser, arithmetic, conversion or date fallback.",
+    "Valid single row => available when both value/dateTime present, otherwise partial; available means structurally decoded reference only. reading contains ONLY reportedAt:string|null, rainfallMm:number|null, periodSeconds:900, units:mm, valueType:total.",
+    "Result contains only common provenance/sample and discriminant-specific fields. failed has reason invalid-provenance|malformed-response|unsupported-measurement and no reading; unavailable has reason no-reading and no reading; available|partial has reading and no reason.",
+    "Ignore inbound extra metadata/URLs/station IDs/coordinates in projection; return no provider-supplied links, location/contact or mutable input aliases. Static provider object is frozen; fresh returned objects cannot mutate shared provider or another call. Readonly public types. No arbitrary station fetch or arbitrary endpoint.",
+    "Software fixed-query one-item policy is not official quota. Future server transport must separately bound bytes/deadline and caller geography; decoder alone is NOT live integration or retrieval/authentication proof."
+  ],
+  "sourceFacts": {
+    "periodSeconds": 900,
+    "units": "mm",
+    "valueType": "total",
+    "missingValueMeaning": "JSON NaN readings omit value; absence remains unknown.",
+    "latestMeaning": "latest available reading for each included measure",
+    "unknowns": [
+      "rainfall-specific national coverage",
+      "quality status semantics",
+      "whether reported timestamp marks accumulation start or end",
+      "numeric rainfall-specific rate quota"
+    ]
+  },
+  "testRequirements": [
+    "actual source-shape zero versus absent value",
+    "empty list not zero",
+    "each measurement mismatch and malformed row holds",
+    "one-item limit enforced without silent drop",
+    "raw reported/receipt strings preserved without time arithmetic",
+    "opaque timestamp policy clear, no false validation claim",
+    "unsafe getter0 calls and caller data unchanged",
+    "import and calls no clock/storage/network; meaningful failing-access control",
+    "returned projection excludes location/station/arbitrary URLs and does not alias input",
+    "unrelated country/planner authorities remain unchanged"
+  ]
+}

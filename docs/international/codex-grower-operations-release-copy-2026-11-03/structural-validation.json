@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "validatedOn": "2026-11-03",
+  "source": "source.json",
+  "sourceSha256": "ea662c644d50f4703b548e55165ae4e765e51a3317173d6cc9df1b5d35940daa",
+  "sourceAuthorityMatchesRuntime": true,
+  "sourceMessages": 6,
+  "integratedEntries": 24,
+  "provenance": {
+    "executor": "Codex",
+    "method": "AI draft"
+  },
+  "reviewStatus": "unreviewed-ai-draft",
+  "fluentHumanApproval": false,
+  "newLanguageEnablement": false,
+  "actualHistoryAuthority": "app/updates/page.tsx groupNotesByDay, RECENT_DAYS_SIMPLE and RECENT_DAYS_ALL",
+  "recentDayLimits": {
+    "RECENT_DAYS_SIMPLE": 3,
+    "RECENT_DAYS_ALL": 5
+  },
+  "defaultRecentHistorySources": 26,
+  "validationScope": "Source/structure/runtime candidate integration only; no fluent, dialect, agricultural or visual approval.",
+  "locales": [
+    {
+      "locale": "zu",
+      "packet": "docs/international/codex-grower-operations-release-copy-2026-11-03/zu.json",
+      "packetSha256": "91a41a271663408f74728817a0bd50a74f594093f7caf738e10fb1caa8646aa1",
+      "runtimeFile": "lib/update-copy-locales/zu.ts",
+      "entries": 6,
+      "previousChunkSha256": "7e1c92e9de7d038ca466b78fc24824c17e37702b002c412c7e9224ede56fb4eb",
+      "integratedChunkSha256": "1d0b51290b78da6054ccd3ccb7b50f44a4fc3e15345963062c59f5bbeaabe469",
+      "previousBytesAndOrderPreserved": true
+    },
+    {
+      "locale": "st",
+      "packet": "docs/international/codex-grower-operations-release-copy-2026-11-03/st.json",
+      "packetSha256": "a382492d453041775fc3f3e16009a9af2c3ce5be790c3f4cf7999f78467ad848",
+      "runtimeFile": "lib/update-copy-locales/st.ts",
+      "entries": 6,
+      "previousChunkSha256": "56981506bc38dc3c66ce12336dfad5c3a1b982da79b7b9c7a202b49d554e581c",
+      "integratedChunkSha256": "cd38364eab9c39ad94fb1dc20980850d20c9db8a1d8ea8313efa85b6c29b3ad0",
+      "previousBytesAndOrderPreserved": true
+    },
+    {
+      "locale": "ts",
+      "packet": "docs/international/codex-grower-operations-release-copy-2026-11-03/ts.json",
+      "packetSha256": "5265059ad63814bbdaa0f57412c15fcd5f3cc4351c4a00c76ad6ba53b3959d93",
+      "runtimeFile": "lib/update-copy-locales/ts.ts",
+      "entries": 6,
+      "previousChunkSha256": "eb0426c9bd1583f78008c4407adb2f58feaed5ead005268058743a2ff8889b2f",
+      "integratedChunkSha256": "963acfc4ea2d3c09f11ebff93973b62eabb6bbeaa521e8217cbeee2962ffc8f2",
+      "previousBytesAndOrderPreserved": true
+    },
+    {
+      "locale": "ve",
+      "packet": "docs/international/codex-grower-operations-release-copy-2026-11-03/ve.json",
+      "packetSha256": "c6d54117af6f83a667cb062d130e50dc624b23874c17a17921d8ef378545a31a",
+      "runtimeFile": "lib/update-copy-locales/ve.ts",
+      "entries": 6,
+      "previousChunkSha256": "64a71ebe266269e8e7e4992c21cb5b8a6333ed7225299e9a55d66649745e16cc",
+      "integratedChunkSha256": "3b8f63368604d1ca7d7f8c90b50eeca285d87bd819a693cdd5b3cacd925c4bec",
+      "previousBytesAndOrderPreserved": true
+    }
+  ],
+  "negativeControls": [
+    {
+      "name": "changed-English",
+      "rejected": true
+    },
+    {
+      "name": "changed-message-hash",
+      "rejected": true
+    },
+    {
+      "name": "changed-packet-source-hash",
+      "rejected": true
+    },
+    {
+      "name": "wrong-locale",
+      "rejected": true
+    },
+    {
+      "name": "missing-row",
+      "rejected": true
+    },
+    {
+      "name": "duplicate-row",
+      "rejected": true
+    },
+    {
+      "name": "ASCII-arrow-normalisation",
+      "rejected": true
+    },
+    {
+      "name": "missing-terminal-period",
+      "rejected": true
+    },
+    {
+      "name": "added-number",
+      "rejected": true
+    },
+    {
+      "name": "AGY-misattribution",
+      "rejected": true
+    },
+    {
+      "name": "fluent-approval-claim",
+      "rejected": true
+    },
+    {
+      "name": "existing-key-collision",
+      "rejected": true
+    }
+  ],
+  "runtimeVerifiedPairs": 24,
+  "announcedAndDefaultRecentHistoryGaps": 0,
+  "exactPriorHeadBytesRestored": true
+}

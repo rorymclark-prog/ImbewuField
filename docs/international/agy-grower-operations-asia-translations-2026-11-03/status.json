@@ -1,0 +1,73 @@
+{
+  "workorder": "docs/international/agy-grower-operations-asia-translations-2026-11-03/WORKORDER.md",
+  "status": "ready-for-coordinator-review",
+  "head": "fbe546d6c30c79e584981bbdf82d7cfada5b6363",
+  "sourceFile": "docs/international/agy-grower-operations-translations-2026-11-03/source.json",
+  "sourceSha256": "f03dd7b45de73a2996c52478483a0ae68bdbe5081f2e8bc267641faa76b071f6",
+  "generatedAt": "2026-11-03T05:08:00Z",
+  "nature": "documentation-only",
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "workerReusedCount": 0,
+  "ownership": {
+    "hi.json": "main",
+    "bn.json": "main",
+    "id.json": "main",
+    "review-notes.md": "main",
+    "status.json": "main"
+  },
+  "deliverables": [
+    {
+      "path": "docs/international/agy-grower-operations-asia-translations-2026-11-03/hi.json",
+      "locale": "hi",
+      "rowCount": 31,
+      "sourceSha256": "f03dd7b45de73a2996c52478483a0ae68bdbe5081f2e8bc267641faa76b071f6",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-operations-asia-translations-2026-11-03/bn.json",
+      "locale": "bn",
+      "rowCount": 31,
+      "sourceSha256": "f03dd7b45de73a2996c52478483a0ae68bdbe5081f2e8bc267641faa76b071f6",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-operations-asia-translations-2026-11-03/id.json",
+      "locale": "id",
+      "rowCount": 31,
+      "sourceSha256": "f03dd7b45de73a2996c52478483a0ae68bdbe5081f2e8bc267641faa76b071f6",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-operations-asia-translations-2026-11-03/review-notes.md",
+      "measuredWhitespaceWordCount": 239,
+      "maxWordCap": 250
+    }
+  ],
+  "totalDraftsProduced": 93,
+  "preservedTokens": [
+    "{crop}",
+    "{date}",
+    "DEMO",
+    "UTC"
+  ],
+  "coordinatorReviewCorrectionsApplied": {
+    "hi_growerOperations23": "Removed transplanting (रोपाई); rendered neutrally as field entry: '{crop} के लिए खेत में प्रवेश की नियोजित तारीख'",
+    "hi_growerOperations29": "Rendered exclusive interval boundary plainly: 'अपवर्जित समाप्ति सीमा (शामिल नहीं) · कोई रिकॉर्ड किया गया कार्य नहीं'",
+    "bn_growerOperations29": "Replaced specific end (নির্দিষ্ট) with plain excluded interval boundary: 'বহির্ভূত শেষ সীমানা (অন্তর্ভুক্ত নয়) · কোনো কাজের রেকর্ড নয়'",
+    "id_growerOperations29": "Reviewed and clarified excluded interval boundary: 'Batas akhir eksklusif (tidak termasuk) · bukan pekerjaan tercatat'",
+    "reviewNotes": "Removed claims of raised beds or universal transplanting; stated unreviewed draft status, remaining terminology uncertainties, and lack of fluent certification from structural pass"
+  },
+  "inspectionScope": {
+    "method": "static-source-json-translation-drafting",
+    "sourceReadsCount": 3,
+    "testsExecuted": 0,
+    "sourceWrites": 0,
+    "gitWrites": 0,
+    "networkCalls": 0,
+    "runtimeLocaleActivation": false
+  }
+}

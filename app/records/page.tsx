@@ -17,7 +17,7 @@ import {
   WriteTimeoutError,
 } from '@/lib/db/queries';
 import type { SalesLog, ProductionLog, ExpenseLog, ExpenseCategory } from '@/lib/db/types';
-import { loadInvoices, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
+import { loadInvoices, paymentMethodLabel, invoiceBookIsCurrent, type SavedInvoice } from '@/lib/invoices';
 // A sample R12.50 cost appeared as R13 here while its receipt kept the cents.
 // The ledger must use the same exact-money formatter as the buyer's document.
 import { formatInvoiceZar } from '@/lib/invoice-document';
@@ -38,14 +38,20 @@ import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import EmptyState from '@/components/EmptyState';
 import MyRecords from '@/components/MyRecords';
-import { cashLedgerSales, cashIncomeTotal } from '@/lib/invoice-sales';
+import { useInvoiceBookSource } from '@/components/invoice/useInvoiceBookSource';
+import { InvoiceStorageNotice } from '@/components/InvoiceStorageStatus';
+import { cashLedgerSales, cashIncomeTotal, reviewInvoiceRandBasis, reviewInvoiceRandPeriod, invoiceRandReviewMessage, type InvoiceRandReview } from '@/lib/invoice-sales';
+import { inspectInvoiceCurrencyBasis, invoiceRandConsumerEligibility } from '@/lib/invoice-currency';
+import { formatRecordedMoney, formattingContext } from '@/lib/international/locales/formatting';
 import { buildFinanceSeries, type FinanceSeries } from '@/lib/finance-series';
 import { useAppLevel } from '@/lib/app-level';
 import { loadCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, type CashflowSettings, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { useFinancePlanSource } from '@/lib/finance-plan-source';
+import SavedSiteUpdates from '@/components/international/countries/SavedSiteUpdates';
 import ComingUpHarvests from '@/components/ComingUpHarvests';
 import CashflowChart from '@/components/CashflowChart';
 import FinanceGraphs from '@/components/FinanceGraphs';
+import { CropPlanStorageNotice } from '@/components/CropPlanStorageStatus';
 import AreaReturnCards from '@/components/AreaReturnCards';
 import type { GrowingEnterprise } from '@/lib/area-returns';
 import MenuButton from '@/components/MenuButton';
@@ -71,10 +77,28 @@ import { parseDecimalInput } from '@/lib/decimal-input';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, isRecordsRegionalLang, recordsDraftNotice } from '@/lib/records-regional-drafts';
 import { recordsDate } from '@/lib/records-months';
 
+// The shared subscriber emits the event read by the finance source hook.
+const onFinancePlacesReceived = () => {};
+
 // w19-12: on screen the thousands separator is a no-break space so "R8 175,00" never splits
 // across lines. lib/invoice-document.ts keeps the plain space because jsPDF's core fonts
 // cannot encode U+00A0 and the same formatter feeds the PDF.
 const fmtZAR = (n: number): string => formatInvoiceZar(n).replace(/ /g, '\u00A0');
+
+const nullableRand = (amount: number | null): string => amount === null ? 'Unavailable' : fmtZAR(amount);
+
+function CurrencyReviewNotice({ review }: { review: InvoiceRandReview }) {
+  const message = invoiceRandReviewMessage(review);
+  return message ? <p role="status" className="font-sans text-sm my-3" style={{ color: 'var(--text-secondary)' }}>{message}</p> : null;
+}
+
+function invoiceMoneyLabel(invoice: SavedInvoice, lang: string): string {
+  const basis = inspectInvoiceCurrencyBasis(invoice);
+  if (basis.status === 'held') return 'Currency unavailable';
+  if (basis.status === 'legacy-rand') return fmtZAR(invoice.total);
+  return formatRecordedMoney({ amount: invoice.total, currency: basis.currency }, formattingContext(lang))?.text.replace(/[\u00a0\u202f]/g, ' ') ?? 'Currency unavailable';
+}
+
 
 /* ── One book, three tabs, and the charts as a view inside it ────────────────
  *
@@ -217,9 +241,10 @@ function scopeKg(rows: { crop: string; kg?: number | null; quantity?: number; un
 function SummaryCards({ sales, production, expenses, invoices, loading }: SummaryProps) {
   const { lang } = useLanguage();
   const includePerennials = useIncludePerennials();
-  const thisMonthSales = sales.filter((s) => isThisMonth(s.sold_at));
+  const thisMonthSales = cashLedgerSales(sales, invoices.map(invoice => invoice.id)).filter((s) => isThisMonth(s.sold_at));
   const thisMonthPaidInvoices = invoices.filter((i) => i.status === 'paid' && isThisMonth(i.paidAt));
-  const totalRevenue = cashIncomeTotal(thisMonthSales, thisMonthPaidInvoices);
+  const moneyReview = reviewInvoiceRandPeriod(invoices, { status: 'paid', dateField: 'paidAt', inPeriod: isThisMonth });
+  const totalRevenue = moneyReview.status === 'held' ? null : cashIncomeTotal(thisMonthSales, thisMonthPaidInvoices, invoices);
   const totalSpent = expenses
     .filter((x) => isThisMonth(x.spent_at))
     .reduce((acc, x) => acc + (x.amount ?? 0), 0);
@@ -229,7 +254,7 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
     {
       icon: <TrendingUp size={16} />,
       label: recordsText(lang, 'Sold this month', 'Okudayisiwe kule nyanga'),
-      value: fmtZAR(totalRevenue),
+      value: nullableRand(totalRevenue),
       color: 'var(--record-positive)',
       bg: 'rgba(46,107,58,0.08)',
       border: 'rgba(46,107,58,0.18)',
@@ -286,14 +311,15 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
         </div>
       ))}
       </div>
+      {!loading && <CurrencyReviewNotice review={moneyReview} />}
       {!loading && monthKg.excluded > 0 && (
         /* Named and quantified, never just subtracted. The same condition that makes a
            capped chart axis honest rather than wrong applies to a filtered total: a
            number with its missing part nowhere on screen is not a filtered figure. */
         <p className="font-sans text-xs mt-2" style={{ color: 'var(--color-muted-strong)' }}>
           {recordsTemplate(lang,
-            'Orchard is switched off, so {kg} kg is not in the harvest figure: {names}. The rand figures still count every sale.',
-            'Ingadi yezithelo icishiwe, ngakho u-{kg} kg awufakiwe esivunweni: {names}. Amanani erandi asabala konke okudayisiwe.',
+            moneyReview.status === 'held' ? 'Orchard is switched off, so {kg} kg is not in the harvest figure: {names}.' : 'Orchard is switched off, so {kg} kg is not in the harvest figure: {names}. The rand figures still count every sale.',
+            moneyReview.status === 'held' ? 'Orchard is switched off, so {kg} kg is not in the harvest figure: {names}.' : 'Ingadi yezithelo icishiwe, ngakho u-{kg} kg awufakiwe esivunweni: {names}. Amanani erandi asabala konke okudayisiwe.',
             { kg: monthKg.excluded.toFixed(1), names: monthKg.excludedNames.join(', ') })}
         </p>
       )}
@@ -310,6 +336,7 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
 function SimpleMoneySummary({ series, lang }: { series: FinanceSeries; lang: string }) {
   if (!series.hasRecords) return null;
   const net = series.totalNetZar;
+  if (net === null || series.totalInZar === null) return <div className="rounded-2xl p-4"><p className="font-display font-bold text-xl">Unavailable</p><CurrencyReviewNotice review={series.moneyReview} /><p>Money out {fmtZAR(series.totalOutZar)}</p></div>;
   const headline = net < 0
     ? recordsTemplate(lang, 'You spent {amount} more than you made', 'Usebenzise i-{amount} ngaphezu kwalokho okutholile', { amount: fmtZAR(Math.abs(net)) })
     : recordsTemplate(lang, 'You kept {amount}', 'Ugcine i-{amount}', { amount: fmtZAR(net) });
@@ -346,7 +373,8 @@ interface PhoneRow {
   iso: string;
   title: string;
   subtitle: string;
-  amount: number;
+  amount: number | null;
+  moneyLabel?: string;
   positive: boolean; // true = money in (green), false = money out (amber)
 }
 
@@ -376,10 +404,10 @@ function toPhoneRows(sales: SalesLog[], expenses: ExpenseLog[], invoices: SavedI
   const paidInvoiceRows: PhoneRow[] = invoices
     .filter((i) => i.status === 'paid')
     .map((i) => ({
-      kind: 'invoice', id: i.id, iso: i.paidAt ?? i.dateISO,
+      kind: 'invoice', id: i.id, iso: i.paidAt ?? '',
       title: i.items.map((item) => item.desc).join(', '),
       subtitle: `${i.billTo || recordsText(lang, 'Farm gate', 'Epulazini')} · ${i.items.map((item) => `${item.qty} ${item.unit}`).join(', ')} · ${recordsText(lang, 'Paid', 'Ikhokhiwe')}`,
-      amount: i.total ?? 0, positive: true,
+      amount: invoiceRandConsumerEligibility(i).status === 'eligible' ? i.total ?? 0 : null, moneyLabel: invoiceMoneyLabel(i, lang), positive: true,
     }));
   return [...saleRows, ...expenseRows, ...paidInvoiceRows].sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
 }
@@ -431,6 +459,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
       className="rounded-2xl overflow-hidden"
       style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
     >
+      <CurrencyReviewNotice review={reviewInvoiceRandBasis(invoices.filter(invoice => invoice.status === 'paid'), invoices)} />
       <div
         className="px-4 py-3 flex items-center gap-2"
         style={{ borderBottom: '1px solid var(--color-border)' }}
@@ -478,7 +507,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                   className="text-sm font-display font-semibold whitespace-nowrap"
                   style={{ color: item.positive ? 'var(--record-positive)' : 'var(--record-negative)' }}
                 >
-                  {item.positive ? '+' : '-'}{fmtZAR(item.amount)}
+                  {item.moneyLabel ? (item.moneyLabel === 'Currency unavailable' ? item.moneyLabel : `+${item.moneyLabel}`) : `${item.positive ? '+' : '-'}${nullableRand(item.amount)}`}
                 </p>
                 <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                   {fmtDate(item.iso, lang)}
@@ -556,6 +585,9 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [kind, setKind] = useState<'in' | 'out'>(lockKind ?? 'in');
+  const quickSale = kind === 'in' && !editing;
+  const invoiceSource = useInvoiceBookSource({ enabled: quickSale && (open || alwaysOpen) });
+  const salePending = useRef(false), saleSequence = useRef(0);
   const [form, setForm] = useState<SaleFormState>(emptyForm());
   const [scanning, setScanning] = useState(false);
   const [scanNote, setScanNote] = useState('');
@@ -572,6 +604,12 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
   const receiptRequest = useRef(0);
   const scanAbort = useRef<AbortController | null>(null);
   const mounted = useRef(true);
+
+  useEffect(() => {
+    if (!quickSale) return;
+    ++saleSequence.current; salePending.current = false;
+    setForm(emptyForm()); setSaveNote('');
+  }, [invoiceSource.epoch, quickSale]);
 
   useEffect(() => { onSavingChange?.(form.loading); }, [form.loading, onSavingChange]);
 
@@ -698,7 +736,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (form.loading || readingPhoto || scanning) return;
+    if (form.loading || readingPhoto || scanning || quickSale && salePending.current) return;
+    if (quickSale && (!invoiceSource.ready || !invoiceSource.book || !invoiceSource.isActorCurrent() || !invoiceBookIsCurrent(invoiceSource.book))) {
+      setForm(f => ({ ...f, error: 'Check the current invoice records before saving this sale.' })); return;
+    }
     const what = form.crop.trim();
     const amount = parseDecimalInput(form.price);
     const quantity = parseDecimalInput(form.quantity);
@@ -706,6 +747,8 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
       setForm((f) => ({ ...f, error: isIn ? recordsPaired(lang, 'Product, quantity and amount are required.') : lang === 'zu' ? 'Kudingeka into nenani.' : recordsPaired(lang, 'Item and amount are required.') }));
       return;
     }
+    const attempt = quickSale ? ++saleSequence.current : 0;
+    if (quickSale) salePending.current = true;
     setForm((f) => ({ ...f, loading: true, error: '' }));
     try {
       const sampling = isSampleMode();
@@ -715,8 +758,22 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           if (sampling) updateSandboxSale(editing.row.id, patch); else await updateSale(editing.row.id, patch);
         } else {
           const row = { enterprise: form.enterprise, crop: what, ...recordQuantityPayload(quantity, form.unit), amount, buyer: form.buyer.trim() || null, sold_at: new Date().toISOString() };
-          const invoice = await addSale(row);
+          const invoice = await addSale(row, invoiceSource.book!);
+          // This save legitimately replaces its raw source. Completion belongs
+          // to the original actor, not to the now-obsolete pre-write token.
+          if (!mounted.current || attempt !== saleSequence.current || !invoiceSource.isActorCurrent()) return;
+          reset();
+          setSaveNote(sampling ? 'DEMO sale recorded. Your personal invoice records are unchanged.' : 'Sale and invoice saved.');
+          invoiceSource.reload();
+          if (!invoiceSource.isActorCurrent()) return;
+          setOpen(false); onCancelEdit();
+          if (!invoiceSource.isActorCurrent()) return;
+          onSaved();
+          if (!invoiceSource.isActorCurrent()) return;
+          onDone?.();
+          if (!invoiceSource.isActorCurrent()) return;
           router.push(`/invoice?view=${encodeURIComponent(invoice.id)}`);
+          return;
         }
       } else {
         const expenseId = editing?.type === 'expense' ? editing.row.id : (draftExpenseId.current ??= crypto.randomUUID());
@@ -742,8 +799,9 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
       onSaved();
       onDone?.();
     } catch (err) {
+      if (quickSale && (attempt !== saleSequence.current || !invoiceSource.isActorCurrent())) return;
       if (!mounted.current || (!isIn && !receiptScopeIsCurrent(receiptScopeRef.current))) return;
-      if (err instanceof WriteTimeoutError) {
+      if (!quickSale && err instanceof WriteTimeoutError) {
         // lib/db/queries.ts gave up waiting for the server to confirm — but persistentLocalCache
         // (lib/firebase/init.ts) means the entry is already durably saved on this device and
         // Firestore is still trying to send it in the background; it is NOT lost and does NOT need
@@ -761,7 +819,9 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         onSaved();
         return;
       }
-      setForm((f) => ({ ...f, loading: false, error: recordsMessage(lang, userFacingMessage(err, 'Failed to save. Try again.', k => translate(lang, k))) }));
+      setForm((f) => ({ ...f, loading: false, error: recordsMessage(lang, userFacingMessage(err, quickSale ? 'The sale could not be confirmed. Check the invoice records before saving again.' : 'Failed to save. Try again.', k => translate(lang, k))) }));
+    } finally {
+      if (quickSale && attempt === saleSequence.current) salePending.current = false;
     }
   }
 
@@ -821,8 +881,15 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           </div>
         )}
       </div>
+      {quickSale && <div className="px-4"><InvoiceStorageNotice />
+        {!invoiceSource.ready && <button type="button" disabled={form.loading || !invoiceSource.isActorCurrent()}
+          className="min-h-11 rounded-lg border px-3 py-2 text-sm" onClick={() => {
+            if (invoiceSource.reload()) { reset(); setSaveNote(''); }
+            else setForm(f => ({ ...f, error: 'The invoice records are still unavailable. Check the storage notice before saving.' }));
+          }}>Reload invoice records and clear this draft</button>}
+      </div>}
       <form onSubmit={handleSubmit} className="p-4 pt-2 space-y-3">
-        <fieldset disabled={form.loading} className="contents">
+        <fieldset disabled={form.loading || quickSale && !invoiceSource.ready} className="contents">
         <label className="block text-sm">{recordsText(lang, 'Growing area for this entry (optional)', 'Indawo yokulima yalokhu okufakiwe (uma uthanda)')}
           <select className="dark-input w-full rounded-lg border px-3 py-2 mt-1" style={{ background: 'var(--bg-1)', borderColor: 'var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' }} value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as GrowingEnterprise : null }))}>
             <option value="">{recordsText(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value="vegetables">{recordsText(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value="staples">{recordsText(lang, 'Staple plots', 'Amasimu ezitshalo eziyisisekelo')}</option>{!isIn && <option value="shared">{recordsText(lang, 'Shared by beds and staple plots', 'Kwabiwe phakathi kwemibhede namasimu ezitshalo eziyisisekelo')}</option>}<option value="other">{recordsText(lang, 'Orchard / other', 'Ingadi yezithelo / okunye')}</option>
@@ -946,7 +1013,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
             style={{ background: 'transparent', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)' }}>
             {recordsText(lang, 'Cancel', 'Khansela')}
           </button>
-          <button type="submit" disabled={form.loading || readingPhoto || scanning}
+          <button type="submit" disabled={form.loading || readingPhoto || scanning || quickSale && !invoiceSource.ready}
             className="flex-1 py-2.5 rounded-xl text-sm font-display font-semibold flex items-center justify-center gap-2 transition-all"
             style={{ background: form.loading ? 'rgba(31,77,43,0.06)' : accent, border: 'none', color: form.loading ? 'var(--color-muted-strong)' : '#fff', cursor: form.loading ? 'not-allowed' : 'pointer' }}>
             {form.loading ? (
@@ -1029,7 +1096,7 @@ function SignInPrompt() {
 // instead of keeping its own second copy of the same rule.
 type Period = FinancePeriod;
 
-interface LedgerRow { kind: 'sale' | 'expense' | 'harvest' | 'invoice'; id: string; iso: string; date: string; desc: string; qty: string; inAmt: number | null; source: string; outAmt: number | null; duplicateSuspect?: boolean }
+interface LedgerRow { kind: 'sale' | 'expense' | 'harvest' | 'invoice'; id: string; iso: string; date: string; desc: string; qty: string; inAmt: number | null; inLabel?: string; source: string; outAmt: number | null; duplicateSuspect?: boolean }
 
 // Builds the unified ledger (sales + expenses + harvest + paid invoices) for a period.
 // Shared by the desktop sheet and the phone CSV export so both stay in sync.
@@ -1045,13 +1112,13 @@ function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: 
     .map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at, lang), desc: `${p.crop} ${recordsText(lang, 'harvested', 'kuvunyiwe')}`, qty: recordsQuantityLabel(p, lang), inAmt: null, source: recordsText(lang, 'Yield log', 'Irekhodi lesivuno'), outAmt: null }));
   const invoiceRows: LedgerRow[] = invoices
     .filter((i) => i.status === 'paid' && isInFinancePeriod(i.paidAt, period, now))
-    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO, lang), desc: i.items.map(item => item.desc).join(', '), qty: i.items.map(item => `${item.qty} ${item.unit}`).join(', '), inAmt: i.total ?? 0, source: i.paymentMethod ? `${recordsText(lang, 'Invoice', 'I-invoyisi')} · ${recordsFill(lang, paymentMethodLabel(i.paymentMethod))}` : recordsText(lang, 'Invoice', 'I-invoyisi'), outAmt: null }));
+    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO, lang), desc: i.items.map(item => item.desc).join(', '), qty: i.items.map(item => `${item.qty} ${item.unit}`).join(', '), inAmt: invoiceRandConsumerEligibility(i).status === 'eligible' ? i.total ?? 0 : null, inLabel: invoiceMoneyLabel(i, lang), source: i.paymentMethod ? `${recordsText(lang, 'Invoice', 'I-invoyisi')} · ${recordsFill(lang, paymentMethodLabel(i.paymentMethod))}` : recordsText(lang, 'Invoice', 'I-invoyisi'), outAmt: null }));
   // Invoice-generated crop rows carry invoice_id and are deliberately absent from saleRows above:
   // the invoice is the money entry while its linked sale rows supply crop/kg evidence to harvest
   // reconciliation. This remaining heuristic catches a farmer manually entering the same sale as
   // well; those unlinked rows still need human review rather than silent deletion.
   const suspect = suspectedDuplicateIncomeIds(
-    [...saleRows, ...invoiceRows].map((r) => ({
+    [...saleRows, ...invoiceRows].filter(r => r.inAmt !== null).map((r) => ({
       id: `${r.kind}-${r.id}`,
       kind: r.kind === 'invoice' ? 'invoice' as const : 'sale' as const,
       amount: r.inAmt ?? 0,
@@ -1073,14 +1140,16 @@ function filterLedgerRows(rows: LedgerRow[], only: 'picked' | 'in' | 'out' | und
 /** The export keeps isiZulu's existing wording; the unreviewed regional drafts never go into a file. */
 const csvLang = (lang: string) => (lang === 'zu' ? 'zu' : 'en');
 
-function exportLedgerCsv(rows: LedgerRow[], period: Period, lang = 'en') {
+function exportLedgerCsv(rows: LedgerRow[], period: Period, lang = 'en', moneyReview?: InvoiceRandReview) {
   const head = lang === 'zu'
     ? ['Usuku', 'Incazelo', 'Inani', 'Ingenayo', 'Umthombo', 'Ephumayo', 'Hlola']
     : ['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'];
   // The CSV can leave the app for a lender or accountant, so unreviewed Sesotho, Tshivenda and
   // Xitsonga drafts stay out of it: those languages export English headings, as before.
   const duplicateNote = lang === 'zu' ? 'Kungenzeka ukuthi ukuthengisa kubalwe kabili — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.' : DUPLICATE_ROW_NOTE;
-  const body = rows.map((r) => [r.date, r.desc, r.qty, r.inAmt != null ? fmtZAR(r.inAmt) : '', r.source, r.outAmt != null ? fmtZAR(r.outAmt) : '', r.duplicateSuspect ? duplicateNote : '']);
+  const body = rows.map((r) => [r.date, r.desc, r.qty, r.inLabel ?? (r.inAmt != null ? fmtZAR(r.inAmt) : ''), r.source, r.outAmt != null ? fmtZAR(r.outAmt) : '', r.duplicateSuspect ? duplicateNote : '']);
+  const reviewMessage = moneyReview ? invoiceRandReviewMessage(moneyReview) : null;
+  if (reviewMessage) body.push(['', '', '', 'Unavailable', '', '', reviewMessage]);
   const csv = [head, ...body].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
   const a = document.createElement('a');
@@ -1105,19 +1174,20 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
   );
   const rows: LedgerRow[] = useMemo(() => filterLedgerRows(allRows, only), [allRows, only]);
 
-  const income = allRows.reduce((a, r) => a + (r.inAmt ?? 0), 0);
+  const moneyReview = reviewInvoiceRandPeriod(invoices, { status: 'paid', dateField: 'paidAt', inPeriod: iso => isInFinancePeriod(iso, period, now) });
+  const income = moneyReview.status === 'held' ? null : allRows.reduce((a, r) => a + (r.inAmt ?? 0), 0);
   const expenseTotal = allRows.reduce((a, r) => a + (r.outAmt ?? 0), 0);
-  const net = income - expenseTotal;
+  const net = income === null ? null : income - expenseTotal;
   const includePerennials = useIncludePerennials();
   const periodKg = scopeKg(production.filter((p) => isInFinancePeriod(p.logged_at, period, now)), includePerennials);
   const yieldLabel = <RecordQuantitySummary compact totals={periodKg.quantities} />;
 
-  function exportCsv() { exportLedgerCsv(filterLedgerRows(buildLedgerRows(sales, expenses, production, invoices, period, now, csvLang(lang)), only), period, csvLang(lang)); }
+  function exportCsv() { exportLedgerCsv(filterLedgerRows(buildLedgerRows(sales, expenses, production, invoices, period, now, csvLang(lang)), only), period, csvLang(lang), moneyReview); }
 
   const stats = [
-    { label: recordsText(lang, 'Income', 'Imali engenayo'), value: fmtZAR(income), color: 'var(--record-positive)' },
+    { label: recordsText(lang, 'Income', 'Imali engenayo'), value: nullableRand(income), color: 'var(--record-positive)' },
     { label: recordsText(lang, 'Expenses', 'Izindleko'), value: expenseTotal ? fmtZAR(expenseTotal) : '—', color: 'var(--record-negative)' },
-    { label: recordsText(lang, 'Recorded cash margin', 'Imali esele erekhodiwe'), value: fmtZAR(net), color: 'var(--color-forest-800)' },
+    { label: recordsText(lang, 'Recorded cash margin', 'Imali esele erekhodiwe'), value: nullableRand(net), color: 'var(--color-forest-800)' },
     { label: recordsText(lang, 'Yield logged', 'Isivuno esirekhodiwe'), value: yieldLabel, color: 'var(--color-water)' },
   ];
 
@@ -1172,6 +1242,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
         </div>
       </div>
 
+      <CurrencyReviewNotice review={moneyReview} />
       {/* Stat row */}
       <div className="grid grid-cols-4 gap-4 mb-5">
         {stats.map((s) => (
@@ -1185,7 +1256,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
         /* Same rule as the phone summary: what the switch removes is named and
            counted on the same screen, so "Yield logged" is never quietly short. */
         <p className="font-sans mb-5" style={{ fontSize: 12, color: 'var(--color-muted-strong)', marginTop: -12 }}>
-          {recordsTemplate(lang, 'Orchard is switched off, so {kg} kg is not in Yield logged: {names}. Income and recorded cash margin still count every sale.', 'Ingadi yezihlahla icishiwe, ngakho u-{kg} kg akafakiwe esivunweni esirekhodiwe: {names}. Imali engenayo nemali esele erekhodiwe kusaqhubeka nokubala konke okudayisiwe.', { kg: periodKg.excluded.toFixed(1), names: periodKg.excludedNames.join(', ') })}
+          {recordsTemplate(lang, moneyReview.status === 'held' ? 'Orchard is switched off, so {kg} kg is not in Yield logged: {names}.' : 'Orchard is switched off, so {kg} kg is not in Yield logged: {names}. Income and recorded cash margin still count every sale.', moneyReview.status === 'held' ? 'Orchard is switched off, so {kg} kg is not in Yield logged: {names}.' : 'Ingadi yezihlahla icishiwe, ngakho u-{kg} kg akafakiwe esivunweni esirekhodiwe: {names}. Imali engenayo nemali esele erekhodiwe kusaqhubeka nokubala konke okudayisiwe.', { kg: periodKg.excluded.toFixed(1), names: periodKg.excludedNames.join(', ') })}
         </p>
       )}
 
@@ -1219,7 +1290,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                   )}
                 </td>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted-strong)', whiteSpace: 'nowrap' }}>{r.qty}</td>
-                <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: 'var(--record-positive)', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.inAmt != null ? fmtZAR(r.inAmt) : '—'}</td>
+                <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: 'var(--record-positive)', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.inLabel ?? (r.inAmt != null ? fmtZAR(r.inAmt) : '—')}</td>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>{r.source}</td>
                 <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: 'var(--record-negative)', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.outAmt != null ? fmtZAR(r.outAmt) : '—'}</td>
                 <td className="pr-4 py-3">
@@ -1280,6 +1351,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
         <h2 className="text-xl font-display font-semibold" style={{ color: 'var(--text-primary)' }}>{recordsText(lang, 'Crop performance', 'Ukusebenza kwezitshalo')}</h2>
         <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield leads: it compares growing work even when prices change.', 'Isivuno sibekwa kuqala: siqhathanisa umsebenzi wokulima ngisho noma amanani eshintsha.')}</p>
       </div>
+      {!waiting && <CurrencyReviewNotice review={metrics.moneyReview} />}
       {waiting ? (
         <p className="px-4 py-6 text-xs font-sans" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Loading crop areas…', 'Kulayishwa izindawo zezitshalo…')}</p>
       ) : metrics.crops.length === 0 ? (
@@ -1296,8 +1368,8 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <div><p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²', lang) : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}</p></div>
-                <div><p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
-                <div><p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
+                <div><p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>{crop.moneyReview.status === 'held' ? 'Unavailable' : crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
+                <div><p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>{crop.moneyReview.status === 'held' ? 'Unavailable' : crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
               </div>
               <p className="text-xs font-sans mt-2" style={{ color: 'var(--text-secondary)' }}>
                 {crop.hasTaggedCost
@@ -1334,13 +1406,13 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
                 <div>
                   <p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Sold for', 'Kudayiswe ngo')}</p>
                   <p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>
-                    {row.hasSale ? fmtZAR(row.turnoverZar) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
+                    {row.moneyReview.status === 'held' ? 'Unavailable' : row.hasSale ? nullableRand(row.turnoverZar) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
                   </p>
                 </div>
                 <div>
                   <p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p>
                   <p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>
-                    {row.priceZarPerKg !== null ? metricNumber(row.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
+                    {row.moneyReview.status === 'held' ? 'Unavailable' : row.priceZarPerKg !== null ? metricNumber(row.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
                   </p>
                 </div>
               </div>
@@ -1366,7 +1438,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
         ) : metrics.gardenMargins.map((margin) => (
           <div key={margin.gardenId ?? 'this-farm'} className="flex items-baseline justify-between gap-3 mt-2">
             <p className="text-sm font-display" style={{ color: 'var(--text-primary)' }}>{margin.gardenId ? `${recordsText(lang, 'Garden', 'Ingadi')} ${margin.gardenId}` : recordsText(lang, 'This farm', 'Leli pulazi')}</p>
-            <p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{fmtZAR(margin.grossMarginZar)}</p>
+            <p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{nullableRand(margin.grossMarginZar)}</p>
           </div>
         ))}
         <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsInstruction(lang, 'Sales logged minus expenses logged. Shared costs are never guessed into crop profit.', 'Imali yokudayisa erekhodiwe kukhishwe izindleko ezirekhodiwe. Izindleko ezabiwe azifakwa ngokuqagela enzuzweni yesitshalo.')}</p>
@@ -1629,6 +1701,8 @@ export default function RecordsPage() {
         <SettingsButton />
       </header>
 
+      <SavedSiteUpdates onPlaces={onFinancePlacesReceived} />
+
       {/* Content */}
       <main className="flex-1 overflow-y-auto px-4 lg:px-8 py-5 lg:py-8 space-y-4">
         {user === 'loading' ? (
@@ -1708,6 +1782,7 @@ export default function RecordsPage() {
               })}
             </div>
             {isRecordsRegionalLang(lang) && <p role="note" lang="en" data-records-draft-notice={lang} className="mt-1 text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsDraftNotice(lang)} English tabs: {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</p>}
+            {tab === 'charts' && <CropPlanStorageNotice />}
 
             {/* bug-02: a failed read keeps showing the last-loaded rows instead of an empty
                 ledger, so this banner — not a blank list — is what says the data may be stale. */}
@@ -1867,7 +1942,7 @@ export default function RecordsPage() {
                     <AreaReturnCards sample={sampling} beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading || !planSource.loaded} />
                     <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
                     <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
-                    <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
+                    <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} forecastPlantings={planSource.forecastPlantings} forecastAvailable={planSource.forecastAvailable} forecastReason={planSource.forecastReason} />
                   </>
                 )}
                 {/* Same LogSaleForm as the phone branch, hosted in a modal. Mounted
@@ -1909,7 +1984,7 @@ export default function RecordsPage() {
                   <CashflowChart sales={sales} expenses={expenses} production={production} invoices={invoices} loading={dataLoading} />
                   <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} />
                   <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
-                  <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
+                  <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} forecastPlantings={planSource.forecastPlantings} forecastAvailable={planSource.forecastAvailable} forecastReason={planSource.forecastReason} />
                   <AreaReturnCards sample={sampling} beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading || !planSource.loaded} />
                   <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
                   {/* Never hidden behind a tab switch: "no data" may only mean "not reachable",
@@ -1940,7 +2015,7 @@ export default function RecordsPage() {
                   )}
                   <button
                     type="button"
-                    onClick={() => exportLedgerCsv(buildLedgerRows(sales, expenses, production, invoices, 'month', new Date(), csvLang(lang)), 'month', csvLang(lang))}
+                    onClick={() => exportLedgerCsv(buildLedgerRows(sales, expenses, production, invoices, 'month', new Date(), csvLang(lang)), 'month', csvLang(lang), reviewInvoiceRandPeriod(invoices, { status: 'paid', dateField: 'paidAt', inPeriod: iso => isInFinancePeriod(iso, 'month', new Date()) }))}
                     disabled={!hasAnyData}
                     className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
                     style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: hasAnyData ? 'var(--color-ink)' : 'var(--text-secondary)', cursor: hasAnyData ? 'pointer' : 'not-allowed' }}

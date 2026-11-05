@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-11-03",
+  "scope": "Nine exact current grower crop/nursery milestone and prior grower-entry release descriptions and update-tour strings. Candidate-only translation; no lessons, species, farming values or production language approval.",
+  "basis": "Enumerated through actual visibleNotes(), updateTourSources(visibleUpdateTour()) and loadUpdateCopy()/updateDescription() for every locale. Recent history uses the actual extracted groupNotesByDay function and current route day limits.",
+  "sourceEnglishConvention": "Exact runtime English strings; sourceSha256 hashes UTF-8 sourceEnglish.",
+  "review": {
+    "status": "unreviewed"
+  },
+  "fluentHumanApproval": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "messagesPerLocale": 9,
+  "totalCandidateMessages": 36,
+  "sourceAuthority": {
+    "releaseFile": "lib/release-notes.ts",
+    "currentMilestoneReleaseSha": "34d527564",
+    "priorGrowerEntryReleaseSha": "12b0acba4",
+    "authorityFileSha256": {
+      "lib/release-notes.ts": "d01a6f17949198a13e10b2e26a8d57363be1967aceedcf77b9fde6c588d1de94",
+      "lib/update-copy.ts": "e65623737412e1f912b751902efe5ce535cda501ac5dbcd65d056c9f30995d0c",
+      "app/updates/page.tsx": "9c44ed060a0bb3f27be3f466671b347f6494edb27cbf73b87d2b1c06375866c9",
+      "lib/update-copy-locales/zu.ts": "bd8d4ea3e8001cbadc7ad96fafd1f5cb09a570bf587e5d9871f4233bfdd93827",
+      "lib/update-copy-locales/st.ts": "0d089c9674bcdc21d5369ca4557ba99bb1a2c8c52bdca7dadf45ae34fc8a79d8",
+      "lib/update-copy-locales/ts.ts": "bdb40d6790b5760dea0ae8437cf8566bffb9f3689a16a418877cf3c3cda65c00",
+      "lib/update-copy-locales/ve.ts": "3c2dc299139bb065f838af705312fb01ba5796eff47042987b3cdba59a82f039"
+    }
+  },
+  "runtimeAudit": {
+    "currentDistinctSourceCount": 17,
+    "locales": [
+      {
+        "locale": "zu",
+        "missingCurrentSourceCount": 9,
+        "defaultHistoryDayCount": 5,
+        "defaultHistoryDescriptionCount": 23,
+        "missingDefaultHistoryDescriptionCount": 3,
+        "simpleHistoryDayCount": 3,
+        "simpleHistoryDescriptionCount": 9,
+        "missingSimpleHistoryDescriptionCount": 3,
+        "otherDefaultRecentHistoryGaps": 0
+      },
+      {
+        "locale": "st",
+        "missingCurrentSourceCount": 9,
+        "defaultHistoryDayCount": 5,
+        "defaultHistoryDescriptionCount": 23,
+        "missingDefaultHistoryDescriptionCount": 3,
+        "simpleHistoryDayCount": 3,
+        "simpleHistoryDescriptionCount": 9,
+        "missingSimpleHistoryDescriptionCount": 3,
+        "otherDefaultRecentHistoryGaps": 0
+      },
+      {
+        "locale": "ts",
+        "missingCurrentSourceCount": 9,
+        "defaultHistoryDayCount": 5,
+        "defaultHistoryDescriptionCount": 23,
+        "missingDefaultHistoryDescriptionCount": 3,
+        "simpleHistoryDayCount": 3,
+        "simpleHistoryDescriptionCount": 9,
+        "missingSimpleHistoryDescriptionCount": 3,
+        "otherDefaultRecentHistoryGaps": 0
+      },
+      {
+        "locale": "ve",
+        "missingCurrentSourceCount": 9,
+        "defaultHistoryDayCount": 5,
+        "defaultHistoryDescriptionCount": 23,
+        "missingDefaultHistoryDescriptionCount": 3,
+        "simpleHistoryDayCount": 3,
+        "simpleHistoryDescriptionCount": 9,
+        "missingSimpleHistoryDescriptionCount": 3,
+        "otherDefaultRecentHistoryGaps": 0
+      }
+    ],
+    "allLocalesHaveIdenticalNineMissingSources": true,
+    "noOtherDefaultRecentHistoryGaps": true
+  },
+  "messages": [
+    {
+      "key": "GrowerRelease.34d527564.change.1",
+      "sourceEnglish": "Review automatic crop plans from your own growing estimates and saved buyer targets.",
+      "sourceSha256": "217d012ccdcb05cefd52c5ccbe6410a03572e491341a50054381a4a5fb0b39eb",
+      "kind": "release-description",
+      "context": "Current grower crop/nursery review milestone; preserve proposal-only review, own estimates, saved sowings unchanged and missing-input limits.",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceReleaseSha": "34d527564",
+      "sourceReleaseWhen": "3 November 2026"
+    },
+    {
+      "key": "GrowerRelease.34d527564.change.2",
+      "sourceEnglish": "Check dated nursery tray and surface needs before downloading your review.",
+      "sourceSha256": "be12af623defb34b23000edce3617e7386479a1e58367340432372ccc649704b",
+      "kind": "release-description",
+      "context": "Current grower crop/nursery review milestone; preserve proposal-only review, own estimates, saved sowings unchanged and missing-input limits.",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceReleaseSha": "34d527564",
+      "sourceReleaseWhen": "3 November 2026"
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.change.1",
+      "sourceEnglish": "Save your own growing estimates and review capacity and dates for measured beds.",
+      "sourceSha256": "00490e50ff48b8b20c8ad54b89a67c5de8915e9683ca3e5204f731253aed6344",
+      "kind": "release-description",
+      "context": "Prior own-growing-estimates entry; preserve missing values, measured-bed scope and estimate versus local farming approval.",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceReleaseSha": "12b0acba4",
+      "sourceReleaseWhen": "2 November 2026"
+    },
+    {
+      "key": "GrowerRelease.34d527564.tour.1.title",
+      "sourceEnglish": "Review a crop plan from your estimates",
+      "sourceSha256": "fcca4eb4a9a4c420028742610cc74194d8f96c88d6531588286b6cc5e4df7597",
+      "kind": "tour-title",
+      "context": "Current grower crop/nursery review milestone; preserve proposal-only review, own estimates, saved sowings unchanged and missing-input limits.",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceReleaseSha": "34d527564",
+      "sourceReleaseWhen": "3 November 2026",
+      "sourceHref": "/facilitator/crops"
+    },
+    {
+      "key": "GrowerRelease.34d527564.tour.1.where",
+      "sourceEnglish": "Crop planner → Automatic plan from your estimates",
+      "sourceSha256": "51efed31c4af73b4e217bd6521d73da4455d6d72c13bd6b00b423a0bd570ba94",
+      "kind": "tour-where",
+      "context": "Navigation label; preserve the arrow and existing destination.",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceReleaseSha": "34d527564",
+      "sourceReleaseWhen": "3 November 2026",
+      "sourceHref": "/facilitator/crops"
+    },
+    {
+      "key": "GrowerRelease.34d527564.tour.1.detail",
+      "sourceEnglish": "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.",
+      "sourceSha256": "5d33bbe66317fb6dcf6987c22c81f26204a99ca1162a135c9e01ba0a28a9708a",
+      "kind": "tour-detail",
+      "context": "Current grower crop/nursery review milestone; preserve proposal-only review, own estimates, saved sowings unchanged and missing-input limits.",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceReleaseSha": "34d527564",
+      "sourceReleaseWhen": "3 November 2026",
+      "sourceHref": "/facilitator/crops"
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.tour.1.title",
+      "sourceEnglish": "Review your growing estimates",
+      "sourceSha256": "017f92fe0feeec6a26911d358288cc22a3d640f2aef1cc30112fad3a409beca7",
+      "kind": "tour-title",
+      "context": "Prior own-growing-estimates entry; preserve missing values, measured-bed scope and estimate versus local farming approval.",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceReleaseSha": "12b0acba4",
+      "sourceReleaseWhen": "2 November 2026",
+      "sourceHref": "/facilitator/crops"
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.tour.1.where",
+      "sourceEnglish": "Crop planner → Your growing estimates",
+      "sourceSha256": "363978bbad660ad1b4df5ef0b08ac457f8368c34f23619c5d78f9e3eca392643",
+      "kind": "tour-where",
+      "context": "Navigation label; preserve the arrow and existing destination.",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceReleaseSha": "12b0acba4",
+      "sourceReleaseWhen": "2 November 2026",
+      "sourceHref": "/facilitator/crops"
+    },
+    {
+      "key": "GrowerRelease.12b0acba4.tour.1.detail",
+      "sourceEnglish": "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.",
+      "sourceSha256": "2ca853dbe96887d43b513090863a0cee7c1f5d7a4c57e4349429a24558bb4ae6",
+      "kind": "tour-detail",
+      "context": "Prior own-growing-estimates entry; preserve missing values, measured-bed scope and estimate versus local farming approval.",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceReleaseSha": "12b0acba4",
+      "sourceReleaseWhen": "2 November 2026",
+      "sourceHref": "/facilitator/crops"
+    }
+  ]
+}

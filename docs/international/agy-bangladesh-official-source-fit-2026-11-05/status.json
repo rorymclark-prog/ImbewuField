@@ -1,0 +1,26 @@
+{
+  "assignment": "docs/international/agy-bangladesh-official-source-fit-2026-11-05/WORKORDER.md",
+  "status": "source-fit-authored",
+  "provenance": "Three official public HTML pages fetched by coordinator via public curl; agent performed no network requests",
+  "inputsRead": [
+    "WORKORDER.md",
+    "COORDINATOR-REVIEW.md",
+    "receipts.json",
+    "bamis-home.html",
+    "bamis-home.txt",
+    "bamis-national.html",
+    "bamis-national.txt",
+    "bmd-agromet.html",
+    "bmd-agromet.txt"
+  ],
+  "outputsWritten": [
+    "docs/international/agy-bangladesh-official-source-fit-2026-11-05/BANGLADESH-SOURCE-FIT.md",
+    "docs/international/agy-bangladesh-official-source-fit-2026-11-05/status.json"
+  ],
+  "wordCount": "UNKNOWN",
+  "validation": "UNKNOWN",
+  "commandsRun": false,
+  "testsRun": false,
+  "workersActive": 0,
+  "workersStopped": true
+}

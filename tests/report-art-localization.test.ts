@@ -1,3 +1,4 @@
+import { SUPPORTED_REPORT_COUNTRY_FIXTURE_URL } from './report-country-fixture.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
@@ -114,7 +115,7 @@ test('the actual generator sends native selected headings with the same source f
  const hooks=registerHooks({resolve(specifier,context,next){
   if(specifier==='@anthropic-ai/sdk')return {url:module('export default class Anthropic {}'),shortCircuit:true};
   if(specifier==='next/server')return {url:module('export class NextRequest {}'),shortCircuit:true};
-  if(specifier==='@/lib/api-auth')return {url:module('export async function guardPaidApiRequest(){return {uid:"translation-test"};}'),shortCircuit:true};
+  if(specifier==='@/lib/report-country-policy')return {url:SUPPORTED_REPORT_COUNTRY_FIXTURE_URL,shortCircuit:true};if(specifier==='@/lib/api-auth')return {url:module('export async function guardPaidApiRequest(){return {uid:"translation-test"};}'),shortCircuit:true};
   if(specifier==='@/lib/metered-ai')return {url:module(`export const AI_MODELS={main:'claude-sonnet-4-6'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async request=>{globalThis[Symbol.for('imbewu-report-art-request-capture')].push(request);return {usage:{},stop_reason:'end_turn',content:[{type:'text',text:'## Captured draft\\nOriginal mocked output.'}]};}}}};}`),shortCircuit:true};
   return next(specifier,context);
  }});

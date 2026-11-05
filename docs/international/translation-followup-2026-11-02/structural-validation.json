@@ -1,0 +1,36 @@
+{
+  "sourceFileSha256": "1fdb6e2bb095f026c30dba552b6a717c3fbf9a16c2eade252cc6ea75663d29a2",
+  "boundedSourceSegments": 59,
+  "sourcePlaceholderCount": 0,
+  "translationQualityOrReleaseApproval": false,
+  "locales": [
+    {
+      "locale": "fr",
+      "file": "docs/international/translation-followup-2026-11-02/fr.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "locale": "es",
+      "file": "docs/international/translation-followup-2026-11-02/es.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "locale": "pt-BR",
+      "file": "docs/international/translation-followup-2026-11-02/pt-BR.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "locale": "sw-KE",
+      "file": "docs/international/translation-followup-2026-11-02/sw-KE.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

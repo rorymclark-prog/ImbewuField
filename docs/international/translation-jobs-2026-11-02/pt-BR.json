@@ -1,0 +1,894 @@
+{
+  "schemaVersion": 1,
+  "locale": "pt-BR",
+  "scope": "Country confirmation, unmapped reference choice, planning hold, grower-owned nursery equipment and measured field blocks. UI text only; no lesson, species or agronomy edits.",
+  "provenance": {
+    "executor": "AGY",
+    "method": "AI draft",
+    "createdOn": "2026-11-02"
+  },
+  "review": {
+    "status": "unreviewed"
+  },
+  "messages": [
+    {
+      "key": "SiteCountryPanel.001",
+      "sourceEnglish": "Reopen the saved mapped site before saving country details.",
+      "sourceSha256": "024f6b1a9ea7643d7d91bd6a8ab37a40d84e8c8bd5b372b442c89b455ab81e27",
+      "text": "Reabra o local mapeado salvo antes de salvar os detalhes do país.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.002",
+      "sourceEnglish": "Choose a country and confirm this site description. Other country codes need two letters.",
+      "sourceSha256": "ebacf3c1ca15461de2ab3f413ddd627c8d2e1ec2d17a365a1bc475bd8e434c12",
+      "text": "Escolha um país e confirme esta descrição do local. Outros códigos de país precisam de duas letras.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.003",
+      "sourceEnglish": "Site country and region",
+      "sourceSha256": "f7b12aebacc7e6117590f323121ac037d81eb5aeedefaa3c622ac636f8fc4089",
+      "text": "País e região do local",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.004",
+      "sourceEnglish": "Open or save the mapped site first to keep its country details with your existing saved places.",
+      "sourceSha256": "573732d715885c0e1701a659c7a3d547e1705a54d3a48211534e079af5db09e9",
+      "text": "Abra ou salve o local mapeado primeiro para manter os detalhes do país com seus locais salvos existentes.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.005",
+      "sourceEnglish": "Open map and saved sites",
+      "sourceSha256": "46e515a52cc81196a6dd4f2ea5e4ba27ac5b2be2e376c2337d0ca0b93554d1e3",
+      "text": "Abrir mapa e locais salvos",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.006",
+      "sourceEnglish": ". A virtual bed has no saved country.",
+      "sourceSha256": "66b05c3df8825f1b9b9842a47e213d7cfeec494aee9bb1e82c5815b77500dbc6",
+      "text": ". Um canteiro virtual não tem país salvo.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.007",
+      "sourceEnglish": "Site country",
+      "sourceSha256": "1e68b503954e005f33af01761a235de5a6b375375b9cb05d262b48ab723bfe14",
+      "text": "País do local",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.008",
+      "sourceEnglish": "Choose country",
+      "sourceSha256": "36f05741e32125acf07563ef02d21511045f30fdb7d06fde6b3d3c92bb6b18b2",
+      "text": "Escolher país",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.009",
+      "sourceEnglish": "Other country",
+      "sourceSha256": "e9a4c33dc9c912a122275ab2b4a91b9f4a48d998d6435c9d58ad1a39d6e04d94",
+      "text": "Outro país",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.010",
+      "sourceEnglish": "Two-letter country code",
+      "sourceSha256": "32324458bc4474aeb7f953f01f220c4019ec2589f2f40a1a4b13f15798db3f95",
+      "text": "Código do país de duas letras",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.011",
+      "sourceEnglish": "Jurisdiction reference (optional)",
+      "sourceSha256": "c0bfb77b56098ac0e633644690e127be58503c6c60cd1ca572798f7684116e8f",
+      "text": "Referência de jurisdição (opcional)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.012",
+      "sourceEnglish": "Agricultural region reference (optional)",
+      "sourceSha256": "2e9350952c5c9b03ca56f6f4f622fe6eb08891f90e3dfbfb08fd1632ee277885",
+      "text": "Referência de região agrícola (opcional)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.013",
+      "sourceEnglish": "Country, language, currency and measurement units are separate choices. These details do not select a planting calendar or approve farming advice. They travel with a site if you explicitly share that site.",
+      "sourceSha256": "ec245bda69a3fe896eda18af9fdbc765e9dd6d772f5e2a528a84e56aabd1a940",
+      "text": "País, idioma, moeda e unidades de medida são escolhas separadas. Esses detalhes não selecionam um calendário de plantio nem aprovam recomendações agrícolas. Eles acompanham o local caso você compartilhe esse local explicitamente.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.014",
+      "sourceEnglish": "I confirm these details describe this mapped site.",
+      "sourceSha256": "0a14498c07908127c4ccef49dd8c1d97df12abadfd089978df63cfd8011e0ea4",
+      "text": "Confirmo que estes detalhes descrevem este local mapeado.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "SiteCountryPanel.015",
+      "sourceEnglish": "Save country details",
+      "sourceSha256": "80e79fd49fc87c0b0eeb0875c1d9280caa673026d90f8971d84e61ba6ba3ec7c",
+      "text": "Salvar detalhes do país",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.001",
+      "sourceEnglish": "Confirm the reference basis for this unmapped workspace first.",
+      "sourceSha256": "01eb6d99602efd3d09e74f30466931652751436b23ccc7f37a652d6ebd8a9bfd",
+      "text": "Confirme primeiro a base de referência para este espaço de trabalho não mapeado.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.002",
+      "sourceEnglish": "The reference choice could not be saved. Please try again; your previous saved choice remains in place.",
+      "sourceSha256": "cd823808105a579e614c00c2e0f530573f6ab1f2b2a6d5d4a5e38a060f486850",
+      "text": "Não foi possível salvar a escolha de referência. Tente novamente; sua escolha salva anterior permanece inalterada.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.003",
+      "sourceEnglish": "Reference choice saved with this device’s crop plan. This does not confirm a farm country or local farming approval.",
+      "sourceSha256": "0afee0b29ee2c71933c5a83a60023e82db91c4f9db8f47d1f55b4b00f8108ba2",
+      "text": "Escolha de referência salva com o plano de cultivo deste dispositivo. Isso não confirma o país da propriedade nem uma aprovação agrícola local.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.004",
+      "sourceEnglish": "The reference choice could not be removed. Please try again.",
+      "sourceSha256": "8776ea386edb982d3cff48813b63fb08fef7c18471dd2ddabb7cfe2c6190c705",
+      "text": "Não foi possível remover a escolha de referência. Tente novamente.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.005",
+      "sourceEnglish": "Reference choice removed. Your saved sowing entries remain in the crop plan.",
+      "sourceSha256": "1e48830dc18eeac95220b0be244bb9e3a9b46fae06d7629b91782bee23225cc2",
+      "text": "Escolha de referência removida. Seus registros de semeadura salvos permanecem no plano de cultivo.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.006",
+      "sourceEnglish": "Planning without a mapped site",
+      "sourceSha256": "3d06bc8746685ea2ec9843b76c6729d1acd4417338ac5f97da56976d4e16af44",
+      "text": "Planejamento sem um local mapeado",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.007",
+      "sourceEnglish": "The existing planner uses South African reference assumptions. You can explicitly use that reference basis for this unmapped workspace. It does not establish your farm’s country, local planting suitability or permission to grow a crop outside South Africa.",
+      "sourceSha256": "9bcd95adb165ae04183796fbe4d334cce5515bf0a6060ccf70c1e9cb5c61c1a4",
+      "text": "O planejador atual utiliza premissas de referência sul-africanas. Você pode utilizar explicitamente essa base de referência para este espaço de trabalho não mapeado. Isso não estabelece o país da sua propriedade, a adequação de plantio local nem a permissão para cultivar fora da África do Sul.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.008",
+      "sourceEnglish": "The choice stays with this device’s crop plan and this workspace only. It never applies to a mapped site, another workspace, currency, language or measurement units.",
+      "sourceSha256": "491ea8b14a9ea58791ccc59a4252cbb25e6325883f1c0879a473c074c9dd9eb5",
+      "text": "A escolha permanece apenas com o plano de cultivo deste dispositivo e com este espaço de trabalho. Ela nunca se aplica a um local mapeado, a outro espaço de trabalho, moeda, idioma ou unidades de medida.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.009",
+      "sourceEnglish": "Sample mode keeps this choice inside its temporary demonstration.",
+      "sourceSha256": "b2586f68678a72cc6d45db3e498e24306fb10cdff5fd36f1ce01870a1a9f4a7d",
+      "text": "O modo de demonstração mantém esta escolha dentro de sua demonstração temporária.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.010",
+      "sourceEnglish": "Open a local design or virtual-bed workspace to choose its reference basis.",
+      "sourceSha256": "be07dfa67bbf400d232e864c13aa95b6646649d26d48e32cf4fdf4ac16ff471e",
+      "text": "Abra um projeto local ou um espaço de trabalho de canteiro virtual para escolher sua base de referência.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.011",
+      "sourceEnglish": "South African reference planning selected for this unmapped workspace.",
+      "sourceSha256": "f51c479c1c2c4f9a6ace4fdff2b0abfb32d26c4c990ebce4210e17d6e0c4325d",
+      "text": "Planejamento com referência sul-africana selecionado para este espaço de trabalho não mapeado.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.012",
+      "sourceEnglish": "Remove reference choice",
+      "sourceSha256": "40308dfaff309028832f710d3e61cb79253042236fe55adeb5f31052997ce41a",
+      "text": "Remover escolha de referência",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.013",
+      "sourceEnglish": "I choose South African reference planning for this unmapped workspace.",
+      "sourceSha256": "a8fef578cca02ebbf45d760a8037e7f2acbc0194721cf0644b750255c7dd2656",
+      "text": "Escolho o planejamento com referência sul-africana para este espaço de trabalho não mapeado.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "WorkspaceReferencePanel.014",
+      "sourceEnglish": "Save reference choice",
+      "sourceSha256": "9b47b515d8edb7a6ac0396643cc899655fdeb0d504757424a2ee80edeea9079c",
+      "text": "Salvar escolha de referência",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "PlannerSupportHold.001",
+      "sourceEnglish": "The existing automatic planner uses South African source assumptions. Country details alone cannot approve a new region. Local calendars, forecasts, crop instructions and their PDF/calendar exports are unavailable here until the planning basis is reviewed.",
+      "sourceSha256": "bb313ec4b8a4d997316a140722ca0e33a58205d555523601039b942b8ae6548a",
+      "text": "O planejador automático atual utiliza premissas de origem sul-africanas. Os detalhes do país, por si sós, não podem aprovar uma nova região. Calendários locais, previsões, instruções de cultivo e suas exportações em PDF/calendário não estão disponíveis aqui até que a base de planejamento seja revisada.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "PlannerSupportHold.002",
+      "sourceEnglish": "Your saved sowing entries and mapped measurements remain stored. You can review those entries, keep actual production records and manage your own nursery equipment below. Nursery demand forecasts remain unavailable.",
+      "sourceSha256": "881ed45a7fb4694491404a7518b924f61e0fb6af554c1f36ec88399035902ffb",
+      "text": "Seus registros de semeadura salvos e medidas mapeadas permanecem armazenados. Você pode revisar esses registros, manter registros reais de produção e gerenciar seus próprios equipamentos de viveiro abaixo. Previsões de demanda do viveiro continuam indisponíveis.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "PlannerSupportHold.003",
+      "sourceEnglish": "Review international evidence and readiness",
+      "sourceSha256": "83e963c3693662ac8d22da4ea524def566b413024219eb00859cf3758b62601e",
+      "text": "Revisar evidências e prontidão internacionais",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "PlannerSupportHold.004",
+      "sourceEnglish": "Saved sowing entries ·",
+      "sourceSha256": "78e460826aa4464f4ce1375ec2ee6c7be2c365aeb461b5eed54769619bbbb422",
+      "text": "Registros de semeadura salvos ·",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "PlannerSupportHold.005",
+      "sourceEnglish": "Saved entries, not a local planting recommendation or observed harvest. No new harvest date, yield or nursery timing is calculated in this view.",
+      "sourceSha256": "cd4965d3070129e90e0df9da93e11b87ae576b505ff6cc9fffecd12de0e31458",
+      "text": "Registros salvos, não uma recomendação local de plantio ou colheita observada. Nenhuma nova data de colheita, produtividade ou cronograma de viveiro é calculado nesta visualização.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "PlannerSupportHold.006",
+      "sourceEnglish": "· saved sowing month:",
+      "sourceSha256": "32fe10f1b48f8f536c532bb2f7fb417d318ae47f8f54beebf697c9bd9cbdd9c7",
+      "text": "· mês de semeadura salvo:",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "PlannerSupportHold.007",
+      "sourceEnglish": "No saved sowing entries for these beds.",
+      "sourceSha256": "146bd36a47f6ff57a0f201ec71020c0c661ff500a1c391591c51063f79062cde",
+      "text": "Nenhum registro de semeadura salvo para estes canteiros.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.001",
+      "sourceEnglish": "Could not export the nursery CSV. Please try again.",
+      "sourceSha256": "bfbe26e723e320d9c8dcc791d5440d397f62aae19fb2ff5251de5ddec0c5a112",
+      "text": "Não foi possível exportar o CSV do viveiro. Tente novamente.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.002",
+      "sourceEnglish": "Nursery planner",
+      "sourceSha256": "112fddab514f926a79e48e22578b0cc640b9f8d26cc5dd4cb55d496c9d7de5dc",
+      "text": "Planejador do viveiro",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.003",
+      "sourceEnglish": "This site’s trays and growing surface",
+      "sourceSha256": "2685b22e0e0eceabb115e1eff148ac5104c3771cdfc57154fb0f4e7ef12525c7",
+      "text": "Bandejas e superfície de cultivo deste local",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.004",
+      "sourceEnglish": "Sample farm: this export is marked DEMO and contains example planning data.",
+      "sourceSha256": "ff01461c17a25986c910133c477d711a2711d2fdb446bf2a226dd7f0ec930921",
+      "text": "Propriedade de demonstração: esta exportação está marcada como DEMO e contém dados de planejamento de exemplo.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.005",
+      "sourceEnglish": "Review seeds and equipment to source",
+      "sourceSha256": "10ff08a9c28fba4cf703581e17432a9fc2761e941aeb5846b36695d8669e8142",
+      "text": "Revisar sementes e equipamentos a adquirir",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.006",
+      "sourceEnglish": "Open task planner",
+      "sourceSha256": "6918abe43dfa03a5b7266507becf8ef78a1aaa3828e9dffe85cddabb82cecf85",
+      "text": "Abrir planejador de tarefas",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.007",
+      "sourceEnglish": "Nursery checks leave your field-task calendar unchanged. Review the crop plan before changing field dates.",
+      "sourceSha256": "c06a580084df97379e8abb822cead7f1d632770c8c75e4b2b0ccd10116aa1e42",
+      "text": "As verificações do viveiro mantêm o calendário de tarefas de campo inalterado. Revise o plano de cultivo antes de alterar as datas no campo.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.008",
+      "sourceEnglish": "1. Net nursery growing surface ·",
+      "sourceSha256": "c82e1c67f45943651b6d47b96203fd32735433d525913dc038687dbfda4211e0",
+      "text": "1. Superfície líquida de cultivo do viveiro ·",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.009",
+      "sourceEnglish": "For this site only. Enter the net surface allocated to these crops after paths, work areas and other uses. Zero means no surface is allocated.",
+      "sourceSha256": "b279979dd368754834217480e4e15857f7e319a078659e72de00d1fcfe6d183b",
+      "text": "Apenas para este local. Insira a superfície líquida alocada para essas culturas após caminhos, áreas de trabalho e outros usos. Zero significa que nenhuma superfície está alocada.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.010",
+      "sourceEnglish": "m² net allocated",
+      "sourceSha256": "7d26411b935d56fcf23751bf7bf6bbce84739729c58ba94425aa9c9e8f0059c4",
+      "text": "m² líquidos alocados",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.011",
+      "sourceEnglish": "Edit",
+      "sourceSha256": "464c4ffd019e1e9691dcf0537c797353ef2b1c1d4833d3d463e5b74ae4547344",
+      "text": "Editar",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.012",
+      "sourceEnglish": "Space name",
+      "sourceSha256": "18aeecdda1d3224378e1f94668364a84dfb18ca90239461b58469c57da022ab7",
+      "text": "Nome do espaço",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.013",
+      "sourceEnglish": "Net usable surface (m²)",
+      "sourceSha256": "1d803c9e5f8edabf7fa9520c4f24d29ebf6c7f083ce3f01ec1adeadbe7bbd7de",
+      "text": "Superfície líquida utilizável (m²)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.014",
+      "sourceEnglish": "Cancel edit",
+      "sourceSha256": "6fa271453f8ac4901530c022db4c9280eaf3c4316a550889561b8483449d7db5",
+      "text": "Cancelar edição",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.015",
+      "sourceEnglish": "2. Your trays and containers ·",
+      "sourceSha256": "bfba947d8f3dcd9cbc2dee87a64431459c4aab4d6b6ebff84ec96b12af8e2806",
+      "text": "2. Suas bandejas e recipientes ·",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.016",
+      "sourceEnglish": "Give each tray type its own name. Outer width and length determine its bench footprint. Owned stock is the number allocated to this plan, not a count of trays currently empty.",
+      "sourceSha256": "7f4ebfa70a70b7685273ca1db6f8c6bfda79d1901a805ca5c5729ab190c6a7e5",
+      "text": "Dê a cada tipo de bandeja seu próprio nome. A largura e o comprimento externos determinam sua área ocupada na bancada. O estoque próprio é o número alocado para este plano, não uma contagem de bandejas atualmente vazias.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.017",
+      "sourceEnglish": "cells",
+      "sourceSha256": "57104c57fbe0d1c944620f06ca6f5f1e26fc87025ad368e9327743b8975e4d49",
+      "text": "células",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.018",
+      "sourceEnglish": "Outer size:",
+      "sourceSha256": "20613999ecf51d72274dffcbcd8183a20c0f174763077ea661e82076e3c3dda3",
+      "text": "Dimensões externas:",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.019",
+      "sourceEnglish": ". Owned:",
+      "sourceSha256": "a5c188b7e4ce25b416df60a2bbe8f4f80bf70b18219561bf0fcf547efe2540b5",
+      "text": ". Próprias:",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.020",
+      "sourceEnglish": "Container name",
+      "sourceSha256": "8d3a5415ee22e30f39114240c191b98b52f67ea8d52a6d8fede1ed76768cba98",
+      "text": "Nome do recipiente",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.021",
+      "sourceEnglish": "Cells per container",
+      "sourceSha256": "8fc274181d72ff893d9140c2f362d0830ae61df734a840d370c9abdc8791fe0f",
+      "text": "Células por recipiente",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.022",
+      "sourceEnglish": "Owned containers (optional)",
+      "sourceSha256": "f9002da6d77f9ea353bcc69b1fe983f9f69ab42c73b7cf8bdd7319ab2aa9b785",
+      "text": "Recipientes próprios (opcional)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.023",
+      "sourceEnglish": "Outer width (cm, optional)",
+      "sourceSha256": "91ff41d191eefac296e40445d9e89e7d54cd18f4c718f94dfbe3823e7a82b999",
+      "text": "Largura externa (cm, opcional)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.024",
+      "sourceEnglish": "Outer length (cm, optional)",
+      "sourceSha256": "cc29705887d91a48816d18d5586fd862dcd2777efefe5905a8bba91f73373f23",
+      "text": "Comprimento externo (cm, opcional)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.025",
+      "sourceEnglish": "3. Your crop nursery recipes ·",
+      "sourceSha256": "e30345eb86990adff17fda7bf987f275e6d355e5d41b2f61b02980054bd69be2",
+      "text": "3. Suas receitas de viveiro para as culturas ·",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.026",
+      "sourceEnglish": "Field survival:",
+      "sourceSha256": "2274a00db5c479097d9da1e06274b17a7effb646ecdf051c5414f1d437739baa",
+      "text": "Sobrevivência no campo:",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.027",
+      "sourceEnglish": ". Own duration:",
+      "sourceSha256": "d41dfd5487a7e491034b94126f344a7c5c58f6108e26e0f0603627733df5acb4",
+      "text": ". Duração própria:",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.028",
+      "sourceEnglish": "A saved success rate is 0%; this recipe cannot size starts or trays.",
+      "sourceSha256": "d4abe845718a26895006c3266c61034fd274cce5ffdf2f7530f21b304c1d9c23",
+      "text": "A taxa de sucesso salva é de 0%; esta receita não pode dimensionar mudas ou bandejas.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.029",
+      "sourceEnglish": "Transplant crop",
+      "sourceSha256": "605ce351bd6d054000351a5b3394179d2a0f5b3849b654e2ea82fdf9bafb607e",
+      "text": "Cultura para transplante",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.030",
+      "sourceEnglish": "Choose a crop",
+      "sourceSha256": "2be8bc8d2eb98d58d79809d560cdf3fb26499a9255e0598edddc9d5a8d80dc0e",
+      "text": "Escolha uma cultura",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.031",
+      "sourceEnglish": "Nursery model",
+      "sourceSha256": "08f3f8ec326ac30156654d9238f8c13e9ac0708f8cb59f3111af53a8d4a3a34b",
+      "text": "Modelo de viveiro",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.032",
+      "sourceEnglish": "One seed / one transplant per cell",
+      "sourceSha256": "6978d72fd38bcdb57f0cfd5a5960010ae24f57a48bb6fc6d8c7e6991b89ac6e3",
+      "text": "Uma semente / uma muda por célula",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.033",
+      "sourceEnglish": "Measured usable starts per tray",
+      "sourceSha256": "d53ce8c32b6cdbf59dd2b420c7a875c46a4701f07edb2eee92e5ed9ff7041189",
+      "text": "Mudas utilizáveis medidas por bandeja",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.034",
+      "sourceEnglish": "Container type",
+      "sourceSha256": "46a6f3068b9c660dd37fe751ca1631d128dcb62ab8d12ee0e1b3903c7412ba1a",
+      "text": "Tipo de recipiente",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.035",
+      "sourceEnglish": "Unknown / choose later",
+      "sourceSha256": "9da52cac04e851f328b4a6c7a1b2eedbc80302e1bcee20d651ebf7b2fc4d0399",
+      "text": "Desconhecido / escolher mais tarde",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.036",
+      "sourceEnglish": "Removed or unavailable container",
+      "sourceSha256": "93b01ab75e7f6f02dbf0014db7bd28e7d824f42ef1dfb0e56b5236cadd1f3896",
+      "text": "Recipiente removido ou indisponível",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.037",
+      "sourceEnglish": "Allocated nursery space",
+      "sourceSha256": "e2b9a944ecb6e22a2ec6a66e0ad4dfce36c6974fb0724144a5ff1daa2b0223e1",
+      "text": "Espaço de viveiro alocado",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.038",
+      "sourceEnglish": "Removed or unavailable space",
+      "sourceSha256": "5f750c269453d529fda32a4131600802e53be1c3d6439d3905e3334964b4a41c",
+      "text": "Espaço removido ou indisponível",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.039",
+      "sourceEnglish": "Your germination (%)",
+      "sourceSha256": "38a30c96d84d37cfc868a1d6690b3723943bf278f5f563d7a9ec0efe4dfc128a",
+      "text": "Sua germinação (%)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.040",
+      "sourceEnglish": "Your nursery survival (%)",
+      "sourceSha256": "3830c41b15172b64671f9bbb3f3bc493a66ee19a133422a38afdcfc0293c9d25",
+      "text": "Sua sobrevivência no viveiro (%)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.041",
+      "sourceEnglish": "Nursery survival is the share of germinated seedlings that remain usable at transplanting. This model assumes one seed is sown per cell and one transplant is taken from each successful cell.",
+      "sourceSha256": "154871dc96288f57da6205dc0fbee71d1bdc0d6db11f2d75feea25ca4cb03c8f",
+      "text": "A sobrevivência no viveiro é a parcela de plântulas germinadas que permanecem utilizáveis no momento do transplante. Este modelo assume que uma semente é semeada por célula e uma muda é retirada de cada célula bem-sucedida.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.042",
+      "sourceEnglish": "Your usable starts per tray",
+      "sourceSha256": "4c15d5fb99ba6ea13b5025ebad5c8bf004a8359c3cb8c426efaf10464a59f602",
+      "text": "Suas mudas utilizáveis por bandeja",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.043",
+      "sourceEnglish": "Your seeds sown per tray (optional)",
+      "sourceSha256": "f1c14c6b33239598867fcef4e2981243d99c8bb744e2efe2c0f93719570a28bb",
+      "text": "Suas sementes semeadas por bandeja (opcional)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.044",
+      "sourceEnglish": "Use your observed usable seedling output for a tray, including nursery losses. Suitable for your multi-sown or pricked-out method; no extra germination or nursery-loss allowance is applied.",
+      "sourceSha256": "b98b6639466a7d36eb542a6a4ba1fcb72ce9b06da9a0632d89e8a82e5361166a",
+      "text": "Use sua produção observada de mudas utilizáveis por bandeja, incluindo perdas no viveiro. Adequado para o seu método de semeadura múltipla ou repicagem; nenhuma margem adicional de germinação ou perda no viveiro é aplicada.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.045",
+      "sourceEnglish": "Your field survival (%, optional)",
+      "sourceSha256": "9ed23664f5a4e5a0a083f2a93903e05bbbedca3bf98109a0f18e4041686b4ce1",
+      "text": "Sua sobrevivência no campo (%, opcional)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.046",
+      "sourceEnglish": "Your nursery duration (weeks, optional)",
+      "sourceSha256": "b2d8bb3736b048c560cb6e10f9b4497a9536f0e0316b99e63cf8417623efd876",
+      "text": "Sua duração no viveiro (semanas, opcional)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.047",
+      "sourceEnglish": "Field survival is separate from nursery losses. Blank applies no extra field allowance. Entering 0% keeps the observation but cannot produce a finite planting requirement.",
+      "sourceSha256": "1577ad9fc24eff96a7276b18557d9624591e61d8142f7c555370ab006a9e3598",
+      "text": "A sobrevivência no campo é separada das perdas no viveiro. Deixar em branco não aplica margem adicional de campo. Inserir 0% mantém a observação, mas não pode produzir uma necessidade finita de plantio.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "NurseryPlanPanel.048",
+      "sourceEnglish": "Clear form",
+      "sourceSha256": "0aec613d3e51904360c71504c8c3360f57513a52e2aae4598e4a89d8642cb7d8",
+      "text": "Limpar formulário",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.001",
+      "sourceEnglish": "Field blocks ·",
+      "sourceSha256": "1622ed4ceb58472e1b0ba604e1015d1f8b00e79207e47a9cc3cb22725601c0b0",
+      "text": "Blocos de campo ·",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.002",
+      "sourceEnglish": "Draw a field, then fill it with beds or keep it as open growing ground.",
+      "sourceSha256": "599ee10a747e4e95010992da003a43caa6e53874852a3194029265e58dfb9de1",
+      "text": "Desenhe um campo e, em seguida, preencha-o com canteiros ou mantenha-o como solo aberto de cultivo.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.003",
+      "sourceEnglish": "Draw field polygon",
+      "sourceSha256": "608e0327bd1adefb3f79baa191b27bd42abdf954727bf2df29973f6c838c139f",
+      "text": "Desenhar polígono do campo",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.004",
+      "sourceEnglish": "Field",
+      "sourceSha256": "f45fc1dfdc96db2761a434542f105c04d1e15cf96f410656460051efd33ea5b6",
+      "text": "Campo",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.005",
+      "sourceEnglish": "Select a field",
+      "sourceSha256": "beb32211dfac5c5ea26806c7cc50ebd99bab790a400c904c6feb2bdfff13090a",
+      "text": "Selecione um campo",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.006",
+      "sourceEnglish": "Field name",
+      "sourceSha256": "2f5574bc5e68951bc5d63ef47998a909f58e69e37ff71975693a6d192d5b5d87",
+      "text": "Nome do campo",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.007",
+      "sourceEnglish": "Growing layout",
+      "sourceSha256": "c9425fb63f33d15a83e0a92fadf118bec332b6eb68c8db04d7ac57eda0ae0269",
+      "text": "Layout de cultivo",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.008",
+      "sourceEnglish": "Fill with beds",
+      "sourceSha256": "080594cb171febd29682a13f6ec2cad13f74dcfa7c7092fecc3c7ea7d25c0fbf",
+      "text": "Preencher com canteiros",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.009",
+      "sourceEnglish": "Open field (no beds)",
+      "sourceSha256": "6c3ae8f4609fe6c8ad33bfc37666ddb9f14cbc46322bc2b79545046b89e312c0",
+      "text": "Campo aberto (sem canteiros)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.010",
+      "sourceEnglish": "Save field layout",
+      "sourceSha256": "980ef043f259ab65a4420832d101a55a32c745f941c11c5311942d57a0957c82",
+      "text": "Salvar disposição do campo",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.011",
+      "sourceEnglish": "Saved:",
+      "sourceSha256": "b6199040d97099ddb70d6e27fdfc39e61aad533b6318ee6e73b95c8fde1c8acd",
+      "text": "Salvo:",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.012",
+      "sourceEnglish": ". Saving again replaces this field’s generated layout.",
+      "sourceSha256": "39569674f51b44ae07e12a3fea5f6428f2956fc1bf7d5f79e11fa32d4945f1b7",
+      "text": ". Salvar novamente substitui a disposição gerada deste campo.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "FieldBlocksPanel.013",
+      "sourceEnglish": "Open automatic crop planner →",
+      "sourceSha256": "3b024bfbec0af9f39ab0f060c79299772dd29eb394e82958d8a977bdc3511a88",
+      "text": "Abrir planejador automático de cultivos →",
+      "review": {
+        "status": "unreviewed"
+      }
+    }
+  ],
+  "coordinatorReview": {
+    "status": "structural-review-only",
+    "reviewedOn": "2026-11-02",
+    "executor": "Codex coordinator",
+    "changes": "Literal DEMO/cm tokens restored where needed; no fluent-human approval."
+  }
+}

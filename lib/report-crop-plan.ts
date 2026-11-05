@@ -9,7 +9,11 @@ import type { CropPlanPdfInput } from './crop-export-pdf';
 import { placedTreeGroups } from './perennial-harvest';
 import { placedAnimalGroups, ANIMAL_ENTERPRISES, PRODUCT_LABEL, HOUSING_LABEL, enterprisesForHousing, isFoodProduct } from './animal-enterprises';
 import { calendarProduceByMonth, treeLineText, animalLineText } from './calendar-produce';
-import type { FactCropPlan } from './report-site-facts';
+import type { FactCropPlan, ReportSiteFacts } from './report-site-facts';
+import { currentPlanningSupport } from './international/planning-support';
+import { canonicalCoordinateSiteId } from './site-id';
+import { hasGrowerCycleMarker, normaliseGrowerCycleAttachment, preserveGrowerCycleMarker, resolvePlantingBasis } from './international/grower-cycle';
+import { assessGrowerPlanning } from './international/grower-planning';
 
 export interface ReportCropSnapshot {
   annualProduction?: ReportProductionYear;
@@ -22,6 +26,35 @@ export interface ReportCropSnapshot {
   plantings: Planting[];
   /** Metre-space copies for drawing only. They are never written back to the design. */
   outlines: Array<{ bedId: string; points: [number, number][] }>;
+}
+
+/** Archived inputs are evidence of what was entered, not current geometry approval.
+ * Every tagged row, even a damaged one, stays outside regenerated catalogue advice. */
+function catalogueReportPlantings(plantings: readonly Planting[]): Planting[] {
+  return plantings.filter(planting => !hasGrowerCycleMarker(planting));
+}
+
+function detachedReportPlanting(planting: Planting): Planting {
+  // A getter/undefined marker must not disappear during a JSON roundtrip and turn
+  // an unreadable own record into an ordinary annual catalogue sowing.
+  const copy = Object.fromEntries(Object.entries(Object.getOwnPropertyDescriptors(planting))
+    .filter(([key, descriptor]) => key !== 'growerCycle' && 'value' in descriptor)
+    .map(([key, descriptor]) => [key, descriptor.value])) as Planting;
+  return { ...copy, ...preserveGrowerCycleMarker(planting) };
+}
+
+function normaliseReportPlanting(p: Planting): Planting {
+  // False lifecycle flags are invalid on an own cycle too. Preserve their
+  // presence so snapshot cleanup cannot turn held metadata into a valid basis.
+  const lifecycle = hasGrowerCycleMarker(p) ? {
+    ...(p.existing !== undefined ? { existing: p.existing } : {}),
+    ...(p.confirmedOnceSowing !== undefined ? { confirmedOnceSowing: p.confirmedOnceSowing } : {}),
+    ...(p.finishedOnceSowing !== undefined ? { finishedOnceSowing: p.finishedOnceSowing } : {}),
+    ...(p.awaitingSowingConfirmation !== undefined ? { awaitingSowingConfirmation: p.awaitingSowingConfirmation } : {}),
+  } : { existing: p.existing === true };
+  return { id: p.id, bedId: p.bedId, cropKey: p.cropKey, sowMonth: p.sowMonth,
+    areaFraction: p.areaFraction, ...lifecycle, once: p.once, inNursery: p.inNursery,
+    variety: p.variety?.trim().slice(0, 120) || undefined, ...preserveGrowerCycleMarker(p) };
 }
 
 export function captureReportCropPlan(canvas: DesignCanvasState, plan: CropPlanState, siteId: string, now = new Date(), production: ReportProductionContext = {}): ReportCropSnapshot {
@@ -38,8 +71,8 @@ export function captureReportCropPlan(canvas: DesignCanvasState, plan: CropPlanS
     outlines.push({ bedId: item.id, points: local.map(([x, y]) => [item.x * wMetres + x * Math.cos(a) - y * Math.sin(a), item.y * hMetres + x * Math.sin(a) + y * Math.cos(a)]) });
   }
   for (const zone of canvas.zones.filter(z => ids.has(z.id))) outlines.push({ bedId: zone.id, points: zone.points.map(([x, y]) => [x * wMetres, y * hMetres]) });
-  const plantings = plan.plantings.filter(p => ids.has(p.bedId)).map(p => ({ ...p }));
-  return { annualProduction: reportProductionYear({ capturedAt: now.toISOString(), beds, plantings }, canvas.items, production), siteId, capturedAt: now.toISOString(), planUpdatedAt: plan.updatedAt, planNotes: plan.planNotes?.filter(n => n.bedIds?.length ? n.bedIds.every(id => ids.has(id)) : plan.plantings.every(p => ids.has(p.bedId))).map(n => ({ ...n, bedIds: n.bedIds ? [...n.bedIds] : undefined })), planNotesAt: plan.planNotesAt, beds, plantings, outlines };
+  const plantings = plan.plantings.filter(p => ids.has(p.bedId)).map(detachedReportPlanting);
+  return { annualProduction: production.allowCataloguePlanning === false ? undefined : reportProductionYear({ capturedAt: now.toISOString(), beds, plantings }, canvas.items, production), siteId, capturedAt: now.toISOString(), planUpdatedAt: plan.updatedAt, planNotes: production.allowCataloguePlanning === false ? undefined : plan.planNotes?.filter(n => n.bedIds?.length ? n.bedIds.every(id => ids.has(id)) : plan.plantings.every(p => ids.has(p.bedId))).map(n => ({ ...n, bedIds: n.bedIds ? [...n.bedIds] : undefined })), planNotesAt: plan.planNotesAt, beds, plantings, outlines };
 }
 
 /** A malformed new attachment must not discard a readable legacy report. */
@@ -54,7 +87,7 @@ export function normaliseReportCropSnapshot(value: unknown): ReportCropSnapshot 
   if (ids.size !== v.beds.length) return;
   if (!v.plantings.every(p => p && str(p.id) && ids.has(p.bedId) && str(p.cropKey) && Number.isInteger(p.sowMonth) && p.sowMonth >= 1 && p.sowMonth <= 12 && (p.areaFraction === undefined || Number.isFinite(p.areaFraction) && p.areaFraction > 0 && p.areaFraction <= 1) && (p.variety === undefined || typeof p.variety === 'string') && [p.once, p.inNursery].every(d => d === undefined || typeof d === 'string' && /^\d{4}-(0[1-9]|1[0-2])$/.test(d)))) return;
   if (!v.outlines.every(o => o && ids.has(o.bedId) && Array.isArray(o.points) && o.points.length >= 3 && o.points.length <= 10000 && o.points.every(p => Array.isArray(p) && p.length === 2 && p.every(n => Number.isFinite(n) && Math.abs(n) < 1e8)))) return;
-  return { annualProduction: normaliseReportProductionYear(v.annualProduction), siteId: v.siteId, capturedAt: v.capturedAt, planUpdatedAt: v.planUpdatedAt, planNotes: Array.isArray(v.planNotes) ? v.planNotes.filter(n => n && ['warning', 'choice', 'gap', 'basis'].includes(n.kind) && typeof n.text === 'string').slice(0, 100).map(n => ({ kind: n.kind, text: n.text.slice(0, 4000), bedIds: Array.isArray(n.bedIds) ? n.bedIds.filter(id => ids.has(id)) : undefined })) : undefined, planNotesAt: Number.isFinite(v.planNotesAt) ? v.planNotesAt : undefined, beds: v.beds.map(b => ({ id: b.id, label: b.label, areaM2: b.areaM2, kind: b.kind === 'plot' ? 'plot' : 'bed', ...(Number.isFinite(b.minDimM) ? { minDimM: b.minDimM } : {}) })), plantings: v.plantings.map(p => ({ id: p.id, bedId: p.bedId, cropKey: p.cropKey, sowMonth: p.sowMonth, areaFraction: p.areaFraction, existing: p.existing === true, once: p.once, inNursery: p.inNursery, variety: p.variety?.trim().slice(0, 120) || undefined })), outlines: v.outlines.map(o => ({ bedId: o.bedId, points: o.points.map(p => [...p] as [number, number]) })) };
+  return { annualProduction: normaliseReportProductionYear(v.annualProduction), siteId: v.siteId, capturedAt: v.capturedAt, planUpdatedAt: v.planUpdatedAt, planNotes: Array.isArray(v.planNotes) ? v.planNotes.filter(n => n && ['warning', 'choice', 'gap', 'basis'].includes(n.kind) && typeof n.text === 'string').slice(0, 100).map(n => ({ kind: n.kind, text: n.text.slice(0, 4000), bedIds: Array.isArray(n.bedIds) ? n.bedIds.filter(id => ids.has(id)) : undefined })) : undefined, planNotesAt: Number.isFinite(v.planNotesAt) ? v.planNotesAt : undefined, beds: v.beds.map(b => ({ id: b.id, label: b.label, areaM2: b.areaM2, kind: b.kind === 'plot' ? 'plot' : 'bed', ...(Number.isFinite(b.minDimM) ? { minDimM: b.minDimM } : {}) })), plantings: v.plantings.map(normaliseReportPlanting), outlines: v.outlines.map(o => ({ bedId: o.bedId, points: o.points.map(p => [...p] as [number, number]) })) };
 }
 
 export function reportCropMonths(s: ReportCropSnapshot) {
@@ -62,10 +95,13 @@ export function reportCropMonths(s: ReportCropSnapshot) {
   return Array.from({ length: 12 }, (_, i) => new Date(start.getFullYear(), start.getMonth() + i, 1).toLocaleDateString('en-ZA', { month: 'short', year: 'numeric' }));
 }
 export function reportCropCalendar(s: ReportCropSnapshot) {
-  return buildOccupancyCalendar(s.plantings, s.beds, new Date(s.capturedAt).getMonth() + 1);
+  return buildOccupancyCalendar(catalogueReportPlantings(s.plantings), s.beds, new Date(s.capturedAt).getMonth() + 1);
 }
 export function reportCropSignature(s: Pick<ReportCropSnapshot, 'beds' | 'plantings' | 'outlines'>) {
-  return JSON.stringify([s.beds.map(b => [b.id, b.label, b.areaM2, b.kind ?? 'bed', b.minDimM ?? null]), s.plantings.map(p => [p.id, p.bedId, p.cropKey, p.sowMonth, p.areaFraction ?? 1, !!p.existing, p.once ?? '', p.inNursery ?? '', p.variety ?? '']), s.outlines]);
+  return JSON.stringify([s.beds.map(b => [b.id, b.label, b.areaM2, b.kind ?? 'bed', b.minDimM ?? null]), s.plantings.map(p => [p.id, p.bedId, p.cropKey, p.sowMonth, p.areaFraction ?? 1, !!p.existing, p.once ?? '', p.inNursery ?? '', p.variety ?? '', hasGrowerCycleMarker(p)
+    ? ['grower-marked', preserveGrowerCycleMarker(p).growerCycle,
+      ['existing', 'inNursery', 'confirmedOnceSowing', 'finishedOnceSowing', 'awaitingSowingConfirmation'].map(key => [key, (p as unknown as Record<string, unknown>)[key] !== undefined, (p as unknown as Record<string, unknown>)[key]])]
+    : ['legacy']]), s.outlines]);
 }
 export interface ReportCropRow { key: string; name: string; cropKey?: string; where: string; sow: string; status: string; variety: string }
 export function reportCropRows(crop: FactCropPlan): ReportCropRow[] {
@@ -73,6 +109,24 @@ export function reportCropRows(crop: FactCropPlan): ReportCropRow[] {
   if (s) {
     const grouped = new Map<string, ReportCropRow>();
     for (const p of s.plantings) {
+      if (hasGrowerCycleMarker(p)) {
+        const held = resolvePlantingBasis(p);
+        const attachment = held.kind === 'held' && held.reasons.length === 1 && held.reasons[0] === 'current-geometry-context-required'
+          ? normaliseGrowerCycleAttachment(preserveGrowerCycleMarker(p).growerCycle) : null;
+        const snapshot = attachment?.assessmentSnapshot;
+        const assessment = snapshot && assessGrowerPlanning({ profile: snapshot.profile, scope: snapshot.scope,
+          measuredAreaM2: snapshot.measuredAreaM2, fieldEntryDate: snapshot.fieldEntryDate });
+        const sow = assessment?.status === 'ready'
+          ? `${assessment.schedule.nurseryStartDate ? `Planned nursery start ${assessment.schedule.nurseryStartDate}; ` : ''}planned field entry ${assessment.schedule.fieldEntryDate}; estimated first harvest ${assessment.schedule.firstHarvestDate}`
+          : `Recorded compatibility month: ${p.once ?? MONTHS_SHORT[p.sowMonth - 1]}; own dates unavailable`;
+        const status = assessment?.status === 'ready'
+          ? 'Grower-planned dated cycle — archived inputs; current geometry and source claims unverified'
+          : 'Grower cycle held — invalid or unsupported saved metadata; not an observed sowing or harvest';
+        const key = JSON.stringify([p.id, sow, status, preserveGrowerCycleMarker(p)]);
+        grouped.set(key, { key, cropKey: p.cropKey, name: cropByKey(p.cropKey)?.name ?? p.cropKey,
+          where: s.beds.find(b => b.id === p.bedId)?.label ?? 'Not recorded', sow, status, variety: p.variety || 'Not recorded' });
+        continue;
+      }
       const status = p.inNursery ? 'In nursery' : p.existing ? 'Recorded as growing' : p.once ? 'First season only' : 'Planned annual sowing';
       const sow = p.once ?? MONTHS_SHORT[p.sowMonth - 1];
       const variety = p.variety || 'Not recorded';
@@ -108,9 +162,25 @@ export function reportCropMapSvg(s: ReportCropSnapshot, offset: number): string 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="410" viewBox="0 0 800 410"><title>${xml(`Saved growing spaces - ${reportCropMonths(s)[offset]}`)}</title><rect width="800" height="410" fill="white"/>${body}</svg>`;
 }
 
+/** A report's independent location must match its attachment. The snapshot cannot
+ * approve itself by claiming another saved site's country. Re-read at action time. */
+export function currentReportCropSupport(snapshot: Pick<ReportCropSnapshot, 'siteId'> | undefined, reportSiteId: string | null) {
+  const canonical = canonicalCoordinateSiteId(reportSiteId);
+  return currentPlanningSupport(canonical && snapshot?.siteId === canonical ? canonical : 'invalid-report-site');
+}
+
+/** A screen/export projection, never a mutation of the archived report. Saved
+ * rows and outlines survive; derived advice is withheld when its current basis is absent. */
+export function projectReportPlanningFacts(facts: ReportSiteFacts | null, allowCataloguePlanning: boolean): ReportSiteFacts | null {
+  if (allowCataloguePlanning || !facts?.crop?.snapshot) return facts;
+  return { ...facts, crop: { ...facts.crop, snapshot: { ...facts.crop.snapshot,
+    annualProduction: undefined, planNotes: undefined, planNotesAt: undefined } } };
+}
+
 export function reportCropWorkingInput(s: ReportCropSnapshot, title: string): CropPlanPdfInput {
   const now = new Date(s.capturedAt);
-  return { plantings: s.plantings, beds: s.beds, tasks: tasksForPlan(s.plantings, s.beds, now.getMonth() + 1), now, planNotes: s.planNotes, planNotesAt: s.planNotesAt, sections: ['calendar', 'plan', 'buying', 'fieldsheets', 'record'], meta: { planTitle: title, siteLine: 'Saved site report crop plan', locationLine: title, climateLine: '', bedsSummary: `${s.beds.length} beds / plots`, dateLabel: now.toLocaleDateString('en-ZA'), estimatedKgPerYear: null, lossPercent: 0, lossAllowanceConfirmed: false } };
+  const plantings = catalogueReportPlantings(s.plantings), hasOwnRows = plantings.length !== s.plantings.length;
+  return { plantings, beds: s.beds, tasks: tasksForPlan(plantings, s.beds, now.getMonth() + 1), now, planNotes: hasOwnRows ? undefined : s.planNotes, planNotesAt: hasOwnRows ? undefined : s.planNotesAt, sections: ['calendar', 'plan', 'buying', 'fieldsheets', 'record'], meta: { planTitle: title, siteLine: 'Saved site report crop plan', locationLine: title, climateLine: '', bedsSummary: `${s.beds.length} beds / plots`, dateLabel: now.toLocaleDateString('en-ZA'), estimatedKgPerYear: null, lossPercent: 0, lossAllowanceConfirmed: false } };
 }
 
 export interface ReportSowingRow {
@@ -122,9 +192,10 @@ export interface ReportSowingRow {
  * including nursery carry-over and absolute first-season stamps, without bed duplication. */
 export function reportSowingCalendar(s: ReportCropSnapshot): { months: string[]; rows: ReportSowingRow[]; unscheduled: string[] } {
   const now = new Date(s.capturedAt), startIndex = now.getFullYear() * 12 + now.getMonth();
-  const plantings = new Map(s.plantings.map(p => [p.id, p]));
+  const cataloguePlantings = catalogueReportPlantings(s.plantings);
+  const plantings = new Map(cataloguePlantings.map(p => [p.id, p]));
   const grouped = new Map<string, ReportSowingRow>();
-  for (const task of tasksForPlan(s.plantings, s.beds, now.getMonth() + 1)) {
+  for (const task of tasksForPlan(cataloguePlantings, s.beds, now.getMonth() + 1)) {
     if (task.action !== 'sow' && task.action !== 'transplant') continue;
     const p = plantings.get(task.plantingId);
     if (!p) continue;
@@ -139,7 +210,7 @@ export function reportSowingCalendar(s: ReportCropSnapshot): { months: string[];
     row.cells[offset][task.action] = true;
     grouped.set(task.cropKey, row);
   }
-  const unscheduled = [...new Set(s.plantings.filter(p => !grouped.has(p.cropKey)).map(p => cropByKey(p.cropKey)?.name ?? p.cropKey))];
+  const unscheduled = [...new Set(cataloguePlantings.filter(p => !grouped.has(p.cropKey)).map(p => cropByKey(p.cropKey)?.name ?? p.cropKey))];
   return { months: reportCropMonths(s), rows: [...grouped.values()], unscheduled };
 }
 
@@ -155,6 +226,8 @@ export interface ReportProductionRow {
 }
 export interface ReportProductionYear { months: string[]; rows: ReportProductionRow[] }
 export interface ReportProductionContext {
+  /** Collector-provided gate; arithmetic-only builders retain their existing inputs. */
+  allowCataloguePlanning?: boolean;
   treeSeasons?: import('./perennial-harvest').TreeSeasonChoices;
   animalSeasons?: import('./animal-enterprises').AnimalSeasonChoices;
   animalChoices?: Partial<Record<import('./animal-enterprises').HousingKind, string>>;
@@ -174,7 +247,7 @@ export function reportProductionYear(s: Pick<ReportCropSnapshot, 'capturedAt' | 
     if (offset !== undefined && !existing.months.includes(offset)) existing.months.push(offset);
     rows.set(row.id, existing);
   };
-  buildFoodAvailability(s.plantings, s.beds, now.getMonth() + 1, 12).forEach((slot, i) => slot.forEach(food => add({ id: `crop:${food.cropKey}:${food.status}`, kind: 'crop', name: food.name, product: food.status === 'stored' ? 'Stored crop' : 'Fresh crop', note: food.status === 'stored' ? 'Storage reference under the crop planner’s stated conditions; stock has not been measured.' : 'Expected picking from the saved sowing plan; not a harvest record.', reference: false }, i)));
+  buildFoodAvailability(catalogueReportPlantings(s.plantings), s.beds, now.getMonth() + 1, 12).forEach((slot, i) => slot.forEach(food => add({ id: `crop:${food.cropKey}:${food.status}`, kind: 'crop', name: food.name, product: food.status === 'stored' ? 'Stored crop' : 'Fresh crop', note: food.status === 'stored' ? 'Storage reference under the crop planner’s stated conditions; stock has not been measured.' : 'Expected picking from the saved sowing plan; not a harvest record.', reference: false }, i)));
   produce.forEach((month, i) => {
     month.trees.forEach(tree => add({ id: `tree:${tree.speciesId}`, kind: 'food-forest', name: tree.name, product: tree.product, note: treeLineText(tree), reference: !!tree.planning }, i));
     month.animals.forEach(animal => add({ id: `animal:${animal.enterpriseId}`, kind: 'animal', name: animal.name, product: PRODUCT_LABEL[animal.product], note: animalLineText(animal) + '. Housing is not an animal count or evidence of output.', reference: false }, i));

@@ -12,7 +12,10 @@ export interface LanguageMetadata {
 }
 export interface SourceMessage {
   key: string;
-  sourceFile: 'lib/i18n.tsx';
+  sourceFile: 'lib/i18n.tsx'
+    | 'components/crops/NurseryFieldPlantingObservationForm.tsx'
+    | 'components/journal/JournalNurseryFieldPlantingSummary.tsx'
+    | 'components/crops/SavedGrowerNurseryReviewPanel.tsx';
   english: string;
   pluralArgument?: string;
 }

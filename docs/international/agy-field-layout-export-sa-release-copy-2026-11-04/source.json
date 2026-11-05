@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "scope": "Four exact English release descriptions for current field-export branch; AI candidates only, no fluent approval. Existing four runtime languages only; root independently reviews before selected map reconciliation.",
+  "sourceCommitBase": "20948636c03ea159cc7156f53ac33ae669469548",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "messages": [
+    {
+      "key": "fieldLayoutRelease01",
+      "english": "Export saved field layouts for Google Earth.",
+      "sha256": "84511f317680f2737c40f5122d606bc9e2f907038c1e4cde7fec905abc1de1bf"
+    },
+    {
+      "key": "fieldLayoutRelease02",
+      "english": "Export saved fields",
+      "sha256": "c1d172c045209ef30924c71f4fb3ed834fc567f52ff14e1451cf118f91921bb0"
+    },
+    {
+      "key": "fieldLayoutRelease03",
+      "english": "Design Studio → Planting → Field blocks",
+      "sha256": "4a9e6d71ade8484ba4544641089b44af802c2da9d2f74461e30776bdf3f240e5"
+    },
+    {
+      "key": "fieldLayoutRelease04",
+      "english": "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.",
+      "sha256": "1a4a6c11df4725bfe49445bcb5957104a0cd4eaf4b3e4139628e4b0de833a638"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "assignment": "docs/international/agy-nursery-review-release-copy-2026-11-05/WORKORDER.md",
+  "status": "unreviewed-ai-drafts-ready",
+  "sourceSha256": "7c5ef4c342b0d7eeca1da2a279854016e5b245b9eeeb147899a2a4bb8a40f161",
+  "runtimeActivation": false,
+  "sourcesCount": 5,
+  "candidatesCount": 20,
+  "reviewNotesWordCount": "UNKNOWN",
+  "validation": "UNKNOWN",
+  "commandsRun": false,
+  "testsRun": false,
+  "workersActive": 0,
+  "workersStopped": true
+}

@@ -1,0 +1,80 @@
+{
+  "locale": "hi",
+  "sourceSha256": "89a0e36996c8868f297f8d3bdabde6c4f20155bc05422c64ca28ff23a6352b67",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "invoiceCurrency.message.01",
+      "english": "Currency for this invoice",
+      "messageSha256": "b4e376d39ea085624b6a36286bb9b6163913a6ed889bdd3ee08123c73985cb8e",
+      "translation": "इस इनवॉइस के लिए मुद्रा"
+    },
+    {
+      "key": "invoiceCurrency.message.02",
+      "english": "Choose invoice currency",
+      "messageSha256": "0f896998ba13fec1a823fd0385677160b514f5c05e7cdaf02e36031087db1c96",
+      "translation": "इनवॉइस मुद्रा चुनें"
+    },
+    {
+      "key": "invoiceCurrency.message.03",
+      "english": "Choose the currency agreed with the buyer. Changing this choice does not convert amounts.",
+      "messageSha256": "f24dceb2eec507e9d2c1e9a31aabe5e81279b44dfefb5ba471ba61570c3127e3",
+      "translation": "खरीदार के साथ सहमत मुद्रा चुनें। इस विकल्प को बदलने से राशियाँ परिवर्तित नहीं होती हैं।"
+    },
+    {
+      "key": "invoiceCurrency.message.04",
+      "english": "Historical rand invoice — currency unchanged",
+      "messageSha256": "f8050714880b1b860109697ea2e453a9fdfe894b5f737014db43eece314f4628",
+      "translation": "ऐतिहासिक रैंड इनवॉइस — मुद्रा अपरिवर्तित"
+    },
+    {
+      "key": "invoiceCurrency.message.05",
+      "english": "Currency cannot be changed on this saved record.",
+      "messageSha256": "87c85dc0c339aa5ef718c4f73c1b4796d2f2575089942c4a24a932028d4f9523",
+      "translation": "इस सहेजे गए रिकॉर्ड पर मुद्रा नहीं बदली जा सकती।"
+    },
+    {
+      "key": "invoiceCurrency.message.06",
+      "english": "Currency needs review",
+      "messageSha256": "7e1bb820a1eb1b106b626e2d68c8504a412a5c0452469b40a93b4468a03a583c",
+      "translation": "मुद्रा की समीक्षा आवश्यक है"
+    },
+    {
+      "key": "invoiceCurrency.message.07",
+      "english": "ZAR — Rand",
+      "messageSha256": "e633f4c59894fab8b486e6007f384b9315dd2398fef472c3ad018feca2653190",
+      "translation": "ZAR — रैंड"
+    },
+    {
+      "key": "invoiceCurrency.message.08",
+      "english": "KES — Kenyan Shilling",
+      "messageSha256": "89209f06860ec58e459ebdc57303ee897c66dcbbead687073931e68b30ab7948",
+      "translation": "KES — केन्याई शिलिंग"
+    },
+    {
+      "key": "invoiceCurrency.message.09",
+      "english": "GBP — Pound Sterling",
+      "messageSha256": "35a088dfcf9c24bd23b4f3e23de8a6888f2f5a153c4ad26c2fac27951bb372c0",
+      "translation": "GBP — पाउंड स्टर्लिंग"
+    },
+    {
+      "key": "invoiceCurrency.message.10",
+      "english": "USD — US Dollar",
+      "messageSha256": "7853cf5f61f030f72ed103311054eaca4f8950f8f56ea5b85f2de4391de321f8",
+      "translation": "USD — अमेरिकी डॉलर"
+    },
+    {
+      "key": "invoiceCurrency.message.11",
+      "english": "EUR — Euro",
+      "messageSha256": "e5f6973c941e5cb765b733e1a93379958f4bc9a0a87c65d500b79c10e27edfc5",
+      "translation": "EUR — यूरो"
+    },
+    {
+      "key": "invoiceCurrency.message.12",
+      "english": "BRL — Brazilian Real",
+      "messageSha256": "762a6d53b9ee561c234087a052e9d1d03f87f6cb4d7f46f1747225a133b61057",
+      "translation": "BRL — ब्राज़ीलियाई रियाल"
+    }
+  ]
+}

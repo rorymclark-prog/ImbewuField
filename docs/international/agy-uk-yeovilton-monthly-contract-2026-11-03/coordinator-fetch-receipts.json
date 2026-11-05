@@ -1,0 +1,50 @@
+[
+  {
+    "source": "directory",
+    "requestedUrl": "https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data",
+    "effectiveUrl": "https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data",
+    "fetchedAtUtc": "2026-11-03T08:47:24.759897+00:00",
+    "httpStatus": 200,
+    "exitCode": 0,
+    "bytes": 164649,
+    "sha256": "f96dee75e5999b9fd0860fe1cc14ad2501185c19c9b4428554eae1d8df084211",
+    "bodyFile": "directory.html",
+    "provenance": "independent coordinator-machine public HTTPS curl fetch"
+  },
+  {
+    "source": "station",
+    "requestedUrl": "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/yeoviltondata.txt",
+    "effectiveUrl": "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/yeoviltondata.txt",
+    "fetchedAtUtc": "2026-11-03T08:47:24.979488+00:00",
+    "httpStatus": 200,
+    "exitCode": 0,
+    "bytes": 39641,
+    "sha256": "4cc4286694a3330df589f6045c215111fc62cdea249f5eca976399ecf8c830ea",
+    "bodyFile": "station.txt",
+    "provenance": "independent coordinator-machine public HTTPS curl fetch"
+  },
+  {
+    "source": "legal",
+    "requestedUrl": "https://www.metoffice.gov.uk/policies/legal",
+    "effectiveUrl": "https://www.metoffice.gov.uk/policies/legal",
+    "fetchedAtUtc": "2026-11-03T08:47:25.264548+00:00",
+    "httpStatus": 200,
+    "exitCode": 0,
+    "bytes": 89302,
+    "sha256": "86798fe18d85f44a89d7f86301f0511691ea5d29521ef8df6f5902ecb0848c4e",
+    "bodyFile": "legal.html",
+    "provenance": "independent coordinator-machine public HTTPS curl fetch"
+  },
+  {
+    "source": "terms",
+    "requestedUrl": "https://www.metoffice.gov.uk/policies/tandc",
+    "effectiveUrl": "https://www.metoffice.gov.uk/policies/tandc",
+    "fetchedAtUtc": "2026-11-03T08:47:25.427303+00:00",
+    "httpStatus": 200,
+    "exitCode": 0,
+    "bytes": 108896,
+    "sha256": "51a50016c9d5f6d8d4e088fa76058dd704d9205ce539b056db51b99385678dfb",
+    "bodyFile": "terms.html",
+    "provenance": "independent coordinator-machine public HTTPS curl fetch"
+  }
+]

@@ -1,15 +1,31 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import ts from 'typescript';
 
 // Simple / All tools (lib/app-level.ts) on the season crop plan (app/cropplan/page.tsx — the
 // task planner, NOT app/facilitator/crops which already does Simple) and the farm-gate prices
-// screen (app/prices/page.tsx). Source-text guard, same idiom as tests/cropplan-simple.test.ts:
-// these pages cannot run under node:test, so the wiring is pinned against the real shipped files.
+// screen (app/prices/page.tsx). Source guards and evaluation of the shipped task-page
+// conditions preserve Simple behavior when additional safety requirements are added.
 
 const CROPPLAN = readFileSync(new URL('../app/cropplan/page.tsx', import.meta.url), 'utf8');
 const PRICES = readFileSync(new URL('../app/prices/page.tsx', import.meta.url), 'utf8');
 const PRICE_DETAIL = readFileSync(new URL('../components/prices/CropPriceGuide.tsx', import.meta.url), 'utf8');
+
+const taskPage = ts.createSourceFile('cropplan/page.tsx', CROPPLAN, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+function findTaskNode<T extends ts.Node>(predicate: (node: ts.Node) => node is T): T {
+  let found: T | undefined;
+  const visit = (node: ts.Node) => {
+    if (!found && predicate(node)) found = node;
+    ts.forEachChild(node, visit);
+  };
+  visit(taskPage);
+  assert.ok(found, 'the shipped task-planner control must exist before testing its conditions');
+  return found;
+}
+function evaluateTask(expression: ts.Expression, values: Record<string, unknown>): unknown {
+  return new Function(...Object.keys(values), `return (${expression.getText(taskPage)});`)(...Object.values(values));
+}
 
 // ── /cropplan ────────────────────────────────────────────────────────────────
 
@@ -21,12 +37,38 @@ test('cropplan reads the Simple / All tools level', () => {
 test('cropplan hides the Season tab, the Learn link and the map-planner promo in Simple', () => {
   assert.match(CROPPLAN, /\{!simple && <LessonLink id="crops:planner"/);
   assert.match(CROPPLAN, /\{!simple && \(\s*<Link href="\/facilitator\/crops"/);
-  assert.match(CROPPLAN, /\{!simple && \(\s*<div className="flex rounded-xl p-0\.5 gap-0\.5 mt-3 mb-5"/,
-    'the Month\\/Season zoom-tab switcher must be All-tools only');
+  const tabs = findTaskNode((node): node is ts.JsxElement => ts.isJsxElement(node)
+    && node.openingElement.attributes.properties.some(attribute => ts.isJsxAttribute(attribute)
+      && attribute.name.getText(taskPage) === 'className' && attribute.initializer
+      && ts.isStringLiteral(attribute.initializer) && attribute.initializer.text === 'flex rounded-xl p-0.5 gap-0.5 mt-3 mb-5'));
+  const conditions: ts.Expression[] = [];
+  for (let ancestor: ts.Node | undefined = tabs.parent; ancestor; ancestor = ancestor.parent) {
+    if (ts.isBinaryExpression(ancestor) && ancestor.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken
+      && tabs.pos >= ancestor.right.pos && tabs.end <= ancestor.right.end) conditions.push(ancestor.left);
+  }
+  assert.ok(conditions.length > 0, 'the actual tab switcher must have a visibility guard');
+  // The original exact !simple wrapper pin rejected the additional country
+  // protection. Execute the shipped guards: Simple stays hidden, while All
+  // tools exposes the SA Season reference only with a supported basis.
+  for (const simple of [true, false]) for (const year of [null, {hasPlanningBasis:false}, {hasPlanningBasis:true}]) {
+    const visible = conditions.every(condition => evaluateTask(condition, { simple, year }));
+    assert.equal(visible, !simple && Boolean(year?.hasPlanningBasis), `Simple=${simple}, supported=${year?.hasPlanningBasis ?? 'loading'}`);
+  }
 });
 
 test('cropplan Simple always reads as Month, whatever view state was left over from All tools', () => {
-  assert.match(CROPPLAN, /const effectiveView: View = simple \? 'month' : view;/);
+  const effective = findTaskNode((node): node is ts.VariableDeclaration => ts.isVariableDeclaration(node)
+    && ts.isIdentifier(node.name) && node.name.text === 'effectiveView');
+  assert.ok(effective.initializer);
+  // Additional safety conditions may restrict Season; they must never weaken
+  // the original promise that switching back to Simple always reads as Month.
+  for (const simple of [true, false]) for (const year of [null, {hasPlanningBasis:false}, {hasPlanningBasis:true}]) {
+    for (const view of ['month','season']) {
+      assert.equal(evaluateTask(effective.initializer, {simple, year, view}),
+        simple || !year?.hasPlanningBasis ? 'month' : view,
+        `Simple=${simple}, supported=${year?.hasPlanningBasis ?? 'loading'}, previous=${view}`);
+    }
+  }
   // Both view branches key off effectiveView, not the raw view state, so Simple can never render
   // the Season branch even if `view` was left on 'season' from an earlier All-tools session.
   assert.match(CROPPLAN, /\{effectiveView === 'month' && \(/);

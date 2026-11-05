@@ -11,17 +11,19 @@ import { buildCropAliasIndex } from './harvest-reconciliation';
 import { cropIdentityOf, cropIdentityMapKey } from './crop-identity';
 import type { ExpenseLog, ProductionLog, SalesLog } from './db/types';
 import type { SavedInvoice } from './invoices';
-import { cashLedgerSales, invoiceSalesForPaidInvoice } from './invoice-sales';
+import { cashLedgerSales, invoiceSalesForPaidInvoice, invoiceQuantitiesForPaidInvoice, reviewInvoiceRandPeriod, type InvoiceRandReview } from './invoice-sales';
+import { invoiceRandConsumerEligibility } from './invoice-currency';
 
 export type FinancePeriod = 'month' | 'season' | 'year';
 
 export interface CropMetric {
+  moneyReview: InvoiceRandReview;
   cropKey: string | null;
   cropName: string;
   areaM2: number | null;
   harvestedKg: number;
   hasHarvest: boolean;
-  turnoverZar: number;
+  turnoverZar: number | null;
   soldKg: number;
   hasSale: boolean;
   taggedCostsZar: number;
@@ -48,24 +50,27 @@ export interface CropMetric {
  * the sourcing that a kg-per-tree table would.
  */
 export interface OrchardMetric {
+  moneyReview: InvoiceRandReview;
   cropName: string;
   harvestedKg: number;
   hasHarvest: boolean;
   soldKg: number;
-  turnoverZar: number;
+  turnoverZar: number | null;
   hasSale: boolean;
   /** turnoverZar / soldKg. Null when nothing was sold — never 0, which would read as free. */
   priceZarPerKg: number | null;
 }
 
 export interface GardenGrossMargin {
+  moneyReview: InvoiceRandReview;
   gardenId: string | null;
-  salesZar: number;
+  salesZar: number | null;
   expensesZar: number;
-  grossMarginZar: number;
+  grossMarginZar: number | null;
 }
 
 export interface FarmMetrics {
+  moneyReview: InvoiceRandReview;
   crops: CropMetric[];
   /**
    * Orchard produce that was recorded and is deliberately NOT a row above, named so the card can
@@ -130,6 +135,10 @@ export function buildFarmMetrics(
   invoices: SavedInvoice[] = [],
 ): FarmMetrics {
   const aliases = buildCropAliasIndex();
+  const review = (rows: SavedInvoice[]) => reviewInvoiceRandPeriod(rows, { status: 'paid', dateField: 'paidAt', inPeriod: iso => isInFinancePeriod(iso, period, now) }, invoices);
+  const moneyReview = review(invoices);
+  const cropReview = (name: string) => review(invoices.filter(invoice => invoice.items.some(item =>
+    cropIdentityMapKey(cropIdentityOf(item.desc, aliases)) === cropIdentityMapKey(cropIdentityOf(name, aliases)))));
   const invoiceIds = invoices.map((invoice) => invoice.id);
   const paidInvoices = invoices.filter((invoice) => invoice.status === 'paid'
     && !!invoice.paidAt && Number.isFinite(Date.parse(invoice.paidAt)));
@@ -139,9 +148,11 @@ export function buildFarmMetrics(
   const cashSales = cashLedgerSales(sales, invoiceIds);
   const cropTurnoverSales = [
     ...cashSales,
-    ...paidInvoices.flatMap(invoiceSalesForPaidInvoice).map((sale) => ({ ...sale, garden_id: null })),
+    ...paidInvoices.flatMap(invoice => (invoiceRandConsumerEligibility(invoice).status === 'held'
+      ? invoiceQuantitiesForPaidInvoice(invoice).map(quantity => ({ ...quantity, amount: 0 }))
+      : invoiceSalesForPaidInvoice(invoice))).map((sale) => ({ ...sale, garden_id: null })),
   ];
-  const rows = new Map<string, Omit<CropMetric, 'yieldKgPerM2' | 'turnoverZarPerM2' | 'priceZarPerKg' | 'taggedCostZarPerM2'> & { weightSalesZar: number }>();
+  const rows = new Map<string, Omit<CropMetric, 'moneyReview' | 'turnoverZar' | 'yieldKgPerM2' | 'turnoverZarPerM2' | 'priceZarPerKg' | 'taggedCostZarPerM2'> & { turnoverZar: number; weightSalesZar: number }>();
   const ensure = (identity: { key: string | null; label: string }) => {
     const key = cropIdentityMapKey(identity);
     const current = rows.get(key);
@@ -208,7 +219,7 @@ export function buildFarmMetrics(
     row.taggedCostsZar += finiteNonNegative(expense.amount);
   }
 
-  const margins = new Map<string, GardenGrossMargin>();
+  const margins = new Map<string, { gardenId: string | null; salesZar: number; expensesZar: number; grossMarginZar: number }>();
   const garden = (id: string | null) => {
     const key = id ?? '__unassigned__';
     const current = margins.get(key);
@@ -221,11 +232,13 @@ export function buildFarmMetrics(
     if (isInFinancePeriod(dateFor(sale), period, now)) garden(sale.garden_id).salesZar += finiteNonNegative(sale.amount);
   }
   for (const invoice of paidInvoices) {
+    if (invoiceRandConsumerEligibility(invoice).status === 'held') continue;
     if (isInFinancePeriod(invoice.paidAt, period, now)) garden(null).salesZar += finiteNonNegative(invoice.total);
   }
   for (const expense of expenses) {
     if (isInFinancePeriod(dateFor(expense), period, now)) garden(expense.garden_id).expensesZar += finiteNonNegative(expense.amount);
   }
+  if (moneyReview.status === 'held') garden(null);
 
   // Partitioned, not filtered: what comes out is named on the card, the same condition that makes
   // any other hiding in this screen honest. Note the money below is untouched — gardenMargins is
@@ -239,32 +252,41 @@ export function buildFarmMetrics(
   const byName = (a: { cropName: string }, b: { cropName: string }) => a.cropName.localeCompare(b.cropName, 'en-ZA');
 
   return {
+    moneyReview,
     perennialProduceNames: perennialRows.map((row) => row.cropName).sort((a, b) => a.localeCompare(b, 'en-ZA')),
     perennialCrops: perennialRows
       .map((row) => ({
         cropName: row.cropName,
+        moneyReview: cropReview(row.cropName),
         harvestedKg: row.harvestedKg,
         hasHarvest: row.hasHarvest,
         soldKg: row.soldKg,
-        turnoverZar: row.turnoverZar,
+        turnoverZar: cropReview(row.cropName).status === 'held' ? null : row.turnoverZar,
         hasSale: row.hasSale,
         // Guarded on soldKg rather than turnover: a giveaway logged as a sale of 0
         // rand over 20 kg is a real R0.00/kg, but 20 kg sold for R400 with the kg
         // left blank would divide by zero and print Infinity on the card.
-        priceZarPerKg: row.hasSale && row.soldKg > 0 ? row.weightSalesZar / row.soldKg : null,
+        priceZarPerKg: cropReview(row.cropName).status === 'held' ? null : row.hasSale && row.soldKg > 0 ? row.weightSalesZar / row.soldKg : null,
       }))
       .sort(byName),
     crops: bedRows
       .map((row) => ({
         ...row,
+        moneyReview: cropReview(row.cropName),
+        turnoverZar: cropReview(row.cropName).status === 'held' ? null : row.turnoverZar,
         yieldKgPerM2: row.areaM2 !== null && row.hasHarvest ? row.harvestedKg / row.areaM2 : null,
-        turnoverZarPerM2: row.areaM2 !== null && row.hasSale ? row.turnoverZar / row.areaM2 : null,
-        priceZarPerKg: row.hasSale && row.soldKg > 0 ? row.weightSalesZar / row.soldKg : null,
+        turnoverZarPerM2: cropReview(row.cropName).status === 'held' ? null : row.areaM2 !== null && row.hasSale ? row.turnoverZar / row.areaM2 : null,
+        priceZarPerKg: cropReview(row.cropName).status === 'held' ? null : row.hasSale && row.soldKg > 0 ? row.weightSalesZar / row.soldKg : null,
         taggedCostZarPerM2: row.areaM2 !== null && row.hasTaggedCost ? row.taggedCostsZar / row.areaM2 : null,
       }))
       .sort((a, b) => a.cropName.localeCompare(b.cropName)),
     gardenMargins: [...margins.values()]
-      .map((margin) => ({ ...margin, grossMarginZar: margin.salesZar - margin.expensesZar }))
+      .map((margin) => {
+        const scopedReview = margin.gardenId === null ? moneyReview : review([]);
+        return { ...margin, moneyReview: scopedReview,
+          salesZar: scopedReview.status === 'held' ? null : margin.salesZar,
+          grossMarginZar: scopedReview.status === 'held' ? null : margin.salesZar - margin.expensesZar };
+      })
       .sort((a, b) => (a.gardenId ?? '').localeCompare(b.gardenId ?? '')),
     unattributedExpensesZar,
     hasUnattributedExpenses,

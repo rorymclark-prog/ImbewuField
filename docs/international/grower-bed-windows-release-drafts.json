@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "be83ce5a093a5f2d1075e37242af27e6aa1448ada1076fceac8c07ce2babfe61",
+  "milestoneId": "grower-bed-availability-windows",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "reviewNotes": "Grower-confirmed planned availability only; half-open ends, gaps unavailable, no bridge across intervals or override of existing occupation. No fluent approval. Separate from native global-language candidate packets.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "88be505ed1384351c10bf7fe25b073d435c62626f2b4a29947ee3ec06eeead15",
+      "selectedFileSha256": "663d662c3db53a8497b2c5a2dd9de0641648314d0e001f8b7141a64ef7f09ec7",
+      "historicalBytesPreserved": true
+    },
+    "st": {
+      "originalFileSha256": "31d20644b7ddf5beb099bdef09b311931c2cda102d3828bc47216805df435e11",
+      "selectedFileSha256": "71d4e24dc2c171fe15ff5e64d2a06431b8569950e64f007ff1ccf4ccc457ec39",
+      "historicalBytesPreserved": true
+    },
+    "ve": {
+      "originalFileSha256": "b53480e42aa0e063445366725e8d73ad41e6f9a79efb00ae29cac35bc1a33b57",
+      "selectedFileSha256": "f62f4e824846e5c86f0d08908c8e4f91b5ecd7dd77e6141afc0621409d347adf",
+      "historicalBytesPreserved": true
+    },
+    "ts": {
+      "originalFileSha256": "78d895f96dd5e2377f3aada4729202b68071f49efdaa2111ae84ba1633545add",
+      "selectedFileSha256": "f0ba24cd467d3199450f04c103e4b44af56d73eb54046c6afe2dc2aa690776f1",
+      "historicalBytesPreserved": true
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Plan separate availability windows for each growing space",
+      "zu": "Hlela izikhathi ezihlukene zokutholakala kwendawo ngayinye yokutshala",
+      "st": "Rera dinako tse arohaneng tsa ho fumaneha ha sebaka ka seng sa ho lema",
+      "ve": "Vhekanyani zwifhinga zwo fhambanaho zwa u wanala ha fhethu huṅwe na huṅwe ha u lima",
+      "ts": "Pulana minkarhi yo hambana ya ku kumeka ka ndhawu yin’wana ni yin’wana yo byala",
+      "messageSha256": "f77f42cfdb4e913faec597b517b74b91cff4aef61c70ab4a20144c75894388e7"
+    },
+    {
+      "english": "Crop plan → Automatic plan from your estimates → Your available growing space",
+      "zu": "Uhlelo lwezitshalo → Uhlelo oluzenzakalelayo olusekelwe ezilinganisweni zakho → Indawo yakho yokutshala etholakalayo",
+      "st": "Moralo wa dijalo → Moralo o iketsang ho tswa ditekanyetsong tsa hao → Sebaka sa hao se fumanehang sa ho lema",
+      "ve": "Pulane ya zwimela → Pulane ya othomethikhi i bvaho kha nyanganyelo dzaṋu → Fhethu haṋu ha u lima hu wanalaho",
+      "ts": "Pulani ya swibyariwa → Pulani ya otomatiki leyi humaka eka mipimanyeto ya wena → Ndhawu ya wena yo byala leyi kumekaka",
+      "messageSha256": "db53cffb259e936f324304d53db3584133fb936832926de0d5d860e7047da4da"
+    },
+    {
+      "english": "Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.",
+      "zu": "Engeza futhi uqinisekise izikhathi zezinsuku ezihlukene zombhede noma isiqephu sensimu esigciniwe. Uhlelo aluzisebenzisi izikhala phakathi kwezikhathi, futhi umjikelezo ngamunye wesitshalo kufanele ungene esikhathini esisodwa; ukusetshenziswa okukhona kuyaqhubeka nokuhlolwa.",
+      "st": "Kenya le ho netefatsa dinako tse arohaneng tsa matsatsi bakeng sa bethe kapa karolo ya tshimo e bolokilweng. Moralo ha o sebedise dikgeo pakeng tsa dinako mme potoloho ka nngwe ya sejalo e lokela ho fella ka hara nako e le nngwe; tshebediso e seng e le teng e ntse e hlahlojwa.",
+      "ve": "Engedzani ni khwaṱhisedze zwifhinga zwo fhambanaho zwa maḓuvha zwa mubhedzi kana tshipiḓa tsha tsimu tsho vhulungwaho. Pulane a i shumisi zwikhala vhukati ha zwifhinga nahone mutevhe muṅwe na muṅwe wa tshimela u tea u fhelela kha tshifhinga tshithihi; u shumiswa ho no ḓi vhaho hone hu kha ḓi sedzuluswa.",
+      "ts": "Engetela u tlhela u tiyisisa minkarhi yo hambana ya masiku ya mubedo kumbe xiphemu xa nsimu lexi hlayisiweke. Pulani a yi tirhisi swivandla leswi nga phakathi ka minkarhi naswona xirhendzevutana xin’wana ni xin’wana xa xibyariwa xi fanele ku helela eka nkarhi wun’we; ku tirhisiwa loku nga kona ka ha kamberiwa.",
+      "messageSha256": "f57d47e490de0d563acec25930a82eefddc1c9ab9d6bbc46235d32db0ea6d912"
+    }
+  ]
+}

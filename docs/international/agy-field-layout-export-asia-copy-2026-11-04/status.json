@@ -1,0 +1,33 @@
+{
+  "taskId": "agy-field-layout-export-asia-copy-2026-11-04",
+  "status": "ready_for_review",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "sourceSha256": "883ab3ffd0593e2387cda3f5518511ed5fa1ee1281cd83a5f654efa5a4de5afd",
+  "messagesCount": 23,
+  "locales": [
+    "hi",
+    "bn",
+    "id"
+  ],
+  "totalDraftPairs": 69,
+  "generatedFiles": [
+    "hi.json",
+    "bn.json",
+    "id.json",
+    "review-notes.md",
+    "status.json"
+  ],
+  "workerProvenance": "tool_subagent_contact_observed_but_independent_file_authorship_unverified",
+  "nativeWorkerUsed": false,
+  "fluentCertificationClaimed": false,
+  "notesWordCount": "UNKNOWN",
+  "coordinatorReview": {
+    "atUtc": "2026-11-04T14:27:00.656939+00:00",
+    "exactPairs": 69,
+    "damagedControlsRejected": 14,
+    "notesWords": 161,
+    "scope": "exact source/schema/order/hash/brand/token checks and identified Bengali terminology/notes corrections; no fluent certification",
+    "workerAuthorship": "native tool contact observed; independent worker output not established; main reports zero active"
+  }
+}

@@ -1,4 +1,5 @@
 'use client';
+import { JournalStorageNotice } from '@/components/JournalStorageStatus';
 
 import workspace from '@/components/layout/Workspace.module.css';
 
@@ -27,6 +28,10 @@ import {
 } from '@/lib/task-board';
 import { taskJournalHref, taskHarvestHref } from '@/lib/task-record-link';
 import { farmMemoryText } from '@/lib/farm-memory-copy';
+import GrowerOperationsPanel from '@/components/crops/GrowerOperationsPanel';
+import { CropPlanStorageNotice } from '@/components/CropPlanStorageStatus';
+import { useGrowerOperations } from '@/components/crops/useGrowerOperations';
+import { hasGrowerCycleMarker } from '@/lib/international/grower-cycle';
 
 // ─── Types & data ────────────────────────────────────────────────────────────
 //
@@ -240,6 +245,7 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
 
 export default function CropPlanPage() {
   const { lang, t } = useLanguage();
+  const operations = useGrowerOperations();
   // Simple / All tools (lib/app-level.ts): Simple leads with the current month's jobs — the
   // farmer's own "what to plant/do now or next" — and drops the Season tab, the month-count grid
   // and the map-planner promo. The task list itself (what actually needs doing) is never gated,
@@ -258,10 +264,10 @@ export default function CropPlanPage() {
   const [view, setView] = useState<View>('month');
   // Simple has no Season tab to switch into, so it always reads as Month regardless of a view
   // choice made earlier in All tools (e.g. switching level mid-session).
-  const effectiveView: View = simple ? 'month' : view;
   const [cursorMonth, setCursorMonth] = useState(1);
   const [todayMonth, setTodayMonth] = useState(1);
   const [year, setYear] = useState<CropBoardYear | null>(null);
+  const effectiveView: View = simple || !year?.hasPlanningBasis ? 'month' : view;
   const [mounted, setMounted] = useState(false);
 
   // One reload path for BOTH the completion set and the sourced tasks, so the
@@ -280,7 +286,11 @@ export default function CropPlanPage() {
     refresh();
     setMounted(true);
     TASK_BOARD_CHANGED_EVENTS.forEach((ev) => window.addEventListener(ev, refresh));
-    return () => TASK_BOARD_CHANGED_EVENTS.forEach((ev) => window.removeEventListener(ev, refresh));
+    window.addEventListener('storage', refresh); window.addEventListener('focus', refresh);
+    return () => {
+      TASK_BOARD_CHANGED_EVENTS.forEach((ev) => window.removeEventListener(ev, refresh));
+      window.removeEventListener('storage', refresh); window.removeEventListener('focus', refresh);
+    };
   }, [refresh]);
 
   function toggleTask(id: string) {
@@ -294,7 +304,12 @@ export default function CropPlanPage() {
   const totalTasks = year?.total ?? 0;
   // A saved plan that produces no job in any of the twelve months. Kept
   // distinct from "no plan yet" so neither notice can claim the wrong thing.
-  const planYieldsNothing = mounted && savedPlantings > 0 && totalTasks === 0;
+  const withheldPlantings = year?.withheldPlantings ?? 0;
+  const hasOwnCycles = operations.book?.plantings.some(hasGrowerCycleMarker) ?? false;
+  // A dated own cycle cannot be diagnosed by the catalogue's month-only job
+  // count. Its checked dates and unresolved sources have their own explanation.
+  const planYieldsNothing = mounted && operations.status === 'ready' && !hasOwnCycles
+    && savedPlantings > 0 && totalTasks === 0 && withheldPlantings === 0;
   const season = saSeason(cursorMonth);
   const seasonLabel = ui(season.name, ({ Spring: 'Intwasahlobo', Summer: 'Ihlobo', Autumn: 'Ikwindla', Winter: 'Ubusika' } as Record<string, string>)[season.name]);
   const monthName = monthNames[cursorMonth - 1];
@@ -354,6 +369,15 @@ export default function CropPlanPage() {
 
       <div className="flex-1 overflow-y-auto">
         <div className={`${workspace.workspace} px-4 py-5 sm:px-6 sm:py-6`}>
+          <CropPlanStorageNotice />
+          <JournalStorageNotice />
+          <GrowerOperationsPanel state={operations} refresh={operations.refresh}
+            checkCurrent={operations.checkCurrent} isCurrent={operations.isCurrent}
+            onRecordObservation={operations.onRecordObservation} />
+          {withheldPlantings > 0 && <section aria-label="Planning support" className="mb-4 rounded-2xl p-4 font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+            <p>Catalogue-derived jobs are unavailable for {withheldPlantings} saved sowing {withheldPlantings === 1 ? 'entry' : 'entries'} without a supported country or workspace basis. The saved entries remain in your plan.</p>
+            <Link href="/facilitator/crops" className="mt-2 inline-block underline">Review country and planning references</Link>
+          </section>}
 
           {/* New: flagship bed-timeline crop planner on the design map — a discovery promo for
               a second tool, not part of the day-to-day task list, so it stays in All tools. */}
@@ -364,6 +388,8 @@ export default function CropPlanPage() {
               <Sprout size={14} aria-hidden style={{ display: "inline", verticalAlign: "-2px" }} /> {ui('New: plan crops bed-by-bed on your design map →', 'Okusha: hlela izitshalo umbhede ngombhede emephini yakho yokuklama →')}
             </Link>
           )}
+
+          {year?.hasPlanningBasis && <p className="mb-3 font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>These jobs use the existing South African planning references for confirmed sites or explicitly acknowledged unmapped workspaces.</p>}
 
           {/* Title row */}
           <div className="flex items-center justify-between mb-1">
@@ -384,7 +410,7 @@ export default function CropPlanPage() {
 
           {/* Zoom tabs — Simple always reads as Month (see effectiveView), so the switcher itself,
               a secondary control, is All-tools only rather than shown disabled or pointless. */}
-          {!simple && (
+          {!simple && year?.hasPlanningBasis && (
             <div className="flex rounded-xl p-0.5 gap-0.5 mt-3 mb-5" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
               {TABS.map((t) => {
                 const on = view === t.v;

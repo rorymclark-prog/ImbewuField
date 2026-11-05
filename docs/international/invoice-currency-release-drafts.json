@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "b03ec8839f1f3b5e0efbd5f26dbfe187e29d9c0c5e606b43d62d9eafeabefe97",
+  "milestoneId": "invoice-currency-basis",
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "reviewNotes": "Unreviewed AI release-description drafts only. The buyer-agreed recorded denomination stays fixed; no exchange conversion or inclusion of other currencies in rand totals is claimed. Existing four notice languages only; no human or fluent approval.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "77491ff1cb48f9701a7f4a7e124071749390a367fbd6b27fec1ba6687416dd14",
+      "selectedFileSha256": "d3be462e1cae3ecff96671f62d4ba5225d12b2c613f32611ac40f71f02e6e735",
+      "historicalBytesPreserved": true
+    },
+    "st": {
+      "originalFileSha256": "b5a06382bd3a749a9cc638e24f71e74223797c851923bacda07a8c4097aaf5b3",
+      "selectedFileSha256": "2202b6949260c9c08b96befd44f5fd68406781b2cb279931e4c514398225c669",
+      "historicalBytesPreserved": true
+    },
+    "ts": {
+      "originalFileSha256": "0aa48e334bda53f97454c1563306ab77a36f619f132e27a4bb77bb267219dd16",
+      "selectedFileSha256": "0eb9e0df760733cc40d14c76f9b6ad3a22e1d0d25df35761891704dd74242c9f",
+      "historicalBytesPreserved": true
+    },
+    "ve": {
+      "originalFileSha256": "c571c8fbbd31996b334b90c75ab366af6c882e211274186aa67335ae5541763c",
+      "selectedFileSha256": "6ca1f1d68b4ddb861b2baaec8919c7bd4a0357faa42004261e35ed777aecdcb1",
+      "historicalBytesPreserved": true
+    }
+  },
+  "messages": [
+    {
+      "key": "change",
+      "sourceOrder": 1,
+      "english": "Choose the currency for each new invoice.",
+      "messageSha256": "9357fc4b6dafc2420dcd9540f72f6224ce5c4c1cb99ef5bbf62d2c23905f0dad",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceFileSha256": "b03ec8839f1f3b5e0efbd5f26dbfe187e29d9c0c5e606b43d62d9eafeabefe97",
+      "translations": {
+        "zu": "Khetha uhlobo lwemali lwe-invoyisi ngayinye entsha.",
+        "st": "Kgetha mofuta wa tjhelete bakeng sa invoice e nngwe le e nngwe e ntjha.",
+        "ts": "Hlawula muxaka wa mali eka invoyisi yin’wana ni yin’wana leyintshwa.",
+        "ve": "Khethani lushaka lwa tshelede lwa invoisi iṅwe na iṅwe ntswa."
+      }
+    },
+    {
+      "key": "tour.title",
+      "sourceOrder": 2,
+      "english": "Keep invoice currencies clear",
+      "messageSha256": "3618497e6c8606936b5d007084c13e3922d7a682ef147a6373856c17d419b5ca",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceFileSha256": "b03ec8839f1f3b5e0efbd5f26dbfe187e29d9c0c5e606b43d62d9eafeabefe97",
+      "translations": {
+        "zu": "Gcina izinhlobo zemali zama-invoyisi zicacile",
+        "st": "Boloka mefuta ya tjhelete ya di-invoice e hlakile",
+        "ts": "Endla leswaku mixaka ya mali ya ti-invoyisi yi va erivaleni",
+        "ve": "Itani uri tshaka dza tshelede dza dzi-invoisi dzi vhe khagala"
+      }
+    },
+    {
+      "key": "tour.where",
+      "sourceOrder": 3,
+      "english": "Invoice → Currency for this invoice",
+      "messageSha256": "714d2090dcb6e0c6be3f8c810175ebe67f2dec257794fb375061edfe7d5c96e1",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceFileSha256": "b03ec8839f1f3b5e0efbd5f26dbfe187e29d9c0c5e606b43d62d9eafeabefe97",
+      "translations": {
+        "zu": "I-invoyisi → Uhlobo lwemali lwale-invoyisi",
+        "st": "Invoice → Mofuta wa tjhelete wa invoice ena",
+        "ts": "Invoyisi → Muxaka wa mali wa invoyisi leyi",
+        "ve": "Invoisi → Lushaka lwa tshelede lwa invoisi iyi"
+      }
+    },
+    {
+      "key": "tour.detail",
+      "sourceOrder": 4,
+      "english": "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.",
+      "messageSha256": "b0654590c696bbf4f278e85b3e416fdb695223b9f58c98dc8cd6aaa2aad99886",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceFileSha256": "b03ec8839f1f3b5e0efbd5f26dbfe187e29d9c0c5e606b43d62d9eafeabefe97",
+      "translations": {
+        "zu": "Khetha uhlobo lwemali ovumelene ngalo nomthengi. Ama-invoyisi agciniwe agcina uhlobo lwawo lwemali; amanani awaguqulelwa kolunye uhlobo lwemali, kanti ezinye izinhlobo zemali zihlala zihlukile ezibalweni eziphelele zerandi.",
+        "st": "Kgetha mofuta wa tjhelete oo o dumellaneng le moreki ka wona. Di-invoice tse bolokilweng di boloka mofuta wa tsona wa tjhelete; dipalo tsa tjhelete ha di fetolelwe mofuteng o mong wa tjhelete, mme mefuta e meng ya tjhelete e dula e arohane le dikakaretso tsa diranta.",
+        "ts": "Hlawula muxaka wa mali lowu pfumelelaniweke na muxavi. Ti-invoyisi leti hlayisiweke ti hlayisa muxaka wa tona wa mali; mintsengo a yi hundzuluxeriwi eka mali yin’wana, naswona mixaka yin’wana ya mali yi hlayisiwa yi hambanile ni mintsengo ya tirhandi.",
+        "ve": "Khethani lushaka lwa tshelede lwe na tendelana na murengi ngaḽo. Dzi-invoisi dzo vhulungwaho dzi dzula na lushaka lwadzo lwa tshelede; mbalo dza tshelede a dzi shandukiswi dza vha kha luṅwe lushaka lwa tshelede, nahone dziṅwe tshaka dza tshelede dzi dzula dzo fhambana na ṱhanganyelo dza rand."
+      }
+    }
+  ]
+}

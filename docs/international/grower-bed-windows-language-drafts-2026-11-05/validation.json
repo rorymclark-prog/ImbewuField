@@ -1,0 +1,66 @@
+{
+  "sourceSha256": "96e69ce266789433482899ba88c3d9510f1309c03af3c059c42d6de0b69bb8d5",
+  "pairs": 84,
+  "locales": [
+    {
+      "locale": "fr",
+      "pairs": 12,
+      "sha256": "519c0d5cbe83477e9d7d76bffd5fc355842eaf6359c783759c6e72ffc20b7b4e"
+    },
+    {
+      "locale": "es",
+      "pairs": 12,
+      "sha256": "e3712320fade10bb084b1f5ad3b87f947db15f545f1d21df43e39c28568c6032"
+    },
+    {
+      "locale": "pt-BR",
+      "pairs": 12,
+      "sha256": "e7e95a53d01784bcda23a0c3d07ee6283faab1000512d543d939abd7b5f40a47"
+    },
+    {
+      "locale": "sw",
+      "pairs": 12,
+      "sha256": "1aca4e8104bc88402cf9e1312319b31b78056f9853e0a68c98fb0c6b4e7c77db"
+    },
+    {
+      "locale": "hi",
+      "pairs": 12,
+      "sha256": "667a685d58d116063ff378400885a02c35d4e89e98d9c50dd10616536ba2059a"
+    },
+    {
+      "locale": "bn",
+      "pairs": 12,
+      "sha256": "9839f524e0761f2bf74ca15d129613394000bdeeae9e86afadfbb37d7c066af5"
+    },
+    {
+      "locale": "id",
+      "pairs": 12,
+      "sha256": "e60075400e3c1ea9a850f2fc962894c01b34e44d81d9c6635a3d84c675c6a2cd"
+    }
+  ],
+  "damagedControlsRejected": 19,
+  "controls": [
+    "wrong locale",
+    "wrong source hash",
+    "runtime enabled",
+    "false reviewed status",
+    "missing message",
+    "duplicate identity",
+    "reordered messages",
+    "changed English",
+    "changed key",
+    "wrong message hash",
+    "empty translation",
+    "English substituted",
+    "missing token",
+    "renamed token",
+    "extra token",
+    "missing unit",
+    "unlisted message field",
+    "nonstring translation",
+    "invented numeric default"
+  ],
+  "notesWords": 139,
+  "semanticCertification": false,
+  "runtimeActivation": false
+}

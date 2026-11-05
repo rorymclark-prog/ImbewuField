@@ -6,16 +6,22 @@
 import { kgPreciseLabel } from '@/lib/format-figures';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import ts from 'typescript';
 import { readFileSync } from 'node:fs';
 import { RECORDS_DRAFTS } from '../lib/records-regional-drafts-data.ts';
 import {
   recordsDraft, recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, recordsUnitWord,
   recordsDraftNotice, isRecordsRegionalLang, samePlaceholders, placeholdersOf,
+  recordsEnglishHoldReason, RECORDS_ENGLISH_HOLDS, RECORDS_RETIRED_SOURCES,
 } from '../lib/records-regional-drafts.ts';
 import { recordQuantityLabel, RECORD_UNITS } from '../lib/farm-records.ts';
 
 const read = (p: string) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
 const LANGS = ['st', 've', 'ts'] as const;
+type RetiredDraft = { english: string; messageSha256: string; translations: Record<string, string>; sourceFile: string; sourceFileSha256: string; status: string; reason: string; replacementEnglish: string };
+const retiredArchive = JSON.parse(read('docs/international/invoice-currency-retired-records-drafts.json')) as { sourceFile: string; sourceFileSha256: string; entries: RetiredDraft[] };
+
 const SOURCES = ['app/records/page.tsx', 'components/MyRecords.tsx', 'components/records/ReceiptPreview.tsx',
   'components/records/RecordQuantityFields.tsx', 'components/records/RecordQuantitySummary.tsx',
   'lib/expense-receipts.ts', 'lib/duplicate-income.ts', 'lib/credit-pack-pdf.ts', 'lib/farm-records.ts',
@@ -184,26 +190,34 @@ test('the do-not-enter-again warning and the nothing-is-lost reassurance keep th
 import { existsSync } from 'node:fs';
 
 /** Quoted English literals inside recordsText/recordsInstruction/recordsUi/recordsFill/recordsTemplate/text calls. */
+function displayedEnglish(node: ts.Node | undefined, found: Set<string>): void {
+  if (!node) return;
+  if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) { found.add(node.text); return; }
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node) || ts.isSatisfiesExpression(node)) {
+    displayedEnglish(node.expression, found); return;
+  }
+  if (ts.isConditionalExpression(node)) {
+    // Predicate literals describe control state; only the returned branches are copy.
+    displayedEnglish(node.whenTrue, found); displayedEnglish(node.whenFalse, found); return;
+  }
+  if (ts.isBinaryExpression(node)) {
+    if ([ts.SyntaxKind.PlusToken, ts.SyntaxKind.BarBarToken, ts.SyntaxKind.QuestionQuestionToken].includes(node.operatorToken.kind)) {
+      displayedEnglish(node.left, found); displayedEnglish(node.right, found);
+    } else if (node.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken) displayedEnglish(node.right, found);
+  }
+}
+
 function englishLiteralsIn(source: string, helpers: string[]): Set<string> {
   const found = new Set<string>();
-  for (const helper of helpers) {
-    const call = new RegExp(`(?<![\\w.])${helper}\\(`, 'g');
-    for (let m = call.exec(source); m; m = call.exec(source)) {
-      let depth = 0; let quote = ''; let start = m.index + m[0].length; const args: string[] = [];
-      for (let i = m.index + m[0].length - 1; i < source.length; i++) {
-        const c = source[i];
-        if (quote) { if (c === '\\') i++; else if (c === quote) quote = ''; continue; }
-        if ("'\"`".includes(c)) quote = c;
-        else if ('([{'.includes(c)) depth++;
-        else if (')]}'.includes(c)) { depth--; if (depth === 0) { args.push(source.slice(start, i)); break; } }
-        else if (c === ',' && depth === 1) { args.push(source.slice(start, i)); start = i + 1; }
-      }
-      // text(en, zu) has English first; the others take lang first.
-      const english = helper === 'text' || helper === 'tx' ? args[0] : args[1];
-      for (const lit of (english ?? '').matchAll(/'((?:[^'\\\n]|\\.)*)'|"((?:[^"\\\n]|\\.)*)"/g)) found.add((lit[1] ?? lit[2]).replace(/\\'/g, "'"));
+  const tree = ts.createSourceFile('displayed-copy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  function visit(node: ts.Node): void {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && helpers.includes(node.expression.text)) {
+      const first = node.expression.text === 'text' || node.expression.text === 'tx';
+      displayedEnglish(node.arguments[first ? 0 : 1], found);
     }
+    ts.forEachChild(node, visit);
   }
-  return found;
+  visit(tree); return found;
 }
 
 test('every English label the money book renders has a draft or an explicit hold in each regional language', () => {
@@ -218,7 +232,7 @@ test('every English label the money book renders has a draft or an explicit hold
   for (const token of ['in', 'out', 'cost', 'sale', 'zu', 'en', 'bookTabPicked', 'bookTabSold', 'bookTabSpent', 'bookTabCharts', ' ', ', ']) literals.delete(token);
   for (const lang of LANGS) {
     const held = new Set(packet(lang).filter((row) => row.status === 'held').map((row) => row.english));
-    const missing = [...literals].filter((english) => !/[A-Za-z]{2}/.test(english) ? false : recordsDraft(lang, english) === null && !held.has(english));
+    const missing = [...literals].filter((english) => !/[A-Za-z]{2}/.test(english) ? false : recordsDraft(lang, english) === null && !held.has(english) && recordsEnglishHoldReason(lang, english) === null);
     assert.deepEqual(missing, [], `${lang}: English shown on the money book with neither a draft nor a recorded hold`);
   }
 });
@@ -227,7 +241,11 @@ test('the draft packet and the shipped table agree: only accepted drafts ship, h
   for (const lang of ['zu', ...LANGS] as const) {
     const rows = JSON.parse(read(`docs/translation-reviews/records-finance-2026-10-06/draft-${lang}.json`)) as Array<{ english: string; status: string; draft: string }>;
     for (const row of rows) {
-      if (row.status === 'accepted') assert.equal(RECORDS_DRAFTS[row.english]?.[lang], row.draft, `${lang} accepted draft missing or different in the table: ${row.english}`);
+      const retired = retiredArchive.entries.find(entry => entry.english === row.english);
+      if (row.status === 'accepted' && retired) {
+        assert.equal(retired.translations[lang], row.draft, `${lang} retired draft must preserve its original accepted-packet wording`);
+        assert.equal(RECORDS_DRAFTS[row.english]?.[lang], undefined, `${lang} stale universal Rand claim must remain retired`);
+      } else if (row.status === 'accepted') assert.equal(RECORDS_DRAFTS[row.english]?.[lang], row.draft, `${lang} accepted draft missing or different in the table: ${row.english}`);
       else assert.equal(RECORDS_DRAFTS[row.english]?.[lang], undefined, `${lang} held row leaked into the table: ${row.english}`);
     }
   }
@@ -279,14 +297,16 @@ test('held rows stay English: after the second-session backcheck no held draft r
 
 /** English literals a Charts component hands to the draft lookup: helper calls, template=, and static english=. */
 function chartEnglish(source: string): Set<string> {
-  const found = englishLiteralsIn(source, ['recordsFill', 'recordsTemplate', 'recordsLabel']);
-  for (const lit of englishLiteralsIn(source, ['text', 'tx'])) found.add(lit); // text(en, zu): English first
-  for (const m of source.matchAll(/\benglish="([^"]+)"/g)) found.add(m[1]);
-  for (const m of source.matchAll(/\btemplate="([^"]+)"/g)) found.add(m[1]);
-  for (const m of source.matchAll(/\btemplate=\{([^}]*)\}/g)) {
-    for (const lit of m[1].matchAll(/'((?:[^'\\\n]|\\.)*)'/g)) found.add(lit[1].replace(/\\'/g, "'"));
+  const found = englishLiteralsIn(source, ['recordsFill', 'recordsTemplate', 'recordsLabel', 'text', 'tx']);
+  const tree = ts.createSourceFile('chart-copy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  function visit(node: ts.Node): void {
+    if (ts.isJsxAttribute(node) && ts.isIdentifier(node.name) && ['english', 'template'].includes(node.name.text)) {
+      const value = node.initializer;
+      displayedEnglish(value && ts.isJsxExpression(value) ? value.expression : value, found);
+    }
+    ts.forEachChild(node, visit);
   }
-  return found;
+  visit(tree); return found;
 }
 
 // Sentences the components hold in a const and pass as `english={...}` (no call to extract them from).
@@ -314,7 +334,7 @@ test('every English sentence the Charts tab renders has a draft or an explicit h
   const packet = (lang: string) => JSON.parse(read(`docs/translation-reviews/records-finance-2026-10-06/draft-${lang}.json`)) as Array<{ english: string; status: string }>;
   for (const lang of LANGS) {
     const held = new Set(packet(lang).filter((row) => row.status === 'held').map((row) => row.english));
-    const missing = [...literals].filter((english) => /[A-Za-z]{2}/.test(english) && recordsDraft(lang, english) === null && !held.has(english));
+    const missing = [...literals].filter((english) => /[A-Za-z]{2}/.test(english) && recordsDraft(lang, english) === null && !held.has(english) && recordsEnglishHoldReason(lang, english) === null);
     assert.deepEqual(missing, [], `${lang}: English on the Charts tab with neither a draft nor a recorded hold`);
   }
 });
@@ -368,7 +388,7 @@ test('every English sentence the invoice page renders has a draft or an explicit
   const packet = (lang: string) => JSON.parse(read(`docs/translation-reviews/records-finance-2026-10-06/draft-${lang}.json`)) as Array<{ english: string; status: string }>;
   for (const lang of LANGS) {
     const held = new Set(packet(lang).filter((row) => row.status === 'held').map((row) => row.english));
-    const missing = [...literals].filter((english) => /[A-Za-z]{2}/.test(english) && recordsDraft(lang, english) === null && !held.has(english));
+    const missing = [...literals].filter((english) => /[A-Za-z]{2}/.test(english) && recordsDraft(lang, english) === null && !held.has(english) && recordsEnglishHoldReason(lang, english) === null);
     assert.deepEqual(missing, [], `${lang}: English on the invoice page with neither a draft nor a recorded hold`);
   }
 });
@@ -410,4 +430,65 @@ test('the invoice a buyer receives stays English whatever the farmer reads: prin
   const english = buildInvoiceDocument({ ...input, language: 'en' });
   for (const lang of LANGS) assert.deepEqual(buildInvoiceDocument({ ...input, language: lang }), english, `${lang}: the document must be the English one`);
   assert.notDeepEqual(buildInvoiceDocument({ ...input, language: 'zu' }), english, 'isiZulu documents are unchanged by this round');
+});
+
+
+test('coverage extracts both displayed branches without treating a condition status as copy', () => {
+  const source = `recordsTemplate(lang, moneyReview.status === 'held'
+    ? 'Held physical total: {kg}.' : 'Ready physical total: {kg}.', null, vars);`;
+  assert.deepEqual([...englishLiteralsIn(source, ['recordsTemplate'])], ['Held physical total: {kg}.', 'Ready physical total: {kg}.']);
+  const known = new Set(['Ready physical total: {kg}.']);
+  assert.deepEqual([...englishLiteralsIn(source, ['recordsTemplate'])].filter(text => !known.has(text)), ['Held physical total: {kg}.'], 'a newly displayed branch must still fail draft/hold coverage');
+  assert.deepEqual([...englishLiteralsIn(`recordsText(lang, condition ? 'held' : 'Ready label', 'zu');`, ['recordsText'])], ['held', 'Ready label'], 'a genuinely displayed held label must not be exempted');
+});
+
+test('chart template coverage keeps complete placeholder strings and both branches despite braces in the quoted copy', () => {
+  const source = `<Figure template={state === 'held' ? 'Held: {picked} and {sold}.' : 'Ready: {picked}.'} english="Visible label" />`;
+  const actual = chartEnglish(source);
+  assert.deepEqual([...actual], ['Held: {picked} and {sold}.', 'Ready: {picked}.', 'Visible label']);
+  assert.ok(!actual.has('held'));
+  const covered = new Set(['Ready: {picked}.', 'Visible label']);
+  assert.deepEqual([...actual].filter(value => !covered.has(value)), ['Held: {picked} and {sold}.'], 'placeholder braces must not conceal an untranslated branch');
+});
+
+test('new financial qualifications have explicit English holds with reasons, not invented regional drafts', () => {
+  assert.ok(Object.keys(RECORDS_ENGLISH_HOLDS).length > 0);
+  for (const [english, reason] of Object.entries(RECORDS_ENGLISH_HOLDS)) {
+    assert.ok(reason.trim().length > 20);
+    for (const lang of LANGS) {
+      assert.equal(recordsEnglishHoldReason(lang, english), reason);
+      assert.equal(recordsDraft(lang, english), null);
+      assert.equal(recordsFill(lang, english), english);
+      assert.equal(recordsPaired(lang, english), english);
+    }
+  }
+  for (const lang of LANGS) assert.equal(recordsEnglishHoldReason(lang, 'held'), null);
+  assert.equal(recordsEnglishHoldReason('en', 'Download PDF'), null);
+});
+
+test('retired universal Rand drafts retain exact original packet wording and source identity without regeneration reviving them', () => {
+  assert.equal(retiredArchive.entries.length, 3);
+  assert.equal(retiredArchive.sourceFile, 'lib/records-regional-drafts-data.ts');
+  assert.match(retiredArchive.sourceFileSha256, /^[a-f0-9]{64}$/);
+  assert.deepEqual(Object.keys(RECORDS_RETIRED_SOURCES).sort(), retiredArchive.entries.map(entry => entry.english).sort());
+  const currentGraphSources = chartEnglish(read('components/FinanceGraphs.tsx'));
+  for (const entry of retiredArchive.entries) {
+    assert.equal(entry.status, 'retired'); assert.ok(entry.reason.length > 20);
+    assert.equal(createHash('sha256').update(entry.english).digest('hex'), entry.messageSha256);
+    assert.equal(entry.sourceFile, retiredArchive.sourceFile); assert.equal(entry.sourceFileSha256, retiredArchive.sourceFileSha256);
+    assert.ok(currentGraphSources.has(entry.replacementEnglish), 'replacement must be actual displayed graph copy');
+    assert.equal(Object.hasOwn(RECORDS_DRAFTS, entry.english), false, 'generated history must not silently restore a stale active row');
+    for (const lang of LANGS) {
+      const historical = JSON.parse(read(`docs/translation-reviews/records-finance-2026-10-06/draft-${lang}.json`)) as Array<{english:string;status:string;draft:string}>;
+      const original = historical.find(row => row.english === entry.english); assert.ok(original);
+      assert.equal(original.status, 'accepted'); assert.equal(entry.translations[lang], original.draft);
+      assert.equal(recordsDraft(lang, entry.english), null);
+    }
+  }
+  const entry = retiredArchive.entries[0], key = entry.english;
+  // Even if the historical generator is run unchanged, the source-key retirement
+  // gate must refuse that exact row; the table assertion above also notices it.
+  RECORDS_DRAFTS[key] = { st: entry.translations.st, ve: entry.translations.ve, ts: entry.translations.ts };
+  try { for (const lang of LANGS) assert.equal(recordsDraft(lang, key), null); }
+  finally { delete RECORDS_DRAFTS[key]; }
 });

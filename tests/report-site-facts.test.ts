@@ -37,6 +37,8 @@ import { reportTreeIllustrations, reportChapterGraphics } from '../lib/report-ch
 import { siteReportVisuals } from '../lib/report-visuals';
 import { DEMO_LOCATION } from '../lib/demo-site';
 import { activeAccountLocalStorageKey } from '../lib/account-local-storage';
+import { createSiteCountryContext } from '../lib/international/site-context.ts';
+import { updateSiteCountryContext } from '../lib/saved-places.ts';
 
 test('the report checklist acknowledges saved work without claiming it is verified',()=>{
   const inputs={hasSite:true,boundaryPointCount:3,surveyFilledFields:2,surveyTotalFields:10,zoneCount:1,elementCount:0,hasCropPlan:false};
@@ -125,6 +127,13 @@ test('chapter graphics use named catalogue trees and typed chart values, never i
     setItem: () => {},
     removeItem: () => {},
   };
+  // The product-window fixtures explicitly use the existing SA reference basis;
+  // coordinates alone no longer approve that basis in the real collector.
+  Object.assign(globalThis, { window: Object.assign(new EventTarget(), {
+    localStorage: globalThis.localStorage, sessionStorage: globalThis.sessionStorage,
+  }) });
+  const siteId = 'site:-27.72623,31.96304';
+  assert.equal(updateSiteCountryContext(siteId, createSiteCountryContext({siteId,countryCode:'ZA',confirmed:true})).status, 'local-saved');
 }
 
 // The demo farm is the funder-demo surface and the only fixture with a full authored design.
@@ -565,7 +574,9 @@ test('annual production evidence survives report storage and prompt input withou
   facts.crop!.snapshot = snapshot;
   const clean = normaliseReportSiteFacts(facts)!;
   assert.deepEqual(clean.crop!.snapshot!.annualProduction, snapshot.annualProduction);
-  const prompt = cropPlanPromptBlock(clean);
+  // This arithmetic/provenance fixture explicitly exercises an established planning basis.
+  // Unqualified prompt callers now retain raw records without generating local calendars.
+  const prompt = cropPlanPromptBlock(clean, true);
   assert.match(prompt, /WHOLE-YEAR FOOD AND PRODUCT PLAN/); assert.match(prompt, /Dec 2026/);
   assert.match(prompt, /not recorded harvests/); assert.match(prompt, /Housing units are not animal counts/);
   const old = { ...snapshot }; delete old.annualProduction;

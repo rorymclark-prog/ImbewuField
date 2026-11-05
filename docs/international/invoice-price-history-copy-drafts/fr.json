@@ -1,0 +1,56 @@
+{
+  "locale": "fr",
+  "sourceSha256": "21124529e1d311664726ab54726e1c43d2785cc0465bc3dabb9ad0711cfa6238",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "invoicePriceHistory.message.01",
+      "english": "Close recorded invoice prices",
+      "messageSha256": "0584320cc857a327350338c753fea372b261fb9eb80330687bbdde5e338ee3fd",
+      "translation": "Fermer les prix de facture enregistrés"
+    },
+    {
+      "key": "invoicePriceHistory.message.02",
+      "english": "Choose a recorded invoice price",
+      "messageSha256": "a0fc853d3f1b3b77bba252bc4af942be87a7cba7e719c89b39e9da76442a50b2",
+      "translation": "Choisir un prix de facture enregistré"
+    },
+    {
+      "key": "invoicePriceHistory.message.03",
+      "english": "Recorded invoice prices need review. Reopen the current records before choosing a price.",
+      "messageSha256": "ac8f7a622a8429f0af3bf5ce695bc20423ccebaa1df3681f761f74942202f59c",
+      "translation": "Les prix de facture enregistrés doivent être vérifiés. Rouvrez les enregistrements actuels avant de choisir un prix."
+    },
+    {
+      "key": "invoicePriceHistory.message.04",
+      "english": "Prices previously recorded on invoices in {currency} for this exact item and unit. Confirm the price for this sale.",
+      "messageSha256": "5460e80b168e8522cab9e6595e960ec7e763a18d0cfc17cc812c36bf7f0a518d",
+      "translation": "Prix précédemment enregistrés sur des factures en {currency} pour cet article et cette unité exacts. Confirmez le prix pour cette vente."
+    },
+    {
+      "key": "invoicePriceHistory.message.05",
+      "english": "No matching recorded invoice prices.",
+      "messageSha256": "aad9bf15391aaa7af2d30d6bcf5a296d9d0323ed5824aeca979d2904652031bd",
+      "translation": "Aucun prix de facture enregistré correspondant."
+    },
+    {
+      "key": "invoicePriceHistory.message.06",
+      "english": "Recorded amount unavailable",
+      "messageSha256": "a0081b672aaeebed7c3bedf43ada1f23d085c914269632e5f16b678c20334b81",
+      "translation": "Montant enregistré indisponible"
+    },
+    {
+      "key": "invoicePriceHistory.message.07",
+      "english": "Invoice #{invoice} · {buyer} · {date}",
+      "messageSha256": "f768ce4a9071e9332bbe84de834c591884628ac2936137453bea953154907482",
+      "translation": "Facture #{invoice} · {buyer} · {date}"
+    },
+    {
+      "key": "invoicePriceHistory.message.08",
+      "english": "Use this recorded price",
+      "messageSha256": "c529a518f1e900618a9ba9e37d995ec8284ef6fb4999c7b2cda14e3dfcc53ebc",
+      "translation": "Utiliser ce prix enregistré"
+    }
+  ]
+}
