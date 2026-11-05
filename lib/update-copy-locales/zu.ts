@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Reference-led Sector graphics: docs/audits/2026-11-05/sector-reference-flow-release-drafts.json; UNREVIEWED machine draft.
+  "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Amamephu eSector abonisa izimpawu zomoya nezemvula ezicace kakhudlwana, kanti umthambeka nemigqa yokuphakama kuhlala kubonakala.",
   // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.
   "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Imidwebo yeSector inemicibisholo egqamile, izimpawu zelanga ezinkulu nokhiye wemephu ocace kakhudlwana.",
   "Sector illustrations now show bolder terrain contours and matching key lines.": "Imidwebo yeSector manje ibonisa imigqa yokuphakama egqamile nemigqa ehambisana nayo kukhiye wemephu.",
