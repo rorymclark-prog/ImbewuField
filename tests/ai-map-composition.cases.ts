@@ -483,11 +483,11 @@ function artProbe() {
   return {ctx,canvas,calls};
 }
 
-test('Sector quiets existing artwork without shifting it or changing the exact factual base', async () => {
+test('illustrated Sector retains artwork colour, registration and the separate exact factual base', async () => {
   const probe=artProbe(),p={state:{items:[],lines:[],zones:[]},frame:{imgW:100,imgH:120,mPerPx:1,satDataUrl:'photo'},
     refLayers:{boundary:[],house:[],driveway:[]}};
-  // Rory selected a muted context after viewing both candidates. The old 'no desaturation'
-  // claim is superseded; source registration, blank coverage and exact output remain guarded.
+  // The coordinator selected researched sample C within Rory's instruction to decide.
+  // Its original colour supersedes the muted-A claim; exact output and registration still bind.
   const pixels=new Uint8ClampedArray([35,90,45,255,255,255,255,255]);
   probe.ctx.getImageData=()=>({data:pixels});
   const before=JSON.stringify(p);
@@ -505,7 +505,7 @@ test('Sector quiets existing artwork without shifting it or changing the exact f
   assert.ok(probe.calls.some(c=>c[0]==='drawImage'&&c[1].src==='painted-result'));
   const draw=probe.calls.find(c=>c[0]==='drawImage'&&c[1].src==='painted-result');
   assert.deepEqual(draw?.slice(2),[0,0,100,120],'same source, frame and scale');
-  assert.ok(pixels[0]>35 && Math.max(...pixels.slice(0,3))-Math.min(...pixels.slice(0,3))<40,'context is lighter and less saturated');
+  assert.deepEqual([...pixels.slice(0,4)],[35,90,45,255],'the retained artwork must keep its original colour');
   assert.deepEqual([...pixels.slice(4)],[255,255,255,255],'unknown archive coverage stays white');
   assert.equal(released,1,'the source image is released after composition');
   assert.equal(options.aiArtwork,true,'the download must disclose AI artwork');

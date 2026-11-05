@@ -565,7 +565,9 @@ test('the shared exact-layer stack puts each boundary treatment below the sheetâ
 });
 
 
-test('muted Sector context retains white archive gaps and never shifts source pixels', () => {
+test('rich Sector context copies original artwork without a colour filter, fade or coordinate shift', () => {
+  // C is an authored presentation choice, not proof that a provider generated a new picture.
+  // The old lightening claim would destroy its intended colour and has been replaced explicitly.
   const source=readFileSync(new URL('../components/design/DesignGlossy.tsx',import.meta.url),'utf8');
   const tree=ts.createSourceFile('sheet.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
   let paint:ts.FunctionDeclaration|undefined;
@@ -573,16 +575,13 @@ test('muted Sector context retains white archive gaps and never shifts source pi
   assert.ok(paint);
   const compiled=ts.transpileModule(paint.getText(tree),{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
   const run=new Function(`${compiled};return drawSectorArtworkContext;`)();
-  const original=new Uint8ClampedArray([255,255,255,255,25,65,35,255,110,80,70,0,250,251,252,255]);
-  const data=new Uint8ClampedArray(original),draws:unknown[][]=[],writes:unknown[][]=[];
-  run({drawImage(...args:unknown[]){draws.push(args);},getImageData(){return {data};},putImageData(...args:unknown[]){writes.push(args);}},'art',4,1);
-  assert.deepEqual(draws,[['art',0,0,4,1]]);
-  assert.deepEqual(writes[0].slice(1),[0,0]);
-  assert.deepEqual([...data.slice(0,4)],[...original.slice(0,4)]);
-  assert.deepEqual([...data.slice(8)],[...original.slice(8)],'transparent/white source gaps stay original');
-  assert.equal(data[7],255);
-  assert.ok(data[4]>original[4] && data[5]>original[5] && data[6]>original[6],'the ground visibly lightens');
-  assert.ok(Math.max(...data.slice(4,7))-Math.min(...data.slice(4,7)) < 40,'context is quieter than thematic colours');
+  const draws:unknown[]=[];
+  const ctx={globalAlpha:1,filter:'none',
+    drawImage(...args:unknown[]){draws.push({args,alpha:this.globalAlpha,filter:this.filter});},
+    getImageData(){throw new Error('C must not recolour source pixels');},
+    putImageData(){throw new Error('C must not replace source pixels');}};
+  run(ctx,'art-with-white-and-transparent-coverage',4,1);
+  assert.deepEqual(draws,[{args:['art-with-white-and-transparent-coverage',0,0,4,1],alpha:1,filter:'none'}]);
 });
 
 

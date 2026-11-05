@@ -9713,23 +9713,11 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
   return drainCanvasToDataUrl(canvas,'image/png');
 }
 
-// These are display treatments of existing artwork, never a new AI generation. Pixel positions
-// and blank archive coverage stay untouched while the analysis becomes the foreground.
+// The researched C treatment keeps the paid painting's colour and detail. White label cards,
+// cased contours and the separate key carry contrast; recolouring the artwork made it look like
+// an instant diagram again. This is a direct copy at the registered frame, never a new AI pass.
 function drawSectorArtworkContext(ctx: CanvasRenderingContext2D, image: CanvasImageSource, W: number, H: number): void {
   ctx.drawImage(image, 0, 0, W, H);
-  const pixels = ctx.getImageData(0, 0, W, H);
-  const data = pixels.data;
-  for (let i = 0; i < data.length; i += 4) {
-    const r=data[i], g=data[i+1], b=data[i+2];
-    // White/transparent pixels are unknown source coverage, not land to illustrate.
-    if (data[i+3] === 0 || Math.min(r,g,b) > 249) continue;
-    const luminance=.2126*r+.7152*g+.0722*b;
-    const tone=102+luminance*.55;
-    data[i]=tone+(r-luminance)*.42;
-    data[i+1]=tone+(g-luminance)*.42;
-    data[i+2]=tone+(b-luminance)*.42;
-  }
-  ctx.putImageData(pixels,0,0);
 }
 
 async function composeSectorSheet(
