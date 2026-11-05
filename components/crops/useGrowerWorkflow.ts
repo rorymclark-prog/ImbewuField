@@ -97,6 +97,7 @@ interface Inputs {
   createPlantingId?: () => string;
 }
 const hold = (issue: string): GrowerWorkflowReview => ({ status: 'held', issues: [issue], blockedBeds: [], targetMetadata: [], existingOwnCycles: [] });
+const PENDING_BOOK_ISSUE = 'The saved plan changed or has unresolved edits. Reopen its current records before reviewing.';
 const planningKey = (book: CropPlanState | null) => JSON.stringify([book?.plantings, book?.growerPlanningProfiles, book?.harvestTargets]);
 const savedNurseryKey = (value: unknown): string | null => {
   try { return JSON.stringify(detachJsonData(value, { allowUndefinedObjectFields: true })); }
@@ -206,10 +207,15 @@ export function useGrowerWorkflow(input: Inputs) {
     };
   }, []);
   useEffect(() => {
-    if (bookEvent && live.current.readCurrentBook().status === 'held') {
-      setSourceIssue('The saved plan changed or has unresolved edits. Reopen its current records before reviewing.');
+    if (!bookEvent) return;
+    if (live.current.readCurrentBook().status === 'held') {
+      setSourceIssue(previous => previous ?? PENDING_BOOK_ISSUE);
       setAcceptance(previous => previous.status === 'confirmed' ? { status: 'idle' } : previous);
       setRevision(value => value + 1);
+    } else {
+      // Ordinary edits are held during the debounce after an earlier save. Its
+      // eventual receipt resolves that book warning, never an independent source issue.
+      setSourceIssue(previous => previous === PENDING_BOOK_ISSUE ? null : previous);
     }
   }, [bookEvent, bookKey]);
 

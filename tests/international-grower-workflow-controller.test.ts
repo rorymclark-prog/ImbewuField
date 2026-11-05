@@ -216,6 +216,60 @@ test('real hook reads current saved geometry and book, reviews actual engine out
   } finally { ui.dispose(); }
 });
 
+test('a successful debounced ordinary save clears its earlier pending-book warning without reopening source review', async () => {
+  const ui = mount(); try {
+    await ui.refresh(); const c = ui.controller;
+    // A prior ordinary save leaves bookEvent nonzero. The next edit is legitimately
+    // held until the page's real queued writer returns its canonical receipt.
+    act(() => { c.runAutosaveEffect(); c.flushAutosave(); });
+    c.state.plan = { ...c.state.plan, plantings: [{ id: 'ordinary-edit', bedId: 'other-bed', cropKey: CROPS[0].key, sowMonth: 12 }], updatedAt: Date.now() };
+    ui.update({ book: c.state.plan });
+    assert.deepEqual(c.readCurrentGrowerBook(), { status: 'held', reason: 'pending-plan-edits' });
+    assert.match(ui.latest.sourceIssue ?? '', /saved plan changed or has unresolved edits/);
+    act(() => { c.runAutosaveEffect(); c.flushAutosave(); });
+    assert.equal(c.readCurrentGrowerBook().status, 'ready');
+    assert.equal(cropBook.cropPlanWriteAdmissionMatches(c.state.planWriteBase.current.admission,
+      c.state.planWriteBase.current.planKey, c.state.planWriteBase.current.token), true);
+    assert.deepEqual(cropBook.loadCropPlan().plantings, c.state.plan.plantings);
+    assert.equal(ui.latest.sourceIssue, null, 'a confirmed ordinary save must not keep telling the grower to reopen unresolved edits');
+    assert.equal(ui.latest.savedNurseryReview, null, 'clearing feedback does not check or reopen saved nursery records');
+  } finally { ui.dispose(); }
+});
+
+test('a still-pending ordinary edit retains the book warning and cannot enter a crop review', async () => {
+  const ui = mount(); try {
+    await ui.refresh(); const c = ui.controller;
+    act(() => { c.runAutosaveEffect(); c.flushAutosave(); });
+    const bytes = JSON.stringify([...local.rows]);
+    c.state.plan = { ...c.state.plan, plantings: [{ id: 'unsaved-edit', bedId: 'other-bed', cropKey: CROPS[0].key, sowMonth: 12 }], updatedAt: Date.now() };
+    ui.update({ book: c.state.plan });
+    act(() => { events.dispatchEvent(new CustomEvent(cropBook.CROP_PLAN_CHANGED_EVENT)); });
+    assert.deepEqual(c.readCurrentGrowerBook(), { status: 'held', reason: 'pending-plan-edits' });
+    assert.match(ui.latest.sourceIssue ?? '', /saved plan changed or has unresolved edits/);
+    const review = await ui.review();
+    assert.equal(review.status, 'held'); assert.ok(review.issues.includes('pending-plan-edits'));
+    assert.equal(JSON.stringify([...local.rows]), bytes, 'a warning or review attempt must not save the pending edit');
+  } finally { ui.dispose(); }
+});
+
+test('an ordinary save cannot erase an independent saved-source warning or restore its withdrawn source', async () => {
+  const ui = mount(); try {
+    await ui.refresh(); const c = ui.controller;
+    act(() => { c.runAutosaveEffect(); c.flushAutosave(); });
+    act(() => { events.dispatchEvent(new Event('imbewu-design-canvas-changed')); });
+    const sourceIssue = ui.latest.sourceIssue;
+    assert.match(sourceIssue ?? '', /saved source may have changed/); assert.equal(ui.latest.source, null);
+    c.state.plan = { ...c.state.plan, plantings: [{ id: 'ordinary-edit', bedId: 'other-bed', cropKey: CROPS[0].key, sowMonth: 12 }], updatedAt: Date.now() };
+    ui.update({ book: c.state.plan });
+    assert.equal(ui.latest.sourceIssue, sourceIssue, 'a pending edit must not replace a separate source warning that its save cannot resolve');
+    act(() => { c.runAutosaveEffect(); c.flushAutosave(); });
+    assert.equal(c.readCurrentGrowerBook().status, 'ready');
+    assert.equal(ui.latest.sourceIssue, sourceIssue); assert.equal(ui.latest.source, null);
+    const review = await ui.review();
+    assert.equal(review.status, 'held'); assert.ok(review.issues.includes('current-source-required'));
+  } finally { ui.dispose(); }
+});
+
 test('an equal-area source move invalidates a checked proposal rather than trusting unchanged bed metrics', async () => {
   const ui = mount(); try {
     const review = await readyReview(ui), area = review.request.beds[0].bed.areaM2;
