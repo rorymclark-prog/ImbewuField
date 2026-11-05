@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: 'ad32a7529', changes: [
+    "Sector illustrations now show bolder terrain contours and matching key lines.",
+  ] },
   { when: '5 November 2026', sha: '2fbfe97b5', changes: [
     "Sector illustrations keep richer colour, with larger labels and clearer contours.",
   ] },

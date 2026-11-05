@@ -37,6 +37,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
+Latest Sector follow-up: [Bolder contours and external reference comparison — 5 November 2026](2026-11-05/sector-bold-contours-codex.md). Release evidence is separate on its PR/issue #35.
+
 Latest Sector implementation: [Actual rich-aerial C and release continuation — 5 November 2026](2026-11-05/sector-rich-aerial-release-codex.md). Release evidence is recorded on PR #1274 and issue #35.
 
 Latest Sector samples: [Illustrated graphics, stronger contours and three context treatments — 5 November 2026](2026-11-05/sector-illustrated-graphics-codex.md). Draft comparison, not a production release.
