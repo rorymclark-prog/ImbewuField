@@ -1,0 +1,67 @@
+{
+  "reviewer": "Codex coordinator",
+  "scope": "Exact source/message/order/hash/literal validation and identified drafting corrections only; not fluent or complete semantic certification.",
+  "sourceCodeCommit": "3f4ea38919fe4c522cf318da4ef07cc2c5295c34",
+  "sourceSha256": "44f0468f6d074f854fbe183b23bf2369f8768fa8bffa7e3c05f521779536501e",
+  "actualMessagePairs": 105,
+  "damagedControlsRejected": 19,
+  "notesActualWhitespaceWords": 173,
+  "runtimeActivation": false,
+  "humanFluentApproval": false,
+  "corrections": [
+    "Message11 distinguishes approval BY a fluent human reviewer from an approval that is itself fluent.",
+    "Candidate terminology notes match actual Swahili baiti and avoid semantic-certification assurances."
+  ],
+  "files": [
+    {
+      "path": "source.json",
+      "bytes": 3989,
+      "sha256": "44f0468f6d074f854fbe183b23bf2369f8768fa8bffa7e3c05f521779536501e"
+    },
+    {
+      "path": "fr.json",
+      "bytes": 4957,
+      "sha256": "93f5f0f4d4ba8cc7380ef7e4c209f69a3037f31cbee3b3d581ef99b03c34f43c"
+    },
+    {
+      "path": "es.json",
+      "bytes": 4861,
+      "sha256": "1d11ccedf00cab62116b8aede1aaa962209fc856c3f47c9ccdd2a1e8efba822b"
+    },
+    {
+      "path": "pt-BR.json",
+      "bytes": 4821,
+      "sha256": "2e6d13ff212a8c9bc71dc3f310f361c34c95b2e75d65851c7dbcfd8aba3782b0"
+    },
+    {
+      "path": "sw.json",
+      "bytes": 4781,
+      "sha256": "0e9a9c917514edbfd1eb6b061829b93005ecbc175962d1644dc1579b4b85bd37"
+    },
+    {
+      "path": "hi.json",
+      "bytes": 6052,
+      "sha256": "0d07ed5fb9e12abae1ad029dd674cde068500feacf5dc9cfb6f8bf1b30614294"
+    },
+    {
+      "path": "bn.json",
+      "bytes": 6090,
+      "sha256": "65ab7265a2fbc4e98f730be3f711225310313e678f44c1528b3cf8ebca0b45c5"
+    },
+    {
+      "path": "id.json",
+      "bytes": 4771,
+      "sha256": "ccbc9a14ad3582b52099a22dcac956734303a0acfed5074c42bad566e9cfb5b5"
+    },
+    {
+      "path": "review-notes.md",
+      "bytes": 1418,
+      "sha256": "5207fe831929eca687f25ecc97fccacef498e5cfffc1c8e008a5eb71c3c50af5"
+    },
+    {
+      "path": "status.json",
+      "bytes": 465,
+      "sha256": "108db352b625b9be6626db7fa807875b856b04b2499723d81b8c719333fb6111"
+    }
+  ]
+}
