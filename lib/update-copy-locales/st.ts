@@ -1,6 +1,42 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
+  "Important updates include a short animation you can pause and replay.": "Lintlafatso tsa bohlokwa di na le papiso e kgutshwane e sisinyehang eo o ka e emisang le ho e bapala hape.",
+  // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
+  "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Limmapa tsa Sector li na le bokamorao bo sa hlahelleng haholo le matshwao a hlakileng a letsatsi, moya le mollo.",
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Kgetha dibaka tse bolokilweng tseo mothusi a ka di sebedisang. O ka kgaola kgokahano ho Ditlhophiso.",
+  "Keep original site photos and PDFs with their source and import history.": "Boloka dinepe tsa pele tsa sebaka le di-PDF hammoho le mohlodi wa tsona le nalane ya ho di kenya.",
+  "Review historical photo registration drafts without moving saved map features.": "Hlahloba meralo ya ho nyalanya dinepe tsa kgale le mmapa ntle le ho suthisa dintho tse bolokilweng mmapeng.",
+  "Manage assistant access": "Laola phihlello ya bathusi",
+  "Settings → Assistant connections": "Ditlhophiso → Dikgokahano le bathusi",
+  "Review connected assistants, selected sites and imported originals.": "Hlahloba bathusi ba hoketsweng, dibaka tse kgethilweng le difaele tsa pele tse kentsweng.",
+  "Check your saved map": "Lekola mmapa wa hao o bolokilweng",
+  "Site design": "Moralo wa sebaka",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlahloba sebaka sona seo pele o kenya diphetoho tsa mothusi kapa o bapisa senepe sa kgale.",
+  // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
+  "Open Terrain & Sections for the two cuts and extra contour detail.": "Bula Terrain & Sections ho bona dikarolo tse pedi le mela e meng ya bophahamo.",
+  // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
+  "Sector illustrations have lighter arrows, clearer contours and a shorter map key.": "Ditshwantsho tsa Sector di na le metsu e bobebe, mela e hlakileng ya bophahamo le senotlolo se sekgutshwane sa mmapa.",
+  // Raw profile: docs/audits/2026-11-03/raw-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Terrain profiles show sampled elevation and classroom positions at the plan scale.": "Diprofaele tsa sebaka di bontsha bophahamo bo nkilweng disampoleng le dibaka tsa ditlelase sekaleng sa moralo.",
+  "Review the shade cover": "Hlahloba sekoahelo sa moriti",
+  "Open Structures, then reassemble the saved AI artwork to show its shade cover.": "Bula Structures, ebe o kopanya botjha setshwantsho sa AI se bolokilweng ho bontsha sekoahelo sa moriti.",
+
+  // Shade recovery: docs/audits/2026-11-03/shade-recovery-release-drafts.json; UNREVIEWED AI draft.
+  "Structures maps show recorded shade cloth over the illustrated beds.": "Dimmapa tsa Structures di bontsha lesela la moriti le rekotilweng hodima dibethe tse takilweng.",
+  // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
+  "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Dimmapa tsa Sector di sebedisa mela ya bophahamo ya kakaretso ya sebaka, ka kgetho ya profaele ya naha A–B.",
+  // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Exact and illustrated Water maps now show the same water budget.": "Mmapa wa Metsi o nepahetseng le o nang le ditshwantsho jwale o bontsha tekanyetso e tshwanang ya metsi.",
+  "Zone maps trim blurry aerial edges when the photo covers the site.": "Dimmapa tsa dibaka di tlosa mathoko a lerootho ha setshwantsho sa moyeng se akaretsa sebaka sohle.",
+  "Existing Site labels and legend now use matching symbols.": "Mmapa wa kgale wa Existing Site jwale o sebedisa matshwao a tshwanang mabitsong a dibaka le senotlolong sa mmapa.",
+  "Choose area names or a numbered key on the historical Existing Site map.": "Kgetha mabitso a dibaka kapa senotlolo sa dinomoro mmapeng wa kgale wa Existing Site.",
+  // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
+  "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Dimmapa tsa Site le Sector tsa Ubhejane di ka bontsha foto ya polokelo ya pele ho mesebetsi.",
+  "AI maps start with available aerial imagery; you can still choose plain paper.": "Dimmapa tsa AI di qala ka ditshwantsho tse teng tsa moyeng; o ntse o ka kgetha pampiri e tshweu.",
+
   // AI maps: docs/audits/2026-11-03/ai-map-release-drafts.json; UNREVIEWED AI drafts.
   "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Dimmapa tsa AI tsa Site le Sector di boloka dintlha tse takilweng, ka mela e mmalwa ya difoto.",
   "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "Phasing e boloka setshwantsho se takilweng; app e eketsa kemiso, matshwao le sekala.",

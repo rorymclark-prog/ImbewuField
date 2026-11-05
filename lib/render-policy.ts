@@ -18,24 +18,24 @@ export interface SheetPresentationSettings {
   view: 'top-down' | 'oblique';
 }
 
-/** Zones need a clean page; illustrated physical-system sheets need the site's real context.
+/** Exact Zones needs a clean page; AI artwork needs the site's real context.
  * A paid plain Earthworks test invented a roof over paving despite a correct digging register.
  * Prefer available imagery for that sheet too; a white page alone cannot supply building context.
- * Ledger/technical styles can start with a white surrounding page on design sheets.
- * Site and Sector retain their factual aerial context; explicit manual choices always win.
+ * The fresh plain Phasing test also invented a courtyard roof and moved tanks. White page
+ * aesthetics cannot replace source evidence, even for Ledger/technical styles. Manual choices win.
  * These are starting choices, not a claim that a model's returned geometry has been verified.
  * The caller supplies the routing authority's default style; selecting settings never spends. */
 export function recommendedSheetSettings(
   sheet: ExactPlanSheetKey,
   frame: Pick<CanvasFrame, 'satDataUrl' | 'underlayDataUrl'>,
   defaultStyle: StylePreset,
+  mode: 'ai' | 'exact' = 'ai',
 ): SheetPresentationSettings {
   const aerial: SheetUnderlay = frame.satDataUrl
     ? hasFarmerPhoto(frame) ? 'photo' : 'satellite'
     : frame.underlayDataUrl ? 'satellite' : 'plain';
   return {
-    underlay: sheet === 'zones' || (['field_ledger', 'extension_blueprint'].includes(defaultStyle)
-      && !['base', 'sector'].includes(sheet)) ? 'plain' : aerial,
+    underlay: mode === 'exact' && sheet === 'zones' ? 'plain' : aerial,
     style: defaultStyle,
     labelMode: sheet === 'earthworks' || sheet === 'planting' || sheet === 'all' ? 'codes' : 'names',
     view: 'top-down',

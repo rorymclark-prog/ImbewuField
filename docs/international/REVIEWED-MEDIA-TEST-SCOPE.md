@@ -45,3 +45,14 @@ The baseline log hash and terminal lines were independently checked. The baselin
 ran concurrently with the complete application suite; this selected run had
 different contention and scope. These observed timings are not a controlled
 speedup ratio. Substantial nested historical verification cost remains.
+
+## Current-main continuation — 5 November 2026
+
+The original draft PR #1178 is reconciled with main `9c8289ff`. Its old CI
+non-TODO failure was the separate polish-callsite regex; main's AST correction
+is retained. Node 24 typecheck and 15 guard/format/structure tests pass on the
+reconciled tree, including the existing isolated corruption controls. Exact
+source comparison confirms the only changes inside the two selected suites are
+the import and outer scope wrapper. No new full-suite pass is claimed. See the
+[continuation audit](../audits/2026-11-05/reviewed-media-test-scope-codex.md) and
+current-head CI before merge.

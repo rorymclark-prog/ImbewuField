@@ -10,6 +10,7 @@ import {
   WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
 } from '../lib/roof-runoff.ts';
 import { computeTankSizing } from '../lib/tank-sizing.ts';
+import { numberLabel } from '../lib/format-figures.ts';
 import {
   annualRoofHarvestLitres,
   deriveWaterSystem,
@@ -159,21 +160,40 @@ test('equal annual rain with different seasonality produces different storage ad
   }).summary));
 });
 
-test('the exact Water sheet footer is wired to the derived storage notes', () => {
+test('the exact and illustrated Water sheets use the same derived storage notes', () => {
   const glossySource = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
-
-  assert.match(glossySource, /function waterReferenceFooterText\(/);
-  assert.match(glossySource, /deriveWaterSystem\(state, refLayers/);
-  assert.match(glossySource, /footerText: waterReferenceFooterText\(/);
+  const exact = glossySource.slice(glossySource.indexOf('async function buildReferenceBlueprintMap('), glossySource.indexOf('export function buildBlueprintZoneMap('));
+  const hybrid = glossySource.slice(glossySource.indexOf('const finishStyledSheet = useCallback('), glossySource.indexOf('const generateAllViaQueue = useCallback('));
+  assert.match(glossySource, /deriveWaterSystem\(\{ \.\.\.state, frame \}, refLayers/);
+  assert.match(exact, /waterReferenceFooter\(renderState, renderFrame, renderRefLayers, site\)/);
+  assert.match(hybrid, /\.\.\.waterReferenceFooter\(renderState, renderFrame, renderRefLayers, site, roofCredit\)/);
   assert.doesNotMatch(glossySource, /footerText:\s*WATER_REFERENCE_NOTES/);
+});
+
+test('the budget counts the primary roof once and reports the tank inventory separately in litres', () => {
+  const design = state([item('jojo_5000', 'first'), item('jojo_5000', 'second'), item('jojo_2500')]);
+  design.zones = [
+    { id: 'primary', feature: 'house', zone: 0, points: ROOF_100_M2 },
+    { id: 'store', feature: 'house', zone: 0, points: [[0.2, 0.2], [0.25, 0.2], [0.25, 0.25], [0.2, 0.25]] },
+  ];
+  const budget = deriveWaterSystem(design, { boundary: BOUNDARY, house: ROOF_100_M2, driveway: [] }, { rainfallMm: 800 });
+  const expectedHarvest = numberLabel(annualRoofHarvestLitres(100, 800) / 1000, 1);
+  assert.deepEqual(budget.storageFacts, [
+    'Primary traced roof: ~100 m²',
+    `Estimated annual yield: ~${expectedHarvest} kL/year`,
+    'Placed storage: 12 500 L',
+  ]);
+  assert.ok(budget.storageNotes.includes(`Estimate = traced roof area × site rainfall (~800 mm/year) × ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} runoff. Confirm the connected roof area on site.`));
+  const withoutRain = deriveWaterSystem(design, { boundary: BOUNDARY, house: ROOF_100_M2, driveway: [] });
+  assert.deepEqual(withoutRain.storageFacts, ['Primary traced roof: ~100 m²', 'Placed storage: 12 500 L']);
 });
 
 test('placed storage always gets the overflow advice, and is never judged against annual harvest', () => {
   const system = derive([item('jojo_1000')], ROOF_100_M2, 800);
   const text = system.notes.join(' ');
 
-  assert.match(text, /800 mm\/yr.*100 m².*kL\/yr/);
-  assert.match(text, /Placed storage totals .*route the overflow/);
+  assert.match(text, /100 m².*kL\/year.*800 mm\/year/);
+  assert.match(text, /Placed storage: 1 000 L.*route the overflow/);
   assert.doesNotMatch(text, /\bm³\b/);
 
   // A year of rain is many times any real tank, so "capacity < annual harvest" is arithmetic, not
@@ -322,7 +342,7 @@ test('invalid frames and absent sources produce empty or source-honest systems',
   broken.frame = { ...broken.frame, mPerPx: 0 };
   assert.deepEqual(
     deriveWaterSystem(broken, { boundary: BOUNDARY, house: ROOF_100_M2, driveway: [] }),
-    { runs: [], nodes: [], notes: [], storageNotes: [] },
+    { runs: [], nodes: [], notes: [], storageNotes: [], storageFacts: [] },
   );
 
   const bedsOnly = derive([item('veg_bed')], []);

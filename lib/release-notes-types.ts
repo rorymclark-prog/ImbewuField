@@ -8,6 +8,8 @@ export interface UpdateTourStop {
   where: string;
   detail: string;
   href: string;
+  /** Add only when this important feature has a matching illustrative walkthrough. */
+  preview?: 'assistant-access';
 }
 
 // The saved update guide keeps five stops; showing more in the banner preview makes it disagree

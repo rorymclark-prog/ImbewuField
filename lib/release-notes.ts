@@ -41,12 +41,65 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: '2fbfe97b5', changes: [
+    "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+  ] },
+  { when: '5 November 2026', sha: 'a5300d2f7', changes: [
+    'Important updates include a short animation you can pause and replay.',
+  ], tour: [{ title: 'Manage assistant access', where: 'Settings → Assistant connections',
+    href: '/connect/imbewu', preview: 'assistant-access',
+    detail: 'Review connected assistants, selected sites and imported originals.' },
+  { title: 'Check your saved map', where: 'Site design', href: '/design',
+    detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
+  { when: '4 November 2026', sha: '0475b9af8', changes: [
+    "Sector maps use a quieter background and clearer sun, wind and fire marks.",
+  ] },
+  { when: '4 November 2026', sha: '1b083437b', changes: [
+    "Exact and illustrated Water maps now show the same water budget.",
+  ] },
+  { when: '4 November 2026', sha: '8f4314fb7', changes: [
+    "Zone maps trim blurry aerial edges when the photo covers the site.",
+  ] },
+  { when: '4 November 2026', sha: 'e5a41e808', changes: [
+    "Existing Site labels and legend now use matching symbols.",
+  ] },
+  { when: '4 November 2026', sha: 'be34f3601', changes: [
+    'Choose which saved sites an assistant can use, and disconnect it in Settings.',
+    'Keep original site photos and PDFs with their source and import history.',
+    'Review historical photo registration drafts without moving saved map features.',
+  ], tour: [{ title: 'Manage assistant access', where: 'Settings → Assistant connections',
+    href: '/connect/imbewu',
+    detail: 'Review connected assistants, selected sites and imported originals.' },
+  { title: 'Check your saved map', where: 'Site design', href: '/design',
+    detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
+  { when: '3 November 2026', sha: '80eb2f0b5', changes: [
+    "Open Terrain & Sections for the two cuts and extra contour detail.",
+  ] },
+  { when: '3 November 2026', sha: '3d0f89c1e', changes: [
+    "Terrain profiles show sampled elevation and classroom positions at the plan scale.",
+    "Sector illustrations have lighter arrows, clearer contours and a shorter map key.",
+  ] },
+  { when: '3 November 2026', sha: 'fe520c58e', changes: [
+    "Structures maps show recorded shade cloth over the illustrated beds.",
+  ], tour: [{title: 'Review the shade cover', where: 'Site design → Glossy', href: '/design',
+    detail: 'Open Structures, then reassemble the saved AI artwork to show its shade cover.'},
+  {title: 'Compare with your exact plan', where: 'Site design → Saved maps', href: '/design',
+    detail: 'Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.'}] },
+  { when: '3 November 2026', sha: '7acc4a319', changes: [
+    "Sector maps use regional overview contours, with an optional A–B terrain profile.",
+  ] },
+  { when: '3 November 2026', sha: '0e9fd5a26', changes: [
+    "Choose area names or a numbered key on the historical Existing Site map.",
+  ] },
+  { when: '3 November 2026', sha: 'a337ff345', changes: [
+    "Ubhejane Site and Sector maps can show the before-works archive photograph.",
+    "AI maps start with available aerial imagery; you can still choose plain paper.",
+  ] },
   { when: '3 November 2026', sha: '74c7bf21b', changes: [
     'AI Site and Sector maps keep their painted detail, with fewer photo strips.',
     'Phasing keeps painted artwork; the app adds its schedule, pins and scale.',
-    'Paper-friendly map styles start on white and keep your chosen background.',
   ], tour: [{ title: 'Review the AI map finish', where: 'Site design → Glossy', href: '/design',
-    detail: 'Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.' },
+    detail: 'AI maps start with available aerial imagery; you can still choose plain paper.' },
   { title: 'Compare with your exact plan', where: 'Site design → Saved maps', href: '/design',
     detail: 'Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.' }] },
   { when: '2 November 2026', sha: '41def1087', changes: [
