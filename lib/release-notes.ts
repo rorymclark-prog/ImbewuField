@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: '634a0fe4b5', changes: [
+    'Check a public US forecast reference',
+  ], tour: [{ title: 'Check a public US forecast reference', where: 'Country evidence → United States → Washington forecast', href: '/international',
+    detail: 'Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.' }] },
   { when: '5 November 2026', sha: 'bbb0848674', changes: [
     'Plan separate availability windows for each growing space',
   ], tour: [{ title: 'Plan separate availability windows for each growing space', where: 'Crop plan → Automatic plan from your estimates → Your available growing space', href: '/facilitator/crops',

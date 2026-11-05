@@ -1,0 +1,81 @@
+{
+  "status": "unreviewed-ai-draft",
+  "authorship": "Codex coordinator",
+  "humanReview": false,
+  "newRuntimeLanguage": false,
+  "scope": "Twelve release-description candidates for four existing update languages, separate from AGY84 bed-window drafts.",
+  "messages": [
+    {
+      "locale": "zu",
+      "english": "Check a public US forecast reference",
+      "messageSha256": "57d51244d96ba5517b059db48e4fa6dc1187a17997a107274421c1dc3085e8a0",
+      "translation": "Hlola isibonelo sesibikezelo sezulu sase-US"
+    },
+    {
+      "locale": "zu",
+      "english": "Country evidence → United States → Washington forecast",
+      "messageSha256": "2c0ded2f7867d48ff50468eeb4688eecbed44bdd05bf05374a5de3aaf5cbc22b",
+      "translation": "Ubufakazi bezwe → United States → Isibikezelo saseWashington"
+    },
+    {
+      "locale": "zu",
+      "english": "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.",
+      "messageSha256": "89893be0f6a48ef8adb1492654f10ed80872607baa085fc56110a8f8dd87fc0d",
+      "translation": "Cela isibikezelo sesibonelo somphakathi saseWashington ku-National Weather Service. Izikhathi zomthombo, amanani e-Celsius nokungaziwa kuhlala kubonakala; lokhu akushintshi izinsuku zezitshalo noma kugunyaze izeluleko zendawo."
+    },
+    {
+      "locale": "st",
+      "english": "Check a public US forecast reference",
+      "messageSha256": "57d51244d96ba5517b059db48e4fa6dc1187a17997a107274421c1dc3085e8a0",
+      "translation": "Lekola mohlala oa bolepi ba leholimo ba US"
+    },
+    {
+      "locale": "st",
+      "english": "Country evidence → United States → Washington forecast",
+      "messageSha256": "2c0ded2f7867d48ff50468eeb4688eecbed44bdd05bf05374a5de3aaf5cbc22b",
+      "translation": "Bopaki ba naha → United States → Bolepi ba Washington"
+    },
+    {
+      "locale": "st",
+      "english": "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.",
+      "messageSha256": "89893be0f6a48ef8adb1492654f10ed80872607baa085fc56110a8f8dd87fc0d",
+      "translation": "Kopa bolepi ba mohlala oa sechaba oa Washington ho National Weather Service. Linako tsa mohloli, boleng ba Celsius le tse sa tsejoeng li lula li bonahala; sena ha se fetole matsatsi a lijalo kapa ho amohela likeletso tsa lehae."
+    },
+    {
+      "locale": "ve",
+      "english": "Check a public US forecast reference",
+      "messageSha256": "57d51244d96ba5517b059db48e4fa6dc1187a17997a107274421c1dc3085e8a0",
+      "translation": "Sedzani tsumbo ya tsumbamutsho ya US"
+    },
+    {
+      "locale": "ve",
+      "english": "Country evidence → United States → Washington forecast",
+      "messageSha256": "2c0ded2f7867d48ff50468eeb4688eecbed44bdd05bf05374a5de3aaf5cbc22b",
+      "translation": "Vhuṱanzi ha shango → United States → Tsumbamutsho ya Washington"
+    },
+    {
+      "locale": "ve",
+      "english": "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.",
+      "messageSha256": "89893be0f6a48ef8adb1492654f10ed80872607baa085fc56110a8f8dd87fc0d",
+      "translation": "Humbelani tsumbamutsho ya tsumbo ya nnyi na nnyi ya Washington kha National Weather Service. Zwifhinga zwa tshiko, mivhalo ya Celsius na zwi sa ḓivhei zwi dzula zwi tshi vhonala; hezwi a zwi shanduli maḓuvha a zwiliṅwa kana u tendela nyeletshedzo ya henefho."
+    },
+    {
+      "locale": "ts",
+      "english": "Check a public US forecast reference",
+      "messageSha256": "57d51244d96ba5517b059db48e4fa6dc1187a17997a107274421c1dc3085e8a0",
+      "translation": "Kambela nkombiso wa maxelo lama rindzeriweke ya US"
+    },
+    {
+      "locale": "ts",
+      "english": "Country evidence → United States → Washington forecast",
+      "messageSha256": "2c0ded2f7867d48ff50468eeb4688eecbed44bdd05bf05374a5de3aaf5cbc22b",
+      "translation": "Vumbhoni bya tiko → United States → Maxelo lama rindzeriweke ya Washington"
+    },
+    {
+      "locale": "ts",
+      "english": "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.",
+      "messageSha256": "89893be0f6a48ef8adb1492654f10ed80872607baa085fc56110a8f8dd87fc0d",
+      "translation": "Kombela nkombiso wa mani na mani wa maxelo lama rindzeriweke ya Washington eka National Weather Service. Minkarhi ya xihlovo, mimpimo ya Celsius ni leswi nga tivekiki swi tshamaka swi vonaka; leswi a swi cinci masiku ya swibyariwa kumbe ku pasisa switsundzuxo swa ndhawu."
+    }
+  ]
+}

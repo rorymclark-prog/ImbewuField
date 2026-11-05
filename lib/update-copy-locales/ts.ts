@@ -439,5 +439,9 @@ const copy:UpdateCopy={
   "Review saved invoice amounts by currency": "Kambisisa mali ya tiinvoyisi leti hlayisiweke hi muxaka wa mali",
   "Invoice → Saved → Summary currency": "Invoyisi → Leti hlayisiweke → Muxaka wa mali wa nkatsakanyo",
   "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Hlawula muxaka wun’we wa mali ku kambisisa mali ya tiinvoyisi leti humesiweke, leti rhekhodiweke ti hakeriwile ni leti nga hakeriwangiki eka xitirhisiwa lexi. Leti i tirhekhodo ta tiinvoyisi, a hi tirhisiti ta le bangi leti tiyisisiweke, mali hinkwato leti ngheneke kumbe mpindzulo.",
+  // NWS reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nws-reference-release-drafts.json.
+  "Check a public US forecast reference": "Kambela nkombiso wa maxelo lama rindzeriweke ya US",
+  "Country evidence → United States → Washington forecast": "Vumbhoni bya tiko → United States → Maxelo lama rindzeriweke ya Washington",
+  "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Kombela nkombiso wa mani na mani wa maxelo lama rindzeriweke ya Washington eka National Weather Service. Minkarhi ya xihlovo, mimpimo ya Celsius ni leswi nga tivekiki swi tshamaka swi vonaka; leswi a swi cinci masiku ya swibyariwa kumbe ku pasisa switsundzuxo swa ndhawu.",
 };
 export default copy;
