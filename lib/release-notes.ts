@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: '45f5bd5481', changes: [
+    'Record nursery sowing in your field journal',
+  ], tour: [{ title: 'Record nursery sowing in your field journal', where: 'Crop planner → Saved planned nursery batches', href: '/facilitator/crops',
+    detail: 'Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.' }] },
   { when: '5 November 2026', sha: 'd05dd1faf3', changes: [
     'Check an Environment Agency rainfall reference',
   ], tour: [{ title: 'Check an Environment Agency rainfall reference', where: 'Country evidence → United Kingdom → Public rainfall network sample', href: '/international',
