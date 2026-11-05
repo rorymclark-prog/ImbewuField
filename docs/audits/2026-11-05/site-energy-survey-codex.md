@@ -27,6 +27,7 @@ is retained; energy is not saved in a separate store.
 | SE-005 | Removing solar during pending Refresh could re-add it on completion | Corrected after independent Codex source review | Removal aborts/invalidates the pending request; interaction test resolves the old reply after removal and checks no second write. |
 | SE-006 | Invalid manual numeric entries could be silently lost on save/recovery | Corrected after independent Codex source review | Raw elevation/wind strings persist in optional draft inputs; field errors and the actual survey save gate require correction. Zero and unknown remain distinct. |
 | SE-007 | New release tour was filtered out and displaced the two-stop guide | Corrected in actual release note | Query-string href was unsupported by the existing guide validator; both visible stops now use the real farmer route and name the correct survey sections. Existing guide/community assertions retained. |
+| SE-008 | Acknowledgment/history test assumed the rolling latest release must still contain the old assistant animation | Test fixture corrected; original assertions retained | The test seeds an assistant offer but its History event reloads current release notes. It now explicitly supplies that same release fixture; unrelated future releases remain free to replace it. No app behavior or assertion was weakened. |
 | SS-002 | New consequential wording lacks fluent review | Open | New controls explicitly use English; no claim of reviewed localisation. Coordinator arranges source-paired drafts. |
 | SS-004 | Physical phone/Safari and complete authenticated in-app journey | Open | Chrome390px component rendering is not a physical-device or full application test. |
 
@@ -61,8 +62,11 @@ local measurements and siting evidence remain necessary.
 
 - Node24.22.2 typecheck: pass.
 - First frozen candidate `a7991dc57`:96/96 focused checks passed. Its full suite later
-  exposed SE-007; it is not a passing release. That checkout/run is preserved.
-- Repair candidate:146/146 affected checks passed, including pending-removal and raw
+  exposed SE-007 and the SE-008 fixture coupling; it is not a passing release.
+  Its local run ended during an interrupted turn without a suite footer and no
+  surviving test PIDs; classify it as interrupted, not a completed full pass.
+  The frozen checkout and original log are preserved.
+- Repair candidate:149/149 affected checks passed, including pending-removal and raw
   input recovery interactions, plus the existing update-guide/community contracts.
 - Full suite/current-head CI/rules/preview: pending; **not merge-ready or live**.
 - Whitespace: pass before freeze.
@@ -81,7 +85,10 @@ local measurements and siting evidence remain necessary.
 - Independent review attribution: `/root/claude_patch_review` supplied a **Codex
   source-only** review of `a7991dc57`, not a Claude-provider calculation or provider
   review call. Receipt SHA256 `b471c11505c5d1be8280ec69e296e907b788884c61793b514d84084ffbf7a928`.
-  Both SE-005/SE-006 were accepted and repaired. Fresh repair review remains pending.
+  Both SE-005/SE-006 were accepted and repaired. Root Codex independently inspected
+  the actual6ca528779 repair delta and relevant scope/recovery/save callbacks:
+  SE-005 and SE-006 are addressed in source and synthetic tests. This is a second
+  source-only disposition, not a Claude call, full suite or customer-flow certification.
 
 This changes the picture: survey elevation/energy cards, monthly solar bars and
 review rows. `PLAN_VERSION` is unchanged.
