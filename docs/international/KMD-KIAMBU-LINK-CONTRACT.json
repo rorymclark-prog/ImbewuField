@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "scope": "Explicit Kiambu curated source discovery, not a liveforecast or crop/data integration",
+  "module": "lib/international/providers/kmd-bulletin-reference.ts",
+  "api": {
+    "resolveKmdBulletinReference": "(countryCode: unknown, countyId: unknown): KmdBulletinReferenceResult",
+    "KMD_COUNTY_CHOICES": "deep-frozen readonly [{id:\"kiambu\",label:\"Kiambu\"}]",
+    "KmdBulletinReferenceResult": "deep-frozen {status:\"reference\",reference:KmdBulletinReference} OR {status:\"unavailable\",reason:\"unsupported-country\"|\"county-not-selected\"|\"county-not-verified\"}",
+    "selection": "Only exactKE/exactkiambu resolves. NonKE always unsupported-country; forKE undefined/null/empty string county-not-selected; allother county values county-not-verified. Never coerce, trim, infer or execute input getters."
+  },
+  "reference": {
+    "providerId": "kmd-county-bulletin-links",
+    "countryCode": "KE",
+    "countyId": "kiambu",
+    "countyLabel": "Kiambu",
+    "sourceTitle": "Kiambu County weekly weather forecast valid 3rd to 9th November 2026",
+    "officialIndexUrl": "https://meteo.go.ke/our-products/county-forecasts/",
+    "officialSearchUrl": "https://meteo.go.ke/search/?query=Kiambu",
+    "officialPageUrl": "https://meteo.go.ke/our-products/county-forecasts/kiambu-county-weekly-weather-forecast-valid-3rd-to-9th-november-2026/",
+    "documentUrl": "https://meteo.go.ke/documents/5545/Kiambu_County_weekly_weather_forecast_valid_3rd_to_9th_November_2026.pdf",
+    "historicalPageUrl": "https://meteo.go.ke/our-products/county-forecasts/kiambu-county-weekly-forecast/",
+    "historicalDocumentUrl": "https://meteo.go.ke/documents/876/Kiambu_County_weekly_weather_forecast_valid_15th_to_21st_July_2025.pdf",
+    "advertisedCalendarWindow": {
+      "startDate": "2026-11-03",
+      "endDate": "2026-11-09",
+      "basis": "source-heading",
+      "timezone": "UNKNOWN",
+      "boundarySemantics": "not-established"
+    },
+    "inspectedOn": "2026-11-05",
+    "htmlReceipt": {
+      "fetchedAtUtc": "2026-11-05T01:47:32.519082+00:00",
+      "bytes": 89606,
+      "sha256": "3762b097c120c7e31ad7146a95465c69a879d0c1f085af72cc3d8f95dad93f6a"
+    },
+    "pdfReceipt": {
+      "fetchedAtUtc": "2026-11-05T01:49:58.417402+00:00",
+      "bytes": 738997,
+      "sha256": "6d05a3f29a1fbf9f3643a91a5bf1a117170ec5fae1dd3e0b4f658dd1e4a5a4f9"
+    },
+    "referenceOnly": true,
+    "runtimeMode": "external-links-only",
+    "verifiedFreshness": "not-assessed",
+    "latestBulletin": "not-established",
+    "reuseLicence": "UNKNOWN",
+    "apiContract": "UNKNOWN",
+    "publishedAt": "UNKNOWN"
+  },
+  "invariants": [
+    "Pure synchronous; zero network/storage/clock/environment mutation at import or call",
+    "All nested returned evidence and choices immutable, no caller mutation can change future results",
+    "No currentness/as-of calculation; retain advertised calendar labels without converting inclusive/exclusive dates or UTC instants",
+    "Receipt times are fetch provenance, not publication or validity; no latest/permission/forecast/farm claims",
+    "Six actual coordinator public bodies matched receipts; new PDF3pages visually read, prior2025PDFbody notfetched",
+    "Map panel printed09am03NOV–09am09NOV2026; timezone notstated; do not apply its map time to all weekly text/tables",
+    "Do not import runtime data into readiness/crop/farm records or species/lessons",
+    "Raw bodies/logs/contact details/signatures/coordinates stay private; publish sanitized receipts/links only"
+  ]
+}

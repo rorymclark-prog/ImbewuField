@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: 'f7f1a49759', changes: [
+    'Find official Kiambu bulletin links',
+  ], tour: [{ title: 'Find official Kiambu bulletin links', where: 'Country evidence → Kenya → County bulletin links', href: '/international',
+    detail: 'Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.' }] },
   { when: '5 November 2026', sha: '2c50bc6c49', changes: [
     'Keep references for saved nursery batches',
   ], tour: [{ title: 'Keep references for saved nursery batches', where: 'Crop plan → Saved planned nursery batches', href: '/facilitator/crops',

@@ -19,6 +19,8 @@ UTC times, response sizes, HTTP/curl outcomes and SHA256. All four bodies matche
 those receipts at review. Raw bodies, private conversations and transcripts are
 excluded. A response hash is provenance evidence, not an agronomy or reuse approval.
 
+A separate [5 November bulletin review](../KMD-KIAMBU-BULLETIN-REVIEW.md) subsequently fetched a dated Kiambu page and its linked PDF. It does not retroactively widen this four-body review or establish live freshness, reuse permission or production readiness.
+
 No product integration was implemented by this research. Public introduction
 access does not settle authentication or licensing for a different endpoint.
 Missing API documentation on one page does not establish agency-wide absence.
