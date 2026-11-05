@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "packet": "nursery-batch-reference-copy-2026-11-05",
+  "status": "frozen-source-for-ai-drafts",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw",
+    "hi",
+    "bn",
+    "id"
+  ],
+  "sources": [
+    {
+      "path": "components/crops/SavedGrowerNurseryReviewPanel.tsx",
+      "bytes": 17562,
+      "sha256": "349c5bc80e9fc85f26604abb28344ea3c037207975d59ffd42dde074f89a496f",
+      "snapshot": "coordinator uncommitted exact-byte snapshot; base is not snapshot identity"
+    }
+  ],
+  "sourceReconciliation": "All28 English entries are exact static source literals or JSX text in the named current component; coordinator checked literal membership. No grower-entered references, crop names or numeric farming inputs included.",
+  "messages": [
+    {
+      "key": "nurseryBatchReference.message.01",
+      "english": "Saved planned nursery batches",
+      "messageSha256": "227ca3a9bc6079c4001eb7f9de0e30adadb19dfe094f6af20db8100dcfeafde0"
+    },
+    {
+      "key": "nurseryBatchReference.message.02",
+      "english": "Check saved batches, enter your own optional references for individual batches, then review nursery resources. References do not record actual sowing, available seeds or live nursery stock.",
+      "messageSha256": "3675e952653456ea812087400ba675ebb1acffaaaadd45c9e50d2cea4352ddb8"
+    },
+    {
+      "key": "nurseryBatchReference.message.03",
+      "english": "DEMO — references stay in this sample session.",
+      "messageSha256": "0e6527c7565ec2699d120a95b76087e7928b52cc2a452b39c11deff75a3d555d"
+    },
+    {
+      "key": "nurseryBatchReference.message.04",
+      "english": "Checking saved nursery batches…",
+      "messageSha256": "9fcf699de9923f58df5b40bbe9e3afff52a387659e7d85252f68c6ef1ef5815e"
+    },
+    {
+      "key": "nurseryBatchReference.message.05",
+      "english": "Check saved nursery batches",
+      "messageSha256": "0c22440b1220b1f955ce46ca6b22143e7da438665adab63d59c35cd88e61504b"
+    },
+    {
+      "key": "nurseryBatchReference.message.06",
+      "english": "Check the current saved plan to load eligible planned nursery batches.",
+      "messageSha256": "eeb00ae0529fcf64d573bdd0dfebfb96d4f523a6bdc90967713bdeb00d397e1a"
+    },
+    {
+      "key": "nurseryBatchReference.message.07",
+      "english": "Earlier checked-batch entries · unsaved and held separately",
+      "messageSha256": "e95eacca61929d9c520f34367578943b21ff4b3e72dc869e7cd8df6f874385df"
+    },
+    {
+      "key": "nurseryBatchReference.message.08",
+      "english": "These entries do not belong to a current save source. Check saved records and enter any changes explicitly against the current batch.",
+      "messageSha256": "698811241b61a33651a277092c68ee9ac6e78f68f7634818760b3ece7ba1536d"
+    },
+    {
+      "key": "nurseryBatchReference.message.09",
+      "english": "No eligible saved transplant raising batch is represented. This does not establish zero nursery demand.",
+      "messageSha256": "23d0c2124b70f69f8c38bfbda7066ce7839143ad23a6f16e31efa5ed67b5950d"
+    },
+    {
+      "key": "nurseryBatchReference.message.10",
+      "english": "Some saved batch references need review. Their retained evidence remains separate from the planned count and resource calculations.",
+      "messageSha256": "486f2278c798ba5b84f92effc4593ec74456644ffe949b398960d625580cd33b"
+    },
+    {
+      "key": "nurseryBatchReference.message.11",
+      "english": "Your variety / cultivar (optional)",
+      "messageSha256": "8b0a20d7f98c38f64e81e771406df9ba21f2d69d5ec27050cc6fcb67bac52a73"
+    },
+    {
+      "key": "nurseryBatchReference.message.12",
+      "english": "Your seed-lot reference (optional)",
+      "messageSha256": "3c79595765d419d49aa7f3fed47389487bac479ffd8352627692a71798e77fc3"
+    },
+    {
+      "key": "nurseryBatchReference.message.13",
+      "english": "Your raising-batch reference (optional)",
+      "messageSha256": "78bd8b84a5258952fbe95ae06a06b380cb43488ab59c7f12f655a11472769451"
+    },
+    {
+      "key": "nurseryBatchReference.message.14",
+      "english": "Saved reference metadata needs review. Retained evidence has not been replaced with blank fields.",
+      "messageSha256": "196ea2593fd89e885892d6870a5551484ffe541a40b04d93d9a535d2a6114fd8"
+    },
+    {
+      "key": "nurseryBatchReference.message.15",
+      "english": "Saving touched batch references…",
+      "messageSha256": "ab0feab4d42d269a41be8cf684fbbe1496c835703944a89b24a3da185336471f"
+    },
+    {
+      "key": "nurseryBatchReference.message.16",
+      "english": "Save all touched references",
+      "messageSha256": "b630edeccbdd969b97c8399722683a2794b384ee3e6d909864ebedf6c504e9b4"
+    },
+    {
+      "key": "nurseryBatchReference.message.17",
+      "english": "Unsaved reference changes: save or explicitly check saved batches again before reviewing resources or exporting.",
+      "messageSha256": "5d66652cccefd8741d142cb9e1819bae7978bb9f4a418164ce5c5bd75bfd26c0"
+    },
+    {
+      "key": "nurseryBatchReference.message.18",
+      "english": "The references could not be saved in this context. Your entries are retained; check current saved records before trying again.",
+      "messageSha256": "0eb04a84c14f60c915325262c82603d463058aae31422d89f7e604f88b8ce171"
+    },
+    {
+      "key": "nurseryBatchReference.message.19",
+      "english": "References saved and current saved batches checked. These remain planned batches, not observed stock.",
+      "messageSha256": "d7e20b3de1daf77436f8d91be2dff9995f0a835dd7f35a5b1aad091312df0bb2"
+    },
+    {
+      "key": "nurseryBatchReference.message.20",
+      "english": "Reference values are unchanged. No write was needed.",
+      "messageSha256": "c2857bcd6f688f27ae9408e4a5785b4a4cc6ceb059d5755b2db691b6c4398c2f"
+    },
+    {
+      "key": "nurseryBatchReference.message.21",
+      "english": "The write was reported, but current saved batches could not be confirmed. Check saved records before continuing.",
+      "messageSha256": "e89defda7f67ce275580aebd3dcf0bf436d2fc6acc84b5a03465b055d269298a"
+    },
+    {
+      "key": "nurseryBatchReference.message.22",
+      "english": "The write was reported, but its saved records could not be checked. Check saved records before continuing.",
+      "messageSha256": "6d6522264c1c32c16b9695ea111fce5d7818fa106d1f44da0d12aeac1028ede7"
+    },
+    {
+      "key": "nurseryBatchReference.message.23",
+      "english": "Current saved records could not be confirmed. Check saved nursery batches before continuing.",
+      "messageSha256": "0482df8c33f5b698d23d382364dc1db9d4ca04ddc495ac001d720766786829aa"
+    },
+    {
+      "key": "nurseryBatchReference.message.24",
+      "english": "The save outcome is not confirmed. Your entries are retained. Check saved records before trying again.",
+      "messageSha256": "461c3b1c64d2cc68bc701db040a406ecb6eb969671c2c8cfa4506ae786304b1a"
+    },
+    {
+      "key": "nurseryBatchReference.message.25",
+      "english": "Saved nursery batches could not be checked. Existing entries have not been treated as a confirmed save.",
+      "messageSha256": "a549ed8805c5dded891fb28fd6c597e9539e76624f7b2d93ac56865f4ced2973"
+    },
+    {
+      "key": "nurseryBatchReference.message.26",
+      "english": "Saved nursery batches could not be checked. Please check the current records.",
+      "messageSha256": "93d6c7f78d99f23f0c21bfd9971c0dcf056182df3e140c93487fd615251e51d6"
+    },
+    {
+      "key": "nurseryBatchReference.message.27",
+      "english": "The checked source changed. Earlier entries have not been applied to current saved batches.",
+      "messageSha256": "7d73d9fa974233d751f27cbc96f7a55efb1f7502647e09d99270739193deaf0b"
+    },
+    {
+      "key": "nurseryBatchReference.message.28",
+      "english": "The checked source changed. Earlier entries are retained separately and have not been applied to current saved batches.",
+      "messageSha256": "d70fc0e7a44f1f58a550c6e33eefde3e76f2d405fb4961adc84dc958a67165f0"
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "checkedAtUtc": "2026-11-05T20:19:06.260608+00:00",
+  "currentBase": "d2c5b586edd94f9f7dbb1827ff18c903e9f17517",
+  "generationSourceSha256": "92b5e2975d1537e0bf11bc3be3159fd91bdeb4966942349570fd20bc8a7b84fc",
+  "scope": "Historical frozen32-English translation input retained; bounded whitespace-normalized current source-text location only, not runtime JSX/DOM or full-file equivalence. Two historical file fingerprints differ, one matches. No runtime language activation/source-certification granted.",
+  "files": [
+    {
+      "path": "components/crops/NurserySowingObservationForm.tsx",
+      "actualSha256": "3cff642c649612e02a02be07082e3d3387110dde583b9e2bf6f6fde963968f55",
+      "frozenGenerationSha256": "7d134fce64d41d6931acc7a18ce82ead40803db58ef3c9849501039984efa72e",
+      "wholeFileFingerprintMatched": false
+    },
+    {
+      "path": "components/journal/JournalNurserySowingSummary.tsx",
+      "actualSha256": "24905a361cf15a5a540e9cda2eca71d946d782d9d6447809104f4edb9fb25dd0",
+      "frozenGenerationSha256": "24905a361cf15a5a540e9cda2eca71d946d782d9d6447809104f4edb9fb25dd0",
+      "wholeFileFingerprintMatched": true
+    },
+    {
+      "path": "components/crops/SavedGrowerNurseryReviewPanel.tsx",
+      "actualSha256": "1111cb197e328db72300121c1d50c038a360917e5d8a6655fd8b604cc7f314b3",
+      "frozenGenerationSha256": "dbfbfac618393500e8a509bd25e90189662d0e8136d301e9a6c17615672a7207",
+      "wholeFileFingerprintMatched": false
+    }
+  ],
+  "selectedMessages": [
+    {
+      "key": "nurserySowing.message.01",
+      "messageSha256": "ed1a727605b8c1978268ac32d7568ef9d80f6fc09c039abd7105664bebdeebbb",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.02",
+      "messageSha256": "eabf14576daab6e350e98644ecffd962dbe342d6b9103b40985e061d2a68b55c",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.03",
+      "messageSha256": "31e649db516ea20d26998bedc6bb2a913f517cfc65dbc3c2af3c9ce1df070bec",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.04",
+      "messageSha256": "de534391d54a77e99a833770f30d0212f7d58b59fe4c2ebc852e47269103f4da",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.05",
+      "messageSha256": "a05cf1b09e9d93292e3f3efe1df975eccc0b3ae800863a7c5b848a0cff6df2cb",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.06",
+      "messageSha256": "885bc7d92ee53522fb5a9912b6f47c8957ceec127fea6e5921b51f3901debe43",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.07",
+      "messageSha256": "bff0cc6684d557846d286ae704a2ca4309a5efbed0183a8b46d4b9fec18c3e6a",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.08",
+      "messageSha256": "c0097ff0629eec6bcf86365c96e8574efea05b0d0630f63916af2cf4ac58158d",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx",
+        "components/journal/JournalNurserySowingSummary.tsx",
+        "components/crops/SavedGrowerNurseryReviewPanel.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.09",
+      "messageSha256": "33f8c91ff914e03ea773c89c1f2b649aafc41dc9946859c10d4d1830ea47bc78",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx",
+        "components/journal/JournalNurserySowingSummary.tsx",
+        "components/crops/SavedGrowerNurseryReviewPanel.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.10",
+      "messageSha256": "b37c7879f6c359f633ed1c478dc9ffac47ad7aac648653bb4a4d509a25fdb3b0",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx",
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.11",
+      "messageSha256": "695ed5ae7ff666916dfe84fdb0088338bd167792171e89b313d1adbcb8041048",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.12",
+      "messageSha256": "9714203997dd1813c87bf6d61abf6c0d9caed3c1466df7e362291bff2fbb798d",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.13",
+      "messageSha256": "45d4fb68fda12bdf0bcc6c828f507c3523b655997434297ef3bb9c60ca9a49b4",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.14",
+      "messageSha256": "64c48afbdb5d7c6868e56b957473f079db5c22816c0c6467a4bce3bb85bde5ee",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.15",
+      "messageSha256": "f385bd12e520b7edb1d46f29998b4c20d06e32b755d7a1d8c2096a9e2df930af",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.16",
+      "messageSha256": "9a5912d95a801e8a47773faf8364ce609b33cb578c0d5a831e498c17baf5f006",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.17",
+      "messageSha256": "94c877a7fad35462f9c3ec3543803f968c60d0d7146d0ab937da680d4d818c60",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.18",
+      "messageSha256": "d0b4ceb65699aefb11b44cf5d161f01417f8874b629cd8450ea83f9e6b6a3eae",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.19",
+      "messageSha256": "1844ec9cd35935c176f9556bb1a498f725cf939158a8df7187a50e7e9a36c2b8",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.20",
+      "messageSha256": "fcc41dd8ecbc68eb05c9f3fcdd5ed53b2c3bc73f6560fce20d888b0c9b805641",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.21",
+      "messageSha256": "d1a00359195895a46a1cd1ca6cea62f0c7d5134b2bf6479d7ce6351d55901abd",
+      "textLocatedIn": [
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.22",
+      "messageSha256": "764a71739b54240c377bec3dc1d91698e1a766674ddd9195b9b14d2a998f6576",
+      "textLocatedIn": [
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.23",
+      "messageSha256": "b8794a33dc05962b79445ae84b172c4e58dd85d1ec4b80708d6aff32710d5aa0",
+      "textLocatedIn": [
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.24",
+      "messageSha256": "e072cbb2fe3c59347e1b80f9df87f689b8bb386f8625d839f9ee8019b350d9d6",
+      "textLocatedIn": [
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.25",
+      "messageSha256": "b95dee0fd9675586bcd66580357df79b1ee181bc3f34c3f0d37897e67347028b",
+      "textLocatedIn": [
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.26",
+      "messageSha256": "b764cdc0eab7137467211272fa539f1260d1bf2e71bcf6ff3bdc960f5c16aa14",
+      "textLocatedIn": [
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.27",
+      "messageSha256": "65953babacde253657c761e41c2b5c46353465a14bb8b4a981a26ade99084f46",
+      "textLocatedIn": [
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.28",
+      "messageSha256": "2b7ffb6c892d41f65d557a54dc3f1e1901b8bbb9cd8d5f370fb06b9d199f1a1d",
+      "textLocatedIn": [
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.29",
+      "messageSha256": "70b0bdf21bcd887d5e685656b16920ee00fe81d95f8f9f47e7b9c530950d6e26",
+      "textLocatedIn": [
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.30",
+      "messageSha256": "ee0f72e18b484c0c8326190dbea4b8fc3058f8889fed221e35bcbf6a864212de",
+      "textLocatedIn": [
+        "components/journal/JournalNurserySowingSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.31",
+      "messageSha256": "4ec92c1bb86019e01a224a2758dcce7fc39fd8e51cdc4efc2708ab85ec34a999",
+      "textLocatedIn": [
+        "components/crops/SavedGrowerNurseryReviewPanel.tsx"
+      ]
+    },
+    {
+      "key": "nurserySowing.message.32",
+      "messageSha256": "a6151a38bb0bfd89dd91b906f05cc5d9fb12dae19ee028d1558ea8917aad85ba",
+      "textLocatedIn": [
+        "components/crops/NurserySowingObservationForm.tsx",
+        "components/journal/JournalNurserySowingSummary.tsx",
+        "components/crops/SavedGrowerNurseryReviewPanel.tsx"
+      ]
+    }
+  ]
+}
