@@ -462,5 +462,9 @@ const copy:UpdateCopy={
   // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
   "Record nursery plant counts in your journal": "Rekhoda izibalo zezitshalo ze-nursery kujenali yakho",
   "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rekhoda inani lezitshalo ozibonile eqoqweni le-nursery eligciniwe, isigaba osihlolile nokuthi uhlole lonke iqoqo noma ingxenye yalo. Gcina lokhu okubonile kujenali kuhlukile ezidingweni ezihleliwe nasesitokweni.",
+  // INMET link release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/inmet-alert-release-drafts.json.
+  "Find official INMET weather-alert sources": "Thola imithombo esemthethweni yezixwayiso zezulu ye-INMET",
+  "Country evidence → Brazil → Official weather-alert links": "Ubufakazi bezwe → Brazil → Izixhumanisi ezisemthethweni zezixwayiso zezulu",
+  "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Vula iwebhusayithi yezixwayiso zezulu ye-INMET, ingosi noma isixhumanisi se-RSS. Izixhumanisi zemithombo zihlanganisiwe zahlolwa; okuphakelayo, isimo sezixwayiso sendawo nemigomo yokusetshenziswa kabusha akukaqinisekiswa. Lezi zixhumanisi azishintshi izeluleko zezitshalo.",
 };
 export default copy;

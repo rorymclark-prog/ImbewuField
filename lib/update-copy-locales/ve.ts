@@ -462,5 +462,9 @@ const copy:UpdateCopy={
   // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
   "Record nursery plant counts in your journal": "Rekhodani zwivhalo zwa zwimela zwa nursery kha dzhenala yaṋu",
   "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rekhodani tshivhalo tsha zwimela zwe na vhona kha tshigwada tsha nursery tsho vhulungwaho, vhuimo he na sedzulusa na uri no sedzulusa tshigwada tshoṱhe kana tshipiḓa tshatsho. Rekhodo idzi dza zwe na vhona kha dzhenala dzi dzule dzo fhambana na ṱhoḓea dzo vhekanywaho na tshitoko.",
+  // INMET link release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/inmet-alert-release-drafts.json.
+  "Find official INMET weather-alert sources": "Wanani zwiko zwa tshiofisi zwa tsevho dza mutsho dza INMET",
+  "Country evidence → Brazil → Official weather-alert links": "Vhuṱanzi ha shango → Brazil → Vhuṱumani ha tshiofisi ha tsevho dza mutsho",
+  "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Vulani webusaithi ya tsevho dza mutsho ya INMET, portal kana vhuṱumani ha RSS. Vhuṱumani ha zwiko ho sedzuluswa; feed, vhuimo ha tsevho dza henefho na milayo ya u shumisa hafhu a zwi athu khwaṱhisedzwa. Vhuṱumani uhu a vhu shanduli ngeletshedzo dza zwimela.",
 };
 export default copy;

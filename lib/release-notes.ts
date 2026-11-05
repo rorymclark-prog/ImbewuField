@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: '88f122ee7c', changes: [
+    'Find official INMET weather-alert sources',
+  ], tour: [{ title: 'Find official INMET weather-alert sources', where: 'Country evidence → Brazil → Official weather-alert links', href: '/international',
+    detail: 'Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.' }] },
   { when: '5 November 2026', sha: '04e90c4601', changes: [
     'Record nursery plant counts in your journal',
   ], tour: [{ title: 'Record nursery plant counts in your journal', where: 'Crop planner → Saved planned nursery batches', href: '/facilitator/crops',
