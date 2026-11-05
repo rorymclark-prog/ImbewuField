@@ -168,6 +168,37 @@ for(const kind of ['records','mine']as const){
   assert.equal(model.invoiceBookIsCurrent(original.book),false);assert.equal(original.isActorCurrent(),true);assert.equal(latest().ready,true);
   assert.equal(latest().book?.invoices[0].currencyCode,'ZAR');
  });
+ test(`${kind} a cloud-sync rejection completes from one real pending local receipt, clears the form and cannot duplicate the sale`,async()=>{
+  let rejectCloud!:(error:Error)=>void;
+  probe.gate=new Promise<void>((_resolve,reject)=>{rejectCloud=reject;});
+  const ui=mount(kind);await ui.flush();await ui.fill();
+  const retained=ui.submit();let first!:Promise<unknown>,duplicate!:Promise<unknown>;
+  act(()=>{first=retained({preventDefault(){}});duplicate=retained({preventDefault(){}});});await ui.flush();
+  assert.equal(probe.calls.length,1);assert.equal(probe.syncs,1);
+  const beforeRejection=model.loadInvoices();
+  assert.equal(beforeRejection.length,1,'the cloud failure must occur after the real protected local write');
+  const invoice=beforeRejection[0];
+  assert.equal(invoice.salesSyncPending,true);assert.equal(invoice.status,'paid');assert.equal(invoice.currencyCode,'ZAR');
+  assert.equal(invoice.total,20);assert.equal(invoice.items[0].qty,2);
+  assert.equal(probe.saved,0);assert.deepEqual(probe.pushes,[],'the form still awaits completion, not an invented early receipt');
+  rejectCloud(new Error('synthetic cloud acknowledgement rejected'));
+  await act(async()=>{await Promise.all([first,duplicate]);});await ui.flush();
+  assert.equal(probe.saved,1);assert.deepEqual(probe.pushes,[`/invoice?view=${encodeURIComponent(invoice.id)}`]);
+  assert.equal(latest().ready,true,'the current actor can inspect the actual written invoice after its ordinary reload');
+  const afterRejection=model.loadInvoices();
+  assert.equal(afterRejection.length,1);assert.deepEqual(afterRejection[0],invoice,'a failed cloud acknowledgement cannot roll back or falsely clear pending payment evidence');
+  const fields=ui.renderer.root.findAllByType('input');
+  const crop=fields.find(input=>input.props['data-crop']||input.props.id?.endsWith('-crop'));
+  const quantity=fields.find(input=>input.props['data-quantity']);
+  const amount=fields.find(input=>input.props.id?.endsWith('-price')||input.props.placeholder==='0.00');
+  assert.ok(crop&&quantity&&amount);
+  for(const input of [crop,quantity,amount])assert.equal(input.props.value,'','receipt completion clears every entered sale value');
+  assert.doesNotMatch(ui.text(),/sale could not be confirmed|Failed to save|could not be confirmed/);
+  const writes=[...local.writes];
+  await ui.invoke(retained);await ui.invoke();await ui.flush();
+  assert.equal(probe.calls.length,1);assert.equal(probe.syncs,1);assert.equal(probe.saved,1);assert.equal(probe.pushes.length,1);
+  assert.deepEqual(local.writes,writes);assert.deepEqual(model.loadInvoices(),afterRejection);
+ });
  for(const transition of ['account-ABA','sample-ABA']as const)test(`${kind} retained submit after ${transition} cannot adopt the refreshed form's source`,async()=>{
   const ui=mount(kind);await ui.flush();await ui.fill();const retained=ui.submit();
   if(transition==='account-ABA'){act(()=>changeOwner('actor-b'));ui.update();await ui.flush();act(()=>changeOwner('actor-a'));ui.update();await ui.flush();}
