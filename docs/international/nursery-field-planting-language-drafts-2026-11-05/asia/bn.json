@@ -1,0 +1,164 @@
+{
+  "locale": "bn",
+  "sourceSha256": "f2b7aab350df4c7043d7244ca357257bef211a40dd436db7b9465b9958f4a14d",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "nurseryFieldPlanting.message.01",
+      "english": "This field-planting form belongs to an earlier checked batch. Check saved nursery batches before opening a new observation.",
+      "messageSha256": "bbe285d0c87aedd0dcb13e2026e9e0d765bf7f8ac0c425ec0aa1521748886be0",
+      "translation": "এই জমিতে রোপণের ফর্মটি আগের একটি যাচাইকৃত ব্যাচের অন্তর্গত। নতুন পর্যবেক্ষণ খোলার আগে সংরক্ষিত নার্সারি ব্যাচগুলি দেখে নিন।"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.02",
+      "english": "Record observed field planting from this nursery batch",
+      "messageSha256": "7470ff608cb6b83c45f0089bb499d01c1b7d8989d250f669b330f5b1cd1227f4",
+      "translation": "এই নার্সারি ব্যাচ থেকে জমিতে প্রত্যক্ষ করা রোপণ নথিভুক্ত করুন"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.03",
+      "english": "Record only the plants you observed being planted in the assigned growing space. This does not deduct nursery stock, establish survival or mark the planned batch complete.",
+      "messageSha256": "33f4f6d8cecb3ce706d3bfcb91038e7a934fbd9327dc8f43006e0ca5b0b486d8",
+      "translation": "নির্ধারিত চাষের জায়গায় আপনি যে চারাগুলি রোপণ করতে দেখেছেন কেবল সেগুলিই নথিভুক্ত করুন। এটি নার্সারির মজুত কমায় না, চারা বেঁচে থাকার নিশ্চয়তা দেয় না বা পরিকল্পিত ব্যাচ সম্পন্ন হিসেবে চিহ্নিত করে না।"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.04",
+      "english": "Planned field-entry day (UTC):",
+      "messageSha256": "acc70e605e0aa22e1a1adc2754a1a3827563b96e86695cf832b7dd60e4a2793c",
+      "translation": "জমিতে প্রবেশের পরিকল্পিত দিন (UTC):"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.05",
+      "english": "This is the saved plan reference, not the day you observed the planting.",
+      "messageSha256": "d15c224fa0c810b6416a96c2811dd681cfd874b8dae2bc6e13cb8e6154b738ea",
+      "translation": "এটি সংরক্ষিত পরিকল্পনার তথ্যসূত্র, আপনি যেদিন রোপণ দেখেছেন সেই দিনটি নয়।"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.06",
+      "english": "DEMO — this observation stays in the sample session.",
+      "messageSha256": "885bc7d92ee53522fb5a9912b6f47c8957ceec127fea6e5921b51f3901debe43",
+      "translation": "DEMO — এই পর্যবেক্ষণটি শুধুমাত্র নমুনা সেশনে থাকে।"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.07",
+      "english": "Checked labels to snapshot with this observation; they do not verify seed identity:",
+      "messageSha256": "bff0cc6684d557846d286ae704a2ca4309a5efbed0183a8b46d4b9fec18c3e6a",
+      "translation": "এই পর্যবেক্ষণের সাথে সংরক্ষণের জন্য যাচাইকৃত ব্যাচের লেবেল; এগুলি বীজের পরিচয় প্রমাণ করে না:"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.08",
+      "english": "Actual observed day",
+      "messageSha256": "695ed5ae7ff666916dfe84fdb0088338bd167792171e89b313d1adbcb8041048",
+      "translation": "প্রকৃত প্রত্যক্ষ করা দিন"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.09",
+      "english": "What you observed",
+      "messageSha256": "9714203997dd1813c87bf6d61abf6c0d9caed3c1466df7e362291bff2fbb798d",
+      "translation": "আপনি যা প্রত্যক্ষ করেছেন"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.10",
+      "english": "Plants you planted",
+      "messageSha256": "c97a1e4905f73250c4deed04b21401ede928bb297978e27d7e51f6a8103022ca",
+      "translation": "আপনি যে চারাগুলি রোপণ করেছেন"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.11",
+      "english": "Enter a whole count. An explicitly entered 0 is zero; a blank field is not a count.",
+      "messageSha256": "921c0851b058d2e2cbcb6ab914c53828fcfe2fb158a60199c2e46cd6f57381a7",
+      "translation": "একটি পূর্ণ সংখ্যা লিখুন। স্পষ্টভাবে প্রবেশ করানো 0 হলো শূন্য; খালি ঘর কোনো গণনা নয়।"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.12",
+      "english": "This record does not imply a particular earlier sowing or count, or change forecasts, task ticks or sales.",
+      "messageSha256": "b0d75bf92cb0953c84ef5ef0add825261513428e11b0f435e430ea6e83d95bfd",
+      "translation": "এই রেকর্ডটি পূর্ববর্তী কোনো নির্দিষ্ট বপন বা গণনা নির্দেশ করে না, অথবা পূর্বাভাস, কাজের চিহ্ন বা বিক্রয়ে পরিবর্তন করে না।"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.13",
+      "english": "I confirm this day, note and planted count describe what I observed.",
+      "messageSha256": "d95a65878f2b9123781cc4ea7627dbd30d6265d689daff41023c72c4f3695232",
+      "translation": "আমি নিশ্চিত করছি যে এই দিন, নোট এবং রোপণকৃত চারার সংখ্যা আমার প্রত্যক্ষ করা বিবরণ তুলে ধরে।"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.14",
+      "english": "Recording field planting…",
+      "messageSha256": "24867c245d17bd7830e6292bfc5f37042d99099eaa476a241eed3e17ee9a3f00",
+      "translation": "জমিতে রোপণ নথিভুক্ত করা হচ্ছে…"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.15",
+      "english": "Save field planting observation",
+      "messageSha256": "bafdfb6c7c68e1694f9fb0158dce305e5d1eac57dfe08749200d1ded1c6d9ab7",
+      "translation": "জমিতে রোপণের পর্যবেক্ষণ সংরক্ষণ করুন"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.16",
+      "english": "Record another field planting",
+      "messageSha256": "0a9ebaaaff4bd8369769ee5bc45b549e7047331fd23bc1db823330eb51a47e29",
+      "translation": "জমিতে আরেকটি রোপণ নথিভুক্ত করুন"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.17",
+      "english": "Stored nursery field planting evidence needs review. Its count and reference labels are withheld; retained evidence has not been treated as an ordinary unlinked note.",
+      "messageSha256": "06792940ac2f26c3b05d40afe749a5bdaf545ad92ad145841c7597d865df0030",
+      "translation": "সংরক্ষিত নার্সারি রোপণের প্রমাণ পর্যালোচনা করা প্রয়োজন। এর গণনা এবং তথ্যসূত্রের লেবেলগুলি দেখানো হচ্ছে না; সংরক্ষিত প্রমাণকে সাধারণ সম্পর্কহীন নোট হিসেবে গণ্য করা হয়নি।"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.18",
+      "english": "Recorded field planting",
+      "messageSha256": "3409ed2562ba4a18e6a1324db9f9e7747fe9d7c4d372d5436fdae0d8fdd734e4",
+      "translation": "নথিভুক্ত জমিতে রোপণ"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.19",
+      "english": "Plants planted during this recorded work",
+      "messageSha256": "5a0aa9652b68493ed936ce4fc23216a9935a57aa6462f2b32701fff4ae82a37f",
+      "translation": "এই নথিভুক্ত কাজের সময় রোপণ করা চারা"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.20",
+      "english": "Observed day",
+      "messageSha256": "d9d37ed724dbb4c508f3c3bad845fb9d06c0b7d2a2e4621bdf91bb8f0ad6e610",
+      "translation": "প্রত্যক্ষ করার দিন"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.21",
+      "english": "Planned field entry (UTC calendar date)",
+      "messageSha256": "3c6bfbe9639babcf80a5ab1d4e8abf71c678a74271b923ab1f847e938ea83c75",
+      "translation": "জমিতে প্রবেশের পরিকল্পিত তারিখ (UTC ক্যালেন্ডার তারিখ)"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.22",
+      "english": "Variety / cultivar at observation",
+      "messageSha256": "65953babacde253657c761e41c2b5c46353465a14bb8b4a981a26ade99084f46",
+      "translation": "পর্যবেক্ষণের সময় জাত / কাল্টিভার"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.23",
+      "english": "Seed-lot reference at observation",
+      "messageSha256": "2b7ffb6c892d41f65d557a54dc3f1e1901b8bbb9cd8d5f370fb06b9d199f1a1d",
+      "translation": "পর্যবেক্ষণের সময় বীজ-লটের তথ্যসূত্র"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.24",
+      "english": "Raising-batch reference at observation",
+      "messageSha256": "70b0bdf21bcd887d5e685656b16920ee00fe81d95f8f9f47e7b9c530950d6e26",
+      "translation": "পর্যবেক্ষণের সময় চারা তৈরির ব্যাচের তথ্যসূত্র"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.25",
+      "english": "Grower-entered observation for this work, not a stock balance, survival result or completed batch. Stored labels do not verify seed identity or identify a particular earlier sowing or count record.",
+      "messageSha256": "6814a1ce5fe65ffdc0e89c58b06936503f1374f25f9983c6f2ddcbd9b916192c",
+      "translation": "এই কাজের জন্য চাষির প্রবেশ করানো পর্যবেক্ষণ, কোনো মজুদের হিসাব, টিকে থাকার ফলাফল বা সম্পন্ন ব্যাচ নয়। সংরক্ষিত লেবেলগুলি বীজের পরিচয় প্রমাণ করে না বা পূর্ববর্তী নির্দিষ্ট কোনো বপন বা গণনার রেকর্ড নির্দেশ করে না।"
+    },
+    {
+      "key": "nurseryFieldPlanting.message.26",
+      "english": "Record field planting",
+      "messageSha256": "27d8d842589e591d1c667757b3eff89146dba75a7ac9a57664077b558688f5e7",
+      "translation": "জমিতে রোপণ নথিভুক্ত করুন"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "assignment": "docs/international/agy-nursery-field-planting-asia-copy-2026-11-05/WORKORDER.md",
+  "status": "unreviewed-ai-drafts-ready",
+  "sourceSha256": "f2b7aab350df4c7043d7244ca357257bef211a40dd436db7b9465b9958f4a14d",
+  "runtimeActivation": false,
+  "sourcesCount": 26,
+  "candidatesCount": 78,
+  "reviewNotesWordCount": "UNKNOWN",
+  "validation": "UNKNOWN",
+  "commandsRun": false,
+  "testsRun": false,
+  "workersActive": 0,
+  "workersStopped": true,
+  "coordinatorReview": {
+    "atUtc": "2026-11-05T07:51:59.356236+00:00",
+    "nativeMainIdleBeforeEdits": true,
+    "nativeNotesActualWhitespaceWords": 204,
+    "notesActualWhitespaceWords": 189,
+    "namedDraftCorrections": [
+      "Hindi row22 plain cultivar label",
+      "Bengali row25 physical inventory wording",
+      "Indonesian row1 nursery-batch consistency",
+      "Condensed notes under200word cap and removed complete semantic assurances"
+    ],
+    "humanFluentApproval": false,
+    "runtimeActivation": false
+  }
+}
