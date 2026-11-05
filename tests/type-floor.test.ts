@@ -119,6 +119,15 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/crops/GrowerPlanningPanel.tsx': 'growers enter their own density, yield and date assumptions; no small-print exemption',
   'components/crops/GrowerAutoPlanPanel.tsx': 'growers review buyer priorities and dated whole-bed proposals before acting; no small-print exemption',
   'components/crops/GrowerNurseryReviewPanel.tsx': 'growers review seed, tray and surface requirements and incomplete budgets; no small-print exemption',
+  // Direct nursery observation and saved batch review components must remain legible outdoors on phones.
+  // Growers enter actual sowings, counts and field plantings, and read historical snapshots and held notices; zero-debt 12px floor.
+  'components/crops/NurseryFieldPlantingObservationForm.tsx': 'growers enter observed field plantings and read held evidence on phones; zero-debt 12px floor',
+  'components/crops/NurseryProgressObservationForm.tsx': 'growers enter observed nursery plant counts and stages on phones; zero-debt 12px floor',
+  'components/crops/NurserySowingObservationForm.tsx': 'growers enter observed tray sowings and dates on phones; zero-debt 12px floor',
+  'components/crops/SavedGrowerNurseryReviewPanel.tsx': 'growers review saved planned batches and enter references on phones; zero-debt 12px floor',
+  'components/journal/JournalNurseryFieldPlantingSummary.tsx': 'growers read observed field planting entries and retained references in the journal; zero-debt 12px floor',
+  'components/journal/JournalNurseryProgressSummary.tsx': 'growers read observed nursery plant counts and stages in the journal; zero-debt 12px floor',
+  'components/journal/JournalNurserySowingSummary.tsx': 'growers read observed nursery sowings and tray counts in the journal; zero-debt 12px floor',
   'components/AiMapSettings.tsx': 'farmers must read their own paid-map switch and service-access status in Settings; enforce the zero-debt 12px floor',
   // Added with wave 15 (code-10): the exchange, community, contact and prices captions.
   'app/community/messages/[threadId]/page.tsx': 'wave 15 code-10: the community message thread; no sub-12px type',
