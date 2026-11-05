@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: '04e90c4601', changes: [
+    'Record nursery plant counts in your journal',
+  ], tour: [{ title: 'Record nursery plant counts in your journal', where: 'Crop planner → Saved planned nursery batches', href: '/facilitator/crops',
+    detail: 'Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.' }] },
   { when: '5 November 2026', sha: '45f5bd5481', changes: [
     'Record nursery sowing in your field journal',
   ], tour: [{ title: 'Record nursery sowing in your field journal', where: 'Crop planner → Saved planned nursery batches', href: '/facilitator/crops',

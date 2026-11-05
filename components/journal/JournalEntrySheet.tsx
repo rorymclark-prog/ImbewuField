@@ -22,6 +22,7 @@ import { useEscapeClose } from '@/lib/use-escape-close';
 import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { farmMemoryText } from '@/lib/farm-memory-copy';
 import JournalNurserySowingSummary from './JournalNurserySowingSummary';
+import JournalNurseryProgressSummary from './JournalNurseryProgressSummary';
 
 export interface BedOption {
   id: string;
@@ -177,6 +178,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
         <div style={{ padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
           {entry && <JournalNurserySowingSummary entry={entry} />}
+          {entry && <JournalNurseryProgressSummary entry={entry} />}
           {initialDraft && !entry && (
             <p role="note" lang={isZulu ? 'zu' : 'en'} style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
               {farmMemoryText(lang, 'taskDraftNotice')}

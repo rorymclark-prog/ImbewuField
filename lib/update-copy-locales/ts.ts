@@ -459,5 +459,8 @@ const copy:UpdateCopy={
   "Record nursery sowing in your field journal": "Rhekhoda ku byala eka nursery eka jenali ya wena ya nsimu",
   "Crop planner → Saved planned nursery batches": "Mupulani wa swibyariwa → Mintlawa ya nursery leyi pulaniweke yi tlhela yi hlayisiwa",
   "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rhekhoda siku leri ku byala ku humeleleke ha rona ni, loko u lava, nhlayo ya tithireyi leti tirhisiweke hi nomboro leyi heleleke eka ntlawa lowu hlayisiweke. Kambisisa rhekhodo ya leswi u swi voneke ni tilebulu ta tirheferense leti rhekhodiweke na yona eka jenali ya wena ni le ka tifayili leti dawunilodiweke.",
+  // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
+  "Record nursery plant counts in your journal": "Rhekhoda nhlayo ya swimilana swa nursery eka jenali ya wena",
+  "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rhekhoda nhlayo ya swimilana leswi u swi voneke eka ntlawa wa nursery lowu hlayisiweke, xiteji lexi u xi kambeleke ni leswaku u kambele ntlawa hinkwawo kumbe xiphemu xa wona. Hlayisa leswi u swi voneke eka jenali swi hambanile ni swilaveko leswi pulaniweke ni xitoko.",
 };
 export default copy;

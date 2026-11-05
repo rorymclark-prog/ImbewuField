@@ -459,5 +459,8 @@ const copy:UpdateCopy={
   "Record nursery sowing in your field journal": "Rekhodani u zwala kha nursery kha dzhenala yaṋu ya tsimu",
   "Crop planner → Saved planned nursery batches": "Muvhekanyi wa zwimela → Zwigwada zwa nursery zwo vhekanywaho zwo vhulungwaho",
   "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rekhodani ḓuvha ḽe u zwala ha itea ngaḽo na, arali ni tshi ṱoḓa, tshivhalo tsha thireyi dzo shumiswaho nga nomboro yo fhelelaho kha tshigwada tsho vhulungwaho. Sedzulusani rekhodo ya zwe na vhona na lebulu dza referentsi dzo rekhodiwaho nayo kha dzhenala yaṋu na kha faela dzo downloudiwaho.",
+  // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
+  "Record nursery plant counts in your journal": "Rekhodani zwivhalo zwa zwimela zwa nursery kha dzhenala yaṋu",
+  "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rekhodani tshivhalo tsha zwimela zwe na vhona kha tshigwada tsha nursery tsho vhulungwaho, vhuimo he na sedzulusa na uri no sedzulusa tshigwada tshoṱhe kana tshipiḓa tshatsho. Rekhodo idzi dza zwe na vhona kha dzhenala dzi dzule dzo fhambana na ṱhoḓea dzo vhekanywaho na tshitoko.",
 };
 export default copy;
