@@ -11,6 +11,9 @@ import styles from './UpdateGuide.module.css';
 import { isUpdateCopyLanguage,updateDescription } from '@/lib/update-copy';
 import { useUpdateCopy } from '@/lib/use-update-copy';
 import UpdateCopyText from './UpdateCopyText';
+import FeatureUpdatePreview from './FeatureUpdatePreview';
+
+const PREVIEW_SEEN_KEY = 'imbewu-feature-preview-seen:';
 
 export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string | null }) {
   const pathname = usePathname();
@@ -24,7 +27,10 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
 
   useEffect(() => {
     try {
-      setGuide(readUpdateGuide(window.sessionStorage.getItem(UPDATE_GUIDE_KEY), loadedBuildSha));
+      const saved = readUpdateGuide(window.sessionStorage.getItem(UPDATE_GUIDE_KEY), loadedBuildSha);
+      let seen = false;
+      try { seen = !!saved?.stops[0]?.preview && window.localStorage.getItem(PREVIEW_SEEN_KEY + saved.stops[0].preview) === '1'; } catch { /* device preference is optional */ }
+      setGuide(seen && saved?.phase === 'offer' ? null : saved);
     } catch { /* The tour is optional when storage is unavailable. */ }
     let cancelled = false;
     // Loaded on demand — the guide is opened far less often than every route mounts this
@@ -49,6 +55,9 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
   }, [pathname, guide?.phase, guide?.index]);
 
   function save(next: UpdateGuideState | null) {
+    if (!next && guide?.stops[0]?.preview) {
+      try { window.localStorage.setItem(PREVIEW_SEEN_KEY + guide.stops[0].preview, '1'); } catch { /* session dismissal still works */ }
+    }
     setGuide(next);
     try {
       if (next) window.sessionStorage.setItem(UPDATE_GUIDE_KEY, JSON.stringify(next));
@@ -86,6 +95,7 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
         <span>{guide.phase === 'offer' ? t('updateGuideOfferBadge') : withCount(t('updateGuideTourBadge'))}</span>
         <button type="button" className={styles.close} onClick={() => save(null)} aria-label={t('updateGuideCloseAria')}><X size={18} aria-hidden /></button>
       </div>
+      {stop.preview === 'assistant-access' && <FeatureUpdatePreview key={guide.index} />}
       {draftLocale && <p className={styles.draftNotice} lang={lang} role="note">{t('updatesDraftNotice')}</p>}
       {guide.phase === 'offer' ? (
         <>

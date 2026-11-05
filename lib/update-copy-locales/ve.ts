@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
+  "Important updates include a short animation you can pause and replay.": "Khwiniso dza ndeme dzi na tshifanyiso tshipfufhi tshi tshimbilaho tshine na nga tshi imisa na u tshi tamba hafhu.",
   // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
   "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Mimepe ya Sector i na murahu u sa vhonalesiho nga maanḓa na zwiga zwi re khagala zwa ḓuvha, muya na mulilo.",
   // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
