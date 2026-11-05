@@ -129,34 +129,80 @@ test('a phasing week baseline clears the chip by the week font ascent', () => {
   assert.doesNotMatch(block, /lineH \* 0\.35/);
 });
 
-test('sector labels sit directly on the photograph with a dark halo, never an opaque chip', () => {
+test('exact Sector labels retain their halo while illustrated cards keep readable text and source wording', () => {
   const labelStart = SOURCE.indexOf('const labelAt =');
   const directStart = SOURCE.indexOf('const directLabelAt =', labelStart);
-  const directFlushStart = SOURCE.indexOf('const flushDirectLabels =', directStart);
-  const paletteStart = SOURCE.indexOf('// Regional-assumption palette', directFlushStart);
-
   assert.ok(labelStart >= 0 && directStart > labelStart, 'legacy sector label painter exists');
-  assert.ok(directFlushStart > directStart && paletteStart > directFlushStart, 'composed sector label painter exists');
-
   const legacyPainter = SOURCE.slice(labelStart, directStart);
-  const composedPainter = SOURCE.slice(directFlushStart, paletteStart);
+  assert.ok(legacyPainter.indexOf('strokeText(') >= 0);
+  assert.ok(legacyPainter.indexOf('fillText(') > legacyPainter.indexOf('strokeText('));
+  assert.doesNotMatch(legacyPainter, /(?:fill|stroke)(?:Rect|RoundRect)|roundRect\(/);
 
-  for (const [name, painter] of [
-    ['legacy', legacyPainter],
-    ['composed', composedPainter],
-  ] as const) {
-    const strokeAt = painter.indexOf('strokeText(');
-    const fillAt = painter.indexOf('fillText(');
-    assert.ok(strokeAt >= 0, `${name} sector labels draw a halo`);
-    assert.ok(fillAt > strokeAt, `${name} sector labels paint coloured text over the halo`);
-    assert.doesNotMatch(
-      painter,
-      /(?:fill|stroke)(?:Rect|RoundRect)|roundRect\(/,
-      `${name} sector labels must not punch an opaque chip through the aerial`,
-    );
+  // The previous claim banned plates in every mode. Rory approved illustrated white cards after
+  // labels disappeared into foliage on his phone. Execute both branches instead: exact labels
+  // still need their halo; illustrated titles/details need contrast and their original wording.
+  const tree = ts.createSourceFile('DesignGlossy.tsx', SOURCE, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  let painter: ts.Expression | undefined;
+  function visit(node: ts.Node) {
+    if (ts.isVariableDeclaration(node) && node.name.getText(tree) === 'flushDirectLabels') painter = node.initializer;
+    ts.forEachChild(node, visit);
   }
-
-  assert.match(composedPainter, /lineJoin = 'round'/, 'wide composed-label halos keep soft corners');
+  visit(tree);
+  assert.ok(painter, 'composed Sector label painter exists');
+  const js = ts.transpileModule(`const paint = ${painter.getText(tree)};`, {
+    compilerOptions: { target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+  const luminance = (hex: string) => {
+    assert.match(hex, /^#[0-9a-f]{6}$/i, 'card text and background use opaque colours');
+    const channels = hex.slice(1).match(/../g)!.map(c => parseInt(c, 16) / 255)
+      .map(c => c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4);
+    return channels[0] * .2126 + channels[1] * .7152 + channels[2] * .0722;
+  };
+  for (const artFinish of [false, true]) for (const W of [600, 1800]) {
+    const calls: Array<{ kind: string; text?: string; color?: string; x?: number; y?: number; width?: number; height?: number }> = [];
+    const ctx = {
+      font: '', fillStyle: '', strokeStyle: '', lineJoin: '',
+      save() {}, restore() {},
+      measureText(text: string) { return { width: text.length * parseFloat(this.font.split(' ')[1]) * .6 }; },
+      fill() { calls.push({ kind: 'fill', color: this.fillStyle }); }, stroke() {},
+      fillText(text: string, x: number, y: number) { calls.push({ kind: 'text', text, color: this.fillStyle, x, y }); },
+      strokeText(text: string) { calls.push({ kind: 'halo', text }); },
+    };
+    const requests = [{ x: W * .5, y: W * .5, lines: ['Summer wind · ESE'], color: '#008B83' }];
+    const original = JSON.stringify(requests);
+    const scope = {
+      ctx, W, H: W * 1.4, externalLegend: true, artFinish, arrowClaims: [], directLabelRequests: requests,
+      REFERENCE_LABEL_FONT: 'sans-serif', SHEET_BODY_FONT: 'sans-serif',
+      roundRectPath(_ctx: unknown, x: number, y: number, width: number, height: number) {
+        calls.push({ kind: 'box', x, y, width, height });
+      },
+      drawIllustratedSectorSun() {}, drawIllustratedSectorFlame() {}, drawStyleLegendSymbol() {},
+    };
+    new Function(...Object.keys(scope), `${js}; paint();`)(...Object.values(scope));
+    assert.equal(JSON.stringify(requests), original, 'painting does not rewrite source labels or anchors');
+    const text = calls.filter(c => c.kind === 'text');
+    if (artFinish) {
+      assert.deepEqual(text.map(c => c.text), ['Summer wind', 'ESE']);
+      assert.ok(!calls.some(c => c.kind === 'halo'), 'card text must not regain a heavy stroke');
+      const backgroundAt = calls.findIndex(c => c.kind === 'fill');
+      assert.ok(backgroundAt >= 0 && backgroundAt < calls.findIndex(c => c.kind === 'text'));
+      const background = calls[backgroundAt].color!;
+      for (const line of text) {
+        const pair = [luminance(background), luminance(line.color!)].sort((a, b) => b - a);
+        assert.ok((pair[0] + .05) / (pair[1] + .05) >= 7, 'card title and detail need strong reading contrast');
+        const box = calls.find(c => c.kind === 'box')!;
+        assert.ok(line.x! > box.x! && line.x! < box.x! + box.width!);
+        assert.ok(line.y! > box.y! && line.y! < box.y! + box.height!);
+      }
+    } else {
+      assert.deepEqual(text.map(c => c.text), requests[0].lines);
+      const haloAt = calls.findIndex(c => c.kind === 'halo');
+      assert.ok(haloAt >= 0 && haloAt < calls.findIndex(c => c.kind === 'text'));
+      assert.equal(text[0].color, requests[0].color);
+      assert.equal(ctx.lineJoin, 'round', 'exact label halos keep soft corners');
+      assert.ok(!calls.some(c => c.kind === 'fill' || c.kind === 'box'), 'exact map keeps its unplated labels');
+    }
+  }
 });
 
 test('sector provenance keeps its complete wording in a padded hairline box at the shared reading size', () => {

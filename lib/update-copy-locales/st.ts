@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.
+  "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Ditshwantsho tsa Sector di na le metsu e hlahelletseng, matshwao a maholo a letsatsi le senotlolo sa mmapa se hlakileng ho feta.",
+  "Sector illustrations now show bolder terrain contours and matching key lines.": "Ditshwantsho tsa Sector jwale di bontsha mela e hlahelletseng ya bophahamo ba mobu le mela e tsamaellanang le yona senotlolong sa mmapa.",
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Ditshwantsho tsa Sector di boloka mebala e nonneng, di na le mabitso a maholo le mela ya bophahamo e hlakileng ho feta.",
   // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
   "Important updates include a short animation you can pause and replay.": "Lintlafatso tsa bohlokwa di na le papiso e kgutshwane e sisinyehang eo o ka e emisang le ho e bapala hape.",
   // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.

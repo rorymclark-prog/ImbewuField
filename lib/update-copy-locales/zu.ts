@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.
+  "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Imidwebo yeSector inemicibisholo egqamile, izimpawu zelanga ezinkulu nokhiye wemephu ocace kakhudlwana.",
+  "Sector illustrations now show bolder terrain contours and matching key lines.": "Imidwebo yeSector manje ibonisa imigqa yokuphakama egqamile nemigqa ehambisana nayo kukhiye wemephu.",
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Imidwebo yeSector igcina imibala egqamile, inamalebula amakhulu nemigqa yokuphakama ecace kakhudlwana.",
   // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
   "Important updates include a short animation you can pause and replay.": "Izibuyekezo ezibalulekile zinevidiyo emfushane enyakazayo ongayimisa bese uyidlala futhi.",
   // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
