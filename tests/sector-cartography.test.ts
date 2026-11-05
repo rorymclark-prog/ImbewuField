@@ -602,7 +602,7 @@ test('authored Sector wind and solar graphics retain their actual bearings at sc
   };
   for(const W of [800,2200]) {
     const moves:number[][]=[],curves:number[][]=[],arcs:number[][]=[],dashes:number[][]=[],suns:number[][]=[];
-    const context=new Proxy({}, {get(_target,key){return (...args:number[])=>{
+    const context=new Proxy({}, {get(_target,key){if(key==='createLinearGradient')return ()=>({addColorStop(){}});return (...args:number[])=>{
       if(key==='moveTo')moves.push(args);if(key==='bezierCurveTo')curves.push(args);
       if(key==='arc')arcs.push(args);if(key==='setLineDash')dashes.push(args[0] as unknown as number[]);
     };},set(){return true;}});
@@ -616,7 +616,7 @@ test('authored Sector wind and solar graphics retain their actual bearings at sc
       const tip=moves.at(-1)!;
       assert.ok(Math.abs(tip[0]-(W*.5+v[0]*W*.3*.94))<1e-8);
       assert.ok(Math.abs(tip[1]-(W*.5+v[1]*W*.3*.94))<1e-8);
-      assert.equal(curves.length,3,'wind stays a family of streamlines, not a filled wedge');
+      assert.equal(curves.length,3,'the ribbon retains all three directional streamlines');
       assert.ok(dashes.some(dash=>dash.length===2 && dash.every(value=>value>0)),'regional wind remains dashed');
     }
     const sun=compile('drawSunArc',common);

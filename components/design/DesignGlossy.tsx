@@ -8148,6 +8148,34 @@ interface SectorAnalysisComposition {
 // the AI version: the bearings. See docs/RENDER-INVESTIGATION-2026-07-20.md 'sector-ai' finding 4
 // — a model-drawn arrow is a coin-flip on both angle and sense, so it must never be redrawn from
 // scratch a second time.
+function drawIllustratedSectorSun(ctx:CanvasRenderingContext2D,x:number,y:number,r:number,color:string):void {
+  ctx.save();ctx.translate(x,y);
+  for(let i=0;i<12;i++) {
+    const angle=i*Math.PI/6,outer=r*(i%2===0?2.05:1.72),inner=r*1.27;
+    ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(Math.cos(angle)*outer,Math.sin(angle)*outer);
+    ctx.lineTo(Math.cos(angle-.07)*inner,Math.sin(angle-.07)*inner);
+    ctx.lineTo(Math.cos(angle+.07)*inner,Math.sin(angle+.07)*inner);ctx.closePath();ctx.fill();
+  }
+  const light=ctx.createRadialGradient(-r*.35,-r*.4,r*.08,0,0,r);
+  light.addColorStop(0,'#FFFFFF');light.addColorStop(.25,'#FFF6D8');light.addColorStop(.65,color);light.addColorStop(1,color);
+  ctx.shadowColor=`${color}42`;ctx.shadowBlur=r*.55;ctx.shadowOffsetY=r*.15;
+  ctx.fillStyle=light;ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fill();
+  ctx.shadowBlur=0;ctx.shadowOffsetY=0;ctx.strokeStyle='#FFFFFF';ctx.lineWidth=Math.max(1,r*.13);ctx.stroke();
+  ctx.beginPath();ctx.arc(0,0,r*1.13,0,Math.PI*2);ctx.strokeStyle=`${color}60`;ctx.lineWidth=Math.max(.7,r*.045);ctx.stroke();ctx.restore();
+}
+
+function drawIllustratedSectorFlame(ctx:CanvasRenderingContext2D,x:number,y:number,r:number,color:string):void {
+  ctx.save();const ember=ctx.createLinearGradient(x,y-r*1.7,x,y+r*1.4);
+  ember.addColorStop(0,'#EBA04A');ember.addColorStop(.48,color);ember.addColorStop(1,'#903E31');
+  ctx.fillStyle=ember;ctx.beginPath();ctx.moveTo(x,y-r*1.7);
+  ctx.bezierCurveTo(x+r*1.5,y-r*.1,x+r,y+r*1.4,x,y+r*1.4);
+  ctx.bezierCurveTo(x-r*1.4,y+r*1.2,x-r*.8,y-r*.1,x-r*.22,y-r*.65);
+  ctx.quadraticCurveTo(x+r*.16,y-r*.08,x,y-r*1.7);ctx.fill();
+  ctx.fillStyle='#F9CB72';ctx.beginPath();ctx.moveTo(x+r*.14,y-r*.35);
+  ctx.bezierCurveTo(x+r*.6,y+r*.24,x+r*.6,y+r*.97,x,y+r*1.07);
+  ctx.bezierCurveTo(x-r*.5,y+r*.75,x-r*.15,y+r*.4,x+r*.14,y-r*.35);ctx.fill();ctx.restore();
+}
+
 function drawSectorAnalysis(
   ctx: CanvasRenderingContext2D,
   W: number,
@@ -8173,7 +8201,7 @@ function drawSectorAnalysis(
   sheetContours?: SheetContourResult,
 ): SectorAnalysisComposition {
   const artFinish = isAiBase && externalLegend;
-  const artInk = { summer:'#B76F20', winter:'#4A7698', cooling:'#247D75', cold:'#426D9B', berg:'#AA622F', fire:'#A04435', fall:'#396A82' };
+  const artInk = { summer:'#BF8223', winter:'#487DA0', cooling:'#237D70', cold:'#497DA6', berg:'#B66A33', fire:'#BC5037', fall:'#396A82' };
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
 
@@ -8488,13 +8516,17 @@ function drawSectorAnalysis(
     // this canvas — so contrast is guaranteed by what's UNDER the label, never by what's under the
     // photo. Font bumped alongside it: 18px-min/×0.0115 was sized before this sheet carried a real
     // photo at phone-viewing scale.
-    const fs = Math.max(artFinish ? 23 : 21, Math.round(W * (artFinish ? 0.014 : 0.0135)));
+    const fs = Math.max(artFinish ? 23 : 21, Math.round(W * (artFinish ? 0.018 : 0.0135)));
     const lineH = Math.round(fs * 1.1);
     for (const request of directLabelRequests) {
       ctx.save();
-      ctx.font = `${artFinish ? 650 : 800} ${fs}px ${REFERENCE_LABEL_FONT}`;
-      const halfW = Math.max(...request.lines.map((line) => ctx.measureText(line).width)) / 2 + fs * 0.55;
-      const halfH = (lineH * request.lines.length) / 2 + fs * 0.42;
+      const words=request.lines.join(' · ').split(' · ');
+      const cardTitle=words[0],cardDetail=words.slice(1).join(' · ');
+      ctx.font = `${artFinish ? 750 : 800} ${artFinish ? fs*.84 : fs}px ${REFERENCE_LABEL_FONT}`;
+      const halfW = artFinish
+        ? Math.max(ctx.measureText(cardTitle).width,ctx.measureText(cardDetail).width)/2+fs*1.65
+        : Math.max(...request.lines.map((line) => ctx.measureText(line).width)) / 2 + fs * 0.55;
+      const halfH = artFinish ? fs*1.15 : (lineH * request.lines.length) / 2 + fs * 0.42;
       // Wider escape net than the original seven: with two benchmark-mass arrows, both sun arcs
       // and the access arrow all anchored in the same top band, the close candidates are often
       // ALL claimed, and a fallback that overlaps defeats the whole dodger. The far candidates
@@ -8526,12 +8558,27 @@ function drawSectorAnalysis(
         if (!overlaps) break;
       }
       directClaims.push({ x0: lx - halfW, x1: lx + halfW, y0: ly - halfH, y1: ly + halfH });
-      // On the illustrated sheet, light plates separate labels from texture without the old
-      // black slabs. Collision claims keep those plates off the analytical marks. The exact
-      // technical sheet retains its original outlined lettering.
+      // The illustrated edition uses measured cards, not small plain labels on a washed photo.
+      // Its title/detail retain the original words; the pictorial cue carries no new site claim.
       if (artFinish) {
-        ctx.fillStyle='rgba(255,255,253,.95)';
-        roundRectPath(ctx,lx-halfW,ly-halfH,halfW*2,halfH*2,fs*.25);ctx.fill();
+        const left=lx-halfW,top=ly-halfH;
+        ctx.save();ctx.shadowColor='rgba(28,48,36,.16)';ctx.shadowBlur=fs*.4;ctx.shadowOffsetY=fs*.13;
+        ctx.fillStyle='#FFFFFF';roundRectPath(ctx,left,top,halfW*2,halfH*2,fs*.3);ctx.fill();ctx.restore();
+        ctx.strokeStyle=`${request.color}45`;ctx.lineWidth=Math.max(1,W*.00055);
+        roundRectPath(ctx,left,top,halfW*2,halfH*2,fs*.3);ctx.stroke();
+        ctx.fillStyle=request.color;roundRectPath(ctx,left,top+fs*.35,fs*.09,halfH*2-fs*.7,fs*.045);ctx.fill();
+        const gx=left+fs*1.1,gy=ly,gr=fs*.42;
+        if(/sun/i.test(cardTitle))drawIllustratedSectorSun(ctx,gx,gy,gr,request.color);
+        else if(/fire/i.test(cardTitle))drawIllustratedSectorFlame(ctx,gx,gy,gr*1.05,request.color);
+        else {
+          const sectorIcon:SectorLegendIcon=/fall|drain|slope/i.test(cardTitle)?'water':/access|driveway|dust/i.test(cardTitle)?'driveway':'wind';
+          drawStyleLegendSymbol(ctx,{swatch:request.color,text:'',sectorIcon,sectorArt:true,visual:sectorIcon==='wind'?'sector-streamline':undefined},gx-gr*1.4,gy,gr*2.8,gr*2.8);
+        }
+        const tx=left+fs*2.15;
+        ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillStyle=request.color;
+        ctx.font=`800 ${fs*.80}px ${REFERENCE_LABEL_FONT}`;ctx.fillText(cardTitle,tx,ly-fs*.38);
+        ctx.fillStyle='#263D32';ctx.font=`600 ${fs*.78}px ${SHEET_BODY_FONT}`;ctx.fillText(cardDetail,tx,ly+fs*.51);
+        ctx.restore();continue;
       }
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -8609,13 +8656,7 @@ function drawSectorAnalysis(
     ctx.moveTo(wedge.tipX, wedge.tipY);
     ctx.lineTo(cx + wedge.centerVec[0] * wedge.rr, cy + wedge.centerVec[1] * wedge.rr);
     ctx.stroke();
-    if (artFinish) {
-      const fx=wedge.tipX, fy=wedge.tipY, size=W*.018;
-      ctx.setLineDash([]);ctx.fillStyle=color;ctx.beginPath();
-      ctx.moveTo(fx,fy-size);ctx.bezierCurveTo(fx+size,fy,fx+size*.7,fy+size,fx,fy+size);
-      ctx.bezierCurveTo(fx-size,fy+size,fx-size*.6,fy,fx-size*.15,fy-size*.25);
-      ctx.quadraticCurveTo(fx+size*.05,fy,fx,fy-size);ctx.fill();
-    }
+    if (artFinish) drawIllustratedSectorFlame(ctx,wedge.tipX,wedge.tipY,W*.013, color);
     ctx.restore();
   };
 
@@ -8662,12 +8703,20 @@ function drawSectorAnalysis(
     ctx.lineTo(tailX - nx * tailHalf, tailY - ny * tailHalf);
     ctx.closePath();
     if(artFinish){
+      const ribbon=ctx.createLinearGradient(tailX,tailY,tipX,tipY);
+      ribbon.addColorStop(0,`${color}10`);ribbon.addColorStop(.32,`${color}55`);ribbon.addColorStop(1,`${color}D9`);
+      const body=W*.021,midX=tailX+dx*.5,midY=tailY+dy*.5;
+      ctx.save();ctx.shadowColor=`${color}24`;ctx.shadowBlur=W*.006;ctx.shadowOffsetY=W*.002;
+      ctx.fillStyle=ribbon;ctx.beginPath();ctx.moveTo(tailX+nx*body,tailY+ny*body);
+      ctx.quadraticCurveTo(midX+nx*body*1.5,midY+ny*body*1.5,headBaseX+nx*body*.36,headBaseY+ny*body*.36);
+      ctx.lineTo(tipX,tipY);ctx.lineTo(headBaseX-nx*body*.36,headBaseY-ny*body*.36);
+      ctx.quadraticCurveTo(midX-nx*body*.3,midY-ny*body*.3,tailX-nx*body,tailY-ny*body);ctx.closePath();ctx.fill();ctx.restore();
       // Three dashed streamlines read as wind; the neighbouring red flame/dash reads as fire.
       // Both use the original sourced axis. Curvature is graphic rhythm, not a new bearing.
       ctx.setLineDash([W*.008,W*.005]);ctx.lineCap='round';ctx.lineWidth=Math.max(3,W*.0024);
       for (const lane of [-1,0,1]) {
         const shift=lane*W*.012;
-        ctx.globalAlpha=lane===0?1:.7;ctx.strokeStyle=color;
+        ctx.globalAlpha=lane===0?.95:.72;ctx.strokeStyle=lane===0?'#FFFFFF':color;
         ctx.beginPath();ctx.moveTo(tailX+nx*shift,tailY+ny*shift);
         ctx.bezierCurveTo(tailX+dx*.36+nx*(shift+W*.012),tailY+dy*.36+ny*(shift+W*.012),
           tailX+dx*.68+nx*(shift-W*.012),tailY+dy*.68+ny*(shift-W*.012),
@@ -8814,6 +8863,7 @@ function drawSectorAnalysis(
   // — usually the same side both times, but genuinely different ('mixed') inside the tropics.
   const bearingToCanvasAngle = (bearingDeg: number) => ((bearingDeg - 90) * Math.PI) / 180;
   const drawSunIcon = (x: number, y: number, r: number, color: string): void => {
+    if(artFinish){drawIllustratedSectorSun(ctx,x,y,r,color);return;}
     ctx.save();
     ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.92)' : 'rgba(14,20,13,0.82)';
     ctx.fillStyle = color;
@@ -8875,7 +8925,7 @@ function drawSectorAnalysis(
     // farmer actually sites a windbreak or a shade tree against; they were drawn at three
     // quarters of the noon sun and vanished into the photograph entirely. They now lead, and the
     // noon marker (which already has the banner and the altitude number carrying it) follows.
-    const sunR = Math.max(14, W * (artFinish ? 0.009 : 0.0125));
+    const sunR = Math.max(14, W * (artFinish ? 0.011 : 0.0125));
     drawSunIcon(cx + Math.cos(startAngle) * r, cy + Math.sin(startAngle) * r, sunR, color);
     drawSunIcon(cx + apexVec[0] * r, cy + apexVec[1] * r, sunR * 0.82, color);
     drawSunIcon(cx + Math.cos(endAngle) * r, cy + Math.sin(endAngle) * r, sunR, color);
@@ -8889,7 +8939,7 @@ function drawSectorAnalysis(
     // symbol overlap this sheet has just been cleared of. The word is the same for either season;
     // the compass point that differs is already spelled out in each arc's own banner.
     if (endCaptions) {
-      const capFs = Math.max(13, Math.round(W * 0.0072));
+      const capFs = Math.max(13, Math.round(W * (artFinish ? 0.013 : 0.0072)));
       ctx.font = `800 ${capFs}px ${REFERENCE_LABEL_FONT}`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -9162,16 +9212,14 @@ function drawSectorAnalysis(
       // the authoritative sheet crop.
       blueprintRing(ctx, bnd, px, py);
       ctx.clip();
-      // MORE PRESENT — Rory: "make the contours a little more prominent." They were drawn at 46%
-      // alpha on the finished sheet, which on a real aerial is barely a suggestion, and contours
-      // are the one thing on this sheet a swale is actually set out against. Lifted to 78%, with
-      // index (major) lines properly heavier than intermediates as on any topographic sheet, and
-      // a dark casing under the colour — the same body-inside-a-casing rule the arrows, canopies
-      // and crop rows all follow, and the only thing that reliably survives dark foliage.
+      // Regional contours are orientation, never swale set-out. The illustrated sheet needs a
+      // stronger white casing and a main/supplemental hierarchy to survive its textured ground.
       ctx.setLineDash([7, 6]);
-      ctx.globalAlpha = externalLegend ? 0.78 : 1;
+      ctx.globalAlpha = artFinish ? 1 : externalLegend ? 0.78 : 1;
       for (const line of sheetContours.lines) {
-        const core = line.major ? 3.4 : 2.2;
+        const main=artFinish ? Math.abs(line.elevM/5-Math.round(line.elevM/5))<1e-6 : line.major;
+        const core = artFinish ? Math.max(3.5,W*(main?.0025:.0019)) : line.major ? 3.4 : 2.2;
+        if(artFinish)ctx.setLineDash(main?[W*.008,W*.003]:[W*.0035,W*.003]);
         ctx.beginPath();
         line.points.forEach(([x, y], index) => {
           if (index === 0) ctx.moveTo(px(x), py(y));
@@ -9180,7 +9228,7 @@ function drawSectorAnalysis(
         ctx.strokeStyle = externalLegend ? 'rgba(255,255,255,.88)' : 'rgba(10,22,10,0.55)';
         ctx.lineWidth = core + (externalLegend ? 3.0 : 2.4);
         ctx.stroke();
-        ctx.strokeStyle = externalLegend ? TERRAIN_CONTOUR_INK : line.major ? 'rgba(160,235,140,0.98)' : 'rgba(126,212,107,0.95)';
+        ctx.strokeStyle = externalLegend ? artFinish&&!main?TERRAIN_SUPPLEMENTAL_INK:TERRAIN_CONTOUR_INK : line.major ? 'rgba(160,235,140,0.98)' : 'rgba(126,212,107,0.95)';
         ctx.lineWidth = core;
         ctx.stroke();
       }
@@ -9199,7 +9247,7 @@ function drawSectorAnalysis(
       if(externalLegend)for(const line of sheetContours.lines){
         const points=line.points.filter(point=>pointInRing(point,bnd));
         const at=points[Math.floor(points.length*.32)];
-        if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,px(at[0]),py(at[1])-W*.006,Math.max(16,W*(artFinish?.013:.009)));
+        if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,px(at[0]),py(at[1])-W*.006,Math.max(16,W*(artFinish?.015:.009)));
       }
       const middleLine = sheetContours.lines[Math.floor(sheetContours.lines.length / 2)];
       if (middleLine) {
@@ -9423,7 +9471,10 @@ function drawSectorAnalysis(
   // computed geometry.
   if (model.driveway) rows.push({ color: DRIVEWAY_COLOR, label: `Driveway access — dust & noise — ${model.driveway.fromLabel}`, style: 'line', icon: markerIcon('driveway'), sectorIcon: 'driveway' });
   if (model.water) rows.push({ color: artFinish ? artInk.fall : '#3A8EC4', label: artFinish ? `Site fall · ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}%` : `Site slope estimate falls ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}% (five-point SRTM · indicative)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
-  if (model.water && sheetContours?.status === 'ok' && contourIntervalM != null) rows.push({ color: externalLegend ? TERRAIN_CONTOUR_INK : '#7ED46B', label: artFinish ? `Regional contours · ${contourIntervalM} m` : `Regional DEM contour — ${contourIntervalM} m overview`, style: 'dashline', sectorIcon: 'water' });
+  if (model.water && sheetContours?.status === 'ok' && contourIntervalM != null) {
+    if(!artFinish||contourIntervalM!==2.5||sheetContours.lines.some(line=>line.major))rows.push({ color: externalLegend ? TERRAIN_CONTOUR_INK : '#7ED46B', label: artFinish ? `Regional contours · ${contourIntervalM===2.5?5:contourIntervalM} m main` : `Regional DEM contour — ${contourIntervalM} m overview`, style: 'dashline', sectorIcon: 'water' });
+    if(artFinish&&contourIntervalM===2.5&&sheetContours.lines.some(line=>!line.major))rows.push({color:TERRAIN_SUPPLEMENTAL_INK,label:'2.5 m supplemental · interpolated',style:'dashline',sectorIcon:'water'});
+  }
   // Gated on drawTerraceFallAnnotations (above) having actually drawn at least one pair — never a
   // placeholder row for a design with no terraces (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md
   // §4b). A different row from the whole-site "Terrace fall ~X% (uniform-fall model)" row above:
@@ -9535,7 +9586,7 @@ function drawSectorContextLabels(
   }
 }
 
-async function fetchSectorPresentationContours(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],site:SectorSite|null):Promise<SheetContourResult> {
+async function fetchSectorPresentationContours(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],site:SectorSite|null,illustrated=false):Promise<SheetContourResult> {
   const elevation=site?.elevation;
   // A presentation crop changes image coordinates but intentionally keeps the saved geographic
   // frame intact. Query the original frame; otherwise resized dimensions move the DEM lookup.
@@ -9543,7 +9594,15 @@ async function fetchSectorPresentationContours(state:DesignCanvasState,frame:Can
     elevation?.directionConfidence==='unconfirmed'?Number.NaN:elevation?.slopeDeg??Number.NaN,
     elevation?.directionConfidence==='unconfirmed'?Number.NaN:elevation?.aspectDeg??Number.NaN,
     async url=>fetch(url,{headers:await paidApiHeaders(),signal:AbortSignal.timeout(15_000)}));
-  const overview=sectorOverviewContours(raw);
+  let overview=sectorOverviewContours(raw);
+  // Rory asked for more terrain detail on the illustration. Reuse the detail sheet's actual
+  // raster isolines, never interpolate extra paths between existing lines or from site slope.
+  // Missing pixels leave the established overview intact; exact Sector keeps its 5 m overview.
+  if(illustrated && raw.source==='mapbox-terrain-rgb' && raw.status==='ok') {
+    const raster=await fetchProfileTerrain(frame,refs.boundary,async url=>fetch(url,{headers:await paidApiHeaders(),signal:AbortSignal.timeout(15_000)}));
+    const detailed=raster?rasterTerrainContours(raster,refs.boundary,frame):[];
+    if(detailed.length)overview={...raw,lines:detailed,intervalM:2.5,tooFlat:false,status:'ok'};
+  }
   const layout=calculateBoundaryPresentationLayout(presentationExtentRing(state,frame,refs.boundary),frame,SCALE);
   return layout?{...overview,lines:overview.lines.map(line=>({...line,points:line.points.map(([x,y])=>[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight] as [number,number])}))}:overview;
 }
@@ -9665,10 +9724,10 @@ function drawSectorArtworkContext(ctx: CanvasRenderingContext2D, image: CanvasIm
     // White/transparent pixels are unknown source coverage, not land to illustrate.
     if (data[i+3] === 0 || Math.min(r,g,b) > 249) continue;
     const luminance=.2126*r+.7152*g+.0722*b;
-    const tone=119+luminance*.5;
-    data[i]=tone+(r-luminance)*.24;
-    data[i+1]=tone+(g-luminance)*.24;
-    data[i+2]=tone+(b-luminance)*.24;
+    const tone=102+luminance*.55;
+    data[i]=tone+(r-luminance)*.42;
+    data[i+1]=tone+(g-luminance)*.42;
+    data[i+2]=tone+(b-luminance)*.42;
   }
   ctx.putImageData(pixels,0,0);
 }
@@ -9686,7 +9745,7 @@ async function composeSectorSheet(
   const renderState = presentation.state;
   const renderFrame = presentation.frame;
   const renderRefLayers = presentation.refLayers;
-  const sheetContours = await fetchSectorPresentationContours(state,frame,refLayers,site);
+  const sheetContours = await fetchSectorPresentationContours(state,frame,refLayers,site,Boolean(baseImage));
   const W = renderFrame.imgW * SCALE;
   const H = renderFrame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -9787,9 +9846,10 @@ async function composeSectorSheet(
     ...(artFinish ? {section:row.sectorIcon==='sun'?'SUN PATH':row.sectorIcon==='wind'||row.sectorIcon==='fire'?'REGIONAL WIND & FIRE':row.sectorIcon==='water'||row.sectorIcon==='frost'||row.label.startsWith('Terrace fall')?'TERRAIN':'SITE REFERENCE'} as const : {}),
     lineKind: row.color === BOUNDARY_LINE_GREEN ? (baseline ? 'path' : 'fence') : row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
     kind: row.style === 'fill' ? 'surface' : undefined,
-    sectorIcon: row.color===TERRAIN_CONTOUR_INK?undefined:row.sectorIcon,
+    sectorIcon: row.color===TERRAIN_CONTOUR_INK||row.color===TERRAIN_SUPPLEMENTAL_INK?undefined:row.sectorIcon,
+    sectorArt:artFinish,
     ...(artFinish && row.sectorIcon==='wind'?{visual:'sector-streamline' as const}:{}),
-    ...(row.color===TERRAIN_CONTOUR_INK?{visual:'terrain-contour' as const}:{}),
+    ...(row.color===TERRAIN_CONTOUR_INK||row.color===TERRAIN_SUPPLEMENTAL_INK?{visual:'terrain-contour' as const}:{}),
   }));
 
   if(baseline) legendRows.push({swatch:'#79583B',text:'Existing fence — visible portion',lineKind:'pipe',...(artFinish?{section:'SITE REFERENCE' as const}:{})});
@@ -10442,6 +10502,7 @@ interface StyleLegendRow {
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE' | 'SUN PATH' | 'REGIONAL WIND & FIRE' | 'TERRAIN' | 'SITE REFERENCE';
   sectorIcon?: SectorLegendIcon;
+  sectorArt?: boolean;
 }
 
 function caseStudyZoneZeroLabel(state: Pick<DesignCanvasState, 'siteId' | 'zones'>): string | undefined {
@@ -10688,7 +10749,8 @@ function drawStyleLegendSymbol(
     return;
   }
   if(row.visual==='terrain-contour'){
-    ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(2,h*.07);ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;
+    const main=row.swatch===TERRAIN_CONTOUR_INK;
+    ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(2,h*(row.sectorArt&&main?.095:.07));ctx.setLineDash(row.sectorArt&&main?[w*.24,w*.09]:[6,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;
   }
   if(row.historicalFeature){drawHistoricalFeatureSymbol(ctx,row.historicalFeature,x+w/2,y,Math.min(w,h));return;}
   if(row.visual==='historical-extent'){ctx.save();ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);strokeHistoricalLine(ctx,'extent',Math.max(1.5,h*.05));ctx.restore();return;}
@@ -10702,7 +10764,9 @@ function drawStyleLegendSymbol(
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.lineWidth = Math.max(2, h * 0.075);
-    if (row.sectorIcon === 'sun') {
+    if (row.sectorIcon === 'sun' && row.sectorArt) {
+      drawIllustratedSectorSun(ctx,cx,y,r,row.swatch);
+    } else if (row.sectorIcon === 'sun') {
       ctx.beginPath();
       ctx.arc(cx, y, r, 0, Math.PI * 2);
       ctx.fill();
@@ -10715,6 +10779,12 @@ function drawStyleLegendSymbol(
       }
     } else if (row.sectorIcon === 'wind') {
       if(row.visual==='sector-streamline')ctx.setLineDash([w*.12,w*.09]);
+      if(row.sectorArt) {
+        const tint=ctx.createLinearGradient(x,y,x+w,y);tint.addColorStop(0,`${row.swatch}12`);tint.addColorStop(1,`${row.swatch}70`);
+        ctx.fillStyle=tint;ctx.beginPath();ctx.moveTo(x,y-r);
+        ctx.quadraticCurveTo(x+w*.4,y-r*1.5,x+w*.85,y-r*.35);ctx.lineTo(x+w,y);
+        ctx.lineTo(x+w*.85,y+r*.35);ctx.quadraticCurveTo(x+w*.4,y+r*.45,x,y+r);ctx.closePath();ctx.fill();
+      }
       for (const off of [-r * 0.75, 0, r * 0.75]) {
         ctx.beginPath();
         ctx.moveTo(x, y + off);
@@ -10726,6 +10796,8 @@ function drawStyleLegendSymbol(
         ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(x+w,y);
         ctx.lineTo(x+w-r*.65,y-r*.45);ctx.lineTo(x+w-r*.65,y+r*.45);ctx.closePath();ctx.fill();
       }
+    } else if (row.sectorIcon === 'fire' && row.sectorArt) {
+      drawIllustratedSectorFlame(ctx,cx,y,r*1.25,row.swatch);
     } else if (row.sectorIcon === 'fire') {
       ctx.beginPath();
       ctx.moveTo(cx, y - r * 2.1);
@@ -11138,6 +11210,7 @@ async function composeStyleSheet(
   if (gutter > 0 && options.gutterLayout) drawLabelGutter(ctx, options.gutterLayout, gutter, mapW, H);
 
   // ── Legend panel ──
+  const illustratedSector=options.legendPresentation==='compact-sector';
   const panel = drawSheetLegendPanel(ctx, W, legendW, H);
   const panelInset = panel.inset;
   const pad = panel.padding;
@@ -11148,8 +11221,8 @@ async function composeStyleSheet(
   let y = panel.titleBaseline;
   ctx.fillStyle = '#20190F';
   const titleSize = Math.round(typeW * SHEET_LEGEND_TYPE.title);
-  ctx.font = `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`;
-  const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
+  ctx.font = `${illustratedSector ? 650 : 800} ${titleSize}px ${illustratedSector ? "Georgia, serif" : REFERENCE_LABEL_FONT}`;
+  const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${illustratedSector ? layerLabel : layerLabel.toUpperCase()}`.split(/\s+/);
   const waterUnderReview = filter === 'water' && options.aiArtwork;
   const titleLines: string[] = [];
   let titleLine = '';
@@ -11358,7 +11431,7 @@ async function composeStyleSheet(
     rowTextGap: number,
   ) => {
     const lineH = Math.max(11, Math.round(fontSize * 1.22));
-    const sectionFs = Math.max(12, Math.round(fontSize * 0.88));
+    const sectionFs = Math.max(12, Math.round(fontSize * (compactSector ? 0.65 : 0.88)));
     const sectionLineH = Math.max(10, Math.round(sectionFs * 1.15));
     const textWidth = Math.max(1, columnWidth - symbolSize - rowTextGap);
     let previousSection: string | undefined;
@@ -11451,7 +11524,7 @@ async function composeStyleSheet(
   // width overflows its column, not just its total height.
   const columnPlanOverflowsWidth = (plan: LegendColumnPlan): boolean => {
     const bodyTextWidth = Math.max(1, plan.columnWidth - plan.textX);
-    const sectionFs = Math.max(12, Math.round(plan.fontSize * 0.88));
+    const sectionFs = Math.max(12, Math.round(plan.fontSize * (compactSector ? 0.65 : 0.88)));
     for (const measured of plan.rowLayout) {
       ctx.font = `600 ${plan.fontSize}px ${SHEET_BODY_FONT}`;
       for (const line of measured.lines) {
@@ -11580,7 +11653,7 @@ async function composeStyleSheet(
   ctx.clip();
   for (const column of columnPlans) {
     const lineH = Math.max(11, Math.round(column.fontSize * 1.22));
-    const sectionFs = Math.max(12, Math.round(column.fontSize * 0.88));
+    const sectionFs = Math.max(12, Math.round(column.fontSize * (compactSector ? 0.65 : 0.88)));
     ctx.save();
     ctx.translate(column.x, legendTop);
     for (const [
@@ -11594,7 +11667,8 @@ async function composeStyleSheet(
         // it competed with the coloured swatches beside it and read as one more piece of colour to
         // decode. Ink says "this is a heading" and lets the swatches be the only colour that means
         // something.
-        ctx.fillStyle = '#20190F';
+        if(compactSector){ctx.strokeStyle='#D9E4DC';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,y+headingHeight-column.fontSize*.08);ctx.lineTo(column.columnWidth,y+headingHeight-column.fontSize*.08);ctx.stroke();}
+        ctx.fillStyle = compactSector ? '#4C6958' : '#20190F';
         ctx.font = `800 ${sectionFs}px ${REFERENCE_LABEL_FONT}`;
         headingLines.forEach((line, headingIndex) => {
           ctx.fillText(line, 0, y + sectionFs + headingIndex * sectionLineH);

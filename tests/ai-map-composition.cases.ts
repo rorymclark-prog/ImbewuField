@@ -6,7 +6,7 @@ import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtwo
 import { PHASING_ARTWORK_PROMPT_MARKER, buildPhasingRestylePrompt } from '../lib/producer-prompt.ts';
 import { UBHEJANE_BEFORE_WORKS, historicalBaselineForSite, historicalBaselineFromPrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, historicalBaselinePrompt } from '../lib/historical-map-baseline.ts';
 import { createHash } from 'node:crypto';
-import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, rasterTerrainContours, fetchProfileTerrain, TERRAIN_CONTOUR_INK } from '../lib/sheet-terrain-profile.ts';
+import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, rasterTerrainContours, fetchProfileTerrain, TERRAIN_CONTOUR_INK, TERRAIN_SUPPLEMENTAL_INK } from '../lib/sheet-terrain-profile.ts';
 import { terrainPixel, terrainRasterWindow, extractTerrainRaster, sampleTerrainRaster, type TerrainRaster } from '../lib/terrain-raster.ts';
 import { clampBaseNudge, clampBaseRotation, clampBaseScale, designBaseMode, makeMercatorUnprojector, pointInRing } from '../lib/design-canvas.ts';
 import { resolveBaseAlign } from '../lib/base-photo-align.ts';
@@ -497,7 +497,7 @@ test('Sector quiets existing artwork without shifting it or changing the exact f
     SCALE:1,document:{createElement:()=>probe.canvas},boundaryPresentationContext:async()=>p,
     fetchSectorPresentationContours:async()=>({lines:[]}),loadImage:async(src:string)=>({src}),
     drawAnalysisBase:async()=>{quiet++;},authoritativeHouseFootprints:()=>[],drawBlueprintBoundary:()=>{},
-    BOUNDARY_LINE_GREEN:'#95B34F', TERRAIN_CONTOUR_INK,
+    BOUNDARY_LINE_GREEN:'#95B34F', TERRAIN_CONTOUR_INK, TERRAIN_SUPPLEMENTAL_INK,
     drawSectorAnalysis:()=>({rows:[{color:'#95B34F',label:'Site boundary',style:'line'}],contextLabel:'Evidence',noteText:'Real analysis'}),
     drainCanvasToDataUrl:()=> 'map-art',composeStyleSheet:async(...args:any[])=>{options=args.at(-1);return 'sheet';},
   });
@@ -801,6 +801,25 @@ test('Sector contour geography uses the original saved frame and only crops the 
     calculateBoundaryPresentationLayout:()=>({cropX:.2,cropY:.1,cropWidth:.5,cropHeight:.6}),paidApiHeaders:async()=>({Authorization:'owner'}),
     fetchSheetContours:async(f:any,b:any)=>{assert.equal(f,frame);assert.equal(b,refs.boundary);queried=true;return{status:'ok',source:'mapbox-terrain-rgb',intervalM:1,lines:[{elevM:105,points:[[.3,.4],[.6,.7]]}]};}});
   const out=await run(state,frame,refs,null);assert.equal(queried,true);assert.equal(out.intervalM,5);assert.deepEqual(out.lines[0].points,[[.19999999999999996,.5000000000000001],[.7999999999999999,1]]);
+});
+
+test('illustrated Sector adds only raster-supported supplemental contours and falls back without pixels', async () => {
+  const frame={imgW:960,imgH:640,mPerPx:.24},refs={boundary:[[.3,.3],[.7,.3],[.7,.8],[.3,.8]]},state={items:[],lines:[],zones:[]};
+  const raw={status:'ok',source:'mapbox-terrain-rgb',intervalM:1,lines:[{elevM:105,points:[[.3,.4],[.6,.7]],major:false}]};
+  const detail=[{elevM:102.5,points:[[.4,.5],[.6,.6]],major:false},{elevM:105,points:[[.3,.4],[.6,.7]],major:true}];
+  const before=JSON.stringify({state,frame,refs,raw,detail});let pixels:any={source:'actual-pixel-fixture'},pixelQueries=0;
+  const run=helper('fetchSectorPresentationContours',{SCALE:3,sectorOverviewContours,presentationExtentRing:()=>refs.boundary,
+    calculateBoundaryPresentationLayout:()=>({cropX:.2,cropY:.1,cropWidth:.5,cropHeight:.6}),paidApiHeaders:async()=>({}),
+    fetchSheetContours:async()=>raw,
+    fetchProfileTerrain:async(f:any,b:any)=>{assert.equal(f,frame);assert.equal(b,refs.boundary);pixelQueries++;return pixels;},
+    rasterTerrainContours:(r:any,b:any,f:any)=>{assert.equal(r,pixels);assert.equal(b,refs.boundary);assert.equal(f,frame);return detail;}});
+  const exact=await run(state,frame,refs,null);assert.equal(pixelQueries,0,'exact overview must not request extra terrain');
+  assert.equal(exact.intervalM,5);assert.deepEqual(exact.lines.map((l:any)=>l.elevM),[105]);
+  const illustrated=await run(state,frame,refs,null,true);assert.equal(pixelQueries,1);assert.equal(illustrated.intervalM,2.5);
+  assert.deepEqual(illustrated.lines.map((l:any)=>l.elevM),[102.5,105]);
+  assert.deepEqual(illustrated.lines[0].points,[[.4,.6666666666666667],[.7999999999999999,.8333333333333334]]);
+  pixels=null;const fallback=await run(state,frame,refs,null,true);assert.equal(fallback.intervalM,5);assert.deepEqual(fallback.lines,exact.lines);
+  assert.equal(JSON.stringify({state,frame,refs,raw,detail}),before,'presentation must not mutate source or saved geometry');
 });
 
 test('Structures recovery adds only recorded permeable shade covers while retaining painted beds and saved dimensions', () => {
