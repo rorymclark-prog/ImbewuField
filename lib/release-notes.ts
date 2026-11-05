@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '5 November 2026', sha: 'd2c5b586edd9', changes: [
+  { when: '5 November 2026', sha: 'f8b89bd3cb4d', changes: [
     'Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.',
   ], tour: [{ title: 'Compare nursery wording drafts', where: 'International reference tools → Language draft review → Nursery field planting', href: '/international/locales/nursery-field-planting',
     detail: 'Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.' }] },
