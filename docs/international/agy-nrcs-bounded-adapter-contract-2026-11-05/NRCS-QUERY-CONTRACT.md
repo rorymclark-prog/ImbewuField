@@ -17,7 +17,7 @@ For the chosen format, the returned JSON structure is `{"Table": [row0, row1, ro
 3. **Row 2+ (Data Rows)**: The observed probe contains string `"1"`, a synthetic constant, not soil data. The help does not establish every future scalar/null representation; validate template-specific types and widths.
 
 ### Operational Boundaries & Scope
-- **Caps & Limits**: The documented 100,000-row maximum is an official query-result cap; the 100,000-byte cap was a coordinator-selected transport safety limit for curl. Neither represents an app default or request-rate ceiling.
+- **Caps & Limits**: The documented 100,000-row maximum limits query-result rows, not response bytes. The retained probe request/receipt do not record a local curl byte cap; that transport-limit claim is unverified. No app default or request-rate ceiling is established.
 - **Observed Access vs. Unknowns**: One unauthenticated constant-only probe succeeded, providing direct endpoint evidence. General authentication policies, reuse terms, rate limits, update cadence, and service SLAs remain unverified beyond this single request.
 - **Adapter Scope**: This research does not authorize raw client SQL pass-through, persistent Area of Interest (`pAOI`) creation, interpretation/rating services, report endpoints, or transmission of farmer locations. Future adapters must use explicitly approved, bounded query templates that satisfy privacy and country readiness gates.
 - **Failures**: Errors, empty datasets, or transport failures must never be converted into zero soil limitations, crop spacing advice, fertilizer recommendations, or farming approvals.

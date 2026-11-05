@@ -13,7 +13,7 @@
       "runtimeIntegrationImplemented": false,
       "syntheticEndpointProbeOnly": false,
       "reviewedDraftSha256": "c89de6776541c190d6aed5642c7d4e770c781b49c02ff1657e0dc1c94dd01aad",
-      "publicationFormatting": "Trailing markdown hard-break spaces removed for repository whitespace rule; wording/order unchanged."
+      "publicationFormatting": "Trailing markdown hard-break spaces removed; Final newline added. Wording/order unchanged by formatting."
     },
     {
       "path": "docs/international/agy-nepal-official-source-fit-2026-11-05/NEPAL-SOURCE-FIT.md",
@@ -25,7 +25,7 @@
       "runtimeIntegrationImplemented": false,
       "syntheticEndpointProbeOnly": false,
       "reviewedDraftSha256": "54b283d6bebf1653ab6f43293901e7b584aca490152c94522a9424804f0ed44b",
-      "publicationFormatting": "Trailing markdown hard-break spaces removed for repository whitespace rule; wording/order unchanged."
+      "publicationFormatting": "Final newline added. Wording/order unchanged by formatting."
     },
     {
       "path": "docs/international/agy-nepal-material-use-2026-11-05/MATERIAL-USE-EVIDENCE.md",
@@ -35,7 +35,8 @@
       "status": "coordinator-source-reviewed-ai-documentation",
       "humanFluentOrLegalApproval": false,
       "runtimeIntegrationImplemented": false,
-      "syntheticEndpointProbeOnly": false
+      "syntheticEndpointProbeOnly": false,
+      "publicationFormatting": "No formatting changes."
     },
     {
       "path": "docs/international/agy-nepal-notice-payload-2026-11-05/NOTICE-PAYLOAD-READING.md",
@@ -45,7 +46,8 @@
       "status": "coordinator-source-reviewed-ai-documentation",
       "humanFluentOrLegalApproval": false,
       "runtimeIntegrationImplemented": false,
-      "syntheticEndpointProbeOnly": false
+      "syntheticEndpointProbeOnly": false,
+      "publicationFormatting": "No formatting changes."
     },
     {
       "path": "docs/international/agy-france-open-licence-2026-11-05/FRANCE-OPEN-LICENCE-NOTE.md",
@@ -57,19 +59,20 @@
       "runtimeIntegrationImplemented": false,
       "syntheticEndpointProbeOnly": false,
       "reviewedDraftSha256": "020cc75ece3df6bc64f1ab87d22e2d428b2d210009ca57e8b76835c3b72fb5e7",
-      "publicationFormatting": "Trailing markdown hard-break spaces removed for repository whitespace rule; wording/order unchanged."
+      "publicationFormatting": "Final newline added. Wording/order unchanged by formatting."
     },
     {
       "path": "docs/international/agy-nrcs-bounded-adapter-contract-2026-11-05/NRCS-QUERY-CONTRACT.md",
-      "bytes": 3780,
-      "sha256": "bc998a35089a5b57d5e9863e37b6bc6e5e7cd3fddb5cab8b76ea8aa7a84bf08f",
-      "actualWhitespaceWords": 440,
+      "bytes": 3822,
+      "sha256": "617823560175018384bb21999a4f75f20ee1a30bbcab64e4a623badfdcd81a21",
+      "actualWhitespaceWords": 447,
       "status": "coordinator-source-reviewed-ai-documentation",
       "humanFluentOrLegalApproval": false,
       "runtimeIntegrationImplemented": false,
       "syntheticEndpointProbeOnly": true,
       "reviewedDraftSha256": "5fdc9fa549189b655b92736cbc27ee56ba387a1455bfe9ee551678dbc93b94df",
-      "publicationFormatting": "Trailing markdown hard-break spaces removed for repository whitespace rule; wording/order unchanged."
+      "publicationFormatting": "Final newline added. Wording/order unchanged by formatting.",
+      "publicationCorrection": "Independent review found no recorded execution evidence for the claimed local curl byte cap; document now explicitly marks it unverified. Constant-only request/response and official row-cap evidence are unchanged."
     }
   ]
 }
