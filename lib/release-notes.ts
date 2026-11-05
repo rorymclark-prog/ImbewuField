@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: '2c50bc6c49', changes: [
+    'Keep references for saved nursery batches',
+  ], tour: [{ title: 'Keep references for saved nursery batches', where: 'Crop plan → Saved planned nursery batches', href: '/facilitator/crops',
+    detail: 'Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.' }] },
   { when: '5 November 2026', sha: '634a0fe4b5', changes: [
     'Check a public US forecast reference',
   ], tour: [{ title: 'Check a public US forecast reference', where: 'Country evidence → United States → Washington forecast', href: '/international',

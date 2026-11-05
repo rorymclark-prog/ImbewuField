@@ -443,5 +443,9 @@ const copy:UpdateCopy={
   "Check a public US forecast reference": "Sedzani tsumbo ya tsumbamutsho ya US",
   "Country evidence → United States → Washington forecast": "Vhuṱanzi ha shango → United States → Tsumbamutsho ya Washington",
   "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Humbelani tsumbamutsho ya tsumbo ya nnyi na nnyi ya Washington kha National Weather Service. Zwifhinga zwa tshiko, mivhalo ya Celsius na zwi sa ḓivhei zwi dzula zwi tshi vhonala; hezwi a zwi shanduli maḓuvha a zwiliṅwa kana u tendela nyeletshedzo ya henefho.",
+  // Nursery-batch-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-batch-reference-release-drafts.json.
+  "Keep references for saved nursery batches": "Vhulungani referentsi dza zwigwada zwa nursery zwo vhulungwaho",
+  "Crop plan → Saved planned nursery batches": "Pulane ya zwimela → Zwigwada zwa nursery zwo vhekanywaho zwo vhulungwaho",
+  "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Engedzani madzina a tshaka dzaṋu, referentsi dza zwigwada zwa mbeu na zwa u alusa zwimilana kha tshigwada tshiṅwe na tshiṅwe tsho vhekanywaho tsho vhulungwaho, ni kone u sedzulusa ṱhoḓea dza nursery kana u downlouda maṱari a mushumo. Hedzi lebulu a dzi rekhodi u zwala ho no vhonwaho kana tshitoko tshi re hone.",
 };
 export default copy;

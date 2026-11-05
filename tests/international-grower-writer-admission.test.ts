@@ -14,6 +14,27 @@ const receipts = await import('../lib/nursery-save-receipt.ts');
 const { harvestTargetsSourceKey } = receipts;
 beforeEach(reset); after(cleanup);
 
+test('new planned-reference presence cannot disappear through the sample JSON token projection', async () => {
+  assert.equal(samples.enterSampleMode(), true);
+  try {
+    const row = { id: 'sample-reference', bedId: 'sample-bed', cropKey: CROPS[0].key, sowMonth: 12, variety: undefined };
+    samples.setSandboxCropPlan({ version: 1, plantings: [row], updatedAt: 7 });
+    assert.equal(crop.readRawCropPlanReceipt().status, 'ready', 'ordinary optional variety omission retains existing sample semantics');
+    const raw = { version: 1 as const, plantings: [{ ...row, nurseryBatchReference: undefined }], updatedAt: 7 };
+    samples.setSandboxCropPlan(raw);
+    assert.equal(crop.readRawCropPlanReceipt().status, 'held', 'present unreadable reference evidence must not become absent');
+    assert.equal(crop.cropPlanWriteToken(), null);
+    assert.equal(samples.getSandboxCropPlan(), raw, 'inspection must not repair the original sample object');
+    for (const reference of [{ seedLotReference: undefined }, { privateMetadata: { note: undefined } }]) {
+      const nested = { version: 1 as const, plantings: [{ ...row, nurseryBatchReference: reference }], updatedAt: 7 };
+      samples.setSandboxCropPlan(nested);
+      assert.equal(crop.readRawCropPlanReceipt().status, 'held', 'nested reference evidence must not become absent through JSON omission');
+      assert.equal(crop.cropPlanWriteToken(), null);
+      assert.equal(samples.getSandboxCropPlan(), nested);
+    }
+  } finally { samples.exitSampleMode(); }
+});
+
 // All quantities, dates and identities here are synthetic engineering fixtures,
 // never crop guidance. Every book read/write uses the real in-memory authorities.
 const otherSite = 'site:2.00000,2.00000';

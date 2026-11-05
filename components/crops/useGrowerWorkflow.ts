@@ -12,6 +12,11 @@ import {
 } from '@/lib/international/grower-workflow-source';
 import { growerPlanningScopeKey, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import { assembleGrowerWorkflowReview, type GrowerWorkflowDraft, type GrowerWorkflowReview, type PrepareGrowerWorkflowAcceptanceInput } from '@/lib/international/grower-workflow';
+import { detachJsonData } from '@/lib/lossless-json';
+import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
+import type { GrowerCycleContext } from '@/lib/international/grower-cycle';
+import type { GrowerWindowInput } from '@/lib/international/grower-autoplan';
+import { resolveGrowerNurseryBatchReference, type GrowerNurseryBatchReferenceChange } from '@/lib/international/grower-nursery';
 
 export type GrowerWorkflowBookReceipt =
   | { status: 'ready'; book: CropPlanState; token: string; isCurrent?: () => boolean }
@@ -33,6 +38,47 @@ export interface GrowerWorkflowAcceptanceCommit {
   /** Revocation only: the parent still checks its own actor, admission and book. */
   readonly isCurrent: () => boolean;
 }
+export interface GrowerSavedNurseryReview {
+  readonly kind: 'saved-nursery-review';
+  readonly source: GrowerWorkflowSource;
+  readonly rows: unknown;
+  readonly cycleContext: GrowerCycleContext;
+  readonly horizon: GrowerWindowInput;
+  readonly references: readonly {
+    readonly plantingId: string;
+    readonly cropKey: string;
+    readonly bedId: string;
+    readonly startDate: string;
+    readonly endDateExclusive: string;
+    readonly reference: ReturnType<typeof resolveGrowerNurseryBatchReference>;
+  }[];
+}
+export type GrowerSavedNurseryReadResult =
+  | { readonly status: 'ready'; readonly view: GrowerSavedNurseryReview }
+  | { readonly status: 'held'; readonly reason: string };
+export interface GrowerNurseryReferenceAcknowledgement { readonly kind: 'nursery-reference-acknowledgement' }
+export type GrowerNurseryBatchReferenceSaveResult =
+  | { readonly status: 'confirmed'; readonly rows: number; readonly sample: boolean; readonly acknowledgement: GrowerNurseryReferenceAcknowledgement }
+  | { readonly status: 'unchanged' }
+  | { readonly status: 'held'; readonly reasons: readonly string[] }
+  | { readonly status: 'failed' }
+  | { readonly status: 'superseded' };
+export interface GrowerNurseryReferenceCommit {
+  readonly originalRows: unknown;
+  readonly originalContext: GrowerCycleContext;
+  readonly source: GrowerWorkflowSource;
+  readonly expectedBookToken: string;
+  readonly changes: readonly GrowerNurseryBatchReferenceChange[];
+  /** Remains checkable after the intended book write revokes its old token. */
+  readonly sourceIsCurrent: () => boolean;
+  /** This only revokes an old intent. The parent still owns the storage gate. */
+  readonly isCurrent: () => boolean;
+}
+export type GrowerNurseryReferenceCommitResult =
+  | { readonly status: 'confirmed'; readonly rows: number; readonly sample: boolean;
+      /** The exact admitted readback/base, not an elapsed time or rerender. */
+      readonly readbackIsCurrent: () => boolean }
+  | Exclude<GrowerNurseryBatchReferenceSaveResult, { status: 'confirmed' }>;
 interface Inputs {
   selection: { kind: GrowerWorkflowSourceKind; sourceId: string } | null;
   scope: GrowerPlanningScope | null;
@@ -42,15 +88,59 @@ interface Inputs {
   actorIsCurrent: () => boolean;
   readCurrentBook: () => GrowerWorkflowBookReceipt;
   commitAcceptance?: (request: GrowerWorkflowAcceptanceCommit) => GrowerWorkflowAcceptanceResult;
+  commitNurseryReferences?: (request: GrowerNurseryReferenceCommit) => GrowerNurseryReferenceCommitResult;
   createPlantingId?: () => string;
 }
 const hold = (issue: string): GrowerWorkflowReview => ({ status: 'held', issues: [issue], blockedBeds: [], targetMetadata: [], existingOwnCycles: [] });
 const planningKey = (book: CropPlanState | null) => JSON.stringify([book?.plantings, book?.growerPlanningProfiles, book?.harvestTargets]);
+const savedNurseryKey = (value: unknown): string | null => {
+  try { return JSON.stringify(detachJsonData(value, { allowUndefinedObjectFields: true })); }
+  catch { return null; }
+};
+function savedNurseryView(source: GrowerWorkflowSource, book: CropPlanState, recordedAt: string): GrowerSavedNurseryReview {
+  const rows = detachJsonData(book.plantings, { allowUndefinedObjectFields: true });
+  const cycleContext: GrowerCycleContext = { scope: source.scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint };
+  const projection = projectGrowerCycles(rows, cycleContext);
+  const references: GrowerSavedNurseryReview['references'] = projection.ownCycles.flatMap(cycle => !cycle.nurseryDemand ? [] : [{
+    plantingId: cycle.plantingId, cropKey: cycle.cropKey, bedId: cycle.bedId,
+    startDate: cycle.nurseryDemand.interval.start, endDateExclusive: cycle.nurseryDemand.interval.endExclusive,
+    reference: resolveGrowerNurseryBatchReference(rows, cycleContext, cycle.plantingId),
+  }]);
+  const starts = references.map(row => row.startDate).sort(), ends = references.map(row => row.endDateExclusive).sort();
+  // These are the represented saved intervals, not a new calendar or a claim
+  // that anything was sown. Empty/zero-length work cannot invent a review day.
+  const horizon: GrowerWindowInput = starts.length && starts[0] < ends[ends.length - 1]
+    ? { state: 'provided', value: { start: starts[0], endExclusive: ends[ends.length - 1] }, unit: 'utc-date-window',
+        provenance: { kind: 'grower-record', recordedAt, reference: 'Coverage of saved planned nursery intervals; not observed sowing dates.' } }
+    : { state: 'missing', reason: 'not-entered' };
+  return detachJsonData({ kind: 'saved-nursery-review', source, rows, cycleContext, horizon, references },
+    { allowUndefinedObjectFields: true }) as GrowerSavedNurseryReview;
+}
+interface SavedNurseryBinding {
+  readonly key: string;
+  readonly rows: unknown;
+  readonly context: GrowerCycleContext;
+  readonly source: GrowerWorkflowSource;
+  readonly sourceKey: string;
+  readonly token: string;
+  readonly epoch: number;
+  readonly selectionKey: string;
+  readonly actorIsCurrent: () => boolean;
+  readonly bookIsCurrent: () => boolean;
+  readonly sourceIsCurrent: () => boolean;
+}
+interface NurseryReferenceAcknowledgementBinding {
+  readonly selectionKey: string;
+  readonly actorIsCurrent: () => boolean;
+  readonly sourceIsCurrent: () => boolean;
+  readonly readbackIsCurrent: () => boolean;
+  consumed: boolean;
+}
 
 /** Ephemeral review coordinator. No read token becomes write authority here. */
 export function useGrowerWorkflow(input: Inputs) {
   const live = useRef(input); live.current = input;
-  const epoch = useRef(0), mounted = useRef(false);
+  const epoch = useRef(0), sourceEpoch = useRef(0), mounted = useRef(false);
   const [source, setSource] = useState<GrowerWorkflowSource | null>(null);
   const sourceRef = useRef(source);
   const sourceContext = useRef<{ actorIsCurrent: () => boolean; selectionKey: string } | null>(null);
@@ -59,6 +149,11 @@ export function useGrowerWorkflow(input: Inputs) {
   const [revision, setRevision] = useState(0);
   const [bookEvent, setBookEvent] = useState(0);
   const [acceptance, setAcceptance] = useState<GrowerWorkflowAcceptanceState>({ status: 'idle' });
+  const [savedNursery, setSavedNursery] = useState<GrowerSavedNurseryReview | null>(null);
+  const [savedNurseryChecking, setSavedNurseryChecking] = useState(false);
+  const savedNurseryBindings = useRef(new WeakMap<object, SavedNurseryBinding>());
+  const nurseryAcknowledgements = useRef(new WeakMap<object, NurseryReferenceAcknowledgementBinding>());
+  const nurseryReading = useRef(false), nurserySaving = useRef(false);
   const accepting = useRef(false);
   const acceptanceContext = useRef<{ actorIsCurrent: () => boolean; selectionKey: string } | null>(null);
   const selectionKey = JSON.stringify([input.selection, growerPlanningScopeKey(input.scope), input.resourceSiteId]);
@@ -75,11 +170,13 @@ export function useGrowerWorkflow(input: Inputs) {
   const bindings = useRef(new WeakMap<object, { draft: GrowerWorkflowDraft; source: GrowerWorkflowSource; recordedAt: string; actorIsCurrent: () => boolean; selectionKey: string }>());
 
   function invalidateSource(message: string | null) {
+    sourceEpoch.current++;
+    setSavedNursery(null); setSavedNurseryChecking(false);
     epoch.current++; sourceContext.current = null; sourceRef.current = null; setSource(null); setSourceIssue(message); setChecking(false); setRevision(value => value + 1);
   }
   useEffect(() => { invalidateSource(null); setAcceptance({ status: 'idle' }); }, [selectionKey]);
-  useEffect(() => { epoch.current++; setChecking(false); setRevision(value => value + 1); }, [bookKey]);
-  useEffect(() => { mounted.current = true; return () => { mounted.current = false; epoch.current++; sourceContext.current = null; sourceRef.current = null; }; }, []);
+  useEffect(() => { epoch.current++; setChecking(false); setSavedNursery(null); setRevision(value => value + 1); }, [bookKey]);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; epoch.current++; sourceEpoch.current++; sourceContext.current = null; sourceRef.current = null; }; }, []);
   useEffect(() => {
     const sourceChanged = () => invalidateSource('The saved source may have changed. Check its current design again.');
     // A local writer dispatches before returning its own receipt. Check the book
@@ -141,6 +238,7 @@ export function useGrowerWorkflow(input: Inputs) {
     return isCurrent() ? { source: result, isCurrent } : null;
   }
   async function onRefresh() {
+    sourceEpoch.current++;
     const turn = ++epoch.current, actorIsCurrent = live.current.actorIsCurrent, checkedSelection = selectionRef.current;
     setAcceptance({ status: 'idle' });
     setChecking(true); sourceContext.current = null; sourceRef.current = null; setSource(null); setSourceIssue(null); setRevision(value => value + 1);
@@ -187,6 +285,110 @@ export function useGrowerWorkflow(input: Inputs) {
       && JSON.stringify(current.request) === JSON.stringify(review.request)
       && JSON.stringify(current.blockedBeds) === JSON.stringify(review.blockedBeds)
       && JSON.stringify(current.existingOwnCycles) === JSON.stringify(review.existingOwnCycles);
+  }
+  function savedBindingIsCurrent(view: GrowerSavedNurseryReview, binding = savedNurseryBindings.current.get(view)): boolean {
+    try {
+      return mounted.current && !!binding && epoch.current === binding.epoch
+        && binding.selectionKey === selectionRef.current && binding.actorIsCurrent() && live.current.actorIsCurrent()
+        && binding.bookIsCurrent() && binding.sourceIsCurrent() && savedNurseryKey(view) === binding.key;
+    } catch { return false; }
+  }
+  async function onReadSavedNursery(acknowledgement?: GrowerNurseryReferenceAcknowledgement): Promise<GrowerSavedNurseryReadResult> {
+    const held = (reason: string): GrowerSavedNurseryReadResult => ({ status: 'held', reason });
+    const acknowledgementBinding = acknowledgement ? nurseryAcknowledgements.current.get(acknowledgement) : null;
+    const acknowledgementIsCurrent = () => {
+      try { return !acknowledgement || !!acknowledgementBinding && !acknowledgementBinding.consumed
+        && acknowledgementBinding.selectionKey === selectionRef.current && acknowledgementBinding.actorIsCurrent()
+        && acknowledgementBinding.sourceIsCurrent() && acknowledgementBinding.readbackIsCurrent(); }
+      catch { return false; }
+    };
+    if (nurseryReading.current || nurserySaving.current) return held('nursery-operation-in-progress');
+    if (!mounted.current || !live.current.actorIsCurrent() || !acknowledgementIsCurrent()) return held('context-changed');
+    const initial = live.current, actorIsCurrent = initial.actorIsCurrent, selection = selectionRef.current;
+    const before = initial.readCurrentBook();
+    if (before.status !== 'ready') return held(before.reason);
+    if (!before.isCurrent?.()) return held('pending-plan-edits');
+    const turn = ++epoch.current;
+    nurseryReading.current = true; setSavedNurseryChecking(true); setSavedNursery(null); setChecking(false);
+    try {
+      const checked = await readSource();
+      if (!checked || !mounted.current || epoch.current !== turn || selectionRef.current !== selection
+        || !actorIsCurrent() || !live.current.actorIsCurrent() || !before.isCurrent?.() || !acknowledgementIsCurrent()) return held('context-changed');
+      const after = live.current.readCurrentBook();
+      if (after.status !== 'ready') return held(after.reason);
+      if (after.token !== before.token || !after.isCurrent?.() || !checked.isCurrent()) return held('saved-plan-changed');
+      const view = savedNurseryView(checked.source, after.book, new Date().toISOString()), key = savedNurseryKey(view);
+      const sourceKey = savedNurseryKey(checked.source);
+      if (!key || !sourceKey || !before.isCurrent?.() || !after.isCurrent?.() || !acknowledgementIsCurrent()) return held('context-changed');
+      const sourceTurn = sourceEpoch.current;
+      savedNurseryBindings.current.set(view, { key,
+        rows: detachJsonData(view.rows, { allowUndefinedObjectFields: true }),
+        context: detachJsonData(view.cycleContext, { allowUndefinedObjectFields: true }) as GrowerCycleContext,
+        source: detachJsonData(checked.source, { allowUndefinedObjectFields: true }) as GrowerWorkflowSource,
+        sourceKey, token: after.token, epoch: turn, selectionKey: selection, actorIsCurrent,
+        bookIsCurrent: () => before.isCurrent?.() === true && after.isCurrent?.() === true,
+        sourceIsCurrent: () => mounted.current && sourceEpoch.current === sourceTurn && checked.isCurrent() });
+      if (!savedBindingIsCurrent(view)) return held('context-changed');
+      if (acknowledgementBinding) acknowledgementBinding.consumed = true;
+      sourceContext.current = { actorIsCurrent, selectionKey: selection };
+      sourceRef.current = checked.source; setSource(checked.source); setSourceIssue(null);
+      setSavedNursery(view);
+      return { status: 'ready', view };
+    } catch { return held('saved-nursery-review-failed'); }
+    finally { nurseryReading.current = false; if (mounted.current) setSavedNurseryChecking(false); }
+  }
+  async function onCheckSavedNurseryCurrent(view: GrowerSavedNurseryReview): Promise<boolean> {
+    const binding = savedNurseryBindings.current.get(view);
+    if (!binding || !savedBindingIsCurrent(view, binding)) return false;
+    const before = live.current.readCurrentBook();
+    if (before.status !== 'ready' || before.token !== binding.token || !before.isCurrent?.()) return false;
+    const checked = await readSource();
+    if (!checked || !checked.isCurrent() || savedNurseryKey(checked.source) !== binding.sourceKey
+      || !savedBindingIsCurrent(view, binding)) return false;
+    const after = live.current.readCurrentBook();
+    return after.status === 'ready' && after.token === binding.token && after.isCurrent?.() === true
+      && before.isCurrent?.() === true && savedBindingIsCurrent(view, binding);
+  }
+  async function onSaveNurseryBatchReferences(view: GrowerSavedNurseryReview, changes: readonly GrowerNurseryBatchReferenceChange[],
+    displayedIsCurrent: () => boolean = () => true): Promise<GrowerNurseryBatchReferenceSaveResult> {
+    const held = (...reasons: string[]): GrowerNurseryBatchReferenceSaveResult => ({ status: 'held', reasons });
+    const binding = savedNurseryBindings.current.get(view), initial = live.current;
+    const originalIsCurrent = () => {
+      try { return !!binding && savedBindingIsCurrent(view, binding) && displayedIsCurrent(); }
+      catch { return false; }
+    };
+    if (nurseryReading.current || nurserySaving.current) return held('nursery-operation-in-progress');
+    if (!binding || !initial.commitNurseryReferences || !originalIsCurrent()) return held('saved-nursery-binding-changed');
+    let detachedChanges: readonly GrowerNurseryBatchReferenceChange[];
+    try { detachedChanges = detachJsonData(changes) as readonly GrowerNurseryBatchReferenceChange[]; }
+    catch { return held('reference-change-unreadable'); }
+    nurserySaving.current = true;
+    try {
+      const before = initial.readCurrentBook();
+      if (before.status !== 'ready') return held(before.reason);
+      if (before.token !== binding.token || !before.isCurrent?.()) return held('saved-plan-changed');
+      const checked = await readSource();
+      if (!checked || savedNurseryKey(checked.source) !== binding.sourceKey || !originalIsCurrent()) return held('source-changed');
+      const after = live.current.readCurrentBook();
+      if (after.status !== 'ready') return held(after.reason);
+      const isCurrent = () => originalIsCurrent() && checked.isCurrent()
+        && before.isCurrent?.() === true && after.isCurrent?.() === true;
+      if (after.token !== binding.token || !isCurrent()) return held('saved-plan-changed');
+      const sourceIsCurrent = () => mounted.current && binding.selectionKey === selectionRef.current
+        && binding.actorIsCurrent() && live.current.actorIsCurrent() && binding.sourceIsCurrent() && checked.isCurrent();
+      const result = initial.commitNurseryReferences({ originalRows: binding.rows, originalContext: binding.context,
+        source: checked.source, expectedBookToken: after.token, changes: detachedChanges, isCurrent, sourceIsCurrent });
+      if (result.status !== 'confirmed') return result;
+      // Own writes revoke the original book. The next read needs the parent's
+      // exact new receipt/base, so a later actor or unrelated write cannot use
+      // a mere rerender as confirmation of this intent.
+      savedNurseryBindings.current.delete(view); setSavedNursery(null);
+      const acknowledgement: GrowerNurseryReferenceAcknowledgement = Object.freeze({ kind: 'nursery-reference-acknowledgement' });
+      nurseryAcknowledgements.current.set(acknowledgement, { consumed: false, selectionKey: binding.selectionKey,
+        actorIsCurrent: binding.actorIsCurrent, sourceIsCurrent, readbackIsCurrent: result.readbackIsCurrent });
+      return { status: 'confirmed', rows: result.rows, sample: result.sample, acknowledgement };
+    } catch { return held('reference-save-check-failed'); }
+    finally { nurserySaving.current = false; }
   }
   async function onAccept(review: Review, displayedReviewIsCurrent: () => boolean = () => true): Promise<GrowerWorkflowAcceptanceResult> {
     const held = (...reasons: string[]): GrowerWorkflowAcceptanceResult => ({ status: 'held', reasons });
@@ -239,5 +441,7 @@ export function useGrowerWorkflow(input: Inputs) {
     const context = acceptanceContext.current;
     if (context && (context.selectionKey !== selectionKey || !context.actorIsCurrent() || !input.actorIsCurrent())) visibleAcceptance = { status: 'idle' };
   } catch { visibleAcceptance = { status: 'idle' }; }
-  return { source: visibleSource, sourceIssue, checking, contextRevision: revision, onRefresh, onReview, onCheckCurrent, onAccept, acceptance: visibleAcceptance };
+  const visibleSavedNursery = savedNursery && savedBindingIsCurrent(savedNursery) ? savedNursery : null;
+  return { source: visibleSource, sourceIssue, checking, contextRevision: revision, onRefresh, onReview, onCheckCurrent, onAccept, acceptance: visibleAcceptance,
+    savedNurseryReview: visibleSavedNursery, savedNurseryChecking, onReadSavedNursery, onCheckSavedNurseryCurrent, onSaveNurseryBatchReferences };
 }

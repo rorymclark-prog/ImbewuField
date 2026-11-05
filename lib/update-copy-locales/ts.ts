@@ -443,5 +443,9 @@ const copy:UpdateCopy={
   "Check a public US forecast reference": "Kambela nkombiso wa maxelo lama rindzeriweke ya US",
   "Country evidence → United States → Washington forecast": "Vumbhoni bya tiko → United States → Maxelo lama rindzeriweke ya Washington",
   "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Kombela nkombiso wa mani na mani wa maxelo lama rindzeriweke ya Washington eka National Weather Service. Minkarhi ya xihlovo, mimpimo ya Celsius ni leswi nga tivekiki swi tshamaka swi vonaka; leswi a swi cinci masiku ya swibyariwa kumbe ku pasisa switsundzuxo swa ndhawu.",
+  // Nursery-batch-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-batch-reference-release-drafts.json.
+  "Keep references for saved nursery batches": "Hlayisa tirheferense ta mintlawa ya nursery leyi hlayisiweke",
+  "Crop plan → Saved planned nursery batches": "Pulani ya swibyariwa → Mintlawa ya nursery leyi pulaniweke yi tlhela yi hlayisiwa",
+  "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Engetela mavito ya tinxaka ta wena, tirheferense ta mintlawa ya mbewu ni mintlawa yo kurisa swimilana eka ntlawa wun’wana ni wun’wana lowu pulaniweke wu tlhela wu hlayisiwa, kutani u kambisisa swilaveko swa nursery kumbe u dawuniloda maphepha ya ntirho. Tilebulu leti a ti rhekhodi ku byala loku voniweke kumbe xitoko lexi nga kona.",
 };
 export default copy;

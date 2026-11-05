@@ -44,6 +44,9 @@ export interface Planting {
   /** Presence is significant even when malformed: never strip a held own-basis
    * row into catalogue planning. Live own arithmetic needs current context. */
   growerCycle?: unknown;
+  /** Optional reference for one saved planned nursery batch. Presence remains
+   * significant when malformed; it is not observed seed or seedling stock. */
+  nurseryBatchReference?: unknown;
   /** A dated crop-cycle capacity allocation, never a weekly delivery promise. */
   harvestTargetId?: string;
   id: string;
@@ -423,7 +426,18 @@ export function restampEditedOnce(
   };
 }
 
+function assertNurseryReferencePresence(planting: unknown): void {
+  if (!planting || typeof planting !== 'object') return;
+  const field = Object.getOwnPropertyDescriptor(planting, 'nurseryBatchReference');
+  // Ordinary optional sample fields may be undefined. This presence-sensitive
+  // attachment cannot: JSON omission would turn held evidence into no label.
+  if (field && (!Object.hasOwn(field, 'value') || field.value === undefined)) throw Error('Unreadable planned nursery reference');
+  // Nested attachment properties are presence-sensitive too; accepting their
+  // undefined values here would silently omit held evidence from the token.
+  if (field) copyCropPlanAuthoredData(field.value);
+}
 function preservePlantingMarker(planting: Planting): Planting {
+  assertNurseryReferencePresence(planting);
   return hasGrowerCycleMarker(planting) ? { ...planting, ...preserveGrowerCycleMarker(planting) } : planting;
 }
 
@@ -564,7 +578,10 @@ function copyCropPlanAuthoredData(value: unknown, parents = new Set<object>(), a
 // Every sample token reads the same descriptor-safe snapshot. A safe initial
 // load cannot authorize a later getter whose JSON result merely looks unchanged.
 function sampleCropPlanSnapshot(value: unknown = getSandboxCropPlan()): { raw: unknown; token: string } {
-  const raw: unknown = JSON.parse(JSON.stringify(copyCropPlanAuthoredData(value, new Set(), true)));
+  const copied = copyCropPlanAuthoredData(value, new Set(), true);
+  const rows = copied && typeof copied === 'object' && !Array.isArray(copied) ? (copied as Partial<CropPlanState>).plantings : null;
+  if (Array.isArray(rows)) rows.forEach(assertNurseryReferencePresence);
+  const raw: unknown = JSON.parse(JSON.stringify(copied));
   return { raw, token: JSON.stringify(['sample', raw]) };
 }
 export function readRawCropPlanReceipt(): RawCropPlanReceipt {
@@ -823,11 +840,15 @@ function cropPlanStorageValue(s: CropPlanState): CropPlanState {
 /** Return the exact bytes this writer stored, rather than blessing whatever
  * another tab may have written before a later read. Tokens stay device-private. */
 
-export function saveCropPlanWithReceipt(s: CropPlanState, options?: { readonly growerProfileChange?: GrowerProfileChangePermit }): CropPlanWriteReceipt {
+export function saveCropPlanWithReceipt(s: CropPlanState, options?: { readonly growerProfileChange?: GrowerProfileChangePermit; readonly writeIsCurrent?: () => boolean }): CropPlanWriteReceipt {
   let profileChange: GrowerProfileChangeProof | undefined, profileChangePermit: GrowerProfileChangePermit | undefined;
+  let writeIsCurrent: (() => boolean) | undefined;
   try {
     if (options !== undefined) {
       if (!options || typeof options !== 'object') return { saved: false, token: null };
+      const guard = Object.getOwnPropertyDescriptor(options, 'writeIsCurrent');
+      if (guard && (!('value' in guard) || typeof guard.value !== 'function')) return { saved: false, token: null };
+      writeIsCurrent = guard?.value;
       const supplied = Object.getOwnPropertyDescriptor(options, 'growerProfileChange');
       if (supplied && !('value' in supplied)) return { saved: false, token: null };
       if (supplied?.value !== undefined) {
@@ -840,6 +861,7 @@ export function saveCropPlanWithReceipt(s: CropPlanState, options?: { readonly g
         if (profileChange.revoked || typeof window === 'undefined' || window !== profileChange.win) return { saved: false, token: null };
       }
     }
+    if (writeIsCurrent && writeIsCurrent() !== true) return { saved: false, token: null };
     // Reject accessor-bearing candidates before spread/normalisation can execute them.
     const detached = copyCropPlanAuthoredData(s, new Set(), true) as CropPlanState;
     const saved = cropPlanStorageValue(detached);
@@ -857,18 +879,22 @@ export function saveCropPlanWithReceipt(s: CropPlanState, options?: { readonly g
     if (sample) {
       const { token } = sampleCropPlanSnapshot(saved);
       if (profileChange && (profileChange.revoked || typeof window === 'undefined' || window !== profileChange.win)) return { saved: false, token: null };
+      if (writeIsCurrent && writeIsCurrent() !== true) return { saved: false, token: null };
       setSandboxCropPlan(saved);
       try { if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT)); } catch { /* An optional refresh event cannot undo an actual saved receipt. */ }
       return { saved: true, token };
     }
     if (typeof window === 'undefined' || !window.localStorage) return { saved: false, token: null };
     let receipt: CropPlanWriteReceipt;
-    if (profileChange) {
+    if (profileChange || writeIsCurrent) {
       const operation = profileChange, context = makeBrowserCropPlanStorageContext();
       if (!context) return { saved: false, token: null };
-      const operationIsCurrent = () => !operation.revoked && typeof window !== 'undefined' && window === operation.win;
+      const operationIsCurrent = () => (!operation || !operation.revoked && typeof window !== 'undefined' && window === operation.win)
+        && (!writeIsCurrent || writeIsCurrent() === true);
       // A storage read inside the underlying context check or raw writer can
       // dispatch sample enter/exit and return to the same owner/mode/token.
+      // A nursery source can also be withdrawn during those reads. Carry its
+      // original revocation callback, which grants no new write authority.
       // Carry the latched operation boundary into that writer's existing checks,
       // before and after the underlying check, rather than checking only once.
       const guarded = { ...context, isCurrent: () => operationIsCurrent() && context.isCurrent() && operationIsCurrent() };

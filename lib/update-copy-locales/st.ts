@@ -443,5 +443,9 @@ const copy:UpdateCopy={
   "Check a public US forecast reference": "Lekola mohlala oa bolepi ba leholimo ba US",
   "Country evidence → United States → Washington forecast": "Bopaki ba naha → United States → Bolepi ba Washington",
   "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Kopa bolepi ba mohlala oa sechaba oa Washington ho National Weather Service. Linako tsa mohloli, boleng ba Celsius le tse sa tsejoeng li lula li bonahala; sena ha se fetole matsatsi a lijalo kapa ho amohela likeletso tsa lehae.",
+  // Nursery-batch-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-batch-reference-release-drafts.json.
+  "Keep references for saved nursery batches": "Boloka ditshupiso tsa dihlopha tsa nursery tse bolokilweng",
+  "Crop plan → Saved planned nursery batches": "Moralo wa dijalo → Dihlopha tse rerilweng tsa nursery tse bolokilweng",
+  "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Kenya mabitso a mefuta ya hao, ditshupiso tsa dihlopha tsa peo le tsa dihlopha tsa ho hodisa dimela bakeng sa sehlopha ka seng se rerilweng se bolokilweng, ebe o hlahloba ditlhoko tsa nursery kapa o jarolle maqephe a mosebetsi. Dileibole tsena ha di rekote ho jala ho bonweng kapa setoko se teng.",
 };
 export default copy;
