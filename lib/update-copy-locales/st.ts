@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Coordinator-adopted unreviewed main contour description; exact packet: docs/international/agy-integration-bold-contour-release-copy-2026-11-05/. English remains paired.
+  "Sector illustrations now show bolder terrain contours and matching key lines.": "Ditshwantsho tsa karolo jwale di bontsha mela e motenya ya sebopeho sa mobu le mela e tsamaelanang ya tlhaloso ya mmapa.",
   // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
   "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Ditshwantsho tsa karolo di boloka mebala e matla haholoanyane, e nang le mangolo a maholwanyane le mela e hlakileng ya sebopeho sa mobu.",
   // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.

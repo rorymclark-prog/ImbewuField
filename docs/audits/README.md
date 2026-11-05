@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest international nursery integration — [Current-main reconciliation and preserved verification scope — 5 November 2026](2026-11-05/international-nursery-main-reconcile-codex.md). New ordered/current-head and actual output gates remain pending.
+
 Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Required release checks and normal published-host login remain open.
 
 Latest assistant identity continuation — [MCP display name, published sprout and private listing — 4 November 2026](2026-11-04/assistant-connector-branding-codex.md). Native authentication follows the separate callback release.
@@ -36,6 +38,8 @@ record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
+
+Latest Sector follow-up: [Bolder contours and external reference comparison — 5 November 2026](2026-11-05/sector-bold-contours-codex.md). Release evidence is separate on its PR/issue #35.
 
 Latest Sector implementation: [Actual rich-aerial C and release continuation — 5 November 2026](2026-11-05/sector-rich-aerial-release-codex.md). Release evidence is recorded on PR #1274 and issue #35.
 

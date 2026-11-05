@@ -88,6 +88,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Plan separate availability windows for each growing space',
   ], tour: [{ title: 'Plan separate availability windows for each growing space', where: 'Crop plan → Automatic plan from your estimates → Your available growing space', href: '/facilitator/crops',
     detail: 'Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.' }] },
+  { when: '5 November 2026', sha: 'ad32a7529', changes: [
+    "Sector illustrations now show bolder terrain contours and matching key lines.",
+  ] },
   { when: '5 November 2026', sha: '2fbfe97b5', changes: [
     "Sector illustrations keep richer colour, with larger labels and clearer contours.",
   ] },

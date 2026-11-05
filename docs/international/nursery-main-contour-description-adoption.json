@@ -1,0 +1,38 @@
+{
+  "coordinator": "Codex root",
+  "sourceMain": "1ae9ac2919bee8496ef820495e3bd5467e9d054a",
+  "sourceSha256": "84e299057b574f4f05dff909b18bc080fceb23599139bdae92d72a980afae708",
+  "policy": "Separate coordinator adoption of four source-exact existing-language release descriptions. The existing update UI labels native descriptions as unreviewed drafts and keeps original English. AGY packets stay immutable historical inactive drafts; no new app language or human fluent approval.",
+  "humanFluentApproval": false,
+  "newLanguageActivation": false,
+  "pairs": [
+    {
+      "locale": "st",
+      "key": "integrationBoldContourRelease.message.01",
+      "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+      "messageSha256": "968cf14c7fb3268a2ab00b3432955732243dad63ddebc0f90c3320dbaa289358",
+      "translation": "Ditshwantsho tsa karolo jwale di bontsha mela e motenya ya sebopeho sa mobu le mela e tsamaelanang ya tlhaloso ya mmapa."
+    },
+    {
+      "locale": "ts",
+      "key": "integrationBoldContourRelease.message.01",
+      "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+      "messageSha256": "968cf14c7fb3268a2ab00b3432955732243dad63ddebc0f90c3320dbaa289358",
+      "translation": "Swifaniso swa xiyenge sweswi swi kombisa milayeni yo bumbula ya xivumbeko xa misava na milayeni leyi fambelanaka ya nhlamuselo ya mepe."
+    },
+    {
+      "locale": "ve",
+      "key": "integrationBoldContourRelease.message.01",
+      "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+      "messageSha256": "968cf14c7fb3268a2ab00b3432955732243dad63ddebc0f90c3320dbaa289358",
+      "translation": "Zwienziso zwa tshipida zwino zwi sumbedza mitalo yo dziaho ya vhuimo ha mavu na mitalo i yelanaho ya thaluso ya mafulo."
+    },
+    {
+      "locale": "zu",
+      "key": "integrationBoldContourRelease.message.01",
+      "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+      "messageSha256": "968cf14c7fb3268a2ab00b3432955732243dad63ddebc0f90c3320dbaa289358",
+      "translation": "Imifanekiso yesigaba manje ibonisa imigqa egqamile yokuma komhlaba kanye nemigqa efanayo yenkcazelo yemephu."
+    }
+  ]
+}

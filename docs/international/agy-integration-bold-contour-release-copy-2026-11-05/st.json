@@ -1,0 +1,14 @@
+{
+  "locale": "st",
+  "sourceSha256": "84e299057b574f4f05dff909b18bc080fceb23599139bdae92d72a980afae708",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "integrationBoldContourRelease.message.01",
+      "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+      "messageSha256": "968cf14c7fb3268a2ab00b3432955732243dad63ddebc0f90c3320dbaa289358",
+      "translation": "Ditshwantsho tsa karolo jwale di bontsha mela e motenya ya sebopeho sa mobu le mela e tsamaelanang ya tlhaloso ya mmapa."
+    }
+  ]
+}

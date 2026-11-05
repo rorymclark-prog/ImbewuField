@@ -1,0 +1,48 @@
+{
+  "atUtc": "2026-11-05T13:07:46.118645+00:00",
+  "sourceSha256": "84e299057b574f4f05dff909b18bc080fceb23599139bdae92d72a980afae708",
+  "sourceMain": "1ae9ac2919bee8496ef820495e3bd5467e9d054a",
+  "actualPairs": 4,
+  "damagedControlsRejected": 15,
+  "notesActualWords": 150,
+  "humanFluentApproval": false,
+  "newLanguageActivation": false,
+  "files": [
+    {
+      "path": "source.json",
+      "bytes": 620,
+      "sha256": "84e299057b574f4f05dff909b18bc080fceb23599139bdae92d72a980afae708"
+    },
+    {
+      "path": "st.json",
+      "bytes": 595,
+      "sha256": "9193a33acd0be28b5f7ce70846e336c1500d7c33bb12a2b2fca31efb8bf587b3"
+    },
+    {
+      "path": "ts.json",
+      "bytes": 610,
+      "sha256": "85db2348b9e7ce0d1f4e1d97bce1c7715d2a5b107bb70139c4ea55ad76264fdf"
+    },
+    {
+      "path": "ve.json",
+      "bytes": 594,
+      "sha256": "aab5762de1dfe30ac2601c95d91668ba3ad840e215a67bfcdbcf81da48a84446"
+    },
+    {
+      "path": "zu.json",
+      "bytes": 583,
+      "sha256": "8bf3195a20992075b91b88fae6e278869678a69607ef938b27f97a7cbf28ecfe"
+    },
+    {
+      "path": "review-notes.md",
+      "bytes": 1134,
+      "sha256": "f36213a86f0a0cf316af4910a71351670c32a852a5b14b2a62d01d975a453ccc"
+    },
+    {
+      "path": "status.json",
+      "bytes": 287,
+      "sha256": "a8b2e9cd8e4aacb3b222f611438e0bf7b49de827309449b465ca08ac8c53fa27"
+    }
+  ],
+  "scope": "Coordinator immutable main file/message/packet identity, fifteen damaged controls and source-paired presentational drafts only. Native152word notes heading trimmed to150 by coordinator; original retained privately. No fluent approval, new app language or runtime adoption by AGY."
+}
