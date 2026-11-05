@@ -1,3 +1,4 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -47,7 +48,7 @@ test('Water replacements bind complete source predicates and preserve every unli
       'rewind only 27 accepted cells: all sources, headings, statuses, four PR953 repairs and unlisted wording remain exact');
   }
 });
-test('only selected Water frames change while other stills, narration and films retain exact bytes', () => {
+test('only selected Water frames change while other stills, narration and films retain exact bytes', () => withBlindReviewedCorrectionReadScope(() => {
   const media = JSON.parse(readFileSync('docs/media/water-reviewed-precision-2026-10-05/frames.json', 'utf8'));
   assert.equal(media.changed.length, 20);
   for (const row of media.changed) {
@@ -72,4 +73,4 @@ test('only selected Water frames change while other stills, narration and films 
   }
   assert.equal(sha(sizes), media.assetSizeManifest.baselineSHA256, 'all unlisted asset-size entries retain exact text');
 
-});
+}));

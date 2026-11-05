@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest media verification continuation: [Current-main reconciliation of existing preservation scopes — 5 November 2026](2026-11-05/reviewed-media-test-scope-codex.md). Full current-head gates remain required.
+
 Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Required release checks and normal published-host login remain open.
 
 Latest assistant identity continuation — [MCP display name, published sprout and private listing — 4 November 2026](2026-11-04/assistant-connector-branding-codex.md). Native authentication follows the separate callback release.
