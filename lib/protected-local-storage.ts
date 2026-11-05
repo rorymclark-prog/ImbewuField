@@ -203,11 +203,14 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
         ...(e.sourceCapture === undefined ? {} : { sourceCapture: e.sourceCapture as CutoverEvidence['sourceCapture'] }) };
     } catch { return null; }
   }
+  function leaseStillRegistered(lease: Lease, canonicalKey: string): boolean {
+    return lease.active && leases.get(canonicalKey) === lease;
+  }
   function currentLease(c: ProtectedStorageContext): Lease | null {
     const lease = leases.get(c.canonicalKey);
     if (!lease?.active) return null;
     if (!lease.context.isCurrent()) { lease.release(); return null; }
-    return c.isCurrent() && sameContext(lease.context, c) && lease.active && leases.get(c.canonicalKey) === lease ? lease : null;
+    return c.isCurrent() && sameContext(lease.context, c) && leaseStillRegistered(lease, c.canonicalKey) ? lease : null;
   }
   function ownsLease(c: ProtectedStorageContext): boolean { return currentLease(c) !== null; }
   /** Private provenance, not a live raw-journal equality check: safe same-lease
@@ -375,13 +378,15 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
       const read = readStorage(context);
       if (!read.writable || typeof expectedToken !== 'string' || read.token !== expectedToken) return { status: 'held', reason: read.reason ?? config.changedReason };
       before = capture(context); const state = inspect(context, before), book = canonical(before.canonical);
-      const lease = currentLease(context);
+      const lease = currentLease(context), canonicalKey = context.canonicalKey;
       if (!state.writable || state.token !== expectedToken || !book || !same(before, capture(context)) || !lease || currentLease(context) !== lease
         || !sourceIsCurrent() || !context.isCurrent()) return { status: 'held', reason: config.changedReason };
       const raw = encodeCanonical({ ...book, payloadRaw });
-      if (!same(before, capture(context)) || !sourceIsCurrent() || !context.isCurrent()) return { status: 'held', reason: config.changedReason };
+      // A final source/context read can withdraw this lease while returning true.
+      // Its last identity check must not call back into those readers again.
+      if (!same(before, capture(context)) || !sourceIsCurrent() || !context.isCurrent() || !leaseStillRegistered(lease, canonicalKey)) return { status: 'held', reason: config.changedReason };
       expected = { ...before, canonical: raw }; attempted = true;
-      context.storage.setItem(context.canonicalKey, raw);
+      context.storage.setItem(canonicalKey, raw);
       performed = true;
       if (!context.isCurrent() || !sourceIsCurrent() || currentLease(context) !== lease || !same(expected, capture(context))) return unconfirmed();
       if (!sourceIsCurrent() || !context.isCurrent() || currentLease(context) !== lease) return unconfirmed();
