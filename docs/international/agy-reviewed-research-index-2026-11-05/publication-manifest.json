@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "preparedAtUtc": "2026-11-05T17:31:17.849998+00:00",
+  "scope": "Six compact coordinator-reviewed research documents only; original raw bodies/logs/private workorders and broad regional drafts excluded. Source/endpoint evidence is not product integration, country readiness or human/legal/fluent certification.",
+  "documents": [
+    {
+      "path": "docs/international/agy-france-official-source-fit-2026-11-05/FRANCE-SOURCE-FIT.md",
+      "bytes": 3025,
+      "sha256": "79a825f1ebdbdc4e1c45128bbb2f3bbc3984344e9aeda77361651c490d9cbf2a",
+      "actualWhitespaceWords": 350,
+      "status": "coordinator-source-reviewed-ai-documentation",
+      "humanFluentOrLegalApproval": false,
+      "runtimeIntegrationImplemented": false,
+      "syntheticEndpointProbeOnly": false,
+      "reviewedDraftSha256": "c89de6776541c190d6aed5642c7d4e770c781b49c02ff1657e0dc1c94dd01aad",
+      "publicationFormatting": "Trailing markdown hard-break spaces removed for repository whitespace rule; wording/order unchanged."
+    },
+    {
+      "path": "docs/international/agy-nepal-official-source-fit-2026-11-05/NEPAL-SOURCE-FIT.md",
+      "bytes": 3083,
+      "sha256": "70c477935ec8cf0ee35e68e6c6f11dba2cdb25d660e458b3d01c7420cf55ef45",
+      "actualWhitespaceWords": 351,
+      "status": "coordinator-source-reviewed-ai-documentation",
+      "humanFluentOrLegalApproval": false,
+      "runtimeIntegrationImplemented": false,
+      "syntheticEndpointProbeOnly": false,
+      "reviewedDraftSha256": "54b283d6bebf1653ab6f43293901e7b584aca490152c94522a9424804f0ed44b",
+      "publicationFormatting": "Trailing markdown hard-break spaces removed for repository whitespace rule; wording/order unchanged."
+    },
+    {
+      "path": "docs/international/agy-nepal-material-use-2026-11-05/MATERIAL-USE-EVIDENCE.md",
+      "bytes": 2550,
+      "sha256": "26dfb3643b9beacbcf88585e23af132522888efe32fd661c621ff604e1a7da97",
+      "actualWhitespaceWords": 267,
+      "status": "coordinator-source-reviewed-ai-documentation",
+      "humanFluentOrLegalApproval": false,
+      "runtimeIntegrationImplemented": false,
+      "syntheticEndpointProbeOnly": false
+    },
+    {
+      "path": "docs/international/agy-nepal-notice-payload-2026-11-05/NOTICE-PAYLOAD-READING.md",
+      "bytes": 2368,
+      "sha256": "d2c741465fdf160333afb6e83dd4c5e3312b8400fe0beebed1c6ff3b2ccf9f47",
+      "actualWhitespaceWords": 242,
+      "status": "coordinator-source-reviewed-ai-documentation",
+      "humanFluentOrLegalApproval": false,
+      "runtimeIntegrationImplemented": false,
+      "syntheticEndpointProbeOnly": false
+    },
+    {
+      "path": "docs/international/agy-france-open-licence-2026-11-05/FRANCE-OPEN-LICENCE-NOTE.md",
+      "bytes": 3097,
+      "sha256": "c4bbddf2ef5bf945eee8969e083ec258a6821cfad727594d057212d5d5015a35",
+      "actualWhitespaceWords": 344,
+      "status": "coordinator-source-reviewed-ai-documentation",
+      "humanFluentOrLegalApproval": false,
+      "runtimeIntegrationImplemented": false,
+      "syntheticEndpointProbeOnly": false,
+      "reviewedDraftSha256": "020cc75ece3df6bc64f1ab87d22e2d428b2d210009ca57e8b76835c3b72fb5e7",
+      "publicationFormatting": "Trailing markdown hard-break spaces removed for repository whitespace rule; wording/order unchanged."
+    },
+    {
+      "path": "docs/international/agy-nrcs-bounded-adapter-contract-2026-11-05/NRCS-QUERY-CONTRACT.md",
+      "bytes": 3780,
+      "sha256": "bc998a35089a5b57d5e9863e37b6bc6e5e7cd3fddb5cab8b76ea8aa7a84bf08f",
+      "actualWhitespaceWords": 440,
+      "status": "coordinator-source-reviewed-ai-documentation",
+      "humanFluentOrLegalApproval": false,
+      "runtimeIntegrationImplemented": false,
+      "syntheticEndpointProbeOnly": true,
+      "reviewedDraftSha256": "5fdc9fa549189b655b92736cbc27ee56ba387a1455bfe9ee551678dbc93b94df",
+      "publicationFormatting": "Trailing markdown hard-break spaces removed for repository whitespace rule; wording/order unchanged."
+    }
+  ]
+}
