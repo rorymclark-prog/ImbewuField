@@ -110,6 +110,28 @@ test('the actual client compares seven inactive packets with Brazilian Portugues
   assert.match(ui.text(), /Fluent human approval is not recorded here/); assert.match(ui.text(), /no review decisions are saved/);
 });
 
+test('print comparisons keep their header, source and full wording together without clipping long cards', () => {
+  // Actual A4 preview output stranded comparison14's header on page4 and its body on page5.
+  // Mark the comparison box for the scoped print rule, while retaining oversized content so
+  // the browser can fragment cards that cannot fit a whole page rather than hiding wording.
+  const input = data();
+  const longDraft = 'Synthetic long review wording. '.repeat(2000);
+  input.languages[0].rows[13].translation = longDraft;
+  const ui = mount(input);
+  const articles = ui.renderer.root.findAllByType('article');
+  assert.equal(articles.length, 26);
+  for (const article of articles) {
+    assert.equal(article.props['data-nursery-draft-comparison'], true);
+    assert.doesNotMatch(article.props.className, /(?:^|\s)(?:h-\S+|max-h-\S+|overflow-hidden|line-clamp-\S+)(?:\s|$)/,
+      'avoiding a page split must not truncate or fix the height of a comparison');
+  }
+  const longCard = ui.article('nurseryFieldPlanting.message.14');
+  const translation = longCard.findAllByType('p').find(node => node.props.lang === 'fr')!;
+  assert.equal(text(translation.findByType('bdi')), longDraft);
+  assert.match(text(longCard), /nurseryFieldPlanting\.message\.14/);
+  assert.match(text(longCard), /AI draft, not fluent human approval/);
+});
+
 test('changed and unavailable current files expose frozen English as a snapshot and never label it current verified wording', () => {
   const input = data(); input.sources[0].status = 'changed'; input.sources[1].status = 'unavailable';
   for (const language of input.languages) for (const row of language.rows) if (row.sourceFile !== sourceFiles[2]) {

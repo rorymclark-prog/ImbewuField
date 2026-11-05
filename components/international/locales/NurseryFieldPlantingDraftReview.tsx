@@ -98,7 +98,7 @@ export default function NurseryFieldPlantingDraftReview({ data }: { data: Nurser
 
       <section aria-label="Nursery field-planting draft comparisons" className="min-w-0 space-y-3">
         {selected && filtered.length === 0 && <p role="status" className={note}>No messages match this search.</p>}
-        {filtered.map(row => <article key={row.key} className={panel} aria-label={`Draft comparison for ${row.key}`}>
+        {filtered.map(row => <article key={row.key} data-nursery-draft-comparison className={panel} aria-label={`Draft comparison for ${row.key}`}>
           <div className="flex min-w-0 flex-wrap items-start justify-between gap-2"><h2 className="break-all font-mono text-sm font-semibold">{row.key}</h2><p className="text-xs">{states[row.state]}</p></div>
           <p className={note}>Source file: <code className="break-all text-xs">{row.sourceFile}</code>.</p>
           <div className="grid min-w-0 gap-3 sm:grid-cols-2">

@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest language-review UI continuation: [Language review help placement — 5 November 2026](2026-11-05/language-review-inline-help-codex.md). The phone collision is reproduced; the separate changed preview remains pending.
+
 Latest international nursery integration — [Current-main reconciliation and preserved verification scope — 5 November 2026](2026-11-05/international-nursery-main-reconcile-codex.md). New ordered/current-head and actual output gates remain pending.
 
 Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Required release checks and normal published-host login remain open.
