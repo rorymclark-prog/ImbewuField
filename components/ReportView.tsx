@@ -1,5 +1,10 @@
 'use client';
 
+import { coordinateSiteIdForPlace } from '@/lib/international/site-context';
+import { currentPlanningSupport } from '@/lib/international/planning-support';
+import { currentReportCropSupport, projectReportPlanningFacts } from '@/lib/report-crop-plan';
+import { CROP_PLAN_CHANGED_EVENT } from '@/lib/crop-plan';
+
 import { numberLabel } from '@/lib/format-figures';
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -325,6 +330,15 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [purpose, setPurpose] = useState<SiteReportPurpose>(() => savedReport?.settings?.purpose ?? loadSurvey(designSiteIdFromLocation(locationData))?.reportPurpose ?? 'potential');
   const [language, setLanguage] = useState(savedReport?.lang ?? appLang ?? 'en');
   const [facts, setFacts] = useState<ReportSiteFacts | null>(savedReport?.facts ?? null);
+  const [, invalidatePlanningSupport] = useState(0);
+  useEffect(() => {
+    const refresh = () => invalidatePlanningSupport(revision => revision + 1);
+    const events = ['storage', 'focus', 'permamap-places-changed', CROP_PLAN_CHANGED_EVENT];
+    events.forEach(event => window.addEventListener(event, refresh));
+    return () => events.forEach(event => window.removeEventListener(event, refresh));
+  }, []);
+  const reportPlanningSupport = currentReportCropSupport(facts?.crop?.snapshot, coordinateSiteIdForPlace(d));
+  const planningFacts = projectReportPlanningFacts(facts, reportPlanningSupport.allowCataloguePlanning);
   const [savedVersion, setSavedVersion] = useState(!!savedReport);
   const [coverChoice, setCoverChoice] = useState<ReportCoverChoice>(savedReport?.coverChoice ?? 'auto');
   const settings = activeSaved?.settings;
@@ -402,7 +416,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const pdfPlaced = includeImages ? placedFigures : new Set<string>();
   const pdfVisuals = { ...visuals, charts: visuals.charts.filter(c => !(facts?.crop?.snapshot && c.kind === 'calendar') && !pdfPlaced.has(c.id)) };
   const reportDate = settings?.generatedAt ?? activeSaved?.savedAt ?? new Date().toISOString();
-  const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, uiLanguage);
+  const summaryPages = reportSummaryPages(planningFacts, d, reading === 'one' ? 1 : 5, uiLanguage);
   const chapters = report.split('\n').flatMap((line, i) => line.startsWith('## ') ? [{ id: `report-chapter-${i}`, title: stripInlineMarkdown(line.slice(3)) }] : []);
   // Short editions keep the same saved facts. Their simpler charts do not need a new report.
   const briefVisuals = { ...siteReportVisuals(facts, d, uiLanguage), title: siteName, subtitle: '',
@@ -460,6 +474,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // made the farmer's saved plan visibly pixelated despite its original still being available.
   const siteKey = designSiteIdFromLocation(d);
   const sheetScope = `${isSampleMode() ? 'sample' : 'live'}:${activeAccountLocalStorageKey(siteKey)}`;
+  const generationScopeRef = useRef<string | null>(sheetScope);
+  generationScopeRef.current = sheetScope;
+  useEffect(() => {
+    generationScopeRef.current = sheetScope;
+    return () => { generationScopeRef.current = null; };
+  }, [sheetScope]);
   const [plateSet, setPlateSet] = useState<{ scope: string; items: StoredSheetMeta[]; latestAt?: string }>({ scope: '', items: [] });
   const reportMapScope = `${sheetScope}:${activeSaved?.id ?? 'draft'}`;
   const [mapChoice, setMapChoice] = useState<{ scope: string; selection: ReportMapSelection }>({ scope: '', selection: { siteId: siteKey, ids: [] } });
@@ -700,8 +720,24 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       collapsePanelOnNarrow();
       return;
     }
+    const generationSiteId = coordinateSiteIdForPlace(d);
+    const beforeSupport = currentPlanningSupport(generationSiteId);
+    if (!generationSiteId || !beforeSupport.allowCataloguePlanning) {
+      setError('Local farming report generation is unavailable for this site’s current country context. Review country details and account save status in the crop planner.');
+      return;
+    }
+    const generationOwner = activeAccountLocalStorageKey(generationSiteId);
+    const contextError = (message = 'Site country details changed while the report was prepared. This draft is withheld. Completed AI work may already have used allowance; review site details before trying again.') =>
+      Object.assign(new Error(message), { name: 'ReportCountryContextError' });
+    const assertGenerationCurrent = () => {
+      const fresh = currentPlanningSupport(generationSiteId);
+      if (abortRef.current !== controller || generationScopeRef.current !== sheetScope
+        || activeAccountLocalStorageKey(generationSiteId) !== generationOwner
+        || !fresh.allowCataloguePlanning || fresh.fingerprint !== beforeSupport.fingerprint) throw contextError();
+    };
     abortRef.current?.abort();
-    abortRef.current = new AbortController();
+    const controller = new AbortController();
+    abortRef.current = controller;
     setReport('');
     setError('');
     setLoading(true);
@@ -777,6 +813,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         ? []
         : await prepareSiteAnalysisImages(plates, loadSheetImage, sheetPlate).catch(() => []);
 
+      assertGenerationCurrent();
       const res = await fetch('/api/generate-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
@@ -798,18 +835,25 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           length,
           purpose,
         }),
-        signal: abortRef.current.signal,
+        signal: controller.signal,
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      assertGenerationCurrent();
+      if (!res.ok) {
+        const failure = await res.json().catch(() => null);
+        if (typeof failure?.code === 'string' && failure.code.startsWith('REPORT_') && typeof failure.error === 'string') throw contextError(failure.error);
+        throw new Error(`HTTP ${res.status}`);
+      }
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
       while (true) {
         const { done, value } = await reader.read();
+        assertGenerationCurrent();
         if (done) break;
         text += dec.decode(value, { stream: true });
         setReport(text);
       }
+      assertGenerationCurrent();
       const provider = res.headers.get('X-Report-Provider') || undefined;
       const model = res.headers.get('X-Report-Model') || undefined;
       setActiveSaved({ id: reportId(), name: siteFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: requested.language, report: text, origin: 'generated', location: d, siteData, waterData, facts: siteFacts, settings: { ...requested, provider, model }, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: siteImages.length ? plates.filter(p => siteImages.some(image => image.label === p.label)).map(p => p.id) : [], groundPhotos });
@@ -817,7 +861,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setReading('full');
       setGenerated(true);
     } catch (err: unknown) {
-      if (err instanceof Error && err.name !== 'AbortError') {
+      if (err instanceof Error && err.name === 'ReportCountryContextError' && abortRef.current === controller) {
+        setReport(''); setGenerated(false); setError(err.message);
+      } else if (err instanceof Error && err.name !== 'AbortError' && abortRef.current === controller) {
         // A dead connection surfaces as TypeError('Failed to fetch') (Chrome) or 'Load failed'
         // (Safari) — browser jargon that tells a farmer nothing. Say the true thing in her
         // words. navigator.onLine alone is not trusted (it lies on captive portals), so the
@@ -834,9 +880,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       // a cancel all clear the streak — they are disappointments, not deaths, and escalating a
       // network error into "your phone cannot generate reports" would be its own bug.
       reportAttemptSurvived(window.localStorage);
-      setLoading(false);
+      if (abortRef.current === controller) setLoading(false);
     }
-  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, purpose, plates, collapsePanelOnNarrow, reportPlace, facts, coverChoice, siteKey, selectedMapIds, uiLanguage, appT]);
+  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, purpose, plates, collapsePanelOnNarrow, reportPlace, facts, coverChoice, siteKey, sheetScope, selectedMapIds, uiLanguage, appT]);
 
   // "Export PDF". This used to be window.print(), which is a silent no-op in an
   // installed iOS PWA (manifest display: standalone) — the button looked dead on
@@ -845,9 +891,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const exportPdf = useCallback(async () => {
     if (!report && reading === 'full') return;
     setPdfState('working');
+    const beforeSupport = currentReportCropSupport(facts?.crop?.snapshot, coordinateSiteIdForPlace(d));
+    const checkPlanningContext = () => {
+      if (facts?.crop && currentReportCropSupport(facts.crop.snapshot, coordinateSiteIdForPlace(d)).fingerprint !== beforeSupport.fingerprint) {
+        throw new Error('Site context changed while preparing the export. Review country details and try again.');
+      }
+    };
     try {
       if (reading !== 'full') {
-        const blob = await buildInkSummaryPdf(reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, uiLanguage), (activeSaved?.savedAt ?? new Date().toISOString()).slice(0, 10), uiLanguage, preparedExample ? preparedExampleNote(uiLanguage) : undefined);
+        const blob = await buildInkSummaryPdf(reportSummaryPages(projectReportPlanningFacts(facts, beforeSupport.allowCataloguePlanning), d, reading === 'one' ? 1 : 5, uiLanguage), (activeSaved?.savedAt ?? new Date().toISOString()).slice(0, 10), uiLanguage, preparedExample ? preparedExampleNote(uiLanguage) : undefined);
+        checkPlanningContext();
         await deliverPdf(blob, reportPdfFilename(siteName, new Date(reportDate)).replace('.pdf', `-${reading === 'one' ? '1' : '5'}-page-summary.pdf`));
         setPdfState('done');
         setTimeout(() => setPdfState('idle'), 2500);
@@ -903,6 +956,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         // farmer hands to a funder carries the evidence the advice was drawn from.
         photos: includeImages ? photoGallery.shown.map((p) => ({ label: p.label, note: p.note, dataUrl: p.dataUrl })) : [],
       });
+      checkPlanningContext();
       await deliverPdf(blob, reportPdfFilename(siteName, new Date(reportDate)));
       setPdfState('done');
       setTimeout(() => setPdfState('idle'), 2500);
@@ -1303,6 +1357,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           )}
           <ReportPurposeGuide language={language} />
           <div className={styles.document}>
+            {facts?.crop && !reportPlanningSupport.allowCataloguePlanning && <p role="note" className={styles.settingsNote}>Saved report text is an archived version. Local crop guidance and inherited forecast attachments are unavailable for this site’s current context; country details do not validate archived farming advice.</p>}
             {preparedExample && <div className={styles.settingsNote} role="note"><strong>{reportOriginLabel(activeSaved?.origin, language)}</strong><p>{preparedExampleNote(language)}</p></div>}
 
             {/* Print header */}
@@ -1513,7 +1568,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
             )}
 
-            {reading === 'full' && facts?.crop && <ReportCropPlan language={contentLanguage} crop={facts.crop} siteName={siteName} month={cropMapMonth} onMonth={setCropMapMonth} includeWorking={includeCropWorkingPlan} onIncludeWorking={setIncludeCropWorkingPlan} legacyCharts={visuals.charts.filter(c => c.kind === 'calendar')} />}
+            {reading === 'full' && facts?.crop && <ReportCropPlan siteId={coordinateSiteIdForPlace(d)} language={contentLanguage} crop={facts.crop} siteName={siteName} month={cropMapMonth} onMonth={setCropMapMonth} includeWorking={includeCropWorkingPlan} onIncludeWorking={setIncludeCropWorkingPlan} legacyCharts={visuals.charts.filter(c => c.kind === 'calendar')} />}
 
             {/* Placeholder before generation */}
             {reading === 'full' && !report && !loading && !error && (

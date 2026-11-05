@@ -17,6 +17,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import ts from 'typescript';
 
 const src = (rel: string) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8');
 const INVOICE = src('../app/invoice/page.tsx');
@@ -53,10 +54,27 @@ test('the seller block on screen and in the PDF read the same profile field', ()
     /const sellerFarm = profile\?\.farm_name/.test(INVOICE),
     'sellerFarm must come from the signed-in profile, not from a constant',
   );
-  assert.ok(
-    /farm: sellerFarm/.test(INVOICE),
-    'the farm name must reach the document through buildInvoiceDocument, not a per-renderer line',
-  );
+  // The shared input now annotates DEMO documents so convincing practice bank
+  // details cannot be mistaken for a real invoice. Real invoices still receive
+  // exactly the saved farm name; this is no permission to invent a fallback.
+  const ast = ts.createSourceFile('invoice.tsx', INVOICE, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const calls: ts.CallExpression[] = [];
+  const visit = (node: ts.Node) => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'buildInvoiceDocument') calls.push(node);
+    ts.forEachChild(node, visit);
+  };
+  visit(ast); assert.equal(calls.length, 1, 'screen, print and PDF must still share one document construction authority');
+  const input = calls[0].arguments[0]; assert.ok(ts.isObjectLiteralExpression(input));
+  const seller = input.properties.find((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && property.name.getText(ast) === 'seller');
+  assert.ok(seller && ts.isObjectLiteralExpression(seller.initializer));
+  const farm = seller.initializer.properties.find((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && property.name.getText(ast) === 'farm');
+  assert.ok(farm, 'the profile farm must enter the shared document input');
+  const actualFarm = new Function('demoInvoice', 'sellerFarm', 'sellerName', `return (${farm.initializer.getText(ast)});`);
+  assert.equal(actualFarm(false, 'Own farm', 'Own seller'), 'Own farm');
+  assert.equal(actualFarm(false, '', 'Own seller'), '', 'a real unset farm still prints no invented name');
+  assert.match(actualFarm(true, 'Practice farm', 'Practice seller'), /^DEMO\b/);
+  assert.match(actualFarm(true, '', ''), /^DEMO\b/, 'sample data must remain identifiable even without a farm name');
+  assert.match(INVOICE, /const demoInvoice = renderedBook\?\.status === 'sample';/, 'DEMO must come from the actual captured sample book');
   assert.ok(
     !/sellerFarm/.test(src('../lib/invoice-pdf.ts')),
     'the PDF writer has gone back to reading the profile itself instead of the shared document',

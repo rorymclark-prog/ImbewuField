@@ -24,6 +24,7 @@
 // saying so.
 
 import test from 'node:test';
+import { initialiseCropPlanFixture, releaseCropPlanFixture, readCanonicalCropPlanFixtureRaw, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
@@ -411,7 +412,7 @@ const NOTES: PlanNote[] = [
 ];
 
 /** A localStorage stand-in, matching the shape lib/crop-plan.ts reads. */
-function withLocalStorage<T>(store: Map<string, string>, run: () => T): T {
+async function withLocalStorage<T>(store: Map<string, string>, run: () => T | Promise<T>): Promise<T> {
   const globalRef = globalThis as unknown as { window?: unknown };
   const previous = globalRef.window;
   globalRef.window = {
@@ -420,11 +421,13 @@ function withLocalStorage<T>(store: Map<string, string>, run: () => T): T {
       setItem: (key: string, value: string) => { store.set(key, value); },
       removeItem: (key: string) => { store.delete(key); },
     },
+    sessionStorage: { getItem: () => null },
     dispatchEvent: () => true,
   };
   try {
-    return run();
+    return await run();
   } finally {
+    releaseCropPlanFixture();
     if (previous === undefined) delete globalRef.window;
     else globalRef.window = previous;
   }
@@ -440,7 +443,8 @@ test('a saved plan round-trips its notes and the time they were generated at', a
     planNotesAt: Date.UTC(2026, 7, 20),
     updatedAt: 1,
   };
-  const loaded = withLocalStorage(store, () => {
+  const loaded = await withLocalStorage(store, async () => {
+    await initialiseCropPlanFixture();
     assert.equal(saveCropPlan(plan), true);
     return loadCropPlan();
   });
@@ -451,7 +455,7 @@ test('a saved plan round-trips its notes and the time they were generated at', a
 test('a plan saved before planNotes existed still loads, with no notes invented for it', async () => {
   const { loadCropPlan } = await import('@/lib/crop-plan');
   const store = new Map<string, string>();
-  const loaded = withLocalStorage(store, () => {
+  const loaded = await withLocalStorage(store, async () => {
     // Written by hand in the pre-planNotes shape, exactly as it sits on a
     // farmer's phone today.
     store.set('imbewu_crop_plan_v1', JSON.stringify({
@@ -471,7 +475,7 @@ test('a plan saved before planNotes existed still loads, with no notes invented 
 test('a hand-edited or corrupt notes blob is dropped rather than rendered', async () => {
   const { loadCropPlan } = await import('@/lib/crop-plan');
   const store = new Map<string, string>();
-  const loaded = withLocalStorage(store, () => {
+  const loaded = await withLocalStorage(store, async () => {
     store.set('imbewu_crop_plan_v1', JSON.stringify({
       version: 1,
       plantings: [{ id: 'p1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 3 }],
@@ -494,7 +498,7 @@ test('a hand-edited or corrupt notes blob is dropped rather than rendered', asyn
   // hand-edited blob) cannot label anything honestly, so the pair is dropped
   // whole rather than shown with a nonsense year.
   for (const badAt of [0, 8, 1_755_648_000 /* seconds, not ms */, Date.UTC(2101, 0, 1), 'August']) {
-    const undated = withLocalStorage(new Map<string, string>(), () => {
+    const undated = await withLocalStorage(new Map<string, string>(), async () => {
       (globalThis as unknown as { window: { localStorage: { setItem(k: string, v: string): void } } })
         .window.localStorage.setItem('imbewu_crop_plan_v1', JSON.stringify({
           version: 1,
@@ -660,7 +664,8 @@ test('saving and reopening dated sowing decisions preserves confirmation and nev
   const old = confirmOnceSowing({ id: 'old', bedId: 'b1', cropKey: 'green-beans', sowMonth: month, once: oldStamp }, year - 1, month);
   const undecided: Planting = { id: 'undecided', bedId: 'b1', cropKey: 'green-beans', sowMonth: month, once: oldStamp };
   const plan: CropPlanState = { version: 1, plantings: [confirmed, old, undecided], updatedAt: now.getTime() };
-  const loaded = withLocalStorage(new Map<string, string>(), () => {
+  const loaded = await withLocalStorage(new Map<string, string>(), async () => {
+    await initialiseCropPlanFixture();
     assert.equal(saveCropPlan(plan), true);
     const first = loadCropPlan();
     assert.equal(saveCropPlan(first), true);
@@ -690,10 +695,11 @@ test('dated production and stock belong to the saved account and retain years, n
   const plan: CropPlanState = { version: 1, plantings: [], productionRecords, preservedProducts, updatedAt: 1 };
   const store = new Map<string, string>();
   try {
-    withLocalStorage(store, () => {
+    await withLocalStorage(store, async () => {
       bindMountedAccountLocalStorageUid('record-farmer/a');
+      await initialiseCropPlanFixture();
       assert.equal(saveCropPlan(plan), true);
-      assert.ok(store.has(accountLocalStorageKey('imbewu_crop_plan_v1', 'record-farmer/a')));
+      assert.ok(store.has(accountLocalStorageKey('imbewu_crop_plan_v2', 'record-farmer/a')));
       assert.ok(!store.has('imbewu_crop_plan_v1'), 'a signed-in production record must not enter the legacy shared key');
       const first = loadCropPlan();
       assert.deepEqual(first.productionRecords, productionRecords);
@@ -706,8 +712,10 @@ test('dated production and stock belong to the saved account and retain years, n
       const other = loadCropPlan();
       assert.equal(other.productionRecords, undefined, 'a second account must not see the first farm\'s production');
       assert.equal(other.preservedProducts, undefined, 'a second account must not see the first farm\'s stock');
+      await initialiseCropPlanFixture();
       assert.equal(saveCropPlan({ version: 1, plantings: [], productionRecords: [], preservedProducts: [], updatedAt: 2 }), true);
       bindMountedAccountLocalStorageUid('record-farmer/a');
+      await initialiseCropPlanFixture();
       const reopened = loadCropPlan();
       assert.equal(saveCropPlan(reopened), true);
       assert.deepEqual(loadCropPlan().productionRecords, productionRecords, 'reopening twice cannot turn litres or eggs into kg or repeat their years');
@@ -720,19 +728,24 @@ test('old or unanswered production fields stay absent while an explicitly cleare
   const { loadCropPlan, saveCropPlan } = await import('@/lib/crop-plan');
   const store = new Map<string, string>();
   try {
-    withLocalStorage(store, () => {
+    await withLocalStorage(store, async () => {
       bindMountedAccountLocalStorageUid('optional-records-farmer');
-      const key = accountLocalStorageKey('imbewu_crop_plan_v1', 'optional-records-farmer');
+      await initialiseCropPlanFixture();
       for (const fields of [{}, { productionRecords: null, preservedProducts: null },
         { productionRecords: {}, preservedProducts: 'unknown' }]) {
-        store.set(key, JSON.stringify({ version: 1, plantings: [], updatedAt: 1, ...fields }));
+        const originalBytes = JSON.stringify({ version: 1, plantings: [], updatedAt: 1, ...fields });
+        replaceCanonicalCropPlanFixtureRaw(originalBytes);
         const unknown = loadCropPlan();
         assert.ok(!Object.hasOwn(unknown, 'productionRecords'), 'a missing or malformed list must not claim a recorded zero');
         assert.ok(!Object.hasOwn(unknown, 'preservedProducts'), 'unanswered stock must remain distinguishable from a cleared list');
-        assert.equal(saveCropPlan(unknown), true);
+        // Missing optional fields remain valid; malformed authored evidence may
+        // project for display but must not be erased by an unrelated save.
+        assert.equal(saveCropPlan(unknown), !Object.hasOwn(fields, 'productionRecords'));
+        assert.equal(readCanonicalCropPlanFixtureRaw(), originalBytes);
         assert.ok(!Object.hasOwn(loadCropPlan(), 'productionRecords'));
         assert.ok(!Object.hasOwn(loadCropPlan(), 'preservedProducts'));
       }
+      replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ version: 1, plantings: [], updatedAt: 1 }));
       assert.equal(saveCropPlan({ version: 1, plantings: [], productionRecords: [], preservedProducts: [], updatedAt: 1 }), true);
       const cleared = loadCropPlan();
       assert.ok(Object.hasOwn(cleared, 'productionRecords'));
@@ -754,7 +767,7 @@ test('corrupt stored quantities are refused without duplicating corrections or t
   ] };
   const store = new Map<string, string>();
   try {
-    withLocalStorage(store, () => {
+    await withLocalStorage(store, async () => {
       bindMountedAccountLocalStorageUid('corrupt-records-farmer');
       store.set(accountLocalStorageKey('imbewu_crop_plan_v1', 'corrupt-records-farmer'), JSON.stringify({
         version: 1, plantings: [], updatedAt: 1,
@@ -769,13 +782,17 @@ test('corrupt stored quantities are refused without duplicating corrections or t
           { ...stock, id: 'invalid-source', sourceIconKey: 'housing:pond' },
           { ...stock, id: 'invalid-origin', provenance: 'assumed-from-harvest' }],
       }));
+      await initialiseCropPlanFixture();
+      const originalBytes = readCanonicalCropPlanFixtureRaw();
       const clean = loadCropPlan();
       assert.deepEqual(clean.productionRecords, [corrected, expected], 'a correction replaces its source/date/status, while expected and actual stay distinct');
       assert.equal(clean.preservedProducts!.length, 1);
       assert.deepEqual(clean.preservedProducts![0].dates, [{ year: 2026, month: 12 }, { year: 2027, month: 1 }], 'stock months must be exact and unique, without a next-year recurrence');
       assert.deepEqual(clean.preservedProducts![0].quantities, [{ year: 2027, month: 1, kg: 0 }],
         'missing, negative and out-of-stock-month kg cannot create food; a dated correction may explicitly say zero');
-      assert.equal(saveCropPlan(clean), true);
+      // Retain all malformed observations rather than persist a filtered display.
+      assert.equal(saveCropPlan(clean), false);
+      assert.equal(readCanonicalCropPlanFixtureRaw(), originalBytes);
       const twice = loadCropPlan();
       assert.deepEqual(twice.productionRecords, clean.productionRecords);
       assert.deepEqual(twice.preservedProducts, clean.preservedProducts);
@@ -862,8 +879,9 @@ test('saving and reopening two farms’ dated records keeps their native units, 
   const preservedProducts = [scopedStock(recordSiteA, 0), scopedStock(recordSiteB, 3), scopedStock(undefined, undefined)];
   const store = new Map<string, string>();
   try {
-    withLocalStorage(store, () => {
+    await withLocalStorage(store, async () => {
       bindMountedAccountLocalStorageUid('two-farms-record-owner');
+      await initialiseCropPlanFixture();
       assert.equal(saveCropPlan({ version: 1, plantings: [], productionRecords, preservedProducts, updatedAt: 1 }), true);
       const first = loadCropPlan();
       assert.deepEqual(first.productionRecords, productionRecords);

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "4ce6f9f05d1ea92995c5d213de6bef3d95eab7f77689648eb2c418d1e9522183",
+  "milestoneId": "ea-rainfall-public-network-reference",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "reviewNotes": "Twelve Codex AI candidates for the four existing update-description languages only. Public network rainfall sample, not farm measurements or crop advice. Reported quantities, missing values and source times remain distinct. No fluent or human approval and no new runtime language. Separate from native AGY draft ownership.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "ea2739dd4749de2d7c87dd3b829044911b8de99fb5119eafeaf7c0c4e3e53e92",
+      "selectedFileSha256": "7787e24e919299303edfcd89c5217689cf865bfb108de16f0134e7911002af60",
+      "historicalBytesPreserved": true
+    },
+    "st": {
+      "originalFileSha256": "88a86a407d7e75e96002ffadb2a8afb058cfd282f4f827d8320ee67dd8673a8a",
+      "selectedFileSha256": "1edf4e8e8cffdb4d524335674ccf7586d35d76615b5d55843a8a792626fa4b17",
+      "historicalBytesPreserved": true
+    },
+    "ve": {
+      "originalFileSha256": "e3f09c09e31270528d68f644e11771977fe8e6b9e81266dbf1f4b92db6b176d2",
+      "selectedFileSha256": "84ba9f0e970bc726d218902f70f95eee5db9eca8a4a6f7571c9567d6e65fab03",
+      "historicalBytesPreserved": true
+    },
+    "ts": {
+      "originalFileSha256": "fd46ad731e5d21587dc21fc155c748c675668f34e438251ba99d6f5f5a347063",
+      "selectedFileSha256": "90b0cf3eded9f0fb318364d0f5de91167e8da1963b573dfff9703c236ee6f8d4",
+      "historicalBytesPreserved": true
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Check an Environment Agency rainfall reference",
+      "zu": "Hlola ireferensi yemvula ye-Environment Agency",
+      "st": "Hlahloba tshupiso ya pula ya Environment Agency",
+      "ve": "Sedzulusani referentsi ya mvula ya Environment Agency",
+      "ts": "Kambela rheferense ya mpfula ya Environment Agency",
+      "messageSha256": "4c71d8e0bfceb4fa57fa73a979e2fba758f65ef0f497e5a0b3278f7c92c68873"
+    },
+    {
+      "english": "Country evidence → United Kingdom → Public rainfall network sample",
+      "zu": "Ubufakazi bezwe → United Kingdom → Isibonelo senethiwekhi yomphakathi yemvula",
+      "st": "Bopaki ba naha → United Kingdom → Mohlala wa marangrang a sechaba a pula",
+      "ve": "Vhuṱanzi ha shango → United Kingdom → Tsumbo ya nethiweke ya mvula ya nnyi na nnyi",
+      "ts": "Vumbhoni bya tiko → United Kingdom → Nkombiso wa netiweke ya mpfula ya mani na mani",
+      "messageSha256": "f4097a8dcadf7b4739e49e96b84fe047af1202f49e9b5aa145630a97add4ac2d"
+    },
+    {
+      "english": "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.",
+      "zu": "Cela isibonelo esisodwa senethiwekhi yomphakathi, lapho imvula ebikiwe, amanani angekho nezikhathi zomthombo kugcinwa ngokwehlukana. Le referensi ayikali imvula epulazini lakho noma ishintshe izeluleko zezitshalo.",
+      "st": "Kopa mohlala o le mong wa marangrang a sechaba moo pula e tlalehilweng, dipalo tse siyo le dinako tsa mohlodi di bolokwang di arohane. Tshupiso ena ha e lekanye pula polasing ya hao kapa ho fetola keletso ya dijalo.",
+      "ve": "Humbelani tsumbo nthihi ya nethiweke ya nnyi na nnyi, hune mvula yo vhigwaho, mivhalo i siho na zwifhinga zwa tshiko zwa dzula zwo fhambanywa. Iyi referentsi a i kali mvula kha bulasi ḽaṋu kana u shandula nyeletshedzo ya zwimela.",
+      "ts": "Kombela nkombiso wun’we wa netiweke ya mani na mani laha mpfula leyi vikiweke, mimpimo leyi nga riki kona ni minkarhi ya xihlovo swi hlayisiwaka swi hambanile. Rheferense leyi a yi pimi mpfula epurasini ra wena kumbe ku cinca switsundzuxo swa swibyariwa.",
+      "messageSha256": "317a13f6f4d06abaa0b8db43bed9d0072446f24a94443605be2f5a98426109bc"
+    }
+  ]
+}

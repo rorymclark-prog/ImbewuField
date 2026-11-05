@@ -41,6 +41,53 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: 'e8f1177aaf91', changes: [
+    'Saving rechecks this tab’s editing access.',
+  ] },
+  { when: '5 November 2026', sha: '5e87ef55b9', changes: [
+    'Compare nursery wording drafts in seven languages',
+  ], tour: [{ title: 'Compare nursery wording drafts', where: 'International reference tools → Language draft review → Nursery field planting', href: '/international/locales/nursery-field-planting',
+    detail: 'Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.' }] },
+  { when: '5 November 2026', sha: 'd645d42a29', changes: [
+    "Find Indonesia’s official BMKG sources",
+  ], tour: [{ title: "Find Indonesia’s official BMKG sources", where: "Country evidence → Research priorities → Indonesia", href: '/international',
+    detail: "Open the official forecast documentation, open-data description and terms from Indonesia’s research-queue card. Source links do not enable a forecast feed or local crop advice." }] },
+  { when: '5 November 2026', sha: '9992ec39de', changes: [
+    'Record a nursery planting in its field bed',
+  ], tour: [{ title: 'Record a nursery planting in its field bed', where: 'Crop planner → Saved planned nursery batches → Record field planting', href: '/facilitator/crops',
+    detail: 'Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.' }] },
+  { when: '5 November 2026', sha: '88f122ee7c', changes: [
+    'Find official INMET weather-alert sources',
+  ], tour: [{ title: 'Find official INMET weather-alert sources', where: 'Country evidence → Brazil → Official weather-alert links', href: '/international',
+    detail: 'Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.' }] },
+  { when: '5 November 2026', sha: '04e90c4601', changes: [
+    'Record nursery plant counts in your journal',
+  ], tour: [{ title: 'Record nursery plant counts in your journal', where: 'Crop planner → Saved planned nursery batches', href: '/facilitator/crops',
+    detail: 'Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.' }] },
+  { when: '5 November 2026', sha: '45f5bd5481', changes: [
+    'Record nursery sowing in your field journal',
+  ], tour: [{ title: 'Record nursery sowing in your field journal', where: 'Crop planner → Saved planned nursery batches', href: '/facilitator/crops',
+    detail: 'Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.' }] },
+  { when: '5 November 2026', sha: 'd05dd1faf3', changes: [
+    'Check an Environment Agency rainfall reference',
+  ], tour: [{ title: 'Check an Environment Agency rainfall reference', where: 'Country evidence → United Kingdom → Public rainfall network sample', href: '/international',
+    detail: 'Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.' }] },
+  { when: '5 November 2026', sha: 'f7f1a49759', changes: [
+    'Find official Kiambu bulletin links',
+  ], tour: [{ title: 'Find official Kiambu bulletin links', where: 'Country evidence → Kenya → County bulletin links', href: '/international',
+    detail: 'Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.' }] },
+  { when: '5 November 2026', sha: '2c50bc6c49', changes: [
+    'Keep references for saved nursery batches',
+  ], tour: [{ title: 'Keep references for saved nursery batches', where: 'Crop plan → Saved planned nursery batches', href: '/facilitator/crops',
+    detail: 'Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.' }] },
+  { when: '5 November 2026', sha: '634a0fe4b5', changes: [
+    'Check a public US forecast reference',
+  ], tour: [{ title: 'Check a public US forecast reference', where: 'Country evidence → United States → Washington forecast', href: '/international',
+    detail: 'Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.' }] },
+  { when: '5 November 2026', sha: 'bbb0848674', changes: [
+    'Plan separate availability windows for each growing space',
+  ], tour: [{ title: 'Plan separate availability windows for each growing space', where: 'Crop plan → Automatic plan from your estimates → Your available growing space', href: '/facilitator/crops',
+    detail: 'Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.' }] },
   { when: '5 November 2026', sha: '2fbfe97b5', changes: [
     "Sector illustrations keep richer colour, with larger labels and clearer contours.",
   ] },
@@ -51,6 +98,75 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'Review connected assistants, selected sites and imported originals.' },
   { title: 'Check your saved map', where: 'Site design', href: '/design',
     detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
+  { when: '4 November 2026', sha: 'a412b28b7e', changes: [
+    'Review saved invoice amounts by currency',
+  ], tour: [{ title: 'Review saved invoice amounts by currency', where: 'Invoice → Saved → Summary currency', href: '/invoice',
+    detail: 'Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.' }] },
+  { when: '4 November 2026', sha: '57218cb6b1', changes: [
+    'Choose a recorded invoice price',
+  ], tour: [{ title: 'Choose a recorded invoice price', where: 'Invoice → Choose a recorded invoice price', href: '/invoice',
+    detail: 'Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.' }] },
+  { when: '4 November 2026', sha: '164e43d010', changes: [
+    'Choose the currency for each new invoice.',
+  ], tour: [{ title: 'Keep invoice currencies clear', where: 'Invoice → Currency for this invoice', href: '/invoice',
+    detail: 'Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.' }] },
+  { when: '4 November 2026', sha: 'db51792ec', changes: [
+    'Record your own field observations from planned tasks.',
+  ], tour: [{ title: 'Record a field observation', where: 'Task Planner → Dated work → Record what happened', href: '/cropplan',
+    detail: 'Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.' }] },
+  { when: '4 November 2026', sha: 'b908db69f', changes: [
+    'Import field outlines from Google Earth.',
+  ], tour: [{ title: 'Review imported field outlines', where: 'Design Studio → Planting → Import field outlines', href: '/design',
+    detail: 'Choose a local KML file, review and select distinct outlines, then add them as new fields. Configure beds or open ground afterwards; map-reference locations are not surveyed boundaries.' }] },
+  { when: '4 November 2026', sha: 'b0ceadb26', changes: [
+    'Export saved field layouts for Google Earth.',
+  ], tour: [{ title: 'Export saved fields', where: 'Design Studio → Planting → Field blocks', href: '/design',
+    detail: 'Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.' }] },
+  { when: '4 November 2026', sha: 'afb197985', changes: [
+    'Enter your crop estimates in metric or imperial units.',
+    'Check saved bed measurements before reviewing capacity.',
+    'Reload changed estimates before saving over newer values.',
+    "New grower accounts can save personal designs without joining an organisation.",
+  ], tour: [{ title: 'Choose units for your own estimates', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.' }] },
+  { when: '4 November 2026', sha: '3eec3c0f0', changes: [
+    'Print planned nursery batch cards with dates and separate seedling counts.',
+  ], tour: [{ title: 'Print planned batch cards', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.' }] },
+  { when: '4 November 2026', sha: '0831af329', changes: [
+    'Download a printable nursery preparation sheet from your own crop proposal.',
+  ], tour: [{ title: 'Print nursery preparation', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.' }] },
+  { when: '4 November 2026', sha: '0831af329', changes: [
+    'Review your own nursery space in square metres or square feet.',
+    'Prepare grouped seedling and seed counts from your proposed crop plan.',
+  ], tour: [{ title: 'Review nursery preparation', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.' }] },
+  { when: '4 November 2026', sha: 'ff23dc4d1', changes: [
+    'See when local design advice needs your saved site and current country details.',
+    'Distinguish advice about the original South African sample from your own drawing.',
+  ], tour: [{ title: 'Check the design advice basis', where: 'Design Studio → Lima', href: '/design',
+    detail: 'Open your saved design. Local tips use the existing South African references only when the current saved-site context supports them. Country confirmation does not approve local farming advice; your drawing stays available when advice is held.' },
+  { title: 'Review the original sample', where: 'Tour → Plan the growing season', href: '/tour',
+    detail: 'Open the growing-season stop and choose All tools to see the sample advice control. It names the original sample layout; a request does not analyse your sample edits.' }] },
+  { when: '4 November 2026', sha: 'ff23dc4d1', changes: [
+    'See a welcome for small growers, market gardens and community projects.',
+  ], tour: [{ title: 'Start with your growing space', where: 'Home → Map and Production plan', href: '/home',
+    detail: 'Use your measured growing space and your own estimates. Regional reference coverage varies; choosing a country does not approve local crop advice.' }] },
+  { when: '4 November 2026', sha: 'd8b983c7f', changes: [
+    'See where your own dated crop plan can review nursery requirements.',
+  ], tour: [{ title: 'Review nursery requirements', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'For a saved measured growing space, review proposed batches from your own dates and inputs. Equipment entries alone do not establish dated availability or local crop approval.' }] },
+  { when: '4 November 2026', sha: '1427bc824', changes: [
+    'Keep editing nursery equipment and buyer targets after a confirmed save.',
+  ], tour: [{ title: 'Continue nursery editing', where: 'Production plan → Nursery planner', href: '/facilitator/crops',
+    detail: 'After a confirmed equipment save, continue entering your next container. Unknown sizes and stock stay unknown.' },
+  { title: 'Continue buyer-target editing', where: 'Production plan → Harvest targets', href: '/facilitator/crops',
+    detail: 'After a confirmed target save, continue entering your next buyer target. Targets remain planned demand, not recorded sales or harvest.' }] },
+  { when: '4 November 2026', sha: '575c24a11', changes: [
+    'Keep the nursery and harvest unit controls available after the same plan is saved again.',
+    'See when you can reload saved settings or need to reopen the crop plan.',
+  ] },
   { when: '4 November 2026', sha: '0475b9af8', changes: [
     "Sector maps use a quieter background and clearer sun, wind and fire marks.",
   ] },
@@ -72,6 +188,56 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'Review connected assistants, selected sites and imported originals.' },
   { title: 'Check your saved map', where: 'Site design', href: '/design',
     detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
+  { when: '3 November 2026', sha: '22f1408d5', changes: [
+    'Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.',
+    'Keep buyer entries when a save cannot be confirmed.',
+  ], tour: [{ title: 'Choose harvest weight units', where: 'Production plan → Harvest targets', href: '/facilitator/crops',
+    detail: 'Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.' }] },
+  { when: '3 November 2026', sha: 'e9d2ee956', changes: [
+    'Enter nursery tray dimensions in centimetres or inches.',
+    'Enter usable nursery surface in square metres or square feet.',
+    'Keep nursery entries until their save is confirmed.',
+  ], tour: [{ title: 'Choose nursery units', where: 'Production plan → Nursery planner', href: '/facilitator/crops',
+    detail: 'Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.' }] },
+  { when: '3 November 2026', sha: 'af9ff00cb', changes: [
+    'Enter field-block bed and path dimensions in metres or feet.',
+    'Keep saved measurements unchanged when switching the displayed unit.',
+  ], tour: [{ title: 'Choose field-block units', where: 'Site design → Planting → Field blocks', href: '/design',
+    detail: 'Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.' }] },
+  { when: '3 November 2026', sha: '6e184d251', changes: [
+    'Keep newer crop plans safe when an older app session saves its copy.',
+    'Review retained copies before continuing with your current crop plan.',
+    'Retry interrupted guest crop transfers without replacing saved account work.',
+  ], tour: [{ title: 'Review crop-plan storage', where: 'Production plan → Crop-plan storage', href: '/facilitator/crops',
+    detail: 'Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.' }] },
+  { when: '3 November 2026', sha: '0ab6f9ea2', changes: [
+    'Save a reviewed plan from your own growing estimates.',
+    'Check unresolved crop records before using a finance forecast.',
+    'Keep saved growing estimates and nursery settings when signing in.',
+  ], tour: [{ title: 'Save your reviewed plan', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Review a complete proposal, save all its planned cycles, then open dated work.' }] },
+  { when: '3 November 2026', sha: 'b3bf0f48f', changes: [
+    'Follow saved grower cycles on their exact planned dates.',
+    'Check current designs before ticking work or exporting dates.',
+    'Keep own crop estimates separate from catalogue print advice.',
+  ], tour: [{ title: 'Review your dated work', where: 'Task Planner → Dated work from your estimates', href: '/cropplan',
+    detail: 'Open Task Planner to check work dates from your saved growing estimates.' }] },
+  { when: '3 November 2026', sha: '34d527564', changes: [
+    'Review automatic crop plans from your own growing estimates and saved buyer targets.',
+    'Check dated nursery tray and surface needs before downloading your review.',
+  ], tour: [{ title: 'Review a crop plan from your estimates', where: 'Crop planner → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.' }] },
+  { when: '3 November 2026', sha: '58a25f4bc', changes: [
+    'Confirm a mapped site’s country before using its crop-planning guidance.',
+    'Keep your sowing records and nursery equipment while local planning is unavailable.',
+  ], tour: [{ title: 'Confirm your site country', where: 'Crop planner → Site country and region', href: '/facilitator/crops',
+    detail: 'Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.' },
+  { title: 'Review an unmapped reference', where: 'Crop planner → Planning without a mapped site', href: '/facilitator/crops',
+    detail: 'For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.' }] },
+  { when: '2 November 2026', sha: '12b0acba4', changes: [
+    'Save your own growing estimates and review capacity and dates for measured beds.',
+  ], tour: [{ title: 'Review your growing estimates', where: 'Crop planner → Your growing estimates', href: '/facilitator/crops',
+    detail: 'Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.' }] },
   { when: '3 November 2026', sha: '80eb2f0b5', changes: [
     "Open Terrain & Sections for the two cuts and extra contour detail.",
   ] },

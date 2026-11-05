@@ -1,0 +1,11 @@
+# Harvest weight and confirmation draft translation notes
+
+## Scope and status
+
+This batch provides 126 unreviewed AI translation drafts (`reviewStatus: "unreviewed-ai-draft"`, `runtimeActivation: false`) across `fr`, `es`, `pt-BR`, `sw`, `hi`, `bn`, and `id` for the 18 owner-frozen `components/crops/HarvestTargetsPanel.tsx` strings in `docs/international/agy-harvest-mass-global-translations-2026-11-03/source.json` (SHA256 `b66aea500317293ef523972b154170e39b056b288b9446394d3ce7646ddf7e21`, commit `b1df0d1ac441b36f515029ed4e902cc8720041e5`). The source snapshot is not final runtime identity; no fluent human review, validator execution, or runtime activation is claimed.
+
+## Semantic and unit preservation
+
+- **Units and symbols (`harvestMass01`–`harvestMass03`, `harvestMass12`, `harvestMass16`)**: Exact `(kg)`, `(lb)`, and `(%)` tokens are preserved without numbers or default conversions. `harvestMass03` disambiguates avoirdupois weight pounds from currency or books (`Livres de poids (lb)`, `Libras de peso (lb)`, `Pauni za uzito (lb)`, `पाउंड वज़न (lb)`, `পাউন্ড ওজন (lb)`, `Pon berat (lb)`). `harvestMass12` translates `"Sales unit"` as a produce-pack/quantity or weight unit, never currency; `harvestMass16` keeps saleable share optional without implying a default percentage.
+- **Planning months and buyer label (`harvestMass13`–`harvestMass15`)**: `harvestMass13` keeps `"For (optional)"` as an optional buyer/outlet label without contact-sharing implications. `harvestMass14`–`harvestMass15` describe planned harvest months (never observed harvests or guaranteed supply) and preserve `(included)` as an inclusive calendar-month boundary.
+- **Session vs. device confirmation and reload (`harvestMass04`–`harvestMass11`, `harvestMass17`–`harvestMass18`)**: Sample-session strings (`harvestMass06`, `harvestMass09`) state memory-only retention, whereas `harvestMass05`/`harvestMass10` state confirmed device-local persistence (not cloud sync or observed stock). `harvestMass11` preserves unconfirmed save semantics (retaining entries and requiring reload without claiming no write, failure, or success); `harvestMass04`/`harvestMass08` treat reload as reading saved targets, not automatic re-save or persistence proof.

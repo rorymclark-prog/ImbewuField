@@ -1,0 +1,20 @@
+{
+  "provenance": "AGY AI drafts; independent source and structural validation by Codex coordinator",
+  "sourceSha256": "89a0e36996c8868f297f8d3bdabde6c4f20155bc05422c64ca28ff23a6352b67",
+  "validatedPairs": 84,
+  "rejectedDamagedControls": 16,
+  "notesActualWhitespaceWords": 186,
+  "packetHashes": {
+    "fr": "ac570169be347881033371ac3ff1e96c77e0378c55d079dd844d2d177d98b656",
+    "es": "f27f3f09a7c46f1c1154698488d6e5e15deee28651eb19da09d22909faf5d30b",
+    "pt-BR": "c125dcda9842fd5de2ae00935c1544a413dfef6830348d976b41b877ce2b3c51",
+    "sw": "09b6e8819156784d8dd08401dd9ecc9113cd353dee61d125e0acf7d307ec687c",
+    "hi": "1ea20975df200f59288cfc1ef4a36cdd39e5079a74b47dbd5c1aeaa25cb011ef",
+    "bn": "4afd840d8bd62c84002e40a4dca5c6c8e667fb4625acb0c2ff469121b8ab5959",
+    "id": "207c04cff5176218086f04263e8f3a0c7e893b86e5393a73ab48352b5f59348d"
+  },
+  "fluentApproval": false,
+  "humanApproval": false,
+  "runtimeActivation": false,
+  "scope": "Existing source identity, row order, tokens, immutable currency-code literals and explicit draft metadata. Identified escape artifact and notes interpretation corrected; no semantic certification."
+}

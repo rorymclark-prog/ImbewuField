@@ -34,9 +34,20 @@ import { getMyProfile, updateMyProfile } from '@/lib/db/queries';
 import type { Profile, UserRole } from '@/lib/db/types';
 import {
   bindMountedAccountLocalStorageUid,
-  migrateGuestLocalStorageRows,
-  type GuestLocalStorageMigration,
+  accountLocalStorageKey,
+  ACCOUNT_LOCAL_STORAGE_OWNER_SEPARATOR,
 } from '@/lib/account-local-storage';
+import {
+  CROP_PLAN_LEGACY_KEY, CROP_PLAN_STORAGE_KEY, CROP_PLAN_CUTOVER_KEY,
+  releaseAllDocumentCropPlanLeases, transferCropPlanStoragePair, readCropPlanStorageTransferHold,
+  type CropPlanStorageContext, type CropPlanStorageLocks,
+} from '@/lib/crop-plan-storage';
+import {
+  JOURNAL_LEGACY_KEY, JOURNAL_STORAGE_KEY, JOURNAL_CUTOVER_KEY,
+  releaseAllDocumentJournalLeases, transferJournalStoragePair, readJournalStorageTransferHold,
+  type JournalStorageContext, type JournalStorageLocks,
+} from '@/lib/journal-storage';
+import { releaseAllDocumentInvoiceLeases } from '@/lib/invoice-storage';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -45,6 +56,10 @@ interface AuthContextValue {
   profile: Profile | null;
   role: UserRole | null;
   loading: boolean;
+  cropPlanMigrationHold: string | null;
+  retryCropPlanMigration: () => Promise<void>;
+  journalMigrationHold: string | null;
+  retryJournalMigration: () => Promise<void>;
   signIn: (email: string, password: string) => Promise<string | null>;
   signUp: (email: string, password: string, fullName: string, role?: UserRole) => Promise<string | null>;
   signInWithGoogle: () => Promise<string | null>;
@@ -61,6 +76,10 @@ const AuthContext = createContext<AuthContextValue>({
   profile: null,
   role: null,
   loading: false,
+  cropPlanMigrationHold: null,
+  retryCropPlanMigration: async () => {},
+  journalMigrationHold: null,
+  retryJournalMigration: async () => {},
   signIn: async () => 'Backend not configured.',
   signUp: async () => 'Backend not configured.',
   signInWithGoogle: async () => 'Backend not configured.',
@@ -72,47 +91,57 @@ const AuthContext = createContext<AuthContextValue>({
 
 // ─── Guest → account localStorage migration ─────────────────────────────────
 
-// The Field Journal (app/journal) and Crop Planner (app/facilitator/crops) are both
-// reachable while signed out, so a farmer can write real work there before ever
-// creating an account. These base keys are duplicated from lib/field-journal.ts's
-// and lib/crop-plan.ts's STORAGE_KEY literals on purpose, rather than imported:
-// this list runs on every sign-in, and pulling in the crop catalog and sample-mode
-// plumbing behind lib/crop-plan.ts here for two string constants that don't change
-// isn't worth it. See migrateGuestLocalStorageRows in lib/account-local-storage.ts
-// for what actually happens with this list and why.
-const GUEST_LOCAL_STORAGE_MIGRATIONS: readonly GuestLocalStorageMigration[] = [
-  {
-    baseKey: 'imbewu_field_journal_v1', // lib/field-journal.ts STORAGE_KEY
-    isEmpty: (raw) => {
-      if (!raw) return true;
-      try {
-        const parsed = JSON.parse(raw);
-        return !Array.isArray(parsed) || parsed.length === 0;
-      } catch {
-        return false; // unparseable is not proof there's nothing worth protecting
-      }
-    },
-  },
-  {
-    baseKey: 'imbewu_crop_plan_v1', // lib/crop-plan.ts STORAGE_KEY
-    isEmpty: (raw) => {
-      if (!raw) return true;
-      try {
-        const parsed = JSON.parse(raw) as { plantings?: unknown; productionRecords?: unknown; preservedProducts?: unknown };
-        // An orchard or animal plan can have no beds. Its dated observations and
-        // stock still belong to the farmer and must neither vanish nor be overwritten.
-        return (!Array.isArray(parsed?.plantings) || parsed.plantings.length === 0)
-          && (!Array.isArray(parsed?.productionRecords) || parsed.productionRecords.length === 0)
-          && (!Array.isArray(parsed?.preservedProducts) || parsed.preservedProducts.length === 0);
-      } catch {
-        return false;
-      }
-    },
-  },
-];
+// Keep auth's data boundary light: importing the crop catalogue here makes every
+// login load farming data. Each store owns its canonical pair transfer; neither
+// may use a single-row copy that loses newer links or its import evidence.
 
-function migrateGuestWorkToAccount(uid: string): void {
-  migrateGuestLocalStorageRows(GUEST_LOCAL_STORAGE_MIGRATIONS, uid);
+const isEmptyCropPlanMigrationSource = (raw: string | null): boolean => {
+  if (raw === null) return true;
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    // No beds does not mean no work: estimates, buyer targets, nursery
+    // evidence and reference choices still belong to the farmer. Recognize
+    // only a known empty scaffold; unknown metadata is never ours to erase.
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return false;
+    const book = parsed as Record<string, unknown>;
+    const collections = ['plantings', 'productionRecords', 'preservedProducts', 'growerPlanningProfiles',
+      'harvestTargets', 'workspaceReferences', 'planNotes'];
+    const known = ['version', 'updatedAt', 'nursery', ...collections];
+    if (book.version !== 1 || !Array.isArray(book.plantings)
+      || Object.keys(book).some(key => !known.includes(key))
+      || (book.updatedAt !== undefined && (typeof book.updatedAt !== 'number' || !Number.isFinite(book.updatedAt) || book.updatedAt < 0))
+      || collections.some(key => book[key] !== undefined && (!Array.isArray(book[key]) || book[key].length > 0))) return false;
+    if (book.nursery !== undefined) {
+      if (!book.nursery || typeof book.nursery !== 'object' || Array.isArray(book.nursery)) return false;
+      const nursery = book.nursery as Record<string, unknown>;
+      const resources = ['spaces', 'containers', 'profiles'];
+      const evidence = ['sourceIssues', 'heldInputs'];
+      if (nursery.version !== 1 || Object.keys(nursery).some(key => !['version', ...resources, ...evidence].includes(key))
+        || resources.some(key => !Array.isArray(nursery[key]) || nursery[key].length > 0)
+        || evidence.some(key => nursery[key] !== undefined && (!Array.isArray(nursery[key]) || nursery[key].length > 0))) return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+function authSampleActive(): boolean {
+  try { return typeof window !== 'undefined' && window.sessionStorage.getItem('imbewu_sample_mode') === '1'; }
+  catch { return true; }
+}
+
+function cropMigrationContext(uid: string | null, isCurrent: () => boolean): CropPlanStorageContext {
+  const key = (base: string) => uid ? accountLocalStorageKey(base, uid)
+    : `${base}${ACCOUNT_LOCAL_STORAGE_OWNER_SEPARATOR}guest`;
+  return { storage: window.localStorage, legacyKey: key(CROP_PLAN_LEGACY_KEY),
+    canonicalKey: key(CROP_PLAN_STORAGE_KEY), receiptKey: key(CROP_PLAN_CUTOVER_KEY), isCurrent };
+}
+function journalMigrationContext(uid: string | null, isCurrent: () => boolean): JournalStorageContext {
+  const key = (base: string) => uid ? accountLocalStorageKey(base, uid)
+    : `${base}${ACCOUNT_LOCAL_STORAGE_OWNER_SEPARATOR}guest`;
+  return { storage: window.localStorage, legacyKey: key(JOURNAL_LEGACY_KEY),
+    canonicalKey: key(JOURNAL_STORAGE_KEY), receiptKey: key(JOURNAL_CUTOVER_KEY), isCurrent };
 }
 
 // ─── Provider ────────────────────────────────────────────────────────────────
@@ -122,8 +151,58 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState<boolean>(isBackendConfigured());
   const [storageReadyEpoch, setStorageReadyEpoch] = useState<number | null>(null);
+  const [cropPlanMigrationHold, setCropPlanMigrationHold] = useState<string | null>(null);
+  const [journalMigrationHold, setJournalMigrationHold] = useState<string | null>(null);
   const authEpochRef = useRef(0);
   const activeUidRef = useRef<string | null>(null);
+  const providerAliveRef = useRef(true);
+  const guestMigrationQueueRef = useRef<Promise<void>>(Promise.resolve());
+  const guestMigrationRef = useRef<{ uid: string; epoch: number; sample: boolean; promise: Promise<void> } | null>(null);
+
+  const migrateGuestWorkToAccount = useCallback((uid: string, retry = false): Promise<void> => {
+    const epoch = authEpochRef.current;
+    const sample = authSampleActive();
+    const previous = guestMigrationRef.current;
+    if (!retry && previous?.uid === uid && previous.epoch === epoch && previous.sample === sample) return previous.promise;
+    // Firebase may notify the observer before or after its sign-in promise resolves.
+    // Serialize both entry points; an obsolete epoch loses authority before touching
+    // storage, and the current observer waits for that cancellation before continuing.
+    const operation = guestMigrationQueueRef.current.then(async () => {
+      const isCurrent = () => providerAliveRef.current && authEpochRef.current === epoch
+        && getFirebase()?.auth.currentUser?.uid === uid && authSampleActive() === sample && !sample;
+      if (!isCurrent() || typeof window === 'undefined') return;
+      try {
+        releaseAllDocumentCropPlanLeases();
+        releaseAllDocumentJournalLeases();
+        releaseAllDocumentInvoiceLeases();
+        if (!isCurrent()) return;
+        const target = cropMigrationContext(uid, isCurrent);
+        await transferCropPlanStoragePair(cropMigrationContext(null, isCurrent), target, {
+          locks: typeof navigator === 'undefined' ? undefined : navigator.locks as CropPlanStorageLocks | undefined,
+          sourceLegacyIsEmpty: isEmptyCropPlanMigrationSource,
+          targetLegacyIsEmpty: isEmptyCropPlanMigrationSource,
+        });
+        if (isCurrent()) setCropPlanMigrationHold(readCropPlanStorageTransferHold(target));
+      } catch {
+        // A held or failed migration is not failed authentication. Its source is
+        // retained, and the crop storage lifecycle exposes the recovery/read-only gate.
+      }
+      if (!isCurrent()) return;
+      try {
+        const target = journalMigrationContext(uid, isCurrent);
+        await transferJournalStoragePair(journalMigrationContext(null, isCurrent), target, {
+          locks: typeof navigator === 'undefined' ? undefined : navigator.locks as JournalStorageLocks | undefined,
+        });
+        if (isCurrent()) setJournalMigrationHold(readJournalStorageTransferHold(target));
+      } catch {
+        // Retain the journal's own copies and hold independently of crop work;
+        // one store's unavailable migration must not fail authentication.
+      }
+    });
+    guestMigrationRef.current = { uid, epoch, sample, promise: operation };
+    guestMigrationQueueRef.current = operation.catch(() => {});
+    return operation;
+  }, []);
 
   // Load/refresh profile whenever the Firebase user changes.
   const syncProfile = useCallback(async (firebaseUser: User | null) => {
@@ -138,6 +217,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    providerAliveRef.current = true;
     const fb = getFirebase();
     if (!fb) {
       // Backend not wired up yet — stay in guest/sample mode.
@@ -152,12 +232,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then(async (result) => {
         if (!result?.user) return;
         const redirectUid = result.user.uid;
-        migrateGuestWorkToAccount(redirectUid);
+        await migrateGuestWorkToAccount(redirectUid);
         if (fb.auth.currentUser?.uid !== redirectUid) return;
         const existing = await getMyProfile();
         if (fb.auth.currentUser?.uid !== redirectUid) return;
         if (!existing) {
-          await updateMyProfile({ full_name: result.user.displayName ?? '', role: 'farmer', language: 'en' });
+          await updateMyProfile({ full_name: result.user.displayName ?? '', role: 'farmer', language: 'en', org_id: null });
         }
       })
       .catch((err) => console.error('Google redirect sign-in failed:', err));
@@ -165,6 +245,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let alive = true;
     const unsub = onAuthStateChanged(fb.auth, async (firebaseUser) => {
       const epoch = ++authEpochRef.current;
+      releaseAllDocumentCropPlanLeases();
+      releaseAllDocumentJournalLeases();
+      releaseAllDocumentInvoiceLeases();
       const nextUid = firebaseUser?.uid ?? null;
       activeUidRef.current = nextUid;
       const isStillCurrent = () =>
@@ -179,10 +262,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       bindFieldIdentity(null);
       setLoading(true);
       setStorageReadyEpoch(null);
+      setCropPlanMigrationHold(null);
+      setJournalMigrationHold(null);
       setProfile(null);
       setUser(firebaseUser);
 
       try {
+        if (firebaseUser) await migrateGuestWorkToAccount(firebaseUser.uid);
+        if (!isStillCurrent()) return;
         let nextProfile = firebaseUser ? await getMyProfile() : null;
         if (!isStillCurrent()) return;
         // bug-09: getMyProfile() resolving to null (as opposed to throwing) means the doc
@@ -191,7 +278,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // same default-profile write the Google sign-in path already does for a brand-new user.
         if (firebaseUser && !nextProfile) {
           try {
-            await updateMyProfile({ full_name: firebaseUser.displayName ?? '', role: 'farmer', language: 'en' });
+            await updateMyProfile({ full_name: firebaseUser.displayName ?? '', role: 'farmer', language: 'en', org_id: null });
             if (!isStillCurrent()) return;
             nextProfile = await getMyProfile();
             if (!isStillCurrent()) return;
@@ -210,10 +297,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return () => {
       alive = false;
+      providerAliveRef.current = false;
+      releaseAllDocumentCropPlanLeases();
+      releaseAllDocumentJournalLeases();
+      releaseAllDocumentInvoiceLeases();
       authEpochRef.current += 1;
       unsub();
     };
-  }, []);
+  }, [migrateGuestWorkToAccount]);
 
   // The old account subtree has been removed in this committed loading render.
   // Rotate the browser-storage namespace now, then release the new subtree. A
@@ -231,18 +322,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!loading) bindFieldIdentity(user && profile ? { uid: user.uid, org: profile.org_id ?? '', role: profile.role } : null);
   }, [user, profile, loading]);
 
+  const retryExpectedEpoch = authEpochRef.current;
+  const retryCropPlanMigration = useCallback(async (): Promise<void> => {
+    const uid = user?.uid;
+    if (!uid || authEpochRef.current !== retryExpectedEpoch || activeUidRef.current !== uid
+      || getFirebase()?.auth.currentUser?.uid !== uid || authSampleActive()) return;
+    await migrateGuestWorkToAccount(uid, true);
+  }, [user?.uid, retryExpectedEpoch, migrateGuestWorkToAccount]);
+  const retryJournalMigration = useCallback(async (): Promise<void> => {
+    const uid = user?.uid;
+    if (!uid || authEpochRef.current !== retryExpectedEpoch || activeUidRef.current !== uid
+      || getFirebase()?.auth.currentUser?.uid !== uid || authSampleActive()) return;
+    await migrateGuestWorkToAccount(uid, true);
+  }, [user?.uid, retryExpectedEpoch, migrateGuestWorkToAccount]);
+
   // ── signIn ──────────────────────────────────────────────────────────────
   const signIn = useCallback(async (email: string, password: string): Promise<string | null> => {
     const fb = getFirebase();
     if (!fb) return 'Firebase is not configured yet — running in sample mode.';
     try {
       const cred = await signInWithEmailAndPassword(fb.auth, email, password);
-      migrateGuestWorkToAccount(cred.user.uid);
+      await migrateGuestWorkToAccount(cred.user.uid);
       return null;
     } catch (err) {
       return friendlyAuthError(err);
     }
-  }, []);
+  }, [migrateGuestWorkToAccount]);
 
   // ── signUp ──────────────────────────────────────────────────────────────
   const signUp = useCallback(async (
@@ -256,7 +361,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const cred = await createUserWithEmailAndPassword(fb.auth, email, password);
       const signupUid = cred.user.uid;
-      migrateGuestWorkToAccount(signupUid);
+      await migrateGuestWorkToAccount(signupUid);
       if (fb.auth.currentUser?.uid !== signupUid) return null;
       // bug-09: the account above is already created and cannot be created again — a retry
       // after this point would fail with "email already in use" with no way back in except
@@ -266,7 +371,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         await updateProfile(cred.user, { displayName: fullName });
         if (fb.auth.currentUser?.uid !== signupUid) return null;
-        await updateMyProfile({ full_name: fullName, role, language: 'en' });
+        await updateMyProfile({ full_name: fullName, role, language: 'en', org_id: null });
       } catch (err) {
         console.error('signUp profile write failed (account created; will retry on next load):', err);
       }
@@ -276,7 +381,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       return friendlyAuthError(err);
     }
-  }, [syncProfile]);
+  }, [syncProfile, migrateGuestWorkToAccount]);
 
   // ── signInWithGoogle ─────────────────────────────────────────────────────
   const signInWithGoogle = useCallback(async (): Promise<string | null> => {
@@ -293,12 +398,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Firebase's popup flow on phones too, directly from the user's tap.
       const cred = await signInWithPopup(fb.auth, provider);
       const popupUid = cred.user.uid;
-      migrateGuestWorkToAccount(popupUid);
+      await migrateGuestWorkToAccount(popupUid);
       if (fb.auth.currentUser?.uid !== popupUid) return null;
       const existing = await getMyProfile();
       if (fb.auth.currentUser?.uid !== popupUid) return null;
       if (!existing) {
-        await updateMyProfile({ full_name: cred.user.displayName ?? '', role: 'farmer', language: 'en' });
+        await updateMyProfile({ full_name: cred.user.displayName ?? '', role: 'farmer', language: 'en', org_id: null });
         if (fb.auth.currentUser?.uid !== popupUid) return null;
       }
       await syncProfile(cred.user);
@@ -306,7 +411,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       return friendlyAuthError(err, 'google');
     }
-  }, [syncProfile]);
+  }, [syncProfile, migrateGuestWorkToAccount]);
 
   // ── resetPassword ────────────────────────────────────────────────────────
   const resetPassword = useCallback(async (email: string): Promise<string | null> => {
@@ -371,7 +476,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider value={{
-      user, profile, role, loading,
+      user, profile, role, loading, cropPlanMigrationHold, retryCropPlanMigration, journalMigrationHold, retryJournalMigration,
       signIn, signUp, signInWithGoogle, resetPassword, changePassword, refreshProfile, signOutUser,
     }}>
       {suspendAccountTree ? (

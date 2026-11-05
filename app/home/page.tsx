@@ -378,7 +378,11 @@ function HomeLandingInner() {
     // and its task source update immediately without a page reload. Crop-plan
     // and canvas saves likewise refresh tasks while Home remains mounted.
     TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.addEventListener(event, refresh));
-    return () => TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.removeEventListener(event, refresh));
+    window.addEventListener('storage', refresh); window.addEventListener('focus', refresh);
+    return () => {
+      TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.removeEventListener(event, refresh));
+      window.removeEventListener('storage', refresh); window.removeEventListener('focus', refresh);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang]);
 

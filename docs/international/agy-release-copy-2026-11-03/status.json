@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-11-03",
+  "status": "needs-human-review",
+  "source": "source.json",
+  "sourceSha256": "4df26d99a699f568d62f4d92e1def27689b397770dae834b2840a5cd38dae7ab",
+  "messagesPerLocale": 8,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "files": {
+    "zu": "docs/international/agy-release-copy-2026-11-03/zu.json",
+    "st": "docs/international/agy-release-copy-2026-11-03/st.json",
+    "ts": "docs/international/agy-release-copy-2026-11-03/ts.json",
+    "ve": "docs/international/agy-release-copy-2026-11-03/ve.json"
+  },
+  "sourceSha256Binding": "All 8 messages match source keys, sourceEnglish, and sourceSha256 exactly from source.json",
+  "executor": "AGY coordinator (ts, ve and file materialisation) with 2 native AI subagents (zu, st)",
+  "nativeWorkerStates": {
+    "zu": "stopped (cleanly terminated via manage_subagents after delivering complete JSON message array)",
+    "st": "stopped (cleanly terminated via manage_subagents after delivering complete JSON message array)",
+    "activeSubagents": 0
+  },
+  "humanReviewGates": {
+    "zu": "unreviewed - requires native isiZulu grower / agronomist review",
+    "st": "unreviewed - requires native Sesotho grower / agronomist review",
+    "ts": "unreviewed - requires native Xitsonga grower / agronomist review",
+    "ve": "unreviewed - requires native Tshivenda grower / agronomist review"
+  },
+  "review": {
+    "status": "unreviewed",
+    "assignedReviewers": null
+  },
+  "productionLanguageEnablement": false,
+  "validation": "All 4 files materialized under docs/international/agy-release-copy-2026-11-03/ with exactly 8 messages each, valid JSON, unreviewed status, preserved navigation arrow →, and reference-basis scope.",
+  "productIntegrationAtExecutorHandoff": false,
+  "coordinatorCandidateIntegration": {
+    "status": "integrated-for-branch-review",
+    "runtimeFiles": [
+      "lib/update-copy-locales/zu.ts",
+      "lib/update-copy-locales/st.ts",
+      "lib/update-copy-locales/ts.ts",
+      "lib/update-copy-locales/ve.ts"
+    ],
+    "entries": 32,
+    "mechanism": "Existing disclosed unreviewed source-paired update-copy candidates; English fallback retained.",
+    "humanApproval": false,
+    "productionRelease": false,
+    "validation": "structural-validation.json"
+  }
+}

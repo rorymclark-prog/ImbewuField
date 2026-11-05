@@ -21,6 +21,9 @@ interface Props {
   plantings: Planting[];
   beds: PlanBed[];
   planLoaded: boolean;
+  forecastPlantings?: Planting[];
+  forecastAvailable?: boolean;
+  forecastReason?: string;
 }
 
 function fmtKg(n: number): string {
@@ -130,11 +133,12 @@ function UnplannedRowView({ row }: { row: UnplannedRow }) {
  * presented as facts about one farm. lib/finance-plan-source.ts is now the one
  * authority for the screen and hands the same beds to both.
  */
-export default function HarvestReconciliation({ production, sales, period, now, loading, plantings, beds, planLoaded }: Props) {
+export default function HarvestReconciliation({ production, sales, period, now, loading, plantings, beds, planLoaded,
+  forecastPlantings, forecastAvailable, forecastReason }: Props) {
   const { lang } = useLanguage();
   const result = useMemo(
-    () => buildReconciliation(plantings, beds, production, sales, period, now),
-    [plantings, beds, production, sales, period, now],
+    () => buildReconciliation(forecastAvailable === true ? forecastPlantings ?? [] : [], beds, production, sales, period, now),
+    [forecastAvailable, forecastPlantings, beds, production, sales, period, now],
   );
 
   const periodLabel = ({ month: 'kule nyanga', season: 'kule sizini', year: 'kulo nyaka' } as const)[period];
@@ -146,7 +150,7 @@ export default function HarvestReconciliation({ production, sales, period, now, 
     year: 'Nothing logged this year. Monthly and seasonal targets are not invented from a crop-cycle benchmark.',
   };
   const isLoading = loading || !planLoaded;
-  const hasPlan = plantings.length > 0;
+  const hasPlan = forecastAvailable === true && (forecastPlantings?.length ?? 0) > 0;
   const hasAnything = result.matched.length > 0 || result.notYetHarvested.length > 0
     || result.unmatchedPlanned.length > 0 || result.unplannedActivity.length > 0;
 
@@ -161,6 +165,13 @@ export default function HarvestReconciliation({ production, sales, period, now, 
 
       {isLoading ? (
         <div className="px-4 py-6 text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{tx('Loading…', 'Kuyalayishwa…')}</div>
+      ) : forecastAvailable !== true ? (
+        <div className="px-4 py-4">
+          <p className="font-display text-sm font-semibold">{recordsFill(lang, 'Crop-plan benchmark unavailable')}</p>
+          <p className="mt-1 font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>{recordsFill(lang, forecastReason ?? 'Confirm the planning basis before comparing with local crop benchmarks.')}</p>
+          <p className="mt-2 font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>{recordsFill(lang, 'Recorded harvest and sales stay in their original books. Missing planning evidence is not a zero yield.')}</p>
+          <div className="mt-3 divide-y">{result.unplannedActivity.map(row => <UnplannedRowView key={row.label} row={row} />)}</div>
+        </div>
       ) : !hasPlan ? (
         <div className="flex flex-col items-center justify-center gap-2 py-8 px-4 text-center">
           <Sprout size={20} style={{ color: 'var(--color-forest-800)' }} />

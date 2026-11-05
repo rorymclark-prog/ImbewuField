@@ -128,10 +128,15 @@ export function openFileInTab(blob: Blob): boolean {
 }
 
 /** The default route for this device, with the other always still available. */
-export async function deliverFile(blob: Blob, filename: string, shareTitle: string): Promise<FileDelivery> {
+export async function deliverFile(blob: Blob, filename: string, shareTitle: string, contextCurrent?: () => boolean): Promise<FileDelivery> {
+  const current = () => { try { return !contextCurrent || contextCurrent(); } catch { return false; } };
+  if (!current()) return 'cancelled';
   if (prefersShareSheet()) {
     const result = await shareFile(blob, filename, shareTitle);
     if (result !== 'unavailable') return result;
   }
+  // A share sheet may outlive the account/site that produced this private file.
+  // Withdrawing that original context also withdraws its delayed download fallback.
+  if (!current()) return 'cancelled';
   return downloadFile(blob, filename);
 }

@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "scope": "Six exact nursery-unit release/update-tour descriptions for existing four South African interface locales only",
+  "sourceCommitBase": "844e4a1bcbf9d1b25d5cc7b747ea22f88e1f727e",
+  "sourceState": "coordinator-frozen exact English from current uncommitted release notes; final SHA restamp may change file hash but must not change English pairs",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "files": [
+    {
+      "path": "lib/release-notes.ts",
+      "bytes": 346535,
+      "sha256": "f2c5e662d3476f376ce2dd1bdee38f55587d3f1e9fb1484f91bde2124cf0f259"
+    }
+  ],
+  "messages": [
+    {
+      "key": "nurseryRelease01",
+      "english": "Enter nursery tray dimensions in centimetres or inches.",
+      "source": "lib/release-notes.ts",
+      "sha256": "d3a7d9692de4a550545a6db23284f4963d7138b66e0cc937205df7fa361db8d0"
+    },
+    {
+      "key": "nurseryRelease02",
+      "english": "Enter usable nursery surface in square metres or square feet.",
+      "source": "lib/release-notes.ts",
+      "sha256": "a1a2399cd320ab99d9b1bef293b1e571e5ae6217a7d90fb88963742fff4a6846"
+    },
+    {
+      "key": "nurseryRelease03",
+      "english": "Keep nursery entries until their save is confirmed.",
+      "source": "lib/release-notes.ts",
+      "sha256": "685c8d76dd8015a7e048b553d3d74ebbdf70fec10d526b968945316c5cd3b1e7"
+    },
+    {
+      "key": "nurseryRelease04",
+      "english": "Choose nursery units",
+      "source": "lib/release-notes.ts",
+      "sha256": "ed0aa0520bba6db48099599e43e3b12cb3372ff7c5e60d163d226d471472e0f7"
+    },
+    {
+      "key": "nurseryRelease05",
+      "english": "Production plan → Nursery planner",
+      "source": "lib/release-notes.ts",
+      "sha256": "363567fb24f40588cfbecfc2d757a4ed01849b82e0c45fa430085eaa9e1aa665"
+    },
+    {
+      "key": "nurseryRelease06",
+      "english": "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.",
+      "source": "lib/release-notes.ts",
+      "sha256": "f7e04b4cc0657845fe48458355a716e01e256abb1e84fdf9dc875ad28e6f080d"
+    }
+  ]
+}

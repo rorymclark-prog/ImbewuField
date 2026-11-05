@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "packet": "invoice-price-history-copy-2026-11-04",
+  "status": "frozen-source-for-ai-drafts",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw",
+    "hi",
+    "bn",
+    "id"
+  ],
+  "sources": [
+    {
+      "path": "app/invoice/page.tsx",
+      "bytes": 114579,
+      "sha256": "65e9579f8f058d83baf9cf155164205bd6e38d220c13db497f2a1fe7904b7a38"
+    }
+  ],
+  "sourceReconciliation": "Rows4 and7 are exact rendered templates with named interpolation tokens for recorded currency and source invoice number/buyer/date; other rows are exact source literals. Root inspected actual frozen UI; no runtime translation activation.",
+  "messages": [
+    {
+      "key": "invoicePriceHistory.message.01",
+      "english": "Close recorded invoice prices",
+      "messageSha256": "0584320cc857a327350338c753fea372b261fb9eb80330687bbdde5e338ee3fd"
+    },
+    {
+      "key": "invoicePriceHistory.message.02",
+      "english": "Choose a recorded invoice price",
+      "messageSha256": "a0fc853d3f1b3b77bba252bc4af942be87a7cba7e719c89b39e9da76442a50b2"
+    },
+    {
+      "key": "invoicePriceHistory.message.03",
+      "english": "Recorded invoice prices need review. Reopen the current records before choosing a price.",
+      "messageSha256": "ac8f7a622a8429f0af3bf5ce695bc20423ccebaa1df3681f761f74942202f59c"
+    },
+    {
+      "key": "invoicePriceHistory.message.04",
+      "english": "Prices previously recorded on invoices in {currency} for this exact item and unit. Confirm the price for this sale.",
+      "messageSha256": "5460e80b168e8522cab9e6595e960ec7e763a18d0cfc17cc812c36bf7f0a518d"
+    },
+    {
+      "key": "invoicePriceHistory.message.05",
+      "english": "No matching recorded invoice prices.",
+      "messageSha256": "aad9bf15391aaa7af2d30d6bcf5a296d9d0323ed5824aeca979d2904652031bd"
+    },
+    {
+      "key": "invoicePriceHistory.message.06",
+      "english": "Recorded amount unavailable",
+      "messageSha256": "a0081b672aaeebed7c3bedf43ada1f23d085c914269632e5f16b678c20334b81"
+    },
+    {
+      "key": "invoicePriceHistory.message.07",
+      "english": "Invoice #{invoice} · {buyer} · {date}",
+      "messageSha256": "f768ce4a9071e9332bbe84de834c591884628ac2936137453bea953154907482"
+    },
+    {
+      "key": "invoicePriceHistory.message.08",
+      "english": "Use this recorded price",
+      "messageSha256": "c529a518f1e900618a9ba9e37d995ec8284ef6fb4999c7b2cda14e3dfcc53ebc"
+    }
+  ]
+}

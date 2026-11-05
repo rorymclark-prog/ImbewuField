@@ -1,0 +1,14 @@
+{
+  "assignment": "docs/international/agy-integration-sector-release-copy-2026-11-05/WORKORDER.md",
+  "status": "unreviewed-ai-drafts-ready",
+  "sourceSha256": "0c13cc8ef76375e5f16c598caa575a36256c137d9143d618afe1f133f3a022f3",
+  "runtimeActivation": false,
+  "sourcesCount": 1,
+  "candidatesCount": 4,
+  "reviewNotesWordCount": "UNKNOWN",
+  "validation": "UNKNOWN",
+  "commandsRun": false,
+  "testsRun": false,
+  "workersActive": 0,
+  "workersStopped": true
+}

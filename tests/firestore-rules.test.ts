@@ -1,4 +1,5 @@
 import { before, after, test } from 'node:test';
+import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import type { Firestore } from 'firebase/firestore';
@@ -36,7 +37,7 @@ const {
 // needs an emulator) and no workflow ran `test:rules`, so the suite reported green while these
 // seven tests could not even construct a document reference.
 const {
-  collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where,
+  collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, deleteField, query, where,
 } = require('@firebase/firestore') as {
   collection: (...args: unknown[]) => unknown;
   doc: (...args: unknown[]) => never;
@@ -45,6 +46,7 @@ const {
   setDoc: (...args: unknown[]) => Promise<unknown>;
   updateDoc: (...args: unknown[]) => Promise<unknown>;
   deleteDoc: (...args: unknown[]) => Promise<unknown>;
+  deleteField: () => unknown;
   query: (...args: unknown[]) => unknown;
   where: (...args: unknown[]) => unknown;
 };
@@ -1568,4 +1570,133 @@ test('contact replies: same-org staff/mentor only, addressed to the message\'s o
   // The platform admin answers the support bucket regardless of org.
   const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
   await assertSucceeds(setDoc(doc(adminDb, 'contact_replies', 'contact-reply-support'), { ...reply, message_id: MSG_SUPPORT, recipient_label: 'support' }));
+});
+
+// Independent growers existed before org_id was initialized explicitly. Seed
+// these profiles with the field genuinely absent so null fixtures cannot mask
+// missing-field rule errors. Each test owns its document IDs and mutations.
+test('a legacy independent grower can save personal designs, reports and logs before membership repair', async () => {
+  const uid = 'independent-legacy-personal-work';
+  await env.withSecurityRulesDisabled(async context => {
+    await setDoc(doc(context.firestore(), 'profiles', uid), {
+      role: 'farmer', full_name: 'Independent legacy grower', language: 'en',
+    });
+  });
+  const db = env.authenticatedContext(uid).firestore();
+  const snapshot = await assertSucceeds(getDoc(doc(db, 'profiles', uid))) as { data: () => Record<string, unknown> };
+  assert.equal(Object.hasOwn(snapshot.data(), 'org_id'), false);
+  const design = { owner_id: uid, org_id: null, title: 'Personal fixture', data: {}, shared_with: null };
+  await assertSucceeds(setDoc(doc(db, 'designs', 'independent-legacy-design'), design));
+  await assertSucceeds(getDoc(doc(db, 'designs', 'independent-legacy-design')));
+  await assertSucceeds(updateDoc(doc(db, 'designs', 'independent-legacy-design'), { title: 'Own correction' }));
+  await assertSucceeds(setDoc(doc(db, 'reports', 'independent-legacy-report'), {
+    owner_id: uid, org_id: null, title: 'Personal report fixture', content: 'Own note', lang: 'en',
+  }));
+  await assertSucceeds(getDoc(doc(db, 'reports', 'independent-legacy-report')));
+  for (const collectionName of LOG_COLLECTIONS) {
+    await assertSucceeds(setDoc(doc(db, collectionName, `independent-legacy-${collectionName}`), logData(uid, null, collectionName)));
+    await assertSucceeds(getDoc(doc(db, collectionName, `independent-legacy-${collectionName}`)));
+  }
+});
+
+test('a missing membership permits ordinary self edits and explicit null repair while preserving the role', async () => {
+  const uid = 'independent-legacy-profile-repair';
+  await env.withSecurityRulesDisabled(async context => {
+    await setDoc(doc(context.firestore(), 'profiles', uid), {
+      role: 'student', full_name: 'Original name', language: 'en',
+    });
+  });
+  const db = env.authenticatedContext(uid).firestore();
+  const ref = doc(db, 'profiles', uid);
+  await assertSucceeds(updateDoc(ref, { full_name: 'Corrected name', language: 'zu' }));
+  let snapshot = await getDoc(ref) as { data: () => Record<string, unknown> };
+  assert.equal(Object.hasOwn(snapshot.data(), 'org_id'), false, 'An ordinary correction must not fabricate membership');
+  assert.equal(snapshot.data().role, 'student');
+  await assertFails(updateDoc(ref, { org_id: ORG_A }));
+  await assertFails(updateDoc(ref, { role: 'mentor' }));
+  await assertFails(updateDoc(ref, { role: 'admin', org_id: null }));
+  await assertSucceeds(updateDoc(ref, { org_id: null }));
+  snapshot = await getDoc(ref) as { data: () => Record<string, unknown> };
+  assert.equal(Object.hasOwn(snapshot.data(), 'org_id'), true);
+  assert.equal(snapshot.data().org_id, null);
+  assert.equal(snapshot.data().role, 'student');
+  await assertSucceeds(updateDoc(ref, { full_name: 'Correction after repair' }));
+  await assertFails(updateDoc(ref, { org_id: ORG_B }));
+});
+
+test('new explicit-null personal profiles work while existing organization memberships remain immutable', async () => {
+  const uid = 'independent-new-null-profile';
+  const db = env.authenticatedContext(uid).firestore();
+  await assertFails(setDoc(doc(db, 'profiles', uid), { role: 'farmer', org_id: ORG_A, full_name: 'Self assignment' }));
+  await assertSucceeds(setDoc(doc(db, 'profiles', uid), { role: 'farmer', org_id: null, full_name: 'Independent new grower' }));
+  await assertSucceeds(setDoc(doc(db, 'designs', 'independent-new-null-design'), {
+    owner_id: uid, org_id: null, title: 'Own design', data: {}, shared_with: null,
+  }));
+  await assertSucceeds(setDoc(doc(db, 'reports', 'independent-new-null-report'), {
+    owner_id: uid, org_id: null, title: 'Own report', content: 'Personal note', lang: 'en',
+  }));
+  const member = 'independent-existing-member-control';
+  await env.withSecurityRulesDisabled(async context => { await profile(context.firestore(), member, 'farmer', ORG_A); });
+  const memberDb = env.authenticatedContext(member).firestore();
+  const ref = doc(memberDb, 'profiles', member);
+  await assertSucceeds(updateDoc(ref, { full_name: 'Allowed member correction' }));
+  for (const patch of [{ org_id: null }, { org_id: ORG_B }, { org_id: deleteField() }, { role: 'admin' }, { role: deleteField() }]) {
+    await assertFails(updateDoc(ref, patch));
+  }
+  await assertFails(setDoc(ref, { role: 'farmer', full_name: 'Replacement that drops membership' }));
+  const snapshot = await getDoc(ref) as { data: () => Record<string, unknown> };
+  assert.equal(snapshot.data().org_id, ORG_A);
+  assert.equal(snapshot.data().role, 'farmer');
+});
+
+test('absent and null memberships never join independent accounts or permit anonymous personal writes', async () => {
+  const absentUid = 'independent-isolation-absent';
+  const nullUid = 'independent-isolation-null';
+  await env.withSecurityRulesDisabled(async context => {
+    const db = context.firestore();
+    await setDoc(doc(db, 'profiles', absentUid), { role: 'farmer', full_name: 'Absent membership' });
+    await profile(db, nullUid, 'farmer', null);
+    for (const uid of [absentUid, nullUid]) {
+      await setDoc(doc(db, 'designs', `independent-private-${uid}`), {
+        owner_id: uid, org_id: null, title: 'Private design', data: {}, shared_with: null,
+      });
+      await setDoc(doc(db, 'reports', `independent-private-${uid}`), {
+        owner_id: uid, org_id: null, title: 'Private report', content: 'Private note',
+      });
+      for (const collectionName of LOG_COLLECTIONS) {
+        await setDoc(doc(db, collectionName, `independent-private-${uid}`), logData(uid, null, collectionName));
+      }
+    }
+  });
+  for (const [uid, other] of [[absentUid, nullUid], [nullUid, absentUid]]) {
+    const db = env.authenticatedContext(uid).firestore();
+    for (const collectionName of ['designs', 'reports', ...LOG_COLLECTIONS]) {
+      const ownRef = doc(db, collectionName, `independent-private-${uid}`);
+      const otherRef = doc(db, collectionName, `independent-private-${other}`);
+      await assertSucceeds(getDoc(ownRef));
+      await assertFails(getDoc(otherRef));
+      await assertFails(updateDoc(otherRef, { title: 'Cross-account change' }));
+      await assertFails(deleteDoc(otherRef));
+    }
+    for (const collectionName of ['designs', 'reports']) {
+      await assertFails(setDoc(doc(db, collectionName, `independent-owner-spoof-${uid}`), {
+        owner_id: other, org_id: null, title: 'Spoofed owner', data: {}, content: 'Spoofed note',
+      }));
+      await assertFails(setDoc(doc(db, collectionName, `independent-org-spoof-${uid}`), {
+        owner_id: uid, org_id: ORG_A, title: 'Spoofed membership', data: {}, content: 'Spoofed note',
+      }));
+    }
+    for (const collectionName of LOG_COLLECTIONS) {
+      await assertFails(setDoc(doc(db, collectionName, `independent-log-spoof-${uid}`), logData(uid, ORG_A, collectionName)));
+    }
+  }
+  const anonymous = env.unauthenticatedContext().firestore();
+  await assertFails(setDoc(doc(anonymous, 'profiles', 'independent-anonymous-profile'), { role: 'farmer', org_id: null }));
+  for (const collectionName of ['designs', 'reports', ...LOG_COLLECTIONS]) {
+    await assertFails(getDoc(doc(anonymous, collectionName, `independent-private-${absentUid}`)));
+    const data = LOG_COLLECTIONS.includes(collectionName as typeof LOG_COLLECTIONS[number])
+      ? logData(absentUid, null, collectionName)
+      : { owner_id: absentUid, org_id: null, title: 'Anonymous write', data: {}, content: 'Anonymous note' };
+    await assertFails(setDoc(doc(anonymous, collectionName, `independent-anonymous-${collectionName}`), data));
+  }
 });

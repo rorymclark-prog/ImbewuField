@@ -754,7 +754,7 @@ export function measurementsPromptBlock(facts: ReportSiteFacts | null | undefine
 }
 
 /** The crop plan the farmer has actually entered — dates and beds, deliberately no yields. */
-export function cropPlanPromptBlock(facts: ReportSiteFacts | null | undefined): string {
+export function cropPlanPromptBlock(facts: ReportSiteFacts | null | undefined, supportedPlanningBasis = false): string {
   const crop = facts?.crop;
   if (!crop) return '';
   const lines = [
@@ -769,6 +769,10 @@ export function cropPlanPromptBlock(facts: ReportSiteFacts | null | undefined): 
       ? ` — ${row.firstSeasonOnlyMonths.join(', ')} ${row.firstSeasonOnlyMonths.length === 1 ? 'is a' : 'are'} one-time first-season sowing${row.firstSeasonOnlyMonths.length === 1 ? '' : 's'} only, not repeated in later years`
       : '';
     lines.push(`· ${row.name} — sown ${row.sowMonths.join(', ')}${row.bedLabels.length ? ` in ${row.bedLabels.join(', ')}` : ''}${row.alreadyGrowing ? ' (already in the ground)' : ''}${onceNote}`);
+  }
+  if (!supportedPlanningBasis) {
+    lines.push('Saved entries only. No current local crop-planning basis has been established. Do not derive a planting calendar, crop rotation, harvest forecast, food gap, nursery timing, yield or income from these records. State that local planning guidance is unavailable; retain recorded names, dates and measurements as unverified user records. Do NOT print a yield or an income figure for any of them.');
+    return lines.join('\n');
   }
   const production = crop.snapshot?.annualProduction;
   if (production) {

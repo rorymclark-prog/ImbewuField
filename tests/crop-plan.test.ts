@@ -507,10 +507,16 @@ test('no page carries its own rival yield table — the sourced catalog is the o
 test('calendar sowing marks come from the catalog window, not a rival month table', () => {
   const calendarSource = readFileSync(new URL('../app/calendar/page.tsx', import.meta.url), 'utf8');
   assert.match(calendarSource, /sowMarksForPattern/);
-  // The calendar follows the farmer's own saved crop plan (CropPlanState.rainPattern),
-  // falling back to 'summer' only for a plan saved before that field existed or when
-  // there is no plan yet — not a page-wide constant that ignores the plan's real climate.
-  assert.match(calendarSource, /rainPattern\s*\?\?\s*['"]summer['"]/);
+  // A global plan pattern is not bound to a site. The former summer fallback
+  // would silently apply SA instructions abroad; catalog authority now requires
+  // an explicit supported context and pattern. The eight runtime cases in
+  // international-calendar-context cover the default hold and all four choices.
+  assert.match(calendarSource, /marks:\s*sowMarksForPattern\(crop\.catalogKey, pattern\)/,
+    'every displayed row must get its marks from the catalog using the chosen reference pattern');
+  assert.match(calendarSource, /rainPattern \? cropsForPattern\(rainPattern, lang\) : \[\]/,
+    'no sowing marks may be calculated before the reference pattern is chosen');
+  assert.doesNotMatch(calendarSource, /rainPattern\s*\?\?\s*['"]summer['"]|setRainPattern\(plan\.rainPattern/,
+    'the unbound global plan must not silently choose a site pattern');
   assert.doesNotMatch(
     calendarSource,
     /marks:\s*\[['"]/,

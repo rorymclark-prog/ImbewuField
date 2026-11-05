@@ -7,13 +7,50 @@ import { act, create } from 'react-test-renderer';
 import { useDialogFocus } from '../lib/use-dialog-focus.ts';
 import { UserFacingError, userFacingMessage } from '../lib/user-facing-error.ts';
 import { RenderJobError, mapSerially } from '../lib/render-jobs.ts';
+import { initialiseCropPlanFixture, releaseCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 
 const source = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const glossy = source('components/design/DesignGlossy.tsx');
 const crop = source('components/crops/CropPlanExportCard.tsx');
 
+async function withAllocatedFieldBook(run: (authority: typeof import('../lib/field-block-allocations.ts')) => void) {
+  class MemoryStorage {
+    private values = new Map<string, string>();
+    get length() { return this.values.size; }
+    key(index: number) { return [...this.values.keys()][index] ?? null; }
+    getItem(key: string) { return this.values.get(key) ?? null; }
+    setItem(key: string, value: string) { this.values.set(key, String(value)); }
+    removeItem(key: string) { this.values.delete(key); }
+    clear() { this.values.clear(); }
+  }
+  const globals = new Map(['window', 'localStorage', 'sessionStorage', 'Storage'].map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  const localStorage = new MemoryStorage(), sessionStorage = new MemoryStorage();
+  Object.assign(globalThis, { window: Object.assign(new EventTarget(), { localStorage, sessionStorage }), localStorage, sessionStorage, Storage: MemoryStorage });
+  const account = await import('../lib/account-local-storage.ts');
+  const previousOwner = account.activeAccountUid();
+  try {
+    account.bindMountedAccountLocalStorageUid(null);
+    // These refusal checks now need the real raw-book lease and actor binding;
+    // the retired display-loader stub cannot establish an allocation receipt.
+    await initialiseCropPlanFixture();
+    replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ version: 1, plantings: [{ bedId: 'field' }], updatedAt: 1 }));
+    const authority = await import('../lib/field-block-allocations.ts');
+    const allocation = authority.readFieldBlockAllocations({ owner: null, sample: false, loading: false });
+    assert.equal(allocation.status, 'known');
+    assert.deepEqual(allocation.allocatedIds, ['field']);
+    run(authority);
+  } finally {
+    releaseCropPlanFixture();
+    account.bindMountedAccountLocalStorageUid(previousOwner);
+    for (const [key, descriptor] of globals) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
+      else Reflect.deleteProperty(globalThis, key);
+    }
+  }
+}
+
 for (const action of ['handleChange', 'handleUndo', 'handleRedo']) {
-  test(`${action} reports an allocated-field refusal without claiming storage failed or changing history`, () => {
+  test(`${action} reports an allocated-field refusal without claiming storage failed or changing history`, async () => withAllocatedFieldBook(authority => {
     const text = source('app/design/page.tsx');
     const file = ts.createSourceFile('page.tsx', text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
     let declaration: ts.VariableDeclaration | undefined;
@@ -29,10 +66,13 @@ for (const action of ['handleChange', 'handleUndo', 'handleRedo']) {
     const writes: string[] = [];
     let message: string | null = null;
     const scope = {
+      ...authority, fieldEditActor: { owner: null, sample: false, loading: false },
       useCallback: (fn: unknown) => fn, t: (key: string) => key,
       setCanvasState: (update: (prev: unknown) => unknown) => assert.equal(update(snapshot), snapshot),
-      reconcileFieldBlockEdit: () => { throw new Error('Remove this field’s crop allocations before changing its outline.'); },
-      loadCropPlan: () => ({ plantings: [{ bedId: 'field' }] }),
+      reconcileFieldBlockEdit: (_prev: unknown, _next: unknown, allocated: ReadonlySet<string>) => {
+        assert.deepEqual([...allocated], ['field'], 'The actual raw receipt must reach the refusal boundary');
+        throw new Error('Remove this field’s crop allocations before changing its outline.');
+      },
       setEditError: (value: string | null) => { message = value; },
       setSaveError: () => { writes.push('storage error'); }, setSaved: () => { writes.push('save status'); },
       persistCanvasState: () => { writes.push('persist'); }, undoStack, redoStack, MAX_UNDO: 40,
@@ -43,7 +83,7 @@ for (const action of ['handleChange', 'handleUndo', 'handleRedo']) {
     assert.deepEqual(writes, []);
     assert.deepEqual(undoStack.current, [snapshot]);
     assert.deepEqual(redoStack.current, [snapshot]);
-  });
+  }));
 }
 
 function handler(name: string, scope: Record<string, unknown>, text = crop) {

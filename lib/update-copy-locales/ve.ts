@@ -1,6 +1,120 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Zwifanyiso zwa sekithara zwi vhulunga mivhala yo natesheaho, i re na madzina mahulwane na mitalo ya mavu i vhonalaho zwavhudi.",
+  // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
+  "Saving rechecks this tab’s editing access.": "U vhulunga zwi vusulusa thendelo ya u lulamisa kha thabu iyi.",
+  "Compare nursery wording drafts in seven languages": "Vhambedzani mitalo ya maipfi a nesele nga nyambo dza sumbe",
+  "Compare nursery wording drafts": "Vhambedzani mitalo ya maipfi a nesele",
+  "International reference tools → Language draft review → Nursery field planting": "Zwishumiswa zwa ndaedzo zwa dzitshaka → Tsedzuluso ya mitalo ya nyambo → U tavha masimuni u bva neseleni",
+  "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.": "Vhambedzani Tshiisimani tsha nesele na mitalo ya nyambo dza sumbe ni vhone musi tshisima tshayo tshi tshi toda inwe tsedzuluso. Bammbiri ili la tsedzuluso a li tendeli vhupinduleli kana u shandukisa luambo lwa tshipulufomo tshanu.",
+  // Unreviewed Codex BMKG research-navigation release candidates; source pairs in bmkg-navigation-release-drafts.json.
+  "Find Indonesia’s official BMKG sources": "Wanani zwiko zwa tshiofisi zwa BMKG ya Indonesia",
+  "Country evidence → Research priorities → Indonesia": "Vhuṱanzi ha shango → Zwine zwa tea u ṱoḓisiswa u thoma → Indonesia",
+  "Open the official forecast documentation, open-data description and terms from Indonesia’s research-queue card. Source links do not enable a forecast feed or local crop advice.": "Vulani maḓokumente a tshiofisi a mavhonele a mutsho, ṱhaluso ya data yo vuleaho na milayo kha garata ya Indonesia ya ṱoḓisiso. Zwikhokanyi zwa zwiko a zwi vulisi data ya mavhonele a mutsho kana nyeletshedzo ya zwimela ya henefho.",
+  // Additive unreviewed Codex release candidates; source pairs: grower-bed-windows-release-drafts.json.
+  "Plan separate availability windows for each growing space": "Vhekanyani zwifhinga zwo fhambanaho zwa u wanala ha fhethu huṅwe na huṅwe ha u lima",
+  "Crop plan → Automatic plan from your estimates → Your available growing space": "Pulane ya zwimela → Pulane ya othomethikhi i bvaho kha nyanganyelo dzaṋu → Fhethu haṋu ha u lima hu wanalaho",
+  "Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.": "Engedzani ni khwaṱhisedze zwifhinga zwo fhambanaho zwa maḓuvha zwa mubhedzi kana tshipiḓa tsha tsimu tsho vhulungwaho. Pulane a i shumisi zwikhala vhukati ha zwifhinga nahone mutevhe muṅwe na muṅwe wa tshimela u tea u fhelela kha tshifhinga tshithihi; u shumiswa ho no ḓi vhaho hone hu kha ḓi sedzuluswa.",
+  "Import field outlines from Google Earth.": "Dzhenisani mikano ya masimu i bvaho kha Google Earth.",
+  "Review imported field outlines": "Ṱolani mikano ya masimu yo dzheniswaho",
+  "Design Studio → Planting → Import field outlines": "Design Studio → U lima → Dzhenisani mikano ya masimu",
+  "Choose a local KML file, review and select distinct outlines, then add them as new fields. Configure beds or open ground afterwards; map-reference locations are not surveyed boundaries.": "Nangani faela ya KML i re kha tshishumiswa tshaṋu, ṱolani ni nange mikano yo fhambanaho, ni kone u i dzhenisa sa masimu maswa. Nga murahu dzudzanyani mmbete ya u ṱavha (beds) kana tsimu yo vuleaho; fhethu ha ndaedzo ya mmapa a si mikano yo pimiwaho nga u ela mavu (survey).",
+  // Integrated exact-source candidate descriptions; fluent-review status unchanged.
+  "Export saved field layouts for Google Earth.": "Bvisani mbumbo dza masimu dzo vhulungwaho dza Google Earth.",
+  "Export saved fields": "Bvisani masimu o vhulungwaho",
+  "Design Studio → Planting → Field blocks": "Design Studio → U lima → Zwipida zwa masimu",
+  "Choose one field or all fields, then download the saved boundaries, beds and path lines as KML. Labels are optional; map-reference locations are not surveyed boundaries.": "Nangani tsimu nthihi kana masimu othe, nahone ni kope mikano yo vhulungwaho, mmbete ya u ṱavha (beds) na mitalo ya dzinḓila sa KML. Zwiga a si zwa khombe-khombe; fhethu ha ndaedzo ya mmapa a si mikano yo pimiwaho nga u ela mavu (survey).",
+  "Enter your crop estimates in metric or imperial units.": "Dzhenisani anganyelo dzaṋu dza zwimela nga dziyuniti dza metric kana dza imperial.",
+  "Check saved bed measurements before reviewing capacity.": "Sedzulusani mielo ya mibete ya u ṱavha yo vhulungwaho musi ni sa athu u sedzulusa vhukoni hayo.",
+  "Reload changed estimates before saving over newer values.": "Dovhani ni laise anganyelo dzo shandukaho musi ni sa athu u vhulunga ni tshi siva mielo yo shandulwaho zwenezwino.",
+  "Choose units for your own estimates": "Nangani dziyuniti dza anganyelo dzaṋu",
+  "Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.": "Nangani m² na kg kana ft² na lb kha anganyelo dzaṋu dza tshivhalo tsha zwimela fhethu na tshileme tsha khaṋo. Sedzulusani mielo yo vhulungwaho, ni kone u sedzulusa mbalo na maḓuvha; hedzi ndi anganyelo dzo pulaniwaho, a si nyeletshedzo ya u lima ya henefho yo khwaṱhisedzwaho.",
+  "New grower accounts can save personal designs without joining an organisation.": "Akhaunthu ntswa dza vhalimi dzi nga vhulunga pulane dzadzo dzi songo ṱanganela dzangano.",
+
+  // Selected update descriptions: docs/international/codex-grower-selected-update-pairs-2026-11-04/selection.json; UNREVIEWED Codex AI drafts, English source remains available.
+  "Keep editing nursery equipment and buyer targets after a confirmed save.": "Bvelani phanḓa na u dzudzanya zwishumiswa zwa tsimu ya zwimela zwiṱuku na zwipikwa zwa vharengi musi u vhulunga ho no khwaṱhisedzwa.",
+  "Continue nursery editing": "Bvelani phanḓa na u dzudzanya tsimu ya zwimela zwiṱuku",
+  "After a confirmed equipment save, continue entering your next container. Unknown sizes and stock stay unknown.": "Musi u vhulunga zwishumiswa ho no khwaṱhisedzwa, bvelani phanḓa na u dzhenisa tshifaredzi tshaṋu tshi tevhelaho. Vhuhulu na tshiṱoko zwi sa ḓivhei zwi dzula zwi sa ḓivhei.",
+  "Continue buyer-target editing": "Bvelani phanḓa na u dzudzanya zwipikwa zwa vharengi",
+  "After a confirmed target save, continue entering your next buyer target. Targets remain planned demand, not recorded sales or harvest.": "Musi u vhulunga tshipikwa ho no khwaṱhisedzwa, bvelani phanḓa na u dzhenisa tshipikwa tshaṋu tshi tevhelaho tsha murengi. Zwipikwa zwi dzula zwi ṱhoḓea dzo pulaniwaho, a si u rengisa kana khaṋo yo rekhodiwaho.",
+  "See where your own dated crop plan can review nursery requirements.": "Vhonani hune pulane yaṋu ya zwimela i re na maḓuvha ya nga sedzulusa ṱhoḓea dza tsimu ya zwimela zwiṱuku.",
+  "Review nursery requirements": "Sedzulusani ṱhoḓea dza tsimu ya zwimela zwiṱuku",
+  "For a saved measured growing space, review proposed batches from your own dates and inputs. Equipment entries alone do not establish dated availability or local crop approval.": "Kha fhethu ha u alusa ho pimiwaho na u vhulungwa, sedzulusani zwigwada zwo dzinginywaho zwi tshi bva kha maḓuvha aṋu na zwidodombedzwa zwe na dzhenisa. U dzhenisa zwishumiswa fhedzi a zwi khwaṱhisedzi u vha hone nga maḓuvha o tiwaho kana thendelo ya zwimela zwa henefho.",
+  "See a welcome for small growers, market gardens and community projects.": "Vhonani ṱanganedzo ya vhalimi vhaṱuku, ngade dza u lima dza u rengisa na thandela dza tshitshavha.",
+  "Start with your growing space": "Thomani nga fhethu haṋu ha u alusa",
+  "Home → Map and Production plan": "Hayani → Mapa na pulane ya mveledziso",
+  "Use your measured growing space and your own estimates. Regional reference coverage varies; choosing a country does not approve local crop advice.": "Shumisani fhethu haṋu ha u alusa ho pimiwaho na anganyelo dzaṋu. U vha hone ha tsumbo dza zwipiḓa zwa mashango zwi a fhambana; u nanga shango a zwi tendeli nyeletshedzo dza zwimela zwa henefho.",
+  "See when local design advice needs your saved site and current country details.": "Vhonani uri nyeletshedzo ya pulane ya henefho i ṱoḓa lini fhethu haṋu ho vhulungwaho na zwidodombedzwa zwa shango zwa zwino.",
+  "Distinguish advice about the original South African sample from your own drawing.": "Fhambanyani nyeletshedzo nga tsumbo ya u thoma ya Afurika Tshipembe na tshifanyiso tshaṋu.",
+  "Check the design advice basis": "Sedzani mutheo wa nyeletshedzo ya pulane",
+  "Design Studio → Lima": "Studio tsha u pulana → Lima",
+  "Open your saved design. Local tips use the existing South African references only when the current saved-site context supports them. Country confirmation does not approve local farming advice; your drawing stays available when advice is held.": "Vulani pulane yaṋu yo vhulungwaho. Nyeletshedzo dza henefho dzi shumisa tsumbo dza Afurika Tshipembe dzi re hone fhedzi musi zwidodombedzwa zwa zwino zwa fhethu ho vhulungwaho zwi tshi dzi tikedza. U khwaṱhisedza shango a zwi tendeli nyeletshedzo dza vhulimi ha henefho; tshifanyiso tshaṋu tshi dzula tshi tshi wanala musi nyeletshedzo dzo imiswa.",
+  "Review the original sample": "Sedzulusani tsumbo ya u thoma",
+  "Tour → Plan the growing season": "Nyendo → Pulanani tshifhinga tsha u lima",
+  "Open the growing-season stop and choose All tools to see the sample advice control. It names the original sample layout; a request does not analyse your sample edits.": "Vulani tshiteji tsha tshifhinga tsha u lima ni nange Zwishumiswa Zwoṱhe (All tools) uri ni vhone tshilangi tsha nyeletshedzo ya tsumbo. Tshi bula pulane ya tsumbo ya u thoma; khumbelo a i sengulusi tshanduko dze na ita kha tsumbo.",
+  // Grower unit recovery wording. AGY drafts reconciled to established terms, pending fluent review.
+  "Keep the nursery and harvest unit controls available after the same plan is saved again.": "Zwilangi zwa dziyuniti dza tsimu ya zwimela zwiṱuku na dza khaṋo zwi dzula zwi tshi wanala musi pulane i fanaho i tshi vhulungwa hafhu.",
+  "See when you can reload saved settings or need to reopen the crop plan.": "Vhonani uri ni nga dovha na laisa zwiimiswa zwo vhulungwaho lini, kana ni tshi tea u vula pulane ya zwimela hafhu.",
+  // Harvest mass release: docs/international/agy-harvest-mass-sa-release-v2-2026-11-03/ve.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.": "Dzhenisani zwipikwa zwa khaṋo zwa vhege na vhege na tshileme tshaṋu tsha zwipaki zwa khaṋo nga dzikhilogiramu (kg) kana dziphaundu dza tshileme (lb).",
+  "Keep buyer entries when a save cannot be confirmed.": "Vhulungani zwidodombedzwa zwa zwilavhelelwa zwa vharengi zwe na dzhenisa zwi tshi kha ḓi vha hone musi u vhulungwa hazwo hu sa koni u khwaṱhisedzwa.",
+  "Choose harvest weight units": "Nangani dziyuniti dza tshileme tsha khaṋo",
+  "Production plan → Harvest targets": "Pulane ya mveledziso → Zwipikwa zwa khaṋo",
+  "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.": "Nangani dzikhilogiramu (kg) kana dziphaundu dza tshileme (lb), dzhenisani tshipikwa tshaṋu tsha khaṋo kana tshileme tshaṋu tsha tshipaki tsha khaṋo, u bva afho ni vhulunge. Tshileme tsha zwipaki tshi sa ḓivhei tshi dzula tshi siho; dziṱhanganyelo dza zwipikwa ndi anganyelo dza u pulana fhedzi.",
+  // Nursery unit release: docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI draft descriptions only.
+  "Enter nursery tray dimensions in centimetres or inches.": "Dzhenisani mielo ya dzithirei dza tsimu ya zwimela zwiṱuku nga dzisentimitha kana dziintshi.",
+  "Enter usable nursery surface in square metres or square feet.": "Dzhenisani vhupo vhu shumisekaho ha tsimu ya zwimela zwiṱuku nga dzimitha dza tshikwere kana dziṋayo dza tshikwere.",
+  "Keep nursery entries until their save is confirmed.": "Litshani zwidodombedzwa zwo dzheniswaho zwa tsimu ya zwimela zwiṱuku zwi tshi kha ḓi vha hone u swika u vhulungwa hazwo hu tshi khwaṱhisedzwa.",
+  "Choose nursery units": "Nangani dziyuniti dza tsimu ya zwimela zwiṱuku",
+  "Production plan → Nursery planner": "Pulane ya mveledziso → Mupulani wa tsimu ya zwimela zwiṱuku",
+  "Choose your units, enter tray sizes and usable growing surface, then save. Unknown equipment values stay blank; zero stock stays zero.": "Nangani dziyuniti dzaṋu, dzhenisani vhuhulu ha dzithirei na vhupo vhu shumisekaho ha u aluwa ha zwimela, u bva afho ni vhulunge. Mielo ya zwishumiswa i sa ḓivhei i dzula i si na tshithu; tshiṱoko tsha zwishumiswa tsha zero tshi dzula tshi zero.",
+  // Field-block unit release: docs/international/agy-field-block-unit-sa-translations-2026-11-03/ve.json rows 16–20; selected UNREVIEWED AGY AI drafts; shared location retained.
+  "Enter field-block bed and path dimensions in metres or feet.": "Dzhenisani mielo ya mmbete ya u ṱavha (beds) na dziḽila dza buḽoko ya tsimu nga dzimithara kana dzifithi (feet).",
+  "Keep saved measurements unchanged when switching the displayed unit.": "Vhulungani mielo yo vhulungwaho i songo shanduka musi ni tshi shandukisa yuniti i sumbedzwaho.",
+  "Choose field-block units": "Nangani dziyuniti dza buḽoko ya tsimu",
+  "Select a field, choose metres or feet, enter your dimensions and review the beds before saving. Open fields keep their polygon area without generating beds.": "Nangani tsimu, nangani dzimithara kana dzifithi (feet), dzhenisani mielo yaṋu uri ni sedzuluse mmbete ya u ṱavha (beds) ni sa athu vhulunga. Masimu o vuleaho a vhulunga vhupo hao ha polygon hu si na u bveledza mmbete ya u ṱavha (beds).",
+  // Grower storage cutover: docs/international/agy-grower-cutover-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI drafts.
+  "Keep newer crop plans safe when an older app session saves its copy.": "Vhulungani pulane ntswa dza zwimela dzi tshi tsireledzea musi sesheni ya kale ya app i tshi vhulunga khophi yayo.",
+  "Review retained copies before continuing with your current crop plan.": "Sedzulusani khophi dzo vhulungwaho ni sa athu bvela phanḓa na pulane yaṋu ya zwino ya zwimela.",
+  "Retry interrupted guest crop transfers without replacing saved account work.": "Lingedzani hafhu u fhirisela mushumo wa zwimela wa mueni wo thithiswaho hu si na u dzhia vhudzulo ha mushumo wa akhaunthu wo vhulungwaho.",
+  "Review crop-plan storage": "Sedzulusani vhuvhulungelo ha pulane ya zwimela",
+  "Production plan → Crop-plan storage": "Pulane ya mveledziso → Vhuvhulungelo ha pulane ya zwimela",
+  "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.": "Sedzani nḓivhadzo ya vhuvhulungelo. Arali sesheni ya kale yo shandula khophi yayo, dzhenisani khophi dzoṱhe mbili ni dzi sedzuluse ni sa athu nanga u fara pulane yaṋu ya zwino.",
+  // Grower proposal acceptance: docs/international/agy-grower-acceptance-release-copy-2026-11-03/ve.json; selected UNREVIEWED AGY AI drafts.
+  "Save a reviewed plan from your own growing estimates.": "Vhulungani pulane yo sedzuluswaho i bvaho kha u anganyela haṋu ha u tavha.",
+  "Check unresolved crop records before using a finance forecast.": "Sedzani rekhodo dza zwimela dzi sa athu tandululwa phanḓa ha u shumisa u anganyela ha masheleni.",
+  "Keep saved growing estimates and nursery settings when signing in.": "Farani u anganyela ha u tavha ho vhulungwaho na ndudzanyo dza vhurerelo ha zwimela musi ni tshi dzhena kha akhaunthu.",
+  "Save your reviewed plan": "Vhulungani pulane yaṋu yo sedzuluswaho",
+  "Production plan → Automatic plan from your estimates": "Pulane ya mveledziso → Pulane i shumaho nga yoṱhe i bvaho kha u anganyela haṋu",
+  "Review a complete proposal, save all its planned cycles, then open dated work.": "Sedzulusani dzinginyo ḽo fhelelaho, ni vhulunge mitevhe yaḽo yoṱhe yo dzudzanywaho, u bva afho ni vule mushumo u re na maḓuvha.",
+  // Grower operations: docs/international/codex-grower-operations-release-copy-2026-11-03/ve.json; UNREVIEWED Codex AI candidates.
+  "Follow saved grower cycles on their exact planned dates.": "Tevhelani mitingatingo ya vhulimi yo vhulungwaho nga madatumu ayo o pulaniwaho nga ho livhaho.",
+  "Check current designs before ticking work or exporting dates.": "Tolani pulane dza zwino musi ni sa athu swaya mushumo kana u bvisa madatumu.",
+  "Keep own crop estimates separate from catalogue print advice.": "Vhulungani ndinganyelo dzaṋu dza zwilimwa dzo fhambana na nyeletshedzo ya khathalogo yo gandiswaho.",
+  "Review your dated work": "Tsedzulusani mushumo waṋu u re na madatumu",
+  "Task Planner → Dated work from your estimates": "Mupulani wa Mishumo → Mushumo u re na madatumu u bvaho kha ndinganyelo dzaṋu",
+  "Open Task Planner to check work dates from your saved growing estimates.": "Vulani Mupulani wa Mishumo u itela u tola madatumu a mushumo a bvaho kha ndinganyelo dzaṋu dza vhulimi dzo vhulungwaho.",
+  // Grower review: docs/international/agy-grower-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
+  "Review automatic crop plans from your own growing estimates and saved buyer targets.": "Tsedzulusani pulane dza zwilimwa dza othomethiki dzi tshi bva kha mbalo dzaṋu dza u alusa na zwipikwa zwo vhulungwaho zwa vharengi.",
+  "Check dated nursery tray and surface needs before downloading your review.": "Tolani thirei dza nese dzi re na datumu na zwidodombedzwa zwa vhupo musi ni sa athu daunilouda tsedzuluso yaṋu.",
+  "Save your own growing estimates and review capacity and dates for measured beds.": "Vhulungani mbalo dzaṋu dza u alusa nahone ni tsedzuluso vhukoni na madatumu a mibethe yo pimiwaho.",
+  "Review a crop plan from your estimates": "Tsedzulusani pulane ya zwilimwa i tshi bva kha mbalo dzaṋu",
+  "Crop planner → Automatic plan from your estimates": "Mupulani wa zwilimwa → Pulane ya othomethiki i tshi bva kha mbalo dzaṋu",
+  "Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.": "Tolani ndinganyo yo vhulungwaho, khwathisedzani u vha hone nahone ni fanyise zwipikwa zwa vharengi na mbalo dzaṋu dza u alusa. Tsedzulusani mitingatingo yo dzinginywaho na zwidodombedzwa zwa nese; nyalo dzaṋu dzo vhulungwaho a dzi shanduki.",
+  "Review your growing estimates": "Tsedzulusani mbalo dzaṋu dza u alusa",
+  "Crop planner → Your growing estimates": "Mupulani wa zwilimwa → Mbalo dzaṋu dza u alusa",
+  "Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.": "Dzhenisani mihumbulo yaṋu, nangani mbethe wo pimiwaho nahone ni tsedzuluso mbalelo. Mbalo dzi siho dzi dzula dzi siho; mvelelo ndi mbalo fhedzi, a si thendelo ya vhulimi ha henefho.",
+  // Country context: docs/international/agy-release-copy-2026-11-03/ve.json; UNREVIEWED AI candidates.
+  "Confirm a mapped site’s country before using its crop-planning guidance.": "Khwathisedzani shango ḽa fhethu ho mapiwaho musi ni sa athu shumisa vhulangeli ha u pulana zwilimwa.",
+  "Keep your sowing records and nursery equipment while local planning is unavailable.": "Vhulungani rekhodo dzaṋu dza u zwala na zwishumiswa zwa nese musi pulane ya henefho i sa athu vha hone.",
+  "Confirm your site country": "Khwathisedzani shango ḽa fhethu haṋu",
+  "Crop planner → Site country and region": "Mupulani wa zwilimwa → Shango ḽa fhethu na vhupo",
+  "Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.": "Vulani fhethu haṋu ho mapiwaho nahone ni khwathisedze zwidodombedzwa zwa shango ḽaho. U khwathisedza shango a zwi tendeli nyeletshedzo dza vhulimi dza vhupo vhuswa.",
+  "Review an unmapped reference": "Tsedzulusani tsumbo i songo mapiwaho",
+  "Crop planner → Planning without a mapped site": "Mupulani wa zwilimwa → U pulana hu si na fhethu ho mapiwaho",
+  "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Kha mbethe wa maitele kana vhuvhambadzi ha henefho, nangani kana ni bvise mutheo wa tsumbo wa Afurika Tshipembe nga ho livhaho. Khetho i sala henefho kha vhupo ha u shumela.",
   // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
   "Important updates include a short animation you can pause and replay.": "Khwiniso dza ndeme dzi na tshifanyiso tshipfufhi tshi tshimbilaho tshine na nga tshi imisa na u tshi tamba hafhu.",
   // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
@@ -323,5 +437,67 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Lingani mepe yo nakiswaho nga AI",
   "Design Studio → Glossy": "Studio tsha u pulana → Mepe yo nakiswaho",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vhulani bulasi yo vhulungwaho, khethani siaṱari ni kone u khetha AI Polished. U bveledza mepe iṅwe na iṅwe zwi a badelwa.",
+  // Own nursery review and preparation release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Review your own nursery space in square metres or square feet.": "Ṱolani vhupo haṋu ha u alusa zwimela zwiṱuku nga dzimitha dza tshikwere (m²) kana dziṋayo dza tshikwere (ft²).",
+  "Prepare grouped seedling and seed counts from your proposed crop plan.": "Lugisani mbalo dza zwimela zwiṱuku na dza mbeu dzo kuvhanganywaho nga zwigwada, dzi tshi bva kha pulane yaṋu ya zwiliṅwa yo dzinginywaho.",
+  "Review nursery preparation": "Ṱolani ndugiselo ya fhethu ha u alusa zwimela zwiṱuku",
+  "Check dated nursery resources, review represented transplant batches and download a preparation worksheet. Counts are planned estimates; unknown requirements stay unknown.": "Ṱolani zwishumiswa zwa u alusa zwimela zwiṱuku zwi re na maḓuvha o bulwaho, ṱolani zwigwada zwo sumbedzwaho zwa zwimela zwiṱuku zwine zwa ḓo pfuluselwa tsimuni, ni kone u ḓowniloda siaṱari ḽa ndugiselo. Mbalo ndi nyelekanyo dza u pulana; ṱhoḓea dzi sa ḓivhei dzi dzula dzi sa ḓivhei.",
+  // Own nursery preparation PDF release: UNREVIEWED Codex AI drafts; exact English source retained.
+  "Download a printable nursery preparation sheet from your own crop proposal.": "Ḓownilodani siaṱari ḽine ḽa nga gandiswa ḽa ndugiselo ya fhethu ha u alusa zwimela zwiṱuku, ḽi tshi bva kha pulane yaṋu ya zwiliṅwa yo dzinginywaho.",
+  "Print nursery preparation": "Gandisani ndugiselo ya fhethu ha u alusa zwimela zwiṱuku",
+  "Review the current nursery inputs, then download the preparation PDF. It keeps planned counts, incomplete requirements and unknown totals separate from observed sowing or stock.": "Sedzulusani zwidodombedzwa zwa zwino zwe na dzhenisa zwa u alusa zwimela zwiṱuku, ni kone u ḓowniloda PDF ya ndugiselo. I fhambanyisa mbalo dzo pulaniwaho, ṱhoḓea dzi songo fhelelaho na ṱhanganyelo dzi sa ḓivhei kha u zwala ho vhoniwaho kana tshitoko tsho vhoniwaho.",
+  // Planned nursery batch cards release (lib/release-notes.ts): UNREVIEWED Codex AI drafts; exact English source retained.
+  "Print planned nursery batch cards with dates and separate seedling counts.": "Gandisani makhadi a zwigwada zwo pulaniwaho zwa u alusa zwimela zwiṱuku, a re na maḓuvha na mbalo dzo fhambanisiwaho dza zwimela zwiṱuku.",
+  "Print planned batch cards": "Gandisani makhadi a zwigwada zwo pulaniwaho",
+  "Use the reviewed nursery proposal to print batch cards. Counts and dates remain planned; handwritten sowing and seed-lot notes are not saved by the app.": "Shumisani dzinginyo ḽa u alusa zwimela zwiṱuku ḽo sedzuluswaho u gandisa makhadi a zwigwada. Mbalo na maḓuvha zwi dzula zwo pulaniwa; mbekanyamushumo a i vhulungi notsi dza u zwala na dza tshigwada tsha mbeu dzo ṅwalwaho nga tshanḓa.",
+  // Field-observation release: UNREVIEWED Codex AI drafts; exact sources in docs/international/grower-observation-release-drafts.json.
+  "Record your own field observations from planned tasks.": "Rekhodani zwe na zwi vhona tsimuni yaṋu ni tshi bva kha mishumo yo pulaniwaho.",
+  "Record a field observation": "Rekhodani zwe na zwi vhona tsimuni",
+  "Task Planner → Dated work → Record what happened": "Mupulani wa Mishumo → Mushumo u re na madatumu → Rekhodani zwe zwa itea",
+  "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.": "Khethani ḓuvha ḽe na vhona tshithu ngaḽo, ṅwalani notsi ni i khwaṱhisedze. Dzhenala i vhulunga ndaedzo ya mushumo wo pulaniwaho nga thungo; rekhodo dza mutevhe wa u sedzulusa, khaṋo, tshitoko na thengiso a dzi shanduki.",
+  // Invoice-currency release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-currency-release-drafts.json.
+  "Choose the currency for each new invoice.": "Khethani lushaka lwa tshelede lwa invoisi iṅwe na iṅwe ntswa.",
+  "Keep invoice currencies clear": "Itani uri tshaka dza tshelede dza dzi-invoisi dzi vhe khagala",
+  "Invoice → Currency for this invoice": "Invoisi → Lushaka lwa tshelede lwa invoisi iyi",
+  "Choose the currency agreed with the buyer. Saved invoices keep their currency; amounts are not converted, and other currencies stay separate from rand totals.": "Khethani lushaka lwa tshelede lwe na tendelana na murengi ngaḽo. Dzi-invoisi dzo vhulungwaho dzi dzula na lushaka lwadzo lwa tshelede; mbalo dza tshelede a dzi shandukiswi dza vha kha luṅwe lushaka lwa tshelede, nahone dziṅwe tshaka dza tshelede dzi dzula dzo fhambana na ṱhanganyelo dza rand.",
+  // Recorded-price release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-price-history-release-drafts.json.
+  "Choose a recorded invoice price": "Nangani mutengo wo rekhodiwaho kha invoice",
+  "Invoice → Choose a recorded invoice price": "Invoice → Nangani mutengo wo rekhodiwaho kha invoice",
+  "Choose a saved invoice price in the same currency, then confirm it for this sale. Only the line price changes; save the invoice when ready.": "Nangani mutengo wa invoice yo vhulungwaho kha lushaka luthihi lwa tshelede, ni kone u u khwaṱhisedza kha iyi thengiso. Hu shanduka mutengo wa mutaladzi fhedzi; vhulungani invoice musi no lugela.",
+  // Invoice-summary release: UNREVIEWED Codex AI drafts; exact sources in docs/international/invoice-summary-release-drafts.json.
+  "Review saved invoice amounts by currency": "Sedzulusanani tshelede ya dzi-invoice dzo vhulungwaho nga lushaka lwa tshelede",
+  "Invoice → Saved → Summary currency": "Invoice → Dzo vhulungwaho → Lushaka lwa tshelede lwa manweledzo",
+  "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Nangani lushaka luthihi lwa tshelede u sedzulusa tshelede ya dzi-invoice dzo bviswaho, dzo rekhodiwaho sa dzo badelwaho na dzi sa athu badelwa kha hetshi tshishumiswa. Hedzi ndi rekhodo dza invoice, a si rasithi dza bannga dzo khwaṱhisedzwaho, mbuelo yoṱhe kana phurofithi.",
+  // NWS reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nws-reference-release-drafts.json.
+  "Check a public US forecast reference": "Sedzani tsumbo ya tsumbamutsho ya US",
+  "Country evidence → United States → Washington forecast": "Vhuṱanzi ha shango → United States → Tsumbamutsho ya Washington",
+  "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Humbelani tsumbamutsho ya tsumbo ya nnyi na nnyi ya Washington kha National Weather Service. Zwifhinga zwa tshiko, mivhalo ya Celsius na zwi sa ḓivhei zwi dzula zwi tshi vhonala; hezwi a zwi shanduli maḓuvha a zwiliṅwa kana u tendela nyeletshedzo ya henefho.",
+  // Nursery-batch-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-batch-reference-release-drafts.json.
+  "Keep references for saved nursery batches": "Vhulungani referentsi dza zwigwada zwa nursery zwo vhulungwaho",
+  "Crop plan → Saved planned nursery batches": "Pulane ya zwimela → Zwigwada zwa nursery zwo vhekanywaho zwo vhulungwaho",
+  "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Engedzani madzina a tshaka dzaṋu, referentsi dza zwigwada zwa mbeu na zwa u alusa zwimilana kha tshigwada tshiṅwe na tshiṅwe tsho vhekanywaho tsho vhulungwaho, ni kone u sedzulusa ṱhoḓea dza nursery kana u downlouda maṱari a mushumo. Hedzi lebulu a dzi rekhodi u zwala ho no vhonwaho kana tshitoko tshi re hone.",
+  // KMD-Kiambu-link release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/kmd-kiambu-link-release-drafts.json.
+  "Find official Kiambu bulletin links": "Wanani dzi-link dza tshiofisi dza mivhigo ya Kiambu",
+  "Country evidence → Kenya → County bulletin links": "Vhuṱanzi ha shango → Kenya → Dzi-link dza mivhigo ya county",
+  "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.": "Nangani Kiambu u vula siaṱari ḽa tshiofisi ḽa muvhigo ḽo sedzuluswaho kana PDF yaḽo, na u wana miṅwe mivhigo ya KMD. Maḓuvha a tshiko na u sa ḓivhea uri mafhungo ndi maswa hani zwi dzula zwi tshi vhonala; hedzi dzi-link a dzi shanduli nyeletshedzo ya zwimela.",
+  // EA-rainfall-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/ea-rainfall-reference-release-drafts.json.
+  "Check an Environment Agency rainfall reference": "Sedzulusani referentsi ya mvula ya Environment Agency",
+  "Country evidence → United Kingdom → Public rainfall network sample": "Vhuṱanzi ha shango → United Kingdom → Tsumbo ya nethiweke ya mvula ya nnyi na nnyi",
+  "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.": "Humbelani tsumbo nthihi ya nethiweke ya nnyi na nnyi, hune mvula yo vhigwaho, mivhalo i siho na zwifhinga zwa tshiko zwa dzula zwo fhambanywa. Iyi referentsi a i kali mvula kha bulasi ḽaṋu kana u shandula nyeletshedzo ya zwimela.",
+  // Nursery-sowing release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-sowing-release-drafts.json.
+  "Record nursery sowing in your field journal": "Rekhodani u zwala kha nursery kha dzhenala yaṋu ya tsimu",
+  "Crop planner → Saved planned nursery batches": "Muvhekanyi wa zwimela → Zwigwada zwa nursery zwo vhekanywaho zwo vhulungwaho",
+  "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rekhodani ḓuvha ḽe u zwala ha itea ngaḽo na, arali ni tshi ṱoḓa, tshivhalo tsha thireyi dzo shumiswaho nga nomboro yo fhelelaho kha tshigwada tsho vhulungwaho. Sedzulusani rekhodo ya zwe na vhona na lebulu dza referentsi dzo rekhodiwaho nayo kha dzhenala yaṋu na kha faela dzo downloudiwaho.",
+  // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
+  "Record nursery plant counts in your journal": "Rekhodani zwivhalo zwa zwimela zwa nursery kha dzhenala yaṋu",
+  "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rekhodani tshivhalo tsha zwimela zwe na vhona kha tshigwada tsha nursery tsho vhulungwaho, vhuimo he na sedzulusa na uri no sedzulusa tshigwada tshoṱhe kana tshipiḓa tshatsho. Rekhodo idzi dza zwe na vhona kha dzhenala dzi dzule dzo fhambana na ṱhoḓea dzo vhekanywaho na tshitoko.",
+  // INMET link release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/inmet-alert-release-drafts.json.
+  "Find official INMET weather-alert sources": "Wanani zwiko zwa tshiofisi zwa tsevho dza mutsho dza INMET",
+  "Country evidence → Brazil → Official weather-alert links": "Vhuṱanzi ha shango → Brazil → Vhuṱumani ha tshiofisi ha tsevho dza mutsho",
+  "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Vulani webusaithi ya tsevho dza mutsho ya INMET, portal kana vhuṱumani ha RSS. Vhuṱumani ha zwiko ho sedzuluswa; feed, vhuimo ha tsevho dza henefho na milayo ya u shumisa hafhu a zwi athu khwaṱhisedzwa. Vhuṱumani uhu a vhu shanduli ngeletshedzo dza zwimela.",
+  // Nursery field-planting release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-field-planting-release-drafts.json.
+  "Record a nursery planting in its field bed": "Rekhodani u ṱavha ha nursery mbedeni wayo wa tsimuni",
+  "Crop planner → Saved planned nursery batches → Record field planting": "Mupulani wa zwimela → Zwipid̄a zwa nursery zwo pulanwa zwo vhulungwaho → Rekhodani u ṱavha tsimuni",
+  "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekhodani d̄uvha na tshivhalo tsha zwimela zwe na zwi vhea mbedeni yo avhelwaho u ṱavha ha nursery ho sedzuluswaho. Vhulungani rekhodo ya zwe na vhona kha jenala yo fhambanaho na d̄uvha l̄o pulanwaho, stock ya nursery na u tshila ha zwimela.",
 };
 export default copy;

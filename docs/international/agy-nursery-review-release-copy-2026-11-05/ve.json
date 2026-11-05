@@ -1,0 +1,38 @@
+{
+  "locale": "ve",
+  "sourceSha256": "7c5ef4c342b0d7eeca1da2a279854016e5b245b9eeeb147899a2a4bb8a40f161",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "nurseryReviewRelease.message.01",
+      "english": "Saving rechecks this tab’s editing access.",
+      "messageSha256": "ecd1d958bc078975aa97212b87bd574fe34826859587291115c8196ac82f59ea",
+      "translation": "U vhulunga zwi vusulusa thendelo ya u lulamisa kha thabu iyi."
+    },
+    {
+      "key": "nurseryReviewRelease.message.02",
+      "english": "Compare nursery wording drafts in seven languages",
+      "messageSha256": "7d18bbe388d0b2be623f43b56edc93e0c4ca959ff6761ad26afc4dbb7be71428",
+      "translation": "Vhambedzani mitalo ya maipfi a nesele nga nyambo dza sumbe"
+    },
+    {
+      "key": "nurseryReviewRelease.message.03",
+      "english": "Compare nursery wording drafts",
+      "messageSha256": "7c3936dc3bc1887695e6bd6a941517cc6d458620a79a5e63da6d4f72539001b1",
+      "translation": "Vhambedzani mitalo ya maipfi a nesele"
+    },
+    {
+      "key": "nurseryReviewRelease.message.04",
+      "english": "International reference tools → Language draft review → Nursery field planting",
+      "messageSha256": "787d827b6f4c2d6f81a44dba6bb65ee22f9c636b3683a057ad494c9afdad798c",
+      "translation": "Zwishumiswa zwa ndaedzo zwa dzitshaka → Tsedzuluso ya mitalo ya nyambo → U tavha masimuni u bva neseleni"
+    },
+    {
+      "key": "nurseryReviewRelease.message.05",
+      "english": "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.",
+      "messageSha256": "a088c7a32e50b511e9713d49112103c111a70ef0d5c6b0e064355427314a9f94",
+      "translation": "Vhambedzani Tshiisimani tsha nesele na mitalo ya nyambo dza sumbe ni vhone musi tshisima tshayo tshi tshi toda inwe tsedzuluso. Bammbiri ili la tsedzuluso a li tendeli vhupinduleli kana u shandukisa luambo lwa tshipulufomo tshanu."
+    }
+  ]
+}

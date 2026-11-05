@@ -1,0 +1,53 @@
+{
+  "workorder": "docs/international/agy-grower-cutover-release-copy-2026-11-03/WORKORDER.md",
+  "status": "completed-awaiting-root-review",
+  "sourceSha256": "995635430ac2753284e1e264194f6a0e12657fa60bf4984258b8ffd1606cdcf1",
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "0548cb767a748f1a82d182e24bb21a96837d4f7f701a614679854d6b3e775156",
+  "baseCommit": "8fb7283c23d902ca891199a55c2c323cf21ae6cb",
+  "provenance": "coordinator-frozen-uncommitted-cutover-release-snapshot",
+  "baseCommitIdentifiesSnapshot": false,
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "milestoneDeployedOrBrowserVerified": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve",
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "messagesPerLocale": 6,
+  "totalDrafts": 48,
+  "reviewNotesWordCount": 210,
+  "reviewNotesMaxWords": 250,
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "commandsExecuted": 0,
+  "testsExecuted": 0,
+  "selfValidatorsExecuted": 0,
+  "networkRequests": 0,
+  "outputs": [
+    "zu.json",
+    "st.json",
+    "ts.json",
+    "ve.json",
+    "fr.json",
+    "es.json",
+    "pt-BR.json",
+    "sw.json",
+    "review-notes.md",
+    "status.json"
+  ],
+  "coordinatorReview": {
+    "checkedAtUtc": "2026-11-03T09:42:14.779213+00:00",
+    "exactPairs": 48,
+    "damagedControlsRejected": 12,
+    "notesWhitespaceWords": 210,
+    "fluentCertification": false,
+    "runtimeActivation": false
+  }
+}

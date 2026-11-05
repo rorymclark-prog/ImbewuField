@@ -1,4 +1,4 @@
-import { isJournalDate, sortJournal, type JournalCategory, type JournalEntry } from './field-journal';
+import { inspectJournalNurseryFieldPlanting, isJournalDate, sortJournal, type JournalCategory, type JournalEntry } from './field-journal';
 import { farmMemoryText } from './farm-memory-copy';
 
 export interface JournalViewFilters {
@@ -77,7 +77,15 @@ export function filterJournalEntries(entries: JournalEntry[], filters: JournalVi
     if (filters.bed && journalBedFilterValue(entry) !== filters.bed) return false;
     if (filters.crop && entry.cropName !== filters.crop) return false;
     if (!words.length) return true;
-    const text = searchText([entry.title, entry.notes, entry.bedLabel, entry.cropName].filter(Boolean).join(' '));
+    const planting = inspectJournalNurseryFieldPlanting(entry);
+    // Search the checked historical snapshot, never a raw malformed marker or
+    // today's editable batch labels. Explicit zero must remain searchable.
+    const plantingText = planting.status === 'observed'
+      ? ['Recorded nursery field planting', String(planting.observation.plantsPlanted),
+        planting.observation.references.variety, planting.observation.references.seedLotReference,
+        planting.observation.references.raisingBatchReference].filter(value => value !== null).join(' ')
+      : planting.status === 'held' ? 'Nursery field planting evidence needs review' : '';
+    const text = searchText([entry.title, entry.notes, entry.bedLabel, entry.cropName, plantingText].filter(Boolean).join(' '));
     return words.every(word => text.includes(word));
   }));
 }

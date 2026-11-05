@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
 
 import { DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA } from '../lib/demo-site.ts';
+import { bindSiteContext, coordinateSiteIdForPlace, createSiteCountryContext } from '../lib/international/site-context.ts';
+import type { SavedPlace } from '../lib/saved-places.ts';
 import type { SavedReport } from '../lib/saved-reports.ts';
 
 const KEY = 'imbewu_saved_reports';
@@ -334,6 +336,14 @@ test('the saved farm name takes precedence over a biome or an unrelated place', 
 // using changed controls or reusing the old ID after regeneration.
 test('editing the next report settings cannot relabel the saved report; regeneration creates another version', async () => {
   reset();
+  // Regeneration requires a real saved-place confirmation. Keep that admission
+  // gate active so the assertions below still exercise actual version creation.
+  const place: SavedPlace = { id: 'report-site', name: 'Original site', lat: DEMO_LOCATION.lat, lon: DEMO_LOCATION.lon,
+    biome: '', rainfall: 0, elevation: 0, savedAt: '2026-11-01T00:00:00.000Z' };
+  place.siteCountryContext = bindSiteContext(createSiteCountryContext({
+    siteId: coordinateSiteIdForPlace(place)!, countryCode: 'ZA', confirmed: true,
+  }, '2026-11-02T12:00:00.000Z')!, place)!;
+  local.setItem('permamap_saved_places', JSON.stringify([place]));
   const { createElement } = await import('react');
   const { act, create } = await import('react-test-renderer');
   const { readFileSync } = await import('node:fs');

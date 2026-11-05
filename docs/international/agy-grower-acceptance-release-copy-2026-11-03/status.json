@@ -1,0 +1,89 @@
+{
+  "workorder": "docs/international/agy-grower-acceptance-release-copy-2026-11-03/WORKORDER.md",
+  "status": "ready-for-root-review",
+  "sourceFile": "docs/international/agy-grower-acceptance-release-copy-2026-11-03/source.json",
+  "sourceSha256": "563f7debc7acced18fb79b3bdae79eadbab7df6a433576447fbfd943db13e03b",
+  "snapshotIdentity": {
+    "sourceFile": "lib/release-notes.ts",
+    "sourceFileSha256": "5c0faf0f22b7799721a787234f6310e47c4e071744560258718100cc2c631a1a",
+    "baseCommit": "0ab6f9ea2a50c43f642344add403d67fdb095613",
+    "identityBasis": "uncommitted-release-note-snapshot-file-hash"
+  },
+  "nature": "documentation-only",
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "ownership": {
+    "zu.json": "main",
+    "st.json": "main",
+    "ts.json": "main",
+    "ve.json": "main",
+    "review-notes.md": "main",
+    "status.json": "main"
+  },
+  "coordinatorReviewCorrectionsApplied": {
+    "zu_growerAcceptanceRelease03": "Replaced false-friend transliteration zenesi (nurse) with explicit plant-seedling nursery phrasing: indawo yokukhulisela izithombo",
+    "st_growerAcceptanceRelease03": "Clarified plant nursery sense explicitly as sethopo sa dijalo",
+    "reviewNotes": "Qualified notes as draft translation intent and open terminology questions for native speaker verification; removed claims of certified semantic preservation"
+  },
+  "deliverables": [
+    {
+      "path": "docs/international/agy-grower-acceptance-release-copy-2026-11-03/zu.json",
+      "locale": "zu",
+      "rowCount": 6,
+      "sourceSha256": "563f7debc7acced18fb79b3bdae79eadbab7df6a433576447fbfd943db13e03b",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-release-copy-2026-11-03/st.json",
+      "locale": "st",
+      "rowCount": 6,
+      "sourceSha256": "563f7debc7acced18fb79b3bdae79eadbab7df6a433576447fbfd943db13e03b",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-release-copy-2026-11-03/ts.json",
+      "locale": "ts",
+      "rowCount": 6,
+      "sourceSha256": "563f7debc7acced18fb79b3bdae79eadbab7df6a433576447fbfd943db13e03b",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-release-copy-2026-11-03/ve.json",
+      "locale": "ve",
+      "rowCount": 6,
+      "sourceSha256": "563f7debc7acced18fb79b3bdae79eadbab7df6a433576447fbfd943db13e03b",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-release-copy-2026-11-03/review-notes.md",
+      "measuredWhitespaceWordCount": 177,
+      "maxWordCap": 200
+    },
+    {
+      "path": "docs/international/agy-grower-acceptance-release-copy-2026-11-03/status.json"
+    }
+  ],
+  "totalDraftsProduced": 24,
+  "inspectionScope": {
+    "filesRead": 3,
+    "testsExecuted": 0,
+    "validatorsExecuted": 0,
+    "sourceWrites": 0,
+    "gitWrites": 0,
+    "networkCalls": 0,
+    "shellCommands": 0,
+    "runtimeActivation": false
+  },
+  "coordinatorReview": {
+    "reviewedAtUtc": "2026-11-03T08:31:31.690819+00:00",
+    "exactSourcePairs": 24,
+    "damagedControlsRejected": 12,
+    "measuredNotesWhitespaceWords": 177,
+    "fluentHumanApproval": false,
+    "runtimeActivation": false
+  }
+}
