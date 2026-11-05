@@ -466,5 +466,9 @@ const copy:UpdateCopy={
   "Find official INMET weather-alert sources": "Thola imithombo esemthethweni yezixwayiso zezulu ye-INMET",
   "Country evidence → Brazil → Official weather-alert links": "Ubufakazi bezwe → Brazil → Izixhumanisi ezisemthethweni zezixwayiso zezulu",
   "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Vula iwebhusayithi yezixwayiso zezulu ye-INMET, ingosi noma isixhumanisi se-RSS. Izixhumanisi zemithombo zihlanganisiwe zahlolwa; okuphakelayo, isimo sezixwayiso sendawo nemigomo yokusetshenziswa kabusha akukaqinisekiswa. Lezi zixhumanisi azishintshi izeluleko zezitshalo.",
+  // Nursery field-planting release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-field-planting-release-drafts.json.
+  "Record a nursery planting in its field bed": "Rekhoda ukutshala kwe-nursery embhedeni wako wasensimini",
+  "Crop planner → Saved planned nursery batches → Record field planting": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe → Rekhoda ukutshala ensimini",
+  "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekhoda usuku nenani lezitshalo ozifake embhedeni owabelwe ukutshala kwe-nursery okuhloliwe. Gcina irekhodi lalokho okubonile kujenali lihlukile osukwini oluhleliwe, esitokweni se-nursery nasekusindeni kwezitshalo.",
 };
 export default copy;

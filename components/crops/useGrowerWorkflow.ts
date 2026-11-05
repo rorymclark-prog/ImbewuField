@@ -15,7 +15,7 @@ import { assembleGrowerWorkflowReview, type GrowerWorkflowDraft, type GrowerWork
 import { detachJsonData } from '@/lib/lossless-json';
 import { loadGrowerOperationsSources, type GrowerOperationsSources } from '@/lib/international/grower-operations-source';
 import { buildGrowerBoardTasks, type BoardTask } from '@/lib/task-board';
-import { recordGrowerNurserySowing, recordGrowerNurseryProgress, type GrowerNurserySowingInput, type GrowerNurseryProgressInput, type GrowerFieldObservationResult } from '@/lib/grower-field-observation';
+import { recordGrowerNurserySowing, recordGrowerNurseryProgress, recordGrowerNurseryFieldPlanting, type GrowerNurserySowingInput, type GrowerNurseryProgressInput, type GrowerNurseryFieldPlantingInput, type GrowerFieldObservationResult } from '@/lib/grower-field-observation';
 import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
 import type { GrowerCycleContext } from '@/lib/international/grower-cycle';
 import type { GrowerWindowInput } from '@/lib/international/grower-autoplan';
@@ -53,6 +53,8 @@ export interface GrowerSavedNurseryReview {
     readonly bedId: string;
     readonly startDate: string;
     readonly endDateExclusive: string;
+    /** Explicit canonical field-entry event; absent old DTOs cannot grant this action. */
+    readonly plannedFieldEntryDate?: string;
     readonly reference: ReturnType<typeof resolveGrowerNurseryBatchReference>;
   }[];
 }
@@ -104,11 +106,15 @@ function savedNurseryView(source: GrowerWorkflowSource, book: CropPlanState, rec
   const rows = detachJsonData(book.plantings, { allowUndefinedObjectFields: true });
   const cycleContext: GrowerCycleContext = { scope: source.scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint };
   const projection = projectGrowerCycles(rows, cycleContext);
-  const references: GrowerSavedNurseryReview['references'] = projection.ownCycles.flatMap(cycle => !cycle.nurseryDemand ? [] : [{
-    plantingId: cycle.plantingId, cropKey: cycle.cropKey, bedId: cycle.bedId,
-    startDate: cycle.nurseryDemand.interval.start, endDateExclusive: cycle.nurseryDemand.interval.endExclusive,
-    reference: resolveGrowerNurseryBatchReference(rows, cycleContext, cycle.plantingId),
-  }]);
+  const references: GrowerSavedNurseryReview['references'] = projection.ownCycles.flatMap(cycle => {
+    if (!cycle.nurseryDemand) return [];
+    const entries = cycle.plannedEvents.filter(event => event.kind === 'field-entry');
+    return [{ plantingId: cycle.plantingId, cropKey: cycle.cropKey, bedId: cycle.bedId,
+      startDate: cycle.nurseryDemand.interval.start, endDateExclusive: cycle.nurseryDemand.interval.endExclusive,
+      ...(entries.length === 1 ? { plannedFieldEntryDate: entries[0].date } : {}),
+      reference: resolveGrowerNurseryBatchReference(rows, cycleContext, cycle.plantingId),
+    }];
+  });
   const starts = references.map(row => row.startDate).sort(), ends = references.map(row => row.endDateExclusive).sort();
   // These are the represented saved intervals, not a new calendar or a claim
   // that anything was sown. Empty/zero-length work cannot invent a review day.
@@ -402,10 +408,14 @@ export function useGrowerWorkflow(input: Inputs) {
     input: GrowerNurseryProgressInput, displayedIsCurrent: () => boolean): Promise<GrowerFieldObservationResult> {
     return recordSavedNurseryObservation(view, plantingId, input, displayedIsCurrent, recordGrowerNurseryProgress, 'a count');
   }
+  function onRecordNurseryFieldPlanting(view: GrowerSavedNurseryReview, plantingId: string,
+    input: GrowerNurseryFieldPlantingInput, displayedIsCurrent: () => boolean): Promise<GrowerFieldObservationResult> {
+    return recordSavedNurseryObservation(view, plantingId, input, displayedIsCurrent, recordGrowerNurseryFieldPlanting, 'field planting', 'field-entry');
+  }
   async function recordSavedNurseryObservation<T>(view: GrowerSavedNurseryReview, plantingId: string,
     input: T, displayedIsCurrent: () => boolean,
     recordObservation: (source: GrowerOperationsSources, task: BoardTask, input: T, options: { isCurrent: () => boolean }) => Promise<GrowerFieldObservationResult>,
-    description: 'sowing' | 'a count'): Promise<GrowerFieldObservationResult> {
+    description: 'sowing' | 'a count' | 'field planting', eventKind: 'nursery-start' | 'field-entry' = 'nursery-start'): Promise<GrowerFieldObservationResult> {
     const held = (): GrowerFieldObservationResult => ({ status: 'held',
       message: `The saved nursery batch or form changed. Check its current records before recording ${description}.` });
     const binding = savedNurseryBindings.current.get(view);
@@ -417,6 +427,8 @@ export function useGrowerWorkflow(input: Inputs) {
     if (nurseryReading.current || nurserySaving.current || !binding || !originalIsCurrent()) return held();
     const targets = view.references.filter(row => row.plantingId === plantingId);
     if (targets.length !== 1 || targets[0].reference.status !== 'ready') return held();
+    const plannedDate = eventKind === 'field-entry' ? targets[0].plannedFieldEntryDate : targets[0].startDate;
+    if (typeof plannedDate !== 'string') return held();
     let snapshot: T;
     try { snapshot = detachJsonData(input) as T; } catch { return held(); }
     nurserySaving.current = true;
@@ -430,8 +442,8 @@ export function useGrowerWorkflow(input: Inputs) {
       if (after.status !== 'ready' || after.token !== binding.token || !after.isCurrent?.()) return held();
       const current = () => isCurrent() && after.isCurrent?.() === true;
       const matches = buildGrowerBoardTasks(operations.book.plantings, operations.contexts, new Date(), new Set()).tasks
-        .filter(task => task.growerEventKind === 'nursery-start' && task.growerJournalLink?.plantingId === plantingId
-          && task.bedId === targets[0].bedId && task.dueDate === targets[0].startDate
+        .filter(task => task.growerEventKind === eventKind && task.growerJournalLink?.plantingId === plantingId
+          && task.bedId === targets[0].bedId && task.dueDate === plannedDate
           && growerPlanningScopeKey(task.growerJournalLink.scope) === growerPlanningScopeKey(binding.context.scope));
       if (matches.length !== 1 || !current()) return held();
       const result = await recordObservation(operations, matches[0], snapshot, { isCurrent: current });
@@ -495,5 +507,5 @@ export function useGrowerWorkflow(input: Inputs) {
   } catch { visibleAcceptance = { status: 'idle' }; }
   const visibleSavedNursery = savedNursery && savedBindingIsCurrent(savedNursery) ? savedNursery : null;
   return { source: visibleSource, sourceIssue, checking, contextRevision: revision, onRefresh, onReview, onCheckCurrent, onAccept, acceptance: visibleAcceptance,
-    savedNurseryReview: visibleSavedNursery, savedNurseryChecking, onReadSavedNursery, onCheckSavedNurseryCurrent, onSaveNurseryBatchReferences, onRecordNurserySowing, onRecordNurseryProgress };
+    savedNurseryReview: visibleSavedNursery, savedNurseryChecking, onReadSavedNursery, onCheckSavedNurseryCurrent, onSaveNurseryBatchReferences, onRecordNurserySowing, onRecordNurseryProgress, onRecordNurseryFieldPlanting };
 }

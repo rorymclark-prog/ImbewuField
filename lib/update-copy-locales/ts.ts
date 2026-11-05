@@ -466,5 +466,9 @@ const copy:UpdateCopy={
   "Find official INMET weather-alert sources": "Kuma swihlovo swa ximfumo swa switsundzuxo swa maxelo swa INMET",
   "Country evidence → Brazil → Official weather-alert links": "Vumbhoni bya tiko → Brazil → Swihlanganisi swa ximfumo swa switsundzuxo swa maxelo",
   "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Pfula webusayiti ya switsundzuxo swa maxelo ya INMET, portal kumbe xihlanganisi xa RSS. Swihlanganisi swa swihlovo swi kamberiwile; feed, xiyimo xa switsundzuxo swa ndhawu ni swipimelo swa ku tlhela u tirhisa a swi si tiyisisiwa. Swihlanganisi leswi a swi cinci switsundzuxo swa swibyariwa.",
+  // Nursery field-planting release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-field-planting-release-drafts.json.
+  "Record a nursery planting in its field bed": "Rhekhoda ku byala ka nursery eka mubedo wa yona ensinwini",
+  "Crop planner → Saved planned nursery batches → Record field planting": "Mupulani wa swibyariwa → Mintlawa ya nursery leyi kunguhatiweke leyi hlayisiweke → Rhekhoda ku byala ensinwini",
+  "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rhekhoda siku ni nhlayo ya swimilana leswi u swi vekeke eka mubedo lowu averiweke ku byala ka nursery loku kamberiweke. Hlayisa rhekhodo ya leswi voniweke eka jenala yi hambanile ni siku leri kunguhatiweke, xitoko xa nursery ni ku hanya ka swimilana.",
 };
 export default copy;

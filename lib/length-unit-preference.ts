@@ -53,7 +53,12 @@ function actorMatches(owner: string | null, inSample: boolean): boolean {
 }
 function changed(scope: Scope) {
   ++scope.epoch; scope.sampleUnit = 'm'; scope.sampleNurseryUnit = 'metric'; scope.sampleMassUnit = 'kg'; scope.sampleGrowerEstimateUnit = 'metric';
-  for (const proof of scope.proofs) for (const listener of proof.listeners) listener();
+  // A view can replace its receipt during notification while another purpose
+  // keeps this scope alive. New receipts/listeners belong to the next change.
+  const notifications = [...scope.proofs].map(proof => ({ proof, listeners: [...proof.listeners] }));
+  for (const { proof, listeners } of notifications) for (const listener of listeners) {
+    if (scope.proofs.has(proof) && proof.listeners.has(listener)) listener();
+  }
 }
 function scopeFor(win: Window): Scope {
   const found = scopes.get(win); if (found) return found;

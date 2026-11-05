@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: '9992ec39de', changes: [
+    'Record a nursery planting in its field bed',
+  ], tour: [{ title: 'Record a nursery planting in its field bed', where: 'Crop planner → Saved planned nursery batches → Record field planting', href: '/facilitator/crops',
+    detail: 'Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.' }] },
   { when: '5 November 2026', sha: '88f122ee7c', changes: [
     'Find official INMET weather-alert sources',
   ], tour: [{ title: 'Find official INMET weather-alert sources', where: 'Country evidence → Brazil → Official weather-alert links', href: '/international',

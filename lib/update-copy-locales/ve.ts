@@ -466,5 +466,9 @@ const copy:UpdateCopy={
   "Find official INMET weather-alert sources": "Wanani zwiko zwa tshiofisi zwa tsevho dza mutsho dza INMET",
   "Country evidence → Brazil → Official weather-alert links": "Vhuṱanzi ha shango → Brazil → Vhuṱumani ha tshiofisi ha tsevho dza mutsho",
   "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Vulani webusaithi ya tsevho dza mutsho ya INMET, portal kana vhuṱumani ha RSS. Vhuṱumani ha zwiko ho sedzuluswa; feed, vhuimo ha tsevho dza henefho na milayo ya u shumisa hafhu a zwi athu khwaṱhisedzwa. Vhuṱumani uhu a vhu shanduli ngeletshedzo dza zwimela.",
+  // Nursery field-planting release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-field-planting-release-drafts.json.
+  "Record a nursery planting in its field bed": "Rekhodani u ṱavha ha nursery mbedeni wayo wa tsimuni",
+  "Crop planner → Saved planned nursery batches → Record field planting": "Mupulani wa zwimela → Zwipid̄a zwa nursery zwo pulanwa zwo vhulungwaho → Rekhodani u ṱavha tsimuni",
+  "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekhodani d̄uvha na tshivhalo tsha zwimela zwe na zwi vhea mbedeni yo avhelwaho u ṱavha ha nursery ho sedzuluswaho. Vhulungani rekhodo ya zwe na vhona kha jenala yo fhambanaho na d̄uvha l̄o pulanwaho, stock ya nursery na u tshila ha zwimela.",
 };
 export default copy;

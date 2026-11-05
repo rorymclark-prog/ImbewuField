@@ -466,5 +466,9 @@ const copy:UpdateCopy={
   "Find official INMET weather-alert sources": "Fumana mehlodi ya semmuso ya ditemoso tsa boemo ba lehodimo tsa INMET",
   "Country evidence → Brazil → Official weather-alert links": "Bopaki ba naha → Brazil → Dihokelo tsa semmuso tsa ditemoso tsa boemo ba lehodimo",
   "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Bula webosaete ya ditemoso tsa boemo ba lehodimo ya INMET, portal kapa sehokelo sa RSS. Dihokelo tsa mehlodi di hlahlobilwe; feed, boemo ba ditemoso tsa lehae le dipehelo tsa tshebediso hape ha di eso netefatswe. Dihokelo tsena ha di fetole keletso ya dijalo.",
+  // Nursery field-planting release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-field-planting-release-drafts.json.
+  "Record a nursery planting in its field bed": "Rekota temo ya sethopo betheng ya sona tshimong",
+  "Crop planner → Saved planned nursery batches → Record field planting": "Moralo wa dijalo → Dihlopha tse rerilweng tsa sethopo tse bolokilweng → Rekota temo tshimong",
+  "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekota letsatsi le palo ya dimela tseo o di kentseng betheng e abetsweng temo ya sethopo e hlahlobilweng. Boloka rekoto ya se bonweng jenaleng e arohane le letsatsi le rerilweng, setoko sa sethopo le ho phela ha dimela.",
 };
 export default copy;

@@ -1,8 +1,8 @@
 import { cropByKey } from './crop-catalog';
 import {
   createJournalEntry, isJournalDate, MAX_ENTRIES, MAX_NOTES_LEN,
-  JOURNAL_BYTE_BUDGET, JOURNAL_CHANGED_EVENT, inspectJournalRowsForWrite, normaliseJournalNurserySowingObservation, normaliseJournalNurseryProgressObservation,
-  type JournalEntry, type JournalNurserySowingObservation, type JournalNurseryProgressObservation,
+  JOURNAL_BYTE_BUDGET, JOURNAL_CHANGED_EVENT, inspectJournalRowsForWrite, normaliseJournalNurserySowingObservation, normaliseJournalNurseryProgressObservation, normaliseJournalNurseryFieldPlantingObservation,
+  type JournalEntry, type JournalNurserySowingObservation, type JournalNurseryProgressObservation, type JournalNurseryFieldPlantingObservation,
 } from './field-journal';
 import { resolveGrowerJournalLink } from './task-record-link';
 import { buildGrowerBoardTasks, type BoardTask } from './task-board';
@@ -30,6 +30,9 @@ export interface GrowerNurseryProgressInput extends GrowerFieldObservationInput 
   readonly plantsObserved: number;
   readonly stage: JournalNurseryProgressObservation['stage'];
   readonly coverage: JournalNurseryProgressObservation['coverage'];
+}
+export interface GrowerNurseryFieldPlantingInput extends GrowerFieldObservationInput {
+  readonly plantsPlanted: number;
 }
 export interface GrowerFieldObservationResult {
   readonly status: 'saved' | 'held' | 'unconfirmed';
@@ -98,6 +101,15 @@ function progressInputSnapshot(value: unknown): GrowerNurseryProgressInput | nul
     stage: observation.stage, coverage: observation.coverage } : null;
 }
 
+function fieldPlantingInputSnapshot(value: unknown): GrowerNurseryFieldPlantingInput | null {
+  const fields = nurseryInputFields(value, ['observedDate', 'note', 'confirmed', 'plantsPlanted']);
+  if (!fields) return null;
+  const generic = inputSnapshot({ observedDate: fields.observedDate.value, note: fields.note.value, confirmed: fields.confirmed.value });
+  const observation = normaliseJournalNurseryFieldPlantingObservation({ kind: 'nursery-field-planting-observation', version: 1,
+    plantsPlanted: fields.plantsPlanted.value, references: { variety: null, seedLotReference: null, raisingBatchReference: null } });
+  return generic && observation ? { ...generic, plantsPlanted: observation.plantsPlanted } : null;
+}
+
 /** Physical trays are an entered observation, independent of planned demand. */
 export async function recordGrowerNurserySowing(
   source: GrowerOperationsSources, task: BoardTask, value: GrowerNurserySowingInput,
@@ -118,9 +130,19 @@ export async function recordGrowerNurseryProgress(
   return appendNurseryObservation(source, task, input, options, 'progress');
 }
 
+/** A counted field planting is an observation, not establishment or inventory. */
+export async function recordGrowerNurseryFieldPlanting(
+  source: GrowerOperationsSources, task: BoardTask, value: GrowerNurseryFieldPlantingInput,
+  options: { isCurrent: () => boolean },
+): Promise<GrowerFieldObservationResult> {
+  const input = fieldPlantingInputSnapshot(value);
+  if (!input) return held('Enter the observed day, a note and a whole number of plants planted, then confirm the observation.');
+  return appendNurseryObservation(source, task, input, options, 'field-planting');
+}
+
 async function appendNurseryObservation(
-  source: GrowerOperationsSources, task: BoardTask, input: GrowerNurserySowingInput | GrowerNurseryProgressInput,
-  options: { isCurrent: () => boolean }, kind: 'sowing' | 'progress',
+  source: GrowerOperationsSources, task: BoardTask, input: GrowerNurserySowingInput | GrowerNurseryProgressInput | GrowerNurseryFieldPlantingInput,
+  options: { isCurrent: () => boolean }, kind: 'sowing' | 'progress' | 'field-planting',
 ): Promise<GrowerFieldObservationResult> {
   let safeTask: BoardTask;
   try { safeTask = detachJsonData(task, { allowUndefinedObjectFields: true }) as BoardTask; }
@@ -129,8 +151,8 @@ async function appendNurseryObservation(
 }
 
 async function appendObservation(
-  source: GrowerOperationsSources, task: BoardTask, input: GrowerFieldObservationInput | GrowerNurserySowingInput | GrowerNurseryProgressInput,
-  options: { isCurrent: () => boolean }, nurseryKind?: 'sowing' | 'progress',
+  source: GrowerOperationsSources, task: BoardTask, input: GrowerFieldObservationInput | GrowerNurserySowingInput | GrowerNurseryProgressInput | GrowerNurseryFieldPlantingInput,
+  options: { isCurrent: () => boolean }, nurseryKind?: 'sowing' | 'progress' | 'field-planting',
 ): Promise<GrowerFieldObservationResult> {
   let attemptedEntry: string | null = null;
   const actor = captureJournalObservationContext();
@@ -148,23 +170,32 @@ async function appendObservation(
     if (link.status !== 'ready') return changed();
     let sowing: JournalNurserySowingObservation | null = null;
     let progress: JournalNurseryProgressObservation | null = null;
+    let fieldPlanting: JournalNurseryFieldPlantingObservation | null = null;
     if (nurseryKind) {
-      if (task.growerEventKind !== 'nursery-start' || link.link.eventKind !== 'nursery-start') return changed();
+      const eventKind = nurseryKind === 'field-planting' ? 'field-entry' : 'nursery-start';
+      if (task.growerEventKind !== eventKind || link.link.eventKind !== eventKind) return changed();
+      if (nurseryKind === 'field-planting' && (task.bedId !== link.bedId || task.cropKey !== link.cropKey
+        || task.dueDate !== link.link.plannedDate)) return changed();
       const contexts = source.contexts.filter(context => growerPlanningScopeKey(context.scope) === growerPlanningScopeKey(link.link.scope));
       if (contexts.length !== 1) return changed();
       const reference = resolveGrowerNurseryBatchReference(source.book.plantings, contexts[0], link.link.plantingId);
       if (reference.status !== 'ready') return held(nurseryKind === 'sowing'
         ? 'The saved nursery references need a fresh check before recording sowing.'
-        : 'The saved nursery references need a fresh check before recording a count.');
+        : nurseryKind === 'progress' ? 'The saved nursery references need a fresh check before recording a count.'
+        : 'The saved transplant nursery batch needs a fresh check before recording field planting.');
       if (nurseryKind === 'sowing') {
         sowing = normaliseJournalNurserySowingObservation({ kind: 'nursery-sowing-observation', version: 1,
           traysUsed: (input as GrowerNurserySowingInput).traysUsed, references: reference.fields });
-      } else {
+      } else if (nurseryKind === 'progress') {
         const count = input as GrowerNurseryProgressInput;
         progress = normaliseJournalNurseryProgressObservation({ kind: 'nursery-progress-observation', version: 1,
           plantsObserved: count.plantsObserved, stage: count.stage, coverage: count.coverage, references: reference.fields });
       }
-      if (!sowing && !progress) return held('The saved nursery references cannot be recorded faithfully. Check them before saving.');
+      else {
+        fieldPlanting = normaliseJournalNurseryFieldPlantingObservation({ kind: 'nursery-field-planting-observation', version: 1,
+          plantsPlanted: (input as GrowerNurseryFieldPlantingInput).plantsPlanted, references: reference.fields });
+      }
+      if (!sowing && !progress && !fieldPlanting) return held('The saved nursery references cannot be recorded faithfully. Check them before saving.');
     }
     await initialiseJournalStorage();
     if (!current()) return changed();
@@ -183,9 +214,9 @@ async function appendObservation(
     const bed = source.contexts.filter(context => growerPlanningScopeKey(context.scope) === growerPlanningScopeKey(link.link.scope))
       .flatMap(context => context.beds).find(row => row.id === link.bedId);
     const cropName = cropByKey(link.cropKey)?.name;
-    const entry: JournalEntry = createJournalEntry({ date: input.observedDate, title: progress ? 'Nursery count' : sowing ? 'Nursery sowing' : 'Field note', notes: input.note,
-      category: sowing || progress ? 'planting' : 'other', bedId: link.bedId, bedLabel: bed?.label ?? null, cropName: cropName ?? null,
-      growerCycleLink: link.link, ...(sowing ? { nurserySowing: sowing } : {}), ...(progress ? { nurseryProgress: progress } : {}) });
+    const entry: JournalEntry = createJournalEntry({ date: input.observedDate, title: fieldPlanting ? 'Field planting' : progress ? 'Nursery count' : sowing ? 'Nursery sowing' : 'Field note', notes: input.note,
+      category: sowing || progress || fieldPlanting ? 'planting' : 'other', bedId: link.bedId, bedLabel: bed?.label ?? null, cropName: cropName ?? null,
+      growerCycleLink: link.link, ...(sowing ? { nurserySowing: sowing } : {}), ...(progress ? { nurseryProgress: progress } : {}), ...(fieldPlanting ? { nurseryFieldPlanting: fieldPlanting } : {}) });
     if (entry.bedId !== link.bedId) entry.bedId = null;
     // IDs are generated by the journal's existing authority. A collision must
     // hold rather than replace an older observation from the same task.
@@ -203,7 +234,9 @@ async function appendObservation(
       if (!current() || readJournalStorage().status !== 'sample' || sampleStorage!.getItem(sampleKey!) !== next) return unconfirmed(entry.id);
       window.dispatchEvent(new CustomEvent(JOURNAL_CHANGED_EVENT));
       if (!current() || sampleStorage!.getItem(sampleKey!) !== next) return unconfirmed(entry.id);
-      return { status: 'saved', journalEntryId: entry.id, message: progress
+      return { status: 'saved', journalEntryId: entry.id, message: fieldPlanting
+        ? 'DEMO field planting saved in the sample journal. The entered quantity does not confirm establishment. Your personal journal, planned batches, forecasts, checklist, harvest, stock and sales records have not changed.'
+        : progress
         ? 'DEMO nursery count saved in the sample journal. Your personal journal, planned batches, forecasts, checklist, harvest, stock and sales records have not changed.'
         : sowing
         ? 'DEMO nursery sowing saved in the sample journal. Your personal journal, planned batches, checklist, harvest, stock and sales records have not changed.'
@@ -215,7 +248,9 @@ async function appendObservation(
     const saved = readJournalStorage();
     if (!current() || saved.token !== written.token || saved.journalRaw !== next) return unconfirmed(entry.id);
     return { status: 'saved', journalEntryId: entry.id,
-      message: progress
+      message: fieldPlanting
+        ? 'Field planting saved in your journal with the observed day and entered quantity. It does not confirm establishment or change planned batches, forecasts, stock, checklist, harvest or sales.'
+        : progress
         ? 'Nursery count saved in your journal with the observed day, coverage and reference snapshot. This observation does not change planned batches, forecasts, stock, checklist, harvest or sales.'
         : sowing
         ? 'Nursery sowing saved in your journal with the observed day and reference snapshot. Planned batches, checklist, harvest, stock and sales records have not changed.'
