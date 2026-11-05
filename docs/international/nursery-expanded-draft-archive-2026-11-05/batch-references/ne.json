@@ -1,0 +1,176 @@
+{
+  "locale": "ne",
+  "sourceSha256": "cbca068b3b5bbe87b07cd4f1c8a1973fdf5414e7283a2198b50d0a1f99df8002",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "nurseryBatchReference.message.01",
+      "english": "Saved planned nursery batches",
+      "messageSha256": "227ca3a9bc6079c4001eb7f9de0e30adadb19dfe094f6af20db8100dcfeafde0",
+      "translation": "सुरक्षित गरिएका योजनाबद्ध नर्सरी ब्याचहरू"
+    },
+    {
+      "key": "nurseryBatchReference.message.02",
+      "english": "Check saved batches, enter your own optional references for individual batches, then review nursery resources. References do not record actual sowing, available seeds or live nursery stock.",
+      "messageSha256": "3675e952653456ea812087400ba675ebb1acffaaaadd45c9e50d2cea4352ddb8",
+      "translation": "सुरक्षित गरिएका ब्याचहरू जाँच गर्नुहोस्, व्यक्तिगत ब्याचहरूका लागि आफ्ना ऐच्छिक सन्दर्भहरू प्रविष्ट गर्नुहोस्, त्यसपछि नर्सरी स्रोतहरूको समीक्षा गर्नुहोस्। सन्दर्भहरूले वास्तविक बीउ छराइ, उपलब्ध बीउ वा जीवित नर्सरी स्टक रेकर्ड गर्दैनन्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.03",
+      "english": "DEMO — references stay in this sample session.",
+      "messageSha256": "0e6527c7565ec2699d120a95b76087e7928b52cc2a452b39c11deff75a3d555d",
+      "translation": "DEMO — सन्दर्भहरू यस नमूना सत्रमा मात्र रहन्छन्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.04",
+      "english": "Checking saved nursery batches…",
+      "messageSha256": "9fcf699de9923f58df5b40bbe9e3afff52a387659e7d85252f68c6ef1ef5815e",
+      "translation": "सुरक्षित गरिएका नर्सरी ब्याचहरू जाँच गरिँदै…"
+    },
+    {
+      "key": "nurseryBatchReference.message.05",
+      "english": "Check saved nursery batches",
+      "messageSha256": "0c22440b1220b1f955ce46ca6b22143e7da438665adab63d59c35cd88e61504b",
+      "translation": "सुरक्षित गरिएका नर्सरी ब्याचहरू जाँच गर्नुहोस्"
+    },
+    {
+      "key": "nurseryBatchReference.message.06",
+      "english": "Check the current saved plan to load eligible planned nursery batches.",
+      "messageSha256": "eeb00ae0529fcf64d573bdd0dfebfb96d4f523a6bdc90967713bdeb00d397e1a",
+      "translation": "योग्य योजनाबद्ध नर्सरी ब्याचहरू लोड गर्न हालको सुरक्षित योजना जाँच गर्नुहोस्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.07",
+      "english": "Earlier checked-batch entries · unsaved and held separately",
+      "messageSha256": "e95eacca61929d9c520f34367578943b21ff4b3e72dc869e7cd8df6f874385df",
+      "translation": "पहिले जाँच गरिएका ब्याच प्रविष्टिहरू · सुरक्षित नगरिएका र छुट्टै राखिएका"
+    },
+    {
+      "key": "nurseryBatchReference.message.08",
+      "english": "These entries do not belong to a current save source. Check saved records and enter any changes explicitly against the current batch.",
+      "messageSha256": "698811241b61a33651a277092c68ee9ac6e78f68f7634818760b3ece7ba1536d",
+      "translation": "यी प्रविष्टिहरू हालको सुरक्षित स्रोतसँग सम्बन्धित छैनन्। सुरक्षित रेकर्डहरू जाँच गर्नुहोस् र हालको ब्याचमा स्पष्ट रूपमा कुनै पनि परिवर्तनहरू प्रविष्ट गर्नुहोस्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.09",
+      "english": "No eligible saved transplant raising batch is represented. This does not establish zero nursery demand.",
+      "messageSha256": "23d0c2124b70f69f8c38bfbda7066ce7839143ad23a6f16e31efa5ed67b5950d",
+      "translation": "कुनै योग्य सुरक्षित प्रत्यारोपण हुर्काउने ब्याच प्रतिनिधित्व गरिएको छैन। यसले शून्य नर्सरी माग स्थापित गर्दैन।"
+    },
+    {
+      "key": "nurseryBatchReference.message.10",
+      "english": "Some saved batch references need review. Their retained evidence remains separate from the planned count and resource calculations.",
+      "messageSha256": "486f2278c798ba5b84f92effc4593ec74456644ffe949b398960d625580cd33b",
+      "translation": "केही सुरक्षित ब्याच सन्दर्भहरू समीक्षा आवश्यक छ। तिनीहरूको सुरक्षित प्रमाण योजनाबद्ध गणना र स्रोत गणनाहरू भन्दा छुट्टै रहन्छ।"
+    },
+    {
+      "key": "nurseryBatchReference.message.11",
+      "english": "Your variety / cultivar (optional)",
+      "messageSha256": "8b0a20d7f98c38f64e81e771406df9ba21f2d69d5ec27050cc6fcb67bac52a73",
+      "translation": "तपाईंको जात / कल्टिभर (ऐच्छिक)"
+    },
+    {
+      "key": "nurseryBatchReference.message.12",
+      "english": "Your seed-lot reference (optional)",
+      "messageSha256": "3c79595765d419d49aa7f3fed47389487bac479ffd8352627692a71798e77fc3",
+      "translation": "तपाईंको बीउ लट सन्दर्भ (ऐच्छिक)"
+    },
+    {
+      "key": "nurseryBatchReference.message.13",
+      "english": "Your raising-batch reference (optional)",
+      "messageSha256": "78bd8b84a5258952fbe95ae06a06b380cb43488ab59c7f12f655a11472769451",
+      "translation": "तपाईंको हुर्काउने ब्याच सन्दर्भ (ऐच्छिक)"
+    },
+    {
+      "key": "nurseryBatchReference.message.14",
+      "english": "Saved reference metadata needs review. Retained evidence has not been replaced with blank fields.",
+      "messageSha256": "196ea2593fd89e885892d6870a5551484ffe541a40b04d93d9a535d2a6114fd8",
+      "translation": "सुरक्षित गरिएको सन्दर्भ मेटाडेटा समीक्षा आवश्यक छ। राखिएको प्रमाण खाली क्षेत्रहरूले प्रतिस्थापन गरिएको छैन।"
+    },
+    {
+      "key": "nurseryBatchReference.message.15",
+      "english": "Saving touched batch references…",
+      "messageSha256": "ab0feab4d42d269a41be8cf684fbbe1496c835703944a89b24a3da185336471f",
+      "translation": "परिमार्जित ब्याच सन्दर्भहरू सुरक्षित गरिँदै…"
+    },
+    {
+      "key": "nurseryBatchReference.message.16",
+      "english": "Save all touched references",
+      "messageSha256": "b630edeccbdd969b97c8399722683a2794b384ee3e6d909864ebedf6c504e9b4",
+      "translation": "सबै परिमार्जित सन्दर्भहरू सुरक्षित गर्नुहोस्"
+    },
+    {
+      "key": "nurseryBatchReference.message.17",
+      "english": "Unsaved reference changes: save or explicitly check saved batches again before reviewing resources or exporting.",
+      "messageSha256": "5d66652cccefd8741d142cb9e1819bae7978bb9f4a418164ce5c5bd75bfd26c0",
+      "translation": "सुरक्षित नगरिएका सन्दर्भ परिवर्तनहरू: स्रोतहरूको समीक्षा वा निर्यात गर्नु अघि सुरक्षित गर्नुहोस् वा सुरक्षित ब्याचहरू पुन: स्पष्ट रूपमा जाँच गर्नुहोस्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.18",
+      "english": "The references could not be saved in this context. Your entries are retained; check current saved records before trying again.",
+      "messageSha256": "0eb04a84c14f60c915325262c82603d463058aae31422d89f7e604f88b8ce171",
+      "translation": "यस सन्दर्भमा सन्दर्भहरू सुरक्षित गर्न सकिएन। तपाईंका प्रविष्टिहरू राखिएका छन्; पुन: प्रयास गर्नु अघि हालका सुरक्षित रेकर्डहरू जाँच गर्नुहोस्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.19",
+      "english": "References saved and current saved batches checked. These remain planned batches, not observed stock.",
+      "messageSha256": "d7e20b3de1daf77436f8d91be2dff9995f0a835dd7f35a5b1aad091312df0bb2",
+      "translation": "सन्दर्भहरू सुरक्षित गरियो र हालका सुरक्षित ब्याचहरू जाँच गरियो। यी योजनाबद्ध ब्याचहरू नै रहन्छन्, अवलोकन गरिएको स्टक होइन।"
+    },
+    {
+      "key": "nurseryBatchReference.message.20",
+      "english": "Reference values are unchanged. No write was needed.",
+      "messageSha256": "c2857bcd6f688f27ae9408e4a5785b4a4cc6ceb059d5755b2db691b6c4398c2f",
+      "translation": "सन्दर्भ मानहरू अपरिवर्तित छन्। कुनै लेखाइ आवश्यक थिएन।"
+    },
+    {
+      "key": "nurseryBatchReference.message.21",
+      "english": "The write was reported, but current saved batches could not be confirmed. Check saved records before continuing.",
+      "messageSha256": "e89defda7f67ce275580aebd3dcf0bf436d2fc6acc84b5a03465b055d269298a",
+      "translation": "लेखाइ रिपोर्ट गरिएको थियो, तर हालका सुरक्षित ब्याचहरू पुष्टि हुन सकेनन्। जारी राख्नु अघि सुरक्षित रेकर्डहरू जाँच गर्नुहोस्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.22",
+      "english": "The write was reported, but its saved records could not be checked. Check saved records before continuing.",
+      "messageSha256": "6d6522264c1c32c16b9695ea111fce5d7818fa106d1f44da0d12aeac1028ede7",
+      "translation": "लेखाइ रिपोर्ट गरिएको थियो, तर यसका सुरक्षित रेकर्डहरू जाँच गर्न सकिएन। जारी राख्नु अघि सुरक्षित रेकर्डहरू जाँच गर्नुहोस्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.23",
+      "english": "Current saved records could not be confirmed. Check saved nursery batches before continuing.",
+      "messageSha256": "0482df8c33f5b698d23d382364dc1db9d4ca04ddc495ac001d720766786829aa",
+      "translation": "हालका सुरक्षित रेकर्डहरू पुष्टि हुन सकेनन्। जारी राख्नु अघि सुरक्षित गरिएका नर्सरी ब्याचहरू जाँच गर्नुहोस्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.24",
+      "english": "The save outcome is not confirmed. Your entries are retained. Check saved records before trying again.",
+      "messageSha256": "461c3b1c64d2cc68bc701db040a406ecb6eb969671c2c8cfa4506ae786304b1a",
+      "translation": "सुरक्षित गर्ने कार्यको नतिजा पुष्टि भएको छैन। तपाईंका प्रविष्टिहरू राखिएका छन्। पुन: प्रयास गर्नु अघि सुरक्षित रेकर्डहरू जाँच गर्नुहोस्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.25",
+      "english": "Saved nursery batches could not be checked. Existing entries have not been treated as a confirmed save.",
+      "messageSha256": "a549ed8805c5dded891fb28fd6c597e9539e76624f7b2d93ac56865f4ced2973",
+      "translation": "सुरक्षित गरिएका नर्सरी ब्याचहरू जाँच गर्न सकिएन। अवस्थित प्रविष्टिहरूलाई पुष्टि गरिएको सुरक्षित रूपमा मानिएको छैन।"
+    },
+    {
+      "key": "nurseryBatchReference.message.26",
+      "english": "Saved nursery batches could not be checked. Please check the current records.",
+      "messageSha256": "93d6c7f78d99f23f0c21bfd9971c0dcf056182df3e140c93487fd615251e51d6",
+      "translation": "सुरक्षित गरिएका नर्सरी ब्याचहरू जाँच गर्न सकिएन। कृपया हालका रेकर्डहरू जाँच गर्नुहोस्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.27",
+      "english": "The checked source changed. Earlier entries have not been applied to current saved batches.",
+      "messageSha256": "7d73d9fa974233d751f27cbc96f7a55efb1f7502647e09d99270739193deaf0b",
+      "translation": "जाँच गरिएको स्रोत परिवर्तन भयो। पहिलेका प्रविष्टिहरू हालका सुरक्षित ब्याचहरूमा लागू गरिएका छैनन्।"
+    },
+    {
+      "key": "nurseryBatchReference.message.28",
+      "english": "The checked source changed. Earlier entries are retained separately and have not been applied to current saved batches.",
+      "messageSha256": "d70fc0e7a44f1f58a550c6e33eefde3e76f2d405fb4961adc84dc958a67165f0",
+      "translation": "जाँच गरिएको स्रोत परिवर्तन भयो। पहिलेका प्रविष्टिहरू छुट्टै राखिएका छन् र हालका सुरक्षित ब्याचहरूमा लागू गरिएका छैनन्।"
+    }
+  ]
+}
