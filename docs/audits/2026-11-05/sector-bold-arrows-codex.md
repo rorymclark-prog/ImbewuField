@@ -1,7 +1,7 @@
 # Sector broad-arrow continuation — 2026-11-05
 
 - Auditor: Codex, with coordinating-chat visual review of drafts 1/2 and the corrected bounds report. No physical-device acceptance is inferred from those reviews.
-- Reviewed revision: `codex/sector-bold-arrows`, based on released main `1ae9ac2919bee8496ef820495e3bd5467e9d054a`.
+- Reviewed revision: implementation `7828378d95cc9339bf28690c9592551faa7d86d7` on `codex/sector-bold-arrows`, based on released main `1ae9ac2919bee8496ef820495e3bd5467e9d054a`.
 - Deployment: preceding bolder-contour release was verified as `1ae9ac2`; this continuation's release identity and current-head gates are recorded on its PR and issue #35.
 - Previous audit: [Bolder contours and external examples](sector-bold-contours-codex.md). Preserve historical findings and the original-device saved-AI-gallery verification gap.
 - Scope: illustrated Sector wind/fall arrow painters, saturated palette, icons/sun markers, matching legend and label collision placement. Exact sheets, saved geometry, source bearings/contours/spacing, archive registration, AI artwork, provider/jobs/gates and other layers remain unchanged.
@@ -40,7 +40,7 @@ The numerical probe instruments only the local extracted renderer, not productio
 
 - Typecheck: clean before final behaviour checks.
 - Focused-render: 639 passed, 0 failed, two workers. Affected Sector: 22 passed, 0 failed.
-- Those checks completed before an intentional environment interruption. Their completion is preserved in the chat tool results; temporary raw log files were removed by the environment. They were not restarted solely because of the interruption. Current-head CI and final notes checks follow the finished commit.
+- Those checks completed before an intentional environment interruption. Their completion is preserved in the chat tool results; temporary raw log files are no longer present. They were not restarted solely because of the interruption. Current-head CI and final notes checks follow the finished commit.
 - The previous three-curve assertion encoded the rejected faint style. Its replacement executes the real filled painter and verifies source tips at screen/print scales, opaque visible body area, substantial head width and retained dashed provenance. All actual solar sweep/radius/marker-count assertions remain. A new regression forces a blocked label into the only free region and fails if the renderer silently paints its last overlapping candidate. No test assertion was deleted to conceal a failure.
 - Whitespace: clean. Full suite is separate CI work; no new local full run/pass claimed. Nursery/root inline-help work remains separate.
 - This changes the picture. PLAN_VERSION remains `v93` and recipe counters are untouched. No new provider render, schema/persistence, permissions, billing or worker change.
