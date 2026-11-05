@@ -31,6 +31,9 @@ import SiteSurveyReview from './SiteSurveyReview';
 import SurveyZuluDraftPair, { surveyZuluConfirmDraft, SURVEY_DISCARD_CONFIRM_ENGLISH, SURVEY_DISCARD_BUTTON_ENGLISH } from './SurveyZuluDraftPair';
 import { resolveSiteSurveyWelcomeDraft, type SiteSurveyWelcomeField } from '@/lib/site-survey-welcome-drafts';
 import type { LocationData } from '@/lib/types';
+import { locationElevationReference, normaliseElevationEvidence, normaliseSiteEnergy, type ElevationEvidence, type SiteEnergyEvidence } from '@/lib/site-energy';
+import SiteSurveyElevation from './SiteSurveyElevation';
+import SiteSurveyEnergy from './SiteSurveyEnergy';
 
 interface Props {
   placeId: string;
@@ -430,6 +433,11 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
   const [soilAmendments, setSoilAmendments] = useState<string[]>(existing?.soilAmendments ?? []);
   const [fencing, setFencing] = useState(existing?.hasFencing ?? '');
   const [productionConditions, setProductionConditions] = useState<SiteProductionConditions>(existing?.productionConditions ?? {});
+  const [elevationEvidence, setElevationEvidence] = useState<ElevationEvidence>(() => ({
+    ...normaliseElevationEvidence(existing?.elevationEvidence, siteId),
+    model: normaliseElevationEvidence(existing?.elevationEvidence, siteId)?.model ?? locationElevationReference(locationData, siteId),
+  }));
+  const [energyEvidence, setEnergyEvidence] = useState<SiteEnergyEvidence>(() => normaliseSiteEnergy(existing?.energyEvidence, siteId) ?? {});
 
   // Step 4 — What exists
   const [crops, setCrops] = useState<string[]>(existing?.existingCrops ?? []);
@@ -528,6 +536,8 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
       ),
       productionYear: productionYear === '' ? undefined : Number(productionYear),
       productionConditions: Object.keys(productionConditions).length ? productionConditions : undefined,
+      elevationEvidence: normaliseElevationEvidence(elevationEvidence, siteId),
+      energyEvidence: normaliseSiteEnergy(energyEvidence, siteId),
       poultryManagement: Object.keys(poultryManagement).length || layingHens !== '' ? {
         ...poultryManagement,
         layingHens: layingHens === '' ? null : Number(layingHens),
@@ -851,6 +861,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
         {/* ── Step 6: Resources & Inputs — Roof catchment ── */}
         {step === 5 && (
           <div className="space-y-5">
+            <SiteSurveyEnergy siteId={siteId} coords={siteLoc} scope={scope} value={energyEvidence} onChange={setEnergyEvidence}/>
             <div style={{ background: 'rgba(35,94,134,0.06)', borderRadius: 14, padding: '12px 14px', border: '1px solid rgba(35,94,134,0.18)' }}>
               <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.5 }}>
                 <span className="font-semibold" style={{ color: 'var(--blue)' }}>{paired('roofCatchmentWhyMattersLabel', 'Why this matters: ')}</span>
@@ -898,6 +909,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
         {/* ── Step 1: Land & Location ── */}
         {step === 1 && (
           <div className="space-y-5">
+            <SiteSurveyElevation value={elevationEvidence} onChange={setElevationEvidence}/>
             <div>
               <SectionLabel>{paired('sectionHowIsLandPrepared', 'How is the land prepared?')}</SectionLabel>
               <div className="space-y-2">

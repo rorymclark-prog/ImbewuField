@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest site-survey energy slice — [Elevation references and source-bound solar/wind screening — 5 November 2026](2026-11-05/site-energy-survey-codex.md). Focused checks passed; full release, integrated preview and language/device review remain pending.
+
 Latest Sector styling — [Actual supplied-reference wind/rain motifs and retained terrain detail — 5 November 2026](2026-11-05/sector-reference-flow-codex.md). Native imagery inspected; release gates/identity follow on the PR and ledger.
 
 Latest Sector release follow-up — [Typography contracts and native update descriptions — 5 November 2026](2026-11-05/sector-release-contracts-codex.md). Broad-arrow artwork is retained; original-device free AI recovery remains unverified.

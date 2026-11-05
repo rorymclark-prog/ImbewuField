@@ -4,6 +4,7 @@ import { loadPlaces } from './saved-places';
 import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { normaliseMarketEvidence, marketEvidencePromptBlock, type MarketEvidence } from './report-site-facts';
+import { normaliseElevationEvidence, normaliseSiteEnergy, siteEnergyPrompt, type ElevationEvidence, type SiteEnergyEvidence } from './site-energy';
 
 // The FAO Household Dietary Diversity Score uses these twelve food groups. This is a count of
 // reported groups, never a made-up nutrition score or an estimate of what a household eats.
@@ -161,6 +162,8 @@ export interface SiteSurvey {
 
   productionConditions?: SiteProductionConditions;
   poultryManagement?: PoultryManagement;
+  elevationEvidence?: ElevationEvidence;
+  energyEvidence?: SiteEnergyEvidence;
 
   notes: string;
 }
@@ -328,6 +331,8 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
       : undefined,
     productionConditions: normaliseProductionConditions(row.productionConditions),
     poultryManagement: normalisePoultryManagement(row.poultryManagement),
+    elevationEvidence: normaliseElevationEvidence(row.elevationEvidence, siteId),
+    energyEvidence: normaliseSiteEnergy(row.energyEvidence, siteId),
     notes: stringValue(row.notes),
   };
 }
@@ -400,6 +405,8 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number, includeM
   lines.push(`Soil condition (self-assessed): ${s.soilCondition || 'not assessed'}`);
   lines.push(`Soil amendments applied: ${s.soilAmendments.length ? s.soilAmendments.filter(v => v !== 'none').join(', ') || 'none reported' : 'not recorded'}`);
   lines.push(`Fencing: ${s.hasFencing || 'not specified'}`);
+  const energyContext = siteEnergyPrompt(s.elevationEvidence, s.energyEvidence, s.siteId);
+  if (energyContext) lines.push('', '--- ELEVATION & ENERGY EVIDENCE ---', energyContext);
 
   const conditions = s.productionConditions;
   const poultry = s.poultryManagement;

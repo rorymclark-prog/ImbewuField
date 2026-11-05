@@ -1,0 +1,21 @@
+.card { padding:16px; border:1px solid var(--border); border-radius:14px; background:var(--surface-2); color:var(--text); }
+.card h3 { font-weight:700; font-size:17px; margin-bottom:8px; }
+.card p { font-size:13px; line-height:1.6; margin:8px 0; }
+.card details { margin-top:12px; }
+.card summary { min-height:48px; display:flex; align-items:center; cursor:pointer; font-weight:600; }
+.fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:12px 0; }
+.field { display:block; font-size:13px; font-weight:600; }
+.field input,.field select,.field textarea { display:block; width:100%; min-height:48px; margin-top:5px; padding:10px; border:1px solid var(--border); border-radius:9px; color:var(--text); background:var(--surface); font-weight:400; }
+.field textarea { min-height:80px; }
+.button { display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:10px 16px; border-radius:9px; color:var(--survey-on-brand); background:var(--brand); font-weight:600; cursor:pointer; }
+.button:disabled { opacity:.65; cursor:wait; }
+.secondary { color:var(--text); border:1px solid var(--border); background:var(--surface); }
+.result { margin:14px 0; padding:14px; background:var(--surface); border-radius:12px; }
+.result strong { display:block; font-size:22px; }
+.months { display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:3px; align-items:end; margin-top:16px; }
+.month { min-width:0; text-align:center; font-size:10px; }
+.bar { background:var(--brand); border-radius:3px 3px 0 0; min-height:2px; }
+.error { color:var(--text); padding:10px; border:1px solid var(--border-strong); border-radius:8px; }
+.note { color:var(--text-2); }
+.card a { text-decoration:underline; }
+@media(max-width:480px) { .fields { grid-template-columns:1fr; } .card { padding:12px; } }

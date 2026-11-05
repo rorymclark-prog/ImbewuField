@@ -1,6 +1,8 @@
 import test from 'node:test';
 import { activeAccountLocalStorageKey, bindMountedAccountLocalStorageUid } from '../lib/account-local-storage.ts';
 import assert from 'node:assert/strict';
+import { parsePvgisResponse } from '../lib/site-energy.ts';
+import { pvgisFixture } from './fixtures/site-energy.ts';
 
 import {
   readSurveyDraft, writeSurveyDraft, clearSurveyDraft, surveyDraftScope, surveyRevision,
@@ -69,6 +71,34 @@ function survey(overrides: Partial<SiteSurvey> = {}): SiteSurvey {
     ...overrides,
   };
 }
+
+test('elevation and energy evidence round-trip only through the saved survey, with source and account isolation', () => {
+  const { local } = installBrowser();
+  bindMountedAccountLocalStorageUid('energy-account-a');
+  const siteId = 'site:45.00000,8.00000';
+  const original = survey({ siteId,
+    elevationEvidence: { model: { siteId, elevationM: 0, source: 'OpenTopoData SRTM30m', sampleBaselineM: 120 }, benchmark: { elevationM: -2, method: 'surveyed', datum: 'local datum', source: 'benchmark record' } },
+    energyEvidence: { solar: parsePvgisResponse(pvgisFixture(), siteId, '2026-11-05T12:00:00.000Z'), wind: { kind: 'measured', heightM: 12, meanSpeedMs: 0, source: 'fixture instrument', period: 'fixture period', obstacles: 'nearby roof' } },
+  });
+  try {
+    assert.ok(saveSurvey(original));
+    const reopened = loadSurvey(siteId)!;
+    assert.deepEqual(reopened.elevationEvidence, original.elevationEvidence);
+    assert.deepEqual(reopened.energyEvidence, original.energyEvidence);
+    assert.match(surveyToPrompt(reopened, 800), /local datum/);
+    assert.match(surveyToPrompt(reopened, 800), /not installed capacity/);
+    assert.match(surveyToPrompt(reopened, 800), /fixture instrument/);
+    bindMountedAccountLocalStorageUid('energy-account-b');
+    assert.equal(loadSurvey(siteId), null);
+    bindMountedAccountLocalStorageUid('energy-account-a');
+    assert.equal(loadSurvey(siteId)?.energyEvidence?.solar?.annualKwh, 1200);
+    const otherSite = 'site:46.00000,8.00000';
+    assert.ok(saveSurvey({ ...original, siteId: otherSite }));
+    assert.equal(loadSurvey(otherSite)?.energyEvidence?.solar, undefined);
+    assert.equal(loadSurvey(otherSite)?.elevationEvidence?.model, undefined);
+    assert.ok(local.rows.size > 0);
+  } finally { bindMountedAccountLocalStorageUid(null); }
+});
 
 test('a complete survey produces finite, specific report context', () => {
   const prompt = surveyToPrompt(survey(), 800);
