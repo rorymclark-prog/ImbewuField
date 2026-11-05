@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed Codex BMKG research-navigation release candidates; source pairs in bmkg-navigation-release-drafts.json.
+  "Find Indonesia’s official BMKG sources": "Kuma swihlovo swa ximfumo swa BMKG swa Indonesia",
+  "Country evidence → Research priorities → Indonesia": "Vumbhoni bya tiko → Swilo leswi rhangisiwaka eka ndzavisiso → Indonesia",
+  "Open the official forecast documentation, open-data description and terms from Indonesia’s research-queue card. Source links do not enable a forecast feed or local crop advice.": "Pfula matsalwa ya ximfumo ya vuprofeta bya maxelo, nhlamuselo ya data leyi pfulekeke ni swipimelo eka khadi ra Indonesia ra ndzavisiso. Swihlanganisi swa swihlovo a swi pfuri data ya vuprofeta bya maxelo kumbe switsundzuxo swa swibyariwa swa ndhawu.",
   // Additive unreviewed Codex release candidates; source pairs: grower-bed-windows-release-drafts.json.
   "Plan separate availability windows for each growing space": "Pulana minkarhi yo hambana ya ku kumeka ka ndhawu yin’wana ni yin’wana yo byala",
   "Crop plan → Automatic plan from your estimates → Your available growing space": "Pulani ya swibyariwa → Pulani ya otomatiki leyi humaka eka mipimanyeto ya wena → Ndhawu ya wena yo byala leyi kumekaka",

@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: 'd645d42a29', changes: [
+    "Find Indonesia’s official BMKG sources",
+  ], tour: [{ title: "Find Indonesia’s official BMKG sources", where: "Country evidence → Research priorities → Indonesia", href: '/international',
+    detail: "Open the official forecast documentation, open-data description and terms from Indonesia’s research-queue card. Source links do not enable a forecast feed or local crop advice." }] },
   { when: '5 November 2026', sha: '9992ec39de', changes: [
     'Record a nursery planting in its field bed',
   ], tour: [{ title: 'Record a nursery planting in its field bed', where: 'Crop planner → Saved planned nursery batches → Record field planting', href: '/facilitator/crops',

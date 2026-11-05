@@ -13,6 +13,7 @@ import NwsForecastReference from './NwsForecastReference';
 import CountyBulletinReference from './CountyBulletinReference';
 import EaRainfallReference from './EaRainfallReference';
 import InmetAlertLinks from './InmetAlertLinks';
+import BmkgResearchLinks from './BmkgResearchLinks';
 
 const metadata = (value: Known<string>) => value.status === 'known' ? value.value : `Unknown — ${value.reason}`;
 const CATEGORY_NAMES = { biodiversity: 'Biodiversity & taxonomy', 'agricultural-extension': 'Agricultural extension', 'weather-frost': 'Weather & frost', soils: 'Soils', 'plant-legality': 'Plant legality' };
@@ -113,6 +114,7 @@ export default function CountryReview() {
     <section className={styles.card} aria-labelledby="queue-heading"><h2 id="queue-heading">Research priorities, not launch approvals</h2>
       <p>Only the four engineering pilots above have source-discovery dossiers. Other entries are an unreviewed research queue; depth and availability differ between pilots.</p>
       {COUNTRY_RESEARCH_QUEUE.map((group) => <p key={group.group}><strong>{group.group}:</strong> {group.countries.join(', ')}.</p>)}
+      <BmkgResearchLinks />
       <p>{EUROPE_RESEARCH_NOTE}</p>
     </section>
   </main></div>;
