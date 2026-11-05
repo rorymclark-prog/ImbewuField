@@ -1,0 +1,35 @@
+{
+  "sourceSha256": "f9dd1b8da9f2a19a91b2354ae7527ebe3d9c5931901788f2f66fb1701c22013a",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "pairs": [
+    {
+      "locale": "st",
+      "key": "nurseryDemoTaskNavigation.release.01",
+      "english": "Keep your DEMO crop plan when opening the Task Planner.",
+      "messageSha256": "c1305588fddef63c3e794ea587c2aa209127783e85580064c8e198d442760a77",
+      "translation": "Boloka moralo wa hao wa dijalo wa DEMO ha o bula Task Planner."
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryDemoTaskNavigation.release.01",
+      "english": "Keep your DEMO crop plan when opening the Task Planner.",
+      "messageSha256": "c1305588fddef63c3e794ea587c2aa209127783e85580064c8e198d442760a77",
+      "translation": "Hlayisa pulani ya wena ya swibyariwa ya DEMO loko u pfula Task Planner."
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryDemoTaskNavigation.release.01",
+      "english": "Keep your DEMO crop plan when opening the Task Planner.",
+      "messageSha256": "c1305588fddef63c3e794ea587c2aa209127783e85580064c8e198d442760a77",
+      "translation": "Vhulungani pulane yavho ya zwimela ya DEMO musi ni tshi vula Task Planner."
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryDemoTaskNavigation.release.01",
+      "english": "Keep your DEMO crop plan when opening the Task Planner.",
+      "messageSha256": "c1305588fddef63c3e794ea587c2aa209127783e85580064c8e198d442760a77",
+      "translation": "Gcina uhlelo lwakho lwezitshalo lwe-DEMO lapho uvula i-Task Planner."
+    }
+  ]
+}

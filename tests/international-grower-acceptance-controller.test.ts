@@ -18,6 +18,10 @@ import { prepareGrowerNurseryBatchReferenceChanges, type GrowerNurseryBatchRefer
 import type { GrowerSavedNurseryReview, GrowerNurseryReferenceAcknowledgement } from '../components/crops/useGrowerWorkflow.ts';
 
 const data = (source: string) => ({ shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(source) });
+// The real Next Link schedules browser idle work after a confirmed receipt mounts.
+// Supply its browser global while keeping the real component and every writer assertion.
+const originalSelf = Object.getOwnPropertyDescriptor(globalThis, 'self');
+Object.defineProperty(globalThis, 'self', { configurable: true, value: globalThis });
 const hooks = registerHooks({
   resolve(specifier, context, next) {
     if (context.parentURL?.endsWith('/components/crops/useGrowerWorkflow.ts') && specifier === '@/lib/db/queries') return data(`export const myDesigns=()=>globalThis.__growerOperationsFixture.cloud();`);
@@ -31,7 +35,10 @@ const hooks = registerHooks({
 const { harvestTargetsSourceKey } = await import('../lib/nursery-save-receipt.ts');
 const { useGrowerWorkflow } = await import('../components/crops/useGrowerWorkflow.ts');
 const { default: Panel } = await import('../components/crops/GrowerAutoPlanPanel.tsx');
-beforeEach(reset); after(() => { hooks.deregister(); cleanup(); });
+beforeEach(reset); after(() => {
+  hooks.deregister(); cleanup();
+  if (originalSelf) Object.defineProperty(globalThis, 'self', originalSelf); else Reflect.deleteProperty(globalThis, 'self');
+});
 
 // All quantities, dates, IDs and geometry are synthetic engineering fixtures.
 // The actual hook, source reader/hash, assembler, acceptance preparation and

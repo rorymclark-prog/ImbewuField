@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import Link from 'next/link';
 import { cropByKey } from '@/lib/crop-catalog';
 import { estimateNumberLabel as quantity } from '@/lib/format-figures';
 import type { HarvestTarget } from '@/lib/crop-plan';
@@ -259,7 +260,7 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
         </button>}
         {usable && review.status === 'review' && props.nurseryReview?.(review)}
       </section>}
-      {!receiptHidden && props.acceptance?.status === 'confirmed' && <p role="status">{props.acceptance.sample ? 'DEMO — ' : ''}{props.acceptance.rows} planned crop cycles saved {props.acceptance.sample ? 'in the example workspace' : 'on this device'}. No sowing, harvest, stock or sales have been recorded. Nursery resource availability remains a separate check. <a className="underline" href="/cropplan">Open dated work in the Task Planner</a>.</p>}
+      {!receiptHidden && props.acceptance?.status === 'confirmed' && <p role="status">{props.acceptance.sample ? 'DEMO — ' : ''}{props.acceptance.rows} planned crop cycles saved {props.acceptance.sample ? 'in the example workspace' : 'on this device'}. No sowing, harvest, stock or sales have been recorded. Nursery resource availability remains a separate check. <Link className="underline" href="/cropplan" prefetch={false}>Open dated work in the Task Planner</Link>.</p>}
       {props.acceptance?.status === 'failed' && <p role="alert">The crop cycles could not be saved. Keep this review open and try again when storage is available.</p>}
       {props.acceptance?.status === 'held' && <p role="alert">No crop cycles were saved. {props.acceptance.reasons.map(issueText).join(' ')}</p>}
       {props.acceptance?.status === 'superseded' && <p role="alert">The write completed, but the current saved plan could not be confirmed. Reopen its saved records before continuing. Do not repeat this save from the old review.</p>}

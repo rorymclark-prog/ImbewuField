@@ -1,0 +1,48 @@
+{
+  "sourceKind": "coordinator-proposed-unpublished-navigation-release-caption",
+  "baseCommit": "e4d717602ace5fce2bcde7b6af2a9e9e10959ef7",
+  "scope": "Narrow real NextLink navigation correction from confirmed-save receipt; code owner works separately, actual end-to-end browser remains unverified. Not hard-reload persistence, account sync or real farming advice.",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "messages": [
+    {
+      "key": "nurseryDemoTaskNavigation.release.01",
+      "english": "Keep your DEMO crop plan when opening the Task Planner.",
+      "messageSha256": "c1305588fddef63c3e794ea587c2aa209127783e85580064c8e198d442760a77"
+    }
+  ],
+  "targets": [
+    {
+      "locale": "st",
+      "path": "lib/update-copy-locales/st.ts",
+      "baselineSha256": "fc7706914caa382b8c2030bdf74f58cea9eced09eddfd0d1059ef472a90a06be",
+      "previousPairs": 434,
+      "expectedPairs": 435
+    },
+    {
+      "locale": "ts",
+      "path": "lib/update-copy-locales/ts.ts",
+      "baselineSha256": "aabea3be605fdf29595ad5c66cdd354d6eb9d6096adbef9ad3b1751a49285212",
+      "previousPairs": 434,
+      "expectedPairs": 435
+    },
+    {
+      "locale": "ve",
+      "path": "lib/update-copy-locales/ve.ts",
+      "baselineSha256": "ee73fa57b74a97e2bba89afb05b7a6269bd428f932fd6e1c97e353cbdb1b580b",
+      "previousPairs": 434,
+      "expectedPairs": 435
+    },
+    {
+      "locale": "zu",
+      "path": "lib/update-copy-locales/zu.ts",
+      "baselineSha256": "758a3fc485cc272d6d185e64587c75b9505628ac9c4905c0e0d08fa15a4ed0cf",
+      "previousPairs": 434,
+      "expectedPairs": 435
+    }
+  ]
+}
