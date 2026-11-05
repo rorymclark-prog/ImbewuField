@@ -447,5 +447,9 @@ const copy:UpdateCopy={
   "Keep references for saved nursery batches": "Vhulungani referentsi dza zwigwada zwa nursery zwo vhulungwaho",
   "Crop plan → Saved planned nursery batches": "Pulane ya zwimela → Zwigwada zwa nursery zwo vhekanywaho zwo vhulungwaho",
   "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Engedzani madzina a tshaka dzaṋu, referentsi dza zwigwada zwa mbeu na zwa u alusa zwimilana kha tshigwada tshiṅwe na tshiṅwe tsho vhekanywaho tsho vhulungwaho, ni kone u sedzulusa ṱhoḓea dza nursery kana u downlouda maṱari a mushumo. Hedzi lebulu a dzi rekhodi u zwala ho no vhonwaho kana tshitoko tshi re hone.",
+  // KMD-Kiambu-link release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/kmd-kiambu-link-release-drafts.json.
+  "Find official Kiambu bulletin links": "Wanani dzi-link dza tshiofisi dza mivhigo ya Kiambu",
+  "Country evidence → Kenya → County bulletin links": "Vhuṱanzi ha shango → Kenya → Dzi-link dza mivhigo ya county",
+  "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.": "Nangani Kiambu u vula siaṱari ḽa tshiofisi ḽa muvhigo ḽo sedzuluswaho kana PDF yaḽo, na u wana miṅwe mivhigo ya KMD. Maḓuvha a tshiko na u sa ḓivhea uri mafhungo ndi maswa hani zwi dzula zwi tshi vhonala; hedzi dzi-link a dzi shanduli nyeletshedzo ya zwimela.",
 };
 export default copy;

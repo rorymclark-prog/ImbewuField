@@ -447,5 +447,9 @@ const copy:UpdateCopy={
   "Keep references for saved nursery batches": "Gcina amareferensi amaqoqo e-nursery agciniwe",
   "Crop plan → Saved planned nursery batches": "Uhlelo lwezitshalo → Amaqoqo e-nursery ahleliwe agciniwe",
   "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Engeza amagama ezinhlobo zakho, amareferensi amaqoqo embewu namaqoqo okukhulisa izithombo eqoqweni ngalinye elihleliwe neligciniwe, bese uhlola izidingo ze-nursery noma ulande amaphepha okusebenza. Lawa malebula awarekhodi ukuhlwanyela okwenzekile noma isitoko esikhona.",
+  // KMD-Kiambu-link release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/kmd-kiambu-link-release-drafts.json.
+  "Find official Kiambu bulletin links": "Thola izixhumanisi ezisemthethweni zemibiko yaseKiambu",
+  "Country evidence → Kenya → County bulletin links": "Ubufakazi bezwe → Kenya → Izixhumanisi zemibiko yesifunda",
+  "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.": "Khetha i-Kiambu ukuze uvule ikhasi lombiko elisemthethweni elihloliwe noma i-PDF yawo, bese uthola eminye imibiko ye-KMD. Izinsuku zomthombo nokungaziwa kokuthi ulwazi lusha kangakanani kuhlala kubonakala; lezi zixhumanisi azibuyekezi izeluleko zezitshalo.",
 };
 export default copy;

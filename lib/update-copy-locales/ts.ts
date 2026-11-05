@@ -447,5 +447,9 @@ const copy:UpdateCopy={
   "Keep references for saved nursery batches": "Hlayisa tirheferense ta mintlawa ya nursery leyi hlayisiweke",
   "Crop plan → Saved planned nursery batches": "Pulani ya swibyariwa → Mintlawa ya nursery leyi pulaniweke yi tlhela yi hlayisiwa",
   "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Engetela mavito ya tinxaka ta wena, tirheferense ta mintlawa ya mbewu ni mintlawa yo kurisa swimilana eka ntlawa wun’wana ni wun’wana lowu pulaniweke wu tlhela wu hlayisiwa, kutani u kambisisa swilaveko swa nursery kumbe u dawuniloda maphepha ya ntirho. Tilebulu leti a ti rhekhodi ku byala loku voniweke kumbe xitoko lexi nga kona.",
+  // KMD-Kiambu-link release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/kmd-kiambu-link-release-drafts.json.
+  "Find official Kiambu bulletin links": "Kuma swihlanganisi swa ximfumo swa swiviko swa Kiambu",
+  "Country evidence → Kenya → County bulletin links": "Vumbhoni bya tiko → Kenya → Swihlanganisi swa swiviko swa county",
+  "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.": "Hlawula Kiambu ku pfula tluka ra ximfumo ra xiviko leri kamberiweke kumbe PDF ya xona ni ku kuma swiviko swin’wana swa KMD. Masiku ya xihlovo ni ku nga tiveki ka leswaku mahungu ma ha ri mantshwa swi sala swi vonaka; swihlanganisi leswi a swi pfuxeti switsundzuxo swa swibyariwa.",
 };
 export default copy;

@@ -447,5 +447,9 @@ const copy:UpdateCopy={
   "Keep references for saved nursery batches": "Boloka ditshupiso tsa dihlopha tsa nursery tse bolokilweng",
   "Crop plan → Saved planned nursery batches": "Moralo wa dijalo → Dihlopha tse rerilweng tsa nursery tse bolokilweng",
   "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Kenya mabitso a mefuta ya hao, ditshupiso tsa dihlopha tsa peo le tsa dihlopha tsa ho hodisa dimela bakeng sa sehlopha ka seng se rerilweng se bolokilweng, ebe o hlahloba ditlhoko tsa nursery kapa o jarolle maqephe a mosebetsi. Dileibole tsena ha di rekote ho jala ho bonweng kapa setoko se teng.",
+  // KMD-Kiambu-link release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/kmd-kiambu-link-release-drafts.json.
+  "Find official Kiambu bulletin links": "Fumana dihokelo tsa semmuso tsa ditlaleho tsa Kiambu",
+  "Country evidence → Kenya → County bulletin links": "Bopaki ba naha → Kenya → Dihokelo tsa ditlaleho tsa county",
+  "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.": "Kgetha Kiambu ho bula leqephe la semmuso la tlaleho le hlahlobilweng kapa PDF ya yona le ho fumana ditlaleho tse ding tsa KMD. Matsatsi a mohlodi le ho se tsejwe hore tlhahisoleseding e ntjha hakae di dula di bonahala; dihokelo tsena ha di ntjhafatse keletso ya dijalo.",
 };
 export default copy;
