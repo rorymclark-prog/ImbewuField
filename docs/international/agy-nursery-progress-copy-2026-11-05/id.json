@@ -1,0 +1,170 @@
+{
+  "locale": "id",
+  "sourceSha256": "5227aca3622f1ce508290d62d7664fd10637fe127db4388b1ac6ef2b0044a328",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "nurseryProgress.message.01",
+      "english": "This nursery-count form belongs to an earlier checked batch. Check saved nursery batches before opening a new observation.",
+      "messageSha256": "b3d63e90e7c6113cc7fdbbdb1ce28ea3dc565e8c6af8568e547ef74a48d9b14b",
+      "translation": "Formulir hitungan pembibitan ini milik batch terperiksa sebelumnya. Periksa batch pembibitan yang tersimpan sebelum membuka observasi baru."
+    },
+    {
+      "key": "nurseryProgress.message.02",
+      "english": "Record an observed nursery plant count",
+      "messageSha256": "5d7553d59425793d39f186b723fc4ed3dcfe791ac70eb51963e56e57b459a701",
+      "translation": "Catat hitungan tanaman pembibitan teramati"
+    },
+    {
+      "key": "nurseryProgress.message.03",
+      "english": "Enter your observed plant count separately from planned quantities. Repeated observations are not added together as stock, and a checked subset does not establish a whole-batch count.",
+      "messageSha256": "952c69c5b9a67ed1709f4775e081c24474bf97e6ee754e3ecf524883d21778cf",
+      "translation": "Masukkan hitungan tanaman teramati Anda secara terpisah dari jumlah yang direncanakan. Observasi berulang tidak dijumlahkan sebagai stok, dan subset terperiksa tidak menetapkan hitungan seluruh batch."
+    },
+    {
+      "key": "nurseryProgress.message.04",
+      "english": "Plants you observed",
+      "messageSha256": "98ffc3f26ac1dfa02616b9de00c5e84943f55e0a2e2f5d591c1f76b0d6a145b5",
+      "translation": "Tanaman yang Anda amati"
+    },
+    {
+      "key": "nurseryProgress.message.05",
+      "english": "Enter a whole count. An explicitly entered 0 is zero; a blank field is not a count.",
+      "messageSha256": "921c0851b058d2e2cbcb6ab914c53828fcfe2fb158a60199c2e46cd6f57381a7",
+      "translation": "Masukkan bilangan bulat. Angka 0 yang dimasukkan secara eksplisit adalah nol; kolom kosong bukanlah hitungan."
+    },
+    {
+      "key": "nurseryProgress.message.06",
+      "english": "Your assessment",
+      "messageSha256": "a740ab409a6c02198962aa1ee6a2d2c4e2df4ec1f575b1d27c4d8cef7d9d4701",
+      "translation": "Penilaian Anda"
+    },
+    {
+      "key": "nurseryProgress.message.07",
+      "english": "Choose your assessment",
+      "messageSha256": "6f405d89084464e2ede1027f8941505a4423d9d5a8bacbb8175bf2fbc5b7ffe8",
+      "translation": "Pilih penilaian Anda"
+    },
+    {
+      "key": "nurseryProgress.message.08",
+      "english": "Emerged",
+      "messageSha256": "dfd590b09da291f2f57905f5d2af654a1feb9497981695051dd01acc1d47d2c1",
+      "translation": "Muncul"
+    },
+    {
+      "key": "nurseryProgress.message.09",
+      "english": "Alive",
+      "messageSha256": "3032763b0e678458e373c225c5319c2b7f6a6abd4fac0b7add3d82394abd3705",
+      "translation": "Hidup"
+    },
+    {
+      "key": "nurseryProgress.message.10",
+      "english": "Ready — your assessment",
+      "messageSha256": "293b3f51d8c9741af2d2569bfd272acfb0bff2dc72b9e0f9ecb7ed87d4222ede",
+      "translation": "Siap — penilaian Anda"
+    },
+    {
+      "key": "nurseryProgress.message.11",
+      "english": "What you counted",
+      "messageSha256": "500dcb0cc4c69c67eac2a0cc31678cc92ff7b3834f67ca823841f7fcd9ac4c36",
+      "translation": "Apa yang Anda hitung"
+    },
+    {
+      "key": "nurseryProgress.message.12",
+      "english": "Choose count coverage",
+      "messageSha256": "454856f16d16d0203a4d5bc1b9f77854ef721bd6955eb6d46710beec909a530d",
+      "translation": "Pilih cakupan hitungan"
+    },
+    {
+      "key": "nurseryProgress.message.13",
+      "english": "Whole batch",
+      "messageSha256": "682427eedefc2d22fa566b3b4ee8e66e1569f7cb5b0f6a0684b7d779b918317e",
+      "translation": "Seluruh batch"
+    },
+    {
+      "key": "nurseryProgress.message.14",
+      "english": "Checked subset only",
+      "messageSha256": "5362014ff1b510b2e1c7b4a8591bf144d70c7a56eed94202d357c19adb442056",
+      "translation": "Hanya subset terperiksa"
+    },
+    {
+      "key": "nurseryProgress.message.15",
+      "english": "Ready is your own assessment, not a readiness certificate or an available-stock record. This note does not update forecasts, tasks or sales.",
+      "messageSha256": "415bb03f949817eb54b109a7a4d17518c33200a13628b9ea359f2b6bce26f2c6",
+      "translation": "Siap adalah penilaian Anda sendiri, bukan sertifikat kesiapan atau catatan stok yang tersedia. Catatan ini tidak memperbarui perkiraan, tugas, atau penjualan."
+    },
+    {
+      "key": "nurseryProgress.message.16",
+      "english": "I confirm this day, note, count, assessment and coverage describe what I observed.",
+      "messageSha256": "2e94c74555012476974ebd52895f25ccf6ebaea0add29020b6d0cc9eb66251eb",
+      "translation": "Saya mengonfirmasi hari, catatan, hitungan, penilaian, dan cakupan ini menjelaskan apa yang saya amati."
+    },
+    {
+      "key": "nurseryProgress.message.17",
+      "english": "Recording nursery count…",
+      "messageSha256": "8f3ddf68ae28504280d9ee361e7802625c17e323ae6651452bb0d3d7286284a0",
+      "translation": "Mencatat hitungan pembibitan…"
+    },
+    {
+      "key": "nurseryProgress.message.18",
+      "english": "Save nursery count observation",
+      "messageSha256": "4e37e342a73b05338f85c0379dec3b26dc7b11397b807b25964f4dac514c6bfd",
+      "translation": "Simpan observasi hitungan pembibitan"
+    },
+    {
+      "key": "nurseryProgress.message.19",
+      "english": "Record another nursery count",
+      "messageSha256": "5d3a964c80aa44de9a3da6496b0a49137d11c0fe9727fc1af0470380d485f45c",
+      "translation": "Catat hitungan pembibitan lainnya"
+    },
+    {
+      "key": "nurseryProgress.message.20",
+      "english": "Stored nursery count evidence needs review. Its count, assessment, coverage and reference labels are withheld.",
+      "messageSha256": "53bd3ce36a3e17b453c5b6ea5998bec5c47b94b066b103c5469c0dce48cec0f6",
+      "translation": "Bukti hitungan pembibitan yang tersimpan perlu ditinjau. Hitungan, penilaian, cakupan, dan label referensinya ditahan."
+    },
+    {
+      "key": "nurseryProgress.message.21",
+      "english": "Recorded nursery plant count",
+      "messageSha256": "230cea7058bcf01f2f8af4ce99451d1dc5f86ff6beaa4931399485b92421b12a",
+      "translation": "Hitungan tanaman pembibitan tercatat"
+    },
+    {
+      "key": "nurseryProgress.message.22",
+      "english": "Plants observed",
+      "messageSha256": "aa8a5badb61978af5d22dd73345f775dc4a42ea36308bd1ec797ad07a23237dc",
+      "translation": "Tanaman yang diamati"
+    },
+    {
+      "key": "nurseryProgress.message.23",
+      "english": "Grower assessment",
+      "messageSha256": "8459f387bef3153b0598e3369c91e7dd0c296c4d68c9aebc7bff2516e4d45058",
+      "translation": "Penilaian penanam"
+    },
+    {
+      "key": "nurseryProgress.message.24",
+      "english": "Ready — grower assessment",
+      "messageSha256": "5bfed112f20c44a508eb90adb64c857c4c11f1cfe95271da2f1b7f7011770343",
+      "translation": "Siap — penilaian penanam"
+    },
+    {
+      "key": "nurseryProgress.message.25",
+      "english": "Count coverage",
+      "messageSha256": "3ef59ac97e0074e701e2c94955e94d6779e61552d26c1c6c0c8699646dc793ca",
+      "translation": "Cakupan hitungan"
+    },
+    {
+      "key": "nurseryProgress.message.26",
+      "english": "Ready is the grower’s assessment, not certification. A subset is not the whole batch; repeated counts are not summed into available stock. Stored labels do not verify seed identity.",
+      "messageSha256": "43f8596fe5bf0588349673d4040f4da24ed1f043a757c87e7265c607a9a17331",
+      "translation": "Siap adalah penilaian penanam, bukan sertifikasi. Subset bukanlah seluruh batch; hitungan berulang tidak dijumlahkan ke dalam stok yang tersedia. Label yang tersimpan tidak memverifikasi identitas benih."
+    },
+    {
+      "key": "nurseryProgress.message.27",
+      "english": "Record nursery plant count",
+      "messageSha256": "2c713c282d20c86cde00f21b0b5f847df6cdf830f772c3703458f7be7ef4709f",
+      "translation": "Catat hitungan tanaman pembibitan"
+    }
+  ]
+}

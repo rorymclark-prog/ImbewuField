@@ -1,0 +1,29 @@
+{
+  "sourceSha256": "5227aca3622f1ce508290d62d7664fd10637fe127db4388b1ac6ef2b0044a328",
+  "pairs": 189,
+  "negativeControls": 17,
+  "notesWords": 167,
+  "correctionsChecked": [
+    "horticultural stock not financial shares",
+    "integer not whole-batch coverage",
+    "emerged not generic grow",
+    "withheld display not retained record",
+    "generic readiness not maturity certificate"
+  ],
+  "files": {
+    "bn.json": "66de63fc7bb99c0999a609d829364362317b212c7da5fa6da3d74d45972a20a3",
+    "source.json": "5227aca3622f1ce508290d62d7664fd10637fe127db4388b1ac6ef2b0044a328",
+    "review-notes.md": "7bab9de1c446509bacd65f32b049913b8541a30bfc31136141ac12e94c8012c3",
+    "fr.json": "2b830459c14d8b43d79f6a5329b55847cc2c6c36d88128d221ca1ce33e0cac2c",
+    "hi.json": "b9e3a3fb81f52c3e5cf5fc26c84acbde2e17b42b60dc4a0d359477b2623d7f42",
+    "pt-BR.json": "7f8a5ae36dd0cb800823a0e78619304c960d52f1c3ba597729b04cc6b128be38",
+    "id.json": "92cce5e22dc6caef0314d85db7cd404e5014ba0274ba4fb24ee6197ef0f33901",
+    "sw.json": "b8f38ec327012d2790ac5b101c67804cf111d77ac32436dd7953aa6d9aea7b91",
+    "status.json": "2496017d950cd0e416927ea29abdb799bf80dbd7b201d5f72e12b2af4ea42dd1",
+    "es.json": "3de0ed0e16fdbbe1cf11e0f79054d470b449772c218d89ce9cec89ca67ec232b"
+  },
+  "runtimeActivation": false,
+  "semanticCertification": false,
+  "reviewScope": "Coordinator actual structure/source/token and named wording review only; no fluent/human/complete-semantic certification",
+  "verifiedAgainstCommit": "9992ec39decb55a9e282ef207d6073ed85b527c4"
+}
