@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: 'a7f1d56ba', changes: [
+    'Saving rechecks this tab’s editing access.',
+  ] },
   { when: '5 November 2026', sha: '5e87ef55b9', changes: [
     'Compare nursery wording drafts in seven languages',
   ], tour: [{ title: 'Compare nursery wording drafts', where: 'International reference tools → Language draft review → Nursery field planting', href: '/international/locales/nursery-field-planting',
