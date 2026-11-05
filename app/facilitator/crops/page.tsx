@@ -29,7 +29,10 @@ import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySa
 import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
 import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
-import { useGrowerWorkflow, type GrowerWorkflowBookReceipt, type GrowerWorkflowAcceptanceCommit, type GrowerWorkflowAcceptanceResult } from '@/components/crops/useGrowerWorkflow';
+import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
+import { useGrowerWorkflow, type GrowerWorkflowBookReceipt, type GrowerWorkflowAcceptanceCommit, type GrowerWorkflowAcceptanceResult,
+  type GrowerNurseryReferenceCommit, type GrowerNurseryReferenceCommitResult } from '@/components/crops/useGrowerWorkflow';
+import { prepareGrowerNurseryBatchReferenceChanges } from '@/lib/international/grower-nursery';
 import { hasGrowerCycleMarker, isProvenForeignGrowerCycle } from '@/lib/international/grower-cycle';
 import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
@@ -1448,7 +1451,7 @@ function FacilitatorCropsPageInner() {
       : design ? chosenDesignId && chosenDesignId !== 'local' ? { kind: 'facilitator-cloud', sourceId: chosenDesignId }
         : { kind: 'facilitator-local', sourceId: 'local' } : null,
     actorIsCurrent: growerActorIsCurrent, readCurrentBook: readCurrentGrowerBook,
-    commitAcceptance: commitGrowerAcceptance, createPlantingId: () => genId('grower') });
+    commitAcceptance: commitGrowerAcceptance, commitNurseryReferences: commitNurseryBatchReferences, createPlantingId: () => genId('grower') });
   const selectedGrowerSource = growerWorkflow.source && growerWorkflow.source.resourceSiteId === productionSiteId
     && growerPlanningScopeKey(growerWorkflow.source.scope) === growerScopeKey
     && (canvasSite ? growerWorkflow.source.kind === 'studio-canvas' && growerWorkflow.source.sourceId === canvasSite
@@ -2058,6 +2061,58 @@ function FacilitatorCropsPageInner() {
       return held('acceptance-check-failed');
     }
   }
+  function commitNurseryBatchReferences(request: GrowerNurseryReferenceCommit): GrowerNurseryReferenceCommitResult {
+    const held = (...reasons: string[]): GrowerNurseryReferenceCommitResult => ({ status: 'held', reasons });
+    let written = false;
+    try {
+      if (!plan || !growerActorIsCurrent() || planSaveConflict || !request.isCurrent()) return held('context-changed');
+      const base = planWriteBase.current;
+      if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)
+        || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) return held('pending-plan-edits');
+      if (base.token !== request.expectedBookToken || cropPlanWriteToken() !== base.token) return held('saved-plan-changed');
+      if (request.source.resourceSiteId !== productionSiteId || growerPlanningScopeKey(request.source.scope) !== growerScopeKey) return held('source-changed');
+      const current = readCurrentGrowerBook();
+      if (current.status !== 'ready' || current.token !== request.expectedBookToken || !current.isCurrent?.()) return held('saved-plan-changed');
+      const admitted = loadCropPlanWithWriteAdmission();
+      if (admitted.token !== current.token || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)) {
+        setPlanSaveConflict(true); return held('saved-plan-changed');
+      }
+      const prepared = prepareGrowerNurseryBatchReferenceChanges({ book: current.book,
+        originalRows: request.originalRows, originalContext: request.originalContext,
+        currentContext: { scope: request.source.scope, beds: request.source.beds, geometryFingerprint: request.source.geometryFingerprint },
+        changes: request.changes });
+      if (prepared.status === 'held') return held(...prepared.reasons);
+      if (!request.isCurrent() || !request.sourceIsCurrent() || !current.isCurrent?.() || !growerActorIsCurrent()
+        || planWriteBase.current !== base || cropPlanWriteToken() !== current.token) return held('context-changed');
+      if (prepared.status === 'unchanged') return { status: 'unchanged' };
+      const next = { ...prepared.book, updatedAt: Date.now() };
+      if (!cropPlanWriteCandidateIsLossless(next)) return held('reference-write-lossy');
+      if (!request.isCurrent() || !current.isCurrent?.() || !growerActorIsCurrent() || planWriteBase.current !== base
+        || base.planKey !== JSON.stringify(plan) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+        || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)
+        || cropPlanWriteToken() !== current.token) return held('saved-plan-changed');
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      const receipt = saveCropPlanWithReceipt(next, { writeIsCurrent: () => request.isCurrent() && request.sourceIsCurrent()
+        && growerActorIsCurrent() && planWriteBase.current === base && base.planKey === JSON.stringify(plan) });
+      setPlanSaveFailed(!receipt.saved);
+      if (!receipt.saved) return { status: 'failed' };
+      written = true;
+      if (!growerActorIsCurrent() || !request.sourceIsCurrent() || planWriteBase.current !== base) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      const confirmed = loadCropPlanWithWriteAdmission(), key = JSON.stringify(confirmed.book);
+      if (confirmed.token !== receipt.token || !cropPlanWriteAdmissionMatches(confirmed.admission, key, receipt.token)
+        || !growerActorIsCurrent() || !request.sourceIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== receipt.token) {
+        setPlanSaveConflict(true); return { status: 'superseded' };
+      }
+      const installed = { owner: base.owner, sample: base.sample, token: receipt.token, planKey: key, admission: confirmed.admission };
+      planWriteBase.current = installed; setPlan(confirmed.book);
+      return { status: 'confirmed', rows: prepared.changedPlantingIds.length, sample: base.sample,
+        readbackIsCurrent: () => growerActorIsCurrent() && request.sourceIsCurrent() && planWriteBase.current === installed
+          && cropPlanWriteToken() === receipt.token && cropPlanWriteAdmissionMatches(installed.admission, key, receipt.token) };
+    } catch {
+      if (written) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      return held('reference-save-check-failed');
+    }
+  }
   // The parent lifecycle survives its own successful base replacement. A form
   // still binds one original context; a later render cannot grant old drafts a
   // fresh actor, site or source merely by passing a new settings prop.
@@ -2355,6 +2410,11 @@ function FacilitatorCropsPageInner() {
       nurseryReview={review => growerWorkflow.source && <GrowerNurseryReviewPanel review={review}
         source={growerWorkflow.source} settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision}
         onCheckCurrent={growerWorkflow.onCheckCurrent} sample={growerSample} />} />
+    <SavedGrowerNurseryReviewPanel key={`saved-nursery:${growerOwner}:${growerSample}:${growerScopeKey}:${productionSiteId}`}
+      review={growerWorkflow.savedNurseryReview} checking={growerWorkflow.savedNurseryChecking}
+      settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision} sample={growerSample}
+      onRefresh={growerWorkflow.onReadSavedNursery} onCheckCurrent={growerWorkflow.onCheckSavedNurseryCurrent}
+      onSaveReferences={growerWorkflow.onSaveNurseryBatchReferences} />
   </>;
 
   return (

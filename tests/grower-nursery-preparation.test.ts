@@ -228,10 +228,16 @@ test('shareable preparation never includes private identities, fingerprints, raw
   assert.doesNotMatch(csv, /HYPERLINK|acceptedAt|sourceRevision|geometryFingerprint|stock_available|pack_weight|unit_price/);
 });
 
-test('the existing own nursery CSV remains its original batch/resource schema', () => {
+test('the own nursery CSV preserves every batch/resource column while adding separate member reference fields', () => {
   const csv = buildGrowerNurseryCsv(fixtures.result, fixtures.source.beds);
-  const first = Object.keys(readCsv(csv)[0]).join(',');
-  assert.equal(first, 'record_type,site_name,plan_basis,source_status,review_status,headroom,crop_name,growing_spaces,start_date,end_date_exclusive,target_final_positions,starts,seeds,trays,area_m2,nursery_model,resource_type,resource_name,recorded_capacity,peak_known_min,peak_known_max,shortage_upper_end,availability_quantity,availability_complete,incomplete,assumptions,issues');
+  const columns = Object.keys(readCsv(csv)[0]);
+  // A seed lot belongs to one member, not the summed preparation group. Keep
+  // the complete prior batch/resource contract alongside these additive fields.
+  const referenceColumns = ['member_number', 'reference_status', 'variety', 'seed_lot_reference', 'raising_batch_reference', 'reference_note'];
+  assert.deepEqual(columns.filter(column => !referenceColumns.includes(column)),
+    'record_type,site_name,plan_basis,source_status,review_status,headroom,crop_name,growing_spaces,start_date,end_date_exclusive,target_final_positions,starts,seeds,trays,area_m2,nursery_model,resource_type,resource_name,recorded_capacity,peak_known_min,peak_known_max,shortage_upper_end,availability_quantity,availability_complete,incomplete,assumptions,issues'.split(','));
+  assert.deepEqual(columns.filter(column => referenceColumns.includes(column)), referenceColumns);
+  assert.equal(new Set(columns).size, columns.length);
   const rows = readCsv(csv); assert.equal(rows.filter(row => row.record_type === 'dated_raising_batch').length, 2);
   assert.ok(rows.every(row => row.record_type !== 'preparation_group_metric'));
 });

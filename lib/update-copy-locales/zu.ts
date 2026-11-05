@@ -443,5 +443,9 @@ const copy:UpdateCopy={
   "Check a public US forecast reference": "Hlola isibonelo sesibikezelo sezulu sase-US",
   "Country evidence → United States → Washington forecast": "Ubufakazi bezwe → United States → Isibikezelo saseWashington",
   "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Cela isibikezelo sesibonelo somphakathi saseWashington ku-National Weather Service. Izikhathi zomthombo, amanani e-Celsius nokungaziwa kuhlala kubonakala; lokhu akushintshi izinsuku zezitshalo noma kugunyaze izeluleko zendawo.",
+  // Nursery-batch-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-batch-reference-release-drafts.json.
+  "Keep references for saved nursery batches": "Gcina amareferensi amaqoqo e-nursery agciniwe",
+  "Crop plan → Saved planned nursery batches": "Uhlelo lwezitshalo → Amaqoqo e-nursery ahleliwe agciniwe",
+  "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.": "Engeza amagama ezinhlobo zakho, amareferensi amaqoqo embewu namaqoqo okukhulisa izithombo eqoqweni ngalinye elihleliwe neligciniwe, bese uhlola izidingo ze-nursery noma ulande amaphepha okusebenza. Lawa malebula awarekhodi ukuhlwanyela okwenzekile noma isitoko esikhona.",
 };
 export default copy;

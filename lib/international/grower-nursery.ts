@@ -1,5 +1,7 @@
 import { cropByKey } from '../crop-catalog';
 import { decimalQuantityProduct } from '../farm-records';
+import { detachJsonData } from '../lossless-json';
+import type { CropPlanState } from '../crop-plan';
 import { sanitiseNurserySettings, type NurserySettings, type NurseryProfile } from '../nursery-settings';
 import { nurseryCeilRatio, nurseryPeak as sharedNurseryPeak, type NurseryForecast, type NurseryResourceForecast, type NurseryInterval } from '../crop-export-schedule';
 import { generateGrowerAutoPlan, isGrowerAutoPlanCurrent, GROWER_AUTOPLAN_MAX_HORIZON_DAYS, GROWER_AUTOPLAN_MAX_ASSESSMENTS,
@@ -37,6 +39,40 @@ export interface GrowerNurseryRequest {
   readonly accountedFieldReservations?: GrowerInput<readonly string[], 'nursery-accounted-field-reservations'>;
 }
 export type GrowerNurseryHeadroom = 'within-budget' | 'shortage' | 'unknown';
+export interface GrowerNurseryReferenceFields {
+  readonly variety: string | null;
+  readonly seedLotReference: string | null;
+  readonly raisingBatchReference: string | null;
+}
+export interface GrowerNurseryBatchReference {
+  readonly kind: 'planned-nursery-reference';
+  readonly version: 1;
+  readonly plantingId: string;
+  readonly scope: GrowerPlanningScope;
+  readonly assessmentFingerprint: string;
+  readonly seedLotReference?: string;
+  readonly raisingBatchReference?: string;
+}
+export type GrowerNurseryBatchReferenceInspection =
+  | { readonly status: 'absent'; readonly fields: GrowerNurseryReferenceFields }
+  | { readonly status: 'valid'; readonly fields: GrowerNurseryReferenceFields; readonly reference: GrowerNurseryBatchReference }
+  | { readonly status: 'held'; readonly reason: string };
+export type GrowerNurseryBatchReferenceResolution =
+  | { readonly status: 'ready'; readonly plantingId: string; readonly fields: GrowerNurseryReferenceFields }
+  | { readonly status: 'held'; readonly reason: string };
+export type GrowerNurseryBatchReferenceView = GrowerNurseryBatchReferenceResolution | { readonly status: 'proposed' };
+export type GrowerNurseryBatchReferenceChange = GrowerNurseryReferenceFields & { readonly plantingId: string };
+export interface PrepareGrowerNurseryBatchReferenceChangesInput {
+  readonly book: CropPlanState;
+  /** Original whole rows/context stay in the controller's private request binding. */
+  readonly originalRows: unknown;
+  readonly originalContext: GrowerCycleContext | null;
+  readonly currentContext: GrowerCycleContext | null;
+  readonly changes: readonly GrowerNurseryBatchReferenceChange[];
+}
+export type GrowerNurseryBatchReferencePreparation =
+  | { readonly status: 'prepared' | 'unchanged'; readonly book: CropPlanState; readonly changedPlantingIds: readonly string[] }
+  | { readonly status: 'held'; readonly reasons: readonly string[] };
 export interface GrowerNurseryBatch {
   readonly id: string;
   readonly sourceStatus: 'proposed' | 'saved-planned';
@@ -61,6 +97,8 @@ export interface GrowerNurseryBatch {
   readonly basis: readonly string[];
   readonly issues: readonly string[];
   readonly incomplete: boolean;
+  /** Always supplied by the real builder; optional for older constructed DTOs. */
+  readonly reference?: GrowerNurseryBatchReferenceView;
 }
 export interface GrowerNurseryResourceBudget extends NurseryResourceForecast {
   readonly resourceKind: 'container' | 'space';
@@ -114,6 +152,150 @@ function nurseryPeak(intervals: NurseryInterval[], start: number, end: number, c
   return result.value && !result.value.every(finite) ? { value: null, incomplete: true, shortage: null } : result;
 }
 
+const referenceFields = ['variety', 'seedLotReference', 'raisingBatchReference'] as const;
+const referenceMarkerKeys = new Set(['kind', 'version', 'plantingId', 'scope', 'assessmentFingerprint', 'seedLotReference', 'raisingBatchReference']);
+const referenceLabel = (value: unknown): value is string => typeof value === 'string' && value.length <= 120
+  && value.trim().length > 0 && !/[\u0000-\u001f\u007f]/.test(value);
+function referenceOwn(row: object, key: string): PropertyDescriptor | undefined {
+  const field = Object.getOwnPropertyDescriptor(row, key);
+  if (field && (!field.enumerable || !Object.hasOwn(field, 'value')) || !field && key in row) throw Error('Unsafe reference field');
+  return field;
+}
+function referenceDataKey(value: unknown): string {
+  // Key spelling order cannot make equal detached source rows look stale. Array
+  // order and every unknown value remain part of the original target evidence.
+  return JSON.stringify(value, (_key, row: unknown) => record(row)
+    ? Object.fromEntries(Object.keys(row).sort().map(key => [key, row[key]])) : row);
+}
+
+/** Inspect only entered references. This neither resolves a cycle nor grants a write. */
+export function inspectGrowerNurseryBatchReference(row: unknown): GrowerNurseryBatchReferenceInspection {
+  const held = (reason: string): GrowerNurseryBatchReferenceInspection => freeze({ status: 'held', reason });
+  try {
+    if (!record(row)) return held('reference-row-unreadable');
+    const variety = referenceOwn(row, 'variety'), marker = referenceOwn(row, 'nurseryBatchReference');
+    if (variety?.value !== undefined && !referenceLabel(variety.value)) return held('reference-variety-invalid');
+    const fields: GrowerNurseryReferenceFields = { variety: variety?.value ?? null, seedLotReference: null, raisingBatchReference: null };
+    if (!marker) return freeze({ status: 'absent', fields });
+    const value = detachJsonData(marker.value);
+    if (!record(value)) return held('reference-invalid');
+    const kind = referenceOwn(value, 'kind')?.value, version = referenceOwn(value, 'version')?.value;
+    const plantingId = referenceOwn(value, 'plantingId')?.value, scope = referenceOwn(value, 'scope')?.value;
+    const assessmentFingerprint = referenceOwn(value, 'assessmentFingerprint')?.value;
+    if (kind !== 'planned-nursery-reference' || version !== 1 || !identity(plantingId) || plantingId.length > 200
+      || !normaliseGrowerPlanningScope(scope) || !identity(assessmentFingerprint)) return held('reference-invalid');
+    for (const field of ['seedLotReference', 'raisingBatchReference'] as const) {
+      const property = referenceOwn(value, field);
+      if (property && !referenceLabel(property.value)) return held('reference-label-invalid');
+    }
+    return freeze({ status: 'valid', reference: value as unknown as GrowerNurseryBatchReference,
+      fields: { ...fields, seedLotReference: Object.hasOwn(value, 'seedLotReference') ? value.seedLotReference as string : null,
+        raisingBatchReference: Object.hasOwn(value, 'raisingBatchReference') ? value.raisingBatchReference as string : null } });
+  } catch { return held('reference-unreadable'); }
+}
+
+function nurseryRowsSnapshot(value: unknown): unknown {
+  const rows = detachJsonData(value, { allowUndefinedObjectFields: true });
+  if (!Array.isArray(rows) || !Array.isArray(value)) return rows;
+  for (let index = 0; index < rows.length; index++) {
+    const original = Object.getOwnPropertyDescriptor(value, String(index))?.value, row: unknown = rows[index];
+    if (!record(original) || !record(row)) continue;
+    // Optional form values may be omitted, but undefined marker presence must
+    // survive the snapshot as held evidence rather than becoming a legacy row.
+    const cycle = Object.getOwnPropertyDescriptor(original, 'growerCycle');
+    if (cycle && Object.hasOwn(cycle, 'value') && cycle.value === undefined) row.growerCycle = undefined;
+    Object.assign(row, preserveGrowerCycleMarker(row));
+    const reference = Object.getOwnPropertyDescriptor(original, 'nurseryBatchReference');
+    if (reference && Object.hasOwn(reference, 'value') && reference.value === undefined) {
+      row.nurseryBatchReference = { kind: 'invalid-planned-nursery-reference', version: 1, reason: 'marker-not-json-safe' };
+    }
+  }
+  return rows;
+}
+function nurseryReferenceSource(rows: unknown, context: GrowerCycleContext | null) {
+  const storedRows = nurseryRowsSnapshot(rows), current = detachJsonData(context, { allowUndefinedObjectFields: true }) as GrowerCycleContext | null;
+  if (!Array.isArray(storedRows) || storedRows.length > GROWER_AUTOPLAN_MAX_ASSESSMENTS
+    || !current || !normaliseGrowerPlanningScope(current.scope) || !identity(current.geometryFingerprint)
+    || !Array.isArray(current.beds)) return null;
+  const projection = projectGrowerCycles(storedRows, current);
+  const byId = new Map<string, Record<string, unknown>>();
+  for (const row of storedRows) if (record(row) && Object.hasOwn(row, 'id') && typeof row.id === 'string') byId.set(row.id, row);
+  return { rows: storedRows, context: current, projection, byId,
+    cycles: new Map(projection.ownCycles.map(cycle => [cycle.plantingId, cycle])) };
+}
+type NurseryReferenceSource = NonNullable<ReturnType<typeof nurseryReferenceSource>>;
+function resolveNurseryReference(source: NurseryReferenceSource, plantingId: string): GrowerNurseryBatchReferenceResolution {
+  const held = (reason: string): GrowerNurseryBatchReferenceResolution => freeze({ status: 'held', reason });
+  const cycle = source.cycles.get(plantingId), row = source.byId.get(plantingId);
+  if (!cycle || !row) return held('reference-cycle-unavailable');
+  if (!cycle.nurseryDemand) return held('reference-not-transplant-cycle');
+  const inspection = inspectGrowerNurseryBatchReference(row);
+  if (inspection.status === 'held') return inspection;
+  if (inspection.status === 'valid' && (inspection.reference.plantingId !== plantingId
+    || growerPlanningScopeKey(inspection.reference.scope) !== growerPlanningScopeKey(cycle.scope)
+    || inspection.reference.assessmentFingerprint !== cycle.assessment.fingerprint)) return held('reference-binding-changed');
+  return freeze({ status: 'ready', plantingId, fields: inspection.fields });
+}
+
+/** Whole-book projector membership is necessary; an engine ordinal, display
+ * batch or detached marker alone cannot select a saved nursery batch. */
+export function resolveGrowerNurseryBatchReference(rows: unknown, context: GrowerCycleContext | null, plantingId: string): GrowerNurseryBatchReferenceResolution {
+  try {
+    const source = nurseryReferenceSource(rows, context);
+    return source && identity(plantingId) ? resolveNurseryReference(source, plantingId)
+      : freeze({ status: 'held', reason: 'reference-source-unavailable' });
+  } catch { return freeze({ status: 'held', reason: 'reference-unreadable' }); }
+}
+
+/** Pure bulk preparation against original target evidence. The parent still
+ * owns actor/sample epochs, current raw admission/lease, one save and readback. */
+export function prepareGrowerNurseryBatchReferenceChanges(input: PrepareGrowerNurseryBatchReferenceChangesInput): GrowerNurseryBatchReferencePreparation {
+  const held = (...reasons: string[]): GrowerNurseryBatchReferencePreparation => freeze({ status: 'held', reasons });
+  try {
+    const rawBook = referenceOwn(input, 'book')?.value as CropPlanState;
+    const book = detachJsonData(rawBook, { allowUndefinedObjectFields: true }) as CropPlanState;
+    const changes = detachJsonData(referenceOwn(input, 'changes')?.value) as GrowerNurseryBatchReferenceChange[];
+    if (!record(book) || book.version !== 1 || !Array.isArray(book.plantings)
+      || !Array.isArray(changes) || changes.length > GROWER_AUTOPLAN_MAX_ASSESSMENTS) return held('reference-change-invalid');
+    book.plantings = nurseryRowsSnapshot(referenceOwn(rawBook, 'plantings')?.value) as CropPlanState['plantings'];
+    if (!changes.length) return freeze({ status: 'unchanged', book, changedPlantingIds: [] });
+    const original = nurseryReferenceSource(referenceOwn(input, 'originalRows')?.value,
+      referenceOwn(input, 'originalContext')?.value as GrowerCycleContext | null);
+    const current = nurseryReferenceSource(referenceOwn(rawBook, 'plantings')?.value,
+      referenceOwn(input, 'currentContext')?.value as GrowerCycleContext | null);
+    if (!original || !current) return held('reference-source-unavailable');
+    if (referenceDataKey(original.context) !== referenceDataKey(current.context)) return held('reference-source-changed');
+    const seen = new Set<string>(), changedPlantingIds: string[] = [];
+    for (const change of changes) {
+      if (!record(change) || Object.keys(change).length !== 4 || !Object.hasOwn(change, 'plantingId') || !identity(change.plantingId)
+        || referenceFields.some(field => !Object.hasOwn(change, field) || change[field] !== null && !referenceLabel(change[field]))) return held('reference-change-invalid');
+      if (seen.has(change.plantingId)) return held('reference-change-ambiguous');
+      seen.add(change.plantingId);
+      const before = resolveNurseryReference(original, change.plantingId), after = resolveNurseryReference(current, change.plantingId);
+      if (before.status === 'held' || after.status === 'held') return held(before.status === 'held' ? before.reason : after.status === 'held' ? after.reason : 'reference-cycle-unavailable');
+      const originalRow = original.byId.get(change.plantingId)!, currentRow = current.byId.get(change.plantingId)!;
+      if (referenceDataKey(originalRow) !== referenceDataKey(currentRow)) return held('reference-target-changed');
+      if (referenceFields.every(field => before.fields[field] === change[field])) continue;
+      const row = book.plantings.find(row => row.id === change.plantingId)!;
+      if (change.variety === null) delete row.variety; else row.variety = change.variety;
+      const prior = Object.getOwnPropertyDescriptor(currentRow, 'nurseryBatchReference')?.value as Record<string, unknown> | undefined;
+      const marker: Record<string, unknown> = { ...prior, kind: 'planned-nursery-reference', version: 1, plantingId: change.plantingId,
+        scope: prior ? prior.scope : current.context.scope, assessmentFingerprint: current.cycles.get(change.plantingId)!.assessment.fingerprint };
+      delete marker.seedLotReference; delete marker.raisingBatchReference;
+      if (change.seedLotReference !== null) marker.seedLotReference = change.seedLotReference;
+      if (change.raisingBatchReference !== null) marker.raisingBatchReference = change.raisingBatchReference;
+      // Clearing known labels cannot erase unrelated metadata an older editor
+      // does not understand. Keep that same bound attachment when needed.
+      const scopeMetadata = referenceDataKey(marker.scope) !== referenceDataKey(normaliseGrowerPlanningScope(marker.scope));
+      if (referenceFields.every(field => change[field] === null) && !scopeMetadata
+        && !Object.keys(marker).some(key => !referenceMarkerKeys.has(key))) delete row.nurseryBatchReference;
+      else row.nurseryBatchReference = marker;
+      changedPlantingIds.push(change.plantingId);
+    }
+    return freeze({ status: changedPlantingIds.length ? 'prepared' : 'unchanged', book, changedPlantingIds });
+  } catch { return held('reference-unreadable'); }
+}
+
 function strictSettings(value: unknown): NurserySettings | null {
   if (!record(value) || value.version !== 1 || !Array.isArray(value.spaces) || !Array.isArray(value.containers) || !Array.isArray(value.profiles)) return null;
   if (value.spaces.length + value.containers.length + value.profiles.length > GROWER_AUTOPLAN_MAX_ASSESSMENTS) return null;
@@ -157,6 +339,7 @@ function emptyForecast(issues: string[]): NurseryForecast {
 interface CycleFact {
   id: string; cycleId: string; demandId: string; profileId: string; cropKey: string;
   plantingIds: string[]; bedId: string; targetPositions: number; start: string; endExclusive: string;
+  reference: GrowerNurseryBatchReferenceView;
 }
 interface SourceFacts {
   status: 'proposed' | 'saved-planned'; scope: GrowerPlanningScope; geometryFingerprint: string;
@@ -181,13 +364,14 @@ function sourceFacts(source: GrowerNurserySource): SourceFacts | null {
         id: cycle.fingerprint, cycleId: cycle.cycleId, demandId: cycle.demandId, profileId: cycle.profileId, cropKey: cycle.cropKey,
         plantingIds: [], bedId: cycle.bedId, targetPositions: cycle.assessment.capacity.estimatedPlantCount,
         start: cycle.assessment.schedule.nurseryStartDate, endExclusive: cycle.assessment.schedule.fieldEntryDate,
+        reference: { status: 'proposed' as const },
       }]) };
   }
   if (source.kind !== 'saved-cycles' || !source.cycleContext || !normaliseGrowerPlanningScope(source.cycleContext.scope)) return null;
   if (Array.isArray(source.rows) && source.rows.length > GROWER_AUTOPLAN_MAX_ASSESSMENTS) return null;
-  const rows = structuredClone(source.rows);
-  const storedRows = Array.isArray(rows) ? rows.map(row => record(row) ? { ...row, ...preserveGrowerCycleMarker(row) } : row) : rows;
-  const context = structuredClone(source.cycleContext), projection = projectGrowerCycles(storedRows, context);
+  const prepared = nurseryReferenceSource(source.rows, source.cycleContext);
+  if (!prepared) return null;
+  const { rows: storedRows, context, projection } = prepared;
   return { status: 'saved-planned', scope: normaliseGrowerPlanningScope(context.scope)!, geometryFingerprint: context.geometryFingerprint ?? '',
     beds: context.beds, snapshot: { kind: 'saved-cycles', rows: storedRows, cycleContext: context }, fieldReservationIds: [],
     issues: [...(projection.heldRows.length ? ['held-cycle-demand-unresolved'] : []), ...(projection.legacyRows.length ? ['legacy-nursery-demand-unassessed'] : [])],
@@ -195,6 +379,7 @@ function sourceFacts(source: GrowerNurserySource): SourceFacts | null {
       id: cycle.plantingId, cycleId: cycle.cycleId, demandId: cycle.demandId, profileId: cycle.profileId, cropKey: cycle.cropKey,
       plantingIds: [cycle.plantingId], bedId: cycle.bedId, targetPositions: cycle.nurseryDemand.targetPositions,
       ...cycle.nurseryDemand.interval,
+      reference: resolveNurseryReference(prepared, cycle.plantingId),
     }]) };
 }
 function batchFor(cycle: CycleFact, status: SourceFacts['status'], settings: NurserySettings, siteId: string): GrowerNurseryBatch {
@@ -245,7 +430,8 @@ function batchFor(cycle: CycleFact, status: SourceFacts['status'], settings: Nur
     cropKey: cycle.cropKey, cropName: cropByKey(cycle.cropKey)?.name ?? cycle.cropKey, plantingIds: [...cycle.plantingIds], bedIds: [cycle.bedId],
     startDate: cycle.start, endDateExclusive: cycle.endExclusive, targetPositions: cycle.targetPositions,
     starts, seeds, trays, areaM2, trayFootprintM2, model: recipe?.model ?? null,
-    ...(container ? {containerId: container.id} : {}), ...(space ? {spaceId: space.id} : {}), basis, issues, incomplete: issues.length > 0 };
+    ...(container ? {containerId: container.id} : {}), ...(space ? {spaceId: space.id} : {}), basis, issues, incomplete: issues.length > 0,
+    reference: cycle.reference };
 }
 
 /** Own dated nursery demand, independent of the catalogue/country forecast gate. */
@@ -418,6 +604,7 @@ export interface GrowerNurseryPreparationGroup {
     readonly plantingIds: readonly string[];
     readonly bedIds: readonly string[];
     readonly endDateExclusive: string;
+    readonly reference?: GrowerNurseryBatchReferenceView;
   }[];
   readonly fieldPositions: GrowerNurseryPreparationMetric;
   readonly startsToRaise: GrowerNurseryPreparationMetric;
@@ -443,10 +630,10 @@ export interface GrowerNurseryPreparation {
   readonly issues: readonly string[];
   readonly guidance: string;
 }
-const preparationGuidance = 'Planned grower estimates from represented transplant raising batches only, not observed sowings, stock or seedling readiness. Direct sowings and unresolved or omitted work are not included. Known subtotals cover only represented batches with known counts; unknown or overflowing counts never become complete totals. Complete group counts do not establish whole-farm seed demand or resource availability. Varieties and seed lots are not identified, so grouped counts do not establish interchangeability. No purchasing quantities, pack sizes, seed weights, prices or local crop instructions are inferred. All dates are UTC; field-entry end dates are exclusive.';
+const preparationGuidance = 'Planned grower estimates from represented transplant raising batches only, not observed sowings, stock or seedling readiness. Direct sowings and unresolved or omitted work are not included. Known subtotals cover only represented batches with known counts; unknown or overflowing counts never become complete totals. Complete group counts do not establish whole-farm seed demand or resource availability. Grower-entered planned references do not verify varieties, seed lots or interchangeability. No purchasing quantities, pack sizes, seed weights, prices or local crop instructions are inferred. All dates are UTC; field-entry end dates are exclusive.';
 const preparationCount = (value: unknown): value is number => finite(value) && Number.isSafeInteger(value);
 type PreparationBatch = Pick<GrowerNurseryBatch, 'id' | 'cycleId' | 'demandId' | 'profileId' | 'cropKey' | 'sourceStatus'
-  | 'startDate' | 'endDateExclusive' | 'targetPositions' | 'starts' | 'seeds' | 'plantingIds' | 'bedIds' | 'incomplete' | 'issues'>;
+  | 'startDate' | 'endDateExclusive' | 'targetPositions' | 'starts' | 'seeds' | 'plantingIds' | 'bedIds' | 'incomplete' | 'issues' | 'reference'>;
 function preparationBatch(value: unknown, sourceStatus: GrowerNurseryResult['sourceStatus']): value is PreparationBatch {
   return record(value) && [value.id, value.cycleId, value.demandId, value.profileId, value.cropKey].every(identity)
     && sourceStatus !== null && value.sourceStatus === sourceStatus
@@ -470,6 +657,20 @@ function preparationMetric(batches: readonly PreparationBatch[], field: 'targetP
   const status = overflow ? 'overflow' : unknownBatchIds.length ? 'unknown' : 'complete';
   return { status, knownSubtotal: overflow || knownBatchCount === 0 ? null : sum,
     total: status === 'complete' ? sum : null, knownBatchCount, unknownBatchCount: unknownBatchIds.length, unknownBatchIds };
+}
+function preparationReference(batch: PreparationBatch, source: NurseryReferenceSource | null): GrowerNurseryBatchReferenceView {
+  try {
+    const descriptor = referenceOwn(batch, 'reference');
+    if (batch.sourceStatus === 'proposed') {
+      return !descriptor || referenceDataKey(detachJsonData(descriptor.value)) === referenceDataKey({ status: 'proposed' })
+        ? freeze({ status: 'proposed' }) : freeze({ status: 'held', reason: 'reference-source-mismatch' });
+    }
+    if (!descriptor) return freeze({ status: 'held', reason: 'reference-unavailable' });
+    if (!source) return freeze({ status: 'held', reason: 'reference-source-unavailable' });
+    const expected = resolveNurseryReference(source, batch.id);
+    return referenceDataKey(detachJsonData(descriptor.value)) === referenceDataKey(expected) ? expected
+      : freeze({ status: 'held', reason: 'reference-result-changed' });
+  } catch { return freeze({ status: 'held', reason: 'reference-unreadable' }); }
 }
 
 /** Aggregate the existing calculated batch counts once. This is a detached view,
@@ -504,6 +705,13 @@ export function projectGrowerNurseryPreparation(result: GrowerNurseryResult): Gr
         sourceKey: context.sourceKey, sourceRevision: context.sourceRevision, geometryFingerprint: context.geometryFingerprint,
         resourceSiteId: context.resourceSiteId, scope: structuredClone(context.scope),
       } };
+    let referenceSource: NurseryReferenceSource | null = null;
+    if (result.sourceStatus === 'saved-planned') {
+      try {
+        const source = result.snapshot.source;
+        if (record(source) && source.kind === 'saved-cycles') referenceSource = nurseryReferenceSource(source.rows, source.cycleContext as GrowerCycleContext | null);
+      } catch { /* Known counts stay independent of unreadable reference evidence. */ }
+    }
     const ids = new Set<string>(), grouped = new Map<string, PreparationBatch[]>();
     for (const batch of result.batches) {
       if (!preparationBatch(batch, result.sourceStatus) || ids.has(batch.id)) return fail('preparation-batch-invalid-or-ambiguous');
@@ -523,6 +731,7 @@ export function projectGrowerNurseryPreparation(result: GrowerNurseryResult): Gr
       return { key, cropKey: first.cropKey, cropName: cropByKey(first.cropKey)?.name ?? 'Crop name unavailable', profileId: first.profileId,
         startDate: first.startDate, batchIds: batches.map(batch => batch.id), members: batches.map(batch => ({
           batchId: batch.id, cycleId: batch.cycleId, plantingIds: [...batch.plantingIds], bedIds: [...batch.bedIds], endDateExclusive: batch.endDateExclusive,
+          reference: preparationReference(batch, referenceSource),
         })), fieldPositions, startsToRaise, seedsToSow, outsideReviewHorizon,
         incomplete: batches.some(batch => batch.incomplete) || issues.length > 0
           || [fieldPositions, startsToRaise, seedsToSow].some(metric => metric.status !== 'complete'), issues };

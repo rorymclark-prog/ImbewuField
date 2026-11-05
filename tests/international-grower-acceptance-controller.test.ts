@@ -12,6 +12,10 @@ import { prepareGrowerWorkflowAcceptance, type GrowerWorkflowDraft, type GrowerW
 import { sanitiseNurserySettings } from '../lib/nursery-settings.ts';
 import { CROPS } from '../lib/crop-catalog.ts';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
+import { generateGrowerAutoPlan } from '../lib/international/grower-autoplan.ts';
+import { createGrowerCyclePlanting } from '../lib/international/grower-cycle.ts';
+import { prepareGrowerNurseryBatchReferenceChanges, type GrowerNurseryBatchReferenceChange } from '../lib/international/grower-nursery.ts';
+import type { GrowerSavedNurseryReview, GrowerNurseryReferenceAcknowledgement } from '../components/crops/useGrowerWorkflow.ts';
 
 const data = (source: string) => ({ shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(source) });
 const hooks = registerHooks({
@@ -50,7 +54,7 @@ async function fixture() {
   return { book, foreign: foreign.row };
 }
 const page = ts.createSourceFile('page.tsx', readFileSync(new URL('../app/facilitator/crops/page.tsx', import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-const names = ['plannerActorIsCurrent','growerActorIsCurrent','readCurrentGrowerBook','commitGrowerAcceptance','rememberStoredPlan','saveGrowerProfiles','saveScopedGrowerInputs'];
+const names = ['plannerActorIsCurrent','growerActorIsCurrent','readCurrentGrowerBook','commitGrowerAcceptance','commitNurseryBatchReferences','rememberStoredPlan','saveGrowerProfiles','saveScopedGrowerInputs'];
 const bodies = new Map<string,string>(); let mount = '';
 function visit(node: ts.Node) {
   if (ts.isFunctionDeclaration(node) && node.name && names.includes(node.name.text)) bodies.set(node.name.text,node.getText(page));
@@ -69,7 +73,7 @@ function parent(book: unknown, resourceSiteId=siteId) {
     activeAccountUid:account.activeAccountUid,isSampleMode:samples.isSampleMode,isBackendConfigured:()=>probe.configured,getFirebase:()=>({auth:{currentUser:probe.actor?{uid:probe.actor}:null}}),
     readRawCropPlanReceipt:crop.readRawCropPlanReceipt,loadCropPlanWithWriteAdmission:crop.loadCropPlanWithWriteAdmission,cropPlanWriteAdmissionMatches:crop.cropPlanWriteAdmissionMatches,
     cropPlanWriteCandidateIsLossless:crop.cropPlanWriteCandidateIsLossless,cropPlanWriteToken:crop.cropPlanWriteToken,saveCropPlanWithReceipt:crop.saveCropPlanWithReceipt,
-    prepareGrowerWorkflowAcceptance,growerPlanningScopeKey,normaliseGrowerPlanningProfiles,sanitiseHarvestTargets:crop.sanitiseHarvestTargets,sanitiseNurserySettings,harvestTargetsSourceKey,
+    prepareGrowerWorkflowAcceptance,prepareGrowerNurseryBatchReferenceChanges,growerPlanningScopeKey,normaliseGrowerPlanningProfiles,sanitiseHarvestTargets:crop.sanitiseHarvestTargets,sanitiseNurserySettings,harvestTargetsSourceKey,
     clearTimeout(){},setPlan(value:any){state.plan=typeof value==='function'?value(state.plan):value;notify();},setPlanSaveConflict(value:boolean){state.planSaveConflict=value;},setPlanSaveFailed(value:boolean){state.planSaveFailed=value;},
     setDesign(){},loadFacilitatorState:()=>null,setCurrentMonth(){},setCurrentYear(){},setFavouriteCropKeys(){},loadFavouriteCropKeys:()=>new Set(),
     setAllowBedSharing(){},loadAllowBedSharing:()=>false,setPriceOverrides(){},loadCropPriceOverrides:()=>({}),setCashflowSettings(){},loadCashflowSettings:()=>({}),setMounted(){},
@@ -84,7 +88,7 @@ function mounted(controller:ReturnType<typeof parent>) {
   let reviewPending:Promise<GrowerWorkflowReview>|null=null,acceptPending:Promise<unknown>|null=null;
   let id=()=>`persistent-${++counter}`;let selection:Parameters<typeof useGrowerWorkflow>[0]['selection']={kind:'studio-canvas',sourceId:siteId};
   function App(){const [,render]=React.useState(0),expectedActor=current.growerActorIsCurrent;current.notify(()=>render(value=>value+1));
-    latest=useGrowerWorkflow({selection,scope,resourceSiteId:current.state.productionSiteId,book:current.state.plan,actorIsCurrent:()=>expectedActor(),readCurrentBook:current.readCurrentGrowerBook,commitAcceptance:current.commitGrowerAcceptance,createPlantingId:()=>id()});
+    latest=useGrowerWorkflow({selection,scope,resourceSiteId:current.state.productionSiteId,book:current.state.plan,actorIsCurrent:()=>expectedActor(),readCurrentBook:current.readCurrentGrowerBook,commitAcceptance:current.commitGrowerAcceptance,commitNurseryReferences:current.commitNurseryBatchReferences,createPlantingId:()=>id()});
     return React.createElement(Panel,{scope,source:latest.source,sourceName:'Synthetic garden',sourceIssue:latest.sourceIssue,checking:latest.checking,contextRevision:latest.contextRevision,
       profiles:current.state.plan.growerPlanningProfiles??[],targets:current.state.plan.harvestTargets??[],targetSiteId:current.state.productionSiteId,onRefresh:latest.onRefresh,onReview:(value:GrowerWorkflowDraft)=>{reviewPending=latest.onReview(value);return reviewPending;},onAccept:(review:Extract<GrowerWorkflowReview,{status:'review'}>,guard:()=>boolean)=>{acceptPending=latest.onAccept(review,guard);return acceptPending as ReturnType<typeof latest.onAccept>;},acceptance:latest.acceptance});}
   act(()=>{renderer=create(React.createElement(App));});
@@ -99,6 +103,9 @@ function mounted(controller:ReturnType<typeof parent>) {
     async refresh(){await act(async()=>{await latest.onRefresh();});},
     async review(){let result!:GrowerWorkflowReview;await act(async()=>{result=await latest.onReview(draft());});assert.equal(result.status,'review',result.issues.join(','));if(result.status!=='review')throw Error('fixture held');return result;},
     async accept(review:Extract<GrowerWorkflowReview,{status:'review'}>,guard=()=>true){let result!:Awaited<ReturnType<typeof latest.onAccept>>;await act(async()=>{result=await latest.onAccept(review,guard);});return result;},
+    async readNursery(acknowledgement?:GrowerNurseryReferenceAcknowledgement){let result!:Awaited<ReturnType<typeof latest.onReadSavedNursery>>;await act(async()=>{result=await latest.onReadSavedNursery(acknowledgement);});return result;},
+    async checkNursery(view:GrowerSavedNurseryReview){let result=false;await act(async()=>{result=await latest.onCheckSavedNurseryCurrent(view);});return result;},
+    async saveNursery(view:GrowerSavedNurseryReview,changes:readonly GrowerNurseryBatchReferenceChange[],guard=()=>true){let result!:Awaited<ReturnType<typeof latest.onSaveNurseryBatchReferences>>;await act(async()=>{result=await latest.onSaveNurseryBatchReferences(view,changes,guard);});return result;},
     dispose(){act(()=>renderer.unmount());}};
 }
 async function ready() {const f=await fixture();local.setItem(studioKey(),JSON.stringify(studio()));const c=parent(f.book),ui=mounted(c);await ui.refresh();return {...f,c,ui};}
@@ -213,4 +220,195 @@ test('a later externally replaced book clears a prior confirmed save claim witho
  const {ui,book}=await ready();try{const review=await ui.review();assert.equal((await ui.accept(review)).status,'confirmed');assert.match(ui.text(),/planned crop cycles saved on this device/);
   await act(async()=>{assert.equal(crop.saveCropPlan({...book,updatedAt:Date.now()}),true);});assert.equal(ui.latest.acceptance.status,'idle');assert.doesNotMatch(ui.text(),/planned crop cycles saved on this device/);assert.match(ui.text(),/saved plan changed or has unresolved edits/);
  }finally{ui.dispose();}
+});
+
+// Use accepted own transplants for nursery references. The earlier ownRow
+// fixture intentionally remains direct-sown for every original acceptance test.
+async function savedNurseryFixture() {
+  const f = await fixture(), raw = studio();
+  raw.items.push({ ...raw.items[0], id: 'bed-b', x: 0.8 });
+  const own = await ownRow(raw);
+  const provided = <T,U extends string>(value:T,unit:U) => ({state:'provided' as const,value,unit,
+    provenance:{kind:'grower-estimate' as const,recordedAt:'2026-11-05T12:00:00.000Z'}});
+  const profile = { ...own.row.growerCycle.assessmentSnapshot.profile, inputs: {
+    ...own.row.growerCycle.assessmentSnapshot.profile.inputs, establishment:provided('transplant' as const,'method'),nurseryDays:provided(10,'days') } };
+  const proposal = generateGrowerAutoPlan({requestedAt:'2026-11-05T12:00:00.000Z',scope,geometryFingerprint:own.source.geometryFingerprint,
+    profiles:[profile],beds:own.source.beds.map(bed=>({bed,scope,measuredAreaM2:provided(bed.areaM2,'m2')})),
+    planningStart:provided('2028-12-01','utc-date'),planningEndExclusive:provided('2029-01-01','utc-date'),
+    availability:own.source.beds.map(bed=>({bedId:bed.id,scope,window:provided({start:'2028-12-01',endExclusive:'2029-01-01'},'utc-date-window')})),
+    reserved:[],demands:[{demandId:'buyer',profileId:profile.profileId,scope,totalKg:provided(17,'kg-total'),
+      harvestWindow:provided({start:'2028-12-20',endExclusive:'2028-12-22'},'utc-date-window')}],maxAssessments:1000});
+  assert.equal(proposal.status,'ready');assert.equal(proposal.cycles.length,2);
+  const rows=proposal.cycles.map((cycle,index)=>{const row=createGrowerCyclePlanting(cycle,{plantingId:`saved-nursery-${index}`,
+    acceptedAt:'2026-11-05T12:00:00.000Z',geometryFingerprint:own.source.geometryFingerprint});assert.ok(row);return row;});
+  const foreign={...f.foreign,privateOtherMetadata:{retained:[null,0,'Unrelated original row']}};
+  const book={...f.book,plantings:[foreign,...rows],growerPlanningProfiles:[profile]};
+  return {...f,book,raw,rows,foreign};
+}
+async function readySavedNursery() {
+  const f=await savedNurseryFixture();local.setItem(studioKey(),JSON.stringify(f.raw));const c=parent(f.book),ui=mounted(c);
+  await ui.refresh();const result=await ui.readNursery();assert.equal(result.status,'ready',result.status==='held'?result.reason:'');
+  if(result.status!=='ready'){ui.dispose();throw Error('Saved nursery source held');}
+  assert.equal(result.view.references.length,2);assert.ok(result.view.references.every(row=>row.reference.status==='ready'));
+  return {...f,c,ui,view:result.view};
+}
+const referenceChanges=(view:GrowerSavedNurseryReview):GrowerNurseryBatchReferenceChange[]=>view.references.map((row,index)=>({plantingId:row.plantingId,
+  variety:`User variety ${index+1}`,seedLotReference:`User lot ${index+1}`,raisingBatchReference:`User raising ${index+1}`}));
+
+test('actual saved-nursery bulk save retains sibling identity and counts, and opaque acknowledgement reopens only its real readback',async()=>{
+ const {ui,c,view,book,rows,foreign}=await readySavedNursery();try{
+  assert.equal(await ui.checkNursery(view),true);const writes=local.writes,changes=referenceChanges(view);
+  const result=await ui.saveNursery(view,changes);assert.equal(result.status,'confirmed');
+  if(result.status!=='confirmed')throw Error('Actual nursery writer failed');
+  assert.equal(result.rows,2);assert.equal(result.sample,false);assert.equal(local.writes,writes+1);
+  const stored=JSON.parse(readCanonicalCropPlanFixtureRaw()) as CropPlanState;
+  assert.deepEqual(stored.plantings[0],foreign);
+  for(const [index,change]of changes.entries()){
+   const row=stored.plantings.find(row=>row.id===change.plantingId)!;
+   assert.equal(row.variety,change.variety);assert.equal((row.nurseryBatchReference as Record<string,unknown>).seedLotReference,change.seedLotReference);
+   assert.deepEqual(row.growerCycle,rows[index].growerCycle,'reference editing cannot change the accepted arithmetic or dates');
+  }
+  for(const key of ['nursery','productionRecords','preservedProducts','planNotes','planNotesAt','rainPattern'])assert.deepEqual(stored[key as keyof CropPlanState],book[key as keyof CropPlanState],key);
+  assert.equal(crop.cropPlanWriteAdmissionMatches(c.state.planWriteBase.current.admission,c.state.planWriteBase.current.planKey,c.state.planWriteBase.current.token),true);
+  assert.equal((await ui.saveNursery(view,changes)).status,'held');assert.equal(local.writes,writes+1);
+  ui.rerender();assert.equal((await ui.readNursery({...result.acknowledgement})).status,'held','public brand alone cannot forge the private receipt');
+  const refreshed=await ui.readNursery(result.acknowledgement);assert.equal(refreshed.status,'ready');
+  if(refreshed.status!=='ready')throw Error('Actual acknowledged readback held');
+  assert.deepEqual(refreshed.view.references.map(row=>row.reference.status==='ready'&&row.reference.fields.seedLotReference),['User lot 1','User lot 2']);
+  assert.equal(await ui.checkNursery(refreshed.view),true);assert.equal((await ui.readNursery(result.acknowledgement)).status,'held','acknowledgement handoff is consumed once');
+  assert.equal(local.writes,writes+1);
+ }finally{ui.dispose();}
+});
+
+test('actual unchanged reference requests perform no write, while explicit clearing affects only the selected saved sibling',async()=>{
+ const {ui,view}=await readySavedNursery();try{
+  const writes=local.writes,empty=view.references.map(row=>({plantingId:row.plantingId,variety:null,seedLotReference:null,raisingBatchReference:null}));
+  assert.equal((await ui.saveNursery(view,[])).status,'unchanged');assert.equal((await ui.saveNursery(view,empty)).status,'unchanged');
+  assert.equal(local.writes,writes);assert.equal(await ui.checkNursery(view),true);
+  const saved=await ui.saveNursery(view,referenceChanges(view));assert.equal(saved.status,'confirmed');if(saved.status!=='confirmed')throw Error('Fixture save failed');
+  const fresh=await ui.readNursery(saved.acknowledgement);assert.equal(fresh.status,'ready');if(fresh.status!=='ready')throw Error('Readback held');
+  const previous=JSON.parse(readCanonicalCropPlanFixtureRaw()) as CropPlanState;
+  const result=await ui.saveNursery(fresh.view,[{plantingId:fresh.view.references[0].plantingId,variety:null,seedLotReference:null,raisingBatchReference:null}]);
+  assert.equal(result.status,'confirmed');const current=JSON.parse(readCanonicalCropPlanFixtureRaw()) as CropPlanState;
+  const cleared=current.plantings.find(row=>row.id===fresh.view.references[0].plantingId)!;
+  assert.equal(Object.hasOwn(cleared,'variety'),false);assert.equal(Object.hasOwn(cleared,'nurseryBatchReference'),false);
+  assert.deepEqual(current.plantings.filter(row=>row.id!==cleared.id),previous.plantings.filter(row=>row.id!==cleared.id));
+  assert.equal(local.writes,writes+2);
+ }finally{ui.dispose();}
+});
+
+test('copied, mutated or replaced saved-nursery views cannot acquire a fresh original reference binding',async()=>{
+ const {ui,view}=await readySavedNursery();try{
+  const changes=referenceChanges(view),bytes=readCanonicalCropPlanFixtureRaw(),writes=local.writes;
+  assert.equal((await ui.saveNursery({...view},changes)).status,'held');
+  const next=await ui.readNursery();assert.equal(next.status,'ready');assert.equal(await ui.checkNursery(view),false);
+  assert.equal((await ui.saveNursery(view,changes)).status,'held');
+  if(next.status!=='ready')throw Error('New explicit read held');
+  (next.view.references[0] as {startDate:string}).startDate='2028-12-02';
+  assert.equal((await ui.saveNursery(next.view,changes)).status,'held');assert.equal(local.writes,writes);assert.equal(readCanonicalCropPlanFixtureRaw(),bytes);
+ }finally{ui.dispose();}
+});
+
+test('source, actor, raw token, draft, selection and unmount races during real source hashing withhold saved-reference writes',async()=>{
+ for(const mutation of ['source','actor','token','draft','selection','unmount']){await reset();const {ui,view,raw,book}=await readySavedNursery();let disposed=false;
+  try{const bytes=readCanonicalCropPlanFixtureRaw(),writes=local.writes,gate=pauseHashes();let displayed=true,pending!:ReturnType<typeof ui.latest.onSaveNurseryBatchReferences>;
+   act(()=>{pending=ui.latest.onSaveNurseryBatchReferences(view,referenceChanges(view),()=>displayed);});await gate.started;
+   if(mutation==='source'){const moved=structuredClone(raw);moved.items[0].x+=0.1;local.setItem(studioKey(),JSON.stringify(moved));}
+   if(mutation==='actor')probe.actor='owner-b';
+   if(mutation==='token')replaceCanonicalCropPlanFixtureRaw(JSON.stringify({...book,updatedAt:123456}));
+   if(mutation==='draft')displayed=false;
+   if(mutation==='selection')ui.select(null);
+   if(mutation==='unmount'){ui.dispose();disposed=true;}
+   await act(async()=>{gate.resume();assert.equal((await pending).status,'held',mutation);});
+   assert.equal(local.writes,writes+(['source','token'].includes(mutation)?1:0),mutation);
+   if(mutation!=='token')assert.equal(readCanonicalCropPlanFixtureRaw(),bytes,mutation);
+  }finally{if(!disposed)ui.dispose();}}
+});
+
+test('concurrent saved-reference callbacks cannot double-write and failed or overwritten writes do not mint a confirmed acknowledgement',async()=>{
+ for(const scenario of ['duplicate','quota','overwrite']){await reset();const {ui,c,view,book}=await readySavedNursery();try{
+  const bytes=readCanonicalCropPlanFixtureRaw(),writes=local.writes,changes=referenceChanges(view);
+  if(scenario==='duplicate'){
+   let first!:ReturnType<typeof ui.latest.onSaveNurseryBatchReferences>,second!:typeof first;
+   let outcomes!:Awaited<typeof first>[];
+   await act(async()=>{first=ui.latest.onSaveNurseryBatchReferences(view,changes);second=ui.latest.onSaveNurseryBatchReferences(view,changes);outcomes=await Promise.all([first,second]);});
+   assert.deepEqual(outcomes.map(result=>result.status),['confirmed','held']);assert.equal(local.writes,writes+1);
+  }else if(scenario==='quota'){
+   const actual=local.setItem;local.setItem=()=>{throw Error('Synthetic reference quota');};
+   try{const result=await ui.saveNursery(view,changes);assert.equal(result.status,'failed');assert.equal('acknowledgement'in result,false);}finally{local.setItem=actual;}
+   assert.equal(readCanonicalCropPlanFixtureRaw(),bytes);assert.equal(local.writes,writes);
+   assert.equal((await ui.saveNursery(view,changes)).status,'confirmed');assert.equal(local.writes,writes+1);
+  }else{
+   const overwrite=()=>replaceCanonicalCropPlanFixtureRaw(JSON.stringify({...book,updatedAt:987654}));events.addEventListener(crop.CROP_PLAN_CHANGED_EVENT,overwrite,{once:true});
+   const result=await ui.saveNursery(view,changes);assert.equal(result.status,'superseded');assert.equal('acknowledgement'in result,false);
+   assert.equal(c.state.planSaveConflict,true);const after=local.writes;assert.equal((await ui.saveNursery(view,changes)).status,'held');assert.equal(local.writes,after);
+  }
+ }finally{ui.dispose();}}
+});
+
+test('saved-reference acknowledgements cannot follow a later source, raw book or account into a newly read view',async()=>{
+ for(const mutation of ['source','book','actor']){await reset();const {ui,view,raw,book}=await readySavedNursery();try{
+  const saved=await ui.saveNursery(view,referenceChanges(view));assert.equal(saved.status,'confirmed');if(saved.status!=='confirmed')throw Error('Actual save held');
+  ui.rerender();
+  if(mutation==='source'){const moved=structuredClone(raw);moved.items[0].x+=0.1;local.setItem(studioKey(),JSON.stringify(moved));}
+  if(mutation==='book')replaceCanonicalCropPlanFixtureRaw(JSON.stringify({...book,updatedAt:654321}));
+  if(mutation==='actor')probe.actor='owner-b';
+  const writes=local.writes;assert.equal((await ui.readNursery(saved.acknowledgement)).status,'held',mutation);assert.equal(local.writes,writes);
+ }finally{ui.dispose();}}
+});
+
+test('sample saved-reference edits and acknowledgement readback stay in memory, and exit during an edit revokes its original view',async()=>{
+ for(const scenario of ['save','exit']){await reset();const real=await fixture();replaceCanonicalCropPlanFixtureRaw(JSON.stringify(real.book));const physical=JSON.stringify([...local.rows]);
+  assert.equal(samples.enterSampleMode(),true);const {ui,view}=await readySavedNursery();try{
+   if(scenario==='save'){
+    const result=await ui.saveNursery(view,referenceChanges(view));assert.equal(result.status,'confirmed');if(result.status!=='confirmed')throw Error('Sample labels held');
+    assert.equal(result.sample,true);ui.rerender();const readback=await ui.readNursery(result.acknowledgement);assert.equal(readback.status,'ready');
+    if(readback.status!=='ready')throw Error('Sample readback held');assert.ok(readback.view.references.every(row=>row.reference.status==='ready'&&row.reference.fields.seedLotReference!==null));
+    assert.ok(samples.getSandboxCropPlan().plantings.some(row=>Object.hasOwn(row,'nurseryBatchReference')));
+   }else{
+    const gate=pauseHashes();let pending!:ReturnType<typeof ui.latest.onSaveNurseryBatchReferences>;
+    act(()=>{pending=ui.latest.onSaveNurseryBatchReferences(view,referenceChanges(view));});await gate.started;samples.exitSampleMode();
+    await act(async()=>{gate.resume();assert.equal((await pending).status,'held');});
+   }
+   assert.equal(JSON.stringify([...local.rows]),physical,scenario);
+  }finally{ui.dispose();samples.exitSampleMode();}}
+});
+
+test('the real parent rechecks original source, actor, raw token and draft after preparing reference changes',async()=>{
+ for(const mutation of ['source','actor','token','draft']){await reset();const {ui,c,view,raw,book}=await readySavedNursery();try{
+  const bytes=readCanonicalCropPlanFixtureRaw(),writes=local.writes,actual=c.state.prepareGrowerNurseryBatchReferenceChanges;
+  let fired=false,displayed=true;
+  c.state.prepareGrowerNurseryBatchReferenceChanges=(...args:Parameters<typeof prepareGrowerNurseryBatchReferenceChanges>)=>{
+   const result=actual(...args);assert.equal(result.status,'prepared');
+   if(!fired){fired=true;
+    if(mutation==='source'){const moved=structuredClone(raw);moved.items[0].x+=0.1;local.setItem(studioKey(),JSON.stringify(moved));}
+    if(mutation==='actor')probe.actor='owner-b';
+    if(mutation==='token')replaceCanonicalCropPlanFixtureRaw(JSON.stringify({...book,updatedAt:246810}));
+    if(mutation==='draft')displayed=false;
+   }
+   return result;
+  };
+  const result=await ui.saveNursery(view,referenceChanges(view),()=>displayed);assert.equal(fired,true);assert.equal(result.status,'held',mutation);
+  assert.equal(local.writes,writes+(['source','token'].includes(mutation)?1:0),mutation);
+  if(mutation!=='token')assert.equal(readCanonicalCropPlanFixtureRaw(),bytes,mutation);
+ }finally{ui.dispose();}}
+});
+
+test('source withdrawal reentered by a real saver storage read cannot physically write reference labels',async()=>{
+ const {ui,c,view}=await readySavedNursery();try{
+  const bytes=readCanonicalCropPlanFixtureRaw(),writes=local.writes,actual=c.state.saveCropPlanWithReceipt as typeof crop.saveCropPlanWithReceipt;
+  let fired=false;
+  c.state.saveCropPlanWithReceipt=(...args:Parameters<typeof crop.saveCropPlanWithReceipt>)=>{
+   local.onRead=()=>{
+    if(fired)return;fired=true;
+    events.dispatchEvent(new Event('imbewu-design-canvas-changed'));
+   };
+   try{return actual(...args);}finally{local.onRead=null;}
+  };
+  const result=await ui.saveNursery(view,referenceChanges(view));
+  assert.equal(fired,true,'the control must reach an actual storage read inside the real saver');
+  assert.ok(result.status==='held'||result.status==='failed',result.status);
+  assert.equal('acknowledgement'in result,false);assert.equal(local.writes,writes);assert.equal(readCanonicalCropPlanFixtureRaw(),bytes);
+  assert.equal((await ui.saveNursery(view,referenceChanges(view))).status,'held');assert.equal(local.writes,writes);
+ }finally{local.onRead=null;ui.dispose();}
 });

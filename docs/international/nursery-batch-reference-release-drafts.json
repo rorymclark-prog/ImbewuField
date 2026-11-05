@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "007ca963d23b2768a5654e806daf1a45a5d41c81a0b517c177f29ae294b057c0",
+  "milestoneId": "grower-nursery-batch-references",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "reviewNotes": "Codex AI candidates for the four existing update-description languages only. References belong to individual saved planned batches; they do not record observed sowing or live stock. No fluent or human approval, no new runtime language. Separate from AGY global-language draft ownership.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "98e2a20d4fc5104d94161400f6cd791a640227e31cf4411582cc51f4a1a5700d",
+      "selectedFileSha256": "840421b610f5a5bc64724e116f781421c8f5f4d812ba2dd25e9e5f40a3235b53",
+      "historicalBytesPreserved": true
+    },
+    "st": {
+      "originalFileSha256": "4b162959483b21549753f99caf7f57d4f858313fffb618c792659b641dd1e85c",
+      "selectedFileSha256": "1ad51d7d280157f7d8e20b32c0ac6123adf151bffea23752abed2fce74e02dd2",
+      "historicalBytesPreserved": true
+    },
+    "ve": {
+      "originalFileSha256": "a4d8128ff9981c4ccb1fd1243159e5996bce385050c676141bb49677d7826c44",
+      "selectedFileSha256": "85c416a4925d3d3c9098258b8b2679e1f593bb9d604b07ff3febe1f4d829be48",
+      "historicalBytesPreserved": true
+    },
+    "ts": {
+      "originalFileSha256": "98b6547475df1008fafecc26c41a92fd73483493f53e5b4e53fedf552e59f621",
+      "selectedFileSha256": "6de11573750000a6303a0db985850302245a20fbad57bb24adb4bf587e86e1fe",
+      "historicalBytesPreserved": true
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Keep references for saved nursery batches",
+      "zu": "Gcina amareferensi amaqoqo e-nursery agciniwe",
+      "st": "Boloka ditshupiso tsa dihlopha tsa nursery tse bolokilweng",
+      "ve": "Vhulungani referentsi dza zwigwada zwa nursery zwo vhulungwaho",
+      "ts": "Hlayisa tirheferense ta mintlawa ya nursery leyi hlayisiweke",
+      "messageSha256": "4ccbdf089b667fa6e08a5b7245d58173790c90b153b856e22283559b0b5d625f"
+    },
+    {
+      "english": "Crop plan → Saved planned nursery batches",
+      "zu": "Uhlelo lwezitshalo → Amaqoqo e-nursery ahleliwe agciniwe",
+      "st": "Moralo wa dijalo → Dihlopha tse rerilweng tsa nursery tse bolokilweng",
+      "ve": "Pulane ya zwimela → Zwigwada zwa nursery zwo vhekanywaho zwo vhulungwaho",
+      "ts": "Pulani ya swibyariwa → Mintlawa ya nursery leyi pulaniweke yi tlhela yi hlayisiwa",
+      "messageSha256": "c6e2073dfcdcdf3967b33c92dd9540e99d4472b801447fac5c762733490dc89f"
+    },
+    {
+      "english": "Add your own variety, seed-lot and raising-batch references to individual saved planned batches, then review nursery requirements or download worksheets. These labels do not record observed sowing or live stock.",
+      "zu": "Engeza amagama ezinhlobo zakho, amareferensi amaqoqo embewu namaqoqo okukhulisa izithombo eqoqweni ngalinye elihleliwe neligciniwe, bese uhlola izidingo ze-nursery noma ulande amaphepha okusebenza. Lawa malebula awarekhodi ukuhlwanyela okwenzekile noma isitoko esikhona.",
+      "st": "Kenya mabitso a mefuta ya hao, ditshupiso tsa dihlopha tsa peo le tsa dihlopha tsa ho hodisa dimela bakeng sa sehlopha ka seng se rerilweng se bolokilweng, ebe o hlahloba ditlhoko tsa nursery kapa o jarolle maqephe a mosebetsi. Dileibole tsena ha di rekote ho jala ho bonweng kapa setoko se teng.",
+      "ve": "Engedzani madzina a tshaka dzaṋu, referentsi dza zwigwada zwa mbeu na zwa u alusa zwimilana kha tshigwada tshiṅwe na tshiṅwe tsho vhekanywaho tsho vhulungwaho, ni kone u sedzulusa ṱhoḓea dza nursery kana u downlouda maṱari a mushumo. Hedzi lebulu a dzi rekhodi u zwala ho no vhonwaho kana tshitoko tshi re hone.",
+      "ts": "Engetela mavito ya tinxaka ta wena, tirheferense ta mintlawa ya mbewu ni mintlawa yo kurisa swimilana eka ntlawa wun’wana ni wun’wana lowu pulaniweke wu tlhela wu hlayisiwa, kutani u kambisisa swilaveko swa nursery kumbe u dawuniloda maphepha ya ntirho. Tilebulu leti a ti rhekhodi ku byala loku voniweke kumbe xitoko lexi nga kona.",
+      "messageSha256": "0ef4f2d410d6985cf2ae103b5773023f6abc6cf42c1ce6b1c96dad6a1851dc39"
+    }
+  ]
+}

@@ -6,12 +6,13 @@ import type { NurserySettings } from '@/lib/nursery-settings';
 import { sanitiseNurserySettings } from '@/lib/nursery-settings';
 import type { GrowerWorkflowReview } from '@/lib/international/grower-workflow';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
+import type { GrowerSavedNurseryReview } from './useGrowerWorkflow';
 import { buildGrowerNurseryForecast, isGrowerNurseryForecastCurrent, nurserySettingsFingerprint,
   projectGrowerNurseryPreparation,
   type GrowerNurseryRequest, type GrowerNurseryResult, type GrowerNurseryResourceWindow,
-  type GrowerNurseryReservation } from '@/lib/international/grower-nursery';
+  type GrowerNurseryReservation, type GrowerNurseryBatchReferenceView } from '@/lib/international/grower-nursery';
 import type { GrowerInput } from '@/lib/international/grower-planning';
-import { buildGrowerNurseryCsv, buildGrowerNurseryPreparationCsv, buildGrowerNurseryPreparationPdf, buildGrowerNurseryBatchLabelsPdf, growerNurseryIssueText as issueText } from '@/lib/nursery-export';
+import { buildGrowerNurseryCsv, buildGrowerNurseryPreparationCsv, buildGrowerNurseryPreparationPdf, buildGrowerNurseryBatchLabelsPdf, NurseryReferenceExportError, growerNurseryIssueText as issueText } from '@/lib/nursery-export';
 import { downloadFile } from '@/lib/file-delivery';
 import { isSampleMode } from '@/lib/sample-mode';
 import {
@@ -33,14 +34,24 @@ import {
   type NurseryDimensionDraft,
 } from '@/lib/length-units';
 
-export interface GrowerNurseryReviewPanelProps {
-  review: Extract<GrowerWorkflowReview, { status: 'review' }>;
+interface NurseryReviewCommonProps {
   source: GrowerWorkflowSource;
   settings?: NurserySettings;
   contextRevision: number;
-  /** The parent rereads the source/book/actor and checks this original review. */
-  onCheckCurrent: (review: Extract<GrowerWorkflowReview, { status: 'review' }>) => Promise<boolean>;
   sample?: boolean;
+}
+export interface GrowerNurseryReviewPanelProps extends NurseryReviewCommonProps {
+  review: Extract<GrowerWorkflowReview, { status: 'review' }>;
+  savedReview?: never;
+  /** The parent rereads the source/book/actor and checks this original review. */
+  onCheckCurrent: (review: Extract<GrowerWorkflowReview, { status: 'review' }>) => Promise<unknown>;
+  onCheckSavedCurrent?: never;
+}
+export interface SavedNurseryReviewPanelProps extends NurseryReviewCommonProps {
+  review?: never;
+  savedReview: GrowerSavedNurseryReview;
+  onCheckCurrent?: never;
+  onCheckSavedCurrent: (review: GrowerSavedNurseryReview) => Promise<boolean>;
 }
 
 type SurfaceDraft = NurseryDimensionDraft<'usableM2'>;
@@ -88,15 +99,23 @@ function makeSurfaceDraft(sourceKey: string, unit: NurseryUnitChoice, text = '')
   return text ? editNurseryDimensionDraft(initial, 'usableM2', text) : initial;
 }
 
+function referenceDetails(reference: GrowerNurseryBatchReferenceView | undefined) {
+  if (reference?.status !== 'ready') return <p>Individual saved batch reference: {reference?.status === 'held' ? 'Needs review' : 'Not recorded'}.</p>;
+  return <dl className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-3 [overflow-wrap:anywhere]">{([
+    ['Your variety / cultivar', reference.fields.variety], ['Your seed-lot reference', reference.fields.seedLotReference],
+    ['Your raising-batch reference', reference.fields.raisingBatchReference],
+  ] as const).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value ?? 'Not recorded'}</dd></div>)}</dl>;
+}
+
 /** The review is transient. Equipment remains in the existing canonical book. */
-export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanelProps) {
+export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanelProps | SavedNurseryReviewPanelProps) {
   const [draftControls, setControls] = useState(blank);
   const [unit, setUnit] = useState<NurseryUnitChoice>('metric');
   const [unitNote, setUnitNote] = useState('');
   const [current, setCurrent] = useState<{ request: GrowerNurseryRequest; result: GrowerNurseryResult; key: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
-  const generation = useRef(0), nextRow = useRef(0);
+  const generation = useRef(0), nextRow = useRef(0), active = useRef(true);
   const prefContext = useRef<ReturnType<typeof captureNurseryUnitPreferenceContext>>(null);
   const settings = props.settings ?? sanitiseNurserySettings(undefined);
   const viewSettings = sanitiseNurserySettings(settings);
@@ -108,7 +127,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
     props.source.sourceRevision,
     props.source.geometryFingerprint,
     props.source.resourceSiteId,
-    props.review.proposal.fingerprint,
+    props.savedReview ?? props.review!.proposal.fingerprint,
     settingsFingerprint,
     settingsFingerprint === null ? settings : null,
     sample,
@@ -168,7 +187,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
     setBusy(false);
   }, [key]);
 
-  useEffect(() => () => { generation.current++; }, []);
+  useEffect(() => { active.current = true; return () => { active.current = false; generation.current++; }; }, []);
 
   const resources = [
     ...viewSettings.containers.filter(row => row.siteId === props.source.resourceSiteId).map(row => ({
@@ -191,10 +210,19 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
 
   const shown = current?.key === key ? current : null;
   const preparation = shown ? projectGrowerNurseryPreparation(shown.result) : null;
+  const fieldReservations = props.review?.request.reserved ?? [];
+  // Legacy deferred callers may have an unknown promise result. Only an actual
+  // affirmative boolean can authenticate either displayed source mode.
+  const checkCurrent = async () => (props.savedReview
+    ? await props.onCheckSavedCurrent(props.savedReview) : await props.onCheckCurrent(props.review)) === true;
+  const renderedInputsCurrent = () => active.current && live.current.props === props && live.current.key === key && live.current.controls === controls;
 
   function change(next: Controls) {
+    if (!renderedInputsCurrent()) return;
     generation.current++;
-    setControls({ ...next, contextKey: key });
+    const updated = { ...next, contextKey: key };
+    live.current = { ...live.current, controls: updated };
+    setControls(updated);
     setCurrent(null);
     setMessage('');
     setBusy(false);
@@ -354,13 +382,13 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       };
     };
 
-    const start = props.review.request.planningStart, end = props.review.request.planningEndExclusive;
+    const start = props.review?.request.planningStart, end = props.review?.request.planningEndExclusive;
     return {
-      source: {
+      source: props.savedReview ? { kind: 'saved-cycles', rows: props.savedReview.rows, cycleContext: props.savedReview.cycleContext } : {
         kind: 'proposal',
-        proposal: props.review.proposal,
-        currentRequest: props.review.request,
-        competingDemand: props.review.blockedBeds.some(bed => bed.reasons.some(reason => reason !== 'source-bed-held')) ? 'unresolved' : 'assessed-none',
+        proposal: props.review!.proposal,
+        currentRequest: props.review!.request,
+        competingDemand: props.review!.blockedBeds.some(bed => bed.reasons.some(reason => reason !== 'source-bed-held')) ? 'unresolved' : 'assessed-none',
       },
       resourceContext: props.source,
       settings,
@@ -370,21 +398,23 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
         unit: 'nursery-settings-fingerprint',
         provenance: { kind: 'grower-record', recordedAt, reference: 'Saved nursery settings reconfirmed for this review; not their original measurement time.' },
       } : missing,
-      horizon: start.state === 'provided' && end.state === 'provided' ? estimate({ start: start.value, endExclusive: end.value }, 'utc-date-window') : missing,
+      horizon: props.savedReview ? props.savedReview.horizon
+        : start?.state === 'provided' && end?.state === 'provided' ? estimate({ start: start.value, endExclusive: end.value }, 'utc-date-window') : missing,
       availability: controls.availabilityConfirmed ? estimate(controls.availability.map(window), 'nursery-resource-windows') : missing,
       otherReservations: controls.otherUsesConfirmed ? estimate(controls.otherUses.map(row => ({ ...window(row), id: `review-use-${row.row}` } satisfies GrowerNurseryReservation)), 'nursery-resource-reservations') : missing,
-      ...(props.review.request.reserved.length ? {
+      ...(fieldReservations.length ? {
         accountedFieldReservations: controls.fieldUsesConfirmed
-          ? estimate(props.review.request.reserved.map(row => row.id), 'nursery-accounted-field-reservations') : missing,
+          ? estimate(fieldReservations.map(row => row.id), 'nursery-accounted-field-reservations') : missing,
       } : {}),
     };
   }
 
   async function review() {
+    if (!renderedInputsCurrent()) return;
     const turn = ++generation.current, snapshotKey = key, snapshotSample = isSampleMode();
     setBusy(true); setCurrent(null); setMessage('');
     try {
-      if (!await props.onCheckCurrent(props.review)) throw Error('stale');
+      if (!await checkCurrent()) throw Error('stale');
       if (generation.current !== turn || live.current.key !== snapshotKey || isSampleMode() !== snapshotSample) return;
       const request = makeRequest(new Date().toISOString());
       const result = buildGrowerNurseryForecast(request);
@@ -397,16 +427,16 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
   }
 
   async function exportReview(kind: 'resource-review' | 'preparation' | 'preparation-pdf' | 'batch-cards-pdf' = 'resource-review') {
-    if (!shown || busy || shown.result.fingerprint === null) return;
+    if (!renderedInputsCurrent() || !shown || busy || shown.result.fingerprint === null) return;
     if (kind !== 'resource-review' && preparation?.status !== 'available') return;
     const turn = ++generation.current, snapshot = shown, snapshotKey = key, snapshotSample = isSampleMode();
-    const sameDisplay = () => generation.current === turn && live.current.key === snapshotKey && isSampleMode() === snapshotSample;
+    const sameDisplay = () => active.current && generation.current === turn && live.current.key === snapshotKey && isSampleMode() === snapshotSample;
     const sameInputs = () => isGrowerNurseryForecastCurrent(snapshot.result, makeRequest(snapshot.request.settingsReview.state === 'provided'
       ? snapshot.request.settingsReview.provenance.recordedAt : snapshot.request.horizon.state === 'provided'
         ? snapshot.request.horizon.provenance.recordedAt : ''));
     setBusy(true); setMessage('');
     try {
-      if (!await props.onCheckCurrent(props.review)) throw Error('stale');
+      if (!await checkCurrent()) throw Error('stale');
       if (!sameDisplay()) return;
       if (!sameInputs()) throw Error('stale');
       if (kind === 'preparation-pdf' || kind === 'batch-cards-pdf') {
@@ -415,7 +445,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
         if (!sameDisplay()) return;
         // Loading the PDF writer yields. A matching displayed key alone cannot
         // prove that saved source/account records stayed current meanwhile.
-        if (!await props.onCheckCurrent(props.review)) throw Error('stale');
+        if (!await checkCurrent()) throw Error('stale');
         if (!sameDisplay()) return;
         if (!sameInputs()) throw Error('stale');
         downloadFile(pdf, `ImbewuField${sample ? '-demo' : ''}-${batchCards ? 'planned-nursery-batch-cards' : 'transplant-preparation'}.pdf`);
@@ -432,8 +462,14 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       setMessage(kind === 'preparation'
         ? 'Transplant preparation CSV downloaded. It covers represented planned batches, not observed sowing, stock or seedling readiness.'
         : 'Reviewed nursery CSV downloaded (area values in canonical m²). It contains proposed estimates, not live stock.');
-    } catch {
-      if (generation.current === turn) { setCurrent(null); setMessage('The current nursery review could not be confirmed. No file was delivered; review the inputs again.'); }
+    } catch (error) {
+      if (sameDisplay()) {
+        if (error instanceof NurseryReferenceExportError && error.reason === 'unsupported-reference-glyph') {
+          setMessage('The PDF font cannot print a planned reference faithfully. No PDF was delivered. Download the transplant preparation CSV to retain its exact text.');
+        } else {
+          setCurrent(null); setMessage('The current nursery review could not be confirmed. No file was delivered; review the inputs again.');
+        }
+      }
     } finally {
       if (generation.current === turn) setBusy(false);
     }
@@ -462,7 +498,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
 
   return <section lang="en" aria-label="Own-input nursery review" className="space-y-3 rounded-xl border border-[var(--border)] p-3 text-sm">
     <div className="flex flex-wrap items-center justify-between gap-2">
-      <h4 className="font-semibold">Nursery requirements for this proposed plan</h4>
+      <h4 className="font-semibold">{props.savedReview ? 'Nursery requirements for saved planned batches' : 'Nursery requirements for this proposed plan'}</h4>
       <label className="flex items-center gap-2 text-xs">
         <span>Nursery units</span>
         <select
@@ -477,7 +513,9 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       </label>
     </div>
     {unitNote && <p role="status" className="text-xs text-[var(--gold)]">{unitNote}</p>}
-    <p>Use the equipment and recipes saved above. Dates and final plant positions come from this crop proposal. No sowing has been accepted or observed.</p>
+    <p>{props.savedReview
+      ? 'Use the equipment and recipes saved above. Dates and final plant positions come from saved planned cycles. Saving a plan does not record observed sowing or live nursery stock.'
+      : 'Use the equipment and recipes saved above. Dates and final plant positions come from this crop proposal. No sowing has been accepted or observed.'}</p>
     {sample && <p className="font-semibold">DEMO — example planning data</p>}
     <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={controls.settingsConfirmed} onChange={event => change({ ...controls, settingsConfirmed: event.target.checked })} />I have reviewed the saved nursery equipment, recipes and loss estimates.</label>
     {resources.length ? <ul>{resources.map(resource => <li key={resource.key}>{resource.name}: {resource.capacityLabel} allocated to this plan. This does not establish dated availability.</li>)}</ul> : <p>No saved nursery containers or surfaces for this source.</p>}
@@ -491,8 +529,8 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       {resourceRows('otherUses')}<button type="button" className={button} onClick={() => add('otherUses')}>Add competing nursery use</button>
       <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={controls.otherUsesConfirmed} onChange={event => change({ ...controls, otherUsesConfirmed: event.target.checked })} />I have listed all other nursery uses, including none if this list is empty.</label>
     </fieldset>
-    {props.review.request.reserved.length > 0 && <fieldset className="space-y-2 rounded-lg border border-[var(--border)] p-3"><legend>Known field occupations</legend>
-      <ul>{props.review.request.reserved.map(row => <li key={row.id}>{props.source.beds.find(bed => bed.id === row.bedId)?.label ?? 'Growing space'}: {row.window.state === 'provided' ? `${row.window.value.start} to before ${row.window.value.endExclusive}` : 'dates unknown'}.</li>)}</ul>
+    {fieldReservations.length > 0 && <fieldset className="space-y-2 rounded-lg border border-[var(--border)] p-3"><legend>Known field occupations</legend>
+      <ul>{fieldReservations.map(row => <li key={row.id}>{props.source.beds.find(bed => bed.id === row.bedId)?.label ?? 'Growing space'}: {row.window.state === 'provided' ? `${row.window.value.start} to before ${row.window.value.endExclusive}` : 'dates unknown'}.</li>)}</ul>
       <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={controls.fieldUsesConfirmed} onChange={event => change({ ...controls, fieldUsesConfirmed: event.target.checked })} />I accounted for nursery resources used by these existing field occupations.</label>
     </fieldset>}
     <button type="button" className={button} disabled={busy} onClick={() => void review()}>{busy ? 'Checking current nursery inputs…' : 'Review own nursery requirements'}</button>
@@ -520,6 +558,10 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
                 : metric.status === 'overflow' ? 'Total unavailable; review the input counts'
                   : `Unknown total; known subtotal ${metric.knownSubtotal === null ? 'Unknown' : quantity(metric.knownSubtotal)}`}</dd></div>)}</dl>
               <p>{group.members.length} represented {group.members.length === 1 ? 'batch' : 'batches'}. Counts already include the supplied loss estimates; do not apply them again.</p>
+              {props.savedReview && <ul className="space-y-2">{group.members.map((member, memberIndex) => <li key={member.batchId}>
+                <p>Represented batch {memberIndex + 1} · raising ends before {member.endDateExclusive} (exclusive, UTC).</p>
+                {referenceDetails(member.reference)}
+              </li>)}</ul>}
               {group.outsideReviewHorizon && <p>Some raising dates extend beyond the review horizon.</p>}
               {group.issues.length > 0 && <ul>{group.issues.map((issue, i) => <li key={i}>{issueText(issue)}</li>)}</ul>}
             </article>)}
@@ -531,12 +573,13 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
             </div>
           </>}
       </section>}
-      {!shown.result.batches.length && <p>This proposal has no transplant raising batch. Other nursery uses still need their own resource accounting.</p>}
+      {!shown.result.batches.length && <p>{props.savedReview ? 'These saved cycles have no represented transplant raising batch.' : 'This proposal has no transplant raising batch.'} Other nursery uses still need their own resource accounting.</p>}
       {shown.result.batches.map((batch, index) => {
         const footprintLabel = `Outer container footprint (${unit === 'metric' ? 'm²' : 'ft²'})`;
         return <article key={batch.id} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
-          <h6 className="font-semibold">Proposed raising batch {index + 1} · {batch.cropName}</h6>
+          <h6 className="font-semibold">{props.savedReview ? 'Saved planned' : 'Proposed'} raising batch {index + 1} · {batch.cropName}</h6>
           <p>{batch.bedIds.map(id => props.source.beds.find(bed => bed.id === id)?.label ?? 'Growing space').join(', ')}. {batch.startDate} to before {batch.endDateExclusive} (UTC).</p>
+          {props.savedReview && referenceDetails(batch.reference)}
           <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">{Object.entries({
             'Target final plants': batch.targetPositions,
             'Starts to raise': batch.starts,
