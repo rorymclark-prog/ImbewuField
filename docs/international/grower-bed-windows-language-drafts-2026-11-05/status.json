@@ -1,0 +1,25 @@
+{
+  "status": "unreviewed-ai-drafts",
+  "authorship": "AGY Flash; coordinator-authored source packet and review notes",
+  "sourcesCount": 12,
+  "candidatesCount": 84,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw",
+    "hi",
+    "bn",
+    "id"
+  ],
+  "sourceSha256": "96e69ce266789433482899ba88c3d9510f1309c03af3c059c42d6de0b69bb8d5",
+  "runtimeActivation": false,
+  "humanReview": false,
+  "coordinatorValidation": {
+    "pairs": 84,
+    "damagedControlsRejected": 19,
+    "notesWords": 139,
+    "semanticCertification": false
+  },
+  "provenanceNote": "Native reported174 notes words without execution; coordinator measured205, condensed and corrected the raised/measured conflation. Final coordinator note is139 words. No native app tests or runtime activation."
+}
