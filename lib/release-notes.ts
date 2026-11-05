@@ -88,6 +88,16 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Plan separate availability windows for each growing space',
   ], tour: [{ title: 'Plan separate availability windows for each growing space', where: 'Crop plan → Automatic plan from your estimates → Your available growing space', href: '/facilitator/crops',
     detail: 'Add and confirm separate date intervals for a saved bed or field plot. The planner keeps gaps unavailable and each crop cycle inside one interval; existing occupations remain checked.' }] },
+  { when: '5 November 2026', sha: '2fbfe97b5', changes: [
+    "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+  ] },
+  { when: '5 November 2026', sha: 'a5300d2f7', changes: [
+    'Important updates include a short animation you can pause and replay.',
+  ], tour: [{ title: 'Manage assistant access', where: 'Settings → Assistant connections',
+    href: '/connect/imbewu', preview: 'assistant-access',
+    detail: 'Review connected assistants, selected sites and imported originals.' },
+  { title: 'Check your saved map', where: 'Site design', href: '/design',
+    detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
   { when: '4 November 2026', sha: 'a412b28b7e', changes: [
     'Review saved invoice amounts by currency',
   ], tour: [{ title: 'Review saved invoice amounts by currency', where: 'Invoice → Saved → Summary currency', href: '/invoice',
@@ -119,7 +129,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     "New grower accounts can save personal designs without joining an organisation.",
   ], tour: [{ title: 'Choose units for your own estimates', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
     detail: 'Choose m² and kg or ft² and lb for your own density and harvest-weight estimates. Check the saved measurements, then review counts and dates; these are planned estimates, not verified local growing advice.' }] },
-
   { when: '4 November 2026', sha: '3eec3c0f0', changes: [
     'Print planned nursery batch cards with dates and separate seedling counts.',
   ], tour: [{ title: 'Print planned batch cards', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
@@ -158,6 +167,27 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Keep the nursery and harvest unit controls available after the same plan is saved again.',
     'See when you can reload saved settings or need to reopen the crop plan.',
   ] },
+  { when: '4 November 2026', sha: '0475b9af8', changes: [
+    "Sector maps use a quieter background and clearer sun, wind and fire marks.",
+  ] },
+  { when: '4 November 2026', sha: '1b083437b', changes: [
+    "Exact and illustrated Water maps now show the same water budget.",
+  ] },
+  { when: '4 November 2026', sha: '8f4314fb7', changes: [
+    "Zone maps trim blurry aerial edges when the photo covers the site.",
+  ] },
+  { when: '4 November 2026', sha: 'e5a41e808', changes: [
+    "Existing Site labels and legend now use matching symbols.",
+  ] },
+  { when: '4 November 2026', sha: 'be34f3601', changes: [
+    'Choose which saved sites an assistant can use, and disconnect it in Settings.',
+    'Keep original site photos and PDFs with their source and import history.',
+    'Review historical photo registration drafts without moving saved map features.',
+  ], tour: [{ title: 'Manage assistant access', where: 'Settings → Assistant connections',
+    href: '/connect/imbewu',
+    detail: 'Review connected assistants, selected sites and imported originals.' },
+  { title: 'Check your saved map', where: 'Site design', href: '/design',
+    detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
   { when: '3 November 2026', sha: '22f1408d5', changes: [
     'Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.',
     'Keep buyer entries when a save cannot be confirmed.',
@@ -197,10 +227,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Check dated nursery tray and surface needs before downloading your review.',
   ], tour: [{ title: 'Review a crop plan from your estimates', where: 'Crop planner → Automatic plan from your estimates', href: '/facilitator/crops',
     detail: 'Check your saved design, confirm availability and match buyer targets to your growing estimates. Review the proposed cycles and nursery needs; your saved sowings remain unchanged.' }] },
-  { when: '2 November 2026', sha: '12b0acba4', changes: [
-    'Save your own growing estimates and review capacity and dates for measured beds.',
-  ], tour: [{ title: 'Review your growing estimates', where: 'Crop planner → Your growing estimates', href: '/facilitator/crops',
-    detail: 'Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.' }] },
   { when: '3 November 2026', sha: '58a25f4bc', changes: [
     'Confirm a mapped site’s country before using its crop-planning guidance.',
     'Keep your sowing records and nursery equipment while local planning is unavailable.',
@@ -208,6 +234,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.' },
   { title: 'Review an unmapped reference', where: 'Crop planner → Planning without a mapped site', href: '/facilitator/crops',
     detail: 'For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.' }] },
+  { when: '2 November 2026', sha: '12b0acba4', changes: [
+    'Save your own growing estimates and review capacity and dates for measured beds.',
+  ], tour: [{ title: 'Review your growing estimates', where: 'Crop planner → Your growing estimates', href: '/facilitator/crops',
+    detail: 'Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.' }] },
   { when: '3 November 2026', sha: '80eb2f0b5', changes: [
     "Open Terrain & Sections for the two cuts and extra contour detail.",
   ] },

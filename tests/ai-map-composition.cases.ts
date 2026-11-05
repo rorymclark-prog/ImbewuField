@@ -6,9 +6,10 @@ import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtwo
 import { PHASING_ARTWORK_PROMPT_MARKER, buildPhasingRestylePrompt } from '../lib/producer-prompt.ts';
 import { UBHEJANE_BEFORE_WORKS, historicalBaselineForSite, historicalBaselineFromPrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, historicalBaselinePrompt } from '../lib/historical-map-baseline.ts';
 import { createHash } from 'node:crypto';
-import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, rasterTerrainContours, fetchProfileTerrain, TERRAIN_CONTOUR_INK } from '../lib/sheet-terrain-profile.ts';
+import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, rasterTerrainContours, fetchProfileTerrain, TERRAIN_CONTOUR_INK, TERRAIN_SUPPLEMENTAL_INK } from '../lib/sheet-terrain-profile.ts';
 import { terrainPixel, terrainRasterWindow, extractTerrainRaster, sampleTerrainRaster, type TerrainRaster } from '../lib/terrain-raster.ts';
-import { makeMercatorUnprojector } from '../lib/design-canvas.ts';
+import { clampBaseNudge, clampBaseRotation, clampBaseScale, designBaseMode, makeMercatorUnprojector, pointInRing } from '../lib/design-canvas.ts';
+import { resolveBaseAlign } from '../lib/base-photo-align.ts';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
@@ -334,7 +335,11 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
       compositeAccurateMap:async(options:any)=>{calls.push(['composite',options]);return 'composite';},burnPaintedBoundary:async()=> 'bounded',
       burnExactLabelLayer:async(map:string)=>({map}),
       composeStyleSheet:async(...args:unknown[])=>{calls.push(['chrome',...args]);return 'sheet';},
-      REFERENCE_SHEET_LABEL:{all:'Whole',water:'Water'},waterReferenceFooterText:()=> 'Water notes',
+      REFERENCE_SHEET_LABEL:{all:'Whole',water:'Water'},
+      waterReferenceFooter:()=>({footerText:'Water notes',footerFacts:['Roof','Yield','Storage']}),
+      waterTerrainFlowArrows:()=>['saved-terrain-flow'],
+      buildWaterPlanOverlay:(...args:unknown[])=>{calls.push(['water-overlay',...args]);return 'saved-water-overlay';},
+      waterFlowLegendRows:(arrows:unknown[])=>arrows.map(()=>({text:'Terrain flow'})),
     });
     assert.equal(await finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false),'sheet',engine);
     const restore=calls.find(c=>c[0]==='restore')!;
@@ -369,6 +374,10 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
     await finish('model','water',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,
       scene,()=>false,'new illustrated-property contract',reference);
     const waterComposite=calls.find(c=>c[0]==='composite')![1] as any;
+    assert.deepEqual(calls.find(c=>c[0]==='water-overlay')?.at(-1),['saved-terrain-flow'],
+      'the illustration draws the saved routes and the same terrain-flow field as the exact plan');
+    assert.deepEqual((calls.find(c=>c[0]==='chrome')?.at(-1) as any).extraLegendRows,[{text:'Terrain flow'}],
+      'the key explains the flow arrows drawn over the painting');
     assert.equal(waterComposite.contextTreatment,hasPhoto?'precision_atlas':'original',
       'plain paper must not receive the photographic palette treatment');
     assert.equal(Boolean(waterComposite.focusBoundaryPx),hasPhoto,
@@ -474,27 +483,37 @@ function artProbe() {
   return {ctx,canvas,calls};
 }
 
-test('Sector keeps paid colour and contrast while exact analysis still uses its quiet factual base', async () => {
+test('illustrated Sector retains artwork colour, registration and the separate exact factual base', async () => {
   const probe=artProbe(),p={state:{items:[],lines:[],zones:[]},frame:{imgW:100,imgH:120,mPerPx:1,satDataUrl:'photo'},
     refLayers:{boundary:[],house:[],driveway:[]}};
-  let quiet=0,options:any;
+  // The coordinator selected researched sample C within Rory's instruction to decide.
+  // Its original colour supersedes the muted-A claim; exact output and registration still bind.
+  const pixels=new Uint8ClampedArray([35,90,45,255,255,255,255,255]);
+  probe.ctx.getImageData=()=>({data:pixels});
+  const before=JSON.stringify(p);
+  let quiet=0,options:any,released=0;
   const compose=helper('composeSectorSheet',{
+    drawSectorArtworkContext:helper('drawSectorArtworkContext',{}),releaseImageSource:()=>{released++;},
     SCALE:1,document:{createElement:()=>probe.canvas},boundaryPresentationContext:async()=>p,
     fetchSectorPresentationContours:async()=>({lines:[]}),loadImage:async(src:string)=>({src}),
-    drawPaperWash:()=>{throw Error('a paid illustration must not receive the photo veil');},
     drawAnalysisBase:async()=>{quiet++;},authoritativeHouseFootprints:()=>[],drawBlueprintBoundary:()=>{},
-    BOUNDARY_LINE_GREEN:'#95B34F', TERRAIN_CONTOUR_INK,
+    BOUNDARY_LINE_GREEN:'#95B34F', TERRAIN_CONTOUR_INK, TERRAIN_SUPPLEMENTAL_INK,
     drawSectorAnalysis:()=>({rows:[{color:'#95B34F',label:'Site boundary',style:'line'}],contextLabel:'Evidence',noteText:'Real analysis'}),
     drainCanvasToDataUrl:()=> 'map-art',composeStyleSheet:async(...args:any[])=>{options=args.at(-1);return 'sheet';},
   });
   await compose('painted-result',p.state,p.frame,p.refLayers,null,'Fictional');
   assert.ok(probe.calls.some(c=>c[0]==='drawImage'&&c[1].src==='painted-result'));
-  assert.ok(!probe.calls.some(c=>c[0]==='set'&&c[1]==='filter'),'AI materials must not be desaturated again');
+  const draw=probe.calls.find(c=>c[0]==='drawImage'&&c[1].src==='painted-result');
+  assert.deepEqual(draw?.slice(2),[0,0,100,120],'same source, frame and scale');
+  assert.deepEqual([...pixels.slice(0,4)],[35,90,45,255],'the retained artwork must keep its original colour');
+  assert.deepEqual([...pixels.slice(4)],[255,255,255,255],'unknown archive coverage stays white');
+  assert.equal(released,1,'the source image is released after composition');
   assert.equal(options.aiArtwork,true,'the download must disclose AI artwork');
   assert.equal(options.legendRows[0].lineKind,'fence','the key must match the green survey boundary rather than a beige pipe');
   await compose(null,p.state,p.frame,p.refLayers,null,'Fictional');
   assert.equal(quiet,1,'the exact renderer still owns its factual base');
   assert.equal(options.aiArtwork,false);
+  assert.equal(JSON.stringify(p),before,'presentation must not alter the frozen site');
 });
 
 test('new Phasing artwork keeps model materials, exact phase positions and the saved source unchanged', async () => {
@@ -667,6 +686,7 @@ test('historical photo markers follow the photograph crop instead of projecting 
 test('historical photo inventory and map use the same eight numbered landmarks without covering them with long plaques', () => {
   const probe=artProbe(),pins:any[]=[];
   const draw=helper('drawHistoricalPhotoFacts',{historicalPresentationPhotoPoint:(_s:any,_f:any,_r:any,p:any)=>p,
+    strokeHistoricalLine:()=>{},
     drawHistoricalPhotoPin:(...args:any[])=>pins.push(args)});
   const b={features:UBHEJANE_BEFORE_WORKS.features.map((v,i)=>({...v,point:[i/10,i/20]})),fence:[[0,0],[1,1]]};
   draw(probe.ctx,{}, {},{},100,200,b);assert.deepEqual(pins.map(v=>[v[1],v[2],v[4]]),b.features.map((v,i)=>[v.point[0]*100,v.point[1]*200,i+1]));
@@ -684,12 +704,79 @@ test('the paid historical coverage mask uses the same crop as photo annotations'
 
 test('named historical areas have readable leader labels and keep the photo facts and geometry unchanged', () => {
   const probe=artProbe(),b=UBHEJANE_BEFORE_WORKS,before=JSON.stringify(b);let pins=0;probe.ctx.measureText=(text:string)=>({width:text.length*20});
-  const draw=helper('drawHistoricalPhotoFacts',{SHEET_BODY_FONT:'Arial',historicalPresentationPhotoPoint:(_s:any,_f:any,_r:any,p:any)=>[p[0]/4000,p[1]/3000],drawHistoricalPhotoPin:()=>{pins++;}});
+  const marks:string[]=[];
+  const draw=helper('drawHistoricalPhotoFacts',{SHEET_BODY_FONT:'Arial',historicalPresentationPhotoPoint:(_s:any,_f:any,_r:any,p:any)=>[p[0]/4000,p[1]/3000],drawHistoricalPhotoPin:()=>{pins++;},
+    strokeHistoricalLine:()=>{},drawHistoricalFeatureSymbol:(_ctx:any,id:string)=>marks.push(id)});
   draw(probe.ctx,{},{},{},1200,1000,b,true,true);
   const text=probe.calls.filter(v=>v[0]==='fillText').map(v=>v[1]);assert.deepEqual(text,['Classroom 1','Classroom 2','Bare slab','Play area','Toilet','Water tank','Dirt road','Fence']);
   assert.equal(pins,0,'names must not leave misleading number-only pins behind');
   assert.equal(probe.calls.filter(v=>v[0]==='strokeRect').length,8,'every name has a light backing, not lettering lost against grass');
+  assert.deepEqual(marks,b.features.map(feature=>feature.id),'every named callout uses the matching key symbol');
   assert.equal(JSON.stringify(b),before,'moving label placement cannot move source facts');
+});
+
+test('Zones can hide fallback photo strips only when the same registered crop holds every plotted point', () => {
+  const crop = { cropX: 0.2, cropY: 0, cropWidth: 0.6, cropHeight: 1, imgH: 1000 };
+  const boundary: Point[] = [[0.3, 0.2], [0.7, 0.2], [0.7, 0.8], [0.3, 0.8]];
+  const refs = { boundary, house: [], driveway: [] };
+  const frame = { imgW: 1000, imgH: 1000, satDataUrl: 'photo', underlayDataUrl: 'satellite' };
+  const state = { baseMode: 'photo', customBase: { scale: 0.8 }, zones: [], lines: [] };
+  const matte = helper('zonePhotoMatte', {
+    SCALE: 2, clampBaseNudge, clampBaseRotation, clampBaseScale, designBaseMode, resolveBaseAlign,
+    presentationExtentRing: () => boundary,
+    calculateBoundaryPresentationLayout: () => crop,
+  });
+  const before = JSON.stringify({ state, frame, refs });
+  const result = matte(state, frame, refs);
+  assert.ok(Math.abs(result.top - 0.101) < 1e-9 && Math.abs(result.bottom - 0.899) < 1e-9);
+  assert.deepEqual(matte(state, { ...frame, underlayDataUrl: undefined }, refs, 'photo'), result,
+    'the frozen job carries the source choice even after its underlay URL is detached');
+  assert.equal(matte(state, { ...frame, satDataUrl: 'satellite' }, refs), undefined);
+  assert.equal(matte(state, frame, refs, 'satellite'), undefined);
+  assert.equal(matte({ ...state, zones: [{ points: [[0.4, 0.08]] }] }, frame, refs), undefined,
+    'the matte must never hide a saved zone vertex');
+  assert.equal(matte({ ...state, customBase: { scale: 1 } }, frame, refs), undefined,
+    'an entirely covered frame keeps its full image');
+  assert.equal(JSON.stringify({ state, frame, refs }), before);
+});
+
+test('Zone 0 uses the case-study wording only when its saved area contains both named features', () => {
+  const box = (x: number, y: number, d: number): Point[] => [[x, y], [x + d, y], [x + d, y + d], [x, y + d]];
+  const classroom = { feature: 'house', name: 'Classroom', points: box(0.2, 0.2, 0.1) };
+  const play = { feature: 'patio', name: 'Slab & Flat Play Area', points: box(0.5, 0.5, 0.1) };
+  const zone = { zone: 0, points: box(0.1, 0.1, 0.6) };
+  const label = helper('caseStudyZoneZeroLabel', { UBHEJANE_BEFORE_WORKS, pointInRing, centroidOf: helper('centroidOf', {}) });
+  const state = { siteId: UBHEJANE_BEFORE_WORKS.siteId, zones: [classroom, play, zone] };
+  assert.equal(label(state), 'Zone 0 — Classroom & play courtyard');
+  assert.equal(label({ ...state, siteId: 'another-farm' }), undefined);
+  assert.equal(label({ ...state, zones: [classroom, play, { ...zone, points: box(0.1, 0.1, 0.3) }] }), undefined);
+});
+
+test('the Zones north arrow clears the photo matte with room for the N', () => {
+  let arrow: number[] = [];
+  const paint = helper('drawSheetNorthArrow', { drawImplNorthArrow: (_ctx: unknown, ...args: number[]) => { arrow = args; } });
+  paint({}, 0, 1000, 1100, 0.065);
+  assert.ok(arrow[1] - arrow[2] * 0.75 > 1100 * 0.065, 'the letter must not straddle the photo edge');
+  paint({}, 0, 1000, 1100);
+  assert.equal(arrow[1], 88, 'unmatted sheets retain their north-arrow placement');
+});
+
+test('the historical legend repeats callout symbols and distinguishes the photographed fence from the design extent', () => {
+  const ink='#95B34F';
+  const strokeHistoricalLine=helper('strokeHistoricalLine',{BOUNDARY_LINE_GREEN:ink});
+  const drawHistoricalFeatureSymbol=helper('drawHistoricalFeatureSymbol',{strokeHistoricalLine});
+  const draw=helper('drawStyleLegendSymbol',{drawHistoricalFeatureSymbol,strokeHistoricalLine});
+  const first=artProbe(),second=artProbe(),fence=artProbe(),extent=artProbe();
+  draw(first.ctx,{historicalFeature:'classroom-1'},0,10,20,20);
+  draw(second.ctx,{historicalFeature:'classroom-2'},0,10,20,20);
+  assert.deepEqual(first.calls,second.calls,'the same roof glyph represents both classrooms');
+  assert.ok(first.calls.some(call=>call[0]==='lineTo'),'the classroom symbol must actually draw');
+  draw(fence.ctx,{historicalFeature:'fence'},0,10,20,20);
+  draw(extent.ctx,{visual:'historical-extent'},0,10,20,20);
+  assert.ok(fence.calls.some(call=>call[0]==='set'&&call[1]==='strokeStyle'&&call[2]==='#79583B'));
+  assert.deepEqual(fence.calls.filter(call=>call[0]==='setLineDash').at(-1)?.[1],[]);
+  assert.ok(extent.calls.some(call=>call[0]==='set'&&call[1]==='strokeStyle'&&call[2]===ink));
+  assert.ok(extent.calls.some(call=>call[0]==='setLineDash'&&call[1].length===2));
 });
 
 test('regional Sector overview does not advertise fine encoded height steps as ground accuracy', () => {
@@ -714,6 +801,25 @@ test('Sector contour geography uses the original saved frame and only crops the 
     calculateBoundaryPresentationLayout:()=>({cropX:.2,cropY:.1,cropWidth:.5,cropHeight:.6}),paidApiHeaders:async()=>({Authorization:'owner'}),
     fetchSheetContours:async(f:any,b:any)=>{assert.equal(f,frame);assert.equal(b,refs.boundary);queried=true;return{status:'ok',source:'mapbox-terrain-rgb',intervalM:1,lines:[{elevM:105,points:[[.3,.4],[.6,.7]]}]};}});
   const out=await run(state,frame,refs,null);assert.equal(queried,true);assert.equal(out.intervalM,5);assert.deepEqual(out.lines[0].points,[[.19999999999999996,.5000000000000001],[.7999999999999999,1]]);
+});
+
+test('illustrated Sector adds only raster-supported supplemental contours and falls back without pixels', async () => {
+  const frame={imgW:960,imgH:640,mPerPx:.24},refs={boundary:[[.3,.3],[.7,.3],[.7,.8],[.3,.8]]},state={items:[],lines:[],zones:[]};
+  const raw={status:'ok',source:'mapbox-terrain-rgb',intervalM:1,lines:[{elevM:105,points:[[.3,.4],[.6,.7]],major:false}]};
+  const detail=[{elevM:102.5,points:[[.4,.5],[.6,.6]],major:false},{elevM:105,points:[[.3,.4],[.6,.7]],major:true}];
+  const before=JSON.stringify({state,frame,refs,raw,detail});let pixels:any={source:'actual-pixel-fixture'},pixelQueries=0;
+  const run=helper('fetchSectorPresentationContours',{SCALE:3,sectorOverviewContours,presentationExtentRing:()=>refs.boundary,
+    calculateBoundaryPresentationLayout:()=>({cropX:.2,cropY:.1,cropWidth:.5,cropHeight:.6}),paidApiHeaders:async()=>({}),
+    fetchSheetContours:async()=>raw,
+    fetchProfileTerrain:async(f:any,b:any)=>{assert.equal(f,frame);assert.equal(b,refs.boundary);pixelQueries++;return pixels;},
+    rasterTerrainContours:(r:any,b:any,f:any)=>{assert.equal(r,pixels);assert.equal(b,refs.boundary);assert.equal(f,frame);return detail;}});
+  const exact=await run(state,frame,refs,null);assert.equal(pixelQueries,0,'exact overview must not request extra terrain');
+  assert.equal(exact.intervalM,5);assert.deepEqual(exact.lines.map((l:any)=>l.elevM),[105]);
+  const illustrated=await run(state,frame,refs,null,true);assert.equal(pixelQueries,1);assert.equal(illustrated.intervalM,2.5);
+  assert.deepEqual(illustrated.lines.map((l:any)=>l.elevM),[102.5,105]);
+  assert.deepEqual(illustrated.lines[0].points,[[.4,.6666666666666667],[.7999999999999999,.8333333333333334]]);
+  pixels=null;const fallback=await run(state,frame,refs,null,true);assert.equal(fallback.intervalM,5);assert.deepEqual(fallback.lines,exact.lines);
+  assert.equal(JSON.stringify({state,frame,refs,raw,detail}),before,'presentation must not mutate source or saved geometry');
 });
 
 test('Structures recovery adds only recorded permeable shade covers while retaining painted beds and saved dimensions', () => {

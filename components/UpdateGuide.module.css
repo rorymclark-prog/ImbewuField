@@ -3,12 +3,12 @@
   right: max(0.75rem, env(safe-area-inset-right));
   top: max(0.75rem, env(safe-area-inset-top));
   z-index: 10001;
-  width: min(22rem, calc(100vw - 1.5rem));
-  max-height: min(22rem, calc(100dvh - var(--bottom-nav-height) - 1.5rem));
+  width: min(30rem, calc(100vw - 1.5rem));
+  max-height: min(44rem, calc(100dvh - var(--bottom-nav-height) - 1.5rem));
   overflow-y: auto;
   padding: 0.9rem 1rem;
   border: 1px solid #c7b99e;
-  border-radius: 0.9rem;
+  border-radius: 1.5rem;
   background: #fffcf5;
   color: #20190f;
   box-shadow: 0 8px 28px rgba(32, 25, 15, 0.22);

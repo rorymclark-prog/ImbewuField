@@ -80,6 +80,10 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
   const transferHolds = new Map<string, { context: ProtectedStorageContext; reason: string }>();
   const pending = new Map<string, { context: ProtectedStorageContext; promise: Promise<ProtectedStorageStatus> }>();
   let leaseGeneration = 0;
+  function contextWithinGeneration(generation: number, context: ProtectedStorageContext): boolean {
+    // A context read can withdraw document access while still returning true.
+    return generation === leaseGeneration && context.isCurrent() && generation === leaseGeneration;
+  }
   let lifecycleWindow: Window | null = null;
   const lifecycleChanged = () => releaseAllDocumentLeases();
   function observeLifecycle(): void {
@@ -309,7 +313,7 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
     }; });
     pending.set(context.canonicalKey, { context, promise: result });
     const generation = leaseGeneration, requestedContext = context;
-    const guarded: ProtectedStorageContext = { ...context, isCurrent: () => generation === leaseGeneration && requestedContext.isCurrent() };
+    const guarded: ProtectedStorageContext = { ...context, isCurrent: () => contextWithinGeneration(generation, requestedContext) };
     void locks.request(lockName(context), { mode: 'exclusive', ifAvailable: true }, async lock => {
       if (!lock) { resolve(held('another-writer')); return; }
       let lease: Lease | undefined;
@@ -344,7 +348,7 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
     if (!locks || context.sample || ownsLease(context)) return held('recovery-unavailable');
     observeLifecycle();
     const generation = leaseGeneration, original = context;
-    context = { ...context, isCurrent: () => generation === leaseGeneration && original.isCurrent() };
+    context = { ...context, isCurrent: () => contextWithinGeneration(generation, original) };
     try {
       return await locks.request(lockName(context), { mode: 'exclusive', ifAvailable: true }, lock => {
         if (!lock) return held('another-writer');
@@ -409,8 +413,8 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
     if (!locks || source.sample || target.sample || source.storage !== target.storage || source.canonicalKey === target.canonicalKey) return { status: 'held', reason: 'transfer-unavailable' };
     observeLifecycle();
     const generation = leaseGeneration, originalSource = source, originalTarget = target;
-    source = { ...source, isCurrent: () => generation === leaseGeneration && originalSource.isCurrent() };
-    target = { ...target, isCurrent: () => generation === leaseGeneration && originalTarget.isCurrent() };
+    source = { ...source, isCurrent: () => contextWithinGeneration(generation, originalSource) };
+    target = { ...target, isCurrent: () => contextWithinGeneration(generation, originalTarget) };
     const ordered = [source, target].sort((a, b) => a.canonicalKey.localeCompare(b.canonicalKey));
     if (ordered.some(c => ownsLease(c))) return { status: 'held', reason: 'document-lease-active' };
     try {
@@ -500,7 +504,8 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
     const proof = legacyReviews.get(review);
     if (!proof || proof.consumed || proof.generation !== leaseGeneration || !context || context.sample || readStorage(context).reason === 'write-unconfirmed' || readStorageTransferHold(context) || !sameContext(proof.context, context)
       || !proof.context.isCurrent() || !context.isCurrent() || !same(proof.snapshot, capture(context))) return null;
-    return proof;
+    // The capture and context callbacks above can invalidate this same review.
+    return proof.generation === leaseGeneration && !proof.consumed ? proof : null;
   }
   function legacyReviewIsCurrent(review: object, context: ProtectedStorageContext | null = makeBrowserStorageContext()): boolean {
     try { return !!currentReview(review, context); } catch { return false; }
@@ -562,7 +567,7 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
         // an automatic retry. Its receipt can become superseded independently.
         let confirmed = false;
         try { confirmed = proof.generation === leaseGeneration && same(expected, capture(context))
-          && sourceIsCurrent() && context.isCurrent(); } catch { /* The write completed; only its confirmation failed. */ }
+          && sourceIsCurrent() && contextWithinGeneration(proof.generation, context); } catch { /* The write completed; only its confirmation failed. */ }
         if (!confirmed) return unconfirmed();
         emit(); return { status: 'kept' };
       };

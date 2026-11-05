@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "sourceKind": "frozen-current-main-sector-release-literal",
+  "mainCommit": "9c8289ff43ee2977904f3ba86de1c9923534b131",
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "ae736689b0d2e2f1ba7879b898b8349f573b3f9fefe45a4580697cf5fb09aada",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "messages": [
+    {
+      "key": "integrationSectorRelease.message.01",
+      "english": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+      "messageSha256": "3738fb72f3f31da8311e7854f3b400559e82b1e939882883f7a15825c79d58ea"
+    }
+  ]
+}

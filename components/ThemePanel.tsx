@@ -480,6 +480,7 @@ export default function ThemePanel({ open, onClose }: Props) {
             <Link href="/tour" onClick={onClose}>{t('settingsTourSamples')}</Link>
             <Link href="/samples" onClick={onClose}>{t('settingsChooseWorkspace')}</Link>
             <Link href="/samples/gardens" onClick={onClose}>{t('settingsBrowseGardens')}</Link>
+            <Link href="/connect/imbewu" onClick={onClose}>Assistant connections</Link>
             <Link href="/feedback" onClick={onClose}>{t('settingsFeedback')}</Link>
           </section>
 

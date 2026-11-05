@@ -1,5 +1,17 @@
 # ImbewuField audit archive
 
+Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Required release checks and normal published-host login remain open.
+
+Latest assistant identity continuation — [MCP display name, published sprout and private listing — 4 November 2026](2026-11-04/assistant-connector-branding-codex.md). Native authentication follows the separate callback release.
+
+Latest assistant connector continuation — [Production release and desktop callback preservation — 4 November 2026](2026-11-04/assistant-connector-loopback-codex.md). Native plugin verification remains open.
+
+Latest Water follow-up is [Budget figures and illustrated route review — 4 November 2026](2026-11-04/water-budget-route-review-codex.md).
+
+Latest Water review is [One budget for exact and illustrated maps — 3 November 2026](2026-11-03/water-shared-budget-codex.md).
+Latest Zone review is [Photo coverage, zone key and the first Water comparison — 3 November 2026](2026-11-03/zone-photo-coverage-codex.md).
+Latest Existing Site follow-up is [Matching area and legend symbols — 3 November 2026](2026-11-03/existing-site-symbol-key-codex.md).
+
 Latest Terrain & Sections continuation: [Separate detail sheet and contour hierarchy — 3 November 2026](2026-11-03/terrain-section-contour-detail-codex.md). Map 02 remains the overview.
 
 Latest Sector continuation: [Downhill and classroom sections, lighter paid Sector finish — 3 November 2026](2026-11-03/downhill-sections-sector-finish-codex.md). Separates A–B downhill from C–D classroom cut.
@@ -24,6 +36,12 @@ record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
+
+Latest Sector implementation: [Actual rich-aerial C and release continuation — 5 November 2026](2026-11-05/sector-rich-aerial-release-codex.md). Release evidence is recorded on PR #1274 and issue #35.
+
+Latest Sector samples: [Illustrated graphics, stronger contours and three context treatments — 5 November 2026](2026-11-05/sector-illustrated-graphics-codex.md). Draft comparison, not a production release.
+
+Latest Sector comparison: [Muted context, clearer analytical marks and unannotated polish input — 4 November 2026](2026-11-04/sector-calm-context-codex.md). Local native draft; release evidence is separate.
 
 Latest live output review: [Three fresh AI results and Earthworks starting-image correction — 31 October 2026](2026-10-31/live-ai-map-settings-review-codex.md). Remaining live tests need the owner browser connection restored.
 
@@ -166,8 +184,13 @@ This convention applies to both Claude and Codex. The source lives in Git, so it
 is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
+## Assistant connector: start here
+
+[ImbewuField connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md). Native linking and production deployment are separate gates from the verified emulator and browser journey.
+
 ## Date index
 
+- [Assistant connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md).
 - [Recorded shade cover recovery — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md).
 
 - [Sector DEM alignment and regional A–B profile — 3 November 2026](2026-11-03/sector-terrain-profile-codex.md).

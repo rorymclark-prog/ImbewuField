@@ -27,7 +27,7 @@
  * not already in the reader's hands. That is here.
  */
 
-import type { UserRole } from './db/types';
+import type { UserRole } from './user-role';
 
 /** The caller's own profile, loaded server-side. Never assembled from request input. */
 export interface CallerProfile {

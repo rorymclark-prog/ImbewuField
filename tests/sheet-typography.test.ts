@@ -129,34 +129,103 @@ test('a phasing week baseline clears the chip by the week font ascent', () => {
   assert.doesNotMatch(block, /lineH \* 0\.35/);
 });
 
-test('sector labels sit directly on the photograph with a dark halo, never an opaque chip', () => {
-  const labelStart = SOURCE.indexOf('const labelAt =');
-  const directStart = SOURCE.indexOf('const directLabelAt =', labelStart);
-  const directFlushStart = SOURCE.indexOf('const flushDirectLabels =', directStart);
-  const paletteStart = SOURCE.indexOf('// Regional-assumption palette', directFlushStart);
-
-  assert.ok(labelStart >= 0 && directStart > labelStart, 'legacy sector label painter exists');
-  assert.ok(directFlushStart > directStart && paletteStart > directFlushStart, 'composed sector label painter exists');
-
-  const legacyPainter = SOURCE.slice(labelStart, directStart);
-  const composedPainter = SOURCE.slice(directFlushStart, paletteStart);
-
-  for (const [name, painter] of [
-    ['legacy', legacyPainter],
-    ['composed', composedPainter],
-  ] as const) {
-    const strokeAt = painter.indexOf('strokeText(');
-    const fillAt = painter.indexOf('fillText(');
-    assert.ok(strokeAt >= 0, `${name} sector labels draw a halo`);
-    assert.ok(fillAt > strokeAt, `${name} sector labels paint coloured text over the halo`);
-    assert.doesNotMatch(
-      painter,
-      /(?:fill|stroke)(?:Rect|RoundRect)|roundRect\(/,
-      `${name} sector labels must not punch an opaque chip through the aerial`,
-    );
+test('plain sector labels retain dark halos while illustrated cards back their unchanged wording', () => {
+  // Main deliberately added measured cards to the illustrated edition. The first
+  // fillText in that branch says nothing about the separate plain-label halo.
+  // Execute each real arrow painter instead of comparing unrelated source offsets.
+  const tree = ts.createSourceFile('DesignGlossy.tsx', SOURCE, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  function arrow(name: string) {
+    const found: ts.Expression[] = [];
+    function visit(node: ts.Node) {
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name && node.initializer) found.push(node.initializer);
+      ts.forEachChild(node, visit);
+    }
+    visit(tree); assert.equal(found.length, 1, `${name} has one real paint authority`);
+    assert.ok(ts.isArrowFunction(found[0])); return found[0].getText(tree);
   }
-
-  assert.match(composedPainter, /lineJoin = 'round'/, 'wide composed-label halos keep soft corners');
+  // Damage only in-memory source, using actual call nodes so formatting changes
+  // cannot turn a negative control into an unchanged copy of the good painter.
+  function omitCalls(expression: string, method: 'strokeText' | 'fill', firstOnly = false) {
+    const prefix = 'const painter = ', parsed = ts.createSourceFile('painter.ts', prefix + expression + ';', ts.ScriptTarget.Latest, true);
+    const calls: ts.CallExpression[] = [];
+    function visit(node: ts.Node) {
+      if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)
+        && ts.isIdentifier(node.expression.expression) && node.expression.expression.text === 'ctx' && node.expression.name.text === method) calls.push(node);
+      ts.forEachChild(node, visit);
+    }
+    visit(parsed); assert.ok(calls.length > 0, `the ${method} negative control must remove a real call`);
+    let damaged = expression;
+    for (const call of (firstOnly ? calls.slice(0, 1) : calls).reverse()) {
+      const start = call.getStart(parsed) - prefix.length, end = call.end - prefix.length;
+      damaged = damaged.slice(0, start) + 'void 0' + damaged.slice(end);
+    }
+    assert.notEqual(damaged, expression); return damaged;
+  }
+  type Rect = { x: number; y: number; w: number; h: number };
+  type Event = { kind: string; text?: string; x?: number; y?: number; ink?: string; lineJoin?: string; rect?: Rect };
+  const lines = ['Summer sun', 'Source wording'], color = '#386144';
+  function paint(name: 'labelAt' | 'flushDirectLabels', artFinish: boolean, expression = arrow(name)) {
+    const events: Event[] = [], saved: Array<{ fillStyle: string; strokeStyle: string; lineJoin: string }> = [];
+    let currentPath: Rect | undefined;
+    const ctx = {
+      fillStyle: '', strokeStyle: '', lineJoin: 'miter', font: '',
+      save() { saved.push({ fillStyle: this.fillStyle, strokeStyle: this.strokeStyle, lineJoin: this.lineJoin }); },
+      restore() { Object.assign(this, saved.pop()); },
+      measureText: (text: string) => ({ width: text.length * 9 }),
+      fill() { events.push({ kind: 'fill', ink: this.fillStyle, rect: currentPath }); },
+      stroke() { events.push({ kind: 'stroke', ink: this.strokeStyle, rect: currentPath }); },
+      fillRect(x: number, y: number, w: number, h: number) { events.push({ kind: 'rectangle', rect: { x, y, w, h } }); },
+      strokeRect(x: number, y: number, w: number, h: number) { events.push({ kind: 'rectangle', rect: { x, y, w, h } }); },
+      roundRect(x: number, y: number, w: number, h: number) { currentPath = { x, y, w, h }; events.push({ kind: 'rectangle', rect: currentPath }); },
+      strokeText(text: string, x: number, y: number) { events.push({ kind: 'outline', text, x, y, ink: this.strokeStyle, lineJoin: this.lineJoin }); },
+      fillText(text: string, x: number, y: number) { events.push({ kind: 'text', text, x, y, ink: this.fillStyle }); },
+    };
+    const scope = { ctx, externalLegend: name === 'flushDirectLabels', rowH: 30, claimed: [],
+      SHEET_BODY_FONT: 'Public Sans', REFERENCE_LABEL_FONT: 'Public Sans', W: 1200, H: 1200, arrowClaims: [], artFinish,
+      directLabelRequests: [{ x: 500, y: 500, lines: [...lines], color }],
+      roundRectPath(_context: unknown, x: number, y: number, w: number, h: number) { currentPath = { x, y, w, h }; events.push({ kind: 'rectangle', rect: currentPath }); },
+      // These are separate icon authorities, outside this label-order check.
+      drawIllustratedSectorSun() {}, drawIllustratedSectorFlame() {}, drawStyleLegendSymbol() {},
+    };
+    const javascript = ts.transpileModule('return (' + expression + ');', { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
+    const painter = new Function(...Object.keys(scope), javascript)(...Object.values(scope));
+    if (name === 'labelAt') painter(500, 500, lines[0], color); else painter();
+    return events;
+  }
+  function halo(events: Event[], expected: string[], softCorners: boolean) {
+    const text = events.filter(event => event.kind === 'text');
+    assert.deepEqual(text.map(event => event.text), expected, 'plain paint preserves all original wording');
+    for (const glyph of text) {
+      const outline = events.slice(0, events.indexOf(glyph)).find(event => event.kind === 'outline'
+        && event.text === glyph.text && event.x === glyph.x && event.y === glyph.y);
+      assert.ok(outline, 'each coloured glyph needs its own earlier halo at the same anchor');
+      assert.match(outline.ink!, /^rgba\(8,/, 'plain labels retain dark halos');
+      assert.equal(glyph.ink, color);
+      if (softCorners) assert.equal(outline.lineJoin, 'round', 'wide composed-label halos keep soft corners');
+    }
+    assert.equal(events.some(event => ['rectangle', 'fill', 'stroke'].includes(event.kind)), false,
+      'plain sector labels must not punch an opaque chip through the aerial');
+  }
+  function card(events: Event[]) {
+    const text = events.filter(event => event.kind === 'text');
+    assert.deepEqual(text.map(event => event.text), lines, 'illustrated title/detail retain the original wording');
+    const backing = events.find(event => event.kind === 'fill' && event.ink === '#FFFFFF');
+    assert.ok(backing?.rect, 'the white measured backing is distinct from the coloured accent paint');
+    for (const glyph of text) {
+      assert.ok(events.indexOf(backing) < events.indexOf(glyph), 'card backing must precede every title/detail glyph');
+      const { x, y, w, h } = backing.rect;
+      assert.ok(glyph.x! > x && glyph.x! < x + w && glyph.y! > y && glyph.y! < y + h, 'both original text anchors stay inside the measured card');
+    }
+  }
+  halo(paint('labelAt', false), [lines[0]], false);
+  halo(paint('flushDirectLabels', false), lines, true);
+  card(paint('flushDirectLabels', true));
+  for (const name of ['labelAt', 'flushDirectLabels'] as const) {
+    assert.throws(() => halo(paint(name, false, omitCalls(arrow(name), 'strokeText')), name === 'labelAt' ? [lines[0]] : lines, name === 'flushDirectLabels'),
+      /earlier halo/, 'removing either actual halo must fail this rule');
+  }
+  assert.throws(() => card(paint('flushDirectLabels', true, omitCalls(arrow('flushDirectLabels'), 'fill', true))),
+    /white measured backing/, 'remaining accent paint cannot conceal removal of the actual white backing');
 });
 
 test('sector provenance keeps its complete wording in a padded hairline box at the shared reading size', () => {

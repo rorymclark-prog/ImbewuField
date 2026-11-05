@@ -1,6 +1,14 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Ditshwantsho tsa karolo di boloka mebala e matla haholoanyane, e nang le mangolo a maholwanyane le mela e hlakileng ya sebopeho sa mobu.",
+  // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
+  "Saving rechecks this tab’s editing access.": "Ho boloka ho hlahloba bocha phihlello ya ho lokisa ya leqephe lena.",
+  "Compare nursery wording drafts in seven languages": "Bapisa meralo ya mantswe a nesari ka dipuo tse supileng",
+  "Compare nursery wording drafts": "Bapisa meralo ya mantswe a nesari",
+  "International reference tools → Language draft review → Nursery field planting": "Dithulusi tsa ditshupiso tsa matjhaba → Tlhahlobo ya meralo ya dipuo → Ho jala masimong ho tswa nesaring",
+  "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.": "Bapisa Senyesemane sa nesari le meralo ya dipuo tse supileng mme o bone ha mohlodi wa tsona o hloka tlhahlobo e nngwe. Letlapa lena la tlhahlobo ha le dumele ditlhaloso kapa ho fetola puo ya sesebediswa sa hao.",
   // Unreviewed Codex BMKG research-navigation release candidates; source pairs in bmkg-navigation-release-drafts.json.
   "Find Indonesia’s official BMKG sources": "Fumana mehlodi ya semmuso ya BMKG ya Indonesia",
   "Country evidence → Research priorities → Indonesia": "Bopaki ba naha → Dintho tse tlang pele dipatlisisong → Indonesia",
@@ -107,6 +115,20 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Hlahloba tšupiso e sa mmepiloeng",
   "Crop planner → Planning without a mapped site": "Moralo oa lijalo → Ho rera ntle le sebaka se mmepiloeng",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Bakeng sa bethe e bōpiloeng kapa moralo oa sebaka, khetha kapa u tlose motheo oa tšupiso oa Afrika Boroa ka ho hlaka. Khetho ena e sala le sebaka seo sa mosebetsi.",
+  // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
+  "Important updates include a short animation you can pause and replay.": "Lintlafatso tsa bohlokwa di na le papiso e kgutshwane e sisinyehang eo o ka e emisang le ho e bapala hape.",
+  // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
+  "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Limmapa tsa Sector li na le bokamorao bo sa hlahelleng haholo le matshwao a hlakileng a letsatsi, moya le mollo.",
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Kgetha dibaka tse bolokilweng tseo mothusi a ka di sebedisang. O ka kgaola kgokahano ho Ditlhophiso.",
+  "Keep original site photos and PDFs with their source and import history.": "Boloka dinepe tsa pele tsa sebaka le di-PDF hammoho le mohlodi wa tsona le nalane ya ho di kenya.",
+  "Review historical photo registration drafts without moving saved map features.": "Hlahloba meralo ya ho nyalanya dinepe tsa kgale le mmapa ntle le ho suthisa dintho tse bolokilweng mmapeng.",
+  "Manage assistant access": "Laola phihlello ya bathusi",
+  "Settings → Assistant connections": "Ditlhophiso → Dikgokahano le bathusi",
+  "Review connected assistants, selected sites and imported originals.": "Hlahloba bathusi ba hoketsweng, dibaka tse kgethilweng le difaele tsa pele tse kentsweng.",
+  "Check your saved map": "Lekola mmapa wa hao o bolokilweng",
+  "Site design": "Moralo wa sebaka",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlahloba sebaka sona seo pele o kenya diphetoho tsa mothusi kapa o bapisa senepe sa kgale.",
   // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
   "Open Terrain & Sections for the two cuts and extra contour detail.": "Bula Terrain & Sections ho bona dikarolo tse pedi le mela e meng ya bophahamo.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
@@ -121,6 +143,9 @@ const copy:UpdateCopy={
   // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
   "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Dimmapa tsa Sector di sebedisa mela ya bophahamo ya kakaretso ya sebaka, ka kgetho ya profaele ya naha A–B.",
   // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Exact and illustrated Water maps now show the same water budget.": "Mmapa wa Metsi o nepahetseng le o nang le ditshwantsho jwale o bontsha tekanyetso e tshwanang ya metsi.",
+  "Zone maps trim blurry aerial edges when the photo covers the site.": "Dimmapa tsa dibaka di tlosa mathoko a lerootho ha setshwantsho sa moyeng se akaretsa sebaka sohle.",
+  "Existing Site labels and legend now use matching symbols.": "Mmapa wa kgale wa Existing Site jwale o sebedisa matshwao a tshwanang mabitsong a dibaka le senotlolong sa mmapa.",
   "Choose area names or a numbered key on the historical Existing Site map.": "Kgetha mabitso a dibaka kapa senotlolo sa dinomoro mmapeng wa kgale wa Existing Site.",
   // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
   "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Dimmapa tsa Site le Sector tsa Ubhejane di ka bontsha foto ya polokelo ya pele ho mesebetsi.",

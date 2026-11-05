@@ -221,6 +221,10 @@
     {
       "file": "app/international/projects/page.tsx",
       "english": "Project workflow review — ImbewuField"
+    },
+    {
+      "file": "app/connect/imbewu/layout.tsx",
+      "english": "Assistant connections — ImbewuField"
     }
   ],
   "dynamicOwners": [
@@ -718,6 +722,13 @@
       "st": "Ditheko hekeng ya polasi — ImbewuField",
       "ts": "Minxavo ya le nyangweni wa purasi — ImbewuField",
       "ve": "Mitengo ya khoroni ya bulasi — ImbewuField"
+    },
+    {
+      "english": "Assistant connections — ImbewuField",
+      "zu": "Ukuxhuma kubasizi — ImbewuField",
+      "st": "Dikgokahano le bathusi — ImbewuField",
+      "ts": "Vuhlanganisi ni vapfuni — ImbewuField",
+      "ve": "Vhuṱumanyi ha vhathusi — ImbewuField"
     }
   ],
   "identityHolds": [

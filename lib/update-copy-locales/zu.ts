@@ -1,6 +1,14 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Imifanekiso yomkhakha igcina umbala othe xaxa, enamalebula amakhudlwana nemigqa ecacile yokuma komhlaba.",
+  // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
+  "Saving rechecks this tab’s editing access.": "Ukulondoloza kuphinda kuhlolisise imvume yokuhlela yale thebhu.",
+  "Compare nursery wording drafts in seven languages": "Qhathanisa izinhlaka zamagama enkulisa ngezilimi eziyisikhombisa",
+  "Compare nursery wording drafts": "Qhathanisa izinhlaka zamagama enkulisa",
+  "International reference tools → Language draft review → Nursery field planting": "Amathuluzi okubhekisela emazweni omhlaba → Ukubuyekezwa kwezinhlaka zezilimi → Ukutshala ensimini kusuka enkulisa",
+  "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.": "Qhathanisa isiNgisi senkulisa nezinhlaka zezilimi eziyisikhombisa ubone lapho umthombo wazo udinga ukuhlolisiswa kabusha. Leli phepha lokusebenza lokubuyekeza aligunyazi izinguqulo noma lishintshe ulimi lohlelo lwakho lokusebenza.",
   // Unreviewed Codex BMKG research-navigation release candidates; source pairs in bmkg-navigation-release-drafts.json.
   "Find Indonesia’s official BMKG sources": "Thola imithombo esemthethweni ye-BMKG yase-Indonesia",
   "Country evidence → Research priorities → Indonesia": "Ubufakazi bezwe → Izinto ezibalulekile zocwaningo → Indonesia",
@@ -107,6 +115,20 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Buyekeza isisekelo sokubhekisela esingadwetshiwe",
   "Crop planner → Planning without a mapped site": "Umhleli wezitshalo → Ukuhlela ngaphandle kwesayithi edwetshiwe",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Kumbhede wokutshala owenziwe noma kumklamo wendawo, khetha ngokucacile noma ususe isisekelo sokubhekisela saseNingizimu Afrika. Ukukhetha kuhlala kuleyo ndawo yokusebenzela.",
+  // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
+  "Important updates include a short animation you can pause and replay.": "Izibuyekezo ezibalulekile zinevidiyo emfushane enyakazayo ongayimisa bese uyidlala futhi.",
+  // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
+  "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Amamephu e-Sector anengemuva elingagqami kakhulu nezimpawu ezicacile zelanga, zomoya nezomlilo.",
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Khetha izindawo ezigciniwe umsizi angazisebenzisa. Unganqamula ukuxhumana kokuthi Izilungiselelo.",
+  "Keep original site photos and PDFs with their source and import history.": "Gcina izithombe zokuqala zendawo nama-PDF kanye nomthombo wawo nomlando wokungeniswa kwawo.",
+  "Review historical photo registration drafts without moving saved map features.": "Hlola okusalungiswa kokuqondanisa izithombe zakudala nemephu ngaphandle kokususa izinto ezigciniwe ezindaweni zazo.",
+  "Manage assistant access": "Phatha ukufinyelela kwabasizi",
+  "Settings → Assistant connections": "Izilungiselelo → Ukuxhuma kubasizi",
+  "Review connected assistants, selected sites and imported originals.": "Hlola abasizi abaxhunyiwe, izindawo ezikhethiwe namafayela okuqala angenisiwe.",
+  "Check your saved map": "Hlola imephu yakho egciniwe",
+  "Site design": "Ukwakheka kwendawo",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Hlola yona leyo ndawo ngaphambi kokwamukela izinguquko zomsizi noma ukuqhathanisa isithombe sakudala.",
   // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
   "Open Terrain & Sections for the two cuts and extra contour detail.": "Vula i-Terrain & Sections ukuze ubone izingxenye ezimbili neminye imigqa yokuphakama.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
@@ -121,6 +143,9 @@ const copy:UpdateCopy={
   // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
   "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Amamephu eSector asebenzisa imigqa yokuphakama yesifunda, enenketho yephrofayili yomhlaba A–B.",
   // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Exact and illustrated Water maps now show the same water budget.": "Ibalazwe Lamanzi elinembile nelinemidwebo manje abonisa isabelomali samanzi esifanayo.",
+  "Zone maps trim blurry aerial edges when the photo covers the site.": "Amabalazwe ezindawo asusa imiphetho yesithombe efiphele uma isithombe siyimboza yonke indawo.",
+  "Existing Site labels and legend now use matching symbols.": "Ibalazwe lomlando le-Existing Site manje lisebenzisa izimpawu ezifanayo kumalebula ezindawo nasokhiye webalazwe.",
   "Choose area names or a numbered key on the historical Existing Site map.": "Khetha amagama ezindawo noma ukhiye onezinombolo ebalazweni lomlando le-Existing Site.",
   // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
   "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Amamephu eSite neSector ase-Ubhejane angabonisa isithombe senqolobane sangaphambi komsebenzi.",

@@ -1,6 +1,14 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Zwifanyiso zwa sekithara zwi vhulunga mivhala yo natesheaho, i re na madzina mahulwane na mitalo ya mavu i vhonalaho zwavhudi.",
+  // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
+  "Saving rechecks this tab’s editing access.": "U vhulunga zwi vusulusa thendelo ya u lulamisa kha thabu iyi.",
+  "Compare nursery wording drafts in seven languages": "Vhambedzani mitalo ya maipfi a nesele nga nyambo dza sumbe",
+  "Compare nursery wording drafts": "Vhambedzani mitalo ya maipfi a nesele",
+  "International reference tools → Language draft review → Nursery field planting": "Zwishumiswa zwa ndaedzo zwa dzitshaka → Tsedzuluso ya mitalo ya nyambo → U tavha masimuni u bva neseleni",
+  "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.": "Vhambedzani Tshiisimani tsha nesele na mitalo ya nyambo dza sumbe ni vhone musi tshisima tshayo tshi tshi toda inwe tsedzuluso. Bammbiri ili la tsedzuluso a li tendeli vhupinduleli kana u shandukisa luambo lwa tshipulufomo tshanu.",
   // Unreviewed Codex BMKG research-navigation release candidates; source pairs in bmkg-navigation-release-drafts.json.
   "Find Indonesia’s official BMKG sources": "Wanani zwiko zwa tshiofisi zwa BMKG ya Indonesia",
   "Country evidence → Research priorities → Indonesia": "Vhuṱanzi ha shango → Zwine zwa tea u ṱoḓisiswa u thoma → Indonesia",
@@ -107,6 +115,20 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Tsedzulusani tsumbo i songo mapiwaho",
   "Crop planner → Planning without a mapped site": "Mupulani wa zwilimwa → U pulana hu si na fhethu ho mapiwaho",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Kha mbethe wa maitele kana vhuvhambadzi ha henefho, nangani kana ni bvise mutheo wa tsumbo wa Afurika Tshipembe nga ho livhaho. Khetho i sala henefho kha vhupo ha u shumela.",
+  // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
+  "Important updates include a short animation you can pause and replay.": "Khwiniso dza ndeme dzi na tshifanyiso tshipfufhi tshi tshimbilaho tshine na nga tshi imisa na u tshi tamba hafhu.",
+  // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
+  "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Mimepe ya Sector i na murahu u sa vhonalesiho nga maanḓa na zwiga zwi re khagala zwa ḓuvha, muya na mulilo.",
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Nangani fhethu ho vhulungwaho hune muthusi a nga hu shumisa. Ni nga fhelisa vhuṱumanyi kha Nzudzanyo.",
+  "Keep original site photos and PDFs with their source and import history.": "Vhulungani zwifanyiso zwa u thoma zwa fhethu na dzi-PDF, khathihi na vhubvo hazwo na ḓivhazwakale ya u zwi dzhenisa.",
+  "Review historical photo registration drafts without moving saved map features.": "Ṱolani mvetamveto ya u livhanyisa zwifanyiso zwa kale na mapa, ni sa sudzulusi zwithu zwo vhulungwaho kha mapa.",
+  "Manage assistant access": "Langulani thendelo dza vhathusi",
+  "Settings → Assistant connections": "Nzudzanyo → Vhuṱumanyi ha vhathusi",
+  "Review connected assistants, selected sites and imported originals.": "Ṱolani vhathusi vho ṱumanywaho, fhethu ho nangiwaho na faela dza u thoma dzo dzheniswaho.",
+  "Check your saved map": "Ṱolani mapa waṋu wo vhulungwaho",
+  "Site design": "Pulane ya fhethu",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Ṱolani henefho fhethu musi ni sa athu shumisa tshanduko dza muthusi kana u vhambedza tshifanyiso tsha kale.",
   // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
   "Open Terrain & Sections for the two cuts and extra contour detail.": "Vulani Terrain & Sections u vhona khethekanyo mbili na miṅwe mitalo ya vhulapfu.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
@@ -121,6 +143,9 @@ const copy:UpdateCopy={
   // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
   "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Mapa a Sector a shumisa mitalo ya vhuimo ha nṱha ya dzingu nga u angaredza, na khetho ya phurofaili ya mavu A–B.",
   // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Exact and illustrated Water maps now show the same water budget.": "Mapa wa Maḓi wa pulane na wa tshifanyiso zwino u sumbedza mugaganyagwama muthihi wa maḓi.",
+  "Zone maps trim blurry aerial edges when the photo covers the site.": "Mapa wa zwipiḓa u fhelisa miphetho i sa vhonali zwavhuḓi musi tshifanyiso tsha nṱha tshi tshi khou fukedza fhethu hoṱhe.",
+  "Existing Site labels and legend now use matching symbols.": "Mapa wa kale wa Existing Site zwino u shumisa zwiga zwi fanaho kha madzina a fhethu na kha khii ya mapa.",
   "Choose area names or a numbered key on the historical Existing Site map.": "Nangani madzina a fhethu kana khii ya nomboro kha mapa wa kale wa Existing Site.",
   // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
   "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Mapa a Site na Sector a Ubhejane a nga sumbedza tshifanyiso tsha kale tsha musi mishumo i sa athu thoma.",

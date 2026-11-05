@@ -1,0 +1,14 @@
+{
+  "locale": "zu",
+  "sourceSha256": "0c13cc8ef76375e5f16c598caa575a36256c137d9143d618afe1f133f3a022f3",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "integrationSectorRelease.message.01",
+      "english": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+      "messageSha256": "3738fb72f3f31da8311e7854f3b400559e82b1e939882883f7a15825c79d58ea",
+      "translation": "Imifanekiso yomkhakha igcina umbala othe xaxa, enamalebula amakhudlwana nemigqa ecacile yokuma komhlaba."
+    }
+  ]
+}

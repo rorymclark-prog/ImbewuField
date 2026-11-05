@@ -1,6 +1,14 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Swifaniso swa xiyenge swi hlayisa mihlovo leyi fuweke swinene, hi marito lamakulu na mitsila leyi nga erivaleni ya vuandlalo bya misava.",
+  // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
+  "Saving rechecks this tab’s editing access.": "Ku hlayisa ku kambisisa nakambe mfikelelo wo lulamisa wa thembu leyi.",
+  "Compare nursery wording drafts in seven languages": "Pimanisa matsalo ya marito ya nesari hi tindzimi ta nkombo",
+  "Compare nursery wording drafts": "Pimanisa matsalo ya marito ya nesari",
+  "International reference tools → Language draft review → Nursery field planting": "Switirhisiwa swo kongomisa swa matiko ya misava → Nkambisiso wa matsalo ya tindzimi → Ku byala masin’wini ku suka eka nesari",
+  "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.": "Pimanisa Xinghezi xa nesari na matsalo ya tindzimi ta nkombo kutani u vona loko xihlovo xa swona xi lava nkambisiso wun’wana. Phepha leri ro kambisisa a ri pfumeleli vuhundzuluxi kumbe ku cinca ririmi ra tirhiso ra wena.",
   // Unreviewed Codex BMKG research-navigation release candidates; source pairs in bmkg-navigation-release-drafts.json.
   "Find Indonesia’s official BMKG sources": "Kuma swihlovo swa ximfumo swa BMKG swa Indonesia",
   "Country evidence → Research priorities → Indonesia": "Vumbhoni bya tiko → Swilo leswi rhangisiwaka eka ndzavisiso → Indonesia",
@@ -107,6 +115,20 @@ const copy:UpdateCopy={
   "Review an unmapped reference": "Kambisisa xisekelo lexi nga mepiwangiki",
   "Crop planner → Planning without a mapped site": "Mukunguhati wa swibyariwa → Ku kunguhata handle ka ndhawu leyi mepiweke",
   "For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.": "Eka bedi ro vumbiwa kumbe dizayini ya laha kaya, hlawula kumbe u susa xisekelo xo komba xa Afrika-Dzonga hi ku kongoma. Nhlawulo wu ta sala na ndhawu yoleyo yo tirhela.",
+  // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
+  "Important updates include a short animation you can pause and replay.": "Swintshuxeto swa nkoka swi na xifaniso xo koma lexi fambaka lexi u nga xi yimisaka ni ku xi tlanga nakambe.",
+  // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
+  "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Mimepe ya Sector yi ni xivumbeko xa le ndzhaku lexi nga humeleriki ngopfu ni mimfungho leyi vonakaka kahle ya dyambu, moya ni ndzilo.",
+  // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.
+  "Choose which saved sites an assistant can use, and disconnect it in Settings.": "Hlawula tindhawu leti hlayisiweke leti mupfuni a nga ti tirhisaka. U nga tsema vuhlanganisi eka Swiyimiso.",
+  "Keep original site photos and PDFs with their source and import history.": "Hlayisa swifaniso swa masungulo swa ndhawu ni ti-PDF swin’we ni xihlovo xa swona ni matimu ya ku swi nghenisa.",
+  "Review historical photo registration drafts without moving saved map features.": "Kambela mipfapfarhuto ya ku fambelanisa swifaniso swa khale ni mepe handle ko susa swilo leswi hlayisiweke emepeni.",
+  "Manage assistant access": "Lawula mfikelelo wa vapfuni",
+  "Settings → Assistant connections": "Swiyimiso → Vuhlanganisi ni vapfuni",
+  "Review connected assistants, selected sites and imported originals.": "Kambela vapfuni lava hlanganisiweke, tindhawu leti hlawuriweke ni tifayela ta masungulo leti nghenisiweke.",
+  "Check your saved map": "Kambela mepe wa wena lowu hlayisiweke",
+  "Site design": "Dizayini ya ndhawu",
+  "Review the same site before applying assistant edits or comparing a historical photograph.": "Kambela ndhawu yoleyo u nga si tirhisa mindzulamiso ya mupfuni kumbe ku pimanisa xifaniso xa khale.",
   // Terrain detail: docs/audits/2026-11-03/terrain-detail-release-drafts.json; UNREVIEWED AI draft.
   "Open Terrain & Sections for the two cuts and extra contour detail.": "Pfula Terrain & Sections ku vona swiphemu swimbirhi ni milayeni yo engetela ya ku tlakuka.",
   // Sector art finish: docs/audits/2026-11-03/sector-finish-release-drafts.json; UNREVIEWED AI draft.
@@ -121,6 +143,9 @@ const copy:UpdateCopy={
   // Terrain profile: docs/audits/2026-11-03/terrain-profile-release-drafts.json; UNREVIEWED AI draft.
   "Sector maps use regional overview contours, with an optional A–B terrain profile.": "Mimepe ya Sector yi tirhisa mitila ya ku tlakuka ya ndhawu hi ku angarhela, hi nhlawulo wa xivumbeko xa misava A–B.",
   // Historical labels: docs/audits/2026-11-03/historical-label-release-drafts.json; UNREVIEWED AI draft.
+  "Exact and illustrated Water maps now show the same water budget.": "Mepe wa Mati wa pulani ni wa xifaniso sweswi yi komba mpimanyeto wun’we wa mati.",
+  "Zone maps trim blurry aerial edges when the photo covers the site.": "Mimepe ya tizoni yi susa makumu lama nga vonakiki kahle loko xifaniso xa le moyeni xi funengeta ndhawu.",
+  "Existing Site labels and legend now use matching symbols.": "Mepe wa khale wa Existing Site sweswi wu tirhisa swikombiso leswi fanaka eka mavito ya tindhawu ni le ka xikombo xa mepe.",
   "Choose area names or a numbered key on the historical Existing Site map.": "Hlawula mavito ya tindhawu kumbe xikombo xa tinomboro eka mepe wa khale wa Existing Site.",
   // Historical baseline: docs/audits/2026-11-03/historical-baseline-release-drafts.json; UNREVIEWED AI drafts.
   "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Mimepe ya Site na Sector ya Ubhejane yi nga komba xifaniso xa khale xa le mahlweni ka mintirho.",
