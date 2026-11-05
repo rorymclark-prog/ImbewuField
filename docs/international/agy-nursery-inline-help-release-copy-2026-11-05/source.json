@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "sourceKind": "coordinator-supplied-unpublished-ui-release-sentence",
+  "baseCommit": "f81aa90d3df05625e11abf10e51064187f5feaa5",
+  "requestedSourceBranch": "codex/nursery-review-inline-help",
+  "provenance": "Exact UI owner release-copy request for the independently observed phone occlusion follow-up. Proposed English before file/commit adoption, not claimed extracted from published Git; browser acceptance of the fix remains pending.",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "messages": [
+    {
+      "key": "nurseryInlineHelpRelease.message.01",
+      "english": "Language review pages keep help below the worksheet so it cannot cover the drafts.",
+      "messageSha256": "d49afb6731cf638377c79ba11082504036422fdc9f5526ae67ff41680897f01f"
+    }
+  ]
+}

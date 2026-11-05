@@ -1,0 +1,40 @@
+{
+  "sourceSha256": "2eea4c1cdb5493c3e321bb29057916ee83b2b6f41d24233eba56a7399d2a9f3e",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "pairs": [
+    {
+      "locale": "st",
+      "key": "nurseryInlineHelpRelease.message.01",
+      "english": "Language review pages keep help below the worksheet so it cannot cover the drafts.",
+      "messageSha256": "d49afb6731cf638377c79ba11082504036422fdc9f5526ae67ff41680897f01f",
+      "translation": "Maqephe a tlhahlobo ya puo a boloka thuso ka tlasa leqephe la mosebetsi e le hore e se ke ya kwala meralo."
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryInlineHelpRelease.message.01",
+      "english": "Language review pages keep help below the worksheet so it cannot cover the drafts.",
+      "messageSha256": "d49afb6731cf638377c79ba11082504036422fdc9f5526ae67ff41680897f01f",
+      "translation": "Matluka yo kambela ririmi ma hlayisa mpfuneto ehansi ka phepha-ntirho leswaku swi nga funengeti matsalo yo sungula."
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryInlineHelpRelease.message.01",
+      "english": "Language review pages keep help below the worksheet so it cannot cover the drafts.",
+      "messageSha256": "d49afb6731cf638377c79ba11082504036422fdc9f5526ae67ff41680897f01f",
+      "translation": "Masiatari a u sedzulusa luambo a vhea thidzo fhasi ha bammbiri la mishumo uri zwi si thivhe ndingedzo dza u thoma."
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryInlineHelpRelease.message.01",
+      "english": "Language review pages keep help below the worksheet so it cannot cover the drafts.",
+      "messageSha256": "d49afb6731cf638377c79ba11082504036422fdc9f5526ae67ff41680897f01f",
+      "translation": "Amakhasi okubuyekeza ulimi agcina usizo ngaphansi kwephepha lomsebenzi ukuze lungasibekeli okubhalwayo okusalungiswa."
+    }
+  ],
+  "reviewNotes": "Four unreviewed candidate translations for proposed UI release note nurseryInlineHelpRelease.message.01. Describes screen layout placement where help appears below the worksheet to avoid obscuring draft text. Not fluent certification, UI verification, or runtime activation.",
+  "validation": "UNKNOWN",
+  "commandsRun": false,
+  "testsRun": false,
+  "workersActive": 0
+}

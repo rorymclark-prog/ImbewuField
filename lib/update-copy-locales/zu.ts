@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
+  "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Amakhasi okubuyekeza ulimi agcina usizo ngaphansi kwephepha lomsebenzi ukuze lungasibekeli okubhalwayo okusalungiswa.",
   // Coordinator-adopted unreviewed main contour description; exact packet: docs/international/agy-integration-bold-contour-release-copy-2026-11-05/. English remains paired.
   "Sector illustrations now show bolder terrain contours and matching key lines.": "Imifanekiso yesigaba manje ibonisa imigqa egqamile yokuma komhlaba kanye nemigqa efanayo yenkcazelo yemephu.",
   // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
