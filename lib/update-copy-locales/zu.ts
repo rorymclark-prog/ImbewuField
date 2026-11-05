@@ -439,5 +439,9 @@ const copy:UpdateCopy={
   "Review saved invoice amounts by currency": "Buyekeza imali yama-invoyisi agciniwe ngohlobo lwemali",
   "Invoice → Saved → Summary currency": "I-invoyisi → Agciniwe → Uhlobo lwemali lwesifinyezo",
   "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Khetha uhlobo olulodwa lwemali ukuze ubuyekeze imali yama-invoyisi akhishiwe, abhalwe njengakhokhiwe nangakakhokhwa kule divayisi. Lawa amarekhodi ama-invoyisi, hhayi amarisidi asebhange aqinisekisiwe, yonke imali engenayo noma inzuzo.",
+  // NWS reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nws-reference-release-drafts.json.
+  "Check a public US forecast reference": "Hlola isibonelo sesibikezelo sezulu sase-US",
+  "Country evidence → United States → Washington forecast": "Ubufakazi bezwe → United States → Isibikezelo saseWashington",
+  "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Cela isibikezelo sesibonelo somphakathi saseWashington ku-National Weather Service. Izikhathi zomthombo, amanani e-Celsius nokungaziwa kuhlala kubonakala; lokhu akushintshi izinsuku zezitshalo noma kugunyaze izeluleko zendawo.",
 };
 export default copy;

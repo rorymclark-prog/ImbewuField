@@ -439,5 +439,9 @@ const copy:UpdateCopy={
   "Review saved invoice amounts by currency": "Hlahloba dipalo tsa di-invoice tse bolokilweng ka mofuta wa tjhelete",
   "Invoice → Saved → Summary currency": "Invoice → Tse bolokilweng → Mofuta wa tjhelete wa kakaretso",
   "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Kgetha mofuta o le mong wa tjhelete ho hlahloba dipalo tsa di-invoice tse ntshitsweng, tse rekotilweng e le tse lefuweng le tse sa lefuwang sesebedisweng sena. Tsena ke direkoto tsa di-invoice, eseng dirisiti tsa banka tse netefaditsweng, lekeno lohle kapa phaello.",
+  // NWS reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nws-reference-release-drafts.json.
+  "Check a public US forecast reference": "Lekola mohlala oa bolepi ba leholimo ba US",
+  "Country evidence → United States → Washington forecast": "Bopaki ba naha → United States → Bolepi ba Washington",
+  "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Kopa bolepi ba mohlala oa sechaba oa Washington ho National Weather Service. Linako tsa mohloli, boleng ba Celsius le tse sa tsejoeng li lula li bonahala; sena ha se fetole matsatsi a lijalo kapa ho amohela likeletso tsa lehae.",
 };
 export default copy;

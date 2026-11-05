@@ -439,5 +439,9 @@ const copy:UpdateCopy={
   "Review saved invoice amounts by currency": "Sedzulusanani tshelede ya dzi-invoice dzo vhulungwaho nga lushaka lwa tshelede",
   "Invoice → Saved → Summary currency": "Invoice → Dzo vhulungwaho → Lushaka lwa tshelede lwa manweledzo",
   "Choose one currency to review issued, recorded paid and unpaid invoice amounts on this device. These are invoice records, not verified bank receipts, complete income or profit.": "Nangani lushaka luthihi lwa tshelede u sedzulusa tshelede ya dzi-invoice dzo bviswaho, dzo rekhodiwaho sa dzo badelwaho na dzi sa athu badelwa kha hetshi tshishumiswa. Hedzi ndi rekhodo dza invoice, a si rasithi dza bannga dzo khwaṱhisedzwaho, mbuelo yoṱhe kana phurofithi.",
+  // NWS reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nws-reference-release-drafts.json.
+  "Check a public US forecast reference": "Sedzani tsumbo ya tsumbamutsho ya US",
+  "Country evidence → United States → Washington forecast": "Vhuṱanzi ha shango → United States → Tsumbamutsho ya Washington",
+  "Request the public Washington demonstration forecast from the National Weather Service. Source times, Celsius values and unknowns stay visible; this does not change crop dates or approve local advice.": "Humbelani tsumbamutsho ya tsumbo ya nnyi na nnyi ya Washington kha National Weather Service. Zwifhinga zwa tshiko, mivhalo ya Celsius na zwi sa ḓivhei zwi dzula zwi tshi vhonala; hezwi a zwi shanduli maḓuvha a zwiliṅwa kana u tendela nyeletshedzo ya henefho.",
 };
 export default copy;
