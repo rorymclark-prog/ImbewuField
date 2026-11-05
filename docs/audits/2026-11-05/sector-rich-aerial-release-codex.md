@@ -1,7 +1,7 @@
 # Sector rich-aerial release continuation — 2026-11-05
 
 - Auditor: Codex; C selected by the coordinating chat within Rory's existing instruction to research/audit and decide. Rory has not personally selected C; no personal preference is attributed to him.
-- Reviewed revision: `codex/sector-illustrated-graphics`, continuation after draft head `8ccd08217a0c744ef008746a1e3e5ad1c10b2d07`, based on main `a43b411ea12111d28352e916357326adcd9cd374`.
+- Reviewed revision: C implementation `2fbfe97b5` on `codex/sector-illustrated-graphics`, continuation after draft head `8ccd08217a0c744ef008746a1e3e5ad1c10b2d07`, based on main `a43b411ea12111d28352e916357326adcd9cd374`.
 - Deployment inspected: production before this release; final release identity, current-head checks and actual owner reassembly/export evidence are recorded on PR #1274 and issue #35.
 - Previous audit: [Three researched Sector samples](sector-illustrated-graphics-codex.md). Preserved unchanged as the draft comparison; this record supersedes its statement that branch code represents A.
 - Scope: publish C's actual original-artwork colour alongside this branch's richer Sector graphics/labels/contours. Exact Sector, registrations, saved geometry, terrain calculations/qualifications, other layers, paid dispatch/gates, schema and access remain unchanged.
