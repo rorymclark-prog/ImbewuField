@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { cropByKey } from '@/lib/crop-catalog';
 import type { NurserySettings } from '@/lib/nursery-settings';
-import type { GrowerFieldObservationResult, GrowerNurserySowingInput } from '@/lib/grower-field-observation';
+import type { GrowerFieldObservationResult, GrowerNurserySowingInput, GrowerNurseryProgressInput } from '@/lib/grower-field-observation';
 import type { GrowerNurseryBatchReferenceChange, GrowerNurseryReferenceFields } from '@/lib/international/grower-nursery';
 import type {
   GrowerSavedNurseryReview, GrowerSavedNurseryReadResult, GrowerNurseryBatchReferenceSaveResult,
@@ -11,6 +11,7 @@ import type {
 } from './useGrowerWorkflow';
 import GrowerNurseryReviewPanel from './GrowerNurseryReviewPanel';
 import NurserySowingObservationForm from './NurserySowingObservationForm';
+import NurseryProgressObservationForm from './NurseryProgressObservationForm';
 
 export interface SavedGrowerNurseryReviewPanelProps {
   review: GrowerSavedNurseryReview | null;
@@ -22,13 +23,14 @@ export interface SavedGrowerNurseryReviewPanelProps {
   onCheckCurrent: (view: GrowerSavedNurseryReview) => Promise<boolean>;
   onSaveReferences: (view: GrowerSavedNurseryReview, changes: readonly GrowerNurseryBatchReferenceChange[], displayedIsCurrent: () => boolean) => Promise<GrowerNurseryBatchReferenceSaveResult>;
   onRecordSowing?: (view: GrowerSavedNurseryReview, plantingId: string, input: GrowerNurserySowingInput, displayedIsCurrent: () => boolean) => Promise<GrowerFieldObservationResult>;
+  onRecordProgress?: (view: GrowerSavedNurseryReview, plantingId: string, input: GrowerNurseryProgressInput, displayedIsCurrent: () => boolean) => Promise<GrowerFieldObservationResult>;
 }
 type TextFields = { [K in keyof GrowerNurseryReferenceFields]: string };
 type Editor = { view: GrowerSavedNurseryReview | null; revision: number; sample: boolean | undefined; touched: ReadonlyMap<string, TextFields> };
 type Phase = 'idle' | 'checking' | 'saving' | 'waiting-commit' | 'refreshing' | 'verifying';
 type RefreshAfterWrite = { view: GrowerSavedNurseryReview; revision: number; acknowledgement: GrowerNurseryReferenceAcknowledgement;
   turn: number; started: boolean; refresh: SavedGrowerNurseryReviewPanelProps['onRefresh'] };
-type SowingForm = { view: GrowerSavedNurseryReview; plantingId: string; revision: number; sample: boolean | undefined; editor: Editor };
+type ObservationForm = { view: GrowerSavedNurseryReview; plantingId: string; revision: number; sample: boolean | undefined; editor: Editor };
 const field = 'mt-1 min-h-11 w-full min-w-0 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-sm';
 const button = 'min-h-11 max-w-full whitespace-normal rounded-lg border border-[var(--border)] px-3 py-2 text-sm disabled:opacity-50';
 const textFields = (value: GrowerNurseryReferenceFields): TextFields => ({ variety: value.variety ?? '', seedLotReference: value.seedLotReference ?? '', raisingBatchReference: value.raisingBatchReference ?? '' });
@@ -41,8 +43,11 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
   const [message, setMessage] = useState('');
   const [blockedBudgetView, setBlockedBudgetView] = useState<GrowerSavedNurseryReview | null>(null);
   const [checkedWrite, setCheckedWrite] = useState<{ view: GrowerSavedNurseryReview; turn: number } | null>(null);
-  const [sowing, setSowing] = useState<SowingForm | null>(null);
-  const sowingRef = useRef<SowingForm | null>(null);
+  const [sowing, setSowing] = useState<ObservationForm | null>(null);
+  const [progress, setProgress] = useState<ObservationForm | null>(null);
+  const progressRef = useRef<ObservationForm | null>(null);
+  const progressProofs = useRef(new WeakMap<() => boolean, () => boolean>());
+  const sowingRef = useRef<ObservationForm | null>(null);
   const sowingProofs = useRef(new WeakMap<() => boolean, () => boolean>());
   const id = useId(), mounted = useRef(true), generation = useRef(0), pending = useRef(false);
   const refreshAfterWrite = useRef<RefreshAfterWrite | null>(null);
@@ -56,9 +61,11 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
   const busy = props.checking || phase === 'checking' || phase === 'saving' || phase === 'waiting-commit' || phase === 'refreshing' || phase === 'verifying';
   const sourceCurrent = () => mounted.current && live.current.review === props.review && live.current.contextRevision === props.contextRevision && live.current.sample === props.sample;
   const editorCurrent = () => sourceCurrent() && editorRef.current === editor;
-  const sowingCurrent = (form: SowingForm) => mounted.current && sowingRef.current === form && live.current.review === form.view
+  const observationCurrent = (form: ObservationForm, active: ObservationForm | null) => mounted.current && active === form && live.current.review === form.view
     && live.current.contextRevision === form.revision && live.current.sample === form.sample && editorRef.current === form.editor
     && !pending.current && !form.editor.touched.size;
+  const sowingCurrent = (form: ObservationForm) => observationCurrent(form, sowingRef.current);
+  const progressCurrent = (form: ObservationForm) => observationCurrent(form, progressRef.current);
 
   useEffect(() => {
     mounted.current = true;
@@ -135,9 +142,9 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
     if (!editorCurrent() || !editorMatchesSource || !props.review || !props.onRecordSowing || dirty || busy || pending.current
       || props.review.references.find(row => row.plantingId === plantingId)?.reference.status !== 'ready') return;
     const next = { view: props.review, plantingId, revision: props.contextRevision, sample: props.sample, editor };
-    sowingRef.current = next; setSowing(next);
+    progressRef.current = null; setProgress(null); sowingRef.current = next; setSowing(next);
   }
-  async function recordSowing(form: SowingForm, input: GrowerNurserySowingInput, formIsCurrent: () => boolean): Promise<GrowerFieldObservationResult> {
+  async function recordSowing(form: ObservationForm, input: GrowerNurserySowingInput, formIsCurrent: () => boolean): Promise<GrowerFieldObservationResult> {
     let isCurrent = sowingProofs.current.get(formIsCurrent);
     if (!isCurrent) {
       isCurrent = () => formIsCurrent() && sowingCurrent(form);
@@ -145,6 +152,21 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
     }
     if (!isCurrent() || !props.onRecordSowing) return { status: 'held', message: 'Check the current saved nursery batch before recording this observation.' };
     return props.onRecordSowing(form.view, form.plantingId, input, isCurrent);
+  }
+  function openProgress(plantingId: string) {
+    if (!editorCurrent() || !editorMatchesSource || !props.review || !props.onRecordProgress || dirty || busy || pending.current
+      || props.review.references.find(row => row.plantingId === plantingId)?.reference.status !== 'ready') return;
+    const next = { view: props.review, plantingId, revision: props.contextRevision, sample: props.sample, editor };
+    sowingRef.current = null; setSowing(null); progressRef.current = next; setProgress(next);
+  }
+  async function recordProgress(form: ObservationForm, input: GrowerNurseryProgressInput, formIsCurrent: () => boolean): Promise<GrowerFieldObservationResult> {
+    let isCurrent = progressProofs.current.get(formIsCurrent);
+    if (!isCurrent) {
+      isCurrent = () => formIsCurrent() && progressCurrent(form);
+      progressProofs.current.set(formIsCurrent, isCurrent);
+    }
+    if (!isCurrent() || !props.onRecordProgress) return { status: 'held', message: 'Check the current saved nursery batch before recording this observation.' };
+    return props.onRecordProgress(form.view, form.plantingId, input, isCurrent);
   }
   async function refresh() {
     if (!sourceCurrent() || pending.current && phase !== 'verifying') return;
@@ -228,6 +250,12 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
               ? <NurserySowingObservationForm view={sowing.view} plantingId={sowing.plantingId} contextRevision={sowing.revision} sample={sowing.sample}
                 onRecord={(input, isCurrent) => recordSowing(sowing, input, isCurrent)} />
               : <button type="button" className={button} onClick={() => openSowing(row.plantingId)}>Record nursery sowing</button>}
+          </>}
+          {props.onRecordProgress && fields && !dirty && !busy && editorMatchesSource && <>
+            {progress && progress.plantingId === row.plantingId && progressCurrent(progress)
+              ? <NurseryProgressObservationForm view={progress.view} plantingId={progress.plantingId} contextRevision={progress.revision} sample={progress.sample}
+                onRecord={(input, isCurrent) => recordProgress(progress, input, isCurrent)} />
+              : <button type="button" className={button} onClick={() => openProgress(row.plantingId)}>Record nursery plant count</button>}
           </>}
         </article>;
       })}

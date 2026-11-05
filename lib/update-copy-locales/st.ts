@@ -459,5 +459,8 @@ const copy:UpdateCopy={
   "Record nursery sowing in your field journal": "Rekota ho jala nursery jenaleng ya hao ya tshimo",
   "Crop planner → Saved planned nursery batches": "Mohlophisi wa dijalo → Dihlopha tse rerilweng tsa nursery tse bolokilweng",
   "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rekota letsatsi leo ho jalweng ka lona le, ha o batla, palo ya diterei tse sebedisitsweng ka dinomoro tse felletseng bakeng sa sehlopha se bolokilweng. Hlahloba rekoto ya seo o se boneng le dileibole tsa ditshupiso tse rekotilweng le yona jenaleng ya hao le difaeleng tse jarollotsweng.",
+  // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
+  "Record nursery plant counts in your journal": "Rekota dipalo tsa dimela tsa nursery jenaleng ya hao",
+  "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rekota palo ya dimela tseo o di boneng sehlopheng sa nursery se bolokilweng, mokgahlelo oo o o hlahlobileng le hore na o hlahlobile sehlopha sohle kapa karolo ya sona. Boloka direkoto tsena tsa seo o se boneng jenaleng di arohane le ditlhoko tse rerilweng le setoko.",
 };
 export default copy;

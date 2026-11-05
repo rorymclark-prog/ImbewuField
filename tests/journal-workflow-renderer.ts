@@ -84,6 +84,8 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
   };
   const NurserySowingSummary = component('components/journal/JournalNurserySowingSummary.tsx', dependencies);
   dependencies['./JournalNurserySowingSummary'] = { __esModule: true, default: NurserySowingSummary };
+  const NurseryProgressSummary = component('components/journal/JournalNurseryProgressSummary.tsx', dependencies);
+  dependencies['./JournalNurseryProgressSummary'] = { __esModule: true, default: NurseryProgressSummary };
   const Sheet = component('components/journal/JournalEntrySheet.tsx', dependencies);
   dependencies['./JournalEntrySheet'] = { __esModule: true, default: Sheet };
   const FieldJournal = component('components/journal/FieldJournal.tsx', dependencies);

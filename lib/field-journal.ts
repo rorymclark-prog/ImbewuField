@@ -80,6 +80,8 @@ export interface JournalEntry {
   growerCycleLink?: unknown;
   /** Entered actual sowing evidence, separate from planned nursery requirements. */
   nurserySowing?: unknown;
+  /** A dated count/assessment, never nursery stock or planned capacity. */
+  nurseryProgress?: unknown;
   createdAt: number;
   updatedAt: number;
 }
@@ -187,6 +189,15 @@ export type JournalNurserySowingInspection =
 const NURSERY_SOWING_FIELDS = ['kind', 'version', 'traysUsed', 'references'] as const;
 const NURSERY_SOWING_REFERENCES = ['variety', 'seedLotReference', 'raisingBatchReference'] as const;
 
+function nurseryReferenceSnapshot(value: unknown): JournalNurserySowingObservation['references'] | null {
+  const references = ownLinkFields(value, NURSERY_SOWING_REFERENCES);
+  if (!references || !NURSERY_SOWING_REFERENCES.every(key => references[key] === null
+    || typeof references[key] === 'string' && references[key].trim().length > 0
+      && references[key].length <= 120 && !/[\u0000-\u001f\u007f]/.test(references[key]))) return null;
+  return Object.freeze({ variety: references.variety as string | null, seedLotReference: references.seedLotReference as string | null,
+    raisingBatchReference: references.raisingBatchReference as string | null });
+}
+
 /** Shape inspection does not prove current crop membership or admit a writer. */
 export function normaliseJournalNurserySowingObservation(value: unknown): JournalNurserySowingObservation | null {
   try {
@@ -194,14 +205,9 @@ export function normaliseJournalNurserySowingObservation(value: unknown): Journa
     if (!fields || fields.kind !== 'nursery-sowing-observation' || fields.version !== 1
       || fields.traysUsed !== null && (typeof fields.traysUsed !== 'number'
         || !Number.isSafeInteger(fields.traysUsed) || fields.traysUsed < 0)) return null;
-    const references = ownLinkFields(fields.references, NURSERY_SOWING_REFERENCES);
-    if (!references || !NURSERY_SOWING_REFERENCES.every(key => references[key] === null
-      || typeof references[key] === 'string' && references[key].trim().length > 0
-        && references[key].length <= 120 && !/[\u0000-\u001f\u007f]/.test(references[key]))) return null;
-    return Object.freeze({ kind: 'nursery-sowing-observation', version: 1, traysUsed: fields.traysUsed,
-      references: Object.freeze({ variety: references.variety as string | null,
-        seedLotReference: references.seedLotReference as string | null,
-        raisingBatchReference: references.raisingBatchReference as string | null }) });
+    const references = nurseryReferenceSnapshot(fields.references);
+    if (!references) return null;
+    return Object.freeze({ kind: 'nursery-sowing-observation', version: 1, traysUsed: fields.traysUsed, references });
   } catch { return null; }
 }
 
@@ -213,6 +219,7 @@ export function inspectJournalNurserySowing(entry: unknown): JournalNurserySowin
     if (!record(entry)) return held('invalid-entry');
     const property = Object.getOwnPropertyDescriptor(entry, 'nurserySowing');
     if (!property) return 'nurserySowing' in entry ? held('invalid-observation') : { status: 'legacy' };
+    if ('nurseryProgress' in entry) return held('ambiguous-nursery-observation');
     if (!property.enumerable || !Object.hasOwn(property, 'value')) return held('invalid-observation');
     const observation = normaliseJournalNurserySowingObservation(property.value);
     if (!observation) return held('invalid-observation');
@@ -223,15 +230,64 @@ export function inspectJournalNurserySowing(entry: unknown): JournalNurserySowin
 }
 
 function preserveJournalNurserySowing(entry: object): Pick<JournalEntry, 'nurserySowing'> {
-  const held = () => ({ nurserySowing: { version: 0, held: true } });
+  return preserveJournalNurseryPayload(entry, 'nurserySowing');
+}
+
+function preserveJournalNurseryPayload(entry: object, key: 'nurserySowing' | 'nurseryProgress'): Pick<JournalEntry, 'nurserySowing' | 'nurseryProgress'> {
+  const held = () => ({ [key]: { version: 0, held: true } });
   try {
-    const property = Object.getOwnPropertyDescriptor(entry, 'nurserySowing');
-    if (!property) return 'nurserySowing' in entry ? held() : {};
+    const property = Object.getOwnPropertyDescriptor(entry, key);
+    if (!property) return key in entry ? held() : {};
     if (!property.enumerable || !Object.hasOwn(property, 'value')) return held();
     // Keep future/malformed JSON verbatim; dropping it could falsely turn an
     // uncertain observation into an ordinary unlinked note on the next save.
-    return { nurserySowing: detachJournalJSON(property.value) };
+    return { [key]: detachJournalJSON(property.value) };
   } catch { return held(); }
+}
+
+export interface JournalNurseryProgressObservation {
+  readonly kind: 'nursery-progress-observation';
+  readonly version: 1;
+  readonly stage: 'emerged' | 'alive' | 'ready';
+  readonly coverage: 'whole-batch' | 'checked-subset';
+  readonly plantsObserved: number;
+  readonly references: JournalNurserySowingObservation['references'];
+}
+export type JournalNurseryProgressInspection =
+  | { readonly status: 'legacy' }
+  | { readonly status: 'observed'; readonly observation: JournalNurseryProgressObservation }
+  | { readonly status: 'held'; readonly reason: string };
+const NURSERY_PROGRESS_FIELDS = ['kind', 'version', 'stage', 'coverage', 'plantsObserved', 'references'] as const;
+
+/** This is an entered count and assessment, not a derived inventory balance. */
+export function normaliseJournalNurseryProgressObservation(value: unknown): JournalNurseryProgressObservation | null {
+  try {
+    const fields = ownLinkFields(detachJournalJSON(value), NURSERY_PROGRESS_FIELDS);
+    if (!fields || fields.kind !== 'nursery-progress-observation' || fields.version !== 1
+      || fields.stage !== 'emerged' && fields.stage !== 'alive' && fields.stage !== 'ready'
+      || fields.coverage !== 'whole-batch' && fields.coverage !== 'checked-subset'
+      || typeof fields.plantsObserved !== 'number' || !Number.isSafeInteger(fields.plantsObserved) || fields.plantsObserved < 0) return null;
+    const references = nurseryReferenceSnapshot(fields.references);
+    if (!references) return null;
+    return Object.freeze({ kind: 'nursery-progress-observation', version: 1, stage: fields.stage,
+      coverage: fields.coverage, plantsObserved: fields.plantsObserved, references });
+  } catch { return null; }
+}
+
+export function inspectJournalNurseryProgress(entry: unknown): JournalNurseryProgressInspection {
+  const held = (reason: string): JournalNurseryProgressInspection => ({ status: 'held', reason });
+  try {
+    if (!record(entry)) return held('invalid-entry');
+    const property = Object.getOwnPropertyDescriptor(entry, 'nurseryProgress');
+    if (!property) return 'nurseryProgress' in entry ? held('invalid-observation') : { status: 'legacy' };
+    if ('nurserySowing' in entry) return held('ambiguous-nursery-observation');
+    if (!property.enumerable || !Object.hasOwn(property, 'value')) return held('invalid-observation');
+    const observation = normaliseJournalNurseryProgressObservation(property.value);
+    if (!observation) return held('invalid-observation');
+    const link = inspectJournalGrowerLink(entry);
+    if (link.status !== 'linked' || link.link.eventKind !== 'nursery-start') return held('nursery-link-required');
+    return { status: 'observed', observation };
+  } catch { return held('observation-unreadable'); }
 }
 
 export interface JournalMonthGroup {
@@ -390,6 +446,7 @@ export function normaliseJournal(value: unknown): JournalEntry[] {
       photos: cleanPhotos(raw.photos),
       ...preserveJournalGrowerLink(raw),
       ...preserveJournalNurserySowing(raw),
+      ...preserveJournalNurseryPayload(raw, 'nurseryProgress'),
       createdAt,
       updatedAt: finiteTime(raw.updatedAt, createdAt),
     });
@@ -410,6 +467,7 @@ export interface JournalEntryInput {
   photos?: string[];
   growerCycleLink?: unknown;
   nurserySowing?: unknown;
+  nurseryProgress?: unknown;
 }
 
 export function newJournalId(now: number = Date.now()): string {
@@ -430,6 +488,7 @@ export function createJournalEntry(input: JournalEntryInput, now: number = Date.
     photos: cleanPhotos(input.photos),
     ...preserveJournalGrowerLink(input),
     ...preserveJournalNurserySowing(input),
+    ...preserveJournalNurseryPayload(input, 'nurseryProgress'),
     createdAt: now,
     updatedAt: now,
   };
@@ -455,10 +514,12 @@ export function editJournalEntry(
   // An ordinary editor cannot attach a new observed fact to a legacy note.
   // Original evidence alone survives, including retained malformed evidence.
   delete edited.nurserySowing;
+  delete edited.nurseryProgress;
   return {
     ...edited,
     ...preserveJournalGrowerLink(entry),
     ...preserveJournalNurserySowing(entry),
+    ...preserveJournalNurseryPayload(entry, 'nurseryProgress'),
     id: entry.id,
     createdAt: entry.createdAt,
     updatedAt: now,
@@ -549,8 +610,9 @@ export function inspectJournalRowsForWrite(raw: string): { rows: Record<string, 
     for (const row of rows) {
       if (!row || typeof row !== 'object' || Array.isArray(row)) return null;
       const entry = byId.get(row.id);
-      if (!entry || inspectJournalGrowerLink(row).status === 'held' || inspectJournalNurserySowing(row).status === 'held') return null;
-      for (const key of ['id', 'date', 'title', 'notes', 'category', 'bedId', 'bedLabel', 'cropName', 'photos', 'createdAt', 'updatedAt', 'nurserySowing'] as const) {
+      if (!entry || inspectJournalGrowerLink(row).status === 'held' || inspectJournalNurserySowing(row).status === 'held'
+        || inspectJournalNurseryProgress(row).status === 'held') return null;
+      for (const key of ['id', 'date', 'title', 'notes', 'category', 'bedId', 'bedLabel', 'cropName', 'photos', 'createdAt', 'updatedAt', 'nurserySowing', 'nurseryProgress'] as const) {
         if (Object.hasOwn(row, key) && JSON.stringify(row[key]) !== JSON.stringify(entry[key])) return null;
       }
     }
@@ -636,6 +698,9 @@ export function saveJournal(entries: JournalEntry[], sourceEntries?: JournalEntr
       if (!original && Object.hasOwn(entry, 'nurserySowing')) throw Error('new-observation-requires-current-cycle');
       if (original && (Object.hasOwn(original, 'nurserySowing') !== Object.hasOwn(entry, 'nurserySowing')
         || JSON.stringify(original.nurserySowing) !== JSON.stringify(entry.nurserySowing))) throw Error('observation-changed');
+      if (!original && Object.hasOwn(entry, 'nurseryProgress')) throw Error('new-progress-requires-current-cycle');
+      if (original && (Object.hasOwn(original, 'nurseryProgress') !== Object.hasOwn(entry, 'nurseryProgress')
+        || JSON.stringify(original.nurseryProgress) !== JSON.stringify(entry.nurseryProgress))) throw Error('progress-changed');
       return { ...original, ...entry };
     });
     const next = JSON.stringify(nextRows);

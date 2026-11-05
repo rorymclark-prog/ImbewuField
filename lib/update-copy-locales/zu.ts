@@ -459,5 +459,8 @@ const copy:UpdateCopy={
   "Record nursery sowing in your field journal": "Rekhoda ukuhlwanyela e-nursery kujenali yakho yasensimini",
   "Crop planner → Saved planned nursery batches": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe",
   "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rekhoda usuku ukuhlwanyela okwenzeke ngalo kanye, uma uthanda, nenani eliyinombolo ephelele lamathileyi asetshenzisiwe eqoqweni eligciniwe. Hlola irekhodi lalokho okubonile namalebula ereferensi agcinwe nalo kujenali yakho nakumafayela owalandayo.",
+  // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
+  "Record nursery plant counts in your journal": "Rekhoda izibalo zezitshalo ze-nursery kujenali yakho",
+  "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rekhoda inani lezitshalo ozibonile eqoqweni le-nursery eligciniwe, isigaba osihlolile nokuthi uhlole lonke iqoqo noma ingxenye yalo. Gcina lokhu okubonile kujenali kuhlukile ezidingweni ezihleliwe nasesitokweni.",
 };
 export default copy;

@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "23f4272f1213c231f447d9878c4da5f6d68b5b624409942a67d2763616ae9d1b",
+  "milestoneId": "grower-nursery-progress-observations",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "newCandidates": 8,
+  "reusedExistingCandidates": 4,
+  "reviewNotes": "Observed count, stage and explicitly checked coverage are journal facts entered by the grower. Ready is an assessment, not certification or available stock. No calculated germination rate, forecast change or stock ledger. Eight new Codex AI candidates and four exact reused existing source-paired location candidates; no fluent certification or new runtime language. Separate from native AGY work.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "124f10b272178f5ad3ece2449edd364cd9cf325df9ece98eaf635f0cf3da9e7c",
+      "selectedFileSha256": "628d2373240f0d113fce58442e3cdc28cfd0d6f375ba6d772be2bb8b29a840b9",
+      "newPairs": 2,
+      "reusedPairs": 1
+    },
+    "st": {
+      "originalFileSha256": "deae59eabe7e2d91ec40b85a432ad2b6c6987f418737d8f8c59777b518055fd8",
+      "selectedFileSha256": "80ebd36aa247db88c87dc993822355cf2c00e04dc69986a9faac08a6489d0d33",
+      "newPairs": 2,
+      "reusedPairs": 1
+    },
+    "ve": {
+      "originalFileSha256": "13bb382dc826b7b826c5f08cb1cd155b9b3a336f469f7ad4a0a80168c23b8f27",
+      "selectedFileSha256": "d4a6d5dafb77781d870556fe91702802879146066b1a1b54882b9ca30d941c05",
+      "newPairs": 2,
+      "reusedPairs": 1
+    },
+    "ts": {
+      "originalFileSha256": "622fe30c48a22e07bdfcb1777133d9eaa7d46cbf290ba328c41434aabb8f3add",
+      "selectedFileSha256": "36ebe5437553494ee9398e204a138bc26ca0777b7c719563d1d0852eb4146ae8",
+      "newPairs": 2,
+      "reusedPairs": 1
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Record nursery plant counts in your journal",
+      "zu": "Rekhoda izibalo zezitshalo ze-nursery kujenali yakho",
+      "st": "Rekota dipalo tsa dimela tsa nursery jenaleng ya hao",
+      "ve": "Rekhodani zwivhalo zwa zwimela zwa nursery kha dzhenala yaṋu",
+      "ts": "Rhekhoda nhlayo ya swimilana swa nursery eka jenali ya wena",
+      "provenance": "Codex-unreviewed-ai-new",
+      "messageSha256": "32606249b352d79e4c2d53038a7fec8710de4f943fcb65cf9d81b0dc9fc4a6e5"
+    },
+    {
+      "english": "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.",
+      "zu": "Rekhoda inani lezitshalo ozibonile eqoqweni le-nursery eligciniwe, isigaba osihlolile nokuthi uhlole lonke iqoqo noma ingxenye yalo. Gcina lokhu okubonile kujenali kuhlukile ezidingweni ezihleliwe nasesitokweni.",
+      "st": "Rekota palo ya dimela tseo o di boneng sehlopheng sa nursery se bolokilweng, mokgahlelo oo o o hlahlobileng le hore na o hlahlobile sehlopha sohle kapa karolo ya sona. Boloka direkoto tsena tsa seo o se boneng jenaleng di arohane le ditlhoko tse rerilweng le setoko.",
+      "ve": "Rekhodani tshivhalo tsha zwimela zwe na vhona kha tshigwada tsha nursery tsho vhulungwaho, vhuimo he na sedzulusa na uri no sedzulusa tshigwada tshoṱhe kana tshipiḓa tshatsho. Rekhodo idzi dza zwe na vhona kha dzhenala dzi dzule dzo fhambana na ṱhoḓea dzo vhekanywaho na tshitoko.",
+      "ts": "Rhekhoda nhlayo ya swimilana leswi u swi voneke eka ntlawa wa nursery lowu hlayisiweke, xiteji lexi u xi kambeleke ni leswaku u kambele ntlawa hinkwawo kumbe xiphemu xa wona. Hlayisa leswi u swi voneke eka jenali swi hambanile ni swilaveko leswi pulaniweke ni xitoko.",
+      "provenance": "Codex-unreviewed-ai-new",
+      "messageSha256": "07059a56447ec8aa69c88cc3664dac0d5f52dee8e1a53b818b1537063dacd838"
+    },
+    {
+      "english": "Crop planner → Saved planned nursery batches",
+      "zu": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe",
+      "st": "Mohlophisi wa dijalo → Dihlopha tse rerilweng tsa nursery tse bolokilweng",
+      "ve": "Muvhekanyi wa zwimela → Zwigwada zwa nursery zwo vhekanywaho zwo vhulungwaho",
+      "ts": "Mupulani wa swibyariwa → Mintlawa ya nursery leyi pulaniweke yi tlhela yi hlayisiwa",
+      "messageSha256": "5543afd25b9a102af7e8c76375409c904c894e28ec12a868996456b7b169059a",
+      "provenance": "reused-existing-source-paired-Codex-AI-candidate-from-nursery-sowing"
+    }
+  ]
+}

@@ -2415,7 +2415,8 @@ function FacilitatorCropsPageInner() {
       settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision} sample={growerSample}
       onRefresh={growerWorkflow.onReadSavedNursery} onCheckCurrent={growerWorkflow.onCheckSavedNurseryCurrent}
       onSaveReferences={growerWorkflow.onSaveNurseryBatchReferences}
-      onRecordSowing={growerWorkflow.onRecordNurserySowing} />
+      onRecordSowing={growerWorkflow.onRecordNurserySowing}
+      onRecordProgress={growerWorkflow.onRecordNurseryProgress} />
   </>;
 
   return (
