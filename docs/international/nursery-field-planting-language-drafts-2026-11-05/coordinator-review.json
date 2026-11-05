@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "d645d42a2950cb838d2a7aab634be99dda40d11e",
+  "sourceSha256": "f2b7aab350df4c7043d7244ca357257bef211a40dd436db7b9465b9958f4a14d",
+  "messages": 26,
+  "pairs": 104,
+  "damagedControlsRejected": 19,
+  "notesActualWhitespaceWords": 181,
+  "files": {
+    "source.json": {
+      "sha256": "f2b7aab350df4c7043d7244ca357257bef211a40dd436db7b9465b9958f4a14d",
+      "bytes": 7015
+    },
+    "fr.json": {
+      "sha256": "dcb1569c6bd1f340444b45ad52ac8cb705f73e14802867db22041aedb9290bf0",
+      "bytes": 9128
+    },
+    "es.json": {
+      "sha256": "c31c8a71d7c9e955e237b490535c12861f88b26e7c37726a0e717fb280843b2b",
+      "bytes": 8972
+    },
+    "pt-BR.json": {
+      "sha256": "61e9e8568e09c9d9b8dc26394e555a2d55ecd7a508650ffe3a7b36d3e6bb4810",
+      "bytes": 8942
+    },
+    "sw.json": {
+      "sha256": "f8cbc109e4bc9899b23acd9658db70cf05b89976e386567122788be3e46416b4",
+      "bytes": 8737
+    },
+    "review-notes.md": {
+      "sha256": "5b3c488b6a7d9e413dd72ce93077a26d10b28e8685dc6164c8858dc103edbc08",
+      "bytes": 1267
+    },
+    "status.json": {
+      "sha256": "b4a04e049fd298684d7457ac42de3f9f293dab962667cb54b8c336a4a9d8ea3a",
+      "bytes": 942
+    }
+  },
+  "threeCodeSourceHashesMatchCommit": true,
+  "reviewScope": "Source binding/structure/literals and identified drafting corrections; not fluent or complete semantic certification",
+  "runtimeActivation": false,
+  "humanReview": false,
+  "fluentReview": false,
+  "broadRegionalDraftsIncluded": false
+}

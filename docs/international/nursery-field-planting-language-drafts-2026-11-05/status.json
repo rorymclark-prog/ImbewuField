@@ -1,0 +1,21 @@
+{
+  "assignment": "docs/international/agy-nursery-field-planting-copy-2026-11-05/WORKORDER.md",
+  "status": "unreviewed-ai-drafts-corrected",
+  "sourceSha256": "f2b7aab350df4c7043d7244ca357257bef211a40dd436db7b9465b9958f4a14d",
+  "runtimeActivation": false,
+  "sourcesCount": 26,
+  "candidatesCount": 104,
+  "reviewNotesWordCount": "UNKNOWN",
+  "validation": "UNKNOWN",
+  "commandsRun": false,
+  "testsRun": false,
+  "workersActive": 0,
+  "workersStopped": true,
+  "coordinatorReview": {
+    "atUtc": "2026-11-05T07:31:52.614586+00:00",
+    "reviewScope": "Frozen source/structure/token/literal checks and named drafting corrections; not fluent/complete semantic approval",
+    "notesActualWhitespaceWords": 181,
+    "correction": "Swahili row25 physical nursery stock uses akiba, not financial shares hisa; same term family as row3 physical inventory. Native completed/stopped before coordinator edit.",
+    "runtimeActivation": false
+  }
+}
