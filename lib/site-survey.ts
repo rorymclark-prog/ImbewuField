@@ -4,7 +4,7 @@ import { loadPlaces } from './saved-places';
 import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { normaliseMarketEvidence, marketEvidencePromptBlock, type MarketEvidence } from './report-site-facts';
-import { normaliseElevationEvidence, normaliseSiteEnergy, siteEnergyPrompt, type ElevationEvidence, type SiteEnergyEvidence } from './site-energy';
+import { normaliseElevationEvidence, normaliseSiteEnergy, siteEnergyPrompt, type ElevationEvidence, type SiteEnergyEvidence, type SurveyEnergyInputs } from './site-energy';
 
 // The FAO Household Dietary Diversity Score uses these twelve food groups. This is a count of
 // reported groups, never a made-up nutrition score or an estimate of what a household eats.
@@ -562,7 +562,7 @@ export function saveSurvey(survey: SiteSurvey): SiteSurvey | null {
 export interface SiteSurveyDraft {
   version: 1;
   answers: SiteSurvey;
-  inputs: { roofMain: string; roofSecondary: string; growingArea: string; layingHens: string; productionYear: string };
+  inputs: { roofMain: string; roofSecondary: string; growingArea: string; layingHens: string; productionYear: string; energy?: SurveyEnergyInputs };
   mode: 'short' | 'full';
   step: number;
   started: boolean;
@@ -598,6 +598,8 @@ export function readSurveyDraft(scope: string): { draft: SiteSurveyDraft | null;
       || !arrays.every(k => Array.isArray(a[k]) && a[k].every(v => typeof v === 'string'))
       || !strings.every(k => typeof a[k] === 'string')
       || !draft.inputs || !inputs.every(k => typeof draft.inputs[k] === 'string')
+      || (draft.inputs.energy !== undefined && (!draft.inputs.energy || typeof draft.inputs.energy !== 'object'
+        || !['benchmarkElevation', 'windSpeed', 'windHeight'].every(k => typeof draft.inputs.energy![k as keyof SurveyEnergyInputs] === 'string')))
       || !['short', 'full'].includes(draft.mode) || !Number.isInteger(draft.step) || draft.step < 0 || draft.step > 7
       || typeof draft.started !== 'boolean' || typeof draft.baseRevision !== 'string'
       || (a.marketEvidence !== undefined && (!a.marketEvidence || typeof a.marketEvidence !== 'object' || Array.isArray(a.marketEvidence)

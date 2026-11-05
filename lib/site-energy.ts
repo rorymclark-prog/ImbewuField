@@ -23,6 +23,17 @@ export interface WindEvidence {
   exposure?: 'open' | 'sheltered' | 'mixed' | 'unknown'; obstacles?: string;
 }
 export interface SiteEnergyEvidence { solar?: SolarReference; solarShadeNotes?: string; wind?: WindEvidence }
+export interface SurveyEnergyInputs { benchmarkElevation: string; windSpeed: string; windHeight: string }
+
+/** Raw strings belong in the recoverable draft; invalid entries must be corrected, not erased. */
+export function surveyEnergyInputErrors(inputs: SurveyEnergyInputs, windKind?: WindEvidence['kind']): Partial<Record<keyof SurveyEnergyInputs, string>> {
+  const errors: Partial<Record<keyof SurveyEnergyInputs, string>> = {};
+  const invalid = (raw: string, min: number, max: number) => raw !== '' && (!raw.trim() || !Number.isFinite(Number(raw)) || Number(raw) < min || Number(raw) > max);
+  if (invalid(inputs.benchmarkElevation, -12000, 10000)) errors.benchmarkElevation = 'Enter a benchmark elevation between −12,000 and 10,000 m, or leave it blank.';
+  if (invalid(inputs.windSpeed, 0, 100)) errors.windSpeed = 'Enter a mean wind speed from 0 to 100 m/s, or leave it blank.';
+  if (invalid(inputs.windHeight, 0.1, 1000) || (inputs.windHeight !== '' && windKind === 'atlas' && ![10,50,100,150,200].includes(Number(inputs.windHeight)))) errors.windHeight = 'Enter a valid measurement height, or select an available atlas height.';
+  return errors;
+}
 
 const object = (v: unknown): Record<string, any> => v && typeof v === 'object' && !Array.isArray(v) ? v as Record<string, any> : {};
 const finite = (v: unknown, min = 0, max = Number.MAX_VALUE): v is number => typeof v === 'number' && Number.isFinite(v) && v >= min && v <= max;
@@ -52,7 +63,7 @@ export function normaliseElevationEvidence(value: unknown, siteId: string): Elev
   if (model.siteId === siteId && model.source === 'OpenTopoData SRTM30m' && finite(model.elevationM, -12000, 10000) && finite(model.sampleBaselineM, 1)) {
     result.model = { siteId, elevationM: model.elevationM, source: model.source, sampleBaselineM: model.sampleBaselineM };
   }
-  if (['reported', 'surveyed'].includes(benchmark.method) && (finite(benchmark.elevationM, -12000, 10000) || text(benchmark.source) || text(benchmark.datum) || date(benchmark.observedOn))) {
+  if (['reported', 'surveyed'].includes(benchmark.method)) {
     result.benchmark = { elevationM: finite(benchmark.elevationM, -12000, 10000) ? benchmark.elevationM : null, method: benchmark.method,
       ...(text(benchmark.source) ? { source: text(benchmark.source) } : {}),
       ...(text(benchmark.datum, 120) ? { datum: text(benchmark.datum, 120) } : {}),

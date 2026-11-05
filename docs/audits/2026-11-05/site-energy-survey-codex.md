@@ -24,6 +24,9 @@ is retained; energy is not saved in a separate store.
 | SE-002 | No actual solar-resource workflow | Implemented; deployment gate pending | Explicit authenticated Fetch calls the fixed PVGIS5.3 public service server-side. Validates site, units, complete months, annual consistency, source period and fixed 1 kWp assumptions. Unsupported results never produce substitute estimates. |
 | SE-003 | Sector winds could be mistaken for turbine energy potential | Implemented evidence workflow; automatic atlas import not implemented | Resources & Inputs records manually selected GWA point or local measurement, height, mean speed, period, source, exposure and obstacles. No turbine-kWh calculation. |
 | SE-004 | Late lookup could be inserted into another account/site | Covered by synthetic interaction/route tests | Verified actor response plus active account/site draft scope, token captured for actor, abort on unmount/site change; no shared response cache. |
+| SE-005 | Removing solar during pending Refresh could re-add it on completion | Corrected after independent Codex source review | Removal aborts/invalidates the pending request; interaction test resolves the old reply after removal and checks no second write. |
+| SE-006 | Invalid manual numeric entries could be silently lost on save/recovery | Corrected after independent Codex source review | Raw elevation/wind strings persist in optional draft inputs; field errors and the actual survey save gate require correction. Zero and unknown remain distinct. |
+| SE-007 | New release tour was filtered out and displaced the two-stop guide | Corrected in actual release note | Query-string href was unsupported by the existing guide validator; both visible stops now use the real farmer route and name the correct survey sections. Existing guide/community assertions retained. |
 | SS-002 | New consequential wording lacks fluent review | Open | New controls explicitly use English; no claim of reviewed localisation. Coordinator arranges source-paired drafts. |
 | SS-004 | Physical phone/Safari and complete authenticated in-app journey | Open | Chrome390px component rendering is not a physical-device or full application test. |
 
@@ -57,18 +60,28 @@ local measurements and siting evidence remain necessary.
 ## Verification
 
 - Node24.22.2 typecheck: pass.
-- Focused checks:96/96 pass (energy parsing, route, rendered React interaction,
-  survey persistence/account isolation/i18n, rate limit and elevation).
+- First frozen candidate `a7991dc57`:96/96 focused checks passed. Its full suite later
+  exposed SE-007; it is not a passing release. That checkout/run is preserved.
+- Repair candidate:146/146 affected checks passed, including pending-removal and raw
+  input recovery interactions, plus the existing update-guide/community contracts.
 - Full suite/current-head CI/rules/preview: pending; **not merge-ready or live**.
 - Whitespace: pass before freeze.
 - Output inspected: synthetic current-component preview in Chrome desktop and390px,
   with no horizontal overflow at390px. Controls/chart/source text visually inspected.
   These captures use fixture numbers and an isolated HTML harness, not a full Next/Firebase session.
+  Repair error states (preserved11000m benchmark /101m/s wind) were also inspected
+  in Chrome; invalid wind no longer claims it is recorded.
 - External calls: one generic public PVGIS documentation example; no private coordinates,
   production records, paid AI/provider calls, keys or secrets.
 - Temporary Python preview process PID88053, port3217, command
   `python3 -m http.server 3217 --bind 127.0.0.1 --directory output/site-energy-survey`,
   owned by this child, verified and stopped after inspection. Own Chrome tab closed and viewport reset.
+- Repair preview: own temporary PythonPID15438/port3217 in the corrections checkout
+  was verified and stopped; own Chrome tab closed.
+- Independent review attribution: `/root/claude_patch_review` supplied a **Codex
+  source-only** review of `a7991dc57`, not a Claude-provider calculation or provider
+  review call. Receipt SHA256 `b471c11505c5d1be8280ec69e296e907b788884c61793b514d84084ffbf7a928`.
+  Both SE-005/SE-006 were accepted and repaired. Fresh repair review remains pending.
 
 This changes the picture: survey elevation/energy cards, monthly solar bars and
 review rows. `PLAN_VERSION` is unchanged.

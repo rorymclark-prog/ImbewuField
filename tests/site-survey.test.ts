@@ -100,6 +100,23 @@ test('elevation and energy evidence round-trip only through the saved survey, wi
   } finally { bindMountedAccountLocalStorageUid(null); }
 });
 
+test('invalid elevation and wind raw strings survive draft recovery but do not enter saved report facts', () => {
+  installBrowser(); bindMountedAccountLocalStorageUid('energy-raw-draft');
+  const siteId = 'site:45.00000,8.00000';
+  const inputs = { roofMain: '', roofSecondary: '', growingArea: '', layingHens: '', productionYear: '', energy: { benchmarkElevation: '11000', windSpeed: '101', windHeight: '1001' } };
+  const draft: SiteSurveyDraft = { version: 1, answers: survey({ siteId }), inputs, mode: 'full', step: 5, started: true, baseRevision: surveyRevision(null) };
+  try {
+    const scope = surveyDraftScope(siteId);
+    assert.ok(writeSurveyDraft(scope, draft, null));
+    const recovered = readSurveyDraft(scope).draft;
+    assert.deepEqual(recovered?.inputs.energy, inputs.energy);
+    assert.equal(loadSurvey(siteId), null);
+    assert.doesNotMatch(surveyToPrompt(recovered!.answers, 800), /11000|101 m\/s|1001 m/);
+    const token = writeSurveyDraft(scope, { ...draft, inputs: { ...inputs, energy: { ...inputs.energy, windSpeed: 101 as unknown as string } } }, readSurveyDraft(scope).token);
+    assert.ok(token); assert.equal(readSurveyDraft(scope).error, true, 'corrupt raw inputs stay recoverable for explicit discard');
+  } finally { bindMountedAccountLocalStorageUid(null); }
+});
+
 test('a complete survey produces finite, specific report context', () => {
   const prompt = surveyToPrompt(survey(), 800);
   assert.match(prompt, /Household homestead/);

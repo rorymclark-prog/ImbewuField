@@ -84,3 +84,38 @@ test('provider failure keeps the existing reference and exposes a retryable erro
     assert.equal(fetchButton(view).props.disabled, false);
   } finally { await act(async () => view?.unmount()); globalThis.fetch = priorFetch; }
 });
+
+test('removing a solar reference while refresh is pending cannot re-add it when the reply arrives', async () => {
+  const h = harness(); const priorFetch = globalThis.fetch;
+  let complete!: (response: Response) => void;
+  globalThis.fetch = async () => new Promise(resolve => { complete = resolve; });
+  let value: energy.SiteEnergyEvidence = { solar: energy.parsePvgisResponse(pvgisFixture(), siteId, '2026-11-05T12:00:00.000Z') };
+  let writes = 0, view!: TestRenderer.ReactTestRenderer;
+  const props = () => ({ siteId, coords: { lat: 45, lon: 8 }, scope: 'fixture-account-a', value, onChange: (next: energy.SiteEnergyEvidence) => { value = next; writes++; } });
+  try {
+    await act(async () => { view = TestRenderer.create(React.createElement(h.Component, props())); });
+    let pending!: Promise<void>;
+    await act(async () => { pending = fetchButton(view).props.onClick(); });
+    await act(async () => { view.root.findAllByType('button').find(b => b.props.children === 'Remove solar reference')!.props.onClick(); view.update(React.createElement(h.Component, props())); });
+    assert.equal(value.solar, undefined); assert.equal(writes, 1);
+    await act(async () => { complete(response()); await pending; });
+    assert.equal(value.solar, undefined); assert.equal(writes, 1);
+  } finally { await act(async () => view?.unmount()); globalThis.fetch = priorFetch; }
+});
+
+test('out-of-range wind strings stay visible for correction and clearing the reference clears the raw draft inputs', async () => {
+  const h = harness(); let view!: TestRenderer.ReactTestRenderer;
+  const changes: [string,string][] = [];
+  try {
+    await act(async () => { view = TestRenderer.create(React.createElement(h.Component, {
+      siteId, coords: { lat: 45, lon: 8 }, scope: 'fixture-account-a',
+      value: { wind: { kind: 'measured', meanSpeedMs: null, heightM: null, source: '', period: '' } }, onChange: () => {},
+      numericInputs: { benchmarkElevation: '', windSpeed: '101', windHeight: '1001' }, onNumericInputChange: (key: string, raw: string) => { changes.push([key,raw]); },
+    })); });
+    const invalid = view.root.findAllByType('input').filter(input => input.props['aria-invalid']);
+    assert.deepEqual(invalid.map(input => input.props.value), ['101','1001']);
+    assert.equal(view.root.findAllByProps({ role: 'alert' }).length, 2);
+    await act(async () => { view.root.findAllByType('button').find(b => b.props.children === 'Remove wind reference')!.props.onClick(); });
+    assert.deepEqual(changes, [['windSpeed',''],['windHeight','']]);
+  } finally { await act(async () => view?.unmount()); }
+});

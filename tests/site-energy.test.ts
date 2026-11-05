@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { pvgisFixture } from './fixtures/site-energy.ts';
-import { normaliseElevationEvidence, normaliseSiteEnergy, normaliseSolarReference, parsePvgisResponse, locationElevationReference, pvgisRequestUrl, siteEnergyPrompt } from '../lib/site-energy.ts';
+import { normaliseElevationEvidence, normaliseSiteEnergy, normaliseSolarReference, parsePvgisResponse, locationElevationReference, pvgisRequestUrl, siteEnergyPrompt, surveyEnergyInputErrors } from '../lib/site-energy.ts';
 import { handleSiteEnergyRequest } from '../lib/site-energy-route.ts';
 import { costClassFor } from '../lib/api-rate-limit.ts';
 import type { LocationData } from '../lib/types.ts';
@@ -43,6 +43,17 @@ test('solar URL fixes the free public provider and declares a reference system i
   assert.equal(url.searchParams.get('optimalangles'), '1'); assert.equal(url.searchParams.get('peakpower'), '1');
   assert.equal(url.searchParams.get('loss'), '14'); assert.equal(url.searchParams.get('lat'), '-30.00000');
   assert.throws(() => pvgisRequestUrl(91, 0)); assert.throws(() => pvgisRequestUrl(NaN, 0));
+});
+
+test('manual numeric answers must be corrected instead of silently disappearing at the survey save gate', () => {
+  assert.deepEqual(surveyEnergyInputErrors({ benchmarkElevation: '11000', windSpeed: '101', windHeight: '1001' }, 'measured'), {
+    benchmarkElevation: 'Enter a benchmark elevation between −12,000 and 10,000 m, or leave it blank.',
+    windSpeed: 'Enter a mean wind speed from 0 to 100 m/s, or leave it blank.',
+    windHeight: 'Enter a valid measurement height, or select an available atlas height.',
+  });
+  for (const benchmarkElevation of ['0','-3','']) assert.deepEqual(surveyEnergyInputErrors({ benchmarkElevation, windSpeed: '0', windHeight: '10' }, 'atlas'), {});
+  assert.ok(surveyEnergyInputErrors({ benchmarkElevation: '', windSpeed: 'NaN', windHeight: '12' }, 'atlas').windHeight);
+  assert.ok(surveyEnergyInputErrors({ benchmarkElevation: '', windSpeed: 'NaN', windHeight: '12' }, 'measured').windSpeed);
 });
 
 test('a real sampled zero or below-sea-level benchmark survives without validating legacy fallback zero', () => {
