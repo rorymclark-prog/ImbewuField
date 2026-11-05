@@ -3,3 +3,5 @@
 - [Illustrated Sector graphics, stronger contours and three samples — Codex](sector-illustrated-graphics-codex.md)
 
 - [Actual rich-aerial C implementation and release continuation — Codex](sector-rich-aerial-release-codex.md)
+
+- [Bolder Sector contours and real reference comparison — Codex](sector-bold-contours-codex.md)

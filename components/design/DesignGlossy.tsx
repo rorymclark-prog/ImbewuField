@@ -9218,7 +9218,7 @@ function drawSectorAnalysis(
       ctx.globalAlpha = artFinish ? 1 : externalLegend ? 0.78 : 1;
       for (const line of sheetContours.lines) {
         const main=artFinish ? Math.abs(line.elevM/5-Math.round(line.elevM/5))<1e-6 : line.major;
-        const core = artFinish ? Math.max(3.5,W*(main?.0025:.0019)) : line.major ? 3.4 : 2.2;
+        const core = artFinish ? Math.max(4.5,W*(main?.004:.003)) : line.major ? 3.4 : 2.2;
         if(artFinish)ctx.setLineDash(main?[W*.008,W*.003]:[W*.0035,W*.003]);
         ctx.beginPath();
         line.points.forEach(([x, y], index) => {
@@ -9228,7 +9228,7 @@ function drawSectorAnalysis(
         ctx.strokeStyle = externalLegend ? 'rgba(255,255,255,.88)' : 'rgba(10,22,10,0.55)';
         ctx.lineWidth = core + (externalLegend ? 3.0 : 2.4);
         ctx.stroke();
-        ctx.strokeStyle = externalLegend ? artFinish&&!main?TERRAIN_SUPPLEMENTAL_INK:TERRAIN_CONTOUR_INK : line.major ? 'rgba(160,235,140,0.98)' : 'rgba(126,212,107,0.95)';
+        ctx.strokeStyle = externalLegend ? TERRAIN_CONTOUR_INK : line.major ? 'rgba(160,235,140,0.98)' : 'rgba(126,212,107,0.95)';
         ctx.lineWidth = core;
         ctx.stroke();
       }
@@ -10738,7 +10738,8 @@ function drawStyleLegendSymbol(
   }
   if(row.visual==='terrain-contour'){
     const main=row.swatch===TERRAIN_CONTOUR_INK;
-    ctx.save();ctx.strokeStyle=row.swatch;ctx.lineWidth=Math.max(2,h*(row.sectorArt&&main?.095:.07));ctx.setLineDash(row.sectorArt&&main?[w*.24,w*.09]:[6,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;
+    // Both illustrated contour classes use dark ink; dash and weight retain their hierarchy.
+    ctx.save();ctx.strokeStyle=row.sectorArt?TERRAIN_CONTOUR_INK:row.swatch;ctx.lineWidth=Math.max(2,h*(row.sectorArt?(main?.14:.1):.07));ctx.setLineDash(row.sectorArt&&main?[w*.24,w*.09]:[6,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();return;
   }
   if(row.historicalFeature){drawHistoricalFeatureSymbol(ctx,row.historicalFeature,x+w/2,y,Math.min(w,h));return;}
   if(row.visual==='historical-extent'){ctx.save();ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);strokeHistoricalLine(ctx,'extent',Math.max(1.5,h*.05));ctx.restore();return;}
