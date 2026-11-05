@@ -585,7 +585,7 @@ test('rich Sector context copies original artwork without a colour filter, fade 
 });
 
 
-test('authored Sector wind and solar graphics retain their actual bearings at screen and print scales', () => {
+test('bold filled Sector winds retain actual bearings, opaque bodies and solar geometry at screen and print scales', () => {
   const source=readFileSync(new URL('../components/design/DesignGlossy.tsx',import.meta.url),'utf8');
   const tree=ts.createSourceFile('sheet.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
   const arrows=new Map<string,string>();
@@ -595,27 +595,46 @@ test('authored Sector wind and solar graphics retain their actual bearings at sc
     ts.forEachChild(node,visit);
   }
   visit(tree);assert.equal(arrows.size,2);
+  // Rory replaced the deliberately faint streamlines with broad filled reference arrows.
+  // Guard visible body area/opacity and the real source tip, not the old three-curve style.
+  let body:ts.FunctionDeclaration|undefined;
+  tree.forEachChild(node=>{if(ts.isFunctionDeclaration(node)&&node.name?.text==='drawIllustratedSectorArrow')body=node;});
+  assert.ok(body);
+  const bodyJs=ts.transpileModule(body.getText(tree),{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+  const drawIllustratedSectorArrow=new Function(`${bodyJs};return drawIllustratedSectorArrow;`)();
   const compile=(name:string,scope:Record<string,unknown>)=>{
     const js=ts.transpileModule(`const paint=${arrows.get(name)};`,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
     return new Function(...Object.keys(scope),`${js};return paint;`)(...Object.values(scope));
   };
   for(const W of [800,2200]) {
-    const moves:number[][]=[],curves:number[][]=[],arcs:number[][]=[],dashes:number[][]=[],suns:number[][]=[];
-    const context=new Proxy({}, {get(_target,key){if(key==='createLinearGradient')return ()=>({addColorStop(){}});return (...args:number[])=>{
-      if(key==='moveTo')moves.push(args);if(key==='bezierCurveTo')curves.push(args);
-      if(key==='arc')arcs.push(args);if(key==='setLineDash')dashes.push(args[0] as unknown as number[]);
-    };},set(){return true;}});
+    const moves:number[][]=[],arcs:number[][]=[],dashes:number[][]=[],suns:number[][]=[];
+    const fills:Array<{points:number[][];color:unknown;alpha:unknown}>=[];let path:number[][]=[];
+    const context=new Proxy({} as Record<PropertyKey,unknown>, {get(target,key){
+      if(key in target)return target[key];
+      return (...args:number[])=>{
+        if(key==='beginPath')path=[];
+        if(key==='moveTo'||key==='lineTo')path.push(args);
+        if(key==='fill')fills.push({points:path.map(p=>[...p]),color:target.fillStyle,alpha:target.globalAlpha});
+        if(key==='moveTo')moves.push(args);if(key==='arc')arcs.push(args);
+        if(key==='setLineDash')dashes.push(args[0] as unknown as number[]);
+      };
+    },set(target,key,value){target[key]=value;return true;}});
     const common={ctx:context,W,H:W,cx:W*.5,cy:W*.5,R:W*.3,arrowLen:W*.07,artFinish:true,externalLegend:true,
-      SECTOR_ENERGY_TIP:.94,claimArrowBox(){},bearingToUnitVector,bearingToCanvasAngle:(bearing:number)=>(bearing-90)*Math.PI/180,
+      drawIllustratedSectorArrow,SECTOR_ENERGY_TIP:.94,claimArrowBox(){},bearingToUnitVector,bearingToCanvasAngle:(bearing:number)=>(bearing-90)*Math.PI/180,
       drawSunIcon(...args:number[]){suns.push(args);},REFERENCE_LABEL_FONT:'Arial'};
     const wind=compile('drawBroadEnergyArrow',common);
     for(const bearing of [45,225,315]) {
-      moves.length=0;curves.length=0;dashes.length=0;
+      moves.length=0;fills.length=0;dashes.length=0;
       const v=bearingToUnitVector(bearing);wind(v,'#426D9B');
-      const tip=moves.at(-1)!;
+      const body=fills.find(fill=>fill.color==='#426D9B');assert.ok(body,'the wind needs a solid coloured body');
+      assert.equal(body.alpha,1,'fading the whole body recreates the rejected faint arrow');
+      const tip=body.points[3];
       assert.ok(Math.abs(tip[0]-(W*.5+v[0]*W*.3*.94))<1e-8);
       assert.ok(Math.abs(tip[1]-(W*.5+v[1]*W*.3*.94))<1e-8);
-      assert.equal(curves.length,3,'the ribbon retains all three directional streamlines');
+      const area=Math.abs(body.points.reduce((sum,p,i)=>{const q=body.points[(i+1)%body.points.length];return sum+p[0]*q[1]-p[1]*q[0];},0))/2;
+      assert.ok(area>W*W*.003,'a tiny triangle or line is not the requested broad filled arrow');
+      const across=body.points.map(p=>(p[0]-tip[0])*-v[1]+(p[1]-tip[1])*v[0]);
+      assert.ok(Math.max(...across)-Math.min(...across)>W*.05,'the head must be unmistakably broad at both output scales');
       assert.ok(dashes.some(dash=>dash.length===2 && dash.every(value=>value>0)),'regional wind remains dashed');
     }
     const sun=compile('drawSunArc',common);
@@ -630,5 +649,30 @@ test('authored Sector wind and solar graphics retain their actual bearings at sc
       }
       assert.equal(suns.length,3);
     }
+  }
+});
+
+
+test('a large Sector arrow cannot force the last label candidate over protected marks', () => {
+  const source=readFileSync(new URL('../components/design/DesignGlossy.tsx',import.meta.url),'utf8');
+  const tree=ts.createSourceFile('sheet.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  let placement:ts.Expression|undefined;
+  function visit(node:ts.Node){
+    if(ts.isVariableDeclaration(node)&&node.name.getText(tree)==='flushDirectLabels')placement=node.initializer;
+    ts.forEachChild(node,visit);
+  }
+  visit(tree);assert.ok(placement);
+  const js=ts.transpileModule(`const paint=${placement.getText(tree)};`,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+  const boxes:Array<{x0:number;x1:number;y0:number;y1:number}>=[];
+  const ctx=new Proxy({}, {get(_target,key){return key==='measureText'?(text:string)=>({width:text.length*7}):()=>{};},set(){return true;}});
+  const scope={ctx,W:1000,H:1000,externalLegend:true,artFinish:true,REFERENCE_LABEL_FONT:'Arial',SHEET_BODY_FONT:'Arial',
+    directLabelRequests:[{x:500,y:200,lines:['Fire approach · NW'],color:'#C64028'}],
+    arrowClaims:[{x0:0,x1:1000,y0:0,y1:700}],drawIllustratedSectorFlame(){},
+    roundRectPath(_ctx:unknown,x:number,y:number,w:number,h:number){if(w>100)boxes.push({x0:x,x1:x+w,y0:y,y1:y+h});}};
+  const paint=new Function(...Object.keys(scope),`${js};return paint;`)(...Object.values(scope));paint();
+  assert.ok(boxes.length>0,'the card itself must be painted');
+  for(const box of boxes){
+    assert.ok(box.y0>=700,'exhausting the nearby choices must not hide an arrow, sun or contour caption');
+    assert.ok(box.x0>=0&&box.x1<=1000&&box.y1<=1000,'the escape stays inside the map');
   }
 });

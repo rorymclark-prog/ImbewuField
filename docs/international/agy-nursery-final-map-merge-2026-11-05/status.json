@@ -1,0 +1,16 @@
+{
+  "executor": "AGY",
+  "method": "exact-source-reconciliation",
+  "sourceInputSha256": "b977ebd2858bc98442005d2760f38f136ac886a9b03e886691072416a62d22d4",
+  "reconciledFiles": [
+    "lib/update-copy-locales/st.ts",
+    "lib/update-copy-locales/ts.ts",
+    "lib/update-copy-locales/ve.ts",
+    "lib/update-copy-locales/zu.ts"
+  ],
+  "commandsRun": false,
+  "testsRun": false,
+  "validation": "UNKNOWN",
+  "workersActive": 0,
+  "runtimeActivation": false
+}

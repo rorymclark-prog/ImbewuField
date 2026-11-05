@@ -4,10 +4,10 @@ const copy:UpdateCopy={
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Ukubuyekezwa kolimi okushicilelwe kugcina uqhathaniso ngalunye ndawonye lapho lulingana ekhasini.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Amakhasi okubuyekeza ulimi agcina usizo ngaphansi kwephepha lomsebenzi ukuze lungasibekeli okubhalwayo okusalungiswa.",
-  // Coordinator-adopted unreviewed main contour description; exact packet: docs/international/agy-integration-bold-contour-release-copy-2026-11-05/. English remains paired.
-  "Sector illustrations now show bolder terrain contours and matching key lines.": "Imifanekiso yesigaba manje ibonisa imigqa egqamile yokuma komhlaba kanye nemigqa efanayo yenkcazelo yemephu.",
-  // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
-  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Imifanekiso yomkhakha igcina umbala othe xaxa, enamalebula amakhudlwana nemigqa ecacile yokuma komhlaba.",
+  // Published current-main Sector wording from docs/audits/2026-11-05/sector-graphics-release-drafts.json.
+  "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Imidwebo yeSector inemicibisholo egqamile, izimpawu zelanga ezinkulu nokhiye wemephu ocace kakhudlwana.",
+  "Sector illustrations now show bolder terrain contours and matching key lines.": "Imidwebo yeSector manje ibonisa imigqa yokuphakama egqamile nemigqa ehambisana nayo kukhiye wemephu.",
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Imidwebo yeSector igcina imibala egqamile, inamalebula amakhulu nemigqa yokuphakama ecace kakhudlwana.",
   // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
   "Saving rechecks this tab’s editing access.": "Ukulondoloza kuphinda kuhlolisise imvume yokuhlela yale thebhu.",
   "Compare nursery wording drafts in seven languages": "Qhathanisa izinhlaka zamagama enkulisa ngezilimi eziyisikhombisa",

@@ -1,5 +1,9 @@
 # ImbewuField audit archive
 
+Latest international release candidate — [Current-main, print and account-gate reconciliation — 5 November 2026](2026-11-05/international-nursery-final-reconcile-codex.md). Source integration is prepared; new full/visual/account gates remain pending.
+
+Latest Sector release follow-up — [Typography contracts and native update descriptions — 5 November 2026](2026-11-05/sector-release-contracts-codex.md). Broad-arrow artwork is retained; original-device free AI recovery remains unverified.
+
 Latest language-review UI continuation: [Language review help placement — 5 November 2026](2026-11-05/language-review-inline-help-codex.md). The phone collision is reproduced; the separate changed preview remains pending.
 
 Latest international nursery integration — [Current-main reconciliation and preserved verification scope — 5 November 2026](2026-11-05/international-nursery-main-reconcile-codex.md). New ordered/current-head and actual output gates remain pending.
@@ -40,6 +44,8 @@ record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
+
+Latest Sector arrow continuation: [Broad filled arrows and collision correction — 5 November 2026](2026-11-05/sector-bold-arrows-codex.md). Current-head release evidence belongs on its PR/issue #35.
 
 Latest Sector follow-up: [Bolder contours and external reference comparison — 5 November 2026](2026-11-05/sector-bold-contours-codex.md). Release evidence is separate on its PR/issue #35.
 

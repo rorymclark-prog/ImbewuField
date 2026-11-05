@@ -4,10 +4,10 @@ const copy:UpdateCopy={
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Tsedzuluso dzo gandwiswaho dza luambo dzi vhea mbambedzo inwe na inwe khathihi musi i tshi lingana kha siaṭari.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Masiatari a u sedzulusa luambo a vhea thidzo fhasi ha bammbiri la mishumo uri zwi si thivhe ndingedzo dza u thoma.",
-  // Coordinator-adopted unreviewed main contour description; exact packet: docs/international/agy-integration-bold-contour-release-copy-2026-11-05/. English remains paired.
-  "Sector illustrations now show bolder terrain contours and matching key lines.": "Zwienziso zwa tshipida zwino zwi sumbedza mitalo yo dziaho ya vhuimo ha mavu na mitalo i yelanaho ya thaluso ya mafulo.",
-  // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
-  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Zwifanyiso zwa sekithara zwi vhulunga mivhala yo natesheaho, i re na madzina mahulwane na mitalo ya mavu i vhonalaho zwavhudi.",
+  // Published current-main Sector wording from docs/audits/2026-11-05/sector-graphics-release-drafts.json.
+  "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Zwifanyiso zwa Sector zwi na misevhe i vhonalaho zwavhuḓi, zwiga zwihulwane zwa ḓuvha na ṱhalutshedzo ya mapa i re khagala nga u engedza.",
+  "Sector illustrations now show bolder terrain contours and matching key lines.": "Zwifanyiso zwa Sector zwino zwi sumbedza mitalo ya vhulapfu ha mavu i vhonalaho zwavhuḓi na mitalo i elanaho nayo kha ṱhalutshedzo ya mapa.",
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Zwifanyiso zwa Sector zwi vhulunga mivhala yo pfumaho, zwi na malebulu mahulwane na mitalo ya vhulapfu i re khagala nga u engedza.",
   // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
   "Saving rechecks this tab’s editing access.": "U vhulunga zwi vusulusa thendelo ya u lulamisa kha thabu iyi.",
   "Compare nursery wording drafts in seven languages": "Vhambedzani mitalo ya maipfi a nesele nga nyambo dza sumbe",

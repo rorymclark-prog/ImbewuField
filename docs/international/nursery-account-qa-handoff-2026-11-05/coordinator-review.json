@@ -1,0 +1,13 @@
+{
+  "atUtc": "2026-11-05T18:19:10.551780+00:00",
+  "sourceHead": "eff63c3cb90ba78911d7f2dbdedb98a75954e522",
+  "sourceManifestSha256": "728e079c17a96e4e820b9490255913af821af6f434ed7c0f404f49b2bceb7168",
+  "actualWords": 441,
+  "documentSha256": "bc92a41c228fd64f0d66b9a58b7468fd1cd0e886c2d1a2ee4ecaee2e96c7e478",
+  "coordinatorSourceReview": true,
+  "nativeSourceWritesRevoked": true,
+  "scope": "Coordinator-corrected bounded proposal; all4snapshots checked, no ordinaryfocus=pagehide or retry=dirtyadmission inference. Nativefalse status preserved as historical executor metadata.",
+  "browserRun": false,
+  "humanFluentApproval": false,
+  "releaseApproved": false
+}

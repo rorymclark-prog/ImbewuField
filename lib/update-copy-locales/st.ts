@@ -4,10 +4,10 @@ const copy:UpdateCopy={
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Dintlha tse hatisitsweng tsa tlhahlobo ya puo di boloka papiso e nngwe le e nngwe e kopane ha e lekana leqepheng.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Maqephe a tlhahlobo ya puo a boloka thuso ka tlasa leqephe la mosebetsi e le hore e se ke ya kwala meralo.",
-  // Coordinator-adopted unreviewed main contour description; exact packet: docs/international/agy-integration-bold-contour-release-copy-2026-11-05/. English remains paired.
-  "Sector illustrations now show bolder terrain contours and matching key lines.": "Ditshwantsho tsa karolo jwale di bontsha mela e motenya ya sebopeho sa mobu le mela e tsamaelanang ya tlhaloso ya mmapa.",
-  // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
-  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Ditshwantsho tsa karolo di boloka mebala e matla haholoanyane, e nang le mangolo a maholwanyane le mela e hlakileng ya sebopeho sa mobu.",
+  // Published current-main Sector wording from docs/audits/2026-11-05/sector-graphics-release-drafts.json.
+  "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Ditshwantsho tsa Sector di na le metsu e hlahelletseng, matshwao a maholo a letsatsi le senotlolo sa mmapa se hlakileng ho feta.",
+  "Sector illustrations now show bolder terrain contours and matching key lines.": "Ditshwantsho tsa Sector jwale di bontsha mela e hlahelletseng ya bophahamo ba mobu le mela e tsamaellanang le yona senotlolong sa mmapa.",
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Ditshwantsho tsa Sector di boloka mebala e nonneng, di na le mabitso a maholo le mela ya bophahamo e hlakileng ho feta.",
   // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
   "Saving rechecks this tab’s editing access.": "Ho boloka ho hlahloba bocha phihlello ya ho lokisa ya leqephe lena.",
   "Compare nursery wording drafts in seven languages": "Bapisa meralo ya mantswe a nesari ka dipuo tse supileng",

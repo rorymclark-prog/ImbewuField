@@ -4,10 +4,10 @@ const copy:UpdateCopy={
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Swikambelo swa ririmi leswi gandlisiweke swi hlayisa mfaniso wun'wana na wun'wana wu ri xikan'we loko wu ringanela eka phepha.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Matluka yo kambela ririmi ma hlayisa mpfuneto ehansi ka phepha-ntirho leswaku swi nga funengeti matsalo yo sungula.",
-  // Coordinator-adopted unreviewed main contour description; exact packet: docs/international/agy-integration-bold-contour-release-copy-2026-11-05/. English remains paired.
-  "Sector illustrations now show bolder terrain contours and matching key lines.": "Swifaniso swa xiyenge sweswi swi kombisa milayeni yo bumbula ya xivumbeko xa misava na milayeni leyi fambelanaka ya nhlamuselo ya mepe.",
-  // Unreviewed current-main appearance description; exact source packet: docs/international/agy-integration-sector-release-copy-2026-11-05/.
-  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Swifaniso swa xiyenge swi hlayisa mihlovo leyi fuweke swinene, hi marito lamakulu na mitsila leyi nga erivaleni ya vuandlalo bya misava.",
+  // Published current-main Sector wording from docs/audits/2026-11-05/sector-graphics-release-drafts.json.
+  "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Swifaniso swa Sector swi ni miseve leyi vonakaka kahle, mimfungho leyikulu ya dyambu ni xilotlelo xa mepe lexi nga erivaleni swinene.",
+  "Sector illustrations now show bolder terrain contours and matching key lines.": "Swifaniso swa Sector sweswi swi komba milayeni yo tlakuka ka misava leyi vonakaka kahle ni milayeni leyi fambelanaka na yona eka xilotlelo xa mepe.",
+  "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Swifaniso swa Sector swi hlayisa mihlovo leyi fuweke, swi ni malebulu lamakulu ni milayeni yo tlakuka leyi nga erivaleni swinene.",
   // Coordinator-adopted unreviewed release drafts; exact packets: docs/international/agy-nursery-review-release-copy-2026-11-05/. English remains paired.
   "Saving rechecks this tab’s editing access.": "Ku hlayisa ku kambisisa nakambe mfikelelo wo lulamisa wa thembu leyi.",
   "Compare nursery wording drafts in seven languages": "Pimanisa matsalo ya marito ya nesari hi tindzimi ta nkombo",

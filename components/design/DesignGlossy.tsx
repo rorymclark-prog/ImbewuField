@@ -8148,10 +8148,40 @@ interface SectorAnalysisComposition {
 // the AI version: the bearings. See docs/RENDER-INVESTIGATION-2026-07-20.md 'sector-ai' finding 4
 // — a model-drawn arrow is a coin-flip on both angle and sense, so it must never be redrawn from
 // scratch a second time.
-function drawIllustratedSectorSun(ctx:CanvasRenderingContext2D,x:number,y:number,r:number,color:string):void {
+// The map, card icons and key share the same filled arrow. Rory's chosen reference has real
+// coloured bodies and decisive heads; translucent streamlines disappeared over his aerial.
+function drawIllustratedSectorArrow(
+  ctx: CanvasRenderingContext2D, sx: number, sy: number, ex: number, ey: number, color: string,
+  paint: { shaftHalf:number; tailHalf?:number; headHalf:number; headLength:number; edgeWidth:number; dashed:boolean },
+): Array<[number,number]> {
+  const length=Math.hypot(ex-sx,ey-sy)||1,ux=(ex-sx)/length,uy=(ey-sy)/length,nx=-uy,ny=ux;
+  const headLength=Math.min(paint.headLength,length*.58),bx=ex-ux*headLength,by=ey-uy*headLength;
+  const tailHalf=paint.tailHalf??paint.shaftHalf;
+  const points:Array<[number,number]>=[
+    [sx+nx*tailHalf,sy+ny*tailHalf],[bx+nx*paint.shaftHalf,by+ny*paint.shaftHalf],
+    [bx+nx*paint.headHalf,by+ny*paint.headHalf],[ex,ey],
+    [bx-nx*paint.headHalf,by-ny*paint.headHalf],[bx-nx*paint.shaftHalf,by-ny*paint.shaftHalf],
+    [sx-nx*tailHalf,sy-ny*tailHalf],
+  ];
+  ctx.save();ctx.globalAlpha=1;ctx.setLineDash([]);ctx.lineJoin='round';
+  ctx.beginPath();points.forEach(([x,y],i)=>(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x,y));ctx.closePath();
+  ctx.strokeStyle='#FFFFFF';ctx.lineWidth=paint.edgeWidth*3.5;ctx.stroke();
+  ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='#183F49';ctx.lineWidth=paint.edgeWidth;ctx.stroke();
+  if(paint.dashed){
+    // Regional/indicative provenance stays visible inside the opaque body, rather than turning
+    // the entire energy back into a faint dashed line.
+    ctx.strokeStyle='#FFFFFF';ctx.lineWidth=Math.max(1,paint.edgeWidth*.85);
+    ctx.setLineDash([length*.075,length*.055]);ctx.lineCap='round';ctx.beginPath();
+    ctx.moveTo(sx+ux*paint.edgeWidth*2,sy+uy*paint.edgeWidth*2);
+    ctx.lineTo(bx+ux*headLength*.32,by+uy*headLength*.32);ctx.stroke();
+  }
+  ctx.restore();return points;
+}
+
+function drawIllustratedSectorSun(ctx:CanvasRenderingContext2D,x:number,y:number,r:number,color:string,compact=false):void {
   ctx.save();ctx.translate(x,y);
   for(let i=0;i<12;i++) {
-    const angle=i*Math.PI/6,outer=r*(i%2===0?2.05:1.72),inner=r*1.27;
+    const angle=i*Math.PI/6,outer=r*(compact?1.22:i%2===0?2.05:1.72),inner=r*(compact?1.08:1.27);
     ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(Math.cos(angle)*outer,Math.sin(angle)*outer);
     ctx.lineTo(Math.cos(angle-.07)*inner,Math.sin(angle-.07)*inner);
     ctx.lineTo(Math.cos(angle+.07)*inner,Math.sin(angle+.07)*inner);ctx.closePath();ctx.fill();
@@ -8201,7 +8231,7 @@ function drawSectorAnalysis(
   sheetContours?: SheetContourResult,
 ): SectorAnalysisComposition {
   const artFinish = isAiBase && externalLegend;
-  const artInk = { summer:'#BF8223', winter:'#487DA0', cooling:'#237D70', cold:'#497DA6', berg:'#B66A33', fire:'#BC5037', fall:'#396A82' };
+  const artInk = { summer:'#D89408', winter:'#2876AD', cooling:'#008B83', cold:'#176FC1', berg:'#D66D11', fire:'#C64028', fall:'#116C92' };
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
 
@@ -8503,7 +8533,9 @@ function drawSectorAnalysis(
   const flushDirectLabels = (): void => {
     if (!externalLegend || directLabelRequests.length === 0) return;
     const directClaims: Array<{ x0: number; x1: number; y0: number; y1: number }> = [
-      { x0: 0, x1: W * 0.33, y0: 0, y1: H * 0.18 },
+      // The illustration's title lives in the external key, so its empty upper-left corner is
+      // available to labels. Keeping the old in-map title claim trapped the enlarged wind cards.
+      ...(artFinish ? [] : [{ x0: 0, x1: W * 0.33, y0: 0, y1: H * 0.18 }]),
       // Every drawn arrow claimed its body earlier — labels must clear the arrows they annotate,
       // not sit on top of them (an opaque plate on an arrow deletes the arrow from the sheet).
       ...arrowClaims,
@@ -8544,9 +8576,14 @@ function drawSectorAnalysis(
         [lineH * 7, 0], [-lineH * 7, 0],
         [lineH * 7, lineH * 2.4], [-lineH * 7, lineH * 2.4],
         [lineH * 4, lineH * 4.8], [-lineH * 4, lineH * 4.8],
+        ...(artFinish ? [
+          [request.tangentBias ?? 0,lineH*6.4],[request.tangentBias ?? 0,-lineH*6.4],
+          [lineH*10,0],[-lineH*10,0],[lineH*10,lineH*2.4],[-lineH*10,lineH*2.4],
+        ] as Array<[number,number]> : []),
       ];
       let lx = request.x;
       let ly = request.y;
+      let placed = false;
       for (const [dx, dy] of candidates) {
         const tx = Math.max(halfW + W * 0.015, Math.min(W - halfW - W * 0.015, request.x + dx));
         const ty = Math.max(halfH + H * 0.025, Math.min(H - halfH - H * 0.025, request.y + dy));
@@ -8555,7 +8592,19 @@ function drawSectorAnalysis(
         );
         lx = tx;
         ly = ty;
-        if (!overlaps) break;
+        if (!overlaps) { placed = true; break; }
+      }
+      if(artFinish && !placed){
+        // A bigger arrow can consume every nearby escape candidate. Do not silently use the
+        // final overlapping candidate: choose the nearest free grid cell inside this map.
+        const step=Math.max(lineH,W*.02);let best=Infinity;
+        for(let ty=halfH+H*.025;ty<=H-halfH-H*.025;ty+=step){
+          for(let tx=halfW+W*.015;tx<=W-halfW-W*.015;tx+=step){
+            if(directClaims.some(box=>tx-halfW<box.x1&&box.x0<tx+halfW&&ty-halfH<box.y1&&box.y0<ty+halfH))continue;
+            const distance=(tx-request.x)**2+(ty-request.y)**2;
+            if(distance<best){best=distance;lx=tx;ly=ty;}
+          }
+        }
       }
       directClaims.push({ x0: lx - halfW, x1: lx + halfW, y0: ly - halfH, y1: ly + halfH });
       // The illustrated edition uses measured cards, not small plain labels on a washed photo.
@@ -8572,10 +8621,10 @@ function drawSectorAnalysis(
         else if(/fire/i.test(cardTitle))drawIllustratedSectorFlame(ctx,gx,gy,gr*1.05,request.color);
         else {
           const sectorIcon:SectorLegendIcon=/fall|drain|slope/i.test(cardTitle)?'water':/access|driveway|dust/i.test(cardTitle)?'driveway':'wind';
-          drawStyleLegendSymbol(ctx,{swatch:request.color,text:'',sectorIcon,sectorArt:true,visual:sectorIcon==='wind'?'sector-streamline':undefined},gx-gr*1.4,gy,gr*2.8,gr*2.8);
+          drawStyleLegendSymbol(ctx,{swatch:request.color,text:'',sectorIcon,sectorArt:true},gx-gr*1.4,gy,gr*2.8,gr*2.8);
         }
         const tx=left+fs*2.15;
-        ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillStyle=request.color;
+        ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillStyle='#24382E';
         ctx.font=`800 ${fs*.80}px ${REFERENCE_LABEL_FONT}`;ctx.fillText(cardTitle,tx,ly-fs*.38);
         ctx.fillStyle='#263D32';ctx.font=`600 ${fs*.78}px ${SHEET_BODY_FONT}`;ctx.fillText(cardDetail,tx,ly+fs*.51);
         ctx.restore();continue;
@@ -8592,9 +8641,9 @@ function drawSectorAnalysis(
     }
   };
 
-  // Regional-assumption palette (§4 mechanism 1: these energies are ALWAYS dashed — solid is
-  // reserved for computed geometry). Colours match design/benchmark/README.md's transcribed icons
-  // (teal / blue / orange wavy wind lines) so the legend and the reference read as the same sheet.
+  // Regional provenance remains dashed inside the filled wind body. Rory's stronger reference
+  // needs opaque saturated arrows; the dash spine still distinguishes assumptions from measured
+  // site geometry. The exact edition retains its original palette and wind symbols.
   const SUMMER_COOLING_COLOR = artFinish ? artInk.cooling : SECTOR_STYLES['summer-cooling-wind'].color;
   const SUMMER_COOLING_LBL = SECTOR_STYLES['summer-cooling-wind'].labelColor;
   const COLD_FRONT_COLOR = artFinish ? artInk.cold : SECTOR_STYLES['cold-front-wind'].color;
@@ -8648,7 +8697,8 @@ function drawSectorAnalysis(
     color: string,
   ): void => {
     ctx.save();
-    if (artFinish) ctx.translate(-wedge.centerVec[1]*W*.035,wedge.centerVec[0]*W*.035);
+    const fx=artFinish?-wedge.centerVec[1]*W*.08:0,fy=artFinish?wedge.centerVec[0]*W*.08:0;
+    if (artFinish) ctx.translate(fx,fy);
     ctx.strokeStyle = color;
     ctx.lineWidth = Math.max(1.8, sectorStrokeWidth('fire', W) * (externalLegend ? 0.42 : 0.28));
     ctx.setLineDash([10, 7]);
@@ -8656,7 +8706,11 @@ function drawSectorAnalysis(
     ctx.moveTo(wedge.tipX, wedge.tipY);
     ctx.lineTo(cx + wedge.centerVec[0] * wedge.rr, cy + wedge.centerVec[1] * wedge.rr);
     ctx.stroke();
-    if (artFinish) drawIllustratedSectorFlame(ctx,wedge.tipX,wedge.tipY,W*.013, color);
+    if (artFinish) {
+      drawIllustratedSectorFlame(ctx,wedge.tipX,wedge.tipY,W*.0195,color);
+      claimArrowBox(wedge.tipX+fx,wedge.tipY+fy,cx+wedge.centerVec[0]*wedge.rr+fx,cy+wedge.centerVec[1]*wedge.rr+fy,W*.005);
+      arrowClaims.push({x0:wedge.tipX+fx-W*.032,x1:wedge.tipX+fx+W*.032,y0:wedge.tipY+fy-W*.036,y1:wedge.tipY+fy+W*.032});
+    }
     ctx.restore();
   };
 
@@ -8686,10 +8740,10 @@ function drawSectorAnalysis(
     const uy = dy / len;
     const nx = -uy;
     const ny = ux;
-    const tailHalf = Math.max(18, W * 0.017) * emphasis * (artFinish ? .65 : 1);
-    const shaftHalf = Math.max(11, W * 0.0105) * emphasis * (artFinish ? .6 : 1);
-    const headHalf = shaftHalf * 2.1;
-    const headLen = Math.max(40, W * 0.046) * emphasis * (artFinish ? .64 : 1);
+    const tailHalf = Math.max(18, W * 0.017) * emphasis * (artFinish ? 1.6 : 1);
+    const shaftHalf = Math.max(11, W * 0.0105) * emphasis * (artFinish ? 2.1 : 1);
+    const headHalf = shaftHalf * (artFinish ? 1.8 : 2.1);
+    const headLen = Math.max(40, W * 0.046) * emphasis * (artFinish ? 1.5 : 1);
     const headBaseX = tipX - ux * headLen;
     const headBaseY = tipY - uy * headLen;
     ctx.save();
@@ -8703,30 +8757,10 @@ function drawSectorAnalysis(
     ctx.lineTo(tailX - nx * tailHalf, tailY - ny * tailHalf);
     ctx.closePath();
     if(artFinish){
-      const ribbon=ctx.createLinearGradient(tailX,tailY,tipX,tipY);
-      ribbon.addColorStop(0,`${color}10`);ribbon.addColorStop(.32,`${color}55`);ribbon.addColorStop(1,`${color}D9`);
-      const body=W*.021,midX=tailX+dx*.5,midY=tailY+dy*.5;
-      ctx.save();ctx.shadowColor=`${color}24`;ctx.shadowBlur=W*.006;ctx.shadowOffsetY=W*.002;
-      ctx.fillStyle=ribbon;ctx.beginPath();ctx.moveTo(tailX+nx*body,tailY+ny*body);
-      ctx.quadraticCurveTo(midX+nx*body*1.5,midY+ny*body*1.5,headBaseX+nx*body*.36,headBaseY+ny*body*.36);
-      ctx.lineTo(tipX,tipY);ctx.lineTo(headBaseX-nx*body*.36,headBaseY-ny*body*.36);
-      ctx.quadraticCurveTo(midX-nx*body*.3,midY-ny*body*.3,tailX-nx*body,tailY-ny*body);ctx.closePath();ctx.fill();ctx.restore();
-      // Three dashed streamlines read as wind; the neighbouring red flame/dash reads as fire.
-      // Both use the original sourced axis. Curvature is graphic rhythm, not a new bearing.
-      ctx.setLineDash([W*.008,W*.005]);ctx.lineCap='round';ctx.lineWidth=Math.max(3,W*.0024);
-      for (const lane of [-1,0,1]) {
-        const shift=lane*W*.012;
-        ctx.globalAlpha=lane===0?.95:.72;ctx.strokeStyle=lane===0?'#FFFFFF':color;
-        ctx.beginPath();ctx.moveTo(tailX+nx*shift,tailY+ny*shift);
-        ctx.bezierCurveTo(tailX+dx*.36+nx*(shift+W*.012),tailY+dy*.36+ny*(shift+W*.012),
-          tailX+dx*.68+nx*(shift-W*.012),tailY+dy*.68+ny*(shift-W*.012),
-          tipX+nx*shift*.4-ux*headLen*.3,tipY+ny*shift*.4-uy*headLen*.3);ctx.stroke();
-      }
-      ctx.globalAlpha=1;ctx.setLineDash([]);ctx.fillStyle=color;
-      ctx.beginPath();ctx.moveTo(tipX,tipY);
-      ctx.lineTo(tipX-ux*headLen*.7+nx*headHalf*.65,tipY-uy*headLen*.7+ny*headHalf*.65);
-      ctx.lineTo(tipX-ux*headLen*.7-nx*headHalf*.65,tipY-uy*headLen*.7-ny*headHalf*.65);ctx.closePath();ctx.fill();
-      ctx.restore();claimArrowBox(tailX,tailY,tipX,tipY,headHalf);return {sxp:tailX,syp:tailY};
+      drawIllustratedSectorArrow(ctx,tailX,tailY,tipX,tipY,color,{
+        tailHalf,shaftHalf,headHalf,headLength:headLen,edgeWidth:Math.max(2,W*.0018),dashed:true,
+      });
+      ctx.restore();claimArrowBox(tailX,tailY,tipX,tipY,headHalf+W*.004);return {sxp:tailX,syp:tailY};
     }
     // ROUTE-CASING TREATMENT, not a tint. The previous pass (30%-alpha fill, 76%-alpha edge, a
     // half-strength dark halo) was three translucent layers stacked on a photograph whose foliage
@@ -8862,8 +8896,12 @@ function drawSectorAnalysis(
   // octant"). Each arc sweeps through whichever side (N/S) that season's noon sun actually sits on
   // — usually the same side both times, but genuinely different ('mixed') inside the tropics.
   const bearingToCanvasAngle = (bearingDeg: number) => ((bearingDeg - 90) * Math.PI) / 180;
-  const drawSunIcon = (x: number, y: number, r: number, color: string): void => {
-    if(artFinish){drawIllustratedSectorSun(ctx,x,y,r,color);return;}
+  const drawSunIcon = (x: number, y: number, r: number, color: string, compact=false): void => {
+    if(artFinish){
+      drawIllustratedSectorSun(ctx,x,y,r,color,compact);
+      const extent=r*(compact?1.3:2.15);
+      arrowClaims.push({x0:x-extent,x1:x+extent,y0:y-extent,y1:y+extent});return;
+    }
     ctx.save();
     ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.92)' : 'rgba(14,20,13,0.82)';
     ctx.fillStyle = color;
@@ -8895,14 +8933,14 @@ function drawSectorAnalysis(
     // same fix applied to a LINE instead of text: a dark halo stroke first, the real colour on top.
     if (externalLegend) {
       ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.82)' : 'rgba(6,10,8,0.55)';
-      ctx.lineWidth = Math.max(2.5, W * 0.0022) + Math.max(3, W * (artFinish ? 0.0046 : 0.0026));
+      ctx.lineWidth = Math.max(2.5, W * 0.0022) + Math.max(3, W * (artFinish ? 0.0064 : 0.0026));
       ctx.lineCap = 'round';
       ctx.beginPath();
       ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
       ctx.stroke();
     }
     ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(2.5, W * (artFinish ? 0.0034 : 0.0022));
+    ctx.lineWidth = Math.max(2.5, W * (artFinish ? 0.0048 : 0.0022));
     ctx.lineCap = 'round';
     ctx.beginPath();
     ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
@@ -8913,7 +8951,7 @@ function drawSectorAnalysis(
       if(!sweepNorth && sweep<0)sweep+=Math.PI*2;
       for(const fraction of [.28,.72]) {
         const angle=startAngle+sweep*fraction, tangent=angle+(sweepNorth?-1:1)*Math.PI/2;
-        const x=cx+Math.cos(angle)*r,y=cy+Math.sin(angle)*r,head=W*.015;
+        const x=cx+Math.cos(angle)*r,y=cy+Math.sin(angle)*r,head=W*.018;
         ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(x,y);
         ctx.lineTo(x-head*Math.cos(tangent-.48),y-head*Math.sin(tangent-.48));
         ctx.lineTo(x-head*Math.cos(tangent+.48),y-head*Math.sin(tangent+.48));ctx.closePath();ctx.fill();
@@ -8925,9 +8963,9 @@ function drawSectorAnalysis(
     // farmer actually sites a windbreak or a shade tree against; they were drawn at three
     // quarters of the noon sun and vanished into the photograph entirely. They now lead, and the
     // noon marker (which already has the banner and the altitude number carrying it) follows.
-    const sunR = Math.max(14, W * (artFinish ? 0.011 : 0.0125));
+    const sunR = Math.max(14, W * (artFinish ? 0.017 : 0.0125));
     drawSunIcon(cx + Math.cos(startAngle) * r, cy + Math.sin(startAngle) * r, sunR, color);
-    drawSunIcon(cx + apexVec[0] * r, cy + apexVec[1] * r, sunR * 0.82, color);
+    drawSunIcon(cx + apexVec[0] * r, cy + apexVec[1] * r, sunR * (artFinish ? .58 : .82), color, artFinish);
     drawSunIcon(cx + Math.cos(endAngle) * r, cy + Math.sin(endAngle) * r, sunR, color);
     // SAY WHICH END IS WHICH. Two suns on the ends of an arc are obvious to anyone who has read a
     // sun-path diagram before and mean nothing to anyone who has not — and this sheet is printed
@@ -8946,12 +8984,13 @@ function drawSectorAnalysis(
       ctx.lineJoin = 'round';
       const caption = (ax: number, ay: number, text: string) => {
         const tx = cx + Math.cos(ax) * r;
-        const ty = cy + Math.sin(ax) * r + sunR * 1.9;
+        const ty = cy + Math.sin(ax) * r + sunR * (artFinish ? 2.65 : 1.9);
         ctx.lineWidth = artFinish ? Math.max(2,capFs*.12) : Math.max(3.5, capFs * 0.24);
         ctx.strokeStyle = artFinish ? 'rgba(255,253,248,.96)' : 'rgba(8,12,10,0.9)';
         ctx.strokeText(text, tx, ty);
         ctx.fillStyle = artFinish ? '#324737' : 'rgba(252,250,240,0.98)';
         ctx.fillText(text, tx, ty);
+        if(artFinish){const half=ctx.measureText(text).width/2;arrowClaims.push({x0:tx-half,x1:tx+half,y0:ty-capFs*.65,y1:ty+capFs*.65});}
         void ay;
       };
       caption(startAngle, 0, artFinish?'Sunrise':'SUNRISE');
@@ -9130,6 +9169,13 @@ function drawSectorAnalysis(
       blueprintRing(ctx, bnd, px, py);
       ctx.clip();
     }
+    if(artFinish){
+      const sx=cx+dn[0]*siteR*startAlong,sy=cy+dn[1]*siteR*startAlong;
+      drawIllustratedSectorArrow(ctx,sx,sy,centerEndX,centerEndY,artInk.fall,{
+        shaftHalf:W*.0065,headHalf:W*.02,headLength:W*.04,edgeWidth:Math.max(1.6,W*.0015),dashed:model.water.indicative,
+      });
+      claimArrowBox(sx,sy,centerEndX,centerEndY,W*.024);
+    }else{
     // Same fix as the sun arc and the wind arrows: a plain blue line at 76% alpha was built for a
     // flat tint and vanishes into a busy AI-painted ground. One dark halo pass under the real line
     // and arrowhead first — same path, wider, dark — then the actual colour on top.
@@ -9185,6 +9231,7 @@ function drawSectorAnalysis(
       ctx.closePath();
       ctx.fill();
       ctx.setLineDash(model.water.indicative ? [8, 6] : []);
+    }
     }
     ctx.restore();
     labelAt(centerEndX, centerEndY + rowH * 0.55, `SLOPE FALL TO ${site?.elevation?.aspectLabel ?? 'DOWNHILL'} · ~${model.water.slopePct.toFixed(0)}%${model.water.indicative ? ' (INDICATIVE)' : ''}`, '#8FD0F0');
@@ -9247,7 +9294,10 @@ function drawSectorAnalysis(
       if(externalLegend)for(const line of sheetContours.lines){
         const points=line.points.filter(point=>pointInRing(point,bnd));
         const at=points[Math.floor(points.length*.32)];
-        if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,px(at[0]),py(at[1])-W*.006,Math.max(16,W*(artFinish?.015:.009)));
+        if(at){
+          const bounds=drawOverviewContourCaption(ctx,`${line.elevM} m`,px(at[0]),py(at[1])-W*.006,Math.max(16,W*(artFinish?.015:.009)));
+          if(artFinish)arrowClaims.push(bounds);
+        }
       }
       const middleLine = sheetContours.lines[Math.floor(sheetContours.lines.length / 2)];
       if (middleLine) {
@@ -9607,9 +9657,12 @@ async function fetchSectorPresentationContours(state:DesignCanvasState,frame:Can
   return layout?{...overview,lines:overview.lines.map(line=>({...line,points:line.points.map(([x,y])=>[(x-layout.cropX)/layout.cropWidth,(y-layout.cropY)/layout.cropHeight] as [number,number])}))}:overview;
 }
 
-function drawOverviewContourCaption(ctx:CanvasRenderingContext2D,label:string,x:number,y:number,size:number):void{
+function drawOverviewContourCaption(ctx:CanvasRenderingContext2D,label:string,x:number,y:number,size:number):{x0:number;x1:number;y0:number;y1:number}{
   ctx.save();ctx.font=`700 ${Math.round(size)}px ${SHEET_BODY_FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';
-  ctx.strokeStyle='#FFFFFF';ctx.lineWidth=Math.max(2,size*.15);ctx.strokeText(label,x,y);ctx.fillStyle=TERRAIN_CONTOUR_INK;ctx.fillText(label,x,y);ctx.restore();
+  ctx.strokeStyle='#FFFFFF';ctx.lineWidth=Math.max(2,size*.15);ctx.strokeText(label,x,y);ctx.fillStyle=TERRAIN_CONTOUR_INK;ctx.fillText(label,x,y);
+  const half=ctx.measureText(label).width/2+size*.12;
+  const bounds={x0:x-half,x1:x+half,y0:y-size*.65,y1:y+size*.65};
+  ctx.restore();return bounds;
 }
 
 async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName?:string):Promise<string|null>{
@@ -9836,7 +9889,6 @@ async function composeSectorSheet(
     kind: row.style === 'fill' ? 'surface' : undefined,
     sectorIcon: row.color===TERRAIN_CONTOUR_INK||row.color===TERRAIN_SUPPLEMENTAL_INK?undefined:row.sectorIcon,
     sectorArt:artFinish,
-    ...(artFinish && row.sectorIcon==='wind'?{visual:'sector-streamline' as const}:{}),
     ...(row.color===TERRAIN_CONTOUR_INK||row.color===TERRAIN_SUPPLEMENTAL_INK?{visual:'terrain-contour' as const}:{}),
   }));
 
@@ -10484,7 +10536,7 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour' | 'zone-boundary' | 'sector-streamline';
+  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour' | 'zone-boundary';
   historicalFeature?: HistoricalFeatureId;
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
@@ -10746,7 +10798,7 @@ function drawStyleLegendSymbol(
   if(row.photoNumber!==undefined){drawHistoricalPhotoPin(ctx,x+w/2,y,Math.min(w,h)*.36,row.photoNumber);return;}
   if (row.sectorIcon) {
     const cx = x + w / 2;
-    const r = Math.max(5, Math.min(w, h) * 0.24);
+    const r = Math.max(5, Math.min(w, h) * (row.sectorArt ? .28 : .24));
     ctx.save();
     ctx.strokeStyle = row.swatch;
     ctx.fillStyle = row.swatch;
@@ -10766,24 +10818,18 @@ function drawStyleLegendSymbol(
         ctx.lineTo(cx + Math.cos(a) * r * 2.05, y + Math.sin(a) * r * 2.05);
         ctx.stroke();
       }
+    } else if (row.sectorArt && (row.sectorIcon === 'wind' || row.sectorIcon === 'water')) {
+      drawIllustratedSectorArrow(ctx,x,y,x+w,y,row.swatch,{
+        shaftHalf:h*.15,headHalf:h*.32,headLength:w*.34,edgeWidth:Math.max(1,h*.035),
+        dashed:row.sectorIcon==='wind'||row.lineKind==='drip',
+      });
     } else if (row.sectorIcon === 'wind') {
-      if(row.visual==='sector-streamline')ctx.setLineDash([w*.12,w*.09]);
-      if(row.sectorArt) {
-        const tint=ctx.createLinearGradient(x,y,x+w,y);tint.addColorStop(0,`${row.swatch}12`);tint.addColorStop(1,`${row.swatch}70`);
-        ctx.fillStyle=tint;ctx.beginPath();ctx.moveTo(x,y-r);
-        ctx.quadraticCurveTo(x+w*.4,y-r*1.5,x+w*.85,y-r*.35);ctx.lineTo(x+w,y);
-        ctx.lineTo(x+w*.85,y+r*.35);ctx.quadraticCurveTo(x+w*.4,y+r*.45,x,y+r);ctx.closePath();ctx.fill();
-      }
       for (const off of [-r * 0.75, 0, r * 0.75]) {
         ctx.beginPath();
         ctx.moveTo(x, y + off);
         ctx.bezierCurveTo(x + w * 0.25, y + off - r * 0.8, x + w * 0.45, y + off + r * 0.8, x + w * 0.68, y + off);
         ctx.bezierCurveTo(x + w * 0.82, y + off - r * 0.55, x + w * 0.92, y + off - r * 0.2, x + w, y + off);
         ctx.stroke();
-      }
-      if(row.visual==='sector-streamline') {
-        ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(x+w,y);
-        ctx.lineTo(x+w-r*.65,y-r*.45);ctx.lineTo(x+w-r*.65,y+r*.45);ctx.closePath();ctx.fill();
       }
     } else if (row.sectorIcon === 'fire' && row.sectorArt) {
       drawIllustratedSectorFlame(ctx,cx,y,r*1.25,row.swatch);

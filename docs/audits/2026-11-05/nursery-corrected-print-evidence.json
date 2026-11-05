@@ -1,0 +1,112 @@
+{
+  "atUtc": "2026-11-05T18:35:28.354371+00:00",
+  "head": "eff63c3cb90ba78911d7f2dbdedb98a75954e522",
+  "source": "Actual separately permitted Chrome native A4 print artifacts; coordinator independently read bytes/extracted allpages/viewed both actual contact sheets.",
+  "outputs": [
+    {
+      "language": "french",
+      "bytes": 317882,
+      "sha256": "7f1de599f1612ee73ee35542baa5008ed204336ae2b8d3f2070402353aca1efb",
+      "pages": 8,
+      "uniqueKeys": 26,
+      "allKeysOnce": true,
+      "perPage": [
+        {
+          "page": 1,
+          "comparisonHeaders": 0,
+          "footers": 0
+        },
+        {
+          "page": 2,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 3,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 4,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 5,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 6,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 7,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 8,
+          "comparisonHeaders": 2,
+          "footers": 2
+        }
+      ],
+      "contactSheetSha256": "d5f6a3cc9691109ee6ec3e231c8afba71add9403e39326c9afd89abcd8d29c7a"
+    },
+    {
+      "language": "bengali",
+      "bytes": 349513,
+      "sha256": "0d89ccf3035018ce5b9b658a4eed19682391f16f40e34888806c2b1fb864245b",
+      "pages": 8,
+      "uniqueKeys": 26,
+      "allKeysOnce": true,
+      "perPage": [
+        {
+          "page": 1,
+          "comparisonHeaders": 0,
+          "footers": 0
+        },
+        {
+          "page": 2,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 3,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 4,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 5,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 6,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 7,
+          "comparisonHeaders": 4,
+          "footers": 4
+        },
+        {
+          "page": 8,
+          "comparisonHeaders": 2,
+          "footers": 2
+        }
+      ],
+      "contactSheetSha256": "7f0cb6cd8563b5db191fd29501b2853aa36f7fb81368b90b5b939d9719cf4e33"
+    }
+  ],
+  "rootVisualReview": "Allcomparison cards intact in French/Bengali contact sheets; no detached headings/footer-only continuation/clipping observed; row14wholepage5. Layout only, no fluent approval.",
+  "accountOrStorageVerified": false,
+  "newMergedPreviewVerified": false
+}

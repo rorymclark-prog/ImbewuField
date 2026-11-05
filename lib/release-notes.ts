@@ -58,6 +58,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     "Find Indonesia’s official BMKG sources",
   ], tour: [{ title: "Find Indonesia’s official BMKG sources", where: "Country evidence → Research priorities → Indonesia", href: '/international',
     detail: "Open the official forecast documentation, open-data description and terms from Indonesia’s research-queue card. Source links do not enable a forecast feed or local crop advice." }] },
+  // Already-published main changes follow this release's announced nursery changes so their existing guide stays reachable.
+  { when: '5 November 2026', sha: '2589a52bf', changes: [
+    "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.",
+  ] },
   { when: '5 November 2026', sha: '9992ec39de', changes: [
     'Record a nursery planting in its field bed',
   ], tour: [{ title: 'Record a nursery planting in its field bed', where: 'Crop planner → Saved planned nursery batches → Record field planting', href: '/facilitator/crops',

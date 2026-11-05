@@ -1,3 +1,7 @@
+# Latest international release reconciliation
+
+[Current-main, print and account-gate reconciliation](international-nursery-final-reconcile-codex.md) retains the published Sector renderer and both typography contracts. Current-head checks/output gates remain pending.
+
 # Audits — 5 November 2026
 
 - [Language review help placement](language-review-inline-help-codex.md): reproduced phone text occlusion; separate in-flow help follow-up, changed preview pending.
@@ -7,3 +11,7 @@
 - [Actual rich-aerial C implementation and release continuation — Codex](sector-rich-aerial-release-codex.md)
 
 - [Bolder Sector contours and real reference comparison — Codex](sector-bold-contours-codex.md)
+
+- [Broad filled Sector arrows and collision correction — Codex](sector-bold-arrows-codex.md)
+
+- [Sector typography and native release-description follow-up — Codex](sector-release-contracts-codex.md)
