@@ -7,3 +7,5 @@
 - [Bolder Sector contours and real reference comparison — Codex](sector-bold-contours-codex.md)
 
 - [Broad filled Sector arrows and collision correction — Codex](sector-bold-arrows-codex.md)
+
+- [Sector typography and native release-description follow-up — Codex](sector-release-contracts-codex.md)
