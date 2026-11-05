@@ -451,5 +451,9 @@ const copy:UpdateCopy={
   "Find official Kiambu bulletin links": "Wanani dzi-link dza tshiofisi dza mivhigo ya Kiambu",
   "Country evidence → Kenya → County bulletin links": "Vhuṱanzi ha shango → Kenya → Dzi-link dza mivhigo ya county",
   "Choose Kiambu to open the inspected official bulletin page or PDF and find other KMD bulletins. Source dates and unknown freshness remain visible; these links do not update crop advice.": "Nangani Kiambu u vula siaṱari ḽa tshiofisi ḽa muvhigo ḽo sedzuluswaho kana PDF yaḽo, na u wana miṅwe mivhigo ya KMD. Maḓuvha a tshiko na u sa ḓivhea uri mafhungo ndi maswa hani zwi dzula zwi tshi vhonala; hedzi dzi-link a dzi shanduli nyeletshedzo ya zwimela.",
+  // EA-rainfall-reference release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/ea-rainfall-reference-release-drafts.json.
+  "Check an Environment Agency rainfall reference": "Sedzulusani referentsi ya mvula ya Environment Agency",
+  "Country evidence → United Kingdom → Public rainfall network sample": "Vhuṱanzi ha shango → United Kingdom → Tsumbo ya nethiweke ya mvula ya nnyi na nnyi",
+  "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.": "Humbelani tsumbo nthihi ya nethiweke ya nnyi na nnyi, hune mvula yo vhigwaho, mivhalo i siho na zwifhinga zwa tshiko zwa dzula zwo fhambanywa. Iyi referentsi a i kali mvula kha bulasi ḽaṋu kana u shandula nyeletshedzo ya zwimela.",
 };
 export default copy;
