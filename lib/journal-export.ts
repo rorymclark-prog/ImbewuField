@@ -1,6 +1,6 @@
 import { journalPlanningReferenceText } from './journal-link-display';
-import { inspectJournalGrowerLink, inspectJournalNurserySowing, inspectJournalNurseryProgress, type JournalEntry,
-  type JournalNurserySowingObservation, type JournalNurseryProgressObservation } from './field-journal';
+import { inspectJournalGrowerLink, inspectJournalNurserySowing, inspectJournalNurseryProgress, inspectJournalNurseryFieldPlanting, type JournalEntry,
+  type JournalNurserySowingObservation, type JournalNurseryProgressObservation, type JournalNurseryFieldPlantingObservation } from './field-journal';
 import { deliverFile, type FileDelivery } from './file-delivery';
 import { farmMemoryText, farmMemoryCategoryLabel, type FarmMemoryKey } from './farm-memory-copy';
 
@@ -67,6 +67,27 @@ function nurseryProgressCells(snapshot: NurseryProgressExport | null): Array<str
     references.variety ?? 'Not recorded', references.seedLotReference ?? 'Not recorded', references.raisingBatchReference ?? 'Not recorded', snapshot.plannedDate];
 }
 
+type NurseryFieldPlantingExport = { status: 'held' }
+  | { status: 'observed'; observation: JournalNurseryFieldPlantingObservation; plannedDate: string };
+function nurseryFieldPlantingSnapshot(entry: JournalEntry): NurseryFieldPlantingExport | null {
+  const inspected = inspectJournalNurseryFieldPlanting(entry);
+  if (inspected.status === 'legacy') return null;
+  if (inspected.status === 'held') return { status: 'held' };
+  const link = inspectJournalGrowerLink(entry);
+  if (link.status !== 'linked' || link.link.eventKind !== 'field-entry') return { status: 'held' };
+  return { status: 'observed', observation: inspected.observation, plannedDate: link.link.plannedDate };
+}
+const nurseryFieldPlantingColumns = ['Nursery field planting observation status (English)', 'Plants planted during this recorded work',
+  'Field planting variety / cultivar (user-entered)', 'Field planting seed-lot reference (user-entered)',
+  'Field planting raising-batch reference (user-entered)', 'Planned field entry (UTC calendar date)'];
+function nurseryFieldPlantingCells(snapshot: NurseryFieldPlantingExport | null): Array<string | number> {
+  if (!snapshot) return ['', '', '', '', '', ''];
+  if (snapshot.status === 'held') return ['Needs review', '', '', '', '', ''];
+  const { plantsPlanted, references } = snapshot.observation;
+  return ['Observed', plantsPlanted, references.variety ?? 'Not recorded', references.seedLotReference ?? 'Not recorded',
+    references.raisingBatchReference ?? 'Not recorded', snapshot.plannedDate];
+}
+
 export function buildJournalCsv(entries: JournalEntry[], options: JournalExportOptions = {}): string {
   const lang = options.lang ?? 'en';
   const t = (key: FarmMemoryKey) => farmMemoryText(lang, key);
@@ -75,10 +96,12 @@ export function buildJournalCsv(entries: JournalEntry[], options: JournalExportO
   const includeReference = entries.some(entry => journalPlanningReferenceText(entry) !== null);
   const nurserySowing = entries.map(nurserySowingSnapshot), includeNurserySowing = nurserySowing.some(value => value !== null);
   const nurseryProgress = entries.map(nurseryProgressSnapshot), includeNurseryProgress = nurseryProgress.some(value => value !== null);
+  const fieldPlanting = entries.map(nurseryFieldPlantingSnapshot), includeFieldPlanting = fieldPlanting.some(value => value !== null);
   // Old journal copies keep their exact column contract. New observation fields
   // appear only when selected records actually contain observed or held evidence.
   const rows: Array<Array<string | number>> = [[...headerKeys.map(t), ...(includeReference ? ['Planning reference (English)'] : []),
-    ...(includeNurserySowing ? nurserySowingColumns : []), ...(includeNurseryProgress ? nurseryProgressColumns : [])]];
+    ...(includeNurserySowing ? nurserySowingColumns : []), ...(includeNurseryProgress ? nurseryProgressColumns : []),
+    ...(includeFieldPlanting ? nurseryFieldPlantingColumns : [])]];
   for (const [index, entry] of entries.entries()) rows.push([
     entry.date, farmMemoryCategoryLabel(lang, entry.category), entry.title, entry.notes,
     entry.bedLabel ?? '', entry.bedId ?? '', entry.cropName ?? '', entry.photos?.length ?? 0,
@@ -87,6 +110,7 @@ export function buildJournalCsv(entries: JournalEntry[], options: JournalExportO
     ...(includeReference ? [journalPlanningReferenceText(entry) ?? ''] : []),
     ...(includeNurserySowing ? nurserySowingCells(nurserySowing[index]) : []),
     ...(includeNurseryProgress ? nurseryProgressCells(nurseryProgress[index]) : []),
+    ...(includeFieldPlanting ? nurseryFieldPlantingCells(fieldPlanting[index]) : []),
   ]);
   return `\uFEFF${rows.map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
 }
@@ -125,6 +149,20 @@ function nurseryProgressHtml(entry: JournalEntry): string {
   return `<section lang="en" class="basis"><h3>Recorded nursery count</h3><p>Grower-entered count and assessment; reference labels are user-entered, not verified seed identity. Ready is the grower's assessment, not a readiness certificate. Counts are not available stock or crop capacity.</p><dl>${fields.map(([label, value]) => `<dt>${html(label)}</dt><dd>${html(String(value))}</dd>`).join('')}</dl></section>`;
 }
 
+function nurseryFieldPlantingHtml(entry: JournalEntry): string {
+  const snapshot = nurseryFieldPlantingSnapshot(entry);
+  if (!snapshot) return '';
+  if (snapshot.status === 'held') return '<p lang="en" class="basis">Nursery field planting observation needs review. Retained evidence is not exported as checked quantities or reference labels.</p>';
+  const { plantsPlanted, references } = snapshot.observation;
+  const fields: Array<[string, string | number]> = [
+    ['Observed day', entry.date], ['Planned field entry (UTC calendar date)', snapshot.plannedDate],
+    ['Plants planted during this recorded work', plantsPlanted], ['Recorded variety / cultivar', references.variety ?? 'Not recorded'],
+    ['Recorded seed-lot reference', references.seedLotReference ?? 'Not recorded'],
+    ['Recorded raising-batch reference', references.raisingBatchReference ?? 'Not recorded'],
+  ];
+  return `<section lang="en" class="basis"><h3>Recorded field planting</h3><p>Grower-entered observation for this work, not a stock balance, survival result or completed batch. Reference labels are user-entered, not verified seed identity. No particular earlier sowing or count record is identified.</p><dl>${fields.map(([label, value]) => `<dt>${html(label)}</dt><dd>${html(String(value))}</dd>`).join('')}</dl></section>`;
+}
+
 function safePhoto(source: string): boolean {
   // Keep this copy independent of the server and prevent active SVG/HTML or remote tracking.
   return /^data:image\/(?:png|jpeg|jpg|webp|gif);base64,[a-zA-Z0-9+/=\r\n]+$/u.test(source);
@@ -145,7 +183,7 @@ export function buildJournalHtml(entries: JournalEntry[], options: JournalExport
     const omitted = t(excluded === 1 ? 'exportPhotoOmittedOne' : 'exportPhotoOmittedMany', {
       n: excluded, reason: t(options.includePhotos === false ? 'exportOmittedByChoice' : 'exportOmittedUnavailable'),
     });
-    return `<article><header><p class="date">${html(entry.date)} · ${html(farmMemoryCategoryLabel(lang, entry.category))}</p><h2>${html(entry.title || t('exportNote'))}</h2></header>${entry.bedLabel || entry.cropName ? `<p class="tags">${entry.bedLabel ? `${html(t('exportBed'))}: ${html(entry.bedLabel)}` : ''}${entry.bedLabel && entry.cropName ? ' · ' : ''}${entry.cropName ? `${html(t('exportCrop'))}: ${html(entry.cropName)}` : ''}</p>` : ''}<p class="notes">${html(entry.notes)}</p>${reference ? `<p lang="en" class="basis">${html(reference)}</p>` : ''}${nurserySowingHtml(entry)}${nurseryProgressHtml(entry)}${photos.length ? `<div class="photos">${photos.map(({ source, number }) => `<figure><img src="${html(source)}" alt="${html(t('exportPhotoAlt', { n: number }))}"><figcaption>${html(entry.date)} · ${html(entry.title || t('exportNote'))} · ${html(t('photoNumber', { n: number }))}</figcaption></figure>`).join('')}</div>` : ''}${excluded > 0 ? `<p class="basis">${html(omitted)}</p>` : ''}</article>`;
+    return `<article><header><p class="date">${html(entry.date)} · ${html(farmMemoryCategoryLabel(lang, entry.category))}</p><h2>${html(entry.title || t('exportNote'))}</h2></header>${entry.bedLabel || entry.cropName ? `<p class="tags">${entry.bedLabel ? `${html(t('exportBed'))}: ${html(entry.bedLabel)}` : ''}${entry.bedLabel && entry.cropName ? ' · ' : ''}${entry.cropName ? `${html(t('exportCrop'))}: ${html(entry.cropName)}` : ''}</p>` : ''}<p class="notes">${html(entry.notes)}</p>${reference ? `<p lang="en" class="basis">${html(reference)}</p>` : ''}${nurserySowingHtml(entry)}${nurseryProgressHtml(entry)}${nurseryFieldPlantingHtml(entry)}${photos.length ? `<div class="photos">${photos.map(({ source, number }) => `<figure><img src="${html(source)}" alt="${html(t('exportPhotoAlt', { n: number }))}"><figcaption>${html(entry.date)} · ${html(entry.title || t('exportNote'))} · ${html(t('photoNumber', { n: number }))}</figcaption></figure>`).join('')}</div>` : ''}${excluded > 0 ? `<p class="basis">${html(omitted)}</p>` : ''}</article>`;
   }).join('\n');
   return `<!doctype html>
 <html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>${html(title)}</title>

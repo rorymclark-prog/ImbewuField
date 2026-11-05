@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "0f715f1261952357f34931e84f0a26df103779fcad4e11455572d93c13f3bc01",
+  "milestoneId": "nursery-field-planting-observation",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "reviewNotes": "Twelve source-paired release-description candidates for four existing languages. Codex provenance, not native AGY or fluent certification. No new runtime language, stock deduction, observed survival or prior-journal-source inference.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "3e0248fc40b4fddc3cfe43da99b7669e21ff9e7f89fcf9e1993bc5d4d706c372",
+      "selectedFileSha256": "d12a870b8e6b575bd28843b03255aab8f197cd1a616749a76cfbda58f26598c8"
+    },
+    "st": {
+      "originalFileSha256": "df04fea6d6ac9c020520a66ab351fe94dd57908e7dcad42fa01d3defb6975b4b",
+      "selectedFileSha256": "6947712b6864d3ad378695e057caf2370fa6e65f85f982f8cf9a8fe0462b780d"
+    },
+    "ve": {
+      "originalFileSha256": "cfffb9f1b4394c7c312ea147c178bc1cc79f59c3db82345ca43af401de8c146c",
+      "selectedFileSha256": "0227ef6e5f3c0085bf517aba595410ef4ed102d5cea37cd4a6ab9bc20d069e11"
+    },
+    "ts": {
+      "originalFileSha256": "8f0f2a71f021b6f3fc5b180f21fa593261cdfec51f6e88945d108439a720a207",
+      "selectedFileSha256": "b41360fffccfc8c738edb7353e90f29aa113f6a59f0c6e9dfe98f31c188e51f7"
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Record a nursery planting in its field bed",
+      "zu": "Rekhoda ukutshala kwe-nursery embhedeni wako wasensimini",
+      "st": "Rekota temo ya sethopo betheng ya sona tshimong",
+      "ve": "Rekhodani u ṱavha ha nursery mbedeni wayo wa tsimuni",
+      "ts": "Rhekhoda ku byala ka nursery eka mubedo wa yona ensinwini",
+      "messageSha256": "ddc67f6bce19df507dbf798a72ba050fb852b420f9cf708307ed7da286ab5db3"
+    },
+    {
+      "english": "Crop planner → Saved planned nursery batches → Record field planting",
+      "zu": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe → Rekhoda ukutshala ensimini",
+      "st": "Moralo wa dijalo → Dihlopha tse rerilweng tsa sethopo tse bolokilweng → Rekota temo tshimong",
+      "ve": "Mupulani wa zwimela → Zwipid̄a zwa nursery zwo pulanwa zwo vhulungwaho → Rekhodani u ṱavha tsimuni",
+      "ts": "Mupulani wa swibyariwa → Mintlawa ya nursery leyi kunguhatiweke leyi hlayisiweke → Rhekhoda ku byala ensinwini",
+      "messageSha256": "712ae199c462d7161673fddac5ab95fa1118c9203b957ced29e8387055b6b57d"
+    },
+    {
+      "english": "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.",
+      "zu": "Rekhoda usuku nenani lezitshalo ozifake embhedeni owabelwe ukutshala kwe-nursery okuhloliwe. Gcina irekhodi lalokho okubonile kujenali lihlukile osukwini oluhleliwe, esitokweni se-nursery nasekusindeni kwezitshalo.",
+      "st": "Rekota letsatsi le palo ya dimela tseo o di kentseng betheng e abetsweng temo ya sethopo e hlahlobilweng. Boloka rekoto ya se bonweng jenaleng e arohane le letsatsi le rerilweng, setoko sa sethopo le ho phela ha dimela.",
+      "ve": "Rekhodani d̄uvha na tshivhalo tsha zwimela zwe na zwi vhea mbedeni yo avhelwaho u ṱavha ha nursery ho sedzuluswaho. Vhulungani rekhodo ya zwe na vhona kha jenala yo fhambanaho na d̄uvha l̄o pulanwaho, stock ya nursery na u tshila ha zwimela.",
+      "ts": "Rhekhoda siku ni nhlayo ya swimilana leswi u swi vekeke eka mubedo lowu averiweke ku byala ka nursery loku kamberiweke. Hlayisa rhekhodo ya leswi voniweke eka jenala yi hambanile ni siku leri kunguhatiweke, xitoko xa nursery ni ku hanya ka swimilana.",
+      "messageSha256": "f67e8e58fa1b7e3ff6062c1a321328709af9452cb19bfe77c2643e82aa69b3e6"
+    }
+  ]
+}
