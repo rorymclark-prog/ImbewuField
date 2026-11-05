@@ -1,0 +1,35 @@
+{
+  "assignment": "docs/international/agy-nursery-progress-copy-2026-11-05/WORKORDER.md",
+  "status": "unreviewed-ai-drafts-ready",
+  "sourceSha256": "5227aca3622f1ce508290d62d7664fd10637fe127db4388b1ac6ef2b0044a328",
+  "runtimeActivation": false,
+  "sourcesCount": 27,
+  "candidatesCount": 189,
+  "reviewNotesWordCount": "UNKNOWN",
+  "validation": "UNKNOWN",
+  "commandsRun": false,
+  "testsRun": false,
+  "workersActive": 0,
+  "workersStopped": true,
+  "coordinatorReview": {
+    "reviewedAtUtc": "2026-11-05T05:42:43.761370+00:00",
+    "pairsChecked": 189,
+    "damagedControlsRejected": 17,
+    "notesWords": 167,
+    "reviewScope": "Exact source/key/order/messageSHA/tokens plus named terminology corrections reviewed. Not fluent or complete semantic certification.",
+    "runtimeActivation": false,
+    "humanReview": false,
+    "fluentReview": false,
+    "commandsExecutedByAgy": false,
+    "declinedCommandAttempt": "df was requested during ENOSPC but declined; coordinator handled diagnostics.",
+    "candidateSha256": {
+      "bn.json": "66de63fc7bb99c0999a609d829364362317b212c7da5fa6da3d74d45972a20a3",
+      "fr.json": "2b830459c14d8b43d79f6a5329b55847cc2c6c36d88128d221ca1ce33e0cac2c",
+      "hi.json": "b9e3a3fb81f52c3e5cf5fc26c84acbde2e17b42b60dc4a0d359477b2623d7f42",
+      "pt-BR.json": "7f8a5ae36dd0cb800823a0e78619304c960d52f1c3ba597729b04cc6b128be38",
+      "id.json": "92cce5e22dc6caef0314d85db7cd404e5014ba0274ba4fb24ee6197ef0f33901",
+      "sw.json": "b8f38ec327012d2790ac5b101c67804cf111d77ac32436dd7953aa6d9aea7b91",
+      "es.json": "3de0ed0e16fdbbe1cf11e0f79054d470b449772c218d89ce9cec89ca67ec232b"
+    }
+  }
+}
