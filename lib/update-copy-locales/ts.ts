@@ -462,5 +462,9 @@ const copy:UpdateCopy={
   // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
   "Record nursery plant counts in your journal": "Rhekhoda nhlayo ya swimilana swa nursery eka jenali ya wena",
   "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rhekhoda nhlayo ya swimilana leswi u swi voneke eka ntlawa wa nursery lowu hlayisiweke, xiteji lexi u xi kambeleke ni leswaku u kambele ntlawa hinkwawo kumbe xiphemu xa wona. Hlayisa leswi u swi voneke eka jenali swi hambanile ni swilaveko leswi pulaniweke ni xitoko.",
+  // INMET link release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/inmet-alert-release-drafts.json.
+  "Find official INMET weather-alert sources": "Kuma swihlovo swa ximfumo swa switsundzuxo swa maxelo swa INMET",
+  "Country evidence → Brazil → Official weather-alert links": "Vumbhoni bya tiko → Brazil → Swihlanganisi swa ximfumo swa switsundzuxo swa maxelo",
+  "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Pfula webusayiti ya switsundzuxo swa maxelo ya INMET, portal kumbe xihlanganisi xa RSS. Swihlanganisi swa swihlovo swi kamberiwile; feed, xiyimo xa switsundzuxo swa ndhawu ni swipimelo swa ku tlhela u tirhisa a swi si tiyisisiwa. Swihlanganisi leswi a swi cinci switsundzuxo swa swibyariwa.",
 };
 export default copy;

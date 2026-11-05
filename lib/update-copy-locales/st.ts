@@ -462,5 +462,9 @@ const copy:UpdateCopy={
   // Nursery-count release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/nursery-progress-release-drafts.json.
   "Record nursery plant counts in your journal": "Rekota dipalo tsa dimela tsa nursery jenaleng ya hao",
   "Record how many plants you observed in a saved nursery batch, the stage you assessed and whether you checked the whole batch or a subset. Keep these journal observations separate from planned requirements and stock.": "Rekota palo ya dimela tseo o di boneng sehlopheng sa nursery se bolokilweng, mokgahlelo oo o o hlahlobileng le hore na o hlahlobile sehlopha sohle kapa karolo ya sona. Boloka direkoto tsena tsa seo o se boneng jenaleng di arohane le ditlhoko tse rerilweng le setoko.",
+  // INMET link release: UNREVIEWED Codex AI candidates; exact pairs in docs/international/inmet-alert-release-drafts.json.
+  "Find official INMET weather-alert sources": "Fumana mehlodi ya semmuso ya ditemoso tsa boemo ba lehodimo tsa INMET",
+  "Country evidence → Brazil → Official weather-alert links": "Bopaki ba naha → Brazil → Dihokelo tsa semmuso tsa ditemoso tsa boemo ba lehodimo",
+  "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.": "Bula webosaete ya ditemoso tsa boemo ba lehodimo ya INMET, portal kapa sehokelo sa RSS. Dihokelo tsa mehlodi di hlahlobilwe; feed, boemo ba ditemoso tsa lehae le dipehelo tsa tshebediso hape ha di eso netefatswe. Dihokelo tsena ha di fetole keletso ya dijalo.",
 };
 export default copy;

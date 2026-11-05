@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "eaa3812521c07525a609c15bbabb1148bc59ae98e82379cb30f0eca12ecc7d15",
+  "milestoneId": "brazil-inmet-alert-links",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "reviewNotes": "Twelve source-paired release-description candidates for four existing languages, not native AGY provenance or fluent certification. Source links were reviewed via official primary-page text. No feed body/schema/local alert status/reuse clearance, provider downtime or crop-advice update is established. No new runtime language.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "628d2373240f0d113fce58442e3cdc28cfd0d6f375ba6d772be2bb8b29a840b9",
+      "selectedFileSha256": "3e0248fc40b4fddc3cfe43da99b7669e21ff9e7f89fcf9e1993bc5d4d706c372"
+    },
+    "st": {
+      "originalFileSha256": "80ebd36aa247db88c87dc993822355cf2c00e04dc69986a9faac08a6489d0d33",
+      "selectedFileSha256": "df04fea6d6ac9c020520a66ab351fe94dd57908e7dcad42fa01d3defb6975b4b"
+    },
+    "ve": {
+      "originalFileSha256": "d4a6d5dafb77781d870556fe91702802879146066b1a1b54882b9ca30d941c05",
+      "selectedFileSha256": "cfffb9f1b4394c7c312ea147c178bc1cc79f59c3db82345ca43af401de8c146c"
+    },
+    "ts": {
+      "originalFileSha256": "36ebe5437553494ee9398e204a138bc26ca0777b7c719563d1d0852eb4146ae8",
+      "selectedFileSha256": "8f0f2a71f021b6f3fc5b180f21fa593261cdfec51f6e88945d108439a720a207"
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Find official INMET weather-alert sources",
+      "zu": "Thola imithombo esemthethweni yezixwayiso zezulu ye-INMET",
+      "st": "Fumana mehlodi ya semmuso ya ditemoso tsa boemo ba lehodimo tsa INMET",
+      "ve": "Wanani zwiko zwa tshiofisi zwa tsevho dza mutsho dza INMET",
+      "ts": "Kuma swihlovo swa ximfumo swa switsundzuxo swa maxelo swa INMET",
+      "messageSha256": "022d6365153bc3ebdca65e963e8838f7b1d628cc9c10f04c75acdbf16b4c2f17"
+    },
+    {
+      "english": "Country evidence → Brazil → Official weather-alert links",
+      "zu": "Ubufakazi bezwe → Brazil → Izixhumanisi ezisemthethweni zezixwayiso zezulu",
+      "st": "Bopaki ba naha → Brazil → Dihokelo tsa semmuso tsa ditemoso tsa boemo ba lehodimo",
+      "ve": "Vhuṱanzi ha shango → Brazil → Vhuṱumani ha tshiofisi ha tsevho dza mutsho",
+      "ts": "Vumbhoni bya tiko → Brazil → Swihlanganisi swa ximfumo swa switsundzuxo swa maxelo",
+      "messageSha256": "e26589e78edf487ce579bec37f21ab20c60590b68c40d128c742ff6c9fc86ebc"
+    },
+    {
+      "english": "Open INMET’s weather-alert website, portal or RSS link. Source links were reviewed; the feed, local alert status and reuse terms have not been verified. These links do not update crop advice.",
+      "zu": "Vula iwebhusayithi yezixwayiso zezulu ye-INMET, ingosi noma isixhumanisi se-RSS. Izixhumanisi zemithombo zihlanganisiwe zahlolwa; okuphakelayo, isimo sezixwayiso sendawo nemigomo yokusetshenziswa kabusha akukaqinisekiswa. Lezi zixhumanisi azishintshi izeluleko zezitshalo.",
+      "st": "Bula webosaete ya ditemoso tsa boemo ba lehodimo ya INMET, portal kapa sehokelo sa RSS. Dihokelo tsa mehlodi di hlahlobilwe; feed, boemo ba ditemoso tsa lehae le dipehelo tsa tshebediso hape ha di eso netefatswe. Dihokelo tsena ha di fetole keletso ya dijalo.",
+      "ve": "Vulani webusaithi ya tsevho dza mutsho ya INMET, portal kana vhuṱumani ha RSS. Vhuṱumani ha zwiko ho sedzuluswa; feed, vhuimo ha tsevho dza henefho na milayo ya u shumisa hafhu a zwi athu khwaṱhisedzwa. Vhuṱumani uhu a vhu shanduli ngeletshedzo dza zwimela.",
+      "ts": "Pfula webusayiti ya switsundzuxo swa maxelo ya INMET, portal kumbe xihlanganisi xa RSS. Swihlanganisi swa swihlovo swi kamberiwile; feed, xiyimo xa switsundzuxo swa ndhawu ni swipimelo swa ku tlhela u tirhisa a swi si tiyisisiwa. Swihlanganisi leswi a swi cinci switsundzuxo swa swibyariwa.",
+      "messageSha256": "1eba29aebd606482a1ccce75f5d13295839ae1e6c7571ae067f1d549c84f405a"
+    }
+  ]
+}
