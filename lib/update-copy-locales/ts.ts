@@ -4,6 +4,9 @@ const copy:UpdateCopy={
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Swikambelo swa ririmi leswi gandlisiweke swi hlayisa mfaniso wun'wana na wun'wana wu ri xikan'we loko wu ringanela eka phepha.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Matluka yo kambela ririmi ma hlayisa mpfuneto ehansi ka phepha-ntirho leswaku swi nga funengeti matsalo yo sungula.",
+  // Published current-main Sector wording and save-feedback description from docs/international/agy-nursery-save-feedback-maps-2026-11-05/source.json.
+  "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Mimepe ya Sector yi komba mimfungho ya moya ni mpfula leyi nga erivaleni swinene, naswona ku voyama ni milayeni yo tlakuka swi tshamaka swi vonaka.",
+  "A warning about unsaved edits clears once the crop plan is saved.": "Xitsundzuxo malunghana ni ku lulamisiwa loku nga hlayisiwangiki xi hela loko pulani ya swibyariwa yi hlayisiwile.",
   // Published current-main Sector wording from docs/audits/2026-11-05/sector-graphics-release-drafts.json.
   "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Swifaniso swa Sector swi ni miseve leyi vonakaka kahle, mimfungho leyikulu ya dyambu ni xilotlelo xa mepe lexi nga erivaleni swinene.",
   "Sector illustrations now show bolder terrain contours and matching key lines.": "Swifaniso swa Sector sweswi swi komba milayeni yo tlakuka ka misava leyi vonakaka kahle ni milayeni leyi fambelanaka na yona eka xilotlelo xa mepe.",

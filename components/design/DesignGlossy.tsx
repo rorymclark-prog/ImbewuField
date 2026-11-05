@@ -8148,11 +8148,31 @@ interface SectorAnalysisComposition {
 // the AI version: the bearings. See docs/RENDER-INVESTIGATION-2026-07-20.md 'sector-ai' finding 4
 // — a model-drawn arrow is a coin-flip on both angle and sense, so it must never be redrawn from
 // scratch a second time.
-// The map, card icons and key share the same filled arrow. Rory's chosen reference has real
-// coloured bodies and decisive heads; translucent streamlines disappeared over his aerial.
+// The supplied references explain the energy with a recognisable motif, not colour alone.
+// Rain is confined to its sourced cold-front symbol; scattered drops used to read as site points.
+function drawIllustratedSectorWeather(ctx:CanvasRenderingContext2D,x:number,y:number,r:number,color:string,rain=false):void {
+  ctx.save();ctx.translate(x,y);ctx.strokeStyle=color;ctx.fillStyle=color;
+  ctx.lineWidth=Math.max(1.4,r*.16);ctx.lineCap='round';ctx.lineJoin='round';ctx.setLineDash([]);
+  if(rain){
+    ctx.beginPath();ctx.moveTo(-r*.82,r*.12);
+    ctx.bezierCurveTo(-r*1.45,r*.12,-r*1.45,-r*.65,-r*.78,-r*.62);
+    ctx.bezierCurveTo(-r*.7,-r*1.32,r*.25,-r*1.32,r*.43,-r*.65);
+    ctx.bezierCurveTo(r*1.2,-r*.95,r*1.55,r*.12,r*.7,r*.12);ctx.closePath();ctx.stroke();
+    for(const dx of [-.6,0,.6]){ctx.beginPath();ctx.moveTo(r*dx,r*.42);ctx.lineTo(r*(dx-.18),r*.85);ctx.stroke();}
+  }else{
+    for(const [offset,reach] of [[-.6,.65],[0,1.12],[.6,.42]]){
+      ctx.beginPath();ctx.moveTo(-r*1.35,r*offset);
+      ctx.bezierCurveTo(-r*.7,r*(offset-.35),-r*.15,r*(offset+.35),r*reach,r*offset);
+      ctx.bezierCurveTo(r*(reach+.65),r*(offset-.12),r*(reach+.4),r*(offset-.85),r*(reach-.05),r*(offset-.65));ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+// Wind bodies, map motifs and the key use one painter; endpoints remain the source bearings.
 function drawIllustratedSectorArrow(
   ctx: CanvasRenderingContext2D, sx: number, sy: number, ex: number, ey: number, color: string,
-  paint: { shaftHalf:number; tailHalf?:number; headHalf:number; headLength:number; edgeWidth:number; dashed:boolean },
+  paint: { shaftHalf:number; tailHalf?:number; headHalf:number; headLength:number; edgeWidth:number; dashed:boolean; weather?:'wind'|'rain' },
 ): Array<[number,number]> {
   const length=Math.hypot(ex-sx,ey-sy)||1,ux=(ex-sx)/length,uy=(ey-sy)/length,nx=-uy,ny=ux;
   const headLength=Math.min(paint.headLength,length*.58),bx=ex-ux*headLength,by=ey-uy*headLength;
@@ -8164,7 +8184,14 @@ function drawIllustratedSectorArrow(
     [sx-nx*tailHalf,sy-ny*tailHalf],
   ];
   ctx.save();ctx.globalAlpha=1;ctx.setLineDash([]);ctx.lineJoin='round';
-  ctx.beginPath();points.forEach(([x,y],i)=>(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x,y));ctx.closePath();
+  ctx.beginPath();
+  if(paint.weather){
+    ctx.moveTo(...points[0]);
+    ctx.bezierCurveTo(sx+ux*length*.35+nx*tailHalf,sy+uy*length*.35+ny*tailHalf,bx-ux*length*.15+nx*paint.shaftHalf,by-uy*length*.15+ny*paint.shaftHalf,...points[1]);
+    points.slice(2,6).forEach(([x,y])=>ctx.lineTo(x,y));
+    ctx.bezierCurveTo(bx-ux*length*.15-nx*paint.shaftHalf,by-uy*length*.15-ny*paint.shaftHalf,sx+ux*length*.35-nx*tailHalf,sy+uy*length*.35-ny*tailHalf,...points[6]);
+  }else points.forEach(([x,y],i)=>(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x,y));
+  ctx.closePath();
   ctx.strokeStyle='#FFFFFF';ctx.lineWidth=paint.edgeWidth*3.5;ctx.stroke();
   ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='#183F49';ctx.lineWidth=paint.edgeWidth;ctx.stroke();
   if(paint.dashed){
@@ -8172,9 +8199,11 @@ function drawIllustratedSectorArrow(
     // the entire energy back into a faint dashed line.
     ctx.strokeStyle='#FFFFFF';ctx.lineWidth=Math.max(1,paint.edgeWidth*.85);
     ctx.setLineDash([length*.075,length*.055]);ctx.lineCap='round';ctx.beginPath();
-    ctx.moveTo(sx+ux*paint.edgeWidth*2,sy+uy*paint.edgeWidth*2);
-    ctx.lineTo(bx+ux*headLength*.32,by+uy*headLength*.32);ctx.stroke();
+    const side=paint.weather?paint.shaftHalf*.7:0;
+    ctx.moveTo(sx+ux*paint.edgeWidth*2+nx*side,sy+uy*paint.edgeWidth*2+ny*side);
+    ctx.lineTo(bx+ux*headLength*.32+nx*side,by+uy*headLength*.32+ny*side);ctx.stroke();
   }
+  if(paint.weather)drawIllustratedSectorWeather(ctx,sx+ux*(length-headLength)*.45,sy+uy*(length-headLength)*.45,Math.min(tailHalf,paint.shaftHalf)*.52,'#FFFFFF',paint.weather==='rain');
   ctx.restore();return points;
 }
 
@@ -8548,7 +8577,7 @@ function drawSectorAnalysis(
     // this canvas — so contrast is guaranteed by what's UNDER the label, never by what's under the
     // photo. Font bumped alongside it: 18px-min/×0.0115 was sized before this sheet carried a real
     // photo at phone-viewing scale.
-    const fs = Math.max(artFinish ? 23 : 21, Math.round(W * (artFinish ? 0.018 : 0.0135)));
+    const fs = Math.max(artFinish ? 23 : 21, Math.round(W * (artFinish ? 0.020 : 0.0135)));
     const lineH = Math.round(fs * 1.1);
     for (const request of directLabelRequests) {
       ctx.save();
@@ -8612,7 +8641,7 @@ function drawSectorAnalysis(
       if (artFinish) {
         const left=lx-halfW,top=ly-halfH;
         ctx.save();ctx.shadowColor='rgba(28,48,36,.16)';ctx.shadowBlur=fs*.4;ctx.shadowOffsetY=fs*.13;
-        ctx.fillStyle='#FFFFFF';roundRectPath(ctx,left,top,halfW*2,halfH*2,fs*.3);ctx.fill();ctx.restore();
+        ctx.fillStyle='#102B23';roundRectPath(ctx,left,top,halfW*2,halfH*2,fs*.16);ctx.fill();ctx.restore();
         ctx.strokeStyle=`${request.color}45`;ctx.lineWidth=Math.max(1,W*.00055);
         roundRectPath(ctx,left,top,halfW*2,halfH*2,fs*.3);ctx.stroke();
         ctx.fillStyle=request.color;roundRectPath(ctx,left,top+fs*.35,fs*.09,halfH*2-fs*.7,fs*.045);ctx.fill();
@@ -8621,12 +8650,12 @@ function drawSectorAnalysis(
         else if(/fire/i.test(cardTitle))drawIllustratedSectorFlame(ctx,gx,gy,gr*1.05,request.color);
         else {
           const sectorIcon:SectorLegendIcon=/fall|drain|slope/i.test(cardTitle)?'water':/access|driveway|dust/i.test(cardTitle)?'driveway':'wind';
-          drawStyleLegendSymbol(ctx,{swatch:request.color,text:'',sectorIcon,sectorArt:true},gx-gr*1.4,gy,gr*2.8,gr*2.8);
+          drawStyleLegendSymbol(ctx,{swatch:request.color,text:cardTitle,sectorIcon,sectorArt:true},gx-gr*1.4,gy,gr*2.8,gr*2.8);
         }
         const tx=left+fs*2.15;
-        ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillStyle='#24382E';
+        ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillStyle='#FFFFFF';
         ctx.font=`800 ${fs*.80}px ${REFERENCE_LABEL_FONT}`;ctx.fillText(cardTitle,tx,ly-fs*.38);
-        ctx.fillStyle='#263D32';ctx.font=`600 ${fs*.78}px ${SHEET_BODY_FONT}`;ctx.fillText(cardDetail,tx,ly+fs*.51);
+        ctx.fillStyle='#EFF8F3';ctx.font=`600 ${fs*.78}px ${SHEET_BODY_FONT}`;ctx.fillText(cardDetail,tx,ly+fs*.51);
         ctx.restore();continue;
       }
       ctx.textAlign = 'center';
@@ -8722,6 +8751,7 @@ function drawSectorAnalysis(
     color: string,
     emphasis = 1,
     labelLines?: string[],
+    weather:'wind'|'rain'='wind',
   ): { sxp: number; syp: number } => {
     // BENCHMARK MASS. design/benchmark/08...Sector_Analysis_Map.png — the sheet this whole
     // renderer answers to — draws each regional wind as a huge tapered wedge arrow that OWNS its
@@ -8740,8 +8770,8 @@ function drawSectorAnalysis(
     const uy = dy / len;
     const nx = -uy;
     const ny = ux;
-    const tailHalf = Math.max(18, W * 0.017) * emphasis * (artFinish ? 1.6 : 1);
-    const shaftHalf = Math.max(11, W * 0.0105) * emphasis * (artFinish ? 2.1 : 1);
+    const tailHalf = Math.max(18, W * 0.017) * emphasis * (artFinish ? 2.5 : 1);
+    const shaftHalf = Math.max(11, W * 0.0105) * emphasis * (artFinish ? 2.5 : 1);
     const headHalf = shaftHalf * (artFinish ? 1.8 : 2.1);
     const headLen = Math.max(40, W * 0.046) * emphasis * (artFinish ? 1.5 : 1);
     const headBaseX = tipX - ux * headLen;
@@ -8758,7 +8788,7 @@ function drawSectorAnalysis(
     ctx.closePath();
     if(artFinish){
       drawIllustratedSectorArrow(ctx,tailX,tailY,tipX,tipY,color,{
-        tailHalf,shaftHalf,headHalf,headLength:headLen,edgeWidth:Math.max(2,W*.0018),dashed:true,
+        tailHalf,shaftHalf,headHalf,headLength:headLen,edgeWidth:Math.max(2,W*.0018),dashed:true,weather,
       });
       ctx.restore();claimArrowBox(tailX,tailY,tipX,tipY,headHalf+W*.004);return {sxp:tailX,syp:tailY};
     }
@@ -9094,7 +9124,7 @@ function drawSectorAnalysis(
     // floating label to queue and nothing left to collide with the arrow (the old tangent-shifted
     // directLabelAt pills were exactly what kept landing on top of the arrows they named).
     const marker = externalLegend
-      ? drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1, artFinish ? undefined : directLines)
+      ? drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1, artFinish ? undefined : directLines,w.id==='cold_front'?'rain':'wind')
       : drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], R * 0.4);
     if(artFinish){
       const name=w.id==='berg'?'Berg wind':w.id==='cold_front'?'Cold front + rain':'Cooling wind';
@@ -9766,11 +9796,14 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
   return drainCanvasToDataUrl(canvas,'image/png');
 }
 
-// The researched C treatment keeps the paid painting's colour and detail. White label cards,
-// cased contours and the separate key carry contrast; recolouring the artwork made it look like
-// an instant diagram again. This is a direct copy at the registered frame, never a new AI pass.
-function drawSectorArtworkContext(ctx: CanvasRenderingContext2D, image: CanvasImageSource, W: number, H: number): void {
+// Rory's supplied reference puts bright analysis over darker aerial detail. Keep the registered
+// painting intact and add a modest contrast veil only inside known image coverage: the historic
+// photograph's unrecorded white corners must never turn into invented dark landscape.
+function drawSectorArtworkContext(ctx: CanvasRenderingContext2D, image: CanvasImageSource, W: number, H: number, coverage:Array<[number,number]>=[]): void {
   ctx.drawImage(image, 0, 0, W, H);
+  if(coverage.length<3)return;
+  ctx.save();ctx.beginPath();coverage.forEach(([x,y],i)=>(i===0?ctx.moveTo:ctx.lineTo).call(ctx,x*W,y*H));ctx.closePath();ctx.clip();
+  ctx.fillStyle='rgba(6,30,22,0.28)';ctx.fillRect(0,0,W,H);ctx.restore();
 }
 
 async function composeSectorSheet(
@@ -9803,7 +9836,12 @@ async function composeSectorSheet(
   // The existing painting supplies orientation; computed analysis supplies the information.
   if (baseImage) {
     const img = await loadImage(baseImage);
-    try { drawSectorArtworkContext(ctx,img,W,H); }
+    try {
+      const coverage=baseline
+        ? [[0,0],[baseline.width,0],[baseline.width,baseline.height],[0,baseline.height]].map(point=>historicalPresentationPhotoPoint(state,frame,refLayers,point as [number,number],baseline))
+        : renderRefLayers.boundary;
+      drawSectorArtworkContext(ctx,img,W,H,coverage);
+    }
     finally { releaseImageSource(img); }
   } else if (baseline && renderFrame.satDataUrl) {
     const image=await loadImage(renderFrame.satDataUrl);
@@ -10818,10 +10856,12 @@ function drawStyleLegendSymbol(
         ctx.lineTo(cx + Math.cos(a) * r * 2.05, y + Math.sin(a) * r * 2.05);
         ctx.stroke();
       }
-    } else if (row.sectorArt && (row.sectorIcon === 'wind' || row.sectorIcon === 'water')) {
+    } else if (row.sectorArt && row.sectorIcon === 'wind') {
+      drawIllustratedSectorWeather(ctx,cx,y,r*1.22,row.swatch,/rain/i.test(row.text));
+    } else if (row.sectorArt && row.sectorIcon === 'water') {
       drawIllustratedSectorArrow(ctx,x,y,x+w,y,row.swatch,{
         shaftHalf:h*.15,headHalf:h*.32,headLength:w*.34,edgeWidth:Math.max(1,h*.035),
-        dashed:row.sectorIcon==='wind'||row.lineKind==='drip',
+        dashed:row.lineKind==='drip',
       });
     } else if (row.sectorIcon === 'wind') {
       for (const off of [-r * 0.75, 0, r * 0.75]) {

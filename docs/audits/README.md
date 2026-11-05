@@ -1,6 +1,7 @@
 # ImbewuField audit archive
 
 Latest international release candidate — [Current-main, print and account-gate reconciliation — 5 November 2026](2026-11-05/international-nursery-final-reconcile-codex.md). Source integration is prepared; new full/visual/account gates remain pending.
+Latest Sector styling — [Actual supplied-reference wind/rain motifs and retained terrain detail — 5 November 2026](2026-11-05/sector-reference-flow-codex.md). Native imagery inspected; release gates/identity follow on the PR and ledger.
 
 Latest Sector release follow-up — [Typography contracts and native update descriptions — 5 November 2026](2026-11-05/sector-release-contracts-codex.md). Broad-arrow artwork is retained; original-device free AI recovery remains unverified.
 
@@ -411,3 +412,5 @@ with screenshots. That pack was exported at `a9b3f5a`; it does not include the
 The browser audit could not exercise the signed-in roles. Its coverage limit is
 not evidence that the current signed-in survey works or fails.
 - [Vegetables L2 fuller regional drafts — 2026-10-05](2026-10-05/study-vegetables-l2-fuller-codex.md)
+
+Latest crop-plan feedback — [Resolved save feedback and final main reconciliation](2026-11-05/nursery-save-feedback-codex.md). Final current-tree and browser gates remain pending.

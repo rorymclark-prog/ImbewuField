@@ -1,0 +1,45 @@
+{
+  "reviewedAtUtc": "2026-11-05T19:44:31.308Z",
+  "method": "Independent coordinator AST extraction from exact parent commits and actual files",
+  "sourceSha256": "6e0441ce9e56f769061151f9eccac37f7026d644011c2de56e11b277f803324a",
+  "exactSuppliedAdditions": 8,
+  "locales": [
+    {
+      "locale": "st",
+      "previousPairs": 430,
+      "currentPairs": 432,
+      "publishedMainPairs": 285,
+      "sourceSha256": "6ddf755adb688aa197eea0d97772606108faa693b6239f330f41fbc2a678c4f0",
+      "exactSuppliedAdditions": 2,
+      "allBaselineAndMainPairsPreserved": true
+    },
+    {
+      "locale": "ts",
+      "previousPairs": 430,
+      "currentPairs": 432,
+      "publishedMainPairs": 285,
+      "sourceSha256": "c6ec2381244515f552a96ad830254d398b6b8e6acb3629a211a40de44752dcf7",
+      "exactSuppliedAdditions": 2,
+      "allBaselineAndMainPairsPreserved": true
+    },
+    {
+      "locale": "ve",
+      "previousPairs": 430,
+      "currentPairs": 432,
+      "publishedMainPairs": 285,
+      "sourceSha256": "4b27428a5dd3a840ca8233681f7ce650e6cfe83460a1987c011c6dc46fb439de",
+      "exactSuppliedAdditions": 2,
+      "allBaselineAndMainPairsPreserved": true
+    },
+    {
+      "locale": "zu",
+      "previousPairs": 430,
+      "currentPairs": 432,
+      "publishedMainPairs": 285,
+      "sourceSha256": "511cc4e68c6a0730e24e8ca055a9325c0f6bde4fef57a8c9bc095b9ad2e840e9",
+      "exactSuppliedAdditions": 2,
+      "allBaselineAndMainPairsPreserved": true
+    }
+  ],
+  "scope": "Source preservation only; no fluent approval or executed browser/full-suite claim"
+}

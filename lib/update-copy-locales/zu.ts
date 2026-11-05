@@ -4,6 +4,9 @@ const copy:UpdateCopy={
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Ukubuyekezwa kolimi okushicilelwe kugcina uqhathaniso ngalunye ndawonye lapho lulingana ekhasini.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Amakhasi okubuyekeza ulimi agcina usizo ngaphansi kwephepha lomsebenzi ukuze lungasibekeli okubhalwayo okusalungiswa.",
+  // Published current-main Sector wording and save-feedback description from docs/international/agy-nursery-save-feedback-maps-2026-11-05/source.json.
+  "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Amamephu eSector abonisa izimpawu zomoya nezemvula ezicace kakhudlwana, kanti umthambeka nemigqa yokuphakama kuhlala kubonakala.",
+  "A warning about unsaved edits clears once the crop plan is saved.": "Isexwayiso mayelana nezinguquko ezingalondoloziwe siyaphela uma uhlelo lwezitshalo selulondoloziwe.",
   // Published current-main Sector wording from docs/audits/2026-11-05/sector-graphics-release-drafts.json.
   "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Imidwebo yeSector inemicibisholo egqamile, izimpawu zelanga ezinkulu nokhiye wemephu ocace kakhudlwana.",
   "Sector illustrations now show bolder terrain contours and matching key lines.": "Imidwebo yeSector manje ibonisa imigqa yokuphakama egqamile nemigqa ehambisana nayo kukhiye wemephu.",

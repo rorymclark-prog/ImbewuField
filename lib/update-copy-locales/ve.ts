@@ -4,6 +4,9 @@ const copy:UpdateCopy={
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Tsedzuluso dzo gandwiswaho dza luambo dzi vhea mbambedzo inwe na inwe khathihi musi i tshi lingana kha siaṭari.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Masiatari a u sedzulusa luambo a vhea thidzo fhasi ha bammbiri la mishumo uri zwi si thivhe ndingedzo dza u thoma.",
+  // Published current-main Sector wording and save-feedback description from docs/international/agy-nursery-save-feedback-maps-2026-11-05/source.json.
+  "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Mimepe ya Sector i sumbedza zwiga zwa muya na mvula zwi re khagala nga u engedza, ngeno mutevhe na mitalo ya vhulapfu zwi tshi dzula zwi tshi vhonala.",
+  "A warning about unsaved edits clears once the crop plan is saved.": "Tsevho nga ha nzudzanyo dzi songo vhulungwaho i a fhela musi pulane ya zwimela yo no vhulungwa.",
   // Published current-main Sector wording from docs/audits/2026-11-05/sector-graphics-release-drafts.json.
   "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Zwifanyiso zwa Sector zwi na misevhe i vhonalaho zwavhuḓi, zwiga zwihulwane zwa ḓuvha na ṱhalutshedzo ya mapa i re khagala nga u engedza.",
   "Sector illustrations now show bolder terrain contours and matching key lines.": "Zwifanyiso zwa Sector zwino zwi sumbedza mitalo ya vhulapfu ha mavu i vhonalaho zwavhuḓi na mitalo i elanaho nayo kha ṱhalutshedzo ya mapa.",

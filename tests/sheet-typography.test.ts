@@ -130,9 +130,10 @@ test('a phasing week baseline clears the chip by the week font ascent', () => {
 });
 
 test('plain sector labels retain dark halos while illustrated cards back their unchanged wording', () => {
-  // Main deliberately added measured cards to the illustrated edition. The first
-  // fillText in that branch says nothing about the separate plain-label halo.
-  // Execute each real arrow painter instead of comparing unrelated source offsets.
+  // Main deliberately added measured cards to the illustrated edition. The approved
+  // reference changed their backing from light to dark, so protect the actual text
+  // enclosure rather than one colour; the following test owns measured contrast.
+  // Execute each real arrow painter without confusing cards with plain-label halos.
   const tree = ts.createSourceFile('DesignGlossy.tsx', SOURCE, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   function arrow(name: string) {
     const found: ts.Expression[] = [];
@@ -162,7 +163,7 @@ test('plain sector labels retain dark halos while illustrated cards back their u
     assert.notEqual(damaged, expression); return damaged;
   }
   type Rect = { x: number; y: number; w: number; h: number };
-  type Event = { kind: string; text?: string; x?: number; y?: number; ink?: string; lineJoin?: string; rect?: Rect };
+  type Event = { kind: string; text?: string; x?: number; y?: number; width?: number; ink?: string; lineJoin?: string; rect?: Rect };
   const lines = ['Summer sun', 'Source wording'], color = '#386144';
   function paint(name: 'labelAt' | 'flushDirectLabels', artFinish: boolean, expression = arrow(name)) {
     const events: Event[] = [], saved: Array<{ fillStyle: string; strokeStyle: string; lineJoin: string }> = [];
@@ -178,7 +179,7 @@ test('plain sector labels retain dark halos while illustrated cards back their u
       strokeRect(x: number, y: number, w: number, h: number) { events.push({ kind: 'rectangle', rect: { x, y, w, h } }); },
       roundRect(x: number, y: number, w: number, h: number) { currentPath = { x, y, w, h }; events.push({ kind: 'rectangle', rect: currentPath }); },
       strokeText(text: string, x: number, y: number) { events.push({ kind: 'outline', text, x, y, ink: this.strokeStyle, lineJoin: this.lineJoin }); },
-      fillText(text: string, x: number, y: number) { events.push({ kind: 'text', text, x, y, ink: this.fillStyle }); },
+      fillText(text: string, x: number, y: number) { events.push({ kind: 'text', text, x, y, width: this.measureText(text).width, ink: this.fillStyle }); },
     };
     const scope = { ctx, externalLegend: name === 'flushDirectLabels', rowH: 30, claimed: [],
       SHEET_BODY_FONT: 'Public Sans', REFERENCE_LABEL_FONT: 'Public Sans', W: 1200, H: 1200, arrowClaims: [], artFinish,
@@ -209,12 +210,18 @@ test('plain sector labels retain dark halos while illustrated cards back their u
   function card(events: Event[]) {
     const text = events.filter(event => event.kind === 'text');
     assert.deepEqual(text.map(event => event.text), lines, 'illustrated title/detail retain the original wording');
-    const backing = events.find(event => event.kind === 'fill' && event.ink === '#FFFFFF');
-    assert.ok(backing?.rect, 'the white measured backing is distinct from the coloured accent paint');
+    const backing = events.find(event => event.kind === 'fill' && event.ink !== color && event.rect
+      && text.every(glyph => glyph.x! > event.rect!.x && glyph.x! + glyph.width! < event.rect!.x + event.rect!.w
+        && glyph.y! > event.rect!.y && glyph.y! < event.rect!.y + event.rect!.h));
+    assert.ok(backing?.rect, 'a separately measured card must enclose every original title/detail line');
+    const accent = events.find(event => event.kind === 'fill' && event.ink === color);
+    assert.ok(accent?.rect, 'the narrow coloured accent remains separate from the card');
+    assert.ok(backing.rect.w > accent.rect.w, 'accent width cannot stand in for the measured text backing');
     for (const glyph of text) {
       assert.ok(events.indexOf(backing) < events.indexOf(glyph), 'card backing must precede every title/detail glyph');
       const { x, y, w, h } = backing.rect;
-      assert.ok(glyph.x! > x && glyph.x! < x + w && glyph.y! > y && glyph.y! < y + h, 'both original text anchors stay inside the measured card');
+      assert.ok(glyph.x! > x && glyph.x! + glyph.width! < x + w && glyph.y! > y && glyph.y! < y + h,
+        'both original text anchors and their measured widths stay inside the card');
     }
   }
   halo(paint('labelAt', false), [lines[0]], false);
@@ -225,7 +232,7 @@ test('plain sector labels retain dark halos while illustrated cards back their u
       /earlier halo/, 'removing either actual halo must fail this rule');
   }
   assert.throws(() => card(paint('flushDirectLabels', true, omitCalls(arrow('flushDirectLabels'), 'fill', true))),
-    /white measured backing/, 'remaining accent paint cannot conceal removal of the actual white backing');
+    /measured card/, 'remaining accent paint cannot conceal removal of the actual text backing');
 });
 
 test('exact Sector labels retain their halo while illustrated cards keep readable text and source wording', () => {
@@ -237,7 +244,7 @@ test('exact Sector labels retain their halo while illustrated cards keep readabl
   assert.ok(legacyPainter.indexOf('fillText(') > legacyPainter.indexOf('strokeText('));
   assert.doesNotMatch(legacyPainter, /(?:fill|stroke)(?:Rect|RoundRect)|roundRect\(/);
 
-  // The previous claim banned plates in every mode. Rory approved illustrated white cards after
+  // The previous claim banned plates in every mode. Rory approved illustrated contrast cards after
   // labels disappeared into foliage on his phone. Execute both branches instead: exact labels
   // still need their halo; illustrated titles/details need contrast and their original wording.
   const tree = ts.createSourceFile('DesignGlossy.tsx', SOURCE, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);

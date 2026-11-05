@@ -565,9 +565,9 @@ test('the shared exact-layer stack puts each boundary treatment below the sheetâ
 });
 
 
-test('rich Sector context copies original artwork without a colour filter, fade or coordinate shift', () => {
-  // C is an authored presentation choice, not proof that a provider generated a new picture.
-  // The old lightening claim would destroy its intended colour and has been replaced explicitly.
+test('Sector contrast retains registered artwork and only shades its known coverage', () => {
+  // Rory's new supplied reference explicitly requests a darker aerial. Preserve the source-copy
+  // contract and test the new coverage clip rather than pinning the previous no-veil style.
   const source=readFileSync(new URL('../components/design/DesignGlossy.tsx',import.meta.url),'utf8');
   const tree=ts.createSourceFile('sheet.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
   let paint:ts.FunctionDeclaration|undefined;
@@ -575,13 +575,36 @@ test('rich Sector context copies original artwork without a colour filter, fade 
   assert.ok(paint);
   const compiled=ts.transpileModule(paint.getText(tree),{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
   const run=new Function(`${compiled};return drawSectorArtworkContext;`)();
-  const draws:unknown[]=[];
+  const draws:unknown[]=[],events:unknown[]=[];
   const ctx={globalAlpha:1,filter:'none',
     drawImage(...args:unknown[]){draws.push({args,alpha:this.globalAlpha,filter:this.filter});},
-    getImageData(){throw new Error('C must not recolour source pixels');},
-    putImageData(){throw new Error('C must not replace source pixels');}};
+    save(){},restore(){},beginPath(){},closePath(){},
+    moveTo(x:number,y:number){events.push(['move',x,y]);},lineTo(x:number,y:number){events.push(['line',x,y]);},
+    clip(){events.push('clip');},fillRect(...args:number[]){events.push(['veil',...args]);},
+    getImageData(){throw new Error('the source artwork is immutable');},
+    putImageData(){throw new Error('the source artwork is immutable');}};
   run(ctx,'art-with-white-and-transparent-coverage',4,1);
   assert.deepEqual(draws,[{args:['art-with-white-and-transparent-coverage',0,0,4,1],alpha:1,filter:'none'}]);
+  assert.deepEqual(events,[],'missing coverage must never darken unknown white corners');
+  run(ctx,'art-with-white-and-transparent-coverage',4,1,[[.25,0],[.75,0],[.75,1],[.25,1]]);
+  assert.deepEqual(events,[['move',1,0],['line',3,0],['line',3,1],['line',1,1],'clip',['veil',0,0,4,1]],'the actual photo extent clips the veil before painting');
+
+  // Draft 1 shaded a small quadrilateral across the roofs: projecting the resized presentation
+  // frame repeats the crop. The same original-frame authority as archive restoration must win.
+  const composer=tree.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text==='composeSectorSheet');
+  assert.ok(composer);let coverage:ts.Expression|undefined;
+  function findCoverage(node:ts.Node){if(ts.isVariableDeclaration(node)&&node.name.getText(tree)==='coverage')coverage=node.initializer;ts.forEachChild(node,findCoverage);}
+  findCoverage(composer);assert.ok(coverage);
+  const js=ts.transpileModule(`const polygon=${coverage.getText(tree)};`,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+  const state={},frame={},refLayers={},renderRefLayers={boundary:[[.1,.2],[.8,.3],[.4,.9]]};
+  const calls:unknown[][]=[];
+  const scope={state,frame,refLayers,renderRefLayers,historicalPresentationPhotoPoint(...args:unknown[]){calls.push(args);return args[3];}};
+  const project=new Function('baseline',...Object.keys(scope),`${js};return polygon;`);
+  const baseline={width:100,height:60};
+  assert.deepEqual(project(baseline,...Object.values(scope)),[[0,0],[100,0],[100,60],[0,60]]);
+  assert.equal(calls.length,4);
+  for(const args of calls){assert.equal(args[0],state);assert.equal(args[1],frame);assert.equal(args[2],refLayers);assert.equal(args[4],baseline);}
+  calls.length=0;assert.equal(project(null,...Object.values(scope)),renderRefLayers.boundary);assert.equal(calls.length,0);
 });
 
 
@@ -597,10 +620,11 @@ test('bold filled Sector winds retain actual bearings, opaque bodies and solar g
   visit(tree);assert.equal(arrows.size,2);
   // Rory replaced the deliberately faint streamlines with broad filled reference arrows.
   // Guard visible body area/opacity and the real source tip, not the old three-curve style.
-  let body:ts.FunctionDeclaration|undefined;
-  tree.forEachChild(node=>{if(ts.isFunctionDeclaration(node)&&node.name?.text==='drawIllustratedSectorArrow')body=node;});
-  assert.ok(body);
-  const bodyJs=ts.transpileModule(body.getText(tree),{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+  let body:ts.FunctionDeclaration|undefined,weather:ts.FunctionDeclaration|undefined;
+  tree.forEachChild(node=>{if(ts.isFunctionDeclaration(node)&&node.name?.text==='drawIllustratedSectorArrow')body=node;
+    if(ts.isFunctionDeclaration(node)&&node.name?.text==='drawIllustratedSectorWeather')weather=node;});
+  assert.ok(body);assert.ok(weather);
+  const bodyJs=ts.transpileModule(weather.getText(tree)+'\n'+body.getText(tree),{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
   const drawIllustratedSectorArrow=new Function(`${bodyJs};return drawIllustratedSectorArrow;`)();
   const compile=(name:string,scope:Record<string,unknown>)=>{
     const js=ts.transpileModule(`const paint=${arrows.get(name)};`,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
@@ -614,6 +638,7 @@ test('bold filled Sector winds retain actual bearings, opaque bodies and solar g
       return (...args:number[])=>{
         if(key==='beginPath')path=[];
         if(key==='moveTo'||key==='lineTo')path.push(args);
+        if(key==='bezierCurveTo')path.push(args.slice(-2));
         if(key==='fill')fills.push({points:path.map(p=>[...p]),color:target.fillStyle,alpha:target.globalAlpha});
         if(key==='moveTo')moves.push(args);if(key==='arc')arcs.push(args);
         if(key==='setLineDash')dashes.push(args[0] as unknown as number[]);
