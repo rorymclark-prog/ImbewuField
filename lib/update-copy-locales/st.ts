@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
+  "Important updates include a short animation you can pause and replay.": "Lintlafatso tsa bohlokwa di na le papiso e kgutshwane e sisinyehang eo o ka e emisang le ho e bapala hape.",
   // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
   "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Limmapa tsa Sector li na le bokamorao bo sa hlahelleng haholo le matshwao a hlakileng a letsatsi, moya le mollo.",
   // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.

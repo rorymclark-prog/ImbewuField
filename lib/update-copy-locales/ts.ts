@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Feature walkthroughs; unreviewed machine draft, paired with English on screen.
+  "Important updates include a short animation you can pause and replay.": "Swintshuxeto swa nkoka swi na xifaniso xo koma lexi fambaka lexi u nga xi yimisaka ni ku xi tlanga nakambe.",
   // Sector context: docs/audits/2026-11-04/sector-context-release-drafts.json; UNREVIEWED machine draft.
   "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Mimepe ya Sector yi ni xivumbeko xa le ndzhaku lexi nga humeleriki ngopfu ni mimfungho leyi vonakaka kahle ya dyambu, moya ni ndzilo.",
   // Assistant connections: docs/audits/2026-11-03/assistant-release-drafts.json; unreviewed machine drafts.

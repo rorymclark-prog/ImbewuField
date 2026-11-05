@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: 'a5300d2f7', changes: [
+    'Important updates include a short animation you can pause and replay.',
+  ], tour: [{ title: 'Manage assistant access', where: 'Settings → Assistant connections',
+    href: '/connect/imbewu', preview: 'assistant-access',
+    detail: 'Review connected assistants, selected sites and imported originals.' },
+  { title: 'Check your saved map', where: 'Site design', href: '/design',
+    detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
   { when: '4 November 2026', sha: '0475b9af8', changes: [
     "Sector maps use a quieter background and clearer sun, wind and fire marks.",
   ] },
