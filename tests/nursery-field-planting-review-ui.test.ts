@@ -5,7 +5,8 @@ import { registerHooks } from 'node:module';
 import React from 'react';
 import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
 import ts from 'typescript';
-import type { NurseryReviewData, NurseryReviewLocale, NurseryReviewRow } from '../lib/international/locales/nursery-field-planting-review';
+import type { NurseryReviewData, NurseryReviewRow } from '../lib/international/locales/nursery-field-planting-review';
+import type { NurseryReviewLocale } from '../lib/international/locales/nursery-field-planting-review-locales';
 
 const previous = new Map(['fetch', 'window', 'localStorage', 'sessionStorage', 'IS_REACT_ACT_ENVIRONMENT'].map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
 const effects = { network: 0, storage: 0, runtimeReaderImport: 0 };
@@ -42,7 +43,7 @@ const hooks = registerHooks({
 const { default: Review } = await import('../components/international/locales/NurseryFieldPlantingDraftReview.tsx');
 const { nurseryFieldPlantingReviewCsv } = await import('../lib/international/locales/nursery-field-planting-review-csv.ts');
 const importEffects = { ...effects };
-const locales: NurseryReviewLocale[] = ['fr', 'es', 'pt-BR', 'sw', 'hi', 'bn', 'id'];
+const locales: NurseryReviewLocale[] = ['fr', 'es', 'pt-BR', 'sw', 'hi', 'bn', 'id', 'ar', 'ur', 'ne', 'vi'];
 const sourceFiles: NurseryReviewRow['sourceFile'][] = [
   'components/crops/NurseryFieldPlantingObservationForm.tsx',
   'components/journal/JournalNurseryFieldPlantingSummary.tsx',
@@ -90,7 +91,7 @@ after(() => {
   for (const [key, descriptor] of previous) { if (descriptor) Object.defineProperty(globalThis, key, descriptor); else Reflect.deleteProperty(globalThis, key); }
 });
 
-test('the actual client compares seven inactive packets with Brazilian Portuguese kept distinct from the general Portuguese draft', () => {
+test('the actual client compares the inactive worksheet packets with Brazilian Portuguese kept distinct from the general Portuguese draft', () => {
   assert.deepEqual(importEffects, { network: 0, storage: 0, runtimeReaderImport: 0 }); const ui = mount();
   assert.equal(ui.language().props.value, 'fr'); assert.match(ui.language().props.className, /min-h-11/);
   const options = ui.language().findAllByType('option');
@@ -103,12 +104,73 @@ test('the actual client compares seven inactive packets with Brazilian Portugues
     const first = ui.article('nurseryFieldPlanting.message.01');
     const translated = first.findAllByType('p').find(node => node.props.lang === locale)!;
     assert.ok(translated); assert.match(text(translated), new RegExp(`^${locale} synthetic draft wording 1$`));
-    assert.equal(translated.findByType('bdi').props.dir, 'auto');
+    // The original LTR packets retain auto isolation; the added RTL choices must
+    // keep their declared direction even when a draft begins with Latin tokens.
+    assert.equal(translated.findByType('bdi').props.dir, locale === 'ar' || locale === 'ur' ? 'rtl' : 'auto');
     assert.match(text(first), /AI draft, not fluent human approval/);
   }
-  ui.choose('pt'); assert.equal(ui.language().props.value, 'id', 'unlisted locale cannot become a runtime-language choice');
+  ui.choose('id'); ui.choose('pt'); assert.equal(ui.language().props.value, 'id', 'unlisted locale cannot become a runtime-language choice');
   assert.match(ui.text(), /Fluent human approval is not recorded here/); assert.match(ui.text(), /no review decisions are saved/);
 });
+
+test('Arabic and Urdu drafts keep explicit RTL isolation with leading DEMO and UTC while English and later LTR choices stay LTR', async () => withDownloads(async state => {
+  for (const [locale, wording] of [['ar', 'DEMO 0 UTC · العربية'], ['ur', 'DEMO 0 UTC · اردو']] as const) {
+    const input = data(), packet = input.languages.find(language => language.locale === locale)!;
+    packet.rows[0].translation = wording;
+    const before = JSON.stringify(input), ui = mount(input);
+    ui.choose(locale);
+    const main = ui.renderer.root.findByType('main');
+    assert.equal(main.props.lang, 'en'); assert.equal(main.props.dir, 'ltr');
+    const row = ui.article(packet.rows[0].key);
+    const translated = row.findAllByType('p').find(node => node.props.lang === locale)!;
+    assert.equal(translated.props.dir, 'rtl'); assert.equal(translated.findByType('bdi').props.dir, 'rtl');
+    assert.deepEqual(translated.findByType('bdi').children, [wording], 'direction must not rewrite mixed-token draft text');
+    const english = row.findAllByType('p').find(node => node.props.lang === 'en')!;
+    assert.equal(english.props.dir, 'ltr'); assert.equal(text(english.findByType('bdi')), packet.rows[0].currentEnglish);
+    assert.equal(row.props['data-nursery-draft-comparison'], true);
+    ui.find('DEMO 0 UTC'); assert.equal(ui.renderer.root.findAllByType('article').length, 1);
+    const download = state.blobs.length; ui.download();
+    assert.deepEqual(new Uint8Array(await state.blobs[download].arrayBuffer()),
+      new TextEncoder().encode(nurseryFieldPlantingReviewCsv(locale, packet.rows)));
+    assert.equal(state.anchors[download].download, `nursery-field-planting-drafts-${locale}.csv`);
+    assert.equal(state.anchors[download].clicked, true);
+    ui.find('');
+    for (const ltr of ['ne', 'vi', 'fr'] as const) {
+      ui.choose(ltr);
+      const draft = ui.article(packet.rows[0].key).findAllByType('p').find(node => node.props.lang === ltr)!;
+      assert.equal(draft.props.dir, 'ltr'); assert.equal(draft.findByType('bdi').props.dir, 'auto');
+      assert.equal(text(draft), `${ltr} synthetic draft wording 1`);
+    }
+    assert.match(ui.text(), /Exporting never approves translations or saves review decisions/);
+    assert.equal(JSON.stringify(input), before);
+  }
+}));
+
+test('RTL choices retain LTR frozen-English and missing-draft wording and cannot export an absent packet', async () => withDownloads(async state => {
+  for (const locale of ['ar', 'ur'] as const) {
+    const input = data(), packet = input.languages.find(language => language.locale === locale)!;
+    input.sources[0].status = 'unavailable';
+    packet.rows[0].currentEnglish = null; packet.rows[0].state = 'source-missing';
+    packet.rows[1].translation = null; packet.rows[1].state = 'invalid';
+    const before = JSON.stringify(input), ui = mount(input); ui.choose(locale);
+    const sourceRow = ui.article(packet.rows[0].key);
+    assert.match(text(sourceRow), /Frozen English snapshot — current source unavailable/);
+    const english = sourceRow.findAllByType('p').find(node => node.props.lang === 'en')!;
+    assert.equal(english.props.dir, 'ltr'); assert.equal(text(english.findByType('bdi')), packet.rows[0].frozenEnglish);
+    const missing = ui.article(packet.rows[1].key).findAllByType('p').find(node => text(node) === 'No draft text is available for comparison.')!;
+    assert.equal(missing.props.lang, 'en'); assert.equal(missing.props.dir, 'ltr');
+    assert.equal(missing.findByType('bdi').props.dir, 'ltr');
+    assert.match(ui.text(), /Current file unavailable · source binding unavailable/);
+    const absent = { ...input, languages: input.languages.filter(language => language.locale !== locale) };
+    ui.update(absent);
+    assert.equal(ui.language().props.value, locale);
+    assert.match(ui.text(), /No draft comparison is available for/);
+    assert.equal(ui.renderer.root.findAllByType('article').length, 0);
+    assert.equal(ui.downloadButton().props.disabled, true); ui.download();
+    assert.equal(JSON.stringify(input), before);
+  }
+  assert.equal(state.blobs.length, 0); assert.equal(state.anchors.length, 0);
+}));
 
 test('print comparisons keep their header, source and full wording together without clipping long cards', () => {
   // Actual A4 preview output stranded comparison14's header on page4 and its body on page5.

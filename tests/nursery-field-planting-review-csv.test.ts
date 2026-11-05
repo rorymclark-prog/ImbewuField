@@ -22,10 +22,11 @@ function parseCsv(csv: string): string[][] {
   return rows;
 }
 
-test('the actual server reader supplies all seven source-checked languages to a UTF-8 review worksheet', () => {
+test('the actual server reader supplies every registered source-checked language to a UTF-8 review worksheet', () => {
   const data = loadNurseryReviewData();
   assert.equal(data.issue, null);
-  assert.equal(data.languages.flatMap(language => language.rows).length, 182);
+  assert.deepEqual(data.languages.map(language => language.locale), ['fr', 'es', 'pt-BR', 'sw', 'hi', 'bn', 'id', 'ar', 'ur', 'ne', 'vi']);
+  assert.equal(data.languages.flatMap(language => language.rows).length, data.languages.length * 26);
   for (const language of data.languages) {
     assert.equal(language.rows.filter(row => row.state === 'draft').length, 26);
     const before = structuredClone(language.rows);
@@ -77,3 +78,22 @@ test('quotes, commas and multilingual multiline drafts round-trip without becomi
 test('an empty worksheet contains column headings without inventing draft or review rows', () => {
   assert.equal(parseCsv(nurseryFieldPlantingReviewCsv('pt-BR', [])).length, 1);
 });
+
+for (const locale of ['ar', 'ur', 'ne', 'vi'] as const) {
+  test(`${locale} actual packet exports its exact mixed-script literals with no approval or direction controls`, () => {
+    const language = loadNurseryReviewData().languages.find(entry => entry.locale === locale)!;
+    assert.ok(language);
+    const rows = parseCsv(nurseryFieldPlantingReviewCsv(locale, language.rows));
+    assert.equal(rows.length, 27);
+    for (const [index, row] of rows.slice(1).entries()) {
+      assert.equal(row[5], language.rows[index].translation);
+      assert.equal(row[7], 'unreviewed'); assert.equal(row[8], '');
+      assert.doesNotMatch(row[5], /[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]/);
+    }
+    const demo = rows.find(row => row[3].startsWith('DEMO'))!;
+    assert.match(demo[5], /DEMO/);
+    const zero = rows.find(row => row[3].includes('entered 0'))!;
+    assert.match(zero[5], /0/);
+    assert.ok(rows.some(row => row[5].includes('UTC')));
+  });
+}

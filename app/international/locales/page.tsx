@@ -39,7 +39,7 @@ export default function InternationalLocaleReviewPage() {
       <header className="space-y-2">
         <div className="flex flex-wrap items-center gap-3"><MenuButton /><Link href="/international" className="inline-flex min-h-11 items-center text-sm underline">International reference tools</Link></div>
         <h1 className="font-display text-2xl font-semibold">Language draft review</h1>
-        <Link href="/international/locales/nursery-field-planting" className="inline-flex min-h-11 items-center text-sm underline">Review nursery field-planting drafts in seven languages</Link>
+        <Link href="/international/locales/nursery-field-planting" className="inline-flex min-h-11 items-center text-sm underline">Review nursery field-planting language drafts</Link>
         <p className={note}>French, Spanish, Portuguese and Swahili drafts for {SOURCE_MESSAGES.length} existing interface messages. Every draft needs fluent human review. This route compares them with the current English source.</p>
         <p className="rounded-xl border border-[var(--border)] bg-[var(--bg-1)] p-3 text-sm">Review workspace only. The app’s existing language choices, lessons, reports and offline packs retain their current support. Translated labels do not establish locally reviewed farming guidance.</p>
       </header>

@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: 'f8b89bd3cb4d', changes: [
+    'Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.',
+  ], tour: [{ title: 'Compare nursery wording drafts', where: 'International reference tools → Language draft review → Nursery field planting', href: '/international/locales/nursery-field-planting',
+    detail: 'Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.' }] },
   { when: '5 November 2026', sha: '287d05f2790e', changes: [
     'A warning about unsaved edits clears once the crop plan is saved.',
   ] },
@@ -50,15 +54,15 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '5 November 2026', sha: 'ec2ed5d90ab3', changes: [
     'Language review pages keep help below the worksheet so it cannot cover the drafts.',
   ] },
-  { when: '5 November 2026', sha: '5e87ef55b9', changes: [
-    'Compare nursery wording drafts in seven languages',
-  ], tour: [{ title: 'Compare nursery wording drafts', where: 'International reference tools → Language draft review → Nursery field planting', href: '/international/locales/nursery-field-planting',
-    detail: 'Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.' }] },
   { when: '5 November 2026', sha: 'd645d42a29', changes: [
     "Find Indonesia’s official BMKG sources",
   ], tour: [{ title: "Find Indonesia’s official BMKG sources", where: "Country evidence → Research priorities → Indonesia", href: '/international',
     detail: "Open the official forecast documentation, open-data description and terms from Indonesia’s research-queue card. Source links do not enable a forecast feed or local crop advice." }] },
   // Already-published main changes follow this release's announced nursery changes so their existing guide stays reachable.
+  { when: '5 November 2026', sha: '5e87ef55b9', changes: [
+    'Compare nursery wording drafts in seven languages',
+  ], tour: [{ title: 'Compare nursery wording drafts', where: 'International reference tools → Language draft review → Nursery field planting', href: '/international/locales/nursery-field-planting',
+    detail: 'Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.' }] },
   { when: '5 November 2026', sha: '53ca0a8d13ed', changes: [
     'Saving rechecks this tab’s editing access.',
   ] },

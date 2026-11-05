@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Added from docs/international/agy-nursery-additional-review-release-code-2026-11-05/source.json
+  "Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.":"Qhathanisa izinhlaka zamagama enkulisa ngesi-Arabic, isi-Urdu, isi-Nepali nesi-Vietnamese.",
+  "Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.":"Qhathanisa isiNgisi sokutshala ensimini kusuka enkulisa nezinhlaka zezilimi ezingasebenzi, kuhlanganise nesi-Arabic nesi-Urdu. Ukuhlolwa komthombo nokudawuniloda kusekela ukubuyekeza; lokhu akugunyazi izinguqulo noma kushintshe ulimi lohlelo lokusebenza.",
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Ukubuyekezwa kolimi okushicilelwe kugcina uqhathaniso ngalunye ndawonye lapho lulingana ekhasini.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Amakhasi okubuyekeza ulimi agcina usizo ngaphansi kwephepha lomsebenzi ukuze lungasibekeli okubhalwayo okusalungiswa.",

@@ -1,0 +1,19 @@
+{
+  "executor": "AGY",
+  "method": "AI-draft-release-copy-code",
+  "sourceSha256": "056c2ae4fcc1146e6f872d4710ac2384344ba64bd42a0debc5411f12a7b171ef",
+  "commandsRun": false,
+  "testsRun": false,
+  "validation": "UNKNOWN",
+  "workersActive": 0,
+  "humanFluentApproval": false,
+  "newRuntimeLanguageActivated": false,
+  "actualSourcePaths": [
+    "lib/update-copy-locales/st.ts",
+    "lib/update-copy-locales/ts.ts",
+    "lib/update-copy-locales/ve.ts",
+    "lib/update-copy-locales/zu.ts"
+  ],
+  "metadataExecutor": "Codex coordinator",
+  "metadataMethod": "AST extraction from actual four AGY-authored files after native schema proposal was declined"
+}

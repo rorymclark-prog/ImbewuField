@@ -1,0 +1,53 @@
+{
+  "sourceKind": "coordinator-proposed-unpublished-release-wording-for-current-review-only-code",
+  "baseCommit": "d2c5b586edd94f9f7dbb1827ff18c903e9f17517",
+  "sourceNote": "Four source-paired inactive packets and mounted-direction tests exist; actual new browser/RTL/print checks remain unverified. No new main-app language activation or fluent approval.",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "messages": [
+    {
+      "key": "nurseryAdditionalDraftReview.release.01",
+      "english": "Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.",
+      "messageSha256": "4cf60556bf80dd6e86c03de151706655a21739c2806ed1668ad2fc7037158189"
+    },
+    {
+      "key": "nurseryAdditionalDraftReview.release.02",
+      "english": "Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.",
+      "messageSha256": "c0e6d0305c2232990ab731faefc37831ee4a70d26c2044c6392383efc75c3954"
+    }
+  ],
+  "targets": [
+    {
+      "locale": "st",
+      "path": "lib/update-copy-locales/st.ts",
+      "baselineSha256": "6ddf755adb688aa197eea0d97772606108faa693b6239f330f41fbc2a678c4f0",
+      "previousPairs": 432,
+      "expectedPairs": 434
+    },
+    {
+      "locale": "ts",
+      "path": "lib/update-copy-locales/ts.ts",
+      "baselineSha256": "c6ec2381244515f552a96ad830254d398b6b8e6acb3629a211a40de44752dcf7",
+      "previousPairs": 432,
+      "expectedPairs": 434
+    },
+    {
+      "locale": "ve",
+      "path": "lib/update-copy-locales/ve.ts",
+      "baselineSha256": "4b27428a5dd3a840ca8233681f7ce650e6cfe83460a1987c011c6dc46fb439de",
+      "previousPairs": 432,
+      "expectedPairs": 434
+    },
+    {
+      "locale": "zu",
+      "path": "lib/update-copy-locales/zu.ts",
+      "baselineSha256": "511cc4e68c6a0730e24e8ca055a9325c0f6bde4fef57a8c9bc095b9ad2e840e9",
+      "previousPairs": 432,
+      "expectedPairs": 434
+    }
+  ]
+}

@@ -19,3 +19,5 @@
 - [Supplied-reference Sector wind/rain graphics, retaining slope and contours — Codex](sector-reference-flow-codex.md)
 
 - [Resolved save feedback and final main reconciliation](nursery-save-feedback-codex.md) — local warning correction; final current-tree/browser gates pending.
+
+- [Additional inactive nursery packets and explicit RTL review](nursery-additional-draft-review-codex.md) — source-bound review candidates; browser/print and final release checks pending.

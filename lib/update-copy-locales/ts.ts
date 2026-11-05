@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Additional unreviewed nursery review wording from docs/international/agy-nursery-additional-review-release-code-2026-11-05/source.json.
+  "Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.": "Pimanisa matsalo ya marito ya nesari hi Xiarab, Xiurdu, Xinepali ni Xivietnam.",
+  "Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.": "Pimanisa Xinghezi xa ku byala masin’wini ku suka eka nesari na matsalo ya tindzimi lama nga tirhiki, ku katsa Xiarab ni Xiurdu. Nkambisiso wa swihlovo ni ku kopa swi seketela nkambisiso; leswi a swi pfumeleli vuhundzuluxi kumbe ku cinca ririmi ra tirhiso.",
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Swikambelo swa ririmi leswi gandlisiweke swi hlayisa mfaniso wun'wana na wun'wana wu ri xikan'we loko wu ringanela eka phepha.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Matluka yo kambela ririmi ma hlayisa mpfuneto ehansi ka phepha-ntirho leswaku swi nga funengeti matsalo yo sungula.",

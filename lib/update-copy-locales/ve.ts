@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Added from docs/international/agy-nursery-additional-review-release-code-2026-11-05/source.json
+  "Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.":"Vhambedzani mitalo ya maipfi a nesele nga Tshi-Arabia, Tshi-Urdu, Tshi-Nepali na Tshi-Vietnam.",
+  "Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.":"Vhambedzani Tshiisimani tsha u tavha masimuni u bva neseleni na mitalo ya nyambo i songo shumeswaho, hu tshi katelwa Tshi-Arabia na Tshi-Urdu. Tsedzuluso dza zwisima na u kopa zwi tikedza tsedzuluso; hezwi a zwi tendeli vhupinduleli kana u shandukisa luambo lwa tshipulufomo.",
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Tsedzuluso dzo gandwiswaho dza luambo dzi vhea mbambedzo inwe na inwe khathihi musi i tshi lingana kha siaṭari.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Masiatari a u sedzulusa luambo a vhea thidzo fhasi ha bammbiri la mishumo uri zwi si thivhe ndingedzo dza u thoma.",
