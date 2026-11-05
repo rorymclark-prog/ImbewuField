@@ -1,7 +1,7 @@
 # Sector graphics and contour comparison — 2026-11-05
 
 - Auditor: Codex; visual preference remains for Rory to review.
-- Reviewed revision: `codex/sector-illustrated-graphics`, integrated over `a43b411ea` (the current main with the separately owned feature walkthroughs).
+- Reviewed revision: implementation `31b47afff5c10f8b52912482bd9291aa1c913f99` on `codex/sector-illustrated-graphics`, integrated over `a43b411ea` (the current main with the separately owned feature walkthroughs).
 - Deployment inspected: `https://imbewufield.vercel.app/api/build-info` reported `a5300d2` initially and `a43b411` during this continuation. These samples are local drafts, not deployed changes.
 - Previous audit: [Sector context and analysis graphics](../2026-11-04/sector-calm-context-codex.md). Retains AI-MAP-058/059/063/064 and the documented source-coverage and registration limits.
 - Scope: illustrated Sector painters, labels, key and optional source-raster supplemental contours. No other map redesign, provider dispatch, paid-job gate, worker, saved schema, calculation, permissions or measured geometry changes.
@@ -37,7 +37,7 @@ All sheets are 3462 × 2448. The actual extra source levels are 327.5 m and 332.
 Research informed the presentation, not new site facts:
 
 - [Permaculture Association sector analysis](https://www.permaculture.org.uk/design-methods/sector-analysis): represent directional energies over the real base site. This supports readable flowing directional marks; it does not supply this site's wind observations.
-- [Cathrine Dolleris forest-garden case study](https://www.permaculture.org.uk/sites/default/files/forest_garden_design_kattekaerhus_cc.pdf), sector page: reviewed as a sector-layout reference; no artwork copied or added as an app asset.
+- [Cathrine Dolleris forest-garden case study](https://www.permaculture.org.uk/sites/default/files/forest_garden_design_kattekaerhus_cc.pdf), sector page: consulted its sector-analysis description as a reference; no artwork copied or added as an app asset.
 - [USGS contour hierarchy](https://www.usgs.gov/ngp-standards-and-specifications/100k-ondemand-topo-cartographic-specifications-elevation): stronger labelled main contours and thinner intervening lines. Its mapping scale/intervals are not adopted as ground accuracy claims here.
 - [QGIS raster extraction](https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rasterextraction.html): contours derive from elevation rasters at a specified interval. Reuse the app's existing actual-raster implementation rather than invent new curves from slope or drawing between lines.
 
@@ -48,7 +48,7 @@ Research informed the presentation, not new site facts:
 - Affected Sector/release/label/tour tests: 34 passed, 0 failed. The wind probe's Canvas stub now supports linear gradients; its actual bearings, three streamlines, dashed register and solar sweep assertions remain intact.
 - New supplemental-contour test executes the real selection/crop function, verifies the original frame is used, exact requests no extra pixels, missing pixels fall back, and source geometry stays unchanged. Existing raster tests check pixel-centre elevations on a known gradient and clipping; tests can fail on displaced or invented contours.
 - Full suite: not run locally for this focused presentation change; no full current-head pass claimed. CI remains separate.
-- Whitespace: `git diff --check` clean. Release-note gate/checks recorded after the implementation stamp.
+- Whitespace: `git diff --check` clean. 13 release-note/label/tour checks passed after the implementation stamp; `notes:pending` reports no uncovered user-facing changes.
 - Output inspected: all three final 1123 × 794 digital A4-sized previews, full-sheet screen exports, and whole-sheet 390 px thumbnail. Card text/key remain separate from the art, no clipping/overlap observed in these samples. No physical-device or physical-print verification.
 - This changes the picture. PLAN_VERSION and recipe counters are unchanged. Source registration, white source gaps, original exact map, paid gates and Terrain & Sections qualifications remain intact.
 

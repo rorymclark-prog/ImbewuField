@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: '31b47afff', changes: [
+    "Sector illustrations have larger labels, richer symbols and clearer contours.",
+  ] },
   { when: '5 November 2026', sha: 'a5300d2f7', changes: [
     'Important updates include a short animation you can pause and replay.',
   ], tour: [{ title: 'Manage assistant access', where: 'Settings → Assistant connections',
