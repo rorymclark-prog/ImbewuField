@@ -455,5 +455,9 @@ const copy:UpdateCopy={
   "Check an Environment Agency rainfall reference": "Sedzulusani referentsi ya mvula ya Environment Agency",
   "Country evidence → United Kingdom → Public rainfall network sample": "Vhuṱanzi ha shango → United Kingdom → Tsumbo ya nethiweke ya mvula ya nnyi na nnyi",
   "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.": "Humbelani tsumbo nthihi ya nethiweke ya nnyi na nnyi, hune mvula yo vhigwaho, mivhalo i siho na zwifhinga zwa tshiko zwa dzula zwo fhambanywa. Iyi referentsi a i kali mvula kha bulasi ḽaṋu kana u shandula nyeletshedzo ya zwimela.",
+  // Nursery-sowing release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-sowing-release-drafts.json.
+  "Record nursery sowing in your field journal": "Rekhodani u zwala kha nursery kha dzhenala yaṋu ya tsimu",
+  "Crop planner → Saved planned nursery batches": "Muvhekanyi wa zwimela → Zwigwada zwa nursery zwo vhekanywaho zwo vhulungwaho",
+  "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rekhodani ḓuvha ḽe u zwala ha itea ngaḽo na, arali ni tshi ṱoḓa, tshivhalo tsha thireyi dzo shumiswaho nga nomboro yo fhelelaho kha tshigwada tsho vhulungwaho. Sedzulusani rekhodo ya zwe na vhona na lebulu dza referentsi dzo rekhodiwaho nayo kha dzhenala yaṋu na kha faela dzo downloudiwaho.",
 };
 export default copy;

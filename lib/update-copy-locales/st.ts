@@ -455,5 +455,9 @@ const copy:UpdateCopy={
   "Check an Environment Agency rainfall reference": "Hlahloba tshupiso ya pula ya Environment Agency",
   "Country evidence → United Kingdom → Public rainfall network sample": "Bopaki ba naha → United Kingdom → Mohlala wa marangrang a sechaba a pula",
   "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.": "Kopa mohlala o le mong wa marangrang a sechaba moo pula e tlalehilweng, dipalo tse siyo le dinako tsa mohlodi di bolokwang di arohane. Tshupiso ena ha e lekanye pula polasing ya hao kapa ho fetola keletso ya dijalo.",
+  // Nursery-sowing release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-sowing-release-drafts.json.
+  "Record nursery sowing in your field journal": "Rekota ho jala nursery jenaleng ya hao ya tshimo",
+  "Crop planner → Saved planned nursery batches": "Mohlophisi wa dijalo → Dihlopha tse rerilweng tsa nursery tse bolokilweng",
+  "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rekota letsatsi leo ho jalweng ka lona le, ha o batla, palo ya diterei tse sebedisitsweng ka dinomoro tse felletseng bakeng sa sehlopha se bolokilweng. Hlahloba rekoto ya seo o se boneng le dileibole tsa ditshupiso tse rekotilweng le yona jenaleng ya hao le difaeleng tse jarollotsweng.",
 };
 export default copy;

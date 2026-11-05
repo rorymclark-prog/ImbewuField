@@ -455,5 +455,9 @@ const copy:UpdateCopy={
   "Check an Environment Agency rainfall reference": "Hlola ireferensi yemvula ye-Environment Agency",
   "Country evidence → United Kingdom → Public rainfall network sample": "Ubufakazi bezwe → United Kingdom → Isibonelo senethiwekhi yomphakathi yemvula",
   "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.": "Cela isibonelo esisodwa senethiwekhi yomphakathi, lapho imvula ebikiwe, amanani angekho nezikhathi zomthombo kugcinwa ngokwehlukana. Le referensi ayikali imvula epulazini lakho noma ishintshe izeluleko zezitshalo.",
+  // Nursery-sowing release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-sowing-release-drafts.json.
+  "Record nursery sowing in your field journal": "Rekhoda ukuhlwanyela e-nursery kujenali yakho yasensimini",
+  "Crop planner → Saved planned nursery batches": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe",
+  "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rekhoda usuku ukuhlwanyela okwenzeke ngalo kanye, uma uthanda, nenani eliyinombolo ephelele lamathileyi asetshenzisiwe eqoqweni eligciniwe. Hlola irekhodi lalokho okubonile namalebula ereferensi agcinwe nalo kujenali yakho nakumafayela owalandayo.",
 };
 export default copy;

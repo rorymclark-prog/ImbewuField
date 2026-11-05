@@ -455,5 +455,9 @@ const copy:UpdateCopy={
   "Check an Environment Agency rainfall reference": "Kambela rheferense ya mpfula ya Environment Agency",
   "Country evidence → United Kingdom → Public rainfall network sample": "Vumbhoni bya tiko → United Kingdom → Nkombiso wa netiweke ya mpfula ya mani na mani",
   "Request one public network example with reported rainfall, missing values and source times kept distinct. This reference does not measure your farm or change crop advice.": "Kombela nkombiso wun’we wa netiweke ya mani na mani laha mpfula leyi vikiweke, mimpimo leyi nga riki kona ni minkarhi ya xihlovo swi hlayisiwaka swi hambanile. Rheferense leyi a yi pimi mpfula epurasini ra wena kumbe ku cinca switsundzuxo swa swibyariwa.",
+  // Nursery-sowing release: UNREVIEWED Codex AI drafts; exact pairs in docs/international/nursery-sowing-release-drafts.json.
+  "Record nursery sowing in your field journal": "Rhekhoda ku byala eka nursery eka jenali ya wena ya nsimu",
+  "Crop planner → Saved planned nursery batches": "Mupulani wa swibyariwa → Mintlawa ya nursery leyi pulaniweke yi tlhela yi hlayisiwa",
+  "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.": "Rhekhoda siku leri ku byala ku humeleleke ha rona ni, loko u lava, nhlayo ya tithireyi leti tirhisiweke hi nomboro leyi heleleke eka ntlawa lowu hlayisiweke. Kambisisa rhekhodo ya leswi u swi voneke ni tilebulu ta tirheferense leti rhekhodiweke na yona eka jenali ya wena ni le ka tifayili leti dawunilodiweke.",
 };
 export default copy;

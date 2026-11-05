@@ -38,6 +38,7 @@ import {
   type JournalEntryInput,
 } from '@/lib/field-journal';
 import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
+import JournalNurserySowingSummary from './JournalNurserySowingSummary';
 import { formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from './journal-labels';
 import motion from './JournalMotion.module.css';
 import explore from './JournalExplore.module.css';
@@ -626,6 +627,7 @@ export default function FieldJournal() {
                       {planningReference && <p lang="en" style={{ marginTop: 8, fontSize: 13, color: 'var(--text-secondary)' }}>
                         {planningReference}
                       </p>}
+                      <JournalNurserySowingSummary entry={entry} />
                       {(entry.bedLabel || entry.cropName) && (
                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8 }}>
                           {entry.bedLabel && <button type="button" className={explore.historyTag} aria-label={memory('bedHistory', { value: entry.bedLabel })} onClick={() => showBedHistory(entry)}><MapPin size={14} aria-hidden="true" />{entry.bedLabel}</button>}

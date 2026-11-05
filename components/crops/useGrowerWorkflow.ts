@@ -13,6 +13,9 @@ import {
 import { growerPlanningScopeKey, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import { assembleGrowerWorkflowReview, type GrowerWorkflowDraft, type GrowerWorkflowReview, type PrepareGrowerWorkflowAcceptanceInput } from '@/lib/international/grower-workflow';
 import { detachJsonData } from '@/lib/lossless-json';
+import { loadGrowerOperationsSources } from '@/lib/international/grower-operations-source';
+import { buildGrowerBoardTasks } from '@/lib/task-board';
+import { recordGrowerNurserySowing, type GrowerNurserySowingInput, type GrowerFieldObservationResult } from '@/lib/grower-field-observation';
 import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
 import type { GrowerCycleContext } from '@/lib/international/grower-cycle';
 import type { GrowerWindowInput } from '@/lib/international/grower-autoplan';
@@ -154,6 +157,7 @@ export function useGrowerWorkflow(input: Inputs) {
   const savedNurseryBindings = useRef(new WeakMap<object, SavedNurseryBinding>());
   const nurseryAcknowledgements = useRef(new WeakMap<object, NurseryReferenceAcknowledgementBinding>());
   const nurseryReading = useRef(false), nurserySaving = useRef(false);
+  const recordedSowingIntents = useRef(new WeakSet<() => boolean>());
   const accepting = useRef(false);
   const acceptanceContext = useRef<{ actorIsCurrent: () => boolean; selectionKey: string } | null>(null);
   const selectionKey = JSON.stringify([input.selection, growerPlanningScopeKey(input.scope), input.resourceSiteId]);
@@ -390,6 +394,44 @@ export function useGrowerWorkflow(input: Inputs) {
     } catch { return held('reference-save-check-failed'); }
     finally { nurserySaving.current = false; }
   }
+  async function onRecordNurserySowing(view: GrowerSavedNurseryReview, plantingId: string,
+    input: GrowerNurserySowingInput, displayedIsCurrent: () => boolean): Promise<GrowerFieldObservationResult> {
+    const held = (): GrowerFieldObservationResult => ({ status: 'held',
+      message: 'The saved nursery batch or form changed. Check its current records before recording sowing.' });
+    const binding = savedNurseryBindings.current.get(view);
+    const originalIsCurrent = () => {
+      try { return !!binding && savedBindingIsCurrent(view, binding) && displayedIsCurrent()
+        && !recordedSowingIntents.current.has(displayedIsCurrent); }
+      catch { return false; }
+    };
+    if (nurseryReading.current || nurserySaving.current || !binding || !originalIsCurrent()) return held();
+    const targets = view.references.filter(row => row.plantingId === plantingId);
+    if (targets.length !== 1 || targets[0].reference.status !== 'ready') return held();
+    let snapshot: GrowerNurserySowingInput;
+    try { snapshot = detachJsonData(input) as GrowerNurserySowingInput; } catch { return held(); }
+    nurserySaving.current = true;
+    try {
+      const before = live.current.readCurrentBook();
+      if (before.status !== 'ready' || before.token !== binding.token || !before.isCurrent?.()) return held();
+      const isCurrent = () => originalIsCurrent() && before.isCurrent?.() === true;
+      const operations = await loadGrowerOperationsSources({ isCurrent });
+      if (operations.status !== 'ready' || !isCurrent()) return held();
+      const after = live.current.readCurrentBook();
+      if (after.status !== 'ready' || after.token !== binding.token || !after.isCurrent?.()) return held();
+      const current = () => isCurrent() && after.isCurrent?.() === true;
+      const matches = buildGrowerBoardTasks(operations.book.plantings, operations.contexts, new Date(), new Set()).tasks
+        .filter(task => task.growerEventKind === 'nursery-start' && task.growerJournalLink?.plantingId === plantingId
+          && task.bedId === targets[0].bedId && task.dueDate === targets[0].startDate
+          && growerPlanningScopeKey(task.growerJournalLink.scope) === growerPlanningScopeKey(binding.context.scope));
+      if (matches.length !== 1 || !current()) return held();
+      const result = await recordGrowerNurserySowing(operations, matches[0], snapshot, { isCurrent: current });
+      // A completed or uncertain append consumes this form, not the saved batch.
+      // A deliberate new observation needs a new blank, explicitly confirmed intent.
+      if (result.status !== 'held') recordedSowingIntents.current.add(displayedIsCurrent);
+      return result;
+    } catch { return held(); }
+    finally { nurserySaving.current = false; }
+  }
   async function onAccept(review: Review, displayedReviewIsCurrent: () => boolean = () => true): Promise<GrowerWorkflowAcceptanceResult> {
     const held = (...reasons: string[]): GrowerWorkflowAcceptanceResult => ({ status: 'held', reasons });
     if (accepting.current) return held('acceptance-in-progress');
@@ -443,5 +485,5 @@ export function useGrowerWorkflow(input: Inputs) {
   } catch { visibleAcceptance = { status: 'idle' }; }
   const visibleSavedNursery = savedNursery && savedBindingIsCurrent(savedNursery) ? savedNursery : null;
   return { source: visibleSource, sourceIssue, checking, contextRevision: revision, onRefresh, onReview, onCheckCurrent, onAccept, acceptance: visibleAcceptance,
-    savedNurseryReview: visibleSavedNursery, savedNurseryChecking, onReadSavedNursery, onCheckSavedNurseryCurrent, onSaveNurseryBatchReferences };
+    savedNurseryReview: visibleSavedNursery, savedNurseryChecking, onReadSavedNursery, onCheckSavedNurseryCurrent, onSaveNurseryBatchReferences, onRecordNurserySowing };
 }

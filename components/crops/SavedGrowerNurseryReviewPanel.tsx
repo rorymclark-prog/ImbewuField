@@ -3,12 +3,14 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { cropByKey } from '@/lib/crop-catalog';
 import type { NurserySettings } from '@/lib/nursery-settings';
+import type { GrowerFieldObservationResult, GrowerNurserySowingInput } from '@/lib/grower-field-observation';
 import type { GrowerNurseryBatchReferenceChange, GrowerNurseryReferenceFields } from '@/lib/international/grower-nursery';
 import type {
   GrowerSavedNurseryReview, GrowerSavedNurseryReadResult, GrowerNurseryBatchReferenceSaveResult,
   GrowerNurseryReferenceAcknowledgement,
 } from './useGrowerWorkflow';
 import GrowerNurseryReviewPanel from './GrowerNurseryReviewPanel';
+import NurserySowingObservationForm from './NurserySowingObservationForm';
 
 export interface SavedGrowerNurseryReviewPanelProps {
   review: GrowerSavedNurseryReview | null;
@@ -19,12 +21,14 @@ export interface SavedGrowerNurseryReviewPanelProps {
   onRefresh: (acknowledgement?: GrowerNurseryReferenceAcknowledgement) => Promise<GrowerSavedNurseryReadResult>;
   onCheckCurrent: (view: GrowerSavedNurseryReview) => Promise<boolean>;
   onSaveReferences: (view: GrowerSavedNurseryReview, changes: readonly GrowerNurseryBatchReferenceChange[], displayedIsCurrent: () => boolean) => Promise<GrowerNurseryBatchReferenceSaveResult>;
+  onRecordSowing?: (view: GrowerSavedNurseryReview, plantingId: string, input: GrowerNurserySowingInput, displayedIsCurrent: () => boolean) => Promise<GrowerFieldObservationResult>;
 }
 type TextFields = { [K in keyof GrowerNurseryReferenceFields]: string };
 type Editor = { view: GrowerSavedNurseryReview | null; revision: number; sample: boolean | undefined; touched: ReadonlyMap<string, TextFields> };
 type Phase = 'idle' | 'checking' | 'saving' | 'waiting-commit' | 'refreshing' | 'verifying';
 type RefreshAfterWrite = { view: GrowerSavedNurseryReview; revision: number; acknowledgement: GrowerNurseryReferenceAcknowledgement;
   turn: number; started: boolean; refresh: SavedGrowerNurseryReviewPanelProps['onRefresh'] };
+type SowingForm = { view: GrowerSavedNurseryReview; plantingId: string; revision: number; sample: boolean | undefined; editor: Editor };
 const field = 'mt-1 min-h-11 w-full min-w-0 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-sm';
 const button = 'min-h-11 max-w-full whitespace-normal rounded-lg border border-[var(--border)] px-3 py-2 text-sm disabled:opacity-50';
 const textFields = (value: GrowerNurseryReferenceFields): TextFields => ({ variety: value.variety ?? '', seedLotReference: value.seedLotReference ?? '', raisingBatchReference: value.raisingBatchReference ?? '' });
@@ -37,6 +41,9 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
   const [message, setMessage] = useState('');
   const [blockedBudgetView, setBlockedBudgetView] = useState<GrowerSavedNurseryReview | null>(null);
   const [checkedWrite, setCheckedWrite] = useState<{ view: GrowerSavedNurseryReview; turn: number } | null>(null);
+  const [sowing, setSowing] = useState<SowingForm | null>(null);
+  const sowingRef = useRef<SowingForm | null>(null);
+  const sowingProofs = useRef(new WeakMap<() => boolean, () => boolean>());
   const id = useId(), mounted = useRef(true), generation = useRef(0), pending = useRef(false);
   const refreshAfterWrite = useRef<RefreshAfterWrite | null>(null);
   const savingAttempt = useRef<object | null>(null);
@@ -49,6 +56,9 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
   const busy = props.checking || phase === 'checking' || phase === 'saving' || phase === 'waiting-commit' || phase === 'refreshing' || phase === 'verifying';
   const sourceCurrent = () => mounted.current && live.current.review === props.review && live.current.contextRevision === props.contextRevision && live.current.sample === props.sample;
   const editorCurrent = () => sourceCurrent() && editorRef.current === editor;
+  const sowingCurrent = (form: SowingForm) => mounted.current && sowingRef.current === form && live.current.review === form.view
+    && live.current.contextRevision === form.revision && live.current.sample === form.sample && editorRef.current === form.editor
+    && !pending.current && !form.editor.touched.size;
 
   useEffect(() => {
     mounted.current = true;
@@ -120,6 +130,21 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
     const touched = new Map(activeEditor.touched), previous = touched.get(plantingId) ?? textFields(row.reference.fields);
     touched.set(plantingId, { ...previous, [key]: text });
     const next = { view: props.review, revision: props.contextRevision, sample: props.sample, touched }; editorRef.current = next; setEditor(next);
+  }
+  function openSowing(plantingId: string) {
+    if (!editorCurrent() || !editorMatchesSource || !props.review || !props.onRecordSowing || dirty || busy || pending.current
+      || props.review.references.find(row => row.plantingId === plantingId)?.reference.status !== 'ready') return;
+    const next = { view: props.review, plantingId, revision: props.contextRevision, sample: props.sample, editor };
+    sowingRef.current = next; setSowing(next);
+  }
+  async function recordSowing(form: SowingForm, input: GrowerNurserySowingInput, formIsCurrent: () => boolean): Promise<GrowerFieldObservationResult> {
+    let isCurrent = sowingProofs.current.get(formIsCurrent);
+    if (!isCurrent) {
+      isCurrent = () => formIsCurrent() && sowingCurrent(form);
+      sowingProofs.current.set(formIsCurrent, isCurrent);
+    }
+    if (!isCurrent() || !props.onRecordSowing) return { status: 'held', message: 'Check the current saved nursery batch before recording this observation.' };
+    return props.onRecordSowing(form.view, form.plantingId, input, isCurrent);
   }
   async function refresh() {
     if (!sourceCurrent() || pending.current && phase !== 'verifying') return;
@@ -198,6 +223,12 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
             <input id={`${id}-${index}-${key}`} aria-label={`${label} — saved batch ${index + 1}`} className={field} value={fields[key]} disabled={busy}
               onChange={event => edit(row.plantingId, key, event.target.value)} />
           </label>)}</div> : <p role="status">Saved reference metadata needs review. Retained evidence has not been replaced with blank fields.</p>}
+          {props.onRecordSowing && fields && !dirty && !busy && editorMatchesSource && <>
+            {sowing && sowing.plantingId === row.plantingId && sowingCurrent(sowing)
+              ? <NurserySowingObservationForm view={sowing.view} plantingId={sowing.plantingId} contextRevision={sowing.revision} sample={sowing.sample}
+                onRecord={(input, isCurrent) => recordSowing(sowing, input, isCurrent)} />
+              : <button type="button" className={button} onClick={() => openSowing(row.plantingId)}>Record nursery sowing</button>}
+          </>}
         </article>;
       })}
       <button type="button" className={button} disabled={!dirty || busy} onClick={() => void save()}>{phase === 'saving' ? 'Saving touched batch references…' : 'Save all touched references'}</button>
