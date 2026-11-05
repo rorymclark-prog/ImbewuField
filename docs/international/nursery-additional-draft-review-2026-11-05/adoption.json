@@ -1,0 +1,59 @@
+{
+  "base": "d2c5b586edd94f9f7dbb1827ff18c903e9f17517",
+  "sourceSha256": "f2b7aab350df4c7043d7244ca357257bef211a40dd436db7b9465b9958f4a14d",
+  "scope": "Exact independently source/token checked AI packets for review worksheet only; not fluent certification or main app language activation. Final UI/RTL/print/browser/current-head checks required.",
+  "packets": [
+    {
+      "locale": "ar",
+      "destination": "lib/international/locales/nursery-field-planting-drafts/ar.json",
+      "sourcePacket": "docs/international/nursery-additional-draft-review-2026-11-05/original-packets/ar.json",
+      "sha256": "78ee3e5e2d47377403848fe23087af09c27b11e6abc379d5cbf8ff828de35347",
+      "bytes": 9491,
+      "status": "unreviewed-ai-draft",
+      "worksheetCandidateOnly": true,
+      "mainAppLanguageActivated": false,
+      "humanFluentApproval": false,
+      "originalCoordinatorHandoff": "docs/international/agy-nursery-field-planting-vietnamese-arabic-2026-11-05/ar.json",
+      "sourcePacketPurpose": "Archived exact original AI handoff; worksheet reads destination only."
+    },
+    {
+      "locale": "vi",
+      "destination": "lib/international/locales/nursery-field-planting-drafts/vi.json",
+      "sourcePacket": "docs/international/nursery-additional-draft-review-2026-11-05/original-packets/vi.json",
+      "sha256": "b2b98967515798b7123a49e249c653b5592b33122748b5c20abbd1f1e224a72a",
+      "bytes": 9300,
+      "status": "unreviewed-ai-draft",
+      "worksheetCandidateOnly": true,
+      "mainAppLanguageActivated": false,
+      "humanFluentApproval": false,
+      "originalCoordinatorHandoff": "docs/international/agy-nursery-field-planting-vietnamese-arabic-2026-11-05/vi.json",
+      "sourcePacketPurpose": "Archived exact original AI handoff; worksheet reads destination only."
+    },
+    {
+      "locale": "ur",
+      "destination": "lib/international/locales/nursery-field-planting-drafts/ur.json",
+      "sourcePacket": "docs/international/nursery-additional-draft-review-2026-11-05/original-packets/ur.json",
+      "sha256": "2357bcd3db4d005d357dfe4aa6b62d5290374d7b2ee9ffdb08e9fe4e8a7529bb",
+      "bytes": 9936,
+      "status": "unreviewed-ai-draft",
+      "worksheetCandidateOnly": true,
+      "mainAppLanguageActivated": false,
+      "humanFluentApproval": false,
+      "originalCoordinatorHandoff": "docs/international/agy-nursery-field-planting-urdu-translations-2026-11-05/ur.json",
+      "sourcePacketPurpose": "Archived exact original AI handoff; worksheet reads destination only."
+    },
+    {
+      "locale": "ne",
+      "destination": "lib/international/locales/nursery-field-planting-drafts/ne.json",
+      "sourcePacket": "docs/international/nursery-additional-draft-review-2026-11-05/original-packets/ne.json",
+      "sha256": "1adf7768b6dda6c3e1fe1a7a1da6d29e7943f48bb35b6db88d717ea612abd17a",
+      "bytes": 11449,
+      "status": "unreviewed-ai-draft",
+      "worksheetCandidateOnly": true,
+      "mainAppLanguageActivated": false,
+      "humanFluentApproval": false,
+      "originalCoordinatorHandoff": "docs/international/agy-nursery-field-planting-nepali-translations-2026-11-05/ne.json",
+      "sourcePacketPurpose": "Archived exact original AI handoff; worksheet reads destination only."
+    }
+  ]
+}

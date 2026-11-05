@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Additional unreviewed nursery review wording from docs/international/agy-nursery-additional-review-release-code-2026-11-05/source.json.
+  "Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.": "Bapisa meralo ya mantswe a nesari ka Searabia, Seurdu, Senepali le Sevietnam.",
+  "Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.": "Bapisa Senyesemane sa ho jala masimong ho tswa nesaring le meralo e sa sebetseng ya dipuo, ho kenyeletswa Searabia le Seurdu. Ditlhahlobo tsa mohlodi le ho jarolla di tshehetsa tlhahlobo; sena ha se dumele ditlhaloso kapa ho fetola puo ya app.",
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Dintlha tse hatisitsweng tsa tlhahlobo ya puo di boloka papiso e nngwe le e nngwe e kopane ha e lekana leqepheng.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Maqephe a tlhahlobo ya puo a boloka thuso ka tlasa leqephe la mosebetsi e le hore e se ke ya kwala meralo.",

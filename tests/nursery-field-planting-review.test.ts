@@ -4,7 +4,8 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { buildNurseryReviewData, type NurseryReviewInputs, type NurseryReviewLocale } from '../lib/international/locales/nursery-field-planting-review.ts';
 
-const locales = ['fr', 'es', 'pt-BR', 'sw', 'hi', 'bn', 'id'] as const;
+// Four newly source-bound worksheet packets extend the original seven; app language support is separate.
+const locales = ['fr', 'es', 'pt-BR', 'sw', 'hi', 'bn', 'id', 'ar', 'ur', 'ne', 'vi'] as const;
 const form = 'components/crops/NurseryFieldPlantingObservationForm.tsx';
 const summary = 'components/journal/JournalNurseryFieldPlantingSummary.tsx';
 const panel = 'components/crops/SavedGrowerNurseryReviewPanel.tsx';
@@ -44,14 +45,14 @@ function packetHeld(data: ReturnType<typeof buildNurseryReviewData>) {
   for (const row of language(data, 'es').rows) assert.equal(row.state, 'draft');
 }
 
-test('the actual seven inactive packets expose 182 paired drafts and never grant human review', () => {
+test('every registered inactive worksheet packet preserves all frozen pairs without granting human review', () => {
   const value = input(), before = structuredClone(value), data = buildNurseryReviewData(value);
   assert.equal(data.issue, null);
   assert.equal(data.sourceSha256, sha(sourceText));
   assert.deepEqual(data.languages.map(row => row.locale), locales);
   assert.deepEqual(Object.fromEntries(data.sources.map(row => [row.path, row.status])), Object.fromEntries(paths.map(path => [path, 'matched'])));
   assert.equal(frozen.messages.length, 26);
-  assert.equal(data.languages.flatMap(row => row.rows).length, 182);
+  assert.equal(data.languages.flatMap(row => row.rows).length, locales.length * frozen.messages.length);
   for (const file of frozen.sourceFiles) assert.equal(sha(value.currentSources[file.path]!), file.sha256, file.path);
   for (const entry of data.languages) {
     const actual = JSON.parse(value.packets[entry.locale]!) as Packet;
@@ -177,3 +178,37 @@ for (const text of ['', '   ', 'Synthetic {crop}', 'Synthetic {', 'Synthetic }',
     assert.equal(data.languages.flatMap(entry => entry.rows).some(row => row.state === 'reviewed'), false);
   });
 }
+
+for (const locale of ['ar', 'ur'] as const) for (const control of ['\u202e', '\u2067', '\u061c']) {
+  test(`${locale} draft text cannot choose hidden direction or isolate controls instead of worksheet metadata`, () => {
+    const value = input();
+    const damaged = JSON.parse(value.packets[locale]!) as Packet;
+    damaged.messages[0].translation += control;
+    const data = buildNurseryReviewData({ ...value, packets: { ...value.packets, [locale]: JSON.stringify(damaged) } });
+    for (const row of language(data, locale).rows) {
+      assert.equal(row.state, 'invalid'); assert.equal(row.translation, null);
+      assert.ok(row.issues.some(issue => issue.includes('text direction')));
+    }
+    for (const other of data.languages.filter(entry => entry.locale !== locale)) {
+      assert.ok(other.rows.every(row => row.state === 'draft'), 'one damaged direction packet cannot withdraw independent languages');
+    }
+    assert.equal(JSON.parse(value.packets[locale]!).messages[0].translation.includes(control), false,
+      'checking a damaged detached packet never changes the original');
+  });
+}
+
+test('the four added worksheet packets remain the exact independently checked draft artifacts', () => {
+  const adoption = JSON.parse(read('docs/international/nursery-additional-draft-review-2026-11-05/adoption.json'));
+  assert.deepEqual(adoption.packets.map((entry: { locale: string }) => entry.locale), ['ar', 'vi', 'ur', 'ne']);
+  assert.equal(adoption.sourceSha256, sha(sourceText));
+  for (const entry of adoption.packets) {
+    const bytes = readFileSync(new URL(`../${entry.destination}`, import.meta.url));
+    assert.deepEqual(bytes, readFileSync(new URL(`../${entry.sourcePacket}`, import.meta.url)),
+      'runtime review candidates retain their actual original packet files for inspectable provenance');
+    assert.equal(bytes.length, entry.bytes);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), entry.sha256);
+    assert.equal(entry.humanFluentApproval, false); assert.equal(entry.mainAppLanguageActivated, false);
+    const actual = JSON.parse(bytes.toString('utf8'));
+    assert.equal(actual.status, 'unreviewed-ai-draft'); assert.equal(actual.runtimeActivation, false);
+  }
+});

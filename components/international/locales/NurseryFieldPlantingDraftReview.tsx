@@ -6,17 +6,9 @@ import MenuButton from '@/components/MenuButton';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { downloadFile } from '@/lib/file-delivery';
 import { nurseryFieldPlantingReviewCsv } from '@/lib/international/locales/nursery-field-planting-review-csv';
-import type { NurseryReviewData, NurseryReviewLocale, NurseryReviewRow } from '@/lib/international/locales/nursery-field-planting-review';
+import { NURSERY_REVIEW_LANGUAGES as languages, type NurseryReviewLocale } from '@/lib/international/locales/nursery-field-planting-review-locales';
+import type { NurseryReviewData, NurseryReviewRow } from '@/lib/international/locales/nursery-field-planting-review';
 
-const languages: readonly { locale: NurseryReviewLocale; label: string }[] = [
-  { locale: 'fr', label: 'French · Français' },
-  { locale: 'es', label: 'Spanish · Español' },
-  { locale: 'pt-BR', label: 'Brazilian Portuguese · Português (Brasil)' },
-  { locale: 'sw', label: 'Swahili · Kiswahili' },
-  { locale: 'hi', label: 'Hindi · हिन्दी' },
-  { locale: 'bn', label: 'Bengali · বাংলা' },
-  { locale: 'id', label: 'Indonesian · Bahasa Indonesia' },
-];
 const field = 'mt-1 min-h-11 w-full min-w-0 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-[var(--text-primary)]';
 const panel = 'min-w-0 space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-1)] p-3 [overflow-wrap:anywhere]';
 const note = 'text-sm text-[var(--text-secondary)]';
@@ -57,12 +49,12 @@ export default function NurseryFieldPlantingDraftReview({ data }: { data: Nurser
     setDownloadMessage('Worksheet download requested. Check your downloads.');
   }
 
-  return <main lang="en" className="min-h-screen bg-[var(--bg-0)] p-4 text-[var(--text-primary)] sm:p-6">
+  return <main lang="en" dir="ltr" className="min-h-screen bg-[var(--bg-0)] p-4 text-[var(--text-primary)] sm:p-6">
     <div className="mx-auto min-w-0 max-w-5xl space-y-5 font-sans [overflow-wrap:anywhere]">
       <header className="space-y-3">
         <div className="flex flex-wrap items-center gap-3"><MenuButton /><Link href="/international/locales" prefetch={false} className="inline-flex min-h-11 max-w-full items-center text-sm underline">Language draft review</Link></div>
         <h1 className="font-display text-2xl font-semibold">Nursery field-planting language worksheet</h1>
-        <p className={note}>Compare the frozen 26-message nursery field-planting wording with seven inactive language drafts. Brazilian Portuguese here is a separate packet from the Portuguese draft on the general language-review page.</p>
+        <p className={note}>Compare the frozen 26-message nursery field-planting wording with inactive language drafts. Brazilian Portuguese here is a separate packet from the Portuguese draft on the general language-review page.</p>
         <p className={panel}>Review worksheet only. Fluent human approval is not recorded here, and no review decisions are saved. These drafts do not activate a language or change the app’s language choices, calibrated lessons, audio, country, currency, units or local farming readiness.</p>
       </header>
 
@@ -103,12 +95,14 @@ export default function NurseryFieldPlantingDraftReview({ data }: { data: Nurser
           <p className={note}>Source file: <code className="break-all text-xs">{row.sourceFile}</code>.</p>
           <div className="grid min-w-0 gap-3 sm:grid-cols-2">
             <div className="min-w-0"><h3 className="text-xs font-semibold">{row.currentEnglish === null ? 'Frozen English snapshot — current source unavailable' : 'Current English'}</h3>
-              <p className="mt-1 min-w-0 whitespace-pre-wrap text-sm [overflow-wrap:anywhere]" lang="en"><bdi dir="auto">{row.currentEnglish ?? row.frozenEnglish}</bdi></p>
+              <p className="mt-1 min-w-0 whitespace-pre-wrap text-sm [overflow-wrap:anywhere]" lang="en" dir="ltr"><bdi dir="auto">{row.currentEnglish ?? row.frozenEnglish}</bdi></p>
               {row.currentEnglish === null && <p className={note}>This frozen wording is not verified as the current English source.</p>}
-              {row.currentEnglish !== null && row.currentEnglish !== row.frozenEnglish && <p className={note}>Frozen English snapshot: <bdi lang="en" dir="auto">{row.frozenEnglish}</bdi>.</p>}
+              {row.currentEnglish !== null && row.currentEnglish !== row.frozenEnglish && <p className={note}>Frozen English snapshot: <bdi lang="en" dir="ltr">{row.frozenEnglish}</bdi>.</p>}
             </div>
             <div className="min-w-0"><h3 className="text-xs font-semibold">Inactive AI draft · {language.label}</h3>
-              <p className="mt-1 min-w-0 whitespace-pre-wrap text-sm [overflow-wrap:anywhere]" lang={row.translation === null ? 'en' : locale}><bdi dir="auto">{row.translation ?? 'No draft text is available for comparison.'}</bdi></p>
+              {/* DEMO/UTC can precede Arabic or Urdu. First-strong auto would then choose LTR inside the isolated draft. */}
+              <p className="mt-1 min-w-0 whitespace-pre-wrap text-sm [overflow-wrap:anywhere]" lang={row.translation === null ? 'en' : locale}
+                dir={row.translation === null ? 'ltr' : language.direction}><bdi dir={row.translation === null ? 'ltr' : language.direction === 'rtl' ? 'rtl' : 'auto'}>{row.translation ?? 'No draft text is available for comparison.'}</bdi></p>
             </div>
           </div>
           {row.issues.length > 0 && <ul aria-label={`Issues for ${row.key}`} className="list-disc space-y-1 pl-5 text-sm">{row.issues.map((issue, index) => <li key={index}>{issue}</li>)}</ul>}

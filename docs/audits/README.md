@@ -414,3 +414,5 @@ not evidence that the current signed-in survey works or fails.
 - [Vegetables L2 fuller regional drafts — 2026-10-05](2026-10-05/study-vegetables-l2-fuller-codex.md)
 
 Latest crop-plan feedback — [Resolved save feedback and final main reconciliation](2026-11-05/nursery-save-feedback-codex.md). Final current-tree and browser gates remain pending.
+
+Latest nursery language worksheet — [Additional inactive packets and explicit RTL review](2026-11-05/nursery-additional-draft-review-codex.md). Actual new browser/print and release gates remain pending.

@@ -1,0 +1,44 @@
+{
+  "sourceReviewedAtUtc": "2026-11-05T20:23:01.532Z",
+  "sourceSha256": "056c2ae4fcc1146e6f872d4710ac2384344ba64bd42a0debc5411f12a7b171ef",
+  "nativeSourceFiles": [
+    {
+      "locale": "st",
+      "path": "lib/update-copy-locales/st.ts",
+      "previous": 432,
+      "current": 434,
+      "added": 2,
+      "sha256": "fc7706914caa382b8c2030bdf74f58cea9eced09eddfd0d1059ef472a90a06be"
+    },
+    {
+      "locale": "ts",
+      "path": "lib/update-copy-locales/ts.ts",
+      "previous": 432,
+      "current": 434,
+      "added": 2,
+      "sha256": "aabea3be605fdf29595ad5c66cdd354d6eb9d6096adbef9ad3b1751a49285212"
+    },
+    {
+      "locale": "ve",
+      "path": "lib/update-copy-locales/ve.ts",
+      "previous": 432,
+      "current": 434,
+      "added": 2,
+      "sha256": "ee73fa57b74a97e2bba89afb05b7a6269bd428f932fd6e1c97e353cbdb1b580b"
+    },
+    {
+      "locale": "zu",
+      "path": "lib/update-copy-locales/zu.ts",
+      "previous": 432,
+      "current": 434,
+      "added": 2,
+      "sha256": "758a3fc485cc272d6d185e64587c75b9505628ac9c4905c0e0d08fa15a4ed0cf"
+    }
+  ],
+  "exactSourcePairs": 8,
+  "historyEntries": 714,
+  "twoVisibleGuides": true,
+  "metadataExecutor": "Codex coordinator",
+  "metadataMethod": "Actual AST extraction of eight translations from four AGY-authored TypeScript maps; native wrong-key proposal and wrong-schema metadata proposal declined before application. No native validator/test run.",
+  "scope": "Source/code/metadata binding only, no fluent/browser/runtime language/release approval"
+}

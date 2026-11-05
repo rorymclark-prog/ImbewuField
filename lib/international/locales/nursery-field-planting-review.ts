@@ -3,8 +3,9 @@ import { assessMessage } from './coverage';
 import { NURSERY_FIELD_PLANTING_REVIEW_SOURCE as binding } from './nursery-field-planting-review-source';
 import type { DraftDictionary, DraftMessage, MessageState, SourceMessage } from './types';
 
-export const NURSERY_REVIEW_LOCALES = ['fr', 'es', 'pt-BR', 'sw', 'hi', 'bn', 'id'] as const;
-export type NurseryReviewLocale = typeof NURSERY_REVIEW_LOCALES[number];
+import { NURSERY_REVIEW_LOCALES, type NurseryReviewLocale } from './nursery-field-planting-review-locales';
+export { NURSERY_REVIEW_LOCALES } from './nursery-field-planting-review-locales';
+export type { NurseryReviewLocale } from './nursery-field-planting-review-locales';
 export interface NurseryReviewRow {
   key: string;
   sourceFile: SourceMessage['sourceFile'];
@@ -76,8 +77,10 @@ export function buildNurseryReviewData(input: NurseryReviewInputs): NurseryRevie
         const value: unknown = packet.messages[index], message = messages[index];
         if (!object(value) || !exactKeys(value, ['key', 'english', 'messageSha256', 'translation'])
           || value.key !== message.key || value.english !== message.english || value.messageSha256 !== hash(message.english)
-          || typeof value.translation !== 'string' || literals(value.translation) !== literals(message.english)) {
-          problem = 'Draft keys, English, hashes, order or protected literals do not match the frozen packet.';
+          || typeof value.translation !== 'string' || literals(value.translation) !== literals(message.english)
+          // Direction belongs to the worksheet metadata, not invisible controls inside a draft.
+          || /[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]/.test(value.translation)) {
+          problem = 'Draft keys, English, hashes, order, protected literals or text direction do not match the frozen packet.';
           break;
         }
         dictionary[message.key] = { key: message.key, sourceEnglish: message.english, text: value.translation,

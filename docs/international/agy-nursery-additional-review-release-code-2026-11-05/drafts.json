@@ -1,0 +1,63 @@
+{
+  "sourceSha256": "056c2ae4fcc1146e6f872d4710ac2384344ba64bd42a0debc5411f12a7b171ef",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "pairs": [
+    {
+      "locale": "st",
+      "key": "nurseryAdditionalDraftReview.release.01",
+      "english": "Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.",
+      "messageSha256": "4cf60556bf80dd6e86c03de151706655a21739c2806ed1668ad2fc7037158189",
+      "translation": "Bapisa meralo ya mantswe a nesari ka Searabia, Seurdu, Senepali le Sevietnam."
+    },
+    {
+      "locale": "st",
+      "key": "nurseryAdditionalDraftReview.release.02",
+      "english": "Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.",
+      "messageSha256": "c0e6d0305c2232990ab731faefc37831ee4a70d26c2044c6392383efc75c3954",
+      "translation": "Bapisa Senyesemane sa ho jala masimong ho tswa nesaring le meralo e sa sebetseng ya dipuo, ho kenyeletswa Searabia le Seurdu. Ditlhahlobo tsa mohlodi le ho jarolla di tshehetsa tlhahlobo; sena ha se dumele ditlhaloso kapa ho fetola puo ya app."
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryAdditionalDraftReview.release.01",
+      "english": "Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.",
+      "messageSha256": "4cf60556bf80dd6e86c03de151706655a21739c2806ed1668ad2fc7037158189",
+      "translation": "Pimanisa matsalo ya marito ya nesari hi Xiarab, Xiurdu, Xinepali ni Xivietnam."
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryAdditionalDraftReview.release.02",
+      "english": "Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.",
+      "messageSha256": "c0e6d0305c2232990ab731faefc37831ee4a70d26c2044c6392383efc75c3954",
+      "translation": "Pimanisa Xinghezi xa ku byala masin’wini ku suka eka nesari na matsalo ya tindzimi lama nga tirhiki, ku katsa Xiarab ni Xiurdu. Nkambisiso wa swihlovo ni ku kopa swi seketela nkambisiso; leswi a swi pfumeleli vuhundzuluxi kumbe ku cinca ririmi ra tirhiso."
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryAdditionalDraftReview.release.01",
+      "english": "Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.",
+      "messageSha256": "4cf60556bf80dd6e86c03de151706655a21739c2806ed1668ad2fc7037158189",
+      "translation": "Vhambedzani mitalo ya maipfi a nesele nga Tshi-Arabia, Tshi-Urdu, Tshi-Nepali na Tshi-Vietnam."
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryAdditionalDraftReview.release.02",
+      "english": "Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.",
+      "messageSha256": "c0e6d0305c2232990ab731faefc37831ee4a70d26c2044c6392383efc75c3954",
+      "translation": "Vhambedzani Tshiisimani tsha u tavha masimuni u bva neseleni na mitalo ya nyambo i songo shumeswaho, hu tshi katelwa Tshi-Arabia na Tshi-Urdu. Tsedzuluso dza zwisima na u kopa zwi tikedza tsedzuluso; hezwi a zwi tendeli vhupinduleli kana u shandukisa luambo lwa tshipulufomo."
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryAdditionalDraftReview.release.01",
+      "english": "Compare nursery wording drafts in Arabic, Urdu, Nepali and Vietnamese.",
+      "messageSha256": "4cf60556bf80dd6e86c03de151706655a21739c2806ed1668ad2fc7037158189",
+      "translation": "Qhathanisa izinhlaka zamagama enkulisa ngesi-Arabic, isi-Urdu, isi-Nepali nesi-Vietnamese."
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryAdditionalDraftReview.release.02",
+      "english": "Compare nursery field-planting English with inactive language drafts, including Arabic and Urdu. Source checks and downloads support review; this does not approve translations or change the app language.",
+      "messageSha256": "c0e6d0305c2232990ab731faefc37831ee4a70d26c2044c6392383efc75c3954",
+      "translation": "Qhathanisa isiNgisi sokutshala ensimini kusuka enkulisa nezinhlaka zezilimi ezingasebenzi, kuhlanganise nesi-Arabic nesi-Urdu. Ukuhlolwa komthombo nokudawuniloda kusekela ukubuyekeza; lokhu akugunyazi izinguqulo noma kushintshe ulimi lohlelo lokusebenza."
+    }
+  ]
+}
