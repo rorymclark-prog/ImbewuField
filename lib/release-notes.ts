@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: '5e87ef55b9', changes: [
+    'Compare nursery wording drafts in seven languages',
+  ], tour: [{ title: 'Compare nursery wording drafts', where: 'International reference tools → Language draft review → Nursery field planting', href: '/international/locales/nursery-field-planting',
+    detail: 'Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.' }] },
   { when: '5 November 2026', sha: 'd645d42a29', changes: [
     "Find Indonesia’s official BMKG sources",
   ], tour: [{ title: "Find Indonesia’s official BMKG sources", where: "Country evidence → Research priorities → Indonesia", href: '/international',
