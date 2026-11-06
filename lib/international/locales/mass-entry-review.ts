@@ -5,7 +5,7 @@ import { MASS_ENTRY_REVIEW_SOURCE as binding } from './mass-entry-review-source'
 import { readCurrentSourceLiterals, type SourceLiteralSelector } from './source-reader';
 import type { DraftDictionary, DraftMessage, MessageState, SourceMessage } from './types';
 
-export const MASS_ENTRY_REVIEW_LOCALES = ['fr', 'es', 'pt-BR', 'sw'] as const;
+export const MASS_ENTRY_REVIEW_LOCALES = ['fr', 'es', 'pt-BR', 'sw', 'hi', 'bn', 'id'] as const;
 export type MassEntryReviewLocale = typeof MASS_ENTRY_REVIEW_LOCALES[number];
 export interface MassEntryReviewRow {
   key: string;

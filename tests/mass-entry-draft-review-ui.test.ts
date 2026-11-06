@@ -7,9 +7,11 @@ import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'rea
 import ts from 'typescript';
 import type { MassEntryReviewData, MassEntryReviewLocale, MassEntryReviewRow } from '../lib/international/locales/mass-entry-review';
 
-const previous = new Map(['fetch', 'window', 'localStorage', 'sessionStorage', 'IS_REACT_ACT_ENVIRONMENT']
+const previous = new Map(['fetch', 'window', 'localStorage', 'sessionStorage', 'IS_REACT_ACT_ENVIRONMENT', '__imbewuMassReviewBackControl']
   .map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
 const effects = { network: 0, storage: 0, runtimeReaderImport: 0 };
+const backRegistration = { active: 0 };
+Object.defineProperty(globalThis, '__imbewuMassReviewBackControl', { configurable: true, value: backRegistration });
 const storage = () => { effects.storage++; throw Error('A comparison must not save a language, translation or approval'); };
 const request = () => { effects.network++; throw Error('The native worksheet receives data rather than fetching or publishing it'); };
 const browser = Object.defineProperties({}, { localStorage: { get: storage }, sessionStorage: { get: storage } });
@@ -28,7 +30,7 @@ const hooks = registerHooks({
       }
       if (specifier === 'next/link') return moduleText(`import React from ${JSON.stringify(import.meta.resolve('react'))};export default function Link({children,...props}){return React.createElement('a',props,children);}`);
       if (specifier === '@/components/MenuButton') return moduleText('export default function Menu(){return null;}');
-      if (specifier === '@/components/BackControl') return moduleText('export function useRegisterBackControl(){}');
+      if (specifier === '@/components/BackControl') return moduleText(`import { useEffect } from ${JSON.stringify(import.meta.resolve('react'))};export function useRegisterBackControl(){useEffect(()=>{const state=globalThis.__imbewuMassReviewBackControl;state.active++;return()=>{state.active--;};},[]);}`);
     }
     return next(specifier, context);
   },
@@ -81,6 +83,7 @@ beforeEach(() => { effects.network = 0; effects.storage = 0; effects.runtimeRead
 afterEach(() => {
   for (const renderer of mounted) act(() => renderer.unmount()); mounted.clear();
   assert.deepEqual(effects, { network: 0, storage: 0, runtimeReaderImport: 0 });
+  assert.equal(backRegistration.active, 0, 'unmounted worksheets release the in-flow return registration');
 });
 after(() => {
   hooks.deregister();
@@ -89,11 +92,25 @@ after(() => {
   }
 });
 
-test('the actual native client compares four inactive languages with no runtime-reader import or approval action', () => {
+test('the worksheet registers its existing in-flow return once and releases it on unmount', () => {
+  assert.equal(backRegistration.active, 0);
+  const ui = mount();
+  assert.equal(backRegistration.active, 1, 'the shared fallback must know the route already has a return link');
+  ui.update(data());
+  assert.equal(backRegistration.active, 1, 'rerendering must not accumulate registrations');
+  act(() => ui.renderer.unmount()); mounted.delete(ui.renderer);
+  assert.equal(backRegistration.active, 0);
+});
+
+// The chooser now advertises seven comparison languages even when this compatibility
+// fixture supplies only the original four; an unavailable comparison is not silently hidden.
+test('the original four inactive comparisons remain usable in the seven-language chooser without runtime imports or approval', () => {
   assert.deepEqual(importEffects, { network: 0, storage: 0, runtimeReaderImport: 0 });
   const value = data(), before = structuredClone(value), ui = mount(value);
   assert.equal(ui.language().props.value, 'fr'); assert.match(ui.language().props.className, /min-h-11/);
-  const options = ui.language().findAllByType('option'); assert.deepEqual(options.map(option => option.props.value), locales);
+  const options = ui.language().findAllByType('option');
+  assert.deepEqual(options.map(option => option.props.value), [...locales, 'hi', 'bn', 'id']);
+  assert.deepEqual(options.slice(0, locales.length).map(option => option.props.value), locales);
   assert.match(text(options.find(option => option.props.value === 'pt-BR')!), /Brazilian Portuguese/);
   assert.equal(options.some(option => option.props.value === 'pt'), false);
   for (const locale of locales) {
@@ -107,6 +124,33 @@ test('the actual native client compares four inactive languages with no runtime-
   assert.match(ui.text(), /human approval.*not recorded|not.*human approval/i);
   assert.match(ui.text(), /no review decisions are saved|does not save.*approval/i);
   assert.deepEqual(ui.renderer.root.findAllByType('button'), [], 'this scope has no approval, save, activation or export action');
+  assert.deepEqual(value, before);
+});
+
+// The original four-language fixture above remains a compatibility check;
+// the added packet choices must work through the same real client without activation.
+test('Hindi, Bengali and Indonesian compare their own inactive rows without changing app settings or approvals', () => {
+  const value = data();
+  const asia: MassEntryReviewLocale[] = ['hi', 'bn', 'id'];
+  for (const locale of asia) value.languages.push({ locale, rows: value.languages[0].rows.map(row => ({
+    ...structuredClone(row), translation: `${locale} synthetic mass draft ${Number(row.key.split('.').at(-1))}`,
+  })) });
+  const before = structuredClone(value), ui = mount(value);
+  const options = ui.language().findAllByType('option');
+  assert.deepEqual(options.map(option => option.props.value), [...locales, ...asia]);
+  for (const [locale, label] of [['hi', 'हिन्दी'], ['bn', 'বাংলা'], ['id', 'Bahasa Indonesia']]) {
+    const option = options.find(node => node.props.value === locale); assert.ok(option); assert.ok(text(option).includes(label));
+    ui.choose(locale); assert.equal(ui.language().props.value, locale);
+    const row = ui.article('massEntry.synthetic.01');
+    const translated = row.findAllByType('p').find(node => node.props.lang === locale); assert.ok(translated);
+    assert.equal(text(translated), `${locale} synthetic mass draft 1`);
+    assert.equal(translated.findByType('bdi').props.dir, 'auto');
+    assert.match(text(row), /Unreviewed AI draft|Inactive AI draft/);
+    assert.match(text(row), /Synthetic English mass wording 1/);
+  }
+  ui.find('id synthetic mass draft 12');
+  assert.match(text(ui.article('massEntry.synthetic.12')), /id synthetic mass draft 12/);
+  assert.equal(ui.renderer.root.findAllByType('button').length, 0);
   assert.deepEqual(value, before);
 });
 

@@ -1,0 +1,80 @@
+{
+  "locale": "hi",
+  "sourceSha256": "d04df52e04b97ea0f72bea9c45b33081152c9ea293dd0dedd4f49e9e27f0edc5",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "massEntry.field.unit.kg",
+      "english": "Kilograms (kg)",
+      "sha256": "7c066ab3b46ec7c8dc585e809174fae3732def2471fb43308ebc98b769160263",
+      "translation": "किलोग्राम (kg)"
+    },
+    {
+      "key": "massEntry.field.unit.lb",
+      "english": "Pounds (lb)",
+      "sha256": "499322ae749ca536047d6f8bde107102d61861b2c9eed423e2bd7e447e97eadc",
+      "translation": "पाउंड (lb)"
+    },
+    {
+      "key": "massEntry.field.switchHeld",
+      "english": "Complete or correct this weight before switching units. Your text is kept.",
+      "sha256": "3ffc02a6a9042af63b19d795219941be5905dc131fdb78c0b44b19a498b91e78",
+      "translation": "इकाई बदलने से पहले इस वज़न को पूरा या सही करें। आपका लिखा हुआ पाठ सुरक्षित रहेगा।"
+    },
+    {
+      "key": "massEntry.field.decimalPoint",
+      "english": "Use a dot or comma for the decimal point, without thousands separators.",
+      "sha256": "48a83b04b1e63a7b7993beb03e96d17a86f855942f083101ed4f2126502e4d9a",
+      "translation": "दशमलव बिंदु के लिए बिंदु या अल्पविराम का उपयोग करें, हज़ारों के विभाजक के बिना।"
+    },
+    {
+      "key": "massEntry.field.convertedDisplay",
+      "english": "≈ Converted display only; it may be rounded. Switching units keeps the original entered weight until you edit the number.",
+      "sha256": "c5af873127d9fbfa042d6820f7fafbd2b0481bc9bd808539d06f9423a44827ff",
+      "translation": "≈ केवल परिवर्तित प्रदर्शन; यह अनुमानित या सन्निकट हो सकता है। जब तक आप संख्या संपादित नहीं करते, इकाई बदलने पर मूल दर्ज किया गया वज़न सुरक्षित रहता है।"
+    },
+    {
+      "key": "massEntry.readback.purposeUnknown",
+      "english": "Planning purpose not recorded. Original requested weight and harvest window are not recorded.",
+      "sha256": "3adbec30c2c70ae50dd0823b7bb63008330883860e6c8fe1acd9fb6c99f96e92",
+      "translation": "योजना का उद्देश्य दर्ज नहीं है। मूल अनुरोधित वज़न और कटाई की समयावधि दर्ज नहीं हैं।"
+    },
+    {
+      "key": "massEntry.readback.buyerPurpose",
+      "english": "Planning purpose: buyer target.",
+      "sha256": "5aec250aedb8cd312a7c49b32376bb9b9e916c6a7e8c1580e06a740e05c2b346",
+      "translation": "योजना का उद्देश्य: खरीदार का लक्ष्य।"
+    },
+    {
+      "key": "massEntry.readback.originalEntryUnknown",
+      "english": "Original entered unit and text are not recorded. They have not been reconstructed from kilograms or cycle capacity.",
+      "sha256": "0b2909532f397bf2974ea8cfd52c5101f1a998e6f7d7071b1dbb463cb7fa97a8",
+      "translation": "मूल दर्ज की गई इकाई और पाठ दर्ज नहीं हैं। उन्हें किलोग्राम या चक्र क्षमता से दोबारा नहीं बनाया गया है।"
+    },
+    {
+      "key": "massEntry.readback.canonicalEquivalent",
+      "english": "Kilograms are the canonical planning equivalent for this whole request.",
+      "sha256": "afc4e4de2d3811e98983ce588401c44d1ff5217ab09b2ded36de1d30238cc471",
+      "translation": "किलोग्राम इस पूरे अनुरोध के लिए मानक योजना समतुल्य हैं।"
+    },
+    {
+      "key": "massEntry.readback.planningEstimate",
+      "english": "This is the grower-entered planning estimate, not this batch’s output or an observed harvest.",
+      "sha256": "af29919b31f9632c76117d0d17971b15ca1ad7244a6b0f363538e29b01db9fef",
+      "translation": "यह किसान द्वारा दर्ज किया गया योजना अनुमान है, इस बैच का उत्पादन या वास्तविक देखी गई कटाई नहीं।"
+    },
+    {
+      "key": "massEntry.readback.originalRequestUnknown",
+      "english": "Original requested weight and harvest window are not recorded. They have not been inferred from this cycle.",
+      "sha256": "f89af4f6b265eee10233b92d42f1dc3438a0b4496300ad6dd49f748a72a880fd",
+      "translation": "मूल अनुरोधित वज़न और कटाई की समयावधि दर्ज नहीं हैं। इस चक्र से उनका अनुमान नहीं लगाया गया है।"
+    },
+    {
+      "key": "massEntry.release.03",
+      "english": "Production plan → Automatic plan from your estimates → Household food or trial growing",
+      "sha256": "16398941e04e9be8040657208324bce9ae65c919f08f9b5d0065cafd169189ff",
+      "translation": "उत्पादन योजना → आपके अनुमानों से स्वचालित योजना → घरेलू भोजन या परीक्षण खेती"
+    }
+  ]
+}

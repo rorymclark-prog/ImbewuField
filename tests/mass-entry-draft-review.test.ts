@@ -6,7 +6,12 @@ import { buildMassEntryReviewData, MASS_ENTRY_REVIEW_LOCALES, type MassEntryRevi
   type MassEntryReviewLocale } from '../lib/international/locales/mass-entry-review.ts';
 import { loadMassEntryReviewData } from '../lib/international/locales/mass-entry-review-server.ts';
 
-const locales = ['fr', 'es', 'pt-BR', 'sw'] as const;
+const originalLocales = ['fr', 'es', 'pt-BR', 'sw'] as const;
+const asiaLocales = ['hi', 'bn', 'id'] as const;
+// Three more inactive packets now share the original twelve-message source.
+// Expand the advertised comparison while retaining explicit FRES48 coverage;
+// the frozen source's historical four-locale metadata must remain unchanged.
+const locales = [...originalLocales, ...asiaLocales] as const;
 const field = 'components/crops/GrowerEnteredMassField.ts';
 const intent = 'components/crops/GrowerCycleIntent.ts';
 const release = 'lib/release-notes.ts';
@@ -18,7 +23,7 @@ const sha = (text: string) => createHash('sha256').update(text, 'utf8').digest('
 interface FrozenMessage { key: string; english: string; sha256: string }
 interface Message extends FrozenMessage { translation: string; [key: string]: unknown }
 interface Packet { locale: string; sourceSha256: string; reviewStatus: string; runtimeActivation: boolean; messages: Message[]; [key: string]: unknown }
-const frozen = JSON.parse(sourceText) as { messages: FrozenMessage[];
+const frozen = JSON.parse(sourceText) as { messages: FrozenMessage[]; locales: string[];
   sourceFiles: { file: string; sha256: string }[] };
 function input(): MassEntryReviewInputs {
   return { sourceText, currentSources: Object.fromEntries(paths.map(path => [path, read(path)])),
@@ -40,14 +45,25 @@ function packetHeld(data: ReturnType<typeof buildMassEntryReviewData>) {
     assert.equal(row.state, 'invalid', row.key); assert.equal(row.translation, null, row.key); assert.ok(row.issues.length, row.key);
   }
   for (const row of language(data, 'es').rows) assert.equal(row.state, 'draft', row.key);
+  for (const entry of data.languages.filter(entry => entry.locale !== 'fr')) {
+    for (const row of entry.rows) assert.equal(row.state, 'draft', `${entry.locale}: ${row.key}`);
+  }
 }
 
-test('the actual current mass sources and four exact inactive packets expose 48 unreviewed pairs without rewriting them', () => {
+test('the actual current mass sources and seven exact inactive packets expose 84 unreviewed pairs without rewriting them', () => {
   const value = input(), before = structuredClone(value), data = buildMassEntryReviewData(value);
   assert.deepEqual(MASS_ENTRY_REVIEW_LOCALES, locales);
   assert.equal(data.issue, null); assert.equal(data.sourceSha256, sha(sourceText));
   assert.deepEqual(data.languages.map(row => row.locale), locales);
-  assert.equal(frozen.messages.length, 12); assert.equal(data.languages.flatMap(row => row.rows).length, 48);
+  assert.equal(frozen.messages.length, 12); assert.equal(data.languages.flatMap(row => row.rows).length, 84);
+  assert.deepEqual(frozen.locales, originalLocales, 'historical capture metadata is not rewritten to advertise later draft packets');
+  assert.equal(sha(sourceText), 'd04df52e04b97ea0f72bea9c45b33081152c9ea293dd0dedd4f49e9e27f0edc5');
+  const original = data.languages.filter(entry => originalLocales.some(locale => locale === entry.locale));
+  const added = data.languages.filter(entry => asiaLocales.some(locale => locale === entry.locale));
+  assert.deepEqual(original.map(entry => entry.locale), originalLocales);
+  assert.equal(original.flatMap(entry => entry.rows).length, 48);
+  assert.deepEqual(added.map(entry => entry.locale), asiaLocales);
+  assert.equal(added.flatMap(entry => entry.rows).length, 36);
   for (const captured of frozen.sourceFiles) {
     const source = data.sources.find(row => row.path === captured.file); assert.ok(source);
     assert.equal(source.capturedSha256, captured.sha256);

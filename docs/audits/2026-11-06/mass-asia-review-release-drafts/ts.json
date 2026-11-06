@@ -1,0 +1,32 @@
+{
+  "locale": "ts",
+  "sourceSha256": "1d81152adc5fb6c32cfb2bb21d707c6e6846f8974be873c039154e7ce978efc6",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "massAsiaReview.release.01",
+      "english": "Compare harvest-weight wording drafts in seven languages.",
+      "sha256": "ba8bc3c8d453076a00e7b13074cd2d65bc92eaa255d19c5b4cfc89f2d2755d4f",
+      "translation": "Pimanisa matsalo ya marito ya ntikelo wa ntshovelo hi tindzimi ta nkombo."
+    },
+    {
+      "key": "massAsiaReview.release.02",
+      "english": "Review seven harvest-weight draft languages",
+      "sha256": "14b55cd869751a6380a3123a9ceea06a8675d9dab4289cbfe4d0b1b48b0dbda2",
+      "translation": "Kambisisa tindzimi ta nkombo ta matsalo ya ntikelo wa ntshovelo"
+    },
+    {
+      "key": "massAsiaReview.release.03",
+      "english": "International reference tools → Language draft review → Harvest weight entry",
+      "sha256": "8d37a88a0ba324b6ce980b1adcb515d90f53bb37f1202d1b318a22ba0181402b",
+      "translation": "Switirhisiwa swa le handle swa xikombo → Nkambisiso wa matsalo ya tindzimi → Ngheniso wa ntikelo wa ntshovelo"
+    },
+    {
+      "key": "massAsiaReview.release.04",
+      "english": "Compare current English with French, Spanish, Brazilian Portuguese, Swahili, Hindi, Bengali and Indonesian drafts. These are unreviewed comparisons, not approved translations or a change to your app language.",
+      "sha256": "bb4d069eaaab3204f1cd2e7c11a466f1c8554be5145d7904879a444f46954334",
+      "translation": "Pimanisa Xinghezi xa sweswi na matsalo ya Xifurha, Xipaniya, Xiputukezi xa le Brazil, Xiswahili, Xihindi, Xibengali na Xii-Indonesia. Leswi i swipimaniso leswi nga kambisisiwangiki, ku nga ri vuhundzuluxi lebyi pfumeleriweke kumbe ku cinca ka ririmi ra apu ya wena."
+    }
+  ]
+}

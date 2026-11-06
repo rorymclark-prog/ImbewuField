@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useMemo, useState } from 'react';
+import { useRegisterBackControl } from '@/components/BackControl';
 import type { MassEntryReviewData, MassEntryReviewLocale } from '@/lib/international/locales/mass-entry-review';
 
 const languages: readonly { locale: MassEntryReviewLocale; label: string }[] = [
@@ -8,6 +9,9 @@ const languages: readonly { locale: MassEntryReviewLocale; label: string }[] = [
   { locale: 'es', label: 'Spanish · Español' },
   { locale: 'pt-BR', label: 'Brazilian Portuguese · Português (Brasil)' },
   { locale: 'sw', label: 'Swahili · Kiswahili' },
+  { locale: 'hi', label: 'Hindi · हिन्दी' },
+  { locale: 'bn', label: 'Bengali · বাংলা' },
+  { locale: 'id', label: 'Indonesian · Bahasa Indonesia' },
 ];
 
 const fieldClass = 'mt-1 min-h-11 w-full min-w-0 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-[var(--text-primary)]';
@@ -31,6 +35,8 @@ const sourceStates: Record<'matched' | 'changed' | 'available' | 'unavailable', 
 };
 
 export default function MassEntryDraftReview({ data }: { data: MassEntryReviewData }) {
+  // The route already renders an in-flow return link; the floating fallback covered it.
+  useRegisterBackControl();
   const id = useId();
   const availableLocales = useMemo(() => {
     return languages.filter(lang => data.languages.some(entry => entry.locale === lang.locale));
@@ -68,7 +74,7 @@ export default function MassEntryDraftReview({ data }: { data: MassEntryReviewDa
             Harvest-weight entry wording review
           </h1>
           <p className={noteClass}>
-            Compare the frozen 12-message harvest-weight and readback wording against inactive language drafts in French, Spanish, Brazilian Portuguese, and Swahili.
+            Compare the frozen 12-message harvest-weight and readback wording against inactive language drafts in French, Spanish, Brazilian Portuguese, Swahili, Hindi, Bengali, and Indonesian.
           </p>
           <div className={panelClass} role="region" aria-label="Worksheet scope and limitations">
             <p className="text-sm">
