@@ -211,7 +211,7 @@ export default function GrowerSeedSourcingForm({
                     }
                   />
                 </label>
-                <p className="text-[11px] text-[var(--text-secondary)]">
+                <p className="text-xs text-[var(--text-secondary)]">
                   Enter whole seed counts without separators. Leave blank if unknown.
                 </p>
               </div>
@@ -232,7 +232,7 @@ export default function GrowerSeedSourcingForm({
                     }
                   />
                 </label>
-                <p className="text-[11px] text-[var(--text-secondary)]">
+                <p className="text-xs text-[var(--text-secondary)]">
                   Enter whole seed counts without separators. Leave blank if unknown.
                 </p>
               </div>
