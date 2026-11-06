@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { loadUpdateCopy, updateDescription } from '../lib/update-copy.ts';
 import { RELEASE_NOTES } from '../lib/release-notes.ts';
-import { pvgisFixture } from './fixtures/site-energy.ts';
+import { pvgisFixture, withDeviceClock } from './fixtures/site-energy.ts';
 import { normaliseElevationEvidence, normaliseSiteEnergy, normaliseSolarReference, parsePvgisResponse, locationElevationReference, pvgisRequestUrl, siteEnergyPrompt, surveyEnergyInputErrors } from '../lib/site-energy.ts';
 import { handleSiteEnergyRequest } from '../lib/site-energy-route.ts';
 import { costClassFor } from '../lib/api-rate-limit.ts';
@@ -155,5 +155,18 @@ test('energy release draft pairs retain exact source, provisional status and exi
     const inserted = adoption.locales[language].insertedText;
     assert.equal(dictionary.split(inserted).length, 2, 'the reviewed block is added once');
     assert.equal(hash(dictionary.replace(inserted, '')), adoption.locales[language].previousSha256, 'every original dictionary byte remains');
+  }
+});
+
+
+test('saved provider climate periods are bounded by retrieval provenance rather than the device clock', () => {
+  const reference = solar();
+  for (const device of ['2022-06-01T08:00:00.000Z', '2050-06-01T08:00:00.000Z']) {
+    withDeviceClock(device, () => {
+      assert.deepEqual(normaliseSolarReference(JSON.parse(JSON.stringify(reference)), site), reference);
+      assert.equal(normaliseSolarReference({ ...reference, endYear: 2027 }, site), undefined, 'climate data after its2026 retrieval stays invalid even on a future device');
+      assert.equal(normaliseSolarReference({ ...reference, fetchedAt: '2022-11-05T12:00:00.000Z' }, site), undefined, 'a2023 period cannot predate its own retrieval');
+      assert.equal(normaliseSolarReference({ ...reference, fetchedAt: 'not a date' }, site), undefined);
+    });
   }
 });

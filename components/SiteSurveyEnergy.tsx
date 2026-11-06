@@ -36,7 +36,7 @@ export default function SiteSurveyEnergy({ siteId, coords, scope, value, onChang
     if (!actor || !coords || !energyCoordinatesMatch(siteId, coords.lat, coords.lon) || !active()) {
       setStatus('error'); setMessage('Sign in and open a site with valid coordinates before fetching.'); return;
     }
-    setStatus('loading'); setMessage('Fetching the reference from European Commission JRC PVGIS…');
+    setStatus('loading'); setMessage('Fetching the reference from European Commission JRC PVGIS… Stay here until it finishes; leaving this section cancels the lookup.');
     try {
       const headers = await paidApiHeaders(actor);
       if (!active()) return;

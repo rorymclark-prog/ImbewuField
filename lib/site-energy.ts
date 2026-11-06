@@ -74,10 +74,12 @@ export function normaliseElevationEvidence(value: unknown, siteId: string): Elev
 
 export function normaliseSolarReference(value: unknown, siteId: string): SolarReference | undefined {
   const v = object(value), months = v.months;
+  // Persisted provider evidence must not disappear when the reading device clock is wrong.
+  // The validated retrieval timestamp, not today on this device, bounds its climate period.
   if (v.provider !== 'European Commission JRC PVGIS' || v.version !== '5.3' || v.siteId !== siteId
     || !coordinateSiteIdParts(siteId) || typeof v.fetchedAt !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(v.fetchedAt) || !Number.isFinite(Date.parse(v.fetchedAt))
     || !text(v.radiationDatabase, 80) || !text(v.meteorologicalDatabase, 80)
-    || !Number.isInteger(v.startYear) || !Number.isInteger(v.endYear) || v.startYear < 1900 || v.endYear < v.startYear || v.endYear > new Date().getFullYear()
+    || !Number.isInteger(v.startYear) || !Number.isInteger(v.endYear) || v.startYear < 1900 || v.endYear < v.startYear || v.endYear > Number(v.fetchedAt.slice(0, 4))
     || v.capacityKwp !== 1 || v.lossPercent !== 14 || v.technology !== 'c-Si' || v.mounting !== 'free-standing' || v.terrainHorizon !== true
     || !finite(v.tiltDegrees, 0, 90) || !finite(v.azimuthDegreesFromSouth, -180, 180)
     || !finite(v.annualKwh) || !finite(v.annualIrradiationKwhM2)

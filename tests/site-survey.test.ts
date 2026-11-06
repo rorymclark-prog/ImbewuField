@@ -2,7 +2,7 @@ import test from 'node:test';
 import { activeAccountLocalStorageKey, bindMountedAccountLocalStorageUid } from '../lib/account-local-storage.ts';
 import assert from 'node:assert/strict';
 import { parsePvgisResponse } from '../lib/site-energy.ts';
-import { pvgisFixture } from './fixtures/site-energy.ts';
+import { pvgisFixture, withDeviceClock } from './fixtures/site-energy.ts';
 
 import {
   readSurveyDraft, writeSurveyDraft, clearSurveyDraft, surveyDraftScope, surveyRevision,
@@ -643,4 +643,22 @@ test('sales intention cannot become achieved sales or income in either report pu
   const unselected = surveyToPrompt(survey({ isCommercial: false, reportedProduction: [] }), 800);
   assert.match(unselected, /Selling or planning to sell produce: Not selected in the saved survey/);
   assert.doesNotMatch(unselected, /Selling produce: No \(household \/ community use\)/);
+});
+
+
+test('loading and resaving on a wrong-clock device retains the saved solar reference and report evidence', () => {
+  installBrowser(); bindMountedAccountLocalStorageUid('energy-wrong-clock');
+  const siteId = 'site:45.00000,8.00000';
+  const solar = parsePvgisResponse(pvgisFixture(), siteId, '2026-11-05T12:00:00.000Z');
+  try {
+    assert.ok(saveSurvey(survey({ siteId, energyEvidence: { solar } })));
+    withDeviceClock('2022-06-01T08:00:00.000Z', () => {
+      const reopened = loadSurvey(siteId)!;
+      assert.deepEqual(reopened.energyEvidence?.solar, solar);
+      const resaved = saveSurvey({ ...reopened, notes: 'Other survey answer edited on a wrong-clock device' })!;
+      assert.deepEqual(resaved.energyEvidence?.solar, solar);
+      assert.match(surveyToPrompt(resaved, 800), /2005–2023/);
+    });
+    assert.deepEqual(loadSurvey(siteId)?.energyEvidence?.solar, solar);
+  } finally { bindMountedAccountLocalStorageUid(null); }
 });

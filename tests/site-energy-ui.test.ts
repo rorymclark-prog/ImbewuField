@@ -129,3 +129,21 @@ test('out-of-range wind strings stay visible for correction and clearing the ref
     assert.deepEqual(changes, [['windSpeed',''],['windHeight','']]);
   } finally { await act(async () => view?.unmount()); }
 });
+
+
+test('in-flight guidance explains section cancellation while unmount still aborts and discards the late result', async () => {
+  const h = harness(), priorFetch = globalThis.fetch;
+  let complete!: (response: Response) => void, signal!: AbortSignal, view!: TestRenderer.ReactTestRenderer;
+  let writes = 0;
+  globalThis.fetch = async (_url, init) => { signal = init!.signal!; return new Promise(resolve => { complete = resolve; }); };
+  try {
+    await act(async () => { view = TestRenderer.create(React.createElement(h.Component, { siteId, coords: { lat: 45, lon: 8 }, scope: 'fixture-account-a', value: {}, onChange: () => { writes++; } })); });
+    let pending!: Promise<void>;
+    await act(async () => { pending = fetchButton(view).props.onClick(); });
+    assert.match(String(view.root.findByProps({ role: 'status' }).props.children), /Stay here until it finishes; leaving this section cancels the lookup/);
+    await act(async () => { view.unmount(); });
+    assert.equal(signal.aborted, true);
+    await act(async () => { complete(response()); await pending; });
+    assert.equal(writes, 0, 'the guidance never permits a cancelled request to write after navigation');
+  } finally { await act(async () => view?.unmount()); globalThis.fetch = priorFetch; }
+});

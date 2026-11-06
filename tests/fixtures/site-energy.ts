@@ -12,3 +12,15 @@ export function pvgisFixture() {
       monthly: { variables: { E_m: { units: 'kWh/mo' }, 'H(i)_m': { units: 'kWh/m2/mo' } } } } },
   };
 }
+
+/** Isolated test-only device clock; never changes the host clock or provider timestamp. */
+export function withDeviceClock<T>(iso: string, run: () => T): T {
+  const RealDate = Date;
+  const fixed = RealDate.parse(iso);
+  class DeviceDate extends RealDate {
+    constructor(...args: any[]) { if (args.length) super(...(args as [any])); else super(fixed); }
+    static now() { return fixed; }
+  }
+  globalThis.Date = DeviceDate as DateConstructor;
+  try { return run(); } finally { globalThis.Date = RealDate; }
+}
