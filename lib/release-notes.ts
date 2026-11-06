@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 November 2026', sha: '245f9cb26bc0', changes: [
+  { when: '6 November 2026', sha: 'dba2d6b1d126', changes: [
     'Find crop planning from your own estimates on the country evidence page.',
   ], tour: [{ title: 'Find your planning route', where: 'International reference tools → Country evidence → Plan from your own growing estimates', href: '/international',
     detail: 'Open the crop planner, confirm your saved mapped site’s country details and use your own growing estimates. Country research choices do not save site details or approve local crop calendars and catalogue guidance.' }] },
