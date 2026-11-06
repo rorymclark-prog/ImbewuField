@@ -7,7 +7,7 @@ import { nurseryCeilRatio, nurseryPeak as sharedNurseryPeak, type NurseryForecas
 import { generateGrowerAutoPlan, isGrowerAutoPlanCurrent, GROWER_AUTOPLAN_MAX_HORIZON_DAYS, GROWER_AUTOPLAN_MAX_ASSESSMENTS,
   type GrowerAutoPlanProposal, type GrowerAutoPlanRequest, type GrowerUtcWindow, type GrowerWindowInput } from './grower-autoplan';
 import { projectGrowerCycles } from './grower-cycle-projection';
-import { preserveGrowerCycleMarker, type GrowerCycleContext } from './grower-cycle';
+import { preserveGrowerCycleMarker, type GrowerCycleContext, type GrowerCycleOriginView } from './grower-cycle';
 import { growerPlanningScopeKey, isGrowerUtcDate, normaliseGrowerInput, normaliseGrowerPlanningScope,
   type GrowerInput, type GrowerPlanningScope } from './grower-planning';
 import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from './grower-workflow-source';
@@ -62,6 +62,9 @@ export type GrowerNurseryBatchReferenceResolution =
   | { readonly status: 'held'; readonly reason: string };
 export type GrowerNurseryBatchReferenceView = GrowerNurseryBatchReferenceResolution | { readonly status: 'proposed' };
 export type GrowerNurseryBatchReferenceChange = GrowerNurseryReferenceFields & { readonly plantingId: string };
+/** Saved batches copy the projected cycle origin. A proposal has no accepted
+ * origin yet; its review metadata (not this engine-only source) names intent. */
+export type GrowerNurseryOriginView = GrowerCycleOriginView | { readonly status: 'proposed' };
 export interface PrepareGrowerNurseryBatchReferenceChangesInput {
   readonly book: CropPlanState;
   /** Original whole rows/context stay in the controller's private request binding. */
@@ -99,6 +102,8 @@ export interface GrowerNurseryBatch {
   readonly incomplete: boolean;
   /** Always supplied by the real builder; optional for older constructed DTOs. */
   readonly reference?: GrowerNurseryBatchReferenceView;
+  /** Always supplied by the real builder; optional for older constructed DTOs. */
+  readonly origin?: GrowerNurseryOriginView;
 }
 export interface GrowerNurseryResourceBudget extends NurseryResourceForecast {
   readonly resourceKind: 'container' | 'space';
@@ -202,9 +207,9 @@ function nurseryRowsSnapshot(value: unknown): unknown {
     if (!record(original) || !record(row)) continue;
     // Optional form values may be omitted, but undefined marker presence must
     // survive the snapshot as held evidence rather than becoming a legacy row.
-    const cycle = Object.getOwnPropertyDescriptor(original, 'growerCycle');
-    if (cycle && Object.hasOwn(cycle, 'value') && cycle.value === undefined) row.growerCycle = undefined;
-    Object.assign(row, preserveGrowerCycleMarker(row));
+    // The permissive form copy may omit nested undefined intent. Preserve the
+    // original already-descriptor-checked marker before it can look legacy.
+    Object.assign(row, preserveGrowerCycleMarker(original));
     const reference = Object.getOwnPropertyDescriptor(original, 'nurseryBatchReference');
     if (reference && Object.hasOwn(reference, 'value') && reference.value === undefined) {
       row.nurseryBatchReference = { kind: 'invalid-planned-nursery-reference', version: 1, reason: 'marker-not-json-safe' };
@@ -340,6 +345,7 @@ interface CycleFact {
   id: string; cycleId: string; demandId: string; profileId: string; cropKey: string;
   plantingIds: string[]; bedId: string; targetPositions: number; start: string; endExclusive: string;
   reference: GrowerNurseryBatchReferenceView;
+  origin: GrowerNurseryOriginView;
 }
 interface SourceFacts {
   status: 'proposed' | 'saved-planned'; scope: GrowerPlanningScope; geometryFingerprint: string;
@@ -364,7 +370,7 @@ function sourceFacts(source: GrowerNurserySource): SourceFacts | null {
         id: cycle.fingerprint, cycleId: cycle.cycleId, demandId: cycle.demandId, profileId: cycle.profileId, cropKey: cycle.cropKey,
         plantingIds: [], bedId: cycle.bedId, targetPositions: cycle.assessment.capacity.estimatedPlantCount,
         start: cycle.assessment.schedule.nurseryStartDate, endExclusive: cycle.assessment.schedule.fieldEntryDate,
-        reference: { status: 'proposed' as const },
+        reference: { status: 'proposed' as const }, origin: { status: 'proposed' as const },
       }]) };
   }
   if (source.kind !== 'saved-cycles' || !source.cycleContext || !normaliseGrowerPlanningScope(source.cycleContext.scope)) return null;
@@ -379,7 +385,7 @@ function sourceFacts(source: GrowerNurserySource): SourceFacts | null {
       id: cycle.plantingId, cycleId: cycle.cycleId, demandId: cycle.demandId, profileId: cycle.profileId, cropKey: cycle.cropKey,
       plantingIds: [cycle.plantingId], bedId: cycle.bedId, targetPositions: cycle.nurseryDemand.targetPositions,
       ...cycle.nurseryDemand.interval,
-      reference: resolveNurseryReference(prepared, cycle.plantingId),
+      reference: resolveNurseryReference(prepared, cycle.plantingId), origin: cycle.origin ?? { status: 'not-recorded' as const },
     }]) };
 }
 function batchFor(cycle: CycleFact, status: SourceFacts['status'], settings: NurserySettings, siteId: string): GrowerNurseryBatch {
@@ -431,7 +437,7 @@ function batchFor(cycle: CycleFact, status: SourceFacts['status'], settings: Nur
     startDate: cycle.start, endDateExclusive: cycle.endExclusive, targetPositions: cycle.targetPositions,
     starts, seeds, trays, areaM2, trayFootprintM2, model: recipe?.model ?? null,
     ...(container ? {containerId: container.id} : {}), ...(space ? {spaceId: space.id} : {}), basis, issues, incomplete: issues.length > 0,
-    reference: cycle.reference };
+    reference: cycle.reference, origin: cycle.origin };
 }
 
 /** Own dated nursery demand, independent of the catalogue/country forecast gate. */

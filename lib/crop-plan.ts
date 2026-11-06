@@ -580,7 +580,12 @@ function copyCropPlanAuthoredData(value: unknown, parents = new Set<object>(), a
 function sampleCropPlanSnapshot(value: unknown = getSandboxCropPlan()): { raw: unknown; token: string } {
   const copied = copyCropPlanAuthoredData(value, new Set(), true);
   const rows = copied && typeof copied === 'object' && !Array.isArray(copied) ? (copied as Partial<CropPlanState>).plantings : null;
-  if (Array.isArray(rows)) rows.forEach(assertNurseryReferencePresence);
+  if (Array.isArray(rows)) {
+    rows.forEach(assertNurseryReferencePresence);
+    // Optional sample fields may follow JSON omission, but a present malformed
+    // cycle origin must remain held rather than turn into an unknown origin.
+    (copied as Partial<CropPlanState>).plantings = rows.map(row => hasGrowerCycleMarker(row) ? preservePlantingMarker(row) : row);
+  }
   const raw: unknown = JSON.parse(JSON.stringify(copied));
   return { raw, token: JSON.stringify(['sample', raw]) };
 }

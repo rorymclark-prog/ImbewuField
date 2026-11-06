@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import React from 'react';
+import GrowerCycleIntent from '../components/crops/GrowerCycleIntent.ts';
 import { act, create, type ReactTestInstance } from 'react-test-renderer';
 import ts from 'typescript';
 import { CROPS, cropByKey } from '../lib/crop-catalog.ts';
@@ -15,7 +16,7 @@ import { hasGrowerCycleMarker, isProvenForeignGrowerCycle, createGrowerCyclePlan
 import { projectGrowerCycles } from '../lib/international/grower-cycle-projection.ts';
 import { growerPlanningScopeKey, type GrowerInput, type GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
-import { assembleGrowerWorkflowReview, type GrowerWorkflowDraft } from '../lib/international/grower-workflow.ts';
+import { assembleGrowerWorkflowReview, prepareGrowerWorkflowAcceptance, type GrowerWorkflowDraft } from '../lib/international/grower-workflow.ts';
 import { buildBedPlanRows, buildBuyingSchedule, buildProductionGuide } from '../lib/crop-export-schedule.ts';
 import { buildPlanDashboard, buildPlanTableRows, idleBedMonths } from '../lib/crop-export-benchmark.ts';
 import { drawCropPlanPages, type CropPlanPdfInput } from '../lib/crop-export-pdf.ts';
@@ -78,8 +79,28 @@ function handlers(book:CropPlanState,beds:any[],binding?:{owner:string|null;samp
   return{...result,state,get book(){return current;},replaceBook(book:CropPlanState){current=book;}};
 }
 const text=(node:ReactTestInstance|string):string=>typeof node==='string'?node:node.children.map(c=>text(c as ReactTestInstance|string)).join('');
-const SavedRows=Function('React','projectGrowerCycles','cropByKey','Link',transpile(functionText('SavedGrowerRows'),true)+'\nreturn SavedGrowerRows;')(React,projectGrowerCycles,cropByKey,(props:any)=>React.createElement('a',props,props.children));
+const SavedRows=Function('React','projectGrowerCycles','cropByKey','Link','GrowerCycleIntent',transpile(functionText('SavedGrowerRows'),true)+'\nreturn SavedGrowerRows;')(React,projectGrowerCycles,cropByKey,(props:any)=>React.createElement('a',props,props.children),GrowerCycleIntent);
 Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});
+
+test('the actual saved-row screen reads back requested weight and window after JSON without substituting allocated bed capacity',async()=>{
+ const f=await fixture();
+ const draft:GrowerWorkflowDraft={...f.draft,targetProfiles:[],demands:[{kind:'grower-entered',entryId:'private-ui-entry',purpose:'household',
+  cropKey:f.profile.cropKey,profileId:f.profile.profileId,grossKg:'12.34567',harvestStart:'2028-02-01',harvestEndExclusive:'2028-03-01'}]};
+ const review=assembleGrowerWorkflowReview({...f,draft});assert.equal(review.status,'review');if(review.status!=='review')return;
+ const prepared=prepareGrowerWorkflowAcceptance({review,binding:{source:f.source,draft,recordedAt},scope:f.scope,source:f.source,book:f.book,
+  acceptedAt:recordedAt,plantingIds:review.proposal.cycles.map((cycle,index)=>({cycleId:cycle.cycleId,plantingId:`ui-row-${index}`}))});
+ assert.equal(prepared.status,'prepared');if(prepared.status!=='prepared')return;
+ const rows=JSON.parse(JSON.stringify(prepared.rows));let renderer:any;
+ try{
+  await act(async()=>{renderer=create(React.createElement(SavedRows,{rows,wholeBookRows:rows,source:f.source,scope:f.scope}));});
+  assert.match(text(renderer.root),/Planning purpose: household food/);
+  assert.match(text(renderer.root),/Original request for all cycles in this demand: ≈12\.346 kg gross/);
+  assert.match(text(renderer.root),/2028-02-01 to before 2028-03-01 \(UTC\)/);
+  assert.doesNotMatch(text(renderer.root),/private-ui-entry|profile-a|synthetic-private-source-receipt/);
+  await act(async()=>renderer.update(React.createElement(SavedRows,{rows,wholeBookRows:rows,source:{...f.source,geometryFingerprint:'moved'},scope:f.scope})));
+  assert.match(text(renderer.root),/Held:/);assert.doesNotMatch(text(renderer.root),/Original request for all cycles/);
+ }finally{if(renderer)await act(async()=>renderer.unmount());}
+});
 
 test('actual page clear/remove/edit/confirmation retain own, foreign and malformed-marker records',async()=>{
  const f=await ownFixture(),legacy={id:'legacy',bedId:f.row.bedId,cropKey:f.row.cropKey,sowMonth:2};
