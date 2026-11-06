@@ -509,5 +509,12 @@ const copy:UpdateCopy={
   "Record a nursery planting in its field bed": "Rekota temo ya sethopo betheng ya sona tshimong",
   "Crop planner → Saved planned nursery batches → Record field planting": "Moralo wa dijalo → Dihlopha tse rerilweng tsa sethopo tse bolokilweng → Rekota temo tshimong",
   "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekota letsatsi le palo ya dimela tseo o di kentseng betheng e abetsweng temo ya sethopo e hlahlobilweng. Boloka rekoto ya se bonweng jenaleng e arohane le letsatsi le rerilweng, setoko sa sethopo le ho phela ha dimela.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Your crop-plan handoff after sign-in waits for this tab’s previous editing access to finish.": "Ho fetiswa ha leano la hao la dijalo kamora ho kena ho emela phihlello e fetileng ya ho lokisa ya tebhe ena ho fela.",
+  "Check your crop plan after signing in": "Hlahloba leano la hao la dijalo kamora ho kena",
+  "Sign in → Crop planner": "Kena → Morero wa dijalo",
+  "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Bula leano la hao la dijalo kamora ho kena. Tebhe ena e lokolla phihlello ya yona e fetileng ya ho lokisa pele e hlahloba direkoto tsa akhaonto tse bolokilweng. Tebhe e nngwe e ntseng e lokisa e boloka tshireletso ya yona; direkoto tse seng teng kapa tse hananang di ntse di hloka tlhahlobo.",
+  // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
+  "Your crop-plan handoff waits for this tab’s earlier editing access to finish.": "Ho fetiswa ha leano la hao la dijalo ho emela phihlello ya pele ya ho lokisa ya tebhe ena ho fela.",
 };
 export default copy;

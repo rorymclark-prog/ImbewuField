@@ -49,6 +49,9 @@ const leases = new Map<string, Lease>();
 const unconfirmedReviews = new Map<string, CropPlanStorageContext>();
 const transferHolds = new Map<string, { context: CropPlanStorageContext; reason: string }>();
 const pending = new Map<string, { context: CropPlanStorageContext; promise: Promise<CropPlanStorageStatus> }>();
+// Readiness resolves while the Web Lock is still held. Track the manager
+// request separately so account transfer can await its actual release.
+const documentLockRequests = new Set<Promise<unknown>>();
 let leaseGeneration = 0;
 function sameContext(a: CropPlanStorageContext, b: CropPlanStorageContext): boolean {
   return a.storage === b.storage && a.canonicalKey === b.canonicalKey && a.legacyKey === b.legacyKey && a.receiptKey === b.receiptKey;
@@ -167,9 +170,11 @@ export function readCropPlanStorageStatus(context: CropPlanStorageContext | null
   const { status, reason, writable, needsInitialisation, legacyDiverged } = readCropPlanStorage(context);
   return { status, ...(reason ? { reason } : {}), writable, needsInitialisation, legacyDiverged };
 }
-export function releaseAllDocumentCropPlanLeases(): void {
+export function releaseAllDocumentCropPlanLeases(): Promise<void> {
   leaseGeneration++; pending.clear();
+  const revokedRequests = [...documentLockRequests];
   for (const lease of [...leases.values()]) lease.release();
+  return Promise.allSettled(revokedRequests).then(() => {});
 }
 function browserLocks(): CropPlanStorageLocks | undefined {
   return typeof navigator === 'undefined' ? undefined : navigator.locks;
@@ -211,7 +216,7 @@ export function initialiseCropPlanStorage(context: CropPlanStorageContext | null
   pending.set(context.canonicalKey, { context, promise: result });
   const generation = leaseGeneration, requestedContext = context;
   const guarded: CropPlanStorageContext = { ...context, isCurrent: () => generation === leaseGeneration && requestedContext.isCurrent() };
-  void locks.request(lockName(context), { mode: 'exclusive', ifAvailable: true }, async lock => {
+  const lockRequest = locks.request(lockName(context), { mode: 'exclusive', ifAvailable: true }, async lock => {
     if (!lock) { resolve(held('another-writer')); return; }
     let lease: Lease | undefined;
     const context = guarded;
@@ -234,7 +239,11 @@ export function initialiseCropPlanStorage(context: CropPlanStorageContext | null
       // never called compare-and-swap, and old v1 clients do not participate.
       await released;
     } catch { lease?.release(); resolve(readCropPlanStorageStatus(context)); }
-  }).catch(() => resolve(held('lock-unavailable'))).finally(() => { if (pending.get(context.canonicalKey)?.promise === result) pending.delete(context.canonicalKey); });
+  }).catch(() => resolve(held('lock-unavailable'))).finally(() => {
+    documentLockRequests.delete(lockRequest);
+    if (pending.get(context.canonicalKey)?.promise === result) pending.delete(context.canonicalKey);
+  });
+  documentLockRequests.add(lockRequest);
   void result.then(() => { if (pending.get(context.canonicalKey)?.promise === result) pending.delete(context.canonicalKey); });
   return result;
 }

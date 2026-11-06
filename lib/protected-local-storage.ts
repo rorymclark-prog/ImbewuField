@@ -79,6 +79,9 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
   const unconfirmedWrites = new Map<string, { context: ProtectedStorageContext; expected: Capture }>();
   const transferHolds = new Map<string, { context: ProtectedStorageContext; reason: string }>();
   const pending = new Map<string, { context: ProtectedStorageContext; promise: Promise<ProtectedStorageStatus> }>();
+  // Readiness resolves while the Web Lock is still held. Track the manager
+  // request separately so account transfer can await its actual release.
+  const documentLockRequests = new Set<Promise<unknown>>();
   let leaseGeneration = 0;
   function contextWithinGeneration(generation: number, context: ProtectedStorageContext): boolean {
     // A context read can withdraw document access while still returning true.
@@ -267,9 +270,11 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
     const { status, reason, writable, needsInitialisation, legacyDiverged } = readStorage(context);
     return { status, ...(reason ? { reason } : {}), writable, needsInitialisation, legacyDiverged };
   }
-  function releaseAllDocumentLeases(): void {
+  function releaseAllDocumentLeases(): Promise<void> {
     leaseGeneration++; pending.clear(); stopLifecycle();
+    const revokedRequests = [...documentLockRequests];
     for (const lease of [...leases.values()]) lease.release();
+    return Promise.allSettled(revokedRequests).then(() => {});
   }
   function browserLocks(): ProtectedStorageLocks | undefined {
     return typeof navigator === 'undefined' ? undefined : navigator.locks;
@@ -314,7 +319,7 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
     pending.set(context.canonicalKey, { context, promise: result });
     const generation = leaseGeneration, requestedContext = context;
     const guarded: ProtectedStorageContext = { ...context, isCurrent: () => contextWithinGeneration(generation, requestedContext) };
-    void locks.request(lockName(context), { mode: 'exclusive', ifAvailable: true }, async lock => {
+    const lockRequest = locks.request(lockName(context), { mode: 'exclusive', ifAvailable: true }, async lock => {
       if (!lock) { resolve(held('another-writer')); return; }
       let lease: Lease | undefined;
       const context = guarded;
@@ -337,7 +342,11 @@ export function createProtectedLocalStorage(config: ProtectedStorageConfig) {
         // never called compare-and-swap, and old v1 clients do not participate.
         await released;
       } catch { lease?.release(); resolve(readStorageStatus(context)); }
-    }).catch(() => resolve(held('lock-unavailable'))).finally(() => { if (pending.get(context.canonicalKey)?.promise === result) pending.delete(context.canonicalKey); });
+    }).catch(() => resolve(held('lock-unavailable'))).finally(() => {
+      documentLockRequests.delete(lockRequest);
+      if (pending.get(context.canonicalKey)?.promise === result) pending.delete(context.canonicalKey);
+    });
+    documentLockRequests.add(lockRequest);
     void result.then(() => { if (pending.get(context.canonicalKey)?.promise === result) pending.delete(context.canonicalKey); });
     return result;
   }

@@ -509,5 +509,12 @@ const copy:UpdateCopy={
   "Record a nursery planting in its field bed": "Rekhoda ukutshala kwe-nursery embhedeni wako wasensimini",
   "Crop planner → Saved planned nursery batches → Record field planting": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe → Rekhoda ukutshala ensimini",
   "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekhoda usuku nenani lezitshalo ozifake embhedeni owabelwe ukutshala kwe-nursery okuhloliwe. Gcina irekhodi lalokho okubonile kujenali lihlukile osukwini oluhleliwe, esitokweni se-nursery nasekusindeni kwezitshalo.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Your crop-plan handoff after sign-in waits for this tab’s previous editing access to finish.": "Ukudluliswa kohlelo lwakho lwezitshalo ngemuva kokungena kulinda ukufinyelela kokuhlela kwangaphambilini kwale thebhu ukuthi kuqede.",
+  "Check your crop plan after signing in": "Hlola uhlelo lwakho lwezitshalo ngemuva kokungena",
+  "Sign in → Crop planner": "Ngena ngemvume → Umhleli wezitshalo",
+  "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Vula uhlelo lwakho lwezitshalo ngemuva kokungena. Le thebhu idedela ukufinyelela kwayo kokuhlela kwangaphambilini ngaphambi kokuhlola amarekhodi e-akhawunti alondoloziwe. Enye ithebhu esahlela igcina ukuvikelwa kwayo; amarekhodi angatholakali noma ashayisanayo asadinga ukubuyekezwa.",
+  // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
+  "Your crop-plan handoff waits for this tab’s earlier editing access to finish.": "Ukudluliswa kohlelo lwakho lwezitshalo kulinda ukufinyelela kokuhlela kwangaphambilini kwale thebhu ukuthi kuqede.",
 };
 export default copy;

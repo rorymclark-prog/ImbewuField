@@ -1,0 +1,19 @@
+{
+  "sourceSha256": "4700cf74dd03fe44898c3d781fc23017ee80930e0b16d2807407acb31bcffd10",
+  "reviewStatus": "unreviewed-ai-draft",
+  "scope": "One shorter source-paired update summary repairs unchanged90-character phone rule. Prior descriptions and dictionary entries preserved. Exact English is displayed underneath; no dedicated draft badge, fluent certification or new runtime language.",
+  "messages": [
+    {
+      "key": "drainRepair.release.01",
+      "feature": "drainRepair",
+      "english": "Your crop-plan handoff waits for this tab’s earlier editing access to finish.",
+      "sha256": "72efbe8f8dd414193bc36ae5ecd71f61d06de2e25fe5c0e83eba297bc0330b6e",
+      "translations": {
+        "zu": "Ukudluliswa kohlelo lwakho lwezitshalo kulinda ukufinyelela kokuhlela kwangaphambilini kwale thebhu ukuthi kuqede.",
+        "st": "Ho fetiswa ha leano la hao la dijalo ho emela phihlello ya pele ya ho lokisa ya tebhe ena ho fela.",
+        "ts": "Ku hundzisiwa ka pulani ya wena ya swimilani ku yimela mpfumelelo wo sungula wo lulamisa wa thebu leyi ku hela.",
+        "ve": "U fhiriselwa ha mbekanyamushumo yaṋu ya zwimela hu lindela thendelo ya u lulamisa ya u thoma ya thabu hei u fhedza."
+      }
+    }
+  ]
+}

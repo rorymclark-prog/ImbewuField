@@ -172,9 +172,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         && getFirebase()?.auth.currentUser?.uid === uid && authSampleActive() === sample && !sample;
       if (!isCurrent() || typeof window === 'undefined') return;
       try {
-        releaseAllDocumentCropPlanLeases();
-        releaseAllDocumentJournalLeases();
-        releaseAllDocumentInvoiceLeases();
+        // Revoke immediately, then wait for this document's old lock-manager
+        // requests to settle before ifAvailable attempts the guest/account pair.
+        // A real other-tab owner still yields a hold; this never waits on it.
+        await Promise.all([
+          releaseAllDocumentCropPlanLeases(),
+          releaseAllDocumentJournalLeases(),
+          releaseAllDocumentInvoiceLeases(),
+        ]);
         if (!isCurrent()) return;
         const target = cropMigrationContext(uid, isCurrent);
         await transferCropPlanStoragePair(cropMigrationContext(null, isCurrent), target, {
