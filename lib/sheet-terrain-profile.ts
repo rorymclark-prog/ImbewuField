@@ -16,6 +16,20 @@ export interface SectorTerrainProfile {
   points: Array<{ distanceM:number; elevationM:number }>;
 }
 
+/** A caption for this sampled section, never a replacement for the site's broader SRTM estimate. */
+export function terrainSectionSummary(profile:SectorTerrainProfile) {
+  const first=profile.points[0],last=profile.points.at(-1);
+  if(!first||!last||profile.points.length<2||!Number.isFinite(profile.lengthM)||profile.lengthM<=0
+    ||!profile.points.every((p,i)=>Number.isFinite(p.distanceM)&&Number.isFinite(p.elevationM)
+      &&p.distanceM>=-1e-6&&p.distanceM<=profile.lengthM+1e-6&&(!i||p.distanceM>profile.points[i-1].distanceM))
+    ||Math.abs(first.distanceM)>1e-6||Math.abs(last.distanceM-profile.lengthM)>1e-6)return null;
+  const fallM=first.elevationM-last.elevationM;
+  const slopePct=Math.abs(fallM/profile.lengthM)*100;
+  if(!Number.isFinite(slopePct))return null;
+  return {startElevationM:first.elevationM,endElevationM:last.elevationM,fallM,lengthM:profile.lengthM,
+    slopePct,slopeDeg:Math.atan(slopePct/100)*180/Math.PI};
+}
+
 // A one-metre isoline is not evidence of one-metre ground accuracy. This is a broad regional
 // overview, never an excavation/set-out plan. Keep original provider data untouched for recovery.
 export function sectorOverviewContours(result:SheetContourResult):SheetContourResult {

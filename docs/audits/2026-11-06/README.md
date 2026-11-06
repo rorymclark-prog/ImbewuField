@@ -1,5 +1,7 @@
 # Audits — 6 November 2026
 
+- [Approved map styling in the app and cross-location checks — Codex](approved-map-style-runtime-codex.md). Fine circular-post boundaries, sourced terrain captions, Earthworks labels and actual native location checks; release evidence on PR/#35.
+
 - [Sample boundaries, slope heights/gradients, Earthworks labels and Record plan — Codex](map-boundary-slope-labels-codex.md). New Sector appearance accepted; native source-derived overlays inspected. Not deployed.
 
 - [Zones neighbouring-reserve context and Base national locator — Codex](zones-reserve-context-codex.md). Sourced local examples; original AI main artwork/footer preserved.

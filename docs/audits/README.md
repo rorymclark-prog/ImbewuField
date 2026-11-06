@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest runtime continuation — [Approved map styling and cross-location checks — 6 November 2026](2026-11-06/approved-map-style-runtime-codex.md). Actual app outputs and provider terrain/context inspected; current-head release evidence is separate on PR/issue #35.
+
 Latest sample revisions — [Boundary, slope values, Earthworks labels and Record plan — 6 November 2026](2026-11-06/map-boundary-slope-labels-codex.md). Native factual overlays and revised Sector appearance; local samples, not deployed defaults.
 
 Latest context sample — [Zones reserve inset and Base national locator — 6 November 2026](2026-11-06/zones-reserve-context-codex.md). Real wider satellite imagery, retained AI artwork and native locator proposal; not deployed.

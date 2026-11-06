@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', sha: 'f98125ce1', changes: [
+    "Maps have finer boundaries with round posts and clearer Earthworks labels.",
+    "Terrain maps show elevation, slope percentage and degrees from local terrain data.",
+  ] },
   { when: '5 November 2026', sha: '6c7c33401', changes: [
     "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.",
   ] },
