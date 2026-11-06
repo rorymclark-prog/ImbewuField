@@ -45,9 +45,18 @@
       "./consent"
     ]
   },
+  "historicalRegressions": [
+    {
+      "path": "tests/shape-sync-loss.test.ts",
+      "payload": "shape-sync-loss.test.ts.txt",
+      "bytes": 3979,
+      "sha256": "dfd2d7916a56263deb6a85cf8fb7bcd6ac773625c9a50f721cda7e32246fefbe"
+    }
+  ],
   "limitations": [
     "The existing provider test supplies synthetic Firestore and Firebase-init boundaries.",
     "Sample mode remains inactive in these old-client cases; eager demo/consent dependency graphs load from current core.",
-    "This fixture does not close emulator, browser, rollout or the original v1 loss TODO gates."
+    "The archived original regression is byte-exact historical evidence, not an executable TODO or an additional test registration.",
+    "This fixture does not close emulator, browser or rollout gates."
   ]
 }

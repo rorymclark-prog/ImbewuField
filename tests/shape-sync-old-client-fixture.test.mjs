@@ -27,6 +27,16 @@ const virtualUrl = rel => pathToFileURL(path.join(oldRoot, rel)).href;
 const oldUrls = new Map(historicalPaths.map(rel => [virtualUrl(rel), rel]));
 const payloads = new Map();
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
+// This archive preserves the original failing claim without registering or
+// importing it a second time. The current original path exercises production.
+const historicalRegressions = [{ path: 'tests/shape-sync-loss.test.ts', payload: 'shape-sync-loss.test.ts.txt', bytes: 3979,
+  sha256: 'dfd2d7916a56263deb6a85cf8fb7bcd6ac773625c9a50f721cda7e32246fefbe' }];
+assert.deepEqual(manifest.historicalRegressions, historicalRegressions);
+for (const pin of historicalRegressions) {
+  const archived = readFileSync(path.join(fixtureRoot, pin.payload));
+  assert.equal(archived.byteLength, pin.bytes, `Historical regression size drift: ${pin.path}`);
+  assert.equal(digest(archived), pin.sha256, `Historical regression hash drift: ${pin.path}`);
+}
 for (const rel of historicalPaths) {
   const pin = manifest.files[rel];
   assert.ok(Number.isSafeInteger(pin.bytes) && pin.bytes > 0, `Missing historical byte pin: ${rel}`);

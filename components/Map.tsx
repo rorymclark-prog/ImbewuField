@@ -881,8 +881,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         }, 120);
       }
     });
-    // User-driven only (Draw emits no events for programmatic add/delete/set — browser gate G4).
-    // The adapter ignores anything fired while painting remote state or tearing down.
+    // Authoring events are user-driven: with the pinned Mapbox GL 3.25.0 / Draw 1.5.1, programmatic
+    // add/delete/set/deleteAll emit no draw.create/update/delete (they can still emit
+    // draw.selectionchange and draw.render). The adapter ignores anything fired while painting remote
+    // state or tearing down.
     map.on('draw.update', (e: { features?: GeoJSON.Feature[] }) => {
       shapeAdapterRef.current?.recordDrawUpdate(e?.features ?? []);
       recompute();
@@ -923,8 +925,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   // Restore persisted parcels + water once the map is ready (survives refresh).
   const restoredRef = useRef(false);
-  // True while tearing down on unmount: deleteAll() fires draw.delete → recompute,
-  // and we must NOT let that persist an empty collection (it would wipe saved shapes
+  // True while tearing down on unmount. The pinned Draw's programmatic deleteAll() emits no
+  // draw.delete authoring event, but teardown is still presentation: if any handler does run
+  // during it, the adapter must record nothing (an empty collection would wipe saved shapes
   // every time the user navigates away from the map).
   const tearingDownRef = useRef(false);
   // True while painting a Firestore-sourced shape onto the map — suppresses the
@@ -975,8 +978,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   // Force the drawn shapes to match localStorage RIGHT NOW (used when a live Firestore
   // update arrives from another browser). Unlike restoreShapes this isn't one-shot.
-  // draw.set() does NOT fire draw.* events, so the applyingRemoteRef guard stays valid
-  // for the synchronous recompute() that follows.
+  // draw.set() emits no authoring draw.create/update/delete with the pinned Draw (it can emit
+  // draw.selectionchange/draw.render); applyingRemoteRef still marks the paint as presentation
+  // for the adapter and the synchronous recompute() that follows.
   const redrawShapesFromStorage = useCallback(() => {
     const draw = ensureDraw();
     if (!draw) return; // map not ready — the restore poller will pick up localStorage
@@ -1062,7 +1066,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       onWater:  () => window.dispatchEvent(new CustomEvent('imbewu-water-points-changed')),
       shapeSync: {
         onRemoteState: (raw) => controller.receiveRemote(raw),
-        onLegacyIsland: (island) => { controller.ingestLegacyIsland(island.shapesJson, island.version); },
+        // The island is REMOTE content, but the controller journals it as ordinary ops and publishes
+        // 'local' — which onView above deliberately skips (local authoring echoes). A Draw that was
+        // already ready and painted before this bootstrap read would therefore stay empty, and an
+        // unresolved/offline first flush never re-publishes. Repaint only when THIS ingest added ops,
+        // only for the still-current controller, through the guarded redraw (no Draw yet → the restore
+        // poller paints later; native/reticle edit → deferred until it ends). Local edits stay unpainted.
+        onLegacyIsland: (island) => {
+          const ingested = controller.ingestLegacyIsland(island.shapesJson, island.version);
+          if (ingested.ok && ingested.opIds.length > 0 && shapeSyncRef.current === controller) redrawRef.current();
+        },
         onReady: () => { void controller.flush(); },
       },
     }) : null;
@@ -4508,14 +4521,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       )}
 
       {/* ── Shape sync v2: durability + preserved conflicts. Never silent: a change that is not yet
-           safe on this device, a paused sync, or two versions of a shape are all shown here. ── */}
-      {!pinDraw && !editPin && (shapeConflicts.length > 0 || (shapeSyncNoticeNow && shapeSyncNoticeNow.level !== 'ok' && shapeSyncNoticeNow.level !== 'info')) && (
+           safe on this device, a paused sync, or two versions of a shape are all shown here. Ordinary
+           'info' (saved on this device only / waiting / syncing) is a non-blocking status line: the
+           strip passes pointer events through, only the alert and the conflict tray take them. ── */}
+      {!pinDraw && !editPin && (shapeConflicts.length > 0 || (shapeSyncNoticeNow && shapeSyncNoticeNow.level !== 'ok')) && (
         <div className="fixed left-1/2 -translate-x-1/2 z-[60] w-full font-sans flex flex-col gap-2"
-          style={{ top: 'calc(12px + env(safe-area-inset-top))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
+          style={{ top: 'calc(12px + env(safe-area-inset-top))', maxWidth: 'min(420px, calc(100vw - 24px))', pointerEvents: 'none' }}>
           {/* Pass 2: ONE pure source of wording (lib/shape-sync/controller shapeSyncNotice). It can
               never say "synced" while anything is pending, volatile, held, deferred or blocked. */}
           {shapeSyncNoticeNow && (shapeSyncNoticeNow.level === 'warn' || shapeSyncNoticeNow.level === 'error') && (
-            <div role="alert" className="rounded-xl px-3 py-2 flex items-center gap-2" style={{ background: 'rgba(28,14,10,0.94)', border: `1px solid ${shapeSyncNoticeNow.level === 'error' ? 'rgba(212,110,66,0.7)' : 'rgba(212,168,83,0.7)'}`, color: '#F4E3C0', fontSize: 13 }}>
+            <div role="alert" className="rounded-xl px-3 py-2 flex items-center gap-2" style={{ background: 'rgba(28,14,10,0.94)', border: `1px solid ${shapeSyncNoticeNow.level === 'error' ? 'rgba(212,110,66,0.7)' : 'rgba(212,168,83,0.7)'}`, color: '#F4E3C0', fontSize: 13, pointerEvents: 'auto' }}>
               <span className="flex-1">{shapeSyncNoticeNow.text}</span>
               {shapeSyncNoticeNow.offerBackup && (
                 <button onClick={downloadShapeRecovery} className="rounded-lg px-2.5 py-1.5 font-semibold" style={{ background: 'rgba(247,242,233,0.12)', border: '1px solid rgba(234,243,226,0.25)', color: '#EAF3E2', cursor: 'pointer' }}>
@@ -4524,8 +4539,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               )}
             </div>
           )}
+          {shapeSyncNoticeNow && shapeSyncNoticeNow.level === 'info' && (
+            <div role="status" aria-live="polite" className="self-center rounded-full px-3 py-1" style={{ background: 'rgba(28,14,10,0.78)', color: '#F4E3C0', fontSize: 13 }}>
+              {shapeSyncNoticeNow.text}
+            </div>
+          )}
           {shapeConflicts.length > 0 && (
-            <div className="rounded-xl p-2" style={{ background: 'rgba(16,22,14,0.94)', border: '1px solid rgba(212,168,83,0.6)', boxShadow: '0 8px 24px rgba(0,0,0,0.45)' }}>
+            <div className="rounded-xl p-2" style={{ background: 'rgba(16,22,14,0.94)', border: '1px solid rgba(212,168,83,0.6)', boxShadow: '0 8px 24px rgba(0,0,0,0.45)', pointerEvents: 'auto' }}>
               <button onClick={() => setConflictsOpen((o) => !o)} className="w-full flex items-center gap-2 px-1.5 py-1 font-semibold" style={{ background: 'transparent', border: 'none', color: '#F4E3C0', fontSize: 14, cursor: 'pointer' }}>
                 <AlertTriangle size={15} />
                 <span className="flex-1 text-left">{shapeConflicts.length === 1 ? '1 shape needs your decision' : `${shapeConflicts.length} shapes need your decision`}</span>
