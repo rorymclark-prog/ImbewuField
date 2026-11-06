@@ -1,30 +1,61 @@
 import type { jsPDF } from 'jspdf';
 import { pdfSafe } from './crop-export-pdf';
-import { reportSowingCalendar, reportCropRows, type ReportProductionYear } from './report-crop-plan';
+import { exactPdfTextWriter } from './pdf-exact-text';
+import { originalQuantityEntryLine } from './international/grower-cycle-intent';
+import { reportSowingCalendar, reportCropRows, type ReportCropRow, type ReportProductionYear } from './report-crop-plan';
 import type { FactCropPlan } from './report-site-facts';
 
-/** Product windows and sowing starts accompany the report; bed allocations remain in the working plan. */
-export function drawReportCropSummary(doc: jsPDF, crop: FactCropPlan, _offset = 0, language = 'en', allowCataloguePlanning = false): void {
-  if (!allowCataloguePlanning) {
-    doc.addPage('a4', 'portrait'); doc.setFont('helvetica', 'bold'); doc.setFontSize(17);
-    doc.text('Saved sowing records', 40, 48); doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
-    const note = 'Local crop guidance, inherited forecasts and derived task calendars are unavailable for the current site context. These are saved entries, not locally reviewed recommendations.';
-    const lines = doc.splitTextToSize(pdfSafe(note), 515) as string[]; doc.text(lines, 40, 76);
-    let y = 76 + lines.length * 13 + 14;
-    for (const row of reportCropRows(crop)) {
-      const text = doc.splitTextToSize(pdfSafe(`${row.name} - saved sowing: ${row.sow || 'Not recorded'} - ${row.where}`), 515) as string[];
-      for (const line of text) {
-        if (y + 13 > 770) {
-          doc.addPage('a4', 'portrait'); doc.setFont('helvetica', 'bold');
-          doc.text('Saved sowing records (continued)', 40, 45);
-          doc.setFont('helvetica', 'normal'); y = 70;
-        }
-        doc.text(line, 40, y); y += 13;
-      }
-      y += 8;
+async function drawSavedCropRows(doc: jsPDF, rows: readonly ReportCropRow[], heading: string, note: string): Promise<void> {
+  // Load the bundled exact-glyph font only when authored quantity evidence is
+  // actually printed. Ordinary report prose keeps its existing formatter.
+  const exact = rows.some(row => row.intent?.originalQuantityEntry)
+    ? await exactPdfTextWriter(doc, () => Error('An original entered weight cannot be printed faithfully. Review the saved request or download its CSV to retain the exact text.')) : null;
+  function page(continued = false) {
+    doc.addPage('a4', 'portrait'); doc.setFont('helvetica', 'bold'); doc.setFontSize(continued ? 10 : 17);
+    doc.text(`${heading}${continued ? ' (continued)' : ''}`, 40, continued ? 45 : 48);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+  }
+  page();
+  const lines = doc.splitTextToSize(pdfSafe(note), 515) as string[]; doc.text(lines, 40, 76);
+  let y = 76 + lines.length * 13 + 14;
+  function write(text: readonly string[], authored = false) {
+    for (const line of text) {
+      if (y + 13 > 770) { page(true); y = 70; }
+      if (authored) exact!.select(line);
+      else { doc.setFont('helvetica', 'normal'); doc.setFontSize(10); }
+      doc.text(line, 40, y); y += 13;
     }
+  }
+  for (const row of rows) {
+    const entry = row.intent?.originalQuantityEntry;
+    const authored = entry ? originalQuantityEntryLine(entry) : null;
+    const readback = [row.name, `saved sowing: ${row.sow || 'Not recorded'}`, row.where,
+      ...(row.intent ? [row.status] : [])].join(' - ');
+    // Keep every raw authored code point through wrapping and PDF encoding;
+    // pdfSafe/splitTextToSize intentionally normalize ordinary copy.
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+    write(doc.splitTextToSize(pdfSafe(readback), 515));
+    for (const line of row.intent?.lines ?? []) {
+      if (authored === line && exact) write(exact.lines(line, 515), true);
+      else {
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+        write(doc.splitTextToSize(pdfSafe(line), 515));
+      }
+    }
+    y += 8;
+  }
+}
+
+/** Product windows and sowing starts accompany the report; bed allocations remain in the working plan. */
+export async function drawReportCropSummary(doc: jsPDF, crop: FactCropPlan, _offset = 0, language = 'en', allowCataloguePlanning = false): Promise<void> {
+  if (!allowCataloguePlanning) {
+    await drawSavedCropRows(doc, reportCropRows(crop), 'Saved sowing records',
+      'Local crop guidance, inherited forecasts and derived task calendars are unavailable for the current site context. These are saved entries, not locally reviewed recommendations.');
     return;
   }
+  const ownRows = reportCropRows(crop).filter(row => row.intent);
+  if (ownRows.length) await drawSavedCropRows(doc, ownRows, 'Saved own-cycle planning intent',
+    'Archived grower estimates, not current geometry approval or observed sowing or harvest. Repeated original requests belong to whole demands, not per-cycle totals.');
   if (crop.snapshot?.annualProduction) drawReportProductionYear(doc, crop.snapshot.annualProduction, crop.snapshot.capturedAt, language);
   const margin = 40, width = 515, nameWidth = 167, monthWidth = (width - nameWidth) / 12;
   let y = 0;

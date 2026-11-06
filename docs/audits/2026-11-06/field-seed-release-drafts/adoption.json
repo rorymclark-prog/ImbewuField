@@ -1,0 +1,14 @@
+{
+  "sourceSha256": "8817508559d63382532277326313235c6fa1e1d1dbacd8a02e126b1cd53f0052",
+  "sourceCommit": "b98c029e142ba8acbb04890a02be78bb20a10d7b",
+  "provenance": "AGY AI drafts with coordinator exact source/English/key/hash/order/literal checks and identified wording corrections; no fluent/human certification.",
+  "pairs": 16,
+  "damagedControlsPerLocale": 18,
+  "actualNotesWords": 211,
+  "actualNativeNotesWords": 224,
+  "notesProvenance": "Coordinator condensed introduction after actual idle handoff. Locale packets and frozen English unchanged.",
+  "use": "Existing-language update captions with English retained visibly; no new app language or approved translation claim.",
+  "sourceChecks": "Node24 typecheck0 and560affectedpass0fail0skip0TODO; actual saved-source private-binding case and controlled final-click negative probe.",
+  "releaseGates": "Final Node24 typecheck0 and598affected checks across45files pass, zero failures/skips/TODO; whitespace and release coverage checked before push. Full current-head CI and actual desktop/phone gate remain open.",
+  "sourceFileReconciliation": "Frozen English messages unchanged; release metadata now stamps source commit b98c029e142b. Original source-file SHA remains historical."
+}

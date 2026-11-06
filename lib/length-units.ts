@@ -1,3 +1,5 @@
+import { rawJsonIsLossless } from './lossless-json';
+
 /** International foot, not the former U.S. survey foot. NIST SP 811 B.8
  * prints 3.048 E-01 m in bold (exact):
  * https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
@@ -21,17 +23,37 @@ export function metresToLength(value: number, unit: LengthUnit): number | null {
 export type LengthDecimal =
   | { readonly status: 'ready'; readonly value: number }
   | { readonly status: 'incomplete' | 'invalid'; readonly reason: 'incomplete-number' | 'plain-decimal-required' | 'outside-finite-range' };
-/** Dot OR comma is explicitly a decimal separator. Neither is a grouping mark.
- * Signs belong to numeric entry; whether a length/path is permitted belongs
- * to the caller's existing geometry authority. This does not parse angles. */
-export function parseLengthDecimal(text: string): LengthDecimal {
+function unitDecimalText(text: string): { readonly status: 'ready'; readonly raw: string } | Exclude<LengthDecimal, { status: 'ready' }> {
   if (typeof text !== 'string') return { status: 'invalid', reason: 'plain-decimal-required' };
   const raw = text.trim();
   if (/^[+-]?[.,]?$/.test(raw)) return { status: 'incomplete', reason: 'incomplete-number' };
   if (!/^[+-]?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(raw)) return { status: 'invalid', reason: 'plain-decimal-required' };
+  return { status: 'ready', raw };
+}
+/** Dot OR comma is explicitly a decimal separator. Neither is a grouping mark.
+ * Signs belong to numeric entry; whether a length/path is permitted belongs
+ * to the caller's existing geometry authority. This does not parse angles. */
+export function parseLengthDecimal(text: string): LengthDecimal {
+  const read = unitDecimalText(text);
+  if (read.status !== 'ready') return read;
+  const { raw } = read;
   const value = Number(raw.replace(',', '.'));
   if (!Number.isFinite(value) || value === 0 && /[1-9]/.test(raw)) return { status: 'invalid', reason: 'outside-finite-range' };
   return { status: 'ready', value };
+}
+
+export type ExactUnitDecimal = LengthDecimal
+  | { readonly status: 'invalid'; readonly reason: 'decimal-representation-loss' };
+/** Preserve the authored decimal before Number or a six-place display can
+ * replace it. The existing parser still owns plain-decimal grammar; only
+ * insignificant spelling is adapted for the lossless JSON numeric authority. */
+export function parseExactUnitDecimal(text: string): ExactUnitDecimal {
+  const read = unitDecimalText(text);
+  if (read.status !== 'ready') return read;
+  const literal = read.raw.replace(',', '.').replace(/^\+/, '').replace(/^(-?)\./, (_match, sign: string) => `${sign}0.`)
+    .replace(/\.$/, '').replace(/^(-?)0+(?=\d)/, '$1');
+  if (!rawJsonIsLossless(literal)) return { status: 'invalid', reason: 'decimal-representation-loss' };
+  return parseLengthDecimal(text);
 }
 
 function plainDecimal(raw: string): string {

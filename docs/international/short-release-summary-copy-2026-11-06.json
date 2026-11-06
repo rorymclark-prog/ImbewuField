@@ -4,6 +4,18 @@
   "scope": "One shorter source-paired update summary repairs unchanged90-character phone rule. Prior descriptions and dictionary entries preserved. Exact English is displayed underneath; no dedicated draft badge, fluent certification or new runtime language.",
   "messages": [
     {
+      "key": "massRepair.release.01",
+      "feature": "massRepair",
+      "english": "Enter household or trial harvest requests in kilograms or pounds.",
+      "sha256": "d1115961371361828a3a5b33d0d66dd4da637fae71559d357d6dccc56d9a1f39",
+      "translations": {
+        "zu": "Faka izicelo zesivuno sasekhaya noma sokuhlola ngamakhilogremu noma ngamaphawundi.",
+        "st": "Kenya dikopo tsa kotulo tsa lelapa kapa tsa teko ka dikhilograma kapa diponto.",
+        "ts": "Nghenisa swikombelo swa ntshovelo swa le kaya kumbe swa ndzingelo hi tikhilogiramu kumbe tipawundi.",
+        "ve": "Dzhenisani khumbelo dza khaṋo ya muṱani kana ya ndingo nga khilogireme kana phaundi."
+      }
+    },
+    {
       "key": "drainRepair.release.01",
       "feature": "drainRepair",
       "english": "Your crop-plan handoff waits for this tab’s earlier editing access to finish.",

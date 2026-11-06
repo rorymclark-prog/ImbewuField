@@ -1,3 +1,4 @@
+import { readGrowerCycleIntent, type GrowerCyclePublicIntent } from './international/grower-cycle-intent';
 import type { GrowerJournalLink } from './field-journal';
 // Home-page task board — a small, glanceable "what's due soon" list built on
 // top of the crop plan (lib/crop-plan.ts). Deliberately generic (BoardTask
@@ -199,6 +200,8 @@ export interface BoardTask {
   /** Own cycles retain their exact one-time UTC calendar day, including its year. */
   dueDate?: string;
   growerEventKind?: GrowerCycleEventKind;
+  /** Public accepted-intent readback only; no private demand identities. */
+  growerIntent?: GrowerCyclePublicIntent;
   /** Planned linkage context only. The journal separately asks what happened
    * and on which observed day; this reference grants no record or access. */
   growerJournalLink?: GrowerJournalLink;
@@ -379,17 +382,18 @@ export function buildGrowerBoardTasks(
       projectedRows.add(cycle.rowIndex);
       const bed = context.beds.find(bed => bed.id === cycle.bedId)!;
       const bedLabel = typeof bed.label === 'string' && bed.label.trim() ? bed.label : translated('taskGrowerMeasuredBed');
+      const intent = readGrowerCycleIntent(cycle.origin);
       for (const event of cycle.plannedEvents) {
         const parts = resolveAbsoluteTaskDate(event.date);
         if (!parts) continue;
         const explanation = event.kind === 'next-entry' ? translated('taskGrowerAvailabilityBoundary')
           : event.endExclusive ? translated('taskGrowerExclusiveBoundary') : null;
         candidates.push({ rowIndex: cycle.rowIndex, plantingId: cycle.plantingId, kind: event.kind,
-          task: { kind: 'grower-cycle', growerEventKind: event.kind, dueDate: event.date,
+          task: { kind: 'grower-cycle', growerEventKind: event.kind, dueDate: event.date, growerIntent: intent,
           growerJournalLink: { version: 1, scope: cycle.scope, plantingId: cycle.plantingId,
             bedId: cycle.bedId, eventKind: event.kind, plannedDate: event.date },
           title: translated(GROWER_VERB_KEY[event.kind], { crop: produceLabel(cycle.cropKey, lang) }),
-          subtitle: [boardBedLabel(bedLabel, translated), translated('taskGrowerPlannedEstimate', { date: event.date }), explanation].filter(Boolean).join(' · '),
+          subtitle: [boardBedLabel(bedLabel, translated), translated('taskGrowerPlannedEstimate', { date: event.date }), explanation, ...intent.lines].filter(Boolean).join(' · '),
           // The dated panel uses text; crop thumbnail consumers use cropKey's artwork.
           icon: '', cropKey: cycle.cropKey, bedId: cycle.bedId, bedLabel,
           dueMonth: parts.month, monthsAway: (parts.year - now.getUTCFullYear()) * 12 + parts.month - now.getUTCMonth() - 1 } });

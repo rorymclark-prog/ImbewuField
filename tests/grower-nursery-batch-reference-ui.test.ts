@@ -24,6 +24,10 @@ Object.assign(globalThis, { __nurseryReferenceUiDownloads: deliveries, IS_REACT_
 const root = new URL('../', import.meta.url).href;
 const hooks = registerHooks({
   resolve(specifier, context, next) {
+    // This fixture exercises nursery references without a browser. The separate
+    // field worksheet has its own real composed-panel and platform coverage.
+    if (context.parentURL?.endsWith('/components/crops/GrowerNurseryReviewPanel.tsx') && specifier === './GrowerFieldSeedSourcingSection') return { shortCircuit: true,
+      url: 'data:text/javascript,' + encodeURIComponent('export default function FieldWorksheetBoundary(){return null;}') };
     if (context.parentURL?.endsWith('/components/crops/GrowerNurseryReviewPanel.tsx') && specifier === '@/lib/file-delivery') return { shortCircuit: true,
       url: 'data:text/javascript,' + encodeURIComponent('export function downloadFile(blob,filename){globalThis.__nurseryReferenceUiDownloads.push({blob,filename});return "downloaded";}') };
     return next(specifier, context);

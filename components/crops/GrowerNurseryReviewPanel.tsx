@@ -2,6 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { estimateNumberLabel as quantity } from '@/lib/format-figures';
+import GrowerCycleIntent from './GrowerCycleIntent';
+import GrowerSeedSourcingPanel from './GrowerSeedSourcingPanel';
+import GrowerFieldSeedSourcingSection from './GrowerFieldSeedSourcingSection';
+import type { SeedSourcingGroupDraft, SeedSourcingGroupPatch } from './GrowerSeedSourcingForm';
+import { parseSeedPurchaseCountInput, type SeedPurchaseCountKind } from '@/lib/seed-purchase-inputs';
+import { reviewGrowerSeedSourcing, type GrowerSeedSourcingReview } from '@/lib/international/grower-seed-sourcing';
 import type { NurserySettings } from '@/lib/nursery-settings';
 import { sanitiseNurserySettings } from '@/lib/nursery-settings';
 import type { GrowerWorkflowReview } from '@/lib/international/grower-workflow';
@@ -12,7 +18,7 @@ import { buildGrowerNurseryForecast, isGrowerNurseryForecastCurrent, nurserySett
   type GrowerNurseryRequest, type GrowerNurseryResult, type GrowerNurseryResourceWindow,
   type GrowerNurseryReservation, type GrowerNurseryBatchReferenceView } from '@/lib/international/grower-nursery';
 import type { GrowerInput } from '@/lib/international/grower-planning';
-import { buildGrowerNurseryCsv, buildGrowerNurseryPreparationCsv, buildGrowerNurseryPreparationPdf, buildGrowerNurseryBatchLabelsPdf, NurseryReferenceExportError, growerNurseryIssueText as issueText } from '@/lib/nursery-export';
+import { buildGrowerNurseryCsv, buildGrowerNurseryPreparationCsv, buildGrowerNurseryPreparationPdf, buildGrowerNurseryBatchLabelsPdf, buildGrowerSeedSourcingCsv, NurseryReferenceExportError, growerNurseryIssueText as issueText } from '@/lib/nursery-export';
 import { downloadFile } from '@/lib/file-delivery';
 import { isSampleMode } from '@/lib/sample-mode';
 import {
@@ -46,12 +52,14 @@ export interface GrowerNurseryReviewPanelProps extends NurseryReviewCommonProps 
   /** The parent rereads the source/book/actor and checks this original review. */
   onCheckCurrent: (review: Extract<GrowerWorkflowReview, { status: 'review' }>) => Promise<unknown>;
   onCheckSavedCurrent?: never;
+  onCheckSavedBindingCurrent?: never;
 }
 export interface SavedNurseryReviewPanelProps extends NurseryReviewCommonProps {
   review?: never;
   savedReview: GrowerSavedNurseryReview;
   onCheckCurrent?: never;
   onCheckSavedCurrent: (review: GrowerSavedNurseryReview) => Promise<boolean>;
+  onCheckSavedBindingCurrent?: (review: GrowerSavedNurseryReview) => boolean;
 }
 
 type SurfaceDraft = NurseryDimensionDraft<'usableM2'>;
@@ -72,6 +80,19 @@ type Controls = {
   otherUses: ResourceRow[];
   contextKey: string;
 };
+type NurseryReviewPair = { request: GrowerNurseryRequest; result: GrowerNurseryResult; key: string };
+type SeedDraft = {
+  props: GrowerNurseryReviewPanelProps | SavedNurseryReviewPanelProps;
+  key: string;
+  sample: boolean;
+  sampleMode: boolean;
+  context: ReturnType<typeof captureNurseryUnitPreferenceContext>;
+  pair: NurseryReviewPair;
+  groups: readonly SeedSourcingGroupDraft[];
+  retainForUnit: boolean;
+};
+type SeedReviewed = { draft: SeedDraft; review: GrowerSeedSourcingReview; controls: Controls; unit: NurseryUnitChoice; turn: number };
+type SeedOperation = { draft: SeedDraft; turn: number; kind: 'review' | 'export'; controls: Controls; unit: NurseryUnitChoice };
 const blank = (): Controls => ({
   settingsConfirmed: false,
   availabilityConfirmed: false,
@@ -112,11 +133,17 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
   const [draftControls, setControls] = useState(blank);
   const [unit, setUnit] = useState<NurseryUnitChoice>('metric');
   const [unitNote, setUnitNote] = useState('');
-  const [current, setCurrent] = useState<{ request: GrowerNurseryRequest; result: GrowerNurseryResult; key: string } | null>(null);
+  const [current, setCurrent] = useState<NurseryReviewPair | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
   const generation = useRef(0), nextRow = useRef(0), active = useRef(true);
   const prefContext = useRef<ReturnType<typeof captureNurseryUnitPreferenceContext>>(null);
+  const [seedDraft, setSeedDraft] = useState<SeedDraft | null>(null);
+  const [seedReviewed, setSeedReviewed] = useState<SeedReviewed | null>(null);
+  const [seedMessage, setSeedMessage] = useState('');
+  const [, seedRender] = useState(0);
+  const seedDraftRef = useRef<SeedDraft | null>(null), seedReviewedRef = useRef<SeedReviewed | null>(null);
+  const seedOperation = useRef<SeedOperation | null>(null), nextSeedGroup = useRef(0);
   const settings = props.settings ?? sanitiseNurserySettings(undefined);
   const viewSettings = sanitiseNurserySettings(settings);
   const settingsFingerprint = nurserySettingsFingerprint(settings);
@@ -143,8 +170,8 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
   };
 
   const handleExternalUnitRef = useRef<(u: NurseryUnitChoice) => void>(() => {});
-  const live = useRef({ props, key, sample, controls, unit });
-  live.current = { props, key, sample, controls, unit };
+  const live = useRef({ props, key, sample, controls, unit, current });
+  live.current = { props, key, sample, controls, unit, current };
 
   const [prefEpoch, setPrefEpoch] = useState(0);
 
@@ -158,6 +185,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
     const stopContext = subscribeNurseryUnitPreferenceContext(ctx, () => {
       // Actor or sample lease transition: trigger fresh effect cycle with clean reset
       generation.current++;
+      resetSeed();
       setCurrent(null);
       setMessage('');
       setUnitNote('');
@@ -182,12 +210,15 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
 
   useEffect(() => {
     generation.current++;
+    resetSeed();
     setCurrent(null);
     setMessage('');
     setBusy(false);
   }, [key]);
 
-  useEffect(() => { active.current = true; return () => { active.current = false; generation.current++; }; }, []);
+  useEffect(() => { active.current = true; return () => {
+    active.current = false; generation.current++; seedDraftRef.current = null; seedReviewedRef.current = null; seedOperation.current = null;
+  }; }, []);
 
   const resources = [
     ...viewSettings.containers.filter(row => row.siteId === props.source.resourceSiteId).map(row => ({
@@ -217,9 +248,142 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
     ? await props.onCheckSavedCurrent(props.savedReview) : await props.onCheckCurrent(props.review)) === true;
   const renderedInputsCurrent = () => active.current && live.current.props === props && live.current.key === key && live.current.controls === controls;
 
-  function change(next: Controls) {
+  function resetSeed(clearDraft = true) {
+    seedReviewedRef.current = null; seedOperation.current = null; setSeedReviewed(null); setSeedMessage('');
+    if (clearDraft) { seedDraftRef.current = null; setSeedDraft(null); }
+    seedRender(value => value + 1);
+  }
+  function seedSourceCurrent(draft: SeedDraft): boolean {
+    return active.current && live.current.props === draft.props && live.current.key === draft.key
+      && live.current.sample === draft.sample && isSampleMode() === draft.sampleMode && !!draft.props.savedReview
+      && prefContext.current === draft.context && nurseryUnitPreferenceContextIsCurrent(draft.context)
+      && (live.current.current === draft.pair || draft.retainForUnit && live.current.current === null);
+  }
+  function originalReviewTime(pair: NurseryReviewPair): string {
+    return pair.request.settingsReview.state === 'provided' ? pair.request.settingsReview.provenance.recordedAt
+      : pair.request.horizon.state === 'provided' ? pair.request.horizon.provenance.recordedAt : '';
+  }
+  function seedInputsCurrent(draft: SeedDraft): boolean {
+    return seedSourceCurrent(draft) && live.current.current === draft.pair
+      && isGrowerNurseryForecastCurrent(draft.pair.result, makeRequest(originalReviewTime(draft.pair)));
+  }
+  function seedProofCurrent(proof: SeedReviewed): boolean {
+    return seedReviewedRef.current === proof && seedDraftRef.current === proof.draft && generation.current === proof.turn
+      && live.current.controls === proof.controls && live.current.unit === proof.unit && seedInputsCurrent(proof.draft);
+  }
+  // Retiring refs during render blocks retained callbacks immediately. An effect
+  // alone would leave the previous account/source proof callable until commit.
+  if (seedDraftRef.current && !seedSourceCurrent(seedDraftRef.current)) {
+    seedDraftRef.current = null; seedReviewedRef.current = null; seedOperation.current = null;
+  }
+  if (seedReviewedRef.current && !seedProofCurrent(seedReviewedRef.current)) seedReviewedRef.current = null;
+  if (seedOperation.current && (generation.current !== seedOperation.current.turn
+    || seedDraftRef.current !== seedOperation.current.draft || live.current.controls !== seedOperation.current.controls
+    || live.current.unit !== seedOperation.current.unit || !seedInputsCurrent(seedOperation.current.draft))) seedOperation.current = null;
+  const shownSeedDraft = seedDraftRef.current === seedDraft ? seedDraft : null;
+  const shownSeedReview = seedReviewedRef.current === seedReviewed ? seedReviewed : null;
+  const seedPending = seedOperation.current;
+  const savedSeedSource = !!props.savedReview && !!shown && shown.result.sourceStatus === 'saved-planned';
+
+  function seedEditorCurrent(): boolean {
+    return renderedInputsCurrent() && savedSeedSource && live.current.current === shown && !busy && !seedOperation.current
+      && seedDraftRef.current === shownSeedDraft && !!prefContext.current && nurseryUnitPreferenceContextIsCurrent(prefContext.current)
+      && (!shownSeedDraft || seedSourceCurrent(shownSeedDraft));
+  }
+  function editSeedGroups(groups: readonly SeedSourcingGroupDraft[]) {
+    if (!seedEditorCurrent() || !shown) return;
+    generation.current++; resetSeed(false);
+    const next: SeedDraft = { props, key, sample, sampleMode: isSampleMode(), context: prefContext.current, pair: shown, groups, retainForUnit: false };
+    seedDraftRef.current = next; setSeedDraft(next);
+  }
+  function addSeedGroup() {
+    if (!seedEditorCurrent() || !shown?.result.batches.length) return;
+    editSeedGroups([...(shownSeedDraft?.groups ?? []), { id: `seed-supply-${++nextSeedGroup.current}`, label: '', batchIds: [],
+      interchangeabilityConfirmed: false, allocatedToPlanSeedsText: '', seedsPerPackText: '' }]);
+  }
+  function changeSeedGroup(id: string, patch: SeedSourcingGroupPatch) {
+    if (!seedEditorCurrent() || !shownSeedDraft || !shownSeedDraft.groups.some(group => group.id === id)) return;
+    editSeedGroups(shownSeedDraft.groups.map(group => group.id === id ? { ...group, ...patch } : group));
+  }
+  function removeSeedGroup(id: string) {
+    if (!seedEditorCurrent() || !shownSeedDraft || !shownSeedDraft.groups.some(group => group.id === id)) return;
+    editSeedGroups(shownSeedDraft.groups.filter(group => group.id !== id));
+  }
+  function seedGroups(draft: SeedDraft) {
+    const count = (raw: unknown, kind: SeedPurchaseCountKind) => {
+      const parsed = parseSeedPurchaseCountInput(raw, kind);
+      // Invalid authored input must reach numeric validation as invalid, never
+      // become unknown or a rounded safe-looking number.
+      return parsed.status === 'invalid' ? typeof raw === 'string' ? raw : false : parsed.value;
+    };
+    return draft.groups.map(group => ({ id: group.id, label: group.label, batchIds: group.batchIds,
+      interchangeabilityConfirmed: group.interchangeabilityConfirmed,
+      allocatedToPlanSeeds: count(group.allocatedToPlanSeedsText, 'allocation'), seedsPerPack: count(group.seedsPerPackText, 'pack') }));
+  }
+  function seedOperationCurrent(operation: SeedOperation): boolean {
+    return seedOperation.current === operation && generation.current === operation.turn && seedDraftRef.current === operation.draft
+      && live.current.controls === operation.controls && live.current.unit === operation.unit && seedInputsCurrent(operation.draft);
+  }
+  async function reviewSeed() {
+    if (!seedEditorCurrent() || !shownSeedDraft?.groups.length || !shown?.result.batches.length || !seedInputsCurrent(shownSeedDraft)) return;
+    const operation: SeedOperation = { draft: shownSeedDraft, turn: ++generation.current, kind: 'review', controls, unit };
+    seedOperation.current = operation; seedReviewedRef.current = null; setSeedReviewed(null); setSeedMessage(''); seedRender(value => value + 1);
+    try {
+      if (!await checkCurrent()) throw Error('stale');
+      if (!seedOperationCurrent(operation)) return;
+      const request = makeRequest(originalReviewTime(operation.draft.pair));
+      const projection = reviewGrowerSeedSourcing({ result: operation.draft.pair.result, currentRequest: request, groups: seedGroups(operation.draft) });
+      if (!seedOperationCurrent(operation)) return;
+      if (projection.status === 'unavailable') throw Error('stale');
+      if (!await checkCurrent()) throw Error('stale');
+      if (!seedOperationCurrent(operation)) return;
+      const next: SeedReviewed = { draft: operation.draft, review: projection, controls, unit, turn: operation.turn };
+      seedReviewedRef.current = next; setSeedReviewed(next);
+    } catch {
+      if (seedOperation.current === operation) {
+        seedReviewedRef.current = null; setSeedReviewed(null);
+        setSeedMessage('The current saved nursery context could not be confirmed. No seed worksheet is available; check the saved nursery review again.');
+      }
+    } finally {
+      if (seedOperation.current === operation) { seedOperation.current = null; seedRender(value => value + 1); }
+    }
+  }
+  async function exportSeed() {
+    if (!renderedInputsCurrent() || busy || seedOperation.current || !shownSeedReview || !seedProofCurrent(shownSeedReview)) return;
+    const proof = shownSeedReview, operation: SeedOperation = { draft: proof.draft, turn: ++generation.current, kind: 'export', controls, unit };
+    const renewed = { ...proof, turn: operation.turn };
+    seedReviewedRef.current = renewed; seedOperation.current = operation; setSeedReviewed(renewed); setSeedMessage(''); seedRender(value => value + 1);
+    try {
+      if (!await checkCurrent()) throw Error('stale');
+      if (!seedOperationCurrent(operation)) return;
+      const request = makeRequest(originalReviewTime(operation.draft.pair));
+      const csv = buildGrowerSeedSourcingCsv(operation.draft.pair.result, request, seedGroups(operation.draft), { sample });
+      if (!seedOperationCurrent(operation)) return;
+      // Even a synchronous formatter can invoke a test/browser callback. A file
+      // must not escape on a stale source merely because it required no await.
+      if (!await checkCurrent()) throw Error('stale');
+      if (!seedOperationCurrent(operation)) return;
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      if (!seedOperationCurrent(operation)) return;
+      downloadFile(blob, `ImbewuField${sample ? '-demo' : ''}-planned-seed-sourcing.csv`);
+      if (seedOperationCurrent(operation)) setSeedMessage('Seed sourcing worksheet downloaded. Planning inputs are not saved; no stock was recorded or order placed.');
+    } catch {
+      if (seedOperation.current === operation) {
+        seedReviewedRef.current = null; setSeedReviewed(null);
+        setSeedMessage('The current saved nursery context could not be confirmed. No file was delivered; check the saved nursery review again.');
+      }
+    } finally {
+      if (seedOperation.current === operation) { seedOperation.current = null; seedRender(value => value + 1); }
+    }
+  }
+
+  function change(next: Controls, preserveSeedForUnit = false) {
     if (!renderedInputsCurrent()) return;
     generation.current++;
+    if (preserveSeedForUnit && seedDraftRef.current) {
+      const retained = { ...seedDraftRef.current, retainForUnit: true };
+      seedDraftRef.current = retained; setSeedDraft(retained); resetSeed(false);
+    } else resetSeed();
     const updated = { ...next, contextKey: key };
     live.current = { ...live.current, controls: updated };
     setControls(updated);
@@ -276,7 +440,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       ...live.current.controls,
       availability: outcome.availability,
       otherUses: outcome.otherUses,
-    });
+    }, true);
   }
 
   handleExternalUnitRef.current = handleExternalUnit;
@@ -314,7 +478,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       ...live.current.controls,
       availability: outcome.availability,
       otherUses: outcome.otherUses,
-    });
+    }, true);
   }
 
   function add(kind: 'availability' | 'otherUses') {
@@ -411,6 +575,8 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
 
   async function review() {
     if (!renderedInputsCurrent()) return;
+    const retainedSeed = seedDraftRef.current?.retainForUnit ? seedDraftRef.current : null;
+    resetSeed(!retainedSeed);
     const turn = ++generation.current, snapshotKey = key, snapshotSample = isSampleMode();
     setBusy(true); setCurrent(null); setMessage('');
     try {
@@ -418,7 +584,19 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       if (generation.current !== turn || live.current.key !== snapshotKey || isSampleMode() !== snapshotSample) return;
       const request = makeRequest(new Date().toISOString());
       const result = buildGrowerNurseryForecast(request);
-      setCurrent({ request, result, key: snapshotKey });
+      const pair = { request, result, key: snapshotKey };
+      // A unit-only paint change may retain authored seed strings, but only the
+      // canonical replay can establish that the actual nursery request stayed
+      // equal. Retention never carries the earlier reviewed-count proof.
+      if (retainedSeed && seedDraftRef.current === retainedSeed && seedSourceCurrent(retainedSeed)
+        && isGrowerNurseryForecastCurrent(retainedSeed.pair.result, makeRequest(originalReviewTime(retainedSeed.pair)))) {
+        // Keep the unit-retention allowance while the separate state updates
+        // commit. A transient null current pair cannot erase these raw strings.
+        // Every later renewal still requires the same canonical request replay.
+        const next = { ...retainedSeed, pair, retainForUnit: true };
+        seedDraftRef.current = next; setSeedDraft(next);
+      } else resetSeed();
+      setCurrent(pair);
     } catch {
       if (generation.current === turn) setMessage('The crop plan or saved inputs could not be confirmed. Review the current crop proposal before continuing.');
     } finally {
@@ -579,6 +757,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
         return <article key={batch.id} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
           <h6 className="font-semibold">{props.savedReview ? 'Saved planned' : 'Proposed'} raising batch {index + 1} · {batch.cropName}</h6>
           <p>{batch.bedIds.map(id => props.source.beds.find(bed => bed.id === id)?.label ?? 'Growing space').join(', ')}. {batch.startDate} to before {batch.endDateExclusive} (UTC).</p>
+          {props.savedReview && <GrowerCycleIntent view={batch.origin?.status === 'proposed' ? undefined : batch.origin} />}
           {props.savedReview && referenceDetails(batch.reference)}
           <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">{Object.entries({
             'Target final plants': batch.targetPositions,
@@ -606,7 +785,21 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       })}
       {shown.result.issues.length > 0 && <ul>{shown.result.issues.map((issue, i) => <li key={i}>{issueText(issue)}</li>)}</ul>}
       <p>These are raising estimates, not observed stock or local crop instructions. Unknown requirements are not zero. Surface totals do not prove tray packing, paths, hardening or up-pot space.</p>
+      {savedSeedSource && <section aria-label="Planned seed sourcing" className="min-w-0 space-y-3 border-t border-[var(--border)] pt-3">
+        <p>Seed sourcing inputs are temporary and are not saved. {sample ? 'DEMO — example planned seed requirements.' : 'Use only your current saved planned nursery batches.'}</p>
+        <GrowerSeedSourcingPanel batches={shown.result.batches.map((batch, index) => ({ id: batch.id,
+          label: `Saved planned batch ${index + 1} · ${batch.cropName} · ${batch.startDate} to before ${batch.endDateExclusive} (UTC)` }))}
+          groups={shownSeedDraft?.groups ?? []} review={shownSeedReview?.review ?? null} disabled={busy || seedPending?.kind === 'export'}
+          reviewing={seedPending?.kind === 'review'} onAddGroup={addSeedGroup} onRemoveGroup={removeSeedGroup}
+          onChangeGroup={changeSeedGroup} onReview={() => void reviewSeed()} />
+        <button type="button" className={button} disabled={busy || !!seedPending || !shownSeedReview}
+          onClick={() => void exportSeed()}>Download seed sourcing worksheet CSV</button>
+        <p className="text-xs text-[var(--text-secondary)]">The CSV includes your entered supply-group labels. Leave out information you do not want in the file.</p>
+        <p role="status" aria-live="polite">{seedMessage}</p>
+      </section>}
       <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview()}>Download reviewed nursery CSV</button>
     </section>}
+    {props.savedReview && typeof props.onCheckSavedBindingCurrent === 'function' && <GrowerFieldSeedSourcingSection savedReview={props.savedReview} contextRevision={props.contextRevision}
+      sample={props.sample} onCheckSavedCurrent={props.onCheckSavedCurrent} onCheckSavedBindingCurrent={props.onCheckSavedBindingCurrent} />}
   </section>;
 }

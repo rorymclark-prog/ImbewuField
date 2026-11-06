@@ -23,6 +23,7 @@ export interface SavedGrowerNurseryReviewPanelProps {
   sample?: boolean;
   onRefresh: (acknowledgement?: GrowerNurseryReferenceAcknowledgement) => Promise<GrowerSavedNurseryReadResult>;
   onCheckCurrent: (view: GrowerSavedNurseryReview) => Promise<boolean>;
+  onCheckBindingCurrent?: (view: GrowerSavedNurseryReview) => boolean;
   onSaveReferences: (view: GrowerSavedNurseryReview, changes: readonly GrowerNurseryBatchReferenceChange[], displayedIsCurrent: () => boolean) => Promise<GrowerNurseryBatchReferenceSaveResult>;
   onRecordSowing?: (view: GrowerSavedNurseryReview, plantingId: string, input: GrowerNurserySowingInput, displayedIsCurrent: () => boolean) => Promise<GrowerFieldObservationResult>;
   onRecordProgress?: (view: GrowerSavedNurseryReview, plantingId: string, input: GrowerNurseryProgressInput, displayedIsCurrent: () => boolean) => Promise<GrowerFieldObservationResult>;
@@ -240,7 +241,7 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
   const canReviewBudget = props.review && props.review !== blockedBudgetView && !dirty && !busy && !checkedWrite && !refreshAfterWrite.current;
   return <section lang="en" aria-label="Saved planned nursery batches" className="min-w-0 space-y-3 rounded-xl border border-[var(--border)] p-3 text-sm [overflow-wrap:anywhere]">
     <h4 className="font-semibold">Saved planned nursery batches</h4>
-    <p>Check saved batches, enter your own optional references for individual batches, then review nursery resources. References do not record actual sowing, available seeds or live nursery stock.</p>
+    <p>Check the saved plan to review nursery batches or open the separate field seed worksheet for accepted cycles without nursery raising. Field seed sourcing does not require a nursery batch, nursery equipment or a nursery review horizon. References do not record actual sowing, available seeds or live nursery stock.</p>
     {props.sample && <p className="font-semibold">DEMO — references stay in this sample session.</p>}
     <button type="button" className={button} disabled={props.checking || pending.current && phase !== 'verifying'} onClick={() => void refresh()}>
       {phase === 'checking' || props.checking ? 'Checking saved nursery batches…' : 'Check saved nursery batches'}
@@ -293,6 +294,7 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
     </>}
     <p role="status" aria-live="polite">{message}</p>
     {canReviewBudget && <GrowerNurseryReviewPanel savedReview={props.review!} source={props.review!.source} settings={props.settings}
-      contextRevision={props.contextRevision} sample={props.sample} onCheckSavedCurrent={props.onCheckCurrent} />}
+      contextRevision={props.contextRevision} sample={props.sample} onCheckSavedCurrent={props.onCheckCurrent}
+      onCheckSavedBindingCurrent={props.onCheckBindingCurrent} />}
   </section>;
 }

@@ -1,0 +1,32 @@
+{
+  "locale": "st",
+  "sourceSha256": "5fab1a69264dea58dbd228513d647997c9f72e48383a894698c519d427c15ed9",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "countryEvidenceNavigation.release.01",
+      "english": "Open evidence tools for your saved country.",
+      "sha256": "504b1da5a80aef4ba1357c1c0f4e98da086ecaeefd9169f95cbf9437eb566edf",
+      "translation": "Bula disebediswa tsa bopaki bakeng sa naha eo o e bolokileng."
+    },
+    {
+      "key": "countryEvidenceNavigation.release.02",
+      "english": "Review your saved country’s evidence",
+      "sha256": "89d439b1bb2320dbdc0adbf8715f2a4ff64a525b726ca0170de56f6dd5241f0e",
+      "translation": "Hlahloba bopaki ba naha eo o e bolokileng"
+    },
+    {
+      "key": "countryEvidenceNavigation.release.03",
+      "english": "Crop planner → Site country and region → Review country evidence",
+      "sha256": "f08fd32862cf3bc4c71de81435f9e4f5823b5204e9c6cdded3370209a730e663",
+      "translation": "Mohlophisi wa dijalo → Naha le lebatowa la sebaka → Hlahloba bopaki ba naha"
+    },
+    {
+      "key": "countryEvidenceNavigation.release.04",
+      "english": "Use the country you saved for this site to open its existing evidence dossier. Countries without a dossier show general reference tools. Opening the link does not save country details, approve an agricultural region or enable local crop advice.",
+      "sha256": "051ff4a5deaff732122f6658a220529031507eff363cdc61fe8e73bcbe6e9537",
+      "translation": "Sebedisa naha eo o e bolokileng bakeng sa sebaka sena ho bula faele ya yona ya bopaki e seng e le teng. Dinaha tse se nang faele ya bopaki di bontsha disebediswa tse akaretsang tsa ho batla tlhahisoleseding. Ho bula sehokelo ha ho boloke dintlha tsa naha, ha ho amohele lebatowa la temo ebile ha ho bulele dikeletso tsa dijalo tsa sebaka seo."
+    }
+  ]
+}

@@ -14,6 +14,9 @@ const url = (source: string) => 'data:text/javascript,' + encodeURIComponent(sou
 const hooks = registerHooks({
   resolve(specifier, context, nextResolve) {
     if (context.parentURL?.endsWith('/components/international/countries/SiteCountryPanel.tsx')) {
+      // Save acknowledgement has no browser/RPC fixture. The separate real
+      // saved-point consumer tests exercise this new weather child directly.
+      if (specifier === './SavedSiteNwsReference') return { shortCircuit: true, url: url('export default function WeatherBoundary() { return null; }') };
       if (specifier === '@/lib/saved-places') return { shortCircuit: true, url: url(`export function updateSiteCountryContext(siteId, value, callback) {
         const probe = globalThis.__countrySaveFeedbackProbe; probe.saves++; probe.callback = callback;
         return { status: 'local-saved', places: [] };

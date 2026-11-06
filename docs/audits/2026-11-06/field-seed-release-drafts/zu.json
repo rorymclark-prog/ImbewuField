@@ -1,0 +1,32 @@
+{
+  "locale": "zu",
+  "sourceSha256": "8817508559d63382532277326313235c6fa1e1d1dbacd8a02e126b1cd53f0052",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "fieldSeedSourcing.release.01",
+      "english": "Plan seed sourcing for field cycles without nursery raising.",
+      "sha256": "2bd6dd57fdc815a53d9f32a3be1c1bfba93eb5067b2065b307863335bc624ebe",
+      "translation": "Hlela ukutholakala kwembewu yemijikelezo yensimu engenaso isigaba senkulisa."
+    },
+    {
+      "key": "fieldSeedSourcing.release.02",
+      "english": "Review field seed requirements",
+      "sha256": "d8139c3c48b421330c9ae079177bb082236d5382d7703e8d2b4b0e24f03913ec",
+      "translation": "Buyekeza izidingo zembewu yensimu"
+    },
+    {
+      "key": "fieldSeedSourcing.release.03",
+      "english": "Crop planner → Saved planned nursery batches → Field seed sourcing",
+      "sha256": "546c0876e484d91d4e4e91fe86554ef152b3e12632268d7e47c463c86108468b",
+      "translation": "Umhleli wezitshalo → Amaqoqo enkulisa ahleliwe alondoloziwe → Ukutholakala kwembewu yensimu"
+    },
+    {
+      "key": "fieldSeedSourcing.release.04",
+      "english": "Open the separate field worksheet for accepted cycles without a nursery phase. Declare botanical seeds, confirm your gross whole-seed requirement, group cycles that can share a supply, and enter your allocation and pack size. Blank counts stay unknown. This temporary worksheet does not record stock, place orders or save the plan.",
+      "sha256": "2044c0187c7ac25ffaf62cb6a3c2908a4d5af8605b314df8665d8634168f31c0",
+      "translation": "Vula iphepha lokusebenzela lensimu elihlukile lemijikelezo eyamukelwe engenaso isigaba senkulisa. Memezela imbewu yezitshalo, qinisekisa isidingo sakho sesiyonke sembewu ephelele, qoqa imijikelezo engabelana ngesiphakelo, bese ufaka isabelo sakho nosayizi wephakethe. Izibalo ezingenalutho zihlala zingaziwa. Leli phepha lokusebenzela lesikhashana alirekhodi isitoko, alibeki ama-oda noma lilondoloze uhlelo."
+    }
+  ]
+}

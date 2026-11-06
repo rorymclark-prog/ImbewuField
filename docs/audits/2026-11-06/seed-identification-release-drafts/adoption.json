@@ -1,0 +1,14 @@
+{
+  "sourceSha256": "fe826da1f3c03aa48d47074726ce3e0e45a7e6bcd084c7549b75309796846681",
+  "provenance": "AGY AI draft captions; coordinator source/key/English/hash/order/CSV/arrow checks and identified drafting corrections, not fluent or human certification.",
+  "pairs": 16,
+  "damagedControlsPerLocale": 17,
+  "notesWords": 135,
+  "originalNativeNotesWords": 222,
+  "notesProvenance": "Coordinator condensed after actual six-output handoff; packets/source unchanged.",
+  "use": "Existing-language update captions with exact English retained; no new app language or approved translation claim.",
+  "scope": "Public canonical crop names and explicit entered labels identify seed worksheets; no seed identity/interchangeability/observed-stock verification.",
+  "sourceChecks": "Source74ab71b9b type0/272businesspass/whitespace0; firstactual16newcases14pass2sourcefailures preserved, same-owner corrections.",
+  "releaseGates": "Actual final Node24type0/295affectedpass0fail0skip0TODO/whitespace0/releasecoverage0; independent bounded source review noadditionalfinding. FullcurrentCI/actualdesktopphone/canonicalreload-export before release.",
+  "sourceFileReconciliation": "Frozen4English unchanged; release metadata stamps sourcecommit74ab71b9b, original sourcefilecapture remains historical."
+}

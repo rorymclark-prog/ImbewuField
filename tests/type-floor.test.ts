@@ -114,11 +114,16 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/crops/TreeAgeEditor.tsx': 'growers record their own tree ages; zero-debt 12px floor',
   'components/international/countries/PlannerSupportHold.tsx': 'growers must read why local advice is held; zero-debt 12px floor',
   'components/international/countries/SiteCountryPanel.tsx': 'growers confirm their own country details; zero-debt 12px floor',
+  'components/international/countries/SavedSiteNwsReference.tsx': 'growers read saved-point weather values and reference limitations on phones; zero-debt 12px floor',
   'components/international/countries/SavedSiteUpdates.tsx': 'farmers read account delivery and offline status before trusting saved country details; zero-debt 12px floor',
   'components/international/countries/WorkspaceReferencePanel.tsx': 'farmers must read and explicitly confirm a workspace reference basis; zero-debt 12px floor',
   'components/crops/GrowerPlanningPanel.tsx': 'growers enter their own density, yield and date assumptions; no small-print exemption',
   'components/crops/GrowerAutoPlanPanel.tsx': 'growers review buyer priorities and dated whole-bed proposals before acting; no small-print exemption',
   'components/crops/GrowerNurseryReviewPanel.tsx': 'growers review seed, tray and surface requirements and incomplete budgets; no small-print exemption',
+  'components/crops/GrowerFieldSeedSourcingSection.tsx': 'growers enter gross field seed counts and review held requirements on phones; zero-debt 12px floor',
+  'components/crops/GrowerSeedSourcingForm.tsx': 'growers enter supply groups, seed allocations and pack counts on phones; zero-debt 12px floor',
+  'components/crops/GrowerSeedSourcingPanel.tsx': 'growers operate their seed sourcing review controls on phones; zero-debt 12px floor',
+  'components/crops/GrowerSeedSourcingSummary.tsx': 'growers read seed requirements, purchase estimates and held notices on phones; zero-debt 12px floor',
   // Direct nursery observation and saved batch review components must remain legible outdoors on phones.
   // Growers enter actual sowings, counts and field plantings, and read historical snapshots and held notices; zero-debt 12px floor.
   'components/crops/NurseryFieldPlantingObservationForm.tsx': 'growers enter observed field plantings and read held evidence on phones; zero-debt 12px floor',

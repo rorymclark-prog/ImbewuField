@@ -1,0 +1,32 @@
+{
+  "locale": "st",
+  "sourceSha256": "fe826da1f3c03aa48d47074726ce3e0e45a7e6bcd084c7549b75309796846681",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "seedWorksheetIdentification.release.01",
+      "english": "Show crop names and your labels in seed worksheets.",
+      "sha256": "c2849d67135e110f621526eac13ad1937be55b2e757a51c9df309af0195b3867",
+      "translation": "Bontsha mabitso a dijalo le mangolo a hao a tsebiso dipampiring tsa tshebetso tsa dipeo."
+    },
+    {
+      "key": "seedWorksheetIdentification.release.02",
+      "english": "Identify planned seed supply groups",
+      "sha256": "f13c8e5d432e38f0b84f0ff7a881d9fb265c9153c7939ae099d45ae7c9dd6da2",
+      "translation": "Hwaya dihlopha tsa phumantsho ya dipeo tse rerilweng"
+    },
+    {
+      "key": "seedWorksheetIdentification.release.03",
+      "english": "Crop planner → Saved planned nursery batches → Seed sourcing review",
+      "sha256": "3b9d89aa64064299d9385ee5f996ecb3cf656b75c14bf4ea300f1f94fcf4c651",
+      "translation": "Moradi wa dijalo → Dihlopha tsa bodirelo ba ho hodisa dimela tse rerilweng tse bolokilweng → Tlhahlobo ya phumantsho ya dipeo"
+    },
+    {
+      "key": "seedWorksheetIdentification.release.04",
+      "english": "Add your own supply-group label and review crop names from the saved nursery batches you selected. The CSV worksheet includes your entered labels. Missing identification stays visible, and crop names do not confirm interchangeable varieties, seed lots or observed stock.",
+      "sha256": "f6ae798d1394d446faab3640d604bdb2fb2716290ddb09fa04a847699fa049bb",
+      "translation": "Kenya lengolo la hao la sehlopha sa phumantsho mme o hlahlobe mabitso a dijalo ho tswa dihlopheng tsa bodirelo ba ho hodisa dimela tse bolokilweng tseo o di kgethileng. Pampiri ya tshebetso ya CSV e kenyeletsa mangolo ao o a kentseng. Tlhahisoleseding ya boitsebiso e siyo e dula e bonahala, mme mabitso a dijalo ha a tiise mefuta e fapaneng e ka arolelanang, dihlopha tsa peo kapa setoko se bonweng ka mahlo."
+    }
+  ]
+}

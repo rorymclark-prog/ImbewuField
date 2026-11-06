@@ -6,6 +6,24 @@ const nextConfig = {
   // which Vercel rejects (> 250 MB). Nothing in public/ is needed at runtime — Vercel serves it
   // statically — so leave it out of those functions.
   experimental: {
+    // The deployed worksheet reads these named files at runtime. Its first
+    // preview had valid repository packets but none in the serverless trace.
+    outputFileTracingIncludes: {
+      '/international/locales/mass-entry': [
+        './lib/international/locales/mass-entry-drafts/source.json',
+        './lib/international/locales/mass-entry-drafts/fr.json',
+        './lib/international/locales/mass-entry-drafts/es.json',
+        './lib/international/locales/mass-entry-drafts/pt-BR.json',
+        './lib/international/locales/mass-entry-drafts/sw.json',
+        './lib/international/locales/mass-entry-drafts/hi.json',
+        './lib/international/locales/mass-entry-drafts/bn.json',
+        './lib/international/locales/mass-entry-drafts/id.json',
+        './components/crops/GrowerEnteredMassField.ts',
+        './components/crops/GrowerCycleIntent.ts',
+        './lib/international/grower-cycle-intent.ts',
+        './lib/release-notes.ts',
+      ],
+    },
     outputFileTracingExcludes: {
       '/manual/**/*': ['./public/**/*'],
     },

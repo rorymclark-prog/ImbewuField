@@ -1,15 +1,22 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
+import { registerHooks } from 'node:module';
+import React from 'react';
+import { act, create, type ReactTestRenderer } from 'react-test-renderer';
+import ts from 'typescript';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
 import { loadCropPlan, saveCropPlanWithReceipt, loadCropPlanWithWriteAdmission, cropPlanWriteAdmissionMatches,
   type CropPlanState } from '../lib/crop-plan.ts';
 import { bindMountedAccountLocalStorageUid } from '../lib/account-local-storage.ts';
-import { initialiseCropPlanFixture, releaseCropPlanFixture } from './crop-plan-storage-fixture.ts';
+import { initialiseCropPlanFixture, releaseCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import type { NurserySettings } from '../lib/nursery-settings.ts';
 import { generateGrowerAutoPlan, type GrowerAutoPlanRequest } from '../lib/international/grower-autoplan.ts';
 import { createGrowerCyclePlanting, type GrowerCycleContext } from '../lib/international/grower-cycle.ts';
 import type { GrowerInput, GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
+import { growerPlanningScopeKey } from '../lib/international/grower-planning.ts';
+import { projectGrowerCycles } from '../lib/international/grower-cycle-projection.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import { buildGrowerNurseryForecast, nurserySettingsFingerprint, projectGrowerNurseryPreparation, isGrowerNurseryForecastCurrent,
   inspectGrowerNurseryBatchReference, resolveGrowerNurseryBatchReference, prepareGrowerNurseryBatchReferenceChanges,
@@ -324,5 +331,145 @@ test('canonical crop-book save and reload preserve row references and unrelated 
   } finally {
     releaseCropPlanFixture(); await Promise.resolve(); bindMountedAccountLocalStorageUid(null);
     if (descriptor) Object.defineProperty(globalThis, 'window', descriptor); else Reflect.deleteProperty(globalThis, 'window');
+  }
+});
+
+test('the real saved-source hook admits field-only accepted cycles without equipment or nursery evidence and retires their original private binding', async () => {
+  const f = await fixture(true), bookApi = await import('../lib/crop-plan.ts');
+  const account = await import('../lib/account-local-storage.ts'), samples = await import('../lib/sample-mode.ts');
+  const previousOwner = account.activeAccountUid();
+  const originals = new Map(['window', 'IS_REACT_ACT_ENVIRONMENT', '__fieldOnlySavedSourceBoundary']
+    .map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  const values = new Map<string, string>(); let writes = 0;
+  const local = {
+    get length() { return values.size; }, key: (index: number) => [...values.keys()][index] ?? null,
+    getItem: (key: string) => values.get(key) ?? null,
+    setItem(key: string, value: string) { writes++; values.set(key, value); },
+    removeItem(key: string) { writes++; values.delete(key); },
+  };
+  const win = Object.assign(new EventTarget(), { localStorage: local, sessionStorage: { getItem: () => null } });
+  const canvas = buildDemoDesignCanvasState();
+  canvas.siteId = f.source.resourceSiteId; canvas.frame.centerLat = 0; canvas.frame.centerLng = 0;
+  const template = canvas.items.find(item => item.defId === 'veg_bed')!;
+  canvas.items = [0.3, 0.7].map((x, index) => ({ ...template, id: `reference-bed-${index}`, x, y: 0.5, wM: 3, hM: 4 }));
+  canvas.lines = []; canvas.zones = [];
+  const boundary = { raw: canvas, sourceReads: 0 };
+  const initialSource = structuredClone(canvas), owner = 'field-only-source-owner';
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: win });
+  Object.defineProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT', { configurable: true, value: true });
+  Object.defineProperty(globalThis, '__fieldOnlySavedSourceBoundary', { configurable: true, value: boundary });
+  bindMountedAccountLocalStorageUid(owner);
+  // Only the browser geometry transport is substituted. Production fingerprinting,
+  // raw-book admission and the hook's private saved-view WeakMap execute below.
+  const hooks = registerHooks({ resolve(specifier, context, next) {
+    if (context.parentURL?.endsWith('/components/crops/useGrowerWorkflow.ts')) {
+      if (specifier === '@/lib/design-canvas' || specifier === '@/lib/facilitator-design') return { shortCircuit: true,
+        url: 'data:text/javascript,' + encodeURIComponent(`
+          const read=()=>{const b=globalThis.__fieldOnlySavedSourceBoundary;b.sourceReads++;
+            return {status:'ready',raw:structuredClone(b.raw),revision:JSON.stringify(b.raw),ownerUid:${JSON.stringify(owner)},sample:false};};
+          export const readCanvasSourceReceipt=read;export const readFacilitatorSourceReceipt=read;
+          export const DESIGN_CANVAS_CHANGED_EVENT='imbewu-design-canvas-changed';`) };
+      if (specifier === '@/lib/db/queries') return { shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(
+        'export async function myDesigns(){throw Error("The field-only fixture must use its selected local geometry source");}') };
+    }
+    return next(specifier, context);
+  } });
+  let renderer: ReactTestRenderer | undefined;
+  try {
+    await initialiseCropPlanFixture();
+    const { nursery: _equipment, ...fieldBook } = f.book;
+    assert.equal(Object.hasOwn(fieldBook, 'nursery'), false);
+    assert.equal(saveCropPlanWithReceipt(fieldBook).saved, true);
+    const admitted = loadCropPlanWithWriteAdmission();
+    assert.ok(admitted.token);
+    const scopeKey = growerPlanningScopeKey(f.scope), siteId = f.source.resourceSiteId;
+    const state = {
+      plan: admitted.book, productionSiteId: siteId, growerOwner: owner, growerSample: false, growerScopeKey: scopeKey,
+      growerBookContext: { current: { siteId, owner, sample: false, scopeKey } },
+      planWriteBase: { current: { owner, sample: false, token: admitted.token, planKey: JSON.stringify(admitted.book), admission: admitted.admission } },
+      planSaveConflict: false, activeAccountUid: account.activeAccountUid, isSampleMode: samples.isSampleMode,
+      isBackendConfigured: () => true, getFirebase: () => ({ auth: { currentUser: { uid: owner } } }),
+      cropPlanWriteToken: bookApi.cropPlanWriteToken, readRawCropPlanReceipt: bookApi.readRawCropPlanReceipt,
+      cropPlanWriteAdmissionMatches: bookApi.cropPlanWriteAdmissionMatches,
+    };
+    // Reuse the controller harness technique to execute the actual page reader
+    // and actor checks rather than constructing a permissive receipt ourselves.
+    const page = ts.createSourceFile('page.tsx', readFileSync(new URL('../app/facilitator/crops/page.tsx', import.meta.url), 'utf8'),
+      ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+    const names = ['plannerActorIsCurrent', 'growerActorIsCurrent', 'readCurrentGrowerBook'];
+    const functions = new Map<string, string>();
+    const visit = (node: ts.Node) => {
+      if (ts.isFunctionDeclaration(node) && node.name && names.includes(node.name.text)) functions.set(node.name.text, node.getText(page));
+      ts.forEachChild(node, visit);
+    };
+    visit(page); assert.equal(functions.size, names.length);
+    const source = ts.transpileModule([...functions.values()].join('\n'), {
+      compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
+    }).outputText;
+    const parent = new Function('context', `with(context){${source};return {${names.join(',')}}}`)(state) as {
+      growerActorIsCurrent: () => boolean;
+      readCurrentGrowerBook: () => import('../components/crops/useGrowerWorkflow.ts').GrowerWorkflowBookReceipt;
+    };
+    const initialRead = parent.readCurrentGrowerBook(); assert.equal(initialRead.status, 'ready');
+    if (initialRead.status !== 'ready') throw Error('The actual parent did not admit the saved raw book');
+    assert.equal(initialRead.book.nursery, undefined); assert.equal(initialRead.isCurrent?.(), true);
+    const { useGrowerWorkflow } = await import('../components/crops/useGrowerWorkflow.ts');
+    let latest!: ReturnType<typeof useGrowerWorkflow>;
+    const hookInput: Parameters<typeof useGrowerWorkflow>[0] = {
+      selection: { kind: 'studio-canvas', sourceId: siteId }, scope: f.scope, resourceSiteId: siteId,
+      book: admitted.book, actorIsCurrent: parent.growerActorIsCurrent, readCurrentBook: parent.readCurrentGrowerBook,
+    };
+    function Harness() { latest = useGrowerWorkflow(hookInput); return null; }
+    act(() => { renderer = create(React.createElement(Harness)); });
+    async function readOnly<T>(run: () => Promise<T>): Promise<T> {
+      const before = JSON.stringify([...values]), beforeWrites = writes;
+      let result!: T;
+      await act(async () => { result = await run(); });
+      assert.equal(JSON.stringify([...values]), before, 'acquisition/checking must not change saved bytes');
+      assert.equal(writes, beforeWrites, 'acquisition/checking must not write a new permission, plan or stock record');
+      return result;
+    }
+    function bindingCurrent(view: import('../components/crops/useGrowerWorkflow.ts').GrowerSavedNurseryReview): boolean {
+      const before = JSON.stringify([...values]), beforeWrites = writes;
+      const current: boolean = latest.onCheckSavedNurseryBindingCurrent(view);
+      assert.equal(typeof current, 'boolean', 'the final handoff revocation check must not yield to another promise');
+      assert.equal(JSON.stringify([...values]), before, 'binding revocation must not change saved bytes');
+      assert.equal(writes, beforeWrites, 'a synchronous binding check cannot create fresh admission or write a record');
+      return current;
+    }
+    const result = await readOnly(() => latest.onReadSavedNursery()); assert.equal(result.status, 'ready');
+    if (result.status !== 'ready') throw Error('Field-only saved-source acquisition was held');
+    const view = result.view;
+    assert.equal(latest.savedNurseryReview, view); assert.deepEqual(view.rows, f.rows);
+    assert.equal(view.references.length, 0); assert.deepEqual(view.horizon, { state: 'missing', reason: 'not-entered' });
+    const projected = projectGrowerCycles(view.rows, view.cycleContext);
+    assert.equal(projected.ownCycles.length, 2); assert.ok(projected.ownCycles.every(cycle => cycle.nurseryDemand === null));
+    assert.equal(bindingCurrent(view), true);
+    assert.equal(bindingCurrent(structuredClone(view)), false, 'matching bytes cannot recreate the original private binding');
+    assert.equal(bindingCurrent({ kind: 'saved-nursery-review', source: view.source, rows: f.rows, cycleContext: f.context,
+      horizon: { state: 'missing', reason: 'not-entered' }, references: [] }), false, 'fabricated saved-view fields grant no handoff authority');
+    assert.equal(await readOnly(() => latest.onCheckSavedNurseryCurrent(view)), true);
+    assert.equal(await readOnly(() => latest.onCheckSavedNurseryCurrent(structuredClone(view))), false,
+      'matching public fields cannot reproduce the hook private saved-view binding');
+    boundary.raw.items[0].wM = 4;
+    assert.equal(bindingCurrent(view), false, 'source receipt retirement is visible synchronously before an async refresh');
+    assert.equal(await readOnly(() => latest.onCheckSavedNurseryCurrent(view)), false, 'the original source receipt must still match');
+    boundary.raw = structuredClone(initialSource);
+    const renewed = await readOnly(() => latest.onReadSavedNursery()); assert.equal(renewed.status, 'ready');
+    if (renewed.status !== 'ready') throw Error('Restored field-only source could not be explicitly recaptured');
+    assert.notEqual(renewed.view, view); assert.equal(await readOnly(() => latest.onCheckSavedNurseryCurrent(renewed.view)), true);
+    assert.equal(bindingCurrent(renewed.view), true); assert.equal(bindingCurrent(view), false, 'a later source capture cannot renew an older view');
+    // This is a deliberate external fixture edit, outside the read-only window.
+    // A subsequent check must reject it without attempting a compensating write.
+    replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ ...fieldBook, planNotes: [{ kind: 'basis', text: 'Later source-book fixture edit' }], updatedAt: 2 }));
+    assert.equal(bindingCurrent(renewed.view), false, 'a changed canonical raw book revokes handoff even without a React prop change');
+    assert.equal(await readOnly(() => latest.onCheckSavedNurseryCurrent(renewed.view)), false, 'the admitted raw book token cannot be recaptured under an old view');
+    assert.ok(boundary.sourceReads >= 6, 'acquisition and checks must reread the selected source around actual fingerprinting');
+  } finally {
+    if (renderer) act(() => renderer!.unmount());
+    hooks.deregister(); releaseCropPlanFixture(); await Promise.resolve(); bindMountedAccountLocalStorageUid(previousOwner);
+    for (const [key, descriptor] of originals) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor); else Reflect.deleteProperty(globalThis, key);
+    }
   }
 });

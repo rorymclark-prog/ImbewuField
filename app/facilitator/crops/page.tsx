@@ -35,6 +35,7 @@ import { useGrowerWorkflow, type GrowerWorkflowBookReceipt, type GrowerWorkflowA
 import { prepareGrowerNurseryBatchReferenceChanges } from '@/lib/international/grower-nursery';
 import { hasGrowerCycleMarker, isProvenForeignGrowerCycle } from '@/lib/international/grower-cycle';
 import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
+import GrowerCycleIntent from '@/components/crops/GrowerCycleIntent';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
 import { activeAccountUid } from '@/lib/account-local-storage';
@@ -2414,6 +2415,7 @@ function FacilitatorCropsPageInner() {
       review={growerWorkflow.savedNurseryReview} checking={growerWorkflow.savedNurseryChecking}
       settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision} sample={growerSample}
       onRefresh={growerWorkflow.onReadSavedNursery} onCheckCurrent={growerWorkflow.onCheckSavedNurseryCurrent}
+      onCheckBindingCurrent={growerWorkflow.onCheckSavedNurseryBindingCurrent}
       onSaveReferences={growerWorkflow.onSaveNurseryBatchReferences}
       onRecordSowing={growerWorkflow.onRecordNurserySowing}
       onRecordProgress={growerWorkflow.onRecordNurseryProgress}
@@ -5082,7 +5084,8 @@ function SavedGrowerRows({ rows, wholeBookRows, source, scope }: {
       const cycle = projection?.ownCycles.find(cycle => cycle.plantingId === row.id);
       return <li key={`${row.id}:${i}`}><strong>{cropByKey(row.cropKey)?.name ?? 'Saved crop record'}</strong> · {cycle
         ? `Own estimates: field entry ${cycle.assessment.schedule.fieldEntryDate}; next field entry ${cycle.assessment.schedule.nextFieldEntryDate}. Planned, not an observation.`
-        : 'Held: source, scope, geometry or record identity needs review. No replacement catalogue schedule is supplied.'}</li>;
+        : 'Held: source, scope, geometry or record identity needs review. No replacement catalogue schedule is supplied.'}
+        {cycle && <GrowerCycleIntent view={cycle.origin} />}</li>;
     })}</ul>
     <Link href="/cropplan" className="underline">Open Task Planner</Link>
   </section>;

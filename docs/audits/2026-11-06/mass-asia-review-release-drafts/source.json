@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Four actual new release descriptions for seven-language inactive mass-entry worksheet, separate from core map copy.",
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "sourceFiles": [
+    {
+      "file": "lib/release-notes.ts",
+      "sha256": "5baea1f6e57766580e83d959fabfa2dfe7eeee5a7af3ee31940509b5e739704d",
+      "base": "af840fb3b74efeeddf0d7ce1a23792a7f27b9936",
+      "sourceState": "Actual uncommitted English on isolated seven-locale worksheet; metadata may change while four exact English strings stay frozen."
+    }
+  ],
+  "messages": [
+    {
+      "key": "massAsiaReview.release.01",
+      "english": "Compare harvest-weight wording drafts in seven languages.",
+      "sha256": "ba8bc3c8d453076a00e7b13074cd2d65bc92eaa255d19c5b4cfc89f2d2755d4f"
+    },
+    {
+      "key": "massAsiaReview.release.02",
+      "english": "Review seven harvest-weight draft languages",
+      "sha256": "14b55cd869751a6380a3123a9ceea06a8675d9dab4289cbfe4d0b1b48b0dbda2"
+    },
+    {
+      "key": "massAsiaReview.release.03",
+      "english": "International reference tools → Language draft review → Harvest weight entry",
+      "sha256": "8d37a88a0ba324b6ce980b1adcb515d90f53bb37f1202d1b318a22ba0181402b"
+    },
+    {
+      "key": "massAsiaReview.release.04",
+      "english": "Compare current English with French, Spanish, Brazilian Portuguese, Swahili, Hindi, Bengali and Indonesian drafts. These are unreviewed comparisons, not approved translations or a change to your app language.",
+      "sha256": "bb4d069eaaab3204f1cd2e7c11a466f1c8554be5145d7904879a444f46954334"
+    }
+  ]
+}

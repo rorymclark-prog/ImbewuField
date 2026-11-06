@@ -1,0 +1,80 @@
+{
+  "locale": "bn",
+  "sourceSha256": "d04df52e04b97ea0f72bea9c45b33081152c9ea293dd0dedd4f49e9e27f0edc5",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "massEntry.field.unit.kg",
+      "english": "Kilograms (kg)",
+      "sha256": "7c066ab3b46ec7c8dc585e809174fae3732def2471fb43308ebc98b769160263",
+      "translation": "কিলোগ্রাম (kg)"
+    },
+    {
+      "key": "massEntry.field.unit.lb",
+      "english": "Pounds (lb)",
+      "sha256": "499322ae749ca536047d6f8bde107102d61861b2c9eed423e2bd7e447e97eadc",
+      "translation": "পাউন্ড (lb)"
+    },
+    {
+      "key": "massEntry.field.switchHeld",
+      "english": "Complete or correct this weight before switching units. Your text is kept.",
+      "sha256": "3ffc02a6a9042af63b19d795219941be5905dc131fdb78c0b44b19a498b91e78",
+      "translation": "একক পরিবর্তন করার আগে এই ওজন সম্পূর্ণ বা সংশোধন করুন। আপনার লেখা পাঠ্য সংরক্ষিত থাকবে।"
+    },
+    {
+      "key": "massEntry.field.decimalPoint",
+      "english": "Use a dot or comma for the decimal point, without thousands separators.",
+      "sha256": "48a83b04b1e63a7b7993beb03e96d17a86f855942f083101ed4f2126502e4d9a",
+      "translation": "হাজারের বিভাজক ছাড়াই দশমিক বিন্দুর জন্য ডট বা কমা ব্যবহার করুন।"
+    },
+    {
+      "key": "massEntry.field.convertedDisplay",
+      "english": "≈ Converted display only; it may be rounded. Switching units keeps the original entered weight until you edit the number.",
+      "sha256": "c5af873127d9fbfa042d6820f7fafbd2b0481bc9bd808539d06f9423a44827ff",
+      "translation": "≈ শুধুমাত্র রূপান্তরিত প্রদর্শন; এটি আসন্ন বা কাছাকাছি সংখ্যায় নেওয়া হতে পারে। আপনি সংখ্যাটি সম্পাদনা না করা পর্যন্ত একক পরিবর্তন করলে মূল প্রবেশকৃত ওজন সংরক্ষিত থাকে।"
+    },
+    {
+      "key": "massEntry.readback.purposeUnknown",
+      "english": "Planning purpose not recorded. Original requested weight and harvest window are not recorded.",
+      "sha256": "3adbec30c2c70ae50dd0823b7bb63008330883860e6c8fe1acd9fb6c99f96e92",
+      "translation": "পরিকল্পনার উদ্দেশ্য রেকর্ড করা হয়নি। মূল অনুরোধকৃত ওজন এবং ফসল কাটার সময়সীমা রেকর্ড করা হয়নি।"
+    },
+    {
+      "key": "massEntry.readback.buyerPurpose",
+      "english": "Planning purpose: buyer target.",
+      "sha256": "5aec250aedb8cd312a7c49b32376bb9b9e916c6a7e8c1580e06a740e05c2b346",
+      "translation": "পরিকল্পনার উদ্দেশ্য: ক্রেতার লক্ষ্য।"
+    },
+    {
+      "key": "massEntry.readback.originalEntryUnknown",
+      "english": "Original entered unit and text are not recorded. They have not been reconstructed from kilograms or cycle capacity.",
+      "sha256": "0b2909532f397bf2974ea8cfd52c5101f1a998e6f7d7071b1dbb463cb7fa97a8",
+      "translation": "মূল প্রবেশকৃত একক এবং পাঠ্য রেকর্ড করা হয়নি। সেগুলি কিলোগ্রাম বা চক্রের সক্ষমতা থেকে পুনর্গঠন করা হয়নি।"
+    },
+    {
+      "key": "massEntry.readback.canonicalEquivalent",
+      "english": "Kilograms are the canonical planning equivalent for this whole request.",
+      "sha256": "afc4e4de2d3811e98983ce588401c44d1ff5217ab09b2ded36de1d30238cc471",
+      "translation": "কিলোগ্রাম হলো এই সম্পূর্ণ অনুরোধের জন্য প্রমিত পরিকল্পনার সমতুল্য।"
+    },
+    {
+      "key": "massEntry.readback.planningEstimate",
+      "english": "This is the grower-entered planning estimate, not this batch’s output or an observed harvest.",
+      "sha256": "af29919b31f9632c76117d0d17971b15ca1ad7244a6b0f363538e29b01db9fef",
+      "translation": "এটি চাষীর প্রবেশ করানো পরিকল্পনার অনুমান, এই ব্যাচের উৎপাদন বা প্রত্যক্ষকৃত ফসল নয়।"
+    },
+    {
+      "key": "massEntry.readback.originalRequestUnknown",
+      "english": "Original requested weight and harvest window are not recorded. They have not been inferred from this cycle.",
+      "sha256": "f89af4f6b265eee10233b92d42f1dc3438a0b4496300ad6dd49f748a72a880fd",
+      "translation": "মূল অনুরোধকৃত ওজন এবং ফসল কাটার সময়সীমা রেকর্ড করা হয়নি। এই চক্র থেকে সেগুলি অনুমান করা হয়নি।"
+    },
+    {
+      "key": "massEntry.release.03",
+      "english": "Production plan → Automatic plan from your estimates → Household food or trial growing",
+      "sha256": "16398941e04e9be8040657208324bce9ae65c919f08f9b5d0065cafd169189ff",
+      "translation": "উৎপাদন পরিকল্পনা → আপনার অনুমান থেকে স্বয়ংক্রিয় পরিকল্পনা → পারিবারিক খাদ্য বা পরীক্ষামূলক চাষ"
+    }
+  ]
+}

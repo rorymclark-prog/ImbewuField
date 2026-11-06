@@ -17,7 +17,7 @@ import { loadGrowerOperationsSources, type GrowerOperationsSources } from '@/lib
 import { buildGrowerBoardTasks, type BoardTask } from '@/lib/task-board';
 import { recordGrowerNurserySowing, recordGrowerNurseryProgress, recordGrowerNurseryFieldPlanting, type GrowerNurserySowingInput, type GrowerNurseryProgressInput, type GrowerNurseryFieldPlantingInput, type GrowerFieldObservationResult } from '@/lib/grower-field-observation';
 import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
-import type { GrowerCycleContext } from '@/lib/international/grower-cycle';
+import type { GrowerCycleContext, GrowerCycleOriginView } from '@/lib/international/grower-cycle';
 import type { GrowerWindowInput } from '@/lib/international/grower-autoplan';
 import { resolveGrowerNurseryBatchReference, type GrowerNurseryBatchReferenceChange } from '@/lib/international/grower-nursery';
 
@@ -56,6 +56,8 @@ export interface GrowerSavedNurseryReview {
     /** Explicit canonical field-entry event; absent old DTOs cannot grant this action. */
     readonly plannedFieldEntryDate?: string;
     readonly reference: ReturnType<typeof resolveGrowerNurseryBatchReference>;
+    /** Recorded accepted intent; `not-recorded` is unknown, never buyer/household. Optional for older DTOs. */
+    readonly origin?: GrowerCycleOriginView;
   }[];
 }
 export type GrowerSavedNurseryReadResult =
@@ -113,7 +115,7 @@ function savedNurseryView(source: GrowerWorkflowSource, book: CropPlanState, rec
     return [{ plantingId: cycle.plantingId, cropKey: cycle.cropKey, bedId: cycle.bedId,
       startDate: cycle.nurseryDemand.interval.start, endDateExclusive: cycle.nurseryDemand.interval.endExclusive,
       ...(entries.length === 1 ? { plannedFieldEntryDate: entries[0].date } : {}),
-      reference: resolveGrowerNurseryBatchReference(rows, cycleContext, cycle.plantingId),
+      reference: resolveGrowerNurseryBatchReference(rows, cycleContext, cycle.plantingId), origin: cycle.origin,
     }];
   });
   const starts = references.map(row => row.startDate).sort(), ends = references.map(row => row.endDateExclusive).sort();
@@ -270,10 +272,22 @@ export function useGrowerWorkflow(input: Inputs) {
   async function onReview(draft: GrowerWorkflowDraft): Promise<GrowerWorkflowReview> {
     const initial = live.current, turn = epoch.current, expected = sourceRef.current, actorIsCurrent = initial.actorIsCurrent, reviewedSelection = selectionRef.current;
     if (accepting.current) return hold('acceptance-in-progress');
+    const reviewIsCurrent = () => {
+      try { return mounted.current && epoch.current === turn && sourceRef.current === expected
+        && selectionRef.current === reviewedSelection && actorIsCurrent() && live.current.actorIsCurrent(); }
+      catch { return false; }
+    };
+    if (!expected || !reviewIsCurrent()) return hold('current-source-required');
+    let detachedDraft: GrowerWorkflowDraft;
+    try {
+      // The actual form omits optional branches and authors string fields.
+      // JSON copying would invoke getters and erase present-undefined weight
+      // evidence before the domain can reject an ambiguous legacy/new entry.
+      detachedDraft = detachJsonData(draft) as GrowerWorkflowDraft;
+    } catch { return reviewIsCurrent() ? hold('unreadable-workflow-input') : hold('context-changed'); }
+    if (!reviewIsCurrent()) return hold('context-changed');
     setAcceptance({ status: 'idle' });
-    if (!expected || !live.current.actorIsCurrent()) return hold('current-source-required');
     const before = live.current.readCurrentBook(); if (before.status === 'held') return hold(before.reason);
-    const detachedDraft = JSON.parse(JSON.stringify(draft)) as GrowerWorkflowDraft;
     const checked = await readSource(), fresh = checked?.source;
     if (epoch.current !== turn || selectionRef.current !== reviewedSelection || !actorIsCurrent() || !live.current.actorIsCurrent()) return hold('context-changed');
     if (!fresh || fresh.sourceKey !== expected.sourceKey || fresh.sourceRevision !== expected.sourceRevision) {
@@ -308,6 +322,11 @@ export function useGrowerWorkflow(input: Inputs) {
         && binding.selectionKey === selectionRef.current && binding.actorIsCurrent() && live.current.actorIsCurrent()
         && binding.bookIsCurrent() && binding.sourceIsCurrent() && savedNurseryKey(view) === binding.key;
     } catch { return false; }
+  }
+  // A book/source change can follow the last awaited read before file handoff.
+  // Revoke only the original private binding; this never replaces fresh reads.
+  function onCheckSavedNurseryBindingCurrent(view: GrowerSavedNurseryReview): boolean {
+    return savedBindingIsCurrent(view);
   }
   async function onReadSavedNursery(acknowledgement?: GrowerNurseryReferenceAcknowledgement): Promise<GrowerSavedNurseryReadResult> {
     const held = (reason: string): GrowerSavedNurseryReadResult => ({ status: 'held', reason });
@@ -513,5 +532,5 @@ export function useGrowerWorkflow(input: Inputs) {
   } catch { visibleAcceptance = { status: 'idle' }; }
   const visibleSavedNursery = savedNursery && savedBindingIsCurrent(savedNursery) ? savedNursery : null;
   return { source: visibleSource, sourceIssue, checking, contextRevision: revision, onRefresh, onReview, onCheckCurrent, onAccept, acceptance: visibleAcceptance,
-    savedNurseryReview: visibleSavedNursery, savedNurseryChecking, onReadSavedNursery, onCheckSavedNurseryCurrent, onSaveNurseryBatchReferences, onRecordNurserySowing, onRecordNurseryProgress, onRecordNurseryFieldPlanting };
+    savedNurseryReview: visibleSavedNursery, savedNurseryChecking, onReadSavedNursery, onCheckSavedNurseryCurrent, onCheckSavedNurseryBindingCurrent, onSaveNurseryBatchReferences, onRecordNurserySowing, onRecordNurseryProgress, onRecordNurseryFieldPlanting };
 }
