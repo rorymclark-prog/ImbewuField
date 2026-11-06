@@ -29,12 +29,15 @@ const probe={owner:'actor-a' as string|null,auth:{user:{uid:'actor-a'} as {uid:s
 Object.assign(globalThis,{__invoiceQuickProbe:probe,IS_REACT_ACT_ENVIRONMENT:true});
 const url=(path:string)=>new URL('../'+path,import.meta.url).href;
 const hookUrl=url('components/invoice/useInvoiceBookSource.ts'),providerUrl=url('components/InvoiceStorageStatus.tsx'),invoiceUrl=url('lib/invoices.ts');
+const noticeUrl=url('components/invoice/QuickSaleCurrencyNotice.tsx');
 const data=(source:string)=>({shortCircuit:true,url:'data:text/javascript,'+encodeURIComponent(source)});
+const noticeLink=data(`import React from ${JSON.stringify(import.meta.resolve('react'))};export default function Link({children,...props}){return React.createElement('a',props,children);}`);
 const auth=data('export const useAuth=()=>globalThis.__invoiceQuickProbe.auth;');
 const firebase=data('const p=globalThis.__invoiceQuickProbe;export const isBackendConfigured=()=>true;export const getFirebase=()=>({auth:{get currentUser(){return p.owner?{uid:p.owner}:null;}}});');
 const observer=data('export const onAuthStateChanged=(auth,callback)=>{const p=globalThis.__invoiceQuickProbe;p.listeners.add(callback);callback(auth.currentUser);return()=>p.listeners.delete(callback);};');
 const invoices=data(`import * as real from ${JSON.stringify(invoiceUrl)};export * from ${JSON.stringify(invoiceUrl)};export const readInvoiceBook=()=>{globalThis.__invoiceQuickProbe.reads++;return real.readInvoiceBook();};`);
 const hooks=registerHooks({resolve(specifier,context,next){
+ if(context.parentURL===noticeUrl&&specifier==='next/link')return noticeLink;
  if([hookUrl,providerUrl].includes(context.parentURL??'')&&specifier==='@/lib/auth')return auth;
  if(context.parentURL===hookUrl&&specifier==='@/lib/invoices')return invoices;
  if(context.parentURL===hookUrl&&specifier==='@/components/InvoiceStorageStatus')return {shortCircuit:true,url:providerUrl};
@@ -42,7 +45,7 @@ const hooks=registerHooks({resolve(specifier,context,next){
  if((context.parentURL?.endsWith('/lib/account-local-storage.ts')||context.parentURL?.endsWith('/lib/length-unit-preference.ts'))&&specifier==='./firebase/init')return firebase;
  return next(specifier,context);
 },load(target,context,next){
- if(target===hookUrl||target===providerUrl)return {shortCircuit:true,format:'module',source:ts.transpileModule(readFileSync(new URL(target),'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText};
+ if(target===hookUrl||target===providerUrl||target===noticeUrl)return {shortCircuit:true,format:'module',source:ts.transpileModule(readFileSync(new URL(target),'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText};
  return next(target,context);
 }});
 const model=await import('../lib/invoices.ts');
@@ -50,6 +53,7 @@ const storage=await import('../lib/invoice-storage.ts');
 const account=await import('../lib/account-local-storage.ts');
 const {useInvoiceBookSource}=await import('../components/invoice/useInvoiceBookSource.ts');
 const {default:Provider,InvoiceStorageNotice}=await import('../components/InvoiceStorageStatus.tsx');
+const {default:QuickSaleCurrencyNotice}=await import('../components/invoice/QuickSaleCurrencyNotice.tsx');
 const {saveSaleInvoice}=await import('../lib/sale-invoice.ts');
 const records=await import('../lib/farm-records.ts');
 const {parseDecimalInput}=await import('../lib/decimal-input.ts');
@@ -68,7 +72,7 @@ const icon=()=>React.createElement('i');
 const boundary=({children}:{children:React.ReactNode})=>React.createElement('div',null,children);
 const quantity=({quantity,onQuantityChange}:{quantity:string;onQuantityChange:(value:string)=>void})=>React.createElement('input',{'data-quantity':true,value:quantity,onChange:(event:{target:{value:string}})=>onQuantityChange(event.target.value)});
 const scope:Record<string,unknown>={React,...React,...records,parseDecimalInput,userFacingMessage,UserFacingError,
- useInvoiceBookSource:tracked,InvoiceStorageNotice,invoiceBookIsCurrent:model.invoiceBookIsCurrent,
+ useInvoiceBookSource:tracked,InvoiceStorageNotice,QuickSaleCurrencyNotice,invoiceBookIsCurrent:model.invoiceBookIsCurrent,
  useRouter:()=>({push:(path:string)=>probe.pushes.push(path)}),useLanguage:()=>({lang:'en'}),useRecordsT:()=>({lang:'en',t:(key:string)=>key}),translate:(_lang:string,key:string)=>key,
  recordsUi:(_lang:string,en:string)=>en,recordsFill:(_lang:string,en:string)=>en,recordsPaired:(_lang:string,en:string)=>en,
  recordsText:(_lang:string,en:string)=>en,recordsInstruction:(_lang:string,en:string)=>en,recordsMessage:(_lang:string,en:string)=>en,
@@ -237,4 +241,29 @@ for(const kind of ['records','mine']as const)test(`${kind} uses an immediate pen
  assert.equal(probe.calls.length,1);assert.equal(probe.syncs,1);
  resume();await act(async()=>{await Promise.all([first,second]);});await ui.flush();
  assert.equal(probe.calls.length,1);assert.equal(probe.saved,1);assert.equal(probe.pushes.length,1);
+});
+
+// These are the actual quick-form declarations with the actual shared notice.
+// Next navigation is represented by its anchor; no source admission or saver is replaced.
+for(const kind of ['records','mine'] as const)test(`${kind} names rand before entry and exposes a separate currency invoice without transferring or saving the draft`,async()=>{
+ const ui=mount(kind);await ui.flush();await ui.fill();
+ const notice=ui.renderer.root.findByProps({role:'note',lang:'en'});
+ const copy=text(notice);assert.match(copy,/South African rand \(ZAR\)/);
+ for(const code of ['KES','GBP','USD','EUR','BRL'])assert.ok(copy.includes(code));
+ assert.match(copy,/draft is not transferred/);
+ const link=notice.findByType('a');assert.equal(link.props.href,'/invoice?mode=sale');
+ assert.equal(link.props.onClick,undefined);assert.equal(link.props.target,undefined);
+ assert.match(link.props.className,/min-h-11/);
+ assert.equal(probe.calls.length,0);assert.equal(probe.syncs,0);assert.deepEqual(probe.pushes,[]);
+ const inputs=ui.renderer.root.findAllByType('input');
+ assert.equal(inputs.find(input=>input.props['data-quantity'])?.props.value,'2');
+ assert.equal(inputs.find(input=>input.props.id?.endsWith('-price')||input.props.placeholder==='0.00')?.props.value,'20');
+});
+
+test('cost entry and editing an existing sale do not advertise creating a second sale invoice',async()=>{
+ const cost=mount('records',true,{lockKind:'out'});await cost.flush();
+ assert.equal(cost.renderer.root.findAllByType(QuickSaleCurrencyNotice).length,0);
+ const editing=mount('records',true,{editing:{type:'sale',row:{id:'existing-sale',user_id:'actor-a',crop:'Line A',quantity:2,unit:'kg',amount:20,sold_at:'2026-11-06T12:00:00Z'}}});await editing.flush();
+ assert.equal(editing.renderer.root.findAllByType(QuickSaleCurrencyNotice).length,0);
+ assert.equal(probe.calls.length,0);assert.deepEqual(probe.pushes,[]);
 });

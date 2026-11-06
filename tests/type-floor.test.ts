@@ -100,6 +100,7 @@ const STAFF_ROUTES = [
 const FARMER_SURFACES: Record<string, string> = {
   'app/invoice/page.tsx': 'farmers enter and read their own saved invoice amounts; zero-debt 12px floor',
   'components/invoice/InvoiceCurrencyChoice.tsx': 'farmers explicitly choose and review the recorded invoice currency; zero-debt 12px floor',
+  'components/invoice/QuickSaleCurrencyNotice.tsx': 'growers distinguish rand quick entry from other invoice currencies before recording money; zero-debt 12px floor',
   'components/invoice/InvoiceDocument.tsx': 'farmers read the shared on-screen and printable invoice document; zero-debt 12px floor',
   'components/invoice/InvoiceCurrencySummaryPanel.tsx': 'growers read saved invoice amounts, currency choices and source holds on phones; zero-debt 12px floor',
   'components/CropPlanStorageStatus.tsx': 'farmers read storage recovery and retained-copy choices on their crop and records screens',

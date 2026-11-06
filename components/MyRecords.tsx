@@ -52,6 +52,7 @@ import { parseDecimalInput } from '@/lib/decimal-input';
 import { loadInvoices, invoiceBookIsCurrent, type SavedInvoice } from '@/lib/invoices';
 import { useInvoiceBookSource } from '@/components/invoice/useInvoiceBookSource';
 import { InvoiceStorageNotice } from '@/components/InvoiceStorageStatus';
+import QuickSaleCurrencyNotice from '@/components/invoice/QuickSaleCurrencyNotice';
 import { userFacingMessage } from '@/lib/user-facing-error';
 import { cashIncomeTotal, reviewInvoiceRandBasis, mergeInvoiceRandReviews, invoiceRandReviewMessage } from '@/lib/invoice-sales';
 import { inspectInvoiceCurrencyBasis, invoiceRandConsumerEligibility } from '@/lib/invoice-currency';
@@ -567,6 +568,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   return (
     <Card accent="#9E5C08" className="md:max-w-xl">
       <SectionLabel>{t('myRecordsLogSaleHeader')}</SectionLabel>
+      <QuickSaleCurrencyNotice />
       <InvoiceStorageNotice />
       {!invoiceSource.ready && <button type="button" disabled={form.loading || !invoiceSource.isActorCurrent()} className="min-h-11 rounded-lg border px-3 py-2 text-sm" onClick={() => {
         if (invoiceSource.reload()) setForm({ crop: '', cropKey: null, quantity: '', unit: 'kg', amount: '', buyer: '', loading: false, error: '' });
