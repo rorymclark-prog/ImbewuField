@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 November 2026', sha: 'b98c029e142b', changes: [
+  { when: '6 November 2026', sha: '2a3c5d351bf2', changes: [
     'Plan seed sourcing for field cycles without nursery raising.',
   ], tour: [{ title: 'Review field seed requirements', where: 'Crop planner → Saved planned nursery batches → Field seed sourcing', href: '/facilitator/crops',
     detail: 'Open the separate field worksheet for accepted cycles without a nursery phase. Declare botanical seeds, confirm your gross whole-seed requirement, group cycles that can share a supply, and enter your allocation and pack size. Blank counts stay unknown. This temporary worksheet does not record stock, place orders or save the plan.' }] },
