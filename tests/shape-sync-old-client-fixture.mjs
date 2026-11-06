@@ -107,4 +107,3 @@ after(() => {
   if (originalTree === undefined) delete process.env.OLD_CLIENT_TREE;
   else process.env.OLD_CLIENT_TREE = originalTree;
 });
-await import('./shape-sync-v2-old-client.test.ts');

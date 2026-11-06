@@ -385,6 +385,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // pill). All tools is the map exactly as it was.
   const simple = useAppLevel() === 'simple';
   const mapRef = useRef<MapRef>(null);
+  const mapViewportRef = useRef<HTMLDivElement | null>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   // ux-14/desk-10/nav-14: on a phone or locked-down machine without WebGL the map area used to
   // be a blank beige (or black, in dark mode) slab with no message, icon or next step — "Map is
@@ -1846,6 +1847,20 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     };
   }, []);
 
+  // Mapbox observes window resizing, not a status row changing its container.
+  // Resize only the paint viewport; keep the map, Draw and saved geometry intact.
+  useEffect(() => {
+    const viewport = mapViewportRef.current;
+    if (!viewport || typeof ResizeObserver === 'undefined') return;
+    let observing = true;
+    const observer = new ResizeObserver(() => {
+      if (!observing) return;
+      try { mapRef.current?.getMap()?.resize(); } catch {}
+    });
+    observer.observe(viewport);
+    return () => { observing = false; observer.disconnect(); };
+  }, [mapSupported]);
+
   // Sync draw layer visibility with the Shapes (showFeatures) and Hatching (showHatch) toggles.
   // Hide via layout `visibility` (definitive — a hidden layer draws nothing), and CRUCIALLY
   // re-apply on Draw's own `draw.render` event: MapboxDraw re-renders its layers on every
@@ -2291,7 +2306,67 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }
 
   return (
-    <div className="relative w-full h-full">
+    <div data-map-workspace className="relative flex w-full h-full min-h-0 flex-col">
+      {/* A separate flow row keeps status out of both the app navigation and
+          the map toolbar. Long decision trays scroll without covering the map. */}
+      <div data-map-sync-region role="region" aria-label="Map sync messages and decisions"
+        className="min-w-0 shrink-0 overflow-y-auto overscroll-contain" style={{ maxHeight: '40%' }}
+        tabIndex={!pinDraw && !editPin && shapeConflicts.length > 0 ? 0 : undefined}>
+      {/* ── Shape sync v2: durability + preserved conflicts. Never silent: a change that is not yet
+           safe on this device, a paused sync, or two versions of a shape are all shown here. Ordinary
+           'info' (saved on this device only / waiting / syncing) is a non-blocking status line: the
+           strip passes pointer events through, only the alert and the conflict tray take them. ── */}
+      {!pinDraw && !editPin && (shapeConflicts.length > 0 || (shapeSyncNoticeNow && shapeSyncNoticeNow.level !== 'ok')) && (
+        <div className="mx-auto w-full font-sans flex flex-col gap-2"
+          style={{ maxWidth: 'min(420px, 100%)', padding: '8px 12px', boxSizing: 'border-box', pointerEvents: 'none' }}>
+          {/* Pass 2: ONE pure source of wording (lib/shape-sync/controller shapeSyncNotice). It can
+              never say "synced" while anything is pending, volatile, held, deferred or blocked. */}
+          {shapeSyncNoticeNow && (shapeSyncNoticeNow.level === 'warn' || shapeSyncNoticeNow.level === 'error') && (
+            <div role="alert" className="rounded-xl px-3 py-2 flex items-center gap-2" style={{ background: 'rgba(28,14,10,0.94)', border: `1px solid ${shapeSyncNoticeNow.level === 'error' ? 'rgba(212,110,66,0.7)' : 'rgba(212,168,83,0.7)'}`, color: '#F4E3C0', fontSize: 13, pointerEvents: 'auto' }}>
+              <span className="flex-1">{shapeSyncNoticeNow.text}</span>
+              {shapeSyncNoticeNow.offerBackup && (
+                <button onClick={downloadShapeRecovery} className="rounded-lg px-2.5 py-1.5 font-semibold" style={{ background: 'rgba(247,242,233,0.12)', border: '1px solid rgba(234,243,226,0.25)', color: '#EAF3E2', cursor: 'pointer' }}>
+                  Download backup
+                </button>
+              )}
+            </div>
+          )}
+          {shapeSyncNoticeNow && shapeSyncNoticeNow.level === 'info' && (
+            <div role="status" aria-live="polite" className="self-center rounded-full px-3 py-1" style={{ background: 'rgba(28,14,10,0.78)', color: '#F4E3C0', fontSize: 13 }}>
+              {shapeSyncNoticeNow.text}
+            </div>
+          )}
+          {shapeConflicts.length > 0 && (
+            <div className="rounded-xl p-2" style={{ background: 'rgba(16,22,14,0.94)', border: '1px solid rgba(212,168,83,0.6)', boxShadow: '0 8px 24px rgba(0,0,0,0.45)', pointerEvents: 'auto' }}>
+              <button onClick={() => setConflictsOpen((o) => !o)} className="w-full flex items-center gap-2 px-1.5 py-1 font-semibold" style={{ background: 'transparent', border: 'none', color: '#F4E3C0', fontSize: 14, cursor: 'pointer' }}>
+                <AlertTriangle size={15} />
+                <span className="flex-1 text-left">{shapeConflicts.length === 1 ? '1 shape needs your decision' : `${shapeConflicts.length} shapes need your decision`}</span>
+                <ChevronDown size={15} style={{ transform: conflictsOpen ? 'rotate(180deg)' : 'none' }} />
+              </button>
+              {conflictsOpen && shapeConflicts.map((c) => {
+                const name = (c.current?.properties?.name ?? c.other?.properties?.name ?? 'Unnamed shape') as string;
+                const btn: React.CSSProperties = { background: 'rgba(247,242,233,0.1)', border: '1px solid rgba(234,243,226,0.22)', color: '#EAF3E2', borderRadius: 9, padding: '6px 10px', fontSize: 12.5, fontWeight: 600, cursor: 'pointer' };
+                return (
+                  <div key={c.conflictId} className="mt-2 rounded-lg p-2" style={{ background: 'rgba(247,242,233,0.06)' }}>
+                    <div style={{ color: '#fff', fontWeight: 700, fontSize: 13.5 }}>{name}</div>
+                    <div style={{ color: 'rgba(234,243,226,0.7)', fontSize: 12.5, marginBottom: 6 }}>{SHAPE_CONFLICT_TEXT[c.kind]}</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      <button style={btn} onClick={() => resolveShapeConflict(c, 'keep-current')}>{c.live ? 'Keep this version' : 'Keep it deleted'}</button>
+                      {c.other
+                        ? <button style={btn} onClick={() => resolveShapeConflict(c, 'use-branch')}>{c.live ? 'Use the other version' : 'Restore it'}</button>
+                        : <button style={btn} onClick={() => resolveShapeConflict(c, 'use-branch')}>Delete it</button>}
+                      {c.other && c.live && <button style={btn} onClick={() => resolveShapeConflict(c, 'keep-both')}>Keep both</button>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
+      </div>
+      <div ref={mapViewportRef} data-map-viewport className="relative min-h-0 w-full flex-1">
       {offlineCanvas&&<div role="status" style={{position:'absolute',bottom:80,left:12,maxWidth:'calc(100% - 24px)',zIndex:10,padding:'8px 12px',borderRadius:10,background:'var(--bg-1)',color:'var(--text-primary)',fontSize:14,pointerEvents:'none'}}>{t('mapOfflineCanvasStatus')}</div>}
       <ReactMapGL
         ref={mapRef}
@@ -4520,59 +4595,6 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </>
       )}
 
-      {/* ── Shape sync v2: durability + preserved conflicts. Never silent: a change that is not yet
-           safe on this device, a paused sync, or two versions of a shape are all shown here. Ordinary
-           'info' (saved on this device only / waiting / syncing) is a non-blocking status line: the
-           strip passes pointer events through, only the alert and the conflict tray take them. ── */}
-      {!pinDraw && !editPin && (shapeConflicts.length > 0 || (shapeSyncNoticeNow && shapeSyncNoticeNow.level !== 'ok')) && (
-        <div className="fixed left-1/2 -translate-x-1/2 z-[60] w-full font-sans flex flex-col gap-2"
-          style={{ top: 'calc(12px + env(safe-area-inset-top))', maxWidth: 'min(420px, calc(100vw - 24px))', pointerEvents: 'none' }}>
-          {/* Pass 2: ONE pure source of wording (lib/shape-sync/controller shapeSyncNotice). It can
-              never say "synced" while anything is pending, volatile, held, deferred or blocked. */}
-          {shapeSyncNoticeNow && (shapeSyncNoticeNow.level === 'warn' || shapeSyncNoticeNow.level === 'error') && (
-            <div role="alert" className="rounded-xl px-3 py-2 flex items-center gap-2" style={{ background: 'rgba(28,14,10,0.94)', border: `1px solid ${shapeSyncNoticeNow.level === 'error' ? 'rgba(212,110,66,0.7)' : 'rgba(212,168,83,0.7)'}`, color: '#F4E3C0', fontSize: 13, pointerEvents: 'auto' }}>
-              <span className="flex-1">{shapeSyncNoticeNow.text}</span>
-              {shapeSyncNoticeNow.offerBackup && (
-                <button onClick={downloadShapeRecovery} className="rounded-lg px-2.5 py-1.5 font-semibold" style={{ background: 'rgba(247,242,233,0.12)', border: '1px solid rgba(234,243,226,0.25)', color: '#EAF3E2', cursor: 'pointer' }}>
-                  Download backup
-                </button>
-              )}
-            </div>
-          )}
-          {shapeSyncNoticeNow && shapeSyncNoticeNow.level === 'info' && (
-            <div role="status" aria-live="polite" className="self-center rounded-full px-3 py-1" style={{ background: 'rgba(28,14,10,0.78)', color: '#F4E3C0', fontSize: 13 }}>
-              {shapeSyncNoticeNow.text}
-            </div>
-          )}
-          {shapeConflicts.length > 0 && (
-            <div className="rounded-xl p-2" style={{ background: 'rgba(16,22,14,0.94)', border: '1px solid rgba(212,168,83,0.6)', boxShadow: '0 8px 24px rgba(0,0,0,0.45)', pointerEvents: 'auto' }}>
-              <button onClick={() => setConflictsOpen((o) => !o)} className="w-full flex items-center gap-2 px-1.5 py-1 font-semibold" style={{ background: 'transparent', border: 'none', color: '#F4E3C0', fontSize: 14, cursor: 'pointer' }}>
-                <AlertTriangle size={15} />
-                <span className="flex-1 text-left">{shapeConflicts.length === 1 ? '1 shape needs your decision' : `${shapeConflicts.length} shapes need your decision`}</span>
-                <ChevronDown size={15} style={{ transform: conflictsOpen ? 'rotate(180deg)' : 'none' }} />
-              </button>
-              {conflictsOpen && shapeConflicts.map((c) => {
-                const name = (c.current?.properties?.name ?? c.other?.properties?.name ?? 'Unnamed shape') as string;
-                const btn: React.CSSProperties = { background: 'rgba(247,242,233,0.1)', border: '1px solid rgba(234,243,226,0.22)', color: '#EAF3E2', borderRadius: 9, padding: '6px 10px', fontSize: 12.5, fontWeight: 600, cursor: 'pointer' };
-                return (
-                  <div key={c.conflictId} className="mt-2 rounded-lg p-2" style={{ background: 'rgba(247,242,233,0.06)' }}>
-                    <div style={{ color: '#fff', fontWeight: 700, fontSize: 13.5 }}>{name}</div>
-                    <div style={{ color: 'rgba(234,243,226,0.7)', fontSize: 12.5, marginBottom: 6 }}>{SHAPE_CONFLICT_TEXT[c.kind]}</div>
-                    <div className="flex flex-wrap gap-1.5">
-                      <button style={btn} onClick={() => resolveShapeConflict(c, 'keep-current')}>{c.live ? 'Keep this version' : 'Keep it deleted'}</button>
-                      {c.other
-                        ? <button style={btn} onClick={() => resolveShapeConflict(c, 'use-branch')}>{c.live ? 'Use the other version' : 'Restore it'}</button>
-                        : <button style={btn} onClick={() => resolveShapeConflict(c, 'use-branch')}>Delete it</button>}
-                      {c.other && c.live && <button style={btn} onClick={() => resolveShapeConflict(c, 'keep-both')}>Keep both</button>}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      )}
-
       {/* ── Lima's quick guide (coach-marks) — plain-language tool tips ── */}
       {guideOpen && (
         <>
@@ -4631,6 +4653,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </div>
         </>
       )}
+      </div>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import './shape-sync-old-client-fixture.mjs';
+
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
 import path from 'node:path';

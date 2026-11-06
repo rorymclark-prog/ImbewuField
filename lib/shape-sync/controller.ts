@@ -826,6 +826,11 @@ export function createShapeSyncController(opts: ControllerOptions): ShapeSyncCon
     } finally {
       inflight = null;
       if (flushAgain && !disposed) { flushAgain = false; scheduleFlush(0); }
+      // Every status published during the flight (adopt/publish, error, blocked) was taken while
+      // `inflight` was still set, so it says flushing: true. Publish the settled status once the
+      // flight has cleared, or subscribers keep showing "0 change(s) syncing…" after a genuine commit.
+      // emitStatus() keeps the current() fence: a disposed or account-changed controller notifies nobody.
+      emitStatus();
     }
   }
 
