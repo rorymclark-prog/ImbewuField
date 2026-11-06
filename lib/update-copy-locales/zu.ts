@@ -509,5 +509,9 @@ const copy:UpdateCopy={
   "Record a nursery planting in its field bed": "Rekhoda ukutshala kwe-nursery embhedeni wako wasensimini",
   "Crop planner → Saved planned nursery batches → Record field planting": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe → Rekhoda ukutshala ensimini",
   "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekhoda usuku nenani lezitshalo ozifake embhedeni owabelwe ukutshala kwe-nursery okuhloliwe. Gcina irekhodi lalokho okubonile kujenali lihlukile osukwini oluhleliwe, esitokweni se-nursery nasekusindeni kwezitshalo.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Plan household food or trial growing from your own harvest target, without a buyer order.": "Hlela ukudla kwasekhaya noma ukulima kokuhlola kusukela kokuhlosiwe kwesivuno sakho, ngaphandle kwe-oda lomthengi.",
+  "Plan food or a growing trial": "Hlela ukudla noma ukuhlola kokulima",
+  "Choose household food or trial growing, enter your gross harvest weight and dates, and use your saved growing estimates and measured spaces. Saved crop records and nursery batches keep the original request. These are planning estimates, not observed harvests or local crop advice.": "Khetha ukudla kwasekhaya noma ukulima kokuhlola, faka isisindo sakho sesivuno sisonke nezinsuku, bese usebenzisa izilinganiso zakho zokulima ezilondoloziwe nezikhala ezikaliwe. Amarekhodi ezitshalo alondoloziwe namaqoqo esithombo agcina isicelo sokuqala. Lezi yizilinganiso zokuhlela, hhayi izivuno ezibonwe ngamehlo noma izeluleko zezitshalo zendawo.",
 };
 export default copy;
