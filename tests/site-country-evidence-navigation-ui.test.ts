@@ -51,6 +51,9 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
   }
   if (context.parentURL === savedUrl && specifier === '@/lib/saved-places') return data(`
     export function updateSiteCountryContext(){globalThis.${key}.saves++;throw Error('Navigation must not write saved country data');}`);
+  // This suite owns the saved-country link, while the point consumer exercises
+  // its real account/store/request lifecycle in its separate component suite.
+  if (context.parentURL === savedUrl && specifier === './SavedSiteNwsReference') return data('export default function SavedSiteNwsReference(){return null;}');
   return next(specifier, context);
 }, load(url, context, next) {
   if ([countryUrl, savedUrl, pageUrl].includes(url)) return { shortCircuit: true, format: 'module',

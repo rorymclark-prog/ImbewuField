@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired NWS point captions; English remains paired. See nws-saved-point-release-drafts/adoption.json.
+  "Check an NWS reference for a saved US point.": "Lekola tšupiso ea NWS bakeng sa ntlha e bolokiloeng ea US.",
+  "Send a coarsened point for a weather reference": "Romela ntlha e lekanyelitsoeng bakeng sa tšupiso ea boemo ba leholimo",
+  "Crop planner → Site country and region → NWS reference for this saved point": "Moralo oa lijalo → Naha le sebaka sa setša → Tšupiso ea NWS bakeng sa ntlha ena e bolokiloeng",
+  "For a site saved with a US country description, explicitly send its coordinates rounded to four decimal places to NWS. The Washington demo stays separate. These reference values do not change crop advice or planning dates. Changing the site or account withdraws the display; a request already sent upstream may continue.": "Bakeng sa setša se bolokiloeng ka tlhaloso ea naha ea US, ka ho hlaka romela likhokahanyo tsa sona tse pota-potiloeng libakeng tse nne tsa lipalo-khohlopo ho NWS. Demo ea Washington e lula e arohane. Lintlha tsena tsa tšupiso ha li fetohe keletso ea lijalo kapa matsatsi a moralo. Ho fetola setša kapa akhaonto ho tlosa pontšo; kopo e seng e rometsoe holimo e ka tsoela pele.",
   // Unreviewed Codex saved-country navigation captions; exact English stays paired. See country-navigation-release-drafts/adoption.json.
   "Open evidence tools for your saved country.": "Bula disebediswa tsa bopaki bakeng sa naha eo o e bolokileng.",
   "Review your saved country’s evidence": "Hlahloba bopaki ba naha eo o e bolokileng",

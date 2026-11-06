@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import NwsForecastValues from './NwsForecastValues';
 import { checkNwsPublicDemo } from '@/app/international/nws-actions';
 import { NWS_REFERENCE_PROVIDER } from '@/lib/international/providers/nws-reference';
 import type { NwsPublicDemoFailure, NwsPublicDemoResult } from '@/lib/international/providers/nws-public-demo';
@@ -62,26 +63,7 @@ export default function NwsForecastReference() {
       {result && result.status !== 'failed' && <div className="min-w-0 space-y-3">
         <h3 className="font-semibold">{result.status === 'partial' ? 'Partial public reference · missing fields remain Unknown' : 'Public forecast reference received'}</h3>
         <p>Demonstration place: {result.provenance.demoPlace}</p>
-        <dl className="space-y-1 text-sm">
-          <div><dt className="font-semibold">Source generatedAt</dt><dd>{result.metadata.generatedAt}</dd></div>
-          <div><dt className="font-semibold">Underlying source updateTime</dt><dd>{result.metadata.updateTime}</dd></div>
-          <div><dt className="font-semibold">Source validTimes interval</dt><dd>{result.metadata.validTimes}</dd></div>
-          <div><dt className="font-semibold">Response retrieved at</dt><dd>{result.provenance.fetchedAt}</dd></div>
-        </dl>
-        <p className="text-sm">Source date-time offsets are shown unchanged. Retrieval time does not establish forecast freshness.</p>
-        <ol className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
-          {result.periods.map(period => <li key={period.number} className="min-w-0 space-y-2 rounded-xl border border-[var(--border)] p-3">
-            <h4 className="font-semibold">Period {period.number}: {period.name ?? 'Unknown'}</h4>
-            <dl className="space-y-1 text-sm">
-              <div><dt className="font-semibold">Source start</dt><dd>{period.startTime}</dd></div>
-              <div><dt className="font-semibold">Source end</dt><dd>{period.endTime}</dd></div>
-              <div><dt className="font-semibold">Temperature (°C)</dt><dd>{period.temperatureC === null ? 'Unknown' : `${period.temperatureC} °C`}</dd></div>
-              <div><dt className="font-semibold">Precipitation probability (%)</dt><dd>{period.precipitationPercent === null ? 'Unknown' : `${period.precipitationPercent}%`}</dd></div>
-            </dl>
-            <div><p className="text-sm font-semibold">NWS source summary</p><p>{period.shortForecast ?? 'Unknown'}</p></div>
-            <div><p className="text-sm font-semibold">NWS source detail</p><p>{period.detailedForecast ?? 'Unknown'}</p></div>
-          </li>)}
-        </ol>
+        <NwsForecastValues metadata={result.metadata} periods={result.periods} fetchedAt={result.provenance.fetchedAt} />
       </div>}
     </div>
     <p className="flex flex-wrap gap-x-4 gap-y-1 text-sm">

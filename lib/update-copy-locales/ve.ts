@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired NWS point captions; English remains paired. See nws-saved-point-release-drafts/adoption.json.
+  "Check an NWS reference for a saved US point.": "Tolani thandululo ya NWS ya tshiga tsho vhulungwaho tsha US.",
+  "Send a coarsened point for a weather reference": "Rhumelani tshiga tsho pfaluswaho u itela thandululo ya mutsho",
+  "Crop planner → Site country and region → NWS reference for this saved point": "Mupulani wa zwo simiwaho → Shango na luvhande lwa fhethu → Thandululo ya NWS ya hetshi tshiga tsho vhulungwaho",
+  "For a site saved with a US country description, explicitly send its coordinates rounded to four decimal places to NWS. The Washington demo stays separate. These reference values do not change crop advice or planning dates. Changing the site or account withdraws the display; a request already sent upstream may continue.": "Kha fhethu ho vhulungwaho nga thaluso ya shango ya US, rhumelani zwo livhaho zwikoordineti zwayo zwo pfaluswaho kha zwivhalo zwina zwa desimala kha NWS. Demo ya Washington i dzula yo fhambana. Hezwi zwivhalo zwa thandululo a zwi shandukisi nyeletshedzo dza zwo simiwaho kana maduvha a ndugiselelo. U shandukisa fhethu kana akhaunthu zwi dzhiela nnda nzumbululo; khumbelo yo no daho u rumelwa ntha i nga kha di bvela phanda.",
   // Unreviewed Codex saved-country navigation captions; exact English stays paired. See country-navigation-release-drafts/adoption.json.
   "Open evidence tools for your saved country.": "Vhulani zwishumiswa zwa vhuṱanzi zwa shango ḽe na ḽi vhulunga.",
   "Review your saved country’s evidence": "Ṱolani vhuṱanzi ha shango ḽe na ḽi vhulunga",

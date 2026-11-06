@@ -1,6 +1,14 @@
 import { detachJsonData } from '@/lib/lossless-json';
 import { COUNTRY_CLIMATE_DEMOS } from './nasa-reference';
-import { decodeNwsReference, type NwsReferenceProvenance, type NwsReferenceResult } from './nws-reference';
+import {
+  decodeNwsReference,
+  decodeNwsPointReference,
+  parseNwsPointRequest,
+  type NwsReferenceProvenance,
+  type NwsReferenceResult,
+  type NwsPointReferenceProvenance,
+  type NwsPointReferenceResult,
+} from './nws-reference';
 
 /** SERVER-INTENDED: the same-origin server action owns this request, including its real
  * identifying User-Agent. This is not a client-side header spoof or farm forecast. */
@@ -11,9 +19,15 @@ const ORIGIN = 'https://api.weather.gov';
 type Stage = 'selection' | 'point' | 'forecast' | 'decode';
 export type NwsPublicDemoFailure = 'unsupported-demo' | 'invalid-options' | 'timeout' | 'network-error'
   | 'rate-limited' | 'http-error' | 'malformed-response' | 'response-too-large';
+
 type Failure = { status: 'failed'; reason: NwsPublicDemoFailure; stage: Stage; provenance: NwsReferenceProvenance;
   httpStatus?: number; retryAfterSeconds?: number | null; decoderReason?: string };
 export type NwsPublicDemoResult = Exclude<NwsReferenceResult, { status: 'failed' }> | Failure;
+
+type PointFailure = { status: 'failed'; reason: NwsPublicDemoFailure | 'invalid-point'; stage: Stage; provenance: NwsPointReferenceProvenance;
+  httpStatus?: number; retryAfterSeconds?: number | null; decoderReason?: string };
+export type NwsPointResult = Exclude<NwsPointReferenceResult, { status: 'failed' }> | PointFailure;
+
 export interface NwsPublicDemoOptions { fetcher?: typeof fetch; now?: () => Date; timeoutMs?: number }
 
 const record = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
@@ -23,14 +37,14 @@ function own(value: Record<string, unknown>, key: string): unknown {
   return field?.value;
 }
 
-function forecastMapping(value: unknown): URL | null {
+function forecastMapping(value: unknown, expectedCoords: { lat: number; lon: number }): URL | null {
   const point = detachJsonData(value);
   if (!record(point) || own(point, 'type') !== 'Feature') return null;
   const geometry = own(point, 'geometry'), properties = own(point, 'properties');
   if (!record(geometry) || own(geometry, 'type') !== 'Point' || !record(properties)) return null;
-  const coordinates = own(geometry, 'coordinates'), demo = COUNTRY_CLIMATE_DEMOS.US;
+  const coordinates = own(geometry, 'coordinates');
   if (!Array.isArray(coordinates) || coordinates.length !== 2
-    || coordinates[0] !== demo.longitude || coordinates[1] !== demo.latitude) return null;
+    || coordinates[0] !== expectedCoords.lon || coordinates[1] !== expectedCoords.lat) return null;
   const gridId = own(properties, 'gridId'), x = own(properties, 'gridX'), y = own(properties, 'gridY');
   const endpoint = own(properties, 'forecast');
   if (typeof gridId !== 'string' || !/^[A-Z0-9]{3}$/.test(gridId)
@@ -46,15 +60,25 @@ function forecastMapping(value: unknown): URL | null {
   return url;
 }
 
-/** Only the existing fixed US public demonstration is supported. A decoded
- * response and its receipt do not authenticate farm geography or approve advice. */
-export async function fetchCountryNwsPublicDemo(code: string, options: NwsPublicDemoOptions = {}): Promise<NwsPublicDemoResult> {
-  let provenance: NwsReferenceProvenance = { providerId: 'nws-forecast-reference', fetchedAt: '', endpoint: '',
-    demoPlace: code === 'US' ? COUNTRY_CLIMATE_DEMOS.US.label : '', referenceOnly: true };
+type TransportReason = Exclude<NwsPublicDemoFailure, 'unsupported-demo'>;
+type Receipt = { endpoint: string; fetchedAt: string };
+type FailureDetails = Pick<Failure, 'httpStatus' | 'retryAfterSeconds' | 'decoderReason'>;
+interface TransportTarget<Result, Failed extends { status: 'failed' }> {
+  pointEndpoint: string;
+  expectedCoords: { lat: number; lon: number };
+  failed: (reason: TransportReason, stage: Stage, receipt: Receipt, extra?: FailureDetails) => Failed;
+  decode: (value: unknown, receipt: Receipt) => Result;
+}
+
+// Receipt variants stay in the wrappers; both requests use this one deadline,
+// response reader and destination policy so a new reference cannot weaken them.
+async function fetchReference<Result, Failed extends { status: 'failed' }>(
+  target: TransportTarget<Result, Failed>, options: NwsPublicDemoOptions
+): Promise<Result | Failed> {
+  let provenance: Receipt = { endpoint: '', fetchedAt: '' };
   let stage: Stage = 'selection';
-  const failed = (reason: NwsPublicDemoFailure, extra: Partial<Pick<Failure, 'httpStatus' | 'retryAfterSeconds' | 'decoderReason'>> = {}): Failure =>
-    ({ status: 'failed', reason, stage, provenance: { ...provenance }, ...extra });
-  if (code !== 'US') return failed('unsupported-demo');
+  const failed = (reason: TransportReason, extra: FailureDetails = {}): Failed =>
+    target.failed(reason, stage, { ...provenance }, extra);
   let fetcher: typeof fetch, clock: () => Date, timeoutMs: number;
   try {
     if (!record(options)) return failed('invalid-options');
@@ -84,13 +108,13 @@ export async function fetchCountryNwsPublicDemo(code: string, options: NwsPublic
     if (!timedOut && monotonicNow() >= deadline) stopForTimeout();
     return timedOut;
   };
-  const timeout = new Promise<Failure>(resolve => {
+  const timeout = new Promise<Failed>(resolve => {
     timer = setTimeout(() => {
       stopForTimeout();
       resolve(failed('timeout'));
     }, timeoutMs);
   });
-  async function readJson(endpoint: string, nextStage: 'point' | 'forecast'): Promise<{ status: 'decoded'; value: unknown } | Failure> {
+  async function readJson(endpoint: string, nextStage: 'point' | 'forecast'): Promise<{ status: 'decoded'; value: unknown } | Failed> {
     stage = nextStage; provenance = { ...provenance, endpoint, fetchedAt: '' };
     if (expired()) return failed('timeout');
     let response: Response;
@@ -146,13 +170,12 @@ export async function fetchCountryNwsPublicDemo(code: string, options: NwsPublic
       }
     } catch { cancelBody(response); return failed('malformed-response'); }
   }
-  async function request(): Promise<NwsPublicDemoResult> {
-    const demo = COUNTRY_CLIMATE_DEMOS.US;
-    const point = await readJson(`${ORIGIN}/points/${demo.latitude},${demo.longitude}`, 'point');
+  async function request(): Promise<Result | Failed> {
+    const point = await readJson(target.pointEndpoint, 'point');
     if (expired()) return failed('timeout');
     if (point.status === 'failed') return point;
     let mapping: URL | null;
-    try { mapping = forecastMapping(point.value); } catch { mapping = null; }
+    try { mapping = forecastMapping(point.value, target.expectedCoords); } catch { mapping = null; }
     if (expired()) return failed('timeout');
     if (!mapping) return failed('malformed-response');
     const forecast = await readJson(mapping.href, 'forecast');
@@ -160,9 +183,9 @@ export async function fetchCountryNwsPublicDemo(code: string, options: NwsPublic
     if (forecast.status === 'failed') return forecast;
     stage = 'decode';
     try {
-      const decoded = decodeNwsReference(forecast.value, provenance);
+      const decoded = target.decode(forecast.value, { ...provenance });
       if (expired()) return failed('timeout');
-      return decoded.status === 'failed' ? failed('malformed-response', { decoderReason: decoded.reason }) : decoded;
+      return decoded;
     } catch { return failed(expired() ? 'timeout' : 'malformed-response'); }
   }
   // Fetch and body streams can ignore AbortSignal. Race the entire two-step
@@ -172,4 +195,46 @@ export async function fetchCountryNwsPublicDemo(code: string, options: NwsPublic
     return expired() ? failed('timeout') : result;
   }
   finally { clearTimeout(timer!); }
+}
+
+/** A public demonstration remains separate from any grower's described point. */
+export async function fetchCountryNwsPublicDemo(code: string, options: NwsPublicDemoOptions = {}): Promise<NwsPublicDemoResult> {
+  const base: NwsReferenceProvenance = { providerId: 'nws-forecast-reference', fetchedAt: '', endpoint: '',
+    demoPlace: code === 'US' ? COUNTRY_CLIMATE_DEMOS.US.label : '', referenceOnly: true };
+  const failed = (reason: NwsPublicDemoFailure, stage: Stage, receipt: Receipt, extra: FailureDetails = {}): Failure =>
+    ({ status: 'failed', reason, stage, provenance: { ...base, ...receipt }, ...extra });
+  if (code !== 'US') return failed('unsupported-demo', 'selection', { endpoint: '', fetchedAt: '' });
+  const demo = COUNTRY_CLIMATE_DEMOS.US;
+  return fetchReference({
+    pointEndpoint: `${ORIGIN}/points/${demo.latitude},${demo.longitude}`,
+    expectedCoords: { lat: demo.latitude, lon: demo.longitude },
+    failed,
+    decode(value, receipt): NwsPublicDemoResult {
+      const decoded = decodeNwsReference(value, { ...base, ...receipt });
+      return decoded.status === 'failed'
+        ? failed('malformed-response', 'decode', receipt, { decoderReason: decoded.reason }) : decoded;
+    },
+  }, options);
+}
+
+/** Matching a requested point is provider consistency, not proof of US coverage,
+ * farm ownership, current conditions, alerts or local farming suitability. */
+export async function fetchNwsPointReference(input: unknown, options: NwsPublicDemoOptions = {}): Promise<NwsPointResult> {
+  const point = parseNwsPointRequest(input);
+  const base: NwsPointReferenceProvenance = { providerId: 'nws-forecast-reference', fetchedAt: '', endpoint: '',
+    referenceOnly: true, kind: 'requested-point', requestedPoint: point ?? { latitude4: '', longitude4: '' } };
+  const failed = (reason: NwsPublicDemoFailure | 'invalid-point', stage: Stage, receipt: Receipt, extra: FailureDetails = {}): PointFailure =>
+    ({ status: 'failed', reason, stage, provenance: { ...base, ...receipt }, ...extra });
+  // Invalid input never reads options, reaches a provider or borrows Washington.
+  if (!point) return failed('invalid-point', 'selection', { endpoint: '', fetchedAt: '' });
+  return fetchReference({
+    pointEndpoint: `${ORIGIN}/points/${point.latitude4},${point.longitude4}`,
+    expectedCoords: { lat: Number(point.latitude4), lon: Number(point.longitude4) },
+    failed,
+    decode(value, receipt): NwsPointResult {
+      const decoded = decodeNwsPointReference(value, { ...base, ...receipt });
+      return decoded.status === 'failed'
+        ? failed('malformed-response', 'decode', receipt, { decoderReason: decoded.reason }) : decoded;
+    },
+  }, options);
 }
