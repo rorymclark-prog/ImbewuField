@@ -557,6 +557,10 @@ const SEED_SOURCING_COLUMNS = [
   'planned_packs',
   'planned_pack_seeds',
   'guidance',
+  'entered_supply_group_label',
+  'label_status',
+  'public_crop_names',
+  'identification_description',
 ] as const;
 
 type SeedSourcingColumn = typeof SEED_SOURCING_COLUMNS[number];
@@ -610,6 +614,10 @@ export function buildGrowerSeedSourcingCsv(
       additional_seeds_needed: group.counts?.neededSeeds ?? 'unknown',
       planned_packs: group.counts?.packsNeeded ?? 'unknown',
       planned_pack_seeds: group.counts?.plannedPackSeeds ?? 'unknown',
+      entered_supply_group_label: group.identification?.enteredLabel ?? '',
+      label_status: group.identification?.labelStatus ?? 'not-recorded',
+      public_crop_names: JSON.stringify(group.identification?.cropNames ?? []),
+      identification_description: group.identification?.description ?? '',
     });
   }
 
