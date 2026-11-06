@@ -18,6 +18,7 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
   if (context.parentURL === panelUrl && specifier === '@/lib/task-board') return data(`
     const p=globalThis.__observationPanel;
     export function buildGrowerBoardTasks(){p.generated=p.tasks.map(task=>({...task}));return {tasks:p.generated,heldPlantings:0};}
+    export const buildGrowerTasksIcs=()=>'';
     export const loadCompletedTaskIds=()=>new Set();
     export const setCompletedTaskState=(id,done)=>{p.checklistWrites++;return new Set(done?[id]:[]);};
     export const downloadTaskIcs=()=>{p.calendars++;return true;};`);

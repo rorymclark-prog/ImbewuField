@@ -609,8 +609,9 @@ export function resolveTaskDate(task: BoardTask, now = new Date()): Date {
   return new Date(origin.getFullYear(), origin.getMonth() + fwd + cycles * 12, 1);
 }
 
-function icsDateStamp(d: Date): string {
-  return `${d.getUTCFullYear()}${String(d.getUTCMonth() + 1).padStart(2, '0')}${String(d.getUTCDate()).padStart(2, '0')}T${String(d.getUTCHours()).padStart(2, '0')}${String(d.getUTCMinutes()).padStart(2, '0')}${String(d.getUTCSeconds()).padStart(2, '0')}Z`;
+function icsDateStamp(d: Date, padYear = false): string {
+  const yearStr = padYear ? String(d.getUTCFullYear()).padStart(4, '0') : `${d.getUTCFullYear()}`;
+  return `${yearStr}${String(d.getUTCMonth() + 1).padStart(2, '0')}${String(d.getUTCDate()).padStart(2, '0')}T${String(d.getUTCHours()).padStart(2, '0')}${String(d.getUTCMinutes()).padStart(2, '0')}${String(d.getUTCSeconds()).padStart(2, '0')}Z`;
 }
 
 function icsAllDayDate(d: Date): string {
@@ -624,31 +625,132 @@ function icsEscape(s: string): string {
   return s.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r\n|\r|\n/g, '\\n');
 }
 
-export function buildTaskIcs(task: BoardTask, now = new Date()): string {
-  const clock = Number.isFinite(now.getTime()) ? now : new Date();
+interface WriteTaskIcsEventOptions {
+  now?: Date;
+  sample?: boolean;
+  bulk?: boolean;
+}
+
+function writeTaskIcsEventLines(task: BoardTask, options: WriteTaskIcsEventOptions = {}): string[] | null {
+  const clock = Number.isFinite(options.now?.getTime()) ? options.now! : new Date();
   const start = resolveTaskDate(task, clock);
-  if (!Number.isFinite(start.getTime())) return '';
+  if (!Number.isFinite(start.getTime())) return null;
   const own = task.kind === 'grower-cycle';
   const ownEnd = own ? addGrowerUtcDays(task.dueDate!, 1) : null;
-  if (own && !ownEnd) return '';
+  if (own && !ownEnd) return null;
   const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1); // DTEND is exclusive for all-day events
   const escape = own ? escapeIcsText : icsEscape;
+
+  const isSample = options.sample === true;
+  const uidPrefix = isSample ? 'demo-' : '';
+  const uid = `${uidPrefix}${escape(task.id)}@imbewufield.app`;
+
+  const summary = isSample ? `DEMO · ${escape(task.title)}` : escape(task.title);
+
+  const baseDesc = own
+    ? 'ImbewuField planned cycle from your own estimates; not recorded work'
+    : 'ImbewuField crop plan';
+  const descPrefix = isSample ? 'DEMO · ' : '';
+  const description = escape(`${descPrefix}${baseDesc} — ${task.subtitle}`);
+
+  const dtstamp = icsDateStamp(clock, options.bulk === true);
+  const dtstart = own ? task.dueDate!.replace(/-/g, '') : icsAllDayDate(start);
+  const dtend = own ? ownEnd!.replace(/-/g, '') : icsAllDayDate(end);
+
+  const lines = [
+    'BEGIN:VEVENT',
+    `UID:${uid}`,
+    `DTSTAMP:${dtstamp}`,
+    `DTSTART;VALUE=DATE:${dtstart}`,
+    `DTEND;VALUE=DATE:${dtend}`,
+    `SUMMARY:${summary}`,
+    `DESCRIPTION:${description}`,
+    'END:VEVENT',
+  ];
+
+  return own ? lines.map(foldIcsLine) : lines;
+}
+
+export function buildTaskIcs(task: BoardTask, now = new Date()): string {
+  const clock = Number.isFinite(now.getTime()) ? now : new Date();
+  const eventLines = writeTaskIcsEventLines(task, { now: clock, bulk: false });
+  if (!eventLines) return '';
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
     'PRODID:-//ImbewuField//Task//EN',
-    'BEGIN:VEVENT',
-    `UID:${escape(task.id)}@imbewufield.app`,
-    `DTSTAMP:${icsDateStamp(clock)}`,
-    `DTSTART;VALUE=DATE:${own ? task.dueDate!.replace(/-/g, '') : icsAllDayDate(start)}`,
-    `DTEND;VALUE=DATE:${own ? ownEnd!.replace(/-/g, '') : icsAllDayDate(end)}`,
-    `SUMMARY:${escape(task.title)}`,
-    `DESCRIPTION:${escape(`${own ? 'ImbewuField planned cycle from your own estimates; not recorded work' : 'ImbewuField crop plan'} — ${task.subtitle}`)}`,
-    'END:VEVENT',
+    ...eventLines,
     'END:VCALENDAR',
     '',
   ];
-  return (own ? lines.map(foldIcsLine) : lines).join('\r\n');
+  return lines.join('\r\n');
+}
+
+const KNOWN_GROWER_EVENT_KINDS: ReadonlySet<string> = new Set(Object.keys(GROWER_VERB_KEY));
+
+export function buildGrowerTasksIcs(
+  tasks: readonly BoardTask[],
+  options: { now?: Date; sample?: boolean } = {},
+): string {
+  if (!Array.isArray(tasks) || tasks.length === 0) return '';
+  if (options.sample !== undefined && typeof options.sample !== 'boolean') return '';
+
+  let clock: Date;
+  if (options.now !== undefined) {
+    if (!(options.now instanceof Date) || !Number.isFinite(options.now.getTime())) return '';
+    const utcYear = options.now.getUTCFullYear();
+    if (!Number.isSafeInteger(utcYear) || utcYear < 1 || utcYear > 9999) return '';
+    clock = options.now;
+  } else {
+    clock = new Date();
+    const utcYear = clock.getUTCFullYear();
+    if (!Number.isSafeInteger(utcYear) || utcYear < 1 || utcYear > 9999) return '';
+  }
+
+  const seenIds = new Set<string>();
+  const isSample = options.sample === true;
+
+  const allEventLines: string[] = [];
+
+  for (const task of tasks) {
+    if (!task || typeof task !== 'object') return '';
+    if (task.kind !== 'grower-cycle') return '';
+    if (typeof task.title !== 'string' || !task.title.trim()) return '';
+    if (typeof task.subtitle !== 'string') return '';
+    if (typeof task.id !== 'string' || !/^grower-cycle-v1-[a-f0-9]{32}$/.test(task.id)) return '';
+    if (seenIds.has(task.id)) return '';
+    seenIds.add(task.id);
+
+    if (typeof task.growerEventKind !== 'string' || !KNOWN_GROWER_EVENT_KINDS.has(task.growerEventKind)) {
+      return '';
+    }
+
+    if (typeof task.dueDate !== 'string') return '';
+    const absDate = resolveAbsoluteTaskDate(task.dueDate);
+    if (!absDate) return '';
+    const nextDay = addGrowerUtcDays(task.dueDate, 1);
+    if (!nextDay) return '';
+
+    const eventLines = writeTaskIcsEventLines(task, { now: clock, sample: isSample, bulk: true });
+    if (!eventLines) return '';
+    allEventLines.push(...eventLines);
+  }
+
+  const calName = isSample
+    ? 'DEMO · ImbewuField planned grower work dates'
+    : 'ImbewuField planned grower work dates';
+
+  const lines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//ImbewuField//Task//EN',
+    foldIcsLine(`X-WR-CALNAME:${escapeIcsText(calName)}`),
+    ...allEventLines,
+    'END:VCALENDAR',
+    '',
+  ];
+
+  return lines.join('\r\n');
 }
 
 export function downloadTaskIcs(task: BoardTask): boolean {

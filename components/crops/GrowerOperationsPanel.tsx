@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CropPlanState } from '@/lib/crop-plan';
 import type { GrowerCycleContext } from '@/lib/international/grower-cycle';
-import { buildGrowerBoardTasks, downloadTaskIcs, loadCompletedTaskIds, setCompletedTaskState, type BoardTask } from '@/lib/task-board';
+import { buildGrowerBoardTasks, buildGrowerTasksIcs, downloadTaskIcs, loadCompletedTaskIds, setCompletedTaskState, type BoardTask } from '@/lib/task-board';
 import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import { isJournalDate, MAX_NOTES_LEN } from '@/lib/field-journal';
 import type { GrowerFieldObservationInput, GrowerFieldObservationResult } from '@/lib/grower-field-observation';
@@ -26,14 +26,50 @@ type ObservationDraft = { epoch: number; state: GrowerOperationsPanelProps['stat
 const linkedTask = (task: BoardTask) => task.kind === 'grower-cycle' && 'growerJournalLink' in task
   && !!task.growerJournalLink && typeof task.growerJournalLink === 'object';
 
+function downloadCheckedCalendar(content: string, sample: boolean, current: () => boolean): boolean {
+  if (!content || !current() || typeof document === 'undefined') return false;
+  let url: string | null = null, anchor: HTMLAnchorElement | null = null, appended = false;
+  try {
+    const blob = new Blob([content], { type: 'text/calendar;charset=utf-8' });
+    if (!current()) return false;
+    url = URL.createObjectURL(blob);
+    if (!current()) return false;
+    anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = sample ? 'DEMO-grower-planned-dates.ics' : 'grower-planned-dates.ics';
+    if (!current()) return false;
+    document.body.appendChild(anchor); appended = true;
+    if (!current()) return false;
+    anchor.click();
+    return true;
+  } catch { return false; }
+  finally {
+    try { if (anchor && appended) document.body.removeChild(anchor); } catch { /* Delivery is separate from cleanup. */ }
+    try { if (url) URL.revokeObjectURL(url); } catch { /* A cleanup failure must not invite a second import. */ }
+  }
+}
+
 /** Exact grower dates have their own section; month-only catalogue jobs keep
  * their existing precision. Completion is a checklist, not a harvest record. */
 export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps) {
   const [completed, setCompleted] = useState<Set<string>>(new Set());
   const [clientSample, setClientSample] = useState(false);
   const [busy, setBusy] = useState(false), [message, setMessage] = useState('');
+  const [calendarBusy, setCalendarBusy] = useState(false);
+  const calendarPending = useRef<object | null>(null), calendarLifetime = useRef<object | null>(null);
+  const calendarRender = {}, currentCalendarRender = useRef(calendarRender); currentCalendarRender.current = calendarRender;
   const generation = useRef(0), live = useRef(props); live.current = props;
   const state = props.state;
+  const calendarContext = useRef({ state, check: props.checkCurrent, current: props.isCurrent, sample: props.sample });
+  const priorCalendarContext = calendarContext.current;
+  if (priorCalendarContext.state !== state || priorCalendarContext.check !== props.checkCurrent
+    || priorCalendarContext.current !== props.isCurrent || priorCalendarContext.sample !== props.sample) {
+    // A request that lost its source cannot regain authority when a later
+    // render happens to restore the same callbacks or sample flag. Retire
+    // only its lease; an individual task still needs its own busy cleanup.
+    calendarContext.current = { state, check: props.checkCurrent, current: props.isCurrent, sample: props.sample };
+    calendarPending.current = null;
+  }
   const observationEpoch = useRef(0), observationActive = useRef(true), observationPending = useRef<object | null>(null);
   const observationContext = useRef({ state, sample: props.sample });
   const [observation, setObservation] = useState<ObservationDraft | null>(null);
@@ -47,15 +83,22 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     observationLive.current = null;
   }
   useEffect(() => {
-    generation.current++; setBusy(false); setMessage(''); setCompleted(loadCompletedTaskIds()); setClientSample(isSampleMode());
+    generation.current++; calendarPending.current = null; setCalendarBusy(false);
+    setBusy(false); setMessage(''); setCompleted(loadCompletedTaskIds()); setClientSample(isSampleMode());
   }, [state]);
+  useEffect(() => { setCalendarBusy(false); }, [state, props.checkCurrent, props.isCurrent, props.sample]);
   useEffect(() => () => { generation.current++; }, []);
   useEffect(() => {
     observationActive.current = true;
-    const sampleChanged = () => { withdrawObservation(); setClientSample(isSampleMode()); };
+    const lifetime = {}; calendarLifetime.current = lifetime;
+    const sampleChanged = () => {
+      calendarPending.current = null; setCalendarBusy(false); setMessage('');
+      withdrawObservation(); setClientSample(isSampleMode());
+    };
     window.addEventListener(SAMPLE_MODE_EVENT, sampleChanged);
     return () => {
       observationActive.current = false; observationEpoch.current++; observationLive.current = null;
+      if (calendarLifetime.current === lifetime) { calendarLifetime.current = null; calendarPending.current = null; }
       window.removeEventListener(SAMPLE_MODE_EVENT, sampleChanged);
     };
   }, []);
@@ -68,7 +111,7 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
   const noSavedPlan = state.status === 'held' && state.heldSources.some(source =>
     !!source && typeof source === 'object' && 'reason' in source && source.reason === 'no-saved-plan');
   const currentObservation = observation?.epoch === observationEpoch.current && observationLive.current === observation ? observation : null;
-  const actionBusy = busy || observationSaving;
+  const actionBusy = busy || observationSaving || calendarBusy;
   function sourceIsCurrent(): boolean {
     try { return live.current.isCurrent(); } catch { return false; }
   }
@@ -76,7 +119,7 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     observationEpoch.current++; observationLive.current = null; setObservation(null); setObservationMessage(null);
   }
   function openObservation(task: BoardTask) {
-    if (observationPending.current || blockedLive.current || busy || state !== live.current.state
+    if (calendarPending.current || observationPending.current || blockedLive.current || busy || state !== live.current.state
       || state.status !== 'ready' || !linkedTask(task) || !live.current.onRecordObservation) return;
     if (!sourceIsCurrent()) {
       setObservationMessage({ epoch: observationEpoch.current, status: 'held', text: 'The saved plan or design changed. Check its current records before recording an observation.' }); return;
@@ -91,12 +134,12 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
       && isSampleMode() === draft.sample && observationEpoch.current === draft.epoch;
   }
   function editObservation(draft: ObservationDraft, change: Partial<Pick<ObservationDraft, 'observedDate' | 'note' | 'confirmed'>>) {
-    if (observationPending.current || blockedLive.current || !draftCurrent(draft)) return;
+    if (calendarPending.current || observationPending.current || blockedLive.current || !draftCurrent(draft)) return;
     const next = { ...draft, ...change, ...('confirmed' in change ? {} : { confirmed: false }) };
     observationLive.current = next; setObservation(next); setObservationMessage(null);
   }
   async function saveObservation(draft: ObservationDraft) {
-    if (observationPending.current || blockedLive.current || !draftCurrent(draft) || !linkedTask(draft.task)) return;
+    if (calendarPending.current || observationPending.current || blockedLive.current || !draftCurrent(draft) || !linkedTask(draft.task)) return;
     if (!isJournalDate(draft.observedDate) || !draft.note.trim() || draft.note.length > MAX_NOTES_LEN || !draft.confirmed) {
       setObservationMessage({ epoch: draft.epoch, status: 'held', text: 'Enter the date you observed this, write a note, and confirm it is your own observation.' }); return;
     }
@@ -134,7 +177,7 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     }
   }
   async function actOnTask(task: BoardTask, action: 'complete' | 'calendar') {
-    if (observationPending.current) return;
+    if (calendarPending.current || observationPending.current) return;
     const turn = ++generation.current, expected = state;
     setBusy(true); setMessage('');
     try {
@@ -157,6 +200,48 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
       if (turn === generation.current) setMessage('Could not check the current saved records. Try checking them again.');
     } finally { if (turn === generation.current) setBusy(false); }
   }
+  async function downloadAllPlannedDates() {
+    if (currentCalendarRender.current !== calendarRender || !calendarLifetime.current || calendarPending.current
+      || observationPending.current || actionBusy || state !== live.current.state || state.status !== 'ready'
+      || !state.book || !result.tasks.length || result.heldPlantings || state.heldSources.length) return;
+    const expected = state, checker = props.checkCurrent, sourceCurrent = props.isCurrent;
+    const propSample = props.sample, deviceSample = isSampleMode(), demo = propSample === true || deviceSample;
+    const lifetime = calendarLifetime.current, operation = {}, turn = ++generation.current;
+    // Keep only public event fields. Neither a journal link nor the source book
+    // belongs in a calendar payload or a detached task snapshot.
+    const tasks = Object.freeze(result.tasks.map(({ id, kind, title, subtitle, icon, dueDate, growerEventKind,
+      dueMonth, monthsAway, completed: done }) => Object.freeze({ id, kind, title, subtitle, icon, dueDate,
+      growerEventKind, dueMonth, monthsAway, completed: done })));
+    calendarPending.current = operation;
+    const owned = () => calendarLifetime.current === lifetime && calendarPending.current === operation
+      && generation.current === turn && live.current.state === expected && live.current.checkCurrent === checker
+      && live.current.isCurrent === sourceCurrent && live.current.sample === propSample && isSampleMode() === deviceSample;
+    const current = () => {
+      if (!owned()) return false;
+      try { return sourceCurrent() === true && owned(); } catch { return false; }
+    };
+    try {
+      if (!current()) { if (owned()) setMessage('The saved plan or design changed. Check its current records before continuing.'); return; }
+      setCalendarBusy(true); setMessage('');
+      const checked = await checker();
+      if (!owned()) return;
+      if (checked !== true || !current()) {
+        if (owned()) setMessage('The saved plan or design changed. Check its current records before continuing.'); return;
+      }
+      const content = buildGrowerTasksIcs(tasks, { sample: demo });
+      if (!current()) return;
+      const downloaded = downloadCheckedCalendar(content, demo, current);
+      if (current()) setMessage(downloaded ? 'Calendar file prepared from all represented checked planned dates. It records no observed work.'
+        : 'The complete calendar file could not be prepared. No partial calendar was downloaded.');
+    } catch {
+      if (owned()) setMessage('Could not prepare all checked planned dates. Check the saved records and try again.');
+    } finally {
+      if (calendarPending.current === operation) {
+        calendarPending.current = null;
+        if (calendarLifetime.current === lifetime) setCalendarBusy(false);
+      }
+    }
+  }
   return <section lang="en" aria-label="Dated work from your estimates"
     className="mb-5 space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] p-4 text-sm text-[var(--text-primary)]">
     <h2 className="font-display text-lg font-semibold">Dated work from your estimates</h2>
@@ -172,6 +257,12 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     {state.status === 'ready' && <>
       {(result.heldPlantings > 0 || state.heldSources.length > 0) && <p role="status">Some saved cycles or design measurements need review. Their work remains withheld; the saved records are retained.</p>}
       {!result.tasks.length && <p>No saved dated cycles can supply work here. Unaccepted proposals stay in review.</p>}
+      {result.tasks.length > 0 && <div className="space-y-2">
+        <button type="button" className={button} disabled={actionBusy || result.heldPlantings > 0 || state.heldSources.length > 0}
+          onClick={() => void downloadAllPlannedDates()}>Download all checked planned dates</button>
+        <p>One calendar file for the planned dates shown here, including checklist items marked done. These are estimates, not recorded work.</p>
+        {(result.heldPlantings > 0 || state.heldSources.length > 0) && <p>Review the held cycles or source measurements before downloading all dates together.</p>}
+      </div>}
       <ul className="space-y-3">{result.tasks.map(task => <li key={task.id} className="space-y-2 rounded-xl border border-[var(--border)] p-3">
         <p className="font-semibold">{task.title}</p>
         <p><time dateTime={task.dueDate}>{task.dueDate}</time> (UTC date)</p>
