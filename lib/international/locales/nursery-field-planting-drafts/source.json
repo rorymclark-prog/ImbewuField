@@ -12,7 +12,7 @@
     },
     {
       "path": "components/crops/SavedGrowerNurseryReviewPanel.tsx",
-      "sha256": "1111cb197e328db72300121c1d50c038a360917e5d8a6655fd8b604cc7f314b3"
+      "sha256": "0779b55c4a8d13be5ace0de0855858a7844f22901fc26ba618b30de496a0af25"
     }
   ],
   "normalization": "Selected actual JSX whitespace collapsed; string literals unchanged. Prefix/suffix around the planned date are separately frozen; no dynamic date or crop-name translation. Not whole-app translation. Shared older journal copy is excluded.",
