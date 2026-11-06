@@ -1,0 +1,32 @@
+{
+  "locale": "ts",
+  "sourceSha256": "1b4857be57afdbda2b073d118a244eef8ddf9299a42d5c4af7b88594ea80b8e4",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "coreMap.release.01",
+      "english": "Review conflicting shape versions on your map.",
+      "sha256": "12dd5e1a2d7528f5562b185cb34860fd1dc2fa1f60f82496ef0b2fec48d3bcb8",
+      "translation": "Kambisisa tivhezheni ta swivumbeko leti lwisanaka eka mepe wa wena."
+    },
+    {
+      "key": "coreMap.release.02",
+      "english": "Review map shape versions",
+      "sha256": "a3086559116877433985a0b4ee0cc9ac9ac111942f907596ad353f5762cdf5b8",
+      "translation": "Kambisisa tivhezheni ta swivumbeko swa mepe"
+    },
+    {
+      "key": "coreMap.release.03",
+      "english": "Map → Shapes needing your decision",
+      "sha256": "81b419b65884f742606afd1407f4947850d2458d068d860ddd9713880a46528d",
+      "translation": "Mepe → Swivumbeko leswi lavaka xiboho xa wena"
+    },
+    {
+      "key": "coreMap.release.04",
+      "english": "Open the list of shapes needing a decision. Review each preserved version before choosing which to keep, or keep both when offered. Download a backup when the map offers one; older app versions still need care.",
+      "sha256": "6c58ca8fc1c337805525ecff141f28395269e6382cb0ffd407e3149606acc3a5",
+      "translation": "Pfula nxaxamelo wa swivumbeko leswi lavaka xiboho. Kambisisa vhezheni yin’wana na yin’wana leyi hlayisiweke u nga si hlawula leyi u faneleke ku yi hlayisa, kumbe u hlayisa ha timbirhi loko swi nyikiwile. Dawuniloda khophi yo hlayisa loko mepe wu yi nyika; tivhezheni ta khale ta apu ta ha lava vukheta."
+    }
+  ]
+}

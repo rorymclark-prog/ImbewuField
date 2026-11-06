@@ -1,0 +1,27 @@
+{
+  "order": "agy-core-map-conflict-copy-2026-11-06",
+  "status": "CORRECTED",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "candidates": 16,
+  "messagesPerLocale": 4,
+  "locales": 4,
+  "localeList": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "workers": 0,
+  "workersActive": 0,
+  "validation": "NOT RUN — coordinator-owned",
+  "sourceSha256": "1b4857be57afdbda2b073d118a244eef8ddf9299a42d5c4af7b88594ea80b8e4",
+  "outputsWritten": [
+    "zu.json",
+    "st.json",
+    "ts.json",
+    "ve.json",
+    "review-notes.md",
+    "status.json"
+  ]
+}

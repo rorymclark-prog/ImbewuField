@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "baseline": "5c12307aa26cdb5d9ebb57814a69b6d4cb0d1f1e",
+  "scope": "Authentic v1 user-sync characterization with separately instantiated byte-identical historical helpers; not an entire frozen browser build.",
+  "files": {
+    "lib/user-sync.ts": {
+      "bytes": 37753,
+      "sha256": "b11d9b1bbe9cf92c7c7683403fefca9988375deafd7cb57ab6b155bf809e0750",
+      "payload": "user-sync.ts.txt"
+    },
+    "lib/account-local-storage.ts": {
+      "bytes": 7325,
+      "sha256": "e752fc2d0e5b5404a41fcf6372292ea96a6e26cd0176780932d619e404e4c16a",
+      "payload": "verified-current-core"
+    },
+    "lib/local-tombstones.ts": {
+      "bytes": 3878,
+      "sha256": "6cdbe0a0ced5bf2d245f326db422633a96368a129bdc190e83797ae392c8c3c6",
+      "payload": "verified-current-core"
+    },
+    "lib/sample-mode.ts": {
+      "bytes": 21484,
+      "sha256": "97d38d04eb782bbbf56170ce9e5a54febb3523e2cc19789db7e864ed6f9b62d7",
+      "payload": "verified-current-core"
+    },
+    "lib/international/site-context.ts": {
+      "bytes": 8252,
+      "sha256": "e4fd20420067b3c998f26287392b1abfb3a545a9bc07d6148c5d41cfd23a74e1",
+      "payload": "verified-current-core"
+    },
+    "lib/international/place-context-merge.ts": {
+      "bytes": 4696,
+      "sha256": "85f91c47fc416b61274ccf52881c7e330ff72a7396871ac303f3c79c410e6e10",
+      "payload": "verified-current-core"
+    },
+    "lib/site-id.ts": {
+      "bytes": 1114,
+      "sha256": "34ba834c887a38c539b97fe43da9f1db6a923dec810f24f6301659a610d3a550",
+      "payload": "verified-current-core"
+    }
+  },
+  "currentDependencyEdges": {
+    "lib/sample-mode.ts": [
+      "./demo-farm",
+      "./consent"
+    ]
+  },
+  "limitations": [
+    "The existing provider test supplies synthetic Firestore and Firebase-init boundaries.",
+    "Sample mode remains inactive in these old-client cases; eager demo/consent dependency graphs load from current core.",
+    "This fixture does not close emulator, browser, rollout or the original v1 loss TODO gates."
+  ]
+}
