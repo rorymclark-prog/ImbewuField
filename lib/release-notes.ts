@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', sha: '9fcdb24fbe12', changes: [
+    'Find crop planning from your own estimates on the country evidence page.',
+  ], tour: [{ title: 'Find your planning route', where: 'International reference tools → Country evidence → Plan from your own growing estimates', href: '/international',
+    detail: 'Open the crop planner, confirm your saved mapped site’s country details and use your own growing estimates. Country research choices do not save site details or approve local crop calendars and catalogue guidance.' }] },
   { when: '6 November 2026', sha: '4bf1cace547c', changes: [
     'Plan household food or trial growing from your own harvest target, without a buyer order.',
   ], tour: [{ title: 'Plan food or a growing trial', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
