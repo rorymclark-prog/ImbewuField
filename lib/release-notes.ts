@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 November 2026', sha: '2247c7a7a', changes: [
+  { when: '6 November 2026', sha: '42b62cc5ce37', changes: [
     "Check an NWS reference for a saved US point.",
   ], tour: [{ title: "Send a coarsened point for a weather reference", where: "Crop planner → Site country and region → NWS reference for this saved point", href: '/facilitator/crops',
     detail: "For a site saved with a US country description, explicitly send its coordinates rounded to four decimal places to NWS. The Washington demo stays separate. These reference values do not change crop advice or planning dates. Changing the site or account withdraws the display; a request already sent upstream may continue." }] },

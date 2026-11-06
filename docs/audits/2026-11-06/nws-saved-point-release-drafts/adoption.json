@@ -45,5 +45,7 @@
       "sha256": "ae71d1ae69858eef3ae1e7c89fe97aad1d451d5dd952bf79b768f397423741b8",
       "bytes": 1035
     }
-  ]
+  ],
+  "codeHead": "42b62cc5ce3792bb8cd1e889d153de60c48b484a",
+  "sourceReconciliation": "Frozen four English messages remain exact after metadata-only code stamp; actual file hash is recorded separately from frozen source packet."
 }
