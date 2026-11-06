@@ -136,6 +136,35 @@ function unwrapSentenceRepairSuccessor(file: string, bytes: string | Uint8Array)
   return before;
 }
 
+type HistoricalPhase = 'afterAB' | 'afterA' | 'afterB' | 'afterC' | 'main69';
+const reconstructionAuthority = sha(JSON.stringify([proofBytes, sentenceRepairBytes, baBytes, cBytes, bBytes, aBytes].map(bytes => sha(bytes))));
+const reconstructedPhases = new Map<string, { identity: string; output: string }>();
+
+function reconstructPhase(file: string, phase: HistoricalPhase, integrated: string, expected: Buffer, verify: (output: string) => void): string {
+  const slot = JSON.stringify([file, phase]);
+  const identity = JSON.stringify([sha(integrated), sha(expected), reconstructionAuthority]);
+  const cached = reconstructedPhases.get(slot);
+  if (cached?.identity === identity) {
+    verify(cached.output);
+    return cached.output;
+  }
+  let projected = integrated;
+  const retained: Set<'A' | 'B' | 'C'> = phase === 'afterA' ? new Set(['A'])
+    : phase === 'afterB' ? new Set(['B'])
+    : phase === 'afterC' ? new Set(['C'])
+    : phase === 'afterAB' ? new Set(['A', 'B']) : new Set();
+  if (file === 'app/sw.js/route.ts') {
+    for (const owner of ['C', 'A', 'B'] as const) if (!retained.has(owner)) projected = removeWorkerOwner(projected, owner);
+  } else projected = reverseManifestOwners(projected, retained);
+  verify(projected);
+  // Import-time history repeatedly rebuilds these same ten file/phase pairs.
+  // Only their authenticated surgical result is shared: every caller still reads
+  // live sources and snapshots and checks the complete result before reuse.
+  if (!reconstructedPhases.has(slot) && reconstructedPhases.size >= 10) reconstructedPhases.delete(reconstructedPhases.keys().next().value!);
+  reconstructedPhases.set(slot, { identity, output: projected });
+  return projected;
+}
+
 export function ensureStudyBACCompositionCurrent(): void {
   return withBlindReviewedCorrectionReadScope(() => {
   assert.equal(proof.status, 'prepared-unreviewed-B-A-C-full-source-history-proof');
@@ -148,19 +177,14 @@ export function ensureStudyBACCompositionCurrent(): void {
       assert.deepEqual(unwrapSentenceRepairSuccessor(file, live), integrated,
         `${file}: complete-current successor projection preserves every unlisted B+A+C byte`);
     } else assert.deepEqual(live, integrated, `${file}: complete integrated live source and every unlisted byte`);
-    const phases = ['main69', 'afterB', 'afterA', 'afterC', 'afterAB'];
+    const phases: HistoricalPhase[] = ['main69', 'afterB', 'afterA', 'afterC', 'afterAB'];
     for (const phase of phases) snapshot(file, phase);
     const worker = file === 'app/sw.js/route.ts';
     for (const phase of phases) {
-      let projected = integrated.toString();
-      const retained: Set<'A' | 'B' | 'C'> = phase === 'afterA' ? new Set(['A'])
-        : phase === 'afterB' ? new Set(['B'])
-        : phase === 'afterC' ? new Set(['C'])
-        : phase === 'afterAB' ? new Set(['A', 'B']) : new Set();
-      if (worker) {
-        for (const owner of ['C', 'A', 'B'] as const) if (!retained.has(owner)) projected = removeWorkerOwner(projected, owner);
-      } else projected = reverseManifestOwners(projected, retained);
-      assert.deepEqual(Buffer.from(projected), snapshot(file, phase), `${file}: surgical ${phase} projection restores the exact immutable full-file snapshot`);
+      const expected = snapshot(file, phase);
+      reconstructPhase(file, phase, integrated.toString(), expected, projected => {
+        assert.deepEqual(Buffer.from(projected), expected, `${file}: surgical ${phase} projection restores the exact immutable full-file snapshot`);
+      });
     }
     if (worker) {
       const activation = integrated.toString().slice(integrated.toString().indexOf("self.addEventListener('activate'"));
@@ -179,7 +203,7 @@ export function ensureStudyBACCompositionCurrent(): void {
   });
 }
 
-function project(file: string, bytes: string | Uint8Array, phase: 'afterAB' | 'afterA' | 'afterB' | 'afterC' | 'main69'): string | Uint8Array {
+function project(file: string, bytes: string | Uint8Array, phase: HistoricalPhase): string | Uint8Array {
   bytes = blindReviewedSourceBefore(file, bytes);
   ensureStudyBACCompositionCurrent();
   const integrated = snapshot(file, 'integrated');
@@ -191,16 +215,10 @@ function project(file: string, bytes: string | Uint8Array, phase: 'afterAB' | 'a
     : raw;
   if (sha(supplied) === sha(expected)) return bytes;
   assert.equal(sha(supplied), sha(integrated), `${file}: only a byte-exact integrated source may be projected; unknown or corrupted owners are rejected`);
-  let restored = supplied.toString();
-  const retained: Set<'A' | 'B' | 'C'> = phase === 'afterA' ? new Set(['A'])
-    : phase === 'afterB' ? new Set(['B'])
-    : phase === 'afterC' ? new Set(['C'])
-    : phase === 'afterAB' ? new Set(['A', 'B']) : new Set();
-  if (file === 'app/sw.js/route.ts') {
-    for (const owner of ['C', 'A', 'B'] as const) if (!retained.has(owner)) restored = removeWorkerOwner(restored, owner);
-  } else restored = reverseManifestOwners(restored, retained);
-  assert.equal(Buffer.byteLength(restored), expected.byteLength, `${file}: exact ${phase} projected byte size`);
-  assert.equal(sha(restored), sha(expected), `${file}: exact ${phase} full-file projected digest`);
+  const restored = reconstructPhase(file, phase, supplied.toString(), expected, output => {
+    assert.equal(Buffer.byteLength(output), expected.byteLength, `${file}: exact ${phase} projected byte size`);
+    assert.equal(sha(output), sha(expected), `${file}: exact ${phase} full-file projected digest`);
+  });
   return typeof bytes === 'string' ? restored : Buffer.from(restored);
 }
 
