@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed AGY seed worksheet identification captions; English remains paired. See seed-identification-release-drafts/adoption.json.
+  "Show crop names and your labels in seed worksheets.": "Komba mavito ya swibyariwa na swilebele swa wena eka maphepha ya mintirho ya mbewu.",
+  "Identify planned seed supply groups": "Tiva mintlawa ya mphakelo wa mbewu leyi kunguhatiweke",
+  "Crop planner → Saved planned nursery batches → Seed sourcing review": "Mupulani wa swibyariwa → Mintlawa ya xirhapa xo kurisa swimilana leyi kunguhatiweke leyi hlayisiweke → Nkambelo wa ku kumiwa ka mbewu",
+  "Add your own supply-group label and review crop names from the saved nursery batches you selected. The CSV worksheet includes your entered labels. Missing identification stays visible, and crop names do not confirm interchangeable varieties, seed lots or observed stock.": "Engetela xilebele xa wena xa ntlawa wa mphakelo kutani u kambela mavito ya swibyariwa ku suka eka mintlawa ya xirhapa leyi hlayisiweke leyi u yi hlawuleke. Phepha ra mintirho ra CSV ri katsa swilebele leswi u swi ngheniseke. Vutitivisi lebyi kayivelaka byi tshama byi vonaka, naswona mavito ya swibyariwa a ma tiyisisi tinxaka leti cincanaka, mintlawa ya mbewu kumbe xitoko lexi voniweke hi mahlo.",
   // Unreviewed source-paired seed sourcing captions; English stays visible. See seed-sourcing-release-drafts/adoption.json.
   "Review seed allocations and planned pack counts.": "Kambela miavelo ya mbewu na tinhlayo ta mapakete lama kunguhatiweke.",
   "Review planned seed sourcing": "Kambela ku kumiwa ka mbewu loku kunguhatiweke",

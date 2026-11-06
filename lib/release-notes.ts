@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', sha: '74ab71b9b', changes: [
+    'Show crop names and your labels in seed worksheets.',
+  ], tour: [{ title: 'Identify planned seed supply groups', where: 'Crop planner → Saved planned nursery batches → Seed sourcing review', href: '/facilitator/crops',
+    detail: 'Add your own supply-group label and review crop names from the saved nursery batches you selected. The CSV worksheet includes your entered labels. Missing identification stays visible, and crop names do not confirm interchangeable varieties, seed lots or observed stock.' }] },
   { when: '6 November 2026', sha: '38c04e5126a3', changes: [
     'Review seed allocations and planned pack counts.',
   ], tour: [{ title: 'Review planned seed sourcing', where: 'Crop planner → Nursery requirements → Seed sourcing', href: '/facilitator/crops',
