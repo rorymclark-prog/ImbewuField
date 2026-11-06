@@ -4,7 +4,8 @@ import { exactPdfTextWriter } from './pdf-exact-text';
 import type { PlanBed } from './crop-plan';
 import type { NurseryForecast, NurseryRange } from './crop-export-schedule';
 import { csvCell } from './journal-export';
-import { projectGrowerNurseryPreparation, type GrowerNurseryResult, type GrowerNurseryBatchReferenceView } from './international/grower-nursery';
+import { projectGrowerNurseryPreparation, type GrowerNurseryResult, type GrowerNurseryBatchReferenceView, type GrowerNurseryRequest } from './international/grower-nursery';
+import { reviewGrowerSeedSourcing } from './international/grower-seed-sourcing';
 
 /** Static delivery copy only; never include entered references in an error. */
 export class NurseryReferenceExportError extends Error {
@@ -533,4 +534,89 @@ export function buildGrowerNurseryPreparationCsv(result: GrowerNurseryResult, op
   }
   return `\uFEFF${[columns, ...rows.map(row => columns.map(column => row[column] ?? ''))]
     .map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
+}
+
+const SEED_SOURCING_COLUMNS = [
+  'record_type',
+  'plan_basis',
+  'source_verification',
+  'coverage',
+  'whole_farm_coverage',
+  'review_status',
+  'nursery_review_status',
+  'horizon_start_utc',
+  'horizon_end_exclusive_utc',
+  'represented_batch_count',
+  'assigned_batch_count',
+  'unassigned_batch_count',
+  'supply_group_number',
+  'group_status',
+  'known_required_seed_subtotal',
+  'required_seeds',
+  'additional_seeds_needed',
+  'planned_packs',
+  'planned_pack_seeds',
+  'guidance',
+] as const;
+
+type SeedSourcingColumn = typeof SEED_SOURCING_COLUMNS[number];
+type SeedSourcingRow = Partial<Record<SeedSourcingColumn, string | number>>;
+
+/** Export the seed sourcing planning review verbatim from canonical projection.
+ * Does not calculate requirements, assert actor freshness or record stock. */
+export function buildGrowerSeedSourcingCsv(
+  result: GrowerNurseryResult,
+  currentRequest: GrowerNurseryRequest,
+  groups: unknown,
+  options: Pick<NurseryCsvOptions, 'sample'> = {}
+): string {
+  const projection = reviewGrowerSeedSourcing({ result, currentRequest, groups });
+  if (projection.status === 'unavailable') {
+    throw new RangeError('A current saved nursery review is required for seed sourcing export.');
+  }
+
+  const context: SeedSourcingRow = {
+    plan_basis: options.sample
+      ? 'DEMO — planned seed sourcing estimates'
+      : 'Planned seed sourcing estimates',
+    source_verification: projection.sourceVerification,
+    coverage: projection.coverage,
+    whole_farm_coverage: projection.wholeFarmCoverage,
+    review_status: projection.status,
+    nursery_review_status: projection.nurseryReviewStatus,
+    horizon_start_utc: projection.horizon?.start ?? 'unknown',
+    horizon_end_exclusive_utc: projection.horizon?.endExclusive ?? 'unknown',
+    represented_batch_count: projection.representedBatchCount,
+    assigned_batch_count: projection.assignedBatchCount,
+    unassigned_batch_count: projection.unassignedBatchIds.length,
+    guidance: projection.guidance,
+  };
+
+  const rows: SeedSourcingRow[] = [
+    {
+      ...context,
+      record_type: 'guidance',
+    },
+  ];
+
+  for (const group of projection.groups) {
+    rows.push({
+      ...context,
+      record_type: 'supply_group',
+      supply_group_number: group.index + 1,
+      group_status: group.status,
+      known_required_seed_subtotal: group.knownRequiredSeedsSubtotal ?? 'unknown',
+      required_seeds: group.requiredSeeds ?? 'unknown',
+      additional_seeds_needed: group.counts?.neededSeeds ?? 'unknown',
+      planned_packs: group.counts?.packsNeeded ?? 'unknown',
+      planned_pack_seeds: group.counts?.plannedPackSeeds ?? 'unknown',
+    });
+  }
+
+  return `\uFEFF${[
+    SEED_SOURCING_COLUMNS,
+    ...rows.map((row) => SEED_SOURCING_COLUMNS.map((col) => row[col] ?? '')),
+  ]
+    .map((row) => row.map(csvCell).join(','))
+    .join('\r\n')}\r\n`;
 }

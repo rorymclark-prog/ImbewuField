@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired seed sourcing captions; English stays visible. See seed-sourcing-release-drafts/adoption.json.
+  "Review seed allocations and planned pack counts.": "Ṱolani zwikovhelo zwa mbeu na mbalotshalo dza phakhethe dzo pulaniwaho.",
+  "Review planned seed sourcing": "Ṱolani u wanala ha mbeu ho pulaniwaho",
+  "Crop planner → Nursery requirements → Seed sourcing": "Mupulani wa zwimela → Zwṱoḓea zwa fhethu ha u alusa zwimela → U wanala ha mbeu",
+  "Open the nursery review for saved planned batches, add the batches that can share a seed supply, and enter your allocation and seeds per pack. Review the planned requirements before downloading the CSV. Blank counts stay unknown; these inputs do not record seed stock, place an order or cover all farm seed demand.": "Vulani tsedzuluso ya fhethu ha u alusa zwimela ya zwigwada zwo pulaniwaho zwo vhulungwaho, engedzani zwigwada zwine zwa nga kovhelana mbeu ine ya wanala, nahone ni dzhenise tshipiḓa tshaṋu na mbeu kha phakhethe iṅwe na iṅwe. Ṱolani zwṱoḓea zwo pulaniwaho musi ni sa athu u kopa CSV. Mbalo dzi si na tshithu dzi dzula dzi sa ḓivhei; hezwi zwo dzheniswaho a zwi rekhodi tshitoko tsha mbeu, a zwi iti oda kana u khumbedza ṱhoḓea yoṱhe ya mbeu ya bulasi.",
   // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
   "Keep saved request details with your plan and exports.": "Vhulungani zwidodombedzwa zwa khumbelo zwo vhulungwaho na pulane yaṋu na zwirumelwa nnḓa.",
   "Check saved request details": "Ṱolani zwidodombedzwa zwa khumbelo zwo vhulungwaho",
