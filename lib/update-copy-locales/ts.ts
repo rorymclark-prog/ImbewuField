@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
+  "Keep saved request details with your plan and exports.": "Hlayisa vuxokoxoko bya xikombelo lebyi hlayisiweke na pulani ya wena na leswi rhumeriwaka ehandle.",
+  "Check saved request details": "Kambela vuxokoxoko bya xikombelo lebyi hlayisiweke",
+  "Crop planner → Nursery requirements for saved planned batches": "Mupulani wa swibyariwa → Swilaveko swa xirhapa xo kurisa swimilana swa mintlawa leyi kunguhatiweke leyi hlayisiweke",
+  "Compare a saved batch’s purpose, original entered weight and request dates in nursery, task and report views. Repeated weights describe the whole request and must not be added together. Another site’s records remain held; these details do not confirm current field geometry or an observed harvest.": "Pimanisa xikongomelo xa ntlawa lowu hlayisiweke, ntiko wo sungula lowu nghenisiweke na masiku ya xikombelo eka mavonelo ya xirhapa xo kurisa swimilana, mintirho na swiviko. Mintiko leyi phindaphindiweke yi hlamusela xikombelo hinkwaxo naswona a yi fanelanga ku hlanganisiwa swin’we. Tirhekhodo ta sayiti yin’wana ti tshama ti khomiwile; vuxokoxoko lebyi a byi tiyisisi xivumbeko xa nsimu ya sweswi kumbe ntshovelo lowu voniweke.",
   // Unreviewed source-paired seven-language worksheet captions; English stays visible. See mass-asia-review-release-drafts/adoption.json.
   "Compare harvest-weight wording drafts in seven languages.": "Pimanisa matsalo ya marito ya ntikelo wa ntshovelo hi tindzimi ta nkombo.",
   "Review seven harvest-weight draft languages": "Kambisisa tindzimi ta nkombo ta matsalo ya ntikelo wa ntshovelo",

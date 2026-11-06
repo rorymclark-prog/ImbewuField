@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
+  "Keep saved request details with your plan and exports.": "Vhulungani zwidodombedzwa zwa khumbelo zwo vhulungwaho na pulane yaṋu na zwirumelwa nnḓa.",
+  "Check saved request details": "Ṱolani zwidodombedzwa zwa khumbelo zwo vhulungwaho",
+  "Crop planner → Nursery requirements for saved planned batches": "Mupulani wa zwimela → Zwṱoḓea zwa fhethu ha u alusa zwimela zwa zwigwada zwo pulaniwaho zwo vhulungwaho",
+  "Compare a saved batch’s purpose, original entered weight and request dates in nursery, task and report views. Repeated weights describe the whole request and must not be added together. Another site’s records remain held; these details do not confirm current field geometry or an observed harvest.": "Vhambedzani ndivho ya tshigwada tsho vhulungwaho, tshileme tsho dzheniswaho tsha u thoma na maḓuvha a khumbelo kha mivhono ya fhethu ha u alusa zwimela, mishumo na mivhigo. Zwileme zwo vusuluswaho zwi ṱalusa khumbelo yoṱhe nahone a zwo ngo tea u ṱanganyiswa khathihi. Rekhodo dza iṅwe fhethu dzi dzula dzo farelelwa; zwidodombedzwa hezwi a zwi khwaṱhisedzi tshiimo tsha tsimu tsha zwino kana khaṋo yo vhonwaho.",
   // Unreviewed source-paired seven-language worksheet captions; English stays visible. See mass-asia-review-release-drafts/adoption.json.
   "Compare harvest-weight wording drafts in seven languages.": "Vhambedzani mitalo ya maipfi a vhuleme ha khaṋo nga nyambo dza sumbe.",
   "Review seven harvest-weight draft languages": "Ṱolani nyambo dza sumbe dza mitalo ya vhuleme ha khaṋo",

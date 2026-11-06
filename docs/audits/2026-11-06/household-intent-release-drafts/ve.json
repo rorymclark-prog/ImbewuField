@@ -1,0 +1,32 @@
+{
+  "locale": "ve",
+  "sourceSha256": "183d285ea47d6cf9d01f8229f1181e5f8ca05e8e4e166d8ca9cd40a2d926eebf",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "householdIntent.release.01",
+      "english": "Keep saved request details with your plan and exports.",
+      "sha256": "0b9817a465052a120755bf97b1010cf06eaa251d8a2e521a854d324c96dbec79",
+      "translation": "Vhulungani zwidodombedzwa zwa khumbelo zwo vhulungwaho na pulane yaṋu na zwirumelwa nnḓa."
+    },
+    {
+      "key": "householdIntent.release.02",
+      "english": "Check saved request details",
+      "sha256": "349660604bf4a7a0df8f3485f247a9aa373f7731deefd6b52f23458005ef917d",
+      "translation": "Ṱolani zwidodombedzwa zwa khumbelo zwo vhulungwaho"
+    },
+    {
+      "key": "householdIntent.release.03",
+      "english": "Crop planner → Nursery requirements for saved planned batches",
+      "sha256": "c23af486bbed29f0942011cffca6bb97ef5d6ebf1b89b6f6f9f29cead15b5d68",
+      "translation": "Mupulani wa zwimela → Zwṱoḓea zwa fhethu ha u alusa zwimela zwa zwigwada zwo pulaniwaho zwo vhulungwaho"
+    },
+    {
+      "key": "householdIntent.release.04",
+      "english": "Compare a saved batch’s purpose, original entered weight and request dates in nursery, task and report views. Repeated weights describe the whole request and must not be added together. Another site’s records remain held; these details do not confirm current field geometry or an observed harvest.",
+      "sha256": "34c4c13fabee475e7b87f33888052dbc50153178c3a0cc8a80ba64f6e5643ef7",
+      "translation": "Vhambedzani ndivho ya tshigwada tsho vhulungwaho, tshileme tsho dzheniswaho tsha u thoma na maḓuvha a khumbelo kha mivhono ya fhethu ha u alusa zwimela, mishumo na mivhigo. Zwileme zwo vusuluswaho zwi ṱalusa khumbelo yoṱhe nahone a zwo ngo tea u ṱanganyiswa khathihi. Rekhodo dza iṅwe fhethu dzi dzula dzo farelelwa; zwidodombedzwa hezwi a zwi khwaṱhisedzi tshiimo tsha tsimu tsha zwino kana khaṋo yo vhonwaho."
+    }
+  ]
+}
