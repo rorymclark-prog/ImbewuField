@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import ts from 'typescript';
 
 // Simple / All tools (lib/app-level.ts) for the Farm map site panel (components/DataPanel.tsx)
 // and its fixes — swarm/map-simple. Source-text guards, in the style tests/tap-targets.test.ts
@@ -82,7 +83,45 @@ test('a saved-site survey stays open when location data is unavailable in sample
 
 test('the Design Studio pill and the survey photo tip use Lucide icons, not emoji', () => {
   assert.doesNotMatch(FARMER_PAGE, /aria-hidden>🎨</, 'the palette emoji is still in the Design Studio pill');
-  assert.match(FARMER_PAGE, /<Palette size=\{15\} aria-hidden \/>/, 'the Design Studio pill must use the Lucide Palette icon');
+  // The exact closing-tag guard rejected a sizing class needed to keep this icon from
+  // shrinking in the phone header. Check the icon identity and accessibility rule instead.
+  const palette = (source: string): { valid: boolean; file: ts.SourceFile; found: ts.JsxSelfClosingElement | undefined } => {
+    const file = ts.createSourceFile('farmer.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+    const imported = file.statements.some(node => ts.isImportDeclaration(node)
+      && ts.isStringLiteral(node.moduleSpecifier) && node.moduleSpecifier.text === 'lucide-react'
+      && node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)
+      && node.importClause.namedBindings.elements.some(entry => entry.name.text === 'Palette'
+        && (entry.propertyName?.text ?? entry.name.text) === 'Palette'));
+    let found: ts.JsxSelfClosingElement | undefined;
+    const visit = (node: ts.Node) => {
+      if (ts.isJsxSelfClosingElement(node) && node.tagName.getText(file) === 'Palette') {
+        const attrs = node.attributes.properties;
+        const size = attrs.find(attr => ts.isJsxAttribute(attr) && attr.name.getText(file) === 'size');
+        const hidden = attrs.find(attr => ts.isJsxAttribute(attr) && attr.name.getText(file) === 'aria-hidden');
+        if (!attrs.some(attr => ts.isJsxSpreadAttribute(attr))
+          && size && ts.isJsxAttribute(size) && size.initializer && ts.isJsxExpression(size.initializer)
+          && size.initializer.expression && ts.isNumericLiteral(size.initializer.expression)
+          && size.initializer.expression.text === '15'
+          && hidden && ts.isJsxAttribute(hidden) && !hidden.initializer) found = node;
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(file);
+    return { valid: imported && !!found, file, found };
+  };
+  const actual = palette(FARMER_PAGE);
+  assert.equal(actual.valid, true, 'the Design Studio pill needs the 15px decorative Lucide Palette icon');
+  assert.ok(actual.found);
+  for (const replacement of ['<span aria-hidden>🎨</span>', '<Other size={15} aria-hidden />',
+    '<Palette size={14} aria-hidden />', '<Palette size={15} />',
+    '<Palette size={15} aria-hidden {...overrides} />']) {
+    const changed: string = FARMER_PAGE.slice(0, actual.found.getStart(actual.file)) + replacement
+      + FARMER_PAGE.slice(actual.found.getEnd());
+    assert.equal(palette(changed).valid, false, `the icon check must reject ${replacement}`);
+  }
+  const wrongImport = FARMER_PAGE.replace("from 'lucide-react'", "from 'another-icon-package'");
+  assert.notEqual(wrongImport, FARMER_PAGE);
+  assert.equal(palette(wrongImport).valid, false, 'the component name alone does not prove a Lucide icon');
   assert.doesNotMatch(SURVEY_SHEET, /📷/, 'the camera emoji is still in the photo tip');
   assert.match(SURVEY_SHEET, /<Camera size=\{14\} aria-hidden \/>/, 'the photo tip must use the Lucide Camera icon');
 });

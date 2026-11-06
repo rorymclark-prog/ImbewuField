@@ -597,18 +597,21 @@ function HomeInner() {
               live here). Now visible ON MOBILE too: farmers on phones could not find the zones
               because this was desktop-only. The older Konva canvas at /facilitator (still hosts
               the AI producer) stays reachable via the burger menu; role switcher stays desktop-only. */}
+          {/* Historical 390px phone evidence showed this action clipped past the viewport edge in sample mode. */}
           <Link
             href={selected ? `/design?lat=${selected.lat.toFixed(5)}&lon=${selected.lon.toFixed(5)}` : '/design'}
-            className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
+            aria-label={t('designStudioLabel')}
+            title={t('designStudioLabel')}
+            className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 shrink md:shrink-0"
             style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--color-forest-800)' }}
           >
-            <Palette size={15} aria-hidden />
+            <Palette size={15} aria-hidden className="flex-shrink-0" />
             {/* zu-04: this pill used to grow a second English line here whenever lang === 'zu'
                 ('Isitudiyo Sokuklama' / 'Uhlaka olungakabuyekezwa · English: Design Studio'),
                 turning a one-line nav pill into two. The draft disclosure now lives once, under
                 the header, in the shared <LanguageDraftNote /> (see DataPanel.tsx) — this pill is
                 just its label, in either language. */}
-            <span>{t('designStudioLabel')}</span>
+            <span className="min-w-0 truncate md:overflow-visible md:text-clip md:whitespace-normal">{t('designStudioLabel')}</span>
           </Link>
           {buildInfo?.sha && (
             <div
