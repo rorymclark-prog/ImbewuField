@@ -1,0 +1,99 @@
+{
+  "sourceSha256": "0d1e53c8c45d8bc1410266c0e13ba0d303bc540f08e995c92092eafe6275cf7d",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeLanguageActivation": "No new language activated. These are descriptions under the existing English-backed visibly marked draft policy, not fluent certification. Existing translation entries take precedence.",
+  "features": [
+    "ownDemand",
+    "countryEntry"
+  ],
+  "messages": [
+    {
+      "key": "ownDemand.release.01",
+      "english": "Plan household food or trial growing from your own harvest target, without a buyer order.",
+      "sha256": "a18b4804c85bb6e4443b34a5132f17ba7d5882049447a790cf8b7f5a3f86e196",
+      "translations": {
+        "zu": "Hlela ukudla kwasekhaya noma ukulima kokuhlola kusukela kokuhlosiwe kwesivuno sakho, ngaphandle kwe-oda lomthengi.",
+        "st": "Rera dijo tsa lelapa kapa temo ya teko ho tswa sepheong sa hao sa kotulo, ntle le taelo ya moreki.",
+        "ts": "Lulamisa swakudya swa le kaya kumbe kurima ka ndzingelo ku suka eka xikongomelo xa wena xa ntshovelo, handle ka oda ya muxavi.",
+        "ve": "Pulaneledzani zwiḽiwa zwa muṱani kana u ṱavha ha ndingo u bva kha zwipikwa zwa khaṋo zwaṋu, hu si na ndaela ya murengi."
+      }
+    },
+    {
+      "key": "ownDemand.release.02",
+      "english": "Plan food or a growing trial",
+      "sha256": "06aa657b65990328db3caaa0ffe2d515e0e0f2f3d39da03f5cb6caa8b76b6b4e",
+      "translations": {
+        "zu": "Hlela ukudla noma ukuhlola kokulima",
+        "st": "Rera dijo kapa teko ya ho lema",
+        "ts": "Lulamisa swakudya kumbe ndzingelo wo rima",
+        "ve": "Pulaneledzani zwiḽiwa kana ndingo ya u ṱavha"
+      }
+    },
+    {
+      "key": "ownDemand.release.03",
+      "english": "Production plan → Automatic plan from your estimates",
+      "sha256": "a42cc4ccc786917de834efdbe8caeb85c2727d839fb9fa877cd59c375417c18d",
+      "translations": {
+        "zu": "Uhlelo lokukhiqiza → Uhlelo oluzenzakalelayo olusuka ezilinganisweni zakho",
+        "st": "Leano la tlhahiso → Leano le itirisang ho tswa dikakanyong tsa hao",
+        "ts": "Pulani ya vuhumelerisi → Pulani yo tiendlekela ku suka eka miringanyeto ya wena",
+        "ve": "Mbekanyamushumo ya vhubveledzi → Pulane ya othomethiki i no bva kha nyanganyelo dzaṋu"
+      }
+    },
+    {
+      "key": "ownDemand.release.04",
+      "english": "Choose household food or trial growing, enter your gross harvest weight and dates, and use your saved growing estimates and measured spaces. Saved crop records and nursery batches keep the original request. These are planning estimates, not observed harvests or local crop advice.",
+      "sha256": "7ccf44deb0a9c894885c7931d865c6b3c4375bc785c33f0260f17c485d9875c2",
+      "translations": {
+        "zu": "Khetha ukudla kwasekhaya noma ukulima kokuhlola, faka isisindo sakho sesivuno sisonke nezinsuku, bese usebenzisa izilinganiso zakho zokulima ezilondoloziwe nezikhala ezikaliwe. Amarekhodi ezitshalo alondoloziwe namaqoqo esithombo agcina isicelo sokuqala. Lezi yizilinganiso zokuhlela, hhayi izivuno ezibonwe ngamehlo noma izeluleko zezitshalo zendawo.",
+        "st": "Kgetha dijo tsa lelapa kapa temo ya teko, kenya boima bohle ba kotulo le matsatsi, mme o sebedise dikakanyo tsa hao tse bolokilweng tsa temo le dibaka tsa temo tse lekantsweng. Direkoto tsa dijalo tse bolokilweng le dihlopha tsa dipeo di boloka kopo ya pele. Tsena ke dikakanyo tsa ho rera, eseng dikotulo tse bonweng kapa keletso ya dijalo tsa lehae.",
+        "ts": "Hlawula swakudya swa le kaya kumbe kurima ka ndzingelo, nghenisa ntikelo hinkwawo wa ntshovelo na masiku, kutani u tirhisa miringanyeto ya wena yo rima leyi hlayisiweke na tindhawu leti pimiweke. Tirhekhodo ta swimilani leti hlayisiweke na mintlawa ya masungulo ya swimilani swi hlayisa xikombelo xo sungula. Leyi i miringanyeto yo lulamisa, ku nga ri mitshovelo leyi voniweke kumbe switsundzuxo swa swimilani swa laha kaya.",
+        "ve": "Nangani zwiḽiwa zwa muṱani kana u ṱavha ha ndingo, dzhenisani vhuleme hoṱhe ha khaṋo na maḓuvha, nahone shumisani nyanganyelo dza u ṱavha dzo vhulungwaho na zwikhala zwo pimiwaho. Rekhodo dza zwimela dzo vhulungwaho na zwigwada zwa nese zwi vhulunga khumbelo ya u thoma. Hedzi ndi nyanganyelo dza mbekanyamushumo, hu si khaṋo dzo vhonwaho kana nyeletshedzo ya zwimela zwa henefho."
+      }
+    },
+    {
+      "key": "countryEntry.release.01",
+      "english": "Find crop planning from your own estimates on the country evidence page.",
+      "sha256": "d4278ed14c0c4279b712a6dfbbfed1e455a2074a47baca2d04dd6f81360f44be",
+      "translations": {
+        "zu": "Thola ukuhlelwa kwezitshalo kusukela ezilinganisweni zakho ekhasini lobufakazi bezwe.",
+        "st": "Fumana thero ya dijalo ho tswa dikakanyong tsa hao leqepheng la bopaki ba naha.",
+        "ts": "Kuma vuxokoxoko byo lulamisa swimilani ku suka eka miringanyeto ya wena eka tluka ra vumbhoni bya tiko.",
+        "ve": "Wanani ndugiselelo dza zwimela u bva kha nyanganyelo dzaṋu kha siaṱari ḽa vhuṱanzi ha shango."
+      }
+    },
+    {
+      "key": "countryEntry.release.02",
+      "english": "Find your planning route",
+      "sha256": "19fa824bfb7a79fec92f3f5770ebac2532f316ddf86258dfd4a3ef74c68933ab",
+      "translations": {
+        "zu": "Thola indlela yakho yokuhlela",
+        "st": "Fumana tsela ya hao ya thero",
+        "ts": "Kuma ndlela ya wena yo lulamisa",
+        "ve": "Wanani ndila yaṋu ya ndugiselelo"
+      }
+    },
+    {
+      "key": "countryEntry.release.03",
+      "english": "International reference tools → Country evidence → Plan from your own growing estimates",
+      "sha256": "fa39d4441b3605069fc7fa6c399f1f8c990267ca412bff21d1f9e7eb6acc864c",
+      "translations": {
+        "zu": "Amathuluzi okubhekisela omhlaba → Ubufakazi bezwe → Hlela kusukela ezilinganisweni zakho zokulima",
+        "st": "Dithulusi tsa tšupiso tsa matjhaba → Bopaki ba naha → Rera ho tswa dikakanyong tsa hao tsa temo",
+        "ts": "Switirhisiwa swa le handle swa xikombo → Vumbhoni bya tiko → Lulamisa ku suka eka miringanyeto ya wena yo rima",
+        "ve": "Zwishumiswa zwa zwiko zwa mashango → Vhuṱanzi ha shango → Pulaneledzani u bva kha nyanganyelo dzaṋu dza u ṱavha"
+      }
+    },
+    {
+      "key": "countryEntry.release.04",
+      "english": "Open the crop planner, confirm your saved mapped site’s country details and use your own growing estimates. Country research choices do not save site details or approve local crop calendars and catalogue guidance.",
+      "sha256": "3eca0dd76d6a6b619b55bc10765116efca06bcd16a76c3d89183dd707939723c",
+      "translations": {
+        "zu": "Vula umhleli wezitshalo, qinisekisa imininingwane yezwe yesiza sakho esilondoloziwe esidwetshiwe bese usebenzisa izilinganiso zakho zokulima. Ukukhetha ucwaningo lwezwe akugcini imininingwane yesiza noma akuvumi amakhalenda ezitshalo zendawo nesiqondiso sekhathalogi.",
+        "st": "Bula morero wa dijalo, netefatsa dintlha tsa naha tsa setsha sa hao se bolokilweng se mmapilweng mme o sebedise dikakanyo tsa hao tsa temo. Dikgetho tsa dipatlisiso tsa naha ha di boloke dintlha tsa setsha kapa ho dumelela ditlha tsa dijalo tsa lehae le tataiso ya lethathamo.",
+        "ts": "Pfula xilulamisi xa swimilani, tiyisisa vuxokoxoko bya tiko bya xitsha xa wena lexi hlayisiweke eka mepe u tlhela u tirhisa miringanyeto ya wena yo rima. Mihlawulo ya ndzavisiso wa tiko a yi hlayisi vuxokoxoko bya xitsha kumbe ku pfumelela tikhalendara ta swimilani swa laha kaya na nkongomiso wa khathalogo.",
+        "ve": "Vulani mululamisi wa zwimela, khwaṱhisedzani zwidodombedzwa zwa shango zwa fhethu haṋu ho mepiwaho ho vhulungwaho nahone shumisani nyanganyelo dzaṋu dza u ṱavha. Khetho dza ṱhoḓisiso ya shango a dzi vhulungi zwidodombedzwa zwa fhethu kana u tendela khalendara dza zwimela zwa henefho na vhulendedzi ha khathalogo."
+      }
+    }
+  ]
+}
