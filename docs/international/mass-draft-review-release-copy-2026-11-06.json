@@ -1,0 +1,55 @@
+{
+  "sourceSha256": "4700cf74dd03fe44898c3d781fc23017ee80930e0b16d2807407acb31bcffd10",
+  "reviewStatus": "unreviewed-ai-draft",
+  "scope": "Four source-paired descriptions under existing bilingual update display: native caption plus exact English underneath, no dedicated draft badge. No fluent certification or new runtime language. Existing entries preserved.",
+  "messages": [
+    {
+      "key": "massReview.release.01",
+      "feature": "massReview",
+      "english": "Compare harvest-weight wording drafts in four languages.",
+      "sha256": "b71e8fa31b2c28aa5f926be7bfbd8b518d96daa733e881a7efb5f9e1d6bed0e8",
+      "translations": {
+        "zu": "Qhathanisa okusalungiswa kwamagama esisindo sesivuno ngezilimi ezine.",
+        "st": "Bapisa meralo ya mantswe a boima ba kotulo ka dipuo tse nne.",
+        "ts": "Pimanisa matsalo ya marito ya ntikelo wa ntshovelo hi tindzimi ta mune.",
+        "ve": "Vhambedzani mitalo ya maipfi a vhuleme ha khaṋo nga nyambo nṋa."
+      }
+    },
+    {
+      "key": "massReview.release.02",
+      "feature": "massReview",
+      "english": "Review harvest weight drafts",
+      "sha256": "1ceddd37d2c1ea6f1b035835db0997cbbbd2f56845c885d8a2b5e05bfab2dba4",
+      "translations": {
+        "zu": "Buyekeza okusalungiswa kwesisindo sesivuno",
+        "st": "Hlahloba meralo ya boima ba kotulo",
+        "ts": "Kambisisa matsalo ya ntikelo wa ntshovelo",
+        "ve": "Ṱolani mitalo ya vhuleme ha khaṋo"
+      }
+    },
+    {
+      "key": "massReview.release.03",
+      "feature": "massReview",
+      "english": "International reference tools → Language draft review → Harvest weight entry",
+      "sha256": "8d37a88a0ba324b6ce980b1adcb515d90f53bb37f1202d1b318a22ba0181402b",
+      "translations": {
+        "zu": "Amathuluzi okubhekisela omhlaba → Ukubuyekezwa kokusalungiswa kolimi → Ukufakwa kwesisindo sesivuno",
+        "st": "Dithulusi tsa tšupiso tsa matjhaba → Tlhahlobo ya moralo wa puo → Keno ya boima ba kotulo",
+        "ts": "Switirhisiwa swa le handle swa xikombo → Nkambisiso wa matsalo ya tindzimi → Ngheniso wa ntikelo wa ntshovelo",
+        "ve": "Zwishumiswa zwa zwiko zwa mashango → Tsedzuluso ya mitalo ya nyambo → U dzhenisa vhuleme ha khaṋo"
+      }
+    },
+    {
+      "key": "massReview.release.04",
+      "feature": "massReview",
+      "english": "Compare the current English for weight entry and saved requests with French, Spanish, Brazilian Portuguese and Swahili drafts. Changed or missing source wording stays visible. This review does not approve translations or change your app language.",
+      "sha256": "657c580d37056aaf201983915ae0e6eea2a9a1d898fccc2db635d29992adca88",
+      "translations": {
+        "zu": "Qhathanisa isiNgisi samanje sokufaka isisindo nezicelo ezilondoloziwe nokusalungiswa kwesiFulentshi, iSpanishi, isiPutukezi saseBrazil nesiSwahili. Amagama omthombo ashintshiwe noma angekho ahlala ebonakala. Lokhu kubuyekeza akugunyazi izinguqulo noma kuguqule ulimi lohlelo lwakho lokusebenza.",
+        "st": "Bapisa Senyesemane sa jwale sa keno ya boima le dikopo tse bolokilweng le meralo ya Sefora, Sepanishe, Sepotoketsi sa Brazil le Seswahili. Mantswe a mohlodi a fetotsweng kapa a siyo a dula a bonahala. Tlhahlobo ena ha e dumelele diphetolelo kapa ho fetola puo ya sesebediswa sa hao.",
+        "ts": "Pimanisa Xinghezi xa sweswi xa ku nghenisa ntikelo na swikombelo leswi hlayisiweke na matsalo ya Xifurha, Xipaniya, Xiputukezi xa le Brazil na Xiswahili. Marito ya xihlovo lama cinciweke kumbe lama kayivelaka ma tshama ma vonaka. Nkambisiso lowu a wu pfumeleli vuhundzuluxi kumbe ku cinca ririmi ra apu ya wena.",
+        "ve": "Vhambedzani Tshiisimane tsha zwino tsha u dzhenisa vhuleme na khumbelo dzo vhulungwaho na mitalo ya Tshifura, Tshipanyani, Tshiputukezi tsha Brazil na Tswahili. Maipfi a vhubvo o shandukiswaho kana a siho a dula a tshi vhonala. Ṱholo hei a i tendeli vhupinduleli kana u shandukisa luambo lwa aputhulekhesheni yaṋu."
+      }
+    }
+  ]
+}

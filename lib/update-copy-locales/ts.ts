@@ -518,5 +518,10 @@ const copy:UpdateCopy={
   "Choose kg or lb for viewing. Changing the view keeps your original entry; typing a new weight changes the request and requires review. Saved crop records and nursery batches show the original entry separately from the planned kilogram quantity.": "Hlawula kg kumbe lb ku xiyisisa. Ku cinca mbonelo swi hlayisa leswi nghenisiweke eku sunguleni; ku tsala ntikelo lowuntshwa swi cinca xikombelo naswona swi lava nkambisiso. Tirhekhodo ta swimilani leti hlayisiweke na mintlawa ya masungulo ya swimilani swi kombisa leswi nghenisiweke eku sunguleni hi ku hambana na ntsengo wa tikhilogiramu lowu pulaniweke.",
   // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
   "Enter household or trial harvest requests in kilograms or pounds.": "Nghenisa swikombelo swa ntshovelo swa le kaya kumbe swa ndzingelo hi tikhilogiramu kumbe tipawundi.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Compare harvest-weight wording drafts in four languages.": "Pimanisa matsalo ya marito ya ntikelo wa ntshovelo hi tindzimi ta mune.",
+  "Review harvest weight drafts": "Kambisisa matsalo ya ntikelo wa ntshovelo",
+  "International reference tools → Language draft review → Harvest weight entry": "Switirhisiwa swa le handle swa xikombo → Nkambisiso wa matsalo ya tindzimi → Ngheniso wa ntikelo wa ntshovelo",
+  "Compare the current English for weight entry and saved requests with French, Spanish, Brazilian Portuguese and Swahili drafts. Changed or missing source wording stays visible. This review does not approve translations or change your app language.": "Pimanisa Xinghezi xa sweswi xa ku nghenisa ntikelo na swikombelo leswi hlayisiweke na matsalo ya Xifurha, Xipaniya, Xiputukezi xa le Brazil na Xiswahili. Marito ya xihlovo lama cinciweke kumbe lama kayivelaka ma tshama ma vonaka. Nkambisiso lowu a wu pfumeleli vuhundzuluxi kumbe ku cinca ririmi ra apu ya wena.",
 };
 export default copy;
