@@ -40,6 +40,7 @@ import { pickWinner, pushDesignCanvas, reconcileDesignCanvas, subscribeDesignCan
 import { useAuth } from '@/lib/auth';
 import { advisorRegionPresentation, observeDesignAdvisorLayout, type AdvisorVisibleRegion } from '@/lib/design-advisor-layout';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
 import {
   computeCanvasFrame,
   contentCountOf,
@@ -480,7 +481,7 @@ function freshState(siteId: string, frame: Omit<CanvasFrame, 'satDataUrl'>): Des
 }
 
 function locationDataCacheKey(lat: number, lon: number): string {
-  return `imbewu_loc_v6_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+  return `imbewu_loc_v7_${lat.toFixed(5)}_${lon.toFixed(5)}`;
 }
 
 function readCachedLocationData(lat: number, lon: number): LocationData | null {
@@ -492,7 +493,8 @@ function readCachedLocationData(lat: number, lon: number): LocationData | null {
     const raw = localStorage.getItem(locationDataCacheKey(lat, lon));
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === 'object' ? (parsed as LocationData) : null;
+    return parsed && typeof parsed === 'object' && monthlyTemperatureStatus(parsed.climate) === 'complete'
+      ? (parsed as LocationData) : null;
   } catch {
     return null;
   }

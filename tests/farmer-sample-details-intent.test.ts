@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import ts from 'typescript';
+import { monthlyTemperatureStatus } from '../lib/climate-temperature.ts';
 
 // Execute the actual page callbacks and effects, without mounting Mapbox or
 // fetching anything. State scheduling, cache, transport, timers, translation
@@ -105,6 +106,7 @@ function harness(options: { sample?: boolean; params?: string; sheetOpen?: boole
     },
     locationRequest: { current: 0 }, siteParamHandled: { current: '' },
     loadPlaces: () => places, DEMO_SITE: demo, isSampleMode: () => settings.sample,
+    monthlyTemperatureStatus,
     // The comparison boundary distinguishes fixture sites. Five-decimal cache
     // spelling comes from the extracted cache expression, not a copied rule.
     designSiteIdFromLocation: (value: Point | null) => value ? JSON.stringify([value.lat, value.lon]) : 'unselected',
@@ -130,7 +132,11 @@ function harness(options: { sample?: boolean; params?: string; sheetOpen?: boole
   const actual = new Function('context', `with(context){${executable};return {handleLocationSelect,handleJumpTo,initialSheet,automaticSample,savedSite,panelIntent};}`)(context) as ActualCallbacks;
   return { ...actual, state, settings, context, places, writes, cache, cacheWrites, requests, pending, errors, timers, transport, storage,
     get headerCalls() { return headerCalls; },
-    seed(point: Point = demo, value: unknown = { ...point, marker: 'Cached fixture' }) { cache.set(cacheKeyFor(point.lat, point.lon), JSON.stringify(value)); },
+    // Cache-hit intent needs an explicitly complete synthetic provider payload;
+    // the separate migration tests retain receipt-free legacy cache misses.
+    seed(point: Point = demo, value: unknown = { ...point, marker: 'Cached fixture',
+      climate: { monthlyTemp: Array.from({ length: 12 }, () => 0), monthlyTempCoverage: { source: 'nasa-power', status: 'complete' } },
+    }) { cache.set(cacheKeyFor(point.lat, point.lon), JSON.stringify(value)); },
     async settle() { await Promise.all([...pending]); },
     advance(ms: number) {
       now += ms;

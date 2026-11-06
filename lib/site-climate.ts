@@ -27,6 +27,7 @@
 import type { RainPattern } from '@/lib/crop-catalog';
 import { classifyKoppen, rainPatternFor } from '@/lib/koppen-global';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { completeMonthlyTemperatures, monthlyTemperatureStatus } from '@/lib/climate-temperature';
 
 export interface SiteClimate {
   /** The planner's rainfall pattern, derived from this site's own monthly climate. */
@@ -59,8 +60,9 @@ const twelveFinite = (values: unknown): values is number[] =>
  *    reliable signature of data that was never fetched for this site. Deriving
  *    a "per-site" pattern from that constant would re-create the original bug
  *    with better-sounding provenance.
- *  - twelve finite monthly rain totals (each >= 0) and twelve finite monthly
- *    temperatures, which are what classifyKoppen actually needs.
+ *  - twelve finite monthly rain totals (each >= 0), plus a complete NASA POWER
+ *    monthly-temperature receipt and valid monthly means. Legacy finite arrays
+ *    and display substitutes do not establish provider coverage.
  *
  * The Köppen class is recomputed here from the monthly numbers rather than
  * trusted from the payload: classifyKoppen is pure, tested, and cheap, and a
@@ -80,7 +82,7 @@ export function siteClimateFromLocationData(data: unknown, lat: number): SiteCli
   const monthlyRainMm = (rainfall as { monthly?: unknown }).monthly;
   const tempC = (climate as { monthlyTemp?: unknown }).monthlyTemp;
   if (!twelveFinite(monthlyRainMm) || monthlyRainMm.some((v) => v < 0)) return null;
-  if (!twelveFinite(tempC)) return null;
+  if (monthlyTemperatureStatus(climate) !== 'complete' || !completeMonthlyTemperatures(tempC)) return null;
 
   const monthly = { tempC, precipMm: monthlyRainMm, lat };
   const koppen = classifyKoppen(monthly);
@@ -103,7 +105,7 @@ export function siteClimateFromLocationData(data: unknown, lat: number): SiteCli
  * everywhere at once whenever the endpoint would answer differently.
  */
 export function locationDataCacheKey(lat: number, lon: number): string {
-  return `imbewu_loc_v6_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+  return `imbewu_loc_v7_${lat.toFixed(5)}_${lon.toFixed(5)}`;
 }
 
 /**

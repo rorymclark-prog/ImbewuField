@@ -29,6 +29,7 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_SITE } from '@/lib/demo-farm';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
 import { networkFailureMessage } from '@/lib/network-failure';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -288,12 +289,14 @@ function HomeInner() {
     // farmer cannot tell the two apart and neither can this cache.
     // v5 (23 Sep): the biome fallback now uses the coldest monthly mean, so previously cached
     // Grassland answers for warm lowveld farms must be fetched again.
-    const cacheKey = `imbewu_loc_v6_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+    // v7: bump for monthly-temperature coverage; legacy display arrays cannot prove supplied months.
+    const cacheKey = `imbewu_loc_v7_${lat.toFixed(5)}_${lon.toFixed(5)}`;
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
         const parsed = JSON.parse(cached);
-        if (designSiteIdFromLocation(parsed) === designSiteIdFromLocation({ lat, lon })) {
+        if (designSiteIdFromLocation(parsed) === designSiteIdFromLocation({ lat, lon })
+          && monthlyTemperatureStatus(parsed?.climate) === 'complete') {
           setData(parsed); setLoading(false); return;
         }
       }
