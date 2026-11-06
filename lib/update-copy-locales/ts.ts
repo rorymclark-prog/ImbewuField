@@ -514,5 +514,7 @@ const copy:UpdateCopy={
   "Check your crop plan after signing in": "Kambela pulani ya wena ya swimilani endzhaku ko nghena",
   "Sign in → Crop planner": "Nghena → Xilulamisi xa swimilani",
   "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Pfula pulani ya wena ya swimilani endzhaku ko nghena. Thebu leyi yi tshika mpfumelelo wa yona wo lulamisa lowu hundzeke yi nga si kambela tirhekhodo ta akhawunti leti hlayisiweke. Thebu yin’wana leyi nga karhi yi lulamisa yi hlayisa nsirhelelo wa yona; tirhekhodo leti nga kumekiki kumbe leti lwisanaka ta ha lava nkambisiso.",
+  // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
+  "Your crop-plan handoff waits for this tab’s earlier editing access to finish.": "Ku hundzisiwa ka pulani ya wena ya swimilani ku yimela mpfumelelo wo sungula wo lulamisa wa thebu leyi ku hela.",
 };
 export default copy;

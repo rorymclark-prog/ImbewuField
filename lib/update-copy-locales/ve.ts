@@ -514,5 +514,7 @@ const copy:UpdateCopy={
   "Check your crop plan after signing in": "Tolani mbekanyamushumo yaṋu ya zwimela nga murahu ha u dzhena",
   "Sign in → Crop planner": "Dzhenani → Mululamisi wa zwimela",
   "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Vulani mbekanyamushumo yaṋu ya zwimela nga murahu ha u dzhena. Thabu hei i bvisa thendelo yayo ya u lulamisa yo fhiraho musi i sa athu tola rekhodo dza akhaunthu dzo vhulungwaho. Iṅwe thabu ine ya khou bvela phanda i tshi khou lulamisa i vhulunga tsireledzo yayo; rekhodo dzi siho kana dzi hananaho dzi kha ḓi ṱoḓa u ṱoliwa.",
+  // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
+  "Your crop-plan handoff waits for this tab’s earlier editing access to finish.": "U fhiriselwa ha mbekanyamushumo yaṋu ya zwimela hu lindela thendelo ya u lulamisa ya u thoma ya thabu hei u fhedza.",
 };
 export default copy;

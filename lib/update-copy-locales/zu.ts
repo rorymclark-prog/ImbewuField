@@ -514,5 +514,7 @@ const copy:UpdateCopy={
   "Check your crop plan after signing in": "Hlola uhlelo lwakho lwezitshalo ngemuva kokungena",
   "Sign in → Crop planner": "Ngena ngemvume → Umhleli wezitshalo",
   "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Vula uhlelo lwakho lwezitshalo ngemuva kokungena. Le thebhu idedela ukufinyelela kwayo kokuhlela kwangaphambilini ngaphambi kokuhlola amarekhodi e-akhawunti alondoloziwe. Enye ithebhu esahlela igcina ukuvikelwa kwayo; amarekhodi angatholakali noma ashayisanayo asadinga ukubuyekezwa.",
+  // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
+  "Your crop-plan handoff waits for this tab’s earlier editing access to finish.": "Ukudluliswa kohlelo lwakho lwezitshalo kulinda ukufinyelela kokuhlela kwangaphambilini kwale thebhu ukuthi kuqede.",
 };
 export default copy;
