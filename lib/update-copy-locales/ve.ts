@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed AGY field seed captions; exact English remains visible. See field-seed-release-drafts/adoption.json.
+  "Plan seed sourcing for field cycles without nursery raising.": "Pulanyani u wanala ha mbeu ya maitele a masimu a si na tshifhinga tsha tshitiratshi tsha zwo simiwaho.",
+  "Review field seed requirements": "Tolani thodea dza mbeu ya masimu",
+  "Crop planner → Saved planned nursery batches → Field seed sourcing": "Mupulani wa zwo simiwaho → Zwiteṅwa zwa tshitiratshi zwo pulanywaho zwo vhulungwaho → U wanala ha mbeu ya masimu",
+  "Open the separate field worksheet for accepted cycles without a nursery phase. Declare botanical seeds, confirm your gross whole-seed requirement, group cycles that can share a supply, and enter your allocation and pack size. Blank counts stay unknown. This temporary worksheet does not record stock, place orders or save the plan.": "Vulani bammbiri la mushumo lo fhambanaho la masimu la maitele o tanganedzwaho a si na tshifhinga tsha tshitiratshi tsha zwo simiwaho. Divhadzani mbeu dza zwo simiwaho, khwathisedzani thodea yavho yothe ya mbeu dzo fhelelaho, vhumbani zwigwada zwa maitele a no nga kovhelana thodea, nahone ni dzhenise mukovhe wavho na saizi ya phakhethe. Zwivhalo zwi si na tshithu zwi dzula zwi sa diwi. Bammbiri ili la mushumo la tshifhinganyana a li rekhodi zwitoko, a li vhei odara kana u vhulunga pulane.",
   // Unreviewed AGY seed worksheet identification captions; English remains paired. See seed-identification-release-drafts/adoption.json.
   "Show crop names and your labels in seed worksheets.": "Sumbedzani madzina a zwimela na zwiṋambatedzwa zwaṋu kha mabammbiri a mishumo ya mbeu.",
   "Identify planned seed supply groups": "Ṱalulani zwigwada zwa u wanala ha mbeu zwo pulaniwaho",

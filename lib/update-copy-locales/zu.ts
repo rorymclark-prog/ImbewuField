@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed AGY field seed captions; exact English remains visible. See field-seed-release-drafts/adoption.json.
+  "Plan seed sourcing for field cycles without nursery raising.": "Hlela ukutholakala kwembewu yemijikelezo yensimu engenaso isigaba senkulisa.",
+  "Review field seed requirements": "Buyekeza izidingo zembewu yensimu",
+  "Crop planner → Saved planned nursery batches → Field seed sourcing": "Umhleli wezitshalo → Amaqoqo enkulisa ahleliwe alondoloziwe → Ukutholakala kwembewu yensimu",
+  "Open the separate field worksheet for accepted cycles without a nursery phase. Declare botanical seeds, confirm your gross whole-seed requirement, group cycles that can share a supply, and enter your allocation and pack size. Blank counts stay unknown. This temporary worksheet does not record stock, place orders or save the plan.": "Vula iphepha lokusebenzela lensimu elihlukile lemijikelezo eyamukelwe engenaso isigaba senkulisa. Memezela imbewu yezitshalo, qinisekisa isidingo sakho sesiyonke sembewu ephelele, qoqa imijikelezo engabelana ngesiphakelo, bese ufaka isabelo sakho nosayizi wephakethe. Izibalo ezingenalutho zihlala zingaziwa. Leli phepha lokusebenzela lesikhashana alirekhodi isitoko, alibeki ama-oda noma lilondoloze uhlelo.",
   // Unreviewed AGY seed worksheet identification captions; English remains paired. See seed-identification-release-drafts/adoption.json.
   "Show crop names and your labels in seed worksheets.": "Bonisa amagama ezitshalo namalebula akho kumaphepha okusebenzela embewu.",
   "Identify planned seed supply groups": "Khomba amaqoqo okuhlinzekwa kwembewu ahleliwe",

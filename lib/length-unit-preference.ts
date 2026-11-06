@@ -21,14 +21,16 @@ export interface FieldLayoutExportContext { readonly kind: 'field-layout-export-
 export interface FieldLayoutImportContext { readonly kind: 'field-layout-import-context' }
 export interface JournalObservationContext { readonly kind: 'journal-observation-context' }
 export interface InvoiceDocumentContext { readonly kind: 'invoice-document-context' }
-type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate' | 'field-layout-export' | 'field-layout-import' | 'journal-observation' | 'invoice-document';
+export interface SeedWorksheetContext { readonly kind: 'seed-worksheet-context' }
+type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate' | 'field-layout-export' | 'field-layout-import' | 'journal-observation' | 'invoice-document' | 'seed-worksheet';
 const purposeKey = (purpose: Purpose) => purpose === 'field' ? KEY : purpose === 'nursery' ? NURSERY_KEY
   : purpose === 'harvest-mass' ? HARVEST_KEY : purpose === 'grower-estimate' ? GROWER_ESTIMATE_KEY
   : purpose === 'field-layout-import' ? FIELD_IMPORT_CONTEXT_KEY : purpose === 'journal-observation' ? JOURNAL_OBSERVATION_CONTEXT_KEY
-  : purpose === 'invoice-document' ? 'imbewu_invoice_document_context_v1' : FIELD_LAYOUT_CONTEXT_KEY;
+  : purpose === 'invoice-document' ? 'imbewu_invoice_document_context_v1'
+  : purpose === 'seed-worksheet' ? 'imbewu_seed_worksheet_context_v1' : FIELD_LAYOUT_CONTEXT_KEY;
 export type NurseryUnitChoice = 'metric' | 'imperial';
 export interface NurseryUnitPreferenceContext { readonly kind: 'nursery-unit-preference' }
-type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext | FieldLayoutExportContext | FieldLayoutImportContext | JournalObservationContext | InvoiceDocumentContext;
+type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext | FieldLayoutExportContext | FieldLayoutImportContext | JournalObservationContext | InvoiceDocumentContext | SeedWorksheetContext;
 const SAMPLE_EVENT = 'imbewu-sample-mode-changed';
 export interface LengthUnitPreferenceContext { readonly kind: 'length-unit-preference' }
 type Result = { unit: LengthUnit; remembered: boolean; destination: 'device' | 'sample' | 'unavailable' };
@@ -81,7 +83,7 @@ function capturePreferenceContext(purpose: Purpose): PreferenceContext | null {
     if (typeof window === 'undefined') return null;
     const win = window, inSample = sample(win), owner = activeAccountUid();
     if (!actorMatches(owner, inSample)) return null;
-    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : purpose === 'grower-estimate' ? 'grower-estimate-unit-preference' : purpose === 'field-layout-import' ? 'field-layout-import-context' : purpose === 'journal-observation' ? 'journal-observation-context' : purpose === 'invoice-document' ? 'invoice-document-context' : 'field-layout-export-context' });
+    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : purpose === 'grower-estimate' ? 'grower-estimate-unit-preference' : purpose === 'field-layout-import' ? 'field-layout-import-context' : purpose === 'journal-observation' ? 'journal-observation-context' : purpose === 'invoice-document' ? 'invoice-document-context' : purpose === 'seed-worksheet' ? 'seed-worksheet-context' : 'field-layout-export-context' });
     const proof: Proof = { purpose, win, scope, epoch: scope.epoch, owner, sample: inSample, storage: local(win),
       key: activeAccountLocalStorageKey(purposeKey(purpose)), revoked: false, listeners: new Set(),
       ...(purpose === 'nursery' ? { nurseryValueListeners: new Set() } : {}),
@@ -354,4 +356,19 @@ export function writeGrowerEstimateUnitPreference(context: GrowerEstimateUnitPre
       ? { remembered: !proof.sample, destination: proof.sample ? 'sample' : 'device' }
       : { remembered: false, destination: 'unavailable' };
   } catch { return { remembered: false, destination: 'unavailable' }; }
+}
+
+// A seed worksheet shares observed actor/sample retirement without gaining
+// access to remembered preferences or creating a stock or ordering ledger.
+export function captureSeedWorksheetContext(): SeedWorksheetContext | null {
+  return capturePreferenceContext('seed-worksheet') as SeedWorksheetContext | null;
+}
+export function seedWorksheetContextIsCurrent(context: SeedWorksheetContext | null): boolean {
+  return !!context && proofs.get(context)?.purpose === 'seed-worksheet' && contextIsCurrent(context);
+}
+export function subscribeSeedWorksheetContext(context: SeedWorksheetContext | null, listener: () => void): () => void {
+  return context && proofs.get(context)?.purpose === 'seed-worksheet' ? subscribeContext(context, listener) : () => {};
+}
+export function revokeSeedWorksheetContext(context: SeedWorksheetContext | null): void {
+  if (context && proofs.get(context)?.purpose === 'seed-worksheet') revokeContext(context);
 }

@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed AGY field seed captions; exact English remains visible. See field-seed-release-drafts/adoption.json.
+  "Plan seed sourcing for field cycles without nursery raising.": "Rala ho fumaneha ha peo bakeng sa mekoloko ea masimo e se nang mohato oa kereche ea limela.",
+  "Review field seed requirements": "Hlahloba litlhoko tsa peo ea masimo",
+  "Crop planner → Saved planned nursery batches → Field seed sourcing": "Moralo oa lijalo → Lihlopha tsa kereche tse reriloeng tse bolokiloeng → Ho fumaneha ha peo ea masimo",
+  "Open the separate field worksheet for accepted cycles without a nursery phase. Declare botanical seeds, confirm your gross whole-seed requirement, group cycles that can share a supply, and enter your allocation and pack size. Blank counts stay unknown. This temporary worksheet does not record stock, place orders or save the plan.": "Bula leqephe la mosebetsi la masimo le arohaneng bakeng sa mekoloko e amohetsoeng e se nang mohato oa kereche ea limela. Phatlalatsa peo ea limela, netefatsa tlhoko ea hau ea kakaretso ea peo e felletseng, bokella mekoloko e ka arolelanang phepelo, 'me u kenye kabelo ea hau le boholo ba pakete. Lipalo tse se nang letho li lula li sa tsejoe. Leqephe lena la nakoana la mosebetsi ha le rekotise setoko, ha le etse liodara kapa ho boloka moralo.",
   // Unreviewed AGY seed worksheet identification captions; English remains paired. See seed-identification-release-drafts/adoption.json.
   "Show crop names and your labels in seed worksheets.": "Bontsha mabitso a dijalo le mangolo a hao a tsebiso dipampiring tsa tshebetso tsa dipeo.",
   "Identify planned seed supply groups": "Hwaya dihlopha tsa phumantsho ya dipeo tse rerilweng",

@@ -1,0 +1,32 @@
+{
+  "locale": "ts",
+  "sourceSha256": "8817508559d63382532277326313235c6fa1e1d1dbacd8a02e126b1cd53f0052",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "fieldSeedSourcing.release.01",
+      "english": "Plan seed sourcing for field cycles without nursery raising.",
+      "sha256": "2bd6dd57fdc815a53d9f32a3be1c1bfba93eb5067b2065b307863335bc624ebe",
+      "translation": "Pulanisa ku kumiwa ka mbewu eka swirhendzevutana swa masimu lama nga riki na xiteji xa nsimu ya swibyariwa."
+    },
+    {
+      "key": "fieldSeedSourcing.release.02",
+      "english": "Review field seed requirements",
+      "sha256": "d8139c3c48b421330c9ae079177bb082236d5382d7703e8d2b4b0e24f03913ec",
+      "translation": "Hlahluva swilaveko swa mbewu ya masimu"
+    },
+    {
+      "key": "fieldSeedSourcing.release.03",
+      "english": "Crop planner → Saved planned nursery batches → Field seed sourcing",
+      "sha256": "546c0876e484d91d4e4e91fe86554ef152b3e12632268d7e47c463c86108468b",
+      "translation": "Mupulani wa swibyariwa → Swiyenge swa nsimu ya swibyariwa leswi pulaniweke leswi hlayisiweke → Ku kumiwa ka mbewu ya masimu"
+    },
+    {
+      "key": "fieldSeedSourcing.release.04",
+      "english": "Open the separate field worksheet for accepted cycles without a nursery phase. Declare botanical seeds, confirm your gross whole-seed requirement, group cycles that can share a supply, and enter your allocation and pack size. Blank counts stay unknown. This temporary worksheet does not record stock, place orders or save the plan.",
+      "sha256": "2044c0187c7ac25ffaf62cb6a3c2908a4d5af8605b314df8665d8634168f31c0",
+      "translation": "Pfula phepha-ntirho ro hambana ra masimu eka swirhendzevutana leswi amukeriweke leswi nga riki na xiteji xa nsimu ya swibyariwa. Tivisani timbewu ta swimilana, tiyisisa xilaveko xa wena hinkwaxo xa timbewu leti heleleke, hlengeleta swirhendzevutana leswi nga avelanaka mphakelo, kutani u nghenisa xiavelo xa wena na sayizi ya phakete. Tinhlayo leti nga riki na nchumu ti tshama ti nga tiviwi. Phepha-ntirho leri ra nkarhinyana a ri rhekhodi switoko, a ri veki swileriso kumbe ku hlayisa pulani."
+    }
+  ]
+}

@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed AGY field seed captions; exact English remains visible. See field-seed-release-drafts/adoption.json.
+  "Plan seed sourcing for field cycles without nursery raising.": "Pulanisa ku kumiwa ka mbewu eka swirhendzevutana swa masimu lama nga riki na xiteji xa nsimu ya swibyariwa.",
+  "Review field seed requirements": "Hlahluva swilaveko swa mbewu ya masimu",
+  "Crop planner → Saved planned nursery batches → Field seed sourcing": "Mupulani wa swibyariwa → Swiyenge swa nsimu ya swibyariwa leswi pulaniweke leswi hlayisiweke → Ku kumiwa ka mbewu ya masimu",
+  "Open the separate field worksheet for accepted cycles without a nursery phase. Declare botanical seeds, confirm your gross whole-seed requirement, group cycles that can share a supply, and enter your allocation and pack size. Blank counts stay unknown. This temporary worksheet does not record stock, place orders or save the plan.": "Pfula phepha-ntirho ro hambana ra masimu eka swirhendzevutana leswi amukeriweke leswi nga riki na xiteji xa nsimu ya swibyariwa. Tivisani timbewu ta swimilana, tiyisisa xilaveko xa wena hinkwaxo xa timbewu leti heleleke, hlengeleta swirhendzevutana leswi nga avelanaka mphakelo, kutani u nghenisa xiavelo xa wena na sayizi ya phakete. Tinhlayo leti nga riki na nchumu ti tshama ti nga tiviwi. Phepha-ntirho leri ra nkarhinyana a ri rhekhodi switoko, a ri veki swileriso kumbe ku hlayisa pulani.",
   // Unreviewed AGY seed worksheet identification captions; English remains paired. See seed-identification-release-drafts/adoption.json.
   "Show crop names and your labels in seed worksheets.": "Komba mavito ya swibyariwa na swilebele swa wena eka maphepha ya mintirho ya mbewu.",
   "Identify planned seed supply groups": "Tiva mintlawa ya mphakelo wa mbewu leyi kunguhatiweke",

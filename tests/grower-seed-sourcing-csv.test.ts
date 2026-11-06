@@ -310,6 +310,7 @@ test('exporter uses the actual canonical projection once and existing csvCell fo
   const hooks = registerHooks({ resolve(specifier, context, next) {
     if (context.parentURL === exporterUrl && specifier === './international/grower-seed-sourcing') return dataModule(`
       import {reviewGrowerSeedSourcing as actual} from ${JSON.stringify(reviewUrl)};
+      export {reviewGrowerFieldSeedSourcing} from ${JSON.stringify(reviewUrl)};
       export function reviewGrowerSeedSourcing(input){const t=globalThis.${key};t.calls++;const result=actual(input);t.forbidRaw=true;return result;}`);
     if (context.parentURL === exporterUrl && specifier === './journal-export') return dataModule(`
       import {csvCell as actual} from ${JSON.stringify(cellsUrl)};
