@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 November 2026', sha: 'e47f24bcf069', changes: [
+  { when: '6 November 2026', sha: '9da2177c6e55', changes: [
     'Your crop-plan handoff waits for this tab’s earlier editing access to finish.',
   ], tour: [{ title: 'Check your crop plan after signing in', where: 'Sign in → Crop planner', href: '/facilitator/crops',
     detail: 'Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.' }] },
