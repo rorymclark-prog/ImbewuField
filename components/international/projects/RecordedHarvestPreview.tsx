@@ -279,9 +279,14 @@ export default function RecordedHarvestPreview({
                       className="rounded-lg border p-3 space-y-1 break-words"
                       style={panelStyle}
                     >
-                      <div className="flex justify-between items-start text-sm">
-                        <span className="font-medium">Row #{row.sourceRowIndex + 1}</span>
-                        <span className="font-semibold">{formatKg(row.quantityKg)}</span>
+                      <div className="flex flex-wrap justify-between items-start text-sm gap-2">
+                        <div className="min-w-0">
+                          <span className="font-medium block break-words">{row.label}</span>
+                          <span className="text-xs" style={{ color: 'var(--text-secondary, #4b5563)' }}>
+                            Row #{row.sourceRowIndex + 1}
+                          </span>
+                        </div>
+                        <span className="font-semibold min-w-0 max-w-full break-words">{formatKg(row.quantityKg)}</span>
                       </div>
                       <div className="text-xs" style={{ color: 'var(--text-secondary, #4b5563)' }}>
                         Month: {row.periodStart} to {row.periodEnd}

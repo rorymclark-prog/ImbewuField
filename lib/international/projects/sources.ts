@@ -69,6 +69,7 @@ export interface PreviewRecordedHarvestRequest {
 export interface EligibleRecordedHarvestRow {
   reference: EvidenceReference;
   sourceRowIndex: number;
+  label: string;
   date: { year: number; month: number };
   periodStart: string;
   periodEnd: string;
@@ -263,6 +264,7 @@ export function previewRecordedHarvest(request: unknown): PreviewRecordedHarvest
       eligibleRows.push({
         reference: ref!,
         sourceRowIndex: index,
+        label: sanitisedRow!.label,
         date: { year: sanitisedRow!.date.year, month: sanitisedRow!.date.month },
         periodStart: rowStart,
         periodEnd: rowEnd,

@@ -219,7 +219,7 @@ test('ready review with empty source displays no eligible weights distinct from 
   assert.ok(!visibleText.includes('0 kg'));
 });
 
-test('ready review with explicit eligible zero displays 0 kg', () => {
+test('ready review with explicit eligible zero displays 0 kg and label', () => {
   const zeroReview: PreviewRecordedHarvestResult = {
     status: 'ready',
     reasons: [],
@@ -227,6 +227,7 @@ test('ready review with explicit eligible zero displays 0 kg', () => {
       {
         reference: { authority: 'production-records', id: 'rec-0' },
         sourceRowIndex: 0,
+        label: 'Engineering Zero Crop',
         date: { year: 2026, month: 1 },
         periodStart: '2026-01-01',
         periodEnd: '2026-01-31',
@@ -241,6 +242,7 @@ test('ready review with explicit eligible zero displays 0 kg', () => {
   const renderer = renderComponent({ review: zeroReview });
   const visibleText = extractVisibleText(renderer.toJSON());
   assert.ok(visibleText.includes('0 kg'));
+  assert.ok(visibleText.includes('Engineering Zero Crop'));
   assert.ok(visibleText.includes('Row #1'));
 });
 
@@ -253,6 +255,7 @@ test('tiny positive observation 1e-7 is preserved and not rendered as 0 kg', () 
       {
         reference: { authority: 'production-records', id: 'rec-tiny' },
         sourceRowIndex: 0,
+        label: 'Engineering Tiny Crop',
         date: { year: 2026, month: 1 },
         periodStart: '2026-01-01',
         periodEnd: '2026-01-31',
@@ -269,6 +272,7 @@ test('tiny positive observation 1e-7 is preserved and not rendered as 0 kg', () 
   assert.ok(!visibleText.includes('0 kg'));
   assert.ok(!visibleText.includes('0kg'));
   assert.ok(visibleText.includes('1e-7 kg'));
+  assert.ok(visibleText.includes('Engineering Tiny Crop'));
 });
 
 test('ready review with decimal-sum-overflow shows unavailable subtotal with reasons and rows count', () => {
@@ -279,6 +283,7 @@ test('ready review with decimal-sum-overflow shows unavailable subtotal with rea
       {
         reference: { authority: 'production-records', id: 'rec-max' },
         sourceRowIndex: 0,
+        label: 'Engineering Overflow Crop',
         date: { year: 2026, month: 1 },
         periodStart: '2026-01-01',
         periodEnd: '2026-01-31',
@@ -294,6 +299,7 @@ test('ready review with decimal-sum-overflow shows unavailable subtotal with rea
   const visibleText = extractVisibleText(renderer.toJSON());
   assert.ok(visibleText.includes('Unavailable (arithmetic limits exceeded)'));
   assert.ok(visibleText.includes('Total quantity exceeds arithmetic limits.'));
+  assert.ok(visibleText.includes('Engineering Overflow Crop'));
   assert.ok(visibleText.includes('Row #1'));
   assert.ok(!visibleText.includes('Not known (no eligible recorded weights)'));
 });
@@ -306,6 +312,7 @@ test('partial review shows known subtotal, rows count, and human-readable exclus
       {
         reference: { authority: 'production-records', id: 'sensitive-private-id-123' },
         sourceRowIndex: 0,
+        label: 'Engineering Partial Crop',
         date: { year: 2026, month: 1 },
         periodStart: '2026-01-01',
         periodEnd: '2026-01-31',
@@ -326,12 +333,44 @@ test('partial review shows known subtotal, rows count, and human-readable exclus
   const renderer = renderComponent({ review: partialReview });
   const visibleText = extractVisibleText(renderer.toJSON());
   assert.ok(visibleText.includes('12.5 kg'));
+  assert.ok(visibleText.includes('Engineering Partial Crop'));
   assert.ok(visibleText.includes('Row #1'));
   assert.ok(visibleText.includes('Row #2'));
   assert.ok(visibleText.includes('Planned or estimated harvest is not an actual observation.'));
   assert.ok(visibleText.includes('Harvest unit is not kilograms (kg); no unit conversion is assumed.'));
   assert.ok(!visibleText.includes('sensitive-private-id-123'));
   assert.ok(!visibleText.includes('sensitive-private-id-456'));
+});
+
+test('renders exact saved label as safe text without injecting HTML elements or raw references', () => {
+  const maliciousLabel = '<img src=x onerror=alert(1)><b>Bold Harvest</b>';
+  const labelReview: PreviewRecordedHarvestResult = {
+    status: 'ready',
+    reasons: [],
+    rows: [
+      {
+        reference: { authority: 'production-records', id: 'private-ref-id-789' },
+        sourceRowIndex: 0,
+        label: maliciousLabel,
+        date: { year: 2026, month: 1 },
+        periodStart: '2026-01-01',
+        periodEnd: '2026-01-31',
+        quantityKg: 5,
+      },
+    ],
+    excluded: [],
+    knownSubtotalKg: 5,
+    projectReportAvailable: false,
+  };
+
+  const renderer = renderComponent({ review: labelReview });
+  const visibleText = extractVisibleText(renderer.toJSON());
+  assert.ok(visibleText.includes(maliciousLabel));
+  assert.ok(!visibleText.includes('private-ref-id-789'));
+
+  // Ensure no <img> or <b> DOM element was created from the label text
+  assert.equal(renderer.root.findAllByType('img').length, 0);
+  assert.equal(renderer.root.findAllByType('b').length, 0);
 });
 
 test('escapes malicious script strings in parent sourceNotice safely as plain text', () => {

@@ -42,6 +42,8 @@ test('positive control: sums 0.1 + 0.2 kg exactly without decimal noise', () => 
   assert.equal(result.status, 'ready');
   assert.equal(result.knownSubtotalKg, 0.3);
   assert.equal(result.rows.length, 2);
+  assert.equal(result.rows[0].label, 'Recorded fixture');
+  assert.equal(result.rows[1].label, 'Recorded fixture');
   assert.equal(result.excluded.length, 0);
   assert.equal(result.projectReportAvailable, false);
 });
@@ -69,6 +71,7 @@ test('explicit zero yields 0 knownSubtotalKg, whereas empty source yields null',
   assert.equal(zeroResult.status, 'ready');
   assert.equal(zeroResult.knownSubtotalKg, 0);
   assert.equal(zeroResult.rows.length, 1);
+  assert.equal(zeroResult.rows[0].label, 'Recorded zero');
 
   const emptyRequest: PreviewRecordedHarvestRequest = {
     siteId: 'site-alpha',
@@ -188,6 +191,41 @@ test('normalization loss on ID and label is excluded with original raw index and
   assert.ok(result.excluded[1].reasons.includes('missing-or-invalid-id'));
   assert.ok(result.excluded[1].reasons.includes('normalization-id-loss'));
   assert.equal(result.excluded[1].reference, null);
+});
+
+test('exact accepted label survives projection and JSON round-trip unchanged while original records stay unmutated', () => {
+  const originalRecord = {
+    id: 'rec-preserved-label',
+    siteId: 'site-alpha',
+    sourceIconKey: 'crop:cabbage',
+    label: 'Exact Saved Harvest Description',
+    date: { year: 2026, month: 1 },
+    quantity: 8.5,
+    unit: 'kg' as const,
+    status: 'actual' as const,
+    provenance: 'farm-record' as const,
+  };
+  const recordCopy = { ...originalRecord };
+  const originalSnapshot = JSON.stringify(recordCopy);
+
+  const request: PreviewRecordedHarvestRequest = {
+    siteId: 'site-alpha',
+    periodStart: '2026-01-01',
+    periodEnd: '2026-01-31',
+    records: [recordCopy],
+  };
+
+  const result = previewRecordedHarvest(request);
+  assert.equal(result.status, 'ready');
+  assert.equal(result.rows.length, 1);
+  assert.equal(result.rows[0].label, 'Exact Saved Harvest Description');
+
+  // JSON round-trip preserves label exactly
+  const serialised = JSON.parse(JSON.stringify(result));
+  assert.equal(serialised.rows[0].label, 'Exact Saved Harvest Description');
+
+  // Input record was not mutated in place
+  assert.equal(JSON.stringify(recordCopy), originalSnapshot);
 });
 
 test('handles leap year, year 0001, and year 0099 complete month boundaries', () => {
