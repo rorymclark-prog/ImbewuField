@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest context sample — [Zones reserve inset and Base national locator — 6 November 2026](2026-11-06/zones-reserve-context-codex.md). Real wider satellite imagery, retained AI artwork and native locator proposal; not deployed.
+
 Latest paired examples — [Exact SVG and AI sample set — 6 November 2026](2026-11-06/paired-map-samples-codex.md). Actual output inspected; previous Sector retained, other drafts not approved for production.
 
 Latest illustrated-map review — [All-map treatment and surrounding-context guides — 6 November 2026](2026-11-06/all-map-illustration-guides-codex.md). Ten draft briefs and actual saved examples; settings implementation and fresh device/output verification remain open.
@@ -195,6 +197,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 [ImbewuField connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md). Native linking and production deployment are separate gates from the verified emulator and browser journey.
 
 ## Date index
+
+- [Zones reserve context and national locator — 6 November 2026](2026-11-06/zones-reserve-context-codex.md).
 
 - [Paired exact SVG and AI map samples — 6 November 2026](2026-11-06/paired-map-samples-codex.md).
 
