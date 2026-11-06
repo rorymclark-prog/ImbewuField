@@ -96,7 +96,9 @@ test('a legacy purpose-only origin explicitly lacks requested input and is never
   const f = await fixture(), row = f.prepared.rows[0];
   const origin = row.growerCycle.origin;
   assert.ok(origin?.kind === 'grower-entered');
-  const { demandSnapshot: _snapshot, ...oldOrigin } = origin;
+  // Historical purpose-only records predate both the snapshot and authored unit/text.
+  // Keeping the new unit/text without its snapshot would represent damaged new evidence.
+  const { demandSnapshot: _snapshot, quantityEntry: _quantity, ...oldOrigin } = origin;
   const old = { ...row, growerCycle: { ...row.growerCycle, origin: oldOrigin } };
   const attachment = normaliseGrowerCycleAttachment(old.growerCycle); assert.ok(attachment);
   assert.deepEqual(growerCycleDemandSnapshotView(attachment), { status: 'not-recorded' });
@@ -105,6 +107,7 @@ test('a legacy purpose-only origin explicitly lacks requested input and is never
   const stored = normaliseGrowerCycleAttachment(preserveGrowerCycleMarker(loaded).growerCycle); assert.ok(stored);
   assert.deepEqual(growerCycleDemandSnapshotView(stored), { status: 'not-recorded' });
   assert.equal('demandSnapshot' in stored.origin!, false);
+  assert.equal('quantityEntry' in stored.origin!, false);
   assert.equal(f.nursery(loaded).batches[0].origin?.status, 'recorded', 'known purpose is independent of missing request input');
 });
 
@@ -179,6 +182,10 @@ test('post-review purpose, weight or window edits require a fresh review and do 
   const f = await fixture(), before = JSON.stringify(f.book), first = f.draft.demands![0];
   assert.equal(first.kind, 'grower-entered');
   if (first.kind !== 'grower-entered') return;
+  // This fixture edits the legacy kg branch. Adding grossKg to a unit-bearing
+  // request would instead test the deliberately held ambiguous-entry shape.
+  assert.equal(Object.hasOwn(first, 'quantityEntry'), false);
+  if (typeof first.grossKg !== 'string') throw Error('Expected the legacy kg fixture');
   for (const patch of [{ purpose: 'trial' as const }, { grossKg: '2.5' }, { harvestEndExclusive: '2028-12-15' }]) {
     const draft = { ...f.draft, demands: [{ ...first, ...patch }] };
     const held = f.prepare(draft); assert.equal(held.status, 'held');

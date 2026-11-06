@@ -272,10 +272,22 @@ export function useGrowerWorkflow(input: Inputs) {
   async function onReview(draft: GrowerWorkflowDraft): Promise<GrowerWorkflowReview> {
     const initial = live.current, turn = epoch.current, expected = sourceRef.current, actorIsCurrent = initial.actorIsCurrent, reviewedSelection = selectionRef.current;
     if (accepting.current) return hold('acceptance-in-progress');
+    const reviewIsCurrent = () => {
+      try { return mounted.current && epoch.current === turn && sourceRef.current === expected
+        && selectionRef.current === reviewedSelection && actorIsCurrent() && live.current.actorIsCurrent(); }
+      catch { return false; }
+    };
+    if (!expected || !reviewIsCurrent()) return hold('current-source-required');
+    let detachedDraft: GrowerWorkflowDraft;
+    try {
+      // The actual form omits optional branches and authors string fields.
+      // JSON copying would invoke getters and erase present-undefined weight
+      // evidence before the domain can reject an ambiguous legacy/new entry.
+      detachedDraft = detachJsonData(draft) as GrowerWorkflowDraft;
+    } catch { return reviewIsCurrent() ? hold('unreadable-workflow-input') : hold('context-changed'); }
+    if (!reviewIsCurrent()) return hold('context-changed');
     setAcceptance({ status: 'idle' });
-    if (!expected || !live.current.actorIsCurrent()) return hold('current-source-required');
     const before = live.current.readCurrentBook(); if (before.status === 'held') return hold(before.reason);
-    const detachedDraft = JSON.parse(JSON.stringify(draft)) as GrowerWorkflowDraft;
     const checked = await readSource(), fresh = checked?.source;
     if (epoch.current !== turn || selectionRef.current !== reviewedSelection || !actorIsCurrent() || !live.current.actorIsCurrent()) return hold('context-changed');
     if (!fresh || fresh.sourceKey !== expected.sourceKey || fresh.sourceRevision !== expected.sourceRevision) {

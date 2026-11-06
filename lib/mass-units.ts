@@ -1,7 +1,8 @@
-import { decimalQuantityProduct } from './farm-records';
+import { decimalQuantityProduct, exactDecimalQuantityProduct } from './farm-records';
+import { detachJsonData } from './lossless-json';
 import {
   createCanonicalUnitDraft, editCanonicalUnitDraft, readCanonicalUnitDraft, switchCanonicalUnitDraft,
-  formatCanonicalUnitValue, representableUnitValue,
+  formatCanonicalUnitValue, representableUnitValue, parseExactUnitDecimal,
   type CanonicalUnitSpec, type CanonicalUnitDraft, type CanonicalUnitDraftRead, type CanonicalUnitDraftSwitch,
 } from './length-units';
 
@@ -11,6 +12,32 @@ import {
 export const AVOIRDUPOIS_POUND_IN_KILOGRAMS = 0.45359237;
 export type MassUnit = 'kg' | 'lb';
 const supported = (unit: unknown): unit is MassUnit => unit === 'kg' || unit === 'lb';
+/** Existing entered-demand text work bound, shared by both entry branches. */
+export const MASS_QUANTITY_ENTRY_MAX_TEXT = 64;
+export interface MassQuantityEntry { readonly unit: MassUnit; readonly text: string }
+export type MassQuantityEntryRead =
+  | { readonly status: 'missing'; readonly entry: MassQuantityEntry }
+  | { readonly status: 'provided'; readonly entry: MassQuantityEntry; readonly kilograms: number }
+  | { readonly status: 'held'; readonly reason: string };
+
+/** A request's original unit/text is separate from a rounded display draft.
+ * This is numeric evidence, not freshness, actor or write authorisation. */
+export function readMassQuantityEntry(value: unknown): MassQuantityEntryRead {
+  try {
+    const detached = detachJsonData(value);
+    if (!detached || typeof detached !== 'object' || Array.isArray(detached)) return { status: 'held', reason: 'mass-entry-invalid' };
+    const fields = detached as Record<string, unknown>;
+    if (JSON.stringify(Object.keys(fields).sort()) !== JSON.stringify(['text', 'unit'])
+      || !supported(fields.unit) || typeof fields.text !== 'string') return { status: 'held', reason: 'mass-entry-invalid' };
+    if (fields.text.length > MASS_QUANTITY_ENTRY_MAX_TEXT) return { status: 'held', reason: 'mass-entry-format' };
+    const entry = Object.freeze({ unit: fields.unit, text: fields.text });
+    if (!entry.text.trim()) return { status: 'missing', entry };
+    const parsed = parseExactUnitDecimal(entry.text);
+    if (parsed.status !== 'ready') return { status: 'held', reason: parsed.reason };
+    const product = exactDecimalQuantityProduct(entry.unit === 'kg' ? [parsed.value] : [parsed.value, AVOIRDUPOIS_POUND_IN_KILOGRAMS]);
+    return product.status === 'ready' ? { status: 'provided', entry, kilograms: product.value } : product;
+  } catch { return { status: 'held', reason: 'mass-entry-unreadable' }; }
+}
 export function massToKilograms(value: number, unit: MassUnit): number | null {
   if (!supported(unit) || !Number.isFinite(value)) return null;
   if (unit === 'kg' || value === 0) return value;

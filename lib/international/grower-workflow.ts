@@ -2,6 +2,7 @@ import type { CropPlanState } from '../crop-plan';
 import { generateGrowerAutoPlan, GROWER_AUTOPLAN_MAX_ASSESSMENTS, type GrowerAutoPlanCycle, type GrowerAutoPlanRequest, type GrowerAutoPlanProposal } from './grower-autoplan';
 import { growerDemandFromHarvestTarget } from './grower-harvest-demand';
 import { createGrowerCyclePlanting, type GrowerCycleOrigin, type GrowerCyclePlanting, isProvenForeignGrowerCycle, resolvePlantingBasis } from './grower-cycle';
+import { readMassQuantityEntry } from '../mass-units';
 import { projectGrowerCycles, type ProjectedGrowerCycle } from './grower-cycle-projection';
 import { growerPlanningScopeKey, isGrowerRecordedAt, isGrowerUtcDate, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope,
   normaliseGrowerMeasuredAreaInput, type GrowerMeasuredAreaInput,
@@ -312,10 +313,14 @@ function acceptedCycleOrigin(current: Extract<GrowerWorkflowReview, { status: 'r
   const meta = entered[0];
   if (meta.profileId !== cycle.profileId || meta.cropKey !== cycle.cropKey
     || growerEnteredDemandId(meta.entryId) !== cycle.demandId) return { status: 'held', reason: 'cycle-origin-mismatch' };
+  const quantity = readMassQuantityEntry(meta.quantityEntry);
+  if (quantity.status !== 'provided' || demand.totalKg.state !== 'provided' || quantity.kilograms !== demand.totalKg.value) {
+    return { status: 'held', reason: 'cycle-origin-mismatch' };
+  }
   return { status: 'ready', origin: { kind: 'grower-entered', purpose: meta.purpose, entryId: meta.entryId,
     // This is the full demand for the whole window. Capacity allocated to one
     // accepted bed must never replace the amount or dates the grower requested.
-    demandSnapshot: structuredClone(demand) } };
+    demandSnapshot: structuredClone(demand), quantityEntry: quantity.entry } };
 }
 
 /** Prepare detached canonical rows without acquiring any save permission. The
