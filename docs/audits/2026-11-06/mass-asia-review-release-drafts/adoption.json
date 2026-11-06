@@ -8,5 +8,6 @@
   "damagedControlsPerLocale": 16,
   "actualNotesWords": 140,
   "use": "Existing-language update/history captions only; source English retained underneath. Existing exact shared route wording preserved. No dedicated visible AI-draft badge claimed.",
-  "limits": "No fullsuite or actualbrowser/layout proof. Seven worksheet choices compare84 inactiveAI candidates only."
+  "limits": "No fullsuite or actualbrowser/layout proof. Seven worksheet choices compare84 inactiveAI candidates only.",
+  "sourceReconciliation": "All four exact English rows and message hashes remain unchanged after release coverage was stamped with the actual code commit."
 }

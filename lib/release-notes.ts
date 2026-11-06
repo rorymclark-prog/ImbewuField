@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 November 2026', sha: 'af840fb3b74e', changes: [
+  { when: '6 November 2026', sha: 'b57a0b778547', changes: [
     'Compare harvest-weight wording drafts in seven languages.',
   ], tour: [{ title: 'Review seven harvest-weight draft languages', where: 'International reference tools → Language draft review → Harvest weight entry', href: '/international/locales/mass-entry',
     detail: 'Compare current English with French, Spanish, Brazilian Portuguese, Swahili, Hindi, Bengali and Indonesian drafts. These are unreviewed comparisons, not approved translations or a change to your app language.' }] },
