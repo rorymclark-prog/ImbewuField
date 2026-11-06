@@ -282,6 +282,37 @@ export interface GrowerFieldSeedSourcingGroupReview extends Omit<GrowerSeedSourc
   /** Internal association handles; the exporter uses public counts only. */
   readonly plantingIds: readonly string[];
   readonly selectedCycleCount: number;
+  /** Public worksheet numbers of the represented cycles this group selects, in
+   * ascending order. Null when membership is held (malformed, duplicated group
+   * identity, repeated or overlapping selections): no arbitrary winner is shown. */
+  readonly cycleNumbers: readonly number[] | null;
+  readonly cycleRelation: 'related' | 'related-with-unrepresented-selections' | 'membership-held';
+}
+/** First matching reason, in this order; `issues` keeps every reason. Only
+ * `entered-count` is a usable planning count, and `0` there is a confirmed zero. */
+export type GrowerFieldSeedCycleRequirementStatus =
+  | 'known-vegetative-material' | 'cycle-held' | 'not-recorded' | 'duplicate-requirement' | 'requirement-invalid'
+  | 'vegetative-declared' | 'material-not-confirmed' | 'count-invalid' | 'count-not-confirmed' | 'unknown' | 'entered-count';
+/** Detached public presentation of one represented accepted non-nursery cycle.
+ * `cycleNumber` is its position in this returned review only: never a saved
+ * identity, canonical reference or stable key across source changes. */
+export interface GrowerFieldSeedCycleBreakdownRow {
+  readonly cycleNumber: number;
+  /** Canonical catalogue name; no variety, lot or other joined reference. */
+  readonly cropName: string | null;
+  /** The existing planned field-entry date, never an observed sowing event. */
+  readonly plannedFieldEntryDate: string | null;
+  readonly requirementStatus: GrowerFieldSeedCycleRequirementStatus;
+  /** `entered` only for one well-formed entry with a whole count. Any status other
+   * than `entered-count` leaves that number a declaration, never a counted need. */
+  readonly enteredGrossState: 'entered' | 'unknown' | 'not-recorded' | 'invalid' | 'ambiguous';
+  readonly enteredGrossRequiredSeeds: number | null;
+  /** True only when this entry is part of its group's known required-seed subtotal. */
+  readonly countedInGroupSubtotal: boolean;
+  /** Public supply-group number, only when exactly one group with unambiguous membership selects it. */
+  readonly supplyGroupNumber: number | null;
+  readonly groupRelation: 'related' | 'not-selected' | 'membership-held';
+  readonly issues: readonly string[];
 }
 export interface GrowerFieldSeedSourcingReview {
   readonly status: 'available' | 'partial' | 'unavailable';
@@ -291,6 +322,8 @@ export interface GrowerFieldSeedSourcingReview {
   readonly coverage: 'represented-accepted-non-nursery-cycles-only';
   readonly wholeFarmCoverage: 'not-assessed';
   readonly cycles: readonly GrowerFieldSeedCycleOption[];
+  /** One public row per entry of `cycles`, in the same order, without internal handles. */
+  readonly cycleBreakdown: readonly GrowerFieldSeedCycleBreakdownRow[];
   readonly representedCycleCount: number;
   readonly assignedCycleCount: number;
   readonly unassignedPlantingIds: readonly string[];
@@ -303,16 +336,18 @@ export interface GrowerFieldSeedSourcingReview {
   readonly guidance: string;
 }
 
-const fieldGuidance = 'Planning only: represented accepted cycles without a nursery phase. No nursery phase does not establish botanical direct sowing. Botanical seed and the gross whole-seed requirement must be explicitly supplied and confirmed by the grower; known vegetative material cannot be counted as seeds. Gross counts already include whatever allowances the grower entered; none are inferred or added. Final plant positions, density, area and harvest estimates are not seed requirements. Group membership and interchangeability are grower assertions, not verified varieties or seed lots. Allocations are entered for this plan, not observed stock or protection against allocating a physical seed pool elsewhere. Unknown requirements are not zero. Nursery cycles, held or legacy rows and omitted or whole-farm seed demand need separate review. No weight, rate, price, purchase, inventory change or actor/source permission is inferred.';
+const fieldGuidance = 'Planning only: represented accepted cycles without a nursery phase. No nursery phase does not establish botanical direct sowing. Botanical seed and the gross whole-seed requirement must be explicitly supplied and confirmed by the grower; known vegetative material cannot be counted as seeds. Gross counts already include whatever allowances the grower entered; none are inferred or added. Final plant positions, density, area and harvest estimates are not seed requirements. Group membership and interchangeability are grower assertions, not verified varieties or seed lots. Allocations are entered for this plan, not observed stock or protection against allocating a physical seed pool elsewhere. Unknown requirements are not zero. Nursery cycles, held or legacy rows and omitted or whole-farm seed demand need separate review. Cycle numbers are positions in this review only, not saved identities; planned field-entry dates are plans, not observed sowing or stock events. No weight, rate, price, purchase, inventory change or actor/source permission is inferred.';
 function fieldUnavailable(issue: string): GrowerFieldSeedSourcingReview {
   return freeze({ status: 'unavailable', basis: 'grower-field-seed-sourcing-estimates', requirementBasis: 'entered-gross-whole-seed-count',
     sourceVerification: 'not-verified', coverage: 'represented-accepted-non-nursery-cycles-only', wholeFarmCoverage: 'not-assessed',
-    cycles: [], representedCycleCount: 0, assignedCycleCount: 0, unassignedPlantingIds: [], heldSourceRowCount: 0,
+    cycles: [], cycleBreakdown: [], representedCycleCount: 0, assignedCycleCount: 0, unassignedPlantingIds: [], heldSourceRowCount: 0,
     legacySourceRowCount: 0, excludedNurseryCycleCount: 0, sourceIssues: [issue], groups: [], issues: [issue], guidance: fieldGuidance });
 }
 interface FieldGroupCandidate {
   index: number; id: string | null; plantingIds: string[]; raw: Record<string, unknown> | null; issues: string[];
 }
+/** Any of these makes a group's selections unfit for a public cycle-number relation. */
+const membershipIssues = new Set(['group-input-invalid', 'group-id-duplicate', 'cycle-membership-duplicate', 'cycle-membership-overlap']);
 function fieldGroupCandidate(raw: unknown, index: number): FieldGroupCandidate {
   const row = object(raw) ? raw : null, id = row && identity(row.id) ? row.id : null;
   // Even a malformed group keeps its readable memberships in the overlap audit.
@@ -392,6 +427,16 @@ export function reviewGrowerFieldSeedSourcing(input: GrowerFieldSeedSourcingInpu
     }
     for (const entries of groupIds.values()) if (entries.length > 1) for (const row of entries) row.issues.push('group-id-duplicate');
     for (const entries of memberships.values()) if (entries.length > 1) for (const row of entries) row.issues.push('cycle-membership-overlap');
+    // Public numbering is presentation only: the position in the current replay.
+    const cycleNumbers = new Map(cycles.map((cycle, index) => [cycle.plantingId, index + 1]));
+    // Decided before quantity holds: a malformed group keeps its readable overlap
+    // audit above, but neither it nor any group it overlaps is related to a number.
+    const membershipHeld = new Set(candidates.filter(row => row.issues.some(issue => membershipIssues.has(issue))));
+    const relation = (row: FieldGroupCandidate): Pick<GrowerFieldSeedSourcingGroupReview, 'cycleNumbers' | 'cycleRelation'> => {
+      if (membershipHeld.has(row)) return { cycleNumbers: null, cycleRelation: 'membership-held' };
+      const numbers = row.plantingIds.flatMap(id => cycleNumbers.has(id) ? [cycleNumbers.get(id)!] : []).sort((a, b) => a - b);
+      return { cycleNumbers: numbers, cycleRelation: numbers.length === row.plantingIds.length ? 'related' : 'related-with-unrepresented-selections' };
+    };
     const assigned = new Set<string>();
     const groups = candidates.map((row): GrowerFieldSeedSourcingGroupReview => {
       const label = enteredLabel(row.raw), cropKeys = new Set<string>(), cropNames = new Set<string>();
@@ -417,9 +462,9 @@ export function reviewGrowerFieldSeedSourcing(input: GrowerFieldSeedSourcingInpu
       ].join(' ');
       const identification: GrowerSeedSourcingGroupReview['identification'] = { ...label, cropNames: [...cropNames].sort((a, b) => a.localeCompare(b)),
         cropIdentityCount: cropStatus === 'complete' ? cropKeys.size : null, cropStatus, description };
-      const selectedCycleCount = new Set(row.plantingIds.filter(id => options.has(id))).size;
+      const selectedCycleCount = new Set(row.plantingIds.filter(id => options.has(id))).size, related = relation(row);
       const held = (): GrowerFieldSeedSourcingGroupReview => ({ index: row.index, id: row.id, plantingIds: [...row.plantingIds], selectedCycleCount,
-        status: 'held', knownRequiredSeedsSubtotal: null, requiredSeeds: null, counts: null, issues: unique(row.issues), identification });
+        ...related, status: 'held', knownRequiredSeedsSubtotal: null, requiredSeeds: null, counts: null, issues: unique(row.issues), identification });
       if (row.issues.length) return held();
       let sum = BigInt(0), known = 0, unknown = false;
       for (const id of row.plantingIds) {
@@ -435,12 +480,34 @@ export function reviewGrowerFieldSeedSourcing(input: GrowerFieldSeedSourcingInpu
       if (counts.status === 'unknown' && (row.raw!.allocatedToPlanSeeds == null || row.raw!.seedsPerPack == null)) row.issues.push('allocation-or-pack-count-unknown');
       if (counts.status === 'overflow') row.issues.push('pack-count-product-overflow');
       for (const id of row.plantingIds) assigned.add(id);
-      return { index: row.index, id: row.id, plantingIds: [...row.plantingIds], selectedCycleCount,
+      return { index: row.index, id: row.id, plantingIds: [...row.plantingIds], selectedCycleCount, ...related,
         status: overflow || counts.status === 'overflow' ? 'overflow' : counts.status,
         knownRequiredSeedsSubtotal: overflow || known === 0 ? null : Number(sum), requiredSeeds, counts: overflow ? null : counts,
         issues: unique(row.issues), identification };
     });
     const unassignedPlantingIds = cycles.map(cycle => cycle.plantingId).filter(id => !assigned.has(id));
+    // Built only from this replay, the parsed entries and the finished groups. A
+    // counted entry is part of exactly one non-held group's known subtotal.
+    const counted = new Set(groups.flatMap(group => group.status === 'held' || group.knownRequiredSeedsSubtotal === null ? []
+      : group.plantingIds.filter(id => requirementsByCycle.get(id)?.length === 1 && requirementsByCycle.get(id)![0].grossRequiredSeeds !== null)));
+    const cycleBreakdown = cycles.map((cycle, index): GrowerFieldSeedCycleBreakdownRow => {
+      const entries = requirementsByCycle.get(cycle.plantingId) ?? [], entry = entries.length === 1 ? entries[0] : null;
+      const entryIssues = unique(entries.flatMap(row => row.issues)), has = (issue: string) => entryIssues.includes(issue);
+      const requirementStatus: GrowerFieldSeedCycleRequirementStatus = cycle.knownMaterialUnit !== null ? 'known-vegetative-material'
+        : cycle.status === 'held' ? 'cycle-held' : !entries.length ? 'not-recorded' : !entry ? 'duplicate-requirement'
+        : has('field-requirement-invalid') ? 'requirement-invalid' : has('vegetative-material-not-seeds') ? 'vegetative-declared'
+        : has('botanical-material-not-confirmed') ? 'material-not-confirmed' : has('gross-seed-count-invalid') ? 'count-invalid'
+        : has('gross-requirement-not-confirmed') ? 'count-not-confirmed' : entry.grossRequiredSeeds === null ? 'unknown' : 'entered-count';
+      // Duplicates show no entered number at all; a malformed entry is never read as a declaration.
+      const enteredGrossState: GrowerFieldSeedCycleBreakdownRow['enteredGrossState'] = !entries.length ? 'not-recorded' : !entry ? 'ambiguous'
+        : has('field-requirement-invalid') || has('gross-seed-count-invalid') ? 'invalid' : entry.grossRequiredSeeds === null ? 'unknown' : 'entered';
+      const selecting = memberships.get(cycle.plantingId) ?? [];
+      const groupRelation = !selecting.length ? 'not-selected' : selecting.length === 1 && !membershipHeld.has(selecting[0]) ? 'related' : 'membership-held';
+      return { cycleNumber: index + 1, cropName: cycle.cropName || null, plannedFieldEntryDate: cycle.plannedFieldEntryDate, requirementStatus,
+        enteredGrossState, enteredGrossRequiredSeeds: enteredGrossState === 'entered' ? entry!.grossRequiredSeeds : null,
+        countedInGroupSubtotal: counted.has(cycle.plantingId), supplyGroupNumber: groupRelation === 'related' ? selecting[0].index + 1 : null,
+        groupRelation, issues: unique([...cycle.reasons, ...(entries.length ? entryIssues : ['field-requirement-not-recorded'])]) };
+    });
     const issues = [...sourceIssues, ...requirementIssues];
     if (unassignedPlantingIds.length) issues.push('represented-cycles-unassigned');
     if (!cycles.length) issues.push('no-represented-non-nursery-cycles');
@@ -448,7 +515,7 @@ export function reviewGrowerFieldSeedSourcing(input: GrowerFieldSeedSourcingInpu
     if (groups.some(group => group.status === 'unknown' || group.status === 'overflow')) issues.push('sourcing-counts-incomplete');
     return freeze({ status: issues.length ? 'partial' : 'available', basis: 'grower-field-seed-sourcing-estimates',
       requirementBasis: 'entered-gross-whole-seed-count', sourceVerification: 'not-verified',
-      coverage: 'represented-accepted-non-nursery-cycles-only', wholeFarmCoverage: 'not-assessed', cycles,
+      coverage: 'represented-accepted-non-nursery-cycles-only', wholeFarmCoverage: 'not-assessed', cycles, cycleBreakdown,
       representedCycleCount: cycles.length, assignedCycleCount: assigned.size, unassignedPlantingIds,
       heldSourceRowCount: projection.heldRows.length, legacySourceRowCount: projection.legacyRows.length, excludedNurseryCycleCount,
       sourceIssues, groups, issues: unique(issues), guidance: fieldGuidance });

@@ -84,7 +84,10 @@ test('the field worksheet describes entered gross counts and canonical public id
   const data = input(), before = JSON.stringify(data), projection = reviewGrowerFieldSeedSourcing(data);
   const csv = buildGrowerFieldSeedSourcingCsv(data), { header, rows } = parse(csv);
   assert.doesNotMatch(header.join(','), /horizon|nursery_review|batch|planting|group_id|site|actor|variety|lot/);
-  assert.equal(rows.length, 2); assert.equal(rows[0].record_type, 'guidance'); assert.equal(rows[1].record_type, 'supply_group');
+  // Adapted for the appended per-cycle breakdown (issue 35): one public row per
+  // represented cycle now follows the unchanged guidance and supply-group rows.
+  assert.equal(rows.length, 4); assert.equal(rows[0].record_type, 'guidance'); assert.equal(rows[1].record_type, 'supply_group');
+  assert.deepEqual(rows.slice(2).map(row => [row.record_type, row.cycle_number]), [['represented_cycle', '1'], ['represented_cycle', '2']]);
   assert.equal(rows[1].requirement_basis, 'entered-gross-whole-seed-count');
   assert.equal(rows[1].coverage, 'represented-accepted-non-nursery-cycles-only'); assert.equal(rows[1].whole_farm_coverage, 'not-assessed');
   assert.equal(rows[1].source_verification, 'not-verified'); assert.equal(rows[1].represented_cycle_count, '2');
@@ -130,7 +133,9 @@ test('held and legacy source rows produce explicit public source-review counts r
   const data = input({ rows: [base.rows[0], { ...base.rows[1], growerCycle: undefined },
     { id: 'private-old', bedId: base.rows[0].bedId, cropKey: crop.key, sowMonth: 2 }], requirements: [requirement(id)], groups: [group([id])] });
   const csv = buildGrowerFieldSeedSourcingCsv(data), rows = parse(csv).rows;
-  assert.equal(rows.length, 3); const source = rows.find(row => row.record_type === 'source_review'); assert.ok(source);
+  // Adapted (issue 35): the one represented cycle adds its own breakdown row.
+  assert.equal(rows.length, 4); assert.equal(rows.filter(row => row.record_type === 'represented_cycle').length, 1);
+  const source = rows.find(row => row.record_type === 'source_review'); assert.ok(source);
   assert.equal(source.held_source_row_count, '1'); assert.equal(source.legacy_source_row_count, '1'); assert.equal(source.review_status, 'partial');
   assert.match(source.issues, /source-has-held-rows/); assert.equal(rows.find(row => row.record_type === 'supply_group')!.required_seeds, '100');
   privateExcluded(csv);
@@ -139,8 +144,13 @@ test('held and legacy source rows produce explicit public source-review counts r
 test('every sample row is visibly marked and field-only options still yield a truthful empty worksheet', () => {
   const rows = parse(buildGrowerFieldSeedSourcingCsv(input(), { sample: true })).rows;
   assert.ok(rows.every(row => row.plan_basis.startsWith('DEMO —')));
-  const empty = parse(buildGrowerFieldSeedSourcingCsv(input({ requirements: [], groups: [] }))).rows;
-  assert.equal(empty.length, 1); assert.equal(empty[0].represented_cycle_count, '2'); assert.equal(empty[0].assigned_cycle_count, '0');
+  // Adapted (issue 35): represented cycles stay listed, unrecorded and unselected,
+  // after the single guidance row; they never become zero or assigned rows.
+  const emptyRows = parse(buildGrowerFieldSeedSourcingCsv(input({ requirements: [], groups: [] }))).rows;
+  const empty = emptyRows.filter(row => row.record_type !== 'represented_cycle'), listed = emptyRows.filter(row => row.record_type === 'represented_cycle');
+  assert.equal(empty.length, 1); assert.equal(listed.length, 2);
+  assert.ok(listed.every(row => row.entered_gross_whole_seeds === 'not-recorded' && row.cycle_relation_status === 'not-selected'
+    && row.counted_in_group_subtotal === 'no' && row.required_seeds === '')); assert.equal(empty[0].represented_cycle_count, '2'); assert.equal(empty[0].assigned_cycle_count, '0');
   assert.equal(empty[0].unassigned_cycle_count, '2'); assert.equal(empty[0].review_status, 'partial');
   assert.equal(empty[0].required_seeds, ''); assert.match(empty[0].issues, /represented-cycles-unassigned/);
 });
