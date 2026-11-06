@@ -509,5 +509,9 @@ const copy:UpdateCopy={
   "Record a nursery planting in its field bed": "Rekota temo ya sethopo betheng ya sona tshimong",
   "Crop planner → Saved planned nursery batches → Record field planting": "Moralo wa dijalo → Dihlopha tse rerilweng tsa sethopo tse bolokilweng → Rekota temo tshimong",
   "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekota letsatsi le palo ya dimela tseo o di kentseng betheng e abetsweng temo ya sethopo e hlahlobilweng. Boloka rekoto ya se bonweng jenaleng e arohane le letsatsi le rerilweng, setoko sa sethopo le ho phela ha dimela.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Plan household food or trial growing from your own harvest target, without a buyer order.": "Rera dijo tsa lelapa kapa temo ya teko ho tswa sepheong sa hao sa kotulo, ntle le taelo ya moreki.",
+  "Plan food or a growing trial": "Rera dijo kapa teko ya ho lema",
+  "Choose household food or trial growing, enter your gross harvest weight and dates, and use your saved growing estimates and measured spaces. Saved crop records and nursery batches keep the original request. These are planning estimates, not observed harvests or local crop advice.": "Kgetha dijo tsa lelapa kapa temo ya teko, kenya boima bohle ba kotulo le matsatsi, mme o sebedise dikakanyo tsa hao tse bolokilweng tsa temo le dibaka tsa temo tse lekantsweng. Direkoto tsa dijalo tse bolokilweng le dihlopha tsa dipeo di boloka kopo ya pele. Tsena ke dikakanyo tsa ho rera, eseng dikotulo tse bonweng kapa keletso ya dijalo tsa lehae.",
 };
 export default copy;
