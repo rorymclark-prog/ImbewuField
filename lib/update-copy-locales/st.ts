@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed current release captions; exact English stays paired. See docs/international/current-release-caption-repair-2026-11-06/adoption.json.
+  "Quick sale names rand and links to invoices in another currency.": "Thekiso e potlakileng e bolela ranta mme e hokahanya le li-invoice ka chelete e 'ngoe.",
+  "Choose the right sale entry": "Khetha ho kenya thekiso ho nepahetseng",
+  "My Records → Sold → Quick sale entry": "Litlaleho tsa Ka → E rekisitsoe → Ho kenya thekiso e potlakileng",
+  "Quick sale records South African rand (ZAR). For another supported currency, open the separate sale-invoice form and choose its currency and payment status. Enter the sale there; the quick-sale draft is not transferred.": "Thekiso e potlakileng e rekota ranta ea Afrika Boroa (ZAR). Bakeng sa chelete e 'ngoe e tšehelitsoeng, bula foromo e arohaneng ea invoice ea thekiso 'me u khethe chelete ea eona le boemo ba tefo. Kenya thekiso moo; moralo oa thekiso e potlakileng ha o fetisoe.",
+  "See when monthly temperatures are incomplete or need another check.": "Bona ha mocheso oa khoeli le khoeli o sa phethahala kapa o hloka tlhahlobo e 'ngoe.",
+  "Check monthly temperature coverage": "Hlahloba boteng ba lintlha tsa mocheso oa khoeli le khoeli",
+  "Map → Site details → Overview or Climate": "Mmapa → Lintlha tsa sebaka → Kakaretso kapa Boemo ba leholimo",
+  "Check whether all monthly mean temperatures were supplied. Missing or unrecorded coverage holds the monthly calendar and planner climate interpretation; reload online to try again. Your saved maps, records and original estimates remain available. Complete model inputs do not confirm local crop suitability.": "Hlahloba hore na likhakanyo tsohle tsa karolelano ea mocheso oa khoeli le khoeli li fanoe. Boteng ba lintlha bo sieo kapa bo sa rekotwang bo emisa khalendara ea khoeli le khoeli le tlhaloso ea boemo ba leholimo ea moralo; laela hape inthaneteng ho leka hape. Limmapa tsa hau tse bolokiloeng, litlaleho le likhakanyo tsa pele li ntse li fumaneha. Lintlha tse felletseng tsa mohlala ha li netefatse ho tšoaneleha ha lijalo tsa lehae.",
+  "Choose app help separately from advice about a saved site.": "Khetha thuso ea lenaneo ka thoko ho keletso e mabapi le sebaka se bolokiloeng.",
+  "Review your LimaBar question before sending it.": "Hlahloba potso ea hau ea LimaBar pele u e romela.",
+  "Choose the scope of your question": "Khetha boholo ba potso ea hau",
+  "Ask Lima → Help with": "Botsa Lima → Thuso ka",
+  "Choose Using the app for general help without attaching saved-site or record context. Advice about your own site needs supported country details saved to your signed-in account. Replies and attachments retire when their context changes. Manual maps and records remain available.": "Khetha Ho sebedisa lenaneo bakeng sa thuso e akaretsang ntle le ho hokela sebaka se bolokiloeng kapa litlaleho. Keletso e mabapi le sebaka sa hau e hloka lintlha tsa naha tse tšehelitsoeng tse bolokiloeng akhaonteng ea hau e kentsweng. Likarabo le lihokelo lia tloha ha litaba tsa tsona li fetoha. Limmapa le litlaleho tseo u li sebelisang ka bowena li ntse li fumaneha.",
   // Unreviewed AGY field seed captions; exact English remains visible. See field-seed-release-drafts/adoption.json.
   "Plan seed sourcing for field cycles without nursery raising.": "Rala ho fumaneha ha peo bakeng sa mekoloko ea masimo e se nang mohato oa kereche ea limela.",
   "Review field seed requirements": "Hlahloba litlhoko tsa peo ea masimo",

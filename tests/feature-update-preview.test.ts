@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { actualUpdateUi, updateNodeText } from './update-ui-renderer.ts';
 import { cleanUpdateTour } from '../lib/update-tour.ts';
 import { RELEASE_NOTES, visibleUpdateTour } from '../lib/release-notes.ts';
+import { controlT } from './control-icon-renderers.ts';
 
 const stop = { title: 'Choose sites', where: 'Settings', detail: 'Review access.', href: '/connect/imbewu', preview: 'assistant-access' };
 
@@ -74,3 +75,28 @@ test('history uses routine or important current releases instead of replaying an
     }
   } finally { RELEASE_NOTES.splice(0, RELEASE_NOTES.length, ...original); }
 });
+
+for (const [href, wrong] of [['/farmer?panel=Ask', '/farmer?panel=Details'], ['/records?tab=sold', '/records?tab=harvest']]) {
+  test(`the mounted guide recognizes ${href} only after the required panel is selected`, async () => {
+    const destination = { title: 'Review this panel', where: 'Current app panel', detail: 'Read the available choices.', href };
+    const h = await actualUpdateUi('en', { kind: 'guide', path: wrong,
+      guide: { sha: 'qa-current-build', stops: [destination], phase: 'offer', index: 0 } });
+    const t = controlT('en');
+    const continueLabel = t('updateGuideContinue').replace('{index}', '1').replace('{total}', '1');
+    try {
+      await h.click('settingsGuideMe');
+      assert.equal(h.renderer.root.findAllByProps({ 'aria-label': t('updateGuideOpenPage') }).length, 1);
+      assert.equal(h.renderer.root.findByProps({ 'aria-label': t('updateGuideOpenPage') }).props.href, href);
+      assert.ok(!h.text().includes(t('updateGuideArrived')), 'a different panel on the same page has not arrived');
+      await h.path(href);
+      assert.equal(h.renderer.root.findAllByProps({ 'aria-label': continueLabel }).length, 1, 'arrival minimizes the guide to reveal the page');
+      await h.actionLabel(continueLabel);
+      assert.ok(h.text().includes(t('updateGuideArrived')));
+      assert.equal(h.renderer.root.findAllByProps({ 'aria-label': t('updateGuideOpenPage') }).length, 0);
+      await h.path(wrong);
+      assert.equal(h.renderer.root.findByProps({ 'aria-label': t('updateGuideOpenPage') }).props.href, href);
+      assert.ok(!h.text().includes(t('updateGuideArrived')));
+      assert.deepEqual(JSON.parse(h.session.get('imbewu-update-guide-v1')!).stops, [destination], 'navigation does not rewrite the stored destination');
+    } finally { await h.dispose(); }
+  });
+}

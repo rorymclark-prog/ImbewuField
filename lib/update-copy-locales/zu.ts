@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed current release captions; exact English stays paired. See docs/international/current-release-caption-repair-2026-11-06/adoption.json.
+  "Quick sale names rand and links to invoices in another currency.": "Ukuthengisa okusheshayo kubalula irandi futhi kuxhumanisa nama-invoyisi kwenye imali.",
+  "Choose the right sale entry": "Khetha ukufaka kokuthengisa okufanele",
+  "My Records → Sold → Quick sale entry": "Amarekhodi Ami → Okudayisiwe → Ukufaka kokuthengisa okusheshayo",
+  "Quick sale records South African rand (ZAR). For another supported currency, open the separate sale-invoice form and choose its currency and payment status. Enter the sale there; the quick-sale draft is not transferred.": "Ukuthengisa okusheshayo kurekhoda irandi laseNingizimu Afrika (ZAR). Ngenye imali esekelwayo, vula ifomu le-invoyisi yokuthengisa elihlukile bese ukhetha imali yalo nesimo sokukhokha. Faka ukuthengisa lapho; uhlaka lokuthengisa okusheshayo aludluliswa.",
+  "See when monthly temperatures are incomplete or need another check.": "Bona lapho amazinga okushisa anyanga zonke engaphelele noma edinga okunye ukuhlolwa.",
+  "Check monthly temperature coverage": "Hlola ukutholakala kwamazinga okushisa anyanga zonke",
+  "Map → Site details → Overview or Climate": "Ibalazwe → Imininingwane yesiza → Isifinyezo noma Isimo Sezulu",
+  "Check whether all monthly mean temperatures were supplied. Missing or unrecorded coverage holds the monthly calendar and planner climate interpretation; reload online to try again. Your saved maps, records and original estimates remain available. Complete model inputs do not confirm local crop suitability.": "Hlola ukuthi wonke amazinga okushisa ayisilinganiso anyanga zonke anikeziwe yini. Ukutholakala okushodayo noma okungarekhodiwe kubamba ikhalenda lanyanga zonke nencazelo yesimo sezulu somhleli; layisha kabusha ku-inthanethi ukuze uzame futhi. Amabalazwe akho agciniwe, amarekhodi nezilinganiso zokuqala kuhlala kukhona. Okufakiwe kwemodeli okuphelele akuqinisekisi ukufaneleka kwezilimo zendawo.",
+  "Choose app help separately from advice about a saved site.": "Khetha usizo lohlelo lokusebenza ngokwehlukana neseluleko mayelana nesiza esigciniwe.",
+  "Review your LimaBar question before sending it.": "Buyekeza umbuzo wakho we-LimaBar ngaphambi kokuwuthumela.",
+  "Choose the scope of your question": "Khetha ubukhulu bombuzo wakho",
+  "Ask Lima → Help with": "Buza u-Lima → Usizo nge",
+  "Choose Using the app for general help without attaching saved-site or record context. Advice about your own site needs supported country details saved to your signed-in account. Replies and attachments retire when their context changes. Manual maps and records remain available.": "Khetha Ukusebenzisa uhlelo lokusebenza ukuze uthole usizo oluvamile ngaphandle kokunamathisela isiza esigciniwe noma umongo wamarekhodi. Iseluleko mayelana nesiza sakho sidinga imininingwane yezwe esekelwayo egcinwe ku-akhawunti yakho ongene kuyo. Izimpendulo nezinanyathiselwa kuyaphela lapho umongo wazo ushintsha. Amabalazwe amarekhodi owasebenzisayo ngesandla ahlala ekhona.",
   // Unreviewed AGY field seed captions; exact English remains visible. See field-seed-release-drafts/adoption.json.
   "Plan seed sourcing for field cycles without nursery raising.": "Hlela ukutholakala kwembewu yemijikelezo yensimu engenaso isigaba senkulisa.",
   "Review field seed requirements": "Buyekeza izidingo zembewu yensimu",

@@ -5,7 +5,7 @@ import { act,create,type ReactTestRenderer,type ReactTestInstance } from 'react-
 import { ChevronUp,X,Menu,ArrowRight } from 'lucide-react';
 import { controlT,type ControlLanguage } from './control-icon-renderers.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
-import { cleanUpdateTour,readUpdateGuide,UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT } from '../lib/update-tour.ts';
+import { cleanUpdateTour,readUpdateGuide,isUpdateGuideDestination,UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT } from '../lib/update-tour.ts';
 import { RELEASE_NOTES,visibleNotes,visibleUpdateTour } from '../lib/release-notes.ts';
 import { cleanUpdateCopy,isUpdateCopyLanguage,loadUpdateCopy,updateDescription,updateTourSources,type UpdateCopy } from '../lib/update-copy.ts';
 import { useUpdateCopy } from '../lib/use-update-copy.ts';
@@ -47,9 +47,9 @@ export async function actualUpdateUi(initial:ControlLanguage,options:UpdateUiOpt
  const registration=Object.assign(new EventTarget(),{waiting:options.waiting?{postMessage:(v:unknown)=>calls.posts.push(v)}:null,installing:null,update:async()=>{}});
  const worker=Object.assign(new EventTarget(),{controller:{},register:async()=>{calls.worker++;return registration;},getRegistration:async()=>registration});
  const document=Object.assign(new EventTarget(),{visibilityState:'visible',querySelector:()=>({getBoundingClientRect:()=>({top:8,left:8,width:44,height:44}),click:()=>calls.menu++})});
- const scope:Record<string,unknown>={React,...React,ChevronUp,X,Menu,ArrowRight,window,document,navigator:{serviceWorker:worker},process:{env:{NODE_ENV:'test'}},URLSearchParams,cleanUpdateTour,readUpdateGuide,UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT,isDifferentBuild,
+ const scope:Record<string,unknown>={React,...React,ChevronUp,X,Menu,ArrowRight,window,document,navigator:{serviceWorker:worker},process:{env:{NODE_ENV:'test'}},URLSearchParams,cleanUpdateTour,readUpdateGuide,isUpdateGuideDestination,UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT,isDifferentBuild,
   isUpdateCopyLanguage,updateDescription,updateTourSources,cleanUpdateCopy,updateDateLabel,RELEASE_NOTES,styles:styleNames,
-  translate:(language:ControlLanguage,key:string)=>controlT(language)(key),APP_LANGS:appLanguages,loadLocale:async()=>{},useRouter:()=>({push:(url:string)=>calls.routes.push(url)}),useLanguage:()=>({lang,t:controlT(lang),onboarded:false,completeOnboarding:(language:string)=>calls.completed.push(language)}),useAppLevel:()=>simple?'simple':'full',usePathname:()=>path,useAuth:()=>({user:options.kind==='discovery'?{uid:actor}:null,loading:false}),useSampleRole:()=>options.sample??false,
+  translate:(language:ControlLanguage,key:string)=>controlT(language)(key),APP_LANGS:appLanguages,loadLocale:async()=>{},useRouter:()=>({push:(url:string)=>calls.routes.push(url)}),useLanguage:()=>({lang,t:controlT(lang),onboarded:false,completeOnboarding:(language:string)=>calls.completed.push(language)}),useAppLevel:()=>simple?'simple':'full',usePathname:()=>new URL(path,'http://fixture').pathname,useSearchParams:()=>new URL(path,'http://fixture').searchParams,useAuth:()=>({user:options.kind==='discovery'?{uid:actor}:null,loading:false}),useSampleRole:()=>options.sample??false,
   recordTourOpening,dismissTourMenuTip,TOUR_INVITATION_LIMIT,announceOverlay:()=>{},localStorage:{getItem:(k:string)=>storage.get(k)??null,setItem:(k:string,v:string)=>storage.set(k,v)},
   AppHeader:({title}:any)=>React.createElement('header',null,title),
   useUpdateCopy:(language:string,enabled:boolean)=>useUpdateCopy(language,enabled,options.loader??loadUpdateCopy),

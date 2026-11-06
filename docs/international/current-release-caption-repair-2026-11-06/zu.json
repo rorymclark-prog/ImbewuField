@@ -1,0 +1,86 @@
+{
+  "locale": "zu",
+  "sourceSha256": "c89655f9bbfb32facd7ac35d1f6981c4f78edae436851851624a0ae0e400e4ed",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "currentReleaseNotice01",
+      "english": "Quick sale names rand and links to invoices in another currency.",
+      "sha256": "d1a7ac4c5fad17be719e68a6f881663467047070d68bb14c69cc3cf31592d769",
+      "translation": "Ukuthengisa okusheshayo kubalula irandi futhi kuxhumanisa nama-invoyisi kwenye imali."
+    },
+    {
+      "key": "currentReleaseNotice02",
+      "english": "Choose the right sale entry",
+      "sha256": "a9acf5a1d74b41f160b9c0e352ca42d9817ea44c0f1ccd88dec9623a329e4f9b",
+      "translation": "Khetha ukufaka kokuthengisa okufanele"
+    },
+    {
+      "key": "currentReleaseNotice03",
+      "english": "My Records → Sold → Quick sale entry",
+      "sha256": "b34d2c85dfeaccb988dfcade81aafe710ab7e94dc55731691d9cc7b57c9ee471",
+      "translation": "Amarekhodi Ami → Okudayisiwe → Ukufaka kokuthengisa okusheshayo"
+    },
+    {
+      "key": "currentReleaseNotice04",
+      "english": "Quick sale records South African rand (ZAR). For another supported currency, open the separate sale-invoice form and choose its currency and payment status. Enter the sale there; the quick-sale draft is not transferred.",
+      "sha256": "7b9046fbd1f286483c54df0382b527591cf5afc969b42fc841c356cdff3e84e4",
+      "translation": "Ukuthengisa okusheshayo kurekhoda irandi laseNingizimu Afrika (ZAR). Ngenye imali esekelwayo, vula ifomu le-invoyisi yokuthengisa elihlukile bese ukhetha imali yalo nesimo sokukhokha. Faka ukuthengisa lapho; uhlaka lokuthengisa okusheshayo aludluliswa."
+    },
+    {
+      "key": "currentReleaseNotice05",
+      "english": "See when monthly temperatures are incomplete or need another check.",
+      "sha256": "5b8e18d5e5ac605f45efd0eb24207a4e3899f95e1db47134665e813a33f613bd",
+      "translation": "Bona lapho amazinga okushisa anyanga zonke engaphelele noma edinga okunye ukuhlolwa."
+    },
+    {
+      "key": "currentReleaseNotice06",
+      "english": "Check monthly temperature coverage",
+      "sha256": "605771bbdab2953c7950fd6d9132ad9db87aacbb529f44dbd0797347df2be793",
+      "translation": "Hlola ukutholakala kwamazinga okushisa anyanga zonke"
+    },
+    {
+      "key": "currentReleaseNotice07",
+      "english": "Map → Site details → Overview or Climate",
+      "sha256": "805e3365c4eae864da13784fee03269bae8a633087a2ab42b402180e392a2b5b",
+      "translation": "Ibalazwe → Imininingwane yesiza → Isifinyezo noma Isimo Sezulu"
+    },
+    {
+      "key": "currentReleaseNotice08",
+      "english": "Check whether all monthly mean temperatures were supplied. Missing or unrecorded coverage holds the monthly calendar and planner climate interpretation; reload online to try again. Your saved maps, records and original estimates remain available. Complete model inputs do not confirm local crop suitability.",
+      "sha256": "75117da5d70e98f0ca9d6c575832b2149ea9e07629c9087d5401b64b1d3eaff1",
+      "translation": "Hlola ukuthi wonke amazinga okushisa ayisilinganiso anyanga zonke anikeziwe yini. Ukutholakala okushodayo noma okungarekhodiwe kubamba ikhalenda lanyanga zonke nencazelo yesimo sezulu somhleli; layisha kabusha ku-inthanethi ukuze uzame futhi. Amabalazwe akho agciniwe, amarekhodi nezilinganiso zokuqala kuhlala kukhona. Okufakiwe kwemodeli okuphelele akuqinisekisi ukufaneleka kwezilimo zendawo."
+    },
+    {
+      "key": "currentReleaseNotice09",
+      "english": "Choose app help separately from advice about a saved site.",
+      "sha256": "084f335a92554251294b3d49e8d7cda2c07051254c5c9a48b1657d95f703a66a",
+      "translation": "Khetha usizo lohlelo lokusebenza ngokwehlukana neseluleko mayelana nesiza esigciniwe."
+    },
+    {
+      "key": "currentReleaseNotice10",
+      "english": "Review your LimaBar question before sending it.",
+      "sha256": "2edb8b1437825aba73c3d2ad875e39da3a290fd25a58545e9fe3f5289f770c7e",
+      "translation": "Buyekeza umbuzo wakho we-LimaBar ngaphambi kokuwuthumela."
+    },
+    {
+      "key": "currentReleaseNotice11",
+      "english": "Choose the scope of your question",
+      "sha256": "6d07936d680ee777c642137ad0162aefb9c854a06a8d87a11dcade74035180fc",
+      "translation": "Khetha ubukhulu bombuzo wakho"
+    },
+    {
+      "key": "currentReleaseNotice12",
+      "english": "Ask Lima → Help with",
+      "sha256": "c02d81b61f4740e688f34bd4f288e26ca3885dcc6958999d501737369cf504d7",
+      "translation": "Buza u-Lima → Usizo nge"
+    },
+    {
+      "key": "currentReleaseNotice13",
+      "english": "Choose Using the app for general help without attaching saved-site or record context. Advice about your own site needs supported country details saved to your signed-in account. Replies and attachments retire when their context changes. Manual maps and records remain available.",
+      "sha256": "c837b7fa60a6b0f0b8660dc1811b4c43c604aee17057eec7b07f07d1ed3bfb61",
+      "translation": "Khetha Ukusebenzisa uhlelo lokusebenza ukuze uthole usizo oluvamile ngaphandle kokunamathisela isiza esigciniwe noma umongo wamarekhodi. Iseluleko mayelana nesiza sakho sidinga imininingwane yezwe esekelwayo egcinwe ku-akhawunti yakho ongene kuyo. Izimpendulo nezinanyathiselwa kuyaphela lapho umongo wazo ushintsha. Amabalazwe amarekhodi owasebenzisayo ngesandla ahlala ekhona."
+    }
+  ]
+}

@@ -37,3 +37,24 @@ test('a refresh offers only internal app pages from the newly installed build', 
   assert.equal(readUpdateGuide('{broken', 'new1234'), null);
   assert.equal(readUpdateGuide(JSON.stringify({ sha: 'new1234', stops: [] }), 'new1234'), null);
 });
+
+test('the guide retains its exact Ask and Sold panels without admitting arbitrary queries or redirect-shaped destinations', () => {
+  const stop = { title: 'Ask scope', where: 'Ask Lima', detail: 'Review the question scope.', href: '/farmer?panel=Ask' };
+  assert.deepEqual(cleanUpdateTour([stop]), [stop]);
+  assert.deepEqual(readUpdateGuide(JSON.stringify({ sha: 'current', stops: [stop], phase: 'tour', index: 0 }), 'current'), {
+    sha: 'current', stops: [stop], phase: 'tour', index: 0,
+  });
+  const sold = { ...stop, href: '/records?tab=sold' };
+  assert.deepEqual(cleanUpdateTour([sold]), [sold]);
+  assert.deepEqual(readUpdateGuide(JSON.stringify({ sha: 'current', stops: [sold], phase: 'tour', index: 0 }), 'current'), {
+    sha: 'current', stops: [sold], phase: 'tour', index: 0,
+  });
+  for (const href of [
+    '/farmer?panel=Ask&next=https://other.example', '/farmer?panel=Other',
+    '/farmer?next=https://other.example', '//other.example', '/farmer/../account',
+    '/farmer%3Fpanel=Ask', '/farmer?panel=Ask#other', '/farmer?panel=Ask\n',
+    '/farmer\n', '/farmer#Ask\n', 'https://other.example/farmer?panel=Ask',
+    '/records?tab=sold&next=//other.example', '/records?tab=other',
+    '/records?tab=sold\n', '/records?tab=sold#other',
+  ]) assert.deepEqual(cleanUpdateTour([{ ...stop, href }]), [], href);
+});
