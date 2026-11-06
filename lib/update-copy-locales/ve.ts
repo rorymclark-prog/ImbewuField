@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired seven-language worksheet captions; English stays visible. See mass-asia-review-release-drafts/adoption.json.
+  "Compare harvest-weight wording drafts in seven languages.": "Vhambedzani mitalo ya maipfi a vhuleme ha khaṋo nga nyambo dza sumbe.",
+  "Review seven harvest-weight draft languages": "Ṱolani nyambo dza sumbe dza mitalo ya vhuleme ha khaṋo",
+  "Compare current English with French, Spanish, Brazilian Portuguese, Swahili, Hindi, Bengali and Indonesian drafts. These are unreviewed comparisons, not approved translations or a change to your app language.": "Vhambedzani Tshiisimane tsha zwino na mitalo ya Tshifura, Tshipanyani, Tshiputukezi tsha Brazil, Tswahili, Tshiindi, Tshibengali na Tshi-Indonesia. Hei ndi mbambedzo i songo ṱoliwaho, hu si vhupinduleli ho tendelwaho kana u shandukisa luambo lwa aputhulekhesheni yaṋu.",
   // Unreviewed AGY caption; coordinator core-only adoption is recorded in docs/international/agy-nursery-demo-navigation-release-code-2026-11-05/adoption.json.
   "Keep your DEMO crop plan when opening the Task Planner.": "Vhulungani pulane yavho ya zwimela ya DEMO musi ni tshi vula Task Planner.",
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.

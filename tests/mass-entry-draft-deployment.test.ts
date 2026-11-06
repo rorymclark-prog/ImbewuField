@@ -33,8 +33,12 @@ const { configSchema } = require('next/dist/server/config-schema') as {
   configSchema: { safeParse: (value: unknown) => { success: boolean; error?: { message: string } } };
 };
 const packetRoot = 'lib/international/locales/mass-entry-drafts';
+// The worksheet now also compares Hindi, Bengali and Indonesian packets. Keep
+// all eight original assets and add only those three exact public JSON files;
+// the same frozen twelve English messages and inactive status still bind them.
 const expected = [`${packetRoot}/source.json`, `${packetRoot}/fr.json`, `${packetRoot}/es.json`,
-  `${packetRoot}/pt-BR.json`, `${packetRoot}/sw.json`, 'components/crops/GrowerEnteredMassField.ts',
+  `${packetRoot}/pt-BR.json`, `${packetRoot}/sw.json`, `${packetRoot}/hi.json`, `${packetRoot}/bn.json`,
+  `${packetRoot}/id.json`, 'components/crops/GrowerEnteredMassField.ts',
   'components/crops/GrowerCycleIntent.ts', 'lib/release-notes.ts'].sort();
 const entryName = 'app/international/locales/mass-entry/page';
 const route = normalizeAppPath(entryName);
@@ -99,10 +103,10 @@ test('actual Next 14 config accepts a narrowly traced mass-review data/source bu
   assert.ok(actualConfig.experimental?.outputFileTracingIncludes,
     'looped source and packet paths need the installed framework’s experimental include slot');
   await withBundle(actualConfig, (directory, files) => {
-    assert.deepEqual(files, expected, 'the worksheet needs exactly five JSON packets and three actual source files');
+    assert.deepEqual(files, expected, 'the worksheet needs the frozen packet, seven inactive language packets and three actual source files');
     const data = loadFromBundle(directory);
-    assert.equal(data.issue, null); assert.deepEqual(data.languages.map(language => language.locale), ['fr', 'es', 'pt-BR', 'sw']);
-    assert.equal(data.languages.flatMap(language => language.rows).length, 48);
+    assert.equal(data.issue, null); assert.deepEqual(data.languages.map(language => language.locale), ['fr', 'es', 'pt-BR', 'sw', 'hi', 'bn', 'id']);
+    assert.equal(data.languages.flatMap(language => language.rows).length, 84);
     for (const language of data.languages) {
       assert.equal(language.rows.length, 12);
       for (const row of language.rows) {
@@ -146,6 +150,9 @@ for (const missing of expected) test(`an omitted traced ${missing} remains visib
       assert.ok(held > 0);
     } else {
       const locale = missing.slice(packetRoot.length + 1, -'.json'.length);
+      const unavailable = data.languages.find(language => language.locale === locale);
+      assert.ok(unavailable, 'a missing packet must remain a visible comparison, including the three additional languages');
+      assert.equal(unavailable.rows.length, 12);
       for (const language of data.languages) for (const row of language.rows) {
         assert.equal(row.state, language.locale === locale ? 'invalid' : 'draft');
         if (language.locale === locale) { assert.equal(row.translation, null); assert.ok(row.issues.length); }
