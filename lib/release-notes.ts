@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 November 2026', sha: 'c80fb4bf0cf1', changes: [
+  { when: '6 November 2026', sha: '9dbb7b3be6fc', changes: [
     'Review conflicting shape versions on your map.',
   ], tour: [{ title: 'Review map shape versions', where: 'Map → Shapes needing your decision', href: '/farmer',
     detail: 'Open the list of shapes needing a decision. Review each preserved version before choosing which to keep, or keep both when offered. Download a backup when the map offers one; older app versions still need care.' }] },
