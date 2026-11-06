@@ -20,6 +20,7 @@ const nextConfig = {
         './lib/international/locales/mass-entry-drafts/id.json',
         './components/crops/GrowerEnteredMassField.ts',
         './components/crops/GrowerCycleIntent.ts',
+        './lib/international/grower-cycle-intent.ts',
         './lib/release-notes.ts',
       ],
     },

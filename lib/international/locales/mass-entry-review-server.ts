@@ -9,7 +9,9 @@ function read(path: string): string | undefined {
 
 /** Only fixed application-source and draft-packet paths are read. A deployment
  * without source files reports unknown English; frozen text cannot substitute
- * for the current interface. No account, farmer store or provider is consulted. */
+ * for the current interface. The shared presenter is read as source text only,
+ * alongside its actual component delegation; it is never executed by this loader.
+ * No account, farmer store or provider is consulted. */
 export function loadMassEntryReviewData() {
   const packetRoot = 'lib/international/locales/mass-entry-drafts';
   return buildMassEntryReviewData({ sourceText: read(`${packetRoot}/source.json`),

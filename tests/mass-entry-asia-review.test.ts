@@ -22,6 +22,12 @@ interface Packet {
   messages: Message[]; [key: string]: unknown;
 }
 const frozen = JSON.parse(sourceText) as { locales: string[]; messages: Pick<Message, 'key' | 'english' | 'sha256'>[] };
+// The frozen job remains unchanged after the shared presenter adds a warning.
+// Its seven translations must be stale rather than silently gaining coverage.
+const changedKey = 'massEntry.readback.planningEstimate';
+const changedEnglish = 'This is the grower-entered planning estimate, not this batch’s output or an observed harvest. Repeated whole-demand request weights must not be added together.';
+const expectedState = (key: string) => key === changedKey ? 'stale' : 'draft';
+const expectedEnglish = (key: string, english: string) => key === changedKey ? changedEnglish : english;
 function input(): MassEntryReviewInputs {
   return { sourceText, currentSources: Object.fromEntries(binding.files.map(file => [file.path, read(file.path)])),
     packets: Object.fromEntries(locales.map(locale => [locale, read(`${folder}/${locale}.json`)])) };
@@ -55,8 +61,8 @@ test('seven actual inactive mass packets expose 84 paired drafts while English a
       const saved = actual.messages[index], source = frozen.messages[index];
       assert.equal(saved.key, source.key); assert.equal(saved.english, source.english);
       assert.equal(saved.sha256, sha(source.english)); assert.equal(row.key, source.key);
-      assert.equal(row.frozenEnglish, source.english); assert.equal(row.currentEnglish, source.english);
-      assert.equal(row.translation, saved.translation); assert.equal(row.state, 'draft', `${locale}/${row.key}`);
+      assert.equal(row.frozenEnglish, source.english); assert.equal(row.currentEnglish, expectedEnglish(row.key, source.english));
+      assert.equal(row.translation, saved.translation); assert.equal(row.state, expectedState(row.key), `${locale}/${row.key}`);
       assert.deepEqual(placeholders(saved.translation), placeholders(source.english));
       for (const literal of ['kg', 'lb', '≈', '→']) {
         assert.equal(saved.translation.split(literal).length, source.english.split(literal).length, `${locale}/${row.key} preserves ${literal}`);
@@ -81,10 +87,20 @@ test('existing FRES packet bytes and comparison rows remain unchanged when Asia 
   assert.equal(sha(read(`${folder}/source.json`)), sourceSha);
 });
 
+test('the three later Asia packets remain exact historical drafts after presenter wording changes', () => {
+  const pins = { hi: 'c5fd049ba1ed6b91137b3d824a12d2b22519a656714401cd802649da434d6a1d',
+    bn: '4480eb2b96f29193f2da67bc1d78b9b8451dd567239d80e17809747176baaa2b',
+    id: 'c7f9bf0d2bd64bc9007f7764bde0aefac1a8a89e1f422bdcdc47666da2e7833c' };
+  for (const locale of asia) assert.equal(sha(read(`${folder}/${locale}.json`)), pins[locale]);
+});
+
 test('the existing server loader includes the three new packets through the shared seven-locale selection', () => {
   const expected = buildMassEntryReviewData(input()), loaded = loadMassEntryReviewData();
   assert.deepEqual(loaded, expected);
-  for (const locale of asia) assert.equal(language(loaded, locale).rows.filter(row => row.state === 'draft').length, 12);
+  for (const locale of asia) {
+    assert.equal(language(loaded, locale).rows.filter(row => row.state === 'draft').length, 11);
+    assert.equal(language(loaded, locale).rows.filter(row => row.state === 'stale').length, 1);
+  }
 });
 
 for (const locale of asia) {
@@ -146,8 +162,8 @@ for (const locale of asia) {
     const value = input(), missingFile = binding.files[0].path;
     const result = buildMassEntryReviewData({ ...value, currentSources: { ...value.currentSources, [missingFile]: undefined } });
     for (const row of language(result, locale).rows) {
-      assert.equal(row.state, row.sourceFile === missingFile ? 'source-missing' : 'draft');
-      assert.equal(row.currentEnglish, row.sourceFile === missingFile ? null : row.frozenEnglish);
+      assert.equal(row.state, row.sourceFile === missingFile ? 'source-missing' : expectedState(row.key));
+      assert.equal(row.currentEnglish, row.sourceFile === missingFile ? null : expectedEnglish(row.key, row.frozenEnglish));
     }
   });
 }

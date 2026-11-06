@@ -26,7 +26,10 @@ test('serialized recorded pounds retain exact original text separately from cano
   const value = view({ unit: 'lb', text: ' 0010.00 ' }), before = JSON.stringify(value), html = render(value);
   assert.match(html, /Original entered weight for this whole demand:/);
   assert.match(html, / 0010\.00  lb/); assert.match(html, /whitespace-pre-wrap/);
-  assert.match(html, /≈4\.536 kg gross across 2028-12-01 to before 2029-01-01/);
+  assert.match(html, /4\.5359237 kg gross across 2028-12-01 to before 2029-01-01/);
+  // Authored text stays separate; the shared delivery view prints the complete
+  // validated canonical numeric equivalent rather than a rounded substitute.
+  assert.doesNotMatch(html, /≈4\.536 kg/);
   assert.match(html, /Kilograms are the canonical planning equivalent for this whole request/);
   assert.match(html, /not this batch’s output or an observed harvest/);
   assert.doesNotMatch(html, /private-entry|private-profile|site:0\.00000|2026-11-06/);

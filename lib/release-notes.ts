@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', sha: '965e29f0b', changes: [
+    'Keep saved request details with your plan and exports.',
+  ], tour: [{ title: 'Check saved request details', where: 'Crop planner → Nursery requirements for saved planned batches', href: '/facilitator/crops',
+    detail: 'Compare a saved batch’s purpose, original entered weight and request dates in nursery, task and report views. Repeated weights describe the whole request and must not be added together. Another site’s records remain held; these details do not confirm current field geometry or an observed harvest.' }] },
   { when: '6 November 2026', sha: 'b57a0b778547', changes: [
     'Compare harvest-weight wording drafts in seven languages.',
   ], tour: [{ title: 'Review seven harvest-weight draft languages', where: 'International reference tools → Language draft review → Harvest weight entry', href: '/international/locales/mass-entry',

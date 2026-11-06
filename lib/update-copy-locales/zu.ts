@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
+  "Keep saved request details with your plan and exports.": "Gcina imininingwane yesicelo elondoloziwe nohlelo lwakho nokuthunyelwayo.",
+  "Check saved request details": "Bheka imininingwane yesicelo elondoloziwe",
+  "Crop planner → Nursery requirements for saved planned batches": "Umhleli wezitshalo → Izidingo zenkulisa zamaqoqo ahleliwe alondoloziwe",
+  "Compare a saved batch’s purpose, original entered weight and request dates in nursery, task and report views. Repeated weights describe the whole request and must not be added together. Another site’s records remain held; these details do not confirm current field geometry or an observed harvest.": "Qhathanisa inhloso yeqoqo elilondoloziwe, isisindo sokuqala esifakiwe kanye nezinsuku zesicelo ekubukweni kwenkulisa, imisebenzi kanye nemibiko. Izisindo eziphindaphindiwe zichaza sonke isicelo futhi akufanele zihlanganiswe ndawonye. Amarekhodi kwenye indawo ahlala ebanjiwe; le mininingwane ayiqinisekisi ubunjalo bensimu yamanje noma isivuno esibonwe ngamehlo.",
   // Unreviewed source-paired seven-language worksheet captions; English stays visible. See mass-asia-review-release-drafts/adoption.json.
   "Compare harvest-weight wording drafts in seven languages.": "Qhathanisa okusalungiswa kwamagama esisindo sesivuno ngezilimi eziyisikhombisa.",
   "Review seven harvest-weight draft languages": "Buyekeza izilimi eziyisikhombisa ezisalungiswa zesisindo sesivuno",

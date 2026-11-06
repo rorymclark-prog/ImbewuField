@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
+  "Keep saved request details with your plan and exports.": "Boloka dintlha tsa kopo tse bolokilweng le moralo wa hao le tse romelwang ntle.",
+  "Check saved request details": "Hlahloba dintlha tsa kopo tse bolokilweng",
+  "Crop planner → Nursery requirements for saved planned batches": "Moradi wa dijalo → Ditlhoko tsa bodirelo ba ho hodisa dimela bakeng sa dihlopha tse rerilweng tse bolokilweng",
+  "Compare a saved batch’s purpose, original entered weight and request dates in nursery, task and report views. Repeated weights describe the whole request and must not be added together. Another site’s records remain held; these details do not confirm current field geometry or an observed harvest.": "Bapisa sepheo sa sehlopha se bolokilweng, boima ba pele bo kentsweng le matsatsi a kopo diponong tsa bodirelo ba ho hodisa dimela, mesebetsi le ditlaleho. Boima bo phetilweng bo hlalosa kopo yohle mme ha bo a lokela ho kopanngwa hammoho. Direkoto tsa setsha se seng di dula di thibilwe; dintlha tsena ha di tiise sebopeho sa masimo a hajwale kapa kotulo e bonweng ka mahlo.",
   // Unreviewed source-paired seven-language worksheet captions; English stays visible. See mass-asia-review-release-drafts/adoption.json.
   "Compare harvest-weight wording drafts in seven languages.": "Bapisa meralo ya mantswe a boima ba kotulo ka dipuo tse supileng.",
   "Review seven harvest-weight draft languages": "Hlahloba dipuo tse supileng tsa moralo wa boima ba kotulo",

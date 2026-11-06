@@ -20,6 +20,7 @@ export default function ReportCropPlan({ crop, siteName, siteId = null, includeW
   const { lang: uiLanguage, t: appT } = useLanguage();
   const tr = (en: string, zu?: string) => reportUiText(en, uiLanguage, appT, zu);
   const s = crop.snapshot;
+  const savedRows = reportCropRows(crop);
   const [changed, setChanged] = useState(false), [exporting, setExporting] = useState(false), [error, setError] = useState('');
   const [support, setSupport] = useState(() => currentReportCropSupport(s, siteId));
   useEffect(() => {
@@ -72,7 +73,9 @@ export default function ReportCropPlan({ crop, siteName, siteId = null, includeW
         return <div key={month}><strong>{reportUiMonth(uiLanguage, month)}</strong><p>{crops.length ? crops.map(row => `${row.name} (${symbol(row.cells[i])})`).join(' · ') : tr('No sowing or transplant task scheduled', 'Akukho ukuhlwanyela noma ukutshala okuhleliwe')}</p></div>;
       })}</div>
       {!!calendar.unscheduled.length && <p className={styles.note}>{tr('No new sowing/transplant task in this period:', 'Akukho ukuhlwanyela noma ukutshala okusha kulesi sikhathi:')} {calendar.unscheduled.join(', ')}. {tr('See the working plan for crops already growing and undated records.', 'Bheka uhlelo lomsebenzi ngezitshalo ezikhulayo namarekhodi angenazinsuku.')}</p>}
-    </> : <ul>{reportCropRows(crop).map(row => <li key={row.key}>{row.name} · saved sowing: {row.sow || tr('Sowing not recorded', 'Ukuhlwanyela akubhalwanga')} · {row.where}</li>)}</ul>}
+    </> : <ul>{savedRows.map(row => <li key={row.key}>{row.name} · saved sowing: {row.sow || tr('Sowing not recorded', 'Ukuhlwanyela akubhalwanga')} · {row.where}
+      {row.intent && <div lang="en"><p>{row.status}</p>{row.intent.lines.map((line, index) => <p key={index} className="whitespace-pre-wrap [overflow-wrap:anywhere]">{line}</p>)}</div>}</li>)}</ul>}
+    {calendar && savedRows.some(row => row.intent) && <section lang="en" aria-label="Saved own-cycle planning intent"><h3>Saved own-cycle planning intent</h3><ul>{savedRows.filter(row => row.intent).map(row => <li key={row.key}>{row.name} · {row.where}<p>{row.status}</p>{row.intent?.lines.map((line, index) => <p key={index} className="whitespace-pre-wrap [overflow-wrap:anywhere]">{line}</p>)}</li>)}</ul></section>}
     {support.allowCataloguePlanning && s?.planNotes?.length ? <details className={styles.notes}><summary>{tr('Saved plan choices and checks', 'Ukukhetha nokuhlola uhlelo olugciniwe')}</summary><ul>{s.planNotes.map((note, i) => <li key={i}>{note.text}</li>)}</ul></details> : null}
     {s && support.allowCataloguePlanning && <div className={styles.controls}>
       <button onClick={() => { void exportWorking(false); }} disabled={exporting}>{tr('Full crop-plan report (English)', 'Umbiko ophelele wohlelo lwezitshalo (isiNgisi)')}</button>
