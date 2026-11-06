@@ -1,0 +1,26 @@
+{
+  "task": "docs/international/agy-field-seed-rtl-ui-2026-11-06/WORKORDER.md",
+  "status": "COMPLETED",
+  "validation": "NOT RUN — coordinator-owned",
+  "workers": 0,
+  "workersActive": 0,
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "outputs": [
+    "docs/international/agy-field-seed-rtl-ui-2026-11-06/drafts.json",
+    "docs/international/agy-field-seed-rtl-ui-2026-11-06/status.json"
+  ],
+  "coordinatorReview": {
+    "at": "2026-11-06T11:37:52.620Z",
+    "actualIdleObserved": true,
+    "scope": "Exact source/structure/literals and identified drafting corrections only; not fluent/human certification, RTL layout readiness or runtime language approval.",
+    "corrections": [
+      "ar03 explicit temporal nursery horizon",
+      "ar05 declaration-not-provided, no permission claim",
+      "ur07 general asexual propagation material from plant parts, no cutting subtype or seed equivalence",
+      "ur08 explicit seed quantity rates",
+      "ur12 and fa12 broad whitespace disclosure with standard terminology"
+    ],
+    "remainingReview": "Named human terminology/fluency review and actual bidi/layout testing required before any runtime activation; all drafts inactive/unreviewed."
+  }
+}

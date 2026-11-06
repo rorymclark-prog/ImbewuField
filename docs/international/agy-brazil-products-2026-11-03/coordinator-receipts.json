@@ -1,0 +1,30 @@
+[
+  {
+    "id": "br-inmet-catalog",
+    "requestedUrl": "https://portal.inmet.gov.br/paginas/catalogoaut",
+    "effectiveUrl": "https://portal.inmet.gov.br/paginas/catalogoaut",
+    "httpStatus": 0,
+    "contentType": null,
+    "curlExit": 56,
+    "startedAt": "2026-11-03T00:16:07.245582+00:00",
+    "completedAt": "2026-11-03T00:16:12.017646+00:00",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receiptAuthor": "Codex coordinator machine",
+    "error": "curl: (56) Recv failure: Connection reset by peer"
+  },
+  {
+    "id": "br-redape-doi",
+    "requestedUrl": "https://doi.org/10.48432/DDBVFO",
+    "effectiveUrl": "https://www.redape.dados.embrapa.br/dataset.xhtml?persistentId=doi:10.48432/DDBVFO",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "curlExit": 0,
+    "startedAt": "2026-11-03T00:16:07.246415+00:00",
+    "completedAt": "2026-11-03T00:16:32.080694+00:00",
+    "bytes": 188341,
+    "sha256": "e51ef6d032a7495edad36070168c898ac3d3a8e3f9ed876f1d68de4d4370b481",
+    "receiptAuthor": "Codex coordinator machine",
+    "error": null
+  }
+]

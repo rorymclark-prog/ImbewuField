@@ -1,0 +1,21 @@
+{
+  "task": "docs/international/agy-field-seed-asia-ui-2026-11-06/WORKORDER.md",
+  "status": "COMPLETED",
+  "correction": "Drafting corrections applied in drafts.json: (1) In Hindi row01, rephrased to denote cycles without a planned nursery seedling-raising stage ('पौधशाला (नर्सरी) में पौध तैयार किए बिना चक्र') rather than failure to construct a nursery; (2) In Hindi row08, replaced discount term chhoot/छूट with grower-chosen extra quantity/margin ('अतिरिक्त मात्रा या मार्जिन') and neutral seed rates ('बीज दरें'); (3) In Indonesian row08, replaced financial term tarif with neutral seeding rate ('laju penanaman'); (4) Documented concrete intended corrections in reviewNotes rather than semantic certification.",
+  "validation": "NOT RUN — coordinator-owned",
+  "workers": 0,
+  "workersActive": 0,
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "outputs": [
+    "docs/international/agy-field-seed-asia-ui-2026-11-06/drafts.json",
+    "docs/international/agy-field-seed-asia-ui-2026-11-06/status.json"
+  ],
+  "coordinatorReview": {
+    "checkedAtUtc": "2026-11-06T11:10:14.023787+00:00",
+    "exactPairs": 39,
+    "damagedControls": 63,
+    "actualNotesWords": 177,
+    "scope": "Exact source/structure/literal checks and identified Hindi/Indonesian wording corrections, not fluent certification or runtime activation."
+  }
+}

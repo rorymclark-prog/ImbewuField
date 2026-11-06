@@ -1,0 +1,51 @@
+{
+  "lane": "agy-brazil-source-fit-2026-11-02",
+  "branch": "codex/agy-country-foundation",
+  "executor": "AGY",
+  "status": "coordinator-reviewed-documentation-only",
+  "milestone": "Completed corrected Brazil source-fit verification evaluating INMET, Embrapa Intro, Embrapa Soils, SiBBr, and MAPA primary documentation responses for Campinas / São Paulo provisional target; incorporated coordinator review corrections",
+  "updatedAt": "2026-11-03T00:14:10.947953+00:00",
+  "artifacts": [
+    "docs/international/agy-brazil-source-fit-2026-11-02/SOURCE-FIT.md",
+    "docs/international/agy-brazil-source-fit-2026-11-02/sources.json",
+    "docs/international/agy-brazil-source-fit-2026-11-02/status.json"
+  ],
+  "externalCoordinatorEvidence": [
+    "docs/international/agy-brazil-source-fit-2026-11-02/coordinator-receipts-2026-11-03.json"
+  ],
+  "evidenceLevels": {
+    "documentationRead": "INMET (national meteorological portal), Embrapa (agricultural research portal), Embrapa Soils (SiSolos repository redirect), SiBBr (biodiversity platform), MAPA (phytosanitary regulatory guidance)",
+    "publicEndpointResponse": "None (underlying product data endpoints were not fetched)",
+    "integrationImplemented": "None (0 / 5)"
+  },
+  "validation": [
+    {
+      "check": "Coordinator receipt, compactness and privacy review",
+      "result": "Five actual body byte counts/SHA256 values match receipts; JSON parsed; compact dossier below 2,000 words; no public product endpoint or integration established."
+    }
+  ],
+  "blocker": null,
+  "nextAction": "Verify specific linked product documentation separately; no planning readiness approval.",
+  "handoff": {
+    "commit": null,
+    "push": false,
+    "pullRequest": null,
+    "reason": "Work order instruction: no commit, push, PR, or issue posting from this lane. Codex root independently reviews and publishes on issue #35."
+  },
+  "coordinatorReview": {
+    "reviewedOn": "2026-11-03",
+    "actualReceiptCount": 5,
+    "allBodyBytesAndHashesMatch": true,
+    "fetchDateBasis": "2026-11-02 UTC; source-folder name follows local 3 November dispatch date",
+    "productEndpointsFetched": 0,
+    "integrationsImplemented": 0,
+    "humanAgronomicApproval": false,
+    "corrections": [
+      "Removed unsupported station and facility identities.",
+      "Unknown product auth, cadence, resolution and terms remain unknown.",
+      "Removed unverified named state enforcement assertions.",
+      "Removed private machine path and corrected future executor timestamp.",
+      "Bound fetch dates to actual UTC receipts and separated documentation review date."
+    ]
+  }
+}

@@ -1,0 +1,500 @@
+{
+  "sourceSha256": "8fb5c154f100bb03f05b16771bfb171e9a77448a26024d834f67bc1e491e8adc",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "packets": [
+    {
+      "locale": "ar",
+      "sourceSha256": "8fb5c154f100bb03f05b16771bfb171e9a77448a26024d834f67bc1e491e8adc",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "nurseryFieldPlanting.message.01",
+          "english": "This field-planting form belongs to an earlier checked batch. Check saved nursery batches before opening a new observation.",
+          "sha256": "bbe285d0c87aedd0dcb13e2026e9e0d765bf7f8ac0c425ec0aa1521748886be0",
+          "translation": "ينتمي نموذج الغرس الحقلي هذا إلى دفعة تم فحصها سابقاً. تحقق من دفعات المشتل المحفوظة قبل فتح ملاحظة جديدة."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.02",
+          "english": "Record observed field planting from this nursery batch",
+          "sha256": "7470ff608cb6b83c45f0089bb499d01c1b7d8989d250f669b330f5b1cd1227f4",
+          "translation": "تسجيل الغرس الحقلي الملاحظ من دفعة المشتل هذه"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.03",
+          "english": "Record only the plants you observed being planted in the assigned growing space. This does not deduct nursery stock, establish survival or mark the planned batch complete.",
+          "sha256": "33f4f6d8cecb3ce706d3bfcb91038e7a934fbd9327dc8f43006e0ca5b0b486d8",
+          "translation": "سجل فقط النباتات التي لاحظت غرسها في مساحة الزراعة المحددة. هذا الإجراء لا يخصم من مخزون المشتل، ولا يثبت بقاء النباتات حية، ولا يحدد الدفعة المخططة كمكتملة."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.04",
+          "english": "Planned field-entry day (UTC):",
+          "sha256": "acc70e605e0aa22e1a1adc2754a1a3827563b96e86695cf832b7dd60e4a2793c",
+          "translation": "يوم النزول الحقلي المخطط (UTC):"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.05",
+          "english": "This is the saved plan reference, not the day you observed the planting.",
+          "sha256": "d15c224fa0c810b6416a96c2811dd681cfd874b8dae2bc6e13cb8e6154b738ea",
+          "translation": "هذا مرجع الخطة المحفوظة، وليس اليوم الذي لاحظت فيه الغرس."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.06",
+          "english": "DEMO — this observation stays in the sample session.",
+          "sha256": "885bc7d92ee53522fb5a9912b6f47c8957ceec127fea6e5921b51f3901debe43",
+          "translation": "DEMO — تظل هذه الملاحظة ضمن جلسة العينة فقط."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.07",
+          "english": "Checked labels to snapshot with this observation; they do not verify seed identity:",
+          "sha256": "bff0cc6684d557846d286ae704a2ca4309a5efbed0183a8b46d4b9fec18c3e6a",
+          "translation": "نصوص الملصقات المحددة لحفظها كما أُدخلت مع هذه الملاحظة؛ وهي لا تثبت هوية البذور:"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.08",
+          "english": "Actual observed day",
+          "sha256": "695ed5ae7ff666916dfe84fdb0088338bd167792171e89b313d1adbcb8041048",
+          "translation": "اليوم الفعلي الملاحظ"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.09",
+          "english": "What you observed",
+          "sha256": "9714203997dd1813c87bf6d61abf6c0d9caed3c1466df7e362291bff2fbb798d",
+          "translation": "ما لاحظته"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.10",
+          "english": "Plants you planted",
+          "sha256": "c97a1e4905f73250c4deed04b21401ede928bb297978e27d7e51f6a8103022ca",
+          "translation": "النباتات التي غرستها"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.11",
+          "english": "Enter a whole count. An explicitly entered 0 is zero; a blank field is not a count.",
+          "sha256": "921c0851b058d2e2cbcb6ab914c53828fcfe2fb158a60199c2e46cd6f57381a7",
+          "translation": "أدخل عدداً صحيحاً. إدخال الرقم 0 صراحةً هو صفر؛ والحقل الفارغ ليس عدداً."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.12",
+          "english": "This record does not imply a particular earlier sowing or count, or change forecasts, task ticks or sales.",
+          "sha256": "b0d75bf92cb0953c84ef5ef0add825261513428e11b0f435e430ea6e83d95bfd",
+          "translation": "هذا السجل لا يستدل منه على زراعة بذور أو عدد سابق محدد، ولا يغير التوقعات أو التأشير على المهام أو المبيعات."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.13",
+          "english": "I confirm this day, note and planted count describe what I observed.",
+          "sha256": "d95a65878f2b9123781cc4ea7627dbd30d6265d689daff41023c72c4f3695232",
+          "translation": "أؤكد أن هذا اليوم والملاحظة وعدد النبات المغروس تصف ما لاحظته فعلياً."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.14",
+          "english": "Recording field planting…",
+          "sha256": "24867c245d17bd7830e6292bfc5f37042d99099eaa476a241eed3e17ee9a3f00",
+          "translation": "جارٍ تسجيل الغرس الحقلي…"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.15",
+          "english": "Save field planting observation",
+          "sha256": "bafdfb6c7c68e1694f9fb0158dce305e5d1eac57dfe08749200d1ded1c6d9ab7",
+          "translation": "حفظ ملاحظة الغرس الحقلي"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.16",
+          "english": "Record another field planting",
+          "sha256": "0a9ebaaaff4bd8369769ee5bc45b549e7047331fd23bc1db823330eb51a47e29",
+          "translation": "تسجيل عملية غرس حقلي أخرى"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.17",
+          "english": "Stored nursery field planting evidence needs review. Its count and reference labels are withheld; retained evidence has not been treated as an ordinary unlinked note.",
+          "sha256": "06792940ac2f26c3b05d40afe749a5bdaf545ad92ad145841c7597d865df0030",
+          "translation": "أدلة الغرس الحقلي المخزنة من المشتل تحتاج إلى مراجعة. تم حجب عددها وملصقاتها المرجعية؛ ولم يتم التعامل مع الأدلة المحتفظ بها كملاحظة عادية غير مرتبطة."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.18",
+          "english": "Recorded field planting",
+          "sha256": "3409ed2562ba4a18e6a1324db9f9e7747fe9d7c4d372d5436fdae0d8fdd734e4",
+          "translation": "الغرس الحقلي المسجل"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.19",
+          "english": "Plants planted during this recorded work",
+          "sha256": "5a0aa9652b68493ed936ce4fc23216a9935a57aa6462f2b32701fff4ae82a37f",
+          "translation": "النباتات المغروسة خلال هذا العمل المسجل"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.20",
+          "english": "Observed day",
+          "sha256": "d9d37ed724dbb4c508f3c3bad845fb9d06c0b7d2a2e4621bdf91bb8f0ad6e610",
+          "translation": "اليوم الملاحظ"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.21",
+          "english": "Planned field entry (UTC calendar date)",
+          "sha256": "3c6bfbe9639babcf80a5ab1d4e8abf71c678a74271b923ab1f847e938ea83c75",
+          "translation": "النزول الحقلي المخطط (تاريخ تقويم UTC)"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.22",
+          "english": "Variety / cultivar at observation",
+          "sha256": "65953babacde253657c761e41c2b5c46353465a14bb8b4a981a26ade99084f46",
+          "translation": "الصنف / المستنبت عند الملاحظة"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.23",
+          "english": "Seed-lot reference at observation",
+          "sha256": "2b7ffb6c892d41f65d557a54dc3f1e1901b8bbb9cd8d5f370fb06b9d199f1a1d",
+          "translation": "مرجع دفعة البذور عند الملاحظة"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.24",
+          "english": "Raising-batch reference at observation",
+          "sha256": "70b0bdf21bcd887d5e685656b16920ee00fe81d95f8f9f47e7b9c530950d6e26",
+          "translation": "مرجع دفعة التشتيل عند الملاحظة"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.25",
+          "english": "Grower-entered observation for this work, not a stock balance, survival result or completed batch. Stored labels do not verify seed identity or identify a particular earlier sowing or count record.",
+          "sha256": "6814a1ce5fe65ffdc0e89c58b06936503f1374f25f9983c6f2ddcbd9b916192c",
+          "translation": "ملاحظة أدخلها المزارع لهذا العمل، وليست رصيد مخزون أو نتيجة بقاء نباتات حية أو دفعة مكتملة. الملصقات المخزنة لا تثبت هوية البذور ولا تحدد زراعة بذور سابقة معينة أو سجل عد."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.26",
+          "english": "Record field planting",
+          "sha256": "27d8d842589e591d1c667757b3eff89146dba75a7ac9a57664077b558688f5e7",
+          "translation": "تسجيل الغرس الحقلي"
+        }
+      ]
+    },
+    {
+      "locale": "ur",
+      "sourceSha256": "8fb5c154f100bb03f05b16771bfb171e9a77448a26024d834f67bc1e491e8adc",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "nurseryFieldPlanting.message.01",
+          "english": "This field-planting form belongs to an earlier checked batch. Check saved nursery batches before opening a new observation.",
+          "sha256": "bbe285d0c87aedd0dcb13e2026e9e0d765bf7f8ac0c425ec0aa1521748886be0",
+          "translation": "کھیت میں پودے لگانے کا یہ فارم پہلے سے چیک شدہ کھیپ سے متعلق ہے۔ نیا مشاہدہ کھولنے سے پہلے محفوظ شدہ نرسری کھیپیں چیک کریں۔"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.02",
+          "english": "Record observed field planting from this nursery batch",
+          "sha256": "7470ff608cb6b83c45f0089bb499d01c1b7d8989d250f669b330f5b1cd1227f4",
+          "translation": "اس نرسری کھیپ سے مشاہدہ شدہ کھیت میں پودے لگانے کا اندراج کریں"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.03",
+          "english": "Record only the plants you observed being planted in the assigned growing space. This does not deduct nursery stock, establish survival or mark the planned batch complete.",
+          "sha256": "33f4f6d8cecb3ce706d3bfcb91038e7a934fbd9327dc8f43006e0ca5b0b486d8",
+          "translation": "صرف ان پودوں کا اندراج کریں جنہیں آپ نے پودوں کے لیے مقررہ بڑھوتری کی جگہ میں لگاتے ہوئے دیکھا ہے۔ اس سے نرسری اسٹاک کم نہیں ہوتا، بقا ثابت نہیں ہوتی اور نہ ہی منصوبہ بند کھیپ مکمل قرار پاتی ہے۔"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.04",
+          "english": "Planned field-entry day (UTC):",
+          "sha256": "acc70e605e0aa22e1a1adc2754a1a3827563b96e86695cf832b7dd60e4a2793c",
+          "translation": "کھیت میں داخلے کا منصوبہ بند دن (UTC):"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.05",
+          "english": "This is the saved plan reference, not the day you observed the planting.",
+          "sha256": "d15c224fa0c810b6416a96c2811dd681cfd874b8dae2bc6e13cb8e6154b738ea",
+          "translation": "یہ محفوظ شدہ منصوبے کا حوالہ ہے، وہ دن نہیں جب آپ نے پودے لگانے کا مشاہدہ کیا۔"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.06",
+          "english": "DEMO — this observation stays in the sample session.",
+          "sha256": "885bc7d92ee53522fb5a9912b6f47c8957ceec127fea6e5921b51f3901debe43",
+          "translation": "DEMO — یہ مشاہدہ نمونہ سیشن میں ہی رہتا ہے۔"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.07",
+          "english": "Checked labels to snapshot with this observation; they do not verify seed identity:",
+          "sha256": "bff0cc6684d557846d286ae704a2ca4309a5efbed0183a8b46d4b9fec18c3e6a",
+          "translation": "منتخب کردہ لیبلز جنہیں اس مشاہدے کے ساتھ محفوظ کیا جانا ہے؛ یہ بیج کی شناخت کی تصدیق نہیں کرتے:"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.08",
+          "english": "Actual observed day",
+          "sha256": "695ed5ae7ff666916dfe84fdb0088338bd167792171e89b313d1adbcb8041048",
+          "translation": "اصل مشاہدہ کا دن"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.09",
+          "english": "What you observed",
+          "sha256": "9714203997dd1813c87bf6d61abf6c0d9caed3c1466df7e362291bff2fbb798d",
+          "translation": "آپ نے کیا مشاہدہ کیا"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.10",
+          "english": "Plants you planted",
+          "sha256": "c97a1e4905f73250c4deed04b21401ede928bb297978e27d7e51f6a8103022ca",
+          "translation": "پودے جو آپ نے لگائے"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.11",
+          "english": "Enter a whole count. An explicitly entered 0 is zero; a blank field is not a count.",
+          "sha256": "921c0851b058d2e2cbcb6ab914c53828fcfe2fb158a60199c2e46cd6f57381a7",
+          "translation": "مکمل عدد درج کریں۔ واضح طور پر درج کردہ 0 صفر ہے؛ خالی خانہ گنتی نہیں ہے۔"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.12",
+          "english": "This record does not imply a particular earlier sowing or count, or change forecasts, task ticks or sales.",
+          "sha256": "b0d75bf92cb0953c84ef5ef0add825261513428e11b0f435e430ea6e83d95bfd",
+          "translation": "یہ اندراج کسی خاص پچھلی بوائی یا گنتی کی نشاندہی نہیں کرتا، اور نہ ہی پیشین گوئیوں، کام کے نشانات یا فروخت کو تبدیل کرتا ہے۔"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.13",
+          "english": "I confirm this day, note and planted count describe what I observed.",
+          "sha256": "d95a65878f2b9123781cc4ea7627dbd30d6265d689daff41023c72c4f3695232",
+          "translation": "میں تصدیق کرتا ہوں کہ یہ دن، نوٹ اور لگائے گئے پودوں کی تعداد اس کی وضاحت کرتے ہیں جو میں نے اصل میں دیکھا۔"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.14",
+          "english": "Recording field planting…",
+          "sha256": "24867c245d17bd7830e6292bfc5f37042d99099eaa476a241eed3e17ee9a3f00",
+          "translation": "کھیت میں پودے لگانے کا اندراج ہو رہا ہے…"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.15",
+          "english": "Save field planting observation",
+          "sha256": "bafdfb6c7c68e1694f9fb0158dce305e5d1eac57dfe08749200d1ded1c6d9ab7",
+          "translation": "کھیت میں پودے لگانے کا مشاہدہ محفوظ کریں"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.16",
+          "english": "Record another field planting",
+          "sha256": "0a9ebaaaff4bd8369769ee5bc45b549e7047331fd23bc1db823330eb51a47e29",
+          "translation": "کھیت میں پودے لگانے کا ایک اور اندراج کریں"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.17",
+          "english": "Stored nursery field planting evidence needs review. Its count and reference labels are withheld; retained evidence has not been treated as an ordinary unlinked note.",
+          "sha256": "06792940ac2f26c3b05d40afe749a5bdaf545ad92ad145841c7597d865df0030",
+          "translation": "نرسری سے کھیت میں پودے لگانے کے محفوظ شدہ شواہد کا جائزہ درکار ہے۔ اس کی گنتی اور حوالہ جاتی لیبلز روک لیے گئے ہیں؛ برقرار رکھے گئے ثبوت کو عام غیر منسلک نوٹ نہیں سمجھا گیا ہے۔"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.18",
+          "english": "Recorded field planting",
+          "sha256": "3409ed2562ba4a18e6a1324db9f9e7747fe9d7c4d372d5436fdae0d8fdd734e4",
+          "translation": "درج شدہ کھیت میں پودے لگانا"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.19",
+          "english": "Plants planted during this recorded work",
+          "sha256": "5a0aa9652b68493ed936ce4fc23216a9935a57aa6462f2b32701fff4ae82a37f",
+          "translation": "اس درج شدہ کام کے دوران لگائے گئے پودے"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.20",
+          "english": "Observed day",
+          "sha256": "d9d37ed724dbb4c508f3c3bad845fb9d06c0b7d2a2e4621bdf91bb8f0ad6e610",
+          "translation": "مشاہدہ کا دن"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.21",
+          "english": "Planned field entry (UTC calendar date)",
+          "sha256": "3c6bfbe9639babcf80a5ab1d4e8abf71c678a74271b923ab1f847e938ea83c75",
+          "translation": "کھیت میں داخلے کی منصوبہ بندی (UTC کیلنڈر کی تاریخ)"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.22",
+          "english": "Variety / cultivar at observation",
+          "sha256": "65953babacde253657c761e41c2b5c46353465a14bb8b4a981a26ade99084f46",
+          "translation": "مشاہدے کے وقت قسم / کلٹیوار"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.23",
+          "english": "Seed-lot reference at observation",
+          "sha256": "2b7ffb6c892d41f65d557a54dc3f1e1901b8bbb9cd8d5f370fb06b9d199f1a1d",
+          "translation": "مشاہدے کے وقت بیج کی لاٹ کا حوالہ"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.24",
+          "english": "Raising-batch reference at observation",
+          "sha256": "70b0bdf21bcd887d5e685656b16920ee00fe81d95f8f9f47e7b9c530950d6e26",
+          "translation": "مشاہدے کے وقت پود تیاری کی کھیپ کا حوالہ"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.25",
+          "english": "Grower-entered observation for this work, not a stock balance, survival result or completed batch. Stored labels do not verify seed identity or identify a particular earlier sowing or count record.",
+          "sha256": "6814a1ce5fe65ffdc0e89c58b06936503f1374f25f9983c6f2ddcbd9b916192c",
+          "translation": "اس کام کے لیے کاشتکار کا درج کردہ مشاہدہ، کوئی اسٹاک بیلنس، بقا کا نتیجہ یا مکمل کھیپ نہیں۔ محفوظ شدہ لیبلز بیج کی شناخت کی تصدیق نہیں کرتے اور نہ ہی کسی خاص پچھلی بوائی یا گنتی کے ریکارڈ کی نشاندہی کرتے ہیں۔"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.26",
+          "english": "Record field planting",
+          "sha256": "27d8d842589e591d1c667757b3eff89146dba75a7ac9a57664077b558688f5e7",
+          "translation": "کھیت میں پودے لگانے کا اندراج کریں"
+        }
+      ]
+    },
+    {
+      "locale": "fa",
+      "sourceSha256": "8fb5c154f100bb03f05b16771bfb171e9a77448a26024d834f67bc1e491e8adc",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "nurseryFieldPlanting.message.01",
+          "english": "This field-planting form belongs to an earlier checked batch. Check saved nursery batches before opening a new observation.",
+          "sha256": "bbe285d0c87aedd0dcb13e2026e9e0d765bf7f8ac0c425ec0aa1521748886be0",
+          "translation": "این فرم کاشت در مزرعه متعلق به یک بهر بررسی‌شده قبلی است. قبل از باز کردن یک مشاهده جدید، بهرهای نهالستان ذخیره‌شده را بررسی کنید."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.02",
+          "english": "Record observed field planting from this nursery batch",
+          "sha256": "7470ff608cb6b83c45f0089bb499d01c1b7d8989d250f669b330f5b1cd1227f4",
+          "translation": "ثبت کاشت در مزرعه مشاهده‌شده از این بهر نهالستان"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.03",
+          "english": "Record only the plants you observed being planted in the assigned growing space. This does not deduct nursery stock, establish survival or mark the planned batch complete.",
+          "sha256": "33f4f6d8cecb3ce706d3bfcb91038e7a934fbd9327dc8f43006e0ca5b0b486d8",
+          "translation": "فقط گیاهانی را ثبت کنید که کاشت آن‌ها را در فضای رشد اختصاص‌یافته مشاهده کرده‌اید. این کار موجودی نهالستان را کسر نمی‌کند، بقا را اثبات نمی‌نماید و بهر برنامه‌ریزی‌شده را به عنوان تکمیل‌شده علامت نمی‌زند."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.04",
+          "english": "Planned field-entry day (UTC):",
+          "sha256": "acc70e605e0aa22e1a1adc2754a1a3827563b96e86695cf832b7dd60e4a2793c",
+          "translation": "روز برنامه‌ریزی‌شده ورود به مزرعه (UTC):"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.05",
+          "english": "This is the saved plan reference, not the day you observed the planting.",
+          "sha256": "d15c224fa0c810b6416a96c2811dd681cfd874b8dae2bc6e13cb8e6154b738ea",
+          "translation": "این مرجع طرح ذخیره‌شده است، نه روزی که شما کاشت را مشاهده کردید."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.06",
+          "english": "DEMO — this observation stays in the sample session.",
+          "sha256": "885bc7d92ee53522fb5a9912b6f47c8957ceec127fea6e5921b51f3901debe43",
+          "translation": "DEMO — این مشاهده در جلسه نمونه باقی می‌ماند."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.07",
+          "english": "Checked labels to snapshot with this observation; they do not verify seed identity:",
+          "sha256": "bff0cc6684d557846d286ae704a2ca4309a5efbed0183a8b46d4b9fec18c3e6a",
+          "translation": "متن برچسب‌های علامت‌زده‌شده برای ذخیره‌سازی همان‌گونه که در زمان این مشاهده وارد شده‌اند؛ آن‌ها هویت بذر را تأیید نمی‌کنند:"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.08",
+          "english": "Actual observed day",
+          "sha256": "695ed5ae7ff666916dfe84fdb0088338bd167792171e89b313d1adbcb8041048",
+          "translation": "روز مشاهده واقعی"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.09",
+          "english": "What you observed",
+          "sha256": "9714203997dd1813c87bf6d61abf6c0d9caed3c1466df7e362291bff2fbb798d",
+          "translation": "آنچه مشاهده کردید"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.10",
+          "english": "Plants you planted",
+          "sha256": "c97a1e4905f73250c4deed04b21401ede928bb297978e27d7e51f6a8103022ca",
+          "translation": "گیاهانی که کاشتید"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.11",
+          "english": "Enter a whole count. An explicitly entered 0 is zero; a blank field is not a count.",
+          "sha256": "921c0851b058d2e2cbcb6ab914c53828fcfe2fb158a60199c2e46cd6f57381a7",
+          "translation": "یک عدد صحیح وارد کنید. عدد 0 که صریحاً وارد شود صفر است؛ فیلد خالی شمارش محسوب نمی‌شود."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.12",
+          "english": "This record does not imply a particular earlier sowing or count, or change forecasts, task ticks or sales.",
+          "sha256": "b0d75bf92cb0953c84ef5ef0add825261513428e11b0f435e430ea6e83d95bfd",
+          "translation": "این رکورد دلالت بر بذرکاری یا شمارش قبلی مشخصی ندارد و پیش‌بینی‌ها، تیک‌های وظایف یا فروش را تغییر نمی‌دهد."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.13",
+          "english": "I confirm this day, note and planted count describe what I observed.",
+          "sha256": "d95a65878f2b9123781cc4ea7627dbd30d6265d689daff41023c72c4f3695232",
+          "translation": "تأیید می‌کنم که این روز، یادداشت و تعداد گیاهان کاشته‌شده آنچه را در واقع مشاهده کردم شرح می‌دهند."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.14",
+          "english": "Recording field planting…",
+          "sha256": "24867c245d17bd7830e6292bfc5f37042d99099eaa476a241eed3e17ee9a3f00",
+          "translation": "در حال ثبت کاشت در مزرعه…"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.15",
+          "english": "Save field planting observation",
+          "sha256": "bafdfb6c7c68e1694f9fb0158dce305e5d1eac57dfe08749200d1ded1c6d9ab7",
+          "translation": "ذخیره مشاهده کاشت در مزرعه"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.16",
+          "english": "Record another field planting",
+          "sha256": "0a9ebaaaff4bd8369769ee5bc45b549e7047331fd23bc1db823330eb51a47e29",
+          "translation": "ثبت کاشت دیگری در مزرعه"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.17",
+          "english": "Stored nursery field planting evidence needs review. Its count and reference labels are withheld; retained evidence has not been treated as an ordinary unlinked note.",
+          "sha256": "06792940ac2f26c3b05d40afe749a5bdaf545ad92ad145841c7597d865df0030",
+          "translation": "شواهد ذخیره‌شده کاشت در مزرعه از نهالستان نیاز به بررسی دارد. تعداد و برچسب‌های مرجع آن مسدود شده‌اند؛ با شواهد نگهداری‌شده مانند یک یادداشت معمولی بدون پیوند برخورد نشده است."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.18",
+          "english": "Recorded field planting",
+          "sha256": "3409ed2562ba4a18e6a1324db9f9e7747fe9d7c4d372d5436fdae0d8fdd734e4",
+          "translation": "کاشت در مزرعه ثبت‌شده"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.19",
+          "english": "Plants planted during this recorded work",
+          "sha256": "5a0aa9652b68493ed936ce4fc23216a9935a57aa6462f2b32701fff4ae82a37f",
+          "translation": "گیاهان کاشته‌شده در طول این کار ثبت‌شده"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.20",
+          "english": "Observed day",
+          "sha256": "d9d37ed724dbb4c508f3c3bad845fb9d06c0b7d2a2e4621bdf91bb8f0ad6e610",
+          "translation": "روز مشاهده‌شده"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.21",
+          "english": "Planned field entry (UTC calendar date)",
+          "sha256": "3c6bfbe9639babcf80a5ab1d4e8abf71c678a74271b923ab1f847e938ea83c75",
+          "translation": "ورود برنامه‌ریزی‌شده به مزرعه (تاریخ تقویم UTC)"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.22",
+          "english": "Variety / cultivar at observation",
+          "sha256": "65953babacde253657c761e41c2b5c46353465a14bb8b4a981a26ade99084f46",
+          "translation": "رقم / کولتیوار در زمان مشاهده"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.23",
+          "english": "Seed-lot reference at observation",
+          "sha256": "2b7ffb6c892d41f65d557a54dc3f1e1901b8bbb9cd8d5f370fb06b9d199f1a1d",
+          "translation": "مرجع بهر بذر در زمان مشاهده"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.24",
+          "english": "Raising-batch reference at observation",
+          "sha256": "70b0bdf21bcd887d5e685656b16920ee00fe81d95f8f9f47e7b9c530950d6e26",
+          "translation": "مرجع بهر پرورش در زمان مشاهده"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.25",
+          "english": "Grower-entered observation for this work, not a stock balance, survival result or completed batch. Stored labels do not verify seed identity or identify a particular earlier sowing or count record.",
+          "sha256": "6814a1ce5fe65ffdc0e89c58b06936503f1374f25f9983c6f2ddcbd9b916192c",
+          "translation": "مشاهده واردشده توسط پرورش‌دهنده برای این کار، نه موجودی انبار، نتیجه بقا یا بهر تکمیل‌شده. برچسب‌های ذخیره‌شده نه هویت بذر را تأیید می‌کنند و نه سابقه بذرکاری یا شمارش قبلی مشخصی را معین می‌سازند."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.26",
+          "english": "Record field planting",
+          "sha256": "27d8d842589e591d1c667757b3eff89146dba75a7ac9a57664077b558688f5e7",
+          "translation": "ثبت کاشت در مزرعه"
+        }
+      ]
+    }
+  ],
+  "reviewNotes": "Unreviewed AI translation drafts for Arabic (ar), Urdu (ur), and Persian (fa) nursery-to-field planting observation UI. Intended drafting boundaries: (1) Observed field planting is distinguished from planned field entry (UTC calendar date) and saved plan references; (2) Planted count requires an integer number where explicitly entered 0 is zero and blank is uncounted; (3) Observations do not deduct stock, determine survival (بقاء / بقا), or mark batches complete; (4) Checked labels express selected entered label text values stored as entered at observation, avoiding photo/image capture connotations, and do not verify seed identity or establish earlier sowing/count records; (5) Evidential non-implication in ar12 (لا يستدل منه) avoids denial of record content; (6) fa25 explicitly coordinates both negative clauses (neither verifies seed identity nor identifies specific records); (7) ur03 restores assigned growing space; (8) Stored evidence withheld pending review remains distinct from an ordinary unlinked note; (9) Exact ASCII literals DEMO, UTC, and 0 are preserved without directional control characters, HTML, or invisible isolators; (10) Text-only RTL candidates do not establish UI bidi/layout readiness. Terms for human review: naturalness of nursery raising batches versus field planting terms in local grower idioms. No runtime activation or semantic certification is claimed."
+}

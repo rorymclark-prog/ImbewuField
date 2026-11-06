@@ -1,0 +1,61 @@
+{
+  "lane": "agy-brazil-products-2026-11-03",
+  "branch": "codex/agy-country-foundation",
+  "executor": "AGY",
+  "status": "coordinator-reviewed-documentation-only",
+  "milestone": "Completed verified product access and reuse evaluation of Redape soil dataset documentation and INMET catalog endpoint attempt; incorporated coordinator review corrections",
+  "updatedAt": "2026-11-03T00:45:24.618327+00:00",
+  "artifacts": [
+    "docs/international/agy-brazil-products-2026-11-03/PRODUCT-ACCESS.md",
+    "docs/international/agy-brazil-products-2026-11-03/sources.json",
+    "docs/international/agy-brazil-products-2026-11-03/status.json"
+  ],
+  "externalCoordinatorEvidence": [
+    "docs/international/agy-brazil-products-2026-11-03/coordinator-receipts.json"
+  ],
+  "evidenceLevels": {
+    "documentationRead": "Embrapa / Redape (DOI: 10.48432/DDBVFO dataset page, v2.0)",
+    "failedAttempt": "INMET automatic station catalog (curl exit 56, connection reset)",
+    "dataFilePayloadFetched": "None (0 CSV files downloaded)",
+    "integrationImplemented": "None (0 / 2)"
+  },
+  "validation": [
+    {
+      "check": "Word count check for PRODUCT-ACCESS.md",
+      "result": "Passed. Verified word count is 631 whitespace words, adhering strictly to the hard cap of 1,000 words."
+    },
+    {
+      "check": "JSON syntax validation for sources.json and status.json",
+      "result": "Passed. Both files validated as well-formed JSON conforming to schema."
+    },
+    {
+      "check": "Subagent activity check",
+      "result": "Passed. Verified 0 active subagents running; single main writer used per work order."
+    },
+    {
+      "check": "Guardrail compliance (zero plant species names, zero crop examples, zero private paths, zero transcripts)",
+      "result": "Passed. Zero plant species names or crop examples present in deliverables; private paths, handles, worker IDs, and session logs excluded."
+    },
+    {
+      "check": "Compliance with coordinator review corrections",
+      "result": "Passed. Corrected access claims: login link and Dataverse href do not prove auth requirements; Public (2) describes catalogue metadata only; actual datafile/API download authentication marked UNKNOWN. Measurement units stated as not established from this response. Observed CC BY-NC 4.0 label retained with commercial/AI clearance marked not established without broader legal conclusions. Actual fetch start/completion UTC recorded from receipts."
+    }
+  ],
+  "blocker": null,
+  "nextAction": "Codex root final review and independent publication coordination via issue #35",
+  "handoff": {
+    "commit": null,
+    "push": false,
+    "pullRequest": null,
+    "reason": "Work order instruction: no commit, push, PR, or issue posting from this lane. Codex root independently reviews and coordinates publication."
+  },
+  "coordinatorReview": {
+    "receiptBodyHashesMatch": true,
+    "documentationFetched": 1,
+    "failedAttempts": 1,
+    "dataFilesFetched": 0,
+    "apiIntegrationImplemented": false,
+    "commercialAiReuseClearance": false,
+    "rawDataNotCopied": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-11-02",
+  "status": "needs-human-review",
+  "source": "docs/international/translation-followup-source-2026-11-02.json",
+  "sourceBatchSha256": "1fdb6e2bb095f026c30dba552b6a717c3fbf9a16c2eade252cc6ea75663d29a2",
+  "messagesPerLocale": 59,
+  "locales": [
+    "hi-IN",
+    "bn-BD",
+    "id-ID"
+  ],
+  "files": {
+    "hi-IN": "docs/international/translation-asia-2026-11-02/hi-IN.json",
+    "bn-BD": "docs/international/translation-asia-2026-11-02/bn-BD.json",
+    "id-ID": "docs/international/translation-asia-2026-11-02/id-ID.json"
+  },
+  "sourceSha256Binding": "All 59 messages match source keys, sourceEnglish, and sourceSha256 exactly from translation-followup-source-2026-11-02.json",
+  "executor": "AGY AI main (id-ID and materialisation) with two AI workers (hi-IN and bn-BD)",
+  "nativeWorkerStates": {
+    "hi-IN": "stopped (cleanly terminated via manage_subagents after delivering complete JSON message array)",
+    "bn-BD": "stopped (cleanly terminated via manage_subagents after delivering complete JSON message array)",
+    "activeSubagents": 0
+  },
+  "humanReviewGates": {
+    "hi-IN": "unreviewed - requires native Indian Hindi grower / agronomist review",
+    "bn-BD": "unreviewed - requires native Bangladeshi Bengali grower / agronomist review",
+    "id-ID": "unreviewed - requires native Indonesian smallholder grower / agronomist review"
+  },
+  "review": {
+    "status": "unreviewed",
+    "assignedReviewers": null
+  },
+  "productIntegration": false,
+  "productionLanguageEnablement": false,
+  "validation": "All 3 files materialized under docs/international/translation-asia-2026-11-02/ with exactly 59 messages each, valid JSON, unreviewed status, and preserved literal tokens (cm, m, m², %, degrees, DEMO, CSV, ImbewuField).",
+  "coordinatorReview": {
+    "scope": "structure/source/protected tokens only",
+    "report": "structural-validation.json",
+    "fluentMeaningApproved": false,
+    "runtimeEnabled": false
+  }
+}

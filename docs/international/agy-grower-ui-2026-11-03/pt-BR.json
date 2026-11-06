@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 1,
+  "locale": "pt-BR",
+  "sourceSha256": "d7f072d7bc1e1d26e67b8e2525f575fdcefc6293824b62daed801f636479314b",
+  "review": {
+    "status": "unreviewed"
+  },
+  "provenance": {
+    "kind": "ai-draft",
+    "executor": "AGY",
+    "createdOn": "2026-11-03"
+  },
+  "messages": [
+    {
+      "key": "GrowerWorkflow.automaticPlan",
+      "sourceEnglish": "Automatic plan from your estimates",
+      "sourceSha256": "1f50cd8dd41a7c09fc687ec37dc2f2f0eee41bba14112d720a4e78f5ec308028",
+      "text": "Plano automático a partir das suas estimativas",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.limits",
+      "sourceEnglish": "Match your saved buyer targets to whole beds or field plots using your own growing estimates. This does not choose a local crop calendar or promise weekly deliveries.",
+      "sourceSha256": "6446964cf5c78293c8f931bf80611ac32c2fe7aa89d3b8145490c166e23f230f",
+      "text": "Faça a correspondência das metas salvas de compradores com canteiros inteiros ou talhões de campo usando suas próprias estimativas de cultivo. Isso não escolhe um calendário de cultivo local nem promete entregas semanais.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.checkDesign",
+      "sourceEnglish": "Check saved design",
+      "sourceSha256": "1706091368fe60c2eaf167299c6a98ab1338f4c4d010b412c35935186f30e9a1",
+      "text": "Verificar desenho salvo",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.noSource",
+      "sourceEnglish": "No current design has been checked for this review.",
+      "sourceSha256": "945f2ce067ddc0acc4f8c205066e339049b3a3ced0873a90c5a522ba3e7921fd",
+      "text": "Nenhum desenho atual foi verificado para esta revisão.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.buyerPriority",
+      "sourceEnglish": "Buyer targets and priority",
+      "sourceSha256": "b7aa35c41cbf7c0743ac2a42a879039ff05d17ee4ed4589b28ddd9c6bfe3a692",
+      "text": "Metas de compradores e prioridade",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.priorityHelp",
+      "sourceEnglish": "Save buyer targets and growing estimates above first. Select each target and its matching estimate profile. Earlier targets have priority.",
+      "sourceSha256": "3639a1d0a5d7c0cc5767bdf2649a680c86915337ad90a69ad2ca4195817128f2",
+      "text": "Salve primeiro as metas de compradores e as estimativas de cultivo acima. Selecione cada meta e seu perfil de estimativa correspondente. Metas anteriores têm prioridade.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.chooseEstimate",
+      "sourceEnglish": "Choose your saved estimate",
+      "sourceSha256": "b4f652cc2fc6065e3c2f2e19cde5371ee2e935ae78338508fd80b132c7f2bf78",
+      "text": "Escolha sua estimativa salva",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.planningStart",
+      "sourceEnglish": "First planning date (UTC)",
+      "sourceSha256": "9c8fb17f937f06bdc51451872a0b36b49c56ef2f245fe88baf46dcdf50e0dadf",
+      "text": "Primeira data de planejamento (UTC)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.planningEnd",
+      "sourceEnglish": "Planning ends before (UTC)",
+      "sourceSha256": "3e8f4e755b9ead0af46d7d3bea6d6f8501b91e09fdd801804b50594f4a9e22d7",
+      "text": "Planejamento termina antes de (UTC)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.availableSpace",
+      "sourceEnglish": "Your available growing space",
+      "sourceSha256": "d9c6e2620441bb95e134f3924ad87f1f7d87699c9a643b76c6560310fd1b1a04",
+      "text": "Seu espaço de cultivo disponível",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.availabilityHelp",
+      "sourceEnglish": "Nothing is assumed free. Enter each available interval. Known existing occupations are checked separately and cannot be overridden here. End dates are exclusive.",
+      "sourceSha256": "d4110b65696a407545c4ed42ef67a42599ef101b07bdee699aeba78a0dbad4ae",
+      "text": "Nada é presumido como livre. Insira cada intervalo disponível. Ocupações existentes conhecidas são verificadas separadamente e não podem ser substituídas aqui. As datas finais são exclusivas.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.noMeasures",
+      "sourceEnglish": "No eligible saved bed or field-plot measurements have been checked.",
+      "sourceSha256": "dc0d62e88027497240fb9d8665bab4f9c6eb7563eb9ccbb1ae1c7dd123f47b17",
+      "text": "Nenhuma medida salva elegível de canteiro ou talhão de campo foi verificada.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.availableFrom",
+      "sourceEnglish": "Available from",
+      "sourceSha256": "6956ec13a778489fef43ea9494cfa2f7bc0da584b7c02224dae0e8fb53d3cadc",
+      "text": "Disponível a partir de",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.availableUntil",
+      "sourceEnglish": "Available until (exclusive)",
+      "sourceSha256": "9b94a7360d3783639cb4fcee4bb7f0e38a3c0e34fc8ca961820e6e6e65d41b18",
+      "text": "Disponível até (exclusivo)",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.estimateConfirmation",
+      "sourceEnglish": "I supply these planning dates and availability as my estimates.",
+      "sourceSha256": "1d7fcd09a798af31e2a3f30cc14c05a4a941914976877bebe4a5ae5ec46b2529",
+      "text": "Forneço estas datas de planejamento e disponibilidade como minhas estimativas.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.reviewPlan",
+      "sourceEnglish": "Review automatic crop plan",
+      "sourceSha256": "30bb9350900281fab91016e155637816af1194cec1f020975b7a35dafefd79cf",
+      "text": "Revisar plano automático de cultivo",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.proposalTitle",
+      "sourceEnglish": "Proposed whole-bed crop cycles",
+      "sourceSha256": "121767c0665f3b4736b4ca8b2db0457348cde0fd56039ad74ab621b2145984f3",
+      "text": "Ciclos de cultivo propostos em canteiro inteiro",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.reviewInputs",
+      "sourceEnglish": "Review inputs before planning",
+      "sourceSha256": "7c26ccc9f7649d4fae3de04c5f0e521685f4188db2bcbb4b7e9cacbffe65bc71",
+      "text": "Revisar dados de entrada antes do planejamento",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.proposalLimits",
+      "sourceEnglish": "These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.",
+      "sourceSha256": "14942df4b9c05691ba5da3c8b752380321bbca55f3e90994200ab4ea36021d38",
+      "text": "Estas são estimativas propostas, não culturas plantadas, estoque observado ou aprovação agrícola local. Nenhum ciclo de cultivo foi adicionado ao seu plano salvo.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.reviewEquipment",
+      "sourceEnglish": "I have reviewed the saved nursery equipment, recipes and loss estimates.",
+      "sourceSha256": "252ae0d7717ab3eb2069cea50d25882d0a7aaa7aae894724ec8d6591309d67c4",
+      "text": "Revisei os equipamentos de viveiro, as receitas de propagação e as estimativas de perda salvas.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.noEquipment",
+      "sourceEnglish": "No saved nursery containers or surfaces for this source.",
+      "sourceSha256": "f1a232cad3f65a60ce6d0b9a7336ed1bc88129c0ed07edea462c38fcdca4a3e2",
+      "text": "Nenhum recipiente ou superfície de viveiro salvo para esta fonte.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.availableResources",
+      "sourceEnglish": "Available nursery resources",
+      "sourceSha256": "e57731ef742bdaadb0ee714a1d3e1c42cd89688d4b0b2037999b79b9a052622c",
+      "text": "Recursos de viveiro disponíveis",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.allocationConfirmation",
+      "sourceEnglish": "I confirm these dated resource allocations.",
+      "sourceSha256": "e65cd3e6f2e36eab91ec0408eaeaa3dd8451712f4de0f9bd345df3f66c9c1f29",
+      "text": "Confirmo estas alocações de recursos com datas.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.otherUses",
+      "sourceEnglish": "Other nursery uses",
+      "sourceSha256": "c93be998f4596554f49f7fd1ada16bec7a0fad28678593337d046bdd527662dc",
+      "text": "Outros usos do viveiro",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.addUse",
+      "sourceEnglish": "Add competing nursery use",
+      "sourceSha256": "08a62e001cb978f5e1520e9e15c979f803ba3609d289698210053f97eaa3290c",
+      "text": "Adicionar uso concorrente do viveiro",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.otherUsesConfirmation",
+      "sourceEnglish": "I have listed all other nursery uses, including none if this list is empty.",
+      "sourceSha256": "56121f921c228c6fda021df54fd9b0d5a73987e17a000c0c31fb739292ad4377",
+      "text": "Listei todos os outros usos do viveiro, incluindo nenhum caso esta lista esteja vazia.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.fieldUsesConfirmation",
+      "sourceEnglish": "I accounted for nursery resources used by these existing field occupations.",
+      "sourceSha256": "6c4071a13db0e6c227916a72319fd468ca5177810967d852bf17d906c0aed28a",
+      "text": "Contabilizei os recursos de viveiro utilizados por estas ocupações de campo existentes.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.reviewNursery",
+      "sourceEnglish": "Review own nursery requirements",
+      "sourceSha256": "ce0fa68d12a50810a6f2ef276e756bebef8a8fb130d480f7999f7dd854e1fca5",
+      "text": "Revisar próprias necessidades de viveiro",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.datedEstimates",
+      "sourceEnglish": "Dated nursery estimates",
+      "sourceSha256": "215ce98cee8458c1423f2597277b1468c12fc5c78db81d1d65a59d18a57cd111",
+      "text": "Estimativas de viveiro com datas",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.incompleteEstimates",
+      "sourceEnglish": "Incomplete nursery estimates",
+      "sourceSha256": "fbe60602cefa16bc27b701808ebe59bedf34795684b6d8c674d86ca4adcb870e",
+      "text": "Estimativas incompletas de viveiro",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.comparisonLimits",
+      "sourceEnglish": "This comparison covers containers and surface only. Seed purchasing quantities and seedling readiness can still be unknown.",
+      "sourceSha256": "c93703b809f2987967b413386c244e200563bad2f2f86c1f36a5ae129f703612",
+      "text": "Esta comparação abrange apenas recipientes e superfície. As quantidades de compra de sementes e a prontidão das mudas ainda podem ser desconhecidas.",
+      "review": {
+        "status": "unreviewed"
+      }
+    },
+    {
+      "key": "GrowerWorkflow.downloadCsv",
+      "sourceEnglish": "Download reviewed nursery CSV",
+      "sourceSha256": "676ec6ce13980b155598d90743f6ea79f12ca07f438eb94b43fc32b08fe2b427",
+      "text": "Baixar CSV revisado do viveiro",
+      "review": {
+        "status": "unreviewed"
+      }
+    }
+  ]
+}

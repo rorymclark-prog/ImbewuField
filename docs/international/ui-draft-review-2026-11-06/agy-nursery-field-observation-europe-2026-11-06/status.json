@@ -1,0 +1,25 @@
+{
+  "task": "docs/international/agy-nursery-field-observation-europe-2026-11-06/WORKORDER.md",
+  "status": "COMPLETED",
+  "validation": "NOT RUN — coordinator-owned",
+  "workers": 0,
+  "workersActive": 0,
+  "sourceSha256": "fbbcc2361d9567110d167974f8e46d6db97e89cd18f1a3e95944bb54ef704d3a",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "outputs": [
+    "docs/international/agy-nursery-field-observation-europe-2026-11-06/drafts.json",
+    "docs/international/agy-nursery-field-observation-europe-2026-11-06/status.json"
+  ],
+  "coordinatorReview": {
+    "at": "2026-11-06T12:29:07.475Z",
+    "actualIdleObserved": true,
+    "scope": "Exact source/structure/literals and identified drafting corrections only; not fluent/human certification, runtime language approval or RTL layout readiness.",
+    "corrections": [
+      "de07/it07 selected checkbox labels rather than verified labels",
+      "it03/25 survival rather than establishment",
+      "de10 source actor and de13 planted count phrasing"
+    ],
+    "remainingReview": "Human terminology/fluency review and actual UI/bidi/layout testing remain required; all drafts inactive and unreviewed."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "task": "docs/international/agy-field-seed-german-italian-ui-2026-11-06/WORKORDER.md",
+  "status": "COMPLETED",
+  "correction": "Drafting corrections applied in German packet: replaced Baumschule in row01 with generic Jungpflanzenanzucht (without tree-only restriction); replaced invented compound Anzuchtpruefhorizont in row03 with Betrachtungszeitraum für die Anzuchtprüfung; updated reviewNotes to reference Jungpflanzenanzucht and document corrections rather than fluent certification.",
+  "validation": "NOT RUN — coordinator-owned",
+  "workers": 0,
+  "workersActive": 0,
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "outputs": [
+    "docs/international/agy-field-seed-german-italian-ui-2026-11-06/drafts.json",
+    "docs/international/agy-field-seed-german-italian-ui-2026-11-06/status.json"
+  ],
+  "coordinatorReview": {
+    "checkedAtUtc": "2026-11-06T11:03:01.492595+00:00",
+    "exactPairs": 26,
+    "damagedControls": 42,
+    "actualNotesWords": 140,
+    "scope": "Exact source/structure/literal validation and identified drafting corrections; no fluent certification or runtime approval."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "task": "docs/international/agy-nursery-field-observation-east-asian-2026-11-06/WORKORDER.md",
+  "status": "COMPLETED",
+  "validation": "NOT RUN — coordinator-owned",
+  "workers": 0,
+  "workersActive": 0,
+  "sourceSha256": "fd6b98d38364de5a29875d0ebade5d80886aaa03db8797cf63cd2dd7fd394450",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "outputs": [
+    "docs/international/agy-nursery-field-observation-east-asian-2026-11-06/drafts.json",
+    "docs/international/agy-nursery-field-observation-east-asian-2026-11-06/status.json"
+  ],
+  "coordinatorReview": {
+    "at": "2026-11-06T12:37:17.964Z",
+    "actualIdleObserved": true,
+    "scope": "Exact source/structure/literals and identified drafting corrections only; not fluent/human certification, runtime language approval or RTL layout readiness.",
+    "corrections": [
+      "zh/vi/th07 stored selected label values, no photo/image claim",
+      "zh03/vi03 survival without added rate; vi25 survival result",
+      "zh03/17 general nursery rather than seedbed",
+      "th17 actual current/past withholding and not recast as ordinary unlinked note",
+      "zh13 actual observed wording"
+    ],
+    "remainingReview": "Human terminology/fluency review and actual UI/bidi/layout testing remain required; all drafts inactive and unreviewed."
+  }
+}

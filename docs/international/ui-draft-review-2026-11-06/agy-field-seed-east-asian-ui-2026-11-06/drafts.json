@@ -1,0 +1,266 @@
+{
+  "sourceSha256": "fe390199b40b9f21304b4e4f072ebf35a6fa82495ad9fce1f6b9cb2e3bd57a92",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "packets": [
+    {
+      "locale": "zh-Hans",
+      "sourceSha256": "fe390199b40b9f21304b4e4f072ebf35a6fa82495ad9fce1f6b9cb2e3bd57a92",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "fieldSeedSourcing.ui.01",
+          "english": "Field seed sourcing · cycles without nursery raising",
+          "sha256": "0cdaef8d9135bd3706d39caf1579cbea996cf6f1e4fd2cb954394478776ca773",
+          "translation": "大田种子采购 · 无育苗阶段的种植周期"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.02",
+          "english": "Use accepted saved field cycles that have no nursery phase. No nursery phase does not establish botanical direct sowing. Enter your own gross whole-seed requirement; final plant positions are not seed counts.",
+          "sha256": "6e2f2e37086135683de7b188c478e45d90f9d9e0de86a36184193aacb38c8399",
+          "translation": "使用已接受且已保存的无育苗阶段的大田周期。没有育苗阶段并不证明属于植物学直接播种。请输入您自己的整数种子总需求量；最终植株定植位并非种子计数。"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.03",
+          "english": "Planning only, not a whole-farm purchase list. No stock is recorded, order placed or plan saved. Unknown counts are not zero. Nursery equipment and a nursery review horizon are not required for this separate field worksheet.",
+          "sha256": "19bc22baa90d968c90b695d4d05879ed12e3f0582f45e3f2fded22c9004e2957",
+          "translation": "仅供规划使用，并非全农场采购清单。不记录库存、不下单也不保存计划。未知数量不等于零。此独立的大田工作表不需要育苗设备和育苗审查周期范围。"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.04",
+          "english": "Check saved field cycles for seed sourcing",
+          "sha256": "6abd97a2ab9b7995c95f076f374e3dd4c0f8ecbf135047ee3d4f51d57c776dc6",
+          "translation": "检查已保存的大田周期以进行种子采购"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.05",
+          "english": "Unknown / not declared",
+          "sha256": "62188a8f54a3001967089450c06a2539e4d654339a05e029534d78f59e3bbf53",
+          "translation": "未知 / 未申报"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.06",
+          "english": "Botanical seeds",
+          "sha256": "4a92951f2227ae298af5aba0e45dfd58cd2e422f4dea2999e07454a5382c144e",
+          "translation": "植物学种子"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.07",
+          "english": "Vegetative material",
+          "sha256": "7da3b02b8bbface89deebd1ec416e38fcc2e518b7a3b65034d61928c8ff3ef01",
+          "translation": "无性繁殖材料"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.08",
+          "english": "Whole seed count, including any allowances you have chosen. No allowances or rates are added here. Blank means unknown; an explicitly confirmed zero is a planning entry.",
+          "sha256": "4a82953a1c3c6f2301c1e25a1d182723f7ad4a40e8df9951602132cf3b3abe87",
+          "translation": "整数种子数量，包含您选择的任何预留余量。此处不添加任何余量或播种率。留空表示未知；明确确认的零是一项规划录入。"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.09",
+          "english": "Add field supply group",
+          "sha256": "f1fcebb59566b636e29bad87090e05e7dea11a12f4f153130e048be82354b142",
+          "translation": "添加大田供应组"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.10",
+          "english": "Review field seed sourcing",
+          "sha256": "05e7d063412f45ed668f8f6ddd86dc72223f530a26389e35df4496355668c066",
+          "translation": "审查大田种子采购"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.11",
+          "english": "Download field seed sourcing CSV",
+          "sha256": "70a9cb4595a74db2d072d06177013b940ec29e57e2485d84805368dead6dfc8c",
+          "translation": "下载大田种子采购 CSV"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.12",
+          "english": "The CSV includes your entered supply-group labels exactly, including whitespace. Leave out information you do not want in the file. Private saved association IDs and individual variety or lot references are not included.",
+          "sha256": "bd3325b895b611cb3a690e7bfbb6fb2c9794cf54c972faa2984d45a248f52f2e",
+          "translation": "CSV 完全包含您输入的供应组标签，包括空格和所有空白字符。请省去您不希望出现在文件中的信息。不包含私有保存的关联 ID 以及个别品种或批次参考。"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.13",
+          "english": "DEMO · temporary sample planning worksheet.",
+          "sha256": "18bd83fa9b2fea83ccf2d2c61768a5f29fffaa9a8b55228a23103c464051d6a9",
+          "translation": "DEMO · 临时样本规划工作表。"
+        }
+      ]
+    },
+    {
+      "locale": "vi",
+      "sourceSha256": "fe390199b40b9f21304b4e4f072ebf35a6fa82495ad9fce1f6b9cb2e3bd57a92",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "fieldSeedSourcing.ui.01",
+          "english": "Field seed sourcing · cycles without nursery raising",
+          "sha256": "0cdaef8d9135bd3706d39caf1579cbea996cf6f1e4fd2cb954394478776ca773",
+          "translation": "Tìm nguồn hạt giống ngoài đồng · chu kỳ không qua ươm cây con"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.02",
+          "english": "Use accepted saved field cycles that have no nursery phase. No nursery phase does not establish botanical direct sowing. Enter your own gross whole-seed requirement; final plant positions are not seed counts.",
+          "sha256": "6e2f2e37086135683de7b188c478e45d90f9d9e0de86a36184193aacb38c8399",
+          "translation": "Sử dụng các chu kỳ ngoài đồng đã lưu và được chấp nhận không có giai đoạn vườn ươm. Việc không có giai đoạn vườn ươm không chứng minh việc gieo hạt thực vật trực tiếp. Hãy nhập nhu cầu tổng số lượng hạt dạng số nguyên của riêng bạn; vị trí cây trồng cuối cùng không phải là số lượng hạt giống."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.03",
+          "english": "Planning only, not a whole-farm purchase list. No stock is recorded, order placed or plan saved. Unknown counts are not zero. Nursery equipment and a nursery review horizon are not required for this separate field worksheet.",
+          "sha256": "19bc22baa90d968c90b695d4d05879ed12e3f0582f45e3f2fded22c9004e2957",
+          "translation": "Chỉ dùng để lập kế hoạch, không phải là danh sách mua sắm cho toàn bộ trang trại. Không ghi nhận hàng tồn kho, không đặt hàng hoặc lưu kế hoạch. Số lượng chưa biết không phải là số không. Không cần thiết bị vườn ươm và phạm vi xem xét vườn ươm cho bảng tính ngoài đồng riêng biệt này."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.04",
+          "english": "Check saved field cycles for seed sourcing",
+          "sha256": "6abd97a2ab9b7995c95f076f374e3dd4c0f8ecbf135047ee3d4f51d57c776dc6",
+          "translation": "Kiểm tra các chu kỳ ngoài đồng đã lưu để tìm nguồn hạt giống"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.05",
+          "english": "Unknown / not declared",
+          "sha256": "62188a8f54a3001967089450c06a2539e4d654339a05e029534d78f59e3bbf53",
+          "translation": "Chưa biết / chưa khai báo"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.06",
+          "english": "Botanical seeds",
+          "sha256": "4a92951f2227ae298af5aba0e45dfd58cd2e422f4dea2999e07454a5382c144e",
+          "translation": "Hạt giống thực vật"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.07",
+          "english": "Vegetative material",
+          "sha256": "7da3b02b8bbface89deebd1ec416e38fcc2e518b7a3b65034d61928c8ff3ef01",
+          "translation": "Vật liệu sinh dưỡng"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.08",
+          "english": "Whole seed count, including any allowances you have chosen. No allowances or rates are added here. Blank means unknown; an explicitly confirmed zero is a planning entry.",
+          "sha256": "4a82953a1c3c6f2301c1e25a1d182723f7ad4a40e8df9951602132cf3b3abe87",
+          "translation": "Số lượng hạt giống tính theo số nguyên, bao gồm mọi định mức dự phòng bạn đã chọn. Không có định mức dự phòng hoặc tỷ lệ gieo nào được thêm vào đây. Để trống có nghĩa là chưa biết; số không được xác nhận rõ ràng là một mục nhập kế hoạch."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.09",
+          "english": "Add field supply group",
+          "sha256": "f1fcebb59566b636e29bad87090e05e7dea11a12f4f153130e048be82354b142",
+          "translation": "Thêm nhóm cung ứng ngoài đồng"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.10",
+          "english": "Review field seed sourcing",
+          "sha256": "05e7d063412f45ed668f8f6ddd86dc72223f530a26389e35df4496355668c066",
+          "translation": "Xem lại nguồn cung cấp hạt giống ngoài đồng"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.11",
+          "english": "Download field seed sourcing CSV",
+          "sha256": "70a9cb4595a74db2d072d06177013b940ec29e57e2485d84805368dead6dfc8c",
+          "translation": "Tải xuống CSV nguồn cung cấp hạt giống ngoài đồng"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.12",
+          "english": "The CSV includes your entered supply-group labels exactly, including whitespace. Leave out information you do not want in the file. Private saved association IDs and individual variety or lot references are not included.",
+          "sha256": "bd3325b895b611cb3a690e7bfbb6fb2c9794cf54c972faa2984d45a248f52f2e",
+          "translation": "Tệp CSV bao gồm chính xác các nhãn nhóm cung ứng bạn đã nhập, bao gồm cả khoảng trắng. Hãy bỏ qua thông tin bạn không muốn có trong tệp. Không bao gồm các ID liên kết đã lưu riêng tư và các tham chiếu giống hoặc lô riêng lẻ."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.13",
+          "english": "DEMO · temporary sample planning worksheet.",
+          "sha256": "18bd83fa9b2fea83ccf2d2c61768a5f29fffaa9a8b55228a23103c464051d6a9",
+          "translation": "DEMO · bảng tính lập kế hoạch mẫu tạm thời."
+        }
+      ]
+    },
+    {
+      "locale": "th",
+      "sourceSha256": "fe390199b40b9f21304b4e4f072ebf35a6fa82495ad9fce1f6b9cb2e3bd57a92",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "fieldSeedSourcing.ui.01",
+          "english": "Field seed sourcing · cycles without nursery raising",
+          "sha256": "0cdaef8d9135bd3706d39caf1579cbea996cf6f1e4fd2cb954394478776ca773",
+          "translation": "การจัดหาเมล็ดพันธุ์แปลงปลูก · รอบการปลูกที่ไม่มีการเพาะกล้าในเรือนเพาะชำ"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.02",
+          "english": "Use accepted saved field cycles that have no nursery phase. No nursery phase does not establish botanical direct sowing. Enter your own gross whole-seed requirement; final plant positions are not seed counts.",
+          "sha256": "6e2f2e37086135683de7b188c478e45d90f9d9e0de86a36184193aacb38c8399",
+          "translation": "ใช้รอบการปลูกในแปลงที่ยอมรับและบันทึกไว้ซึ่งไม่มีระยะเรือนเพาะชำ การไม่มีระยะเรือนเพาะชำไม่ได้พิสูจน์ว่าเป็นการหยอดเมล็ดพืชโดยตรง ให้ป้อนจำนวนความต้องการเมล็ดพันธุ์ทั้งหมดเป็นจำนวนเต็มของคุณเอง ตำแหน่งพืชสุดท้ายไม่ใช่การนับจำนวนเมล็ด"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.03",
+          "english": "Planning only, not a whole-farm purchase list. No stock is recorded, order placed or plan saved. Unknown counts are not zero. Nursery equipment and a nursery review horizon are not required for this separate field worksheet.",
+          "sha256": "19bc22baa90d968c90b695d4d05879ed12e3f0582f45e3f2fded22c9004e2957",
+          "translation": "สำหรับการวางแผนเท่านั้น ไม่ใช่รายการจัดซื้อสำหรับทั้งฟาร์ม ไม่มีการบันทึกสต็อก การสั่งซื้อ หรือการบันทึกแผน จำนวนที่ไม่ทราบไม่ใช่ศูนย์ ไม่จำเป็นต้องมีอุปกรณ์เรือนเพาะชำและขอบเขตระยะเวลาการทบทวนเรือนเพาะชำสำหรับแผ่นงานแปลงปลูกแยกต่างหากนี้"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.04",
+          "english": "Check saved field cycles for seed sourcing",
+          "sha256": "6abd97a2ab9b7995c95f076f374e3dd4c0f8ecbf135047ee3d4f51d57c776dc6",
+          "translation": "ตรวจสอบรอบการปลูกในแปลงที่บันทึกไว้สำหรับการจัดหาเมล็ดพันธุ์"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.05",
+          "english": "Unknown / not declared",
+          "sha256": "62188a8f54a3001967089450c06a2539e4d654339a05e029534d78f59e3bbf53",
+          "translation": "ไม่ทราบ / ไม่ได้ประกาศ"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.06",
+          "english": "Botanical seeds",
+          "sha256": "4a92951f2227ae298af5aba0e45dfd58cd2e422f4dea2999e07454a5382c144e",
+          "translation": "เมล็ดพันธุ์ทางพฤกษศาสตร์"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.07",
+          "english": "Vegetative material",
+          "sha256": "7da3b02b8bbface89deebd1ec416e38fcc2e518b7a3b65034d61928c8ff3ef01",
+          "translation": "ส่วนขยายพันธุ์ของพืช"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.08",
+          "english": "Whole seed count, including any allowances you have chosen. No allowances or rates are added here. Blank means unknown; an explicitly confirmed zero is a planning entry.",
+          "sha256": "4a82953a1c3c6f2301c1e25a1d182723f7ad4a40e8df9951602132cf3b3abe87",
+          "translation": "จำนวนเมล็ดพันธุ์ทั้งหมดเป็นจำนวนเต็ม รวมเผื่อค่าเผื่อใดๆ ที่คุณเลือกไว้ ไม่มีการเพิ่มค่าเผื่อหรืออัตราการเพาะปลูกที่นี่ ช่องว่างหมายถึงไม่ทราบ ค่าศูนย์ที่ได้รับการยืนยันอย่างชัดเจนคือรายการการวางแผน"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.09",
+          "english": "Add field supply group",
+          "sha256": "f1fcebb59566b636e29bad87090e05e7dea11a12f4f153130e048be82354b142",
+          "translation": "เพิ่มกลุ่มการจัดหาสำหรับแปลงปลูก"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.10",
+          "english": "Review field seed sourcing",
+          "sha256": "05e7d063412f45ed668f8f6ddd86dc72223f530a26389e35df4496355668c066",
+          "translation": "ตรวจสอบการจัดหาเมล็ดพันธุ์สำหรับแปลงปลูก"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.11",
+          "english": "Download field seed sourcing CSV",
+          "sha256": "70a9cb4595a74db2d072d06177013b940ec29e57e2485d84805368dead6dfc8c",
+          "translation": "ดาวน์โหลด CSV การจัดหาเมล็ดพันธุ์สำหรับแปลงปลูก"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.12",
+          "english": "The CSV includes your entered supply-group labels exactly, including whitespace. Leave out information you do not want in the file. Private saved association IDs and individual variety or lot references are not included.",
+          "sha256": "bd3325b895b611cb3a690e7bfbb6fb2c9794cf54c972faa2984d45a248f52f2e",
+          "translation": "CSV จะรวมป้ายกำกับกลุ่มการจัดหาที่คุณป้อนไว้อย่างถูกต้องทุกประการ รวมถึงช่องว่าง ละเว้นข้อมูลที่คุณไม่ต้องการให้อยู่ในไฟล์ ไม่รวม ID ความเชื่อมโยงส่วนตัวที่บันทึกไว้และการอ้างอิงสายพันธุ์หรือล็อตรายรายการ"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.13",
+          "english": "DEMO · temporary sample planning worksheet.",
+          "sha256": "18bd83fa9b2fea83ccf2d2c61768a5f29fffaa9a8b55228a23103c464051d6a9",
+          "translation": "DEMO · แผ่นงานการวางแผนตัวอย่างชั่วคราว"
+        }
+      ]
+    }
+  ],
+  "reviewNotes": "Unreviewed AI translation drafts for Simplified Chinese (zh-Hans), Vietnamese (vi), and Thai (th) field seed UI copy. Intended drafting boundaries: (1) Absence of a nursery phase describes an operational planning distinction without implying biological impossibility or proving botanical direct sowing; (2) Whole-seed requirements and counts in rows 02 and 08 are translated as integer seed numbers and gross totals rather than unbroken physical integrity or dehusked quality; (3) Explicit material declaration is maintained without conflating vegetative and botanical items; (4) Exact ASCII literals DEMO and CSV are preserved verbatim; (5) Blank remains unknown while confirmed zero is an explicit planning entry. Drafting corrections applied: removed physical-quality terms (整粒 in zh-Hans, hạt nguyên in vi, เต็มเมล็ด in th) in favor of gross integer seed counts; corrected zh-Hans row 01 from crop rotation (轮作) to planting cycles (种植周期); restored Unknown (ไม่ทราบ) alongside not declared in th row 05; and broadened whitespace coverage in zh-Hans row 12 beyond simple spaces. Remaining checks for human reviewers: verify horticultural naturalness in local agricultural contexts. No runtime language activation or semantic certification is claimed."
+}

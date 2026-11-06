@@ -1,0 +1,26 @@
+{
+  "task": "docs/international/agy-nursery-field-observation-rtl-2026-11-06/WORKORDER.md",
+  "status": "COMPLETED",
+  "validation": "NOT RUN — coordinator-owned",
+  "workers": 0,
+  "workersActive": 0,
+  "sourceSha256": "8fb5c154f100bb03f05b16771bfb171e9a77448a26024d834f67bc1e491e8adc",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "outputs": [
+    "docs/international/agy-nursery-field-observation-rtl-2026-11-06/drafts.json",
+    "docs/international/agy-nursery-field-observation-rtl-2026-11-06/status.json"
+  ],
+  "coordinatorReview": {
+    "at": "2026-11-06T12:44:31.282Z",
+    "actualIdleObserved": true,
+    "scope": "Exact source/structure/literals and identified drafting corrections only; not fluent/human certification, runtime language approval or RTL layout readiness.",
+    "corrections": [
+      "ar07/fa07 selected entered label text stored as entered, no image/photo",
+      "ar12 evidential non-implication rather than record-content denial",
+      "fa25 both seed-identity and earlier-record negatives explicit",
+      "ur03 assigned growing space"
+    ],
+    "remainingReview": "Human terminology/fluency review and actual UI/bidi/layout testing remain required; all drafts inactive and unreviewed."
+  }
+}

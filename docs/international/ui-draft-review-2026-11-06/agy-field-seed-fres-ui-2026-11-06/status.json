@@ -1,0 +1,25 @@
+{
+  "task": "docs/international/agy-field-seed-fres-ui-2026-11-06/WORKORDER.md",
+  "status": "COMPLETED",
+  "correction": "COORDINATOR-REVIEW.md revisions applied: preserved exact ASCII literals DEMO (reverting French DÉMO) and CSV across all four locales; clarified rows 02 and 08 to express gross requirements as whole-number counts of seeds rather than physical integrity/intact seeds; updated review-notes to state intended drafting boundaries and specific remaining reviewer checks (<250 words).",
+  "validation": "NOT RUN — coordinator-owned",
+  "workers": 0,
+  "workersActive": 0,
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "outputs": [
+    "docs/international/agy-field-seed-fres-ui-2026-11-06/fr.json",
+    "docs/international/agy-field-seed-fres-ui-2026-11-06/es.json",
+    "docs/international/agy-field-seed-fres-ui-2026-11-06/pt-BR.json",
+    "docs/international/agy-field-seed-fres-ui-2026-11-06/sw.json",
+    "docs/international/agy-field-seed-fres-ui-2026-11-06/review-notes.md",
+    "docs/international/agy-field-seed-fres-ui-2026-11-06/status.json"
+  ],
+  "coordinatorReview": {
+    "pairs": 52,
+    "damagedControlsPerLocale": 21,
+    "actualNotesWords": 208,
+    "scope": "Exact source/English/key/hash/order/token/DEMO/CSV checks, not semantic/fluent/human certification or runtime language activation.",
+    "identifiedDraftCorrections": "DEMO literal and integer-count versus intact-material distinction corrected before acceptance."
+  }
+}

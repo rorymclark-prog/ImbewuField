@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "validatedOn": "2026-11-03",
+  "validator": "Codex coordinator independent actual-file structural checks",
+  "sourceSha256": "d7f072d7bc1e1d26e67b8e2525f575fdcefc6293824b62daed801f636479314b",
+  "totalEntries": 128,
+  "locales": [
+    {
+      "locale": "fr",
+      "entries": 32,
+      "sha256": "1c56f8722f0cd7c52c591dd603a8dc9cd5a4d1a0c11166f607769665dbe8d494"
+    },
+    {
+      "locale": "es",
+      "entries": 32,
+      "sha256": "fc29e20df38d95f840c95c3a845566842b507d1a2580a3b0c2a4e71ea412eba6"
+    },
+    {
+      "locale": "pt-BR",
+      "entries": 32,
+      "sha256": "fb818f49115b06ca7539ccfb3533d28517fc7b7ef93c6f96e590f93488b2c771"
+    },
+    {
+      "locale": "sw",
+      "entries": 32,
+      "sha256": "96911125c0b1f822e82a67f21bdfd3be753b746c98838edd8e1b937af1e859b6"
+    }
+  ],
+  "negativeControls": [
+    {
+      "name": "missing-entry",
+      "rejected": true
+    },
+    {
+      "name": "duplicate-key",
+      "rejected": true
+    },
+    {
+      "name": "different-packet-hash",
+      "rejected": true
+    },
+    {
+      "name": "wrong-locale",
+      "rejected": true
+    },
+    {
+      "name": "claimed-review",
+      "rejected": true
+    },
+    {
+      "name": "changed-English",
+      "rejected": true
+    },
+    {
+      "name": "changed-message-hash",
+      "rejected": true
+    },
+    {
+      "name": "blank-text",
+      "rejected": true
+    },
+    {
+      "name": "claimed-message-review",
+      "rejected": true
+    },
+    {
+      "name": "removed-UTC",
+      "rejected": true
+    },
+    {
+      "name": "removed-CSV",
+      "rejected": true
+    },
+    {
+      "name": "private-path",
+      "rejected": true
+    }
+  ],
+  "sourceFileHashesStillMatchImplementation": true,
+  "implementationCommit": "34d527564a94f4df713d986a9775e2b7decc4049",
+  "humanReview": {
+    "status": "unreviewed",
+    "reviewer": null
+  },
+  "runtimeActivation": false,
+  "coordinatorTextReconciliation": {
+    "currentImplementationCommit": "fbe546d6c30c79e584981bbdf82d7cfada5b6363",
+    "all32EnglishStringsRemainExact": true,
+    "frozenFileHashesMatchCurrent": false,
+    "changedSourceFiles": [
+      "components/crops/GrowerAutoPlanPanel.tsx",
+      "components/crops/GrowerNurseryReviewPanel.tsx"
+    ],
+    "note": "Display-only estimate formatting changed component file hashes after the frozen snapshot. The frozen source packet remains intact; all selected English strings are unchanged. No runtime activation or human review is implied."
+  }
+}

@@ -1,0 +1,500 @@
+{
+  "sourceSha256": "fd6b98d38364de5a29875d0ebade5d80886aaa03db8797cf63cd2dd7fd394450",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "packets": [
+    {
+      "locale": "zh-Hans",
+      "sourceSha256": "fd6b98d38364de5a29875d0ebade5d80886aaa03db8797cf63cd2dd7fd394450",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "nurseryFieldPlanting.message.01",
+          "english": "This field-planting form belongs to an earlier checked batch. Check saved nursery batches before opening a new observation.",
+          "sha256": "bbe285d0c87aedd0dcb13e2026e9e0d765bf7f8ac0c425ec0aa1521748886be0",
+          "translation": "此大田定植表单属于较早核对的批次。在开启新观察记录之前，请检查已保存的育苗批次。"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.02",
+          "english": "Record observed field planting from this nursery batch",
+          "sha256": "7470ff608cb6b83c45f0089bb499d01c1b7d8989d250f669b330f5b1cd1227f4",
+          "translation": "记录从该育苗批次观察到的大田定植"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.03",
+          "english": "Record only the plants you observed being planted in the assigned growing space. This does not deduct nursery stock, establish survival or mark the planned batch complete.",
+          "sha256": "33f4f6d8cecb3ce706d3bfcb91038e7a934fbd9327dc8f43006e0ca5b0b486d8",
+          "translation": "仅记录您观察到定植在指定种植空间中的植株。这不会扣减育苗库存，不确认成活，也不将计划批次标记为已完成。"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.04",
+          "english": "Planned field-entry day (UTC):",
+          "sha256": "acc70e605e0aa22e1a1adc2754a1a3827563b96e86695cf832b7dd60e4a2793c",
+          "translation": "计划下田日期 (UTC)："
+        },
+        {
+          "key": "nurseryFieldPlanting.message.05",
+          "english": "This is the saved plan reference, not the day you observed the planting.",
+          "sha256": "d15c224fa0c810b6416a96c2811dd681cfd874b8dae2bc6e13cb8e6154b738ea",
+          "translation": "这是已保存的计划参考，并非您观察到定植的日期。"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.06",
+          "english": "DEMO — this observation stays in the sample session.",
+          "sha256": "885bc7d92ee53522fb5a9912b6f47c8957ceec127fea6e5921b51f3901debe43",
+          "translation": "DEMO — 此观察记录仅保留在示例会话中。"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.07",
+          "english": "Checked labels to snapshot with this observation; they do not verify seed identity:",
+          "sha256": "bff0cc6684d557846d286ae704a2ca4309a5efbed0183a8b46d4b9fec18c3e6a",
+          "translation": "勾选用于随此观察记录一同保存快照的标签；它们并不验证种子身份："
+        },
+        {
+          "key": "nurseryFieldPlanting.message.08",
+          "english": "Actual observed day",
+          "sha256": "695ed5ae7ff666916dfe84fdb0088338bd167792171e89b313d1adbcb8041048",
+          "translation": "实际观察日期"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.09",
+          "english": "What you observed",
+          "sha256": "9714203997dd1813c87bf6d61abf6c0d9caed3c1466df7e362291bff2fbb798d",
+          "translation": "您观察到的内容"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.10",
+          "english": "Plants you planted",
+          "sha256": "c97a1e4905f73250c4deed04b21401ede928bb297978e27d7e51f6a8103022ca",
+          "translation": "您定植的植株"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.11",
+          "english": "Enter a whole count. An explicitly entered 0 is zero; a blank field is not a count.",
+          "sha256": "921c0851b058d2e2cbcb6ab914c53828fcfe2fb158a60199c2e46cd6f57381a7",
+          "translation": "请输入整数数量。明确输入的 0 代表零；留空字段不作为计数。"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.12",
+          "english": "This record does not imply a particular earlier sowing or count, or change forecasts, task ticks or sales.",
+          "sha256": "b0d75bf92cb0953c84ef5ef0add825261513428e11b0f435e430ea6e83d95bfd",
+          "translation": "此记录并不暗示特定的先前播种或计数，也不改变预测、任务勾选或销售。"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.13",
+          "english": "I confirm this day, note and planted count describe what I observed.",
+          "sha256": "d95a65878f2b9123781cc4ea7627dbd30d6265d689daff41023c72c4f3695232",
+          "translation": "我确认此日期、备注和定植数量描述了我实际观察到的情况。"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.14",
+          "english": "Recording field planting…",
+          "sha256": "24867c245d17bd7830e6292bfc5f37042d99099eaa476a241eed3e17ee9a3f00",
+          "translation": "正在记录大田定植…"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.15",
+          "english": "Save field planting observation",
+          "sha256": "bafdfb6c7c68e1694f9fb0158dce305e5d1eac57dfe08749200d1ded1c6d9ab7",
+          "translation": "保存大田定植观察记录"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.16",
+          "english": "Record another field planting",
+          "sha256": "0a9ebaaaff4bd8369769ee5bc45b549e7047331fd23bc1db823330eb51a47e29",
+          "translation": "记录另一笔大田定植"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.17",
+          "english": "Stored nursery field planting evidence needs review. Its count and reference labels are withheld; retained evidence has not been treated as an ordinary unlinked note.",
+          "sha256": "06792940ac2f26c3b05d40afe749a5bdaf545ad92ad145841c7597d865df0030",
+          "translation": "保存的育苗大田定植证据需要复核。其数量和参考标签已被暂扣；保留的证据未被当作普通的未关联便签处理。"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.18",
+          "english": "Recorded field planting",
+          "sha256": "3409ed2562ba4a18e6a1324db9f9e7747fe9d7c4d372d5436fdae0d8fdd734e4",
+          "translation": "已记录的大田定植"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.19",
+          "english": "Plants planted during this recorded work",
+          "sha256": "5a0aa9652b68493ed936ce4fc23216a9935a57aa6462f2b32701fff4ae82a37f",
+          "translation": "在此记录工作中定植的植株"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.20",
+          "english": "Observed day",
+          "sha256": "d9d37ed724dbb4c508f3c3bad845fb9d06c0b7d2a2e4621bdf91bb8f0ad6e610",
+          "translation": "观察日期"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.21",
+          "english": "Planned field entry (UTC calendar date)",
+          "sha256": "3c6bfbe9639babcf80a5ab1d4e8abf71c678a74271b923ab1f847e938ea83c75",
+          "translation": "计划下田（UTC 日历日期）"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.22",
+          "english": "Variety / cultivar at observation",
+          "sha256": "65953babacde253657c761e41c2b5c46353465a14bb8b4a981a26ade99084f46",
+          "translation": "观察时的品种 / 栽培品种"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.23",
+          "english": "Seed-lot reference at observation",
+          "sha256": "2b7ffb6c892d41f65d557a54dc3f1e1901b8bbb9cd8d5f370fb06b9d199f1a1d",
+          "translation": "观察时的种子批次参考"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.24",
+          "english": "Raising-batch reference at observation",
+          "sha256": "70b0bdf21bcd887d5e685656b16920ee00fe81d95f8f9f47e7b9c530950d6e26",
+          "translation": "观察时的育苗批次参考"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.25",
+          "english": "Grower-entered observation for this work, not a stock balance, survival result or completed batch. Stored labels do not verify seed identity or identify a particular earlier sowing or count record.",
+          "sha256": "6814a1ce5fe65ffdc0e89c58b06936503f1374f25f9983c6f2ddcbd9b916192c",
+          "translation": "种植者为该工作录入的观察记录，并非库存结余、成活结果或已完成批次。保存的标签并不验证种子身份，也不确认特定的先前播种或计数记录。"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.26",
+          "english": "Record field planting",
+          "sha256": "27d8d842589e591d1c667757b3eff89146dba75a7ac9a57664077b558688f5e7",
+          "translation": "记录大田定植"
+        }
+      ]
+    },
+    {
+      "locale": "vi",
+      "sourceSha256": "fd6b98d38364de5a29875d0ebade5d80886aaa03db8797cf63cd2dd7fd394450",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "nurseryFieldPlanting.message.01",
+          "english": "This field-planting form belongs to an earlier checked batch. Check saved nursery batches before opening a new observation.",
+          "sha256": "bbe285d0c87aedd0dcb13e2026e9e0d765bf7f8ac0c425ec0aa1521748886be0",
+          "translation": "Biểu mẫu trồng ra ruộng này thuộc về một lô đã kiểm tra trước đó. Hãy kiểm tra các lô vườn ươm đã lưu trước khi mở một quan sát mới."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.02",
+          "english": "Record observed field planting from this nursery batch",
+          "sha256": "7470ff608cb6b83c45f0089bb499d01c1b7d8989d250f669b330f5b1cd1227f4",
+          "translation": "Ghi nhận việc trồng ra ruộng quan sát được từ lô vườn ươm này"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.03",
+          "english": "Record only the plants you observed being planted in the assigned growing space. This does not deduct nursery stock, establish survival or mark the planned batch complete.",
+          "sha256": "33f4f6d8cecb3ce706d3bfcb91038e7a934fbd9327dc8f43006e0ca5b0b486d8",
+          "translation": "Chỉ ghi nhận những cây mà bạn quan sát thấy được trồng vào không gian canh tác được chỉ định. Việc này không khấu trừ tồn kho vườn ươm, không xác nhận sự sống sót và không đánh dấu lô đã lên kế hoạch là hoàn thành."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.04",
+          "english": "Planned field-entry day (UTC):",
+          "sha256": "acc70e605e0aa22e1a1adc2754a1a3827563b96e86695cf832b7dd60e4a2793c",
+          "translation": "Ngày dự kiến ra ruộng (UTC):"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.05",
+          "english": "This is the saved plan reference, not the day you observed the planting.",
+          "sha256": "d15c224fa0c810b6416a96c2811dd681cfd874b8dae2bc6e13cb8e6154b738ea",
+          "translation": "Đây là tham chiếu kế hoạch đã lưu, không phải ngày bạn quan sát việc trồng."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.06",
+          "english": "DEMO — this observation stays in the sample session.",
+          "sha256": "885bc7d92ee53522fb5a9912b6f47c8957ceec127fea6e5921b51f3901debe43",
+          "translation": "DEMO — quan sát này chỉ lưu lại trong phiên mẫu."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.07",
+          "english": "Checked labels to snapshot with this observation; they do not verify seed identity:",
+          "sha256": "bff0cc6684d557846d286ae704a2ca4309a5efbed0183a8b46d4b9fec18c3e6a",
+          "translation": "Các nhãn đã đánh dấu chọn để lưu giữ cùng quan sát này; chúng không xác minh danh tính hạt giống:"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.08",
+          "english": "Actual observed day",
+          "sha256": "695ed5ae7ff666916dfe84fdb0088338bd167792171e89b313d1adbcb8041048",
+          "translation": "Ngày quan sát thực tế"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.09",
+          "english": "What you observed",
+          "sha256": "9714203997dd1813c87bf6d61abf6c0d9caed3c1466df7e362291bff2fbb798d",
+          "translation": "Những gì bạn đã quan sát"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.10",
+          "english": "Plants you planted",
+          "sha256": "c97a1e4905f73250c4deed04b21401ede928bb297978e27d7e51f6a8103022ca",
+          "translation": "Những cây bạn đã trồng"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.11",
+          "english": "Enter a whole count. An explicitly entered 0 is zero; a blank field is not a count.",
+          "sha256": "921c0851b058d2e2cbcb6ab914c53828fcfe2fb158a60199c2e46cd6f57381a7",
+          "translation": "Nhập một số nguyên. Số 0 được nhập rõ ràng là số không; ô để trống không phải là số đếm."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.12",
+          "english": "This record does not imply a particular earlier sowing or count, or change forecasts, task ticks or sales.",
+          "sha256": "b0d75bf92cb0953c84ef5ef0add825261513428e11b0f435e430ea6e83d95bfd",
+          "translation": "Bản ghi này không ngụ ý một lần gieo hạt hoặc số đếm cụ thể trước đó, và không thay đổi dự báo, dấu tích nhiệm vụ hay bán hàng."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.13",
+          "english": "I confirm this day, note and planted count describe what I observed.",
+          "sha256": "d95a65878f2b9123781cc4ea7627dbd30d6265d689daff41023c72c4f3695232",
+          "translation": "Tôi xác nhận ngày này, ghi chú và số lượng cây đã trồng phản ánh đúng những gì tôi quan sát được."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.14",
+          "english": "Recording field planting…",
+          "sha256": "24867c245d17bd7830e6292bfc5f37042d99099eaa476a241eed3e17ee9a3f00",
+          "translation": "Đang ghi nhận việc trồng ra ruộng…"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.15",
+          "english": "Save field planting observation",
+          "sha256": "bafdfb6c7c68e1694f9fb0158dce305e5d1eac57dfe08749200d1ded1c6d9ab7",
+          "translation": "Lưu quan sát trồng ra ruộng"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.16",
+          "english": "Record another field planting",
+          "sha256": "0a9ebaaaff4bd8369769ee5bc45b549e7047331fd23bc1db823330eb51a47e29",
+          "translation": "Ghi nhận việc trồng ra ruộng khác"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.17",
+          "english": "Stored nursery field planting evidence needs review. Its count and reference labels are withheld; retained evidence has not been treated as an ordinary unlinked note.",
+          "sha256": "06792940ac2f26c3b05d40afe749a5bdaf545ad92ad145841c7597d865df0030",
+          "translation": "Bằng chứng trồng từ vườn ươm ra ruộng đã lưu cần được xem xét lại. Số đếm và nhãn tham chiếu bị giữ lại; bằng chứng được giữ lại không bị coi như một ghi chú thông thường không liên kết."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.18",
+          "english": "Recorded field planting",
+          "sha256": "3409ed2562ba4a18e6a1324db9f9e7747fe9d7c4d372d5436fdae0d8fdd734e4",
+          "translation": "Việc trồng ra ruộng đã ghi nhận"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.19",
+          "english": "Plants planted during this recorded work",
+          "sha256": "5a0aa9652b68493ed936ce4fc23216a9935a57aa6462f2b32701fff4ae82a37f",
+          "translation": "Các cây được trồng trong công việc đã ghi nhận này"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.20",
+          "english": "Observed day",
+          "sha256": "d9d37ed724dbb4c508f3c3bad845fb9d06c0b7d2a2e4621bdf91bb8f0ad6e610",
+          "translation": "Ngày quan sát"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.21",
+          "english": "Planned field entry (UTC calendar date)",
+          "sha256": "3c6bfbe9639babcf80a5ab1d4e8abf71c678a74271b923ab1f847e938ea83c75",
+          "translation": "Dự kiến ra ruộng (ngày theo lịch UTC)"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.22",
+          "english": "Variety / cultivar at observation",
+          "sha256": "65953babacde253657c761e41c2b5c46353465a14bb8b4a981a26ade99084f46",
+          "translation": "Giống / thứ giống tại thời điểm quan sát"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.23",
+          "english": "Seed-lot reference at observation",
+          "sha256": "2b7ffb6c892d41f65d557a54dc3f1e1901b8bbb9cd8d5f370fb06b9d199f1a1d",
+          "translation": "Tham chiếu lô hạt giống tại thời điểm quan sát"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.24",
+          "english": "Raising-batch reference at observation",
+          "sha256": "70b0bdf21bcd887d5e685656b16920ee00fe81d95f8f9f47e7b9c530950d6e26",
+          "translation": "Tham chiếu lô ươm tại thời điểm quan sát"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.25",
+          "english": "Grower-entered observation for this work, not a stock balance, survival result or completed batch. Stored labels do not verify seed identity or identify a particular earlier sowing or count record.",
+          "sha256": "6814a1ce5fe65ffdc0e89c58b06936503f1374f25f9983c6f2ddcbd9b916192c",
+          "translation": "Quan sát do người trồng nhập cho công việc này, không phải là số dư tồn kho, kết quả sống sót hay lô đã hoàn thành. Các nhãn đã lưu không xác minh danh tính hạt giống hoặc xác định một lần gieo hạt hay bản ghi số đếm cụ thể trước đó."
+        },
+        {
+          "key": "nurseryFieldPlanting.message.26",
+          "english": "Record field planting",
+          "sha256": "27d8d842589e591d1c667757b3eff89146dba75a7ac9a57664077b558688f5e7",
+          "translation": "Ghi nhận việc trồng ra ruộng"
+        }
+      ]
+    },
+    {
+      "locale": "th",
+      "sourceSha256": "fd6b98d38364de5a29875d0ebade5d80886aaa03db8797cf63cd2dd7fd394450",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "nurseryFieldPlanting.message.01",
+          "english": "This field-planting form belongs to an earlier checked batch. Check saved nursery batches before opening a new observation.",
+          "sha256": "bbe285d0c87aedd0dcb13e2026e9e0d765bf7f8ac0c425ec0aa1521748886be0",
+          "translation": "แบบฟอร์มการย้ายปลูกลงแปลงนี้เป็นของรุ่นที่ตรวจสอบแล้วก่อนหน้า โปรดตรวจสอบรุ่นเพาะกล้าที่บันทึกไว้ก่อนเปิดการสังเกตใหม่"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.02",
+          "english": "Record observed field planting from this nursery batch",
+          "sha256": "7470ff608cb6b83c45f0089bb499d01c1b7d8989d250f669b330f5b1cd1227f4",
+          "translation": "บันทึกการย้ายปลูกลงแปลงที่สังเกตได้จากรุ่นเพาะกล้านี้"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.03",
+          "english": "Record only the plants you observed being planted in the assigned growing space. This does not deduct nursery stock, establish survival or mark the planned batch complete.",
+          "sha256": "33f4f6d8cecb3ce706d3bfcb91038e7a934fbd9327dc8f43006e0ca5b0b486d8",
+          "translation": "บันทึกเฉพาะต้นพืชที่คุณสังเกตเห็นว่ามีการปลูกลงในพื้นที่ปลูกที่กำหนดเท่านั้น การดำเนินการนี้ไม่หักยอดสต็อกต้นกล้า ไม่ยืนยันการรอดตาย และไม่ทำเครื่องหมายรุ่นที่วางแผนไว้ว่าเสร็จสมบูรณ์"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.04",
+          "english": "Planned field-entry day (UTC):",
+          "sha256": "acc70e605e0aa22e1a1adc2754a1a3827563b96e86695cf832b7dd60e4a2793c",
+          "translation": "วันที่วางแผนลงแปลง (UTC):"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.05",
+          "english": "This is the saved plan reference, not the day you observed the planting.",
+          "sha256": "d15c224fa0c810b6416a96c2811dd681cfd874b8dae2bc6e13cb8e6154b738ea",
+          "translation": "นี่คือข้อมูลอ้างอิงแผนงานที่บันทึกไว้ ไม่ใช่วันที่คุณสังเกตเห็นการปลูก"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.06",
+          "english": "DEMO — this observation stays in the sample session.",
+          "sha256": "885bc7d92ee53522fb5a9912b6f47c8957ceec127fea6e5921b51f3901debe43",
+          "translation": "DEMO — การสังเกตนี้จะคงอยู่ในเซสชันตัวอย่างเท่านั้น"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.07",
+          "english": "Checked labels to snapshot with this observation; they do not verify seed identity:",
+          "sha256": "bff0cc6684d557846d286ae704a2ca4309a5efbed0183a8b46d4b9fec18c3e6a",
+          "translation": "ป้ายกำกับที่ทำเครื่องหมายเลือกเพื่อบันทึกข้อมูลร่วมกับการสังเกตนี้ ป้ายเหล่านี้ไม่ได้ยืนยันตัวตนของเมล็ดพันธุ์:"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.08",
+          "english": "Actual observed day",
+          "sha256": "695ed5ae7ff666916dfe84fdb0088338bd167792171e89b313d1adbcb8041048",
+          "translation": "วันที่สังเกตจริง"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.09",
+          "english": "What you observed",
+          "sha256": "9714203997dd1813c87bf6d61abf6c0d9caed3c1466df7e362291bff2fbb798d",
+          "translation": "สิ่งที่คุณสังเกตเห็น"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.10",
+          "english": "Plants you planted",
+          "sha256": "c97a1e4905f73250c4deed04b21401ede928bb297978e27d7e51f6a8103022ca",
+          "translation": "ต้นพืชที่คุณปลูก"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.11",
+          "english": "Enter a whole count. An explicitly entered 0 is zero; a blank field is not a count.",
+          "sha256": "921c0851b058d2e2cbcb6ab914c53828fcfe2fb158a60199c2e46cd6f57381a7",
+          "translation": "ป้อนจำนวนเต็ม เลข 0 ที่ป้อนอย่างชัดเจนคือศูนย์ ช่องว่างไม่ใช่การนับจำนวน"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.12",
+          "english": "This record does not imply a particular earlier sowing or count, or change forecasts, task ticks or sales.",
+          "sha256": "b0d75bf92cb0953c84ef5ef0add825261513428e11b0f435e430ea6e83d95bfd",
+          "translation": "บันทึกนี้ไม่ได้บ่งชี้ถึงการหว่านหรือจำนวนก่อนหน้าเป็นการเฉพาะ และไม่เปลี่ยนแปลงการคาดการณ์ การติ๊กงาน หรือยอดขาย"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.13",
+          "english": "I confirm this day, note and planted count describe what I observed.",
+          "sha256": "d95a65878f2b9123781cc4ea7627dbd30d6265d689daff41023c72c4f3695232",
+          "translation": "ข้าพเจ้ายืนยันว่าวันที่ บันทึกข้อความ และจำนวนต้นที่ปลูกนี้อธิบายสิ่งที่ข้าพเจ้าสังเกตเห็นจริง"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.14",
+          "english": "Recording field planting…",
+          "sha256": "24867c245d17bd7830e6292bfc5f37042d99099eaa476a241eed3e17ee9a3f00",
+          "translation": "กำลังบันทึกการย้ายปลูกลงแปลง…"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.15",
+          "english": "Save field planting observation",
+          "sha256": "bafdfb6c7c68e1694f9fb0158dce305e5d1eac57dfe08749200d1ded1c6d9ab7",
+          "translation": "บันทึกการสังเกตการย้ายปลูกลงแปลง"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.16",
+          "english": "Record another field planting",
+          "sha256": "0a9ebaaaff4bd8369769ee5bc45b549e7047331fd23bc1db823330eb51a47e29",
+          "translation": "บันทึกการย้ายปลูกลงแปลงรายการอื่น"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.17",
+          "english": "Stored nursery field planting evidence needs review. Its count and reference labels are withheld; retained evidence has not been treated as an ordinary unlinked note.",
+          "sha256": "06792940ac2f26c3b05d40afe749a5bdaf545ad92ad145841c7597d865df0030",
+          "translation": "หลักฐานการย้ายปลูกจากเรือนเพาะชำลงแปลงที่บันทึกไว้จำเป็นต้องได้รับการตรวจสอบ จำนวนและป้ายกำกับอ้างอิงถูกระงับไว้ หลักฐานที่เก็บไว้นี้ไม่ได้รับการปฏิบัติเหมือนเป็นบันทึกข้อความทั่วไปที่ไม่มีการเชื่อมโยง"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.18",
+          "english": "Recorded field planting",
+          "sha256": "3409ed2562ba4a18e6a1324db9f9e7747fe9d7c4d372d5436fdae0d8fdd734e4",
+          "translation": "การย้ายปลูกลงแปลงที่บันทึกไว้"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.19",
+          "english": "Plants planted during this recorded work",
+          "sha256": "5a0aa9652b68493ed936ce4fc23216a9935a57aa6462f2b32701fff4ae82a37f",
+          "translation": "ต้นพืชที่ปลูกระหว่างงานที่บันทึกไว้นี้"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.20",
+          "english": "Observed day",
+          "sha256": "d9d37ed724dbb4c508f3c3bad845fb9d06c0b7d2a2e4621bdf91bb8f0ad6e610",
+          "translation": "วันที่สังเกต"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.21",
+          "english": "Planned field entry (UTC calendar date)",
+          "sha256": "3c6bfbe9639babcf80a5ab1d4e8abf71c678a74271b923ab1f847e938ea83c75",
+          "translation": "การลงแปลงตามแผน (วันที่ตามปฏิทิน UTC)"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.22",
+          "english": "Variety / cultivar at observation",
+          "sha256": "65953babacde253657c761e41c2b5c46353465a14bb8b4a981a26ade99084f46",
+          "translation": "พันธุ์ / พันธุ์ปลูกขณะสังเกต"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.23",
+          "english": "Seed-lot reference at observation",
+          "sha256": "2b7ffb6c892d41f65d557a54dc3f1e1901b8bbb9cd8d5f370fb06b9d199f1a1d",
+          "translation": "ข้อมูลอ้างอิงรุ่นเมล็ดพันธุ์ขณะสังเกต"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.24",
+          "english": "Raising-batch reference at observation",
+          "sha256": "70b0bdf21bcd887d5e685656b16920ee00fe81d95f8f9f47e7b9c530950d6e26",
+          "translation": "ข้อมูลอ้างอิงรุ่นเพาะกล้าขณะสังเกต"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.25",
+          "english": "Grower-entered observation for this work, not a stock balance, survival result or completed batch. Stored labels do not verify seed identity or identify a particular earlier sowing or count record.",
+          "sha256": "6814a1ce5fe65ffdc0e89c58b06936503f1374f25f9983c6f2ddcbd9b916192c",
+          "translation": "การสังเกตที่ผู้ปลูกป้อนสำหรับงานนี้ ไม่ใช่ยอดคงเหลือในสต็อก ผลการรอดตาย หรือรุ่นที่เสร็จสมบูรณ์ ป้ายกำกับที่บันทึกไว้ไม่ได้ยืนยันตัวตนของเมล็ดพันธุ์หรือระบุการหว่านหรือบันทึกจำนวนก่อนหน้าเป็นการเฉพาะ"
+        },
+        {
+          "key": "nurseryFieldPlanting.message.26",
+          "english": "Record field planting",
+          "sha256": "27d8d842589e591d1c667757b3eff89146dba75a7ac9a57664077b558688f5e7",
+          "translation": "บันทึกการย้ายปลูกลงแปลง"
+        }
+      ]
+    }
+  ],
+  "reviewNotes": "Unreviewed AI translation drafts for Simplified Chinese (zh-Hans), Vietnamese (vi), and Thai (th) nursery-to-field planting observation UI. Intended drafting boundaries: (1) Observed field planting is distinguished from planned field entry (UTC calendar date) and saved plan references; (2) Planted count requires an integer number where explicitly entered 0 is zero and blank is uncounted; (3) Observations do not deduct stock, determine survival (成活 / sự sống sót / การรอดตาย, avoiding rate concepts), or mark batches complete; (4) Checked labels mean user-selected checkbox labels preserved/snapshotted as entered (保存快照 / lưu giữ / บันทึกข้อมูล), avoiding camera/image capture connotations; (5) General nursery stock and evidence wording (育苗) is preserved without seedbed limitation; (6) Thai row 17 reflects current withholding and non-ordinary-note handling rather than future promises; (7) Simplified Chinese row 13 expresses what was actually observed; (8) Exact ASCII literals DEMO, UTC, and 0 are preserved. Terms for human review: naturalness of nursery raising batches versus field planting terms in local dialects. No runtime activation or semantic certification is claimed."
+}

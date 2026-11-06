@@ -36,65 +36,91 @@ sequence and specific human/source/integration gates. These stages can overlap
 where ownership and dependencies permit; they are not promised calendar weeks.
 Human review cannot be replaced by an AI-authored approval record.
 
-## Current execution and ownership — 2 November checkpoint
+## Current execution and ownership — 3 November checkpoint
 
 Codex owns implementation, independent review, checks and release coordination.
-Disjoint workers may run concurrently; shared saved-data contracts require root
-review. Preserve the original worktree and old lanes' unrelated/private work.
+The released baseline remains `8a12b3e`; these new milestones are under review.
 
 - Draft [PR #1167](https://github.com/rorymclark-prog/ImbewuField/pull/1167),
-  head `12b0acba`, contains site-country context, account-safe metadata sync and
-  guarded catalogue consumers. Typecheck and 137 affected checks pass. Its local
-  full run was stopped during disk pressure; current-head full CI remains a gate.
-- Draft [PR #1168](https://github.com/rorymclark-prog/ImbewuField/pull/1168),
-  head `7cd65415`, stacks grower estimates and safe plan-book writes on #1167.
-  Typecheck, 110 affected checks and seven independent page/storage probes pass.
-  Full current-head CI remains pending. Merge order is #1167 before #1168.
-- This next branch adds pure automatic own-input proposals, immutable canonical
-  cycle attachments, context-aware projections and a saved buyer-demand adapter.
-  Malformed markers survive storage and cannot become catalogue rows. Legacy
-  tasks and report calculations withhold tagged rows; explicit current projections
-  retain own dates, cycle kg, target plants and nursery intervals. Unknown seeds,
-  trays, space and delivery distributions remain unknown. Typecheck and 100
-  focused integration checks pass; the full suite is running. **Live acceptance
-  is not enabled:** remaining UI/task/export/nursery/finance consumers need review
-  before these rows can enter a user's plan. This prerequisite is not a completed
-  international auto-planner release.
+  head `66e2dffc6`, holds site-country context and guarded consumers. The old full
+  run failed ten related checks. Coordinator baseline comparison and repairs
+  preserved the behavior assertions, added actual rejection controls and supplied
+  the missing disclosed release-copy candidates. Its actual full Node24 run finished
+  with6460pass, zero failures and one existing TODO; process exit0. Current-head
+  hosted/account/security checks remain separate release requirements.
+- Draft [PR #1171](https://github.com/rorymclark-prog/ImbewuField/pull/1171),
+  head `fbe546d6c`, consolidates the preserved implementation ancestors from #1168
+  and #1169 into the complete grower-input/proposal/nursery review flow above
+  #1167. This avoids separate releases of disconnected prerequisites. The original
+  commits remain recoverable in its history; no production merge has occurred.
+  Typecheck and 676 workflow/storage/source/calculation checks passed. Postmerge
+  release/UI/format checks passed 154 tests with zero failures and one existing
+  shape-sync TODO. Canonical crop-cycle acceptance remains disabled: proposed
+  capacity is neither planted crops, observed stock nor fulfilled buyer demand.
+- The actual practice UI drew an extra measured bed, saved a synthetic buyer
+  target and growing estimate, then produced two ready cycles while holding
+  unresolved existing sowings. Native date controls work through their accessible
+  date interface. Desktop/390px empty controls fit without horizontal overflow.
+  Finished proposal and missing-input nursery states were inspected on desktop;
+  unknown quantities stayed unknown. Current hosted preview, populated phone
+  review, real-account persistence, older-client metadata preservation and
+  current-head full/security checks remain release gates. Temporary practice changes reset on reload.
+- Draft [PR #1172](https://github.com/rorymclark-prog/ImbewuField/pull/1172),
+  head `14e00f344`, contains the separate US NWS observation implementation in
+  `codex/international-weather-reference`. Actual official documentation, schema,
+  station metadata and observation responses were fetched. The bounded adapter,
+  existing-guard/data-budget route and opt-in US country-review screen preserve
+  units, missingness, QC flags, separate points and observation/retrieval times.
+  Typecheck and202 selected checks pass. Actual desktop/390px phone partial
+  observations and country-switch clearing were inspected. Current-head rules,
+  focused-render and Vercel checks are green; full CI/account/hosted behavior gates
+  remain. It is not merged and does not supply farm weather or crop advice.
 
-The built-in browser is now available. The #1168 hosted preview was inspected at
-normal desktop and 390-pixel phone width. A partial profile saved on this device,
-survived reload in its original workspace and was removed after the test. The
-phone document measured 390 pixels with no horizontal overflow. No mapped-site,
-cloud or second-device persistence is certified: the preview currently opens a
-sign-in page for account access. Source probes and local storage checks do not
-replace those release checks. Neither draft milestone is merged or released.
+## AGY deliveries and current work
 
-## AGY delivery and new parallel language jobs
+The earlier source shortlist and Kenya/UK/US bounded follow-ups remain separate
+from product integrations. The compact Brazil introductory bundle now contains
+five independently receipted public bodies, with actual UTC fetch dates distinct
+from local dispatch/review dates. Unsupported station/location assertions and
+inferred product terms were removed. The follow-up verified Redape documentation
+and recorded a failed INMET catalogue attempt; no soil CSV/API payload was fetched.
+The observed noncommercial licence label does not establish commercial or AI-use
+clearance. Connection reset on one request is not a provider-outage finding.
 
-The earlier seven-family source shortlist shipped with the foundation. Kenya's
-bounded follow-up is reviewed in #1167; the UK's four-response compact review is
-in #1168. The US research CLI has now handed off and exited successfully with
-its workers stopped. This branch includes a corrected US compact bundle checked
-against four actual public responses across three official source families.
-Documentation fetched is distinct from a tested product-data endpoint or an
-implemented adapter. No pilot product-data integration or local region approval
-has been established by these research deliveries.
+The earlier three international translation batches contain 801 source-bound AI
+draft entries. An additional 128-entry automatic-plan/nursery packet covers French,
+Spanish, Brazilian Portuguese and Swahili. Frozen source/keys/hashes/tokens and
+12 corruption controls were independently checked. Regional tags and terminology
+are not interchangeable; no named fluent review or new runtime language approval
+is present. These remain review packets, not a translated app or lessons.
 
-Two completed translation batches contain 624 source-bound draft entries:
-97 and 59 entries per locale for French, Latin American Spanish, Brazilian
-Portuguese and Kenyan Swahili. Independent structure/hash/protected-token checks
-pass; named fluent human review and runtime language enablement remain absent.
-The second batch's main AGY CLI exited successfully after its workers stopped.
+Three existing-language release-copy batches supply32,36 and16 exact candidates for
+isiZulu, Sesotho, Xitsonga and Tshivenda. They are wired only through the existing
+explicitly unreviewed source-paired mechanism, preserving old chunk bytes, English
+fallback and review notices. Structural/runtime checks and recent-history coverage
+pass; no fluent approval is implied by AI worker names or roles.
 
-A new bounded translation assignment is now active in the existing translation
-conversation, using Gemini 3.8 Flash High. Two AI workers handle Hindi (India)
-and Bengali (Bangladesh); the main AI handles Indonesian. These countries are
-already in the expansion queue. The assignment is exactly the frozen 59-message
-full-warning/status inventory per locale, with separate output ownership. Startup
-and two workers were observed; delivery is not yet claimed. All outputs must
-remain unreviewed drafts, with no lesson/species edits or production language
-activation. Optional interaction-data sharing remains off. No raw conversation
-handles or transcripts belong in publication bundles.
+The bounded Tend comparison is now coordinator-reviewed with corrections. Its
+three fresh official-page bodies match the exact machine receipts. Existing legacy
+tasks, monthly actuals and reconciliation were distinguished from missing new-cycle
+integration; monthly summaries were not relabelled as dated sowing observations.
+The compact945word comparison is source inspection, not logged-in Tend testing or
+customer research. No production capability was implemented by that research.
+
+AGY completed a source-bound consumer map against #1171. Coordinator review
+corrected withheld benchmarks versus false-zero claims and retained the live
+account-switch requirement separately from pure scope validation. This map
+prepared code work but did not implement it. A broader recursive scan was declined.
+Its existing CLI is now assigned124 source-bound French, Spanish, Brazilian
+Portuguese and Swahili drafts for31 exact work-date/checklist messages. The two
+source files are frozen by hash; runtime activation and fluent review remain false.
+Normal scoped permissions and optional-sharing OFF remain.
+
+Codex implementation continues in `codex/international-grower-operations`, based
+on #1171: exact-date task/calendar work, fresh account-bound saved-source loading,
+pure full-proposal acceptance preparation and actual task-screen integration.
+These are uncommitted work in progress. Acceptance remains disabled; no release or
+new-country farming/language approval is implied.
 
 ## Invariants throughout
 
