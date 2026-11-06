@@ -1,0 +1,54 @@
+{
+  "sourceSha256": "0d1e53c8c45d8bc1410266c0e13ba0d303bc540f08e995c92092eafe6275cf7d",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeLanguageActivation": "No new language activated. These are descriptions under the existing English-backed visibly marked draft policy, not fluent certification. Existing translation entries take precedence.",
+  "features": [
+    "recordedHarvest"
+  ],
+  "messages": [
+    {
+      "key": "recordedHarvest.release.01",
+      "english": "Review recorded harvest weights for a saved site and reporting period.",
+      "sha256": "79838e2901ff7f7fb5736329369d954e77f750f6904eabd5263f367cac856466",
+      "translations": {
+        "zu": "Buyekeza izisindo zesivuno ezirekhodiwe zesiza esilondoloziwe nesikhathi sokubika.",
+        "st": "Hlahloba boima ba kotulo bo rekotilweng bakeng sa setsha se bolokilweng le nako ya tlaleho.",
+        "ts": "Kambisisa mintikelo ya ntshovelo leyi tsariweke ya xitsha lexi hlayisiweke na nkarhi wo vika.",
+        "ve": "Ṱolani vhuleme ha khaṋo ho rekhodiwaho ha fhethu ho vhulungwaho na tshifhinga tsha muvhigo."
+      }
+    },
+    {
+      "key": "recordedHarvest.release.02",
+      "english": "Review your recorded harvest",
+      "sha256": "ef6999475a61fa6fc0463000d14e20c73f483b42a901f61b1d8a1cc18d199bac",
+      "translations": {
+        "zu": "Buyekeza isivuno sakho esirekhodiwe",
+        "st": "Hlahloba kotulo ya hao e rekotilweng",
+        "ts": "Kambisisa ntshovelo wa wena lowu tsariweke",
+        "ve": "Ṱolani khaṋo yaṋu yo rekhodiwaho"
+      }
+    },
+    {
+      "key": "recordedHarvest.release.03",
+      "english": "International reference tools → Project workflows → Recorded harvest preview",
+      "sha256": "fa4aedaaa4ca7db57fc7f5714c6b9267087fb1c023dd3611323b983de2b3c0ea",
+      "translations": {
+        "zu": "Amathuluzi okubhekisela omhlaba → Ukuhamba komsebenzi wephrojekthi → Ukubuka kuqala kwesivuno esirekhodiwe",
+        "st": "Dithulusi tsa tšupiso tsa matjhaba → Mekgwa ya tshebetso ya morero → Ponelopele ya kotulo e rekotilweng",
+        "ts": "Switirhisiwa swa le handle swa xikombo → Mafambiselo ya mintirho ya phurojeke → Nkambisiso wo rhanga wa ntshovelo lowu tsariweke",
+        "ve": "Zwishumiswa zwa zwiko zwa mashango → Kuitele kwa mishumo ya thandela → Mbonelaphanda ya khaṋo yo rekhodiwaho"
+      }
+    },
+    {
+      "key": "recordedHarvest.release.04",
+      "english": "Choose a saved site and reporting dates to review monthly observations saved on this device. Eligible records keep their labels and known kilogram subtotal. Missing or excluded records stay visible as gaps; this preview does not publish a project result or grant sharing approval.",
+      "sha256": "7e3b492c5aa9c52abe5c2918fb423cde2751bb69558132ccea9c0a9b35815b65",
+      "translations": {
+        "zu": "Khetha isiza esilondoloziwe nezinsuku zokubika ukuze ubuyekeze okubonwe nyanga zonke okulondolozwe kule divayisi. Amarekhodi afanelekile agcina amalebula awo kanye nesamba esincane samakhilogremu esaziwayo. Amarekhodi angekho noma akhishiwe ahlala ebonakala njengezikhala; lokhu kubuka kuqala akushicileli umphumela wephrojekthi noma kunganikezi imvume yokwabelana.",
+        "st": "Kgetha setsha se bolokilweng le matsatsi a tlaleho ho hlahloba ditlhahlobo tsa kgwedi le kgwedi tse bolokilweng sesebedisweng sena. Direkoto tse tshwanelehang di boloka mabitso a tsona le palo e tsejwang ya dikhilograma. Direkoto tse siyo kapa tse kgethilweng di dula di bonahala e le dikgeo; ponelopele ena ha e phatlalatse sephetho sa morero kapa ho fana ka tumello ya ho arolelana.",
+        "ts": "Hlawula xitsha lexi hlayisiweke na masiku yo vika ku kambisisa swivono swa n’hweti na n’hweti leswi hlayisiweke eka xitirhisiwa lexi. Tirhekhodo leti faneleke ti hlayisa mimfungho ya tona na ntsengo lowutsongo wa tikhilogiramu lowu tiviwaka. Tirhekhodo leti kayivelaka kumbe leti susiweke ti tshama ti vonaka tanihi swikhala; nkambisiso lowu wo rhanga a wu hangalasi vuyelo bya phurojeke kumbe ku nyika mpfumelelo wo avelana.",
+        "ve": "Nangani fhethu ho vhulungwaho na maḓuvha a muvhigo u tola zwiṱolwa zwa ṅwedzi muṅwe na muṅwe zwo vhulungwaho kha hetshi tshishumiswa. Rekhodo dzo teyaho dzi vhulunga zwidodombedzwa zwadzo na thanganyelo ṱhukhu i ḓivhiwaho ya khilogireme. Rekhodo dzi siho kana dzo bviswaho dzi dula dzi tshi vhonala sa mavhaka; mbonelaphanda hei a i andadzi mvelelo ya thandela kana u ṋea thendelo ya u kovhelana."
+      }
+    }
+  ]
+}

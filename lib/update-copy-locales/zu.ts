@@ -509,5 +509,10 @@ const copy:UpdateCopy={
   "Record a nursery planting in its field bed": "Rekhoda ukutshala kwe-nursery embhedeni wako wasensimini",
   "Crop planner → Saved planned nursery batches → Record field planting": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe → Rekhoda ukutshala ensimini",
   "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekhoda usuku nenani lezitshalo ozifake embhedeni owabelwe ukutshala kwe-nursery okuhloliwe. Gcina irekhodi lalokho okubonile kujenali lihlukile osukwini oluhleliwe, esitokweni se-nursery nasekusindeni kwezitshalo.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Review recorded harvest weights for a saved site and reporting period.": "Buyekeza izisindo zesivuno ezirekhodiwe zesiza esilondoloziwe nesikhathi sokubika.",
+  "Review your recorded harvest": "Buyekeza isivuno sakho esirekhodiwe",
+  "International reference tools → Project workflows → Recorded harvest preview": "Amathuluzi okubhekisela omhlaba → Ukuhamba komsebenzi wephrojekthi → Ukubuka kuqala kwesivuno esirekhodiwe",
+  "Choose a saved site and reporting dates to review monthly observations saved on this device. Eligible records keep their labels and known kilogram subtotal. Missing or excluded records stay visible as gaps; this preview does not publish a project result or grant sharing approval.": "Khetha isiza esilondoloziwe nezinsuku zokubika ukuze ubuyekeze okubonwe nyanga zonke okulondolozwe kule divayisi. Amarekhodi afanelekile agcina amalebula awo kanye nesamba esincane samakhilogremu esaziwayo. Amarekhodi angekho noma akhishiwe ahlala ebonakala njengezikhala; lokhu kubuka kuqala akushicileli umphumela wephrojekthi noma kunganikezi imvume yokwabelana.",
 };
 export default copy;

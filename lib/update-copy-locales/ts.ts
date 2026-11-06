@@ -509,5 +509,10 @@ const copy:UpdateCopy={
   "Record a nursery planting in its field bed": "Rhekhoda ku byala ka nursery eka mubedo wa yona ensinwini",
   "Crop planner → Saved planned nursery batches → Record field planting": "Mupulani wa swibyariwa → Mintlawa ya nursery leyi kunguhatiweke leyi hlayisiweke → Rhekhoda ku byala ensinwini",
   "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rhekhoda siku ni nhlayo ya swimilana leswi u swi vekeke eka mubedo lowu averiweke ku byala ka nursery loku kamberiweke. Hlayisa rhekhodo ya leswi voniweke eka jenala yi hambanile ni siku leri kunguhatiweke, xitoko xa nursery ni ku hanya ka swimilana.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Review recorded harvest weights for a saved site and reporting period.": "Kambisisa mintikelo ya ntshovelo leyi tsariweke ya xitsha lexi hlayisiweke na nkarhi wo vika.",
+  "Review your recorded harvest": "Kambisisa ntshovelo wa wena lowu tsariweke",
+  "International reference tools → Project workflows → Recorded harvest preview": "Switirhisiwa swa le handle swa xikombo → Mafambiselo ya mintirho ya phurojeke → Nkambisiso wo rhanga wa ntshovelo lowu tsariweke",
+  "Choose a saved site and reporting dates to review monthly observations saved on this device. Eligible records keep their labels and known kilogram subtotal. Missing or excluded records stay visible as gaps; this preview does not publish a project result or grant sharing approval.": "Hlawula xitsha lexi hlayisiweke na masiku yo vika ku kambisisa swivono swa n’hweti na n’hweti leswi hlayisiweke eka xitirhisiwa lexi. Tirhekhodo leti faneleke ti hlayisa mimfungho ya tona na ntsengo lowutsongo wa tikhilogiramu lowu tiviwaka. Tirhekhodo leti kayivelaka kumbe leti susiweke ti tshama ti vonaka tanihi swikhala; nkambisiso lowu wo rhanga a wu hangalasi vuyelo bya phurojeke kumbe ku nyika mpfumelelo wo avelana.",
 };
 export default copy;
