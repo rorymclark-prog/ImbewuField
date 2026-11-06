@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "purpose": "13 exact frozen field seed UI messages for Simplified Chinese, Vietnamese and Thai draft review; no runtime or fluent approval.",
+  "locales": [
+    "zh-Hans",
+    "vi",
+    "th"
+  ],
+  "sourceFiles": [
+    {
+      "file": "components/crops/GrowerFieldSeedSourcingSection.tsx",
+      "sha256": "574664a3a13fa2e9a40e00e8515f633e4759a063dc305f9caf95031086e67e6f",
+      "base": "b98c029e142ba8acbb04890a02be78bb20a10d7b"
+    }
+  ],
+  "messages": [
+    {
+      "key": "fieldSeedSourcing.ui.01",
+      "english": "Field seed sourcing · cycles without nursery raising",
+      "sha256": "0cdaef8d9135bd3706d39caf1579cbea996cf6f1e4fd2cb954394478776ca773"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.02",
+      "english": "Use accepted saved field cycles that have no nursery phase. No nursery phase does not establish botanical direct sowing. Enter your own gross whole-seed requirement; final plant positions are not seed counts.",
+      "sha256": "6e2f2e37086135683de7b188c478e45d90f9d9e0de86a36184193aacb38c8399"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.03",
+      "english": "Planning only, not a whole-farm purchase list. No stock is recorded, order placed or plan saved. Unknown counts are not zero. Nursery equipment and a nursery review horizon are not required for this separate field worksheet.",
+      "sha256": "19bc22baa90d968c90b695d4d05879ed12e3f0582f45e3f2fded22c9004e2957"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.04",
+      "english": "Check saved field cycles for seed sourcing",
+      "sha256": "6abd97a2ab9b7995c95f076f374e3dd4c0f8ecbf135047ee3d4f51d57c776dc6"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.05",
+      "english": "Unknown / not declared",
+      "sha256": "62188a8f54a3001967089450c06a2539e4d654339a05e029534d78f59e3bbf53"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.06",
+      "english": "Botanical seeds",
+      "sha256": "4a92951f2227ae298af5aba0e45dfd58cd2e422f4dea2999e07454a5382c144e"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.07",
+      "english": "Vegetative material",
+      "sha256": "7da3b02b8bbface89deebd1ec416e38fcc2e518b7a3b65034d61928c8ff3ef01"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.08",
+      "english": "Whole seed count, including any allowances you have chosen. No allowances or rates are added here. Blank means unknown; an explicitly confirmed zero is a planning entry.",
+      "sha256": "4a82953a1c3c6f2301c1e25a1d182723f7ad4a40e8df9951602132cf3b3abe87"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.09",
+      "english": "Add field supply group",
+      "sha256": "f1fcebb59566b636e29bad87090e05e7dea11a12f4f153130e048be82354b142"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.10",
+      "english": "Review field seed sourcing",
+      "sha256": "05e7d063412f45ed668f8f6ddd86dc72223f530a26389e35df4496355668c066"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.11",
+      "english": "Download field seed sourcing CSV",
+      "sha256": "70a9cb4595a74db2d072d06177013b940ec29e57e2485d84805368dead6dfc8c"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.12",
+      "english": "The CSV includes your entered supply-group labels exactly, including whitespace. Leave out information you do not want in the file. Private saved association IDs and individual variety or lot references are not included.",
+      "sha256": "bd3325b895b611cb3a690e7bfbb6fb2c9794cf54c972faa2984d45a248f52f2e"
+    },
+    {
+      "key": "fieldSeedSourcing.ui.13",
+      "english": "DEMO · temporary sample planning worksheet.",
+      "sha256": "18bd83fa9b2fea83ccf2d2c61768a5f29fffaa9a8b55228a23103c464051d6a9"
+    }
+  ]
+}

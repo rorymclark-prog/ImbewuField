@@ -1,0 +1,375 @@
+{
+  "schemaVersion": 1,
+  "publishedAtLabel": "2026-11-06",
+  "purpose": "Inactive AI UI translation candidates for named human review",
+  "draftPairs": 403,
+  "localePackets": 23,
+  "languages": 15,
+  "runtimeActivation": false,
+  "humanFluentApproval": false,
+  "uiOrRtlLayoutVerified": false,
+  "sourceArtifactsCopiedExactly": 28,
+  "sourceArtifactBytes": 231439,
+  "privacyReview": "All28source/packet/status/notes files inspected; no sensitive findings. No workorders/rawlogs/quarantineddrafts copied.",
+  "families": [
+    {
+      "folder": "agy-field-seed-asia-ui-2026-11-06",
+      "kind": "field-seed-ui",
+      "messages": 13,
+      "locales": [
+        "hi",
+        "bn",
+        "id"
+      ],
+      "pairs": 39,
+      "sourceSha256": "bab81a720b091ed7775d6f4765a0f7363a07496d54cf4f784def58a5396b1070",
+      "mode": "bundle",
+      "notesWords": 177,
+      "runtimeActivation": false
+    },
+    {
+      "folder": "agy-field-seed-east-asian-ui-2026-11-06",
+      "kind": "field-seed-ui",
+      "messages": 13,
+      "locales": [
+        "zh-Hans",
+        "vi",
+        "th"
+      ],
+      "pairs": 39,
+      "sourceSha256": "fe390199b40b9f21304b4e4f072ebf35a6fa82495ad9fce1f6b9cb2e3bd57a92",
+      "mode": "bundle",
+      "notesWords": 178,
+      "runtimeActivation": false
+    },
+    {
+      "folder": "agy-field-seed-fres-ui-2026-11-06",
+      "kind": "field-seed-ui",
+      "messages": 13,
+      "locales": [
+        "es",
+        "fr",
+        "pt-BR",
+        "sw"
+      ],
+      "pairs": 52,
+      "sourceSha256": "c22b10d733b108802c6c43459f9341bb7e76eca200dbfc3437e2573298490297",
+      "mode": "packets",
+      "notesWords": 208,
+      "runtimeActivation": false
+    },
+    {
+      "folder": "agy-field-seed-german-italian-ui-2026-11-06",
+      "kind": "field-seed-ui",
+      "messages": 13,
+      "locales": [
+        "de",
+        "it"
+      ],
+      "pairs": 26,
+      "sourceSha256": "a62fb5be4670874fd5bbbad836c39de76426e5efc6c97a8af914276b77d06549",
+      "mode": "bundle",
+      "notesWords": 140,
+      "runtimeActivation": false
+    },
+    {
+      "folder": "agy-field-seed-rtl-ui-2026-11-06",
+      "kind": "field-seed-ui",
+      "messages": 13,
+      "locales": [
+        "ar",
+        "ur",
+        "fa"
+      ],
+      "pairs": 39,
+      "sourceSha256": "07bca9bdaacdefb73485e3a6525e0585456f6b48f25595a943266187ec0788df",
+      "mode": "bundle",
+      "notesWords": 193,
+      "runtimeActivation": false
+    },
+    {
+      "folder": "agy-nursery-field-observation-east-asian-2026-11-06",
+      "kind": "nursery-to-field-observation-ui",
+      "messages": 26,
+      "locales": [
+        "zh-Hans",
+        "vi",
+        "th"
+      ],
+      "pairs": 78,
+      "sourceSha256": "fd6b98d38364de5a29875d0ebade5d80886aaa03db8797cf63cd2dd7fd394450",
+      "mode": "bundle",
+      "notesWords": 167,
+      "runtimeActivation": false
+    },
+    {
+      "folder": "agy-nursery-field-observation-europe-2026-11-06",
+      "kind": "nursery-to-field-observation-ui",
+      "messages": 26,
+      "locales": [
+        "de",
+        "it"
+      ],
+      "pairs": 52,
+      "sourceSha256": "fbbcc2361d9567110d167974f8e46d6db97e89cd18f1a3e95944bb54ef704d3a",
+      "mode": "bundle",
+      "notesWords": 160,
+      "runtimeActivation": false
+    },
+    {
+      "folder": "agy-nursery-field-observation-rtl-2026-11-06",
+      "kind": "nursery-to-field-observation-ui",
+      "messages": 26,
+      "locales": [
+        "ar",
+        "ur",
+        "fa"
+      ],
+      "pairs": 78,
+      "sourceSha256": "8fb5c154f100bb03f05b16771bfb171e9a77448a26024d834f67bc1e491e8adc",
+      "mode": "bundle",
+      "notesWords": 197,
+      "runtimeActivation": false
+    }
+  ],
+  "files": [
+    {
+      "file": "agy-field-seed-asia-ui-2026-11-06/drafts.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-asia-ui-2026-11-06/drafts.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 21269,
+      "sha256": "a14fa41b0ca3b2d2b8d855049e88fd12a7f9ff793d7f7748e232d4d362955870",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-asia-ui-2026-11-06/source.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-asia-ui-2026-11-06/source.json",
+      "kind": "historical-source-capture",
+      "bytes": 3611,
+      "sha256": "bab81a720b091ed7775d6f4765a0f7363a07496d54cf4f784def58a5396b1070",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-asia-ui-2026-11-06/status.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-asia-ui-2026-11-06/status.json",
+      "kind": "draft-task-status",
+      "bytes": 1495,
+      "sha256": "8c9bdba2ba76672fc07de68fbf04e80754143cd95fc1ab06f09e8cae1a486dff",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-east-asian-ui-2026-11-06/drafts.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-east-asian-ui-2026-11-06/drafts.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 20021,
+      "sha256": "1907b510ed32ed4acfec242abf8d98940eeb66f0ca0dd8ffaa98525171c477d6",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-east-asian-ui-2026-11-06/source.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-east-asian-ui-2026-11-06/source.json",
+      "kind": "historical-source-capture",
+      "bytes": 3626,
+      "sha256": "fe390199b40b9f21304b4e4f072ebf35a6fa82495ad9fce1f6b9cb2e3bd57a92",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-east-asian-ui-2026-11-06/status.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-east-asian-ui-2026-11-06/status.json",
+      "kind": "draft-task-status",
+      "bytes": 1801,
+      "sha256": "2e881408de5e097a08e0ea522ece1b497070b8ffffa34d3af801e22ce09e9da0",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-fres-ui-2026-11-06/es.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-fres-ui-2026-11-06/es.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 5208,
+      "sha256": "c3b65b98e053f80d6e6c0e1a91b612fba743df91944c68b86d793c5bf24b29c3",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-fres-ui-2026-11-06/fr.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-fres-ui-2026-11-06/fr.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 5338,
+      "sha256": "157ba3fb3c63ba62a19dd299af6a208d21cdcdb04634c815ed1ec476b0f556a8",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-fres-ui-2026-11-06/pt-BR.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-fres-ui-2026-11-06/pt-BR.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 5167,
+      "sha256": "8f54055d2a6f3ffe11ba0f4064f7ab70b8351eae0f86a3635c2ce24420b8496d",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-fres-ui-2026-11-06/review-notes.md",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-fres-ui-2026-11-06/review-notes.md",
+      "kind": "human-review-notes",
+      "bytes": 1460,
+      "sha256": "060892d947546122226aaa50ab3d65728235580502d961639201b3afccdef954",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-fres-ui-2026-11-06/source.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-fres-ui-2026-11-06/source.json",
+      "kind": "historical-source-capture",
+      "bytes": 3630,
+      "sha256": "c22b10d733b108802c6c43459f9341bb7e76eca200dbfc3437e2573298490297",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-fres-ui-2026-11-06/status.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-fres-ui-2026-11-06/status.json",
+      "kind": "draft-task-status",
+      "bytes": 1495,
+      "sha256": "19f56d46875406044006d59559be89ede17c59400b2a666c9d3be02f88ebf6a6",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-fres-ui-2026-11-06/sw.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-fres-ui-2026-11-06/sw.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 4985,
+      "sha256": "5e65f8ab08ef38688f4390a62a33c5b2ce293f937228f8340dad866979b357c1",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-german-italian-ui-2026-11-06/drafts.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-german-italian-ui-2026-11-06/drafts.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 12277,
+      "sha256": "68ec82c43fe1499430c9bd7247f79f2b23db30a02950bad87614c1840d9e0e77",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-german-italian-ui-2026-11-06/source.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-german-italian-ui-2026-11-06/source.json",
+      "kind": "historical-source-capture",
+      "bytes": 3590,
+      "sha256": "a62fb5be4670874fd5bbbad836c39de76426e5efc6c97a8af914276b77d06549",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-german-italian-ui-2026-11-06/status.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-german-italian-ui-2026-11-06/status.json",
+      "kind": "draft-task-status",
+      "bytes": 1143,
+      "sha256": "e69800368273dc4b0d5639090cd44d416543144163719514f1ca2a33552d83b5",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-rtl-ui-2026-11-06/drafts.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-rtl-ui-2026-11-06/drafts.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 19911,
+      "sha256": "2811fd4d0f582bb9c29ed8541e94213fed7e63539df03c017297daf50a5752a2",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-rtl-ui-2026-11-06/source.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-rtl-ui-2026-11-06/source.json",
+      "kind": "historical-source-capture",
+      "bytes": 3606,
+      "sha256": "07bca9bdaacdefb73485e3a6525e0585456f6b48f25595a943266187ec0788df",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-field-seed-rtl-ui-2026-11-06/status.json",
+      "sourceRepositoryPath": "docs/international/agy-field-seed-rtl-ui-2026-11-06/status.json",
+      "kind": "draft-task-status",
+      "bytes": 1228,
+      "sha256": "680fdb1dd87786330f3713db84a46283dea763f922d711620a78bf69f3a356c3",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-nursery-field-observation-east-asian-2026-11-06/drafts.json",
+      "sourceRepositoryPath": "docs/international/agy-nursery-field-observation-east-asian-2026-11-06/drafts.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 32490,
+      "sha256": "533ccf117ee1d5397a4a4707430a638b774ff0cded9716150f49fd8b605e72c6",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-nursery-field-observation-east-asian-2026-11-06/source.json",
+      "sourceRepositoryPath": "docs/international/agy-nursery-field-observation-east-asian-2026-11-06/source.json",
+      "kind": "historical-source-capture",
+      "bytes": 7184,
+      "sha256": "fd6b98d38364de5a29875d0ebade5d80886aaa03db8797cf63cd2dd7fd394450",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-nursery-field-observation-east-asian-2026-11-06/status.json",
+      "sourceRepositoryPath": "docs/international/agy-nursery-field-observation-east-asian-2026-11-06/status.json",
+      "kind": "draft-task-status",
+      "bytes": 1331,
+      "sha256": "a16b4e70e7479b1e418f7df6403f2fe05959bae7881960a646312d5ce3160c0b",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-nursery-field-observation-europe-2026-11-06/drafts.json",
+      "sourceRepositoryPath": "docs/international/agy-nursery-field-observation-europe-2026-11-06/drafts.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 20246,
+      "sha256": "799b9e068b973993c622988cd942dc047a5bcff12aa496799e3d31c25464326f",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-nursery-field-observation-europe-2026-11-06/source.json",
+      "sourceRepositoryPath": "docs/international/agy-nursery-field-observation-europe-2026-11-06/source.json",
+      "kind": "historical-source-capture",
+      "bytes": 7148,
+      "sha256": "fbbcc2361d9567110d167974f8e46d6db97e89cd18f1a3e95944bb54ef704d3a",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-nursery-field-observation-europe-2026-11-06/status.json",
+      "sourceRepositoryPath": "docs/international/agy-nursery-field-observation-europe-2026-11-06/status.json",
+      "kind": "draft-task-status",
+      "bytes": 1184,
+      "sha256": "5567ee7cac8d671885cf898134a5a677e7d43610394a38bcdfdcca4e4531bc5e",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-nursery-field-observation-rtl-2026-11-06/drafts.json",
+      "sourceRepositoryPath": "docs/international/agy-nursery-field-observation-rtl-2026-11-06/drafts.json",
+      "kind": "inactive-ai-translation-packets",
+      "bytes": 32575,
+      "sha256": "9dc03dd0a54d1280fb3cbf52e606fab983ef241fe22c11f4bf416558909b5103",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-nursery-field-observation-rtl-2026-11-06/source.json",
+      "sourceRepositoryPath": "docs/international/agy-nursery-field-observation-rtl-2026-11-06/source.json",
+      "kind": "historical-source-capture",
+      "bytes": 7164,
+      "sha256": "8fb5c154f100bb03f05b16771bfb171e9a77448a26024d834f67bc1e491e8adc",
+      "originalBytesPreserved": true
+    },
+    {
+      "file": "agy-nursery-field-observation-rtl-2026-11-06/status.json",
+      "sourceRepositoryPath": "docs/international/agy-nursery-field-observation-rtl-2026-11-06/status.json",
+      "kind": "draft-task-status",
+      "bytes": 1256,
+      "sha256": "96f04337a945661baeb1e2033c06c01f53620d2c42848fd55bf97d45afb0b181",
+      "originalBytesPreserved": true
+    }
+  ],
+  "checker": {
+    "file": "check_packets.py",
+    "sha256": "814aab97b5f6d915cb0fe30fbd2c44be53bd6e54494cbe53775ebae9bfb34600",
+    "publicationAdapter": "Existing coordinator validation body preserved; stdout receipt output and fail-closed optimized-Python guard only."
+  },
+  "validationReceipt": {
+    "file": "validation-receipt.json",
+    "sha256": "7207b5f77052ca30eda54391ba27f4ff981eaa1f64197f57126f3f2b8b967f8c"
+  },
+  "readme": {
+    "file": "README.md",
+    "sha256": "7ea020ec25a026b1cbec84c7fe5294bb8d685190fbc92ef7dea7c579c4b2b019"
+  },
+  "applicationCodeChanged": false
+}

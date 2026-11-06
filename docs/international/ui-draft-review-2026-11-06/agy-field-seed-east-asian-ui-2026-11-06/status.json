@@ -1,0 +1,26 @@
+{
+  "task": "docs/international/agy-field-seed-east-asian-ui-2026-11-06/WORKORDER.md",
+  "status": "COMPLETED",
+  "correction": "Drafting corrections applied in drafts.json: (1) Removed physical-quality terms implying intact/dehusked seed condition (整粒 in zh-Hans row02, hạt nguyên in vi row02, เต็มเมล็ด in th rows 02 and 08), expressing gross integer numbers of seeds instead; (2) In zh-Hans row01, replaced crop rotation (轮作) with planting cycle (种植周期); (3) In th row05, restored 'Unknown' (ไม่ทราบ) alongside 'not declared' (ไม่ได้ประกาศ); (4) In zh-Hans row12, broadened whitespace phrasing beyond simple spaces; (5) Updated reviewNotes to document these concrete drafting corrections (<250 words) without semantic certification.",
+  "validation": "NOT RUN — coordinator-owned",
+  "workers": 0,
+  "workersActive": 0,
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "outputs": [
+    "docs/international/agy-field-seed-east-asian-ui-2026-11-06/drafts.json",
+    "docs/international/agy-field-seed-east-asian-ui-2026-11-06/status.json"
+  ],
+  "coordinatorReview": {
+    "at": "2026-11-06T11:28:49.350Z",
+    "scope": "Exact source/structure/literals and identified drafting corrections only; not fluent/human certification or runtime language approval.",
+    "actualIdleObserved": true,
+    "corrections": [
+      "Removed physical intact-seed implications in zh-Hans02, vi02 and th02/08",
+      "Removed added crop-rotation meaning in zh-Hans01",
+      "Restored unknown versus undeclared in th05",
+      "Expanded zh-Hans12 from spaces to all whitespace"
+    ],
+    "remainingReview": "Human terminology/fluency review and actual UI/layout remain required; inactive unreviewed AI drafts."
+  }
+}

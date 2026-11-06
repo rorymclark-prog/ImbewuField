@@ -1,0 +1,180 @@
+{
+  "sourceSha256": "a62fb5be4670874fd5bbbad836c39de76426e5efc6c97a8af914276b77d06549",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "packets": [
+    {
+      "locale": "de",
+      "sourceSha256": "a62fb5be4670874fd5bbbad836c39de76426e5efc6c97a8af914276b77d06549",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "fieldSeedSourcing.ui.01",
+          "english": "Field seed sourcing · cycles without nursery raising",
+          "sha256": "0cdaef8d9135bd3706d39caf1579cbea996cf6f1e4fd2cb954394478776ca773",
+          "translation": "Saatgutbeschaffung für das Freiland · Zyklen ohne Jungpflanzenanzucht"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.02",
+          "english": "Use accepted saved field cycles that have no nursery phase. No nursery phase does not establish botanical direct sowing. Enter your own gross whole-seed requirement; final plant positions are not seed counts.",
+          "sha256": "6e2f2e37086135683de7b188c478e45d90f9d9e0de86a36184193aacb38c8399",
+          "translation": "Verwenden Sie akzeptierte gespeicherte Freilandzyklen, die keine Anzuchtphase haben. Das Fehlen einer Anzuchtphase belegt keine botanische Direktsaat. Geben Sie Ihren eigenen Bruttobedarf als ganzzahlige Samenzahl ein; endgültige Pflanzenpositionen sind keine Samenzahlen."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.03",
+          "english": "Planning only, not a whole-farm purchase list. No stock is recorded, order placed or plan saved. Unknown counts are not zero. Nursery equipment and a nursery review horizon are not required for this separate field worksheet.",
+          "sha256": "19bc22baa90d968c90b695d4d05879ed12e3f0582f45e3f2fded22c9004e2957",
+          "translation": "Nur Planung, keine Einkaufsliste für den gesamten Betrieb. Es wird kein Bestand erfasst, keine Bestellung aufgegeben oder ein Plan gespeichert. Unbekannte Zahlen sind nicht null. Anzuchtausrüstung und ein Betrachtungszeitraum für die Anzuchtprüfung sind für dieses separate Freilandarbeitsblatt nicht erforderlich."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.04",
+          "english": "Check saved field cycles for seed sourcing",
+          "sha256": "6abd97a2ab9b7995c95f076f374e3dd4c0f8ecbf135047ee3d4f51d57c776dc6",
+          "translation": "Gespeicherte Freilandzyklen für die Saatgutbeschaffung prüfen"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.05",
+          "english": "Unknown / not declared",
+          "sha256": "62188a8f54a3001967089450c06a2539e4d654339a05e029534d78f59e3bbf53",
+          "translation": "Unbekannt / nicht deklariert"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.06",
+          "english": "Botanical seeds",
+          "sha256": "4a92951f2227ae298af5aba0e45dfd58cd2e422f4dea2999e07454a5382c144e",
+          "translation": "Botanische Samen"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.07",
+          "english": "Vegetative material",
+          "sha256": "7da3b02b8bbface89deebd1ec416e38fcc2e518b7a3b65034d61928c8ff3ef01",
+          "translation": "Vegetatives Pflanzgut"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.08",
+          "english": "Whole seed count, including any allowances you have chosen. No allowances or rates are added here. Blank means unknown; an explicitly confirmed zero is a planning entry.",
+          "sha256": "4a82953a1c3c6f2301c1e25a1d182723f7ad4a40e8df9951602132cf3b3abe87",
+          "translation": "Samenzahl als ganze Zahl, einschließlich aller von Ihnen gewählten Zuschläge. Hier werden keine Zuschläge oder Saatstärken hinzugefügt. Leer bedeutet unbekannt; eine ausdrücklich bestätigte Null ist ein Planungseintrag."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.09",
+          "english": "Add field supply group",
+          "sha256": "f1fcebb59566b636e29bad87090e05e7dea11a12f4f153130e048be82354b142",
+          "translation": "Freiland-Beschaffungsgruppe hinzufügen"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.10",
+          "english": "Review field seed sourcing",
+          "sha256": "05e7d063412f45ed668f8f6ddd86dc72223f530a26389e35df4496355668c066",
+          "translation": "Saatgutbeschaffung für das Freiland überprüfen"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.11",
+          "english": "Download field seed sourcing CSV",
+          "sha256": "70a9cb4595a74db2d072d06177013b940ec29e57e2485d84805368dead6dfc8c",
+          "translation": "Freiland-Saatgutbeschaffungs-CSV herunterladen"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.12",
+          "english": "The CSV includes your entered supply-group labels exactly, including whitespace. Leave out information you do not want in the file. Private saved association IDs and individual variety or lot references are not included.",
+          "sha256": "bd3325b895b611cb3a690e7bfbb6fb2c9794cf54c972faa2984d45a248f52f2e",
+          "translation": "Die CSV enthält Ihre eingegebenen Bezeichnungen für Beschaffungsgruppen exakt, einschließlich Leerzeichen. Lassen Sie Informationen weg, die Sie nicht in der Datei haben möchten. Private gespeicherte Zuordnungs-IDs sowie individuelle Sorten- oder Chargenreferenzen sind nicht enthalten."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.13",
+          "english": "DEMO · temporary sample planning worksheet.",
+          "sha256": "18bd83fa9b2fea83ccf2d2c61768a5f29fffaa9a8b55228a23103c464051d6a9",
+          "translation": "DEMO · vorübergehendes Muster-Planungsarbeitsblatt."
+        }
+      ]
+    },
+    {
+      "locale": "it",
+      "sourceSha256": "a62fb5be4670874fd5bbbad836c39de76426e5efc6c97a8af914276b77d06549",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "fieldSeedSourcing.ui.01",
+          "english": "Field seed sourcing · cycles without nursery raising",
+          "sha256": "0cdaef8d9135bd3706d39caf1579cbea996cf6f1e4fd2cb954394478776ca773",
+          "translation": "Approvvigionamento sementi in pieno campo · cicli senza coltivazione in vivaio"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.02",
+          "english": "Use accepted saved field cycles that have no nursery phase. No nursery phase does not establish botanical direct sowing. Enter your own gross whole-seed requirement; final plant positions are not seed counts.",
+          "sha256": "6e2f2e37086135683de7b188c478e45d90f9d9e0de86a36184193aacb38c8399",
+          "translation": "Utilizza i cicli in pieno campo salvati e accettati che non hanno una fase di vivaio. L'assenza di una fase di vivaio non dimostra la semina diretta botanica. Inserisci il tuo fabbisogno lordo come numero intero di semi; le posizioni finali delle piante non sono conteggi di semi."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.03",
+          "english": "Planning only, not a whole-farm purchase list. No stock is recorded, order placed or plan saved. Unknown counts are not zero. Nursery equipment and a nursery review horizon are not required for this separate field worksheet.",
+          "sha256": "19bc22baa90d968c90b695d4d05879ed12e3f0582f45e3f2fded22c9004e2957",
+          "translation": "Solo pianificazione, non un elenco di acquisto per l'intera azienda. Nessuna scorta viene registrata, nessun ordine effettuato né alcun piano salvato. I conteggi sconosciuti non sono zero. L'attrezzatura per vivaio e un orizzonte di revisione del vivaio non sono richiesti per questo foglio di lavoro separato per il pieno campo."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.04",
+          "english": "Check saved field cycles for seed sourcing",
+          "sha256": "6abd97a2ab9b7995c95f076f374e3dd4c0f8ecbf135047ee3d4f51d57c776dc6",
+          "translation": "Controlla i cicli in pieno campo salvati per l'approvvigionamento delle sementi"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.05",
+          "english": "Unknown / not declared",
+          "sha256": "62188a8f54a3001967089450c06a2539e4d654339a05e029534d78f59e3bbf53",
+          "translation": "Sconosciuto / non dichiarato"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.06",
+          "english": "Botanical seeds",
+          "sha256": "4a92951f2227ae298af5aba0e45dfd58cd2e422f4dea2999e07454a5382c144e",
+          "translation": "Semi botanici"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.07",
+          "english": "Vegetative material",
+          "sha256": "7da3b02b8bbface89deebd1ec416e38fcc2e518b7a3b65034d61928c8ff3ef01",
+          "translation": "Materiale vegetativo"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.08",
+          "english": "Whole seed count, including any allowances you have chosen. No allowances or rates are added here. Blank means unknown; an explicitly confirmed zero is a planning entry.",
+          "sha256": "4a82953a1c3c6f2301c1e25a1d182723f7ad4a40e8df9951602132cf3b3abe87",
+          "translation": "Conteggio dei semi come numero intero, inclusi eventuali margini scelti. Qui non vengono aggiunti margini o tassi di semina. Lo spazio vuoto indica sconosciuto; uno zero confermato esplicitamente è una voce di pianificazione."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.09",
+          "english": "Add field supply group",
+          "sha256": "f1fcebb59566b636e29bad87090e05e7dea11a12f4f153130e048be82354b142",
+          "translation": "Aggiungi gruppo di fornitura per pieno campo"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.10",
+          "english": "Review field seed sourcing",
+          "sha256": "05e7d063412f45ed668f8f6ddd86dc72223f530a26389e35df4496355668c066",
+          "translation": "Esamina l'approvvigionamento delle sementi in pieno campo"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.11",
+          "english": "Download field seed sourcing CSV",
+          "sha256": "70a9cb4595a74db2d072d06177013b940ec29e57e2485d84805368dead6dfc8c",
+          "translation": "Scarica CSV per l'approvvigionamento sementi in pieno campo"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.12",
+          "english": "The CSV includes your entered supply-group labels exactly, including whitespace. Leave out information you do not want in the file. Private saved association IDs and individual variety or lot references are not included.",
+          "sha256": "bd3325b895b611cb3a690e7bfbb6fb2c9794cf54c972faa2984d45a248f52f2e",
+          "translation": "Il CSV include esattamente le etichette dei gruppi di fornitura inserite, inclusi gli spazi. Ometti le informazioni che non desideri nel file. Gli ID privati di associazione salvati e i riferimenti a singole varietà o lotti non sono inclusi."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.13",
+          "english": "DEMO · temporary sample planning worksheet.",
+          "sha256": "18bd83fa9b2fea83ccf2d2c61768a5f29fffaa9a8b55228a23103c464051d6a9",
+          "translation": "DEMO · foglio di lavoro temporaneo di pianificazione campione."
+        }
+      ]
+    }
+  ],
+  "reviewNotes": "Unreviewed AI translation drafts for German (de) and Italian (it) field seed UI copy. Intended drafting boundaries: (1) Absence of a nursery phase describes an operational planning distinction without implying biological impossibility or proving botanical direct sowing; (2) Whole-seed requirements and counts in rows 02 and 08 are translated as integer quantities (ganzzahlige Samenzahl, numero intero di semi) rather than unbroken physical integrity; (3) Explicit material declaration is maintained; (4) Exact ASCII literals DEMO and CSV are preserved verbatim; (5) Blank remains unknown while confirmed zero is an explicit planning entry. Drafting corrections applied: replaced Baumschule with generic Jungpflanzenanzucht, and avoided compound Anzuchtpruefhorizont in favor of Betrachtungszeitraum für die Anzuchtprüfung. Remaining checks for human reviewers: verify horticultural naturalness of Freiland / pieno campo and Jungpflanzenanzucht / vivaio in local farming contexts. No runtime language activation or semantic certification is claimed."
+}

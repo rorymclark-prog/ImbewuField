@@ -1,0 +1,266 @@
+{
+  "sourceSha256": "bab81a720b091ed7775d6f4765a0f7363a07496d54cf4f784def58a5396b1070",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "packets": [
+    {
+      "locale": "hi",
+      "sourceSha256": "bab81a720b091ed7775d6f4765a0f7363a07496d54cf4f784def58a5396b1070",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "fieldSeedSourcing.ui.01",
+          "english": "Field seed sourcing · cycles without nursery raising",
+          "sha256": "0cdaef8d9135bd3706d39caf1579cbea996cf6f1e4fd2cb954394478776ca773",
+          "translation": "खेत के बीज की सोर्सिंग · पौधशाला (नर्सरी) में पौध तैयार किए बिना चक्र"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.02",
+          "english": "Use accepted saved field cycles that have no nursery phase. No nursery phase does not establish botanical direct sowing. Enter your own gross whole-seed requirement; final plant positions are not seed counts.",
+          "sha256": "6e2f2e37086135683de7b188c478e45d90f9d9e0de86a36184193aacb38c8399",
+          "translation": "स्वीकृत सहेजे गए खेत चक्रों का उपयोग करें जिनमें कोई पौधशाला चरण नहीं है। पौधशाला चरण का न होना वानस्पतिक सीधी बुआई को प्रमाणित नहीं करता है। अपनी कुल पूर्णांक बीज संख्या की आवश्यकता दर्ज करें; पौधों की अंतिम स्थितियाँ बीज की संख्या नहीं हैं।"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.03",
+          "english": "Planning only, not a whole-farm purchase list. No stock is recorded, order placed or plan saved. Unknown counts are not zero. Nursery equipment and a nursery review horizon are not required for this separate field worksheet.",
+          "sha256": "19bc22baa90d968c90b695d4d05879ed12e3f0582f45e3f2fded22c9004e2957",
+          "translation": "केवल योजना, पूरे खेत की खरीद सूची नहीं। कोई स्टॉक दर्ज नहीं किया गया है, कोई ऑर्डर नहीं दिया गया है या योजना सहेजी नहीं गई है। अज्ञात गणनाएं शून्य नहीं हैं। इस अलग खेत वर्कशीट के लिए पौधशाला उपकरण और पौधशाला समीक्षा अवधि की आवश्यकता नहीं है।"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.04",
+          "english": "Check saved field cycles for seed sourcing",
+          "sha256": "6abd97a2ab9b7995c95f076f374e3dd4c0f8ecbf135047ee3d4f51d57c776dc6",
+          "translation": "बीज सोर्सिंग के लिए सहेजे गए खेत चक्रों की जांच करें"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.05",
+          "english": "Unknown / not declared",
+          "sha256": "62188a8f54a3001967089450c06a2539e4d654339a05e029534d78f59e3bbf53",
+          "translation": "अज्ञात / घोषित नहीं"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.06",
+          "english": "Botanical seeds",
+          "sha256": "4a92951f2227ae298af5aba0e45dfd58cd2e422f4dea2999e07454a5382c144e",
+          "translation": "वानस्पतिक बीज"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.07",
+          "english": "Vegetative material",
+          "sha256": "7da3b02b8bbface89deebd1ec416e38fcc2e518b7a3b65034d61928c8ff3ef01",
+          "translation": "वानस्पतिक सामग्री"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.08",
+          "english": "Whole seed count, including any allowances you have chosen. No allowances or rates are added here. Blank means unknown; an explicitly confirmed zero is a planning entry.",
+          "sha256": "4a82953a1c3c6f2301c1e25a1d182723f7ad4a40e8df9951602132cf3b3abe87",
+          "translation": "पूर्णांक बीजों की संख्या, जिसमें आपके द्वारा चुनी गई कोई भी अतिरिक्त मात्रा या मार्जिन शामिल है। यहाँ कोई अतिरिक्त मात्रा या बीज दरें नहीं जोड़ी जाती हैं। रिक्त का अर्थ अज्ञात है; स्पष्ट रूप से पुष्टि किया गया शून्य एक योजना प्रविष्टि है।"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.09",
+          "english": "Add field supply group",
+          "sha256": "f1fcebb59566b636e29bad87090e05e7dea11a12f4f153130e048be82354b142",
+          "translation": "खेत आपूर्ति समूह जोड़ें"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.10",
+          "english": "Review field seed sourcing",
+          "sha256": "05e7d063412f45ed668f8f6ddd86dc72223f530a26389e35df4496355668c066",
+          "translation": "खेत बीज सोर्सिंग की समीक्षा करें"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.11",
+          "english": "Download field seed sourcing CSV",
+          "sha256": "70a9cb4595a74db2d072d06177013b940ec29e57e2485d84805368dead6dfc8c",
+          "translation": "खेत बीज सोर्सिंग CSV डाउनलोड करें"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.12",
+          "english": "The CSV includes your entered supply-group labels exactly, including whitespace. Leave out information you do not want in the file. Private saved association IDs and individual variety or lot references are not included.",
+          "sha256": "bd3325b895b611cb3a690e7bfbb6fb2c9794cf54c972faa2984d45a248f52f2e",
+          "translation": "CSV में रिक्त स्थान सहित आपके द्वारा दर्ज किए गए आपूर्ति-समूह लेबल बिल्कुल वैसे ही शामिल हैं। वह जानकारी छोड़ दें जिसे आप फ़ाइल में नहीं चाहते हैं। निजी सहेजे गए एसोसिएशन आईडी और व्यक्तिगत किस्म या लॉट संदर्भ शामिल नहीं हैं।"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.13",
+          "english": "DEMO · temporary sample planning worksheet.",
+          "sha256": "18bd83fa9b2fea83ccf2d2c61768a5f29fffaa9a8b55228a23103c464051d6a9",
+          "translation": "DEMO · अस्थायी नमूना योजना वर्कशीट।"
+        }
+      ]
+    },
+    {
+      "locale": "bn",
+      "sourceSha256": "bab81a720b091ed7775d6f4765a0f7363a07496d54cf4f784def58a5396b1070",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "fieldSeedSourcing.ui.01",
+          "english": "Field seed sourcing · cycles without nursery raising",
+          "sha256": "0cdaef8d9135bd3706d39caf1579cbea996cf6f1e4fd2cb954394478776ca773",
+          "translation": "মাঠের বীজ সংগ্রহ · নার্সারিতে চারা তৈরি ছাড়া চক্র"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.02",
+          "english": "Use accepted saved field cycles that have no nursery phase. No nursery phase does not establish botanical direct sowing. Enter your own gross whole-seed requirement; final plant positions are not seed counts.",
+          "sha256": "6e2f2e37086135683de7b188c478e45d90f9d9e0de86a36184193aacb38c8399",
+          "translation": "গৃহীত সংরক্ষিত মাঠের চক্র ব্যবহার করুন যেগুলিতে কোনও নার্সারি পর্যায় নেই। নার্সারি পর্যায় না থাকা সরাসরি বোটানিক্যাল বীজ বপন প্রমাণ করে না। আপনার নিজস্ব মোট পূর্ণসংখ্যা বীজের প্রয়োজনীয়তা লিখুন; চূড়ান্ত উদ্ভিদের অবস্থান বীজের সংখ্যা নয়।"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.03",
+          "english": "Planning only, not a whole-farm purchase list. No stock is recorded, order placed or plan saved. Unknown counts are not zero. Nursery equipment and a nursery review horizon are not required for this separate field worksheet.",
+          "sha256": "19bc22baa90d968c90b695d4d05879ed12e3f0582f45e3f2fded22c9004e2957",
+          "translation": "শুধুমাত্র পরিকল্পনা, পুরো খামারের ক্রয়ের তালিকা নয়। কোনও স্টক রেকর্ড করা হয় না, অর্ডার দেওয়া হয় না বা পরিকল্পনা সংরক্ষিত হয় না। অজানা গণনা শূন্য নয়। এই পৃথক মাঠের ওয়ার্কশীটের জন্য নার্সারি সরঞ্জাম এবং নার্সারি পর্যালোচনার সময়সীমার প্রয়োজন নেই।"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.04",
+          "english": "Check saved field cycles for seed sourcing",
+          "sha256": "6abd97a2ab9b7995c95f076f374e3dd4c0f8ecbf135047ee3d4f51d57c776dc6",
+          "translation": "বীজ সংগ্রহের জন্য সংরক্ষিত মাঠের চক্র পরীক্ষা করুন"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.05",
+          "english": "Unknown / not declared",
+          "sha256": "62188a8f54a3001967089450c06a2539e4d654339a05e029534d78f59e3bbf53",
+          "translation": "অজানা / ঘোষিত নয়"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.06",
+          "english": "Botanical seeds",
+          "sha256": "4a92951f2227ae298af5aba0e45dfd58cd2e422f4dea2999e07454a5382c144e",
+          "translation": "বোটানিক্যাল বীজ"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.07",
+          "english": "Vegetative material",
+          "sha256": "7da3b02b8bbface89deebd1ec416e38fcc2e518b7a3b65034d61928c8ff3ef01",
+          "translation": "অঙ্গজ উপাদান"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.08",
+          "english": "Whole seed count, including any allowances you have chosen. No allowances or rates are added here. Blank means unknown; an explicitly confirmed zero is a planning entry.",
+          "sha256": "4a82953a1c3c6f2301c1e25a1d182723f7ad4a40e8df9951602132cf3b3abe87",
+          "translation": "পূর্ণসংখ্যা বীজের গণনা, আপনার নির্বাচিত যে কোনও অতিরিক্ত অংশ সহ। এখানে কোনও অতিরিক্ত অংশ বা হার যোগ করা হয় না। ফাঁকা মানে অজানা; স্পষ্টভাবে নিশ্চিত করা শূন্য একটি পরিকল্পনার এন্ট্রি।"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.09",
+          "english": "Add field supply group",
+          "sha256": "f1fcebb59566b636e29bad87090e05e7dea11a12f4f153130e048be82354b142",
+          "translation": "মাঠের সরবরাহ গ্রুপ যোগ করুন"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.10",
+          "english": "Review field seed sourcing",
+          "sha256": "05e7d063412f45ed668f8f6ddd86dc72223f530a26389e35df4496355668c066",
+          "translation": "মাঠের বীজ সংগ্রহ পর্যালোচনা করুন"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.11",
+          "english": "Download field seed sourcing CSV",
+          "sha256": "70a9cb4595a74db2d072d06177013b940ec29e57e2485d84805368dead6dfc8c",
+          "translation": "মাঠের বীজ সংগ্রহের CSV ডাউনলোড করুন"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.12",
+          "english": "The CSV includes your entered supply-group labels exactly, including whitespace. Leave out information you do not want in the file. Private saved association IDs and individual variety or lot references are not included.",
+          "sha256": "bd3325b895b611cb3a690e7bfbb6fb2c9794cf54c972faa2984d45a248f52f2e",
+          "translation": "CSV-তে ফাঁকা স্থান সহ আপনার প্রবেশ করানো সরবরাহ-গ্রুপের লেবেলগুলি হুবহু অন্তর্ভুক্ত রয়েছে। ফাইলে আপনি চান না এমন তথ্য বাদ দিন। ব্যক্তিগত সংরক্ষিত অ্যাসোসিয়েশন আইডি এবং পৃথক জাত বা লট রেফারেন্স অন্তর্ভুক্ত নয়।"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.13",
+          "english": "DEMO · temporary sample planning worksheet.",
+          "sha256": "18bd83fa9b2fea83ccf2d2c61768a5f29fffaa9a8b55228a23103c464051d6a9",
+          "translation": "DEMO · অস্থায়ী নমুনা পরিকল্পনা ওয়ার্কশীট।"
+        }
+      ]
+    },
+    {
+      "locale": "id",
+      "sourceSha256": "bab81a720b091ed7775d6f4765a0f7363a07496d54cf4f784def58a5396b1070",
+      "reviewStatus": "unreviewed-ai-draft",
+      "runtimeActivation": false,
+      "messages": [
+        {
+          "key": "fieldSeedSourcing.ui.01",
+          "english": "Field seed sourcing · cycles without nursery raising",
+          "sha256": "0cdaef8d9135bd3706d39caf1579cbea996cf6f1e4fd2cb954394478776ca773",
+          "translation": "Pengadaan benih lahan terbuka · siklus tanpa pembibitan"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.02",
+          "english": "Use accepted saved field cycles that have no nursery phase. No nursery phase does not establish botanical direct sowing. Enter your own gross whole-seed requirement; final plant positions are not seed counts.",
+          "sha256": "6e2f2e37086135683de7b188c478e45d90f9d9e0de86a36184193aacb38c8399",
+          "translation": "Gunakan siklus lahan terbuka tersimpan dan diterima yang tidak memiliki tahap pembibitan. Ketiadaan tahap pembibitan tidak membuktikan penanaman benih botani langsung. Masukkan kebutuhan kotor jumlah bulat benih Anda sendiri; posisi akhir tanaman bukan merupakan hitungan benih."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.03",
+          "english": "Planning only, not a whole-farm purchase list. No stock is recorded, order placed or plan saved. Unknown counts are not zero. Nursery equipment and a nursery review horizon are not required for this separate field worksheet.",
+          "sha256": "19bc22baa90d968c90b695d4d05879ed12e3f0582f45e3f2fded22c9004e2957",
+          "translation": "Hanya perencanaan, bukan daftar pembelian seluruh kebun. Tidak ada stok yang dicatat, pesanan yang dibuat, atau rencana yang disimpan. Hitungan yang tidak diketahui bukanlah nol. Peralatan pembibitan dan cakupan tinjauan pembibitan tidak diperlukan untuk lembar kerja lahan terbuka terpisah ini."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.04",
+          "english": "Check saved field cycles for seed sourcing",
+          "sha256": "6abd97a2ab9b7995c95f076f374e3dd4c0f8ecbf135047ee3d4f51d57c776dc6",
+          "translation": "Periksa siklus lahan terbuka tersimpan untuk pengadaan benih"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.05",
+          "english": "Unknown / not declared",
+          "sha256": "62188a8f54a3001967089450c06a2539e4d654339a05e029534d78f59e3bbf53",
+          "translation": "Tidak diketahui / tidak dinyatakan"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.06",
+          "english": "Botanical seeds",
+          "sha256": "4a92951f2227ae298af5aba0e45dfd58cd2e422f4dea2999e07454a5382c144e",
+          "translation": "Benih botani"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.07",
+          "english": "Vegetative material",
+          "sha256": "7da3b02b8bbface89deebd1ec416e38fcc2e518b7a3b65034d61928c8ff3ef01",
+          "translation": "Bahan vegetatif"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.08",
+          "english": "Whole seed count, including any allowances you have chosen. No allowances or rates are added here. Blank means unknown; an explicitly confirmed zero is a planning entry.",
+          "sha256": "4a82953a1c3c6f2301c1e25a1d182723f7ad4a40e8df9951602132cf3b3abe87",
+          "translation": "Hitungan benih bilangan bulat, termasuk toleransi tambahan apa pun yang Anda pilih. Tidak ada toleransi atau laju penanaman yang ditambahkan di sini. Kosong berarti tidak diketahui; angka nol yang dikonfirmasi secara eksplisit adalah entri perencanaan."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.09",
+          "english": "Add field supply group",
+          "sha256": "f1fcebb59566b636e29bad87090e05e7dea11a12f4f153130e048be82354b142",
+          "translation": "Tambah kelompok pasokan lahan terbuka"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.10",
+          "english": "Review field seed sourcing",
+          "sha256": "05e7d063412f45ed668f8f6ddd86dc72223f530a26389e35df4496355668c066",
+          "translation": "Tinjau pengadaan benih lahan terbuka"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.11",
+          "english": "Download field seed sourcing CSV",
+          "sha256": "70a9cb4595a74db2d072d06177013b940ec29e57e2485d84805368dead6dfc8c",
+          "translation": "Unduh CSV pengadaan benih lahan terbuka"
+        },
+        {
+          "key": "fieldSeedSourcing.ui.12",
+          "english": "The CSV includes your entered supply-group labels exactly, including whitespace. Leave out information you do not want in the file. Private saved association IDs and individual variety or lot references are not included.",
+          "sha256": "bd3325b895b611cb3a690e7bfbb6fb2c9794cf54c972faa2984d45a248f52f2e",
+          "translation": "CSV mencakup label kelompok pasokan yang Anda masukkan secara tepat, termasuk spasi. Abaikan informasi yang tidak ingin Anda sertakan dalam berkas. ID asosiasi privat tersimpan serta referensi varietas atau lot individu tidak disertakan."
+        },
+        {
+          "key": "fieldSeedSourcing.ui.13",
+          "english": "DEMO · temporary sample planning worksheet.",
+          "sha256": "18bd83fa9b2fea83ccf2d2c61768a5f29fffaa9a8b55228a23103c464051d6a9",
+          "translation": "DEMO · lembar kerja perencanaan sampel sementara."
+        }
+      ]
+    }
+  ],
+  "reviewNotes": "Unreviewed AI translation drafts for Hindi (hi), Bengali (bn), and Indonesian (id) field seed UI copy. Intended drafting boundaries: (1) Absence of a nursery phase describes an operational planning distinction without implying biological impossibility or proving botanical direct sowing; (2) Whole-seed requirements and counts in rows 02 and 08 are translated as integer seed numbers (पूर्णांक बीज संख्या in hi, পূর্ণসংখ্যা বীজের সংখ্যা in bn, hitungan bilangan bulat benih in id) rather than unbroken physical seed integrity; (3) Explicit material declaration is maintained; (4) Exact ASCII literals DEMO and CSV are preserved verbatim; (5) Blank remains unknown while confirmed zero is an explicit planning entry. Drafting corrections applied: in hi row 01 clarified cycles without a seedling-raising phase in a nursery, and in row 08 replaced discount term (chhoot/छूट) with extra seed quantity/margin and neutral seed rate; in id row 08 replaced financial term tarif with neutral laju penanaman (seeding rate). Remaining checks for human reviewers: verify horticultural naturalness of nursery and field terms in local farming contexts. No runtime language activation or semantic certification is claimed."
+}
