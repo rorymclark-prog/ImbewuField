@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
 import { useRegisterBackControl } from '@/components/BackControl';
@@ -16,6 +16,9 @@ import EaRainfallReference from './EaRainfallReference';
 import InmetAlertLinks from './InmetAlertLinks';
 import BmkgResearchLinks from './BmkgResearchLinks';
 import DwdStationReference from './DwdStationReference';
+import DwdStationCatalogSearch from './DwdStationCatalogSearch';
+import { searchDwdStationCatalogReference } from '@/app/international/dwd-catalog-actions';
+import { parseDwdStationRequest, type DwdStationRequest } from '@/lib/international/providers/dwd-mosmix-request';
 
 const metadata = (value: Known<string>) => value.status === 'known' ? value.value : `Unknown — ${value.reason}`;
 const CATEGORY_NAMES = { biodiversity: 'Biodiversity & taxonomy', 'agricultural-extension': 'Agricultural extension', 'weather-frost': 'Weather & frost', soils: 'Soils', 'plant-legality': 'Plant legality' };
@@ -45,6 +48,7 @@ export default function CountryReview({ countryHint }: CountryReviewProps = {}) 
   const [region, setRegion] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ClimateReferenceResult | null>(null);
+  const [dwdSelection, setDwdSelection] = useState<{ request: Readonly<DwdStationRequest>; countryCode: string } | null>(null);
   const [hintNotice, setHintNotice] = useState<CountryEvidenceSelection | null>(
     initialSelection.kind !== 'default' ? initialSelection : null
   );
@@ -52,6 +56,14 @@ export default function CountryReview({ countryHint }: CountryReviewProps = {}) 
   const requestGenRef = useRef(0);
   const mountedRef = useRef(true);
   const currentCheckRef = useRef<(() => Promise<void>) | null>(null);
+  const currentDwdSelectRef = useRef<((stationId: string) => void) | null>(null);
+
+  const chooseDwdStation: (stationId: string) => void = useCallback((stationId: string) => {
+    if (!mountedRef.current || currentDwdSelectRef.current !== chooseDwdStation) return;
+    const request = parseDwdStationRequest({ stationId });
+    if (request) setDwdSelection({ request, countryCode: code });
+  }, [code]);
+  currentDwdSelectRef.current = chooseDwdStation;
 
   useEffect(() => {
     mountedRef.current = true;
@@ -69,6 +81,7 @@ export default function CountryReview({ countryHint }: CountryReviewProps = {}) 
     setCode(nextSelection.code);
     setRegion('');
     setResult(null);
+    setDwdSelection(null);
     setLoading(false);
     setHintNotice(nextSelection.kind !== 'default' ? nextSelection : null);
   }
@@ -104,6 +117,7 @@ export default function CountryReview({ countryHint }: CountryReviewProps = {}) 
     setResult(null);
     setLoading(false);
     setHintNotice(null);
+    setDwdSelection(null);
   }
   return <div className={styles.page}><main className={styles.main}>
     <header className={styles.header}>
@@ -190,7 +204,9 @@ export default function CountryReview({ countryHint }: CountryReviewProps = {}) 
     {code === 'KE' && <CountyBulletinReference key={code} />}
     {code === 'GB' && <EaRainfallReference key={code} />}
     {code === 'BR' && <InmetAlertLinks key={code} countryCode={code} />}
-    <DwdStationReference key={`dwd:${code}`} />
+    <DwdStationCatalogSearch key={`dwd-search:${code}`} searchCatalog={searchDwdStationCatalogReference} onSelectStation={chooseDwdStation} />
+    <p>Choosing a catalogue station only fills the ID below. Press Check station reference to request its forecast. An earlier request may continue upstream.</p>
+    <DwdStationReference key={`dwd:${code}`} selection={dwdSelection?.countryCode === code ? dwdSelection.request : null} />
     <section className={styles.card} aria-labelledby="queue-heading"><h2 id="queue-heading">Research priorities, not launch approvals</h2>
       <p>Only the four engineering pilots above have source-discovery dossiers. Other entries are an unreviewed research queue; depth and availability differ between pilots.</p>
       {COUNTRY_RESEARCH_QUEUE.map((group) => <p key={group.group}><strong>{group.group}:</strong> {group.countries.join(', ')}.</p>)}
