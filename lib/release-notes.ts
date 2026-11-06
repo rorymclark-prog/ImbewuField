@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', changes: [
+    'Quick sale names rand and links to invoices in another currency.',
+  ], tour: [{ title: 'Choose the right sale entry', where: 'My Records → Sold → Quick sale entry', href: '/records?tab=sold',
+    detail: 'Quick sale records South African rand (ZAR). For another supported currency, open the separate sale-invoice form and choose its currency and payment status. Enter the sale there; the quick-sale draft is not transferred.' }] },
   { when: '6 November 2026', sha: 'a99d51f2de8b', changes: [
     'See when monthly temperatures are incomplete or need another check.',
   ], tour: [{ title: 'Check monthly temperature coverage', where: 'Map → Site details → Overview or Climate', href: '/farmer',
