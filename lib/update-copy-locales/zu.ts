@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired NWS point captions; English remains paired. See nws-saved-point-release-drafts/adoption.json.
+  "Check an NWS reference for a saved US point.": "Hlola ireferensi ye-NWS yephuzu le-US elilondoloziwe.",
+  "Send a coarsened point for a weather reference": "Thumela iphuzu elilinganiselwe ukuze uthole ireferensi yesimo sezulu",
+  "Crop planner → Site country and region → NWS reference for this saved point": "Umhleli wezitshalo → Izwe nendawo yesiza → Ireferensi ye-NWS yaleli phuzu elilondoloziwe",
+  "For a site saved with a US country description, explicitly send its coordinates rounded to four decimal places to NWS. The Washington demo stays separate. These reference values do not change crop advice or planning dates. Changing the site or account withdraws the display; a request already sent upstream may continue.": "Kwisiza esilondolozwe nencazelo yezwe ye-US, thumela ngokusobala izixhumanisi zaso eziqoqwe ezindaweni ezine zedesimali ku-NWS. Idemo yase-Washington ihlala yodwa. Lawa manani ereferensi awashintshi izeluleko zezitshalo noma izinsuku zokuhlela. Ukushintsha isiza noma i-akhawunti kuhoxisa ukuboniswa; isicelo esivele sithunyelwe phezulu singaqhubeka.",
   // Unreviewed Codex saved-country navigation captions; exact English stays paired. See country-navigation-release-drafts/adoption.json.
   "Open evidence tools for your saved country.": "Vula amathuluzi obufakazi ezwe olilondolozile.",
   "Review your saved country’s evidence": "Hlola ubufakazi bezwe olilondolozile",

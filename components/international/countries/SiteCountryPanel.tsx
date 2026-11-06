@@ -7,6 +7,7 @@ import { savedCountryEvidenceHref } from '@/lib/international/countries/navigati
 import { updateSiteCountryContext } from '@/lib/saved-places';
 import { DEFINITIVE_CONTEXT_REJECTIONS, type PlaceContextOutcome } from '@/lib/user-sync';
 import { isSampleMode } from '@/lib/sample-mode';
+import SavedSiteNwsReference from './SavedSiteNwsReference';
 
 export interface CountrySaveNotice {
   siteId: string;
@@ -83,6 +84,7 @@ export default function SiteCountryPanel({ resolution, onSaved, onDelivery }: {
         · Reference tools only; opening this link does not save country details or approve farming advice.
       </span>
     </p>}
+    <SavedSiteNwsReference siteId={resolution.siteId} resolution={resolution} />
     {resolution.status === 'missing-site' ? <p className="mt-3 text-sm">Open or save the mapped site first to keep its country details with your existing saved places. <Link href="/farmer" className="underline">Open map and saved sites</Link>. A virtual bed has no saved country.</p> : <details className="mt-3" open={!current}>
       <summary className="min-h-11 cursor-pointer py-2 font-semibold">{current ? 'Review or change country details' : 'Confirm country details'}</summary>
       <form onSubmit={save} className="grid gap-3 pt-2 sm:grid-cols-2">

@@ -1,0 +1,18 @@
+{
+  "task": "docs/international/agy-nws-saved-point-release-copy-2026-11-06/WORKORDER.md",
+  "status": "COMPLETED",
+  "correction": "COORDINATOR-REVIEW.md revisions applied: TS02 coordinate rounding phrasing aligned, VE02 precision term aligned without comparison implication, review-notes updated to remove linguistic claims and focus on reviewer verification (<200 words).",
+  "validation": "NOT RUN — coordinator-owned",
+  "workers": 0,
+  "workersActive": 0,
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "outputs": [
+    "docs/international/agy-nws-saved-point-release-copy-2026-11-06/zu.json",
+    "docs/international/agy-nws-saved-point-release-copy-2026-11-06/st.json",
+    "docs/international/agy-nws-saved-point-release-copy-2026-11-06/ts.json",
+    "docs/international/agy-nws-saved-point-release-copy-2026-11-06/ve.json",
+    "docs/international/agy-nws-saved-point-release-copy-2026-11-06/review-notes.md",
+    "docs/international/agy-nws-saved-point-release-copy-2026-11-06/status.json"
+  ]
+}

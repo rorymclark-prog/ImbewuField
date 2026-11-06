@@ -11,7 +11,9 @@ Object.defineProperty(globalThis, '__nwsActionBoundary', { configurable: true, v
 const hook = registerHooks({ resolve(specifier, context, next) {
   if (context.parentURL === actionUrl && specifier === '@/lib/international/providers/nws-public-demo') {
     return { shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(
-      'export const fetchCountryNwsPublicDemo=(...args)=>{const p=globalThis.__nwsActionBoundary;p.calls.push(args);return p.next();};') };
+      // The action module now imports both entry points. The legacy action must
+      // still call only its original fixed-demo boundary.
+      'export const fetchNwsPointReference=()=>{throw Error("Legacy demo cannot borrow point transport");}; export const fetchCountryNwsPublicDemo=(...args)=>{const p=globalThis.__nwsActionBoundary;p.calls.push(args);return p.next();};') };
   }
   return next(specifier, context);
 } });

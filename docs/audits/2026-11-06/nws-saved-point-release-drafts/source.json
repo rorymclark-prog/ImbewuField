@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Four exact NWS saved-point update descriptions; AI comparison candidates, not fluent or human approval.",
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "sourceFiles": [
+    {
+      "file": "lib/release-notes.ts",
+      "sha256": "e1539c009ede1aadc120ff9ec8f29b79abaf5fe220dab74380a21f39f25b0615",
+      "base": "2247c7a7ab8eae1c596439f253174ae6a39e887e",
+      "sourceState": "ActualcoordinatorEnglish; metadata-only code stamp later doesnotchangefrozenEnglish."
+    }
+  ],
+  "messages": [
+    {
+      "key": "nwsSavedPoint.release.01",
+      "english": "Check an NWS reference for a saved US point.",
+      "sha256": "49e9178f608324cb7f090f611bdac10a7e3894e7445ccc0ffeeda99d75765e30"
+    },
+    {
+      "key": "nwsSavedPoint.release.02",
+      "english": "Send a coarsened point for a weather reference",
+      "sha256": "c665ff04a26288bcc76e4acef571bf36416f4716d0d2d04753b522800ee39896"
+    },
+    {
+      "key": "nwsSavedPoint.release.03",
+      "english": "Crop planner → Site country and region → NWS reference for this saved point",
+      "sha256": "46b1e54aaa4b956d4f3a0bc099f3bbe36a580cd7fa7c29ae1d24c32a63cf9d1c"
+    },
+    {
+      "key": "nwsSavedPoint.release.04",
+      "english": "For a site saved with a US country description, explicitly send its coordinates rounded to four decimal places to NWS. The Washington demo stays separate. These reference values do not change crop advice or planning dates. Changing the site or account withdraws the display; a request already sent upstream may continue.",
+      "sha256": "947dd986a6c761578c7e9cd2393bfca4d18ee0fe2fa3cba5728ce83746319a96"
+    }
+  ]
+}

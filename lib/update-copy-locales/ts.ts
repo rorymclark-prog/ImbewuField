@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired NWS point captions; English remains paired. See nws-saved-point-release-drafts/adoption.json.
+  "Check an NWS reference for a saved US point.": "Kambela xikombo xa NWS xa yinhla leyi hlayisiweke ya US.",
+  "Send a coarsened point for a weather reference": "Rhumela yinhla leyi hleriweke ku kuma xikombo xa maxelo",
+  "Crop planner → Site country and region → NWS reference for this saved point": "Mupulani wa swibyariwa → Tiko na ndhawu ya sayiti → Xikombo xa NWS xa yinhla leyi hlayisiweke",
+  "For a site saved with a US country description, explicitly send its coordinates rounded to four decimal places to NWS. The Washington demo stays separate. These reference values do not change crop advice or planning dates. Changing the site or account withdraws the display; a request already sent upstream may continue.": "Eka sayiti leyi hlayisiweke hi nhlamuselo ya tiko ya US, rhumela hi ku kongoma ti-coordinate ta yona leti hleriweke eka tindhawu ta mune ta desimale eka NWS. Demo ya Washington yi tshama yi hambanile. Mindzinganyeto leyi ya swikombo a yi cinci switsundzuxo swa swibyariwa kumbe masiku yo pulana. Ku cinca sayiti kumbe akhawunti swi susa nkombiso; xikombelo lexi se xi rhumeriweke eka lava nga henhla xi nga ha ya emahlweni.",
   // Unreviewed Codex saved-country navigation captions; exact English stays paired. See country-navigation-release-drafts/adoption.json.
   "Open evidence tools for your saved country.": "Pfula switirhisiwa swa vumbhoni swa tiko leri u ri hlayiseke.",
   "Review your saved country’s evidence": "Kambisisa vumbhoni bya tiko leri u ri hlayiseke",
