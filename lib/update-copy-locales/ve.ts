@@ -1,6 +1,15 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Site survey energy: docs/audits/2026-11-06/site-energy-release-drafts/source.json; UNREVIEWED machine drafts, shown with English source.
+  "Record elevation benchmarks separately from the terrain model in your site survey.": "Rikodani zwikombetshedzo zwa vhulapfu zwo fhambana na tsumbo ya mavu kha tsedzuluso ya fhethu hanu.",
+  "Fetch a solar reference and record wind evidence with its height and source.": "Dzhenisani tshiko tsha ḓuvha nahone rikodani vhutanzi ha muya na vhulapfu hawo na vhubvo.",
+  "Review site elevation": "Ṱolani vhulapfu ha fhethu",
+  "Your site → Site survey → Land & Location": "Fhethu hanu → Tsedzuluso ya fhethu → Mavu na Vhudzulo",
+  "Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.": "Vulani tsedzuluso ya fhethu hanu u tola tshiko tsha mavu nahone engedzani tshikombetshedzo tsha vhulapfu tshi no bva kha vhubvo ho fhambanaho.",
+  "Review energy evidence": "Ṱolani vhutanzi ha maanḓa",
+  "Your site → Site survey → Resources & Inputs": "Fhethu hanu → Tsedzuluso ya fhethu → Zwishumiswa na Zwidzheniswa",
+  "Review the reference solar assumptions and record wind height, source and period before saving.": "Ṱolani mihumbulo ya tshiko tsha ḓuvha nahone rikodani vhulapfu ha muya, vhubvo na tshifhinga musi ni sa athu vhulunga.",
   // Reference-led Sector graphics: docs/audits/2026-11-05/sector-reference-flow-release-drafts.json; UNREVIEWED machine draft.
   "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Mimepe ya Sector i sumbedza zwiga zwa muya na mvula zwi re khagala nga u engedza, ngeno mutevhe na mitalo ya vhulapfu zwi tshi dzula zwi tshi vhonala.",
   // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.

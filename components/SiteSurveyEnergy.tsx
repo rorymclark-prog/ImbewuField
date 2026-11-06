@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { numberLabel } from '@/lib/format-figures';
 import { getFirebase } from '@/lib/firebase/init';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { surveyDraftScopeIsActive } from '@/lib/site-survey';
@@ -64,14 +65,14 @@ export default function SiteSurveyEnergy({ siteId, coords, scope, value, onChang
       <button type="button" className={styles.button} disabled={status === 'loading' || !coords} onClick={lookup}>{status === 'loading' ? 'Fetching solar reference…' : solar ? 'Refresh solar reference from PVGIS' : 'Fetch solar reference from PVGIS'}</button>
       <p role={status === 'error' ? 'alert' : 'status'} className={status === 'error' ? styles.error : styles.note}>{message}</p>
       {solar && <div className={styles.result}>
-        <strong>{solar.annualKwh.toLocaleString()} kWh / year</strong>
-        <p>Modelled electricity for the assumed 1 kWp system. Solar irradiation on that panel plane: {solar.annualIrradiationKwhM2.toLocaleString()} kWh/m²/year.</p>
+        <strong>{numberLabel(solar.annualKwh)} kWh / year</strong>
+        <p>Modelled electricity for the assumed 1 kWp system. Solar irradiation on that panel plane: {numberLabel(solar.annualIrradiationKwhM2)} kWh/m²/year.</p>
         <p>Tilt {solar.tiltDegrees}° · azimuth {solar.azimuthDegreesFromSouth}° from south (0° south, +90° west, −90° east). Free-standing c-Si · assumed losses 14% · terrain horizon included.</p>
         <div className={styles.months} role="img" aria-label={`Monthly reference electricity in kWh: ${solar.months.map(m => `${MONTHS[m.month - 1]} ${m.energyKwh}`).join(', ')}`}>
           {solar.months.map(m => <div className={styles.month} key={m.month} title={`${MONTHS[m.month - 1]}: ${m.energyKwh} kWh`}><div className={styles.bar} style={{ height: `${Math.max(2, 80 * m.energyKwh / Math.max(1, ...solar.months.map(row => row.energyKwh)))}px` }}/>{MONTHS[m.month - 1]}</div>)}
         </div>
         <details><summary>Monthly values (kWh)</summary><table><tbody>{solar.months.map(m => <tr key={m.month}><th scope="row">{MONTHS[m.month - 1]}</th><td>{m.energyKwh} kWh</td></tr>)}</tbody></table></details>
-        <p className={styles.note}>JRC PVGIS {solar.version} · {solar.radiationDatabase} / {solar.meteorologicalDatabase} · climate period {solar.startYear}–{solar.endYear} · retrieved {new Date(solar.fetchedAt).toLocaleDateString()}. <a href={PVGIS_GUIDE} target="_blank" rel="noreferrer">Source & method</a></p>
+        <p className={styles.note}>JRC PVGIS {solar.version} · {solar.radiationDatabase} / {solar.meteorologicalDatabase} · climate period {solar.startYear}–{solar.endYear} · retrieved {solar.fetchedAt.slice(0, 10)} (UTC). <a href={PVGIS_GUIDE} target="_blank" rel="noreferrer">Source & method</a></p>
         <button type="button" className={`${styles.button} ${styles.secondary}`} onClick={() => { request.current?.abort(); request.current = null; setStatus('idle'); setMessage('Solar reference removed.'); onChange({ ...value, solar: undefined }); }}>Remove solar reference</button>
       </div>}
       <label className={styles.field}>Nearby shade / solar siting observations<textarea maxLength={500} value={value.solarShadeNotes ?? ''} onChange={e => onChange({ ...value, solarShadeNotes: e.target.value })}/></label>

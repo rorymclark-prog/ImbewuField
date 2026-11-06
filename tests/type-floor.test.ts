@@ -114,6 +114,8 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/records/RecordQuantityFields.tsx': 'a farmer must read the production quantity and its unit before saving',
   'components/records/RecordQuantitySummary.tsx': 'eggs and packages need readable separate totals beside weighed harvests',
   'components/SiteSurveySheet.tsx': 'the field survey now has no sub-12px labels; keep that gain',
+  'components/SiteSurveyElevation.tsx': 'farmers read terrain evidence and enter separate benchmarks on phones',
+  'components/SiteSurveyEnergy.tsx': 'farmers enter wind observations and review solar assumptions on phones',
   'components/SiteSurveyReview.tsx': 'farmers must read their own survey answers before saving',
   // The annual product plan and report-purpose choices are read by the same farmers as their
   // saved survey answers. New components must inherit the zero-debt floor from the first release.

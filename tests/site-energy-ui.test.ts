@@ -6,10 +6,19 @@ import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import ts from 'typescript';
 import * as energy from '../lib/site-energy.ts';
+import * as figures from '../lib/format-figures.ts';
 import { pvgisFixture } from './fixtures/site-energy.ts';
 
 const siteId = 'site:45.00000,8.00000';
 const otherSite = 'site:46.00000,8.00000';
+
+test('survey month labels and field errors keep the farmer-readable12px floor', () => {
+  const css = readFileSync(new URL('../components/SiteSurveyEnergy.module.css', import.meta.url), 'utf8');
+  const sizes = [...css.matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)].map(match => Number(match[1]));
+  assert.ok(sizes.length > 0);
+  assert.ok(sizes.every(size => size >= 12), 'the compact chart and error labels are still farmer-facing text');
+  assert.match(css, /\.field small\s*\{[^}]*font-size:\s*12px/);
+});
 
 function harness() {
   const require = createRequire(import.meta.url);
@@ -20,6 +29,7 @@ function harness() {
     '@/lib/api-client-auth': { paidApiHeaders: async () => ({ Authorization: 'Bearer fixture-token' }) },
     '@/lib/site-survey': { surveyDraftScopeIsActive: () => scopeActive },
     '@/lib/site-energy': energy,
+    '@/lib/format-figures': figures,
     './SiteSurveyEnergy.module.css': new Proxy({}, { get: (_, key) => String(key) }),
   };
   const source = readFileSync(new URL('../components/SiteSurveyEnergy.tsx', import.meta.url), 'utf8');

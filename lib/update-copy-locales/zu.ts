@@ -1,6 +1,15 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Site survey energy: docs/audits/2026-11-06/site-energy-release-drafts/source.json; UNREVIEWED machine drafts, shown with English source.
+  "Record elevation benchmarks separately from the terrain model in your site survey.": "Qopha izinkomba zokuphakama ngokwehlukana nemodeli yendawo ocwaningweni lwesiza sakho.",
+  "Fetch a solar reference and record wind evidence with its height and source.": "Landa inkomba yelanga bese uqopha ubufakazi bomoya nokuphakama kwawo nomthombo.",
+  "Review site elevation": "Buyekeza ukuphakama kwesiza",
+  "Your site → Site survey → Land & Location": "Isiza sakho → Ucwaningo lwesiza → Umhlaba Nendawo",
+  "Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.": "Vula ucwaningo lwesiza sakho ukuze uhlole inkomba yendawo bese wengeza inkomba yokuphakama ethathwe ngokwehlukile.",
+  "Review energy evidence": "Buyekeza ubufakazi bamandla",
+  "Your site → Site survey → Resources & Inputs": "Isiza sakho → Ucwaningo lwesiza → Izinsiza Nokufakwayo",
+  "Review the reference solar assumptions and record wind height, source and period before saving.": "Buyekeza imicabango ethathwayo yenkomba yelanga bese uqopha ukuphakama komoya, umthombo nesikhathi ngaphambi kokulondoloza.",
   // Reference-led Sector graphics: docs/audits/2026-11-05/sector-reference-flow-release-drafts.json; UNREVIEWED machine draft.
   "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Amamephu eSector abonisa izimpawu zomoya nezemvula ezicace kakhudlwana, kanti umthambeka nemigqa yokuphakama kuhlala kubonakala.",
   // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.

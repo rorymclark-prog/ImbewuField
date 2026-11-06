@@ -1,6 +1,15 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Site survey energy: docs/audits/2026-11-06/site-energy-release-drafts/source.json; UNREVIEWED machine drafts, shown with English source.
+  "Record elevation benchmarks separately from the terrain model in your site survey.": "Tsala swikombiso swa ku tlakuka hi ku hambana na xifaniso xa mbango eka nkambisiso wa xitsha xa wena.",
+  "Fetch a solar reference and record wind evidence with its height and source.": "Kuma xikombo xa dyambu u tlhela u tsala vumbhoni bya moya na ku tlakuka ka wona na xihlovo.",
+  "Review site elevation": "Kambisisa ku tlakuka ka xitsha",
+  "Your site → Site survey → Land & Location": "Xitsha xa wena → Nkambisiso wa xitsha → Misava na Ndhawu",
+  "Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.": "Pfula nkambisiso wa xitsha xa wena ku kambela xikombo xa mbango u tlhela u engetela xikombiso xa ku tlakuka lexi humaka eka xihlovo lexi hambaneke.",
+  "Review energy evidence": "Kambisisa vumbhoni bya matimba",
+  "Your site → Site survey → Resources & Inputs": "Xitsha xa wena → Nkambisiso wa xitsha → Switirhisiwa na Swongheriwana",
+  "Review the reference solar assumptions and record wind height, source and period before saving.": "Kambisisa miehleketo ya xikombo xa dyambu u tlhela u tsala ku tlakuka ka moya, xihlovo na nkarhi u nga si hlayisa.",
   // Reference-led Sector graphics: docs/audits/2026-11-05/sector-reference-flow-release-drafts.json; UNREVIEWED machine draft.
   "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Mimepe ya Sector yi komba mimfungho ya moya ni mpfula leyi nga erivaleni swinene, naswona ku voyama ni milayeni yo tlakuka swi tshamaka swi vonaka.",
   // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.

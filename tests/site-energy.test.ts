@@ -1,5 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { loadUpdateCopy, updateDescription } from '../lib/update-copy.ts';
+import { RELEASE_NOTES } from '../lib/release-notes.ts';
 import { pvgisFixture } from './fixtures/site-energy.ts';
 import { normaliseElevationEvidence, normaliseSiteEnergy, normaliseSolarReference, parsePvgisResponse, locationElevationReference, pvgisRequestUrl, siteEnergyPrompt, surveyEnergyInputErrors } from '../lib/site-energy.ts';
 import { handleSiteEnergyRequest } from '../lib/site-energy-route.ts';
@@ -119,4 +123,37 @@ test('mismatched site and oversized/headerless bodies are rejected before provid
   const denied = () => ({ ...allowed(), verdict: { allowed: false, retryAfterSeconds: 42 } });
   const limited = await handleSiteEnergyRequest(request(), { authenticate, rateLimit: denied, fetch: fetcher });
   assert.equal(limited.status, 429); assert.equal(limited.headers.get('retry-after'), '42'); assert.equal(calls, 0);
+});
+
+
+test('energy release draft pairs retain exact source, provisional status and existing locale bytes', async () => {
+  const read = (path: string) => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
+  const hash = (text: string) => createHash('sha256').update(text).digest('hex');
+  const dir = 'docs/audits/2026-11-06/site-energy-release-drafts/';
+  const packet = JSON.parse(read(dir + 'source.json'));
+  const adoption = JSON.parse(read(dir + 'adoption.json'));
+  const release = RELEASE_NOTES.find(entry => entry.changes.includes(packet.messages[0].english));
+  assert.ok(release, 'the packet remains bound to its own release, not the rolling latest entry');
+  const sources = [...release.changes, ...(release.tour ?? []).flatMap(stop => [stop.title, stop.where, stop.detail])];
+  assert.deepEqual(packet.messages.map((row: any) => row.english), sources);
+  for (const language of packet.locales) {
+    const draft = JSON.parse(read(dir + language + '.json'));
+    assert.equal(draft.locale, language);
+    assert.equal(draft.sourceSha256, hash(read(dir + 'source.json')));
+    assert.equal(draft.reviewStatus, 'unreviewed-ai-draft');
+    assert.equal(draft.runtimeActivation, false, 'the packet itself never certifies activation or fluent review');
+    const copy = await loadUpdateCopy(language);
+    assert.equal(draft.messages.length, packet.messages.length);
+    for (const [index, row] of draft.messages.entries()) {
+      const source = packet.messages[index];
+      assert.equal(row.key, source.key); assert.equal(row.english, source.english);
+      assert.equal(row.sha256, hash(source.english));
+      assert.equal(updateDescription(copy, source.english), row.translation);
+      assert.notEqual(row.translation, source.english);
+    }
+    const dictionary = read('lib/update-copy-locales/' + language + '.ts');
+    const inserted = adoption.locales[language].insertedText;
+    assert.equal(dictionary.split(inserted).length, 2, 'the reviewed block is added once');
+    assert.equal(hash(dictionary.replace(inserted, '')), adoption.locales[language].previousSha256, 'every original dictionary byte remains');
+  }
 });
