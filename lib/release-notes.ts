@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', changes: [
+    'Choose app help separately from advice about a saved site.',
+    'Review your LimaBar question before sending it.',
+  ], tour: [{ title: 'Choose the scope of your question', where: 'Ask Lima → Help with', href: '/farmer?panel=Ask',
+    detail: 'Choose Using the app for general help without attaching saved-site or record context. Advice about your own site needs supported country details saved to your signed-in account. Replies and attachments retire when their context changes. Manual maps and records remain available.' }] },
   { when: '6 November 2026', sha: '82d75912c5b8', changes: [
     'Plan seed sourcing for field cycles without nursery raising.',
   ], tour: [{ title: 'Review field seed requirements', where: 'Crop planner → Saved planned nursery batches → Field seed sourcing', href: '/facilitator/crops',

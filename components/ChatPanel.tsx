@@ -13,6 +13,9 @@ import { useSampleRole } from '@/lib/use-role-navigation';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage } from '@/lib/i18n';
 import { isSampleMode } from '@/lib/sample-mode';
+import { readLocalAdviceActor, useLocalAdviceContext } from '@/lib/use-local-advice-context';
+import { requestLocalAdvice, localAdviceHoldMessage, localAdviceUnavailableMessage, LOCAL_ADVICE_SITE_HOLD, LOCAL_ADVICE_BASIS, LOCAL_ADVICE_GENERAL_BASIS } from '@/lib/local-advice-client';
+import type { LocalAdviceMode } from '@/lib/local-advice-types';
 
 // A message's content is never a raw server/JS error — a failed send or an unreadable photo sets
 // `error: true` instead, and the bubble renders t('chatErrorMessage')/t('chatPhotoOpenError') for
@@ -24,7 +27,7 @@ interface Props {
   siteData?: SiteData | null;
   waterData?: WaterData | null;
   appLang?: string;
-  /** A question typed into LimaBar (?q=) — submitted automatically once on mount. */
+  /** A LimaBar question is retained for review against the current advice scope. */
   initialQuery?: string | null;
   /** LimaBar's camera button (?photo=1) — opens the photo picker automatically once on mount. */
   initialPhoto?: boolean;
@@ -75,13 +78,17 @@ export default function ChatPanel(props: Props) {
 
 function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuery, initialPhoto, initialFile, onInitialConsumed }: Props) {
   const { t, lang } = useLanguage();
+  const [adviceMode, setAdviceMode] = useState<LocalAdviceMode>('personal-site');
+  const [policyMessage, setPolicyMessage] = useState('');
+  const recordOwner = useRef<string | null>(null);
   const [messages, setMessages] = useState<Msg[]>([]);
+  const [messageKey, setMessageKey] = useState<string | null>(null);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [production, setProduction] = useState<{ crop: string; kg: number | null; quantity?: number; unit?: string }[]>([]);
   const [salesRows, setSalesRows] = useState<{ crop: string; kg: number | null; quantity?: number; unit?: string; amount: number }[]>([]);
-  const [consent, setConsent] = useState<FarmerConsent | null>(null);
-  const [pendingImage, setPendingImage] = useState<{ data: string; mediaType: string; preview: string } | null>(null);
+  const [storedConsent, setConsent] = useState<FarmerConsent | null>(null);
+  const [storedImage, setPendingImage] = useState<(Awaited<ReturnType<typeof fileToPayload>> & { key: string; actor: string }) | null>(null);
   const [hasSample, setHasSample] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -98,39 +105,14 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
     return () => window.removeEventListener('imbewu-farmdata-changed', refresh);
   }, []);
 
-  // Best-effort load of the signed-in farmer's real records. No-ops otherwise.
-  // Harvests AND sales: for a long time only production was loaded here, so a signed-in farmer's
-  // real harvests reached the assistant while their real sales did not — and the `sales` field was
-  // filled from the DEMO store alone. Ask "what did I earn from my cabbages" and the answer came
-  // back from practice view data, or from nothing, while the rows sat in Firestore.
-  useEffect(() => {
-    let alive = true;
-    (async () => {
-      try { const rows = await myProduction(); if (alive) setProduction(rows.map((r) => ({ crop: r.crop, kg: r.kg, quantity: r.quantity, unit: r.unit }))); }
-      catch { /* not signed in / offline */ }
-    })();
-    (async () => {
-      try { const rows = await mySales(); if (alive) setSalesRows(rows.map((r) => ({ crop: r.crop, kg: r.kg, quantity: r.quantity, unit: r.unit, amount: r.amount }))); }
-      catch { /* not signed in / offline */ }
-    })();
-    // The farmer's own sharing settings, read through the SAME query ConsentPanel uses, so the
-    // assistant and the screen can never describe different switches. Sample mode and a farmer who
-    // has never opened that screen both come back null — which stays null all the way to the
-    // prompt, where "I cannot see your settings, open Account" is the honest answer. Filling in a
-    // confident "you are sharing nothing" from a failed read is the one thing not to do here.
-    (async () => {
-      try { const c = await getMyConsent(); if (alive) setConsent(c); }
-      catch { /* not signed in / offline / sample mode */ }
-    })();
-    return () => { alive = false; };
-  }, []);
-
   const buildContext = useCallback(() => {
     const reports = loadReports();
     const localProd = getLocalProduction().map((p) => ({ crop: p.crop, kg: p.kg }));
     const localSales = getLocalSales().map((s) => ({ crop: s.crop, kg: s.kg, amount: s.amount }));
-    const prod = [...production, ...localProd];
-    const sales = [...salesRows, ...localSales];
+    const ownRecords = recordOwner.current === readLocalAdviceActor().key;
+    const consent = ownRecords ? storedConsent : null;
+    const prod = [...(ownRecords ? production : []), ...localProd];
+    const sales = [...(ownRecords ? salesRows : []), ...localSales];
     // Live site (from the map) takes priority; otherwise fall back to the last
     // analysed site so the assistant stays site-aware on any page.
     const last = locationData ? null : getLastSite();
@@ -152,62 +134,110 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
       project: getLocalProject() ?? undefined,
       reports: reports.length ? reports.map((r, i) => ({ name: r.name, savedAt: r.savedAt, text: i === 0 ? r.report : undefined })) : undefined,
     };
-  }, [locationData, siteData, waterData, appLang, production, salesRows, consent]);
+  }, [locationData, siteData, waterData, appLang, production, salesRows, storedConsent]);
+
+  const context = useLocalAdviceContext(locationData ?? getLastSite()?.locationData ?? null,
+    adviceMode === 'general-help' ? { language: appLang ?? lang } : buildContext, adviceMode);
+  const contextKey = context.snapshot?.key ?? null;
+  const pendingImage = storedImage?.key === contextKey && storedImage.actor === context.actorKey ? storedImage : null;
+  const contextRef = useRef(context);
+  contextRef.current = context;
+  const requestVersion = useRef(0);
+  const submittedQuestion = useRef<{ text: string; actor: string; mode: LocalAdviceMode } | null>(null);
+  const previousActor = useRef(context.actorKey);
+  useEffect(() => {
+    ++requestVersion.current;
+    abortRef.current?.abort();
+    setLoading(false);
+    setMessages([]);
+    setPendingImage(null);
+    setPolicyMessage('');
+    if (previousActor.current !== context.actorKey) setInput('');
+    else if (submittedQuestion.current?.actor === context.actorKey && submittedQuestion.current.mode === adviceMode) {
+      setInput(submittedQuestion.current.text);
+    }
+    previousActor.current = context.actorKey;
+    submittedQuestion.current = null;
+  }, [contextKey, context.actorKey, adviceMode]);
+
+  // Best-effort load of the signed-in farmer's real records. No-ops otherwise.
+  // Harvests AND sales: for a long time only production was loaded here, so a signed-in farmer's
+  // real harvests reached the assistant while their real sales did not — and the `sales` field was
+  // filled from the DEMO store alone. Ask "what did I earn from my cabbages" and the answer came
+  // back from practice view data, or from nothing, while the rows sat in Firestore.
+  useEffect(() => {
+    let alive = true;
+    const ownerKey = context.actorKey;
+    recordOwner.current = ownerKey;
+    setProduction([]); setSalesRows([]); setConsent(null);
+    const current = () => alive && readLocalAdviceActor().key === ownerKey;
+    (async () => {
+      try { const rows = await myProduction(); if (current()) setProduction(rows.map((r) => ({ crop: r.crop, kg: r.kg, quantity: r.quantity, unit: r.unit }))); }
+      catch { /* not signed in / offline */ }
+    })();
+    (async () => {
+      try { const rows = await mySales(); if (current()) setSalesRows(rows.map((r) => ({ crop: r.crop, kg: r.kg, quantity: r.quantity, unit: r.unit, amount: r.amount }))); }
+      catch { /* not signed in / offline */ }
+    })();
+    // The farmer's own sharing settings, read through the SAME query ConsentPanel uses, so the
+    // assistant and the screen can never describe different switches. Sample mode and a farmer who
+    // has never opened that screen both come back null — which stays null all the way to the
+    // prompt, where "I cannot see your settings, open Account" is the honest answer. Filling in a
+    // confident "you are sharing nothing" from a failed read is the one thing not to do here.
+    (async () => {
+      try { const c = await getMyConsent(); if (current()) setConsent(c); }
+      catch { /* not signed in / offline / sample mode */ }
+    })();
+    return () => { alive = false; };
+  }, [context.actorKey]);
 
   const send = useCallback(async (text: string) => {
     const q = text.trim();
-    const img = pendingImage;
+    const img = adviceMode === 'personal-site' ? pendingImage : null;
     if ((!q && !img) || loading) return;
-    const history = [...messages, { role: 'user' as const, content: q || (img ? t('chatDefaultPhotoQuestion') : ''), image: img?.preview }];
+    const snapshot = contextRef.current.snapshot;
+    if (!snapshot) { setInput(q); setPolicyMessage(LOCAL_ADVICE_SITE_HOLD); return; }
+    const version = ++requestVersion.current;
+    const current = () => version === requestVersion.current && contextRef.current.isCurrent(snapshot);
+    const history = [...(messageKey === snapshot.key ? messages : []), { role: 'user' as const, content: q || (img ? t('chatDefaultPhotoQuestion') : ''), image: img?.preview }];
+    submittedQuestion.current = { text: q, actor: contextRef.current.actorKey, mode: adviceMode };
+    setMessageKey(snapshot.key);
     setMessages([...history, { role: 'assistant', content: '' }]);
-    setInput('');
-    setPendingImage(null);
-    setLoading(true);
+    setInput(''); setPendingImage(null); setPolicyMessage(''); setLoading(true);
     const controller = new AbortController();
-    abortRef.current = controller;
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
-        body: JSON.stringify({
-          messages: history.map(({ role, content }) => ({ role, content })),
-          context: buildContext(),
-          image: img ? { data: img.data, mediaType: img.mediaType } : undefined,
-        }),
-        signal: controller.signal,
-      });
-      if (!res.ok || !res.body) throw new Error(`${res.status}`);
-      const reader = res.body.getReader();
-      const dec = new TextDecoder();
-      let acc = '';
-      for (;;) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        acc += dec.decode(value, { stream: true });
-        setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: 'assistant', content: acc }; return c; });
-      }
-    } catch (e) {
-      if ((e as Error)?.name !== 'AbortError') {
-        setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: 'assistant', content: '', error: true }; return c; });
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [messages, loading, buildContext, pendingImage, t]);
+    abortRef.current?.abort(); abortRef.current = controller;
+    const result = await requestLocalAdvice({ snapshot, isCurrent: current, signal: controller.signal,
+      headers: paidApiHeaders, fetcher: init => fetch('/api/chat', init),
+      body: { messages: history.map(({ role, content }) => ({ role, content })),
+        context: adviceMode === 'general-help' ? { language: appLang ?? lang } : buildContext(),
+        ...(img ? { image: { data: img.data, mediaType: img.mediaType } } : {}) },
+    });
+    if (!current()) return;
+    if (result.status === 'ready') { submittedQuestion.current = null; setMessages([...history, { role: 'assistant', content: result.text }]); }
+    else if (result.status === 'held') { setInput(q); setMessages(history); setPolicyMessage(localAdviceHoldMessage(result)); }
+    else if (result.status === 'unavailable') { setInput(q); setMessages(history); setPolicyMessage(localAdviceUnavailableMessage(result)); }
+    else if (result.status === 'error') setMessages([...history, { role: 'assistant', content: '', error: true }]);
+    setLoading(false);
+  }, [messages, messageKey, loading, buildContext, pendingImage, t, adviceMode, appLang, lang]);
 
   const onPickFile = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     e.target.value = '';
     if (!file) return;
-    try { setPendingImage(await fileToPayload(file)); } catch { /* ignore */ }
+    const version = requestVersion.current, actor = readLocalAdviceActor().key;
+    try {
+      const image = await fileToPayload(file);
+      const key = contextRef.current.snapshot?.key;
+      if (key && requestVersion.current === version && readLocalAdviceActor().key === actor) setPendingImage({ ...image, key, actor });
+    } catch { /* Ignore a failed or obsolete attachment. */ }
   }, []);
 
-  // LimaBar deep link: a typed question (?q=) auto-submits once; a photo intent
-  // (?photo=1) opens the picker once. Runs on mount only — the parent clears the
-  // params via onInitialConsumed so this never re-fires on re-render.
+  // Country and account records may still be loading. Retain the question for
+  // explicit review rather than spending allowance then consuming a retired intent.
   useEffect(() => {
     if (initialQuery && initialQuery.trim()) {
-      send(initialQuery);
+      setInput(initialQuery);
+      setPolicyMessage('Review your question and advice scope, then press Send.');
       onInitialConsumed?.();
     } else if (initialPhoto) {
       fileRef.current?.click();
@@ -219,17 +249,31 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
   useEffect(() => {
     if (!initialFile) return;
     let active = true;
+    const version = requestVersion.current, actor = readLocalAdviceActor().key;
+    const current = () => active && requestVersion.current === version && readLocalAdviceActor().key === actor;
     fileToPayload(initialFile).then(
-      (image) => { if (active) setPendingImage(image); },
-      () => { if (active) setMessages([{ role: 'assistant', content: '', error: true, errorKind: 'photo' }]); },
+      (image) => { const key = contextRef.current.snapshot?.key; if (current() && key) setPendingImage({ ...image, key, actor }); },
+      () => { if (current()) setMessages([{ role: 'assistant', content: '', error: true, errorKind: 'photo' }]); },
     );
     return () => { active = false; };
   }, [initialFile]);
 
-  const isDisabled = loading || (!input.trim() && !pendingImage);
+  const isDisabled = loading || !context.snapshot || (!input.trim() && !pendingImage);
 
   return (
     <div className="flex flex-col gap-3">
+      <label lang="en" className="text-sm font-display">
+        Help with
+        <select value={adviceMode} onChange={event => setAdviceMode(event.target.value as LocalAdviceMode)}
+          className="ml-2 rounded-lg border px-2 py-2" style={{ minHeight: 44 }}>
+          <option value="personal-site">My saved site</option>
+          <option value="general-help">Using the app</option>
+        </select>
+      </label>
+      <p lang="en" className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>
+        {adviceMode === 'general-help' ? LOCAL_ADVICE_GENERAL_BASIS : context.snapshot ? LOCAL_ADVICE_BASIS : LOCAL_ADVICE_SITE_HOLD}
+      </p>
+      {policyMessage && <p lang="en" role="status" className="text-sm">{policyMessage}</p>}
       {/* Lima "thinking" shimmer — a calm gradient background-clip sweep over the
           placeholder text (spec §6), replacing the old opacity-flash animate-pulse.
           Linear sweep so it never looks "broken" on a slow connection; static
@@ -287,7 +331,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
           )}
 
           <div className="flex flex-col gap-1.5">
-            {SUGGESTION_KEYS.map((key) => (
+            {adviceMode === 'personal-site' && SUGGESTION_KEYS.map((key) => (
               <button key={key} onClick={() => send(t(key))}
                 className="text-left px-3 py-2 rounded-lg font-display hover:bg-[rgba(31,77,43,0.05)] transition-colors"
                 style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: 13 }}>
@@ -299,7 +343,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
       )}
 
       {/* Messages */}
-      {messages.map((m, i) => (
+      {(messageKey === contextKey ? messages : []).map((m, i) => (
         <div key={i} className={m.role === 'user' ? 'flex justify-end' : 'flex justify-start'}>
           <div className="px-3.5 py-2.5 text-sm"
             style={m.role === 'user'
@@ -327,7 +371,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
         )}
         <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex gap-2">
           <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={onPickFile} className="hidden" />
-          <button type="button" onClick={() => fileRef.current?.click()} title={t('chatTakePhotoTitle')}
+          <button type="button" disabled={adviceMode === 'general-help' || !context.snapshot} onClick={() => fileRef.current?.click()} title={t('chatTakePhotoTitle')}
             className="flex-shrink-0 rounded-xl flex items-center justify-center hover:bg-[rgba(31,77,43,0.08)] transition-colors"
             style={{ minHeight: 46, minWidth: 46, background: 'rgba(226,216,196,0.4)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
             <Camera size={18} />

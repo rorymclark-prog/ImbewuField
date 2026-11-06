@@ -5,8 +5,9 @@ import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 import { quantityTotals, recordQuantityLabel, recordQuantityPayload, recordUnit, type RecordQuantityRow } from '@/lib/farm-records';
 import { contextTooLarge, imageTooLarge, messageTooLong, tooManyMessages } from '@/lib/api-request-limits';
-
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
+import { resolveLocalAdvicePolicy, localAdviceDecisionCurrent } from '@/lib/local-advice-policy';
+import type { LocalAdviceDecision } from '@/lib/local-advice-types';
+import { selectLocalAdviceSystem } from '@/lib/local-advice-prompts';
 
 const LANG_NAMES: Record<string, string> = {
   en: 'English', zu: 'isiZulu', xh: 'isiXhosa', af: 'Afrikaans', st: 'Sesotho',
@@ -154,17 +155,21 @@ type AllowedMediaType = typeof ALLOWED_MEDIA_TYPES[number];
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/chat');
   if (auth.response) return auth.response;
-  const metered = await meteredAi(req, auth, '/api/chat', client);
-  if (metered.response) return metered.response;
-  const { ai } = metered;
   let body: any;
   try {
     body = await req.json();
   } catch {
     return new Response('Invalid request', { status: 400 });
   }
+  if (!body || typeof body !== 'object' || Array.isArray(body)
+    || (body.context != null && (typeof body.context !== 'object' || Array.isArray(body.context)))
+    || (body.context?.language !== undefined && typeof body.context.language !== 'string')
+    || (body.image != null && (typeof body.image !== 'object' || Array.isArray(body.image)
+      || typeof body.image.data !== 'string' || (body.image.mediaType !== undefined && typeof body.image.mediaType !== 'string')))) {
+    return new Response('Invalid request', { status: 400 });
+  }
   const messages: ChatMsg[] = Array.isArray(body.messages) ? body.messages : [];
-  const ctx = body.context as Ctx | undefined;
+  const ctx = (body.context ?? undefined) as Ctx | undefined;
   const image = body.image as { data: string; mediaType: string } | undefined;
 
   if (tooManyMessages(messages.length)) {
@@ -180,16 +185,40 @@ export async function POST(req: NextRequest) {
     return new Response('Photo is too large.', { status: 413 });
   }
 
-  const ctxBlock = buildContext(ctx);
+  const hasSiteInputs = Object.hasOwn(body, 'image')
+    || Object.keys(ctx ?? {}).some(key => key !== 'language')
+    || Object.keys(body).some(key => !['messages', 'context', 'image', 'adviceContext'].includes(key));
+  const policyInput = { adviceContext: body.adviceContext, location: ctx?.locationData, hasSiteInputs };
+  let decision: LocalAdviceDecision;
+  try { decision = await resolveLocalAdvicePolicy(req, auth, policyInput); }
+  catch { return Response.json({ code: 'LOCAL_ADVICE_COUNTRY_SOURCE_UNAVAILABLE',
+    error: 'Saved-site country details could not be checked. Try again after account updates reconnect.', allowanceMayBeSpent: false },
+    { status: 503, headers: { 'Cache-Control': 'no-store' } }); }
+  if (!decision.allowed) return Response.json({ code: decision.code, error: decision.error, allowanceMayBeSpent: false },
+    { status: decision.status, headers: { 'Cache-Control': 'no-store' } });
+  let allowanceMayBeSpent = false;
+  const contextChanged = () => Response.json({ code: 'LOCAL_ADVICE_CONTEXT_CHANGED',
+    error: 'The saved-site country context changed or could not be checked. No advice was delivered. Check the intended site before asking again.', allowanceMayBeSpent },
+    { status: 409, headers: { 'Cache-Control': 'no-store' } });
+  const stillCurrent = async () => {
+    if (req.signal.aborted) return false;
+    try {
+      const fresh = await resolveLocalAdvicePolicy(req, auth, policyInput);
+      return !req.signal.aborted && localAdviceDecisionCurrent(decision, fresh);
+    } catch { return false; }
+  };
+  let ctxBlock: string;
+  try { ctxBlock = decision.mode === 'personal-site' ? buildContext(ctx) : ''; }
+  catch { return new Response('Invalid context data', { status: 400 }); }
   const langName = ctx?.language && Object.hasOwn(LANG_NAMES, ctx.language) ? LANG_NAMES[ctx.language] : undefined;
   const langLine = langName && langName !== 'English'
     ? `\n\nThe farmer's preferred language is ${langName} — reply in ${langName} unless they clearly write in another language.`
     : '';
 
-  const system = SYSTEM + langLine + (ctxBlock ? `\n\n${ctxBlock}` : '');
+  const system = selectLocalAdviceSystem(decision.mode, SYSTEM) + langLine + (ctxBlock ? `\n\n${ctxBlock}` : '');
 
   const clean: Anthropic.MessageParam[] = messages
-    .filter((m) => (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string' && m.content.trim())
+    .filter((m) => (m?.role === 'user' || m?.role === 'assistant') && typeof m.content === 'string' && m.content.trim())
     .slice(-20)
     .map((m) => ({ role: m.role, content: m.content }));
 
@@ -209,7 +238,10 @@ export async function POST(req: NextRequest) {
   }
 
   if (clean.length === 0) {
-    return new Response('Ask me anything about your site, crops, finances or project.', { status: 200 });
+    if (!await stillCurrent()) return contextChanged();
+    return new Response(decision.mode === 'general-help' ? 'Ask about using the app or its privacy settings.'
+      : 'Ask me anything about your site, crops, finances or project.', { status: 200,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store', 'X-Imbewu-Advice-Mode': decision.mode } });
   }
 
   // PROMPT CACHING, and why it goes HERE rather than on the report builder.
@@ -233,34 +265,33 @@ export async function POST(req: NextRequest) {
   const CACHE_MIN_CHARS = 4000; // ~1k tokens, the smallest prefix the model will cache
   const cacheableSystem = system.length >= CACHE_MIN_CHARS;
 
-  const stream = await ai.messages.stream({
-    model: AI_MODELS.main,
-    max_tokens: 1500,
-    system: cacheableSystem
-      ? [{ type: 'text' as const, text: system, cache_control: { type: 'ephemeral' as const } }]
-      : system,
-    messages: clean,
-  });
-
-  const readable = new ReadableStream({
-    async start(controller) {
-      try {
-        for await (const chunk of stream) {
-          if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
-            controller.enqueue(new TextEncoder().encode(chunk.delta.text));
-          }
-        }
-      } catch (err) {
-        console.error('[api/chat] stream error:', err);
-        controller.enqueue(new TextEncoder().encode('\n\n⚠ Something went wrong — please try again.'));
-      } finally {
-        controller.close();
-        // Usage is priced, logged and added to the person's allowance by lib/metered-ai.ts.
-      }
-    },
-  });
-
-  return new Response(readable, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache' },
-  });
+  if (!await stillCurrent()) return contextChanged();
+  try {
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
+    const metered = await meteredAi(req, auth, '/api/chat', client);
+    allowanceMayBeSpent = true;
+    if (metered.response) return metered.response;
+    if (!await stillCurrent()) return contextChanged();
+    const stream = await metered.ai.messages.stream({
+      model: AI_MODELS.main, max_tokens: 1500,
+      system: cacheableSystem ? [{ type: 'text' as const, text: system, cache_control: { type: 'ephemeral' as const } }] : system,
+      messages: clean,
+    }, { signal: req.signal });
+    // Finishing the metered iterator also waits for actual usage settlement.
+    // A per-chunk country check could never retract advice already delivered.
+    const chunks: string[] = [];
+    for await (const chunk of stream) {
+      if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') chunks.push(chunk.delta.text);
+    }
+    if (!await stillCurrent() || req.signal.aborted) return contextChanged();
+    return new Response(chunks.join(''), { headers: { 'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-store', 'X-Imbewu-Advice-Mode': decision.mode } });
+  } catch {
+    // Keep an operational failure signal without logging a provider body or private context.
+    console.error('[api/chat] local advice request failed');
+    if (!await stillCurrent()) return contextChanged();
+    return Response.json({ code: 'LOCAL_ADVICE_MODEL_UNAVAILABLE',
+      error: 'The advice request could not be completed. No advice was delivered. Try again explicitly.', allowanceMayBeSpent },
+      { status: 502, headers: { 'Cache-Control': 'no-store' } });
+  }
 }
