@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest paired examples — [Exact SVG and AI sample set — 6 November 2026](2026-11-06/paired-map-samples-codex.md). Actual output inspected; previous Sector retained, other drafts not approved for production.
+
 Latest illustrated-map review — [All-map treatment and surrounding-context guides — 6 November 2026](2026-11-06/all-map-illustration-guides-codex.md). Ten draft briefs and actual saved examples; settings implementation and fresh device/output verification remain open.
 
 Latest Zones wording review — [Boundary authority and care-intensity evidence — 5 November 2026](2026-11-05/zones-authority-key-codex.md). Findings only; fresh exact inspected, current saved AI remains unverified.
@@ -193,6 +195,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 [ImbewuField connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md). Native linking and production deployment are separate gates from the verified emulator and browser journey.
 
 ## Date index
+
+- [Paired exact SVG and AI map samples — 6 November 2026](2026-11-06/paired-map-samples-codex.md).
 
 - [All-map illustration and context guides — 6 November 2026](2026-11-06/all-map-illustration-guides-codex.md).
 
