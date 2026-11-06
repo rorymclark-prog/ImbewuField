@@ -2,6 +2,7 @@ import type { PlanBed, Planting } from '../crop-plan';
 import { normaliseGrowerAutoPlanDemand, growerDemandWindowContainsAssessment,
   type GrowerAutoPlanCycle, type GrowerAutoPlanDemand, type GrowerReadyAssessment } from './grower-autoplan';
 import { detachJsonData } from '../lossless-json';
+import { readMassQuantityEntry, type MassQuantityEntry } from '../mass-units';
 import {
   assessGrowerPlanning, growerPlanningScopeKey, isGrowerRecordedAt, normaliseGrowerPlanningScope,
   type GrowerPlanningScope, type GrowerPlanningSnapshot,
@@ -16,7 +17,9 @@ export type GrowerCycleOrigin =
   | { readonly kind: 'grower-entered'; readonly purpose: GrowerEnteredDemandPurpose; readonly entryId: string;
       /** Exact replayed request, not this cycle's allocated capacity or dates.
        * Older purpose-only attachments deliberately leave it absent. */
-      readonly demandSnapshot?: GrowerAutoPlanDemand };
+      readonly demandSnapshot?: GrowerAutoPlanDemand;
+      /** Exact original text/unit; absent on older requests, never inferred. */
+      readonly quantityEntry?: MassQuantityEntry };
 /** Derived read view. `not-recorded` is an absent field on a cycle saved before
  * origins existed: it is unknown, never inferred as buyer, household or trial. */
 export type GrowerCycleOriginView =
@@ -24,6 +27,9 @@ export type GrowerCycleOriginView =
   | { readonly status: 'not-recorded' };
 export type GrowerCycleDemandSnapshotView =
   | { readonly status: 'recorded'; readonly demand: GrowerAutoPlanDemand }
+  | { readonly status: 'not-recorded' };
+export type GrowerCycleQuantityEntryView =
+  | { readonly status: 'recorded'; readonly entry: MassQuantityEntry }
   | { readonly status: 'not-recorded' };
 
 /** Canonical row attachment, not a second crop-cycle book or a country approval. */
@@ -121,8 +127,11 @@ export function normaliseGrowerCycleOrigin(value: unknown, demandId: unknown): G
     if (kind !== 'buyer-target' && kind !== 'grower-entered') return null;
     const snapshotField = descriptors.demandSnapshot;
     if (!snapshotField && 'demandSnapshot' in value) return null;
-    const expectedKeys = kind === 'grower-entered' && snapshotField
-      ? ['demandSnapshot', ...ORIGIN_KEYS[kind]] : ORIGIN_KEYS[kind];
+    const quantityField = descriptors.quantityEntry;
+    if (!quantityField && 'quantityEntry' in value) return null;
+    const expectedKeys = [...ORIGIN_KEYS[kind],
+      ...(kind === 'grower-entered' && snapshotField ? ['demandSnapshot'] : []),
+      ...(kind === 'grower-entered' && quantityField ? ['quantityEntry'] : [])].sort();
     if (JSON.stringify([...keys].sort()) !== JSON.stringify(expectedKeys)) return null;
     if (kind === 'buyer-target') {
       const harvestTargetId = descriptors.harvestTargetId.value;
@@ -134,7 +143,11 @@ export function normaliseGrowerCycleOrigin(value: unknown, demandId: unknown): G
       || entryId !== entryId.trim() || growerEnteredDemandId(entryId) !== demandId) return null;
     const demandSnapshot = snapshotField ? enteredDemandSnapshot(snapshotField.value, demandId) : null;
     if (snapshotField && !demandSnapshot) return null;
-    return { kind, purpose, entryId, ...(demandSnapshot ? { demandSnapshot } : {}) };
+    const quantity = quantityField ? readMassQuantityEntry(quantityField.value) : null;
+    if (quantityField && (!demandSnapshot || demandSnapshot.totalKg.state !== 'provided'
+      || quantity?.status !== 'provided' || quantity.kilograms !== demandSnapshot.totalKg.value)) return null;
+    return { kind, purpose, entryId, ...(demandSnapshot ? { demandSnapshot } : {}),
+      ...(quantity?.status === 'provided' ? { quantityEntry: quantity.entry } : {}) };
   } catch { return null; }
 }
 export function growerCycleOriginView(attachment: Pick<GrowerCycleAttachment, 'origin'>): GrowerCycleOriginView {
@@ -149,6 +162,14 @@ export function growerCycleDemandSnapshotView(attachment: Pick<GrowerCycleAttach
     ? { status: 'recorded', demand: detachJsonData(origin.demandSnapshot) as GrowerAutoPlanDemand }
     : { status: 'not-recorded' };
   return freeze(view);
+}
+
+/** Call after resolving the attachment; an absent historical unit is unknown. */
+export function growerCycleQuantityEntryView(attachment: Pick<GrowerCycleAttachment, 'origin'>): GrowerCycleQuantityEntryView {
+  const origin = attachment.origin;
+  return freeze(origin?.kind === 'grower-entered' && origin.quantityEntry
+    ? { status: 'recorded', entry: detachJsonData(origin.quantityEntry) as MassQuantityEntry }
+    : { status: 'not-recorded' });
 }
 
 /** Parse detached inputs and recompute through the one existing arithmetic authority. */

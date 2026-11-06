@@ -75,10 +75,11 @@ test('mixed household, trial and buyer acceptance records each origin from the f
   if (prepared.status !== 'prepared') return;
   // Purpose alone lost the original requested weight/window. The complete
   // origin must retain the independent replayed request, not allocated output.
+  // These legacy-kg inputs also retain their original submitted spelling.
   const expected: Record<string, GrowerCycleOrigin> = {
-    'grower-entered:h1': { kind: 'grower-entered', purpose: 'household', entryId: 'h1',
+    'grower-entered:h1': { kind: 'grower-entered', purpose: 'household', entryId: 'h1', quantityEntry: { unit: 'kg', text: '12' },
       demandSnapshot: result.request.demands.find(demand => demand.demandId === 'grower-entered:h1')! },
-    'grower-entered:t1': { kind: 'grower-entered', purpose: 'trial', entryId: 't1',
+    'grower-entered:t1': { kind: 'grower-entered', purpose: 'trial', entryId: 't1', quantityEntry: { unit: 'kg', text: '12' },
       demandSnapshot: result.request.demands.find(demand => demand.demandId === 'grower-entered:t1')! },
     'target-a': { kind: 'buyer-target', harvestTargetId: 'target-a' } };
   assert.deepEqual([...new Set(prepared.rows.map(row => row.growerCycle.demandId))], ['grower-entered:h1', 'grower-entered:t1', 'target-a']);
@@ -128,7 +129,7 @@ test('saved entered cycles reserve land in later reviews and project their reada
   const later = review({ ...f, book: stored });
   assert.deepEqual(later.request.reserved.map(row => row.id), prepared.rows.map(row => row.id));
   assert.deepEqual(later.existingOwnCycles.map(cycle => cycle.origin),
-    prepared.rows.map(() => ({ status: 'recorded', origin: { kind: 'grower-entered', purpose: 'household', entryId: 'h1',
+    prepared.rows.map(() => ({ status: 'recorded', origin: { kind: 'grower-entered', purpose: 'household', entryId: 'h1', quantityEntry: { unit: 'kg', text: '12' },
       demandSnapshot: originalReview.request.demands[0] } })));
   for (const cycle of later.proposal.cycles) for (const reserved of later.existingOwnCycles.filter(own => own.bedId === cycle.bedId)) {
     assert.ok(cycle.assessment.schedule.nextFieldEntryDate <= reserved.reservation.start
@@ -180,7 +181,7 @@ test('saved nursery batches carry the recorded origin and still revalidate sourc
   assert.equal(saved.sourceStatus, 'saved-planned');
   assert.ok(saved.batches.length > 0);
   for (const batch of saved.batches) assert.deepEqual(batch.origin, { status: 'recorded',
-    origin: { kind: 'grower-entered', purpose: 'household', entryId: 'h1', demandSnapshot: result.request.demands[0] } });
+    origin: { kind: 'grower-entered', purpose: 'household', entryId: 'h1', quantityEntry: { unit: 'kg', text: '12' }, demandSnapshot: result.request.demands[0] } });
   assert.ok(saved.batches.every(batch => batch.demandId === 'grower-entered:h1'));
   // Moved geometry: the saved source is stale, so no batch (or origin) is produced.
   const moved = buildGrowerNurseryForecast({ ...request, source: { kind: 'saved-cycles', rows: stored,

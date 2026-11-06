@@ -9,6 +9,8 @@ import { growerPlanningScopeKey, type GrowerPlanningProfile, type GrowerPlanning
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import type { GrowerWorkflowDemandDraft, GrowerWorkflowDraft, GrowerWorkflowReview } from '@/lib/international/grower-workflow';
 import { GROWER_DEMAND_SELECTION_MAX_ROWS, type GrowerEnteredDemandEntry, type GrowerEnteredDemandPurpose } from '@/lib/international/grower-entered-demand';
+import type { MassQuantityEntry } from '@/lib/mass-units';
+import GrowerEnteredMassField from './GrowerEnteredMassField';
 import type { GrowerWorkflowAcceptanceResult, GrowerWorkflowAcceptanceState } from './useGrowerWorkflow';
 
 export interface GrowerAutoPlanPanelProps {
@@ -59,6 +61,7 @@ const issueLabels: Record<string, string> = {
   'zero-saleable-share': 'A zero saleable percentage cannot supply a positive buyer target.',
   'unit-weight-missing': 'Enter your harvest weight per sales unit in the buyer target.',
   'current-source-required': 'Check the current saved design before reviewing.',
+  'unreadable-workflow-input': 'This review contains unreadable inputs. Enter the affected demand again before reviewing.',
   'saved-plan-changed': 'The saved plan changed. Reload it before reviewing.',
   'pending-plan-edits': 'Save or resolve your open plan edits before reviewing.',
   'source-changed': 'The saved design changed. Check it again before reviewing.',
@@ -118,6 +121,14 @@ const issueLabels: Record<string, string> = {
   'entered-gross-kg-precision': 'Use at most six decimal places for kilograms.',
   'entered-gross-kg-range': 'This gross harvest weight is outside the software range.',
   'entered-gross-kg-representation-loss': 'This weight cannot be stored exactly. Enter a weight with fewer digits.',
+  'entered-quantity-entry-conflict': 'This demand has two weight entries. Remove it and enter the weight again.',
+  'entered-mass-entry-invalid': 'Enter a weight and choose kilograms or pounds.',
+  'entered-mass-entry-unreadable': 'This weight could not be read. Enter it again.',
+  'entered-mass-entry-format': 'This weight text is too long. Enter a shorter plain decimal.',
+  'entered-decimal-representation-loss': 'This weight or its kilogram conversion cannot be stored exactly. Enter a weight with fewer digits.',
+  'entered-incomplete-number': 'Finish entering your weight. Your original text is kept.',
+  'entered-plain-decimal-required': 'Enter a plain decimal weight in the selected unit, without thousands separators.',
+  'entered-outside-finite-range': 'This weight or its conversion is outside the software range.',
   'entered-harvest-window-incomplete': 'Enter both harvest dates, or leave both blank.',
   'entered-harvest-window-invalid': 'Enter a valid harvest start and a later exclusive end date.',
 };
@@ -201,9 +212,18 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   }
   // Every edit, including a household/trial switch, goes through change():
   // the displayed review, its save button and any old receipt are withdrawn.
-  function updateEntered(entryId: string, values: Partial<Omit<GrowerEnteredDemandEntry, 'kind' | 'entryId'>>) {
+  function updateEntered(entryId: string, values: Partial<Omit<GrowerEnteredDemandEntry, 'kind' | 'entryId' | 'grossKg' | 'quantityEntry'>>) {
     if (!draftCurrent() || !draft.demands.some(row => row.kind === 'grower-entered' && row.entryId === entryId)) return;
     change({ ...draft, demands: draft.demands.map(row => row.kind === 'grower-entered' && row.entryId === entryId ? { ...row, ...values } : row) });
+  }
+  function updateEnteredQuantity(entryId: string, quantityEntry: MassQuantityEntry): boolean {
+    if (!draftCurrent() || !draft.demands.some(row => row.kind === 'grower-entered' && row.entryId === entryId)) return false;
+    change({ ...draft, demands: draft.demands.map(row => {
+      if (row.kind !== 'grower-entered' || row.entryId !== entryId) return row;
+      const { grossKg: _legacy, quantityEntry: _previous, ...fields } = row;
+      return { ...fields, quantityEntry: { ...quantityEntry } };
+    }) });
+    return true;
   }
   function removeEntered(entryId: string) {
     if (!draftCurrent() || !draft.demands.some(row => row.kind === 'grower-entered' && row.entryId === entryId)) return;
@@ -281,7 +301,7 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
       </fieldset>
       <fieldset className="space-y-3 rounded-xl border border-[var(--border)] p-3">
         <legend className="px-1 font-semibold">Household and trial growing (no buyer)</legend>
-        <p>Plan your own food or a trial on the same measured beds with your own growing estimates. Enter the gross harvest weight this plan should cover across the whole harvest window, in kilograms. Blank means not entered; 0 means a known zero.</p>
+        <p>Plan your own food or a trial on the same measured beds with your own growing estimates. Enter the gross harvest weight this plan should cover across the whole harvest window. Choose kilograms or pounds independently of country or language. Blank means not entered; 0 means a known zero.</p>
         <p>This is not a nutrition or food-security assessment, a sale, or evidence that a crop or trial is suitable or safe.</p>
         {!mapped ? <p>Open a mapped site to plan household or trial growing. Unmapped designs stay on hold.</p> : <>
           {!enteredCrops.length && <p>Save a growing estimate for this site above first.</p>}
@@ -300,8 +320,10 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
                 onChange={event => updateEntered(row.entryId, { profileId: event.target.value })}>
                 <option value="">Choose your saved estimate</option>{profiles.filter(profile => profile.cropKey === row.cropKey).map((profile, profileIndex) => <option key={profile.profileId} value={profile.profileId}>Saved estimate {profileIndex + 1}</option>)}
               </select></label>
-              <label className="block">Gross harvest weight for the whole window, kg — {name}<input type="text" inputMode="decimal" autoComplete="off" className={field}
-                value={row.grossKg} onChange={event => updateEntered(row.entryId, { grossKg: event.target.value })} /></label>
+              <GrowerEnteredMassField name={name} fieldClass={field}
+                entry={Object.hasOwn(row, 'quantityEntry') ? row.quantityEntry! : { unit: 'kg', text: row.grossKg! }}
+                isCurrent={() => draftCurrent() && draft.demands.includes(row)}
+                onEdit={entry => updateEnteredQuantity(row.entryId, entry)} />
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <label>Harvest from (UTC) — {name}<input type="date" className={field} value={row.harvestStart} onChange={event => updateEntered(row.entryId, { harvestStart: event.target.value })} /></label>
                 <label>Harvest ends before (UTC, exclusive) — {name}<input type="date" className={field} value={row.harvestEndExclusive} onChange={event => updateEntered(row.entryId, { harvestEndExclusive: event.target.value })} /></label>
@@ -363,6 +385,7 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
             {!usable && <ul>{review.proposal.issues.map((issue, index) => <li key={index}>{issueText(issue)}</li>)}</ul>}
             {review.targetMetadata.map(target => <p key={target.targetId}>Buyer demand: {quantity(target.buyerTotalKg)} kg over {target.days} days. Gross estimated cycle capacity needed: {quantity(target.grossCapacityRequiredKg)} kg. Weekly delivery quantities remain unverified.</p>)}
             {review.enteredDemandMetadata?.map(entry => <p key={entry.demandId}>{purposeLabel(entry.purpose)} demand you entered: {entry.grossCapacityKg === null ? 'weight not entered' : `${quantity(entry.grossCapacityKg)} kg gross for the whole window`}. No buyer or sale; not a nutrition check{entry.purpose === 'trial' ? ', trial evidence or safety finding' : ''}.</p>)}
+            {review.enteredDemandMetadata?.map(entry => <p key={`entry:${entry.demandId}`}>Original entered weight for this whole demand: <span className="whitespace-pre-wrap [overflow-wrap:anywhere]">{entry.quantityEntry.text || 'not entered'} {entry.quantityEntry.unit}</span>. Kilogram figures above are the canonical planning equivalent.</p>)}
             {usable && review.proposal.cycles.map(cycle => <article key={cycle.cycleId} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
               <h4 className="font-semibold">{beds.find(bed => bed.id === cycle.bedId)?.label ?? 'Saved growing space'} · {cropByKey(cycle.cropKey)?.name ?? cycle.cropKey}{enteredMeta(cycle.demandId) ? ` · ${purposeLabel(enteredMeta(cycle.demandId)!.purpose)}` : ''}</h4>
               <p>{quantity(cycle.assessment.capacity.estimatedPlantCount)} estimated plants; {quantity(cycle.assessment.capacity.estimatedYieldKg)} kg for this whole cycle.</p>

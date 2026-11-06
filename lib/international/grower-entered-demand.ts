@@ -1,4 +1,5 @@
 import { rawJsonIsLossless } from '../lossless-json';
+import { MASS_QUANTITY_ENTRY_MAX_TEXT, readMassQuantityEntry, type MassQuantityEntry } from '../mass-units';
 import { GROWER_AUTOPLAN_MAX_ASSESSMENTS, type GrowerAutoPlanDemand, type GrowerUtcWindow } from './grower-autoplan';
 import {
   growerPlanningScopeKey, isGrowerRecordedAt, isGrowerUtcDate, normaliseGrowerInput,
@@ -12,7 +13,7 @@ export const GROWER_DEMAND_SELECTION_MAX_ROWS = GROWER_AUTOPLAN_MAX_ASSESSMENTS;
 /** Representation guard only, not a farming quantity limit. The decimal
  * round-trip check below separately rejects fractional precision loss. */
 const MAX_REPRESENTABLE_KG = Number.MAX_SAFE_INTEGER;
-const MAX_KG_TEXT = 64;
+const MAX_KG_TEXT = MASS_QUANTITY_ENTRY_MAX_TEXT;
 const MAX_KG_DECIMALS = 6;
 const MAX_ENTRY_ID = 120;
 
@@ -23,7 +24,7 @@ export type GrowerEnteredDemandPurpose = 'household' | 'trial';
 
 /** One editor row exactly as entered. Quantity and dates stay text so a blank
  * ('' = not entered) can never be confused with a known zero ('0'). */
-export interface GrowerEnteredDemandEntry {
+interface GrowerEnteredDemandEntryFields {
   readonly kind: 'grower-entered';
   /** Editor identity chosen once per row; not a buyer, outlet or harvest-target identity. */
   readonly entryId: string;
@@ -31,13 +32,15 @@ export interface GrowerEnteredDemandEntry {
   /** Existing catalogue identity the grower chose; must equal the chosen profile's crop. */
   readonly cropKey: string;
   readonly profileId: string;
-  /** Gross kilograms the whole harvest window should cover, canonical kg-total. */
-  readonly grossKg: string;
   /** Inclusive UTC start date, or '' when not entered. */
   readonly harvestStart: string;
   /** Exclusive UTC end date, or '' when not entered. */
   readonly harvestEndExclusive: string;
 }
+export type GrowerEnteredDemandEntry = GrowerEnteredDemandEntryFields & (
+  | { readonly grossKg: string; readonly quantityEntry?: never }
+  | { readonly grossKg?: never; readonly quantityEntry: MassQuantityEntry }
+);
 
 export interface GrowerEnteredDemandMetadata {
   readonly demandId: string;
@@ -47,6 +50,8 @@ export interface GrowerEnteredDemandMetadata {
   readonly profileId: string;
   /** null = not entered. 0 = an explicit known zero. */
   readonly grossCapacityKg: number | null;
+  /** Actual authored entry, never reconstructed from converted kg or display. */
+  readonly quantityEntry: MassQuantityEntry;
   readonly harvestWindow: GrowerUtcWindow | null;
   readonly quantityBasis: 'grower-entered-gross-cycle-capacity';
   readonly buyer: 'none';
@@ -71,7 +76,7 @@ export type GrowerEnteredDemandSet =
   | { readonly status: 'held'; readonly reasons: readonly string[]; readonly entryIndex: number | null }
   | { readonly status: 'ready'; readonly rows: readonly GrowerEnteredDemandRow[] };
 
-const ENTRY_KEYS = ['kind', 'entryId', 'purpose', 'cropKey', 'profileId', 'grossKg', 'harvestStart', 'harvestEndExclusive'] as const;
+const ENTRY_KEYS = ['kind', 'entryId', 'purpose', 'cropKey', 'profileId', 'grossKg', 'quantityEntry', 'harvestStart', 'harvestEndExclusive'] as const;
 type EntryFields = Record<(typeof ENTRY_KEYS)[number], unknown>;
 
 const NOTES: Record<GrowerEnteredDemandPurpose, string> = {
@@ -104,6 +109,8 @@ function readEntry(value: unknown): { status: 'ready'; fields: EntryFields } | {
   const prototype = Object.getPrototypeOf(value);
   if (prototype !== Object.prototype && prototype !== null) return { status: 'held', reason: 'entry-unreadable' };
   const descriptors = Object.getOwnPropertyDescriptors(value);
+  if (descriptors.grossKg && descriptors.quantityEntry) return { status: 'held', reason: 'quantity-entry-conflict' };
+  if (descriptors.quantityEntry && !descriptors.quantityEntry.enumerable) return { status: 'held', reason: 'entry-unreadable' };
   const keys = Reflect.ownKeys(descriptors);
   if (keys.some(key => typeof key !== 'string' || !(ENTRY_KEYS as readonly string[]).includes(key))) {
     return { status: 'held', reason: 'entry-shape-invalid' };
@@ -177,11 +184,18 @@ export function growerDemandFromEnteredEntry(request: {
     const reasons: string[] = [];
     const purpose = entry.purpose === 'household' || entry.purpose === 'trial' ? entry.purpose : null;
     if (!purpose) reasons.push('purpose-invalid');
-    const quantity = parseGrossKg(entry.grossKg);
+    const mass = Object.hasOwn(request.entry as object, 'quantityEntry') ? readMassQuantityEntry(entry.quantityEntry) : null;
+    let quantity: Parsed<number> = mass
+      ? mass.status === 'held' ? mass : mass.status === 'missing' ? { status: 'missing' } : { status: 'provided', value: mass.kilograms }
+      : parseGrossKg(entry.grossKg);
+    if (mass?.status === 'provided' && (mass.kilograms < 0 || mass.kilograms > MAX_REPRESENTABLE_KG)) {
+      quantity = { status: 'held', reason: mass.kilograms < 0 ? 'gross-kg-negative' : 'gross-kg-range' };
+    }
     if (quantity.status === 'held') reasons.push(quantity.reason);
     const window = parseHarvestWindow(entry.harvestStart, entry.harvestEndExclusive);
     if (window.status === 'held') reasons.push(window.reason);
     if (reasons.length || !purpose || quantity.status === 'held' || window.status === 'held') return held(...reasons);
+    const quantityEntry: MassQuantityEntry = mass && mass.status !== 'held' ? mass.entry : { unit: 'kg', text: entry.grossKg as string };
     const provenance: GrowerInputProvenance = { kind: 'grower-estimate', recordedAt: request.recordedAt, note: NOTES[purpose] };
     const knownZero = quantity.status === 'provided' && quantity.value === 0;
     // Re-parse through the shared input authority, so provenance/unit rules stay single-sourced.
@@ -198,7 +212,7 @@ export function growerDemandFromEnteredEntry(request: {
       harvestWindow: harvestWindow.state === 'provided'
         ? { ...harvestWindow, value: { start: harvestWindow.value.start, endExclusive: harvestWindow.value.endExclusive } } : harvestWindow };
     const metadata: GrowerEnteredDemandMetadata = { demandId, entryId: entry.entryId, purpose, cropKey: profile.cropKey,
-      profileId: profile.profileId, grossCapacityKg: totalKg.state === 'provided' ? totalKg.value : null,
+      profileId: profile.profileId, grossCapacityKg: totalKg.state === 'provided' ? totalKg.value : null, quantityEntry,
       harvestWindow: window.status === 'provided' ? { ...window.value } : null,
       quantityBasis: 'grower-entered-gross-cycle-capacity', buyer: 'none', saleableOutput: 'not-applicable',
       nutritionSufficiency: 'not-assessed', agronomicEvidence: 'not-established', sourceVerification: 'not-verified' };

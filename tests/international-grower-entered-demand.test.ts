@@ -40,8 +40,9 @@ test('a household row becomes an explicit kg-total demand with honest provenance
     { start: '2028-02-01', endExclusive: '2028-03-01' });
   // The shared input authority accepts exactly what the adapter emitted.
   assert.deepEqual(normaliseGrowerInput(result.demand.totalKg, 'kg-total', (v): v is number => typeof v === 'number'), result.demand.totalKg);
+  // New entries retain their authored kg spelling as well as the canonical total.
   assert.deepEqual(result.metadata, { demandId: 'grower-entered:entry-1', entryId: 'entry-1', purpose: 'household', cropKey: profile.cropKey,
-    profileId: profile.profileId, grossCapacityKg: 24, harvestWindow: { start: '2028-02-01', endExclusive: '2028-03-01' },
+    profileId: profile.profileId, grossCapacityKg: 24, quantityEntry: { unit: 'kg', text: '24' }, harvestWindow: { start: '2028-02-01', endExclusive: '2028-03-01' },
     quantityBasis: 'grower-entered-gross-cycle-capacity', buyer: 'none', saleableOutput: 'not-applicable',
     nutritionSufficiency: 'not-assessed', agronomicEvidence: 'not-established', sourceVerification: 'not-verified' });
   for (const key of ['targetId', 'harvestTargetId', 'buyerTotalKg', 'saleablePercent', 'weeklyKg', 'price', 'currency']) {

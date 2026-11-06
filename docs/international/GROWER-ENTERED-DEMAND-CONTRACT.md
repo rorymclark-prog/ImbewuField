@@ -18,10 +18,10 @@ provenance note and in review metadata (`buyer:'none'`,
 
 Quantity text stays text until this adapter. Blank (`''`, whitespace) is
 `missing/not-entered` and the engine reports it; `0` is a known zero that needs
-no window and produces `zero-demand`. Signs, exponents, locale separators,
+no window and produces `zero-demand`. The legacy `grossKg` branch keeps its
+original rules: signs, exponents, locale separators,
 units, more than six decimals and values above `Number.MAX_SAFE_INTEGER` (a
-numeric-representation guard, not a quantity policy) hold. Unit
-and locale conversion stays a separate reviewed boundary. A partial, impossible
+numeric-representation guard, not a quantity policy) hold. A partial, impossible
 or reversed window holds; a blank window on a positive or unknown quantity is
 passed to the engine as `not-entered`.
 
@@ -36,8 +36,7 @@ saved harvest-target identity (selected or not, damaged or duplicated) equal to
 that namespaced demand holds as a collision. The whole ordered demand list is
 bounded by `GROWER_DEMAND_SELECTION_MAX_ROWS`, which reuses the existing engine
 ceiling `GROWER_AUTOPLAN_MAX_ASSESSMENTS`. These are software representation/work bounds, not farming recommendations.
-Canonical kg-only entry is a bounded milestone:
-no localized unit or decimal-separator conversion is offered.
+The additive `quantityEntry` branch is described below; the engine remains kg-only.
 
 `GrowerWorkflowDraft.demands` is additive. Absent, the legacy buyer-only
 `targetProfiles` list keeps its exact meaning and output. Present, it is the only
@@ -59,7 +58,7 @@ across local designs.
 
 Accepted cycles record `growerCycle.origin`, an optional extension of the
 version-1 attachment: `{kind:'buyer-target', harvestTargetId}` or
-`{kind:'grower-entered', purpose:'household'|'trial', entryId, demandSnapshot?}`. It is derived
+`{kind:'grower-entered', purpose:'household'|'trial', entryId, demandSnapshot?, quantityEntry?}`. It is derived
 only from the acceptance coordinator's fresh replayed review and must match the
 cycle's own `demandId`. Absent means a cycle saved before origins existed: its
 origin is unknown and is never inferred as buyer, household or trial. Present
@@ -105,3 +104,58 @@ This snapshot establishes traceable entered intent, not source authenticity,
 actor permission, nutrition sufficiency, actual harvest or country approval.
 
 The entry parser also holds a decimal whose numeric serialization would change its value, even below the whole-number software limit. It reuses the existing lossless JSON number authority and preserves supported leading/trailing zero syntax. This is a representation guard, not farming guidance.
+
+## Authored kg/lb entry
+
+An editor row supplies exactly one weight property: legacy `grossKg: string`,
+or `quantityEntry: {unit:'kg'|'lb', text:string}`. Both present hold even when
+one is empty or explicitly undefined. The new entry reader rejects unknown
+fields, malformed presence, accessors and non-enumerable properties without
+evaluating getters. It detaches evidence rather than freezing the caller's form.
+Both branches reuse the established 64-character entry work bound; there is no
+new farming quantity ceiling. Canonical kg retain the existing nonnegative,
+finite and `Number.MAX_SAFE_INTEGER` representation boundary.
+
+`parseExactUnitDecimal` shares `parseLengthDecimal`'s plain-decimal grammar:
+dot or comma is explicitly a decimal separator, never grouping. Numeric signs
+are grammar; the entered-demand authority separately rejects negative weight.
+No exponents are parsed. The exact wrapper normalizes insignificant spelling
+for the existing `rawJsonIsLossless` guard before converting to Number. Negative
+zero and decimal serialization loss hold. The original unit and untrimmed text
+are retained unchanged, including supported padding and decimal separators.
+
+`readMassQuantityEntry` keeps blank distinct from provided zero. Pounds use the
+existing exact avoirdupois-pound constant in `mass-units.ts`; no country or
+language selects or reinterprets a unit. `exactDecimalQuantityProduct` reuses
+the existing coefficient multiplication and decimal comparison in
+`farm-records.ts`. The exact coefficient product must equal the final Number's
+declared decimal; overflow, nonzero underflow or changed decimal value hold.
+This is not a binary floating-point exactness promise. Existing
+`decimalQuantityProduct`, `massToKilograms`, mass drafts and their intentionally
+rounded numeric behavior are unchanged. Converted canonical kg never pass
+through the old six-place entry field or a rounded display string.
+
+Review metadata includes `quantityEntry` from the submitted branch, so even a
+different spelling or unit giving the same canonical kg requires fresh review.
+New acceptance reparses the actual fresh replayed metadata and binds that
+weight to its full canonical demand snapshot before copying both into the
+existing origin. New legacy `grossKg` submissions can record their actual
+`{unit:'kg', text:grossKg}`; this is submitted evidence, not reconstruction from
+planned output. A saved `quantityEntry` requires a matching positive provided
+canonical snapshot. Buyer origins reject this property. Malformed or mismatched
+present evidence holds the whole cycle and existing raw-marker copies preserve
+the hold through JSON, canonical, sample, nursery and report paths.
+
+Older origin-only and snapshot-only rows remain valid and explicitly lack
+recorded original unit/text. `growerCycleQuantityEntryView({origin})`, used after
+attachment resolution, returns a detached recorded entry or `not-recorded`.
+It cannot recover authorship from canonical kg or certify freshness or actor
+permission. Existing attachment/source/geometry/occupancy/private replay and
+save authorization gates remain necessary.
+
+UI consumers must keep authored entry separate from `MassDraft` display state:
+the shared unit switch reformats display text. Toggling a display cannot replace
+authored input, mutate saved geometry or rows, accept a review or create a new
+write permission. An actual edit uses the current entry unit/text and withdraws
+the old review. Domain implementation alone is not proof of that UI behavior,
+hook detachment, browser verification or runtime release.

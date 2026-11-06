@@ -1,0 +1,99 @@
+{
+  "sourceSha256": "0d1e53c8c45d8bc1410266c0e13ba0d303bc540f08e995c92092eafe6275cf7d",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeLanguageActivation": "No new language activated. These are unreviewed AI draft descriptions, not fluent certification. Existing UpdateCopyText shows the native caption with exact English underneath and has no dedicated draft badge. Existing translation entries take precedence.",
+  "features": [
+    "ownDemand",
+    "massEntry"
+  ],
+  "messages": [
+    {
+      "key": "ownDemand.release.01",
+      "english": "Plan household food or trial growing from your own harvest target, without a buyer order.",
+      "sha256": "a18b4804c85bb6e4443b34a5132f17ba7d5882049447a790cf8b7f5a3f86e196",
+      "translations": {
+        "zu": "Hlela ukudla kwasekhaya noma ukulima kokuhlola kusukela kokuhlosiwe kwesivuno sakho, ngaphandle kwe-oda lomthengi.",
+        "st": "Rera dijo tsa lelapa kapa temo ya teko ho tswa sepheong sa hao sa kotulo, ntle le taelo ya moreki.",
+        "ts": "Lulamisa swakudya swa le kaya kumbe kurima ka ndzingelo ku suka eka xikongomelo xa wena xa ntshovelo, handle ka oda ya muxavi.",
+        "ve": "Pulaneledzani zwiḽiwa zwa muṱani kana u ṱavha ha ndingo u bva kha zwipikwa zwa khaṋo zwaṋu, hu si na ndaela ya murengi."
+      }
+    },
+    {
+      "key": "ownDemand.release.02",
+      "english": "Plan food or a growing trial",
+      "sha256": "06aa657b65990328db3caaa0ffe2d515e0e0f2f3d39da03f5cb6caa8b76b6b4e",
+      "translations": {
+        "zu": "Hlela ukudla noma ukuhlola kokulima",
+        "st": "Rera dijo kapa teko ya ho lema",
+        "ts": "Lulamisa swakudya kumbe ndzingelo wo rima",
+        "ve": "Pulaneledzani zwiḽiwa kana ndingo ya u ṱavha"
+      }
+    },
+    {
+      "key": "ownDemand.release.03",
+      "english": "Production plan → Automatic plan from your estimates",
+      "sha256": "a42cc4ccc786917de834efdbe8caeb85c2727d839fb9fa877cd59c375417c18d",
+      "translations": {
+        "zu": "Uhlelo lokukhiqiza → Uhlelo oluzenzakalelayo olusuka ezilinganisweni zakho",
+        "st": "Leano la tlhahiso → Leano le itirisang ho tswa dikakanyong tsa hao",
+        "ts": "Pulani ya vuhumelerisi → Pulani yo tiendlekela ku suka eka miringanyeto ya wena",
+        "ve": "Mbekanyamushumo ya vhubveledzi → Pulane ya othomethiki i no bva kha nyanganyelo dzaṋu"
+      }
+    },
+    {
+      "key": "ownDemand.release.04",
+      "english": "Choose household food or trial growing, enter your gross harvest weight and dates, and use your saved growing estimates and measured spaces. Saved crop records and nursery batches keep the original request. These are planning estimates, not observed harvests or local crop advice.",
+      "sha256": "7ccf44deb0a9c894885c7931d865c6b3c4375bc785c33f0260f17c485d9875c2",
+      "translations": {
+        "zu": "Khetha ukudla kwasekhaya noma ukulima kokuhlola, faka isisindo sakho sesivuno sisonke nezinsuku, bese usebenzisa izilinganiso zakho zokulima ezilondoloziwe nezikhala ezikaliwe. Amarekhodi ezitshalo alondoloziwe namaqoqo esithombo agcina isicelo sokuqala. Lezi yizilinganiso zokuhlela, hhayi izivuno ezibonwe ngamehlo noma izeluleko zezitshalo zendawo.",
+        "st": "Kgetha dijo tsa lelapa kapa temo ya teko, kenya boima bohle ba kotulo le matsatsi, mme o sebedise dikakanyo tsa hao tse bolokilweng tsa temo le dibaka tsa temo tse lekantsweng. Direkoto tsa dijalo tse bolokilweng le dihlopha tsa dipeo di boloka kopo ya pele. Tsena ke dikakanyo tsa ho rera, eseng dikotulo tse bonweng kapa keletso ya dijalo tsa lehae.",
+        "ts": "Hlawula swakudya swa le kaya kumbe kurima ka ndzingelo, nghenisa ntikelo hinkwawo wa ntshovelo na masiku, kutani u tirhisa miringanyeto ya wena yo rima leyi hlayisiweke na tindhawu leti pimiweke. Tirhekhodo ta swimilani leti hlayisiweke na mintlawa ya masungulo ya swimilani swi hlayisa xikombelo xo sungula. Leyi i miringanyeto yo lulamisa, ku nga ri mitshovelo leyi voniweke kumbe switsundzuxo swa swimilani swa laha kaya.",
+        "ve": "Nangani zwiḽiwa zwa muṱani kana u ṱavha ha ndingo, dzhenisani vhuleme hoṱhe ha khaṋo na maḓuvha, nahone shumisani nyanganyelo dza u ṱavha dzo vhulungwaho na zwikhala zwo pimiwaho. Rekhodo dza zwimela dzo vhulungwaho na zwigwada zwa nese zwi vhulunga khumbelo ya u thoma. Hedzi ndi nyanganyelo dza mbekanyamushumo, hu si khaṋo dzo vhonwaho kana nyeletshedzo ya zwimela zwa henefho."
+      }
+    },
+    {
+      "key": "massEntry.release.01",
+      "english": "Enter household or trial harvest requests in kilograms or pounds and keep the original entry with saved cycles.",
+      "sha256": "5393482c44624915ec20cf912068eda95fc5f452d0e07722206b1738085c61f4",
+      "translations": {
+        "zu": "Faka izicelo zesivuno sasekhaya noma sokuhlola ngamakhilogremu noma ngamaphawundi bese ugcina okufakwe ekuqaleni nemijikelezo elondoloziwe.",
+        "st": "Kenya dikopo tsa kotulo tsa lelapa kapa tsa teko ka dikhilograma kapa diponto mme o boloke se kentsweng sa pele le medikoloho ya temo e bolokilweng.",
+        "ts": "Nghenisa swikombelo swa ntshovelo swa le kaya kumbe swa ndzingelo hi tikhilogiramu kumbe tipawundi u tlhela u hlayisa leswi nghenisiweke eku sunguleni swin’we na mizingeleko leyi hlayisiweke.",
+        "ve": "Dzhenisani khumbelo dza khaṋo ya muṱani kana ya ndingo nga khilogireme kana phaundi nahone ni vhulunge zwe zwa dzheniswa u thoma zwi na mitingatingo ya vhulimi yo vhulungwaho."
+      }
+    },
+    {
+      "key": "massEntry.release.02",
+      "english": "Choose harvest weight units",
+      "sha256": "4e37a4962dd155a0671e77f26f4b7bd2201ad16af2e83d40fc2b9cdc1ec91779",
+      "translations": {
+        "zu": "Khetha amayunithi wesisindo sesivuno",
+        "st": "Kgetha diyuniti tsa boima ba kotulo",
+        "ts": "Hlawula tiyuniti ta ntikelo wa ntshovelo",
+        "ve": "Nangani yunithi dza vhuleme ha khaṋo"
+      }
+    },
+    {
+      "key": "massEntry.release.03",
+      "english": "Production plan → Automatic plan from your estimates → Household food or trial growing",
+      "sha256": "16398941e04e9be8040657208324bce9ae65c919f08f9b5d0065cafd169189ff",
+      "translations": {
+        "zu": "Uhlelo lokukhiqiza → Uhlelo oluzenzakalelayo olusuka ezilinganisweni zakho → Ukudla kwasekhaya noma ukulima kokuhlola",
+        "st": "Leano la tlhahiso → Leano le itirisang ho tswa dikakanyong tsa hao → Dijo tsa lelapa kapa temo ya teko",
+        "ts": "Pulani ya vuhumelerisi → Pulani yo tiendlekela ku suka eka miringanyeto ya wena → Swakudya swa le kaya kumbe kurima ka ndzingelo",
+        "ve": "Mbekanyamushumo ya vhubveledzi → Pulane ya othomethiki i no bva kha nyanganyelo dzaṋu → Zwiḽiwa zwa muṱani kana u ṱavha ha ndingo"
+      }
+    },
+    {
+      "key": "massEntry.release.04",
+      "english": "Choose kg or lb for viewing. Changing the view keeps your original entry; typing a new weight changes the request and requires review. Saved crop records and nursery batches show the original entry separately from the planned kilogram quantity.",
+      "sha256": "26bc60729676a974b2392c675969d4ec0d99308dcfa53c281e1d7475be111f4c",
+      "translations": {
+        "zu": "Khetha kg noma lb ukuze ubuke. Ukushintsha ukubuka kugcina okufakwe ekuqaleni; ukuthayipha isisindo esisha kushintsha isicelo futhi kudinga ukubuyekezwa. Amarekhodi ezitshalo alondoloziwe namaqoqo esithombo abonisa okufakwe ekuqaleni ngokwehlukana nenani lamakhilogremu ahleliwe.",
+        "st": "Kgetha kg kapa lb bakeng sa ho sheba. Ho fetola pono ho boloka se kentsweng sa pele; ho thapa boima bo botjha ho fetola kopo mme ho hloka tlhahlobo. Direkoto tsa dijalo tse bolokilweng le dihlopha tsa dipeo di bontsha se kentsweng sa pele ka thoko ho bongata bo rerilweng ba dikhilograma.",
+        "ts": "Hlawula kg kumbe lb ku xiyisisa. Ku cinca mbonelo swi hlayisa leswi nghenisiweke eku sunguleni; ku tsala ntikelo lowuntshwa swi cinca xikombelo naswona swi lava nkambisiso. Tirhekhodo ta swimilani leti hlayisiweke na mintlawa ya masungulo ya swimilani swi kombisa leswi nghenisiweke eku sunguleni hi ku hambana na ntsengo wa tikhilogiramu lowu pulaniweke.",
+        "ve": "Nangani kg kana lb u itela u vhona. U shandukisa mbonalo zwi vhulunga zwe zwa dzheniswa u thoma; u ṅwala vhuleme vhuswa zwi shandukisa khumbelo nahone zwi ṱoḓa u ṱoliwa. Rekhodo dza zwimela dzo vhulungwaho na zwigwada zwa nese zwi sumbedza zwe zwa dzheniswa u thoma zwo fhambana na tshivhalo tsho pulaneledzwaho tsha khilogireme."
+      }
+    }
+  ]
+}
