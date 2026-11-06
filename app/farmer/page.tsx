@@ -258,7 +258,7 @@ function HomeInner() {
   }, [searchKey]);
 
   const locationRequest = useRef(0);
-  const handleLocationSelect = useCallback(async (lat: number, lon: number) => {
+  const handleLocationSelect = useCallback(async (lat: number, lon: number, options?: { openDetails?: boolean }) => {
     const request = ++locationRequest.current;
     const named = loadPlaces().find(p=>designSiteIdFromLocation(p)===designSiteIdFromLocation({lat,lon}));
     setActivePlaceId(named?.id??null);setActivePlaceName(named?.name??null);
@@ -270,7 +270,9 @@ function HomeInner() {
     setMapCapture(null);
     setReportPhotoAnalysis(undefined);
     setError('');
-    setSheetOpen(true);
+    if (options?.openDetails !== false) {
+      setSheetOpen(true);
+    }
 
     // Check localStorage cache. MUST key at 5 dp (~1.1 m) to match designSiteIdFromLocation —
     // 2 dp (~1.1 km) made two different nearby sites collide on the same key, so the second
@@ -464,6 +466,9 @@ function HomeInner() {
   // Sample mode: auto-load the real Ubhejane Creche site so the evaluator lands
   // straight on a populated map instead of an empty "tap to survey" state.
   //
+  // Automatic sample map loading initializes location data but does not itself
+  // request the Details bottom sheet to open.
+  //
   // The camera move is NOT optional. Selecting the site loads its data but
   // leaves the map wherever it was — zoom 5.2, the whole of South Africa — so
   // the flagship screen opened on Botswana and Lesotho with the farm an
@@ -472,7 +477,7 @@ function HomeInner() {
   // it is told to fly.
   useEffect(() => {
     if (isSampleMode() && !selected && !searchParams.get('site') && !reportSiteFlow) {
-      handleLocationSelect(DEMO_SITE.lat, DEMO_SITE.lon);
+      handleLocationSelect(DEMO_SITE.lat, DEMO_SITE.lon, { openDetails: false });
       const t = setTimeout(() => setJumpTo({ lat: DEMO_SITE.lat, lon: DEMO_SITE.lon }), 800);
       return () => clearTimeout(t);
     }
