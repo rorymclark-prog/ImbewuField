@@ -5,6 +5,13 @@ import { checkDwdStationReference } from '@/app/international/dwd-mosmix-actions
 import { parseDwdStationRequest } from '@/lib/international/providers/dwd-mosmix-request';
 import type { DwdMosmixImportResult, DwdMosmixImportFailure } from '@/lib/international/providers/dwd-mosmix-import';
 import type { DwdMosmixIssue } from '@/lib/international/providers/dwd-mosmix-reference';
+import {
+  TEMPERATURE_DISPLAY_UNITS,
+  isTemperatureDisplayUnit,
+  kelvinToDisplayTemperature,
+  type TemperatureDisplayUnit,
+} from '@/lib/temperature-units';
+import { numberLabel } from '@/lib/format-figures';
 
 type SuccessResult = Extract<DwdMosmixImportResult, { status: 'available' | 'partial' }>;
 
@@ -48,6 +55,12 @@ const issueCopy: Record<DwdMosmixIssue, string> = {
   'precipitation-values-missing': 'Some or all precipitation values in the time steps are missing.',
 };
 
+const UNIT_LABELS: Record<TemperatureDisplayUnit, string> = {
+  K: 'Kelvin (K)',
+  C: 'Celsius (°C)',
+  F: 'Fahrenheit (°F)',
+};
+
 /**
  * Public reference card for manual DWD station forecasts.
  *
@@ -58,10 +71,15 @@ const issueCopy: Record<DwdMosmixIssue, string> = {
  * 4. Bound to captured view and input refs: both input editing and checking verify that currentView
  *    and currentStationId match their respective captured states before processing.
  * 5. Every accepted edit increments the generation counter and publishes a NEW idle object.
- * 6. While pending, inputs and buttons are disabled and programmatic input events are ignored.
- * 7. Display shows native temperature in Kelvin (K) and precipitation in kg/m² without conversion.
- * 8. Strictly distinguishes null/missing ("Unknown") from explicit numerical zero ("0").
- * 9. Caps displayed source periods to the first 12, truthfully indicating the display limit.
+ * 6. While pending, the station ID input and Check button are disabled and programmatic input events are ignored.
+ *    The temperature display unit selector is independent and remains available while pending.
+ * 7. Display allows choosing temperature unit (K, C, F), defaulting to native source Kelvin (K).
+ *    Display unit changes do not trigger or cancel forecast requests, modify inputs, or alter stored data.
+ *    Protected by a per-render current-unit-handler ref to reject retained old callbacks and A->B->A replay.
+ * 8. Converted C/F temperatures are displayed using numberLabel (max 2 fraction digits) with exact raw source
+ *    Kelvin shown beside them; K displays exact unaltered source value.
+ * 9. Strictly distinguishes null/missing ("Unknown") from explicit numerical zero ("0").
+ * 10. Caps displayed source periods to the first 12, truthfully indicating the display limit.
  */
 export interface DwdStationReferenceProps {
   selection?: Readonly<{ stationId: string }> | null;
@@ -70,6 +88,7 @@ export interface DwdStationReferenceProps {
 export default function DwdStationReference({ selection }: DwdStationReferenceProps = {}) {
   const [stationIdInput, setStationIdInput] = useState<string>('');
   const [view, setView] = useState<View>({ status: 'idle' });
+  const [temperatureUnit, setTemperatureUnit] = useState<TemperatureDisplayUnit>('K');
 
   const currentView = useRef(view);
   currentView.current = view;
@@ -80,6 +99,8 @@ export default function DwdStationReference({ selection }: DwdStationReferencePr
   const mounted = useRef(true);
   const pending = useRef(false);
   const generation = useRef(0);
+
+  const currentUnitHandler = useRef<(nextUnit: unknown) => void>(() => {});
 
   useEffect(() => {
     mounted.current = true;
@@ -122,6 +143,18 @@ export default function DwdStationReference({ selection }: DwdStationReferencePr
     generation.current++;
     publish({ status: 'idle' });
   }
+
+  function handleUnitChange(nextUnit: unknown) {
+    if (
+      !mounted.current ||
+      currentUnitHandler.current !== handleUnitChange ||
+      !isTemperatureDisplayUnit(nextUnit)
+    ) {
+      return;
+    }
+    setTemperatureUnit(nextUnit);
+  }
+  currentUnitHandler.current = handleUnitChange;
 
   async function handleCheck() {
     if (
@@ -227,6 +260,27 @@ export default function DwdStationReference({ selection }: DwdStationReferencePr
         </p>
       </div>
 
+      <div className="flex flex-wrap items-center gap-2 pt-1 text-sm">
+        <label htmlFor="dwd-temperature-unit-select" className="font-semibold">
+          Temperature display unit
+        </label>
+        <select
+          id="dwd-temperature-unit-select"
+          value={temperatureUnit}
+          onChange={(e) => handleUnitChange(e.target.value)}
+          className="min-h-11 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-sm"
+        >
+          {TEMPERATURE_DISPLAY_UNITS.map((unit) => (
+            <option key={unit} value={unit}>
+              {UNIT_LABELS[unit]}
+            </option>
+          ))}
+        </select>
+        <span className="text-xs text-[var(--text-muted)]">
+          Source forecast temperatures use Kelvin. Display unit conversions are calculated for presentation only.
+        </span>
+      </div>
+
       <div
         role="status"
         aria-live="polite"
@@ -318,28 +372,43 @@ export default function DwdStationReference({ selection }: DwdStationReferencePr
               </div>
 
               <ol className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
-                {success.periods.slice(0, 12).map((period, index) => (
-                  <li
-                    key={period.validAt || index}
-                    className="min-w-0 space-y-1 rounded-xl border border-[var(--border)] p-3 text-sm"
-                  >
-                    <p className="font-semibold">Valid at (UTC): {period.validAt}</p>
-                    <dl className="space-y-1 text-xs">
-                      <div>
-                        <dt className="inline font-semibold">Temperature: </dt>
-                        <dd className="inline">
-                          {period.temperatureK === null ? 'Unknown' : `${period.temperatureK} K`}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt className="inline font-semibold">Precipitation: </dt>
-                        <dd className="inline">
-                          {period.precipitationKgM2 === null ? 'Unknown' : `${period.precipitationKgM2} kg/m²`}
-                        </dd>
-                      </div>
-                    </dl>
-                  </li>
-                ))}
+                {success.periods.slice(0, 12).map((period, index) => {
+                  let temperatureDisplay = 'Unknown';
+                  if (period.temperatureK !== null) {
+                    if (temperatureUnit === 'K') {
+                      temperatureDisplay = `${period.temperatureK} K`;
+                    } else {
+                      const converted = kelvinToDisplayTemperature(period.temperatureK, temperatureUnit);
+                      if (converted !== null) {
+                        const unitSymbol = temperatureUnit === 'C' ? '°C' : '°F';
+                        temperatureDisplay = `${numberLabel(converted, 2)} ${unitSymbol} (Source: ${period.temperatureK} K)`;
+                      } else {
+                        temperatureDisplay = `Conversion unavailable (Source: ${period.temperatureK} K)`;
+                      }
+                    }
+                  }
+
+                  return (
+                    <li
+                      key={period.validAt || index}
+                      className="min-w-0 space-y-1 rounded-xl border border-[var(--border)] p-3 text-sm"
+                    >
+                      <p className="font-semibold">Valid at (UTC): {period.validAt}</p>
+                      <dl className="space-y-1 text-xs">
+                        <div>
+                          <dt className="inline font-semibold">Temperature: </dt>
+                          <dd className="inline">{temperatureDisplay}</dd>
+                        </div>
+                        <div>
+                          <dt className="inline font-semibold">Precipitation: </dt>
+                          <dd className="inline">
+                            {period.precipitationKgM2 === null ? 'Unknown' : `${period.precipitationKgM2} kg/m²`}
+                          </dd>
+                        </div>
+                      </dl>
+                    </li>
+                  );
+                })}
               </ol>
             </div>
           </div>
@@ -347,7 +416,7 @@ export default function DwdStationReference({ selection }: DwdStationReferencePr
       </div>
 
       <footer className="border-t border-[var(--border)] pt-3 text-xs text-[var(--text-muted)]">
-          <p>Source: Deutscher Wetterdienst (DWD), MOSMIX. Selected source values extracted and displayed by ImbewuField.</p>
+        <p>Source: Deutscher Wetterdienst (DWD), MOSMIX. Selected source values extracted and displayed by ImbewuField.</p>
         <p className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
           <a
             className="inline-flex min-h-11 items-center underline"
@@ -365,9 +434,9 @@ export default function DwdStationReference({ selection }: DwdStationReferencePr
           >
             DWD Copyright & Terms
           </a>
-            <a className="inline-flex min-h-11 items-center underline" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">
-              Data licence: CC BY 4.0
-            </a>
+          <a className="inline-flex min-h-11 items-center underline" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">
+            Data licence: CC BY 4.0
+          </a>
         </p>
       </footer>
     </section>

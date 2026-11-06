@@ -115,7 +115,9 @@ function mount(countryHint: unknown = 'KE') {
   act(() => { renderer = create(element(countryHint)); }); mounted.add(renderer);
   const card = () => renderer.root.findByType(DwdStationReference).findByType('section');
   const nasaButton = () => renderer.root.findAllByType('button').find(node => /^Check(?:ing)? public reference/.test(text(node)))!;
-  const country = () => renderer.root.findByType('select');
+  // The temperature display adds its own select; country ownership still uses
+  // the actual labelled Country control rather than global select cardinality.
+  const country = () => renderer.root.findAllByType('label').find(node => text(node).startsWith('Country'))!.findByType('select');
   const region = () => renderer.root.findAllByType('label').find(node => text(node).startsWith('Agricultural region reference'))!.findByType('input');
   return { renderer, card, country, region, nasaButton, text: () => text(renderer.root),
     input: () => card().findByType('input'), button: () => card().findByType('button'),
