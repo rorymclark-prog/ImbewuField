@@ -1,7 +1,7 @@
 {
   "sourceSha256": "0d1e53c8c45d8bc1410266c0e13ba0d303bc540f08e995c92092eafe6275cf7d",
   "reviewStatus": "unreviewed-ai-draft",
-  "runtimeLanguageActivation": "No new language activated. These are descriptions under the existing English-backed visibly marked draft policy, not fluent certification. Existing translation entries take precedence.",
+  "runtimeLanguageActivation": "No new language activated. These are unreviewed AI draft descriptions, not fluent certification. Existing UpdateCopyText shows the native caption with exact English underneath and has no dedicated draft badge. Existing translation entries take precedence.",
   "features": [
     "ownDemand"
   ],
