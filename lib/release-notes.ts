@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 November 2026', sha: '8f2942290', changes: [
+  { when: '6 November 2026', sha: '2da11ba98', changes: [
     'Open evidence tools for your saved country.',
   ], tour: [{ title: 'Review your saved country’s evidence', where: 'Crop planner → Site country and region → Review country evidence', href: '/facilitator/crops',
     detail: 'Use the country you saved for this site to open its existing evidence dossier. Countries without a dossier show general reference tools. Opening the link does not save country details, approve an agricultural region or enable local crop advice.' }] },
