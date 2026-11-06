@@ -297,4 +297,3 @@ test('the observed Auth A to B to A history revokes pending labelled output rath
   assert.doesNotMatch(ui.text(), /Personal pending label/);
   assert.equal(boundary.csvCalls, 0); assert.equal(boundary.deliveries.length, 0);
 });
-
