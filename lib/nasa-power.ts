@@ -1,6 +1,7 @@
 import type { MonthlyRainfall, ClimateData } from './types';
 import { aspectLabel } from './biome';
 import { classifyKoppen } from './koppen-global';
+import { cleanPowerValue as clean, completeMonthlyTemperatures, type MonthlyTemperatureCoverage } from './climate-temperature';
 
 const MONTH_KEYS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -212,8 +213,6 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
 
   // NASA POWER uses -999 as a missing/fill sentinel (common at coastal/ocean taps).
   // Strip these before any reduction so they don't corrupt min/max/mean calculations.
-  const clean = (v: unknown): number | null =>
-    typeof v === 'number' && v > -900 && Number.isFinite(v) ? v : null;
   const cleanNonNegative = (v: unknown): number | null => {
     const value = clean(v);
     return value !== null && value >= 0 ? value : null;
@@ -238,7 +237,11 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   };
 
   const temperatureByMonth = asRecord(p.T2M);
-  const monthlyTemp = MONTH_KEYS.map((k) => clean(temperatureByMonth[k]) ?? 20);
+  const cleanedMonthlyTemp = MONTH_KEYS.map((k) => clean(temperatureByMonth[k]));
+  // A finite display substitute is not evidence that POWER supplied the month.
+  const monthlyTempCoverage: MonthlyTemperatureCoverage = { source: 'nasa-power',
+    status: completeMonthlyTemperatures(cleanedMonthlyTemp) ? 'complete' : 'incomplete' };
+  const monthlyTemp = cleanedMonthlyTemp.map((value) => value ?? 20);
   const meanTemp = parseFloat((monthlyTemp.reduce((a: number, b: number) => a + b, 0) / 12).toFixed(1));
   const hotMonthTemp = reduceParam(p.T2M_MAX, (vals) => Math.max(...vals), 25);
   const minTemperatureByMonth = asRecord(p.T2M_MIN);
@@ -324,6 +327,6 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
 
   return {
     rainfall: { monthly, annual: parseFloat(annual.toFixed(0)), pattern, wetSeason, drySeason, rainfallSource },
-    climate: { meanTemp, maxTemp, minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, windFromSummer, windFromWinter },
+    climate: { meanTemp, maxTemp, minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, monthlyTempCoverage, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, windFromSummer, windFromWinter },
   };
 }

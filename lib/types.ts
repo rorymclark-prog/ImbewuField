@@ -1,3 +1,5 @@
+import type { MonthlyTemperatureCoverage } from './climate-temperature';
+
 export interface LatLon { lat: number; lon: number }
 
 /** Where a site's biome came from. A surveyed polygon on SANBI's national vegetation map and a
@@ -35,6 +37,8 @@ export interface ClimateData {
   /** Present only when all twelve NASA POWER T2M_MIN values were available. */
   minTempSource?: 'nasa-power';
   monthlyTemp: number[];
+  /** Parser coverage of raw monthly means, before display substitutes; not a farm observation. */
+  monthlyTempCoverage?: MonthlyTemperatureCoverage;
   solarRadiation: number;
   koppen: string;
   koppenDesc: string;

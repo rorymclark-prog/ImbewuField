@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', changes: [
+    'See when monthly temperatures are incomplete or need another check.',
+  ], tour: [{ title: 'Check monthly temperature coverage', where: 'Map → Site details → Overview or Climate', href: '/farmer',
+    detail: 'Check whether all monthly mean temperatures were supplied. Missing or unrecorded coverage holds the monthly calendar and planner climate interpretation; reload online to try again. Your saved maps, records and original estimates remain available. Complete model inputs do not confirm local crop suitability.' }] },
   { when: '6 November 2026', sha: '103543678c55', changes: [
     'Choose app help separately from advice about a saved site.',
     'Review your LimaBar question before sending it.',

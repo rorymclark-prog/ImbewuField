@@ -325,6 +325,9 @@ test('bought or carried mango and nuts do not manufacture local harvests, safe s
 // Synthetic parser/planner cases, not fetched normals or new agronomic guidance. The seasonal
 // shapes and temperature endpoints reuse tests/sa-rain-pattern.test.ts and growing-zones.test.ts.
 // The Cfb case recombines their existing mild endpoints/bimodal shape to cover Southern Cape.
+// This declares the synthetic intake's complete monthly-mean precondition. It is
+// not a provider observation or a backfilled receipt for a captured real climate.
+const SYNTHETIC_COMPLETE_MEAN_COVERAGE = { source: 'nasa-power', status: 'complete' } as const;
 const summerRain = (annual: number) => [0.15, 0.13, 0.11, 0.06, 0.03, 0.01, 0.01, 0.02, 0.05, 0.10, 0.14, 0.19].map(weight => weight * annual);
 const winterRain = (annual: number) => [0.02, 0.03, 0.04, 0.09, 0.14, 0.17, 0.16, 0.14, 0.10, 0.06, 0.03, 0.02].map(weight => weight * annual);
 const bimodalRain = (annual: number) => [0.08, 0.08, 0.11, 0.10, 0.07, 0.05, 0.05, 0.06, 0.08, 0.11, 0.11, 0.10].map(weight => weight * annual);
@@ -359,7 +362,7 @@ test('all eight researched zone cases use their own crop calendar, heat checks a
   const e = buildCompleteProductionExample();
   for (const row of REGIONAL_CASES) {
     const climate = siteClimateFromLocationData({ rainfall: { rainfallSource: 'nasa-power', monthly: row.rain },
-      climate: { monthlyTemp: row.temp } }, row.lat);
+      climate: { monthlyTemp: row.temp, monthlyTempCoverage: SYNTHETIC_COMPLETE_MEAN_COVERAGE } }, row.lat);
     assert.ok(climate, `${row.zone}: a complete synthetic parser case must resolve`);
     assert.equal(climate.pattern, row.pattern, `${row.zone}: warm coastal sowings leaked into a different climate`);
     const zones = growingZonesForClimate(row.temp, row.rain, row.lat);
@@ -391,13 +394,18 @@ test('missing or mismatched climate cannot borrow the warm example as site data 
   const e = buildCompleteProductionExample();
   const cold = REGIONAL_CASES[0];
   const oldLabel = { rainfall: { rainfallSource: 'nasa-power', monthly: cold.rain },
-    climate: { monthlyTemp: cold.temp, koppen: 'Af' } };
+    climate: { monthlyTemp: cold.temp, monthlyTempCoverage: SYNTHETIC_COMPLETE_MEAN_COVERAGE, koppen: 'Af' } };
   const resolved = siteClimateFromLocationData(oldLabel, cold.lat);
   assert.ok(resolved);
   assert.equal(resolved.pattern, 'summer', 'a stale warm cache label must not override cold monthly data');
   assert.notEqual(resolved.koppen, 'Af');
-  for (const data of [undefined, {}, { rainfall: { monthly: cold.rain }, climate: { monthlyTemp: cold.temp } },
-    { rainfall: { rainfallSource: 'nasa-power', monthly: cold.rain.slice(1) }, climate: { monthlyTemp: cold.temp } }]) {
+  assert.equal(siteClimateFromLocationData({ rainfall: { rainfallSource: 'nasa-power', monthly: cold.rain },
+    climate: { monthlyTemp: cold.temp } }, cold.lat), null,
+  'legacy monthly arrays without a coverage declaration cannot borrow the synthetic complete precondition');
+  for (const data of [undefined, {}, { rainfall: { monthly: cold.rain },
+    climate: { monthlyTemp: cold.temp, monthlyTempCoverage: SYNTHETIC_COMPLETE_MEAN_COVERAGE } },
+    { rainfall: { rainfallSource: 'nasa-power', monthly: cold.rain.slice(1) },
+      climate: { monthlyTemp: cold.temp, monthlyTempCoverage: SYNTHETIC_COMPLETE_MEAN_COVERAGE } }]) {
     assert.equal(siteClimateFromLocationData(data, cold.lat), null, 'missing, unsourced or incomplete readings must remain unknown');
   }
   assert.deepEqual(growingZonesForClimate([], [], cold.lat), []);
