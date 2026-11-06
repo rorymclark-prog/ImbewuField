@@ -41,14 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: 'a768564db55c', changes: [
+    'Keep your DEMO crop plan when opening the Task Planner.',
+  ] },
   { when: '5 November 2026', sha: '287d05f2790e', changes: [
     'A warning about unsaved edits clears once the crop plan is saved.',
   ] },
   { when: '5 November 2026', sha: 'e3cb6c2ded43', changes: [
     'Printed language reviews keep each comparison together when it fits on a page.',
-  ] },
-  { when: '5 November 2026', sha: 'ec2ed5d90ab3', changes: [
-    'Language review pages keep help below the worksheet so it cannot cover the drafts.',
   ] },
   { when: '5 November 2026', sha: '5e87ef55b9', changes: [
     'Compare nursery wording drafts in seven languages',
@@ -59,6 +59,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   ], tour: [{ title: "Find Indonesia’s official BMKG sources", where: "Country evidence → Research priorities → Indonesia", href: '/international',
     detail: "Open the official forecast documentation, open-data description and terms from Indonesia’s research-queue card. Source links do not enable a forecast feed or local crop advice." }] },
   // Already-published main changes follow this release's announced nursery changes so their existing guide stays reachable.
+  { when: '5 November 2026', sha: 'ec2ed5d90ab3', changes: [
+    'Language review pages keep help below the worksheet so it cannot cover the drafts.',
+  ] },
   { when: '5 November 2026', sha: '53ca0a8d13ed', changes: [
     'Saving rechecks this tab’s editing access.',
   ] },

@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed AGY caption; coordinator core-only adoption is recorded in docs/international/agy-nursery-demo-navigation-release-code-2026-11-05/adoption.json.
+  "Keep your DEMO crop plan when opening the Task Planner.": "Boloka moralo wa hao wa dijalo wa DEMO ha o bula Task Planner.",
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
   "Printed language reviews keep each comparison together when it fits on a page.": "Dintlha tse hatisitsweng tsa tlhahlobo ya puo di boloka papiso e nngwe le e nngwe e kopane ha e lekana leqepheng.",
   "Language review pages keep help below the worksheet so it cannot cover the drafts.": "Maqephe a tlhahlobo ya puo a boloka thuso ka tlasa leqephe la mosebetsi e le hore e se ke ya kwala meralo.",

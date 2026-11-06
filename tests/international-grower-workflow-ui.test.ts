@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
 import React from 'react';
 import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
+import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime.js';
 import ts from 'typescript';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
@@ -372,4 +373,79 @@ test('interval area labels abbreviate saved fractional measurements without roun
     assert.equal(JSON.stringify(fractionalSource), sourceBefore);
     assert.equal(JSON.stringify(fractionalCanvas), canvasBefore);
   } finally { screen.dispose(); }
+});
+
+test('the confirmed DEMO plan link uses real Next client navigation without reseeding the active sample book', async () => {
+  const previous = new Map(['window', 'self', 'Storage', 'localStorage', 'sessionStorage', 'fetch', 'IS_REACT_ACT_ENVIRONMENT']
+    .map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  class MemoryStorage {
+    rows = new Map<string, string>();
+    get length() { return this.rows.size; }
+    key(index: number) { return [...this.rows.keys()][index] ?? null; }
+    getItem(key: string) { return this.rows.get(key) ?? null; }
+    setItem(key: string, value: string) { this.rows.set(key, String(value)); }
+    removeItem(key: string) { this.rows.delete(key); }
+    clear() { this.rows.clear(); }
+  }
+  let hardNavigations = 0, network = 0, sampleChanges = 0, prefetches = 0;
+  const hardNavigate = () => { hardNavigations++; throw Error('Task navigation must not reload the DEMO document'); };
+  const location = { assign: hardNavigate, replace: hardNavigate, reload: hardNavigate,
+    get href() { return 'https://example.invalid/facilitator/crops'; }, set href(_value: string) { hardNavigate(); } };
+  const local = new MemoryStorage(), session = new MemoryStorage();
+  const browser = Object.assign(new EventTarget(), { localStorage: local, sessionStorage: session, location });
+  for (const [key, value] of Object.entries({ window: browser, self: globalThis, Storage: MemoryStorage,
+    localStorage: local, sessionStorage: session, IS_REACT_ACT_ENVIRONMENT: true,
+    fetch: () => { network++; throw Error('The navigation fixture must not fetch'); } })) {
+    Object.defineProperty(globalThis, key, { configurable: true, value });
+  }
+  const samples = await import('../lib/sample-mode.ts');
+  let renderer: ReactTestRenderer | undefined;
+  const pushes: string[] = [];
+  const changed = () => { sampleChanges++; };
+  try {
+    assert.equal(samples.enterSampleMode(), true);
+    // Use the genuine sandbox with a distinct existing engineering fixture. This
+    // checks the navigation boundary, not whether an acceptance write occurred.
+    samples.setSandboxCropPlan(structuredClone(book));
+    const retained = samples.getSandboxCropPlan(), before = JSON.stringify(retained);
+    browser.addEventListener(samples.SAMPLE_MODE_EVENT, changed);
+    function Destination() {
+      assert.equal(samples.isSampleMode(), true);
+      assert.equal(samples.getSandboxCropPlan(), retained, 'client navigation must retain the actual module-owned sample object');
+      return React.createElement('p', { 'data-task-route': true }, JSON.stringify(samples.getSandboxCropPlan()));
+    }
+    function Host() {
+      const [path, setPath] = React.useState('/facilitator/crops');
+      const router = { back() {}, forward() {}, refresh: hardNavigate, replace: hardNavigate,
+        prefetch() { prefetches++; }, push(href: string) { pushes.push(href); setPath(href); } };
+      return React.createElement(AppRouterContext.Provider, { value: router }, path === '/cropplan'
+        ? React.createElement(Destination)
+        : React.createElement(Panel, { scope, source, sourceName: 'Synthetic saved garden', sourceIssue: null, checking: false,
+          contextRevision: 1, profiles: [profile], targets: [target], targetSiteId: scope.siteId,
+          onRefresh: async () => {}, onReview: async () => { throw Error('Navigation must not run a crop review'); },
+          acceptance: { status: 'confirmed', rows: 1, sample: true } }));
+    }
+    act(() => { renderer = create(React.createElement(Host)); });
+    const link = renderer!.root.findByType('a');
+    assert.equal(link.props.href, '/cropplan'); assert.equal(text(link), 'Open dated work in the Task Planner');
+    const status = renderer!.root.findAllByType('p').find(node => node.props.role === 'status'
+      && text(node).includes('Open dated work in the Task Planner'));
+    assert.ok(status); assert.match(text(status), /DEMO — 1 planned crop cycles saved in the example workspace/);
+    assert.equal(typeof link.props.onClick, 'function', 'a plain anchor reloads and loses the in-memory sample book');
+    const event = { currentTarget: { nodeName: 'A', getAttribute: () => null }, defaultPrevented: false,
+      metaKey: false, ctrlKey: false, shiftKey: false, altKey: false, nativeEvent: { which: 1 },
+      preventDefault() { this.defaultPrevented = true; } };
+    await act(async () => link.props.onClick(event));
+    assert.equal(event.defaultPrevented, true, 'the real Link must suppress native document navigation');
+    assert.deepEqual(pushes, ['/cropplan']);
+    assert.equal(text(renderer!.root.findByProps({ 'data-task-route': true })), before);
+    assert.equal(JSON.stringify(samples.getSandboxCropPlan()), before);
+    assert.equal(sampleChanges, 0); assert.equal(hardNavigations, 0); assert.equal(prefetches, 0); assert.equal(network, 0);
+  } finally {
+    if (renderer) act(() => renderer!.unmount());
+    browser.removeEventListener(samples.SAMPLE_MODE_EVENT, changed); samples.exitSampleMode();
+    for (const [key, descriptor] of previous) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor); else Reflect.deleteProperty(globalThis, key);
+    }
+  }
 });
