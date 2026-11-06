@@ -518,5 +518,10 @@ const copy:UpdateCopy={
   "Choose kg or lb for viewing. Changing the view keeps your original entry; typing a new weight changes the request and requires review. Saved crop records and nursery batches show the original entry separately from the planned kilogram quantity.": "Kgetha kg kapa lb bakeng sa ho sheba. Ho fetola pono ho boloka se kentsweng sa pele; ho thapa boima bo botjha ho fetola kopo mme ho hloka tlhahlobo. Direkoto tsa dijalo tse bolokilweng le dihlopha tsa dipeo di bontsha se kentsweng sa pele ka thoko ho bongata bo rerilweng ba dikhilograma.",
   // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
   "Enter household or trial harvest requests in kilograms or pounds.": "Kenya dikopo tsa kotulo tsa lelapa kapa tsa teko ka dikhilograma kapa diponto.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Compare harvest-weight wording drafts in four languages.": "Bapisa meralo ya mantswe a boima ba kotulo ka dipuo tse nne.",
+  "Review harvest weight drafts": "Hlahloba meralo ya boima ba kotulo",
+  "International reference tools → Language draft review → Harvest weight entry": "Dithulusi tsa tšupiso tsa matjhaba → Tlhahlobo ya moralo wa puo → Keno ya boima ba kotulo",
+  "Compare the current English for weight entry and saved requests with French, Spanish, Brazilian Portuguese and Swahili drafts. Changed or missing source wording stays visible. This review does not approve translations or change your app language.": "Bapisa Senyesemane sa jwale sa keno ya boima le dikopo tse bolokilweng le meralo ya Sefora, Sepanishe, Sepotoketsi sa Brazil le Seswahili. Mantswe a mohlodi a fetotsweng kapa a siyo a dula a bonahala. Tlhahlobo ena ha e dumelele diphetolelo kapa ho fetola puo ya sesebediswa sa hao.",
 };
 export default copy;

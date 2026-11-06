@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', sha: '8c4c2744d76e', changes: [
+    "Compare harvest-weight wording drafts in four languages.",
+  ], tour: [{ title: "Review harvest weight drafts", where: "International reference tools → Language draft review → Harvest weight entry", href: '/international/locales/mass-entry',
+    detail: "Compare the current English for weight entry and saved requests with French, Spanish, Brazilian Portuguese and Swahili drafts. Changed or missing source wording stays visible. This review does not approve translations or change your app language." }] },
   { when: '6 November 2026', sha: 'e66f8e3de2ab', changes: [
     'Enter household or trial harvest requests in kilograms or pounds.',
   ], tour: [{ title: 'Choose harvest weight units', where: 'Production plan → Automatic plan from your estimates → Household food or trial growing', href: '/facilitator/crops',

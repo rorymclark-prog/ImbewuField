@@ -518,5 +518,10 @@ const copy:UpdateCopy={
   "Choose kg or lb for viewing. Changing the view keeps your original entry; typing a new weight changes the request and requires review. Saved crop records and nursery batches show the original entry separately from the planned kilogram quantity.": "Nangani kg kana lb u itela u vhona. U shandukisa mbonalo zwi vhulunga zwe zwa dzheniswa u thoma; u ṅwala vhuleme vhuswa zwi shandukisa khumbelo nahone zwi ṱoḓa u ṱoliwa. Rekhodo dza zwimela dzo vhulungwaho na zwigwada zwa nese zwi sumbedza zwe zwa dzheniswa u thoma zwo fhambana na tshivhalo tsho pulaneledzwaho tsha khilogireme.",
   // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
   "Enter household or trial harvest requests in kilograms or pounds.": "Dzhenisani khumbelo dza khaṋo ya muṱani kana ya ndingo nga khilogireme kana phaundi.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Compare harvest-weight wording drafts in four languages.": "Vhambedzani mitalo ya maipfi a vhuleme ha khaṋo nga nyambo nṋa.",
+  "Review harvest weight drafts": "Ṱolani mitalo ya vhuleme ha khaṋo",
+  "International reference tools → Language draft review → Harvest weight entry": "Zwishumiswa zwa zwiko zwa mashango → Tsedzuluso ya mitalo ya nyambo → U dzhenisa vhuleme ha khaṋo",
+  "Compare the current English for weight entry and saved requests with French, Spanish, Brazilian Portuguese and Swahili drafts. Changed or missing source wording stays visible. This review does not approve translations or change your app language.": "Vhambedzani Tshiisimane tsha zwino tsha u dzhenisa vhuleme na khumbelo dzo vhulungwaho na mitalo ya Tshifura, Tshipanyani, Tshiputukezi tsha Brazil na Tswahili. Maipfi a vhubvo o shandukiswaho kana a siho a dula a tshi vhonala. Ṱholo hei a i tendeli vhupinduleli kana u shandukisa luambo lwa aputhulekhesheni yaṋu.",
 };
 export default copy;

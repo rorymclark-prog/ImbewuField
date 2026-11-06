@@ -15,7 +15,10 @@ export interface SourceMessage {
   sourceFile: 'lib/i18n.tsx'
     | 'components/crops/NurseryFieldPlantingObservationForm.tsx'
     | 'components/journal/JournalNurseryFieldPlantingSummary.tsx'
-    | 'components/crops/SavedGrowerNurseryReviewPanel.tsx';
+    | 'components/crops/SavedGrowerNurseryReviewPanel.tsx'
+    | 'components/crops/GrowerEnteredMassField.ts'
+    | 'components/crops/GrowerCycleIntent.ts'
+    | 'lib/release-notes.ts';
   english: string;
   pluralArgument?: string;
 }
