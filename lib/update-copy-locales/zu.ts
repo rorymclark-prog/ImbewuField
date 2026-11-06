@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired seed sourcing captions; English stays visible. See seed-sourcing-release-drafts/adoption.json.
+  "Review seed allocations and planned pack counts.": "Buyekeza izabelo zembewu nezibalo zamaphakethe ahleliwe.",
+  "Review planned seed sourcing": "Buyekeza ukutholakala kwembewu okuhleliwe",
+  "Crop planner → Nursery requirements → Seed sourcing": "Umhleli wezitshalo → Izidingo zenkulisa yokukhulisa izitshalo → Ukutholakala kwembewu",
+  "Open the nursery review for saved planned batches, add the batches that can share a seed supply, and enter your allocation and seeds per pack. Review the planned requirements before downloading the CSV. Blank counts stay unknown; these inputs do not record seed stock, place an order or cover all farm seed demand.": "Vula ukubuyekezwa kwenkulisa yokukhulisa izitshalo kwamaqoqo ahleliwe alondoloziwe, engeza amaqoqo angabelana ngesitoko noma ukuhlinzekwa kwembewu, bese ufaka isabelo sakho nembewu ngephakethe ngalinye. Buyekeza izidingo ezihleliwe ngaphambi kokulanda i-CSV. Izibalo ezingenalutho zihlala zingaziwa; lokhu okufakiwe akurekhodi isitoko sembewu, akufaki i-oda noma kuhlanganise sonke isidingo sembewu yepulazi.",
   // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
   "Keep saved request details with your plan and exports.": "Gcina imininingwane yesicelo elondoloziwe nohlelo lwakho nokuthunyelwayo.",
   "Check saved request details": "Bheka imininingwane yesicelo elondoloziwe",

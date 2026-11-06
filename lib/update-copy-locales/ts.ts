@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired seed sourcing captions; English stays visible. See seed-sourcing-release-drafts/adoption.json.
+  "Review seed allocations and planned pack counts.": "Kambela miavelo ya mbewu na tinhlayo ta mapakete lama kunguhatiweke.",
+  "Review planned seed sourcing": "Kambela ku kumiwa ka mbewu loku kunguhatiweke",
+  "Crop planner → Nursery requirements → Seed sourcing": "Mupulani wa swibyariwa → Swilaveko swa xirhapa xo kurisa swimilana → Ku kumiwa ka mbewu",
+  "Open the nursery review for saved planned batches, add the batches that can share a seed supply, and enter your allocation and seeds per pack. Review the planned requirements before downloading the CSV. Blank counts stay unknown; these inputs do not record seed stock, place an order or cover all farm seed demand.": "Pfula nkambelo wa xirhapa xo kurisa swimilana wa mintlawa leyi kunguhatiweke leyi hlayisiweke, engetela mintlawa leyi nga avelanaka mphakelo wa mbewu, kutani u nghenisa xiavelo xa wena na timbewu eka pakete yin’wana na yin’wana. Kambela swilaveko leswi kunguhatiweke emahlweni ko kopa CSV. Tinhlayo leti nga hava nchumu ti tshama ti nga tiviwi; leswi nghenisiweke a swi rhekhodi xitoko xa mbewu, a swi veki odara kumbe ku hlanganisa xilaveko hinkwaxo xa mbewu ya purasi.",
   // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
   "Keep saved request details with your plan and exports.": "Hlayisa vuxokoxoko bya xikombelo lebyi hlayisiweke na pulani ya wena na leswi rhumeriwaka ehandle.",
   "Check saved request details": "Kambela vuxokoxoko bya xikombelo lebyi hlayisiweke",

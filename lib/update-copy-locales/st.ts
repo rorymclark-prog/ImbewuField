@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired seed sourcing captions; English stays visible. See seed-sourcing-release-drafts/adoption.json.
+  "Review seed allocations and planned pack counts.": "Hlahloba dabelo tsa dipeo le dipalo tsa diphuthelo tse rerilweng.",
+  "Review planned seed sourcing": "Hlahloba phumantsho ya dipeo e rerilweng",
+  "Crop planner → Nursery requirements → Seed sourcing": "Moradi wa dijalo → Ditlhoko tsa bodirelo ba ho hodisa dimela → Phumantsho ya dipeo",
+  "Open the nursery review for saved planned batches, add the batches that can share a seed supply, and enter your allocation and seeds per pack. Review the planned requirements before downloading the CSV. Blank counts stay unknown; these inputs do not record seed stock, place an order or cover all farm seed demand.": "Bula tlhahlobo ya bodirelo ba ho hodisa dimela bakeng sa dihlopha tse rerilweng tse bolokilweng, eketsa dihlopha tse ka arolelanang kabelo ya dipeo, mme o kenye kabelo ya hao le dipeo ka phuthelo ka nngwe. Hlahloba ditlhoko tse rerilweng pele o jarolla CSV. Dipalo tse se nang letho di dula di sa tsejwe; dintlha tsena tse kentsweng ha di rekote setoko sa dipeo, ha di etse odara kapa ho akaretsa tlhoko yohle ya dipeo tsa polasi.",
   // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
   "Keep saved request details with your plan and exports.": "Boloka dintlha tsa kopo tse bolokilweng le moralo wa hao le tse romelwang ntle.",
   "Check saved request details": "Hlahloba dintlha tsa kopo tse bolokilweng",

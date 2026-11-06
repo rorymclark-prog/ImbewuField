@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', sha: '38c04e5126a3', changes: [
+    'Review seed allocations and planned pack counts.',
+  ], tour: [{ title: 'Review planned seed sourcing', where: 'Crop planner → Nursery requirements → Seed sourcing', href: '/facilitator/crops',
+    detail: 'Open the nursery review for saved planned batches, add the batches that can share a seed supply, and enter your allocation and seeds per pack. Review the planned requirements before downloading the CSV. Blank counts stay unknown; these inputs do not record seed stock, place an order or cover all farm seed demand.' }] },
   { when: '6 November 2026', sha: '965e29f0b', changes: [
     'Keep saved request details with your plan and exports.',
   ], tour: [{ title: 'Check saved request details', where: 'Crop planner → Nursery requirements for saved planned batches', href: '/facilitator/crops',
