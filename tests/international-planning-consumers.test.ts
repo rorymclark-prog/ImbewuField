@@ -137,10 +137,10 @@ test('unsupported collection keeps raw sowings and outlines while withholding de
 
 test('unsupported crop PDF contains saved records and no regenerated sowing or production calendar',async()=>{
   await browser(); const cropFact=fact(), doc=new jsPDF({unit:'pt',format:'a4'});
-  drawReportCropSummary(doc,cropFact,0,'en',false);
+  await drawReportCropSummary(doc,cropFact,0,'en',false);
   const output=doc.output();assert.match(output,/Saved sowing records/);assert.match(output,/Local crop guidance/);
   assert.doesNotMatch(output,/Seasonal sowing calendar|SITE REPORT \/ ANNUAL PRODUCTION|Check seedlings/);
-  const enabled=new jsPDF({unit:'pt',format:'a4'});drawReportCropSummary(enabled,cropFact,0,'en',true);
+  const enabled=new jsPDF({unit:'pt',format:'a4'});await drawReportCropSummary(enabled,cropFact,0,'en',true);
   assert.match(enabled.output(),/Seasonal sowing calendar/);
 });
 
@@ -194,7 +194,7 @@ test('a long saved-record allocation wraps over real PDF pages without dropping 
   cropFact.snapshot=undefined;
   cropFact.crops[0].bedLabels=Array.from({length:500},(_,index)=>`Fixture growing space ${index+1}`);
   const doc=new jsPDF({unit:'pt',format:'a4'});
-  drawReportCropSummary(doc,cropFact,0,'en',false);
+  await drawReportCropSummary(doc,cropFact,0,'en',false);
   assert.ok(doc.getNumberOfPages()>2);
   const output=doc.output();assert.match(output,/Fixture growing space 500/);assert.match(output.replaceAll('\\(', '(').replaceAll('\\)', ')'),/Saved sowing records \(continued\)/);
   assert.doesNotMatch(output,/Seasonal sowing calendar/);

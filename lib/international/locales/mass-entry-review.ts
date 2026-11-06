@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { rawJsonIsLossless } from '../../lossless-json';
 import { assessMessage } from './coverage';
 import { MASS_ENTRY_REVIEW_SOURCE as binding } from './mass-entry-review-source';
-import { readCurrentSourceLiterals, type SourceLiteralSelector } from './source-reader';
+import { hasCurrentSourceDelegation, readCurrentSourceLiterals, type SourceLiteralSelector } from './source-reader';
 import type { DraftDictionary, DraftMessage, MessageState, SourceMessage } from './types';
 
 export const MASS_ENTRY_REVIEW_LOCALES = ['fr', 'es', 'pt-BR', 'sw', 'hi', 'bn', 'id'] as const;
@@ -60,11 +60,15 @@ export function buildMassEntryReviewData(input: MassEntryReviewInputs): MassEntr
     messages.push({ key: value.key, english: value.english, sourceFile: selected.sourceFile });
   }
   const current: Record<string, string | undefined> = {};
+  const component = input.currentSources[binding.delegation.sourceFile];
+  const delegated = typeof component === 'string' && hasCurrentSourceDelegation(component, binding.delegation);
   for (const file of binding.files) {
     const text = input.currentSources[file.path];
     const selectors: Record<string, SourceLiteralSelector> = Object.fromEntries(binding.messages
       .filter(message => message.sourceFile === file.path).map(message => [message.key, message.selector]));
-    if (typeof text === 'string') Object.assign(current, readCurrentSourceLiterals(text, selectors));
+    if (typeof text === 'string' && (file.path !== binding.delegation.targetFile || delegated)) {
+      Object.assign(current, readCurrentSourceLiterals(text, selectors));
+    }
   }
   const languages = MASS_ENTRY_REVIEW_LOCALES.map(locale => {
     const packet = parse(input.packets[locale]);
@@ -90,12 +94,17 @@ export function buildMassEntryReviewData(input: MassEntryReviewInputs): MassEntr
     }
     return { locale, rows: messages.map(message => {
       const assessment = assessMessage(message, current, (problem ? {} : dictionary) as DraftDictionary, locale);
-      const contextIssue = sources.some(file => file.path === message.sourceFile && file.status === 'changed')
+      const relocated = message.sourceFile === binding.delegation.targetFile;
+      const contextIssue = sources.some(file => (file.path === message.sourceFile
+        || relocated && file.path === binding.delegation.sourceFile) && file.status === 'changed')
         ? ['The component source changed since capture. Recheck the current wording and context before language review.'] : [];
       return { key: message.key, sourceFile: message.sourceFile, frozenEnglish: message.english,
         currentEnglish: assessment.source ?? null, translation: problem ? null : dictionary[message.key]?.text ?? null,
         state: problem && assessment.state !== 'source-missing' ? 'invalid' as const : assessment.state,
-        issues: [...assessment.issues, ...contextIssue, ...(problem ? [problem] : [])] };
+        issues: [...assessment.issues, ...contextIssue,
+          ...(relocated ? ['Current wording is read from the shared intent presenter after source relocation; the frozen capture remains unchanged.'] : []),
+          ...(relocated && !delegated ? ['The current component delegation to this presenter could not be verified.'] : []),
+          ...(problem ? [problem] : [])] };
     }) };
   });
   return { ...base, issue: null, languages };

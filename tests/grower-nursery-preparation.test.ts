@@ -234,7 +234,11 @@ test('the own nursery CSV preserves every batch/resource column while adding sep
   // A seed lot belongs to one member, not the summed preparation group. Keep
   // the complete prior batch/resource contract alongside these additive fields.
   const referenceColumns = ['member_number', 'reference_status', 'variety', 'seed_lot_reference', 'raising_batch_reference', 'reference_note'];
-  assert.deepEqual(columns.filter(column => !referenceColumns.includes(column)),
+  // Original whole-demand input is additive member metadata, never a resource
+  // total; verify every prior batch/resource column and exact new column order.
+  const intentColumns = ['planning_intent_status', 'planning_purpose', 'original_requested_gross_kg', 'original_request_weight_unit', 'original_request_harvest_start_utc', 'original_request_harvest_end_exclusive_utc', 'original_request_note', 'original_entered_weight_text', 'original_entered_weight_unit'];
+  assert.deepEqual(columns.slice(-intentColumns.length), intentColumns);
+  assert.deepEqual(columns.filter(column => !referenceColumns.includes(column) && !intentColumns.includes(column)),
     'record_type,site_name,plan_basis,source_status,review_status,headroom,crop_name,growing_spaces,start_date,end_date_exclusive,target_final_positions,starts,seeds,trays,area_m2,nursery_model,resource_type,resource_name,recorded_capacity,peak_known_min,peak_known_max,shortage_upper_end,availability_quantity,availability_complete,incomplete,assumptions,issues'.split(','));
   assert.deepEqual(columns.filter(column => referenceColumns.includes(column)), referenceColumns);
   assert.equal(new Set(columns).size, columns.length);

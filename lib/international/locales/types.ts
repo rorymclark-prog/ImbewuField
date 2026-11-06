@@ -18,6 +18,7 @@ export interface SourceMessage {
     | 'components/crops/SavedGrowerNurseryReviewPanel.tsx'
     | 'components/crops/GrowerEnteredMassField.ts'
     | 'components/crops/GrowerCycleIntent.ts'
+    | 'lib/international/grower-cycle-intent.ts'
     | 'lib/release-notes.ts';
   english: string;
   pluralArgument?: string;

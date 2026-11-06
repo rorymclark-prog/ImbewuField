@@ -34,12 +34,18 @@ const { configSchema } = require('next/dist/server/config-schema') as {
 };
 const packetRoot = 'lib/international/locales/mass-entry-drafts';
 // The worksheet now also compares Hindi, Bengali and Indonesian packets. Keep
-// all eight original assets and add only those three exact public JSON files;
-// the same frozen twelve English messages and inactive status still bind them.
+// all eight original assets and those three exact public JSON files. Wording
+// now lives in a shared presenter: trace that twelfth named asset as well,
+// retaining the original component as actual delegation/context evidence.
 const expected = [`${packetRoot}/source.json`, `${packetRoot}/fr.json`, `${packetRoot}/es.json`,
   `${packetRoot}/pt-BR.json`, `${packetRoot}/sw.json`, `${packetRoot}/hi.json`, `${packetRoot}/bn.json`,
   `${packetRoot}/id.json`, 'components/crops/GrowerEnteredMassField.ts',
-  'components/crops/GrowerCycleIntent.ts', 'lib/release-notes.ts'].sort();
+  'components/crops/GrowerCycleIntent.ts', 'lib/international/grower-cycle-intent.ts', 'lib/release-notes.ts'].sort();
+const component = 'components/crops/GrowerCycleIntent.ts';
+const presenter = 'lib/international/grower-cycle-intent.ts';
+const changedKey = 'massEntry.readback.planningEstimate';
+const changedEnglish = 'This is the grower-entered planning estimate, not this batch’s output or an observed harvest. Repeated whole-demand request weights must not be added together.';
+const expectedState = (key: string) => key === changedKey ? 'stale' : 'draft';
 const entryName = 'app/international/locales/mass-entry/page';
 const route = normalizeAppPath(entryName);
 const scan = (pattern: string) => new Promise<string[]>((done, fail) => {
@@ -103,15 +109,15 @@ test('actual Next 14 config accepts a narrowly traced mass-review data/source bu
   assert.ok(actualConfig.experimental?.outputFileTracingIncludes,
     'looped source and packet paths need the installed framework’s experimental include slot');
   await withBundle(actualConfig, (directory, files) => {
-    assert.deepEqual(files, expected, 'the worksheet needs the frozen packet, seven inactive language packets and three actual source files');
+    assert.deepEqual(files, expected, 'the worksheet needs the frozen packet, seven inactive language packets and four actual source/context files');
     const data = loadFromBundle(directory);
     assert.equal(data.issue, null); assert.deepEqual(data.languages.map(language => language.locale), ['fr', 'es', 'pt-BR', 'sw', 'hi', 'bn', 'id']);
     assert.equal(data.languages.flatMap(language => language.rows).length, 84);
     for (const language of data.languages) {
       assert.equal(language.rows.length, 12);
       for (const row of language.rows) {
-        assert.equal(row.state, 'draft', `${language.locale}: ${row.key}`);
-        assert.equal(row.currentEnglish, row.frozenEnglish, row.key);
+        assert.equal(row.state, expectedState(row.key), `${language.locale}: ${row.key}`);
+        assert.equal(row.currentEnglish, row.key === changedKey ? changedEnglish : row.frozenEnglish, row.key);
         assert.ok(row.translation?.trim(), row.key);
       }
     }
@@ -138,14 +144,14 @@ for (const missing of expected) test(`an omitted traced ${missing} remains visib
       assert.ok(data.issue); assert.deepEqual(data.languages, []); return;
     }
     assert.equal(data.issue, null);
-    const sourceFile = ['components/crops/GrowerEnteredMassField.ts', 'components/crops/GrowerCycleIntent.ts', 'lib/release-notes.ts'].includes(missing);
+    const sourceFile = ['components/crops/GrowerEnteredMassField.ts', component, presenter, 'lib/release-notes.ts'].includes(missing);
     if (sourceFile) {
       assert.equal(data.sources.find(source => source.path === missing)?.status, 'unavailable');
       let held = 0;
       for (const row of data.languages.flatMap(language => language.rows)) {
-        if (row.sourceFile === missing) {
+        if (row.sourceFile === missing || missing === component && row.sourceFile === presenter) {
           held++; assert.equal(row.currentEnglish, null); assert.equal(row.state, 'source-missing'); assert.ok(row.issues.length);
-        } else assert.equal(row.state, 'draft');
+        } else assert.equal(row.state, expectedState(row.key));
       }
       assert.ok(held > 0);
     } else {
@@ -154,7 +160,7 @@ for (const missing of expected) test(`an omitted traced ${missing} remains visib
       assert.ok(unavailable, 'a missing packet must remain a visible comparison, including the three additional languages');
       assert.equal(unavailable.rows.length, 12);
       for (const language of data.languages) for (const row of language.rows) {
-        assert.equal(row.state, language.locale === locale ? 'invalid' : 'draft');
+        assert.equal(row.state, language.locale === locale ? 'invalid' : expectedState(row.key));
         if (language.locale === locale) { assert.equal(row.translation, null); assert.ok(row.issues.length); }
       }
     }

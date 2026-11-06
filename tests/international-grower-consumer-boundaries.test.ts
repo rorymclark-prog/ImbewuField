@@ -94,7 +94,10 @@ test('the actual saved-row screen reads back requested weight and window after J
  try{
   await act(async()=>{renderer=create(React.createElement(SavedRows,{rows,wholeBookRows:rows,source:f.source,scope:f.scope}));});
   assert.match(text(renderer.root),/Planning purpose: household food/);
-  assert.match(text(renderer.root),/Original request for all cycles in this demand: ≈12\.346 kg gross/);
+  // Original entered input is now lossless across the common public presenter.
+  // Keep this actual screen assertion stricter than the former rounded readback.
+  assert.match(text(renderer.root),/Original request for all cycles in this demand: 12\.34567 kg gross/);
+  assert.doesNotMatch(text(renderer.root),/≈12\.346 kg gross/);
   assert.match(text(renderer.root),/2028-02-01 to before 2028-03-01 \(UTC\)/);
   assert.doesNotMatch(text(renderer.root),/private-ui-entry|profile-a|synthetic-private-source-receipt/);
   await act(async()=>renderer.update(React.createElement(SavedRows,{rows,wholeBookRows:rows,source:{...f.source,geometryFingerprint:'moved'},scope:f.scope})));

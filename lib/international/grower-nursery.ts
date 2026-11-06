@@ -1,3 +1,4 @@
+import { readGrowerCycleIntentField, type GrowerCyclePublicIntent } from './grower-cycle-intent';
 import { cropByKey } from '../crop-catalog';
 import { decimalQuantityProduct } from '../farm-records';
 import { detachJsonData } from '../lossless-json';
@@ -611,6 +612,8 @@ export interface GrowerNurseryPreparationGroup {
     readonly bedIds: readonly string[];
     readonly endDateExclusive: string;
     readonly reference?: GrowerNurseryBatchReferenceView;
+    /** Preserve each member’s accepted intent; grouped quantities are not demand totals. */
+    readonly intent?: GrowerCyclePublicIntent;
   }[];
   readonly fieldPositions: GrowerNurseryPreparationMetric;
   readonly startsToRaise: GrowerNurseryPreparationMetric;
@@ -737,7 +740,7 @@ export function projectGrowerNurseryPreparation(result: GrowerNurseryResult): Gr
       return { key, cropKey: first.cropKey, cropName: cropByKey(first.cropKey)?.name ?? 'Crop name unavailable', profileId: first.profileId,
         startDate: first.startDate, batchIds: batches.map(batch => batch.id), members: batches.map(batch => ({
           batchId: batch.id, cycleId: batch.cycleId, plantingIds: [...batch.plantingIds], bedIds: [...batch.bedIds], endDateExclusive: batch.endDateExclusive,
-          reference: preparationReference(batch, referenceSource),
+          reference: preparationReference(batch, referenceSource), intent: readGrowerCycleIntentField(batch),
         })), fieldPositions, startsToRaise, seedsToSow, outsideReviewHorizon,
         incomplete: batches.some(batch => batch.incomplete) || issues.length > 0
           || [fieldPositions, startsToRaise, seedsToSow].some(metric => metric.status !== 'complete'), issues };

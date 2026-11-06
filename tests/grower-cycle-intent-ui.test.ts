@@ -47,9 +47,11 @@ test('an unrecorded purpose remains unknown and an explicit buyer retains its ow
   assert.doesNotMatch(buyer, /private-buyer|kg|household food/);
 });
 
-test('tiny positive and rounded request weights cannot masquerade as an exact recorded zero', () => {
+test('original entered requests retain exact numeric readback instead of replacing it with a rounded estimate', () => {
   const tiny = entered('household', 0.0000001), before = JSON.stringify(tiny);
   assert.match(render(tiny), /1e-7 kg/); assert.doesNotMatch(render(tiny), /: 0 kg/);
-  assert.match(render(entered('household', 12.34567)), /≈12\.346 kg/);
+  // The original request is retained data, not calculated output: show every supplied digit.
+  assert.match(render(entered('household', 12.34567)), /12\.34567 kg/);
+  assert.doesNotMatch(render(entered('household', 12.34567)), /≈|12\.346 kg/);
   assert.equal(JSON.stringify(tiny), before);
 });

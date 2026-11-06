@@ -14,8 +14,9 @@ const asiaLocales = ['hi', 'bn', 'id'] as const;
 const locales = [...originalLocales, ...asiaLocales] as const;
 const field = 'components/crops/GrowerEnteredMassField.ts';
 const intent = 'components/crops/GrowerCycleIntent.ts';
+const presenter = 'lib/international/grower-cycle-intent.ts';
 const release = 'lib/release-notes.ts';
-const paths = [field, intent, release];
+const paths = [field, intent, presenter, release];
 const folder = 'lib/international/locales/mass-entry-drafts';
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const sourceText = read(`${folder}/source.json`);
@@ -25,6 +26,12 @@ interface Message extends FrozenMessage { translation: string; [key: string]: un
 interface Packet { locale: string; sourceSha256: string; reviewStatus: string; runtimeActivation: boolean; messages: Message[]; [key: string]: unknown }
 const frozen = JSON.parse(sourceText) as { messages: FrozenMessage[]; locales: string[];
   sourceFiles: { file: string; sha256: string }[] };
+// The shared presenter now adds the non-summing warning. Keep every frozen
+// packet and compare the changed current sentence as stale, never reapprove it.
+const changedKey = 'massEntry.readback.planningEstimate';
+const changedEnglish = 'This is the grower-entered planning estimate, not this batch’s output or an observed harvest. Repeated whole-demand request weights must not be added together.';
+const expectedState = (key: string) => key === changedKey ? 'stale' : 'draft';
+const expectedEnglish = (key: string, english: string) => key === changedKey ? changedEnglish : english;
 function input(): MassEntryReviewInputs {
   return { sourceText, currentSources: Object.fromEntries(paths.map(path => [path, read(path)])),
     packets: Object.fromEntries(locales.map(locale => [locale, read(`${folder}/${locale}.json`)])) };
@@ -44,13 +51,13 @@ function packetHeld(data: ReturnType<typeof buildMassEntryReviewData>) {
   for (const row of language(data).rows) {
     assert.equal(row.state, 'invalid', row.key); assert.equal(row.translation, null, row.key); assert.ok(row.issues.length, row.key);
   }
-  for (const row of language(data, 'es').rows) assert.equal(row.state, 'draft', row.key);
+  for (const row of language(data, 'es').rows) assert.equal(row.state, expectedState(row.key), row.key);
   for (const entry of data.languages.filter(entry => entry.locale !== 'fr')) {
-    for (const row of entry.rows) assert.equal(row.state, 'draft', `${entry.locale}: ${row.key}`);
+    for (const row of entry.rows) assert.equal(row.state, expectedState(row.key), `${entry.locale}: ${row.key}`);
   }
 }
 
-test('the actual current mass sources and seven exact inactive packets expose 84 unreviewed pairs without rewriting them', () => {
+test('the actual mass sources retain 84 unreviewed pairs while seven changed non-summing sentences remain stale', () => {
   const value = input(), before = structuredClone(value), data = buildMassEntryReviewData(value);
   assert.deepEqual(MASS_ENTRY_REVIEW_LOCALES, locales);
   assert.equal(data.issue, null); assert.equal(data.sourceSha256, sha(sourceText));
@@ -79,12 +86,15 @@ test('the actual current mass sources and seven exact inactive packets expose 84
     assert.deepEqual(entry.rows.map(row => row.key), frozen.messages.map(row => row.key));
     for (const [index, row] of entry.rows.entries()) {
       assert.equal(actual.messages[index].sha256, sha(actual.messages[index].english));
-      assert.equal(row.frozenEnglish, frozen.messages[index].english); assert.equal(row.currentEnglish, frozen.messages[index].english);
-      assert.equal(row.translation, actual.messages[index].translation); assert.equal(row.state, 'draft', row.key);
-      assert.equal(row.sourceFile, index < 5 ? field : index < 11 ? intent : release, row.key);
+      assert.equal(row.frozenEnglish, frozen.messages[index].english);
+      assert.equal(row.currentEnglish, expectedEnglish(row.key, frozen.messages[index].english));
+      assert.equal(row.translation, actual.messages[index].translation); assert.equal(row.state, expectedState(row.key), row.key);
+      assert.equal(row.sourceFile, index < 5 ? field : index < 11 ? presenter : release, row.key);
       assert.equal(row.issues.some(issue => /human.reviewed|approved by/i.test(issue)), false);
     }
   }
+  assert.equal(data.languages.flatMap(entry => entry.rows).filter(row => row.state === 'draft').length, 77);
+  assert.equal(data.languages.flatMap(entry => entry.rows).filter(row => row.state === 'stale').length, 7);
   assert.deepEqual(value, before);
 });
 
@@ -92,13 +102,115 @@ test('the named server loader reads actual current source and packet files rathe
   assert.deepEqual(loadMassEntryReviewData(), buildMassEntryReviewData(input()));
 });
 
+test('relocated current wording retains historical component provenance without inventing a presenter capture', () => {
+  const data = buildMassEntryReviewData(input());
+  const component = data.sources.find(source => source.path === intent), current = data.sources.find(source => source.path === presenter);
+  assert.ok(component); assert.ok(current);
+  assert.equal(component.capturedSha256, '88b4f0fe56d8f0d494d26a2a7f8dfbb045ee1abac825880cbac4f765d4da835f');
+  assert.equal(component.status, 'changed'); assert.equal(current.capturedSha256, null); assert.equal(current.status, 'available');
+  for (const row of language(data).rows.filter(row => row.sourceFile === presenter)) {
+    assert.ok(row.issues.some(issue => /relocation/.test(issue)));
+    assert.ok(row.issues.some(issue => /component source changed/i.test(issue)));
+  }
+});
+
+for (const damage of ['missing-import', 'wrong-call', 'wrong-argument', 'unused-result', 'missing-render', 'dynamic-render', 'syntax-error'] as const) {
+  test(`${damage} component delegation cannot certify shared presenter wording`, () => {
+    const value = input(), component = value.currentSources[intent]!;
+    const changed = damage === 'missing-import' ? component.replace("from '@/lib/international/grower-cycle-intent'", "from './unrelated-presenter'")
+      : damage === 'wrong-call' ? component.replace('const intent = readGrowerCycleIntent(view)', 'const intent = unrelatedIntent(view)')
+      : damage === 'wrong-argument' ? component.replace('readGrowerCycleIntent(view)', 'readGrowerCycleIntent(otherView)')
+      : damage === 'unused-result' ? component.replace('...intent.lines.map', '...unrelated.lines.map')
+      : damage === 'missing-render' ? component.replace("}, text)));", "}, 'Unrelated fixed wording')));")
+      : damage === 'dynamic-render' ? component.replace('...intent.lines.map', '...intent.otherLines.map')
+      : `${component}\nfunction {`;
+    assert.notEqual(changed, component);
+    const data = buildMassEntryReviewData({ ...value, currentSources: { ...value.currentSources, [intent]: changed } });
+    for (const row of language(data).rows) {
+      assert.equal(row.state, row.sourceFile === presenter ? 'source-missing' : expectedState(row.key), row.key);
+      if (row.sourceFile === presenter) { assert.equal(row.currentEnglish, null); assert.ok(row.issues.length); }
+    }
+  });
+}
+
+for (const damage of ['comment', 'unrelated-function', 'nested-helper', 'nested-arrow', 'dynamic-template'] as const) {
+  test(`${damage} cannot substitute for the presenter's actual buyer-purpose literal`, () => {
+    const value = input(), current = value.currentSources[presenter]!, original = 'Planning purpose: buyer target.';
+    const replacement = damage === 'dynamic-template' ? '`Planning purpose: ${buyerWord}.`' : 'unboundBuyerText';
+    let changed = current.replace(`['${original}']`, `[${replacement}]`);
+    const helper = `return result('recorded', 'buyer-target', ['${original}']);`;
+    if (damage === 'comment') changed += `\n// ${original}\n`;
+    if (damage === 'unrelated-function') changed += `\nfunction unrelated(){ ${helper} }\n`;
+    if (damage === 'nested-helper' || damage === 'nested-arrow') changed = changed.replace('  try {', damage === 'nested-helper'
+      ? `  function unused(){ ${helper} }\n  try {` : `  const unused = () => { ${helper} };\n  try {`);
+    assert.notEqual(changed, current);
+    const data = buildMassEntryReviewData({ ...value, currentSources: { ...value.currentSources, [presenter]: changed } });
+    const row = language(data).rows[6];
+    assert.equal(row.currentEnglish, null); assert.equal(row.state, 'source-missing');
+    assert.equal(language(data).rows[5].state, 'draft', 'another independently identified presenter role remains readable');
+  });
+}
+
+test('actual changed presenter literals are exposed as current English rather than substituted from frozen packets', () => {
+  const value = input(), current = value.currentSources[presenter]!;
+  const changed = current.replace("['Planning purpose: buyer target.']", "['Changed current buyer purpose.']");
+  assert.notEqual(changed, current);
+  const row = language(buildMassEntryReviewData({ ...value, currentSources: { ...value.currentSources, [presenter]: changed } })).rows[6];
+  assert.equal(row.currentEnglish, 'Changed current buyer purpose.'); assert.equal(row.state, 'stale');
+  assert.equal(row.frozenEnglish, 'Planning purpose: buyer target.');
+});
+
+for (const damage of ['wrong-branch', 'duplicate-branch', 'unexported-owner', 'duplicate-owner', 'dynamic-array'] as const) {
+  test(`${damage} presenter cannot choose an arbitrary purposeUnknown literal`, () => {
+    const value = input(), current = value.currentSources[presenter]!;
+    const condition = "view === undefined || status === 'not-recorded'";
+    const actual = `if (${condition}) return result('not-recorded', 'not-recorded', [\n      '${frozen.messages[5].english}',\n    ]);`;
+    assert.ok(current.includes(actual));
+    const changed = damage === 'wrong-branch' ? current.replace(condition, 'unrelatedCondition')
+      : damage === 'duplicate-branch' ? current.replace(actual, `${actual}\n    ${actual}`)
+      : damage === 'unexported-owner' ? current.replace('export function readGrowerCycleIntent(', 'function readGrowerCycleIntent(')
+      : damage === 'duplicate-owner' ? `${current}\nexport function readGrowerCycleIntent(){return undefined;}\n`
+      : current.replace(`'${frozen.messages[5].english}',`, 'unboundPurposeText,');
+    assert.notEqual(changed, current);
+    const row = language(buildMassEntryReviewData({ ...value, currentSources: { ...value.currentSources, [presenter]: changed } })).rows[5];
+    assert.equal(row.currentEnglish, null); assert.equal(row.state, 'source-missing');
+  });
+}
+
+test('conditional missing-entry and missing-request roles cannot borrow old wording from unrelated pushes', () => {
+  for (const index of [7, 10]) {
+    const value = input(), current = value.currentSources[presenter]!, original = frozen.messages[index].english;
+    const changed = current.replace(`'${original}'`, 'unboundMissingText')
+      + `\nfunction unrelated(){lines.push('${original}');}\n`;
+    assert.notEqual(changed, current);
+    const row = language(buildMassEntryReviewData({ ...value, currentSources: { ...value.currentSources, [presenter]: changed } })).rows[index];
+    assert.equal(row.currentEnglish, null); assert.equal(row.state, 'source-missing');
+  }
+});
+
+test('duplicate or dynamic canonical push arguments cannot retain current-English status through another literal', () => {
+  const value = input(), current = value.currentSources[presenter]!, canonical = frozen.messages[8].english;
+  const actualPush = current.slice(current.indexOf('    lines.push(`Original request'), current.indexOf('\n    return result', current.indexOf('    lines.push(`Original request')));
+  assert.ok(actualPush.includes(canonical));
+  for (const changed of [current.replace(`'${canonical}'`, 'unboundCanonicalText'),
+    current.replace(`'${canonical}'`, `\`${canonical} \${extra}\``),
+    current.replace(actualPush, `${actualPush}\n${actualPush}`),
+    current.replace('String(requestedGrossKg)', 'unboundGrossWeight')
+      + `\nfunction unused(){lines.push('Unrelated', '${canonical}', 'Other estimate copy');}\n`]) {
+    assert.notEqual(changed, current);
+    const row = language(buildMassEntryReviewData({ ...value, currentSources: { ...value.currentSources, [presenter]: changed } })).rows[8];
+    assert.equal(row.currentEnglish, null); assert.equal(row.state, 'source-missing');
+  }
+});
+
 for (const path of paths) test(`missing actual ${path} withdraws only its current English instead of borrowing the frozen snapshot`, () => {
   const value = input(), data = buildMassEntryReviewData({ ...value, currentSources: { ...value.currentSources, [path]: undefined } });
   assert.equal(data.sources.find(row => row.path === path)?.status, 'unavailable');
   for (const row of data.languages.flatMap(entry => entry.rows)) {
-    assert.equal(row.currentEnglish, row.sourceFile === path ? null : row.frozenEnglish);
-    assert.equal(row.state, row.sourceFile === path ? 'source-missing' : 'draft', row.key);
-    if (row.sourceFile === path) assert.ok(row.issues.length);
+    const affected = row.sourceFile === path || path === intent && row.sourceFile === presenter;
+    assert.equal(row.currentEnglish, affected ? null : expectedEnglish(row.key, row.frozenEnglish));
+    assert.equal(row.state, affected ? 'source-missing' : expectedState(row.key), row.key);
+    if (affected) assert.ok(row.issues.length);
   }
 });
 
