@@ -58,8 +58,20 @@ export default function CountryReview() {
       <p><Link href="/international/locales" className={styles.link}>Review language drafts →</Link></p>
       <p><Link href="/international/projects" className={styles.link}>Review project workflows and evidence →</Link></p>
     </nav>
-    <section className={styles.notice} aria-label="Readiness limits"><strong>Reference only. International production planning is unavailable.</strong>
+    <section className={styles.notice} aria-label="Readiness limits"><strong>Reference only. Locally reviewed crop calendars and catalogue guidance are unavailable for these international pilots.</strong>
       <p>A country, an agricultural region and a language are independent choices. This English review interface does not certify local agronomy. South African defaults are never applied by this foundation.</p>
+    </section>
+    <section className={styles.card} aria-labelledby="own-estimates-heading">
+      <h2 id="own-estimates-heading">Plan from your own growing estimates</h2>
+      <p>For a saved mapped site, you can review a crop plan using the measurements and growing estimates you enter.</p>
+      <ol>
+        <li>Open your saved mapped site or its mapped design in the crop planner.</li>
+        <li>In “Site country and region”, choose the country and confirm the site description. The country selector on this page explores reference evidence; it does not save site details.</li>
+        <li>Save your growing estimates, then open “Automatic plan from your estimates”. Select a saved buyer target, or add household or trial demand. Enter your dates and confirm the available growing space.</li>
+      </ol>
+      <p>Incomplete inputs or changed source records can hold a review. Your estimates do not supply a locally reviewed crop calendar or record an actual planting or harvest.</p>
+      <p><Link href="/facilitator/crops" prefetch={false} className={`${styles.link} inline-flex min-h-11 items-center`}>Open crop planner →</Link></p>
+      <p><Link href="/farmer" prefetch={false} className={`${styles.link} inline-flex min-h-11 items-center`}>Open map and saved sites →</Link></p>
     </section>
     <section className={styles.card} aria-labelledby="context-heading"><h2 id="context-heading">Review a country</h2>
       <div className={styles.fields}><label>Country<select value={code} disabled={loading} onChange={(event) => { setCode(event.target.value); setRegion(''); setResult(null); }}>
