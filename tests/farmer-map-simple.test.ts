@@ -85,7 +85,7 @@ test('the Design Studio pill and the survey photo tip use Lucide icons, not emoj
   assert.doesNotMatch(FARMER_PAGE, /aria-hidden>🎨</, 'the palette emoji is still in the Design Studio pill');
   // The exact closing-tag guard rejected a sizing class needed to keep this icon from
   // shrinking in the phone header. Check the icon identity and accessibility rule instead.
-  const palette = (source: string) => {
+  const palette = (source: string): { valid: boolean; file: ts.SourceFile; found: ts.JsxSelfClosingElement | undefined } => {
     const file = ts.createSourceFile('farmer.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
     const imported = file.statements.some(node => ts.isImportDeclaration(node)
       && ts.isStringLiteral(node.moduleSpecifier) && node.moduleSpecifier.text === 'lucide-react'
@@ -115,7 +115,7 @@ test('the Design Studio pill and the survey photo tip use Lucide icons, not emoj
   for (const replacement of ['<span aria-hidden>🎨</span>', '<Other size={15} aria-hidden />',
     '<Palette size={14} aria-hidden />', '<Palette size={15} />',
     '<Palette size={15} aria-hidden {...overrides} />']) {
-    const changed = FARMER_PAGE.slice(0, actual.found.getStart(actual.file)) + replacement
+    const changed: string = FARMER_PAGE.slice(0, actual.found.getStart(actual.file)) + replacement
       + FARMER_PAGE.slice(actual.found.getEnd());
     assert.equal(palette(changed).valid, false, `the icon check must reject ${replacement}`);
   }
