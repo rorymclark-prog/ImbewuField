@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', sha: 'e158ec611370', changes: [
+    'Review recorded harvest weights for a saved site and reporting period.',
+  ], tour: [{ title: 'Review your recorded harvest', where: 'International reference tools → Project workflows → Recorded harvest preview', href: '/international/projects',
+    detail: 'Choose a saved site and reporting dates to review monthly observations saved on this device. Eligible records keep their labels and known kilogram subtotal. Missing or excluded records stay visible as gaps; this preview does not publish a project result or grant sharing approval.' }] },
   { when: '5 November 2026', sha: 'a768564db55c', changes: [
     'Keep your DEMO crop plan when opening the Task Planner.',
   ] },

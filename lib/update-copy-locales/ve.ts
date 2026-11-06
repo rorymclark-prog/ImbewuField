@@ -509,5 +509,10 @@ const copy:UpdateCopy={
   "Record a nursery planting in its field bed": "Rekhodani u ṱavha ha nursery mbedeni wayo wa tsimuni",
   "Crop planner → Saved planned nursery batches → Record field planting": "Mupulani wa zwimela → Zwipid̄a zwa nursery zwo pulanwa zwo vhulungwaho → Rekhodani u ṱavha tsimuni",
   "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekhodani d̄uvha na tshivhalo tsha zwimela zwe na zwi vhea mbedeni yo avhelwaho u ṱavha ha nursery ho sedzuluswaho. Vhulungani rekhodo ya zwe na vhona kha jenala yo fhambanaho na d̄uvha l̄o pulanwaho, stock ya nursery na u tshila ha zwimela.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Review recorded harvest weights for a saved site and reporting period.": "Ṱolani vhuleme ha khaṋo ho rekhodiwaho ha fhethu ho vhulungwaho na tshifhinga tsha muvhigo.",
+  "Review your recorded harvest": "Ṱolani khaṋo yaṋu yo rekhodiwaho",
+  "International reference tools → Project workflows → Recorded harvest preview": "Zwishumiswa zwa zwiko zwa mashango → Kuitele kwa mishumo ya thandela → Mbonelaphanda ya khaṋo yo rekhodiwaho",
+  "Choose a saved site and reporting dates to review monthly observations saved on this device. Eligible records keep their labels and known kilogram subtotal. Missing or excluded records stay visible as gaps; this preview does not publish a project result or grant sharing approval.": "Nangani fhethu ho vhulungwaho na maḓuvha a muvhigo u tola zwiṱolwa zwa ṅwedzi muṅwe na muṅwe zwo vhulungwaho kha hetshi tshishumiswa. Rekhodo dzo teyaho dzi vhulunga zwidodombedzwa zwadzo na thanganyelo ṱhukhu i ḓivhiwaho ya khilogireme. Rekhodo dzi siho kana dzo bviswaho dzi dula dzi tshi vhonala sa mavhaka; mbonelaphanda hei a i andadzi mvelelo ya thandela kana u ṋea thendelo ya u kovhelana.",
 };
 export default copy;

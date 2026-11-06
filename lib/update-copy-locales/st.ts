@@ -509,5 +509,10 @@ const copy:UpdateCopy={
   "Record a nursery planting in its field bed": "Rekota temo ya sethopo betheng ya sona tshimong",
   "Crop planner → Saved planned nursery batches → Record field planting": "Moralo wa dijalo → Dihlopha tse rerilweng tsa sethopo tse bolokilweng → Rekota temo tshimong",
   "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekota letsatsi le palo ya dimela tseo o di kentseng betheng e abetsweng temo ya sethopo e hlahlobilweng. Boloka rekoto ya se bonweng jenaleng e arohane le letsatsi le rerilweng, setoko sa sethopo le ho phela ha dimela.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Review recorded harvest weights for a saved site and reporting period.": "Hlahloba boima ba kotulo bo rekotilweng bakeng sa setsha se bolokilweng le nako ya tlaleho.",
+  "Review your recorded harvest": "Hlahloba kotulo ya hao e rekotilweng",
+  "International reference tools → Project workflows → Recorded harvest preview": "Dithulusi tsa tšupiso tsa matjhaba → Mekgwa ya tshebetso ya morero → Ponelopele ya kotulo e rekotilweng",
+  "Choose a saved site and reporting dates to review monthly observations saved on this device. Eligible records keep their labels and known kilogram subtotal. Missing or excluded records stay visible as gaps; this preview does not publish a project result or grant sharing approval.": "Kgetha setsha se bolokilweng le matsatsi a tlaleho ho hlahloba ditlhahlobo tsa kgwedi le kgwedi tse bolokilweng sesebedisweng sena. Direkoto tse tshwanelehang di boloka mabitso a tsona le palo e tsejwang ya dikhilograma. Direkoto tse siyo kapa tse kgethilweng di dula di bonahala e le dikgeo; ponelopele ena ha e phatlalatse sephetho sa morero kapa ho fana ka tumello ya ho arolelana.",
 };
 export default copy;

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { useState } from 'react';
+import RecordedHarvestPreviewController from './RecordedHarvestPreviewController';
 import { PROJECT_TEMPLATES } from '@/lib/international/projects/templates';
 import { PROJECT_SOURCE_BOUNDARIES } from '@/lib/international/projects/sources';
 import { reviewProjectIndicator } from '@/lib/international/projects/evaluate';
@@ -51,7 +52,7 @@ export default function ProjectWorkflowReview() {
           <h1 className="text-3xl font-semibold">Build the evidence around the grower’s work</h1>
           <p>Choose a workflow, inspect the records it needs and try the evidence checks. Country-specific farming support requires separate review.</p>
           <div className="rounded-xl border p-4" style={panelStyle}>
-            <strong>Fictional demonstration only.</strong> All quantities and observations below are arithmetic examples. This screen reads no farm records, saves no changes and publishes no results. The controls let you review the workflow and its gaps.
+            <strong>Fictional demonstration only.</strong> The workflow controls below use fictional quantities and observations. They save no changes and publish no results. The separate recorded-harvest preview reads selected monthly farm records from this device only when you request it.
           </div>
         </header>
 
@@ -121,9 +122,11 @@ export default function ProjectWorkflowReview() {
           </details>
         </section>
 
+        <RecordedHarvestPreviewController />
+
         <section className="space-y-4" aria-labelledby="source-boundary">
           <h2 id="source-boundary" className="text-xl font-semibold">Keep one record of the work</h2>
-          <p>The existing books remain the authorities. A future authorised integration can supply their reviewed references; this demonstration does not fetch them or create a second ledger.</p>
+          <p>The existing books remain the authorities. The recorded-harvest preview reads the existing monthly production book without creating a second ledger. Its device subtotal does not establish project membership, sharing approval or a project result.</p>
           <div className="grid gap-3 sm:grid-cols-2">{PROJECT_SOURCE_BOUNDARIES.map(source => <details key={source.authority} className="rounded-xl border p-3" style={panelStyle}>
             <summary className="min-h-[44px] cursor-pointer py-2 font-semibold">{source.authority}</summary><p className="pt-2 text-sm">{source.integration}</p>
           </details>)}</div>

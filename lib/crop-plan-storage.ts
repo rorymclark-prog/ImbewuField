@@ -163,6 +163,79 @@ export function readCropPlanStorage(context: CropPlanStorageContext | null = mak
     return same(s, capture(context)) ? result : held('book-changed', result.bookRaw);
   } catch { return held('storage-unavailable'); }
 }
+
+/** Opaque source evidence only. A read receipt never enters the writer-lease map. */
+export interface CropPlanStorageReadReceipt { readonly kind: 'crop-plan-storage-read-receipt' }
+export type CropPlanStorageView =
+  | { readonly status: 'ready'; readonly bookRaw: string; readonly receipt: CropPlanStorageReadReceipt }
+  | { readonly status: 'held'; readonly reason: string };
+interface ReadProof {
+  readonly context: CropPlanStorageContext;
+  readonly snapshot: Capture;
+  checking: boolean;
+}
+const readProofs = new WeakMap<object, ReadProof>();
+const readable = (value: CropPlanStorageRead): value is CropPlanStorageRead & { bookRaw: string } =>
+  value.bookRaw !== null && (value.status === 'ready' || value.reason === 'writer-not-acquired');
+
+/** Freeze the original addresses and predicate, rather than letting a retained
+ * receipt adopt a mutated context object or a later account's equal bytes. */
+function bindReadContext(original: CropPlanStorageContext): CropPlanStorageContext {
+  const { storage, legacyKey, canonicalKey, receiptKey, sample, isCurrent } = original;
+  return Object.freeze({ storage, legacyKey, canonicalKey, receiptKey, sample,
+    isCurrent: () => original.storage === storage && original.legacyKey === legacyKey
+      && original.canonicalKey === canonicalKey && original.receiptKey === receiptKey
+      && original.sample === sample && original.isCurrent === isCurrent && isCurrent.call(original) });
+}
+
+/** Read the proven canonical book without acquiring or initializing an editing
+ * lease. Every other store hold remains authoritative, including legacy edits,
+ * pending transfers and an unconfirmed review acknowledgement. */
+export function readCropPlanStorageView(context: CropPlanStorageContext | null = makeBrowserCropPlanStorageContext()): CropPlanStorageView {
+  let receipt: CropPlanStorageReadReceipt | null = null;
+  try {
+    if (!context || context.sample) return { status: 'held', reason: context?.sample ? 'sample-source-required' : 'storage-unavailable' };
+    const bound = bindReadContext(context), before = capture(bound), captured = inspect(bound, before), source = readCropPlanStorage(bound);
+    if (!readable(source)) return { status: 'held', reason: source.reason ?? 'source-unavailable' };
+    if (!readable(captured)) return { status: 'held', reason: captured.reason ?? 'source-unavailable' };
+    if (captured.bookRaw !== source.bookRaw || !same(before, capture(bound))) return { status: 'held', reason: 'book-changed' };
+    receipt = Object.freeze({}) as CropPlanStorageReadReceipt;
+    readProofs.set(receipt, { context: bound, snapshot: before, checking: false });
+    if (!cropPlanStorageReadReceiptIsCurrent(receipt)) return { status: 'held', reason: 'book-changed' };
+    return Object.freeze({ status: 'ready', bookRaw: captured.bookRaw, receipt });
+  } catch {
+    releaseCropPlanStorageReadReceipt(receipt);
+    return { status: 'held', reason: 'storage-unavailable' };
+  }
+}
+
+/** Any observed source/context failure permanently retires this receipt, even
+ * if another writer later restores the same strings. No fallback reads legacy. */
+export function cropPlanStorageReadReceiptIsCurrent(
+  receipt: unknown, context?: CropPlanStorageContext | null,
+): receipt is CropPlanStorageReadReceipt {
+  const proof = receipt && typeof receipt === 'object' ? readProofs.get(receipt) : null;
+  if (!proof) return false;
+  if (proof.checking) { readProofs.delete(receipt as object); return false; }
+  let current = false;
+  proof.checking = true;
+  try {
+    const c = proof.context;
+    if ((context === undefined || !!context && context.isCurrent() && sameContext(c, context) && context.sample === c.sample)
+      && c.isCurrent() && same(proof.snapshot, capture(c))) {
+      const captured = inspect(c, proof.snapshot), source = readCropPlanStorage(c);
+      current = readable(captured) && readable(source) && captured.bookRaw === source.bookRaw
+        && same(proof.snapshot, capture(c)) && c.isCurrent()
+        && readProofs.get(receipt as object) === proof;
+    }
+  } catch { /* Unreadable source evidence cannot retain a read receipt. */ }
+  finally { proof.checking = false; }
+  if (!current) readProofs.delete(receipt as object);
+  return current;
+}
+export function releaseCropPlanStorageReadReceipt(receipt: unknown): void {
+  if (receipt && typeof receipt === 'object') readProofs.delete(receipt);
+}
 export function readCropPlanStorageStatus(context: CropPlanStorageContext | null = makeBrowserCropPlanStorageContext()): CropPlanStorageStatus {
   const { status, reason, writable, needsInitialisation, legacyDiverged } = readCropPlanStorage(context);
   return { status, ...(reason ? { reason } : {}), writable, needsInitialisation, legacyDiverged };
