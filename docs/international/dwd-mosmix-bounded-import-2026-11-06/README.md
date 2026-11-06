@@ -1,7 +1,10 @@
 # Explicit public-station forecast reference
 
-The international review page now includes a manual DWD station lookup. It starts
-blank and requests data only when the user presses Check. Changing the reviewed
+The international review page includes an explicit DWD catalogue search and a
+manual station lookup. Both start blank. Search uses ASCII name/ID text, returns
+at most 20 matching rows with the full match count, and keeps unverified names
+unknown. Choosing a result only fills the station ID; Check is a separate forecast
+request. Changing the reviewed
 country retires and resets the card; it does not select a station, attach weather
 to a saved farm or change country readiness. Nothing updates crop plans, field
 calendars, maps or observations.

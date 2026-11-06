@@ -13,6 +13,7 @@ import type { CountryReviewProps } from '../components/international/countries/C
 const root = new URL('../', import.meta.url).href;
 const parentUrl = new URL('../components/international/countries/CountryReview.tsx', import.meta.url).href;
 const cardUrl = new URL('../components/international/countries/DwdStationReference.tsx', import.meta.url).href;
+const catalogUrl = new URL('../components/international/countries/DwdStationCatalogSearch.tsx', import.meta.url).href;
 const nasaUrl = new URL('../lib/international/providers/nasa-reference.ts', import.meta.url).href;
 const key = '__dwdCountryReviewUi';
 const prior = new Map([key, 'fetch', 'window', 'localStorage', 'sessionStorage', 'IS_REACT_ACT_ENVIRONMENT']
@@ -44,6 +45,11 @@ const hooks = registerHooks({
       if (specifier === '@/components/MenuButton') return moduleText('export default function Menu(){return null;}');
       if (specifier === '@/components/BackControl') return moduleText('export function useRegisterBackControl(){}');
       if (specifier === './CountryReview.module.css') return moduleText('export default {};');
+      // Catalogue search is now a real mounted child. Keep the existing eight
+      // parent claims intact while prohibiting its unrequested transport work;
+      // the separate composed suite owns explicit Search -> Use -> Check.
+      if (specifier === '@/app/international/dwd-catalog-actions') return moduleText(`
+        export function searchDwdStationCatalogReference(){return globalThis.fetch('forbidden-unrequested-catalogue-action');}`);
       if (Object.hasOwn(otherCards, specifier)) return moduleText(`import React from ${JSON.stringify(import.meta.resolve('react'))};
         export default function OtherReference(){return React.createElement('section',{'data-other-public-reference':${JSON.stringify(otherCards[specifier as keyof typeof otherCards])}});}`);
       if (specifier === '@/lib/international/providers/nasa-reference') return moduleText(`export * from ${JSON.stringify(nasaUrl)};
@@ -54,7 +60,7 @@ const hooks = registerHooks({
     return next(specifier, context);
   },
   load(url, context, next) {
-    if ([parentUrl, cardUrl].includes(url)) {
+    if ([parentUrl, cardUrl, catalogUrl].includes(url)) {
       const source = readFileSync(new URL(url), 'utf8');
       probe.sourceHashes[url] = createHash('sha256').update(source).digest('hex');
       return { shortCircuit: true, format: 'module', source: ts.transpileModule(source,

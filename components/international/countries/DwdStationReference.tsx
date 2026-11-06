@@ -63,7 +63,11 @@ const issueCopy: Record<DwdMosmixIssue, string> = {
  * 8. Strictly distinguishes null/missing ("Unknown") from explicit numerical zero ("0").
  * 9. Caps displayed source periods to the first 12, truthfully indicating the display limit.
  */
-export default function DwdStationReference() {
+export interface DwdStationReferenceProps {
+  selection?: Readonly<{ stationId: string }> | null;
+}
+
+export default function DwdStationReference({ selection }: DwdStationReferenceProps = {}) {
   const [stationIdInput, setStationIdInput] = useState<string>('');
   const [view, setView] = useState<View>({ status: 'idle' });
 
@@ -90,6 +94,19 @@ export default function DwdStationReference() {
     currentView.current = next;
     setView(next);
   }
+
+  useEffect(() => {
+    if (!selection || !mounted.current) return;
+    const request = parseDwdStationRequest(selection);
+    if (!request) return;
+    // Choosing a catalogue row fills the field only. It retires the earlier
+    // display even when that explicit request is still settling upstream.
+    generation.current++;
+    pending.current = false;
+    currentStationId.current = request.stationId;
+    setStationIdInput(request.stationId);
+    publish({ status: 'idle' });
+  }, [selection]);
 
   function handleInputChange(value: string) {
     if (
