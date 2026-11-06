@@ -17,7 +17,7 @@ import { loadGrowerOperationsSources, type GrowerOperationsSources } from '@/lib
 import { buildGrowerBoardTasks, type BoardTask } from '@/lib/task-board';
 import { recordGrowerNurserySowing, recordGrowerNurseryProgress, recordGrowerNurseryFieldPlanting, type GrowerNurserySowingInput, type GrowerNurseryProgressInput, type GrowerNurseryFieldPlantingInput, type GrowerFieldObservationResult } from '@/lib/grower-field-observation';
 import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
-import type { GrowerCycleContext } from '@/lib/international/grower-cycle';
+import type { GrowerCycleContext, GrowerCycleOriginView } from '@/lib/international/grower-cycle';
 import type { GrowerWindowInput } from '@/lib/international/grower-autoplan';
 import { resolveGrowerNurseryBatchReference, type GrowerNurseryBatchReferenceChange } from '@/lib/international/grower-nursery';
 
@@ -56,6 +56,8 @@ export interface GrowerSavedNurseryReview {
     /** Explicit canonical field-entry event; absent old DTOs cannot grant this action. */
     readonly plannedFieldEntryDate?: string;
     readonly reference: ReturnType<typeof resolveGrowerNurseryBatchReference>;
+    /** Recorded accepted intent; `not-recorded` is unknown, never buyer/household. Optional for older DTOs. */
+    readonly origin?: GrowerCycleOriginView;
   }[];
 }
 export type GrowerSavedNurseryReadResult =
@@ -113,7 +115,7 @@ function savedNurseryView(source: GrowerWorkflowSource, book: CropPlanState, rec
     return [{ plantingId: cycle.plantingId, cropKey: cycle.cropKey, bedId: cycle.bedId,
       startDate: cycle.nurseryDemand.interval.start, endDateExclusive: cycle.nurseryDemand.interval.endExclusive,
       ...(entries.length === 1 ? { plannedFieldEntryDate: entries[0].date } : {}),
-      reference: resolveGrowerNurseryBatchReference(rows, cycleContext, cycle.plantingId),
+      reference: resolveGrowerNurseryBatchReference(rows, cycleContext, cycle.plantingId), origin: cycle.origin,
     }];
   });
   const starts = references.map(row => row.startDate).sort(), ends = references.map(row => row.endDateExclusive).sort();

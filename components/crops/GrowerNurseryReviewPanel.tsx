@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { estimateNumberLabel as quantity } from '@/lib/format-figures';
+import GrowerCycleIntent from './GrowerCycleIntent';
 import type { NurserySettings } from '@/lib/nursery-settings';
 import { sanitiseNurserySettings } from '@/lib/nursery-settings';
 import type { GrowerWorkflowReview } from '@/lib/international/grower-workflow';
@@ -579,6 +580,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
         return <article key={batch.id} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
           <h6 className="font-semibold">{props.savedReview ? 'Saved planned' : 'Proposed'} raising batch {index + 1} · {batch.cropName}</h6>
           <p>{batch.bedIds.map(id => props.source.beds.find(bed => bed.id === id)?.label ?? 'Growing space').join(', ')}. {batch.startDate} to before {batch.endDateExclusive} (UTC).</p>
+          {props.savedReview && <GrowerCycleIntent view={batch.origin?.status === 'proposed' ? undefined : batch.origin} />}
           {props.savedReview && referenceDetails(batch.reference)}
           <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">{Object.entries({
             'Target final plants': batch.targetPositions,

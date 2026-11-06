@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', sha: '5c12307aa26c', changes: [
+    'Plan household food or trial growing from your own harvest target, without a buyer order.',
+  ], tour: [{ title: 'Plan food or a growing trial', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Choose household food or trial growing, enter your gross harvest weight and dates, and use your saved growing estimates and measured spaces. Saved crop records and nursery batches keep the original request. These are planning estimates, not observed harvests or local crop advice.' }] },
   { when: '5 November 2026', sha: 'a768564db55c', changes: [
     'Keep your DEMO crop plan when opening the Task Planner.',
   ] },

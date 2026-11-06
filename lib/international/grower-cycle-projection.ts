@@ -1,6 +1,6 @@
 import type { Planting } from '../crop-plan';
 import { cropByKey } from '../crop-catalog';
-import { resolvePlantingBasis, type GrowerCycleContext } from './grower-cycle';
+import { growerCycleOriginView, resolvePlantingBasis, type GrowerCycleContext, type GrowerCycleOriginView } from './grower-cycle';
 import type { GrowerReadyAssessment } from './grower-autoplan';
 import type { GrowerPlanningScope } from './grower-planning';
 
@@ -35,6 +35,9 @@ export interface ProjectedGrowerCycle {
   readonly targetPlantCount: number;
   readonly reservation: { readonly start: string; readonly endExclusive: string };
   readonly nurseryDemand: GrowerCycleNurseryDemand | null;
+  /** Accepted intent from the attachment; `not-recorded` stays unknown, never buyer or household.
+   * Always supplied by the real projector; optional for older constructed DTOs. */
+  readonly origin?: GrowerCycleOriginView;
   readonly sourceVerification: 'not-verified';
 }
 export interface LegacyProjectionRow {
@@ -119,7 +122,7 @@ export function projectGrowerCycles(rows: unknown, context: GrowerCycleContext |
         targetPlantCount: assessment.capacity.estimatedPlantCount, reservation,
         nurseryDemand: dates.nurseryStartDate === null ? null : { targetPositions: assessment.capacity.estimatedPlantCount,
           interval: { start: dates.nurseryStartDate, endExclusive: dates.fieldEntryDate }, seedQuantity: null, trayQuantity: null, spaceM2: null },
-        sourceVerification: 'not-verified' as const }));
+        origin: growerCycleOriginView(attachment), sourceVerification: 'not-verified' as const }));
     });
     // A running furthest end identifies all involved whole-bed overlaps without
     // choosing an arbitrary winner or making quadratic pairs for a corrupted book.
