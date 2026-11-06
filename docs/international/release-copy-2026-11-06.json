@@ -1,0 +1,54 @@
+{
+  "sourceSha256": "0d1e53c8c45d8bc1410266c0e13ba0d303bc540f08e995c92092eafe6275cf7d",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeLanguageActivation": "No new language activated. These are descriptions under the existing English-backed visibly marked draft policy, not fluent certification. Existing translation entries take precedence.",
+  "features": [
+    "onboardingDrain"
+  ],
+  "messages": [
+    {
+      "key": "onboardingDrain.release.01",
+      "english": "Your crop-plan handoff after sign-in waits for this tab’s previous editing access to finish.",
+      "sha256": "94289e4e7da95e9c394fa40d3d54cecf8511d7a3f5d8bf44e9051d1fb0225947",
+      "translations": {
+        "zu": "Ukudluliswa kohlelo lwakho lwezitshalo ngemuva kokungena kulinda ukufinyelela kokuhlela kwangaphambilini kwale thebhu ukuthi kuqede.",
+        "st": "Ho fetiswa ha leano la hao la dijalo kamora ho kena ho emela phihlello e fetileng ya ho lokisa ya tebhe ena ho fela.",
+        "ts": "Ku hundzisiwa ka pulani ya wena ya swimilani endzhaku ko nghena ku yimela mpfumelelo wo lulamisa lowu hundzeke wa thebu leyi ku hela.",
+        "ve": "U fhiriselwa ha mbekanyamushumo yaṋu ya zwimela nga murahu ha u dzhena hu lindela thendelo ya u lulamisa yo fhiraho ya thabu hei u fhedza."
+      }
+    },
+    {
+      "key": "onboardingDrain.release.02",
+      "english": "Check your crop plan after signing in",
+      "sha256": "ed67a505de604221ddf07097d879ffacd38578ae22df0f183abecca880e4351b",
+      "translations": {
+        "zu": "Hlola uhlelo lwakho lwezitshalo ngemuva kokungena",
+        "st": "Hlahloba leano la hao la dijalo kamora ho kena",
+        "ts": "Kambela pulani ya wena ya swimilani endzhaku ko nghena",
+        "ve": "Tolani mbekanyamushumo yaṋu ya zwimela nga murahu ha u dzhena"
+      }
+    },
+    {
+      "key": "onboardingDrain.release.03",
+      "english": "Sign in → Crop planner",
+      "sha256": "dfc10210eded4fb606aa4f62c53e5fb18baccc937cd47f95a7d6cc0a71c62f4b",
+      "translations": {
+        "zu": "Ngena ngemvume → Umhleli wezitshalo",
+        "st": "Kena → Morero wa dijalo",
+        "ts": "Nghena → Xilulamisi xa swimilani",
+        "ve": "Dzhenani → Mululamisi wa zwimela"
+      }
+    },
+    {
+      "key": "onboardingDrain.release.04",
+      "english": "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.",
+      "sha256": "f5a32cd441b58bc693d95eff9184109305bb465d3fb730ddbc1eaf8e525e7d48",
+      "translations": {
+        "zu": "Vula uhlelo lwakho lwezitshalo ngemuva kokungena. Le thebhu idedela ukufinyelela kwayo kokuhlela kwangaphambilini ngaphambi kokuhlola amarekhodi e-akhawunti alondoloziwe. Enye ithebhu esahlela igcina ukuvikelwa kwayo; amarekhodi angatholakali noma ashayisanayo asadinga ukubuyekezwa.",
+        "st": "Bula leano la hao la dijalo kamora ho kena. Tebhe ena e lokolla phihlello ya yona e fetileng ya ho lokisa pele e hlahloba direkoto tsa akhaonto tse bolokilweng. Tebhe e nngwe e ntseng e lokisa e boloka tshireletso ya yona; direkoto tse seng teng kapa tse hananang di ntse di hloka tlhahlobo.",
+        "ts": "Pfula pulani ya wena ya swimilani endzhaku ko nghena. Thebu leyi yi tshika mpfumelelo wa yona wo lulamisa lowu hundzeke yi nga si kambela tirhekhodo ta akhawunti leti hlayisiweke. Thebu yin’wana leyi nga karhi yi lulamisa yi hlayisa nsirhelelo wa yona; tirhekhodo leti nga kumekiki kumbe leti lwisanaka ta ha lava nkambisiso.",
+        "ve": "Vulani mbekanyamushumo yaṋu ya zwimela nga murahu ha u dzhena. Thabu hei i bvisa thendelo yayo ya u lulamisa yo fhiraho musi i sa athu tola rekhodo dza akhaunthu dzo vhulungwaho. Iṅwe thabu ine ya khou bvela phanda i tshi khou lulamisa i vhulunga tsireledzo yayo; rekhodo dzi siho kana dzi hananaho dzi kha ḓi ṱoḓa u ṱoliwa."
+      }
+    }
+  ]
+}

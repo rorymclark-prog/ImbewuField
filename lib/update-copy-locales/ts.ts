@@ -509,5 +509,10 @@ const copy:UpdateCopy={
   "Record a nursery planting in its field bed": "Rhekhoda ku byala ka nursery eka mubedo wa yona ensinwini",
   "Crop planner → Saved planned nursery batches → Record field planting": "Mupulani wa swibyariwa → Mintlawa ya nursery leyi kunguhatiweke leyi hlayisiweke → Rhekhoda ku byala ensinwini",
   "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rhekhoda siku ni nhlayo ya swimilana leswi u swi vekeke eka mubedo lowu averiweke ku byala ka nursery loku kamberiweke. Hlayisa rhekhodo ya leswi voniweke eka jenala yi hambanile ni siku leri kunguhatiweke, xitoko xa nursery ni ku hanya ka swimilana.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Your crop-plan handoff after sign-in waits for this tab’s previous editing access to finish.": "Ku hundzisiwa ka pulani ya wena ya swimilani endzhaku ko nghena ku yimela mpfumelelo wo lulamisa lowu hundzeke wa thebu leyi ku hela.",
+  "Check your crop plan after signing in": "Kambela pulani ya wena ya swimilani endzhaku ko nghena",
+  "Sign in → Crop planner": "Nghena → Xilulamisi xa swimilani",
+  "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Pfula pulani ya wena ya swimilani endzhaku ko nghena. Thebu leyi yi tshika mpfumelelo wa yona wo lulamisa lowu hundzeke yi nga si kambela tirhekhodo ta akhawunti leti hlayisiweke. Thebu yin’wana leyi nga karhi yi lulamisa yi hlayisa nsirhelelo wa yona; tirhekhodo leti nga kumekiki kumbe leti lwisanaka ta ha lava nkambisiso.",
 };
 export default copy;

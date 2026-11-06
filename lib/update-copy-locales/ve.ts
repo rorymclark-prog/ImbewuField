@@ -509,5 +509,10 @@ const copy:UpdateCopy={
   "Record a nursery planting in its field bed": "Rekhodani u ṱavha ha nursery mbedeni wayo wa tsimuni",
   "Crop planner → Saved planned nursery batches → Record field planting": "Mupulani wa zwimela → Zwipid̄a zwa nursery zwo pulanwa zwo vhulungwaho → Rekhodani u ṱavha tsimuni",
   "Record the day and number of plants you put into the assigned bed for a checked nursery planting. Keep the observed journal record separate from the planned date, nursery stock and survival.": "Rekhodani d̄uvha na tshivhalo tsha zwimela zwe na zwi vhea mbedeni yo avhelwaho u ṱavha ha nursery ho sedzuluswaho. Vhulungani rekhodo ya zwe na vhona kha jenala yo fhambanaho na d̄uvha l̄o pulanwaho, stock ya nursery na u tshila ha zwimela.",
+  // International release descriptions: unreviewed source-paired AI drafts; English fallback retained.
+  "Your crop-plan handoff after sign-in waits for this tab’s previous editing access to finish.": "U fhiriselwa ha mbekanyamushumo yaṋu ya zwimela nga murahu ha u dzhena hu lindela thendelo ya u lulamisa yo fhiraho ya thabu hei u fhedza.",
+  "Check your crop plan after signing in": "Tolani mbekanyamushumo yaṋu ya zwimela nga murahu ha u dzhena",
+  "Sign in → Crop planner": "Dzhenani → Mululamisi wa zwimela",
+  "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Vulani mbekanyamushumo yaṋu ya zwimela nga murahu ha u dzhena. Thabu hei i bvisa thendelo yayo ya u lulamisa yo fhiraho musi i sa athu tola rekhodo dza akhaunthu dzo vhulungwaho. Iṅwe thabu ine ya khou bvela phanda i tshi khou lulamisa i vhulunga tsireledzo yayo; rekhodo dzi siho kana dzi hananaho dzi kha ḓi ṱoḓa u ṱoliwa.",
 };
 export default copy;
