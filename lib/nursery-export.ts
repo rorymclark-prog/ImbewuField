@@ -5,7 +5,8 @@ import type { PlanBed } from './crop-plan';
 import type { NurseryForecast, NurseryRange } from './crop-export-schedule';
 import { csvCell } from './journal-export';
 import { projectGrowerNurseryPreparation, type GrowerNurseryResult, type GrowerNurseryBatchReferenceView, type GrowerNurseryRequest } from './international/grower-nursery';
-import { reviewGrowerSeedSourcing } from './international/grower-seed-sourcing';
+import { reviewGrowerSeedSourcing, reviewGrowerFieldSeedSourcing,
+  type GrowerSeedSourcingGroupReview, type GrowerFieldSeedSourcingInput } from './international/grower-seed-sourcing';
 
 /** Static delivery copy only; never include entered references in an error. */
 export class NurseryReferenceExportError extends Error {
@@ -566,6 +567,26 @@ const SEED_SOURCING_COLUMNS = [
 type SeedSourcingColumn = typeof SEED_SOURCING_COLUMNS[number];
 type SeedSourcingRow = Partial<Record<SeedSourcingColumn, string | number>>;
 
+function seedSourcingGroupCells(group: Pick<GrowerSeedSourcingGroupReview,
+  'index' | 'status' | 'knownRequiredSeedsSubtotal' | 'requiredSeeds' | 'counts' | 'identification'>) {
+  return {
+    supply_group_number: group.index + 1,
+    group_status: group.status,
+    known_required_seed_subtotal: group.knownRequiredSeedsSubtotal ?? 'unknown',
+    required_seeds: group.requiredSeeds ?? 'unknown',
+    additional_seeds_needed: group.counts?.neededSeeds ?? 'unknown',
+    planned_packs: group.counts?.packsNeeded ?? 'unknown',
+    planned_pack_seeds: group.counts?.plannedPackSeeds ?? 'unknown',
+    entered_supply_group_label: group.identification?.enteredLabel ?? '',
+    label_status: group.identification?.labelStatus ?? 'not-recorded',
+    public_crop_names: JSON.stringify(group.identification?.cropNames ?? []),
+    identification_description: group.identification?.description ?? '',
+  };
+}
+function serializeSeedSourcingCsv(columns: readonly string[], rows: readonly (readonly (string | number)[])[]): string {
+  return `\uFEFF${[columns, ...rows].map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
+}
+
 /** Export the seed sourcing planning review verbatim from canonical projection.
  * Does not calculate requirements, assert actor freshness or record stock. */
 export function buildGrowerSeedSourcingCsv(
@@ -607,24 +628,43 @@ export function buildGrowerSeedSourcingCsv(
     rows.push({
       ...context,
       record_type: 'supply_group',
-      supply_group_number: group.index + 1,
-      group_status: group.status,
-      known_required_seed_subtotal: group.knownRequiredSeedsSubtotal ?? 'unknown',
-      required_seeds: group.requiredSeeds ?? 'unknown',
-      additional_seeds_needed: group.counts?.neededSeeds ?? 'unknown',
-      planned_packs: group.counts?.packsNeeded ?? 'unknown',
-      planned_pack_seeds: group.counts?.plannedPackSeeds ?? 'unknown',
-      entered_supply_group_label: group.identification?.enteredLabel ?? '',
-      label_status: group.identification?.labelStatus ?? 'not-recorded',
-      public_crop_names: JSON.stringify(group.identification?.cropNames ?? []),
-      identification_description: group.identification?.description ?? '',
+      ...seedSourcingGroupCells(group),
     });
   }
 
-  return `\uFEFF${[
-    SEED_SOURCING_COLUMNS,
-    ...rows.map((row) => SEED_SOURCING_COLUMNS.map((col) => row[col] ?? '')),
-  ]
-    .map((row) => row.map(csvCell).join(','))
-    .join('\r\n')}\r\n`;
+  return serializeSeedSourcingCsv(SEED_SOURCING_COLUMNS, rows.map(row => SEED_SOURCING_COLUMNS.map(column => row[column] ?? '')));
+}
+
+const FIELD_SEED_SOURCING_COLUMNS = [
+  'record_type', 'plan_basis', 'source_verification', 'requirement_basis', 'coverage', 'whole_farm_coverage', 'review_status',
+  'represented_cycle_count', 'assigned_cycle_count', 'unassigned_cycle_count', 'held_source_row_count', 'legacy_source_row_count',
+  'excluded_nursery_cycle_count', 'supply_group_number', 'selected_cycle_count', 'group_status', 'known_required_seed_subtotal',
+  'required_seeds', 'additional_seeds_needed', 'planned_packs', 'planned_pack_seeds', 'entered_supply_group_label',
+  'label_status', 'public_crop_names', 'identification_description', 'issues', 'guidance',
+] as const;
+type FieldSeedSourcingColumn = typeof FIELD_SEED_SOURCING_COLUMNS[number];
+type FieldSeedSourcingRow = Partial<Record<FieldSeedSourcingColumn, string | number>>;
+
+/** Replay raw accepted cycles instead of trusting a caller's projected review.
+ * The parent still owns live book/source/actor checks before file delivery. */
+export function buildGrowerFieldSeedSourcingCsv(
+  input: GrowerFieldSeedSourcingInput,
+  options: Pick<NurseryCsvOptions, 'sample'> = {}
+): string {
+  const projection = reviewGrowerFieldSeedSourcing(input);
+  if (projection.status === 'unavailable') throw new RangeError('A readable accepted-cycle source is required for field seed sourcing export.');
+  const context: FieldSeedSourcingRow = {
+    plan_basis: options.sample ? 'DEMO — entered gross whole-seed planning estimates' : 'Entered gross whole-seed planning estimates',
+    source_verification: projection.sourceVerification, requirement_basis: projection.requirementBasis,
+    coverage: projection.coverage, whole_farm_coverage: projection.wholeFarmCoverage, review_status: projection.status,
+    represented_cycle_count: projection.representedCycleCount, assigned_cycle_count: projection.assignedCycleCount,
+    unassigned_cycle_count: projection.unassignedPlantingIds.length, held_source_row_count: projection.heldSourceRowCount,
+    legacy_source_row_count: projection.legacySourceRowCount, excluded_nursery_cycle_count: projection.excludedNurseryCycleCount,
+    guidance: projection.guidance,
+  };
+  const rows: FieldSeedSourcingRow[] = [{ ...context, record_type: 'guidance', issues: projection.issues.join(' | ') }];
+  if (projection.sourceIssues.length) rows.push({ ...context, record_type: 'source_review', issues: projection.sourceIssues.join(' | ') });
+  for (const group of projection.groups) rows.push({ ...context, record_type: 'supply_group', ...seedSourcingGroupCells(group),
+    selected_cycle_count: group.selectedCycleCount, issues: group.issues.join(' | ') });
+  return serializeSeedSourcingCsv(FIELD_SEED_SOURCING_COLUMNS, rows.map(row => FIELD_SEED_SOURCING_COLUMNS.map(column => row[column] ?? '')));
 }

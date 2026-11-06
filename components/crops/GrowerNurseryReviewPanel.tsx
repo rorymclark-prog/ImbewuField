@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { estimateNumberLabel as quantity } from '@/lib/format-figures';
 import GrowerCycleIntent from './GrowerCycleIntent';
 import GrowerSeedSourcingPanel from './GrowerSeedSourcingPanel';
+import GrowerFieldSeedSourcingSection from './GrowerFieldSeedSourcingSection';
 import type { SeedSourcingGroupDraft, SeedSourcingGroupPatch } from './GrowerSeedSourcingForm';
 import { parseSeedPurchaseCountInput, type SeedPurchaseCountKind } from '@/lib/seed-purchase-inputs';
 import { reviewGrowerSeedSourcing, type GrowerSeedSourcingReview } from '@/lib/international/grower-seed-sourcing';
@@ -796,5 +797,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       </section>}
       <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview()}>Download reviewed nursery CSV</button>
     </section>}
+    {props.savedReview && <GrowerFieldSeedSourcingSection savedReview={props.savedReview} contextRevision={props.contextRevision}
+      sample={props.sample} onCheckSavedCurrent={props.onCheckSavedCurrent} />}
   </section>;
 }
