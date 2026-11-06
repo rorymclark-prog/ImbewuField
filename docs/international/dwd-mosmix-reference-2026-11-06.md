@@ -1,0 +1,29 @@
+# DWD MOSMIX station decoder
+
+This slice prepares real station-reference parsing for the international programme. It does not add a user-facing weather panel, perform a provider request, select a nearby station, change the automatic crop planner or establish country readiness. HTTP transport, KMZ extraction, byte decoding, source credit presentation and live actor/context delivery remain subsequent integration work.
+
+## Source and contract
+
+The shared request/provenance authority admits literal station IDs in the four spelling families actually present in the official single-station directory captured on 6 November 2026: five digits; one uppercase ASCII letter followed by three or four digits; two uppercase ASCII letters followed by three digits. All 6,045 captured directory spellings passed the actual request/endpoint/provenance functions. This is format coverage for that snapshot, not proof of membership for any future request or a country/suitability claim. No station, language, country, URL or clock default is inferred. The canonical endpoint repeats the same station ID in the directory and filename; queries, fragments, credentials, alternate hosts and coerced/whitespace identifiers are held.
+
+The decoder accepts an already-decoded KML string plus exact caller-supplied source context. It requires the expected station, MOSMIX product, direct metadata placement, supported namespaces and unique increasing canonical UTC timestamps. Only native TTT temperature in K and RR1c preceding-hour precipitation in kg/m² are interpreted. They are distinct from NWS precipitation probability, minima, monthly climate inputs, farm measurements and crop advice. No Celsius conversion, interval construction, rounding, accumulation or freshness inference occurs.
+
+The declared undefined marker becomes null. Other literal numeric zeros remain zero. Missing supported series produce explicit partial results; absence of both is held. Truncated lists, duplicate identities, malformed/nonfinite numbers and nonzero numeric underflow are held. Results and nested arrays/objects are detached and frozen. Provenance binds supplied spelling/context; it is not cryptographic provider truth, permission or an authenticated-site receipt.
+
+Primary references: [DWD single-station directory](https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/single_stations/), [official extension schema](https://opendata.dwd.de/weather/lib/pointforecast_dwd_extension_V1_0.xsd), [element definitions](https://opendata.dwd.de/weather/lib/MetElementDefinition.xml). Existing rights research distinguishes general product-class conditions from product membership and exceptions; this code does not grant licence clearance, local legality, endorsement or readiness.
+
+## Bounded XML profile
+
+Pinned sax 1.6.1 is the maintained streaming parser; @types/sax 1.2.7 is development-only. The inspected package has known XML-conformance gaps, so this is an explicitly bounded MOSMIX profile, not a universal XML validator or vulnerability guarantee. Before parsing, character/entity checks admit exact predefined/numeric XML references and reject DTD/entity declarations. Callbacks reject raw and expanded duplicate attributes, unsupported QName spellings, malformed declaration grammar/placement and outside-root CDATA. URI/local-name matching permits genuine prefix aliases without trusting lookalike namespaces. Parser errors are held; messages containing raw input are not returned.
+
+Engineering ceilings are software policy, not DWD quotas or agronomy: 2 Mi UTF-16 input code units, 32 levels, 32 attributes per element, 10,000 elements, 1,024 time steps, 256 series, 65,536 code units per field and 64 per numeric token. Chunked writes retain the parser’s process-global buffer settings. The new modules make no filesystem or network calls and do not handle ZIP or byte decoding. Arbitrary caller Proxy reflection traps can still execute; descriptor exceptions are held and ordinary getters are not invoked.
+
+## Evidence and remaining gates
+
+Node 24 typecheck, 440 selected provider/context cases across 15 files and whitespace passed after source-driven identifier expansion. Three in-memory damaged-source controls failed real assertions: zero-to-null corruption, omitted duplicate guards and namespace guessing. Canonical source/test files were unchanged by these controls. Earlier typecheck caught ten new test callbacks returning assertion-helper objects; they were corrected to void callbacks without changing any assertion.
+
+The real decoder also processed two independently fetched public station snapshots, numeric 01001 and alphanumeric A051. Every timestamp and both selected values for 247 periods each were compared against independent standard-library XML parsing: 988 numeric values, with 179 and 239 rain zeros preserved respectively. The pure admission probe covered all 6,045 captured IDs with zero network calls. These are historical source inspections, not an implemented HTTP integration or current farm forecast.
+
+Original full KML hashes: 01001=4d51aa1b696f18ebab04255ab56b058e8839d44537b28b3e13236ec28d15989a; A051=10b364212a38c9e53ae1612c9a21729ff1d2abf8a07298cbafc91b431251a94b. Both retained bodies were ASCII despite an ISO-8859-1 declaration; that observation supplies no general byte-encoding policy. Public repository tests contain synthetic fixtures, not copied provider bodies or private farm data.
+
+No visible application output changes in this decoder slice; PLAN_VERSION, species, lessons and saved geometry remain unchanged. Selected checks do not replace full current-head CI, genuine UI/account evidence for later consumers, human language review or production-release approval. Separate release-caption coverage failures from prior heads must be repaired before a broader release.
