@@ -37,6 +37,7 @@ const probe = {
 };
 Object.assign(globalThis, { __localAdviceUiProbe: probe });
 const moduleUrl = (code: string) => 'data:text/javascript,' + encodeURIComponent(code);
+const sourceRootUrl = new URL('../', import.meta.url).href;
 const virtual = new Map<string, string>([
   ['auth', 'export const useAuth=()=>({user:globalThis.__localAdviceUiProbe.user,loading:globalThis.__localAdviceUiProbe.authLoading});'],
   ['firebase', 'export const getFirebase=()=>({auth:{currentUser:globalThis.__localAdviceUiProbe.user}});export const isBackendConfigured=()=>true;'],
@@ -67,7 +68,7 @@ const hooks = registerHooks({
     return next(specifier, context);
   },
   load(url, context, next) {
-    if (url.endsWith('.tsx') && url.includes('/legacy-advice-country-boundary/')) return {
+    if (url.endsWith('.tsx') && url.startsWith(sourceRootUrl)) return {
       shortCircuit: true, format: 'module', source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
         compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX },
       }).outputText,
