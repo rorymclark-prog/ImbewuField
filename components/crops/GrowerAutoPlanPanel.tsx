@@ -7,7 +7,10 @@ import { estimateNumberLabel as quantity } from '@/lib/format-figures';
 import type { HarvestTarget } from '@/lib/crop-plan';
 import { growerPlanningScopeKey, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
-import type { GrowerWorkflowDraft, GrowerWorkflowReview } from '@/lib/international/grower-workflow';
+import type { GrowerWorkflowDemandDraft, GrowerWorkflowDraft, GrowerWorkflowReview } from '@/lib/international/grower-workflow';
+import { GROWER_DEMAND_SELECTION_MAX_ROWS, type GrowerEnteredDemandEntry, type GrowerEnteredDemandPurpose } from '@/lib/international/grower-entered-demand';
+import type { MassQuantityEntry } from '@/lib/mass-units';
+import GrowerEnteredMassField from './GrowerEnteredMassField';
 import type { GrowerWorkflowAcceptanceResult, GrowerWorkflowAcceptanceState } from './useGrowerWorkflow';
 
 export interface GrowerAutoPlanPanelProps {
@@ -32,15 +35,33 @@ const field = 'mt-1 min-h-11 w-full rounded-lg border border-[var(--border)] bg-
 const button = 'min-h-11 rounded-lg border border-[var(--border)] px-3 py-2 text-sm disabled:opacity-50';
 type Availability = GrowerWorkflowDraft['available'][number];
 type AvailabilityRow = Availability & { rowKey: string };
-type PanelDraft = Omit<GrowerWorkflowDraft, 'available'> & { available: AvailabilityRow[] };
+type PanelDraft = Omit<GrowerWorkflowDraft, 'available' | 'targetProfiles' | 'demands'> & {
+  available: AvailabilityRow[];
+  /** One ordered priority list for buyer targets and grower-entered demands. */
+  demands: GrowerWorkflowDemandDraft[];
+};
 const emptyDraft = (): PanelDraft => ({ planningStart: '', planningEndExclusive: '', maxAssessments: '',
-  targetProfiles: [], available: [], assumptionsConfirmed: false });
+  demands: [], available: [], assumptionsConfirmed: false });
+const purposeLabel = (purpose: GrowerEnteredDemandPurpose) => purpose === 'trial' ? 'Trial' : 'Household';
+const demandKey = (row: GrowerWorkflowDemandDraft) => row.kind === 'buyer-target' ? `buyer:${row.targetId}` : `entered:${row.entryId}`;
+/** Buyer-only selections keep the exact legacy request shape. Any grower-entered
+ * row switches to the ordered list; buyer rows are never duplicated in both. */
+function workflowRequest(draft: PanelDraft): GrowerWorkflowDraft {
+  const available = draft.available.map(({ rowKey: _rowKey, ...row }) => row);
+  const head = { planningStart: draft.planningStart, planningEndExclusive: draft.planningEndExclusive, maxAssessments: draft.maxAssessments };
+  if (!draft.demands.some(row => row.kind === 'grower-entered')) {
+    return { ...head, targetProfiles: draft.demands.flatMap(row => row.kind === 'buyer-target'
+      ? [{ targetId: row.targetId, profileId: row.profileId }] : []), available, assumptionsConfirmed: draft.assumptionsConfirmed };
+  }
+  return { ...head, targetProfiles: [], demands: draft.demands.map(row => ({ ...row })), available, assumptionsConfirmed: draft.assumptionsConfirmed };
+}
 const issueLabels: Record<string, string> = {
   'mapped-site-required': 'Open a mapped site to use its saved buyer targets.',
   'saleable-share-missing': 'Enter your saleable percentage in the buyer target.',
   'zero-saleable-share': 'A zero saleable percentage cannot supply a positive buyer target.',
   'unit-weight-missing': 'Enter your harvest weight per sales unit in the buyer target.',
   'current-source-required': 'Check the current saved design before reviewing.',
+  'unreadable-workflow-input': 'This review contains unreadable inputs. Enter the affected demand again before reviewing.',
   'saved-plan-changed': 'The saved plan changed. Reload it before reviewing.',
   'pending-plan-edits': 'Save or resolve your open plan edits before reviewing.',
   'source-changed': 'The saved design changed. Check it again before reviewing.',
@@ -72,9 +93,49 @@ const issueLabels: Record<string, string> = {
   'fieldOccupancyDays': 'Your field occupancy is missing or invalid.',
   'turnaroundDays': 'Your turnaround after clearing is missing or invalid.',
   'allowedEntryMonths': 'Your allowed field-entry months are missing or invalid.',
+  'totalKg': 'A demand weight has not been entered. Blank is not zero: enter 0 only when the known demand is zero.',
+  'harvestWindow': 'A positive demand needs both harvest dates.',
+  'demand-selection-ambiguous': 'This review mixed two demand lists. Reopen the form and review again.',
+  'selected-demand-required': 'Select a saved buyer target or add a household or trial demand.',
+  'demand-row-limit': `A review can include at most ${GROWER_DEMAND_SELECTION_MAX_ROWS} demands (a software limit).`,
+  'demand-kind-invalid': 'A demand row was not recognised. Remove it and add it again.',
+  'entered-demand-unavailable': 'A household or trial row could not be read. Remove it and add it again.',
+  'entered-entry-unreadable': 'A household or trial row could not be read. Remove it and add it again.',
+  'entered-entry-shape-invalid': 'A household or trial row could not be read. Remove it and add it again.',
+  'entered-entry-id-invalid': 'A household or trial row could not be read. Remove it and add it again.',
+  'entered-entry-ambiguous': 'Two household or trial rows share one identity. Remove one and add it again.',
+  'entered-demand-id-collision': 'A household or trial row identity matches a saved buyer target. Remove the row and add it again.',
+  'entered-entry-row-limit': `A review can include at most ${GROWER_DEMAND_SELECTION_MAX_ROWS} household or trial rows (a software limit).`,
+  'entered-crop-required': 'Choose a crop for every household or trial demand.',
+  'entered-profile-required': 'Choose a saved growing estimate for every household or trial demand.',
+  'entered-profile-missing': 'A chosen growing estimate is no longer saved. Choose one again.',
+  'entered-profile-ambiguous': 'A chosen growing estimate has an ambiguous identity. Review the saved profiles.',
+  'entered-profile-invalid': 'A chosen growing estimate is invalid. Review its saved inputs.',
+  'entered-profile-identity-mismatch': 'A chosen growing estimate changed. Choose it again.',
+  'entered-scope-mismatch': 'A chosen growing estimate belongs to another site.',
+  'entered-crop-identity-mismatch': 'A chosen growing estimate is for a different crop. Choose an estimate for this crop.',
+  'entered-purpose-invalid': 'Choose household or trial for every entered demand.',
+  'entered-gross-kg-invalid': 'Enter the gross harvest weight as a plain number of kilograms, or leave it blank.',
+  'entered-gross-kg-format': 'Enter the gross harvest weight as a plain number of kilograms, for example 12 or 12.5.',
+  'entered-gross-kg-negative': 'A gross harvest weight cannot be negative.',
+  'entered-gross-kg-precision': 'Use at most six decimal places for kilograms.',
+  'entered-gross-kg-range': 'This gross harvest weight is outside the software range.',
+  'entered-gross-kg-representation-loss': 'This weight cannot be stored exactly. Enter a weight with fewer digits.',
+  'entered-quantity-entry-conflict': 'This demand has two weight entries. Remove it and enter the weight again.',
+  'entered-mass-entry-invalid': 'Enter a weight and choose kilograms or pounds.',
+  'entered-mass-entry-unreadable': 'This weight could not be read. Enter it again.',
+  'entered-mass-entry-format': 'This weight text is too long. Enter a shorter plain decimal.',
+  'entered-decimal-representation-loss': 'This weight or its kilogram conversion cannot be stored exactly. Enter a weight with fewer digits.',
+  'entered-incomplete-number': 'Finish entering your weight. Your original text is kept.',
+  'entered-plain-decimal-required': 'Enter a plain decimal weight in the selected unit, without thousands separators.',
+  'entered-outside-finite-range': 'This weight or its conversion is outside the software range.',
+  'entered-harvest-window-incomplete': 'Enter both harvest dates, or leave both blank.',
+  'entered-harvest-window-invalid': 'Enter a valid harvest start and a later exclusive end date.',
 };
 const issueText = (code: string) => issueLabels[code] ?? issueLabels[code.replace(/^target-/, '')]
-  ?? issueLabels[code.split(':').at(-1) ?? ''] ?? 'Check the saved source and entered assumptions before using this review.';
+  ?? issueLabels[code.split(':').at(-1) ?? '']
+  ?? (code.startsWith('entered-') ? 'Check your household or trial demands before using this review.' : undefined)
+  ?? 'Check the saved source and entered assumptions before using this review.';
 
 /** Review and receipt UI. The parent owns current-source reads and guarded writes. */
 export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
@@ -137,13 +198,44 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
     if (!available.some(row => row.bedId === bedId)) virtualRows.current.set(bedId, newRowKey());
     change({ ...draft, available });
   }
+  /** A fresh identity per entered row. It becomes the persisted engine demand
+   * suffix, so it must not repeat across sessions the way a useId sequence can. */
+  function newEntryId() {
+    try { const uuid = globalThis.crypto?.randomUUID?.(); if (uuid) return `entry-${uuid}`; } catch { /* fall through */ }
+    return `${formId}-entered-${Date.now().toString(36)}-${++rowSequence.current}`;
+  }
+  function addEntered(purpose: GrowerEnteredDemandPurpose) {
+    if (!draftCurrent() || draft.demands.length >= GROWER_DEMAND_SELECTION_MAX_ROWS) return;
+    const row: GrowerEnteredDemandEntry = { kind: 'grower-entered', entryId: newEntryId(), purpose, cropKey: '', profileId: '',
+      grossKg: '', harvestStart: '', harvestEndExclusive: '' };
+    change({ ...draft, demands: [...draft.demands, row] });
+  }
+  // Every edit, including a household/trial switch, goes through change():
+  // the displayed review, its save button and any old receipt are withdrawn.
+  function updateEntered(entryId: string, values: Partial<Omit<GrowerEnteredDemandEntry, 'kind' | 'entryId' | 'grossKg' | 'quantityEntry'>>) {
+    if (!draftCurrent() || !draft.demands.some(row => row.kind === 'grower-entered' && row.entryId === entryId)) return;
+    change({ ...draft, demands: draft.demands.map(row => row.kind === 'grower-entered' && row.entryId === entryId ? { ...row, ...values } : row) });
+  }
+  function updateEnteredQuantity(entryId: string, quantityEntry: MassQuantityEntry): boolean {
+    if (!draftCurrent() || !draft.demands.some(row => row.kind === 'grower-entered' && row.entryId === entryId)) return false;
+    change({ ...draft, demands: draft.demands.map(row => {
+      if (row.kind !== 'grower-entered' || row.entryId !== entryId) return row;
+      const { grossKg: _legacy, quantityEntry: _previous, ...fields } = row;
+      return { ...fields, quantityEntry: { ...quantityEntry } };
+    }) });
+    return true;
+  }
+  function removeEntered(entryId: string) {
+    if (!draftCurrent() || !draft.demands.some(row => row.kind === 'grower-entered' && row.entryId === entryId)) return;
+    change({ ...draft, demands: draft.demands.filter(row => row.kind !== 'grower-entered' || row.entryId !== entryId) });
+  }
   async function run() {
     if (!draftCurrent()) return;
     const turn = ++generation.current, revision = props.contextRevision;
     reviewGeneration.current = null; reviewContext.current = null;
     setBusy(true); setReview(null); setError('');
     try {
-      const request: GrowerWorkflowDraft = { ...draft, available: draft.available.map(({ rowKey: _rowKey, ...row }) => row) };
+      const request = workflowRequest(draft);
       const result = await props.onReview(request);
       if (generation.current === turn && live.current.contextRevision === revision && contextCurrent()) {
         reviewGeneration.current = turn; reviewContext.current = { revision, source: props.source, scopeKey }; setReview(result);
@@ -164,14 +256,21 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
     finally { accepting.current = false; }
   }
   function move(index: number, direction: number) {
-    const rows = [...draft.targetProfiles], other = index + direction;
+    const rows = [...draft.demands], other = index + direction;
     if (other < 0 || other >= rows.length) return;
     [rows[index], rows[other]] = [rows[other], rows[index]];
-    change({ ...draft, targetProfiles: rows });
+    change({ ...draft, demands: rows });
   }
   const saving = props.acceptance?.status === 'saving';
   const saved = props.acceptance?.status === 'confirmed';
   const usable = review?.status === 'review' && (review.proposal.status === 'ready' || review.proposal.status === 'with-gaps');
+  const mapped = props.scope?.kind === 'mapped-site';
+  const entered = draft.demands.filter((row): row is GrowerEnteredDemandEntry => row.kind === 'grower-entered');
+  const enteredCrops = [...new Set(profiles.map(profile => profile.cropKey))];
+  const demandLabel = (row: GrowerWorkflowDemandDraft) => row.kind === 'buyer-target'
+    ? `Buyer target · ${cropByKey(targets.find(target => target.id === row.targetId)?.cropKey ?? '')?.name ?? 'Unavailable target'}`
+    : `${purposeLabel(row.purpose)} · ${cropByKey(row.cropKey)?.name ?? 'crop not chosen'}`;
+  const enteredMeta = (demandId: string) => review?.status === 'review' ? review.enteredDemandMetadata?.find(row => row.demandId === demandId) : undefined;
   return <details className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] text-[var(--text-primary)]">
     <summary className="min-h-12 cursor-pointer px-4 py-3 font-display font-semibold">Automatic plan from your estimates</summary>
     <section aria-label="Grower automatic plan review" className="space-y-4 px-4 pb-4 text-sm">
@@ -188,23 +287,65 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
         <p>Save buyer targets and growing estimates above first. Select each target and its matching estimate profile. Earlier targets have priority.</p>
         {!targets.length && <p>{props.scope?.kind === 'mapped-site' ? 'No saved buyer targets for this mapped site.' : 'Open a mapped site to review its saved buyer targets.'}</p>}
         {targets.map(target => {
-          const selected = draft.targetProfiles.find(row => row.targetId === target.id);
+          const selected = draft.demands.find(row => row.kind === 'buyer-target' && row.targetId === target.id);
           return <div key={target.id} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
             <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={!!selected} onChange={event => change({ ...draft,
-              targetProfiles: event.target.checked ? [...draft.targetProfiles, { targetId: target.id, profileId: '' }]
-                : draft.targetProfiles.filter(row => row.targetId !== target.id) })} />Include {cropByKey(target.cropKey)?.name ?? target.cropKey}: {target.startMonth} to {target.endMonth}</label>
+              demands: event.target.checked ? [...draft.demands, { kind: 'buyer-target', targetId: target.id, profileId: '' }]
+                : draft.demands.filter(row => row.kind !== 'buyer-target' || row.targetId !== target.id) })} />Include {cropByKey(target.cropKey)?.name ?? target.cropKey}: {target.startMonth} to {target.endMonth}</label>
             {selected && <label className="block">Growing estimate for this target<select className={field} value={selected.profileId} onChange={event => change({ ...draft,
-              targetProfiles: draft.targetProfiles.map(row => row.targetId === target.id ? { ...row, profileId: event.target.value } : row) })}>
+              demands: draft.demands.map(row => row.kind === 'buyer-target' && row.targetId === target.id ? { ...row, profileId: event.target.value } : row) })}>
               <option value="">Choose your saved estimate</option>{profiles.filter(profile => profile.cropKey === target.cropKey).map((profile, index) => <option key={profile.profileId} value={profile.profileId}>Saved estimate {index + 1}</option>)}
             </select></label>}
           </div>;
         })}
-        {draft.targetProfiles.length > 0 && <ol className="space-y-2">{draft.targetProfiles.map((row, index) => <li key={row.targetId} className="flex flex-wrap items-center gap-2">
-          <span>{index + 1}. {cropByKey(targets.find(target => target.id === row.targetId)?.cropKey ?? '')?.name ?? 'Unavailable target'}</span>
-          <button type="button" className={button} disabled={index === 0} onClick={() => move(index, -1)} aria-label={`Move target ${index + 1} earlier`}>Earlier</button>
-          <button type="button" className={button} disabled={index === draft.targetProfiles.length - 1} onClick={() => move(index, 1)} aria-label={`Move target ${index + 1} later`}>Later</button>
-        </li>)}</ol>}
       </fieldset>
+      <fieldset className="space-y-3 rounded-xl border border-[var(--border)] p-3">
+        <legend className="px-1 font-semibold">Household and trial growing (no buyer)</legend>
+        <p>Plan your own food or a trial on the same measured beds with your own growing estimates. Enter the gross harvest weight this plan should cover across the whole harvest window. Choose kilograms or pounds independently of country or language. Blank means not entered; 0 means a known zero.</p>
+        <p>This is not a nutrition or food-security assessment, a sale, or evidence that a crop or trial is suitable or safe.</p>
+        {!mapped ? <p>Open a mapped site to plan household or trial growing. Unmapped designs stay on hold.</p> : <>
+          {!enteredCrops.length && <p>Save a growing estimate for this site above first.</p>}
+          {entered.map((row, index) => {
+            const name = `${purposeLabel(row.purpose)} demand ${index + 1}`;
+            return <div key={row.entryId} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
+              <label className="block">Purpose — {name}<select className={field} value={row.purpose} onChange={event => {
+                const purpose = event.target.value;
+                if (purpose === 'household' || purpose === 'trial') updateEntered(row.entryId, { purpose });
+              }}><option value="household">Household food</option><option value="trial">Trial</option></select></label>
+              <label className="block">Crop — {name}<select className={field} value={row.cropKey}
+                onChange={event => updateEntered(row.entryId, { cropKey: event.target.value, profileId: '' })}>
+                <option value="">Choose a crop with a saved estimate</option>{enteredCrops.map(key => <option key={key} value={key}>{cropByKey(key)?.name ?? key}</option>)}
+              </select></label>
+              <label className="block">Growing estimate — {name}<select className={field} value={row.profileId} disabled={!row.cropKey}
+                onChange={event => updateEntered(row.entryId, { profileId: event.target.value })}>
+                <option value="">Choose your saved estimate</option>{profiles.filter(profile => profile.cropKey === row.cropKey).map((profile, profileIndex) => <option key={profile.profileId} value={profile.profileId}>Saved estimate {profileIndex + 1}</option>)}
+              </select></label>
+              <GrowerEnteredMassField name={name} fieldClass={field}
+                entry={Object.hasOwn(row, 'quantityEntry') ? row.quantityEntry! : { unit: 'kg', text: row.grossKg! }}
+                isCurrent={() => draftCurrent() && draft.demands.includes(row)}
+                onEdit={entry => updateEnteredQuantity(row.entryId, entry)} />
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <label>Harvest from (UTC) — {name}<input type="date" className={field} value={row.harvestStart} onChange={event => updateEntered(row.entryId, { harvestStart: event.target.value })} /></label>
+                <label>Harvest ends before (UTC, exclusive) — {name}<input type="date" className={field} value={row.harvestEndExclusive} onChange={event => updateEntered(row.entryId, { harvestEndExclusive: event.target.value })} /></label>
+              </div>
+              <button type="button" className={button} aria-label={`Remove ${name}`} onClick={() => removeEntered(row.entryId)}>Remove demand</button>
+            </div>;
+          })}
+          <div className="flex flex-wrap gap-2">
+            <button type="button" className={button} disabled={draft.demands.length >= GROWER_DEMAND_SELECTION_MAX_ROWS} onClick={() => addEntered('household')}>Add household demand</button>
+            <button type="button" className={button} disabled={draft.demands.length >= GROWER_DEMAND_SELECTION_MAX_ROWS} onClick={() => addEntered('trial')}>Add trial demand</button>
+          </div>
+        </>}
+      </fieldset>
+      {draft.demands.length > 0 && <section aria-label="Demand priority" className="space-y-2 rounded-xl border border-[var(--border)] p-3">
+        <h3 className="font-semibold">Demand priority</h3>
+        <p>Earlier demands are planned first and keep their beds; later demands use what remains.</p>
+        <ol className="space-y-2">{draft.demands.map((row, index) => <li key={demandKey(row)} className="flex flex-wrap items-center gap-2">
+          <span>{index + 1}. {demandLabel(row)}</span>
+          <button type="button" className={button} disabled={index === 0} onClick={() => move(index, -1)} aria-label={`Move demand ${index + 1} earlier`}>Earlier</button>
+          <button type="button" className={button} disabled={index === draft.demands.length - 1} onClick={() => move(index, 1)} aria-label={`Move demand ${index + 1} later`}>Later</button>
+        </li>)}</ol>
+      </section>}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <label>First planning date (UTC)<input type="date" className={field} value={draft.planningStart} onChange={event => change({ ...draft, planningStart: event.target.value })} /></label>
         <label>Planning ends before (UTC)<input type="date" className={field} value={draft.planningEndExclusive} onChange={event => change({ ...draft, planningEndExclusive: event.target.value })} /></label>
@@ -243,14 +384,17 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
           : <><p>Search result: {review.proposal.status.replace(/-/g, ' ')}.</p>
             {!usable && <ul>{review.proposal.issues.map((issue, index) => <li key={index}>{issueText(issue)}</li>)}</ul>}
             {review.targetMetadata.map(target => <p key={target.targetId}>Buyer demand: {quantity(target.buyerTotalKg)} kg over {target.days} days. Gross estimated cycle capacity needed: {quantity(target.grossCapacityRequiredKg)} kg. Weekly delivery quantities remain unverified.</p>)}
+            {review.enteredDemandMetadata?.map(entry => <p key={entry.demandId}>{purposeLabel(entry.purpose)} demand you entered: {entry.grossCapacityKg === null ? 'weight not entered' : `${quantity(entry.grossCapacityKg)} kg gross for the whole window`}. No buyer or sale; not a nutrition check{entry.purpose === 'trial' ? ', trial evidence or safety finding' : ''}.</p>)}
+            {review.enteredDemandMetadata?.map(entry => <p key={`entry:${entry.demandId}`}>Original entered weight for this whole demand: <span className="whitespace-pre-wrap [overflow-wrap:anywhere]">{entry.quantityEntry.text || 'not entered'} {entry.quantityEntry.unit}</span>. Kilogram figures above are the canonical planning equivalent.</p>)}
             {usable && review.proposal.cycles.map(cycle => <article key={cycle.cycleId} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
-              <h4 className="font-semibold">{beds.find(bed => bed.id === cycle.bedId)?.label ?? 'Saved growing space'} · {cropByKey(cycle.cropKey)?.name ?? cycle.cropKey}</h4>
+              <h4 className="font-semibold">{beds.find(bed => bed.id === cycle.bedId)?.label ?? 'Saved growing space'} · {cropByKey(cycle.cropKey)?.name ?? cycle.cropKey}{enteredMeta(cycle.demandId) ? ` · ${purposeLabel(enteredMeta(cycle.demandId)!.purpose)}` : ''}</h4>
               <p>{quantity(cycle.assessment.capacity.estimatedPlantCount)} estimated plants; {quantity(cycle.assessment.capacity.estimatedYieldKg)} kg for this whole cycle.</p>
               <dl>{Object.entries({ 'Nursery start': cycle.assessment.schedule.nurseryStartDate ?? 'No nursery phase', 'Field entry': cycle.assessment.schedule.fieldEntryDate,
                 'First harvest': cycle.assessment.schedule.firstHarvestDate, 'Picking ends (exclusive)': cycle.assessment.schedule.harvestEndExclusiveDate,
                 'Field clear': cycle.assessment.schedule.fieldClearDate, 'Next field entry': cycle.assessment.schedule.nextFieldEntryDate }).map(([label, value]) => <div key={label} className="flex flex-wrap gap-x-2"><dt>{label}:</dt><dd>{value}</dd></div>)}</dl>
             </article>)}
-            {usable && review.proposal.demandResults.map(target => <p key={target.demandId}>Estimated gross capacity: {quantity(target.estimatedAllocatedKg)} kg; remaining: {quantity(target.unmetKg)} kg; excess: {quantity(target.excessEstimatedKg)} kg.</p>)}
+            {usable && review.proposal.demandResults.map(target => <p key={target.demandId}>{review.enteredDemandMetadata
+              ? `${enteredMeta(target.demandId) ? purposeLabel(enteredMeta(target.demandId)!.purpose) : 'Buyer target'}: ` : ''}Estimated gross capacity: {quantity(target.estimatedAllocatedKg)} kg; remaining: {quantity(target.unmetKg)} kg; excess: {quantity(target.excessEstimatedKg)} kg.</p>)}
           </>}
         {review.blockedBeds.length > 0 && <ul>{review.blockedBeds.map(bed => <li key={bed.bedId}>{beds.find(item => item.id === bed.bedId)?.label ?? 'Growing space'} held: {bed.reasons.map(issueText).join('; ')}</li>)}</ul>}
         {!saved && <p>These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.</p>}

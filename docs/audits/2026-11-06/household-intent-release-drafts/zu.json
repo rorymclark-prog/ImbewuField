@@ -1,0 +1,32 @@
+{
+  "locale": "zu",
+  "sourceSha256": "183d285ea47d6cf9d01f8229f1181e5f8ca05e8e4e166d8ca9cd40a2d926eebf",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "householdIntent.release.01",
+      "english": "Keep saved request details with your plan and exports.",
+      "sha256": "0b9817a465052a120755bf97b1010cf06eaa251d8a2e521a854d324c96dbec79",
+      "translation": "Gcina imininingwane yesicelo elondoloziwe nohlelo lwakho nokuthunyelwayo."
+    },
+    {
+      "key": "householdIntent.release.02",
+      "english": "Check saved request details",
+      "sha256": "349660604bf4a7a0df8f3485f247a9aa373f7731deefd6b52f23458005ef917d",
+      "translation": "Bheka imininingwane yesicelo elondoloziwe"
+    },
+    {
+      "key": "householdIntent.release.03",
+      "english": "Crop planner → Nursery requirements for saved planned batches",
+      "sha256": "c23af486bbed29f0942011cffca6bb97ef5d6ebf1b89b6f6f9f29cead15b5d68",
+      "translation": "Umhleli wezitshalo → Izidingo zenkulisa zamaqoqo ahleliwe alondoloziwe"
+    },
+    {
+      "key": "householdIntent.release.04",
+      "english": "Compare a saved batch’s purpose, original entered weight and request dates in nursery, task and report views. Repeated weights describe the whole request and must not be added together. Another site’s records remain held; these details do not confirm current field geometry or an observed harvest.",
+      "sha256": "34c4c13fabee475e7b87f33888052dbc50153178c3a0cc8a80ba64f6e5643ef7",
+      "translation": "Qhathanisa inhloso yeqoqo elilondoloziwe, isisindo sokuqala esifakiwe kanye nezinsuku zesicelo ekubukweni kwenkulisa, imisebenzi kanye nemibiko. Izisindo eziphindaphindiwe zichaza sonke isicelo futhi akufanele zihlanganiswe ndawonye. Amarekhodi kwenye indawo ahlala ebanjiwe; le mininingwane ayiqinisekisi ubunjalo bensimu yamanje noma isivuno esibonwe ngamehlo."
+    }
+  ]
+}

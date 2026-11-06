@@ -1,3 +1,4 @@
+import { readGrowerCycleIntent, type GrowerCyclePublicIntent } from './international/grower-cycle-intent';
 import type { DesignCanvasState } from './design-canvas';
 import { bedsFromDesignCanvas, canvasMetreExtent } from './design-beds-bridge';
 import { ELEMENTS_BY_ID } from './design-elements';
@@ -12,8 +13,8 @@ import { calendarProduceByMonth, treeLineText, animalLineText } from './calendar
 import type { FactCropPlan, ReportSiteFacts } from './report-site-facts';
 import { currentPlanningSupport } from './international/planning-support';
 import { canonicalCoordinateSiteId } from './site-id';
-import { hasGrowerCycleMarker, normaliseGrowerCycleAttachment, preserveGrowerCycleMarker, resolvePlantingBasis } from './international/grower-cycle';
-import { assessGrowerPlanning } from './international/grower-planning';
+import { growerCycleOriginView, hasGrowerCycleMarker, normaliseGrowerCycleAttachment, preserveGrowerCycleMarker, resolvePlantingBasis } from './international/grower-cycle';
+import { assessGrowerPlanning, growerPlanningScopeKey } from './international/grower-planning';
 
 export interface ReportCropSnapshot {
   annualProduction?: ReportProductionYear;
@@ -103,7 +104,7 @@ export function reportCropSignature(s: Pick<ReportCropSnapshot, 'beds' | 'planti
       ['existing', 'inNursery', 'confirmedOnceSowing', 'finishedOnceSowing', 'awaitingSowingConfirmation'].map(key => [key, (p as unknown as Record<string, unknown>)[key] !== undefined, (p as unknown as Record<string, unknown>)[key]])]
     : ['legacy']]), s.outlines]);
 }
-export interface ReportCropRow { key: string; name: string; cropKey?: string; where: string; sow: string; status: string; variety: string }
+export interface ReportCropRow { key: string; name: string; cropKey?: string; where: string; sow: string; status: string; variety: string; intent?: GrowerCyclePublicIntent }
 export function reportCropRows(crop: FactCropPlan): ReportCropRow[] {
   const s = crop.snapshot;
   if (s) {
@@ -111,8 +112,13 @@ export function reportCropRows(crop: FactCropPlan): ReportCropRow[] {
     for (const p of s.plantings) {
       if (hasGrowerCycleMarker(p)) {
         const held = resolvePlantingBasis(p);
-        const attachment = held.kind === 'held' && held.reasons.length === 1 && held.reasons[0] === 'current-geometry-context-required'
+        const archived = held.kind === 'held' && held.reasons.length === 1 && held.reasons[0] === 'current-geometry-context-required'
           ? normaliseGrowerCycleAttachment(preserveGrowerCycleMarker(p).growerCycle) : null;
+        // Archived evidence can describe its own site without claiming current
+        // geometry approval. Coincident bed IDs do not establish site identity.
+        const site = canonicalCoordinateSiteId(s.siteId);
+        const attachment = site && archived && growerPlanningScopeKey(archived.assessmentSnapshot.scope)
+          === growerPlanningScopeKey({ kind: 'mapped-site', siteId: site }) ? archived : null;
         const snapshot = attachment?.assessmentSnapshot;
         const assessment = snapshot && assessGrowerPlanning({ profile: snapshot.profile, scope: snapshot.scope,
           measuredAreaM2: snapshot.measuredAreaM2, fieldEntryDate: snapshot.fieldEntryDate });
@@ -124,7 +130,8 @@ export function reportCropRows(crop: FactCropPlan): ReportCropRow[] {
           : 'Grower cycle held — invalid or unsupported saved metadata; not an observed sowing or harvest';
         const key = JSON.stringify([p.id, sow, status, preserveGrowerCycleMarker(p)]);
         grouped.set(key, { key, cropKey: p.cropKey, name: cropByKey(p.cropKey)?.name ?? p.cropKey,
-          where: s.beds.find(b => b.id === p.bedId)?.label ?? 'Not recorded', sow, status, variety: p.variety || 'Not recorded' });
+          where: s.beds.find(b => b.id === p.bedId)?.label ?? 'Not recorded', sow, status, variety: p.variety || 'Not recorded',
+          intent: readGrowerCycleIntent(attachment ? growerCycleOriginView(attachment) : { status: 'held' }) });
         continue;
       }
       const status = p.inNursery ? 'In nursery' : p.existing ? 'Recorded as growing' : p.once ? 'First season only' : 'Planned annual sowing';

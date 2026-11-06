@@ -1,0 +1,10 @@
+{
+  "sourceSha256": "183d285ea47d6cf9d01f8229f1181e5f8ca05e8e4e166d8ca9cd40a2d926eebf",
+  "pairs": 16,
+  "damagedControlsPerLocale": 16,
+  "notesWords": 156,
+  "review": "Exact source/key/hash/order/token checks and identified nursery terminology corrections; not fluent certification.",
+  "use": "Existing-language update captions with exact English retained; no new app language or human translation approval.",
+  "releaseGates": "Current source type0/170source-consumer+10renderer; full/currentCI/hosted/combineddesktop-phone pending.",
+  "sourceFileReconciliation": "Frozen English unchanged; release metadata may later stamp code commit, not a new text capture."
+}

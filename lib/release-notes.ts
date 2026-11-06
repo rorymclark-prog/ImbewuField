@@ -41,6 +41,38 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', sha: 'b98c029e142b', changes: [
+    'Plan seed sourcing for field cycles without nursery raising.',
+  ], tour: [{ title: 'Review field seed requirements', where: 'Crop planner → Saved planned nursery batches → Field seed sourcing', href: '/facilitator/crops',
+    detail: 'Open the separate field worksheet for accepted cycles without a nursery phase. Declare botanical seeds, confirm your gross whole-seed requirement, group cycles that can share a supply, and enter your allocation and pack size. Blank counts stay unknown. This temporary worksheet does not record stock, place orders or save the plan.' }] },
+  { when: '6 November 2026', sha: '74ab71b9b', changes: [
+    'Show crop names and your labels in seed worksheets.',
+  ], tour: [{ title: 'Identify planned seed supply groups', where: 'Crop planner → Saved planned nursery batches → Seed sourcing review', href: '/facilitator/crops',
+    detail: 'Add your own supply-group label and review crop names from the saved nursery batches you selected. The CSV worksheet includes your entered labels. Missing identification stays visible, and crop names do not confirm interchangeable varieties, seed lots or observed stock.' }] },
+  { when: '6 November 2026', sha: '38c04e5126a3', changes: [
+    'Review seed allocations and planned pack counts.',
+  ], tour: [{ title: 'Review planned seed sourcing', where: 'Crop planner → Nursery requirements → Seed sourcing', href: '/facilitator/crops',
+    detail: 'Open the nursery review for saved planned batches, add the batches that can share a seed supply, and enter your allocation and seeds per pack. Review the planned requirements before downloading the CSV. Blank counts stay unknown; these inputs do not record seed stock, place an order or cover all farm seed demand.' }] },
+  { when: '6 November 2026', sha: '965e29f0b', changes: [
+    'Keep saved request details with your plan and exports.',
+  ], tour: [{ title: 'Check saved request details', where: 'Crop planner → Nursery requirements for saved planned batches', href: '/facilitator/crops',
+    detail: 'Compare a saved batch’s purpose, original entered weight and request dates in nursery, task and report views. Repeated weights describe the whole request and must not be added together. Another site’s records remain held; these details do not confirm current field geometry or an observed harvest.' }] },
+  { when: '6 November 2026', sha: 'b57a0b778547', changes: [
+    'Compare harvest-weight wording drafts in seven languages.',
+  ], tour: [{ title: 'Review seven harvest-weight draft languages', where: 'International reference tools → Language draft review → Harvest weight entry', href: '/international/locales/mass-entry',
+    detail: 'Compare current English with French, Spanish, Brazilian Portuguese, Swahili, Hindi, Bengali and Indonesian drafts. These are unreviewed comparisons, not approved translations or a change to your app language.' }] },
+  { when: '6 November 2026', sha: '8c4c2744d76e', changes: [
+    "Compare harvest-weight wording drafts in four languages.",
+  ], tour: [{ title: "Review harvest weight drafts", where: "International reference tools → Language draft review → Harvest weight entry", href: '/international/locales/mass-entry',
+    detail: "Compare the current English for weight entry and saved requests with French, Spanish, Brazilian Portuguese and Swahili drafts. Changed or missing source wording stays visible. This review does not approve translations or change your app language." }] },
+  { when: '6 November 2026', sha: 'e66f8e3de2ab', changes: [
+    'Enter household or trial harvest requests in kilograms or pounds.',
+  ], tour: [{ title: 'Choose harvest weight units', where: 'Production plan → Automatic plan from your estimates → Household food or trial growing', href: '/facilitator/crops',
+    detail: 'Choose kg or lb for viewing. Changing the view keeps your original entry; typing a new weight changes the request and requires review. Saved crop records and nursery batches show the original entry separately from the planned kilogram quantity.' }] },
+  { when: '6 November 2026', sha: '4bf1cace547c', changes: [
+    'Plan household food or trial growing from your own harvest target, without a buyer order.',
+  ], tour: [{ title: 'Plan food or a growing trial', where: 'Production plan → Automatic plan from your estimates', href: '/facilitator/crops',
+    detail: 'Choose household food or trial growing, enter your gross harvest weight and dates, and use your saved growing estimates and measured spaces. Saved crop records and nursery batches keep the original request. These are planning estimates, not observed harvests or local crop advice.' }] },
   { when: '6 November 2026', sha: '74365784b126', changes: [
     'Review conflicting shape versions on your map.',
   ], tour: [{ title: 'Review map shape versions', where: 'Map → Shapes needing your decision', href: '/farmer',

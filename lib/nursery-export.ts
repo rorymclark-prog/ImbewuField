@@ -1,9 +1,12 @@
+import { readGrowerCycleIntent, readGrowerCycleIntentField, growerCycleIntentColumns, GROWER_INTENT_EXPORT_COLUMNS } from './international/grower-cycle-intent';
 import type { jsPDF } from 'jspdf';
-import { registerReportPdfFont } from './report-pdf-font';
+import { exactPdfTextWriter } from './pdf-exact-text';
 import type { PlanBed } from './crop-plan';
 import type { NurseryForecast, NurseryRange } from './crop-export-schedule';
 import { csvCell } from './journal-export';
-import { projectGrowerNurseryPreparation, type GrowerNurseryResult, type GrowerNurseryBatchReferenceView } from './international/grower-nursery';
+import { projectGrowerNurseryPreparation, type GrowerNurseryResult, type GrowerNurseryBatchReferenceView, type GrowerNurseryRequest } from './international/grower-nursery';
+import { reviewGrowerSeedSourcing, reviewGrowerFieldSeedSourcing,
+  type GrowerSeedSourcingGroupReview, type GrowerFieldSeedSourcingInput } from './international/grower-seed-sourcing';
 
 /** Static delivery copy only; never include entered references in an error. */
 export class NurseryReferenceExportError extends Error {
@@ -31,39 +34,6 @@ function referenceColumns(reference: MemberReference) {
       : reference.status === 'proposed' ? 'Proposed cycle: no saved planned reference.' : 'Saved planned references need review; do not infer their absence.' };
 }
 
-/** jsPDF's UTF-16 encoder uses the registered font cmap and silently omits
- * missing glyphs. Check that exact authority before handing user labels to it. */
-async function plannedReferenceWriter(doc: jsPDF) {
-  const family = await registerReportPdfFont(doc);
-  doc.setFont(family, 'normal');
-  const metadata = doc.getFont().metadata;
-  const seenGlyphs = new Map<number, number>();
-  function select(text: string) {
-    for (let index = 0; index < text.length; index++) {
-      const code = text.charCodeAt(index), glyph: unknown = metadata.cmap?.unicode?.codeMap?.[code];
-      if (typeof glyph !== 'number' || glyph <= 0 || metadata.characterToGlyph(code) !== glyph
-        || (seenGlyphs.has(glyph) && seenGlyphs.get(glyph) !== code)) {
-        throw new NurseryReferenceExportError();
-      }
-      // The embedded ToUnicode map is keyed by glyph. Two distinct characters
-      // sharing one glyph cannot both retain their original text in this PDF.
-      seenGlyphs.set(glyph, code);
-    }
-    doc.setFont(family, 'normal'); doc.setFontSize(10);
-  }
-  return { select, lines(text: string, width: number) {
-    select(text);
-    const lines: string[] = []; let line = '';
-    // Retain every entered code point, including repeated spaces and combining
-    // marks. The ordinary copy formatter intentionally normalizes punctuation.
-    for (const character of text) {
-      if (line && doc.getTextWidth(line + character) > width) { lines.push(line); line = ''; }
-      line += character;
-    }
-    if (line) lines.push(line);
-    return lines;
-  } };
-}
 
 export interface NurseryCsvOptions {
   siteName?: string;
@@ -172,7 +142,7 @@ export function buildGrowerNurseryCsv(result: GrowerNurseryResult, beds: readonl
     'crop_name', 'growing_spaces', 'member_number', 'reference_status', 'variety', 'seed_lot_reference', 'raising_batch_reference', 'reference_note', 'start_date', 'end_date_exclusive', 'target_final_positions',
     'starts', 'seeds', 'trays', 'area_m2', 'nursery_model', 'resource_type', 'resource_name',
     'recorded_capacity', 'peak_known_min', 'peak_known_max', 'shortage_upper_end',
-    'availability_quantity', 'availability_complete', 'incomplete', 'assumptions', 'issues'] as const;
+    'availability_quantity', 'availability_complete', 'incomplete', 'assumptions', 'issues', ...GROWER_INTENT_EXPORT_COLUMNS] as const;
   type OwnRow = Partial<Record<typeof columns[number], string | number>>;
   const rows: OwnRow[] = [];
   const preparation = projectGrowerNurseryPreparation(result);
@@ -183,7 +153,7 @@ export function buildGrowerNurseryCsv(result: GrowerNurseryResult, beds: readonl
   rows.push({ ...context, record_type: 'guidance', incomplete: result.status === 'ready' ? 'no' : 'yes',
     assumptions: result.forecast.guidance, issues: result.issues.map(growerNurseryIssueText).join(' | ') });
   for (const [index, batch] of result.batches.entries()) rows.push({ ...context, record_type: 'dated_raising_batch',
-    member_number: index + 1, ...referenceColumns(exportReference(references.get(batch.id), batch.sourceStatus)),
+    member_number: index + 1, ...growerCycleIntentColumns(readGrowerCycleIntentField(batch)), ...referenceColumns(exportReference(references.get(batch.id), batch.sourceStatus)),
     source_status: batch.sourceStatus, crop_name: batch.cropName,
     growing_spaces: batch.bedIds.map(id => beds.find(bed => bed.id === id)?.label ?? 'Growing space not available').join(' | '),
     start_date: batch.startDate, end_date_exclusive: batch.endDateExclusive, target_final_positions: batch.targetPositions,
@@ -214,7 +184,7 @@ export async function buildGrowerNurseryBatchLabelsPdf(result: GrowerNurseryResu
 
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
-  const referenceWriter = await plannedReferenceWriter(doc);
+  const referenceWriter = await exactPdfTextWriter(doc, () => new NurseryReferenceExportError());
   const width = doc.internal.pageSize.getWidth(), height = doc.internal.pageSize.getHeight();
   const margin = 36, contentWidth = width - 2 * margin, bottom = height - 66;
   const ink: [number, number, number] = [43, 48, 39];
@@ -316,7 +286,15 @@ export async function buildGrowerNurseryBatchLabelsPdf(result: GrowerNurseryResu
 
     for (const [memberIndex, member] of group.members.entries()) {
       const reference = exportReference(member.reference, projection.sourceStatus), fields = referenceColumns(reference);
-      paragraph(`Member ${memberIndex + 1}: raising ${group.startDate}; field entry ${member.endDateExclusive} (exclusive UTC).`, 9, 'bold', 4, cardTitle);
+      const memberHeading = `Member ${memberIndex + 1}: raising ${group.startDate}; field entry ${member.endDateExclusive} (exclusive UTC).`;
+      const intentLines = (member.intent ?? readGrowerCycleIntent(undefined)).lines;
+      // Keep this bounded public intent together with its member identity. The
+      // entered reference fields below retain their existing long-text paging.
+      font(9, 'bold'); let intentHeight = doc.splitTextToSize(memberHeading, contentWidth).length * 11.7 + 4;
+      font(9); for (const line of intentLines) intentHeight += doc.splitTextToSize(preparationPdfCopy(line), contentWidth).length * 11.7 + 4;
+      ensure(intentHeight + 2, cardTitle);
+      paragraph(memberHeading, 9, 'bold', 4, cardTitle);
+      for (const line of intentLines) paragraph(line, 9, 'normal', 4, cardTitle);
       paragraph(fields.reference_note, 9, 'normal', 4, cardTitle);
       for (const [label, value] of [['Variety', fields.variety], ['Seed lot reference', fields.seed_lot_reference], ['Raising batch reference', fields.raising_batch_reference]]) {
         for (const line of referenceWriter.lines(`${label}: ${value}`, contentWidth)) {
@@ -405,7 +383,7 @@ export async function buildGrowerNurseryPreparationPdf(result: GrowerNurseryResu
   if (projection.groups.some(group => !/^[\x20-\x7e]+$/.test(group.cropName))) throw Error('The crop identity cannot be printed faithfully with the current PDF font.');
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
-  const referenceWriter = await plannedReferenceWriter(doc);
+  const referenceWriter = await exactPdfTextWriter(doc, () => new NurseryReferenceExportError());
   const width = doc.internal.pageSize.getWidth(), height = doc.internal.pageSize.getHeight();
   const margin = 36, contentWidth = width - 2 * margin, bottom = height - 66;
   const ink: [number, number, number] = [43, 48, 39];
@@ -475,10 +453,23 @@ export async function buildGrowerNurseryPreparationPdf(result: GrowerNurseryResu
     paragraph(`${group.members.length} represented ${group.members.length === 1 ? 'batch' : 'batches'}.`, 10);
     for (const [memberIndex, member] of group.members.entries()) {
       const reference = exportReference(member.reference, projection.sourceStatus), fields = referenceColumns(reference);
-      paragraph(`Member ${memberIndex + 1}: raising ${group.startDate}; field entry ${member.endDateExclusive} (exclusive UTC).`, 9, 'bold');
+      const memberHeading = `Member ${memberIndex + 1}: raising ${group.startDate}; field entry ${member.endDateExclusive} (exclusive UTC).`;
+      const intentLines = (member.intent ?? readGrowerCycleIntent(undefined)).lines;
+      font(9, 'bold'); let intentHeight = doc.splitTextToSize(memberHeading, contentWidth).length * 11.7 + 5;
+      font(9); for (const line of intentLines) intentHeight += doc.splitTextToSize(preparationPdfCopy(line), contentWidth).length * 11.7 + 5;
+      const referenceNoteHeight = doc.splitTextToSize(preparationPdfCopy(fields.reference_note), contentWidth).length * 11.7 + 5;
+      const referenceRows = [['Variety', fields.variety], ['Seed lot reference', fields.seed_lot_reference], ['Raising batch reference', fields.raising_batch_reference]]
+        .map(([label, value]) => referenceWriter.lines(`${label}: ${value}`, contentWidth));
+      const memberHeight = intentHeight + referenceNoteHeight + referenceRows.reduce((sum, lines) => sum + lines.length * 13 + 4, 0);
+      font(10); const freshPageRoom = bottom - margin - 18 - doc.splitTextToSize(activeGroup, contentWidth).length * 13 - 6;
+      // Extra intent must not leave a short reference block without its member
+      // identity. Oversized entered references retain existing per-line paging.
+      ensure((memberHeight + 2 <= freshPageRoom ? memberHeight : intentHeight) + 2);
+      paragraph(memberHeading, 9, 'bold');
+      for (const line of intentLines) paragraph(line, 9);
       paragraph(fields.reference_note, 9);
-      for (const [label, value] of [['Variety', fields.variety], ['Seed lot reference', fields.seed_lot_reference], ['Raising batch reference', fields.raising_batch_reference]]) {
-        for (const line of referenceWriter.lines(`${label}: ${value}`, contentWidth)) {
+      for (const lines of referenceRows) {
+        for (const line of lines) {
           ensure(15); referenceWriter.select(line); doc.setTextColor(...ink);
           doc.text(line, margin, y + 10); y += 13;
         }
@@ -514,7 +505,7 @@ export function buildGrowerNurseryPreparationCsv(result: GrowerNurseryResult, op
     'projection_status', 'projection_incomplete', 'coverage', 'horizon_start_utc', 'horizon_end_exclusive_utc', 'group_number', 'crop_name',
     'raising_start_date_utc', 'field_entry_dates_exclusive_utc', 'represented_batch_count', 'metric', 'metric_status',
     'known_subtotal', 'represented_batch_total', 'known_batch_count', 'unknown_batch_count', 'group_incomplete',
-    'outside_review_horizon', 'member_number', 'reference_status', 'variety', 'seed_lot_reference', 'raising_batch_reference', 'reference_note', 'issues', 'guidance'] as const;
+    'outside_review_horizon', 'member_number', 'reference_status', 'variety', 'seed_lot_reference', 'raising_batch_reference', 'reference_note', 'issues', 'guidance', ...GROWER_INTENT_EXPORT_COLUMNS] as const;
   type PreparationRow = Partial<Record<typeof columns[number], string | number>>;
   const labels = (issues: readonly string[]) => [...new Set(issues.map(growerNurseryIssueText))].join(' | ');
   const context: PreparationRow = {
@@ -529,7 +520,7 @@ export function buildGrowerNurseryPreparationCsv(result: GrowerNurseryResult, op
     issues: labels(projection.issues), guidance: projection.guidance }];
   for (const [index, group] of projection.groups.entries()) {
     for (const [memberIndex, member] of group.members.entries()) rows.push({ ...context, record_type: 'planned_batch_reference',
-      group_number: index + 1, member_number: memberIndex + 1, crop_name: group.cropName,
+      group_number: index + 1, member_number: memberIndex + 1, crop_name: group.cropName, ...growerCycleIntentColumns(member.intent ?? readGrowerCycleIntent(undefined)),
       raising_start_date_utc: group.startDate, field_entry_dates_exclusive_utc: member.endDateExclusive,
       ...referenceColumns(exportReference(member.reference, projection.sourceStatus)), guidance: projection.guidance });
     for (const [name, metric] of [['field_positions', group.fieldPositions], ['starts_to_raise', group.startsToRaise], ['seeds_to_sow', group.seedsToSow]] as const) {
@@ -544,4 +535,136 @@ export function buildGrowerNurseryPreparationCsv(result: GrowerNurseryResult, op
   }
   return `\uFEFF${[columns, ...rows.map(row => columns.map(column => row[column] ?? ''))]
     .map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
+}
+
+const SEED_SOURCING_COLUMNS = [
+  'record_type',
+  'plan_basis',
+  'source_verification',
+  'coverage',
+  'whole_farm_coverage',
+  'review_status',
+  'nursery_review_status',
+  'horizon_start_utc',
+  'horizon_end_exclusive_utc',
+  'represented_batch_count',
+  'assigned_batch_count',
+  'unassigned_batch_count',
+  'supply_group_number',
+  'group_status',
+  'known_required_seed_subtotal',
+  'required_seeds',
+  'additional_seeds_needed',
+  'planned_packs',
+  'planned_pack_seeds',
+  'guidance',
+  'entered_supply_group_label',
+  'label_status',
+  'public_crop_names',
+  'identification_description',
+] as const;
+
+type SeedSourcingColumn = typeof SEED_SOURCING_COLUMNS[number];
+type SeedSourcingRow = Partial<Record<SeedSourcingColumn, string | number>>;
+
+function seedSourcingGroupCells(group: Pick<GrowerSeedSourcingGroupReview,
+  'index' | 'status' | 'knownRequiredSeedsSubtotal' | 'requiredSeeds' | 'counts' | 'identification'>) {
+  return {
+    supply_group_number: group.index + 1,
+    group_status: group.status,
+    known_required_seed_subtotal: group.knownRequiredSeedsSubtotal ?? 'unknown',
+    required_seeds: group.requiredSeeds ?? 'unknown',
+    additional_seeds_needed: group.counts?.neededSeeds ?? 'unknown',
+    planned_packs: group.counts?.packsNeeded ?? 'unknown',
+    planned_pack_seeds: group.counts?.plannedPackSeeds ?? 'unknown',
+    entered_supply_group_label: group.identification?.enteredLabel ?? '',
+    label_status: group.identification?.labelStatus ?? 'not-recorded',
+    public_crop_names: JSON.stringify(group.identification?.cropNames ?? []),
+    identification_description: group.identification?.description ?? '',
+  };
+}
+function serializeSeedSourcingCsv(columns: readonly string[], rows: readonly (readonly (string | number)[])[]): string {
+  return `\uFEFF${[columns, ...rows].map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
+}
+
+/** Export the seed sourcing planning review verbatim from canonical projection.
+ * Does not calculate requirements, assert actor freshness or record stock. */
+export function buildGrowerSeedSourcingCsv(
+  result: GrowerNurseryResult,
+  currentRequest: GrowerNurseryRequest,
+  groups: unknown,
+  options: Pick<NurseryCsvOptions, 'sample'> = {}
+): string {
+  const projection = reviewGrowerSeedSourcing({ result, currentRequest, groups });
+  if (projection.status === 'unavailable') {
+    throw new RangeError('A current saved nursery review is required for seed sourcing export.');
+  }
+
+  const context: SeedSourcingRow = {
+    plan_basis: options.sample
+      ? 'DEMO — planned seed sourcing estimates'
+      : 'Planned seed sourcing estimates',
+    source_verification: projection.sourceVerification,
+    coverage: projection.coverage,
+    whole_farm_coverage: projection.wholeFarmCoverage,
+    review_status: projection.status,
+    nursery_review_status: projection.nurseryReviewStatus,
+    horizon_start_utc: projection.horizon?.start ?? 'unknown',
+    horizon_end_exclusive_utc: projection.horizon?.endExclusive ?? 'unknown',
+    represented_batch_count: projection.representedBatchCount,
+    assigned_batch_count: projection.assignedBatchCount,
+    unassigned_batch_count: projection.unassignedBatchIds.length,
+    guidance: projection.guidance,
+  };
+
+  const rows: SeedSourcingRow[] = [
+    {
+      ...context,
+      record_type: 'guidance',
+    },
+  ];
+
+  for (const group of projection.groups) {
+    rows.push({
+      ...context,
+      record_type: 'supply_group',
+      ...seedSourcingGroupCells(group),
+    });
+  }
+
+  return serializeSeedSourcingCsv(SEED_SOURCING_COLUMNS, rows.map(row => SEED_SOURCING_COLUMNS.map(column => row[column] ?? '')));
+}
+
+const FIELD_SEED_SOURCING_COLUMNS = [
+  'record_type', 'plan_basis', 'source_verification', 'requirement_basis', 'coverage', 'whole_farm_coverage', 'review_status',
+  'represented_cycle_count', 'assigned_cycle_count', 'unassigned_cycle_count', 'held_source_row_count', 'legacy_source_row_count',
+  'excluded_nursery_cycle_count', 'supply_group_number', 'selected_cycle_count', 'group_status', 'known_required_seed_subtotal',
+  'required_seeds', 'additional_seeds_needed', 'planned_packs', 'planned_pack_seeds', 'entered_supply_group_label',
+  'label_status', 'public_crop_names', 'identification_description', 'issues', 'guidance',
+] as const;
+type FieldSeedSourcingColumn = typeof FIELD_SEED_SOURCING_COLUMNS[number];
+type FieldSeedSourcingRow = Partial<Record<FieldSeedSourcingColumn, string | number>>;
+
+/** Replay raw accepted cycles instead of trusting a caller's projected review.
+ * The parent still owns live book/source/actor checks before file delivery. */
+export function buildGrowerFieldSeedSourcingCsv(
+  input: GrowerFieldSeedSourcingInput,
+  options: Pick<NurseryCsvOptions, 'sample'> = {}
+): string {
+  const projection = reviewGrowerFieldSeedSourcing(input);
+  if (projection.status === 'unavailable') throw new RangeError('A readable accepted-cycle source is required for field seed sourcing export.');
+  const context: FieldSeedSourcingRow = {
+    plan_basis: options.sample ? 'DEMO — entered gross whole-seed planning estimates' : 'Entered gross whole-seed planning estimates',
+    source_verification: projection.sourceVerification, requirement_basis: projection.requirementBasis,
+    coverage: projection.coverage, whole_farm_coverage: projection.wholeFarmCoverage, review_status: projection.status,
+    represented_cycle_count: projection.representedCycleCount, assigned_cycle_count: projection.assignedCycleCount,
+    unassigned_cycle_count: projection.unassignedPlantingIds.length, held_source_row_count: projection.heldSourceRowCount,
+    legacy_source_row_count: projection.legacySourceRowCount, excluded_nursery_cycle_count: projection.excludedNurseryCycleCount,
+    guidance: projection.guidance,
+  };
+  const rows: FieldSeedSourcingRow[] = [{ ...context, record_type: 'guidance', issues: projection.issues.join(' | ') }];
+  if (projection.sourceIssues.length) rows.push({ ...context, record_type: 'source_review', issues: projection.sourceIssues.join(' | ') });
+  for (const group of projection.groups) rows.push({ ...context, record_type: 'supply_group', ...seedSourcingGroupCells(group),
+    selected_cycle_count: group.selectedCycleCount, issues: group.issues.join(' | ') });
+  return serializeSeedSourcingCsv(FIELD_SEED_SOURCING_COLUMNS, rows.map(row => FIELD_SEED_SOURCING_COLUMNS.map(column => row[column] ?? '')));
 }

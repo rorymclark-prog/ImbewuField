@@ -77,16 +77,50 @@ export function compareDecimalQuantities(a: DecimalQuantity | undefined, b: Deci
   return difference < 0 ? -1 : difference > 0 ? 1 : 0;
 }
 
-/** Multiply entered decimal quantities, converting only the final product. */
-export function decimalQuantityProduct(values: readonly number[]): number | null {
+function decimalProductCoefficients(values: readonly number[]): DecimalQuantity | null {
   let product: DecimalQuantity = { digits: BigInt(1), exponent: 0 };
   for (const value of values) {
     if (typeof value !== 'number' || !Number.isFinite(value)) return null;
     const factor = addDecimalQuantity(undefined, value);
     product = { digits: product.digits * factor.digits, exponent: product.exponent + factor.exponent };
   }
+  return product;
+}
+
+/** Multiply entered decimal quantities, converting only the final product. */
+export function decimalQuantityProduct(values: readonly number[]): number | null {
+  const product = decimalProductCoefficients(values);
+  if (!product) return null;
   const quantity = decimalQuantityNumber(product);
   return quantity === 0 && product.digits !== BigInt(0) ? null : quantity;
+}
+
+export type ExactDecimalProductResult =
+  | { readonly status: 'ready'; readonly value: number }
+  | { readonly status: 'held'; readonly reason: 'invalid-factor' | 'outside-finite-range' | 'decimal-representation-loss' | 'work-limit' };
+
+/** Authored requests promise their decimal input, whereas older observation
+ * helpers permit a rounded Number product. Compare declared decimals before
+ * accepting that new promise, without changing the older helpers' behaviour. */
+export function exactDecimalQuantityProduct(values: readonly number[]): ExactDecimalProductResult {
+  try {
+    if (!Array.isArray(values)) return { status: 'held', reason: 'invalid-factor' };
+    if (values.length > DECIMAL_QUANTITY_FLOOR_MAX_FACTORS) return { status: 'held', reason: 'work-limit' };
+    const copy: number[] = [];
+    for (let index = 0; index < values.length; index++) {
+      const field = Object.getOwnPropertyDescriptor(values, index);
+      if (!field || !('value' in field) || typeof field.value !== 'number' || !Number.isFinite(field.value)
+        || Object.is(field.value, -0)) return { status: 'held', reason: 'invalid-factor' };
+      copy.push(field.value);
+    }
+    const product = decimalProductCoefficients(copy)!;
+    const value = decimalQuantityNumber(product);
+    if (value === null || value === 0 && product.digits !== BigInt(0)) return { status: 'held', reason: 'outside-finite-range' };
+    if (compareDecimalQuantities(product, addDecimalQuantity(undefined, value)) !== 0) {
+      return { status: 'held', reason: 'decimal-representation-loss' };
+    }
+    return { status: 'ready', value };
+  } catch { return { status: 'held', reason: 'invalid-factor' }; }
 }
 
 /** Software work ceilings for exact decimal arithmetic, not farm measurements.

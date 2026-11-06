@@ -132,11 +132,17 @@ function reservationInput(value: unknown): GrowerBedReservation | null {
   const parsed = availabilityInput(value);
   return parsed ? { id: value.id, ...parsed } : null;
 }
-function demandInput(value: unknown): GrowerAutoPlanDemand | null {
+/** The engine and durable accepted-intent snapshots share one input parser. */
+export function normaliseGrowerAutoPlanDemand(value: unknown): GrowerAutoPlanDemand | null {
   if (!record(value) || !identity(value.demandId) || !identity(value.profileId)) return null;
   const scope = normaliseGrowerPlanningScope(value.scope);
   const totalKg = normaliseGrowerInput(value.totalKg, 'kg-total', nonNegative), harvestWindow = windowInput(value.harvestWindow);
   return scope && totalKg && harvestWindow ? { demandId: value.demandId, profileId: value.profileId, scope, totalKg, harvestWindow } : null;
+}
+/** A demand window covers whole picking intervals, never just their first day. */
+export function growerDemandWindowContainsAssessment(window: GrowerUtcWindow, assessment: GrowerReadyAssessment): boolean {
+  return assessment.schedule.firstHarvestDate >= window.start
+    && assessment.schedule.harvestEndExclusiveDate <= window.endExclusive;
 }
 const basis = { basis: 'grower-input-cycle-capacity' as const, sourceVerification: 'not-verified' as const };
 class WorkLimit extends Error {}
@@ -167,7 +173,7 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
   const beds = (value.beds as unknown[]).map(bedInput);
   const availability = (value.availability as unknown[]).map(availabilityInput);
   const reserved = (value.reserved as unknown[]).map(reservationInput);
-  const demands = (value.demands as unknown[]).map(demandInput);
+  const demands = (value.demands as unknown[]).map(normaliseGrowerAutoPlanDemand);
   const planningStart = normaliseGrowerInput(value.planningStart, 'utc-date', isGrowerUtcDate);
   const planningEndExclusive = normaliseGrowerInput(value.planningEndExclusive, 'utc-date', isGrowerUtcDate);
   const invalid = [!scope && 'scope', profiles.length !== (value.profiles as unknown[]).length && 'profiles',
@@ -271,7 +277,7 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
             cursor = addGrowerUtcDays(cursor, (Date.parse(target.start) - Date.parse(dates.firstHarvestDate)) / 86_400_000);
             continue;
           }
-          if (dates.harvestEndExclusiveDate > target.endExclusive) { reasons.add('harvest-window'); break; }
+          if (!growerDemandWindowContainsAssessment(target, result)) { reasons.add('harvest-window'); break; }
           if (dates.nextFieldEntryDate > finish) { reasons.add('availability-or-horizon'); break; }
           const overlaps = occupied.filter(row => row.bedId === bed.bed.id && cursor! < row.endExclusive && dates.nextFieldEntryDate > row.start);
           if (overlaps.length) {

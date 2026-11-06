@@ -645,7 +645,7 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
     const first = doc.getNumberOfPages() + 1;
     const { drawReportCropSummary } = await import('./report-crop-pdf');
     const support = currentReportCropSupport(meta.cropPlan.snapshot, coordinateSiteIdForPlace(meta));
-    drawReportCropSummary(doc, meta.cropPlan, meta.cropMapMonth ?? 0, meta.language, support.allowCataloguePlanning);
+    await drawReportCropSummary(doc, meta.cropPlan, meta.cropMapMonth ?? 0, meta.language, support.allowCataloguePlanning);
     for (let p = first; p < doc.getNumberOfPages(); p++) { doc.setPage(p); footer(p); }
     doc.setPage(doc.getNumberOfPages());
   }

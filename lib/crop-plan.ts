@@ -580,7 +580,12 @@ function copyCropPlanAuthoredData(value: unknown, parents = new Set<object>(), a
 function sampleCropPlanSnapshot(value: unknown = getSandboxCropPlan()): { raw: unknown; token: string } {
   const copied = copyCropPlanAuthoredData(value, new Set(), true);
   const rows = copied && typeof copied === 'object' && !Array.isArray(copied) ? (copied as Partial<CropPlanState>).plantings : null;
-  if (Array.isArray(rows)) rows.forEach(assertNurseryReferencePresence);
+  if (Array.isArray(rows)) {
+    rows.forEach(assertNurseryReferencePresence);
+    // Optional sample fields may follow JSON omission, but a present malformed
+    // cycle origin must remain held rather than turn into an unknown origin.
+    (copied as Partial<CropPlanState>).plantings = rows.map(row => hasGrowerCycleMarker(row) ? preservePlantingMarker(row) : row);
+  }
   const raw: unknown = JSON.parse(JSON.stringify(copied));
   return { raw, token: JSON.stringify(['sample', raw]) };
 }
@@ -2216,6 +2221,19 @@ const PROPAGATION_UNIT: Record<string, string> = {
 };
 
 /**
+ * Pure helper to read known non-botanical planting-material units from the existing
+ * dictionary. Direct-field seed planning must share these existing material distinctions
+ * without duplicating the mapping or treating nursery absence as proof of seed material.
+ * Returns null if the crop key is not an existing mapped vegetative exception.
+ */
+export function knownVegetativePropagationUnit(cropKey: unknown): string | null {
+  if (typeof cropKey === 'string' && Object.hasOwn(PROPAGATION_UNIT, cropKey)) {
+    return PROPAGATION_UNIT[cropKey];
+  }
+  return null;
+}
+
+/**
  * Canonical cohort-level calculation shared by the screen total and buying
  * schedule. Splits of the same crop sown in the same month aggregate before
  * rounding; genuinely separate succession months remain separate purchases.
@@ -2291,7 +2309,7 @@ export function seedBoqBatchesForPlan(plantings: Planting[], beds: PlanBed[]): S
           sowMonth, bedIds: [...bedIds], inNursery,
         };
       }
-      const unit = PROPAGATION_UNIT[cropKey] ?? (crop.transplant ? 'seedlings' : 'seeds');
+      const unit = knownVegetativePropagationUnit(cropKey) ?? (crop.transplant ? 'seedlings' : 'seeds');
       const finalPlantPositions = Math.max(1, Math.round(rawCount));
       const minimumPositions = Math.max(1, Math.floor(rawMinimum));
       const maximumPositions = Math.max(minimumPositions, Math.ceil(rawMaximum));
