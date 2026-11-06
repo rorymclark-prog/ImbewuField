@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { actualUpdateUi } from './update-ui-renderer.ts';
 import { cleanUpdateTour } from '../lib/update-tour.ts';
 
-const stop = { title: 'Choose sites', where: 'Settings', detail: 'Review access.', href: '/connect/imbewu', preview: 'assistant-access' };
+const stop = { title: 'Choose sites', where: 'Settings', detail: 'Review access.', href: '/connect/imbewu', preview: 'assistant-access' as const };
 
 test('an important update demonstrates the feature and lets the reader pause and replay it', async () => {
   const h = await actualUpdateUi('en', { kind: 'guide', guide: { sha: 'qa-current-build', stops: [stop], phase: 'offer', index: 0 } });
@@ -30,7 +30,9 @@ test('routine updates do not acquire a demonstration and reduced motion has a co
 });
 
 test('acknowledging a feature keeps later update offers quiet, while the history can reopen it', async () => {
-  const h = await actualUpdateUi('en', { kind: 'guide', seenPreview: true, guide: { sha: 'qa-current-build', stops: [stop], phase: 'offer', index: 0 } });
+  // History reloads the current release, not the saved offer. Keep this feature fixture current
+  // explicitly: a later unrelated release may correctly have no assistant animation at all.
+  const h = await actualUpdateUi('en', { kind: 'guide', seenPreview: true, releaseTour: [stop], guide: { sha: 'qa-current-build', stops: [stop], phase: 'offer', index: 0 } });
   try {
     assert.equal(h.renderer.toJSON(), null);
     await h.event('imbewu-open-update-guide');

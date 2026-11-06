@@ -26,6 +26,7 @@ export function updateNodeText(node:ReactTestInstance):string{return node.childr
 const styleNames=Object.fromEntries([...read('components/UpdateGuide.module.css').matchAll(/\.([A-Za-z][\w-]*)/g)].map(m=>[m[1],m[1]]));
 export interface UpdateUiOptions {
  seenPreview?:boolean;kind?:'banner'|'guide'|'history'|'discovery'|'onboarding';path?:string;simple?:boolean;sample?:boolean;waiting?:boolean;guide?:unknown;
+ releaseTour?:ReturnType<typeof visibleUpdateTour>;
  server?:(lang:string,url:string,index:number)=>Promise<any>;loader?:(lang:string)=>Promise<UpdateCopy>;
 }
 let fixtureId=0;
@@ -53,7 +54,7 @@ export async function actualUpdateUi(initial:ControlLanguage,options:UpdateUiOpt
   recordTourOpening,dismissTourMenuTip,TOUR_INVITATION_LIMIT,announceOverlay:()=>{},localStorage:{getItem:(k:string)=>storage.get(k)??null,setItem:(k:string,v:string)=>storage.set(k,v)},
   AppHeader:({title}:any)=>React.createElement('header',null,title),
   useUpdateCopy:(language:string,enabled:boolean)=>useUpdateCopy(language,enabled,options.loader??loadUpdateCopy),
-  loadReleaseNotes:async()=>{calls.lazy++;return{visibleNotes,visibleUpdateTour};},
+  loadReleaseNotes:async()=>{calls.lazy++;return{visibleNotes,visibleUpdateTour:()=>options.releaseTour??visibleUpdateTour()};},
   fetch:async(url:string)=>{calls.fetch.push(url);const language=new URL(url,'http://fixture').searchParams.get('language')??'';let data;if(options.server)data=await options.server(language,url,calls.fetch.length);else{const notes=visibleNotes(),tour=visibleUpdateTour();data={sha:'qa-new-build',notes,tour,...(isUpdateCopyLanguage(language)?{copyLanguage:language,copy:cleanUpdateCopy(await loadUpdateCopy(language),[...notes,...updateTourSources(tour)],language,language)}:{})};}return{ok:true,json:async()=>data};},
  };
  scope.FeatureUpdatePreview=compiled('components/FeatureUpdatePreview.tsx','FeatureUpdatePreview',scope);

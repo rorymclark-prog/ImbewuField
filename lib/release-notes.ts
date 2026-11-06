@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 November 2026', sha: '06315a74a', changes: [
+    'Record elevation benchmarks separately from the terrain model in your site survey.',
+    'Fetch a solar reference and record wind evidence with its height and source.',
+  ], tour: [{ title: 'Review site elevation', where: 'Your site → Site survey → Land & Location', href: '/farmer',
+    detail: 'Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.' },
+  { title: 'Review energy evidence', where: 'Your site → Site survey → Resources & Inputs', href: '/farmer',
+    detail: 'Review the reference solar assumptions and record wind height, source and period before saving.' }] },
   { when: '5 November 2026', sha: '6c7c33401', changes: [
     "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.",
   ] },

@@ -1,0 +1,31 @@
+{
+  "order": "agy-site-energy-release-copy-2026-11-06",
+  "status": "DRAFTED",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "candidates": 32,
+  "locales": 4,
+  "localeList": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "workers": 0,
+  "workersActive": 0,
+  "validation": "NOT RUN — coordinator-owned",
+  "sourceFilesRead": [
+    "source.json",
+    "manifest.json",
+    "survey-glossary.json",
+    "survey-glossary-manifest.json"
+  ],
+  "outputsWritten": [
+    "zu.json",
+    "st.json",
+    "ts.json",
+    "ve.json",
+    "HANDOFF.md",
+    "status.json"
+  ]
+}

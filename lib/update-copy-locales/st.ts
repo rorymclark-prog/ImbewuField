@@ -1,6 +1,15 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Site survey energy: docs/audits/2026-11-06/site-energy-release-drafts/source.json; UNREVIEWED machine drafts, shown with English source.
+  "Record elevation benchmarks separately from the terrain model in your site survey.": "Rekota matshwao a bophahamo ka thoko ho mohlala wa sebaka patlisisong ya hao ya setsha.",
+  "Fetch a solar reference and record wind evidence with its height and source.": "Fumana tšupiso ya letsatsi mme o rekote bopaki ba moya le bophahamo ba wona le mohlodi.",
+  "Review site elevation": "Hlahloba bophahamo ba setsha",
+  "Your site → Site survey → Land & Location": "Setsha sa hao → Patlisiso ya setsha → Mobu le Sebaka",
+  "Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.": "Bula patlisiso ya hao ya setsha ho hlahloba tšupiso ya sebaka le ho eketsa letshwao la bophahamo le tswang mohloding o ka thoko.",
+  "Review energy evidence": "Hlahloba bopaki ba matla",
+  "Your site → Site survey → Resources & Inputs": "Setsha sa hao → Patlisiso ya setsha → Mehlodi le Tse Kenywang",
+  "Review the reference solar assumptions and record wind height, source and period before saving.": "Hlahloba mehopolo ya tšupiso ya letsatsi mme o rekote bophahamo ba moya, mohlodi le nako pele o boloka.",
   // Reference-led Sector graphics: docs/audits/2026-11-05/sector-reference-flow-release-drafts.json; UNREVIEWED machine draft.
   "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Limmapa tsa Sector di bontsha matshwao a hlakileng ho feta a moya le pula, ha moepa le mela ya bophahamo di ntse di bonahala.",
   // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.

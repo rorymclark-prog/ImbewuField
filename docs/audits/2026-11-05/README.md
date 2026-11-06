@@ -1,5 +1,7 @@
 # Audits — 5 November 2026
 
+- [Site survey elevation and energy — Codex](site-energy-survey-codex.md)
+
 - [Illustrated Sector graphics, stronger contours and three samples — Codex](sector-illustrated-graphics-codex.md)
 
 - [Actual rich-aerial C implementation and release continuation — Codex](sector-rich-aerial-release-codex.md)

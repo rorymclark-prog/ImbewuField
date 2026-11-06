@@ -1,0 +1,56 @@
+{
+  "locale": "ve",
+  "sourceSha256": "0125c11b7512565f0ab16d5a8ee349d563d86dce237c7250400267cde544e4df",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "siteEnergy.release.01",
+      "english": "Record elevation benchmarks separately from the terrain model in your site survey.",
+      "sha256": "c96a46dd6de25ad075432b019d02bfc58342c437abd42227cab5e2602d5e4956",
+      "translation": "Rikodani zwikombetshedzo zwa vhulapfu zwo fhambana na tsumbo ya mavu kha tsedzuluso ya fhethu hanu."
+    },
+    {
+      "key": "siteEnergy.release.02",
+      "english": "Fetch a solar reference and record wind evidence with its height and source.",
+      "sha256": "70c9b053a564a65f29187bcd718ff149a1d63667491754f383304c47f8c1045d",
+      "translation": "Dzhenisani tshiko tsha ḓuvha nahone rikodani vhutanzi ha muya na vhulapfu hawo na vhubvo."
+    },
+    {
+      "key": "siteEnergy.release.03",
+      "english": "Review site elevation",
+      "sha256": "91cc08989ac0e8aec84cdeb6b8f6c3e992b59fc053958aea7d31cdedc5b39fac",
+      "translation": "Ṱolani vhulapfu ha fhethu"
+    },
+    {
+      "key": "siteEnergy.release.04",
+      "english": "Your site → Site survey → Land & Location",
+      "sha256": "fd3c551ccbe96b370afdc6edb99dca986cef5b0284299a13d3a3841e72d4f760",
+      "translation": "Fhethu hanu → Tsedzuluso ya fhethu → Mavu na Vhudzulo"
+    },
+    {
+      "key": "siteEnergy.release.05",
+      "english": "Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.",
+      "sha256": "a0a0146fae9ccc55619b044ba18c9072458532d8b5d1f2e279fa9aa5dcf71a55",
+      "translation": "Vulani tsedzuluso ya fhethu hanu u tola tshiko tsha mavu nahone engedzani tshikombetshedzo tsha vhulapfu tshi no bva kha vhubvo ho fhambanaho."
+    },
+    {
+      "key": "siteEnergy.release.06",
+      "english": "Review energy evidence",
+      "sha256": "19290d5423716dfde9ae296c7aa3374af756ecee717995fd44a4aa1c8c8f757e",
+      "translation": "Ṱolani vhutanzi ha maanḓa"
+    },
+    {
+      "key": "siteEnergy.release.07",
+      "english": "Your site → Site survey → Resources & Inputs",
+      "sha256": "4fc10ab435ecc664e8b7792362fdf865847c0efae947f0dc3f1b4dd23c419614",
+      "translation": "Fhethu hanu → Tsedzuluso ya fhethu → Zwishumiswa na Zwidzheniswa"
+    },
+    {
+      "key": "siteEnergy.release.08",
+      "english": "Review the reference solar assumptions and record wind height, source and period before saving.",
+      "sha256": "263e94e24ed0c22c07a9122d654f55d95849555d7a38d5eb8a4e889f6ad2981e",
+      "translation": "Ṱolani mihumbulo ya tshiko tsha ḓuvha nahone rikodani vhulapfu ha muya, vhubvo na tshifhinga musi ni sa athu vhulunga."
+    }
+  ]
+}
