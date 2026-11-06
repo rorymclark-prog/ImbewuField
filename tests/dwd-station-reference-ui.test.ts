@@ -175,7 +175,10 @@ test('imports, mount and idle edits never request a station or access storage, a
   assert.deepEqual(importEffects, { network: 0, storage: 0 });
   const ui = mount(); assert.equal(probe.calls.length, 0); assert.equal(ui.input().props.value, '');
   assert.equal(ui.input().props.type, 'text'); assert.equal(ui.card().props.lang, 'en');
-  const label = ui.card().findByType('label'); assert.equal(readable(label), 'Station ID');
+  // The independent display-unit control has its own label; this claim binds
+  // the Station ID label to the station input, not to a global label count.
+  const label = ui.card().findAllByType('label').find(node => readable(node) === 'Station ID');
+  assert.ok(label); assert.equal(readable(label), 'Station ID');
   assert.ok(label.findAllByType('input').includes(ui.input()) || label.props.htmlFor === ui.input().props.id);
   assert.equal(readable(ui.card().findByType('h2')), 'Check a public station forecast');
   assert.equal(readable(ui.button()), 'Check station reference');
@@ -237,7 +240,11 @@ test('source K and kg/m² values retain zero and long fractions, with issue, ret
   result.periods.forEach((period, index) => {
     assert.ok(readable(rows[index]).includes(period.validAt)); assert.match(readable(rows[index]), /Valid at \(UTC\)/i);
   });
-  assert.doesNotMatch(ui.text(), /°C|°F|\bmm\b|273\.157 K|0\.123 kg\/m²/);
+  // The explicit display selector legitimately names C/F; default quantity
+  // cells must still show the exact unrounded Kelvin and precipitation source.
+  assert.equal(ui.card().findByType('select').props.value, 'K');
+  const quantities = rows.flatMap(row => [datum(row, /^Temperature/), datum(row, /^Precipitation/)]).join(' ');
+  assert.doesNotMatch(quantities, /°C|°F|\bmm\b|273\.157 K|0\.123 kg\/m²/);
   assert.equal(JSON.stringify(result), before);
 });
 
