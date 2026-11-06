@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed current release captions; exact English stays paired. See docs/international/current-release-caption-repair-2026-11-06/adoption.json.
+  "Quick sale names rand and links to invoices in another currency.": "Ku xavisa hi ku hatlisa ku vula rhandi naswona ku hlanganisa na ti-invoyisi hi mali yin'wana.",
+  "Choose the right sale entry": "Hlawula ku nghenisa ka vuxavisi loku faneleke",
+  "My Records → Sold → Quick sale entry": "Tirhekhodo ta Mina → Xavisiwile → Ku nghenisa ka vuxavisi hi ku hatlisa",
+  "Quick sale records South African rand (ZAR). For another supported currency, open the separate sale-invoice form and choose its currency and payment status. Enter the sale there; the quick-sale draft is not transferred.": "Ku xavisa hi ku hatlisa ku rhekhoda rhandi ya Afrika Dzonga (ZAR). Eka mali yin'wana leyi seketeriwaka, pfula fomo yo hambana ya invoyisi ya vuxavisi kutani u hlawula mali ya yona na xiyimo xa ku hakela. Nghenisa vuxavisi kwalaho; drafi ya ku xavisa hi ku hatlisa a yi hundziseriwi.",
+  "See when monthly temperatures are incomplete or need another check.": "Vona loko mahiselo ya n'weti na n'weti ma nga helelanga kumbe ma lava ku kamberiwa nakambe.",
+  "Check monthly temperature coverage": "Kambela vukona bya mahiselo ya n'weti na n'weti",
+  "Map → Site details → Overview or Climate": "Mepe → Vuxokoxoko bya sayiti → Nkatsakanyo kumbe Maxelo",
+  "Check whether all monthly mean temperatures were supplied. Missing or unrecorded coverage holds the monthly calendar and planner climate interpretation; reload online to try again. Your saved maps, records and original estimates remain available. Complete model inputs do not confirm local crop suitability.": "Kambela loko mahiselo hinkwawo ya xikarhi (avhareji) ya n'weti na n'weti ma nyikiwile. Vukona bya tinhlayo lebyi kayivelaka kumbe lebyi nga rhekhodiwangiki byi khoma khalendara ya n'weti na n'weti na nhlamuselo ya maxelo ya mupulani; layicha nakambe eka inthanete ku ringeta nakambe. Mimepe ya wena leyi hlayisiweke, tirhekhodo na miringanyeto yo sungula swa ha kumeka. Switirhisiwa swa modele leswi heleleke a swi tiyisisi ku fanela ka swibyariwa swa laha kaya.",
+  "Choose app help separately from advice about a saved site.": "Hlawula mpfuno wa apu hi ku hambana na xitsundzuxo hi sayiti leyi hlayisiweke.",
+  "Review your LimaBar question before sending it.": "Pfuxeta xivutiso xa wena xa LimaBar u nga si xi rhumela.",
+  "Choose the scope of your question": "Hlawula mpimo wa xivutiso xa wena",
+  "Ask Lima → Help with": "Vutisa Lima → Mpfuno hi",
+  "Choose Using the app for general help without attaching saved-site or record context. Advice about your own site needs supported country details saved to your signed-in account. Replies and attachments retire when their context changes. Manual maps and records remain available.": "Hlawula Ku tirhisa apu eka mpfuno lowu tolovelekeke handle ko hlanganisa sayiti leyi hlayisiweke kumbe mongo wa tirhekhodo. Xitsundzuxo hi sayiti ya wena xi lava vuxokoxoko bya tiko lebyi seketeriwaka lebyi hlayisiweke eka akhawunti ya wena leyi u ngheneke eka yona. Tinhlamulo na swinambetelo swa hela loko mongo wa swona wu cinca. Mimepe na tirhekhodo leti u ti tirhisaka hi wexe eka apu swa ha kumeka.",
   // Unreviewed AGY field seed captions; exact English remains visible. See field-seed-release-drafts/adoption.json.
   "Plan seed sourcing for field cycles without nursery raising.": "Pulanisa ku kumiwa ka mbewu eka swirhendzevutana swa masimu lama nga riki na xiteji xa nsimu ya swibyariwa.",
   "Review field seed requirements": "Hlahluva swilaveko swa mbewu ya masimu",

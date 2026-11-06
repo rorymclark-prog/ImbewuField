@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed current release captions; exact English stays paired. See docs/international/current-release-caption-repair-2026-11-06/adoption.json.
+  "Quick sale names rand and links to invoices in another currency.": "U rengisa ha u tavhanya hu bula randa nahone hu vhambedza na ma-invoisi nga inwe tshelede.",
+  "Choose the right sale entry": "Nangani u dzhenisa thengiso ho teaho",
+  "My Records → Sold → Quick sale entry": "Zwirekhodi Zhanga → Zwo rengiswaho → U dzhenisa thengiso ha u tavhanya",
+  "Quick sale records South African rand (ZAR). For another supported currency, open the separate sale-invoice form and choose its currency and payment status. Enter the sale there; the quick-sale draft is not transferred.": "U rengisa ha u tavhanya hu rekhoda randa ya Afurika Tshipembe (ZAR). Kha inwe tshelede i tikedzwaho, vhulani fomo yo fhambanaho ya invoisi ya thengiso nahone ni nange tshelede yayo na tshiimo tsha mbadelo. Dzhenisani thengiso henefho; drafu ya u rengisa ha u tavhanya a i fhiriselwi.",
+  "See when monthly temperatures are incomplete or need another check.": "Vhonani musi vhudalo ha mufhiso wa nwedzi na nwedzi vhu songo fhelelaho kana vhu tshi toda inwe thodisiso.",
+  "Check monthly temperature coverage": "Tolani u vha hone ha zwidodombedzwa zwa mufhiso wa nwedzi na nwedzi",
+  "Map → Site details → Overview or Climate": "Mmepe → Zwidodombedzwa zwa fhethu → Manweledzo kana Kilaimethe",
+  "Check whether all monthly mean temperatures were supplied. Missing or unrecorded coverage holds the monthly calendar and planner climate interpretation; reload online to try again. Your saved maps, records and original estimates remain available. Complete model inputs do not confirm local crop suitability.": "Tolani arali mufhiso wothe wa vhukati (avhareji) wa nwedzi na nwedzi wo netshedzwa. U vha hone ha zwidodombedzwa ho xelaho kana ho sa rekhodiwaho hu fara khalendara ya nwedzi na nwedzi na thaluso ya kilaimethe ya mulanganyi; vusani kha inthanethe u lingedza hafhu. Mimepe yavho yo vhulungwaho, zwirekhodi na mithelo yo rathwaho zwi dzula zwi hone. Zwidzheniswa zwothe zwa modele a zwi khwathisedzi u teya ha zwimela zwa henefho.",
+  "Choose app help separately from advice about a saved site.": "Nangani thusedzo ya apu thungo ha nyeletshedzo nga ha fhethu ho vhulungwaho.",
+  "Review your LimaBar question before sending it.": "Sedzulusani mbudziso yavho ya LimaBar musi ni sa athu u i rumela.",
+  "Choose the scope of your question": "Nangani vhuhulwane ha mbudziso yavho",
+  "Ask Lima → Help with": "Vhudzisani Lima → Thusedzo nga",
+  "Choose Using the app for general help without attaching saved-site or record context. Advice about your own site needs supported country details saved to your signed-in account. Replies and attachments retire when their context changes. Manual maps and records remain available.": "Nangani U shumisa apu kha thusedzo yo teaho hu si na u nambatedza fhethu ho vhulungwaho kana zwirekhodi. Nyeletshedzo nga ha fhethu havho i toda zwidodombedzwa zwa shango zwi tikedzwaho zwo vhulungwaho kha akhauthi yavho yo dzheniswaho. Phindulo na zwinambatedzwa zwi a fhela musi tshiimo tshazwo tshi tshi shanduka. Mimepe na zwirekhodi zwine na zwi shumisa nga vhune kha apu zwi dzula zwi hone.",
   // Unreviewed AGY field seed captions; exact English remains visible. See field-seed-release-drafts/adoption.json.
   "Plan seed sourcing for field cycles without nursery raising.": "Pulanyani u wanala ha mbeu ya maitele a masimu a si na tshifhinga tsha tshitiratshi tsha zwo simiwaho.",
   "Review field seed requirements": "Tolani thodea dza mbeu ya masimu",
