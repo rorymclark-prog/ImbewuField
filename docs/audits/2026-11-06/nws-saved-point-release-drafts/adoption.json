@@ -1,0 +1,51 @@
+{
+  "provenance": "AGY AI candidate packets, independently checked by coordinator; identified title/notes drafting issues corrected.",
+  "sourceSha256": "94311c252f219708622e5882d6a897e9ce74c8fec192d3b58d630beead4b9be6",
+  "codeBase": "2247c7a7ab8eae1c596439f253174ae6a39e887e",
+  "reviewStatus": "unreviewed-ai-draft",
+  "humanApproval": false,
+  "newAppLanguageActivation": false,
+  "usage": "Existing update descriptions only, with exact English retained; no fluent/semantic certification or new application language.",
+  "structuralPairs": 16,
+  "damagedControlsPerLocale": 20,
+  "actualNotesWords": 168,
+  "files": [
+    {
+      "file": "source.json",
+      "sha256": "94311c252f219708622e5882d6a897e9ce74c8fec192d3b58d630beead4b9be6",
+      "bytes": 1669
+    },
+    {
+      "file": "zu.json",
+      "sha256": "385314df4448ac1304d84bf35e34eb59c790fa58230d55806de7f20e98d18997",
+      "bytes": 1982
+    },
+    {
+      "file": "st.json",
+      "sha256": "fd6528111a1ee7718f833abe86964bf789c968ba3972752c668f1eae5522086d",
+      "bytes": 2026
+    },
+    {
+      "file": "ts.json",
+      "sha256": "84451adee41b6178d2f95d00a22b68f1220e0d23d240da4e6321757b8984590f",
+      "bytes": 2050
+    },
+    {
+      "file": "ve.json",
+      "sha256": "56591ca1fd56a8923f2a7944e7860a169ac53687cee2b1aadaf2873c1091bd85",
+      "bytes": 2077
+    },
+    {
+      "file": "review-notes.md",
+      "sha256": "c5f66a260db6b90b383ba0526fd871cb640278213a4ab50af289e64a805d16c1",
+      "bytes": 1226
+    },
+    {
+      "file": "status.json",
+      "sha256": "ae71d1ae69858eef3ae1e7c89fe97aad1d451d5dd952bf79b768f397423741b8",
+      "bytes": 1035
+    }
+  ],
+  "codeHead": "42b62cc5ce3792bb8cd1e889d153de60c48b484a",
+  "sourceReconciliation": "Frozen four English messages remain exact after metadata-only code stamp; actual file hash is recorded separately from frozen source packet."
+}

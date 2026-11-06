@@ -7,7 +7,7 @@ export const NWS_REFERENCE_PROVIDER = {
   name: 'National Weather Service 12-hour forecast reference',
   apiDocsUrl: 'https://www.weather.gov/documentation/services-web-api',
   disclaimerUrl: 'https://www.weather.gov/disclaimer',
-  coverage: 'United States meteorological reference; public coarse demonstration points only.',
+  coverage: 'United States meteorological reference; public coarse demonstration points and explicitly requested points only.',
   units: 'Celsius (units=si query parameter for textual output; numeric values checked independently against C or wmoUnit:degC).',
   licence: 'US Government work in the public domain with specific exceptions/annotations; 17 U.S.C. § 403 notice required for copyrighted third-party works consisting predominantly of NWS material. No official government endorsement or affiliation implied.',
   limits: 'Single forecast endpoint response, maximum 100 periods software bound; no automatic retries.',
@@ -19,6 +19,61 @@ export type NwsReferenceProvenance = {
   endpoint: string;
   demoPlace: string;
   referenceOnly: true;
+};
+
+export interface NwsPointRequest {
+  readonly latitude4: string;
+  readonly longitude4: string;
+}
+
+export function parseNwsPointRequest(input: unknown): Readonly<NwsPointRequest> | null {
+  let detached: unknown;
+  try {
+    detached = detachJsonData(input);
+  } catch {
+    return null;
+  }
+  if (!isPlainObject(detached)) return null;
+
+  const keys = Object.keys(detached);
+  if (keys.length !== 2 || !keys.includes('latitude4') || !keys.includes('longitude4')) {
+    return null;
+  }
+
+  const latVal = getOwn(detached, 'latitude4');
+  const lonVal = getOwn(detached, 'longitude4');
+
+  if (typeof latVal !== 'string' || typeof lonVal !== 'string') return null;
+
+  // Strict fixed 4-decimal pattern without leading +, whitespace, exponents, etc.
+  if (!/^-?\d+\.\d{4}$/.test(latVal) || !/^-?\d+\.\d{4}$/.test(lonVal)) {
+    return null;
+  }
+
+  const latNum = Number(latVal);
+  const lonNum = Number(lonVal);
+
+  if (!Number.isFinite(latNum) || !Number.isFinite(lonNum)) return null;
+  if (latNum < -90 || latNum > 90 || lonNum < -180 || lonNum > 180) return null;
+
+  // Exact canonical Number(value).toFixed(4) spelling (rejects -0.0000, uncanonical numbers)
+  if (latVal !== latNum.toFixed(4) || lonVal !== lonNum.toFixed(4)) {
+    return null;
+  }
+
+  return Object.freeze({
+    latitude4: latVal,
+    longitude4: lonVal,
+  });
+}
+
+export type NwsPointReferenceProvenance = {
+  providerId: 'nws-forecast-reference';
+  fetchedAt: string;
+  endpoint: string;
+  referenceOnly: true;
+  kind: 'requested-point';
+  requestedPoint: NwsPointRequest;
 };
 
 export type NwsReferencePeriod = {
@@ -50,6 +105,25 @@ export type NwsReferenceResult =
       };
       periods: readonly NwsReferencePeriod[];
       provenance: NwsReferenceProvenance;
+    };
+
+export type NwsPointReferenceResult =
+  | {
+      status: 'failed';
+      reason: string;
+      provenance: NwsPointReferenceProvenance;
+    }
+  | {
+      status: 'available' | 'partial';
+      units: 'C';
+      metadata: {
+        generatedAt: string;
+        updateTime: string;
+        validTimes: string;
+        sourceUnits: 'si';
+      };
+      periods: readonly NwsReferencePeriod[];
+      provenance: NwsPointReferenceProvenance;
     };
 
 /** Software safeguard on max decoded periods to prevent unbounded allocations.
@@ -260,7 +334,9 @@ export function decodeNwsReference(
     typeof fetchedAt !== 'string' ||
     !isValidCalendarDateTime(fetchedAt) ||
     typeof endpoint !== 'string' ||
-    typeof demoPlace !== 'string'
+    typeof demoPlace !== 'string' ||
+    hasOwnProp(prov, 'kind') ||
+    hasOwnProp(prov, 'requestedPoint')
   ) {
     return {
       status: 'failed',
@@ -668,6 +744,113 @@ export function decodeNwsReference(
       sourceUnits: 'si',
     },
     periods: Object.freeze(decodedPeriods),
+    provenance: safeProvenance,
+  };
+}
+
+export function decodeNwsPointReference(
+  value: unknown,
+  provenance: NwsPointReferenceProvenance
+): NwsPointReferenceResult {
+  let detachedProvenance: unknown;
+  try {
+    detachedProvenance = detachJsonData(provenance);
+  } catch {
+    return {
+      status: 'failed',
+      reason: 'Reflection or unsafe object structure in provenance',
+      provenance: {
+        providerId: 'nws-forecast-reference',
+        fetchedAt: '',
+        endpoint: '',
+        referenceOnly: true,
+        kind: 'requested-point',
+        requestedPoint: { latitude4: '', longitude4: '' },
+      },
+    };
+  }
+
+  if (!isPlainObject(detachedProvenance)) {
+    return {
+      status: 'failed',
+      reason: 'Invalid provenance object supplied',
+      provenance: {
+        providerId: 'nws-forecast-reference',
+        fetchedAt: '',
+        endpoint: '',
+        referenceOnly: true,
+        kind: 'requested-point',
+        requestedPoint: { latitude4: '', longitude4: '' },
+      },
+    };
+  }
+
+  const prov = detachedProvenance as Record<string, unknown>;
+  const keys = Object.keys(prov);
+  const requiredKeys = ['providerId', 'fetchedAt', 'endpoint', 'referenceOnly', 'kind', 'requestedPoint'];
+  const hasExactSixKeys = keys.length === 6 && requiredKeys.every((k) => Object.hasOwn(prov, k));
+
+  const providerId = getOwn(prov, 'providerId');
+  const fetchedAt = getOwn(prov, 'fetchedAt');
+  const endpoint = getOwn(prov, 'endpoint');
+  const referenceOnly = getOwn(prov, 'referenceOnly');
+  const kind = getOwn(prov, 'kind');
+  const requestedPoint = parseNwsPointRequest(getOwn(prov, 'requestedPoint'));
+
+  if (
+    !hasExactSixKeys ||
+    providerId !== 'nws-forecast-reference' ||
+    referenceOnly !== true ||
+    kind !== 'requested-point' ||
+    requestedPoint === null ||
+    typeof fetchedAt !== 'string' ||
+    !isValidCalendarDateTime(fetchedAt) ||
+    typeof endpoint !== 'string'
+  ) {
+    return {
+      status: 'failed',
+      reason: 'Invalid point provenance supplied',
+      provenance: {
+        providerId: 'nws-forecast-reference',
+        fetchedAt: '',
+        endpoint: '',
+        referenceOnly: true,
+        kind: 'requested-point',
+        requestedPoint: { latitude4: '', longitude4: '' },
+      },
+    };
+  }
+
+  const safeProvenance: NwsPointReferenceProvenance = {
+    providerId: 'nws-forecast-reference',
+    fetchedAt,
+    endpoint,
+    referenceOnly: true,
+    kind: 'requested-point',
+    requestedPoint,
+  };
+
+  const payloadResult = decodeNwsReference(value, {
+    providerId: 'nws-forecast-reference',
+    fetchedAt,
+    endpoint,
+    demoPlace: '',
+    referenceOnly: true,
+  });
+
+  if (payloadResult.status === 'failed') {
+    return {
+      status: 'failed',
+      reason: payloadResult.reason,
+      provenance: safeProvenance,
+    };
+  }
+
+  return {
+    status: payloadResult.status,
+    units: payloadResult.units,
+    metadata: payloadResult.metadata,
+    periods: payloadResult.periods,
     provenance: safeProvenance,
   };
 }

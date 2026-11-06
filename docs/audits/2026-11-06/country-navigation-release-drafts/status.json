@@ -1,0 +1,28 @@
+{
+  "provenance": "Codex AI",
+  "workers": 0,
+  "sourceSha256": "5fab1a69264dea58dbd228513d647997c9f72e48383a894698c519d427c15ed9",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "messageCount": 16,
+  "sourceMessageHashCount": 4,
+  "reviewNotesWhitespaceWords": 172,
+  "validation": {
+    "status": "NOT RUN",
+    "owner": "coordinator"
+  },
+  "outputPaths": [
+    "zu.json",
+    "st.json",
+    "ts.json",
+    "ve.json",
+    "review-notes.md",
+    "status.json"
+  ]
+}
