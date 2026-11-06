@@ -197,7 +197,12 @@ test('actual saved accepted nursery batches start unselected with blank counts a
   assert.equal(file.filename, 'ImbewuField-planned-seed-sourcing.csv');
   assert.deepEqual([entry.known_required_seed_subtotal, entry.required_seeds, entry.additional_seeds_needed, entry.planned_packs, entry.planned_pack_seeds], ['320', '320', '300', '3', '300']);
   assert.equal(entry.source_verification, 'not-verified'); assert.equal(entry.whole_farm_coverage, 'not-assessed');
-  assert.doesNotMatch(csv, /private-|My supply only|seed-supply-|fingerprint|owner-a/);
+  // Explicit presentation labels now accompany the download disclosure;
+  // internal handles and automatically joined saved references remain excluded.
+  assert.equal(entry.entered_supply_group_label, '  My supply only  ');
+  assert.equal(entry.label_status, 'provided');
+  assert.deepEqual(JSON.parse(entry.public_crop_names), [crop.name]);
+  assert.doesNotMatch(csv, /private-|seed-supply-|fingerprint|owner-a/);
   assert.equal(JSON.stringify([...local.rows]), before); assert.equal(JSON.stringify([...session.rows]), beforeSession);
   assert.match(ui.text(), /temporary and are not saved/); assert.match(ui.text(), /no stock was recorded or order placed/i);
 });

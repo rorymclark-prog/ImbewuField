@@ -313,7 +313,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       // become unknown or a rounded safe-looking number.
       return parsed.status === 'invalid' ? typeof raw === 'string' ? raw : false : parsed.value;
     };
-    return draft.groups.map(group => ({ id: group.id, batchIds: group.batchIds,
+    return draft.groups.map(group => ({ id: group.id, label: group.label, batchIds: group.batchIds,
       interchangeabilityConfirmed: group.interchangeabilityConfirmed,
       allocatedToPlanSeeds: count(group.allocatedToPlanSeedsText, 'allocation'), seedsPerPack: count(group.seedsPerPackText, 'pack') }));
   }
@@ -791,6 +791,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
           onChangeGroup={changeSeedGroup} onReview={() => void reviewSeed()} />
         <button type="button" className={button} disabled={busy || !!seedPending || !shownSeedReview}
           onClick={() => void exportSeed()}>Download seed sourcing worksheet CSV</button>
+        <p className="text-xs text-[var(--text-secondary)]">The CSV includes your entered supply-group labels. Leave out information you do not want in the file.</p>
         <p role="status" aria-live="polite">{seedMessage}</p>
       </section>}
       <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview()}>Download reviewed nursery CSV</button>

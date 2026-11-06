@@ -1,3 +1,4 @@
+import { cropByKey } from '../crop-catalog';
 import { detachJsonData } from '../lossless-json';
 import { reviewSeedPurchaseCounts, type SeedPurchaseCountsReview } from '../seed-purchase-counts';
 import { GROWER_AUTOPLAN_MAX_ASSESSMENTS, type GrowerUtcWindow } from './grower-autoplan';
@@ -6,6 +7,7 @@ import { isGrowerNurseryForecastCurrent, projectGrowerNurseryPreparation,
 
 export interface GrowerSeedSourcingGroupInput {
   readonly id: string;
+  readonly label?: string;
   readonly batchIds: readonly string[];
   readonly interchangeabilityConfirmed: boolean;
   /** Entered allocation to this planning review, not observed physical stock. */
@@ -28,6 +30,14 @@ export interface GrowerSeedSourcingGroupReview {
   readonly requiredSeeds: number | null;
   readonly counts: SeedPurchaseCountsReview | null;
   readonly issues: readonly string[];
+  readonly identification: {
+    readonly enteredLabel: string | null;
+    readonly labelStatus: 'provided' | 'not-recorded' | 'invalid';
+    readonly cropNames: readonly string[];
+    readonly cropIdentityCount: number | null;
+    readonly cropStatus: 'complete' | 'incomplete' | 'unavailable';
+    readonly description: string;
+  };
 }
 export interface GrowerSeedSourcingReview {
   readonly status: 'available' | 'partial' | 'unavailable';
@@ -68,7 +78,7 @@ function candidate(raw: unknown, index: number): Candidate {
   // another group must not win an overlap merely because this one appears later.
   const batchIds = row && Array.isArray(row.batchIds) ? row.batchIds.filter(identity) : [];
   const issues: string[] = [];
-  const allowed = ['id', 'batchIds', 'interchangeabilityConfirmed', 'allocatedToPlanSeeds', 'seedsPerPack'];
+  const allowed = ['id', 'label', 'batchIds', 'interchangeabilityConfirmed', 'allocatedToPlanSeeds', 'seedsPerPack'];
   if (!row || !id || Object.keys(row).some(key => !allowed.includes(key))
     || !Array.isArray(row.batchIds) || !row.batchIds.length || row.batchIds.length > GROWER_AUTOPLAN_MAX_ASSESSMENTS
     || batchIds.length !== row.batchIds.length || !Object.hasOwn(row, 'allocatedToPlanSeeds')) issues.push('group-input-invalid');
@@ -105,14 +115,101 @@ export function reviewGrowerSeedSourcing(input: GrowerSeedSourcingInput): Grower
     for (const entries of groupIds.values()) if (entries.length > 1) for (const row of entries) row.issues.push('group-id-duplicate');
     for (const entries of memberships.values()) if (entries.length > 1) for (const row of entries) row.issues.push('batch-membership-overlap');
 
+    const batchCropKeys = new Map<string, string>();
+    for (const prepGroup of preparation.groups) {
+      for (const member of prepGroup.members) {
+        batchCropKeys.set(member.batchId, prepGroup.cropKey);
+      }
+    }
+
     const assigned = new Set<string>();
     const groups = candidates.map((row): GrowerSeedSourcingGroupReview => {
+      let enteredLabel: string | null = null;
+      let labelStatus: 'provided' | 'not-recorded' | 'invalid' = 'not-recorded';
+      if (row.raw && Object.hasOwn(row.raw, 'label')) {
+        const rawLabel = row.raw.label;
+        if (typeof rawLabel === 'string') {
+          enteredLabel = rawLabel;
+          labelStatus = rawLabel.trim() === '' ? 'not-recorded' : 'provided';
+        } else if (rawLabel === undefined) {
+          labelStatus = 'not-recorded';
+        } else {
+          labelStatus = 'invalid';
+        }
+      }
+
+      const knownCropKeys = new Set<string>();
+      const safeCropNames = new Set<string>();
+      let anyUnresolvedCrop = false;
+
+      for (const id of row.batchIds) {
+        const ref = references.get(id);
+        const cropKey = batchCropKeys.get(id);
+        if (ref?.status === 'ready' && cropKey) {
+          knownCropKeys.add(cropKey);
+          const def = cropByKey(cropKey);
+          if (def && typeof def.name === 'string' && def.name.trim() !== '') {
+            safeCropNames.add(def.name);
+          } else {
+            anyUnresolvedCrop = true;
+          }
+        } else {
+          anyUnresolvedCrop = true;
+        }
+      }
+
+      const cropNames = [...safeCropNames].sort((a, b) => a.localeCompare(b));
+      let cropStatus: 'complete' | 'incomplete' | 'unavailable' = 'unavailable';
+      let cropIdentityCount: number | null = null;
+
+      if (row.batchIds.length > 0) {
+        if (!anyUnresolvedCrop && cropNames.length > 0) {
+          cropStatus = 'complete';
+          cropIdentityCount = knownCropKeys.size;
+        } else if (cropNames.length > 0) {
+          cropStatus = 'incomplete';
+          cropIdentityCount = null;
+        } else {
+          cropStatus = 'unavailable';
+          cropIdentityCount = null;
+        }
+      }
+
+      const descParts: string[] = [];
+      if (labelStatus === 'not-recorded') {
+        descParts.push('Supply group label not recorded.');
+      } else if (labelStatus === 'invalid') {
+        descParts.push('Supply group label is invalid.');
+      }
+
+      if (cropStatus === 'unavailable') {
+        descParts.push('Crop identification unavailable for selected batches.');
+      } else if (cropStatus === 'incomplete') {
+        descParts.push('Crop identification incomplete; some selected batch references need review.');
+      }
+
+      if (knownCropKeys.size > 1) {
+        descParts.push('Multiple crop identities selected for this seed supply group.');
+      }
+
+      descParts.push('Crop names and grower confirmation do not verify interchangeable varieties or seed lots.');
+      const description = descParts.join(' ');
+
+      const identification = {
+        enteredLabel,
+        labelStatus,
+        cropNames,
+        cropIdentityCount,
+        cropStatus,
+        description,
+      };
+
       for (const id of row.batchIds) {
         if (!batches.has(id)) row.issues.push('batch-not-in-current-review');
         else if (references.get(id)?.status !== 'ready') row.issues.push('batch-reference-held');
       }
       const held = (): GrowerSeedSourcingGroupReview => ({ index: row.index, id: row.id, batchIds: [...row.batchIds], status: 'held',
-        knownRequiredSeedsSubtotal: null, requiredSeeds: null, counts: null, issues: unique(row.issues) });
+        knownRequiredSeedsSubtotal: null, requiredSeeds: null, counts: null, issues: unique(row.issues), identification });
       if (row.issues.length) return held();
       let sum = BigInt(0), known = 0, unknown = false;
       for (const id of row.batchIds) {
@@ -136,7 +233,7 @@ export function reviewGrowerSeedSourcing(input: GrowerSeedSourcingInput): Grower
       return { index: row.index, id: row.id, batchIds: [...row.batchIds],
         status: overflow || counts.status === 'overflow' ? 'overflow' : counts.status,
         knownRequiredSeedsSubtotal: overflow || known === 0 ? null : Number(sum), requiredSeeds,
-        counts: overflow ? null : counts, issues: unique(row.issues) };
+        counts: overflow ? null : counts, issues: unique(row.issues), identification };
     });
     const unassignedBatchIds = result.batches.map(batch => batch.id).filter(id => !assigned.has(id));
     const issues = [...preparation.issues];

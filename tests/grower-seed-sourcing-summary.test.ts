@@ -40,6 +40,8 @@ const importEffects = { ...effects };
 function group(values: Partial<GrowerSeedSourcingGroupReview> = {}): GrowerSeedSourcingGroupReview {
   return { index: 73, id: 'private-supply-group', batchIds: ['private-raising-a', 'private-raising-b'], status: 'complete',
     knownRequiredSeedsSubtotal: 17, requiredSeeds: 17,
+    identification: { enteredLabel: null, labelStatus: 'not-recorded', cropNames: [], cropIdentityCount: null,
+      cropStatus: 'unavailable', description: 'Planning identification is not recorded; varieties and seed lots are not verified.' },
     counts: { status: 'complete', neededSeeds: 12, packsNeeded: 3, plannedPackSeeds: 15 }, issues: [], ...values };
 }
 function review(values: Partial<GrowerSeedSourcingReview> = {}): GrowerSeedSourcingReview {

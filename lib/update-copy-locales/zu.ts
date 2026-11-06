@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed AGY seed worksheet identification captions; English remains paired. See seed-identification-release-drafts/adoption.json.
+  "Show crop names and your labels in seed worksheets.": "Bonisa amagama ezitshalo namalebula akho kumaphepha okusebenzela embewu.",
+  "Identify planned seed supply groups": "Khomba amaqoqo okuhlinzekwa kwembewu ahleliwe",
+  "Crop planner → Saved planned nursery batches → Seed sourcing review": "Umhleli wezitshalo → Amaqoqo enkulisa ahleliwe alondoloziwe → Ukubuyekezwa kokutholakala kwembewu",
+  "Add your own supply-group label and review crop names from the saved nursery batches you selected. The CSV worksheet includes your entered labels. Missing identification stays visible, and crop names do not confirm interchangeable varieties, seed lots or observed stock.": "Faka ilebula lakho leqoqo lokuhlinzekwa kwembewu bese ubuyekeza amagama ezitshalo kusuka emaqoqweni enkulisa alondoloziwe owakhethile. Iphepha lokusebenzela le-CSV lihlanganisa amalebula owafakile. Ukuhlonza okungekho kuhlala kubonakala, futhi amagama ezitshalo awaqinisekisi izinhlobo ezingashintshana, amaqoqo ezinhlamvu zembewu noma isitoko esibonwe ngamehlo.",
   // Unreviewed source-paired seed sourcing captions; English stays visible. See seed-sourcing-release-drafts/adoption.json.
   "Review seed allocations and planned pack counts.": "Buyekeza izabelo zembewu nezibalo zamaphakethe ahleliwe.",
   "Review planned seed sourcing": "Buyekeza ukutholakala kwembewu okuhleliwe",

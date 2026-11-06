@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed AGY seed worksheet identification captions; English remains paired. See seed-identification-release-drafts/adoption.json.
+  "Show crop names and your labels in seed worksheets.": "Bontsha mabitso a dijalo le mangolo a hao a tsebiso dipampiring tsa tshebetso tsa dipeo.",
+  "Identify planned seed supply groups": "Hwaya dihlopha tsa phumantsho ya dipeo tse rerilweng",
+  "Crop planner → Saved planned nursery batches → Seed sourcing review": "Moradi wa dijalo → Dihlopha tsa bodirelo ba ho hodisa dimela tse rerilweng tse bolokilweng → Tlhahlobo ya phumantsho ya dipeo",
+  "Add your own supply-group label and review crop names from the saved nursery batches you selected. The CSV worksheet includes your entered labels. Missing identification stays visible, and crop names do not confirm interchangeable varieties, seed lots or observed stock.": "Kenya lengolo la hao la sehlopha sa phumantsho mme o hlahlobe mabitso a dijalo ho tswa dihlopheng tsa bodirelo ba ho hodisa dimela tse bolokilweng tseo o di kgethileng. Pampiri ya tshebetso ya CSV e kenyeletsa mangolo ao o a kentseng. Tlhahisoleseding ya boitsebiso e siyo e dula e bonahala, mme mabitso a dijalo ha a tiise mefuta e fapaneng e ka arolelanang, dihlopha tsa peo kapa setoko se bonweng ka mahlo.",
   // Unreviewed source-paired seed sourcing captions; English stays visible. See seed-sourcing-release-drafts/adoption.json.
   "Review seed allocations and planned pack counts.": "Hlahloba dabelo tsa dipeo le dipalo tsa diphuthelo tse rerilweng.",
   "Review planned seed sourcing": "Hlahloba phumantsho ya dipeo e rerilweng",

@@ -20,13 +20,16 @@ const own = <T, U extends string>(value: T, unit: U): Extract<GrowerInput<T, U>,
   state: 'provided', value, unit, provenance: { kind: 'grower-estimate', recordedAt: stamp },
 });
 const crop = CROPS[0];
-const columns = [
+const priorColumns = [
   'record_type', 'plan_basis', 'source_verification', 'coverage', 'whole_farm_coverage',
   'review_status', 'nursery_review_status', 'horizon_start_utc', 'horizon_end_exclusive_utc',
   'represented_batch_count', 'assigned_batch_count', 'unassigned_batch_count',
   'supply_group_number', 'group_status', 'known_required_seed_subtotal', 'required_seeds',
   'additional_seeds_needed', 'planned_packs', 'planned_pack_seeds', 'guidance',
 ] as const;
+// Identification is additive: every existing column retains its exact position.
+const columns = [...priorColumns, 'entered_supply_group_label', 'label_status',
+  'public_crop_names', 'identification_description'] as const;
 type Column = typeof columns[number];
 type CsvRow = Record<Column, string>;
 const quantities: readonly Column[] = ['known_required_seed_subtotal', 'required_seeds', 'additional_seeds_needed', 'planned_packs', 'planned_pack_seeds'];
@@ -109,7 +112,7 @@ function read(csv: string): CsvRow[] {
   }
   assert.equal(quoted, false); assert.deepEqual(fields, []); assert.equal(value, '');
   assert.deepEqual(records.shift(), [...columns]);
-  for (const row of records) assert.equal(row.length, 20);
+  for (const row of records) assert.equal(row.length, columns.length);
   return records.map(row => Object.fromEntries(columns.map((key, index) => [key, row[index]])) as CsvRow);
 }
 const numbers = (row: CsvRow) => quantities.map(key => row[key]);
@@ -124,10 +127,11 @@ function assertUnavailable(result: Parameters<typeof buildGrowerSeedSourcingCsv>
   });
 }
 
-test('saved seed sourcing CSV keeps all twenty public columns, five distinct quantities and canonical guidance without mutating inputs', () => {
+test('saved seed sourcing CSV keeps the exact twenty-column prefix, additive identification, five distinct quantities and canonical guidance without mutating inputs', () => {
   const input = { ...fresh(), groups: [group()] }, before = JSON.stringify(input);
   const csv = buildGrowerSeedSourcingCsv(input.result, input.currentRequest, input.groups), rows = read(csv);
   assert.equal(csv.split('\r\n')[0], '\uFEFF' + columns.map(csvCell).join(','));
+  assert.deepEqual(columns.slice(0, 20), [...priorColumns]);
   assert.deepEqual(input.result.batches.map(batch => batch.seeds), [160, 160]);
   assert.equal(rows.length, 2); assert.equal(rows[0].record_type, 'guidance'); assert.equal(rows[1].record_type, 'supply_group');
   for (const key of ['supply_group_number', 'group_status', ...quantities] as const) assert.equal(rows[0][key], '');
@@ -225,12 +229,19 @@ test('unassessed saved legacy demand stays partial without leaking its private I
   assertPrivate(csv);
 });
 
-test('DEMO labels every row and malformed private labels remain held rather than becoming user-facing CSV cells', () => {
-  const data = fresh(), groups = [{ ...group(), label: '=private-user-label, "secret"\r\nnext' }];
+test('DEMO labels every row and explicitly entered group labels use existing formula-safe escaping without becoming verified stock', () => {
+  // The disclosed entered label is now intentional worksheet content; saved
+  // variety, seed-lot and raising references remain private in the next control.
+  const label = '=Entered supply, "chosen"\r\nnext';
+  const data = fresh(), groups = [{ ...group(), label }];
   const csv = buildGrowerSeedSourcingCsv(data.result, data.currentRequest, groups, { sample: true }), rows = read(csv);
-  assert.equal(rows.length, 2); assert.equal(rows[1].group_status, 'held'); assert.deepEqual(numbers(rows[1]), Array(5).fill('unknown'));
+  assert.equal(rows.length, 2); assert.equal(rows[1].group_status, 'complete');
+  assert.deepEqual(numbers(rows[1]), ['320', '320', '300', '3', '300']);
+  assert.equal(rows[1].entered_supply_group_label, "'" + label);
+  assert.equal(rows[1].label_status, 'provided');
+  assert.equal(csv.includes(csvCell(label)), true);
   for (const row of rows) assert.equal(row.plan_basis, 'DEMO — planned seed sourcing estimates');
-  assertPrivate(csv); assert.equal(csv.includes('secret'), false);
+  assertPrivate(csv);
 });
 
 test('valid saved seed-lot, raising and variety references remain private even though the canonical review recognises them', () => {
@@ -316,7 +327,7 @@ test('exporter uses the actual canonical projection once and existing csvCell fo
     const raw = group(), row = watch({ ...raw, batchIds: watch([...raw.batchIds]) });
     const groups = watch([row]);
     const csv = exporter.buildGrowerSeedSourcingCsv(base.result, base.currentRequest, groups), rows = read(csv);
-    assert.equal(trace.calls, 1); assert.equal(trace.rawReads, 0); assert.equal(trace.cells, 20 * 3);
+    assert.equal(trace.calls, 1); assert.equal(trace.rawReads, 0); assert.equal(trace.cells, columns.length * 3);
     assert.equal(rows.length, 2); assert.deepEqual(numbers(rows[1]), ['320', '320', '300', '3', '300']); assertPrivate(csv);
   } finally {
     trace.forbidRaw = false; hooks.deregister();

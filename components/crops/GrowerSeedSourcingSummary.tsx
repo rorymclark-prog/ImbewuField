@@ -108,6 +108,42 @@ export default function GrowerSeedSourcingSummary({
                       </span>
                     </div>
 
+                    <div className="space-y-1 text-xs">
+                      <p>
+                        Entered label:{' '}
+                        {group.identification?.labelStatus === 'provided' ? (
+                          <span className="font-medium whitespace-pre-wrap">
+                            {group.identification.enteredLabel}
+                          </span>
+                        ) : group.identification?.labelStatus === 'invalid' ? (
+                          <span className="font-medium text-red-600">
+                            Invalid label format
+                          </span>
+                        ) : group.identification?.enteredLabel !== null && group.identification?.enteredLabel !== undefined ? (
+                          <span className="font-medium whitespace-pre-wrap">
+                            Not recorded (blank: &quot;{group.identification.enteredLabel}&quot;)
+                          </span>
+                        ) : (
+                          <span className="font-medium text-[var(--text-secondary)]">
+                            Not recorded
+                          </span>
+                        )}
+                      </p>
+                      <p>
+                        Public crop identities:{' '}
+                        <span className="font-medium">
+                          {group.identification?.cropNames.length
+                            ? group.identification.cropNames.join(', ')
+                            : 'None identified'}
+                        </span>
+                      </p>
+                      {group.identification?.description && (
+                        <p className="text-[var(--text-secondary)]">
+                          {group.identification.description}
+                        </p>
+                      )}
+                    </div>
+
                     <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                       <div>
                         <dt className="text-xs text-[var(--text-secondary)]">

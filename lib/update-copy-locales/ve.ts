@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed AGY seed worksheet identification captions; English remains paired. See seed-identification-release-drafts/adoption.json.
+  "Show crop names and your labels in seed worksheets.": "Sumbedzani madzina a zwimela na zwiṋambatedzwa zwaṋu kha mabammbiri a mishumo ya mbeu.",
+  "Identify planned seed supply groups": "Ṱalulani zwigwada zwa u wanala ha mbeu zwo pulaniwaho",
+  "Crop planner → Saved planned nursery batches → Seed sourcing review": "Mupulani wa zwimela → Zwigwada zwo pulaniwaho zwo vhulungwaho zwa fhethu ha u alusa zwimela → Tsedzuluso ya u wanala ha mbeu",
+  "Add your own supply-group label and review crop names from the saved nursery batches you selected. The CSV worksheet includes your entered labels. Missing identification stays visible, and crop names do not confirm interchangeable varieties, seed lots or observed stock.": "Engedzani tshiṋambatedzwa tshaṋu tsha tshigwada tsha u wanala ha mbeu nahone ni sedzuluse madzina a zwimela u bva kha zwigwada zwa fhethu ha u alusa zwimela zwo vhulungwaho zwe na nanga. Bammbiri ḽa mushumo ḽa CSV ḽi katela zwiṋambatedzwa zwe na dzhenisa. Mawanelo a siho a dzula a tshi vhonala, nahone madzina a zwimela a thi khwaṱhisedzi tshaka dzi no kona u tshintshana, zwigwada zwa mbeu dzo khetheaho kana tshitoko tsho vhonwaho.",
   // Unreviewed source-paired seed sourcing captions; English stays visible. See seed-sourcing-release-drafts/adoption.json.
   "Review seed allocations and planned pack counts.": "Ṱolani zwikovhelo zwa mbeu na mbalotshalo dza phakhethe dzo pulaniwaho.",
   "Review planned seed sourcing": "Ṱolani u wanala ha mbeu ho pulaniwaho",

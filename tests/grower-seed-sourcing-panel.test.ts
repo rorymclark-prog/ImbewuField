@@ -73,7 +73,10 @@ function review(): GrowerSeedSourcingReview {
     coverage: 'represented-saved-transplant-batches-only', wholeFarmCoverage: 'not-assessed', horizon: null,
     representedBatchCount: 9, assignedBatchCount: 1, unassignedBatchIds: ['private-unassigned'], sourceIssues: [],
     groups: [{ index: 88, id: 'private-review-group', batchIds: ['private-batch-one'], status: 'unknown', knownRequiredSeedsSubtotal: 17,
-      requiredSeeds: null, counts: { status: 'unknown', neededSeeds: null, packsNeeded: null, plannedPackSeeds: null }, issues: [] }], issues: [],
+      requiredSeeds: null, counts: { status: 'unknown', neededSeeds: null, packsNeeded: null, plannedPackSeeds: null }, issues: [],
+      // The additive public identification DTO does not derive or repair supplied counts.
+      identification: { enteredLabel: null, labelStatus: 'not-recorded', cropNames: [], cropIdentityCount: null,
+        cropStatus: 'unavailable', description: 'Synthetic supplied identification; no verified seed identity.' } }], issues: [],
     guidance: 'Synthetic supplied planning guidance; no authenticated source or stock.' };
 }
 function text(node: ReactTestInstance | string): string {
