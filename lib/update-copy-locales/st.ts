@@ -516,5 +516,7 @@ const copy:UpdateCopy={
   "Enter household or trial harvest requests in kilograms or pounds and keep the original entry with saved cycles.": "Kenya dikopo tsa kotulo tsa lelapa kapa tsa teko ka dikhilograma kapa diponto mme o boloke se kentsweng sa pele le medikoloho ya temo e bolokilweng.",
   "Production plan → Automatic plan from your estimates → Household food or trial growing": "Leano la tlhahiso → Leano le itirisang ho tswa dikakanyong tsa hao → Dijo tsa lelapa kapa temo ya teko",
   "Choose kg or lb for viewing. Changing the view keeps your original entry; typing a new weight changes the request and requires review. Saved crop records and nursery batches show the original entry separately from the planned kilogram quantity.": "Kgetha kg kapa lb bakeng sa ho sheba. Ho fetola pono ho boloka se kentsweng sa pele; ho thapa boima bo botjha ho fetola kopo mme ho hloka tlhahlobo. Direkoto tsa dijalo tse bolokilweng le dihlopha tsa dipeo di bontsha se kentsweng sa pele ka thoko ho bongata bo rerilweng ba dikhilograma.",
+  // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
+  "Enter household or trial harvest requests in kilograms or pounds.": "Kenya dikopo tsa kotulo tsa lelapa kapa tsa teko ka dikhilograma kapa diponto.",
 };
 export default copy;

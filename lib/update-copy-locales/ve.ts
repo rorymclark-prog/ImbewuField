@@ -516,5 +516,7 @@ const copy:UpdateCopy={
   "Enter household or trial harvest requests in kilograms or pounds and keep the original entry with saved cycles.": "Dzhenisani khumbelo dza khaṋo ya muṱani kana ya ndingo nga khilogireme kana phaundi nahone ni vhulunge zwe zwa dzheniswa u thoma zwi na mitingatingo ya vhulimi yo vhulungwaho.",
   "Production plan → Automatic plan from your estimates → Household food or trial growing": "Mbekanyamushumo ya vhubveledzi → Pulane ya othomethiki i no bva kha nyanganyelo dzaṋu → Zwiḽiwa zwa muṱani kana u ṱavha ha ndingo",
   "Choose kg or lb for viewing. Changing the view keeps your original entry; typing a new weight changes the request and requires review. Saved crop records and nursery batches show the original entry separately from the planned kilogram quantity.": "Nangani kg kana lb u itela u vhona. U shandukisa mbonalo zwi vhulunga zwe zwa dzheniswa u thoma; u ṅwala vhuleme vhuswa zwi shandukisa khumbelo nahone zwi ṱoḓa u ṱoliwa. Rekhodo dza zwimela dzo vhulungwaho na zwigwada zwa nese zwi sumbedza zwe zwa dzheniswa u thoma zwo fhambana na tshivhalo tsho pulaneledzwaho tsha khilogireme.",
+  // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
+  "Enter household or trial harvest requests in kilograms or pounds.": "Dzhenisani khumbelo dza khaṋo ya muṱani kana ya ndingo nga khilogireme kana phaundi.",
 };
 export default copy;

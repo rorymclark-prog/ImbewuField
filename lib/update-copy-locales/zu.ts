@@ -516,5 +516,7 @@ const copy:UpdateCopy={
   "Enter household or trial harvest requests in kilograms or pounds and keep the original entry with saved cycles.": "Faka izicelo zesivuno sasekhaya noma sokuhlola ngamakhilogremu noma ngamaphawundi bese ugcina okufakwe ekuqaleni nemijikelezo elondoloziwe.",
   "Production plan → Automatic plan from your estimates → Household food or trial growing": "Uhlelo lokukhiqiza → Uhlelo oluzenzakalelayo olusuka ezilinganisweni zakho → Ukudla kwasekhaya noma ukulima kokuhlola",
   "Choose kg or lb for viewing. Changing the view keeps your original entry; typing a new weight changes the request and requires review. Saved crop records and nursery batches show the original entry separately from the planned kilogram quantity.": "Khetha kg noma lb ukuze ubuke. Ukushintsha ukubuka kugcina okufakwe ekuqaleni; ukuthayipha isisindo esisha kushintsha isicelo futhi kudinga ukubuyekezwa. Amarekhodi ezitshalo alondoloziwe namaqoqo esithombo abonisa okufakwe ekuqaleni ngokwehlukana nenani lamakhilogremu ahleliwe.",
+  // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
+  "Enter household or trial harvest requests in kilograms or pounds.": "Faka izicelo zesivuno sasekhaya noma sokuhlola ngamakhilogremu noma ngamaphawundi.",
 };
 export default copy;

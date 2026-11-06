@@ -516,5 +516,7 @@ const copy:UpdateCopy={
   "Enter household or trial harvest requests in kilograms or pounds and keep the original entry with saved cycles.": "Nghenisa swikombelo swa ntshovelo swa le kaya kumbe swa ndzingelo hi tikhilogiramu kumbe tipawundi u tlhela u hlayisa leswi nghenisiweke eku sunguleni swin’we na mizingeleko leyi hlayisiweke.",
   "Production plan → Automatic plan from your estimates → Household food or trial growing": "Pulani ya vuhumelerisi → Pulani yo tiendlekela ku suka eka miringanyeto ya wena → Swakudya swa le kaya kumbe kurima ka ndzingelo",
   "Choose kg or lb for viewing. Changing the view keeps your original entry; typing a new weight changes the request and requires review. Saved crop records and nursery batches show the original entry separately from the planned kilogram quantity.": "Hlawula kg kumbe lb ku xiyisisa. Ku cinca mbonelo swi hlayisa leswi nghenisiweke eku sunguleni; ku tsala ntikelo lowuntshwa swi cinca xikombelo naswona swi lava nkambisiso. Tirhekhodo ta swimilani leti hlayisiweke na mintlawa ya masungulo ya swimilani swi kombisa leswi nghenisiweke eku sunguleni hi ku hambana na ntsengo wa tikhilogiramu lowu pulaniweke.",
+  // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
+  "Enter household or trial harvest requests in kilograms or pounds.": "Nghenisa swikombelo swa ntshovelo swa le kaya kumbe swa ndzingelo hi tikhilogiramu kumbe tipawundi.",
 };
 export default copy;
