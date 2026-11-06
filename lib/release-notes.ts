@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 November 2026', sha: '59a1a9ed58c1', changes: [
+  { when: '6 November 2026', sha: 'e66f8e3de2ab', changes: [
     'Enter household or trial harvest requests in kilograms or pounds.',
   ], tour: [{ title: 'Choose harvest weight units', where: 'Production plan → Automatic plan from your estimates → Household food or trial growing', href: '/facilitator/crops',
     detail: 'Choose kg or lb for viewing. Changing the view keeps your original entry; typing a new weight changes the request and requires review. Saved crop records and nursery batches show the original entry separately from the planned kilogram quantity.' }] },
