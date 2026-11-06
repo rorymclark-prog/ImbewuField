@@ -20,7 +20,7 @@ const probe = { calls: [] as string[], saves: 0, backRegistrations: 0, replayEff
   next: ((_code: string) => Promise.resolve(reference('current synthetic public reference'))) as (code: string) => Promise<ClimateReferenceResult> };
 Object.assign(globalThis, { [key]: probe, IS_REACT_ACT_ENVIRONMENT: true });
 const data = (source: string) => ({ shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(source) });
-const widgetImports = { './NwsForecastReference': 'US', './CountyBulletinReference': 'KE', './EaRainfallReference': 'GB', './InmetAlertLinks': 'BR', './BmkgResearchLinks': 'research-queue' };
+const widgetImports = { './NwsForecastReference': 'US', './CountyBulletinReference': 'KE', './EaRainfallReference': 'GB', './InmetAlertLinks': 'BR', './BmkgResearchLinks': 'research-queue', './DwdStationReference': 'DWD-forecast', './DwdStationCatalogSearch': 'DWD-catalog' };
 // Run the real page/components, navigation helper, registry and readiness. Only
 // framework affordances, existing child widgets, provider transport and the
 // external saved-place write sink are isolated; no production store is touched.
@@ -42,9 +42,11 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
     if (specifier === '@/components/MenuButton') return data('export default function MenuButton(){return null;}');
     if (specifier === '@/components/BackControl') return data(`export function useRegisterBackControl(){globalThis.${key}.backRegistrations++;}`);
     if (specifier === './CountryReview.module.css') return data('export default {};');
+    // DWD's station tools are global references, not the selected country's
+    // local provider. Keep that distinction in this dossier-navigation probe.
     if (Object.hasOwn(widgetImports, specifier)) return data(`
       import React from ${JSON.stringify(new URL('../node_modules/react/index.js', import.meta.url).href)};
-      export default function Widget(){return React.createElement('section',{'data-navigation-widget':${JSON.stringify(widgetImports[specifier as keyof typeof widgetImports])}},'Existing provider boundary');}`);
+      export default function Widget(){return React.createElement('section',{${JSON.stringify(specifier.startsWith('./Dwd') ? 'data-global-reference-widget' : 'data-navigation-widget')}:${JSON.stringify(widgetImports[specifier as keyof typeof widgetImports])}},'Existing provider boundary');}`);
     if (specifier === '@/lib/international/providers/nasa-reference') return data(`
       export * from ${JSON.stringify(nasaUrl)};
       export function fetchCountryClimateReference(code){const p=globalThis.${key};p.calls.push(code);return p.next(code);}`);
@@ -109,6 +111,17 @@ function saved(code = 'GB'): SiteContextResolution {
   assert.ok(context); row.siteCountryContext = bindSiteContext(context, row);
   const resolution = resolveSiteCountryContext([row], siteId); assert.equal(resolution.status, 'confirmed'); return resolution;
 }
+test('global station tools remain distinct from each selected country provider without starting a request', () => {
+  for (const code of ['KE', 'GB', 'US', 'BR'] as const) {
+    const ui = mount(code);
+    assert.deepEqual(widgets(ui.renderer), [code]);
+    assert.deepEqual(ui.renderer.root.findAll(node => node.props['data-global-reference-widget'] !== undefined)
+      .map(node => node.props['data-global-reference-widget']), ['DWD-catalog', 'DWD-forecast']);
+    assert.equal(probe.calls.length, 0);
+    assert.equal(probe.saves, 0);
+    ui.dispose();
+  }
+});
 const evidenceLinks = (renderer: ReactTestRenderer) => renderer.root.findAllByType('a').filter(node => text(node) === 'Review country evidence');
 beforeEach(() => { probe.calls = []; probe.saves = 0; probe.backRegistrations = 0; probe.replayEffects = false; probe.effectCleanups = 0; probe.next = async () => reference('current synthetic public reference'); });
 afterEach(() => { for (const renderer of mounted) act(() => renderer.unmount()); mounted.clear(); });

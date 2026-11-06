@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import GrowerSeedPackBudget from './GrowerSeedPackBudget';
+import { useLanguage } from '@/lib/i18n-context';
+import { formattingContext } from '@/lib/international/locales/formatting';
 import type { GrowerSavedNurseryReview } from './useGrowerWorkflow';
 import { reviewGrowerFieldSeedSourcing, type GrowerFieldSeedSourcingInput,
   type GrowerFieldSeedSourcingReview } from '@/lib/international/grower-seed-sourcing';
@@ -75,6 +78,7 @@ function input(draft: Draft): GrowerFieldSeedSourcingInput {
 
 /** Temporary entered field requirements; the parent remains the saved-book authority. */
 export default function GrowerFieldSeedSourcingSection(props: GrowerFieldSeedSourcingSectionProps) {
+  const { lang } = useLanguage();
   const [draft, setDraft] = useState<Draft | null>(null), [reviewed, setReviewed] = useState<Reviewed | null>(null);
   const [message, setMessage] = useState(''), [sampleLabel, setSampleLabel] = useState(props.sample === true);
   const [, render] = useState(0);
@@ -284,6 +288,10 @@ export default function GrowerFieldSeedSourcingSection(props: GrowerFieldSeedSou
         ] as const).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{quantity(value)}</dd></div>)}</dl>
         {group.issues.length > 0 && <ul>{[...new Set(group.issues.map(humanReason))].map((reason, i) => <li key={i}>{reason}</li>)}</ul>}
       </article>)}
+      <GrowerSeedPackBudget reviewProof={shownReview} review={shownReview.review}
+        isCurrent={proof => proof === shownReview && reviewedRef.current === shownReview
+          && draftRef.current === shownReview.draft && sourceCurrent(shownReview.draft.authority) && !operation.current}
+        disabled={busy} sample={shownReview.draft.authority.sample} formatting={formattingContext(lang)} />
       <button type="button" className={button} disabled={busy} onClick={() => void exportCsv()}>Download field seed sourcing CSV</button>
     </section>}
     <p>The CSV includes your entered supply-group labels exactly, including whitespace. Leave out information you do not want in the file. Private saved association IDs and individual variety or lot references are not included.</p>
