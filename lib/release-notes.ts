@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 November 2026', changes: [
+  { when: '6 November 2026', sha: '103543678c55', changes: [
     'Choose app help separately from advice about a saved site.',
     'Review your LimaBar question before sending it.',
   ], tour: [{ title: 'Choose the scope of your question', where: 'Ask Lima → Help with', href: '/farmer?panel=Ask',
