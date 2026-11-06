@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest illustrated-map review — [All-map treatment and surrounding-context guides — 6 November 2026](2026-11-06/all-map-illustration-guides-codex.md). Ten draft briefs and actual saved examples; settings implementation and fresh device/output verification remain open.
+
 Latest Zones wording review — [Boundary authority and care-intensity evidence — 5 November 2026](2026-11-05/zones-authority-key-codex.md). Findings only; fresh exact inspected, current saved AI remains unverified.
 
 Latest Sector styling — [Actual supplied-reference wind/rain motifs and retained terrain detail — 5 November 2026](2026-11-05/sector-reference-flow-codex.md). Native imagery inspected; release gates/identity follow on the PR and ledger.
@@ -191,6 +193,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 [ImbewuField connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md). Native linking and production deployment are separate gates from the verified emulator and browser journey.
 
 ## Date index
+
+- [All-map illustration and context guides — 6 November 2026](2026-11-06/all-map-illustration-guides-codex.md).
 
 - [Assistant connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md).
 - [Recorded shade cover recovery — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md).
