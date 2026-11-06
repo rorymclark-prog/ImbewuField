@@ -16,11 +16,12 @@ export interface GrowerFieldSeedSourcingSectionProps {
   contextRevision: number;
   sample?: boolean;
   onCheckSavedCurrent: (view: GrowerSavedNurseryReview) => Promise<boolean>;
+  onCheckSavedBindingCurrent: (view: GrowerSavedNurseryReview) => boolean;
 }
 type Requirement = { plantingId: string; materialDeclaration: 'botanical-seed' | 'vegetative' | null; grossText: string; confirmed: boolean };
 type Group = { id: string; label: string; plantingIds: readonly string[]; interchangeable: boolean; allocationText: string; packText: string };
 type Authority = { props: GrowerFieldSeedSourcingSectionProps; binding: object; lifecycle: object; source: string;
-  sampleMode: boolean; sample: boolean; proof: SeedWorksheetContext; stop: () => void };
+  sampleMode: boolean; sample: boolean; proof: SeedWorksheetContext; retired: boolean; stop: () => void };
 type Draft = { authority: Authority; options: GrowerFieldSeedSourcingReview; requirements: readonly Requirement[]; groups: readonly Group[] };
 type Reviewed = { draft: Draft; review: GrowerFieldSeedSourcingReview };
 type Operation = { kind: 'open' | 'review' | 'export'; authority: Authority; draft: Draft | null };
@@ -84,6 +85,7 @@ export default function GrowerFieldSeedSourcingSection(props: GrowerFieldSeedSou
   const live = useRef({ props, source, binding: {} });
   if (live.current.props.savedReview !== props.savedReview || live.current.props.contextRevision !== props.contextRevision
     || live.current.props.sample !== props.sample || live.current.props.onCheckSavedCurrent !== props.onCheckSavedCurrent
+    || live.current.props.onCheckSavedBindingCurrent !== props.onCheckSavedBindingCurrent
     || live.current.source !== source) live.current = { props, source, binding: {} };
   else live.current.props = props;
   const binding = live.current.binding, mountedLifetime = lifecycle.current;
@@ -101,11 +103,22 @@ export default function GrowerFieldSeedSourcingSection(props: GrowerFieldSeedSou
     if (lifecycle.current) { setDraft(null); setReviewed(null); setMessage(''); refresh(); }
   }
   function sourceCurrent(value: Authority): boolean {
-    return authority.current === value && lifecycle.current === value.lifecycle && live.current.binding === value.binding
-      && live.current.props.savedReview === value.props.savedReview && live.current.props.contextRevision === value.props.contextRevision
-      && live.current.props.onCheckSavedCurrent === value.props.onCheckSavedCurrent
-      && sourceIdentity(value.props.savedReview) === value.source && isSampleMode() === value.sampleMode
-      && seedWorksheetContextIsCurrent(value.proof);
+    if (value.retired) return false;
+    try {
+      const current = authority.current === value && lifecycle.current === value.lifecycle && live.current.binding === value.binding
+        && live.current.props.savedReview === value.props.savedReview && live.current.props.contextRevision === value.props.contextRevision
+        && live.current.props.onCheckSavedCurrent === value.props.onCheckSavedCurrent
+        && live.current.props.onCheckSavedBindingCurrent === value.props.onCheckSavedBindingCurrent
+        && typeof value.props.onCheckSavedBindingCurrent === 'function'
+        && value.props.onCheckSavedBindingCurrent(value.props.savedReview) === true
+        && authority.current === value && lifecycle.current === value.lifecycle && live.current.binding === value.binding
+        && sourceIdentity(value.props.savedReview) === value.source && isSampleMode() === value.sampleMode
+        && seedWorksheetContextIsCurrent(value.proof);
+      // A declined original binding withdraws this intent permanently. Only a
+      // new explicit check can ask the existing source owner for fresh admission.
+      if (!current) value.retired = true;
+      return current;
+    } catch { value.retired = true; return false; }
   }
   function operationCurrent(value: Operation): boolean {
     return operation.current === value && sourceCurrent(value.authority) && draftRef.current === value.draft;
@@ -139,7 +152,7 @@ export default function GrowerFieldSeedSourcingSection(props: GrowerFieldSeedSou
     draftRef.current = null; reviewedRef.current = null; setDraft(null); setReviewed(null); setMessage('');
     const proof = captureSeedWorksheetContext();
     if (!proof) { setMessage('The current saved context could not be confirmed. Check saved records again.'); refresh(); return; }
-    const value: Authority = { props, binding, lifecycle: mountedLifetime, source, proof, stop: () => {},
+    const value: Authority = { props, binding, lifecycle: mountedLifetime, source, proof, retired: false, stop: () => {},
       sampleMode: isSampleMode(), sample: props.sample === true || isSampleMode() };
     authority.current = value;
     value.stop = subscribeSeedWorksheetContext(proof, () => { if (authority.current === value) retire(); });

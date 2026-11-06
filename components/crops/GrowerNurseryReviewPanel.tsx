@@ -52,12 +52,14 @@ export interface GrowerNurseryReviewPanelProps extends NurseryReviewCommonProps 
   /** The parent rereads the source/book/actor and checks this original review. */
   onCheckCurrent: (review: Extract<GrowerWorkflowReview, { status: 'review' }>) => Promise<unknown>;
   onCheckSavedCurrent?: never;
+  onCheckSavedBindingCurrent?: never;
 }
 export interface SavedNurseryReviewPanelProps extends NurseryReviewCommonProps {
   review?: never;
   savedReview: GrowerSavedNurseryReview;
   onCheckCurrent?: never;
   onCheckSavedCurrent: (review: GrowerSavedNurseryReview) => Promise<boolean>;
+  onCheckSavedBindingCurrent?: (review: GrowerSavedNurseryReview) => boolean;
 }
 
 type SurfaceDraft = NurseryDimensionDraft<'usableM2'>;
@@ -797,7 +799,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
       </section>}
       <button type="button" className={button} disabled={busy || shown.result.fingerprint === null} onClick={() => void exportReview()}>Download reviewed nursery CSV</button>
     </section>}
-    {props.savedReview && <GrowerFieldSeedSourcingSection savedReview={props.savedReview} contextRevision={props.contextRevision}
-      sample={props.sample} onCheckSavedCurrent={props.onCheckSavedCurrent} />}
+    {props.savedReview && typeof props.onCheckSavedBindingCurrent === 'function' && <GrowerFieldSeedSourcingSection savedReview={props.savedReview} contextRevision={props.contextRevision}
+      sample={props.sample} onCheckSavedCurrent={props.onCheckSavedCurrent} onCheckSavedBindingCurrent={props.onCheckSavedBindingCurrent} />}
   </section>;
 }

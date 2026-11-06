@@ -429,6 +429,14 @@ test('the real saved-source hook admits field-only accepted cycles without equip
       assert.equal(writes, beforeWrites, 'acquisition/checking must not write a new permission, plan or stock record');
       return result;
     }
+    function bindingCurrent(view: import('../components/crops/useGrowerWorkflow.ts').GrowerSavedNurseryReview): boolean {
+      const before = JSON.stringify([...values]), beforeWrites = writes;
+      const current: boolean = latest.onCheckSavedNurseryBindingCurrent(view);
+      assert.equal(typeof current, 'boolean', 'the final handoff revocation check must not yield to another promise');
+      assert.equal(JSON.stringify([...values]), before, 'binding revocation must not change saved bytes');
+      assert.equal(writes, beforeWrites, 'a synchronous binding check cannot create fresh admission or write a record');
+      return current;
+    }
     const result = await readOnly(() => latest.onReadSavedNursery()); assert.equal(result.status, 'ready');
     if (result.status !== 'ready') throw Error('Field-only saved-source acquisition was held');
     const view = result.view;
@@ -436,18 +444,25 @@ test('the real saved-source hook admits field-only accepted cycles without equip
     assert.equal(view.references.length, 0); assert.deepEqual(view.horizon, { state: 'missing', reason: 'not-entered' });
     const projected = projectGrowerCycles(view.rows, view.cycleContext);
     assert.equal(projected.ownCycles.length, 2); assert.ok(projected.ownCycles.every(cycle => cycle.nurseryDemand === null));
+    assert.equal(bindingCurrent(view), true);
+    assert.equal(bindingCurrent(structuredClone(view)), false, 'matching bytes cannot recreate the original private binding');
+    assert.equal(bindingCurrent({ kind: 'saved-nursery-review', source: view.source, rows: f.rows, cycleContext: f.context,
+      horizon: { state: 'missing', reason: 'not-entered' }, references: [] }), false, 'fabricated saved-view fields grant no handoff authority');
     assert.equal(await readOnly(() => latest.onCheckSavedNurseryCurrent(view)), true);
     assert.equal(await readOnly(() => latest.onCheckSavedNurseryCurrent(structuredClone(view))), false,
       'matching public fields cannot reproduce the hook private saved-view binding');
     boundary.raw.items[0].wM = 4;
+    assert.equal(bindingCurrent(view), false, 'source receipt retirement is visible synchronously before an async refresh');
     assert.equal(await readOnly(() => latest.onCheckSavedNurseryCurrent(view)), false, 'the original source receipt must still match');
     boundary.raw = structuredClone(initialSource);
     const renewed = await readOnly(() => latest.onReadSavedNursery()); assert.equal(renewed.status, 'ready');
     if (renewed.status !== 'ready') throw Error('Restored field-only source could not be explicitly recaptured');
     assert.notEqual(renewed.view, view); assert.equal(await readOnly(() => latest.onCheckSavedNurseryCurrent(renewed.view)), true);
+    assert.equal(bindingCurrent(renewed.view), true); assert.equal(bindingCurrent(view), false, 'a later source capture cannot renew an older view');
     // This is a deliberate external fixture edit, outside the read-only window.
     // A subsequent check must reject it without attempting a compensating write.
     replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ ...fieldBook, planNotes: [{ kind: 'basis', text: 'Later source-book fixture edit' }], updatedAt: 2 }));
+    assert.equal(bindingCurrent(renewed.view), false, 'a changed canonical raw book revokes handoff even without a React prop change');
     assert.equal(await readOnly(() => latest.onCheckSavedNurseryCurrent(renewed.view)), false, 'the admitted raw book token cannot be recaptured under an old view');
     assert.ok(boundary.sourceReads >= 6, 'acquisition and checks must reread the selected source around actual fingerprinting');
   } finally {

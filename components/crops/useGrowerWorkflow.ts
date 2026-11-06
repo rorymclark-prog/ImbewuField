@@ -323,6 +323,11 @@ export function useGrowerWorkflow(input: Inputs) {
         && binding.bookIsCurrent() && binding.sourceIsCurrent() && savedNurseryKey(view) === binding.key;
     } catch { return false; }
   }
+  // A book/source change can follow the last awaited read before file handoff.
+  // Revoke only the original private binding; this never replaces fresh reads.
+  function onCheckSavedNurseryBindingCurrent(view: GrowerSavedNurseryReview): boolean {
+    return savedBindingIsCurrent(view);
+  }
   async function onReadSavedNursery(acknowledgement?: GrowerNurseryReferenceAcknowledgement): Promise<GrowerSavedNurseryReadResult> {
     const held = (reason: string): GrowerSavedNurseryReadResult => ({ status: 'held', reason });
     const acknowledgementBinding = acknowledgement ? nurseryAcknowledgements.current.get(acknowledgement) : null;
@@ -527,5 +532,5 @@ export function useGrowerWorkflow(input: Inputs) {
   } catch { visibleAcceptance = { status: 'idle' }; }
   const visibleSavedNursery = savedNursery && savedBindingIsCurrent(savedNursery) ? savedNursery : null;
   return { source: visibleSource, sourceIssue, checking, contextRevision: revision, onRefresh, onReview, onCheckCurrent, onAccept, acceptance: visibleAcceptance,
-    savedNurseryReview: visibleSavedNursery, savedNurseryChecking, onReadSavedNursery, onCheckSavedNurseryCurrent, onSaveNurseryBatchReferences, onRecordNurserySowing, onRecordNurseryProgress, onRecordNurseryFieldPlanting };
+    savedNurseryReview: visibleSavedNursery, savedNurseryChecking, onReadSavedNursery, onCheckSavedNurseryCurrent, onCheckSavedNurseryBindingCurrent, onSaveNurseryBatchReferences, onRecordNurserySowing, onRecordNurseryProgress, onRecordNurseryFieldPlanting };
 }

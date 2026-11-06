@@ -23,6 +23,7 @@ export interface SavedGrowerNurseryReviewPanelProps {
   sample?: boolean;
   onRefresh: (acknowledgement?: GrowerNurseryReferenceAcknowledgement) => Promise<GrowerSavedNurseryReadResult>;
   onCheckCurrent: (view: GrowerSavedNurseryReview) => Promise<boolean>;
+  onCheckBindingCurrent?: (view: GrowerSavedNurseryReview) => boolean;
   onSaveReferences: (view: GrowerSavedNurseryReview, changes: readonly GrowerNurseryBatchReferenceChange[], displayedIsCurrent: () => boolean) => Promise<GrowerNurseryBatchReferenceSaveResult>;
   onRecordSowing?: (view: GrowerSavedNurseryReview, plantingId: string, input: GrowerNurserySowingInput, displayedIsCurrent: () => boolean) => Promise<GrowerFieldObservationResult>;
   onRecordProgress?: (view: GrowerSavedNurseryReview, plantingId: string, input: GrowerNurseryProgressInput, displayedIsCurrent: () => boolean) => Promise<GrowerFieldObservationResult>;
@@ -293,6 +294,7 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
     </>}
     <p role="status" aria-live="polite">{message}</p>
     {canReviewBudget && <GrowerNurseryReviewPanel savedReview={props.review!} source={props.review!.source} settings={props.settings}
-      contextRevision={props.contextRevision} sample={props.sample} onCheckSavedCurrent={props.onCheckCurrent} />}
+      contextRevision={props.contextRevision} sample={props.sample} onCheckSavedCurrent={props.onCheckCurrent}
+      onCheckSavedBindingCurrent={props.onCheckBindingCurrent} />}
   </section>;
 }

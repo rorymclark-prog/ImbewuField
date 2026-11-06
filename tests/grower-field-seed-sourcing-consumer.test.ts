@@ -22,7 +22,8 @@ import type { SavedGrowerNurseryReviewPanelProps } from '../components/crops/Sav
 // Accepted-cycle creation, field projection, count parsing, CSV formatting,
 // composed panels and guarded download are real. The fixture owns Firebase
 // and browser storage. The permission callback admits only its original opaque
-// fixture view; it does not claim integration with the production hook's WeakMap.
+// fixture view; both permission callbacks are controlled boundaries, not a
+// replacement book reader or integration with the production hook's WeakMap.
 const root = new URL('../', import.meta.url).href;
 const hooks = registerHooks({ load(url, context, next) {
   if (url.startsWith(root) && url.endsWith('.tsx')) return { shortCircuit: true, format: 'module',
@@ -97,9 +98,11 @@ const mounted = new Set<ReactTestRenderer>();
 async function mount(options: { composed?: boolean; strict?: boolean; cropKey?: string; sample?: boolean; fakeView?: boolean; mutableSource?: boolean } = {}) {
   const actual = await fixture(options.cropKey, options.mutableSource), displayed = options.fakeView ? structuredClone(actual) : actual;
   const admitted = new WeakSet([actual]);
-  const gate = { calls: [] as GrowerSavedNurseryReview[], check: async (_view: GrowerSavedNurseryReview) => true };
+  const gate = { calls: [] as GrowerSavedNurseryReview[], check: async (_view: GrowerSavedNurseryReview) => true,
+    bindingCalls: [] as GrowerSavedNurseryReview[], bindingCheck: (_view: GrowerSavedNurseryReview) => true };
   let props: GrowerFieldSeedSourcingSectionProps = { savedReview: displayed, contextRevision: 1, sample: options.sample,
-    onCheckSavedCurrent: async checked => { gate.calls.push(checked); return admitted.has(checked) && await gate.check(checked); } };
+    onCheckSavedCurrent: async checked => { gate.calls.push(checked); return admitted.has(checked) && await gate.check(checked); },
+    onCheckSavedBindingCurrent: checked => { gate.bindingCalls.push(checked); return admitted.has(checked) ? gate.bindingCheck(checked) : false; } };
   const element = () => options.composed ? React.createElement(NurseryPanel, { ...props, source: props.savedReview.source })
     : React.createElement(FieldSection, props);
   let renderer!: ReactTestRenderer;
@@ -157,6 +160,7 @@ test('actual composed field-only saved cycles work without raising references, e
   assert.equal(ui.actual.references.length, 0); assert.equal(ui.actual.horizon.state, 'missing'); assert.equal(ui.gate.calls.length, 0);
   assert.equal(ui.renderer.root.findAllByProps({ 'aria-label': 'Reviewed own nursery requirements' }).length, 0);
   await ui.open(); assert.equal(ui.gate.calls.length, 2); assert.ok(ui.gate.calls.every(view => view === ui.actual));
+  assert.ok(ui.gate.bindingCalls.length > 0); assert.ok(ui.gate.bindingCalls.every(view => view === ui.actual));
   const cycle = ui.section().findByProps({ 'aria-label': 'Field cycle 1' });
   assert.equal(cycle.findByType('select').props.value, '');
   assert.equal(ui.labelled('Your gross required seeds').findByType('input').props.value, '');
@@ -171,6 +175,34 @@ test('a structurally valid cloned view cannot borrow the permission callback’s
   assert.equal(ui.gate.calls.length, 1); assert.notEqual(ui.displayed, ui.actual);
   assert.equal(ui.section().findAllByProps({ 'aria-label': 'Field cycle 1' }).length, 0);
   assert.match(ui.text(), /could not be confirmed/); assert.equal(platform.downloads.length, 0);
+});
+
+for (const outcome of ['missing', 'throws', 'nontrue'] as const) test(`the field consumer fails closed when its synchronous binding guard is ${outcome}`, async () => {
+  const ui = await mount();
+  if (outcome === 'missing') ui.update({ onCheckSavedBindingCurrent: undefined as unknown as GrowerFieldSeedSourcingSectionProps['onCheckSavedBindingCurrent'] });
+  else if (outcome === 'throws') ui.gate.bindingCheck = () => { throw Error('Private binding unavailable'); };
+  else ui.gate.bindingCheck = () => 'truthy is not admission' as unknown as boolean;
+  await ui.open();
+  assert.equal(ui.section().findAllByProps({ 'aria-label': 'Field cycle 1' }).length, 0);
+  assert.equal(ui.section().findAllByProps({ 'aria-label': 'Reviewed field seed sourcing' }).length, 0);
+  assert.equal(platform.downloads.length, 0);
+});
+
+test('changing the synchronous callback identity retires the displayed worksheet and its retained export handler', async () => {
+  const ui = await mount(); await ui.ready(); const retained = ui.button('Download field seed sourcing CSV').props.onClick;
+  ui.update({ onCheckSavedBindingCurrent: checked => checked === ui.actual });
+  assert.equal(ui.section().findAllByProps({ 'aria-label': 'Reviewed field seed sourcing' }).length, 0);
+  act(() => retained()); assert.equal(platform.downloads.length, 0);
+  await ui.ready(); assert.equal(metric(ui, 'Required seeds'), '100');
+});
+
+test('an observed declined binding permanently withdraws the old displayed intent even if the boundary later returns true', async () => {
+  const ui = await mount(); await ui.ready(); const retained = ui.button('Download field seed sourcing CSV').props.onClick;
+  ui.gate.bindingCheck = () => false; ui.update({});
+  assert.equal(ui.section().findAllByProps({ 'aria-label': 'Reviewed field seed sourcing' }).length, 0);
+  ui.gate.bindingCheck = () => true; ui.update({});
+  assert.equal(ui.section().findAllByProps({ 'aria-label': 'Reviewed field seed sourcing' }).length, 0);
+  act(() => retained()); assert.equal(platform.downloads.length, 0);
 });
 
 test('deliberately confirmed zero is preserved and the exact Unicode group label is disclosed and exported without private associations', async () => {
@@ -286,6 +318,25 @@ for (const retirement of ['source', 'actor']) test(`queued ${retirement} retirem
   assert.equal(platform.urls.size, 0); assert.ok(platform.removed > 0); assert.ok(platform.revoked.length > 0);
 });
 
+test('the original synchronous binding is rechecked at final handoff when it withdraws after an affirmative async reader', async () => {
+  const ui = await mount(); await ui.ready(); let allowed = true, queued = false, withdrawn = false;
+  ui.gate.bindingCheck = () => allowed;
+  platform.onAppend = () => {
+    ui.gate.check = async () => {
+      session.onRead = () => {
+        session.onRead = null; queued = true;
+        queueMicrotask(() => { allowed = false; withdrawn = true; });
+      };
+      return true;
+    };
+  };
+  await ui.download();
+  assert.equal(queued, true); assert.equal(withdrawn, true);
+  assert.equal(platform.downloads.length, 0); assert.equal(platform.urls.size, 0);
+  assert.ok(platform.removed > 0); assert.ok(platform.revoked.length > 0);
+  assert.ok(ui.gate.bindingCalls.every(view => view === ui.actual));
+});
+
 test('a late old finally cannot clear the new operation after source A-B-A, and retained callbacks cannot restart it', async () => {
   const ui = await mount(); await ui.ready(); const old = deferred<boolean>(); ui.gate.check = () => old.promise;
   const retained = ui.button('Download field seed sourcing CSV').props.onClick; act(() => retained());
@@ -308,7 +359,8 @@ test('unmount blocks retained callbacks and late permission delivery; StrictMode
 });
 
 test('initial sample text is hydration-consistent and DEMO is reconciled after mount without automatic review or download', async () => {
-  const view = await fixture(), props: GrowerFieldSeedSourcingSectionProps = { savedReview: view, contextRevision: 1, onCheckSavedCurrent: async () => true };
+  const view = await fixture(), props: GrowerFieldSeedSourcingSectionProps = { savedReview: view, contextRevision: 1,
+    onCheckSavedCurrent: async () => true, onCheckSavedBindingCurrent: checked => checked === view };
   const element = React.createElement(FieldSection, props), first = renderToString(element);
   session.rows.set('imbewu_sample_mode', '1'); assert.equal(renderToString(element), first);
   const ui = await mount(); assert.match(ui.text(), /DEMO/); assert.equal(ui.gate.calls.length, 0); assert.equal(platform.downloads.length, 0);
@@ -317,11 +369,19 @@ test('initial sample text is hydration-consistent and DEMO is reconciled after m
 test('saved-panel checking and blocked-view gates still withhold the entire additive field consumer', async () => {
   const view = await fixture(); let props: SavedGrowerNurseryReviewPanelProps = { review: view, checking: true, contextRevision: 1,
     onRefresh: async () => ({ status: 'held', reason: 'fixture' } as Awaited<ReturnType<SavedGrowerNurseryReviewPanelProps['onRefresh']>>),
-    onCheckCurrent: async checked => checked === view, onSaveReferences: async () => ({ status: 'held', reasons: ['fixture'] }) };
+    onCheckCurrent: async checked => checked === view, onCheckBindingCurrent: checked => checked === view,
+    onSaveReferences: async () => ({ status: 'held', reasons: ['fixture'] }) };
   let renderer!: ReactTestRenderer; act(() => { renderer = create(React.createElement(SavedPanel, props)); }); mounted.add(renderer);
   assert.equal(renderer.root.findAllByType(FieldSection).length, 0);
   props = { ...props, checking: false }; act(() => renderer.update(React.createElement(SavedPanel, props)));
   assert.equal(renderer.root.findAllByType(FieldSection).length, 1);
   const refresh = renderer.root.findAllByType('button').find(node => text(node) === 'Check saved nursery batches')!;
   await act(async () => refresh.props.onClick()); assert.equal(renderer.root.findAllByType(FieldSection).length, 0);
+});
+
+test('legacy saved nursery callers without the new binding capability retain their nursery flow and cannot mount the field consumer', async () => {
+  const ui = await mount({ composed: true });
+  ui.update({ onCheckSavedBindingCurrent: undefined as unknown as GrowerFieldSeedSourcingSectionProps['onCheckSavedBindingCurrent'] });
+  assert.equal(ui.renderer.root.findAllByType(FieldSection).length, 0);
+  assert.ok(ui.renderer.root.findAllByType('button').some(node => text(node) === 'Review own nursery requirements'));
 });
