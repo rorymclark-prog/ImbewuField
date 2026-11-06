@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed Codex saved-country navigation captions; exact English stays paired. See country-navigation-release-drafts/adoption.json.
+  "Open evidence tools for your saved country.": "Vhulani zwishumiswa zwa vhuṱanzi zwa shango ḽe na ḽi vhulunga.",
+  "Review your saved country’s evidence": "Ṱolani vhuṱanzi ha shango ḽe na ḽi vhulunga",
+  "Crop planner → Site country and region → Review country evidence": "Mudzudzanyi wa zwilimwa → Shango na dzingu ḽa fhethu → Ṱolani vhuṱanzi ha shango",
+  "Use the country you saved for this site to open its existing evidence dossier. Countries without a dossier show general reference tools. Opening the link does not save country details, approve an agricultural region or enable local crop advice.": "Shumisani shango ḽe na ḽi vhulungela fhethu afha u vula faela yaḽo ya vhuṱanzi ine ya vha hone. Mashango a si na faela ya vhuṱanzi a sumbedza zwishumiswa zwa u wana mafhungo nga u angaredza. U vula vhuṱumanyi a zwi vhulungi zwidodombedzwa zwa shango, a zwi tendeli dzingu ḽa vhulimi nahone a zwi vuli ngeletshedzo dza zwilimwa dza fhethu afho.",
   // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
   "Keep saved request details with your plan and exports.": "Vhulungani zwidodombedzwa zwa khumbelo zwo vhulungwaho na pulane yaṋu na zwirumelwa nnḓa.",
   "Check saved request details": "Ṱolani zwidodombedzwa zwa khumbelo zwo vhulungwaho",

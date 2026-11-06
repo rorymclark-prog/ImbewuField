@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed Codex saved-country navigation captions; exact English stays paired. See country-navigation-release-drafts/adoption.json.
+  "Open evidence tools for your saved country.": "Bula disebediswa tsa bopaki bakeng sa naha eo o e bolokileng.",
+  "Review your saved country’s evidence": "Hlahloba bopaki ba naha eo o e bolokileng",
+  "Crop planner → Site country and region → Review country evidence": "Mohlophisi wa dijalo → Naha le lebatowa la sebaka → Hlahloba bopaki ba naha",
+  "Use the country you saved for this site to open its existing evidence dossier. Countries without a dossier show general reference tools. Opening the link does not save country details, approve an agricultural region or enable local crop advice.": "Sebedisa naha eo o e bolokileng bakeng sa sebaka sena ho bula faele ya yona ya bopaki e seng e le teng. Dinaha tse se nang faele ya bopaki di bontsha disebediswa tse akaretsang tsa ho batla tlhahisoleseding. Ho bula sehokelo ha ho boloke dintlha tsa naha, ha ho amohele lebatowa la temo ebile ha ho bulele dikeletso tsa dijalo tsa sebaka seo.",
   // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
   "Keep saved request details with your plan and exports.": "Boloka dintlha tsa kopo tse bolokilweng le moralo wa hao le tse romelwang ntle.",
   "Check saved request details": "Hlahloba dintlha tsa kopo tse bolokilweng",

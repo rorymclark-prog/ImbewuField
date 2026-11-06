@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Four exact saved-country evidence navigation update captions; Codex AI candidates, not fluent/human approval.",
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "sourceFiles": [
+    {
+      "file": "lib/release-notes.ts",
+      "sha256": "4fdd1609ce529a4678bb4e46400291eb277911a2ae91c6534fa9cb3312fea656",
+      "base": "5bf587beeed29eedfa6976fb79d623bf1a7068ac",
+      "sourceState": "Actual coordinator English for corrected country navigation; release metadata may later stamp code commit, English frozen."
+    }
+  ],
+  "messages": [
+    {
+      "key": "countryEvidenceNavigation.release.01",
+      "english": "Open evidence tools for your saved country.",
+      "sha256": "504b1da5a80aef4ba1357c1c0f4e98da086ecaeefd9169f95cbf9437eb566edf"
+    },
+    {
+      "key": "countryEvidenceNavigation.release.02",
+      "english": "Review your saved country’s evidence",
+      "sha256": "89d439b1bb2320dbdc0adbf8715f2a4ff64a525b726ca0170de56f6dd5241f0e"
+    },
+    {
+      "key": "countryEvidenceNavigation.release.03",
+      "english": "Crop planner → Site country and region → Review country evidence",
+      "sha256": "f08fd32862cf3bc4c71de81435f9e4f5823b5204e9c6cdded3370209a730e663"
+    },
+    {
+      "key": "countryEvidenceNavigation.release.04",
+      "english": "Use the country you saved for this site to open its existing evidence dossier. Countries without a dossier show general reference tools. Opening the link does not save country details, approve an agricultural region or enable local crop advice.",
+      "sha256": "051ff4a5deaff732122f6658a220529031507eff363cdc61fe8e73bcbe6e9537"
+    }
+  ]
+}

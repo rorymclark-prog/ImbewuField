@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed Codex saved-country navigation captions; exact English stays paired. See country-navigation-release-drafts/adoption.json.
+  "Open evidence tools for your saved country.": "Pfula switirhisiwa swa vumbhoni swa tiko leri u ri hlayiseke.",
+  "Review your saved country’s evidence": "Kambisisa vumbhoni bya tiko leri u ri hlayiseke",
+  "Crop planner → Site country and region → Review country evidence": "Xikunguhati xa swibyariwa → Tiko na xifundzha xa ndhawu → Kambisisa vumbhoni bya tiko",
+  "Use the country you saved for this site to open its existing evidence dossier. Countries without a dossier show general reference tools. Opening the link does not save country details, approve an agricultural region or enable local crop advice.": "Tirhisa tiko leri u ri hlayiseke eka ndhawu leyi ku pfula fayili ya rona ya vumbhoni leyi se yi nga kona. Matiko lama nga riki na fayili ya vumbhoni ma komba switirhisiwa swa vuxokoxoko swo tirhisiwa hi ku angarhela. Ku pfula xihlanganisi a swi hlayisi vuxokoxoko bya tiko, a swi pasisi xifundzha xa vurimi naswona a swi pfuli switsundzuxo swa swibyariwa swa ndhawu yoleyo.",
   // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
   "Keep saved request details with your plan and exports.": "Hlayisa vuxokoxoko bya xikombelo lebyi hlayisiweke na pulani ya wena na leswi rhumeriwaka ehandle.",
   "Check saved request details": "Kambela vuxokoxoko bya xikombelo lebyi hlayisiweke",

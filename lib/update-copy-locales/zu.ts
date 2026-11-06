@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed Codex saved-country navigation captions; exact English stays paired. See country-navigation-release-drafts/adoption.json.
+  "Open evidence tools for your saved country.": "Vula amathuluzi obufakazi ezwe olilondolozile.",
+  "Review your saved country’s evidence": "Hlola ubufakazi bezwe olilondolozile",
+  "Crop planner → Site country and region → Review country evidence": "Umhleli wezitshalo → Izwe nesifunda sendawo → Hlola ubufakazi bezwe",
+  "Use the country you saved for this site to open its existing evidence dossier. Countries without a dossier show general reference tools. Opening the link does not save country details, approve an agricultural region or enable local crop advice.": "Sebenzisa izwe olilondolozele le ndawo ukuvula ifayela lalo lobufakazi elikhona. Amazwe angenalo ifayela lobufakazi abonisa amathuluzi ajwayelekile okubhekisela. Ukuvula isixhumanisi akuyilondolozi imininingwane yezwe, akugunyazi isifunda sezolimo futhi akuvuli izeluleko zokulima izitshalo kuleyo ndawo.",
   // Unreviewed source-paired household request captions; English stays visible. See household-intent-release-drafts/adoption.json.
   "Keep saved request details with your plan and exports.": "Gcina imininingwane yesicelo elondoloziwe nohlelo lwakho nokuthunyelwayo.",
   "Check saved request details": "Bheka imininingwane yesicelo elondoloziwe",

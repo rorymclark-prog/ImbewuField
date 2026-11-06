@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { createSiteCountryContext, type SiteContextResolution } from '@/lib/international/site-context';
+import { savedCountryEvidenceHref } from '@/lib/international/countries/navigation';
 import { updateSiteCountryContext } from '@/lib/saved-places';
 import { DEFINITIVE_CONTEXT_REJECTIONS, type PlaceContextOutcome } from '@/lib/user-sync';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -66,12 +67,22 @@ export default function SiteCountryPanel({ resolution, onSaved, onDelivery }: {
     onSaved();
   }
 
+  const evidenceHref = savedCountryEvidenceHref(resolution);
+
   return <section aria-label="Site country and region" className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] p-4 font-sans text-[var(--text-primary)]">
     <h2 className="font-display text-lg font-semibold">Site country and region</h2>
     <p className="mt-1 text-sm text-[var(--text-secondary)]">{current
       ? `Saved country: ${countries.find(([code]) => code === current.countryCode)?.[1] ?? current.countryCode}. This is the grower’s description, not local agronomy approval.`
       : resolution.status === 'conflict' ? 'Saved entries for this same mapped site disagree. Confirm one description for all of them.'
         : 'The country for this site has not been confirmed. Existing plans and measured maps stay saved.'}</p>
+    {evidenceHref && <p className="mt-2 text-sm">
+      <Link href={evidenceHref} className="inline-flex min-h-11 items-center font-medium underline">
+        Review country evidence
+      </Link>{' '}
+      <span className="text-[var(--text-secondary)]">
+        · Reference tools only; opening this link does not save country details or approve farming advice.
+      </span>
+    </p>}
     {resolution.status === 'missing-site' ? <p className="mt-3 text-sm">Open or save the mapped site first to keep its country details with your existing saved places. <Link href="/farmer" className="underline">Open map and saved sites</Link>. A virtual bed has no saved country.</p> : <details className="mt-3" open={!current}>
       <summary className="min-h-11 cursor-pointer py-2 font-semibold">{current ? 'Review or change country details' : 'Confirm country details'}</summary>
       <form onSubmit={save} className="grid gap-3 pt-2 sm:grid-cols-2">
