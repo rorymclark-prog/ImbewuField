@@ -4,8 +4,9 @@ import type { LocationData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 import { imageTooLarge, MAX_FREE_TEXT_CHARS, MAX_IMAGES_PER_REQUEST } from '@/lib/api-request-limits';
-
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
+import { resolveLocalAdvicePolicy, localAdviceDecisionCurrent } from '@/lib/local-advice-policy';
+import type { LocalAdviceDecision } from '@/lib/local-advice-types';
+import { selectLocalAdviceSystem } from '@/lib/local-advice-prompts';
 
 const LANGUAGES: Record<string, string> = {
   en: 'English', af: 'Afrikaans', zu: 'isiZulu', xh: 'isiXhosa',
@@ -16,23 +17,27 @@ const LANGUAGES: Record<string, string> = {
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/design');
   if (auth.response) return auth.response;
-  const metered = await meteredAi(req, auth, '/api/design', client);
-  if (metered.response) return metered.response;
-  const { ai } = metered;
-  let body: { images: Array<{ data: string; mediaType: string }>; locationData: LocationData; photoAnalysis?: string; language?: string; tone?: 'simple' | 'professional' };
+  let body: { adviceContext?: unknown; images: Array<{ data: string; mediaType: string }>; locationData: LocationData; photoAnalysis?: string; language?: string; tone?: 'simple' | 'professional' };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
+  if (!body || typeof body !== 'object' || Array.isArray(body)) return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
   const { images, locationData, photoAnalysis, language, tone } = body;
 
-  if (!images?.length) return NextResponse.json({ error: 'No sketch provided' }, { status: 400 });
+  if (!Array.isArray(images) || !images.length) return NextResponse.json({ error: 'No sketch provided' }, { status: 400 });
   if (images.length > MAX_IMAGES_PER_REQUEST) {
     return NextResponse.json({ error: 'Too many images — send up to 6.' }, { status: 413 });
   }
   if (images.some((img) => imageTooLarge(img))) {
     return NextResponse.json({ error: 'One of the images is too large.' }, { status: 413 });
+  }
+  if (images.some(img => !img || typeof img.data !== 'string' || !img.data || !['image/jpeg', 'image/png'].includes(img.mediaType))
+    || (photoAnalysis !== undefined && typeof photoAnalysis !== 'string')
+    || (language !== undefined && typeof language !== 'string')
+    || (tone !== undefined && tone !== 'simple' && tone !== 'professional')) {
+    return NextResponse.json({ error: 'Invalid sketch inputs' }, { status: 400 });
   }
   if (typeof photoAnalysis === 'string' && photoAnalysis.length > MAX_FREE_TEXT_CHARS) {
     return NextResponse.json({ error: 'Photo analysis text is too long.' }, { status: 413 });
@@ -40,9 +45,32 @@ export async function POST(req: NextRequest) {
 
   if (!locationData?.biome || !locationData.rainfall || !locationData.elevation
       || !locationData.soil || !locationData.climate
-      || typeof locationData.lat !== 'number' || typeof locationData.lon !== 'number') {
+      || !Number.isFinite(locationData.lat) || !Number.isFinite(locationData.lon)) {
     return NextResponse.json({ error: 'Invalid location data' }, { status: 400 });
   }
+
+  const policyInput = { adviceContext: body.adviceContext, location: locationData, hasSiteInputs: true };
+  let decision: LocalAdviceDecision;
+  try { decision = await resolveLocalAdvicePolicy(req, auth, policyInput); }
+  catch { return NextResponse.json({ code: 'LOCAL_ADVICE_COUNTRY_SOURCE_UNAVAILABLE',
+    error: 'Saved-site country details could not be checked. Try again after account updates reconnect.', allowanceMayBeSpent: false },
+    { status: 503, headers: { 'Cache-Control': 'no-store' } }); }
+  if (!decision.allowed) return NextResponse.json({ code: decision.code, error: decision.error, allowanceMayBeSpent: false },
+    { status: decision.status, headers: { 'Cache-Control': 'no-store' } });
+  if (decision.mode !== 'personal-site') return NextResponse.json({ code: 'LOCAL_ADVICE_PERSONAL_CONTEXT_NOT_ALLOWED',
+    error: 'This route requires a supported saved-site context. General app help is available in chat.', allowanceMayBeSpent: false },
+    { status: 422, headers: { 'Cache-Control': 'no-store' } });
+  let allowanceMayBeSpent = false;
+  const contextChanged = () => NextResponse.json({ code: 'LOCAL_ADVICE_CONTEXT_CHANGED',
+    error: 'The saved-site country context changed or could not be checked. No advice was delivered. Check the intended site before asking again.', allowanceMayBeSpent },
+    { status: 409, headers: { 'Cache-Control': 'no-store' } });
+  const stillCurrent = async () => {
+    if (req.signal.aborted) return false;
+    try {
+      const fresh = await resolveLocalAdvicePolicy(req, auth, policyInput);
+      return !req.signal.aborted && localAdviceDecisionCurrent(decision, fresh);
+    } catch { return false; }
+  };
 
   const d = locationData;
   const langCode = language ?? 'en';
@@ -63,7 +91,7 @@ export async function POST(req: NextRequest) {
     })),
     {
       type: 'text' as const,
-      text: `You are an expert permaculture designer. The farmer has uploaded a hand-drawn (or rough) sketch of their property. Read the sketch carefully — note everything they have marked: the house/buildings, boundaries, slopes, water (rivers, dams, taps), existing trees, roads/paths, a north arrow if present, and anything else.
+      text: selectLocalAdviceSystem(decision.mode, `You are an expert permaculture designer. The farmer has uploaded a hand-drawn (or rough) sketch of their property. Read the sketch carefully — note everything they have marked: the house/buildings, boundaries, slopes, water (rivers, dams, taps), existing trees, roads/paths, a north arrow if present, and anything else.
 
 Produce a practical permaculture DESIGN laid out on THEIR sketch — refer to the actual features they drew ("near the house you marked top-left...", "along the slope running down to the stream..."). Make it buildable for a small-scale farmer.
 
@@ -99,37 +127,33 @@ Key plantings per area — name real species suited to ${d.biome.name}, windbrea
 ## 👣 First 3 Steps
 The first three things to mark out and start on the ground.${langLine}${toneLine}
 
-Be specific to their sketch and this site. This is a real plan they will use.`,
+Be specific to their sketch and this site. This is a real plan they will use.`),
     },
   ];
 
-  const stream = await ai.messages.stream({
-    model: AI_MODELS.main,
-    max_tokens: 3000,
-    messages: [{ role: 'user', content }],
-  });
-
-  const readable = new ReadableStream({
-    async start(controller) {
-      try {
-        for await (const chunk of stream) {
-          if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
-            controller.enqueue(new TextEncoder().encode(chunk.delta.text));
-          }
-        }
-      } catch (err) {
-        const msg = err instanceof Error ? err.message : String(err);
-        const friendly = /could not process image/i.test(msg)
-          ? '\n\n⚠ Could not read this image. Try a clearer photo of the sketch (good light, whole page in frame).'
-          : `\n\n⚠ Design error: ${msg}`;
-        controller.enqueue(new TextEncoder().encode(friendly));
-      } finally {
-        controller.close();
-      }
-    },
-  });
-
-  return new Response(readable, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache' },
-  });
+  if (!await stillCurrent()) return contextChanged();
+  try {
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
+    const metered = await meteredAi(req, auth, '/api/design', client);
+    allowanceMayBeSpent = true;
+    if (metered.response) return metered.response;
+    if (!await stillCurrent()) return contextChanged();
+    const stream = await metered.ai.messages.stream({ model: AI_MODELS.main, max_tokens: 3000,
+      messages: [{ role: 'user', content }] }, { signal: req.signal });
+    const chunks: string[] = [];
+    for await (const chunk of stream) {
+      if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') chunks.push(chunk.delta.text);
+    }
+    // The metered iterator has settled actual completed work; stale buffered
+    // advice is still withheld rather than leaking a previously sent prefix.
+    if (!await stillCurrent() || req.signal.aborted) return contextChanged();
+    return new Response(chunks.join(''), { headers: { 'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-store', 'X-Imbewu-Advice-Mode': decision.mode } });
+  } catch {
+    console.error('[api/design] local advice request failed');
+    if (!await stillCurrent()) return contextChanged();
+    return NextResponse.json({ code: 'LOCAL_ADVICE_MODEL_UNAVAILABLE',
+      error: 'The sketch advice could not be completed. No advice was delivered. Try a clear image of the whole sketch again explicitly.', allowanceMayBeSpent },
+      { status: 502, headers: { 'Cache-Control': 'no-store' } });
+  }
 }

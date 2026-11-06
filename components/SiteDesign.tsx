@@ -8,6 +8,8 @@ import { paidApiHeaders } from '@/lib/api-client-auth';
 import { networkFailureMessage } from '@/lib/network-failure';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { useLanguage } from '@/lib/i18n';
+import { useLocalAdviceContext } from '@/lib/use-local-advice-context';
+import { requestLocalAdvice, localAdviceHoldMessage, localAdviceUnavailableMessage, LOCAL_ADVICE_SITE_HOLD, LOCAL_ADVICE_BASIS } from '@/lib/local-advice-client';
 
 interface Props {
   locationData: LocationData | null;
@@ -68,22 +70,48 @@ function renderDesign(text: string) {
 
 export default function SiteDesign({ locationData, photoAnalysis, appLang, placeName }: Props) {
   const { t } = useLanguage();
-  const [preview, setPreview] = useState<string>('');
+  const [storedPreview, setPreview] = useState<string>('');
+  const [attachmentScope, setAttachmentScope] = useState<string | null>(null);
   const [imageData, setImageData] = useState<{ data: string; mediaType: string } | null>(null);
-  const [design, setDesign] = useState('');
+  const [storedDesign, setDesign] = useState('');
+  const [resultKey, setResultKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [language, setLanguage] = useState(appLang ?? 'en');
   const [tone, setTone] = useState<'simple' | 'professional'>('simple');
   const inputRef = useRef<HTMLInputElement>(null);
   const previewUrlRef = useRef<string>('');
+  const abortRef = useRef<AbortController | null>(null);
+  const version = useRef(0);
+  const context = useLocalAdviceContext(locationData, { imageData, photoAnalysis, language, tone });
+  const contextKey = context.snapshot?.key ?? null;
+  const currentAttachmentScope = JSON.stringify([context.actorKey, locationData?.lat, locationData?.lon, context.snapshot?.adviceContext]);
+  const preview = attachmentScope === currentAttachmentScope ? storedPreview : '';
+  const currentImage = attachmentScope === currentAttachmentScope ? imageData : null;
+  const design = resultKey === contextKey ? storedDesign : '';
+  const contextRef = useRef(context); contextRef.current = context;
+  const uploadActor = useRef(context.actorKey); uploadActor.current = context.actorKey;
+  const liveAttachmentScope = useRef(currentAttachmentScope); liveAttachmentScope.current = currentAttachmentScope;
+  useEffect(() => {
+    ++version.current; abortRef.current?.abort();
+    setDesign(''); setError(''); setLoading(false);
+    return () => { ++version.current; abortRef.current?.abort(); };
+  }, [contextKey]);
+  useEffect(() => {
+    setImageData(null); setPreview('');
+    if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
+    previewUrlRef.current = '';
+  }, [context.actorKey, locationData?.lat, locationData?.lon]);
 
   const processFile = useCallback(async (file?: File) => {
     if (!file || !file.type.startsWith('image/')) return;
+    const actor = uploadActor.current, site = contextRef.current.snapshot?.key ?? null, scope = liveAttachmentScope.current;
     try {
       const resized = await resizeImage(file);
-      setImageData(resized);
+      if (uploadActor.current !== actor || contextRef.current.snapshot?.key !== site) return;
+      setAttachmentScope(scope); setImageData(resized);
     } catch (err: unknown) {
+      if (uploadActor.current !== actor || contextRef.current.snapshot?.key !== site) return;
       setError(userFacingMessage(err, 'Could not process image', t));
       return;
     }
@@ -99,33 +127,28 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
   }, []);
 
   async function generate() {
-    if (!locationData || !imageData) return;
-    setLoading(true); setError(''); setDesign('');
-    try {
-      const res = await fetch('/api/design', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
-        body: JSON.stringify({ images: [imageData], locationData, photoAnalysis, language, tone }),
-      });
-      if (!res.ok) { setError(networkFailureMessage(t, { status: res.status })); return; }
-      const reader = res.body!.getReader();
-      const dec = new TextDecoder();
-      let text = '';
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        text += dec.decode(value, { stream: true });
-        setDesign(text);
-      }
-    } catch {
-      setError(networkFailureMessage(t));
-    } finally {
-      setLoading(false);
-    }
+    const snapshot = contextRef.current.snapshot;
+    if (!locationData || !currentImage || !snapshot) { setError(LOCAL_ADVICE_SITE_HOLD); return; }
+    const captured = ++version.current;
+    const current = () => captured === version.current && contextRef.current.isCurrent(snapshot);
+    abortRef.current?.abort(); const controller = new AbortController(); abortRef.current = controller;
+    setLoading(true); setError(''); setDesign(''); setResultKey(snapshot.key);
+    const result = await requestLocalAdvice({ snapshot, isCurrent: current, signal: controller.signal,
+      headers: paidApiHeaders, fetcher: init => fetch('/api/design', init),
+      body: { images: [{ data: currentImage.data, mediaType: currentImage.mediaType }], locationData, photoAnalysis, language, tone } });
+    if (!current()) return;
+    if (result.status === 'ready') setDesign(result.text);
+    else if (result.status === 'held') setError(localAdviceHoldMessage(result));
+    else if (result.status === 'unavailable') setError(localAdviceUnavailableMessage(result));
+    else if (result.status === 'error') setError(networkFailureMessage(t));
+    setLoading(false);
   }
 
   return (
     <div className="space-y-5">
+      <p lang="en" className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+        {context.snapshot ? LOCAL_ADVICE_BASIS : LOCAL_ADVICE_SITE_HOLD}
+      </p>
       {/* Design Studio — the single canonical true-scale canvas. Opens /design for THIS
           site (carrying lat/lon, plus the saved-place name where we have it, the same way
           the "Design this" links do). The old embedded rival canvas was removed so farmers
@@ -187,7 +210,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
       </div>
 
       {/* Language + tone */}
-      {imageData && (
+      {currentImage && (
         <div className="flex gap-2">
           <select value={language} onChange={(e) => setLanguage(e.target.value)}
             className="flex-1 text-xs font-display rounded-lg px-2 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] cursor-pointer"
@@ -203,8 +226,8 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
       )}
 
       {/* Generate */}
-      {imageData && (
-        <button onClick={generate} disabled={loading || !locationData}
+      {currentImage && (
+        <button onClick={generate} disabled={loading || !locationData || !context.snapshot}
           className="w-full py-2 rounded-xl text-xs font-display font-semibold transition-all"
           style={loading
             ? { background: '#E2D8CB', border: '1px solid var(--border)', color: 'var(--text-muted)' }
