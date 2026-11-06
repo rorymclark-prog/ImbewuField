@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired core map update drafts; exact English retained. See core-map-conflict-release-drafts/adoption.json.
+  "Review conflicting shape versions on your map.": "Ṱolani vesheni dza zwivhumbeo dzi no lwisana kha mepe waṋu.",
+  "Review map shape versions": "Ṱolani vesheni dza zwivhumbeo zwa mepe",
+  "Map → Shapes needing your decision": "Mepe → Zwivhumbeo zwi ṱoḓaho tsheo yaṋu",
+  "Open the list of shapes needing a decision. Review each preserved version before choosing which to keep, or keep both when offered. Download a backup when the map offers one; older app versions still need care.": "Vulani mutevhe wa zwivhumbeo zwi ṱoḓaho tsheo. Ṱolani vesheni iṅwe na iṅwe yo vhulungwaho musi ni sa athu nanga ine na tea u i vhulunga, kana u vhulunga dzoṱhe mbili musi dzo ṋetshedzwa. Kopololani bekhaphu musi mepe u tshi i ṋetshedza; vesheni dza kale dza aputhulekhesheni dzi kha ḓi ṱoḓa vhulondolozi.",
   // Unreviewed AGY caption; coordinator core-only adoption is recorded in docs/international/agy-nursery-demo-navigation-release-code-2026-11-05/adoption.json.
   "Keep your DEMO crop plan when opening the Task Planner.": "Vhulungani pulane yavho ya zwimela ya DEMO musi ni tshi vula Task Planner.",
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.

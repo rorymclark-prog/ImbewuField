@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 November 2026', sha: '9dbb7b3be6fc', changes: [
+    'Review conflicting shape versions on your map.',
+  ], tour: [{ title: 'Review map shape versions', where: 'Map → Shapes needing your decision', href: '/farmer',
+    detail: 'Open the list of shapes needing a decision. Review each preserved version before choosing which to keep, or keep both when offered. Download a backup when the map offers one; older app versions still need care.' }] },
   { when: '6 November 2026', sha: '9da2177c6e55', changes: [
     'Your crop-plan handoff waits for this tab’s earlier editing access to finish.',
   ], tour: [{ title: 'Check your crop plan after signing in', where: 'Sign in → Crop planner', href: '/facilitator/crops',

@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed source-paired core map update drafts; exact English retained. See core-map-conflict-release-drafts/adoption.json.
+  "Review conflicting shape versions on your map.": "Buyekeza izinguqulo zomumo eziphikisanayo kumephu yakho.",
+  "Review map shape versions": "Buyekeza izinguqulo zomumo wemephu",
+  "Map → Shapes needing your decision": "Imephu → Imimo edinga isinqumo sakho",
+  "Open the list of shapes needing a decision. Review each preserved version before choosing which to keep, or keep both when offered. Download a backup when the map offers one; older app versions still need care.": "Vula uhlu lwemimo edinga isinqumo. Buyekeza inguqulo ngayinye elondoloziwe ngaphambi kokukhetha okufanele ukugcine, noma ugcine kokubili lapho kunikezwa. Landa ikhophi yesipele lapho imephu ikunikeza yona; izinguqulo ezindala zohlelo lokusebenza zisadinga ukunakekelwa.",
   // Unreviewed AGY caption; coordinator core-only adoption is recorded in docs/international/agy-nursery-demo-navigation-release-code-2026-11-05/adoption.json.
   "Keep your DEMO crop plan when opening the Task Planner.": "Gcina uhlelo lwakho lwezitshalo lwe-DEMO lapho uvula i-Task Planner.",
   // Coordinator-adopted unreviewed help-placement description; exact packet: docs/international/agy-nursery-inline-help-release-copy-2026-11-05/. English remains paired.
