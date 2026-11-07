@@ -36,6 +36,7 @@ export function obliqueTerrainEvidence(contours: SheetContourResult, site: Secto
 }
 
 const OBLIQUE_LOOK: Record<StylePreset, string> = {
+  editorial_atlas: 'Clean architectural landscape illustration with fine ink detail, restrained sage and teal colours and light neutral materials.',
   precision_atlas: 'Polished naturalistic landscape illustration, crisp detailed foliage and roofs, restrained realistic colours.',
   photo_plan: 'Naturalistic photographic garden visualisation, realistic foliage, roofs and ground materials.',
   satellite_overlay: 'Naturalistic aerial garden visualisation with crisp realistic detail.',
