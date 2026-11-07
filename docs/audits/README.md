@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest release-copy verification — [Exact-source availability and non-vacuous language controls — 7 November 2026](2026-11-07/calendar-copy-coverage.md). Focused source/React checks are separate from pending current-head full and calendar device/import gates.
+
 Latest field seed follow-up — [Per-cycle CSV integration — 6 November 2026](2026-11-06/field-seed-cycle-integration-codex.md). Typecheck and 615 affected checks pass; new current-head CI and actual multi-cycle delivery remain pending.
 
 Latest international release candidate — [Current-main, print and account-gate reconciliation — 5 November 2026](2026-11-05/international-nursery-final-reconcile-codex.md). Source integration is prepared; new full/visual/account gates remain pending.
