@@ -289,5 +289,8 @@ const copy:UpdateCopy={
   "Check nursery space": "Kontroleer kwekerygrootte",
   "Crop planner → Nursery planner": "Gewasbeplanner → Kwekerybeplanner",
   "Add your tray sizes, usable nursery surface and crop estimates. Review overlapping demand and missing information before adding automatic sowings.": "Voeg jou trooigroottes, bruikbare kwekeryoppervlak en gewasskattings by. Hersien oorvleuelende aanvraag en ontbrekende inligting voordat jy outomatiese saaiings byvoeg.",
+  "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.": "Kies Editorial Atlas vir 'n ligter AI-styl en 'n ronde Sector-diagram.",
+  "Maps have finer boundaries with round posts and clearer Earthworks labels.": "Kaarte het fyner grense met ronde pale en duideliker Earthworks-etikette.",
+  "Terrain maps show elevation, slope percentage and degrees from local terrain data.": "Terreinkaarte wys hoogte, hellingspersentasie en grade uit plaaslike terreindata.",
 };
 export default copy;
