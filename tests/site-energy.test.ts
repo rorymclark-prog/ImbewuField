@@ -138,6 +138,23 @@ test('energy release draft pairs retain exact source, provisional status and exi
   const composition = JSON.parse(read(dir + 'INTEGRATION-PROVENANCE.json'));
   const captions = JSON.parse(read(composition.independentCaptionAdoption.path));
   const captionSource = JSON.parse(read('docs/international/current-release-caption-repair-2026-11-06/source.json'));
+  const mapCaptionText = read('docs/audits/2026-11-07/editorial-caption-release-drafts.json');
+  const mapReleaseText = read('docs/audits/2026-11-07/editorial-release-drafts.json');
+  assert.equal(hash(mapCaptionText), 'd4c16e0243a28f689bf2a98d526c2d1a8f54e09a650b664b999d7dcc0b0a6478');
+  assert.equal(hash(mapReleaseText), 'fde3b2239ce1abd01818853e0ecbfcffbe2cd4f316a51d517c5717aa88123464');
+  const mapCaption = JSON.parse(mapCaptionText), mapRelease = JSON.parse(mapReleaseText);
+  assert.equal(mapCaption.status, 'unreviewed-machine-draft');
+  assert.equal(mapRelease.status, 'unreviewed-machine-draft');
+  assert.equal(mapRelease.entries.length, 3);
+  // A later merge added four map pairs ahead of the energy/caption composition.
+  // Bind their primary matrices and complete postimages independently; altered
+  // callers must still reach the original historical-byte failure below.
+  const mapPostimages: Record<string, string> = {
+    zu: '1a384c81cdd5e6352715183a944e14dffd71d15c8ae469e8dd35385358ace17a',
+    st: 'e23757a69d199302b3c13a2f5d936788e6ba67525819b545a036dabc35de19c2',
+    ts: '1a3e80d8381b36251ece84b9dffa316cfbcccf3e83b30b00beba2e1209aa5f33',
+    ve: '0ac9b89309953362fdab4e6ac4e20b64d011abc03a0735c42d837d90da4f1430',
+  };
   assert.equal(hash(read(dir + 'adoption.json')), composition.historicalAdoptionSha256);
   assert.equal(hash(read(composition.independentCaptionAdoption.path)), composition.independentCaptionAdoption.sha256);
   const expectedLocales = ['st', 'ts', 've', 'zu'];
@@ -172,8 +189,19 @@ test('energy release draft pairs retain exact source, provisional status and exi
     assert.equal(composition.locales[language].historicalResultSha256, adoption.locales[language].resultSha256);
     assert.equal(composition.locales[language].integrationBaseSha256, priorCaption.afterSha256);
     assert.equal(hash(inserted), composition.locales[language].energyInsertionSha256);
+    const mapRows: { english: string; translation: string }[] = [
+      { english: mapCaption.sourceEnglish, translation: mapCaption.translations[language] },
+      ...mapRelease.entries.map((row: Record<string, string>) => ({ english: row.english, translation: row[language] })),
+    ];
+    assert.equal(mapRows.length, 4);
+    assert.equal(new Set(mapRows.map(row => row.english)).size, 4);
+    assert.ok(mapRows.every(row => typeof row.english === 'string' && typeof row.translation === 'string' && row.translation !== row.english));
+    const mapInserted = '\n  // Exact unreviewed upstream map pairs; see the two Editorial draft packets dated 7 November 2026.\n'
+      + mapRows.map(row => `  ${JSON.stringify(row.english)}: ${JSON.stringify(row.translation)},\n`).join('');
     const assertPreserved = (candidate: string) => {
       assert.equal(candidate.split(inserted).length, 2, 'the reviewed block is added once');
+      assert.equal(candidate.split(mapInserted).length, 2, 'the complete upstream map block is added once');
+      if (hash(candidate) === mapPostimages[language]) candidate = candidate.replace(mapInserted, '');
       assert.equal(hash(candidate.replace(inserted, '')), priorCaption.afterSha256,
         'every existing international dictionary byte remains beneath the additive energy block');
     };
@@ -185,6 +213,18 @@ test('energy release draft pairs retain exact source, provisional status and exi
     assert.throws(() => assertPreserved(dictionary.replace(unrelatedLine, unrelatedLine.replace(JSON.stringify(copy[unrelatedSource]), '"Changed translation"'))),
       /every existing international dictionary byte remains/);
     assert.throws(() => assertPreserved(dictionary + inserted), /the reviewed block is added once/);
+    const sameSizeLine = unrelatedLine.replace(JSON.stringify(copy[unrelatedSource]),
+      JSON.stringify(copy[unrelatedSource].replace(/[A-Za-z]/, letter => letter === 'X' ? 'Y' : 'X')));
+    assert.notEqual(sameSizeLine, unrelatedLine, 'the same-size fixture changes a real unrelated caption');
+    assert.equal(Buffer.byteLength(sameSizeLine), Buffer.byteLength(unrelatedLine));
+    assert.throws(() => assertPreserved(dictionary.replace(unrelatedLine, sameSizeLine)),
+      /every existing international dictionary byte remains/);
+    assert.throws(() => assertPreserved(dictionary.replace(mapInserted, '')), /the complete upstream map block is added once/);
+    const alteredMap = mapInserted.replace(JSON.stringify(mapRows[0].translation),
+      JSON.stringify(mapRows[0].translation.replace(/[A-Za-z]/, letter => letter === 'X' ? 'Y' : 'X')));
+    assert.notEqual(alteredMap, mapInserted, 'the altered-map fixture changes a declared map translation');
+    assert.throws(() => assertPreserved(dictionary.replace(mapInserted, alteredMap)), /the complete upstream map block is added once/);
+    assert.throws(() => assertPreserved(dictionary + mapInserted), /the complete upstream map block is added once/);
   }
 });
 

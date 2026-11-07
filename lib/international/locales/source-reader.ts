@@ -254,3 +254,58 @@ export function readCurrentSourceLiterals(sourceText: string, selectors: Readonl
   }
   return result;
 }
+
+export interface BoundSourceNode {
+  readonly selector: string;
+  readonly nodeKind: 'JsxText' | 'StringLiteral' | 'NoSubstitutionTemplateLiteral';
+  readonly startUtf16: number;
+  readonly endUtf16: number;
+  readonly startByte: number;
+  readonly endByte: number;
+  readonly line: number;
+  readonly column: number;
+  readonly rawSource: string;
+  readonly english: string;
+}
+
+/** A complete captured node, not a substring or a similarly worded comment.
+ * Callers still own the whole-file identity and the immutable packet binding.
+ * JSX text is intentionally raw: fragment edge whitespace is evidence here. */
+export function readCurrentBoundSourceNodes(sourceText: string, bindings: Readonly<Record<string, BoundSourceNode>>): SourceDictionary {
+  const source = ts.createSourceFile('bound-source.tsx', sourceText, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const entries = Object.entries(bindings);
+  const result: Record<string, string | undefined> = Object.fromEntries(entries.map(([key]) => [key, undefined]));
+  if (hasParseErrors(source) || entries.some(([, binding]) => !binding || typeof binding.selector !== 'string'
+    || typeof binding.rawSource !== 'string' || typeof binding.english !== 'string'
+    || !['JsxText', 'StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(binding.nodeKind))
+    || new Set(entries.map(([, binding]) => binding.selector)).size !== entries.length) return result;
+  for (const [key, binding] of entries) {
+    if (![binding.startUtf16, binding.endUtf16, binding.startByte, binding.endByte, binding.line, binding.column].every(Number.isSafeInteger)
+      || binding.startUtf16 < 0 || binding.endUtf16 <= binding.startUtf16 || binding.endUtf16 > sourceText.length
+      || binding.startByte < 0 || binding.endByte <= binding.startByte || binding.line < 1 || binding.column < 1) continue;
+    const parts = binding.selector.split('/');
+    if (parts.shift() !== 'SourceFile' || !parts.length) continue;
+    let node: ts.Node | undefined = source;
+    for (const part of parts) {
+      const match = /^forEachChild\[(\d+)\]:([A-Za-z]+)$/.exec(part);
+      if (!match || !node) { node = undefined; break; }
+      const children: ts.Node[] = [];
+      ts.forEachChild(node, child => { children.push(child); });
+      node = children[Number(match[1])];
+      if (node && ts.SyntaxKind[node.kind] !== match[2]) node = undefined;
+    }
+    if (!node || ts.SyntaxKind[node.kind] !== binding.nodeKind) continue;
+    // getStart/getText trim JSX leading spaces. node.pos owns the raw fragment,
+    // including the space after a strong title and the row023 newline/indent.
+    const start = ts.isJsxText(node) ? node.pos : node.getStart(source);
+    const raw = sourceText.slice(start, node.end);
+    if (start !== binding.startUtf16 || node.end !== binding.endUtf16 || raw !== binding.rawSource
+      || Buffer.byteLength(sourceText.slice(0, start), 'utf8') !== binding.startByte
+      || Buffer.byteLength(sourceText.slice(0, node.end), 'utf8') !== binding.endByte) continue;
+    const position = source.getLineAndCharacterOfPosition(binding.startUtf16);
+    if (position.line + 1 !== binding.line || position.character + 1 !== binding.column) continue;
+    const decoded = ts.isJsxText(node) ? raw : literalText(node);
+    if (decoded === binding.english) result[key] = decoded;
+  }
+  return result;
+}

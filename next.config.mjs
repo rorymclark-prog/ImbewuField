@@ -23,6 +23,23 @@ const nextConfig = {
         './lib/international/grower-cycle-intent.ts',
         './lib/release-notes.ts',
       ],
+      // This worksheet also reads looped paths: retain the exact inactive
+      // packets and live component so deployment cannot lose its evidence.
+      '/international/locales/learning-region': [
+        './lib/international/locales/learning-region-drafts/source.json',
+        './lib/international/locales/learning-region-drafts/fr.json',
+        './lib/international/locales/learning-region-drafts/es.json',
+        './lib/international/locales/learning-region-drafts/pt-BR.json',
+        './lib/international/locales/learning-region-drafts/sw.json',
+        './lib/international/locales/learning-region-drafts/hi.json',
+        './lib/international/locales/learning-region-drafts/bn.json',
+        './lib/international/locales/learning-region-drafts/id.json',
+        './lib/international/locales/learning-region-drafts/de.json',
+        './lib/international/locales/learning-region-drafts/it.json',
+        './lib/international/locales/learning-region-drafts/nl.json',
+        './lib/international/locales/learning-region-drafts/pl.json',
+        './components/studies/LearningRegionNotice.tsx',
+      ],
     },
     outputFileTracingExcludes: {
       '/manual/**/*': ['./public/**/*'],

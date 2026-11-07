@@ -19,7 +19,8 @@ export interface SourceMessage {
     | 'components/crops/GrowerEnteredMassField.ts'
     | 'components/crops/GrowerCycleIntent.ts'
     | 'lib/international/grower-cycle-intent.ts'
-    | 'lib/release-notes.ts';
+    | 'lib/release-notes.ts'
+    | 'components/studies/LearningRegionNotice.tsx';
   english: string;
   pluralArgument?: string;
 }

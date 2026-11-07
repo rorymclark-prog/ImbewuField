@@ -105,6 +105,7 @@ async function isolatedGuard() {
     'tests/wave-16-history-checks.ts','tests/fixtures/student-page-before-wave-16.tsx.txt',
     // The wave 17 layer sits on the wave 16 one the same way.
     'tests/wave-17-history-checks.ts','tests/fixtures/student-page-before-wave-17.tsx.txt',
+    'tests/learning-context-history-checks.ts','components/studies/LearningRegionNotice.tsx',
     // w25-03: the service-worker layer is projected first by slides-webp-history-checks.ts.
     'tests/wave-25-offline-history-checks.ts','tests/fixtures/sw-route-before-w25-offline.ts.txt']);
   for (const file of files) { if (retiredJpegs.has(file)) continue;const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }
