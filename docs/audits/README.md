@@ -16,6 +16,8 @@ Latest illustrated-map review — [All-map treatment and surrounding-context gui
 
 Latest Zones wording review — [Boundary authority and care-intensity evidence — 5 November 2026](2026-11-05/zones-authority-key-codex.md). Findings only; fresh exact inspected, current saved AI remains unverified.
 
+Latest site-survey energy slice — [Release contracts and integrated account QA — 6 November 2026](2026-11-06/site-energy-survey-release-codex.md). Actual local save/recovery and account isolation verified; full release gates, hosted OAuth and language/device limits remain explicit.
+
 Latest Sector styling — [Actual supplied-reference wind/rain motifs and retained terrain detail — 5 November 2026](2026-11-05/sector-reference-flow-codex.md). Native imagery inspected; release gates/identity follow on the PR and ledger.
 
 Latest Sector release follow-up — [Typography contracts and native update descriptions — 5 November 2026](2026-11-05/sector-release-contracts-codex.md). Broad-arrow artwork is retained; original-device free AI recovery remains unverified.

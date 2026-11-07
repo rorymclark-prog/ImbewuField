@@ -582,5 +582,14 @@ const copy:UpdateCopy={
   "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Bula leano la hao la dijalo kamora ho kena. Tebhe ena e lokolla phihlello ya yona e fetileng ya ho lokisa pele e hlahloba direkoto tsa akhaonto tse bolokilweng. Tebhe e nngwe e ntseng e lokisa e boloka tshireletso ya yona; direkoto tse seng teng kapa tse hananang di ntse di hloka tlhahlobo.",
   // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
   "Your crop-plan handoff waits for this tab’s earlier editing access to finish.": "Ho fetiswa ha leano la hao la dijalo ho emela phihlello ya pele ya ho lokisa ya tebhe ena ho fela.",
+  // Site survey energy: docs/audits/2026-11-06/site-energy-release-drafts/source.json; UNREVIEWED machine drafts, shown with English source.
+  "Record elevation benchmarks separately from the terrain model in your site survey.": "Rekota matshwao a bophahamo ka thoko ho mohlala wa sebaka patlisisong ya hao ya setsha.",
+  "Fetch a solar reference and record wind evidence with its height and source.": "Fumana tšupiso ya letsatsi mme o rekote bopaki ba moya le bophahamo ba wona le mohlodi.",
+  "Review site elevation": "Hlahloba bophahamo ba setsha",
+  "Your site → Site survey → Land & Location": "Setsha sa hao → Patlisiso ya setsha → Mobu le Sebaka",
+  "Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.": "Bula patlisiso ya hao ya setsha ho hlahloba tšupiso ya sebaka le ho eketsa letshwao la bophahamo le tswang mohloding o ka thoko.",
+  "Review energy evidence": "Hlahloba bopaki ba matla",
+  "Your site → Site survey → Resources & Inputs": "Setsha sa hao → Patlisiso ya setsha → Mehlodi le Tse Kenywang",
+  "Review the reference solar assumptions and record wind height, source and period before saving.": "Hlahloba mehopolo ya tšupiso ya letsatsi mme o rekote bophahamo ba moya, mohlodi le nako pele o boloka.",
 };
 export default copy;

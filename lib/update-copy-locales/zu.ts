@@ -582,5 +582,14 @@ const copy:UpdateCopy={
   "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Vula uhlelo lwakho lwezitshalo ngemuva kokungena. Le thebhu idedela ukufinyelela kwayo kokuhlela kwangaphambilini ngaphambi kokuhlola amarekhodi e-akhawunti alondoloziwe. Enye ithebhu esahlela igcina ukuvikelwa kwayo; amarekhodi angatholakali noma ashayisanayo asadinga ukubuyekezwa.",
   // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
   "Your crop-plan handoff waits for this tab’s earlier editing access to finish.": "Ukudluliswa kohlelo lwakho lwezitshalo kulinda ukufinyelela kokuhlela kwangaphambilini kwale thebhu ukuthi kuqede.",
+  // Site survey energy: docs/audits/2026-11-06/site-energy-release-drafts/source.json; UNREVIEWED machine drafts, shown with English source.
+  "Record elevation benchmarks separately from the terrain model in your site survey.": "Qopha izinkomba zokuphakama ngokwehlukana nemodeli yendawo ocwaningweni lwesiza sakho.",
+  "Fetch a solar reference and record wind evidence with its height and source.": "Landa inkomba yelanga bese uqopha ubufakazi bomoya nokuphakama kwawo nomthombo.",
+  "Review site elevation": "Buyekeza ukuphakama kwesiza",
+  "Your site → Site survey → Land & Location": "Isiza sakho → Ucwaningo lwesiza → Umhlaba Nendawo",
+  "Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.": "Vula ucwaningo lwesiza sakho ukuze uhlole inkomba yendawo bese wengeza inkomba yokuphakama ethathwe ngokwehlukile.",
+  "Review energy evidence": "Buyekeza ubufakazi bamandla",
+  "Your site → Site survey → Resources & Inputs": "Isiza sakho → Ucwaningo lwesiza → Izinsiza Nokufakwayo",
+  "Review the reference solar assumptions and record wind height, source and period before saving.": "Buyekeza imicabango ethathwayo yenkomba yelanga bese uqopha ukuphakama komoya, umthombo nesikhathi ngaphambi kokulondoloza.",
 };
 export default copy;

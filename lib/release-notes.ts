@@ -190,6 +190,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'Review connected assistants, selected sites and imported originals.' },
   { title: 'Check your saved map', where: 'Site design', href: '/design',
     detail: 'Review the same site before applying assistant edits or comparing a historical photograph.' }] },
+  { when: '5 November 2026', sha: '06315a74a', changes: [
+    'Record elevation benchmarks separately from the terrain model in your site survey.',
+    'Fetch a solar reference and record wind evidence with its height and source.',
+  ], tour: [{ title: 'Review site elevation', where: 'Your site → Site survey → Land & Location', href: '/farmer',
+    detail: 'Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.' },
+  { title: 'Review energy evidence', where: 'Your site → Site survey → Resources & Inputs', href: '/farmer',
+    detail: 'Review the reference solar assumptions and record wind height, source and period before saving.' }] },
   { when: '4 November 2026', sha: 'a412b28b7e', changes: [
     'Review saved invoice amounts by currency',
   ], tour: [{ title: 'Review saved invoice amounts by currency', where: 'Invoice → Saved → Summary currency', href: '/invoice',

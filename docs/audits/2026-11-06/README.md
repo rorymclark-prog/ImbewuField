@@ -16,3 +16,5 @@
 
 The [audit archive](../README.md) retains the earlier area records and release
 limitations. This index addition does not reclassify earlier evidence.
+
+- [Site survey elevation and energy: release contracts and integrated account QA — Codex](site-energy-survey-release-codex.md)

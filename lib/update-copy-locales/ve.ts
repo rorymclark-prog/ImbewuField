@@ -582,5 +582,14 @@ const copy:UpdateCopy={
   "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Vulani mbekanyamushumo yaṋu ya zwimela nga murahu ha u dzhena. Thabu hei i bvisa thendelo yayo ya u lulamisa yo fhiraho musi i sa athu tola rekhodo dza akhaunthu dzo vhulungwaho. Iṅwe thabu ine ya khou bvela phanda i tshi khou lulamisa i vhulunga tsireledzo yayo; rekhodo dzi siho kana dzi hananaho dzi kha ḓi ṱoḓa u ṱoliwa.",
   // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
   "Your crop-plan handoff waits for this tab’s earlier editing access to finish.": "U fhiriselwa ha mbekanyamushumo yaṋu ya zwimela hu lindela thendelo ya u lulamisa ya u thoma ya thabu hei u fhedza.",
+  // Site survey energy: docs/audits/2026-11-06/site-energy-release-drafts/source.json; UNREVIEWED machine drafts, shown with English source.
+  "Record elevation benchmarks separately from the terrain model in your site survey.": "Rikodani zwikombetshedzo zwa vhulapfu zwo fhambana na tsumbo ya mavu kha tsedzuluso ya fhethu hanu.",
+  "Fetch a solar reference and record wind evidence with its height and source.": "Dzhenisani tshiko tsha ḓuvha nahone rikodani vhutanzi ha muya na vhulapfu hawo na vhubvo.",
+  "Review site elevation": "Ṱolani vhulapfu ha fhethu",
+  "Your site → Site survey → Land & Location": "Fhethu hanu → Tsedzuluso ya fhethu → Mavu na Vhudzulo",
+  "Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.": "Vulani tsedzuluso ya fhethu hanu u tola tshiko tsha mavu nahone engedzani tshikombetshedzo tsha vhulapfu tshi no bva kha vhubvo ho fhambanaho.",
+  "Review energy evidence": "Ṱolani vhutanzi ha maanḓa",
+  "Your site → Site survey → Resources & Inputs": "Fhethu hanu → Tsedzuluso ya fhethu → Zwishumiswa na Zwidzheniswa",
+  "Review the reference solar assumptions and record wind height, source and period before saving.": "Ṱolani mihumbulo ya tshiko tsha ḓuvha nahone rikodani vhulapfu ha muya, vhubvo na tshifhinga musi ni sa athu vhulunga.",
 };
 export default copy;

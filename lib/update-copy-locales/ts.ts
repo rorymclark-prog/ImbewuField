@@ -582,5 +582,14 @@ const copy:UpdateCopy={
   "Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.": "Pfula pulani ya wena ya swimilani endzhaku ko nghena. Thebu leyi yi tshika mpfumelelo wa yona wo lulamisa lowu hundzeke yi nga si kambela tirhekhodo ta akhawunti leti hlayisiweke. Thebu yin’wana leyi nga karhi yi lulamisa yi hlayisa nsirhelelo wa yona; tirhekhodo leti nga kumekiki kumbe leti lwisanaka ta ha lava nkambisiso.",
   // Short phone summary: source-paired unreviewed AI draft, exact English remains underneath.
   "Your crop-plan handoff waits for this tab’s earlier editing access to finish.": "Ku hundzisiwa ka pulani ya wena ya swimilani ku yimela mpfumelelo wo sungula wo lulamisa wa thebu leyi ku hela.",
+  // Site survey energy: docs/audits/2026-11-06/site-energy-release-drafts/source.json; UNREVIEWED machine drafts, shown with English source.
+  "Record elevation benchmarks separately from the terrain model in your site survey.": "Tsala swikombiso swa ku tlakuka hi ku hambana na xifaniso xa mbango eka nkambisiso wa xitsha xa wena.",
+  "Fetch a solar reference and record wind evidence with its height and source.": "Kuma xikombo xa dyambu u tlhela u tsala vumbhoni bya moya na ku tlakuka ka wona na xihlovo.",
+  "Review site elevation": "Kambisisa ku tlakuka ka xitsha",
+  "Your site → Site survey → Land & Location": "Xitsha xa wena → Nkambisiso wa xitsha → Misava na Ndhawu",
+  "Open your site survey to check the terrain reference and add a separately sourced elevation benchmark.": "Pfula nkambisiso wa xitsha xa wena ku kambela xikombo xa mbango u tlhela u engetela xikombiso xa ku tlakuka lexi humaka eka xihlovo lexi hambaneke.",
+  "Review energy evidence": "Kambisisa vumbhoni bya matimba",
+  "Your site → Site survey → Resources & Inputs": "Xitsha xa wena → Nkambisiso wa xitsha → Switirhisiwa na Swongheriwana",
+  "Review the reference solar assumptions and record wind height, source and period before saving.": "Kambisisa miehleketo ya xikombo xa dyambu u tlhela u tsala ku tlakuka ka moya, xihlovo na nkarhi u nga si hlayisa.",
 };
 export default copy;
