@@ -492,7 +492,7 @@ const PLAN_SET_ANCHOR_PHOTO =
 // the model something concrete to hold constant across the 5 independent calls of one batch.
 export const STYLE_LINES: Record<StylePreset, string> = {
   precision_atlas:
-    'STYLE — Precision Atlas: premium flat orthographic landscape cartography with the lush hand-painted finish of a commissioned garden masterplan. Use layered transparent watercolor washes plus controlled gouache detail, fine dry-brush ground grain, disciplined ink edges and strong figure-ground clarity. Fixed palette: deep slate roofs, layered sage and olive land, cool blue-green accents, warm buff soil, charcoal linework and parchment cream. The result is richly illustrated and print-ready, never a dark satellite filter, never photorealistic, never oblique or isometric.' + PLAN_SET_ANCHOR,
+    'STYLE — Precision Atlas: premium flat orthographic landscape cartography with the lush hand-painted finish of a commissioned garden masterplan. Use layered transparent watercolor washes plus controlled gouache detail, fine dry-brush ground grain, disciplined ink edges and strong figure-ground clarity. Fixed palette: deep slate roofs, layered sage and olive land, cool blue-green accents, warm buff soil, charcoal linework and pure white page space. The result is richly illustrated and print-ready, never a dark satellite filter, never photorealistic, never oblique or isometric. Keep fine roof materials, vegetation textures and clear open surfaces, with no ornamental border or heavy outline. Let the app add its exact boundary, labels and white legend afterwards.' + PLAN_SET_ANCHOR,
   // PHOTO PLAN — the reference-sheet formula, and the reason it exists.
   //
   // Rory spent a paid Master Atlas render on 2026-07-29 and it came back as an invented engraved
@@ -1345,6 +1345,7 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
   const body = [
     `TASK: turn this whole aerial photograph of a real South African smallholding${placeName ? ` (${placeName})` : ''} into one finished illustrated map, edge to edge, in the style below. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this artwork.`,
     edgeToEdge,
+    `APPROVED SECTOR APPEARANCE: rich, finely detailed aerial illustration with layered natural greens, distinct roof materials and readable open ground. Preserve THIS source site's land cover and every feature position; do not import another site's buildings, garden, reserve, fence, terrain or vegetation. The app adds bright gold summer suns, blue winter suns, flowing weather arrows, the fine saved boundary with small round post symbols, local contour labels and a pure white key AFTER painting. Draw none of these analytical graphics yourself, and apply no vignette or boundary-shaped dark patch: the app alone shades the surroundings of the saved proposed polygon.`,
     paintWhatIsThere,
     restyleOnly,
     noInvent,

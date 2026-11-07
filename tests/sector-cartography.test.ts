@@ -383,7 +383,8 @@ test('regional wedges keep one dashed provenance mark per energy, not two runawa
   assert.match(regionalEnergyPainter, /drawRegionalCenterline\(fireWedge, SECTOR_STYLES\.fire\.color\)/);
 
   const legendStart = source.indexOf('const summerCoolingWind = model.namedWind.find');
-  const legendEnd = source.indexOf('if (model.water) rows.push', legendStart);
+  // Stop before terrain rows: contours now have their own evidence gate, independent of slope.
+  const legendEnd = source.indexOf("if (sheetContours?.status === 'ok'", legendStart);
   assert.ok(legendStart >= 0 && legendEnd > legendStart);
   const legend = source.slice(legendStart, legendEnd);
   assert.equal((legend.match(/style: 'dashline'/g) ?? []).length, 4, 'three winds and fire remain dashed in the legend');
@@ -565,9 +566,9 @@ test('the shared exact-layer stack puts each boundary treatment below the sheetâ
 });
 
 
-test('Sector contrast retains registered artwork and only shades its known coverage', () => {
-  // Rory's new supplied reference explicitly requests a darker aerial. Preserve the source-copy
-  // contract and test the new coverage clip rather than pinning the previous no-veil style.
+test('Sector contrast shades only photographed land outside the full saved proposed boundary', () => {
+  // Rory approved a luminous property with a darker surround. Shading the entire photograph
+  // also dimmed the property; coverage and the saved proposed ring must both constrain the veil.
   const source=readFileSync(new URL('../components/design/DesignGlossy.tsx',import.meta.url),'utf8');
   const tree=ts.createSourceFile('sheet.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
   let paint:ts.FunctionDeclaration|undefined;
@@ -580,14 +581,17 @@ test('Sector contrast retains registered artwork and only shades its known cover
     drawImage(...args:unknown[]){draws.push({args,alpha:this.globalAlpha,filter:this.filter});},
     save(){},restore(){},beginPath(){},closePath(){},
     moveTo(x:number,y:number){events.push(['move',x,y]);},lineTo(x:number,y:number){events.push(['line',x,y]);},
-    clip(){events.push('clip');},fillRect(...args:number[]){events.push(['veil',...args]);},
+    clip(){events.push('clip');},rect(...args:number[]){events.push(['rect',...args]);},fill(rule:string){events.push(['veil',rule]);},
     getImageData(){throw new Error('the source artwork is immutable');},
     putImageData(){throw new Error('the source artwork is immutable');}};
   run(ctx,'art-with-white-and-transparent-coverage',4,1);
   assert.deepEqual(draws,[{args:['art-with-white-and-transparent-coverage',0,0,4,1],alpha:1,filter:'none'}]);
   assert.deepEqual(events,[],'missing coverage must never darken unknown white corners');
-  run(ctx,'art-with-white-and-transparent-coverage',4,1,[[.25,0],[.75,0],[.75,1],[.25,1]]);
-  assert.deepEqual(events,[['move',1,0],['line',3,0],['line',3,1],['line',1,1],'clip',['veil',0,0,4,1]],'the actual photo extent clips the veil before painting');
+  run(ctx,'art-with-white-and-transparent-coverage',4,1,[[.25,0],[.75,0],[.75,1],[.25,1]],[[.4,.2],[.6,.2],[.6,.8],[.4,.8]]);
+  assert.deepEqual(events,[['move',1,0],['line',3,0],['line',3,1],['line',1,1],'clip',['rect',0,0,4,1],['move',1.6,.2],['line',2.4,.2],['line',2.4,.8],['line',1.6,.8],['veil','evenodd']], 'photo coverage clips an even-odd surround with the entire saved polygon removed');
+  events.length=0;
+  run(ctx,'art',4,1,[[0,0],[1,0],[1,1],[0,1]]);
+  assert.ok(!events.some(e=>Array.isArray(e)&&e[0]==='veil'),'missing saved boundary must not darken the entire site');
 
   // Draft 1 shaded a small quadrilateral across the roofs: projecting the resized presentation
   // frame repeats the crop. The same original-frame authority as archive restoration must win.
@@ -604,7 +608,7 @@ test('Sector contrast retains registered artwork and only shades its known cover
   assert.deepEqual(project(baseline,...Object.values(scope)),[[0,0],[100,0],[100,60],[0,60]]);
   assert.equal(calls.length,4);
   for(const args of calls){assert.equal(args[0],state);assert.equal(args[1],frame);assert.equal(args[2],refLayers);assert.equal(args[4],baseline);}
-  calls.length=0;assert.equal(project(null,...Object.values(scope)),renderRefLayers.boundary);assert.equal(calls.length,0);
+  calls.length=0;assert.deepEqual(project(null,...Object.values(scope)),[[0,0],[1,0],[1,1],[0,1]]);assert.equal(calls.length,0);
 });
 
 

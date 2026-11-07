@@ -6,17 +6,20 @@ import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtwo
 import { PHASING_ARTWORK_PROMPT_MARKER, buildPhasingRestylePrompt } from '../lib/producer-prompt.ts';
 import { UBHEJANE_BEFORE_WORKS, historicalBaselineForSite, historicalBaselineFromPrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, historicalBaselinePrompt } from '../lib/historical-map-baseline.ts';
 import { createHash } from 'node:crypto';
-import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, rasterTerrainContours, fetchProfileTerrain, TERRAIN_CONTOUR_INK, TERRAIN_SUPPLEMENTAL_INK } from '../lib/sheet-terrain-profile.ts';
+import { sectorOverviewContours, sectorTerrainProfile, rasterTerrainProfile, rasterTerrainSections, rasterTerrainContours, terrainSectionSummary, fetchProfileTerrain, TERRAIN_CONTOUR_INK, TERRAIN_SUPPLEMENTAL_INK } from '../lib/sheet-terrain-profile.ts';
 import { terrainPixel, terrainRasterWindow, extractTerrainRaster, sampleTerrainRaster, type TerrainRaster } from '../lib/terrain-raster.ts';
 import { clampBaseNudge, clampBaseRotation, clampBaseScale, designBaseMode, makeMercatorUnprojector, pointInRing } from '../lib/design-canvas.ts';
 import { resolveBaseAlign } from '../lib/base-photo-align.ts';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
-import { itemInFilter, isContextElement, zonesInFilter, lineInFilter, exactSheetElementRegister, EXACT_CONTEXT_ALPHA } from '../lib/glossy-filters.ts';
+import { itemInFilter, isContextElement, zonesInFilter, lineInFilter, exactSheetElementRegister, exactSheetElementLegendGroups, exactSheetLineRegister, EXACT_CONTEXT_ALPHA } from '../lib/glossy-filters.ts';
+import { plotBox } from '../lib/producer-labels.ts';
 import { statusOf } from '../lib/design-canvas.ts';
 import { authoritativeHouseFootprints, sameFootprint } from '../lib/house-footprints.ts';
 import polygonClipping from 'polygon-clipping';
+import { boundarySegmentsWithBreaks } from '../lib/boundary-geometry.ts';
+import { polishedRenderPoints } from '../lib/render-geometry.ts';
 
 // Execute the actual production helpers. A source-pattern test cannot see a photo strip or
 // prove that a completed job's old mask is replaced. No private farm records or native dependency.
@@ -911,4 +914,90 @@ test('Terrain & Sections supplementary contours use the same posted grid and cli
     for(const point of line.points){assert.ok(point.every(n=>n>=.1-1e-8&&n<=.9+1e-8),'must stop at the actual boundary');assert.ok(Math.abs(sampleTerrainRaster(r,...unproject(point))!.elevationM-line.elevM)<1e-6,'half-pixel displacement must fail on a known gradient');}
   }
   assert.deepEqual(rasterTerrainContours({...r,elevations:r.elevations.map(()=>330)},b,frame),[]);
+});
+
+
+test('terrain captions show both gradient units from that section and never invent missing endpoint heights',()=>{
+  const profile={a:[0,0] as Point,b:[1,1] as Point,lengthM:100,points:[{distanceM:0,elevationM:110},{distanceM:50,elevationM:107},{distanceM:100,elevationM:100}]};
+  const before=JSON.stringify(profile),summary=terrainSectionSummary(profile)!;
+  assert.equal(summary.slopePct,10);assert.ok(Math.abs(summary.slopeDeg-5.7105931375)<1e-9);
+  assert.equal(summary.startElevationM,110);assert.equal(summary.endElevationM,100);assert.equal(summary.fallM,10);
+  assert.equal(JSON.stringify(profile),before);
+  assert.ok(terrainSectionSummary({...profile,points:[...profile.points.slice(0,-1),{distanceM:100+1e-12,elevationM:100}]}),'native interpolation round-off is not missing endpoint evidence');
+  const rising=terrainSectionSummary({...profile,points:profile.points.map(p=>({...p,elevationM:210-p.elevationM}))})!;
+  assert.equal(rising.fallM,-10);assert.equal(rising.slopePct,10,'cross-sections may rise without a negative steepness');
+  const flat=terrainSectionSummary({...profile,points:profile.points.map(p=>({...p,elevationM:110}))})!;
+  assert.equal(flat.slopePct,0);assert.equal(flat.slopeDeg,0);
+  for(const bad of [{...profile,lengthM:0},{...profile,points:[]},{...profile,points:profile.points.slice(1)},{...profile,points:profile.points.slice(0,-1)},{...profile,points:[...profile.points].reverse()},{...profile,points:profile.points.map(p=>({...p,elevationM:NaN}))}])assert.equal(terrainSectionSummary(bad),null);
+});
+
+test('fine map boundaries retain the saved ring and draw circular post symbols instead of thick dashed borders',()=>{
+  const paint=helper('drawBlueprintBoundary',{boundarySegmentsWithBreaks,polishedRenderPoints});
+  const ring:Point[]=[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],before=JSON.stringify(ring);
+  for(const width of [800,1800,3600]){
+    const probe=artProbe();paint(probe.ctx,ring,(n:number)=>n*width,(n:number)=>n*width,width);
+    const posts=probe.calls.filter(c=>c[0]==='arc');assert.ok(posts.length>12);
+    assert.ok(posts.every(c=>c[3]<=Math.max(1.8,width*.002)),'posts remain small circles');
+    const weights=probe.calls.filter(c=>c[0]==='set'&&c[1]==='lineWidth').map(c=>c[2]);
+    assert.ok(Math.max(...weights)<2*Math.min(...posts.map(c=>c[3])),'the wire must remain finer than the circular post symbols');
+    assert.ok(probe.calls.some(c=>c[0]==='setLineDash'&&c.length===2&&c[1].length===0));
+    for(const c of posts)assert.ok(Math.abs(c[1]-width*.1)<.01||Math.abs(c[1]-width*.9)<.01||Math.abs(c[2]-width*.1)<.01||Math.abs(c[2]-width*.9)<.01,'post symbols stay on the saved line');
+  }
+  assert.equal(JSON.stringify(ring),before);
+});
+
+test('terrain queries and section captions use each location instead of the Ubhejane sample values',async()=>{
+  // Deliberately synthetic test rasters: independent locations exercise projection and unknowns,
+  // without passing these fixture heights off as a real site's survey or a provider observation.
+  const cases=[[-27.72619,31.96317,330],[-33.9249,18.4241,80],[-25.7479,28.2293,1350],[51.5074,-.1278,30]];
+  const queries:string[]=[],summaries:number[]=[];
+  for(const [lat,lon,height] of cases){
+    const frame:any={centerLng:lon,centerLat:lat,zoom:18,imgW:320,imgH:320,mPerPx:156543.033928*Math.cos(lat*Math.PI/180)/2**18};
+    const b:Point[]=[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],unproject=makeMercatorUnprojector(lon,lat,18,320,320),geo=b.map(unproject);
+    const win=terrainRasterWindow(Math.min(...geo.map(p=>p[0])),Math.min(...geo.map(p=>p[1])),Math.max(...geo.map(p=>p[0])),Math.max(...geo.map(p=>p[1])))!;
+    const raster:TerrainRaster={source:'mapbox.terrain-rgb',zoom:14,tileSize:256,...win,elevations:Array.from({length:win.width*win.height},(_,i)=>height-Math.floor(i/win.width)*.8+(i%win.width)*.3),verticalDatum:'mixed-unverified'};
+    const loaded=await fetchProfileTerrain(frame,b,async url=>{queries.push(url);return{ok:true,json:async()=>raster};});assert.ok(loaded);
+    const sections=rasterTerrainSections(loaded,b,[],frame);assert.ok(sections);
+    const summary=terrainSectionSummary(sections.downhill);assert.ok(summary);summaries.push(summary.startElevationM);
+    assert.ok(Math.abs(summary.startElevationM-height)<30,'heights must follow this raster, never the reference image');
+    const contours=rasterTerrainContours(loaded,b,frame);
+    for(const c of contours)for(const point of c.points)assert.ok(Math.abs(sampleTerrainRaster(loaded,...unproject(point))!.elevationM-c.elevM)<1e-6);
+    assert.equal(await fetchProfileTerrain(frame,b,async()=>({ok:false,json:async()=>null})),null,'unavailable evidence stays unavailable at every location');
+  }
+  assert.equal(new Set(queries).size,cases.length);assert.equal(new Set(summaries.map(v=>v.toFixed(1))).size,cases.length);
+});
+
+test('Earthworks callouts identify saved beds and each swale even when plant-code mode suppresses plant names',()=>{
+  const labels=helper('earthworksReferenceLabels',{ELEMENTS_BY_ID,exactSheetElementLegendGroups,exactSheetLineRegister,statusOf,plotBox});
+  const state:any={items:[{id:'bed-a',defId:'veg_bed',x:.2,y:.3},{id:'bed-b',defId:'veg_bed',x:.2,y:.5},{id:'banana',defId:'banana_circle',x:.4,y:.6},{id:'tree',defId:'tree_mango',x:.8,y:.7}],zones:[],lines:[{id:'swale-a',kind:'swale',points:[[.2,.2],[.8,.3]]},{id:'swale-b',kind:'swale',points:[[.2,.7],[.8,.8]]},{id:'pipe',kind:'pipe',points:[[.1,.1],[.9,.9]]}]};
+  const refs={boundary:[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],house:[],driveway:[]},before=JSON.stringify({state,refs});
+  const out=labels(state,refs,1000,1000);
+  assert.ok(out.some((l:any)=>/VEGETABLE BED.*×2/.test(l.text)));
+  assert.ok(out.some((l:any)=>/BANANA CIRCLE/.test(l.text)));
+  for(const [id,x,y] of [['swale-a',800,300],['swale-b',800,800]]){
+    const label=out.find((l:any)=>l.id===id);assert.ok(label);assert.equal(label.cx,x);assert.equal(label.cy,y);
+  }
+  assert.ok(!out.some((l:any)=>l.id==='pipe'||l.id==='tree'),'context systems never acquire excavation callouts');
+  assert.equal(JSON.stringify({state,refs}),before);
+});
+
+test('terrain plan keeps sourced contour heights when no consistent downhill section can be supported',async()=>{
+  const probe=artProbe(),refs={boundary:[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],house:[],driveway:[]},state={siteId:'test-terrain',items:[],lines:[],zones:[]},frame={imgW:600,imgH:600,mPerPx:.5,centerLat:-33.9};
+  const captions:string[]=[];
+  const paint=helper('buildSectorTerrainProfileSheet',{fetchProfileTerrain:async()=>({source:'test fixture'}),paidApiHeaders:async()=>({}),historicalBaselineForSite:()=>null,authoritativeHouseFootprints:()=>[],rasterTerrainSections:()=>null,
+    boundaryPresentationContext:async()=>({state,frame,refLayers:refs}),rasterTerrainContours:()=>[{elevM:15,major:true,points:[[.2,.2],[.8,.7]]}],calculateBoundaryPresentationLayout:()=>null,presentationExtentRing:()=>refs.boundary,SCALE:1,
+    document:{createElement:()=>probe.canvas},SHEET_BODY_FONT:'Arial',TERRAIN_CONTOUR_INK,TERRAIN_SUPPLEMENTAL_INK,terrainGridSpacingM:()=>8.5,drawBlueprintBoundary:()=>{},drawBlueprintScaleBar:()=>{},drawOverviewContourCaption:(_ctx:any,label:string)=>captions.push(label),drainCanvasToDataUrl:()=>'terrain-with-contours'});
+  assert.equal(await paint(state,frame,refs,'Test extent'),'terrain-with-contours');
+  assert.deepEqual(captions,['15 m']);
+  assert.ok(probe.calls.some(c=>c[0]==='fillText'&&c[1]==='Slope section unavailable'));
+  assert.ok(!probe.calls.some(c=>c[0]==='fillText'&&/\d+\.\d+%/.test(c[1])),'missing section must not acquire an invented percentage');
+});
+
+test('Sector uses available raster contours when the separate broad SRTM slope is missing',async()=>{
+  const frame={imgW:600,imgH:600,mPerPx:.5},refs={boundary:[[.1,.1],[.9,.1],[.9,.9],[.1,.9]]},state={items:[],lines:[],zones:[]};
+  const detail=[{elevM:15,major:true,points:[[.2,.2],[.8,.7]]},{elevM:12.5,major:false,points:[[.2,.4],[.8,.9]]}];
+  const paint=helper('fetchSectorPresentationContours',{SCALE:1,fetchSheetContours:async()=>({source:null,status:'unavailable',lines:[],intervalM:5}),sectorOverviewContours,
+    fetchProfileTerrain:async()=>({source:'test fixture'}),rasterTerrainContours:()=>detail,paidApiHeaders:async()=>({}),calculateBoundaryPresentationLayout:()=>null,presentationExtentRing:()=>refs.boundary});
+  const exact=await paint(state,frame,refs,null);assert.equal(exact.status,'ok');assert.deepEqual(exact.lines.map((l:any)=>l.elevM),[15]);
+  const illustrated=await paint(state,frame,refs,null,true);assert.deepEqual(illustrated.lines.map((l:any)=>l.elevM),[15,12.5]);
 });

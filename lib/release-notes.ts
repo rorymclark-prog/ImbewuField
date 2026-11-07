@@ -326,10 +326,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'Open your mapped site and confirm its country details. Country confirmation does not approve farming advice for a new region.' },
   { title: 'Review an unmapped reference', where: 'Crop planner → Planning without a mapped site', href: '/facilitator/crops',
     detail: 'For a virtual bed or local design, explicitly choose or remove the South African reference basis. The choice stays with that workspace.' }] },
-  { when: '2 November 2026', sha: '12b0acba4', changes: [
-    'Save your own growing estimates and review capacity and dates for measured beds.',
-  ], tour: [{ title: 'Review your growing estimates', where: 'Crop planner → Your growing estimates', href: '/facilitator/crops',
-    detail: 'Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.' }] },
   { when: '3 November 2026', sha: '80eb2f0b5', changes: [
     "Open Terrain & Sections for the two cuts and extra contour detail.",
   ] },
@@ -360,6 +356,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'AI maps start with available aerial imagery; you can still choose plain paper.' },
   { title: 'Compare with your exact plan', where: 'Site design → Saved maps', href: '/design',
     detail: 'Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.' }] },
+  { when: '2 November 2026', sha: '12b0acba4', changes: [
+    'Save your own growing estimates and review capacity and dates for measured beds.',
+  ], tour: [{ title: 'Review your growing estimates', where: 'Crop planner → Your growing estimates', href: '/facilitator/crops',
+    detail: 'Enter your own assumptions, choose a measured bed and review the calculation. Blank values stay missing; the result is an estimate, not local farming approval.' }] },
   { when: '2 November 2026', sha: '41def1087', changes: [
     'Explore international reference drafts; local farming advice remains unavailable.',
   ], tour: [{ title: 'Review international references', where: 'International foundation', href: '/international',
@@ -5356,20 +5356,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    when: '5 August (night)',
-    sha: '96f0250',
-    changes: [
-      'Money: sales you log now appear in your sales total and recent-sales list',
-    ],
-  },
-  {
-    when: '5 August (night)',
-    sha: '66b5ba2',
-    changes: [
-      'Money: log a harvest straight from Finance — no need to find a hidden screen',
-    ],
-  },
-  {
     when: '6 August (evening)',
     sha: '451cd18',
     changes: [
@@ -5389,6 +5375,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'The crop plan timeline now runs two full years - pan sideways to see year two',
       'Year two is drawn faded: the same cycle again, not a plan you have decided on',
       'No more empty months at the end of the timeline',
+    ],
+  },
+  {
+    when: '5 August (night)',
+    sha: '96f0250',
+    changes: [
+      'Money: sales you log now appear in your sales total and recent-sales list',
     ],
   },
   {
@@ -5735,6 +5728,17 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Your rendered maps are saved on this device and survive closing the app',
       'Fixed the phantom hedge along the fence, and the driveway merging into the house',
       'Beds, banana circles and tree basins moved to the Planting sheet where they belong',
+    ],
+  },
+  { when: '6 November 2026', sha: 'f98125ce1', changes: [
+    "Maps have finer boundaries with round posts and clearer Earthworks labels.",
+    "Terrain maps show elevation, slope percentage and degrees from local terrain data.",
+  ] },
+  {
+    when: '5 August (night)',
+    sha: '66b5ba2',
+    changes: [
+      'Money: log a harvest straight from Finance — no need to find a hidden screen',
     ],
   },
 ];
