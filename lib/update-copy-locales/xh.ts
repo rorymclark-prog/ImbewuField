@@ -289,5 +289,8 @@ const copy:UpdateCopy={
   "Check nursery space": "Hlola indawo yenkulisa",
   "Crop planner → Nursery planner": "Isicwangcisi sezityalo → Isicwangcisi senkulisa",
   "Add your tray sizes, usable nursery surface and crop estimates. Review overlapping demand and missing information before adding automatic sowings.": "Yongeza ubungakanani beetreyi zakho, umphezulu wenkulisa osebenzisekayo neengqikelelo zezityalo. Hlola imfuno edibeneyo nolwazi olusilelayo phambi kokongeza ukutyala okuzenzekelayo.",
+  "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.": "Khetha i-Editorial Atlas ukuze ufumane isitayile se-AI esikhaphukhaphu nomzobo ojikelezayo we-Sector.",
+  "Maps have finer boundaries with round posts and clearer Earthworks labels.": "Iimephu zinemida ecekethekileyo eneepali ezingqukuva neelebheli ze-Earthworks ezicace ngakumbi.",
+  "Terrain maps show elevation, slope percentage and degrees from local terrain data.": "Iimephu zomhlaba zibonisa ukuphakama, ipesenti yethambeka needigri ezivela kwidatha yomhlaba yendawo.",
 };
 export default copy;
