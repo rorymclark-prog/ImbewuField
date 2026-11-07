@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest release-test continuation — [Coverage with an empty current guide — 7 November 2026](2026-11-07/performance-release-fixtures.md). Explicit historical positive fixtures, honest current defaults and retained assertions; current-head full CI remains separate.
+
 Latest runtime continuation — [Approved map styling and cross-location checks — 6 November 2026](2026-11-06/approved-map-style-runtime-codex.md). Actual app outputs and provider terrain/context inspected; current-head release evidence is separate on PR/issue #35.
 
 Latest sample revisions — [Boundary, slope values, Earthworks labels and Record plan — 6 November 2026](2026-11-06/map-boundary-slope-labels-codex.md). Native factual overlays and revised Sector appearance; local samples, not deployed defaults.
