@@ -245,8 +245,8 @@ const copy:UpdateCopy={
   "Choose a crop, weekly weight and harvest months. Review the proposal before adding its dated sowings to your crop plan.": "Khetha isityalo, ubunzima beveki nganye kunye neenyanga zokuvuna. Hlola isindululo phambi kokongeza ukuhlwayela kwaso okunemihla kwisicwangciso sakho sezityalo.",
   // Added with the 6 Nov 2026 merge of main (Sector graphics, assistant connections, terrain, AI maps, international references, nursery planner). UNREVIEWED machine drafts; the English source is shown beside each.
   "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Iimephu zeSector zibonisa iimpawu zomoya nezemvula ezicacileyo, umthambeka neemigca yokuphakama kusabonakala.",
-  "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Imizobo yeSector inemitshangatshangana eqaqambileyo, iimpawu zelanga ezinkulu nesalathiso semephu esicacileyo.",
-  "Sector illustrations now show bolder terrain contours and matching key lines.": "Imizobo yeSector ngoku ibonisa iimigca yokuphakama komhlaba eqaqambileyo nemigca efanayo kwisalathiso.",
+  "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Imizobo yeSector ineentolo ezingqindilili, iimpawu zelanga ezinkulu nesalathiso semephu esicacileyo.",
+  "Sector illustrations now show bolder terrain contours and matching key lines.": "Imizobo yeSector ngoku ibonisa imigca yokuphakama komhlaba engqindilili nemigca efanayo kwisalathiso.",
   "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Imizobo yeSector igcina imibala ecwebileyo, enamalebula amakhulu neemigca yokuphakama ecacileyo.",
   "Important updates include a short animation you can pause and replay.": "Uhlaziyo olubalulekileyo lubandakanya ibhanyabhanya elifutshane onokulimisa uze ulidlale kwakhona.",
   "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Iimephu zeSector zisebenzisa imvelaphi ethe cwaka nezimpawu ezicacileyo zelanga, zomoya nezomlilo.",
