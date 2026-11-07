@@ -288,7 +288,15 @@ for (const outcome of ['held', 'failed', 'superseded'] as const) test(`an entere
     fillPlanning(screen); await addEntered(screen, 'Trial'); await screen.click('Review automatic crop plan');
     assert.equal(screen.accepts.length, 0);
     await screen.click(text(saveButton(screen)!)); assert.equal(screen.accepts.length, 1);
+    const retainedSave = saveButton(screen)!.props.onClick;
     screen.update({ acceptance: result });
+    if (outcome === 'superseded') {
+      assert.match(screen.text(), /write completed, but the current saved plan could not be confirmed/);
+      assert.doesNotMatch(screen.text(), /No crop cycle has been added to your saved plan/);
+      assert.equal(saveButton(screen)!.props.disabled, true);
+      await act(async () => { retainedSave(); });
+      assert.equal(screen.accepts.length, 1, 'a retained handler must preserve the completed uncertain receipt');
+    } else assert.equal(saveButton(screen)!.props.disabled, false, 'held and failed work retain manual retry');
     await act(async () => {});
     screen.update({ sourceIssue: 'Parent check still needs review.' });
     await act(async () => {});
@@ -296,4 +304,29 @@ for (const outcome of ['held', 'failed', 'superseded'] as const) test(`an entere
     screen.change('Gross harvest weight', '24'); await screen.click('Review automatic crop plan');
     assert.equal(screen.accepts.length, 1, 'editing and re-reviewing must not retry a save');
   } finally { screen.dispose(); }
+});
+
+test('a confirmed receipt survives a retained save handler', async () => {
+ const screen=mount();
+ try {
+  const result: GrowerWorkflowAcceptanceResult={status:'confirmed',rows:1,sample:false};
+  screen.update({onAccept:async(review,current)=>{screen.accepts.push({review,current});return result;}});
+  fillPlanning(screen);await addEntered(screen,'Trial');await screen.click('Review automatic crop plan');
+  const retained=saveButton(screen)!.props.onClick;
+  await screen.click(text(saveButton(screen)!));assert.equal(screen.accepts.length,1);
+  screen.update({acceptance:result});assert.equal(saveButton(screen)!.props.disabled,true);
+  await act(async()=>{retained();});assert.equal(screen.accepts.length,1);
+  assert.doesNotMatch(screen.text(),/No crop cycle has been added to your saved plan/);
+ } finally {screen.dispose();}
+});
+for(const outcome of ['held','failed'] as const)test(`${outcome} retains explicit manual retry`,async()=>{
+ const screen=mount();
+ try{
+  const result:GrowerWorkflowAcceptanceResult=outcome==='held'?{status:'held',reasons:['fixture-parent-hold']}:{status:'failed'};
+  screen.update({onAccept:async(review,current)=>{screen.accepts.push({review,current});return result;}});
+  fillPlanning(screen);await addEntered(screen,'Trial');await screen.click('Review automatic crop plan');
+  await screen.click(text(saveButton(screen)!));screen.update({acceptance:result});
+  assert.equal(saveButton(screen)!.props.disabled,false);await screen.click(text(saveButton(screen)!));
+  assert.equal(screen.accepts.length,2);
+ }finally{screen.dispose();}
 });

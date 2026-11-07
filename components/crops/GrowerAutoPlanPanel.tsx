@@ -243,8 +243,10 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
     } catch { if (generation.current === turn) setError('Could not check the current saved inputs. Your plan has not changed.'); }
     finally { if (generation.current === turn) setBusy(false); }
   }
+  // A superseded receipt follows a completed write. Keep its warning and block
+  // retained save callbacks until a new source check or review replaces it.
   async function save() {
-    if (accepting.current || !props.onAccept || review?.status !== 'review' || !contextCurrent() || !reviewMatchesContext
+    if (accepting.current || live.current.acceptance?.status === 'confirmed' || live.current.acceptance?.status === 'superseded' || !props.onAccept || review?.status !== 'review' || !contextCurrent() || !reviewMatchesContext
       || reviewRef.current !== review || reviewGeneration.current !== generation.current) return;
     const expected = review, turn = ++generation.current, revision = props.contextRevision;
     reviewGeneration.current = turn;
@@ -397,9 +399,9 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
               ? `${enteredMeta(target.demandId) ? purposeLabel(enteredMeta(target.demandId)!.purpose) : 'Buyer target'}: ` : ''}Estimated gross capacity: {quantity(target.estimatedAllocatedKg)} kg; remaining: {quantity(target.unmetKg)} kg; excess: {quantity(target.excessEstimatedKg)} kg.</p>)}
           </>}
         {review.blockedBeds.length > 0 && <ul>{review.blockedBeds.map(bed => <li key={bed.bedId}>{beds.find(item => item.id === bed.bedId)?.label ?? 'Growing space'} held: {bed.reasons.map(issueText).join('; ')}</li>)}</ul>}
-        {!saved && <p>These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.</p>}
+        {!saved && props.acceptance?.status !== 'superseded' && <p>These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.</p>}
         {props.onAccept && review.status === 'review' && review.proposal.status === 'ready' && review.proposal.cycles.length > 0 && <button
-          type="button" className={button} disabled={saving || saved || props.checking || busy} onClick={() => void save()}>
+          type="button" className={button} disabled={saving || saved || props.acceptance?.status === 'superseded' || props.checking || busy} onClick={() => void save()}>
           {saving ? 'Checking and saving planned cycles…' : `Save all ${review.proposal.cycles.length} planned crop cycles`}
         </button>}
         {usable && review.status === 'review' && props.nurseryReview?.(review)}

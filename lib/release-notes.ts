@@ -129,6 +129,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Your crop-plan handoff waits for this tab’s earlier editing access to finish.',
   ], tour: [{ title: 'Check your crop plan after signing in', where: 'Sign in → Crop planner', href: '/facilitator/crops',
     detail: 'Open your crop plan after signing in. This tab releases its previous editing access before checking the saved account records. Another tab that is still editing keeps its protection; unavailable or conflicting records still require review.' }] },
+  { when: '6 November 2026', sha: 'f98125ce1', changes: [
+    "Maps have finer boundaries with round posts and clearer Earthworks labels.",
+    "Terrain maps show elevation, slope percentage and degrees from local terrain data.",
+  ] },
   { when: '5 November 2026', sha: 'a768564db55c', changes: [
     'Keep your DEMO crop plan when opening the Task Planner.',
   ] },
@@ -5381,6 +5385,20 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
+    when: '5 August (night)',
+    sha: '96f0250',
+    changes: [
+      'Money: sales you log now appear in your sales total and recent-sales list',
+    ],
+  },
+  {
+    when: '5 August (night)',
+    sha: '66b5ba2',
+    changes: [
+      'Money: log a harvest straight from Finance — no need to find a hidden screen',
+    ],
+  },
+  {
     when: '6 August (evening)',
     sha: '451cd18',
     changes: [
@@ -5400,13 +5418,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'The crop plan timeline now runs two full years - pan sideways to see year two',
       'Year two is drawn faded: the same cycle again, not a plan you have decided on',
       'No more empty months at the end of the timeline',
-    ],
-  },
-  {
-    when: '5 August (night)',
-    sha: '96f0250',
-    changes: [
-      'Money: sales you log now appear in your sales total and recent-sales list',
     ],
   },
   {
@@ -5753,17 +5764,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Your rendered maps are saved on this device and survive closing the app',
       'Fixed the phantom hedge along the fence, and the driveway merging into the house',
       'Beds, banana circles and tree basins moved to the Planting sheet where they belong',
-    ],
-  },
-  { when: '6 November 2026', sha: 'f98125ce1', changes: [
-    "Maps have finer boundaries with round posts and clearer Earthworks labels.",
-    "Terrain maps show elevation, slope percentage and degrees from local terrain data.",
-  ] },
-  {
-    when: '5 August (night)',
-    sha: '66b5ba2',
-    changes: [
-      'Money: log a harvest straight from Finance — no need to find a hidden screen',
     ],
   },
 ];
