@@ -245,8 +245,8 @@ const copy:UpdateCopy={
   "Choose a crop, weekly weight and harvest months. Review the proposal before adding its dated sowings to your crop plan.": "Khetha isityalo, ubunzima beveki nganye kunye neenyanga zokuvuna. Hlola isindululo phambi kokongeza ukuhlwayela kwaso okunemihla kwisicwangciso sakho sezityalo.",
   // Added with the 6 Nov 2026 merge of main (Sector graphics, assistant connections, terrain, AI maps, international references, nursery planner). UNREVIEWED machine drafts; the English source is shown beside each.
   "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Iimephu zeSector zibonisa iimpawu zomoya nezemvula ezicacileyo, umthambeka neemigca yokuphakama kusabonakala.",
-  "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Imizobo yeSector inemitshangatshangana ekhaphukhaphu, iimpawu zelanga ezinkulu nesalathiso semephu esicacileyo.",
-  "Sector illustrations now show bolder terrain contours and matching key lines.": "Imizobo yeSector ngoku ibonisa iimigca yokuphakama komhlaba ekhaphukhaphu nemigca efanayo kwisalathiso.",
+  "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.": "Imizobo yeSector ineentolo ezingqindilili, iimpawu zelanga ezinkulu nesalathiso semephu esicacileyo.",
+  "Sector illustrations now show bolder terrain contours and matching key lines.": "Imizobo yeSector ngoku ibonisa imigca yokuphakama komhlaba engqindilili nemigca efanayo kwisalathiso.",
   "Sector illustrations keep richer colour, with larger labels and clearer contours.": "Imizobo yeSector igcina imibala ecwebileyo, enamalebula amakhulu neemigca yokuphakama ecacileyo.",
   "Important updates include a short animation you can pause and replay.": "Uhlaziyo olubalulekileyo lubandakanya ibhanyabhanya elifutshane onokulimisa uze ulidlale kwakhona.",
   "Sector maps use a quieter background and clearer sun, wind and fire marks.": "Iimephu zeSector zisebenzisa imvelaphi ethe cwaka nezimpawu ezicacileyo zelanga, zomoya nezomlilo.",
@@ -270,7 +270,7 @@ const copy:UpdateCopy={
   "Zone maps trim blurry aerial edges when the photo covers the site.": "Iimephu zeZone zisusa imiphetho engacacanga yefoto yasemoyeni xa ifoto igubungela indawo yonke.",
   "Existing Site labels and legend now use matching symbols.": "Amalebula esalathiso seExisting Site ngoku asebenzisa iimpawu ezifanayo.",
   "Choose area names or a numbered key on the historical Existing Site map.": "Khetha amagama emimandla okanye isalathiso esinamanani kwimephu yembali yeExisting Site.",
-  "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Iimephu zeSite neSector ze-Ubhejane zinokubonisa ifoto yengobo yangaphambi kwemisebenzi.",
+  "Ubhejane Site and Sector maps can show the before-works archive photograph.": "Iimephu zeSite neSector ze-Ubhejane zinokubonisa ifoto egciniweyo yangaphambi kwemisebenzi.",
   "AI maps start with available aerial imagery; you can still choose plain paper.": "Iimephu ze-AI ziqala ngemifanekiso yasemoyeni ekhoyo; usenakho ukukhetha iphepha elimhlophe.",
   "AI Site and Sector maps keep their painted detail, with fewer photo strips.": "Iimephu ze-AI zeSite neSector zigcina iinkcukacha zazo ezipeyintiweyo, zinemitya yeefoto embalwa.",
   "Phasing keeps painted artwork; the app adds its schedule, pins and scale.": "IPhasing igcina umzobo opeyintiweyo; i-app yongeza ishedyuli, iipini nesikali.",
@@ -290,7 +290,7 @@ const copy:UpdateCopy={
   "Crop planner → Nursery planner": "Isicwangcisi sezityalo → Isicwangcisi senkulisa",
   "Add your tray sizes, usable nursery surface and crop estimates. Review overlapping demand and missing information before adding automatic sowings.": "Yongeza ubungakanani beetreyi zakho, umphezulu wenkulisa osebenzisekayo neengqikelelo zezityalo. Hlola imfuno edibeneyo nolwazi olusilelayo phambi kokongeza ukutyala okuzenzekelayo.",
   "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.": "Khetha i-Editorial Atlas ukuze ufumane isitayile se-AI esikhaphukhaphu nomzobo ojikelezayo we-Sector.",
-  "Maps have finer boundaries with round posts and clearer Earthworks labels.": "Iimephu zinemida ecekethekileyo eneepali ezingqukuva neelebheli ze-Earthworks ezicace ngakumbi.",
+  "Maps have finer boundaries with round posts and clearer Earthworks labels.": "Iimephu zinemida emincinci eneepali ezingqukuva neelebheli ze-Earthworks ezicace ngakumbi.",
   "Terrain maps show elevation, slope percentage and degrees from local terrain data.": "Iimephu zomhlaba zibonisa ukuphakama, ipesenti yethambeka needigri ezivela kwidatha yomhlaba yendawo.",
 };
 export default copy;
