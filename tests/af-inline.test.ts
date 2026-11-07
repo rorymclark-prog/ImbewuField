@@ -533,3 +533,38 @@ test('Afrikaans kg and axis formats: comma decimal on the invoice rows and the C
   assert.equal((read('components/CashflowChart.tsx').match(/randTickForLang\(lang, /g) ?? []).length, 4);
   assert.doesNotMatch(read('components/CashflowChart.tsx'), /[^a-zA-Z]randTick\(/);
 });
+
+/* ── Seventh sweep parity (7 Nov): g57 mirrors the isiXhosa g55 (the 6 Nov merge of main) ─────────────── */
+
+test('g57: the Afrikaans Assistant connections shard mirrors the isiXhosa g55 key for key, with placeholders and figures intact', async () => {
+  const { default: xhShard } = await import('@/lib/locales/xh-inline/g55-main-nov');
+  const { default: afShard } = await import('@/lib/locales/af-inline/g57-main-nov');
+  assert.equal(Object.keys(afShard).length, 41);
+  assert.deepEqual(Object.keys(afShard), Object.keys(xhShard));
+  for (const english of Object.keys(xhShard)) {
+    assert.equal(AF_INLINE_SOURCE[english], afShard[english], `${english} is served from g57`);
+    assert.notEqual(afShard[english], english, `${english} has a real draft`);
+    assert.equal(placeholdersOf(afShard[english]), placeholdersOf(english), `${english} keeps its placeholders`);
+    assert.equal(numbers(afShard[english]), numbers(english), `${english} keeps its figures`);
+  }
+  const key = 'This does not grant access to your Gmail, Drive or computer. New sites need a new connection decision. Connections expire after 90 days; access tokens last one hour.';
+  assert.match(afShard[key], /Gmail.*Drive.*90 dae.*een uur/);
+  assert.match(afShard['Use the ImbewuField private plugin, or add the following Streamable HTTP endpoint in a host that supports OAuth and remote MCP:'], /ImbewuField.*Streamable HTTP.*OAuth.*MCP/);
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  try {
+    assert.equal(inlineTemplate('af', 'Connect {name}', null, { name: 'Claude' }), 'Koppel Claude');
+    assert.equal(inlineTemplate('af', '{n} selected sites · expires {date}', null, { n: 2, date: '2026/11/07' }), '2 gekose terreine · verval op 2026/11/07');
+    assert.equal(inlineText('af', 'Assistant connections'), 'Assistentverbindings');
+    for (const lang of ['en', 'zu', 'st', 'ts', 've']) assert.equal(inlineText(lang, 'Connect {name}'), 'Connect {name}', lang);
+  } finally { registerInlineDrafts('af', {}); }
+});
+
+test('g57: every current release-note and tour line that zu.ts drafts has a valid Afrikaans update-copy draft that keeps its figures', async () => {
+  const { RELEASE_NOTES } = await import('@/lib/release-notes');
+  const { default: af } = await import('@/lib/update-copy-locales/af');
+  const { default: zu } = await import('@/lib/update-copy-locales/zu');
+  const { validUpdateDescription } = await import('@/lib/update-copy');
+  const sources = RELEASE_NOTES.flatMap((n) => [...n.changes, ...(n.tour ?? []).flatMap((s) => [s.title, s.where, s.detail])]);
+  const missing = sources.filter((s) => s in zu && !validUpdateDescription(s, af[s]));
+  assert.deepEqual(missing, [], 'every line the other update-copy languages draft needs an Afrikaans draft');
+});
