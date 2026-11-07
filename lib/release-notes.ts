@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 November 2026', sha: '6e49dd25d', changes: [
+    'Map advice refreshes after switching tools and keeps new requests visible.',
+  ] },
   { when: '7 November 2026', sha: '6ec4a916f', changes: [
     'Compare learning-language drafts and download a worksheet for human review.',
     'Plan review keeps a warning when the saved plan or its source cannot be checked.',
