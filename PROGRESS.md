@@ -192,6 +192,7 @@ and isiZulu output are unchanged.
   - PDFs and download texts.
   - Narration audio.
   - The readiness checklist's record statuses and evidence details (a note says so).
+- **Merge of main, 7 Nov (isiXhosa):** the release-note and tour lines main added since the last merge (Sector graphics, assistant connections, terrain, AI maps, international references, nursery planner) now have isiXhosa update-copy drafts (`lib/update-copy-locales/xh.ts`, 45 entries, the same sources the other four languages draft); the Assistant connections page (`app/connect/imbewu`), its registration-preview figure and the Settings link follow isiXhosa through `xh-inline/g55-main-nov.ts` (41 drafts; the other five languages render the same English). `UpdateGuide`, `FeatureUpdatePreview` and `PWAUpdateNotifier` stay English because the update-UI test harness compiles them without the isiXhosa lookup (the walkthrough is fixed `lang="en"`). Unreviewed machine drafts.
 
 ### 24 Oct 2026 — isiXhosa phase 3: Studies slide cards and the last English corners (PR #1090)
 - **Studies slide cards:** all 10 modules (240 slides) as isiXhosa silent cards, with the draft above
