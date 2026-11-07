@@ -26,6 +26,8 @@ export function updateNodeText(node:ReactTestInstance):string{return node.childr
 const styleNames=Object.fromEntries([...read('components/UpdateGuide.module.css').matchAll(/\.([A-Za-z][\w-]*)/g)].map(m=>[m[1],m[1]]));
 export interface UpdateUiOptions {
  seenPreview?:boolean;kind?:'banner'|'guide'|'history'|'discovery'|'onboarding';path?:string;simple?:boolean;sample?:boolean;waiting?:boolean;guide?:unknown;
+ /** Controlled history data isolates copy arrival/coverage; omitted keeps the real release history. */
+ historyNotes?:typeof RELEASE_NOTES;
  server?:(lang:string,url:string,index:number)=>Promise<any>;loader?:(lang:string)=>Promise<UpdateCopy>;
 }
 let fixtureId=0;
@@ -48,7 +50,7 @@ export async function actualUpdateUi(initial:ControlLanguage,options:UpdateUiOpt
  const worker=Object.assign(new EventTarget(),{controller:{},register:async()=>{calls.worker++;return registration;},getRegistration:async()=>registration});
  const document=Object.assign(new EventTarget(),{visibilityState:'visible',querySelector:()=>({getBoundingClientRect:()=>({top:8,left:8,width:44,height:44}),click:()=>calls.menu++})});
  const scope:Record<string,unknown>={React,...React,ChevronUp,X,Menu,ArrowRight,window,document,navigator:{serviceWorker:worker},process:{env:{NODE_ENV:'test'}},URLSearchParams,cleanUpdateTour,readUpdateGuide,isUpdateGuideDestination,UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT,isDifferentBuild,
-  isUpdateCopyLanguage,updateDescription,updateTourSources,cleanUpdateCopy,updateDateLabel,RELEASE_NOTES,styles:styleNames,
+  isUpdateCopyLanguage,updateDescription,updateTourSources,cleanUpdateCopy,updateDateLabel,RELEASE_NOTES:options.historyNotes??RELEASE_NOTES,styles:styleNames,
   translate:(language:ControlLanguage,key:string)=>controlT(language)(key),APP_LANGS:appLanguages,loadLocale:async()=>{},useRouter:()=>({push:(url:string)=>calls.routes.push(url)}),useLanguage:()=>({lang,t:controlT(lang),onboarded:false,completeOnboarding:(language:string)=>calls.completed.push(language)}),useAppLevel:()=>simple?'simple':'full',usePathname:()=>new URL(path,'http://fixture').pathname,useSearchParams:()=>new URL(path,'http://fixture').searchParams,useAuth:()=>({user:options.kind==='discovery'?{uid:actor}:null,loading:false}),useSampleRole:()=>options.sample??false,
   recordTourOpening,dismissTourMenuTip,TOUR_INVITATION_LIMIT,announceOverlay:()=>{},localStorage:{getItem:(k:string)=>storage.get(k)??null,setItem:(k:string,v:string)=>storage.set(k,v)},
   AppHeader:({title}:any)=>React.createElement('header',null,title),

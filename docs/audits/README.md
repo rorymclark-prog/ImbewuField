@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest release-copy verification — [Exact-source availability and non-vacuous language controls — 7 November 2026](2026-11-07/calendar-copy-coverage.md). Focused source/React checks are separate from pending current-head full and calendar device/import gates.
+
 Latest international release candidate — [Current-main, print and account-gate reconciliation — 5 November 2026](2026-11-05/international-nursery-final-reconcile-codex.md). Source integration is prepared; new full/visual/account gates remain pending.
 Latest Sector styling — [Actual supplied-reference wind/rain motifs and retained terrain detail — 5 November 2026](2026-11-05/sector-reference-flow-codex.md). Native imagery inspected; release gates/identity follow on the PR and ledger.
 

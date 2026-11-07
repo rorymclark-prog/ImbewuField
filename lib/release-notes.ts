@@ -41,6 +41,15 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 November 2026', sha: '4f0f0f2eaa73', changes: [
+    'Estimate seed-pack costs in your checked planning worksheets.',
+    'Download checked planned work dates together in one calendar file.',
+  ], tour: [
+    { title: 'Estimate seed-pack costs', where: 'Crop planner → Nursery or field seed sourcing', href: '/facilitator/crops',
+      detail: 'Choose a currency and enter your pack prices beside checked supply groups. Prices are temporary and clear when you change currency. Missing costs stay unknown; an incomplete subtotal does not cover the whole farm. Displayed costs are rounded, and this estimate records no purchase or expense.' },
+    { title: 'Download planned work dates together', where: 'Task Planner → Dated work from your estimates', href: '/cropplan',
+      detail: 'Check saved cycles and designs, then download all represented planned dates in one calendar file. Held sources need review first. Checklist items marked done stay in the calendar. DEMO files are labelled separately; a calendar records no observed work, harvest or free-bed confirmation.' },
+  ] },
   { when: '6 November 2026', sha: '22a77b4cc395', changes: [
     'Quick sale names rand and links to invoices in another currency.',
   ], tour: [{ title: 'Choose the right sale entry', where: 'My Records → Sold → Quick sale entry', href: '/records?tab=sold',
