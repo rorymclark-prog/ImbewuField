@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { estimateNumberLabel as quantity } from '@/lib/format-figures';
 import GrowerCycleIntent from './GrowerCycleIntent';
 import GrowerSeedSourcingPanel from './GrowerSeedSourcingPanel';
+import GrowerSeedPackBudget from './GrowerSeedPackBudget';
 import GrowerFieldSeedSourcingSection from './GrowerFieldSeedSourcingSection';
+import { useLanguage } from '@/lib/i18n-context';
+import { formattingContext } from '@/lib/international/locales/formatting';
 import type { SeedSourcingGroupDraft, SeedSourcingGroupPatch } from './GrowerSeedSourcingForm';
 import { parseSeedPurchaseCountInput, type SeedPurchaseCountKind } from '@/lib/seed-purchase-inputs';
 import { reviewGrowerSeedSourcing, type GrowerSeedSourcingReview } from '@/lib/international/grower-seed-sourcing';
@@ -130,6 +133,7 @@ function referenceDetails(reference: GrowerNurseryBatchReferenceView | undefined
 
 /** The review is transient. Equipment remains in the existing canonical book. */
 export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanelProps | SavedNurseryReviewPanelProps) {
+  const { lang } = useLanguage();
   const [draftControls, setControls] = useState(blank);
   const [unit, setUnit] = useState<NurseryUnitChoice>('metric');
   const [unitNote, setUnitNote] = useState('');
@@ -270,6 +274,16 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
   function seedProofCurrent(proof: SeedReviewed): boolean {
     return seedReviewedRef.current === proof && seedDraftRef.current === proof.draft && generation.current === proof.turn
       && live.current.controls === proof.controls && live.current.unit === proof.unit && seedInputsCurrent(proof.draft);
+  }
+  function seedBudgetProofCurrent(proof: SeedReviewed): boolean {
+    // A saved book/source can be revoked between the last review and a price
+    // edit. Use its original owner's live binding, as the field worksheet does.
+    if (!seedProofCurrent(proof)) return false;
+    const original = proof.draft.props;
+    try {
+      return !!original.savedReview && typeof original.onCheckSavedBindingCurrent === 'function'
+        && original.onCheckSavedBindingCurrent(original.savedReview) === true && seedProofCurrent(proof);
+    } catch { return false; }
   }
   // Retiring refs during render blocks retained callbacks immediately. An effect
   // alone would leave the previous account/source proof callable until commit.
@@ -792,6 +806,9 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
           groups={shownSeedDraft?.groups ?? []} review={shownSeedReview?.review ?? null} disabled={busy || seedPending?.kind === 'export'}
           reviewing={seedPending?.kind === 'review'} onAddGroup={addSeedGroup} onRemoveGroup={removeSeedGroup}
           onChangeGroup={changeSeedGroup} onReview={() => void reviewSeed()} />
+        {shownSeedReview && <GrowerSeedPackBudget reviewProof={shownSeedReview} review={shownSeedReview.review}
+          isCurrent={proof => proof === shownSeedReview && seedBudgetProofCurrent(shownSeedReview)}
+          disabled={busy || !!seedPending} sample={sample} formatting={formattingContext(lang)} />}
         <button type="button" className={button} disabled={busy || !!seedPending || !shownSeedReview}
           onClick={() => void exportSeed()}>Download seed sourcing worksheet CSV</button>
         <p className="text-xs text-[var(--text-secondary)]">The CSV includes your entered supply-group labels. Leave out information you do not want in the file.</p>
