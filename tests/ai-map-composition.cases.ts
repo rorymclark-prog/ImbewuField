@@ -25,6 +25,17 @@ import { polishedRenderPoints } from '../lib/render-geometry.ts';
 // prove that a completed job's old mask is replaced. No private farm records or native dependency.
 const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
 const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+test('a completed Sector job uses its frozen style even after the picker changes',async()=>{
+  const calls:any[]=[];
+  const finish=helper('finishSectorSheet',{state:{},frame:{},refLayers:{},site:null,placeName:'Current',DEFAULT_PRODUCER_STYLE,
+    composeSectorSheet:(...args:any[])=>{calls.push(args);return Promise.resolve('page');}});
+  const snapshot={state:{siteId:'frozen'},frame:{centerLat:51.5},refLayers:{boundary:[]},site:null,placeName:'Frozen'};
+  await finish('art',snapshot,null,'editorial_atlas');
+  assert.equal(calls[0][7],'editorial_atlas');
+  assert.equal(calls[0][1],snapshot.state);
+  assert.match(source,/finishSectorRef\.current\(sourceImage, frozenScene, historicalSource, styleKey\)/,'comparison and output must use the same style');
+  assert.match(source,/finishSectorRef\.current\(factualModelImage, frozenScene, historicalSource, styleKey\)/);
+});
 function helper(name: string, scope: Record<string, unknown>): any {
   scope = { exactSheetElementRegister, EXACT_CONTEXT_ALPHA, ...scope };
   let code = '';

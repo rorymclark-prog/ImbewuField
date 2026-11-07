@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Editorial and boundary/terrain release: docs/audits/2026-11-07/editorial-release-drafts.json; UNREVIEWED machine drafts.
+  "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.": "Khetha i-Editorial Atlas ukuze uthole isitayela se-AI esilula nomdwebo oyindilinga weSector.",
+  "Maps have finer boundaries with round posts and clearer Earthworks labels.": "Amamephu anemingcele emincane enezigxobo eziyindilinga namalebula e-Earthworks acace kakhudlwana.",
+  "Terrain maps show elevation, slope percentage and degrees from local terrain data.": "Amamephu omhlaba abonisa ukuphakama, iphesenti lomthambeka namadigri athathwe kudatha yomhlaba yendawo.",
   // Reference-led Sector graphics: docs/audits/2026-11-05/sector-reference-flow-release-drafts.json; UNREVIEWED machine draft.
   "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.": "Amamephu eSector abonisa izimpawu zomoya nezemvula ezicace kakhudlwana, kanti umthambeka nemigqa yokuphakama kuhlala kubonakala.",
   // Sector graphics: docs/audits/2026-11-05/sector-graphics-release-drafts.json; UNREVIEWED machine drafts.

@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-07",
+  "status": "unreviewed-machine-draft",
+  "scope": "Release notice only; no farming/course instruction. Also supplies missing exact source pairs for the preceding boundary/terrain notice.",
+  "entries": [
+    {
+      "english": "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.",
+      "zu": "Khetha i-Editorial Atlas ukuze uthole isitayela se-AI esilula nomdwebo oyindilinga weSector.",
+      "st": "Kgetha Editorial Atlas bakeng sa setaele sa AI se bobebe le setshwantsho se chitja sa Sector.",
+      "ts": "Hlawula Editorial Atlas ku kuma xitayili xa AI lexi vevukaka ni xifaniso xa xirhendzevutana xa Sector.",
+      "ve": "Nangani Editorial Atlas u wana tshitaela tsha AI tshi leluwaho na tshifanyiso tsha Sector tsha tshitendeledzi."
+    },
+    {
+      "english": "Maps have finer boundaries with round posts and clearer Earthworks labels.",
+      "zu": "Amamephu anemingcele emincane enezigxobo eziyindilinga namalebula e-Earthworks acace kakhudlwana.",
+      "st": "Limmapa di na le meedi e mesesane e nang le dipalo tse chitja le mabitso a hlakileng a Earthworks.",
+      "ts": "Mimepe yi ni mindzilakana yo lala leyi nga ni tiphuphu ta xirhendzevutana ni malebulu ya Earthworks lama nga erivaleni swinene.",
+      "ve": "Mimepe i na mikano misekene i re na thanda dza tshitendeledzi na malebulu a Earthworks a re khagala nga u engedza."
+    },
+    {
+      "english": "Terrain maps show elevation, slope percentage and degrees from local terrain data.",
+      "zu": "Amamephu omhlaba abonisa ukuphakama, iphesenti lomthambeka namadigri athathwe kudatha yomhlaba yendawo.",
+      "st": "Limmapa tsa sebaka di bontsha bophahamo, peresente ya moepa le dikerii tse tswang ho data ya sebaka seo.",
+      "ts": "Mimepe ya misava yi komba ku tlakuka, phesente ya ku voyama ni tidigirii leswi humaka eka datha ya misava ya ndhawu.",
+      "ve": "Mimepe ya mavu i sumbedza vhulapfu, phesenthe ya mutevhe na digirii zwi bvaho kha data ya mavu a henefho."
+    }
+  ]
+}
