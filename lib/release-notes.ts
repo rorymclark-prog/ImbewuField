@@ -43,7 +43,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '7 November 2026', sha: '6ec4a916f', changes: [
     'Compare learning-language drafts and download a worksheet for human review.',
-    'Plan review keeps a superseded-save warning when the saved plan or its source cannot be checked.',
+    'Plan review keeps a warning when the saved plan or its source cannot be checked.',
   ], tour: [{ title: 'Review learning-language drafts', where: 'International reference tools → Language draft review → Learning region', href: '/international/locales/learning-region',
     detail: 'Compare English wording and context with inactive drafts in eleven languages. Changed or unavailable source wording stays visible. Download a worksheet for a named language reviewer; this does not approve translations or change your app language.' }] },
   { when: '7 November 2026', sha: 'e668a63bdca7', changes: [
