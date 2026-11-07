@@ -1,0 +1,23 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "entries": [
+    {
+      "source": "Ubhejane Site and Sector maps can show the before-works archive photograph.",
+      "drafts": {
+        "zu": "Amamephu eSite neSector ase-Ubhejane angabonisa isithombe senqolobane sangaphambi komsebenzi.",
+        "st": "Dimmapa tsa Site le Sector tsa Ubhejane di ka bontsha foto ya polokelo ya pele ho mesebetsi.",
+        "ts": "Mimepe ya Site na Sector ya Ubhejane yi nga komba xifaniso xa khale xa le mahlweni ka mintirho.",
+        "ve": "Mapa a Site na Sector a Ubhejane a nga sumbedza tshifanyiso tsha kale tsha musi mishumo i sa athu thoma."
+      }
+    },
+    {
+      "source": "AI maps start with available aerial imagery; you can still choose plain paper.",
+      "drafts": {
+        "zu": "Amamephu e-AI aqala ngezithombe zasemoyeni ezikhona; usengakhetha iphepha elimhlophe.",
+        "st": "Dimmapa tsa AI di qala ka ditshwantsho tse teng tsa moyeng; o ntse o ka kgetha pampiri e tshweu.",
+        "ts": "Mimepe ya AI yi sungula hi swifaniso leswi kumekaka swa le henhla; wa ha nga hlawula phepha ro basa.",
+        "ve": "Mapa a AI a thoma nga zwifanyiso zwi re hone zwa nṱha; ni kha ḓi nga nanga bammbiri ḽitshena."
+      }
+    }
+  ]
+}

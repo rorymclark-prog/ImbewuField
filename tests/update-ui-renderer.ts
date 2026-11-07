@@ -25,7 +25,7 @@ function compiled(path:string,name:string,scope:Record<string,unknown>):any {
 export function updateNodeText(node:ReactTestInstance):string{return node.children.map(n=>typeof n==='string'?n:updateNodeText(n)).join('');}
 const styleNames=Object.fromEntries([...read('components/UpdateGuide.module.css').matchAll(/\.([A-Za-z][\w-]*)/g)].map(m=>[m[1],m[1]]));
 export interface UpdateUiOptions {
- kind?:'banner'|'guide'|'history'|'discovery'|'onboarding';path?:string;simple?:boolean;sample?:boolean;waiting?:boolean;guide?:unknown;
+ seenPreview?:boolean;kind?:'banner'|'guide'|'history'|'discovery'|'onboarding';path?:string;simple?:boolean;sample?:boolean;waiting?:boolean;guide?:unknown;
  server?:(lang:string,url:string,index:number)=>Promise<any>;loader?:(lang:string)=>Promise<UpdateCopy>;
 }
 let fixtureId=0;
@@ -36,10 +36,11 @@ export async function actualUpdateUi(initial:ControlLanguage,options:UpdateUiOpt
  const actor='qa-update-'+(++fixtureId);
  const session=new Map<string,string>(),storage=new Map<string,string>(),calls={fetch:[]as string[],reload:0,lazy:0,worker:0,posts:[]as unknown[],menu:0,completed:[]as string[],routes:[]as string[]};
  if(options.kind==='discovery')storage.set('imbewu-tour-discovery:'+actor,JSON.stringify({openings:TOUR_INVITATION_LIMIT,menuTipDismissed:false}));
+ if(options.seenPreview)storage.set('imbewu-feature-preview-seen:assistant-access','1');
  if(options.guide)session.set(UPDATE_GUIDE_KEY,JSON.stringify(options.guide));
  const timers=new Map<number,{fn:()=>void;ms:number;interval:boolean}>();let nextTimer=0;
  const window=Object.assign(new EventTarget(),{
-  location:{search:'',reload:()=>calls.reload++},sessionStorage:{getItem:(k:string)=>session.get(k)??null,setItem:(k:string,v:string)=>session.set(k,v),removeItem:(k:string)=>session.delete(k)},
+  location:{search:'',reload:()=>calls.reload++},localStorage:{getItem:(k:string)=>storage.get(k)??null,setItem:(k:string,v:string)=>storage.set(k,v)},sessionStorage:{getItem:(k:string)=>session.get(k)??null,setItem:(k:string,v:string)=>session.set(k,v),removeItem:(k:string)=>session.delete(k)},
   setTimeout:(fn:()=>void,ms:number)=>{const id=++nextTimer;timers.set(id,{fn,ms,interval:false});return id;},clearTimeout:(id:number)=>timers.delete(id),
   setInterval:(fn:()=>void,ms:number)=>{const id=++nextTimer;timers.set(id,{fn,ms,interval:true});return id;},clearInterval:(id:number)=>timers.delete(id),
  });
@@ -55,6 +56,7 @@ export async function actualUpdateUi(initial:ControlLanguage,options:UpdateUiOpt
   loadReleaseNotes:async()=>{calls.lazy++;return{visibleNotes,visibleUpdateTour};},
   fetch:async(url:string)=>{calls.fetch.push(url);const language=new URL(url,'http://fixture').searchParams.get('language')??'';let data;if(options.server)data=await options.server(language,url,calls.fetch.length);else{const notes=visibleNotes(),tour=visibleUpdateTour();data={sha:'qa-new-build',notes,tour,...(isUpdateCopyLanguage(language)?{copyLanguage:language,copy:cleanUpdateCopy(await loadUpdateCopy(language),[...notes,...updateTourSources(tour)],language,language)}:{})};}return{ok:true,json:async()=>data};},
  };
+ scope.FeatureUpdatePreview=compiled('components/FeatureUpdatePreview.tsx','FeatureUpdatePreview',scope);
  scope.UpdateCopyText=compiled('components/UpdateCopyText.tsx','UpdateCopyText',scope);
  const kind=options.kind??'banner',file=kind==='banner'?'components/PWAUpdateNotifier.tsx':kind==='guide'?'components/UpdateGuide.tsx':kind==='history'?'app/updates/page.tsx':kind==='discovery'?'components/TourDiscovery.tsx':'components/Onboarding.tsx';
  const name=kind==='banner'?'PWAUpdateNotifier':kind==='guide'?'UpdateGuide':kind==='history'?'UpdatesPage':kind==='discovery'?'TourDiscoveryProvider':'Onboarding';const Component=compiled(file,name,scope);

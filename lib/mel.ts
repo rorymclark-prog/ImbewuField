@@ -1,4 +1,4 @@
-import type { UserRole } from './db/types';
+import type { UserRole } from './user-role';
 
 export const MEL_STAGES = ['baseline', 'course_before', 'course_after', 'midpoint', 'closeout', 'app_midpoint', 'app_closeout'] as const;
 export type MelStage = typeof MEL_STAGES[number];

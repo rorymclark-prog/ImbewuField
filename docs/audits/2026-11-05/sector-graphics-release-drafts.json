@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-05",
+  "status": "unreviewed-machine-draft",
+  "scope": "Sector update-banner UI descriptions only; no farming or course instruction",
+  "entries": [
+    {
+      "sourceEnglish": "Sector illustrations have bolder arrows, larger sun symbols and a clearer map key.",
+      "zu": "Imidwebo yeSector inemicibisholo egqamile, izimpawu zelanga ezinkulu nokhiye wemephu ocace kakhudlwana.",
+      "st": "Ditshwantsho tsa Sector di na le metsu e hlahelletseng, matshwao a maholo a letsatsi le senotlolo sa mmapa se hlakileng ho feta.",
+      "ts": "Swifaniso swa Sector swi ni miseve leyi vonakaka kahle, mimfungho leyikulu ya dyambu ni xilotlelo xa mepe lexi nga erivaleni swinene.",
+      "ve": "Zwifanyiso zwa Sector zwi na misevhe i vhonalaho zwavhuḓi, zwiga zwihulwane zwa ḓuvha na ṱhalutshedzo ya mapa i re khagala nga u engedza."
+    },
+    {
+      "sourceEnglish": "Sector illustrations now show bolder terrain contours and matching key lines.",
+      "zu": "Imidwebo yeSector manje ibonisa imigqa yokuphakama egqamile nemigqa ehambisana nayo kukhiye wemephu.",
+      "st": "Ditshwantsho tsa Sector jwale di bontsha mela e hlahelletseng ya bophahamo ba mobu le mela e tsamaellanang le yona senotlolong sa mmapa.",
+      "ts": "Swifaniso swa Sector sweswi swi komba milayeni yo tlakuka ka misava leyi vonakaka kahle ni milayeni leyi fambelanaka na yona eka xilotlelo xa mepe.",
+      "ve": "Zwifanyiso zwa Sector zwino zwi sumbedza mitalo ya vhulapfu ha mavu i vhonalaho zwavhuḓi na mitalo i elanaho nayo kha ṱhalutshedzo ya mapa."
+    },
+    {
+      "sourceEnglish": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+      "zu": "Imidwebo yeSector igcina imibala egqamile, inamalebula amakhulu nemigqa yokuphakama ecace kakhudlwana.",
+      "st": "Ditshwantsho tsa Sector di boloka mebala e nonneng, di na le mabitso a maholo le mela ya bophahamo e hlakileng ho feta.",
+      "ts": "Swifaniso swa Sector swi hlayisa mihlovo leyi fuweke, swi ni malebulu lamakulu ni milayeni yo tlakuka leyi nga erivaleni swinene.",
+      "ve": "Zwifanyiso zwa Sector zwi vhulunga mivhala yo pfumaho, zwi na malebulu mahulwane na mitalo ya vhulapfu i re khagala nga u engedza."
+    }
+  ]
+}

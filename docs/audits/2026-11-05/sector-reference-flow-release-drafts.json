@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-05",
+  "status": "unreviewed-machine-draft",
+  "scope": "Sector update description only; no farming or course instruction",
+  "sourceEnglish": "Sector maps show clearer wind and rain symbols, with slope and contours kept visible.",
+  "translations": {
+    "zu": "Amamephu eSector abonisa izimpawu zomoya nezemvula ezicace kakhudlwana, kanti umthambeka nemigqa yokuphakama kuhlala kubonakala.",
+    "st": "Limmapa tsa Sector di bontsha matshwao a hlakileng ho feta a moya le pula, ha moepa le mela ya bophahamo di ntse di bonahala.",
+    "ts": "Mimepe ya Sector yi komba mimfungho ya moya ni mpfula leyi nga erivaleni swinene, naswona ku voyama ni milayeni yo tlakuka swi tshamaka swi vonaka.",
+    "ve": "Mimepe ya Sector i sumbedza zwiga zwa muya na mvula zwi re khagala nga u engedza, ngeno mutevhe na mitalo ya vhulapfu zwi tshi dzula zwi tshi vhonala."
+  }
+}

@@ -237,6 +237,7 @@ export function buildLockedIllustrationPrompt(
       : paintedPaper
       ? `ILLUSTRATED PROPERTY FINISH: the app adds the measured boundary, labels and inventory after you paint. Your artwork owns the roof, driveway and all property materials; it will not be covered with flat guide polygons. The outside page and legend remain white. Keep building silhouettes, paths, areas and counts faithful to the saved design.`
       : `HYBRID FINISH: the app preserves the exact property edge and then reinforces exact illustrated roof and driveway geometry, technical routes, labels and legend over your artwork. It does not paste raw satellite or ground tiles back inside the painted property. Make the trees, beds, tanks, basins, structures and ground one continuous, visually rich illustration beneath that precise cartographic linework.`,
+    layer === 'ZONES' ? 'ZONE AUTHORITY: paint only existing site materials and structures. Draw no coloured zoning bands, region boundaries, numbers or badges; the app draws the saved zones and calibrated scale after your artwork.' : '',
     waterArtDirection,
     groundClause,
     paintedPhotoCompleteness,
@@ -315,7 +316,7 @@ export function buildProducerPrompt(
     `Do not add a title block, legend panel, paper border, north arrow, scale bar or outer margin. ` +
     `Do not rotate, zoom, shrink, crop, recenter or reframe the property. Use the selected style's palette and brushwork only; the app adds all sheet furniture afterwards.`;
   const noInvent =
-    `NO INVENT: do not add any roads, roofs, trees, beds, ponds, paths, labels, shadows or other features that are not already marked or visible in the source image.`;
+    `Photographic inset seams, repeated blur strips and exposure joins are not physical roads, fences or walls. Ignore those image artefacts. NO INVENT: do not add any roads, roofs, trees, beds, ponds, paths, labels, shadows or other features that are not already marked or visible in the source image.`;
   const speciesInstructions = items
     .filter(i => i.speciesCrownForm && i.label)
     .map(i => `The tree marked '${i.label}' is a ${i.speciesCrownForm} canopy tree.`)
@@ -491,7 +492,7 @@ const PLAN_SET_ANCHOR_PHOTO =
 // the model something concrete to hold constant across the 5 independent calls of one batch.
 export const STYLE_LINES: Record<StylePreset, string> = {
   precision_atlas:
-    'STYLE — Precision Atlas: premium flat orthographic landscape cartography with the lush hand-painted finish of a commissioned garden masterplan. Use layered transparent watercolor washes plus controlled gouache detail, fine dry-brush ground grain, disciplined ink edges and strong figure-ground clarity. Fixed palette: deep slate roofs, layered sage and olive land, cool blue-green accents, warm buff soil, charcoal linework and parchment cream. The result is richly illustrated and print-ready, never a dark satellite filter, never photorealistic, never oblique or isometric.' + PLAN_SET_ANCHOR,
+    'STYLE — Precision Atlas: premium flat orthographic landscape cartography with the lush hand-painted finish of a commissioned garden masterplan. Use layered transparent watercolor washes plus controlled gouache detail, fine dry-brush ground grain, disciplined ink edges and strong figure-ground clarity. Fixed palette: deep slate roofs, layered sage and olive land, cool blue-green accents, warm buff soil, charcoal linework and pure white page space. The result is richly illustrated and print-ready, never a dark satellite filter, never photorealistic, never oblique or isometric. Keep fine roof materials, vegetation textures and clear open surfaces, with no ornamental border or heavy outline. Let the app add its exact boundary, labels and white legend afterwards.' + PLAN_SET_ANCHOR,
   // PHOTO PLAN — the reference-sheet formula, and the reason it exists.
   //
   // Rory spent a paid Master Atlas render on 2026-07-29 and it came back as an invented engraved
@@ -542,6 +543,9 @@ export const STYLE_LINES: Record<StylePreset, string> = {
 // exist on that sheet (mirrors itemInFilter/lineInFilter in DesignGlossy.tsx), so absent features
 // are never primed and zone entries can never leak onto a non-Zones sheet — by construction, not by
 // telling the model "never do X" (the thing the audit found backfires).
+// Both marker vocabularies must describe one physical cover, rather than one inventing a roof.
+const SHADE_TUNNEL_ART_DIRECTION = 'a shade tunnel marker is a frame covered in porous dark shade mesh, with its crop beds faintly visible beneath. Show the mesh canopy across its exact footprint and thin frame ribs; never an uncovered vegetable bed or a solid metal building roof';
+
 const M = {
   // WAS: 'green rectangles are vegetable beds full of cabbages and leafy greens'. Rory, on a
   // finished hybrid: "the veg beds still look like a hedge and don't have vegetables". Two causes,
@@ -604,6 +608,7 @@ const M = {
   terrace: 'a narrow long rectangular marker is a terrace retaining bank — a hatched, textured retained riser face holding back a level change',
   coop: 'a marker is a fixed chicken coop — a small timber hen house on low legs with a sloped roof and a wire-mesh run, no wheels',
   chicken_tractor: 'a marker is a chicken tractor — a small wheeled A-frame ark on skids, NOT the fixed coop',
+  shade_tunnel: SHADE_TUNNEL_ART_DIRECTION,
   nursery: 'a marker is a nursery table — a waist-high slatted timber bench with seedling trays under light shade cloth',
   compost: 'a marker is a compost bay — three adjacent open-topped timber-slat bays in a row',
   worm_farm: 'a marker is a worm farm — a stack of 2-3 dark plastic trays on short legs, lidded, never open-topped bays',
@@ -621,14 +626,14 @@ const M = {
 type ShowcaseMarkerKey = keyof typeof M;
 
 const SHOWCASE_MARKERS_BY_SHEET: Record<ShowcaseSheetKind, ShowcaseMarkerKey[]> = {
-  all: ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'zones'],
+  all: ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'shade_tunnel', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'zones'],
   zones: ['zones', 'driveway'],
   water: ['tank', 'tap', 'dam', 'borehole', 'pipe', 'drip', 'driveway', 'tree_basin', 'banana_circle', 'greywater_basin', 'greywater_line', 'greywater_fitting'],
   // Sheet 05. Swale, berm, terrace and half-moon moved off Water when earthworks became its own
   // setting-out drawing; the driveway stays as the orientation mark every sheet carries.
   earthworks: ['swale', 'berm', 'terrace', 'half_moon', 'driveway'],
   planting: ['bed', 'staple_garden', 'tree', 'windbreak', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank'],
-  structures: ['building', 'hive', 'patio', 'fence', 'path', 'driveway', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground'],
+  structures: ['building', 'hive', 'patio', 'fence', 'path', 'driveway', 'coop', 'chicken_tractor', 'shade_tunnel', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground'],
 };
 
 const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
@@ -641,7 +646,7 @@ const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
   swale: /swale/i,
   pipe: /\bpipe\b/i,
   drip: /drip|irrigation line/i,
-  building: /\bbuilding\b|\bhouse\b|\bshed\b|\bhut\b|\bbarn\b|shade (?:house|tunnel)|greenhouse|polytunnel/i,
+  building: /\bbuilding\b|(?<!shade )\bhouse\b|\bshed\b|\bhut\b|\bbarn\b|greenhouse|polytunnel/i,
   hive: /hive/i,
   patio: /patio|paving|courtyard/i,
   fence: /fence/i,
@@ -661,6 +666,7 @@ const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
   terrace: /terrace|retaining bank/i,
   coop: /chicken coop/i,
   chicken_tractor: /chicken tractor/i,
+  shade_tunnel: /shade (?:house|tunnel)/i,
   nursery: /nursery/i,
   compost: /\bcompost\b/i,
   worm_farm: /worm farm/i,
@@ -696,7 +702,7 @@ export function showcaseSheetKindForLabel(layerLabel: string): ShowcaseSheetKind
 // The same saved bed has two stages: ground to prepare on Earthworks, growing crops on Planting.
 // Sharing the planted glossary made the paid setting-out sheet grow a garden over its dig marks.
 function earthworksDrawingContract(): string {
-  return 'EARTHWORKS SETTING-OUT — BEFORE PLANTING: this sheet shows ground preparation, not the finished garden. Each brown rectangular bed is one bare prepared bed with restrained soil and mulch texture; keep every bed separate at its exact corners, width, length, rotation and spacing. Do not subdivide, merge, lengthen, move or add beds. Each small brown circle is one empty tree pit to dig, not a tree canopy, planted basin or pot. A marked banana circle is an excavated basin with a soil rim, without banana plants. Swales are dry on-contour excavated channels and raised spoil berms, in earth colours along the exact saved route and width; never blue water pipes, streams, planted hedges or tree rows. Preserve existing vegetation visible in the photograph as quiet site context, but add no proposed crops, trees, palms, hedges or flowering plants. The whole-site planting brief is future context only. The number of marked pits, beds and swales is authoritative.';
+  return 'EARTHWORKS SETTING-OUT — BEFORE PLANTING: this sheet shows ground preparation, not the finished garden. Each brown rectangular bed is one bare prepared bed with restrained soil and mulch texture; keep every bed separate at its exact corners, width, length, rotation and spacing. Do not subdivide, merge, lengthen, move or add beds. Each small brown circle locates one empty tree pit to dig, not a tree canopy, planted basin or pot. These circles identify positions; never infer an excavation diameter, depth or bank height from a symbolic marker. Bare prepared beds have soil edges: add no masonry, timber framing or pale kerbs unless explicitly recorded in the feature register. A marked banana circle is an excavated basin with a soil rim, without banana plants. Swales are dry on-contour excavated channels and raised spoil berms, in earth colours along the exact saved route and width; never blue water pipes, streams, planted hedges, tree rows or invented stone retaining walls. Preserve existing vegetation visible in the photograph as quiet site context, but add no proposed crops, trees, palms, hedges or flowering plants. The whole-site planting brief is future context only. The number of marked pits, beds and swales is authoritative.';
 }
 
 function sheetDrawingScope(sheet: ShowcaseSheetKind): string {
@@ -772,7 +778,7 @@ export function buildShowcasePrompt(
   const labels = `${elementsText}${placeName ? '; ' + placeName : ''}`;
   const markerGlossary = showcaseMarkerGlossary(sheetKind, elementsText);
   const noInvent =
-    `NO INVENT: the feature list below is complete. Do not add any road, roof, tree, bed, pond, path, pipe, irrigation run, greywater run, label, shadow or other feature that is not already marked or visible in the source image. If a feature is absent from the list, it must be absent from the artwork and legend.`;
+    `Photographic inset seams, repeated blur strips and exposure joins are not physical roads, fences or walls. Ignore those image artefacts. NO INVENT: the feature list below is complete. Do not add any road, roof, tree, bed, pond, path, pipe, irrigation run, greywater run, label, shadow or other feature that is not already marked or visible in the source image. If a feature is absent from the list, it must be absent from the artwork and legend.`;
   const waterSections = [
     /tank|jojo|rain barrel/i.test(elementsText) ? 'RAINWATER' : '',
     /\bpipe\b|drip|irrigation|tap|borehole|\bpond\b|\bdam\b|swale/i.test(elementsText) ? 'IRRIGATION' : '',
@@ -861,6 +867,7 @@ const OVERLAY_ICONS: Record<string, string> = {
   // description meant for a different catalog element.
   coop:      'a chicken-coop marker → a small fixed timber hen house on low legs, a sloped roof, a wire-mesh run alongside it, no wheels and no skids',
   chicken_tractor: 'a chicken-tractor marker → a small A-frame ark on skids about 2 m long, timber ends and chicken-wire sloping sides, two small wheels at one end. It is a movable hen house, NOT a tractor and not any kind of vehicle',
+  shade_tunnel: SHADE_TUNNEL_ART_DIRECTION,
   nursery:   'a nursery-table marker → a waist-high slatted timber bench carrying rows of small black seedling trays under light shade cloth',
   compost:   'a compost-bay marker → three adjacent open-topped timber-slat bays in a row, the left one heaped with dark brown compost',
   // WORM FARM is a stacked bin system, not a compost bay — audit finding 2026-07-25: ICON_MATCH.compost
@@ -907,7 +914,7 @@ const OVERLAY_ICONS: Record<string, string> = {
 };
 
 const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
-  all:        ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'pollinator', 'patio', 'fence', 'path'],
+  all:        ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'shade_tunnel', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'pollinator', 'patio', 'fence', 'path'],
   zones:      ['building', 'path', 'fence'],
   // half_moon/berm/terrace/swale are 'earthworks' category, which sheetForElement now routes to
   // its own 'earthworks' sheet — same authority DesignGlossy.tsx uses, so this list cannot drift
@@ -915,7 +922,7 @@ const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
   water:      ['tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'pipe', 'drip'],
   earthworks: ['swale', 'half_moon', 'berm', 'terrace'],
   planting:   ['bed', 'staple_garden', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator'],
-  structures: ['building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'patio', 'fence', 'path'],
+  structures: ['building', 'hive', 'coop', 'chicken_tractor', 'shade_tunnel', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'patio', 'fence', 'path'],
 };
 
 // Only describe icons this sheet can actually contain. Describing an icon the sheet has no marker
@@ -935,10 +942,11 @@ const ICON_MATCH: Record<string, RegExp> = {
   // Split so a fixed Chicken Coop and a wheeled Chicken Tractor get their own, different, correct
   // descriptions instead of one regex routing both to whichever came first (audit finding 2026-07-25).
   coop: /chicken coop/i, chicken_tractor: /chicken tractor/i,
+  shade_tunnel: /shade (?:house|tunnel)/i,
   nursery: /nursery/i, compost: /\bcompost\b/i, worm_farm: /worm farm/i,
   goat_pen: /goat pen/i, pig_pen: /pig pen/i, kraal: /\bkraal\b/i, rabbit_hutch: /rabbit hutch/i,
   duck_pond: /duck pond/i, livestock_trough: /livestock trough/i, biodigester: /biodigester/i, market_stall: /market stall/i, playground: /playground|play area/i,
-  pollinator: /pollinator/i, vetiver_row: /vetiver row/i, building: /\bshed\b|\bhut\b|\bbarn\b|shade (?:house|tunnel)|greenhouse|polytunnel/i,
+  pollinator: /pollinator/i, vetiver_row: /vetiver row/i, building: /\bshed\b|\bhut\b|\bbarn\b|greenhouse|polytunnel/i,
   patio: /patio|paving|courtyard/i, fence: /fence/i, path: /path|walkway/i,
   swale: /swale/i, pipe: /pipe/i, drip: /drip|irrigation/i, windbreak: /windbreak|hedge/i,
 };
@@ -1307,17 +1315,12 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
   // and NOT the driveway's tar, gives it somewhere correct to put that area.
   const paintWhatIsThere =
     `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, and paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never given a ridge or pitch, and never the tar-black of the driveway; it reads as ground you can walk on, not a structure. Render any building as a quiet, low-key roof colour sitting in the ground fabric — not a sharp, high-contrast structure, not the star of the composition; its exact outline is drawn separately afterwards. Keep the land legible: this is the background a farmer reads their sun, wind and fire lines against, so it must stay crisp and varied, never a flat wash.`;
-  // RESTYLE ONLY, not KEEP EXACT. The old wording asked the model to hold the boundary/roof/
-  // driveway "in exactly their photographed shape, position and scale" — a registration promise
-  // gpt-image-2 cannot keep (it reframes the whole scene) and one the app no longer asks it to
-  // keep, because it no longer trusts it: composeSectorSheet draws the true house, driveway and
-  // boundary from refLayers on top of this image, at measured coordinates, regardless of what the
-  // model returns. The only thing that still matters is that the overall crop stays roughly the
-  // same scene, since a wildly different crop still looks wrong sitting under our overlay.
+  // The app restores factual source structures, but that cannot hide a relocated roof painted
+  // beside them. Keep the photographed silhouettes as well as the common camera and crop.
   const restyleOnly =
-    `RESTYLE ONLY: this is a ground-texture pass, not a survey. Keep the same north-up, flat orthographic top-down view and roughly the same crop and scale as the source photograph — no oblique view, no perspective tilt, no 3D camera, no zoom or recentering. The property boundary, every roof and the driveway will be drawn separately afterwards, at measured positions, directly over this artwork — so their exact outline, position and scale here do not matter and are not graded; only the overall scene and crop do.`;
+    `RESTYLE ONLY: this is a ground-texture pass, not a survey. Keep the same north-up, flat orthographic top-down view and roughly the same crop and scale as the source photograph — no oblique view, no perspective tilt, no 3D camera, no zoom or recentering. The property boundary, every roof and the driveway will be drawn separately afterwards, at measured positions, directly over this artwork — so retain their photographed outline, position and scale. Repaint their materials without moving, adding, merging or enlarging them; keep the same overall scene and crop.`;
   const noInvent =
-    `NO INVENT: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible in the source photograph. Where the ground is open it stays open.`;
+    `Photographic inset seams, repeated blur strips and exposure joins are not physical roads, fences or walls. Ignore those image artefacts. NO INVENT: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible in the source photograph. Where the ground is open it stays open.`;
   const noAnalysis =
     `DO NOT DRAW THE ANALYSIS: draw no arrows, arcs, wedges, compass letters (N/E/S/W), bearing text, distance rings, or any sun, wind, fire, water or frost annotation. Draw no callouts, no legend panel, no title block, no north arrow, no scale bar and no lettering of any kind, anywhere on the sheet. This sheet is a restyle of the ground only — the app draws all of the sun/wind/fire/water/frost analysis afterwards from the site's real measured data, never from anything guessed off this image.`;
   // photo_plan / satellite_overlay: the style line already forbids stylising the ground "under any
@@ -1342,6 +1345,7 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
   const body = [
     `TASK: turn this whole aerial photograph of a real South African smallholding${placeName ? ` (${placeName})` : ''} into one finished illustrated map, edge to edge, in the style below. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this artwork.`,
     edgeToEdge,
+    `APPROVED SECTOR APPEARANCE: rich, finely detailed aerial illustration with layered natural greens, distinct roof materials and readable open ground. Preserve THIS source site's land cover and every feature position; do not import another site's buildings, garden, reserve, fence, terrain or vegetation. The app adds bright gold summer suns, blue winter suns, flowing weather arrows, the fine saved boundary with small round post symbols, local contour labels and a pure white key AFTER painting. Draw none of these analytical graphics yourself, and apply no vignette or boundary-shaped dark patch: the app alone shades the surroundings of the saved proposed polygon.`,
     paintWhatIsThere,
     restyleOnly,
     noInvent,
@@ -1356,54 +1360,12 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }
 
-/**
- * Paid Sector polish — the input is already the complete deterministic sheet.
- *
- * This is intentionally separate from buildSectorRestylePrompt. That older prompt produces a safe
- * hybrid by painting only the aerial ground before the app redraws every analytical mark. It is a
- * useful fallback, but it cannot create the visibly authored, frame-worthy Sector sheet requested
- * by the paid "AI-polished" action. Here the exact sheet is the reference and the model polishes the
- * whole page. The exact source is saved separately before this runs, so AI typography or styling
- * variation can never destroy the authoritative bearings.
- */
+/** A second pass improves the unannotated site artwork. The app owns every analytical mark. */
 export function buildSectorSheetPolishPrompt(stylePreset: StylePreset, placeName?: string): string {
-  // WHY THIS WAS REWRITTEN (three times — read all three, they are one story).
-  //
-  // First: Full Treatment reverted to Hybrid on almost every attempt. render-difference.ts's gate
-  // needs >=10% of the compared pixels to change visibly, and the old "POLISH, DO NOT REDESIGN /
-  // keep the ground calm" wording asked for exactly the restrained nudge that gate rejects.
-  //
-  // Second: once past the gate, every label came back DOUBLED — the model's half-redrawn overlay
-  // ghosting behind the app's own recomposed one. The interim fix told the model to leave the
-  // overlay pixels alone entirely, because the finisher was going to redraw them anyway.
-  //
-  // Third, the real one: that finisher WAS THE BUG. Rory, after two weeks and a lot of paid
-  // renders: "there's no third AI polish render at all... The second is an AI generated underlay
-  // with elements overdrawn." He was right — the completion handler cropped the model's polished
-  // page back to the map panel and rebuilt the entire overlay deterministically, so the paid third
-  // pass could never look different from the Hybrid no matter what it painted. That crop+recompose
-  // is now gone for this stage (see DesignGlossy's completion handler): the model's page IS the
-  // Full Treatment result, exactly as extendProtectMaskToStyleSheet's docblock always promised
-  // ("deliberately leaves the chrome editable so the second paid pass can produce the richer
-  // typography, pictorial legend and notes layout that distinguish it from Hybrid"). So this
-  // prompt now asks for the whole authored page: ground AND marks AND typography, redrawn
-  // beautifully, with the wording and geometry copied faithfully. The exact master is saved
-  // separately before this runs and remains the factual authority; the difference gate still
-  // rejects a lazy copy; the sheet is captioned as the AI-authored version.
-  const polishClause = isPhotoPreservingStyle(stylePreset)
-    ? `THE GROUND: give the photograph a real, visible correction pass — push exposure, white balance, contrast, dehaze and sharpness hard enough that the ground clearly reads as a better photograph: richer greens, cleaner soil colour, real depth in shadow, crisp texture. The ground stays a photograph, never illustrated. THE MARKS AND TEXT: redraw every label, arrow, arc, wedge, legend row, title, north arrow and scale bar yourself, in clean professional cartographic typography — crisp lettering on well-shaped plates, confident arrowheads, even line weights, a beautifully set legend panel with real hierarchy. The marks should look deliberately designed over the photograph, never pasted on it.`
-    : `THE WHOLE PAGE IS YOURS TO REDRAW: repaint the ground in the requested style with real materials, texture and one consistent light direction, and redraw every label, arrow, arc, wedge, legend row, title, north arrow and scale bar yourself in the same hand — clean professional cartographic typography, confident arrowheads, even line weights, a beautifully set legend panel with real hierarchy. RETURNING THE PAGE LOOKING THE SAME IS A FAILED RESULT, and so is a flat filter or vignette over the top — someone paid for this pass specifically to get an authored sheet the earlier passes could not produce.`;
-  const body = [
-    `TASK: repaint this COMPLETE, already-correct Sector Analysis plan sheet${placeName ? ` for ${placeName}` : ''} as one finished, frame-worthy professional cartographic artwork in the requested style. The supplied image already contains the final map crop, property geometry, title, labels, arrows, sectors, sun paths, slope direction, legend, north arrow and scale bar — it is your complete and only blueprint.`,
-    `USE THE WHOLE INPUT AS THE BLUEPRINT: preserve the same canvas aspect ratio, panel layout, map crop, north-up orientation and top-down view. Do not zoom, crop, rotate, recenter, tilt or replace the site.`,
-    `PRESERVE CONTENT, NOT PIXELS: keep every existing arrow's start, end, direction and colour family; keep every sun arc, sector wedge, slope arrow, boundary, house and driveway in the same position. Keep every legend row and map label. Do not add, remove, merge or rename any analytical feature. Redraw all of them; move none of them.`,
-    polishClause,
-    `NO INVENTION: add no new wind, fire, rain, sun, frost, contour, access, slope or site claim. Add no tree, bed, pond, tank, path, fence or building. Do not infer any new direction from the photograph.`,
-    noZoning,
-    `TEXT: copy the supplied wording exactly, letter for letter — every bearing, every legend row, every note. Never paraphrase, translate, abbreviate or add commentary. If a word cannot be rendered confidently, reproduce the supplied letterforms as closely as you can rather than substituting different text.`,
-    `FINAL CHECK: place this beside the sheet you were given — if a farmer could not tell within two seconds which one is visibly more polished, the pass has failed. It must still be recognisably the same Sector Analysis: same site, same analytical geometry, same directions, same position, same labels and same legend — an unmistakably better-drawn edition of the identical document.`,
-  ].join('\n\n');
-  return `${STYLE_LINES[stylePreset]}\n\n${body}`;
+  // Cropping the old Hybrid page still left sun/wind/fire graphics inside its map. Asking the
+  // model to redraw those and then composing them again produced two competing registrations.
+  // The caller now passes accepted ground-only artwork; never ask for a page or analysis here.
+  return `${buildSectorRestylePrompt(stylePreset, placeName)}\n\nPAID SECOND PASS: the input is the FIRST-PASS AI artwork, a draft, not a finished sheet. Improve its materials, lighting, roof detail and texture visibly while retaining every existing feature in the same position. RETURNING THE SUPPLIED IMAGE UNCHANGED IS A FAILED RESULT; a global filter, grain, warmth or vignette alone is not a finished second pass. WRITE NOTHING: no text, labels, legend, title, north arrow or scale bar. Draw no sun paths, arrows, arcs, wedges, wind, fire, rain, contours or analysis marks. The app draws those once afterwards from the frozen site facts. Invent nothing and move none of the existing features.`;
 }
 
 /**
@@ -1421,15 +1383,26 @@ export function buildSectorSheetPolishPrompt(stylePreset: StylePreset, placeName
  * "paint the fabric" contract. Keeping them separate honours the single-place-for-one-answer rule
  * from the recurring-bug-pattern section of the handover: one function per distinct prompt context.
  */
-export function buildPhasingRestylePrompt(stylePreset: StylePreset, placeName?: string): string {
-  const photographic = isPhotoPreservingStyle(stylePreset);
+export const PHASING_ARTWORK_PROMPT_MARKER = 'PHASING MAP ARTWORK v2';
+
+export function buildPhasingRestylePrompt(stylePreset: StylePreset, placeName?: string, designFacts = '', groundSource: 'photo' | 'paper' = 'photo'): string {
+  const ground = groundContractFor(stylePreset, groundSource);
+  const photographic = ground === 'photo';
   const body = [
+    `${PHASING_ARTWORK_PROMPT_MARKER}.`,
     `TASK: ${photographic ? 'enhance the clarity of' : 'illustrate'} this MAP COLUMN of a real South African smallholding${placeName ? ` (${placeName})` : ''} in the selected style. It is the map artwork for an implementation and phasing sheet. The schedule panel is not in this image; the app adds it afterwards.`,
-    photographic
+    ground === 'paper'
+      ? `WHITE PAPER FINISH: paint only the supplied feature footprints as detailed plan illustrations. All space between and beyond features stays pure white drawing paper; add no ground, wash, terrain or neighbouring landscape.`
+      : photographic
       ? `PHOTOGRAPHIC FINISH: keep the real ground photographic. Correct clarity, contrast and exposure without moving, repainting or inventing objects. Retain every already-marked design feature in the same position, count and footprint.`
+      : groundSource === 'paper'
+      ? `ILLUSTRATE THE SAVED PROPERTY: render only the saved property materials and marked features. Keep unknown surfaces neutral, paving uncovered and roofs inside their supplied silhouettes. Never add proposed planting that is not already marked.`
       : `ILLUSTRATE THE SUPPLIED MAP: render the existing ground and already-marked design features in one coherent hand, edge to edge. Keep open ground open, paving uncovered and roofs inside their existing silhouettes. Never add proposed planting that is not already marked.`,
-    `GEOMETRY: keep the exact north-up orthographic crop, aspect ratio, scale and camera. Every bed keeps its outer corners, length, width, rotation and gap from its neighbours. Every tree, tank, structure, route and phase pin stays at its supplied position. Do not merge, subdivide, omit or duplicate features.`,
+    groundSource === 'paper' && ground === 'paint' ? `ILLUSTRATED PROPERTY: paint the saved property interior as one coherent landscape; unknown surfaces stay neutral. Keep the surrounding page pure white. Complete crowns may overlap the property line.` : '',
+    `GEOMETRY: keep the exact north-up orthographic crop, aspect ratio, scale and camera. Every bed keeps its outer corners, length, width, rotation and gap from its neighbours. Every tree, tank, structure and route stays at its supplied position. The app adds phase pins afterwards; do not paint numbered circles. Do not merge, subdivide, omit or duplicate features.`,
     `NO PAGE FURNITURE: there is no reserved legend or schedule area inside this map image. Do not create a blank side panel, cream strip, border, title, legend, north arrow or scale bar. Draw no dates, week ranges, tasks, phase names, hold points or other planning text; the app owns every schedule fact. Write nothing.`,
+    `REPLACE EVERY GUIDE: circles and coloured footprints are placement guides, not finished symbols. Paint coherent top-down trees, shade cloth stretched over frames, crops and materials. Keep a shade tunnel distinct from uncovered vegetable beds. Do not copy the flat SVG glyphs.`,
+    ...(designFacts ? [`SAVED DESIGN FACTS AND FOOTPRINTS:\n${designFacts}`] : []),
     `FINAL CHECK: return the same complete map column in the same frame, with visibly improved materials or photographic clarity, and no new feature, panel or text.`,
   ].join('\n\n');
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;

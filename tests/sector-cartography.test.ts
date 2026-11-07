@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import ts from 'typescript';
 
 import { bearingToUnitVector, deriveSectorModel, labelToBearing } from '../lib/sector.ts';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth } from '../lib/sector-cartography.ts';
@@ -382,14 +383,15 @@ test('regional wedges keep one dashed provenance mark per energy, not two runawa
   assert.match(regionalEnergyPainter, /drawRegionalCenterline\(fireWedge, SECTOR_STYLES\.fire\.color\)/);
 
   const legendStart = source.indexOf('const summerCoolingWind = model.namedWind.find');
-  const legendEnd = source.indexOf('if (model.water) rows.push', legendStart);
+  // Stop before terrain rows: contours now have their own evidence gate, independent of slope.
+  const legendEnd = source.indexOf("if (sheetContours?.status === 'ok'", legendStart);
   assert.ok(legendStart >= 0 && legendEnd > legendStart);
   const legend = source.slice(legendStart, legendEnd);
   assert.equal((legend.match(/style: 'dashline'/g) ?? []).length, 4, 'three winds and fire remain dashed in the legend');
   assert.match(legend, /model\.driveway\)[\s\S]*style: 'line'/, 'computed driveway stays in the solid register');
 });
 
-test('wires Sector jobs through authoritative houses and protected-pixel restoration', () => {
+test('wires Sector jobs through authoritative houses and protected-pixel restoration', async () => {
   const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
   const composeStart = source.indexOf('async function composeSectorSheet(');
   const composeEnd = source.indexOf('export async function buildBlueprintSectorMap(', composeStart);
@@ -442,26 +444,77 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
   // legend rows, notes, title — back over it at BOTH stages. The stages still genuinely differ,
   // because the polish pass repaints the ground the whole page is built on. See
   // lib/sheet-chrome-pass.ts.
-  assert.match(
-    queue,
-    /cropStyleSheetToMap\(hybridInput, mapWidth, mapHeight\)/,
-    'the polish stage must send the map column, never the composed Hybrid page',
-  );
-  assert.match(
-    queue,
-    /const protectMaskDataUrl = kind === 'sector' && !polishStage/,
-    'a protect mask promises a byte-restore; the polish stage restores nothing, so it must not send one',
-  );
-  assert.match(
-    completion,
-    /sheet\.key === 'sector' && sourceImage && protectMask && !isPolishedResult/,
-    'the HYBRID stage (and only it) restores protected source pixels',
-  );
-  assert.match(
-    completion,
-    /: sheet\.key === 'sector'\s*\n\s*\? await finishSectorRef\.current\(factualModelImage, frozenScene\)/,
-    'both Sector stages must recompose the app-owned analysis — a raw model return has no legend on it',
-  );
+  // A crop of the Sector map still contains sun/wind/fire marks. Only its unannotated accepted
+  // artwork may enter the second pass. Base keeps the crop contract on its own route.
+  const queueTree=ts.createSourceFile('queue.ts',queue,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  let mapInput:ts.Expression|undefined;
+  function findInput(node:ts.Node) {
+    if(ts.isVariableDeclaration(node) && node.name.getText(queueTree)==='hybridMapInput')mapInput=node.initializer;
+    ts.forEachChild(node,findInput);
+  }
+  findInput(queueTree);assert.ok(mapInput);
+  const select=new Function('hybridInput','kind','hybridMapForPolishRef','cropStyleSheetToMap','mapWidth','mapHeight',
+    `return (async()=>(${mapInput.getText(queueTree)}))();`);
+  const sourceText=mapInput.getText(queueTree);
+  assert.match(sourceText,/kind === 'sector'/);
+  assert.match(queue,/polishStage && kind === 'sector' && !hybridMapInput/,'missing raw artwork must stop before a paid enqueue');
+  assert.match(completion,/if \(sheet.key === 'sector'\) hybridMapForPolishRef.current = \{key:'sector',map:factualModelImage\}/,
+    'stash restored map artwork, never the finished annotated sheet');
+  const crop=async()=> 'CROPPED WITH MARKS';
+  assert.equal(await select('ANNOTATED PAGE','sector',{current:{key:'sector',map:'RAW ART'}},crop,100,100),'RAW ART');
+  assert.equal(await select('ANNOTATED PAGE','sector',{current:{key:'water',map:'WRONG SHEET'}},crop,100,100),null);
+  assert.equal(await select('ANNOTATED PAGE','sector',{current:null},crop,100,100),null);
+  assert.equal(await select('ANNOTATED PAGE','base',{current:null},crop,100,100),'CROPPED WITH MARKS');
+  assert.equal(await select(null,'sector',{current:{key:'sector',map:'STALE ART'}},crop,100,100),null);
+  // Before-works sheets added a second restoration purpose: keeping unphotographed ground
+  // blank, including after polish. The old regex incorrectly equated that coverage mask with
+  // the Hybrid-only roof mask. Execute the actual gates so both rules remain independently
+  // capable of failing, rather than pinning the order of their Boolean terms.
+  const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const restoreGates: ts.IfStatement[] = [];
+  const roofGates: ts.Expression[] = [];
+  const inputRoofGates: ts.Expression[] = [];
+  const sectorFinishCalls: ts.CallExpression[] = [];
+  function visit(node: ts.Node) {
+    if (ts.isIfStatement(node)) {
+      const condition = node.expression.getText(tree);
+      if (condition.includes('historicalSource') && condition.includes('sourceImage') && condition.includes('protectMask')
+          && node.thenStatement.getText(tree).includes('restoreProtectedPixels(sourceImage, raw,')) restoreGates.push(node);
+    }
+    if (ts.isVariableDeclaration(node) && node.name.getText(tree) === 'currentMask'
+        && node.initializer && ts.isConditionalExpression(node.initializer)
+        && node.initializer.whenTrue.getText(tree).includes('buildProtectMask(')) roofGates.push(node.initializer.condition);
+    if (ts.isVariableDeclaration(node) && node.name.getText(tree) === 'protectMaskDataUrl'
+        && node.getStart(tree) >= queueStart && node.getEnd() <= queueEnd
+        && node.initializer && ts.isConditionalExpression(node.initializer)
+        && node.initializer.whenTrue.getText(tree).includes('buildProtectMask(')) inputRoofGates.push(node.initializer.condition);
+    if (ts.isCallExpression(node) && node.expression.getText(tree) === 'finishSectorRef.current'
+        && node.arguments[0]?.getText(tree) === 'factualModelImage') sectorFinishCalls.push(node);
+    ts.forEachChild(node, visit);
+  }
+  visit(tree);
+  assert.equal(restoreGates.length, 1, 'one actual restore call owns the coverage/Hybrid decision');
+  assert.equal(roofGates.length, 1, 'one ordinary roof-mask decision remains visible');
+  assert.equal(inputRoofGates.length, 1, 'one queue decision promises the ordinary roof mask');
+  const restore = new Function('sheet', 'sourceImage', 'protectMask', 'isPolishedResult', 'historicalSource',
+    `return Boolean(${restoreGates[0].expression.getText(tree)});`) as (sheet: {key:string}, source: string|null, mask: string|null, polished: boolean, historic: object|null) => boolean;
+  const roof = new Function('sheet', 'isPolishedResult', `return Boolean(${roofGates[0].getText(tree)});`) as (sheet: {key:string}, polished: boolean) => boolean;
+  const inputRoof = new Function('kind', 'polishStage', `return Boolean(${inputRoofGates[0].getText(tree)});`) as (kind: string, polish: boolean) => boolean;
+  for (const key of ['sector', 'base', 'water']) for (const polished of [false, true]) {
+    assert.equal(restore({key}, 'source', 'mask', polished, null), key === 'sector' && !polished, 'ordinary photos restore only Sector Hybrid');
+    assert.equal(roof({key}, polished), key === 'sector' && !polished, 'a polished image must never receive the old photographic roof mask');
+    assert.equal(inputRoof(key, polished), roof({key}, polished), 'queue input and completion must agree about the ordinary roof mask');
+    assert.equal(restore({key}, null, 'mask', polished, {}), false, 'coverage cannot restore missing source pixels');
+    assert.equal(restore({key}, 'source', null, polished, {}), false, 'coverage cannot restore without its recorded mask');
+  }
+  assert.match(queue, /if\s*\(historicalActive && availableHistoricalBaseline\)[\s\S]*buildHistoricalCoverageMask/);
+  assert.equal(restore({key:'sector'}, 'source', 'mask', true, {}), true, 'historic polish still preserves genuinely unphotographed ground');
+  assert.equal(restore({key:'base'}, 'source', 'mask', false, {}), true, 'the Existing Site baseline preserves the same coverage');
+  assert.match(restoreGates[0].thenStatement.getText(tree), /if\s*\(historicalSource\)[\s\S]*buildHistoricalCoverageMask/);
+  assert.match(restoreGates[0].thenStatement.getText(tree), /stackOverlayImages\(coverage,currentMask/);
+  assert.equal(sectorFinishCalls.length, 1, 'the retained map still has one Sector finisher');
+  assert.deepEqual(sectorFinishCalls[0].arguments.map(a => a.getText(tree)), ['factualModelImage', 'frozenScene', 'historicalSource'],
+    'Sector recomposes the actual restored image with its frozen geometry and its own historical source');
   assert.doesNotMatch(
     completion,
     /sectorPolishOwnsPage/,
@@ -469,17 +522,186 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
   );
 });
 
-test('the shared exact-layer stack puts the boundary below every sheet’s canopies', () => {
-  // Sheet 06 was corrected first, but a Structures-only repair would leave sheet 07 drawing a
-  // fence over context trees. The shared overlay owns this order, before any sheet branch.
+test('the shared exact-layer stack puts each boundary treatment below the sheet’s features', async () => {
+  // Zones has a quieter boundary than the other sheets. Exercise paint order rather than
+  // treating the first Zones conditional as the start of feature painting.
   const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
-  const start = source.indexOf('async function buildExactLayerOverlay(');
-  const end = source.indexOf('/** Sheet 01 uses the same measured editorial composition', start);
-  assert.ok(start >= 0 && end > start, 'expected the shared exact-layer overlay');
-  const overlay = source.slice(start, end);
-  const boundary = overlay.indexOf('drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);');
-  const firstSheetBranch = overlay.indexOf("if (filter === 'zones')");
-  assert.ok(boundary >= 0 && boundary < firstSheetBranch, 'boundary must paint before context or content items');
-  const calls = overlay.match(/^\s*drawBlueprintBoundary\(/gm) ?? [];
-  assert.equal(calls.length, 1, 'one shared boundary pass prevents sheet-specific draw-order drift');
+  const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  let declaration: ts.FunctionDeclaration | undefined;
+  tree.forEachChild(node => {
+    if (ts.isFunctionDeclaration(node) && node.name?.text === 'buildExactLayerOverlay') declaration = node;
+  });
+  assert.ok(declaration);
+  const javascript = ts.transpileModule(declaration.getText(tree), {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
+  }).outputText;
+  const events: string[] = [];
+  const feature = () => events.push('feature');
+  const ctx = { save() {}, restore() {}, drawImage() {}, globalAlpha: 1 };
+  const scope = {
+    preloadReferenceFeatureArtwork: async () => {},
+    document: { createElement: () => ({ getContext: () => ctx }) },
+    drawBlueprintBoundary: () => events.push('boundary'),
+    drawZoneBoundary: () => events.push('zone-boundary'),
+    drawExactFeaturesWithPresentation: (_ctx: unknown, _w: number, _h: number, _style: unknown, paint: (ctx: unknown) => void) => paint(ctx),
+    drawFilteredLines: () => {},
+    drawFilteredItems: feature,
+    drawWaterFeatures: feature,
+    drawContextItems: feature,
+    drawWaterRoutes: () => {},
+    drawWaterLeaderLabels: () => {},
+    drawEarthworksFeatures: feature,
+    buildZoneOverlay: () => undefined,
+    EXACT_CONTEXT_ALPHA: { zones: 0.5, structures: 0.5 },
+    drainCanvasToDataUrl: () => 'overlay',
+  };
+  const paint = new Function(...Object.keys(scope), javascript + '; return buildExactLayerOverlay;')(...Object.values(scope));
+  for (const sheet of ['zones', 'water', 'earthworks', 'planting', 'structures', 'all']) {
+    events.length = 0;
+    await paint({}, { imgW: 100, mPerPx: 1, satDataUrl: 'photo' }, {}, sheet, 100, 100);
+    assert.equal(events[0], sheet === 'zones' ? 'zone-boundary' : 'boundary', sheet);
+    assert.ok(events.includes('feature'), sheet + ' must exercise actual feature painting');
+    assert.equal(events.filter(event => event.endsWith('boundary')).length, 1, sheet + ' paints one boundary');
+  }
+});
+
+
+test('Sector contrast shades only photographed land outside the full saved proposed boundary', () => {
+  // Rory approved a luminous property with a darker surround. Shading the entire photograph
+  // also dimmed the property; coverage and the saved proposed ring must both constrain the veil.
+  const source=readFileSync(new URL('../components/design/DesignGlossy.tsx',import.meta.url),'utf8');
+  const tree=ts.createSourceFile('sheet.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  let paint:ts.FunctionDeclaration|undefined;
+  tree.forEachChild(node=>{if(ts.isFunctionDeclaration(node) && node.name?.text==='drawSectorArtworkContext')paint=node;});
+  assert.ok(paint);
+  const compiled=ts.transpileModule(paint.getText(tree),{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+  const run=new Function(`${compiled};return drawSectorArtworkContext;`)();
+  const draws:unknown[]=[],events:unknown[]=[];
+  const ctx={globalAlpha:1,filter:'none',
+    drawImage(...args:unknown[]){draws.push({args,alpha:this.globalAlpha,filter:this.filter});},
+    save(){},restore(){},beginPath(){},closePath(){},
+    moveTo(x:number,y:number){events.push(['move',x,y]);},lineTo(x:number,y:number){events.push(['line',x,y]);},
+    clip(){events.push('clip');},rect(...args:number[]){events.push(['rect',...args]);},fill(rule:string){events.push(['veil',rule]);},
+    getImageData(){throw new Error('the source artwork is immutable');},
+    putImageData(){throw new Error('the source artwork is immutable');}};
+  run(ctx,'art-with-white-and-transparent-coverage',4,1);
+  assert.deepEqual(draws,[{args:['art-with-white-and-transparent-coverage',0,0,4,1],alpha:1,filter:'none'}]);
+  assert.deepEqual(events,[],'missing coverage must never darken unknown white corners');
+  run(ctx,'art-with-white-and-transparent-coverage',4,1,[[.25,0],[.75,0],[.75,1],[.25,1]],[[.4,.2],[.6,.2],[.6,.8],[.4,.8]]);
+  assert.deepEqual(events,[['move',1,0],['line',3,0],['line',3,1],['line',1,1],'clip',['rect',0,0,4,1],['move',1.6,.2],['line',2.4,.2],['line',2.4,.8],['line',1.6,.8],['veil','evenodd']], 'photo coverage clips an even-odd surround with the entire saved polygon removed');
+  events.length=0;
+  run(ctx,'art',4,1,[[0,0],[1,0],[1,1],[0,1]]);
+  assert.ok(!events.some(e=>Array.isArray(e)&&e[0]==='veil'),'missing saved boundary must not darken the entire site');
+
+  // Draft 1 shaded a small quadrilateral across the roofs: projecting the resized presentation
+  // frame repeats the crop. The same original-frame authority as archive restoration must win.
+  const composer=tree.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text==='composeSectorSheet');
+  assert.ok(composer);let coverage:ts.Expression|undefined;
+  function findCoverage(node:ts.Node){if(ts.isVariableDeclaration(node)&&node.name.getText(tree)==='coverage')coverage=node.initializer;ts.forEachChild(node,findCoverage);}
+  findCoverage(composer);assert.ok(coverage);
+  const js=ts.transpileModule(`const polygon=${coverage.getText(tree)};`,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+  const state={},frame={},refLayers={},renderRefLayers={boundary:[[.1,.2],[.8,.3],[.4,.9]]};
+  const calls:unknown[][]=[];
+  const scope={state,frame,refLayers,renderRefLayers,historicalPresentationPhotoPoint(...args:unknown[]){calls.push(args);return args[3];}};
+  const project=new Function('baseline',...Object.keys(scope),`${js};return polygon;`);
+  const baseline={width:100,height:60};
+  assert.deepEqual(project(baseline,...Object.values(scope)),[[0,0],[100,0],[100,60],[0,60]]);
+  assert.equal(calls.length,4);
+  for(const args of calls){assert.equal(args[0],state);assert.equal(args[1],frame);assert.equal(args[2],refLayers);assert.equal(args[4],baseline);}
+  calls.length=0;assert.deepEqual(project(null,...Object.values(scope)),[[0,0],[1,0],[1,1],[0,1]]);assert.equal(calls.length,0);
+});
+
+
+test('bold filled Sector winds retain actual bearings, opaque bodies and solar geometry at screen and print scales', () => {
+  const source=readFileSync(new URL('../components/design/DesignGlossy.tsx',import.meta.url),'utf8');
+  const tree=ts.createSourceFile('sheet.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  const arrows=new Map<string,string>();
+  function visit(node:ts.Node) {
+    if(ts.isVariableDeclaration(node) && ['drawBroadEnergyArrow','drawSunArc'].includes(node.name.getText(tree)) && node.initializer)
+      arrows.set(node.name.getText(tree),node.initializer.getText(tree));
+    ts.forEachChild(node,visit);
+  }
+  visit(tree);assert.equal(arrows.size,2);
+  // Rory replaced the deliberately faint streamlines with broad filled reference arrows.
+  // Guard visible body area/opacity and the real source tip, not the old three-curve style.
+  let body:ts.FunctionDeclaration|undefined,weather:ts.FunctionDeclaration|undefined;
+  tree.forEachChild(node=>{if(ts.isFunctionDeclaration(node)&&node.name?.text==='drawIllustratedSectorArrow')body=node;
+    if(ts.isFunctionDeclaration(node)&&node.name?.text==='drawIllustratedSectorWeather')weather=node;});
+  assert.ok(body);assert.ok(weather);
+  const bodyJs=ts.transpileModule(weather.getText(tree)+'\n'+body.getText(tree),{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+  const drawIllustratedSectorArrow=new Function(`${bodyJs};return drawIllustratedSectorArrow;`)();
+  const compile=(name:string,scope:Record<string,unknown>)=>{
+    const js=ts.transpileModule(`const paint=${arrows.get(name)};`,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+    return new Function(...Object.keys(scope),`${js};return paint;`)(...Object.values(scope));
+  };
+  for(const W of [800,2200]) {
+    const moves:number[][]=[],arcs:number[][]=[],dashes:number[][]=[],suns:number[][]=[];
+    const fills:Array<{points:number[][];color:unknown;alpha:unknown}>=[];let path:number[][]=[];
+    const context=new Proxy({} as Record<PropertyKey,unknown>, {get(target,key){
+      if(key in target)return target[key];
+      return (...args:number[])=>{
+        if(key==='beginPath')path=[];
+        if(key==='moveTo'||key==='lineTo')path.push(args);
+        if(key==='bezierCurveTo')path.push(args.slice(-2));
+        if(key==='fill')fills.push({points:path.map(p=>[...p]),color:target.fillStyle,alpha:target.globalAlpha});
+        if(key==='moveTo')moves.push(args);if(key==='arc')arcs.push(args);
+        if(key==='setLineDash')dashes.push(args[0] as unknown as number[]);
+      };
+    },set(target,key,value){target[key]=value;return true;}});
+    const common={ctx:context,W,H:W,cx:W*.5,cy:W*.5,R:W*.3,arrowLen:W*.07,artFinish:true,externalLegend:true,
+      drawIllustratedSectorArrow,SECTOR_ENERGY_TIP:.94,claimArrowBox(){},bearingToUnitVector,bearingToCanvasAngle:(bearing:number)=>(bearing-90)*Math.PI/180,
+      drawSunIcon(...args:number[]){suns.push(args);},REFERENCE_LABEL_FONT:'Arial'};
+    const wind=compile('drawBroadEnergyArrow',common);
+    for(const bearing of [45,225,315]) {
+      moves.length=0;fills.length=0;dashes.length=0;
+      const v=bearingToUnitVector(bearing);wind(v,'#426D9B');
+      const body=fills.find(fill=>fill.color==='#426D9B');assert.ok(body,'the wind needs a solid coloured body');
+      assert.equal(body.alpha,1,'fading the whole body recreates the rejected faint arrow');
+      const tip=body.points[3];
+      assert.ok(Math.abs(tip[0]-(W*.5+v[0]*W*.3*.94))<1e-8);
+      assert.ok(Math.abs(tip[1]-(W*.5+v[1]*W*.3*.94))<1e-8);
+      const area=Math.abs(body.points.reduce((sum,p,i)=>{const q=body.points[(i+1)%body.points.length];return sum+p[0]*q[1]-p[1]*q[0];},0))/2;
+      assert.ok(area>W*W*.003,'a tiny triangle or line is not the requested broad filled arrow');
+      const across=body.points.map(p=>(p[0]-tip[0])*-v[1]+(p[1]-tip[1])*v[0]);
+      assert.ok(Math.max(...across)-Math.min(...across)>W*.05,'the head must be unmistakably broad at both output scales');
+      assert.ok(dashes.some(dash=>dash.length===2 && dash.every(value=>value>0)),'regional wind remains dashed');
+    }
+    const sun=compile('drawSunArc',common);
+    for(const noonSide of ['N','S']) {
+      arcs.length=0;suns.length=0;
+      const path={sunriseAzDeg:65,sunsetAzDeg:295,noonSide};sun(path,W*.4,'#B76F20');
+      assert.ok(arcs.length>=1);
+      for(const arc of arcs) {
+        assert.equal(arc[2],W*.4);
+        assert.equal(arc[3],(65-90)*Math.PI/180);assert.equal(arc[4],(295-90)*Math.PI/180);
+        assert.equal(arc[5],noonSide==='N','the real noon side controls the sweep');
+      }
+      assert.equal(suns.length,3);
+    }
+  }
+});
+
+
+test('a large Sector arrow cannot force the last label candidate over protected marks', () => {
+  const source=readFileSync(new URL('../components/design/DesignGlossy.tsx',import.meta.url),'utf8');
+  const tree=ts.createSourceFile('sheet.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  let placement:ts.Expression|undefined;
+  function visit(node:ts.Node){
+    if(ts.isVariableDeclaration(node)&&node.name.getText(tree)==='flushDirectLabels')placement=node.initializer;
+    ts.forEachChild(node,visit);
+  }
+  visit(tree);assert.ok(placement);
+  const js=ts.transpileModule(`const paint=${placement.getText(tree)};`,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+  const boxes:Array<{x0:number;x1:number;y0:number;y1:number}>=[];
+  const ctx=new Proxy({}, {get(_target,key){return key==='measureText'?(text:string)=>({width:text.length*7}):()=>{};},set(){return true;}});
+  const scope={ctx,W:1000,H:1000,externalLegend:true,artFinish:true,REFERENCE_LABEL_FONT:'Arial',SHEET_BODY_FONT:'Arial',
+    directLabelRequests:[{x:500,y:200,lines:['Fire approach · NW'],color:'#C64028'}],
+    arrowClaims:[{x0:0,x1:1000,y0:0,y1:700}],drawIllustratedSectorFlame(){},
+    roundRectPath(_ctx:unknown,x:number,y:number,w:number,h:number){if(w>100)boxes.push({x0:x,x1:x+w,y0:y,y1:y+h});}};
+  const paint=new Function(...Object.keys(scope),`${js};return paint;`)(...Object.values(scope));paint();
+  assert.ok(boxes.length>0,'the card itself must be painted');
+  for(const box of boxes){
+    assert.ok(box.y0>=700,'exhausting the nearby choices must not hide an arrow, sun or contour caption');
+    assert.ok(box.x0>=0&&box.x1<=1000&&box.y1<=1000,'the escape stays inside the map');
+  }
 });

@@ -310,12 +310,12 @@ test('the design-layer polish uploads the Hybrid MAP, never the Hybrid page', ()
   );
 });
 
-test('Sector and Existing Site upload the map column, at both paid stages', () => {
+test('Sector uploads unannotated artwork while Existing Site retains its map-only crop', () => {
   const flow = callbackBody('generateSectorViaQueue');
   assert.match(
     flow,
-    /const hybridMapInput = hybridInput\s*\n\s*\? await cropStyleSheetToMap\(hybridInput, mapWidth, mapHeight\)/,
-    'the finished Hybrid page must be cut back to its map column before it is sent anywhere',
+    /kind === 'sector'[\s\S]*?hybridMapForPolishRef\.current\.map[\s\S]*?: await cropStyleSheetToMap\(hybridInput, mapWidth, mapHeight\)/,
+    'a Sector crop still contains analysis, so it must use raw artwork; Base keeps its crop',
   );
   assert.match(flow, /compositeDataUrl: composite,/);
   assert.doesNotMatch(
@@ -382,16 +382,18 @@ test('the locked paid render keeps model element artwork while exact Zones remai
   // What locked still guarantees, and what the stack below must keep: ground, structures, and
   // everything outside the plot stay exact, and labels/legend are drawn by the app from saved data.
   const src = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
-  // Zones are the one deliberate exception: their translucent polygons and numbered badges are
-  // saved geometry, not element artwork. A paid Carl & Sandy render exposed that putting `locked`
-  // first suppressed those facts as well, leaving only the model's faint approximation. The zone
-  // branch must therefore come first; every other locked sheet must still take `undefined` so its
-  // plants and structures are not over-painted with exact sprites.
+  // Zones keep their saved polygons. A fresh Structures result also omitted its recorded net
+  // canopy, so the narrow shade-only helper may restore that permeable material. This replaces
+  // the obsolete blanket 'undefined' claim, not the protection against restamping every plant.
+  // Its executable test checks only cloth, exact saved dimensions and visible beds underneath.
   const at = src.indexOf("const overlayImage = f === 'zones'");
   assert.ok(at > 0, 'the locked overlay decision moved — re-pin it, do not delete this guard');
-  const decision = src.slice(at, at + 520);
-  assert.match(decision, /const overlayImage = f === 'zones'[\s\S]*?\? buildZoneOverlay\([\s\S]*?: locked\s*\n?\s*\? undefined/,
-    'the locked path is stacking a feature overlay over the model again — AI Polished is exact');
+  const decision = src.slice(at, at + 620);
+  assert.match(decision, /const overlayImage = f === 'zones'[\s\S]*?\? buildZoneOverlay\([\s\S]*?: locked\s*\n?\s*\? buildRecordedShadeCoverOverlay\(renderState,renderFrame,f,W,H\)/,
+    'locked artwork may receive only the narrow recorded-cover material, never the whole exact feature layer');
+  const cover = src.slice(src.indexOf('function buildRecordedShadeCoverOverlay('), src.indexOf('function drawFilteredItems('));
+  assert.match(cover, /if\(filter!=='structures'\)return undefined/, 'other painted sheets must not receive these stamps');
+  assert.match(cover, /state.items.filter\(item=>isShadeClothStructure\(item.defId\)\)/, 'ordinary plants/structures must never be restored by this exception');
   // And the builder itself is gone: a full-resolution canvas per sheet that nothing consumes, on
   // the path iOS has been killing for memory.
   assert.ok(!/const exactFeatureOverlay =/.test(src),

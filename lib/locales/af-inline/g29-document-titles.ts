@@ -20,6 +20,8 @@ const drafts: Record<string, string> = {
   "Language draft review": "Hersiening van taalkonsepte",
   "Country evidence review": "Hersiening van landbewyse",
   "Project workflow review": "Hersiening van projekwerkvloei",
+  // main's /connect/imbewu page
+  "Assistant connections": "Assistentverbindings",
   "Your design learning folder": "Jou ontwerpleerlêer",
   "ImbewuField — permaculture planning for South African farmers": "ImbewuField — permakultuurbeplanning vir Suid-Afrikaanse boere",
   "ImbewuField — partner deck": "ImbewuField — vennootaanbieding",
