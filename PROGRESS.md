@@ -142,6 +142,7 @@ and isiZulu output are unchanged.
   model's English and put back untouched) and the farmer's "Wind confirmed on site" note. Left English on purpose:
   `SectorSummary` (compiled by the `control-icon-renderers` module-stub harness, which has no isiXhosa lookup in scope).
 - **Blind review of g54 (2 Nov):** 101 strings, 1 repair (the thorny-hedge tip's "stock-proof" had read as "protects livestock"), 14 minor, none touching a direction, figure or safety caveat; the greywater, tank-weight, 5 m, siting-survey, dip, sterile-vetiver, guava and female-tree cautions all survive. "ii-snail" and "Ubulongwe" kept — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-02c/`.
+- **Blind review of the 7 Nov drafts (g55 Assistant connections page + 48 update-copy lines):** 89 strings, 5 repairs ("active" connection had read as "important"; "bolder" arrows/contours had read as "lighter"; "archive photograph" and "finer boundaries" each read as a different thing), 8 minor; the no-password, no Gmail/Drive/computer access, new-site decision, 90 days / one hour and disconnect-any-time wording all survive — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-07/`.
 - **Report picker (2 Nov):** the sample-mode (prepared example) language picker now offers every inline-draft
   language beside English and isiZulu, in `LANGUAGE_OPTIONS` order. `preparedSampleReport` keeps isiXhosa once its
   drafts are loaded (English otherwise, so English text is never labelled a translation); `preparedExampleNote` has an

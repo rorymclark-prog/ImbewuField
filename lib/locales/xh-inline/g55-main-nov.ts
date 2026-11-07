@@ -25,7 +25,7 @@ const drafts: Record<string, string> = {
   "Connected assistants": "Abancedisi abaqhagamshelweyo",
   "{n} selected sites · expires {date}": "Iindawo ezikhethiweyo: {n} · iphelelwa ngomhla we-{date}",
   "Disconnect {name}": "Nqumla {name}",
-  "No active assistant connections.": "Akukho qhagamshelo lubalulekileyo lwabancedisi.",
+  "No active assistant connections.": "Akukho qhagamshelo olusebenzayo lwabancedisi.",
   "Site originals": "Iifayile zoqobo zendawo",
   "Imported originals keep their source, byte count and fingerprint. They are separate from the small evidence thumbnails stored on a device.": "Iifayile zoqobo ezingeniswe zigcina umthombo wazo, inani lee-byte nesigxina somnwe. Zahlukile kwiithambnaili ezincinci zobungqina ezigcinwe kwisixhobo.",
   "Completed imports remain in ImbewuField after the chat closes.": "Ukungeniswa okugqityiweyo kuhlala kwi-ImbewuField emva kokuba incoko ivaliwe.",
