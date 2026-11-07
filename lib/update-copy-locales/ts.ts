@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Whole contour captions: docs/audits/2026-11-07/editorial-caption-release-drafts.json; UNREVIEWED machine draft.
+  "Sector contour labels stay whole near the boundary.": "Malebulu ya milayeni yo tlakuka eka Sector ma tshamaka ma helele ekusuhi ni ndzilakana.",
   // Editorial and boundary/terrain release: docs/audits/2026-11-07/editorial-release-drafts.json; UNREVIEWED machine drafts.
   "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.": "Hlawula Editorial Atlas ku kuma xitayili xa AI lexi vevukaka ni xifaniso xa xirhendzevutana xa Sector.",
   "Maps have finer boundaries with round posts and clearer Earthworks labels.": "Mimepe yi ni mindzilakana yo lala leyi nga ni tiphuphu ta xirhendzevutana ni malebulu ya Earthworks lama nga erivaleni swinene.",
