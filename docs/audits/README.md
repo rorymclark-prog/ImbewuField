@@ -1,5 +1,9 @@
 # ImbewuField audit archive
 
+Latest private verification consolidation — [Preserved parent coverage and scoped Water validation — 7 November 2026](2026-11-07/international-performance-consolidation.md). Local source preparation; current successor checks and release gates remain separate.
+
+Latest release-test continuation — [Coverage with an empty current guide — 7 November 2026](2026-11-07/performance-release-fixtures.md). Explicit historical positive fixtures, honest current defaults and retained assertions; current-head full CI remains separate.
+
 Latest combined-source continuation — [Current main, map captions, learning context and receipt review — 7 November 2026](2026-11-07/international-release-next.md). Separate local source prepared; new combined verification and genuine device/account gates remain open.
 
 Latest learning-context implementation — [Course origin and explicit saved-site choice — 7 November 2026](2026-11-07/learning-region-context.md). Source/focused review complete; current combined type/full and actual device/account gates remain open.

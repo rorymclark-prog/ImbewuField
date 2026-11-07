@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { act,type ReactTestInstance } from 'react-test-renderer';
-import { actualUpdateUi,actualBuildInfo,updateNodeText } from './update-ui-renderer.ts';
+import { actualUpdateUi,actualBuildInfo,updateNodeText ,withArchivedReleaseTour} from './update-ui-renderer.ts';
 import { controlLocales,controlT } from './control-icon-renderers.ts';
 import { loadUpdateCopy,updateDescription,cleanUpdateCopy,updateTourSources,type UpdateCopy } from '../lib/update-copy.ts';
 import { updateDateLabel } from '../lib/update-copy-date.ts';
@@ -90,6 +90,8 @@ test('displayed update dates retain original day/year/group identity and use the
 });
 
 for(const lang of langs)test(`${lang}: real update banner keeps manual refresh, native controls, source backing and new-build authority`,async()=>{
+ // This positive guide case uses an explicit real archived announcement.
+ return withArchivedReleaseTour(async()=>{
  const h=await actualUpdateUi(lang),t=controlT(lang);try{
   assert.equal(h.calls.reload,0);assert.equal(h.calls.worker,1);assert.ok(h.text().includes(t('updateBannerReady').replace('{sha}',' · qa-new-build')));assert.ok(h.text().includes(t('updatesTranslationDraft')));
   await h.click('updateBannerWhatChangedAria');assert.ok(h.text().includes(t('updatesDraftNotice')));
@@ -100,6 +102,8 @@ for(const lang of langs)test(`${lang}: real update banner keeps manual refresh, 
   await h.click('updateBannerWhatChangedAria');await h.buttonText(controlT(next)('updateBannerRefreshButton'));
   assert.equal(h.calls.reload,1);const saved=JSON.parse(h.session.get(UPDATE_GUIDE_KEY)!);assert.equal(saved.sha,'qa-new-build');assert.deepEqual(saved.stops,visibleUpdateTour());assert.equal(saved.phase,'offer');assert.equal(saved.index,0);
  }finally{await h.dispose();}
+
+ });
 });
 
 test('a newly published empty native set leaves its source English instead of restoring an older local draft',async()=>{
@@ -120,6 +124,8 @@ test('dismissal suppresses the notice, pitch stays unobstructed, and offline fal
 });
 
 for(const lang of langs)test(`${lang}: current guide follows original destinations and progress while descriptions change language`,async()=>{
+ // This positive guide case uses an explicit real archived announcement.
+ return withArchivedReleaseTour(async()=>{
  const stops=visibleUpdateTour(),guide={sha:'qa-current-build',stops,phase:'offer',index:0};const h=await actualUpdateUi(lang,{kind:'guide',guide}),t=controlT(lang);
  try{
   assert.ok(h.text().includes(t('updateGuideOfferTitle')));assert.ok(h.text().includes(t('updateGuideOfferBody')));assert.ok(h.text().includes(t('updatesDraftNotice')));
@@ -137,6 +143,8 @@ for(const lang of langs)test(`${lang}: current guide follows original destinatio
   }
   await h.click('updateGuidePrevious');assert.equal(JSON.parse(h.session.get(UPDATE_GUIDE_KEY)!).index,0);await h.actionLabel(controlT('ts')('updateGuideContinue').replace('{index}','1').replace('{total}',String(stops.length)));await h.click('updateGuideStop');assert.ok(!h.session.has(UPDATE_GUIDE_KEY));
  }finally{await h.dispose();}
+
+ });
 });
 
 test('history reflects actual native coverage, older history remains reachable source, and Simple keeps its original limit',async()=>{
