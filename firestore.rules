@@ -409,12 +409,16 @@ service cloud.firestore {
     match /course_assignments/{id} {
       // isAdmin() added — same admin-org-mismatch gap as course_enrollments above.
       allow read: if isAdmin() || owns(resource.data) || (isCourseStaff() && inMyOrg(resource.data));
-      allow create, update: if isCourseStaff()
-        && inMyOrg(request.resource.data)
-        && request.resource.data.assigned_by == request.auth.uid
-        && request.resource.data.profile_id is string
-        && request.resource.data.module is string
-        && (request.resource.data.due_at == null || request.resource.data.due_at is string);
+      function validCourseAssignmentWrite() {
+        return isCourseStaff()
+          && inMyOrg(request.resource.data)
+          && request.resource.data.assigned_by == request.auth.uid
+          && request.resource.data.profile_id is string
+          && request.resource.data.module is string
+          && (request.resource.data.due_at == null || request.resource.data.due_at is string);
+      }
+      allow create: if validCourseAssignmentWrite();
+      allow update: if inMyOrg(resource.data) && validCourseAssignmentWrite();
       allow delete: if isCourseStaff() && inMyOrg(resource.data);
     }
 

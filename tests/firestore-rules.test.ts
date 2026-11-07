@@ -428,6 +428,62 @@ for (const collectionName of ['course_progress', 'course_submissions'] as const)
   }
 }
 
+// A staff member's valid assignment payload must not acquire an existing record
+// from another organisation. Preserve ordinary edits inside their own organisation.
+for (const role of ['mentor', 'ngo'] as const) {
+  const uid = `assignment-staff-${role}`;
+  const orgId = 'assignment-own-org';
+  const learner = `assignment-learner-${role}`;
+  const foreignLearner = `assignment-foreign-learner-${role}`;
+  const ownAssignment = {
+    profile_id: learner, org_id: orgId, assigned_by: uid, module: 'm1', due_at: null,
+  };
+  const seedPeople = () => env.withSecurityRulesDisabled(async (context) => {
+    const db = context.firestore();
+    await Promise.all([
+      profile(db, uid, role, orgId),
+      profile(db, learner, 'farmer', orgId),
+      profile(db, foreignLearner, 'farmer', 'assignment-other-org'),
+    ]);
+  });
+
+  test(`course_assignments: ${role} can create and edit assignments in their own organisation`, async () => {
+    await seedPeople();
+    const ref = doc(env.authenticatedContext(uid).firestore(), 'course_assignments', `${uid}-own`);
+    await assertSucceeds(setDoc(ref, ownAssignment));
+    await assertSucceeds(setDoc(ref, { ...ownAssignment, module: 'm2' }));
+    await assertSucceeds(updateDoc(ref, { module: 'm3' }));
+    await assertSucceeds(setDoc(ref, { module: 'm4' }, { merge: true }));
+    const saved = await getDoc(ref) as { data: () => unknown };
+    assert.deepEqual(saved.data(), { ...ownAssignment, module: 'm4' });
+  });
+
+  test(`course_assignments: ${role} cannot replace a known assignment in another organisation`, async () => {
+    await seedPeople();
+    const id = `${uid}-foreign`;
+    const original = {
+      ...ownAssignment, profile_id: foreignLearner, org_id: 'assignment-other-org',
+      assigned_by: 'assignment-other-staff', fixtureMarker: 'original-assignment-evidence',
+    };
+    await env.withSecurityRulesDisabled(async (context) => {
+      await setDoc(doc(context.firestore(), 'course_assignments', id), original);
+    });
+    const ref = doc(env.authenticatedContext(uid).firestore(), 'course_assignments', id);
+    await assertFails(getDoc(ref));
+    for (const attempt of [
+      () => setDoc(ref, ownAssignment),
+      () => updateDoc(ref, ownAssignment),
+      () => setDoc(ref, ownAssignment, { merge: true }),
+    ]) {
+      await assertFails(attempt());
+      await env.withSecurityRulesDisabled(async (context) => {
+        const saved = await getDoc(doc(context.firestore(), 'course_assignments', id)) as { data: () => unknown };
+        assert.deepEqual(saved.data(), original);
+      });
+    }
+  });
+}
+
 // THE ATTACK THIS CLOSES. "Mentor", "NGO coordinator" and "Funder" were options in the PUBLIC
 // signup dropdown, and the rules let a new account self-assign any of them. isMentor() is a bare
 // role check that never inspects resource.data, and it sat in `allow read` on all three financial
