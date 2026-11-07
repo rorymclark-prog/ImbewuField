@@ -4,7 +4,8 @@ import { completeSampleEvidence, freshEvidenceData, trainingTotals, milestoneAt,
 import { melCan, memberAccessSummary, programmeCapabilities } from '../lib/mel';
 import { programmeRecordMetrics, PROGRESS_TEMPLATES, progressValue, progressRecordSections, programmeMetricLabel, programmeMetricNote, programmeMetricValue } from '../lib/programme-progress';
 import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index';
-import { registerXhInline } from '../lib/xh-inline';
+import { AF_INLINE_SOURCE } from '../lib/locales/af-inline/index';
+import { registerInlineDrafts, registerXhInline } from '../lib/xh-inline';
 import { melAssessmentTitle, MEL_TEMPLATES } from '../lib/mel-templates';
 import { DEMO_NETWORK } from '../lib/network-demo';
 import { productionAreaSummary } from '../lib/production-sites';
@@ -146,6 +147,44 @@ test('isiXhosa programme record cards: every label, figure note and basis note r
     assert.equal(melAssessmentTitle('zu','course_before','Before the in-person course'),'Before the in-person course');
   } finally { registerXhInline({}); }
 });
+test('Afrikaans programme record cards: every label, figure note and basis note reads a draft, figures and dates exact; English, isiZulu and isiXhosa unchanged', () => {
+  const farmer=structuredClone(DEMO_NETWORK.farmers[0]);
+  const english=programmeRecordMetrics([farmer],productionAreaSummary([]),2);
+  const sample=programmeRecordMetrics([farmer,structuredClone(DEMO_NETWORK.farmers[1])],{sites:7,vegetableM2:120,stapleM2:80,hectares:0.02,firstObserved:'2026-02-01',lastObserved:'2026-09-30'} as ReturnType<typeof productionAreaSummary>,3);
+  registerInlineDrafts('af',{});
+  for(const m of sample.metrics){ assert.equal(programmeMetricLabel('af',m.label),m.label,'English until the Afrikaans drafts load'); assert.equal(programmeMetricNote('af',m.note),m.note); }
+  registerInlineDrafts('af',AF_INLINE_SOURCE);
+  try {
+    const gaps=['Gardens with area records','Farmers with production or sales records','Farmers active in the last 90 days'];
+    for(const label of gaps) assert.notEqual(programmeMetricLabel('af',label),label,label);
+    for(const m of [...sample.metrics,...english.metrics]){
+      assert.notEqual(programmeMetricLabel('af',m.label),m.label,`label ${m.label}`);
+      assert.notEqual(programmeMetricNote('af',m.note),m.note,`note ${m.note}`);
+      assert.equal(programmeMetricLabel('en',m.label),m.label);
+      assert.equal(programmeMetricLabel('zu',m.label),m.label);
+      assert.equal(programmeMetricNote('zu',m.note),m.note);
+      assert.equal(programmeMetricNote('en',m.note),m.note);
+    }
+    const figures=(text:string)=>(text.match(/\d+/g)??[]).join(',');
+    for(const m of sample.metrics){ const note=programmeMetricNote('af',m.note); assert.equal(figures(note),figures(m.note),`figures in ${m.note}`); }
+    const coverage=sample.metrics.find(m=>m.id==='harvest')!;
+    assert.match(programmeMetricNote('af',coverage.note),/sluit produksie in$/);
+    assert.match(programmeMetricNote('af',sample.metrics.find(m=>m.id==='gardens')!.note),/2026-02-01.*2026-09-30/);
+    for(const note of sample.notes) assert.notEqual(programmeMetricNote('af',note),note,note);
+    assert.equal(programmeMetricValue('af',null),'Nie gerapporteer nie');
+    assert.equal(programmeMetricValue('en',null),'Not reported');
+    assert.equal(programmeMetricValue('af',12,'kg'),progressValue(12,'kg'));
+    // The stock stage names read in Afrikaans; a title someone typed is shown as recorded.
+    assert.equal(melAssessmentTitle('af','course_before','Before the in-person course'),'Voor die persoonlike kursus');
+    assert.equal(melAssessmentTitle('af','course_after',MEL_TEMPLATES.course_after.en),'Ná die persoonlike kursus');
+    assert.equal(melAssessmentTitle('af','course_before','Spring cohort — before'),'Spring cohort — before');
+    assert.equal(melAssessmentTitle('en','course_before','Before the in-person course'),'Before the in-person course');
+    assert.equal(melAssessmentTitle('zu','course_before','Before the in-person course'),'Before the in-person course');
+    // isiXhosa is not read from the Afrikaans drafts.
+    assert.equal(programmeMetricLabel('xh','Gardens with area records'),'Gardens with area records');
+  } finally { registerInlineDrafts('af',{}); }
+});
+
 test('indicator suggestions cover the whole programme and do not pre-fill results or numeric targets', () => {
   assert.equal(new Set(PROGRESS_TEMPLATES.map(t=>t.category)).size,7);
   for(const template of PROGRESS_TEMPLATES){assert.ok(template.method);assert.ok(!('target' in template));assert.ok(!('baseline' in template));assert.ok(!('actual' in template));}

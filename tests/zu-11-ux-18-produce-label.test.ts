@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 
 import { produceLabel } from '../lib/produce-label.ts';
 import { RECORDS_DRAFTS } from '../lib/records-regional-drafts-data.ts';
+import { AF_INLINE_SOURCE } from '../lib/locales/af-inline/index.ts';
 import { pricedCropList } from '../components/prices/CropPriceGuide.format.ts';
 
 // ux-18 (wave 14): the same crop read 'Sweet Potato' on /calendar, 'Sweet potato' on /home and
@@ -52,11 +53,21 @@ test('MyRecords\' lender summary reads isiZulu first, and the orchard chip/expor
 });
 
 test('MyRecords\' lender summary reads the isiXhosa draft first, then the English source, and never prints the English twice', () => {
-  assert.match(myRecords, /if \(lang === 'xh'\) \{\n    const draft = recordsDraft\(lang, english\);\n    return draft && draft !== english \? `\$\{draft\} — \$\{english\}` : english;/);
+  assert.match(myRecords, /if \(lang === 'xh' \|\| lang === 'af'\) \{\n    const draft = recordsDraft\(lang, english\);\n    return draft && draft !== english \? `\$\{draft\} — \$\{english\}` : english;/);
   const paragraph = RECORDS_DRAFTS['A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit score or a loan approval.'];
   assert.ok(paragraph?.xh && paragraph.xh.trim() !== '', 'the lender paragraph has an isiXhosa draft to lead with');
   // The other regional languages keep English first, as before.
   assert.match(myRecords, /if \(lang !== 'zu'\) return recordsPaired\(lang, english\);/);
+});
+
+test('MyRecords\' lender summary reads the Afrikaans draft first, then the English source, through the same branch as isiXhosa', () => {
+  const branch = myRecords.match(/function recordsUiZuFirst[\s\S]*?\n\}\n/);
+  assert.ok(branch, 'recordsUiZuFirst is still one function');
+  assert.match(branch[0], /if \(lang === 'xh' \|\| lang === 'af'\) \{/);
+  assert.equal((branch[0].match(/`\$\{draft\} — \$\{english\}`/g) ?? []).length, 1, 'one draft-then-source line serves both languages');
+  const paragraph = 'A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit score or a loan approval.';
+  assert.ok(AF_INLINE_SOURCE[paragraph]?.trim(), 'the lender paragraph has an Afrikaans draft to lead with');
+  assert.match(branch[0], /recordsDraft\(lang, english\)/, 'Afrikaans drafts come from the inline lookup behind recordsDraft');
 });
 
 test('app/calendar/page.tsx derives its grid crop names from produceLabel, not a hardcoded Title Case literal', () => {

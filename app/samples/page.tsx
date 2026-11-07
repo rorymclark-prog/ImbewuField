@@ -51,7 +51,7 @@ export default function SamplesPage() {
     const [error, setError] = useState('');
     const { lang } = useLanguage();
     // isiXhosa: the unreviewed draft keyed by the exact English template (lib/locales/xh-inline).
-    const ui = (english: string, zulu: string, values: Record<string, string | number> = {}) => lang === 'xh' ? inlineTemplate(lang, english, null, values) : sampleWorkspaceText(lang, english, zulu, values);
+    const ui = (english: string, zulu: string, values: Record<string, string | number> = {}) => (lang === 'xh' || lang === 'af') ? inlineTemplate(lang, english, null, values) : sampleWorkspaceText(lang, english, zulu, values);
     const pair = (english: string, zulu: string, values: Record<string, string | number> = {}, sourceValues = values): ChooserPair => ({ sourceEnglish: sampleWorkspaceText('en', english, zulu, sourceValues), nativeDraft: ui(english, zulu, values) });
     const paired = (english: string, zulu: string, values: Record<string, string | number> = {}, sourceValues = values) => <PairedDraft lang={lang} pair={pair(english, zulu, values, sourceValues)}/>;
     const examples = examplesEn.map(([id, label, title, description], i) => [id, ui(label, examplesZu[i][1]), ui(title, examplesZu[i][2]), ui(description, examplesZu[i][3])] as const);

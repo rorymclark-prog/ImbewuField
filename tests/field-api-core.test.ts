@@ -126,3 +126,21 @@ test('the offline report note is English unless the reader asked for isiXhosa, a
     assert.equal(fieldDataReportNote({ _device: { cached: false, pending: false } }, 'xh'), null);
   } finally { registerXhInline({}); }
 });
+
+test('the offline report note is English unless the reader asked for Afrikaans, and then keeps the saved date exactly', async () => {
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index');
+  const { registerInlineDrafts } = await import('../lib/xh-inline');
+  const data = { _device: { cached: true, savedAt: Date.UTC(2026, 9, 24, 8, 30) }, visits: [{ _pending: true }] };
+  const english = fieldDataReportNote(data)!;
+  assert.equal(english, 'Uses information saved on this device on 2026-10-24T08:30:00.000Z. Includes device-saved changes not yet confirmed by the server.');
+  try {
+    registerInlineDrafts('af', {});
+    assert.equal(fieldDataReportNote(data, 'af'), english, 'English until the drafts load');
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+    for (const language of ['en', 'zu', 'st', 'xh', undefined]) assert.equal(fieldDataReportNote(data, language), english);
+    const af = fieldDataReportNote(data, 'af')!;
+    assert.notEqual(af, english); assert.ok(af.includes('2026-10-24T08:30:00.000Z'));
+    assert.equal(fieldDataReportNote({ _device: { cached: true } }, 'af'), AF_INLINE_SOURCE['Uses information saved on this device.']);
+    assert.equal(fieldDataReportNote({ _device: { cached: false, pending: false } }, 'af'), null);
+  } finally { registerInlineDrafts('af', {}); }
+});

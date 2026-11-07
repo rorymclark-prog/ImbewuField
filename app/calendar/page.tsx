@@ -16,9 +16,10 @@ import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
 import type { RainPattern } from '@/lib/crop-catalog';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
+import { recordsBookMonthShort } from '@/lib/records-months';
 import { loadCropPlan } from '@/lib/crop-plan';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import {
   CALENDAR_LIMA_ADVICE_ZU, CALENDAR_LIMA_HOLD_MONTHS,
   CALENDAR_MAINTAIN_HOLD_KEYS, CALENDAR_MAINTAIN_ZU,
@@ -33,12 +34,14 @@ function CalendarDraftSource({
 }: {
   lang: string; english: string; zulu: string; heldForReview?: boolean; style?: React.CSSProperties;
 }) {
-  if ((lang === 'zu' || lang === 'xh') && heldForReview) {
+  if ((lang === 'zu' || isInlineDraftLang(lang)) && heldForReview) {
     return (
       <div style={style}>
         <p style={{ margin: 0 }}>
           {/* w22-05: muted was 4.16:1 on the tinted draft box in light; secondary clears 4.5:1 in both themes. */}
-          <span className="text-xs leading-snug text-[var(--text-secondary)]">{lang === 'xh' ? inlineText(lang, 'isiXhosa translation pending — English source:') : 'isiZulu translation pending — English source:'} </span>
+          {lang === 'af'
+            ? <span className="text-xs leading-snug text-[var(--text-secondary)]">{inlineText(lang, 'Afrikaans translation pending — English source:')} </span>
+            : <span className="text-xs leading-snug text-[var(--text-secondary)]">{lang === 'xh' ? inlineText(lang, 'isiXhosa translation pending — English source:') : 'isiZulu translation pending — English source:'} </span>}
           <span lang="en">{english}</span>
         </p>
       </div>
@@ -391,7 +394,9 @@ export default function CalendarPage() {
     ? [t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
        t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
        t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')]
-    : MONTH_ABBR;
+    : lang === 'af'
+      ? MONTH_ABBR.map((_, i) => recordsBookMonthShort('af', i + 1))
+      : MONTH_ABBR;
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
   // The crops the farmer actually planted, read from lib/crop-plan.ts's loadCropPlan() — the same
   // store the crop planner (app/cropplan, app/facilitator/crops) writes to. This used to read
@@ -491,6 +496,12 @@ export default function CalendarPage() {
             <span lang="en" style={{ display: 'block', marginTop: 4 }}>Monthly chores and Lima advice have unreviewed isiXhosa drafts beside English sources. Some farming instructions remain in English for review.</span>
           </p>
         )}
+        {lang === 'af' && (
+          <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 12 }}>
+            {inlineText(lang, 'Monthly chores and Lima advice have unreviewed Afrikaans drafts beside English sources. Some farming instructions remain in English for review.')}
+            <span lang="en" style={{ display: 'block', marginTop: 4 }}>Monthly chores and Lima advice have unreviewed Afrikaans drafts beside English sources. Some farming instructions remain in English for review.</span>
+          </p>
+        )}
         {lang === 'zu' && (
           <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 12 }}>
             Imisebenzi yanyanga zonke neseluleko sikaLima sinombhalo wesiZulu ongakabuyekezwa nomthombo wesiNgisi. Eminye imiyalo yokulima isasele ngesiNgisi ukuze ibuyekezwe.
@@ -551,8 +562,8 @@ export default function CalendarPage() {
                   aria-current={idx === currentMonth ? 'date' : undefined}
                   aria-label={
                     idx === currentMonth
-                      ? (lang === 'zu' ? `Khetha u-${monthLabels[idx]} — le nyanga` : inlineTemplate(lang, 'Select {month} — this month', null, { month: lang === 'xh' ? monthLabels[idx] : MONTH_ABBR[idx] }))
-                      : (lang === 'zu' ? `Khetha u-${monthLabels[idx]}` : inlineTemplate(lang, 'Select {month}', null, { month: lang === 'xh' ? monthLabels[idx] : MONTH_ABBR[idx] }))
+                      ? (lang === 'zu' ? `Khetha u-${monthLabels[idx]} — le nyanga` : inlineTemplate(lang, 'Select {month} — this month', null, { month: lang === 'xh' || lang === 'af' ? monthLabels[idx] : MONTH_ABBR[idx] }))
+                      : (lang === 'zu' ? `Khetha u-${monthLabels[idx]}` : inlineTemplate(lang, 'Select {month}', null, { month: lang === 'xh' || lang === 'af' ? monthLabels[idx] : MONTH_ABBR[idx] }))
                   }
                 >
                   {monthLabels[idx]}

@@ -13,7 +13,7 @@ export type MelReportOptions = {
   assessments: MelReportAssessment[]; milestones: ProgrammeMilestone[]; assessmentSource: boolean; milestoneSource: boolean;
   selectedId: string; beforeId: string; analysis: MelReportAnalysis | null; sourceNotes?: string[];
   comparisonAsOf?: string; donorName?: string; donorReference?: 'none' | 'sef';
-  /** 'xh' reads the isiXhosa drafts (lib/locales/xh-inline/g45-mel-report.ts) for the fixed wording; any other value is the English report, byte for byte. Names, figures, units, dates and recorded evidence stay as recorded. */
+  /** 'xh' reads the isiXhosa drafts (lib/locales/xh-inline/g45-mel-report.ts) and 'af' the Afrikaans drafts (lib/locales/af-inline/g47-mel-report.ts) for the fixed wording; any other value is the English report, byte for byte. Names, figures, units, dates and recorded evidence stay as recorded. */
   language?: string;
 };
 export const SEF_REPORTING_SOURCE = 'https://www-idc-co-za.b-cdn.net/wp-content/uploads/2025/05/Terms-of-Reference-Strategic-Implementing-Partners-Open-Call-2025.pdf';
@@ -23,10 +23,10 @@ export function buildMelEvidenceReport(options: MelReportOptions) {
   const { project, asOf, today, funder } = options;
   if(!validEvidenceDate(asOf) || asOf>today || options.comparisonAsOf && (!validEvidenceDate(options.comparisonAsOf) || options.comparisonAsOf>=asOf)) throw Error('Choose valid milestone cutoffs in order, ending today or earlier.');
   const lang = options.language ?? 'en';
-  /** A fixed sentence or label in the reader's language; `{name}` placeholders take the recorded values. English (and every language but isiXhosa) is the original text, byte for byte. */
+  /** A fixed sentence or label in the reader's language; `{name}` placeholders take the recorded values. English (and every language but isiXhosa and Afrikaans) is the original text, byte for byte. */
   const t = (english: string, vars: Record<string, string | number> = {}) => inlineTemplate(lang, english, null, vars);
   const english = (text: string, vars: Record<string, string | number> = {}) => inlineTemplate('en', text, null, vars);
-  /** A fixed word from the data (a stage, a status, a survey question or answer option): its isiXhosa draft, else as given. */
+  /** A fixed word from the data (a stage, a status, a survey question or answer option): its isiXhosa or Afrikaans draft, else as given. */
   const tr = (text: string) => inlineText(lang, text);
   const notAvailable = t('Not available');
   const numeric = (value: number | null | undefined) => value === null || value === undefined || !Number.isFinite(value) ? notAvailable : numberLabel(value, 2);

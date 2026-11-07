@@ -2,7 +2,7 @@
 
 import { useLanguage } from '@/lib/i18n';
 import FinanceText from './FinanceText';
-import { xhInlineDraft } from '@/lib/xh-inline';
+import { inlineDraft, isInlineDraftLang } from '@/lib/xh-inline';
 
 /**
  * Renders `zu` in place of `en` when the app language is isiZulu and a draft exists for this
@@ -16,14 +16,14 @@ import { xhInlineDraft } from '@/lib/xh-inline';
 export function FinanceZuText({ en, zu }: { en: string; zu: string | null }) {
   const { lang } = useLanguage();
   if (lang === 'zu' && zu) return <span lang="zu">{zu}</span>;
-  const xhosa = lang === 'xh' ? xhInlineDraft(en) : null;
-  if (xhosa) return <span lang="xh">{xhosa}</span>;
-  return <span lang={lang === 'zu' || lang === 'xh' ? 'en' : undefined}>{en}</span>;
+  const xhosa = isInlineDraftLang(lang) ? inlineDraft(lang, en) : null;
+  if (xhosa) return <span lang={lang}>{xhosa}</span>;
+  return <span lang={lang === 'zu' || isInlineDraftLang(lang) ? 'en' : undefined}>{en}</span>;
 }
 
 /** Same swap for text passed to FinanceText, which needs a plain string rather than a node. */
 export function financeZuOrEnglish(lang: string, en: string, zu: string | null): string {
-  if (lang === 'xh') return xhInlineDraft(en) ?? en;
+  if (isInlineDraftLang(lang)) return inlineDraft(lang, en) ?? en;
   return lang === 'zu' && zu ? zu : en;
 }
 
@@ -38,7 +38,7 @@ export function FinanceZuLessonReading({ en, zu, headingLevel }: { en: string; z
  *  or none exists yet and the learner is seeing the English original. */
 export function FinanceZuBadge({ hasDraft }: { hasDraft: boolean }) {
   const { lang, t } = useLanguage();
-  if (lang !== 'zu' && lang !== 'xh') return null;
+  if (lang !== 'zu' && !isInlineDraftLang(lang)) return null;
   return (
     <span
       className="finance-zu-badge"
@@ -57,10 +57,10 @@ export function FinanceZuBadge({ hasDraft }: { hasDraft: boolean }) {
 /** Page-level note for the course outline and the practical project — not repeated per string. */
 export function FinanceZuCourseNotice() {
   const { lang, t } = useLanguage();
-  if (lang !== 'zu' && lang !== 'xh') return null;
+  if (lang !== 'zu' && !isInlineDraftLang(lang)) return null;
   return (
     <p role="note" className="finance-zu-notice" style={{ margin: '12px 0', fontSize: 13, color: 'var(--text-secondary)' }}>
-      <span lang={lang}>{t('studentZuluLessonDraftBadge')}</span> — <span lang="en">Machine {lang === 'xh' ? 'isiXhosa' : 'isiZulu'} draft, not yet reviewed by a fluent speaker. Lesson bodies not yet translated stay in English.</span>
+      <span lang={lang}>{t('studentZuluLessonDraftBadge')}</span> — <span lang="en">Machine {lang === 'xh' ? 'isiXhosa' : lang === 'af' ? 'Afrikaans' : 'isiZulu'} draft, not yet reviewed by a fluent speaker. Lesson bodies not yet translated stay in English.</span>
     </p>
   );
 }

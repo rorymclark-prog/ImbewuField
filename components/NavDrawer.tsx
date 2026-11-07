@@ -52,7 +52,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const { t, lang } = useLanguage();
   const isZulu = lang === 'zu';
   // isiXhosa reads the inline drafts keyed by the exact English (the sample-tour tables have none).
-  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => {const native=lang==='xh'?inlineTemplate(lang,english,null,values):sampleWorkspaceText(lang,english,zulu,values);return isZulu?`${native} (${sampleWorkspaceText('en',english,zulu,values)})`:native;};
+  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => {const native=(lang==='xh'||lang==='af')?inlineTemplate(lang,english,null,values):sampleWorkspaceText(lang,english,zulu,values);return isZulu?`${native} (${sampleWorkspaceText('en',english,zulu,values)})`:native;};
   // Every link below used to be offered to everybody, including the four staff dashboards. See
   // lib/role-access.ts for why that is a usability failure rather than a security one, and for
   // what `role === null` deliberately does NOT do.

@@ -48,7 +48,7 @@ export function overlayFieldWrites(url: string, original: any, writes: FieldWrit
   return out;
 }
 
-/** The report's offline note. `language` 'xh' reads the isiXhosa drafts for its fixed wording (the saved date stays as recorded); anything else is the English. */
+/** The report's offline note. `language` 'xh' or 'af' reads that language's drafts for its fixed wording (the saved date stays as recorded); anything else is the English. */
 export function fieldDataReportNote(data: any, language?: string): string | null {
   const status=data?._device;
   const pending=status?.pending || ['visits','sessions','milestones','sites'].some(key=>Array.isArray(data?.[key])&&data[key].some((row:any)=>row._pending));

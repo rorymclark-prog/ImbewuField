@@ -41,7 +41,7 @@ import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport, preparedSampleReport, preparedExampleNote } from '@/lib/report-summary';
 import { reportUiText, reportUiDate, reportHeadingAliases, reportDocumentText, REPORT_DOCUMENT_LANGUAGES } from '@/lib/report-localisation';
 import LanguageDraftNote from './LanguageDraftNote';
-import { isInlineDraftLang, xhInlineDraft } from '@/lib/xh-inline';
+import { inlineDraft, isInlineDraftLang } from '@/lib/xh-inline';
 import { localeDate } from '@/lib/xh-dates';
 import { loadLocale, translate } from '@/lib/i18n';
 import { useLanguage } from '@/lib/i18n';
@@ -204,11 +204,11 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
       // Long native field/source words hid the source column on a phone. Only those columns may
       // break within a word; the measurement value must never split a decimal or a stored name.
       // Minimum widths also stop the auto table layout turning field labels into two-letter lines.
-      // isiXhosa counts too, but only once its drafts have loaded: before then reportDocumentText('…','xh') is the English,
+      // Afrikaans and isiXhosa count too, but only once their drafts have loaded: before then reportDocumentText('…','af'|'xh') is the English,
       // and an English table must never be taken for a translated one (hence the 'differs from the English' condition).
-      const nativeHeaders = (sources: readonly string[]) => headers.length === sources.length && [...REPORT_DOCUMENT_LANGUAGES, 'xh'].some(language =>
+      const nativeHeaders = (sources: readonly string[]) => headers.length === sources.length && [...REPORT_DOCUMENT_LANGUAGES, 'af', 'xh'].some(language =>
         sources.every((source, index) => headers[index].trim() === reportDocumentText(source, language))
-        && (language !== 'xh' || sources.some((source, index) => headers[index].trim() !== source)));
+        && ((language !== 'af' && language !== 'xh') || sources.some((source, index) => headers[index].trim() !== source)));
       const nativeMeasurementTable = nativeHeaders(['Measure','Value','Where it comes from']);
       const measurementWidths = [95,126,130];
       // A six-column native checklist hid its final actions off the phone. Exact source headers
@@ -346,7 +346,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const simple = useAppLevel() === 'simple';
   const { lang: uiLanguage, t: appT } = useLanguage();
   // isiXhosa: the draft keyed by the exact English (lib/locales/xh-inline), else the dictionary.
-  const xhDraft = (en: string) => uiLanguage === 'xh' ? xhInlineDraft(en) : null;
+  const xhDraft = (en: string) => isInlineDraftLang(uiLanguage) ? inlineDraft(uiLanguage, en) : null;
   const tr = (en: string, zu: string) => xhDraft(en) ?? reportUiText(en, uiLanguage, appT, zu);
   const label = (en: string) => xhDraft(en) ?? reportUiText(en, uiLanguage, appT);
   // The report's own language picker (LANGUAGE_OPTIONS) is independent of the app-wide language,
@@ -903,7 +903,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         soilPh: d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : undefined,
         language: contentLanguage,
         meanTempC: d.climate.meanTemp,
-        dateLabel: localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA'),
+        dateLabel: localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : language === 'af' ? 'af-ZA' : 'en-ZA'),
         sheets: includeImages ? plates : [],
         loadSheetImage,
         // The same photographs the model read and the screen shows — so the printed report a
@@ -1327,7 +1327,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 </div>
                 <div className="text-right">
                   <div className={`${styles.date} font-sans`}>
-                    {localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA')}
+                    {localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : language === 'af' ? 'af-ZA' : 'en-ZA')}
                   </div>
                 </div>
               </div>

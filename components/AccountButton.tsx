@@ -15,13 +15,14 @@ export default function AccountButton() {
   const native = ['zu', 'st', 'ts', 've'].includes(lang);
   // isiXhosa is also an unreviewed machine draft, so it keeps the English beside it like the four
   // languages above; its wording comes from the isiXhosa inline drafts, not the account tables.
-  const isXhosa = lang === 'xh';
-  const isDraft = native || isXhosa;
-  const signIn = isXhosa ? inlineText(lang, 'Sign in') : accountText(lang, 'Sign in', 'Ngena ngemvume', t);
-  const signOut = isXhosa ? inlineText(lang, 'Sign out') : accountText(lang, 'Sign out', 'Phuma ngemvume', t);
+  // Afrikaans reads the same English-keyed inline drafts (lib/xh-inline.ts).
+  const inlineDraftLang = lang === 'xh' || lang === 'af';
+  const isDraft = native || inlineDraftLang;
+  const signIn = inlineDraftLang ? inlineText(lang, 'Sign in') : accountText(lang, 'Sign in', 'Ngena ngemvume', t);
+  const signOut = inlineDraftLang ? inlineText(lang, 'Sign out') : accountText(lang, 'Sign out', 'Phuma ngemvume', t);
   const signOutCopy = 'Signing out ends access to this account on this device. Sign in again to continue.';
   const signOutZulu = 'Ukuphuma ngemvume kuvala ukufinyelela kule akhawunti kule divayisi. Ngena futhi ukuze uqhubeke.';
-  const signOutDescription = isXhosa ? inlineText(lang, signOutCopy, signOutZulu) : sampleWorkspaceText(lang, signOutCopy, signOutZulu);
+  const signOutDescription = inlineDraftLang ? inlineText(lang, signOutCopy, signOutZulu) : sampleWorkspaceText(lang, signOutCopy, signOutZulu);
 
   // Don't render at all when Firebase is unconfigured — no auth to surface.
   if (!isBackendConfigured()) return null;

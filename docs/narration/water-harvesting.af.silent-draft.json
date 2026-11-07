@@ -1,0 +1,701 @@
+{
+  "language": "af",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Water Harvesting",
+        "body": [
+          "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Wateropvang"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kontoerslote, walle, damme, reënwatertenks en gryswater — vertraag, versprei en laat elke druppel insak."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "Explain how a level contour swale can slow and spread runoff for infiltration on a suitable site.",
+          "Explain why dams need a designed spillway and a site assessment.",
+          "Explain what a first-flush diverter does and why tank water still needs a safety check.",
+          "Keep greywater away from people, food and drinking-water pipes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Leeruitkomste"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Verduidelik hoe 'n waterpas kontoersloot afloop op 'n geskikte terrein kan vertraag en versprei sodat dit kan insypel."
+          },
+          {
+            "status": "draft",
+            "text": "Verduidelik hoekom damme 'n ontwerpte oorloop en 'n terreinbeoordeling nodig het."
+          },
+          {
+            "status": "draft",
+            "text": "Verduidelik wat 'n eerstespoel-afleier doen en hoekom tenkwater steeds 'n veiligheidskontrole nodig het."
+          },
+          {
+            "status": "draft",
+            "text": "Hou gryswater weg van mense, kos en drinkwaterpype."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Two Swale Designs",
+        "body": [
+          "A level contour swale is one design for slowing runoff. Its trench follows a level contour so water can spread and soak into suitable soil.",
+          "Some swales are deliberately given a slight grade, with a designed safe outlet. Soil, slope, drainage and storm flow decide which approach is suitable. Ask a trained local adviser to assess the site before digging."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Twee ontwerpe vir kontoerslote"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Waterpas kontoersloot is een ontwerp om afloop te vertraag. Die sloot volg 'n waterpas kontoer sodat water kan versprei en in geskikte grond kan insak."
+          },
+          {
+            "status": "draft",
+            "text": "Sommige kontoerslote kry doelbewus 'n effense val, met 'n ontwerpte veilige uitlaat. Grond, helling, dreinering en stormvloei bepaal watter benadering geskik is. Vra 'n opgeleide plaaslike adviseur om die terrein te beoordeel voordat jy grawe."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "A Swale May Let Water Soak In",
+        "body": [
+          "This picture shows a level contour swale as a concept. Water may spread along the trench and soak in where the soil allows it.",
+          "It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "'n Kontoersloot kan water laat insak"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hierdie prentjie wys 'n waterpas kontoersloot as 'n konsep. Water kan langs die sloot versprei en insak waar die grond dit toelaat."
+          },
+          {
+            "status": "draft",
+            "text": "Dit wys nie hoe diep vog op jou grond insak nie. Kontroleer die grond, helling en oorlooproete voordat jy bou."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "The Downhill Berm",
+        "body": [
+          "The excavated soil forms a berm on the downhill side. It is where trees may be planted when the site design is suitable.",
+          "Trees may draw on moisture stored in nearby soil after rain; the result varies by site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Die wal aan die laer kant"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Die uitgegraafde grond vorm 'n wal aan die laer kant. Dit is waar bome geplant kan word wanneer die terreinontwerp geskik is."
+          },
+          {
+            "status": "draft",
+            "text": "Bome kan ná reën vog gebruik wat in nabygeleë grond gestoor is; die resultaat verskil van terrein tot terrein."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Storms Need a Safe Overflow",
+        "body": [
+          "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+          "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+          "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Storms het 'n veilige oorloop nodig"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Swaar reën kan 'n kontoersloot vinniger vul as wat water in die grond insak. Beplan 'n veilige oorloop voordat jy grawe."
+          },
+          {
+            "status": "draft",
+            "text": "Die roete mag nie die helling laat erodeer of skadelike water na 'n buurman stuur nie. 'n Kontoersloot of dam laer af moet dit veilig kan ontvang."
+          },
+          {
+            "status": "draft",
+            "text": "Vra 'n opgeleide plaaslike adviseur om die grond, helling en stormvloei te beoordeel. 'n Prentjie is nie 'n konstruksieontwerp nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Assess the Overflow Before Digging",
+        "body": [
+          "A swale needs a planned overflow route for heavy rain. Check it before digging.",
+          "Water may go to another swale or a dam only when a site assessment shows that the route, outlet and receiver can take the flow without damage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Beoordeel die oorloop voordat jy grawe"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Kontoersloot het 'n beplande oorlooproete vir swaar reën nodig. Kontroleer dit voordat jy grawe."
+          },
+          {
+            "status": "draft",
+            "text": "Water mag net na 'n ander kontoersloot of 'n dam gaan wanneer 'n terreinbeoordeling wys dat die roete, uitlaat en ontvanger die vloei sonder skade kan hanteer."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Check the Site Before Digging",
+        "body": [
+          "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+          "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kontroleer die terrein voordat jy grawe"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Helling alleen sê nie vir jou of 'n kontoersloot geskik is nie. Grond, dreinering, onstabiele grond en die water wat van bo af aankom, is almal belangrik."
+          },
+          {
+            "status": "draft",
+            "text": "Hou goeie grondbedekking. Kry 'n plaaslike beoordeling voordat jy op steil, nat of onstabiele grond grawe. Grasversperrings en terrasse het ook 'n ontwerp nodig wat by die terrein pas."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Watch: Roots Help Hold Soil",
+        "body": [
+          "Roots help hold soil along a planted contour line.",
+          "Choose erosion controls with local advice; steep land needs a site assessment."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Wortels help om grond vas te hou"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Wortels help om grond langs 'n beplante kontoerlyn vas te hou."
+          },
+          {
+            "status": "draft",
+            "text": "Kies erosiebeheer met plaaslike advies; steil grond het 'n terreinbeoordeling nodig."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Store Rain for the Dry Season",
+        "body": [
+          "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+          "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+          "Before changing a watercourse or building storage works, check the required authorisation with the water authority."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Stoor reën vir die droë seisoen"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Dam of poel kan afloop stoor, maar hoeveel water beskikbaar is, hang af van plaaslike reën, die opvanggebied, verliese en hoeveel water jy gebruik."
+          },
+          {
+            "status": "draft",
+            "text": "Reënseisoene verskil oor Suid-Afrika heen. Gebruik plaaslike rekords en beplan vir droë tydperke; 'n vol dam is nie gewaarborg nie."
+          },
+          {
+            "status": "draft",
+            "text": "Voordat jy 'n waterloop verander of stoorwerke bou, gaan by die waterowerheid na watter magtiging nodig is."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Design the Spillway Before the Wall",
+        "body": [
+          "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+          "Do not assume that annual rainfall tells you the size of a flood or the storage you will have.",
+          "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ontwerp die oorloop voor die wal"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Dam het 'n terreinondersoek en 'n ontwerp deur 'n gepas gekwalifiseerde persoon nodig. Afloop uit die opvanggebied, grond, fondamente, risiko stroomaf en 'n veilige oorloop is almal belangrik."
+          },
+          {
+            "status": "draft",
+            "text": "Moenie aanvaar dat jaarlikse reënval jou vertel hoe groot 'n vloed sal wees of hoeveel water jy sal kan stoor nie."
+          },
+          {
+            "status": "draft",
+            "text": "Onbeheerde oorvloei kan die wal erodeer en laat breek. Beplan 'n veilige roete vir oortollige water voor konstruksie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Dam and Spillway: A Concept",
+        "body": [
+          "Design the spillway before the wall — an overtopped wall can breach catastrophically.",
+          "Catchment runoff is one input. A suitably qualified person must assess the site, dam and spillway design before construction."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dam en oorloop: 'n Konsep"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ontwerp die oorloop voor die wal — 'n wal waaroor water loop, kan katastrofies breek."
+          },
+          {
+            "status": "draft",
+            "text": "Afloop uit die opvanggebied is een inset. 'n Gepas gekwalifiseerde persoon moet die terrein, die dam en die oorloopontwerp voor konstruksie beoordeel."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Care for the Dam and Its Banks",
+        "body": [
+          "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+          "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+          "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Versorg die dam en sy walle"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Water kan deur verdamping en sypeling verlore gaan. Kontroleer die watervlak en soek na lekke of erosie."
+          },
+          {
+            "status": "draft",
+            "text": "Hou die oorloop oop en onderhou die walbedekking wat in die ontwerp gespesifiseer is. Moenie bome op 'n gronddamwal plant nie."
+          },
+          {
+            "status": "draft",
+            "text": "Diere kan walle beskadig en mis by die water voeg. Hulle teenwoordigheid maak die water nie skoon of veilig nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Your Roof Is a Harvesting Surface",
+        "body": [
+          "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+          "Check whether the roof material is suitable for rainwater collection before connecting a tank.",
+          "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+          "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jou dak is 'n opvangoppervlak"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Jou dak kan reënwater opvang. Die hoeveelheid hang af van die dakoppervlakte, reënval en verliese."
+          },
+          {
+            "status": "draft",
+            "text": "Gaan na of die dakmateriaal geskik is vir die opvang van reënwater voordat jy 'n tenk aansluit."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik die dakoppervlakte soos van bo af gesien en plaaslike reënvalrekords. Maak dan voorsiening vir water wat die geut mis, wat weggelei word of wat uit 'n vol tenk oorloop."
+          },
+          {
+            "status": "draft",
+            "text": "'n Jaarlikse totaal sê nie vir jou hoeveel water tydens 'n droë tydperk beskikbaar sal wees nie. Vergelyk die toevoer met die gebruike wat jy beplan."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Divert the Dirty First Flush",
+        "body": [
+          "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+          "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+          "A diverter does not make the remaining water safe to drink."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lei die vuil eerste spoel weg"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Afloop van die dak kan stof, uitwerpsels en ander besoedeling meedra. 'n Eerstespoel-afleier hou 'n deel van die eerste afloop uit die tenk."
+          },
+          {
+            "status": "draft",
+            "text": "Hoeveel water weggelei moet word, hang af van die dak en die stelsel. Gebruik die verskaffer se instruksies vir grootte en onderhoud; daar is nie een volume vir elke dak nie."
+          },
+          {
+            "status": "draft",
+            "text": "'n Afleier maak nie die oorblywende water veilig om te drink nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "First Flush to Tank: A Concept",
+        "body": [
+          "A first-flush diverter keeps early roof runoff out of the tank.",
+          "Size and maintain it for your roof; later runoff still needs a safety check."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Eerste spoel na tenk: 'n Konsep"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Eerstespoel-afleier hou vroeë afloop van die dak uit die tenk."
+          },
+          {
+            "status": "draft",
+            "text": "Kies die grootte vir jou dak en onderhou dit; latere afloop het steeds 'n veiligheidskontrole nodig."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Match Tank Size to Water Demand",
+        "body": [
+          "Tank size depends on water demand, rain, roof area and the length of dry periods.",
+          "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+          "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Pas tenkgrootte by watervraag"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Tenkgrootte hang af van die watervraag, reën, dakoppervlakte en hoe lank droë tydperke duur."
+          },
+          {
+            "status": "draft",
+            "text": "Lys die beoogde gebruike en skat hulle watervraag uit jou eie rekords. Vergelyk dit deur die seisoene met die toevoer."
+          },
+          {
+            "status": "draft",
+            "text": "Beplan wat jy sal doen wanneer die gestoorde water min raak. 'n Provinsienaam alleen kan nie vir jou sê watter tenkgrootte jy nodig het nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Keep Stored Water Protected",
+        "body": [
+          "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+          "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+          "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hou gestoorde water beskerm"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hou die tenk toe, sit gaas oor openinge teen insekte, en onderhou die dak, geute en afleier. Hou reënwater apart van drinkwaterpype."
+          },
+          {
+            "status": "draft",
+            "text": "Water wat helder lyk, kan steeds kieme of chemikalieë bevat. Vra die plaaslike gesondheidsowerheid oor toetsing en behandeling wat by die beoogde gebruik pas."
+          },
+          {
+            "status": "draft",
+            "text": "'n Basiese filter alleen is nie 'n waarborg vir drinkwater nie. Water wat op voedselgewasse gebruik word, het ook 'n veiligheidsbeoordeling nodig."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Used Water Varies by Source",
+        "body": [
+          "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way.",
+          "South African guidance differs on kitchen water and laundry water. Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Gebruikte water verskil volgens bron"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Gebruikte huishoudelike water kan kieme, soute, skoonmaakmiddels en ander stowwe bevat. Riglyne definieer nie elke bron op dieselfde manier nie."
+          },
+          {
+            "status": "draft",
+            "text": "Suid-Afrikaanse riglyne verskil oor kombuiswater en wasgoedwater. Moenie toiletwater, water van luiers, of water waarmee 'n siek persoon of diere gewas is, by 'n hergebruikplan insluit nie. Moenie water hergebruik wat skadelike chemikalieë bevat nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Get Local Advice Before Any Reuse",
+        "body": [
+          "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site.",
+          "If this advice is unavailable or unclear, do not reuse the water. Soil and mulch do not disinfect wastewater."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kry plaaslike advies voor enige hergebruik"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Voor enige hergebruik, vra die munisipaliteit en 'n gekwalifiseerde plaaslike sanitasie-adviseur om die presiese bron, die huishouding se water- en sanitasiedienste, die beoogde gebruik en die terrein na te gaan."
+          },
+          {
+            "status": "draft",
+            "text": "As hierdie advies nie beskikbaar of nie duidelik is nie, moenie die water hergebruik nie. Grond en deklaag ontsmet nie afvalwater nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "heading": "A Picture Is Not a Farm Design",
+        "body": [
+          "This generic picture is not a tested or approved farm design. It does not prove that the source, route or destination is safe.",
+          "Check with qualified local advisers before any reuse. Soil and mulch do not disinfect wastewater."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "'n Prentjie is nie 'n plaasontwerp nie"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hierdie algemene prentjie is nie 'n getoetste of goedgekeurde plaasontwerp nie. Dit bewys nie dat die bron, roete of bestemming veilig is nie."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer by gekwalifiseerde plaaslike adviseurs voor enige hergebruik. Grond en deklaag ontsmet nie afvalwater nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "heading": "Prevent Contact and Pollution",
+        "body": [
+          "Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.",
+          "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Voorkom kontak en besoedeling"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Voorkom kontak met mense of diere. Moenie waswater aan drinkwaterpypwerk koppel nie, en moenie dit spuit, dit laat plasse vorm of dit van die eiendom af in 'n straat, drein of waterloop laat afloop nie."
+          },
+          {
+            "status": "draft",
+            "text": "As 'n hergebruikstelsel reeds werk en die water sleg ruik, plasse vorm of plante skade doen, hou op om dit te gebruik en kry gekwalifiseerde plaaslike advies."
+          }
+        ]
+      }
+    },
+    {
+      "n": 23,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Build an A-frame level from three poles and a weighted string.",
+          "Use it to find one level line across your slope.",
+          "Photograph the A-frame and the line you marked."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldopdrag"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bou 'n A-raamwaterpas van drie pale en 'n tou met 'n gewig daaraan."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik dit om een waterpas lyn oor jou helling te vind."
+          },
+          {
+            "status": "draft",
+            "text": "Neem 'n foto van die A-raam en die lyn wat jy gemerk het."
+          }
+        ]
+      }
+    },
+    {
+      "n": 24,
+      "english": {
+        "heading": "Check Your Work",
+        "body": [
+          "My A-frame is built and I have tested it.",
+          "Turn it around — it should read the same.",
+          "I have marked at least three points at the same height across my slope.",
+          "My marked line runs across the slope, not down it.",
+          "Realistic minimum time for the real work: 5 days."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kontroleer jou werk"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "My A-raam is gebou en ek het dit getoets."
+          },
+          {
+            "status": "draft",
+            "text": "Draai dit om — dit behoort dieselfde te wys."
+          },
+          {
+            "status": "draft",
+            "text": "Ek het ten minste drie punte op dieselfde hoogte oor my helling gemerk."
+          },
+          {
+            "status": "draft",
+            "text": "My gemerkte lyn loop dwars oor die helling, nie teen die helling af nie."
+          },
+          {
+            "status": "draft",
+            "text": "Realistiese minimum tyd vir die regte werk: 5 dae."
+          }
+        ]
+      }
+    }
+  ]
+}

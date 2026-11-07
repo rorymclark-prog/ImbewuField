@@ -8,7 +8,7 @@ import OfflinePageLink from './OfflinePageLink';
 import DesignDraftCopy from './DesignDraftCopy';
 import Tx, { TxRich, XhDraftLine } from './Tx';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import styles from './FinanceCourse.module.css';
 import ArrowLabel from './ArrowLabel';
 import Summary from './Summary';
@@ -50,8 +50,8 @@ export default function DesignWorkedExample() {
   }
 
   // The download line carries a file name, so the exact-English lookup of DesignDraftCopy cannot match it for isiXhosa: it reads the template.
-  const downloadNote = downloadMessage && (lang === 'xh' && downloadMessage.startsWith('Download requested:')
-    ? <XhDraftLine xh={inlineTemplate(lang, 'Download requested: {name}. Open the saved file and check it before leaving this page.', null, { name: downloadMessage.match(/^Download requested: (.+?)\. Open the saved file and check it before leaving this page\.$/)?.[1] ?? 'imbewu-worked-design.svg' })} en={downloadMessage} />
+  const downloadNote = downloadMessage && (isInlineDraftLang(lang) && downloadMessage.startsWith('Download requested:')
+    ? <XhDraftLine lang={lang} xh={inlineTemplate(lang, 'Download requested: {name}. Open the saved file and check it before leaving this page.', null, { name: downloadMessage.match(/^Download requested: (.+?)\. Open the saved file and check it before leaving this page\.$/)?.[1] ?? 'imbewu-worked-design.svg' })} en={downloadMessage} />
     : <DesignDraftCopy en={downloadMessage} zu={downloadMessage.startsWith('Download requested:') ? `Kucelwe ukulanda: ${downloadMessage.match(/^Download requested: (.+?)\. Open the saved file and check it before leaving this page\.$/)?.[1] ?? 'ifayela'}. Vula ifayela elilondoloziwe ulihlole ngaphambi kokuphuma kuleli khasi.` : 'Ukulanda akukwazanga ukulungiswa. Gcina leli khasi livuliwe bese uzama futhi.'} />);
 
   return <>

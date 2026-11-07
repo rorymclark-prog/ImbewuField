@@ -92,7 +92,7 @@ test('source-paired Study infographic machine drafts show their English source b
   assert.match(infographic,
     /LessonInfographic url=\{lesson\.infographicUrl!\} alt=\{lessonContent\.infographicAlt \?\? lesson\.infographicAlt!\}/,
     'the translated description must remain the image alt text');
-  assert.match(infographic, /Machine draft · \{lang === 'st' \? 'Sesotho' : lang === 'ts' \? 'X[^']*' : lang === 'zu' \? 'isiZulu' : lang === 'xh' \? 'isiXhosa' : 'Tshivenda'\} image description/,
+  assert.match(infographic, /Machine draft · \{lang === 'st' \? 'Sesotho' : lang === 'ts' \? 'X[^']*' : lang === 'zu' \? 'isiZulu' : lang === 'xh' \? 'isiXhosa' : lang === 'af' \? 'Afrikaans' : 'Tshivenda'\} image description/,
     'the visible caption must identify the unreviewed language draft');
   assert.match(infographic, /<p lang=\{lang\} className="text-sm">\{infographicAltDraft\}<\/p>/,
     'the translated description must also be visible to sighted learners');

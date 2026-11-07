@@ -51,6 +51,9 @@ test('formatStaffDate and formatStaffDateRange speak isiXhosa and leave other la
   const d = new Date('2026-10-24T00:00:00');
   assert.equal(formatStaffDate('2026-10-24', 'en'), d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }));
   assert.equal(formatStaffDate('2026-10-24', 'zu'), d.toLocaleDateString('zu-ZA', { day: 'numeric', month: 'short', year: 'numeric' }));
+  // Afrikaans has a browser locale pack, so staff dates use it (24 Okt. 2026 style, not English).
+  assert.equal(formatStaffDate('2026-10-24', 'af'), d.toLocaleDateString('af-ZA', { day: 'numeric', month: 'short', year: 'numeric' }));
+  assert.notEqual(formatStaffDate('2026-10-24', 'af'), formatStaffDate('2026-10-24', 'en'));
   assert.equal(formatStaffDate(null, 'xh'), '');
   assert.equal(formatStaffDate('not-a-date', 'xh'), 'not-a-date');
 });

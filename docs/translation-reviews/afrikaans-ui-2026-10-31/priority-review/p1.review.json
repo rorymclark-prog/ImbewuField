@@ -1,0 +1,105 @@
+{
+  "unit": "p1",
+  "okCount": 312,
+  "items": [
+    {
+      "index": 27,
+      "verdict": "repair",
+      "english": "Outline your roof, swale or earthwork — I calculate how much rain it collects.",
+      "draft": "Trek jou dak, voor of grondwerk se buitelyn — ek bereken hoeveel reën dit opvang.",
+      "backtranslation": "Trace your roof, furrow or earthwork's outline — I calculate how much rain it captures.",
+      "problem": "The draft says 'voor' (furrow) where the English says swale, so a farmer would trace a furrow instead of a swale (kontoersloot, as used in item 65).",
+      "corrected": "Trek die buitelyn van jou dak, kontoersloot of grondwerk — ek bereken hoeveel reën dit opvang."
+    },
+    {
+      "index": 37,
+      "verdict": "repair",
+      "english": "Use a roof outline traced on the map or measured on site. Leave this blank if you do not know.",
+      "draft": "Growwe riglyn: 2-slaapkamerhuis ≈ 60 m², 3-slaapkamer ≈ 100 m², groot plaashuis ≈ 150+ m²",
+      "backtranslation": "Rough guide: 2-bedroom house ≈ 60 m², 3-bedroom ≈ 100 m², large farmhouse ≈ 150+ m²",
+      "problem": "The draft replaces the instruction with an invented rough guide of house sizes (60/100/150 m²) that is not in the English, and drops 'leave this blank if you do not know'.",
+      "corrected": "Gebruik 'n dakbuitelyn wat op die kaart nagetrek of op die terrein gemeet is. Laat dit leeg as jy nie weet nie."
+    },
+    {
+      "index": 38,
+      "verdict": "repair",
+      "english": "The area covered by the roof when seen from directly above; do not use the sloping roof surface.",
+      "draft": "Vloeroppervlak van die gebou, nie die voetspoor van die dakhelling nie",
+      "backtranslation": "Floor area of the building, not the footprint of the roof slope",
+      "problem": "The draft tells the farmer to use the building's floor area, but the English asks for the area the roof covers seen from directly above, not the sloping roof surface; this gives a wrong rain-capture figure.",
+      "corrected": "Die oppervlakte wat die dak bedek wanneer jy dit van reg bo af sien; moenie die skuins dakoppervlak gebruik nie."
+    },
+    {
+      "index": 50,
+      "verdict": "repair",
+      "english": "Frost-free ≈",
+      "draft": "Rysvry ≈",
+      "backtranslation": "Rice-free ≈",
+      "problem": "'Rysvry' means 'rice-free', not 'frost-free'; the frost-free season label is lost.",
+      "corrected": "Rypvry ≈"
+    },
+    {
+      "index": 57,
+      "verdict": "repair",
+      "english": "Warm, wet summers and mild, dry winters with frequent morning mist. Reliable summer rain and a long frost-free season let you grow most of the year — plan around the dry winter and afternoon summer storms.",
+      "draft": "Warm, nat somers en sagte, droë winters met gereelde oggendmis. Betroubare somerreën en 'n lang ryp-vrye seisoen laat jou die meeste van die jaar verbou — beplan rondom die droë winter en nabrandstorings in die somer.",
+      "backtranslation": "Warm, wet summers and mild, dry winters with frequent morning mist. Reliable summer rain and a long frost-free season let you cultivate most of the year — plan around the dry winter and \"after-burn disturbances\" (nonsense word) in summer.",
+      "problem": "'nabrandstorings' is not a real word (reads like 'after-burn disturbances'); the warning about afternoon summer storms is lost.",
+      "corrected": "Warm, nat somers en sagte, droë winters met gereelde oggendmis. Betroubare somerreën en 'n lang rypvrye seisoen laat jou die meeste van die jaar verbou — beplan rondom die droë winter en middagstorms in die somer."
+    },
+    {
+      "index": 79,
+      "verdict": "repair",
+      "english": "Grazing animals often compact this soil hard. Loosen it below the surface before digging channels or ponds. Plant oats or vetch as a winter cover crop to protect and feed the soil. The soil is usually mildly acidic (pH 5.5–6.5) — add agricultural lime if it is more acidic than that. Build up organic matter with compost and biochar.",
+      "draft": "Weidende diere trap hierdie grond dikwels hard. Maak dit onder die oppervlak los voordat jy kanale of damme grawe. Plant hawer of wieke as 'n winterdekgewas om die grond te beskerm en te voed. Die grond is gewoonlik effens suur (pH 5.5–6.5) — voeg landboukalk by as dit suurder as dit is. Bou organiese materiaal op met kompos en biochar.",
+      "backtranslation": "Grazing animals often trample this soil hard. Loosen it below the surface before you dig channels or dams. Plant oats or vetch as a winter cover crop to protect and feed the soil. The soil is usually slightly acidic (pH 5.5–6.5) — add agricultural lime if it is more acidic than it is [unclear: \"than that\"]. Build up organic matter with compost and biochar.",
+      "problem": "'as dit suurder as dit is' reads as 'if it is more acidic than it is', so it is unclear when to add lime (the English means more acidic than pH 5.5–6.5).",
+      "corrected": "Weidende diere trap hierdie grond dikwels hard. Maak dit onder die oppervlak los voordat jy kanale of damme grawe. Plant hawer of wieke as 'n winterdekgewas om die grond te beskerm en te voed. Die grond is gewoonlik effens suur (pH 5.5–6.5) — voeg landboukalk by as die grond suurder is as dit. Bou organiese materiaal op met kompos en biochar."
+    },
+    {
+      "index": 163,
+      "verdict": "repair",
+      "english": "Try every calculation before checking. You can read out or point to your reasoning while a facilitator writes it down. These self-checks do not award course credit.",
+      "draft": "Probeer elke berekening voordat jy nagaan. Jy kan jou redenasie voorlees of daarna wys terwyl 'n fasiliteerder dit neerskryf. Hierdie selfkontroles gee nie kursuskrediet nie.",
+      "backtranslation": "Try each calculation before you check. You can read your reasoning aloud or show it afterwards while a facilitator writes it down. These self-checks do not give course credit.",
+      "problem": "'daarna wys' means 'show it afterwards', but the English says the learner can point to their reasoning while the facilitator writes it down.",
+      "corrected": "Probeer elke berekening voordat jy nagaan. Jy kan jou redenasie voorlees of daarop wys terwyl 'n fasiliteerder dit neerskryf. Hierdie selfkontroles gee nie kursuskrediet nie."
+    },
+    {
+      "index": 289,
+      "verdict": "repair",
+      "english": "A sheep-scab treatment plan should be in place: the disease carries a high economic and welfare cost.",
+      "draft": "'n Behandelingsplan vir skaapbrandsiekte moet in plek wees: die siekte bring hoë ekonomiese en welsynskoste mee.",
+      "backtranslation": "A treatment plan for sheep scab must be in place: the disease brings high economic and welfare costs.",
+      "problem": "The English says a sheep-scab treatment plan 'should' be in place (advice), but 'moet' makes it a legal must, in a list where the other items really are legal rules.",
+      "corrected": "'n Behandelingsplan vir skaapbrandsiekte behoort in plek te wees: die siekte bring hoë ekonomiese en welsynskoste mee."
+    },
+    {
+      "index": 311,
+      "verdict": "repair",
+      "english": "Assumed planting variety: Sunrise Solo, subject to a frost-free, drained growing position. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.",
+      "draft": "Aanvaarde plantvariëteit: Sunrise Solo, onderhewig aan 'n rypvrye, gedreineerde groeiplek. Bevestig sy plaaslike plukmaande; die kalender gebruik 'n gemerkte streeksverwysing waar daar 'n bron is.",
+      "backtranslation": "Accepted plant variety: Sunrise Solo, subject to a frost-free, drained growing spot. Confirm its local picking months; the calendar uses a marked regional reference where there is a source.",
+      "problem": "'Aanvaarde' means accepted/approved, so a farmer could read Sunrise Solo as an approved or recommended variety; the English only says it is the assumed variety for the plan.",
+      "corrected": "Aangenome plantvariëteit: Sunrise Solo, onderhewig aan 'n rypvrye, gedreineerde groeiplek. Bevestig sy plaaslike plukmaande; die kalender gebruik 'n gemerkte streeksverwysing waar daar 'n bron is."
+    },
+    {
+      "index": 312,
+      "verdict": "repair",
+      "english": "Assumed planting variety: Tommy Atkins, subject to local flowering and frost checks. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.",
+      "draft": "Aanvaarde plantvariëteit: Tommy Atkins, onderhewig aan plaaslike blom- en rypkontroles. Bevestig sy plaaslike plukmaande; die kalender gebruik 'n gemerkte streeksverwysing waar daar 'n bron is.",
+      "backtranslation": "Accepted plant variety: Tommy Atkins, subject to local flowering and frost checks. Confirm its local picking months; the calendar uses a marked regional reference where there is a source.",
+      "problem": "'Aanvaarde' means accepted/approved, so a farmer could read Tommy Atkins as an approved or recommended variety; the English only says it is the assumed variety for the plan.",
+      "corrected": "Aangenome plantvariëteit: Tommy Atkins, onderhewig aan plaaslike blom- en rypkontroles. Bevestig sy plaaslike plukmaande; die kalender gebruik 'n gemerkte streeksverwysing waar daar 'n bron is."
+    },
+    {
+      "index": 313,
+      "verdict": "repair",
+      "english": "Assumes light frost; check severity locally.",
+      "draft": "Aanvaar ligte ryp; kontroleer die felheid plaaslik.",
+      "backtranslation": "Accept(s) light frost [ambiguous: imperative \"Assume light frost\" or \"Tolerates light frost\"]; check the severity locally.",
+      "problem": "'Aanvaar ligte ryp' most naturally reads as 'tolerates light frost' (a plant hardiness claim), while the English says the entry assumes light frost; a farmer could overrate the plant's frost tolerance.",
+      "corrected": "Gaan uit van ligte ryp; kontroleer die felheid plaaslik."
+    }
+  ]
+}

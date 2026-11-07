@@ -45,3 +45,24 @@ export function formatXhosaJournalDate(value: string): string {
   const months = ['Jan', 'Feb', 'Mat', 'Epr', 'Mey', 'Jun', 'Jul', 'Aga', 'Sep', 'Okt', 'Nov', 'Dis'];
   return `${days[date.getUTCDay()]} ${date.getUTCDate()} ${months[date.getUTCMonth()]}`;
 }
+
+// Afrikaans twins of the formatters above (same reason: the English formatters print English months).
+// Unreviewed machine draft, like the rest of the Afrikaans journal copy. Months match lib/records-months.ts.
+export function formatAfrikaansMonth(monthKey: string): string {
+  const match = /^(\d{4})-(\d{2})$/.exec(monthKey);
+  if (!match) return 'Onbekende datum';
+  const month = Number(match[2]);
+  if (month < 1 || month > 12) return 'Onbekende datum';
+  const names = ['Januarie', 'Februarie', 'Maart', 'April', 'Mei', 'Junie', 'Julie', 'Augustus', 'September', 'Oktober', 'November', 'Desember'];
+  return `${names[month - 1]} ${match[1]}`;
+}
+
+export function formatAfrikaansJournalDate(value: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return value;
+  const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
+  if (date.toISOString().slice(0, 10) !== value) return value;
+  const days = ['So', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Sa'];
+  const months = ['Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des'];
+  return `${days[date.getUTCDay()]} ${date.getUTCDate()} ${months[date.getUTCMonth()]}`;
+}

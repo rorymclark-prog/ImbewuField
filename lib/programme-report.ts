@@ -26,7 +26,7 @@ export interface ProgrammeReportOptions {
   comparison?: { startMonth: string; endMonth: string };
   withheldForConsent: number;
   date: string;
-  /** 'xh' reads the isiXhosa drafts for the fixed wording; anything else (or omitted) is the English. */
+  /** 'xh' and 'af' read the isiXhosa / Afrikaans drafts for the fixed wording; anything else (or omitted) is the English. */
   language?: string;
 }
 export interface ProgrammeReportModel {
@@ -97,9 +97,10 @@ function programmeComparisonTable(o: ProgrammeReportOptions): ReportTable {
 
 /** Snapshot metrics have no event dates. Only the server's dated ledger can answer a period query;
  * a cohort filter must never relabel organisation-wide monthly totals as that cohort's results.
- * `o.language` only changes the fixed wording: 'xh' reads the isiXhosa drafts keyed by each English
- * string (lib/locales/xh-inline/g18-programme-report-body.ts, g16-programme-reports.ts); every other
- * value (names, numbers, dates) is data and stays as recorded, and any other language is English. */
+ * `o.language` only changes the fixed wording: 'xh' reads the isiXhosa drafts and 'af' the Afrikaans drafts,
+ * keyed by each English string (lib/locales/{xh,af}-inline/g18-programme-report-body.ts, g16-programme-reports.ts);
+ * every other value (names, numbers, dates) is data and stays as recorded, and any other language is English.
+ * Until a language's drafts are loaded (the server, English readers) the report is English throughout. */
 export function buildProgrammeReport(o: ProgrammeReportOptions): ProgrammeReportModel {
   const lang = o.language ?? 'en';
   /** A fixed sentence or label; `{name}` placeholders take the recorded values. */

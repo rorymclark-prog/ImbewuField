@@ -22,7 +22,7 @@ const MONTH_FULL_KEYS = [
 
 
 function formatDrySeason(drySeason: string, t: (key: string) => string, lang: string): string {
-  if (lang !== 'zu' && lang !== 'xh') return drySeason;
+  if (lang !== 'zu' && lang !== 'xh' && lang !== 'af') return drySeason;
   const sourceLabels: Record<string, [string, string]> = {
     'May–Aug': [t('waterBalanceMonthMay'), t('waterBalanceMonthAug')],
     'Nov–Mar': [t('waterBalanceMonthNov'), t('waterBalanceMonthMar')],

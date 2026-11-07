@@ -2,13 +2,13 @@
 import { useEffect, useState } from 'react';
 import { TRAINING_FEEDBACK_TEMPLATE, trainingFeedbackSummary, type FeedbackLanguage, type TrainingRecord } from '@/lib/programme-evidence';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText, inlineTemplate, xhInlineDraft } from '@/lib/xh-inline';
+import { inlineDraft, inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import styles from './MelDashboard.module.css';
 
 export default function TrainingFeedback({session,onChange,funder=false}:{session:TrainingRecord;onChange?:(session:TrainingRecord)=>void;funder?:boolean}) {
   const {lang}=useLanguage();
   // Consent and privacy wording: the isiXhosa draft always carries its English source beneath it.
-  const pair=(en:string)=>{const draft=lang==='xh'?xhInlineDraft(en):null;return draft?<span style={{minWidth:0}}>{draft}<small style={{display:'block',fontSize:12,lineHeight:1.45}}>English source: {en}</small></span>:en;};
+  const pair=(en:string)=>{const draft=isInlineDraftLang(lang)?inlineDraft(lang,en):null;return draft?<span style={{minWidth:0}}>{draft}<small style={{display:'block',fontSize:12,lineHeight:1.45}}>English source: {en}</small></span>:en;};
   const [person,setPerson]=useState(''),[answers,setAnswers]=useState<Record<string,string>>({}),[language,setLanguage]=useState<FeedbackLanguage>('en'),[consent,setConsent]=useState(false),[notice,setNotice]=useState('');
   const present=session.attendance.some(a=>a.id===person&&a.present);
   useEffect(()=>{if(person&&!present){setPerson('');setAnswers({});setConsent(false);}},[person,present]);

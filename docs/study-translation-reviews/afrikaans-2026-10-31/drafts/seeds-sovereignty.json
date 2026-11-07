@@ -1,0 +1,115 @@
+{
+ "id": "seeds-sovereignty",
+ "title": "Sade en Saadsoewereiniteit",
+ "description": "Bewaar, berg en deel saad — vry daarvan om elke seisoen saad te moet koop.",
+ "lessons": [
+  {
+   "id": "seeds-sovereignty-l1",
+   "title": "Hoekom saadbewaring saak maak",
+   "body": "Oopbestuifde saad van 'n stabiele variëteit kan soortgelyke plante voortbring wanneer bestuiwing behoorlik bestuur word. F1-hibriede kom van geselekteerde ouers. Hul bewaarde saad kan ontkiem, maar die volgende generasie wissel; dit behou dalk nie die kombinasie wat jy wou hê nie.\n\nSaadsoewereiniteit sluit die kennis en keuses in wat nodig is om geskikte saad te kweek, te bewaar en te deel. Hou die gewas en variëteit se identiteit by elke saadlot.\n\nKies gesonde plante met nuttige eienskappe. Begin met 'n gewas wat jy ken en vra 'n mentor wat saad bewaar hoe om die bestuiwing en seleksie daarvan te bestuur.",
+   "keyPoints": [
+    "Stabiele oopbestuifde variëteite het geskikte bestuiwingsbestuur nodig",
+    "Saadsoewereiniteit beteken vryheid daarvan om elke seisoen van 'n saadmaatskappy afhanklik te wees",
+    "Diversiteit van gewasse en variëteite kan aanpassing by klimaatsverandering ondersteun wanneer variëteite by plaaslike toestande pas",
+    "Kies gesonde plante met nuttige eienskappe; gebruik gewasspesifieke riglyne vir saadbewaring"
+   ],
+   "quiz": [
+    {
+     "q": "Hoekom sal saad wat van 'n hibriede (F1) tamatie bewaar is, nie volgende seisoen suiwer teel nie?",
+     "options": [
+      "Hibriedsaad is steriel en sal glad nie ontkiem nie",
+      "Hibriedsaad is 'n eenmalige genetiese kruising — sy nakomelinge wissel onvoorspelbaar van die ouer",
+      "Hibriede groei slegs in kommersiële kweekhuise",
+      "Hibriedsaad verloor sy lewensvatbaarheid vinniger in berging"
+     ],
+     "correct": 1,
+     "rationale": "F1-hibriede word geteel deur twee spesifieke ouerlyne te kruis — hul saad dra 'n gemengde, onvoorspelbare genetiese herkombinasie, nie 'n stabiele kopie van die ouer nie."
+    },
+    {
+     "q": "Wanneer jy 'n ouerplant kies om saad van te bewaar, wat moet jou keuse rig?",
+     "options": [
+      "Watter plant ook al die enkele grootste vrug opgelewer het",
+      "Die gesondste, mees siektevrye, goedgevormde plant, selfs al lewer dit nie die meeste op nie",
+      "Watter plant ook al eerste ryp geword het, ongeag gesondheid",
+      "Enige plant — seleksie beïnvloed nie toekomstige saadgehalte nie"
+     ],
+     "correct": 1,
+     "rationale": "Jy selekteer vir die eienskappe wat jy wil voortdra — gesondheid en groeikrag is op die lang termyn belangriker as een plant se enkele grootste oes."
+    }
+   ],
+   "infographicAlt": "Twee saadpakkies bo 'n vereenvoudigde vergelyking: vyf plante wat soortgelyk lyk aan die linkerkant en vyf verskillende plante aan die regterkant. Werklike nakomelinge hang af van variëteit en bestuiwing."
+  },
+  {
+   "id": "seeds-sovereignty-l2",
+   "title": "Hoe om saad te bewaar: droë en nat metodes",
+   "body": "Droë saad moet ryp word voordat dit ingesamel word. Verwyder kaf en beskadigde saad, en droog dit dan klaar in die skaduwee met lugvloei.\n\nSaad in vlesige vrugte het 'n gewasspesifieke metode nodig. Tamatiesaad kan kortliks gefermenteer word om die jel te help verwyder, en dan afgespoel en deeglik gedroog word. Hou 'n aktiewe fles oop of los bedek. Fermentasie is nie vir elke gewas met nat saad nodig nie en waarborg nie siektevrye saad nie.\n\nBestuiwing maak ook saak. Mielies word deur die wind bestuif en kan met ander variëteite kruis. Tamaties bestuif hulself meestal, maar kruising is moontlik. Kontroleer die gewas en variëteit voordat jy isolasie beplan of saad bewaar.",
+   "keyPoints": [
+    "Gewasse vir die droë metode (bone, mielies, sonneblom) droog eenvoudig op die plant voordat dit ingesamel word",
+    "Tamatiefermentasie verwyder jel; ander nat sade het hul eie verwerkingsmetode nodig",
+    "Tamaties bestuif hulself meestal, maar kan kruis; mielies word deur die wind bestuif. Kontroleer gewas- en variëteitspesifieke isolasieriglyne voordat jy saad bewaar",
+    "Spoel verwerkte tamatiesaad af en droog dit deeglik voor berging"
+   ],
+   "quiz": [
+    {
+     "q": "Wat help kort fermentasie verwyder wanneer jy tamatiesaad verwerk?",
+     "options": [
+      "Fermentasie verbeter die saad se geur",
+      "Dit help om die jel om die saad te verwyder voordat dit afgespoel en gedroog word",
+      "Dit maak enige peste binne-in die vrug dood",
+      "Dit is suiwer tradisioneel, sonder enige praktiese funksie"
+     ],
+     "correct": 1,
+     "rationale": "Fermentasie help om tamatiesaad van sy jel te skei. Dit is nie 'n waarborg van ontkieming of siektevrye saad nie; droog, berg en toets die saadlot."
+    },
+    {
+     "q": "Hoekom het mielies 'n veel groter isolasieafstand as tamaties nodig om 'n variëteit suiwer te hou?",
+     "options": [
+      "Mieliesaad is brosser",
+      "Mielies word deur die wind bestuif en kruis maklik oor afstand; tamaties bestuif hulself meestal",
+      "Tamaties kruisbestuif glad nie, onder geen omstandighede nie",
+      "Mielies blom vir 'n korter tydperk"
+     ],
+     "correct": 1,
+     "rationale": "Wind dra mieliestuifmeel baie verder as wat insek- of selfbestuiwing tamatiestuifmeel beweeg — daardie verskil in bestuiwingsmetode bepaal die isolasievereiste."
+    }
+   ],
+   "infographicAlt": "Droë saad word uit ryp peule ingesamel. Die voorbeeld van die nat metode vir tamaties wys kort fermentasie, afspoel en droog."
+  },
+  {
+   "id": "seeds-sovereignty-l3",
+   "title": "Droog, berg en deel saad",
+   "body": "Droog saad behoorlik voordat jy dit berg: papierkoeverte, nie plastiek nie, op 'n skaduryke, lugtige plek — nooit in direkte son of in hitte in 'n geslote ruimte nie. Die drie vyande van saad se lewensvatbaarheid is hitte, lig en vog. Hoe lank saad in berging hou, wissel na gelang van gewas en toestande, so toets ontkieming voordat jy op bewaarde saad staatmaak.\n\nMerk elke koevert met die gewas, variëteit en datum waarop dit bewaar is. Hou deeglik droë saad in 'n verseëlde houer op 'n koel, donker, droë plek. As jy klam saad verseël, kan dit vog vasvang en die saad beskadig.\n\nVoor 'n nuwe plantseisoen, toets 'n klein hoeveelheid vir ontkieming sodat jy nie staatmaak op saad wat stilletjies sy lewensvatbaarheid verloor het nie.\n\nReël hierdie seisoen 'n saadruil met bure. Wat een huishouding goed bewaar, kan verskeie huishoudings deel — en die hele groep se variëteitsdiversiteit groei met elke ruil.",
+   "keyPoints": [
+    "Droog saad in die skaduwee met goeie lugvloei; nooit in direkte son of in hitte in 'n geslote ruimte nie",
+    "Berg gemerkte saad koel, donker en droog — hitte, lig en vog is die drie vyande van lewensvatbaarheid",
+    "Toets 'n klein hoeveelheid vir ontkieming voordat jy vir aanplanting op gebergde saad staatmaak",
+    "Saadruilings laat almal se variëteitsdiversiteit vinniger groei as om alleen saad te bewaar"
+   ],
+   "quiz": [
+    {
+     "q": "Wat is die drie hoofvyande van gebergde saad se lewensvatbaarheid?",
+     "options": [
+      "Wind, insekte en swam",
+      "Hitte, lig en vog",
+      "Koue, donkerte en droogte",
+      "Grondkontak, peste en knaagdiere"
+     ],
+     "correct": 1,
+     "rationale": "As jy deeglik droë saad koel en donker hou, werk jy al drie teë. 'n Verseëlde houer help om droë saad droog te hou, maar kan vog vasvang as saad verpak word terwyl dit klam is."
+    },
+    {
+     "q": "Hoekom toets jy 'n klein hoeveelheid gebergde saad vir ontkieming voor die plantseisoen?",
+     "options": [
+      "Dit is 'n wetlike vereiste om saad te deel",
+      "Saad kan stilletjies sy lewensvatbaarheid in berging verloor, en toetsing verhoed dat jy staatmaak op saad wat nie sal groei nie",
+      "Dit verbeter die saad se geur",
+      "Dit is slegs nodig vir hibriedsaad"
+     ],
+     "correct": 1,
+     "rationale": "'n Ontkiemingstoets vang saad uit wat in berging doodgegaan het voordat jy 'n hele seisoen se aanplanting daarop gewaag het."
+    }
+   ],
+   "infographicAlt": "Saadkoeverte in 'n verseëlde houer, koel, donker en droog gehou. Langsaan lê tien sade op 'n klam lap — sommige het ontkiem, sommige nie — as 'n ontkiemingstoets."
+  }
+ ]
+}

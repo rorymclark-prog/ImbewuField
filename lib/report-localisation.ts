@@ -1,6 +1,6 @@
 import { REPORT_UI_KEYS } from './i18n-pending.ts';
-import { recordsDate, recordsMonthShort } from './records-months.ts';
-import { inlineDraftsLoaded, xhInlineDraft } from '@/lib/xh-inline';
+import { recordsReportDate, recordsReportMonthShort } from './records-months.ts';
+import { inlineDraft, inlineDraftsLoaded } from '@/lib/xh-inline';
 import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
@@ -1725,18 +1725,20 @@ export const REPORT_DOCUMENT_COPY:readonly {english:string;zu:string;st:string;t
   }
 ];
 export const REPORT_DOCUMENT_LANGUAGES=['zu','st','ts','ve'] as const;
-/** True when reportDocumentText really changes the language: the four paired languages, and isiXhosa once its drafts are loaded. */
+/** True when reportDocumentText really changes the language: the four paired languages, and Afrikaans or isiXhosa once their drafts are loaded. */
 export function reportDocumentTranslated(language:string):boolean {
-  return REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])||(language==='xh'&&inlineDraftsLoaded('xh'));
+  return REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])||((language==='af'||language==='xh')&&inlineDraftsLoaded(language));
 }
-/** The shared isiXhosa draft for 'Amount' means a quantity (Ubungakanani); in the cost table beside 'Quantity' it is the money column,
- * so it takes the money book's word (Isixa), as lib/farm-report.ts does. */
+/** The shared Afrikaans draft for 'Amount' means a quantity (Hoeveelheid); in the cost table beside 'Quantity' it is the money column,
+ * so it takes the money book's word (Bedrag), as lib/farm-report.ts does. The same for isiXhosa (Ubungakanani -> Isixa). */
+const AF_DOCUMENT_WORDS:Readonly<Record<string,string>>={Amount:'Bedrag'};
 const XH_DOCUMENT_WORDS:Readonly<Record<string,string>>={Amount:'Isixa'};
 const documentCopy=new Map(REPORT_DOCUMENT_COPY.map(row=>[row.english,row]));
 export function reportDocumentText(source:string,language='en',values:Record<string,string|number>={}):string {
   const row=documentCopy.get(source);
-  // isiXhosa: the draft keyed by the exact English (lib/locales/xh-inline), else English until the drafts load.
-  const text=language==='xh'?(Object.hasOwn(XH_DOCUMENT_WORDS,source)&&inlineDraftsLoaded('xh')?XH_DOCUMENT_WORDS[source]:xhInlineDraft(source)??source):row&&REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])?row[language as typeof REPORT_DOCUMENT_LANGUAGES[number]]:source;
+  // Afrikaans and isiXhosa: the draft keyed by the exact English (lib/locales/af-inline, lib/locales/xh-inline), else English until the drafts load.
+  const inlineWords=language==='af'?AF_DOCUMENT_WORDS:XH_DOCUMENT_WORDS;
+  const text=language==='af'||language==='xh'?(Object.hasOwn(inlineWords,source)&&inlineDraftsLoaded(language)?inlineWords[source]:inlineDraft(language,source)??source):row&&REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])?row[language as typeof REPORT_DOCUMENT_LANGUAGES[number]]:source;
   return text.replace(/\{(\w+)\}/g,(token,key:string)=>Object.hasOwn(values,key)?String(values[key]):token);
 }
 
@@ -1814,14 +1816,14 @@ export function reportHeadingPrompt(prompt:string,sources:readonly string[],lang
 export function reportUiDate(language: string, iso: string, withTime = true): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return iso;
-  return recordsDate(language, date, true) + (withTime ? ` · ${date.toLocaleTimeString('en-ZA', { hour12: false })}` : '');
+  return recordsReportDate(language, date, true) + (withTime ? ` · ${date.toLocaleTimeString('en-ZA', { hour12: false })}` : '');
 }
 
 /** Calendar labels are presentation only; stored sowing months and dates stay exact. */
 export function reportUiMonth(language: string, englishMonthYear: string): string {
   const [month, ...rest] = englishMonthYear.split(' ');
-  const index = Array.from({ length: 12 }, (_, at) => recordsMonthShort('en', at + 1)).indexOf(month.slice(0, 3));
-  return index < 0 ? englishMonthYear : [recordsMonthShort(language, index + 1), ...rest].join(' ');
+  const index = Array.from({ length: 12 }, (_, at) => recordsReportMonthShort('en', at + 1)).indexOf(month.slice(0, 3));
+  return index < 0 ? englishMonthYear : [recordsReportMonthShort(language, index + 1), ...rest].join(' ');
 }
 
 /** The saved crop page has one wording and data source in every report language. */

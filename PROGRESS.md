@@ -65,6 +65,172 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2 Nov 2026 — Afrikaans: blind review of the Design Studio leftovers shard (g56)
+All 101 drafts back-translated blind; 1 repair (pig "wallow" had become "drinking place"), 6 minor. Record: `docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-g56-2026-11-02/`.
+- 7 Nov 2026: mirrored the isiXhosa 6 Nov merge-of-main drafts: new inline shard `g57-main-nov.ts` (41 keys, the Assistant connections page, registration preview and Settings link) and 45 release-note and tour lines in `lib/update-copy-locales/af.ts`, each with a mirror test in `tests/af-inline.test.ts`. UNREVIEWED machine drafts.
+- 7 Nov 2026: blind back-translation review of those 89 drafts (g57-main-nov + 48 update-copy lines): 0 repairs. Record: `docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-2026-11-07/`.
+
+### 31 Oct 2026 — Afrikaans: the whole app as a labelled machine draft (PR #1161, stacked on #1090)
+All unreviewed machine drafts; English is the authority and is shown beside each draft where isiXhosa
+shows it. English, isiZulu and isiXhosa output are unchanged.
+- **Dictionary:** the 2,182 keys `lib/locales/af.ts` lacked, plus the survey keys that read the same as English.
+- **Inline drafts:** `lib/locales/af-inline/` covers every string the isiXhosa layer covers (8,165) plus
+  the Afrikaans notices. `lib/xh-inline.ts` keeps one English-keyed map per draft language
+  (`isInlineDraftLang`); `tests/af-inline.test.ts` checks placeholders, numbers, stale keys and xh parity.
+- **Screens:** the isiXhosa-only inline-draft branches (about 110 files) now serve Afrikaans too, each with
+  its own draft notice.
+- **Release notes and tour:** all 235 lines (`lib/update-copy-locales/af.ts`).
+- **Dates, weather, error pages:** on-screen dates use the browser's `af-ZA` month names; the weather card
+  and error/offline pages carry their own Afrikaans tables.
+- **Kept English for Afrikaans on purpose:** at first, all report documents. The farm, programme and site
+  reports and the invoice document were drafted later (below).
+- **Blind review of safety, money and consent drafts:** 1,936 drafts back-translated by six independent
+  reviewers before seeing the English; 44 repairs applied (`docs/translation-reviews/afrikaans-ui-2026-10-31/`).
+- **Studies lessons:** all 10 modules (33 lessons, 646 fields) as source-paired drafts
+  (`lib/course-translation-drafts-af.ts`, built by `scripts/build-af-course-drafts.mjs`); three blind
+  reviewers, 3 repairs (`docs/study-translation-reviews/afrikaans-2026-10-31/`). The Studies page gets an
+  Afrikaans history layer (`tests/af-studies-history-checks.ts`).
+- **Permaculture Manual:** all 14 chapters at `/manual/af` (`content/manual/af/`), with glossary
+  `research/manual/glossary-af.md`. The 52 safety sections had a blind review: 8 repairs
+  (`research/manual/review-af/`, notes and open decisions in `research/manual/REVIEW-af.md`).
+- **Fluent-review hand-off:** `docs/translation-reviews/afrikaans-ui-2026-10-31/fluent-review-handoff-2026-10-31.csv`
+  (11,851 rows, safety first).
+- **Studies slide cards:** all 10 modules (240 silent cards, about 60 MB) in `public/course-decks/<module>/af-silent/`,
+  built by `scripts/build-af-deck-release.mjs` into a separate Afrikaans release registry. The narration
+  had a blind review (2 repairs).
+- **Farm report (Records book):** `buildFarmReport({ language: 'af' })` builds the farmer's production and
+  finance report in Afrikaans from the existing g34 drafts, as isiXhosa does. Recorded names, units, amounts
+  and the file name stay as recorded. The month rows use `af-ZA` short months, and the unpaid-invoice column
+  says "Bedrag" (money), not the quantity word. `tests/farm-report.test.ts` checks every figure.
+  The farm report PDF (via `ReportComposer`) now uses the Afrikaans labels too.
+- **Programme report (staff/funder):** `lib/programme-report-pdf.ts` takes `language: 'af'`. The screen
+  controls, analysis text, tables and PDF headings, footer ("Programverslag") and counts use the Afrikaans
+  drafts; figures and recorded names are unchanged. The screen note no longer claims that the PDF stays English.
+  `tests/programme-report.test.ts` adds two Afrikaans tests.
+- **Money book, CSV, invoice and money charts:** the CSV headings and duplicate note, the invoice document
+  (`DOCUMENT_COPY.af`: "Faktuur", "Bedrag", unit and payment words) and the chart months are in Afrikaans.
+  Afrikaans months come from the new `recordsBook*` functions in `lib/records-months.ts`. They are kept apart
+  from the shared month tables, which the report tests pin to English for `af`. The row words, units,
+  categories and instructions ("verkoping", "koste", "kwitansie") come from `recordsDraft('af', …)`, which
+  reads the 464 drafts in `af-inline/g44-records-book-rows.ts`; recorded names and typed text never pass
+  through it. The cashflow and coming-harvest charts and the invoice page follow. The money book and
+  invoice page have their own Afrikaans draft notice.
+- **Dates elsewhere:** the report view, community posts and messages, mentor due dates and facilitator
+  crop designs use `af-ZA`; the calendar tabs, crop price dates and M&E due dates use Afrikaans months.
+  The sample assessment programme has an Afrikaans toggle and notice.
+  The field journal, both crop planners, community "time ago" dates and the water-balance dry season
+  also use Afrikaans months (journal weekdays So Ma Di Wo Do Vr Sa, as `af-ZA` writes them).
+- **Site report:** the summaries, header, glance table, cost table, M&E plan, risk register, trust statement,
+  cover, contents, figure labels and months follow Afrikaans (`af-inline/g45-site-report.ts`, 389 drafts;
+  `reportDocumentText` reads them). They are Afrikaans only once the drafts are loaded; before that the
+  output is the English byte for byte, and the old "af is English" assertions stay as that check. The
+  generate-report route loads the drafts for Afrikaans requests only. Still English: the
+  crop-plan PDF pages (the same for isiXhosa). The 39 preparation checklist rows followed on 1 Nov
+  (`af-inline/g46-report-preparation.ts`), as for isiXhosa.
+- **M&E evidence and facilitator reports (1 Nov):** `buildMelEvidenceReport` and `buildTrainingReport` already
+  take a `language` option; `MelEvidenceReport`, `FacilitatorReport` and the offline note
+  (`fieldDataReportNote`) now pass `'af'` through, so on screen and in the PDF the body follows Afrikaans once
+  the drafts load (`af-inline/g47-mel-report.ts` 188 drafts, `g48-staff-reports.ts` 56 drafts; the same
+  244 keys as isiXhosa `g45`/`g46`). Before the drafts load, and for every other language, the output is
+  the English byte for byte; the download file name is built from English; figures, units, dates, names and
+  recorded evidence are unchanged (tests in `tests/mel-report.test.ts`, `staff-report.test.ts`,
+  `field-api-core.test.ts`). The programme report's MEL tab now carries the same "unreviewed Afrikaans
+  draft" notice as the other tabs; the older "MEL analysis text is in English" notice key was retired.
+- **Mentor field report (1 Nov):** `FieldTeams.tsx` now passes `'af'` (`isInlineDraftLang(lang) ? lang : 'en'`) to
+  `buildFieldReport` and `fieldVisitReportLines`, so the field implementation report, the saved-visit report
+  and the focus and programme labels follow Afrikaans once the drafts load (`af-inline/g49-field-report.ts`,
+  the same 109 keys as isiXhosa `g47`). Both reports show the existing "unreviewed Afrikaans draft" notice.
+  Before the drafts load, and for every other language, the output is the English byte for byte; the download
+  keeps its English file name; figures, dates, coordinates, names and typed text are unchanged
+  (tests in `tests/staff-report.test.ts`, `field-programmes-i18n.test.ts`).
+- **Browser-sweep gap fixes (1 Nov):** the fixes the isiXhosa browser check led to now serve Afrikaans through
+  the shared helpers in `lib/xh-inline.ts` (`isInlineDraftLang`, `inlineText`, `inlineDraft`). New shard
+  `af-inline/g50-ui-gaps.ts` (83 drafts; "Crop or product" was already drafted) covers the same keys as
+  isiXhosa `g48`: the Farm memory journal controls (`farmMemoryText('af', …)`), the funder/NGO programme record
+  cards (`programmeMetricLabel`, `programmeMetricNote`, `programmeMetricValue`), the two sample-farm photo
+  captions (AI stays AI) and "Which report do I need?". The sample-farm notice was re-keyed in g10 (photo
+  captions are no longer claimed to stay English). Journal CSV/printable copies stay English for Afrikaans and
+  the screen says so ("Gestoorde kopieë …"); `lang` attributes on the journal, entry sheet and photo review
+  follow the draft language. The crop planner pairs a month with its English once, shows the draft notice once
+  (no per-row label) and writes Afrikaans task titles ("Oes Uie", `ACTION_AF_VERB`, crop names through the
+  inline drafts). The money book lender card leads with the Afrikaans draft then the English source; stock
+  assessment titles (`melAssessmentTitle`) and the report contents lists use the drafts. Tests extended:
+  `farm-memory-copy`, `farm-memory-ui`, `farm-memory-task-controls`, `programme-evidence`, `sample-programme`,
+  `zu-11-ux-18-produce-label`, `report-ui-localization`.
+- **Blind review of the 1 Nov drafts:** 858 money book, site report and release-note drafts back-translated
+  before seeing the English; 24 repairs (`docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-2026-11-01/`).
+- **Blind review of g54 and g55 (2 Nov):** 203 Design Studio guide, field-block and lesson drafts back-translated; 4 repairs (downwind placement wording, "bank" read as bench) (`docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-g54-g55-2026-11-02/`).
+- **Second browser-sweep fixes (2 Nov):** the Afrikaans mirror of the isiXhosa fixes in `fb3a8d7`, merged in.
+  `lib/task-title-draft.ts` now serves both languages (the Afrikaans verb table moved out of
+  `app/cropplan/page.tsx`), so Home's upcoming tasks and the planner read the same ("Oes Uie",
+  "Bedding 1 · Hierdie maand te doen"; a bed the farmer named stays as typed). The planner's count line, month
+  buttons and empty message name the month once in Afrikaans. The Studies Design notice shows one Afrikaans
+  notice (its sentence was never drafted, so it used to show the English twice) and `/student` shows one banner,
+  not two. `XhosaDraftNote` (name kept for the pinned type-floor entry) now covers Afrikaans on /contact,
+  /design, /network, /partners, /vision, the sample gardens and the guide pages. `/prices` labels the English
+  line "Engelse bron:"; `CohortTimeline` uses `recordsBookMonthShort('af', …)` for its month axis (the shared
+  month tables stay English for Afrikaans). New shard `af-inline/g51-ui-gaps-2.ts` (8 drafts: the six
+  isiXhosa `g49` keys plus "Afrikaans draft." and the Design notice sentence). 95 Afrikaans Manual figure
+  captions in `content/manual/figures.json` (ids, paths, figure numbers and Latin names unchanged) and the
+  credit "Illustrasie: met AI vir hierdie handleiding gemaak" (`figureCredit`). The `/records` tab notice only
+  ever rendered for Sesotho, Tshivenda, Xitsonga and isiXhosa, so it makes no English-tabs claim for Afrikaans.
+  `tests/af-studies-history-checks.ts` moved to the new isiXhosa predecessor bytes
+  (`tests/fixtures/student-page-before-af-studies.tsx.txt`) and the new live page hash. Tests: `af-inline`,
+  `farm-memory-task-controls`, `manual`, `crop-plan-page-ux`; the isiXhosa pins on `/student`, `/prices`, the
+  cohort axis and the draft note were widened, not weakened.
+- **Third browser-sweep fixes (2 Nov):** the Afrikaans mirror of the isiXhosa fixes in `37a4800`, merged in.
+  New shard `af-inline/g52-ui-gaps-3.ts` (the same 4 keys as `xh-inline/g50`: the scale exercise notice and
+  "MODEL ONLY", "No gap", "Outer width"). The Manual chapter link reads `content/manual/af/ui.json`
+  ("Lees hierdie hoofstuk in Engels"). The `/tour` page, the Tour guide dialog and `/atlas` use
+  `isInlineDraftLang`, so Afrikaans shows its drafted tour notice (the disclosure sentence is keyed in
+  `af-inline/g43-notices.ts`; the minutes line now reads the Afrikaans minutes) and the Atlas draft note.
+  `lib/xh-inline.ts` keeps the one `['xh', 'af']` definition. The `INLINE_DRAFT_LANGS` pin in
+  `tests/product-tour.test.ts` was widened to include `af`, not weakened.
+- **isiXhosa fix found on the way:** the invoice page told isiXhosa farmers the buyer's invoice "stays in
+  English", but it uses `DOCUMENT_COPY.xh`. The note now says so (fixed on #1090).
+- **Staff and map screens:** the M&E dashboard and overview, sector overlay compass words, rainfall chart
+  and photo viewer now use the Afrikaans drafts and notices that isiXhosa already had.
+- **Report language picker (2 Nov):** the prepared example now offers Afrikaans as well as English and isiZulu; its
+  note and body follow the Afrikaans drafts (`af-inline/g53-prepared-example.ts`). AI-written reports in a draft
+  language say they were written by AI and not reviewed by a fluent speaker.
+- **Fourth sweep parity (2 Nov):** the Afrikaans mirror of the isiXhosa fixes in `4a49434`, merged in. New shard
+  `af-inline/g54-interactive.ts` (166 drafts, the same keys as `xh-inline/g52-interactive.ts`): Design Studio palette
+  names and group headings, canvas zoom and base-map labels and sector notes, the 77 step-guide sub-steps, the field
+  blocks panel and its errors, the survey's water and local-market blocks and the annual production overview (which now
+  reads Afrikaans; English, isiZulu, Sesotho, Xitsonga and Tshivenda stay English byte for byte). Compass emphasis
+  (NOORDE, DWARS), JoJo, species and unit text are unchanged. The two retired navigation-note keys (and the Afrikaans
+  pair) are gone with the duplicate drawer notice. Records errors and hints lead with the Afrikaans and label the
+  English "Engelse bron:". Every draft language now has one notice per surface: the results sheet Water, Photos and Lima
+  lines, the drawer and `/records` add nothing beside the shared `LanguageDraftNote`, and the Sold card no longer adds
+  its own "AFRIKAANS MASJIENKONSEP" line (the `/invoice` page still does). Afrikaans rand figures on `/records` now all
+  read `R7 470,00` (the Sold total was `R18800`, sale rows and receipts `R 280.00`, "Spent this month" `R 0`);
+  `randForLang` in `lib/format-figures.ts` returns the caller's own English string for every other language. Tests:
+  `af-inline` (g54 mirror, overview render, one notice, rand format); `records-regional-drafts` now expects
+  `Kanselleer — Engelse bron: Cancel` for Afrikaans (the draft-first order isiXhosa already had) and no Sold card note.
+- **Records polish (2 Nov):** Afrikaans only; English and the other languages are byte for byte as before. The Charts tab
+  showed 22 per-caption "Onhersiene Afrikaanse konsep." labels; the five chart cards now pass `draftLabel={!['xh', 'af'].includes(lang)}`
+  to `IsiZuluDraftSource`, so the shared `LanguageDraftNote` is the page's one notice and each caption keeps its source line.
+  That line, and the Sold card's per-label lines, read "Engelse bron:" (they said "English source:"). The Sold/Spent ledger's
+  invoice rows read `2,5 kg`, `8,0 kg` (they said `2.5 kg`, `8 kg`) through `invoiceQtyForLang`, and the cashflow axis reads
+  `R2,6k`, `−R5,7k` through `randTickForLang` (both in `lib/format-figures.ts`). Tests: three new `af-inline` tests.
+- **Fifth sweep parity (2 Nov):** the Afrikaans mirror of the isiXhosa fixes in `5a84a70`, merged in. New shard
+  `af-inline/g55-design-tabs.ts` (37 drafts, the same keys as `xh-inline/g53-design-tabs.ts`): the Design Studio step-tab
+  names, the "Why this step?" lessons (titles, bodies, principles, tips), Tray, a gate's length, and the sample farm's
+  rainwater tank and compost bays. Figures, `{placeholders}`, Sone 1 and mango are kept. The chart cards now share the
+  isiXhosa `draftLabel` expression, which drops the per-caption label for both languages (Afrikaans behaviour is
+  unchanged). The invoice sale card pairs its five money instructions with "Engelse bron:" as isiXhosa does. The retired
+  isiXhosa Sold-card notice is gone from the Afrikaans shard too. The palette's armed-tool hint now shows its English
+  source for Afrikaans. Tests: `af-inline` (g55 mirror); the `draftLabel` pin now reads the shared expression.
+- **Design Studio leftovers parity (2 Nov):** the Afrikaans mirror of isiXhosa g54, merged in. New shard
+  `af-inline/g56-design-leftovers.ts` (101 drafts, the same keys as `xh-inline/g54-design-leftovers.ts`): the tip under
+  each of the 79 palette elements, the Layers panel button names (templates with `{name}`/`{n}`/`{total}`), the Water
+  layer's five groups, the three sector notes that carry a figure (`lib/sector-note-display.ts`) and "Wind confirmed on
+  site". Same vocabulary as the earlier shards (kontoersloot, wal, windskerm, gryswater, "aan die kant waarheen die wind
+  van die huis af waai"). Figures are kept as the English writes them, decimals with a full stop (`2.5 t`, `1.85 m`),
+  as the other Afrikaans shards do. Every safety caveat is kept (never tap the toilet, plant-safe soap, 5 m from
+  foundations, siting survey before drilling, never a fruit tree in the dip, sterile vetiver, guava, female trees).
+  Tests: two new `af-inline` tests (g56 mirror; tips, templates and sector notes through the shared draft-language check).
+
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English
 and isiZulu output are unchanged.

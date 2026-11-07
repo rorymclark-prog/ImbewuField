@@ -1,0 +1,323 @@
+0 | Earthworks
+1 | The land's energies — sun, wind, fire, water. Nothing to draw: check whether it matches what you know of your land.
+2 | Trees south of beds so they don't cast their shade on them. Tap a tree, then tap the map.
+3 | Frost-sensitive trees and shrubs are hidden where the modelled minimum reaches freezing point; check the planting spot for frost.
+4 | Show sector energies (sun, wind, fire, water)
+5 | Sector energies: sun path, wind, fire and water — tap to show
+6 | ⓘ Frost risk
+7 | The modelled minimum reaches freezing point. Frost-sensitive options are hidden; check the planting spot for frost.
+8 | ⚠ Check for frost
+9 | May need a sheltered spot or suitable cultivar. Check the local frost before you plant.
+10 | Frost data not available — tree choices use only the broad climate zone.
+11 | Greywater
+12 | Earthworks and contour layout
+13 | Livestock and infrastructure
+14 | FIRE
+15 | FROST
+16 | Regional fire context: {season} Possible approach from the {direction} — confirm locally.
+17 | Water flows downhill to the {direction} — swales go ACROSS that flow{frost}.
+18 |  · frost settles low there on still, cold nights
+19 | Overall · Zones · Water · Planting · Structures. Site and Phasing stay exact; Sector and Earthworks each have an AI option on their own sheet — it appears within a few minutes in your gallery.
+20 | Exact canvas is free and immediate, and draws every label, key and line at full sheet resolution. AI-polished first saves that exact master copy, and then spends one paid AI render to paint the map artwork — your boundary, labels, key, title block, north arrow and scale bar are then redrawn on top by the app, never by the model. Neither of the two choices ever changes your canvas design.
+21 | No {stepLower} found on this design, so there is nothing to map — draw it first at the {step} step. (A {stepLower} map is built from your actual {stepLower}, never guessed. If you DID draw it and still see this, it is a bug — please report it.)
+22 | Nothing to phase yet — first trace your boundary and place a few elements (water, beds, trees…). The implementation plan is built from your actual design, never guessed.
+23 | Natural ways to handle pests and disease?
+24 | livestock
+25 | This is a read-only access check for programme tools, not a sign-in as this member. It does not reveal their private answers and does not change their role. Other app features do not yet have individual switches here.
+26 | Earthwork
+27 | Trace your roof, furrow or earthwork's outline — I calculate how much rain it captures.
+28 | Frost risk
+29 | Frost
+30 | Frost likely
+31 | Frost-free
+32 | → Earthwork before first rains:
+33 | Dig a small hole — shows the colour and layers
+34 | Greywater
+35 | Overhead sprinkler system
+36 | Flood / furrow
+37 | Rough guide: 2-bedroom house ≈ 60 m², 3-bedroom ≈ 100 m², large farmhouse ≈ 150+ m²
+38 | Floor area of the building, not the footprint of the roof slope
+39 | Start from scratch or use no-dig method
+40 | Livestock on the site (select all)
+41 | No livestock
+42 | Livestock kraal
+43 | Synthetic fertilisers and pesticides are used
+44 | Pests and diseases
+45 | Flooding / erosion
+46 | Animals and livestock
+47 | Fire and hazards
+48 | Frost & growing period
+49 | Frost dates, ET, disease risk & planting calendar
+50 | Rice-free ≈
+51 | Light frost:
+52 | Frost expected
+53 | Light frost risk
+54 | Frost expected ({tempC}°C winter min). Protect tender crops Aug–Sep with covers and north-facing microclimates.
+55 | Light frost risk ({tempC}°C winter min). Plant cold-sensitive trees on raised beds or north-facing slopes.
+56 | Frost-free all year ({tempC}°C min). Tropical and subtropical food trees are viable here.
+57 | Warm, wet summers and mild, dry winters with frequent morning mist. Reliable summer rain and a long frost-free season let you cultivate most of the year — plan around the dry winter and "after-burn disturbances" (nonsense word) in summer.
+58 | Reliable rainfall all year with mild temperatures and no long dry season. Good for steady production across several crops — manage moisture and disease rather than drought.
+59 | High-altitude site with cold winters and a short growing season. Maximise warm-aspect microclimates and frost-resistant varieties.
+60 | We keep your farm information safe and use it only to help you. You can change these settings any time in the app.
+61 | Safely stored in the cloud so it is never lost. Required to use the app.
+62 | Animals and livestock
+63 | Fire and hazards
+64 | Protect against frost in winter.
+65 | Trace the outline of your roof, swale or earthwork — I calculate how much rain it captures.
+66 | Minimum safe level
+67 | Minimum safe: {amount}
+68 | The tank level drops below the safe minimum in {month}. Options: enlarge the storage, add a second tank, or reduce irrigation during {season}.
+69 | Storms are heavy but hard to predict | Grass competes with young trees for water and light | Frost can damage plants on higher ground | Termites can damage wood and young plants
+70 | Sometimes needs fire to stay healthy, about every 10–15 years | Prohibited invasive plants can take over | No edible Fynbos plants — bring in soil for any food garden | Hot, dry summers
+71 | Extreme heat, more than 45°C | Flash floods are rare but can be dangerous | Salt can build up in the soil as water evaporates | Wind can blow topsoil away
+72 | Cyclones and storms can cause damage | High humidity promotes fungal diseases | Steep slopes run erosion danger | Landslide danger on clay slopes
+73 | Heavy summer storms come fast. Dig channels along the slope (swales) and small dams before the rains start in August or September, so the water soaks in instead of running away. Make tanks big: at least 50 litres for every square metre of roof that drains into it. Dig dams long and narrow — about 3 times longer than wide — on gentle slopes.
+74 | Summer brings short, heavy thunderstorms. On every slope dig channels that follow the ground gently downhill (about 1m drop for every 1,000m across) to spread the water instead of letting it race away. Winters are dry, so water storage is important. As a rule: 1 square metre of roof catches about 1 litre of water for every 1mm of rain.
+75 | Rain falls only in winter, so do earthworks in late autumn (March to May), before the rain comes. Small banks along the contour and shallow basins with mulch work well. Size your water tanks carefully — the summer (December to February) is dry. Reused household water (greywater) is good for food-growing areas, but never for the natural Fynbos — it is too rich in nutrients for it.
+76 | On slopes that face west, shade net can capture water from mist. Build a small raised rim around each plant to catch every drop of rain where it falls. It is worth reusing household water (greywater) here. Every 100mm of rain counts — even a small roof tank is valuable.
+77 | Shade net can capture water from mist in the air. Design channels to catch flash floods safely. Store water underground, where it stays cool and does not evaporate. Plant trees as windbreaks — they reduce evaporation and give shade before you plant crops.
+78 | Rain is heavy, so flood management is more important than capturing water. Use shallow channels to slow water on steep slopes. Raised beds keep plants from standing in water. Channels along the contour also help prevent landslides on clay soil. Lead downpipes from your roof to underground tanks.
+79 | Grazing animals often trample this soil hard. Loosen it below the surface before you dig channels or dams. Plant oats or vetch as a winter cover crop to protect and feed the soil. The soil is usually slightly acidic (pH 5.5–6.5) — add agricultural lime if it is more acidic than it is [unclear: "than that"]. Build up organic matter with compost and biochar.
+80 | Do not add compost, lime or phosphorus to natural Fynbos areas — it kills the plants, which are adapted to poor soil. Grow food separately, on soil brought in from elsewhere. Cover food beds with Fynbos plant material as mulch. Cape reeds help hold the banks of water channels in place naturally.
+81 | A photo you scan here is made small; a PDF you upload keeps only its file name, not the document. Both exist only on this phone, and old items can be automatically deleted to make room for new ones. Keep the real documents safe too — with your mentor, at home, or wherever they were issued.
+82 | Don't see yours? Take a photo — Lima records the unknown and a botanist or mentor can confirm it later.
+83 | Farmers who choose to be visible appear here as an approximate area — never their exact homestead.
+84 | Your location is shown as an approximate area of ~1km, never your exact homestead
+85 | A notebook, harvest record or sales record can help. Do not add kilograms to bunches [unclear]. Leave figures blank when your records do not cover a full year.
+86 | Everything in the short survey, plus detailed production records and separate sections for livestock and sales.
+87 | Livestock and poultry
+88 | These groups describe your production. They do not measure what your household ate and do not give a nutrition score.
+89 | Poultry meat
+90 | Meat and poultry
+91 | Milk and dairy
+92 | These checks cover startup files. They do not promise fresh map images, every report image or every optional tool.
+93 | Try each role with the Ubhejane farm. Your account's role stays the same and practice changes do not touch real projects.
+94 | New passwords do not match.
+95 | Your location shows as an approximate area of ~1km, never your exact homestead
+96 | Summer rainfall, light frost
+97 | Frost is expected
+98 | Light frost possible
+99 | Treat the {n} empty answer as unknown. Do not read it as a low score.
+100 | Treat the {n} empty answers as unknown. Do not read them as a low score.
+101 |  means this account could not read that record — it never means zero.
+102 |  Tour records do not contain private farmer data.
+103 | A dash (—) means no readable value. It never means zero.
+104 | These checks cover the permissions listed below. They do not yet offer a separate on/off switch for each feature of the app. Platform administrator and funder accounts are still managed by the platform.
+105 | Changes describe respondents with both measurements. They do not prove that the project caused the change. Self-reported garden area is not verified production hectares.
+106 | The isiXhosa text in assessments has not yet been reviewed by a fluent isiXhosa speaker. Do not regard it as fully translated and approved.
+107 | Answering is voluntary. You may skip any question. Answers are linked to your account to compare progress. Authorised NGO analysts can read them; funders see only approved summaries. Do not include ID numbers or other people's names.
+108 | A dash means a missing figure. It never means zero.
+109 | A dash means a figure this account may not read. It never means zero.
+110 | Totals cover the {reporting} of {total} farms whose records this account may read. The other {other} are counted as farms, never as zeros.
+111 | {n} more farmer is enrolled here but has not consented to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.
+112 | {n} more farmers are enrolled here but have not consented to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.
+113 | For seed quantities, use the crop planner's seed list. Do not buy seed based on a derived yield or a chart of monthly availability.
+114 | This ready-to-read example is compiled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Example finances, soil examples and household examples stay illustrative where they are marked so. Planned areas and infrastructure do not prove completed work.
+115 | Greywater line
+116 | soil or earthwork item
+117 | soil and earthwork items
+118 | Calculation for an average year, not a promise of rain. It counts only the roof that was traced and only the tanks drawn on the plan; it says nothing about whether the water is safe to drink.
+119 | fire follows this wind
+120 | Fire risk
+121 | Fire will most likely come from the
+122 | Where fire will most likely come from (regional)
+123 | Wind and fire: regional pattern
+124 | Each listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead.
+125 | Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on {name}.
+126 | Winter — protect seedlings against frost; harvest vegetables and root crops.
+127 | Summer rain, light winter frost
+128 | Rain all year, frost-free
+129 | Remove spent tomato plants before disease spreads
+130 | Protect tender seedlings against frost with shade net or row cover
+131 | Prepare spring beds — dig compost in before the heat comes
+132 | Remove frost cloth as the days get warmer — let the sun strengthen seedlings
+133 | Water daily in the morning — watering in the evening invites fungal diseases
+134 | April is the best time to plant garlic in most parts of South Africa. Use healthy large cloves from disease-free stock. Spinach germinates well now — thin seedlings to 15 cm apart for big leaves. Cooler nights mean less pest pressure: advantage to you.
+135 | Sow spinach every 3 weeks from May to July in succession for a continuous harvest window. Carrots sown now will be ready by August. Autumn is also the ideal time to improve soil — dig in fully mature compost now and the earthworms will do the rest over the winter.
+136 | June is the coldest month on the Highveld. In frost-sensitive areas, protect spinach seedlings at night with fleece or dry grass. On the coast and in the Cape, June is actually ideal growing weather — focus there on maximising yields before the spring heat comes.
+137 | August signals transition. Sow tomato seed indoors now — 6 to 8 weeks before your last frost gives transplants a head start. In frost-free coastal regions you can sow tomatoes directly in the ground by late August. Start loosening winter-compacted soil in every bed.
+138 | November brings the first summer rains in many regions — a welcome relief after spring's dry periods. Don't skip watering (awkward word order): rain is unpredictable and penetrates only shallowly. Weekly deep irrigation is every time better than shallow rain for root development. Protect young maize after rain against strong wind.
+139 | Open My records and choose Picked. Choose the crop, enter the weight and save. Do this as soon as you pick, so you never have to remember a number later.
+140 | Pest / disease
+141 | Compare harvests, sales and expenses in Charts. Open invoices, choose Saved and open an existing invoice to find Share PDF and Print. See how the farmer keeps a digital record; you do not need to send anything to a buyer.
+142 | A fictional hot KZN farm with vegetables, staple food, fruit, nuts, berries, eggs, milk, honey and fish. View its monthly calendar, young trees and printable plan. Shown in English.
+143 | Changes stay in this tour session. Reset or reload starts over. Signing in is not needed, and switching views never changes your real account permissions.
+144 | Growing areas exclude buildings, paths, tree areas and unused space. Photos illustrate the surroundings; they do not measure the land.
+145 | Children
+146 | Evidence comes before claims. These report references guide the structure; they do not certify this programme and do not replace an evaluation.
+147 | DEMONSTRATION RECORDS: all figures in this report are illustrative and may not be used as evidence of real programme results.
+148 | Review missing evidence for {list}. Confirm whether gaps reflect consent, access or incomplete recording; do not pressure farmers to share.
+149 | Readable books do not guarantee complete records.
+150 | Current record-based flags. One farmer can appear in more than one row; counts may not be added together as unique people. Owners and deadlines must be agreed with the team.
+151 | Record food that you kept, bought or carried over from an earlier harvest. Choose the months for it yourself. The plan does not calculate a safe shelf life or a preserving recipe.
+152 | Use these records to compare with what you actually gather. It does not predict the coming year and does not set picking dates.
+153 | The next ten years, from this month. Add planting dates and expected yields under each plant above. Missing yields stay visible; young trees do not get a mature tree's yield.
+154 | These are your observations; it does not promise a yield.
+155 | Vegetables and staple food from the beds. Fruit, nuts and berries from the food forest. Eggs, milk, meat, honey and fish along with it.
+156 | No frost assumed
+157 | Meat
+158 | Eggs and meat
+159 | The two receipts total R120.00. Invoice P01 is now settled in this example. Keep both receipts and the original invoice; do not add their values as separate sales.
+160 | The app currently records fully paid or unpaid. Keep part payments and the remaining balance in a separate, checked record; do not mark the invoice as fully paid after only a deposit.
+161 | Fictional receipts and payments for learning. These checks do not change My records.
+162 | These records do not show full profit. Use your own source documents for a real farm.
+163 | Try each calculation before you check. You can read your reasoning aloud or show it afterwards while a facilitator writes it down. These self-checks do not give course credit.
+164 | Full profit is unknown. The source pack does not provide complete production costs, inventory values, equipment use and other relevant adjustments. Do not regard a cash balance, cash change or the difference between sales and the two payments as full profit.
+165 | The gap is outside both bed outlines. Do not count it as bed area.
+166 | The downloaded diagram includes its model dimensions. Its size on paper depends on the print settings: do not measure the printout with a ruler and assume a distance on the ground, unless you have set and checked the printed scale.
+167 | The water point, growing area and route from house to gate indicate "trajectories" to discuss with the people who do the work. It does not set a measured travel time or an agreed workload.
+168 | The supplied route footprint and gap are fictional geometry, not access standards. It does not establish drainage, crop spacing, soil suitability or safe working clearance. The original growing area remains existing evidence when B is shown; do not count both outlines as active production.
+169 | Use this unit's own opening balances and source cards. Do not carry a previous unit's totals over to this exercise.
+170 | Find your way and keep work safe
+171 | {harvest}: Plot A ({plot}) harvest weighed {quantity} kg. This weight is supplied by the imaginary harvest card; do not derive it from the plot area.
+172 | Work at a pace that allows field observation, discussion and another attempt after feedback. Eighteen reading pages do not set a course duration or replace seasonal evidence. The facilitator reviews what you can explain and demonstrate.
+173 | Use a notebook, drawings or supported oral answers. The supplied fictional worked demonstration supports the lesson method; a real field plan still needs checked measurements, evidence and review. These pages do not certify a design and do not award assessed progress. Audio and translations are not yet available; save the reading route from its overview before you go out of signal.
+174 | Imaginary site in metres, without a real location. Plot A is only a reference for these source cards. Dimensions do not establish harvest, rights, safety or a planting recommendation.
+175 | The loan card confirms cash received and the same capital still owed at the end of the month. No loan repayment takes place here. Terms and interest are not supplied: do not recommend this loan or assume that it is free.
+176 | Confirm the group's languages and access needs. Bring an existing core lesson, its printed still and transcript, plus ordinary objects for a safe practical exercise.
+177 | Confirm ACT's register and consent wording before you collect real data. Ask separately before you photograph or share anyone's work. Do not use a shared device for private household records.
+178 | The two days refresh the teaching method and practise chosen lessons. They do not fully cover or assess all ten modules. Choose a published, available lesson that suits the local group and check its source and media before use.
+179 | ACT decides on any attendance record or certificate wording according to its own policy. Do not call this refresher course an accredited qualification.
+180 | Have pairs describe one observation and one uncertainty; then model a safe action of which you have checked the exact core lesson source and local limitations.
+181 | Return to the core modules for the relevant teaching point. Do not turn an illustration into proof of a site condition.
+182 | Test on a trainer device or demo account; do not sign in as a farmer or use someone else's records.
+183 | Give each learner a role and a safe action.
+184 | Model a simple soil, water or seed observation with local materials after you have checked the method and site; stop if the action is unsafe.
+185 | A revised practical exercise with a safe role for each learner.
+186 | Use the same case on a printed base map; do not enter a private household's data on a shared trainer device.
+187 | Identify the local language to use, the exact English source when a translation is a draft, materials, access support and a stopping point for unsafe or unverified advice.
+188 | The observer records what was seen: invitation to take part, safe practical action, source/uncertainty, check for understanding and response to feedback.
+189 | Stop unsafe or unverified farming advice and identify the next source or practitioner check.
+190 | Integration of Small Livestock
+191 | Survey answers are self-reported. Small groups are withheld; these figures alone do not prove project impact.
+192 | Trace a boundary on a satellite view of the real farm, and then lay out beds, water systems, earthworks and structures directly on that land — not a generic template.
+193 | Ten modules, 33 lessons, on permaculture ethics, reading the landscape, water harvesting, soil health, seeds, plant guilds, food forests, livestock and market gardening — each lesson with a short quiz.
+194 | ImbewuField home screen showing the farm's weather forecast, a heat warning and the next suggested step
+195 | Today's weather, a heat warning, and what to do next on this farm.
+196 | AI-generated site report showing rainfall, soil texture, frost danger and height above sea level, plus the site's mapped land parcels
+197 | Rainfall, soil, frost danger and height above sea level for the exact site — plus its mapped land parcels.
+198 | What are the chickens for: eggs, meat or both?
+199 | Is clean drinking water always available?
+200 | Does this site get frost?
+201 | Ensure reliable clean drinking water before you buy more birds.
+202 | Every breed needs clean drinking water, suitable feed and protected housing.
+203 | You reported frost. Check winter shelter and warmth for chicks with a local adviser.
+204 | Water for growing is limited. Check drinking water separately; garden water does not confirm a safe water supply for poultry.
+205 | An option for eggs and meat. It did better than the other indigenous breeds for eggs in a managed ARC trial; those results do not predict this farm.
+206 | An indigenous option for eggs and meat conserved by the ARC; check local stock and care needs.
+207 | Consider this only after you have checked reliable feed, drinking water, housing, health care and managed lighting. Breed and supplier must still be confirmed locally.
+208 | Commercial broilers — meat system
+209 | Needs reliable balanced feed, water, suitable housing and management. Confirm chick supply and a meat market before you choose.
+210 | Milk
+211 | kg live weight/bird at slaughter
+212 | kg milk/cow/lactation
+213 | kg milk/ewe/305-day lactation
+214 | kg/bird at slaughter (32–33 days)
+215 | young reaching slaughter/breeding age/ewe(doe)/year
+216 | Live weaning weight of calves from communal Nguni herds in Limpopo; not meat weight.
+217 | Milk-recorded Jersey and Holstein herds, per lactation; not an annual total.
+218 | Commercial industry reference at slaughter; not a prediction for a household flock.
+219 | Non-South African study reference; live weight, not meat weight.
+220 | Milk-recorded Saanen herds, per lactation; not an annual total.
+221 | Extensive Boer-goat reference for lambs (kids) weaned; not meat weight.
+222 | Lambs born as reported by farmers; not lambs weaned or meat weight.
+223 | Commercial dairy processors require an even milk supply through the year. This is a herd-supply reference, not milk from every cow through the year. Confirm your farm's calving and milking months.
+224 | In this South African Saanen milk-recording study, ewes (does) that lambed (kidded) in spring had the highest average lactation milk yield. Table 1 defines spring as August–October for this study. These are lambing-season categories, not confirmed milk-collection months.
+225 | Frost on this farm
+226 | Planned crops to check for frost
+227 | Frost has been observed here in {months}. Check frost-sensitive crops against these observations.
+228 | Frost has been observed here; months not recorded. Check frost-sensitive crops against these observations.
+229 | Farmer reports that no frost was observed. This observation does not prove that future winters will be frost-free.
+230 | Local frost observations have not been recorded. Satellite monthly averages cannot determine first and last frost dates.
+231 | These planned crops will occupy ground in months when frost has been observed here. Confirm local protection or change the planting before you rely on these dates.
+232 | Check that the variety, local climate, pollination, water and care fit your yield assumptions. Ages alone do not prove site suitability or survival.
+233 | Known subtotals leave out missing yields. Eggs, meat, milk, fish and honey are not included in these crop-kg totals. Picking months and food-gap checks must still be confirmed locally.
+234 | Made-up stock months from January to March 2027, not a safe shelf life. Freezer conditions, a safe processing method and the quantity in stock are not supplied.
+235 | Made-up stock months from June to August 2027, not a safe shelf life. The example banana picking record is also made up; a safe drying method and the quantity in stock are not supplied.
+236 | Made-up stock months from August to October 2027, not a safe shelf life. Fermentation control, a tested processing recipe and the quantity in stock are not supplied.
+237 | Made-up stock months from May to August 2027, not a safe shelf life. The processing method, a tested preserving recipe and the quantity in stock are not supplied.
+238 | Made-up stock months from March to May 2027, not a safe shelf life. Made-up bought or carried-over stock; no harvest from this example mango tree is claimed. A safe drying method and the quantity in stock are not supplied.
+239 | Made-up stock months from August to October 2027, not a safe shelf life. Made-up bought or carried-over nuts in the shell; no harvest from these example trees is claimed. Storage conditions, kernel weight and the quantity in stock are not supplied.
+240 | Keep hives away from play areas, provide fresh water and use a dry site. Ask a registered beekeeper to check safe local placement before you add a hive.
+241 | Inspect each colony regularly for signs of notifiable bee diseases and infection by Cape-bee (Capensis).
+242 | Keep written records of colonies, apiary locations, diseases, disease-control measures and colony losses with their reasons.
+243 | Do not move honey bees across the Cape bee line, or keep Cape bees north of it, without written approval.
+244 | Report any suspected notifiable disease (American foulbrood is listed); officials can order that an infected colony be destroyed.
+245 | Cattle pens may not be overcrowded: there must be enough floor space so that every animal can lie down at the same time.
+246 | Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: the state's Veterinary Services enforce isolation and movement restrictions.
+247 | Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinarian office, as part of the national bovine brucellosis control scheme under the Animal Diseases Act.
+248 | No animal may be slaughtered at any place other than a registered abattoir, with the exception below.
+249 | Slaughter for the farmer's own household consumption, or for cultural or religious purposes, is exempt from the abattoir rule.
+250 | In the warmer, humid KZN, KZN DARD describes Nguni × Jersey dairy trials at Makhathini to combine milk potential with local adaptation. Hand-milking with the calf present highlights the competition between household milk and calf growth. Discuss adapted livestock and feeding locally; commercial milk-recording totals do not predict this system. Record calving, lactation stage and milk available after the calf's needs.
+251 | Cows may not be loaded for transport if their udders are swollen with milk.
+252 | A cull cow may only be slaughtered at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.
+253 | Newer South African commercial reference: SAPA 2024 reports average slaughter at 30–31 days with a bird weight of 1.8–1.85 kg. The primary range above remains the earlier 2022 reference at 32–33 days. These are commercial bird weights, not kg of dressed meat or a target for a village flock. Record hatching or purchase age, feed system, actual harvest date and the basis of the weighed product.
+254 | In free-range broiler production the indoor stocking density may not exceed 15 birds per square metre of floor space.
+255 | An owner or manager whose animals are infected, or possibly infected, with a controlled animal disease must report it immediately to the state's veterinary director.
+256 | Newcastle disease and notifiable avian influenza are on the state's list of controlled and notifiable animal diseases.
+257 | No animal may be slaughtered at any place other than an abattoir, with the exceptions below.
+258 | Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.
+259 | Scavenging village chickens grow more slowly than commercially bred birds and are more vulnerable to diseases, parasites and predators.
+260 | The free-range outdoor area may not be overloaded: not more than 5 birds per square metre of outdoor run.
+261 | Ducks are one of the domesticated animal species listed in the Meat Safety Act, so its rules on registered abattoirs and hygiene apply to them.
+262 | Ducks slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt, but that meat may not be sold.
+263 | Ducks are birds/poultry, so an outbreak of avian influenza in a duck flock is a controlled animal disease under the Animal Diseases Act and must be reported immediately to the state veterinarian.
+264 | South African Saanen reference by lactation number, not age in years: average milk mass per standardised 305-day lactation was 947.3 kg at first parity, 1043.2 at second, 1073.4 at third, 1020.3 at fourth, 972.8 at fifth, 901.6 at sixth and 775.4 at ≥7th. These ARC milk-recorded groups were mostly intensive/semi-intensive stud herds. Record the actual kidding date, lactation number and collected milk; do not divide these totals evenly over months.
+265 | At Putukwane near Polokwane, 179 lactating ewes (does) under extensive feeding with irregular supplementation were observed for 210 days after kidding. Average milk mass was 1.45 kg/day for Saanen, 0.75 for British Alpine and 0.56 for Toggenburg during the observed lactation. Early lactation exceeded mid and late lactation; kidding in March–April did better than October–November in this group. These conditions differ from stud-herd records. Discuss adapted livestock and feed locally; these are not litres/day or promises for the whole year.
+266 | An owner may not allow a goat to remain in a dirty or parasite-infested condition, and must get veterinary or other treatment for a sick, injured or diseased animal when he or she can.
+267 | Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services enforce isolation and movement restrictions, and a suspected case must be reported.
+268 | Within a declared FMD-affected zone, goats and their products (including milk) cannot be moved into, out of or within the zone without a state veterinary movement permit and compliance with its conditions.
+269 | A goat may be slaughtered for sale only at a registered abattoir under the Meat Safety Act (relevant when culled dairy does or buck kids are sold for meat); slaughter for the farmer's own consumption, or for cultural/religious purposes, is exempt, but that meat may then not be sold.
+270 | The government's 2016 goat manual distinguishes indigenous, Boer, Savanna and Kalahari Red stock for meat purposes from milk/fibre breeds, with breeding goals and individual birth, weaning, weight and sales records. Uncontrolled communal mating can produce births at any time; this does not prove that meat or weaned kids are available all year. Choose stock for the local system and record survival and product stage before you predict quantities.
+271 | A goat may be slaughtered for sale only at a registered abattoir under the Meat Safety Act; slaughter for the farmer's own consumption, or for cultural/religious purposes (including ceremonial slaughter, common with indigenous goats), is exempt from that rule, but that meat may then not be sold.
+272 | A goat may be slaughtered for sale only at a registered abattoir under the Meat Safety Act; slaughter for the farmer's own consumption, or for cultural/religious purposes, is exempt from that rule, but that meat may then not be sold.
+273 | ARC Table 1 lists pregnant sows at 10–18 L drinking water/day and lactating sows at 18–23 L/day. These are stages of breeding sows, not one quantity for every pig. Farrowing care separates cooling the sow from warmth for the piglets; outdoor systems need locally adapted hardy stock, shade and shelter. Confirm stage, reliable clean water, feed and housing locally. The manual provides no verified edible kg per breeding sow for this plan.
+274 | African swine fever (ASF) is listed under the Animal Diseases Act as a controlled animal disease relating to pigs; warthogs and Ornithodorus ticks are carriers/vectors.
+275 | Foot-and-mouth disease (FMD) is also listed under the Animal Diseases Act as a controlled animal disease relating to pigs.
+276 | Swill (food waste) may not be fed to pigs unless it has been boiled for at least 60 minutes or sterilised by another equally effective method.
+277 | A pig may not be slaughtered anywhere other than at a registered abattoir, except for own household consumption or cultural/religious purposes.
+278 | South African grower reference: New Zealand White and Phendula rabbits in the 2017 Stellenbosch trial were slaughtered at about 11 weeks after birth. Overall averages were 2.62 kg live slaughter weight, 1.55 kg hot carcass, 1.48 kg chilled carcass and 1.26 kg reference carcass with head and red offal removed, still with bones. Balanced pellets and water were freely available in a grower pen. These weights are not boneless meat or annual yield per doe; do not multiply them by the unrelated FAO backyard target.
+279 | Rabbits are one of the domesticated animal species listed in the Meat Safety Act, so the Act's rules on abattoirs and hygiene apply to them, as to ducks and other listed species.
+280 | Rabbits slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt from this rule, but its meat may not be sold.
+281 | The government's sheep manual describes controlled breeding at the Mara research station, Limpopo: mating in June–July and lambing in November–December to match rain and grass. This is one station's breeding calendar, not months for mutton harvest. Let adapted stock for meat purposes and feed match locally, and then record birth, survival, weaning and actual slaughter or sale; lambs born per ewe are not edible kg.
+282 | Sheep may not be kept overcrowded in pens: at least 0.56 square metres of floor space per sheep so that every animal can lie down.
+283 | Electric prods, sticks or driving sticks may not be used on sheep.
+284 | Livestock must get water and feed as soon as they reach their night camp or final destination.
+285 | Injured, disabled or blind sheep must get priority at slaughter, or emergency slaughter, to prevent further pain or distress.
+286 | Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act; Veterinary Services enforce isolation and movement restrictions.
+287 | Sheep scab is by law a controlled disease: a suspected or positive case must be reported immediately to the State Veterinarian.
+288 | A sheep may only be slaughtered at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.
+289 | A treatment plan for sheep scab must be in place: the disease brings high economic and welfare costs.
+290 | Despite foot-and-mouth disease (FMD) in South Africa, wool exports continue under the inactivation clause of the OIE (World Organisation for Animal Health) rules.
+291 | Table 1 ('Comparison of number of cows, production and fertility in the main dairy breeds in South Africa'), Milk column, Grade rows: Jersey 3840 kg and Holstein-Friesland 5422 kg per lactation (Registered rows: 4468 and 6426 kg). The document says these are herds in the National Milk Recording Scheme, which 'have been shown to be better managed than those outside the scheme, with their performance per lactation being 50 % greater than that of the national herd', so a smallholder herd should expect less.
+292 | Table 1, AFC column, rows in the table's order Holstein-Friesland Reg./Grade, Jersey Reg./Grade, Ayrshire Reg./Grade: 28, 30, 25, 28, 29, 32 months. The Grade rows used here are Holstein-Friesland 30 and Jersey 28 (Grade Ayrshire 32 is not used: the enterprise is of the Jersey or Holstein type). 28 x 4.35 = 121.8 weeks; 30 x 4.35 = 130.5 weeks. Milk starts at first calving, so age at first calving is the time to first product.
+293 | Holstein 739.33 and Jersey 696.81 days productive life (first calving to culling) in South African milk-recorded herds, 2000-2019: 696.81/365.25 = 1.91 and 739.33/365.25 = 2.02 years.
+294 | 32 days / 7 = 4.57 weeks; 33 days / 7 = 4.71 weeks. This enterprise has a single grow-out cycle ending in slaughter, so 'time to first product' = age at slaughter. South Africa, average of the commercial industry.
+295 | Non-SA (Guyana study citing Steklenev 1990); no SA-specific absolute figure for live weight at slaughter was found (see gaps). 2.93 kg = Pekin at 8-10 weeks, 2.29 kg = Muscovy at 8-10 weeks - matches this enterprise's two breeds. The same LRRD article's own experiment (Table 2, intensive system, Guyana) measured live weight at slaughter (8 weeks) as: Pekin males 2.53 kg, Pekin females 2.29 kg, Muscovy males 2.47 kg, Muscovy females 1.51 kg - broadly in agreement with, but not merged into, the cited range above, since it is a separate dataset/table in the same source. No sourced eggs/duck/year figure was found for either breed (see gaps); the LRRD and SAJAS sources used here studied ducks raised only for meat.
+296 | P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/females, 12 weeks for males). Treat as 'time to first product' = age to slaughter, since it is a single-cycle meat enterprise (no repeating product like eggs). Non-South African trial by researchers from Warsaw, published in SAJAS; the journal's location does not prove local applicability.
+297 | Lowest (≥7th parity) and highest (3rd parity) group averages for milk yield per 305-day standardised lactation in 16,407 analysed South African ARC Saanen lactation records, 1955–2018, mostly intensive/semi-intensive stud herds. The original PDF's Table 3 labels the last group ≥7th; HTML shows it as >7th. Kept in kg, without conversion to litres, annualisation or interpolation of yield by age.
+298 | The reported weaning rate is 149%, or 1.49 lambs (kids) weaned per mated ewe (doe). The source describes observations over twenty years for extensive Boer does at 295 mm rainfall; it does not state lambs weaned per ewe per calendar year. This is a reproductive outcome, not kg of live animals or dressed meat. A separate average litter size of 1.93 lambs born per birth has a different denominator and stage and is not merged into this figure.
+299 | FAO's general backyard target, not a South African observed rate. The 30–35 young per doe per year reached slaughter or breeding age after allowance for losses after weaning; they are not merely weaned and are not kg of meat. The source models six litters and 5.5 surviving young per litter, and describes a goal of 30 rabbits; an extra litter raises its stated goal to 35. Do not combine this backyard target with grower-pen carcass weight from another trial.
+300 | outputUnit is 'lambs born/ewe/year' rather than the proposed 'kg live weight/lamb at weaning or slaughter' or 'lambs weaned/ewe/year': the source explains '...', and instead calculates 'Lambs born per ewe (...)' - a lambing rate (born), not a weaning rate, self-reported by smallholders rather than measured/weighed. 139%=1.39, 83%=0.83, 61%=0.61 lambs born/ewe/year; the range [0.61, 1.39] spans the three Western Cape smallholder districts surveyed (Eden, Central Karoo, West Coast), all from this one study/citation - not merged with any other document. The same article separately cites a COMMERCIAL extensive benchmark of 110-156% lambing and 94-132% weaning (Snyman & Herselman, 2005), explicitly 'expressed over ewes joined' (a different denominator/system) - not merged into this smallholder range.
+301 | Different farmers — never stacked
+302 | 1994/95 total kg/tree at age 14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Marketable weights are respectively 77.87, 28.42 and 23.38 kg/tree. One season and varying management, canopy and cultivar prevent a universal annual curve or carrying the total over to saleable kg. The authors explicitly warn against yield comparisons. The separate KZN guide gives conservatively 2,000, average 3,000–5,000 and good 6,000+ kg/ha, not kg/tree per age.
+303 | ARC Infruitec Citrusdal, 1990. 10th leaf: Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. 7th leaf: Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/tree/year. The source calls it comparative, not absolute. Different cultivars and orchard groups do not establish a universal age-yield ramp.
+304 | About year 4–5 in the KZN horticulture guide. The context is frost-free warm, humid subtropical production areas; cultivar, propagation age and establishment in the field are not specified. This is a first-harvest reference, not a guaranteed local quantity or age of full bearing.
+305 | African Delight: age 3, 12,000–20,000 kg/ha; age 4, 20,000–35,000 kg/ha; mature orchards, 35,000–50,000 kg/ha. Age of full bearing and matching planting density are not stated; do not convert with Ruby Crisp spacing or interpolate a curve per tree.
+306 | Allow for slow growth, frost sensitivity and roots that exploit rock cracks.
+307 | Ask a local botanical nursery to confirm the plant's identity and suitable provenance; no primary named cultivar or exact frost threshold has been verified.
+308 | Ask a specialised local nursery for identified C. genistoides and a locally tested selection; different ecotypes do not perform equally well.
+309 | Ask for Rhoicissus tridentata and record local months for ripe fruit. Do not use medicinal use or use of the root for animals as proof of food [use] (garbled).
+310 | Ask for identified Morus nigra fruiting material with a locally observed season. Do not use a generic black-fruited mulberry or a fruitless ornamental as proof of this product.
+311 | Accepted plant variety: Sunrise Solo, subject to a frost-free, drained growing spot. Confirm its local picking months; the calendar uses a marked regional reference where there is a source.
+312 | Accepted plant variety: Tommy Atkins, subject to local flowering and frost checks. Confirm its local picking months; the calendar uses a marked regional reference where there is a source.
+313 | Accept(s) light frost [ambiguous: imperative "Assume light frost" or "Tolerates light frost"]; check the severity locally.
+314 | Avoid frost and waterlogging. Honey Gold needs male and female plants; Sunrise Solo is hermaphroditic.
+315 | Best in summer-rainfall areas with little frost; protect young trees on colder sites.
+316 | Buy stock of the exact species for the verified intended use. Do not treat evidence of medicinal use or fruit for game as a prediction for fresh household food.
+317 | Buying advice: choose a meat strain and a supplier's plan for batches; confirm arrangements for brooding, feed, water and slaughter.
+318 | Buying advice: for egg production, ask a layer supplier for vaccinated point-of-lay pullets, with records of age, feeding and vaccination.
+319 | Buying advice: let breed/stock match the product, local feed, climate and care capacity; confirm with a local livestock or beekeeping adviser.
+320 | Check chill requirement, support and pruning system before you plant. Autumn-bearing varieties may not take over a spring-bearing calendar.
+321 | Check frost, drainage and disease pressure in the flowering season. Sensitivity to heat and sunburn differs between cultivars.
+322 | Check local frost and water. Food processing needs a suitable method and explicit records of kept stock.

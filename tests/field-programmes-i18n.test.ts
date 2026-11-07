@@ -44,7 +44,8 @@ test('the field report is built in the reader\'s language and shows the unreview
   // buildFieldReport / fieldVisitReportLines and shows the same notice as the other reports. English
   // and every other language still build the English report (see tests/staff-report.test.ts).
   const src = source();
-  assert.match(src, /const reportLanguage=lang==='xh'\?'xh':'en';/, 'only isiXhosa gets a translated report body');
+  // Widened for Afrikaans: the language is passed through for the two draft languages (xh, af) and is English otherwise.
+  assert.match(src, /const reportLanguage=(?:lang==='xh'\?'xh':'en'|isInlineDraftLang\(lang\)\?lang:'en');/, 'only the draft languages get a translated report body');
   assert.match(src, /buildFieldReport\(data,\{[^}]*language:reportLanguage\}\)/, 'the aggregate report no longer receives the language');
   assert.match(src, /fieldVisitReportLines\(visitReport,reportName\(visitReport\.farmerId\),reportName\(visitReport\.mentorId\),reportLanguage\)/, 'the saved-visit report no longer receives the language');
   const notice = "The controls, analysis text, tables and PDF here are an unreviewed isiXhosa draft. Names and recorded evidence are kept as recorded.";
@@ -54,6 +55,16 @@ test('the field report is built in the reader\'s language and shows the unreview
     assert.ok(src.includes(`inlineText(lang,'${label}')`), `${label} is no longer routed through inlineText`);
   }
   assert.doesNotMatch(src, /title="Field visit report"|photoHeading="Visit photographs|reportLabel="Field support records"/, 'a report heading went back to hard-coded English');
+});
+
+test('the field report is built in Afrikaans for an Afrikaans reader and shows the unreviewed Afrikaans draft notice', () => {
+  const src = source();
+  assert.match(src, /const reportLanguage=isInlineDraftLang\(lang\)\?lang:'en';/, 'Afrikaans no longer reaches buildFieldReport');
+  assert.match(src, /import \{ inlineText, isInlineDraftLang \} from '@\/lib\/xh-inline';/);
+  const notice = "The controls, analysis text, tables and PDF here are an unreviewed Afrikaans draft. Names and recorded evidence are kept as recorded.";
+  assert.equal(src.split(`lang==='af'&&<p role="note" className={styles.notice}>{inlineText(lang,'${notice}')}</p>`).length - 1, 2, 'both the aggregate and the saved-visit report show the Afrikaans draft notice');
+  // The notice is the one the other Afrikaans reports already use, and it has its draft.
+  assert.ok(readFileSync(new URL('../lib/locales/af-inline/g43-notices.ts', import.meta.url), 'utf8').includes(`"${notice}"`), 'the Afrikaans notice has a draft');
 });
 
 test('the saved-visit PDF keeps its English file name for every language', () => {

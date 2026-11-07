@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import { fieldApi } from '@/lib/field-api';
 import { fieldDataReportNote } from '@/lib/field-request-model';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -84,8 +84,8 @@ export default function MelEvidenceReport({ orgId, organisation, funder, sample 
   const projects = [...new Set([...(data?.assessments.map(assessment => assessment.project) || []), ...(data?.milestones.map(milestone => milestone.project) || [])])].sort();
   const readyAnalysis = analysis?.assessmentId === selectedId && analysis.beforeId === beforeId ? analysis : null;
   const donors=[...new Set((data?.milestones || []).filter(m=>(!project || m.project===project) && (!funder || m.published)).flatMap(m=>m.donor?[m.donor.funder]:[]))].sort();
-  // isiXhosa readers get the report body in isiXhosa (an unreviewed draft); every other language builds the English report. The download file name is built from English inside buildMelEvidenceReport.
-  const reportLanguage = lang === 'xh' ? 'xh' : 'en';
+  // isiXhosa and Afrikaans readers get the report body in their language (unreviewed drafts); every other language builds the English report. The download file name is built from English inside buildMelEvidenceReport.
+  const reportLanguage = isInlineDraftLang(lang) ? lang : 'en';
   const sourceNotes = (data?.noteSources || []).flatMap(({ source, payload }) => { const note = fieldDataReportNote(payload, reportLanguage); return note ? [inlineTemplate(reportLanguage, '{source}: {note}', null, { source: inlineText(reportLanguage, source), note })] : []; });
   const findingsNote = readyAnalysis?.noteSource ? fieldDataReportNote(readyAnalysis.noteSource, reportLanguage) : null;
   const reportAnalysis = readyAnalysis ? { ...readyAnalysis, notes: findingsNote ? [inlineTemplate(reportLanguage, 'Assessment findings: {note}', null, { note: findingsNote })] : [] } : null;

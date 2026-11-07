@@ -24,7 +24,7 @@ import { getCropArt } from '@/lib/crop-art';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
 import { recordWeightKg, recordQuantityLabel, recordQuantityPayload, quantityTotals, decimalQuantitySum, type RecordQuantityRow } from '@/lib/farm-records';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import type { Garden as DbGarden, GardenMember, Profile, GardenerProfile as DbGardenerProfile, ProductionLog, SalesLog, CourseProgress } from '@/lib/db/types';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -505,6 +505,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             </div>
             {lang === 'zu' && <p className="text-xs leading-relaxed mb-3" style={{color:'var(--text-muted)'}}>{ui('', 'Izilawuli nezaziso zaleli khasi zisesiZulu. Amagama abalimi, izindawo, izitshalo nezifundo, kanye nemininingwane egcinwe nemibiko noma izithombe zesibonelo, kuboniswa njengoba ifakiwe futhi kungase kube ngesiNgisi.')}</p>}
             {lang === 'xh' && <p className="text-xs leading-relaxed mb-3" style={{color:'var(--text-muted)'}}>{inlineText(lang, "The controls and notices on this page are in isiXhosa. Farmer, place, crop and course names, and the details saved with reports or sample photos, are shown as entered and may be in English.")}</p>}
+            {lang === 'af' && <p className="text-xs leading-relaxed mb-3" style={{color:'var(--text-muted)'}}>{inlineText(lang, "The controls and notices on this page are in Afrikaans. Farmer, place, crop and course names, and the details saved with reports or sample photos, are shown as entered and may be in English.")}</p>}
             <label className="block text-sm mb-3" style={{color:'var(--color-forest-700)'}}>{ui('Area / village','Indawo / isigodi')}<select value={areaFilter} onChange={e=>{setAreaFilter(e.target.value); const first=gardens.find(g=>e.target.value==='All areas'||(g.town||'Area not recorded')===e.target.value); if(first)selectGarden(first);}} className="block w-full rounded-lg p-2 mt-1" style={{minHeight:44,background:'var(--input-bg)',border:'1px solid var(--border)'}}><option value="All areas">{ui('All areas','Zonke izindawo')}</option>{areaNames.map(a=><option key={a} value={a}>{a === 'Area not recorded' ? ui(a,'Indawo ayirekhodiwe') : a}</option>)}</select></label>
             {isDemo && <button type="button" className="text-sm underline mb-3" onClick={()=>setShowSampleLima(v=>!v)}>{showSampleLima?ui('Close Lima example','Vala isibonelo saseLima'):ui('Try Lima for this role','Zama isibonelo saseLima sale ndima')}</button>}
             {showSampleLima && isDemo && <SampleLimaConversation role={mode==='funder'?'funder':'ngo'}/>}
@@ -617,7 +618,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     )}
                     <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{gardener.plot} · {gardener.sizeM2} m² · {garden.town}</div>
                     {lang === 'zu' && <p className="text-xs" style={{color:'var(--text-muted)'}}>{ui('', 'Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo.')}</p>}
-                    {lang === 'xh' && <p className="text-xs" style={{color:'var(--text-muted)'}}>{inlineText(lang, "The recorded site size does not confirm the actual productive area.")}</p>}
+                    {isInlineDraftLang(lang) && <p className="text-xs" style={{color:'var(--text-muted)'}}>{inlineText(lang, "The recorded site size does not confirm the actual productive area.")}</p>}
                   </div>
                 </div>
                 <button onClick={() => { if (isDemo) setSampleView('aerial'); else mapRef.current?.flyTo({ center: [gardener.lon, gardener.lat], zoom: 16, duration: 1200 }); }}
@@ -671,7 +672,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: 'var(--bg-2)', color: 'var(--color-forest-800)' }} onClick={() => setSampleView('design')}>{ui('Open example garden design →','Vula umklamo wengadi oyisibonelo →')}</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>{ui('Close example','Vala isibonelo')}</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={`${garden.id}-${sampleView}`} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>{ui('Explore the separate Ubhejane design workspace →','Hlola indawo ehlukile yokuklama yase-Ubhejane →')}</button></>}
                     {!isDemo && <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{ui('This register does not include the farmer’s private design.','Le rejista ayifaki umklamo wangasese womlimi.')}</p>}
                     {lang === 'zu' && <p className="text-xs leading-relaxed" style={{color:'var(--text-muted)'}}>{ui('', 'Umbiko we-PDF ongezansi usalokhu unombhalo wesiNgisi. Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo; izindleko azifakiwe, ngakho lo mbiko awubonisi inzuzo.')}</p>}
-                    {lang === 'xh' && <p className="text-xs leading-relaxed" style={{color:'var(--text-muted)'}}>{inlineText(lang, "The PDF report below is still in English. The recorded site size does not confirm the actual productive area; costs are not included, so this report does not show profit.")}</p>}
+                    {isInlineDraftLang(lang) && <p className="text-xs leading-relaxed" style={{color:'var(--text-muted)'}}>{inlineText(lang, "The PDF report below is still in English. The recorded site size does not confirm the actual productive area; costs are not included, so this report does not show profit.")}</p>}
                     <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>{ui('Preview & download this garden record','Buka bese ulanda irekhodi lale ngadi')}</summary>
                       <ReportComposer title="Garden production record" sample={isDemo} photos={isDemo ? sampleSitePhotos(garden.id) : []} photosByDefault={isDemo} sections={[
                         { title: 'Garden record', lines: [garden.name, `${gardener.name} · ${gardener.plot}`, `Plot size recorded: ${gardener.sizeM2} m². This is not a verified active production area.`] },

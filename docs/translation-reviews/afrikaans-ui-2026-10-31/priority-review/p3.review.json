@@ -1,0 +1,78 @@
+{
+  "unit": "p3",
+  "okCount": 315,
+  "items": [
+    {
+      "index": 58,
+      "verdict": "repair",
+      "english": "Full Treatment is shelved and shown here for review only: it runs AI Polished, then spends a second paid render over the finished artwork.",
+      "draft": "Volle Behandeling is opgeskort en word hier slegs vir hersiening gewys: dit doen AI-gepoleer, en spandeer dan 'n tweede betaalde lewering oor die voltooide kunswerk.",
+      "backtranslation": "Full Treatment is suspended and is shown here only for review: it does AI-polished, and then spends a second paid render over the finished artwork.",
+      "problem": "'dit doen AI-gepoleer' is ungrammatical, so a farmer cannot tell that Full Treatment first runs the AI Polished mode and then charges a second paid render.",
+      "corrected": "Volle Behandeling is opgeskort en word hier slegs vir hersiening gewys: dit voer AI-gepoleer uit en spandeer dan 'n tweede betaalde lewering oor die voltooide kunswerk."
+    },
+    {
+      "index": 62,
+      "verdict": "repair",
+      "english": "Step 1 of {total} — saving the exact geometry-locked map first (no AI cost)…",
+      "draft": "Stap 1 van {total} — stoor eers die presiese, geometrie-vasgeslote kaart (geen AI-koste nie)…",
+      "backtranslation": "Step 1 of {total} — first save the exact, geometry-locked map (no AI cost)…",
+      "problem": "The English is a progress message ('saving ... first'), but the draft reads as an instruction ('first save'), so a farmer may think they must act.",
+      "corrected": "Stap 1 van {total} — stoor tans eers die presiese, geometrie-vasgeslote kaart (geen AI-koste nie)…"
+    },
+    {
+      "index": 63,
+      "verdict": "repair",
+      "english": "Step 3 of 3 — starting one paid gpt-image-2 polish pass over the AI hybrid…",
+      "draft": "Stap 3 van 3 — begin een betaalde gpt-image-2-poleerrondte oor die AI-hibried…",
+      "backtranslation": "Step 3 of 3 — start one paid gpt-image-2 polish round over the AI hybrid…",
+      "problem": "The English reports that the paid polish pass is starting; the draft reads as an instruction to start a paid pass, which misstates who triggers the charge.",
+      "corrected": "Stap 3 van 3 — begin tans een betaalde gpt-image-2-poleerrondte oor die AI-hibried…"
+    },
+    {
+      "index": 71,
+      "verdict": "repair",
+      "english": "Save sale & invoice",
+      "draft": "Stoor verkoop",
+      "backtranslation": "Save sale",
+      "problem": "The button saves the sale AND creates an invoice; the draft drops the invoice, so a farmer does not know an invoice is made (and it no longer matches the button name in item 174).",
+      "corrected": "Stoor verkoping en faktuur"
+    },
+    {
+      "index": 219,
+      "verdict": "repair",
+      "english": "Review the same dates and complete books; setup spending can precede sales.",
+      "draft": "Hersien dieselfde datums en volledige boeke; opstelbesteding kan voor verkope kom.",
+      "backtranslation": "Review the same dates and complete books; set-up spending can come before sales.",
+      "problem": "'opstelbesteding' (drafting/compose spending) is unclear; the English means set-up (start-up) spending that can come before sales.",
+      "corrected": "Hersien dieselfde datums en volledige boeke; aanvangsbesteding kan voor verkope kom."
+    },
+    {
+      "index": 247,
+      "verdict": "repair",
+      "english": "The bank balance is unknown in every step. A complete result also needs the relevant costs and other records; changing the window does not supply them.",
+      "draft": "Die banksaldo is in elke stap onbekend. 'n Volledige resultaat het ook die betrokke koste en ander rekords nodig; om die venster te verander, verskaf dit nie.",
+      "backtranslation": "The bank balance is unknown in every step. A complete result also needs the relevant costs and other records; changing the window does not provide it.",
+      "problem": "The clause 'om die venster te verander, verskaf dit nie' is garbled and can read as 'it does not provide a way to change the window' instead of 'changing the window does not supply those costs and records'.",
+      "corrected": "Die banksaldo is in elke stap onbekend. 'n Volledige resultaat het ook die betrokke koste en ander rekords nodig; die verandering van die venster verskaf hulle nie."
+    },
+    {
+      "index": 266,
+      "verdict": "repair",
+      "english": "The original forecast starts at {opening}, pays the two quoted amounts, then receives the assumed sale. Actual cash starts at the same opening amount and uses only the dated cash records. It also includes the stated funding and household withdrawal. The unknown, unpaid water charge changes neither the counted cash nor what is known about the missing cost.",
+      "draft": "Die oorspronklike vooruitskatting begin by {opening}, betaal die twee gekwoteerde bedrae, en ontvang dan die aanvaarde verkoping. Werklike kontant begin by dieselfde openingsbedrag en gebruik slegs die gedateerde kontantrekords. Dit sluit ook die genoemde befondsing en huishoudelike onttrekking in. Die onbekende, onbetaalde waterheffing verander nie die getelde kontant of wat oor die ontbrekende koste bekend is nie.",
+      "backtranslation": "The original forecast starts at {opening}, pays the two quoted amounts, and then receives the accepted sale. Actual cash starts at the same opening amount and uses only the dated cash records. It also includes the named funding and household withdrawal. The unknown, unpaid water levy does not change the counted cash or what is known about the missing cost.",
+      "problem": "'aanvaarde verkoping' means an accepted sale, but the English says the forecast receives an ASSUMED sale (it is only an enquiry, not a confirmed order), so the draft overstates certainty about money coming in.",
+      "corrected": "Die oorspronklike vooruitskatting begin by {opening}, betaal die twee gekwoteerde bedrae, en ontvang dan die veronderstelde verkoping. Werklike kontant begin by dieselfde openingsbedrag en gebruik slegs die gedateerde kontantrekords. Dit sluit ook die genoemde befondsing en huishoudelike onttrekking in. Die onbekende, onbetaalde waterheffing verander nie die getelde kontant of wat oor die ontbrekende koste bekend is nie."
+    },
+    {
+      "index": 276,
+      "verdict": "repair",
+      "english": "Only discussion and investigation may proceed. Agree the evidence and care first, then define materials and request comparable quotations. No construction budget is supplied.",
+      "draft": "Slegs bespreking en ondersoek mag voortgaan. Kom eers die bewyse en versorging ooreen, omskryf dan materiaal en vra vergelykbare kwotasies aan. Geen konstruksiebegroting word verskaf nie.",
+      "backtranslation": "Only discussion and investigation may proceed. First agree on the evidence and care, then define materials and request comparable quotes. No construction budget is provided.",
+      "problem": "'Kom eers die bewyse en versorging ooreen' is ungrammatical (ooreenkom needs 'oor'), making the required first step — agreeing the evidence and care — unclear.",
+      "corrected": "Slegs bespreking en ondersoek mag voortgaan. Kom eers ooreen oor die bewyse en versorging, omskryf dan materiaal en vra vergelykbare kwotasies aan. Geen konstruksiebegroting word verskaf nie."
+    }
+  ]
+}

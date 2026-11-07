@@ -11,7 +11,8 @@ import {REPORT_DOCUMENT_LANGUAGES} from '../lib/report-localisation.ts';
 import {buildReportHeaderMarkdown,absentWaterBodies,type ReportHeaderInput,type ReportSiteFacts} from '../lib/report-site-facts.ts';
 import {reportDocumentText,reportRecordedSourceLabel,REPORT_DOCUMENT_COPY} from '../lib/report-localisation.ts';
 import {recordsMonthRangeIndices,recordsSeasonLabel,recordsMonthShort,recordsReportSeasonLabel,RECORDS_SEASON_COPY} from '../lib/records-months.ts';
-import {registerXhInline,inlineDraftsLoaded} from '../lib/xh-inline.ts';
+import {registerInlineDrafts,registerXhInline,inlineDraftsLoaded} from '../lib/xh-inline.ts';
+import {AF_INLINE_SOURCE} from '../lib/locales/af-inline/index.ts';
 import {XH_INLINE_SOURCE} from '../lib/locales/xh-inline/index.ts';
 import {siteReportFigures,climateFigure} from '../lib/report-figures.ts';
 import {WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,roofHarvestLitres} from '../lib/roof-runoff.ts';
@@ -29,10 +30,13 @@ const numbers=(s:string)=>(s.match(/(?<![\p{L}\p{N}])-?\d+(?:[.,]\d+)?/gu)??[]).
 // is not about isiXhosa runs without them, exactly as the server does.
 const withXhosa=<T,>(run:()=>T):T=>{registerXhInline(XH_INLINE_SOURCE);try{return run();}finally{registerXhInline({});}};
 const rows=(s:string)=>s.split('\n').filter(l=>l.startsWith('| ')&&!l.includes('|---')).map(line=>line.slice(1,-1).split('|').map(c=>c.trim()));
+// Afrikaans wording exists only once its drafts are registered (the browser's af locale chunk does that); every test below that
+// is not about Afrikaans runs without them, exactly as the server does.
+const withAfrikaans=<T,>(run:()=>T):T=>{registerInlineDrafts('af',AF_INLINE_SOURCE);try{return run();}finally{registerInlineDrafts('af',{});}};
 function cell(markdown:string,source:string,language:string){return rows(markdown).find(r=>r[0]===reportDocumentText(source,language))!;}
 
 test('all original English header variants and diagram bytes survive the shared month-parser change',()=>{
- const before=JSON.stringify(fixture);for(const row of fixture.cases){assert.equal(buildReportHeaderMarkdown(row.input),row.expected,row.name);assert.equal(buildReportHeaderMarkdown(row.input,'af'),row.expected);assert.equal(buildReportHeaderMarkdown(row.input,'xh'),row.expected,`${row.name}: before its drafts load isiXhosa is the English, byte for byte`);}
+ const before=JSON.stringify(fixture);for(const row of fixture.cases){assert.equal(buildReportHeaderMarkdown(row.input),row.expected,row.name);assert.equal(buildReportHeaderMarkdown(row.input,'af'),row.expected,`${row.name}: before its drafts load Afrikaans is the English, byte for byte`);assert.equal(buildReportHeaderMarkdown(row.input,'xh'),row.expected,`${row.name}: before its drafts load isiXhosa is the English, byte for byte`);}
  assert.deepEqual(siteReportFigures(visual.facts,visual.location,'en',{canvas:visual.canvas,mapLayers:visual.refs,phasePlan:visual.phasePlan}),visual.figures.en);
  assert.equal(JSON.stringify(fixture),before);
 });
@@ -161,6 +165,59 @@ test('model soil classes reuse existing native diagram wording while laboratory 
  }
 });
 
+test('Afrikaans header: once the drafts load, labels, provenance, seasons and notices are Afrikaans while every figure, name and source record is the English one',()=>withAfrikaans(()=>{
+ for(const row of fixture.cases){
+  const before=JSON.stringify(row.input);const af=buildReportHeaderMarkdown(row.input,'af');const englishRows=rows(row.expected),afRows=rows(af);
+  assert.notEqual(af,row.expected,row.name);assert.equal(afRows.length,englishRows.length,row.name);
+  assert.deepEqual(numbers(af),numbers(row.expected),`${row.name}: a source number changed`);
+  assert.deepEqual(afRows[0],['Maatstaf','Waarde','Waar dit vandaan kom']);
+  for(let i=1;i<englishRows.length;i++)assert.equal(afRows[i][0],reportDocumentText(englishRows[i][0],'af'),`${row.name}: field label`);
+  const rawSources=new Set([row.input.facts?.boundary?.source,row.input.facts?.roof?.source,...packet.preservedSourceIdentities]);
+  for(let i=1;i<englishRows.length;i++)if(rawSources.has(englishRows[i][2]))assert.equal(afRows[i][2],reportRecordedSourceLabel(englishRows[i][2],'af'));
+  assert.ok(afRows.slice(1).some((r,i)=>r[2]!==englishRows[i+1][2]),'provenance is in Afrikaans');
+  for(const value of [row.input.facts?.farmName,row.input.vegUnit,row.input.bruLabel,...(row.input.facts?.design?.elements.map(e=>e.name)??[]),...(row.input.facts?.water?.tanks.map(t=>t.name)??[]),...(row.input.facts?.water?.mapPoints.map(p=>p.name)??[])])if(value&&row.expected.includes(value))assert.ok(af.includes(value),`af: changed saved name/source ${value}`);
+  const measured=row.input.soilSource==='lab'||row.input.soilSource==='soilgrids';
+  if(!measured)assert.equal(cell(af,'Soil (0-30 cm)','af')[1],'Nie gemeet nie; reël \'n grondtoets');
+  assert.equal(JSON.stringify(row.input),before);
+ }
+ // The standfirst, document title and trust statement follow the same drafts.
+ assert.equal(reportDocumentText('Permaculture Site Report','af'),'Permakultuur-terreinverslag');
+ assert.equal(reportDocumentText('Site Report — {name}','af',{name:'Ubhejane'}),'Terreinverslag — Ubhejane');
+ const input=fixture.cases.find(r=>r.name==='farmer-observations')!.input;
+ assert.ok(cell(buildReportHeaderMarkdown(input,'af'),'Annual rainfall','af')[1].includes('nat Okt–Mrt')||/nat \p{L}{3}–\p{L}{3}/u.test(cell(buildReportHeaderMarkdown(input,'af'),'Annual rainfall','af')[1]));
+}));
+
+test('Afrikaans seasons use Afrikaans months only after the drafts load; the shared tables stay English for Afrikaans',()=>{
+ const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+ for(let from=0;from<12;from++)for(let to=0;to<12;to++){const source=months[from]+'–'+months[to];assert.equal(recordsReportSeasonLabel('af',source),source,'drafts not loaded: the English range');assert.equal(recordsSeasonLabel('af',source),source);}
+ withAfrikaans(()=>{
+  const afMonths=['Jan','Feb','Mrt','Apr','Mei','Jun','Jul','Aug','Sep','Okt','Nov','Des'];
+  for(let from=0;from<12;from++)for(let to=0;to<12;to++)assert.equal(recordsReportSeasonLabel('af',months[from]+'–'+months[to]),afMonths[from]+'–'+afMonths[to]);
+  assert.equal(recordsReportSeasonLabel('af','year-round'),'heeljaar');assert.equal(recordsReportSeasonLabel('af','none'),'geen');
+  assert.equal(recordsReportSeasonLabel('af','Wet in summer'),'Wet in summer','a farmer\'s own wording is returned verbatim');
+  for(const lang of ['en',...languages])assert.equal(recordsReportSeasonLabel(lang,'Oct–Mar'),recordsSeasonLabel(lang,'Oct–Mar'),`${lang}: unchanged`);
+  assert.equal(recordsSeasonLabel('af','Oct–Mar'),'Oct–Mar');
+ });
+});
+
+test('the real API emits the Afrikaans header, cost table and trust statement, loading the drafts itself, with the same supplied values',async()=>{
+ const module=(s:string)=>'data:text/javascript,'+encodeURIComponent(s);const calls:any[]=[];const key=Symbol.for('imbewu-header-provider-stub');(globalThis as any)[key]=calls;
+ const hooks=registerHooks({resolve(s,c,next){if(s==='@anthropic-ai/sdk')return{url:module('export default class Anthropic{}'),shortCircuit:true};if(s==='next/server')return{url:module('export class NextRequest{}'),shortCircuit:true};if(s==='@/lib/api-auth')return{url:module('export async function guardPaidApiRequest(){return {uid:"header-test"};}'),shortCircuit:true};if(s==='@/lib/metered-ai')return{url:module(`export const AI_MODELS={main:'claude-sonnet-4-6'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async request=>{globalThis[Symbol.for('imbewu-header-provider-stub')].push(request);return {usage:{},stop_reason:'end_turn',content:[{type:'text',text:'## Mocked body\\nOriginal mocked response.'}]};}}}};}`),shortCircuit:true};return next(s,c);}});
+ const original=globalThis.fetch;globalThis.fetch=async()=>new Response('{}');
+ registerInlineDrafts('af',{});assert.equal(inlineDraftsLoaded('af'),false);
+ try{const {POST}=await import('../app/api/generate-report/route.ts');
+  const post=async(language:string)=>{calls.length=0;const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language,locationData:DEMO_LOCATION,sections:['Executive Summary']})})as any);assert.equal(response.status,200);return response.text();};
+  const english=await post('en');assert.equal(inlineDraftsLoaded('af'),false,'an English request never loads the Afrikaans drafts');
+  const text=await post('af');assert.equal(calls.length,1);assert.equal(inlineDraftsLoaded('af'),true,'an Afrikaans request loads them');
+  const start=text.indexOf('## '+reportDocumentText('Site at a Glance','af'));assert.ok(start>=0);
+  const table=text.slice(start,text.indexOf('## 1. Mocked body'));
+  assert.ok(table.includes('| Maatstaf | Waarde | Waar dit vandaan kom |'));assert.ok(cell(table,'Annual rainfall','af')[1].includes(String(DEMO_LOCATION.rainfall.annual)+' mm'));assert.ok(!table.includes('| Property boundary |'));
+  assert.ok(text.includes('## '+reportDocumentText('Contents','af')));assert.ok(text.includes('Hoeveel om hierdie plan te vertrou'));assert.ok(text.includes(reportDocumentText('Draft translation: not yet reviewed by a fluent speaker. Check the English source before acting.','af')));
+  // The same request in English is untouched: no Afrikaans word, and the English labels as before.
+  assert.ok(english.includes('| Measure | Value | Where it comes from |'));assert.ok(!english.includes('Maatstaf'));
+ }finally{globalThis.fetch=original;hooks.deregister();delete(globalThis as any)[key];registerInlineDrafts('af',{});}
+});
+
 test('isiXhosa header: once the drafts load, labels, provenance, seasons and notices are isiXhosa while every figure, name and source record is the English one',()=>withXhosa(()=>{
  assert.equal(inlineDraftsLoaded('xh'),true);
  for(const row of fixture.cases){
@@ -240,7 +297,7 @@ test('the real API emits the isiXhosa header and trust statement, loading the dr
   assert.ok(text.includes('Okuqulathwe'));
   // The same request in English is untouched: no isiXhosa word, and the English labels as before.
   assert.ok(english.includes('| Measure | Value | Where it comes from |'));assert.ok(!english.includes('Isilinganiso'));
- }finally{globalThis.fetch=original;hooks.deregister();delete(globalThis as any)[key];registerXhInline({});}
+ }finally{globalThis.fetch=original;hooks.deregister();delete(globalThis as any)[key];registerXhInline({});registerInlineDrafts('af',{});}
 });
 
 test('the actual reader wraps the isiXhosa measurement table once its drafts load, and an English table is never taken for one',()=>{

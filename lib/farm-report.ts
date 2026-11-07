@@ -16,8 +16,9 @@ import type { ReportChart, ReportMetric, ReportSection, ReportTable } from './pr
 export type FarmReportKind = 'production' | 'finance';
 /** The language of the report's fixed wording. English (the default) and isiZulu build the English
  * report byte-for-byte; 'xh' reads the isiXhosa drafts in lib/locales/xh-inline/g34-farm-report-body.ts,
- * keyed by each English string. Recorded data (names, units, amounts, dates) is never translated. */
-export type FarmReportLanguage = 'en' | 'zu' | 'xh';
+ * and 'af' the Afrikaans drafts in lib/locales/af-inline/g34-farm-report-body.ts, keyed by each English
+ * string. Recorded data (names, units, amounts, dates) is never translated. */
+export type FarmReportLanguage = 'en' | 'zu' | 'xh' | 'af';
 type Say = (english: string, vars?: Record<string, string | number>) => string;
 const sayIn = (language: string | undefined): Say => (english, vars = {}) => inlineTemplate(language ?? 'en', english, null, vars);
 // w23-06: "1 local invoices" read as a slip in a document a farmer shares; counts agree with their noun.
@@ -118,9 +119,12 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
   const dateLabel = (value: string | undefined) => validDate(value) ? value!.slice(0, 10) : t('Date unavailable');
   // isiXhosa wording is in play only once the isiXhosa drafts are loaded (before that, e.g. on the server, the report is English throughout).
   const xhOn = lang === 'xh' && t('At a glance') !== 'At a glance';
+  // The same for Afrikaans, once its drafts are loaded.
+  const afOn = lang === 'af' && t('At a glance') !== 'At a glance';
   const notAvailable = t('Not available');
-  // The shared 'Amount' draft means a quantity; on a money column use the money book's own word (Isixa).
-  const amountWord = xhOn ? recordsDraft('xh', 'Amount') ?? t('Amount') : t('Amount');
+  // The shared 'Amount' draft means a quantity; on a money column use the money book's own word
+  // (isiXhosa Isixa; Afrikaans Bedrag, as in the money book's "Bedrag (R)", an unreviewed draft).
+  const amountWord = xhOn ? recordsDraft('xh', 'Amount') ?? t('Amount') : afOn ? 'Bedrag' : t('Amount');
   const reference = options.reference ?? now;
   if (!Number.isFinite(reference.getTime()) || localTodayISODate(reference) > localTodayISODate(now)) throw Error('Choose a report date on or before today.');
   const inPeriod = (date: string | undefined) => isInFinancePeriod(date, period, reference);
@@ -239,8 +243,9 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
   const monthlyTable: ReportTable = { title: t('Month by month'), note: t('The same local-calendar series as Records, restricted to this selection. No entries means no recorded result. The current month is incomplete. Any future-dated entries in this selection are included and must be checked. Recorded cash margin is not a bank balance or full profit.'), columns: [t('Month'), t('Money received'), t('Costs recorded'), t('Cash margin')], rows: monthly.map(month => {
     const validReceipts = sales.filter(row => monthKey(row.sold_at) === month.key).every(row => moneyKnown(row.amount)) && invoices.filter(row => monthKey(row.paidAt!) === month.key).every(row => moneyKnown(row.total));
     const validCosts = expenses.filter(row => monthKey(row.spent_at) === month.key).every(row => moneyKnown(row.amount));
-    // isiXhosa month names, the ones the Records book uses; English keeps finance-series' own label.
-    const monthName = xhOn ? `${recordsMonthShort(lang, month.month)} ${month.year}` : month.longLabel;
+    // isiXhosa month names, the ones the Records book uses; Afrikaans the af-ZA short month the app's
+    // Afrikaans dates use; English keeps finance-series' own label.
+    const monthName = xhOn ? `${recordsMonthShort(lang, month.month)} ${month.year}` : afOn ? `${new Date(month.year, month.month - 1, 1).toLocaleDateString('af-ZA', { month: 'short' })} ${month.year}` : month.longLabel;
     return [monthName, !month.hasRecords ? noEntries : validReceipts ? randCentsLabel(month.moneyInZar) : notAvailable, !month.hasRecords ? noEntries : validCosts ? randCentsLabel(month.moneyOutZar) : notAvailable, !month.hasRecords ? noEntries : validReceipts && validCosts ? randCentsLabel(month.netZar) : notAvailable];
   }) };
   const knownWeights = cropNames.flatMap(crop => {

@@ -268,7 +268,7 @@ test('preparedSampleReport keeps isiXhosa once its drafts are loaded, and never 
 test('the sample-mode report picker offers isiXhosa and every inline-draft language, in LANGUAGE_OPTIONS order, and real reports in a draft language carry the AI notice', () => {
   const view = read('components/ReportView.tsx');
   assert.match(view, /LANGUAGE_OPTIONS\.filter\(l => !sampleMode \|\| l\.code === 'en' \|\| l\.code === 'zu' \|\| isInlineDraftLang\(l\.code\)\)\.map/, 'the picker is filtered, never reordered');
-  assert.match(view, /import \{ isInlineDraftLang, xhInlineDraft \} from '@\/lib\/xh-inline';/);
+  assert.match(view, /import \{[^}]*\bisInlineDraftLang\b[^}]*\} from '@\/lib\/xh-inline';/, 'the draft-language check comes from the shared helper');
   const order = [...(/const LANGUAGE_OPTIONS = \[([\s\S]*?)\] as const;/.exec(view)![1].matchAll(/code: '(\w+)'/g))].map(match => match[1]);
   assert.deepEqual(order, ['en', 'zu', 'xh', 'af', 'st', 'nso', 'tn', 'ts', 've', 'ss', 'nr']);
   const notice = 'This report was written by AI in {language}. It has not been reviewed by a fluent speaker; check figures against the English source.';
@@ -280,4 +280,18 @@ test('the sample-mode report picker offers isiXhosa and every inline-draft langu
     assert.ok(draft && draft !== notice);
     assert.deepEqual(draft.match(/\{\w+\}/g), ['{language}'], 'the language name placeholder survives');
   });
+});
+
+test('Afrikaans: the prepared example keeps af once its drafts load, its note reads in Afrikaans, and the AI-report notice has an Afrikaans draft', async () => {
+  const { registerInlineDrafts } = await import('../lib/xh-inline.ts');
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index.ts');
+  const english = preparedExampleNote('en');
+  registerInlineDrafts('af', {});
+  assert.equal(preparedExampleNote('af'), english, 'before the drafts load, Afrikaans is the English');
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  try {
+    assert.equal(preparedExampleNote('af'), "Voorbereide voorbeeld van gestoorde rekords. Dit is nie 'n volledige terreinassessering, ontwerpverslag of bewys van vordering nie. Geen nuwe AI-ontleding nie.");
+    assert.equal(preparedExampleNote('en'), english);
+    assert.ok(AF_INLINE_SOURCE['This report was written by AI in {language}. It has not been reviewed by a fluent speaker; check figures against the English source.']?.includes('{language}'));
+  } finally { registerInlineDrafts('af', {}); }
 });

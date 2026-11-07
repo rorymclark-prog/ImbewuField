@@ -22,15 +22,32 @@ test('the PDF export error no longer appends the raw JS error message to the far
   assert.match(src, /'Could not build the PDF\. Check your connection and try again\.': '/, 'the isiZulu translation for the new sentence is missing from the known-strings map');
 });
 
-test('SavedReportsList dates follow en-ZA/zu-ZA, not the browser default locale', () => {
+test('SavedReportsList dates follow en-ZA/zu-ZA/af-ZA, not the browser default locale', () => {
   const src = savedReportsList();
   assert.doesNotMatch(src, /toLocaleDateString\(\)/, 'a bare toLocaleDateString() call remains');
   assert.doesNotMatch(src, /toLocaleDateString\(undefined/, 'a toLocaleDateString(undefined, …) call remains');
   assert.doesNotMatch(src, /toLocaleTimeString\(\[\]/, 'a toLocaleTimeString([], …) call (browser-default locale) remains');
-  assert.match(src, /const dateLocale = lang === 'zu' \? 'zu-ZA' : 'en-ZA'/, 'the shared dateLocale constant is gone');
+  assert.match(src, /const dateLocale = lang === 'zu' \? 'zu-ZA' : lang === 'af' \? 'af-ZA' : 'en-ZA'/, 'the shared dateLocale constant is gone');
 });
 
 test("mentor's enrolled-date line follows en-ZA/zu-ZA consistently", () => {
   const src = mentorPage();
   assert.doesNotMatch(src, /toLocaleDateString\(\)(?!,)/, 'a bare toLocaleDateString() call remains on the mentor page');
+});
+
+test('Afrikaans dates use af-ZA where isiXhosa already had its own date handling', () => {
+  const read = (path: string) => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
+  const report = reportView();
+  assert.equal(
+    (report.match(/language === 'zu' \? 'zu-ZA' : language === 'af' \? 'af-ZA' : 'en-ZA'/g) ?? []).length,
+    2,
+    'both ReportView date lines must pick af-ZA for Afrikaans',
+  );
+  for (const path of ['app/community/page.tsx', 'app/community/messages/[threadId]/page.tsx']) {
+    const src = read(path);
+    assert.match(src, /localeDate\(lang, d, \{ day: 'numeric', month: 'short' \}, lang === 'af' \? 'af-ZA' : 'en-ZA'\)/, `${path}: older posts use af-ZA for Afrikaans`);
+    assert.match(src, /\(lang === 'xh' \|\| lang === 'af'\) \? xhCommunityDate\(/, `${path}: Afrikaans goes through the date helper`);
+  }
+  assert.match(read('app/facilitator/crops/page.tsx'), /lang === 'af' \? 'af-ZA' : 'en-ZA'/, 'the saved-design date uses af-ZA for Afrikaans');
+  assert.match(mentorPage(), /toLocaleDateString\('af-ZA'/, 'the far-off mentor due date uses af-ZA for Afrikaans');
 });

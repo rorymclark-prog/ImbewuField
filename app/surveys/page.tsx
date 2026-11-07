@@ -22,17 +22,18 @@ import {
 } from '@/lib/db/queries';
 import type { Survey, SurveyQuestion, SurveyQType } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 
 function localUi(en: string, zu: string, lang: string) {
   return inlineText(lang, en, zu);
 }
 
 const SURVEY_XH_DRAFT_NOTICE = 'ISIXHOSA DRAFT — Built-in demonstration text is an unreviewed AI draft. Questions written by an organisation appear in the original English. Ask the survey creator before submitting if anything is unclear.';
+const SURVEY_AF_DRAFT_NOTICE = 'AFRIKAANS DRAFT — Built-in demonstration text is an unreviewed AI draft. Questions written by an organisation appear in the original English. Ask the survey creator before submitting if anything is unclear.';
 
 // "3 questions" / "1 response": English adds an "s", isiZulu has no plural suffix, isiXhosa swaps the whole noun.
 function countNoun(lang: string, n: number | null, one: string, many: string, zu: string) {
-  if (lang === 'xh') return inlineText(lang, n === 1 ? one : many);
+  if (isInlineDraftLang(lang)) return inlineText(lang, n === 1 ? one : many);
   return `${localUi(one, zu, lang)}${n !== 1 && lang !== 'zu' ? 's' : ''}`;
 }
 
@@ -97,7 +98,7 @@ const SAMPLE_SURVEY_ZU_DRAFTS: Record<string, { title?: string; questions?: Reco
 };
 
 function showSampleDraft(survey: Survey, source: string, draft: string | undefined, lang: string) {
-  if (lang === 'xh' && survey.id.startsWith('sample-')) {
+  if (isInlineDraftLang(lang) && survey.id.startsWith('sample-')) {
     // isiXhosa drafts of the built-in demonstration surveys, keyed by the exact English
     // (lib/locales/xh-inline/g01-survey.ts); live organisation copy is never translated here.
     const xh = inlineText(lang, source);
@@ -686,9 +687,9 @@ function FarmerSurveyCard({
                           cursor: 'pointer',
                         }}
                       >
-                        {(lang === 'zu' || lang === 'xh') && survey.id.startsWith('sample-')
+                        {(lang === 'zu' || isInlineDraftLang(lang)) && survey.id.startsWith('sample-')
                           ? showSampleDraft(survey, v, v === 'Yes' ? 'Yebo' : 'Cha', lang)
-                        : lang === 'zu' ? `${v === 'Yes' ? 'Yebo' : 'Cha'} / ${v}` : lang === 'xh' ? `${inlineText(lang, v)} / ${v}` : v}
+                        : lang === 'zu' ? `${v === 'Yes' ? 'Yebo' : 'Cha'} / ${v}` : isInlineDraftLang(lang) ? `${inlineText(lang, v)} / ${v}` : v}
                       </button>
                     );
                   })}
@@ -830,6 +831,11 @@ export default function SurveysPage() {
         {lang === 'xh' && (
           <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
             {inlineText(lang, SURVEY_XH_DRAFT_NOTICE)} / {SURVEY_XH_DRAFT_NOTICE}
+          </p>
+        )}
+        {lang === 'af' && (
+          <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
+            {inlineText(lang, SURVEY_AF_DRAFT_NOTICE)} / {SURVEY_AF_DRAFT_NOTICE}
           </p>
         )}
 

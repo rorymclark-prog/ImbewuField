@@ -4,14 +4,14 @@ import { siteReportPurposeLabel } from '@/lib/site-survey';
 import { useLanguage } from '@/lib/i18n';
 import { reportUiText, reportUiDate } from '@/lib/report-localisation';
 import styles from '../ReportView.module.css';
-import { xhInlineDraft } from '@/lib/xh-inline';
+import { inlineDraft, isInlineDraftLang } from '@/lib/xh-inline';
 
 export default function ReportVersionDetails({ settings, language, savedAt, reference, origin }: {
   settings?: ReportGenerationSettings; language: string; savedAt?: string; reference?: string; sample?: boolean; origin?: ReportOrigin;
 }) {
   const { lang, t: appT } = useLanguage();
   // isiXhosa: the draft keyed by the exact English (lib/locales/xh-inline), else the dictionary.
-  const t = (english: string) => (lang === 'xh' ? xhInlineDraft(english) : null) ?? reportUiText(english, lang, appT);
+  const t = (english: string) => (isInlineDraftLang(lang) ? inlineDraft(lang, english) : null) ?? reportUiText(english, lang, appT);
   const sample = origin === 'prepared-example';
   const wording = settings?.tone === 'simple' ? t('Simple') : settings?.tone === 'professional' ? t('Detailed') : t('Not recorded');
   const depth = settings ? t({ 'one-pager': 'Brief advice', standard: 'Standard', comprehensive: 'Comprehensive' }[settings.length]) : t('Not recorded');

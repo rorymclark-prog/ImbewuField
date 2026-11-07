@@ -1,0 +1,16 @@
+{
+  "unit": "L1",
+  "okCount": 259,
+  "items": [
+    {
+      "index": 240,
+      "path": "water-harvesting/water-harvesting-l4/body/p1",
+      "verdict": "repair",
+      "english": "Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.",
+      "draft": "Moenie toiletwater, water van doeke, of water van die was van 'n siek persoon of van diere by 'n hergebruikplan insluit nie. Moenie water hergebruik wat skadelike chemikalieë bevat nie.",
+      "backtranslation": "Do not include toilet water, water from cloths, or water from washing a sick person or from animals in a reuse plan. Do not reuse water that contains harmful chemicals.",
+      "problem": "'water van doeke' reads as 'water from cloths' rather than nappies, and 'of van diere' leaves unclear that water used to wash animals is excluded, weakening a greywater safety exclusion.",
+      "corrected": "Moenie toiletwater, water van luiers, of water waarmee 'n siek persoon of diere gewas is, by 'n hergebruikplan insluit nie. Moenie water hergebruik wat skadelike chemikalieë bevat nie."
+    }
+  ]
+}

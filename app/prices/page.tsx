@@ -93,7 +93,7 @@ export default function PricesPage() {
           <div className={selected ? workspace.pricePickerActive : undefined}>
             <p className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)', lineHeight: 1.5 }}>
               {lang === 'zu' ? <>{t('pricesChooseCrop')}<span className="block mt-1">{translate('en', 'pricesChooseCrop')}</span></>
-                : lang === 'xh' && t('pricesChooseCrop') !== translate('en', 'pricesChooseCrop')
+                : (lang === 'xh' || lang === 'af') && t('pricesChooseCrop') !== translate('en', 'pricesChooseCrop')
                   ? <>{t('pricesChooseCrop')}<span lang="en" className="block mt-1">{inlineText(lang, 'English source:')} {translate('en', 'pricesChooseCrop')}</span></>
                   : t('pricesChooseCrop')}
             </p>

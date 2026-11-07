@@ -1,5 +1,5 @@
 import type { MelQuestion, MelStage, MelTemplate } from './mel';
-import { inlineText } from './xh-inline';
+import { inlineText, isInlineDraftLang } from './xh-inline';
 
 export const MEL_TIMING_ZU: Record<MelStage, string> = {
   baseline: 'Ngaphambi kokuthi kuqale usizo lwephrojekthi. Uma sekuqalile, bhala ukuthi izimpendulo zibheka emuva.',
@@ -67,8 +67,8 @@ export const MEL_TEMPLATES: Record<MelStage, MelTemplate> = {
 
 /**
  * The assessment's title on screen. A title that is still the stock stage name ('Before the in-person course') reads in
- * isiXhosa; a title someone typed is theirs and is shown as recorded.
+ * isiXhosa or Afrikaans; a title someone typed is theirs and is shown as recorded.
  */
 export function melAssessmentTitle(lang: string, stage: MelStage, title: string): string {
-  return lang === 'xh' && MEL_TEMPLATES[stage]?.en === title ? inlineText(lang, title) : title;
+  return isInlineDraftLang(lang) && MEL_TEMPLATES[stage]?.en === title ? inlineText(lang, title) : title;
 }

@@ -1,6 +1,7 @@
 import type { JournalEntry } from './field-journal';
 import { deliverFile, type FileDelivery } from './file-delivery';
 import { farmMemoryText, farmMemoryCategoryLabel, type FarmMemoryKey } from './farm-memory-copy';
+import { isInlineDraftLang } from './xh-inline';
 
 export interface JournalExportOptions {
   lang?: string;
@@ -19,8 +20,8 @@ export function csvCell(value: string | number): string {
   return `"${text.replace(/"/g, '""')}"`;
 }
 
-/** isiXhosa has no draft of the saved-copy wording, so its copies stay English exactly as before the screen was drafted. */
-const exportLanguage = (lang?: string) => lang === 'xh' ? 'en' : lang ?? 'en';
+/** isiXhosa and Afrikaans have no draft of the saved-copy wording, so their copies stay English exactly as before the screen was drafted. */
+const exportLanguage = (lang?: string) => lang && isInlineDraftLang(lang) ? 'en' : lang ?? 'en';
 
 export function buildJournalCsv(entries: JournalEntry[], options: JournalExportOptions = {}): string {
   const lang = exportLanguage(options.lang);

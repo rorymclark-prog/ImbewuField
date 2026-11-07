@@ -84,7 +84,7 @@ import { isSampleMode } from '@/lib/sample-mode';
 
 import { useMemo } from 'react';
 import { useLanguage } from '@/lib/i18n';
-import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import {
   AlertTriangle, CalendarDays, Check, ClipboardList, GraduationCap, Info,
   Leaf, ListChecks, MapPin, Minus, Ruler, ShieldAlert, Sprout, TrendingUp, Wallet, X,
@@ -128,7 +128,7 @@ const STATUS_COLOR: Record<string, string> = {
 // Farmer-entered survey answers and report/source prose stay in their original
 // language. Translate only fixed interface and disclosure copy in this panel.
 function panelText(text: string, lang: string): string {
-  if (lang === 'xh') return inlineText(lang, text);
+  if (isInlineDraftLang(lang)) return inlineText(lang, text);
   if (lang !== 'zu') return text;
   const copy: Record<string, string> = {
     'Not visible': 'Akubonakali',
@@ -161,7 +161,7 @@ function panelText(text: string, lang: string): string {
 
 /** isiXhosa draft for fixed panel copy; every other language (isiZulu included) keeps the English here. */
 function xhText(lang: string, english: string): string {
-  return lang === 'xh' ? inlineText(lang, english) : english;
+  return isInlineDraftLang(lang) ? inlineText(lang, english) : english;
 }
 
 export interface FarmerPanelProps {
@@ -754,7 +754,7 @@ export function FarmerPanel({
                   fontStyle: survey.state === 'not_visible' ? 'italic' : 'normal',
                 }}
               >
-                {lang === 'xh' && survey.filled !== null && survey.total !== null
+                {isInlineDraftLang(lang) && survey.filled !== null && survey.total !== null
                   ? inlineTemplate(lang, '{filled} of {total} answered', null, { filled: survey.filled, total: survey.total })
                   : xhText(lang, survey.headline)}
               </span>
@@ -765,9 +765,9 @@ export function FarmerPanel({
             )}
 
             <div className="font-sans" style={{ fontSize: 12, color: MUTED, marginTop: 8, lineHeight: 1.45 }}>
-              {lang === 'xh' && survey.state === 'not_started' && survey.total !== null
+              {isInlineDraftLang(lang) && survey.state === 'not_started' && survey.total !== null
                 ? inlineTemplate(lang, 'The site survey has not been started. All {total} questions are blank — this is a gap in the record, not a score of zero.', null, { total: survey.total })
-                : lang === 'xh' && survey.state === 'partial' && survey.missing !== null
+                : isInlineDraftLang(lang) && survey.state === 'partial' && survey.missing !== null
                   ? survey.missing === 1
                     ? inlineTemplate(lang, '{missing} question is still blank — not answered, not zero.', null, { missing: survey.missing })
                     : inlineTemplate(lang, '{missing} questions are still blank — not answered, not zero.', null, { missing: survey.missing })
@@ -818,7 +818,7 @@ export function FarmerPanel({
                 <div className="flex items-baseline justify-between gap-2" style={{ marginBottom: 5 }}>
                   <span className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>
                     {/* the proportion AND what it is a proportion OF */}
-                    {lang === 'xh' && progress.pct !== null
+                    {isInlineDraftLang(lang) && progress.pct !== null
                       ? progress.steps && progress.stepsDone !== null && progress.stepsTotal !== null
                         ? inlineTemplate(lang, '{pct} of site setup — {done} of {total} steps done', null, { pct: formatPct(progress.pct), done: progress.stepsDone, total: progress.stepsTotal })
                         : inlineTemplate(lang, '{pct} of site setup', null, { pct: formatPct(progress.pct) })
@@ -934,7 +934,7 @@ export function FarmerPanel({
               : farmer.consent === 'demo'
                 ? inlineText(lang, ' Tour records do not contain private farmer data.')
                 : inlineText(lang, ' Showing a real farmer’s books to another account requires a server-side authorisation gate and that farmer’s recorded consent — see the header of this file.')}
-            {lang === 'xh' && inlineText(lang, ' Some longer explanations are still shown in English. Written answers and notes stay in their original language.')}
+            {isInlineDraftLang(lang) && inlineText(lang, ' Some longer explanations are still shown in English. Written answers and notes stay in their original language.')}
           </span>
         </div>
     </>

@@ -2,7 +2,7 @@
 //
 // lib/sector.ts builds each note as English prose (some with a figure inside, e.g. "across about 120 m") and its output
 // feeds pinned tests and the Glossy renderer, so it never changes. The Design canvas shows the strongest note as a chip
-// over the map; a draft language (lib/xh-inline.ts isInlineDraftLang) reads the isiXhosa draft here, at render.
+// over the map; a draft language (lib/xh-inline.ts isInlineDraftLang: isiXhosa, Afrikaans) reads its draft here, at render.
 //   - A note with no figure is looked up whole, like every other inline draft.
 //   - A note with a figure has a fixed sentence shape and one value slot. Its English TEMPLATE below is the lookup key, the
 //     figure is cut out of the English the model wrote and put back into the draft untouched, so no number is ever invented
@@ -29,7 +29,7 @@ const SHAPES = SECTOR_NOTE_TEMPLATES.map(({ template, slot }) => ({
   pattern: new RegExp(`^${escapeForRegExp(template).replace(escapeForRegExp(`{${slot}}`), '(\\d+(?:\\.\\d+)?)')}$`),
 }));
 
-/** The sector note as the Design canvas shows it: the isiXhosa draft for a draft language, the note itself for every other. */
+/** The sector note as the Design canvas shows it: the draft for a draft language (isiXhosa, Afrikaans), the note itself for every other. */
 export function sectorNoteText(lang: string, note: string): string {
   if (!isInlineDraftLang(lang)) return note;
   const whole = inlineText(lang, note);

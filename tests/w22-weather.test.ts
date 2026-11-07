@@ -47,7 +47,12 @@ test('w22-04: day labels, hazard sentences, water line and descriptions are draf
     assert.ok(key, `description "${label}" has a key`);
     assert.equal(weatherText('en', key!), label, 'English matches describeWeatherCode');
     assert.notEqual(weatherText('zu', key!), label);
+    assert.notEqual(weatherText('af', key!), label, `Afrikaans has a draft for "${label}"`);
   }
+  // Afrikaans keeps every placeholder and figure.
+  assert.equal(weatherText('af', weatherDayKey(1, true)), 'Vandag');
+  assert.match(fillWeather(weatherText('af', 'weatherWaterLoss'), { mm: '3.2' }), /3\.2mm/);
+  assert.match(fillWeather(weatherText('af', 'weatherFrostBanner'), { days: 'Vandag, Ma' }), /Vandag, Ma/);
 });
 
 test('w22-04: drafts are labelled and paired with the English source', () => {

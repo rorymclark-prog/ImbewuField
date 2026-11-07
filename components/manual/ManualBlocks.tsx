@@ -57,7 +57,7 @@ export function ManualFigureView({ figure, lang, grouped = false }: { figure: Ma
       <img src={figure.src} alt={caption.text} width={figure.width} height={figure.height} loading="lazy" style={figureImageStyle(figure)} />
       <figcaption lang={caption.lang} style={{ fontSize: 14, lineHeight: 1.5, color: 'var(--text-secondary)', marginTop: 8 }}>
         {caption.text}
-        {figure.credit && <span lang={lang === 'xh' && figureCredit(figure, lang) !== figure.credit ? 'xh' : undefined} style={{ display: 'block', fontSize: 12, marginTop: 2 }}>{figureCredit(figure, lang)}</span>}
+        {figure.credit && <span lang={(lang === 'xh' || lang === 'af') && figureCredit(figure, lang) !== figure.credit ? lang : undefined} style={{ display: 'block', fontSize: 12, marginTop: 2 }}>{figureCredit(figure, lang)}</span>}
       </figcaption>
     </figure>
   );

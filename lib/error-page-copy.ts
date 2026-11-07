@@ -5,13 +5,13 @@
 // choice directly from localStorage, safely, and returns a small fixed English/isiZulu copy
 // pair instead (lang-07): never the raw JavaScript error message.
 
-export type ErrorPageLang = 'en' | 'zu' | 'xh';
+export type ErrorPageLang = 'en' | 'zu' | 'xh' | 'af';
 
 export function readErrorPageLang(): ErrorPageLang {
   if (typeof window === 'undefined') return 'en';
   try {
     const saved = window.localStorage.getItem('permamap_lang');
-    return saved === 'zu' ? 'zu' : saved === 'xh' ? 'xh' : 'en';
+    return saved === 'zu' ? 'zu' : saved === 'xh' ? 'xh' : saved === 'af' ? 'af' : 'en';
   } catch {
     return 'en';
   }
@@ -29,7 +29,7 @@ export interface ErrorPageCopy {
   notFoundTitle: string;
   notFoundBody: string;
   goHome: string;
-  /** Set only for the isiZulu and isiXhosa copy — shown as a small separate line, never folded into errorBody/notFoundBody. */
+  /** Set only for the isiZulu, isiXhosa and Afrikaans copy — shown as a small separate line, never folded into errorBody/notFoundBody. */
   zuluDraftNotice?: string;
 }
 
@@ -78,6 +78,20 @@ const XH: ErrorPageCopy = {
   zuluDraftNotice: 'Unreviewed isiXhosa draft.',
 };
 
+// Unreviewed Afrikaans machine draft (31 Oct 2026), written out for the same reason as isiXhosa.
+const AF: ErrorPageCopy = {
+  errorTitle: 'Iets het skeefgeloop',
+  errorBody: "Hierdie bladsy het 'n probleem ondervind. Jou ander verslae, foto's en plekke is veilig.",
+  tryAgain: 'Probeer weer',
+  notFoundTitle: 'Bladsy nie gevind nie',
+  notFoundBody: 'Daardie bladsy bestaan nie.',
+  goHome: 'Gaan na die tuisblad',
+  offlineTitle: 'Jy is vanlyn',
+  offlineBody: 'Hierdie skerm is nog nie op jou foon gestoor nie. Skerms wat jy voorheen oopgemaak het, werk steeds. Maak een daarvan oop, of probeer weer wanneer jy sein het.',
+  offlineSaved: 'Op hierdie toestel gestoor',
+  zuluDraftNotice: 'Unreviewed Afrikaans draft.',
+};
+
 // A chunk that will not load is the app saying "this screen's code was never saved on this phone",
 // not a bug in the screen — and on a farm with no signal the generic "Try again" just fails again.
 // Matches webpack's ChunkLoadError / "Loading chunk N failed" / "Loading CSS chunk N failed" and the
@@ -90,5 +104,5 @@ export function isOfflineError(error: { name?: string; message?: string } | null
 }
 
 export function errorPageCopy(lang: ErrorPageLang): ErrorPageCopy {
-  return lang === 'zu' ? ZU : lang === 'xh' ? XH : EN;
+  return lang === 'zu' ? ZU : lang === 'xh' ? XH : lang === 'af' ? AF : EN;
 }

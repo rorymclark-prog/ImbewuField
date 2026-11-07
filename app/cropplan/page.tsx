@@ -19,7 +19,8 @@ import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
+import { recordsBookMonthShort } from '@/lib/records-months';
 import { ACTION_SOURCE_VERB, taskTitleXh, taskSubtitleXh } from '@/lib/task-title-draft';
 import { CROP_PLAN_MONTH_FOCUS_HOLD_MONTHS, CROP_PLAN_MONTH_FOCUS_ZU } from '@/lib/calendar-zu-draft';
 import {
@@ -111,19 +112,19 @@ function taskSubtitleDraft(task: BoardTask): string | null {
 function CropPlanDraftSource({ lang, english, zulu, heldForReview = false, className = '', style }: {
   lang: string; english: string; zulu: string; heldForReview?: boolean; className?: string; style?: React.CSSProperties;
 }) {
-  if ((lang === 'zu' || lang === 'xh') && heldForReview) {
+  if ((lang === 'zu' || isInlineDraftLang(lang)) && heldForReview) {
     return (
       <div className={className} style={style}>
         <p style={{ margin: 0 }}>
-          <span className="text-xs leading-snug text-stone-600">{lang === 'xh' ? inlineText(lang, 'isiXhosa translation pending — English source:') : 'isiZulu translation pending — English source:'} </span>
+          <span className="text-xs leading-snug text-stone-600">{lang === 'xh' ? inlineText(lang, 'isiXhosa translation pending — English source:') : lang === 'af' ? inlineText(lang, 'Afrikaans translation pending — English source:') : 'isiZulu translation pending — English source:'} </span>
           <span lang="en">{english}</span>
         </p>
       </div>
     );
   }
-  // isiXhosa: the page-level note above the list already says these are unreviewed drafts with English sources,
-  // so the per-line "Unreviewed isiXhosa draft." label is not repeated under every line.
-  return <IsiZuluDraftSource lang={lang} english={english} zulu={zulu} className={className} style={style} draftLabel={lang !== 'xh'} />;
+  // isiXhosa and Afrikaans: the page-level note above the list already says these are unreviewed drafts with English
+  // sources, so the per-line "Unreviewed … draft." label is not repeated under every line.
+  return <IsiZuluDraftSource lang={lang} english={english} zulu={zulu} className={className} style={style} draftLabel={!isInlineDraftLang(lang)} />;
 }
 
 // ─── Month helpers ───────────────────────────────────────────────────────────
@@ -204,7 +205,7 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
                   english={task.title}
                   zulu={taskTitleDraft(task) ?? task.title}
                   xhosa={taskTitleXh(task, lang)}
-                  draftLabel={lang !== 'xh'}
+                  draftLabel={!isInlineDraftLang(lang)}
                 />
               </div>
               <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>
@@ -213,11 +214,11 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
                   english={task.subtitle}
                   zulu={taskSubtitleDraft(task) ?? task.subtitle}
                   xhosa={taskSubtitleXh(task, lang)}
-                  draftLabel={lang !== 'xh'}
+                  draftLabel={!isInlineDraftLang(lang)}
                 />
               </div>
               {(journalHref || harvestHref) && (
-                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1" lang={lang === 'zu' || lang === 'xh' ? lang : 'en'}>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1" lang={lang === 'zu' || isInlineDraftLang(lang) ? lang : 'en'}>
                   {journalHref && <Link href={journalHref} className="inline-flex items-center gap-1 min-h-11 font-sans text-sm underline underline-offset-4" style={{ color: 'var(--color-forest-800)' }} aria-label={farmMemoryText(lang, 'writeFieldNoteAria', { title: task.title })}>
                     <ClipboardList size={15} aria-hidden /> {farmMemoryText(lang, 'writeFieldNote')}
                   </Link>}
@@ -249,12 +250,14 @@ export default function CropPlanPage() {
     t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')];
   const monthNames = lang === 'zu'
     ? MONTHS.map((english, month) => `${zuMonths[month]} / ${english}`)
-    : lang === 'xh'
+    : isInlineDraftLang(lang)
       ? MONTHS.map((english) => { const draft = inlineText(lang, english); return draft === english ? english : `${draft} / ${english}`; })
       : MONTHS;
   const monthShortNames = lang === 'zu' || lang === 'xh'
     ? zuMonths
-    : MONTHS_SHORT;
+    : lang === 'af'
+      ? MONTHS_SHORT.map((_, month) => recordsBookMonthShort(lang, month + 1))
+      : MONTHS_SHORT;
   const [view, setView] = useState<View>('month');
   // Simple has no Season tab to switch into, so it always reads as Month regardless of a view
   // choice made earlier in All tools (e.g. switching level mid-session).
@@ -298,8 +301,8 @@ export default function CropPlanPage() {
   const season = saSeason(cursorMonth);
   const seasonLabel = ui(season.name, ({ Spring: 'Intwasahlobo', Summer: 'Ihlobo', Autumn: 'Ikwindla', Winter: 'Ubusika' } as Record<string, string>)[season.name]);
   const monthName = monthNames[cursorMonth - 1];
-  // isiXhosa counts and messages name the month once, in isiXhosa: the heading above already shows the
-  // isiXhosa / English pair, and "UNOVEMBA / NOVEMBER: 3 jobs" repeats the English month in a sentence.
+  // isiXhosa and Afrikaans counts and messages name the month once, in that language: the heading above already
+  // shows the draft / English pair, and "UNOVEMBA / NOVEMBER: 3 jobs" repeats the English month in a sentence.
   const monthNameXh = (index: number) => inlineText(lang, MONTHS[index]);
   const away = monthsUntil(cursorMonth, todayMonth);
 
@@ -333,6 +336,12 @@ export default function CropPlanPage() {
         <p role="note" className="flex-shrink-0 px-4 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
           {inlineText(lang, 'Unreviewed isiXhosa drafts with English sources; some farming instructions remain in English for review.')}
           <span lang="en" style={{ display: 'block', marginTop: 4 }}>Unreviewed isiXhosa drafts with English sources; some farming instructions remain in English for review.</span>
+        </p>
+      )}
+      {lang === 'af' && (
+        <p role="note" className="flex-shrink-0 px-4 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+          {inlineText(lang, 'Unreviewed Afrikaans drafts with English sources; some farming instructions remain in English for review.')}
+          <span lang="en" style={{ display: 'block', marginTop: 4 }}>Unreviewed Afrikaans drafts with English sources; some farming instructions remain in English for review.</span>
         </p>
       )}
 
@@ -445,7 +454,7 @@ export default function CropPlanPage() {
                   const n = countFor(m);
                   return (
                     <button key={label} onClick={() => setCursorMonth(m)}
-                      aria-label={lang === 'xh' ? inlineTemplate(lang, n === 1 ? '{month} — {n} job' : '{month} — {n} jobs', null, { month: monthNameXh(i), n }) : `${monthNames[i]} — ${n} ${ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')}`}
+                      aria-label={isInlineDraftLang(lang) ? inlineTemplate(lang, n === 1 ? '{month} — {n} job' : '{month} — {n} jobs', null, { month: monthNameXh(i), n }) : `${monthNames[i]} — ${n} ${ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')}`}
                       aria-current={on ? 'true' : undefined}
                       className="rounded-lg py-1.5 flex flex-col items-center justify-center"
                       style={{
@@ -462,7 +471,7 @@ export default function CropPlanPage() {
 
               <div className="flex items-center gap-2 mb-3 flex-wrap">
                 <span className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
-                  {lang === 'xh' ? inlineTemplate(lang, monthTasks.length === 1 ? '{n} job in {month}' : '{n} jobs in {month}', null, { n: monthTasks.length, month: monthNameXh(cursorMonth - 1) }) : <>{monthTasks.length} {ui(monthTasks.length === 1 ? 'job' : 'jobs', monthTasks.length === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('in', 'ku')} {monthName}</>}
+                  {isInlineDraftLang(lang) ? inlineTemplate(lang, monthTasks.length === 1 ? '{n} job in {month}' : '{n} jobs in {month}', null, { n: monthTasks.length, month: monthNameXh(cursorMonth - 1) }) : <>{monthTasks.length} {ui(monthTasks.length === 1 ? 'job' : 'jobs', monthTasks.length === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('in', 'ku')} {monthName}</>}
                 </span>
                 {/* Describes the MONTH you are browsing, never the jobs in it — a job
                     carries its own "Due in N months" line, and a picking that lands in
@@ -470,14 +479,14 @@ export default function CropPlanPage() {
                     here would read as a claim about the jobs. */}
                 {mounted && (
                   <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: away === 0 ? 'var(--brand-soft)' : 'var(--bg-2)', color: away === 0 ? 'var(--color-forest-800)' : 'var(--text-secondary)' }}>
-                    {away === 0 ? ui('Current month', 'Inyanga yamanje') : away === 1 ? ui('1 month ahead', 'Inyanga e-1 ezayo') : lang === 'xh' ? inlineTemplate(lang, '{n} months ahead', null, { n: away }) : `${away} ${ui('months ahead', 'izinyanga ezizayo')}`}
+                    {away === 0 ? ui('Current month', 'Inyanga yamanje') : away === 1 ? ui('1 month ahead', 'Inyanga e-1 ezayo') : isInlineDraftLang(lang) ? inlineTemplate(lang, '{n} months ahead', null, { n: away }) : `${away} ${ui('months ahead', 'izinyanga ezizayo')}`}
                   </span>
                 )}
               </div>
               <TaskList
                 tasks={monthTasks}
                 onToggle={toggleTask}
-                emptyMessage={lang === 'zu' ? `Akukho msebenzi ohlelweni lwezitshalo ngo-${monthName}.` : lang === 'xh' ? inlineTemplate(lang, 'Nothing due from your crop plan in {month}.', null, { month: monthNameXh(cursorMonth - 1) }) : `Nothing due from your crop plan in ${monthName}.`}
+                emptyMessage={lang === 'zu' ? `Akukho msebenzi ohlelweni lwezitshalo ngo-${monthName}.` : isInlineDraftLang(lang) ? inlineTemplate(lang, 'Nothing due from your crop plan in {month}.', null, { month: monthNameXh(cursorMonth - 1) }) : `Nothing due from your crop plan in ${monthName}.`}
                 doneLabel={ui('Mark done', 'Maka njengokwenziwe')}
                 notDoneLabel={ui('Mark not done', 'Susa uphawu lokwenziwe')}
                 lang={lang}
@@ -510,7 +519,7 @@ export default function CropPlanPage() {
                       <span className="font-display font-semibold" style={{ fontSize: 'clamp(16px, 1.2vw, 18px)', color: 'var(--text-primary)' }}>{monthNames[m - 1]}</span>
                       {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: 'var(--brand-soft)', color: 'var(--color-forest-800)' }}>{ui('Now', 'Manje')}</span>}
                       <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)' }}>
-                        {lang === 'xh' ? inlineTemplate(lang, n === 1 ? '{n} job from your plan' : '{n} jobs from your plan', null, { n }) : <>{n} {ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('from your plan', 'ohlelweni lwakho')}</>}
+                        {isInlineDraftLang(lang) ? inlineTemplate(lang, n === 1 ? '{n} job from your plan' : '{n} jobs from your plan', null, { n }) : <>{n} {ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('from your plan', 'ohlelweni lwakho')}</>}
                       </span>
                     </div>
                     {/* Generic seasonal guidance, not derived from this farmer's beds —

@@ -1,6 +1,6 @@
 import { recordsDate } from './records-months.ts';
 import { numberLabel } from '@/lib/format-figures';
-import { xhInlineDraft } from '@/lib/xh-inline';
+import { inlineDraft } from '@/lib/xh-inline';
 import type { CompletionScoreInputs } from './completion-score';
 import type { EvidenceItem } from './site-evidence';
 import { hasDrawnDesign, type ReportSiteFacts } from './report-site-facts';
@@ -515,9 +515,10 @@ export const REPORT_PREPARATION_COPY: readonly { english: string; zu: string; st
 const preparationCopy = new Map(REPORT_PREPARATION_COPY.map(row => [row.english, row]));
 export function reportPreparationText(english: string, language: string, values: Record<string, string | number> = {}): string {
   const row = preparationCopy.get(english);
-  // isiXhosa reads the inline drafts keyed by this exact English (lib/locales/xh-inline/g44-report-preparation.ts and
-  // earlier shards); until they are registered (server, or before the xh chunk loads) it stays the English, as before.
-  const template = language === 'xh' ? xhInlineDraft(english) ?? english
+  // isiXhosa and Afrikaans read the inline drafts keyed by this exact English (lib/locales/xh-inline/g44-report-preparation.ts,
+  // lib/locales/af-inline/g46-report-preparation.ts and earlier shards); until they are registered (server, or before the
+  // locale chunk loads) they stay the English, as before.
+  const template = language === 'xh' || language === 'af' ? inlineDraft(language, english) ?? english
     : row && (language === 'zu' || language === 'st' || language === 'ts' || language === 've') ? row[language] : english;
   // Substitute once: a farmer's label containing braces must not be interpreted as another template.
   return template.replace(/\{(\w+)\}/g, (placeholder, key: string) => Object.hasOwn(values, key) ? String(values[key]) : placeholder);

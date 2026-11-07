@@ -15,7 +15,7 @@
  * one renderer is caught by `tests/invoice-document.test.ts`.
  */
 
-import { recordsMonthLong, recordsMonthShort } from './records-months';
+import { recordsMonthLong, recordsMonthShort, recordsBookMonthLong, recordsBookMonthShort } from './records-months';
 import { formatXhosaDate } from './xh-dates';
 import type { InvoiceItem, InvoiceStatus, PaymentMethod } from './invoices';
 
@@ -63,6 +63,8 @@ function longDate(iso: string, language?: string): string | null {
   if (language === 'zu') return `${d.getDate()} ${recordsMonthLong('zu', d.getMonth() + 1)} ${d.getFullYear()}`;
   // isiXhosa: browsers fall back to English for xh-ZA, so the month word comes from the app's own table.
   if (language === 'xh') return formatXhosaDate(d, { day: true, month: 'long', year: true });
+  // Afrikaans: the same table, so the month word is the app's own ('23 Oktober 2026').
+  if (language === 'af') return `${d.getDate()} ${recordsBookMonthLong('af', d.getMonth() + 1)} ${d.getFullYear()}`;
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
@@ -72,6 +74,7 @@ function shortDate(iso: string, language?: string): string | null {
   const d = new Date(ms);
   if (language === 'zu') return `${d.getDate()} ${recordsMonthShort('zu', d.getMonth() + 1)} ${d.getFullYear()}`;
   if (language === 'xh') return formatXhosaDate(d, { day: true, month: 'short', year: true });
+  if (language === 'af') return `${d.getDate()} ${recordsBookMonthShort('af', d.getMonth() + 1)} ${d.getFullYear()}`;
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
@@ -98,9 +101,15 @@ const XHOSA_UNITS: Record<string, string> = {
   bag: 'ingxowa', bags: 'iingxowa', crate: 'ikreyiti', crates: 'iikreyiti',
   bunch: 'isinyanda', bunches: 'izinyanda', tray: 'itreyi', trays: 'iitreyi', each: 'nganye',
 };
+// Afrikaans unit words (unreviewed draft); 'each' is 'stuks', the word the farm report uses for items.
+const AFRIKAANS_UNITS: Record<string, string> = {
+  bag: 'sak', bags: 'sakke', crate: 'krat', crates: 'krate',
+  bunch: 'bos', bunches: 'bosse', tray: 'bak', trays: 'bakke', each: 'stuks',
+};
 export function unitLabel(qty: number, unit: string, language?: string): string {
   const label = qty === 1 ? (SINGULAR_UNIT[unit] ?? unit) : unit;
   if (language === 'xh') return XHOSA_UNITS[label] ?? label;
+  if (language === 'af') return AFRIKAANS_UNITS[label] ?? label;
   if (language !== 'zu') return label;
   const isiZuluUnits: Record<string, string> = {
     bag: 'isaka', bags: 'amasaka', crate: 'ikhreyithi', crates: 'amakhreyithi',
@@ -228,13 +237,24 @@ const DOCUMENT_COPY = {
     total: 'Isixa se-invoyisi', totalDue: 'Isixa esifanele ukuhlawulwa', footer: 'Yenziwe nge-ImbewuField', page: 'iphepha', continued: 'iyaqhubeka',
     notesLabel: 'Amanqaku',
   },
+  // Unreviewed Afrikaans machine draft (1 Nov 2026). As with the isiZulu and isiXhosa copy, the printed
+  // document carries no draft notice: every figure, date, reference and bank detail on it is unchanged.
+  // The money column is "Bedrag" (as in the money book's "Bedrag (R)"); "Hoeveelheid" would mean quantity.
+  af: {
+    sellerPlaceholder: 'Jou besigheidsnaam', invoice: 'Faktuur', issued: 'Uitgereik', due: 'Verskuldig',
+    buyerReference: 'Jou verwysing', originalPaperInvoice: 'Oorspronklike papierfaktuur', billTo: 'Faktuur aan',
+    buyerPlaceholder: 'Koper se naam', item: 'Item', amount: 'Bedrag', noItems: 'Nog geen items nie',
+    howToPay: 'Hoe om te betaal', paid: 'Betaal', account: 'Rekening', branchCode: 'Takkode',
+    total: 'Faktuurtotaal', totalDue: 'Totaal verskuldig', footer: 'Gegenereer met ImbewuField', page: 'bladsy', continued: 'vervolg',
+    notesLabel: 'Notas',
+  },
 } as const;
 
 /** The copy tables, exported so tests can pin that every language has the same keys and figures. */
 export const INVOICE_DOCUMENT_COPY = DOCUMENT_COPY;
 
 export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocument {
-  const copy = input.language === 'zu' ? DOCUMENT_COPY.zu : input.language === 'xh' ? DOCUMENT_COPY.xh : DOCUMENT_COPY.en;
+  const copy = input.language === 'zu' ? DOCUMENT_COPY.zu : input.language === 'xh' ? DOCUMENT_COPY.xh : input.language === 'af' ? DOCUMENT_COPY.af : DOCUMENT_COPY.en;
   const items = input.items.filter((item) => item.desc.trim().length > 0);
   const total = items.reduce((sum, item) => sum + item.qty * item.price, 0);
 
@@ -269,7 +289,9 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     ? { cash: 'Ukheshi', eft: 'EFT', card: 'Ikhadi', mobile: 'Inkokhelo yeselula', other: 'Okunye' }
     : input.language === 'xh'
       ? { cash: 'Ikheshi', eft: 'EFT', card: 'Ikhadi', mobile: 'Ngefowuni', other: 'Okunye' }
-      : { cash: 'Cash', eft: 'EFT', card: 'Card', mobile: 'Mobile', other: 'Other' };
+      : input.language === 'af'
+        ? { cash: 'Kontant', eft: 'EFT', card: 'Kaart', mobile: 'Selfoon', other: 'Ander' }
+        : { cash: 'Cash', eft: 'EFT', card: 'Card', mobile: 'Mobile', other: 'Other' };
   const paidStamp = input.status === 'paid'
     ? [copy.paid, paidOn, input.paymentMethod ? paymentLabels[input.paymentMethod] : null]
       .filter((part): part is string => Boolean(part))

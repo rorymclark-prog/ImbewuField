@@ -1,7 +1,7 @@
 'use client';
 
 import { isRecordsRegionalLang, recordsDraft, recordsTemplate } from '@/lib/records-regional-drafts';
-import { fillInline, inlineText, xhInlineDraft } from '@/lib/xh-inline';
+import { fillInline, inlineDraft, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 /**
  * Keeps financial wording readable in isiZulu while showing the exact English source.
@@ -30,7 +30,7 @@ export default function IsiZuluDraftSource({
   /** English with {placeholders}; omit for a fixed sentence (the lookup then uses `english`). */
   template?: string;
   vars?: Record<string, string | number>;
-  /** isiXhosa only: false drops the "Unreviewed isiXhosa draft." label for a screen that already says so once (the English source line stays). */
+  /** isiXhosa and Afrikaans: false drops the "Unreviewed … draft." label for a screen that already says so once (the English source line stays). */
   draftLabel?: boolean;
   className?: string;
   style?: React.CSSProperties;
@@ -45,9 +45,11 @@ export default function IsiZuluDraftSource({
     ? (zulu || looked('zu'))
     : isRecordsRegionalLang(lang) ? looked(lang) : english;
   // isiXhosa also reads lib/locales/xh-inline/ (lib/xh-inline.ts) for a sentence the money-book drafts do not
-  // cover, and call sites that build their own isiXhosa (a task title) pass it as `xhosa`.
-  const xhInline = lang === 'xh' && base === english ? xhInlineDraft(sentence) : null;
-  const local = lang === 'xh' && xhosa ? xhosa : xhInline ? fillInline(xhInline, vars ?? {}) : base;
+  // cover, and call sites that build their own isiXhosa (a task title) pass it as `xhosa`. Afrikaans
+  // reads its own inline drafts (lib/locales/af-inline/) the same way, and a call site's own
+  // inline-draft wording (`xhosa`) is shown for it too.
+  const xhInline = isInlineDraftLang(lang) && base === english ? inlineDraft(lang, sentence) : null;
+  const local = isInlineDraftLang(lang) && xhosa ? xhosa : xhInline ? fillInline(xhInline, vars ?? {}) : base;
   if (!local || local === english) return <p className={className} style={style}>{english}</p>;
 
   return (
@@ -56,7 +58,10 @@ export default function IsiZuluDraftSource({
       <p className="mt-1 text-xs leading-snug text-[var(--text-muted)]" style={{ marginBottom: 0 }}>
         {lang === 'zu' && <span>Unreviewed isiZulu draft. </span>}
         {lang === 'xh' && draftLabel && <span>{inlineText(lang, 'Unreviewed isiXhosa draft.')} </span>}
-        <span lang="en">English source: {english}</span>
+        {lang === 'af' && draftLabel && <span>{inlineText(lang, 'Unreviewed Afrikaans draft.')} </span>}
+        {lang === 'af'
+          ? <><span lang="af">{`${inlineText(lang, 'English source:')} `}</span><span lang="en">{english}</span></>
+          : <span lang="en">English source: {english}</span>}
       </p>
     </div>
   );

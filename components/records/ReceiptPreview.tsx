@@ -9,6 +9,7 @@ import { getSandboxExpenses, isSampleMode } from '@/lib/sample-mode';
 import { useLanguage } from '@/lib/i18n';
 import { userFacingMessage } from '@/lib/user-facing-error';
 import { recordsFill } from '@/lib/records-regional-drafts';
+import { randForLang } from '@/lib/format-figures';
 import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 
 /** The tour's receipt is drawn from its own expense, so the slip and ledger always agree. */
@@ -23,7 +24,7 @@ export function ReceiptPaper({ expense }: { expense: Pick<ExpenseLog, 'id' | 'it
     <p style={{ fontSize: 12 }}>{text('Ref', 'Inombolo')} {expense.id.replace(/^demo-expense-/, 'RC-').toUpperCase()}</p>
     <p style={{ fontSize: 12 }}>{new Date(expense.spent_at).toLocaleDateString('en-ZA')}</p>
     <div style={{ borderTop: '1px dashed #B5AB98', borderBottom: '1px dashed #B5AB98', padding: '16px 0', margin: '16px 0', fontSize: 14 }}>{clean(expense.item)}</div>
-    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 19, fontWeight: 700 }}><span>{text('TOTAL', 'ISAMBA')}</span><span>R {expense.amount.toFixed(2)}</span></div>
+    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 19, fontWeight: 700 }}><span>{text('TOTAL', 'ISAMBA')}</span><span>{randForLang(lang, expense.amount, `R ${expense.amount.toFixed(2)}`)}</span></div>
     <p style={{ marginTop: 24, fontSize: 12, textAlign: 'center' }}>{text('Thank you · Keep this receipt', 'Siyabonga · Gcina le risidi')}</p>
   </article>;
 }
@@ -89,7 +90,7 @@ export default function ReceiptPreview({ expense }: { expense: ExpenseLog }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}><h2 style={{ fontSize: 20 }}>{text('Purchase receipt', 'Irisidi lokuthenga')}</h2><button type="button" aria-label={text('Close receipt', 'Vala irisidi')} onClick={() => dialog.current?.close()} style={{ minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}><X size={22} /></button></div>
       {loading ? <p role="status">{text('Opening receipt…', 'Kuvulwa irisidi…')}</p> : error ? <div><p role="alert">{recordsFill(lang, error)}</p><button type="button" onClick={() => void openReceipt()} style={{ minHeight: 44, textDecoration: 'underline' }}>{text('Try again', 'Zama futhi')}</button></div>
         : photoUrl && receipt ? <>
-          <p style={{ margin: '8px 0', fontSize: 14 }}>{expense.item} · R {expense.amount.toFixed(2)}</p>
+          <p style={{ margin: '8px 0', fontSize: 14 }}>{expense.item} · {randForLang(lang, expense.amount, `R ${expense.amount.toFixed(2)}`)}</p>
           <p style={{ margin: '8px 0', fontSize: 12 }}>{text('Original photo · saved on this device only', 'Isithombe sokuqala · sigcinwe kule divayisi kuphela')}</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 12 }}>
             <a href={photoUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, gap: 6, textDecoration: 'underline' }}><Eye size={16} /> {text('Open full size', 'Vula ngosayizi ophelele')}</a>

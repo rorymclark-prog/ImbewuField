@@ -6,7 +6,7 @@ import { recordsMonthLong } from './records-months';
 import type { GrowingZoneId } from './growing-zones';
 import type { SiteProductionConditions } from './site-survey';
 import type { ProductionGuideItem } from './crop-export-schedule';
-import { inlineText, inlineTemplate } from './xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from './xh-inline';
 import { inlineBuilt } from './xh-inline-match';
 
 interface Reference { label: string; url: string }
@@ -1343,7 +1343,7 @@ function productGuideValue(lang: string, name: string, captured: string): string
 
 /** One composed line of the product guide in the reader's language; English for every language but isiXhosa. */
 export function productGuideLine(lang: string, english: string): string {
-  if (lang !== 'xh') return english;
+  if (!isInlineDraftLang(lang)) return english;
   const reference = referenceLines().get(english);
   if (reference) return `${inlineText(lang, reference.title)}: ${inlineText(lang, reference.note)}`;
   return inlineBuilt(lang, english, PRODUCT_GUIDE_TEMPLATES, (name, captured) => productGuideValue(lang, name, captured));

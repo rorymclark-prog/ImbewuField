@@ -33,8 +33,8 @@ export default function LanguageDraftNote({ lang, scope }: { lang: string; scope
     } catch { /* sessionStorage unavailable (private browsing); the note just stays visible */ }
   }, [storageKey]);
 
-  // isiXhosa is an unreviewed machine draft too, so it carries the same notice.
-  if ((lang !== 'xh' && !['zu', 'st', 'ts', 've'].includes(lang)) || dismissedKey === storageKey) return null;
+  // isiXhosa and Afrikaans are unreviewed machine drafts too, so they carry the same notice.
+  if ((lang !== 'xh' && lang !== 'af' && !['zu', 'st', 'ts', 've'].includes(lang)) || dismissedKey === storageKey) return null;
 
   const dismiss = () => {
     setDismissedKey(storageKey);

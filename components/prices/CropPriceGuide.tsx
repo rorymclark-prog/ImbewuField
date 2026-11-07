@@ -16,8 +16,8 @@ import { inlineText } from '@/lib/xh-inline';
 export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: PricedCrop; onChangeCrop: () => void; simple?: boolean }) {
   const { t, lang } = useLanguage();
   const { price } = crop;
-  // isiZulu and isiXhosa both show the exact English source beside the draft wording for prices.
-  const bilingual = lang === 'zu' || lang === 'xh';
+  // isiZulu, isiXhosa and Afrikaans show the exact English source beside the draft wording for prices.
+  const bilingual = lang === 'zu' || lang === 'xh' || lang === 'af';
   const sourced = price.confidence === 'sourced';
   // 'recommended' = the average of the cited prices found (lib/crop-prices.ts). It gets its own
   // badge: calling it a "real market price" overclaims, and "rough estimate" undersells a figure
@@ -27,7 +27,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
   const pricedDate = priceDateLabel(price);
   const dateForDisplay = lang === 'zu' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => ({
     January: 'Januwari', February: 'Februwari', March: 'Mashi', April: 'Ephreli', May: 'Meyi', June: 'Juni', July: 'Julayi', August: 'Agasti', September: 'Septhemba', October: 'Okthoba', November: 'Novemba', December: 'Disemba',
-  })[month] ?? month) : lang === 'xh' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => inlineText(lang, month).replace(/^u/, '')) : pricedDate;
+  })[month] ?? month) : lang === 'xh' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => inlineText(lang, month).replace(/^u/, '')) : lang === 'af' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => inlineText(lang, month)) : pricedDate;
   return (
     <div className="flex flex-col items-center text-center">
       <button

@@ -227,3 +227,107 @@ test('language: omitting it, English and isiZulu are byte-identical; isiXhosa tr
   // Without the isiXhosa drafts loaded (the server, English readers) the English comes back unchanged.
   assert.deepEqual(buildProgrammeReport({ ...options(), language: 'xh' }), buildProgrammeReport(options()));
 });
+
+test('Afrikaans reader: the report body is Afrikaans, every figure and recorded name is unchanged, and English is untouched', async () => {
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index');
+  const { registerInlineDrafts } = await import('../lib/xh-inline');
+  const figures = (value: unknown) => (JSON.stringify(value).match(/\d+(?:\.\d+)?/g) ?? []).join(' ');
+  const shapes: Partial<ProgrammeReportOptions>[] = [
+    {}, { kind: 'production', funder: false }, { kind: 'training', funder: false },
+    { basis: 'window', startMonth: DEMO_COHORT_MONTHLY.months[1].key, endMonth: DEMO_COHORT_MONTHLY.months.at(-1)!.key, date: `${DEMO_COHORT_MONTHLY.months.at(-1)!.key}-15` },
+    { basis: 'window', comparison: { startMonth: DEMO_COHORT_MONTHLY.months[0].key, endMonth: DEMO_COHORT_MONTHLY.months[1].key }, startMonth: DEMO_COHORT_MONTHLY.months[2].key, endMonth: DEMO_COHORT_MONTHLY.months[3].key, date: `${DEMO_COHORT_MONTHLY.months.at(-1)!.key}-15` },
+    { rows: structuredClone(DEMO_NETWORK.farmers.slice(0, 1)), withheldForConsent: 1 }, { rows: [] },
+  ];
+  // Without the Afrikaans drafts loaded (the server, English readers) the English comes back unchanged.
+  assert.deepEqual(buildProgrammeReport({ ...options(), language: 'af' }), buildProgrammeReport(options()));
+  try {
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+    for (const shape of shapes) {
+      const plain = buildProgrammeReport(options(shape));
+      // Omitting the language, English and isiZulu stay the English report even with the Afrikaans drafts loaded.
+      assert.deepEqual(buildProgrammeReport({ ...options(shape), language: 'en' }), plain);
+      assert.deepEqual(buildProgrammeReport({ ...options(shape), language: 'zu' }), plain);
+      assert.deepEqual(buildProgrammeReport({ ...options(shape), language: 'xh' }), plain, 'isiXhosa without its drafts is the English report');
+      const af = buildProgrammeReport({ ...options(shape), language: 'af' });
+      // Data and numbers are untouched: the same figures, the same row/section/table structure, the same cohort and month names.
+      assert.equal(figures(af), figures(plain));
+      assert.equal(af.rows.length, plain.rows.length);
+      assert.deepEqual(af.sections.map(s => s.lines.length), plain.sections.map(s => s.lines.length));
+      assert.deepEqual(af.tables.map(t => [t.rows.length, t.columns.length]), plain.tables.map(t => [t.rows.length, t.columns.length]));
+      assert.deepEqual(af.coverage.map(c => [c.available, c.total]), plain.coverage.map(c => [c.available, c.total]));
+      assert.equal(af.chart!.rows.length, plain.chart!.rows.length);
+      assert.deepEqual(af.chart!.rows.map(r => r.value), plain.chart!.rows.map(r => r.value));
+      assert.deepEqual(af.metrics.map(m => m.value.match(/\d[\d ,.]*/g)), plain.metrics.map(m => m.value.match(/\d[\d ,.]*/g)), 'metric figures are identical');
+      assert.deepEqual(af.comparison, plain.comparison);
+      assert.notEqual(af.title, plain.title);
+      assert.notEqual(af.subtitle, plain.subtitle);
+      assert.notEqual(af.period, plain.period);
+      assert.notEqual(af.chart!.title, plain.chart!.title);
+      assert.deepEqual(af.sections.map(s => s.title).filter(title => plain.sections.some(s => s.title === title)), [], 'every section title is Afrikaans');
+      assert.deepEqual(af.tables.map(t => t.title).filter(title => plain.tables.some(t => t.title === title)), [], 'every table title is Afrikaans');
+      assert.deepEqual(af.metrics.map(m => m.label).filter(label => plain.metrics.some(m => m.label === label)), [], 'every metric label is Afrikaans');
+      af.sections.forEach((section, i) => section.lines.forEach((line, n) => assert.notEqual(line, plain.sections[i].lines[n], `section line ${i}.${n} is Afrikaans`)));
+      af.tables.forEach((table, i) => { assert.notEqual(table.note, plain.tables[i].note); table.columns.forEach((column, n) => assert.notEqual(column, plain.tables[i].columns[n], `${table.title} column ${n}`)); });
+    }
+    // Recorded names stay as data, and the caveats survive in Afrikaans.
+    const named = options({ language: 'af', cohortId: DEMO_NETWORK.farmers[0].farmer.cohortId! });
+    const cohortName = named.rows.find(r => r.farmer.cohortId === named.cohortId)!.farmer.cohortName!;
+    const report = buildProgrammeReport(named);
+    assert.ok(report.scope.includes(cohortName) && report.scope.includes('Example organisation'));
+    assert.match(allText(report), /nie|geen/i);
+    assert.ok(!/not evidence|does not imply|are visible in this selection/i.test(allText(report)));
+  } finally { registerInlineDrafts('af', {}); }
+});
+
+test('Afrikaans reader: the PDF headings, metric labels and footer are Afrikaans, figures and recorded text are not, and English/isiZulu/isiXhosa are byte-identical', async () => {
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index');
+  const { registerInlineDrafts } = await import('../lib/xh-inline');
+  const build = async (language: 'en' | 'zu' | 'xh' | 'af' | undefined, format: 'summary' | 'full' = 'summary') => {
+    const report = buildProgrammeReport({ ...options(), language: language === 'af' ? 'af' : undefined });
+    // A table of recorded rows longer than the brief's five, with an accented recorded name.
+    const long = { title: report.tables[0].title, note: report.tables[0].note, columns: report.tables[0].columns, rows: Array.from({ length: 8 }, (_, i) => ['Plot ' + i, String(i * 10), 'Kloof Östra']) };
+    const branding = { organisation: { label: 'Example Trust' }, garden: { label: '' }, funder: { label: '' } } as unknown as Parameters<typeof buildProgrammePdf>[4];
+    const pdf = await buildProgrammePdf(report.title, true, report.sections, format, branding, [], 'Evidence', undefined, {
+      tables: [...report.tables, long], metrics: [...report.metrics, { label: 'Attendance', value: '7 / 9', detail: '78% present' }, { label: 'Harvest logged', value: '12 kg', detail: '3 of 9 farmers · current snapshot' }], chart: report.chart,
+      language, date: '2026-10-23',
+    });
+    return { text: pdfContentStreams(pdf.output('arraybuffer')), pdf };
+  };
+  try {
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+    for (const format of ['summary', 'full'] as const) {
+      const english = (await build(undefined, format)).text;
+      // Asking for English is the same bytes as omitting the language.
+      assert.equal((await build('en', format)).text, english);
+      const afText = (await build('af', format)).text;
+      assert.notEqual(afText, english);
+      assert.match(afText, /Die Afrikaanse opskrifte is nie hersien nie; bewysteks word gehou in die taal waarin dit aangeteken is\./);
+      assert.match(afText, /Toerwerkruimte/);
+      assert.match(afText, /78% teenwoordig/);
+      assert.match(afText, /3 van 9 boere/);
+      assert.match(afText, /Programverslag/);
+      // 'Geïmplementeer deur' keeps its i-diaeresis (WinAnsi octal 317 once upper-cased by af-ZA) rather than losing the letter.
+      assert.match(afText, /GE(?:\\317|\xcf)MPLEMENTEER DEUR/);
+      assert.ok(!/DEMONSTRATION RECORDS/.test(afText), 'the demonstration banner is Afrikaans');
+      assert.match(afText, /DEMONSTRASIEREKORDS/);
+      assert.match(afText, format === 'full' ? /Plot 7/ : /Plot 4/);
+      if (format === 'summary') {
+        assert.match(afText, /3 verdere rye in die volledige verslag\./);
+        assert.match(afText, /Kort opsomming:/);
+      }
+      // Recorded text is written as recorded (its non-ASCII letter is kept, as in the English PDF).
+      assert.match(afText, /Kloof (?:\\326|\xd6)stra/);
+    }
+    // Afrikaans letters survive pdfSafe (WinAnsi covers them), and unsupported symbols still go.
+    const { pdfSafe } = await import('../lib/crop-export-pdf');
+    assert.equal(pdfSafe('Geïmplementeer deur · Fasiliteerder, Wêreld, Boë, ôs, é'), 'Geïmplementeer deur - Fasiliteerder, Wêreld, Boë, ôs, é');
+    // The footer and report-label rules are the isiZulu/isiXhosa ones: a labelled report keeps its own label.
+    const labelled = await buildProgrammePdf('T', false, [], 'full', undefined, [], 'Evidence', undefined, { language: 'af', reportLabel: 'Staff evidence' });
+    assert.match(pdfContentStreams(labelled.output('arraybuffer')), /Staff evidence/);
+    // Without the Afrikaans drafts loaded the headings are English (the header note too, in English).
+    registerInlineDrafts('af', {});
+    const unloaded = (await build('af')).text;
+    assert.match(unloaded, /The Afrikaans headings are unreviewed/);
+    assert.ok(!/Toerwerkruimte|Programverslag/.test(unloaded));
+  } finally { registerInlineDrafts('af', {}); }
+});

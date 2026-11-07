@@ -9,7 +9,7 @@ import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import { useAppLevel, isStaffRole } from '@/lib/app-level';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { resizeForStorage } from '@/lib/site-evidence';
@@ -404,7 +404,7 @@ export default function VisionPage() {
                 {/* Error result */}
                 {errResult && (
                   <>
-                    {(zu || lang === 'xh') && <p className="font-sans text-xs mb-2" style={{ color: 'var(--text-muted)' }}>{zu ? 'Impendulo ye-AI engezansi ingesiNgisi.' : inlineText(lang, 'The AI answer below is in English.')}</p>}
+                    {(zu || isInlineDraftLang(lang)) && <p className="font-sans text-xs mb-2" style={{ color: 'var(--text-muted)' }}>{zu ? 'Impendulo ye-AI engezansi ingesiNgisi.' : inlineText(lang, 'The AI answer below is in English.')}</p>}
                     <p className="font-sans text-sm" style={{ color: 'var(--text-secondary)' }}>{errResult.error}</p>
                   </>
                 )}
@@ -421,7 +421,7 @@ export default function VisionPage() {
                       </div>
                     </div>
                     {(!simple || showDetail) && <ConfidencePill level={cropResult.confidence} zu={zu} lang={lang} />}
-                    {(zu || lang === 'xh') && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>{zu ? 'Impendulo ye-AI engezansi ingesiNgisi.' : inlineText(lang, 'The AI answer below is in English.')}</p>}
+                    {(zu || isInlineDraftLang(lang)) && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>{zu ? 'Impendulo ye-AI engezansi ingesiNgisi.' : inlineText(lang, 'The AI answer below is in English.')}</p>}
                     <p className="font-sans text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {cropResult.note}
                     </p>
@@ -447,7 +447,7 @@ export default function VisionPage() {
                       </div>
                     </div>
                     {(!simple || showDetail) && <ConfidencePill level={weighResult.confidence} zu={zu} lang={lang} />}
-                    {(zu || lang === 'xh') && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>{zu ? 'Impendulo ye-AI engezansi ingesiNgisi.' : inlineText(lang, 'The AI answer below is in English.')}</p>}
+                    {(zu || isInlineDraftLang(lang)) && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>{zu ? 'Impendulo ye-AI engezansi ingesiNgisi.' : inlineText(lang, 'The AI answer below is in English.')}</p>}
                     <p className="font-sans text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {weighResult.note}
                     </p>

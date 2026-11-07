@@ -1084,7 +1084,7 @@ export default function DesignPalette({
             ? t('designPaletteTapCorners')
             : null;
 
-  const armedHintSource = tool === 'line' && ['zu','xh','st','ts','ve'].includes(lang)
+  const armedHintSource = tool === 'line' && ['zu','xh','af','st','ts','ve'].includes(lang)
     ? translate('en','designPaletteTapCorners') : null;
 
   // Identity of the tip currently on screen. A NEW tip is a new key, so closing one never

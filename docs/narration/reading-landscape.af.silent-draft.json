@@ -1,0 +1,618 @@
+{
+  "language": "af",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Reading the Landscape",
+        "body": [
+          "A permaculture course for South African smallholder farmers.",
+          "Read the land before you change it. Find where water moves, where sunlight falls, where wind travels, and where cold air settles.",
+          "These observations guide practical choices for crops, trees, buildings, roads, and water. They are the start of good design."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lees die landskap"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Permakultuurkursus vir Suid-Afrikaanse kleinboere."
+          },
+          {
+            "status": "draft",
+            "text": "Lees die grond voordat jy dit verander. Vind uit waar water beweeg, waar sonlig val, waar wind deurtrek en waar koue lug gaan lê."
+          },
+          {
+            "status": "draft",
+            "text": "Hierdie waarnemings lei praktiese keuses vir gewasse, bome, geboue, paaie en water. Hulle is die begin van goeie ontwerp."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "Every farm has patterns that work before we add anything.",
+          "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+          "When you read these patterns first, you place water, crops, trees, and buildings where they can work with the land."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hoekom dit saak maak"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Elke plaas het patrone wat werk voordat ons enigiets byvoeg."
+          },
+          {
+            "status": "draft",
+            "text": "Reën volg reeds lyne oor die grond. Die son verwarm reeds sommige plekke meer as ander. Wind vind reeds gapings en rante. Koue lug gaan reeds in holtes lê."
+          },
+          {
+            "status": "draft",
+            "text": "Wanneer jy hierdie patrone eers lees, plaas jy water, gewasse, bome en geboue waar hulle saam met die grond kan werk."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "You will read sun angles, shade, wind, frost, and slope.",
+          "You will use an A-frame level to trace contours.",
+          "You will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Leeruitkomste"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Teen die einde van hierdie module sal jy water oor jou grond kan volg en kan vind waar dit jou grond verlaat."
+          },
+          {
+            "status": "draft",
+            "text": "Jy sal sonhoeke, skaduwee, wind, ryp en helling lees."
+          },
+          {
+            "status": "draft",
+            "text": "Jy sal 'n A-raamwaterpas gebruik om kontoere na te volg."
+          },
+          {
+            "status": "draft",
+            "text": "Jy sal 'n eenvoudige terreinkaart teken met watervloei, seisoenale winde, rypkolle, bestaande plantegroei, sones en sektore."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Lesson 1: Where Rain Goes",
+        "body": [
+          "Before you harvest water, learn where it already goes.",
+          "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "Some excess water needs a safe route away so it does not cause damage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Les 1: Waarheen reën gaan"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Voordat jy water opvang, leer waarheen dit reeds gaan."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk van 'n veilige plek af tydens swaar reën. Wanneer dit daarna veilig is, stap oor jou grond. Soek na spoelvoortjies, plekke waar water uitwaaier, plasse en waar water jou eiendom verlaat."
+          },
+          {
+            "status": "draft",
+            "text": "Sommige oortollige water het 'n veilige roete weg nodig sodat dit nie skade aanrig nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Watch: Water Slows, Sinks, and Leaves",
+        "body": [
+          "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Water vertraag, sak in en loop weg"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Die prentjie wys reën wat teen die helling afloop. Volg waar dit vinniger word, versprei, insak, saamkom en die grond verlaat."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Trace Contours with an A-Frame",
+        "body": [
+          "Build an A-frame level from three poles and a weighted string.",
+          "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+          "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Volg kontoere met 'n A-raam"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bou 'n A-raamwaterpas van drie pale en 'n tou met 'n gewig daaraan."
+          },
+          {
+            "status": "draft",
+            "text": "Stap daarmee oor die grond om punte op dieselfde hoogte te vind. Verbind hierdie punte om 'n kontoerlyn na te volg."
+          },
+          {
+            "status": "draft",
+            "text": "'n A-raam kan jou help om punte op dieselfde hoogte te merk en 'n kontoerlyn na te volg. Sy merke is 'n waarneming, nie 'n ontwerp of goedkeuring vir grondwerke nie. Laat die terrein beoordeel voordat jy grawe. Grond, helling, dreinering, stormvloei en 'n veilige oorlooproete is almal belangrik. Vra 'n opgeleide plaaslike adviseur."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Observe Water Before You Build",
+        "body": [
+          "Water picks up speed and erosive force as it runs downhill.",
+          "There is no one placement rule for every slope. Observe where water moves and gathers.",
+          "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Neem water waar voordat jy bou"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Water kry spoed en eroderende krag soos dit teen die helling afloop."
+          },
+          {
+            "status": "draft",
+            "text": "Daar is nie een plasingsreël vir elke helling nie. Neem waar waar water beweeg en saamkom."
+          },
+          {
+            "status": "draft",
+            "text": "Swak uitgelegde kontoere kan erosie vererger, en grond wat water stadig opneem, kan te veel water hou. Kies enige waterwerke volgens die terrein en beplan 'n veilige roete vir oortollige water."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Lesson 2: Read Sun and Shade",
+        "body": [
+          "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+          "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.",
+          "Watch your own site before choosing where to place tender crops, trees, or buildings."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Les 2: Lees son en skaduwee"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "In groot dele van Suid-Afrika, veral in die winter, is die son in die noorde. Sy baan verander met die seisoen en jou ligging."
+          },
+          {
+            "status": "draft",
+            "text": "Noordhellings kry dikwels meer son en kan warmer en droër wees. Suidhellings is dikwels koeler en klammer. Ryp kan in lae holtes saamkom waar koue lug gaan lê."
+          },
+          {
+            "status": "draft",
+            "text": "Hou jou eie terrein dop voordat jy kies waar om teer gewasse, bome of geboue te plaas."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Watch: Follow the Sun Across the Site",
+        "body": [
+          "Follow the sun, building, tree, and their shadows across the slope. Compare summer’s high sun with winter’s lower sun."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Volg die son oor die terrein"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Volg die son, die gebou, die boom en hulle skaduwees oor die helling. Vergelyk die somer se hoë son met die winter se laer son."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Check Winter Shadows Before Building",
+        "body": [
+          "Winter sun is lower and farther north than summer sun.",
+          "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+          "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kontroleer winterskaduwees voordat jy bou"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Die wintersons is laer en verder noord as die somerson."
+          },
+          {
+            "status": "draft",
+            "text": "'n Muur of skadunet kan 'n bedding in die winter langer beskadu as in die somer. Kontroleer die werklike skaduwees voordat jy 'n skadustruktuur bou of permanent vasmaak."
+          },
+          {
+            "status": "draft",
+            "text": "Staan op 'n winterdag om 8 vm., middag en 4 nm. op die plek. Kyk waar die skaduwee val."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Protect Frost-Tender Plants",
+        "body": [
+          "Pawpaw and young citrus are sensitive to frost.",
+          "Keep tender plants out of known low frost pockets. Observe local frost before planting."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Beskerm rypgevoelige plante"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Papaja en jong sitrus is sensitief vir ryp."
+          },
+          {
+            "status": "draft",
+            "text": "Hou teer plante uit bekende lae rypkolle. Neem plaaslike ryp waar voordat jy plant."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Lesson 3: Read Wind, Frost, and Slope",
+        "body": [
+          "Wind can damage crops on a smallholding.",
+          "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "Wind, cold air and slope all matter when choosing places for crops and shelter."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Les 3: Lees wind, ryp en helling"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Wind kan gewasse op 'n kleinhoewe beskadig."
+          },
+          {
+            "status": "draft",
+            "text": "Die rigting en sterkte van skadelike wind verander met die streek, die seisoen en jou terrein se rante en gapings. Stap op winderige dae oor die grond. Teken aan waarvandaan skadelike wind kom en wat dit raak. Kontroleer plaaslike weerrekords voordat jy 'n windskerm plaas."
+          },
+          {
+            "status": "draft",
+            "text": "Wind, koue lug en helling maak almal saak wanneer jy plekke vir gewasse en beskutting kies."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Watch: See Wind and Cold Air on the Map",
+        "body": [
+          "A place sheltered from wind can still collect cold air. Check wind shelter and frost risk separately."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Sien wind en koue lug op die kaart"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Plek wat teen wind beskut is, kan steeds koue lug laat saamkom. Kontroleer windbeskutting en rypgevaar afsonderlik."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Cold Air Flows Downhill",
+        "body": [
+          "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+          "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+          "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+          "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Koue lug vloei teen die helling af"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Op 'n helder, windstil nag kan koue lug teen die helling afvloei en in lae plekke saamkom. Hierdie plekke kan kouer wees as nabygeleë hellings."
+          },
+          {
+            "status": "draft",
+            "text": "Ryp is ys wat op 'n koue oppervlak vorm. Mis alleen wys nie dat ys gevorm het nie, en rypskade kan gebeur sonder sigbare ys."
+          },
+          {
+            "status": "draft",
+            "text": "Soek na ys en plantskade, vergelyk lae grond met hellings, en kontroleer minimumtemperature waar jy kan. Merk plekke waar koue of skade die langste aanhou. Hou sensitiewe plante weg van die koue kolle wat jy waarneem."
+          },
+          {
+            "status": "draft",
+            "text": "Vergelyk moontlike plekke vir 'n kwekery deur die plaaslike rypseisoen. Kontroleer plaaslike rekords van minimumtemperature of vra 'n plaaslike landbouadviseur voordat jy 'n permanente plek kies."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Choose Airflow and Warmth",
+        "body": [
+          "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+          "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kies lugvloei en warmte"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sit 'n kwekery vir ryp-sensitiewe saailinge buite die koue kolle wat jy waargeneem het. Vergelyk moontlike plekke deur die plaaslike rypseisoen. Kontroleer plaaslike rekords van minimumtemperature of vra 'n plaaslike landbouadviseur voordat jy 'n permanente plek kies. Kontroleer ook son en skadelike wind. Geen plek teen 'n heuwelhang waarborg dat dit vry van ryp sal bly nie."
+          },
+          {
+            "status": "draft",
+            "text": "Vir tamaties wat deur laatroes gepla word, kan goeie lugvloei en oggendson help dat blare droog word. Langdurige koel, klam weer kan die siekte steeds bevoordeel. Om net 'n bedding te skuif, beheer nie laatroes nie. Kry ook plaaslike raad oor gewasgesondheid."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Lesson 4: Start Your Site Map",
+        "body": [
+          "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+          "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+          "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Les 4: Begin jou terreinkaart"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vir 'n terreinkaart het jy papier, 'n maatband, 'n kompas en tyd nodig om oor jou grond te stap."
+          },
+          {
+            "status": "draft",
+            "text": "Stap langs die grens en maak 'n eerste skets. Merk dit 'nie volgens skaal nie' totdat jy die afstande nagegaan het. Merk noord. Voeg die huis, bome, water, paaie en heinings by."
+          },
+          {
+            "status": "draft",
+            "text": "Teken dan die patrone wat jy waargeneem het. Jou kaart word die ontwerpgeraamte vir die hele kleinhoewe."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Watch: Draw the Land You Already Have",
+        "body": [
+          "Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Teken die grond wat jy reeds het"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Gebruik die prentjie as 'n gids: grens, geboue, paaie, water, hellings en rigtingpyle. Teken wat reeds bestaan voordat jy veranderinge beplan."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Let Plants Help You Read Soil",
+        "body": [
+          "Look for places where frost sits longest and where the ground smells damp during dry months.",
+          "Notice existing vegetation. Mark where khakibos or blackjack grows thick.",
+          "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Laat plante jou help om grond te lees"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Soek na plekke waar ryp die langste lê en waar die grond in droë maande klam ruik."
+          },
+          {
+            "status": "draft",
+            "text": "Let op bestaande plantegroei. Merk waar khakibos of blackjack dig groei."
+          },
+          {
+            "status": "draft",
+            "text": "Hierdie plante kan op versteurde plekke groei, maar hulle teenwoordigheid alleen wys nie of die grond gekompakteer is nie. Kontroleer die grond voordat jy besluit wat die kol vir jou ontwerp beteken."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Add Seasons, Zones, and Sectors",
+        "body": [
+          "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+          "Overlay your zones and sectors on the same base map.",
+          "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Voeg seisoene, sones en sektore by"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Merk somer- en winterwind afsonderlik. Hulle kan uit verskillende rigtings kom, so 'n windskerm of gewasplek wat in een seisoen werk, kan in die ander verkeerd wees."
+          },
+          {
+            "status": "draft",
+            "text": "Lê jou sones en sektore oor dieselfde basiskaart."
+          },
+          {
+            "status": "draft",
+            "text": "Werk die skets seisoen vir seisoen by. 'n Potloodkaart wat jy werklik gebruik, is meer werd as 'n perfekte kaart wat net een keer geteken is."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+          "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+          "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldopdrag"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Wanneer dit veilig is ná swaar reën, stap oor jou grond. Merk spoelvoortjies, water wat versprei, plasse en waar water jou eiendom verlaat. Let op waar oortollige water dalk 'n veilige roete weg nodig het."
+          },
+          {
+            "status": "draft",
+            "text": "Kom terug teen dagbreek op 'n koue Junie-oggend. Merk mis, bevrore dou en die plekke waar ryp die langste bly."
+          },
+          {
+            "status": "draft",
+            "text": "Teken jou grens op papier, merk noord, en voeg die huis, water, paaie, heinings, hellings en bestaande plantegroei by."
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Build an A-frame level from three poles and a weighted string.",
+          "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+          "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldaksie"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bou 'n A-raamwaterpas van drie pale en 'n tou met 'n gewig daaraan."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik dit om punte op dieselfde hoogte te merk en 'n kontoerlyn na te volg. Dit is 'n waarneming, nie 'n ontwerp vir grondwerke nie. Voordat jy grawe, vra 'n opgeleide plaaslike adviseur om die terrein te beoordeel en 'n veilige roete vir oortollige water te beplan."
+          },
+          {
+            "status": "draft",
+            "text": "Voeg pyle vir somer- en winterwind by, skaduwaarnemings van 8 vm., middag en 4 nm., en jou sones en sektore. Hou die kaart en werk dit by."
+          }
+        ]
+      }
+    }
+  ]
+}

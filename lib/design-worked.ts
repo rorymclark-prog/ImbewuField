@@ -71,6 +71,7 @@ export function workedHandoverText(lang = 'en') {
     `${pack.caseId} — ${tx(pack.title)} — ${pack.currentRevision}`,
     // isiXhosa is an unreviewed machine draft: a saved copy says so, in one line.
     ...(lang === 'xh' ? [tx('Unreviewed isiXhosa draft.')] : []),
+    ...(lang === 'af' ? [tx('Unreviewed Afrikaans draft.')] : []),
     tx(pack.notice),
     inlineTemplate(lang, 'Units: {unit}. {axis}.', null, { unit: tx(pack.coordinateSystem.unit), axis: tx(pack.coordinateSystem.axis) }),
     inlineTemplate(lang, 'Teaching frame: {width} × {height} m. Not a land-rights record or fixed physical print scale.', null, { width: pack.frame.width, height: pack.frame.height }),

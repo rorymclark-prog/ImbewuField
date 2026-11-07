@@ -1,0 +1,22 @@
+{
+  "unit": "M1",
+  "sectionsReviewed": 18,
+  "items": [
+    {
+      "section": "01-what-is-permaculture#4",
+      "verdict": "repair",
+      "english": "It goes under mulch to fruit trees, never onto morogo you eat raw, and kitchen or nappy water never goes in it.",
+      "afrikaansBefore": "en kombuis- of doekwater gaan nooit daarin nie.",
+      "afrikaansAfter": "en kombuiswater of luierwater (water waarin doeke gewas is) gaan nooit daarin nie.",
+      "problem": "\"doekwater\" reads as dishcloth or cloth-washing water, so a farmer may not see that water from washing nappies (faecal contamination) must never go into greywater."
+    },
+    {
+      "section": "05-animal-systems#3",
+      "verdict": "repair",
+      "english": "**Grit**, small hard stones or coarse sand she keeps in her gizzard to grind food",
+      "afrikaansBefore": "- **Gruis**, klein harde klippies of growwe sand wat sy in haar krop hou om kos fyn te maal",
+      "afrikaansAfter": "- **Gruis**, klein harde klippies of growwe sand wat sy in haar spiermaag hou om kos fyn te maal",
+      "problem": "\"krop\" is the crop, not the gizzard, so the draft names the wrong organ for grinding food (factual error, low risk)."
+    }
+  ]
+}

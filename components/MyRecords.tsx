@@ -1,6 +1,6 @@
 'use client';
 
-import { randCentsLabel } from '@/lib/format-figures';
+import { randAmountForLang, randCentsLabel, randForLang } from '@/lib/format-figures';
 import { sampleProducePhoto } from '@/lib/sample-media';
 import { resizeFileForUpload } from '@/lib/site-evidence';
 
@@ -11,7 +11,8 @@ import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { useLanguage, translate } from '@/lib/i18n';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, recordsDraft, samePlaceholders } from '@/lib/records-regional-drafts';
-import { recordsDate } from '@/lib/records-months';
+import { inlineText } from '@/lib/xh-inline';
+import { recordsBookDate } from '@/lib/records-months';
 import {
   myProduction,
   mySales,
@@ -80,8 +81,8 @@ function recordsUi(lang: string, english: string, isiZulu: string, paired = fals
 // then the isiZulu one (recordsUi's `paired` order above), on a card specifically meant to be
 // shown to a lender who may read isiZulu first. Same pairing, isiZulu first.
 function recordsUiZuFirst(lang: string, english: string, isiZulu: string): string {
-  // isiXhosa follows the same rule as isiZulu here: the draft first, the English source after it.
-  if (lang === 'xh') {
+  // isiXhosa and Afrikaans follow the same rule as isiZulu here: the draft first, the English source after it.
+  if (lang === 'xh' || lang === 'af') {
     const draft = recordsDraft(lang, english);
     return draft && draft !== english ? `${draft} — ${english}` : english;
   }
@@ -96,7 +97,9 @@ function RecordZuluDraft({ lang, english, isiZulu }: { lang: string; english: st
   return (
     <span className="inline-flex min-w-0 flex-col" style={{ textTransform: 'none', letterSpacing: 'normal', lineHeight: 1.25 }}>
       <span lang={lang}>{local}</span>
-      <span lang="en" className="text-xs font-normal" style={{ color: 'inherit' }}>English source: {english}</span>
+      {lang === 'af'
+        ? <span className="text-xs font-normal" style={{ color: 'inherit' }}><span lang="af">{`${inlineText(lang, 'English source:')} `}</span><span lang="en">{english}</span></span>
+        : <span lang="en" className="text-xs font-normal" style={{ color: 'inherit' }}>English source: {english}</span>}
     </span>
   );
 }
@@ -246,7 +249,7 @@ function fmtDate(raw: string | null | undefined, lang = 'en'): string {
   const d = new Date(raw);
   return isNaN(d.getTime())
     ? raw
-    : recordsDate(lang, d, true);
+    : recordsBookDate(lang, d, true);
 }
 
 /* ── Sign-in prompt ──────────────────────────────────────────────────────── */
@@ -417,7 +420,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>
           <CropSelect
             ariaLabel={recordsFill(lang, 'Produce / product')}
-            language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en'}
+            language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : lang === 'af' ? 'af' : 'en'}
             value={form.crop}
             onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
           />
@@ -569,7 +572,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>
             <CropSelect
               ariaLabel={recordsFill(lang, 'Produce / product')}
-              language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en'}
+              language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : lang === 'af' ? 'af' : 'en'}
               value={form.crop}
               onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
             />
@@ -592,8 +595,8 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
                     {' '}
                     {t('myRecordsGuidePriceForKg')
                       .replace('{kg}', String(saleKg))
-                      .replace('{low}', (guideLow * saleKg).toFixed(2))
-                      .replace('{high}', (guideHigh * saleKg).toFixed(2))}
+                      .replace('{low}', randAmountForLang(lang, guideLow * saleKg, (guideLow * saleKg).toFixed(2)))
+                      .replace('{high}', randAmountForLang(lang, guideHigh * saleKg, (guideHigh * saleKg).toFixed(2)))}
                   </>
                 )}{' '}
                 {guide.confidence === 'estimated'
@@ -885,7 +888,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
             </p>
           </div>
           <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: 'var(--gold)' }}>
-            R {EXAMPLE_SALE.amount.toFixed(2)}
+            {randForLang(lang, EXAMPLE_SALE.amount, `R ${EXAMPLE_SALE.amount.toFixed(2)}`)}
           </div>
           <ExampleBadge label={t('myRecordsExampleBadge')} />
         </div>
@@ -931,7 +934,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
             className="text-sm font-display font-semibold flex-shrink-0"
             style={{ color: 'var(--gold)' }}
           >
-            R {item.amount.toFixed(2)}
+            {randForLang(lang, item.amount, `R ${item.amount.toFixed(2)}`)}
           </div>
         </div>
       ))}
@@ -1440,6 +1443,7 @@ export default function MyRecords({
       {showSold && (
         <Card accent="#315939">
           {lang === 'zu' && <p role="note" className="mb-3 text-xs" style={{ color: 'var(--color-muted-strong)' }}>ISIZULU MACHINE DRAFT — This wording has not been reviewed by a fluent isiZulu speaker. The exact English source appears under each line.</p>}
+          {/* Afrikaans gets no second notice here: the shared <LanguageDraftNote> at the top of /records is its one draft notice. */}
           <SectionLabel><RecordZuluDraft lang={lang} english="Record a sale" isiZulu="Qopha ukuthengisa" /></SectionLabel>
           <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Create an invoice to keep the buyer, produce, quantity and payment together." isiZulu="Dala i-invoyisi ukuze ugcine umthengi, isivuno, inani kanye nenkokhelo ndawonye." /></p>
           <div className="flex flex-wrap gap-2">
@@ -1484,7 +1488,7 @@ export default function MyRecords({
             <div className="space-y-3 mb-3">
               <div className="min-w-0">
                 <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--gold)', lineHeight: 1 }}>
-                  R{totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}
+                  {randForLang(lang, totalRev, `R${totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}`)}
                 </div>
                 <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                   {t('myRecordsTotalRevenue')}

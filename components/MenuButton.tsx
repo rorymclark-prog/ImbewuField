@@ -41,7 +41,7 @@ export default function MenuButton() {
         onClick={() => setOpen(true)}
         aria-label={accessibleSourceLabel(lang, t('openNavigationAriaLabel'), translate('en', 'openNavigationAriaLabel'))}
         aria-expanded={open}
-        title={sample ? (lang === 'xh' ? inlineText(lang, 'Tour — open choices and exit') : sampleWorkspaceText(lang, 'Tour — open choices and exit', 'Uhambo — vula izinketho bese uphuma')) : t('openNavigationAriaLabel')}
+        title={sample ? ((lang === 'xh' || lang === 'af') ? inlineText(lang, 'Tour — open choices and exit') : sampleWorkspaceText(lang, 'Tour — open choices and exit', 'Uhambo — vula izinketho bese uphuma')) : t('openNavigationAriaLabel')}
         className="flex-shrink-0 flex items-center justify-center rounded-full transition-all"
         style={{
           // Tokens, not hexes — the lesson SettingsButton already carries: a control

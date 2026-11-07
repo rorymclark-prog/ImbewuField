@@ -3,6 +3,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import { isInlineDraftLang } from '@/lib/xh-inline';
 import {
   MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, figureCaption, figureCredit, isManualChapter, isManualLang, manualUi,
   parseInline, parseManual, type ManualFigure,
@@ -116,10 +117,10 @@ test('UI strings: English complete, translated languages complete, placeholders 
   }
 });
 
-test('all five home languages Rory asked for are public: isiZulu, Sesotho, Tshivenḓa, Xitsonga and isiXhosa', () => {
-  assert.deepEqual(MANUAL_LANGS, ['en', 'zu', 'st', 've', 'ts', 'xh']);
+test('every language Rory asked for is public: isiZulu, Sesotho, Tshivenḓa, Xitsonga, isiXhosa and Afrikaans', () => {
+  assert.deepEqual(MANUAL_LANGS, ['en', 'zu', 'st', 've', 'ts', 'xh', 'af']);
   assert.deepEqual(Object.keys(MANUAL_LANG_NAMES), MANUAL_LANGS);
-  for (const lang of ['zu', 'st', 've', 'ts', 'xh']) {
+  for (const lang of ['zu', 'st', 've', 'ts', 'xh', 'af']) {
     assert.equal(isManualLang(lang), true, `/manual/${lang} must be served`);
     for (const slug of MANUAL_CHAPTERS) assert.ok(existsSync(file(lang, slug)), `${lang}/${slug} is missing`);
   }
@@ -248,10 +249,40 @@ test('the picture credit is isiXhosa for isiXhosa readers and stored text for ev
   for (const f of figures) {
     assert.equal(f.credit, 'Illustration: made with AI for this manual');
     assert.equal(figureCredit(f, 'xh'), 'Umfanekiso: wenziwe nge-AI kule ncwadi');
-    for (const lang of MANUAL_LANGS.filter((l) => l !== 'xh')) assert.equal(figureCredit(f, lang), f.credit, `${lang}: credit unchanged`);
+    // Widened for Afrikaans, which has its own credit line (pinned in the Afrikaans test below).
+    for (const lang of MANUAL_LANGS.filter((l) => l !== 'xh' && l !== 'af')) assert.equal(figureCredit(f, lang), f.credit, `${lang}: credit unchanged`);
   }
   assert.equal(figureCredit({ ...figures[0], credit: 'Photo: Imbewu' }, 'xh'), 'Photo: Imbewu', 'an unlisted credit is shown as stored');
   assert.equal(figureCredit({ ...figures[0], credit: undefined }, 'xh'), undefined);
+});
+
+// Afrikaans figure captions and the shared credit line (an unreviewed machine draft, like the af chapters).
+test('every figure has an Afrikaans caption that keeps the English caption\'s numbers and Latin names', () => {
+  assert.equal(figures.length, 95);
+  for (const f of figures) {
+    const af = f.caption.af;
+    assert.ok(typeof af === 'string' && af.trim(), `${f.id}: missing Afrikaans caption`);
+    assert.notEqual(af, f.caption.en, `${f.id}: Afrikaans caption is still the English one`);
+    assert.deepEqual(figureCaption(f, 'af'), { text: af, lang: 'af' });
+    const keep = (text: string) => (text.match(/\d+(?: \d{3})?|\(([A-Z][a-z]+ [a-z]+)\)/g) ?? []).map((m) => m.replace(/^\(|\)$/g, ''));
+    for (const token of keep(f.caption.en)) assert.ok(af!.includes(token), `${f.id}: Afrikaans caption lost "${token}"`);
+    // The digits are the same set, so nothing was invented or dropped.
+    assert.deepEqual((af!.match(/\d+/g) ?? []).sort(), (f.caption.en.match(/\d+/g) ?? []).sort(), `${f.id}: digits differ`);
+    // English, isiZulu and isiXhosa are untouched.
+    assert.equal(figureCaption(f, 'en').text, f.caption.en);
+    assert.equal(figureCaption(f, 'zu').text, f.caption.zu);
+    assert.equal(figureCaption(f, 'xh').text, f.caption.xh);
+  }
+});
+
+test('the picture credit is Afrikaans for Afrikaans readers, isiXhosa for isiXhosa readers and stored text for every other language', () => {
+  for (const f of figures) {
+    assert.equal(figureCredit(f, 'af'), 'Illustrasie: met AI vir hierdie handleiding gemaak');
+    assert.equal(figureCredit(f, 'xh'), 'Umfanekiso: wenziwe nge-AI kule ncwadi');
+    for (const lang of MANUAL_LANGS.filter((l) => l !== 'xh' && l !== 'af')) assert.equal(figureCredit(f, lang), f.credit, `${lang}: credit unchanged`);
+  }
+  assert.equal(figureCredit({ ...figures[0], credit: 'Photo: Imbewu' }, 'af'), 'Photo: Imbewu', 'an unlisted credit is shown as stored');
+  assert.equal(figureCredit({ ...figures[0], credit: undefined }, 'af'), undefined);
 });
 
 test('the chapter page links back to English in the reader\'s own draft language for isiXhosa, and in English for the rest', () => {
@@ -262,5 +293,9 @@ test('the chapter page links back to English in the reader\'s own draft language
   const read = (lang: string) => JSON.parse(readFileSync(path.join(ROOT, 'content', 'manual', lang, 'ui.json'), 'utf8')) as Record<string, string>;
   assert.equal(manualUi('xh').readInEnglish, read('xh').readInEnglish);
   assert.equal(manualUi('xh').readInEnglish, 'Funda esi sahluko ngesiNgesi');
+  // Afrikaans reads its own link text too (it is an inline-draft language); the regional languages stay English.
+  assert.equal(manualUi('af').readInEnglish, read('af').readInEnglish);
+  assert.equal(manualUi('af').readInEnglish, 'Lees hierdie hoofstuk in Engels');
+  for (const lang of ['zu', 'st', 'ts', 've']) assert.equal(isInlineDraftLang(lang), false, `${lang} keeps the English link`);
   assert.equal(manualUi('en').readInEnglish, 'Read this chapter in English');
 });

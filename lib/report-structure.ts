@@ -21,6 +21,9 @@ import { fillInline, inlineText } from '@/lib/xh-inline';
  * tests/report-document-localization.test.ts pins these three to the drafts. */
 export const XH_FRONT_MATTER_TITLES = { 'Contents': 'Okuqulathwe', 'Document control': 'Ulawulo lwamaxwebhu', 'Site at a Glance': 'Indawo ngokubona nje' } as const;
 const XH_CONTENTS = XH_FRONT_MATTER_TITLES.Contents;
+/** Afrikaans front-matter titles are fixed for the same reason: a document built on the server, before any Afrikaans
+ * drafts load, must still be recognised (and left unnumbered) by the browser. tests/report-structure.test.ts pins them to the drafts. */
+export const AF_FRONT_MATTER_TITLES = { 'Contents': 'Inhoud', 'Document control': 'Dokumentbeheer', 'Site at a Glance': "Die terrein in 'n oogopslag" } as const;
 function documentText(source: string, language: string, values: Record<string, string | number> = {}): string {
   if (language !== 'xh') return reportDocumentText(source, language, values);
   if (Object.hasOwn(XH_FRONT_MATTER_TITLES, source)) return XH_FRONT_MATTER_TITLES[source as keyof typeof XH_FRONT_MATTER_TITLES];
@@ -34,6 +37,7 @@ const UNNUMBERED_TITLES = new Set([
   'site at a glance',
   'indawo kafushane',
   'okuqukethwe',
+  ...Object.values(AF_FRONT_MATTER_TITLES).map(title => title.toLocaleLowerCase()),
   ...Object.values(XH_FRONT_MATTER_TITLES).map(title => title.toLocaleLowerCase()),
   ...['Contents','Document control','Site at a Glance'].flatMap(title=>REPORT_DOCUMENT_LANGUAGES.map(language=>reportDocumentText(title,language).toLocaleLowerCase())),
 ]);
@@ -260,7 +264,7 @@ export function ensureDocumentArchitecture(markdown: string,language='en'): stri
   const text = markdown ?? '';
   if (!text.trim()) return text;
   // Already a structured document — leave it exactly as generated.
-  const contentsTitles=new Set([...['en',...REPORT_DOCUMENT_LANGUAGES].map(code=>reportDocumentText('Contents',code).toLocaleLowerCase()),XH_CONTENTS.toLocaleLowerCase()]);
+  const contentsTitles=new Set([...['en',...REPORT_DOCUMENT_LANGUAGES].map(code=>reportDocumentText('Contents',code).toLocaleLowerCase()),XH_CONTENTS.toLocaleLowerCase(),AF_FRONT_MATTER_TITLES.Contents.toLocaleLowerCase()]);
   if(text.split('\n').some(line=>{const match=/^##\s+(.+?)\s*$/.exec(line);return match&&contentsTitles.has(match[1].toLocaleLowerCase());}))return text;
 
   const figured = numberFigures(text,language);

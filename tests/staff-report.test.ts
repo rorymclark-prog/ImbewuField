@@ -182,6 +182,67 @@ test('isiXhosa reader: the facilitator report body is isiXhosa, every figure and
   } finally { registerXhInline({}); }
 });
 
+// ---- Afrikaans reader: the facilitator delivery report (g48-staff-reports.ts) ------------------------------------------------
+test('Afrikaans reader: the facilitator report body is Afrikaans, every figure and recorded name is unchanged, and every other language is the same English', async () => {
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index');
+  const { registerInlineDrafts } = await import('../lib/xh-inline');
+  const session = structuredClone(freshEvidenceData().sessions[0]);
+  session.attendance.push({ id: 'guest-example', name: 'PRIVATE GUEST', present: true });
+  session.presentCount = 3; session.registeredCount = 3; session.assessmentId = 'linked';
+  session.feedback = [{ participantId: session.attendance[0].id, consent: true, language: 'en', recordedAt: '2026-08-15', answers: { course_clear: '4', course_change: 'PRIVATE COMMENT' } }];
+  const sessions = [session, { ...session, id: 'second', date: '2026-09-01', facilitator: '', nextSteps: '', report: '', assessmentId: '' }];
+  const inputs = [
+    { ...options },
+    { ...options, from: '2026-08-01', to: '2026-09-30', comparePrevious: true, assessments: [{ id: 'linked', title: 'Linked example assessment' }] },
+    { ...options, ownerId: session.ownerId, project: session.project },
+    { ...options, project: 'No such project' },
+  ];
+  const everyString = (value: unknown, out: string[] = []): string[] => {
+    if (typeof value === 'string') out.push(value);
+    else if (Array.isArray(value)) value.forEach(item => everyString(item, out));
+    else if (value && typeof value === 'object') Object.entries(value).forEach(([key, item]) => { if (key !== 'url') everyString(item, out); });
+    return out;
+  };
+  const digitsIn = (text: string) => (text.match(/\d+(?:[.,]\d+)?/g) ?? []).join(' ');
+  try {
+    registerInlineDrafts('af', {}); // the server, or before the Afrikaans drafts load
+    for (const input of inputs) assert.deepEqual(buildTrainingReport(sessions, { ...input, language: 'af' }), buildTrainingReport(sessions, input));
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+    for (const input of inputs) {
+      const english = buildTrainingReport(sessions, input);
+      for (const language of ['en', 'zu', 'st', 'ts', 've', 'xh', undefined]) assert.deepEqual(buildTrainingReport(sessions, { ...input, language }), english, `${language}`);
+      const af = buildTrainingReport(sessions, { ...input, language: 'af' });
+      assert.deepEqual(af.counts, english.counts); assert.deepEqual(af.sessions, english.sessions);
+      assert.equal(af.filename, english.filename, 'the download name is built from English');
+      assert.deepEqual(af.metrics.length, english.metrics.length);
+      assert.deepEqual(af.tables.map(table => [table.rows.length, table.columns.length, table.columnWeights, table.keepAllRowsInSummary, table.includeInSummary]), english.tables.map(table => [table.rows.length, table.columns.length, table.columnWeights, table.keepAllRowsInSummary, table.includeInSummary]));
+      assert.deepEqual(af.sections.map(section => [section.lines.length, section.references]), english.sections.map(section => [section.lines.length, section.references]));
+      assert.notEqual(af.title, english.title);
+      assert.deepEqual(af.sections.map(section => section.title).filter(title => english.sections.some(section => section.title === title)), [], 'every section title is Afrikaans');
+      assert.deepEqual(af.tables.map(table => table.title).filter(title => english.tables.some(table => table.title === title)), [], 'every table title is Afrikaans');
+      assert.deepEqual(af.metrics.map(metric => metric.label).filter(label => english.metrics.some(metric => metric.label === label)), [], 'every metric label is Afrikaans');
+      af.tables.forEach((table, index) => { assert.notEqual(table.note, english.tables[index].note); table.columns.forEach((column, n) => { if (!['Status'].includes(column)) assert.notEqual(column, english.tables[index].columns[n], `${table.title} column ${n}`); }); });
+      af.sections.forEach((section, index) => section.lines.forEach((line, n) => { if (line !== af.scope) assert.notEqual(line, english.sections[index].lines[n], `${section.title} line ${n}`); }));
+      // Every figure is exact, string by string.
+      const englishStrings = everyString(english), afStrings = everyString(af);
+      assert.equal(afStrings.length, englishStrings.length);
+      englishStrings.forEach((text, index) => assert.equal(digitsIn(afStrings[index]), digitsIn(text), `figures in ${JSON.stringify(text.slice(0, 80))}`));
+      // Recorded names and text stay as recorded; private text stays out.
+      const text = JSON.stringify(af);
+      for (const recorded of [session.title, session.project, session.facilitator, session.nextSteps, 'Linked example assessment']) if (JSON.stringify(english).includes(recorded)) assert.ok(text.includes(recorded), `${recorded} stays as recorded`);
+      assert.ok(!text.includes('PRIVATE GUEST') && !text.includes('PRIVATE COMMENT') && !text.includes(session.attendance[0].name));
+    }
+    // The survey question is the MEL template's Afrikaans wording, with the same counts.
+    const feedback = buildTrainingReport(sessions, { ...options, language: 'af' }).tables.find(table => table.columns.length === 4 && table.rows.some(row => row[2] === '2 / 6'));
+    assert.ok(feedback, 'answered / eligible keeps its figures');
+    // The preparation of the Afrikaans PDF works and carries the Afrikaans body.
+    const report = buildTrainingReport(sessions, { ...options, language: 'af' });
+    const pdf = await buildProgrammePdf(report.title, false, report.sections, 'full', undefined, [], 'Bewyse', undefined, { metrics: report.metrics, tables: report.tables, language: 'af', reportLabel: 'Opleidingsleweringsrekords' });
+    const content = pdfContentStreams(pdf.output('arraybuffer'));
+    assert.match(content, /Leweringshersiening/); assert.ok(!/Delivery review/.test(content));
+  } finally { registerInlineDrafts('af', {}); }
+});
+
 // ---- isiXhosa reader: the mentor field report and the organisation field implementation report -------
 test('isiXhosa reader: the field report body is isiXhosa, every figure and recorded name is unchanged, and every other language is the same English', async () => {
   const { XH_INLINE_SOURCE } = await import('../lib/locales/xh-inline/index');
@@ -274,4 +335,98 @@ test('isiXhosa reader: the saved-visit lines word the fixed labels in isiXhosa a
     assert.match(xh.join('\n'), /Akukabelwa mntu/); assert.match(xh.join('\n'), /Akukacwangciswa/);
     assert.ok(!/Not yet/.test(xh.join('\n')));
   } finally { registerXhInline({}); }
+});
+
+// ---- Afrikaans reader: the mentor field report and the organisation field implementation report (g49-field-report.ts) ----
+test('Afrikaans reader: the field report body is Afrikaans, every figure and recorded name is unchanged, and every other language is the same English', async () => {
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index');
+  const { registerInlineDrafts } = await import('../lib/xh-inline');
+  const { completeSampleFieldWorkspace, freshFieldWorkspace, FIELD_FOCUS } = await import('../lib/field-teams');
+  const sample = completeSampleFieldWorkspace(freshFieldWorkspace());
+  const rich: FieldWorkspace = { ...field(), teams: [{ mentorId: 'mentor', location: 'Example group', farmerIds: ['p1', 'p2'], guidance: 'Typed guidance {n}', updatedAt: '2026-10-01', programme: 'act-sef-food-security' }], visits: [
+    { id: 'v1', mentorId: 'mentor', farmerId: 'p1', date: '2026-09-10', notes: 'Recorded visit', observations: 'Practical record check', practicalSkill: 'Record a harvest', skillResult: 'demonstrated', agreedAction: 'Review the missing record', responsiblePerson: '', followUpDate: '2026-09-20', focus: ['water', 'soil'], location: 'Plot 7', latitude: -33.91234, longitude: 18.42345, supportRequested: 'Seed', originalNotes: 'Raw notes', photoCount: 2 },
+    { id: 'v2', mentorId: 'mentor', farmerId: 'p1', date: '2026-08-10', notes: 'Earlier visit', agreedAction: 'Plant beans', responsiblePerson: 'Participant one', followUpDate: '2026-08-20', actionCompletedOn: '2026-08-19', actionOutcome: 'Beans planted', focus: ['crops'], practicalSkill: 'Plant', skillResult: 'needs-support' },
+  ] };
+  const workspaces = [rich, sample, { ...rich, sample: true }, { ...rich, teams: [], visits: [] }];
+  const inputs = [
+    { ...options },
+    { ...options, organisation: true, loadedPhotoCount: 1 },
+    { ...options, from: '2026-08-01', to: '2026-09-30', comparePrevious: true, loadedPhotoCount: 0 },
+    { ...options, farmerId: 'p1', from: '2026-08-01', to: '2026-09-30' },
+    { ...options, farmerId: 'removed-person' },
+  ];
+  const everyString = (value: unknown, out: string[] = []): string[] => {
+    if (typeof value === 'string') out.push(value);
+    else if (Array.isArray(value)) value.forEach(item => everyString(item, out));
+    else if (value && typeof value === 'object') Object.entries(value).forEach(([key, item]) => { if (key !== 'url') everyString(item, out); });
+    return out;
+  };
+  const digitsIn = (text: string) => (text.match(/\d+(?:[.,]\d+)?/g) ?? []).join(' ');
+  try {
+    registerInlineDrafts('af', {}); // the server, or before the Afrikaans drafts load
+    for (const data of workspaces) for (const input of inputs) assert.deepEqual(buildFieldReport(data, { ...input, language: 'af' }), buildFieldReport(data, input));
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+    for (const data of workspaces) for (const input of inputs) {
+      const english = buildFieldReport(data, input);
+      for (const language of ['en', 'zu', 'st', 'ts', 've', 'xh', undefined]) assert.deepEqual(buildFieldReport(data, { ...input, language }), english, `${language}`);
+      const af = buildFieldReport(data, { ...input, language: 'af' });
+      assert.equal(af.filename, english.filename, 'the download name is built from English');
+      assert.equal(af.metrics.length, english.metrics.length);
+      assert.deepEqual(af.metrics.map(metric => metric.value), english.metrics.map(metric => metric.value));
+      assert.deepEqual(af.tables.map(table => [table.rows.length, table.columns.length, table.columnWeights, table.keepAllRowsInSummary, table.includeInSummary]), english.tables.map(table => [table.rows.length, table.columns.length, table.columnWeights, table.keepAllRowsInSummary, table.includeInSummary]));
+      assert.deepEqual(af.sections.map(section => [section.lines.length, section.summaryLines?.length]), english.sections.map(section => [section.lines.length, section.summaryLines?.length]));
+      assert.deepEqual(af.chart?.rows.map(row => row.value), english.chart?.rows.map(row => row.value));
+      assert.notEqual(af.title, english.title);
+      assert.deepEqual(af.sections.map(section => section.title).filter(title => english.sections.some(section => section.title === title)), [], 'every section title is Afrikaans');
+      assert.deepEqual(af.tables.map(table => table.title).filter(title => english.tables.some(table => table.title === title)), [], 'every table title is Afrikaans');
+      assert.deepEqual(af.metrics.map(metric => metric.label).filter(label => english.metrics.some(metric => metric.label === label)), [], 'every metric label is Afrikaans');
+      af.tables.forEach((table, index) => { assert.notEqual(table.note, english.tables[index].note); table.columns.forEach((column, n) => { if (!['Status', 'Mentor'].includes(column)) assert.notEqual(column, english.tables[index].columns[n], `${table.title} column ${n}`); }); });
+      if (af.chart) { assert.notEqual(af.chart.title, english.chart!.title); assert.notEqual(af.chart.note, english.chart!.note); af.chart.rows.forEach((row, n) => assert.notEqual(row.label, english.chart!.rows[n].label, 'every focus bar is Afrikaans')); }
+      // Every figure is exact, string by string.
+      const englishStrings = everyString(english), afStrings = everyString(af);
+      assert.equal(afStrings.length, englishStrings.length);
+      englishStrings.forEach((text, index) => assert.equal(digitsIn(afStrings[index]), digitsIn(text), `figures in ${JSON.stringify(text.slice(0, 80))}`));
+    }
+    // Recorded names, typed text, coordinates and dates stay exactly as recorded.
+    const af = buildFieldReport(rich, { ...options, organisation: true, loadedPhotoCount: 1 });
+    const text = JSON.stringify(buildFieldReport(rich, { ...options, organisation: true, loadedPhotoCount: 1, language: 'af' }));
+    for (const recorded of ['Participant one', 'Participant two', 'Garden one', 'Example group', 'Typed guidance {n}', 'Review the missing record', 'Record a harvest', 'Beans planted', 'Plot 7', '-33.91234, 18.42345', '2026-09-10', '2026-09-20', 'Raw notes', 'Seed']) assert.ok(text.includes(recorded), `${recorded} stays as recorded`);
+    assert.ok(text.includes('https://www.google.com/maps/search/?api=1&query=-33.91234,18.42345'));
+    assert.notEqual(af.title, JSON.parse(text).title);
+    // The report says "Former team member" and "Site not recorded" in Afrikaans only for the fallbacks, never for a recorded name.
+    const gone = JSON.stringify(buildFieldReport({ ...rich, people: [] }, { ...options, language: 'af' }));
+    assert.match(gone, /Voormalige spanlid/); assert.match(gone, /Terrein nie aangeteken nie/); assert.ok(!/Former team member|Site not recorded/.test(gone));
+    // The date range in the scope line keeps its dates; the fixed words are Afrikaans.
+    assert.match(buildFieldReport(rich, { ...options, from: '2026-08-01', to: '2026-09-30', language: 'af' }).scope, /2026-08-01 tot 2026-09-30$/);
+    assert.match(buildFieldReport(rich, { ...options, language: 'af' }).scope, /eerste aangetekende besoek tot jongste aangetekende besoek$/);
+    // Every FIELD_FOCUS label has its own draft, so no support-area tag is left in English.
+    for (const label of Object.values(FIELD_FOCUS)) assert.ok(AF_INLINE_SOURCE[label], `${label} has an Afrikaans draft`);
+    // The preparation of the Afrikaans PDF works and carries the Afrikaans body.
+    const report = buildFieldReport(rich, { ...options, language: 'af' });
+    const pdf = await buildProgrammePdf(report.title, false, report.sections, 'full', undefined, [], 'Bewyse', undefined, { metrics: report.metrics, tables: report.tables, chart: report.chart, language: 'af', reportLabel: 'Veldondersteuningsrekords' });
+    const content = pdfContentStreams(pdf.output('arraybuffer'));
+    assert.match(content, /Ondersteuningshersiening/); assert.ok(!/Support review/.test(content));
+  } finally { registerInlineDrafts('af', {}); }
+});
+
+test('Afrikaans reader: the saved-visit lines word the fixed labels in Afrikaans and keep every recorded value', async () => {
+  const { AF_INLINE_SOURCE } = await import('../lib/locales/af-inline/index');
+  const { registerInlineDrafts } = await import('../lib/xh-inline');
+  const { fieldVisitReportLines } = await import('../lib/field-teams');
+  const visit = { id: 'v1', mentorId: 'm', farmerId: 'f', date: '2026-09-10', notes: 'Notes {n}', observations: 'Seen', supportRequested: 'Seed', originalNotes: 'Raw', location: 'Plot 7', latitude: -33.91234, longitude: 18.42345, focus: ['water', 'harvest'] as ('water' | 'harvest')[], practicalSkill: 'Mulch', skillResult: 'needs-support' as const, agreedAction: 'Spread mulch', responsiblePerson: '', followUpDate: '', actionCompletedOn: '2026-09-12', actionOutcome: 'Done', photoCount: 3 };
+  try {
+    registerInlineDrafts('af', {});
+    const english = fieldVisitReportLines(visit, 'Farmer {x}', 'Mentor Name');
+    assert.deepEqual(fieldVisitReportLines(visit, 'Farmer {x}', 'Mentor Name', 'af'), english, 'before the drafts load Afrikaans is the English');
+    registerInlineDrafts('af', AF_INLINE_SOURCE);
+    for (const language of ['en', 'zu', 'st', 'ts', 've', 'xh', undefined]) assert.deepEqual(fieldVisitReportLines(visit, 'Farmer {x}', 'Mentor Name', language), english);
+    const af = fieldVisitReportLines(visit, 'Farmer {x}', 'Mentor Name', 'af');
+    assert.equal(af.length, english.length);
+    english.forEach((line, index) => assert.equal(line.match(/-?\d+(?:\.\d+)?/g)?.join(' '), af[index].match(/-?\d+(?:\.\d+)?/g)?.join(' '), `figures in ${line}`));
+    for (const recorded of ['2026-09-10 | Farmer {x} | Mentor: Mentor Name', 'Plot 7', '-33.91234, 18.42345', 'Notes {n}', 'Seen', 'Seed', 'Raw', 'Mulch', 'Spread mulch', 'Done', '2026-09-12']) assert.ok(af.join('\n').includes(recorded), `${recorded} stays as recorded`);
+    assert.ok(af.includes('Google Maps: https://www.google.com/maps/search/?api=1&query=-33.91234,18.42345'));
+    assert.ok(af.every((line, index) => index === 0 || line.startsWith('Google Maps') || line !== english[index]), 'every fixed label is Afrikaans');
+    assert.match(af.join('\n'), /Nog nie toegewys nie/); assert.match(af.join('\n'), /Nog nie geskeduleer nie/);
+    assert.ok(!/Not yet/.test(af.join('\n')));
+  } finally { registerInlineDrafts('af', {}); }
 });

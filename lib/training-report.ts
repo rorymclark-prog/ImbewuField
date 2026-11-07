@@ -7,9 +7,9 @@ import { inlineText, inlineTemplate } from './xh-inline';
 export function buildTrainingReport(input: readonly TrainingRecord[], options: { project?: string; ownerId?: string; from?: string; to?: string; today: string; assessments?: { id: string; title: string }[]; comparePrevious?: boolean; language?: string }) {
   const { project = '', ownerId = '', from = '', to = '', today } = options;
   const lang = options.language ?? 'en';
-  /** A fixed sentence or label in the reader's language ('xh' reads lib/locales/xh-inline/g46-staff-reports.ts); English and every other language are the original text, byte for byte. Names, figures, dates and recorded text stay as recorded. */
+  /** A fixed sentence or label in the reader's language ('xh' reads lib/locales/xh-inline/g46-staff-reports.ts, 'af' lib/locales/af-inline/g48-staff-reports.ts); English and every other language are the original text, byte for byte. Names, figures, dates and recorded text stay as recorded. */
   const t = (english: string, vars: Record<string, string | number> = {}) => inlineTemplate(lang, english, null, vars);
-  /** A fixed word from the data (a survey question or answer option): its isiXhosa draft, else as given. */
+  /** A fixed word from the data (a survey question or answer option): its isiXhosa or Afrikaans draft, else as given. */
   const tr = (text: string) => inlineText(lang, text);
   const sessions = [...new Map(input.map(session => [session.id, session])).values()].filter(session => (!project || session.project === project) && (!ownerId || session.ownerId === ownerId) && (!from || session.date >= from) && (!to || session.date <= to) && session.date <= today).sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
   const totals = trainingTotals(sessions, today);

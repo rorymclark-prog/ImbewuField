@@ -33,7 +33,7 @@ import { gatherSiteInputs, surveyFilledCount, SURVEY_TOTAL_FIELDS } from '@/lib/
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import { useLanguage, translate } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { BIOME_I18N_KEYS } from '@/lib/biome';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2, Users } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
@@ -212,7 +212,7 @@ const DEMO_FEATURE_NAME_ZU: Record<string, string> = {
   'Municipal tap': 'Umpompi kamasipala',
 };
 function demoFeatureLabel(name: string, lang: string): string {
-  if (lang === 'xh') return inlineText(lang, name);
+  if (isInlineDraftLang(lang)) return inlineText(lang, name);
   return lang === 'zu' ? (DEMO_FEATURE_NAME_ZU[name] ?? name) : name;
 }
 
@@ -850,7 +850,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     };
   })();
   // `zulu` is the current-language read (t() keys), so it is the isiXhosa read for xh too.
-  const limaRead = lang === 'zu' || lang === 'xh' ? limaReadParts.zulu : limaReadParts.english;
+  const limaRead = lang === 'zu' || isInlineDraftLang(lang) ? limaReadParts.zulu : limaReadParts.english;
 
   return (
     <div className="h-full flex flex-col overflow-hidden">
@@ -910,7 +910,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {/* Rainfall deliberately omitted here — the headline "Annual rainfall" stat below is the
                     single measured figure; showing BRU's zone-average mm/yr too reads as a second,
                     competing rainfall number for the same site. */}
-                BRU {data.bru.brucode} · {lang === 'zu' || lang === 'xh' ? t('bruZoneApprox') : 'approx.'} {data.bru.nearestBrg} · {data.bru.tmean}{t('unitTempAverage')}
+                BRU {data.bru.brucode} · {lang === 'zu' || lang === 'xh' || lang === 'af' ? t('bruZoneApprox') : 'approx.'} {data.bru.nearestBrg} · {data.bru.tmean}{t('unitTempAverage')}
               </div>
             )}
             {!simple && (
@@ -920,7 +920,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             )}
             {!simple && data.bru && (
               <div className="mt-0.5" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)' }}>
-                {lang === 'zu' || lang === 'xh' ? t('bruZoneAttribution') : data.bru.attribution} — {lang === 'zu' || lang === 'xh' ? t('bruZoneNameCaveat') : 'zone name is a best-effort climate match, not verified'}
+                {lang === 'zu' || lang === 'xh' || lang === 'af' ? t('bruZoneAttribution') : data.bru.attribution} — {lang === 'zu' || lang === 'xh' || lang === 'af' ? t('bruZoneNameCaveat') : 'zone name is a best-effort climate match, not verified'}
               </div>
             )}
           </div>
@@ -1182,11 +1182,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
               <p style={{ fontSize: 12.5, lineHeight: 1.5, color: '#4A3F2E', margin: 0, flex: 1, minWidth: 0 }}>
                 <span className="font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>Lima · </span>
-                {lang === 'zu' || lang === 'xh' ? (
+                {lang === 'zu' || isInlineDraftLang(lang) ? (
                   <>
                     <span>{limaRead}</span>
                     {lang === 'zu' && <span className="block mt-1 text-xs text-[var(--text-muted)]">{t('siteSummaryZuluDraftNotice')}</span>}
-                    <span className="block mt-1 text-xs text-[var(--text-muted)]" lang="en">{lang === 'xh' ? <span lang="xh">{inlineText(lang, 'English source:')}</span> : 'English source:'} {limaReadParts.english}</span>
+                    <span className="block mt-1 text-xs text-[var(--text-muted)]" lang="en">{isInlineDraftLang(lang) ? <span lang={lang}>{inlineText(lang, 'English source:')}</span> : 'English source:'} {limaReadParts.english}</span>
                   </>
                 ) : limaRead}
               </p>
@@ -1675,7 +1675,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
                   <div style={ovlSt}>{t('windKmhCard')}</div>
                   <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#5E7A66' }}>
-                    {kmh > 22 ? inlineText(lang, 'Moderate – strong') : kmh > 12 ? inlineText(lang, 'Light – moderate') : (lang === 'xh' ? inlineText(lang, 'Light wind') : 'Light')}
+                    {kmh > 22 ? inlineText(lang, 'Moderate – strong') : kmh > 12 ? inlineText(lang, 'Light – moderate') : (isInlineDraftLang(lang) ? inlineText(lang, 'Light wind') : 'Light')}
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 16, alignItems: 'flex-end' }}>

@@ -25,10 +25,10 @@ type TankChromeKey =
 
 // isiXhosa gets the same paired layout as isiZulu: its unreviewed draft, then the exact English source.
 function XhTankChromeText({ name, sourceBlock = false }: { name: TankChromeKey; sourceBlock?: boolean }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   return (
     <>
-      <span lang="xh">{t(name)}</span>
+      <span lang={lang}>{t(name)}</span>
       <span
         lang="en"
         style={{
@@ -49,7 +49,7 @@ function XhTankChromeText({ name, sourceBlock = false }: { name: TankChromeKey; 
 
 function TankChromeText({ name, sourceBlock = false }: { name: TankChromeKey; sourceBlock?: boolean }) {
   const { t, lang } = useLanguage();
-  if (lang === 'xh') return <XhTankChromeText name={name} sourceBlock={sourceBlock} />;
+  if (lang === 'xh' || lang === 'af') return <XhTankChromeText name={name} sourceBlock={sourceBlock} />;
   if (lang !== 'zu') return t(name);
 
   return (
@@ -169,7 +169,7 @@ export default function TankCalculator({
 
         {open && (
           <div style={{ padding: '8px 10px 10px' }}>
-            {(lang === 'zu' || lang === 'xh') && (
+            {(lang === 'zu' || lang === 'xh' || lang === 'af') && (
               <div
                 role="note"
                 style={{ marginBottom: 8, padding: '6px 8px', borderRadius: 7, background: '#FFF5D6', border: '1px solid #E9CC76', fontSize: 10.5, lineHeight: 1.35, color: '#704B08' }}

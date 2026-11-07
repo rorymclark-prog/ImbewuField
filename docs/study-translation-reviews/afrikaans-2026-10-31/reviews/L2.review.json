@@ -1,0 +1,16 @@
+{
+  "unit": "L2",
+  "okCount": 303,
+  "items": [
+    {
+      "index": 11,
+      "path": "soil-health/soil-health-l1/body/p8",
+      "verdict": "repair",
+      "english": "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.",
+      "draft": "Teken aan wat jy sien en wat onseker bly. Moenie water gee of grondbehandelings voorskryf op grond van net een fles nie.",
+      "backtranslation": "Record what you see and what remains uncertain. Do not water or prescribe soil treatments on the basis of just one jar.",
+      "problem": "The draft says 'do not water (moenie water gee)' instead of 'do not prescribe watering', turning a caution against drawing watering advice from one jar into an instruction about the act of watering itself.",
+      "corrected": "Teken aan wat jy sien en wat onseker bly. Moenie op grond van net een fles watergee of grondbehandelings voorskryf nie."
+    }
+  ]
+}

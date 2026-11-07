@@ -61,7 +61,7 @@ import {
 import { CATEGORY_LABEL, EX, ZU_CATEGORY_LABEL, exchangeText } from './theme';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
-import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { produceLabel } from '@/lib/produce-label';
 import { ExchangeDraftNotice, ExchangeSourceCopy } from './ExchangeCopy';
 
@@ -117,7 +117,7 @@ function toggle<T>(list: T[], value: T): T[] {
 export default function ExchangeBoard() {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
-  const xh = lang === 'xh';
+  const xh = isInlineDraftLang(lang); // isiXhosa or Afrikaans: the English-keyed inline drafts
   const simple = useAppLevel() === 'simple';
   const tx = (en: string, dz: string) => exchangeText(lang, en, dz);
   // Empty on the server and on the first client render, so hydration matches;

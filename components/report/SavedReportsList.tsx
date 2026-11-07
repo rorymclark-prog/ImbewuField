@@ -62,7 +62,7 @@ export default function SavedReportsList({
   // copy-14: toLocaleDateString/toLocaleTimeString with no locale argument read the device's
   // browser locale, which prints the en-US '10/16/2026' on a phone set to that rather than
   // 'en-ZA'.
-  const dateLocale = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
+  const dateLocale = lang === 'zu' ? 'zu-ZA' : lang === 'af' ? 'af-ZA' : 'en-ZA';
   // 'xh-ZA' falls back to English in browsers, so isiXhosa writes its own month names (xh-dates).
   const dayLabel = (value: string | number, opts?: Intl.DateTimeFormatOptions) => lang === 'xh'
     ? formatXhosaDate(new Date(value), { day: true, month: opts?.month === 'long' ? 'long' : 'short', year: true })

@@ -14,6 +14,7 @@ import styles from '@/components/SampleExperience.module.css';
 
 // The isiXhosa draft notice sits next to its English, like the isiZulu one below (shard: g13-dates-feedback).
 const XH_DRAFT_NOTICE='ISIXHOSA DRAFT — This translation has not been reviewed by a fluent isiXhosa speaker.';
+const AF_DRAFT_NOTICE='AFRIKAANS DRAFT — This translation has not been reviewed by a fluent Afrikaans speaker.';
 type Ticket={id:string;title:string;kind:string;details:string;createdAt:string;role:string;sample:boolean;path:string};
 export default function FeedbackPage(){
   const {user,role}=useAuth();const {lang}=useLanguage();const simple=useAppLevel()==='simple';const [kind,setKind]=useState<'bug'|'feature'>('bug'),[title,setTitle]=useState(''),[details,setDetails]=useState(''),[path,setPath]=useState(''),[agree,setAgree]=useState(false),[busy,setBusy]=useState(false),[receipt,setReceipt]=useState(''),[error,setError]=useState(''),[tickets,setTickets]=useState<Ticket[]|null>(null);
@@ -38,6 +39,7 @@ export default function FeedbackPage(){
     <h1>{label('Report a bug or suggest a feature','Bika inkinga noma phakamisa isici esisha')}</h1>
     {lang==='zu'&&<p role="note">UMBHALO WESIZULU USALUHLAKA — Le nguqulo ayikabuyekezwa umuntu okhuluma kahle isiZulu. / ISIZULU DRAFT — This translation has not been reviewed by a fluent isiZulu speaker.</p>}
     {lang==='xh'&&<p role="note">{paired(XH_DRAFT_NOTICE,'')}</p>}
+    {lang==='af'&&<p role="note">{paired(AF_DRAFT_NOTICE,'')}</p>}
     {/* ux-03/nav-04: was developer-addressed phrasing on a farmer-facing screen — rewritten to
         speak to the person filling the form in, below. */}
     <p>{paired('Tell us what happened or what would help. Please leave out passwords, identity numbers, private survey answers and other people’s personal information.','Sitshele okwenzekile noma okungasiza. Ungafaki amagama ayimfihlo, izinombolo zomazisi, izimpendulo eziyimfihlo zezinhlolovo noma imininingwane yomuntu siqu yabanye abantu.')}</p>

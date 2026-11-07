@@ -1,7 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/lib/i18n';
-import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { EX } from './theme';
 
 /**
@@ -12,12 +12,12 @@ import { EX } from './theme';
  */
 export function ExchangeSourceCopy({ en, zu, tpl, vars }: { en: string; zu: string; tpl?: string; vars?: Record<string, string | number> }) {
   const { lang } = useLanguage();
-  if (lang === 'xh') {
+  if (isInlineDraftLang(lang)) {
     const draft = tpl ? inlineTemplate(lang, tpl, null, vars ?? {}) : inlineText(lang, en);
     if (draft === en) return <>{en}</>;
     return (
       <>
-        <span lang="xh">{draft}</span>
+        <span lang={lang}>{draft}</span>
         <small lang="en" style={{ display: 'block', marginTop: 4, fontSize: 12, lineHeight: 1.45 }}>
           English source: {en}
         </small>
@@ -40,6 +40,13 @@ export function ExchangeDraftNotice() {
     return (
       <p role="note" lang="xh" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: EX.faint }}>
         {inlineText(lang, 'Unreviewed isiXhosa draft. This wording is waiting for a fluent isiXhosa speaker to review it.')}
+      </p>
+    );
+  }
+  if (lang === 'af') {
+    return (
+      <p role="note" lang="af" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: EX.faint }}>
+        {inlineText(lang, 'Unreviewed Afrikaans draft. This wording is waiting for a fluent Afrikaans speaker to review it.')}
       </p>
     );
   }

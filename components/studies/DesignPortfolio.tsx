@@ -8,7 +8,7 @@ import { PORTFOLIO_STAGES, PORTFOLIO_LIMIT, PORTFOLIO_NOTICE, portfolioStorageKe
 import OfflinePageLink from './OfflinePageLink';
 import DesignDraftCopy from './DesignDraftCopy';
 import Tx, { TxArrow, XhDraftLine } from './Tx';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import styles from './FinanceCourse.module.css';
 import folder from './DesignPortfolio.module.css';
 import ArrowLabel from './ArrowLabel';
@@ -88,7 +88,7 @@ export default function DesignPortfolio() {
   const statusCopy = (message: string) => {
     const zu = STATUS_ZU[message];
     // isiXhosa reads the draft keyed by this exact English (lib/locales/xh-inline/).
-    return lang === 'zu' && zu ? <DesignDraftCopy en={message} zu={zu} /> : lang === 'xh' ? inlineText(lang, message) : message;
+    return lang === 'zu' && zu ? <DesignDraftCopy en={message} zu={zu} /> : isInlineDraftLang(lang) ? inlineText(lang, message) : message;
   };
   useEffect(() => {
     if (!ready || !draft.dirty) return;
@@ -140,8 +140,8 @@ export default function DesignPortfolio() {
         <label htmlFor={`portfolio-${field.id}`}><strong><DesignDraftCopy en={field.label} zu={FIELD_ZU[field.id].label} /></strong></label>
         <span id={`help-${field.id}`}><DesignDraftCopy en={field.prompt} zu={FIELD_ZU[field.id].prompt} /></span>
         <textarea id={`portfolio-${field.id}`} aria-describedby={`help-${field.id}`} disabled={!ready} rows={5} maxLength={PORTFOLIO_LIMIT} value={answers[field.id] ?? ''} onChange={event => change(field.id, event.target.value)} />
-        {(answers[field.id]?.length ?? 0) > PORTFOLIO_LIMIT - 500 && <span>{lang === 'xh'
-          ? <XhDraftLine xh={inlineTemplate(lang, '{n} characters remaining. Keep longer evidence in a separate document and reference it here.', null, { n: PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0) })} en={`${PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0)} characters remaining. Keep longer evidence in a separate document and reference it here.`} />
+        {(answers[field.id]?.length ?? 0) > PORTFOLIO_LIMIT - 500 && <span>{isInlineDraftLang(lang)
+          ? <XhDraftLine lang={lang} xh={inlineTemplate(lang, '{n} characters remaining. Keep longer evidence in a separate document and reference it here.', null, { n: PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0) })} en={`${PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0)} characters remaining. Keep longer evidence in a separate document and reference it here.`} />
           : <DesignDraftCopy en={`${PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0)} characters remaining. Keep longer evidence in a separate document and reference it here.`} zu={`${PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0)} izinhlamvu ezisele. Gcina ubufakazi obude kudokhumenti ehlukile bese ubhekisela kubo lapha.`} />}</span>}
         <p className={folder.printAnswer}>{answers[field.id] || <DesignDraftCopy en="[Not yet recorded]" zu="[Akukarekhodwa]" />}</p>
       </div>)}

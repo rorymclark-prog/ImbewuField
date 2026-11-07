@@ -85,8 +85,9 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
   const currentDesc = describeWeatherCode(current.weatherCode);
   const today = daily[0];
   const zu = lang === 'zu';
-  // isiXhosa shows its own drafts (lib/weather-copy.ts) the same way, beside the English source.
-  const drafted = zu || lang === 'xh';
+  // isiXhosa and Afrikaans show their own drafts (lib/weather-copy.ts) the same way, beside the English source.
+  const ownDraft = lang === 'xh' || lang === 'af';
+  const drafted = zu || ownDraft;
   const daysIn = (l: string, list: typeof daily) => list.map((d) => dayLabel(l, d.date, daily.indexOf(d))).join(', ');
   const hazardText = (key: string, list: typeof daily) => ({
     text: fillWeather(weatherText(lang, key), { days: daysIn(lang, list) }),
@@ -156,7 +157,7 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
                 <IsiZuluDraftSource
                   lang={lang}
                   zulu={fillWeather(weatherText(lang, 'weatherWaterLoss'), { mm: today.et0Mm.toFixed(1) })}
-                  xhosa={lang === 'xh' ? fillWeather(weatherText(lang, 'weatherWaterLoss'), { mm: today.et0Mm.toFixed(1) }) : undefined}
+                  xhosa={ownDraft ? fillWeather(weatherText(lang, 'weatherWaterLoss'), { mm: today.et0Mm.toFixed(1) }) : undefined}
                   english={fillWeather(weatherEnglish('weatherWaterLoss'), { mm: today.et0Mm.toFixed(1) })}
                 />
               ) : (
@@ -209,6 +210,11 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
             {inlineText(lang, 'Unreviewed isiXhosa draft.')} <span lang="en">English source for the days: {[0, 1, 2, 3, 4, 5, 6].map((n) => weatherEnglish(weatherDayKey(n, false))).join(', ')}; Today.</span>
           </p>
         )}
+        {lang === 'af' && (
+          <p className="font-sans" style={{ margin: 0, padding: '6px 14px', fontSize: 12, color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}>
+            {inlineText(lang, 'Unreviewed Afrikaans draft.')} <span lang="en">English source for the days: {[0, 1, 2, 3, 4, 5, 6].map((n) => weatherEnglish(weatherDayKey(n, false))).join(', ')}; Today.</span>
+          </p>
+        )}
       </div>
     </div>
   );
@@ -217,7 +223,7 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
 function DescLabel({ lang, label }: { lang: string; label: string }) {
   const key = weatherDescKey(label);
   if (!key) return <>{label}</>;
-  return <IsiZuluDraftSource lang={lang} zulu={weatherText(lang, key)} xhosa={lang === 'xh' ? weatherText(lang, key) : undefined} english={label} />;
+  return <IsiZuluDraftSource lang={lang} zulu={weatherText(lang, key)} xhosa={lang === 'xh' || lang === 'af' ? weatherText(lang, key) : undefined} english={label} />;
 }
 
 function HazardBanner({ icon, tone, text, english, lang }: { icon: React.ReactNode; tone: 'blue' | 'orange'; text: string; english: string; lang: string }) {
@@ -232,7 +238,7 @@ function HazardBanner({ icon, tone, text, english, lang }: { icon: React.ReactNo
     >
       <span className="flex-shrink-0">{icon}</span>
       <span className="font-sans font-medium" style={{ fontSize: 12, color: c }}>
-        <IsiZuluDraftSource lang={lang} zulu={lang === 'zu' ? text : ''} xhosa={lang === 'xh' ? text : undefined} english={english} />
+        <IsiZuluDraftSource lang={lang} zulu={lang === 'zu' ? text : ''} xhosa={lang === 'xh' || lang === 'af' ? text : undefined} english={english} />
       </span>
     </div>
   );

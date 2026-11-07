@@ -21,12 +21,15 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
   const [selected, setSelected] = useState('sample-baseline');
   const [localZu, setZu] = useState(false);
   const [localXh, setXh] = useState(false);
-  useEffect(() => { setXh(appLang === 'xh'); }, [appLang]);
+  const [localAf, setAf] = useState(false);
+  useEffect(() => { setXh(appLang === 'xh'); setAf(appLang === 'af'); }, [appLang]);
   const zu = language ?? localZu;
   const xh = !zu && (xhosa ?? localXh);
-  const lang = zu ? 'zu' : xh ? 'xh' : 'en';
-  // isiXhosa: the dictionary's own wording when xh.ts has this key, otherwise the inline draft for this exact English.
-  const ui = (key: string, english: string) => { if (zu) return translate('zu', key); if (!xh) return english; const own = translate('xh', key); return own !== translate('en', key) ? own : inlineText('xh', english); };
+  // Afrikaans follows the app language like isiXhosa does; MelDashboard only passes the isiZulu/isiXhosa flags.
+  const af = !zu && !xh && localAf;
+  const lang = zu ? 'zu' : xh ? 'xh' : af ? 'af' : 'en';
+  // isiXhosa / Afrikaans: the dictionary's own wording when that locale has this key, otherwise the inline draft for this exact English.
+  const ui = (key: string, english: string) => { if (zu) return translate('zu', key); if (!xh && !af) return english; const own = translate(lang, key); return own !== translate('en', key) ? own : inlineText(lang, english); };
   const [, setLocaleTick] = useState(0);
   const detailRef = useRef<HTMLElement>(null);
   const [notice, setNotice] = useState('');
@@ -46,7 +49,7 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
   const completed = data.reduce((n, x) => n + x.rows.length, 0);
   if (compact) return <div className={styles.compact}><strong>{ui('sampleProgrammeAssessments', 'Assessments')}</strong><span>{assigned} {ui('sampleProgrammeAssignments', 'assignments')} · {completed} {ui('sampleProgrammeCompleted', 'completed')}</span><span>{controls.published.length} {ui('sampleProgrammeSummariesShared', 'summaries shared')}</span></div>;
   if (accessOnly) return <div className={styles.card}>
-    {(zu || xh) && <p role="note">{ui('sampleProgrammeEnglishAccessNote', 'The permission and data sharing details below remain in English so their meaning stays exact.')}</p>}
+    {(zu || xh || af) && <p role="note">{ui('sampleProgrammeEnglishAccessNote', 'The permission and data sharing details below remain in English so their meaning stays exact.')}</p>}
     <h2>People &amp; access</h2>
     <label className={styles.option}><input type="checkbox" checked={controls.funderAccess} onChange={e => update({ ...controls, funderAccess: e.target.checked })} />Allow linked funders to view our dashboards</label>
     <p>Member roles choose the workspace. Assessment permissions let the organisation delegate specific work. Farmer consent and publication checks still apply.</p>
@@ -55,13 +58,14 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
     </div>)}{notice && <p role="status">{notice}</p>}
   </div>;
   const published = samplePublishedAssessments(controls);
-  if (funder) return <>{(zu || xh) && <p role="note">{ui('sampleProgrammeEnglishAccessNote', 'The permission and data sharing details below remain in English so their meaning stays exact.')}</p>}<h2>Shared assessments</h2><p>Summaries shared by the organisation. Private feedback remains restricted.</p>{!controls.funderAccess ? <p className={styles.card}>The organisation has switched off funder access.</p> : !published.length ? <p className={styles.card}>The organisation has not shared any summaries.</p> : published.map(a => <details key={a.id} className={styles.card} style={{ margin: '16px 0' }}><summary>{a.title} · {a.completed}/{a.assigned} completed</summary><MelMetrics metrics={a.metrics} lang={lang} /></details>)}</>;
+  if (funder) return <>{(zu || xh || af) && <p role="note">{ui('sampleProgrammeEnglishAccessNote', 'The permission and data sharing details below remain in English so their meaning stays exact.')}</p>}<h2>Shared assessments</h2><p>Summaries shared by the organisation. Private feedback remains restricted.</p>{!controls.funderAccess ? <p className={styles.card}>The organisation has switched off funder access.</p> : !published.length ? <p className={styles.card}>The organisation has not shared any summaries.</p> : published.map(a => <details key={a.id} className={styles.card} style={{ margin: '16px 0' }}><summary>{a.title} · {a.completed}/{a.assigned} completed</summary><MelMetrics metrics={a.metrics} lang={lang} /></details>)}</>;
   return <>
     <MelOverview items={data.map(({ assessment, rows }) => ({ ...assessment, published: controls.published.includes(assessment.id), assigned: assessment.participantIds.length, completed: rows.length }))} selectedId={selected} zu={zu} lang={lang} onOpen={id => { setSelected(id); setChosenPeople([]); setFunderPreview(false); requestAnimationFrame(() => detailRef.current?.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })); }} />
     {xh && <><p role="note">{inlineText(lang, 'These are sample assessment questions. Any isiXhosa text here has not been reviewed by a fluent isiXhosa speaker.')}</p><p role="note">{ui('sampleProgrammeEnglishAccessNote', 'Permission and sharing descriptions remain in English so their meaning stays exact.')}</p></>}
+    {af && <><p role="note">{inlineText(lang, 'These are sample assessment questions. Any Afrikaans text here has not been reviewed by a fluent Afrikaans speaker.')}</p><p role="note">{ui('sampleProgrammeEnglishAccessNote', 'Permission and sharing descriptions remain in English so their meaning stays exact.')}</p></>}
     {zu && <><p role="note">{ui('sampleProgrammeZuluReviewNote', 'These are sample assessment questions. The isiZulu text has not been reviewed by a fluent isiZulu speaker.')}</p><p role="note">{ui('sampleProgrammeEnglishAccessNote', 'Permission and sharing descriptions remain in English so their meaning stays exact.')}</p></>}
     <details className={styles.about}><summary>{ui('sampleProgrammeAboutCounts', 'About these counts')}</summary><p>{inlineText(lang, 'Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.')}</p></details>
-    {language === undefined && <div className={styles.row}><button onClick={() => { setZu(false); setXh(false); }} aria-pressed={!zu && !xh}>English</button><button onClick={() => { setZu(true); setXh(false); }} aria-pressed={zu}>isiZulu</button>{appLang === 'xh' && <button onClick={() => { setZu(false); setXh(true); }} aria-pressed={xh}>isiXhosa</button>}</div>}
+    {language === undefined && <div className={styles.row}><button onClick={() => { setZu(false); setXh(false); setAf(false); }} aria-pressed={!zu && !xh && !af}>English</button><button onClick={() => { setZu(true); setXh(false); setAf(false); }} aria-pressed={zu}>isiZulu</button>{appLang === 'xh' && <button onClick={() => { setZu(false); setXh(true); setAf(false); }} aria-pressed={xh}>isiXhosa</button>}{appLang === 'af' && <button onClick={() => { setZu(false); setXh(false); setAf(true); }} aria-pressed={af}>Afrikaans</button>}</div>}
     <details className={styles.card}><summary>{ui('sampleProgrammeCreateAssessment', 'Create an assessment')}</summary>
       <label>{ui('sampleProgrammeStage', 'Stage')}<select value={draft.stage} onChange={e => setDraft({ ...draft, stage: e.target.value as MelStage })}>{MEL_STAGES.map(s => <option key={s} value={s}>{zu ? MEL_TEMPLATES[s].zu : inlineText(lang, MEL_TEMPLATES[s].en)}</option>)}</select></label>
       <label>{ui('sampleProgrammeProjectCohort', 'Project / course cohort')}<input value={draft.project} onChange={e => setDraft({ ...draft, project: e.target.value })} /></label>
@@ -94,5 +98,5 @@ export function SampleFunderGate({ children }: { children: React.ReactNode }) {
   const { lang } = useLanguage();
   useEffect(() => { setAllowed(!isSampleMode() || readSampleProgramme().funderAccess); }, []);
   if (allowed === null) return null;
-  return allowed ? children : <section className={styles.root}>{lang === 'zu' && <p role="note">{translate('zu', 'sampleProgrammeEnglishAccessNote')}</p>}{lang === 'xh' && <p role="note">{translate('xh', 'sampleProgrammeEnglishAccessNote')}</p>}<h1>Funder access is off</h1><p>The organisation has hidden its dashboards. Switch to Organisation → Control centre → People & permissions to turn sharing back on.</p></section>;
+  return allowed ? children : <section className={styles.root}>{lang === 'zu' && <p role="note">{translate('zu', 'sampleProgrammeEnglishAccessNote')}</p>}{lang === 'xh' && <p role="note">{translate('xh', 'sampleProgrammeEnglishAccessNote')}</p>}{lang === 'af' && <p role="note">{translate('af', 'sampleProgrammeEnglishAccessNote')}</p>}<h1>Funder access is off</h1><p>The organisation has hidden its dashboards. Switch to Organisation → Control centre → People & permissions to turn sharing back on.</p></section>;
 }

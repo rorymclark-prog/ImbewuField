@@ -37,7 +37,7 @@ export default function JournalPhotoReview({ entries, lang = 'en' }: { entries: 
 
   const optionLabel = (photo: typeof photos[number]) => `${photo.date} · ${photo.title || fm('untitledNote')}${photo.context ? ` · ${photo.context}` : ''} · ${fm('photoNumber', { n: photo.number })}`;
   return (
-    <section className={styles.review} lang={lang === 'zu' || lang === 'xh' ? lang : 'en'} aria-label={fm('photos')}>
+    <section className={styles.review} lang={lang === 'zu' || lang === 'xh' || lang === 'af' ? lang : 'en'} aria-label={fm('photos')}>
       <div className={styles.heading}><Camera size={16} aria-hidden /><h2>{fm('photosHeading')}</h2></div>
       <p>{fm('photosHelp')}</p>
       <div className={styles.strip}>

@@ -37,7 +37,8 @@ import { aspectLabel } from './biome';
 import type { PhasePlan } from './phasing';
 import { reportVisualText } from './report-visuals';
 import { reportRecordedSourceLabel } from './report-localisation';
-import { recordsMonthShort, recordsMonthRangeIndices, recordsSeasonLabel } from './records-months';
+import { recordsReportMonthShort, recordsMonthRangeIndices, recordsReportSeasonLabel } from './records-months';
+import { inlineDraftsLoaded } from '@/lib/xh-inline';
 
 /** `note` says how to read the drawing and what it cannot tell you; `source` says where every mark came from. */
 export type ReportFigure = { id: string; title: string; note: string; source: string; svg: string; width: number; height: number; alt: string };
@@ -50,8 +51,9 @@ const FONT = 'Arial, sans-serif';
 
 type Translate = (en: string, zu: string) => string;
 const translator = (language: string): Translate => (en, zu) => reportVisualText(en, language, {}, zu);
-// isiXhosa drafts (via reportVisualText) are as long as the other native drafts, so they wrap too.
-const nativeDraft = (language: string) => ['zu', 'xh', 'st', 'ts', 've'].includes(language);
+// isiXhosa drafts (via reportVisualText) are as long as the other native drafts, so they wrap too. So do
+// Afrikaans drafts, but only once they are loaded: before then Afrikaans is the English figure, unwrapped.
+const nativeDraft = (language: string) => ['zu', 'xh', 'st', 'ts', 've'].includes(language) || (language === 'af' && inlineDraftsLoaded('af'));
 const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
 const escapeXml = (s: string) => s.replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' }[c]!));
 /** Space-grouped thousands and a decimal point, built by hand: en-ZA's own formatter groups with
@@ -495,7 +497,7 @@ const seasonMonths=recordsMonthRangeIndices;
 
 /** Flagged months as readable runs, joining a run that wraps the year end: "Nov–Feb, Jun". */
 function monthRuns(flags: boolean[], language = 'en'): string {
-  const names = MONTHS.map((_, i) => recordsMonthShort(language, i + 1));
+  const names = MONTHS.map((_, i) => recordsReportMonthShort(language, i + 1));
   if (!flags.some(Boolean)) return '';
   if (flags.every(Boolean)) return `${names[0]}–${names[11]}`;
   const runs: string[] = [];
@@ -516,7 +518,7 @@ function barPath(x: number, base: number, w: number, h: number, r = 4) {
   return `M${px(x)} ${px(base)}V${px(y + rr)}Q${px(x)} ${px(y)} ${px(x + rr)} ${px(y)}H${px(x + w - rr)}Q${px(x + w)} ${px(y)} ${px(x + w)} ${px(y + rr)}V${px(base)}Z`;
 }
 
-const monthLabels = (p: Pen, left: number, slot: number, y: number, language = 'en') => MONTHS.forEach((_, i) => p.text(left + slot * (i + 0.5), y, recordsMonthShort(language, i + 1), { size: 12, fill: MUTED, anchor: 'middle' }));
+const monthLabels = (p: Pen, left: number, slot: number, y: number, language = 'en') => MONTHS.forEach((_, i) => p.text(left + slot * (i + 0.5), y, recordsReportMonthShort(language, i + 1), { size: 12, fill: MUTED, anchor: 'middle' }));
 
 type KeyEntry = { draw: (x: number, y: number) => void; label: string };
 /** Key entries left to right, wrapping to the drawing's width. Returns the y under the last row. */
@@ -567,7 +569,7 @@ function figureHeader(p: Pen, headline: string, detail: string, language: string
 function figureSeason(value: string | undefined, language: string): string {
   if (!value || !nativeDraft(language)) return value ?? '';
   if (value.endsWith(', episodic')) return reportVisualText('{range}, episodic', language, { range: figureSeason(value.slice(0, -10), language) });
-  return recordsSeasonLabel(language,value);
+  return recordsReportSeasonLabel(language,value);
 }
 
 function figurePhaseRange(value: string, language: string): string {
@@ -594,7 +596,7 @@ export function climateFigure(location: LocationData | null | undefined, languag
   const wettest = monthly.indexOf(Math.max(...monthly)), driest = monthly.indexOf(Math.min(...monthly));
   const left = 50, right = W - 14, slot = (right - left) / 12;
 
-  const month = (index: number) => recordsMonthShort(language, index + 1);
+  const month = (index: number) => recordsReportMonthShort(language, index + 1);
   const offset = figureHeader(p, `${figureNumber(annual)} mm ${t('of rain in an average year', 'yemvula ngonyaka ojwayelekile')}`,
     `${t('Wettest month', 'Inyanga enemvula kakhulu')}: ${month(wettest)} (${figureNumber(monthly[wettest])} mm)   ·   ${t('Driest month', 'Inyanga eyome kakhulu')}: ${month(driest)} (${figureNumber(monthly[driest])} mm)`, language);
 

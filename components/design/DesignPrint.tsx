@@ -546,6 +546,11 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
             {inlineText(lang, 'Unreviewed isiXhosa draft. Labels printed on the maps remain English.')}
           </p>
         )}
+        {lang === 'af' && (
+          <p lang="af" role="note" style={{ margin: 0, padding: '7px 16px', background: 'rgba(192,122,30,0.10)', color: '#5C3B0D', fontSize: 12, lineHeight: 1.4 }}>
+            {inlineText(lang, 'Unreviewed Afrikaans draft. Labels printed on the maps remain English.')}
+          </p>
+        )}
 
         <div style={{ display: 'flex', flex: 1, minHeight: 0, flexDirection: 'column', overflowY: 'auto' }}>
           {/* Controls */}

@@ -1,0 +1,151 @@
+{
+ "id": "reading-landscape",
+ "title": "Lees die landskap",
+ "description": "Identifiseer watervloei, sonhoeke, windpatrone en topografie op jou terrein.",
+ "lessons": [
+  {
+   "id": "reading-landscape-l1",
+   "title": "Verstaan watervloei: Waarheen reën op jou grond gaan",
+   "body": "Voordat jy water opvang, leer waarheen dit reeds gaan. Kyk van 'n veilige plek af tydens swaar reën. Wanneer dit daarna veilig is, stap oor jou grond. Soek na spoelvoortjies, plekke waar water uitwaaier, waar dit plasse vorm en waar dit jou eiendom verlaat. Sommige oortollige water het 'n veilige roete weg nodig sodat dit nie skade aanrig nie.\n\n'n A-raamwaterpas kan jou help om punte op dieselfde hoogte te merk en 'n kontoerlyn na te volg. Sy merke is 'n waarneming, nie 'n ontwerp of goedkeuring vir grondwerke nie. Voordat jy 'n kontoersloot, dam of ander struktuur grawe, laat die terrein beoordeel. Grond, helling, dreinering, stormvloei en 'n veilige oorlooproete is almal belangrik. Vra 'n opgeleide plaaslike adviseur.\n\nDaar is nie een plasingsreël vir elke helling nie. Neem waar waar water beweeg en saamkom. Swak uitgelegde kontoere kan erosie vererger, en grond wat water stadig opneem, kan te veel water hou. Kies enige waterwerke volgens die terrein en beplan 'n veilige roete vir oortollige water.",
+   "keyPoints": [
+    "Kyk van 'n veilige plek af tydens reën, en stap dan oor die grond wanneer dit veilig is",
+    "'n A-raam kan punte op dieselfde hoogte merk, maar dit wys nie of grondwerke geskik is nie",
+    "Waterwerke en veilige oorlooproetes het 'n terreinbeoordeling nodig",
+    "Sommige oortollige water het 'n veilige roete weg nodig om skade te voorkom"
+   ],
+   "quiz": [
+    {
+     "q": "Wat kan 'n A-raamwaterpas jou help vind?",
+     "options": [
+      "Punte op dieselfde hoogte langs 'n kontoer",
+      "Of 'n kontoersloot veilig op hierdie helling gebou kan word",
+      "Hoeveel stormwater die grond kan opneem",
+      "Waar 'n dam se oorloop gebou moet word"
+     ],
+     "correct": 0,
+     "rationale": "'n A-raam kan help om punte op dieselfde hoogte te merk. Dit beoordeel nie die grond, dreinering, stormvloei of of grondwerke geskik is nie."
+    },
+    {
+     "q": "Jy sien vinnige afloop op 'n hellende terrein in KZN. Wat moet jy doen voordat jy 'n waterstruktuur grawe?",
+     "options": [
+      "Plaas dit so hoog moontlik teen die helling",
+      "Kontroleer die grond, helling, dreinering en stormvloei, en beplan 'n veilige oorloop saam met 'n opgeleide plaaslike adviseur",
+      "Plaas dit waar ook al die water eerste verskyn",
+      "Volg dieselfde reël van bo, middel en onder wat op ander plase gebruik word"
+     ],
+     "correct": 1,
+     "rationale": "'n Plasingsreël kan nie wys of 'n struktuur by die terrein pas nie. Swak uitgelegde kontoere kan erosie vererger, en oortollige water het 'n veilige roete nodig."
+    }
+   ],
+   "infographicAlt": "'n Heuwelhang van die kant af gesien, met pyle wat wys waar reën teen die helling afloop, waar dit in 'n holte saamkom en waar dit insak waar die grond gelyker word."
+  },
+  {
+   "id": "reading-landscape-l2",
+   "title": "Sonhoeke, skaduwee en aspek: Kry die meeste uit sonlig",
+   "body": "In groot dele van Suid-Afrika, veral in die winter, is die son in die noorde. Sy baan verander met die seisoen en jou ligging. Noordhellings kry dikwels meer son en kan warmer en droër wees. Suidhellings is dikwels koeler en klammer. Ryp kan in lae holtes saamkom waar koue lug gaan lê. Hou jou eie terrein dop voordat jy kies waar om teer gewasse te plant of geboue te plaas.\n\nDie wintersons is laer en verder noord as die somerson. 'n Muur of skadunet kan 'n bedding in die winter langer beskadu as in die somer. Voordat jy enigiets permanent plaas, staan op 'n winterdag om 8 vm., middag en 4 nm. op die plek en kyk waar die skaduwee val.\n\nPapaja en jong sitrus is sensitief vir ryp. Hou teer plante uit bekende lae rypkolle. Neem plaaslike ryp waar voordat jy plant.",
+   "keyPoints": [
+    "Noordhellings kry dikwels meer direkte son; suidhellings is dikwels koeler en klammer",
+    "Die wintersons is laer en verder noord; kontroleer plaaslike skaduwee voordat jy bou",
+    "Koue lug kan in lae holtes saamkom; aspek is net een terreinfaktor",
+    "Kontroleer plaaslike ryp voordat jy teer papaja of jong sitrus plaas"
+   ],
+   "quiz": [
+    {
+     "q": "Waar moet 'n boer eerste kyk vir 'n plek vir 'n ryp-sensitiewe jong papaja op 'n kleinhoewe op die Hoëveld?",
+     "options": [
+      "Die laagste punt waar koue lug saamkom",
+      "'n Koue, beskaduwde holte",
+      "'n Sonnige plek buite 'n bekende rypholte, nadat die terrein se ryppatroon nagegaan is",
+      "'n Plek wat gekies is sonder om die terrein na te gaan"
+     ],
+     "correct": 2,
+     "rationale": "Koue lug kan in lae plekke saamkom. 'n Sonniger plek buite 'n bekende rypkol kan die risiko verminder, maar plaaslike rypwaarnemings moet die finale plek bepaal."
+    },
+    {
+     "q": "'n Boer beplan skadunet aan die noordekant van haar tuin. Wat moet sy nagaan voordat sy dit vasmaak?",
+     "options": [
+      "Waar die skaduwee daarvan in die winter op die bedding val",
+      "Of dit ryp weglei",
+      "Of die son altyd om middag reg bo is",
+      "Net of dit verdamping in die somer verminder"
+     ],
+     "correct": 0,
+     "rationale": "Die wintersons is laer en verder noord. Skadunet kan die ure son op 'n bedding verander. Kontroleer die werklike skaduwees om 8 vm., middag en 4 nm. voordat jy dit vasmaak."
+    }
+   ],
+   "infographicAlt": "'n Helling met die son in die noorde. Skaduwees van die gebou en die boom val suid, teen die helling af."
+  },
+  {
+   "id": "reading-landscape-l3",
+   "title": "Wind, ryp en topografie: Lees die onsigbare kragte",
+   "body": "Wind kan gewasse op 'n kleinhoewe beskadig. Die rigting en sterkte van skadelike wind verander met die streek, die seisoen en jou terrein se rante en gapings. Stap op winderige dae oor die grond. Teken aan waarvandaan die wind kom en wat dit raak. Kontroleer plaaslike weerrekords voordat jy besluit waar beskutting nodig is.\n\nOp 'n helder, windstil nag kan koue lug teen die helling afvloei en in lae plekke saamkom. Hierdie plekke kan kouer wees as nabygeleë hellings. Ryppatrone hang ook van die terrein af. Vergelyk moontlike plekke deur die plaaslike rypseisoen. Kontroleer plaaslike rekords van minimumtemperature waar dit beskikbaar is. As rekords nie beskikbaar is nie, hou aan om oor koue nagte waar te neem en vra 'n plaaslike landbouadviseur voordat jy 'n permanente plek vir teer saailinge kies.\n\nRyp is ys wat op 'n koue oppervlak vorm. Mis alleen wys nie dat ys gevorm het nie, en rypskade kan gebeur sonder sigbare ys. Soek na ys en plantskade, vergelyk lae grond met hellings, en kontroleer minimumtemperature waar jy kan. Merk plekke waar koue of skade die langste aanhou. Hou sensitiewe plante weg van die koue kolle wat jy waarneem.\n\nVir tamaties wat deur laatroes gepla word, kan lugvloei en oggendson help dat blare droog word. Laatroes kan steeds tydens langdurige koel, klam weer versprei. Om net 'n bedding te skuif, sal dit nie beheer nie; kry ook plaaslike raad oor gewasgesondheid.",
+   "keyPoints": [
+    "Neem die rigting van skadelike wind op jou terrein waar voordat jy beskutting plaas",
+    "Koue lug kan op helder, windstil nagte teen die helling afloop en in lae grond saamkom",
+    "Vergelyk plantskade en temperature ná koue nagte oor jou hele terrein; sigbare ryp is nie die enigste teken nie",
+    "Lugvloei en droogword kan help om nat blare te verminder, maar beheer nie op hul eie laatroes nie"
+   ],
+   "quiz": [
+    {
+     "q": "Waar moet 'n boer eerste kyk wanneer hy 'n kwekery vir ryp-sensitiewe saailinge op 'n kleinhoewe op die Hoëveld plaas?",
+     "options": [
+      "'n Bekende rypholte onder in die vallei",
+      "'n Blootgestelde rant, sonder om die wind na te gaan",
+      "'n Sonnige, beskutte plek buite 'n waargenome rypholte, nadat die terrein se patroon op koue nagte nagegaan is",
+      "Die plek met die meeste skaduwee, sonder om ryp na te gaan"
+     ],
+     "correct": 2,
+     "rationale": "Koue lug kan op helder, windstil nagte in lae plekke gaan lê. Vergelyk moontlike kwekeryplekke deur die plaaslike rypseisoen. Kontroleer plaaslike rekords van minimumtemperature of vra 'n plaaslike landbouadviseur voordat jy 'n permanente keuse maak. Sigbare ryp is nie die enigste teken van rypskade nie, en geen plek teen 'n heuwelhang waarborg dat dit vry van ryp sal bly nie."
+    },
+    {
+     "q": "'n Boer in KZN se tamaties kry herhaaldelik laatroes tydens koel, klam tydperke. Watter plek vir die bedding kan help dat blare droog word, saam met plaaslike raad oor gewasgesondheid?",
+     "options": [
+      "'n Verseëlde, ongeventileerde tonnel",
+      "'n Plek met goeie lugvloei en oggendson",
+      "'n Lae plek naby 'n dam",
+      "'n Beskaduwde suidmuur"
+     ],
+     "correct": 1,
+     "rationale": "Lugvloei en oggendson kan help dat blare droog word. Laatroes word deur langdurige koel, klam weer bevoordeel, en om net die bedding te skuif, is nie 'n volledige beheerplan nie."
+    }
+   ],
+   "infographicAlt": "'n Plaas van bo af gesien, met pyle wat die windrigting wys, koue lug wat teen die helling af na 'n rypholte dreineer, en die rigting van die helling."
+  },
+  {
+   "id": "reading-landscape-l4",
+   "title": "Maak 'n eenvoudige terreinkaart: Jou ontwerp begin op papier",
+   "body": "Vir 'n terreinkaart het jy papier, 'n maatband, 'n kompas en tyd nodig om oor jou grond te stap. Stap langs die grens en maak 'n eerste skets. Merk dit 'nie volgens skaal nie' totdat jy die afstande nagegaan het. Merk noord. Voeg die huis, bome, water, paaie en heinings by. Teken pyle vir somer- en winterwind, skadupatrone en waar water in reën vloei.\n\nLet op waar ryp die langste lê, waar die grond in droë maande klam ruik, en waar khakibos of blackjack dig groei. Hierdie plante kan op versteurde plekke groei, maar hulle teenwoordigheid alleen wys nie of die grond gekompakteer is nie. Kontroleer die grond voordat jy besluit wat die kol vir jou ontwerp beteken.\n\nLê jou sones en sektore oor dieselfde skets. Werk dit seisoen vir seisoen by. 'n Potloodskets wat jy werklik gebruik, is meer werd as 'n perfekte een wat net een keer geteken is.",
+   "keyPoints": [
+    "Vir 'n terreinkaart het jy net papier, 'n maatband, 'n kompas en waarneming nodig",
+    "Merk watervloei, windrigting, rypkolle en bestaande plantegroei",
+    "Merk digte groei van khakibos of blackjack vir 'n nader ondersoek van die grond; dit bewys nie kompaksie nie",
+    "Lê sones en sektore oor jou basiskaart om die geraamte van die ontwerp te voltooi"
+   ],
+   "quiz": [
+    {
+     "q": "Jy sien elke jaar digte blackjack in een hoek groei. Wat moet jy volgende doen?",
+     "options": [
+      "Die grond daar is buitengewoon vrugbaar",
+      "Daardie gebied het 'n hoër watertafel",
+      "Merk die kol en kontroleer die grond; die plant alleen kan nie kompaksie wys nie",
+      "Blackjack groei net in skaduwee, so daar is 'n verborge syferplek"
+     ],
+     "correct": 2,
+     "rationale": "Blackjack kan in versteurde grond groei, maar sy teenwoordigheid alleen diagnoseer nie kompaksie nie. Neem waar en kontroleer die grond voordat jy besluit wat die kol vir jou ontwerp beteken."
+    },
+    {
+     "q": "Hoekom moet jy somer- en winterwind afsonderlik op jou terreinkaart merk?",
+     "options": [
+      "Windrigting verander nooit in SA nie",
+      "Hulle kan uit verskillende rigtings kom, wat verander waar windskerms en teer gewasse moet kom",
+      "Wind is net in die winter op die Hoëveld belangrik",
+      "Windrigting raak net geboue"
+     ],
+     "correct": 1,
+     "rationale": "Seisoenale verskuiwings in die wind beteken dat 'n windskerm of gewasplasing wat vir een seisoen werk, vir die ander verkeerd kan wees — daarom moet albei afsonderlik gemerk word."
+    }
+   ],
+   "infographicAlt": "'n Handgetekende terreinkaart op papier wat noord, die geboue, die water en die grens wys — rof, soos 'n boer dit sou teken."
+  }
+ ]
+}

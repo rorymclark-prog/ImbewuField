@@ -1,5 +1,5 @@
 export type UpdateCopy = Readonly<Record<string, string>>;
-export type UpdateCopyLanguage = 'zu' | 'st' | 'ts' | 've' | 'xh';
+export type UpdateCopyLanguage = 'zu' | 'st' | 'ts' | 've' | 'xh' | 'af';
 const EMPTY: UpdateCopy = Object.freeze({});
 const loaders = {
   zu: () => import('./update-copy-locales/zu').then(m => m.default),
@@ -7,6 +7,7 @@ const loaders = {
   ts: () => import('./update-copy-locales/ts').then(m => m.default),
   ve: () => import('./update-copy-locales/ve').then(m => m.default),
   xh: () => import('./update-copy-locales/xh').then(m => m.default),
+  af: () => import('./update-copy-locales/af').then(m => m.default),
 };
 const cache = new Map<string, Promise<UpdateCopy>>();
 export function isUpdateCopyLanguage(lang:string):lang is UpdateCopyLanguage {

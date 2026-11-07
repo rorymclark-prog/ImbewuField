@@ -113,7 +113,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/exchange/ShareListingButton.tsx': 'wave 15 code-10: the share-a-listing menu; no sub-12px type',
   'components/prices/CropPriceGuide.tsx': 'wave 15 code-10: the crop price guide; no sub-12px type',
   'components/LanguageDraftNote.tsx': 'the shared isiZulu-draft notice (wave 14, zu-04) is read on farmer-facing phones',
-  'components/XhosaDraftNote.tsx': 'the isiXhosa wrapper around the shared draft notice; it sets no font size of its own',
+  'components/XhosaDraftNote.tsx': 'the isiXhosa and Afrikaans wrapper around the shared draft notice; it sets no font size of its own',
   'components/records/RecordQuantityFields.tsx': 'a farmer must read the production quantity and its unit before saving',
   'components/records/RecordQuantitySummary.tsx': 'eggs and packages need readable separate totals beside weighed harvests',
   'components/SiteSurveySheet.tsx': 'the field survey now has no sub-12px labels; keep that gain',

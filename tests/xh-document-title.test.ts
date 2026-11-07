@@ -3,7 +3,7 @@
 // The metadata titles in app/**/layout.tsx stay static English (tests/page-titles.test.ts), so
 // the translation happens in the browser: a client component mounted once inside the language
 // provider rewrites document.title when the language is isiXhosa. This pins that the component
-// exists, is mounted, only acts for 'xh', survives Next.js re-setting the title, and that every
+// exists, is mounted, only acts for 'xh' (and 'af'), survives Next.js re-setting the title, and that every
 // static metadata title has an isiXhosa draft (or is listed as intentionally English).
 //
 // Run with:
@@ -54,13 +54,14 @@ function staticTitles(): { file: string; title: string }[] {
   return found;
 }
 
-test('the component exists and acts only for isiXhosa', () => {
+test('the component exists and acts only for isiXhosa and Afrikaans', () => {
   const src = read('components/DocumentTitle.tsx');
   assert.match(src, /^'use client';/m);
   assert.match(src, /useLanguage\(\)/);
   assert.match(src, /usePathname\(\)/);
-  assert.match(src, /lang !== 'xh'/, 'must return early for every language but isiXhosa');
-  assert.match(src, /inlineText\('xh'/, 'translates through the inline isiXhosa drafts');
+  assert.match(src, /if \(\(lang !== 'xh' && lang !== 'af'\) \|\| typeof document === 'undefined'\) return;/, 'must return early for every language but isiXhosa and Afrikaans');
+  assert.match(src, /export function xhDocumentTitle\(english: string, lang = 'xh'\)/, 'isiXhosa is the default title language');
+  assert.match(src, /inlineText\(lang, english\)/, 'translates through the inline drafts (isiXhosa unless Afrikaans is passed)');
   assert.match(src, /SUFFIX/, 'splits off the shared " — ImbewuField" suffix');
 });
 

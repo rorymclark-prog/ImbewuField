@@ -59,7 +59,7 @@ import { kgLabel, kgTotalLabel, randLabel, randTick } from '@/lib/format-figures
 import { soldBarParts, type CohortMonth, type CohortSeries, type SoldBarParts } from '@/lib/cohort-series';
 import type { CohortTraining } from '@/lib/cohort-report';
 import { useLanguage } from '@/lib/i18n';
-import { recordsMonthShort } from '@/lib/records-months';
+import { recordsBookMonthShort, recordsMonthShort } from '@/lib/records-months';
 import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 
 /* White programme cards and darker labels; preserve the harvest/sales colour meanings. */
@@ -336,11 +336,15 @@ function SplitKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
 export function CohortTimeline({ series, className }: { series: CohortSeries; className?: string }) {
   const { lang } = useLanguage();
   // The month axis, its tooltips and the "cut in full" sentences take the isiXhosa short month names
-  // (lib/records-months.ts); every other language keeps the English labels lib/cohort-series.ts builds.
+  // (lib/records-months.ts) or, for Afrikaans, the standard Afrikaans ones (recordsBookMonthShort, NOT the shared
+  // month tables, which Afrikaans is deliberately outside); every other language keeps the English labels
+  // lib/cohort-series.ts builds.
   const months = useMemo(
     () => (lang === 'xh'
       ? series.months.map((m) => ({ ...m, label: recordsMonthShort(lang, m.month), longLabel: `${recordsMonthShort(lang, m.month)} ${m.year}` }))
-      : series.months),
+      : lang === 'af'
+        ? series.months.map((m) => ({ ...m, label: recordsBookMonthShort(lang, m.month), longLabel: `${recordsBookMonthShort(lang, m.month)} ${m.year}` }))
+        : series.months),
     [series.months, lang],
   );
 

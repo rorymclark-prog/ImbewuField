@@ -1,0 +1,87 @@
+{
+  "unit": "p6",
+  "okCount": 312,
+  "items": [
+    {
+      "index": 44,
+      "verdict": "repair",
+      "english": "Withdrawn",
+      "draft": "Onttrek",
+      "backtranslation": "Withdraw",
+      "problem": "Draft 'Onttrek' reads as the button 'Withdraw' (same as items 59/61), so a status meaning the consent/response is already withdrawn looks like an action still to take.",
+      "corrected": "Is onttrek"
+    },
+    {
+      "index": 130,
+      "verdict": "repair",
+      "english": "Reviewed for funder sharing",
+      "draft": "Hersien vir deel met befondsers",
+      "backtranslation": "Review for sharing with funders",
+      "problem": "'Hersien vir deel met befondsers' reads as an instruction 'Review for sharing' rather than the confirmed status 'Reviewed', so it is unclear whether the funder-sharing review has happened.",
+      "corrected": "Is hersien vir deling met befondsers"
+    },
+    {
+      "index": 131,
+      "verdict": "repair",
+      "english": "Reviewed for funder sharing · registers stay private",
+      "draft": "Hersien vir deel met befondsers · registers bly privaat",
+      "backtranslation": "Review for sharing with funders · registers stay private",
+      "problem": "Same as 130: reads as an instruction to review instead of a status that review for funder sharing is done.",
+      "corrected": "Is hersien vir deling met befondsers · registers bly privaat"
+    },
+    {
+      "index": 156,
+      "verdict": "repair",
+      "english": "Clarify consent and access with the organisation. Missing permission is not poor performance.",
+      "draft": "Verduidelik toestemming en toegang saam met die organisasie. Ontbrekende toestemming is nie swak prestasie nie.",
+      "backtranslation": "Explain consent and access together with the organisation. Missing consent is not poor performance.",
+      "problem": "'Verduidelik ... saam met die organisasie' means 'explain together with the organisation' instead of 'clarify (find out) with the organisation', reversing who must give the explanation about consent.",
+      "corrected": "Klaar toestemming en toegang met die organisasie uit. Ontbrekende toestemming is nie swak prestasie nie."
+    },
+    {
+      "index": 186,
+      "verdict": "repair",
+      "english": "On iPhone: open the link in Safari, tap Share, then “Add to Home Screen”.",
+      "draft": "Op iPhone: maak die skakel in Safari oop, tik Deel, dan “Voeg by tuisskerm”.",
+      "backtranslation": "On iPhone: open the link in Safari, tap Share, then \"Add to home screen\".",
+      "problem": "iPhones have no Afrikaans system language, so the Safari menu shows 'Add to Home Screen'; a farmer looking for 'Voeg by tuisskerm' will not find it.",
+      "corrected": "Op iPhone: maak die skakel in Safari oop, tik Deel (Share), dan “Add to Home Screen”."
+    },
+    {
+      "index": 202,
+      "verdict": "repair",
+      "english": "Sharing this bed with another crop at the same time. The kilogram comparison uses each crop's allocated area only; no generic intercropping bonus or penalty is invented.",
+      "draft": "Deel hierdie bedding terselfdertyd met 'n ander gewas. Die kilogramvergelyking gebruik slegs elke gewas se toegewese oppervlakte; geen algemene tussenplant-bonus of -straf word uitgedink nie.",
+      "backtranslation": "Share this bed at the same time with another crop. The kilogram comparison uses only each crop's allocated area; no general intercropping bonus or penalty is invented.",
+      "problem": "The English describes a state ('Sharing this bed with another crop'); the draft is an imperative 'Share this bed with another crop', which tells the farmer to intercrop.",
+      "corrected": "Hierdie bedding word terselfdertyd met 'n ander gewas gedeel. Die kilogramvergelyking gebruik slegs elke gewas se toegewese oppervlakte; geen algemene tussenplant-bonus of -straf word uitgedink nie."
+    },
+    {
+      "index": 262,
+      "verdict": "repair",
+      "english": "A project has an installation team but no agreed person to look after it afterwards. What is incomplete?",
+      "draft": "'n Projek het 'n installeringspan maar geen ooreengekome persoon om daarna daarna om te sien nie. Wat is onvolledig?",
+      "backtranslation": "A project has an installation team but no agreed person to look after it after that after that [duplicated \"daarna\"]. What is incomplete?",
+      "problem": "Duplicated 'daarna daarna' makes the sentence garbled ('look after it after that after that').",
+      "corrected": "'n Projek het 'n installeringspan maar geen ooreengekome persoon om dit daarna te versorg nie. Wat is onvolledig?"
+    },
+    {
+      "index": 267,
+      "verdict": "repair",
+      "english": "Build a small evidence folder or envelope, with references that match the notebook. Use sample records if private material cannot be redacted. Keep actual customer details out of classroom screenshots.",
+      "draft": "Bou 'n klein bewyslêer of koevert, met verwysings wat by die notaboek pas. Gebruik voorbeeldrekords as private materiaal nie geredigeer kan word nie. Hou werklike kliëntbesonderhede uit klaskamerskermskote.",
+      "backtranslation": "Build a small evidence file or envelope, with references that match the notebook. Use sample records if private material cannot be edited/redacted. Keep real client details out of classroom screenshots.",
+      "problem": "'geredigeer' means 'edited', not 'redacted', so the privacy rule becomes 'use sample records if private material cannot be edited' instead of 'cannot be blacked out'.",
+      "corrected": "Bou 'n klein bewyslêer of koevert, met verwysings wat by die notaboek pas. Gebruik voorbeeldrekords as private materiaal nie uitgeswart kan word nie. Hou werklike kliëntbesonderhede uit klaskamerskermskote."
+    },
+    {
+      "index": 320,
+      "verdict": "repair",
+      "english": "Saving keeps one folder for this account on this browser and device. It does not sync to another device. Guest notes are shared by people using this browser. Download a text copy to keep with your drawings, and save before leaving this page.",
+      "draft": "Stoor hou een lêer vir hierdie rekening op hierdie blaaier en toestel. Dit sinkroniseer nie na 'n ander toestel nie. Gasnotas word gedeel deur mense wat hierdie blaaier gebruik. Laai 'n tekskopie af om saam met jou tekeninge te hou, en stoor voordat jy hierdie bladsy verlaat.",
+      "backtranslation": "Save keeps one file for this account on this browser and device. It does not sync to another device. Guest notes are shared by people who use this browser. Download a text copy to keep with your drawings, and save before you leave this page.",
+      "problem": "'lêer' is a file, but the English says Save keeps one folder; users may expect a single file they can find.",
+      "corrected": "Stoor hou een vouer vir hierdie rekening op hierdie blaaier en toestel. Dit sinkroniseer nie na 'n ander toestel nie. Gasnotas word gedeel deur mense wat hierdie blaaier gebruik. Laai 'n tekskopie af om saam met jou tekeninge te hou, en stoor voordat jy hierdie bladsy verlaat."
+    }
+  ]
+}

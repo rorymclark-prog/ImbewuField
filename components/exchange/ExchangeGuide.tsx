@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp, Handshake, Leaf, Package, ShoppingBasket, Sprou
 import { EX } from './theme';
 import { useLanguage } from '@/lib/i18n';
 import { ExchangeSourceCopy } from './ExchangeCopy';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 /**
  * The teaching panel. Two entry points, one body:
@@ -30,7 +30,7 @@ export default function ExchangeGuide({
 }) {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
-  const xh = lang === 'xh';
+  const xh = isInlineDraftLang(lang); // isiXhosa or Afrikaans: the English-keyed inline drafts
   const tx = (en: string, dz: string) => inlineText(lang, en, dz);
   const [expanded, setExpanded] = useState(false);
   const examples: Array<{ icon: typeof Leaf; label: string; example: string }> = [

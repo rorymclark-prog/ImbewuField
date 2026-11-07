@@ -1,0 +1,642 @@
+{
+  "language": "af",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Market Gardening & Community",
+        "body": [
+          "Your garden gives food, income, and useful knowledge.",
+          "This module shows how to keep records, sell surplus, and build local food networks.",
+          "The aim is a farm that feeds the household and works as a small, clear economy."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Marktuinbou en gemeenskap"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Jou tuin gee kos, inkomste en nuttige kennis."
+          },
+          {
+            "status": "draft",
+            "text": "Hierdie module wys hoe om rekords te hou, oorskot te verkoop en plaaslike voedselnetwerke te bou."
+          },
+          {
+            "status": "draft",
+            "text": "Die doel is 'n plaas wat die huishouding voed en as 'n klein, duidelike ekonomie werk."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "A harvest can feed the household, be sold, be shared, or be lost.",
+          "Recording these different uses helps you see what the farm produces and what reaches customers.",
+          "Use that information to protect household food and make better business decisions."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hoekom dit saak maak"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Oes kan die huishouding voed, verkoop word, gedeel word of verlore gaan."
+          },
+          {
+            "status": "draft",
+            "text": "As jy hierdie verskillende gebruike aanteken, sien jy wat die plaas produseer en wat by klante uitkom."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik daardie inligting om die huishouding se kos te beskerm en beter sakebesluite te neem."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end, you can record harvests and where they go.",
+          "You can work out the true cost of production before setting a price.",
+          "You can match surplus to a suitable customer or selling channel.",
+          "You can build a local network for seeds, tools, skills, and food."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Leeruitkomste"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Aan die einde kan jy oeste aanteken en waarheen hulle gaan."
+          },
+          {
+            "status": "draft",
+            "text": "Jy kan die werklike produksiekoste bereken voordat jy 'n prys vasstel."
+          },
+          {
+            "status": "draft",
+            "text": "Jy kan oorskot by 'n geskikte klant of verkoopskanaal pas."
+          },
+          {
+            "status": "draft",
+            "text": "Jy kan 'n plaaslike netwerk vir saad, gereedskap, vaardighede en kos bou."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Watch: What the Farm Record Shows",
+        "body": [
+          "The record follows each harvest to family food, sales, gifts, or compost.",
+          "Read across the season to see the farm as an economy before making a business decision."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Wat die plaasrekord wys"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Die rekord volg elke oes na kos vir die gesin, verkope, geskenke of kompos."
+          },
+          {
+            "status": "draft",
+            "text": "Lees oor die hele seisoen om die plaas as 'n ekonomie te sien voordat jy 'n sakebesluit neem."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Record Every Harvest",
+        "body": [
+          "Write down every harvest as it happens.",
+          "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+          "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+          "Do not rely on memory at the end of the season."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Teken elke oes aan"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Skryf elke oes neer soos dit gebeur."
+          },
+          {
+            "status": "draft",
+            "text": "Teken kilogram tamaties, dosyne eiers en bondels morogo aan, en skryf dan neer waarheen elkeen gegaan het."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik dieselfde eenvoudige gewoonte vir kos wat by die huis gehou word, produkte wat verkoop word, produkte wat weggegee word en produkte wat gekomposteer word."
+          },
+          {
+            "status": "draft",
+            "text": "Moenie aan die einde van die seisoen op jou geheue staatmaak nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Let One Season Answer Questions",
+        "body": [
+          "One season of records answers practical questions.",
+          "Which crops give the best yield per bed? Which return the most for each hour of work?",
+          "Which crops use more seeds, water, and compost than they return?",
+          "The record also shows which months leave the household buying food."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Laat een seisoen vrae beantwoord"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Een seisoen se rekords beantwoord praktiese vrae."
+          },
+          {
+            "status": "draft",
+            "text": "Watter gewasse gee die beste opbrengs per bedding? Watter bring die meeste in vir elke uur se werk?"
+          },
+          {
+            "status": "draft",
+            "text": "Watter gewasse gebruik meer saad, water en kompos as wat hulle teruggee?"
+          },
+          {
+            "status": "draft",
+            "text": "Die rekord wys ook in watter maande die huishouding kos moet koop."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Find the True Cost",
+        "body": [
+          "Before setting a price, record production, packing and selling costs, including labour and transport.",
+          "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+          "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Vind die werklike koste"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Voordat jy 'n prys vasstel, teken produksie-, verpakkings- en verkoopkoste aan, insluitend arbeid en vervoer."
+          },
+          {
+            "status": "draft",
+            "text": "Hier is 'n onderrigvoorbeeld, nie 'n markprys nie: die koste van tamaties is R18 per kilogram, maar hulle word vir R15 per kilogram verkoop. Daardie prys dek nie die vermelde koste nie."
+          },
+          {
+            "status": "draft",
+            "text": "Hersien die prys, die koste en die volgende aanplanting. Kontroleer wat klante werklik sal koop; 'n hoër vraprys is nie 'n gewaarborgde verkoping nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Plan for the Food Gap",
+        "body": [
+          "Use your record to find when household food runs short.",
+          "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+          "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Beplan vir die voedseltekort"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Gebruik jou rekord om uit te vind wanneer die huishouding se kos min raak."
+          },
+          {
+            "status": "draft",
+            "text": "Kies plaaslik geskikte gewasse en werk terug van die oes wat jy nodig het. Kontroleer die toestande vir plant en die verwagte tyd tot oes."
+          },
+          {
+            "status": "draft",
+            "text": "'n Datum wat op 'n ander plaas werk, werk dalk nie hier nie. Sluit 'n noodplan in vir wanneer reën, water of gewasse misluk."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Watch: Where Surplus Can Go",
+        "body": [
+          "Surplus can leave the farm through a roadside stall, a group delivery to a shop, or a box delivered to a household.",
+          "The arrows show each route."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Waarheen oorskot kan gaan"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Oorskot kan die plaas verlaat deur 'n padstalletjie, 'n groepsaflewering aan 'n winkel, of 'n boks wat by 'n huishouding afgelewer word."
+          },
+          {
+            "status": "draft",
+            "text": "Die pyle wys elke roete."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Know Your Customer",
+        "body": [
+          "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+          "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+          "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ken jou klant"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vra wat die klant nodig het: produk, hoeveelheid, gehalte, aflewering en betaaldatum."
+          },
+          {
+            "status": "draft",
+            "text": "Vergelyk markfooie, vervoer, verpakking en onverkoopte produkte sowel as die verkoopprys."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer die markreëls en die plaaslike vereistes vir handel en voedsel. 'n Informele stalletjie is nie outomaties sonder reëls of koste nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Count the Work of Direct Selling",
+        "body": [
+          "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+          "A box scheme supplies a regular selection to agreed customers.",
+          "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Reken die werk van direkte verkope in"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Direkte verkope kan meer van die verkoopprys behou, maar dit verg ook tyd, verpakking, vervoer en kliëntediens."
+          },
+          {
+            "status": "draft",
+            "text": "'n Boksskema voorsien 'n gereelde keuse van produkte aan ooreengekome klante."
+          },
+          {
+            "status": "draft",
+            "text": "Kom ooreen oor die inhoud, prys en betaling en oor wat gebeur wanneer daar 'n tekort aan gewasse is. Gereelde bestellings help net met beplanning wanneer klante en kwekers die ooreenkoms kan nakom."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Plan Around Real Orders",
+        "body": [
+          "Start from what you can reliably supply and what customers want.",
+          "Check the costs and household food needs before promising regular boxes.",
+          "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Beplan rondom werklike bestellings"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Begin by wat jy betroubaar kan voorsien en wat klante wil hê."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer die koste en die huishouding se voedselbehoeftes voordat jy gereelde bokse belowe."
+          },
+          {
+            "status": "draft",
+            "text": "Tuinoppervlakte of die getal klante alleen voorspel nie inkomste nie. Probeer 'n hanteerbare reëling en teken die resultate aan."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Match the Channel to Your Supply",
+        "body": [
+          "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+          "Offer the surplus you have and agree clear terms with customers.",
+          "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Pas die kanaal by jou voorraad"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "As produksie van week tot week verander, vermy om 'n vaste aflewering te belowe wat jy nie kan voorsien nie."
+          },
+          {
+            "status": "draft",
+            "text": "Bied die oorskot aan wat jy het en kom duidelike voorwaardes met klante ooreen."
+          },
+          {
+            "status": "draft",
+            "text": "Beskryf jou kweekpraktyke eerlik. Kontroleer enige sertifisering of bewering wat die koper vereis voordat jy 'n etiket gebruik."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Watch: How Neighbours Strengthen a Harvest",
+        "body": [
+          "One farm can produce food.",
+          "A group can share seed, tools, skills, and transport.",
+          "Separate growers become a stronger local food network, with each household contributing what it can."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Hoe bure 'n oes versterk"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Een plaas kan kos produseer."
+          },
+          {
+            "status": "draft",
+            "text": "'n Groep kan saad, gereedskap, vaardighede en vervoer deel."
+          },
+          {
+            "status": "draft",
+            "text": "Afsonderlike kwekers word 'n sterker plaaslike voedselnetwerk, en elke huishouding dra by wat dit kan."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Save Seed Together",
+        "body": [
+          "Neighbours can share different varieties and the work of saving seed.",
+          "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+          "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.",
+          "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bewaar saad saam"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bure kan verskillende variëteite en die werk van saadbewaring deel."
+          },
+          {
+            "status": "draft",
+            "text": "Teken die gewas, variëteit, bron en versameldatum aan. Beplan geskikte isolasie, seleksie, droging en berging vir elke gewas."
+          },
+          {
+            "status": "draft",
+            "text": "Deel vermeerder nie outomaties diversiteit nie en verbeter nie outomaties gehalte nie. Kontroleer identiteit en ontkieming voordat jy op gedeelde saad staatmaak."
+          },
+          {
+            "status": "draft",
+            "text": "Voordat jy saad ruil, kontroleer of die variëteit beskerm is en of toestemming nodig is."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Share Expensive Tools",
+        "body": [
+          "Tool sharing puts expensive equipment within reach of the group.",
+          "A water pump or grain mill may be beyond one household’s budget.",
+          "Shared use spreads the value across the group and helps each farm do work it could not do alone."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Deel duur gereedskap"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Deur gereedskap te deel, kom duur toerusting binne die groep se bereik."
+          },
+          {
+            "status": "draft",
+            "text": "'n Waterpomp of graanmeul is dalk buite een huishouding se begroting."
+          },
+          {
+            "status": "draft",
+            "text": "Gedeelde gebruik versprei die waarde oor die groep en help elke plaas om werk te doen wat dit nie alleen kon doen nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Reduce Loss Between Harvest and Sale",
+        "body": [
+          "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+          "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+          "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Verminder verliese tussen oes en verkoop"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hanteer produkte saggies en sorg vir geskikte skadu, verpakking en berging tot by aflewering."
+          },
+          {
+            "status": "draft",
+            "text": "'n Nabygeleë koper kan die reis verkort, maar verliese en verkoopkoste moet steeds gemeet word."
+          },
+          {
+            "status": "draft",
+            "text": "Vergelyk vir elke opsie die geld wat ná fooie, vervoer en bederf ontvang word. Moenie aanvaar dat die naaste koper altyd die beste opbrengs gee nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Share Skills and Check Results",
+        "body": [
+          "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+          "Record the method, conditions and result so others can judge whether it may suit their land.",
+          "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Deel vaardighede en kontroleer resultate"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bure kan nuttige vaardighede demonstreer en vergelyk wat op hul eie plase gebeur het."
+          },
+          {
+            "status": "draft",
+            "text": "Teken die metode, toestande en resultaat aan sodat ander kan oordeel of dit dalk by hul grond pas."
+          },
+          {
+            "status": "draft",
+            "text": "Soek gekwalifiseerde advies vir onbekende siektes of tegniese probleme. Gedeelde ervaring en spesialishulp kan saamwerk."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Field Assignment: Make a Farm Record",
+        "body": [
+          "Use headings for harvest, where it went, costs, and labour.",
+          "Record every kilogram, dozen, or bundle as it leaves the farm.",
+          "Include food kept by the household, produce sold, produce gifted, and produce composted.",
+          "At the end of one season, identify a crop that returns well and a month when the household buys food."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldopdrag: Maak 'n plaasrekord"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Gebruik opskrifte vir oes, waarheen dit gegaan het, koste en arbeid."
+          },
+          {
+            "status": "draft",
+            "text": "Teken elke kilogram, dosyn of bondel aan soos dit die plaas verlaat."
+          },
+          {
+            "status": "draft",
+            "text": "Sluit kos in wat die huishouding hou, produkte wat verkoop word, produkte wat weggegee word en produkte wat gekomposteer word."
+          },
+          {
+            "status": "draft",
+            "text": "Identifiseer aan die einde van een seisoen 'n gewas wat 'n goeie opbrengs gee en 'n maand wanneer die huishouding kos koop."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Field Action: Use the Record",
+        "body": [
+          "Choose one real decision from your farm record.",
+          "Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions.",
+          "Then agree one practical seed swap, tool share, shared delivery or skills session with neighbours. Before a seed swap, check whether the variety is protected and whether permission is needed. Record responsibilities and review what happens."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldaksie: Gebruik die rekord"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kies een werklike besluit uit jou plaasrekord."
+          },
+          {
+            "status": "draft",
+            "text": "Vergelyk die koste en opbrengs van 'n gewas of verkoopsroete, of beplan vir 'n voedseltekort in die huishouding met behulp van plaaslike groeitoestande."
+          },
+          {
+            "status": "draft",
+            "text": "Kom dan met bure ooreen oor een praktiese saadruil, gereedskapdeling, gedeelde aflewering of vaardigheidsessie. Voordat jy saad ruil, kontroleer of die variëteit beskerm is en of toestemming nodig is. Teken verantwoordelikhede aan en hersien wat gebeur."
+          }
+        ]
+      }
+    }
+  ]
+}

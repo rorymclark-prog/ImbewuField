@@ -1,0 +1,323 @@
+0 | If you are worried that grain diseases are carried over, swap it yourself for broad beans.
+1 | Your frost months as observed by the farmer ({months}) were used: frost-sensitive crops are not suggested when their field growing period stretches over those months.
+2 | Months that were not recorded are not a promise of frost-free conditions.
+3 | Yield measures are only used where the catalogue has them; missing kilograms are never made up.
+4 | Frost-free sowing months for {names} do not yet come from a published local table — check those dates with your extension officer before you rely on them.
+5 | {names} was left out: no sowing window remains after your observed frost months ({months}) and the available site climate were checked.
+6 | {names} was left out: no sowing window remains after your observed frost months ({months}) and the available site climate were checked.
+7 | Check a sheltered growing area or local timing with your extension officer before you yourself add frost-sensitive crops.
+8 | the field period stretches over your observed frost months
+9 | the field period stretches over your observed frost months, or another heat or rainfall test for the site rules it out
+10 | . The mild, dry winter suits cool-season crops; the warm, frost-free conditions also carry
+11 | . The warm, frost-free conditions also carry
+12 |  thrive. Mild winters keep frost-sensitive crops viable on sheltered slopes.
+13 | . High humidity — choose disease-resistant varieties and provide as much airflow as possible.
+14 |  on warm north slopes. Protect all crops against frost and strong wind.
+15 | This measurement did not record where its figures come from. Treat it with the same caution as a model estimate.
+16 | NOT A MEASUREMENT. No soil data was available for this point, so these are the app's general figures — the same numbers it would show everywhere. Don't spend money on the basis of it. A soil test is the only way to know.
+17 | Farmers who choose to be visible appear here as an approximate area — never their exact homestead.
+18 | Repeat attendance counts as another attendance, not another person. Attendance and satisfaction are evidence of delivery; they do not on their own prove acquired skills or impact.
+19 | This is a sum of each garden's latest recorded observation, not necessarily an area planted on one common date. Check again at each reporting period. Checked by the organisation does not mean independently audited. Crop cycles and multiple farmers do not add extra hectares.
+20 | I have checked that these areas do not overlap and that this garden is not registered under another code.
+21 | Grain maize for maize meal. Sow directly into a mapped staple-food plot as soon as frost danger is past; use several adjacent rows for wind pollination. The 140 days reserved in the calendar are conservative — confirm the cultivar's maturity time before harvest.
+22 | Plant after frost danger: November to mid-January in frost areas, or March-April in frost-free areas. Let pods turn yellow and dry before you shell and store them.
+23 | Cut-and-come-again leafy cabbage crop: pick the outer leaves and the plant keeps producing, and light frost makes the taste sweeter. It does not handle extreme heat — in warm areas late-summer and autumn sowings are better. No South African yield for kale has ever been published yet, so the kilogram estimate here comes from Kenyan and American extension figures, reduced for a bed watered by hand — consider it a placeholder in planning, not a promise.
+24 | Sow only directly — carrots do not transplant well. Keep the bed loose and stone-free.
+25 | Is grown from rooted cuttings, not from seed — plant in soil with ridges so that it can easily be dug out later.
+26 | Propagate from whole tubers or pieces of tubers. Needs consistently moist soil and warm, frost-free conditions.
+27 | This plant spacing is the audited irrigated layout. Groundnuts need sandy, well-drained soil and a long frost-free growing season.
+28 | The classic legume that 'grows through the winter' — sow in autumn, it stands through frost and makes pods in spring.
+29 | True spinach (Spinacia oleracea) — not the Swiss chard that South Africans usually call spinach. Cool-season and fast: it bolts in heat, so stick to the cool sowing times and pick in time. The same botanical family (Amaranthaceae) as Swiss chard and beet, so the rotation rule treats all three as one family — don't plant one after another in the same bed.
+30 | Cool-weather Brassica root crop — sow only directly and thin out early so the roots can swell. Same botanical family as cabbage, kale and broccoli, so don't plan turnips directly after (or before) another cabbage crop in the same bed. Young leaves are a traditional edible vegetable — pick sparingly; the yield figure covers only the roots.
+31 | DAFF: leaves are picked about every two weeks once the harvest starts, and it continues until frost ends the crop.
+32 | A cabbage crop like cabbage and broccoli — the same rotation family, so avoid planting one directly after another in the same bed. DAFF says cauliflower survives down to about 0°C once established, so it is not marked as frost-sensitive here, but young transplants must still be protected against a sudden hard frost.
+33 | A drought-resistant grain crop, more heat- and drought-resistant than maize. A December sowing is left out of this catalogue's planner because the resulting May harvest would run into the frost — still workable with local frost protection, just not automatically scheduled here. No named SA cultivars were found.
+34 | A nitrogen-fixing legume grown for dry beans, not for green pods. DAFF never mentions a frost sensitivity for soybeans, so it is not marked here as frost-sensitive — but it is a warm-season crop and these sowing months are already timed for that.
+35 | Solanaceae family, the same as tomatoes, sweet peppers, chillies and potato — keep this rotation family together when you plan beds. Frost-sensitive: grow as transplants and only plant out once frost danger is past.
+36 | Cucurbitaceae family, the same as pumpkin, butternut, cucumber and watermelon — avoid repeating this family in the same bed. Frost-sensitive vine crop; no Western Cape sowing calendar was found, although it is a known WC crop, so consider it something to confirm locally.
+37 | A fast-bearing Cucurbitaceae vine that is picked young and often — the same rotation family as pumpkin, gem squash, cucumber and watermelon. Frost-sensitive; no Western Cape calendar was obtained from sources.
+38 | Cucurbitaceae cantaloupe/melon vine. A January sowing is left out of this catalogue's planner because the resulting harvest would run into the frost — still workable with local frost protection, just not automatically scheduled here.
+39 | Is grown and eaten as a fresh vegetable, unlike field maize — the dossier's own food group is fruit vegetable, not staple grain, so it is kept there rather than being grouped with maize, although it is the same species. Frost-sensitive like maize.
+40 | An indigenous nitrogen-fixing legume grown for its underground dry seed pods (a relative of the groundnut, not a true bean). The yield figure is dry seed, the low side of genotype averages across seven South African trial sites. A December sowing is left out of this catalogue's planner because the resulting harvest would run into the frost.
+41 | An oilseed crop grown for dry seed. Frost sensitivity was taken from ECOCROP (DAFF's own guide does not mention frost), and only a November sowing is automatically scheduled here — December and January sowings are left out of this catalogue's planner because their harvest would run into the frost. No named SA cultivars were found.
+42 | An indigenous leafy vegetable (Solanum retroflexum, umsobo/nightshade) grown for its leaves and picked young — the ripe berries of some related Solanum species are poisonous, so follow only a trusted local source on which parts are eaten. DAFF: sensitive to frost. No South African cultivars or yield figures were found, so it stays manual.
+43 | A fast-growing cover crop for biomass/soil improvement and grazing that is grown to full flower, not for a food harvest — it is not counted in the kitchen's harvest totals. Same botanical family as radish and cabbage, so plan rotation accordingly. Not itself frost-sensitive, but is killed by the first hard frost or by herbicide, which is the usual way it is terminated.
+44 | Quantities stay in their recorded units. Bags, crates, eggs, pieces and other counts are never converted to kilograms. Names are kept as recorded; crops with different names are not automatically merged.
+45 | {n} local invoices are currently marked as unpaid. They are not included in money received.
+46 | Check missing costs, unpaid invoices and supporting slips before you share the report. Costs without labels are never allocated to crop profit.
+47 | Track what happened. A buyer paid for produce. The owner added some of their own money. The farm borrowed money. All three can put money in the tin, but they are different events. Write the reason next to each amount. When the owner takes money home, record that too. Don't hide it among packaging or transport. The farm and the household both matter. Clear records help you see how they support each other.
+48 | Give each record a date and a clear reason. Keep the receipt, invoice or another useful reference. Reopen the entry after saving and compare it with the source. Check the amount and the unit. A kilogram and a bunch are different. If evidence is missing, write what is unknown. Don't use zero to mean 'I don't know'. Keep a note of a correction so you can explain it later.
+49 | Reconcile means compare and explain. Count the cash. Read the wallet statement. Link deliveries, sales, payments and receipts by their references. Check the dates and units as well as the totals. When you find an error, keep the original reference and write what changed and why. If you can't yet explain a difference, say so. Don't add a guessed entry just to make the totals agree.
+50 | Start with a product and a period. A direct cost belongs to that product. A shared cost serves more than one product. Use a record of how it was used to split it, and explain your choice. Split the cost; don't copy the whole bill into both crops. Keep the family's work hours visible too. No wage paid does not mean no work done. An amount used to value that time is different from cash paid out.
+51 | A budget is a plan with reasons behind the numbers. Name the activity and the period. Show what you expect to sell and what you expect to use. Keep shared bills once in the farm total. Family work still matters when no wage is paid. Write down what you don't know yet. A positive answer on paper does not prove that the soil, water, time or buyers are available.
+52 | Look in your records before you add something. If the invoice is already there, open it. If the sale is there but needs an invoice, use that sale. If you bring in an older or paper record, keep its original reference and dates. Read the save message. Open the saved document and check it. A second copy of a document may not become a second sale.
+53 | Write each payment down once, with its evidence. A deposit can arrive before produce is delivered. Keep it linked to that customer and order. Later applying that same deposit to an invoice does not bring in more money. Keep questions and agreed corrections visible. If money arrives and you don't know who sent it, investigate it before you link it to a sale.
+54 | The amount borrowed is not the amount you might have left to spend. Read the fees and when they are paid. Each instalment can contain repayment of the borrowed amount, interest and other charges. If a charge is already included, don't add it again. Keep the dates. An instalment that looks smaller is not enough information to choose a loan.
+55 | A document can arrive after the work. Payment can happen before or after the service. Keep those dates together. At the end of our month ask what was delivered, used, owed and still available. A bank line alone cannot answer every question. Also check the stock and equipment records. When evidence is missing, write what you still need. Don't enter zero just to finish a total.
+56 | Keep the story behind a number. Who supplied what? When did it happen? Which document supports it? Which money movement belongs to it? Keep records ordered and safe. Tax and record-keeping obligations depend on the business and its circumstances. Use current SARS guidelines and suitable help. A saved invoice, tax reference field or app export cannot confirm all those obligations for you.
+57 | Write one action, the evidence needed, who would obtain it, and a review date. Use only classroom roles and dates. Don't put real client, household or bank details here.
+58 | Full Treatment is suspended and is shown here only for review: it does AI-polished, and then spends a second paid render over the finished artwork.
+59 | about a quarter of the cost
+60 | AI-painted artwork · your labels and key on top · 1 paid render
+61 | A 2nd AI round over the finished sheet · 2 paid renders
+62 | Step 1 of {total} — first save the exact, geometry-locked map (no AI cost)…
+63 | Step 3 of 3 — start one paid gpt-image-2 polish round over the AI hybrid…
+64 | Harvest weights and sales go into My records.
+65 | Which of my crops earns the most money per kg?
+66 | Generate income
+67 | Funding / costs
+68 | Crops and sales
+69 | Record sale
+70 | Kg sold
+71 | Save sale
+72 | No sales recorded yet.
+73 | kg sold
+74 | Recent sales
+75 | Earn an income
+76 | Map your site, track a harvest, keep a cost and its receipt, or make an invoice. Practise on the sample farm before you use your own records.
+77 | Everything, including every planning and money tool.
+78 | Paid AI features
+79 | Allow all paid AI tools
+80 | Prices
+81 | A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden, and then return to your own work.
+82 | A hard, cemented layer (calcrete) often lies under the topsoil and may need to be broken up with a chisel plough so roots can grow down. Add gypsum rather than lime — the soil is already alkaline. Biochar in the soil helps it retain water. Bitter Aloe grows well here and can be sold.
+83 | Try invoices, orchard or cash
+84 | Understand the money. Plan the next season.
+85 | Sell / Sold
+86 | Guide price, July 2026:
+87 | Estimated guide — confirm the local price.
+88 | Guide from a source — enter the price you actually agreed on.
+89 | Recommended guide — an average of prices found; confirm locally.
+90 | No reliable guide price is saved for this crop. Enter the price you actually agreed on.
+91 | Orchard is switched off, so {kg} kg is not in the weight above: {names}. The rand total still counts every sale, orchard included.
+92 | Your goal: earn income — Lima prefers market crops.
+93 | Use the same year and unit for quantity, household use and sales. Income is for that same year.
+94 | Enter the amount earned from sales, before costs. The survey records income; it does not calculate profit.
+95 | Build a fuller picture of your site, including production, harvest months, household use and sales.
+96 | Record whether you sell produce and where. Quantities and income belong with each production item.
+97 | Open the comprehensive route for annual quantities, harvest months and sales.
+98 | Check these figures: quantities need a unit, and household use plus sales cannot exceed the annual quantity. Give an Other item a name before you save.
+99 | Income and sales
+100 | Income earned (ZAR)
+101 | Your production rows can record what was sold and what income was earned
+102 | In the Current production step you can record for each item what was sold and what income was earned.
+103 | Local crop planning, journal notes and downloaded lessons can work without signal. AI chat, AI reports, transcription, receipt scanning, new sign-in and fresh online maps still need a connection. The map offers an Offline canvas for saved drawings and pins without satellite or terrain layers. Original receipts in the money book stay on their original device.
+104 | Invoices
+105 | Farm-gate prices
+106 | Tap a crop to see wholesale and retail guide prices per kg — for when you stand at the gate. Check today's local price before you agree.
+107 | Actual market price
+108 | Recommended price — average of prices found
+109 | Price on {date} — always check today's actual price before you agree
+110 | per kg — shop-shelf price, not a farm-gate price
+111 | Under R500
+112 | More than R2000
+113 | (appears at the top of your invoices)
+114 | (shown on invoices)
+115 | Leave it empty to invoice under your own name instead.
+116 | None of the production, sales or expense books can be read for this farmer.
+117 | Income from sales
+118 | Costs
+119 | Harvest not linked to sales
+120 | Illustrative estimate: cash income plus unlinked harvest at an assumed R15/kg. Not turnover, profit or measured benefit for the household.
+121 | No sales recorded yet
+122 | The sales book is readable and empty
+123 | No costs recorded yet
+124 | The expense book is readable and empty
+125 | The sales and expense books are both empty
+126 | Needs both the sales and production books
+127 | Nothing sold yet
+128 | No positive balance between harvest and sales
+129 | Costs higher than income
+130 | Money in / out per month
+131 | Sold, as a share of the {kg} harvested
+132 | Farmer income
+133 | This shows farmers' own production and income figures, so access is limited to programme teams and their funders.
+134 | Dormant, under plan, or loss-making
+135 | Pins show only status and size of the plot — both are recorded for each site. Harvest, income and progress are in the panel, where "no data" can be said in words.
+136 | Your account can't manage people here. Ask an organisation administrator to give you Manage people access.
+137 | Sales received
+138 | Harvest not linked to sales: unknown — sales exceed recorded harvest
+139 | Books — sales
+140 | The PDF report below is still in English. The recorded site size does not confirm the actual productive area; costs are not included, so this report does not show profit.
+141 | We couldn't load {name}'s production, sales and training data. Check your account access and try again.
+142 | Harvest not linked to sales: {kg} kg
+143 | Production and sales
+144 | Recorded sales
+145 | sold
+146 | after costs
+147 | The group you fund
+148 | Income
+149 | income
+150 | Income and livelihood
+151 | Produce sold, recorded income and costs, paid work and market access.
+152 | No values with prices or measurements available.
+153 | This is the saved planting plan, not a harvest or sales record. Check whether the bed is really clear before each next planting.
+154 | Subtotal of infrastructure with prices
+155 | Lines waiting on a price or measurement
+156 | Planned budget, not actual spending. A missing price is not zero. Get current local quotes.
+157 | Record harvest weight, food kept or given away, sales and costs with their dates.
+158 | Verify dimensions and costs before you act.
+159 | Site photos and map plates are, where available, shown separately in this report. An AI-generated reference photo is not proof of the real site. Missing dimensions, quotes or records stay missing. Check the site, dates and evidence with the implementing organisation before you use this example for a funding decision.
+160 | What has already been priced
+161 | Planned subtotal with prices
+162 | lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.
+163 | The order and rough length of each phase, worked out from what is on the saved design. The weeks are a planning guide, not a promise: weather, money and labour will shift them. The order should not change.
+164 | Say how much you have, and whether you want Rand, a swap or nothing at all.
+165 | Tour exchange board — explore listings from the farmer network. Listings here are not for sale.
+166 | Highest price first
+167 | No payments, no trust account, no delivery.
+168 | Money and pickup are arranged between the two farmers, outside the app.
+169 | Price, swap or free
+170 | Price in Rand
+171 | Suggested from the app's price book: about R{price}/kg wholesale. Farm gate, not shop shelf — change it to what you actually want.
+172 | Counted in kilograms, but not in the Rand figure — no price on record: {names}.
+173 | Save a sale and its invoice
+174 | Open My records, choose Sell and enter the crop, weight and amount received. Save sale and invoice opens the linked paid invoice. For several products or later payment, use Create an invoice.
+175 | Choose your orchard product when you record a harvest or sale. In Charts, use Orchard on to include fruit and nuts, or switch it off to compare annual crops.
+176 | Read your cash balance
+177 | Cash surplus is money received minus recorded spending for the chosen period. Cash shortfall means spending was higher. Add missing costs before you judge how the garden is doing.
+178 | Open money charts
+179 | Put your identity on invoices
+180 | Add your farm name and logo in Account. Complete your contact and bank details in Invoice, then save, share the PDF or print it.
+181 | Open Invoice
+182 | A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden and then return to your own work.
+183 | Record a sale
+184 | Explore the app in about {minutes} minutes: plan a garden, learn a skill, track a sale, support growers and see the programme evidence.
+185 | Record the work and the sale
+186 | Explore an invoice
+187 | The next stops connect a garden design with its studies, harvests, sales and programme reports.
+188 | Picked records harvests; Sell records sales; Spend keeps costs; Charts bring the figures together. Switch tabs to follow the work from crop to cash.
+189 | Open Invoice, then Saved, to view a document. In Spend, open a receipt to see the purchase details behind a cost.
+190 | In Picked, open Records for a lender to see harvest, income and cost history and export the summary.
+191 | Open the farm map, crop plan, harvests and sample sales.
+192 | Harvest and money
+193 | What you sold
+194 | Your crop sales and the money you earned from them.
+195 | What you paid for seed, tools and inputs.
+196 | Funding partner
+197 | Recorded harvests, sales and costs with coverage.
+198 | Ledger dates apply to harvest, sales and costs. Learning and membership stay current snapshots.
+199 | Sales recorded
+200 | Sales ledger
+201 | Sales weight
+202 | Sales income
+203 | Produce sold
+204 | Sales logs; only weighed entries
+205 | Sales ledger; not grant spending
+206 | Costs recorded
+207 | Dated expense logs; coverage is the current number of readable books
+208 | Expense ledger; reporting can differ from sales
+209 | Harvest recorded: {harvest}. Sales recorded: {sales}. Basis: {basis}. Each measure has its own coverage; no claim of sales-minus-costs or return on investment is made.
+210 | Questions for the next funding review
+211 | Reconcile sales, harvest dates and expense coverage before you draw conclusions about livelihood or finances. Produce picked earlier, purchased stock and missing logs can affect the balance.
+212 | Production and sales logs describe recorded activity. Course completion describes recorded learning progress. Neither establishes an improvement in household income, diet, food security or resilience.
+213 | Grant commitments, disbursements, a programme budget and independently verified spending are not available here. Farmers' sales and costs are not the organisation's grant accounts.
+214 | Source: shared production, sales and expense books and course records. This is recorded app data, not an independent audit. Consent and account access determine coverage.
+215 | Monthly totals use harvest, sale and expense dates in UTC. Readable empty books contribute zero; unreadable books contribute no value. Only known weights are included; counts and packets are not converted.
+216 | Sales ZAR
+217 | Costs ZAR
+218 | Recorded costs exceed sales
+219 | Review the same dates and complete books; set-up spending can come before sales.
+220 | No production or sales book visible
+221 | Enter a price of zero or more, or leave it empty.
+222 | My price per unit (R)
+223 | Optional · your own price
+224 | This price is your record, not a live market price or a profit calculation.
+225 | Own price: R{price} / {unit}
+226 | Quantity × own price: R{value} before costs
+227 | Quantity × own price needs to be checked.
+228 | Follow a practice sale
+229 | One invoice. Two payments.
+230 | Phases of the payment example
+231 | Deliver and invoice
+232 | Receive part of the payment
+233 | Order P01 · R120.00 agreed
+234 | Delivery P01 · Invoice P01
+235 | Receipt P01-A · R40.00 received
+236 | Receipt P01-B · another R80.00 received
+237 | The buyer ordered. Nothing has been delivered or paid in this example. Keep the agreement; an order is not a cash receipt.
+238 | The agreed produce was delivered and invoiced for R120.00. The buyer has not paid. Keep the delivery and invoice references together.
+239 | R40.00 settles part of invoice P01. R80.00 remains owing. It is the same produce sale; the receipt does not create another sale.
+240 | Invoice value
+241 | Still owing
+242 | Not invoiced
+243 | Phases of the cash-window example
+244 | The chosen window starts at zero. R400.00 in minus R300.00 out gives a running total of R100.00. We did not provide a bank opening balance.
+245 | Over both months R600.00 came in and R650.00 went out. The running total is −R50.00. This is a net movement over the window, not proof of an overdrawn account.
+246 | Now the window starts at Month B, again from zero. R200.00 in minus R350.00 out gives −R150.00. No source record changed; only the chosen window changed.
+247 | The bank balance is unknown in every step. A complete result also needs the relevant costs and other records; changing the window does not provide it.
+248 | Invented classroom amounts. Start with the opening cash, and then go through the cards one by one. Sales, cash and money owed answer different questions.
+249 | Cash is in the tin. No produce sale, buyer balance or loan has been recorded yet.
+250 | Cash in tin
+251 | Produce sales recorded
+252 | Buyer still owes
+253 | Loan principal still owing
+254 | Produce sale {reference}: {amount} received now.
+255 | Produce sale {reference}: {amount} is paid later.
+256 | Buyer pays {amount} for the earlier sale {settles}. This is a receipt, not another sale.
+257 | Loan {reference}: {amount} goes into the cash tin and must be repaid.
+258 | Loan payment {reference}: {amount} leaves cash, including {principal} principal and {interest} interest.
+259 | Owner puts {amount} into the cash tin.
+260 | Owner takes {amount} out of the cash tin.
+261 | Packaging payment {reference}: {amount} leaves the cash tin.
+262 | Equipment purchase {reference}: {amount} leaves the cash tin.
+263 | Transport payment {reference}: {amount} leaves the cash tin.
+264 | Use a notebook and pocket calculator, or type here. Enter rand in the money boxes and kilograms in the stock box. Use a minus sign for a cash shortfall. A comma or point can separate decimals.
+265 | Harvest left = opening stock + harvest − delivery − household food − recorded loss. Compare it with {stockReference}. Invoice value = delivered kilograms × the agreed price per kilogram. The payment within the month settles part of that invoice; {laterReference} falls outside this month.
+266 | The original forecast starts at {opening}, pays the two quoted amounts, and then receives the accepted sale. Actual cash starts at the same opening amount and uses only the dated cash records. It also includes the named funding and household withdrawal. The unknown, unpaid water levy does not change the counted cash or what is known about the missing cost.
+267 | Actual cash
+268 | unfunded shortfall, not cash in a tin
+269 | Explain the change from planned to actual cash
+270 | These changes add up to {difference}. They explain the change in closing cash, not profit. In these cases the price per kilogram stays the same; the difference in sales comes from quantity.
+271 | Owner contribution or loan received
+272 | Household cash withdrawal
+273 | Delivered sales compared with the original sales assumption
+274 | Part of this sale not collected within the month
+275 | Quoted costs minus actual packaging and transport payments
+276 | Only discussion and investigation may proceed. First agree on the evidence and care, then define materials and request comparable quotes. No construction budget is provided.
+277 | Cost:
+278 | R1 record:
+279 | Use {link} to practise cash timing. A practice budget for sales or packaging cannot serve as a budget for garden construction.
+280 | Record work, costs and agreed care
+281 | Download every diagram you need, plus the source and decision record. It includes the current choice, alternative, conditions, work/cost/care records, next discussion owner and revision history. Keep your own learner notes in your separate design file.
+282 | Understand the money.
+283 | Start with farm and household money
+284 | The figures are invented classroom examples, not local prices, promised earnings or recommendations for your farm. Each unit provides its own case study and opening balances.
+285 | Make and manage an invoice
+286 | Record a sale once
+287 | Record a cost and keep the receipt
+288 | Review payment
+289 | Bring in paper and previous sales
+290 | Record a paid cost
+291 | Start with a plan. Then check what was harvested, delivered and paid. Show your calculations and explain what the evidence cannot tell you.
+292 | Every date, amount, quantity and measurement in these case studies is invented for practice. They are not local prices, expected yields or recommendations for a real farm. Practitioner and learner review is still open.
+293 | Keep the original plan separate from the later records. Make a short final pack: a labelled site sketch, budget with exclusions, dated cash forecast, harvest destinations, invoice/payment trail, and a review with a next action.
+294 | {opening}: cash counted {cash}; harvested stock {stock} kg; customer balance {balance}. Keep the review between {period}.
+295 | {plan}. The enquiry {reference} mentions up to {quantity} kg at {price} per kg. This is an enquiry, not a confirmed order. The plan assumes that all that quantity is delivered and paid on {date}. That assumption still has to be confirmed.
+296 | Included quoted payments
+297 | Alternative quoted payments
+298 | Actual cash records
+299 | {reference}: {label}. An enquiry mentions {quantity} items at {price} each. The alternative assumes receipt on {date}; no order has been confirmed. It needs {hours} owner hours while only {available} are available.
+300 | Compare cash dates, hours and evidence—not the price of one kilogram with the price of one item. More information is needed before you choose a real enterprise.
+301 | delivered sale
+302 | recorded loss
+303 | The delivery and invoice
+304 | {order}: {buyer} confirms an order for {quantity} kg at {price} per kg. Accepted delivery {delivery} and invoice {invoice} are dated {date}. The invoice is {amount}. These are the same delivered produce, not another sale. These are classroom cards, not tax invoices.
+305 | packaging paid
+306 | transport paid
+307 | buyer payment
+308 | loan received
+309 | {count}: counted cash {amount}. Reconcile the records with this count.
+310 | {payment}: {amount} received for {invoice}. This belongs to the later month's cash, not to this month's closing cash.
+311 | {cost}: {description} Keep its cost unknown; find the bill or confirm the levy with the supplier. Zero would claim something the evidence does not support.
+312 | Do the budget and forecast preserve the original dates, assumptions, excluded costs and any early cash shortfall?
+313 | Does every quantity keep its unit? Do household food and loss stay separate from sales?
+314 | Can you trace one delivery to one invoice and its payments, without double-counting sales or treating an unpaid amount as cash?
+315 | Does the review explain quantity, payment timing, costs and financing separately, while leaving missing costs and full profit unknown?
+316 | Use the sample farm, not your real financial records. Part payments stay in this workbook exercise where the app cannot fully represent them.
+317 | Invoice guide
+318 | Payment guide
+319 | Expense guide
+320 | The case studies and figures are original classroom material. The record categories and the distinction between cash movement and income are guided by {fao} and {iowa}. Local tax rules and foreign worked examples are not imported into this exercise.
+321 | Iowa State University's guidance for a farm income statement
+322 | Record expenses

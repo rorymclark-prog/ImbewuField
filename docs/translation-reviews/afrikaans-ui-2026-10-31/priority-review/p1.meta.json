@@ -1,0 +1,2263 @@
+[
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designStepEarthworks",
+  "english": "Earthworks",
+  "draft": "Grondwerke"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designGuidanceSector",
+  "english": "The land's energies — sun, wind, fire, water. Nothing to draw: check it matches what you know of your land.",
+  "draft": "Die grond se energieë — son, wind, vuur, water. Niks om te teken nie: kyk of dit klop met wat jy van jou grond weet."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designGuidancePlanting",
+  "english": "Trees south of beds so they don't shade them. Tap a tree, then tap the map.",
+  "draft": "Bome suid van beddings sodat hulle nie op hulle skadu gooi nie. Tik 'n boom, tik dan die kaart."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "speciesPickerFrostNote",
+  "english": "Frost-tender trees and shrubs are hidden where the modeled minimum reaches freezing; check the planting spot for frost.",
+  "draft": "Rypsensitiewe bome en struike word versteek waar die gemodelleerde minimum vriespunt bereik; kyk die plantplek na vir ryp."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designCanvasShowSector",
+  "english": "Show sector energies (sun, wind, fire, water)",
+  "draft": "Wys sektorenergieë (son, wind, vuur, water)"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designCanvasSectorHidden",
+  "english": "Sector energies: sun path, wind, fire & water — tap to show",
+  "draft": "Sektorenergieë: sonbaan, wind, vuur en water — tik om te wys"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designPaletteFrostRisk",
+  "english": "ⓘ Frost risk",
+  "draft": "ⓘ Ryprisiko"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designPaletteFrostHidden",
+  "english": "Modeled minimum reaches freezing. Frost-sensitive options are hidden; check the planting spot for frost.",
+  "draft": "Die gemodelleerde minimum bereik vriespunt. Rypsensitiewe opsies word versteek; kyk die plantplek na vir ryp."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designPaletteFrostCheck",
+  "english": "⚠ Check frost",
+  "draft": "⚠ Kyk vir ryp"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designPaletteFrostCheckTitle",
+  "english": "May need a sheltered spot or suitable cultivar. Check local frost before planting.",
+  "draft": "Het dalk 'n beskutte plek of geskikte kultivar nodig. Kyk die plaaslike ryp na voordat jy plant."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designPaletteFrostUnavailable",
+  "english": "Frost data unavailable — tree choices use the broad climate zone only.",
+  "draft": "Rypdata nie beskikbaar nie — boomkeuses gebruik slegs die breë klimaatsone."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designPaletteLineGreywater",
+  "english": "Greywater",
+  "draft": "Gryswater"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designPrintSheetEarthworks",
+  "english": "Earthworks & contour setting-out",
+  "draft": "Grondwerke en kontoeruitleg"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designPrintSheetStructures",
+  "english": "Livestock & infrastructure",
+  "draft": "Vee en infrastruktuur"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designSectorFire",
+  "english": "FIRE",
+  "draft": "VUUR"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designSectorFrost",
+  "english": "FROST",
+  "draft": "RYP"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designSectorFireRow",
+  "english": "Regional fire context: {season} Possible approach from the {direction} — confirm locally.",
+  "draft": "Streeksbrandkonteks: {season} Moontlike nadering uit die {direction} — bevestig plaaslik."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designSectorWaterRow",
+  "english": "Water flows downhill to the {direction} — swales go ACROSS that flow{frost}.",
+  "draft": "Water vloei afdraand na die {direction} — kontoerslote gaan DWARS oor daardie vloei{frost}."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designSectorFrostNote",
+  "english": " · frost settles low there on still, cold nights",
+  "draft": " · ryp sak daar laag op stil, koue nagte"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designGlossyBatchNote",
+  "english": "Whole · Zones · Water · Planting · Structures. Site & Phasing stay exact; Sector and Earthworks each have an AI option on their own sheet — lands in your gallery in a few minutes.",
+  "draft": "Geheel · Sones · Water · Aanplanting · Strukture. Terrein en Fasering bly presies; Sektor en Grondwerke het elk 'n AI-opsie op hul eie vel — dit verskyn binne 'n paar minute in jou galery."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designGlossyFinishHelp",
+  "english": "Exact Canvas is free and instant, and draws every label, legend and line at full sheet resolution. AI Polished saves that exact master first, then spends one paid AI render painting the map artwork — your boundary, labels, legend, title block, north arrow and scale bar are drawn back on top by the app afterwards, never by the model. Neither choice ever changes your canvas design.",
+  "draft": "Presiese doek is gratis en onmiddellik, en teken elke etiket, sleutel en lyn teen volle velresolusie. AI-gepoleer stoor eers daardie presiese meesterkopie, en spandeer dan een betaalde AI-lewering om die kaartkunswerk te verf — jou grens, etikette, sleutel, titelblok, noordpyl en skaalbalk word daarna deur die app weer bo-op geteken, nooit deur die model nie. Geen van die twee keuses verander ooit jou doekontwerp nie."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designGlossyEmptyLayer",
+  "english": "No {stepLower} found on this design, so there’s nothing to map — draw them on the {step} step first. (A {stepLower} map is built from your real {stepLower}, never guessed. If you HAVE drawn them and still see this, it’s a bug — please report it.)",
+  "draft": "Geen {stepLower} op hierdie ontwerp gevind nie, so daar is niks om te karteer nie — teken dit eers by die {step}-stap. ('n {stepLower}-kaart word uit jou werklike {stepLower} gebou, nooit geraai nie. As jy dit WEL geteken het en dit steeds sien, is dit 'n fout — rapporteer dit asseblief.)"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "designGlossyNothingToPhase",
+  "english": "Nothing to phase yet — trace your boundary and place some elements (water, beds, trees…) first. The implementation plan is built from your real design, never guessed.",
+  "draft": "Nog niks om te faseer nie — trek eers jou grens na en plaas 'n paar elemente (water, beddings, bome…). Die implementeringsplan word uit jou werklike ontwerp gebou, nooit geraai nie."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "chatSuggestionPest",
+  "english": "Natural ways to deal with pests & disease?",
+  "draft": "Natuurlike maniere om pes en siekte te hanteer?"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "profileSkillLivestock",
+  "english": "livestock",
+  "draft": "vee"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "mentorAccessReadOnlyNotice",
+  "english": "This is a read-only access check for programme tools, not a sign-in as this member. It does not reveal their private responses or change their role. Other app features do not yet have individual switches here.",
+  "draft": "Dit is 'n leesalleen-toegangskontrole vir programgereedskap, nie 'n aanmelding as hierdie lid nie. Dit onthul nie hul private antwoorde nie en verander nie hul rol nie. Ander app-funksies het nog nie individuele skakelaars hier nie."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "waterCategoryEarthwork",
+  "english": "Earthwork",
+  "draft": "Grondwerk"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "guideDrawHarvestingDesc",
+  "english": "Outline your roof, swale or earthwork — I calculate how much rain it collects.",
+  "draft": "Trek jou dak, voor of grondwerk se buitelyn — ek bereken hoeveel reën dit opvang."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "statFrostRisk",
+  "english": "Frost risk",
+  "draft": "Ryprisiko"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "calendarFrost",
+  "english": "Frost",
+  "draft": "Ryp"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "frostLikelyLabel",
+  "english": "Frost likely",
+  "draft": "Ryp waarskynlik"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "frostFreeLabel",
+  "english": "Frost-free",
+  "draft": "Rypvry"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "earthworksBeforeRainsLabel",
+  "english": "→ Earthworks before first rains:",
+  "draft": "→ Grondwerk voor eerste reëns:"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "photoDetailSoilProfile",
+  "english": "Dig a small hole — show the colour and layers",
+  "draft": "Grawe 'n klein gat — wys die kleur en lae"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "waterSourceGreyWater",
+  "english": "Grey water",
+  "draft": "Gryswater"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "waterDeliverySprinklerDesc",
+  "english": "Overhead spray system",
+  "draft": "Bo-oor spuitstelsel"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "waterDeliveryFloodLabel",
+  "english": "Flood / furrow",
+  "draft": "Oorstroming / voor"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "roofMainBuildingGuide",
+  "english": "Use a roof outline traced on the map or measured on site. Leave this blank if you do not know.",
+  "draft": "Growwe riglyn: 2-slaapkamerhuis ≈ 60 m², 3-slaapkamer ≈ 100 m², groot plaashuis ≈ 150+ m²"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "roofMainHint",
+  "english": "The area covered by the roof when seen from directly above; do not use the sloping roof surface.",
+  "draft": "Vloeroppervlak van die gebou, nie die voetspoor van die dakhelling nie"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "landPrepNoneDesc",
+  "english": "Starting from scratch or using no-dig method",
+  "draft": "Begin van voor af of gebruik geen-grawe-metode"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "sectionLivestock",
+  "english": "Livestock on site (select all)",
+  "draft": "Vee op die terrein (kies almal)"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "livestockNone",
+  "english": "No livestock",
+  "draft": "Geen vee nie"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "infraLivestockKraal",
+  "english": "Livestock kraal",
+  "draft": "Veekraal"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "practiceConventionalDesc",
+  "english": "Synthetic fertilisers and pesticides used",
+  "draft": "Sintetiese kunsmis en plaagdoders word gebruik"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "challengePests",
+  "english": "Pests & disease",
+  "draft": "Plae en siektes"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "challengeFlooding",
+  "english": "Flooding / erosion",
+  "draft": "Oorstroming / erosie"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "allSectionAnimalsLivestock",
+  "english": "Animals & livestock",
+  "draft": "Diere en vee"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "allSectionFireHazards",
+  "english": "Fire & hazards",
+  "draft": "Vuur en gevare"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "frostGrowingSeason",
+  "english": "Frost & growing season",
+  "draft": "Ryp & groeiperiode"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "climateReportDesc",
+  "english": "Frost dates, ET, disease risk & planting calendar",
+  "draft": "Rypdatums, ET, siektrisiko & plantkalender"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "frostFreePrefix",
+  "english": "Frost-free ≈",
+  "draft": "Rysvry ≈"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "lightFrostPrefix",
+  "english": "Light frost:",
+  "draft": "Ligte ryp:"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "climateFrostExpected",
+  "english": "Frost expected",
+  "draft": "Ryp verwag"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "climateLightFrost",
+  "english": "Light frost risk",
+  "draft": "Ligte ryprisiko"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "insightFrostExpected",
+  "english": "Frost expected ({tempC}°C winter min). Protect tender crops Aug–Sep with covers and north-facing micro-climates.",
+  "draft": "Ryp verwag ({tempC}°C wintermin). Beskerm teer gewasse Aug–Sep met bedekkings en noordgerigte mikroklimate."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "insightLightFrost",
+  "english": "Light frost risk ({tempC}°C winter min). Site cold-sensitive trees on raised beds or north-facing slopes.",
+  "draft": "Ligte ryprisiko ({tempC}°C wintermin). Plant kouegevoelige bome op verhoogde beddens of noordgerigte hellings."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "insightFrostFree",
+  "english": "Frost-free year-round ({tempC}°C min). Tropical and subtropical food trees are viable here.",
+  "draft": "Rypvry die hele jaar ({tempC}°C min). Tropiese en subtropiese voedselbome is lewensvatbaar hier."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "summaryWarmWetSummer",
+  "english": "Warm, wet summers and mild, dry winters with frequent morning mist. Reliable summer rain and a long frost-free season let you grow most of the year — plan around the dry winter and afternoon summer storms.",
+  "draft": "Warm, nat somers en sagte, droë winters met gereelde oggendmis. Betroubare somerreën en 'n lang ryp-vrye seisoen laat jou die meeste van die jaar verbou — beplan rondom die droë winter en nabrandstorings in die somer."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "summaryReliableRainfall",
+  "english": "Reliable rainfall year-round with mild temperatures and no long dry season. Good for steady production across multiple crops — manage humidity and disease rather than drought.",
+  "draft": "Betroubare reënval die hele jaar met sagte temperature en geen lang droë seisoen nie. Goed vir bestendige produksie oor verskeie gewasse — bestuur vog en siekte eerder as droogte."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "summaryHighAltitude",
+  "english": "High-altitude site with cold winters and a short growing season. Maximise warm-aspect micro-climates and frost-hardy varieties.",
+  "draft": "Hoëligging-terrein met koue winters en 'n kort groeiseisoen. Maksimeer warm-aspek mikroklimate en ryp-bestande variëteite."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "popiaBody",
+  "english": "We keep your farm information safe and only use it to help you. You can change these settings any time in the app.",
+  "draft": "Ons hou jou plaasinligting veilig en gebruik dit slegs om jou te help. Jy kan hierdie instellings enige tyd in die toep verander."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "popiaStoreDesc",
+  "english": "Saved securely in the cloud so it's never lost. Required to use the app.",
+  "draft": "Veilig in die wolk gestoor sodat dit nooit verlore gaan nie. Vereis om die toep te gebruik."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "reportUiAnimalsLivestock",
+  "english": "Animals & Livestock",
+  "draft": "Diere en vee"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "reportUiFireHazards",
+  "english": "Fire & Hazards",
+  "draft": "Vuur en gevare"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "siteSummaryFrostProtection",
+  "english": "Protect against frost in winter.",
+  "draft": "Beskerm in die winter teen ryp."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "mapGuideHarvestDescription",
+  "english": "Outline your roof, swale or earthwork — I calculate how much rain it collects.",
+  "draft": "Trek die buitelyn van jou dak, kontoersloot of grondwerk — ek bereken hoeveel reën dit opvang."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "waterBalanceLegendMinSafe",
+  "english": "Min safe level",
+  "draft": "Minimum veilige vlak"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "waterBalanceMinSafe",
+  "english": "Min safe: {amount}",
+  "draft": "Minimum veilig: {amount}"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "waterBalanceShortfallDetail",
+  "english": "Tank level dips below the safe minimum in {month}. Options: increase storage, add a second tank, or reduce irrigation during {season}.",
+  "draft": "Die tankvlak sak in {month} onder die veilige minimum. Opsies: vergroot die berging, voeg 'n tweede tenk by, of verminder besproeiing gedurende {season}."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeChallengesSavanna",
+  "english": "Storms are heavy but hard to predict | Grass competes with young trees for water and light | Frost can damage plants at higher ground | Termites can damage wood and young plants",
+  "draft": "Storms is swaar maar moeilik om te voorspel | Gras kompeteer met jong bome om water en lig | Ryp kan plante op hoër grond beskadig | Termiete kan hout en jong plante beskadig"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeChallengesFynbos",
+  "english": "Needs occasional fire to stay healthy, roughly every 10–15 years | Banned invasive plants can take over | No edible Fynbos plants — bring in soil for any food garden | Hot, dry summers",
+  "draft": "Het soms vuur nodig om gesond te bly, ongeveer elke 10–15 jaar | Verbode indringerplante kan oorneem | Geen eetbare Fynbos-plante nie — bring grond in vir enige voedseltuin | Warm, droë somers"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeChallengesDesert",
+  "english": "Extreme heat, over 45°C | Flash floods are rare but can be dangerous | Salt can build up in the soil as water evaporates | Wind can blow away topsoil",
+  "draft": "Uiterste hitte, meer as 45°C | Skielike vloede is skaars maar kan gevaarlik wees | Sout kan in die grond opbou soos water verdamp | Wind kan bogrond wegwaai"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeChallengesIocb",
+  "english": "Cyclones and storms can cause damage | High humidity encourages fungal disease | Steep slopes risk erosion | Landslide risk on clay slopes",
+  "draft": "Siklone en storms kan skade aanrig | Hoë humiditeit bevorder swamsiektes | Steil hellings loop erosiegevaar | Grondverskuiwingsgevaar op kleihellings"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeWaterSavanna",
+  "english": "Heavy summer storms arrive fast. Dig channels along the slope (swales) and small ponds before the rains start in August or September, so the water soaks in instead of running off. Make tanks big: at least 50 litres for every square metre of roof that drains into them. Dig dams long and narrow — about 3 times longer than wide — on gentle slopes.",
+  "draft": "Swaar somerstorms kom vinnig. Grawe kanale langs die helling (kontoerslote) en klein damme voordat die reëns in Augustus of September begin, sodat die water insyfer in plaas daarvan om weg te loop. Maak tenks groot: ten minste 50 liter vir elke vierkante meter dak wat daarin dreineer. Grawe damme lank en smal — ongeveer 3 keer langer as wyd — op sagte hellings."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeWaterGrassland",
+  "english": "Summer brings short, heavy thunderstorms. On every slope, dig channels that follow the land gently downhill (about a 1m drop for every 1,000m across) to spread the water instead of letting it rush away. Winters are dry, so storing water matters. As a rule: 1 square metre of roof catches about 1 litre of water for every 1mm of rain.",
+  "draft": "Die somer bring kort, swaar donderstorms. Grawe op elke helling kanale wat die grond saggies afdraand volg (ongeveer 1m daling vir elke 1,000m oor) om die water te versprei in plaas daarvan om dit te laat wegjaag. Winters is droog, daarom is wateropberging belangrik. As reël: 1 vierkante meter dak vang ongeveer 1 liter water vir elke 1mm reën."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeWaterFynbos",
+  "english": "Rain falls only in winter, so do earthworks in late autumn (March to May), before the rain comes. Small banks along the contour and shallow mulched basins work well. Size your water tanks carefully — summer (December to February) is dry. Reused household water (greywater) is fine for food-growing areas, but never for the natural Fynbos — it is too rich in nutrients for it.",
+  "draft": "Reën val slegs in die winter, doen dus grondwerk in die laat herfs (Maart tot Mei), voordat die reën kom. Klein walle langs die kontoer en vlak bekkens met deklaag werk goed. Bepaal die grootte van jou watertenks versigtig — die somer (Desember tot Februarie) is droog. Hergebruikte huishoudelike water (gryswater) is goed vir voedselverbouingsareas, maar nooit vir die natuurlike Fynbos nie — dit is te ryk aan voedingstowwe daarvoor."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeWaterSucculentKaroo",
+  "english": "On slopes facing west, shade netting can catch water from fog. Build a small raised rim around each plant to trap every drop of rain where it falls. Reusing household water (greywater) is worth doing here. Every 100mm of rain matters — even a small roof tank is valuable.",
+  "draft": "Op hellings wat wes wys, kan skadunet water uit mis opvang. Bou 'n klein verhoogde rand rondom elke plant om elke druppel reën vas te vang waar dit val. Dit is die moeite werd om huishoudelike water (gryswater) hier te hergebruik. Elke 100mm reën tel — selfs 'n klein daktenk is waardevol."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeWaterDesert",
+  "english": "Shade netting can catch water from fog in the air. Design channels to catch sudden flash floods safely. Store water underground, where it stays cool and does not evaporate. Plant trees as windbreaks — they reduce evaporation and give shade before you plant crops.",
+  "draft": "Skadunet kan water uit mis in die lug opvang. Ontwerp kanale om skielike vloede veilig op te vang. Stoor water ondergronds, waar dit koel bly en nie verdamp nie. Plant bome as windskerms — hulle verminder verdamping en gee skaduwee voordat jy gewasse plant."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeWaterIocb",
+  "english": "Rain is heavy, so managing floods matters more than collecting water. Use shallow channels to slow water down on steep slopes. Raised beds stop plants sitting in water. Channels along the contour also help prevent landslides on clay soil. Run downpipes from your roof into underground tanks.",
+  "draft": "Reën is swaar, daarom is vloedbestuur belangriker as om water op te vang. Gebruik vlak kanale om water op steil hellings te vertraag. Verhoogde beddings keer dat plante in water staan. Kanale langs die kontoer help ook om grondverskuiwings op kleigrond te voorkom. Lei afvoerpype van jou dak na ondergrondse tenks."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeSoilGrassland",
+  "english": "Grazing animals often compact this soil hard. Loosen it below the surface before digging channels or ponds. Plant oats or vetch as a winter cover crop to protect and feed the soil. The soil is usually mildly acidic (pH 5.5–6.5) — add agricultural lime if it is more acidic than that. Build up organic matter with compost and biochar.",
+  "draft": "Weidende diere trap hierdie grond dikwels hard. Maak dit onder die oppervlak los voordat jy kanale of damme grawe. Plant hawer of wieke as 'n winterdekgewas om die grond te beskerm en te voed. Die grond is gewoonlik effens suur (pH 5.5–6.5) — voeg landboukalk by as dit suurder as dit is. Bou organiese materiaal op met kompos en biochar."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "biomeSoilFynbos",
+  "english": "Do not add compost, lime or phosphorus to natural Fynbos areas — it kills the plants, which are adapted to poor soil. Grow food separately, on soil brought in from elsewhere. Mulch food beds with Fynbos plant material. Cape reeds help hold the banks of water channels in place naturally.",
+  "draft": "Moenie kompos, kalk of fosfor by natuurlike Fynbos-areas voeg nie — dit maak die plante dood, wat by arm grond aangepas is. Kweek voedsel apart, op grond wat van elders ingebring is. Bedek voedselbeddings met Fynbos-plantmateriaal as deklaag. Kaapse riete help om die walle van waterkanale natuurlik in plek te hou."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "evidenceSheetLandLegalWarningBody",
+  "english": "A photo you scan here is shrunk small; a PDF you upload keeps only its file name, not the document. Both live on this phone alone, and old items can be deleted automatically to make room for new ones. Keep the real papers safe too — with your mentor, at home, or wherever they were issued.",
+  "draft": "'n Foto wat jy hier skandeer, word klein gemaak; 'n PDF wat jy oplaai, hou net sy lêernaam, nie die dokument nie. Albei bestaan slegs op hierdie foon, en ou items kan outomaties uitgevee word om plek vir nuwes te maak. Hou die regte dokumente ook veilig — by jou mentor, by die huis, of waar hulle ook al uitgereik is."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "evidenceCatalogueEdiblesFooter",
+  "english": "Don't see yours? Snap it — Lima logs the unknown and a botanist or mentor can confirm it later.",
+  "draft": "Sien jy nie joune nie? Neem 'n foto — Lima teken die onbekende aan en 'n plantkundige of mentor kan dit later bevestig."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "communityNearbyIntro",
+  "english": "Farmers who choose to be visible show up here as an approximate area — never their exact homestead.",
+  "draft": "Boere wat kies om sigbaar te wees, verskyn hier as 'n benaderde area — nooit hul presiese opstal nie."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "communityShowOnMapHint",
+  "english": "Your location shows as an approximate ~1km area, never your exact homestead",
+  "draft": "Jou ligging word gewys as 'n benaderde area van ~1km, nooit jou presiese opstal nie"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "surveyGuideProduction",
+  "english": "A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.",
+  "draft": "'n Notaboek, oesrekord of verkooprekord kan help. Moenie kilogramme by bosse tel nie. Laat syfers leeg wanneer jou rekords nie 'n volle jaar dek nie."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "surveyFullIncludes",
+  "english": "Everything in the short survey, plus detailed production records and separate livestock and sales sections.",
+  "draft": "Alles in die kort opname, plus gedetailleerde produksierekords en aparte afdelings vir vee en verkope."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "surveyStepLivestockPoultry",
+  "english": "Livestock & poultry",
+  "draft": "Vee en pluimvee"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "surveyFaoHddsFooter",
+  "english": "These groups describe your production. They do not measure what your household ate or give a nutrition score.",
+  "draft": "Hierdie groepe beskryf jou produksie. Hulle meet nie wat jou huishouding geëet het nie en gee nie 'n voedingstelling nie."
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "surveyProdPoultryLabel",
+  "english": "Poultry meat",
+  "draft": "Pluimveevleis"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "surveyHddsMeatPoultry",
+  "english": "Meat & poultry",
+  "draft": "Vleis en pluimvee"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "surveyHddsMilk",
+  "english": "Milk & dairy",
+  "draft": "Melk en suiwel"
+ },
+ {
+  "cls": "safety",
+  "source": "dictionary",
+  "key": "offlineReadinessLimit",
+  "english": "These checks cover startup files. They do not promise fresh map imagery, every report image, or every optional tool.",
+  "draft": "Hierdie kontroles dek opstartlêers. Hulle belowe nie vars kaartbeelde, elke verslagbeeld of elke opsionele hulpmiddel nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Try each role using the Ubhejane farm. Your account role stays the same and practice changes do not affect real projects.",
+  "english": "Try each role using the Ubhejane farm. Your account role stays the same and practice changes do not affect real projects.",
+  "draft": "Probeer elke rol met die Ubhejane-plaas. Jou rekening se rol bly dieselfde en oefenveranderinge raak nie regte projekte nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "New passwords do not match.",
+  "english": "New passwords do not match.",
+  "draft": "Nuwe wagwoorde stem nie ooreen nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Your location shows as an approximate ~1km area, never your exact homestead",
+  "english": "Your location shows as an approximate ~1km area, never your exact homestead",
+  "draft": "Jou ligging wys as 'n benaderde gebied van ~1km, nooit jou presiese opstal nie"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Summer rainfall, light frost",
+  "english": "Summer rainfall, light frost",
+  "draft": "Somerreënval, ligte ryp"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Frost expected",
+  "english": "Frost expected",
+  "draft": "Ryp word verwag"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Light frost possible",
+  "english": "Light frost possible",
+  "draft": "Ligte ryp moontlik"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Treat the {n} blank answer as unknown. Do not read them as a low score.",
+  "english": "Treat the {n} blank answer as unknown. Do not read them as a low score.",
+  "draft": "Behandel die {n} leë antwoord as onbekend. Moenie dit as 'n lae telling lees nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Treat the {n} blank answers as unknown. Do not read them as a low score.",
+  "english": "Treat the {n} blank answers as unknown. Do not read them as a low score.",
+  "draft": "Behandel die {n} leë antwoorde as onbekend. Moenie dit as 'n lae telling lees nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": " means this account could not read that record — it never means zero.",
+  "english": " means this account could not read that record — it never means zero.",
+  "draft": " beteken hierdie rekening kon nie daardie rekord lees nie — dit beteken nooit nul nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": " Tour records do not contain private farmer data.",
+  "english": " Tour records do not contain private farmer data.",
+  "draft": " Toerrekords bevat nie privaat boerdata nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A dash (—) means no readable value. It never means zero.",
+  "english": "A dash (—) means no readable value. It never means zero.",
+  "draft": "'n Strepie (—) beteken geen leesbare waarde nie. Dit beteken nooit nul nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "These controls cover the permissions listed below. They do not yet provide a separate on/off switch for every app feature. Platform administrator and funder accounts remain platform-managed.",
+  "english": "These controls cover the permissions listed below. They do not yet provide a separate on/off switch for every app feature. Platform administrator and funder accounts remain platform-managed.",
+  "draft": "Hierdie kontroles dek die toestemmings wat hieronder gelys word. Hulle bied nog nie 'n aparte aan/af-skakelaar vir elke funksie van die app nie. Platformadministrateur- en befondserrekeninge word steeds deur die platform bestuur."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Changes describe respondents with both measurements. They do not prove that the project caused the change. Self-reported garden area is not verified production hectares.",
+  "english": "Changes describe respondents with both measurements. They do not prove that the project caused the change. Self-reported garden area is not verified production hectares.",
+  "draft": "Veranderinge beskryf respondente met albei metings. Hulle bewys nie dat die projek die verandering veroorsaak het nie. Selfgerapporteerde tuinoppervlakte is nie geverifieerde produksiehektare nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The isiXhosa text in assessments has not yet been reviewed by a fluent isiXhosa speaker. Do not treat it as fully translated and approved.",
+  "english": "The isiXhosa text in assessments has not yet been reviewed by a fluent isiXhosa speaker. Do not treat it as fully translated and approved.",
+  "draft": "Die isiXhosa-teks in assesserings is nog nie deur 'n vlot isiXhosa-spreker hersien nie. Moenie dit as volledig vertaal en goedgekeur beskou nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Answering is voluntary. You may skip any question. Responses are linked to your account to compare progress. Authorised NGO analysts can read them; funders see approved summaries only. Do not include ID numbers or other people’s names.",
+  "english": "Answering is voluntary. You may skip any question. Responses are linked to your account to compare progress. Authorised NGO analysts can read them; funders see approved summaries only. Do not include ID numbers or other people’s names.",
+  "draft": "Om te antwoord is vrywillig. Jy mag enige vraag oorslaan. Antwoorde word aan jou rekening gekoppel om vordering te vergelyk. Gemagtigde NRO-ontleders kan dit lees; befondsers sien slegs goedgekeurde opsommings. Moenie ID-nommers of ander mense se name insluit nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A dash means a missing figure. It never means zero.",
+  "english": "A dash means a missing figure. It never means zero.",
+  "draft": "'n Strepie beteken 'n ontbrekende syfer. Dit beteken nooit nul nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A dash means a figure this account may not read. It never means zero.",
+  "english": "A dash means a figure this account may not read. It never means zero.",
+  "draft": "'n Strepie beteken 'n syfer wat hierdie rekening nie mag lees nie. Dit beteken nooit nul nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Totals cover the {reporting} of {total} farms whose records this account may read. The other {other} are counted as farms, never as zeros.",
+  "english": "Totals cover the {reporting} of {total} farms whose records this account may read. The other {other} are counted as farms, never as zeros.",
+  "draft": "Totale dek die {reporting} van {total} plase wie se rekords hierdie rekening mag lees. Die ander {other} word as plase getel, nooit as nulle nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "{n} more farmer is enrolled here but have not agreed to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.",
+  "english": "{n} more farmer is enrolled here but have not agreed to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.",
+  "draft": "Nog {n} boer is hier ingeskryf, maar het nie ingestem om hul syfers te deel nie, so hulle word nie gelys nie. 'n Strepie beteken 'n syfer wat hierdie rekening nie mag lees nie — dit beteken nooit nul nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "{n} more farmers are enrolled here but have not agreed to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.",
+  "english": "{n} more farmers are enrolled here but have not agreed to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.",
+  "draft": "Nog {n} boere is hier ingeskryf, maar het nie ingestem om hul syfers te deel nie, so hulle word nie gelys nie. 'n Strepie beteken 'n syfer wat hierdie rekening nie mag lees nie — dit beteken nooit nul nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.",
+  "english": "For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.",
+  "draft": "Vir saadhoeveelhede, gebruik die gewasbeplanner se saadlys. Moenie saad koop op grond van 'n afgeleide opbrengs of 'n grafiek van maandelikse beskikbaarheid nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "This ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.",
+  "english": "This ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.",
+  "draft": "Hierdie leesgereed voorbeeld is saamgestel uit die gestoorde terrein- en ontwerprekords. Dit is nie 'n nuwe AI-ontleding of 'n onafhanklik geverifieerde assessering nie. Voorbeeldfinansies, grondvoorbeelde en huishoudingsvoorbeelde bly illustratief waar hulle so gemerk is. Beplande gebiede en infrastruktuur bewys nie voltooide werk nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Greywater line",
+  "english": "Greywater line",
+  "draft": "Gryswaterlyn"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "soil or earthworks item",
+  "english": "soil or earthworks item",
+  "draft": "grond- of grondwerk-item"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "soil and earthworks items",
+  "english": "soil and earthworks items",
+  "draft": "grond- en grondwerk-items"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Average-year arithmetic, not a promise of rain. It counts only the roof that has been traced and only the tanks drawn on the plan; it says nothing about whether the water is safe to drink.",
+  "english": "Average-year arithmetic, not a promise of rain. It counts only the roof that has been traced and only the tanks drawn on the plan; it says nothing about whether the water is safe to drink.",
+  "draft": "Berekening vir 'n gemiddelde jaar, nie 'n belofte van reën nie. Dit tel slegs die dak wat nagetrek is en slegs die tenks wat op die plan geteken is; dit sê niks oor of die water veilig is om te drink nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "fire follows this wind",
+  "english": "fire follows this wind",
+  "draft": "vuur volg hierdie wind"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Fire risk",
+  "english": "Fire risk",
+  "draft": "Vuurrisiko"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Fire is most likely to arrive from the",
+  "english": "Fire is most likely to arrive from the",
+  "draft": "Vuur sal heel waarskynlik kom uit die"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Where fire is most likely to come from (regional)",
+  "english": "Where fire is most likely to come from (regional)",
+  "draft": "Waar vuur heel waarskynlik vandaan sal kom (streek)"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Wind and fire: regional pattern",
+  "english": "Wind and fire: regional pattern",
+  "draft": "Wind en vuur: streekspatroon"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead.",
+  "english": "Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead.",
+  "draft": "Elke lysting dra 'n punt wat tot ongeveer 'n kilometer afgerond is — 'n buurt, nooit 'n opstal nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on {name}.",
+  "english": "Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on {name}.",
+  "draft": "Jou ligging word tot ongeveer 'n kilometer afgerond voordat dit gestoor word — nooit jou presiese opstal nie. Gebaseer op {name}."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Winter — protect seedlings from frost; harvest greens & roots.",
+  "english": "Winter — protect seedlings from frost; harvest greens & roots.",
+  "draft": "Winter — beskerm saailinge teen ryp; oes groente en wortelgewasse."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Summer rain, light winter frost",
+  "english": "Summer rain, light winter frost",
+  "draft": "Somerreën, ligte winterryp"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Rain all year, frost-free",
+  "english": "Rain all year, frost-free",
+  "draft": "Reën die hele jaar, rypvry"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Remove spent tomato plants before disease spreads",
+  "english": "Remove spent tomato plants before disease spreads",
+  "draft": "Verwyder uitgediende tamatieplante voordat siekte versprei"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Protect tender seedlings from frost with shade cloth or row cover",
+  "english": "Protect tender seedlings from frost with shade cloth or row cover",
+  "draft": "Beskerm sagte saailinge teen ryp met skadunet of rybedekking"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Prepare spring beds — dig in compost before the heat arrives",
+  "english": "Prepare spring beds — dig in compost before the heat arrives",
+  "draft": "Berei lentebeddings voor — grawe kompos in voordat die hitte kom"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Remove frost cloth as days warm — let sun strengthen seedlings",
+  "english": "Remove frost cloth as days warm — let sun strengthen seedlings",
+  "draft": "Verwyder rypdoek soos die dae warmer word — laat die son saailinge versterk"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Water daily in the morning — evening watering invites fungal disease",
+  "english": "Water daily in the morning — evening watering invites fungal disease",
+  "draft": "Gee daagliks soggens water — saans water gee lok swamsiektes uit"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "April is the best time to plant garlic in most of South Africa. Use healthy large cloves from disease-free stock. Spinach germinates well now — thin seedlings to 15 cm apart for big leaves. Cooler nights mean less pest pressure: advantage yours.",
+  "english": "April is the best time to plant garlic in most of South Africa. Use healthy large cloves from disease-free stock. Spinach germinates well now — thin seedlings to 15 cm apart for big leaves. Cooler nights mean less pest pressure: advantage yours.",
+  "draft": "April is die beste tyd om knoffel in die meeste dele van Suid-Afrika te plant. Gebruik gesonde groot huisies van siektevrye voorraad. Spinasie ontkiem nou goed — dun saailinge uit tot 15 cm van mekaar vir groot blare. Koeler nagte beteken minder pesdruk: voordeel vir jou."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Succession sow spinach every 3 weeks from May through July for a continuous harvest window. Carrots sown now will be ready by August. Autumn is also the ideal time to improve soil — dig in mature compost now and the earthworms will do the rest over winter.",
+  "english": "Succession sow spinach every 3 weeks from May through July for a continuous harvest window. Carrots sown now will be ready by August. Autumn is also the ideal time to improve soil — dig in mature compost now and the earthworms will do the rest over winter.",
+  "draft": "Saai spinasie elke 3 weke van Mei tot Julie in opeenvolging vir 'n aaneenlopende oesvenster. Wortels wat nou gesaai word, sal teen Augustus gereed wees. Herfs is ook die ideale tyd om grond te verbeter — grawe nou volryp kompos in en die erdwurms sal die res oor die winter doen."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "June is the coldest month in the Highveld. In frost-prone areas, protect spinach seedlings overnight with fleece or dry grass. On the coast and in the Cape, June is actually ideal growing weather — focus there on maximising yields before spring heat arrives.",
+  "english": "June is the coldest month in the Highveld. In frost-prone areas, protect spinach seedlings overnight with fleece or dry grass. On the coast and in the Cape, June is actually ideal growing weather — focus there on maximising yields before spring heat arrives.",
+  "draft": "Junie is die koudste maand op die Hoëveld. In rypgevoelige gebiede, beskerm spinasiesaailinge snags met vlies of droë gras. Aan die kus en in die Kaap is Junie eintlik ideale groeiweer — fokus daar daarop om opbrengste te maksimeer voordat die lentehitte kom."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "August signals transition. Sow tomato seeds indoors now — 6 to 8 weeks before your last frost gives transplants a running start. In frost-free coastal regions you can direct-sow tomatoes in the ground by late August. Begin loosening winter-compacted soil in every bed.",
+  "english": "August signals transition. Sow tomato seeds indoors now — 6 to 8 weeks before your last frost gives transplants a running start. In frost-free coastal regions you can direct-sow tomatoes in the ground by late August. Begin loosening winter-compacted soil in every bed.",
+  "draft": "Augustus dui op oorgang. Saai nou tamatiesaad binnenshuis — 6 tot 8 weke voor jou laaste ryp gee oorplantings 'n voorsprong. In rypvrye kusstreke kan jy tamaties teen laat Augustus direk in die grond saai. Begin om winterverdigte grond in elke bedding los te maak."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "November brings the first summer rains in many regions — a welcome relief after spring dry spells. Do not skip watering: rain is unpredictable and surface-shallow. Deep irrigation weekly beats shallow rain every time for root development. Protect young maize from strong wind after rain.",
+  "english": "November brings the first summer rains in many regions — a welcome relief after spring dry spells. Do not skip watering: rain is unpredictable and surface-shallow. Deep irrigation weekly beats shallow rain every time for root development. Protect young maize from strong wind after rain.",
+  "draft": "November bring die eerste somerreëns in baie streke — 'n welkome verligting ná lente se droë periodes. Moenie water gee oorslaan nie: reën is onvoorspelbaar en dring net vlak in. Weeklikse diep besproeiing is elke keer beter as vlak reën vir wortelontwikkeling. Beskerm jong mielies ná reën teen sterk wind."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Open My Records and choose Picked. Pick the crop, enter the weight and save. Do this as soon as you pick, so you never have to remember a number later.",
+  "english": "Open My Records and choose Picked. Pick the crop, enter the weight and save. Do this as soon as you pick, so you never have to remember a number later.",
+  "draft": "Maak My rekords oop en kies Gepluk. Kies die gewas, voer die gewig in en stoor. Doen dit sodra jy pluk, sodat jy nooit later 'n getal hoef te onthou nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Pest / disease",
+  "english": "Pest / disease",
+  "draft": "Pes / siekte"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Compare harvests, sales and expenses in Charts. Open invoices, choose Saved and open an existing invoice to find Share PDF and Print. See how the farmer keeps a digital record; you do not need to send anything to a buyer.",
+  "english": "Compare harvests, sales and expenses in Charts. Open invoices, choose Saved and open an existing invoice to find Share PDF and Print. See how the farmer keeps a digital record; you do not need to send anything to a buyer.",
+  "draft": "Vergelyk oeste, verkope en uitgawes in Grafieke. Maak fakture oop, kies Gestoor en maak 'n bestaande faktuur oop om Deel PDF en Druk te vind. Sien hoe die boer 'n digitale rekord hou; jy hoef niks na 'n koper te stuur nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A fictional warm KZN farm with vegetables, staples, fruit, nuts, berries, eggs, milk, honey and fish. View its monthly calendar, young trees and printable plan. Shown in English.",
+  "english": "A fictional warm KZN farm with vegetables, staples, fruit, nuts, berries, eggs, milk, honey and fish. View its monthly calendar, young trees and printable plan. Shown in English.",
+  "draft": "'n Fiktiewe warm KZN-plaas met groente, stapelvoedsel, vrugte, neute, bessies, eiers, melk, heuning en vis. Bekyk sy maandelikse kalender, jong bome en drukbare plan. Word in Engels gewys."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Changes stay in this tour session. Resetting or reloading starts fresh. Signing in is not required and switching views never changes your real account permissions.",
+  "english": "Changes stay in this tour session. Resetting or reloading starts fresh. Signing in is not required and switching views never changes your real account permissions.",
+  "draft": "Veranderinge bly in hierdie toersessie. Terugstel of herlaai begin van voor af. Aanmelding is nie nodig nie, en die wissel van aansigte verander nooit jou regte rekeningtoestemmings nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Growing areas exclude buildings, paths, tree areas and unused space. Photos illustrate the setting; they do not measure the land.",
+  "english": "Growing areas exclude buildings, paths, tree areas and unused space. Photos illustrate the setting; they do not measure the land.",
+  "draft": "Groeigebiede sluit geboue, paadjies, boomgebiede en ongebruikte ruimte uit. Foto's illustreer die omgewing; hulle meet nie die grond nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Children",
+  "english": "Children",
+  "draft": "Kinders"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Evidence comes before claims. These reporting references inform the structure; they do not certify this programme or replace an evaluation.",
+  "english": "Evidence comes before claims. These reporting references inform the structure; they do not certify this programme or replace an evaluation.",
+  "draft": "Bewyse kom voor bewerings. Hierdie verslagverwysings rig die struktuur; hulle sertifiseer nie hierdie program nie en vervang nie 'n evaluering nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "DEMONSTRATION RECORDS: all figures in this report are illustrative and must not be used as evidence of real programme results.",
+  "english": "DEMONSTRATION RECORDS: all figures in this report are illustrative and must not be used as evidence of real programme results.",
+  "draft": "DEMONSTRASIEREKORDS: alle syfers in hierdie verslag is illustratief en mag nie as bewyse van werklike programresultate gebruik word nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Review missing evidence for {list}. Confirm whether gaps reflect consent, access, or incomplete recording; do not pressure farmers to share.",
+  "english": "Review missing evidence for {list}. Confirm whether gaps reflect consent, access, or incomplete recording; do not pressure farmers to share.",
+  "draft": "Hersien ontbrekende bewyse vir {list}. Bevestig of leemtes toestemming, toegang of onvolledige aantekening weerspieël; moenie boere druk om te deel nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Readable books do not guarantee complete records.",
+  "english": "Readable books do not guarantee complete records.",
+  "draft": "Leesbare boeke waarborg nie volledige rekords nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Current record-based flags. One farmer may appear in more than one row; counts must not be added as unique people. Owners and due dates must be agreed with the team.",
+  "english": "Current record-based flags. One farmer may appear in more than one row; counts must not be added as unique people. Owners and due dates must be agreed with the team.",
+  "draft": "Huidige rekordgebaseerde vlae. Een boer kan in meer as een ry verskyn; tellings mag nie as unieke mense bymekaargetel word nie. Eienaars en sperdatums moet met die span ooreengekom word."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Record food you have kept, bought or carried from an earlier harvest. Choose its months yourself. The plan does not work out a safe shelf life or a preservation recipe.",
+  "english": "Record food you have kept, bought or carried from an earlier harvest. Choose its months yourself. The plan does not work out a safe shelf life or a preservation recipe.",
+  "draft": "Teken kos aan wat jy gehou, gekoop of van 'n vroeëre oes oorgedra het. Kies self die maande daarvoor. Die plan bereken nie 'n veilige raklewe of 'n preserveringsresep nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Use these records to compare with what you actually collect. They do not predict the coming year or set picking dates.",
+  "english": "Use these records to compare with what you actually collect. They do not predict the coming year or set picking dates.",
+  "draft": "Gebruik hierdie rekords om te vergelyk met wat jy werklik insamel. Dit voorspel nie die komende jaar nie en stel nie plukdatums vas nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The next ten years, starting this month. Add planting dates and expected yields under each plant above. Missing yields remain visible; young trees do not receive a mature-tree yield.",
+  "english": "The next ten years, starting this month. Add planting dates and expected yields under each plant above. Missing yields remain visible; young trees do not receive a mature-tree yield.",
+  "draft": "Die volgende tien jaar, vanaf hierdie maand. Voeg plantdatums en verwagte opbrengste onder elke plant hierbo by. Ontbrekende opbrengste bly sigbaar; jong bome kry nie 'n volwasse boom se opbrengs nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "These are your observations; they do not promise a yield.",
+  "english": "These are your observations; they do not promise a yield.",
+  "draft": "Dit is jou waarnemings; dit belowe nie 'n opbrengs nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Vegetables and staples from the beds. Fruit, nuts and berries from the food forest. Eggs, milk, meat, honey and fish alongside them.",
+  "english": "Vegetables and staples from the beds. Fruit, nuts and berries from the food forest. Eggs, milk, meat, honey and fish alongside them.",
+  "draft": "Groente en stapelvoedsel uit die beddings. Vrugte, neute en bessies uit die voedselwoud. Eiers, melk, vleis, heuning en vis saam daarmee."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "No frost assumed",
+  "english": "No frost assumed",
+  "draft": "Geen ryp aangeneem nie"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Meat",
+  "english": "Meat",
+  "draft": "Vleis"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Eggs and meat",
+  "english": "Eggs and meat",
+  "draft": "Eiers en vleis"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The two receipts total R120.00. Invoice P01 is now settled in this example. Keep both receipts and the original invoice; do not add their values as separate sales.",
+  "english": "The two receipts total R120.00. Invoice P01 is now settled in this example. Keep both receipts and the original invoice; do not add their values as separate sales.",
+  "draft": "Die twee kwitansies is altesaam R120.00. Faktuur P01 is nou in hierdie voorbeeld vereffen. Hou albei kwitansies en die oorspronklike faktuur; moenie hul waardes as aparte verkope bytel nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The app currently records paid in full or unpaid. Keep part payments and the remaining balance in a separate checked record; do not mark the invoice fully paid after only a deposit.",
+  "english": "The app currently records paid in full or unpaid. Keep part payments and the remaining balance in a separate checked record; do not mark the invoice fully paid after only a deposit.",
+  "draft": "Die app teken tans volledig betaal of onbetaal aan. Hou deelbetalings en die oorblywende saldo in 'n aparte, nagegaande rekord; moenie die faktuur as volledig betaal merk ná slegs 'n deposito nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Invented receipts and payments for learning. These controls do not change My Records.",
+  "english": "Invented receipts and payments for learning. These controls do not change My Records.",
+  "draft": "Versinde kwitansies en betalings om te leer. Hierdie kontroles verander nie My rekords nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "These records do not show full profit. Use your own source documents for a real farm.",
+  "english": "These records do not show full profit. Use your own source documents for a real farm.",
+  "draft": "Hierdie rekords wys nie volle wins nie. Gebruik jou eie brondokumente vir 'n regte plaas."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Try every calculation before checking. You can read out or point to your reasoning while a facilitator writes it down. These self-checks do not award course credit.",
+  "english": "Try every calculation before checking. You can read out or point to your reasoning while a facilitator writes it down. These self-checks do not award course credit.",
+  "draft": "Probeer elke berekening voordat jy nagaan. Jy kan jou redenasie voorlees of daarna wys terwyl 'n fasiliteerder dit neerskryf. Hierdie selfkontroles gee nie kursuskrediet nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Full profit is unknown. The source pack does not supply complete production costs, stock values, equipment use and other relevant adjustments. Do not treat a cash balance, cash change or the difference between sales and the two payments as full profit.",
+  "english": "Full profit is unknown. The source pack does not supply complete production costs, stock values, equipment use and other relevant adjustments. Do not treat a cash balance, cash change or the difference between sales and the two payments as full profit.",
+  "draft": "Volle wins is onbekend. Die bronpakket verskaf nie volledige produksiekoste, voorraadwaardes, toerustinggebruik en ander betrokke aanpassings nie. Moenie 'n kontantsaldo, kontantverandering of die verskil tussen verkope en die twee betalings as volle wins beskou nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The gap is outside both bed outlines. Do not count it as bed area.",
+  "english": "The gap is outside both bed outlines. Do not count it as bed area.",
+  "draft": "Die gaping is buite albei beddinguitlyne. Moenie dit as beddingoppervlakte tel nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The downloaded diagram includes its model dimensions. Its size on paper depends on the print settings: do not measure the print with a ruler and assume a ground distance unless you have established and checked the printed scale.",
+  "english": "The downloaded diagram includes its model dimensions. Its size on paper depends on the print settings: do not measure the print with a ruler and assume a ground distance unless you have established and checked the printed scale.",
+  "draft": "Die afgelaaide diagram sluit sy modelafmetings in. Die grootte daarvan op papier hang van die drukinstellings af: moenie die afdruk met 'n liniaal meet en 'n afstand op die grond aanneem nie, tensy jy die gedrukte skaal vasgestel en nagegaan het."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The water point, growing area and home-to-gate route suggest journeys to discuss with the people doing the work. They do not establish a measured travel time or an agreed workload.",
+  "english": "The water point, growing area and home-to-gate route suggest journeys to discuss with the people doing the work. They do not establish a measured travel time or an agreed workload.",
+  "draft": "Die waterpunt, groeiarea en roete van huis na hek dui op trajekte om met die mense wat die werk doen te bespreek. Dit stel nie 'n gemete reistyd of 'n ooreengekome werklading vas nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The supplied route footprint and gap are fictional geometry, not access standards. They do not establish drainage, crop spacing, soil suitability or safe working clearance. The original growing area remains existing evidence when B is displayed; do not count both outlines as active production.",
+  "english": "The supplied route footprint and gap are fictional geometry, not access standards. They do not establish drainage, crop spacing, soil suitability or safe working clearance. The original growing area remains existing evidence when B is displayed; do not count both outlines as active production.",
+  "draft": "Die verskafde roete-voetspoor en gaping is fiktiewe geometrie, nie toegangstandaarde nie. Dit stel nie dreinering, gewasspasiëring, grondgeskiktheid of veilige werkspeling vas nie. Die oorspronklike groeiarea bly bestaande bewyse wanneer B vertoon word; moenie albei uitlyne as aktiewe produksie tel nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Use this unit’s own opening balances and source cards. Do not carry a previous unit’s totals into this exercise.",
+  "english": "Use this unit’s own opening balances and source cards. Do not carry a previous unit’s totals into this exercise.",
+  "draft": "Gebruik hierdie eenheid se eie openingsaldo's en bronkaarte. Moenie 'n vorige eenheid se totale na hierdie oefening oordra nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Find your way and keep work safe",
+  "english": "Find your way and keep work safe",
+  "draft": "Vind jou pad en hou werk veilig"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "{harvest}: Plot A ({plot}) harvest weighed {quantity} kg. This weight is supplied by the imaginary harvest card; do not derive it from the plot area.",
+  "english": "{harvest}: Plot A ({plot}) harvest weighed {quantity} kg. This weight is supplied by the imaginary harvest card; do not derive it from the plot area.",
+  "draft": "{harvest}: Perseel A ({plot}) se oes het {quantity} kg geweeg. Hierdie gewig word deur die denkbeeldige oeskaart verskaf; moenie dit van die perseeloppervlakte aflei nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Work at a pace that allows field observation, discussion and another attempt after feedback. Eighteen reading pages do not establish a course duration or replace seasonal evidence. The facilitator reviews what you can explain and demonstrate.",
+  "english": "Work at a pace that allows field observation, discussion and another attempt after feedback. Eighteen reading pages do not establish a course duration or replace seasonal evidence. The facilitator reviews what you can explain and demonstrate.",
+  "draft": "Werk teen 'n tempo wat veldwaarneming, bespreking en nog 'n poging ná terugvoer toelaat. Agtien leesbladsye stel nie 'n kursusduur vas of vervang seisoenale bewyse nie. Die fasiliteerder hersien wat jy kan verduidelik en demonstreer."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Use a notebook, drawings or supported spoken answers. The supplied fictional worked demonstration supports the lesson method; a real field plan still needs checked measurements, evidence and review. These pages do not certify a design or award assessed progress. Audio and translations are not yet available; save the pathway from its overview before leaving signal.",
+  "english": "Use a notebook, drawings or supported spoken answers. The supplied fictional worked demonstration supports the lesson method; a real field plan still needs checked measurements, evidence and review. These pages do not certify a design or award assessed progress. Audio and translations are not yet available; save the pathway from its overview before leaving signal.",
+  "draft": "Gebruik 'n notaboek, tekeninge of ondersteunde mondelinge antwoorde. Die verskafde fiktiewe uitgewerkte demonstrasie ondersteun die lesmetode; 'n regte veldplan het steeds nagegaande metings, bewyse en hersiening nodig. Hierdie bladsye sertifiseer nie 'n ontwerp nie en ken nie geassesseerde vordering toe nie. Klank en vertalings is nog nie beskikbaar nie; stoor die leesroete vanaf sy oorsig voordat jy uit sein gaan."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Imaginary site in metres, with no real location. Plot A is only a reference for these source cards. Dimensions do not establish harvest, rights, safety or a planting recommendation.",
+  "english": "Imaginary site in metres, with no real location. Plot A is only a reference for these source cards. Dimensions do not establish harvest, rights, safety or a planting recommendation.",
+  "draft": "Denkbeeldige terrein in meter, sonder 'n regte ligging. Perseel A is slegs 'n verwysing vir hierdie bronkaarte. Afmetings stel nie oes, regte, veiligheid of 'n plantaanbeveling vas nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The loan card confirms cash received and the same principal still owed at month end. No loan repayment occurs here. Terms and interest are not supplied: do not recommend this loan or assume it is free.",
+  "english": "The loan card confirms cash received and the same principal still owed at month end. No loan repayment occurs here. Terms and interest are not supplied: do not recommend this loan or assume it is free.",
+  "draft": "Die leningskaart bevestig kontant ontvang en dieselfde kapitaal wat aan die einde van die maand steeds verskuldig is. Geen leningsterugbetaling vind hier plaas nie. Voorwaardes en rente word nie verskaf nie: moenie hierdie lening aanbeveel of aanneem dat dit gratis is nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Confirm the group’s languages and access needs. Bring an existing core lesson, its printed still and transcript, plus ordinary objects for a safe practical.",
+  "english": "Confirm the group’s languages and access needs. Bring an existing core lesson, its printed still and transcript, plus ordinary objects for a safe practical.",
+  "draft": "Bevestig die groep se tale en toegangsbehoeftes. Bring 'n bestaande kernles, sy gedrukte stilbeeld en transkripsie, plus gewone voorwerpe vir 'n veilige praktiese oefening."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Confirm ACT’s register and consent wording before collecting real data. Ask separately before photographing or sharing anyone’s work. Do not use a shared device for private household records.",
+  "english": "Confirm ACT’s register and consent wording before collecting real data. Ask separately before photographing or sharing anyone’s work. Do not use a shared device for private household records.",
+  "draft": "Bevestig ACT se register- en toestemmingsbewoording voordat jy regte data insamel. Vra afsonderlik voordat jy enigiemand se werk afneem of deel. Moenie 'n gedeelde toestel vir private huishoudingsrekords gebruik nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The two days refresh the teaching method and practise selected lessons. They do not cover or assess all ten modules in full. Choose a published, available lesson that fits the local group and check its source and media before use.",
+  "english": "The two days refresh the teaching method and practise selected lessons. They do not cover or assess all ten modules in full. Choose a published, available lesson that fits the local group and check its source and media before use.",
+  "draft": "Die twee dae knap die onderrigmetode op en oefen gekose lesse. Hulle dek of assesseer nie al tien modules volledig nie. Kies 'n gepubliseerde, beskikbare les wat by die plaaslike groep pas en kontroleer sy bron en media voor gebruik."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "ACT decides any attendance record or certificate wording under its own policy. Do not call this refresher an accredited qualification.",
+  "english": "ACT decides any attendance record or certificate wording under its own policy. Do not call this refresher an accredited qualification.",
+  "draft": "ACT besluit oor enige bywoningsrekord of sertifikaatbewoording volgens sy eie beleid. Moenie hierdie opknappingskursus 'n geakkrediteerde kwalifikasie noem nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Let pairs describe one observation and one uncertainty; then model a safe action whose exact core-lesson source and local limits you have checked.",
+  "english": "Let pairs describe one observation and one uncertainty; then model a safe action whose exact core-lesson source and local limits you have checked.",
+  "draft": "Laat pare een waarneming en een onsekerheid beskryf; modelleer dan 'n veilige handeling waarvan jy die presiese kernlesbron en plaaslike beperkings gekontroleer het."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Return to the core modules for the relevant teaching point. Do not turn an illustration into proof of a site condition.",
+  "english": "Return to the core modules for the relevant teaching point. Do not turn an illustration into proof of a site condition.",
+  "draft": "Keer terug na die kernmodules vir die betrokke onderrigpunt. Moenie 'n illustrasie in bewys van 'n terreintoestand omskep nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Test on a trainer device or demo account; do not sign in as a farmer or use someone else’s records.",
+  "english": "Test on a trainer device or demo account; do not sign in as a farmer or use someone else’s records.",
+  "draft": "Toets op 'n opleierstoestel of demo-rekening; moenie as 'n boer aanmeld of iemand anders se rekords gebruik nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Assign a role and a safe action to every learner.",
+  "english": "Assign a role and a safe action to every learner.",
+  "draft": "Gee elke leerder 'n rol en 'n veilige handeling."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Model a simple soil, water or seed observation using local materials after checking the method and site; pause if the action is unsafe.",
+  "english": "Model a simple soil, water or seed observation using local materials after checking the method and site; pause if the action is unsafe.",
+  "draft": "Modelleer 'n eenvoudige grond-, water- of saadwaarneming met plaaslike materiaal nadat jy die metode en terrein gekontroleer het; hou op as die handeling onveilig is."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A revised practical with a safe role for each learner.",
+  "english": "A revised practical with a safe role for each learner.",
+  "draft": "'n Hersiene praktiese oefening met 'n veilige rol vir elke leerder."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Use the same case on a printed base map; do not enter a private household’s data into a shared trainer device.",
+  "english": "Use the same case on a printed base map; do not enter a private household’s data into a shared trainer device.",
+  "draft": "Gebruik dieselfde geval op 'n gedrukte basiskaart; moenie 'n private huishouding se data op 'n gedeelde opleierstoestel invoer nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Identify the local language to use, the exact English source when a translation is a draft, materials, access support and a stop point for unsafe or unverified advice.",
+  "english": "Identify the local language to use, the exact English source when a translation is a draft, materials, access support and a stop point for unsafe or unverified advice.",
+  "draft": "Identifiseer die plaaslike taal om te gebruik, die presiese Engelse bron wanneer 'n vertaling 'n konsep is, materiaal, toegangsondersteuning en 'n stoppunt vir onveilige of ongeverifieerde advies."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The observer records what was seen: invitation to participate, safe practical action, source/uncertainty, check for understanding and response to feedback.",
+  "english": "The observer records what was seen: invitation to participate, safe practical action, source/uncertainty, check for understanding and response to feedback.",
+  "draft": "Die waarnemer teken aan wat gesien is: uitnodiging om deel te neem, veilige praktiese handeling, bron/onsekerheid, kontrole vir begrip en reaksie op terugvoer."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Pauses unsafe or unverified farming advice and identifies the next source or practitioner check.",
+  "english": "Pauses unsafe or unverified farming advice and identifies the next source or practitioner check.",
+  "draft": "Stop onveilige of ongeverifieerde boerdery-advies en identifiseer die volgende bron of praktisynkontrole."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Small Livestock Integration",
+  "english": "Small Livestock Integration",
+  "draft": "Integrasie van Kleinvee"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Survey responses are self-reported. Small groups are withheld; these figures alone do not establish project impact.",
+  "english": "Survey responses are self-reported. Small groups are withheld; these figures alone do not establish project impact.",
+  "draft": "Opname-antwoorde is selfgerapporteer. Klein groepe word teruggehou; hierdie syfers alleen bewys nie projekimpak nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Trace a boundary on a satellite view of the real farm, then lay out beds, water systems, earthworks and structures directly on that ground — not a generic template.",
+  "english": "Trace a boundary on a satellite view of the real farm, then lay out beds, water systems, earthworks and structures directly on that ground — not a generic template.",
+  "draft": "Trek 'n grens op 'n satellietaansig van die werklike plaas, en lê dan beddings, waterstelsels, grondwerke en strukture direk op daardie grond uit — nie 'n generiese sjabloon nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Ten modules, 33 lessons, covering permaculture ethics, reading the landscape, water harvesting, soil health, seeds, plant guilds, food forests, livestock and market gardening — each lesson with a short quiz.",
+  "english": "Ten modules, 33 lessons, covering permaculture ethics, reading the landscape, water harvesting, soil health, seeds, plant guilds, food forests, livestock and market gardening — each lesson with a short quiz.",
+  "draft": "Tien modules, 33 lesse, oor permakultuuretiek, die lees van die landskap, wateropvang, grondgesondheid, sade, plantgildes, voedselwoude, vee en marktuinbou — elke les met 'n kort vasvra."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "ImbewuField home screen showing the farm’s weather forecast, a heat warning, and the next suggested step",
+  "english": "ImbewuField home screen showing the farm’s weather forecast, a heat warning, and the next suggested step",
+  "draft": "ImbewuField-tuisskerm wat die plaas se weervoorspelling, 'n hittewaarskuwing en die volgende voorgestelde stap wys"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Today’s weather, a heat warning, and what to do next on this farm.",
+  "english": "Today’s weather, a heat warning, and what to do next on this farm.",
+  "draft": "Vandag se weer, 'n hittewaarskuwing, en wat om volgende op hierdie plaas te doen."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "AI-generated site report showing rainfall, soil texture, frost risk and elevation, plus the site’s mapped land parcels",
+  "english": "AI-generated site report showing rainfall, soil texture, frost risk and elevation, plus the site’s mapped land parcels",
+  "draft": "AI-gegenereerde terreinverslag wat reënval, grondtekstuur, rypgevaar en hoogte bo seespieël wys, plus die terrein se gekarteerde grondpersele"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Rainfall, soil, frost risk and elevation for the exact site — plus its mapped land parcels.",
+  "english": "Rainfall, soil, frost risk and elevation for the exact site — plus its mapped land parcels.",
+  "draft": "Reënval, grond, rypgevaar en hoogte bo seespieël vir die presiese terrein — plus sy gekarteerde grondpersele."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "What are the chickens for: eggs, meat or both?",
+  "english": "What are the chickens for: eggs, meat or both?",
+  "draft": "Waarvoor is die hoenders: eiers, vleis of albei?"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Is clean drinking water always available?",
+  "english": "Is clean drinking water always available?",
+  "draft": "Is skoon drinkwater altyd beskikbaar?"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Does this site get frost?",
+  "english": "Does this site get frost?",
+  "draft": "Kry hierdie terrein ryp?"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Secure reliable clean drinking water before buying more birds.",
+  "english": "Secure reliable clean drinking water before buying more birds.",
+  "draft": "Verseker betroubare skoon drinkwater voordat jy meer voëls koop."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Every breed needs clean drinking water, suitable feed and protected housing.",
+  "english": "Every breed needs clean drinking water, suitable feed and protected housing.",
+  "draft": "Elke ras het skoon drinkwater, geskikte voer en beskermde behuising nodig."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "You reported frost. Check winter shelter and chick warmth with a local adviser.",
+  "english": "You reported frost. Check winter shelter and chick warmth with a local adviser.",
+  "draft": "Jy het ryp aangemeld. Kontroleer winterskuiling en warmte vir kuikens met 'n plaaslike adviseur."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Growing water is limited. Check drinking water separately; garden water does not confirm a safe poultry supply.",
+  "english": "Growing water is limited. Check drinking water separately; garden water does not confirm a safe poultry supply.",
+  "draft": "Water vir verbouing is beperk. Kontroleer drinkwater afsonderlik; tuinwater bevestig nie 'n veilige watervoorraad vir pluimvee nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "An egg-and-meat option. It outperformed the other indigenous breeds for eggs in a managed ARC trial; those results do not predict this farm.",
+  "english": "An egg-and-meat option. It outperformed the other indigenous breeds for eggs in a managed ARC trial; those results do not predict this farm.",
+  "draft": "'n Opsie vir eiers en vleis. Dit het in 'n bestuurde ARC-proef beter as die ander inheemse rasse vir eiers gevaar; daardie resultate voorspel nie hierdie plaas nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "An ARC-conserved indigenous option for eggs and meat; check local stock and care needs.",
+  "english": "An ARC-conserved indigenous option for eggs and meat; check local stock and care needs.",
+  "draft": "'n Inheemse opsie vir eiers en vleis wat deur die ARC bewaar word; kontroleer plaaslike voorraad en versorgingsbehoeftes."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Consider only after checking reliable feed, drinking water, housing, health care and managed lighting. Breed and supplier still need local confirmation.",
+  "english": "Consider only after checking reliable feed, drinking water, housing, health care and managed lighting. Breed and supplier still need local confirmation.",
+  "draft": "Oorweeg dit slegs nadat jy betroubare voer, drinkwater, behuising, gesondheidsorg en bestuurde beligting gekontroleer het. Ras en verskaffer moet steeds plaaslik bevestig word."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Commercial broilers — meat system",
+  "english": "Commercial broilers — meat system",
+  "draft": "Kommersiële braaikuikens — vleisstelsel"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Needs dependable balanced feed, water, suitable housing and management. Confirm chick supply and a meat outlet before choosing.",
+  "english": "Needs dependable balanced feed, water, suitable housing and management. Confirm chick supply and a meat outlet before choosing.",
+  "draft": "Het betroubare gebalanseerde voer, water, geskikte behuising en bestuur nodig. Bevestig kuikenvoorsiening en 'n vleismark voordat jy kies."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Milk",
+  "english": "Milk",
+  "draft": "Melk"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "kg live weight/bird at slaughter",
+  "english": "kg live weight/bird at slaughter",
+  "draft": "kg lewende gewig/voël by slag"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "kg milk/cow/lactation",
+  "english": "kg milk/cow/lactation",
+  "draft": "kg melk/koei/laktasie"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "kg milk/doe/305-day lactation",
+  "english": "kg milk/doe/305-day lactation",
+  "draft": "kg melk/ooi/305-dag-laktasie"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "kg/bird at slaughter (32–33 days)",
+  "english": "kg/bird at slaughter (32–33 days)",
+  "draft": "kg/voël by slag (32–33 dae)"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "young reaching slaughter/reproduction age/doe/year",
+  "english": "young reaching slaughter/reproduction age/doe/year",
+  "draft": "kleintjies wat slag-/teelouderdom bereik/ooi/jaar"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Live calf weaning weight from communal Nguni herds in Limpopo; not meat weight.",
+  "english": "Live calf weaning weight from communal Nguni herds in Limpopo; not meat weight.",
+  "draft": "Lewende speengewig van kalwers uit gemeenskaplike Nguni-kuddes in Limpopo; nie vleisgewig nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Milk-recorded Jersey and Holstein herds, per lactation; not an annual total.",
+  "english": "Milk-recorded Jersey and Holstein herds, per lactation; not an annual total.",
+  "draft": "Melkaangetekende Jersey- en Holstein-kuddes, per laktasie; nie 'n jaartotaal nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Commercial industry reference at slaughter; not a household flock forecast.",
+  "english": "Commercial industry reference at slaughter; not a household flock forecast.",
+  "draft": "Kommersiële bedryfsverwysing by slag; nie 'n voorspelling vir 'n huishoudelike trop nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Non-South African study reference; live weight, not meat weight.",
+  "english": "Non-South African study reference; live weight, not meat weight.",
+  "draft": "Nie-Suid-Afrikaanse studieverwysing; lewende gewig, nie vleisgewig nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Milk-recorded Saanen herds, per lactation; not an annual total.",
+  "english": "Milk-recorded Saanen herds, per lactation; not an annual total.",
+  "draft": "Melkaangetekende Saanen-kuddes, per laktasie; nie 'n jaartotaal nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Extensive Boer-goat reference for kids weaned; not meat weight.",
+  "english": "Extensive Boer-goat reference for kids weaned; not meat weight.",
+  "draft": "Ekstensiewe Boer-goat-verwysing vir lammers gespeen; nie vleisgewig nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Farmer-reported lambs born; not lambs weaned or meat weight.",
+  "english": "Farmer-reported lambs born; not lambs weaned or meat weight.",
+  "draft": "Lammers gebore soos deur boere aangemeld; nie lammers gespeen of vleisgewig nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Commercial dairy processors require an even year-round milk supply. This is a herd supply reference, not year-round milk from each cow. Confirm your farm's calving and milking months.",
+  "english": "Commercial dairy processors require an even year-round milk supply. This is a herd supply reference, not year-round milk from each cow. Confirm your farm's calving and milking months.",
+  "draft": "Kommersiële suiwelverwerkers vereis 'n eweredige melkvoorraad deur die jaar. Dit is 'n kuddevoorraad-verwysing, nie melk van elke koei deur die jaar nie. Bevestig jou plaas se kalwings- en melkmaande."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "In this South African Saanen milk-recording study, does kidding in spring had the highest average lactation milk yield. Table 1 defines spring as August–October for this study. These are kidding-season categories, not confirmed milk collection months.",
+  "english": "In this South African Saanen milk-recording study, does kidding in spring had the highest average lactation milk yield. Table 1 defines spring as August–October for this study. These are kidding-season categories, not confirmed milk collection months.",
+  "draft": "In hierdie Suid-Afrikaanse Saanen-melkaantekeningstudie het ooie wat in die lente gelam het die hoogste gemiddelde laktasie-melkopbrengs gehad. Tabel 1 definieer lente as Augustus–Oktober vir hierdie studie. Dit is lamseisoen-kategorieë, nie bevestigde melkinsamelingsmaande nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Frost on this farm",
+  "english": "Frost on this farm",
+  "draft": "Ryp op hierdie plaas"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Planned crops to check for frost",
+  "english": "Planned crops to check for frost",
+  "draft": "Beplande gewasse om vir ryp te kontroleer"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Frost has been observed here in {months}. Check frost-tender crops against these observations.",
+  "english": "Frost has been observed here in {months}. Check frost-tender crops against these observations.",
+  "draft": "Ryp is hier waargeneem in {months}. Kontroleer rypgevoelige gewasse teen hierdie waarnemings."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Frost has been observed here; months not recorded. Check frost-tender crops against these observations.",
+  "english": "Frost has been observed here; months not recorded. Check frost-tender crops against these observations.",
+  "draft": "Ryp is hier waargeneem; maande nie aangeteken nie. Kontroleer rypgevoelige gewasse teen hierdie waarnemings."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Farmer reports no observed frost. This observation does not establish that future winters will be frost-free.",
+  "english": "Farmer reports no observed frost. This observation does not establish that future winters will be frost-free.",
+  "draft": "Boer meld aan dat geen ryp waargeneem is nie. Hierdie waarneming bewys nie dat toekomstige winters rypvry sal wees nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.",
+  "english": "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.",
+  "draft": "Plaaslike rypwaarnemings is nie aangeteken nie. Satelliet se maandelikse gemiddeldes kan nie eerste en laaste rypdatums bepaal nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "These planned crops will hold ground in months when frost has been observed here. Confirm local protection or change the planting before relying on these dates.",
+  "english": "These planned crops will hold ground in months when frost has been observed here. Confirm local protection or change the planting before relying on these dates.",
+  "draft": "Hierdie beplande gewasse sal grond beset in maande wanneer ryp hier waargeneem is. Bevestig plaaslike beskerming of verander die plantwerk voordat jy op hierdie datums staatmaak."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Check that the variety, local climate, pollination, water and care match your yield assumptions. Ages alone do not establish site suitability or survival.",
+  "english": "Check that the variety, local climate, pollination, water and care match your yield assumptions. Ages alone do not establish site suitability or survival.",
+  "draft": "Kontroleer dat die variëteit, plaaslike klimaat, bestuiwing, water en versorging by jou opbrengsaannames pas. Ouderdomme alleen bewys nie terreingeskiktheid of oorlewing nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Known subtotals leave out missing yields. Eggs, meat, milk, fish and honey are not included in these crop kg totals. Picking months and food-gap checks still need local confirmation.",
+  "english": "Known subtotals leave out missing yields. Eggs, meat, milk, fish and honey are not included in these crop kg totals. Picking months and food-gap checks still need local confirmation.",
+  "draft": "Bekende subtotale laat ontbrekende opbrengste uit. Eiers, vleis, melk, vis en heuning is nie by hierdie gewas-kg-totale ingesluit nie. Plukmaande en voedselgaping-kontroles moet steeds plaaslik bevestig word."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Invented stock months from January to March 2027, not a safe shelf life. Freezer conditions, a safe processing method and the amount held are not supplied.",
+  "english": "Invented stock months from January to March 2027, not a safe shelf life. Freezer conditions, a safe processing method and the amount held are not supplied.",
+  "draft": "Uitgedinkte voorraadmaande van Januarie tot Maart 2027, nie 'n veilige raklewe nie. Vrieskastoestande, 'n veilige verwerkingsmetode en die hoeveelheid in voorraad word nie verskaf nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Invented stock months from June to August 2027, not a safe shelf life. The example banana picking record is also invented; a safe drying method and the amount held are not supplied.",
+  "english": "Invented stock months from June to August 2027, not a safe shelf life. The example banana picking record is also invented; a safe drying method and the amount held are not supplied.",
+  "draft": "Uitgedinkte voorraadmaande van Junie tot Augustus 2027, nie 'n veilige raklewe nie. Die voorbeeld-piesangplukrekord is ook uitgedink; 'n veilige droogmetode en die hoeveelheid in voorraad word nie verskaf nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Invented stock months from August to October 2027, not a safe shelf life. Fermentation controls, a tested processing recipe and the amount held are not supplied.",
+  "english": "Invented stock months from August to October 2027, not a safe shelf life. Fermentation controls, a tested processing recipe and the amount held are not supplied.",
+  "draft": "Uitgedinkte voorraadmaande van Augustus tot Oktober 2027, nie 'n veilige raklewe nie. Fermentasiebeheer, 'n getoetste verwerkingsresep en die hoeveelheid in voorraad word nie verskaf nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Invented stock months from May to August 2027, not a safe shelf life. The processing method, a tested preservation recipe and the amount held are not supplied.",
+  "english": "Invented stock months from May to August 2027, not a safe shelf life. The processing method, a tested preservation recipe and the amount held are not supplied.",
+  "draft": "Uitgedinkte voorraadmaande van Mei tot Augustus 2027, nie 'n veilige raklewe nie. Die verwerkingsmetode, 'n getoetste preserveringsresep en die hoeveelheid in voorraad word nie verskaf nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Invented stock months from March to May 2027, not a safe shelf life. Made-up bought or carried stock; no harvest from this example mango tree is claimed. A safe drying method and the amount held are not supplied.",
+  "english": "Invented stock months from March to May 2027, not a safe shelf life. Made-up bought or carried stock; no harvest from this example mango tree is claimed. A safe drying method and the amount held are not supplied.",
+  "draft": "Uitgedinkte voorraadmaande van Maart tot Mei 2027, nie 'n veilige raklewe nie. Opgemaakte gekoopte of oorgedraagde voorraad; geen oes van hierdie voorbeeld-mangoboom word beweer nie. 'n Veilige droogmetode en die hoeveelheid in voorraad word nie verskaf nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Invented stock months from August to October 2027, not a safe shelf life. Made-up bought or carried nuts in shell; no harvest from these example trees is claimed. Storage conditions, kernel weight and the amount held are not supplied.",
+  "english": "Invented stock months from August to October 2027, not a safe shelf life. Made-up bought or carried nuts in shell; no harvest from these example trees is claimed. Storage conditions, kernel weight and the amount held are not supplied.",
+  "draft": "Uitgedinkte voorraadmaande van Augustus tot Oktober 2027, nie 'n veilige raklewe nie. Opgemaakte gekoopte of oorgedraagde neute in die dop; geen oes van hierdie voorbeeldbome word beweer nie. Bergingstoestande, pitgewig en die hoeveelheid in voorraad word nie verskaf nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Keep hives away from playgrounds, provide fresh water and use a dry site. Ask a registered beekeeper to check safe local placement before adding a hive.",
+  "english": "Keep hives away from playgrounds, provide fresh water and use a dry site. Ask a registered beekeeper to check safe local placement before adding a hive.",
+  "draft": "Hou korwe weg van speelterreine, voorsien vars water en gebruik 'n droë terrein. Vra 'n geregistreerde byeboer om veilige plaaslike plasing te kontroleer voordat jy 'n korf byvoeg."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Inspect every colony regularly for signs of notifiable bee disease and Cape-bee (Capensis) infection.",
+  "english": "Inspect every colony regularly for signs of notifiable bee disease and Cape-bee (Capensis) infection.",
+  "draft": "Inspekteer elke kolonie gereeld vir tekens van aanmeldbare byesiektes en infeksie deur Cape-bee (Capensis)."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Keep written records of colonies, apiary locations, diseases, disease-control measures and colony losses with their reasons.",
+  "english": "Keep written records of colonies, apiary locations, diseases, disease-control measures and colony losses with their reasons.",
+  "draft": "Hou geskrewe rekords van kolonies, byeplaas-liggings, siektes, siektebeheermaatreëls en kolonieverliese met hul redes."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Do not move honeybees across the Cape bee line, or keep Cape bees north of it, without written approval.",
+  "english": "Do not move honeybees across the Cape bee line, or keep Cape bees north of it, without written approval.",
+  "draft": "Moenie heuningbye oor die Cape bee-lyn skuif, of Cape bees noord daarvan aanhou, sonder skriftelike goedkeuring nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Report any suspected notifiable disease (American foulbrood is listed); officials can order an infected colony destroyed.",
+  "english": "Report any suspected notifiable disease (American foulbrood is listed); officials can order an infected colony destroyed.",
+  "draft": "Meld enige vermoedelike aanmeldbare siekte aan (Amerikaanse vuilbroed is gelys); amptenare kan beveel dat 'n besmette kolonie vernietig word."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Cattle pens must not be overcrowded: there must be enough floor space for every animal to lie down at the same time.",
+  "english": "Cattle pens must not be overcrowded: there must be enough floor space for every animal to lie down at the same time.",
+  "draft": "Beeshokke mag nie oorbevolk wees nie: daar moet genoeg vloerruimte wees sodat elke dier terselfdertyd kan lê."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: state Veterinary Services enforce isolation and movement restrictions.",
+  "english": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: state Veterinary Services enforce isolation and movement restrictions.",
+  "draft": "Bek-en-klouseer (FMD) is 'n beheerde dieresiekte ingevolge die Wet op Dieresiektes: die staat se Veeartsenydienste dwing isolasie en bewegingsbeperkings af."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinary office, as part of the national bovine brucellosis control scheme under the Animal Diseases Act.",
+  "english": "Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinary office, as part of the national bovine brucellosis control scheme under the Animal Diseases Act.",
+  "draft": "Enige vermoedelike of bevestigde brucellose-verwante misgeboorte by beeste moet by die Staatsveeartskantoor aangemeld word, as deel van die nasionale beesbrucellose-beheerskema ingevolge die Wet op Dieresiektes."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "No animal may be slaughtered anywhere but a registered abattoir, with the exception below.",
+  "english": "No animal may be slaughtered anywhere but a registered abattoir, with the exception below.",
+  "draft": "Geen dier mag op enige ander plek as 'n geregistreerde abattoir geslag word nie, met die uitsondering hieronder."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Slaughter for the farmer's own household consumption, or for cultural or religious purposes, is exempt from the abattoir rule.",
+  "english": "Slaughter for the farmer's own household consumption, or for cultural or religious purposes, is exempt from the abattoir rule.",
+  "draft": "Slagting vir die boer se eie huishoudelike verbruik, of vir kulturele of godsdienstige doeleindes, is vrygestel van die abattoirreël."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "In hotter, humid KZN, KZN DARD describes Nguni × Jersey dairy trials at Makhathini to combine milk potential with local adaptation. Hand milking with the calf present highlights competition between household milk and calf growth. Discuss adapted stock and feeding locally; commercial milk-recording totals do not forecast this system. Record calving, lactation stage and milk available after calf needs.",
+  "english": "In hotter, humid KZN, KZN DARD describes Nguni × Jersey dairy trials at Makhathini to combine milk potential with local adaptation. Hand milking with the calf present highlights competition between household milk and calf growth. Discuss adapted stock and feeding locally; commercial milk-recording totals do not forecast this system. Record calving, lactation stage and milk available after calf needs.",
+  "draft": "In die warmer, vogtige KZN beskryf KZN DARD Nguni × Jersey-suiwelproewe by Makhathini om melkpotensiaal met plaaslike aanpassing te kombineer. Handmelk met die kalf teenwoordig beklemtoon die kompetisie tussen huishoudelike melk en kalfgroei. Bespreek aangepaste vee en voeding plaaslik; kommersiële melkaantekeningtotale voorspel nie hierdie stelsel nie. Teken kalwing, laktasiestadium en melk wat beskikbaar is ná die kalf se behoeftes aan."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Cows must not be loaded for transport if their udders are distended with milk.",
+  "english": "Cows must not be loaded for transport if their udders are distended with milk.",
+  "draft": "Koeie mag nie vir vervoer gelaai word as hul uiers met melk opgeswel is nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A cull cow may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+  "english": "A cull cow may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+  "draft": "'n Uitskotkoei mag slegs by 'n abattoir geslag word, behalwe vir die boer se eie verbruik of vir kulturele of godsdienstige doeleindes."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Newer South African commercial reference: SAPA 2024 reports average slaughter at 30–31 days with bird weight 1.8–1.85 kg. The primary range above remains the earlier 2022 reference at 32–33 days. These are commercial bird weights, not dressed meat kg or a village flock target. Record hatch or purchase age, feeding system, actual harvest date and weighed product basis.",
+  "english": "Newer South African commercial reference: SAPA 2024 reports average slaughter at 30–31 days with bird weight 1.8–1.85 kg. The primary range above remains the earlier 2022 reference at 32–33 days. These are commercial bird weights, not dressed meat kg or a village flock target. Record hatch or purchase age, feeding system, actual harvest date and weighed product basis.",
+  "draft": "Nuwer Suid-Afrikaanse kommersiële verwysing: SAPA 2024 meld gemiddelde slagting op 30–31 dae met 'n voëlgewig van 1.8–1.85 kg. Die primêre reeks hierbo bly die vroeëre 2022-verwysing op 32–33 dae. Dit is kommersiële voëlgewigte, nie kg skoongemaakte vleis of 'n teiken vir 'n dorpstrop nie. Teken uitbroei- of aankoopouderdom, voerstelsel, werklike oesdatum en die basis van die geweegde produk aan."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "In free-range broiler production, indoor stocking must not exceed 15 birds per square metre of floor space.",
+  "english": "In free-range broiler production, indoor stocking must not exceed 15 birds per square metre of floor space.",
+  "draft": "In vrylopende braaikuikenproduksie mag die binnenshuise beladingsdigtheid nie 15 voëls per vierkante meter vloerruimte oorskry nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+  "english": "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+  "draft": "'n Eienaar of bestuurder wie se diere met 'n beheerde dieresiekte besmet is, of moontlik besmet is, moet dit onmiddellik by die staat se veeartsenydirekteur aanmeld."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+  "english": "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+  "draft": "Newcastle-siekte en aanmeldbare voëlgriep is op die staat se lys van beheerde en aanmeldbare dieresiektes."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+  "english": "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+  "draft": "Geen dier mag op enige ander plek as 'n abattoir geslag word nie, met die uitsonderings hieronder."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.",
+  "english": "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.",
+  "draft": "Slagting vir jou eie huishouding, of vir kulturele of godsdienstige doeleindes, is vrygestel van die abattoirreël."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Scavenging village chickens grow more slowly than commercially-farmed birds and are more vulnerable to disease, parasites and predators.",
+  "english": "Scavenging village chickens grow more slowly than commercially-farmed birds and are more vulnerable to disease, parasites and predators.",
+  "draft": "Skarrelende dorpshoenders groei stadiger as kommersieel geteelde voëls en is meer kwesbaar vir siektes, parasiete en roofdiere."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The outdoor free-range area must not be overstocked: no more than 5 birds per square metre of range.",
+  "english": "The outdoor free-range area must not be overstocked: no more than 5 birds per square metre of range.",
+  "draft": "Die vrylopende buitearea mag nie oorbelaai word nie: nie meer as 5 voëls per vierkante meter buiteloop nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Ducks are one of the domesticated animal species listed in the Meat Safety Act, so its rules on registered abattoirs and hygiene apply to them.",
+  "english": "Ducks are one of the domesticated animal species listed in the Meat Safety Act, so its rules on registered abattoirs and hygiene apply to them.",
+  "draft": "Eende is een van die mak dierspesies wat in die Wet op Vleisveiligheid gelys word, daarom is sy reëls oor geregistreerde abattoirs en higiëne op hulle van toepassing."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Ducks slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt but that meat may not be sold.",
+  "english": "Ducks slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt but that meat may not be sold.",
+  "draft": "Eende wat geslag word om verkoop te word, moet by 'n geregistreerde abattoir geslag word; slagting vir die boer se eie verbruik is vrygestel, maar daardie vleis mag nie verkoop word nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Ducks are birds/poultry, so an outbreak of avian influenza in a duck flock is a controlled animal disease under the Animal Diseases Act and must be reported to the state vet immediately.",
+  "english": "Ducks are birds/poultry, so an outbreak of avian influenza in a duck flock is a controlled animal disease under the Animal Diseases Act and must be reported to the state vet immediately.",
+  "draft": "Eende is voëls/pluimvee, daarom is 'n uitbreking van voëlgriep in 'n eendtrop 'n beheerde dieresiekte ingevolge die Wet op Dieresiektes en moet dit onmiddellik by die staatsveearts aangemeld word."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "South African Saanen reference by lactation number, not age in years: mean milk mass per standardised 305-day lactation was 947.3 kg at first parity, 1043.2 at second, 1073.4 at third, 1020.3 at fourth, 972.8 at fifth, 901.6 at sixth and 775.4 at ≥7th. These ARC milk-recorded groups were mostly intensive/semi-intensive stud herds. Record actual kidding date, lactation number and collected milk; do not divide these totals evenly into months.",
+  "english": "South African Saanen reference by lactation number, not age in years: mean milk mass per standardised 305-day lactation was 947.3 kg at first parity, 1043.2 at second, 1073.4 at third, 1020.3 at fourth, 972.8 at fifth, 901.6 at sixth and 775.4 at ≥7th. These ARC milk-recorded groups were mostly intensive/semi-intensive stud herds. Record actual kidding date, lactation number and collected milk; do not divide these totals evenly into months.",
+  "draft": "Suid-Afrikaanse Saanen-verwysing volgens laktasienommer, nie ouderdom in jare nie: gemiddelde melkmassa per gestandaardiseerde 305-dag-laktasie was 947.3 kg by eerste pariteit, 1043.2 by tweede, 1073.4 by derde, 1020.3 by vierde, 972.8 by vyfde, 901.6 by sesde en 775.4 by ≥7de. Hierdie ARC-melkaangetekende groepe was meestal intensiewe/semi-intensiewe stoetkuddes. Teken die werklike lamdatum, laktasienommer en ingesamelde melk aan; moenie hierdie totale eweredig oor maande verdeel nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "At Putukwane near Polokwane, 179 lactating does under extensive feeding with irregular supplementation were observed for 210 days after kidding. Mean milk mass was 1.45 kg/day for Saanen, 0.75 for British Alpine and 0.56 for Toggenburg during observed lactation. Early lactation exceeded mid and late lactation; March–April kidding outperformed October–November in this cohort. These conditions differ from stud-herd records. Discuss adapted stock and feed locally; these are not litres/day or year-round promises.",
+  "english": "At Putukwane near Polokwane, 179 lactating does under extensive feeding with irregular supplementation were observed for 210 days after kidding. Mean milk mass was 1.45 kg/day for Saanen, 0.75 for British Alpine and 0.56 for Toggenburg during observed lactation. Early lactation exceeded mid and late lactation; March–April kidding outperformed October–November in this cohort. These conditions differ from stud-herd records. Discuss adapted stock and feed locally; these are not litres/day or year-round promises.",
+  "draft": "By Putukwane naby Polokwane is 179 lakterende ooie onder ekstensiewe voeding met ongereelde aanvulling vir 210 dae ná lamming waargeneem. Gemiddelde melkmassa was 1.45 kg/dag vir Saanen, 0.75 vir British Alpine en 0.56 vir Toggenburg tydens die waargenome laktasie. Vroeë laktasie het middel- en laat laktasie oorskry; lamming in Maart–April het beter gevaar as Oktober–November in hierdie groep. Hierdie toestande verskil van stoetkudde-rekords. Bespreek aangepaste vee en voer plaaslik; dit is nie liter/dag of beloftes vir die hele jaar nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "An owner must not let a goat stay in a dirty or parasite-infested condition, and must get veterinary or other treatment for a sick, injured or diseased animal when able to.",
+  "english": "An owner must not let a goat stay in a dirty or parasite-infested condition, and must get veterinary or other treatment for a sick, injured or diseased animal when able to.",
+  "draft": "'n Eienaar mag nie toelaat dat 'n bok in 'n vuil of parasietbesmette toestand bly nie, en moet veeartsenykundige of ander behandeling vir 'n siek, beseerde of sieklike dier kry wanneer hy of sy kan."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services enforce isolation and movement restrictions, and a suspected case must be reported.",
+  "english": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services enforce isolation and movement restrictions, and a suspected case must be reported.",
+  "draft": "Bek-en-klouseer (FMD) is 'n beheerde dieresiekte ingevolge die Wet op Dieresiektes: veeartsenydienste dwing isolasie en bewegingsbeperkings af, en 'n vermoedelike geval moet aangemeld word."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Inside a declared FMD-affected zone, goats and their products (including milk) cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+  "english": "Inside a declared FMD-affected zone, goats and their products (including milk) cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+  "draft": "Binne 'n verklaarde FMD-geaffekteerde sone kan bokke en hul produkte (insluitend melk) nie in, uit of binne die sone geskuif word sonder 'n staatsveeartsenykundige bewegingspermit en nakoming van sy voorwaardes nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act (relevant when culled dairy does or male kids are sold for meat); slaughtering for the farmer's own consumption, or for cultural/religious purposes, is exempt but that meat may not then be sold.",
+  "english": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act (relevant when culled dairy does or male kids are sold for meat); slaughtering for the farmer's own consumption, or for cultural/religious purposes, is exempt but that meat may not then be sold.",
+  "draft": "'n Bok mag slegs vir verkoop by 'n geregistreerde abattoir geslag word ingevolge die Wet op Vleisveiligheid (van belang wanneer uitgeskote melkooie of bokramlammers vir vleis verkoop word); slagting vir die boer se eie verbruik, of vir kulturele/godsdienstige doeleindes, is vrygestel, maar daardie vleis mag dan nie verkoop word nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The 2016 government goat manual distinguishes indigenous, Boer, Savanna and Kalahari Red meat-purpose stock from milk/fibre breeds, with breeding objectives and individual birth, weaning, weight and sale records. Uncontrolled communal mating can produce births at any time; that does not establish meat or weaned-kid availability all year. Choose stock for the local system and record survival and product stage before forecasting quantities.",
+  "english": "The 2016 government goat manual distinguishes indigenous, Boer, Savanna and Kalahari Red meat-purpose stock from milk/fibre breeds, with breeding objectives and individual birth, weaning, weight and sale records. Uncontrolled communal mating can produce births at any time; that does not establish meat or weaned-kid availability all year. Choose stock for the local system and record survival and product stage before forecasting quantities.",
+  "draft": "Die regering se bokhandleiding van 2016 onderskei inheemse, Boer-, Savanna- en Kalahari Red-vee vir vleisdoeleindes van melk-/veselrasse, met teeldoelwitte en individuele geboorte-, speen-, gewig- en verkooprekords. Onbeheerde gemeenskaplike dekking kan op enige tyd geboortes lewer; dit bewys nie dat vleis of gespeende lammers die hele jaar beskikbaar is nie. Kies vee vir die plaaslike stelsel en teken oorlewing en produkstadium aan voordat jy hoeveelhede voorspel."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes (including ceremonial slaughter, common with indigenous goats), is exempt from that rule, but that meat may not then be sold.",
+  "english": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes (including ceremonial slaughter, common with indigenous goats), is exempt from that rule, but that meat may not then be sold.",
+  "draft": "'n Bok mag slegs vir verkoop by 'n geregistreerde abattoir geslag word ingevolge die Wet op Vleisveiligheid; slagting vir die boer se eie verbruik, of vir kulturele/godsdienstige doeleindes (insluitend seremoniële slagting, algemeen by inheemse bokke), is van daardie reël vrygestel, maar daardie vleis mag dan nie verkoop word nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes, is exempt from that rule, but that meat may not then be sold.",
+  "english": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes, is exempt from that rule, but that meat may not then be sold.",
+  "draft": "'n Bok mag slegs vir verkoop by 'n geregistreerde abattoir geslag word ingevolge die Wet op Vleisveiligheid; slagting vir die boer se eie verbruik, of vir kulturele/godsdienstige doeleindes, is van daardie reël vrygestel, maar daardie vleis mag dan nie verkoop word nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "ARC Table 1 lists pregnant sows at 10–18 L drinking water/day and lactating sows at 18–23 L/day. These are breeding-sow stages, not one amount for every pig. Farrowing care separates sow cooling from piglet warmth; outdoor systems need locally adapted hardy stock, shade and shelter. Confirm stage, reliable clean water, feed and housing locally. The manual supplies no verified edible kg per breeding sow for this plan.",
+  "english": "ARC Table 1 lists pregnant sows at 10–18 L drinking water/day and lactating sows at 18–23 L/day. These are breeding-sow stages, not one amount for every pig. Farrowing care separates sow cooling from piglet warmth; outdoor systems need locally adapted hardy stock, shade and shelter. Confirm stage, reliable clean water, feed and housing locally. The manual supplies no verified edible kg per breeding sow for this plan.",
+  "draft": "ARC Tabel 1 lys dragtige sôe teen 10–18 L drinkwater/dag en lakterende sôe teen 18–23 L/dag. Dit is stadiums van teelsôe, nie een hoeveelheid vir elke vark nie. Kraamsorg skei die verkoeling van die sog van warmte vir die varkies; buitestelsels het plaaslik aangepaste geharde vee, skaduwee en skuiling nodig. Bevestig stadium, betroubare skoon water, voer en behuising plaaslik. Die handleiding verskaf geen geverifieerde eetbare kg per teelsog vir hierdie plan nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "African swine fever (ASF) is listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act; warthogs and Ornithodorus ticks are carriers/vectors.",
+  "english": "African swine fever (ASF) is listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act; warthogs and Ornithodorus ticks are carriers/vectors.",
+  "draft": "Afrika-varkpes (ASF) is ingevolge die Wet op Dieresiektes gelys as 'n beheerde dieresiekte wat op varke betrekking het; vlakvarke en Ornithodorus-bosluise is draers/vektore."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Foot-and-mouth disease (FMD) is also listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act.",
+  "english": "Foot-and-mouth disease (FMD) is also listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act.",
+  "draft": "Bek-en-klouseer (FMD) is ook ingevolge die Wet op Dieresiektes gelys as 'n beheerde dieresiekte wat op varke betrekking het."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Swill (food waste) may not be fed to pigs unless it has been boiled for at least 60 minutes or sterilised by another equally effective method.",
+  "english": "Swill (food waste) may not be fed to pigs unless it has been boiled for at least 60 minutes or sterilised by another equally effective method.",
+  "draft": "Swill (voedselafval) mag nie aan varke gevoer word nie, tensy dit vir ten minste 60 minute gekook is of deur 'n ander ewe doeltreffende metode gesteriliseer is."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A pig may not be slaughtered anywhere but a registered abattoir, except for own household consumption or cultural/religious purposes.",
+  "english": "A pig may not be slaughtered anywhere but a registered abattoir, except for own household consumption or cultural/religious purposes.",
+  "draft": "'n Vark mag nêrens anders as by 'n geregistreerde abattoir geslag word nie, behalwe vir eie huishoudelike verbruik of kulturele/godsdienstige doeleindes."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "South African grower reference: New Zealand White and Phendula rabbits in the 2017 Stellenbosch trial were slaughtered at about 11 weeks from birth. Overall means were 2.62 kg live slaughter weight, 1.55 kg hot carcass, 1.48 kg chilled carcass and 1.26 kg reference carcass with head and red offal removed, still including bones. Balanced pellets and water were freely available in a grower house. These weights are not boneless meat or annual doe output; do not multiply them by the unrelated FAO backyard target.",
+  "english": "South African grower reference: New Zealand White and Phendula rabbits in the 2017 Stellenbosch trial were slaughtered at about 11 weeks from birth. Overall means were 2.62 kg live slaughter weight, 1.55 kg hot carcass, 1.48 kg chilled carcass and 1.26 kg reference carcass with head and red offal removed, still including bones. Balanced pellets and water were freely available in a grower house. These weights are not boneless meat or annual doe output; do not multiply them by the unrelated FAO backyard target.",
+  "draft": "Suid-Afrikaanse groeier-verwysing: New Zealand White- en Phendula-konyne in die Stellenbosch-proef van 2017 is op ongeveer 11 weke ná geboorte geslag. Algehele gemiddeldes was 2.62 kg lewende slaggewig, 1.55 kg warm karkas, 1.48 kg verkoelde karkas en 1.26 kg verwysingskarkas met kop en rooi afval verwyder, steeds met bene. Gebalanseerde korrels en water was vrylik beskikbaar in 'n groeihok. Hierdie gewigte is nie beenlose vleis of jaarlikse opbrengs per ooi nie; moenie hulle met die onverwante FAO-agterplaasteiken vermenigvuldig nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Rabbits are one of the domesticated animal species listed in the Meat Safety Act, so the Act's rules on abattoirs and hygiene apply to them, as they do to ducks and other listed species.",
+  "english": "Rabbits are one of the domesticated animal species listed in the Meat Safety Act, so the Act's rules on abattoirs and hygiene apply to them, as they do to ducks and other listed species.",
+  "draft": "Konyne is een van die mak dierspesies wat in die Wet op Vleisveiligheid gelys word, daarom is die Wet se reëls oor abattoirs en higiëne op hulle van toepassing, soos op eende en ander gelyste spesies."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Rabbits slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt from this rule but the meat from it may not be sold.",
+  "english": "Rabbits slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt from this rule but the meat from it may not be sold.",
+  "draft": "Konyne wat geslag word om verkoop te word, moet by 'n geregistreerde abattoir geslag word; slagting vir die boer se eie verbruik is van hierdie reël vrygestel, maar die vleis daarvan mag nie verkoop word nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The government sheep manual describes controlled breeding at Mara Research Station, Limpopo: June–July mating and November–December lambing to match rain and grass. This is one station breeding calendar, not mutton harvest months. Match adapted meat-purpose stock and feed locally, then record birth, survival, weaning and actual slaughter or sale; lambs born per ewe are not edible kg.",
+  "english": "The government sheep manual describes controlled breeding at Mara Research Station, Limpopo: June–July mating and November–December lambing to match rain and grass. This is one station breeding calendar, not mutton harvest months. Match adapted meat-purpose stock and feed locally, then record birth, survival, weaning and actual slaughter or sale; lambs born per ewe are not edible kg.",
+  "draft": "Die regering se skaaphandleiding beskryf beheerde teling by die Mara-navorsingstasie, Limpopo: dekking in Junie–Julie en lamming in November–Desember om by reën en gras te pas. Dit is een stasie se teelkalender, nie maande vir skaapvleisoes nie. Laat aangepaste vee vir vleisdoeleindes en voer plaaslik ooreenstem, en teken dan geboorte, oorlewing, speen en werklike slagting of verkoop aan; lammers gebore per ooi is nie eetbare kg nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Sheep must not be penned overcrowded: at least 0.56 square metres of floor space per sheep so every animal can lie down.",
+  "english": "Sheep must not be penned overcrowded: at least 0.56 square metres of floor space per sheep so every animal can lie down.",
+  "draft": "Skape mag nie oorbevolk in hokke aangehou word nie: ten minste 0.56 vierkante meter vloerruimte per skaap sodat elke dier kan lê."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Electric prodders, sticks or goads may not be used on sheep.",
+  "english": "Electric prodders, sticks or goads may not be used on sheep.",
+  "draft": "Elektriese porstokke, stokke of dryfstokke mag nie op skape gebruik word nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Livestock must be given water and fed as soon as they reach their night camp or final destination.",
+  "english": "Livestock must be given water and fed as soon as they reach their night camp or final destination.",
+  "draft": "Vee moet water en voer kry sodra hulle hul nagkamp of eindbestemming bereik."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Injured, disabled or blind sheep must be given priority slaughter, or emergency slaughter, to prevent further pain or distress.",
+  "english": "Injured, disabled or blind sheep must be given priority slaughter, or emergency slaughter, to prevent further pain or distress.",
+  "draft": "Beseerde, gestremde of blinde skape moet voorrang by slagting, of noodslagting, kry om verdere pyn of nood te voorkom."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act; Veterinary Services enforce isolation and movement restrictions.",
+  "english": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act; Veterinary Services enforce isolation and movement restrictions.",
+  "draft": "Bek-en-klouseer (FMD) is 'n beheerde dieresiekte ingevolge die Wet op Dieresiektes; Veeartsenydienste dwing isolasie en bewegingsbeperkings af."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Sheep scab is a controlled disease by law: a suspected or positive case must be reported to the State Veterinarian immediately.",
+  "english": "Sheep scab is a controlled disease by law: a suspected or positive case must be reported to the State Veterinarian immediately.",
+  "draft": "Skaapbrandsiekte is by wet 'n beheerde siekte: 'n vermoedelike of positiewe geval moet onmiddellik by die Staatsveearts aangemeld word."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A sheep may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+  "english": "A sheep may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+  "draft": "'n Skaap mag slegs by 'n abattoir geslag word, behalwe vir die boer se eie verbruik of vir kulturele of godsdienstige doeleindes."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A sheep-scab treatment plan should be in place: the disease carries a high economic and welfare cost.",
+  "english": "A sheep-scab treatment plan should be in place: the disease carries a high economic and welfare cost.",
+  "draft": "'n Behandelingsplan vir skaapbrandsiekte moet in plek wees: die siekte bring hoë ekonomiese en welsynskoste mee."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Despite foot-and-mouth disease (FMD) in South Africa, wool exports continue under the inactivation clause of the OIE (World Organisation for Animal Health) rules.",
+  "english": "Despite foot-and-mouth disease (FMD) in South Africa, wool exports continue under the inactivation clause of the OIE (World Organisation for Animal Health) rules.",
+  "draft": "Ten spyte van bek-en-klouseer (FMD) in Suid-Afrika gaan woluitvoere voort ingevolge die inaktiveringsklousule van die OIE (Wêreldorganisasie vir Diergesondheid) se reëls."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Table 1 ('Comparison of number of cows, production and fertility in the main dairy breeds in South Africa'), Milk column, Grade rows: Jersey 3840 kg and Holstein-Friesland 5422 kg per lactation (Registered rows: 4468 and 6426 kg). The document says these are National Milk Recording Scheme herds, which 'have been shown to be better managed than those outside the scheme, with their performance per lactation being 50 % greater than that of the national herd', so a smallholder herd should expect less.",
+  "english": "Table 1 ('Comparison of number of cows, production and fertility in the main dairy breeds in South Africa'), Milk column, Grade rows: Jersey 3840 kg and Holstein-Friesland 5422 kg per lactation (Registered rows: 4468 and 6426 kg). The document says these are National Milk Recording Scheme herds, which 'have been shown to be better managed than those outside the scheme, with their performance per lactation being 50 % greater than that of the national herd', so a smallholder herd should expect less.",
+  "draft": "Tabel 1 ('Comparison of number of cows, production and fertility in the main dairy breeds in South Africa'), Melk-kolom, Graad-rye: Jersey 3840 kg en Holstein-Friesland 5422 kg per laktasie (Geregistreerde rye: 4468 en 6426 kg). Die dokument sê dit is kuddes in die Nasionale Melkaantekeningskema, wat 'have been shown to be better managed than those outside the scheme, with their performance per lactation being 50 % greater than that of the national herd', daarom moet 'n kleinboerkudde minder verwag."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Table 1, AFC column, rows in the table's order Holstein-Friesland Reg./Grade, Jersey Reg./Grade, Ayrshire Reg./Grade: 28, 30, 25, 28, 29, 32 months. The Grade rows used here are Holstein-Friesland 30 and Jersey 28 (Grade Ayrshire 32 is not used: the enterprise is Jersey or Holstein type). 28 x 4.35 = 121.8 weeks; 30 x 4.35 = 130.5 weeks. Milk begins at first calving, so age at first calving is the time to first product.",
+  "english": "Table 1, AFC column, rows in the table's order Holstein-Friesland Reg./Grade, Jersey Reg./Grade, Ayrshire Reg./Grade: 28, 30, 25, 28, 29, 32 months. The Grade rows used here are Holstein-Friesland 30 and Jersey 28 (Grade Ayrshire 32 is not used: the enterprise is Jersey or Holstein type). 28 x 4.35 = 121.8 weeks; 30 x 4.35 = 130.5 weeks. Milk begins at first calving, so age at first calving is the time to first product.",
+  "draft": "Tabel 1, AFC-kolom, rye in die tabel se volgorde Holstein-Friesland Reg./Graad, Jersey Reg./Graad, Ayrshire Reg./Graad: 28, 30, 25, 28, 29, 32 maande. Die Graad-rye wat hier gebruik word, is Holstein-Friesland 30 en Jersey 28 (Graad-Ayrshire 32 word nie gebruik nie: die onderneming is van die Jersey- of Holstein-tipe). 28 x 4.35 = 121.8 weke; 30 x 4.35 = 130.5 weke. Melk begin by eerste kalwing, daarom is ouderdom by eerste kalwing die tyd tot eerste produk."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Holstein 739.33 and Jersey 696.81 days of productive life (first calving to culling) in South African milk-recorded herds, 2000-2019: 696.81/365.25 = 1.91 and 739.33/365.25 = 2.02 years.",
+  "english": "Holstein 739.33 and Jersey 696.81 days of productive life (first calving to culling) in South African milk-recorded herds, 2000-2019: 696.81/365.25 = 1.91 and 739.33/365.25 = 2.02 years.",
+  "draft": "Holstein 739.33 en Jersey 696.81 dae produktiewe lewe (eerste kalwing tot uitskot) in Suid-Afrikaanse melkaangetekende kuddes, 2000-2019: 696.81/365.25 = 1.91 en 739.33/365.25 = 2.02 jaar."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "32 days / 7 = 4.57 weeks; 33 days / 7 = 4.71 weeks. This enterprise has a single grow-out cycle ending in slaughter, so 'time to first product' = age at slaughter. South Africa, commercial industry average.",
+  "english": "32 days / 7 = 4.57 weeks; 33 days / 7 = 4.71 weeks. This enterprise has a single grow-out cycle ending in slaughter, so 'time to first product' = age at slaughter. South Africa, commercial industry average.",
+  "draft": "32 dae / 7 = 4.57 weke; 33 dae / 7 = 4.71 weke. Hierdie onderneming het 'n enkele uitgroeisiklus wat in slagting eindig, daarom is 'tyd tot eerste produk' = ouderdom by slagting. Suid-Afrika, gemiddelde van die kommersiële bedryf."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Non-SA (Guyana study reporting a citation to Steklenev 1990); no SA-specific absolute slaughter live-weight figure was found (see gaps). 2.93 kg = Pekin at 8-10 weeks, 2.29 kg = Muscovy at 8-10 weeks - matches this enterprise's two breeds. The same LRRD paper's own experiment (Table 2, intensive system, Guyana) measured live weight at slaughter (8 weeks) as: Pekin drakes 2.53 kg, Pekin hens 2.29 kg, Muscovy drakes 2.47 kg, Muscovy hens 1.51 kg - broadly consistent with, but not merged into, the cited range above since it is a separate dataset/table in the same source. No sourced eggs/duck/year figure was found for either breed (see gaps); the LRRD and SAJAS sources used here studied ducks reared only for meat.",
+  "english": "Non-SA (Guyana study reporting a citation to Steklenev 1990); no SA-specific absolute slaughter live-weight figure was found (see gaps). 2.93 kg = Pekin at 8-10 weeks, 2.29 kg = Muscovy at 8-10 weeks - matches this enterprise's two breeds. The same LRRD paper's own experiment (Table 2, intensive system, Guyana) measured live weight at slaughter (8 weeks) as: Pekin drakes 2.53 kg, Pekin hens 2.29 kg, Muscovy drakes 2.47 kg, Muscovy hens 1.51 kg - broadly consistent with, but not merged into, the cited range above since it is a separate dataset/table in the same source. No sourced eggs/duck/year figure was found for either breed (see gaps); the LRRD and SAJAS sources used here studied ducks reared only for meat.",
+  "draft": "Nie-SA (Guyana-studie wat na Steklenev 1990 verwys); geen SA-spesifieke absolute syfer vir lewende gewig by slag is gevind nie (sien leemtes). 2.93 kg = Pekin op 8-10 weke, 2.29 kg = Muscovy op 8-10 weke - stem ooreen met hierdie onderneming se twee rasse. Dieselfde LRRD-artikel se eie eksperiment (Tabel 2, intensiewe stelsel, Guyana) het lewende gewig by slag (8 weke) gemeet as: Pekin-mannetjies 2.53 kg, Pekin-wyfies 2.29 kg, Muscovy-mannetjies 2.47 kg, Muscovy-wyfies 1.51 kg - breedweg in ooreenstemming met, maar nie saamgevoeg by, die aangehaalde reeks hierbo nie, aangesien dit 'n aparte datastel/tabel in dieselfde bron is. Geen eiers/eend/jaar-syfer met 'n bron is vir enige van die rasse gevind nie (sien leemtes); die LRRD- en SAJAS-bronne wat hier gebruik word, het eende bestudeer wat slegs vir vleis grootgemaak is."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/hens, 12 weeks for drakes). Treated as 'time to first product' = age to slaughter, since this is a single-cycle meat enterprise (no repeat product like eggs). Non-South-African trial by Warsaw researchers, published in SAJAS; journal location does not establish local applicability.",
+  "english": "P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/hens, 12 weeks for drakes). Treated as 'time to first product' = age to slaughter, since this is a single-cycle meat enterprise (no repeat product like eggs). Non-South-African trial by Warsaw researchers, published in SAJAS; journal location does not establish local applicability.",
+  "draft": "P44 = Pekin (7 weke tot slag); MR71 = Muscovy (10 weke vir eende/wyfies, 12 weke vir mannetjies). Behandel as 'tyd tot eerste produk' = ouderdom tot slag, aangesien dit 'n enkelsiklus-vleisonderneming is (geen herhalende produk soos eiers nie). Nie-Suid-Afrikaanse proef deur navorsers van Warskou, gepubliseer in SAJAS; die joernaal se ligging bewys nie plaaslike toepaslikheid nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Lowest (≥7th parity) and highest (3rd parity) group means for milk yield per 305-day standardised lactation in 16,407 analysed South African ARC Saanen lactation records, 1955–2018, mostly intensive/semi-intensive stud herds. Original PDF Table 3 labels the last group ≥7th; HTML renders it >7th. Kept in kg, without litres conversion, annualisation or yield-by-age interpolation.",
+  "english": "Lowest (≥7th parity) and highest (3rd parity) group means for milk yield per 305-day standardised lactation in 16,407 analysed South African ARC Saanen lactation records, 1955–2018, mostly intensive/semi-intensive stud herds. Original PDF Table 3 labels the last group ≥7th; HTML renders it >7th. Kept in kg, without litres conversion, annualisation or yield-by-age interpolation.",
+  "draft": "Laagste (≥7de pariteit) en hoogste (3de pariteit) groepgemiddeldes vir melkopbrengs per 305-dag gestandaardiseerde laktasie in 16,407 ontlede Suid-Afrikaanse ARC-Saanen-laktasierekords, 1955–2018, meestal intensiewe/semi-intensiewe stoetkuddes. Die oorspronklike PDF se Tabel 3 benoem die laaste groep ≥7de; HTML wys dit as >7de. Gehou in kg, sonder omskakeling na liter, annualisering of interpolasie van opbrengs volgens ouderdom."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The reported weaning rate is 149%, or 1.49 kids weaned per doe mated. The source describes observations over twenty years for extensive Boer does at 295 mm rainfall; it does not state kids weaned per doe per calendar year. This is a reproductive outcome, not kg of live animals or dressed meat. A separate mean litter size of 1.93 kids born per parturition has a different denominator and stage and is not merged into this figure.",
+  "english": "The reported weaning rate is 149%, or 1.49 kids weaned per doe mated. The source describes observations over twenty years for extensive Boer does at 295 mm rainfall; it does not state kids weaned per doe per calendar year. This is a reproductive outcome, not kg of live animals or dressed meat. A separate mean litter size of 1.93 kids born per parturition has a different denominator and stage and is not merged into this figure.",
+  "draft": "Die aangemelde speenkoers is 149%, of 1.49 lammers gespeen per gedekte ooi. Die bron beskryf waarnemings oor twintig jaar vir ekstensiewe Boer-ooie by 295 mm reënval; dit noem nie lammers gespeen per ooi per kalenderjaar nie. Dit is 'n voortplantingsuitkoms, nie kg lewende diere of skoongemaakte vleis nie. 'n Aparte gemiddelde werpselgrootte van 1.93 lammers gebore per geboorte het 'n ander noemer en stadium en word nie by hierdie syfer saamgevoeg nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "FAO general backyard target, not a South African observed rate. The 30–35 young per doe annually have reached slaughter or reproduction age after allowance for post-weaning loss; they are not merely weaned and are not kg of meat. The source models six litters and 5.5 surviving young per litter, describing a 30-rabbit objective; an extra litter raises its stated objective to 35. Do not combine this backyard target with grower-house carcass weight from a different trial.",
+  "english": "FAO general backyard target, not a South African observed rate. The 30–35 young per doe annually have reached slaughter or reproduction age after allowance for post-weaning loss; they are not merely weaned and are not kg of meat. The source models six litters and 5.5 surviving young per litter, describing a 30-rabbit objective; an extra litter raises its stated objective to 35. Do not combine this backyard target with grower-house carcass weight from a different trial.",
+  "draft": "FAO se algemene agterplaasteiken, nie 'n Suid-Afrikaanse waargenome tempo nie. Die 30–35 kleintjies per ooi per jaar het slag- of teelouderdom bereik ná voorsiening vir verliese ná speen; hulle is nie bloot gespeen nie en is nie kg vleis nie. Die bron modelleer ses werpsels en 5.5 oorlewende kleintjies per werpsel, en beskryf 'n doelwit van 30 konyne; 'n ekstra werpsel verhoog sy gestelde doelwit tot 35. Moenie hierdie agterplaasteiken kombineer met groeihok-karkasgewig uit 'n ander proef nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "outputUnit is 'lambs born/ewe/year' rather than the suggested 'kg live weight/lamb at weaning or slaughter' or 'lambs weaned/ewe/year': the source explains 'Measuring accurate lambing percentages for smallholder sheep farmers is challenging as these farmers mostly farm extensively and do not keep records', and instead calculates 'Lambs born per ewe (as recorded from the surveys based on interviews with individual respondents)' - a lambing (born), not weaning, figure, self-reported by smallholder farmers rather than measured/weighed. 139%=1.39, 83%=0.83, 61%=0.61 lambs born/ewe/year; the range [0.61, 1.39] spans the three Western Cape smallholder districts surveyed (Eden, Central Karoo, West Coast), all from this one study/quote - not merged with any other document. The same paper separately states a COMMERCIAL extensive benchmark of 110-156% lambing and 94-132% weaning (Snyman & Herselman, 2005), explicitly 'expressed over ewes joined' (a different denominator/system) - not merged into this smallholder range.",
+  "english": "outputUnit is 'lambs born/ewe/year' rather than the suggested 'kg live weight/lamb at weaning or slaughter' or 'lambs weaned/ewe/year': the source explains 'Measuring accurate lambing percentages for smallholder sheep farmers is challenging as these farmers mostly farm extensively and do not keep records', and instead calculates 'Lambs born per ewe (as recorded from the surveys based on interviews with individual respondents)' - a lambing (born), not weaning, figure, self-reported by smallholder farmers rather than measured/weighed. 139%=1.39, 83%=0.83, 61%=0.61 lambs born/ewe/year; the range [0.61, 1.39] spans the three Western Cape smallholder districts surveyed (Eden, Central Karoo, West Coast), all from this one study/quote - not merged with any other document. The same paper separately states a COMMERCIAL extensive benchmark of 110-156% lambing and 94-132% weaning (Snyman & Herselman, 2005), explicitly 'expressed over ewes joined' (a different denominator/system) - not merged into this smallholder range.",
+  "draft": "outputUnit is 'lambs born/ewe/year' eerder as die voorgestelde 'kg live weight/lamb at weaning or slaughter' of 'lambs weaned/ewe/year': die bron verduidelik 'Measuring accurate lambing percentages for smallholder sheep farmers is challenging as these farmers mostly farm extensively and do not keep records', en bereken eerder 'Lambs born per ewe (as recorded from the surveys based on interviews with individual respondents)' - 'n lamsyfer (gebore), nie 'n speensyfer nie, selfgerapporteer deur kleinboere eerder as gemeet/geweeg. 139%=1.39, 83%=0.83, 61%=0.61 lammers gebore/ooi/jaar; die reeks [0.61, 1.39] strek oor die drie Wes-Kaapse kleinboerdistrikte wat ondervra is (Eden, Sentraal-Karoo, Weskus), alles uit hierdie een studie/aanhaling - nie by enige ander dokument saamgevoeg nie. Dieselfde artikel noem afsonderlik 'n KOMMERSIËLE ekstensiewe maatstaf van 110-156% lamming en 94-132% speen (Snyman & Herselman, 2005), uitdruklik 'expressed over ewes joined' ('n ander noemer/stelsel) - nie by hierdie kleinboerreeks saamgevoeg nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Different farmers — never stacked",
+  "english": "Different farmers — never stacked",
+  "draft": "Verskillende boere — nooit gestapel nie"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "1994/95 total kg/tree at age 14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Marketable weights are respectively 77.87, 28.42 and 23.38 kg/tree. One season and varying management, canopy and cultivar prevent a universal annual curve or copying total into saleable kg. The authors explicitly caution yield comparisons. The separate KZN guide gives conservative 2,000, average 3,000–5,000 and good 6,000+ kg/ha, not per-age kg/tree.",
+  "english": "1994/95 total kg/tree at age 14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Marketable weights are respectively 77.87, 28.42 and 23.38 kg/tree. One season and varying management, canopy and cultivar prevent a universal annual curve or copying total into saleable kg. The authors explicitly caution yield comparisons. The separate KZN guide gives conservative 2,000, average 3,000–5,000 and good 6,000+ kg/ha, not per-age kg/tree.",
+  "draft": "1994/95 totale kg/boom op ouderdom 14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Bemarkbare gewigte is onderskeidelik 77.87, 28.42 en 23.38 kg/boom. Een seisoen en wisselende bestuur, kroon en kultivar verhoed 'n universele jaarkurwe of die oordrag van die totaal na verkoopbare kg. Die outeurs waarsku uitdruklik teen opbrengsvergelykings. Die aparte KZN-gids gee konserwatief 2,000, gemiddeld 3,000–5,000 en goed 6,000+ kg/ha, nie kg/boom per ouderdom nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "ARC Infruitec Citrusdal, 1990. 10th leaf: Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. 7th leaf: Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/tree/year. The source calls these comparative, not absolute. Different cultivars and orchard groups do not establish a universal age-yield ramp.",
+  "english": "ARC Infruitec Citrusdal, 1990. 10th leaf: Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. 7th leaf: Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/tree/year. The source calls these comparative, not absolute. Different cultivars and orchard groups do not establish a universal age-yield ramp.",
+  "draft": "ARC Infruitec Citrusdal, 1990. 10de blad: Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/boom/jaar. 7de blad: Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/boom/jaar. Die bron noem dit vergelykend, nie absoluut nie. Verskillende kultivars en boordgroepe bepaal nie 'n universele ouderdom-opbrengs-oploop nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "About years 4–5 in the KZN horticultural guide. Context is frost-free warm, humid subtropical production areas; cultivar, propagation age and field establishment are not specified. This is a first-crop reference, not a guaranteed local quantity or full-bearing age.",
+  "english": "About years 4–5 in the KZN horticultural guide. Context is frost-free warm, humid subtropical production areas; cultivar, propagation age and field establishment are not specified. This is a first-crop reference, not a guaranteed local quantity or full-bearing age.",
+  "draft": "Ongeveer jaar 4–5 in die KZN-tuinbougids. Die konteks is rypvrye warm, vogtige subtropiese produksiegebiede; kultivar, voortplantingsouderdom en vestiging in die veld word nie gespesifiseer nie. Dit is 'n eerste-oes-verwysing, nie 'n gewaarborgde plaaslike hoeveelheid of ouderdom van volle draag nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "African Delight: age 3, 12,000–20,000 kg/ha; age 4, 20,000–35,000 kg/ha; mature orchards, 35,000–50,000 kg/ha. Full-bearing age and matched planting density are not stated; do not convert using Ruby Crisp spacing or interpolate a per-tree curve.",
+  "english": "African Delight: age 3, 12,000–20,000 kg/ha; age 4, 20,000–35,000 kg/ha; mature orchards, 35,000–50,000 kg/ha. Full-bearing age and matched planting density are not stated; do not convert using Ruby Crisp spacing or interpolate a per-tree curve.",
+  "draft": "African Delight: ouderdom 3, 12,000–20,000 kg/ha; ouderdom 4, 20,000–35,000 kg/ha; volwasse boorde, 35,000–50,000 kg/ha. Ouderdom van volle draag en ooreenstemmende plantdigtheid word nie gestel nie; moenie met Ruby Crisp-spasiëring omskakel of 'n kurwe per boom interpoleer nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Allow for slow growth, frost sensitivity and roots that exploit rock crevices.",
+  "english": "Allow for slow growth, frost sensitivity and roots that exploit rock crevices.",
+  "draft": "Maak voorsiening vir stadige groei, rypgevoeligheid en wortels wat rotsskeure benut."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Ask a local botanical nursery to confirm the plant's identity and suitable provenance; no primary named cultivar or exact frost threshold was verified.",
+  "english": "Ask a local botanical nursery to confirm the plant's identity and suitable provenance; no primary named cultivar or exact frost threshold was verified.",
+  "draft": "Vra 'n plaaslike botaniese kwekery om die plant se identiteit en geskikte herkoms te bevestig; geen primêre benoemde kultivar of presiese rypdrempel is geverifieer nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Ask a specialist local nursery for identified C. genistoides and a locally proven selection; different ecotypes do not perform equally.",
+  "english": "Ask a specialist local nursery for identified C. genistoides and a locally proven selection; different ecotypes do not perform equally.",
+  "draft": "Vra 'n gespesialiseerde plaaslike kwekery vir geïdentifiseerde C. genistoides en 'n plaaslik beproefde seleksie; verskillende ekotipes presteer nie ewe goed nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Ask for Rhoicissus tridentata and record local ripe-fruit months. Do not use medicinal or animal root use as food evidence.",
+  "english": "Ask for Rhoicissus tridentata and record local ripe-fruit months. Do not use medicinal or animal root use as food evidence.",
+  "draft": "Vra vir Rhoicissus tridentata en teken plaaslike maande vir ryp vrugte aan. Moenie medisinale gebruik of gebruik van die wortel vir diere as bewys van voedsel gebruik nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Ask for identified Morus nigra fruiting material with a locally observed season. Do not use a generic black-fruited mulberry or fruitless ornamental as proof of this product.",
+  "english": "Ask for identified Morus nigra fruiting material with a locally observed season. Do not use a generic black-fruited mulberry or fruitless ornamental as proof of this product.",
+  "draft": "Vra vir geïdentifiseerde Morus nigra-vrugdraende materiaal met 'n plaaslik waargenome seisoen. Moenie 'n generiese moerbei met swart vrugte of 'n vrugtelose sierplant as bewys van hierdie produk gebruik nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Assumed planting variety: Sunrise Solo, subject to a frost-free, drained growing position. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.",
+  "english": "Assumed planting variety: Sunrise Solo, subject to a frost-free, drained growing position. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.",
+  "draft": "Aanvaarde plantvariëteit: Sunrise Solo, onderhewig aan 'n rypvrye, gedreineerde groeiplek. Bevestig sy plaaslike plukmaande; die kalender gebruik 'n gemerkte streeksverwysing waar daar 'n bron is."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Assumed planting variety: Tommy Atkins, subject to local flowering and frost checks. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.",
+  "english": "Assumed planting variety: Tommy Atkins, subject to local flowering and frost checks. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.",
+  "draft": "Aanvaarde plantvariëteit: Tommy Atkins, onderhewig aan plaaslike blom- en rypkontroles. Bevestig sy plaaslike plukmaande; die kalender gebruik 'n gemerkte streeksverwysing waar daar 'n bron is."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Assumes light frost; check severity locally.",
+  "english": "Assumes light frost; check severity locally.",
+  "draft": "Aanvaar ligte ryp; kontroleer die felheid plaaslik."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Avoid frost and waterlogging. Honey Gold needs male and female plants; Sunrise Solo is hermaphrodite.",
+  "english": "Avoid frost and waterlogging. Honey Gold needs male and female plants; Sunrise Solo is hermaphrodite.",
+  "draft": "Vermy ryp en versuiping. Honey Gold het manlike en vroulike plante nodig; Sunrise Solo is hermafrodities."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Best in summer-rain areas with little frost; protect young trees in colder sites.",
+  "english": "Best in summer-rain areas with little frost; protect young trees in colder sites.",
+  "draft": "Die beste in somerreëngebiede met min ryp; beskerm jong bome op kouer terreine."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Buy exact-species stock for the verified intended use. Do not treat medicinal or wildlife-fruit evidence as a fresh household-food forecast.",
+  "english": "Buy exact-species stock for the verified intended use. Do not treat medicinal or wildlife-fruit evidence as a fresh household-food forecast.",
+  "draft": "Koop voorraad van die presiese spesie vir die geverifieerde beoogde gebruik. Moenie bewyse van medisinale gebruik of vrugte vir wild as 'n voorspelling vir vars huishoudelike voedsel behandel nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Buying advice: choose a meat strain and supplier batch plan; confirm brooding, feed, water and slaughter arrangements.",
+  "english": "Buying advice: choose a meat strain and supplier batch plan; confirm brooding, feed, water and slaughter arrangements.",
+  "draft": "Koopadvies: kies 'n vleisstam en 'n verskaffer se plan vir groepe; bevestig reëlings vir broei, voer, water en slag."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Buying advice: for egg production, request vaccinated point-of-lay pullets from a layer supplier, with age, feeding and vaccination records.",
+  "english": "Buying advice: for egg production, request vaccinated point-of-lay pullets from a layer supplier, with age, feeding and vaccination records.",
+  "draft": "Koopadvies: vir eierproduksie, vra 'n lêhenverskaffer vir ingeënte lêgereed jong henne, met rekords van ouderdom, voeding en inenting."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Buying advice: match breed/stock to the product, local feed, climate and care capacity; confirm with a local livestock or beekeeping adviser.",
+  "english": "Buying advice: match breed/stock to the product, local feed, climate and care capacity; confirm with a local livestock or beekeeping adviser.",
+  "draft": "Koopadvies: laat ras/voorraad by die produk, plaaslike voer, klimaat en versorgingsvermoë pas; bevestig met 'n plaaslike vee- of byeboerdery-adviseur."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Check chilling, support and pruning system before planting. Autumn-bearing varieties must not inherit a spring-bearing calendar.",
+  "english": "Check chilling, support and pruning system before planting. Autumn-bearing varieties must not inherit a spring-bearing calendar.",
+  "draft": "Kontroleer kouebehoefte, ondersteuning en snoeistelsel voordat jy plant. Herfsdraende variëteite mag nie 'n lentedraende kalender oorneem nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Check frost, drainage and flowering-season disease pressure. Heat and sunburn sensitivity differ between cultivars.",
+  "english": "Check frost, drainage and flowering-season disease pressure. Heat and sunburn sensitivity differ between cultivars.",
+  "draft": "Kontroleer ryp, dreinering en siektedruk in die blomseisoen. Gevoeligheid vir hitte en sonbrand verskil tussen kultivars."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Check local frost and water. Food processing needs a suitable method and explicit kept-stock records.",
+  "english": "Check local frost and water. Food processing needs a suitable method and explicit kept-stock records.",
+  "draft": "Kontroleer plaaslike ryp en water. Voedselverwerking het 'n geskikte metode en uitdruklike rekords van gehoue voorraad nodig."
+ }
+]

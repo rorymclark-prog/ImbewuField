@@ -776,6 +776,17 @@ test('animal save failures remain visible until both choices and production mont
   assert.match(productionPage, /animalSaveFailed && <p role="alert"[^>]*>(?:\{inlineText\(lang, ')?Animal products and production months could not be saved/);
 });
 
+test('Afrikaans readers get Afrikaans months on the crop-plan grid, in sentences and on the axis tooltip', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  assert.match(page, /lang === 'xh' \|\| lang === 'af' \? recordsBookMonthShort\(lang, m\) : MONTHS_SHORT\[m - 1\]/);
+  assert.match(page, /lang === 'xh' \|\| lang === 'af' \? text\.replace\(MONTH_ABBREVIATION, \(abbreviation\) => recordsBookMonthShort\(lang,/);
+  assert.match(page, /lang === 'xh' \|\| lang === 'af' \? recordsBookMonthLong\(lang, slot\.month\) : MONTH_NAMES\[slot\.month - 1\]/);
+  // The plan-export date label (feeds the crop plan PDF) is not touched.
+  assert.match(page, /dateLabel: new Date\(\)\.toLocaleDateString\('en-ZA', \{ day: 'numeric', month: 'long', year: 'numeric' \}\)/);
+  const cropplan = source('../app/cropplan/page.tsx');
+  assert.match(cropplan, /lang === 'af'\s*\? MONTHS_SHORT\.map\(\(_, month\) => recordsBookMonthShort\(lang, month \+ 1\)\)/);
+});
+
 test('the production-plan header wraps on a phone instead of clipping the title or pushing the bed count off the right edge', () => {
   const page = source('../app/facilitator/crops/page.tsx');
   const header = page.match(/<header className="([^"]*)" style=\{\{ minHeight: 56,/);
@@ -793,4 +804,17 @@ test('the production-plan title block shrinks on a phone instead of ending off-s
   assert.doesNotMatch(page, /<div className="flex flex-col min-w-0 flex-shrink-0">/, 'the title block may shrink below its content width');
   assert.equal((page.match(/md:flex-shrink-0/g) ?? []).length, 2, 'wide screens keep the unshrunk, scrollable single row');
   assert.equal((page.match(/font-display font-semibold truncate" style=\{\{ fontSize: 'clamp\(15px, 1\.15vw, 18px\)'/g) ?? []).length, 2, 'the title truncates rather than overflowing');
+});
+
+test('the crop-plan task lines for isiXhosa and Afrikaans come from the one shared module Home also reads', () => {
+  const page = source('../app/cropplan/page.tsx');
+  const home = source('../app/home/page.tsx');
+  const lib = source('../lib/task-title-draft.ts');
+  for (const text of [page, home]) assert.match(text, /from '@\/lib\/task-title-draft'/);
+  assert.match(home, /taskTitleXh\(task, lang\) \?\? task\.title/);
+  assert.match(home, /taskSubtitleXh\(task, lang\) \?\? task\.subtitle/);
+  assert.doesNotMatch(page, /const ACTION_(?:XH|AF)_VERB|function taskTitleXh|function taskSubtitleXh/, 'the page keeps no copy of the helpers');
+  assert.match(lib, /\(lang !== 'xh' && lang !== 'af'\) \|\| task\.kind !== 'crop' \|\| !task\.action/);
+  assert.match(lib, /\(lang !== 'xh' && lang !== 'af'\) \|\| task\.kind !== 'crop'\) return undefined/);
+  assert.match(lib, /bedLabelXh\(task\.subtitle\.slice\(0, splitAt\), lang\)/, 'the default bed label is drafted for both languages');
 });

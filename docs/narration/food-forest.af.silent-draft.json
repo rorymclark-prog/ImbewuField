@@ -1,0 +1,677 @@
+{
+  "language": "af",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Food Forest Design",
+        "body": [
+          "Build a living food system in layers.",
+          "Grow food from tall canopy down to root crops.",
+          "Use vertical space, soil life, shade, and moisture together.",
+          "Learn how to design and establish a food forest for your farm."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Voedselwoudontwerp"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bou 'n lewende voedselstelsel in lae."
+          },
+          {
+            "status": "draft",
+            "text": "Kweek kos van die hoë kroondak tot by wortelgewasse."
+          },
+          {
+            "status": "draft",
+            "text": "Gebruik vertikale ruimte, grondlewe, skadu en vog saam."
+          },
+          {
+            "status": "draft",
+            "text": "Leer hoe om 'n voedselwoud vir jou plaas te ontwerp en te vestig."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "A food forest grows useful plants at different heights.",
+          "Good design can combine harvests, shade and soil cover. Plants still compete for light, water and nutrients.",
+          "Plan the care you can provide and watch how the planting changes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hoekom dit saak maak"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Voedselwoud kweek nuttige plante op verskillende hoogtes."
+          },
+          {
+            "status": "draft",
+            "text": "Goeie ontwerp kan oeste, skadu en grondbedekking kombineer. Plante ding steeds mee om lig, water en voedingstowwe."
+          },
+          {
+            "status": "draft",
+            "text": "Beplan die versorging wat jy kan gee en kyk hoe die aanplanting verander."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "Name the seven commonly described food-forest layers.",
+          "Check plants against your site, local ecology and the approved project list.",
+          "Plan establishment and ongoing care without assuming a fixed date for harvest or canopy closure."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Leeruitkomste"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Noem die sewe lae van 'n voedselwoud wat algemeen beskryf word."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer plante teen jou terrein, die plaaslike ekologie en die goedgekeurde projeklys."
+          },
+          {
+            "status": "draft",
+            "text": "Beplan vestiging en deurlopende versorging sonder om 'n vaste datum vir oes of vir 'n geslote kroondak te aanvaar."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "The Forest Uses Every Layer",
+        "body": [
+          "An indigenous forest fills the space from the highest branches to the roots.",
+          "Different plants use the light and moisture available at their level.",
+          "A food forest copies this pattern with productive species.",
+          "The result is not one crop in one row, but many useful layers growing together."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Die woud gebruik elke laag"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "'n Inheemse woud vul die ruimte van die hoogste takke tot by die wortels."
+          },
+          {
+            "status": "draft",
+            "text": "Verskillende plante gebruik die lig en vog wat op hul vlak beskikbaar is."
+          },
+          {
+            "status": "draft",
+            "text": "'n Voedselwoud boots hierdie patroon na met produktiewe spesies."
+          },
+          {
+            "status": "draft",
+            "text": "Die resultaat is nie een gewas in een ry nie, maar baie nuttige lae wat saam groei."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Watch: Read the Seven Planting Layers",
+        "body": [
+          "Find seven planting layers.",
+          "Tall trees form the canopy.",
+          "Smaller trees grow below it.",
+          "Then look for woody shrubs.",
+          "Herbaceous plants have soft stems.",
+          "Ground cover spreads across the surface.",
+          "Root crops grow below the surface.",
+          "Climbers use suitable supports.",
+          "These are planning layers, not fixed height bands. Choose plants and spacing for your site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Lees die sewe plantlae"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vind sewe plantlae."
+          },
+          {
+            "status": "draft",
+            "text": "Hoë bome vorm die kroondak."
+          },
+          {
+            "status": "draft",
+            "text": "Kleiner bome groei daaronder."
+          },
+          {
+            "status": "draft",
+            "text": "Kyk dan vir houtagtige struike."
+          },
+          {
+            "status": "draft",
+            "text": "Kruidagtige plante het sagte stingels."
+          },
+          {
+            "status": "draft",
+            "text": "Grondbedekking sprei oor die oppervlak."
+          },
+          {
+            "status": "draft",
+            "text": "Wortelgewasse groei onder die oppervlak."
+          },
+          {
+            "status": "draft",
+            "text": "Rankplante gebruik geskikte stutte."
+          },
+          {
+            "status": "draft",
+            "text": "Dit is beplanningslae, nie vaste hoogtebande nie. Kies plante en spasiëring vir jou terrein."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "The Seven Layers",
+        "body": [
+          "Think of tall canopy, smaller trees, shrubs and herbaceous plants.",
+          "Ground cover protects the surface, root crops grow below it, and climbers use suitable supports.",
+          "The heights and spacing depend on the plants and site. These are planning layers, not fixed height bands."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Die sewe lae"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Dink aan 'n hoë kroondak, kleiner bome, struike en kruidagtige plante."
+          },
+          {
+            "status": "draft",
+            "text": "Grondbedekking beskerm die oppervlak, wortelgewasse groei daaronder, en rankplante gebruik geskikte stutte."
+          },
+          {
+            "status": "draft",
+            "text": "Die hoogtes en spasiëring hang van die plante en die terrein af. Dit is beplanningslae, nie vaste hoogtebande nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Read a Layered Planting Example",
+        "body": [
+          "The original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.",
+          "It places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.",
+          "Treat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lees 'n voorbeeld van gelaagde aanplanting"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Die oorspronklike Hoëveldse voorbeeld sluit Wild Fig of pekanneut in bo suurlemoen, naartjie en black mulberry."
+          },
+          {
+            "status": "draft",
+            "text": "Dit plaas Cape gooseberry en Wild Medlar saam met groente, wild garlic, patats en granadilla."
+          },
+          {
+            "status": "draft",
+            "text": "Behandel dit as 'n voorbeeld van 'n uitleg, nie as toestemming om elke spesie te plant nie. Kontroleer eers identiteit, rypbestandheid, volwasse grootte en plaaslike beperkings."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Care Changes as Plants Grow",
+        "body": [
+          "Young plants need establishment care: moisture checks, weed control and protection from damage.",
+          "As plants grow, shade and leaf litter change conditions below them.",
+          "Check competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Versorging verander soos plante groei"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Jong plante het vestigingsorg nodig: vogkontroles, onkruidbeheer en beskerming teen skade."
+          },
+          {
+            "status": "draft",
+            "text": "Soos plante groei, verander skadu en blaarafval die toestande onder hulle."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer mededinging en toegang. Snoei, dun uit of pas die laer aanplanting aan wanneer waarnemings dit vereis; die stelsel word nie op 'n vaste verjaardag sorgvry nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Choose for Your Site",
+        "body": [
+          "Check local rainfall, frost, heat, soil and water availability before choosing plants.",
+          "Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.",
+          "A regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kies vir jou terrein"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kontroleer plaaslike reënval, ryp, hitte, grond en beskikbare water voordat jy plante kies."
+          },
+          {
+            "status": "draft",
+            "text": "Mango kan rypskade ly. Kweper het geskikte winterkoue nodig om betroubaar te oes."
+          },
+          {
+            "status": "draft",
+            "text": "'n Streeksetiket of 'n beskutte hoek is nie genoeg nie. Bevestig elke plant en variëteit met betroubare plaaslike leiding."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Watch: Match the Species to the Climate",
+        "body": [
+          "Climate decides which species belong.",
+          "On the Highveld, choose cold-tolerant trees and shrubs; on the KZN coast and Lowveld, choose warm-climate species.",
+          "Match every plant to your site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Pas die spesies by die klimaat"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Die klimaat bepaal watter spesies hoort."
+          },
+          {
+            "status": "draft",
+            "text": "Kies op die Hoëveld koudbestande bome en struike; kies aan die KZN-kus en in die Laeveld spesies vir 'n warm klimaat."
+          },
+          {
+            "status": "draft",
+            "text": "Pas elke plant by jou terrein."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Check the Highveld Examples",
+        "body": [
+          "The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.",
+          "This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.",
+          "Keep existing legal and project restrictions in force. Do not plant from a picture alone."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kontroleer die Hoëveldse voorbeelde"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Die oorspronklike lys sluit pekanneut, okkerneut en inheemse vy in; appel, peer, pruim, black mulberry en lukwart; roosmaryn, Wild Medlar, Cape gooseberry en Barbados cherry."
+          },
+          {
+            "status": "draft",
+            "text": "Hierdie lys is nie 'n algemene aanbeveling nie. Kontroleer elke plant teen ryp, grond, volwasse grootte en die goedgekeurde plaaslike spesielys."
+          },
+          {
+            "status": "draft",
+            "text": "Hou bestaande wetlike en projekbeperkings van krag. Moenie plant net op grond van 'n prent nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Check the Warm-Region Examples",
+        "body": [
+          "The original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.",
+          "Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.",
+          "Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kontroleer die voorbeelde vir warm streke"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Die oorspronklike voorbeelde vir warm streke sluit mango, avokado, Natal Mahogany, piesang, papaja, lietsjie, Wild Fig, Barbados cherry en Wild Dagga in."
+          },
+          {
+            "status": "draft",
+            "text": "Marula, Mopane en baobab verskyn ook in die Limpopo-voorbeelde. Plaaslike geskiktheid moet steeds gekontroleer word."
+          },
+          {
+            "status": "draft",
+            "text": "Nuttige bome is nie outomaties eetbaar nie. Bevestig identiteit en veilige gebruik; 'n landskapfoto is nie 'n gids om kos te identifiseer nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Include Locally Appropriate Indigenous Plants",
+        "body": [
+          "Locally appropriate indigenous plants can support habitat as part of the design.",
+          "Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.",
+          "Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sluit plaaslik geskikte inheemse plante in"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Plaaslik geskikte inheemse plante kan as deel van die ontwerp habitat ondersteun."
+          },
+          {
+            "status": "draft",
+            "text": "Kies vir jou ekosisteem en die nuttige rol van elke plant. Daar is geen persentasieteiken met 'n bron in hierdie les nie."
+          },
+          {
+            "status": "draft",
+            "text": "Beskerm bestaande natuurlike plantegroei. Moenie gesonde grasveld in 'n voedselwoud omskep bloot omdat bome elders nuttig is nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Plan the Sequence for the Site",
+        "body": [
+          "Start by checking the site, water supply and care available. Protect exposed soil early.",
+          "Temporary support plants may provide shelter and useful cut material where appropriate.",
+          "Main trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Beplan die volgorde vir die terrein"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Begin deur die terrein, die watervoorsiening en die beskikbare versorging te kontroleer. Beskerm blootgestelde grond vroeg."
+          },
+          {
+            "status": "draft",
+            "text": "Tydelike ondersteuningsplante kan waar gepas skuiling en nuttige gesnyde materiaal verskaf."
+          },
+          {
+            "status": "draft",
+            "text": "Hoofbome en laer lae kan ingebring word soos toestande dit toelaat. Grondbedekking hoef nie tot die einde te wag nie; vermy plante wat met jong bome meeding."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Watch: Care for a Young Food Forest",
+        "body": [
+          "This picture shows a young food forest. Start with an area you can care for.",
+          "Protect exposed soil early. Here, loose mulch covers the soil.",
+          "Keep mulch away from the trunk. Notice the clear space at the tree's base.",
+          "Watch for competition. The farmer is removing grass near the young tree.",
+          "Before adding more plants, check moisture, shelter and the care you can provide. Let what you observe guide your next step."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kyk: Versorg 'n jong voedselwoud"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hierdie prent wys 'n jong voedselwoud. Begin met 'n gebied wat jy kan versorg."
+          },
+          {
+            "status": "draft",
+            "text": "Beskerm blootgestelde grond vroeg. Hier bedek los deklaag die grond."
+          },
+          {
+            "status": "draft",
+            "text": "Hou deklaag weg van die stam. Let op die oop ruimte by die voet van die boom."
+          },
+          {
+            "status": "draft",
+            "text": "Hou mededinging dop. Die boer verwyder gras naby die jong boom."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer vog, skuiling en die versorging wat jy kan gee voordat jy meer plante byvoeg. Laat wat jy waarneem jou volgende stap bepaal."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Prepare a Manageable First Area",
+        "body": [
+          "Begin with an area you can water and maintain. Check existing vegetation before clearing.",
+          "Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.",
+          "Plan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Berei 'n hanteerbare eerste gebied voor"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Begin met 'n gebied wat jy kan natmaak en onderhou. Kontroleer bestaande plantegroei voordat jy skoonmaak."
+          },
+          {
+            "status": "draft",
+            "text": "Waar gepas, kan gewone karton onder geskikte deklaag ongewenste groei onderdruk. Sorg dat water steeds die grond kan binnedring en hou stamme vry."
+          },
+          {
+            "status": "draft",
+            "text": "Beplan spasiëring volgens die volwasse grootte van plante. Berei kwekeryplante voor vir die volgende geskikte geleentheid om te plant."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Adjust as the Trees Grow",
+        "body": [
+          "Watch how shade, roots and available water affect neighbouring plants.",
+          "Comfrey and wild garlic appear in the original underplanting example; check their local suitability before use.",
+          "Prune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Pas aan soos die bome groei"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kyk hoe skadu, wortels en beskikbare water naburige plante beïnvloed."
+          },
+          {
+            "status": "draft",
+            "text": "Comfrey en wild garlic verskyn in die oorspronklike voorbeeld van onderplanting; kontroleer hul plaaslike geskiktheid voordat jy hulle gebruik."
+          },
+          {
+            "status": "draft",
+            "text": "Snoei of dun ondersteuningsplante uit wanneer nodig, met metodes wat by elke spesie pas. Geskikte, skoon snoeisels kan as deklaag teruggaan. Moenie vir 'n vaste jaar wag as mededinging reeds plante skaad nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Plant with Reliable Moisture",
+        "body": [
+          "Choose a planting opportunity when soil moisture and expected weather support establishment.",
+          "Rain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.",
+          "Check young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Plant wanneer daar betroubare vog is"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kies 'n geleentheid om te plant wanneer grondvog en die verwagte weer vestiging ondersteun."
+          },
+          {
+            "status": "draft",
+            "text": "Reën kan help, maar kontroleer die wortelsone en hou 'n noodplan vir natmaak gereed. Vermy om in versuipte grond te plant."
+          },
+          {
+            "status": "draft",
+            "text": "Kontroleer jong plante nadat jy geplant het. Die tyd van oes en insette van buite hang van die spesie, terrein en versorging af; daar is geen gewaarborgde resultaat in die vyfde jaar nie."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Draw the layers for your own proposed planting. Mark access, water and existing natural vegetation.",
+          "Record local frost, rain, soil and available care.",
+          "For each plant from the approved list, record its intended role and the local advice still needed before planting."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldopdrag"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Teken die lae vir jou eie voorgestelde aanplanting. Merk toegang, water en bestaande natuurlike plantegroei."
+          },
+          {
+            "status": "draft",
+            "text": "Skryf plaaslike ryp, reën, grond en beskikbare versorging neer."
+          },
+          {
+            "status": "draft",
+            "text": "Skryf vir elke plant van die goedgekeurde lys neer watter rol dit moet speel, en watter plaaslike advies jy nog nodig het voordat jy plant."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Inspect a manageable area and choose one next step.",
+          "Protect exposed soil, check plant suitability, or prepare nursery plants.",
+          "Plant only when conditions and follow-up care are suitable. Return to the same spot to check survival, soil moisture and competition."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Veldaksie"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Inspekteer 'n hanteerbare gebied en kies een volgende stap."
+          },
+          {
+            "status": "draft",
+            "text": "Beskerm blootgestelde grond, kontroleer of plante geskik is, of berei kwekeryplante voor."
+          },
+          {
+            "status": "draft",
+            "text": "Plant net wanneer toestande en opvolgversorging geskik is. Keer terug na dieselfde plek om oorlewing, grondvog en mededinging te kontroleer."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -13,7 +13,8 @@ import type { MapRefLayers } from '../lib/base-layers.ts';
 import type { ReportSiteFacts } from '../lib/report-site-facts.ts';
 import type { LocationData } from '../lib/types.ts';
 import type { PhasePlan } from '../lib/phasing.ts';
-import { registerXhInline } from '../lib/xh-inline.ts';
+import { registerInlineDrafts, registerXhInline } from '../lib/xh-inline.ts';
+import { AF_INLINE_SOURCE } from '../lib/locales/af-inline/index.ts';
 import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index.ts';
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
@@ -138,6 +139,46 @@ test('original evidence attribution and the changed-design warning reach the sel
       assert.equal(chart.figure,figure);assert.ok(chart.note.includes(figure.source));assert.equal(chart.title,figure.title);
     }
   }
+});
+
+test('Afrikaans drawings: English bytes until the drafts load, then Afrikaans words and months with every figure, input and species name exact', () => {
+  const snapshot = JSON.stringify(fixture);
+  const english = all('en');
+  // Before the Afrikaans drafts load (the server) an Afrikaans drawing is the English one.
+  assert.deepEqual(all('af').map(f => f.svg), english.map(f => f.svg));
+  registerInlineDrafts('af', AF_INLINE_SOURCE);
+  try {
+    const af = all('af');
+    assert.deepEqual(af.map(f => f.id), english.map(f => f.id), 'no drawing disappears');
+    for (const figure of af.filter(f => selected.has(f.id))) {
+      const original = english.find(f => f.id === figure.id)!;
+      for (const key of ['title', 'note', 'alt'] as const) assert.notEqual(figure[key], original[key], `af ${figure.id} ${key}`);
+      assert.equal(figure.width, original.width);
+    }
+    // The ground projection, bed codes and species identities are the English ones.
+    const projection = (svg: string) => svg.split('<g clip-path="url(#plan)">')[1].split('</g>')[0];
+    const plan = sitePlanFigure(fixture.canvas, 'af', fixture.refs)!, plain = sitePlanFigure(fixture.canvas, 'en', fixture.refs)!;
+    assert.equal(projection(plan.svg), projection(plain.svg));
+    const codes = plantCodesForSheet(fixture.canvas.items.map(row => row.defId));
+    for (const [id, code] of codes) if (!(BED_DEF_IDS as readonly string[]).includes(id)) assert.ok(words(plan.svg).includes(`${code} ${ELEMENTS_BY_ID[id].name}`), 'plant names are identities, not translation candidates');
+    assert.ok(plan.note.includes(reportVisualText('It is not a land survey.', 'af')));
+    // The climate drawing names its months in Afrikaans and keeps its own year-range kicker.
+    const climate = af.find(f => f.id === 'climate');
+    if (climate) {
+      const text = words(climate.svg);
+      assert.ok(/\bMrt\b/.test(text) && /\bDes\b/.test(text), 'Afrikaans month labels');
+      assert.ok(!/\b(Mar|Dec)\b/.test(text), 'no English month label left in the Afrikaans drawing');
+    }
+    // Visual overview for the same site: values are the English ones.
+    const base = siteReportVisuals(fixture.facts, fixture.location), localised = siteReportVisuals(fixture.facts, fixture.location, 'af');
+    assert.deepEqual(localised.metrics.map(m => m.value), base.metrics.map(m => m.value));
+    assert.deepEqual(localised.charts.map(c => c.rows.map(r => r.value)), base.charts.map(c => c.rows.map(r => r.value)));
+    assert.equal(localised.overviewTitle, "Die terrein in 'n oogopslag");
+    assert.equal(withReportFigures(localised, af, 'af').slideHint, reportVisualText('Slide to see more', 'af'));
+  } finally {
+    registerInlineDrafts('af', {});
+  }
+  assert.equal(JSON.stringify(fixture), snapshot);
 });
 
 test('isiXhosa drawings: once the drafts load, isiXhosa words and months with every figure, input and species name exact; the other languages do not move', () => {

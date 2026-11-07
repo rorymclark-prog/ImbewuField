@@ -391,7 +391,7 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
     arrow('wind-s-arr', v, SUMMER, windWidth(model.windSummer.speed), '9 5');
     els.push(label('wind-s-lbl', cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), formatDesignTranslation(t('designSectorSeasonWind'), {
       season: lang === 'zu' ? t('designSectorSummer').toLowerCase() : t('designSectorSummer'),
-      direction: lang === 'zu' || lang === 'xh'
+      direction: lang === 'zu' || lang === 'xh' || lang === 'af'
         ? `${sectorCompassWord(model.windSummer.bearingDeg, t)} (${model.windSummer.fromLabel})`
         : model.windSummer.fromLabel,
     }), SUMMER_LBL, v));
@@ -401,7 +401,7 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
     arrow('wind-w-arr', v, WINTER, windWidth(model.windWinter.speed), '9 5');
     els.push(label('wind-w-lbl', cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), formatDesignTranslation(t('designSectorSeasonWind'), {
       season: lang === 'zu' ? t('designSectorWinter').toLowerCase() : t('designSectorWinter'),
-      direction: lang === 'zu' || lang === 'xh'
+      direction: lang === 'zu' || lang === 'xh' || lang === 'af'
         ? `${sectorCompassWord(model.windWinter.bearingDeg, t)} (${model.windWinter.fromLabel})`
         : model.windWinter.fromLabel,
     }), WINTER_LBL, v));

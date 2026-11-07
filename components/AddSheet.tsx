@@ -110,7 +110,7 @@ export default function AddSheet({ open, surface, onClose, onPick, simple }: Add
             <p className="font-sans" style={{ fontSize: 13, color: INK_MUTED, margin: '2px 0 0' }}>
               {t('addSheetSub')}
             </p>
-            {(lang === 'zu' || lang === 'xh') && (
+            {(lang === 'zu' || lang === 'xh' || lang === 'af') && (
               <p className="font-sans" style={{ fontSize: 12.5, color: INK_MUTED, margin: '5px 0 0' }}>
                 {t('addZuluDraftNotice')}
               </p>

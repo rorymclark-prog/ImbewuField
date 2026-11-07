@@ -12,7 +12,7 @@ import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LA
 import { produceLabel } from '@/lib/produce-label';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
-import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 /**
  * Distance is coloured by bucket so a scan down the board reads as a map:
@@ -195,7 +195,7 @@ export default function ListingCard({
         {listing.availableMonth !== null && (
           <span className="flex items-center gap-1.5 font-sans" style={{ fontSize: 12, color: EX.faint }}>
             <Calendar size={11} strokeWidth={1.8} />
-            {zu ? (listing.kind === 'want' ? 'Kudingeka ngaphambi kuka' : 'Kulungile ngo') + ZU_MONTH_LABEL[listing.availableMonth - 1].slice(1) : lang === 'xh' ? inlineTemplate(lang, listing.kind === 'want' ? 'Needed by {month}' : 'Ready {month}', null, { month: xhMonthStem(lang, MONTH_LABEL[listing.availableMonth - 1]) }) : (listing.kind === 'want' ? 'Needed by' : 'Ready') + ' ' + MONTH_LABEL[listing.availableMonth - 1]}
+            {zu ? (listing.kind === 'want' ? 'Kudingeka ngaphambi kuka' : 'Kulungile ngo') + ZU_MONTH_LABEL[listing.availableMonth - 1].slice(1) : isInlineDraftLang(lang) ? inlineTemplate(lang, listing.kind === 'want' ? 'Needed by {month}' : 'Ready {month}', null, { month: lang === 'xh' ? xhMonthStem(lang, MONTH_LABEL[listing.availableMonth - 1]) : inlineText(lang, MONTH_LABEL[listing.availableMonth - 1]) }) : (listing.kind === 'want' ? 'Needed by' : 'Ready') + ' ' + MONTH_LABEL[listing.availableMonth - 1]}
           </span>
         )}
         {closed && (

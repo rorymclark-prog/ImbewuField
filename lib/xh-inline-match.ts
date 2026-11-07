@@ -10,7 +10,7 @@
 //
 // Free of React and lib/i18n.tsx, like lib/xh-inline.ts.
 
-import { inlineTemplate, inlineText } from './xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from './xh-inline';
 
 const escapeRegex = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -42,7 +42,7 @@ export function inlineBuilt(
   templates: readonly string[],
   value?: (name: string, captured: string) => string,
 ): string {
-  if (lang !== 'xh') return english;
+  if (!isInlineDraftLang(lang)) return english;
   const fixed = inlineText(lang, english);
   if (fixed !== english) return fixed;
   for (const template of templates) {
@@ -70,7 +70,7 @@ export function inlineBuiltList(
   separator = '; ',
   value?: (name: string, captured: string) => string,
 ): string {
-  if (lang !== 'xh') return english;
+  if (!isInlineDraftLang(lang)) return english;
   const fixed = inlineText(lang, english);
   if (fixed !== english) return fixed;
   const parts = english.split(separator);

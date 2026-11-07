@@ -22,7 +22,7 @@ const SiteSurveySheet=dynamic(()=>import('../SiteSurveySheet'),{ssr:false});
 const icons={photos:Camera,soil:FlaskConical,water:Droplets,survey:ClipboardList,boundary:Map,design:PenTool,crops:Sprout};
 export default function ReportPreparation({location,place,onSavedPlace,onChanged,snapshot,maps,onViewMaps,onSurveySaved}:{location:LocationData;place?:SavedPlace;onSavedPlace:(place:SavedPlace)=>void;onChanged:()=>void;snapshot:boolean;maps:ReportDesignRecords['maps'];onViewMaps:()=>void;onSurveySaved?:(survey:SiteSurvey)=>void}) {
   const { lang: language } = useLanguage();
-  // isiXhosa reads the draft keyed by the exact English template (lib/locales/xh-inline) inside reportPreparationText,
+  // isiXhosa and Afrikaans read the draft keyed by the exact English template (lib/locales/xh-inline) inside reportPreparationText,
   // as do the checklist's own statuses and evidence details (lib/report-readiness.ts).
   const copy = (source: string, values?: Record<string, string | number>) => reportPreparationText(source, language, values);
   const progress=useSiteProgress(location);
@@ -54,6 +54,7 @@ export default function ReportPreparation({location,place,onSavedPlace,onChanged
   return <section lang={language} className={`${styles.preparation} no-print`} aria-label={copy('Improve this report')}>
     <details><summary><strong>{copy('Improve this report')}</strong><span>{copy('{count} of 7 areas have records · see what to add or review', { count: items.filter(i=>i.hasRecord).length })}</span></summary>
       {language==='xh'&&<p role="note">{inlineText(language,'The isiXhosa text here is an unreviewed draft. Names, notes and source labels you recorded or typed are shown exactly as you wrote them.')}</p>}
+      {language==='af'&&<p role="note">{inlineText(language,'The Afrikaans text here is an unreviewed draft. Names, notes and source labels you recorded or typed are shown exactly as you wrote them.')}</p>}
       <p>{copy('Generate with the information you have, or add more evidence first. Records present do not mean the information has been checked or the design is finished.')}</p>
       {snapshot&&<p>{copy('This checklist describes your current site. The saved report remains an earlier snapshot; generate a new report to use updated evidence.')}</p>}
       {!place&&<form className={styles.save} onSubmit={e=>{e.preventDefault();try{

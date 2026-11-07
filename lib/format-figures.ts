@@ -32,6 +32,15 @@ export function randTick(amount: number): string {
 }
 
 /**
+ * {@link randTick} for the language that is showing. Afrikaans writes the decimal mark as a comma, like the rest of the
+ * records book ('R2,6k', '−R5,7k'); the k abbreviation and every other language are unchanged, byte for byte.
+ */
+export function randTickForLang(lang: string, amount: number): string {
+  const tick = randTick(amount);
+  return lang === 'af' ? tick.replace('.', ',') : tick;
+}
+
+/**
  * '27 090 kg' — whole kilograms, space-grouped, for a figure that adds up a whole cohort.
  *
  * {@link kgLabel} above is the per-farm figure and keeps a tenth of a kilogram below 100, which is
@@ -90,6 +99,20 @@ export function randCentsLabel(amount: number): string {
 }
 
 /**
+ * The rand label for the language that is showing. Afrikaans reads the South African convention the rest of the
+ * records book already uses ('R7 470,00': space-grouped thousands, comma decimal, always cents), so a stray 'R18800'
+ * or 'R 280.00' does not sit beside it. Every other language returns `english` untouched, byte for byte.
+ */
+export function randForLang(lang: string, amount: number, english: string): string {
+  return lang === 'af' ? randCentsLabel(amount) : english;
+}
+
+/** {@link randForLang} without the leading 'R', for a translated template that already carries it ('R{low}–R{high}'). */
+export function randAmountForLang(lang: string, amount: number, english: string): string {
+  return lang === 'af' ? randCentsLabel(amount).replace(/^(-?)R/, '$1') : english;
+}
+
+/**
  * '1 203,6 kg' — space-grouped thousands with a comma decimal, one decimal place, matching the
  * money figures' convention above instead of `quantity.toLocaleString('en-ZA')`: that call renders
  * differently across ICU builds and between server and client (the hydration-mismatch class
@@ -103,6 +126,19 @@ export function kgPreciseLabel(kg: number): string {
   const whole = Math.floor(tenths / 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   const frac = (tenths % 10).toString();
   return `${sign}${whole},${frac} kg`;
+}
+
+/**
+ * An invoice line's quantity as the ledger prints it ('2.5 kg'). Afrikaans reads the app's one kilogram format
+ * ('2,5 kg', '8,0 kg' — {@link kgPreciseLabel}, the one the sale and harvest rows already use) and a comma decimal on any
+ * other unit; every other language returns the raw `${qty} ${unit}` it always did, byte for byte.
+ */
+export function invoiceQtyForLang(lang: string, qty: number | string, unit: string): string {
+  const raw = `${qty} ${unit}`;
+  if (lang !== 'af') return raw;
+  const n = typeof qty === 'number' ? qty : Number(qty);
+  if (unit.trim().toLowerCase() === 'kg' && Number.isFinite(n) && String(qty).trim() !== '') return kgPreciseLabel(n);
+  return `${String(qty).replace(/^(-?\d+)\.(\d+)$/, '$1,$2')} ${unit}`;
 }
 
 export function numberLabel(n: number, maximumFractionDigits = 3): string {
@@ -127,12 +163,13 @@ export function numberLabel(n: number, maximumFractionDigits = 3): string {
  * and invoice-document.ts formats dates the same way for the exact same locale pair. Day/month
  * order (not en-ZA's month/day) is what a South African reader expects. isiXhosa has no browser
  * locale pack ('xh-ZA' falls back to English), so lang 'xh' uses lib/xh-dates.ts month names.
+ * Afrikaans has one ('af-ZA'), so it gets the browser's own Afrikaans month names.
  */
 export function formatStaffDate(iso: string | null | undefined, lang: string): string {
   if (!iso) return '';
   const date = new Date(`${iso}T00:00:00`);
   if (Number.isNaN(date.getTime())) return iso;
-  return localeDate(lang, date, { day: 'numeric', month: 'short', year: 'numeric' }, lang === 'zu' ? 'zu-ZA' : 'en-GB');
+  return localeDate(lang, date, { day: 'numeric', month: 'short', year: 'numeric' }, lang === 'zu' ? 'zu-ZA' : lang === 'af' ? 'af-ZA' : 'en-GB');
 }
 
 /** '15 Aug – 5 Sep 2026' — a staff date range, dropping the year from the first date when both
@@ -143,7 +180,7 @@ export function formatStaffDateRange(fromIso: string | null | undefined, toIso: 
   const fromDate = new Date(`${fromIso}T00:00:00`);
   const toDate = new Date(`${toIso}T00:00:00`);
   if (Number.isNaN(fromDate.getTime()) || Number.isNaN(toDate.getTime())) return `${fromIso} – ${toIso}`;
-  const locale = lang === 'zu' ? 'zu-ZA' : 'en-GB';
+  const locale = lang === 'zu' ? 'zu-ZA' : lang === 'af' ? 'af-ZA' : 'en-GB';
   const sameYear = fromDate.getFullYear() === toDate.getFullYear();
   const fromLabel = localeDate(lang, fromDate, sameYear ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'short', year: 'numeric' }, locale);
   const toLabel = localeDate(lang, toDate, { day: 'numeric', month: 'short', year: 'numeric' }, locale);

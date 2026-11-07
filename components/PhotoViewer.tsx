@@ -10,8 +10,9 @@ import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 export default function PhotoViewer() {
   const {lang,t}=useLanguage();
   // isiXhosa is an unreviewed machine draft too; it reads the inline drafts keyed by the English
-  // (its dictionary has no photoViewer* entries yet) and keeps the English source beside errors.
-  const draft=['zu','st','ts','ve','xh'].includes(lang);
+  // (its dictionary has no photoViewer* entries yet) and keeps the English source beside errors. Afrikaans
+  // reads its full af.ts photoViewer* entries and also keeps the English source beside errors.
+  const draft=['zu','st','ts','ve','xh','af'].includes(lang);
   const ui=(key:string,english:string)=>lang==='xh'?inlineText(lang,english):t(key);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLImageElement | null>(null);

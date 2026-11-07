@@ -2,6 +2,7 @@ import { createCourseDeckReleaseBindings, type CourseDeckRelease, type CourseDec
 import stSilentPair from '../docs/narration/intro-permaculture.st.silent-draft.json' with { type: 'json' };
 import { COURSE_DECK_RELEASE_ROWS, COURSE_DECK_RELEASE_EXPECTED_COUNTS } from './course-deck-release-bindings-data';
 import { XH_DECK_RELEASE_EXPECTED_COUNTS, XH_DECK_RELEASE_ROWS } from './course-deck-release-bindings-xh-data';
+import { AF_DECK_RELEASE_EXPECTED_COUNTS, AF_DECK_RELEASE_ROWS } from './course-deck-release-bindings-af-data';
 
 // An invalid declared replacement stays active and unavailable; it cannot expose legacy media.
 const SESOTHO_AND_EARLIER_BINDINGS = createCourseDeckReleaseBindings(
@@ -33,11 +34,17 @@ const XH_PAIRS = new Map(XH_DECK_RELEASE_ROWS.map(row => [row.pairPath, pairFrom
 const ISIXHOSA_BINDINGS = createCourseDeckReleaseBindings(
   XH_DECK_RELEASE_ROWS, XH_DECK_RELEASE_EXPECTED_COUNTS, path => XH_PAIRS.get(path),
 );
+const AF_PAIRS = new Map(AF_DECK_RELEASE_ROWS.map(row => [row.pairPath, pairFromRelease(row)]));
+// Afrikaans cards are their own registry too, for the same reason.
+const AFRIKAANS_BINDINGS = createCourseDeckReleaseBindings(
+  AF_DECK_RELEASE_ROWS, AF_DECK_RELEASE_EXPECTED_COUNTS, path => AF_PAIRS.get(path),
+);
+const bindingsFor = (language: string) => language === 'xh' ? ISIXHOSA_BINDINGS
+  : language === 'af' ? AFRIKAANS_BINDINGS : SESOTHO_AND_EARLIER_BINDINGS;
 export const CURRENT_DECK_RELEASE_BINDINGS: CourseDeckReleaseBindings = Object.freeze({
-  has: (moduleId: string, language: string) => language === 'xh'
-    ? ISIXHOSA_BINDINGS.has(moduleId, language) : SESOTHO_AND_EARLIER_BINDINGS.has(moduleId, language),
-  resolve: (moduleId: string, language: string, sourceFor: DeckReleaseSource) => language === 'xh'
-    ? ISIXHOSA_BINDINGS.resolve(moduleId, language, sourceFor) : SESOTHO_AND_EARLIER_BINDINGS.resolve(moduleId, language, sourceFor),
+  has: (moduleId: string, language: string) => bindingsFor(language).has(moduleId, language),
+  resolve: (moduleId: string, language: string, sourceFor: DeckReleaseSource) =>
+    bindingsFor(language).resolve(moduleId, language, sourceFor),
 });
 export function hasCurrentDeckRelease(moduleId: string, language: string): boolean {
   return CURRENT_DECK_RELEASE_BINDINGS.has(moduleId, language);
