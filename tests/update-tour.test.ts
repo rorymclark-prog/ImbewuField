@@ -1,3 +1,4 @@
+import { withArchivedReleaseTour } from './update-ui-renderer.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { existsSync } from 'node:fs';
@@ -5,6 +6,8 @@ import { visibleNotes, visibleUpdateTour, type ReleaseNote } from '../lib/releas
 import { cleanUpdateTour, readUpdateGuide } from '../lib/update-tour.ts';
 
 test('the update guide visits the pages described by the visible release notes', () => {
+ // This positive guide case uses an explicit real archived announcement.
+ return withArchivedReleaseTour(async()=>{
   const stops = visibleUpdateTour();
   assert.ok(stops.length >= 2, 'the guide must lead beyond the update list');
   for (const stop of stops) {
@@ -19,8 +22,11 @@ test('the update guide visits the pages described by the visible release notes',
   assert.deepEqual(visibleUpdateTour(notes, 2), [stops[0]],
     'an older change outside the announced notes must not appear in the guide');
 });
+});
 
 test('a refresh offers only internal app pages from the newly installed build', () => {
+ // This positive guide case uses an explicit real archived announcement.
+ return withArchivedReleaseTour(async()=>{
   const stops = visibleUpdateTour();
   assert.deepEqual(cleanUpdateTour([
     ...stops,
@@ -36,4 +42,5 @@ test('a refresh offers only internal app pages from the newly installed build', 
   });
   assert.equal(readUpdateGuide('{broken', 'new1234'), null);
   assert.equal(readUpdateGuide(JSON.stringify({ sha: 'new1234', stops: [] }), 'new1234'), null);
+});
 });

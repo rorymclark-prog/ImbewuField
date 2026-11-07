@@ -1,3 +1,4 @@
+import { withArchivedReleaseTour } from './update-ui-renderer.ts';
 import test from'node:test';import assert from'node:assert/strict';import fs from'node:fs';import{createHash}from'node:crypto';
 import{PRODUCT_TOUR,PRODUCT_TOUR_FEATURES,FARM_TOUR}from'../lib/sample-tour.ts';
 import{REGIONAL_TOUR}from'../lib/sample-tour-regional.ts';
@@ -102,9 +103,12 @@ for(const lang of allDrafts)test(`${lang}: the actual staff role selector keeps 
 import { loadUpdateCopy, updateDescription } from '../lib/update-copy.ts';
 import { RELEASE_NOTES, visibleUpdateTour } from '../lib/release-notes.ts';
 test('the announced practice change retains native source-bound release text and a real guide action in every language',async()=>{
+ // This positive guide case uses an explicit real archived announcement.
+ return withArchivedReleaseTour(async()=>{
  // Once a newer release is announced this entry moves into the update history; it keeps its text and /samples guide there.
  const entry=RELEASE_NOTES.find(n=>n.changes.includes(packet.releaseRows[0].english));assert.ok(entry);assert.ok(entry.tour?.some(s=>s.href==='/samples'&&s.title===packet.releaseRows[1].english));assert.ok(visibleUpdateTour().length>=2);
  for(const lang of allDrafts){const copy=await loadUpdateCopy(lang);for(const row of packet.releaseRows)assert.equal(updateDescription(copy,row.english),row[lang]);}
+});
 });
 
 test('native role wording never changes a role key, icon, readiness flag, destination or mentor alias',()=>{

@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { act } from 'react-test-renderer';
-import { actualUpdateUi,actualBuildInfo,updateNodeText } from './update-ui-renderer.ts';
+import { act,type ReactTestInstance } from 'react-test-renderer';
+import { actualUpdateUi,actualBuildInfo,updateNodeText,withArchivedReleaseTour } from './update-ui-renderer.ts';
 import { controlLocales,controlT } from './control-icon-renderers.ts';
-import { loadUpdateCopy,updateDescription,cleanUpdateCopy,updateTourSources } from '../lib/update-copy.ts';
+import { loadUpdateCopy,updateDescription,cleanUpdateCopy,updateTourSources,type UpdateCopy } from '../lib/update-copy.ts';
 import { updateDateLabel } from '../lib/update-copy-date.ts';
 import { recordsMonthLong } from '../lib/records-months.ts';
 import { RELEASE_NOTES,visibleNotes,visibleUpdateTour } from '../lib/release-notes.ts';
@@ -17,6 +17,38 @@ const langs=['zu','st','ts','ve']as const;
 const hash=(s:string)=>createHash('sha256').update(s).digest('hex');
 const tokens=(s:string)=>(s.match(/\{[^{}]+\}|\d+(?:[.,]\d+)?/g)??[]).sort();
 
+type NativeLanguage=(typeof langs)[number];
+type UpdateUi=Awaited<ReturnType<typeof actualUpdateUi>>;
+const unavailableSource='New deployment description absent from this bundle';
+const copyRows=(h:UpdateUi)=>h.renderer.root.findAll(node=>typeof node.type==='function'&&typeof node.props.source==='string');
+function assertCopyRow(row:ReactTestInstance,lang:NativeLanguage,copy:UpdateCopy){
+ const source=row.props.source as string,native=updateDescription(copy,source);
+ assert.ok(row.findAllByType('span').some(span=>span.props.lang===(native===source?'en':lang)&&updateNodeText(span)===native),'the exact available text has its honest language tag');
+ if(native===source)assert.equal(updateNodeText(row),source,'missing copy remains source English without an obsolete native addition');
+ else assert.ok(row.findAllByType('small').some(backing=>backing.props.lang==='en'&&updateNodeText(backing).includes(source)&&updateNodeText(backing).includes(controlT(lang)('offlineSourceLabel'))),'native descriptions retain their labelled English backing');
+}
+function assertHistoryAvailability(h:UpdateUi,lang:NativeLanguage,copy:UpdateCopy){
+ const rows=copyRows(h);assert.ok(rows.length,'the history fixture must render actual description components');
+ for(const row of rows)assertCopyRow(row,lang,copy);
+ const missing=rows.some(row=>updateDescription(copy,row.props.source)===row.props.source);
+ assert.equal(h.renderer.root.findAllByProps({role:'note'}).some(note=>updateNodeText(note)===controlT(lang)('updatesEnglishGap')),missing,'the English-gap notice follows displayed source coverage, not the release date');
+}
+async function existingNativeSource(languages:readonly NativeLanguage[]){
+ const copies=new Map<NativeLanguage,UpdateCopy>();for(const lang of languages)copies.set(lang,await loadUpdateCopy(lang));
+ const source=(packet.historyBefore as typeof RELEASE_NOTES).flatMap(note=>note.changes).find(source=>{
+  const values=languages.map(lang=>updateDescription(copies.get(lang)!,source));
+  return values.every(native=>native!==source)&&new Set(values).size===languages.length;
+ });
+ assert.ok(source,'the archived fixture must contain genuine published native wording for each tested language');
+ for(const lang of languages)assert.notEqual(updateDescription(copies.get(lang)!,source),source,'an English fallback cannot satisfy a native-copy adverse control');
+ if(languages.length>1)assert.equal(new Set(languages.map(lang=>updateDescription(copies.get(lang)!,source))).size,languages.length,'late-language controls require distinguishable real native descriptions');
+ return{source,copies};
+}
+function oneHistorySource(source:string):typeof RELEASE_NOTES{
+ const original=(packet.historyBefore as typeof RELEASE_NOTES).find(note=>note.changes.includes(source));assert.ok(original);
+ return[{...original,changes:[source]}];
+}
+
 test('update drafts preserve source history, existing control wording, quantities and original locale bytes',async()=>{
  // New releases prepend entries; the full original archived suffix must stay exact.
  assert.deepEqual(RELEASE_NOTES.slice(-packet.historyBefore.length),packet.historyBefore,'the complete archived source, order, dates, links and tours survive');
@@ -26,7 +58,13 @@ test('update drafts preserve source history, existing control wording, quantitie
   for(const row of packet.entries){assert.equal(controlT('en')(row.key),row.english);if(typeof row[lang]==='string'){assert.equal(t(row.key),row[lang]);assert.deepEqual(tokens(row[lang]),tokens(row.english));}}
   for(const row of packet.sourceControls)if(!packet.entries.some((r:any)=>r.key===row.key&&typeof r[lang]==='string'))assert.equal(controlLocales[lang][row.key]??null,row[lang]);
   for(const row of packet.bodyEntries){assert.equal(updateDescription(copy,row.english),row[lang]);assert.notEqual(row[lang],row.english);assert.deepEqual(tokens(row[lang]),tokens(row.english));}
-  for(const source of [...visibleNotes(),...updateTourSources(visibleUpdateTour())])assert.notEqual(updateDescription(copy,source),source,'the currently announced build has native descriptions');
+  // New releases may honestly ship English before a reviewed native pair exists.
+  // Preserve the original captured translations above; current availability is per exact source.
+  const announced=[...visibleNotes(),...updateTourSources(visibleUpdateTour())],available=cleanUpdateCopy(copy,announced,lang,lang);
+  for(const source of announced){
+   if(Object.hasOwn(available,source)){assert.notEqual(updateDescription(copy,source),source);assert.equal(updateDescription(copy,source),available[source]);}
+   else assert.equal(updateDescription(copy,source),source,'an unavailable exact-source translation stays English');
+  }
   const source=beforeAccountTranslations(beforeCommunityProfileTranslations(beforeCommunityMemberTranslations(beforeCommunityThreadTranslations(beforePhotoViewerTranslations(read(`lib/locales/${lang}.ts`),lang),lang),lang),lang),lang);assert.equal(hash(beforeUpdateNoticeTranslations(source,lang)),packet.sourceSha256[`lib/locales/${lang}.ts`]);
   const broken=source.replace(JSON.stringify(t('updatesIntro')),JSON.stringify('Changed unlisted text'));assert.equal(beforeUpdateNoticeTranslations(broken,lang),broken);
   const partial={...controlLocales[lang]};delete partial.updatesIntro;assert.equal(beforeUpdateNoticeDictionary(partial,lang),partial);
@@ -52,6 +90,8 @@ test('displayed update dates retain original day/year/group identity and use the
 });
 
 for(const lang of langs)test(`${lang}: real update banner keeps manual refresh, native controls, source backing and new-build authority`,async()=>{
+ // This positive guide case uses an explicit real archived announcement.
+ return withArchivedReleaseTour(async()=>{
  const h=await actualUpdateUi(lang),t=controlT(lang);try{
   assert.equal(h.calls.reload,0);assert.equal(h.calls.worker,1);assert.ok(h.text().includes(t('updateBannerReady').replace('{sha}',' · qa-new-build')));assert.ok(h.text().includes(t('updatesTranslationDraft')));
   await h.click('updateBannerWhatChangedAria');assert.ok(h.text().includes(t('updatesDraftNotice')));
@@ -63,11 +103,15 @@ for(const lang of langs)test(`${lang}: real update banner keeps manual refresh, 
   assert.equal(h.calls.reload,1);const saved=JSON.parse(h.session.get(UPDATE_GUIDE_KEY)!);assert.equal(saved.sha,'qa-new-build');assert.deepEqual(saved.stops,visibleUpdateTour());assert.equal(saved.phase,'offer');assert.equal(saved.index,0);
  }finally{await h.dispose();}
 });
+});
 
 test('a newly published empty native set leaves its source English instead of restoring an older local draft',async()=>{
- const notes=visibleNotes();const h=await actualUpdateUi('ts',{server:async language=>({sha:'qa-new-build',notes,tour:[],copyLanguage:language,copy:{}})});
- try{await h.click('updateBannerWhatChangedAria');assert.ok(h.text().includes(notes[0]));assert.ok(!h.text().includes(updateDescription(await loadUpdateCopy('ts'),notes[0])));assert.ok(h.text().includes(controlT('ts')('updatesEnglishGap')));}finally{await h.dispose();}
- const raw='New deployment description absent from this bundle';const native='Nhlamuselo ya deployment leyintshwa';
+ // The newest note need not have a local draft. Use a genuinely translated
+ // archived source so a forbidden fallback to that old draft can actually fail.
+ const known=await existingNativeSource(['ts']),notes=[known.source];
+ const h=await actualUpdateUi('ts',{server:async language=>({sha:'qa-new-build',notes,tour:[],copyLanguage:language,copy:{}})});
+ try{await h.click('updateBannerWhatChangedAria');assert.ok(h.text().includes(notes[0]));assert.ok(!h.text().includes(updateDescription(await loadUpdateCopy('ts'),notes[0])));assert.ok(h.text().includes(controlT('ts')('updatesEnglishGap')));for(const row of copyRows(h))assertCopyRow(row,'ts',{});}finally{await h.dispose();}
+ const raw=unavailableSource;const native='Nhlamuselo ya deployment leyintshwa';
  const x=await actualUpdateUi('ts',{server:async language=>({sha:'qa-new-build',notes:[raw],tour:[],copyLanguage:language,copy:{[raw]:native}})});
  try{await x.click('updateBannerWhatChangedAria');assert.ok(x.text().includes(native));assert.ok(x.text().includes(raw));}finally{await x.dispose();}
 });
@@ -79,6 +123,8 @@ test('dismissal suppresses the notice, pitch stays unobstructed, and offline fal
 });
 
 for(const lang of langs)test(`${lang}: current guide follows original destinations and progress while descriptions change language`,async()=>{
+ // This positive guide case uses an explicit real archived announcement.
+ return withArchivedReleaseTour(async()=>{
  const stops=visibleUpdateTour(),guide={sha:'qa-current-build',stops,phase:'offer',index:0};const h=await actualUpdateUi(lang,{kind:'guide',guide}),t=controlT(lang);
  try{
   assert.ok(h.text().includes(t('updateGuideOfferTitle')));assert.ok(h.text().includes(t('updateGuideOfferBody')));assert.ok(h.text().includes(t('updatesDraftNotice')));
@@ -97,15 +143,34 @@ for(const lang of langs)test(`${lang}: current guide follows original destinatio
   await h.click('updateGuidePrevious');assert.equal(JSON.parse(h.session.get(UPDATE_GUIDE_KEY)!).index,0);await h.actionLabel(controlT('ts')('updateGuideContinue').replace('{index}','1').replace('{total}',String(stops.length)));await h.click('updateGuideStop');assert.ok(!h.session.has(UPDATE_GUIDE_KEY));
  }finally{await h.dispose();}
 });
+});
 
-test('history recent groups translate, older history remains reachable source, and Simple keeps its original limit',async()=>{
+test('history reflects actual native coverage, older history remains reachable source, and Simple keeps its original limit',async()=>{
  for(const lang of langs){const h=await actualUpdateUi(lang,{kind:'history'}),t=controlT(lang);try{
-  assert.ok(h.text().includes(t('navWhatsNew')));assert.ok(h.text().includes(t('updatesIntro')));assert.ok(!h.text().includes(t('updatesEnglishGap')),'all default recent days are translated');
+  assert.ok(h.text().includes(t('navWhatsNew')));assert.ok(h.text().includes(t('updatesIntro')));
+  // A recent date does not grant translation coverage. Newly added English and
+  // already-paired descriptions share the same source-backed disclosure rule.
+  assertHistoryAvailability(h,lang,await loadUpdateCopy(lang));
   assert.equal(h.renderer.root.findAllByType('section').length,5);await h.buttonText(t('updatesShowOlder'));assert.ok(h.text().includes(t('updatesEnglishGap')));assert.ok(h.renderer.root.findAllByType('section').length>5);assert.ok(h.text().includes(RELEASE_NOTES.at(-1)!.changes.at(-1)!));assert.deepEqual(h.renderer.root.findAllByType('li').map(li=>li.find(n=>typeof n.type==='function'&&typeof n.props.source==='string').props.source),RELEASE_NOTES.flatMap(n=>n.changes),'every archived description remains in its original order');
   // Wave 15 (ux-09) gives Simple the same disclosure, so an opened history stays open and Show fewer
   // returns Simple to its original three-day limit.
   await h.level(true);assert.ok(h.renderer.root.findAllByType('section').length>5);await h.buttonText(t('updatesShowFewer'));assert.equal(h.renderer.root.findAllByType('section').length,3);assert.ok(h.renderer.root.findAllByType('button').some(b=>updateNodeText(b)===t('updatesShowOlder')));
  }finally{await h.dispose();}}
+});
+
+for(const lang of langs)test(`${lang}: full, partial and withdrawn native history copy retain honest source coverage`,async()=>{
+ const known=await existingNativeSource([lang]),copy=known.copies.get(lang)!,native=updateDescription(copy,known.source);
+ assert.notEqual(native,known.source);assert.equal(updateDescription(copy,unavailableSource),unavailableSource);
+ const complete=await actualUpdateUi(lang,{kind:'history',historyNotes:oneHistorySource(known.source)});
+ try{assertHistoryAvailability(complete,lang,copy);assert.ok(complete.text().includes(native));assert.equal(complete.calls.reload,0);}finally{await complete.dispose();}
+ const partialNotes=oneHistorySource(known.source);partialNotes[0]={...partialNotes[0],changes:[known.source,unavailableSource]};
+ const partial=await actualUpdateUi(lang,{kind:'history',historyNotes:partialNotes});
+ try{assertHistoryAvailability(partial,lang,copy);assert.ok(partial.text().includes(native));assert.ok(partial.text().includes(unavailableSource));}finally{await partial.dispose();}
+ // This exact source has a real local draft, but the current chunk omits it.
+ // Falling back to the bundled value would wrongly relabel English as available.
+ const withheld={...copy};delete withheld[known.source];
+ const unavailable=await actualUpdateUi(lang,{kind:'history',historyNotes:oneHistorySource(known.source),loader:async()=>withheld});
+ try{assertHistoryAvailability(unavailable,lang,withheld);assert.ok(unavailable.text().includes(known.source));assert.ok(!unavailable.text().includes(native));assert.equal(unavailable.calls.reload,0);}finally{await unavailable.dispose();}
 });
 
 test('the new deployment serves compact native/source pairs while original build metadata remains compatible',async()=>{
@@ -121,8 +186,19 @@ for(const lang of langs)test(`${lang}: the real discovery invitation and onboard
 });
 
 test('late native chunks cannot relabel a different selected language, and chunk failures disclose English source',async()=>{
- const pending=new Map<string,(copy:any)=>void>();const h=await actualUpdateUi('st',{kind:'history',loader:language=>new Promise(resolve=>pending.set(language,resolve))});
- try{assert.ok(h.text().includes(controlT('st')('updatesLoadingTranslations')));await h.language('ts');await act(async()=>pending.get('st')!(await loadUpdateCopy('st')));assert.ok(!h.text().includes(updateDescription(await loadUpdateCopy('st'),visibleNotes()[0])));assert.ok(h.text().includes(controlT('ts')('updatesLoadingTranslations')));await act(async()=>pending.get('ts')!(await loadUpdateCopy('ts')));assert.ok(h.text().includes(updateDescription(await loadUpdateCopy('ts'),visibleNotes()[0])));}finally{await h.dispose();}
+ // Keep chunk-arrival proof independent of whichever release happens to be first.
+ const known=await existingNativeSource(['st','ts']),source=known.source;
+ const oldNative=updateDescription(known.copies.get('st')!,source),selectedNative=updateDescription(known.copies.get('ts')!,source);
+ const pending=new Map<string,(copy:any)=>void>();const h=await actualUpdateUi('st',{kind:'history',historyNotes:oneHistorySource(source),loader:language=>new Promise(resolve=>pending.set(language,resolve))});
+ try{
+  assert.ok(h.text().includes(controlT('st')('updatesLoadingTranslations')));await h.language('ts');
+  await act(async()=>pending.get('st')!(known.copies.get('st')!));
+  assert.ok(!h.text().includes(oldNative));assert.ok(!h.text().includes(selectedNative));
+  assertCopyRow(copyRows(h)[0],'ts',{});assert.ok(h.text().includes(controlT('ts')('updatesLoadingTranslations')));
+  await act(async()=>pending.get('ts')!(known.copies.get('ts')!));
+  assert.ok(h.text().includes(selectedNative));assert.ok(!h.text().includes(oldNative));
+  assertHistoryAvailability(h,'ts',known.copies.get('ts')!);
+ }finally{await h.dispose();}
  const failed=await actualUpdateUi('ve',{kind:'history',loader:async()=>{throw Error('chunk unavailable');}});try{assert.ok(failed.text().includes(controlT('ve')('updatesTranslationsUnavailable')));assert.ok(failed.text().includes(visibleNotes()[0]));assert.equal(failed.calls.reload,0);}finally{await failed.dispose();}
 });
 
