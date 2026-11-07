@@ -68,6 +68,7 @@ must provision — not buildable from code alone).
 ### 2 Nov 2026 — Afrikaans: blind review of the Design Studio leftovers shard (g56)
 All 101 drafts back-translated blind; 1 repair (pig "wallow" had become "drinking place"), 6 minor. Record: `docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-g56-2026-11-02/`.
 - 7 Nov 2026: mirrored the isiXhosa 6 Nov merge-of-main drafts: new inline shard `g57-main-nov.ts` (41 keys, the Assistant connections page, registration preview and Settings link) and 45 release-note and tour lines in `lib/update-copy-locales/af.ts`, each with a mirror test in `tests/af-inline.test.ts`. UNREVIEWED machine drafts.
+- 7 Nov 2026: blind back-translation review of those 89 drafts (g57-main-nov + 48 update-copy lines): 0 repairs. Record: `docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-2026-11-07/`.
 
 ### 31 Oct 2026 — Afrikaans: the whole app as a labelled machine draft (PR #1161, stacked on #1090)
 All unreviewed machine drafts; English is the authority and is shown beside each draft where isiXhosa
