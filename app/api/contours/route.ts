@@ -4,6 +4,7 @@ import { isoLines } from 'marchingsquares';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { TILE_ZOOM, TILE_SIZE, contourCacheKey } from '@/lib/contour-cache-key';
 import { buildThresholds } from '@/lib/contour-thresholds';
+import { terrainRasterWindow, extractTerrainRaster, type TerrainRaster } from '@/lib/terrain-raster';
 
 // ── Fine-grained (5m) contour lines, generated on the fly from Mapbox's ──
 // terrain-RGB DEM (the same data already used for hillshade/3D terrain).
@@ -34,7 +35,7 @@ export type ContourFeatureCollection = GeoJSON.FeatureCollection<
   };
 };
 
-type CacheEntry = { body: ContourFeatureCollection; expires: number };
+type CacheEntry = { body: ContourFeatureCollection | TerrainRaster; expires: number };
 const CACHE = new Map<string, CacheEntry>();
 const CACHE_TTL_MS = 10 * 60 * 1000;
 const CACHE_MAX_ENTRIES = 50;
@@ -66,14 +67,18 @@ function pixelToLat(py: number, z: number): number {
   return (180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
 }
 
-async function fetchTileElevations(z: number, x: number, y: number, token: string): Promise<number[][] | null> {
+async function fetchTileElevations(z: number, x: number, y: number, token: string, rawTerrain=false): Promise<number[][] | null> {
   const n = 2 ** z;
   if (x < 0 || y < 0 || x >= n || y >= n) return null; // off the world (padding wrapped past a pole)
-  const url = `https://api.mapbox.com/v4/mapbox.mapbox-terrain-dem-v1/${z}/${x}/${y}.pngraw?access_token=${token}`;
+  // Raw profile pixels use the documented Raster Tiles endpoint. The legacy contour source is
+  // unchanged; DEM-v1's buffered SDK tiles must not be presumed to be ordinary raster pixels.
+  const tileset=rawTerrain?'mapbox.terrain-rgb':'mapbox.mapbox-terrain-dem-v1';
+  const url = `https://api.mapbox.com/v4/${tileset}/${z}/${x}/${y}.pngraw?access_token=${token}`;
   const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
   if (!res.ok) return null;
   const buf = Buffer.from(await res.arrayBuffer());
   const png = PNG.sync.read(buf);
+  if(rawTerrain&&(png.width!==TILE_SIZE||png.height!==TILE_SIZE))return null;
   const rows: number[][] = new Array(png.height);
   for (let row = 0; row < png.height; row++) {
     const cols = new Array(png.width);
@@ -98,6 +103,7 @@ export async function GET(req: NextRequest) {
   const maxLat = parseFloat(searchParams.get('maxLat') ?? '');
   const interval = parseFloat(searchParams.get('interval') ?? '5') || 5;
   const major = parseFloat(searchParams.get('major') ?? '25') || 25;
+  const rawTerrain = searchParams.get('terrain') === 'pixels';
 
   if ([minLon, minLat, maxLon, maxLat].some((v) => isNaN(v)) || minLon >= maxLon || minLat >= maxLat) {
     return NextResponse.json({ error: 'Invalid bbox — need minLon,minLat,maxLon,maxLat' }, { status: 400 });
@@ -115,10 +121,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'bbox too large for on-the-fly fine contours (site-scale only)' }, { status: 400 });
   }
 
+  const rasterWindow=rawTerrain?terrainRasterWindow(minLon,minLat,maxLon,maxLat):null;
+  if(rawTerrain&&!rasterWindow)return NextResponse.json({error:'Terrain pixels require a valid site bbox of at most 128 × 128 posted pixels'}, {status:400});
+
   const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   if (!token) return NextResponse.json({ error: 'Mapbox token not configured' }, { status: 500 });
 
-  const cacheKey = contourCacheKey(minLon, minLat, maxLon, maxLat, interval, major);
+  const cacheKey = rasterWindow ? `pixels:${rasterWindow.originX},${rasterWindow.originY},${rasterWindow.width},${rasterWindow.height}` : contourCacheKey(minLon, minLat, maxLon, maxLat, interval, major);
   const cached = CACHE.get(cacheKey);
   if (cached && cached.expires > Date.now()) {
     return NextResponse.json(cached.body, { headers: { 'Cache-Control': 'public, max-age=300' } });
@@ -142,7 +151,7 @@ export async function GET(req: NextRequest) {
   for (let ty = tileYMin; ty <= tileYMax; ty++) {
     for (let tx = tileXMin; tx <= tileXMax; tx++) {
       tilePromises.push(
-        fetchTileElevations(TILE_ZOOM, tx, ty, token).then((rows) => ({ x: tx, y: ty, rows }))
+        fetchTileElevations(TILE_ZOOM, tx, ty, token, rawTerrain).then((rows) => ({ x: tx, y: ty, rows }))
       );
     }
   }
@@ -172,6 +181,16 @@ export async function GET(req: NextRequest) {
       const srcRow = cellRows[r];
       for (let c = 0; c < TILE_SIZE; c++) destRow[originCol + c] = srcRow[c];
     }
+  }
+
+  // The profile needs actual posted heights. Densifying two isoline crossings manufactured a
+  // straight hillside; return the bounded original pixel neighbourhood without running isolines.
+  if(rasterWindow){
+    const body=extractTerrainRaster(grid,tileXMin*TILE_SIZE,tileYMin*TILE_SIZE,rasterWindow);
+    if(!body)return NextResponse.json({error:'Terrain pixel coverage incomplete'}, {status:502});
+    if(CACHE.size>=CACHE_MAX_ENTRIES){const oldest=CACHE.keys().next().value;if(oldest!==undefined)CACHE.delete(oldest);}
+    CACHE.set(cacheKey,{body,expires:Date.now()+CACHE_TTL_MS});
+    return NextResponse.json(body,{headers:{'Cache-Control':'public, max-age=300'}});
   }
 
   // Min/max over the REQUESTED FARM, not the one-tile padding. The padding exists only to let

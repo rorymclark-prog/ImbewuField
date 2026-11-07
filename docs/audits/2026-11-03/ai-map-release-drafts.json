@@ -1,0 +1,86 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "entries": [
+    {
+      "source": "AI Site and Sector maps keep their painted detail, with fewer photo strips.",
+      "drafts": {
+        "zu": "Amamephu e-AI eSite neSector agcina imininingwane edwetshiwe, enemigqa yezithombe embalwa.",
+        "st": "Dimmapa tsa AI tsa Site le Sector di boloka dintlha tse takilweng, ka mela e mmalwa ya difoto.",
+        "ts": "Mimepe ya AI ya Site na Sector yi hlayisa vuxokoxoko byo dirowiwa, hi mitila mitsongo ya swifaniso.",
+        "ve": "Mapa a AI a Site na Sector a vhulunga zwidodombedzwa zwo olwa, a na mitalo miṱuku ya zwifanyiso."
+      }
+    },
+    {
+      "source": "Phasing keeps painted artwork; the app adds its schedule, pins and scale.",
+      "drafts": {
+        "zu": "I-Phasing igcina umdwebo; i-app ingeza uhlelo, izimpawu nesikali.",
+        "st": "Phasing e boloka setshwantsho se takilweng; app e eketsa kemiso, matshwao le sekala.",
+        "ts": "Phasing yi hlayisa xifaniso lexi dirowiweke; app yi engetela xiyimiso, swikombiso na xikalo.",
+        "ve": "Phasing i vhulunga tshifanyiso tsho olwaho; app i engedza shedulu, zwiga na tshikalo."
+      }
+    },
+    {
+      "source": "Paper-friendly map styles start on white and keep your chosen background.",
+      "drafts": {
+        "zu": "Izitayela zemephu ezifanele iphepha ziqala kokumhlophe futhi zigcina ingemuva olikhethile.",
+        "st": "Ditaele tsa mmapa tse loketseng pampiri di qala ka bosweu mme di boloka bokamorao boo o bo kgethileng.",
+        "ts": "Switayele swa mepe leswi faneleke phepha swi sungula hi ku basa naswona swi hlayisa le ndzhaku loku u ku hlawuleke.",
+        "ve": "Zwitaila zwa mapa zwo teaho bammbiri zwi thoma nga hutshena zwa vhulunga murahu we na nanga."
+      }
+    },
+    {
+      "source": "Review the AI map finish",
+      "drafts": {
+        "zu": "Hlola ukubukeka kwemephu ye-AI",
+        "st": "Hlahloba ponahalo ya mmapa wa AI",
+        "ts": "Kambela ku languteka ka mepe wa AI",
+        "ve": "Ṱolani mbonalo ya mapa wa AI"
+      }
+    },
+    {
+      "source": "Site design → Glossy",
+      "drafts": {
+        "zu": "Ukwakhiwa kwesiza → Glossy",
+        "st": "Moralo wa sebaka → Glossy",
+        "ts": "Dizayini ya ndhawu → Glossy",
+        "ve": "Nzudzanyo ya fhethu → Glossy"
+      }
+    },
+    {
+      "source": "Choose a sheet and style. Paper-friendly styles start on white unless you choose another background.",
+      "drafts": {
+        "zu": "Khetha ishidi nesitayela. Izitayela ezifanele iphepha ziqala kokumhlophe ngaphandle uma ukhetha elinye ingemuva.",
+        "st": "Kgetha leqephe le setaele. Ditaele tse loketseng pampiri di qala ka bosweu ntle le ha o kgetha bokamorao bo bong.",
+        "ts": "Hlawula phepha na xitayele. Switayele leswi faneleke phepha swi sungula hi ku basa handle ka loko u hlawula le ndzhaku kun’wana.",
+        "ve": "Nangani siaṱari na tshitaila. Zwitaila zwo teaho bammbiri zwi thoma nga hutshena nga nnḓa ha musi ni tshi nanga muṅwe murahu."
+      }
+    },
+    {
+      "source": "Compare with your exact plan",
+      "drafts": {
+        "zu": "Qhathanisa nohlelo lwakho olunembile",
+        "st": "Bapisa le moralo wa hao o nepahetseng",
+        "ts": "Fananisa na pulani ya wena leyi kongomeke",
+        "ve": "Vhambedzani na pulane yaṋu yo teaho"
+      }
+    },
+    {
+      "source": "Site design → Saved maps",
+      "drafts": {
+        "zu": "Ukwakhiwa kwesiza → Amamephu agciniwe",
+        "st": "Moralo wa sebaka → Dimmapa tse bolokilweng",
+        "ts": "Dizayini ya ndhawu → Mimepe leyi hlayisiweke",
+        "ve": "Nzudzanyo ya fhethu → Mapa o vhulungwaho"
+      }
+    },
+    {
+      "source": "Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.",
+      "drafts": {
+        "zu": "Vula uhlelo olunembile olugciniwe eduze komdwebo walo we-AI. Hlola amakhona emibhede, izakhiwo nezitshalo ngaphambi kokusebenzisa umdwebo.",
+        "st": "Bula moralo o nepahetseng o bolokilweng pela setshwantsho sa ona sa AI. Hlahloba dikgutlo tsa dibethe, meaho le dimela pele o sebedisa setshwantsho.",
+        "ts": "Pfula pulani leyi kongomeke leyi hlayisiweke etlhelo ka xifaniso xa yona xa AI. Kambela tikhona ta mibedo, miako na swimilana u nga si tirhisa xifaniso.",
+        "ve": "Vulani pulane yo teaho yo vhulungwaho tsini na tshifanyiso tshayo tsha AI. Ṱolani khuḓa dza mibete, zwifhaṱo na zwimela musi ni sa athu u shumisa tshifanyiso."
+      }
+    }
+  ]
+}

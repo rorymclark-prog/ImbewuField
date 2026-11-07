@@ -121,9 +121,10 @@ export function sheetRenderRoute(
   // blocked satellite_overlay on the six design-layer sheets where it is the whole point — the
   // Full Treatment dead-end of e0bf17a. c252349 removed it from there, correctly, and did not put
   // it back anywhere, so applySheet's comment promising "a non-satellite_overlay producer style"
-  // became untrue. It belongs here, where the sheet is known.
+  // became untrue. Zones also needs app-owned regions and calibrated scale: the paid
+  // model-chrome comparison invented its scale and roof forms. Keep that choice out of its picker.
   const requested = lockedPolishStyle(selectedStyle, DEFAULT_PRODUCER_STYLE);
-  const styleUsed = 'exact' in sheet && isModelChromeStyle(requested)
+  const styleUsed = ('exact' in sheet || sheet.filter === 'zones') && isModelChromeStyle(requested)
     ? DEFAULT_PRODUCER_STYLE
     : requested;
   const hybridFlags = renderAuthorityFlagsForStyle(styleUsed);

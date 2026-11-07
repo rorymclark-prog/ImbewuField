@@ -1,10 +1,67 @@
 # ImbewuField audit archive
 
+Latest runtime continuation — [Approved map styling and cross-location checks — 6 November 2026](2026-11-06/approved-map-style-runtime-codex.md). Actual app outputs and provider terrain/context inspected; current-head release evidence is separate on PR/issue #35.
+
+Latest sample revisions — [Boundary, slope values, Earthworks labels and Record plan — 6 November 2026](2026-11-06/map-boundary-slope-labels-codex.md). Native factual overlays and revised Sector appearance; local samples, not deployed defaults.
+
+Latest context sample — [Zones reserve inset and Base national locator — 6 November 2026](2026-11-06/zones-reserve-context-codex.md). Real wider satellite imagery, retained AI artwork and native locator proposal; not deployed.
+
+Latest paired examples — [Exact SVG and AI sample set — 6 November 2026](2026-11-06/paired-map-samples-codex.md). Actual output inspected; previous Sector retained, other drafts not approved for production.
+
+Latest illustrated-map review — [All-map treatment and surrounding-context guides — 6 November 2026](2026-11-06/all-map-illustration-guides-codex.md). Ten draft briefs and actual saved examples; settings implementation and fresh device/output verification remain open.
+
+Latest Zones wording review — [Boundary authority and care-intensity evidence — 5 November 2026](2026-11-05/zones-authority-key-codex.md). Findings only; fresh exact inspected, current saved AI remains unverified.
+
+Latest Sector styling — [Actual supplied-reference wind/rain motifs and retained terrain detail — 5 November 2026](2026-11-05/sector-reference-flow-codex.md). Native imagery inspected; release gates/identity follow on the PR and ledger.
+
+Latest Sector release follow-up — [Typography contracts and native update descriptions — 5 November 2026](2026-11-05/sector-release-contracts-codex.md). Broad-arrow artwork is retained; original-device free AI recovery remains unverified.
+
+Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Required release checks and normal published-host login remain open.
+
+Latest assistant identity continuation — [MCP display name, published sprout and private listing — 4 November 2026](2026-11-04/assistant-connector-branding-codex.md). Native authentication follows the separate callback release.
+
+Latest assistant connector continuation — [Production release and desktop callback preservation — 4 November 2026](2026-11-04/assistant-connector-loopback-codex.md). Native plugin verification remains open.
+
+Latest Water follow-up is [Budget figures and illustrated route review — 4 November 2026](2026-11-04/water-budget-route-review-codex.md).
+
+Latest Water review is [One budget for exact and illustrated maps — 3 November 2026](2026-11-03/water-shared-budget-codex.md).
+Latest Zone review is [Photo coverage, zone key and the first Water comparison — 3 November 2026](2026-11-03/zone-photo-coverage-codex.md).
+Latest Existing Site follow-up is [Matching area and legend symbols — 3 November 2026](2026-11-03/existing-site-symbol-key-codex.md).
+
+Latest Terrain & Sections continuation: [Separate detail sheet and contour hierarchy — 3 November 2026](2026-11-03/terrain-section-contour-detail-codex.md). Map 02 remains the overview.
+
+Latest Sector continuation: [Downhill and classroom sections, lighter paid Sector finish — 3 November 2026](2026-11-03/downhill-sections-sector-finish-codex.md). Separates A–B downhill from C–D classroom cut.
+
+Latest raw section continuation: [Raw terrain pixels and scaled classroom section — 3 November 2026](2026-11-03/raw-terrain-classroom-profile-codex.md). The earlier sparse profile was rejected; Sector overlay polish remains open.
+
+Latest Structures recovery: [Recorded permeable shade cover over paid artwork — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md). App-drawn material is distinguished from AI output.
+
+Latest terrain continuation: [Sector DEM alignment, data limits and regional A–B profile — 3 November 2026](2026-11-03/sector-terrain-profile-codex.md). Fresh Earthworks/Structures still have documented visual failures.
+
+Latest area-label follow-up: [Named historical areas and numbered alternative — 3 November 2026](2026-11-03/historical-area-labels-codex.md).
+
+Latest historical baseline: [Approved before-works photo, numbered facts and evidence-based defaults — 3 November 2026](2026-11-03/historical-baseline-codex.md). Exact photographic previews are separate from pending historical AI Sector verification.
+
+Latest implementation: [Nine-layer AI fidelity corrections — 3 November 2026](2026-11-03/ai-layer-fidelity-corrections-codex.md). Local output and contract evidence are separate from pending fresh-provider checks.
+
+Previous AI output review: [Nine actual AI layer versions and rejected oblique — 2 November 2026](2026-11-02/ai-layer-output-review-codex.md). Availability is verified; the recorded fidelity and provenance failures remain open.
+
+
 This is the shared starting point for Rory, Claude and Codex. Read the latest
 record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
+
+Latest Sector arrow continuation: [Broad filled arrows and collision correction — 5 November 2026](2026-11-05/sector-bold-arrows-codex.md). Current-head release evidence belongs on its PR/issue #35.
+
+Latest Sector follow-up: [Bolder contours and external reference comparison — 5 November 2026](2026-11-05/sector-bold-contours-codex.md). Release evidence is separate on its PR/issue #35.
+
+Latest Sector implementation: [Actual rich-aerial C and release continuation — 5 November 2026](2026-11-05/sector-rich-aerial-release-codex.md). Release evidence is recorded on PR #1274 and issue #35.
+
+Latest Sector samples: [Illustrated graphics, stronger contours and three context treatments — 5 November 2026](2026-11-05/sector-illustrated-graphics-codex.md). Draft comparison, not a production release.
+
+Latest Sector comparison: [Muted context, clearer analytical marks and unannotated polish input — 4 November 2026](2026-11-04/sector-calm-context-codex.md). Local native draft; release evidence is separate.
 
 Latest live output review: [Three fresh AI results and Earthworks starting-image correction — 31 October 2026](2026-10-31/live-ai-map-settings-review-codex.md). Remaining live tests need the owner browser connection restored.
 
@@ -139,7 +196,25 @@ This convention applies to both Claude and Codex. The source lives in Git, so it
 is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
+## Assistant connector: start here
+
+[ImbewuField connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md). Native linking and production deployment are separate gates from the verified emulator and browser journey.
+
 ## Date index
+
+- [Zones reserve context and national locator — 6 November 2026](2026-11-06/zones-reserve-context-codex.md).
+
+- [Paired exact SVG and AI map samples — 6 November 2026](2026-11-06/paired-map-samples-codex.md).
+
+- [All-map illustration and context guides — 6 November 2026](2026-11-06/all-map-illustration-guides-codex.md).
+
+- [Assistant connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md).
+- [Recorded shade cover recovery — 3 November 2026](2026-11-03/structures-shade-recovery-codex.md).
+
+- [Sector DEM alignment and regional A–B profile — 3 November 2026](2026-11-03/sector-terrain-profile-codex.md).
+- [Named historical areas — 3 November 2026](2026-11-03/historical-area-labels-codex.md).
+- [Approved historical baseline — 3 November 2026](2026-11-03/historical-baseline-codex.md).
+- [Nine-layer AI fidelity corrections — 3 November 2026](2026-11-03/ai-layer-fidelity-corrections-codex.md).
 
 - [Nursery forecast source and verification — 1 November 2026](2026-11-01/nursery-source-and-verification.md).
 
@@ -258,6 +333,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-11-03 | [Structures shade recovery](2026-11-03/structures-shade-recovery-codex.md) · [Historical baseline](2026-11-03/historical-baseline-codex.md) · [Area names](2026-11-03/historical-area-labels-codex.md) · [Sector regional profile](2026-11-03/sector-terrain-profile-codex.md) · [AI fidelity](2026-11-03/ai-layer-fidelity-corrections-codex.md) |
 | 2026-10-31 | [Nine-sheet AI fidelity and three viewport sizes — Codex](2026-10-31/ai-sheet-fidelity-codex.md) |
 | 2026-10-31 | [Per-sheet AI starting settings — Codex](2026-10-31/map-sheet-defaults-codex.md) |
 | 2026-10-31 | [Live AI map settings/output review — Codex](2026-10-31/live-ai-map-settings-review-codex.md) |
