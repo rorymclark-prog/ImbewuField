@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest field seed follow-up — [Per-cycle CSV integration — 6 November 2026](2026-11-06/field-seed-cycle-integration-codex.md). Typecheck and 615 affected checks pass; new current-head CI and actual multi-cycle delivery remain pending.
+
 Latest international release candidate — [Current-main, print and account-gate reconciliation — 5 November 2026](2026-11-05/international-nursery-final-reconcile-codex.md). Source integration is prepared; new full/visual/account gates remain pending.
 
 Latest runtime continuation — [Approved map styling and cross-location checks — 6 November 2026](2026-11-06/approved-map-style-runtime-codex.md). Actual app outputs and provider terrain/context inspected; current-head release evidence is separate on PR/issue #35.
