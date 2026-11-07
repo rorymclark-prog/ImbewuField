@@ -9,6 +9,7 @@ import { CROPS } from '@/lib/crop-catalog';
 import { bindSiteContext, createSiteCountryContext } from '@/lib/international/site-context';
 import type { SavedPlace } from '@/lib/saved-places';
 import type { AutoSuggestResult } from '@/lib/crop-autosuggest';
+import type { HarvestTargetsPanelProps } from '@/components/crops/HarvestTargetsPanel';
 import { IDEAL_PLAN_COPY, suggestIdealYearPlan } from '@/lib/crop-plan-ideal';
 import type { PlanBed, Planting } from '@/lib/crop-plan';
 import { createWorkspacePlanningReference, type WorkspacePlanningReference } from '@/lib/international/workspace-context';
@@ -99,12 +100,14 @@ function text(node: ReactTestInstance | string): string {
 }
 class MemoryStorage {
   rows = new Map<string, string>();
+  private mutations = new Map<string, number>();
+  writesFor(key: string) { return this.mutations.get(key) ?? 0; }
   failWrite = false;
   get length() { return this.rows.size; }
   key(index: number) { return [...this.rows.keys()][index] ?? null; }
   getItem(key: string) { return this.rows.get(key) ?? null; }
-  setItem(key: string, value: string) { if (this.failWrite) throw Error('quota'); this.rows.set(key, String(value)); }
-  removeItem(key: string) { this.rows.delete(key); }
+  setItem(key: string, value: string) { if (this.failWrite) throw Error('quota'); this.rows.set(key, String(value)); this.mutations.set(key, this.writesFor(key) + 1); }
+  removeItem(key: string) { this.rows.delete(key); this.mutations.set(key, this.writesFor(key) + 1); }
 }
 
 const countryContext = (countryCode: string) => createSiteCountryContext({ siteId, countryCode, confirmed: true }, '2026-11-02T12:00:00.000Z')!;
@@ -178,7 +181,7 @@ async function mount(countryCode?: string, options: {
     for (const [id, timer] of [...timers]) if (timer.delay === 400) { timers.delete(id); timer.callback(); }
   };
   return {
-    get renderer() { return renderer; }, localStorage, timers, field, savedRaw, replaceSavedRaw: replaceCanonicalCropPlanFixtureRaw,
+    get renderer() { return renderer; }, localStorage, timers, field, savedRaw, canonicalWrites: () => localStorage.writesFor(canonicalKey), replaceSavedRaw: replaceCanonicalCropPlanFixtureRaw,
     text: () => text(renderer.root),
     boundaries(name: string) { return renderer.root.findAll(node => node.props['data-boundary'] === `@/components/crops/${name}`); },
     async change(prefix: string, value: string) { await act(async () => field(prefix).props.onChange({ target: { value } })); },
@@ -232,6 +235,21 @@ async function mount(countryCode?: string, options: {
   };
 }
 
+type Screen = Awaited<ReturnType<typeof mount>>;
+function targetBoundaries(screen: Screen, basis: 'own-records' | 'catalogue') {
+  return screen.boundaries('HarvestTargetsPanel').filter(node => basis === 'own-records'
+    ? node.props['data-props'].basis === 'own-records' : node.props['data-props'].basis === undefined);
+}
+function catalogueTargetProps(screen: Screen): HarvestTargetsPanelProps {
+  const catalogue = targetBoundaries(screen, 'catalogue');
+  assert.equal(catalogue.length, 1, 'Select the actual default-basis catalogue consumer, never the own-records no-op');
+  return catalogue[0].props['data-props'];
+}
+function harvestSuggestion(id: string): AutoSuggestResult {
+  return { plantings: [{ ...fixturePlan.plantings[0], id }],
+    notes: [{ kind: 'basis', text: 'Engineering acceptance control, not a farming instruction.' }], laterThisYear: [] };
+}
+
 // Unsupported mapped sites now have a record-only target form. Its presence is
 // intentional: assert its explicit basis and safe save boundary instead of the old
 // blanket absence claim, while keeping catalogue advice and exports held below.
@@ -278,8 +296,11 @@ test('the real country form requires renewed confirmation and persists metadata 
     assert.equal(loadPlaces()[0].siteCountryContext?.countryCode, 'ZA');
     assert.equal(loadPlaces()[0].siteCountryContext?.agriculturalRegionReference, 'Grower description');
     assert.equal(screen.boundaries('CropPlanExportCard').length, 1);
-    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 1);
-    assert.notEqual(screen.boundaries('HarvestTargetsPanel')[0].props['data-props'].basis, 'own-records');
+    // Mapped growers now retain own-estimate/date entry alongside the separate
+    // catalogue editor. A single total/first-row assertion tested the old layout.
+    assert.equal(targetBoundaries(screen, 'own-records').length, 1);
+    assert.equal(targetBoundaries(screen, 'catalogue').length, 1);
+    assert.equal(screen.boundaries('HarvestTargetsPanel').length, 2);
     assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Planning support' }).length, 0);
     await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
@@ -290,15 +311,49 @@ test('the real country form requires renewed confirmation and persists metadata 
   } finally { await screen.dispose(); }
 });
 
+test('a current catalogue harvest callback reaches the canonical saver and appends a valid isolated fixture', async () => {
+  const screen = await mount('ZA', { plantings: [], auto: false });
+  try {
+    const accept = catalogueTargetProps(screen).onAccept;
+    assert.equal(targetBoundaries(screen, 'own-records').length, 1);
+    await screen.flushSave();
+    const raw = screen.savedRaw(), writes = screen.canonicalWrites();
+    assert.deepEqual(JSON.parse(raw).plantings, [], 'The positive control starts with measured space and no incumbent sowing');
+    const result = harvestSuggestion('current-catalogue-suggestion');
+    await act(async () => accept(result)); await screen.flushSave();
+    assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, result.plantings);
+    assert.notEqual(screen.savedRaw(), raw, 'The real callback must change the stored canonical book');
+    assert.equal(screen.canonicalWrites() - writes, 1, 'The positive control must reach the actual canonical writer once');
+  } finally { await screen.dispose(); }
+});
+
+test('the separate own-records target callback remains an explicit no-op rather than a catalogue acceptance control', async () => {
+  const screen = await mount('ZA', { auto: false });
+  try {
+    const own = targetBoundaries(screen, 'own-records'); assert.equal(own.length, 1);
+    assert.equal(targetBoundaries(screen, 'catalogue').length, 1);
+    const props: HarvestTargetsPanelProps = own[0].props['data-props'];
+    const accept = props.onAccept;
+    await screen.flushSave(); const raw = screen.savedRaw(), writes = screen.canonicalWrites();
+    await act(async () => accept(harvestSuggestion('own-records-no-op'))); await screen.flushSave();
+    assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
+    assert.equal(screen.savedRaw(), raw); assert.equal(screen.canonicalWrites() - writes, 0);
+  } finally { await screen.dispose(); }
+});
+
 test('a stale harvest-target accept callback rereads the current country before mutating the saved plan', async () => {
   const screen = await mount('ZA');
   try {
-    const accept = screen.boundaries('HarvestTargetsPanel')[0].props['data-props'].onAccept as (result: AutoSuggestResult) => void;
+    const accept = catalogueTargetProps(screen).onAccept;
     await screen.setStoredCountry('KE', false);
-    const result = { plantings: [{ ...fixturePlan.plantings[0], id: 'stale-suggestion' }], notes: [] } as unknown as AutoSuggestResult;
+    await screen.flushSave(); // Exclude setup and country-storage writes from the action control.
+    const raw = screen.savedRaw(), writes = screen.canonicalWrites();
+    const result = harvestSuggestion('stale-suggestion');
     await act(async () => accept(result));
     await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
+    assert.equal(screen.savedRaw(), raw, 'A stale catalogue callback cannot alter any canonical book fields');
+    assert.equal(screen.canonicalWrites() - writes, 0, 'Silent country invalidation must stop canonical writes at the real catalogue callback');
     await screen.setStoredCountry('KE');
     assertOwnTargetRecords(screen);
     assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
@@ -381,15 +436,19 @@ test('the queued ideal producer runs for its supported scope but cannot run afte
 test('a same-coordinate bed-kind change invalidates queued production and stale harvest-target acceptance', async () => {
   const screen = await mount('ZA');
   try {
-    const accept = screen.boundaries('HarvestTargetsPanel')[0].props['data-props'].onAccept as (result: AutoSuggestResult) => void;
+    const accept = catalogueTargetProps(screen).onAccept;
     const run = await screen.queueIdeal();
     await screen.changeBedKind('plot');
     await run();
     assert.equal(probe.idealRuns, 0);
-    const result = { plantings: [{ ...fixturePlan.plantings[0], id: 'old-bed-kind-suggestion' }], notes: [] } as unknown as AutoSuggestResult;
+    await screen.flushSave(); // Settle the geometry event before counting this action's book writes.
+    const raw = screen.savedRaw(), writes = screen.canonicalWrites();
+    const result = harvestSuggestion('old-bed-kind-suggestion');
     await act(async () => accept(result));
     await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
+    assert.equal(screen.savedRaw(), raw, 'A former bed-kind callback cannot alter any canonical book fields');
+    assert.equal(screen.canonicalWrites() - writes, 0, 'Changed geometry must stop canonical writes at the real catalogue callback');
   } finally { await screen.dispose(); }
 });
 

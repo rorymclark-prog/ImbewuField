@@ -175,9 +175,44 @@ for(const lang of langs)test(`${lang}: full, partial and withdrawn native histor
  try{assertHistoryAvailability(unavailable,lang,withheld);assert.ok(unavailable.text().includes(known.source));assert.ok(!unavailable.text().includes(native));assert.equal(unavailable.calls.reload,0);}finally{await unavailable.dispose();}
 });
 
-test('the new deployment serves compact native/source pairs while original build metadata remains compatible',async()=>{
- const original=await(await actualBuildInfo()).json();assert.deepEqual(Object.keys(original).sort(),['branch','notes','sha','source','tour']);assert.deepEqual(original.notes,visibleNotes());assert.deepEqual(original.tour,visibleUpdateTour());
- for(const lang of langs){const data=await(await actualBuildInfo(lang)).json(),allowed=[...visibleNotes(),...updateTourSources(visibleUpdateTour())];assert.equal(data.copyLanguage,lang);assert.deepEqual(data.notes,original.notes);assert.deepEqual(data.tour,original.tour);assert.ok(Object.keys(data.copy).length);for(const source of Object.keys(data.copy))assert.ok(allowed.includes(source));}
+async function assertBuildInfoAnnouncementCopy(requireNative:boolean){
+ const original=await(await actualBuildInfo()).json();
+ assert.deepEqual(Object.keys(original).sort(),['branch','notes','sha','source','tour']);
+ assert.equal(original.branch,'qa-branch');assert.equal(original.sha,'1234567');assert.equal(original.source,'env');
+ assert.deepEqual(original.notes,visibleNotes());assert.deepEqual(original.tour,visibleUpdateTour());
+ const allowed=[...visibleNotes(),...updateTourSources(visibleUpdateTour())];
+ for(const lang of langs){
+  const copy=await loadUpdateCopy(lang),data=await(await actualBuildInfo(lang)).json();
+  const expected=Object.fromEntries(allowed.flatMap(source=>{
+   const native=updateDescription(copy,source);return native===source?[]:[[source,native]];
+  }));
+  assert.deepEqual(Object.keys(data).sort(),['branch','copy','copyLanguage','notes','sha','source','tour']);
+  assert.equal(data.branch,original.branch);assert.equal(data.sha,original.sha);assert.equal(data.source,original.source);
+  assert.equal(data.copyLanguage,lang);assert.deepEqual(data.notes,original.notes);assert.deepEqual(data.tour,original.tour);
+  for(const source of Object.keys(data.copy))assert.ok(allowed.includes(source),'only announced notes and tour descriptions may acquire native copy');
+  assert.deepEqual(data.copy,expected,'the installing build serves every genuine available pair for this exact source and language, and no others');
+  for(const source of allowed){
+   assert.equal(updateDescription(data.copy,source),updateDescription(copy,source));
+   if(!Object.hasOwn(expected,source))assert.equal(updateDescription(data.copy,source),source,'untranslated current announcements remain honest English');
+  }
+  if(requireNative){
+   assert.ok(Object.keys(expected).length,'the real archived announcement must exercise available native route data');
+   assert.ok(Object.keys(data.copy).length,'an empty provider reply cannot satisfy the native-positive route contract');
+   const unannounced=Object.keys(copy).find(source=>!allowed.includes(source)&&updateDescription(copy,source)!==source);
+   assert.ok(unannounced,'a genuine translated source outside this announcement makes stale-copy exclusion capable of failing');
+   assert.equal(Object.hasOwn(data.copy,unannounced),false,'native history outside the announcement never leaks into build copy');
+  }
+ }
+}
+
+test('current deployment copy matches exact announcement coverage and retains build metadata even when native coverage is empty',async()=>{
+ // New releases can legitimately move all native pairs outside the five-line
+ // announcement. Coverage follows exact source identity, never a nonempty quota.
+ await assertBuildInfoAnnouncementCopy(false);
+});
+
+test('a real archived announcement serves its available native pairs and excludes translated unannounced history',async()=>{
+ await withArchivedReleaseTour(()=>assertBuildInfoAnnouncementCopy(true));
 });
 
 for(const lang of langs)test(`${lang}: the real discovery invitation and onboarding CTA retain their original actions`,async()=>{
