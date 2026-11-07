@@ -96,7 +96,7 @@ function mount(scope: 'core-farming' | 'design-preview' | 'finance-preview' = 'c
     renderer, text: () => content(renderer.root), select: () => renderer.root.findByType('select'),
     choose(value: unknown) { act(() => renderer.root.findByType('select').props.onChange({ target: { value } })); },
     render() { act(() => renderer.update(element())); },
-    event(name = 'permamap-places-changed') { act(() => browser.dispatchEvent(new Event(name))); },
+    event(name = 'permamap-places-changed') { act(() => { browser.dispatchEvent(new Event(name)); }); },
     unmount() { act(() => renderer.unmount()); mounted.delete(renderer); },
   };
 }
