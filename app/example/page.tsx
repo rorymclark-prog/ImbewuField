@@ -18,6 +18,7 @@ import CompletionScore from '@/components/report/CompletionScore';
 import { DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA, DEMO_COMPLETION } from '@/lib/demo-site';
 
 import Illustration from '@/components/Illustration';
+import WaterYear from '@/components/WaterYear';
 import workspace from '@/components/layout/Workspace.module.css';
 
 function Card({ children }: { children: React.ReactNode }) {
@@ -246,6 +247,14 @@ function ExampleInner() {
             </span>
           </div>
         </div>
+
+        {/* The water year: the harvesting card's roof and this site's monthly rain, played through. */}
+        <WaterYear
+          monthlyMm={data.rainfall.monthly}
+          roofM2={water.areaM2}
+          pattern="summer"
+          rainSource="NASA POWER monthly averages for this point"
+        />
 
         <div className={workspace.twoColumns}>
           {/* Key species */}
