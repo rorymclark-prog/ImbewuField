@@ -2,15 +2,15 @@ import { cropByKey, hasAutomaticPlanningBasis } from './crop-catalog';
 import {
   benchmarkDatedAreaConflictPlantingIds, datedPlantingSowIndex, estimatedYieldKg,
   harvestTargetMonthIndex, planningMaturityMonths, sanitiseHarvestTargets,
-  harvestTargetWeeklyKg, harvestTargetYieldFactor,
+  harvestTargetWeeklyKg, harvestTargetYieldFactor, isMonthlyHarvestTarget, resolveHarvestTargetDateWindow,
   TRANSPLANT_ENTRY_PLANNED_MONTHS,
-  type HarvestTarget, type KgHarvestTarget, type PlanBed, type Planting,
+  type HarvestTarget, type KgHarvestTarget, type MonthlyHarvestTarget, type PlanBed, type Planting,
 } from './crop-plan';
 
 export const HARVEST_TARGET_BASIS = 'Crop-cycle capacity uses the catalogue’s South African planning yields and picking windows. It does not forecast kilograms each week. Check local suitability, losses and actual harvest records before promising deliveries.';
 
 export interface HarvestTargetAssessment {
-  target: HarvestTarget;
+  target: MonthlyHarvestTarget;
   demandKg: number | null;
   days: number;
   /** Area summed across crop cycles, not a claim about simultaneous land. */
@@ -35,18 +35,20 @@ export function targetMonthStamp(index: number): string {
 export function targetDemand(target: KgHarvestTarget): { demandKg: number; days: number } | null;
 export function targetDemand(target: HarvestTarget): { demandKg: number | null; days: number } | null;
 export function targetDemand(target: HarvestTarget): { demandKg: number | null; days: number } | null {
-  if (!sanitiseHarvestTargets([target]).length) return null;
-  const start = harvestTargetMonthIndex(target.startMonth)!;
-  const end = harvestTargetMonthIndex(target.endMonth)!;
-  const days = (Date.UTC(Math.floor((end + 1) / 12), (end + 1) % 12, 1)
-    - Date.UTC(Math.floor(start / 12), start % 12, 1)) / 86_400_000;
-  const weeklyKg = harvestTargetWeeklyKg(target);
+  const saved = sanitiseHarvestTargets([target])[0];
+  if (!saved) return null;
+  const window = resolveHarvestTargetDateWindow(saved);
+  if (!window) return null;
+  const { days } = window;
+  const weeklyKg = harvestTargetWeeklyKg(saved);
   return { days, demandKg: weeklyKg === null ? null : weeklyKg * days / 7 };
 }
 
 /** Credit a whole cycle only when its entire planning picking window fits.
  * Prorating an overlapping cycle would invent a within-cycle harvest curve. */
 export function targetPickingWindow(planting: Planting, target: HarvestTarget): number[] {
+  // Month-based catalogue windows cannot establish an exact dated buyer window.
+  if (!isMonthlyHarvestTarget(target)) return [];
   const crop = cropByKey(planting.cropKey);
   const start = harvestTargetMonthIndex(target.startMonth);
   const end = harvestTargetMonthIndex(target.endMonth);
@@ -72,6 +74,7 @@ export function assessHarvestTarget(
   target: HarvestTarget, beds: PlanBed[], plantings: Planting[],
   now = { year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
 ): HarvestTargetAssessment | null {
+  if (!isMonthlyHarvestTarget(target)) return null;
   const demand = targetDemand(target);
   if (!demand) return null;
   const crop = cropByKey(target.cropKey)!;

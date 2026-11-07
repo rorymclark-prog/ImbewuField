@@ -466,7 +466,8 @@ function loadCropBoardSource(): { beds: PlanBed[]; plantings: Planting[]; savedP
   const heldIds = new Set([...byBed.keys()].filter(id => !bedIds.has(id)));
   const plantings = plan.plantings.filter(planting => bedIds.has(planting.bedId));
   return { beds, plantings, savedPlantings: plan.plantings.length,
-    withheldPlantings: plan.plantings.filter(planting => heldIds.has(planting.bedId)).length,
+    // Own dated cycles never produce catalogue jobs; their work is shown separately.
+    withheldPlantings: plan.plantings.filter(planting => heldIds.has(planting.bedId) && !hasGrowerCycleMarker(planting)).length,
     hasPlanningBasis: eligible.length > 0 };
 }
 

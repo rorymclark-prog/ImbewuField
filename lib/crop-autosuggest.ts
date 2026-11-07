@@ -13,6 +13,7 @@ import { assessHarvestTarget, HARVEST_TARGET_BASIS, targetMonthStamp, targetPick
 import {
   existingSowOffset,
   harvestTargetMonthIndex,
+  isMonthlyHarvestTarget,
   sanitiseHarvestTargets,
   harvestTargetYieldFactor,
   harvestEndMonthForCrop,
@@ -3754,8 +3755,12 @@ export function suggestHarvestTargets(
     || realNow.year < 2020 || realNow.year >= 2100 || realNow.month < 1 || realNow.month > 12) {
     return { plantings: [], notes: [planNote('warning', 'A valid current date is needed to date the sowing tasks.')], laterThisYear: [] };
   }
-  const selected = sanitiseHarvestTargets(targets).filter((t) => t.siteId === siteId)
+  const savedTargets = sanitiseHarvestTargets(targets).filter((t) => t.siteId === siteId);
+  const datedTargets = savedTargets.filter(target => !isMonthlyHarvestTarget(target));
+  if (datedTargets.length) notes.push(planNote('warning', 'Exact-date buyer targets need the automatic plan from your own estimates. No catalogue sowings were proposed for those targets.'));
+  const selected = savedTargets.filter(isMonthlyHarvestTarget)
     .sort((a, b) => a.endMonth.localeCompare(b.endMonth) || a.startMonth.localeCompare(b.startMonth));
+  if (!selected.length && datedTargets.length) return { plantings: [], notes, laterThisYear: [] };
   const seen = new Set<string>();
   beds = beds.filter((bed) => {
     if (!bed.id.trim() || seen.has(bed.id) || !Number.isFinite(bed.areaM2) || bed.areaM2 <= 0

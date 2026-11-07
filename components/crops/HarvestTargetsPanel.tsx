@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { Target, Trash2 } from 'lucide-react';
 import { CROPS, cropByKey, hasPlanningYield, MONTHS_SHORT, type RainPattern } from '@/lib/crop-catalog';
-import { HARVEST_TARGET_UNITS, sanitiseHarvestTargets, type HarvestTarget, type PlanBed, type Planting, type HarvestPackUnit } from '@/lib/crop-plan';
+import { HARVEST_TARGET_UNITS, sanitiseHarvestTargets, resolveHarvestTargetDateWindow, isMonthlyHarvestTarget, type MonthlyHarvestTiming, type DatedHarvestTiming, type HarvestTarget, type PlanBed, type Planting, type HarvestPackUnit } from '@/lib/crop-plan';
 import { suggestHarvestTargets, type AutoSuggestAnswers, type AutoSuggestResult } from '@/lib/crop-autosuggest';
 import { assessHarvestTarget, HARVEST_TARGET_BASIS, targetMonthStamp } from '@/lib/harvest-targets';
 import { numberLabel } from '@/lib/format-figures';
@@ -47,16 +47,23 @@ const targetAmount = (kg: number | null, target: HarvestTarget, massUnit: MassUn
     ? `${numberLabel(kg / target.kgPerUnit, 1)} ${unitLabel(target.unit)} equivalent (${amount(kg, massUnit)})`
     : amount(kg, massUnit);
 const monthName = (stamp: string) => `${MONTHS_SHORT[Number(stamp.slice(5)) - 1]} ${stamp.slice(0, 4)}`;
+function targetWindowLabel(target: HarvestTarget): string {
+  const window = resolveHarvestTargetDateWindow(target);
+  if (!window) return 'Requested dates need review';
+  return isMonthlyHarvestTarget(target) ? `${monthName(target.startMonth)} – ${monthName(target.endMonth)}`
+    : `${window.start} to before ${window.endExclusive} (UTC, exclusive)`;
+}
 
 type Editor = { sourceKey: string; context: HarvestMassUnitPreferenceContext | null; saveContext: HarvestSaveContext | null;
   massUnit: MassUnit; weekly: MassDraft<'weeklyKg'>; pack: MassDraft<'kgPerUnit'>;
   cropKey: string; weeklyQuantity: string; unit: typeof HARVEST_TARGET_UNITS[number]; marketablePercent: string; outlet: string;
-  startMonth: string; endMonth: string; editingId: string | null; irrigated: boolean; sharing: boolean; vines: boolean; dirty: boolean; uncertain: boolean };
+  timing: 'monthly' | 'date-window'; dateStart: string; dateEndExclusive: string; startMonth: string; endMonth: string; editingId: string | null; irrigated: boolean; sharing: boolean; vines: boolean; dirty: boolean; uncertain: boolean };
 function freshEditor(sourceKey: string, massUnit: MassUnit, context: HarvestMassUnitPreferenceContext | null, saveContext: HarvestSaveContext | null, basis: 'catalogue' | 'own-records', currentMonth: number): Editor {
   return { sourceKey, massUnit, context, saveContext,
     weekly: createMassDraft({ sourceKey, unit: massUnit, kilograms: { weeklyKg: undefined } }),
     pack: createMassDraft({ sourceKey, unit: massUnit, kilograms: { kgPerUnit: undefined }, optionalFields: ['kgPerUnit'] }),
     cropKey: '', weeklyQuantity: '', unit: 'kg', marketablePercent: '', outlet: '', editingId: null,
+    timing: 'monthly', dateStart: '', dateEndExclusive: '',
     startMonth: basis === 'catalogue' ? targetMonthStamp(currentMonth) : '', endMonth: basis === 'catalogue' ? targetMonthStamp(currentMonth + 11) : '',
     irrigated: false, sharing: false, vines: false, dirty: false, uncertain: false };
 }
@@ -67,7 +74,7 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
   const today = new Date(), now = { year: today.getFullYear(), month: today.getMonth() + 1 };
   const currentMonth = now.year * 12 + now.month - 1, sourceKey = harvestTargetsSourceKey(siteId, targets) ?? '';
   const [editor, setEditor] = useState(() => freshEditor(sourceKey, 'kg', null, saveContext ?? null, basis, currentMonth));
-  const { cropKey, unit, marketablePercent, outlet, startMonth, endMonth, editingId, irrigated, sharing, vines, massUnit } = editor;
+  const { cropKey, unit, marketablePercent, outlet, timing, dateStart, dateEndExclusive, startMonth, endMonth, editingId, irrigated, sharing, vines, massUnit } = editor;
   const weeklyQuantity = unit === 'kg' ? editor.weekly.fields.weeklyKg.text : editor.weeklyQuantity;
   const kgPerUnit = editor.pack.fields.kgPerUnit.text;
   const [error, setError] = useState(''), [saveStatus, setSaveStatus] = useState(''), [preferenceNote, setPreferenceNote] = useState('');
@@ -88,7 +95,11 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
   const nurseryForecast = useMemo(() => result
     ? buildNurseryForecast([...plantings, ...result.plantings], beds, siteId, sanitiseNurserySettings(nurserySettings), now)
     : null, [plantings, result, beds, siteId, nurserySettings, now]);
-  const assessments = basis === 'catalogue' ? ownTargets.map((target) => assessHarvestTarget(target, beds, plantings)!) : [];
+  const monthlyTargets = ownTargets.filter(isMonthlyHarvestTarget);
+  const recordTargets = basis === 'own-records' ? ownTargets : ownTargets.filter(target => !isMonthlyHarvestTarget(target));
+  const assessments = basis === 'catalogue' ? monthlyTargets.flatMap(target => {
+    const assessment = assessHarvestTarget(target, beds, plantings); return assessment ? [assessment] : [];
+  }) : [];
   const producerExpected = saveContext !== undefined;
   const live = useRef({ sourceKey, editor, saveContext, producerExpected, onTargets, onSaveTargets, onAccept, basis, key, result });
   live.current = { sourceKey, editor, saveContext, producerExpected, onTargets, onSaveTargets, onAccept, basis, key, result };
@@ -146,6 +157,13 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
   const setOutlet = (text: string) => mutate(previous => ({ ...previous, outlet: text, dirty: true }));
   const setStartMonth = (text: string) => mutate(previous => ({ ...previous, startMonth: text, dirty: true }));
   const setEndMonth = (text: string) => mutate(previous => ({ ...previous, endMonth: text, dirty: true }));
+  const setDateStart = (text: string) => mutate(previous => ({ ...previous, dateStart: text, dirty: true }));
+  const setDateEndExclusive = (text: string) => mutate(previous => ({ ...previous, dateEndExclusive: text, dirty: true }));
+  function setTiming(next: string) {
+    if (basis !== 'own-records' || next !== 'monthly' && next !== 'date-window') return;
+    mutate(previous => previous.timing === next ? previous : { ...previous, timing: next,
+      startMonth: '', endMonth: '', dateStart: '', dateEndExclusive: '', dirty: true });
+  }
   const setUnit = (unit: Editor['unit']) => mutate(previous => ({ ...previous, unit,
     weeklyQuantity: previous.unit === 'kg' ? previous.weekly.fields.weeklyKg.text : previous.weeklyQuantity,
     weekly: unit === 'kg' ? previous.unit !== 'kg' ? editMassDraft(previous.weekly, 'weeklyKg', previous.weeklyQuantity) : previous.weekly
@@ -215,10 +233,17 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
     } catch { finish(undefined); }
   }
   function editTarget(target: HarvestTarget) {
+    const window = resolveHarvestTargetDateWindow(target);
+    if (!window || basis === 'catalogue' && !isMonthlyHarvestTarget(target)) {
+      setError('Review this target with your own growing estimates. Its exact dates cannot be edited as catalogue months.'); return;
+    }
+    const targetTiming: Pick<Editor, 'timing' | 'dateStart' | 'dateEndExclusive' | 'startMonth' | 'endMonth'> = isMonthlyHarvestTarget(target)
+      ? { timing: 'monthly', startMonth: target.startMonth, endMonth: target.endMonth, dateStart: '', dateEndExclusive: '' }
+      : { timing: 'date-window', startMonth: '', endMonth: '', dateStart: window.start, dateEndExclusive: window.endExclusive };
     mutate(previous => ({ ...previous, editingId: target.id, cropKey: target.cropKey, weeklyQuantity: target.weeklyQuantity === undefined ? '' : String(target.weeklyQuantity), unit: target.unit ?? 'kg',
       weekly: createMassDraft({ sourceKey: previous.sourceKey, unit: previous.massUnit, kilograms: { weeklyKg: target.weeklyKg } }),
       pack: createMassDraft({ sourceKey: previous.sourceKey, unit: previous.massUnit, kilograms: { kgPerUnit: target.kgPerUnit }, optionalFields: ['kgPerUnit'] }),
-      marketablePercent: target.marketablePercent === undefined ? '' : String(target.marketablePercent), outlet: target.outlet ?? '', startMonth: target.startMonth, endMonth: target.endMonth, dirty: true }));
+      marketablePercent: target.marketablePercent === undefined ? '' : String(target.marketablePercent), outlet: target.outlet ?? '', ...targetTiming, dirty: true }));
     setError(''); setSaveStatus('');
   }
   function removeTarget(target: HarvestTarget) {
@@ -226,15 +251,17 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
   }
   function saveTarget(event: FormEvent) {
     event.preventDefault(); setSaveStatus('');
-    const base = { id: editingId ?? crypto.randomUUID(), siteId, cropKey, startMonth, endMonth,
+    const targetTiming: MonthlyHarvestTiming | DatedHarvestTiming = timing === 'date-window'
+      ? { timing: 'date-window', window: { start: dateStart, endExclusive: dateEndExclusive } } : { startMonth, endMonth };
+    const base = { id: editingId ?? crypto.randomUUID(), siteId, cropKey, ...targetTiming,
       ...(outlet.trim() ? { outlet: outlet.trim() } : {}), ...(marketablePercent.trim() ? { marketablePercent: Number(marketablePercent) } : {}) };
     const weekly = readMassDraft(editor.weekly, sourceKey), pack = readMassDraft(editor.pack, sourceKey);
-    if (unit === 'kg' ? weekly.status !== 'ready' : pack.status !== 'ready') { setError('Choose a crop, positive quantity and 1–12 harvest months. Items need whole numbers. Enter a positive pack weight when known and a saleable share from 0–100%.'); return; }
+    if (unit === 'kg' ? weekly.status !== 'ready' : pack.status !== 'ready') { setError(timing === 'date-window' ? 'Choose a crop and positive weekly quantity. Enter a valid UTC start and a later end-before date, within 2020–2100 and at most 366 days (a software limit). Items need whole numbers; check known pack weight and saleable share.' : 'Choose a crop, positive quantity and 1–12 harvest months. Items need whole numbers. Enter a positive pack weight when known and a saleable share from 0–100%.'); return; }
     const target: HarvestTarget = unit === 'kg' ? { ...base, weeklyKg: weekly.status === 'ready' ? weekly.kilograms.weeklyKg! : NaN }
       : { ...base, weeklyQuantity: Number(editor.weeklyQuantity), unit: unit as HarvestPackUnit,
         ...(pack.status === 'ready' && pack.kilograms.kgPerUnit !== undefined ? { kgPerUnit: pack.kilograms.kgPerUnit } : {}) };
     const saved = sanitiseHarvestTargets([target])[0];
-    if (!saved) { setError('Choose a crop, positive quantity and 1–12 harvest months. Items need whole numbers. Enter a positive pack weight when known and a saleable share from 0–100%.'); return; }
+    if (!saved) { setError(timing === 'date-window' ? 'Choose a crop and positive weekly quantity. Enter a valid UTC start and a later end-before date, within 2020–2100 and at most 366 days (a software limit). Items need whole numbers; check known pack weight and saleable share.' : 'Choose a crop, positive quantity and 1–12 harvest months. Items need whole numbers. Enter a positive pack weight when known and a saleable share from 0–100%.'); return; }
     persist([...targets.filter(t => t.siteId !== siteId || t.id !== saved.id), saved], previous => clearForm(previous));
   }
   function catalogueCurrent() { return isCurrent(editor) && live.current.basis === 'catalogue' && live.current.key === key; }
@@ -281,12 +308,27 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
         <label className="text-sm">For (optional)
           <input value={outlet} onChange={(e) => setOutlet(e.target.value)} maxLength={120} placeholder="Market, restaurant or box scheme" className={field} disabled={!current || pending.current} />
         </label>
-        <label className="text-sm">First harvest month
-          <input required type="month" min="2020-01" max="2099-12" value={startMonth} onChange={(e) => setStartMonth(e.target.value)} className={field} disabled={!current || pending.current} />
-        </label>
-        <label className="text-sm">Last harvest month (included)
-          <input required type="month" min={startMonth || '2020-01'} max="2099-12" value={endMonth} onChange={(e) => setEndMonth(e.target.value)} className={field} disabled={!current || pending.current} />
-        </label>
+        {basis === 'own-records' && <label className="text-sm">Demand date entry
+          <select value={timing} onChange={event => setTiming(event.target.value)} className={`${field} min-h-11`} disabled={!current || pending.current}>
+            <option value="monthly">Monthly</option><option value="date-window">Exact UTC dates</option>
+          </select>
+        </label>}
+        {timing === 'monthly' ? <>
+          <label className="text-sm">First harvest month
+            <input required type="month" min="2020-01" max="2099-12" value={startMonth} onChange={(e) => setStartMonth(e.target.value)} className={field} disabled={!current || pending.current} />
+          </label>
+          <label className="text-sm">Last harvest month (included)
+            <input required type="month" min={startMonth || '2020-01'} max="2099-12" value={endMonth} onChange={(e) => setEndMonth(e.target.value)} className={field} disabled={!current || pending.current} />
+          </label>
+        </> : <>
+          <label className="text-sm">Requested harvest from (UTC)
+            <input required type="date" min="2020-01-01" max="2099-12-31" value={dateStart} onChange={event => setDateStart(event.target.value)} className={`${field} min-h-11`} disabled={!current || pending.current} />
+          </label>
+          <label className="text-sm">Requested harvest ends before (UTC, exclusive)
+            <input required type="date" min={dateStart || '2020-01-01'} max="2100-01-01" value={dateEndExclusive} onChange={event => setDateEndExclusive(event.target.value)} className={`${field} min-h-11`} disabled={!current || pending.current} />
+          </label>
+          <p className="sm:col-span-2 lg:col-span-4 text-xs">One requested harvest/demand interval, not delivery appointments or observed picking. The end day is excluded. Quantity per week remains a demand rate; weekly supply is not promised.</p>
+        </>}
         {unit !== 'kg' && <label className="text-sm">{`Harvest ${massUnit} per ${packLabel(unit)} (your estimate)`}
           <input inputMode="decimal" value={kgPerUnit} onChange={(e) => setKgPerUnit(e.target.value)} placeholder="Leave blank until you know" className={field} disabled={!current || pending.current} />
         </label>}
@@ -304,10 +346,11 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
         {error && <p role="alert" className="sm:col-span-2 lg:col-span-4 text-sm text-[var(--gold)]">{error}</p>}
       </form>
       {saveStatus && <p role="status">{saveStatus}</p>}
-      {basis === 'own-records' && ownTargets.map(target => <article key={target.id} className="space-y-2 rounded-xl border border-[var(--border)] p-3 text-sm">
+      {recordTargets.map(target => <article key={target.id} className="space-y-2 rounded-xl border border-[var(--border)] p-3 text-sm">
         <h3 className="font-semibold">{cropByKey(target.cropKey)?.name ?? target.cropKey} · {weeklyLabel(target, massUnit)}</h3>
-        <p>{monthName(target.startMonth)} – {monthName(target.endMonth)}. Saleable share: {target.marketablePercent === undefined ? 'unknown' : `${target.marketablePercent}%`}.</p>
-        <div className="flex gap-2"><button type="button" className={secondary} onClick={() => editTarget(target)}>Edit</button>
+        <p>{targetWindowLabel(target)}. Saleable share: {target.marketablePercent === undefined ? 'unknown' : `${target.marketablePercent}%`}.</p>
+        {basis === 'catalogue' && <p>Exact-date records require your own growing estimates. No catalogue month assessment or sowing plan is supplied for this target.</p>}
+        <div className="flex gap-2"><button type="button" className={secondary} disabled={basis === 'catalogue'} onClick={() => editTarget(target)}>Edit</button>
           <button type="button" className={secondary} onClick={() => removeTarget(target)} aria-label={`Remove ${cropByKey(target.cropKey)?.name} target`}>Remove</button></div>
       </article>)}
 
@@ -347,8 +390,9 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
 
       {result && <section aria-label="Target sowing review" className="rounded-xl border border-[var(--border)] p-3 space-y-3">
         <h3 className="font-display font-semibold">Review {result.plantings.length} proposed sowing{result.plantings.length === 1 ? '' : 's'}</h3>
-        {ownTargets.map((target) => {
-          const a = assessHarvestTarget(target, beds, [...plantings, ...result.plantings])!;
+        {monthlyTargets.map((target) => {
+          const a = assessHarvestTarget(target, beds, [...plantings, ...result.plantings]);
+          if (!a) return null;
           return <p key={target.id} className="text-sm"><strong>{cropByKey(target.cropKey)?.name} · {weeklyLabel(target, massUnit)}:</strong> {a.demandKg === null ? 'Growing space awaits your pack weight. ' : `${targetAmount(a.allocatedKg, target, massUnit)} linked cycle capacity after adding${target.marketablePercent === undefined ? ' (unadjusted benchmark)' : ' (after your saleable allowance)'}; ${targetAmount(a.shortageKg, target, massUnit)} still unallocated. `}{a.surplusKg !== null && a.surplusKg > 0.001 ? `${targetAmount(a.surplusKg, target, massUnit)} above total demand. ` : ''}{a.gapMonths.length ? `No picking window in ${a.gapMonths.map(monthName).join(', ')}.` : 'A picking window reaches each requested month; weekly quantities remain unverified.'}</p>;
         })}
         {result.plantings.length > 0 && <div className="max-h-64 overflow-auto"><table className="w-full text-left text-xs">

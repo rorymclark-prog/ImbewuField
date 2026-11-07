@@ -2,8 +2,12 @@ import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPerM2Range } from './crop-catalog';
 import { normaliseRecordUnit, validRecordQuantity, type RecordUnit } from './farm-records';
 import { sanitiseNurserySettings, type NurserySettings } from './nursery-settings';
+import { detachJsonData } from './lossless-json';
 import { sanitiseWorkspacePlanningReferences, type WorkspacePlanningReference } from './international/workspace-context';
-import { normaliseGrowerPlanningProfile, normaliseGrowerPlanningProfiles, type GrowerPlanningProfile } from './international/grower-planning';
+import {
+  addGrowerUtcDays, isGrowerUtcDate, normaliseGrowerPlanningProfile,
+  normaliseGrowerPlanningProfiles, type GrowerPlanningProfile,
+} from './international/grower-planning';
 import { hasGrowerCycleMarker, preserveGrowerCycleMarker } from './international/grower-cycle';
 import { foodGroupOf, nutritionGroupOf } from './crop-groups';
 import {
@@ -154,13 +158,30 @@ export interface CropPlanState {
   updatedAt: number;
 }
 
-interface HarvestTargetBase {
-  id: string;
-  siteId: string;
-  cropKey: string;
+export interface MonthlyHarvestTiming {
   /** Inclusive calendar months; demand uses their actual day counts. */
   startMonth: string;
   endMonth: string;
+  timing?: never;
+  window?: never;
+}
+
+export interface DatedHarvestTiming {
+  timing: 'date-window';
+  window: {
+    readonly start: string;
+    readonly endExclusive: string;
+  };
+  startMonth?: never;
+  endMonth?: never;
+}
+
+export type HarvestTargetTiming = MonthlyHarvestTiming | DatedHarvestTiming;
+
+interface HarvestTargetShared {
+  id: string;
+  siteId: string;
+  cropKey: string;
   /** A private planning label, not a permission to share a customer's details. */
   outlet?: string;
   /** Grower's own expected saleable fraction; absence applies no allowance. */
@@ -169,20 +190,34 @@ interface HarvestTargetBase {
 
 export const HARVEST_TARGET_UNITS = ['kg', 'bunches', 'bags', 'crates', 'trays', 'each'] as const satisfies readonly RecordUnit[];
 export type HarvestPackUnit = Exclude<typeof HARVEST_TARGET_UNITS[number], 'kg'>;
-export interface KgHarvestTarget extends HarvestTargetBase {
+
+interface KgHarvestDemand {
   weeklyKg: number;
   weeklyQuantity?: never;
   unit?: never;
   kgPerUnit?: never;
 }
-export interface PackHarvestTarget extends HarvestTargetBase {
+
+interface PackHarvestDemand {
   weeklyQuantity: number;
   unit: HarvestPackUnit;
   /** Harvest weight represented by one produce pack, supplied by the grower. */
   kgPerUnit?: number;
   weeklyKg?: never;
 }
-export type HarvestTarget = KgHarvestTarget | PackHarvestTarget;
+
+export type KgHarvestTarget = HarvestTargetShared & KgHarvestDemand & HarvestTargetTiming;
+export type PackHarvestTarget = HarvestTargetShared & PackHarvestDemand & HarvestTargetTiming;
+
+export type MonthlyKgHarvestTarget = HarvestTargetShared & KgHarvestDemand & MonthlyHarvestTiming;
+export type MonthlyPackHarvestTarget = HarvestTargetShared & PackHarvestDemand & MonthlyHarvestTiming;
+export type MonthlyHarvestTarget = MonthlyKgHarvestTarget | MonthlyPackHarvestTarget;
+
+export type DatedKgHarvestTarget = HarvestTargetShared & KgHarvestDemand & DatedHarvestTiming;
+export type DatedPackHarvestTarget = HarvestTargetShared & PackHarvestDemand & DatedHarvestTiming;
+export type DatedHarvestTarget = DatedKgHarvestTarget | DatedPackHarvestTarget;
+
+export type HarvestTarget = MonthlyHarvestTarget | DatedHarvestTarget;
 
 /** A bunch, head or tray has no universal weight. Keep an unknown conversion
  * unknown, and never borrow a weight from another crop, customer or farm. */
@@ -202,26 +237,143 @@ export function harvestTargetMonthIndex(stamp: unknown): number | null {
   return index !== null && index >= 2020 * 12 && index < 2100 * 12 ? index : null;
 }
 
+export interface HarvestTargetDateWindow {
+  readonly timing: 'monthly' | 'date-window';
+  readonly start: string;
+  readonly endExclusive: string;
+  readonly days: number;
+}
+
+/** Canonical harvest target demand interval resolver. Resolves legacy inclusive
+ * calendar months or explicit UTC date windows into half-open date bounds. */
+export function resolveHarvestTargetDateWindow(value: unknown): HarvestTargetDateWindow | null {
+  try {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+    const proto = Object.getPrototypeOf(value);
+    if (proto !== Object.prototype && proto !== null) return null;
+
+    const descTiming = Object.getOwnPropertyDescriptor(value, 'timing');
+    const descWindow = Object.getOwnPropertyDescriptor(value, 'window');
+    const descStartMonth = Object.getOwnPropertyDescriptor(value, 'startMonth');
+    const descEndMonth = Object.getOwnPropertyDescriptor(value, 'endMonth');
+
+    if (descTiming && (!descTiming.enumerable || !Object.hasOwn(descTiming, 'value'))) return null;
+    if (descWindow && (!descWindow.enumerable || !Object.hasOwn(descWindow, 'value'))) return null;
+    if (descStartMonth && (!descStartMonth.enumerable || !Object.hasOwn(descStartMonth, 'value'))) return null;
+    if (descEndMonth && (!descEndMonth.enumerable || !Object.hasOwn(descEndMonth, 'value'))) return null;
+
+    const hasTiming = descTiming !== undefined;
+    const hasWindow = descWindow !== undefined;
+
+    if (hasTiming || hasWindow) {
+      if (descStartMonth !== undefined || descEndMonth !== undefined) return null;
+      if (!descTiming || descTiming.value !== 'date-window') return null;
+      if (!descWindow || !descWindow.value || typeof descWindow.value !== 'object') return null;
+
+      let detachedWindow: unknown;
+      try {
+        detachedWindow = detachJsonData(descWindow.value);
+      } catch {
+        return null;
+      }
+      if (!detachedWindow || typeof detachedWindow !== 'object' || Array.isArray(detachedWindow)) return null;
+
+      const windowKeys = Reflect.ownKeys(detachedWindow);
+      if (windowKeys.length !== 2) return null;
+      if (!Object.hasOwn(detachedWindow, 'start') || !Object.hasOwn(detachedWindow, 'endExclusive')) return null;
+
+      const start = (detachedWindow as Record<string, unknown>).start;
+      const endExclusive = (detachedWindow as Record<string, unknown>).endExclusive;
+      if (typeof start !== 'string' || typeof endExclusive !== 'string') return null;
+      if (!isGrowerUtcDate(start) || !isGrowerUtcDate(endExclusive) || start >= endExclusive) return null;
+      if (start < '2020-01-01' || endExclusive > '2100-01-01') return null;
+
+      const days = (Date.parse(`${endExclusive}T00:00:00.000Z`) - Date.parse(`${start}T00:00:00.000Z`)) / 86_400_000;
+      if (!Number.isSafeInteger(days) || days <= 0 || days > 366) return null;
+      if (addGrowerUtcDays(start, days) !== endExclusive) return null;
+
+      return Object.freeze({
+        timing: 'date-window',
+        start,
+        endExclusive,
+        days,
+      });
+    }
+
+    if (!descStartMonth || !Object.hasOwn(descStartMonth, 'value') || !descStartMonth.enumerable
+      || !descEndMonth || !Object.hasOwn(descEndMonth, 'value') || !descEndMonth.enumerable) {
+      return null;
+    }
+
+    const startMonth = descStartMonth.value;
+    const endMonth = descEndMonth.value;
+    const startIdx = harvestTargetMonthIndex(startMonth);
+    const endIdx = harvestTargetMonthIndex(endMonth);
+    if (startIdx === null || endIdx === null || endIdx < startIdx || endIdx - startIdx >= 12) {
+      return null;
+    }
+
+    const startDate = `${startMonth}-01`;
+    const endYear = Math.floor((endIdx + 1) / 12);
+    const endMonthNum = (endIdx + 1) % 12 + 1;
+    const endExclusiveDate = `${endYear}-${String(endMonthNum).padStart(2, '0')}-01`;
+    const days = (Date.UTC(endYear, endMonthNum - 1, 1) - Date.UTC(Math.floor(startIdx / 12), startIdx % 12, 1)) / 86_400_000;
+    if (!Number.isSafeInteger(days) || days <= 0) return null;
+    if (addGrowerUtcDays(startDate, days) !== endExclusiveDate) return null;
+
+    return Object.freeze({
+      timing: 'monthly',
+      start: startDate,
+      endExclusive: endExclusiveDate,
+      days,
+    });
+  } catch {
+    return null;
+  }
+}
+
+/** Check whether a harvest target uses legacy monthly calendar bounds. */
+export function isMonthlyHarvestTarget(value: HarvestTarget): value is MonthlyHarvestTarget {
+  const window = resolveHarvestTargetDateWindow(value);
+  return window !== null && window.timing === 'monthly';
+}
+
 export function sanitiseHarvestTargets(value: unknown): HarvestTarget[] {
   if (!Array.isArray(value)) return [];
   const seen = new Set<string>();
   return value.flatMap((raw): HarvestTarget[] => {
     if (!raw || typeof raw !== 'object') return [];
+    const timing = resolveHarvestTargetDateWindow(raw);
+    if (!timing) return [];
+
     const t = raw as Partial<HarvestTarget>;
-    const start = harvestTargetMonthIndex(t.startMonth);
-    const end = harvestTargetMonthIndex(t.endMonth);
     if (typeof t.id !== 'string' || !t.id.trim() || seen.has(t.id)
       || typeof t.siteId !== 'string' || !t.siteId.trim()
       || typeof t.cropKey !== 'string' || !cropByKey(t.cropKey)
-      || start === null || end === null || end < start || end - start >= 12
       || (t.outlet !== undefined && (typeof t.outlet !== 'string' || t.outlet.trim().length > 120))
       || (t.marketablePercent !== undefined && (typeof t.marketablePercent !== 'number'
         || !Number.isFinite(t.marketablePercent) || t.marketablePercent < 0 || t.marketablePercent > 100))) return [];
-    const base = { id: t.id, siteId: t.siteId, cropKey: t.cropKey,
-      startMonth: t.startMonth!, endMonth: t.endMonth!,
+
+    let timingFields: MonthlyHarvestTiming | DatedHarvestTiming;
+    if (timing.timing === 'monthly') {
+      const startMonth = timing.start.slice(0, 7);
+      const lastDay = addGrowerUtcDays(timing.endExclusive, -1);
+      if (!lastDay) return [];
+      const endMonth = lastDay.slice(0, 7);
+      timingFields = { startMonth, endMonth };
+    } else {
+      timingFields = { timing: 'date-window', window: { start: timing.start, endExclusive: timing.endExclusive } };
+    }
+
+    const base = {
+      id: t.id,
+      siteId: t.siteId,
+      cropKey: t.cropKey,
+      ...timingFields,
       ...(t.outlet?.trim() ? { outlet: t.outlet.trim() } : {}),
       ...(t.marketablePercent !== undefined ? { marketablePercent: t.marketablePercent } : {}),
     };
+
     let target: HarvestTarget;
     if (t.weeklyQuantity !== undefined) {
       const unit = normaliseRecordUnit(t.unit);

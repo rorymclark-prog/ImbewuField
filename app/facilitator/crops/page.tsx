@@ -2391,7 +2391,7 @@ function FacilitatorCropsPageInner() {
   const loading = design === undefined || plan === null || !mounted;
   const growerPlanningPanel = <>
     <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} />
-    {!allowCataloguePlanning && productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
+    {productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
       key={`own-targets:${productionSiteId}:${growerScopeKey}`} basis="own-records" siteId={productionSiteId}
       targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
       saveContext={harvestSaveContext} onTargets={saveHarvestTargets}

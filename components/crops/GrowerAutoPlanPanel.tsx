@@ -1,14 +1,15 @@
 'use client';
 
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { cropByKey } from '@/lib/crop-catalog';
 import { estimateNumberLabel as quantity } from '@/lib/format-figures';
-import type { HarvestTarget } from '@/lib/crop-plan';
+import { resolveHarvestTargetDateWindow, isMonthlyHarvestTarget, type HarvestTarget } from '@/lib/crop-plan';
 import { growerPlanningScopeKey, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import type { GrowerWorkflowDemandDraft, GrowerWorkflowDraft, GrowerWorkflowReview } from '@/lib/international/grower-workflow';
 import { GROWER_DEMAND_SELECTION_MAX_ROWS, type GrowerEnteredDemandEntry, type GrowerEnteredDemandPurpose } from '@/lib/international/grower-entered-demand';
+import { GROWER_BUYER_PICKING_PERIOD_DAYS, projectGrowerBuyerPickingPeriods } from '@/lib/international/grower-harvest-demand';
 import type { MassQuantityEntry } from '@/lib/mass-units';
 import GrowerEnteredMassField from './GrowerEnteredMassField';
 import type { GrowerWorkflowAcceptanceResult, GrowerWorkflowAcceptanceState } from './useGrowerWorkflow';
@@ -266,6 +267,12 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   const saving = props.acceptance?.status === 'saving';
   const saved = props.acceptance?.status === 'confirmed';
   const usable = review?.status === 'review' && (review.proposal.status === 'ready' || review.proposal.status === 'with-gaps');
+  // Canonical replay is bounded but deliberate work: reuse one report for this
+  // review, including ordinary receipt or parent rerenders. It grants no live authority.
+  const buyerPicking = useMemo(() => usable && review ? projectGrowerBuyerPickingPeriods(review) : null, [review, usable]);
+  const pickingCycleOrdinals = useMemo(() => new Map(review?.status === 'review' && usable
+    ? review.proposal.cycles.map((cycle, index): [string, number] => [JSON.stringify([cycle.cycleId, cycle.bedId, cycle.demandId, cycle.profileId]), index + 1]) : []), [review, usable]);
+  const pickingBedLabels = useMemo(() => new Map(beds.map((bed): [string, string] => [bed.id, bed.label])), [beds]);
   const mapped = props.scope?.kind === 'mapped-site';
   const entered = draft.demands.filter((row): row is GrowerEnteredDemandEntry => row.kind === 'grower-entered');
   const enteredCrops = [...new Set(profiles.map(profile => profile.cropKey))];
@@ -290,10 +297,13 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
         {!targets.length && <p>{props.scope?.kind === 'mapped-site' ? 'No saved buyer targets for this mapped site.' : 'Open a mapped site to review its saved buyer targets.'}</p>}
         {targets.map(target => {
           const selected = draft.demands.find(row => row.kind === 'buyer-target' && row.targetId === target.id);
+          const window = resolveHarvestTargetDateWindow(target);
+          const timingLabel = isMonthlyHarvestTarget(target) ? `${target.startMonth} to ${target.endMonth}`
+            : window ? `${window.start} to before ${window.endExclusive} (UTC, exclusive)` : 'Requested dates need review';
           return <div key={target.id} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
             <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={!!selected} onChange={event => change({ ...draft,
               demands: event.target.checked ? [...draft.demands, { kind: 'buyer-target', targetId: target.id, profileId: '' }]
-                : draft.demands.filter(row => row.kind !== 'buyer-target' || row.targetId !== target.id) })} />Include {cropByKey(target.cropKey)?.name ?? target.cropKey}: {target.startMonth} to {target.endMonth}</label>
+                : draft.demands.filter(row => row.kind !== 'buyer-target' || row.targetId !== target.id) })} />Include {cropByKey(target.cropKey)?.name ?? target.cropKey}: {timingLabel}</label>
             {selected && <label className="block">Growing estimate for this target<select className={field} value={selected.profileId} onChange={event => change({ ...draft,
               demands: draft.demands.map(row => row.kind === 'buyer-target' && row.targetId === target.id ? { ...row, profileId: event.target.value } : row) })}>
               <option value="">Choose your saved estimate</option>{profiles.filter(profile => profile.cropKey === target.cropKey).map((profile, index) => <option key={profile.profileId} value={profile.profileId}>Saved estimate {index + 1}</option>)}
@@ -397,6 +407,31 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
             </article>)}
             {usable && review.proposal.demandResults.map(target => <p key={target.demandId}>{review.enteredDemandMetadata
               ? `${enteredMeta(target.demandId) ? purposeLabel(enteredMeta(target.demandId)!.purpose) : 'Buyer target'}: ` : ''}Estimated gross capacity: {quantity(target.estimatedAllocatedKg)} kg; remaining: {quantity(target.unmetKg)} kg; excess: {quantity(target.excessEstimatedKg)} kg.</p>)}
+            {usable && buyerPicking && (buyerPicking.status === 'held' || buyerPicking.buyers.length > 0) && <details aria-label="Buyer picking date review" className="min-w-0 rounded-lg border border-[var(--border)] p-3 [overflow-wrap:anywhere]">
+              <summary className="min-h-11 cursor-pointer font-semibold">Buyer picking dates by review period</summary>
+              <div className="mt-2 space-y-3">
+                <p>Proposed picking dates only, not observed harvest or promised deliveries. Harvest and delivery quantities for each period remain Unknown. Saved target facts have not been independently verified.</p>
+                <p>{GROWER_BUYER_PICKING_PERIOD_DAYS}-day review periods start at each buyer window’s exact start, with a shorter final period when needed. Dates are UTC; every end is exclusive, so its end day is outside that interval.</p>
+                <p>Some picking dates in a period do not establish picking throughout the whole period, weekly supply or locally verified growing assumptions. A missing proposed window does not establish zero harvest or a delivery shortfall.</p>
+                {buyerPicking.status === 'held' ? <p role="status">Picking dates could not be checked for this review. No gap or date-coverage conclusion is available. Check the current inputs and review again.</p>
+                  : buyerPicking.buyers.map((buyer, buyerIndex) => <section key={buyer.targetId} aria-label={`Buyer ${buyerIndex + 1} picking periods`} className="min-w-0 space-y-2 rounded-lg border border-[var(--border)] p-3">
+                    <h4 className="font-semibold">Buyer {buyerIndex + 1} · {cropByKey(targets.find(target => target.id === buyer.targetId)?.cropKey ?? '')?.name ?? 'Saved buyer target'}</h4>
+                    <p>Buyer window: {buyer.window.start} to before {buyer.window.endExclusive} (UTC, exclusive).</p>
+                    {buyer.zeroDemand ? <p>Known zero demand for this buyer. No picking periods are reported; this is not a supply or suitability finding.</p>
+                      : <ol className="space-y-3">{buyer.periods.map((period, periodIndex) => <li key={period.start} className="min-w-0 space-y-2 rounded-lg border border-[var(--border)] p-3">
+                        <h5 className="font-semibold">Review period {periodIndex + 1}: {period.start} to before {period.endExclusive} (UTC, exclusive)</h5>
+                        <p>{period.status === 'not-fully-within-plan' ? 'Not fully within this plan. Outside-plan dates are unassessed; this is not a supply failure.'
+                          : period.status === 'picking-window-present' ? 'Some proposed picking dates are present.'
+                          : 'No proposed picking window overlaps this period.'}</p>
+                        <p>Harvest/delivery quantity for this period: Unknown.</p>
+                        {period.overlaps.length > 0 && <ul aria-label={`Proposed picking overlaps for buyer ${buyerIndex + 1}, period ${periodIndex + 1}`} className="space-y-1">{period.overlaps.map((overlap, overlapIndex) => {
+                          const cycleOrdinal = pickingCycleOrdinals.get(JSON.stringify([overlap.cycleId, overlap.bedId, buyer.targetId, buyer.profileId]));
+                          return <li key={overlapIndex}>{cycleOrdinal !== undefined ? `Proposed cycle ${cycleOrdinal}` : 'Proposed cycle'} · {pickingBedLabels.get(overlap.bedId) ?? 'Saved growing space'}: {overlap.start} to before {overlap.endExclusive} (UTC, exclusive).</li>;
+                        })}</ul>}
+                      </li>)}</ol>}
+                  </section>)}
+              </div>
+            </details>}
           </>}
         {review.blockedBeds.length > 0 && <ul>{review.blockedBeds.map(bed => <li key={bed.bedId}>{beds.find(item => item.id === bed.bedId)?.label ?? 'Growing space'} held: {bed.reasons.map(issueText).join('; ')}</li>)}</ul>}
         {review.status === 'review' && !saved && props.acceptance?.status !== 'superseded' && <p>These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.</p>}

@@ -106,7 +106,7 @@ function mount(data: Data, initiallyChecked = true) {
     onCheckCurrent: async view => handlers.check ? handlers.check(view) : view === props.review && JSON.stringify(view.rows) === JSON.stringify(book.plantings),
     onSaveReferences: async (view, changes, isCurrent) => {
       saves.push({ view, changes, isCurrent }); if (handlers.save) return handlers.save(view, changes, isCurrent);
-      if (!isCurrent()) return { status: 'superseded' };
+      if (!isCurrent()) return { status: 'held', reasons: ['context-changed'] };
       const prepared = prepareGrowerNurseryBatchReferenceChanges({ book, originalRows: view.rows, originalContext: view.cycleContext, currentContext: data.context, changes });
       if (prepared.status === 'held') return { status: 'held', reasons: prepared.reasons };
       if (prepared.status === 'unchanged') return { status: 'unchanged' };
@@ -308,4 +308,60 @@ test('supported non-ASCII grower reference text remains eligible for the actual 
   assert.match(ui.text(), /Transplant preparation PDF downloaded/);
   assert.doesNotMatch(ui.text(), /PDF font cannot print/);
   assert.equal(ui.field(variety).props.value, 'Grower α');
+});
+
+// REVIEW-A proposal controls: status is simulated here as the real parent's POST-WRITE
+// contract. These UI tests do not establish persistence; provider R-A1/R-A2 supply that
+// separate actual-parent/hook/storage-boundary evidence. No production writer is stubbed green.
+test('post-write superseded in the same displayed view is honest and blocks its source, not only resource review', async () => {
+  const ui = mount(await fixture()); ui.handlers.save = async () => ({ status: 'superseded' });
+  ui.edit(seedLot, 'Post-write retained input'); await ui.press('Save all touched references');
+  assert.match(ui.text(), /The write completed, but current saved batches could not be confirmed/);
+  assert.doesNotMatch(ui.text(), /Unsaved reference changes:/);
+  assert.equal(ui.button('Save all touched references').props.disabled, true);
+  assert.equal(ui.field(seedLot).props.disabled, true);
+  assert.equal(ui.saves.length, 1);
+});
+test('a returned post-write superseded latches the view against retained edit and submit callbacks', async () => {
+  const ui = mount(await fixture()); ui.handlers.save = async () => ({ status: 'superseded' });
+  ui.edit(seedLot, 'Original retained input');
+  const submit = ui.button('Save all touched references').props.onClick, edit = ui.field(seedLot).props.onChange;
+  await ui.press('Save all touched references');
+  act(() => { submit(); edit({ target: { value: 'Do not replace old write evidence' } }); submit(); }); await ui.flush();
+  assert.equal(ui.saves.length, 1, 'handler gate rejects retry even when disabled DOM is bypassed');
+  assert.equal(ui.field(seedLot).props.value, 'Original retained input');
+  assert.match(ui.text(), /The write completed/);
+});
+test('post-write truth follows the retained editor when the hook withdraws its checked source', async () => {
+  const ui = mount(await fixture()); ui.handlers.save = async () => ({ status: 'superseded' });
+  ui.edit(seedLot, 'Written but not confirmed'); await ui.press('Save all touched references');
+  ui.update({ review: null, contextRevision: ui.props.contextRevision + 1 }); await ui.flush();
+  assert.match(ui.text(), /Earlier checked-batch entries · write completed, current saved batches not confirmed/);
+  assert.match(ui.text(), /Written but not confirmed/); assert.doesNotMatch(ui.text(), /unsaved and held separately|have not been applied to current saved batches/);
+  assert.equal(ui.saves.length, 1);
+});
+test('a held explicit recheck of the same source does not release its post-write retry latch', async () => {
+  const ui = mount(await fixture()); ui.handlers.save = async () => ({ status: 'superseded' });
+  ui.edit(seedLot, 'Retain under hold'); await ui.press('Save all touched references');
+  ui.handlers.refresh = async () => ({ status: 'held', reason: 'saved-plan-changed' });
+  await ui.press('Check saved nursery batches'); await ui.press('Save all touched references');
+  assert.equal(ui.saves.length, 1); assert.equal(ui.button('Save all touched references').props.disabled, true);
+  assert.equal(ui.field(seedLot).props.value, 'Retain under hold');
+});
+test('a fresh authoritative checked view permits explicit new edits and a confirmed save, rather than blocking forever', async () => {
+  const ui = mount(await fixture()); ui.handlers.save = async () => ({ status: 'superseded' });
+  ui.edit(seedLot, 'Old unconfirmed input'); const oldView = ui.props.review;
+  await ui.press('Save all touched references'); ui.handlers.save = undefined;
+  await ui.press('Check saved nursery batches'); assert.notEqual(ui.props.review, oldView);
+  ui.edit(seedLot, 'Explicit entry against fresh checked view');
+  assert.equal(ui.field(seedLot).props.disabled, false); assert.equal(ui.button('Save all touched references').props.disabled, false);
+  await ui.press('Save all touched references'); await ui.flush();
+  assert.equal(ui.saves.length, 2); assert.match(ui.text(), /References saved and current saved batches checked/);
+});
+test('a legitimate pre-write held result never claims a completed write or installs the post-write latch', async () => {
+  const ui = mount(await fixture()); ui.handlers.save = async () => ({ status: 'held', reasons: ['saved-plan-changed'] });
+  ui.edit(seedLot, 'Pre-write entry'); await ui.press('Save all touched references');
+  assert.doesNotMatch(ui.text(), /The write completed/); assert.equal(ui.button('Save all touched references').props.disabled, false);
+  ui.edit(seedLot, 'Corrected explicit entry'); assert.equal(ui.field(seedLot).props.value, 'Corrected explicit entry');
+  assert.equal(ui.field(seedLot).props.disabled, false);
 });

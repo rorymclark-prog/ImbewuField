@@ -37,6 +37,7 @@ type RefreshAfterWrite = { view: GrowerSavedNurseryReview; revision: number; ack
 type ObservationForm = { view: GrowerSavedNurseryReview; plantingId: string; revision: number; sample: boolean | undefined; editor: Editor };
 const field = 'mt-1 min-h-11 w-full min-w-0 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-sm';
 const button = 'min-h-11 max-w-full whitespace-normal rounded-lg border border-[var(--border)] px-3 py-2 text-sm disabled:opacity-50';
+const supersededMessage = 'The write completed, but current saved batches could not be confirmed. Your entries are retained here; reopen saved records before continuing and do not repeat this save from these entries.';
 const textFields = (value: GrowerNurseryReferenceFields): TextFields => ({ variety: value.variety ?? '', seedLotReference: value.seedLotReference ?? '', raisingBatchReference: value.raisingBatchReference ?? '' });
 
 /** Per-planned-batch labels use the parent's real saved-book authority. They
@@ -59,6 +60,8 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
   const id = useId(), mounted = useRef(true), generation = useRef(0), pending = useRef(false);
   const refreshAfterWrite = useRef<RefreshAfterWrite | null>(null);
   const savingAttempt = useRef<object | null>(null);
+  // The real parent reports superseded only after its storage write completed.
+  const supersededEditor = useRef<Editor | null>(null);
   const seenContext = useRef({ view: props.review, revision: props.contextRevision, sample: props.sample });
   const live = useRef(props); live.current = props;
   const editorRef = useRef(editor); editorRef.current = editor;
@@ -86,7 +89,8 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
     generation.current++; pending.current = false;
     if (editorRef.current.touched.size) {
       setPhase('idle'); setCheckedWrite(null);
-      setMessage('The checked source changed. Earlier entries are retained separately and have not been applied to current saved batches.'); return;
+      setMessage(supersededEditor.current === editorRef.current ? supersededMessage
+        : 'The checked source changed. Earlier entries are retained separately and have not been applied to current saved batches.'); return;
     }
     const next = { view: props.review, revision: props.contextRevision, sample: props.sample, touched: new Map<string, TextFields>() };
     editorRef.current = next; setEditor(next); setPhase('idle'); setMessage(''); setCheckedWrite(null);
@@ -138,7 +142,7 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
   }, [checkedWrite, props.review, props.onCheckCurrent]);
 
   function edit(plantingId: string, key: keyof TextFields, text: string) {
-    if (!editorCurrent() || busy || pending.current || !props.review) return;
+    if (!editorCurrent() || busy || pending.current || !props.review || supersededEditor.current?.view === props.review) return;
     const row = props.review.references.find(value => value.plantingId === plantingId);
     if (row?.reference.status !== 'ready') return;
     generation.current++; setMessage(''); setCheckedWrite(null);
@@ -204,7 +208,7 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
     finally { if (mounted.current && generation.current === turn) { pending.current = false; setPhase('idle'); } }
   }
   async function save() {
-    if (!editorCurrent() || !props.review || !dirty || busy || pending.current) return;
+    if (!editorCurrent() || !props.review || !dirty || busy || pending.current || supersededEditor.current?.view === props.review) return;
     const view = props.review, originalEditor = editor, revision = props.contextRevision, turn = ++generation.current;
     const attempt = {}; savingAttempt.current = attempt;
     pending.current = true; setPhase('saving'); setMessage('');
@@ -220,6 +224,10 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
       if (result.status === 'confirmed') {
         refreshAfterWrite.current = { view, revision, acknowledgement: result.acknowledgement, turn, started: false, refresh: props.onRefresh };
         setPhase('waiting-commit'); setMessage('Checking the confirmed write against current saved batches…'); return;
+      }
+      if (result.status === 'superseded') {
+        supersededEditor.current = originalEditor; pending.current = false; setPhase('idle'); setBlockedBudgetView(live.current.review);
+        setMessage(supersededMessage); return;
       }
       if (!displayedIsCurrent()) { pending.current = false; setPhase('idle'); setMessage('The checked source changed. Earlier entries have not been applied to current saved batches.'); return; }
       if (result.status === 'unchanged') {
@@ -248,7 +256,7 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
     </button>
     {!props.review && <p>Check the current saved plan to load eligible planned nursery batches.</p>}
     {withdrawnDraft && <details className="space-y-2 rounded-lg border border-[var(--border)] p-3">
-      <summary className="min-h-11 cursor-pointer">Earlier checked-batch entries · unsaved and held separately</summary>
+      <summary className="min-h-11 cursor-pointer">{supersededEditor.current === editor ? 'Earlier checked-batch entries · write completed, current saved batches not confirmed' : 'Earlier checked-batch entries · unsaved and held separately'}</summary>
       {[...editor.touched].map(([plantingId, fields], index) => <div key={plantingId} className="space-y-1">
         <p>Earlier batch {index + 1}</p>
         <p>Variety / cultivar: {fields.variety || 'Not entered'}</p><p>Seed-lot reference: {fields.seedLotReference || 'Not entered'}</p><p>Raising-batch reference: {fields.raisingBatchReference || 'Not entered'}</p>
@@ -266,7 +274,7 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
           {fields ? <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-3">{([
             ['variety', 'Your variety / cultivar (optional)'], ['seedLotReference', 'Your seed-lot reference (optional)'], ['raisingBatchReference', 'Your raising-batch reference (optional)'],
           ] as const).map(([key, label]) => <label key={key} htmlFor={`${id}-${index}-${key}`}>{label}
-            <input id={`${id}-${index}-${key}`} aria-label={`${label} — saved batch ${index + 1}`} className={field} value={fields[key]} disabled={busy}
+            <input id={`${id}-${index}-${key}`} aria-label={`${label} — saved batch ${index + 1}`} className={field} value={fields[key]} disabled={busy || supersededEditor.current?.view === props.review}
               onChange={event => edit(row.plantingId, key, event.target.value)} />
           </label>)}</div> : <p role="status">Saved reference metadata needs review. Retained evidence has not been replaced with blank fields.</p>}
           {props.onRecordSowing && fields && !dirty && !busy && editorMatchesSource && <>
@@ -289,8 +297,8 @@ export default function SavedGrowerNurseryReviewPanel(props: SavedGrowerNurseryR
           </>}
         </article>;
       })}
-      <button type="button" className={button} disabled={!dirty || busy} onClick={() => void save()}>{phase === 'saving' ? 'Saving touched batch references…' : 'Save all touched references'}</button>
-      {dirty && <p>Unsaved reference changes: save or explicitly check saved batches again before reviewing resources or exporting.</p>}
+      <button type="button" className={button} disabled={!dirty || busy || supersededEditor.current?.view === props.review} onClick={() => void save()}>{phase === 'saving' ? 'Saving touched batch references…' : 'Save all touched references'}</button>
+      {dirty && supersededEditor.current?.view !== props.review && <p>Unsaved reference changes: save or explicitly check saved batches again before reviewing resources or exporting.</p>}
     </>}
     <p role="status" aria-live="polite">{message}</p>
     {canReviewBudget && <GrowerNurseryReviewPanel savedReview={props.review!} source={props.review!.source} settings={props.settings}

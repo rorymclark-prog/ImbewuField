@@ -1,7 +1,7 @@
 export const NURSERY_FIELD_PLANTING_REVIEW_SOURCE = Object.freeze({
-  sourceSha256: 'cdf67235c8d74573c0cd107fe0a5411a2750959010f7d2c2ac7a0d673008cb3c',
-  sourceCommit: 'e70f2ddeda013766b7b67e58e09090718b5494ee',
-  capturedOn: '2026-11-05',
+  sourceSha256: 'cf2d91901f84afe1d31b5befe40077f85792bb97ac26fee419a2d5f912906394',
+  sourceCommit: '2c95aad704e4afc6bd93640f7281b8e447f711d4',
+  capturedOn: '2026-11-07',
   files: Object.freeze([
     Object.freeze({
       path: 'components/crops/NurseryFieldPlantingObservationForm.tsx',
@@ -13,7 +13,7 @@ export const NURSERY_FIELD_PLANTING_REVIEW_SOURCE = Object.freeze({
     }),
     Object.freeze({
       path: 'components/crops/SavedGrowerNurseryReviewPanel.tsx',
-      sha256: '0779b55c4a8d13be5ace0de0855858a7844f22901fc26ba618b30de496a0af25',
+      sha256: '8718c9bdf2846478832f6a6bd9fa34f4e0dd2a51ca6cf80e1487f7d3c1399a9a',
     }),
   ]),
   messageFiles: Object.freeze({
