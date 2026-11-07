@@ -865,3 +865,52 @@ test('g54: no English key is drafted twice with different wording across the sha
   for (const line of g54.split('\n')) { const m = /^\s*("(?:[^"\\]|\\.)*"):\s*"/.exec(line); if (m && seen.has(JSON.parse(m[1]))) clashes.push(`${JSON.parse(m[1])} (also in ${seen.get(JSON.parse(m[1]))})`); }
   assert.deepEqual(clashes, [], 'g54 must not shadow an existing draft');
 });
+
+// ── g55: the Assistant connections page, its registration-preview figure and the Settings link (6 Nov 2026 merge of main) ──
+test('g55: the Assistant connections page and registration preview read isiXhosa for isiXhosa and the exact same English for every other language', async () => {
+  const shard = (await import('@/lib/locales/xh-inline/g55-main-nov')).default;
+  const english = Object.keys(shard);
+  assert.ok(english.length >= 35);
+  registerXhInline(XH_INLINE_SOURCE);
+  try {
+    for (const key of english) {
+      const draft = shard[key];
+      assert.notEqual(draft, key, key);
+      assert.equal(placeholdersOf(draft), placeholdersOf(key), key);
+      assert.equal(inlineText('xh', key), draft);
+      for (const lang of ['en', 'zu', 'st', 'ts', 've']) assert.equal(inlineText(lang, key), key, `${lang}: ${key}`);
+    }
+    assert.equal(inlineTemplate('xh', 'Connect {name}', null, { name: 'Claude' }), 'Qhagamshela Claude');
+    assert.equal(inlineTemplate('en', 'Connect {name}', null, { name: 'Claude' }), 'Connect Claude');
+    assert.equal(inlineTemplate('xh', '{n} selected sites · expires {date}', null, { n: 2, date: '2026/11/07' }), 'Iindawo ezikhethiweyo: 2 · iphelelwa ngomhla we-2026/11/07');
+    assert.equal(inlineTemplate('zu', 'Disconnect {name}', null, { name: 'ChatGPT' }), 'Disconnect ChatGPT');
+    // Figures and product names survive.
+    assert.match(shard['This does not grant access to your Gmail, Drive or computer. New sites need a new connection decision. Connections expire after 90 days; access tokens last one hour.'], /Gmail.*Drive.*90/);
+    assert.match(shard['Use the ImbewuField private plugin, or add the following Streamable HTTP endpoint in a host that supports OAuth and remote MCP:'], /ImbewuField.*Streamable HTTP.*OAuth.*MCP/);
+    // The tab title and the Settings link reuse the existing "Assistant connections" draft.
+    assert.equal(inlineText('xh', 'Assistant connections'), 'Unxibelelwano lomncedisi');
+  } finally { registerXhInline({}); }
+});
+
+test('g55: the page and figure route every visible English through the lookup; the stub-compiled update components stay untouched', () => {
+  const page = readFileSync(join(ROOT, 'app/connect/imbewu/page.tsx'), 'utf8');
+  const figure = readFileSync(join(ROOT, 'components/PhotoRegistrationPreview.tsx'), 'utf8');
+  for (const src of [page, figure]) assert.match(src, /from '@\/lib\/xh-inline'/);
+  assert.match(page, /\{t\('Assistant connections'\)\}/);
+  assert.match(page, /inlineTemplate\(lang, 'Connect \{name\}'/);
+  assert.match(readFileSync(join(ROOT, 'components/ThemePanel.tsx'), 'utf8'), /inlineText\(lang, 'Assistant connections'\)/);
+  // A module-stub harness compiles these with a fixed scope, so they must not gain the isiXhosa lookup.
+  for (const file of ['components/UpdateGuide.tsx', 'components/FeatureUpdatePreview.tsx', 'components/PWAUpdateNotifier.tsx']) {
+    assert.doesNotMatch(readFileSync(join(ROOT, file), 'utf8'), /xh-inline/, file);
+  }
+});
+
+test('g55: every current release note and tour stop has an isiXhosa update-copy draft that keeps its figures', async () => {
+  const { RELEASE_NOTES } = await import('@/lib/release-notes');
+  const { default: xh } = await import('@/lib/update-copy-locales/xh');
+  const { default: zu } = await import('@/lib/update-copy-locales/zu');
+  const { validUpdateDescription } = await import('@/lib/update-copy');
+  const sources = RELEASE_NOTES.flatMap((n) => [...n.changes, ...(n.tour ?? []).flatMap((s) => [s.title, s.where, s.detail])]);
+  const missing = sources.filter((s) => s in zu && !validUpdateDescription(s, xh[s]));
+  assert.deepEqual(missing, [], 'every line the other four update-copy languages draft needs an isiXhosa draft');
+});
