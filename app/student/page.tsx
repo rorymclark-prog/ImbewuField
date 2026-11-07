@@ -23,6 +23,7 @@ import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
 import DesignDraftCopy from '@/components/studies/DesignDraftCopy';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
+import LearningRegionContext from '@/components/studies/LearningRegionNotice';
 import AppHeader from '@/components/layout/AppHeader';
 // perf-04: the deck player (slides, animation and narration wiring) only renders once a lesson's
 // deck is actually opened — load its chunk then, not with the rest of Studies.
@@ -823,6 +824,7 @@ export default function StudentPage() {
             the header, never inside a card or button; the course-specific line below it says which
             lessons carry isiZulu drafts. */}
         <LanguageDraftNote lang={lang} scope="student" />
+        <LearningRegionContext scope="core-farming" />
         {lang === 'zu' && (
           <p className="font-sans" role="note" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
             {t('studentZuluCourseLanguageNote')}

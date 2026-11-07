@@ -399,7 +399,7 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
               ? `${enteredMeta(target.demandId) ? purposeLabel(enteredMeta(target.demandId)!.purpose) : 'Buyer target'}: ` : ''}Estimated gross capacity: {quantity(target.estimatedAllocatedKg)} kg; remaining: {quantity(target.unmetKg)} kg; excess: {quantity(target.excessEstimatedKg)} kg.</p>)}
           </>}
         {review.blockedBeds.length > 0 && <ul>{review.blockedBeds.map(bed => <li key={bed.bedId}>{beds.find(item => item.id === bed.bedId)?.label ?? 'Growing space'} held: {bed.reasons.map(issueText).join('; ')}</li>)}</ul>}
-        {!saved && props.acceptance?.status !== 'superseded' && <p>These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.</p>}
+        {review.status === 'review' && !saved && props.acceptance?.status !== 'superseded' && <p>These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.</p>}
         {props.onAccept && review.status === 'review' && review.proposal.status === 'ready' && review.proposal.cycles.length > 0 && <button
           type="button" className={button} disabled={saving || saved || props.acceptance?.status === 'superseded' || props.checking || busy} onClick={() => void save()}>
           {saving ? 'Checking and saving planned cycles…' : `Save all ${review.proposal.cycles.length} planned crop cycles`}

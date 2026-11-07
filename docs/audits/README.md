@@ -1,5 +1,11 @@
 # ImbewuField audit archive
 
+Latest combined-source continuation — [Current main, map captions, learning context and receipt review — 7 November 2026](2026-11-07/international-release-next.md). Separate local source prepared; new combined verification and genuine device/account gates remain open.
+
+Latest learning-context implementation — [Course origin and explicit saved-site choice — 7 November 2026](2026-11-07/learning-region-context.md). Source/focused review complete; current combined type/full and actual device/account gates remain open.
+
+Latest crop-plan receipt continuation — [Completed write followed by a held review — 7 November 2026](2026-11-07/grower-held-review-receipt.md). Before/after controls and bounded source review are separate from combined release validation.
+
 Latest bounded follow-up — [Editorial contour caption clipping — 7 November 2026](2026-11-07/editorial-contour-captions-codex.md). Native source and corrected output inspected; isolated correction, not yet deployed.
 
 Latest companion style — [Editorial Atlas — 7 November 2026](2026-11-07/editorial-map-style-codex.md). Second selectable appearance and circular Sector page; native outputs inspected, fresh provider artwork remains unverified.

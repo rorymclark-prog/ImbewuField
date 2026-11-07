@@ -286,7 +286,9 @@ export function useGrowerWorkflow(input: Inputs) {
       detachedDraft = detachJsonData(draft) as GrowerWorkflowDraft;
     } catch { return reviewIsCurrent() ? hold('unreadable-workflow-input') : hold('context-changed'); }
     if (!reviewIsCurrent()) return hold('context-changed');
-    setAcceptance({ status: 'idle' });
+    // A held review cannot replace the warning from an already completed write.
+    // Keep it until both the saved book and source have passed the fresh checks.
+    setAcceptance(previous => previous.status === 'superseded' ? previous : { status: 'idle' });
     const before = live.current.readCurrentBook(); if (before.status === 'held') return hold(before.reason);
     const checked = await readSource(), fresh = checked?.source;
     if (epoch.current !== turn || selectionRef.current !== reviewedSelection || !actorIsCurrent() || !live.current.actorIsCurrent()) return hold('context-changed');
@@ -296,6 +298,7 @@ export function useGrowerWorkflow(input: Inputs) {
     const after = live.current.readCurrentBook();
     if (after.status === 'held') return hold(after.reason);
     if (after.token !== before.token) return hold('saved-plan-changed');
+    setAcceptance({ status: 'idle' });
     const recordedAt = new Date().toISOString();
     const review = assembleGrowerWorkflowReview({ scope: live.current.scope, source: fresh, book: after.book, draft: detachedDraft, recordedAt });
     if (review.status === 'review') bindings.current.set(review, { draft: detachedDraft, source: fresh, recordedAt, actorIsCurrent, selectionKey: reviewedSelection });

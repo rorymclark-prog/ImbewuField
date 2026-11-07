@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 November 2026', sha: 'e668a63bdca7', changes: [
+    'Read course sources beside a saved site you choose for learning.',
+  ], tour: [{ title: 'Review course origin and site context', where: 'Study → Farming, Design or Farm Finance', href: '/student',
+    detail: 'Read the course source notice and optionally choose a saved site. Country and agricultural region remain the grower’s description; local suitability has not been assessed here. This temporary choice does not save country details or select an app language.' }] },
   { when: '7 November 2026', sha: '842192455', changes: [
     'Sector contour labels stay whole near the boundary.',
   ] },

@@ -5,6 +5,7 @@ import PathwayOfflineDownload from '@/components/studies/PathwayOfflineDownload'
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import DesignDraftCopy, { DesignDraftNotice } from '@/components/studies/DesignDraftCopy';
 import CourseSyllabus from '@/components/studies/CourseSyllabus';
+import LearningRegionContext from '@/components/studies/LearningRegionNotice';
 import FullToolsOnly from '@/components/studies/FullToolsOnly';
 import styles from '@/components/studies/FinanceCourse.module.css';
 import ArrowLabel from '@/components/studies/ArrowLabel';
@@ -21,6 +22,7 @@ export default function DesignCoursePage() {
       <EnglishOnly><aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong>English teaching preview · {DESIGN_LESSONS.length} lesson drafts.</strong> Reading these pages does not award course credit or certify a design.</p><details><summary>More<ChevronDown className={styles.chevron} size={20} aria-hidden="true" /></summary><p>Read and practise with a facilitator or learning partner. A supplied fictional worked demonstration and scale exercise are available; a real field plan still needs its own checked measurements, evidence and review. Reviewed lesson translations and narration are not yet available. Some page labels may appear as unreviewed isiZulu drafts. Save the reading pathway for offline use here before leaving signal.</p></details></aside></EnglishOnly>
       <DesignDraftNotice />
       <section className={styles.section}><h2><DesignDraftCopy en="Build one design folder as you learn" zu="Yakha ifolda eyodwa yokuklama njengoba ufunda" /></h2><p>Keep your brief, observations, existing map, alternatives, chosen plan, work and care arrangements, and revisions together. Use paper, spoken explanations or the app. Each stage adds a reasoned decision, not just another feature on a drawing.</p><p>Use the existing technical modules when checking a water, soil, planting or animal proposal. This pathway teaches how to connect those decisions. A field plan still needs suitable measurements, local evidence and any relevant advice or permissions.</p><div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/design/folder"><DesignDraftCopy en="Open your design learning folder →" zu="Vula ifolda yakho yokufunda ngokuklama →" /></OfflinePageLink></div></section>
+      <LearningRegionContext scope="design-preview" />
       <CourseSyllabus
         units={DESIGN_COURSE.units.map(unit => ({ id: unit.id, number: unit.number, title: unit.title, blurb: unit.output, lessons: unit.lessons }))}
         basePath="/student/design"
