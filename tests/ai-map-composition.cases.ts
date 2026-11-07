@@ -20,11 +20,23 @@ import { authoritativeHouseFootprints, sameFootprint } from '../lib/house-footpr
 import polygonClipping from 'polygon-clipping';
 import { boundarySegmentsWithBreaks } from '../lib/boundary-geometry.ts';
 import { polishedRenderPoints } from '../lib/render-geometry.ts';
+import { editorialContourCaptionAnchor, EDITORIAL_SECTOR_PAGE } from '../lib/sector-editorial.ts';
 
 // Execute the actual production helpers. A source-pattern test cannot see a photo strip or
 // prove that a completed job's old mask is replaced. No private farm records or native dependency.
 const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
 const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+test('a completed Sector job uses its frozen style even after the picker changes',async()=>{
+  const calls:any[]=[];
+  const finish=helper('finishSectorSheet',{state:{},frame:{},refLayers:{},site:null,placeName:'Current',DEFAULT_PRODUCER_STYLE,
+    composeSectorSheet:(...args:any[])=>{calls.push(args);return Promise.resolve('page');}});
+  const snapshot={state:{siteId:'frozen'},frame:{centerLat:51.5},refLayers:{boundary:[]},site:null,placeName:'Frozen'};
+  await finish('art',snapshot,null,'editorial_atlas');
+  assert.equal(calls[0][7],'editorial_atlas');
+  assert.equal(calls[0][1],snapshot.state);
+  assert.match(source,/finishSectorRef\.current\(sourceImage, frozenScene, historicalSource, styleKey\)/,'comparison and output must use the same style');
+  assert.match(source,/finishSectorRef\.current\(factualModelImage, frozenScene, historicalSource, styleKey\)/);
+});
 function helper(name: string, scope: Record<string, unknown>): any {
   scope = { exactSheetElementRegister, EXACT_CONTEXT_ALPHA, ...scope };
   let code = '';
@@ -485,6 +497,29 @@ function artProbe() {
   const canvas={width:0,height:0,getContext:()=>ctx};
   return {ctx,canvas,calls};
 }
+
+test('editorial composition labels a DEM height once and cannot emit a clipped edge fragment',async()=>{
+  const probe=artProbe(),p={state:{items:[],lines:[],zones:[]},frame:{imgW:100,imgH:100,mPerPx:1,satDataUrl:'photo',centerLat:-28,centerLng:31},
+    refLayers:{boundary:[[0,0],[1,0],[1,1],[0,1]],house:[],driveway:[]}};
+  probe.ctx.measureText=()=>({width:40});
+  const labels:string[]=[];
+  const compose=helper('composeSectorSheet',{
+    SCALE:1,document:{createElement:()=>probe.canvas},boundaryPresentationContext:async()=>p,
+    fetchSectorPresentationContours:async()=>({status:'ok',intervalM:5,lines:[
+      {major:true,elevM:325,points:[[.4,.5],[.6,.5]]},
+      {major:true,elevM:325,points:[[.01,.9],[.03,.91]]},
+      {major:true,elevM:330,points:[[.01,.2],[.03,.21]]},
+    ]}),loadImage:async()=>({}),releaseImageSource:()=>{},releaseCanvas:()=>{},
+    EDITORIAL_SECTOR_PAGE,editorialContourCaptionAnchor,SHEET_BODY_FONT:'Arial',
+    paintEditorialSectorPage:(_ctx:any,input:any)=>input.paintMapReference(probe.ctx,{x:0,y:0,w:100,h:100}),
+    drawOverviewContourCaption:(_ctx:any,label:string)=>labels.push(label),drawBlueprintBoundary:()=>{},
+    deriveSectorModel:()=>({}),basemapAttribution:()=>'',drainCanvasToDataUrl:()=> 'page',
+  });
+  const before=JSON.stringify(p);
+  assert.equal(await compose('painting',p.state,p.frame,p.refLayers,null,'Site',null,'editorial_atlas'),'page');
+  assert.deepEqual(labels,['325 m'],'reuse a complete existing level caption; omit a new level when no complete caption fits');
+  assert.equal(JSON.stringify(p),before);
+});
 
 test('illustrated Sector retains artwork colour, registration and the separate exact factual base', async () => {
   const probe=artProbe(),p={state:{items:[],lines:[],zones:[]},frame:{imgW:100,imgH:120,mPerPx:1,satDataUrl:'photo'},

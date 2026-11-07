@@ -1,5 +1,9 @@
 # ImbewuField audit archive
 
+Latest bounded follow-up — [Editorial contour caption clipping — 7 November 2026](2026-11-07/editorial-contour-captions-codex.md). Native source and corrected output inspected; isolated correction, not yet deployed.
+
+Latest companion style — [Editorial Atlas — 7 November 2026](2026-11-07/editorial-map-style-codex.md). Second selectable appearance and circular Sector page; native outputs inspected, fresh provider artwork remains unverified.
+
 Latest release-copy verification — [Exact-source availability and non-vacuous language controls — 7 November 2026](2026-11-07/calendar-copy-coverage.md). Focused source/React checks are separate from pending current-head full and calendar device/import gates.
 
 Latest field seed follow-up — [Per-cycle CSV integration — 6 November 2026](2026-11-06/field-seed-cycle-integration-codex.md). Typecheck and 615 affected checks pass; new current-head CI and actual multi-cycle delivery remain pending.

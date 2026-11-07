@@ -12,6 +12,7 @@ import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
 export type StylePreset =
   | 'precision_atlas'
+  | 'editorial_atlas'
   | 'satellite_overlay'
   | 'field_ledger'
   | 'homestead_storybook'
@@ -491,6 +492,8 @@ const PLAN_SET_ANCHOR_PHOTO =
 // blank white is exactly the satellite-disappears failure. Named colours (not just mood words) give
 // the model something concrete to hold constant across the 5 independent calls of one batch.
 export const STYLE_LINES: Record<StylePreset, string> = {
+  editorial_atlas:
+    'STYLE — Editorial Atlas: a clean contemporary illustrated field atlas. Use precise flat orthographic drawing, delicate ink contours, restrained natural texture and clear uncluttered surfaces. Fixed palette: slate roofs, sage vegetation, buff soil, teal water, ochre summer and indigo winter accents. Fine detailed plants and roof materials, with a light neutral ground and pure white page space. Avoid lush gouache, heavy shadows, dark vignettes, parchment or decorative fencing. This is the quieter editorial companion to Reference Blueprint. Draw artwork only: the app supplies typography, labels, analytical graphics and the white key. Keep the complete supplied site, source crop and geometry; never borrow the reference site’s numbers, features or directions.' + PLAN_SET_ANCHOR,
   precision_atlas:
     'STYLE — Precision Atlas: premium flat orthographic landscape cartography with the lush hand-painted finish of a commissioned garden masterplan. Use layered transparent watercolor washes plus controlled gouache detail, fine dry-brush ground grain, disciplined ink edges and strong figure-ground clarity. Fixed palette: deep slate roofs, layered sage and olive land, cool blue-green accents, warm buff soil, charcoal linework and pure white page space. The result is richly illustrated and print-ready, never a dark satellite filter, never photorealistic, never oblique or isometric. Keep fine roof materials, vegetation textures and clear open surfaces, with no ornamental border or heavy outline. Let the app add its exact boundary, labels and white legend afterwards.' + PLAN_SET_ANCHOR,
   // PHOTO PLAN — the reference-sheet formula, and the reason it exists.
@@ -1345,7 +1348,9 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
   const body = [
     `TASK: turn this whole aerial photograph of a real South African smallholding${placeName ? ` (${placeName})` : ''} into one finished illustrated map, edge to edge, in the style below. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this artwork.`,
     edgeToEdge,
-    `APPROVED SECTOR APPEARANCE: rich, finely detailed aerial illustration with layered natural greens, distinct roof materials and readable open ground. Preserve THIS source site's land cover and every feature position; do not import another site's buildings, garden, reserve, fence, terrain or vegetation. The app adds bright gold summer suns, blue winter suns, flowing weather arrows, the fine saved boundary with small round post symbols, local contour labels and a pure white key AFTER painting. Draw none of these analytical graphics yourself, and apply no vignette or boundary-shaped dark patch: the app alone shades the surroundings of the saved proposed polygon.`,
+    stylePreset === 'editorial_atlas'
+      ? `EDITORIAL SECTOR APPEARANCE: a light, finely drawn site illustration with restrained natural materials and open legible surfaces. Keep the full rectangular source crop: do not draw a circle or crop any boundary tip. The app fits the complete proposed boundary inside a circular compass diagram on white paper, with ochre summer suns, indigo winter suns, teal and rust wind bands, clear callout cards and an editorial key. Paint none of those graphics or lettering. Preserve THIS site's land cover and feature positions; never copy the reference site's directions, season dates, terrain numbers or advice. No vignette or dark surround.`
+      : `APPROVED SECTOR APPEARANCE: rich, finely detailed aerial illustration with layered natural greens, distinct roof materials and readable open ground. Preserve THIS source site's land cover and every feature position; do not import another site's buildings, garden, reserve, fence, terrain or vegetation. The app adds bright gold summer suns, blue winter suns, flowing weather arrows, the fine saved boundary with small round post symbols, local contour labels and a pure white key AFTER painting. Draw none of these analytical graphics yourself, and apply no vignette or boundary-shaped dark patch: the app alone shades the surroundings of the saved proposed polygon.`,
     paintWhatIsThere,
     restyleOnly,
     noInvent,

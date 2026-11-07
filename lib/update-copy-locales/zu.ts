@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Exact unreviewed upstream map pairs; see the two Editorial draft packets dated 7 November 2026.
+  "Sector contour labels stay whole near the boundary.": "Amalebula emigqa yokuphakama kuSector ahlala ephelele eduze komngcele.",
+  "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.": "Khetha i-Editorial Atlas ukuze uthole isitayela se-AI esilula nomdwebo oyindilinga weSector.",
+  "Maps have finer boundaries with round posts and clearer Earthworks labels.": "Amamephu anemingcele emincane enezigxobo eziyindilinga namalebula e-Earthworks acace kakhudlwana.",
+  "Terrain maps show elevation, slope percentage and degrees from local terrain data.": "Amamephu omhlaba abonisa ukuphakama, iphesenti lomthambeka namadigri athathwe kudatha yomhlaba yendawo.",
+
   // Unreviewed current release captions; exact English stays paired. See docs/international/current-release-caption-repair-2026-11-06/adoption.json.
   "Quick sale names rand and links to invoices in another currency.": "Ukuthengisa okusheshayo kubalula irandi futhi kuxhumanisa nama-invoyisi kwenye imali.",
   "Choose the right sale entry": "Khetha ukufaka kokuthengisa okufanele",

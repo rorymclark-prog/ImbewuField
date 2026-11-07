@@ -41,6 +41,15 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 November 2026', sha: '842192455', changes: [
+    'Sector contour labels stay whole near the boundary.',
+  ] },
+  { when: '7 November 2026', sha: '4c5d1735a', changes: [
+    "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.",
+  ], tour: [{ title: 'Check each map’s settings', where: 'Menu → Site design', href: '/design',
+    detail: 'Open Glossy and choose a sheet. Adjust its style, background or labels; your choices stay selected when you switch maps and return.' },
+  { title: 'Compare with your exact plan', where: 'Site design → Saved maps', href: '/design',
+    detail: 'Open the saved exact plan beside its AI illustration. Check bed corners, buildings and plants before using the illustration.' }] },
   { when: '7 November 2026', sha: 'e6be6b59927b', changes: [
     'Estimate seed-pack costs in your nursery and field worksheets.',
     'Download checked planned work dates together in one calendar file.',

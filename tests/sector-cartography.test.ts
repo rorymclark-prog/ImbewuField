@@ -8,6 +8,65 @@ import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, S
 import { contourIntervalForFrame } from '../lib/contours.ts';
 import { makeMercatorUnprojector } from '../lib/design-canvas.ts';
 import { fetchSheetContours } from '../lib/sheet-contours.ts';
+import { fitEditorialSectorMap, editorialSolarAnchors, editorialContourCaptionAnchor, EDITORIAL_SECTOR_PAGE } from '../lib/sector-editorial.ts';
+import { buildSectorRestylePrompt, buildLockedIllustrationPrompt, STYLE_LINES } from '../lib/producer-prompt.ts';
+import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
+
+test('editorial contour captions remain whole at property and historical photo edges',()=>{
+  const property:Array<[number,number]>=[[0,0],[100,0],[100,100],[0,100]];
+  const photo:Array<[number,number]>=[[20,20],[80,20],[80,80],[20,80]];
+  const before=JSON.stringify({property,photo});
+  // The source midpoint is inside the property but its text extends over the edge.
+  assert.equal(editorialContourCaptionAnchor([[3,50]],40,18,[property]),null);
+  assert.equal(editorialContourCaptionAnchor([[23,50]],40,18,[property,photo]),null,
+    'a known level does not license painting its caption into unphotographed blank space');
+  const at=editorialContourCaptionAnchor([[22,50],[60,50],[70,50]],30,18,[property,photo]);
+  assert.ok(at,'use another point on the same contour when its whole label fits');
+  assert.ok(at.x-17>20 && at.x+17<80 && at.y-11>20 && at.y+11<80);
+  const concave:Array<[number,number]>=[[0,0],[100,0],[100,40],[10,40],[10,60],[100,60],[100,100],[0,100]];
+  assert.equal(editorialContourCaptionAnchor([[50,50]],20,40,[concave]),null,
+    'four inside corners cannot hide a property notch crossing the middle of a label');
+  assert.equal(JSON.stringify({property,photo}),before);
+});
+
+test('the circular editorial viewport preserves every proposed boundary tip without stretching the site', () => {
+  for (const [width,height] of [[1900,700],[700,1900],[1000,1000]]) {
+    for (const boundary of [[[.01,.02],[.99,.03],[.6,.7],[.2,.99]], [[-.2,.3],[1.4,.1],[1.2,1.7],[-.1,.9]]] as Array<Array<[number,number]>>) {
+      const before=JSON.stringify(boundary), fit=fitEditorialSectorMap(width,height,boundary);
+      assert.ok(Math.abs(fit.w/width-fit.h/height)<1e-10,'the map must retain its aspect ratio');
+      for(const [x,y] of boundary) assert.ok(Math.hypot(fit.x+x*fit.w-EDITORIAL_SECTOR_PAGE.cx,fit.y+y*fit.h-EDITORIAL_SECTOR_PAGE.cy)<EDITORIAL_SECTOR_PAGE.radius*.86);
+      assert.equal(JSON.stringify(boundary),before,'circle fitting cannot edit the saved fence');
+    }
+  }
+});
+
+test('the second style uses each latitude’s solar facts and does not copy the reference farm', () => {
+  const paths=[];
+  for(const [lat,lon] of [[-27.73,31.96],[-33.93,18.42],[-22.1,30],[51.5,-.12]]) {
+    const model=deriveSectorModel(null,lat,lon);
+    paths.push(editorialSolarAnchors(model.solar.summer));
+    for(const path of [model.solar.summer,model.solar.winter]) {
+      const anchors=editorialSolarAnchors(path)!;
+      assert.ok(Math.abs(Math.hypot(...anchors.rise)-1)<1e-10);
+      assert.ok(Math.abs(anchors.noon[1])<=1);
+      assert.equal(Math.sign(anchors.noon[1]),path.noonSide==='S'?1:-1);
+    }
+    if(lon===18.42 || lat>0) assert.equal(model.namedWind.length,0,'unsupported locations must not inherit the sample’s KZN winds');
+  }
+  assert.equal(new Set(paths.map(p=>JSON.stringify(p))).size,4);
+  assert.equal(editorialSolarAnchors(deriveSectorModel(null,80,0).solar.winter),null);
+  const prompt=buildSectorRestylePrompt('editorial_atlas','Other farm');
+  assert.match(prompt,/do not draw a circle or crop any boundary tip/);
+  assert.doesNotMatch(prompt,/Ubhejane|12%|86°|39°/);
+  assert.match(buildLockedIllustrationPrompt('Water','editorial_atlas'),/Editorial Atlas/);
+  assert.notEqual(STYLE_LINES.editorial_atlas,STYLE_LINES.precision_atlas);
+  assert.equal(DEFAULT_PRODUCER_STYLE,'precision_atlas','the approved first style remains the default');
+  for(const sheet of [{exact:'sector'},{filter:'water'},{filter:'zones'}] as const) {
+    const route=sheetRenderRoute(sheet,'hybrid','editorial_atlas');
+    assert.equal(route.styleUsed,'editorial_atlas');
+    assert.deepEqual(route.hybridFlags,{showcase:false,geometryLock:true});
+  }
+});
 
 const DURBAN = {
   biome: 'Indian Ocean Coastal Belt',
@@ -513,8 +572,10 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
   assert.match(restoreGates[0].thenStatement.getText(tree), /if\s*\(historicalSource\)[\s\S]*buildHistoricalCoverageMask/);
   assert.match(restoreGates[0].thenStatement.getText(tree), /stackOverlayImages\(coverage,currentMask/);
   assert.equal(sectorFinishCalls.length, 1, 'the retained map still has one Sector finisher');
-  assert.deepEqual(sectorFinishCalls[0].arguments.map(a => a.getText(tree)), ['factualModelImage', 'frozenScene', 'historicalSource'],
-    'Sector recomposes the actual restored image with its frozen geometry and its own historical source');
+  // The second presentation needs the durable job style as well as its source/geometry;
+  // reading the current picker here would restyle an older job while it is completing.
+  assert.deepEqual(sectorFinishCalls[0].arguments.map(a => a.getText(tree)), ['factualModelImage', 'frozenScene', 'historicalSource', 'styleKey'],
+    'Sector recomposes the restored image with its frozen geometry, historical source and job style');
   assert.doesNotMatch(
     completion,
     /sectorPolishOwnsPage/,

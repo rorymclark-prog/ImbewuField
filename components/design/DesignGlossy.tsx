@@ -109,6 +109,7 @@ import { SHEET_RENDER_RECIPE, savedSheetFreshness, type SavedSheetFreshness } fr
 import { newestSavedMapForSheet } from '@/lib/saved-map-preview';
 import { SHADE_CLOTH_ALPHA, STRUCTURES_LEGEND_SECTION_ORDER, isShadeClothStructure, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
+import { EDITORIAL_SECTOR_PAGE, editorialContourCaptionAnchor, paintEditorialSectorPage } from '@/lib/sector-editorial';
 import { referenceFeatureArtworkUrl, settleOptionalReferenceArtLoad, stapleTileUrl, vegSpriteUrl, VEG_SPRITES, isTankDefId } from '@/lib/reference-feature-art';
 import {
   DEFAULT_SHEET_LABEL_MODE,
@@ -570,14 +571,17 @@ const STYLE_TITLE: Record<AnalysisStyle, string> = {
 // so accuracy is guaranteed by construction. Seven researched site-plan styles.
 // swatch = the card's colour chip (Rory's mockup shows each style as a card with a colour block).
 const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; labelStyle: LabelStyle; swatch: string; recommended?: boolean }> = [
+  // Rory is building two companion looks. Keep both visible before the older optional packs;
+  // adding the editorial choice must never silently replace the accepted illustrated default.
+  { key: 'precision_atlas', label: 'Reference Blueprint', blurb: 'richly illustrated site · exact labels and key', labelStyle: 'reference', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
+  { key: 'editorial_atlas', label: 'Editorial Atlas', blurb: 'clean illustrated atlas · circular Sector diagram', labelStyle: 'reference', swatch: 'conic-gradient(from 315deg, #B5512E, #FFFFFF 20%, #207F70 35%, #FFFFFF 50%, #286783 70%, #FFFFFF 90%, #B5512E)' },
   // labelStyle is required by the type but unused here: this style always takes the showcase path,
   // which passes labels: [] because the MODEL letters the sheet itself.
-  // Photo Plan leads the list because it is the only style that keeps the farmer's real aerial
+  // Photo Plan remains available because it keeps the farmer's real aerial
   // photograph AND our exact labels, counts and legend. Every other AI style repaints the ground;
   // Satellite Overlay keeps it but hands the lettering to the model.
   { key: 'photo_plan',          label: 'Photo Plan',          blurb: 'your real aerial photo · design drawn on top · exact labels', labelStyle: 'reference', swatch: 'linear-gradient(135deg,#2B3A24 0%,#4E8B3A 50%,#B4E000 100%)', recommended: true },
   { key: 'satellite_overlay',   label: 'Satellite Overlay',   blurb: 'experimental · AI controls the labels and layout', labelStyle: 'clean', swatch: 'linear-gradient(135deg,#12140F 0%,#2F4A2A 55%,#B4E000 100%)' },
-  { key: 'precision_atlas',      label: 'Reference Blueprint', blurb: 'illustrated site · your labels and legend', labelStyle: 'reference', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
   { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink',       swatch: '#E4D8B8' },
   { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook', swatch: '#8FAE62' },
   { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint', swatch: '#69819B' },
@@ -9873,6 +9877,7 @@ async function composeSectorSheet(
   site: SectorSite | null,
   placeName?: string,
   baseline: HistoricalBaseline | null = null,
+  styleKey?: StylePreset,
 ): Promise<string> {
   const presentation = await boundaryPresentationContext(state, frame, refLayers);
   const renderState = presentation.state;
@@ -9891,6 +9896,53 @@ async function composeSectorSheet(
   const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
   const pad = Math.round(W * 0.02);
   const rowH = Math.round(W * 0.026);
+
+  if (styleKey === 'editorial_atlas') {
+    // The model still receives the original rectangle. Circle fitting is presentation-only and
+    // includes every saved boundary vertex; an AI-drawn circle cannot decide which land to omit.
+    if (baseImage || renderFrame.satDataUrl) {
+      const image = await loadImage(baseImage ?? renderFrame.satDataUrl!);
+      try { ctx.drawImage(image, 0, 0, W, H); } finally { releaseImageSource(image); }
+    } else await drawAnalysisBase(ctx, renderFrame, W, H);
+    const page = document.createElement('canvas');
+    page.width = EDITORIAL_SECTOR_PAGE.width; page.height = EDITORIAL_SECTOR_PAGE.height;
+    try {
+      const pageCtx = page.getContext('2d'); if (!pageCtx) throw new Error('Editorial Sector page unavailable');
+      paintEditorialSectorPage(pageCtx, {
+        image: canvas, width: W, height: H, boundary: renderRefLayers.boundary,
+        paintMapReference: (target, fit) => {
+          const fx=(n:number)=>fit.x+n*fit.w,fy=(n:number)=>fit.y+n*fit.h;
+          const clipRings=[renderRefLayers.boundary.map(([x,y])=>[fx(x),fy(y)] as [number,number])];
+          if(baseline)clipRings.push([[0,0],[baseline.width,0],[baseline.width,baseline.height],[0,baseline.height]]
+            .map(point=>historicalPresentationPhotoPoint(state,frame,refLayers,point as [number,number],baseline))
+            .map(([x,y])=>[fx(x),fy(y)] as [number,number]));
+          target.save();
+          if(renderRefLayers.boundary.length>=3){
+            target.beginPath();renderRefLayers.boundary.forEach(([x,y],i)=>(i?target.lineTo:target.moveTo).call(target,fx(x),fy(y)));
+            target.closePath();target.clip();
+          }
+          const labelledLevels=new Set<number>();
+          for(const line of sheetContours.lines){
+            target.beginPath();line.points.forEach(([x,y],i)=>(i?target.lineTo:target.moveTo).call(target,fx(x),fy(y)));
+            target.strokeStyle=line.major?'#765C3F':'#A28D70';target.lineWidth=line.major?1.8:.9;target.stroke();
+            if(line.major && !labelledLevels.has(line.elevM)){
+              const label=`${line.elevM} m`;
+              target.font=`700 14px ${SHEET_BODY_FONT}`;
+              const at=editorialContourCaptionAnchor(line.points.map(([x,y])=>[fx(x),fy(y)]),target.measureText(label).width+14*.24,14*1.3,clipRings);
+              if(at){drawOverviewContourCaption(target,label,at.x,at.y,14);labelledLevels.add(line.elevM);}
+            }
+          }
+          target.restore();
+          drawBlueprintBoundary(target,renderRefLayers.boundary,fx,fy,fit.w,renderState,renderFrame);
+        },
+        model: deriveSectorModel(site,frame.centerLat,frame.centerLng), placeName,
+        mPerImagePx: renderFrame.mPerPx / SCALE, aiArtwork: baseImage !== null,
+        contourNote: sheetContours.status === 'ok' ? `Contour heights in metres · ${sheetContours.intervalM} m interval · regional DEM.` : 'Contour elevations unavailable for this site.',
+        attribution: baseline ? 'Historic drone photograph: Imbewu project archive; roof-aligned, not surveyed. Unphotographed areas remain blank.' : renderFrame.satDataUrl ? basemapAttribution() : '',
+      });
+      return drainCanvasToDataUrl(page,'image/png');
+    } finally { releaseCanvas(canvas); releaseCanvas(page); }
+  }
 
   // The existing painting supplies orientation; computed analysis supplies the information.
   if (baseImage) {
@@ -14960,8 +15012,8 @@ export default function DesignGlossy({
 
   // Both Sector stages return map artwork; measured analysis and page furniture belong to the app.
   const finishSectorSheet = useCallback(
-    (modelImage: string, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, baseline: HistoricalBaseline | null = null): Promise<string> =>
-      composeSectorSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName, baseline),
+    (modelImage: string, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, baseline: HistoricalBaseline | null = null, styleKey:StylePreset=DEFAULT_PRODUCER_STYLE): Promise<string> =>
+      composeSectorSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName, baseline,styleKey),
     [state, frame, refLayers, site, placeName],
   );
 
@@ -15940,7 +15992,7 @@ export default function DesignGlossy({
                 baselineSheet = sheet.key === 'implementation'
                   ? await finishPhasingRef.current(sourceImage, frozenScene, sheet.prompt, styleKey)
                   : sheet.key === 'sector'
-                  ? await finishSectorRef.current(sourceImage, frozenScene, historicalSource)
+                  ? await finishSectorRef.current(sourceImage, frozenScene, historicalSource, styleKey)
                   : sheet.key === 'base'
                   ? await finishSiteRef.current(sourceImage, styleKey, frozenScene, historicalSource,frozenScene.labelMode)
                   : styleDef
@@ -15953,7 +16005,7 @@ export default function DesignGlossy({
               const finalSheet = sheet.key === 'implementation'
                 ? await finishPhasingRef.current(raw, frozenScene, sheet.prompt, styleKey)
                 : sheet.key === 'sector'
-                ? await finishSectorRef.current(factualModelImage, frozenScene, historicalSource)
+                ? await finishSectorRef.current(factualModelImage, frozenScene, historicalSource, styleKey)
                 : sheet.key === 'base'
                 ? await finishSiteRef.current(factualModelImage, styleKey, frozenScene, historicalSource,frozenScene.labelMode)
                 : styleDef
