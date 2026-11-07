@@ -127,15 +127,29 @@ export default function DesignAdvisor({ state, simple = false }: DesignAdvisorPr
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    let active = true;
+    let refreshQueued = false;
+    let latestInvalidationVersion = 0;
     function invalidate() {
-      ++requestVersion.current;
+      latestInvalidationVersion = ++requestVersion.current;
       pending.current?.abort();
-      setLoadingKey(null);
-      refreshContext(value => value + 1);
+      // Navigation saves dispatch while the parent's state updater is rendering.
+      // Revoke advice now; only React's refresh waits until that render is over.
+      if (refreshQueued) return;
+      refreshQueued = true;
+      queueMicrotask(() => {
+        if (!active) return;
+        refreshQueued = false;
+        const invalidationVersion = latestInvalidationVersion;
+        // A new Ask can start before this refresh, or while React queues its setter.
+        setLoadingKey(current => requestVersion.current === invalidationVersion ? null : current);
+        refreshContext(value => value + 1);
+      });
     }
     const events = ['permamap-places-changed', DESIGN_CANVAS_CHANGED_EVENT, SAMPLE_MODE_EVENT, 'storage'];
     for (const event of events) window.addEventListener(event, invalidate);
     return () => {
+      active = false;
       ++requestVersion.current;
       pending.current?.abort();
       for (const event of events) window.removeEventListener(event, invalidate);
