@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "reason": "The energy handoff and international caption additions were developed on different branches. Preserve the historical adoption unchanged and separately bind the reviewed additive insertion to the actual combined branch before the energy merge.",
+  "historicalEnergyCommit": "3db92d4ff6685a0d3d0452021080cc3027edf89a",
+  "historicalAdoptionSha256": "747f9a118f83448c9175a28212d74adaf448cb3466d1771e2cf99730d9735a76",
+  "integrationBaseCommit": "a3f5e54ed132d841bb14e20c2e8e81d94aeed4e0",
+  "locales": {
+    "zu": {
+      "path": "lib/update-copy-locales/zu.ts",
+      "historicalPreviousSha256": "7a2bf1d00c324d88f5785306ef16526b25b5a5682131dbaddc00cb77921eb185",
+      "historicalResultSha256": "59753fa46fc857d2c7c56a1a94da08166c03ed76ef8a7c04b86dcc347d09ed60",
+      "integrationBaseSha256": "c07758e5bacdab3e5df5b27715a9938ec1d043947483840ebba4650750e5bc52",
+      "energyInsertionSha256": "6a234aeb4241b7aa9a6718192c7a6e8a5c563509c292a7d26a3cf6c990fd5488",
+      "historicalAdoptionUnchanged": true,
+      "exactIntegrationBaseRestoredByRemovingEnergyInsertion": true
+    },
+    "st": {
+      "path": "lib/update-copy-locales/st.ts",
+      "historicalPreviousSha256": "ad75d9d205f58d604d58ec58ad2bab242605a0b6b3a3b1418b0ce24e03b71426",
+      "historicalResultSha256": "32158e474f734e2255c5cb76ded89d1b6eb6a6fc7538e9984d276acbd54f8567",
+      "integrationBaseSha256": "b501b2e6e7dad4f86ac30dbfb6691a37b71127faf690ba0a37e47affeff3de57",
+      "energyInsertionSha256": "1611e06c5a5a55cda809eecc0eaf1b7a6f16b684355f7b7ddbc097a51f6cdd55",
+      "historicalAdoptionUnchanged": true,
+      "exactIntegrationBaseRestoredByRemovingEnergyInsertion": true
+    },
+    "ts": {
+      "path": "lib/update-copy-locales/ts.ts",
+      "historicalPreviousSha256": "5abe20cf54e900528fbf97def7fc972d7e249937bbb5c9f7315be831a7ad3920",
+      "historicalResultSha256": "cf4b0138ab391fccf9f456109bce83217b5aedfbcfce93806bb28abb38996271",
+      "integrationBaseSha256": "3edb0f6f234ce1017ae68049ec09c643e623058d08ae38ce8269eb612f4aef94",
+      "energyInsertionSha256": "0fa872548f59b5ced78509e4cdf35f9a045527818083fa803540d6094510ad16",
+      "historicalAdoptionUnchanged": true,
+      "exactIntegrationBaseRestoredByRemovingEnergyInsertion": true
+    },
+    "ve": {
+      "path": "lib/update-copy-locales/ve.ts",
+      "historicalPreviousSha256": "9b023043ad4ce4b6c49d49fc9538cd69574ed7b95c8b34bb735beac516c19265",
+      "historicalResultSha256": "a26c4501754f3c931b9429e974f013c09423344ab5177241c181c7173888ab2d",
+      "integrationBaseSha256": "a73bf86567c475d4e0a8f6ea337f6db5a8679a4b043d10048afe21809247bb79",
+      "energyInsertionSha256": "fee4edb3967644733b810b6f3bd66bf66e17450cd861de000bce07ce8da39794",
+      "historicalAdoptionUnchanged": true,
+      "exactIntegrationBaseRestoredByRemovingEnergyInsertion": true
+    }
+  },
+  "translationApproval": "Unreviewed AI draft status and exact English backing remain unchanged; no fluent or new runtime language approval.",
+  "independentCaptionAdoption": {
+    "path": "docs/international/current-release-caption-repair-2026-11-06/adoption.json",
+    "sha256": "3fc0c9d3512bb508b123291849670ae37068560a7a2c4436453313394b5c8771",
+    "anchor": "Its existing chunks[].afterSha256 values predate this energy integration and match the exact pre-energy target blobs."
+  },
+  "historicalPairPreservation": {
+    "priorNonEnergyPairsPerLocale": 285,
+    "integrationBasePairsPerLocale": 493,
+    "energyAddedPairsPerLocale": 8,
+    "review": "Independent read-only coordinator review compared historical285key/value pairs to actual pre-energy target493; all retained unchanged. No fluent approval."
+  }
+}

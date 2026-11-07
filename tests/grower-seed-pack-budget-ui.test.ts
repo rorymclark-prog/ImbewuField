@@ -62,9 +62,10 @@ function nursery(patch: Partial<GrowerSeedSourcingReview> = {}): GrowerSeedSourc
 function field(): GrowerFieldSeedSourcingReview {
   const { batchIds: _ignored, ...base } = group();
   return { status: 'partial', basis: 'grower-field-seed-sourcing-estimates', requirementBasis: 'entered-gross-whole-seed-count', sourceVerification: 'not-verified',
-    coverage: 'represented-accepted-non-nursery-cycles-only', wholeFarmCoverage: 'not-assessed', cycles: [], representedCycleCount: 5, assignedCycleCount: 1,
+    coverage: 'represented-accepted-non-nursery-cycles-only', wholeFarmCoverage: 'not-assessed', cycles: [], cycleBreakdown: [], representedCycleCount: 5, assignedCycleCount: 1,
     unassignedPlantingIds: ['private-unassigned-one', 'private-unassigned-two'], heldSourceRowCount: 2, legacySourceRowCount: 3, excludedNurseryCycleCount: 4,
-    sourceIssues: [], groups: [{ ...base, plantingIds: ['private-field-cycle'], selectedCycleCount: 1 }], issues: [], guidance: 'Synthetic field presentation only.' };
+    sourceIssues: [], groups: [{ ...base, plantingIds: ['private-field-cycle'], selectedCycleCount: 1,
+      cycleNumbers: [], cycleRelation: 'related-with-unrepresented-selections' }], issues: [], guidance: 'Synthetic field presentation only.' };
 }
 function deepFreeze<T>(value: T): T {
   if (value && typeof value === 'object') { Object.values(value).forEach(deepFreeze); Object.freeze(value); } return value;

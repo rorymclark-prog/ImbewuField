@@ -365,11 +365,16 @@ service cloud.firestore {
 
     match /course_progress/{id} {
       allow read:  if owns(resource.data) || isAdmin() || (isMentor() && inMyOrg(resource.data)) || staffConsentedAccess(resource.data, 'training');
-      allow write: if signedIn()
-        && request.resource.data.profile_id == request.auth.uid
-        && request.resource.data.org_id == myOrg()
-        && request.resource.data.module is string
-        && request.resource.data.done is bool;
+      function validOwnProgressWrite() {
+        return owns(request.resource.data)
+          && request.resource.data.org_id == myOrg()
+          && request.resource.data.module is string
+          && request.resource.data.done is bool;
+      }
+      // The submitted owner proves whose new record this is. Replacing an
+      // existing record also requires its stored owner, before any changes.
+      allow create: if validOwnProgressWrite();
+      allow update: if owns(resource.data) && validOwnProgressWrite();
     }
 
     // Enrollment and assignments are MENTOR-OWNED. The learner owns their own
@@ -425,14 +430,17 @@ service cloud.firestore {
     // are learner-only; mentors/staff never write a submission on a learner's behalf.
     match /course_submissions/{id} {
       allow read: if owns(resource.data) || isAdmin() || (isMentor() && inMyOrg(resource.data)) || staffConsentedAccess(resource.data, 'training');
-      allow create, update: if signedIn()
-        && request.resource.data.profile_id == request.auth.uid
-        && request.resource.data.org_id == myOrg()
-        && request.resource.data.module is string
-        && request.resource.data.submitted_at is string
-        && request.resource.data.self_check is list
-        && (!('photo_path' in request.resource.data) || request.resource.data.photo_path == null || request.resource.data.photo_path is string)
-        && (!('voice_path' in request.resource.data) || request.resource.data.voice_path == null || request.resource.data.voice_path is string);
+      function validOwnSubmissionWrite() {
+        return owns(request.resource.data)
+          && request.resource.data.org_id == myOrg()
+          && request.resource.data.module is string
+          && request.resource.data.submitted_at is string
+          && request.resource.data.self_check is list
+          && (!('photo_path' in request.resource.data) || request.resource.data.photo_path == null || request.resource.data.photo_path is string)
+          && (!('voice_path' in request.resource.data) || request.resource.data.voice_path == null || request.resource.data.voice_path is string);
+      }
+      allow create: if validOwnSubmissionWrite();
+      allow update: if owns(resource.data) && validOwnSubmissionWrite();
       allow delete: if false; // evidence is append/overwrite only — no client-side deletion
     }
 

@@ -362,6 +362,72 @@ before(async () => {
 
 after(async () => { await env?.cleanup(); });
 
+// A valid new owner field does not grant ownership of an existing training record.
+// Exercise real SDK replacement, update and merge writes: a read refusal alone
+// does not prove the original evidence survives. Missing and explicit-null orgs
+// must still permit the farmer's own records without permitting a takeover.
+for (const collectionName of ['course_progress', 'course_submissions'] as const) {
+  for (const variant of ['missing-org', 'null-org', 'linked-org'] as const) {
+    const uid = `training-owner-${variant}`;
+    const orgId = variant === 'linked-org' ? 'training-owner-org' : null;
+    const ownRecord = {
+      profile_id: uid,
+      org_id: orgId,
+      module: 'm1',
+      ...(collectionName === 'course_progress'
+        ? { done: false }
+        : { submitted_at: '2026-11-07T00:00:00.000Z', self_check: [false] }),
+    };
+    const seedProfile = () => env.withSecurityRulesDisabled(async (context) => {
+      await setDoc(doc(context.firestore(), 'profiles', uid), {
+        role: 'farmer', full_name: uid,
+        ...(variant === 'missing-org' ? {} : { org_id: orgId }),
+      });
+    });
+
+    test(`${collectionName}: ${variant} farmer can create and edit their own training evidence`, async () => {
+      await seedProfile();
+      const ref = doc(env.authenticatedContext(uid).firestore(), collectionName, `${uid}-own-${collectionName}`);
+      await assertSucceeds(setDoc(ref, ownRecord));
+      await assertSucceeds(setDoc(ref, { ...ownRecord, module: 'm2' }));
+      await assertSucceeds(updateDoc(ref, { module: 'm3' }));
+      await assertSucceeds(setDoc(ref, { module: 'm4' }, { merge: true }));
+      const saved = await getDoc(ref) as { data: () => unknown };
+      assert.deepEqual(saved.data(), { ...ownRecord, module: 'm4' });
+    });
+
+    for (const ownerScope of ['same-org', 'other-org'] as const) {
+      test(`${collectionName}: ${variant} farmer cannot replace another ${ownerScope} owner's evidence`, async () => {
+        await seedProfile();
+        const id = `${uid}-foreign-${ownerScope}-${collectionName}`;
+        const original = {
+          ...ownRecord,
+          profile_id: 'another-training-owner',
+          org_id: ownerScope === 'same-org' ? orgId : 'another-training-org',
+          fixtureMarker: 'original-owner-evidence',
+        };
+        await env.withSecurityRulesDisabled(async (context) => {
+          await setDoc(doc(context.firestore(), collectionName, id), original);
+        });
+        const ref = doc(env.authenticatedContext(uid).firestore(), collectionName, id);
+        await assertFails(getDoc(ref));
+        const attempts = [
+          () => setDoc(ref, ownRecord),
+          () => updateDoc(ref, ownRecord),
+          () => setDoc(ref, ownRecord, { merge: true }),
+        ];
+        for (const attempt of attempts) {
+          await assertFails(attempt());
+          await env.withSecurityRulesDisabled(async (context) => {
+            const saved = await getDoc(doc(context.firestore(), collectionName, id)) as { data: () => unknown };
+            assert.deepEqual(saved.data(), original);
+          });
+        }
+      });
+    }
+  }
+}
+
 // THE ATTACK THIS CLOSES. "Mentor", "NGO coordinator" and "Funder" were options in the PUBLIC
 // signup dropdown, and the rules let a new account self-assign any of them. isMentor() is a bare
 // role check that never inspects resource.data, and it sat in `allow read` on all three financial

@@ -122,6 +122,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/crops/GrowerAutoPlanPanel.tsx': 'growers review buyer priorities and dated whole-bed proposals before acting; no small-print exemption',
   'components/crops/GrowerNurseryReviewPanel.tsx': 'growers review seed, tray and surface requirements and incomplete budgets; no small-print exemption',
   'components/crops/GrowerFieldSeedSourcingSection.tsx': 'growers enter gross field seed counts and review held requirements on phones; zero-debt 12px floor',
+  'components/crops/GrowerSeedPackBudget.tsx': 'growers enter prices and read unknown costs and incomplete budgets on phones; zero-debt 12px floor',
   'components/crops/GrowerSeedSourcingForm.tsx': 'growers enter supply groups, seed allocations and pack counts on phones; zero-debt 12px floor',
   'components/crops/GrowerSeedSourcingPanel.tsx': 'growers operate their seed sourcing review controls on phones; zero-debt 12px floor',
   'components/crops/GrowerSeedSourcingSummary.tsx': 'growers read seed requirements, purchase estimates and held notices on phones; zero-debt 12px floor',

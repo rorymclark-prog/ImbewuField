@@ -1,0 +1,23 @@
+# International release integration candidate — 7 November 2026
+
+This is a local consolidated candidate, not a production release. It combines the international nursery/grower stack and checked calendar at b97d26f0b91a66d4ac57792697cffd818f474f6f, main map work at 4c5d1735a86f9e46ce48d0cfa068c80bc4747371, field-cycle detail at 6f6e086c6e20a7cecf2fd2d72a9a4747ebb476f2 and energy at 3db92d4ff6685a0d3d0452021080cc3027edf89a. Original commit ancestry, audits, source-paired drafts and existing assertions are retained.
+
+## Composition corrections
+
+The seed-budget UI fixture now supplies the field-cycle relation and breakdown metadata introduced by the independently developed field-cycle feature. Its original assertions are unchanged. The budget screen joins the existing farmer readability register at the same 12px floor; no exemption or reduced assertion is introduced.
+
+The energy dictionary guard originally assumed the historical energy branch's dictionary was also the current international branch's dictionary. The target had legitimately acquired additional captions. Historical energy adoption remains byte-for-byte unchanged. Separate integration provenance records both exact commits and links the pre-energy target hashes to the already-existing caption-repair adoption hashes. The test still requires the energy block exactly once and every prior target byte preserved, and now rejects deletion or modification of an unrelated caption and duplicate energy blocks. Independent source comparison confirmed all 285 historical non-energy pairs per locale survive among the 493 target pairs, before eight energy additions. Draft status and English backing are unchanged; this is not fluent approval or a new runtime language.
+
+## Authorization and deployment gates
+
+Existing training evidence stays bound to its current owner on update, while legitimate own creation and edits remain available for missing, null and linked organization profiles. Eighteen permanent SDK regression cases extend the original 62 unchanged cases. The complete local emulator harness passes 80/80; the same 18 new names against the prior rules produce six legitimate passes and twelve real foreign-replacement failures. Separate local verification covers malformed requests, existing-document preservation, read/delete policy and anonymous callers. These are local mock-auth results, not blanket security or production token certification. Detailed reproduction receipts remain private pending coordinated remediation.
+
+The index source preserves the previously captured live contact-message composite alongside the other seventeen definitions. Live state must be refreshed before deployment. Storage source is unchanged. The main data-rules workflow automatically deploys relevant Firestore rules, indexes and Storage rules; the old queue's inert-deployment statement is obsolete. No main merge, rule/index rollout or public security disclosure is authorised by this audit. The private release hold remains until coordinated review and concrete deployment approval.
+
+## Validation and remaining work
+
+On this combined source, ordered Node24 typecheck, 1,411 affected cases across 57 files and whitespace checks pass, with zero failures, cancellations, skips or TODOs. Earlier combined failures are preserved as evidence of the fixture, readability and composition corrections. All original rules-test bodies remain intact; no test assertion was removed to obtain a pass.
+
+A final release-copy stamp, full current-tree suite, current-head CI and genuine desktop/phone/account QA remain required. Calendar external import and real provider interaction remain unverified. Root Work browser is disabled; no workaround was used. Earlier preview metadata and peer-observed images do not certify this combined candidate. New language dictionaries are inactive unreviewed AI drafts and require fluent review; country selection does not certify local agronomy.
+
+PLAN_VERSION, species, calibrated lessons/quizzes and measured saved geometry remain unchanged. The assembled UI changes the picture on the relevant planning and survey screens; it does not alter a saved site-plan picture during rendering.

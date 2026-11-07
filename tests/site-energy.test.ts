@@ -132,6 +132,19 @@ test('energy release draft pairs retain exact source, provisional status and exi
   const dir = 'docs/audits/2026-11-06/site-energy-release-drafts/';
   const packet = JSON.parse(read(dir + 'source.json'));
   const adoption = JSON.parse(read(dir + 'adoption.json'));
+  // The two branches added captions independently. Keep the original energy
+  // adoption intact, and use the already-recorded caption repair as the exact
+  // pre-energy baseline rather than blessing a hash from the merged dictionary.
+  const composition = JSON.parse(read(dir + 'INTEGRATION-PROVENANCE.json'));
+  const captions = JSON.parse(read(composition.independentCaptionAdoption.path));
+  const captionSource = JSON.parse(read('docs/international/current-release-caption-repair-2026-11-06/source.json'));
+  assert.equal(hash(read(dir + 'adoption.json')), composition.historicalAdoptionSha256);
+  assert.equal(hash(read(composition.independentCaptionAdoption.path)), composition.independentCaptionAdoption.sha256);
+  const expectedLocales = ['st', 'ts', 've', 'zu'];
+  assert.deepEqual([...packet.locales].sort(), expectedLocales);
+  assert.deepEqual(Object.keys(adoption.locales).sort(), expectedLocales);
+  assert.deepEqual(Object.keys(composition.locales).sort(), expectedLocales);
+  assert.deepEqual(captions.chunks.map((row: { locale: string }) => row.locale).sort(), expectedLocales);
   const release = RELEASE_NOTES.find(entry => entry.changes.includes(packet.messages[0].english));
   assert.ok(release, 'the packet remains bound to its own release, not the rolling latest entry');
   const sources = [...release.changes, ...(release.tour ?? []).flatMap(stop => [stop.title, stop.where, stop.detail])];
@@ -153,8 +166,25 @@ test('energy release draft pairs retain exact source, provisional status and exi
     }
     const dictionary = read('lib/update-copy-locales/' + language + '.ts');
     const inserted = adoption.locales[language].insertedText;
-    assert.equal(dictionary.split(inserted).length, 2, 'the reviewed block is added once');
-    assert.equal(hash(dictionary.replace(inserted, '')), adoption.locales[language].previousSha256, 'every original dictionary byte remains');
+    const priorCaption = captions.chunks.find((row: { locale: string }) => row.locale === language);
+    assert.ok(priorCaption);
+    assert.equal(composition.locales[language].historicalPreviousSha256, adoption.locales[language].previousSha256);
+    assert.equal(composition.locales[language].historicalResultSha256, adoption.locales[language].resultSha256);
+    assert.equal(composition.locales[language].integrationBaseSha256, priorCaption.afterSha256);
+    assert.equal(hash(inserted), composition.locales[language].energyInsertionSha256);
+    const assertPreserved = (candidate: string) => {
+      assert.equal(candidate.split(inserted).length, 2, 'the reviewed block is added once');
+      assert.equal(hash(candidate.replace(inserted, '')), priorCaption.afterSha256,
+        'every existing international dictionary byte remains beneath the additive energy block');
+    };
+    assertPreserved(dictionary);
+    const unrelatedSource = captionSource.messages[0].english;
+    const unrelatedLine = `  ${JSON.stringify(unrelatedSource)}: ${JSON.stringify(copy[unrelatedSource])},\n`;
+    assert.equal(dictionary.split(unrelatedLine).length, 2, 'the adverse fixture selects one real non-energy caption');
+    assert.throws(() => assertPreserved(dictionary.replace(unrelatedLine, '')), /every existing international dictionary byte remains/);
+    assert.throws(() => assertPreserved(dictionary.replace(unrelatedLine, unrelatedLine.replace(JSON.stringify(copy[unrelatedSource]), '"Changed translation"'))),
+      /every existing international dictionary byte remains/);
+    assert.throws(() => assertPreserved(dictionary + inserted), /the reviewed block is added once/);
   }
 });
 
