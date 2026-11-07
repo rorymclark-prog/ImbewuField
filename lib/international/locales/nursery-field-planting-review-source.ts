@@ -1,6 +1,6 @@
 export const NURSERY_FIELD_PLANTING_REVIEW_SOURCE = Object.freeze({
   sourceSha256: 'cf2d91901f84afe1d31b5befe40077f85792bb97ac26fee419a2d5f912906394',
-  sourceCommit: '2c95aad704e4afc6bd93640f7281b8e447f711d4',
+  sourceCommit: 'a6cca70e3b792e44c9d6456f4276bf97cc809372',
   capturedOn: '2026-11-07',
   files: Object.freeze([
     Object.freeze({

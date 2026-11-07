@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 November 2026', sha: 'a6cca70e3b792e44c9d6456f4276bf97cc809372', changes: [
+    'Set exact buyer dates and review proposed picking periods in your own crop plan.',
+    'Nursery saves keep a clear warning when a completed write cannot be confirmed.',
+    'Find recorded nursery batch labels and counts in journal search and exports.',
+  ], tour: [{ title: 'Review buyer dates with your estimates', where: 'Crop plan → Your buyer-demand records', href: '/facilitator/crops',
+    detail: 'Open a mapped garden and choose Monthly or Exact UTC dates in your buyer records. Review proposed picking dates with your own growing estimates. Period quantities stay unknown; these dates do not record an observed harvest or promise deliveries.' }] },
   { when: '7 November 2026', sha: '6e49dd25d', changes: [
     'Map advice refreshes after switching tools and keeps new requests visible.',
   ] },
