@@ -41,6 +41,24 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 November 2026', sha: 'e6be6b59927b', changes: [
+    'Estimate seed-pack costs in your nursery and field worksheets.',
+    'Download checked planned work dates together in one calendar file.',
+    'Export field seed estimates by planned cycle.',
+    'Keep elevation benchmarks and energy references with your site survey.',
+    'Find a DWD station reference and choose temperature display units.',
+  ], tour: [
+    { title: 'Estimate seed-pack costs', where: 'Crop planner → Nursery or field seed sourcing', href: '/facilitator/crops',
+      detail: 'Choose a currency and enter your pack prices beside checked supply groups. Prices are temporary and clear when you change currency. Missing costs stay unknown; an incomplete subtotal does not cover the whole farm. Displayed costs are rounded, and this estimate records no purchase or expense.' },
+    { title: 'Download planned work dates together', where: 'Task Planner → Dated work from your estimates', href: '/cropplan',
+      detail: 'Check saved cycles and designs, then download all represented planned dates in one calendar file. Held sources need review first. Checklist items marked done stay in the calendar. DEMO files are labelled separately; a calendar records no observed work, harvest or free-bed confirmation.' },
+    { title: 'Export field seed estimates by cycle', where: 'Crop planner → Field seed sourcing → CSV worksheet', href: '/facilitator/crops',
+      detail: 'Review the represented cycles and their supply-group relationships in the field CSV. Entered gross seed counts remain your estimates. Unknown counts and held membership stay visible, and repeated group totals do not create additional seed demand.' },
+    { title: 'Review site survey references', where: 'Map → Site survey → Land & Location or Resources & Inputs', href: '/farmer',
+      detail: 'Keep separately sourced elevation benchmarks beside the terrain reference. Read the coordinate disclosure and solar assumptions before requesting a reference, or enter wind evidence with its height, source and period. Reference values do not confirm actual energy output.' },
+    { title: 'Review a station forecast', where: 'International reference tools → DWD station reference', href: '/international',
+      detail: 'Search the catalogue or enter a station ID, then separately request its forecast. Choose K, C or F for display while the source Kelvin value stays visible. A station reference does not attach weather to your farm, change planting dates or approve local crop advice.' },
+  ] },
   { when: '7 November 2026', sha: '4f0f0f2eaa73', changes: [
     'Estimate seed-pack costs in your checked planning worksheets.',
     'Download checked planned work dates together in one calendar file.',
