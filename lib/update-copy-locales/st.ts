@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Whole contour captions: docs/audits/2026-11-07/editorial-caption-release-drafts.json; UNREVIEWED machine draft.
+  "Sector contour labels stay whole near the boundary.": "Mabitso a mela ya bophahamo ho Sector a dula a felletse pela moedi.",
   // Editorial and boundary/terrain release: docs/audits/2026-11-07/editorial-release-drafts.json; UNREVIEWED machine drafts.
   "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.": "Kgetha Editorial Atlas bakeng sa setaele sa AI se bobebe le setshwantsho se chitja sa Sector.",
   "Maps have finer boundaries with round posts and clearer Earthworks labels.": "Limmapa di na le meedi e mesesane e nang le dipalo tse chitja le mabitso a hlakileng a Earthworks.",

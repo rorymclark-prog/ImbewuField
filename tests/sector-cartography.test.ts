@@ -8,9 +8,26 @@ import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, S
 import { contourIntervalForFrame } from '../lib/contours.ts';
 import { makeMercatorUnprojector } from '../lib/design-canvas.ts';
 import { fetchSheetContours } from '../lib/sheet-contours.ts';
-import { fitEditorialSectorMap, editorialSolarAnchors, EDITORIAL_SECTOR_PAGE } from '../lib/sector-editorial.ts';
+import { fitEditorialSectorMap, editorialSolarAnchors, editorialContourCaptionAnchor, EDITORIAL_SECTOR_PAGE } from '../lib/sector-editorial.ts';
 import { buildSectorRestylePrompt, buildLockedIllustrationPrompt, STYLE_LINES } from '../lib/producer-prompt.ts';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
+
+test('editorial contour captions remain whole at property and historical photo edges',()=>{
+  const property:Array<[number,number]>=[[0,0],[100,0],[100,100],[0,100]];
+  const photo:Array<[number,number]>=[[20,20],[80,20],[80,80],[20,80]];
+  const before=JSON.stringify({property,photo});
+  // The source midpoint is inside the property but its text extends over the edge.
+  assert.equal(editorialContourCaptionAnchor([[3,50]],40,18,[property]),null);
+  assert.equal(editorialContourCaptionAnchor([[23,50]],40,18,[property,photo]),null,
+    'a known level does not license painting its caption into unphotographed blank space');
+  const at=editorialContourCaptionAnchor([[22,50],[60,50],[70,50]],30,18,[property,photo]);
+  assert.ok(at,'use another point on the same contour when its whole label fits');
+  assert.ok(at.x-17>20 && at.x+17<80 && at.y-11>20 && at.y+11<80);
+  const concave:Array<[number,number]>=[[0,0],[100,0],[100,40],[10,40],[10,60],[100,60],[100,100],[0,100]];
+  assert.equal(editorialContourCaptionAnchor([[50,50]],20,40,[concave]),null,
+    'four inside corners cannot hide a property notch crossing the middle of a label');
+  assert.equal(JSON.stringify({property,photo}),before);
+});
 
 test('the circular editorial viewport preserves every proposed boundary tip without stretching the site', () => {
   for (const [width,height] of [[1900,700],[700,1900],[1000,1000]]) {

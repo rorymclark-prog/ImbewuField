@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest bounded follow-up — [Editorial contour caption clipping — 7 November 2026](2026-11-07/editorial-contour-captions-codex.md). Native source and corrected output inspected; isolated correction, not yet deployed.
+
 Latest companion style — [Editorial Atlas — 7 November 2026](2026-11-07/editorial-map-style-codex.md). Second selectable appearance and circular Sector page; native outputs inspected, fresh provider artwork remains unverified.
 
 Latest runtime continuation — [Approved map styling and cross-location checks — 6 November 2026](2026-11-06/approved-map-style-runtime-codex.md). Actual app outputs and provider terrain/context inspected; current-head release evidence is separate on PR/issue #35.

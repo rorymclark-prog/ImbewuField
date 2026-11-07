@@ -1,6 +1,32 @@
 import { bearingToUnitVector, type SectorModel } from '@/lib/sector';
 import { presentSectorCartography } from '@/lib/sector-cartography';
 import type { SunPath } from '@/lib/solar';
+import { pointInRing } from '@/lib/design-canvas';
+
+/** A centre point inside a clip is not enough: the complete caption and its white casing must
+ * fit. Otherwise a boundary can leave only the unit “m” visible beside an unknown photo corner. */
+export function editorialContourCaptionAnchor(
+  points: Array<[number,number]>, width:number, height:number, clips:Array<Array<[number,number]>>,
+): {x:number;y:number}|null {
+  if(!points.length || ![width,height].every(n=>Number.isFinite(n)&&n>0) || !clips.length)return null;
+  const cross=(a:[number,number],b:[number,number],c:[number,number])=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
+  const touches=(a:[number,number],b:[number,number],c:[number,number],d:[number,number])=>
+    Math.max(a[0],b[0])>=Math.min(c[0],d[0]) && Math.max(c[0],d[0])>=Math.min(a[0],b[0]) &&
+    Math.max(a[1],b[1])>=Math.min(c[1],d[1]) && Math.max(c[1],d[1])>=Math.min(a[1],b[1]) &&
+    cross(a,b,c)*cross(a,b,d)<=0 && cross(c,d,a)*cross(c,d,b)<=0;
+  const candidates=points.flatMap((p,i)=>i ? [[(p[0]+points[i-1][0])/2,(p[1]+points[i-1][1])/2] as [number,number],p] : [p]);
+  const middle=(candidates.length-1)/2;
+  for(const {p} of candidates.map((p,i)=>({p,i})).sort((a,b)=>Math.abs(a.i-middle)-Math.abs(b.i-middle))) {
+    for(const dy of [-8,8,0]) {
+      const x=p[0],y=p[1]+dy;
+      if(![x,y].every(Number.isFinite))continue;
+      const box:Array<[number,number]>=[[x-width/2-2,y-height/2-2],[x+width/2+2,y-height/2-2],[x+width/2+2,y+height/2+2],[x-width/2-2,y+height/2+2]];
+      if(clips.every(ring=>ring.length>=3 && box.every(c=>pointInRing(c,ring)) &&
+        !ring.some((a,i)=>box.some((c,j)=>touches(a,ring[(i+1)%ring.length],c,box[(j+1)%box.length])))))return{x,y};
+    }
+  }
+  return null;
+}
 
 export const EDITORIAL_SECTOR_PAGE = { width: 1800, height: 1273, cx: 620, cy: 650, radius: 420 } as const;
 

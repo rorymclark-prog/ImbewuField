@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 November 2026', sha: '842192455', changes: [
+    'Sector contour labels stay whole near the boundary.',
+  ] },
   { when: '7 November 2026', sha: '4c5d1735a', changes: [
     "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.",
   ], tour: [{ title: 'Check each map’s settings', where: 'Menu → Site design', href: '/design',
