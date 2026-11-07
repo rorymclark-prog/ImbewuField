@@ -1,0 +1,24 @@
+{
+  "unit": "03-sector-planning",
+  "okCount": 100,
+  "items": [
+    {
+      "where": "Drawing the sector map, definition of sector",
+      "verdict": "repair",
+      "english": "A **sector** is a force or energy that comes onto your land from outside: sun, wind, fire, ...",
+      "draft": "**I-sector** lamandla okanye amandla angena kumhlaba wakho evela ngaphandle: ...",
+      "backtranslation": "A sector [ungrammatical 'lamandla'] energies or energy entering your land from outside",
+      "problem": "Definition has no working predicate; 'lamandla' is a wrong concord and the sentence does not say what a sector is.",
+      "corrected": "**I-sector** yinto enamandla okanye amandla angena kumhlaba wakho evela ngaphandle: ..."
+    },
+    {
+      "where": "Frost, step 3 (steer cold air)",
+      "verdict": "repair",
+      "english": "... a horseshoe-shaped hedge on the uphill side, open end facing downhill.",
+      "draft": "... ecaleni elingaphezulu ethambekeni, ngomhlaba ovulekileyo ujonge ezantsi.",
+      "backtranslation": "... on the uphill side, with open ground facing down.",
+      "problem": "'Open end' of the horseshoe became 'open ground'; the key instruction (leave the end open downhill so cold air drains) is lost.",
+      "corrected": "... ecaleni elingaphezulu ethambekeni, isiphelo esivulekileyo sijonge ezantsi."
+    }
+  ]
+}

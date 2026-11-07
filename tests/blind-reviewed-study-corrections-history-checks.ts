@@ -4,6 +4,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { wave16OwnsSource, wave16SourceBefore } from './wave-16-history-checks.ts';
+import { xhDeckListingBefore } from './xh-deck-history-checks.ts';
 import { ensureSlidesWebpCurrent, withSlidesWebpCheckedScope, slidesWebpListingBefore, slidesWebpOwnsSource, slidesWebpRetiredBefore, slidesWebpSourceBefore, slidesWebpHistoryReadFileSync } from './slides-webp-history-checks.ts';
 
 // A dated test may inspect a predecessor only after the complete new layer has
@@ -80,7 +81,8 @@ function stat(file: string) {
 let lastSuccessfulSignature = '';
 export function ensureBlindReviewedCorrectionsCurrent(): void {
   ensureSlidesWebpCurrent();
-  const livePaths = mediaPaths();
+  // The isiXhosa slide cards are a newer layer (tests/xh-deck-history-checks.ts); this layer sees the listing before them.
+  const livePaths = xhDeckListingBefore(mediaPaths());
   const paths = slidesWebpListingBefore(livePaths);
   assert.deepEqual(paths, inventory.map(row => row.path).sort(), 'new or removed unlisted media cannot hide behind a cached validation');
   const files = [...paths, ...Object.keys(proof.files), ...Object.keys(proof.protected), folder + 'source-layer-proof.json', folder + 'native-before-after.json', folder + 'media-before-inventory.json',

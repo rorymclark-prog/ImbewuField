@@ -1,0 +1,20 @@
+# g40-record-plan — Phase A blind back-translation (isiXhosa values only, lib/locales/xh-inline/g40-record-plan.ts, insertion order)
+0. Your account has changed. Open this map again before saving it.
+1. The map has been added. Open Saved maps so that you export it or put it into a report.
+2. The map could not be fixed (or: prepared). Please try again.
+3. Records plan
+4. To scale · symbols and key (legend) · no AI cost
+5. Close the records plan
+6. The same saved site plan that is used in your report. Solid lines show things that exist; dotted lines show proposals.
+7. Add to maps
+8. Download PNG
+9. Download SVG
+10. Fixing (or: preparing) the map…
+11. Save the site boundary or add design items so that you can draw this plan.
+12. This production summary is currently in English.
+13. This guide is currently in English.
+14. Site opportunities
+15. Complete site plan
+16. Corrected (or: fixed-up) example
+17. The report that was made
+18. Origin not written down

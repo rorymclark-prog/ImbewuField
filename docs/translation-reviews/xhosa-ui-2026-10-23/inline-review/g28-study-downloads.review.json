@@ -1,0 +1,35 @@
+{
+  "unit": "g28-study-downloads",
+  "shard": "g28-study-downloads.ts",
+  "range": "all",
+  "okCount": 25,
+  "items": [
+    {
+      "index": 1,
+      "key": "Synthetic classroom case. This is not a farm record, financial advice or a submitted assessment.",
+      "verdict": "repair",
+      "draft": "Imeko eyilelwe eklasini. Le asiyiyo irekhodi yefama, asingcebiso yemali, kwaye asingovavanyo olungeniswe.",
+      "backtranslation": "A scenario designed for the classroom. This is not a farm record, not financial advice, and not an uploaded/entered assessment.",
+      "problem": "\"Synthetic\" (made-up/fictional) case lost: \"eyilelwe eklasini\" = designed for the classroom, so the text no longer says the case is invented",
+      "corrected": "Imeko eqanjiweyo yeklasi. Le asiyiyo irekhodi yefama, asingcebiso yemali, kwaye asingovavanyo olungeniswe."
+    },
+    {
+      "index": 22,
+      "key": "OBSERVATION PLAN — no outcomes supplied",
+      "verdict": "repair",
+      "draft": "ISICWANGCISO SOKUJONGA — akukho zimveliso zinikiweyo",
+      "backtranslation": "REVIEW PLAN — no products provided",
+      "problem": "\"outcomes\" rendered as \"zimveliso\" (products/yields)",
+      "corrected": "ISICWANGCISO SOKUJONGA — akukho ziphumo zinikiweyo"
+    },
+    {
+      "index": 27,
+      "key": "Illustrated growers discussing a paper plan; it is contextual only and not the fictional classroom site",
+      "verdict": "repair",
+      "draft": "Umzobo wabalimi bexoxa ngesicwangciso sephepha; ubonisa imeko kuphela, awuyiyo indawo eyilelwe yeklasi",
+      "backtranslation": "A drawing of farmers discussing a paper plan; it shows a scenario only, it is not the place designed for the class",
+      "problem": "\"fictional classroom site\" rendered as \"eyilelwe yeklasi\" (designed for class); fictional lost",
+      "corrected": "Umzobo wabalimi bexoxa ngesicwangciso sephepha; ubonisa imeko kuphela, awuyiyo indawo eqanjiweyo yeklasi"
+    }
+  ]
+}

@@ -1,0 +1,618 @@
+{
+  "language": "xh",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Reading the Landscape",
+        "body": [
+          "A permaculture course for South African smallholder farmers.",
+          "Read the land before you change it. Find where water moves, where sunlight falls, where wind travels, and where cold air settles.",
+          "These observations guide practical choices for crops, trees, buildings, roads, and water. They are the start of good design."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ukufunda indawo yakho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ikhosi ye-permaculture yabafama abancinci baseMzantsi Afrika."
+          },
+          {
+            "status": "draft",
+            "text": "Funda umhlaba phambi kokuba uwutshintshe. Fumana apho amanzi ahamba khona, apho ilanga likhanya khona, apho umoya uhamba khona, nalapho umoya obandayo uhlala khona."
+          },
+          {
+            "status": "draft",
+            "text": "Ezi nto uzibonayo ziyakukhokela ekukhetheni izityalo, imithi, izakhiwo, iindlela namanzi. Ziyiqalo loyilo oluhle."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "Every farm has patterns that work before we add anything.",
+          "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+          "When you read these patterns first, you place water, crops, trees, and buildings where they can work with the land."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kutheni oku kubalulekile"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Yonke ifama inamalungiselelo asebenzayo ngaphambi kokuba songeze nantoni na."
+          },
+          {
+            "status": "draft",
+            "text": "Imvula sele ilandela imigca phezu komhlaba. Ilanga sele lifudumeza ezinye iindawo ngaphezu kwezinye. Umoya sele ufumana izithuba neemiqolo. Umoya obandayo sele uhlala kwiindawo eziphantsi."
+          },
+          {
+            "status": "draft",
+            "text": "Xa uzifunda ezi ndlela kuqala, ubeka amanzi, izityalo, imithi nezakhiwo apho zinokusebenza khona kunye nomhlaba."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "You will read sun angles, shade, wind, frost, and slope.",
+          "You will use an A-frame level to trace contours.",
+          "You will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Iziphumo zokufunda"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ekupheleni kwalo mxholo, uya kukwazi ukulandela amanzi phezu komhlaba wakho uze ufumane apho aphuma khona."
+          },
+          {
+            "status": "draft",
+            "text": "Uya kufunda ukuma kwelanga, umthunzi, umoya, iqabaka neethambeka."
+          },
+          {
+            "status": "draft",
+            "text": "Uya kusebenzisa i-A-frame level ukulandela imigca yokuphakama."
+          },
+          {
+            "status": "draft",
+            "text": "Uya kuzoba imephu elula yendawo enokuhamba kwamanzi, imimoya yamaxesha onyaka, iindawo zeqabaka, izityalo ezikhoyo, iindawo (zones) neesektha (sectors)."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Lesson 1: Where Rain Goes",
+        "body": [
+          "Before you harvest water, learn where it already goes.",
+          "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "Some excess water needs a safe route away so it does not cause damage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isifundo 1: Apho imvula iya khona"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Phambi kokuba uqokelele amanzi, funda ukuba asele eya phi na."
+          },
+          {
+            "status": "draft",
+            "text": "Khangela ukusuka kwindawo ekhuselekileyo ngexesha lemvula enkulu. Xa kukhuselekile emva koko, hamba emhlabeni wakho. Khangela imijelo emincinci yamanzi (ii-rill), iindawo apho amanzi asasazeka khona, amachibi, nalapho amanzi ephuma khona epropathini yakho."
+          },
+          {
+            "status": "draft",
+            "text": "Amanzi athile agqithisileyo adinga indlela ekhuselekileyo yokuhamba kude ukuze angabangeli monakalo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Watch: Water Slows, Sinks, and Leaves",
+        "body": [
+          "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jonga: amanzi ayacotha, angene emhlabeni, aze aphume"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umfanekiso ubonisa imvula ihla ngenduli. Landela apho ikhawuleza khona, isasazeka khona, ingena emhlabeni khona, iqokelelana khona, ize iphume emhlabeni."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Trace Contours with an A-Frame",
+        "body": [
+          "Build an A-frame level from three poles and a weighted string.",
+          "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+          "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Landela imigca yokuphakama nge-A-frame"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Yakha i-A-frame level ngeentsika ezintathu nentambo eboshelwe into enzima."
+          },
+          {
+            "status": "draft",
+            "text": "Yihambise emhlabeni ukufumana amanqaku akwisithuba esinye sokuphakama. Dibanisa la manqaku ukulandela umgca wokuphakama."
+          },
+          {
+            "status": "draft",
+            "text": "I-A-frame inokukunceda uphawule amanqaku akwisithuba esinye sokuphakama uze ulandele umgca wokuphakama. Iimpawu zayo kukuqwalasela kuphela, asiso uyilo okanye imvume yemisebenzi yokumba umhlaba. Phambi kokumba, cela indawo ivavanywe. Umhlaba, ithambeka, ukuphuma kwamanzi, ukuhamba kwamanzi emvula enkulu nendlela ekhuselekileyo yamanzi agqithisileyo zonke ziyabalulekile. Buza umcebisi wasekuhlaleni oqeqeshiweyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Observe Water Before You Build",
+        "body": [
+          "Water picks up speed and erosive force as it runs downhill.",
+          "There is no one placement rule for every slope. Observe where water moves and gathers.",
+          "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bona amanzi phambi kokwakha"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Amanzi aya ekhawuleza aze abe namandla okukhukulisa ngoxa ehla ethambekeni."
+          },
+          {
+            "status": "draft",
+            "text": "Akukho mgaqo mnye wokubeka olandelwa kuwo onke amathambeka. Khangela apho amanzi ahamba khona aze aqokelelane."
+          },
+          {
+            "status": "draft",
+            "text": "Imigca yokuphakama ebekwe kakubi inokunyusa ukukhukuliseka komhlaba, kwaye umhlaba ofunxa amanzi ngokucotha unokubamba amanzi amaninzi kakhulu. Khetha nayiphi na imisebenzi yamanzi efanelekileyo kwindawo yakho kwaye ucwangcise indlela ekhuselekileyo yamanzi agqithisileyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Lesson 2: Read Sun and Shade",
+        "body": [
+          "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+          "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.",
+          "Watch your own site before choosing where to place tender crops, trees, or buildings."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isifundo 2: Funda ilanga nomthunzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kwiindawo ezininzi zoMzantsi Afrika, ingakumbi ebusika, ilanga likumntla. Indlela yalo itshintsha ngexesha lonyaka nangokwendawo okuyo."
+          },
+          {
+            "status": "draft",
+            "text": "Amathambeka ajonge emntla ahlala efumana ilanga elininzi kwaye anokushisa aze omile ngakumbi. Amathambeka ajonge emzantsi ahlala epholile kwaye enomswakama ngakumbi. Iqabaka linokuqokelelana kwiindawo eziphantsi apho umoya obandayo uhlala khona."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga indawo yakho ngokwakho phambi kokukhetha apho uza kubeka izityalo ezithambileyo, imithi okanye izakhiwo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Watch: Follow the Sun Across the Site",
+        "body": [
+          "Follow the sun, building, tree, and their shadows across the slope. Compare summer’s high sun with winter’s lower sun."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jonga: landela ilanga kwindawo yonke"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Landela ilanga, isakhiwo, umthi nezithunzi zazo phezu kwethambeka. Thelekisa ilanga eliphakamileyo lasehlotyeni nelanga eliphantsi lasebusika."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Check Winter Shadows Before Building",
+        "body": [
+          "Winter sun is lower and farther north than summer sun.",
+          "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+          "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jonga izithunzi zasebusika phambi kokwakha"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ilanga lasebusika liphantsi kwaye likude ngakumbi emntla kunelanga lasehlotyeni."
+          },
+          {
+            "status": "draft",
+            "text": "Udonga okanye ilaphu lomthunzi lunganika ibhedi umthunzi ixesha elide ebusika kunasehlotyeni. Jonga izithunzi zokwenyani phambi kokuba wakhe okanye ulungise isakhiwo somthunzi endaweni."
+          },
+          {
+            "status": "draft",
+            "text": "Yima kuloo ndawo nge-8am, emini, nge-4pm ngosuku lwasebusika. Jonga apho umthunzi uwela khona."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Protect Frost-Tender Plants",
+        "body": [
+          "Pawpaw and young citrus are sensitive to frost.",
+          "Keep tender plants out of known low frost pockets. Observe local frost before planting."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khusela izityalo eziva iqabaka"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-pawpaw nemithi emincinci ye-citrus iyaziva iqabaka."
+          },
+          {
+            "status": "draft",
+            "text": "Gcina izityalo ezithambileyo kude neendawo eziphantsi ezaziwayo apho iqabaka liqokelelana khona. Jonga iqabaka lasekuhlaleni phambi kokutyala."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Lesson 3: Read Wind, Frost, and Slope",
+        "body": [
+          "Wind can damage crops on a smallholding.",
+          "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "Wind, cold air and slope all matter when choosing places for crops and shelter."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isifundo 3: Funda umoya, iqabaka neethambeka"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umoya unokonakalisa izityalo kwifama encinci."
+          },
+          {
+            "status": "draft",
+            "text": "Icala nokomelela komoya onokonakalisa kutshintsha ngommandla, ngexesha lonyaka, nangemiqolo nezithuba zendawo yakho. Hamba emhlabeni wakho ngeentsuku ezinomoya. Rekhoda apho umoya onokonakalisa uvela khona nento echaphazelwa nguwo. Jonga iirekhodi zemozulu zasekuhlaleni phambi kokubeka isikhuselo somoya."
+          },
+          {
+            "status": "draft",
+            "text": "Umoya, umoya obandayo neethambeka zonke ziyabalulekile xa ukhetha iindawo zezityalo nezikhuselo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Watch: See Wind and Cold Air on the Map",
+        "body": [
+          "A place sheltered from wind can still collect cold air. Check wind shelter and frost risk separately."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jonga: bona umoya nomoya obandayo kwimephu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Indawo ekhuselekileyo emoyeni isenokuqokelela umoya obandayo. Jonga ukhuseleko emoyeni nomngcipheko weqabaka ngokwahlukeneyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Cold Air Flows Downhill",
+        "body": [
+          "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+          "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+          "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+          "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umoya obandayo uhla ethambekeni"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ebusuku obucacileyo, obuthe cwaka, umoya obandayo unokuhamba ethambekeni ehla uze uqokelelane kwiindawo eziphantsi. Ezi ndawo zinokubanda kunamathambeka angqongileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Iqabaka ngumkhenkce owenzeka kumphezulu obandayo. Inkungu yodwa ayibonisi ukuba umkhenkce wenzekile, kwaye umonakalo weqabaka unokwenzeka ngaphandle komkhenkce obonakalayo."
+          },
+          {
+            "status": "draft",
+            "text": "Khangela umkhenkce nomonakalo wezityalo, thelekisa umhlaba ophantsi namathambeka, uze ujonge ubushushu obuphantsi kakhulu apho ukwazi. Phawula iindawo apho ukubanda okanye umonakalo kuhlala ixesha elide. Gcina izityalo ezibucayi kude neendawo ezibandayo ozibonileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Thelekisa iindawo onokuzikhetha zokukhulisela izityalo ezincinci kwixesha leqabaka lasekuhlaleni. Jonga iirekhodi zasekuhlaleni zobushushu obuphantsi kakhulu okanye ubuze umcebisi wezolimo wasekuhlaleni phambi kokukhetha indawo esisigxina."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Choose Airflow and Warmth",
+        "body": [
+          "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+          "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khetha umoya ohambayo nobushushu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Beka indawo yokukhulisela izityalo ezincinci eziva iqabaka ngaphandle kweendawo ezibandayo ozibonileyo. Thelekisa iindawo onokuzikhetha kwixesha leqabaka lasekuhlaleni. Jonga iirekhodi zasekuhlaleni zobushushu obuphantsi kakhulu okanye ubuze umcebisi wezolimo wasekuhlaleni phambi kokukhetha indawo esisigxina. Jonga nelanga nomoya onokonakalisa. Akukho ndawo yenduli iqinisekisa ukungabikho kweqabaka."
+          },
+          {
+            "status": "draft",
+            "text": "Kwiitumato ezinengxaki ye-late blight, ukuhamba komoya kakuhle nelanga lekuseni kunganceda amagqabi omile. Imozulu ebandayo, enomswakama exesha elide isenokuwukhuthaza lo sifo. Ukuhambisa ibhedi kuphela akulawuli i-late blight. Funa nengcebiso yasekuhlaleni yempilo yezityalo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Lesson 4: Start Your Site Map",
+        "body": [
+          "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+          "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+          "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isifundo 4: Qala imephu yendawo yakho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imephu yendawo idinga iphepha, itheyiphu yokulinganisa, ikhampasi, nexesha lokuhamba emhlabeni wakho."
+          },
+          {
+            "status": "draft",
+            "text": "Hamba ngomda uze wenze umzobo wokuqala. Wubhale 'awulinganiswanga' de uhlole imigama yawo. Phawula emntla. Yongeza indlu, imithi, amanzi, iindlela neefensi."
+          },
+          {
+            "status": "draft",
+            "text": "Emva koko zoba iipatheni ozibonileyo. Imephu yakho iba sisakhelo soyilo lwayo yonke ifama encinci."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Watch: Draw the Land You Already Have",
+        "body": [
+          "Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jonga: zoba umhlaba onawo ngoku"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sebenzisa umfanekiso njengesikhokelo: umda, izakhiwo, iindlela, amanzi, amathambeka nemicibisholo yamacala. Zoba oko sele kukho phambi kokucwangcisa utshintsho."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Let Plants Help You Read Soil",
+        "body": [
+          "Look for places where frost sits longest and where the ground smells damp during dry months.",
+          "Notice existing vegetation. Mark where khakibos or blackjack grows thick.",
+          "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Vumela izityalo zikunceda ufunde umhlaba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khangela apho iqabaka lihlala ixesha elide nalapho umhlaba unuka ukumanzi ngeenyanga ezomileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Qaphela izityalo ezikhoyo. Phawula apho i-khakibos okanye i-blackjack ikhula ngokuxineneyo."
+          },
+          {
+            "status": "draft",
+            "text": "Ezi zityalo zinokukhula kwiindawo ezothusiweyo, kodwa ukubakho kwazo kuphela akubonisi ukuba umhlaba uxinene na. Hlola umhlaba phambi kokugqiba ukuba loo ndawo ithetha ntoni kuyilo lwakho."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Add Seasons, Zones, and Sectors",
+        "body": [
+          "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+          "Overlay your zones and sectors on the same base map.",
+          "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Yongeza amaxesha onyaka, iindawo neesektha"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Phawula umoya wasehlotyeni nowasebusika ngokwahlukeneyo. Ungavela emacaleni ahlukeneyo, ngoko isikhuselo somoya okanye indawo yesityalo esebenza kwixesha elinye inokuba kukungalunganga kwelinye."
+          },
+          {
+            "status": "draft",
+            "text": "Faka iindawo (zones) neesektha (sectors) zakho phezu kwemephu efanayo esisiseko."
+          },
+          {
+            "status": "draft",
+            "text": "Wuhlaziye umzobo ixesha ngalinye lonyaka. Imephu yepensile oyisebenzisayo ngokwenene ibaluleke ngakumbi kunemephu egqibeleleyo ezotywe kanye."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+          "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+          "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umsebenzi wasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Xa kukhuselekile emva kwemvula enkulu, hamba emhlabeni wakho. Phawula imijelo emincinci yamanzi, amanzi asasazekayo, amachibi, nalapho amanzi ephuma khona epropathini yakho. Qaphela apho amanzi agqithisileyo anokudinga indlela ekhuselekileyo yokuhamba kude."
+          },
+          {
+            "status": "draft",
+            "text": "Buya ekuseni kakhulu ngentsasa ebandayo yoJuni. Phawula inkungu, amazolo akhenkcezileyo, neendawo apho iqabaka lihlala ixesha elide."
+          },
+          {
+            "status": "draft",
+            "text": "Ephepheni, zoba umda wakho, phawula emntla, uze wongeze indlu, amanzi, iindlela, iifensi, amathambeka nezityalo ezikhoyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Build an A-frame level from three poles and a weighted string.",
+          "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+          "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isenzo sasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Yakha i-A-frame level ngeentsika ezintathu nentambo eboshelwe into enzima."
+          },
+          {
+            "status": "draft",
+            "text": "Yisebenzise ukuphawula amanqaku akwisithuba esinye sokuphakama uze ulandele umgca wokuphakama. Oku kukuqwalasela, asiso uyilo lwemisebenzi yokumba umhlaba. Phambi kokumba, cela umcebisi wasekuhlaleni oqeqeshiweyo avavanye indawo acwangcise indlela ekhuselekileyo yamanzi agqithisileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Yongeza imicibisholo yomoya wasehlotyeni nowasebusika, ukuqwalasela umthunzi nge-8am, emini, nge-4pm, neendawo (zones) neesektha (sectors) zakho. Gcina imephu uze uyihlaziye."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -17,6 +17,7 @@ import {
 } from '@/lib/field-journal';
 import { getElementArt2 } from '@/lib/element-art-2';
 import motion from './JournalMotion.module.css';
+import { inlineText } from '@/lib/xh-inline';
 import { journalCategoryLabel } from './journal-labels';
 import { useEscapeClose } from '@/lib/use-escape-close';
 import { useDialogFocus } from '@/lib/use-dialog-focus';
@@ -47,7 +48,7 @@ interface Props {
 export default function JournalEntrySheet({ entry, initialDraft, beds, crops, onSave, onDelete, onClose, error }: Props) {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
-  const ui = (english: string, zulu: string) => isZulu ? zulu : english;
+  const ui = (english: string, zulu: string) => inlineText(lang, english, zulu);
   const simple = useAppLevel() === 'simple';
   const [date, setDate] = useState(entry?.date ?? initialDraft?.date ?? todayISODate());
   const [title, setTitle] = useState(entry?.title ?? initialDraft?.title ?? '');
@@ -175,7 +176,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
         <div style={{ padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
           {initialDraft && !entry && (
-            <p role="note" lang={isZulu ? 'zu' : 'en'} style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
+            <p role="note" lang={isZulu ? 'zu' : lang === 'xh' ? 'xh' : 'en'} style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
               {farmMemoryText(lang, 'taskDraftNotice')}
             </p>
           )}
@@ -208,7 +209,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
                       ) : (
                         <c.icon size={15} aria-hidden />
                       )}
-                      {isZulu ? journalCategoryLabel(c.key) : c.label}
+                      {isZulu ? journalCategoryLabel(c.key) : inlineText(lang, c.label)}
                     </button>
                   );
                 })}

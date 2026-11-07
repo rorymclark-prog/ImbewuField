@@ -6,6 +6,7 @@ import { useDialogFocus } from '@/lib/use-dialog-focus';
 import type { EvidenceCatalogueGroup, EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
 import { EVIDENCE_GROUP_ICON, QUICK_NUMBERS, LIMA_TIPS } from '@/lib/evidence-catalogue';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { evidenceDocumentScope, saveEvidenceDocument, loadEvidenceDocument, removeEvidenceDocument } from '@/lib/evidence-documents';
 import {
@@ -28,7 +29,7 @@ interface Props {
 }
 
 export default function EvidenceSheet({ siteId, group, item, onClose, onChanged }: Props) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const itemKey = item ? `${group.key}_${item.key}` : `${group.key}_site_photos`;
   const [evidenceItems, setEvidenceItems] = useState<EvidenceItem[]>([]);
   const [quickNums, setQuickNums] = useState<Record<string, string>>({});
@@ -89,7 +90,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
           break;
         }
       } catch (err) {
-        setFileError(userFacingMessage(err, t('evidenceSheetFileSaveFailed'), t));
+        setFileError(inlineText(lang, userFacingMessage(err, t('evidenceSheetFileSaveFailed'), t)));
         break;
       }
     }
@@ -113,7 +114,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');link.href=url;link.download=evidenceItems.find(row=>row.documentId===id)?.name??'lab-result.pdf';link.click();
       setTimeout(()=>URL.revokeObjectURL(url),60000);
-    } catch (e) { setFileError(userFacingMessage(e, t('evidenceSheetPdfOpenFailed'), t)); }
+    } catch (e) { setFileError(inlineText(lang, userFacingMessage(e, t('evidenceSheetPdfOpenFailed'), t))); }
   }
 
   function startEditField(fieldKey: string) {

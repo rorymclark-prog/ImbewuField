@@ -1,0 +1,33 @@
+{
+  "unit": "g03-community-contact",
+  "okCount": 165,
+  "items": [
+    {
+      "where": "line 26",
+      "verdict": "repair",
+      "english": "Sent to: ",
+      "draft": "Kuthunyelwe: ",
+      "backtranslation": "Sent:",
+      "problem": "'Sent to:' lost direction (recipient).",
+      "corrected": "Umamkeli: "
+    },
+    {
+      "where": "line 78",
+      "verdict": "repair",
+      "english": "Your location shows as an approximate ~1km area, never your exact homestead",
+      "draft": "Indawo yakho iboniswa njengommandla oqikelelweyo we-~1km, hayi naxesha umzi wakho ngqo",
+      "backtranslation": "...shown as estimated ~1km area, 'hayi naxesha' (not at times) your exact home.",
+      "problem": "Privacy statement 'never your exact homestead' garbled; 'naxesha' is not a word.",
+      "corrected": "Indawo yakho iboniswa njengommandla oqikelelweyo we-~1km, ayisoze ibe yindawo echanekileyo yomzi wakho"
+    },
+    {
+      "where": "line 169",
+      "verdict": "repair",
+      "english": "Module titles, training descriptions, reports and assessment evidence are still shown in English.",
+      "draft": "Izihloko zeemodyuli, inkcazelo yoqeqesho, iingxelo nobungqina boxatyiso zisabonakala ngesiNgesi.",
+      "backtranslation": "...reports and 'uxatyiso' (esteem/appreciation) evidence still appear in English.",
+      "problem": "'uxatyiso' is not 'assessment'; glossary/xh.ts use uvavanyo.",
+      "corrected": "Izihloko zeemodyuli, inkcazelo yoqeqesho, iingxelo nobungqina bovavanyo zisabonakala ngesiNgesi."
+    }
+  ]
+}

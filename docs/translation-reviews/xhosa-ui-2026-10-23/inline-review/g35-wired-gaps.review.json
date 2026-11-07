@@ -1,0 +1,17 @@
+{
+  "unit": "g35-wired-gaps",
+  "shard": "g35-wired-gaps.ts",
+  "range": "all",
+  "okCount": 7,
+  "items": [
+    {
+      "index": 4,
+      "key": "Supported by the case.",
+      "verdict": "repair",
+      "draft": "Ixhaswa yikesi.",
+      "backtranslation": "Supported by the suitcase/crate (ikesi).",
+      "problem": "\"case\" (a worked case/scenario in a study exercise) rendered with \"ikesi\" = a container/suitcase.",
+      "corrected": "Ixhaswa yimeko ebonisiweyo."
+    }
+  ]
+}

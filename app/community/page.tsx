@@ -13,6 +13,8 @@ import { useAuth } from '@/lib/auth';
 import { translate,useLanguage } from '@/lib/i18n';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 import { communityTimeAgo } from '@/lib/community-time';
+import { inlineText } from '@/lib/xh-inline';
+import { localeDate } from '@/lib/xh-dates';
 import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { uploadPhoto } from '@/lib/db/queries';
@@ -35,7 +37,7 @@ import AppHeader from '@/components/layout/AppHeader';
 type Tab = 'nearby' | 'board' | 'messages';
 
 function NearbyMapLoading(){
-  const {t}=useLanguage();
+  const {t}=useCommunityLanguage();
   return <div role="status" aria-label={t('communityHubLoading')} className="w-full h-full flex flex-col gap-3 items-center justify-center rounded-2xl" style={{background:'var(--bg-1)',color:'var(--text-secondary)'}}><Loader2 size={24} className="animate-spin" aria-hidden/><p>{t('communityHubLoading')}</p></div>;
 }
 
@@ -47,17 +49,37 @@ const KIND_COLOR: Record<BoardKind, string> = { have: 'var(--color-forest-800)',
 // White read 2.04:1 on dark Have and 3.47:1 on Free; a themed gold tint keeps Free readable in each theme.
 const KIND_TEXT:Record<BoardKind,string>={have:'var(--color-canvas)',want:'var(--on-forest)',free:'var(--text-primary)'};
 
+// isiXhosa: a key the xh locale has not translated yet falls back to English; show the unreviewed
+// draft keyed by that same English instead (lib/locales/xh-inline). Other languages keep t() exactly.
+function useCommunityLanguage() {
+  const language = useLanguage();
+  const { lang } = language;
+  const t = (key: string) => { const text = language.t(key); return lang === 'xh' && text === translate('en', key) ? inlineText(lang, text) : text; };
+  return { ...language, t };
+}
+
+// isiXhosa: communityTimeAgo spells a date older than a day with the en-ZA month; isiXhosa
+// writes its own month names (lib/xh-dates). Every other language keeps communityTimeAgo exactly.
+function xhCommunityDate(ts: unknown, shown: string): string {
+  const value = ts as { toDate?: () => Date; seconds?: number } | null;
+  if (!value || !shown) return shown;
+  try {
+    const d = typeof value.toDate === 'function' ? value.toDate() : new Date((value.seconds ?? 0) * 1000);
+    return Date.now() - d.getTime() < 86_400_000 ? shown : localeDate('xh', d, { day: 'numeric', month: 'short' }, 'en-ZA');
+  } catch { return shown; }
+}
+
 type CommunityTranslate=(key:string)=>string;
 const categoryLabel=(value:BoardCategory,t:CommunityTranslate)=>t(({seed:'communityCategorySeed',seedlings:'communityCategorySeedlings',produce:'communityCategoryProduce',tools:'communityCategoryTools',other:'communityCategoryOther'})[value]);
 const kindLabel=(value:BoardKind,t:CommunityTranslate)=>t(({have:'communityBoardKindHave',want:'communityBoardKindWant',free:'communityBoardKindFree'})[value]);
 function CommunitySource({id}:{id:string}) {
-  const {t,lang}=useLanguage();
-  return <><span lang={t(id)===translate('en',id)?'en':lang}>{t(id)}</span>{['zu','st','ts','ve'].includes(lang)&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en',id)}</small>}</>;
+  const {t,lang}=useCommunityLanguage();
+  return <><span lang={t(id)===translate('en',id)?'en':lang}>{t(id)}</span>{['zu','xh','st','ts','ve'].includes(lang)&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en',id)}</small>}</>;
 }
 
 export default function CommunityHubPage() {
   const { user, loading } = useAuth();
-  const { t, lang } = useLanguage();
+  const { t, lang } = useCommunityLanguage();
   const tr = t;
   const router = useRouter();
   const simple = useAppLevel() === 'simple';
@@ -234,7 +256,7 @@ export default function CommunityHubPage() {
 }
 
 function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOpenProfile: (uid: string) => void }) {
-  const { t, lang } = useLanguage();
+  const { t, lang } = useCommunityLanguage();
   const tr = t;
   const pinned = nearby.filter((p) => p.show_on_map);
   return (
@@ -285,7 +307,7 @@ function BoardTab({
   onPosted: () => void; onClose: (id: string) => Promise<void>; onDelete: (id: string) => Promise<void>;
   onMessage: (uid: string, name: string) => void; messagingBusy: boolean;
 }) {
-  const { t, lang } = useLanguage();
+  const { t, lang } = useCommunityLanguage();
   const tr = t;
   const [pendingPost,setPendingPost]=useState<string|null>(null);
   const [actionError,setActionError]=useState<'communityBoardCloseError'|'communityBoardDeleteError'|null>(null);
@@ -299,7 +321,7 @@ function BoardTab({
   return (
     <div>
       {actionError&&<p role="alert" style={{color:'var(--text-primary)',borderInlineStart:'3px solid var(--danger)',paddingInlineStart:8}}><CommunitySource id={actionError}/></p>}
-      <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
+      <div className="flex flex-wrap items-center justify-between gap-2" style={{ marginBottom: 14 }}>
         <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 18, color: 'var(--text-primary)' }}>{tr('communityBoardTitle')}</h1>
         <button
           onClick={onToggleNewPost}
@@ -320,13 +342,13 @@ function BoardTab({
         <div className={workspace.cards}>
           {posts.map((p) => (
             <div key={p.id} className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-              <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1" style={{ marginBottom: 6 }}>
                 <span className="font-sans font-bold" style={{ fontSize: 12, padding: '2px 8px', borderRadius: 100, background: KIND_COLOR[p.kind], color: KIND_TEXT[p.kind], textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   {kindLabel(p.kind,t)}
                 </span>
                 <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{categoryLabel(p.category,t)}</span>
                 <div style={{ flex: 1 }} />
-                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{communityTimeAgo(p.created_at,lang,t)}</span>
+                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{lang === 'xh' ? xhCommunityDate(p.created_at, communityTimeAgo(p.created_at,lang,t)) : communityTimeAgo(p.created_at,lang,t)}</span>
               </div>
               {/* The caption identifies the farmer's photo without translating their name. */}
               {p.photo_url && (
@@ -368,7 +390,7 @@ function BoardTab({
 }
 
 function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaText: string; simple: boolean; onPosted: () => void; onCancel: () => void }) {
-  const { t, lang } = useLanguage();
+  const { t, lang } = useCommunityLanguage();
   const tr = t;
   const fileRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState<BoardCategory>('seed');
@@ -514,7 +536,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
 }
 
 function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myUid: string; onOpen: (id: string) => void }) {
-  const { t, lang } = useLanguage();
+  const { t, lang } = useCommunityLanguage();
   if (threads.length === 0) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
@@ -540,9 +562,9 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
               <span style={{ color: 'var(--color-canvas)', fontWeight: 700, fontSize: 15 }}>{(otherName?.[0] ?? '?').toUpperCase()}</span>
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div className="flex items-baseline justify-between gap-2">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-2">
                 <span lang={ownedOtherName===undefined?lang:''} className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>{otherName}</span>
-                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', flexShrink: 0 }}>{communityTimeAgo(th.last_message_at,lang,t)}</span>
+                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', flexShrink: 0 }}>{lang === 'xh' ? xhCommunityDate(th.last_message_at, communityTimeAgo(th.last_message_at,lang,t)) : communityTimeAgo(th.last_message_at,lang,t)}</span>
               </div>
               <div lang={th.last_message?'':lang} className="font-sans truncate" style={{ fontSize: 12.5, color: 'var(--text-secondary)' }}>{th.last_message || t('communitySayHello')}</div>
             </div>

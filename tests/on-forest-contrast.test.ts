@@ -71,8 +71,8 @@ test('w16-02: LessonLink and the Design labels paint text with the themed forest
   assert.match(lesson, /const GREEN = 'var\(--color-forest-800\)'/);
   const design = readFileSync(join(root, 'app/design/page.tsx'), 'utf8');
   // w20-23: the picker's own h1 moved into AppHeader (h1 is now sr-only) and the typed arrow became a Lucide ArrowRight.
-  assert.match(design, /<AppHeader title=\{isZulu \? 'Isitudiyo Sokuklama' : 'Design Studio'\}/);
-  assert.match(design, /color: 'var\(--color-forest-800\)', fontWeight: 600, flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 4 \}\}>\{isZulu \? 'Klama' : 'Design'\}<ArrowRight/);
+  assert.match(design, /<AppHeader title=\{isZulu \? 'Isitudiyo Sokuklama' : inlineText\(lang, 'Design Studio'\)\}/);
+  assert.match(design, /color: 'var\(--color-forest-800\)', fontWeight: 600, flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 4 \}\}>\{isZulu \? 'Klama' : inlineText\(lang, 'Design'\)\}<ArrowRight/);
 });
 
 // w17-01: widened guard. Scans every *.tsx and *.module.css under app/ and components/ and fails when

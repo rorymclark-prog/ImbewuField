@@ -1,0 +1,125 @@
+{
+  "unit": "g21-staff-misc",
+  "shard": "g21-staff-misc.ts",
+  "range": "all",
+  "okCount": 273,
+  "items": [
+    {
+      "index": 2,
+      "key": "A two-day refresher for people who will facilitate the existing core course. Practise teaching with the app, a real object and a paper fallback.",
+      "verdict": "repair",
+      "draft": "Uhlaziyo lweentsuku ezimbini lwabantu abaza kuququzelela ikhosi esisiseko esele ikhona. Qhelisa ukufundisa usebenzisa i-app, into yokwenyani nephepha lokuziphindezela.",
+      "backtranslation": "A two-day refresher for people who will facilitate the existing basic course. Practise teaching using the app, a real thing and a paper for going over/revising.",
+      "problem": "\"paper fallback\" rendered as \"iphepha lokuziphindezela\" (paper for repeating/revising) - the fallback meaning is lost.",
+      "corrected": "Uhlaziyo lweentsuku ezimbini lwabantu abaza kuququzelela ikhosi esisiseko esele ikhona. Qhelisa ukufundisa usebenzisa i-app, into yokwenyani nephepha oza kulisebenzisa xa i-app ingasebenzi."
+    },
+    {
+      "index": 9,
+      "key": "Confirm the hours, group size, trainers, venue and programme policy with ACT before delivery. The app’s isiZulu, Sesotho and Tshivenda text may include marked machine drafts. Check each lesson’s text, slides and narration separately before teaching; use the exact English source and local language support when a translation is unclear.",
+      "verdict": "repair",
+      "draft": "Qinisekisa iiyure, ubungakanani beqela, abaqeqeshi, indawo kunye nomgaqo-nkqubo wenkqubo ne-ACT phambi kokuba kuqalise. Isicatshulwa se-app sesiZulu, seSesotho nesesiTshivenda sinokuba nodidi lwezimvo ezenziwe ngoomatshini ezibonisiweyo. Khangela isicatshulwa, iisilayidi nokuchazwa kwesifundo ngasinye ngokwahlukeneyo phambi kokufundisa; sebenzisa umthombo wesiNgesi ngqo nenkxaso yolwimi lwasekuhlaleni xa ukuguqulelwa kungacacanga.",
+      "backtranslation": "Confirm the hours, size of the group, trainers, place and programme policy with ACT before it begins. The text of the app in isiZulu, Sesotho and Tshivenda may have a kind of opinions made by machines shown. Check the text, slides and description of each lesson separately before teaching; use the English source directly with local language support when the translation is unclear.",
+      "problem": "\"may include marked machine drafts\" rendered as \"may have a kind of opinions made by machines shown\" (\"izimvo\" = opinions) - the warning that the other-language text is an unreviewed machine draft is garbled.",
+      "corrected": "Qinisekisa iiyure, ubungakanani beqela, abaqeqeshi, indawo kunye nomgaqo-nkqubo wenkqubo ne-ACT phambi kokuba kuqalise. Isicatshulwa se-app sesiZulu, seSesotho nesesiTshivenda sinokuba needrafti ezenziwe ngoomatshini ezibhalwe ngokucacileyo. Khangela isicatshulwa, iisilayidi nokuchazwa kwesifundo ngasinye ngokwahlukeneyo phambi kokufundisa; sebenzisa umthombo wesiNgesi ngqo nenkxaso yolwimi lwasekuhlaleni xa ukuguqulelwa kungacacanga."
+    },
+    {
+      "index": 13,
+      "key": "Confirm the group’s languages and access needs. Bring an existing core lesson, its printed still and transcript, plus ordinary objects for a safe practical.",
+      "verdict": "repair",
+      "draft": "Qinisekisa iilwimi zeqela neemfuno zokufikelela. Zisa isifundo esisisiseko esikhoyo, umfanekiso waso oshicilelweyo nombhalo wesipaji, kunye nezinto eziqhelekileyo zomsebenzi osemgangathweni wokhuseleko.",
+      "backtranslation": "Confirm the group's languages and access needs. Bring the existing basic lesson, its printed picture and pocket text, together with the usual things of work in a safety standard.",
+      "problem": "\"transcript\" rendered as \"umbhalo wesipaji\" (pocket text) - wrong term.",
+      "corrected": "Qinisekisa iilwimi zeqela neemfuno zokufikelela. Zisa isifundo esisisiseko esikhoyo, umfanekiso waso oshicilelweyo nombhalo wamazwi okuchazwa, kunye nezinto eziqhelekileyo zomsebenzi osemgangathweni wokhuseleko."
+    },
+    {
+      "index": 15,
+      "key": "Confirm ACT’s register and consent wording before collecting real data. Ask separately before photographing or sharing anyone’s work. Do not use a shared device for private household records.",
+      "verdict": "repair",
+      "draft": "Qinisekisa irejista nomsebenzi wokuvuma we-ACT phambi kokuqokelela idatha yokwenyani. Buza ngokwahlukeneyo phambi kokuthatha ifoto okanye ukwabelana ngomsebenzi womntu. Musa ukusebenzisa isixhobo esabelwanayo kwiirekhodi zangasese zekhaya.",
+      "backtranslation": "Confirm the register and the consent task of ACT before collecting real data. Ask separately before taking a photo or sharing a person's work. Do not use the shared device for private household records.",
+      "problem": "\"consent wording\" rendered as \"consent task/work\" (\"umsebenzi wokuvuma\") - the wording to be confirmed is lost, and consent meaning is changed.",
+      "corrected": "Qinisekisa irejista namagama okuvuma e-ACT phambi kokuqokelela idatha yokwenyani. Buza ngokwahlukeneyo phambi kokuthatha ifoto okanye ukwabelana ngomsebenzi womntu. Musa ukusebenzisa isixhobo esabelwanayo kwiirekhodi zangasese zekhaya."
+    },
+    {
+      "index": 19,
+      "key": "The two days refresh the teaching method and practise selected lessons. They do not cover or assess all ten modules in full. Choose a published, available lesson that fits the local group and check its source and media before use.",
+      "verdict": "repair",
+      "draft": "Ezi ntsuku zimbini zihlaziya indlela yokufundisa zize ziqhelise izifundo ezikhethiweyo. Azigquli okanye zivavanye zonke iimodyuli ezili-10 ngokupheleleyo. Khetha isifundo esipapashiweyo, esikhoyo esifanelekileyo kwiqela lasekuhlaleni uze ukhangele umthombo wesona namajelo phambi kokusisebenzisa.",
+      "backtranslation": "These two days refresh the way of teaching and practise chosen lessons. They do not cover or assess all 10 modules completely. Choose a published, available lesson that suits the local group and check its source and channels before using it.",
+      "problem": "\"its source and media\" rendered with the nonsense \"umthombo wesona namajelo\" - wrong concord, reads as a different noun.",
+      "corrected": "Ezi ntsuku zimbini zihlaziya indlela yokufundisa zize ziqhelise izifundo ezikhethiweyo. Azigquli okanye zivavanye zonke iimodyuli ezili-10 ngokupheleleyo. Khetha isifundo esipapashiweyo, esikhoyo esifanelekileyo kwiqela lasekuhlaleni uze ukhangele umthombo waso namajelo aso phambi kokusisebenzisa."
+    },
+    {
+      "index": 60,
+      "key": "Open a lesson, change language, test media and prepare an offline fallback.",
+      "verdict": "repair",
+      "draft": "Vula isifundo, tshintsha ulwimi, vavanya amajelo ulungiselele isicwangciso sokuziphindezela ngaphandle kwe-intanethi.",
+      "backtranslation": "Open a lesson, change language, check channels, prepare a plan for revising offline.",
+      "problem": "\"offline fallback\" rendered as \"isicwangciso sokuziphindezela\" (a plan for repeating/revising) - fallback meaning lost.",
+      "corrected": "Vula isifundo, tshintsha ulwimi, vavanya amajelo ulungiselele isicwangciso esingasebenza ngaphandle kwe-intanethi."
+    },
+    {
+      "index": 66,
+      "key": "Use the printed still, transcript and question if the app or download fails.",
+      "verdict": "repair",
+      "draft": "Sebenzisa umfanekiso oshicilelweyo, umbhalo wesipaji nombuzo ukuba i-app okanye ukukhuphela kungaphumeleli.",
+      "backtranslation": "Use the printed picture, pocket text and question if the app or downloading does not succeed.",
+      "problem": "\"transcript\" rendered as \"umbhalo wesipaji\" (pocket text) - wrong term.",
+      "corrected": "Sebenzisa umfanekiso oshicilelweyo, umbhalo wamazwi okuchazwa nombuzo ukuba i-app okanye ukukhuphela kungaphumeleli."
+    },
+    {
+      "index": 84,
+      "key": "Return to Day 1 questions. Name the ones that need a local practitioner, measurement or source before advice is given.",
+      "verdict": "repair",
+      "draft": "Buyela kwimibuzo yoSuku 1. Chaza leyo idinga umsebenzi wasekuhlaleni, umlinganiselo okanye umthombo phambi kokunikwa kwecebiso.",
+      "backtranslation": "Return to the Day 1 questions. Describe which needs local work, measurement or a source before advice is given.",
+      "problem": "\"local practitioner\" rendered as \"umsebenzi wasekuhlaleni\" (local work/job) - the person to consult is lost.",
+      "corrected": "Buyela kwimibuzo yoSuku 1. Chaza leyo idinga ingcali yasekuhlaleni, umlinganiselo okanye umthombo phambi kokunikwa kwecebiso."
+    },
+    {
+      "index": 107,
+      "key": "Prepare an outcome, activity, question and paper fallback.",
+      "verdict": "repair",
+      "draft": "Lungiselela umphumo, umsebenzi, umbuzo nephepha lokuziphindezela.",
+      "backtranslation": "Prepare the outcome, the task, the question and the paper for revising.",
+      "problem": "\"paper fallback\" rendered as \"iphepha lokuziphindezela\" (paper for repeating/revising) - fallback meaning lost.",
+      "corrected": "Lungiselela umphumo, umsebenzi, umbuzo nephepha oza kulisebenzisa xa i-app ingasebenzi."
+    },
+    {
+      "index": 132,
+      "key": "Pauses unsafe or unverified farming advice and identifies the next source or practitioner check.",
+      "verdict": "repair",
+      "draft": "Iyayeka icebiso lokulima elingakhuselekanga okanye elingaqinisekiswanga ichonge umthombo olandelayo okanye ukukhangela komsebenzi.",
+      "backtranslation": "Stops unsafe or unconfirmed farming advice and identifies the next source or work check.",
+      "problem": "\"practitioner check\" rendered as \"ukukhangela komsebenzi\" (checking of the work) - the practitioner is lost; sentence also loses the \"and\" between stopping advice and naming the next source.",
+      "corrected": "Iyayeka icebiso lokulima elingakhuselekanga okanye elingaqinisekiswanga, ichonge umthombo olandelayo okanye ukukhangelwa yingcali."
+    },
+    {
+      "index": 168,
+      "key": "A season-by-season task board — prep, sow, transplant, harvest — built from each crop’s real planting window for South African rainfall patterns.",
+      "verdict": "repair",
+      "draft": "Ibhodi yemisebenzi yexesha ngalinye lonyaka — ukulungiselela, ukuhlwayela, ukutshitshisa, ukuvuna — eyakhiwe ngexesha lokwenyani lokutyala lesityalo ngasinye ngokweemo zemvula zoMzantsi Afrika.",
+      "backtranslation": "A board of tasks for each season of the year — preparing, sowing, weeding, harvesting — built on the real planting time of each crop according to the rain patterns of South Africa.",
+      "problem": "\"transplant\" rendered as \"ukutshitshisa\" - not a recognised term for transplanting (reads as a different task such as weeding/hurrying).",
+      "corrected": "Ibhodi yemisebenzi yexesha ngalinye lonyaka — ukulungiselela, ukuhlwayela, ukuhambisa izityalo ezincinci, ukuvuna — eyakhiwe ngexesha lokwenyani lokutyala lesityalo ngasinye ngokweemo zemvula zoMzantsi Afrika."
+    },
+    {
+      "index": 170,
+      "key": "Every plant on offer in farm design is a real, sourced species — indigenous fruit trees, exotic fruit and nut trees, shrubs, groundcovers and climbers — each with its own water need, mature size and use.",
+      "verdict": "repair",
+      "draft": "Isityalo ngasinye esikhoyo kuyilo lwefama luhlobo lwenene, olunomthombo — imithi yeziqhamo yesiNtu, imithi yeziqhamo neenzalo eziphuma phesheya, amatyholo, izityalo ezigubungela umhlaba nezikhwelayo — ngasinye sinesidingo saso samanzi, ubukhulu bokuvuthwa nokusetyenziswa.",
+      "backtranslation": "Each crop available in the farm design is a true kind with a source — traditional fruit trees, fruit trees and offspring from overseas, herbs, ground-covering and climbing crops — each with its own water need, size of ripening and use.",
+      "problem": "\"exotic fruit and nut trees\" rendered as \"imithi yeziqhamo neenzalo\" (fruit trees and offspring) - nuts replaced by \"offspring\".",
+      "corrected": "Isityalo ngasinye esikhoyo kuyilo lwefama luhlobo lwenene, olunomthombo — imithi yeziqhamo yesiNtu, imithi yeziqhamo neyamantongomane eziphuma phesheya, amatyholo, izityalo ezigubungela umhlaba nezikhwelayo — ngasinye sinesidingo saso samanzi, ubukhulu bokuvuthwa nokusetyenziswa."
+    },
+    {
+      "index": 238,
+      "key": "Printing isn't available in the installed app. This page's link is copied — open it in Safari or Chrome to print.",
+      "verdict": "repair",
+      "draft": "Ukushicilela akukho kwi-app efakiweyo. Ilinki yeli phepha ikhutshelwe — yivule kwi-Safari okanye kwi-Chrome ukuze ushicilele.",
+      "backtranslation": "Printing is not available in the installed app. The link of this page is downloaded/copied — open it in Safari or in Chrome to print.",
+      "problem": "\"This page's link is copied\" rendered as \"ikhutshelwe\" (downloaded) - user told the link was downloaded rather than copied to clipboard.",
+      "corrected": "Ukushicilela akukho kwi-app efakiweyo. Ilinki yeli phepha ikhophiwe — yivule kwi-Safari okanye kwi-Chrome ukuze ushicilele."
+    }
+  ]
+}

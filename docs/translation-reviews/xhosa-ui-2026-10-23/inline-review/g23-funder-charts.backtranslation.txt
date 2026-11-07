@@ -1,0 +1,77 @@
+0 Harvest and income, month by month
+1 How this is calculated
+2 Not shared
+3 Cannot be compared
+4 Sold
+5 Farmer income
+6 Farmers
+7 Harvest not linked with sales
+8 Harvested, {n} months
+9 Not linked, across {n} farms
+10 Kilograms harvested
+11 Kilograms sold
+12 Kilograms harvested, and sold
+13 Money received by farmers
+14 Rand income per month across {n} farms.
+15 No farm in this group has shared its sales book. Income that is not allowed to be shown is not R0 income, so these months are not drawn at all.
+16 Sold more than was harvested in that month
+17 Harvested · {n} farm
+18 Harvested · {n} farms
+19 Sold · {n} farm
+20 Sold · {n} farms
+21 Sold with no recorded harvest behind it
+22 Different farmers — bars are not placed on top of one another
+23 Harvest not linked with sales is not an estimated household use.
+24 Harvest not linked with sales may have been stored, eaten, given away, lost or has no sales record. These four numbers include the {n} months visible here. The group total elsewhere on this page counts every record since each farm joined, so it may be slightly bigger — these are different time periods, not two answers.
+25 Shown briefly so that the remaining months of the year stay readable: {list}.
+26 {month} — {kg} harvested
+27 {month} — {kg} sold
+28 {month} — {amount} income
+29 What is stored is counted only for the {n} farm that shared both books, so it is not the harvested amount above minus the sold amount.
+30 What is stored is counted only for the {n} farms that shared both books, so it is not the harvested amount above minus the sold amount.
+31 A dotted line is a month where sales exceed the harvest recorded in that month alone. Usually it is produce harvested earlier and sold later; sometimes it is a harvest nobody wrote down.
+32 A sold bar with dots is weight with no harvest record here — perhaps this farmer did not share their harvest book, or the produce was harvested in an earlier month. The bar still reaches the whole amount sold; nothing is shown shorter than it is.
+33 harvest not shared
+34 sales not shared
+35 income not shared
+36 {kg} harvested
+37 {kg} sold
+38 {amount} income
+39 {n} farm records
+40 {n} farms record
+41 {prod} of {total} farms shared a harvest record
+42 {prod} of {total} farms shared a harvest record
+43 {n} shared sales
+44 {n} shared sales
+45 {a} and {b}.
+46 None of them shared both.
+47 {n} of them shared both.
+48 {n} of them shared both.
+49 Anyone who did not share does not appear in these bars, and is not counted as zero.
+50 Kilograms harvested per month across {n} farms, showing kilograms sold and harvest not linked with sales.
+51 Kilograms harvested per month across {n} farms. No one here shared a sales record.
+52 Kilograms sold per month across {n} farms. No one here shared a harvest record.
+53 Kilograms harvested per month across {picked} farms, and kilograms sold across {sold} farms, placed side by side because they are not the same farms.
+54 No one here agreed to share a harvest record, so only the sold bars are drawn. The empty half of each column is consent never given by anyone, not an empty harvest.
+55 No one here agreed to share a sales record, so only the harvested bars are drawn. The empty half of each column is consent never given by anyone, not harvest that was never sold.
+56 no farm shared both
+57 only {n} farm shared both
+58 only {n} farms shared both
+59 {n} farm shared a harvest record
+60 {n} farms shared a harvest record
+61 {a} and {b}, but {c}.
+62 Harvested and sold stand side by side because they are not the same farms: none can be placed on top of the other, subtracted from the other, or cut to fit the other.
+63 Course progress across the whole group
+64 None of the {total} farmers agreed to share a training record.
+65 {reporting} of {total} farmers shared a training record. The course has {modules} modules.
+66 {reporting} of {total} farmers shared a training record. The course has {modules} modules.
+67 A training record that was not allowed to be shared is not a farmer who has not done training, so no one is shown at zero here — they are simply not drawn.
+68 Average course completed
+69 Finished every module
+70 Started the course
+71 Modules completed in total
+72 How many of the {reporting} reporting farmers completed each number of course modules, from never up to all {modules}.
+73 {n} farmer completed {done} of {total} modules
+74 {n} farmers completed {done} of {total} modules
+75 Modules completed, out of {total}
+76 A module is counted when the farmer has completed it in the app. Farmers who did not share a training record are not drawn at zero — they are not drawn at all.

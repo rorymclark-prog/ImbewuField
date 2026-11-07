@@ -1,0 +1,701 @@
+{
+  "language": "xh",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Water Harvesting",
+        "body": [
+          "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ukuqokelela amanzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imisele (swales), i-berm, amadama, iitanki zamanzi emvula nee-greywater — yenza amanzi ahambe kancinci, asasazeke aze angene emhlabeni, lonke ithonsi."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "Explain how a level contour swale can slow and spread runoff for infiltration on a suitable site.",
+          "Explain why dams need a designed spillway and a site assessment.",
+          "Explain what a first-flush diverter does and why tank water still needs a safety check.",
+          "Keep greywater away from people, food and drinking-water pipes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Iziphumo zokufunda"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Cacisa ukuba umsele olinganayo olandela umgca wokuphakama unokunciphisa ijubane lamanzi agelekayo awasasaze ukuze afunxeke kwindawo efanelekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Cacisa ukuba kutheni amadama edinga indlela yokuphuphuma eyilelweyo novavanyo lwendawo."
+          },
+          {
+            "status": "draft",
+            "text": "Cacisa ukuba yintoni eyenziwa yi-first-flush diverter nokuba kutheni amanzi etanki esadinga ukujongwa ukhuseleko."
+          },
+          {
+            "status": "draft",
+            "text": "Gcina i-greywater kude nabantu, nokutya nemibhobho yamanzi okusela."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Two Swale Designs",
+        "body": [
+          "A level contour swale is one design for slowing runoff. Its trench follows a level contour so water can spread and soak into suitable soil.",
+          "Some swales are deliberately given a slight grade, with a designed safe outlet. Soil, slope, drainage and storm flow decide which approach is suitable. Ask a trained local adviser to assess the site before digging."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Iindlela ezimbini zoyilo lomsele"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umsele olinganayo olandela umgca wokuphakama yindlela enye yoyilo yokunciphisa ijubane lamanzi agelekayo. Umjelo wawo ulandela umgca wokuphakama olinganayo ukuze amanzi asasazeke afunxeke emhlabeni ofanelekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Eminye imisele yenzelwe ngabom ukuba nethambeka elincinci, kunye nendawo ekhuselekileyo yokuphuma eyilelweyo. Umhlaba, ithambeka, ukuphuma kwamanzi nokuhamba kwamanzi esaqhwithi kuchaza ukuba yeyiphi indlela efanelekileyo. Cela umcebisi wasekuhlaleni oqeqeshiweyo ahlole indawo phambi kokumba."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "A Swale May Let Water Soak In",
+        "body": [
+          "This picture shows a level contour swale as a concept. Water may spread along the trench and soak in where the soil allows it.",
+          "It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umsele unokuvumela amanzi afunxeke"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Lo mfanekiso ubonisa umsele olinganayo olandela umgca wokuphakama njengombono. Amanzi asenokusasazeka ecaleni komjelo afunxeke apho umhlaba ukuvumela khona."
+          },
+          {
+            "status": "draft",
+            "text": "Awubonisi ukuba ukufuma kufikelela ubunzulu obungakanani emhlabeni wakho. Jonga umhlaba, ithambeka nendlela yokuphuphuma kwamanzi phambi kokwakha."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "The Downhill Berm",
+        "body": [
+          "The excavated soil forms a berm on the downhill side. It is where trees may be planted when the site design is suitable.",
+          "Trees may draw on moisture stored in nearby soil after rain; the result varies by site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "I-berm esezantsi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umhlaba okhutshiweyo wenza i-berm ngakwicala eliya ezantsi. Yindawo apho kunokutyalwa khona imithi xa uyilo lwendawo lufanelekile."
+          },
+          {
+            "status": "draft",
+            "text": "Imithi isenokusebenzisa ukufuma okugcinwe emhlabeni osondeleyo emva kwemvula; isiphumo siyahluka ngokwendawo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Storms Need a Safe Overflow",
+        "body": [
+          "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+          "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+          "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Izaqhwithi zidinga indlela ekhuselekileyo yokuphuphuma"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imvula enkulu isenokugcwalisa umsele ngokukhawuleza kunokuba amanzi afunxeke emhlabeni. Cwangcisa indlela ekhuselekileyo yokuphuphuma phambi kokumba."
+          },
+          {
+            "status": "draft",
+            "text": "Indlela mayingawonakalisi ithambeka okanye ithumele amanzi anokonakalisa kummelwane. Umsele okanye idama elingezantsi kufuneka likwazi ukuwamkela ngokukhuselekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Cela umcebisi wasekuhlaleni oqeqeshiweyo ahlole umhlaba, ithambeka nokuhamba kwamanzi esaqhwithi. Umfanekiso awuyonto yoyilo lokwakha."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Assess the Overflow Before Digging",
+        "body": [
+          "A swale needs a planned overflow route for heavy rain. Check it before digging.",
+          "Water may go to another swale or a dam only when a site assessment shows that the route, outlet and receiver can take the flow without damage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Vavanya indlela yokuphuphuma phambi kokumba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umsele udinga indlela ecwangcisiweyo yokuphuphuma kwimvula enkulu. Yijonge phambi kokumba."
+          },
+          {
+            "status": "draft",
+            "text": "Amanzi asenokuya komnye umsele okanye kwidama kuphela xa uvavanyo lwendawo lubonisa ukuba indlela, indawo yokuphuma nendawo yokwamkela zinokuthwala ukuhamba kwamanzi ngaphandle komonakalo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Check the Site Before Digging",
+        "body": [
+          "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+          "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jonga indawo phambi kokumba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ithambeka lodwa alikuxeleli ukuba umsele ufanelekile okanye hayi. Umhlaba, ukuphuma kwamanzi, umhlaba ongazinzanga namanzi asuka ngaphezulu kwethambeka konke kuyabaluleka."
+          },
+          {
+            "status": "draft",
+            "text": "Gcina umhlaba ugqunyiwe kakuhle. Funa uvavanyo lwasekuhlaleni phambi kokumba emhlabeni omnqantsa kakhulu, onamanzi okanye ongazinzanga. Imiqobo yengca nezitebhisi zomhlaba (iitheresi) nazo zifuna uyilo olufanele indawo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Watch: Roots Help Hold Soil",
+        "body": [
+          "Roots help hold soil along a planted contour line.",
+          "Choose erosion controls with local advice; steep land needs a site assessment."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jonga: iingcambu zinceda ukubamba umhlaba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Iingcambu zinceda ukubamba umhlaba ecaleni komgca wokuphakama otyaliweyo."
+          },
+          {
+            "status": "draft",
+            "text": "Khetha indlela yokulawula ukukhukuliseka ngengcebiso yasekuhlaleni; umhlaba omnqantsa kakhulu udinga uvavanyo lwendawo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Store Rain for the Dry Season",
+        "body": [
+          "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+          "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+          "Before changing a watercourse or building storage works, check the required authorisation with the water authority."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Gcina imvula yexesha lokoma"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Idama okanye ichibi lingagcina amanzi agelekayo, kodwa inani elifumanekayo lixhomekeke kwimvula yasekuhlaleni, indawo ekhuphela amanzi (catchment), ilahleko yamanzi nokuba usebenzisa amanzi amaninzi kangakanani."
+          },
+          {
+            "status": "draft",
+            "text": "Amaxesha emvula ayahluka kulo lonke uMzantsi Afrika. Sebenzisa iirekhodi zasekuhlaleni kwaye ucwangcise amaxesha omileyo; akukho sithembiso sokuba idama liya kuhlala ligcwele."
+          },
+          {
+            "status": "draft",
+            "text": "Phambi kokutshintsha umjelo wamanzi okanye ukwakha imisebenzi yokugcina amanzi, jonga imvume efunekayo kwigunya lamanzi."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Design the Spillway Before the Wall",
+        "body": [
+          "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+          "Do not assume that annual rainfall tells you the size of a flood or the storage you will have.",
+          "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Yila indlela yokuphuphuma ngaphambi kodonga"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Idama lifuna uphando lwendawo noyilo olwenziwa ngumntu oqeqeshelwe oko ngokufanelekileyo. Amanzi agelekayo kwindawo ekhuphela amanzi, umhlaba, iziseko, umngcipheko ongezantsi nendlela ekhuselekileyo yokuphuphuma kwamanzi (spillway) konke kuyabaluleka."
+          },
+          {
+            "status": "draft",
+            "text": "Musa ukucinga ukuba imvula yonyaka ikuxelela ubukhulu bomkhukula okanye amanzi aya kuba nawo egcinwe."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuphuphuma okungalawulwanga kunokukhukulisa kwaye kuqhekeze udonga. Cwangcisa indlela ekhuselekileyo yamanzi agqithisileyo phambi kokwakha."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Dam and Spillway: A Concept",
+        "body": [
+          "Design the spillway before the wall — an overtopped wall can breach catastrophically.",
+          "Catchment runoff is one input. A suitably qualified person must assess the site, dam and spillway design before construction."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Idama nendlela yokuphuphuma: umbono"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Yila indlela yokuphuphuma phambi kodonga — udonga olugqithwa ngamanzi lunokuqhekeka ngokubi kakhulu."
+          },
+          {
+            "status": "draft",
+            "text": "Amanzi agelekayo kwindawo ekhuphela amanzi yenye kuphela yezinto ezifunekayo. Umntu oqeqeshelwe oko ngokufanelekileyo kufuneka avavanye indawo noyilo ledama nolwendlela yokuphuphuma phambi kokwakha."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Care for the Dam and Its Banks",
+        "body": [
+          "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+          "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+          "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khathalela idama namabhanki alo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Amanzi anokulahleka ngokuhwamla nangokuvuza emhlabeni. Jonga ukuphakama kwamanzi kwaye ufune ukuvuza okanye ukukhukuliseka."
+          },
+          {
+            "status": "draft",
+            "text": "Gcina indlela yokuphuphuma ingavaliwe kwaye ugcine ukugqunywa kwamabhanki njengoko kumiselwe kuyilo. Musa ukutyala imithi kudonga ledama lomhlaba."
+          },
+          {
+            "status": "draft",
+            "text": "Izilwanyana zingonakalisa amabhanki kwaye zongeze ubulongwe emanzini. Ubukho bazo abwenzi amanzi acocekileyo okanye akhuselekileyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Your Roof Is a Harvesting Surface",
+        "body": [
+          "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+          "Check whether the roof material is suitable for rainwater collection before connecting a tank.",
+          "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+          "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Uphahla lwakho luyindawo yokuqokelela amanzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Uphahla lwakho lunokuqokelela amanzi emvula. Inani lixhomekeke kubungakanani bophahla, kwimvula nakwilahleko."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga ukuba izinto zophahla zifanelekile na ekuqokeleleni amanzi emvula phambi kokuqhagamshela itanki."
+          },
+          {
+            "status": "draft",
+            "text": "Sebenzisa ubungakanani bophahla njengoko buboniwa ngaphezulu kunye neerekhodi zemvula zasekuhlaleni. Emva koko qwalasela amanzi angangeni emjelweni wophahla (igatara), aphambukiswayo okanye aphuphuma kwitanki egcweleyo."
+          },
+          {
+            "status": "draft",
+            "text": "Isixa semvula yonyaka asikuxeleli ukuba mangaphi amanzi aya kubakho ngexesha lokoma. Thelekisa amanzi onawo nokusetyenziswa okucwangcisileyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Divert the Dirty First Flush",
+        "body": [
+          "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+          "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+          "A diverter does not make the remaining water safe to drink."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Phambukisa amanzi okuqala angcolileyo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Amanzi asuka ophahleni anokuthwala uthuli, ubulongwe nokunye ukungcola. I-first-flush diverter (isixhobo esiphambukisa amanzi okuqala) igcina inxalenye yamanzi okuqala ingangeni kwitanki."
+          },
+          {
+            "status": "draft",
+            "text": "Ubungakanani bamanzi afuneka aphambukiswe buxhomekeke kuphahla nakwinkqubo. Sebenzisa imiyalelo yomthengisi yobungakanani nokugcinwa; akukho mthamo mnye ofanele lonke uphahla."
+          },
+          {
+            "status": "draft",
+            "text": "I-diverter ayiwenzi amanzi asele akhuselekile ukusela."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "First Flush to Tank: A Concept",
+        "body": [
+          "A first-flush diverter keeps early roof runoff out of the tank.",
+          "Size and maintain it for your roof; later runoff still needs a safety check."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Amanzi okuqala aye kwitanki: umbono"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-first-flush diverter igcina amanzi okuqala asuka ophahleni engangeni kwitanki."
+          },
+          {
+            "status": "draft",
+            "text": "Yilinganise uyigcine ngokophahla lwakho; amanzi alandelayo asadinga ukujongwa ukhuseleko."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Match Tank Size to Water Demand",
+        "body": [
+          "Tank size depends on water demand, rain, roof area and the length of dry periods.",
+          "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+          "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Linganisa ubungakanani betanki nemfuno yamanzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ubungakanani betanki buxhomekeke kwimfuno yamanzi, imvula, ubungakanani bophahla nobude bamaxesha omileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Bhala ukusetyenziswa oceba ukukwenza uze uqikelele imfuno yako usebenzisa iirekhodi zakho. Thelekisa oko namanzi onawo ngamaxesha onyaka."
+          },
+          {
+            "status": "draft",
+            "text": "Cwangcisa into oya kuyenza xa amanzi agciniweyo ancipha. Igama lephondo ngokwalo alinakukuxelela ubungakanani betanki obuyifunayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Keep Stored Water Protected",
+        "body": [
+          "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+          "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+          "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Gcina amanzi agciniweyo ekhuselekile"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Gcina itanki igqunyiwe, gquma imingxuma ngesikrini ukuthintela izinambuzane, kwaye ugcine uphahla, igatara ne-diverter. Gcina amanzi emvula eyahlukile kwimibhobho yamanzi okusela."
+          },
+          {
+            "status": "draft",
+            "text": "Amanzi abonakala ecocekile asenokuba neentsholongwane okanye iikhemikhali. Buza kwigunya lezempilo lasekuhlaleni malunga novavanyo nokucoca okufanelekileyo ekusetyenzisweni okucetywayo."
+          },
+          {
+            "status": "draft",
+            "text": "Isihluzi esiyisiseko sodwa asisosiqinisekiso samanzi okusela. Amanzi asetyenziswa kwizityalo zokutya nawo afuna uvavanyo lokhuseleko."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Used Water Varies by Source",
+        "body": [
+          "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way.",
+          "South African guidance differs on kitchen water and laundry water. Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Amanzi asetyenzisiweyo ahluka ngomthombo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Amanzi asetyenzisiweyo ekhaya anokuba neentsholongwane, ityuwa, iimveliso zokucoca nezinye izinto. Izikhokelo azichazi umthombo ngamnye ngendlela efanayo."
+          },
+          {
+            "status": "draft",
+            "text": "Izikhokelo zaseMzantsi Afrika ziyahluka malunga namanzi asekhitshini namanzi okuhlamba iimpahla. Musa ukubandakanya amanzi asetoyilethi, amanzi eediyapha, okuhlamba umntu ogulayo okanye okuhlamba izilwanyana kwicebo lokuwasebenzisa kwakhona. Musa ukuphinda usebenzise amanzi aneekhemikhali eziyingozi."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Get Local Advice Before Any Reuse",
+        "body": [
+          "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site.",
+          "If this advice is unavailable or unclear, do not reuse the water. Soil and mulch do not disinfect wastewater."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Fumana ingcebiso yasekuhlaleni phambi kokuphinda usebenzise"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Phambi kokuphinda usebenzise, cela umasipala nomcebisi oqeqeshiweyo wasekuhlaleni wococeko ukuba ahlole umthombo ngqo, iinkonzo zamanzi nococeko zekhaya, ukusetyenziswa okucetywayo nendawo."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba le ngcebiso ayifumaneki okanye ayicacanga, musa ukuphinda usebenzise amanzi. Umhlaba nengca yokugquma azibulali ntsholongwane emanzini angcolileyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "heading": "A Picture Is Not a Farm Design",
+        "body": [
+          "This generic picture is not a tested or approved farm design. It does not prove that the source, route or destination is safe.",
+          "Check with qualified local advisers before any reuse. Soil and mulch do not disinfect wastewater."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umfanekiso awuyonto yoyilo lwefama"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Lo mfanekiso oqhelekileyo awuyonto yoyilo lwefama olujongwe okanye olwamkelweyo. Awubonisi ukuba umthombo, indlela okanye indawo eya kuyo kukhuselekile."
+          },
+          {
+            "status": "draft",
+            "text": "Hlola nabacebisi basekuhlaleni abaqeqeshiweyo phambi kokuphinda usebenzise. Umhlaba nengca yokugquma azibulali ntsholongwane emanzini angcolileyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "heading": "Prevent Contact and Pollution",
+        "body": [
+          "Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.",
+          "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Thintela ukuchukumisa amanzi nokungcoliseka"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Thintela abantu okanye izilwanyana ukuba bachukumise la manzi. Musa ukudibanisa amanzi okuhlamba nemibhobho yamanzi okusela, ukuwafafaza, ukuwayeka ame, okanye ukuwavumela aphume epropathini aye esitratweni, kwi-drain okanye emlanjeni."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba inkqubo yokuphinda kusetyenziswe amanzi sele isebenza kwaye amanzi enuka kakubi, ayama, okanye alimaza izityalo, yeka ukuwasebenzisa kwaye ufune ingcebiso yomcebisi oqeqeshiweyo wasekuhlaleni."
+          }
+        ]
+      }
+    },
+    {
+      "n": 23,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Build an A-frame level from three poles and a weighted string.",
+          "Use it to find one level line across your slope.",
+          "Photograph the A-frame and the line you marked."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umsebenzi wasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Yakha i-A-frame level ngeentsika ezintathu nentambo eboshelwe into enzima."
+          },
+          {
+            "status": "draft",
+            "text": "Yisebenzise ukufumana umgca omnye olinganayo phezu kwethambeka lakho."
+          },
+          {
+            "status": "draft",
+            "text": "Thatha ifoto ye-A-frame nomgca owuphawulileyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 24,
+      "english": {
+        "heading": "Check Your Work",
+        "body": [
+          "My A-frame is built and I have tested it.",
+          "Turn it around — it should read the same.",
+          "I have marked at least three points at the same height across my slope.",
+          "My marked line runs across the slope, not down it.",
+          "Realistic minimum time for the real work: 5 days."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jonga umsebenzi wakho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-A-frame yam yakhiwe kwaye ndiyivavanyile."
+          },
+          {
+            "status": "draft",
+            "text": "Yijike — kufuneka ifunde ngendlela efanayo."
+          },
+          {
+            "status": "draft",
+            "text": "Ndiphawule ubuncinane amanqaku amathathu akwisithuba esinye sokuphakama phezu kwethambeka lam."
+          },
+          {
+            "status": "draft",
+            "text": "Umgca wam endiwuphawulileyo uwela ithambeka, awuhli ngalo."
+          },
+          {
+            "status": "draft",
+            "text": "Ixesha elincinci elinokwenzeka kumsebenzi wokwenyani: iintsuku ezi-5."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,3810 @@
+[
+ {
+  "id": "R001",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R002",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R003",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R004",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R005",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R006",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R007",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R008",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R009",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R010",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R011",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R012",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R013",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R014",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R015",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R016",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R017",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R018",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R019",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R020",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R021",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R022",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R023",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R024",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R025",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R026",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R027",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R028",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R029",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R030",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R031",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R032",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R033",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R034",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R035",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R036",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R037",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R038",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R039",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R040",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R041",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R042",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R043",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R044",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R045",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R046",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R047",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R048",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R049",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R050",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R051",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R052",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R053",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R054",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R055",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R056",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R057",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R058",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R059",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R060",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R061",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R062",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R063",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R064",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R065",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R066",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R067",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R068",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R069",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R070",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R071",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R072",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R073",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R074",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R075",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R076",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R077",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R078",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R079",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R080",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R081",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R082",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R083",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R084",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R085",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R086",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R087",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R088",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R089",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R090",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R091",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R092",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R093",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R094",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R095",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R096",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R097",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R098",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R099",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R100",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R101",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R102",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R103",
+  "verdict": "repair",
+  "problem": "'Kusetyenziswe kule nyanga' = 'used this month' without saying money; next to rand figure and beside 'Kuvunwe' it can read as produce used. English 'Spent' = money out.",
+  "repaired": "Imali esetyenzisiweyo kule nyanga",
+  "severity": "wording"
+ },
+ {
+  "id": "R104",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R105",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R106",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R107",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R108",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R109",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R110",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R111",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R112",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R113",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R114",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R115",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R116",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R117",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R118",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R119",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R120",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R121",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R122",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R123",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R124",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R125",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R126",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R127",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R128",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R129",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R130",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R131",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R132",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R133",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R134",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R135",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R136",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R137",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R138",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R139",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R140",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R141",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R142",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R143",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R144",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R145",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R146",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R147",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R148",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R149",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R150",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R151",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R152",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R153",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R154",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R155",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R156",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R157",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R158",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R159",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R160",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R161",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R162",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R163",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R164",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R165",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R166",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R167",
+  "verdict": "repair",
+  "problem": "'Izithole' means heifers (young cows) in isiXhosa, not seedlings. The placeholder would show farmers an example about livestock in a seed/cost field. Seedlings = 'izithombo'.",
+  "repaired": "umz. Izithombo",
+  "severity": "meaning"
+ },
+ {
+  "id": "R168",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R169",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R170",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R171",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R172",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R173",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R174",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R175",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R176",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R177",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R178",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R179",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R180",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R181",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R182",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R183",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R184",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R185",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R186",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R187",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R188",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R189",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R190",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R191",
+  "verdict": "repair",
+  "problem": "'Iirekhodi zombolekisi wemali' = 'the lender's records' (possessive), not records prepared FOR a lender. Farmer could think these are the lender's own records.",
+  "repaired": "Iirekhodi ezenzelwe umbolekisi wemali",
+  "severity": "wording"
+ },
+ {
+  "id": "R192",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R193",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R194",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R195",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R196",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R197",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R198",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R199",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R200",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R201",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R202",
+  "verdict": "repair",
+  "problem": "Same possessive problem as R191: 'export the lender's records' instead of 'export records for a lender'.",
+  "repaired": "Thumela ngaphandle iirekhodi ezenzelwe umbolekisi wemali",
+  "severity": "wording"
+ },
+ {
+  "id": "R203",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R204",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R205",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R206",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R207",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R208",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R209",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R210",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R211",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R212",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R213",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R214",
+  "verdict": "repair",
+  "problem": "Spelling of negative copulative: 'awububungqina' should be 'awubobungqina' (it is not proof).",
+  "repaired": "Umfanekiso wesityalo owenziwe yi-AI, awubobungqina besivuno",
+  "severity": "minor"
+ },
+ {
+  "id": "R215",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R216",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R217",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R218",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R219",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R220",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R221",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R222",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R223",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R224",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R225",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R226",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R227",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R228",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R229",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R230",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R231",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R232",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R233",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R234",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R235",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R236",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R237",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R238",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R239",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R240",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R241",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R242",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R243",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R244",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R245",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R246",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R247",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R248",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R249",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R250",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R251",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R252",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R253",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R254",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R255",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R256",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R257",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R258",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R259",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R260",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R261",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R262",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R263",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R264",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R265",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R266",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R267",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R268",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R269",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R270",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R271",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R272",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R273",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R274",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R275",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R276",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R277",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R278",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R279",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R280",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R281",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R282",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R283",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R284",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R285",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R286",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R287",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R288",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R289",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R290",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R291",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R292",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R293",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R294",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R295",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R296",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R297",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R298",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R299",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R300",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R301",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R302",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R303",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R304",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R305",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R306",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R307",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R308",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R309",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R310",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R311",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R312",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R313",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R314",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R315",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R316",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R317",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R318",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R319",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R320",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R321",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R322",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R323",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R324",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R325",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R326",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R327",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R328",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R329",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R330",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R331",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R332",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R333",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R334",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R335",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R336",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R337",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R338",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R339",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R340",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R341",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R342",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R343",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R344",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R345",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R346",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R347",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R348",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R349",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R350",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R351",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R352",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R353",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R354",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R355",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R356",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R357",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R358",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R359",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R360",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R361",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R362",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R363",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R364",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R365",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R366",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R367",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R368",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R369",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R370",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R371",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R372",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R373",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R374",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R375",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R376",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R377",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R378",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R379",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R380",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R381",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R382",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R383",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R384",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R385",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R386",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R387",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R388",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R389",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R390",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R391",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R392",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R393",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R394",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R395",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R396",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R397",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R398",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R399",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R400",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R401",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R402",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R403",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I001",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I002",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I003",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I004",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I005",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I006",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I007",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I008",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I009",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I010",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I011",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I012",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I013",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I014",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I015",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I016",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I017",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I018",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I019",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I020",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I021",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I022",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I023",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I024",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I025",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I027",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I028",
+  "verdict": "repair",
+  "problem": "'Ihlawulwa ngu' ('it is paid by') is a dangling preposition when shown as a label ABOVE the buyer name rather than directly joined to it. A noun label is clearer.",
+  "repaired": "Umhlawuli",
+  "severity": "wording"
+ },
+ {
+  "id": "I029",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I030",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I031",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I032",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I033",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I034",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I035",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I036",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I037",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I038",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I039",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I040",
+  "verdict": "repair",
+  "problem": "'Khetha kanye intengiso' reads 'choose a sale once / only one sale'; English is 'Choose the exact sale' (the correct one).",
+  "repaired": "Khetha intengiso echanekileyo",
+  "severity": "wording"
+ },
+ {
+  "id": "I043",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I044",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I045",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I046",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I048",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I049",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I050",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I051",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I052",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I053",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I054",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I055",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I056",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I057",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I059",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I060",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I061",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I062",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I065",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I066",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I067",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I068",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I069",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I070",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I071",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I072",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I073",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I075",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I076",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I077",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I078",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I082",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I083",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I084",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I085",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I086",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I087",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I088",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I089",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I090",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I092",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I094",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I095",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I096",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I097",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I098",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I099",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I100",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I101",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I102",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I103",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I106",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I107",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I108",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I109",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I111",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I112",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I113",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I114",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I115",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I117",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I118",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I119",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I122",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I123",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I124",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I125",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I126",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I127",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I128",
+  "verdict": "repair",
+  "problem": "Draft says keep 'its (the invoice's) original details and any linked sale'; English says keep the original details OF any linked sale.",
+  "repaired": "Le i-invoyisi ayikwazanga ukugcinwa. Jonga indawo yokugcina kwisixhobo sakho uze ugcine iinkcukacha zokuqala zentengiso nganye enxulunyanisiweyo, emva koko uzame kwakhona.",
+  "severity": "wording"
+ },
+ {
+  "id": "I129",
+  "verdict": "repair",
+  "problem": "'sele ingeyenye i-invoyisi' is ambiguous: 'inge-' is the negative participial prefix, so it can read 'is already not another invoice'. English means the sale is already linked to/belongs to another invoice.",
+  "repaired": "Le ntengiso sele inxulunyaniswe nenye i-invoyisi.",
+  "severity": "meaning"
+ },
+ {
+  "id": "I130",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I131",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I132",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I134",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I135",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I137",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I138",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I139",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I140",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I141",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I142",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I143",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I144",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I145",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I146",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I150",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I152",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I153",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I154",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I155",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I156",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I157",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I158",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I159",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "W11-01",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "W13-01",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "W13-02",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "W13-03",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "W13-04",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "W13-05",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "W13-06",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ }
+]

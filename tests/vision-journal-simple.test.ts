@@ -24,12 +24,12 @@ test('/vision, FieldJournal and JournalEntrySheet all read Simple / All tools fr
 test('/vision: the confidence pill is collapsed behind a More detail toggle in Simple', () => {
   assert.match(
     VISION,
-    /\{\(!simple \|\| showDetail\) && <ConfidencePill level=\{cropResult\.confidence\} zu=\{zu\} \/>\}/,
+    /\{\(!simple \|\| showDetail\) && <ConfidencePill level=\{cropResult\.confidence\} zu=\{zu\}( lang=\{lang\})? \/>\}/,
     'the crop result must not show ConfidencePill in Simple until showDetail is set',
   );
   assert.match(
     VISION,
-    /\{\(!simple \|\| showDetail\) && <ConfidencePill level=\{weighResult\.confidence\} zu=\{zu\} \/>\}/,
+    /\{\(!simple \|\| showDetail\) && <ConfidencePill level=\{weighResult\.confidence\} zu=\{zu\}( lang=\{lang\})? \/>\}/,
     'the weigh result must not show ConfidencePill in Simple until showDetail is set',
   );
   assert.match(

@@ -4,10 +4,12 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { Camera, Loader2, Leaf, Scale, ChevronRight } from 'lucide-react';
 import AppHeader from '@/components/layout/AppHeader';
+import XhosaDraftNote from '@/components/XhosaDraftNote';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { useAppLevel, isStaffRole } from '@/lib/app-level';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { resizeForStorage } from '@/lib/site-evidence';
@@ -53,11 +55,11 @@ const CONFIDENCE_STYLE: Record<'high' | 'medium' | 'low', { bg: string; color: s
   low:    { bg: 'rgba(92,80,64,0.10)',   color: 'var(--text-secondary)', label: 'Low confidence' },
 };
 
-function ConfidencePill({ level, zu }: { level: 'high' | 'medium' | 'low'; zu: boolean }) {
+function ConfidencePill({ level, zu, lang }: { level: 'high' | 'medium' | 'low'; zu: boolean; lang: string }) {
   const s = CONFIDENCE_STYLE[level];
   const label = zu
     ? level === 'high' ? 'Ukuqiniseka okuphezulu' : level === 'medium' ? 'Ukuqiniseka okuphakathi' : 'Ukuqiniseka okuphansi'
-    : s.label;
+    : inlineText(lang, s.label);
   return (
     <span
       className="inline-block text-xs font-sans px-2.5 py-0.5 rounded-full"
@@ -94,7 +96,7 @@ function LimaSprout({ size = 22 }: { size?: number }) {
 export default function VisionPage() {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
-  const t = (en: string, isiZulu: string) => zu ? isiZulu : en;
+  const t = (en: string, isiZulu: string) => inlineText(lang, en, isiZulu);
   const simple = useAppLevel() === 'simple';
   // staff-15: a mentor/ngo/funder/admin opening /vision used to see the farmer's own photo-upload
   // tool with nothing to actually photograph. Staff accounts get a short redirect card instead.
@@ -168,7 +170,7 @@ export default function VisionPage() {
         if (res.status === 413) {
           setNetworkError(t('This photo is too large — try again with a clearer, closer photo.', 'Lesi sithombe sikhulu kakhulu — zama futhi ngesithombe esicacile, esiseduze.'));
         } else {
-          setNetworkError(t(`Server error ${res.status} — please try again.`, `Kube nenkinga kuseva (${res.status}). Zama futhi.`));
+          setNetworkError((zu ? `Kube nenkinga kuseva (${res.status}). Zama futhi.` : inlineTemplate(lang, 'Server error {status} — please try again.', null, { status: res.status })));
         }
         return;
       }
@@ -225,6 +227,7 @@ export default function VisionPage() {
         title="Lima Vision"
         right={<LessonLink id="vision:overview" label={t('Learn', 'Funda')} />}
       />
+      <XhosaDraftNote scope="vision" />
 
       {/* ── Scrollable body ── */}
       <main className="flex-1 overflow-y-auto">
@@ -401,7 +404,7 @@ export default function VisionPage() {
                 {/* Error result */}
                 {errResult && (
                   <>
-                    {zu && <p className="font-sans text-xs mb-2" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
+                    {(zu || lang === 'xh') && <p className="font-sans text-xs mb-2" style={{ color: 'var(--text-muted)' }}>{zu ? 'Impendulo ye-AI engezansi ingesiNgisi.' : inlineText(lang, 'The AI answer below is in English.')}</p>}
                     <p className="font-sans text-sm" style={{ color: 'var(--text-secondary)' }}>{errResult.error}</p>
                   </>
                 )}
@@ -414,11 +417,11 @@ export default function VisionPage() {
                         {cropResult.crop}
                       </div>
                       <div className="font-sans text-sm md:text-base mt-1" style={{ color: 'var(--text-secondary)' }}>
-                        ~{cropResult.estimatedKg} kg &nbsp;&middot;&nbsp; ~{cropResult.weeksToHarvest} {zu ? cropResult.weeksToHarvest === 1 ? 'isonto' : 'amaviki' : cropResult.weeksToHarvest === 1 ? 'week' : 'weeks'} {t('to harvest', 'kuze kuvunwe')}
+                        ~{cropResult.estimatedKg} kg &nbsp;&middot;&nbsp; ~{cropResult.weeksToHarvest} {zu ? cropResult.weeksToHarvest === 1 ? 'isonto' : 'amaviki' : cropResult.weeksToHarvest === 1 ? inlineText(lang, 'week') : inlineText(lang, 'weeks')} {t('to harvest', 'kuze kuvunwe')}
                       </div>
                     </div>
-                    {(!simple || showDetail) && <ConfidencePill level={cropResult.confidence} zu={zu} />}
-                    {zu && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
+                    {(!simple || showDetail) && <ConfidencePill level={cropResult.confidence} zu={zu} lang={lang} />}
+                    {(zu || lang === 'xh') && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>{zu ? 'Impendulo ye-AI engezansi ingesiNgisi.' : inlineText(lang, 'The AI answer below is in English.')}</p>}
                     <p className="font-sans text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {cropResult.note}
                     </p>
@@ -443,8 +446,8 @@ export default function VisionPage() {
                         ~{weighResult.estimatedKg} kg
                       </div>
                     </div>
-                    {(!simple || showDetail) && <ConfidencePill level={weighResult.confidence} zu={zu} />}
-                    {zu && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
+                    {(!simple || showDetail) && <ConfidencePill level={weighResult.confidence} zu={zu} lang={lang} />}
+                    {(zu || lang === 'xh') && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>{zu ? 'Impendulo ye-AI engezansi ingesiNgisi.' : inlineText(lang, 'The AI answer below is in English.')}</p>}
                     <p className="font-sans text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {weighResult.note}
                     </p>

@@ -1,0 +1,454 @@
+0 | designSpeciesSectionExoticFruitNuts | Foreign (outside) fruits & nuts
+1 | designSpeciesSectionLargeTrees | Big trees
+2 | designSpeciesSectionMediumTrees | Middle-sized trees
+3 | designSpeciesSectionSmallTreesShrubs | Small trees & large shrubs/bushes
+4 | designSpeciesSectionShrubs | Shrubs/bushes
+5 | designSpeciesSectionGroundcovers | Plants that cover the ground & soft/tender plants
+6 | designSpeciesSectionClimbers | Climbing plants (plants that go up)
+7 | designSpeciesUseFood | food
+8 | designSpeciesUseNitrogenFixer | adds nitrogen
+9 | designSpeciesUsePollinator | attracts bees and insects
+10 | designSpeciesUseHabitat | home for animals
+11 | designSpeciesUseShade | shade
+12 | designSpeciesUseWindbreak | wind barrier
+13 | designSpeciesUseFodder | livestock feed
+14 | designSpeciesUseMulch | covering grass (mulch)
+15 | designSpeciesUseLivingFence | living fence
+16 | designSpeciesUseErosionControl | prevents erosion
+17 | designSpeciesUseMedicinal | medicinal
+18 | designSpeciesUseTimber | planks/timber
+19 | designSpeciesUseGroundcover | covers the soil
+20 | mentorZuluDraftNotice | The isiXhosa text in this field-visit workspace is an unreviewed draft. English is shown beside the meanings of place, privacy, assessment and saving. Your notes and names stay exactly as you entered them.
+21 | mentorProgrammeCoordination | Programme coordination/arrangement
+22 | mentorTeamsGuidanceHeading | Mentor groups & guidance/orientation
+23 | mentorMyFieldwork | My field work
+24 | mentorGiveEachMentorIntro | Give each mentor a clear group, programme focus and current instructions.
+25 | mentorSupportGardenIntro | Support the garden. Build practical skills. Follow up on the actions agreed on.
+26 | mentorRecordFieldVisit | Record a field visit
+27 | mentorTrainingAttendance | Training & attendance/presence
+28 | mentorOrganisationIdLabel | Organisation ID
+29 | mentorOrganisationIdPlaceholder | Choose the organisation you manage
+30 | mentorLoadingFieldTeam | The field group is loading…
+31 | mentorFieldworkViewsAria | Field work insights
+32 | mentorTabPriorities | What is important
+33 | mentorTabPeopleGardens | People & gardens
+34 | mentorTabVisitRecords | Visit records
+35 | mentorTabFieldReport | Field report
+36 | mentorRecordScopePrefix | Scope/breadth of records
+37 | mentorParticipantLabel | Participant
+38 | mentorAllAssignedParticipants | All participants assigned
+39 | mentorFromDateLabel | From date
+40 | mentorToDateLabel | To date
+41 | mentorClearFilters | Remove filters
+42 | mentorFiltersExplain | These filters apply to visit numbers, follow-up and the field report. Assignments describe your current group.
+43 | mentorMoreHistoryNotice | {count} visit records have been loaded. More history is available. Load it before looking at the complete coverage numbers or preparing the field report.
+44 | mentorLoadingEllipsis | Loading…
+45 | mentorLoadMoreVisitHistory | Load more visit history
+46 | mentorChooseEndDate | Choose an end date that is the first date or later than it.
+47 | mentorMetricAssignedParticipants | Assigned participants
+48 | mentorMetricCurrentFieldTeam | Current field group
+49 | mentorMetricParticipantsVisited | Participants who were visited
+50 | mentorCoverageAria | {visited} were visited; {unvisited} were not visited in this period
+51 | mentorStillToVisit | {count} who are representing(?) were visited in this period
+52 | mentorMetricFollowUpsDue | Follow-up that is needed
+53 | mentorOpenActionsDueToday | Open actions that must be done by today's date
+54 | mentorMetricVisitsRecorded | Recorded visit
+55 | mentorWithinSelectedPeriod | In the chosen period
+56 | mentorWhatNeedsAttention | What needs attention
+57 | mentorOpenActionsCount | {count} open actions
+58 | mentorNoOpenActions | There are no recorded open actions in this selection. Look at the visit and agree on the next support that is needed.
+59 | mentorActionCompleted | Completed
+60 | mentorFollowUpOverdue | Follow-up has passed its time (overdue)
+61 | mentorFollowUpToday | Follow up today
+62 | mentorFollowUpScheduled | Follow-up has been scheduled
+63 | mentorDateNeeded | A date is required
+64 | mentorOwnerNeeded | A manager/person in charge is required
+65 | mentorAgreeFollowUpDate | Agree on the follow-up date
+66 | mentorReviewAction | Check the action
+67 | mentorViewAllVisitActions | See all visit actions
+68 | mentorPlanNextVisit | Schedule the next garden visit
+69 | mentorParticipantsWithoutVisit | {count} participants who were not visited in this period
+70 | mentorSearchAssignedGroup | Look in the group you were assigned, open their recent records, or start a visit with their name already chosen.
+71 | mentorOpenPeopleGardens | Open people & gardens
+72 | mentorVisitDetailsAria | Visit details
+73 | mentorFieldVisitDetailsHeading | Field visit details
+74 | mentorEditFieldVisit | Edit field visit
+75 | mentorCloseVisit | Close visit
+76 | mentorPreparingVisitPhotos | Visit photos are being prepared…
+77 | mentorVisitPhotosLoadFailed | The visit photos could not be loaded. Close and reopen this visit before editing it.
+78 | mentorChooseParticipant | Choose a participant
+79 | mentorVisitDateLabel | Visit date
+80 | mentorSiteLocationLabel | Site location (not compulsory)
+81 | mentorSiteLocationPlaceholder | Garden name, meeting place or directions
+82 | mentorLocationMapDirections | Place, map & directions
+83 | mentorSupportAreasCovered | Support areas that are included
+84 | mentorFocusGarden | Establishing & maintaining the garden
+85 | mentorFocusWater | Getting water & fixing/preparing
+86 | mentorFocusSoil | Soil health & compost
+87 | mentorFocusSeedlings | Young animals(?) & seed storage
+88 | mentorFocusCrops | Looking after & protecting plants
+89 | mentorFocusHarvest | Harvest & sharing out of food
+90 | mentorFocusLearning | Practical skills & training
+91 | mentorFocusRecords | Records & livelihood support
+92 | mentorSupportRequestedLabel | Support requested
+93 | mentorSupportRequestedPlaceholder | Water, tools, farming supplies, looking after plants, records or other requested support
+94 | mentorObservationsLabel | Things noticed and problems
+95 | mentorObservationsPlaceholder | Describe the condition of the garden and what you checked. Enter amounts and units when you have measured.
+96 | mentorAgreedActionLabel | Step that was agreed on
+97 | mentorAgreedActionPlaceholder | What will happen after this?
+98 | mentorResponsiblePersonLabel | Person responsible
+99 | mentorResponsiblePersonPlaceholder | Who will do this step?
+100 | mentorFollowUpDateLabel | Follow-up date
+101 | mentorPracticalSkillCheck | Checking a practical skill
+102 | mentorPracticalSkillIntro | Record a skill shown in the garden separately from finishing a course or "ukuzimasa" (unclear, something done by oneself).
+103 | mentorSkillObserved | Skill that was observed
+104 | mentorSkillObservedPlaceholder | e.g. estimating the weight of the harvest and writing it down
+105 | mentorObservationResultLabel | Result of the observation
+106 | mentorSkillNotAssessed | Not assessed
+107 | mentorSkillDemonstrated | Was shown during this visit
+108 | mentorSkillNeedsSupport | Needs more support
+109 | mentorCloseOutAction | Close this step
+110 | mentorCloseOutIntro | Mark completion only after checking what has changed. Leave the date unrecorded while the step is still open.
+111 | mentorCompletedOnLabel | Completed on date
+112 | mentorCompletionEvidenceLabel | Evidence of completion
+113 | mentorCompletionEvidencePlaceholder | What was completed, and how did you check it?
+114 | mentorOriginalNotesSummary | Original notes before being cleaned up by AI
+115 | mentorVisitNotesVisibility | Visit notes and photos are visible to the shared mentor and to authorised organisation staff.
+116 | mentorSavingEllipsis | Saving…
+117 | mentorSaveVisit | Save visit
+118 | mentorReportUsesSavedVisit | This report uses the saved visit. Save any edit so that you can refresh it.
+119 | mentorRecordedVisitsAria | Recorded field visit
+120 | mentorRecordedVisitsHeading | Recorded visit
+121 | mentorNoVisitsRecorded | There is no recorded visit in this selection.
+122 | mentorCompletedActionLabel | Step that was completed:
+123 | mentorNextActionLabel | Next step:
+124 | mentorResponsibleLabel | Responsible:
+125 | mentorNotYetAssigned | Not yet assigned to anyone
+126 | mentorFollowUpLabel | Follow-up:
+127 | mentorNotYetScheduled | Not yet scheduled
+128 | mentorCompletedLabel | Completed:
+129 | mentorVisitPhotosCount | {count} visit photos
+130 | mentorViewEditVisit | See / edit visit
+131 | mentorViewVisit | See visit
+132 | mentorShowMoreVisits | Show another visit ({count} left over)
+133 | mentorFindParticipantLabel | Find a participant or garden
+134 | mentorSearchNamesGardens | Search names or gardens
+135 | mentorGardenLocationTBD | The garden location is still to be written
+136 | mentorMostRecentLoadedVisit | Recently loaded visit
+137 | mentorLastRecordedVisit | Last recorded visit
+138 | mentorNoVisitInHistoryLoaded | There is no visit in the loaded history up to now
+139 | mentorNoVisitRecordedYet | No visit has been recorded yet
+140 | mentorRecordVisitButton | Record a visit
+141 | mentorLatestVisitButton | Recent visit
+142 | mentorNoParticipantsMatch | There are no participants that match this selection.
+143 | mentorNoFieldTeamAssigned | No field group has been assigned yet. Your organisation can assign it in the Control centre → Mentor groups.
+144 | mentorOrganisationGuidanceHeading | Organisation guidance/orientation
+145 | mentorNoGuidancePosted | No guidance has been put in yet.
+146 | mentorAssignedParticipantsCount | {count} assigned participants
+147 | mentorLabelPrefix | Mentor:
+148 | mentorUpdatedPrefix | refreshed/updated
+149 | mentorEditTeamGuidance | Edit group & guidance
+150 | mentorAssignUpdateTeam | Assign or update the group
+151 | mentorMentorLabel | Mentor
+152 | mentorChooseMentorOption | Choose a mentor
+153 | mentorServiceLocationLabel | Service area
+154 | mentorProgrammeFocusLabel | Programme emphasis
+155 | mentorParticipantGroupHeading | Group of participants
+156 | mentorGuidanceForMentorLabel | This mentor's guidance
+157 | mentorSaveTeamGuidance | Save group & guidance
+158 | mentorFirstRecordedVisit | First recorded visit
+159 | mentorLatestRecordedVisitLabel | Recent recorded visit
+160 | mentorFormerTeamMember | Former member of the group
+161 | mentorInternalReportNotice | Mentor's internal report · Includes visit notes that are not public. Use the organisation's published programme report when sharing with funders.
+162 | mentorAccessCheckHeading | Check the member's saved access
+163 | mentorAccessCheckIntro | Choose a member to see their active programme permissions and the farmer group assigned to them. Save changes in the People & permissions section first, then refresh here.
+164 | mentorAccessOrgLabel | Organisation
+165 | mentorAccessMemberLabel | Member
+166 | mentorAccessChooseMember | Choose a member
+167 | mentorAccessRoleOrganisation | Organisation
+168 | mentorAccessRefreshButton | Refresh access
+169 | mentorAccessChecking | Saved access is being checked…
+170 | mentorAccessSettingsLabel | Access settings
+171 | mentorAccessCurrentServerSettings | Current server settings
+172 | mentorAccessCheckedAtPrefix | checked
+173 | mentorAccessAllowed | ✓ Allowed
+174 | mentorAccessNotAllowed | — Not allowed
+175 | mentorAccessAssignedFieldGroup | Assigned field group
+176 | mentorAccessNoLocationAssigned | No place has been assigned.
+177 | mentorAccessNoFarmersAssigned | No farmers or students are assigned at present.
+178 | mentorAccessTrainingRecordsNote | Training records are limited to this mentor's sessions only. Non-public assessment analysis, when opened above, includes the organisation's assessments.
+179 | mentorAccessReadOnlyNotice | This is a check of access to programme tools that are read-only, it is not signing in as this member. It does not show their private answers and does not change their role. Some app features do not yet have their own switches here.
+180 | mentorRoleFarmer | Farmer
+181 | mentorRoleMentor | Mentor
+182 | mentorRoleStudent | Student/learner
+183 | mentorRoleNgo | Organisation staff
+184 | mentorRoleFunder | Funder
+185 | mentorRoleAdmin | Administrator
+186 | mentorVisibleOnMapAria | It is visible on the map
+187 | mentorPeopleUnavailableHeading | People are not available
+188 | mentorPeopleUnavailableBody | You may not be able to access your organisation's list of people, or the connection is not available.
+189 | mentorNoTeamMembersFound | No group members were found. Invite your colleagues to join your organisation.
+190 | mentorUnknownName | Unknown
+191 | mentorYouBadge | You
+192 | mentorYourProfileFallback | Your profile
+193 | mentorTapToViewEdit | Tap to look and edit
+194 | mentorEditProfileButton | Edit profile
+195 | mentorProjectTeamLabel | Project group
+196 | mentorMemberSingular | member
+197 | mentorMemberPlural | members
+198 | mentorProfilePhotoAlt | Profile photo
+199 | reportKoppenDescAf | Tropical rainforest
+200 | reportKoppenDescAm | Tropical monsoon rain
+201 | reportKoppenDescAw | Tropical savanna, dry winter
+202 | reportKoppenDescAs | Tropical savanna, dry summer
+203 | reportKoppenDescBWh | Hot desert
+204 | reportKoppenDescBWk | Cold desert
+205 | reportKoppenDescBSh | Hot, almost dry plateau (semi-arid)
+206 | reportKoppenDescBSk | Cold, almost dry plateau (semi-arid)
+207 | reportKoppenDescCfa | Moist climate near the tropics
+208 | reportKoppenDescCfb | Cool/temperate coastal (sea) climate
+209 | reportKoppenDescCfc | Coastal (sea) climate near the pole
+210 | reportKoppenDescCsa | Mediterranean climate, hot summer
+211 | reportKoppenDescCsb | Mediterranean climate, warm summer
+212 | reportKoppenDescCsc | Mediterranean climate, cool summer
+213 | reportKoppenDescCwa | Moist climate near the tropics, dry winter
+214 | reportKoppenDescCwb | High-lying areas near the tropics, dry winter
+215 | reportKoppenDescCwc | High-lying areas near the tropics, short summer
+216 | reportKoppenDescDfa | It is cold, no dry season, hot summer
+217 | reportKoppenDescDfb | It is cold, no dry season, warm summer
+218 | reportKoppenDescDfc | Near the Arctic
+219 | reportKoppenDescDfd | Near the Arctic, very cold
+220 | reportKoppenDescDwa | It is cold, dry winter, hot summer
+221 | reportKoppenDescDwb | It is cold, dry winter, warm summer
+222 | reportKoppenDescDwc | Near the Arctic, dry winter
+223 | reportKoppenDescDwd | Very cold, dry winter
+224 | reportKoppenDescDsa | It is cold, dry summer, hot summer
+225 | reportKoppenDescDsb | It is cold, dry summer, warm summer
+226 | reportKoppenDescDsc | Near the Arctic, dry summer
+227 | reportKoppenDescDsd | Very cold, dry summer
+228 | reportKoppenDescET | Tundra
+229 | reportKoppenDescEF | Garment/blanket of ice
+230 | reportRainfallPatternSummer | in summer
+231 | reportRainfallPatternWinter | in winter
+232 | reportRainfallPatternYearRound | all year round
+233 | reportSeasonYearRound | all year round
+234 | reportSeasonNone | none / there is not
+235 | studentGuidesDescription | Make a map of your place, track the harvest, keep costs and their receipts(?), or make an invoice. Practise on a sample farm before using your records.
+236 | courseNarrationLanguage | Narration language
+237 | courseAudioListen | Listen
+238 | courseAudioLanguageMissing | This module has not yet been recorded in language ({appLanguage}) at present — it is playing in language ({playingLanguage}).
+239 | courseAudioPauseTrack | Pause {title} for a while
+240 | courseAudioPlayTrack | Play {title}
+241 | courseAudioPlayFailed | This clip could not be played — check your connection and try again.
+242 | courseDeckRegion | Lesson slides. Use the left and right arrow buttons to change slides.
+243 | courseDeckFullscreenEnterAria | Show slides on the full screen
+244 | courseDeckFullscreenExitAria | Exit from the full screen
+245 | courseDeckFullscreenEnter | Whole screen
+246 | courseDeckFullscreenExit | Exit from the whole screen
+247 | courseDeckViewMode | Choose how to look at this slide
+248 | courseDeckReadText | Read the text
+249 | courseDeckSeeSlide | Look at the slide
+250 | courseDeckSlideNarration | Narration of the slide
+251 | courseDeckNoNarration | No narration
+252 | courseDeckSilentStatus | No narration will play. Use Next so that you read at your own pace.
+253 | courseDiagramShow | Show the picture
+254 | courseDiagramFailed | This picture could not be loaded — check your connection and try again.
+255 | courseDeckSlideImageSize | Size of the slide
+256 | courseDeckZoomOut | Make it small
+257 | courseDeckZoomIn | Make it big
+258 | courseDeckPanHint | Drag to move around
+259 | courseDeckTurnPhoneHint | Turn your phone so it lies sideways so that you get wide animation.
+260 | courseDeckClose | Close
+261 | courseDeckWatch | Watch · {seconds}s · {size}
+262 | courseDeckOpenImageAria | Open the unmoving image of {title} at full size
+263 | courseDeckOpenImage | See the slide image · zoom in
+264 | courseDeckNarrationAria | Narration of {title}
+265 | courseDeckNarrationFailed | Narration could not play. Check your connection and tap Play lesson again, or read this slide below.
+266 | courseDeckAnimationFailed | The animation could not load. You can continue listening, read the slide, or tap Watch to try again.
+267 | courseDeckSlideLanguage | Language of this slide: {language}.
+268 | courseDeckNarrationFallback | Narration language: {spokenLanguage}. Narration in language ({appLanguage}) is not yet available in this module at present.
+269 | courseDeckStopAria | Pause the lesson
+270 | courseDeckPlayAria | Play the lesson
+271 | courseDeckStop | Pause
+272 | courseDeckPlay | Play the lesson
+273 | courseDeckBack | ‹ Go back
+274 | courseDeckNext | Next ›
+275 | courseDeckReadSlide | Read this slide · {language}
+276 | offlineDownloadUnsupported | This browser cannot save lessons so that they are used without internet. Chrome on Android can.
+277 | offlineGetWhileSignal | Put in the slides, narration and clips on this phone while you have signal. After that they work without airtime at all.
+278 | offlineOnThisPhone | On this phone · {size}
+279 | offlineRemovePack | Remove saved lessons
+280 | offlineStopDownload | Pause
+281 | offlineFinishDownload | Complete the download · {size} left over
+282 | offlineDownloadPack | Download · {size}
+283 | offlineDownloadQuality | Download quality
+284 | offlineQualityStandard | Ordinary/standard
+285 | offlineQualityStandardNote | on phones that use data
+286 | offlineQualityHigher | Highest quality
+287 | offlineQualityHigherNote | facilitators & funders · wifi
+288 | offlineDownloadBytesProgress | {current} in {total}
+289 | offlineEnglishMediaFallback | This package includes slides or narration in English where the chosen language is not yet available.
+290 | offlineEnglishSlidesFallback | Some slides are still in English where the chosen language is not yet available.
+291 | offlineGetSlidesWhileSignal | Save slides and their displayed posters on this phone. After that the slides work without internet, except narration or video.
+292 | offlineRegionalPackChoice | What is contained in the regional slide release
+293 | offlineRegionalSlidesOnly | Slides only
+294 | offlineRegionalFullMedia | Slides + narration in English and clips
+295 | offlineRegionalFullMediaNote | The complete package includes background narration in English where available, animations and lesson images.
+296 | offlineFilesProgress | {done} of {total} files
+297 | offlineFilesFailed | {count} files were not downloaded. Tap Complete the download again while you still have signal — some are already saved.
+298 | offlineSavedMayClear | Saved, but this phone may delete it if storage runs out. Check your saved lessons again before you leave the signal.
+299 | offlineLowStorage | This phone has little space — the download may not go in.
+300 | completionScoreAria | Completeness of setting up the place
+301 | completionScoreTitle | Completeness of the place
+302 | completionScoreProgressAria | {percent}% completed, {done} of {total} stages completed
+303 | completionScoreDoneCount | {done}/{total} completed
+304 | completionStepLocated | Place has been found
+305 | completionStepBoundary | Boundary has been drawn
+306 | completionStepSurvey | Site survey has been filled in
+307 | completionStepDesign | Design is completed
+308 | completionStepCropPlan | Production plan is completed
+309 | completionStatusDone | Completed
+310 | completionStatusPartial | Partly
+311 | completionStatusNotStarted | Not started
+312 | designStudioLabel | Design studio
+313 | siteDesignOpenStudio | Open the design studio
+314 | siteDesignStudioDesc | Place tanks, trees & zones on your land at real size — step-by-step guidance, or automatic design with one tap.
+315 | siteDesignStartDesigning | Start designing this place →
+316 | siteDesignSelectLocation | Choose a place on the map so that you open its Design Studio.
+317 | siteDesignSketchHeader | Drawing → AI design
+318 | siteDesignUploadIntro | Upload a plan of your land that was drawn by hand (or a photo of it). Lima reads it and makes a permaculture design on top of your drawing, using the climate, soil, sun and wind of this place.
+319 | siteDesignDropSketch | Put your place's drawing here or tap to upload it
+320 | siteDesignSketchHint | hand drawing, plan, or photo of it
+321 | siteDesignToneSimple | Easy
+322 | siteDesignToneDetailed | With details
+323 | siteDesignGenerating | Designing your place…
+324 | siteDesignGenerateButton | Make a design
+325 | siteDesignPhotoAnalysisNote | The analysis of your photos will be used in the design
+326 | mapHeldTitle | The map is resting for a while
+327 | mapHeldBody | This page closed unexpectedly several times in a row, so the map has been paused so that you can go back in. Your reports, photos and places all still work below.
+328 | mapHeldLoad | Load the map
+329 | reportsOfflineTitle | Reports need signal first
+330 | reportsOfflineMessage | This part of the app has not yet been saved on your phone, and there is no signal now. Open it once while you have signal, then it will work without internet.
+331 | reportsOfflineZuluDraftNotice | Unreviewed isiXhosa draft.
+332 | reportsOfflineRetry | Try again
+333 | reportsOfflineClose | Close
+334 | tabRecords | Records
+335 | tabDashboard | Dashboard
+336 | tabStudies | Studies/Lessons
+337 | assessmentState_draft | draft
+338 | assessmentState_open | opened
+339 | assessmentState_closed | closed
+340 | assessmentState_shared | shared
+341 | sampleProgrammeEnglishAccessNote | The explanations of permissions and sharing always stay in English so that their meaning always stays clear.
+342 | mapDeleteButton | Delete
+343 | mapShareButton | Share
+344 | mapCopiedToast | Copied!
+345 | mapDeleteConfirmShort | Are you sure?
+346 | mapDrawDiscard | Discard?
+347 | mapGpsUnavailable | GPS is not available on this device.
+348 | mapGpsFailed | Could not find where you are — allow GPS and try while outside.
+349 | mapShowTools | Show map tools
+350 | mapHideTools | Hide map tools
+351 | mapSaveSpotTitle | Save this place in your Places
+352 | mapSelectSpotTitle | Tap a place on the map first
+353 | mapPrintBaseTitle | Print a clean base map (boundary, edges of houses and contour lines, without shade lines) so that you draw your design by hand
+354 | mapPrintWindowTabTitle | ImbewuField — base map
+355 | mapPrintWindowHeading | Base map of the place
+356 | mapPrintWindowInstructions | Print and draw your design by hand — beds, paths, trees, water, compost. Drawn to scale; contour lines show the slope.
+357 | siteSummaryRainEssential | Rainfall is only {mm}mm, so water harvesting is important.
+358 | siteSummaryRainEstimate | The estimate of annual rainfall is {mm}mm. Check the water that is available in the dry season before planning year-round crops.
+359 | siteSummarySoilTested | Use your soil test and the needs of the local crops to plan the improvement of the soil.
+360 | siteSummarySoilUntested | The condition of the soil needs to be checked on site; prepare a soil test.
+361 | siteSummaryFrostProtection | Protect from frost in winter.
+362 | siteSummaryPlanPrompt | Do you want a complete planting plan?
+363 | siteSummaryZuluDraftNotice | Unreviewed isiXhosa draft. Read the English source before making farming decisions.
+364 | languageDraftNoticeText | This isiXhosa text is an unreviewed machine draft.
+365 | languageDraftNoticeEnglishToggle | English
+366 | languageDraftNoticeEnglishText | The isiXhosa text on this page is an unreviewed machine draft. Read English before you rely on it when taking a farming or account decision.
+367 | languageDraftNoticeDismiss | Remove
+368 | bruZoneAttribution | Area details: KZN DARD Bioresource Units
+369 | bruZoneApprox | about
+370 | bruZoneNameCaveat | the name of the area is the most possible climate grouping, it has not been confirmed
+371 | mapEditPlaceTitle | Edit name or colour
+372 | mapEditShapeTitle | Edit shape
+373 | mapDeletePlaceTitle | Delete this place
+374 | mapGpsDrawTitle | Stand at the corner of your land and tap to put it here
+375 | mapSearchButton | Search
+376 | mapGuideButton | Lima's guide
+377 | mapGuideTitle | How the map tools work
+378 | mapGuideHeading | Your map guide
+379 | mapGuideIntro | Here is the map in a few taps — you can open it again any time with the button that says ?.
+380 | mapGuideZuluDraftNotice | The isiXhosa guide text is a draft, and has not been checked by a person who speaks isiXhosa well.
+381 | mapGuideSearchTitle | Find your land
+382 | mapGuideSearchDescription | Search for a town, or tap the map — I learn its climate, soil and water.
+383 | mapGuideBoundaryTitle | Draw the boundary of the land
+384 | mapGuideBoundaryDescription | Mark each corner of your site, or tap GPS to walk to it. I measure its size.
+385 | mapGuideHarvestTitle | Draw a water harvesting area
+386 | mapGuideHarvestDescription | Draw the edge of your roof, a swale or an earthwork — I calculate how much rain it collects.
+387 | mapGuideWaterPointTitle | Add a water place
+388 | mapGuideWaterPointDescription | Put a pin on a borehole, spring, dam or tank — we mark the foundations of development (infrastructure) on the map.
+389 | mapGuidePlaceTitle | Save a place
+390 | mapGuidePlaceDescription | Put a coloured pin and give it a name — Home, Field or Water.
+391 | mapGuideLayersTitle | Map layers
+392 | mapGuideLayersDescription | Switch between satellite / topo, then open or close contour lines & terrain shape.
+393 | mapGuideClose | I understand
+394 | mapOfflineCanvas | Map without internet
+395 | mapOfflineCanvasStatus | Map without internet · drawings and pins that have been saved. Satellite images and terrain shape need a connection.
+396 | mapUnsupportedTitle | The map cannot open on this phone
+397 | mapUnsupportedMessage | Try another browser, or continue working with your saved reports and the site plan below.
+398 | mapUnsupportedOpenReports | Open site reports
+399 | mapUnsupportedOpenLiteDesign | Open the simple design
+400 | mapLayerHDTitle | Switch to the clearer Esri images — it is often sharper than ordinary images when you zoom in
+401 | mapLayerReliefTitle | Terrain with shadows — puts shade on the slopes so that hills, valleys and the side the land faces can be seen
+402 | settingsButtonLabel | Settings
+403 | settingsButtonAriaLabel | Settings
+404 | printBaseMapButton | Print the base map
+405 | siteElementsHeader | Things of the place
+406 | siteElementEditTitle | Edit name or note
+407 | limaWhoIs | Lima, your planting helper
+408 | limaWhoIsStaff | Lima, your helper
+409 | limaAskButton | Ask for help
+410 | limaPhotoButton | Photo
+411 | chatGreeting | Hello — I am Lima.
+412 | chatIntro | Ask about your place, plants, soil & water, money, or the project. Tap the camera to photograph a plant or insect so that it is diagnosed. Natural & regenerative only.
+413 | chatSampleDataLoaded | Ubhejane farm details have been loaded — tap to remove them
+414 | chatSampleDataLoad | Load Ubhejane farm details (testing money questions)
+415 | chatSuggestionPlant | What should I plant in my place at this time of year?
+416 | chatSuggestionBestCrop | Which of my crops makes the most money per kg?
+417 | chatSuggestionContract | What are my contract obligations, and am I on the way (on track)?
+418 | chatSuggestionPest | Natural ways of dealing with insects & diseases?
+419 | chatSuggestionWater | How can I collect and keep rainwater here?
+420 | chatPhotoAttached | Photo has been attached
+421 | chatRemovePhoto | remove
+422 | chatTakePhotoTitle | Take / attach a photo
+423 | chatInputPlaceholder | Ask Lima anything...
+424 | chatThinking | I am thinking…
+425 | chatDefaultPhotoQuestion | Please diagnose this photo.
+426 | chatErrorMessage | Sorry, something did not go well. Please try again.
+427 | chatPhotoOpenError | This photo could not be opened. Please try another photo or a JPEG image.
+428 | chatZuluDraftNotice | The isiXhosa text in Lima's chat is an unreviewed draft. A person who speaks isiXhosa well and a local agricultural inspector have not yet approved it.
+429 | waterBalanceTitle | Water balance
+430 | waterBalanceEstimateLabel | estimate
+431 | waterBalanceLegendRoofCatchment | Roof water
+432 | waterBalanceLegendTotalDemand | Total demand
+433 | waterBalanceLegendTankLevel | Tank level
+434 | waterBalanceLegendMinSafe | Safe low level
+435 | waterBalancePeopleEstimated | Estimated people
+436 | waterBalanceHouseholdMonthly | {litres} L/per month at home
+437 | waterBalanceStorageCapacity | Storage capacity
+438 | waterBalanceMinSafe | Safe minimum: {amount}
+439 | waterBalanceStorage | Storage
+440 | waterBalanceNotMapped | Not yet placed on the map
+441 | waterBalanceDrawWaterArea | Draw a water place so that you calculate
+442 | waterBalanceVegIrrigation | Irrigating vegetables
+443 | waterBalancePerDryMonthEstimate | per dry month (estimate)
+444 | waterBalanceFruitTrees | Fruit trees
+445 | waterBalancePerDryMonthUnit | per dry month
+446 | waterBalanceCompleteSurvey | Complete the site survey so that you see the household's water need and irrigation needs.
+447 | waterBalanceAddRoofArea | Add the roof size to the site survey so that you calculate the water that can be collected per month.
+448 | waterBalanceDrawHarvestArea | Draw a water harvesting area on the map so that you see what size of storage you can build.
+449 | waterBalancePossibleShortfall | There may be a shortage during the dry season
+450 | waterBalanceShortfallDetail | The tank level fell below the safe minimum in {month}. Ways: increase storage, add a second tank, or reduce irrigation during the {season} season.
+451 | waterBalanceMonthJan | January
+452 | waterBalanceMonthFeb | February
+453 | waterBalanceMonthMar | March

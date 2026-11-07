@@ -62,6 +62,7 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_NETWORK_NOTICE, demoFarmerById } from '@/lib/network-demo';
 import { kgTotalLabel, randLabel } from '@/lib/format-figures';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import FarmerPanel from '@/components/network/FarmerPanel';
 import { CohortTimeline, CohortTrainingChart } from './CohortCharts';
 import type { GardenStatus } from '@/lib/db/types';
@@ -154,7 +155,7 @@ function Tile({ label, value, sub, tone }: {
 
 export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'ngo' }) {
   const { lang } = useLanguage();
-  const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const ui = (en: string, zu: string) => inlineText(lang, en, zu);
   const { user } = useAuth();
   const portfolio = useNetworkPortfolio(Boolean(user));
   const all = portfolio.rows;
@@ -307,6 +308,9 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           </div>
         )}
 
+        {lang === 'xh' && <p role="note" className="px-3 md:px-5 py-2 font-sans" style={{ fontSize: MICRO, color: INK_MUTED, lineHeight: 1.5, background: PAPER }}>
+          {inlineText(lang, 'The sharing controls and notices on this page are in isiXhosa. Some charts, data-status warnings and the farmer detail panel are still shown in English; names, figures and evidence typed by people are shown as saved.')}
+        </p>}
         {lang === 'zu' && <p role="note" className="px-3 md:px-5 py-2 font-sans" style={{ fontSize: MICRO, color: INK_MUTED, lineHeight: 1.5, background: PAPER }}>
           Izilawuli nezaziso zokwabelana kuleli khasi zisesiZulu. Amanye amagrafu, izexwayiso zesimo sedatha nephaneli yemininingwane yomlimi zisaboniswa ngesiNgisi; amagama, amanani nobufakazi obuqoshwe ngabantu kuboniswa njengoba kugcinwe.
         </p>}
@@ -321,8 +325,8 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           </h2>
           <p className="font-sans" style={{ fontSize: 12.5, color: INK_MUTED, margin: '0 0 12px', lineHeight: 1.5 }}>
             {totals.reportingCount === totals.farmerCount
-              ? ui(`Every figure below is recorded by the ${totals.farmerCount} ${totals.farmerCount === 1 ? 'farmer' : 'farmers'} it belongs to, and shown only for the categories they agreed to share.`,`Isibalo ngasinye esingezansi siqoshwe umlimi esingesakhe kubalimi abangu-${totals.farmerCount}, futhi siboniswa ezigabeni avume ukwabelana ngazo kuphela.`)
-              : ui(`Totals cover the ${totals.reportingCount} of ${totals.farmerCount} farms whose records this account may read. The other ${totals.farmerCount - totals.reportingCount} are counted as farms, never as zeros.`,`Amarekhodi amapulazi angu-${totals.reportingCount} kwangu-${totals.farmerCount} ayafundeka kule akhawunti. Amanye angu-${totals.farmerCount - totals.reportingCount} asabalwa njengamapulazi, hhayi njengoziro.`)}
+              ? inlineTemplate(lang, totals.farmerCount === 1 ? 'Every figure below is recorded by the {n} farmer it belongs to, and shown only for the categories they agreed to share.' : 'Every figure below is recorded by the {n} farmers it belongs to, and shown only for the categories they agreed to share.', 'Isibalo ngasinye esingezansi siqoshwe umlimi esingesakhe kubalimi abangu-{n}, futhi siboniswa ezigabeni avume ukwabelana ngazo kuphela.', { n: totals.farmerCount })
+              : inlineTemplate(lang, 'Totals cover the {reporting} of {total} farms whose records this account may read. The other {other} are counted as farms, never as zeros.', 'Amarekhodi amapulazi angu-{reporting} kwangu-{total} ayafundeka kule akhawunti. Amanye angu-{other} asabalwa njengamapulazi, hhayi njengoziro.', { reporting: totals.reportingCount, total: totals.farmerCount, other: totals.farmerCount - totals.reportingCount })}
           </p>
 
           {emptyPortfolio ? (
@@ -336,7 +340,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
               <p className="font-sans" style={{ fontSize: 12.5, color: INK_SOFT, margin: 0, lineHeight: 1.6 }}>
                 {ui('Farmers appear here once they have agreed to share their records with the organisation.','Abalimi babonakala lapha uma sebevumile ukwabelana ngenhlangano ngamarekhodi abo.')}{' '}
                 {portfolio.withheldForConsent > 0
-                  ? ui(`${portfolio.withheldForConsent} ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here and have not yet done so.`,`Abalimi abangu-${portfolio.withheldForConsent} babhalisiwe lapha kodwa abakavumi ukwabelana ngamarekhodi abo.`)
+                  ? inlineTemplate(lang, portfolio.withheldForConsent === 1 ? '{n} farmer is enrolled here and have not yet done so.' : '{n} farmers are enrolled here and have not yet done so.', 'Abalimi abangu-{n} babhalisiwe lapha kodwa abakavumi ukwabelana ngamarekhodi abo.', { n: portfolio.withheldForConsent })
                   : ui('Nothing is hidden by an error — the list is genuinely empty.','Akukho okufihlwe iphutha — uhlu alunalutho ngempela.')}
               </p>
             </div>
@@ -381,7 +385,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       }}
                     >
                       <Download size={13} />
-                      {ui(`Export ${sorted.length === all.length ? 'all' : sorted.length} as CSV`,`Khipha ${sorted.length === all.length ? 'konke' : sorted.length} njenge-CSV`)}
+                      {(sorted.length === all.length ? inlineText(lang, 'Export all as CSV', 'Khipha konke njenge-CSV') : inlineTemplate(lang, 'Export {n} as CSV', 'Khipha {n} njenge-CSV', { n: sorted.length }))}
                     </button>
                   </div>
 
@@ -479,7 +483,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                   </div>
 
                   <p className="font-sans" style={{ fontSize: MICRO, color: INK_MUTED, margin: '9px 0 0', lineHeight: 1.5 }}>
-                    {ui(`Showing ${sorted.length} of ${all.length} ${all.length === 1 ? 'farm' : 'farms'}. The totals and charts above always cover the whole cohort — the month-by-month figures are worked out for the organisation, not per district, so a filter here cannot change them.`,`Kuboniswa amapulazi angu-${sorted.length} kwangu-${all.length}. Izibalo namagrafu angenhla ahlanganisa iqembu lonke njalo — izibalo zenyanga ngayinye zenziwa ngenhlangano, hhayi ngesifunda, ngakho isihlungi salapha asikwazi ukuzishintsha.`)}
+                    {inlineTemplate(lang, all.length === 1 ? 'Showing {shown} of {total} farm. The totals and charts above always cover the whole cohort — the month-by-month figures are worked out for the organisation, not per district, so a filter here cannot change them.' : 'Showing {shown} of {total} farms. The totals and charts above always cover the whole cohort — the month-by-month figures are worked out for the organisation, not per district, so a filter here cannot change them.', 'Kuboniswa amapulazi angu-{shown} kwangu-{total}. Izibalo namagrafu angenhla ahlanganisa iqembu lonke njalo — izibalo zenyanga ngayinye zenziwa ngenhlangano, hhayi ngesifunda, ngakho isihlungi salapha asikwazi ukuzishintsha.', { shown: sorted.length, total: all.length })}
                     {filtersOn && (
                       <>
                         {' '}
@@ -565,7 +569,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                   {portfolio.isDemo
                     ? ui('A dash means a missing figure. It never means zero.','Udeshi usho ukuthi inani alikho. Awusho ukuthi kunguziro.')
                     : portfolio.withheldForConsent > 0
-                      ? ui(`${portfolio.withheldForConsent} more ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here but have not agreed to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.`,`Abalimi abangu-${portfolio.withheldForConsent} babhalisiwe kodwa abavumanga ukwabelana ngezibalo zabo, ngakho ababoniswa. Udeshi usho ukuthi le akhawunti ayikwazi ukufunda inani — awusho ukuthi kunguziro.`)
+                      ? inlineTemplate(lang, portfolio.withheldForConsent === 1 ? '{n} more farmer is enrolled here but have not agreed to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.' : '{n} more farmers are enrolled here but have not agreed to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.', 'Abalimi abangu-{n} babhalisiwe kodwa abavumanga ukwabelana ngezibalo zabo, ngakho ababoniswa. Udeshi usho ukuthi le akhawunti ayikwazi ukufunda inani — awusho ukuthi kunguziro.', { n: portfolio.withheldForConsent })
                       : ui('A dash means a figure this account may not read. It never means zero.','Udeshi usho ukuthi le akhawunti ayikwazi ukufunda inani. Awusho ukuthi kunguziro.')}
                 </p>
               </section>
@@ -666,6 +670,7 @@ function attentionLabel(kind: NetworkAttentionFlag['kind'], ui: CohortUi) {
 function FarmRow({ row, selected, onOpen, ui }: {
   row: NetworkFarmerSummary; selected: boolean; onOpen: () => void; ui: CohortUi;
 }) {
+  const { lang } = useLanguage();
   const { farmer } = row;
   const c = farmCells(row, ui);
   const cell: React.CSSProperties = {
@@ -696,7 +701,7 @@ function FarmRow({ row, selected, onOpen, ui }: {
         <button
           type="button"
           onClick={onOpen}
-          aria-label={ui(`Open ${farmer.name}'s record`,`Vula irekhodi lika-${farmer.name}`)}
+          aria-label={inlineTemplate(lang, "Open {name}'s record", 'Vula irekhodi lika-{name}', { name: farmer.name })}
           className="inline-flex items-center gap-1 font-sans font-semibold"
           style={{
             fontSize: MICRO, color: FOREST, background: 'rgba(31,77,43,0.08)',
@@ -715,13 +720,14 @@ function FarmRow({ row, selected, onOpen, ui }: {
 function FarmCard({ row, selected, onOpen, ui }: {
   row: NetworkFarmerSummary; selected: boolean; onOpen: () => void; ui: CohortUi;
 }) {
+  const { lang } = useLanguage();
   const { farmer } = row;
   const c = farmCells(row, ui);
   return (
     <button
       type="button"
       onClick={onOpen}
-      aria-label={ui(`Open ${farmer.name}'s record`,`Vula irekhodi lika-${farmer.name}`)}
+      aria-label={inlineTemplate(lang, "Open {name}'s record", 'Vula irekhodi lika-{name}', { name: farmer.name })}
       className="w-full text-left"
       style={{
         display: 'block', background: selected ? 'rgba(31,77,43,0.06)' : 'transparent',

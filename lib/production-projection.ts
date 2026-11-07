@@ -5,6 +5,7 @@ import { cropByKey, hasPlanningYield } from './crop-catalog';
 import { benchmarkDatedAreaConflictBedLabels, datedPlantingSowIndex, estimatedYieldKgAdjusted, occupiedMonthsForPlanting, planningMaturityMonths, TRANSPLANT_BED_RESERVED_FROM_MONTHS, TRANSPLANT_ENTRY_PLANNED_MONTHS, type Planting, type PlanBed } from './crop-plan';
 import { isHouseholdFoodHarvest, type PlacedTreeGroup, type TreeAgeGroup, type TreeSeasonChoices } from './perennial-harvest';
 import { numberLabel } from './format-figures';
+import { inlineBuiltList } from './xh-inline-match';
 
 export type KgRange = [number, number];
 export interface AgeProjection {
@@ -177,4 +178,21 @@ export function projectedKgLabel(kg: KgRange | null): string {
   if (!kg || !kg.every(n => Number.isFinite(n) && n >= 0)) return 'Needs information';
   const [from, to] = kg.map(n => n > 0 && n < 0.001 ? '<0.001' : numberLabel(n >= 1 ? Math.round(n * 10) / 10 : n));
   return `${from === to ? from : `${from}–${to}`} kg`;
+}
+
+// The English above is shared with the printed plan, so the screen asks for the isiXhosa here.
+// Stage, age, "still needed" and calendar-note strings are either fixed sentences (looked up by
+// their exact English) or built from a value; the templates name each of those once. Several
+// parts joined with "; " are translated part by part. Crop names, bed labels and numbers stay.
+const PROJECTION_TEMPLATES = [
+  '{n} plants need age groups',
+  '{crop}: check sowing date',
+  '{bed}: check growing area',
+  '{crop}: carry-in harvest not quantified',
+  '{from}–{to} yr',
+  'Growing · first-crop ref {span}',
+] as const;
+
+export function projectionText(lang: string, english: string): string {
+  return inlineBuiltList(lang, english, PROJECTION_TEMPLATES);
 }

@@ -1,4 +1,8 @@
+'use client';
+
 import { Sprout } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n-context';
+import { inlineText } from '@/lib/xh-inline';
 
 export type IllustrationName = 'login-hero' | 'empty-sprout' | 'example-hero';
 
@@ -8,12 +12,13 @@ export interface IllustrationProps {
 }
 
 function LoginFarm({ className }: { className: string }) {
+  const { lang } = useLanguage();
   return (
     <svg
       className={className}
       viewBox="0 0 360 142"
       role="img"
-      aria-label="Raised vegetable beds and a water tank on a South African smallholding at sunrise"
+      aria-label={inlineText(lang, 'Raised vegetable beds and a water tank on a South African smallholding at sunrise')}
       style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 16 }}
     >
       <defs aria-hidden="true">
@@ -71,12 +76,13 @@ function LoginFarm({ className }: { className: string }) {
 }
 
 function ExampleFarm({ className }: { className: string }) {
+  const { lang } = useLanguage();
   return (
     <svg
       className={className}
       viewBox="0 0 720 180"
       role="img"
-      aria-label="A wide view of a South African smallholding with raised beds, a homestead, hills and stored rainwater in warm morning light"
+      aria-label={inlineText(lang, 'A wide view of a South African smallholding with raised beds, a homestead, hills and stored rainwater in warm morning light')}
       style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 16 }}
     >
       <defs aria-hidden="true">

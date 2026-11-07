@@ -1,0 +1,660 @@
+[
+ {
+  "path": "small-livestock/title",
+  "back": "Integrating small livestock",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/description",
+  "back": "Chickens, ducks and bees as members of the system — not a thing that thought at the end.",
+  "flags": [
+   "'into ecinge ekugqibeleni' is ungrammatical (active 'that thought'); passive needed, e.g. 'into ecingwa emva kwexesha' / 'into ecingelwa ekugqibeleni'"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/infographicAlt",
+  "back": "A drawing of a chicken coop with wheels shown in two places beside a strip of land. An arrow points right; three chickens stand in the coop on the right, and there is a patch scratched darkly between the two places.",
+  "flags": [
+   "'ekrwelwe ngokumnyama' (scratched darkly) is awkward; likely means a darker scratched patch"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/title",
+  "back": "Chickens in the system: controlling insects/pests, enriching soil and food",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/body",
+  "back": "Chickens can help on an empty bed after harvesting. They scratch among crop residue and eat some insects and weed seed. Their manure and bedding can be composted and returned to the soil. Foraging does not take the place of properly nutritious feed, clean water, shelter and daily care.\n\nA chicken tractor is a moving coop without a floor (a chicken coop that can be moved). Move it before the ground has no plants, becomes mud, or is covered too heavily by manure. The right time depends on the chickens, soil and weather. No single number of chickens guarantees there will be enough soil enrichment across the whole site.\n\nKeep chickens away from seedlings and from crops harvested for food. Fresh manure can carry germs. Ask an agricultural adviser to tell you how to handle manure safely before planting the next crop. Ducks scratch less, but may still damage plants and turn wet soil into mud. Watch the birds and move them when necessary.",
+  "flags": [
+   "'akuyithatheli indawo ukutya' is awkward (better 'akuthathi indawo yokutya')",
+   "English loan 'I-chicken tractor' kept, but glossed"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/keyPoints/0",
+  "back": "Move the coop before the birds damage the soil or the manure piles up",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/keyPoints/1",
+  "back": "Balance the number of birds with the use of manure and your soil, your crops and the food available",
+  "flags": [
+   "'nokusetyenziswa kobulongwe' (with the use of manure) — check intended phrasing"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/keyPoints/2",
+  "back": "Put chickens on a bed after harvest only — never put them near young seedlings",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/keyPoints/3",
+  "back": "Ducks scratch less, but still need supervision when near plants and wet soil",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/0/q",
+  "back": "You want chickens to prepare an empty bed so it can be planted again. When is the right time to put them in?",
+  "flags": [
+   "'itywaliswe' is a misspelling/non-word; should be 'ityalwe' (be planted)"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/0/options/0",
+  "back": "Right after planting seedlings, so they loosen the soil around them",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/0/options/1",
+  "back": "After harvesting, when the bed is already cleared, before the next planting",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/0/options/2",
+  "back": "During the growing season, when the upper leaves can withstand scratching",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/0/options/3",
+  "back": "In winter only, to prevent heat stress",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/0/rationale",
+  "back": "Use the empty bed after harvesting. Keep fresh manure away from food crops and plan a safe way of handling manure before planting again.",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/1/q",
+  "back": "Why are ducks more suitable than chickens in the lower layer of an established food forest (food forest understorey)?",
+  "flags": [
+   "'kunokuba kunjalo ngeenkukhu' is clunky but understandable"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/1/options/0",
+  "back": "Ducks produce more manure per day",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/1/options/1",
+  "back": "Ducks eat slugs and snails without strong scratching that disturbs roots and mulch",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/1/options/2",
+  "back": "Ducks cannot get sick with Newcastle disease",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/1/options/3",
+  "back": "Ducks sleep in trees, which reduces soil compaction",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l1/quiz/1/rationale",
+  "back": "Ducks do not scratch like chickens. They may trample or eat plants, so watch the soil and move them when necessary.",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/infographicAlt",
+  "back": "A beehive opened showing frames placed one on another inside, and a wide circle over a farm map showing how far bees go to forage.",
+  "flags": [
+   "minor concord 'phezu komnye' with iifreyimu"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/title",
+  "back": "Bees: pollination, honey and the nature of the system",
+  "flags": [
+   "'nendalo yenkqubo' (nature of the system) is vague — if English is 'biodiversity/ecology' it is weak"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/body",
+  "back": "Honeybees and other insects carry flower pollen and drop it on other flowers. This helps many fruit and vegetable crops, including avocado. Crops and varieties differ in what they need for pollination. A hive does not guarantee a better harvest everywhere: weather, water, plant health and other pollinating insects also matter.\n\nSouth Africa has two other small types (subspecies) of native honeybees. The Cape honeybee is found in the Western Cape and some parts of the Eastern Cape. The African honeybee is native to central Africa and most of Southern Africa. These natural areas, in general, are not a guide for moving bees. The Department's control measures set a dividing line for bee movement. Check the current rules for moving bees with the Department and an experienced local beekeeper before moving bees or hives.\n\nLearn from an experienced local beekeeper before getting a hive. Keep hives away from busy paths, homes and places where children play. Morning sun can help; a safe site matters first. Give bees flowering plants through all seasons and avoid exposing bees to pesticides. Active bees are not proof that a farm has no chemicals or diseases. National honeybee control measures require registration for specified beekeeping activities, including managed hives for bee products, queen rearing, commercial pollination, and removal, destruction or moving of a colony. Ask the Department if you are not sure whether the rules apply to your activity. If a colony repeatedly swarms, ask a trained beekeeper to inspect it. Crowding is one possible reason, not a diagnosis.",
+  "flags": [
+   "'unezinye iintlobo ezincinci ezimbini' reads 'has two OTHER subspecies' — 'ezinye' should be dropped",
+   "minor concord 'asilolo uxilongo' (should agree with ukuxinana: 'akulolo')"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/keyPoints/0",
+  "back": "Pollinating insects help many crops; the benefit depends on the crop and situation",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/keyPoints/1",
+  "back": "Learn safe hive care from an experienced local beekeeper",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/keyPoints/2",
+  "back": "Choose a safe site for the hive, away from busy paths and children",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/keyPoints/3",
+  "back": "Register with the Department for activities covered by national honeybee control measures",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/0/q",
+  "back": "Avocado trees flower but produce few fruit. What should the farmer check about pollination?",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/0/options/0",
+  "back": "Assume pollination is always enough and check nothing",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/0/options/1",
+  "back": "Assume only one kind of beetle can carry pollen",
+  "flags": [
+   "'ibhungane' = beetle; if English says 'insect' this narrows the claim"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/0/options/2",
+  "back": "Check whether insects visit the flowers and carry pollen; other reasons for few fruit must also be checked",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/0/options/3",
+  "back": "Assume few fruit always means frost damage",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/0/rationale",
+  "back": "Bees and other insects can move pollen between avocado flowers. Few visits can reduce pollination, but weather and plant condition can also affect fruit set.",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/1/q",
+  "back": "The bees of a hive have swarmed repeatedly. Which is the best next step?",
+  "flags": [
+   "'Lelipi' misspelt; standard 'Leliphi'"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/1/options/0",
+  "back": "Ask a trained beekeeper to inspect the colony, including space, queen and health",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/1/options/1",
+  "back": "Replace the queen without inspecting the colony",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/1/options/2",
+  "back": "Assume nothing can be inspected or managed",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/1/options/3",
+  "back": "Turn the hive around without finding a reason",
+  "flags": [
+   "'Jikisa' = turn/rotate; if English is 'move the hive' this is a shift"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/quiz/1/rationale",
+  "back": "Crowding can encourage bees to swarm, but it is not the only reason. Inspection guides the response; adding space is not a certain cure.",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/infographicAlt",
+  "back": "Bought feed enters the farm. Animals produce manure, some nutrients return to the planting area through fully decomposed manure, and food and other products leave the farm.",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/title",
+  "back": "Integrating livestock cycles: nutrients that move around the farm",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/body",
+  "back": "Some nutrients can return to the planting area in compost made with manure. Fresh manure can carry harmful germs. Fully compost manure before using it near food crops. Bought feed brings nutrients into the farm, while food and other products remove them. Keep a record of bought feed and food sold or taken for the home. Food scraps alone may not meet the animals' needs.\n\nGuinea fowl forage for insects and may eat ticks (small blood-sucking creatures). Do not trust them to protect people or livestock from ticks or tick-borne diseases. Inspect the animals and follow the local animal health plan.\n\nFor each animal, ask: what can it eat here? What useful things does it produce? What else does it need? Combine water, suitable feed, shelter, fencing and daily care.\n\nChickens following goats is not a proven way to replace goat worm control. Grazing management can help, but goats still need health checks and a parasite plan (organisms living on others) from a vet or animal health adviser. Do not stop treatment because chickens visited the grazing camp.",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/keyPoints/0",
+  "back": "Use suitable farm resources while meeting the full needs of each animal",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/keyPoints/1",
+  "back": "Guinea fowl foraging does not take the place of tick checks or an animal health plan",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/keyPoints/2",
+  "back": "Ask what each animal eats, produces and needs, including bought inputs",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/keyPoints/3",
+  "back": "Do not replace goat worm control with chickens following the herd",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/0/q",
+  "back": "A farmer keeps guinea fowl. How should he control ticks on his livestock?",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/0/options/0",
+  "back": "Stop checking livestock because there are birds",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/0/options/1",
+  "back": "Keep checking the animals and follow the local animal health plan",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/0/options/2",
+  "back": "Assume ducks remove all ticks",
+  "flags": [
+   "'iidada' = ducks, but the question is about guinea fowl — check source (may be 'the birds')"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/0/options/3",
+  "back": "Treat all animals without checking the problem or getting advice",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/0/rationale",
+  "back": "The birds may eat ticks, but that does not guarantee reliable protection from ticks or the diseases they carry.",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/1/q",
+  "back": "Chickens foraged after the goats. What should the farmer do about goat worms?",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/1/options/0",
+  "back": "Continue the health checks and parasite plan agreed with an animal health adviser",
+  "flags": [
+   "'noluhlolo' misspelt; standard 'nohlolo'"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/1/options/1",
+  "back": "Stop all ways of checking worms because chickens were there",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/1/options/2",
+  "back": "Assume chicken manure kills all worm eggs",
+  "flags": [
+   "check source: may be 'chickens eat all worm eggs'"
+  ]
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/1/options/3",
+  "back": "Assume moving the herd always makes treatment unnecessary",
+  "flags": []
+ },
+ {
+  "path": "small-livestock/small-livestock-l3/quiz/1/rationale",
+  "back": "Chickens are not a proven way to replace goat worm control. Grazing management and animal health checks must work together.",
+  "flags": [
+   "'noluhlolo' misspelt; standard 'nohlolo'"
+  ]
+ },
+ {
+  "path": "soil-health/title",
+  "back": "Soil health and composting",
+  "flags": []
+ },
+ {
+  "path": "soil-health/description",
+  "back": "Build living soil with compost, mulch, cover crops and worm farms",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/infographicAlt",
+  "back": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a soil jar settles into three layers — sand, silt and clay.",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/title",
+  "back": "Understanding your soil: the foundation of everything",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/body",
+  "back": "Soil contains many kinds of living things. Bacteria and fungi help decompose organic matter (decaying material from plants and animals) and cycle nutrients.\n\nSome fungi help roots get nutrients. Worm channels can help water and air enter the soil.\n\nLook at roots, soil structure and water movement, and visible soil life.\n\nPut soil and water in a clear jar, with a little suitable detergent for separating soil particles (dispersing detergent). Close it, shake it, then leave it undisturbed.\n\nSand settles first. Silt (soil finer than sand) follows, while clay can stay suspended in the water for a very long time.\n\nThis is a simple learning test. Clumps and unsettled clay can mislead you; use a soil lab when you need texture to be accurate.\n\nA firm sand layer under cloudy water does not yet tell you the final proportion. Some fine particles may still be suspended in the water.\n\nCompare the settled layers and test the soil by hand in the field.\n\nWrite down what you see and everything still uncertain. Do not decide irrigation or soil treatment based on one jar alone.\n\nCompaction, poor drainage and loss of organic matter can reduce roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity changes with moisture and season.\n\nLook at patterns across the whole field. Check management history, drainage and crop growth before choosing a treatment.",
+  "flags": [
+   "'ilingelo' is an uncommon/uncertain word for 'test'; 'uvavanyo' is standard",
+   "minor concord 'zingene' (amanzi nomoya → 'angene')"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l1/keyPoints/0",
+  "back": "Use many clues to assess soil condition",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/keyPoints/1",
+  "back": "Soil colour and number of worms on their own cannot explain the cause of a problem",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/keyPoints/2",
+  "back": "The jar test gives a strict/firm view of soil texture; it is not a full soil test",
+  "flags": [
+   "'umbono ongqongqo' means a strict/rigorous view — opposite of 'rough idea'; meaning error",
+   "concord 'ayisosivivinyo' does not agree with 'ilingelo'"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l1/keyPoints/3",
+  "back": "Check drainage, roots and management history before choosing a treatment",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/0/q",
+  "back": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/0/options/0",
+  "back": "The soil definitely needs less water",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/0/options/1",
+  "back": "Fine particles may still be suspended in the water; more observation is needed",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/0/options/2",
+  "back": "All the clay has already settled",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/0/options/3",
+  "back": "The crop definitely needs gypsum",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/0/rationale",
+  "back": "Cloudy water may hold fine particles not yet settled. One early look cannot establish the final proportion or the right treatment.",
+  "flags": [
+   "'kunye' (together) should be 'kanye' (once)"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/1/q",
+  "back": "A farmer finds compacted soil and few worms. Which is a useful next step?",
+  "flags": [
+   "'Linyathelo luluphi' is ungrammatical; should be 'Leliphi inyathelo'"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/1/options/0",
+  "back": "Assume all soil life is already dead",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/1/options/1",
+  "back": "Add a treatment without checking the site",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/1/options/2",
+  "back": "Check drainage, roots, moisture and management history",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/1/options/3",
+  "back": "Give up because the soil cannot improve",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l1/quiz/1/rationale",
+  "back": "Looking at many things helps identify the problem. Worm activity varies with conditions, so few worms alone do not show its cause.",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/infographicAlt",
+  "back": "A compost heap 'discussed' and opened, showing alternating layers of dry brown materials and fresh green materials, heat rising in the centre, and an arrow showing turning.",
+  "flags": [
+   "'ixoxiwe' means 'discussed' — wrong word; should be e.g. 'isikwe/iqhekeziwe' (cut open) or just 'ivuliwe'"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l2/title",
+  "back": "Making and using compost",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/body",
+  "back": "Compost is organic matter decomposed under controlled conditions.\n\nFinished compost can improve soil structure and contributes nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns (dry brown materials) with fresh greens (fresh green materials). Avoid thick, wet layers that block air.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit all mixtures of materials.\n\nA hot middle temperature does not guarantee every part of the heap has been treated. Time, temperature and management all matter.\n\nDo not put meat, milk and dairy products, diseased plants, pet waste and contaminated materials in this simple home process.\n\nDo not assume home composting destroys all weed seed or all disease-causing organisms. Use a recognised process where sanitisation is needed.\n\nDo not put wattle seed BAGS/SACKS into the compost heap. An ordinary heap may not make all the seed unable to grow.\n\nUse only clean, untreated materials. Tree bark decomposes slowly; being only bark does not guarantee it cannot be contaminated.\n\nCheck the heap and turn it when it needs air or more mixing. Keep it moist rather than waterlogged.",
+  "flags": [
+   "'iingxowa zembewu' = seed bags/sacks, not seed pods — wrong word (pods: 'amaqokobhe/amakhoba embewu')",
+   "'Ixolo lomthi... ukuba lixolo kuphela' sentence about bark — check against source"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l2/keyPoints/0",
+  "back": "Balance browns, greens, moisture and air",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/keyPoints/1",
+  "back": "A hot middle temperature does not guarantee the whole heap is clean",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/keyPoints/2",
+  "back": "Do not add seed bags and contaminated materials",
+  "flags": [
+   "'iingxowa zembewu' = seed bags, not pods"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l2/keyPoints/3",
+  "back": "Judge compost readiness by its condition, not by a fixed regional timetable",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/0/q",
+  "back": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What is the solution?",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/0/options/0",
+  "back": "Add fresh green materials rich in nitrogen",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/0/options/1",
+  "back": "Add dry carbon-rich materials like straw and turn the heap",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/0/options/2",
+  "back": "Stop turning it and let it cool",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/0/options/3",
+  "back": "Add lots of water — the smell means it is too dry",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/0/rationale",
+  "back": "A wet, slimy heap may need more air and more dry material. Add dry browns and turn the heap to open it. Ammonia smell may also mean too much nitrogen-rich material. Make sure the heap stays moist, not waterlogged.",
+  "flags": [
+   "'umoya omkhulu' (big air/wind) slightly odd for 'more air'"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/1/q",
+  "back": "Why should wattle seed bags not be put in an ordinary compost heap?",
+  "flags": [
+   "'iingxowa zembewu' = seed bags, not pods"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/1/options/0",
+  "back": "The bark makes all heaps too hot",
+  "flags": [
+   "'Ixolo' = bark; source probably 'pods' — check"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/1/options/1",
+  "back": "Some seed may survive and spread when the compost is used",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/1/options/2",
+  "back": "The bags always attract termites",
+  "flags": [
+   "'iingxowa' = bags, not pods"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/1/options/3",
+  "back": "The bags release a gas that kills all soil life",
+  "flags": [
+   "'iingxowa' = bags, not pods"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/1/rationale",
+  "back": "An ordinary heap may not expose all seeds to conditions that make them unable to grow. Not adding the bags avoids spreading them with the compost.",
+  "flags": [
+   "'iingxowa' = bags, not pods"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l3/infographicAlt",
+  "back": "Two plots of soil under the same sun: bare soil is slippery and dry, covered soil still dark and still moist.",
+  "flags": [
+   "'utyibilikile' = slipped/slippery — if source says 'cracked' it should be 'uqhekekile'"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l3/title",
+  "back": "Covering the soil and cover crops: protecting and building soil",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/body",
+  "back": "Cover bare soil with suitable, clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce water loss by evaporation, soften rain impact and suppress weeds.\n\nKeep it away from tree and plant stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect soil between main crops. Choose by local climate, available water and the next planting.\n\nCourse examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes (plants like beans) need the right bacteria and growing conditions to fix nitrogen. Nutrients in their residue become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into worm castings. Check the bin rather than expecting a fixed harvest date.\n\nThe liquid that drips naturally from a worm bin is called leachate. It is not the same as prepared worm-castings tea.\n\nLeachate can contain harmful organisms or harmful substances. Do not use it on edible crops or assume that diluting it with water makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first big spring storm can hit bare soil and damage its surface and structure. If water runs across the field, it can carry loose soil.\n\nCover crops, mulch and organic matter can help hold soil in place and keep it alive.",
+  "flags": [
+   "typo 'nicocekileyo' → 'necocekileyo'",
+   "'ingca yokugquma' (covering grass) used for all mulch incl. wood chips — acceptable coined term"
+  ]
+ },
+ {
+  "path": "soil-health/soil-health-l3/keyPoints/0",
+  "back": "Protect exposed soil with a suitable cover",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/keyPoints/1",
+  "back": "Keep mulch away from tree and plant stems",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/keyPoints/2",
+  "back": "Choose cover crops by water, climate and the next crop",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/keyPoints/3",
+  "back": "Worm bin leachate is not automatically a safe fertiliser; keep it away from edible crops",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/0/q",
+  "back": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/0/options/0",
+  "back": "Too much burning in the winter sun and waterlogging from rain",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/0/options/1",
+  "back": "Frost kills soil life and weeds take over early",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/0/options/2",
+  "back": "Erosion of dry topsoil by wind and loss of soil structure from the impact of a spring storm",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/0/options/3",
+  "back": "Soil pH drops and nitrogen increases",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/0/rationale",
+  "back": "Bare soil is exposed to winter wind, which can carry dry topsoil. Raindrop impact can damage the surface; where water runs across the field, it can carry loose soil.",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/1/q",
+  "back": "What should you remember about the liquid that drips from a worm bin?",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/1/options/0",
+  "back": "It is always safe on salad leaves",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/1/options/1",
+  "back": "It can contain harmful organisms or harmful substances; diluting with water is not a guarantee of safety",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/1/options/2",
+  "back": "It is exactly the same as finished worm castings",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/1/options/3",
+  "back": "Diluting at a fixed ratio makes all the liquid safe",
+  "flags": []
+ },
+ {
+  "path": "soil-health/soil-health-l3/quiz/1/rationale",
+  "back": "Leachate is liquid that drips naturally from a worm bin. Its make-up varies, so it should not be described as a proven safe nutrient for edible crops.",
+  "flags": []
+ }
+]

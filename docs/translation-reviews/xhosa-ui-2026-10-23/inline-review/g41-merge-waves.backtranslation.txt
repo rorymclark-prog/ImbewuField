@@ -1,0 +1,56 @@
+# g41-merge-waves — Phase A blind back-translation (isiXhosa values only, lib/locales/xh-inline/g41-merge-waves.ts, insertion order)
+0. Harvest entries: {harvests} / sales [entries]: {sales}
+1. Home invoice marked as not yet paid: {n}. It is not counted in money received.
+2. Existing record without a usable event date, which cannot go into the period totals: {n}. Check the source record.
+3. Harvest or sales entry without a usable quantity: {n}. Their weight and numbers remain unavailable.
+4. Entry with a future date inside this calendar selection: {n}. It continues to be included, as in Records; check its date before sharing.
+5. Sales entry: {n}
+6. Sales entries: {n}
+7. Paid invoice: {n}
+8. Paid invoices: {n}
+9. Cost entry: {n}; completeness unknown
+10. Home invoice: {n}; current status
+11. The file could not be read
+12. The image could not be read
+13. That file could not be read.
+14. That file is not an image we can read.
+15. That image could not be prepared.
+16. That image is too big to be saved. Try a smaller or simpler/lighter image.
+17. This information has not yet been saved on this device. Open it when you have a connection, or use Offline & sync to prepare it.
+18. The server did not confirm this save.
+19. This action needs a connection. Your field records may (possibly) be saved on this device.
+20. This entry is too big. Use smaller photos or split the register.
+21. This record is being sent. Wait for it to finish before you save another adjustment.
+22. This saved entry needs to be checked in Offline & sync before it is changed.
+23. Your account or workspace has changed. Open this cost again before saving its receipt.
+24. Save the receipt together with the cost.
+25. Choose a JPG, PNG or WebP photo no larger than 10 MB. Keep the first/original one readable.
+26. This file is not a readable JPG, PNG or WebP photo. Choose another image.
+27. The cost has been saved, but its receipt could not be confirmed on this device. Keep the photo and try this cost again.
+28. The document could not be saved. Keep your original file.
+29. Choose a PDF no larger than 10 MB. For a photo, choose an image instead.
+30. Check the quantity and the unit of the produce.
+31. Sign in before saving the sale.
+32. Open the invoice linked to this recorded sale before changing it.
+33. Sign in before marking the invoice as paid
+34. Your account changed before the invoice was saved.
+35. Choose a sale from your records.
+36. Sign in so that you link a recorded sale.
+37. Your account changed before the sale was linked.
+38. The recorded sale is no longer available.
+39. The invoice's sale could not be reconciled/brought into agreement.
+40. Open the linked invoice so that you change this sale.
+41. Sign in before editing this sale.
+42. Connect to the internet so that you edit this sale safely.
+43. This sale is not found in your records.
+44. Sign in before saving this cost.
+45. Your account changed before this cost was saved.
+46. Sign in before deleting this sale.
+47. Connect to the internet so that you delete this sale safely.
+48. Sign in and open your workspace before saving field work on this device.
+49. The account or organisation has changed. Open your workspace again.
+50. The connection has timed out. Your saved entry is still on this device.
+51. The connection has timed out.
+52. The image could not be prepared
+53. Practice message saved
+54. The place/site could not be saved. Keep this page open and try again.

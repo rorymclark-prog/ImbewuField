@@ -1,0 +1,38 @@
+Phase A blind back-translation (values only, by source line number)
+3 Farmers' exchange | 4 Seeds, seedlings, leftover produce and tools - among farmers | 5 preview - sample records
+8 Farmers trade with farmers - seeds, seedlings, leftover produce, tools and sharing work.
+9-10 The trade board holds **{total} open notice(s)** from **{farmerCount} farmers** in {cropCount} crops - {offers} are offered, {wants} are wanted.
+11 Most sold now: | 14 Seeds | 15 Seedlings | 16 Leftover produce | 17 Tools and work
+18 Two kilograms of last season's sugar bean seed | 19 Tray of strong tomato seedlings ready to be planted | 20 Chard that you harvest faster than you can sell it | 21 Planting tool hired by the day, or two days of sharing work
+22 Tap "Post notice" then choose whether you're offering or wanting. | 23 Choose a crop from the list so other farmers looking for it truly find you. | 24 Say how much you have, and whether you want Rand, swap, or nothing at all. | 25 Enter a town near you so people can see roughly how far you are.
+26 Nothing on the board for now | 27 What the exchange is for
+28 The exchange is a place where farmers find each other. Seed that would just sit in a bucket, seedlings of someone who planted a lot, leftover produce you can't sell in your village, a tool that stands and can be used six days in a week - all that matters more to a farmer standing 20 kilometres away than it matters to you. Write what you have, or say what you want, and arrange the board by who is near.
+29 Posting your first notice | 30 Post notice | 31 A notice you post is kept on this phone only. It isn't sent to other farmers, and no one else can see it for now. | 32 How the exchange works
+35 Share notice | 36 Copied - paste it in WhatsApp | 37 Sharing didn't happen on this device. Copy this and send it yourself: | 38 Details of the notice to be copied
+41 Unreviewed isiXhosa design (uyilo). This text waits for someone who speaks isiXhosa well to review it.
+44 {notice} Whatever you post is kept on this device only.
+45 Tour trade board - browse notices from the farmers' network. Notices in this place aren't sold.
+46 There's no way to contact another farmer through the app for now. For now, write down the name and area on their card and arrange through your mentor or team - or use Share to pass the notice on yourself.
+47 notice | 48 notices | 49 offered | 50 wanted | 51 crops | 52 farmers | 53 Search crop, town or farmer | 54 Search notices | 55 Close | 56 Post | 57 All | 58 Offered | 59 Wanted | 60 Category | 61 Crop | 62 Produce | 63 Tools | 64 Work | 65 Other
+66 Sort notices | 67 Newest first | 68 Nearest first | 69 Cheapest first | 70 Highest price first | 71 By crop | 72 Largest amount first | 73 I'm looking from | 74 Where you're looking from | 75 no specific place | 76 Distance limit | 77 Any distance | 78-81 Within 10/25/50/100 km | 82 My place
+83 Sorting by distance needs a starting place - choose a town above, or save your location on the map. | 84 Choose where you're looking from to see how far each notice is. | 85 Show notices that are already finished | 86 Nothing matches that
+87-88 {total} notice(s) on the board - try a wider distance, or remove filters. | 89 Remove filters | 90 Showing {shown} of {total} | 91 What this preview can't do | 92 No messages.
+93 You can't contact another farmer here. There's nothing on the card that is a contact button, because nothing stands behind it for now.
+94 No payment, no holding of money, no delivery. | 95 Money and going to fetch goods are arranged between two farmers, outside the app. | 96 No rating or reputation. | 97 No notices match any name on this board. | 98 Nothing published.
+99 Notices you post stay on this device. Sharing them between farmers needs the public backend to be opened first and its security rules added.
+100 Places are rounded. | 101 Each notice has a place rounded to near one kilometre - local area, not exact home.
+104 Right now | 105 In the past {n} hours | 106 days | 107 months | 108 Yours - on this device only | 109 Sample | 110 Closed | 111 Place not offered | 112 Place unknown | 113 Mark as done | 114 Delete | 115 Needed before {month} | 116 Fine in {month} | 117 Exchange - {wants} | 118 {amount} the whole lot
+121-132 months
+135 I want {crop} | 136 {crop} available | 137 Notice saved
+138 Kept on this phone only - no one else can see it until you send it to them yourself. Share it now, or find it on the board anytime and share later.
+139 Share by WhatsApp | 140 Back to board | 141 Are you offering or wanting? | 142 What kind of thing? | 143 Which crop? | 144 Not a specific crop (tools, work, other)
+145 Choose from list instead of typing a name - that lets another farmer filter the board by crop and truly find you.
+146 Title | 147 Swiss chard - I harvest it regularly in the week | 148 Details (if you want) | 149 Anything the buyer needs to know - kind, condition and how to collect it. | 150 How much? (if you want) | 151 Amount must be a number above zero - or leave it empty.
+152 Price, swap or free | 153 Price in Rand | 154 Swap | 155 Free | 156 Raise the price | 157 per | 158 whole
+159 Suggested from the app's price book: about R{price}/kg at most. Farm price, not supermarket shelf - change it to the number you truly want.
+160 Enter a number above zero, or choose Swap or Free. | 161 same, or Raise the price.
+162 What were you taking? e.g. maize or pumpkin seed | 163 Needed when? (if you want) | 164 When will it be fine? (if you want) | 165 Any time | 166 Your name | 167 Your name or your team name | 168 Nearby town | 169 e.g. Nquthu
+170 Show roughly where I am, so nearby farmers see the distance.
+171 Your location is rounded to near one kilometre before being saved - never the exact place of your home. Based on {name}.
+172 More options
+173 This notice is kept on this phone only. It isn't sent to other farmers and no one else can see it - sharing notices between farmers isn't built yet. | 174 Cancel | 175 Save notice

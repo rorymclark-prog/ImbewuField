@@ -20,6 +20,8 @@ import { designSiteIdFromLocation } from '@/lib/design-studio';
 import styles from '@/components/MelDashboard.module.css';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
+import { inlineText } from '@/lib/xh-inline';
+import { formatXhosaDate } from '@/lib/xh-dates';
 
 const ReportView = dynamic(() => import('@/components/ReportView'), { ssr: false });
 
@@ -58,6 +60,9 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
   }
   const choices = reportSiteChoices(reports, places);
   const dateLocale = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
+  // 'xh-ZA' falls back to English in browsers, so isiXhosa writes its own month names (xh-dates).
+  const dayLabel = (value: string | number) => lang === 'xh' ? formatXhosaDate(new Date(value), { day: true, month: 'short', year: true }) : new Date(value).toLocaleDateString(dateLocale);
+  const stampLabel = (value: string | number) => lang === 'xh' ? formatXhosaDate(new Date(value), { day: true, month: 'short', year: true, time: true }) : new Date(value).toLocaleString(dateLocale);
   const hasEnglishSavedReport = reports.some(report => report.lang === 'en');
   if (opened) return <ReportView locationData={opened.location} siteData={opened.siteData} waterData={opened.waterData} savedPlaces={places} savedReport={opened} activePlaceId={places.find(p => designSiteIdFromLocation(p) === designSiteIdFromLocation(opened.location))?.id} onClose={() => setOpened(null)} />;
   // sdesk-04: /reports used to be three floating Menu/Back/Settings pills over the hero, with no
@@ -88,6 +93,7 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
     ) : !ready ? <p role="status" aria-live="polite">{t('reportsLoading')}</p> : <>
       {sample && <p className={styles.notice}>{t('reportsSampleWorkspaceNotice')}</p>}
       {['zu', 'st', 'ts', 've'].includes(lang) && hasEnglishSavedReport && <p className={styles.notice} role="note">{t('reportsEnglishSavedNote').replace('{language}', APP_LANGS.find((locale) => locale.code === lang)?.native ?? lang)}</p>}
+      {lang === 'xh' && hasEnglishSavedReport && <p className={styles.notice} role="note">{inlineText(lang, 'Some saved reports have full English text. The controls here are in isiXhosa.')}</p>}
       <div className={styles.row} role="group" aria-label={t('reportsChooseSitesOrReports')}><button aria-pressed={view==='sites'} onClick={()=>setView('sites')}>{t('reportsSavedSites')} · {choices.filter(c=>c.place).length}</button><button aria-pressed={view==='reports'} onClick={()=>setView('reports')}>{t('reportsSavedReports')} · {reports.length}</button></div>
       <Link href="/farmer?reportSite=new&guided=1" className={styles.card} style={{ display:'flex', gap:14, alignItems:'center', margin:'20px 0' }}><Plus size={28}/><div><h2>{t('reportsSelectNewSite')}</h2><p style={{margin:0}}>{t('reportsSelectNewSiteHelp')}</p></div><ArrowRight style={{marginLeft:'auto',flexShrink:0}}/></Link>
       {error && <p role="alert" className={styles.error}>{error}</p>}
@@ -96,11 +102,11 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
       <div className={styles.grid}>{choices.filter(c => c.place).map(choice => { const place=choice.place!; const latest=choice.reports[0]; const href=`/farmer?site=${encodeURIComponent(place.id)}&openReport=1`; return <article className={styles.card} key={choice.siteId}>
         <MapPin size={28} aria-hidden="true"/><h2 style={{marginTop:14}}>{place.name || t('reportsSavedSiteFallback')}</h2><p style={{fontSize:12,color:'var(--text-secondary)'}}>{Math.abs(place.lat).toFixed(2)}°{place.lat<0?'S':'N'} · {Math.abs(place.lon).toFixed(2)}°{place.lon<0?'W':'E'}</p>
         <SiteCropPlanPreview siteId={choice.siteId} siteName={place.name || t('reportsSavedSiteFallback')} />
-        <p>{latest ? t(choice.reports.length === 1 ? 'reportsOneSavedReportLatest' : 'reportsManySavedReportsLatest').replace('{count}', String(choice.reports.length)).replace('{date}', new Date(latest.savedAt).toLocaleDateString(dateLocale)) : t('reportsReadyForFirstReport')}</p>
+        <p>{latest ? t(choice.reports.length === 1 ? 'reportsOneSavedReportLatest' : 'reportsManySavedReportsLatest').replace('{count}', String(choice.reports.length)).replace('{date}', dayLabel(latest.savedAt)) : t('reportsReadyForFirstReport')}</p>
         <Link href={href} aria-label={t('reportsOpenWorkspaceForSite').replace('{site}', place.name || t('reportsSavedSiteFallback'))} style={{display:'inline-flex',minHeight:44,alignItems:'center',gap:8,fontWeight:600}}><FileText size={18}/>{t('reportsOpenGenerateReport')}<ArrowRight size={16}/></Link>
         {latest&&<p><button disabled={opening} onClick={()=>void openSaved(latest)}>{opening ? t('reportsOpening') : t('reportsReadLatest')}</button></p>}
       </article>; })}</div></>}
-      {view==='reports'&&<><p>{t('reportsEarlierReportsDescription')}</p>{!reports.length&&<p>{t('reportsNoSavedReports')}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??t('reportsUnlinkedSiteHeading')}</h3>{!choice.place&&<p>{t('reportsRemovedPinNote')}</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {report.settings?.purpose ? `${siteReportPurposeLabel(report.settings.purpose, lang)} · ` : ''}{reportOriginLabel(report.origin, lang)} · {new Date(report.savedAt).toLocaleString(dateLocale)}</button></p>)}</section>)}</>}
+      {view==='reports'&&<><p>{t('reportsEarlierReportsDescription')}</p>{!reports.length&&<p>{t('reportsNoSavedReports')}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??t('reportsUnlinkedSiteHeading')}</h3>{!choice.place&&<p>{t('reportsRemovedPinNote')}</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {report.settings?.purpose ? `${siteReportPurposeLabel(report.settings.purpose, lang)} · ` : ''}{reportOriginLabel(report.origin, lang)} · {stampLabel(report.savedAt)}</button></p>)}</section>)}</>}
     </>}
   </div></main>
     <TabBar hideAtDesktop />

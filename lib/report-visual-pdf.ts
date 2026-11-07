@@ -1,5 +1,6 @@
 import type { jsPDF } from 'jspdf';
 import { pdfSafe } from './crop-export-pdf';
+import { inlineText } from '@/lib/xh-inline';
 import { reportChartSvg, type ReportVisuals } from './report-visuals';
 import type { ChapterGraphic } from './report-chapter-visuals';
 
@@ -122,8 +123,8 @@ export function packReportCards(cards: ReportCardBox[], start: { y: number; fres
 
 /** The PDF reuses the screen's exact chart artwork and data, at print resolution.
  * The caller owns page numbering, branding and the full narrative that follows. */
-export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets: VisualPdfAssets, date: string, language: 'en' | 'zu' = 'en'): void {
-  const label = (en: string, zu: string) => language === 'zu' ? zu : en;
+export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets: VisualPdfAssets, date: string, language: string = 'en'): void {
+  const label = (en: string, zu: string) => inlineText(language, en, zu);
   const standardLabel = (value: string) => ({
     'IMBEWUFIELD / SITE REPORT': label('IMBEWUFIELD / SITE REPORT','IMBEWUFIELD / UMBIKO WESIZA'),
     'The site at a glance': label('The site at a glance','Indawo le njengoba injalo'),

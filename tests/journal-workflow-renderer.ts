@@ -7,6 +7,7 @@ import * as journal from '../lib/field-journal.ts';
 import * as view from '../lib/journal-view.ts';
 import * as taskLinks from '../lib/task-record-link.ts';
 import * as copy from '../lib/farm-memory-copy.ts';
+import * as xhInline from '../lib/xh-inline.ts';
 
 const require = createRequire(import.meta.url);
 const css = new Proxy({}, { get: (_target, key) => key === '__esModule' ? false : String(key) });
@@ -59,6 +60,8 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
     '@/lib/element-art-2': { getElementArt2: () => undefined },
     '@/lib/journal-view': view,
     '@/lib/farm-memory-copy': copy,
+    // The isiXhosa layer (lib/xh-inline) is real: with no locale chunk registered it returns the English.
+    '@/lib/xh-inline': xhInline,
     '@/components/LanguageDraftNote': { __esModule: true, default: ({ lang }: { lang: string }) => lang === 'zu' ? React.createElement('p', { role: 'note', lang }, copy.farmMemoryText(lang, 'draftNotice')) : null },
     '@/lib/task-record-link': taskLinks,
     '@/lib/sample-mode': { isSampleMode: () => false },
@@ -68,7 +71,7 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
     },
     '@/lib/use-escape-close': { useEscapeClose: () => {} },
     '@/lib/use-dialog-focus': { useDialogFocus: () => {} },
-    './journal-labels': { formatZuluJournalDate: journal.formatJournalDate, formatZuluMonth: journal.monthLabelOf, journalCategoryLabel: (key: string) => key },
+    './journal-labels': { formatZuluJournalDate: journal.formatJournalDate, formatZuluMonth: journal.monthLabelOf, formatXhosaJournalDate: journal.formatJournalDate, formatXhosaMonth: journal.monthLabelOf, journalCategoryLabel: (key: string) => key },
     './JournalPhotoReview': { __esModule: true, default: () => null },
     'next/link': { __esModule: true, default: ({ children, ...props }: any) => React.createElement('a', props, children) },
   };

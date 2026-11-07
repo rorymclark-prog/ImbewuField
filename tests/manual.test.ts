@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import {
-  MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, isManualChapter, isManualLang, manualUi,
+  MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, figureCaption, figureCredit, isManualChapter, isManualLang, manualUi,
   parseInline, parseManual, type ManualFigure,
 } from '@/lib/manual';
 
@@ -116,10 +116,10 @@ test('UI strings: English complete, translated languages complete, placeholders 
   }
 });
 
-test('all four home languages Rory asked for are public: isiZulu, Sesotho, Tshivenḓa and Xitsonga', () => {
-  assert.deepEqual(MANUAL_LANGS, ['en', 'zu', 'st', 've', 'ts']);
+test('all five home languages Rory asked for are public: isiZulu, Sesotho, Tshivenḓa, Xitsonga and isiXhosa', () => {
+  assert.deepEqual(MANUAL_LANGS, ['en', 'zu', 'st', 've', 'ts', 'xh']);
   assert.deepEqual(Object.keys(MANUAL_LANG_NAMES), MANUAL_LANGS);
-  for (const lang of ['zu', 'st', 've', 'ts']) {
+  for (const lang of ['zu', 'st', 've', 'ts', 'xh']) {
     assert.equal(isManualLang(lang), true, `/manual/${lang} must be served`);
     for (const slug of MANUAL_CHAPTERS) assert.ok(existsSync(file(lang, slug)), `${lang}/${slug} is missing`);
   }
@@ -226,4 +226,41 @@ test('every file in public/manual/figures/ is listed in figures.json', () => {
     if (name.startsWith('.')) continue;
     assert.ok(listed.has(name), `public/manual/figures/${name} is not in content/manual/figures.json`);
   }
+});
+
+// isiXhosa figure captions and the shared credit line (an unreviewed machine draft, like the xh chapters).
+test('every figure has an isiXhosa caption that keeps the English caption\'s numbers and Latin names', () => {
+  for (const f of figures) {
+    const xh = f.caption.xh;
+    assert.ok(typeof xh === 'string' && xh.trim(), `${f.id}: missing isiXhosa caption`);
+    assert.notEqual(xh, f.caption.en, `${f.id}: isiXhosa caption is still the English one`);
+    assert.deepEqual(figureCaption(f, 'xh'), { text: xh, lang: 'xh' });
+    // Every figure, count and Latin name in the English caption survives in the draft.
+    const keep = (text: string) => (text.match(/\d+(?: \d{3})?|\(([A-Z][a-z]+ [a-z]+)\)/g) ?? []).map((m) => m.replace(/^\(|\)$/g, ''));
+    for (const token of keep(f.caption.en)) assert.ok(xh!.includes(token), `${f.id}: isiXhosa caption lost "${token}"`);
+    // English and the other captioned languages are untouched.
+    assert.equal(figureCaption(f, 'en').text, f.caption.en);
+    assert.equal(figureCaption(f, 'zu').text, f.caption.zu);
+  }
+});
+
+test('the picture credit is isiXhosa for isiXhosa readers and stored text for every other language', () => {
+  for (const f of figures) {
+    assert.equal(f.credit, 'Illustration: made with AI for this manual');
+    assert.equal(figureCredit(f, 'xh'), 'Umfanekiso: wenziwe nge-AI kule ncwadi');
+    for (const lang of MANUAL_LANGS.filter((l) => l !== 'xh')) assert.equal(figureCredit(f, lang), f.credit, `${lang}: credit unchanged`);
+  }
+  assert.equal(figureCredit({ ...figures[0], credit: 'Photo: Imbewu' }, 'xh'), 'Photo: Imbewu', 'an unlisted credit is shown as stored');
+  assert.equal(figureCredit({ ...figures[0], credit: undefined }, 'xh'), undefined);
+});
+
+test('the chapter page links back to English in the reader\'s own draft language for isiXhosa, and in English for the rest', () => {
+  const route = readFileSync(path.join(ROOT, 'app', 'manual', '[lang]', '[slug]', 'page.tsx'), 'utf8');
+  assert.match(route, /isInlineDraftLang\(lang\)/);
+  assert.match(route, /\{ui\.readInEnglish\}/);
+  assert.match(route, /manualUi\('en'\)\.readInEnglish/);
+  const read = (lang: string) => JSON.parse(readFileSync(path.join(ROOT, 'content', 'manual', lang, 'ui.json'), 'utf8')) as Record<string, string>;
+  assert.equal(manualUi('xh').readInEnglish, read('xh').readInEnglish);
+  assert.equal(manualUi('xh').readInEnglish, 'Funda esi sahluko ngesiNgesi');
+  assert.equal(manualUi('en').readInEnglish, 'Read this chapter in English');
 });

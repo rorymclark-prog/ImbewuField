@@ -32,8 +32,10 @@
 import { useState } from 'react';
 import { FileText, Trash2, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { deleteReport, groupReportsBySite, type SavedReport } from '@/lib/saved-reports';
 import { resolveColor, type SavedPlace } from '@/lib/saved-places';
+import { formatXhosaDate } from '@/lib/xh-dates';
 
 interface Props {
   reports: SavedReport[];
@@ -61,6 +63,10 @@ export default function SavedReportsList({
   // browser locale, which prints the en-US '10/16/2026' on a phone set to that rather than
   // 'en-ZA'.
   const dateLocale = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
+  // 'xh-ZA' falls back to English in browsers, so isiXhosa writes its own month names (xh-dates).
+  const dayLabel = (value: string | number, opts?: Intl.DateTimeFormatOptions) => lang === 'xh'
+    ? formatXhosaDate(new Date(value), { day: true, month: opts?.month === 'long' ? 'long' : 'short', year: true })
+    : new Date(value).toLocaleDateString(dateLocale, opts);
   const [openSiteId, setOpenSiteId] = useState<string | null>(null);
 
   const groups = groupReportsBySite(reports, places);
@@ -138,7 +144,7 @@ export default function SavedReportsList({
                     </div>
                     <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                       {count} {count === 1 ? t('savedReportCountSingular') : t('savedReportCountPlural')}
-                      {' · '}{new Date(g.reports[0].savedAt).toLocaleDateString(dateLocale)}
+                      {' · '}{dayLabel(g.reports[0].savedAt)}
                     </div>
                   </div>
                   <ChevronRight size={16} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
@@ -174,13 +180,13 @@ export default function SavedReportsList({
                   <button onClick={() => onViewReport?.(r)} className="flex-1 min-w-0 text-left">
                     <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
                       {known
-                        ? new Date(r.savedAt).toLocaleDateString(dateLocale, { day: 'numeric', month: 'long', year: 'numeric' })
+                        ? dayLabel(r.savedAt, { day: 'numeric', month: 'long', year: 'numeric' })
                         : r.name}
                     </div>
                     <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                       {known
                         ? new Date(r.savedAt).toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' })
-                        : `${new Date(r.savedAt).toLocaleDateString(dateLocale)} · ${Math.abs(r.location.lat).toFixed(3)}°S ${r.location.lon.toFixed(3)}°E`}
+                        : `${dayLabel(r.savedAt)} · ${Math.abs(r.location.lat).toFixed(3)}°S ${r.location.lon.toFixed(3)}°E`}
                     </div>
                   </button>
                   <button
@@ -192,7 +198,7 @@ export default function SavedReportsList({
                   </button>
                   <button
                     onClick={() => onDeleted?.(deleteReport(r.id))}
-                    title="Delete"
+                    title={inlineText(lang, 'Delete')}
                     className="px-2 py-1.5 flex-shrink-0 flex items-center"
                     style={{ color: 'var(--text-secondary)' }}
                   >

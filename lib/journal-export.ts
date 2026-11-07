@@ -19,8 +19,11 @@ export function csvCell(value: string | number): string {
   return `"${text.replace(/"/g, '""')}"`;
 }
 
+/** isiXhosa has no draft of the saved-copy wording, so its copies stay English exactly as before the screen was drafted. */
+const exportLanguage = (lang?: string) => lang === 'xh' ? 'en' : lang ?? 'en';
+
 export function buildJournalCsv(entries: JournalEntry[], options: JournalExportOptions = {}): string {
-  const lang = options.lang ?? 'en';
+  const lang = exportLanguage(options.lang);
   const t = (key: FarmMemoryKey) => farmMemoryText(lang, key);
   const headerKeys: FarmMemoryKey[] = ['exportDate', 'exportCategory', 'exportTitle', 'exportNotes',
     'exportBed', 'exportBedId', 'exportCrop', 'exportPhotos', 'exportBasisHeading', 'exportSelection'];
@@ -68,9 +71,9 @@ ${articles || `<p>${html(t('exportEmpty'))}</p>`}
 }
 
 export function downloadJournalCsv(entries: JournalEntry[], options: JournalExportOptions = {}): Promise<FileDelivery> {
-  return deliverFile(new Blob([buildJournalCsv(entries, options)], { type: 'text/csv;charset=utf-8' }), 'ImbewuField-journal.csv', farmMemoryText(options.lang ?? 'en', 'exportShareTitle'));
+  return deliverFile(new Blob([buildJournalCsv(entries, options)], { type: 'text/csv;charset=utf-8' }), 'ImbewuField-journal.csv', farmMemoryText(exportLanguage(options.lang), 'exportShareTitle'));
 }
 
 export function downloadJournalHtml(entries: JournalEntry[], options: JournalExportOptions = {}): Promise<FileDelivery> {
-  return deliverFile(new Blob([buildJournalHtml(entries, options)], { type: 'text/html;charset=utf-8' }), 'ImbewuField-journal.html', farmMemoryText(options.lang ?? 'en', 'exportPrintShareTitle'));
+  return deliverFile(new Blob([buildJournalHtml(entries, options)], { type: 'text/html;charset=utf-8' }), 'ImbewuField-journal.html', farmMemoryText(exportLanguage(options.lang), 'exportPrintShareTitle'));
 }

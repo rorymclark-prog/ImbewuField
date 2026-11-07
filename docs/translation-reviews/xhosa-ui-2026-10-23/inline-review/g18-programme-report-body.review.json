@@ -1,0 +1,26 @@
+{
+  "unit": "g18-programme-report-body",
+  "shard": "g18-programme-report-body.ts",
+  "range": "all",
+  "okCount": 146,
+  "items": [
+    {
+      "index": 28,
+      "key": "This counts portfolio records, not unique households or indirect beneficiaries.",
+      "verdict": "repair",
+      "draft": "Oku kubala iirekhodi zephotifoliyo, hayi iintsapho ezahlukeneyo okanye abo banconywa ngokungangqalanga.",
+      "backtranslation": "This counts portfolio records, not separate households or those indirectly praised/benefiting.",
+      "problem": "indirect beneficiaries rendered as \"banconywa\" (those who are praised)",
+      "corrected": "Oku kubala iirekhodi zephotifoliyo, hayi iintsapho ezahlukeneyo okanye abo basizakala ngokungangqalanga."
+    },
+    {
+      "index": 67,
+      "key": "Grant commitments, disbursements, a programme budget and independently verified expenditure are not available here. Farmer sales and costs are not the organisation’s grant accounts.",
+      "verdict": "repair",
+      "draft": "Izibophelelo zesibonelelo, uhlawulo, ibhajethi yenkqubo nenkcitho eqinisekiswe ngokuzimeleyo azifumaneki apha. Intengiso neendleko zabafama asiziyo iiakhawunti zesibonelelo zombutho.",
+      "backtranslation": "Grant commitments, penalty, programme budget and independently confirmed expenditure are not available here. Farmers' sales and costs are not the organisation's grant accounts.",
+      "problem": "\"disbursements\" rendered as \"uhlawulo\" which means a fine/penalty (backtranslated as \"penalty\"); funder money term",
+      "corrected": "Izibophelelo zesibonelelo, iintlawulo ezikhutshiweyo, ibhajethi yenkqubo nenkcitho eqinisekiswe ngokuzimeleyo azifumaneki apha. Intengiso neendleko zabafama asiziyo iiakhawunti zesibonelelo zombutho."
+    }
+  ]
+}

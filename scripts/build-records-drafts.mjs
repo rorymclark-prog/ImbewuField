@@ -13,7 +13,7 @@ const inventory = JSON.parse(readFileSync(join(DIR, 'inventory.json'), 'utf8'));
 const placeholders = (s) => [...s.matchAll(/\{([a-zA-Z]+)\}/g)].map((m) => m[1]).sort().join(',');
 const rows = {};
 const problems = [];
-for (const lang of ['zu', 'st', 've', 'ts']) {
+for (const lang of ['zu', 'st', 've', 'ts', 'xh']) {
   let drafts;
   try { drafts = JSON.parse(readFileSync(join(DIR, `draft-${lang}.json`), 'utf8')); } catch { continue; }
   for (const d of drafts) {
@@ -30,7 +30,7 @@ writeFileSync(join(ROOT, 'lib/records-regional-drafts-data.ts'), `// GENERATED b
 // Do not edit by hand: change the packet's draft-<lang>.json and rebuild. Keyed by exact English
 // (see lib/records-regional-drafts.ts). Unreviewed machine drafts — Rory authorised these for later
 // facilitator review on 6 October 2026; none has been checked by a fluent speaker or local farming reviewer.
-export type RecordsDraftRow = { zu?: string; st?: string; ve?: string; ts?: string };
+export type RecordsDraftRow = { zu?: string; st?: string; ve?: string; ts?: string; xh?: string };
 
 export const RECORDS_DRAFTS: Record<string, RecordsDraftRow> = {
 ${body}

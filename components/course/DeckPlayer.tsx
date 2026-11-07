@@ -9,12 +9,11 @@ import {
   deckFor,
   currentRegionalDeckSlide,
   formatBytes,
-  resolveDeckLang,
   slideAudioUrl,
   slideImageFor,
   timedAnimationSync,
 } from '@/lib/course-deck';
-import { availableNarrationLanguages, requiresExplicitNarrationChoice, resolveNarrationLang, trackTitle } from '@/lib/course-audio';
+import { availableNarrationLanguages, resolveNarrationLang, trackTitle } from '@/lib/course-audio';
 import { hasCurrentDeckRelease } from '@/lib/course-deck-release-bindings-registry';
 import type { CourseDeckReleaseSlide } from '@/lib/course-deck-release-bindings';
 import { COURSE_NARRATION } from '@/lib/course-audio';
@@ -25,6 +24,8 @@ import { isiZuluDeckReviewHold } from '@/lib/course-deck-review-holds';
 import { COURSE_CACHE } from '@/lib/offline-cache';
 import COURSE_DECK_ART from '@/docs/course-deck-art.json' with { type: 'json' };
 import { useLanguage } from '@/lib/i18n-context';
+import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { requiresLearnerNarrationChoice, resolveLearnerDeckLang } from '@/lib/learner-deck-lang';
 import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
 
 // The module as it was actually written: slides in a teaching order, narrated, with animations
@@ -68,6 +69,7 @@ const LANG_NAME: Record<string, string> = {
 };
 const langName = (code: string, uiLang: string) => uiLang === 'zu' && code === 'en'
   ? 'isiNgisi'
+  : uiLang === 'xh' && code === 'en' ? 'isiNgesi'
   : LANG_NAME[code] ?? code;
 
 type IsiZuluSourcePairContentProps = {
@@ -128,8 +130,8 @@ function CurrentDeckReleaseContent({ slide, source, sourceHeading, language }: {
   return <>
     {slide ? <div lang={language}><h5>{slide.targetHeading}</h5>
       {slide.targetText.map((paragraph, i) => <p key={i}>{paragraph}</p>)}</div>
-      : <p>Current draft source comparison changed; showing English until checked.</p>}
-    <div lang="en"><h5>Exact English source</h5><h5>{sourceHeading}</h5>
+      : <p>{inlineText(language, 'Current draft source comparison changed; showing English until checked.')}</p>}
+    <div lang="en"><h5>{inlineText(language, 'Exact English source')}</h5><h5>{sourceHeading}</h5>
       {source.map((paragraph, i) => <p key={i}>{paragraph}</p>)}</div>
   </>;
 }
@@ -148,8 +150,8 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // English, a facilitator checks both, and the app-wide language is a heavier thing to change and
   // change back. It defaults to the app's language and is only offered when the module actually
   // has more than one recording.
-  const regionalSlidesSelected = ['st', 've', 'ts'].includes(appLang);
-  const needsExplicitChoice = requiresExplicitNarrationChoice(moduleId, appLang);
+  const regionalSlidesSelected = ['st', 've', 'ts', 'xh'].includes(appLang);
+  const needsExplicitChoice = requiresLearnerNarrationChoice(moduleId, appLang);
   const needsSourceNarrationChoice = needsExplicitChoice && !!narration?.languages.includes('en');
   const defaultNarrationChoice = needsExplicitChoice ? NO_NARRATION : appLang;
   const [slideChoice, setSlideChoice] = useState(appLang);
@@ -160,7 +162,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     setSlideChoice(appLang);
     setNarrationChoice(defaultNarrationChoice);
   }, [appLang, defaultNarrationChoice]);
-  const slideLang = resolveDeckLang(moduleId, slideChoice);
+  const slideLang = resolveLearnerDeckLang(moduleId, slideChoice);
   const spokenLang = narrationChoice && narrationChoice !== NO_NARRATION
     ? resolveNarrationLang(moduleId, narrationChoice)
     : null;
@@ -500,7 +502,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const hasCurrentRelease = hasCurrentDeckRelease(moduleId, slideChoice);
   const currentReleaseSlide = currentRegionalDeckSlide(moduleId, slideChoice, current.slide);
   const currentReleaseSource = COURSE_TRANSCRIPTS[moduleId]?.en?.[current.slide] ?? [];
-  const currentReleaseLabel = 'Read slide · unreviewed draft / exact English source';
+  const currentReleaseLabel = inlineText(slideChoice, 'Read slide · unreviewed draft / exact English source');
   const img = slideImageFor(moduleId, slideChoice, current.slide);
   const anim = animationUrls(moduleId, current.slide, slideChoice);
   const audio = audioForCurrent;
@@ -588,7 +590,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                   }}
                 >
                   {regionalSlidesSelected && code === 'en'
-                    ? appLang === 'st' ? 'Modumo wa Senyesemane · English source narration' : 'English source narration'
+                    ? appLang === 'st' ? 'Modumo wa Senyesemane · English source narration' : inlineText(appLang, 'English source narration')
                     : regionalNarrationDraft(moduleId, code)
                       ? `${langName(code, uiLang)} AI draft · English holds`
                     : langName(code, uiLang)}
@@ -817,7 +819,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       {needsSourceNarrationChoice && (
         <p role="status" style={{ margin: 0, fontSize: 12, lineHeight: 1.4, color: MUTED }}>
           {narrationChoice === NO_NARRATION
-            ? `${langName(appLang, uiLang)} slides selected. No narration will play. Use Next to read at your own pace.`
+            ? inlineTemplate(appLang, '{language} slides selected. No narration will play. Use Next to read at your own pace.', null, { language: langName(appLang, uiLang) })
+            : appLang === 'xh' ? <>{inlineText(appLang, 'isiXhosa AI draft')} · {narrationChoice === 'en'
+            ? inlineText(appLang, 'English source narration selected. isiXhosa narration is not available for this module yet.')
+            : inlineText(appLang, 'No isiXhosa narration is available. Select English source narration or No narration.')}</>
             : appLang === 'st' ? <>Sesotho AI draft · {narrationChoice === 'en'
             ? 'Ho kgethilwe modumo wa Senyesemane (wa mohlodi). English source: English source narration selected.'
             : 'Ha ho modumo wa Sesotho wa thuto ena. Kgetha modumo wa Senyesemane gore o mamele thuto, kana khetha “No narration”. English source: No Sesotho narration is available. Select English source narration or No narration.'}</>
@@ -829,7 +834,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
       {regionalSlidesSelected && !needsSourceNarrationChoice && narrationChoice === 'en' && (
         <p role="status" style={{ margin: 0, fontSize: 12, lineHeight: 1.4, color: MUTED }}>
-          English source narration selected. Your regional slides remain visible.
+          {inlineText(appLang, 'English source narration selected. Your regional slides remain visible.')}
         </p>
       )}
 

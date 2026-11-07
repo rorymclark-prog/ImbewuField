@@ -8,10 +8,17 @@ import { getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { validVisitPhotos, type VisitPhoto } from '@/lib/field-teams';
 import { useLanguage } from '@/lib/i18n-context';
+import { fillInline, inlineTemplate } from '@/lib/xh-inline';
 export type VisitCaptureValue = { notes: string; originalNotes?: string; photos?: VisitPhoto[] };
 export default function VisitCapture({ value, onChange, disabled=false, notesRequired=true, onBusyChange }: { value: VisitCaptureValue; onChange: (value:VisitCaptureValue)=>void; disabled?:boolean; notesRequired?:boolean; onBusyChange?: (busy:boolean)=>void }) {
   const { lang } = useLanguage();
-  const ui = (en: string, zu: string) => lang === 'zu' ? `${zu} · ${en}` : en;
+  // isiZulu and isiXhosa drafts both sit beside the exact English; other languages show English.
+  const ui = (en: string, zu: string, vars: Record<string, string | number> = {}) => {
+    const english = fillInline(en, vars);
+    if (lang === 'zu') return `${zu} · ${english}`;
+    const xh = lang === 'xh' ? inlineTemplate(lang, en, null, vars) : english;
+    return xh === english ? english : `${xh} · ${english}`;
+  };
   const {user,profile}=useAuth();
   const alive=useRef(true),scopeRef=useRef('');
   scopeRef.current=[user?.uid??'',profile?.org_id??'',profile?.role??''].join('|');
@@ -57,13 +64,14 @@ export default function VisitCapture({ value, onChange, disabled=false, notesReq
   }
   return <fieldset disabled={disabled||busy} style={{border:0,padding:0,margin:'16px 0'}}>
     {lang === 'zu' && <p role="note" style={{fontSize:12,lineHeight:1.5}}>{ui('isiZulu wording is an unreviewed draft. User-entered notes are kept as written.', 'Umbhalo wesiZulu uwuhlaka olungakabuyekezwa. Amanothi owafakayo agcinwa njengoba ewabhalile.')}</p>}
+    {lang === 'xh' && <p role="note" style={{fontSize:12,lineHeight:1.5}}>{ui('isiXhosa wording is an unreviewed draft. User-entered notes are kept as written.', '')}</p>}
     <details style={{marginBottom:16}}><summary style={{minHeight:44,cursor:'pointer'}}>{ui('Speak your visit notes on your phone', 'Shono amanothi okuvakasha ngocingo lwakho')}</summary><ol style={{paddingLeft:24,lineHeight:1.7}}><li>{ui('Tap the notes box, then the microphone on your phone’s keyboard.', 'Thepha ibhokisi lamanothi, bese uthinta imakrofoni kukhibhodi yocingo.')}</li><li>{ui('Say what you saw, what you did, any measurements, and what needs attention.', 'Shono okubonile, okwenzile, izilinganiso ozithathile nokudinga ukunakwa.')}</li><li>{ui('Finish with who will do what and the follow-up date. Check names and numbers before saving.', 'Qeda ngokuthi ubani ozokwenza ini nosuku lokulandelela. Hlola amagama nezinombolo ngaphambi kokugcina.')}</li></ol><p>{ui('No app AI charge for keyboard dictation. Your phone may need dictation enabled and an internet connection.', 'Ukusho usebenzisa ikhibhodi akukhokhisi i-AI yohlelo lokusebenza. Ucingo lungadinga ukuvulwa kokubizela umbhalo noxhumano lwe-inthanethi.')}</p><button type="button" onClick={()=>text.current?.focus()} style={{minHeight:44}}>{ui('Start in the notes box', 'Qala ebhokisini lamanothi')}</button></details>
     <label>{ui('Visit outcome and follow-up', 'Umphumela wokuvakasha nokulandelela')}<textarea ref={text} required={notesRequired} maxLength={4000} value={value.notes} onChange={e=>{onChange({...value,notes:e.target.value});setSuggestion('');}} placeholder={ui('Observed… Work completed… Measurements… Support needed… Next action, owner and date…', 'Okubonile… Umsebenzi oqediwe… Izilinganiso… Usizo oludingekayo… Isinyathelo esilandelayo, umenzi nosuku…')} style={{minHeight:140}}/></label>
     <button type="button" disabled={!value.notes.trim()} onClick={()=>void clean()} style={{minHeight:44}}>{ui('Clean up my notes · optional AI', 'Lungisa amanothi ami · i-AI ongayikhetha')}</button><p style={{fontSize:13}}>{ui('Only your notes are sent for cleanup. Review the suggestion before using it; photos are not sent.', 'Amanothi akho kuphela athunyelwa ukuyolungiswa. Buyekeza isiphakamiso ngaphambi kokusisebenzisa; izithombe azithunyelwa.')}</p>
     {suggestion&&<section style={{margin:'16px 0',padding:16,border:'1px solid var(--border)',borderRadius:12}}><h3>{ui('Review the suggested wording', 'Buyekeza umbhalo ophakanyisiwe')}</h3><p style={{whiteSpace:'pre-wrap'}}>{suggestion}</p><button type="button" onClick={()=>{onChange({...value,notes:suggestion,originalNotes:original.current});setSuggestion('');}} style={{minHeight:44}}>{ui('Use this wording', 'Sebenzisa lo mbhalo')}</button><button type="button" onClick={()=>setSuggestion('')} style={{minHeight:44}}>{ui('Keep original', 'Gcina owokuqala')}</button></section>}
     <label style={{display:'block',marginTop:16}}>{ui('Visit photos · up to 3', 'Izithombe zokuvakasha · kufika kwezintathu')}<input type="file" accept="image/*" capture="environment" onChange={e=>{void photos(e.target.files);e.target.value='';}}/></label>
     <label style={{display:'block'}}>{ui('Choose existing photos', 'Khetha izithombe ezikhona')}<input type="file" accept="image/*" multiple onChange={e=>{void photos(e.target.files);e.target.value='';}}/></label>
-    <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>{(value.photos??[]).map((photo,index)=><figure key={index} style={{width:180}}><img src={photo.image} alt={ui(`Visit photo ${index+1}`, `Isithombe sokuvakasha ${index+1}`)} style={{width:180,height:130,objectFit:'cover',borderRadius:10}}/><input aria-label={ui(`Caption for photo ${index+1}`, `Incazelo yesithombe ${index+1}`)} required maxLength={200} value={photo.caption} onChange={e=>onChange({...value,photos:value.photos?.map((p,i)=>i===index?{...p,caption:e.target.value}:p)})} placeholder={ui('What does this show?', 'Sibonisani lesi sithombe?')}/><button type="button" onClick={()=>onChange({...value,photos:value.photos?.filter((_,i)=>i!==index)})} style={{minHeight:44}}>{ui('Remove photo', 'Susa isithombe')}</button></figure>)}</div>
+    <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>{(value.photos??[]).map((photo,index)=><figure key={index} style={{width:180}}><img src={photo.image} alt={ui('Visit photo {n}', `Isithombe sokuvakasha ${index+1}`, {n:index+1})} style={{width:180,height:130,objectFit:'cover',borderRadius:10}}/><input aria-label={ui('Caption for photo {n}', `Incazelo yesithombe ${index+1}`, {n:index+1})} required maxLength={200} value={photo.caption} onChange={e=>onChange({...value,photos:value.photos?.map((p,i)=>i===index?{...p,caption:e.target.value}:p)})} placeholder={ui('What does this show?', 'Sibonisani lesi sithombe?')}/><button type="button" onClick={()=>onChange({...value,photos:value.photos?.filter((_,i)=>i!==index)})} style={{minHeight:44}}>{ui('Remove photo', 'Susa isithombe')}</button></figure>)}</div>
     {busy&&<p role="status">{ui('Preparing…', 'Kuyalungiselelwa…')}</p>}{error&&<p role="alert">{error}</p>}
   </fieldset>;
 }

@@ -84,7 +84,7 @@ test('Simple\'s default print job is the full design only — layer pages need "
 
 test('Simple prints one clear action, labelled for a farmer/facilitator rather than technical PDF language', () => {
   assert.match(
-    PAGE, /\{simple \? 'Print my plan' : 'Print \/ Save as PDF'\}/,
+    PAGE, /\{simple \? (?:'Print my plan'|tx\('Print my plan'\)) : (?:'Print \/ Save as PDF'|tx\('Print \/ Save as PDF'\))\}/,
     'Simple\'s Print button must read "Print my plan"',
   );
 });

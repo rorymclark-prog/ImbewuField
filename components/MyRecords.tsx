@@ -80,6 +80,11 @@ function recordsUi(lang: string, english: string, isiZulu: string, paired = fals
 // then the isiZulu one (recordsUi's `paired` order above), on a card specifically meant to be
 // shown to a lender who may read isiZulu first. Same pairing, isiZulu first.
 function recordsUiZuFirst(lang: string, english: string, isiZulu: string): string {
+  // isiXhosa follows the same rule as isiZulu here: the draft first, the English source after it.
+  if (lang === 'xh') {
+    const draft = recordsDraft(lang, english);
+    return draft && draft !== english ? `${draft} — ${english}` : english;
+  }
   if (lang !== 'zu') return recordsPaired(lang, english);
   return `${isiZulu} — ${english}`;
 }
@@ -412,7 +417,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>
           <CropSelect
             ariaLabel={recordsFill(lang, 'Produce / product')}
-            language={lang === 'zu' ? 'zu' : 'en'}
+            language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en'}
             value={form.crop}
             onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
           />
@@ -564,7 +569,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>
             <CropSelect
               ariaLabel={recordsFill(lang, 'Produce / product')}
-              language={lang === 'zu' ? 'zu' : 'en'}
+              language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en'}
               value={form.crop}
               onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
             />

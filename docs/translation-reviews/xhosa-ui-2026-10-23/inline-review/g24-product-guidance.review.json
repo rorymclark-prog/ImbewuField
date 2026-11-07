@@ -1,0 +1,602 @@
+{
+  "unit": "g24-product-guidance",
+  "shard": "g24-product-guidance.ts",
+  "range": "all",
+  "okCount": 631,
+  "items": [
+    {
+      "index": 0,
+      "key": "1994/95 total kg/tree at age 14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Marketable weights are respectively 77.87, 28.42 and 23.38 kg/tree. One season and varying management, canopy and cultivar prevent a universal annual curve or copying total into saleable kg. The authors explicitly caution yield comparisons. The separate KZN guide gives conservative 2,000, average 3,000–5,000 and good 6,000+ kg/ha, not per-age kg/tree.",
+      "verdict": "repair",
+      "draft": "1994/95 ubungakanani bonke be-kg/umthi xa umthi uneminyaka eyi-14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Ubunzima obuthengiswayo bungu-77.87, 28.42 kunye ne-23.38 kg/umthi ngokulandelelana. Ixesha elinye lonyaka, ulawulo olwahlukeneyo, ikhanopi neendidi kuthintela ijika lonyaka elinye elisebenza kuyo yonke indawo okanye ukukopa ingqikelelo iyonke njenge-kg ezithengiswayo. Ababhali bakhuthaza ngokucacileyo ukuba kuqwalaselwe ukuthelekisa izivuno. Isikhokelo se-KZN esahlukileyo sinika ubuncinane obu-2,000, umndilili ongu-3,000–5,000 kunye nokulungileyo okungu-6,000+ kg/ha, hayi i-kg/umthi ngobudala.",
+      "backtranslation": "1994/95 total yields in kg/tree when tree is 14 years old: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Marketable weight is 77.87, 28.42 and 23.38 kg/tree respectively. One season, different management, canopy and varieties prevent one age curve that works everywhere or copying the total estimate as marketable kg. Authors clearly encourage caution when comparing yields. A separate KZN guide gives minimum 2,000, average 3,000-5,000 and good 6,000+ kg/ha, not kg/tree by age.",
+      "problem": "Reversal: English says the authors explicitly CAUTION against comparing yields; draft says they encourage considering/comparing. Also \"annual curve\" garbled.",
+      "corrected": "1994/95 ubungakanani bonke be-kg/umthi xa umthi uneminyaka eyi-14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Ubunzima obuthengiswayo bungu-77.87, 28.42 kunye ne-23.38 kg/umthi ngokulandelelana. Ixesha elinye lonyaka, ulawulo olwahlukeneyo, ikhanopi neendidi kuthintela ijika lesivuno lonyaka elisebenza kuyo yonke indawo okanye ukukopa ingqikelelo iyonke njenge-kg ezithengiswayo. Ababhali balumkisa ngokucacileyo ngokuthelekisa izivuno. Isikhokelo se-KZN esahlukileyo sinika ubuncinane obu-2,000, umndilili ongu-3,000–5,000 kunye nokulungileyo okungu-6,000+ kg/ha, hayi i-kg/umthi ngobudala."
+    },
+    {
+      "index": 1,
+      "key": "2022 trial at Kleinplasie near Hermon concerns Medjool. Abstract treatment dates label ripening stages inconsistently; no harvest months are inferred. Full university handle returned HTTP 403 during checking.",
+      "verdict": "repair",
+      "draft": "Uvavanyo luka-2022 eKleinplasie kufuphi neHermon lubhekisele kwi-Medjool. Imihla yonyango kushwankathelo ibhala izigaba zokuvuthwa ngokungahambelaniyo; akukho nyanga zokuvuna ziqikelelwayo. Isibambi se-yunivesithi esipheleleyo sibuyise i-HTTP 403 ngexesha lokuhlola.",
+      "backtranslation": "A 2022 trial at Kleinplasie near Hermon referred to Medjool. Treatment dates in the summary record ripening stages inconsistently; no harvest months are estimated. The full university holder (repository?) returned HTTP 403 during checking.",
+      "problem": "\"handle\" (persistent link) rendered as \"isibambi\" (holder) - wrong term.",
+      "corrected": "Uvavanyo luka-2022 eKleinplasie kufuphi neHermon lubhekisele kwi-Medjool. Imihla yonyango kushwankathelo ibhala izigaba zokuvuthwa ngokungahambelaniyo; akukho nyanga zokuvuna ziqikelelwayo. Ikhonkco elipheleleyo le-yunivesithi libuyise i-HTTP 403 ngexesha lokuhlola."
+    },
+    {
+      "index": 2,
+      "key": "ARC Infruitec Citrusdal, 1990. 10th leaf: Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. 7th leaf: Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/tree/year. The source calls these comparative, not absolute. Different cultivars and orchard groups do not establish a universal age-yield ramp.",
+      "verdict": "repair",
+      "draft": "ARC Infruitec Citrusdal, 1990. Amagqabi ayi-10: Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/umthi/unyaka. Amagqabi ayi-7: Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/umthi/unyaka. Umthombo uzibiza ngokuthelekisayo, hayi ngokupheleleyo. Iindidi ezahlukeneyo neengqokelela zezitiya zeziqhamo azibonisi ukunyuka kwesivuno ngobudala okusebenzayo kuyo yonke indawo.",
+      "backtranslation": "ARC Infruitec Citrusdal, 1990. 10 leaves(?): Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. 7 leaves: Tena 12.1, ... Source calls itself comparative, not complete. Different varieties and fruit-orchard collections do not show a yield increase with age that works everywhere.",
+      "problem": "\"10th leaf / 7th leaf\" means orchard year; draft says \"10 leaves / 7 leaves\" - misleading.",
+      "corrected": "ARC Infruitec Citrusdal, 1990. Unyaka wesi-10 wesitiya (10th leaf): Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/umthi/unyaka. Unyaka wesi-7 wesitiya (7th leaf): Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/umthi/unyaka. Umthombo uzibiza ngokuthelekisayo, hayi ngokupheleleyo. Iindidi ezahlukeneyo neengqokelela zezitiya zeziqhamo azibonisi ukunyuka kwesivuno ngobudala okusebenzayo kuyo yonke indawo."
+    },
+    {
+      "index": 16,
+      "key": "Annual transplant duration",
+      "verdict": "repair",
+      "draft": "Ixesha lokutshintshela konyaka",
+      "backtranslation": "Time of switching to annual (season changeover)",
+      "problem": "\"transplant duration\" rendered as \"changeover time\" (tshintshela) - wrong sense.",
+      "corrected": "Ixesha lokuhlaliswa kwezityalo zonyaka"
+    },
+    {
+      "index": 42,
+      "key": "Ask for correctly identified spekboom and record whether it is planted for food, browse or restoration. No measured household leaf yield is supplied.",
+      "verdict": "repair",
+      "draft": "Cela i-spekboom echongwe ngokuchanekileyo ubhale ukuba itshaywa ukutya, ukutyiwa yimfuyo okanye ukubuyisela indalo. Akukho sivuno silinganisiweyo samagqabi ekhaya esinikeziweyo.",
+      "backtranslation": "Ask for correctly identified spekboom; record whether it is browsed (eaten) as food, grazed by livestock or for restoration. No estimated home leaf yield is given.",
+      "problem": "\"planted for food\" rendered with \"itshaywa\" (is hit) - nonsense verb.",
+      "corrected": "Cela i-spekboom echongwe ngokuchanekileyo ubhale ukuba ityalelwa ukutya, ukutyiwa yimfuyo okanye ukubuyisela indalo. Akukho sivuno silinganisiweyo samagqabi ekhaya esinikeziweyo."
+    },
+    {
+      "index": 70,
+      "key": "Buying advice: for egg production, request vaccinated point-of-lay pullets from a layer supplier, with age, feeding and vaccination records.",
+      "verdict": "repair",
+      "draft": "Isiluleko sokuthenga: kwimveliso yamaqanda, cela izikhukhukazi ezincinci ezikufutshane nokubeka ezifakelwe iinaliti kumthengisi weenkukhu zamaqanda, kunye neerekhodi zobudala, zokutya nezokugonya.",
+      "backtranslation": "Purchase advice: for egg production, ask an egg-chicken seller for young hens near laying that have been injected, with records of age, feed and vaccination.",
+      "problem": "Vaccinated pullets rendered as \"fakelwe iinaliti\" (needles put in) - livestock health term; use gonya.",
+      "corrected": "Isiluleko sokuthenga: kwimveliso yamaqanda, cela izikhukhukazi ezincinci ezikufutshane nokubeka ezigonyiweyo kumthengisi weenkukhu zamaqanda, kunye neerekhodi zobudala, zokutya nezokugonya."
+    },
+    {
+      "index": 73,
+      "key": "Calculated orchard-average equivalent using the KZN guide's likely production of 50 t/ha and midpoint planting spacings: cool KZN Midlands, 5.75 x 2.75 m, about 79 kg/tree; hot areas, 7.5 x 3.5 m, about 131 kg/tree. Calculation: 50,000 kg/ha x m²/tree / 10,000 m²/ha. These values are derived, not measured individual-tree yields. The spread reflects spacing, not varieties or a production-by-age curve. Confirm local orchard yield and actual spacing before using this reference.",
+      "verdict": "repair",
+      "draft": "Elilinganayo lomndilili wesitiya liharishwe kusetyenziswa imveliso enokwenzeka ye-50 t/ha yesikhokelo se-KZN kunye nezithuba zokutyala zesiphakathi: iKZN Midlands ebandayo, 5.75 x 2.75 m, malunga ne-79 kg/umthi; iindawo ezishushu, 7.5 x 3.5 m, malunga ne-131 kg/umthi. Ubalo: 50,000 kg/ha x m²/umthi / 10,000 m²/ha. Ezi ziqhelo ziphuma kubalo, azizizo izivuno ezilinganisiweyo zomthi omnye. Umahluko ubonisa isithuba, hayi iindidi okanye ijika lemveliso ngobudala. Qinisekisa isivuno sesitiya sasekuhlaleni nesithuba sokwenyani phambi kokusebenzisa esi sisalathiso.",
+      "backtranslation": "Equivalent of average orchard (?) was calculated using the possible production of 50 t/ha of the KZN guide and middle planting spaces: cool KZN Midlands, 5.75 x 2.75 m, about 79 kg/tree; hot areas, 7.5 x 3.5 m, about 131 kg/tree. Calculation: 50,000 kg/ha x m²/tree / 10,000 m²/ha. These norms come from calculation, not measured yields of a single tree. The difference shows spacing, not varieties or a yield curve by age. Confirm local orchard yield and actual spacing before using this indicator.",
+      "problem": "\"liharishwe\" is not a word for \"calculated\" (resembles diarrhoea verb).",
+      "corrected": "Elilinganayo lomndilili wesitiya libaliwe kusetyenziswa imveliso enokwenzeka ye-50 t/ha yesikhokelo se-KZN kunye nezithuba zokutyala zesiphakathi: iKZN Midlands ebandayo, 5.75 x 2.75 m, malunga ne-79 kg/umthi; iindawo ezishushu, 7.5 x 3.5 m, malunga ne-131 kg/umthi. Ubalo: 50,000 kg/ha x m²/umthi / 10,000 m²/ha. Ezi ziqhelo ziphuma kubalo, azizizo izivuno ezilinganisiweyo zomthi omnye. Umahluko ubonisa isithuba, hayi iindidi okanye ijika lemveliso ngobudala. Qinisekisa isivuno sesitiya sasekuhlaleni nesithuba sokwenyani phambi kokusebenzisa esi sisalathiso."
+    },
+    {
+      "index": 89,
+      "key": "Choose a cool growing season and fertile, well-drained soil. Heat reduces bud quality and freezing can damage buds.",
+      "verdict": "repair",
+      "draft": "Khetha ixesha lokukhula elibandayo nomhlaba ohlumileyo, ophuma kakuhle amanzi. Ubushushu buyehlisa umgangatho weentyatyambo ezingekavuleki kwaye ukuqhwaba kunokonakalisa.",
+      "backtranslation": "Choose a cool growing season and fertile, well-drained soil. Heat lowers quality of flowers not yet open and clapping (hail?) can damage.",
+      "problem": "\"ukuqhwaba\" (clapping) used for freezing - wrong term; frost safety.",
+      "corrected": "Khetha ixesha lokukhula elibandayo nomhlaba ohlumileyo, ophuma kakuhle amanzi. Ubushushu buyehlisa umgangatho weentyatyambo ezingekavuleki kwaye iqabaka linokuzonakalisa."
+    },
+    {
+      "index": 101,
+      "key": "Collect fallen nuts frequently, dehusk promptly and dry with clean ventilation. Keep poultry and manure away from harvesting nuts.",
+      "verdict": "repair",
+      "draft": "Qokelela amandongomane awileyo rhoqo, wasuse amaxolo ngokukhawuleza kwaye uwomise kumoya ohamba kakuhle. Gcina iinkukhu nogbuyo kude namandongomane avunwayo.",
+      "backtranslation": "Collect fallen nuts often, remove husks quickly and dry in well-ventilated air. Keep chickens and ... [ugbuyo?] away from nuts being harvested.",
+      "problem": "Food hygiene: \"clean ventilation\" lost; \"ugbuyo\" is not a recognised word for manure.",
+      "corrected": "Qokelela amandongomane awileyo rhoqo, wasuse amaxolo ngokukhawuleza kwaye uwomise kumoya ococekileyo ohamba kakuhle. Gcina iinkukhu nobulongwe bazo kude namandongomane avunwayo."
+    },
+    {
+      "index": 107,
+      "key": "Confirm botanical identity before using this catalogue entry as a separate fruit enterprise. Do not count it twice merely because the same plant is also labelled C. bispinosa.",
+      "verdict": "repair",
+      "draft": "Qinisekisa ukuchongwa kwesityalo phambi kokusebenzisa olu gcino lwekhathalogu njengeshishini eliyodwa leziqhamo. Ungalibali kabini nje kuba isityalo esifanayo sibizwa nangokuthi yi-C. bispinosa.",
+      "backtranslation": "Confirm plant identification before using this catalogue storage as a single fruit business. Do not be mixed up twice just because the same plant is also called C. bispinosa.",
+      "problem": "\"Ungalibali\" = do not forget; English says do not count twice.",
+      "corrected": "Qinisekisa ukuchongwa kwesityalo phambi kokusebenzisa olu gcino lwekhathalogu njengeshishini eliyodwa leziqhamo. Ungayibali kabini nje kuba isityalo esifanayo sibizwa nangokuthi yi-C. bispinosa."
+    },
+    {
+      "index": 111,
+      "key": "Confirm exact species with a qualified indigenous nursery. Do not substitute genus-level berry claims for identification.",
+      "verdict": "repair",
+      "draft": "Qinisekisa udidi oluchanekileyo kunye nenethsari yezityalo zomthonyama efanelekileyo. Ungafaki izibango zeqhekeza zibe lutshintsho lokuchongwa.",
+      "backtranslation": "Confirm correct type and suitable indigenous plant nursery. Do not make claims of fragment (cuttings?) become a change of identification.",
+      "problem": "\"izibango zeqhekeza\" (claims of a fragment) does not mean genus-level berry claims; identification warning garbled.",
+      "corrected": "Qinisekisa udidi oluchanekileyo kunye nenethsari yezityalo zomthonyama efanelekileyo. Ungathathi indawo yokuchongwa ngezibango ezibanzi zeberry zalo lonke uhlobo (genus)."
+    },
+    {
+      "index": 120,
+      "key": "Confirm sweet versus bitter material and food versus feed purpose before including this planting in household food.",
+      "verdict": "repair",
+      "draft": "Qinisekisa izinto ezimnandi nezikrakra kunye nenjongo yokutya nenjongo yokutyisa imfuyo phambi kokufaka olu tyalo kwikhaya lokutya.",
+      "backtranslation": "Confirm sweet and bitter types and the food purpose and animal-feeding purpose before putting this planting in the food home.",
+      "problem": "\"kwikhaya lokutya\" garbled (household food); sweet vs bitter (toxicity) check unclear.",
+      "corrected": "Qinisekisa izinto ezimnandi nezikrakra kunye nenjongo yokutya nenjongo yokutyisa imfuyo phambi kokufaka olu tyalo kukutya kwekhaya."
+    },
+    {
+      "index": 131,
+      "key": "Control rooted runners so this fast groundcover does not smother neighbouring plants.",
+      "verdict": "repair",
+      "draft": "Lawula iimbaleki ezinengcambu ukuze esi sigubungelo sikhula ngokukhawuleza singazigubungeli izityalo ezikufutshane.",
+      "backtranslation": "Control rooted refugees (imbaleki) so that this ground cover growing quickly does not cover nearby plants.",
+      "problem": "\"runners\" rendered as \"imbaleki\" (fugitives/refugees) - wrong term.",
+      "corrected": "Lawula iziqu ezihamba emhlabeni ezinengcambu ukuze esi sigubungelo sikhula ngokukhawuleza singazigubungeli izityalo ezikufutshane."
+    },
+    {
+      "index": 135,
+      "key": "Count assumption: {n} banana circle(s) × 3 planted bananas. Followers are not additional planted trees.",
+      "verdict": "repair",
+      "draft": "Ucinga ukubala: iisangqa zebhanana ezi-{n} × 3 zeebhanana ezityalwe. Iimbaleki azizizo izimithi ezongezelelweyo ezityalwe.",
+      "backtranslation": "Thinking of calculating: {n} banana circles x 3 of planted bananas. The refugees (imbaleki) are not additional trees planted.",
+      "problem": "\"followers\" (banana suckers) rendered as \"imbaleki\" (fugitives).",
+      "corrected": "Ucinga ukubala: iisangqa zebhanana ezi-{n} × 3 zeebhanana ezityalwe. Amahlumela alandelayo azizizo izimithi ezongezelelweyo ezityalwe."
+    },
+    {
+      "index": 144,
+      "key": "Cut shoots are chopped, heat-oxidised, dried and sieved; green tea is dried without oxidation. Fresh shoot kg is not dried tea kg. C. genistoides is a specific commercial species, not every honeybush species.",
+      "verdict": "repair",
+      "draft": "Amahlumela asikiweyo ayaqotywa, aoksidayizwe ngobushushu, omiswe kwaye ahluzwe; iti eluhlaza iyomiswa ngaphandle kwe-oksijini. Ii-kg zamahlumela amatsha aziyi-kg yeti eyomileyo. I-C. genistoides luhlobo oluthile lorhwebo, hayi zonke iindidi ze-honeybush.",
+      "backtranslation": "Cut shoots are chopped, oxidised by heat, dried and sieved; green tea is dried without oxygen. Kg of fresh shoots are not kg of dry tea. C. genistoides is a specific commercial kind, not all honeybush types.",
+      "problem": "\"without oxidation\" rendered as \"without oxygen\" (ngaphandle kwe-oksijini) - different process.",
+      "corrected": "Amahlumela asikiweyo ayaqotywa, aoksidayizwe ngobushushu, omiswe kwaye ahluzwe; iti eluhlaza iyomiswa ngaphandle kokuoksidayizwa. Ii-kg zamahlumela amatsha aziyi-kg yeti eyomileyo. I-C. genistoides luhlobo oluthile lorhwebo, hayi zonke iindidi ze-honeybush."
+    },
+    {
+      "index": 164,
+      "key": "Edible-part and safety review",
+      "verdict": "repair",
+      "draft": "Uhlolo lwenxalenye etyiwayo noluphepha",
+      "backtranslation": "Check of edible part and safe(?)",
+      "problem": "\"safety\" rendered \"noluphepha\" (nonstandard/unclear).",
+      "corrected": "Uhlolo lwenxalenye etyiwayo nolokhuseleko"
+    },
+    {
+      "index": 175,
+      "key": "Female palms need suitable male pollen. Record sex, cultivar and pollination management before forecasting fruit.",
+      "verdict": "repair",
+      "draft": "Iintsimbi ezisisifazane zidinga umungu wentyatyambo osisilisa ofanelekileyo. Bhala isini, indidi nolawulo lokuthwalwa komungu wentyatyambo phambi kokuqikelela iziqhamo.",
+      "backtranslation": "Female bells(?) need suitable male pollen. Record sex, type and control of pollen carrying before estimating fruit.",
+      "problem": "\"palms\" rendered \"iintsimbi\" (bells/iron) - wrong plant term.",
+      "corrected": "Iipalm ezisisifazane zidinga umungu wentyatyambo osisilisa ofanelekileyo. Bhala isini, indidi nolawulo lokuthwalwa komungu wentyatyambo phambi kokuqikelela iziqhamo."
+    },
+    {
+      "index": 186,
+      "key": "Food is the berry; the same SANBI account reports poisonous tuberous roots. September–June describes berry occurrence, not a measured ripe-picking interval.",
+      "verdict": "repair",
+      "draft": "Ukutya yiberry; umthombo ofanayo we-SANBI uxela ukuba iingcambu ezinesiqu zinetyhefu. USeptemba–Juni uchaza ukubakho kweberry, hayi ixesha elilinganisiweyo lokuvuna ezivuthiweyo.",
+      "backtranslation": "Food is the berry; the same SANBI source reports that roots with stem are poisonous. September-June describes the presence of the berry, not an estimated time of harvesting ripe ones.",
+      "problem": "Poison warning: \"tuberous roots\" rendered \"iingcambu ezinesiqu\" (roots with stem) - unclear.",
+      "corrected": "Ukutya yiberry; umthombo ofanayo we-SANBI uxela ukuba iingcambu ezinjengetiyubha zinetyhefu. USeptemba–Juni uchaza ukubakho kweberry, hayi ixesha elilinganisiweyo lokuvuna ezivuthiweyo."
+    },
+    {
+      "index": 211,
+      "key": "Full production at year 7 in this general KZN guide. No per-tree output at that age is stated, and rootstock, cultivar and management can change bearing. The four Langkloof budgets are separate regional planning assumptions, not measured confirmation of this generic age.",
+      "verdict": "repair",
+      "draft": "Imveliso epheleleyo ngonyaka wesi-7 kwesi sikhokelo jikelele se-KZN. Akukho mveliso ngomthi kobo budala ichaziweyo, kwaye ingcambu exhasayo, indidi nolawulo zinokutshintsha ukuthwala. Uhlahlo-lwabiwo-mali oluthathu lwaseLangkloof ziingcinga zokucwangcisa zengingqi ezahlukeneyo, hayi uqinisekiso olulinganisiweyo lobu budala bejikelele.",
+      "backtranslation": "Full production in year 7 in this general KZN guide. No production per tree at that age is stated, and rootstock, variety and management can change bearing. The three Langkloof budgets are different regional planning ideas, not a measured confirmation of this general age.",
+      "problem": "Number changed: English says four Langkloof budgets; draft says three.",
+      "corrected": "Imveliso epheleleyo ngonyaka wesi-7 kwesi sikhokelo jikelele se-KZN. Akukho mveliso ngomthi kobo budala ichaziweyo, kwaye ingcambu exhasayo, indidi nolawulo zinokutshintsha ukuthwala. Uhlahlo-lwabiwo-mali olune lwaseLangkloof ziingcinga zokucwangcisa zengingqi ezahlukeneyo, hayi uqinisekiso olulinganisiweyo lobu budala bejikelele."
+    },
+    {
+      "index": 214,
+      "key": "Geography of the review's bearing-age citation",
+      "verdict": "repair",
+      "draft": "Indawo yengqaliselo yobudala bokuthwala yophononongo",
+      "backtranslation": "Starting point of bearing age of review",
+      "problem": "\"Geography of the citation\" rendered as \"indawo yengqaliselo\" (place of attention) - meaning lost.",
+      "corrected": "Indawo yomthombo ocatshulwe ngophononongo ngobudala bokuthwala"
+    },
+    {
+      "index": 220,
+      "key": "Grafted stock: first nuts around 3–5 years, depending on variety; seedlings usually 10–12 years and sometimes longer. SAMAC recommends removing flowers until year 3 during establishment. The existing KZN guide 4–5-year first-bearing reference remains qualified; nursery propagation must be recorded before applying it.",
+      "verdict": "repair",
+      "draft": "Isitokhwe esidityanisiweyo: amandongomane okuqala malunga neminyaka emi-3–5, kuxhomekeke kwindidi; imithi ekhuliswe embewini ihlala iminyaka eyi-10–12 kwaye ngamanye amaxesha ixesha elide. I-SAMAC incoma ukususa iintyatyambo de kube kunyaka wesi-3 ngexesha lokuqala. Isalathiso esikhoyo se-KZN sokuthwala kokuqala kweminyaka emi-4–5 siyaqhubeka sifanelekile; ukuphindaphindwa kwenethsari kufuneka kubhalwe phambi kokusisebenzisa.",
+      "backtranslation": "Grafted stock: first nuts about 3-5 years, depending on variety; seed-grown trees take 10-12 years and sometimes longer. SAMAC recommends removing flowers until year 3 in the first period. The available KZN indicator of first bearing at 4-5 years remains suitable; nursery propagation must be recorded before using it.",
+      "problem": "\"remains qualified\" (conditional) rendered \"remains suitable\" - qualification lost.",
+      "corrected": "Isitokhwe esidityanisiweyo: amandongomane okuqala malunga neminyaka emi-3–5, kuxhomekeke kwindidi; imithi ekhuliswe embewini ihlala iminyaka eyi-10–12 kwaye ngamanye amaxesha ixesha elide. I-SAMAC incoma ukususa iintyatyambo de kube kunyaka wesi-3 ngexesha lokuqala. Isalathiso esikhoyo se-KZN sokuthwala kokuqala kweminyaka emi-4–5 sisenemiqathango; ukuphindaphindwa kwenethsari kufuneka kubhalwe phambi kokusisebenzisa."
+    },
+    {
+      "index": 224,
+      "key": "Harvest full-sized heads while bracts remain closed; fleshy bract bases and receptacle are the food part. Annual transplanted crops and perennial crowns are different production systems. Month wording has northern-hemisphere/state context and is not assigned to a South African region.",
+      "verdict": "repair",
+      "draft": "Vuna iintloko ezinkulu xa ii-bract zisavaliwe; iziseko ezinenyama ze-bract ne-receptacle yinxalenye etyiwayo. Izityalo zonyaka ezihlanyelwayo neziqhwala ezihlala ixesha elide ziinkqubo ezahlukeneyo zemveliso. Amagama enyanga anemeko yehemisferi esemantla/yelizwe kwaye awabelwanga kwingingqi yoMzantsi Afrika.",
+      "backtranslation": "Harvest large heads when bracts are still closed; fleshy bases of bract and receptacle are the edible part. Annual sown plants and long-lasting perennials are different production systems. Month names have a northern hemisphere/other-country setting and were not allocated to a South African region.",
+      "problem": "\"transplanted\" rendered as sown; \"crowns\" garbled.",
+      "corrected": "Vuna iintloko ezinkulu xa ii-bract zisavaliwe; iziseko ezinenyama ze-bract ne-receptacle yinxalenye etyiwayo. Izityalo zonyaka ezihlalisiweyo neziqu ezihlala ixesha elide ziinkqubo ezahlukeneyo zemveliso. Amagama enyanga anemeko yehemisferi esemantla/yelizwe kwaye awabelwanga kwingingqi yoMzantsi Afrika."
+    },
+    {
+      "index": 231,
+      "key": "Hass on Duke 7, initially 200 trees/ha at Bruyns Hill (Natal Midlands bioclimatic group 2), with intensive irrigation and nutrition. Age 3: 10,000 kg/ha; age 6: 20,000 kg/ha; sustainable average about 22,500 kg/ha. Same-study density permits equivalents of 50 kg/tree at age 3 and 100 kg/tree at age 6; there is no reference for every intermediate age. These orchard benchmarks are conditional on good resources, comparable climate and timely orchard management, including Phytophthora control and thinning; do not auto-fill farm quantities.",
+      "verdict": "repair",
+      "draft": "I-Hass kwi-Duke 7, ekuqaleni imithi eyi-200/ha eBruyns Hill (iqela lemozulu yendalo lesi-2 laseNatal Midlands), kunye nokunkcenkceshela nokondla okunzulu. Iminyaka emi-3: 10,000 kg/ha; iminyaka emi-6: 20,000 kg/ha; umndilili oqhubekayo malunga ne-22,500 kg/ha. Ubuninzi bophando olufanayo bugunyaza ezilinganayo ne-50 kg/umthi kwiminyaka emi-3 kunye ne-100 kg/umthi kwiminyaka emi-6; akukho sisalathiso kuyo yonke iminyaka ephakathi. Ezi zalathiso zesitiya ziphantsi kwezixhobo ezilungileyo, imozulu efanayo nolawulo lwesitiya ngexesha, kubandakanya ulawulo lwe-Phytophthora nokucutha; ungazaleli ngokuzenzekelayo amanani efama.",
+      "backtranslation": "Hass on Duke 7, initially 200 trees/ha at Bruyns Hill (Natal Midlands climate group 2), with irrigation and deep feeding. 3 years: 10,000 kg/ha; 6 years: 20,000 kg/ha; continuing average about 22,500 kg/ha. The maximum of the same research authorises equivalents of 50 kg/tree at 3 years and 100 kg/tree at 6 years; no indicator for all in-between years. These orchard indicators are under good equipment, the same climate and orchard management over time, including Phytophthora control and pruning; do not automatically spread farm numbers.",
+      "problem": "\"do not auto-fill farm quantities\" rendered \"ungazaleli\" (do not give birth/spread) - instruction lost.",
+      "corrected": "I-Hass kwi-Duke 7, ekuqaleni imithi eyi-200/ha eBruyns Hill (iqela lemozulu yendalo lesi-2 laseNatal Midlands), kunye nokunkcenkceshela nokondla okunzulu. Iminyaka emi-3: 10,000 kg/ha; iminyaka emi-6: 20,000 kg/ha; umndilili oqhubekayo malunga ne-22,500 kg/ha. Ubuninzi bophando olufanayo bugunyaza ezilinganayo ne-50 kg/umthi kwiminyaka emi-3 kunye ne-100 kg/umthi kwiminyaka emi-6; akukho sisalathiso kuyo yonke iminyaka ephakathi. Ezi zalathiso zesitiya ziphantsi kwezixhobo ezilungileyo, imozulu efanayo nolawulo lwesitiya ngexesha, kubandakanya ulawulo lwe-Phytophthora nokucutha; ungazifaki ngokuzenzekelayo amanani efama."
+    },
+    {
+      "index": 258,
+      "key": "KZN guide reference for light cropping at year 3, in temperate apple conditions best adapted there to Dry Highland Sourveld. Rootstock, cultivar and nursery starting age are not specified. A named low-chill cultivar still needs adequate local winter chilling and establishment; this is not a warm-coast guarantee.",
+      "verdict": "repair",
+      "draft": "Isalathiso sesikhokelo se-KZN sokuthwala okuncinci ngonyaka wesi-3, kwiimeko ze-apile ezinesimo sezulu esifudumeleyo ezifaneleke kakhulu apho kwi-Dry Highland Sourveld. Ingcambu exhasayo, indidi nobudala bokuqala benethsari azichazwanga. Indidi ebizwe ngegama yobubanda obuphantsi isafuna ububanda obaneleyo basebusika basekuhlaleni nokusekwa; oku asisiqinisekiso sonxweme olushushu.",
+      "backtranslation": "Indicator of KZN guide of small bearing in year 3, in warm-climate apple conditions most suitable there in Dry Highland Sourveld. Rootstock, variety and nursery starting age not stated. A named low-chill variety still needs enough local winter cold and establishment; this is not confirmation of the warm coast.",
+      "problem": "\"temperate\" rendered as \"warm\" (esifudumeleyo) - contradicts later \"not a warm-coast guarantee\".",
+      "corrected": "Isalathiso sesikhokelo se-KZN sokuthwala okuncinci ngonyaka wesi-3, kwiimeko ze-apile ezinesimo sezulu esilinganiselweyo (temperate) ezifaneleke kakhulu apho kwi-Dry Highland Sourveld. Ingcambu exhasayo, indidi nobudala bokuqala benethsari azichazwanga. Indidi ebizwe ngegama yobubanda obuphantsi isafuna ububanda obaneleyo basebusika basekuhlaleni nokusekwa; oku asisiqinisekiso sonxweme olushushu."
+    },
+    {
+      "index": 259,
+      "key": "KZN guide: Queen is a fresh-fruit candidate; Smooth Cayenne is mainly a processing candidate. Confirm clean crowns/suckers, local suitability and crop-cycle advice with a nursery. Queen re-establishment after the plant crop belongs in the future plan.",
+      "verdict": "repair",
+      "draft": "Isikhokelo se-KZN: I-Queen ngumgqatswa weziqhamo ezitsha; i-Smooth Cayenne ikakhulu ngumgqatswa wokusetyenzwa. Qinisekisa iintloko/iimbaleki ezicocekileyo, ukufaneleka kwasekuhlaleni nesiluleko somjikelo wesityalo kunye nenethsari. Ukuphinda usekwe kwe-Queen emva kwesityalo somhlaba kuyinxalenye yesicwangciso esizayo.",
+      "backtranslation": "KZN guide: Queen is a candidate for fresh fruit; Smooth Cayenne mainly a candidate for processing. Confirm clean heads/suckers(imbaleki), local suitability and advice of plant cycle and nursery. Re-establishing Queen after a ground crop is part of the future plan.",
+      "problem": "\"suckers\" rendered \"iimbaleki\" (fugitives).",
+      "corrected": "Isikhokelo se-KZN: I-Queen ngumgqatswa weziqhamo ezitsha; i-Smooth Cayenne ikakhulu ngumgqatswa wokusetyenzwa. Qinisekisa iintloko/amahlumela acocekileyo, ukufaneleka kwasekuhlaleni nesiluleko somjikelo wesityalo kunye nenethsari. Ukuphinda usekwe kwe-Queen emva kwesityalo somhlaba kuyinxalenye yesicwangciso esizayo."
+    },
+    {
+      "index": 272,
+      "key": "Keep preserved-stock dates separate from fruit picking; a canning end use does not establish safe shelf life.",
+      "verdict": "repair",
+      "draft": "Gcina imihla yesitokhwe esigciniweyo yahlukile kuvuno lweziqhamo; ukusetyenziswa kokuvalwa kwezityalo ezityiwayo akuqinisekisi ubomi bokugcina obukhuselekileyo.",
+      "backtranslation": "Keep dates of stored stock separate from fruit harvest; use of closing (sealing) edible plants does not confirm safe storage life.",
+      "problem": "Food safety: \"canning\" rendered as \"closing of edible plants\" - process lost.",
+      "corrected": "Gcina imihla yesitokhwe esigciniweyo yahlukile kuvuno lweziqhamo; ukusetyenziswa ekugcineni ngeekani (canning) akuqinisekisi ubomi bokugcina obukhuselekileyo."
+    },
+    {
+      "index": 275,
+      "key": "Keep this mixed landrace entry out of household-food totals until an experienced local grower confirms the seed source, form and appropriate food preparation.",
+      "verdict": "repair",
+      "draft": "Gcina le ngeniso edibeneyo yohlobo lwasekhaya ingabandakanywa kwizibalo zokutya kwekhaya de umlimi wasekuhlaleni onamava aqinisekise umthombo wembewu, uhlobo nokulungiswa kokutya okufanelekileyo.",
+      "backtranslation": "Keep this combined income of home type be included in home food calculations until an experienced local farmer confirms seed source, type and suitable food preparation.",
+      "problem": "\"entry\" rendered \"ingeniso\" (income) - money term; instruction to keep out of food totals.",
+      "corrected": "Gcina eli rekhodi lidibeneyo lohlobo lwasekhaya lingabandakanywa kwizibalo zokutya kwekhaya de umlimi wasekuhlaleni onamava aqinisekise umthombo wembewu, uhlobo nokulungiswa kokutya okufanelekileyo."
+    },
+    {
+      "index": 281,
+      "key": "Large amounts of its leaves can taint dairy milk, according to SANBI; this is not a ration recommendation.",
+      "verdict": "repair",
+      "draft": "Ubuninzi bamagqabi ayo bunokwenza ubisi lweenkomo lukhasa, ngokwe-SANBI; oku asisincomo sesabelo sokutya.",
+      "backtranslation": "Its abundant leaves can make cow's milk sour/curdle (khasa), according to SANBI; this is not a recommendation for feed allocation.",
+      "problem": "\"taint\" rendered with unclear verb \"lukhasa\"; milk-quality warning unclear.",
+      "corrected": "Ubuninzi bamagqabi ayo bunokwenza ubisi lweenkomo lube nencasa embi, ngokwe-SANBI; oku asisincomo sesabelo sokutya."
+    },
+    {
+      "index": 306,
+      "key": "Match this fast pioneer to warm, moist eastern/northern conditions; protect damp, shaded seedlings.",
+      "verdict": "repair",
+      "draft": "Hambelanisa esi sityalo sokuqala esikhula ngokukhawuleza neemeko ezifudumeleyo, ezinomswakama zasempuma/emntla; khusela iimbewu ezimanzi, ezinomthunzi.",
+      "backtranslation": "Match this fast-growing first plant to warm, humid east/north conditions; protect wet, shaded seeds.",
+      "problem": "\"seedlings\" rendered as \"seeds\".",
+      "corrected": "Hambelanisa esi sityalo sokuqala esikhula ngokukhawuleza neemeko ezifudumeleyo, ezinomswakama zasempuma/emntla; khusela izithole ezimanzi, ezinomthunzi."
+    },
+    {
+      "index": 308,
+      "key": "Match warm summers with cool, frost-free winter conditions for flowering; protect from wind and keep young plants watered.",
+      "verdict": "repair",
+      "draft": "Hambelanisa amehlo ashushu nemeko zasebusika ezibandayo, ezingenaqabaka zokuqhakaza; khusela emoyeni kwaye uzigcine izityalo ezincinci zinkcenkceshelwa.",
+      "backtranslation": "Match warm eyes (?) with cold, frost-free winter conditions at flowering; protect from wind and keep young plants irrigated.",
+      "problem": "\"warm summers\" rendered \"amehlo ashushu\" (warm eyes) - wrong term.",
+      "corrected": "Hambelanisa ihlobo elishushu neemeko zasebusika ezibandayo, ezingenaqabaka zokuqhakaza; khusela emoyeni kwaye uzigcine izityalo ezincinci zinkcenkceshelwa."
+    },
+    {
+      "index": 316,
+      "key": "New rainy-season growth gives the best tops; wash off coastal sand thoroughly and boil for the documented vegetable preparation. August–November flowering is not leaf availability.",
+      "verdict": "repair",
+      "draft": "Ukukhula kwexesha lemvula entsha kunika iincopho ezilungileyo; hlamba isanti yonxweme kakuhle kwaye uphekele ukulungiswa kwemifuno okubhaliweyo. Ukuqhakaza kukaAgasti–Novemba akuyiyo ukufumaneka kwamagqabi.",
+      "backtranslation": "Growth of new rain season gives good tips; wash coastal sand well and cook for written vegetable preparation. Flowering of August-November is not availability of leaves.",
+      "problem": "Food safety: \"boil\" rendered as generic \"cook\".",
+      "corrected": "Ukukhula kwexesha lemvula entsha kunika iincopho ezilungileyo; hlamba isanti yonxweme kakuhle kwaye ubilise ngokwendlela yokulungisa imifuno ebhaliweyo. Ukuqhakaza kukaAgasti–Novemba akuyiyo ukufumaneka kwamagqabi."
+    },
+    {
+      "index": 321,
+      "key": "Obtain an identified edible food landrace from a trusted local seed source. A wild-looking melon or the common name karkoer alone is insufficient.",
+      "verdict": "repair",
+      "draft": "Fumana uhlobo lwasekhaya lokutya olwachongwa kumthombo wembewu wasekuhlaleni othenjwayo. Ikhomo elibonakala lasendle okanye igama eliqhelekileyo i-karkoer kuphela akwanelanga.",
+      "backtranslation": "Get a home food type identified at a trusted local seed source. A cow that looks wild or the common name karkoer alone is not enough.",
+      "problem": "\"melon\" rendered \"ikhomo\" (cow) - wrong term.",
+      "corrected": "Fumana uhlobo lwasekhaya lokutya olwachongwa kumthombo wembewu wasekuhlaleni othenjwayo. Imeloni ebonakala yasendle okanye igama eliqhelekileyo i-karkoer kuphela akwanelanga."
+    },
+    {
+      "index": 338,
+      "key": "Plan around actual calving/kidding and lactation. Dry animals do not supply milk.",
+      "verdict": "repair",
+      "draft": "Cwangcisa ngokolutsha lwenkomo/lwebhokhwe lwangempela nokukhupha ubisi. Izilwanyana ezomileyo aziniki bisi.",
+      "backtranslation": "Plan according to actual youth (calving/kidding age?) of cow/goat and milk extraction. Dry animals give no milk.",
+      "problem": "\"calving/kidding\" rendered \"ukolutsha\" (youth) - wrong term.",
+      "corrected": "Cwangcisa ngokubeleka kwenkomo/kwebhokhwe kwangempela nokukhupha ubisi. Izilwanyana ezomileyo aziniki bisi."
+    },
+    {
+      "index": 343,
+      "key": "Poisonous parts must remain visible",
+      "verdict": "repair",
+      "draft": "Iindawo ezinetyhefu kufuneka zihlale zibonakala",
+      "backtranslation": "Poisonous places must always be visible",
+      "problem": "Poison safety: \"parts\" rendered \"iindawo\" (places).",
+      "corrected": "Iinxalenye ezinetyhefu kufuneka zihlale zibonakala"
+    },
+    {
+      "index": 361,
+      "key": "Provide climbing support. Tuberous roots are poisonous; children should not forage unsupervised.",
+      "verdict": "repair",
+      "draft": "Nika inkxaso yokunyuka. Iingcambu ezinesiqu zinetyhefu; abantwana akufuneki baqokelele ukutya bengaphangelwanga.",
+      "backtranslation": "Provide climbing support. Roots with stem are poisonous; children must not collect food unsupervised.",
+      "problem": "Poison warning: \"tuberous roots\" rendered \"roots with stem\" - unclear.",
+      "corrected": "Nika inkxaso yokunyuka. Iingcambu ezinjengetiyubha zinetyhefu; abantwana akufuneki baqokelele ukutya bengaphangelwanga."
+    },
+    {
+      "index": 384,
+      "key": "Record young-leaf harvest separately from fruit consumed by wildlife.",
+      "verdict": "repair",
+      "draft": "Bhala ukuvunwa kwamagqabi amatsha ngokwahlukileyo kwiziqhamo ezityiwa ziimpuku zasendle.",
+      "backtranslation": "Record harvesting fresh leaves separately from fruits eaten by wild mice.",
+      "problem": "\"wildlife\" rendered \"wild mice\".",
+      "corrected": "Bhala ukuvunwa kwamagqabi amatsha ngokwahlukileyo kwiziqhamo ezityiwa zizilwanyana zasendle."
+    },
+    {
+      "index": 415,
+      "key": "Ripe fruit only; tuberous roots are poisonous.",
+      "verdict": "repair",
+      "draft": "Isiqhamo esivuthiweyo kuphela; iingcambu ezinesiqu zinetyhefu.",
+      "backtranslation": "Ripe fruit only; roots with stem are poisonous.",
+      "problem": "Poison warning: \"tuberous roots\" rendered \"roots with stem\" - unclear.",
+      "corrected": "Isiqhamo esivuthiweyo kuphela; iingcambu ezinjengetiyubha zinetyhefu."
+    },
+    {
+      "index": 431,
+      "key": "SANBI also records flower-bud pickle use. Root porridge/coffee references are not instructions to harvest roots or a complete preparation guide.",
+      "verdict": "repair",
+      "draft": "I-SANBI ibhala nokusetyenziswa kweentyatyambo ezingekavuleki njengesonka esimuncu. Izalathiso zeporridge/yekofi yengcambu azizizo imiyalelo yokuvuna iingcambu okanye isikhokelo esipheleleyo sokulungiselela.",
+      "backtranslation": "SANBI also records use of unopened flowers as sour bread. Indicators of porridge/root coffee are not instructions for harvesting roots or a full preparation guide.",
+      "problem": "\"pickle\" rendered \"isonka esimuncu\" (sour bread).",
+      "corrected": "I-SANBI ibhala nokusetyenziswa kweentyatyambo ezingekavuleki njenge-pickle. Izalathiso zeporridge/yekofi yengcambu azizizo imiyalelo yokuvuna iingcambu okanye isikhokelo esipheleleyo sokulungiselela."
+    },
+    {
+      "index": 435,
+      "key": "SANBI describes humid coastal/estuarine conditions and no tolerance of even mild frost.",
+      "verdict": "repair",
+      "draft": "I-SANBI ichaza iimeko zonxweme/zomlomo womlambo ezinomswakama kwaye ayinyamezeli nokuba ngumbhlalo omncinci weqabaka.",
+      "backtranslation": "SANBI describes humid coast/river mouth conditions and it does not tolerate even a small frost bed (?).",
+      "problem": "\"even mild frost\" rendered \"ngumbhlalo omncinci weqabaka\" - garbled; frost tolerance.",
+      "corrected": "I-SANBI ichaza iimeko zonxweme/zomlomo womlambo ezinomswakama kwaye ayinyamezeli nokuba liqabaka elincinci."
+    },
+    {
+      "index": 437,
+      "key": "SANBI qualifies the food statement; it is about ripe berries, not latex, bark or roots. Fruit presence February–September does not establish ripe picking throughout.",
+      "verdict": "repair",
+      "draft": "I-SANBI iqinisa ingxelo yokutya; ibhekisele kumaberry avuthiweyo, hayi i-latex, igxolo okanye iingcambu. Ukubakho kweziqhamo kuFebruwari–Septemba akuqinisekisi ukuvuna ezivuthiweyo ngalo lonke ixesha.",
+      "backtranslation": "SANBI reinforces the food report; refers to ripe berries, not latex, bark or roots. Presence of fruits February-September does not confirm harvesting ripe ones all that time.",
+      "problem": "\"qualifies\" (restricts) rendered \"iqinisa\" (strengthens/confirms) - opposite; food statement.",
+      "corrected": "I-SANBI inika imiqathango kwingxelo yokutya; ibhekisele kumaberry avuthiweyo, hayi i-latex, igxolo okanye iingcambu. Ukubakho kweziqhamo kuFebruwari–Septemba akuqinisekisi ukuvuna ezivuthiweyo ngalo lonke ixesha."
+    },
+    {
+      "index": 438,
+      "key": "SANBI records a wide range from frost-free coast to winter-frost regions. Its hooked and straight thorns matter when choosing access routes.",
+      "verdict": "repair",
+      "draft": "I-SANBI ibhala uluhlu olubanzi ukusuka kunxweme olungenaqabaka ukuya kwiindawo zeqabaka lasebusika. Imithi yayo ephambanisiweyo neyethe nkqo ibalulekile ekukhetheni iindlela zokufikelela.",
+      "backtranslation": "SANBI records a wide range from frost-free coast to places of winter frost. Its crossed and upright trees are important in choosing ways of access.",
+      "problem": "\"thorns\" rendered \"imithi\" (trees).",
+      "corrected": "I-SANBI ibhala uluhlu olubanzi ukusuka kunxweme olungenaqabaka ukuya kwiindawo zeqabaka lasebusika. Ameva ayo agobileyo neyethe nkqo abalulekile ekukhetheni iindlela zokufikelela."
+    },
+    {
+      "index": 444,
+      "key": "SANBI records this tree in east-coast dune forest from Eastern Cape through KwaZulu-Natal, with tolerance of salty sea spray.",
+      "verdict": "repair",
+      "draft": "I-SANBI ibhala lo mthi kwihlathi lenduli yesanti yasempuma yonxweme ukusuka eMpuma Koloni ukuya eKwaZulu-Natal, onyamezela umbhobho wetyuwa wolwandle.",
+      "backtranslation": "SANBI records this tree in the eastern coastal sand-dune forest from Eastern Cape to KwaZulu-Natal, tolerating sea salt spray (umbhobho?).",
+      "problem": "\"umbhobho\" (pipe) used for sea spray.",
+      "corrected": "I-SANBI ibhala lo mthi kwihlathi lenduli yesanti yasempuma yonxweme ukusuka eMpuma Koloni ukuya eKwaZulu-Natal, onyamezela umoya onetyuwa wolwandle."
+    },
+    {
+      "index": 446,
+      "key": "SANBI reports that leaf browsing can taint cattle milk. No feed ration is recommended.",
+      "verdict": "repair",
+      "draft": "I-SANBI ixela ukuba ukutyiwa kwamagqabi kunokwenza ubisi lweenkomo lukhasa. Akukho sabelo sokutya sicetywayo.",
+      "backtranslation": "SANBI reports that eating leaves can make cow's milk curdle. No feed allocation recommended.",
+      "problem": "\"taint\" rendered with unclear verb \"lukhasa\"; milk-quality warning unclear.",
+      "corrected": "I-SANBI ixela ukuba ukutyiwa kwamagqabi kunokwenza ubisi lweenkomo lube nencasa embi. Akukho sabelo sokutya sicetywayo."
+    },
+    {
+      "index": 469,
+      "key": "South African trial harvest duration and native yields",
+      "verdict": "repair",
+      "draft": "Ixesha lokuvuna novavanyo lwaseMzantsi Afrika neziqhamo zomthombo",
+      "backtranslation": "South African harvest time and trial and fruits of source",
+      "problem": "\"native yields\" rendered \"iziqhamo\" (fruits).",
+      "corrected": "Ixesha lokuvuna novavanyo lwaseMzantsi Afrika nezivuno ezibhaliweyo kumthombo"
+    },
+    {
+      "index": 470,
+      "key": "Southern Cape 2003 rotation trial, sweet narrow-leaf Tanjil. Actual sowing / harvested grain kg/ha across camps: Riversdale 15 April / 2401–2529; Swellendam 12 May / 1003–1289; Tygerhoek 24 April / 2584–3058. Swellendam bracketed 1407–1704 figures estimate harvest losses, not weighed harvest. Riversdale’s 29 October harvest is an observed date, not generic maturity or a current-cultivar picking window. Feed-laboratory grain analysis does not certify household edible production.",
+      "verdict": "repair",
+      "draft": "Uvavanyo lokujikeleza lwaseMazantsi eKapa lwango-2003, i-sweet narrow-leaf Tanjil. Ukuhlwayela kwangempela / i-kg yeenkozo ezivuniweyo kuyo yonke imikhandlu: IRiversdale 15 Epreli / 2401–2529; ISwellendam 12 Meyi / 1003–1289; ITygerhoek 24 Epreli / 2584–3058. Amanani e-Swellendam abakhuphe ama-1407–1704 aqikelela ilahleko yokuvuna, hayi ukuvuna okulinganisiweyo. Ukuvunwa kweRiversdale ngomhla wama-29 Okthobha ngumhla obonwe, hayi ukuvuthwa ngokubanzi okanye ifestile yokuvuna yendidi yangoku. Uhlalutyo lwenkozo lwelabhoratri yokutya alugunyaziswa njengemveliso yokutya kwekhaya.",
+      "backtranslation": "2003 Southern Cape rotation trial, sweet narrow-leaf Tanjil. Actual sowing / kg grain harvested across councils(?): Riversdale 15 April / 2401-2529; Swellendam 12 May / 1003-1289; Tygerhoek 24 April / 2584-3058. Swellendam numbers they removed 1407-1704 estimate harvest loss, not measured harvest. Riversdale harvest on 29 October is an observed date, not general ripening or a harvest window for the current variety. Laboratory food grain analysis is not authorised as home food production.",
+      "problem": "Bracketed figures garbled (\"abakhuphe\"); \"feed-laboratory\" rendered as food laboratory.",
+      "corrected": "Uvavanyo lokujikeleza lwaseMazantsi eKapa lwango-2003, i-sweet narrow-leaf Tanjil. Ukuhlwayela kwangempela / i-kg yeenkozo ezivuniweyo kuyo yonke imikhandlu: IRiversdale 15 Epreli / 2401–2529; ISwellendam 12 Meyi / 1003–1289; ITygerhoek 24 Epreli / 2584–3058. Amanani ase-Swellendam akubakaleni (1407–1704) aqikelela ilahleko yokuvuna, hayi ukuvuna okulinganisiweyo. Ukuvunwa kweRiversdale ngomhla wama-29 Okthobha ngumhla obonwe, hayi ukuvuthwa ngokubanzi okanye ifestile yokuvuna yendidi yangoku. Uhlalutyo lwenkozo lwelabhoratri yokutya kwezilwanyana alugunyaziswa njengemveliso yokutya kwekhaya."
+    },
+    {
+      "index": 480,
+      "key": "Supplier lists Mandellup and Lila-Baer, April–May planting, feed and green-manure uses. Its whole-SA region claim is not an independently verified climate-by-climate food trial. Tanjil’s earlier field amounts and dates are not transferred to these cultivars.",
+      "verdict": "repair",
+      "draft": "Umthengisi udwelisa i-Mandellup ne-Lila-Baer, ukutyala kuEpreli–Meyi, ukusetyenziswa njengokutya nesichumisi esiluhlaza. Ibango lommandla wonke we-SA alilovavanyo lokutya olwaqinisekiswa ngokuzimeleyo ngemozulu nemozulu. Amanani omlimi wangaphambili kunye nemihla ye-Tanjil ayidluliselwanga kwezi ndidi.",
+      "backtranslation": "The seller lists Mandellup and Lila-Baer, planting in April-May, use as food and green fertiliser. The whole-SA region claim is not a food trial independently confirmed with climate and weather. Earlier farmer's numbers and dates of Tanjil were not passed to these varieties.",
+      "problem": "\"feed\" use rendered as food; \"climate-by-climate\" garbled.",
+      "corrected": "Umthengisi udwelisa i-Mandellup ne-Lila-Baer, ukutyala kuEpreli–Meyi, ukusetyenziswa njengokutya kwemfuyo nesichumisi esiluhlaza. Ibango lommandla wonke we-SA alilovavanyo lokutya olwaqinisekiswa ngokuzimeleyo ngemozulu ngemozulu. Amanani omlimi wangaphambili kunye nemihla ye-Tanjil ayidluliselwanga kwezi ndidi."
+    },
+    {
+      "index": 484,
+      "key": "Texas Mission is classified high chill and names Nonpareil as pollinator. Its 5 kg/tree production entry does not state tree age, management, trial region or whether weight is kernel or in-shell; it is not a mature annual food forecast.",
+      "verdict": "repair",
+      "draft": "I-Texas Mission ihlelwe njengobubanda obuphezulu kwaye ibiza i-Nonpareil njengomthwali womungu wentyatyambo. Ingeniso yayo yemveliso ye-5 kg/umthi ayichazi bubudala bomthi, ulawulo, ingingqi yovavanyo okanye ukuba ubunzima bukwee-kernel okanye bukumandongomane asebusweni; asisiqikelelo sonyaka sokutya esikhulileyo.",
+      "backtranslation": "Texas Mission is classified as high cold and names Nonpareil as pollen carrier. Its production income of 5 kg/tree does not say tree age, management, trial region or whether the weight is in kernels or in-shell nuts; not a yearly estimate of mature food.",
+      "problem": "\"entry\" rendered \"ingeniso\" (income).",
+      "corrected": "I-Texas Mission ihlelwe njengobubanda obuphezulu kwaye ibiza i-Nonpareil njengomthwali womungu wentyatyambo. Irekhodi lalo lemveliso ye-5 kg/umthi ayichazi bubudala bomthi, ulawulo, ingingqi yovavanyo okanye ukuba ubunzima bukwee-kernel okanye bukumandongomane asebusweni; asisiqikelelo sonyaka sokutya esikhulileyo."
+    },
+    {
+      "index": 485,
+      "key": "Texas Mission named production entry",
+      "verdict": "repair",
+      "draft": "Ingeniso yemveliso ebizwe ngegama ye-Texas Mission",
+      "backtranslation": "Named production income of Texas Mission",
+      "problem": "\"entry\" rendered \"ingeniso\" (income).",
+      "corrected": "Irekhodi lemveliso ebizwe ngegama ye-Texas Mission"
+    },
+    {
+      "index": 491,
+      "key": "The KZN guide gives 13–20 months for both the first planting-to-harvest cycle and subsequent harvest-to-harvest cycles. It lists different commercial densities for Williams, Grand Nain and Chinese Cavendish. A banana circle counts as three planted bananas here; replacement followers are stages of those mats, not extra mapped trees or guaranteed year-round supply.",
+      "verdict": "repair",
+      "draft": "Isikhokelo se-KZN sinika iinyanga ezili-13–20 kuzo zombini umjikelo wokuqala wokusuka ekutyaleni ukuya ekuvuneni kunye nemijikelo elandelayo yokusuka ekuvuneni ukuya ekuvuneni. Sidwelisa ubuninzi bezorhwebo obahlukeneyo bee-Williams, Grand Nain nee-Chinese Cavendish. Isangqa sebhanana sibalwa njengeebhanana ezintathu ezityalwe apha; iimbaleki zokutshintsha ziziqendu zaloo mamati, hayi imithi eyongezelelweyo ekwimephu okanye unikezelo oluqinisekileyo lonyaka wonke.",
+      "backtranslation": "KZN guide gives 13-20 months for both the first cycle from planting to harvest and following cycles from harvest to harvest. It lists different commercial quantities of Williams, Grand Nain and Chinese Cavendish. A banana circle is counted as three planted bananas here; replacement refugees (imbaleki) are pieces of those mats, not extra trees on the map or confirmed all-year supply.",
+      "problem": "\"followers\" (banana suckers) rendered \"imbaleki\" (fugitives).",
+      "corrected": "Isikhokelo se-KZN sinika iinyanga ezili-13–20 kuzo zombini umjikelo wokuqala wokusuka ekutyaleni ukuya ekuvuneni kunye nemijikelo elandelayo yokusuka ekuvuneni ukuya ekuvuneni. Sidwelisa ubuninzi bezorhwebo obahlukeneyo bee-Williams, Grand Nain nee-Chinese Cavendish. Isangqa sebhanana sibalwa njengeebhanana ezintathu ezityalwe apha; amahlumela atshintshayo ziziqendu zaloo mamati, hayi imithi eyongezelelweyo ekwimephu okanye unikezelo oluqinisekileyo lonyaka wonke."
+    },
+    {
+      "index": 502,
+      "key": "The account records fish-stunning use. No such use is recommended, and no household fruit food claim is made.",
+      "verdict": "repair",
+      "draft": "Ingxelo ibhala ukusetyenziswa kokuxhoma iintlanzi. Akukho kusetyenziswa okunjalo okucetyiswayo, kwaye akukho bango lokutya kweziqhamo zekhaya elenziweyo.",
+      "backtranslation": "The report records use of hanging fish [ukuxhoma iintlanzi]. No such use is recommended, and no claim of food of fruits of home-made(?) home.",
+      "problem": "Poison safety: \"fish-stunning\" rendered \"ukuxhoma iintlanzi\" (hanging fish); last clause garbled.",
+      "corrected": "Ingxelo ibhala ukusetyenziswa kwesi sityalo ukuqaqa iintlanzi ngetyhefu. Akukho kusetyenziswa okunjalo okucetyiswayo, kwaye akukho bango lokutya kweziqhamo ekhaya."
+    },
+    {
+      "index": 508,
+      "key": "The checked primary assessment establishes exact identity and South African distribution only. It does not establish edible parts, food-use preparation, picking dates or yield; claims for a different Lycium species are not transferred.",
+      "verdict": "repair",
+      "draft": "Uhlolo oluphambili oluhloliweyo luseka ukuchongwa okuchanekileyo nokusasazeka koMzantsi Afrika kuphela. Alusekeli iindawo ezityiwayo, ukulungiswa kokutya, imihla yokuvuna okanye isivuno; amabango odidi olwahlukileyo lwe-Lycium awadluliselwa.",
+      "backtranslation": "The main checked review establishes only correct identification and South African spread. It does not support edible parts, food preparation, harvest dates or yield; claims of a different Lycium type were not passed on.",
+      "problem": "\"edible parts\" rendered \"iindawo ezityiwayo\" (places).",
+      "corrected": "Uhlolo oluphambili oluhloliweyo luseka ukuchongwa okuchanekileyo nokusasazeka koMzantsi Afrika kuphela. Alusekeli iinxalenye ezityiwayo, ukulungiswa kokutya, imihla yokuvuna okanye isivuno; amabango odidi olwahlukileyo lwe-Lycium awadluliselwa."
+    },
+    {
+      "index": 509,
+      "key": "The discussion explicitly includes S. undulata among edible dried ripe currant fruits and traditional fermentation uses. Its host article species calendar is not transferred to S. undulata.",
+      "verdict": "repair",
+      "draft": "Ingxoxo ibandakanya ngokucacileyo i-S. undulata phakathi kweziqhamo ze-currant ezivuthiweyo ezomisiweyo ezityiwayo nokusetyenziswa kokubilisa kwemveli. Ikhalenda yodidi lwenqaku elilungileyo ayidluliselwa kwi-S. undulata.",
+      "backtranslation": "Discussion clearly includes S. undulata among edible dried ripe currant fruits and traditional boiling use. The calendar of the good-article type is not passed to S. undulata.",
+      "problem": "\"host article\" rendered \"good article\".",
+      "corrected": "Ingxoxo ibandakanya ngokucacileyo i-S. undulata phakathi kweziqhamo ze-currant ezivuthiweyo ezomisiweyo ezityiwayo nokusetyenziswa kokubilisa kwemveli. Ikhalenda yodidi lwenqaku eliphethe isihloko ayidluliselwa kwi-S. undulata."
+    },
+    {
+      "index": 520,
+      "key": "The human food product is young leaves. Berries described as bird/bat food are not promoted to a human fruit harvest. No leaf cutting age, exact months or household leaf kg is given.",
+      "verdict": "repair",
+      "draft": "Imveliso yokutya yabantu yamagqabi amatsha. Amaberry achazwa njengokutya kweentaka/kweengcuka alikhuthazwa njengesivuno seziqhamo sabantu. Akukho budala bokusika amagqabi, inyanga ezichanekileyo okanye kg yamagqabi ekhaya enikeziweyo.",
+      "backtranslation": "Human food product of fresh leaves. Berries described as food of birds/mongoose are not encouraged as human fruit harvest. No age of cutting leaves, exact months or kg of home leaves given.",
+      "problem": "\"bat\" rendered \"iingcuka\" (hyenas/wolves).",
+      "corrected": "Imveliso yokutya yabantu yamagqabi amatsha. Amaberry achazwa njengokutya kweentaka/kwamalulwane alikhuthazwa njengesivuno seziqhamo sabantu. Akukho budala bokusika amagqabi, inyanga ezichanekileyo okanye kg yamagqabi ekhaya enikeziweyo."
+    },
+    {
+      "index": 523,
+      "key": "The museum lists M. nigra as cultivated in southern Africa and distinguishes naturalised Morus taxa. It gives no ripe-harvest months or quantified yield.",
+      "verdict": "repair",
+      "draft": "Imyuziyam idwelisa i-M. nigra njengelinywayo kumazantsi eAfrika kwaye ihlula ii-Morus ezifakwe emhlabeni. Ayinikezi nyanga zokuvuna ezivuthiweyo okanye isivuno esilinganisiweyo.",
+      "backtranslation": "The museum lists M. nigra as grown in southern Africa and separates Morus put in the ground. It gives no months of harvesting ripe ones or estimated yield.",
+      "problem": "\"naturalised\" rendered \"put in the ground\".",
+      "corrected": "Imyuziyam idwelisa i-M. nigra njengelinywayo kumazantsi eAfrika kwaye ihlula ii-Morus ezisele zikhula zodwa. Ayinikezi nyanga zokuvuna ezivuthiweyo okanye isivuno esilinganisiweyo."
+    },
+    {
+      "index": 525,
+      "key": "The original PROTA account dates flowering and fruiting but does not date ripening. SANBI describes red to dark-purple ripe berries without ripe picking months. The November–March observation is retained as southern African phenology; local food-ready picking months remain unknown.",
+      "verdict": "repair",
+      "draft": "Ingxelo yoqobo ye-PROTA ibhala imihla yokuqhakaza nokuqhama kodwa ayibhali imihla yokuvuthwa. I-SANBI ichaza amaberry avuthiweyo abomvu ukuya kububomvu obumnyama ngaphandle kweenyanga zokuvuna ezivuthiweyo. Ukuqwalaselwa kukaNovemba–Matshi kugcinwe njengexesha lokuqhama laseMazantsi eAfrika; iinyanga zasekuhlaleni zokuvuna ezilungele ukutyiwa zisakwaziwa.",
+      "backtranslation": "Original PROTA report records flowering and fruiting dates but not ripening dates. SANBI describes ripe berries red to dark red without months of harvesting ripe ones. The observation of November-March is kept as fruiting time of southern Africa; local months of harvesting ripe ones still unknown.",
+      "problem": "\"dark-purple\" rendered \"dark red\".",
+      "corrected": "Ingxelo yoqobo ye-PROTA ibhala imihla yokuqhakaza nokuqhama kodwa ayibhali imihla yokuvuthwa. I-SANBI ichaza amaberry avuthiweyo abomvu ukuya ki-purple emnyama ngaphandle kweenyanga zokuvuna ezivuthiweyo. Ukuqwalaselwa kukaNovemba–Matshi kugcinwe njengexesha lokuqhama laseMazantsi eAfrika; iinyanga zasekuhlaleni zokuvuna ezilungele ukutyiwa zisakwaziwa."
+    },
+    {
+      "index": 531,
+      "key": "The primary study tested South African grown pod material, including those named cultivars and an unknown one, and developed food products. This is food-part evidence, not a regional maturity/yield trial. University full-text handle returned HTTP 403 during checking.",
+      "verdict": "repair",
+      "draft": "Uvavanyo oluphambili lwavavanya izinto ze-pod ezikhuliswe eMzantsi Afrika, kubandakanya ezo ndidi zibizwe ngamagama nenye engaziwayo, kwaye lwaphuhlisa iimveliso zokutya. Obu bubungqina benxalenye yokutya, hayi uvavanyo lokuvuthwa/lwesivuno lwengingqi. Isibambi sombhalo opheleleyo we-yunivesithi sibuyise i-HTTP 403 ngexesha lokuhlola.",
+      "backtranslation": "The main trial tested pod items grown in South Africa, including those named types and one unknown, and developed food products. This is evidence of the edible part, not a regional ripeness/yield trial. The full-text university holder returned HTTP 403 during checking.",
+      "problem": "\"handle\" (persistent link) rendered \"isibambi\" (holder).",
+      "corrected": "Uvavanyo oluphambili lwavavanya izinto ze-pod ezikhuliswe eMzantsi Afrika, kubandakanya ezo ndidi zibizwe ngamagama nenye engaziwayo, kwaye lwaphuhlisa iimveliso zokutya. Obu bubungqina benxalenye yokutya, hayi uvavanyo lokuvuthwa/lwesivuno lwengingqi. Ikhonkco lombhalo opheleleyo we-yunivesithi libuyise i-HTTP 403 ngexesha lokuhlola."
+    },
+    {
+      "index": 537,
+      "key": "The same source reports poison in seeds, bark, wood and roots. Guava-like fruit appearance is not evidence of edible fruit.",
+      "verdict": "repair",
+      "draft": "Umthombo ofanayo uxela ityhefu kwiimbewu, igxolo, izinki nengcambu. Ukubonakala kweziqhamo ezifana nejamu akubungqina bokuba iziqhamo ziyatyeka.",
+      "backtranslation": "The same source reports poison in seeds, bark, thorns(?) and root. Appearance of fruits like jam is not evidence that fruits are edible.",
+      "problem": "Poison safety: \"wood\" rendered \"izinki\" (zinc); \"guava-like\" rendered \"jam-like\".",
+      "corrected": "Umthombo ofanayo uxela ityhefu kwiimbewu, igxolo, umthi nengcambu. Ukubonakala kweziqhamo ezifana ne-guava akubungqina bokuba iziqhamo ziyatyeka."
+    },
+    {
+      "index": 547,
+      "key": "The sweet, astringent ripe fruit is documented as edible, ripening February–May. This very slow-growing arid western tree has no quantified first crop age or food kg benchmark.",
+      "verdict": "repair",
+      "draft": "Isiqhamo esivuthiweyo esimnandi, esinomhlophe, sibhalwe njengesityiwayo, sivuthwa kuFebruwari–Meyi. Lo mthi wasentshona oyomileyo okhula ngokucotha kakhulu awunabudala bokuqala sesityalo olulinganisiweyo okanye umlinganiselo wokutya we-kg.",
+      "backtranslation": "Sweet, white ripe fruit, written as edible, ripens February-May. This very slow-growing dry western tree has no estimated first age of planting or food estimate in kg.",
+      "problem": "\"astringent\" rendered \"esinomhlophe\" (with white) - wrong.",
+      "corrected": "Isiqhamo esivuthiweyo esimnandi, esinokuqina emlonyeni (astringent), sibhalwe njengesityiwayo, sivuthwa kuFebruwari–Meyi. Lo mthi wasentshona oyomileyo okhula ngokucotha kakhulu awunabudala bokuqala sesityalo olulinganisiweyo okanye umlinganiselo wokutya we-kg."
+    },
+    {
+      "index": 554,
+      "key": "This explicit caution prevents routine household-food forecasting. Sporadic all-year fruiting is not promoted to an edible-food availability calendar.",
+      "verdict": "repair",
+      "draft": "Esi silumkiso esicacileyo sithintela uqikelelo oluqhelekileyo lokutya kwekhaya. Ukuqhama okungeneno lonyaka wonke akuphuhliswa kube yikhalenda yokufumaneka kokutya okutyiwayo.",
+      "backtranslation": "This clear warning prevents the usual estimate of home food. Fruiting not here all year is not developed into a calendar of availability of edible food.",
+      "problem": "\"Sporadic\" fruiting garbled (\"okungeneno\").",
+      "corrected": "Esi silumkiso esicacileyo sithintela uqikelelo oluqhelekileyo lokutya kwekhaya. Ukuqhama ngamaxesha athile unyaka wonke akuphuhliswa kube yikhalenda yokufumaneka kokutya okutyiwayo."
+    },
+    {
+      "index": 556,
+      "key": "This is a historical one-hectare financial model; it does not provide matched per-tree kg or a measured biological maturity curve. No financial values or pesticide recipes are copied.",
+      "verdict": "repair",
+      "draft": "Lo ngumzekelo wezemali wehektare enye wakudala; awunikezi kg yomthi ngamnye ehambelanayo okanye ijika lokuvuthwa kwebhayoloji elilinganisiweyo. Akukho xabiso lezimali okanye iiresiphi zomgqomo wokubulala izambatho ezikhutshelweyo.",
+      "backtranslation": "This is an old one-hectare financial example; it gives no matching kg per tree or estimated biological ripening curve. No financial value or recipes of a barrel for killing(?) discarded clothes.",
+      "problem": "Chemical safety: \"pesticide recipes\" rendered as barrel for killing clothes - nonsense term.",
+      "corrected": "Lo ngumzekelo wezemali wehektare enye wakudala; awunikezi kg yomthi ngamnye ehambelanayo okanye ijika lokuvuthwa kwebhayoloji elilinganisiweyo. Akukho xabiso lezimali okanye iiresiphi zemichiza yokubulala izinambuzane ezikopishiweyo."
+    },
+    {
+      "index": 557,
+      "key": "This is an annual, not a fruit tree. The account describes boiled leaves as a spinach substitute and pickling. It supplies no food harvest duration, kg/plant or exact leaf calendar.",
+      "verdict": "repair",
+      "draft": "Esi sisityalo sonyaka, hayi umthi weziqhamo. Ingxelo ichaza amagqabi abilisiweyo njengenye indlela ye-spinach nokufakwa kwisonka esimuncu. Ayinikezi bude bokuvuna ukutya, kg/isityalo okanye ikhalenda echanekileyo yamagqabi.",
+      "backtranslation": "This is an annual plant, not a fruit tree. The report describes cooked leaves as another way of spinach and putting in sour bread. It gives no length of food harvest, kg/plant or exact calendar of leaves.",
+      "problem": "\"pickling\" rendered \"isonka esimuncu\" (sour bread).",
+      "corrected": "Esi sisityalo sonyaka, hayi umthi weziqhamo. Ingxelo ichaza amagqabi abilisiweyo njengenye indlela ye-spinach nokwenza i-pickle. Ayinikezi bude bokuvuna ukutya, kg/isityalo okanye ikhalenda echanekileyo yamagqabi."
+    },
+    {
+      "index": 559,
+      "key": "This large tree requires substantial space away from buildings, paving, sewer lines and walls because SANBI reports aggressive roots.",
+      "verdict": "repair",
+      "draft": "Lo mthi omkhulu udinga indawo enkulu kude nezakhiwo, ukuhlohlwa, imibhobho yenkunkuma namabhodi ngenxa yokuba i-SANBI ixela iingcambu ezinobundlongondlongo.",
+      "backtranslation": "This large tree needs a large place away from buildings, pipes(?), drain pipes and boards because SANBI reports aggressive roots.",
+      "problem": "\"paving\" and \"walls\" rendered \"ukuhlohlwa\" and \"amabhodi\" (boards).",
+      "corrected": "Lo mthi omkhulu udinga indawo enkulu kude nezakhiwo, iindlela ezibekwe amatye, imibhobho yenkunkuma neendonga ngenxa yokuba i-SANBI ixela iingcambu ezinobundlongondlongo."
+    },
+    {
+      "index": 574,
+      "key": "Use clean runners and match the variety and production system to the area. Reliable irrigation and disease control matter.",
+      "verdict": "repair",
+      "draft": "Sebenzisa iimbaleki ezicocekileyo kwaye uhambelanise uhlobo nenkqubo yemveliso nommandla. Unkcenkceshelo olwathembekileyo nolawulo lwezifo lubalulekile.",
+      "backtranslation": "Use clean refugees (imbaleki) and match the type with production system and region. Reliable irrigation and disease control are important.",
+      "problem": "\"runners\" rendered \"imbaleki\" (fugitives).",
+      "corrected": "Sebenzisa amahlumela acocekileyo kwaye uhambelanise uhlobo nenkqubo yemveliso nommandla. Unkcenkceshelo olwathembekileyo nolawulo lwezifo lubalulekile."
+    },
+    {
+      "index": 577,
+      "key": "Use correctly identified local planting material. No locally validated named cultivar shortlist is sourced; this plan does not claim nitrogen fixation or medicinal effects.",
+      "verdict": "repair",
+      "draft": "Sebenzisa izinto zokutyala zasekuhlaleni ezichongwe ngokuchanekileyo. Akukho luhlu lufutshane lweendidi ezibizwe ngamagama ezivavanywe apha ekuhlaleni olufunyenweyo; esi sicwangciso asibangi kutya inayitrojeni okanye iziphumo zonyango.",
+      "backtranslation": "Use correctly identified local planting materials. No short list of named varieties tested locally found; this plan does not claim nitrogen food or medicinal results.",
+      "problem": "\"nitrogen fixation\" rendered \"kutya inayitrojeni\" (eating nitrogen).",
+      "corrected": "Sebenzisa izinto zokutyala zasekuhlaleni ezichongwe ngokuchanekileyo. Akukho luhlu lufutshane lweendidi ezibizwe ngamagama ezivavanywe apha ekuhlaleni olufunyenweyo; esi sicwangciso asibangi ukubopha inayitrojeni okanye iziphumo zonyango."
+    },
+    {
+      "index": 592,
+      "key": "Warm, frost-free conditions and dependable water are needed. Keep a replacement follower after the fruiting stem is removed.",
+      "verdict": "repair",
+      "draft": "Kuyafuneka iimeko ezifudumeleyo, ezingenaqabaka namanzi athembekileyo. Gcina imbaleki yokutshintsha emva kokususwa kwesiqu esiqhamayo.",
+      "backtranslation": "Warm, frost-free conditions and reliable water are needed. Keep a replacement refugee (imbaleki) after removal of the fruiting stem.",
+      "problem": "\"follower\" (banana sucker) rendered \"imbaleki\" (fugitive).",
+      "corrected": "Kuyafuneka iimeko ezifudumeleyo, ezingenaqabaka namanzi athembekileyo. Gcina ihlumela lokutshintsha emva kokususwa kwesiqu esiqhamayo."
+    },
+    {
+      "index": 628,
+      "key": "identified edible melon landrace — specialist confirmation needed",
+      "verdict": "repair",
+      "draft": "uhlobo lwasekhaya lwekhomo ekutyiwayo elichongiweyo — kufuneka ukuqinisekiswa yingcali",
+      "backtranslation": "home type of edible cow-... (karkoer?) identified - needs confirmation by an expert",
+      "problem": "\"melon\" rendered \"ikhomo\" (cow) - wrong term.",
+      "corrected": "uhlobo lwasekhaya lwemeloni etyiwayo elichongiweyo — kufuneka ukuqinisekiswa yingcali"
+    }
+  ]
+}

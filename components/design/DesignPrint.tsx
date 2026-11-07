@@ -18,6 +18,7 @@ import { X, FileDown, Images, Loader2, RefreshCw, Share2, Square, SquareCheck } 
 import { jsPDF } from 'jspdf';
 import LessonLink from './LessonLink';
 import { useAppLevel } from '@/lib/app-level';
+import { inlineText } from '@/lib/xh-inline';
 
 import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
 import type { SectorSite } from '@/lib/sector';
@@ -538,6 +539,11 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
         {lang === 'zu' && (
           <p lang="en" role="note" style={{ margin: 0, padding: '7px 16px', background: 'rgba(192,122,30,0.10)', color: '#5C3B0D', fontSize: 12, lineHeight: 1.4 }}>
             Unreviewed isiZulu draft. The exact English source appears on key export controls; labels printed on the maps remain English.
+          </p>
+        )}
+        {lang === 'xh' && (
+          <p lang="xh" role="note" style={{ margin: 0, padding: '7px 16px', background: 'rgba(192,122,30,0.10)', color: '#5C3B0D', fontSize: 12, lineHeight: 1.4 }}>
+            {inlineText(lang, 'Unreviewed isiXhosa draft. Labels printed on the maps remain English.')}
           </p>
         )}
 

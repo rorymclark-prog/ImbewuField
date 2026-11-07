@@ -61,6 +61,7 @@ import {
 import { CATEGORY_LABEL, EX, ZU_CATEGORY_LABEL, exchangeText } from './theme';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
+import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 import { produceLabel } from '@/lib/produce-label';
 import { ExchangeDraftNotice, ExchangeSourceCopy } from './ExchangeCopy';
 
@@ -116,6 +117,7 @@ function toggle<T>(list: T[], value: T): T[] {
 export default function ExchangeBoard() {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
+  const xh = lang === 'xh';
   const simple = useAppLevel() === 'simple';
   const tx = (en: string, dz: string) => exchangeText(lang, en, dz);
   // Empty on the server and on the first client render, so hydration matches;
@@ -213,7 +215,7 @@ export default function ExchangeBoard() {
       >
         <CircleAlert size={14} strokeWidth={2} style={{ color: EX.amber, marginTop: 1, flexShrink: 0 }} />
         <p className="font-sans" style={{ fontSize: 12, color: EX.amberText, lineHeight: 1.5, margin: 0 }}>
-          {zu ? <ExchangeSourceCopy en={`${DEMO_EXCHANGE.notice} Anything you post is saved on this device only.`} zu="Lo mbukiso ubonisa izikhangiso ezivela kunethiwekhi yabalimi. Lezi zikhangiso azithengiswa lapha. Okufakayo kugcinwa kule divayisi kuphela." /> : <>{DEMO_EXCHANGE.notice} Anything you post is saved on this device only.</>}
+          {zu || xh ? <ExchangeSourceCopy en={`${DEMO_EXCHANGE.notice} Anything you post is saved on this device only.`} tpl="{notice} Anything you post is saved on this device only." vars={{ notice: inlineText(lang, DEMO_EXCHANGE.notice) }} zu="Lo mbukiso ubonisa izikhangiso ezivela kunethiwekhi yabalimi. Lezi zikhangiso azithengiswa lapha. Okufakayo kugcinwa kule divayisi kuphela." /> : <>{DEMO_EXCHANGE.notice} Anything you post is saved on this device only.</>}
         </p>
       </div>
       <ExchangeDraftNotice />
@@ -317,7 +319,7 @@ export default function ExchangeBoard() {
             const on = categories.includes(c);
             return (
               <Chip key={c} on={on} disabled={count === 0} onClick={() => setCategories((v) => toggle(v, c))}>
-                {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]} <span style={{ opacity: 0.65 }}>{count}</span>
+                {zu ? ZU_CATEGORY_LABEL[c] : inlineText(lang, CATEGORY_LABEL[c])} <span style={{ opacity: 0.65 }}>{count}</span>
               </Chip>
             );
           })}
@@ -431,7 +433,7 @@ export default function ExchangeBoard() {
             {tx('Nothing matches that', 'Akukho okuhambisana nalokho')}
           </p>
           <p className="font-sans" style={{ fontSize: 12.5, color: EX.faint, margin: '0 0 14px', lineHeight: 1.5 }}>
-            {zu ? `Kunezikhangiso ezingu-${summary.total} ebhodini — zama ibanga elibanzi noma ususe izihlungi.` : `${summary.total} ${summary.total === 1 ? 'listing is' : 'listings are'} on the board — try a wider distance, or clear the filters.`}
+            {zu ? `Kunezikhangiso ezingu-${summary.total} ebhodini — zama ibanga elibanzi noma ususe izihlungi.` : xh ? inlineTemplate(lang, summary.total === 1 ? '{total} listing is on the board — try a wider distance, or clear the filters.' : '{total} listings are on the board — try a wider distance, or clear the filters.', null, { total: summary.total }) : `${summary.total} ${summary.total === 1 ? 'listing is' : 'listings are'} on the board — try a wider distance, or clear the filters.`}
           </p>
           {filtersActive && (
             <button
@@ -454,7 +456,7 @@ export default function ExchangeBoard() {
         <>
           <div className="flex items-center gap-2">
             <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>
-              {zu ? `Kuboniswa ezingu-${rows.length} kwezingu-${summary.total}` : `Showing ${rows.length} of ${summary.total}`}
+              {zu ? `Kuboniswa ezingu-${rows.length} kwezingu-${summary.total}` : inlineTemplate(lang, 'Showing {shown} of {total}', null, { shown: rows.length, total: summary.total })}
             </span>
             <div style={{ flex: 1 }} />
             {filtersActive && (
@@ -477,7 +479,7 @@ export default function ExchangeBoard() {
             >
               <Info size={12} strokeWidth={1.9} style={{ color: EX.muted, marginTop: 1.5, flexShrink: 0 }} />
               <span className="font-sans" style={{ fontSize: 12, color: EX.muted, lineHeight: 1.45 }}>
-                {zu ? <ExchangeSourceCopy en="No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself." zu="Okwamanje alikho ithuluzi lokuxhumana nomunye umlimi ngalolu hlelo lokusebenza. Bhala igama nendawo ekhadini bese uhlela ngokusebenzisa umholi wakho noma iqembu — noma usebenzise u-Yabelana ukudlulisela isikhangiso wena." /> : 'No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself.'}
+                {zu || xh ? <ExchangeSourceCopy en="No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself." zu="Okwamanje alikho ithuluzi lokuxhumana nomunye umlimi ngalolu hlelo lokusebenza. Bhala igama nendawo ekhadini bese uhlela ngokusebenzisa umholi wakho noma iqembu — noma usebenzise u-Yabelana ukudlulisela isikhangiso wena." /> : 'No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself.'}
               </span>
             </div>
           )}
@@ -512,11 +514,11 @@ export default function ExchangeBoard() {
           className="font-sans"
           style={{ fontSize: 12, color: EX.faint, lineHeight: 1.65, margin: 0, paddingLeft: 18 }}
         >
-          <li><strong style={{ fontWeight: 600 }}>{tx('No messaging.', 'Ayikho imiyalezo.')}</strong> {zu ? <ExchangeSourceCopy en="You cannot contact another farmer from here. Nothing on a card is a contact button, because there is nothing behind it yet." zu="Awukwazi ukuxhumana nomunye umlimi lapha. Alikho inkinobho yokuxhumana ekhadini ngoba ayikasebenzi." /> : 'You cannot contact another farmer from here. Nothing on a card is a contact button, because there is nothing behind it yet.'}</li>
-          <li><strong style={{ fontWeight: 600 }}>{tx('No payments, no escrow, no delivery.', 'Azikho izinkokhelo, ukubanjelwa kwemali noma ukulethwa.')}</strong> {zu ? <ExchangeSourceCopy en="Money and collection are arranged between the two farmers, off the app." zu="Imali nokulandwa kwempahla kuhlelwa phakathi kwabalimi, ngaphandle kwalolu hlelo lokusebenza." /> : 'Money and collection are arranged between the two farmers, off the app.'}</li>
-          <li><strong style={{ fontWeight: 600 }}>{tx('No ratings or reputation.', 'Azikho izilinganiso noma udumo.')}</strong> {zu ? <ExchangeSourceCopy en="There is no score behind any name on this board." zu="Awekho amaphuzu ahambisana namagama akuleli bhodi." /> : 'There is no score behind any name on this board.'}</li>
-          <li><strong style={{ fontWeight: 600 }}>{tx('Nothing is published.', 'Akukho okushicilelwayo.')}</strong> {zu ? <ExchangeSourceCopy en="Listings you post stay on this device. Sharing them between farmers needs the community backend switched on and its security rules extended first." zu="Izikhangiso ozifakayo zigcinwa kule divayisi. Ukuze kwabelwane ngazo kudingeka kuvulwe ingxenye yomphakathi bese kwandiswa imithetho yayo yezokuphepha kuqala." /> : 'Listings you post stay on this device. Sharing them between farmers needs the community backend switched on and its security rules extended first.'}</li>
-          <li><strong style={{ fontWeight: 600 }}>{tx('Locations are approximate.', 'Izindawo zilinganiselwe.')}</strong> {zu ? <ExchangeSourceCopy en="Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead." zu="Indawo yesikhangiso isondezwa cishe kwikhilomitha elilodwa — ibonisa indawo eseduze, hhayi umuzi ngqo." /> : 'Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead.'}</li>
+          <li><strong style={{ fontWeight: 600 }}>{tx('No messaging.', 'Ayikho imiyalezo.')}</strong> {zu || xh ? <ExchangeSourceCopy en="You cannot contact another farmer from here. Nothing on a card is a contact button, because there is nothing behind it yet." zu="Awukwazi ukuxhumana nomunye umlimi lapha. Alikho inkinobho yokuxhumana ekhadini ngoba ayikasebenzi." /> : 'You cannot contact another farmer from here. Nothing on a card is a contact button, because there is nothing behind it yet.'}</li>
+          <li><strong style={{ fontWeight: 600 }}>{tx('No payments, no escrow, no delivery.', 'Azikho izinkokhelo, ukubanjelwa kwemali noma ukulethwa.')}</strong> {zu || xh ? <ExchangeSourceCopy en="Money and collection are arranged between the two farmers, off the app." zu="Imali nokulandwa kwempahla kuhlelwa phakathi kwabalimi, ngaphandle kwalolu hlelo lokusebenza." /> : 'Money and collection are arranged between the two farmers, off the app.'}</li>
+          <li><strong style={{ fontWeight: 600 }}>{tx('No ratings or reputation.', 'Azikho izilinganiso noma udumo.')}</strong> {zu || xh ? <ExchangeSourceCopy en="There is no score behind any name on this board." zu="Awekho amaphuzu ahambisana namagama akuleli bhodi." /> : 'There is no score behind any name on this board.'}</li>
+          <li><strong style={{ fontWeight: 600 }}>{tx('Nothing is published.', 'Akukho okushicilelwayo.')}</strong> {zu || xh ? <ExchangeSourceCopy en="Listings you post stay on this device. Sharing them between farmers needs the community backend switched on and its security rules extended first." zu="Izikhangiso ozifakayo zigcinwa kule divayisi. Ukuze kwabelwane ngazo kudingeka kuvulwe ingxenye yomphakathi bese kwandiswa imithetho yayo yezokuphepha kuqala." /> : 'Listings you post stay on this device. Sharing them between farmers needs the community backend switched on and its security rules extended first.'}</li>
+          <li><strong style={{ fontWeight: 600 }}>{tx('Locations are approximate.', 'Izindawo zilinganiselwe.')}</strong> {zu || xh ? <ExchangeSourceCopy en="Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead." zu="Indawo yesikhangiso isondezwa cishe kwikhilomitha elilodwa — ibonisa indawo eseduze, hhayi umuzi ngqo." /> : 'Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead.'}</li>
         </ul>
       </div>
       {/* ux-01/desk-01/staff-03: this board is mounted inside app/exchange/page.tsx's own scroll

@@ -166,7 +166,7 @@ async function handle(req: NextRequest, write: boolean) {
         const snap = await tx.get(ref);
         const a = snap.data() as MelAssessment | undefined;
         if (!a || a.orgId !== orgId || a.state !== 'open' || !a.participantIds.includes(uid)) fail('This assessment is not open for your account.', 403);
-        if (b.consent !== true || !['en', 'zu'].includes(b.language) || !validAnswers(MEL_TEMPLATES[a.stage], b.answers) || !Object.values(b.answers).some(v => typeof v === 'string' && v.trim())) fail('Agree to the assessment notice and answer at least one question.');
+        if (b.consent !== true || !['en', 'zu', 'xh'].includes(b.language) || !validAnswers(MEL_TEMPLATES[a.stage], b.answers) || !Object.values(b.answers).some(v => typeof v === 'string' && v.trim())) fail('Agree to the assessment notice and answer at least one question.');
         writeFieldReceipt(tx,receipt,now);
         // Deterministic ID + transaction: retries replace one response, never inflate completion.
         tx.set(ref.collection('responses').doc(uid), { assessmentId: b.id, participantId: uid, orgId, version: a.version, language: b.language, consent: true, answers: b.answers, submittedAt: now } satisfies MelResponse);

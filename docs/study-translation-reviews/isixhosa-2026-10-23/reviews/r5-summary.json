@@ -1,0 +1,74 @@
+{
+ "round": 5,
+ "reviewer_note": "Machine reviewer (Claude), not a fluent isiXhosa speaker. Verdicts are a machine pre-screen and do not replace approval by a fluent first-language speaker, which is still required before shipping. Phase A (blind back-translation + flags) was written before the English was read.",
+ "items": 155,
+ "counts": {
+  "ok": 127,
+  "repair": 28,
+  "hold": 0
+ },
+ "repair_severity": {
+  "meaning": 3,
+  "wording": 10,
+  "minor": 15
+ },
+ "phase_a_flags_retracted_in_b": [
+  "'umfama' was flagged in A as possibly 'blind person'; in isiXhosa the blind person is 'imfama' (class 9) while 'umfama/abafama' is in common use for farmer, so left as ok ('umlimi' would be the more formal choice).",
+  "'ukusikha ngesandla' was flagged in A as 'cutting by hand'; -kha is 'pick/pluck', so it matches 'picking it off by hand' — ok.",
+  "A-flags on 'less waste during a glut', 'sow one/two/three/four', 'store as protein' and 'their presence does not make water clean or safe' turned out to mirror the English source exactly — ok."
+ ],
+ "quiz_integrity": "No quiz option changes the correct answer; repaired options (l4 quiz/0/options/1, l4 water quiz/0/options/1) are the correct answers and stay correct; repaired distractors (water l1 quiz/1/options/0, l3 quiz/1/options/2) stay wrong.",
+ "holds": [],
+ "top_issues": [
+  {
+   "path": "water-harvesting/water-harvesting-l3/quiz/0/rationale",
+   "severity": "meaning",
+   "issue": "'amanzi asetyenziswayo' (water used) replaces 'usable supply': the tank-sizing rationale compares use with demand instead of supply with demand. Repaired to 'amanzi afumanekayo'."
+  },
+  {
+   "path": "vegetables-staples/vegetables-staples-l3/body",
+   "severity": "meaning",
+   "issue": "Open-pollinated maize glossed '(ohlwayelwa ngokwemvelo)' = 'sown naturally' — teaches a wrong seed-saving concept. Also isiZulu 'Ubhatata' and an ungrammatical clause. Repaired."
+  },
+  {
+   "path": "water-harvesting/water-harvesting-l3/quiz/1/options/2",
+   "severity": "meaning",
+   "issue": "Distractor uses 'isiphekepheke' (rocket/spacecraft) for 'acidic' — nonsense in a quiz option. Repaired to 'Ane-asidi eninzi ngakumbi'."
+  },
+  {
+   "path": "water-harvesting/water-harvesting-l4/body",
+   "severity": "wording",
+   "issue": "Greywater safety close tells the learner to seek 'hired' advice ('eqeshiweyo') rather than qualified/trained advice; 'intended use' rendered 'requested use' throughout the lesson. Repaired."
+  },
+  {
+   "path": "vegetables-staples/vegetables-staples-l1/body",
+   "severity": "wording",
+   "issue": "Malformed no-dig/dig verbs ('ukungombi', 'ungombe'), isiZulu 'Utamatisi', ungrammatical 'least disturbance' line, and 'gets harder/easier every season' flattened to 'hard/easy all year'. Repaired."
+  },
+  {
+   "path": "vegetables-staples/vegetables-staples-l4/body (+keyPoints/3, quiz/0/options/1)",
+   "severity": "wording",
+   "issue": "Pesticide safety line 'imveliso ebhaliswe isityalo' is ungrammatical for 'registered FOR the crop and pest' (the correct quiz answer uses the same phrase); isiZulu 'eliphuzi' for yellow. Repaired with 'ebhaliselwe' / 'elimthubi'."
+  },
+  {
+   "path": "water-harvesting/water-harvesting-l1/body + quiz/1/q",
+   "severity": "wording",
+   "issue": "'Steep' rendered with -tsiba ('jumping') in the erosion/earthwork safety advice; 'upslope' as 'up the mountain'. Repaired to 'omnqantsa'."
+  },
+  {
+   "path": "water-harvesting/water-harvesting-l3/body",
+   "severity": "wording",
+   "issue": "'Allow for water that misses the gutter' rendered 'measure water that does not succeed'; malformed 'izophahla', 'asiyongqiniseko'; 'requested' for 'intended' use in the drinking-water testing advice. Repaired."
+  },
+  {
+   "path": "vegetables-staples/vegetables-staples-l4/quiz/1/q + rationale",
+   "severity": "wording",
+   "issue": "'ayaphuzisa' / 'Ukuphuzisa' (isiZulu-based causative 'make yellow') for leaves turning yellow. Repaired."
+  },
+  {
+   "path": "water-harvesting (5 fields: l3 keyPoints/3, quiz/1/rationale, l4 keyPoints/1, quiz/0/options/1)",
+   "severity": "minor",
+   "issue": "'ukusetyenziswa okuceliweyo' = 'requested use' for 'intended use' — consistent mistranslation; all occurrences repaired to 'okucetywayo' for one consistent term."
+  }
+ ]
+}

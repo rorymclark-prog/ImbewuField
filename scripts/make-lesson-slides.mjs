@@ -72,7 +72,7 @@ if (!moduleId || !lang) {
 }
 
 if (pairedPath && (!pairedDraftLanguageLabel(lang) || sourcePath || brandingPath || overridesPath || imagesDir)) {
-  throw new Error('--paired-draft supports st, ts, ve and zu with the authored English source only, without art or branding overrides');
+  throw new Error('--paired-draft supports st, ts, ve, xh and zu with the authored English source only, without art or branding overrides');
 }
 if (pairedArtPath && !pairedPath) throw new Error('--paired-art requires --paired-draft');
 if (validateOnly && !pairedPath) throw new Error('--validate-only requires --paired-draft');

@@ -25,6 +25,7 @@ import { calibratedMPerPx, canvasToPhoto, carriedMPerPx, photoToCanvas, type Pho
 import { uploadPhoto } from '@/lib/db/queries';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { useEscapeClose } from '@/lib/use-escape-close';
 
@@ -70,7 +71,7 @@ interface Props {
 // lib/base-photo-align.ts.
 
 export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, initialPhotoDataUrl = null, initialMPerPx = null, simple = false }: Props) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [img, setImg] = useState<HTMLImageElement | null>(null);
   const [rotationDeg, setRotationDeg] = useState(0); // 0-359, 0 = assume already north-up
   // Alignment controls. Opacity defaults part-way so the satellite shows through the moment the
@@ -381,7 +382,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
       if (!url) throw new UserFacingError(t('designPhotoSaveError'));
       onApply({ url, mPerPx, previewDataUrl });
     } catch (err) {
-      setError(userFacingMessage(err, t('designPhotoUnknownError'), t));
+      setError(inlineText(lang, userFacingMessage(err, t('designPhotoUnknownError'), t)));
     } finally {
       setBusy(false);
     }

@@ -1,0 +1,51 @@
+{
+ "unit": "10-natural-pest-control",
+ "okCount": 205,
+ "items": [
+  {
+   "where": "Aphids, Tip",
+   "verdict": "repair",
+   "english": "An aphid colony that has turned brown and papery has been killed by parasitic wasps.",
+   "draft": "Iqela le-aphid eselijike laba mdaka-nsundu libe lithambile njengephepha lixelwe zii-parasitic wasp.",
+   "backtranslation": "A colony that turned brown and soft as paper has been 'xelwe' (told/stung?) by wasps.",
+   "problem": "Verb 'xela' (to tell) wrongly spelt for 'xhela' (sting) and 'killed' was lost; meaning unclear.",
+   "corrected": "Iqela le-aphid eselijike laba mdaka-nsundu libe lingathi liphepha, libulewe zii-parasitic wasp."
+  },
+  {
+   "where": "Encourage predators, parasitic wasps",
+   "verdict": "repair",
+   "english": "Parasitic wasps are tiny and cannot sting people.",
+   "draft": "Ii-parasitic wasp zincinci kwaye azinakubaxela abantu.",
+   "backtranslation": "...cannot 'xela' (tell/inform) people.",
+   "problem": "Wrong verb spelling: 'xela' means tell; 'xhela' means sting (glossary: ukuxhelwa yinyosi). Safety-relevant statement was garbled.",
+   "corrected": "Ii-parasitic wasp zincinci kwaye azinakubaxhela abantu."
+  },
+  {
+   "where": "Companion planting",
+   "verdict": "repair",
+   "english": "Farmers in China grew a small floating fern with their rice for centuries",
+   "draft": "...babetyala i-fern ... kunye nerayisi iinkulungwane,",
+   "backtranslation": "...for thousands (of years)",
+   "problem": "'iinkulungwane' = thousands; English says centuries (fact inflated).",
+   "corrected": "...kunye nerayisi amakhulu eminyaka,"
+  },
+  {
+   "where": "Cutworms, step 3",
+   "verdict": "repair",
+   "english": "pushed 3 to 5 cm into the soil",
+   "draft": "ityiwe emhlabeni nge-3 ukuya kwi-5 cm",
+   "backtranslation": "'eaten' into the ground",
+   "problem": "'ityiwe' is the passive of -tya (to eat); wrong verb.",
+   "corrected": "ifakwe emhlabeni nge-3 ukuya kwi-5 cm"
+  },
+  {
+   "where": "Step-by-step, step 5",
+   "verdict": "repair",
+   "english": "Keep them off young seedlings, which they scratch up.",
+   "draft": "Zigcine kude nezithombo ezincinci, kuba ziyaluxovula.",
+   "backtranslation": "...because they knead/trample 'it' (wrong noun class)",
+   "problem": "Wrong verb and concord (trample/knead, not scratch up).",
+   "corrected": "Zigcine kude nezithombo ezincinci, kuba ziyazikrwexa zize zizikhuphe."
+  }
+ ]
+}

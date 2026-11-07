@@ -18,6 +18,7 @@
 // to lib/crop-catalog.ts (a plain object module) keeps it safe to call from anywhere: client
 // components, lib/task-board.ts, and node --test alike.
 import { cropByKey } from './crop-catalog';
+import { inlineText } from './xh-inline';
 
 // catalog key -> isiZulu common name. Confident, widely-used names only; a key with no entry
 // here falls back to the English catalog name — correct, if not yet translated — rather than a
@@ -69,6 +70,8 @@ function sentenceCaseFallback(key: string): string {
 export function produceLabel(key: string, lang: string): string {
   const crop = cropByKey(key);
   const english = crop?.name ?? sentenceCaseFallback(key);
+  // isiXhosa: the common name from lib/locales/xh-inline/ for this exact catalogue name, else English.
+  if (lang === 'xh') return inlineText(lang, english);
   if (lang !== 'zu') return english;
   return CROP_NAME_ZU[key] ?? english;
 }

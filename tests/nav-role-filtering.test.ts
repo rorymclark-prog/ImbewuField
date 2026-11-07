@@ -145,6 +145,7 @@ test('the Journal tile describes notes and photos in each target language withou
 
   // The whole-app translation request now supplies source-paired regional drafts. The rule is
   // still honest diary wording, not the old requirement that every other language stay English.
+  // The isiXhosa draft (this branch) names the Journal's actual notes and photos too.
   const packet = JSON.parse(read('docs/translation/four-language-completion/navigation-account-drafts.json'));
   const journal = packet.entries.find((entry: { key: string }) => entry.key === 'homeQuickJournalDesc');
   assert.ok(journal, 'the regional Journal labels need their exact source meaning available for review');
@@ -154,13 +155,13 @@ test('the Journal tile describes notes and photos in each target language withou
     const src = read(`lib/locales/${f}`);
     assert.doesNotMatch(src, /homeQuickJournalDesc:\s*['"][^'"\n]*(?:Rekhoda izivuno|Log harvests)/i,
       `${f} must not restore the old promise that the Journal records harvests.`);
-    if (['zu.ts', 'st.ts', 'ts.ts', 've.ts'].includes(f)) {
+    if (['zu.ts', 'xh.ts', 'st.ts', 'ts.ts', 've.ts'].includes(f)) {
       assert.match(src, /homeQuickJournalDesc:\s*['"][^'"\n]+['"]/,
         `${f}: the target language needs its own notes-and-photos label`);
       const code = f.slice(0, -3);
       const { default: dict } = await import(`../lib/locales/${code}.ts`);
       assert.notEqual(dict.homeQuickJournalDesc, desc[1], `${f}: the tile is still English`);
-      if (code !== 'zu') assert.equal(dict.homeQuickJournalDesc, journal[code], `${f}: the tile must retain its source-paired review draft`);
+      if (code !== 'zu' && code !== 'xh') assert.equal(dict.homeQuickJournalDesc, journal[code], `${f}: the tile must retain its source-paired review draft`);
     } else {
       assert.doesNotMatch(src, /homeQuickJournalDesc:/,
         `${f} remains on the English pending text until its own review draft is prepared`);

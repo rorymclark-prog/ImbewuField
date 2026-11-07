@@ -123,3 +123,61 @@ test('a six-column cash ledger carries its last entry across pages with readable
   assert.ok((text.match(/Money in/g) ?? []).length >= 2);
   assert.ok((text.match(/Money out/g) ?? []).length >= 2);
 });
+
+test('isiXhosa reader: the report body is isiXhosa, every figure and recorded name is unchanged, and English is untouched', async () => {
+  const { XH_INLINE_SOURCE } = await import('../lib/locales/xh-inline/index');
+  const { registerXhInline } = await import('../lib/xh-inline');
+  const figures = (value: unknown) => (JSON.stringify(value).match(/\d+(?:[.,]\d+)?/g) ?? []).join(' ');
+  const eggs = { ...harvest('count', 0), crop: 'Eggs', ...recordQuantityPayload(12, 'eggs') };
+  const base = {
+    production: [harvest('a', 10), harvest('b', 4, '2025-12-20T10:00:00'), eggs, { ...harvest('nodate', 999), logged_at: '' }],
+    sales: [sale('direct', 20), sale('linked', 60, { invoice_id: 'invoice-1' })],
+    expenses: [cost('cost', 25), { ...cost('tagged', 5), category: 'Seed' }] as ExpenseLog[],
+    invoices: [invoice({ total: 75 }), invoice({ id: 'invoice-2', no: 2, status: 'unpaid', paidAt: undefined, dueDateISO: '2026-02-01' })],
+  };
+  try {
+    registerXhInline(XH_INLINE_SOURCE);
+    for (const kind of ['production', 'finance'] as const) {
+      const english = buildFarmReport(options({ ...base, kind }));
+      // Omitting the language, or asking for English or isiZulu, is the same English report.
+      assert.deepEqual(buildFarmReport(options({ ...base, kind, language: 'en' })), english);
+      assert.deepEqual(buildFarmReport(options({ ...base, kind, language: 'zu' })), english);
+      const xh = buildFarmReport(options({ ...base, kind, language: 'xh' }));
+      assert.notEqual(xh.title, english.title);
+      assert.notEqual(xh.period, english.period);
+      assert.deepEqual(xh.sections.map(s => s.title).filter(title => english.sections.some(s => s.title === title)), [], 'every section title is isiXhosa');
+      assert.deepEqual(xh.tables.map(table => table.title).filter(title => english.tables.some(table => table.title === title)), [], 'every table title is isiXhosa');
+      assert.deepEqual(xh.metrics.map(m => m.label).filter(label => english.metrics.some(m => m.label === label)), [], 'every metric label is isiXhosa');
+      // Same shape: sections, lines, tables, rows, columns, chart rows.
+      assert.deepEqual(xh.sections.map(s => s.lines.length), english.sections.map(s => s.lines.length));
+      assert.deepEqual(xh.tables.map(table => [table.rows.length, table.columns.length]), english.tables.map(table => [table.rows.length, table.columns.length]));
+      assert.equal(xh.chart?.rows.length, english.chart?.rows.length);
+      // Every section line is isiXhosa, and so is every table title/note/column and the chart wording.
+      xh.sections.forEach((section, i) => section.lines.forEach((line, n) => assert.notEqual(line, english.sections[i].lines[n], `section line ${i}.${n} is isiXhosa`)));
+      xh.tables.forEach((table, i) => { assert.notEqual(table.note, english.tables[i].note); table.columns.forEach((column, n) => assert.notEqual(column, english.tables[i].columns[n], `${table.title} column ${n}`)); });
+      if (english.chart) { assert.notEqual(xh.chart!.title, english.chart.title); assert.notEqual(xh.chart!.note, english.chart.note); }
+      // Money, counts and dates are exact, recorded names stay as recorded, the download name is English.
+      for (const amount of JSON.stringify(english).match(/-?R\d[\d\s,]*/g) ?? []) assert.ok(JSON.stringify(xh).includes(amount), `${amount} survives`);
+      const numbersIn = (value: string) => (value.match(/\d[\d\s,]*/g) ?? []).map(number => number.trim());
+      assert.deepEqual(xh.metrics.map(m => numbersIn(m.value)), english.metrics.map(m => numbersIn(m.value)));
+      assert.deepEqual(xh.metrics.map(m => numbersIn(m.detail ?? '')), english.metrics.map(m => numbersIn(m.detail ?? '')));
+      assert.equal(xh.filename, english.filename);
+      assert.equal(xh.date, english.date);
+      assert.match(xh.period, /^2025-12-01 .*2026-02-28 · /);
+      const text = JSON.stringify(xh);
+      assert.ok(!text.includes('PRIVATE BUYER') && !text.includes('PRIVATE SUPPLIER'));
+      for (const name of ['Swiss chard', 'Eggs', 'Recorded expense', 'Example farm', '12 eggs']) if (JSON.stringify(english).includes(name)) assert.ok(text.includes(name), `${name} stays as recorded`);
+      assert.ok(figures(xh.tables.map(table => table.rows.map(row => row.filter(cell => /\d/.test(cell) && !/[a-z]/i.test(cell)))))
+        === figures(english.tables.map(table => table.rows.map(row => row.filter(cell => /\d/.test(cell) && !/[a-z]/i.test(cell))))), 'purely numeric cells (amounts, counts, dates) are identical');
+    }
+    // The money words are the money book's.
+    const finance = buildFarmReport(options({ ...base, kind: 'finance', language: 'xh' }));
+    const ledger = finance.tables.find(table => table.columns.includes('Imali engenayo'))!;
+    assert.deepEqual(ledger.columns.slice(2, 4), ['Imali engenayo', 'Imali ephumayo']);
+    assert.ok(finance.metrics.some(m => m.label === 'Imali eseleyo ebhaliweyo'));
+    // The month rows use isiXhosa month names with the same year.
+    assert.match(String(finance.tables[0].rows[0][0]), /^(Jan|Feb|Mat|Epr|Mey|Jun|Jul|Aga|Sep|Okt|Nov|Dis) 20\d\d$/);
+  } finally { registerXhInline({}); }
+  // Without the isiXhosa drafts loaded (the server, English readers) the English comes back unchanged.
+  assert.deepEqual(buildFarmReport(options({ ...base, language: 'xh' })), buildFarmReport(options({ ...base })));
+});

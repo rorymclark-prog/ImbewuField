@@ -1,0 +1,5 @@
+{ "unit": "s02-study-tracks", "okCount": 158, "items": [
+ {"where":"#31 budget explainer","verdict":"repair","english":"Family work still matters when no wage is paid.","draft":"...usabalulekile nxa kungekho mvuzo uhlawulwayo","backtranslation":"family work still matters when no wage is paid (but 'nxa' is isiZulu)","problem":"isiZulu conjunction 'nxa'","corrected":"...usabalulekile xa kungekho mvuzo uhlawulwayo"},
+ {"where":"#27 reconcile explainer","verdict":"repair","english":"Do not add a guessed entry just to make the totals agree.","draft":"Musa ukongeza ingeniso eqikelelwayo","backtranslation":"Do not add an estimated income","problem":"'entry' narrowed to 'income' (hides guessed costs/other entries)","corrected":"Musa ukongeza irekhodi eliqikelelwayo ukwenzela ukuba izixa zivumelane."},
+ {"where":"#25 stock explainer","verdict":"repair","english":"Add what you picked.","draft":"oko ukuvuniweyo","backtranslation":"what is harvested-for-you (ungrammatical)","problem":"ungrammatical verb form","corrected":"oko ukuvunileyo"}
+]}

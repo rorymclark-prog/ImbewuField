@@ -1,0 +1,51 @@
+0. Previous closing date of milestones · not mandatory
+1. Funder of the indicator
+2. All visible funder indicators
+3. Chosen funder · no visible indicators
+4. Funder's reporting indicator
+5. No additional indicator
+6. IDC / SEF · public guide of May 2025
+7. Funder filters work only on combined milestone definitions. The size of the assessment does not change. Record funder codes, agreement, measurement period and participating people in the Indicators and objectives. The public indicator must be compared with your signed agreement.
+8. Choose a valid date of milestone evidence that is the one or before today and the closing date of the earlier comparison, or leave the comparison empty.
+9. Calendar year
+10. Date in the reporting period
+11. Compare recorded totals
+12. No comparison
+13. Calendar period that has passed
+14. The same calendar period in the previous year
+15. Choose a valid date that is today or before today.
+16. All gardens in this book. Earlier totals use the records available now, including corrections made afterwards. Unpaid invoices always stay the current state. Planned harvests are not in this report.
+17. Choose a report date that is valid, today or before today.
+18. {start} to {end} · past calendar period; completeness of records is not known
+19. No usable documents
+20. Comparison of past periods
+21. Earlier: {earlier}. Selected: {selected}. It is a complete change in recorded totals only; calendar periods may differ in length and season of the year. Current periods are not complete. No time alignment or claim about what caused the change. Missing or unusable source documents hold up the affected comparison. Unpaid invoices are the state of today and are not compared.
+22. Earlier period
+23. Selected period
+24. Recorded change
+25. Comparison of earlier money books
+26. Earlier {earlierStart} to {earlierEnd}; selected {selectedStart} to {selectedEnd} (UTC). Only the existing history of monthly money books is compared. Missing months or unassigned books hold up the result. A recorded zero does not confirm that there was no farming activity. Current months are not complete. Consent and current membership apply; these totals are not a linked group of farmers or an estimate of impact.
+27. Earlier months
+28. {period} · compared with {start} to {end}
+29. Funder's reporting requirement · not mandatory
+30. Add the indicator agreed in the funding agreement. The definition, participating people and reporting basis must come from that agreement. These details are shared with the indicator when it is published; use an indicator that can be shared and do not put in personal or confidential information.
+31. Add funder requirement
+32. Funder / funding programme
+33. Agreement / reporting indicator
+34. Funder indicator code
+35. Measurement / reporting periods
+36. Measurement period starts
+37. Measurement period ends
+38. Basis of observation
+39. Condition / measure on the observation date
+40. It is added up within the defined measurement period
+41. Each observation is the total of a separate period
+42. Participating people / disaggregation and rules of inclusion
+43. Agreed disaggregation and privacy rules
+44. Write "not required by this agreement" if it applies. No details of people are estimated by names. Use the measurement definition above for the start dates, method of collecting, evidence and verification.
+45. Compare recorded months
+46. Earlier series of calendar months
+47. Same months in the previous year
+48. Compare with the earlier date range
+49. Choose both session dates to compare an equal number of calendar days. Owner and project filters apply in both periods.
+50. Choose both visit dates to compare an equal number of calendar days. Current allocations apply to both periods; the status of actions is not the status of the past period.

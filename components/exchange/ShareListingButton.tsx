@@ -6,6 +6,7 @@ import { listingShareText, type Listing } from '@/lib/exchange';
 import { shareListing } from './share';
 import { EX } from './theme';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { ExchangeSourceCopy } from './ExchangeCopy';
 
 /**
@@ -29,7 +30,8 @@ export default function ShareListingButton({
 }) {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
-  const buttonLabel = label ?? (zu ? 'Yabelana ngesikhangiso' : 'Share listing');
+  const xh = lang === 'xh';
+  const buttonLabel = label ?? (zu ? 'Yabelana ngesikhangiso' : inlineText(lang, 'Share listing'));
   const [state, setState] = useState<'idle' | 'copied' | 'failed'>('idle');
 
   async function handleShare() {
@@ -62,7 +64,7 @@ export default function ShareListingButton({
         }}
       >
         {state === 'copied' ? <Check size={11.5} strokeWidth={2} /> : <Share2 size={11.5} strokeWidth={1.9} />}
-        {state === 'copied' ? (zu ? 'Kukopishelwe — namathisela ku-WhatsApp' : 'Copied — paste it into WhatsApp') : buttonLabel}
+        {state === 'copied' ? (zu ? 'Kukopishelwe — namathisela ku-WhatsApp' : inlineText(lang, 'Copied — paste it into WhatsApp')) : buttonLabel}
       </button>
       {state === 'failed' && (
         <div
@@ -70,13 +72,13 @@ export default function ShareListingButton({
           style={{ marginTop: 8, padding: '8px 10px', background: 'var(--bg-2)', border: `1px solid ${EX.border}` }}
         >
           <p className="font-sans" style={{ fontSize: 12, color: EX.faint, margin: '0 0 6px', lineHeight: 1.45 }}>
-            {zu ? <ExchangeSourceCopy en="Could not share on this device. Copy this yourself and send it:" zu="Ayikwazanga ukwabelana kule divayisi. Kopisha lokhu wena bese ukuthumela:" /> : 'Could not share on this device. Copy this yourself and send it:'}
+            {zu || xh ? <ExchangeSourceCopy en="Could not share on this device. Copy this yourself and send it:" zu="Ayikwazanga ukwabelana kule divayisi. Kopisha lokhu wena bese ukuthumela:" /> : 'Could not share on this device. Copy this yourself and send it:'}
           </p>
           <textarea
             readOnly
             value={listingShareText(listing)}
             rows={5}
-            aria-label={zu ? 'Imininingwane yesikhangiso ozoyikopisha' : 'Listing details to copy'}
+            aria-label={zu ? 'Imininingwane yesikhangiso ozoyikopisha' : inlineText(lang, 'Listing details to copy')}
             onFocus={(e) => e.currentTarget.select()}
             className="w-full font-sans rounded-lg px-2.5 py-2"
             style={{ fontSize: 12, background: 'var(--input-bg)', border: `1px solid ${EX.inputBorder}`, color: EX.ink, resize: 'none' }}

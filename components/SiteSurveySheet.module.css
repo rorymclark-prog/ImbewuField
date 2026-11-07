@@ -97,6 +97,10 @@
 .reviewIntro p { font-size:13px; line-height:1.7; color:var(--text-2); margin-top:6px; }
 .reviewGrid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 .reviewCard { border:1px solid var(--border); border-radius:16px; padding:18px; background:var(--surface); min-width:0; }
+/* A fieldset legend sits ON the top border by default, so a heading such as "What are you preparing?" straddled the
+   card edge (worst with a longer language). Floated to full width it becomes the card's first line, inside the padding. */
+.reviewCard>legend { float:left; width:100%; padding:0; margin:0 0 10px; font-weight:700; line-height:1.35; }
+.reviewCard>legend+* { clear:both; }
 .reviewCard header { display:flex; align-items:center; gap:8px; margin-bottom:16px; color:var(--brand); }
 .reviewCard h3 { flex:1; font:600 18px var(--font-display); color:var(--text); }
 .reviewCard header button { display:grid; place-items:center; width:44px; margin:-10px -8px -10px 0; }

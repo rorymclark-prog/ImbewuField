@@ -266,7 +266,7 @@ test('the money panel never prints a rand tick over a withheld book', () => {
   // The guard is population-based (whose book exists), not value-sniffing (were the numbers 0).
   assert.match(chart, /const zarWithheld = series\.salesFarmers === 0/);
   // The tick says "Not shared" — the words the Farmer income figure already uses — or the real max.
-  assert.match(chart, /zarWithheld \? 'Not shared' : randTick\(maxZar\)/);
+  assert.match(chart, /zarWithheld \? (?:inlineText\(lang, )?'Not shared'\)? : randTick\(maxZar\)/);
   // No unconditional tick survives; "R1" was exactly this expression.
   assert.doesNotMatch(chart, /\{randTick\(maxZar\)\}/);
   // The withheld branch keeps the plot's height, so the shared month axis cannot shift.

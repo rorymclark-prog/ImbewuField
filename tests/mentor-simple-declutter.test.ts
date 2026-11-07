@@ -64,6 +64,6 @@ test('Simple shortens the enrolment status pill to two states: on track / needs 
   assert.match(src, /const SIMPLE_NEEDS_ATTENTION = new Set<EnrollmentStatus>\(\['paused', 'withdrawn'\]\)/,
     'the two-state status mapping changed — recheck which states count as "needs attention"');
   assert.match(src, /function simpleStatusLabel/, 'the two-state status label helper is gone');
-  assert.match(src, /\{simple \? simpleStatusLabel\(status, lang\) : lang === 'zu' \? MENTOR_STATUS_ZU\[status\] : STATUS_LABEL\[status\]\}/,
+  assert.match(src, /\{simple \? simpleStatusLabel\(status, lang\) : lang === 'zu' \? MENTOR_STATUS_ZU\[status\] : (?:inlineText\(lang, )?STATUS_LABEL\[status\]\)?\}/,
     'the status pill no longer switches to the two-state label in Simple');
 });

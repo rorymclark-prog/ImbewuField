@@ -24,6 +24,7 @@ import { getCropArt } from '@/lib/crop-art';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
 import { recordWeightKg, recordQuantityLabel, recordQuantityPayload, quantityTotals, decimalQuantitySum, type RecordQuantityRow } from '@/lib/farm-records';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import type { Garden as DbGarden, GardenMember, Profile, GardenerProfile as DbGardenerProfile, ProductionLog, SalesLog, CourseProgress } from '@/lib/db/types';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -263,7 +264,7 @@ function initials(name: string) { return name.split(' ').map((p) => p[0]).join('
 
 export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder' }) {
   const { lang } = useLanguage();
-  const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const ui = (en: string, zu: string) => inlineText(lang, en, zu);
   const router = useRouter();
   const [sampleView, setSampleView] = useState<'design' | 'aerial' | null>(null);
   const [areaFilter, setAreaFilter] = useState('All areas');
@@ -503,6 +504,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
               )}
             </div>
             {lang === 'zu' && <p className="text-xs leading-relaxed mb-3" style={{color:'var(--text-muted)'}}>{ui('', 'Izilawuli nezaziso zaleli khasi zisesiZulu. Amagama abalimi, izindawo, izitshalo nezifundo, kanye nemininingwane egcinwe nemibiko noma izithombe zesibonelo, kuboniswa njengoba ifakiwe futhi kungase kube ngesiNgisi.')}</p>}
+            {lang === 'xh' && <p className="text-xs leading-relaxed mb-3" style={{color:'var(--text-muted)'}}>{inlineText(lang, "The controls and notices on this page are in isiXhosa. Farmer, place, crop and course names, and the details saved with reports or sample photos, are shown as entered and may be in English.")}</p>}
             <label className="block text-sm mb-3" style={{color:'var(--color-forest-700)'}}>{ui('Area / village','Indawo / isigodi')}<select value={areaFilter} onChange={e=>{setAreaFilter(e.target.value); const first=gardens.find(g=>e.target.value==='All areas'||(g.town||'Area not recorded')===e.target.value); if(first)selectGarden(first);}} className="block w-full rounded-lg p-2 mt-1" style={{minHeight:44,background:'var(--input-bg)',border:'1px solid var(--border)'}}><option value="All areas">{ui('All areas','Zonke izindawo')}</option>{areaNames.map(a=><option key={a} value={a}>{a === 'Area not recorded' ? ui(a,'Indawo ayirekhodiwe') : a}</option>)}</select></label>
             {isDemo && <button type="button" className="text-sm underline mb-3" onClick={()=>setShowSampleLima(v=>!v)}>{showSampleLima?ui('Close Lima example','Vala isibonelo saseLima'):ui('Try Lima for this role','Zama isibonelo saseLima sale ndima')}</button>}
             {showSampleLima && isDemo && <SampleLimaConversation role={mode==='funder'?'funder':'ngo'}/>}
@@ -554,7 +556,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   ? `Showing ${gardens.length} garden examples`
                   : gardensLoadError
                     ? ui('Gardens unavailable','Izingadi azitholakali')
-                    : ui(`Showing ${gardens.length} gardens`,`Kuboniswa izingadi ezingu-${gardens.length}`)}
+                    : inlineTemplate(lang, 'Showing {n} gardens', 'Kuboniswa izingadi ezingu-{n}', { n: gardens.length })}
             </span>
           </div>}
           {isDemo ? <SampleGardenVisual key={garden?.id ?? 'overview'} kind={garden?.kind} variant={garden?.id} name={garden?.name ?? 'Example garden landscape'} initial="design" /> : <ReactMapGL ref={mapRef} mapboxAccessToken={TOKEN} initialViewState={{ longitude: 25, latitude: -29, zoom: 4.4 }} mapStyle="mapbox://styles/mapbox/dark-v11" style={{ width: '100%', height: '100%' }}>
@@ -615,6 +617,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     )}
                     <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{gardener.plot} · {gardener.sizeM2} m² · {garden.town}</div>
                     {lang === 'zu' && <p className="text-xs" style={{color:'var(--text-muted)'}}>{ui('', 'Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo.')}</p>}
+                    {lang === 'xh' && <p className="text-xs" style={{color:'var(--text-muted)'}}>{inlineText(lang, "The recorded site size does not confirm the actual productive area.")}</p>}
                   </div>
                 </div>
                 <button onClick={() => { if (isDemo) setSampleView('aerial'); else mapRef.current?.flyTo({ center: [gardener.lon, gardener.lat], zoom: 16, duration: 1200 }); }}
@@ -626,7 +629,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   <Spinner />
                 ) : gardenerError ? (
                   <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: 'var(--bg-1)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)', color: 'var(--danger)' }}>
-                    {ui(`We could not load ${gardener.name}'s production, sales and training data. Check your account access and try again.`,`Asikwazanga ukulayisha idatha ka-${gardener.name} yokukhiqiza, ukuthengisa nokuqeqeshwa. Hlola imvume ye-akhawunti yakho bese uzama futhi.`)}
+                    {inlineTemplate(lang, "We could not load {name}'s production, sales and training data. Check your account access and try again.", 'Asikwazanga ukulayisha idatha ka-{name} yokukhiqiza, ukuthengisa nokuqeqeshwa. Hlola imvume ye-akhawunti yakho bese uzama futhi.', { name: gardener.name })}
                     <button
                       onClick={() => { void openGardener(gardener); }}
                       className="block mt-2 text-xs font-display font-semibold underline"
@@ -646,7 +649,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     <p className="text-xs font-sans mt-2" style={{ color: 'var(--text-muted)' }}>
                       {totals.weightCoverageUnknown ? 'Weight not matched to sales: unknown — counts and packages are kept in their own units.' : totals.kept === null
                         ? ui('Harvest not matched to sales: unknown — sales exceed recorded harvest','Inani lesivuno elingahambisani nokuthengisa: alaziwa — okuthengisiwe kudlula isivuno esirekhodiwe')
-                        : ui(`Harvest not matched to sales: ${totals.kept} kg`,`Isivuno esingahambisani nokuthengisa: ${totals.kept} kg`)}
+                        : inlineTemplate(lang, 'Harvest not matched to sales: {kg} kg', 'Isivuno esingahambisani nokuthengisa: {kg} kg', { kg: totals.kept })}
                     </p>
 
                     {/* Courses */}
@@ -668,6 +671,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: 'var(--bg-2)', color: 'var(--color-forest-800)' }} onClick={() => setSampleView('design')}>{ui('Open example garden design →','Vula umklamo wengadi oyisibonelo →')}</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>{ui('Close example','Vala isibonelo')}</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={`${garden.id}-${sampleView}`} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>{ui('Explore the separate Ubhejane design workspace →','Hlola indawo ehlukile yokuklama yase-Ubhejane →')}</button></>}
                     {!isDemo && <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{ui('This register does not include the farmer’s private design.','Le rejista ayifaki umklamo wangasese womlimi.')}</p>}
                     {lang === 'zu' && <p className="text-xs leading-relaxed" style={{color:'var(--text-muted)'}}>{ui('', 'Umbiko we-PDF ongezansi usalokhu unombhalo wesiNgisi. Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo; izindleko azifakiwe, ngakho lo mbiko awubonisi inzuzo.')}</p>}
+                    {lang === 'xh' && <p className="text-xs leading-relaxed" style={{color:'var(--text-muted)'}}>{inlineText(lang, "The PDF report below is still in English. The recorded site size does not confirm the actual productive area; costs are not included, so this report does not show profit.")}</p>}
                     <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>{ui('Preview & download this garden record','Buka bese ulanda irekhodi lale ngadi')}</summary>
                       <ReportComposer title="Garden production record" sample={isDemo} photos={isDemo ? sampleSitePhotos(garden.id) : []} photosByDefault={isDemo} sections={[
                         { title: 'Garden record', lines: [garden.name, `${gardener.name} · ${gardener.plot}`, `Plot size recorded: ${gardener.sizeM2} m². This is not a verified active production area.`] },

@@ -1,0 +1,29 @@
+{
+ "language": "xh",
+ "items": 544,
+ "counts": {
+  "ok": 535,
+  "repair": 9,
+  "hold": 0
+ },
+ "repair_by_severity": {
+  "meaning": 2,
+  "wording": 6,
+  "minor": 1
+ },
+ "placeholder_check": "All 544 drafts and all 9 repairs carry exactly the English {placeholders} (verified with Python).",
+ "top_issues": [
+  "R167 (meaning): placeholder 'umz. Izithole' means 'e.g. heifers' in isiXhosa, not seedlings -> 'umz. Izithombo'.",
+  "I129 (meaning): 'sele ingeyenye i-invoyisi' can read with the negative participial 'inge-' ('already not another invoice'); English = already belongs to another invoice -> 'Le ntengiso sele inxulunyaniswe nenye i-invoyisi.'",
+  "R191/R202 (wording): 'Iirekhodi zombolekisi wemali' = the lender's records, not records FOR a lender -> 'Iirekhodi ezenzelwe umbolekisi wemali'.",
+  "R103 (wording): 'Kusetyenziswe kule nyanga' = 'used this month', does not say money; beside 'Kuvunwe' it can read as produce used -> 'Imali esetyenzisiweyo kule nyanga'.",
+  "I128 (wording): 'keep its original details and any linked sale' vs English 'keep the original details of any linked sale' -> repaired.",
+  "I040 (wording): 'Khetha kanye intengiso' reads 'choose (only) once/one sale' instead of 'choose the exact sale' -> 'Khetha intengiso echanekileyo'.",
+  "I028 (wording): 'Ihlawulwa ngu' is a dangling preposition as a label above the buyer name -> 'Umhlawuli' (payer).",
+  "R214 (minor): spelling 'awububungqina' -> 'awubobungqina'.",
+  "Not repaired, watch: R348 'Kuvunwe & kuthengiswe' (21 chars) and R349 'Isicwangciso nenyani' (20 chars) are long for segment tabs; R016 'Intengiso' for 'Sold' is a noun (sales) by design; R085 'Imali eseleyo yegadi' drops 'gross'.",
+  "Not repaired, watch: R021 'Amafutha' (fuel) also means fat/oil; R365/R366 'Kwakhona' (also) can read as 'again'; R344 singular 'kwinyanga e-{n} ezayo' is awkward when n=1; orthography 'le invoyisi' (I077) and 'kwiIirekhodi Zam' (I071)."
+ ],
+ "checks_passed": "Negations (R044/R098 not touched, R186 nothing lost, R241 do not enter again, R262 nothing deleted, R088 never guessed, R192 not a credit score/loan approval, R340 not promises) are preserved. Recover invoice (Yakha kwakhona i-invoyisi) is distinct from View (Jonga), Create (Yenza i-invoyisi) and Retry (Zama kwakhona). Picked = kuvunwe/kuvuniwe (harvested). Sure? = Uqinisekile? on the delete confirm. Buyer (umthengi) vs supplier (umthengisi) are used correctly throughout. Income/money in vs costs/money out are not swapped. 'EyeKhala' = July matches R254. No added prices, figures or 'free' promises.",
+ "confidence_limits": "This is a machine review, not approval by a fluent speaker. I can reliably catch whole-word meaning errors, swapped polarity, wrong-language vocabulary and placeholder drift, but I am less reliable on fine isiXhosa concord (relative/possessive agreement with loanwords and with inserted numbers), regional and register preferences (e.g. thatha vs thabatha, amafutha for fuel), how natural fragments sound once the app concatenates them, and whether farmers in the Eastern Cape would find a term like 'Imbuyekezo' or 'umlinganiselo wesicwangciso' clear. A first-language isiXhosa speaker with farming context should still check everything before it ships, especially the 9 repairs and the long chart/tab labels."
+}

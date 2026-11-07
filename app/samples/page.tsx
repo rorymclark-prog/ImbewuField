@@ -14,6 +14,7 @@ import { sampleChoicesForAccount } from '@/lib/sample-tour';
 import { sampleWorkspaceText } from '@/lib/sample-tour-localization';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 import { useLanguage } from '@/lib/i18n';
+import { inlineTemplate } from '@/lib/xh-inline';
 import styles from '@/components/MelDashboard.module.css';
 import chooser from './Samples.module.css';
 const icons = { ngo: Users, funder: HandCoins, farmer: Sprout, mentor: GraduationCap, student: BookOpen };
@@ -49,7 +50,8 @@ export default function SamplesPage() {
     const router = useRouter();
     const [error, setError] = useState('');
     const { lang } = useLanguage();
-    const ui = (english: string, zulu: string, values: Record<string, string | number> = {}) => sampleWorkspaceText(lang, english, zulu, values);
+    // isiXhosa: the unreviewed draft keyed by the exact English template (lib/locales/xh-inline).
+    const ui = (english: string, zulu: string, values: Record<string, string | number> = {}) => lang === 'xh' ? inlineTemplate(lang, english, null, values) : sampleWorkspaceText(lang, english, zulu, values);
     const pair = (english: string, zulu: string, values: Record<string, string | number> = {}, sourceValues = values): ChooserPair => ({ sourceEnglish: sampleWorkspaceText('en', english, zulu, sourceValues), nativeDraft: ui(english, zulu, values) });
     const paired = (english: string, zulu: string, values: Record<string, string | number> = {}, sourceValues = values) => <PairedDraft lang={lang} pair={pair(english, zulu, values, sourceValues)}/>;
     const examples = examplesEn.map(([id, label, title, description], i) => [id, ui(label, examplesZu[i][1]), ui(title, examplesZu[i][2]), ui(description, examplesZu[i][3])] as const);

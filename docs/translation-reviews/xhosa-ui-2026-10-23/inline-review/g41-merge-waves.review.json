@@ -1,0 +1,26 @@
+{
+  "unit": "g41-merge-waves",
+  "shard": "g41-merge-waves.ts",
+  "range": "all",
+  "okCount": 53,
+  "items": [
+    {
+      "index": 19,
+      "key": "This action needs a connection. Your field records can still be saved on this device.",
+      "verdict": "repair",
+      "draft": "Esi senzo sifuna uqhagamshelo. Iirekhodi zakho zasentsimini zisenokugcinwa kwesi sixhobo.",
+      "backtranslation": "This action needs a connection. Your field records may (possibly) be saved on this device.",
+      "problem": "'can still be saved' became 'zisenokugcinwa', the potential 'may/might be saved' (cf. isenokwenzeka 'it may happen'). The reassurance that offline saving still works turns into uncertainty about whether records are saved at all. Use -sakwazi / -senakho 'can still'.",
+      "corrected": "Esi senzo sifuna uqhagamshelo. Iirekhodi zakho zasentsimini zisenakho ukugcinwa kwesi sixhobo."
+    },
+    {
+      "index": 25,
+      "key": "Choose a JPG, PNG or WebP photo up to 10 MB. Keep the original readable.",
+      "verdict": "repair",
+      "draft": "Khetha ifoto ye-JPG, PNG okanye WebP engadluli kwi-10 MB. Gcina eyokuqala ifundeka.",
+      "backtranslation": "Choose a JPG, PNG or WebP photo no larger than 10 MB. Keep the first one readable.",
+      "problem": "'Keep the original readable' rendered 'Gcina eyokuqala ifundeka' with no noun, which reads as 'keep the first one readable' (first of several photos?) rather than the original receipt photo. Name the photo and use yoqobo (original), as xh.ts does for 'full-size original' (eyoqobo).",
+      "corrected": "Khetha ifoto ye-JPG, PNG okanye WebP engadluli kwi-10 MB. Gcina ifoto yoqobo ifundeka."
+    }
+  ]
+}

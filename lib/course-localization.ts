@@ -31,8 +31,9 @@ import { TSHIVENDA_SOIL_HEALTH_DRAFT } from './course-translation-drafts-ve-soil
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from './course-translation-drafts-ve-market-community.ts';
 import { TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT } from './course-translation-drafts-ve-seeds-sovereignty.ts';
 import { TSHIVENDA_SMALL_LIVESTOCK_DRAFT } from './course-translation-drafts-ve-small-livestock.ts';
+import { ISIXHOSA_COURSE_DRAFTS } from './course-translation-drafts-xh.ts';
 
-export type CourseLanguage = 'en' | 'zu' | 'st' | 'ts' | 've';
+export type CourseLanguage = 'en' | 'zu' | 'st' | 'ts' | 've' | 'xh';
 export type CourseTranslationStatus =
   | 'unavailable'
   | 'review-draft'
@@ -192,13 +193,14 @@ export interface LearnerLessonPresentation {
   status: 'approved' | 'draft' | 'english-fallback';
 }
 
-type RegionalLanguage = 'st' | 'ts' | 've';
+type RegionalLanguage = 'st' | 'ts' | 've' | 'xh';
 type RegionalPair = {
   sourceEnglish: string;
   reviewStatus: 'machine-draft' | 'hold';
   sesothoDraft?: string;
   xitsongaDraft?: string;
   tshivendaDraft?: string;
+  xhosaDraft?: string;
 };
 type RegionalLessonDraft = {
   id: string;
@@ -224,12 +226,14 @@ const REGIONAL_LESSON_DRAFTS: Record<RegionalLanguage, Array<{ lessons: Regional
     XITSONGA_MARKET_COMMUNITY_DRAFT, XITSONGA_PLANT_GUILDS_DRAFT, XITSONGA_VEGETABLES_STAPLES_L2_DRAFT,
     XITSONGA_SEEDS_SOVEREIGNTY_DRAFT],
   ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT, TSHIVENDA_SOIL_HEALTH_DRAFT, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT, TSHIVENDA_FOOD_FOREST_DRAFT, TSHIVENDA_PLANT_GUILDS_DRAFT, TSHIVENDA_MARKET_COMMUNITY_DRAFT, TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT, TSHIVENDA_SMALL_LIVESTOCK_DRAFT],
+  // isiXhosa (23 Oct 2026): every module, machine-drafted in one pass and source-paired.
+  xh: ISIXHOSA_COURSE_DRAFTS,
 };
 
 function regionalPair(pair: RegionalPair, source: string, language: RegionalLanguage): string | null {
   if (pair.sourceEnglish !== source) return null;
   if (pair.reviewStatus === 'hold') return source;
-  const draft = language === 'st' ? pair.sesothoDraft : language === 'ts' ? pair.xitsongaDraft : pair.tshivendaDraft;
+  const draft = language === 'st' ? pair.sesothoDraft : language === 'ts' ? pair.xitsongaDraft : language === 'xh' ? pair.xhosaDraft : pair.tshivendaDraft;
   return typeof draft === 'string' && draft.trim() ? draft : null;
 }
 
@@ -282,7 +286,7 @@ export function resolveLearnerLessonPresentation(
     quiz: lesson.quiz,
     infographicAlt: lesson.infographicAlt,
   };
-  if (language === 'st' || language === 'ts' || language === 've') {
+  if (language === 'st' || language === 'ts' || language === 've' || language === 'xh') {
     const draft = REGIONAL_LESSON_DRAFTS[language].flatMap(module => module.lessons)
       .find(candidate => candidate.id === lesson.id);
     const content = draft && regionalLessonContent(lesson, draft, language);

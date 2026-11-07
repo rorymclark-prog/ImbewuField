@@ -1,0 +1,46 @@
+{
+ "module": "plant-guilds",
+ "items": [
+  {
+   "n": 14,
+   "field": "body[0]",
+   "verdict": "repair",
+   "english": "Sesbania punicea is the invasive red sesbania. Its pods have four lengthwise wings. Confirm identity using reliable botanical guidance.  Check the full name before planting. Respect the agreed project species list, including any restriction on Sesbania sesban. Can the supplier verify the species?",
+   "draft": "I-Sesbania punicea yi-red sesbania ehlasela ngokungalawulekiyo. Iipodi zayo zinamaphiko amane aphantse ubude. Qinisekisa ukuba sisiphi isityalo usebenzisa isikhokelo sezityalo esithembekileyo.  Hlola igama elipheleleyo ngaphambi kokutyala. Hlonipha uluhlu lweentlobo lweprojekthi olwamkelweyo, kuquka naluphi na uthintelo kwi-Sesbania sesban. Ngaba umthengisi angaqinisekisa ukuba sisiphi na isityalo?",
+   "backtranslation": "Sesbania punicea is a red sesbania that invades uncontrollably. Its pods have four wings, nearly (the) length ('aphantse ubude'). Confirm which plant it is using a trusted plant guide.  Check the full name before planting. Respect the project's approved species list, including any restriction on Sesbania sesban. Can the seller confirm which plant it is?",
+   "problem": "'lengthwise' became 'nearly the length' (aphantse): a plant-identification fact was changed",
+   "corrected": "I-Sesbania punicea yi-red sesbania ehlasela ngokungalawulekiyo. Iipodi zayo zinamaphiko amane ahamba ubude bepodi. Qinisekisa ukuba sisiphi isityalo usebenzisa isikhokelo sezityalo esithembekileyo.  Hlola igama elipheleleyo ngaphambi kokutyala. Hlonipha uluhlu lweentlobo lweprojekthi olwamkelweyo, kuquka naluphi na uthintelo kwi-Sesbania sesban. Ngaba umthengisi angaqinisekisa ukuba sisiphi na isityalo?"
+  },
+  {
+   "n": 16,
+   "field": "body[0]",
+   "verdict": "repair",
+   "english": "Use a sunny, freely draining position. It is a short-lived support shrub; frost and waterlogging can limit it.  Decide whether each plant mainly supplies peas or leafy material. Frequent severe cutting can damage it and reduce the food harvest. Are you growing this plant for peas or mulch?",
+   "draft": "Sebenzisa indawo enelanga, apho amanzi akhuphuka ngokukhululekileyo. Sisihlahla esixhasayo esiphila ixesha elifutshane; iqabaka nomhlaba ozele ngamanzi kunokuyithintela.  Gqiba ukuba isityalo ngasinye sinika ii-pea okanye impahla yamagqabi ngokuyintloko. Ukusika kakhulu rhoqo kunganonzakalisa isityalo kwaye kunciphise isivuno sokutya. Ngaba uyityala esi sityalo ukuze uvune ii-pea okanye ufumane ingca yokugquma?",
+   "backtranslation": "Use a sunny place, where water goes up/rises freely (reads as water 'rising', not draining). It is a short-lived supporting shrub; frost and waterlogged soil can hold it back.  Decide whether each plant mainly gives peas or leaf material. Cutting too much, often, can harm the plant and reduce the food harvest. Are you planting this plant to harvest peas or to get mulch?",
+   "problem": "'freely draining' became water 'rising' freely: drainage meaning lost",
+   "corrected": "Sebenzisa indawo enelanga namanzi aphumayo kakuhle. Sisihlahla esixhasayo esiphila ixesha elifutshane; iqabaka nomhlaba ozele ngamanzi kunokuyithintela.  Gqiba ukuba isityalo ngasinye sinika ii-pea okanye impahla yamagqabi ngokuyintloko. Ukusika kakhulu rhoqo kunganonzakalisa isityalo kwaye kunciphise isivuno sokutya. Ngaba uyityala esi sityalo ukuze uvune ii-pea okanye ufumane ingca yokugquma?"
+  },
+  {
+   "n": 19,
+   "field": "body[0]",
+   "verdict": "repair",
+   "english": "Sunn hemp can cover a suitable warm-season gap before the next crop.",
+   "draft": "I-sunn hemp inganigqubuthela itshiba elifanelekileyo lexesha elifudumeleyo phambi kwesityalo esilandelayo.",
+   "backtranslation": "Sunn hemp can cover (a) suitable warm-season patch/bed before the next crop (the verb form 'inganigqubuthela' is garbled).",
+   "problem": "garbled verb concord ('inganigqubuthela') and 'itshiba' is not 'gap'; aligned to reference draft 'isikhewu'",
+   "corrected": "I-sunn hemp inokugubungela isikhewu esifanelekileyo sexesha elifudumeleyo phambi kwesityalo esilandelayo."
+  },
+  {
+   "n": 24,
+   "field": "body[0]",
+   "verdict": "repair",
+   "english": "Cowpea covers sunny gaps. Pigeon pea provides food and leafy material. Managed Sesbania sesban can supply taller temporary support.  Add suitable flowering and mulch plants. Keep the mango trunk clear and manage light, water and access. Which layers fit your site?",
+   "draft": "I-cowpea igubungela amatshiba anelanga. I-pigeon pea inika ukutya nempahla yamagqabi. I-Sesbania sesban elawulwayo inganika inkxaso yethutyana ephakamileyo.  Yongeza izityalo ezifanelekileyo ezidubulayo nezengca yokugquma. Gcina isiqu se-mango sicocekile kwaye ulawule ukukhanya, amanzi nendlela yokufikelela. Yimiphi imigangatho ehambelana nendawo yakho?",
+   "backtranslation": "Cowpea covers sunny patches. Pigeon pea gives food and leaf material. A managed Sesbania sesban can give tall short-term support.  Add suitable flowering plants and mulch plants. Keep the mango trunk clean and manage light, water and access. Which layers suit your site?",
+   "problem": "'gaps' rendered with 'itshiba' (patch/bed); aligned with reference draft 'izikhewu'",
+   "corrected": "I-cowpea igubungela izikhewu ezinelanga. I-pigeon pea inika ukutya nempahla yamagqabi. I-Sesbania sesban elawulwayo inganika inkxaso yethutyana ephakamileyo.  Yongeza izityalo ezifanelekileyo ezidubulayo nezengca yokugquma. Gcina isiqu se-mango sicocekile kwaye ulawule ukukhanya, amanzi nendlela yokufikelela. Yimiphi imigangatho ehambelana nendawo yakho?"
+  }
+ ],
+ "okCount": 98
+}

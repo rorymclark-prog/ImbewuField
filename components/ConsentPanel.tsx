@@ -23,11 +23,15 @@ import { CONSENT_PANEL_HEADING, CONSENT_SCOPES, grantedScopes, hasConsent, type 
 import { getMyConsent, revokeAllMyConsent, setMyConsentScope } from '@/lib/db/queries';
 import { accountText,fillAccountText,isAccountDraftLanguage,type AccountValues } from '@/lib/account-copy';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, xhInlineDraft } from '@/lib/xh-inline';
 
 export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
   const { lang,t } = useLanguage();
-  const draft=isAccountDraftLanguage(lang);
-  const text=(english:string,zulu:string,values:AccountValues={})=>accountText(lang,english,zulu,t,values);
+  // isiXhosa gets the same treatment as the account-table languages: the English consent wording
+  // always stays on screen and the unreviewed isiXhosa machine draft sits above it.
+  const isXhosa=lang==='xh';
+  const draft=isAccountDraftLanguage(lang)||isXhosa;
+  const text=(english:string,zulu:string,values:AccountValues={})=>isXhosa?fillAccountText(inlineText(lang,english),values):accountText(lang,english,zulu,t,values);
   const paired=(english:string,zulu:string,values:AccountValues={},sourceValues=values)=><><span lang={draft?lang:'en'}>{text(english,zulu,values)}</span>{draft&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4}}><span lang={lang}>{t('popiaEnglishSourceLabel')}: </span>{fillAccountText(english,sourceValues)}</small>}</>;
   const [consent, setConsent] = useState<FarmerConsent | null>(null);
   const [loading, setLoading] = useState(true);
@@ -71,6 +75,8 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
   const on = grantedScopes(consent).length;
   const who = orgName ? `${orgName}` : 'the organisation running your programme';
   const whoZu = orgName ? `i-${orgName}` : 'inhlangano eqhuba uhlelo lwakho';
+  // isiXhosa names the organisation as the agent of "will no longer be seen by …".
+  const whoXh = orgName ? `ngu-${orgName}` : inlineText(lang, 'the organisation running your programme');
 
   const organisation=lang==='zu'?whoZu:orgName??text('the organisation running your programme','inhlangano eqhuba uhlelo lwakho');
   return (
@@ -81,9 +87,9 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
           {paired(CONSENT_PANEL_HEADING.label,CONSENT_PANEL_HEADING.labelZuDraft)}
         </div>
       </div>
-      {draft&&<p role="note" lang={lang} className="text-xs mt-2">{t('popiaConsentDraftNotice')}</p>}
+      {draft&&<p role="note" lang={lang} className="text-xs mt-2">{isXhosa?inlineText(lang,'Unreviewed consent translation. Read the English source before choosing or agreeing.'):t('popiaConsentDraftNotice')}</p>}
       <p className="text-sm font-display mt-3 leading-snug" style={{ color: 'var(--text-secondary)' }}>
-        {paired('Nothing here is shared unless you switch it on. You can change your mind at any time, and {organisation} will stop seeing it straight away.','Akukho lutho olwabiwayo lapha ngaphandle kokuthi uyivule. Ungashintsha umqondo wakho noma nini, futhi {organisation} izoyeka ukukubona ngokushesha.',{organisation},{organisation:who})}
+        {paired('Nothing here is shared unless you switch it on. You can change your mind at any time, and {organisation} will stop seeing it straight away.','Akukho lutho olwabiwayo lapha ngaphandle kokuthi uyivule. Ungashintsha umqondo wakho noma nini, futhi {organisation} izoyeka ukukubona ngokushesha.',{organisation:isXhosa&&xhInlineDraft('Nothing here is shared unless you switch it on. You can change your mind at any time, and {organisation} will stop seeing it straight away.')?whoXh:organisation},{organisation:who})}
       </p>
       {loading ? (
         <div className="flex items-center gap-2 py-4 text-sm font-display" style={{ color: 'var(--text-muted)' }}>

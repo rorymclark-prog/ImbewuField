@@ -336,7 +336,7 @@ test('every crop with a sourced shelf life has its conditions and source reachab
   assert.match(PAGE, /href=\{crop\.storageSourceUrl\}/, 'the source must render as a link');
   assert.match(PAGE, /rel="noopener noreferrer"/, 'the source link keeps the page\'s existing link hygiene');
   // ...and it is mounted in the planting detail sheet, next to the sow/harvest line.
-  assert.match(PAGE, /<CropStorageLine crop=\{crop\} \/>\s*\n\s*<div>\{crop\.note\}<\/div>/,
+  assert.match(PAGE, /<CropStorageLine crop=\{crop\} \/>\s*\n\s*<div>\{(?:inlineText\(lang, crop\.note\)|crop\.note)\}<\/div>/,
     'the planting detail sheet must show the storage line');
 });
 
@@ -547,7 +547,8 @@ test('the plan page renders the accepted notes with the same grouping the review
   // the label is what carries that honesty.
   // Month AND year — "suggested in Sep" read thirteen months later points at
   // the wrong September.
-  assert.match(PAGE, /From the plan suggested in \{planNotesDateLabel\(generatedAt\)\}/);
+  // The sentence is an inlineTemplate so isiXhosa readers get a draft: the date is its {date} value.
+  assert.match(PAGE, /From the plan suggested in \{date\}\.[^;]*\{ date: planNotesDateLabel\(generatedAt\) \}/);
   assert.match(PAGE, /Anything you have changed by hand since is not\s*\n?\s*described here\./);
 });
 

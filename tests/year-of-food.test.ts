@@ -18,6 +18,7 @@ import {
 } from '@/lib/crop-plan';
 import { formatMonthSpan, type TreeAvailabilityItem } from '@/lib/perennial-harvest';
 import { PRODUCT_LABEL, type AnimalAvailabilityItem } from '@/lib/animal-enterprises';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { buildYearOfFood, freshOffsetsFromSow, suggestGapFills, type GapFillMonth, type YearOfFood } from '@/lib/year-of-food';
 
 const JAN_ORDER = Array.from({ length: 24 }, (_, i) => (i % 12) + 1);
@@ -211,6 +212,9 @@ const foodCardDependencies: Record<string, unknown> = {
   '@/lib/crop-catalog': { MONTHS_SHORT },
   '@/lib/animal-enterprises': { PRODUCT_LABEL },
   '@/lib/perennial-harvest': { formatMonthSpan },
+  // The card reads the reader's language (isiXhosa drafts); the tests render it in English.
+  '@/lib/i18n': { useLanguage: () => ({ lang: 'en' }) },
+  '@/lib/xh-inline': { inlineText, inlineTemplate },
   './AnimalEnterprisesCard': { PRODUCT_ICON: Object.fromEntries(Object.keys(PRODUCT_LABEL).map(product => [product, () => null])) },
 };
 const foodCardModule = { exports: {} as { default?: React.ComponentType<FoodCardProps> } };

@@ -37,7 +37,7 @@ test('English is untouched: no draft is ever returned for English, and English l
     }
   }
   // Unaffected languages stay English too — a language with no table must never get another's words.
-  assert.equal(recordsFill('xh', 'Cancel'), 'Cancel');
+  assert.equal(recordsFill('nr', 'Cancel'), 'Cancel');
   assert.equal(recordsFill('af', 'Cancel'), 'Cancel');
 });
 
@@ -119,6 +119,10 @@ test('Sesotho, Tshivenda and Xitsonga draft notices name the language, say unrev
   assert.equal(isRecordsRegionalLang('zu'), false);
   assert.match(recordsDraftNotice('st'), /Unreviewed Sesotho machine draft/);
   assert.match(recordsDraftNotice('ve'), /Unreviewed Tshivenda machine draft/);
+  // isiXhosa joined the regional lane on 23 Oct 2026 (docs/translation-reviews/xhosa-ui-2026-10-23/).
+  assert.equal(isRecordsRegionalLang('xh'), true);
+  assert.match(recordsDraftNotice('xh'), /Unreviewed isiXhosa machine draft\. English source is shown beside instructions/);
+  assert.equal(recordsDraft('xh', 'Cancel') !== null, true, 'isiXhosa money-book drafts are reachable');
   assert.match(recordsDraftNotice('ts'), /Unreviewed Xitsonga machine draft \(provisional standard written Xitsonga\)/);
   for (const lang of LANGS) assert.doesNotMatch(recordsDraftNotice(lang), /reviewed by|approved|fluent speaker has|Shangani/i);
 });
@@ -244,7 +248,9 @@ test('useRecordsT wraps useLanguage and never itself — a self-call crashed the
 
 test('validation text and the draft notice reach the screen for the regional languages', () => {
   const page = read('app/records/page.tsx');
-  assert.match(page, /isRecordsRegionalLang\(lang\) && <p role="note" lang="en" data-records-draft-notice=\{lang\}/, 'the unreviewed-draft notice must render above the tabs');
+  // Sesotho, Tshivenda and Xitsonga keep their English status line above the tabs; isiXhosa (a draft language with the shared
+  // LanguageDraftNote) no longer stacks a second, English one.
+  assert.match(page, /isRecordsRegionalLang\(lang\) && !isInlineDraftLang\(lang\) && <p role="note" lang="en" data-records-draft-notice=\{lang\}/, 'the unreviewed-draft notice must render above the tabs');
   assert.match(page, /recordsPaired\(lang, 'Product, quantity and amount are required\.'\)/);
   assert.match(page, /recordsPaired\(lang, 'Item and amount are required\.'\)/);
   // The saved form must still validate exactly as before: the rule is untouched, only the words moved.
@@ -253,7 +259,12 @@ test('validation text and the draft notice reach the screen for the regional lan
 
 test('the CSV export never carries an unreviewed regional draft: Sesotho, Tshivenda and Xitsonga export English', () => {
   const page = read('app/records/page.tsx');
-  assert.match(page, /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : 'en'\);/);
+  assert.match(page, /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : 'en'\);/);
+  // isiXhosa is the one regional-lane language that IS exported (headings only; column order and values unchanged).
+  assert.match(page, /\? \['Umhla', 'Inkcazelo', 'Ubungakanani', 'Engenayo', 'Umthombo', 'Ephumayo', 'Hlola'\]/);
+  assert.match(page, /: \['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'\]/);
+  const csvLine = page.match(/const csvLang = [^\n]*/)![0];
+  for (const held of ['st', 've', 'ts']) assert.doesNotMatch(csvLine, new RegExp(`'${held}'`), `${held} must not reach the CSV`);
   const calls = [...page.matchAll(/(?<!function )exportLedgerCsv\(([^\n]*)/g)].map((m) => m[1]);
   assert.ok(calls.length >= 2, 'both CSV entry points (desktop sheet and phone button) must still exist');
   for (const call of calls) {
@@ -375,7 +386,7 @@ test('every English sentence the invoice page renders has a draft or an explicit
 
 test('invoice page ui(): regional languages read the English-keyed lookup, English is untouched, isiZulu keeps its wording', () => {
   assert.match(INVOICE_PAGE, /if \(!isRecordsRegionalLang\(lang\)\) return english;/, 'any other language keeps English');
-  assert.match(INVOICE_PAGE, /INVOICE_PAIRED_COPY\.has\(english\) \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/, 'sentences a farmer acts on keep the English beside the draft');
+  assert.match(INVOICE_PAGE, /INVOICE_PAIRED_COPY\.has\(english\)( \|\| \(isInlineDraftLang\(lang\) && INVOICE_DRAFT_PAIRED_COPY\.has\(english\)\))? \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/, 'sentences a farmer acts on keep the English beside the draft');
   assert.match(INVOICE_PAGE, /recordsFill\('zu', english, isiZulu \?\? INVOICE_ZU\[english\] \?\? english\)/, 'existing isiZulu wording wins; a draft only fills an English fallback');
   assert.match(INVOICE_PAGE, /INVOICE_PAIRED_COPY\.has\(english\) && zulu !== english/, 'a paired sentence is paired only when there is a translation to pair (it used to print the English twice)');
   assert.match(INVOICE_PAGE, /recordsFill\(lang, paymentMethodLabel\(method\)\)/);
@@ -383,6 +394,7 @@ test('invoice page ui(): regional languages read the English-keyed lookup, Engli
   assert.doesNotMatch(INVOICE_PAGE, /recordQuantityLabel\(/, 'the recorded-sale picker must not bypass the unit-word lookup');
   assert.match(INVOICE_PAGE, /data-records-draft-notice=\{lang\}/);
   assert.match(INVOICE_PAGE, /The invoice a buyer receives \(print and PDF\) stays in English\./);
+  assert.match(INVOICE_PAGE, /lang === 'xh' \? ' The invoice a buyer receives \(print and PDF\) uses the isiXhosa draft labels/, 'isiXhosa invoices use DOCUMENT_COPY.xh, so the note must not claim English');
 });
 
 test('the price-guide sentences keep their rand figure and date when drafted', () => {

@@ -189,6 +189,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
 
   return (
     <div className="space-y-3">
+      {/* One notice per surface: a draft language (isiXhosa) is covered by the shared <LanguageDraftNote> above the tabs. */}
       {lang === 'zu' && (
         <p role="note" className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('photoZuluDraftNotice')}</p>
       )}

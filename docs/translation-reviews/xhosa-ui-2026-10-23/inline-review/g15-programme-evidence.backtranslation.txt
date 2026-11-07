@@ -1,0 +1,1 @@
+g15 blind back-translation done in-session (programme evidence, training register, privacy of attendance names/IDs/signatures read correctly; #1 read "prices", #99 read "stamps").

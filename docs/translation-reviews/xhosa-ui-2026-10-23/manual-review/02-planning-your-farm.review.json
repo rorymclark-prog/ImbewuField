@@ -1,0 +1,15 @@
+{
+  "unit": "02-planning-your-farm",
+  "okCount": 85,
+  "items": [
+    {
+      "where": "Key points, bullet 2",
+      "verdict": "repair",
+      "english": "North- and east-facing slopes are the warmest.",
+      "draft": "Amathambeka ajonge emntla naajonge empuma yiwona afudumeleyo.",
+      "backtranslation": "North-facing and 'naajonge' east-facing slopes are the warmest (typo)",
+      "problem": "Typo in the concord ('naajonge'); minor, meaning recoverable.",
+      "corrected": "Amathambeka ajonge emntla nalawo ajonge empuma yiwona afudumeleyo."
+    }
+  ]
+}

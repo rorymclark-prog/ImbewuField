@@ -1,0 +1,206 @@
+{
+  "unit": "g22-production-data",
+  "shard": "g22-production-data.ts",
+  "range": "all",
+  "okCount": 325,
+  "items": [
+    {
+      "index": 26,
+      "key": "These are options to discuss, not a final breed recommendation. Confirm healthy stock, supplier availability, ventilation, chick warmth and a health plan locally. Record actual production months separately; this guide promises no output or dates.",
+      "verdict": "repair",
+      "draft": "Ezi ziindlela zokuxoxa ngazo, hayi isincomo sokugqibela solwahlulo. Qinisekisa apha ekuhlaleni imfuyo enempilo, ukufumaneka komthengisi, umoya ohamba kakuhle, ukufudumala kwamantshontsho nesicwangciso sempilo. Bhala iinyanga zokwenyani zemveliso ngokwahlukileyo; esi sikhokelo asithembisi mveliso okanye mihla.",
+      "backtranslation": "These are ways to discuss, not a final recommendation of \"solwahlulo\" (division/distinction)...",
+      "problem": "\"breed\" rendered as \"solwahlulo\" (unclear word, not \"breed\"); term lost",
+      "corrected": "Ezi ziindlela zokuxoxa ngazo, hayi isincomo sokugqibela sohlobo. Qinisekisa apha ekuhlaleni imfuyo enempilo, ukufumaneka komthengisi, umoya ohamba kakuhle, ukufudumala kwamantshontsho nesicwangciso sempilo. Bhala iinyanga zokwenyani zemveliso ngokwahlukileyo; esi sikhokelo asithembisi mveliso okanye mihla."
+    },
+    {
+      "index": 63,
+      "key": "kids weaned/doe mated",
+      "verdict": "repair",
+      "draft": "amathole ayekisiweyo ebeleni/imazi eshiyeneyo",
+      "backtranslation": "weaned young per \"separated/different\" female",
+      "problem": "\"doe mated\" rendered as imazi eshiyeneyo (separated); the mated condition of the denominator is lost",
+      "corrected": "amathole ayekisiweyo ebeleni/imazi ekhwelisiweyo"
+    },
+    {
+      "index": 80,
+      "key": "Semi-arid Merino reference; pasture and management affect the clip.",
+      "verdict": "repair",
+      "draft": "Isalathiso se-Merino yommandla ozomileyo; ukutya kwengca nolawulo kuchaphazela uboya obuxotyiweyo.",
+      "backtranslation": "Merino indicator of a dry (arid) region; ...",
+      "problem": "\"semi-arid\" rendered as \"ozomileyo\" (arid/dry); the semi- is lost",
+      "corrected": "Isalathiso se-Merino yommandla ozomileyo ngokwesiqingatha; ukutya kwengca nolawulo kuchaphazela uboya obuxotyiweyo."
+    },
+    {
+      "index": 194,
+      "key": "Invented stock months from January to March 2027, not a safe shelf life. Freezer conditions, a safe processing method and the amount held are not supplied.",
+      "verdict": "repair",
+      "draft": "Iinyanga zokugcina eziqanjiweyo ukusuka kuJanyuwari ukuya kuMatshi 2027, hayi ixesha elikhuselekileyo lokugcina. Iimeko zefriza, indlela ekhuselekileyo yokuqhuba nobungakanani obugciniweyo azinikezelwanga.",
+      "backtranslation": "... safe way of \"driving\" (ukuqhuba) ...",
+      "problem": "ukuqhuba (to drive/run) is not \"processing\"; food-safety method named with wrong verb",
+      "corrected": "Iinyanga zokugcina eziqanjiweyo ukusuka kuJanyuwari ukuya kuMatshi 2027, hayi ixesha elikhuselekileyo lokugcina. Iimeko zefriza, indlela ekhuselekileyo yokulungisa nobungakanani obugciniweyo azinikezelwanga."
+    },
+    {
+      "index": 197,
+      "key": "Fermented cabbage",
+      "verdict": "repair",
+      "draft": "Ikhabishi ebilisiweyo",
+      "backtranslation": "Boiled cabbage",
+      "problem": "Fermented cabbage rendered as boiled cabbage (wrong food process, food-safety relevant)",
+      "corrected": "Ikhabishi efermentiweyo"
+    },
+    {
+      "index": 198,
+      "key": "Invented stock months from August to October 2027, not a safe shelf life. Fermentation controls, a tested processing recipe and the amount held are not supplied.",
+      "verdict": "repair",
+      "draft": "Iinyanga zokugcina eziqanjiweyo ukusuka kuAgasti ukuya kuOkthobha 2027, hayi ixesha elikhuselekileyo lokugcina. Ulawulo lokubilisa, iresiphi yokuqhuba eyavavanywayo nobungakanani obugciniweyo azinikezelwanga.",
+      "backtranslation": "Boiling control, a tested \"driving\" recipe...",
+      "problem": "\"Fermentation controls\" rendered as boiling control; \"processing recipe\" as ukuqhuba recipe",
+      "corrected": "Iinyanga zokugcina eziqanjiweyo ukusuka kuAgasti ukuya kuOkthobha 2027, hayi ixesha elikhuselekileyo lokugcina. Ulawulo lokufermenta, iresiphi yokulungisa eyavavanywayo nobungakanani obugciniweyo azinikezelwanga."
+    },
+    {
+      "index": 199,
+      "key": "Processed tomatoes",
+      "verdict": "repair",
+      "draft": "Utamatisi oqhutyiweyo",
+      "backtranslation": "Driven tomatoes",
+      "problem": "ukuqhuba is not \"processed\"",
+      "corrected": "Utamatisi olungisiweyo"
+    },
+    {
+      "index": 200,
+      "key": "Invented stock months from May to August 2027, not a safe shelf life. The processing method, a tested preservation recipe and the amount held are not supplied.",
+      "verdict": "repair",
+      "draft": "Iinyanga zokugcina eziqanjiweyo ukusuka kuMeyi ukuya kuAgasti 2027, hayi ixesha elikhuselekileyo lokugcina. Indlela yokuqhuba, iresiphi yokugcina eyavavanywayo nobungakanani obugciniweyo azinikezelwanga.",
+      "backtranslation": "Method of \"driving\" ...",
+      "problem": "ukuqhuba is not \"processing method\"",
+      "corrected": "Iinyanga zokugcina eziqanjiweyo ukusuka kuMeyi ukuya kuAgasti 2027, hayi ixesha elikhuselekileyo lokugcina. Indlela yokulungisa, iresiphi yokugcina eyavavanywayo nobungakanani obugciniweyo azinikezelwanga."
+    },
+    {
+      "index": 251,
+      "key": "Hens need at least 8 hours of continuous darkness in every 24-hour cycle to rest properly.",
+      "verdict": "repair",
+      "draft": "Izikhukhukazi zidinga ubuncinane iiyure ezi-8 zobumnyama obuqhubekayo kumjikelo ngamnye weeyure ezingama-24 ukuze zinqwenele kakuhle.",
+      "backtranslation": "... 24-hour cycle so that they \"wish/long for\" well",
+      "problem": "zinqwenele kakuhle (long for/wish) is wrong for \"rest properly\"",
+      "corrected": "Izikhukhukazi zidinga ubuncinane iiyure ezi-8 zobumnyama obuqhubekayo kumjikelo ngamnye weeyure ezingama-24 ukuze ziphumle kakuhle."
+    },
+    {
+      "index": 255,
+      "key": "Watch flocks for sudden deaths, ruffled feathers, swollen wattles/combs or a sudden drop in egg production - these are signs of avian influenza and should be reported at once.",
+      "verdict": "repair",
+      "draft": "Khangela imihlambi ukuba inokufa ngequbuliso, iintsiba ezixukuxekileyo, ii-wattle/ii-comb ezivuvukileyo okanye ukwehla ngequbuliso kwemveliso yamaqanda - ezi ziimpawu ze-avian influenza kwaye kufuneka ziqatshelwe ngoko nangoko.",
+      "backtranslation": "... signs of avian influenza and must be noticed/heeded immediately",
+      "problem": "duty to REPORT lost: \"ziqatshelwe\" means be noticed, not be reported",
+      "corrected": "Khangela imihlambi ukuba inokufa ngequbuliso, iintsiba ezixukuxekileyo, ii-wattle/ii-comb ezivuvukileyo okanye ukwehla ngequbuliso kwemveliso yamaqanda - ezi ziimpawu ze-avian influenza kwaye kufuneka zixelwe ngoko nangoko."
+    },
+    {
+      "index": 256,
+      "key": "Keep ducks away from wild birds and open water/feed that attracts them, and control visitors' access to duck housing, to reduce avian-influenza risk.",
+      "verdict": "repair",
+      "draft": "Gcina iidada kude neentaka zasendle namanzi aphuma/ukutya okuzitsalayo, kwaye ulawule ukufikelela kwabagxeleli endlwini yeedada, ukunciphisa umngcipheko we-avian influenza.",
+      "backtranslation": "... keep ducks away from wild birds and water that \"comes out\"/attractive food ...",
+      "problem": "\"open water\" rendered as \"amanzi aphuma\" (water that comes out/drains), not open water",
+      "corrected": "Gcina iidada kude neentaka zasendle namanzi avulekileyo/ukutya okuzitsalayo, kwaye ulawule ukufikelela kwabagxeleli endlwini yeedada, ukunciphisa umngcipheko we-avian influenza."
+    },
+    {
+      "index": 268,
+      "key": "South African Saanen reference by lactation number, not age in years: mean milk mass per standardised 305-day lactation was 947.3 kg at first parity, 1043.2 at second, 1073.4 at third, 1020.3 at fourth, 972.8 at fifth, 901.6 at sixth and 775.4 at ≥7th. These ARC milk-recorded groups were mostly intensive/semi-intensive stud herds. Record actual kidding date, lactation number and collected milk; do not divide these totals evenly into months.",
+      "verdict": "repair",
+      "draft": "Isalathiso se-Saanen yaseMzantsi Afrika ngokwenani lokuvelisa ubisi, hayi ubudala ngeminyaka: ubunzima obumlinganiselo bobisi ngexesha ngalinye elimiselweyo leentsuku ezingama-305 yayi-947.3 kg ekuzaleni kokuqala, 1043.2 kwesesibini, 1073.4 kwesesithathu, 1020.3 kwesesine, 972.8 kwesesihlanu, 901.6 kwesesithandathu kunye ne-775.4 kwi-≥7th. Aya maqela abhalwe ubisi yi-ARC ayenemihlambi yezifundo enzulu/ephakathi nenzulu ikakhulu. Bhala umhla wokwenyani wokuzala, inani lexesha lokuvelisa ubisi nobisi olukhutshiweyo; musa ukwahlula ezi zixa zilingane ziye kwiinyanga.",
+      "backtranslation": "... groups were mostly deep/mid-deep STUDY herds",
+      "problem": "\"stud herds\" rendered as \"imihlambi yezifundo\" (study herds / lessons); stud (pedigree breeding herd) is a different thing",
+      "corrected": "Isalathiso se-Saanen yaseMzantsi Afrika ngokwenani lokuvelisa ubisi, hayi ubudala ngeminyaka: ubunzima obumlinganiselo bobisi ngexesha ngalinye elimiselweyo leentsuku ezingama-305 yayi-947.3 kg ekuzaleni kokuqala, 1043.2 kwesesibini, 1073.4 kwesesithathu, 1020.3 kwesesine, 972.8 kwesesihlanu, 901.6 kwesesithandathu kunye ne-775.4 kwi-≥7th. Aya maqela abhalwe ubisi yi-ARC ayenemihlambi ye-stud enzulu/ephakathi nenzulu ikakhulu. Bhala umhla wokwenyani wokuzala, inani lexesha lokuvelisa ubisi nobisi olukhutshiweyo; musa ukwahlula ezi zixa zilingane ziye kwiinyanga."
+    },
+    {
+      "index": 269,
+      "key": "At Putukwane near Polokwane, 179 lactating does under extensive feeding with irregular supplementation were observed for 210 days after kidding. Mean milk mass was 1.45 kg/day for Saanen, 0.75 for British Alpine and 0.56 for Toggenburg during observed lactation. Early lactation exceeded mid and late lactation; March–April kidding outperformed October–November in this cohort. These conditions differ from stud-herd records. Discuss adapted stock and feed locally; these are not litres/day or year-round promises.",
+      "verdict": "repair",
+      "draft": "ePutukwane ngasePolokwane, iimazi ezingama-179 ezivelisa ubisi phantsi kokutya okubanzi kunye nokongezwa okungaqhelekanga zajongwa iintsuku ezingama-210 emva kokuzala. Ubunzima bobisi obumlinganiselo bubuyi-1.45 kg/ngosuku kwi-Saanen, i-0.75 kwi-British Alpine kunye ne-0.56 kwi-Toggenburg ngexesha lokuvelisa ubisi elijongiweyo. Ubisi lwexesha lokuqala lokuvelisa lwaludlula olwexesha eliphakathi neliphelayo; ukuzala kukaMatshi–Epreli kwadlula ukuzala kuka-Okthobha–Novemba kweli qela. Ezi meko ziyahluka kwiirekhodi zemihlambi yezifundo. Xoxa ngemfuyo eziqhelaniswe nendawo nokutya apha ekuhlaleni; ezi aziziilitha/ngosuku okanye izithembiso zonyaka wonke.",
+      "backtranslation": "... differ from records of study herds",
+      "problem": "\"stud herds\" rendered as \"imihlambi yezifundo\" (study herds / lessons); stud (pedigree breeding herd) is a different thing",
+      "corrected": "ePutukwane ngasePolokwane, iimazi ezingama-179 ezivelisa ubisi phantsi kokutya okubanzi kunye nokongezwa okungaqhelekanga zajongwa iintsuku ezingama-210 emva kokuzala. Ubunzima bobisi obumlinganiselo bubuyi-1.45 kg/ngosuku kwi-Saanen, i-0.75 kwi-British Alpine kunye ne-0.56 kwi-Toggenburg ngexesha lokuvelisa ubisi elijongiweyo. Ubisi lwexesha lokuqala lokuvelisa lwaludlula olwexesha eliphakathi neliphelayo; ukuzala kukaMatshi–Epreli kwadlula ukuzala kuka-Okthobha–Novemba kweli qela. Ezi meko ziyahluka kwiirekhodi zemihlambi ye-stud. Xoxa ngemfuyo eziqhelaniswe nendawo nokutya apha ekuhlaleni; ezi aziziilitha/ngosuku okanye izithembiso zonyaka wonke."
+    },
+    {
+      "index": 318,
+      "key": "Table 5 gives weaning weight (WW) across four agro-ecological zones for the same nine Nguni communal herds: arid 114.51 kg (lowest), semi-arid 119.98 kg, dry sub-humid 117.91 kg, humid 121.21 kg (highest). The range recorded here spans this one study's own arid-to-humid zone means; it is not merged with any other paper's weaning-weight figures (other SA studies report different ranges for different systems - e.g. research-station or stud herds - and were deliberately excluded to avoid mixing systems). 826 Nguni calves from nine herds that the paper itself says were 'kept under extensive grazing system' in Limpopo Province - a genuine communal/extensive veld system matching this enterprise.",
+      "verdict": "repair",
+      "draft": "Itheyibhile 5 inika ubunzima bokuyekiswa ebeleni (WW) kwiindawo ezine ze-agro-ecological kwimihlambi efanayo yoNguni elithoba yasekuhlaleni: indawo eyomileyo 114.51 kg (eyona iphantsi), indawo eyomileyo ngokwesiqingatha 119.98 kg, indawo e-dry sub-humid 117.91 kg, indawo enomswakama 121.21 kg (eyona iphezulu). Uluhlu olubhaliweyo apha luquka kuphela imilinganiselo yeendawo zolu phando ngokwalo ukusuka kwindawo eyomileyo ukuya kwenomswakama; aluqhagamshelwanga nobunye ubunzima bokuyekiswa ebeleni obuvela kwamanye amaphepha (ezinye izifundo zaseMzantsi Afrika zixela uluhlu olwahlukileyo kwiinkqubo ezahlukeneyo - umzekelo, izikhululo zophando okanye imihlambi yezifundo - kwaye zashiywa ngabom ukuphepha ukuxuba iinkqubo). Iinkonyana ezingama-826 ezivela kwimihlambi esithoba, eyathi iphepha ngokwalo ithi 'igcinwe phantsi kwenkqubo yokudlala ngokubanzi' kwiphondo laseLimpopo - inkqubo yokwenyani yasekuhlaleni/yokudlala ngokubanzi ehambelana nalo shishini.",
+      "backtranslation": "... research stations or study herds ...",
+      "problem": "\"stud herds\" rendered as \"imihlambi yezifundo\" (study herds / lessons); stud (pedigree breeding herd) is a different thing",
+      "corrected": "Itheyibhile 5 inika ubunzima bokuyekiswa ebeleni (WW) kwiindawo ezine ze-agro-ecological kwimihlambi efanayo yoNguni elithoba yasekuhlaleni: indawo eyomileyo 114.51 kg (eyona iphantsi), indawo eyomileyo ngokwesiqingatha 119.98 kg, indawo e-dry sub-humid 117.91 kg, indawo enomswakama 121.21 kg (eyona iphezulu). Uluhlu olubhaliweyo apha luquka kuphela imilinganiselo yeendawo zolu phando ngokwalo ukusuka kwindawo eyomileyo ukuya kwenomswakama; aluqhagamshelwanga nobunye ubunzima bokuyekiswa ebeleni obuvela kwamanye amaphepha (ezinye izifundo zaseMzantsi Afrika zixela uluhlu olwahlukileyo kwiinkqubo ezahlukeneyo - umzekelo, izikhululo zophando okanye imihlambi ye-stud - kwaye zashiywa ngabom ukuphepha ukuxuba iinkqubo). Iinkonyana ezingama-826 ezivela kwimihlambi esithoba, eyathi iphepha ngokwalo ithi 'igcinwe phantsi kwenkqubo yokudlala ngokubanzi' kwiphondo laseLimpopo - inkqubo yokwenyani yasekuhlaleni/yokudlala ngokubanzi ehambelana nalo shishini."
+    },
+    {
+      "index": 319,
+      "key": "2354 days / 365.25 = 6.44 years. 'Failure time' is the length of productive herd life for the 580 uncensored (fully-observed) records in the combined dataset; the dissertation itself defines productive herd life as 'the time interval between first calving date to culling date'. Combined data from three extensively-grazed Nguni stud herds, animals born 1968-2015.",
+      "verdict": "repair",
+      "draft": "Iintsuku ezili-2354 / 365.25 = iminyaka eyi-6.44. 'Ixesha lokusilela' ubude bobomi bemveliso bomhlambi kwiirekhodi ezingama-580 ezibonwe ngokupheleleyo kwidathasethi edibeneyo; i-dissertation ngokwayo ichaza ubomi bemveliso bomhlambi njengo 'xesha eliphakathi komhla wokuzala wokuqala nomhla wokuhlinzwa'. Idatha edibeneyo evela kwimihlambi emithathu yezifundo yamaNguni edla ngokubanzi, izilwanyana ezizalwe ngo-1968-2015.",
+      "backtranslation": "... three extensive-grazing Nguni study herds ...",
+      "problem": "\"stud herds\" rendered as \"imihlambi yezifundo\" (study herds / lessons); stud (pedigree breeding herd) is a different thing",
+      "corrected": "Iintsuku ezili-2354 / 365.25 = iminyaka eyi-6.44. 'Ixesha lokusilela' ubude bobomi bemveliso bomhlambi kwiirekhodi ezingama-580 ezibonwe ngokupheleleyo kwidathasethi edibeneyo; i-dissertation ngokwayo ichaza ubomi bemveliso bomhlambi njengo 'xesha eliphakathi komhla wokuzala wokuqala nomhla wokuhlinzwa'. Idatha edibeneyo evela kwimihlambi emithathu ye-stud yamaNguni edla ngokubanzi, izilwanyana ezizalwe ngo-1968-2015."
+    },
+    {
+      "index": 338,
+      "key": "Lowest (≥7th parity) and highest (3rd parity) group means for milk yield per 305-day standardised lactation in 16,407 analysed South African ARC Saanen lactation records, 1955–2018, mostly intensive/semi-intensive stud herds. Original PDF Table 3 labels the last group ≥7th; HTML renders it >7th. Kept in kg, without litres conversion, annualisation or yield-by-age interpolation.",
+      "verdict": "repair",
+      "draft": "Intsingiselo esezantsi (≥7th parity) neyona iphezulu (3rd parity) yamaqela kwisivuno sobisi ngexesha ngalinye lokuvelisa ubisi elimiselweyo leentsuku ezingama-305 kwiirekhodi zokuvelisa ubisi zeSaanen ze-ARC zaseMzantsi Afrika ezingama-16,407 ezihlalutyiweyo, 1955–2018, ikakhulu imihlambi yezifundo enzulu/ephakathi nenzulu. I-PDF yoqobo Itheyibhile 3 ibiza iqela lokugqibela ≥7th; i-HTML ikubonisa >7th. Igcinwe nge-kg, ngaphandle kokuguqulwa ibe ngamalitha, ukuguqulwa ibe ngonyaka okanye ukubala phakathi kwesivuno ngokobudala.",
+      "backtranslation": "... mostly deep/mid-deep study herds",
+      "problem": "\"stud herds\" rendered as \"imihlambi yezifundo\" (study herds / lessons); stud (pedigree breeding herd) is a different thing",
+      "corrected": "Intsingiselo esezantsi (≥7th parity) neyona iphezulu (3rd parity) yamaqela kwisivuno sobisi ngexesha ngalinye lokuvelisa ubisi elimiselweyo leentsuku ezingama-305 kwiirekhodi zokuvelisa ubisi zeSaanen ze-ARC zaseMzantsi Afrika ezingama-16,407 ezihlalutyiweyo, 1955–2018, ikakhulu imihlambi ye-stud enzulu/ephakathi nenzulu. I-PDF yoqobo Itheyibhile 3 ibiza iqela lokugqibela ≥7th; i-HTML ikubonisa >7th. Igcinwe nge-kg, ngaphandle kokuguqulwa ibe ngamalitha, ukuguqulwa ibe ngonyaka okanye ukubala phakathi kwesivuno ngokobudala."
+    },
+    {
+      "index": 284,
+      "key": "ARC Table 1 lists pregnant sows at 10–18 L drinking water/day and lactating sows at 18–23 L/day. These are breeding-sow stages, not one amount for every pig. Farrowing care separates sow cooling from piglet warmth; outdoor systems need locally adapted hardy stock, shade and shelter. Confirm stage, reliable clean water, feed and housing locally. The manual supplies no verified edible kg per breeding sow for this plan.",
+      "verdict": "repair",
+      "draft": "Itheyibhile 1 ye-ARC idwelisa iimazi zehagu ezikhulelweyo ngeelitha ezili-10–18 zamanzi okusela ngosuku neemazi ezivelisa ubisi ngeelitha ezili-18–23 ngosuku. La ngamanqanaba eemazi zokwenzalana, hayi ubungakanani obunye beehagu zonke. Ukunakekela ukuzala kwahlula ukupholisa imazi nokufudumala kwamathole ehagu; iinkqubo zangaphandle zifuna imfuyo eqinileyo eziqhelaniswe nendawo, umthunzi nendawo yokukhusela. Qinisekisa inqanaba, amanzi acocekileyo athembekileyo, ukutya nendawo yokuhlala apha ekuhlaleni. Incwadana ayinikezeli ii-kg zokutya eziqinisekisiweyo kwimazi nganye yokwenzalana kolu cwangciso.",
+      "backtranslation": "The booklet does not give confirmed kg of FEED per breeding female",
+      "problem": "\"verified edible kg\" (meat) rendered as \"ii-kg zokutya\" (kg of food/feed): reverses the meaning",
+      "corrected": "Itheyibhile 1 ye-ARC idwelisa iimazi zehagu ezikhulelweyo ngeelitha ezili-10–18 zamanzi okusela ngosuku neemazi ezivelisa ubisi ngeelitha ezili-18–23 ngosuku. La ngamanqanaba eemazi zokwenzalana, hayi ubungakanani obunye beehagu zonke. Ukunakekela ukuzala kwahlula ukupholisa imazi nokufudumala kwamathole ehagu; iinkqubo zangaphandle zifuna imfuyo eqinileyo eziqhelaniswe nendawo, umthunzi nendawo yokukhusela. Qinisekisa inqanaba, amanzi acocekileyo athembekileyo, ukutya nendawo yokuhlala apha ekuhlaleni. Incwadana ayinikezeli ii-kg zenyama ezityiwayo eziqinisekisiweyo kwimazi nganye yokwenzalana kolu cwangciso."
+    },
+    {
+      "index": 291,
+      "key": "Swill (food waste) may not be fed to pigs unless it has been boiled for at least 60 minutes or sterilised by another equally effective method.",
+      "verdict": "repair",
+      "draft": "Inkunkuma yokutya (swill) ayinakutyiswa kwiihagu ngaphandle kokuba iphekwe imizuzu engama-60 ubuncinane okanye ikhutshelwe iintsholongwane ngenye indlela esebenza ngokufanayo.",
+      "backtranslation": "Swill may not be fed to pigs unless cooked for at least 60 minutes or had germs removed...",
+      "problem": "\"boiled\" softened to \"cooked\" (iphekwe); boiling is the safety requirement",
+      "corrected": "Inkunkuma yokutya (swill) ayinakutyiswa kwiihagu ngaphandle kokuba ibilisiwe imizuzu engama-60 ubuncinane okanye ikhutshelwe iintsholongwane ngenye indlela esebenza ngokufanayo."
+    },
+    {
+      "index": 315,
+      "key": "Despite foot-and-mouth disease (FMD) in South Africa, wool exports continue under the inactivation clause of the OIE (World Organisation for Animal Health) rules.",
+      "verdict": "repair",
+      "draft": "Nangona kukho i-foot-and-mouth disease (FMD) eMzantsi Afrika, ukuthunyelwa kweboya ngaphandle kuyaqhubeka phantsi komgaqo wokuvalwa kwe-OIE (World Organisation for Animal Health).",
+      "backtranslation": "... under the OIE closing rule",
+      "problem": "\"inactivation clause\" rendered as \"umgaqo wokuvalwa\" (closing rule): wrong technical term",
+      "corrected": "Nangona kukho i-foot-and-mouth disease (FMD) eMzantsi Afrika, ukuthunyelwa kweboya ngaphandle kuyaqhubeka phantsi komgaqo wokuyenza intsholongwane ingasebenzi (inactivation) we-OIE (World Organisation for Animal Health)."
+    },
+    {
+      "index": 333,
+      "key": "Indoor/house floor space in a Free Range or Barn system with perches: 12 birds/m2 = 1/12 = 0.083 m2/bird. The same Code's external range limit is much larger (5 birds/m2 = 0.2 m2/bird outdoors, see welfare) - not mixed into this indoor figure, per the instruction not to combine different systems. A separate cage-system table in the same document (Table 3.1) gives a different, more confined figure for battery cages, also not used here since this enterprise is framed as free-range/barn. South Africa.",
+      "verdict": "repair",
+      "draft": "Indawo yomgangatho wangaphakathi/wendlu kwinkqubo ye-Free Range okanye i-Barn enezindlu zokuphumla: iintaka ezi-12/m2 = 1/12 = 0.083 m2/intaka. Umda wangaphandle wokuhamba ngokukhululekileyo weKhowudi efanayo mkhulu kakhulu (iintaka ezi-5/m2 = 0.2 m2/intaka ngaphandle, jonga unyango) - ayixutywanga kweli nani langaphakathi, ngokomyalelo wokungadibanisi iinkqubo ezahlukeneyo. Itheyibhile eyahlukileyo yeenkqubo zekheji kuxwebhu olufanayo (Itheyibhile 3.1) inika inani elahlukileyo, elivaleleke ngakumbi lee-battery cage, nalo alisetyenziswanga apha kuba eli shishini lenziwe njengelokuhamba ngokukhululekileyo/le-barn. EMzantsi Afrika.",
+      "backtranslation": "... (see treatment)",
+      "problem": "cross-reference \"welfare\" rendered as \"unyango\" (medical treatment)",
+      "corrected": "Indawo yomgangatho wangaphakathi/wendlu kwinkqubo ye-Free Range okanye i-Barn enezindlu zokuphumla: iintaka ezi-12/m2 = 1/12 = 0.083 m2/intaka. Umda wangaphandle wokuhamba ngokukhululekileyo weKhowudi efanayo mkhulu kakhulu (iintaka ezi-5/m2 = 0.2 m2/intaka ngaphandle, jonga unakekelo lwezilwanyana) - ayixutywanga kweli nani langaphakathi, ngokomyalelo wokungadibanisi iinkqubo ezahlukeneyo. Itheyibhile eyahlukileyo yeenkqubo zekheji kuxwebhu olufanayo (Itheyibhile 3.1) inika inani elahlukileyo, elivaleleke ngakumbi lee-battery cage, nalo alisetyenziswanga apha kuba eli shishini lenziwe njengelokuhamba ngokukhululekileyo/le-barn. EMzantsi Afrika."
+    },
+    {
+      "index": 340,
+      "key": "The reported weaning rate is 149%, or 1.49 kids weaned per doe mated. The source describes observations over twenty years for extensive Boer does at 295 mm rainfall; it does not state kids weaned per doe per calendar year. This is a reproductive outcome, not kg of live animals or dressed meat. A separate mean litter size of 1.93 kids born per parturition has a different denominator and stage and is not merged into this figure.",
+      "verdict": "repair",
+      "draft": "Izinga eliqikelelweyo lokuyekiswa ebeleni li-149%, okanye amathole ayi-1.49 ayekisiweyo ebeleni kwimazi nganye eshiyeneyo. Umthombo uchaza ukubonwa kweminyaka engamashumi amabini kwiimazi zeBoer ezikwindawo ebanzi kwimvula engama-295 mm; awuchazi amathole ayekisiweyo ebeleni kwimazi nganye ngonyaka wekhalenda. Esi sisiphumo sokwenzalana, hayi ii-kg zezilwanyana eziphilayo okanye zenyama ehlutshiweyo. Umlinganiselo ohlukileyo wobungakanani bethole kwizibelo ezi-1.93 ezizalwe ekuzaleni ngalinye unomdivisi ohlukileyo kwaye inqanaba elahlukileyo kwaye alidityaniswanga kweli nani.",
+      "backtranslation": "The estimated weaning rate is 149%, or 1.49 weaned young per separated female ... A different measure of \"size of kid in 1.93 portions\" ...",
+      "problem": "\"doe mated\" lost (imazi eshiyeneyo); \"reported\" became \"estimated\"; \"mean litter size 1.93 born per parturition\" garbled to \"size of kid in 1.93 portions\"",
+      "corrected": "Izinga elibikiweyo lokuyekiswa ebeleni li-149%, okanye amathole ayi-1.49 ayekisiweyo ebeleni kwimazi nganye ekhwelisiweyo. Umthombo uchaza ukubonwa kweminyaka engamashumi amabini kwiimazi zeBoer ezikwindawo ebanzi kwimvula engama-295 mm; awuchazi amathole ayekisiweyo ebeleni kwimazi nganye ngonyaka wekhalenda. Esi sisiphumo sokwenzalana, hayi ii-kg zezilwanyana eziphilayo okanye zenyama ehlutshiweyo. Umlinganiselo ohlukileyo wobungakanani bezalo (amathole ayi-1.93 azalwe ekuzaleni ngalinye) unomdivisi ohlukileyo kwaye inqanaba elahlukileyo kwaye alidityaniswanga kweli nani."
+    },
+    {
+      "index": 346,
+      "key": "Semi-arid/extensive-veld range (4-5 kg greasy wool/sheep/year) used as the primary value; the same sentence's 8 kg/year figure is for a different system (sheep grazing CULTIVATED pastures) and is deliberately excluded from the range rather than averaged in. A Western Cape Government (Elsenburg) Dohne Merino Extensive enterprise budget (Ceres-Karoo, 2024) separately reports total flock wool sold as 4439.64 kg from a flock of '1 519' Smallstock Units, i.e. 4439.64/1519 = 2.92 kg per Smallstock Unit/year - not used as the primary value because the source does not state that 1 Smallstock Unit = 1 sheep (SSU is a standardised stock-class weighting, not a literal head count), so converting it to kg/sheep would require an unstated conversion factor. A separate NWGA/Mandela Initiative paper on the Eastern Cape communal Wool Sheep Development Program reports a Grootfontein ADI progeny-test 'Greasy fleece weight (kg) 2.8 [commercial rams] 2.4 [communal rams]' for communal Eastern Cape flocks - not merged into the primary value because that table is explicitly for '6-month old lambs' (a different life stage from a mature sheep's full annual clip), consistent with the rule against mixing figures across life stages; kept here only as EC-communal context: commercial-ram-sired lambs at 6 months averaged 2.8 kg, communal-ram-sired lambs 2.4 kg, a +16% difference.",
+      "verdict": "repair",
+      "draft": "Uluhlu lommandla ozomileyo ngokwesiqingatha/lwengca yokudlala ngokubanzi (4-5 kg yeboya elinamafutha/igusha/ngonyaka) lusetyenziswe njengexabiso eliphambili; inani le-8 kg/ngonyaka lawo awo umhlathi lenkqubo eyahlukileyo (igusha edla kwiindawo zokudlela ZOKULIMA) lishiyiwe ngabom koluhlu endaweni yokuba lilinganiswe. Isabelo sikarhulumente weNtshona Koloni (Elsenburg) se-Dohne Merino Extensive (Ceres-Karoo, 2024) sinika ngokwahlukileyo iboya elithengisiweyo lomhlambi lingama-4439.64 kg ukusuka kumhlambi we-'1 519' Smallstock Units, oko kukuthi 4439.64/1519 = 2.92 kg ngeSmallstock Unit/ngonyaka - ayisetyenziswanga njengexabiso eliphambili kuba umthombo awuchazi ukuba 1 Smallstock Unit = 1 igusha (i-SSU yinkcazo ephakathi yodidi lwezilwanyana, hayi ukubalwa kwentloko kokwenyani), ngoko ukuyiguqulela ibe yi-kg/igusha kuya kufuna into yokuguqula engachazwanga. Iphepha elahlukileyo le-NWGA/Mandela Initiative malunga neNkqubo yoPhuhliso lweGusha zeBoya zaseMpuma Koloni zasekuhlaleni libika i-Grootfontein ADI progeny-test 'Greasy fleece weight (kg) 2.8 [commercial rams] 2.4 [communal rams]' kwimihlambi yasekuhlaleni yaseMpuma Koloni - ayidityaniswanga kwixabiso eliphambili kuba itheyibhile ikuchaza ngokucacileyo ukuba ngu '6-month old lambs' (inqanaba lobomi elahlukileyo kwigusha ekhulileyo ephela unyaka) ngokuhambelana nomgaqo wokungaxuxi amanani aphakathi kwamanqanaba obomi; igcinwe apha njengomxholo we-EC-communal kuphela: amatakane azalwe ziinkunzi zorhwebo kwiinyanga ezi-6 aphakathi ne-2.8 kg, amatakane azalwe ziinkunzi zasekuhlaleni i-2.4 kg, umahluko we-+16%.",
+      "backtranslation": "... the 8 kg/year figure \"of its own jaw\" of a different system ...",
+      "problem": "\"the same sentence's 8 kg/year figure\" garbled to \"lawo awo umhlathi\" (their own jaw)",
+      "corrected": "Uluhlu lommandla ozomileyo ngokwesiqingatha/lwengca yokudlala ngokubanzi (4-5 kg yeboya elinamafutha/igusha/ngonyaka) lusetyenziswe njengexabiso eliphambili; inani le-8 kg/ngonyaka elisesivakalisini esifanayo lelenkqubo eyahlukileyo (igusha edla kwiindawo zokudlela ZOKULIMA) lishiyiwe ngabom koluhlu endaweni yokuba lilinganiswe. Isabelo sikarhulumente weNtshona Koloni (Elsenburg) se-Dohne Merino Extensive (Ceres-Karoo, 2024) sinika ngokwahlukileyo iboya elithengisiweyo lomhlambi lingama-4439.64 kg ukusuka kumhlambi we-'1 519' Smallstock Units, oko kukuthi 4439.64/1519 = 2.92 kg ngeSmallstock Unit/ngonyaka - ayisetyenziswanga njengexabiso eliphambili kuba umthombo awuchazi ukuba 1 Smallstock Unit = 1 igusha (i-SSU yinkcazo ephakathi yodidi lwezilwanyana, hayi ukubalwa kwentloko kokwenyani), ngoko ukuyiguqulela ibe yi-kg/igusha kuya kufuna into yokuguqula engachazwanga. Iphepha elahlukileyo le-NWGA/Mandela Initiative malunga neNkqubo yoPhuhliso lweGusha zeBoya zaseMpuma Koloni zasekuhlaleni libika i-Grootfontein ADI progeny-test 'Greasy fleece weight (kg) 2.8 [commercial rams] 2.4 [communal rams]' kwimihlambi yasekuhlaleni yaseMpuma Koloni - ayidityaniswanga kwixabiso eliphambili kuba itheyibhile ikuchaza ngokucacileyo ukuba ngu '6-month old lambs' (inqanaba lobomi elahlukileyo kwigusha ekhulileyo ephela unyaka) ngokuhambelana nomgaqo wokungaxuxi amanani aphakathi kwamanqanaba obomi; igcinwe apha njengomxholo we-EC-communal kuphela: amatakane azalwe ziinkunzi zorhwebo kwiinyanga ezi-6 aphakathi ne-2.8 kg, amatakane azalwe ziinkunzi zasekuhlaleni i-2.4 kg, umahluko we-+16%."
+    }
+  ]
+}

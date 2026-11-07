@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import AppHeader from '@/components/layout/AppHeader';
+import XhosaDraftNote from '@/components/XhosaDraftNote';
 import TabBar from '@/components/TabBar';
 import SampleGardenVisual from '@/components/SampleGardenVisual';
 import ReportComposer from '@/components/ReportComposer';
@@ -14,12 +15,13 @@ import { sampleGardenReportSections, sampleGardenReportUrl } from '@/lib/sample-
 import { samplePortrait } from '@/lib/sample-media';
 import { SAMPLE_BRANDING } from '@/lib/sample-branding';
 import { useLanguage } from '@/lib/i18n-context';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import styles from '@/components/SampleExperience.module.css';
 
 export default function SampleGardensPage() {
   const { lang } = useLanguage();
-  const ui = (english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
-  const kindLabel = (kind: string | undefined) => !kind ? '' : lang !== 'zu' ? kind : ({
+  const ui = (english: string, isiZulu: string) => inlineText(lang, english, isiZulu);
+  const kindLabel = (kind: string | undefined) => !kind ? '' : lang === 'xh' ? inlineText(lang, kind) : lang !== 'zu' ? kind : ({
     'Community garden': 'Ingadi yomphakathi',
     'Crèche garden': 'Ingadi yenkulisa',
     'School garden': 'Ingadi yesikole',
@@ -36,18 +38,18 @@ export default function SampleGardensPage() {
   useEffect(() => { const id = new URLSearchParams(window.location.search).get('garden'); if (id && SAMPLE_GARDENS.some(g => g.id === id)) setSelected(id); }, []);
   useEffect(()=>{if(selected)detail.current?.scrollIntoView({block:'start',behavior:'auto'});},[selected]);
   return <main className={styles.page} style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', paddingBottom: 0 }}>
-    <AppHeader backFallback="/samples" title={ui('Gardens','Izingadi')} /><div className={styles.content} style={{ flex: 1, overflowY: 'auto', paddingBottom: 'calc(max(180px, var(--lima-fab-clearance, 180px)) + var(--bottom-nav-height, 0px) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
+    <AppHeader backFallback="/samples" title={ui('Gardens','Izingadi')} /><XhosaDraftNote scope="sample-gardens" /><div className={styles.content} style={{ flex: 1, overflowY: 'auto', paddingBottom: 'calc(max(180px, var(--lima-fab-clearance, 180px)) + var(--bottom-nav-height, 0px) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
     <h1>{SAMPLE_GARDENS.length} {ui('gardens','izingadi')}</h1><p>{ui('Choose a garden to explore its layout, people and report.','Khetha ingadi ukuze uhlole ukuhleleka kwayo, abantu nombiko.')}</p>
     {garden&&<section ref={detail} className={styles.card} aria-label={ui('Selected garden','Ingadi ekhethiwe')}>
       <div className={styles.actions}><button onClick={()=>setSelected(null)}>← {ui('All gardens','Zonke izingadi')}</button><label>{ui('Change garden','Shintsha ingadi')}<select value={garden.id} onChange={e=>setSelected(e.target.value)}>{SAMPLE_GARDENS.map(g=><option key={g.id} value={g.id}>{g.name}</option>)}</select></label></div>
       <h2 aria-live="polite">{garden.name}</h2><p>{garden.town} · {kindLabel(garden.kind)} · {numberLabel(Math.round(garden.areaM2??0))} m² {ui('illustrative area','indawo eyisibonelo')}</p>
       <SampleGardenVisual key={garden.id} name={garden.name} kind={garden.kind} variant={garden.id} initial="aerial"/>
       <div className={styles.grid} style={{marginTop:20}}>{[[ui('Site area','Indawo yengadi'),garden.areaM2 ?? 0],[ui('Vegetable beds','Imibhede yemifino'),garden.production.vegetableM2],[ui('Staple plots','Iziza zezitshalo eziyinhloko'),garden.production.stapleM2]].map(([label,value])=><section className={styles.card} key={label}><h3>{label}</h3><strong>{numberLabel(Number(value))} m²</strong></section>)}</div><p>{ui('Growing areas exclude buildings, paths, tree areas and unused space. Photos illustrate the setting; they do not measure the land.','Izindawo zokutshala azifaki izakhiwo, izindlela, izindawo zezihlahla noma umhlaba ongasetshenziswa. Izithombe zibonisa indawo kuphela; azilinganisi umhlaba.')}</p>
-      <h2 style={{marginTop:24}}>{ui('Participants','Ababambiqhaza')}</h2><p>{ui(`${garden.language}-speaking group.`, `Iqembu elikhuluma ${garden.language}.`)}</p>
-      <div className={styles.grid}>{(SAMPLE_PARTICIPANTS[garden.language??'isiZulu']??[]).map(name=><figure key={name} style={{display:'flex',alignItems:'center',gap:14}}><img data-photo-preview src={samplePortrait(name)} alt={ui(`Portrait illustration of ${name}`,`Umfanekiso ka-${name}`)} width={80} height={80} style={{borderRadius:'50%',objectFit:'cover'}}/><figcaption>{name}</figcaption></figure>)}</div>
+      <h2 style={{marginTop:24}}>{ui('Participants','Ababambiqhaza')}</h2><p>{inlineTemplate(lang, '{language}-speaking group.', 'Iqembu elikhuluma {language}.', { language: String(garden.language) })}</p>
+      <div className={styles.grid}>{(SAMPLE_PARTICIPANTS[garden.language??'isiZulu']??[]).map(name=><figure key={name} style={{display:'flex',alignItems:'center',gap:14}}><img data-photo-preview src={samplePortrait(name)} alt={inlineTemplate(lang, 'Portrait illustration of {name}', 'Umfanekiso ka-{name}', { name })} width={80} height={80} style={{borderRadius:'50%',objectFit:'cover'}}/><figcaption>{name}</figcaption></figure>)}</div>
       <div className={styles.actions}><a className={styles.button} href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer">{ui('Open completed report (PDF)','Vula umbiko ogcwalisiwe (PDF)')}</a><a className={styles.button} href={sampleGardenReportUrl(garden.id)} download={`${garden.id}-tour-report.pdf`}>{ui('Download report','Landa umbiko')}</a></div>
       <p>{ui("The saved report includes this garden's site photograph, layout, assessment narrative, programme figures and next actions. Generate a new report below to create another copy.",'Umbiko ogciniwe uhlanganisa isithombe sendawo yale ngadi, ukuhleleka kwayo, umbhalo wokuhlola, izibalo zohlelo nezinyathelo ezilandelayo. Dala omunye umbiko ngezansi ukuze wenze enye ikhophi.')}</p>
-      {lang === 'zu' && <p role="note" className={styles.notice}>Umbhalo wokuhlola nobufakazi obukulo mbiko kusagcinwe ngesiNgisi; akuzona iziyalezo zokulima eziqinisekisiwe ngesiZulu.</p>}
+      {(lang === 'zu' || lang === 'xh') && <p role="note" className={styles.notice} lang={lang}>{lang === 'zu' ? 'Umbhalo wokuhlola nobufakazi obukulo mbiko kusagcinwe ngesiNgisi; akuzona iziyalezo zokulima eziqinisekisiwe ngesiZulu.' : inlineText(lang, 'The assessment text and evidence in this report are still in English; they are not verified isiXhosa farming instructions.')}</p>}
       <ReportComposer key={`report-${garden.id}`} sample visuals={sampleReportVisuals(garden)} reportDate={SAMPLE_REPORT_DATE} photos={[...sampleSitePhotos(garden.id), { image: `/demo/reports/${garden.id}-layout.png`, caption: `${garden.name} — schematic layout, not to scale` }]} photosByDefault photoHeading="Site reference and schematic layout" title={`${garden.name} — garden report`} branding={{...SAMPLE_BRANDING,garden:{...SAMPLE_BRANDING.garden,label:garden.name}}} sections={sampleGardenReportSections(garden)}/>
       <p><Link href="/samples/farm">{ui('Open the separate editable Ubhejane farm example','Vula isibonelo sepulazi lase-Ubhejane ongasihlela')}</Link></p>
     </section>}
@@ -57,7 +59,7 @@ export default function SampleGardensPage() {
       // read as a second bordered card nested inside this article's own .card border, with the
       // report link hanging outside it. One card, one set of padding, both links in one row.
       <article key={g.id} className={styles.card} style={{padding:16}}>
-        <button onClick={()=>setSelected(g.id)} style={{display:'block',width:'100%',textAlign:'left',border:'none',background:'none',padding:0,margin:0,cursor:'pointer',color:'inherit',font:'inherit'}} aria-label={ui(`Open ${g.name}`,`Vula ${g.name}`)}>
+        <button onClick={()=>setSelected(g.id)} style={{display:'block',width:'100%',textAlign:'left',border:'none',background:'none',padding:0,margin:0,cursor:'pointer',color:'inherit',font:'inherit'}} aria-label={inlineTemplate(lang, 'Open {name}', 'Vula {name}', { name: g.name })}>
           <img src={sampleSitePhoto(g.id)} alt="" loading="lazy" style={{width:'100%',aspectRatio:'3/2',objectFit:'cover',borderRadius:12}}/><h2 className={styles.cardTitle} style={{marginTop:12}}>{g.name}</h2><p style={{margin:'4px 0'}}>{g.kind ? kindLabel(g.kind) : ''} · {g.town}</p>
         </button>
         <div className={styles.cardLinks}>

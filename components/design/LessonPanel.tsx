@@ -10,13 +10,22 @@ import { Sprout, Lightbulb } from 'lucide-react';
 import type { StepLesson } from '@/lib/design-lessons';
 import SpeakButton from '@/components/SpeakButton';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 const GREEN = '#1F4D2B';
 const DARK = '#0B120B';
 
 export function LessonPanel({ lesson }: { lesson: StepLesson & { draft?: boolean } }) {
-  const { t } = useLanguage();
-  const narration = `${lesson.title}. ${lesson.body} ${lesson.principle} ${lesson.tip}`;
+  const { t, lang } = useLanguage();
+  const englishNarration = `${lesson.title}. ${lesson.body} ${lesson.principle} ${lesson.tip}`;
+  // The lesson copy is English data (lib/design-lessons.ts, lib/lesson-registry.ts). A draft language reads the
+  // isiXhosa draft keyed by that exact English, or the English when there is none; every other language is untouched.
+  const read = (english: string) => (isInlineDraftLang(lang) ? inlineText(lang, english) : english);
+  const title = read(lesson.title);
+  const body = read(lesson.body);
+  const principle = read(lesson.principle);
+  const tip = read(lesson.tip);
+  const narration = `${title}. ${body} ${principle} ${tip}`;
   return (
     <div
       style={{
@@ -29,10 +38,10 @@ export function LessonPanel({ lesson }: { lesson: StepLesson & { draft?: boolean
       }}
     >
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
-        <div style={{ flex: 1, fontSize: 14, fontWeight: 700, color: DARK }}>{lesson.title}</div>
-        <SpeakButton text={narration} englishText={narration} size={16} color={GREEN} />
+        <div style={{ flex: 1, fontSize: 14, fontWeight: 700, color: DARK }}>{title}</div>
+        <SpeakButton text={narration} englishText={englishNarration} size={16} color={GREEN} />
       </div>
-      <div style={{ fontSize: 13.5, lineHeight: 1.5, color: DARK }}>{lesson.body}</div>
+      <div style={{ fontSize: 13.5, lineHeight: 1.5, color: DARK }}>{body}</div>
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
         <Sprout size={13} color={GREEN} style={{ flexShrink: 0, marginTop: 3 }} />
         <div style={{ fontSize: 12.5, lineHeight: 1.4, color: DARK }}>
@@ -48,7 +57,7 @@ export function LessonPanel({ lesson }: { lesson: StepLesson & { draft?: boolean
           >
             {t('designLessonPrinciple')}
           </span>
-          {lesson.principle}
+          {principle}
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
@@ -66,7 +75,7 @@ export function LessonPanel({ lesson }: { lesson: StepLesson & { draft?: boolean
           >
             {t('designLessonTryThis')}
           </span>
-          {lesson.tip}
+          {tip}
         </div>
       </div>
       {lesson.courseModuleId && (

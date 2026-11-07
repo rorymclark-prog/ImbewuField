@@ -1,0 +1,46 @@
+{
+  "unit": "dictionary-part3",
+  "okCount": 450,
+  "items": [
+    {
+      "index": 88,
+      "key": "profileRoleNgo",
+      "verdict": "repair",
+      "english": "Organisation staff",
+      "draft": "Umsebenzi wombutho",
+      "backtranslation": "Organisation worker",
+      "problem": "Umsebenzi wombutho = the work/job of the organisation (umsebenzi is the word for work; a person who works is isisebenzi / abasebenzi). As a role label it does not name a person.",
+      "corrected": "Isisebenzi sombutho"
+    },
+    {
+      "index": 289,
+      "key": "updateGuidePrevious",
+      "verdict": "repair",
+      "english": "Previous",
+      "draft": "Ngaphambili",
+      "backtranslation": "Before / Previous",
+      "problem": "Ngaphambili means forward/ahead/in front, which reads like the opposite of Previous next to the Next step button.",
+      "corrected": "Inyathelo langaphambili"
+    },
+    {
+      "index": 427,
+      "key": "communityMoreLabel",
+      "verdict": "repair",
+      "english": "More",
+      "draft": "Ngaphezulu",
+      "backtranslation": "More",
+      "problem": "Ngaphezulu means above / over, not the quantity More; reads as a direction.",
+      "corrected": "Okungakumbi"
+    },
+    {
+      "index": 428,
+      "key": "communityLessLabel",
+      "verdict": "repair",
+      "english": "Less",
+      "draft": "Ngaphantsi",
+      "backtranslation": "Less",
+      "problem": "Ngaphantsi means below / under, not the quantity Less; reads as a direction.",
+      "corrected": "Okuncinci"
+    }
+  ]
+}

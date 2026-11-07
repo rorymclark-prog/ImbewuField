@@ -301,6 +301,11 @@ test('new SiteSurveySheet copy is available as an isiZulu draft while other loca
         assert.match(block, new RegExp(`^  ${key}: ['"]`, 'm'), `isiZulu draft is missing ${key}`);
         continue;
       }
+      // isiXhosa (23 Oct 2026): fully drafted, unreviewed, and marked by the same survey notice.
+      if (locale === 'xh') {
+        assert.match(block, new RegExp(`^  ${key}: ['"]`, 'm'), `isiXhosa draft is missing ${key}`);
+        continue;
+      }
       assert.doesNotMatch(
         block,
         new RegExp(`^  ${key}:`, 'm'),
@@ -308,6 +313,11 @@ test('new SiteSurveySheet copy is available as an isiZulu draft while other loca
       );
     }
   }
+});
+
+test('the survey draft notice shows for isiXhosa as well as isiZulu', () => {
+  const sheet = readFileSync(new URL('../components/SiteSurveySheet.tsx', import.meta.url), 'utf8');
+  assert.match(sheet, /\(lang === 'zu' \|\| lang === 'xh'\) && <p className=\{styles\.zuluDraftNotice\} role="note">\{t\('surveyZuluDraftNotice'\)\}<\/p>/);
 });
 
 test('the rewired SiteSurveySheet keys were already fully translated in every locale', () => {

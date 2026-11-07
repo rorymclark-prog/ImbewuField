@@ -8,8 +8,9 @@
 
 import { STEP_COPY, type Coords } from '@/lib/site-progress';
 import type { CompletionStepKey } from '@/lib/completion-score';
+import { inlineText } from '@/lib/xh-inline';
 
-const localUi = (lang: string, english: string, zulu: string) => lang === 'zu' ? zulu : english;
+const localUi = (lang: string, english: string, zulu: string) => inlineText(lang, english, zulu);
 
 interface StepAction { label: string; href: (coords: Coords | null, siteId?: string) => string }
 export const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {

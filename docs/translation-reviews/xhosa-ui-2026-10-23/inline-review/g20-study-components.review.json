@@ -1,0 +1,80 @@
+{
+  "unit": "g20-study-components",
+  "shard": "g20-study-components.ts",
+  "range": "all",
+  "okCount": 556,
+  "items": [
+    {
+      "index": 76,
+      "key": "Try every calculation before checking. You can read out or point to your reasoning while a facilitator writes it down. These self-checks do not award course credit.",
+      "verdict": "repair",
+      "draft": "Zama zonke izibalo phambi kokukhangela. Ungafunda phandle okanye ukhombe ingqiqo yakho ngoxa umququzeleli ebhala phantsi. Ezi zivavanyo zokuzivavanya azinikezi ikhredithi yekhosi.",
+      "backtranslation": "Try all calculations before checking. You may read aloud/outside or point out your reasoning while the facilitator writes down. These self-checks give no course credit.",
+      "problem": "\"phandle\" means \"outside\"; English says read out (aloud).",
+      "corrected": "Zama zonke izibalo phambi kokukhangela. Ungafunda ngokuvakalayo okanye ukhombe ingqiqo yakho ngoxa umququzeleli ebhala phantsi. Ezi zivavanyo zokuzivavanya azinikezi ikhredithi yekhosi."
+    },
+    {
+      "index": 99,
+      "key": "The original forecast starts at {opening}, pays the two quoted amounts, then receives the assumed sale. Actual cash starts at the same opening amount and uses only the dated cash records. It also includes the stated funding and household withdrawal. The unknown, unpaid water charge changes neither the counted cash nor what is known about the missing cost.",
+      "verdict": "repair",
+      "draft": "Uqikelelo lokuqala luqala ku-{opening}, luhlawula izixa ezibini ezicatshulweyo, kuze kufunyanwe intengiso eqikelelweyo. Imali yokwenyani iqala ngesixa esifanayo sokuvula kwaye isebenzisa kuphela iirekhodi zemali ezinomhla. Ibandakanya nenkxaso echaziweyo nokukhutshwa kwemali yekhaya. Intlawulo yamanzi engaziwayo, engahlawulwanga ayitshintshi mali ibaliweyo okanye oko kwaziwayo ngendleko engekhoyo.",
+      "backtranslation": "The first estimate starts at {opening}, pays two quoted amounts, so that an estimated sale is obtained. Actual cash starts with the same opening amount and uses only the dated money records. It also includes the stated support and the home withdrawal. An unknown, unpaid water payment does not change the counted money or what is known about the missing cost.",
+      "problem": "Sequence/logic changed: English says forecast pays the two quoted amounts, THEN receives the assumed sale; draft reads as purpose clause and says estimated rather than assumed.",
+      "corrected": "Uqikelelo lokuqala luqala ku-{opening}, luhlawula izixa ezibini ezicatshulweyo, emva koko lufumana intengiso ecingelwayo. Imali yokwenyani iqala ngesixa esifanayo sokuvula kwaye isebenzisa kuphela iirekhodi zemali ezinomhla. Ibandakanya nenkxaso echaziweyo nokukhutshwa kwemali yekhaya. Intlawulo yamanzi engaziwayo, engahlawulwanga ayitshintshi mali ibaliweyo okanye oko kwaziwayo ngendleko engekhoyo."
+    },
+    {
+      "index": 115,
+      "key": "Quoted costs minus actual packaging and transport payments",
+      "verdict": "repair",
+      "draft": "Iindleko ezicatshulweyo ngaphandle kweentlawulo zokwenyani zokupakisha nezothutho",
+      "backtranslation": "Quoted costs without actual packaging and transport payments",
+      "problem": "\"minus\" (subtraction) became \"ngaphandle\" (excluding); money arithmetic label.",
+      "corrected": "Iindleko ezicatshulweyo ukuthabatha iintlawulo zokwenyani zokupakisha nezothutho"
+    },
+    {
+      "index": 442,
+      "key": "Read and practise with a facilitator or learning partner. A supplied fictional worked demonstration and scale exercise are available; a real field plan still needs its own checked measurements, evidence and review. Reviewed lesson translations and narration are not yet available. Some page labels may appear as unreviewed isiZulu drafts. Save the reading pathway for offline use here before leaving signal.",
+      "verdict": "repair",
+      "draft": "Funda uziqhelise nomququzeleli okanye iqabane lokufunda. Kukho umboniso osonjululweyo oyilelwe nomsebenzi wesikali; isicwangciso sentsimi yokwenyani sisafuna imilinganiselo yaso ekhangeliweyo, ubungqina nophononongo. Iinguqulelo zezifundo ezihlaziyiweyo nokuchazwa ngesandi akukafumaneki. Ezinye iilebhile zephepha zinokubonakala njengamadrafti esiXhosa angekahlolwa. Gcina indlela yokufunda ukuze isetyenziswe ngaphandle kwe-intanethi apha phambi kokushiya indawo enesiginali.",
+      "backtranslation": "Learn and practise with a facilitator or study partner. There is a made-up solved demonstration with scale work; a real field plan still needs its own checked measurements, evidence and review. Updated lesson translations and audio explanation are not yet available. Some page labels may appear as unreviewed isiXhosa drafts. Save the learning path for offline use here before leaving the signal area.",
+      "problem": "\"Reviewed\" translations rendered as \"ezihlaziyiweyo\" (updated/revised); the point is that reviewed translations do not exist yet.",
+      "corrected": "Funda uziqhelise nomququzeleli okanye iqabane lokufunda. Kukho umboniso osonjululweyo oyilelwe nomsebenzi wesikali; isicwangciso sentsimi yokwenyani sisafuna imilinganiselo yaso ekhangeliweyo, ubungqina nophononongo. Iinguqulelo zezifundo ezihlolwe kakuhle nokuchazwa ngesandi akukafumaneki. Ezinye iilebhile zephepha zinokubonakala njengamadrafti esiXhosa angekahlolwa. Gcina indlela yokufunda ukuze isetyenziswe ngaphandle kwe-intanethi apha phambi kokushiya indawo enesiginali."
+    },
+    {
+      "index": 517,
+      "key": "No tax calculation, registration status or compliant tax invoice is being assessed.",
+      "verdict": "repair",
+      "draft": "Akukho kubalwa kwerhafu, ngqongqo yokubhaliswa okanye i-invoyisi yerhafu ehambelana nomthetho ehlolwayo.",
+      "backtranslation": "No tax calculation, registration threshold or legally compliant tax invoice is checked.",
+      "problem": "\"registration status\" rendered as \"registration threshold\" (ngqongqo).",
+      "corrected": "Akukho kubalwa kwerhafu, isimo sokubhaliswa okanye i-invoyisi yerhafu ehambelana nomthetho ehlolwayo."
+    },
+    {
+      "index": 519,
+      "key": "The loan card confirms cash received and the same principal still owed at month end. No loan repayment occurs here. Terms and interest are not supplied: do not recommend this loan or assume it is free.",
+      "verdict": "repair",
+      "draft": "Ikhadi lemboleko liqinisekisa imali efunyenweyo nesixa esiphambili esifanayo esisafuneka ukuhlawulwa ekupheleni kwenyanga. Akukho kubuyiselwa kwemboleko apha. Imigaqo nenzala azinikezwanga: ungayincomi le mboleko okanye ucinge ukuba ayinaxabiso.",
+      "backtranslation": "The loan card confirms the money received and the same principal amount still to be paid at the end of the month. There is no loan repayment here. Terms and interest are not given: do not recommend this loan or assume it has no cost.",
+      "problem": "\"assume it is free\" (costs nothing) rendered \"ayinaxabiso\" (has no value/price) - loan/money text, ambiguous and can read as \"worthless\".",
+      "corrected": "Ikhadi lemboleko liqinisekisa imali efunyenweyo nesixa esiphambili esifanayo esisafuneka ukuhlawulwa ekupheleni kwenyanga. Akukho kubuyiselwa kwemboleko apha. Imigaqo nenzala azinikezwanga: ungayincomi le mboleko okanye ucinge ukuba ayibizi nto."
+    },
+    {
+      "index": 524,
+      "key": "Earlier growing costs are outside the supplied budget.",
+      "verdict": "repair",
+      "draft": "Iindleko zangaphambili zokutyala ziphezu kwebhajethi enikeziweyo.",
+      "backtranslation": "Upfront planting costs are above the given budget.",
+      "problem": "\"are outside the supplied budget\" (not included) rendered as \"exceed/above the budget\" - different money fact.",
+      "corrected": "Iindleko zangaphambili zokutyala azibandakanywanga kwibhajethi enikeziweyo."
+    },
+    {
+      "index": 533,
+      "key": "A water delivery for the growing activity is confirmed. Its charge and supporting bill are missing. Nothing has yet been paid for this delivery.",
+      "verdict": "repair",
+      "draft": "Ukuhanjiswa kwamanzi komsebenzi wokutyala kuqinisekisiwe. Intlawulo yako nebhili exhasayo ziyalahleka. Akukabikho nto ihlawulelwe oku kuhanjiswa.",
+      "backtranslation": "The water delivery for the planting work is confirmed. Its payment and the supporting bill are missing. Nothing has yet been paid for this delivery.",
+      "problem": "\"charge\" (amount billed) rendered as \"intlawulo\" (payment), which clashes with \"nothing has yet been paid\".",
+      "corrected": "Ukuhanjiswa kwamanzi komsebenzi wokutyala kuqinisekisiwe. Isixa esibizwayo kuko nebhili exhasayo ziyalahleka. Akukabikho nto ihlawulelwe oku kuhanjiswa."
+    }
+  ]
+}

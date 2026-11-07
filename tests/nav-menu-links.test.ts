@@ -67,7 +67,9 @@ test('the Planting Calendar has a translated door in Farm Tools for every target
   for (const src of localeFiles) {
     assert.ok((src.match(/^\s*navPlantingCalendar:/gm) ?? []).length <= 1, 'a second label must not silently override the first');
   }
-  for (const code of ['zu', 'st', 'ts', 've']) {
+  // isiXhosa joined isiZulu as a fully drafted language (23 Oct 2026).
+  assert.match(read('../lib/locales/xh.ts'), /navPlantingCalendar: '[^']+'/);
+  for (const code of ['zu', 'xh', 'st', 'ts', 've']) {
     const { default: dict } = await import(`../lib/locales/${code}.ts`);
     assert.ok(dict.navPlantingCalendar?.trim(), `${code}: calendar navigation cannot be blank`);
     assert.notEqual(dict.navPlantingCalendar, 'Planting Calendar', `${code}: calendar navigation still falls back to English`);

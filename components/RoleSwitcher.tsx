@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Sprout, Users, GraduationCap, BarChart3, Building2, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { inlineTemplate } from '@/lib/xh-inline';
 import { useRouter } from 'next/navigation';
 import { useRoleNavigation, startRolePreview } from '@/lib/use-role-navigation';
 import { visibleRoleTabs } from '@/lib/role-navigation';
@@ -22,7 +23,8 @@ const ROLE_ALIASES: Record<string, string> = { facilitator: 'mentor' };
 
 export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { current: string; inMenu?: boolean; onNavigate?: () => void }) {
   const { t, lang } = useLanguage();
-  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => sampleWorkspaceText(lang,english,zulu,values);
+  // isiXhosa reads the inline drafts keyed by the exact English (the sample-tour tables have none).
+  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => lang==='xh' ? inlineTemplate(lang,english,null,values) : sampleWorkspaceText(lang,english,zulu,values);
   const router = useRouter();
   const { accountRole, navigationRole, sample } = useRoleNavigation();
   const visible = visibleRoleTabs(navigationRole);

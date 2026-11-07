@@ -1,0 +1,765 @@
+[
+ {
+  "path": "reading-landscape/title",
+  "back": "Reading your place",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/description",
+  "back": "Identify the movement of water, the position of the sun, wind paths and the shape of the land at your place.",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/infographicAlt",
+  "back": "A hillside is viewed from the side, with arrows showing where rain runs down the slope, where it collects in a low place, and where it soaks in where the ground is flat.",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/title",
+  "back": "Understanding water movement: where rain goes on your land",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/body",
+  "back": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterwards, walk your land. Look for rills (small water channels), places where water spreads, where it collects, and where it leaves your land. Some excess water needs a safe path to travel away so that it does not cause damage.\n\nAn A-frame level (a tool shaped like the letter A that helps find places of equal height) can help you mark points at the same height and follow a contour line. Its marks are observation only; they are not a plan or permission for earthworks. Before digging a swale (a trench for catching water along a contour line), a dam or another structure, ask for your site to be assessed. Soil, slope, drainage, heavy-rain flow and a safe outlet for excess water all matter. Ask a trained local adviser.\n\nThere is no single placement rule followed on all slopes. Look where water moves and collects. Badly placed contour lines can increase soil erosion, and soil that absorbs water slowly can hold too much water. Choose any water works that suit your site and plan a safe path for excess water.",
+  "flags": [
+   "'Amanzi athile agqithisileyo' = 'SOME/certain excess water' - the qualifier 'athile' may narrow a general rule (all overflow needs a safe path)",
+   "'Imigca yokuphakama ebekwe kakubi' = 'badly placed contour LINES' - lines themselves do not erode; probably means badly placed contour earthworks/swales",
+   "'umhlaba ofunxa amanzi kancinci unokubamba amanzi amaninzi kakhulu' - subject is the soil itself; the warning is likely about a swale on slow-draining soil waterlogging"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/keyPoints/0",
+  "back": "Watch from a safe place during rain, then walk the land when it is safe",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/keyPoints/1",
+  "back": "An A-frame can mark points at the same height, but it does not show whether earthworks are suitable",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/keyPoints/2",
+  "back": "Water works and safe overflow paths need a site assessment",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/keyPoints/3",
+  "back": "Some excess water needs a safe path to travel away to prevent damage",
+  "flags": [
+   "'Amanzi athile' = 'some/certain water' qualifier, same as body"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/q",
+  "back": "An A-frame level can help you find what?",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/options/0",
+  "back": "Points at the same height along a contour line",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/options/1",
+  "back": "Whether a swale is safe to build on this slope",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/options/2",
+  "back": "How much heavy-rain water the soil can absorb",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/options/3",
+  "back": "Where a spillway (the path for water leaving a dam) must be built",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/rationale",
+  "back": "An A-frame can help you mark points at the same height. It does not assess soil, drainage, heavy-rain flow, or whether earthworks are suitable.",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/q",
+  "back": "You see water moving quickly over the ground on a sloping site in KZN. What should you do before digging a water structure?",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/options/0",
+  "back": "Place it as high as possible on the slope",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/options/1",
+  "back": "Check the soil, slope, drainage and heavy-rain flow, and plan a safe path for excess water with a trained local adviser",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/options/2",
+  "back": "Place it where the water first comes from",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/options/3",
+  "back": "Follow the same top, middle and bottom rule used on other farms",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/rationale",
+  "back": "A placement rule cannot show whether a structure suits a site. Badly placed contour lines can increase soil erosion, and excess water needs a safe path.",
+  "flags": [
+   "'Imigca yokuphakama' = contour lines (not earthworks), as in body"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/infographicAlt",
+  "back": "A slope with the sun in the north. The shadows of a building and a tree fall to the south, down the slope.",
+  "flags": [
+   "'Ithambeka elinelanga emntla' = 'a slope with sun in the north' - does not clearly say 'north-facing slope'"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/title",
+  "back": "Sun position, shade and aspect: using sunlight well",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/body",
+  "back": "In many parts of South Africa, especially in winter, the sun is in the north. Its path changes with the season and with location. North-facing slopes usually get more sun and can be hotter and drier. South-facing slopes usually stay cooler and moister. Frost can collect in low places where cold air settles. Check your site yourself before choosing where to plant tender plants or put buildings.\n\nThe winter sun is lower and further north than the summer sun. A wall or shade cloth can shade a bed for longer in winter than in summer. Before placing anything long-lasting, stand at that spot at 8am, at noon and at 4pm on a winter day and see where the shade falls.\n\nPawpaw and young citrus trees (fruit trees) are sensitive to frost. Keep tender plants away from known low places where frost collects. Check local frost before planting.",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/keyPoints/0",
+  "back": "North-facing slopes usually get more direct sun; south-facing slopes usually stay cooler and moister",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/keyPoints/1",
+  "back": "The winter sun is lower and further north; check local shade before building",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/keyPoints/2",
+  "back": "Cold air can collect in low places; aspect is only one of the site factors",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/keyPoints/3",
+  "back": "Check local frost before placing a tender pawpaw or a young citrus",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/q",
+  "back": "Where should a farmer first look for a spot for a young frost-sensitive pawpaw on a small Highveld farm?",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/options/0",
+  "back": "The lowest place where cold air collects",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/options/1",
+  "back": "A cold, low, shaded place",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/options/2",
+  "back": "A sunny place outside a known low frost spot, after checking how frost behaves at the site",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/options/3",
+  "back": "A place chosen without checking the site",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/rationale",
+  "back": "Cold air can collect in low places. A sunnier spot outside a known frost spot can reduce the risk, but what is observed of local frost must guide the final placement.",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/q",
+  "back": "A farmer plans shade cloth on the north side of his garden. What should he check before fixing it in place?",
+  "flags": [
+   "'legadi lakhe' - possessive 'lakhe' agrees with icala not igadi; 'his garden' would be 'yegadi yakhe'/'legadi yakhe' (minor grammar)"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/options/0",
+  "back": "Where its shadow falls on the bed in winter",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/options/1",
+  "back": "Whether it carries frost away",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/options/2",
+  "back": "Whether the sun is always overhead at noon",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/options/3",
+  "back": "Only whether it reduces water evaporation in summer",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/rationale",
+  "back": "The winter sun is lower and further north. Shade cloth can change the hours of sun on the bed. Check the real shadows at 8am, noon and 4pm before fixing it in place.",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/infographicAlt",
+  "back": "A farm seen from above, with arrows showing wind direction, cold air flowing down the slope to a low frost place, and the direction the slope faces.",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/title",
+  "back": "Wind, frost and landform: reading invisible forces",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/body",
+  "back": "Wind can damage plants on a small farm. The direction and strength of damaging wind change by region, by season, and with the ridges and gaps of your site. Walk your land on windy days. Record where the wind comes from and what it [typo verb] affects. Check local weather records before deciding where shelter is needed.\n\nOn clear, still nights, cold air can flow down the slope and collect in low places. These places can be colder than the surrounding slopes. Frost patterns also depend on the site. Compare the spots you might choose during the local frost season. Check local minimum-temperature records where they exist. If records do not exist, keep watching on cold nights and ask a local agricultural adviser before choosing a permanent home for tender young plants (seedlings).\n\nFrost is ice that forms on a cold surface. Mist/fog alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground and slopes, and check minimum temperature where you can. Note places where cold or damage lasts long. Keep sensitive plants away from the cold places you have seen.\n\nFor tomato with a late blight problem (a tomato plant disease), air movement and morning sun can help leaves dry. Late blight can still spread during long cool, damp weather. Moving the bed BUT will not control it; also seek local plant-health guidance.",
+  "flags": [
+   "'echatshazelwa' is a misspelling/non-word; should be 'echatshazelwa'->'echaphazelwa' (affected)",
+   "'aziingqongileyo' is ungrammatical; should be 'angqongileyo'/'abangqongileyo' (surrounding)",
+   "'aziko' should be 'azikho' (do not exist)",
+   "'zobushushu obuphantsi kakhulu lasekuhlaleni' - wrong concord 'la-'; should be 'zasekuhlaleni'",
+   "'Inkungu' = mist/fog. If the source means dew, the isiXhosa word is 'umbethe' - possible wrong word",
+   "'Ukuhambisa ibhedi kodwa akuyi kuyilawula' - 'kodwa' (but) is misplaced; intended 'kuphela/kodwa' -> 'Ukuhambisa ibhedi kuphela akuyi kuyilawula' (moving the bed ALONE)",
+   "'Kutamatisi onengxaki' - 'utamatisi' is the isiZulu-leaning form; isiXhosa course text elsewhere uses 'itumato'. Also locative/concord odd"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/keyPoints/0",
+  "back": "Check the direction of damaging wind at your site before placing shelter",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/keyPoints/1",
+  "back": "Cold air can flow down the slope on clear, still nights and collect on low ground",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/keyPoints/2",
+  "back": "Compare plant damage on cold nights and temperatures across your whole site; visible frost is not the only sign",
+  "flags": [
+   "'Iqabaka elibonakalayo asilo' - concord should be cl.5 'alilo'; body uses 'umkhenkce' (ice) for the visible thing"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/keyPoints/3",
+  "back": "Air movement and drying can help reduce wet leaves, but they are not enough to control late blight",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/q",
+  "back": "Where should the farmer first look when placing a place for 'giving birth to' young frost-sensitive plants (nursery) on a small Highveld farm?",
+  "flags": [
+   "'indawo yokuzalela izityalo' - '-zalela' = give birth/breed; awkward for a seedling nursery ('indawo yokukhulisela izithole/izityalo ezincinci')"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/options/0",
+  "back": "A known frost place down in the valley",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/options/1",
+  "back": "An open ridge without checking the wind",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/options/2",
+  "back": "A sunny, sheltered place outside an observed low frost spot, after checking the cold-night pattern at the site",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/options/3",
+  "back": "A very heavily shaded place, without checking frost",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/rationale",
+  "back": "Cold air can settle in low places on clear, still nights. Compare the spots you might choose for a nursery during the local frost season. Check local minimum-temperature records or ask a local agricultural adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hill position guarantees the absence of frost.",
+  "flags": [
+   "'yokuzalela' again for nursery"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/q",
+  "back": "A KZN farmer's tomato often gets late blight during cool, damp weather. Which bed position can help the leaves dry, together with local plant-health advice?",
+  "flags": [
+   "'Utamatisi' isiZulu-leaning; isiXhosa 'itumato' used in seed module"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/options/0",
+  "back": "A closed tunnel with no air",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/options/1",
+  "back": "A place with good air movement and morning sun",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/options/2",
+  "back": "A low place beside a dam",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/options/3",
+  "back": "A shaded south wall",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/rationale",
+  "back": "Air movement and morning sun can help leaves dry. Late blight is encouraged by long cool, damp weather, and moving the bed BUT is not a complete control plan.",
+  "flags": [
+   "'ukuhambisa ibhedi kodwa' - 'kodwa' misplaced; intended 'kuphela' (alone)"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/infographicAlt",
+  "back": "A site map hand-drawn on paper showing north, buildings, water and the boundary — not polished, as a farmer might draw it.",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/title",
+  "back": "Making a simple site map: your design starts on paper",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/body",
+  "back": "A site map needs paper, a measuring tape, a compass and time to walk your land. Walk the boundary and make a first drawing. Label it 'not measured' until you check its distances. Mark north. Add the house, trees, water, paths and fences. Draw arrows for summer and winter wind, shade paths, and where water flows when it rains.\n\nNote where frost stays long, where the soil SMELLS of wetness in the dry months, and where khakibos or blackjack grows densely. These plants can grow in disturbed places, but their presence BUT does not show whether the soil is compacted. Test the soil before deciding what that place means for your design.\n\nPut your zones and sectors over the same drawing. Update it every season. A pencil drawing you really use is worth more than a perfect one made once.",
+  "flags": [
+   "'apho umhlaba unuka ukumanzi' = 'where the soil smells of wetness' - '-nuka' = smell; probably meant 'stays damp' ('uhlala umanzi') - possible meaning error",
+   "'ukubakho kwazo kodwa akubonisi' - redundant second 'kodwa'"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/keyPoints/0",
+  "back": "A site map needs only paper, a measuring tape, a compass and observation",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/keyPoints/1",
+  "back": "Mark water movement, wind direction, frost places and existing plants",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/keyPoints/2",
+  "back": "Mark dense growth of khakibos or blackjack so that you test the soil further; it does not show soil compaction",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/keyPoints/3",
+  "back": "Put zones and sectors over your base map to complete the design framework",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/q",
+  "back": "You see blackjack growing densely in one corner every year. What should you do next?",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/options/0",
+  "back": "The soil there is especially fertile",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/options/1",
+  "back": "That place has a high water table",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/options/2",
+  "back": "Mark the place and test the soil; the plant BUT cannot show soil compaction",
+  "flags": [
+   "'isityalo kodwa' - misplaced 'kodwa'; intended 'isityalo sodwa' (the plant alone)"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/options/3",
+  "back": "Blackjack grows only in shade, so there is a small hidden water source",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/rationale",
+  "back": "Blackjack can grow in disturbed soil, but its presence BUT does not show soil compaction. Look and test the soil before deciding what that place means for your design.",
+  "flags": [
+   "redundant second 'kodwa'"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/q",
+  "back": "Why do you mark summer and winter wind separately on your site map?",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/options/0",
+  "back": "Wind direction does not change in South Africa",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/options/1",
+  "back": "They can come from different directions, changing where windbreaks and tender plants should be placed",
+  "flags": [
+   "'Zinokuvela' - cl.10 concord does not match umoya/imimoya (minor)"
+  ]
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/options/2",
+  "back": "Wind matters only in winter on the Highveld",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/options/3",
+  "back": "Wind direction affects only buildings",
+  "flags": []
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/rationale",
+  "back": "Seasonal wind change means a windbreak or plant position that works in one season can be wrong in the other — so both must be marked separately.",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/title",
+  "back": "Seed and seed sovereignty (control of seed)",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/description",
+  "back": "Save, store and share seed — freedom from buying seed every season.",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/infographicAlt",
+  "back": "Two seed packets above a simple comparison: five plants that look alike on the left and five different plants on the right. The real offspring depends on the variety and on pollination.",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/title",
+  "back": "Why saving seed matters",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/body",
+  "back": "Open-pollinated seed from a stable variety can produce similar plants when pollination (the transfer of pollen from one flower to another) is properly managed. F1 hybrids come from selected parents. Their saved seed may germinate, but the next generation varies; it may not keep the combination you wanted.\n\nSeed sovereignty includes the knowledge and choice needed to plant, save and share suitable seed. Keep the plant identity and variety with each batch of seed.\n\nChoose healthy plants with useful traits. Start with a crop you know, and ask a seed-saving adviser how to manage its pollination and selection.",
+  "flags": [
+   "'ezinezimpawu' uses isiZulu-form 'izimpawu'; isiXhosa 'iimpawu' -> 'ezineempawu'",
+   "'angalulawula njani i-pollination' - object concord 'lu' does not match i-pollination (cl.9 -> 'angayilawula')"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/keyPoints/0",
+  "back": "Stable open-pollinated varieties need proper pollination management",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/keyPoints/1",
+  "back": "Seed sovereignty means freedom from depending on a seed company every season",
+  "flags": [
+   "'Ulawulo ... lithetha' - concord should be 'luthetha' (cl.11)"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/keyPoints/2",
+  "back": "Diversity of crops and varieties can help adapt to climate change when the varieties suit home conditions",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/keyPoints/3",
+  "back": "Choose healthy plants with useful traits; use seed-saving guidance specific to each crop",
+  "flags": [
+   "'ezinezimpawu' isiZulu-form plural"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/q",
+  "back": "Why will seed saved from a hybrid (F1) tomato NOT produce plants like the parent next season?",
+  "flags": [
+   "'ingayi kuvelisa' = 'will not' (certain); body says the next generation varies/may not - check source certainty"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/options/0",
+  "back": "Hybrid seed is completely sterile and will not germinate at all",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/options/1",
+  "back": "Hybrid seed is a one-time genetic combination — its offspring differs from its parent in unexpected ways",
+  "flags": [
+   "'yidibaniso lemfuza' concord ('yemfuza') minor"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/options/2",
+  "back": "Hybrids grow only in commercial greenhouses",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/options/3",
+  "back": "Hybrid seed quickly loses its ability to germinate in storage",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/rationale",
+  "back": "F1 hybrids are PICKED (harvested) by crossing two specific parent lines — their seed carries a mixed, unpredictable genetic combination, not a stable copy of the parent.",
+  "flags": [
+   "'zikhiwa' = 'are picked/plucked (fruit)'; should be 'zenziwa' (are made)",
+   "'oluxubeneyo nolungaqikelelekiyo' concord does not match idibaniso (cl.9 -> 'exubeneyo nengaqikelelekiyo')"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/q",
+  "back": "When choosing a parent plant to take seed from, what should guide your choice?",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/options/0",
+  "back": "Any plant that produced the single biggest fruit",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/options/1",
+  "back": "The healthiest, disease-free plant with good form, even if it is not the most productive",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/options/2",
+  "back": "Any plant that ripened first, regardless of health",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/options/3",
+  "back": "Any plant — the choice does not affect future seed quality",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/rationale",
+  "back": "You are choosing the traits you want to continue — health and vigour matter more in the long term than one plant's big harvest.",
+  "flags": [
+   "'izimpawu' isiZulu form; isiXhosa 'iimpawu'"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/infographicAlt",
+  "back": "Dry seed is collected from ripe pods (seed bags). An example of the wet method for tomato shows short 'fertilising/rotting' (fermentation), cleaning and drying.",
+  "flags": [
+   "'ukuvundiswa' - '-vundisa' = fertilise/make fertile (or rot); not a clear word for fermentation ('ukubiliswa'/'ukuvubela') - possible wrong word"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/title",
+  "back": "How to save seed: dry and wet methods",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/body",
+  "back": "Dry seed must ripen before it is collected. Remove the chaff (soft rubbish around the seed) and damaged seed, then finish drying it in the shade with moving air.\n\nSeed in fleshy fruit needs a specific method for each crop. Tomato seed can be 'fertilised/rotted' (fermented) for a short time to help remove its gel, then cleaned and dried well. Keep the working jar open or loosely covered. Fermentation is not needed for all wet-seeded crops and does not guarantee disease-free seed.\n\nPollination (the transfer of pollen from one flower to another) also matters. Maize is 'brought in' by the wind and can cross with other varieties. Tomatoes mostly pollinate themselves, but crossing happens. Check the crop and variety before planning isolation or seed saving.",
+  "flags": [
+   "'ukuvundiswa' for fermentation - see item 99",
+   "'Umbona ungeniswa ngumoya' = 'maize is brought in/admitted by the wind' - does not mean wind-pollinated; should say pollen is carried by wind ('umbona u-pollinate-wa ngumoya' / 'uthuli lwentyatyambo lombona luthwalwa ngumoya')"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/keyPoints/0",
+  "back": "Dry-method crops (beans, maize, sunflower (sun flower)) simply dry on the plant before collection",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/keyPoints/1",
+  "back": "Tomato fermentation removes the gel; other wet seeds need their own preparation method",
+  "flags": [
+   "'Ukuvundiswa' for fermentation"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/keyPoints/2",
+  "back": "Tomatoes mostly pollinate themselves but can cross; maize is 'brought in' by the wind. Check crop- and variety-specific isolation guidance before saving seed",
+  "flags": [
+   "'ungeniswa ngumoya' - not 'wind-pollinated'"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/keyPoints/3",
+  "back": "Clean prepared tomato seed and dry it well before storing it",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/q",
+  "back": "Short fermentation helps remove what when preparing tomato seed?",
+  "flags": [
+   "'Ukuvundiswa' for fermentation"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/options/0",
+  "back": "Fermentation improves the flavour of the seed",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/options/1",
+  "back": "It helps remove the gel around the seed before cleaning and drying",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/options/2",
+  "back": "It kills all damaging insects inside the fruit",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/options/3",
+  "back": "It is just a custom with no real [non-word] use",
+  "flags": [
+   "'engenasebenzo' is not a word; 'engenamsebenzi'/'engenaluncedo'"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/rationale",
+  "back": "Fermentation helps separate tomato seed from its gel. It does not guarantee germination or disease-free seed; dry, store and test the batch.",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/q",
+  "back": "Why does maize need a much larger isolation distance than tomato to keep the variety pure?",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/options/0",
+  "back": "Maize seed breaks easily",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/options/1",
+  "back": "Maize is 'brought in' by the wind and crosses easily over distance; tomatoes mostly pollinate themselves",
+  "flags": [
+   "'ungeniswa ngumoya' - not 'wind-pollinated'"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/options/2",
+  "back": "Tomatoes do not cross at all under any condition",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/options/3",
+  "back": "Maize flowers for a short time",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/rationale",
+  "back": "The wind carries maize pollen much further than insects or self-pollination move tomato pollen — that difference in pollination method is what drives the need for isolation distance.",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/infographicAlt",
+  "back": "Seed envelopes kept in a closed container, cool, dark and dry. Next to them, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
+  "flags": [
+   "'imbewu elishumi' - number concord minor ('iimbewu ezilishumi')"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/title",
+  "back": "Drying, storing and sharing seed",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/body",
+  "back": "Dry seed well before storing it: in paper envelopes, not plastic, in a shaded place with moving air — never use direct sun or enclosed heat. The three enemies of a seed's ability to germinate are heat, light and moisture. Seed life in storage varies by crop and conditions, so test germination before relying on stored seed.\n\nWrite on each envelope the crop, variety and date it was saved. Keep well-dried seed in a sealed container in a cool, dark, dry place. Sealing wet seed can STOP moisture and spoil it.\n\nBefore a new planting season, test a small batch for germination so that you do not rely on seed that has quietly lost its ability to germinate.\n\nPlan a seed swap with neighbours this season. What one household saves well, many households can share — and the variety diversity of the whole group grows with each swap.",
+  "flags": [
+   "'kunganqanda ukufuma' = 'can STOP/ward off moisture' - '-nqanda' means prevent; the warning is that sealing wet seed TRAPS moisture. Reversed meaning (cf. item 130 'sinokubamba ukufuma')",
+   "Sentence 1 reads as drying seed IN paper envelopes; check source (drying vs storing medium)",
+   "'Oko umzi omnye ukugcina kakuhle' - relative verb form should be 'ukugcinayo'"
+  ]
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/keyPoints/0",
+  "back": "Dry seed in the shade with moving air; never in direct sun or enclosed heat",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/keyPoints/1",
+  "back": "Keep labelled seed in a cool, dark, dry place — heat, light and moisture are the three enemies of germination",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/keyPoints/2",
+  "back": "Test a small batch for germination before relying on saved seed for planting",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/keyPoints/3",
+  "back": "Seed swapping increases everyone's variety diversity faster than saving alone",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/q",
+  "back": "What are the three main enemies of saved seed's ability to germinate?",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/options/0",
+  "back": "Wind, insects and mould",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/options/1",
+  "back": "Heat, light and moisture",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/options/2",
+  "back": "Cold, darkness and dryness",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/options/3",
+  "back": "Touching the soil, damaging insects and rats/mice",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/rationale",
+  "back": "Keeping well-dried seed cool and dark counters all three. A sealed container helps keep dry seed dry, but it can trap moisture if the seed is packed wet.",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/q",
+  "back": "Why is a small batch of saved seed tested for germination before the planting season?",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/options/0",
+  "back": "It is a legal requirement for sharing seed",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/options/1",
+  "back": "Seed can quietly lose its ability to germinate in storage, and the test prevents relying on seed that will not grow",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/options/2",
+  "back": "It improves the flavour of the seed",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/options/3",
+  "back": "It is needed only for hybrid seed",
+  "flags": []
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/rationale",
+  "back": "A germination test catches seed that has already died in storage before you PROMISE the whole season's DEBT/COURT CASE to it.",
+  "flags": [
+   "'uthembise ityala lonke lesizini' - 'ityala' = debt/court case/fault; does not mean committing the season; nonsense phrase"
+  ]
+ }
+]

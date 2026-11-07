@@ -1,0 +1,108 @@
+0. things
+1. No known amount
+2. No entries
+3. Recorded units: {n}
+4. Date not available
+5. not available
+6. Amount not written down
+7. Has no variety
+8. Not set
+9. Farm production report
+10. Farm money report
+11. What needs careful looking at
+12. Size of the records and checking
+13. Production by recorded name
+14. Harvest entries
+15. Money record details
+16. Unpaid invoices · current state
+17. Costs by recorded category
+18. Weight of the recorded harvest
+19. {start} to {end} · the current period is not finished
+20. Farm / business: {farm}. Prepared on the date of {date}.
+21. Record period: {period}. This report includes all gardens in the present book; it is not a report of one place.
+22. Only entries with dates that are in the chosen period are counted in the period totals. Unpaid invoices are a separate current state, as recorded on this device.
+23. SAMPLE RECORDS: sample numbers, not evidence of real production or money.
+24. Your farm report: check the contents before sharing. Access of the organisation and the funder is still controlled by the existing consent controls.
+25. Source: the harvest, sales and cost books present in this account, together with invoices saved on this device. This export does not confirm that the books are complete or independently confirmed.
+26. Dates use the same local calendar time as Records. Harvest, sales, cost and invoice-payment dates decide which entry is visible. Other dates record when the entry was saved; check the event date separately.
+27. A paid local invoice is counted once as money received. Linked sales rows are replaced by the recorded amount. An invoice not on this device may appear through linked sales; non-production payments may be missing.
+28. Amounts stay in the units they were recorded in. Bags, crates, eggs, items and other details are not converted to kilograms. Names are kept as recorded; crops with different names are not combined automatically.
+29. No estimated harvest, guide price, planned production, opening bank balance or estimated household spending is included in this report.
+30. The numbers describe the readable entries in this choice. A book without entries is not evidence that there is no farming activity.
+31. Source / checking
+32. Entries
+33. Meaning
+34. Harvest book
+35. Dated harvest entries in the chosen period
+36. Direct / unlinked sales
+37. Sales money entries after the local invoice is replaced
+38. Paid local invoices
+39. Counted once, using their payment date
+40. Cost book
+41. Dated costs; completeness not confirmed
+42. Amounts not available
+43. These entries do not contribute to the weight or the estimated amount
+44. Dates not available · all existing records
+45. Cannot be assigned to the report period
+46. Entries that may be repeated
+47. Sales and invoices written by hand that need checking; no entry is removed silently
+48. Entries dated in the future
+49. Included when inside this calendar choice, as in Records; check these dates
+50. Harvest entries: {n}, containing {harvest}. Recorded sales amount: {sold}.
+51. Harvests and sales may refer to different harvest dates, to stored produce or to goods bought. Their difference is not household use, gifts or measured loss.
+52. Money received: {received}. Recorded costs: {costs}.
+53. amount not available for chosen money received
+54. amount not available for chosen costs
+55. Recorded remaining money: {margin}. This is money received minus recorded costs, not full profit of the accounts or bank balance.
+56. {n} local invoices are marked as unpaid at present. They are not counted in money received.
+57. No dated entries are present in this period. Choose another period or record activity; there is no estimated result.
+58. {n} existing records have no usable event date and cannot enter the period totals. Check the source records.
+59. {n} harvest or sales entries have no usable amount. Their weight and amounts remain unavailable.
+60. {n} income entries need to be checked whether they are repeated. {note}
+61. It may be one single sale — a paid invoice already counted as income.
+62. {n} entries have future dates inside this calendar choice. They stay included, as in Records; check their dates before sharing.
+63. Record household use, gifts, loss and stock movement separately before making a balance of food use. Those considered items are not handed over by these books.
+64. Harvest found in each place needs a matching crop, a measured planting area and dates of the crop cycle. The map or present plan alone do not give that comparison.
+65. Check lost costs, unpaid invoices and supporting receipts before sharing the report. Costs not marked are not allocated to crop profit.
+66. Sales amount
+67. Dated records in this period
+68. Production names
+69. As recorded; not a biodiversity score
+70. Money received
+71. Sales entries: {sales} + paid invoices: {invoices}
+72. Cost entries: {n}; completeness is not known
+73. Recorded remaining money
+74. Recorded money received minus costs; not accounts profit
+75. Unpaid invoices now
+76. Local invoices: {n}; current state
+77. Units always differ. The sales amount follows its money/payment date and may come from an earlier harvest. No food use balance is counted.
+78. Recorded harvest
+79. Amount sold
+80. No harvest entries
+81. No sales amount
+82. Harvest entries: {harvests} / of sales: {sales}
+83. Only entries with dates in the chosen period. The report keeps recorded names and units.
+84. {crop} · sale
+85. Invoice {no}
+86. Sales book
+87. Paid local invoice
+88. Check whether it is repeated
+89. The total of a paid invoice replaces its linked sales once. Hand-written entries that could be repeated stay included until checked. Contact details of the buyer and seller are not included.
+90. Entry
+91. Money coming in
+92. Money going out
+93. Check
+94. Local invoices issued on the date of {date} or before it, marked as unpaid at present. This is not limited to the chosen money period and is not an independently confirmed amount of what will be received.
+95. Issued
+96. All recorded categories are included. Work, drop in price, stock and other lost costs are not estimated.
+97. Recorded costs
+98. The same local calendar range as Records, limited to this choice. Absence of entries means there is no recorded result. The current month is not finished. Any future-dated entries in this choice are included and must be checked. Recorded remaining money is not a bank balance or full profit.
+99. Remaining money
+100. Shown {shown} of {total} recorded production names that have known weight, largest totals first. Each name and unit stays in the tables. These are recorded totals, not a ranking of performance.
+101. The report analysis and tables are an unreviewed isiXhosa text. Recorded names and units stay as they were recorded.
+102. Farm records
+103. Farm / business
+104. Sample farm
+105. My farm
+106. Prepared offline with records present on this device. A successful export does not confirm that shared records are current.
+107. Prepared offline with records present on this device. New shared records may be missing.

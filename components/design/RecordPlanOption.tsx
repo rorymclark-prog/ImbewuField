@@ -9,6 +9,7 @@ import { sitePlanFigure } from '@/lib/report-figures';
 import { svgImage } from '@/lib/report-visual-pdf';
 import { deliverFile } from '@/lib/file-delivery';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import styles from './RecordPlanOption.module.css';
 
@@ -22,7 +23,7 @@ export default function RecordPlanOption({ state, refLayers, onAdd }: {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
   const dialog = useRef<HTMLDialogElement>(null);
-  const t = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const t = (en: string, zu: string) => inlineText(language, en, zu);
   const figure = useMemo(() => open ? sitePlanFigure(state, language, refLayers) : null, [open, state, language, refLayers]);
   useEffect(() => { if (open) dialog.current?.showModal(); }, [open]);
   async function output(kind: 'maps' | 'png' | 'svg') {

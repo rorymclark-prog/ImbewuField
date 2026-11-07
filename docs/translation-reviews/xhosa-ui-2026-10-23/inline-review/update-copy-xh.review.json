@@ -1,0 +1,62 @@
+{
+  "unit": "update-copy-xh",
+  "shard": "../../../../lib/update-copy-locales/xh.ts",
+  "range": "all",
+  "okCount": 142,
+  "items": [
+    {
+      "index": 35,
+      "key": "Four draft languages: reading choices, map reviews and report version details.",
+      "verdict": "repair",
+      "draft": "Iilwimi ezine eziyidrafti: ukhetho lokufunda, uphononongo lweemephu neenkcukacha zenguqulelo yengxelo.",
+      "backtranslation": "Four draft languages: study choice, map review and report-translation details.",
+      "problem": "'report version details' rendered 'iinkcukacha zenguqulelo yengxelo', which a reader takes as 'report translation details' (inguqulelo = translation in this same app copy). The note is about report versions; use uhlelo (version/edition).",
+      "corrected": "Iilwimi ezine eziyidrafti: ukhetho lokufunda, uphononongo lweemephu neenkcukacha zohlelo lwengxelo."
+    },
+    {
+      "index": 38,
+      "key": "Sesotho, Xitsonga and Tshivenda: more site report, map and Lima controls.",
+      "verdict": "repair",
+      "draft": "IsiSuthu, isiTsonga nesiTshivenda: izilawuli ezininzi zengxelo yendawo, zemephu nezikaLima.",
+      "backtranslation": "Sesotho, Xitsonga and Tshivenda: many site-report, map and Lima controls.",
+      "problem": "'more ... controls' (additional ones now translated) became 'izilawuli ezininzi' = 'many controls', overstating coverage and losing the 'in addition' sense.",
+      "corrected": "IsiSuthu, isiTsonga nesiTshivenda: izilawuli ezingakumbi zengxelo yendawo, zemephu nezikaLima."
+    },
+    {
+      "index": 41,
+      "key": "Sesotho, Xitsonga and Tshivenda: more menus, site progress and sign-in messages.",
+      "verdict": "repair",
+      "draft": "IsiSuthu, isiTsonga nesiTshivenda: iimenyu ezininzi, inkqubela yendawo nemiyalezo yokungena.",
+      "backtranslation": "Sesotho, Xitsonga and Tshivenda: many menus, site progress and sign-in messages.",
+      "problem": "'more menus' became 'iimenyu ezininzi' = 'many menus'; same drift as entry 38.",
+      "corrected": "IsiSuthu, isiTsonga nesiTshivenda: iimenyu ezingakumbi, inkqubela yendawo nemiyalezo yokungena."
+    },
+    {
+      "index": 58,
+      "key": "Saving offline keeps your note or message instead of losing it or hanging.",
+      "verdict": "repair",
+      "draft": "Ukugcina ngaphandle kwe-intanethi kugcina inqaku lakho okanye umyalezo endaweni yokuwulahla okanye ukuthi i-app ibambeke.",
+      "backtranslation": "Offline saving keeps your note or message instead of throwing it away or saying the app is stuck.",
+      "problem": "'instead of losing it or hanging' — 'okanye ukuthi i-app ibambeke' reads as 'or saying that the app is stuck' (ukuthi = to say). The English means the app no longer hangs.",
+      "corrected": "Ukugcina ngaphandle kwe-intanethi kugcina inqaku lakho okanye umyalezo endaweni yokuwulahla okanye yokuba i-app ibambeke."
+    },
+    {
+      "index": 101,
+      "key": "On a laptop each page has one set of links at the top, and titles are no longer cut off.",
+      "verdict": "repair",
+      "draft": "Kwilaptop, iphepha ngalinye linamakhonkco amanye kuphela phezulu, kwaye izihloko azisanqunyulwa.",
+      "backtranslation": "On a laptop, each page has only some/other links at the top, and headings are no longer cut off.",
+      "problem": "'one set of links' rendered 'amakhonkco amanye kuphela', which reads as 'only some/other links' rather than a single set of links.",
+      "corrected": "Kwilaptop, iphepha ngalinye lineqela elinye kuphela lamakhonkco phezulu, kwaye izihloko azisanqunyulwa."
+    },
+    {
+      "index": 141,
+      "key": "Prepared examples are labelled clearly; unused report settings are hidden.",
+      "verdict": "repair",
+      "draft": "Imizekelo elungisiweyo iphawulwe ngokucacileyo; iisetingi zengxelo ezingasetyenziswayo zifihliwe.",
+      "backtranslation": "Corrected samples are clearly marked; unused report settings are hidden.",
+      "problem": "'Prepared examples' rendered 'Imizekelo elungisiweyo', which in this same file means 'corrected' (entry 71 'amakhadi alungisiweyo' = corrected cards). A reader thinks the examples were fixed. Use -lungiselelwe (prepared).",
+      "corrected": "Imizekelo elungiselelweyo iphawulwe ngokucacileyo; iisetingi zengxelo ezingasetyenziswayo zifihliwe."
+    }
+  ]
+}

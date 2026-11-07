@@ -29,6 +29,7 @@ import { TSHIVENDA_SOIL_HEALTH_DRAFT } from './course-translation-drafts-ve-soil
 import { TSHIVENDA_SMALL_LIVESTOCK_DRAFT } from './course-translation-drafts-ve-small-livestock.ts';
 import { TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT } from './course-translation-drafts-ve-seeds-sovereignty.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from './course-translation-drafts-ve-market-community.ts';
+import { ISIXHOSA_COURSE_DRAFTS } from './course-translation-drafts-xh.ts';
 
 /** Source-paired learner card copy. These isiZulu strings are drafts pending language and local farming review. */
 export const COURSE_MODULE_TRANSLATION_DRAFTS = {
@@ -138,15 +139,28 @@ export function resolveCourseModulePresentation(module: CourseModule, language: 
       return { title, description, status };
     }
   }
+  if (language === 'xh') {
+    const draft = ISIXHOSA_COURSE_DRAFTS.find(candidate => candidate.id === module.id);
+    if (draft && module.title === draft.title.sourceEnglish &&
+      module.description === draft.description.sourceEnglish &&
+      module.durationMins === draft.sourceMetadata.durationMins &&
+      module.category === draft.sourceMetadata.category) {
+      const title = draft.title.reviewStatus === 'hold' ? module.title : draft.title.xhosaDraft;
+      const description = draft.description.reviewStatus === 'hold' ? module.description : draft.description.xhosaDraft;
+      const status = draft.title.reviewStatus === 'machine-draft' ||
+        draft.description.reviewStatus === 'machine-draft' ? 'draft' : 'english-fallback';
+      return { title, description, status };
+    }
+  }
   return { title: module.title, description: module.description, status: 'english-fallback' };
 }
 
 /** A module's English heading does not mean all its lessons are English. Count only drafts
  * that still pass their exact-source check, so the card cannot advertise a stale translation. */
-export function regionalModuleDraftBadge(module: CourseModule, language: 'st' | 'ts' | 've'): string {
+export function regionalModuleDraftBadge(module: CourseModule, language: 'st' | 'ts' | 've' | 'xh'): string {
   const modulePresentation = resolveCourseModulePresentation(module, language);
   if (modulePresentation.status === 'draft') {
-    return `${language === 've' ? 'Tshivenda ' : ''}AI draft · review pending`;
+    return `${language === 've' ? 'Tshivenda ' : language === 'xh' ? 'isiXhosa ' : ''}AI draft · review pending`;
   }
   const lessonDrafts = module.lessons.filter(lesson =>
     resolveLearnerLessonPresentation(lesson, language).status === 'draft').length;

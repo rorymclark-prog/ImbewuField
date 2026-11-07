@@ -17,7 +17,7 @@ export default function AreaReturnCards({ beds, sales, expenses, invoices, perio
   const rand = (n: number) => `R ${numberLabel(n, 2)}`;
   return <section aria-label={text('Returns per growing area', 'Imali etholwa endaweni yokulima')} className="record-paper my-6 rounded-2xl border p-5" style={{ background: 'var(--bg-1)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}>
     <div className="flex flex-wrap items-baseline justify-between gap-2"><h2 className="font-display text-xl font-semibold">{text('What your growing space returns', 'Imali etholwa endaweni yakho yokulima')}</h2><span className="text-sm">{period === 'month' ? text('This month', 'Le nyanga') : period === 'season' ? text('This season', 'Le sizini') : text('This calendar year', 'Lo nyaka wekhalenda')} · {now.getFullYear()}</span></div>
-    <IsiZuluDraftSource className="text-sm mt-2 mb-4" lang={lang}
+    <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="text-sm mt-2 mb-4" lang={lang}
       english="Recorded sales minus assigned costs, per mapped m². Compare the same period and area over time."
       zulu="Imali etholwe ngokuthengisa okurekhodiwe kususwe izindleko ezabelwe leyo ndawo, ngemitha-skwele ebalwe emephini. Qhathanisa inkathi nendawo efanayo ngokuhamba kwesikhathi." />
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">{result.cards.map(card => <article key={card.key} className="rounded-xl border p-4" style={{ background: 'var(--bg-2)', borderColor: 'var(--border)' }}>
@@ -26,7 +26,7 @@ export default function AreaReturnCards({ beds, sales, expenses, invoices, perio
       <p className="text-xs">{lang === 'zu' ? <>{numberLabel(card.areaM2)} m² ebalazweni · {card.entries} okufakiwe okwabelwe indawo</> : recordsTemplate(lang, '{area} m² mapped · {n} assigned entries', null, { area: numberLabel(card.areaM2), n: card.entries })}</p>
       {!loading && <p className="text-xs mt-2">{card.entries ? (lang === 'zu' ? `${rand(card.sales)} okudayisiwe · ${rand(card.costs)} izindleko` : recordsTemplate(lang, '{sales} sales · {costs} costs', null, { sales: rand(card.sales), costs: rand(card.costs) })) : text('Assign sales and costs to see a result.', 'Yabela okudayisiwe nezindleko ukuze ubone umphumela.')}</p>}
     </article>)}</div>
-    <IsiZuluDraftSource className="text-sm mt-4" lang={lang}
+    <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="text-sm mt-4" lang={lang}
       template={result.unassignedEntries ? '{n} entries still unassigned: {sales} sales and {costs} costs. Edit a Sold or Spent entry and choose its growing area.' : undefined}
       vars={{ n: result.unassignedEntries, sales: rand(result.unassignedSales), costs: rand(result.unassignedCosts) }}
       english={result.unassignedEntries
@@ -35,7 +35,7 @@ export default function AreaReturnCards({ beds, sales, expenses, invoices, perio
       zulu={result.unassignedEntries
         ? `${result.unassignedEntries} okufakile akukabelwa indawo: ukuthengisa okungu-${rand(result.unassignedSales)} nezindleko ezingu-${rand(result.unassignedCosts)}. Hlela okufakile ngaphansi kwe-Sold noma i-Spent, bese ukhetha indawo yakho yokulima.`
         : 'Kubalwa okufakile kuphela okwabelwe indawo ngokusobala.'} />
-    <IsiZuluDraftSource className="text-xs mt-2" lang={lang}
+    <IsiZuluDraftSource draftLabel={!['xh', 'af'].includes(lang)} className="text-xs mt-2" lang={lang}
       template="Shared costs ({shared}) reduce Combined only. Orchard and other activities stay separate. These figures exclude unassigned costs and may omit overheads or labour; they are not full net profit. The denominator is today’s mapped area, not a historical measurement or harvested area."
       vars={{ shared: rand(result.sharedCosts) }}
       english={`Shared costs (${rand(result.sharedCosts)}) reduce Combined only. Orchard and other activities stay separate. These figures exclude unassigned costs and may omit overheads or labour; they are not full net profit. The denominator is today’s mapped area, not a historical measurement or harvested area.`}

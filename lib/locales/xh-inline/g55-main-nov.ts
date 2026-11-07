@@ -1,0 +1,50 @@
+// Unreviewed isiXhosa machine drafts keyed by the exact English (see index.ts).
+// What the 6 Nov 2026 merge of main added: the Assistant connections page (app/connect/imbewu), the registration-preview
+// figure it embeds, and the Settings link to it. The update guide and its illustrated walkthrough stay English here: a
+// module-stub harness compiles them without an isiXhosa lookup (their release-note and tour wording is in update-copy-locales/xh.ts).
+const drafts: Record<string, string> = {
+  // Assistant connections page (its title and the Settings link reuse the g29 draft of "Assistant connections").
+  "Back to Account": "Buyela kwi-Akhawunti",
+  "Work with your saved sites through an assistant. Choose which sites it may use and disconnect it here whenever you need to.": "Sebenza ngeendawo zakho ezigciniweyo usebenzisa umncedisi. Khetha ukuba zeziphi iindawo anokuzisebenzisa, uze umnqumle apha nanini na xa kufuneka.",
+  "Checking your account…": "Iyajonga i-akhawunti yakho…",
+  "Sign in to your ImbewuField account": "Ngena kwi-akhawunti yakho ye-ImbewuField",
+  "Your assistant receives its own scoped connection. It does not receive your password.": "Umncedisi wakho ufumana uqhagamshelo lwakhe olunemida. Akayifumani iphasiwedi yakho.",
+  "Continue with Google": "Qhubeka nge-Google",
+  "Password": "Iphasiwedi",
+  "Loading your sites and connections…": "Iyalayisha iindawo zakho noqhagamshelo…",
+  "Your account": "I-akhawunti yakho",
+  "Personal account": "I-akhawunti yobuqu",
+  "Connect {name}": "Qhagamshela {name}",
+  "After you approve, return to": "Emva kokuvuma, buyela ku-",
+  "Only continue if you started this connection and recognise that destination.": "Qhubeka kuphela ukuba nguwe owaqala olu qhagamshelo kwaye uyayazi leyo ndawo.",
+  "Choose sites to share with this assistant": "Khetha iindawo ozabelana ngazo nalo mncedisi",
+  "No saved sites are synced to this account yet. You may connect with no sites, then save a site in the app and reconnect to select it.": "Akukabikho ndawo zigciniweyo ezivumelanisiweyo kule akhawunti. Unokuqhagamshela ngaphandle kweendawo, uze ugcine indawo kwi-app, uqhagamshele kwakhona ukuze uyikhethe.",
+  "This does not grant access to your Gmail, Drive or computer. New sites need a new connection decision. Connections expire after 90 days; access tokens last one hour.": "Oku akunikezi ufikelelo kwi-Gmail, kwi-Drive okanye kwikhompyuter yakho. Iindawo ezintsha zifuna isigqibo esitsha soqhagamshelo. Uqhagamshelo luphelelwa kwiintsuku ezingama-90; iithokheni zokufikelela zihlala iyure enye.",
+  "Allow selected access": "Vumela ufikelelo olukhethiweyo",
+  "Cancel connection": "Rhoxisa uqhagamshelo",
+  "Connected assistants": "Abancedisi abaqhagamshelweyo",
+  "{n} selected sites · expires {date}": "Iindawo ezikhethiweyo: {n} · iphelelwa ngomhla we-{date}",
+  "Disconnect {name}": "Nqumla {name}",
+  "No active assistant connections.": "Akukho qhagamshelo olusebenzayo lwabancedisi.",
+  "Site originals": "Iifayile zoqobo zendawo",
+  "Imported originals keep their source, byte count and fingerprint. They are separate from the small evidence thumbnails stored on a device.": "Iifayile zoqobo ezingeniswe zigcina umthombo wazo, inani lee-byte nesigxina somnwe. Zahlukile kwiithambnaili ezincinci zobungqina ezigcinwe kwisixhobo.",
+  "Completed imports remain in ImbewuField after the chat closes.": "Ukungeniswa okugqityiweyo kuhlala kwi-ImbewuField emva kokuba incoko ivaliwe.",
+  "{size} bytes · {mime}": "ii-byte ezi-{size} · {mime}",
+  "Import authorisation: {authorisation}": "Imvume yokungenisa: {authorisation}",
+  "Open original {name}": "Vula ifayile yoqobo: {name}",
+  "No originals are attached to this site.": "Akukho fayile zoqobo ziqhotyoshelweyo kule ndawo.",
+  "Historical photo registration draft": "Idrafti yokuqondanisa ifoto yakudala",
+  "Review registered photograph": "Hlola ifoto eqondaniswe nemephu",
+  "{name} · Original bytes verified": "{name} · Ii-byte zoqobo ziqinisekisiwe",
+  "Connect an MCP-compatible assistant": "Qhagamshela umncedisi osebenzisana ne-MCP",
+  "Use the ImbewuField private plugin, or add the following Streamable HTTP endpoint in a host that supports OAuth and remote MCP:": "Sebenzisa i-plugin yangasese ye-ImbewuField, okanye ongeze le endpoint ye-Streamable HTTP kwi-host exhasa i-OAuth ne-MCP ekude:",
+  "Your host should open this app’s sign-in and site-selection page. An installed plugin card alone does not mean the connection is authenticated.": "I-host yakho kufuneka ivule iphepha lokungena nelokukhetha indawo lale app. Ikhadi le-plugin efakiweyo yodwa ayithethi ukuba uqhagamshelo luqinisekisiwe.",
+  // Registration-preview figure.
+  "Photo preview is unavailable on this device.": "Ukujonga ifoto akunakwenzeka kweli sixhobo.",
+  "The original photo could not be displayed.": "Ifoto yoqobo ayinakubonisa.",
+  "Registered original photograph with saved design outlines and observed control points": "Ifoto yoqobo eqondaniswe nemephu enemigca yoyilo olugciniweyo namanqaku olawulo abonwe",
+  "Matching error: {rms} pixels RMS; {max} pixels maximum.": "Impazamo yokuqondanisa: ii-pixel ezi-{rms} ze-RMS; ubuninzi bee-pixel ezi-{max}.",
+  "White circles mark matched controls. Green outlines show the saved design. Empty ground stays blank.": "Amacangci amhlophe abonisa amanqaku olawulo aqondanisiweyo. Imigca eluhlaza ibonisa uyilo olugciniweyo. Umhlaba ongenanto uhlala ungenanto.",
+  "Needs visual review · Your current maps and saved geometry are unchanged.": "Kufuneka ihlolwe ngamehlo · Iimephu zakho zangoku nejiyometri egciniweyo azitshintshanga.",
+};
+export default drafts;

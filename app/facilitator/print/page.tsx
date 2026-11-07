@@ -33,6 +33,8 @@ import { describeHarvest } from '@/lib/water-calc';
 import { loadCachedSiteClimate } from '@/lib/site-climate';
 import { useAppLevel } from '@/lib/app-level';
 import { isSampleMode } from '@/lib/sample-mode';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 // ── Copied label/colour tables (kept in sync manually with FacilitatorCanvas.tsx) ──
 
@@ -381,6 +383,8 @@ type PageKey = 'full' | LayerId;
 export default function FacilitatorPrintPage() {
   // w16-10: this page has its own Back controls in every state — the floating pill stands down.
   useRegisterBackControl();
+  const { lang } = useLanguage();
+  const tx = (en: string) => inlineText(lang, en);
   const simple = useAppLevel() === 'simple';
   // Simple: the per-layer page checkboxes and the cost tables are collapsed behind this, leaving
   // one "Print my plan" action that prints the full design sheet. All tools is unaffected —
@@ -677,18 +681,18 @@ export default function FacilitatorPrintPage() {
   }, [computed]);
 
   if (state === undefined) {
-    return <div style={{ padding: 40, fontFamily: 'var(--font-sans), sans-serif', color: '#5C5040' }}>Loading…</div>;
+    return <div style={{ padding: 40, fontFamily: 'var(--font-sans), sans-serif', color: '#5C5040' }}>{tx('Loading…')}</div>;
   }
 
   if (state === null) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, fontFamily: 'var(--font-sans), sans-serif', color: '#5C5040', background: '#E4DCC6' }}>
-        <div style={{ fontSize: 15 }}>No design on this device yet.</div>
+        <div style={{ fontSize: 15 }}>{tx('No design on this device yet.')}</div>
         <button
           onClick={() => history.back()}
           style={{ padding: '8px 16px', borderRadius: 8, border: '1px solid #C2A878', background: '#fff', color: '#3A352C', cursor: 'pointer' }}
         >
-          ‹ Back
+          ‹ {tx('Back')}
         </button>
       </div>
     );
@@ -736,7 +740,7 @@ export default function FacilitatorPrintPage() {
           onClick={() => history.back()}
           style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13 }}
         >
-          <ArrowLeft size={14} strokeWidth={1.8} /> Back
+          <ArrowLeft size={14} strokeWidth={1.8} /> {tx('Back')}
         </button>
         {/* history.back() no-ops when this page was opened directly (e.g. a new tab) —
             give a real destination so the facilitator is never stranded here. */}
@@ -744,7 +748,7 @@ export default function FacilitatorPrintPage() {
           href="/facilitator"
           style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13, textDecoration: 'none' }}
         >
-          <Pencil size={14} strokeWidth={1.8} /> Back to Design map
+          <Pencil size={14} strokeWidth={1.8} /> {tx('Back to Design map')}
         </a>
         <button
           onClick={() => {
@@ -770,14 +774,14 @@ export default function FacilitatorPrintPage() {
             fontSize: 13, fontWeight: 600,
           }}
         >
-          <Printer size={15} strokeWidth={1.8} /> {simple ? 'Print my plan' : 'Print / Save as PDF'}
+          <Printer size={15} strokeWidth={1.8} /> {simple ? tx('Print my plan') : tx('Print / Save as PDF')}
         </button>
         <span style={{ fontSize: 12, opacity: 0.85, marginLeft: 8 }}>
-          {nothingToPrint ? 'Select at least one page to print' : 'A4 landscape plan pack'}
+          {nothingToPrint ? tx('Select at least one page to print') : tx('A4 landscape plan pack')}
         </span>
         {showPrintHint && (
           <span style={{ fontSize: 12, color: '#FFE9B3', marginLeft: 8 }}>
-            Printing isn&apos;t available in the installed app. This page&apos;s link is copied — open it in Safari or Chrome to print.
+            {tx("Printing isn't available in the installed app. This page's link is copied — open it in Safari or Chrome to print.")}
           </span>
         )}
 
@@ -789,14 +793,14 @@ export default function FacilitatorPrintPage() {
               onClick={() => setShowMoreOptions((v) => !v)}
               style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 12 }}
             >
-              More options <ChevronDown size={14} strokeWidth={1.8} style={{ transform: showMoreOptions ? 'rotate(180deg)' : undefined }} />
+              {tx('More options')} <ChevronDown size={14} strokeWidth={1.8} style={{ transform: showMoreOptions ? 'rotate(180deg)' : undefined }} />
             </button>
           )}
           {(!simple || showMoreOptions) && (
             <>
               <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, cursor: 'pointer' }}>
                 <input type="checkbox" checked={fullOn} onChange={() => togglePage('full')} />
-                Full design
+                {tx('Full design')}
               </label>
               {c.layersPresent.map((lid) => (
                 <label key={lid} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, cursor: 'pointer' }}>
@@ -813,7 +817,7 @@ export default function FacilitatorPrintPage() {
           and the surrounding body background fix above — but needs a caption so a bright A4 page
           on a now-themed surround reads as a chosen print preview, not a failed render. */}
       <p className="no-print" style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-muted)', margin: '14px 0 0' }}>
-        Print preview
+        {tx('Print preview')}
       </p>
 
       {fullOn && (
@@ -832,7 +836,7 @@ export default function FacilitatorPrintPage() {
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: 16, fontWeight: 700, letterSpacing: 0.5, color: '#1F4D2B' }}>ImbewuField</div>
-              <div style={{ fontSize: 9.5, color: '#755942' }}>Permaculture plan sheet</div>
+              <div style={{ fontSize: 9.5, color: '#755942' }}>{tx('Permaculture plan sheet')}</div>
             </div>
           </div>
 
@@ -856,7 +860,7 @@ export default function FacilitatorPrintPage() {
                 item per row fixes the wrap; width comes from here, not from the row count. */}
             <div style={{ flex: '0 0 220px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: '4mm', fontSize: 10 }}>
               <div>
-                <div style={{ fontSize: 12, fontWeight: 700, borderBottom: '1px solid #C7BCA6', marginBottom: 3, paddingBottom: 2 }}>Legend</div>
+                <div style={{ fontSize: 12, fontWeight: 700, borderBottom: '1px solid #C7BCA6', marginBottom: 3, paddingBottom: 2 }}>{tx('Legend')}</div>
                 <div>
                   {(Object.keys(c.itemTally) as ElType[]).map((type) => {
                     const t = c.itemTally[type]!;
@@ -882,7 +886,7 @@ export default function FacilitatorPrintPage() {
                     );
                   })}
                   {Object.keys(c.itemTally).length === 0 && Object.keys(c.lineTally).length === 0 && (
-                    <div style={{ fontSize: 9, color: '#755942' }}>No elements placed yet.</div>
+                    <div style={{ fontSize: 9, color: '#755942' }}>{tx('No elements placed yet.')}</div>
                   )}
                 </div>
               </div>
@@ -898,12 +902,12 @@ export default function FacilitatorPrintPage() {
                   All tools always shows them (simple is false, so this is unconditional there). */}
               {(!simple || showMoreOptions) && (
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 12, fontWeight: 700, borderBottom: '1px solid #C7BCA6', marginBottom: 3, paddingBottom: 2 }}>Bill of quantities</div>
+                <div style={{ fontSize: 12, fontWeight: 700, borderBottom: '1px solid #C7BCA6', marginBottom: 3, paddingBottom: 2 }}>{tx('Bill of quantities')}</div>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 9 }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid #C7BCA6' }}>
-                      <th style={{ textAlign: 'left', padding: '2px 0' }}>Item</th>
-                      <th style={{ textAlign: 'right', padding: '2px 0' }}>Qty</th>
+                      <th style={{ textAlign: 'left', padding: '2px 0' }}>{tx('Item')}</th>
+                      <th style={{ textAlign: 'right', padding: '2px 0' }}>{tx('Qty')}</th>
                       <th style={{ textAlign: 'right', padding: '2px 0' }}>ZAR</th>
                     </tr>
                   </thead>
@@ -916,12 +920,12 @@ export default function FacilitatorPrintPage() {
                       </tr>
                     ))}
                     {c.boqRows.length === 0 && (
-                      <tr><td colSpan={3} style={{ padding: '4px 0', color: '#755942' }}>Nothing to cost yet.</td></tr>
+                      <tr><td colSpan={3} style={{ padding: '4px 0', color: '#755942' }}>{tx('Nothing to cost yet.')}</td></tr>
                     )}
                   </tbody>
                   <tfoot>
                     <tr style={{ borderTop: '2px solid #161311', fontWeight: 700 }}>
-                      <td style={{ padding: '3px 0' }} colSpan={2}>TOTAL</td>
+                      <td style={{ padding: '3px 0' }} colSpan={2}>{tx('TOTAL')}</td>
                       <td style={{ textAlign: 'right', padding: '3px 0' }}>{formatZar(c.total)}</td>
                     </tr>
                   </tfoot>
@@ -929,7 +933,7 @@ export default function FacilitatorPrintPage() {
                 {c.existingRows.length > 0 && (
                   <div style={{ marginTop: 8 }}>
                     <div style={{ fontSize: 8, fontWeight: 700, color: '#5C5040' }}>
-                      Already on the land — not counted in the budget
+                      {tx('Already on the land — not counted in the budget')}
                     </div>
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 8, color: '#5C5040' }}>
                       <tbody>

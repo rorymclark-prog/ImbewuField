@@ -1,0 +1,12 @@
+# dict-1099 — Phase A blind back-translation (isiXhosa values only, lib/locales/xh.ts, 11 reportUi* keys in the order given)
+0. Refresh the corrected (fixed-up) example
+1. Refreshing refreshes this corrected example with the saved records. It does not write new advice. The example's history is deleted when you start the workplace again.
+2. Refresh the corrected example so that you use this language.
+3. Corrected example
+4. Purpose of the report
+5. Full example
+6. All saved chapters, maps and pictures.
+7. PDF of the corrected example
+8. These summaries use the same corrected records. The full example includes all the maps and pictures that exist.
+9. Purpose
+10. Origin of the report

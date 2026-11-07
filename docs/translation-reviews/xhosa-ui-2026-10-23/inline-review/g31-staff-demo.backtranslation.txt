@@ -1,0 +1,136 @@
+0 It shows the observation dated {asOf} or earlier, using the latest corrected records. It does not rebuild what was entered at that time.
+1 Not included in the funder view
+2 Repeated attendance is counted as one more presence, not another person. Attendance and satisfaction are evidence of delivery; they do not by themselves show skills gained or impact.
+3 one code per visit
+4 Record production, water, soil, daily life and other approved indicators. Enter the result or measurement for each date; repeated observation is not collected together. Leave an unknown baseline or an unapproved target empty.
+5 This is the partners' default identity on the programme reports of this organisation. Use the public name of the whole programme when several gardens are included. Upload logos you are authorised to use.
+6 Logo: {name}
+7 This action must stay inside the tour.
+8 Training access is closed to the mentor. Open it at Organisation → People and access.
+9 The organisation has closed funders' access.
+10 This practice place has ended. Open the workspace again.
+11 Training activities
+12 Group photo
+13 Attendance certificates
+14 Signed paper register
+15 Former group member
+16 First recorded visit
+17 Latest recorded visit
+18 All participants supplied
+19 up to
+20 Sample requests must stay inside the sample.
+21 The workspace has changed. Open the field groups again.
+22 This draft lacks saved visit photos. Save your notes, then open the original visit again while connected to the internet before sending the changes.
+23 Check the farmer, observation, follow-up date and photo captions. A person's name or a follow-up date needs an approved action.
+24 Choose the mentor, place and the non-repeating assignment of farmers.
+25 Choose the assigned farmer.
+26 This sample has ended. Open the workspace again.
+27 The saved record was not restored. Open the visit records again to confirm the change.
+28 Group and guide saved. The mentor will see this in their workspace.
+29 Visit recorded.
+30 Save an unfinished draft on this device
+31 Restore the saved draft
+32 Draft saved on this device, including photos and signatures. Send the completed record when you are ready.
+33 The draft could not be saved. Keep this form open.
+34 Saved draft restored. Check it before sending it.
+35 Attendance signature of {name}
+36 Signed {date}
+37 Sign again
+38 Add signature
+39 — sign below with a finger or pen.
+40 Sign attendance of {name}
+41 The signing area is full. Save it or delete it and sign again.
+42 Use the signature
+43 Delete the drawing
+44 Delete the signature
+45 Responses: {completed} · Came: {assigned}
+46 See feedback results
+47 Collect five short answers after the session. Participants may skip questions.
+48 Record a participant's response
+49 Ask the participant and have them record their answers themselves. This form saves their response together with the session. For participants who respond in their own account, connect the assessment below.
+50 Choose who came
+51 response recorded
+52 The participant agrees that these responses be recorded for the programme team.
+53 Add a response to the session
+54 Remove the response
+55 Response added. Save the session so that the response stays.
+56 Response removed from this draft. Save the session so that the change is kept.
+57 Answered: {n} · Skipped: {missing}
+58 Food security visit guide
+59 Beneficial garden visit
+60 Walk through the garden together. Look, ask and practise.
+61 Garden and water
+62 Look at the beds, water access, upkeep of things and protection of crops.
+63 Soil and seedlings
+64 Look at soil cover, compost, seedlings and the next planting.
+65 Harvest and getting food
+66 Distinguish what is eaten or shared, what is sold and what is stored.
+67 Learning and next action
+68 Look for a working skill. Agree on an action, a responsible person and a date.
+69 How these records support the programme
+70 These records support delivery of ACT's SEF food security. Attendance at work and payroll stay in the authorised SEF system.
+71 Attendance at training and working skills seen are recorded separately.
+72 Areas that were checked and shared by the organisation.
+73 Record the area actually in production. Keep one code per visible garden.
+74 Areas planted at the start match the 18 garden profiles. Buildings, paths, trees and unused land are not included. These allocations are sample only; they are not measurements checked on the ground.
+75 Only areas shared by the organisation come from here.
+76 Edit, save and change sharing here; no real project is changed.
+77 Loading production areas…
+78 {area} of hectares
+79 No published measurement yet
+80 Different gardens: {sites} · observation {first} up to {last}.
+81 Published records only.
+82 Includes confidential records; funders see published records only.
+83 This is the result of combining the most recent recorded observation of each garden, not necessarily the area planted on one same date. Check again at each report time. What the organisation has checked does not mean independently checked. Crop cycles and several farmers do not add extra hectares.
+84 Update this garden
+85 Add a garden observation
+86 Permanent site code
+87 e.g. rhino-01
+88 Garden name
+89 Productive vegetable beds (m²)
+90 Productive staple crop plots (m²)
+91 Total garden boundary (m², not compulsory)
+92 Evidence of measurement
+93 Method, date, and where the site record or photo is kept. Avoid entering participants' personal details.
+94 Enter 0 only where you checked that there is no production. Use one site code on following visits. Do not include paths, buildings, resting land and tree areas in these two kinds of crops.
+95 I have confirmed that these areas do not overlap and this garden is not registered under another code.
+96 Include this garden's areas in the funder total result
+97 Save observation
+98 Where the planted area comes from
+99 One row per garden. Vegetable beds and staple crop plots add together to make a larger total result.
+100 AI-made indicator of {name}
+101 Vegetables {veg} m² · Staple crops {staple} m²
+102 Total area: {area} m²
+103 Shared result
+104 Organisation only
+105 Basis of the area
+106 Update / change sharing
+107 Saved and included in the funder total result.
+108 Saved privately for the organisation.
+109 This practice place has ended. Open the production areas again.
+110 Total area planted
+111 The numbers show assignment of assessment and responses. A participant may appear in several assessments. Missing numeric responses remain unknown. Awaiting review means closed but not shared; it is not a separate recorded consent status.
+112 Sample conversation with Lima
+113 Lima · guided conversation
+114 Review this edited conversation. Live questions are available in your workspace.
+115 The sample questions and answers below stay in English so that advice is not changed in translation.
+116 You
+117 An AI-made example of aphids on a leaf
+118 Read the aphid control guide
+119 Repeat the example
+120 Change the practice role
+121 Ask for improvement
+122 Garden picture: {name}
+123 Garden plan
+124 Plan drawing, {kind}: {name}. It is not a measured plot plan.
+125 AI-made indicator of the place of {name}. It is not field evidence.
+126 {kind} · {name}. Tap the plan to enlarge it. Drawing plan; not scaled by size.
+127 AI-made indicator of {name}. Tap to enlarge. A sample scenario, they are not satellite images or measured site plans.
+128 Profile: {name}
+129 {label} (current)
+130 Coming soon
+131 {label} (coming soon)
+132 The design map is a set of Mentor tools
+133 View as a role with sample records
+134 Change the way of viewing…
+135 Change the way of practising…

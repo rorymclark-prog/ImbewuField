@@ -1,0 +1,961 @@
+[
+ {
+  "path": "reading-landscape/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/description",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/infographicAlt",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/body",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l1/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/infographicAlt",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/body",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/q",
+  "verdict": "repair",
+  "problem": "Possessive 'lakhe' agrees with icala, not igadi; 'her garden' = 'igadi yakhe'.",
+  "repaired": "Umfama ucwangcisa ilaphu lomthunzi kwicala lasemntla legadi yakhe. Kufuneka ajonge ntoni phambi kokulilungisa endaweni?",
+  "severity": "minor"
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l2/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/infographicAlt",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/body",
+  "verdict": "repair",
+  "problem": "Several non-words/typos ('echatshazelwa', 'aziingqongileyo', 'aziko', concord 'lasekuhlaleni'); isiZulu-leaning 'utamatisi' (course uses 'itumato'); 'kodwa' (but) where English says 'alone' - 'moving a bed alone will not control it' became 'moving the bed but will not control it'.",
+  "repaired": "Umoya unokonakalisa izityalo kwifama encinci. Icala nokomelela komoya onokonakalisa kutshintsha ngommandla, ngexesha lonyaka, nangemiqolo yeentaba nezithuba zendawo yakho. Hamba emhlabeni wakho ngeentsuku ezinomoya. Rekhoda apho umoya uvela khona nento echaphazelwa nguwo. Jonga iirekhodi zemozulu zasekuhlaleni phambi kokugqiba ukuba isikhuselo sidingeka phi.\n\nEbusuku obucacileyo, obuthe cwaka, umoya obandayo unokuhamba ethambekeni ehla uze uqokelelane kwiindawo eziphantsi. Ezi ndawo zinokubanda kunamathambeka angqongileyo. Iindlela zeqabaka nazo zixhomekeke kwindawo. Thelekisa iindawo onokuzikhetha kwixesha leqabaka lasekuhlaleni. Jonga iirekhodi zasekuhlaleni zobushushu obuphantsi kakhulu apho zikhoyo. Ukuba iirekhodi azikho, qhubeka ujonga ebusuku obubandayo uze ubuze umcebisi wezolimo wasekuhlaleni phambi kokukhetha ikhaya elisisigxina lezityalo ezincinci ezithambileyo (seedlings).\n\nIqabaka ngumkhenkce owenzeka kumphezulu obandayo. Inkungu yodwa ayibonisi ukuba umkhenkce wenzekile, kwaye umonakalo weqabaka unokwenzeka ngaphandle komkhenkce obonakalayo. Khangela umkhenkce nomonakalo wezityalo, thelekisa umhlaba ophantsi namathambeka, uze ujonge ubushushu obuphantsi kakhulu apho ukwazi. Phawula iindawo apho ukubanda okanye umonakalo kuhlala ixesha elide. Gcina izityalo ezibucayi kude neendawo ezibandayo ozibonileyo.\n\nKwiitumato ezinengxaki ye-late blight (isifo sezityalo setumato), ukuhamba komoya nelanga lekuseni kunganceda amagqabi omile. I-late blight isenokusasazeka ngexesha lemozulu ebandayo, enomswakama exesha elide. Ukuhambisa ibhedi kuphela akuyi kuyilawula; funa nesikhokelo sasekuhlaleni sempilo yezityalo.",
+  "severity": "wording"
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/keyPoints/2",
+  "verdict": "repair",
+  "problem": "Negative copula concord: iqabaka is cl.5, so 'alilo', not 'asilo'.",
+  "repaired": "Thelekisa umonakalo wezityalo ebusuku obubandayo nobushushu kwindawo yakho yonke; iqabaka elibonakalayo alilo kuphela uphawu",
+  "severity": "minor"
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/q",
+  "verdict": "repair",
+  "problem": "'-zalela' means give birth/breed; for a seedling nursery use 'indawo yokukhulisela izityalo ezincinci'.",
+  "repaired": "Umfama makakhangele phi kuqala xa ebeka indawo yokukhulisela izityalo ezincinci eziva iqabaka kwifama encinci yaseHighveld?",
+  "severity": "wording"
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/0/rationale",
+  "verdict": "repair",
+  "problem": "Same 'zokuzalela' (birthing) for nursery; copula concord 'asilo' -> 'alilo'.",
+  "repaired": "Umoya obandayo unokuhlala kwiindawo eziphantsi ebusuku obucacileyo, obuthe cwaka. Thelekisa iindawo onokuzikhetha zokukhulisela izityalo ezincinci kwixesha leqabaka lasekuhlaleni. Jonga iirekhodi zobushushu obuphantsi kakhulu lasekuhlaleni okanye buza umcebisi wezolimo wasekuhlaleni phambi kokwenza ukhetho olusisigxina. Iqabaka elibonakalayo alilo kuphela uphawu lomonakalo weqabaka, kwaye akukho ndawo yenduli iqinisekisa ukungabikho kweqabaka.",
+  "severity": "wording"
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/q",
+  "verdict": "repair",
+  "problem": "'Utamatisi' is the isiZulu form; course uses isiXhosa 'itumato' (English is plural 'tomatoes').",
+  "repaired": "Iitumato zomfama wase-KZN zihlala zifumana i-late blight ngexesha lemozulu ebandayo, enomswakama. Yeyiphi indawo yebhedi enokunceda amagqabi omile, kunye nengcebiso yasekuhlaleni yempilo yezityalo?",
+  "severity": "wording"
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l3/quiz/1/rationale",
+  "verdict": "repair",
+  "problem": "'kodwa' (but) used where English says 'alone' - garbles 'moving the bed alone is not a complete control plan'.",
+  "repaired": "Ukuhamba komoya nelanga lekuseni kunganceda amagqabi omile. I-late blight ikhuthazwa yimozulu ebandayo, enomswakama exesha elide, kwaye ukuhambisa ibhedi kuphela asisicwangciso esipheleleyo solawulo.",
+  "severity": "wording"
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/infographicAlt",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/body",
+  "verdict": "repair",
+  "problem": "Second 'kodwa' should be 'kuphela' ('their presence ALONE does not show compaction').",
+  "repaired": "Imephu yendawo idinga iphepha, itheyiphu yokulinganisa, ikhampasi, nexesha lokuhamba emhlabeni wakho. Hamba ngomda uze wenze umzobo wokuqala. Wubhale 'awulinganiswanga' de uhlole imigama yawo. Phawula emntla. Yongeza indlu, imithi, amanzi, iindlela, iifensi. Zoba imicibisholo yomoya wasehlotyeni nowasebusika, iindlela zomthunzi, nalapho amanzi ahamba khona xa kunetha.\n\nQaphela apho iqabaka lihlala ixesha elide, apho umhlaba unuka ukumanzi ngeenyanga ezomileyo, nalapho i-khakibos okanye i-blackjack ikhula ngokuxineneyo. Ezi zityalo zinokukhula kwiindawo ezothusiweyo, kodwa ukubakho kwazo kuphela akubonisi ukuba umhlaba uxinene na. Hlola umhlaba phambi kokugqiba ukuba loo ndawo ithetha ntoni kuyilo lwakho.\n\nFaka iindawo (zones) neesektha (sectors) zakho phezu komzobo ofanayo. Wuhlaziye ixesha ngalinye lonyaka. Umzobo wepensile osebenzisayo ngokwenene ubaluleke ngakumbi kunalowo ugqibeleleyo owenziwe kanye.",
+  "severity": "wording"
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/options/2",
+  "verdict": "repair",
+  "problem": "Correct quiz option: 'the plant but cannot show compaction' - should be 'the plant ALONE' ('sodwa').",
+  "repaired": "Phawula indawo uze uhlole umhlaba; isityalo sodwa asinakubonisa ukuxinana komhlaba",
+  "severity": "wording"
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/0/rationale",
+  "verdict": "repair",
+  "problem": "Second 'kodwa' should be 'kuphela' ('presence alone').",
+  "repaired": "I-blackjack inokukhula kumhlaba othe wothuswa, kodwa ukubakho kwayo kuphela akubonisi ukuxinana komhlaba. Jonga uze uhlole umhlaba phambi kokugqiba ukuba indawo leyo ithetha ntoni kuyilo lwakho.",
+  "severity": "wording"
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "reading-landscape/reading-landscape-l4/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/description",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/infographicAlt",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/body",
+  "verdict": "repair",
+  "problem": "isiZulu plural 'izimpawu' (isiXhosa 'iimpawu'); object concord 'lu' does not match i-pollination (cl.9 'yi').",
+  "repaired": "Imbewu ye-open-pollinated esuka kuhlobo oluzinzileyo inokuvelisa izityalo ezifanayo xa i-pollination (ukudluliselwa kothuli lwentyatyambo ukusuka kwenye intyatyambo ukuya kwenye) ilawulwa ngokufanelekileyo. Ii-F1 hybrid zivela kubazali abakhethiweyo. Imbewu yazo egciniweyo inokuhluma, kodwa isizukulwana esilandelayo siyahluka; kusenokwenzeka ukuba singayigcini indibaniselwano owawuyifuna.\n\nUlawulo lwembewu (seed sovereignty) luquka ulwazi nokhetho olufunekayo ukuze utyale, ulondoloze kwaye wabelane ngembewu efanelekileyo. Gcina ukuchongwa kwesityalo nohlobo kunye neqela ngalinye lembewu.\n\nKhetha izityalo ezinempilo ezineempawu eziluncedo. Qala ngesityalo osaziyo, ubuze umcebisi wokulondoloza imbewu ukuba angayilawula njani i-pollination nokukhetha kwaso.",
+  "severity": "minor"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/keyPoints/1",
+  "verdict": "repair",
+  "problem": "Subject concord: ulawulo is cl.11 -> 'luthetha'.",
+  "repaired": "Ulawulo lwembewu luthetha inkululeko ekuxhomekekeni kwinkampani yembewu ngesizini nganye",
+  "severity": "minor"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/keyPoints/3",
+  "verdict": "repair",
+  "problem": "isiZulu plural 'izimpawu'; isiXhosa 'iimpawu'.",
+  "repaired": "Khetha izityalo ezinempilo ezineempawu eziluncedo; sebenzisa isikhokelo sokulondoloza imbewu esithile kwisityalo ngasinye",
+  "severity": "minor"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/rationale",
+  "verdict": "repair",
+  "problem": "'zikhiwa' means 'are picked/plucked' (as fruit), not 'are bred/made'; relative concords do not agree with 'idibaniso'.",
+  "repaired": "Ii-F1 hybrid zenziwa ngokuwelisa imigca emibini ethile yabazali — imbewu yazo iphethe idibaniso lemfuza elixubeneyo nelingaqikelelekiyo, ayiyiyo ikopi ezinzileyo yomzali.",
+  "severity": "wording"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/1/rationale",
+  "verdict": "repair",
+  "problem": "isiZulu plural 'izimpawu'; isiXhosa 'iimpawu'.",
+  "repaired": "Ukhetha iimpawu ozifunayo ukuba ziqhubeke — impilo namandla okukhula zibaluleke ngakumbi kwixesha elide kunesivuno esikhulu sesityalo esinye.",
+  "severity": "minor"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/infographicAlt",
+  "verdict": "repair",
+  "problem": "'ukuvundiswa' can read as 'fertilising'; gloss the technical term on first use.",
+  "repaired": "Imbewu eyomileyo iqokelelwa kwiipodi (iingxowa zembewu) ezivuthiweyo. Umzekelo wendlela emanzi yetumato ubonisa ukuvundiswa (fermentation) okufutshane, ukuhlambulula nokuyomisa.",
+  "severity": "minor"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/body",
+  "verdict": "repair",
+  "problem": "'Umbona ungeniswa ngumoya' means 'maize is brought in by the wind', not wind-pollinated; 'unganxibelelana' (connect/communicate) is weak for cross-pollinate. Also gloss 'ukuvundiswa' (fermentation).",
+  "repaired": "Imbewu eyomileyo kufuneka ivuthwe phambi kokuqokelelwa. Susa i-chaff (inkunkuma ethambileyo ejikelezayo imbewu) kunye nembewu eyonakeleyo, uze ugqibezele ukuyomisa emthunzini kukho umoya ohambayo.\n\nImbewu esesiqhamweni esinenyama idinga indlela ethile kwisityalo ngasinye. Imbewu yetumato inokuvundiswa (fermentation) ixesha elifutshane ukunceda ukususa ijeli yayo, emva koko ihlanjululwe yomiswe kakuhle. Gcina ingqayi esebenzayo ivulekile okanye igqunywe ngokukhululekileyo. Ukuvundiswa akufuneki kuzo zonke izityalo ezineembewu ezimanzi kwaye akuqinisekisi mbewu engenasifo.\n\nI-pollination (ukudluliselwa kothuli lwentyatyambo ukusuka kwenye intyatyambo ukuya kwenye) nayo ibalulekile. Uthuli lwentyatyambo lombona luthwalwa ngumoya (wind-pollinated), kwaye umbona unokuxubana nezinye iintlobo. Iitumato ubukhulu becala ziyazi-pollinate ngokwazo, kodwa ukuxubana kuyenzeka. Jonga isityalo nohlobo phambi kokucwangcisa ukwahlula (isolation) okanye ukulondoloza imbewu.",
+  "severity": "meaning"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/keyPoints/1",
+  "verdict": "repair",
+  "problem": "Gloss 'ukuvundiswa' so it is not read as 'fertilising'.",
+  "repaired": "Ukuvundiswa (fermentation) kwetumato kususa ijeli; ezinye iimbewu ezimanzi zidinga indlela yazo yokulungiswa",
+  "severity": "minor"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/keyPoints/2",
+  "verdict": "repair",
+  "problem": "'ungeniswa ngumoya' (brought in by wind) does not say maize is wind-pollinated.",
+  "repaired": "Iitumato ubukhulu becala ziyazi-pollinate ngokwazo kodwa zinokuxubana; uthuli lwentyatyambo lombona luthwalwa ngumoya. Jonga isikhokelo sokwahlula esithile kwisityalo nohlobo phambi kokulondoloza imbewu",
+  "severity": "meaning"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/q",
+  "verdict": "repair",
+  "problem": "Gloss 'ukuvundiswa' so it is not read as 'fertilising'.",
+  "repaired": "Ukuvundiswa (fermentation) okufutshane kunceda ukususa ntoni xa kulungiswa imbewu yetumato?",
+  "severity": "minor"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/options/3",
+  "verdict": "repair",
+  "problem": "'engenasebenzo' is not a word; 'engenamsebenzi' (without function).",
+  "repaired": "Yinto yesiko nje engenamsebenzi ngokwenene",
+  "severity": "minor"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/options/1",
+  "verdict": "repair",
+  "problem": "CORRECT quiz option: 'ungeniswa ngumoya' (brought in by wind) does not convey wind-pollinated, the key fact of the answer.",
+  "repaired": "Uthuli lwentyatyambo lombona luthwalwa ngumoya kwaye umbona uxubana ngokulula emgama; iitumato ubukhulu becala ziyazi-pollinate ngokwazo",
+  "severity": "meaning"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/infographicAlt",
+  "verdict": "repair",
+  "problem": "Numeral concord: 'iimbewu ezilishumi' (ten seeds).",
+  "repaired": "Iimvulophu zembewu zigcinwe kwisikhongozeli esivaliweyo, zipholile, zimnyama kwaye ziyomile. Ecaleni kwazo, iimbewu ezilishumi kwilaphu elimanzi — ezinye zihlumile, ezinye azihlumanga — njengovavanyo lokuhluma.",
+  "severity": "minor"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/body",
+  "verdict": "repair",
+  "problem": "Reversed meaning: '-nqanda' = stop/ward off, so 'sealing damp seed can STOP moisture' instead of 'TRAP moisture'. Learners could seal damp seed and lose it.",
+  "repaired": "Yomisa imbewu kakuhle phambi kokuyigcina: kwiimvulophu zephepha, hayi iplastiki, kwindawo enomthunzi nomoya ohambayo — ungaze usebenzise ilanga elithe ngqo okanye ubushushu obuvalelweyo. Iintshaba ezintathu zokukwazi kwembewu ukuhluma kukushisa, ukukhanya nokufuma. Ubomi bembewu ekugcinweni buyahluka ngokwesityalo neemeko, ngoko vavanya ukuhluma phambi kokuthembela kwimbewu egciniweyo.\n\nBhala kwimvulophu nganye isityalo, uhlobo nomhla egciniwe ngawo. Gcina imbewu eyomile kakuhle kwisikhongozeli esivaliweyo kwindawo epholileyo, emnyama, eyomileyo. Ukuvala imbewu emanzi kungavalela ukufuma ngaphakathi kwaye kuyonakalise.\n\nPhambi kwesizini entsha yokutyala, vavanya iqela elincinci ngokuhluma ukuze ungathembeli kwimbewu eyaphulukana ngokuthe cwaka nokukwazi ukuhluma.\n\nCwangcisa ukutshintshisana ngembewu nabamelwane kwesi sizini. Oko umzi omnye ukugcina kakuhle, imizi emininzi inokwabelana ngako — kwaye ukwahluka kweentlobo zeqela lonke kukhula ngokutshintshisana ngalinye.",
+  "severity": "meaning"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/rationale",
+  "verdict": "repair",
+  "problem": "'uthembise ityala lonke lesizini' = 'promise the whole season's debt/court case' - 'ityala' (case/debt) confused with 'ukutyala' (planting).",
+  "repaired": "Uvavanyo lokuhluma lubamba imbewu esele ifile ekugcinweni phambi kokuba uthembele kuyo ekutyaleni kwesizini yonke.",
+  "severity": "wording"
+ }
+]

@@ -23,7 +23,8 @@ test('w21-04: the Learn link is translated on /farmer and the community profile'
     assert.doesNotMatch(src, /<LessonLink id="[^"]+" label="Learn" \/>/, p);
     // The four-language track routes the community profile through the shared homeLearnAction key,
     // which also covers Sesotho, Xitsonga and Tshivenda; either form keeps the link translated.
-    assert.match(src, /label=\{(?:lang === 'zu' \? 'Funda' : 'Learn'|t\('homeLearnAction'\))\}/, p);
+    // isiXhosa may read the inline draft of the same English 'Learn'.
+    assert.match(src, /label=\{(?:lang === 'zu' \? 'Funda' : (?:'Learn'|inlineText\(lang, 'Learn'\))|(?:lang === 'xh' \? inlineText\(lang, 'Learn'\) : )?t\('homeLearnAction'\))\}/, p);
   }
 });
 

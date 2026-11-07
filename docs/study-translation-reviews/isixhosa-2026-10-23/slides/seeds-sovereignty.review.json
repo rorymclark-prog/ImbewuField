@@ -1,0 +1,36 @@
+{
+ "module": "seeds-sovereignty",
+ "okCount": 175,
+ "items": [
+  {
+   "n": 8,
+   "field": "body[6]",
+   "verdict": "repair",
+   "english": "What would make you reject a seed plant even if its fruit were large?",
+   "draft": "Yintoni enokukwenza wale isityalo sembewu nokuba isiqhamo saso sikhulu?",
+   "backtranslation": "What can you do of this seed plant even if its fruit is big? (garbled, no reject sense)",
+   "problem": "Ungrammatical; the question about what would make you reject the plant is lost.",
+   "corrected": "Yintoni enokukwenza uwale isityalo sembewu nokuba isiqhamo saso sikhulu?"
+  },
+  {
+   "n": 8,
+   "field": "body[7]",
+   "verdict": "repair",
+   "english": "Point out the plants you would select and the plants you would reject.",
+   "draft": "Khomba izityalo ongazikhetha nezo ongazizala.",
+   "backtranslation": "Point out plants you could choose and ones you could give birth to / breed from.",
+   "problem": "ongazizala = breed/give birth to, the opposite of reject (selection logic reversed).",
+   "corrected": "Khomba izityalo ongazikhetha nezo ongazilahla."
+  },
+  {
+   "n": 9,
+   "field": "body[1]",
+   "verdict": "repair",
+   "english": "Crops pollinated by wind or insects can cross over long distances.",
+   "draft": "...ngumoya okanye zizinambuzane zinokuxubana ngomgama omde.",
+   "backtranslation": "...by wind or are insects can mix over a long distance.",
+   "problem": "Ungrammatical copula (zizinambuzane = they are insects) instead of agent 'by insects'.",
+   "corrected": "Izityalo eziphiwa uthuli lwentyatyambo ngumoya okanye ngeenambuzane zinokuxubana ngomgama omde."
+  }
+ ]
+}

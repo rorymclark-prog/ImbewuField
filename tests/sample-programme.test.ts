@@ -7,6 +7,8 @@ import { FARM_TOUR, sampleRolesFor, cleanTourProgress } from '../lib/sample-tour
 import { freshSampleAssessment, freshSampleFarmPack, SAMPLE_FARM_SITE_ID, sampleFarmSections, SAMPLE_PHOTOS } from '../lib/sample-farm-pack';
 import { validFeedback, feedbackText } from '../lib/product-feedback';
 import { buildDemoSavedPlace } from '../lib/demo-farm';
+import { XH_INLINE_SOURCE } from '../lib/locales/xh-inline/index';
+import { inlineText, registerXhInline } from '../lib/xh-inline';
 
 test('sample tour spans 15 minutes and leads to real farm pages with bounded progress',()=>{
   assert.equal(FARM_TOUR.reduce((n,s)=>n+s.minutes,0),15);
@@ -415,4 +417,22 @@ test('visit photos cannot overflow a record or point to untrusted external image
   assert.equal(validVisitPhotos([{...p,image:'https://example.com/tracker'}]),false);
   assert.equal(validVisitPhotos([{...p,caption:'x'.repeat(201)}]),false);
   assert.equal(validVisitPhotos([{...p,image:'data:image/jpeg;base64,'+'A'.repeat(150000)}]),false);
+});
+
+test('the two example photo captions read in isiXhosa (keeping AI) while the saved pack keeps the English, and the notice no longer claims captions stay English',()=>{
+  registerXhInline(XH_INLINE_SOURCE);
+  try {
+    for(const photo of SAMPLE_PHOTOS){
+      const draft=inlineText('xh',photo.caption);
+      assert.notEqual(draft,photo.caption,photo.caption);
+      assert.match(draft,/yi-AI/,'AI stays AI');
+      assert.equal(inlineText('en',photo.caption),photo.caption);
+      assert.equal(inlineText('zu',photo.caption),photo.caption);
+    }
+  } finally { registerXhInline({}); }
+  const page=readFileSync(new URL('../app/samples/farm/page.tsx',import.meta.url),'utf8');
+  assert.match(page,/alt=\{inlineText\(lang,p\.caption\)\}/);
+  assert.match(page,/<figcaption lang=\{lang==='xh'\?'xh':undefined\}>\{inlineText\(lang,p\.caption\)\}<\/figcaption>/);
+  assert.ok(!/soil test results and photo captions/.test(page),'the isiXhosa notice must not say photo captions stay in English');
+  assert.match(page,/caption:p\.caption\}/,'the saved pack keeps the caption exactly as recorded');
 });

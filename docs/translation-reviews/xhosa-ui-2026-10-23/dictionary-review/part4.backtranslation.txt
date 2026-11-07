@@ -1,0 +1,453 @@
+0 | communityBoardKindFree | Free
+1 | communityBoardDescription | Description
+2 | communityBoardDescriptionPlaceholder | e.g. Local tomato seedlings, 20 available
+3 | communityBoardPost | Send
+4 | communityBoardClose | Mark as finished
+5 | communityBoardDelete | Delete
+6 | communityMessagesEmpty | There is no chat yet.
+7 | communityMessageInputPlaceholder | Write a message…
+8 | communitySend | Send
+9 | communitySendError | The message was not sent — check your connection and try again.
+10 | communityMessagesListenError | We could not stay connected to this chat. Check your connection and try again.
+11 | communityPostError | We could not publish — check your connection and try again.
+12 | communityContactError | We could not open the chat — check your connection and try again.
+13 | communityReportReasonPlaceholder | What is wrong?
+14 | communityReportSubmit | Send report
+15 | communityReportSent | The report has been sent. Thank you.
+16 | communityReportError | We could not send the report — check your connection and try again.
+17 | communitySignInRequired | Sign in so that you can use the community layer.
+18 | communityLoadError | We could not load the community layer now. Check your connection and try again.
+19 | communityRetry | Try again
+20 | bookTabPicked | Harvested
+21 | bookTabSold | Sold
+22 | bookTabSpent | Costs
+23 | bookTabCharts | Charts
+24 | myRecordsDeleteError | It was not deleted. Try again.
+25 | myRecordsGuidePriceLabel | Guide price, of July 2026:
+26 | myRecordsGuidePriceRange | in shops about R{wholesale}/kg · directly/at the farm gate about R{retail}/kg.
+27 | myRecordsGuidePriceForKg | For {kg} kg, that is about R{low}–R{high}.
+28 | myRecordsGuideEstimated | An estimated guide — confirm the local price.
+29 | myRecordsGuideSourced | A guide that comes from a source — enter the price you actually agreed on.
+30 | myRecordsGuideRecommended | A recommended guide — the average of prices found; confirm locally.
+31 | myRecordsGuideMissing | There is no reliable guide price saved for this crop. Enter the price you actually agreed on.
+32 | myRecordsLoadError | We could not load your recent records. Check your connection and try again — what is seen below may be old or incomplete.
+33 | myRecordsRetry | Try again
+34 | recordsOrchardIn | With the fruit garden
+35 | recordsOrchardOut | Outside the fruit garden
+36 | recordsOrchardOutNote | The fruit garden is closed, so {kg} kg was not counted in this total: {names}. Nothing has been deleted — open it again so that it is counted again.
+37 | recordsOrchardOutNoteMoney | The fruit garden is closed, so {kg} kg was not counted in the weight above: {names}. The rand total still counts all the sales, including that of the fruit garden.
+38 | myRecordsExampleHeading | Example — what a written entry looks like
+39 | myRecordsExampleBadge | Example
+40 | insightsGenerateError | We could not make the report — check your connection and try again.
+41 | popiaGoalPickOne | Choose one in order to continue
+42 | welcomeHeroTitle | Let us find your land.
+43 | welcomeHeroSub | Tap once — Lima learns your land, rain and weather.
+44 | welcomeFindLand | Find my land
+45 | welcomeShowExample | Show me an example first
+46 | continueSiteTitle | Continue with {site}
+47 | continueSitePct | {pct}% completed
+48 | continueSiteCta | Open my place
+49 | startNewSite | Start a new place
+50 | guidedBarSearch | Look for your town, or tap your home on the map.
+51 | guidedBarLocate | Use where I am
+52 | coachOverline | The next step
+53 | coachStepBoundaryTitle | Walk your boundary
+54 | coachStepBoundaryBody | Tap each corner of your land. Lima will measure it at your place.
+55 | coachStepBoundaryCta | Draw now
+56 | coachStepSurveyTitle | Tell Lima about this land
+57 | coachStepSurveyBody | A few quick questions — water, land, and what grows here.
+58 | coachStepSurveyCta | Fill in the survey
+59 | coachStepDesignTitle | Design your farm
+60 | coachStepDesignBody | Place beds, trees and water on your real land.
+61 | coachStepDesignCta | Open the studio
+62 | coachStepCropTitle | Make your production plan
+63 | coachStepCropBody | Choose crops, Lima builds you a planting calendar.
+64 | coachStepCropCta | Plan crops
+65 | coachDoneTitle | Your place is fully planned
+66 | coachDoneBody | Lima will keep watching. Come back and write harvests and the diary.
+67 | coachDoneCta | Done
+68 | coachDismiss | Hide this tip
+69 | coachZuluEnglishGuidanceNotice | This farming guidance and Lima's stays in English until the source is checked and it is checked by a person who speaks isiXhosa well.
+70 | coachGoalFeed | Your goal: feeding the family — Lima chooses food crops for the whole year.
+71 | coachGoalIncome | Your goal: getting an income — Lima chooses market crops.
+72 | coachGoalSoil | Your goal: restoring the land — Lima chooses crops that build the soil.
+73 | settingsGuideMe | Guide me
+74 | settingsGuideMeDesc | Show the next-step guide on your place's report.
+75 | settingsVoiceLabel | Lima reads aloud
+76 | settingsVoiceDesc | Speak tips aloud when a voice is available.
+77 | demoBannerLabel | Example farm
+78 | demoBannerBody | This is how the report of a completed place looks.
+79 | demoExit | Leave the example
+80 | ttsSpeakLabel | Read aloud
+81 | ttsStopLabel | Stop reading
+82 | manageSite | Manage this place
+83 | renameSite | Rename
+84 | setMainSite | Make it the main place
+85 | mainSiteAlready | Main place
+86 | deleteSite | Delete place
+87 | deleteSiteConfirm | Delete this saved place?
+88 | saveBtn | Save
+89 | cancelBtn | Cancel
+90 | addButton | Add
+91 | addSheetTitle | What do you want to add?
+92 | addSheetSub | Choose one — Lima will give you the right tool.
+93 | addZuluDraftNotice | This menu text in isiXhosa is a draft, and has not yet been checked by a person who speaks isiXhosa well.
+94 | addSheetClose | Close
+95 | addGroupLand | My land
+96 | addGroupGrowing | Planting
+97 | addGroupWater | Water
+98 | addGroupStructures | Paths and structures
+99 | addOpensStudioChip | Opens the studio
+100 | addOpensMapChip | Opens the map
+101 | addLabelBoundary | Land boundary
+102 | addHintBoundary | Draw your land's boundary.
+103 | addLabelHouse | House / building
+104 | addHintHouse | Draw a line around your house or the main building.
+105 | addLabelLawn | Grass
+106 | addHintLawn | Draw an area that already has grass.
+107 | addLabelVegGarden | Vegetable garden (existing)
+108 | addHintVegGarden | Draw a garden that already has crops.
+109 | addLabelVegBed | New vegetable bed
+110 | addHintVegBed | Place a new bed for planting.
+111 | addLabelTree | Tree
+112 | addHintTree | Mark a tree — existing or planned.
+113 | addLabelWaterTank | Water tank
+114 | addHintWaterTank | Place a JoJo or tank.
+115 | addLabelWaterBody | Dam / lake
+116 | addHintWaterBody | Draw water that is on your land.
+117 | addLabelTap | Tap
+118 | addHintTap | Mark the tap's location.
+119 | addLabelPath | Path
+120 | addHintPath | Draw a walking path.
+121 | addLabelFence | Wire fence
+122 | addHintFence | Draw the fence line.
+123 | addToolsPanelRow | Add to my map
+124 | surveyMissingEssentials | Add the important things before saving
+125 | surveyMissingHint | Choose your goals, land preparation and land condition, water source and how it arrives, way of farming and challenges. Other details are not compulsory.
+126 | surveySameYearUnit | Use the same year and the same unit for quantity, home use and sales. Income is for this one year.
+127 | surveyGuidePeople | Count the adults who work the land, not everyone who lives at home. In a community place, use the number of members.
+128 | surveyGuideLand | Look at many parts of the planting area. If the land differs, describe the difference in your notes. Choose "I am not sure" when you cannot tell.
+129 | surveyGuideProduction | A notebook, harvest record or sales record can help you. Do not mix kilograms and ... (izinyanda). Leave numbers unwritten when your records do not cover the whole year.
+130 | surveyGuideLivestock | Walk around the place and write what is there now. Things you plan to add, write in your notes so that they are not taken as resources that already exist.
+131 | surveyGuideIncome | Enter money received from sales, before costs. The survey records income; it does not calculate profit.
+132 | surveyGuideWater | Start at the spring/fountain, then follow the pipe or the way of carrying. Look at the water storage place and the roof channels. Areas filled in by the map can be corrected if you measured them at the place.
+133 | surveyGuideChallenges | Describe where the problem happens and when you notice it. Put the most urgent problem first in your notes.
+134 | surveyAnswerYes | Yes
+135 | surveyAnswerNo | No
+136 | surveyNotApplicable | It does not apply here
+137 | surveyRoofEstimateTitle | From the roof to stored water
+138 | surveyAnnualRainfall | Annual rain of the place
+139 | surveyEstimatedCollection | Estimated collection / year
+140 | surveyRainfallMissing | Annual rain is not available in this view. The place report may use the analysis of your place.
+141 | surveyRoofInputs | It uses the roof size you entered or drew together with rain from the place analysis. Collection efficiency is an estimate: 80% with roof channels, 60% without. Actual collection varies.
+142 | surveyRoofExample | See a worked example at 600 mm rain
+143 | surveyKeyChecks | {n} of the {total} main checks are written
+144 | surveyCardHint | Choose a short or full survey. Review your answers before using them in your place's report.
+145 | surveyFieldNotebook | Your field notebook
+146 | surveyWelcomeTitle | A good plan starts with your land.
+147 | surveyZuluDraftNotice | ISIXHOSA DRAFT — The isiXhosa words of this survey are not yet checked. If something is unclear, switch to English before saving your answers.
+148 | surveyWelcomeIntro | Tell us what you see, what you can do, and what is important to you. What you notice helps make a more useful place report.
+149 | surveyShortTitle | Short and simple
+150 | surveyFullTitle | Complete
+151 | surveyFiveSections | 5 sections + review
+152 | surveySevenSections | 7 sections + review
+153 | surveyShortDescription | Start with the important things of your home and garden. Easy choices, and a place for your notes.
+154 | surveyFullDescription | Build a more complete picture of your place, including production, harvest months, home use and sales.
+155 | surveyShortIncludes | People and goals · land · planting · water · challenges
+156 | surveyFullIncludes | Everything in the short survey, plus detailed production records and different parts of livestock and sales.
+157 | surveySwitchHint | Change mode at any time. All your answers stay together, including details you added before.
+158 | surveyContinue | Continue with the survey
+159 | surveyBegin | Start the survey
+160 | surveyBenefitObserve | Write what you see
+161 | surveyBenefitAdvice | Give the place report information
+162 | surveyBenefitReview | Review before saving
+163 | surveyIllustrationCaption | Picture · it is not a map of your place
+164 | surveySections | Survey sections
+165 | surveyYourSite | The place you chose
+166 | surveyGrowingResources | Planting and resources
+167 | surveySaveReminder | Answers are saved when you have finished and tap "Save".
+168 | surveyUnsaved | Changes are not yet saved
+169 | surveyReviewTitle | Review your survey
+170 | surveySaveContinue | Save and continue
+171 | surveyUnknownHint | Leave a question unanswered if you are not sure. Something unknown is more helpful than guessing.
+172 | surveyFieldGuide | On the way
+173 | surveyObserveFirst | Look, then write.
+174 | surveyRecordOverview | In your notebook
+175 | surveyGoalsSelected | Selected goals
+176 | surveyProductionEntries | What is written of production
+177 | surveyEditingExisting | You are updating your existing survey. Earlier details stay here when you change modes.
+178 | surveyTipPeople | Who uses this land? Choose the goals that are important to you. You can choose more than one.
+179 | surveyTipLand | Look at the land and how you work it. These are things you see, not the result of a laboratory soil test.
+180 | surveyTipProduction | Write what you are already planting. In the complete survey, open only the kinds of production you want to record.
+181 | surveyTipLivestock | Choose the animals and structures that are already at the place. Leave unconfirmed details unwritten.
+182 | surveyTipIncome | Write whether you sell the produce, and where you sell it. Quantity and income are recorded for each item of produce.
+183 | surveyTipWater | Follow the water: where it comes from, how it reaches the crops, and where it is stored.
+184 | surveyTipChallenges | Tell us what is holding you back. Your notes help the report to focus on your real situation.
+185 | surveyReviewHint | Look at what you have noticed before saving. Tap the pencil to go back to any section.
+186 | surveyAddProduction | Add detailed production records
+187 | surveyAddProductionHint | Open the full mode to write the yearly quantity, harvest months and sales.
+188 | surveyOptionalRecord | Not compulsory · tap to add or review
+189 | surveyPerYear | year
+190 | surveyProductionCheck | Check these numbers: quantity needs a unit, and home use together with sales cannot exceed the yearly quantity. Give a name to the item called "Other" before saving.
+191 | surveyFixBeforeSave | Check what is written of production and the sizes of areas before saving. Use numbers greater than zero or zero (literally: greater than egg or egg); leave things you do not know unwritten.
+192 | surveySaveError | Your survey could not be saved. Leave this screen open and try again.
+193 | surveyIllustrativeOnly | A worked example, it is not the rain of your place
+194 | surveyNotRecorded | Not written
+195 | surveyNoneReported | Nothing reported
+196 | surveySourceMap | From the shapes you drew on the map
+197 | surveySourceFarmer | Entered by you
+198 | surveyYourSiteAtGlance | Summary of your place
+199 | surveyReviewBasis | These are the things you saw that you wrote down. Areas not written remain unknown. Save so that these answers are available in your place's report.
+200 | surveyEditSection | Edit section
+201 | surveyHarvestOverview | The harvest calendar you reported
+202 | surveyHarvestUnknown | A tick means you wrote a harvest in that month. A month with nothing means the time was not recorded; it does not mean there is a shortage of food.
+203 | surveyHarvestReported | Harvest reported
+204 | surveyNoProductionYet | No detailed production written. You can add it later in the complete survey.
+205 | surveyEditProduction | Review production records
+206 | surveyStepHouseholdInfo | Information about the home
+207 | surveyStepLandLocation | Land and place
+208 | surveyStepCurrentProduction | Current production
+209 | surveyStepLivestockPoultry | Livestock and chickens
+210 | surveyStepIncomeSales | Income and sales
+211 | surveyStepResourcesInputs | Resources and things used
+212 | surveyCloseAriaLabel | Close
+213 | surveyDiscardConfirm | Throw away your answers up to now? This list of questions has not been saved.
+214 | surveyDiscardBtn | Throw away answers
+215 | surveyAutoFillNote | Filled in automatically from the shapes you drew ({area} m²) — tap to adjust
+216 | surveyEfficiencySuffix | working well (efficiency)
+217 | surveyNumInputDefaultPlaceholder | e.g. 120
+218 | surveyExistingGrowingAreaLabel | Area now cultivated
+219 | surveyExistingGrowingAreaPlaceholder | e.g. 200
+220 | surveyExistingGrowingAreaHint | Estimated size, in square metres, of the area you already plant
+221 | surveyCurrentProductionSurveyLabel | Current production survey
+222 | surveyReportWhatYouKnow | Report what you know — leave anything blank if you are not sure. This helps us measure progress over time.
+223 | surveyWhatDoYouProducePlaceholder | What do you produce?
+224 | surveyQtyPerYearLabel | Amount / per year
+225 | surveyUnitLabel | Unit
+226 | surveyUnitPlaceholder | e.g. kg, bundles
+227 | surveyUsedByHouseholdLabel | Used by the home
+228 | surveySoldLabel | Sold
+229 | surveyIncomeEarnedLabel | Income received (ZAR)
+230 | surveyHarvestMonthsLabel | Months of harvesting
+231 | surveyFaoFoodGroupLabel | FAO food group
+232 | surveyFoodGroupNotSure | I am not sure
+233 | surveyFoodGroupsReportedCount | {n} food groups reported.
+234 | surveyFoodGroupsNotReported | No food groups reported yet.
+235 | surveyFaoHddsFooter | These groups describe your production. They do not measure what your home has eaten, and they give no nutrition scores.
+236 | surveyProdLeafyGreensLabel | Leafy vegetables
+237 | surveyProdLeafyGreensHint | Spinach, kale, cabbage, etc.
+238 | surveyProdOtherVegLabel | Other vegetables
+239 | surveyProdOtherVegHint | Tomatoes, onions, peppers, etc.
+240 | surveyProdStapleCropsLabel | Staple field crops
+241 | surveyProdStapleCropsHint | Maize, beans, sweet potato, etc.
+242 | surveyProdFruitLabel | Fruit
+243 | surveyProdFruitHint | From trees or from climbing plants
+244 | surveyProdNutsBerriesLabel | Nuts and berries
+245 | surveyProdNutsBerriesHint | From trees or from (shrubs/thickets? matyholo)
+246 | surveyProdEggsLabel | Eggs
+247 | surveyProdPoultryLabel | Chicken meat
+248 | surveyProdRabbitsLabel | Rabbits
+249 | surveyProdHoneyLabel | Honey
+250 | surveyProdOtherLabel | Other
+251 | surveyProdOtherHint | Anything not listed above
+252 | surveyToggleSellProduceSub | Your produce lines can record what is sold and the income received
+253 | surveyIncomeSalesNote | You can record what was sold and the income received for each item at the step called Current production.
+254 | surveyMonthMar | Mar
+255 | surveyMonthApr | Apr
+256 | surveyMonthMay | May
+257 | surveyMonthAug | Aug
+258 | surveyMonthOct | Oct
+259 | surveyMonthDec | Dec
+260 | surveyHddsCereals | Grains
+261 | surveyHddsRootsTubers | Roots and tubers
+262 | surveyHddsVegetables | Vegetables
+263 | surveyHddsFruit | Fruit
+264 | surveyHddsMeatPoultry | Meat and chickens
+265 | surveyHddsEggs | Eggs
+266 | surveyHddsFish | Fish
+267 | surveyHddsPulsesNutsSeeds | Beans, nuts and seeds
+268 | surveyHddsMilk | Milk and milk products
+269 | surveyHddsOilsFats | Oil and fats
+270 | surveyHddsSugarsHoney | Sugar and honey
+271 | surveyHddsSpicesBeverages | Spices and drinks
+272 | loginRoleFarmer | Farmer
+273 | loginRoleStudent | Student
+274 | loginSubtitleSignIn | Sign in to your account.
+275 | loginSubtitleCreate | Create a new account.
+276 | loginSubtitleReset | Reset your password.
+277 | loginContinueToMap | Sign in to continue to your map
+278 | loginBackendUnavailableNotice | Signing in is not available in this practice version. Everything you try here is kept on this phone.
+279 | loginSignIn | Sign in
+280 | loginCreateAccount | Create an account
+281 | loginResetEmailSent | The reset email has been sent to
+282 | loginResetCheckInbox | Check your email inbox and follow the link to set a new password.
+283 | loginBackToSignIn | Go back to signing in
+284 | loginFullName | Full name
+285 | loginEmailAddress | Email address
+286 | loginPassword | Password
+287 | loginRole | Role
+288 | loginSigningIn | Signing in...
+289 | loginCreatingAccount | Creating account...
+290 | loginSending | Sending...
+291 | loginSendResetEmail | Send reset email
+292 | loginForgotPassword | Have you forgotten your password?
+293 | loginOr | or
+294 | loginConnecting | Connecting...
+295 | loginContinueWithGoogle | Continue with Google
+296 | loginGoogleEmbeddedHelp | Signing in with Google does not open inside this in-app browser. Sign in with email above, or open the app in Chrome / Safari:
+297 | loginLinkCopied | Link copied
+298 | loginCopyAppLink | Copy the app link
+299 | loginBackToApp | Go back to the app
+300 | loginTrustFooter | Built for small farmers of South Africa
+301 | loginErrorInvalidEmail | This does not look like a valid email address.
+302 | loginErrorAccountDisabled | This account is closed.
+303 | loginErrorAccountNotFound | No account was found with that email.
+304 | loginErrorWrongPassword | The password is not correct — try again.
+305 | loginErrorInvalidCredentials | The email or the password is not correct.
+306 | loginErrorEmailInUse | An account with that email already exists.
+307 | loginErrorWeakPassword | Choose a strong password (at least 6 characters).
+308 | loginErrorTooManyAttempts | There are too many attempts — wait a little and try again.
+309 | loginErrorNetwork | Network error — check your connection.
+310 | loginErrorCancelled | Signing in was cancelled.
+311 | loginErrorDifferentProvider | An account with this email already exists that uses another way of signing in.
+312 | loginErrorEmailDisabled | Signing in with email and password is closed in this app. The app administrator must open it.
+313 | loginErrorGoogleDisabled | Signing in with Google is closed in this app. The app administrator must open it.
+314 | loginErrorPopupBlocked | Your browser blocked signing in with Google. Allow popups for this site and try again, or open it in Safari / Chrome.
+315 | loginErrorDomainNotAuthorised | This web address is not yet authorised for signing in with Google. For now use email + password.
+316 | loginErrorStorageBlocked | This browser blocks the storage place needed by Google sign-in — open the site in Chrome or in Safari.
+317 | loginErrorBackendSampleMode | Firebase is not yet set up — it is working in sample mode.
+318 | loginErrorBackendUnavailable | Firebase is not yet set up.
+319 | loginErrorGoogleEmbedded | Signing in with Google will not open inside this in-app browser. Open imbewufield.vercel.app in Chrome or in Safari, or sign in with email + password here.
+320 | loginErrorUnexpected | Something did not go well. Please try again.
+321 | gateTitle | Sign in to ImbewuField
+322 | gateDescription | Private version for testing — enter the password to continue.
+323 | gatePassword | Password
+324 | gateWrongPassword | The password is not correct — try again.
+325 | gateChecking | Checking...
+326 | gateEnter | Sign in
+327 | offlineZuluDraftNotice | Unreviewed isiXhosa draft. Check the English beside save, sync and remove actions. / This isiXhosa text is a draft not yet checked. Look at the English at the side when you save, synchronise or remove.
+328 | offlineTitle | Saved on this phone
+329 | offlineConnected | Connected
+330 | offlineUsingSavedCopies | Without internet — using copies saved on this device
+331 | offlineConnectedSentence | Online — pages saved for use without internet are listed below.
+332 | offlineEntriesWaiting | {count} entries waiting to be sent
+333 | offlineBeforeLeavingSignal | Before you leave the signal
+334 | offlinePrepareDescription | Prepare the pages and the authorised records you need, including photos of visits and of training. This uses data and the device's storage. Stay signed in on this device.
+335 | offlineWorking | Working…
+336 | offlinePrepareButton | Prepare field work on this device
+337 | offlineLessonDownloads | Download lesson slides, spoken explanation and episodes separately under
+338 | offlineStudyLink | Study without internet
+339 | offlineOpenToolsOnce | Open your saved design, crop plans and reports online once, so that their extra tools and pictures become available.
+340 | offlinePageReadiness | Readiness of pages · {ready} of {total}
+341 | offlineStartupFilesSaved | Startup files saved
+342 | offlineNotConfirmed | Not confirmed on this device
+343 | offlineReadinessLimit | This check looks at startup files only. It does not promise new map pictures, all report pictures, or the whole device that is not forced.
+344 | offlineSavedEntriesTitle | Saved entries waiting to be sent
+345 | offlineSavedEntriesDescription | Completed visits, training registers, signatures, opinions, photos, garden observations and assessment answers can wait here. Syncing runs when the app is open and the connection has returned.
+346 | offlineSavedEntriesDescriptionFarmer | Diary notes, records and photos wait here until you have a signal. They are sent by themselves when the app is open and you are back online.
+347 | offlineSyncNow | Send now
+348 | offlineQueueEmpty | Nothing is waiting to be sent. My records are kept separately.
+349 | offlineNeedsReview | Needs checking — saving on the server is not confirmed
+350 | offlineSending | Sending / waiting for confirmation
+351 | offlineWaitingToSend | Saved on this device — waiting to be sent
+352 | offlineDownloadCopy | Download a copy
+353 | offlineRemoveConfirm | Remove this waiting change from this device? This cannot be brought back here. Download a copy first if you want to keep it. The server record is not deleted.
+354 | offlineRemoveQueuedChange | Remove the waiting change
+355 | offlineKeepEntry | Keep it
+356 | offlineReviewRemove | Check / remove
+357 | offlineConflictHelp | When there is a clash, keep the downloaded copy, remove this waiting change, reconnect and open the current record again. Compare the versions before you save your corrections. Permission or verification errors must be resolved before sending again.
+358 | offlineAvailableTitle | What is always available
+359 | offlineCachedCount | {count} authorised information requests are saved on this device. Their contents show the last successful download, together with your changes not yet sent.
+360 | offlineAvailableDescription | Crop planning on this device, diary notes and downloaded lessons can work without signal. AI chat, AI reports, speech writing, scanning receipts, new sign-ins and new online maps still need a connection. The map has an offline drawing page of saved drawings and pins, without satellite or land tiles. Original receipts in the money book stay on their original device.
+361 | offlineDeviceSafety | Use the ordinary browser window. Clearing site data removes the downloaded things and field work not yet sent. Protect this device, especially when it keeps attendance signatures or photos.
+362 | offlinePreparingPages | Preparing the app's pages…
+363 | offlinePreparingNamedPage | Preparing {page}…
+364 | offlineSavingFieldwork | Saving authorised field work information…
+365 | offlinePreparationGaps | Preparation is finished but there are gaps. Read the list below before leaving the signal.
+366 | offlinePreparationComplete | The available pages and field-work records are saved on this device. Test opening again without signal before you go.
+367 | offlineSyncComplete | Sending is finished. Anything still listed below is kept on this phone.
+368 | offlinePortfolio | Portfolio
+369 | offlineErrorUnsupportedBrowser | This browser cannot prepare the app to be used without internet.
+370 | offlineErrorFirstStart | The app is still preparing its first start without internet. Keep it open with a connection and try again.
+371 | offlineErrorPrepareTimeout | The preparation ran out of time. Keep the app open with a connection and try again.
+372 | offlineErrorWorkspaceChanged | The workspace has changed. Prepare again in the current account.
+373 | offlineErrorEntrySending | This entry is being sent. Wait before removing it.
+374 | offlineErrorServiceUnavailable | This service is not available for saving on the device.
+375 | offlineErrorSignInRequired | Sign in and open your workspace before saving field work on this device.
+376 | offlineErrorAccountChanged | The account or organisation has changed. Open your workspace again.
+377 | offlineErrorConnectionTimeout | The connection ran out of time.
+378 | offlineUnknownPage | Another page
+379 | offlineLabelTrainingRegister | Training register
+380 | offlineLabelProgrammeIndicator | Programme indicator
+381 | offlineLabelGardenObservation | Garden observation
+382 | offlineLabelAssessmentResponse | Assessment answer
+383 | offlineLabelVisit | Visit
+384 | offlinePageHome | At home
+385 | offlinePageOffline | Saved on this phone
+386 | offlinePageFarmer | Survey of the garden and place
+387 | offlinePageLessons | Lessons
+388 | offlinePageRecords | My records
+389 | offlinePageInvoices | Invoices
+390 | offlinePageJournal | Diary
+391 | offlinePageCropPlan | Production plan
+392 | offlinePageGardenTasks | Garden tasks
+393 | offlinePageReports | Saved reports
+394 | offlinePageDesign | Design studio
+395 | offlinePageCalendar | Planting calendar
+396 | offlinePageAssessments | Assessment
+397 | offlinePageMentor | Mentor's field work
+398 | offlinePageOrganisation | Organisation
+399 | offlinePageFunder | Funder's reports
+400 | offlinePagePortfolio | Garden portfolio
+401 | pricesFarmGateTitle | Farm prices
+402 | pricesLearn | Learn
+403 | pricesChooseCrop | Tap a crop to see guide prices for selling in bulk and in the shop per kg — when you stand at the gate. Look at today's local price before agreeing.
+404 | reportsViewerLoadError | The report viewer could not load. Reconnect and try to open the saved report again.
+405 | reportsTitle | Place reports
+406 | reportsIntro | Choose a place to prepare and make its report, or reopen a report you have already saved.
+407 | reportsFunderNotice | Your funder workspace contains programme reports shared with you.
+408 | reportsOpenFunderView | Open the funder's view
+409 | reportsLoading | Loading your saved places…
+410 | reportsSampleWorkspaceNotice | Sample workspace · your real places and saved reports are kept separately.
+411 | reportsChooseSitesOrReports | Choose places or reports
+412 | reportsSavedSites | Saved places
+413 | reportsSavedReports | Saved reports
+414 | reportsSelectNewSite | Choose a new place on the map
+415 | reportsSelectNewSiteHelp | Look for a place or tap where it is, then continue to its report.
+416 | reportsSitesDescription | Open a place to make a report and to see which photos, assessment results, survey details and design work can improve it.
+417 | reportsNoSitesTitle | There are no saved places yet
+418 | reportsNoSitesHelp | Choose a place on the map to start. Give it a name and save it in the report workspace so that you can come back here.
+419 | reportsSavedSiteFallback | Saved place
+420 | reportsOneSavedReportLatest | 1 saved report · latest {date}
+421 | reportsManySavedReportsLatest | {count} saved reports · latest {date}
+422 | reportsReadyForFirstReport | Ready for its first report
+423 | reportsOpenWorkspaceForSite | Open the report workspace of {site}
+424 | reportsOpenGenerateReport | Open the place and make a report
+425 | reportsReadLatest | Read the latest saved report
+426 | reportsOpening | Opening…
+427 | reportsEarlierReportsDescription | Open an earlier report without making it again. Each report keeps its saved text and the condition of the place as it was at that time.
+428 | reportsNoSavedReports | There are no saved reports yet. Open a saved place, make its report, and choose Save.
+429 | reportsUnlinkedSiteHeading | Reports of places not saved as plots
+430 | reportsRemovedPinNote | These reports remain available even if their saved pin has been removed.
+431 | priceAllCrops | All crops
+432 | priceConfidenceSourced | Actual market price
+433 | priceConfidenceEstimate | Only an estimate — not confirmed
+434 | priceConfidenceRecommended | Recommended price — average of prices found
+435 | priceUpdatedCheckToday | Price of {date} — always check today's actual price before agreeing
+436 | priceWholesale | In bulk
+437 | pricePerKgTrader | per kg — close to what a trader or market buyer pays
+438 | priceRetail | At the shop
+439 | pricePerKgShop | per kg — the shop shelf price, not the farm price
+440 | cropPlanOpenAria | Open the production plan of {site}
+441 | cropPlanStartAria | Start the production plan of {site}
+442 | cropPlanTitle | Production plan
+443 | cropPlanAddGrowingAreas | Add your planting areas
+444 | cropPlanLoading | Loading your plan…
+445 | cropPlanPlannedCount | {count} planned crops
+446 | cropPlanStartAction | Start the production plan
+447 | cropPlanBedCount | {count} beds
+448 | cropPlanPlotCount | {count} plots
+449 | limaClosePhotoDialog | Close
+450 | limaFabAriaLabel | Open Lima, your field guide — drag to move
+451 | limaFabTitle | Open Lima
+452 | limaFieldGuideSubtitle | Field guide · ImbewuField

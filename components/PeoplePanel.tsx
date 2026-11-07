@@ -3,6 +3,7 @@
 import { MapPin, User } from 'lucide-react';
 import type { Profile } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n-context';
+import { inlineText } from '@/lib/xh-inline';
 
 const ROLE_LABEL_KEYS: Record<string, string> = {
   farmer: 'mentorRoleFarmer',
@@ -146,7 +147,7 @@ function PersonCard({
   isCurrentUser: boolean;
   onOpenProfile?: () => void;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const bio = person.bio?.trim();
 
   // Only the current user's own card opens anything — render it as a real
@@ -158,7 +159,7 @@ function PersonCard({
     <Wrapper
       type={isCurrentUser ? 'button' : undefined}
       onClick={isCurrentUser ? onOpenProfile : undefined}
-      aria-label={isCurrentUser ? 'Open your profile' : undefined}
+      aria-label={isCurrentUser ? inlineText(lang, 'Open your profile') : undefined}
       style={{
         display: 'flex',
         alignItems: 'center',

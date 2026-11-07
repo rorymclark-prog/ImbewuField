@@ -49,7 +49,7 @@ test('the page root, header and grid surfaces read the per-theme tokens', () => 
   );
   assert.match(
     CROPS,
-    /height: 56, background: 'var\(--bg-1\)', borderBottom: '1px solid var\(--border\)' \}\}>/,
+    /(?:min[hH]|h)eight: 56, background: 'var\(--bg-1\)', borderBottom: '1px solid var\(--border\)' \}\}>/,
     'the header bar must read --bg-1 and --border',
   );
   assert.match(
@@ -67,7 +67,7 @@ test('the month-grid header labels, bed names, bed areas and the production-scor
   );
   assert.match(
     CROPS,
-    /className="font-display font-semibold" style=\{\{ fontSize: 'clamp\(13px, 1vw, 15px\)', color: 'var\(--text-primary\)' \}\}>\s*\{bed\.label\}/,
+    /className="font-display font-semibold" style=\{\{ fontSize: 'clamp\(13px, 1vw, 15px\)', color: 'var\(--text-primary\)' \}\}>\s*\{(?:bedLabelText\(lang, )?bed\.label\)?\}/,
     'the bed name in each row must use a responsive clamp()',
   );
   assert.match(

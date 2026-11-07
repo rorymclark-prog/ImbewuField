@@ -22,6 +22,7 @@ import SettingsButton from '@/components/SettingsButton';
 import { tabsForRole } from '@/components/TabBar';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 export default function AppHeader({
@@ -36,7 +37,7 @@ export default function AppHeader({
   right?: ReactNode;
   desktopNav?: boolean;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { navigationRole } = useRoleNavigation();
   const pathname = usePathname();
   const tabs = tabsForRole(navigationRole);
@@ -55,12 +56,15 @@ export default function AppHeader({
       <BackButton fallback={backFallback} />
       <BrandLogo />
       {/* w20-37: the title repeats the h1 and, at lg+, the active nav item, so it only shows when
-          one is set and (when the nav is showing) below lg. The divider goes with it. */}
+          one is set and (when the nav is showing) below lg. The divider goes with it.
+          Below lg the title wraps to at most two lines inside the 52px bar instead of cutting off with an
+          ellipsis: the longer isiXhosa/Afrikaans/Sesotho titles lost their last word at 390px. From lg up it
+          is one nowrap line exactly as before. */}
       {title && (
         <>
           <div className={`w-px h-5${desktopNav ? ' lg:hidden' : ''}`} style={{ background: 'var(--border)' }} />
           <span
-            className={`text-xs font-display truncate min-w-0 whitespace-nowrap${desktopNav ? ' lg:hidden' : ' lg:shrink-0 lg:overflow-visible'}`}
+            className={`text-xs font-display min-w-0 break-words leading-tight line-clamp-2 lg:whitespace-nowrap${desktopNav ? ' lg:hidden' : ' lg:shrink-0 lg:overflow-visible lg:line-clamp-none'}`}
             style={{ color: 'var(--text-secondary)' }}
           >
             {title}
@@ -68,7 +72,7 @@ export default function AppHeader({
         </>
       )}
       {desktopNav && (
-        <nav aria-label="Primary" className="hidden lg:flex items-center gap-5 ml-2 shrink-0 whitespace-nowrap">
+        <nav aria-label={inlineText(lang, 'Primary')} className="hidden lg:flex items-center gap-5 ml-2 shrink-0 whitespace-nowrap">
           {tabs.map(({ href, key }) => (
             <Link
               key={href}

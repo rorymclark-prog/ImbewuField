@@ -11,9 +11,10 @@ import type { CSSProperties } from 'react';
 import { tabsForRole } from '@/components/TabBar';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 export default function DesktopPrimaryNav() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { navigationRole } = useRoleNavigation();
   const pathname = usePathname();
   const tabs = tabsForRole(navigationRole);
@@ -24,7 +25,7 @@ export default function DesktopPrimaryNav() {
   }
 
   return (
-    <nav aria-label="Primary" className="hidden lg:flex items-center gap-5 ml-2 min-w-0 overflow-hidden whitespace-nowrap">
+    <nav aria-label={inlineText(lang, 'Primary')} className="hidden lg:flex items-center gap-5 ml-2 min-w-0 overflow-hidden whitespace-nowrap">
       {tabs.map(({ href, key }) => (
         <Link
           key={href}

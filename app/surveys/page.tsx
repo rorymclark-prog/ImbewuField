@@ -22,9 +22,18 @@ import {
 } from '@/lib/db/queries';
 import type { Survey, SurveyQuestion, SurveyQType } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 
 function localUi(en: string, zu: string, lang: string) {
-  return lang === 'zu' ? zu : en;
+  return inlineText(lang, en, zu);
+}
+
+const SURVEY_XH_DRAFT_NOTICE = 'ISIXHOSA DRAFT — Built-in demonstration text is an unreviewed AI draft. Questions written by an organisation appear in the original English. Ask the survey creator before submitting if anything is unclear.';
+
+// "3 questions" / "1 response": English adds an "s", isiZulu has no plural suffix, isiXhosa swaps the whole noun.
+function countNoun(lang: string, n: number | null, one: string, many: string, zu: string) {
+  if (lang === 'xh') return inlineText(lang, n === 1 ? one : many);
+  return `${localUi(one, zu, lang)}${n !== 1 && lang !== 'zu' ? 's' : ''}`;
 }
 
 // ─── Sample data (shown when backend is not configured) ──────────────────────
@@ -88,6 +97,12 @@ const SAMPLE_SURVEY_ZU_DRAFTS: Record<string, { title?: string; questions?: Reco
 };
 
 function showSampleDraft(survey: Survey, source: string, draft: string | undefined, lang: string) {
+  if (lang === 'xh' && survey.id.startsWith('sample-')) {
+    // isiXhosa drafts of the built-in demonstration surveys, keyed by the exact English
+    // (lib/locales/xh-inline/g01-survey.ts); live organisation copy is never translated here.
+    const xh = inlineText(lang, source);
+    return xh !== source ? `${xh} / ${source}` : source;
+  }
   return lang === 'zu' && survey.id.startsWith('sample-') && draft ? `${draft} / ${source}` : source;
 }
 
@@ -241,7 +256,7 @@ function QuestionBuilder({
               {q.options.length > 2 && (
                 <button
                   onClick={() => removeOption(i)}
-                  aria-label={localUi(`Remove option ${i + 1}`, `Susa impendulo ${i + 1}`, lang)}
+                  aria-label={inlineTemplate(lang, 'Remove option {n}', 'Susa impendulo {n}', { n: i + 1 })}
                   className="flex items-center justify-center flex-shrink-0"
                   style={{ width: 44, height: 44, color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer' }}
                 >
@@ -539,14 +554,14 @@ function StaffSurveyCard({ survey, isLive, canEditLabels, onSaved }: { survey: S
         <div className="flex-1 min-w-0">
           <div className="font-display font-semibold text-sm break-words" style={{ color: 'var(--text-primary)' }}>{showSurveyText(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, survey.title_zu, lang)}</div>
           <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-            {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 ? (lang === 'zu' ? '' : 's') : ''}
+            {survey.org_name} &middot; {survey.questions.length} {countNoun(lang, survey.questions.length, 'question', 'questions', 'umbuzo')}
           </div>
         </div>
         <div className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-full"
           style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.18)' }}>
           <ClipboardList size={11} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.8} />
           <span className="font-display font-semibold text-xs" style={{ color: 'var(--color-forest-800)' }}>
-            {responseCount === null ? '—' : responseCount} {localUi('response', 'impendulo', lang)}{responseCount !== 1 && lang !== 'zu' ? 's' : ''}
+            {responseCount === null ? '—' : responseCount} {countNoun(lang, responseCount, 'response', 'responses', 'impendulo')}
           </span>
         </div>
       </div>
@@ -632,7 +647,7 @@ function FarmerSurveyCard({
           <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-secondary)' }}>
             {localUi('From', 'Kuvela ku', lang)} {survey.org_name}
             {/* Simple hides the question-count metadata — a farmer answering does not need it. */}
-            {!simple && <>{' · '}{survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}</>}
+            {!simple && <>{' · '}{survey.questions.length} {countNoun(lang, survey.questions.length, 'question', 'questions', 'umbuzo')}</>}
           </div>
         </div>
         {submitted ? (
@@ -671,9 +686,9 @@ function FarmerSurveyCard({
                           cursor: 'pointer',
                         }}
                       >
-                        {lang === 'zu' && survey.id.startsWith('sample-')
+                        {(lang === 'zu' || lang === 'xh') && survey.id.startsWith('sample-')
                           ? showSampleDraft(survey, v, v === 'Yes' ? 'Yebo' : 'Cha', lang)
-                        : lang === 'zu' ? `${v === 'Yes' ? 'Yebo' : 'Cha'} / ${v}` : v}
+                        : lang === 'zu' ? `${v === 'Yes' ? 'Yebo' : 'Cha'} / ${v}` : lang === 'xh' ? `${inlineText(lang, v)} / ${v}` : v}
                       </button>
                     );
                   })}
@@ -725,7 +740,7 @@ function FarmerSurveyCard({
             <p role="alert" className="text-sm font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(154,52,18,0.08)', color: 'var(--orange)', border: '1px solid rgba(154,52,18,0.25)' }}>
               {lang === 'zu'
                 ? 'Izimpendulo zakho zisekhona. Asikwazanga ukuzithumela. Hlola uxhumano lwakho bese uthepha okuthi Thumela futhi. / Your answers are still here. We could not submit them. Check your connection and tap Submit again.'
-                : 'Your answers are still here. We could not submit them. Check your connection and tap Submit again.'}
+                : inlineText(lang, 'Your answers are still here. We could not submit them. Check your connection and tap Submit again.')}
             </p>
           )}
 
@@ -809,6 +824,12 @@ export default function SurveysPage() {
             {lang === 'zu'
               ? 'ISIZULU DRAFT — Built-in demonstration text is an unreviewed AI draft. For live surveys, an organisation may enter isiZulu labels; they appear beside the exact English text and have not been independently reviewed. Ask the survey creator before submitting if anything is unclear. / UHLAKA LWESIZULU — Umbhalo wezibonelo owakhelwe ngaphakathi uwuhlaka lwe-AI olungakabuyekezwa. Kuhlolovo olubukhoma, inhlangano ingafaka amagama esiZulu; aboniswa eduze kombhalo wesiNgisi oqondile futhi awabuyekezwanga ngokuzimela. Buza umdali wenhlolovo uma kukhona okungacacile ngaphambi kokuthumela.'
               : ''}
+          </p>
+        )}
+
+        {lang === 'xh' && (
+          <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
+            {inlineText(lang, SURVEY_XH_DRAFT_NOTICE)} / {SURVEY_XH_DRAFT_NOTICE}
           </p>
         )}
 

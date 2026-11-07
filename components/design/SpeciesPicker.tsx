@@ -6,7 +6,7 @@ import { BIOMES } from '@/lib/biome';
 import { useLanguage } from '@/lib/i18n';
 import { formatDesignTranslation, translatedSpeciesSection, translatedSpeciesUse } from '@/lib/design-studio-i18n';
 import { speciesPickerArtworkUrl } from '@/lib/species-art';
-import { formatMonthSpan, formatRange, perennialHarvestFor, sourcedSeasonMonths } from '@/lib/perennial-harvest';
+import { formatRange, monthSpanText, perennialHarvestFor, sourcedSeasonMonths } from '@/lib/perennial-harvest';
 
 interface SpeciesPickerProps {
   /** A lib/biome.ts BIOMES registry key ("IOCB"), never the display name — see biomeKeyForName. */
@@ -24,7 +24,7 @@ export default function SpeciesPicker({
   onSelect,
   onClose,
 }: SpeciesPickerProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   // One line of sourced harvest facts under a fruit tree; nothing at all where none is sourced,
   // rather than a row of dashes on every shrub (lib/perennial-harvest.ts holds the citations).
@@ -32,7 +32,7 @@ export default function SpeciesPicker({
     const h = perennialHarvestFor(id);
     if (!h) return null;
     const parts: string[] = [];
-    const months = formatMonthSpan(sourcedSeasonMonths(h));
+    const months = monthSpanText(lang, sourcedSeasonMonths(h));
     if (months) parts.push(formatDesignTranslation(t('speciesPickerHarvest'), { months }));
     if (h.yearsToFirstCrop) parts.push(formatDesignTranslation(t('speciesPickerFirstCrop'), { years: formatRange(h.yearsToFirstCrop.value) }));
     if (h.yieldKgPerTree) parts.push(formatDesignTranslation(t('speciesPickerYield'), { kg: formatRange(h.yieldKgPerTree.value.map(Math.round) as [number, number]) }));

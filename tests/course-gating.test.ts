@@ -238,7 +238,9 @@ test('unlock explanations keep isiZulu, English, unknown reasons, and the canoni
     `Thumela umsebenzi wesifundo esithi “${title}” ukuze uvule lesi`,
   );
   assert.equal(localisedUnlockReason(finish, 'en', shouldNotBeCalled), finish);
-  assert.equal(localisedUnlockReason(finish, 'xh', shouldNotBeCalled), finish);
+  assert.equal(localisedUnlockReason(finish, 'af', shouldNotBeCalled), finish);
+  // isiXhosa (23 Oct 2026) reads its own drafted templates, like the regional languages.
+  assert.equal(localisedUnlockReason(finish, 'xh', (key) => (key === 'studentFinishToUnlock' ? 'Gqiba “{title}”' : key)), `Gqiba “${title}”`);
   assert.equal(localisedUnlockReason('A new source gate', 'st', (key) => st[key] ?? key), 'A new source gate');
   assert.equal(
     localisedUnlockReason(finish, 'st', (key) => englishTemplates[key]),

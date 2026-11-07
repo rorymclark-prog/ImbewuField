@@ -12,6 +12,7 @@ import { RELEASE_NOTES } from '@/lib/release-notes';
 import { OPEN_UPDATE_GUIDE_EVENT } from '@/lib/update-tour';
 import { useAppLevel } from '@/lib/app-level';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useUpdateCopy } from '@/lib/use-update-copy';
 import { isUpdateCopyLanguage,updateDescription } from '@/lib/update-copy';
 import { updateDateLabel } from '@/lib/update-copy-date';
@@ -48,6 +49,9 @@ const RECENT_DAYS_ALL = 5;
 export default function UpdatesPage() {
   const {t,lang} = useLanguage();
   const nativeCopy = useUpdateCopy(lang,true);
+  // isiXhosa: these update-page keys are English-only in the xh locale, so xh readers get the
+  // unreviewed draft keyed by the same English (lib/locales/xh-inline); every other language keeps t().
+  const tx = (key: string, english: string) => lang === 'xh' ? inlineText(lang, english) : t(key);
   const simple = useAppLevel() === 'simple';
   const [showAll, setShowAll] = useState(false);
   const dayGroups = groupNotesByDay(RELEASE_NOTES);
@@ -67,12 +71,12 @@ export default function UpdatesPage() {
             {t('navWhatsNew')}
           </h1>
           <p className="text-xs mb-6" style={{ color: 'var(--text-secondary)' }}>
-            {t('updatesIntro')}
+            {tx('updatesIntro', 'Every change that reached the app, newest first — the same notes the refresh banner shows, kept here so they don’t disappear when the next update lands.')}
           </p>
           <button type="button" onClick={() => window.dispatchEvent(new Event(OPEN_UPDATE_GUIDE_EVENT))}
             className="mb-6 px-4 rounded-lg font-semibold"
             style={{ minHeight: 44, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}>
-            {t('updatesGuideAction')}
+            {tx('updatesGuideAction', 'Guide me to recent changes')}
           </button>
 
           {isUpdateCopyLanguage(lang)&&<p role="note" className="text-xs mb-4">{t('updatesDraftNotice')}</p>}
@@ -103,7 +107,7 @@ export default function UpdatesPage() {
               className="mb-6 px-4 rounded-lg font-semibold"
               style={{ minHeight: 44, background: 'transparent', border: '1.5px solid var(--color-forest-800)', color: 'var(--color-forest-800)' }}
             >
-              {showAll ? t('updatesShowFewer') : t('updatesShowOlder')}
+              {showAll ? tx('updatesShowFewer', 'Show fewer updates') : tx('updatesShowOlder', 'Show older updates')}
             </button>
           )}
         </div>

@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { useLanguage } from '@/lib/i18n-context';
+import { inlineText } from '@/lib/xh-inline';
 
 /**
  * The ImbewuField wordmark + icon. Clickable — always returns to the landing hub.
@@ -8,11 +10,12 @@ import Link from 'next/link';
  */
 // nav-17: the wordmark is a <span> inside the home link, never a heading — each page owns its single h1.
 export default function BrandLogo() {
+  const { lang } = useLanguage();
   return (
     <Link
       href="/"
-      title="Home"
-      aria-label="ImbewuField home"
+      title={inlineText(lang, 'Home')}
+      aria-label={inlineText(lang, 'ImbewuField home')}
       className="flex items-center gap-2.5 flex-shrink-0"
       style={{ textDecoration: 'none' }}
     >

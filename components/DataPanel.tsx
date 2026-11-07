@@ -33,6 +33,7 @@ import { gatherSiteInputs, surveyFilledCount, SURVEY_TOTAL_FIELDS } from '@/lib/
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import { useLanguage, translate } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { BIOME_I18N_KEYS } from '@/lib/biome';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2, Users } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
@@ -211,6 +212,7 @@ const DEMO_FEATURE_NAME_ZU: Record<string, string> = {
   'Municipal tap': 'Umpompi kamasipala',
 };
 function demoFeatureLabel(name: string, lang: string): string {
+  if (lang === 'xh') return inlineText(lang, name);
   return lang === 'zu' ? (DEMO_FEATURE_NAME_ZU[name] ?? name) : name;
 }
 
@@ -847,7 +849,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       zulu: `${zuluWater} ${zuluSoil}${zuluFrost} ${zuluPlan}`,
     };
   })();
-  const limaRead = lang === 'zu' ? limaReadParts.zulu : limaReadParts.english;
+  // `zulu` is the current-language read (t() keys), so it is the isiXhosa read for xh too.
+  const limaRead = lang === 'zu' || lang === 'xh' ? limaReadParts.zulu : limaReadParts.english;
 
   return (
     <div className="h-full flex flex-col overflow-hidden">
@@ -907,7 +910,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {/* Rainfall deliberately omitted here — the headline "Annual rainfall" stat below is the
                     single measured figure; showing BRU's zone-average mm/yr too reads as a second,
                     competing rainfall number for the same site. */}
-                BRU {data.bru.brucode} · {lang === 'zu' ? t('bruZoneApprox') : 'approx.'} {data.bru.nearestBrg} · {data.bru.tmean}{t('unitTempAverage')}
+                BRU {data.bru.brucode} · {lang === 'zu' || lang === 'xh' ? t('bruZoneApprox') : 'approx.'} {data.bru.nearestBrg} · {data.bru.tmean}{t('unitTempAverage')}
               </div>
             )}
             {!simple && (
@@ -917,7 +920,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             )}
             {!simple && data.bru && (
               <div className="mt-0.5" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)' }}>
-                {lang === 'zu' ? t('bruZoneAttribution') : data.bru.attribution} — {lang === 'zu' ? t('bruZoneNameCaveat') : 'zone name is a best-effort climate match, not verified'}
+                {lang === 'zu' || lang === 'xh' ? t('bruZoneAttribution') : data.bru.attribution} — {lang === 'zu' || lang === 'xh' ? t('bruZoneNameCaveat') : 'zone name is a best-effort climate match, not verified'}
               </div>
             )}
           </div>
@@ -951,9 +954,18 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <button
               key={tabName}
               onClick={() => setTab(tabName)}
-              className="flex flex-1 items-center justify-center gap-1.5 font-sans transition-all duration-150"
+              // Equal-width tabs that fit five to a row at 390px: the label sits under its icon and may take two
+              // lines (a longer language such as isiXhosa), instead of a nowrap row that pushed the fifth tab
+              // onto a second line of its own. Twelve-plus tabs still wrap, as before.
+              className="flex items-center justify-center font-sans transition-all duration-150"
               style={{
-                padding: '9px 12px',
+                flex: '1 1 0',
+                minWidth: 64,
+                flexDirection: 'column',
+                gap: 2,
+                padding: '8px 3px',
+                textAlign: 'center',
+                lineHeight: 1.15,
                 minHeight: 44,
                 borderBottom: tab === tabName ? '2px solid var(--ochre)' : '2px solid transparent',
                 borderTop: 'none', borderLeft: 'none', borderRight: 'none',
@@ -961,7 +973,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 color: tab === tabName ? 'var(--gold-dim)' : 'var(--text-muted)',
                 fontSize: 12.5,
                 fontWeight: tab === tabName ? 600 : 400,
-                whiteSpace: 'nowrap',
                 cursor: 'pointer',
               }}
             >
@@ -980,7 +991,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           const y = e.currentTarget.scrollTop;
           setHeaderCollapsed((prev) => (y > 64 ? true : y < 24 ? false : prev));
         }}
-        style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}>
+        style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain', paddingBottom: 'calc(28px + env(safe-area-inset-bottom, 0px))' }}>
 
         {/* OVERVIEW */}
         {tab === 'Overview' && (
@@ -1150,7 +1161,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   ? { color: 'var(--gold)', text: t('insightHighWind').replace('{kmh}', (data.climate.windSpeed * 3.6).toFixed(0)).replace('{dir}', data.climate.windFromSummer) }
                   : { color: 'var(--text-secondary)', text: t('insightModerateWind').replace('{dir}', data.climate.windFromSummer) },
                 data.soil.soilSource !== 'lab' && data.soil.soilSource !== 'soilgrids'
-                  ? { color: 'var(--text-secondary)', text: appLang === 'zu' ? 'Umhlabathi awukahlolwa. Hlela ukuhlolwa ngaphambi kokuthenga izinto zokuwulungisa.' : 'Soil carbon is not measured here. Arrange a soil test before amendment purchases.' }
+                  ? { color: 'var(--text-secondary)', text: appLang === 'zu' ? 'Umhlabathi awukahlolwa. Hlela ukuhlolwa ngaphambi kokuthenga izinto zokuwulungisa.' : inlineText(appLang ?? lang, 'Soil carbon is not measured here. Arrange a soil test before amendment purchases.') }
                   : data.soil.organicCarbon < 1.5
                   ? { color: 'var(--gold)', text: t('insightLowSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) }
                   : { color: 'var(--color-forest-800)', text: t('insightGoodSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) },
@@ -1171,11 +1182,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
               <p style={{ fontSize: 12.5, lineHeight: 1.5, color: '#4A3F2E', margin: 0, flex: 1, minWidth: 0 }}>
                 <span className="font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>Lima · </span>
-                {lang === 'zu' ? (
+                {lang === 'zu' || lang === 'xh' ? (
                   <>
                     <span>{limaRead}</span>
-                    <span className="block mt-1 text-xs text-[var(--text-muted)]">{t('siteSummaryZuluDraftNotice')}</span>
-                    <span className="block mt-1 text-xs text-[var(--text-muted)]" lang="en">English source: {limaReadParts.english}</span>
+                    {lang === 'zu' && <span className="block mt-1 text-xs text-[var(--text-muted)]">{t('siteSummaryZuluDraftNotice')}</span>}
+                    <span className="block mt-1 text-xs text-[var(--text-muted)]" lang="en">{lang === 'xh' ? <span lang="xh">{inlineText(lang, 'English source:')}</span> : 'English source:'} {limaReadParts.english}</span>
                   </>
                 ) : limaRead}
               </p>
@@ -1472,7 +1483,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             : kp.startsWith('BS') ? t('summarySemiAridSteppe')
             : kp.startsWith('BW') ? t('summaryAridDesert')
             : kp.startsWith('ET') ? t('summaryHighAltitude')
-            : 'Variable climate — use local rainfall and temperature data to plan your seasonal crop calendar.';
+            : inlineText(lang, 'Variable climate — use local rainfall and temperature data to plan your seasonal crop calendar.');
 
           const CROPS: Record<string, Array<{ pre: string; bold: string; post: string }>> = {
             Cwb: [{ pre: 'Year-round vegetables on summer rain — ', bold: 'maize, beans, leafy greens, brassicas & sweet potato', post: '. The mild, dry winter suits cool-season crops; the warm, frost-free conditions also carry ' }, { pre: '', bold: 'bananas, avocado & subtropical fruit', post: '.' }],
@@ -1574,7 +1585,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   </div>
                   <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 14, color: '#3D4A36', lineHeight: 1.5 }}>
                     {cropSegs.map((seg, i) => (
-                      <span key={i}>{seg.pre}{seg.bold && <b style={{ fontWeight: 600 }}>{seg.bold}</b>}{seg.post}</span>
+                      <span key={i}>{inlineText(lang, seg.pre)}{seg.bold && <b style={{ fontWeight: 600 }}>{seg.bold}</b>}{inlineText(lang, seg.post)}</span>
                     ))}
                   </div>
                 </div>
@@ -1654,8 +1665,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 </div>
                 <div style={{ ...implSt, marginTop: 11 }}>
                   → {data.rainfall.pattern === 'winter'
-                    ? 'Sunniest in the wet summer — maximise solar gain in autumn and spring.'
-                    : 'Sunniest in the dry winter — ideal for cool-season crops and drying produce.'}
+                    ? inlineText(lang, 'Sunniest in the wet summer — maximise solar gain in autumn and spring.')
+                    : inlineText(lang, 'Sunniest in the dry winter — ideal for cool-season crops and drying produce.')}
                 </div>
               </div>
 
@@ -1664,7 +1675,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
                   <div style={ovlSt}>{t('windKmhCard')}</div>
                   <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#5E7A66' }}>
-                    {kmh > 22 ? 'Moderate – strong' : kmh > 12 ? 'Light – moderate' : 'Light'}
+                    {kmh > 22 ? inlineText(lang, 'Moderate – strong') : kmh > 12 ? inlineText(lang, 'Light – moderate') : (lang === 'xh' ? inlineText(lang, 'Light wind') : 'Light')}
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 16, alignItems: 'flex-end' }}>
@@ -1815,11 +1826,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               };
               return (
                 <div style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 13, padding: '13px 14px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-                    <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                  {/* Wraps with a gap: the heading and its "{n} of {total} key checks recorded" count ran together on one
+                      line at 390px in a longer language. */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px 12px', marginBottom: 8 }}>
+                    <span style={{ font: '700 12px/1.2 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                       {t('surveySectionLabel')}
                     </span>
-                    <span style={{ font: '600 12px/1 var(--font-sans), sans-serif', color: done === SURVEY_TOTAL_FIELDS ? 'var(--emerald)' : 'var(--gold-dim)' }}>
+                    <span style={{ font: '600 12px/1.2 var(--font-sans), sans-serif', color: done === SURVEY_TOTAL_FIELDS ? 'var(--emerald)' : 'var(--gold-dim)' }}>
                       {t('surveyKeyChecks').replace('{n}', String(done)).replace('{total}', String(SURVEY_TOTAL_FIELDS))}
                     </span>
                   </div>
@@ -1848,8 +1861,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
             {/* Report completeness bar */}
             <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
-                <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '4px 12px', marginBottom: 7 }}>
+                <span style={{ font: '700 12px/1.2 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                   {t('reportCompletenessLabel')}
                 </span>
                 <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', color: completeness >= 60 ? 'var(--emerald)' : 'var(--gold-dim)' }}>
@@ -1862,8 +1875,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </div>
 
             {/* Evidence & Documents label + catalogue link */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px 12px' }}>
+              <span style={{ font: '700 12px/1.2 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                 {t('reportEvidenceDocsLabel')}
               </span>
               <button

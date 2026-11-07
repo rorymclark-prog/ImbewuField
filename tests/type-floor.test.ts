@@ -92,6 +92,8 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  // Fixed English on server-rendered pages (teach-the-teachers, /partners) that follows the language; renders text only.
+  'components/InlineText.tsx': 'isiXhosa inline text wrapper; renders only the text it is given, no type of its own',
   'components/AiMapSettings.tsx': 'farmers must read their own paid-map switch and service-access status in Settings; enforce the zero-debt 12px floor',
   // Added with wave 15 (code-10): the exchange, community, contact and prices captions.
   'app/community/messages/[threadId]/page.tsx': 'wave 15 code-10: the community message thread; no sub-12px type',
@@ -111,6 +113,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/exchange/ShareListingButton.tsx': 'wave 15 code-10: the share-a-listing menu; no sub-12px type',
   'components/prices/CropPriceGuide.tsx': 'wave 15 code-10: the crop price guide; no sub-12px type',
   'components/LanguageDraftNote.tsx': 'the shared isiZulu-draft notice (wave 14, zu-04) is read on farmer-facing phones',
+  'components/XhosaDraftNote.tsx': 'the isiXhosa wrapper around the shared draft notice; it sets no font size of its own',
   'components/records/RecordQuantityFields.tsx': 'a farmer must read the production quantity and its unit before saving',
   'components/records/RecordQuantitySummary.tsx': 'eggs and packages need readable separate totals beside weighed harvests',
   'components/SiteSurveySheet.tsx': 'the field survey now has no sub-12px labels; keep that gain',

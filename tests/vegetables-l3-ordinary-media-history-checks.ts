@@ -1,3 +1,4 @@
+import { xhDeckUrlsBefore } from './xh-deck-history-checks.ts';
 import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { validateCurrentVegetablesL1OrdinaryMedia, vegetablesL1AssetSizesBeforeOrdinary, vegetablesL1MediaBeforeEarlierProof } from './vegetables-l1-ordinary-media-history-checks.ts';
@@ -93,6 +94,8 @@ export function validateCurrentVegetablesL3OrdinaryMedia(currentManifest = readF
   const actualPaths = readdirSync('public/course-decks/vegetables-staples', { recursive: true }).map(String)
     .filter(path => statSync('public/course-decks/vegetables-staples/' + path).isFile())
     .map(path => '/course-decks/vegetables-staples/' + path).sort();
+  // The isiXhosa slide cards are a newer layer (tests/xh-deck-history-checks.ts); this layer sees the folder before them.
+  actualPaths.splice(0, actualPaths.length, ...xhDeckUrlsBefore(actualPaths, 'vegetables-staples'));
   assert.deepEqual(actualPaths, oldAssets.map((row: { path: string }) => row.path).sort(), 'no Vegetables asset is added or removed');
   assert.equal(oldAssets.filter((row: { path: string }) => !changed.has(row.path)).length, 84);
   for (const row of oldAssets) {

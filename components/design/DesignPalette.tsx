@@ -127,6 +127,8 @@ import {
 } from '@/lib/design-layer-membership';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { translate, useLanguage } from '@/lib/i18n';
+import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { designElementDisplayName, designGroupDisplayLabel } from '@/lib/design-element-display';
 import { uiVersion, DEFAULT_UI_VERSION, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
 import {
@@ -464,6 +466,19 @@ function toolLabel(label: string): string {
  * contrast — including in direct sun, where hue differences go first. It rides in box-shadow, so
  * nothing reflows when the selection moves.
  */
+// The layer-name cell of the Layers panel. It wraps on WORD boundaries (hyphenating where the browser knows the language
+// -- `lang` is set on the span) and breaks inside a word only as a last resort (`break-word`, never `anywhere`, which
+// would also shrink the cell's min-content and break words that did fit). A translated name with a long word (Afrikaans
+// "Terreinverwysings") used to split mid-word at the roomy 13.5 px card size, so such a word drops to the panel's 12 px
+// size instead; short names, English included, are unchanged.
+function layerNameStyle(label: string, cardsUi: boolean): React.CSSProperties {
+  const longestWord = Math.max(0, ...label.split(/\s+/).map((word) => word.length));
+  return {
+    minWidth: 0, whiteSpace: 'normal', overflowWrap: 'break-word', wordBreak: 'normal', hyphens: 'auto',
+    lineHeight: 1.15, fontSize: cardsUi && longestWord <= 13 ? 13.5 : 12, fontWeight: 650,
+  };
+}
+
 function selectionRing(active: boolean): React.CSSProperties {
   return active
     ? { border: `2px solid ${GOLD}`, boxShadow: `0 0 0 2px ${PAPER}, 0 0 0 4px ${DARK}` }
@@ -1060,7 +1075,7 @@ export default function DesignPalette({
 
   const armedHintLabel =
     tool === 'place' && armedDef
-      ? formatDesignTranslation(t('designPaletteTapPlace'), { name: armedDef.name })
+      ? formatDesignTranslation(t('designPaletteTapPlace'), { name: designElementDisplayName(armedDef, lang) })
       : tool === 'zone' && areaFeature
         ? formatDesignTranslation(t('designPaletteDrawFeature'), { feature: GROUND_FEATURES[areaFeature].label })
         : tool === 'zone'
@@ -1069,7 +1084,7 @@ export default function DesignPalette({
             ? t('designPaletteTapCorners')
             : null;
 
-  const armedHintSource = tool === 'line' && ['zu','st','ts','ve'].includes(lang)
+  const armedHintSource = tool === 'line' && ['zu','xh','st','ts','ve'].includes(lang)
     ? translate('en','designPaletteTapCorners') : null;
 
   // Identity of the tip currently on screen. A NEW tip is a new key, so closing one never
@@ -1665,7 +1680,7 @@ export default function DesignPalette({
                       onClick={() => setLayersFloating((floating) => !floating)}
                       style={{ border: '1px solid rgba(31,77,43,0.25)', background: PAPER, color: GREEN, borderRadius: 7, padding: '3px 7px', fontSize: 10.5, fontWeight: 700, cursor: 'pointer' }}
                     >
-                      {layersFloating ? 'Dock' : 'Float'}
+                      {layersFloating ? inlineText(lang, 'Dock') : inlineText(lang, 'Float')}
                     </button>
                   )}
                   {([[t('designPaletteAllOn'), true], [t('designPaletteAllOff'), false]] as const).map(([label, val]) => (
@@ -1722,11 +1737,14 @@ export default function DesignPalette({
                     || elementChildren.length > 0
                     || universalDisclosure;
                   const expanded = hasChildren && expandedLayers.has(lt.key);
+                  // English-only until now, and still byte-identical in every language but a draft one: inlineTemplate
+                  // fills the same English template when no draft exists, so isiZulu, Sesotho, Xitsonga and Tshivenda read what they did.
+                  const layerName = t(lt.labelKey);
                   const selectionLabel = selection.total === 0
-                    ? `${t(lt.labelKey)} has no editable objects on this step`
+                    ? inlineTemplate(lang, '{name} has no editable objects on this step', null, { name: layerName })
                     : allSelected
-                      ? `Deselect all ${selection.total} objects on ${t(lt.labelKey)}`
-                      : `Select all ${selection.total} objects on ${t(lt.labelKey)}`;
+                      ? inlineTemplate(lang, 'Deselect all {n} objects on {name}', null, { n: selection.total, name: layerName })
+                      : inlineTemplate(lang, 'Select all {n} objects on {name}', null, { n: selection.total, name: layerName });
                   const LayerIcon = lt.Icon;
                   const SelectionIcon = allSelected ? SquareCheckBig : someSelected ? SquareMinus : Square;
                   return (
@@ -1749,9 +1767,9 @@ export default function DesignPalette({
                       >
                         <button
                           type="button"
-                          aria-label={`${on ? 'Hide' : 'Show'} ${t(lt.labelKey)}`}
+                          aria-label={inlineTemplate(lang, on ? 'Hide {name}' : 'Show {name}', null, { name: layerName })}
                           aria-pressed={on}
-                          title={`${on ? 'Hide' : 'Show'} ${t(lt.labelKey)}`}
+                          title={inlineTemplate(lang, on ? 'Hide {name}' : 'Show {name}', null, { name: layerName })}
                           onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
                           style={{
                             width: compactDesktopLayerPanel ? 32 : 40,
@@ -1785,8 +1803,8 @@ export default function DesignPalette({
                           type="button"
                           role="checkbox"
                           aria-checked={movable}
-                          aria-label={`${movable ? 'Lock' : 'Allow moving'} ${t(lt.labelKey)} on the map`}
-                          title={movable ? `Lock ${t(lt.labelKey)} on the map` : `Allow moving ${t(lt.labelKey)} on the map`}
+                          aria-label={inlineTemplate(lang, movable ? 'Lock {name} on the map' : 'Allow moving {name} on the map', null, { name: layerName })}
+                          title={inlineTemplate(lang, movable ? 'Lock {name} on the map' : 'Allow moving {name} on the map', null, { name: layerName })}
                           disabled={selection.total === 0}
                           onClick={() => layerMovement.onMovableChange({ ...layerMovement.movable, [lt.key]: !movable })}
                           style={{
@@ -1818,8 +1836,8 @@ export default function DesignPalette({
                             onClick={() => toggleExpandedLayer(lt.key)}
                             aria-expanded={expanded}
                             aria-controls={`${lt.key}-layer-children`}
-                            aria-label={`${expanded ? 'Collapse' : 'Expand'} ${t(lt.labelKey)} controls`}
-                            title={`${expanded ? 'Collapse' : 'Expand'} ${t(lt.labelKey)} controls`}
+                            aria-label={inlineTemplate(lang, expanded ? 'Collapse {name} controls' : 'Expand {name} controls', null, { name: layerName })}
+                            title={inlineTemplate(lang, expanded ? 'Collapse {name} controls' : 'Expand {name} controls', null, { name: layerName })}
                             style={{
                               minWidth: 0, minHeight: compactDesktopLayerPanel ? 32 : 40,
                               padding: 0, border: 'none', background: 'transparent', color: DARK,
@@ -1827,19 +1845,19 @@ export default function DesignPalette({
                               gap: 4, cursor: 'pointer', textAlign: 'left',
                             }}
                           >
-                            <span style={{ minWidth: 0, whiteSpace: 'normal', overflowWrap: 'break-word', lineHeight: 1.15, fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                            <span lang={lang} style={layerNameStyle(t(lt.labelKey), cardsUi)}>
                               {t(lt.labelKey)}
                             </span>
                             {expanded ? <ChevronDown size={16} aria-hidden /> : <ChevronRight size={16} aria-hidden />}
                           </button>
                         ) : (
-                          <span style={{ minWidth: 0, whiteSpace: 'normal', overflowWrap: 'break-word', lineHeight: 1.15, fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                          <span lang={lang} style={layerNameStyle(t(lt.labelKey), cardsUi)}>
                             {t(lt.labelKey)}
                           </span>
                         )}
                         {selection.selected > 0 && (
                           <span
-                            aria-label={`${selection.selected} of ${selection.total} selected`}
+                            aria-label={inlineTemplate(lang, '{n} of {total} selected', null, { n: selection.selected, total: selection.total })}
                             style={{
                               minWidth: 28, padding: '2px 6px', borderRadius: 999, background: GREEN,
                               color: PAPER, fontSize: 9.5, fontWeight: 800, textAlign: 'center', fontVariantNumeric: 'tabular-nums',
@@ -1869,16 +1887,17 @@ export default function DesignPalette({
                             ['drip', 'Drip irrigation'],
                             ['swales', 'Swales'],
                           ] as const).map(([key, label]) => {
+                            const childName = designGroupDisplayLabel(label, lang);
                             const childOn = waterInfrastructure.visibility[key];
                             const childSelection = layerSelection.childCount('water', key);
                             const childAllSelected = childSelection.total > 0 && childSelection.selected === childSelection.total;
                             const childSomeSelected = childSelection.selected > 0 && !childAllSelected;
                             const ChildSelectionIcon = childAllSelected ? SquareCheckBig : childSomeSelected ? SquareMinus : Square;
                             const childSelectionLabel = childSelection.total === 0
-                              ? `${label} has no editable objects on this step`
+                              ? inlineTemplate(lang, '{name} has no editable objects on this step', null, { name: childName })
                               : childAllSelected
-                                ? `Deselect all ${childSelection.total} ${label} objects`
-                                : `Select all ${childSelection.total} ${label} objects`;
+                                ? inlineTemplate(lang, 'Deselect all {n} {name} objects', null, { n: childSelection.total, name: childName })
+                                : inlineTemplate(lang, 'Select all {n} {name} objects', null, { n: childSelection.total, name: childName });
                             return (
                               <div
                                 key={key}
@@ -1892,7 +1911,7 @@ export default function DesignPalette({
                                   alignItems: 'center', gap: 4, textAlign: 'left',
                                 }}
                               >
-                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                <button type="button" aria-label={inlineTemplate(lang, childOn ? 'Hide {name}' : 'Show {name}', null, { name: childName })} aria-pressed={childOn}
                                   onClick={() => {
                                     if (!childOn && !activeLayers.water) setActiveLayers({ ...activeLayers, water: true });
                                     if (childOn && (waterInfrastructureForElement(placeDefId ?? '') === key || (tool === 'line' && waterInfrastructureForLine(lineKind) === key))) setTool('select');
@@ -1906,14 +1925,14 @@ export default function DesignPalette({
                                   style={{ width: 24, height: 24, padding: 0, border: 'none', background: childSelection.selected > 0 ? 'rgba(247,201,126,0.26)' : 'transparent', color: childSelection.total === 0 ? '#C9C1B4' : childSelection.selected > 0 ? GREEN : '#776F63', display: 'grid', placeItems: 'center', cursor: childSelection.total === 0 ? 'not-allowed' : 'pointer' }}>
                                   <ChildSelectionIcon size={16} strokeWidth={childSelection.selected > 0 ? 2.35 : 1.8} aria-hidden />
                                 </button>
-                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                <button type="button" aria-label={inlineTemplate(lang, childOn ? 'Hide {name}' : 'Show {name}', null, { name: childName })} aria-pressed={childOn}
                                   onClick={() => {
                                     if (!childOn && !activeLayers.water) setActiveLayers({ ...activeLayers, water: true });
                                     if (childOn && (waterInfrastructureForElement(placeDefId ?? '') === key || (tool === 'line' && waterInfrastructureForLine(lineKind) === key))) setTool('select');
                                     waterInfrastructure.onVisibilityChange({ ...waterInfrastructure.visibility, [key]: !childOn });
                                   }}
                                   style={{ minWidth: 0, minHeight: 24, padding: 0, border: 'none', background: 'transparent', color: 'inherit', cursor: 'pointer', textAlign: 'left' }}>
-                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{label}</span>
+                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{childName}</span>
                                 </button>
                               </div>
                             );
@@ -1936,15 +1955,16 @@ export default function DesignPalette({
                           {PLANTING_SUBLAYER_ORDER.map((key) => {
                             const childOn = plantingSublayers.visibility[key];
                             const label = PLANTING_SUBLAYER_LABEL[key];
+                            const childName = designGroupDisplayLabel(label, lang);
                             const childSelection = layerSelection.childCount('planting', key);
                             const childAllSelected = childSelection.total > 0 && childSelection.selected === childSelection.total;
                             const childSomeSelected = childSelection.selected > 0 && !childAllSelected;
                             const ChildSelectionIcon = childAllSelected ? SquareCheckBig : childSomeSelected ? SquareMinus : Square;
                             const childSelectionLabel = childSelection.total === 0
-                              ? `${label} has no editable objects on this step`
+                              ? inlineTemplate(lang, '{name} has no editable objects on this step', null, { name: childName })
                               : childAllSelected
-                                ? `Deselect all ${childSelection.total} ${label} objects`
-                                : `Select all ${childSelection.total} ${label} objects`;
+                                ? inlineTemplate(lang, 'Deselect all {n} {name} objects', null, { n: childSelection.total, name: childName })
+                                : inlineTemplate(lang, 'Select all {n} {name} objects', null, { n: childSelection.total, name: childName });
                             return (
                               <div
                                 key={key}
@@ -1958,7 +1978,7 @@ export default function DesignPalette({
                                   alignItems: 'center', gap: 4, textAlign: 'left',
                                 }}
                               >
-                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                <button type="button" aria-label={inlineTemplate(lang, childOn ? 'Hide {name}' : 'Show {name}', null, { name: childName })} aria-pressed={childOn}
                                   onClick={() => {
                                     if (!childOn && !activeLayers.planting) setActiveLayers({ ...activeLayers, planting: true });
                                     if (childOn && (plantingSublayerForElement(placeDefId ?? '') === key || (tool === 'line' && plantingSublayerForLine(lineKind) === key) || (areaFeature !== null && plantingSublayerForZone({ feature: areaFeature }) === key))) setTool('select');
@@ -1972,14 +1992,14 @@ export default function DesignPalette({
                                   style={{ width: 24, height: 24, padding: 0, border: 'none', background: childSelection.selected > 0 ? 'rgba(247,201,126,0.26)' : 'transparent', color: childSelection.total === 0 ? '#C9C1B4' : childSelection.selected > 0 ? GREEN : '#776F63', display: 'grid', placeItems: 'center', cursor: childSelection.total === 0 ? 'not-allowed' : 'pointer' }}>
                                   <ChildSelectionIcon size={16} strokeWidth={childSelection.selected > 0 ? 2.35 : 1.8} aria-hidden />
                                 </button>
-                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                <button type="button" aria-label={inlineTemplate(lang, childOn ? 'Hide {name}' : 'Show {name}', null, { name: childName })} aria-pressed={childOn}
                                   onClick={() => {
                                     if (!childOn && !activeLayers.planting) setActiveLayers({ ...activeLayers, planting: true });
                                     if (childOn && (plantingSublayerForElement(placeDefId ?? '') === key || (tool === 'line' && plantingSublayerForLine(lineKind) === key) || (areaFeature !== null && plantingSublayerForZone({ feature: areaFeature }) === key))) setTool('select');
                                     plantingSublayers.onVisibilityChange({ ...plantingSublayers.visibility, [key]: !childOn });
                                   }}
                                   style={{ minWidth: 0, minHeight: 24, padding: 0, border: 'none', background: 'transparent', color: 'inherit', cursor: 'pointer', textAlign: 'left' }}>
-                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{label}</span>
+                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{designGroupDisplayLabel(label, lang)}</span>
                                 </button>
                               </div>
                             );
@@ -2001,21 +2021,22 @@ export default function DesignPalette({
                         >
                           {elementChildren.length === 0 && (
                             <p style={{ margin: 0, padding: '7px 4px 6px', color: '#776F63', fontSize: 10.5, lineHeight: 1.3 }}>
-                              No individual elements to show here yet.
+                              {inlineText(lang, 'No individual elements to show here yet.')}
                             </p>
                           )}
                           {elementChildren.map((child) => {
                             const childOn = layerElements.visibility[child.key] !== false;
-                            const label = child.count > 1 ? `${child.label} · ${child.count}` : child.label;
+                            const childLabel = designGroupDisplayLabel(child.label, lang);
+                            const childName = child.count > 1 ? `${childLabel} · ${child.count}` : childLabel;
                             const childSelection = layerSelection.childCount(lt.key, child.key);
                             const childAllSelected = childSelection.total > 0 && childSelection.selected === childSelection.total;
                             const childSomeSelected = childSelection.selected > 0 && !childAllSelected;
                             const ChildSelectionIcon = childAllSelected ? SquareCheckBig : childSomeSelected ? SquareMinus : Square;
                             const childSelectionLabel = childSelection.total === 0
-                              ? `${label} has no editable objects on this step`
+                              ? inlineTemplate(lang, '{name} has no editable objects on this step', null, { name: childName })
                               : childAllSelected
-                                ? `Deselect all ${childSelection.total} ${label} objects`
-                                : `Select all ${childSelection.total} ${label} objects`;
+                                ? inlineTemplate(lang, 'Deselect all {n} {name} objects', null, { n: childSelection.total, name: childName })
+                                : inlineTemplate(lang, 'Select all {n} {name} objects', null, { n: childSelection.total, name: childName });
                             return (
                               <div
                                 key={child.key}
@@ -2029,7 +2050,7 @@ export default function DesignPalette({
                                   alignItems: 'center', gap: 4, textAlign: 'left',
                                 }}
                               >
-                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                <button type="button" aria-label={inlineTemplate(lang, childOn ? 'Hide {name}' : 'Show {name}', null, { name: childName })} aria-pressed={childOn}
                                   onClick={() => {
                                     if (!childOn && !activeLayers[lt.key]) setActiveLayers({ ...activeLayers, [lt.key]: true });
                                     const armedKey = tool === 'place' ? layerElementKeyForItem(placeDefId ?? '') : tool === 'line' ? layerElementKeyForLine(lineKind) : areaFeature !== null ? layerElementKeyForZone({ zone: zoneDraw, feature: areaFeature }) : null;
@@ -2044,7 +2065,7 @@ export default function DesignPalette({
                                   style={{ width: 24, height: 24, padding: 0, border: 'none', background: childSelection.selected > 0 ? 'rgba(247,201,126,0.26)' : 'transparent', color: childSelection.total === 0 ? '#C9C1B4' : childSelection.selected > 0 ? GREEN : '#776F63', display: 'grid', placeItems: 'center', cursor: childSelection.total === 0 ? 'not-allowed' : 'pointer' }}>
                                   <ChildSelectionIcon size={16} strokeWidth={childSelection.selected > 0 ? 2.35 : 1.8} aria-hidden />
                                 </button>
-                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                <button type="button" aria-label={inlineTemplate(lang, childOn ? 'Hide {name}' : 'Show {name}', null, { name: childName })} aria-pressed={childOn}
                                   onClick={() => {
                                     if (!childOn && !activeLayers[lt.key]) setActiveLayers({ ...activeLayers, [lt.key]: true });
                                     const armedKey = tool === 'place' ? layerElementKeyForItem(placeDefId ?? '') : tool === 'line' ? layerElementKeyForLine(lineKind) : areaFeature !== null ? layerElementKeyForZone({ zone: zoneDraw, feature: areaFeature }) : null;
@@ -2052,7 +2073,7 @@ export default function DesignPalette({
                                     layerElements.onVisibilityChange({ ...layerElements.visibility, [child.key]: !childOn });
                                   }}
                                   style={{ minWidth: 0, minHeight: 24, padding: 0, border: 'none', background: 'transparent', color: 'inherit', cursor: 'pointer', textAlign: 'left' }}>
-                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{label}</span>
+                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{childName}</span>
                                 </button>
                               </div>
                             );
@@ -2162,7 +2183,7 @@ export default function DesignPalette({
                       layersFloatDrag.current = { dx: event.clientX - x, dy: event.clientY - y };
                       setLayersFloatPos({ x, y });
                     }}
-                    title="Drag Layers panel"
+                    title={inlineText(lang, 'Drag Layers panel')}
                     style={{ flexBasis: '100%', marginTop: -2, padding: '3px 0', textAlign: 'center', color: '#7C725E', cursor: 'grab', touchAction: 'none', fontSize: 13, lineHeight: 1 }}
                   >
                     ⠿
@@ -2177,7 +2198,7 @@ export default function DesignPalette({
                      no drag handle at all, not just a dead one. */
                   <div
                     role="separator"
-                    aria-label="Drag to resize the Layers panel"
+                    aria-label={inlineText(lang, 'Drag to resize the Layers panel')}
                     onPointerDown={(event) => beginDesktopResize('layers', event)}
                     style={{
                       position: 'absolute', top: 0, bottom: 0, left: -7,
@@ -2239,14 +2260,14 @@ export default function DesignPalette({
           <button
             type="button"
             onClick={() => setChipsFloating(false)}
-            title="Dock the palette back into the panel"
-            aria-label="Dock the element palette"
+            title={inlineText(lang, 'Dock the palette back into the panel')}
+            aria-label={inlineText(lang, 'Dock the element palette')}
             style={{
               border: '1px solid rgba(0,0,0,0.12)', background: PAPER, color: '#6B6355',
               borderRadius: 8, padding: '3px 8px', fontSize: 11, fontWeight: 600, cursor: 'pointer',
             }}
           >
-            Dock
+            {inlineText(lang, 'Dock')}
           </button>
         </div>
         {/* flex + minHeight:0 so this actually scrolls inside the clamped panel rather than
@@ -2308,7 +2329,7 @@ export default function DesignPalette({
             key={def.id}
             type="button"
             onClick={() => pickElement(def)}
-            title={checkFrost ? t('designPaletteFrostCheckTitle') : suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
+            title={checkFrost ? t('designPaletteFrostCheckTitle') : suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: designElementDisplayName(def, lang) })}
             // The photograph seam stays optional. Until an illustrator supplies a real asset the
             // farmer sees the exact emoji she saw before; fake generated symbols would make a
             // tool look more finished while saying less clearly what it places.
@@ -2384,9 +2405,9 @@ export default function DesignPalette({
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: cardsUi || (desktopAside && workspaceMode !== 'tray') ? 'center' : 'flex-start', minWidth: 0 }}>
               {/* Cards get room for two lines, so 'Indigenous Shade Tree' stops truncating —
                   whiteSpace stays nowrap only in chip mode, where a wrap would grow the strip. */}
-              <span style={{ fontSize: 11.5, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{def.name}</span>
+              <span style={{ fontSize: 11.5, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{designElementDisplayName(def, lang)}</span>
               <span style={{ fontSize: cardsUi ? 10 : 9.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
-                {def.id === 'gate' ? `${def.wM} m long` : def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
+                {def.id === 'gate' ? inlineTemplate(lang, '{length} m long', null, { length: def.wM }) : def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
               </span>
               {checkFrost && <span style={{ fontSize: 9, fontWeight: 700, color: active ? GOLD : '#9A5E12' }}>{t('designPaletteFrostCheck')}</span>}
             </span>
@@ -2414,7 +2435,7 @@ export default function DesignPalette({
               {!chipsWrap && (
                 <span aria-hidden style={{ width: 1, height: 24, background: 'rgba(0,0,0,0.14)' }} />
               )}
-              {PLANTING_GROUP_LABEL[heading]}
+              {designGroupDisplayLabel(PLANTING_GROUP_LABEL[heading], lang)}
               {chipsWrap && (
                 <span aria-hidden style={{ flex: '1 1 auto', height: 1, background: 'rgba(0,0,0,0.14)' }} />
               )}
@@ -2929,7 +2950,8 @@ export default function DesignPalette({
               ) : (
                 <CategoryFallbackIcon category={hintDef.category} size={15} />
               )}
-              <span><strong>{hintDef.name}:</strong> {hintDef.tip}</span>
+              {/* The tip is English data (lib/design-elements.ts); a draft language reads the draft keyed by that exact English, the element name as the palette chip does. */}
+              <span><strong>{designElementDisplayName(hintDef, lang)}:</strong> {inlineText(lang, hintDef.tip)}</span>
             </div>
             <LessonLink id={`element:${hintDef.id}`} label={t('designPaletteLearnAbout')} />
           </div>
@@ -3247,7 +3269,7 @@ export default function DesignPalette({
       {desktopAside && workspaceMode !== 'tray' && onDesktopPanelWidthChange && (
         <div
           role="separator"
-          aria-label="Drag to resize the Elements panel"
+          aria-label={inlineText(lang, 'Drag to resize the Elements panel')}
           onPointerDown={(event) => beginDesktopResize('elements', event)}
           style={{
             /* Straddles the edge like the Layers handle — 7px in, 7px out —

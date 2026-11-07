@@ -1,0 +1,96 @@
+{
+  "unit": "dictionary-old2",
+  "okCount": 338,
+  "items": [
+    {
+      "index": 10,
+      "key": "landPrepAnimalDesc",
+      "verdict": "repair",
+      "english": "Traditional plough or cultivator",
+      "draft": "Ikhuba okanye isilimi sesintu",
+      "backtranslation": "Hoe or traditional plough",
+      "problem": "wrong tool: 'ikhuba' is a hoe, not a cultivator; 'isilimi' is not a clear tool word. Back-translation says hoe or traditional plough.",
+      "corrected": "Ipolo yesintu okanye isixhobo sokuhlakula"
+    },
+    {
+      "index": 11,
+      "key": "landPrepNoneLabel",
+      "verdict": "repair",
+      "english": "Not yet prepared / no-till",
+      "draft": "Akukalungiswa / akulinywa",
+      "backtranslation": "Not yet prepared / not farmed",
+      "problem": "'no-till' (a farming method: soil is cropped without tilling) became 'akulinywa' = not farmed/not cultivated, which says nothing is grown.",
+      "corrected": "Akukalungiswa / akukho kuvula umhlaba"
+    },
+    {
+      "index": 12,
+      "key": "landPrepNoneDesc",
+      "verdict": "repair",
+      "english": "Starting from scratch or using no-dig method",
+      "draft": "Uqala phantsi okanye usebenzisa indlela yokungemba",
+      "backtranslation": "Starting from scratch or using a method of marking out (surveying)",
+      "problem": "'no-dig method' became 'indlela yokungemba', which means a surveying/marking-out method; the no-dig meaning is lost. 'From scratch' also rendered 'phantsi' (low/down).",
+      "corrected": "Uqala ekuqaleni okanye usebenzisa indlela yokungawumbi umhlaba"
+    },
+    {
+      "index": 15,
+      "key": "soilConditionCompacted",
+      "verdict": "repair",
+      "english": "Compacted / hard",
+      "draft": "Iqinile / inzima",
+      "backtranslation": "Hard / difficult",
+      "problem": "'Compacted' (soil structure term) is lost; 'inzima' means heavy/difficult, not compacted.",
+      "corrected": "Icinezelekile / iqinile"
+    },
+    {
+      "index": 35,
+      "key": "cropGrainMaize",
+      "verdict": "kept",
+      "english": "Grain / maize",
+      "draft": "Iinkozo / umbona",
+      "backtranslation": "Grains / maize",
+      "problem": "Crop name differs from the English: 'maize' replaced by the local word 'umbona'; species name must stay as in the English. Coordinator: kept; \"umbona\" is the everyday isiXhosa word for maize and the shards use it; the species-name rule concerns swapped wild-plant names.",
+      "corrected": "Iinkozo / i-maize"
+    },
+    {
+      "index": 73,
+      "key": "marketLocalCommunity",
+      "verdict": "repair",
+      "english": "Local community / informal market",
+      "draft": "Uluntu lwendawo / imarike engekho semthethweni",
+      "backtranslation": "Local community / informal (not official) market",
+      "problem": "'informal market' rendered 'engekho semthethweni' = not legal/illegal; informal is not illegal (legal meaning added).",
+      "corrected": "Uluntu lwendawo / imarike engekho ngokusesikweni"
+    },
+    {
+      "index": 89,
+      "key": "buttonCopied",
+      "verdict": "repair",
+      "english": "Copied!",
+      "draft": "Kukhutshelwe!",
+      "backtranslation": "Downloaded!",
+      "problem": "'Copied!' rendered as 'Kukhutshelwe!' = Downloaded!; wrong action confirmed to the user.",
+      "corrected": "Kukopishiwe!"
+    },
+    {
+      "index": 323,
+      "key": "myRecordsSharedWithMe",
+      "verdict": "repair",
+      "english": "Shared with me",
+      "draft": "Yabiwa nam",
+      "backtranslation": "Shared by me",
+      "problem": "'Shared with me' rendered 'Yabiwa nam' = shared by me/and me; direction of sharing reversed.",
+      "corrected": "Yabelwa mna"
+    },
+    {
+      "index": 32,
+      "key": "cropHerbsMedicinal",
+      "verdict": "repair",
+      "english": "Herbs / medicinal",
+      "draft": "Amayeza / izityalo zonyango",
+      "backtranslation": "Medicines / healing plants",
+      "problem": "Coordinator: culinary herbs are lost; the label reads as medicine only.",
+      "corrected": "Imifuno enencasa / izityalo zonyango"
+    }
+  ]
+}

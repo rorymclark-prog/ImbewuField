@@ -18,8 +18,9 @@ import uiZu from '../content/manual/zu/ui.json' with { type: 'json' };
 import uiSt from '../content/manual/st/ui.json' with { type: 'json' };
 import uiVe from '../content/manual/ve/ui.json' with { type: 'json' };
 import uiTs from '../content/manual/ts/ui.json' with { type: 'json' };
+import uiXh from '../content/manual/xh/ui.json' with { type: 'json' };
 
-export const MANUAL_LANGS = ['en', 'zu', 'st', 've', 'ts'] as const;
+export const MANUAL_LANGS = ['en', 'zu', 'st', 've', 'ts', 'xh'] as const;
 export type ManualLang = (typeof MANUAL_LANGS)[number];
 
 export const MANUAL_LANG_NAMES: Record<ManualLang, string> = {
@@ -28,6 +29,7 @@ export const MANUAL_LANG_NAMES: Record<ManualLang, string> = {
   st: 'Sesotho',
   ve: 'Tshivenḓa',
   ts: 'Xitsonga',
+  xh: 'isiXhosa',
 };
 
 export function isManualLang(code: string): code is ManualLang {
@@ -75,7 +77,7 @@ export interface ManualUi {
   book: string;
 }
 
-const UI: Record<ManualLang, ManualUi> = { en: uiEn, zu: uiZu, st: uiSt, ve: uiVe, ts: uiTs };
+const UI: Record<ManualLang, ManualUi> = { en: uiEn, zu: uiZu, st: uiSt, ve: uiVe, ts: uiTs, xh: uiXh };
 
 /** Per-key fallback to English, so a half-translated ui.json never shows a blank button. */
 export function manualUi(lang: ManualLang): ManualUi {
@@ -246,6 +248,18 @@ export interface ManualFigure {
 export function figureCaption(figure: ManualFigure, lang: ManualLang): { text: string; lang: ManualLang } {
   const own = figure.caption[lang];
   return own && own.trim() ? { text: own, lang } : { text: figure.caption.en, lang: 'en' };
+}
+
+// The one credit line every picture carries is stored in English in figures.json. isiXhosa readers get it
+// in isiXhosa (an unreviewed machine draft, like the xh chapters); every other language keeps the stored text
+// exactly, and a credit with no entry here (a photo credit, a permission line) is shown as stored.
+const FIGURE_CREDIT_XH: Record<string, string> = {
+  'Illustration: made with AI for this manual': 'Umfanekiso: wenziwe nge-AI kule ncwadi',
+};
+
+export function figureCredit(figure: ManualFigure, lang: ManualLang): string | undefined {
+  if (!figure.credit) return figure.credit;
+  return lang === 'xh' ? FIGURE_CREDIT_XH[figure.credit] ?? figure.credit : figure.credit;
 }
 
 /** Figures for one chapter, grouped by the section they follow. */

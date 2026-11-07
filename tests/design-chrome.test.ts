@@ -183,7 +183,7 @@ test('the nine-step rail fills and centres the available desktop width', () => {
   const stepper = readFileSync(new URL('../components/design/CardsStepper.tsx', import.meta.url), 'utf8');
 
   assert.match(stepper, /justifyContent: 'center'/);
-  assert.match(stepper, /flex: '1 0 108px', maxWidth: 150/,
+  assert.match(stepper, /flex: '1 0 108px', maxWidth: (draftLang \? 'none' : )?150/,
     'steps should grow into readable targets without becoming an off-centre text clump');
 });
 

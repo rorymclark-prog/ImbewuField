@@ -41,6 +41,8 @@ import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport, preparedSampleReport, preparedExampleNote } from '@/lib/report-summary';
 import { reportUiText, reportUiDate, reportHeadingAliases, reportDocumentText, REPORT_DOCUMENT_LANGUAGES } from '@/lib/report-localisation';
 import LanguageDraftNote from './LanguageDraftNote';
+import { isInlineDraftLang, xhInlineDraft } from '@/lib/xh-inline';
+import { localeDate } from '@/lib/xh-dates';
 import { loadLocale, translate } from '@/lib/i18n';
 import { useLanguage } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
@@ -103,6 +105,9 @@ const LANGUAGE_OPTIONS = [
   { code: 'ss', label: 'siSwati' },
   { code: 'nr', label: 'isiNdebele' },
 ] as const;
+
+// Shown above an AI-written report in a draft language; keyed by this exact English (lib/locales/xh-inline).
+const AI_DRAFT_LANGUAGE_NOTICE = 'This report was written by AI in {language}. It has not been reviewed by a fluent speaker; check figures against the English source.';
 
 const REPORT_SIDEBAR_QUERY = '(min-width: 1100px)';
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -199,20 +204,20 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
       // Long native field/source words hid the source column on a phone. Only those columns may
       // break within a word; the measurement value must never split a decimal or a stored name.
       // Minimum widths also stop the auto table layout turning field labels into two-letter lines.
-      const nativeMeasurementTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
-        headers.length === 3 && ['Measure','Value','Where it comes from'].every((source,index) =>
-          headers[index].trim() === reportDocumentText(source,language)));
+      // isiXhosa counts too, but only once its drafts have loaded: before then reportDocumentText('…','xh') is the English,
+      // and an English table must never be taken for a translated one (hence the 'differs from the English' condition).
+      const nativeHeaders = (sources: readonly string[]) => headers.length === sources.length && [...REPORT_DOCUMENT_LANGUAGES, 'xh'].some(language =>
+        sources.every((source, index) => headers[index].trim() === reportDocumentText(source, language))
+        && (language !== 'xh' || sources.some((source, index) => headers[index].trim() !== source)));
+      const nativeMeasurementTable = nativeHeaders(['Measure','Value','Where it comes from']);
       const measurementWidths = [95,126,130];
       // A six-column native checklist hid its final actions off the phone. Exact source headers
       // identify these tables so phone rows can keep every field visible with its own label.
-      const nativeChecklistTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
-        [ ['Indicator','What it answers','Baseline','How to measure','How often','Recorded in'],
-          ['#','Risk','What raised it','Likelihood','Impact','What to do about it'],
-        ].some(labels => headers.length === labels.length && labels.every((source,index) =>
-          headers[index].trim() === reportDocumentText(source,language))));
-      const nativeCostTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
-        headers.length === 5 && ['Item','Quantity','Rate','Amount','Measured from'].every((source,index) =>
-          headers[index].trim() === reportDocumentText(source,language)));
+      const nativeChecklistTable = [
+        ['Indicator','What it answers','Baseline','How to measure','How often','Recorded in'],
+        ['#','Risk','What raised it','Likelihood','Impact','What to do about it'],
+      ].some(labels => nativeHeaders(labels));
+      const nativeCostTable = nativeHeaders(['Item','Quantity','Rate','Amount','Measured from']);
       const nativeFieldTable = nativeChecklistTable || nativeCostTable;
       const rows = body.map(splitRow);
       const groups: { heading?: string; rows: { cells: string[]; index: number }[] }[] = [];
@@ -340,8 +345,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   useEffect(() => { setCropMapMonth(0); setIncludeCropWorkingPlan(false); }, [activeSaved?.id]);
   const simple = useAppLevel() === 'simple';
   const { lang: uiLanguage, t: appT } = useLanguage();
-  const tr = (en: string, zu: string) => reportUiText(en, uiLanguage, appT, zu);
-  const label = (en: string) => reportUiText(en, uiLanguage, appT);
+  // isiXhosa: the draft keyed by the exact English (lib/locales/xh-inline), else the dictionary.
+  const xhDraft = (en: string) => uiLanguage === 'xh' ? xhInlineDraft(en) : null;
+  const tr = (en: string, zu: string) => xhDraft(en) ?? reportUiText(en, uiLanguage, appT, zu);
+  const label = (en: string) => xhDraft(en) ?? reportUiText(en, uiLanguage, appT);
   // The report's own language picker (LANGUAGE_OPTIONS) is independent of the app-wide language,
   // so its locale chunk may never have been fetched — load it so translate() below has real text
   // to find rather than always falling back to English.
@@ -381,7 +388,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       'Could not build the PDF. Check your connection and try again.': 'Umbiko we-PDF awukwazanga ukwakhiwa. Hlola uxhumano lwakho bese uzama futhi.',
       'No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.': 'Ayikho inethiwekhi — kudingeka i-inthanethi ukuze kubhalwe umbiko. Izigaba ozikhethile zigciniwe; zama futhi uma inethiwekhi isibuya.',
     };
-    return reportUiText(message, uiLanguage, appT, known[message]);
+    return xhDraft(message) ?? reportUiText(message, uiLanguage, appT, known[message]);
   };
   const showVisuals = reading === 'full' && (presentation !== 'print' || includeImages);
   // The drawn figures (site plan, climate, water budget, sun and wind, soil, build order) read the
@@ -896,7 +903,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         soilPh: d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : undefined,
         language: contentLanguage,
         meanTempC: d.climate.meanTemp,
-        dateLabel: new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
+        dateLabel: localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA'),
         sheets: includeImages ? plates : [],
         loadSheetImage,
         // The same photographs the model read and the screen shows — so the printed report a
@@ -1059,6 +1066,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       {(isWide || viewOptionsOpen) && <p className={`${styles.languageNote} no-print`}>{tr('Screen, print and summary controls change the view or export without a new AI call.', 'Izilawuli zesikrini, zokuphrinta nezifinyezo zishintsha indlela yokubuka noma yokukhipha umbiko ngaphandle kokusebenzisa i-AI futhi.')}</p>}
       {(isWide || viewOptionsOpen) && sampleMode && <p className={`${styles.languageNote} no-print`}>{tr('Refresh updates this prepared example from saved records. It does not write new advice. Sample history clears when you restart the workspace.', 'Ukuvuselela kusebenzisa amarekhodi agciniwe kulesi sibonelo. Akubhali izeluleko ezintsha. Umlando wesibonelo uyasulwa uma uqala kabusha indawo yokusebenza.')}</p>}
       {uiLanguage !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{label('This report keeps its original {language} text. Controls use your app language. Choose a report language before generating a new version.').replace('{language}', LANGUAGE_OPTIONS.find(option => option.code === contentLanguage)?.label ?? contentLanguage)}</p>}
+      {report && reading === 'full' && !preparedExample && isInlineDraftLang(contentLanguage) && <p role="note" className={`${styles.languageNote} no-print`}>{(xhDraft(AI_DRAFT_LANGUAGE_NOTICE) ?? AI_DRAFT_LANGUAGE_NOTICE).replace('{language}', LANGUAGE_OPTIONS.find(option => option.code === contentLanguage)?.label ?? contentLanguage)}</p>}
       {sampleMode && language !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Refresh prepared example to apply this language.', 'Vuselela isibonelo esilungiselelwe ukuze usebenzise lolu limi.')}</p>}
       <div className="no-print px-3"><LanguageDraftNote lang={uiLanguage} scope="report-viewer" /></div>
       <div className="flex-1 flex overflow-hidden">
@@ -1122,7 +1130,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             className="min-h-11 w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--report-panel)]"
             style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-ink)' }}
           >
-            {LANGUAGE_OPTIONS.filter(l => !sampleMode || l.code === 'en' || l.code === 'zu').map((l) => <option key={l.code} value={l.code} lang={l.code}>{l.label}</option>)}
+            {LANGUAGE_OPTIONS.filter(l => !sampleMode || l.code === 'en' || l.code === 'zu' || isInlineDraftLang(l.code)).map((l) => <option key={l.code} value={l.code} lang={l.code}>{l.label}</option>)}
           </select>
           {!sampleMode && <>
           {language !== 'en' && (
@@ -1265,12 +1273,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     <button
                       key={id}
                       onClick={() => jumpToChapter(id)}
+                      title={xhDraft(title) ? title : undefined}
                       className="min-h-11 w-full text-left px-2 py-1.5 rounded-lg text-xs font-display transition-all"
                       style={{ color: 'var(--report-muted)', background: 'transparent', border: '1px solid transparent' }}
                       onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-ink)'; (e.target as HTMLButtonElement).style.background = 'var(--report-panel)'; }}
                       onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-muted)'; (e.target as HTMLButtonElement).style.background = 'transparent'; }}
                     >
-                      {title}
+                      {xhDraft(title) ?? title}
                     </button>
                   ))}
                 </div>
@@ -1318,7 +1327,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 </div>
                 <div className="text-right">
                   <div className={`${styles.date} font-sans`}>
-                    {new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    {localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA')}
                   </div>
                 </div>
               </div>

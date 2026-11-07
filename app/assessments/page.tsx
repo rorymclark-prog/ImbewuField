@@ -5,8 +5,9 @@ import MelDashboard from '@/components/MelDashboard';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
-const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
+const tr = (lang: string, en: string, zu: string) => inlineText(lang, en, zu);
 
 // Verified bug: this page rendered <MelDashboard /> with no header or tab bar at all — a dead
 // end with no way back except the browser's own back button. Every other screen in this area

@@ -1,0 +1,347 @@
+0 | liveEstimateTotalRoofArea | Total roof area:
+1 | liveEstimateAt600mmRain | With 600 mm of rain →
+2 | liveEstimatePerYear | kL/year
+3 | liveEstimateActualRainfallNote | Lima will recalculate using the actual rainfall of your place
+4 | sectionHowIsLandPrepared | How is the soil prepared?
+5 | landPrepHandToolsLabel | Hand tools (spade, fork, hoe)
+6 | landPrepHandToolsDesc | Hand work on the soil — reduces the depth and size of the place
+7 | landPrepTractorLabel | Tractor / by machines
+8 | landPrepTractorDesc | Deep farming is possible, large areas
+9 | landPrepAnimalLabel | Animal power (ox, donkey)
+10 | landPrepAnimalDesc | Hoe or traditional plough
+11 | landPrepNoneLabel | Not yet prepared / not farmed
+12 | landPrepNoneDesc | Starting from scratch or using a method of marking out (surveying)
+13 | sectionSoilCondition | Condition of the soil (as you see it)
+14 | soilConditionHealthy | It is healthy and soft
+15 | soilConditionCompacted | Hard / difficult
+16 | soilConditionSandy | Sandy / drains water quickly
+17 | soilConditionClay | Muddy / full of water
+18 | soilConditionUnknown | I am not sure
+19 | sectionSoilInputs | Soil inputs already added (select all)
+20 | soilAmendmentCompost | Compost
+21 | soilAmendmentKraalManure | Kraal manure
+22 | soilAmendmentMulch | Mulch / pieces of wood
+23 | soilAmendmentCommercialFert | Shop-bought fertiliser
+24 | soilAmendmentNone | Nothing yet
+25 | sectionFencing | Wire
+26 | fencingFull | Fenced completely
+27 | fencingPartial | Fenced partially
+28 | fencingNone | No fence
+29 | sectionCropsGrowing | Crops already growing (select all)
+30 | cropVegetables | Vegetables
+31 | cropFruitTrees | Fruit trees
+32 | cropHerbsMedicinal | Medicines / medicinal plants
+33 | cropIndigenousPlants | Indigenous/traditional plants
+34 | cropFodder | Livestock feed / grazing
+35 | cropGrainMaize | Grains / maize
+36 | cropNothing | Nothing yet
+37 | sectionLivestock | Livestock at the place (select all)
+38 | livestockChickens | Chickens
+39 | livestockGoats | Goats
+40 | livestockCattle | Cattle
+41 | livestockPigs | Pigs
+42 | livestockBees | Bees
+43 | livestockNone | No livestock
+44 | sectionOtherInfrastructure | Other infrastructure (select all)
+45 | infraShadeTunnel | Shade tunnel
+46 | infraGreenhouse | Plant house / plastic tunnel
+47 | infraCompostBay | Compost place
+48 | infraStorageShed | Storage shed
+49 | infraLivestockKraal | Livestock kraal
+50 | sectionFarmingApproach | Method of farming
+51 | practiceFullyOrganicLabel | Completely natural
+52 | practiceFullyOrganicDesc | No chemical things, based on compost
+53 | practiceMostlyOrganicLabel | Mostly natural
+54 | practiceMostlyOrganicDesc | Natural where possible, sometimes different
+55 | practiceConventionalLabel | Ordinary / conventional
+56 | practiceConventionalDesc | Chemical fertilisers and insecticides are used
+57 | practiceExperimentingLabel | It is being tried / mixed
+58 | practiceExperimentingDesc | I am trying different ways, it is not yet settled
+59 | sectionMainChallenges | Main challenges on this place (select at least one)
+60 | challengeDrought | Drought / dry times
+61 | challengePests | Insects and diseases
+62 | challengePoorSoil | Bad / damaged soil
+63 | challengeLimitedWater | Limited access to water
+64 | challengeFunding | Funding / costs
+65 | challengeLabour | Not enough workers
+66 | challengeFlooding | Floods / erosion
+67 | challengeMarket | Access to market
+68 | challengeNone | No big challenges
+69 | toggleSellProduceLabel | We are selling or planning to sell produce
+70 | toggleSellProduceSub | It opens questions about access to market
+71 | sectionCurrentOrTargetMarket | Current or targeted market
+72 | marketFarmStall | Farm shop at the place
+73 | marketLocalCommunity | Local community / informal (not official) market
+74 | marketWholesale | Selling in bulk / big buyers
+75 | marketNotSure | I am not sure yet
+76 | sectionAnythingElseLimaShouldKnow | Is there anything else Lima needs to know?
+77 | notesPlaceholderHint | Special features of the place, history, things you have tried, certain worries…
+78 | photoTip | Advice: photos of the soil, slope, problem places, and existing crops help Lima give more specific advice — add them with the camera button on the map.
+79 | notesPlaceholder | e.g. The north-facing slope gets afternoon shade from the hill. We removed a tree and the soil there is very hard…
+80 | buttonBack | Back
+81 | buttonNext | Next
+82 | buttonSaveAndGenerateReport | Save and make the report
+83 | reportToolbarBack | Back
+84 | reportToolbarTitle | Report of the analysis of the place
+85 | buttonSaveReport | Save the report
+86 | buttonSaved | Saved
+87 | buttonExportPdf | Export PDF
+88 | buttonShare | Share
+89 | buttonCopied | Downloaded!
+90 | buttonRegenerate | Make again
+91 | buttonGenerating | It is making...
+92 | buttonGenerateReport | Make a report
+93 | sidebarSavedReports | Saved reports
+94 | sidebarDeleteReport | Delete
+95 | sidebarLanguageLabel | Language
+96 | sidebarBilingualToggle | + English alongside
+97 | sidebarWordingLabel | Words
+98 | toneSimple | Simple
+99 | toneDetailed | With details
+100 | sidebarLengthLabel | Length
+101 | lengthOnePager | One page
+102 | lengthStandard | Ordinary/standard
+103 | lengthComprehensive | Complete
+104 | sidebarSectionsLabel | Sections
+105 | sectionPresetFarmer | Farmer
+106 | sectionPresetAll | All
+107 | sectionPresetFarmerTitle | Choose the sections most useful to a small farmer
+108 | sectionPresetAllTitle | Choose all sections
+109 | photosIncludedLabel | Photos included
+110 | photosIncludedSub | Analysis of the photos will support the report
+111 | tocLabel | In this report
+112 | reportPrintSubtitle | Report of permaculture analysis of the place
+113 | reportSavedPlacesHeader | Saved places · GPS notes
+114 | reportSatelliteViewHeader | Satellite view of the place
+115 | reportSatelliteImageAlt | Satellite view taken of the place
+116 | reportMonthlyRainfallHeader | Rain pattern of each month
+117 | reportPlaceholderTitle | Report
+118 | reportPlaceholderBody | Choose your sections then tap Make
+119 | reportSectionSelected | section
+120 | reportSectionsSelected | chosen sections
+121 | reportPhotosIncludedSuffix | · photos included
+122 | reportPrintFooter | Made by ImbewuField — imbewufield.vercel.app
+123 | reportShareTitle | ImbewuField analysis of the place
+124 | reportBiomeLabel | Biome
+125 | reportRainfallLabel | Rain
+126 | reportElevationLabel | Height / elevation
+127 | reportSoilPhLabel | Soil pH
+128 | reportVegetationLabel | Crops
+129 | reportSiteAreaLabel | Size of the place
+130 | reportWaterStorageLabel | Keeping of water (water storage)
+131 | reportExecutiveSummaryHeading | Main summary
+132 | allSectionExecutiveSummary | Main summary
+133 | allSectionSiteConditions | Conditions of the place
+134 | allSectionNaturalVegetationBiome | Indigenous crops and biome
+135 | allSectionWaterHarvesting | Collecting water
+136 | allSectionIrrigationPlan | Irrigation plan
+137 | allSectionSoilStrategy | Soil strategy
+138 | allSectionPlantingCalendar | Planting calendar
+139 | allSectionYearRoundFoodProduction | Producing food all year round
+140 | allSectionFruitNutBerryTrees | Fruit trees, nut and berry trees
+141 | allSectionIndigenousTrees | Indigenous trees
+142 | allSectionAgroecosystemPlantingGuide | Planting guide of agroecosystem
+143 | allSectionCropRotation | Changing/rotating crops
+144 | allSectionAnimalsLivestock | Animals and livestock
+145 | allSectionSunSolar | Sun and solar power
+146 | allSectionWindWindbreaks | Wind and wind protections
+147 | allSectionFireHazards | Fire and dangers
+148 | allSectionEconomicOpportunities | Economic opportunities
+149 | allSectionPlantGuilds | Crop groups
+150 | allSectionZoneDesign | Design of regions/zones
+151 | allSectionSeasonalCalendar | Calendar of the seasons of the year
+152 | allSectionFiveYearVision | View of 5 years
+153 | allSectionYear1Priorities | Main things of the first year
+154 | climateZone | Climate region
+155 | goodForGrowing | Ready to plant
+156 | rainfallMmMonth | Rain — mm / month
+157 | monthlyTempC | Temperature of the month — °C
+158 | sunlightHoursDay | Sun — hours / day
+159 | windKmhCard | Wind — km / h
+160 | frostGrowingSeason | Frost & growing time
+161 | wantFullClimateReport | Do you want a complete weather/climate report?
+162 | climateReportDesc | Frost days, ET, risk of diseases & planting calendar
+163 | prevailingWind | Usual / typical
+164 | inWinter | in winter
+165 | frostFreePrefix | No frost ≈
+166 | daysUnit | days
+167 | lightFrostPrefix | Light frost:
+168 | plantTenderMidAug | Plant tender crops from the middle of August
+169 | winterLowPrefix | The lowest in winter ≈
+170 | summerHighPrefix | The highest in summer ≈
+171 | lifeGuideIndigenousPlants | Indigenous crops you should include
+172 | lifeGuideVegetables | Vegetables that suit this climate
+173 | lifeGuideFruitTrees | Fruit trees
+174 | lifeGuideIndigenousFruit | Indigenous fruits
+175 | lifeGuideNutTrees | Nut trees & field crops
+176 | lifeGuideAnimalSystems | Animal systems
+177 | climatePatternWinter | Winter rain
+178 | climatePatternSummer | Summer rain
+179 | climatePatternYearRound | Rain all year round
+180 | climateFrostExpected | Frost is expected
+181 | climateLightFrost | Risk of light frost
+182 | climateFrostFree | No frost
+183 | climateWetLabel | Wet
+184 | climateDryLabel | Dry
+185 | insightSemiArid | Partially dry area — {mm} mm/yr. Collecting water is needed before planting food trees.
+186 | insightModerateRain | {mm} mm/yr — medium rain. Mulch and swales greatly extend the growing time.
+187 | insightStrongRain | {mm} mm/yr — much rain. Build soil carbon in order to keep moisture in the dry months.
+188 | insightFrostExpected | Frost is expected ({tempC}°C lowest in winter). Protect tender crops in August–September with covers and with small warm places facing north.
+189 | insightLightFrost | Risk of light frost ({tempC}°C lowest in winter). Plant trees that cannot withstand cold on raised beds or on north-facing slopes.
+190 | insightFrostFree | No frost all year ({tempC}°C lowest). Tropical and subtropical food trees can grow here.
+191 | insightHighWind | Strong wind ({kmh} km/h average). Windbreaks on the {dir} side give the greatest benefit as the first investment.
+192 | insightModerateWind | Medium wind coming from {dir}. A single line of hedge/row of crops on the side the wind comes from clearly reduces pressure on the crops.
+193 | insightLowSoilCarbon | Soil carbon that is reported ({oc}%). Look at the source of the data and the soil test; suitable natural things may help, but it is not assured that the harvest will rise.
+194 | insightGoodSoilCarbon | Acceptable soil carbon ({oc}%). Keep it with compost and with little tilling in order to keep the benefit.
+195 | climateRainfallInsight | Much rain falls {wet}. Keep water in the dams (ponds/dams) so that it helps you in the dry time of {dry}.
+196 | reportCompletenessLabel | Completeness of the report
+197 | reportEvidenceDocsLabel | Evidence & documents
+198 | reportFullLibraryLink | Full storehouse
+199 | reportGroupWater | Water
+200 | reportGroupStructures | Buildings & access
+201 | reportGroupSoil | Soil & growing beds
+202 | reportGroupTrees | Trees & crops that are present
+203 | reportGroupAnimals | Animal systems
+204 | reportGroupEnergy | Power & electricity
+205 | reportGroupSitePhotos | Photos of the site
+206 | reportAddWater | Add water
+207 | reportAddStructures | Add buildings & access
+208 | reportAddSoil | Add soil & growing beds
+209 | reportAddTrees | Add trees & crops that are present
+210 | reportAddAnimals | Add animal systems
+211 | reportAddEnergy | Add power & electricity
+212 | reportItemSingular | thing
+213 | reportItemPlural | things
+214 | reportPhotosCount | {n} photos
+215 | zoneHumidSubtropicalSummerRain | Humid subtropical climate · summer rain
+216 | zoneHumidSubtropicalMistBelt | Humid subtropical climate · fog belt
+217 | zoneMediterraneanCoastal | Mediterranean climate · coastal
+218 | zoneMediterraneanMaritime | Mediterranean climate · of the sea
+219 | zoneHumidSubtropical | Humid subtropical climate
+220 | zoneTemperateOceanic | Cool oceanic climate
+221 | zoneSemiAridHotDesert | Partially dry · hot desert
+222 | zoneSemiAridColdDesert | Partially dry · cold desert
+223 | zoneSemiAridHotSteppe | Partially dry · hot plateau
+224 | zoneSemiAridColdSteppe | Partially dry · cold plateau
+225 | zoneAlpineMontane | Mountain place
+226 | chipRainPerYear | mm of rain / year
+227 | summaryWarmWetSummer | A hot and rainy summer, and a cool and dry winter that is often foggy in the mornings. Reliable summer rain and a long time without frost allow you to farm most of the year — plan by looking at the dry winter and the afternoon storms in summer.
+228 | summaryReliableRainfall | Reliable rain all year, medium temperatures, and no long time of drought. Suitable for steady production of many crops — manage moisture and diseases rather than drought.
+229 | summaryWetMildWinter | A rainy and cool winter, and a hot and dry summer. The cool rainy season is your main growing season; in summer drought-resistant or irrigated crops are needed.
+230 | summarySemiAridSteppe | A partially dry plateau — medium rain that varies a lot between seasons. Collecting water and using mulch is important to extend the growing season.
+231 | summaryAridDesert | Edges of dry desert — rain is little and not reliable. Water collection needs to be established before any significant food production can be possible.
+232 | summaryHighAltitude | A high place with cold winters and a short growing season. Make full use of small warm places and frost-resistant crops.
+233 | surveySectionLabel | Garden survey
+234 | surveyStepsOf6 | {n} of 6 steps
+235 | surveyOpenButton | Fill in the survey
+236 | surveyUpdateButton | Refresh the survey
+237 | surveyGoalFood | Food security
+238 | surveyGoalIncome | Make money
+239 | surveyGoalSoil | Restore the soil
+240 | surveyGoalEducation | Place of showing (display)
+241 | homeLastSite | Last place
+242 | homeReopenMap | Open the map again
+243 | homeStatRain | Rain
+244 | homeStatTemp | Temperature
+245 | homeStatSoilPH | Soil pH
+246 | homeStatASL | Height / elevation
+247 | homeLimaSuggests | Lima advises
+248 | homeSurveyNew | Explore a new place
+249 | homeSurveyDesc | Put the marker so that Lima learns the climate, soil and water there.
+250 | homeOpenMap | Open the map
+251 | homeQuickStudy | Learn
+252 | homeQuickStudyDesc | Permaculture course
+253 | homeQuickContact | Connect
+254 | homeQuickContactDesc | Mentor · organisation
+255 | homeQuickJournal | Journal (diary)
+256 | homeQuickCropPlanner | Production plan
+257 | homeQuickCropPlannerDesc | Crops, fruit and livestock products
+258 | homeQuickMyRecords | My records
+259 | homeQuickMyRecordsDesc | Crops and sales
+260 | homeDashboards | Dashboards
+261 | homeDashboardsHide | Hide
+262 | homeDashboardsSummary | Farmer · Mentor · Organisation · Funder · Student
+263 | homeRoleFarmerLabel | Farmer
+264 | homeRoleFarmerDesc | Analyse the place — climate, soil, water, AI reports
+265 | homeRoleMentorLabel | Mentor
+266 | homeRoleMentorDesc | Run a course, visit farms, confirm progress
+267 | homeRoleStudentLabel | Student
+268 | homeRoleStudentDesc | Learn permaculture, step by step
+269 | homeRoleNGOLabel | Organisation
+270 | homeRoleNGODesc | Overview of the organisation's programme
+271 | homeRoleFunderLabel | Funder
+272 | homeRoleFunderDesc | Funders' results (viewing only)
+273 | homeSurveysLabel | Survey
+274 | homeSurveysDesc | Answer the survey that comes from your organisation
+275 | homeLimaVisionDesc | Take a photo of a bed or a harvest — Lima reads it
+276 | homeFooter | ImbewuField · grown with you
+277 | homeGreeting | Hello, {name}
+278 | navSectionMain | Main things
+279 | navSectionFarmTools | Farm tools
+280 | navSectionOrganisation | Organisation
+281 | navDesignMap | Map
+282 | navFieldJournal | Journal
+283 | navTaskPlanner | Plan of tasks
+284 | navGardenSurvey | Garden survey
+285 | navNGODashboard | Dashboard of the organisation
+286 | navMyAccount | My account
+287 | navCloseMenu | Close the menu
+288 | myRecordsTitle | My records
+289 | myRecordsSubtitle | What you plant · what you sell · design from your mentor
+290 | myRecordsSignInTitle | Sign in in order to save your records
+291 | myRecordsSignInBody | Follow what you plant and what you sell — your data stays with you.
+292 | myRecordsSignInButton | Go to sign in
+293 | myRecordsSaving | Saving…
+294 | myRecordsLogProductionHeader | Record produce
+295 | myRecordsCropLabel | Crop
+296 | myRecordsCropPlaceholder | e.g. Spinach
+297 | myRecordsCropSalePlaceholder | e.g. Tomatoes
+298 | myRecordsKgHarvestedLabel | Kg harvested
+299 | myRecordsPhotoLabel | Photo of the produce (optional)
+300 | myRecordsChoosePhoto | Choose a photo…
+301 | myRecordsProdValidationError | The name of the crop and kg greater than 0 are required.
+302 | myRecordsSaveError | Not saved. Try again.
+303 | myRecordsSaveHarvest | Save the harvest
+304 | myRecordsLogSaleHeader | Record a sale
+305 | myRecordsKgSoldLabel | Kg sold
+306 | myRecordsAmountLabel | Money (R)
+307 | myRecordsBuyerLabel | Buyer (optional)
+308 | myRecordsBuyerPlaceholder | e.g. Market
+309 | myRecordsSaleValidationError | Crop, kg and money (R) are required.
+310 | myRecordsSaveSale | Save the sale and invoice
+311 | myRecordsNoHarvests | There are no recorded harvests yet.
+312 | myRecordsTotalHarvested | total harvest
+313 | myRecordsTopsLabel | highest
+314 | myRecordsNoSales | There are no recorded sales yet.
+315 | myRecordsTotalRevenue | total income
+316 | myRecordsKgSoldSuffix | kg sold
+317 | myRecordsNoDesigns | There is no design shared with you yet.
+318 | myRecordsUntitledDesign | Design without a name
+319 | myRecordsSharedPrefix | Shared
+320 | myRecordsOpenButton | Open
+321 | myRecordsRecentHarvests | Recent harvests
+322 | myRecordsSalesHeader | Recent sales
+323 | myRecordsSharedWithMe | Shared by me
+324 | insightsSelectLocation | Choose a place first
+325 | insightsReportTitle | AI permaculture report
+326 | insightsReportSubtitle | Water · Soil · Groups(guilds) · Calendar · Quick wins
+327 | insightsAnalysing | It is analysing...
+328 | insightsAnalyseSite | Analyse the place
+329 | insightsEmptyPrompt | Using your exact slope, rain time, soil pH + OC, and biome to make a specific report of the place
+330 | popiaTitle | Your data, your choice
+331 | popiaBody | We keep your farm information safe and use it only to help you. You can change these settings any time in the app.
+332 | popiaStoreLabel | Save my farm and financial data
+333 | popiaStoreDesc | Stored safely in the cloud so that it does not get lost. It is required in order to use the app.
+334 | popiaShareLabel | Share with my NGO results without names
+335 | popiaShareDesc | It helps programmes to track impact. You can delete it any time.
+336 | popiaAgreeButton | I agree, continue
+337 | popiaStorageRequired | Storage in the cloud is required to use ImbewuField.
+338 | popiaGoalTitle | What do you want most from your soil?
+339 | popiaGoalBody | Lima uses this to tailor his advice to you.
+340 | popiaGoalFeedLabel | Feed my family
+341 | popiaGoalFeedDesc | Vegetables available regularly all year round
+342 | popiaGoalIncomeLabel | Get income
+343 | popiaGoalIncomeDesc | Lima focuses on market crops you can sell
+344 | popiaGoalSoilLabel | Restore my soil
+345 | popiaGoalSoilDesc | Cover crops and bean crops so that the soil is restored
+346 | popiaGetStarted | Start

@@ -1,3 +1,6 @@
+import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { priceLabel, type Listing } from '@/lib/exchange';
+
 /**
  * The exchange screens used to paint the app's paper-and-ink palette as literal hex, which meant
  * the board stayed lit-paper bright under dark mode while every screen around it followed the
@@ -63,7 +66,7 @@ export const ZU_PRICE_MODE_LABEL = {
 } as const;
 
 export function exchangeText(lang: string, english: string, isiZulu: string): string {
-  return lang === 'zu' ? isiZulu : english;
+  return inlineText(lang, english, isiZulu);
 }
 
 export const MONTH_LABEL = [
@@ -74,3 +77,28 @@ export const ZU_MONTH_LABEL = [
   'uJanuwari', 'uFebruwari', 'uMashi', 'u-Ephreli', 'uMeyi', 'uJuni',
   'uJulayi', 'u-Agasti', 'uSepthemba', 'u-Okthoba', 'uNovemba', 'uDisemba',
 ] as const;
+
+/**
+ * The English price line for a listing, in isiXhosa when the reader is on xh. The Rand amount and
+ * its unit ("R6/kg") are numbers and units, so they stay; the words around them come from the
+ * drafts. Any other language gets `priceLabel` exactly as before.
+ */
+export function xhPriceLabel(lang: string, listing: Pick<Listing, 'price'>): string {
+  const english = priceLabel(listing);
+  if (lang !== 'xh') return english;
+  const p = listing.price;
+  switch (p.type) {
+    case 'free': return inlineText(lang, 'Free');
+    case 'ask': return inlineText(lang, 'Make an offer');
+    case 'swap': return inlineTemplate(lang, 'Swap — {wants}', null, { wants: p.wants });
+    case 'zar':
+      return p.per === 'lot'
+        ? inlineTemplate(lang, '{amount} for the lot', null, { amount: english.replace(/ for the lot$/, '') })
+        : english;
+  }
+}
+
+/** The month name as isiXhosa wants it after "ngo": the draft is "uJanuwari", the sentence needs "Januwari". */
+export function xhMonthStem(lang: string, month: string): string {
+  return lang === 'xh' ? inlineText(lang, month).replace(/^u/, '') : month;
+}

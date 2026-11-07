@@ -14,6 +14,18 @@
  */
 
 import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES } from './report-localisation';
+import { fillInline, inlineText } from '@/lib/xh-inline';
+
+/** isiXhosa's front-matter titles are fixed (they must be recognised on the server before any isiXhosa drafts load, and again in a
+ * fresh browser tab); the other front-matter wording uses the draft keyed by the exact English.
+ * tests/report-document-localization.test.ts pins these three to the drafts. */
+export const XH_FRONT_MATTER_TITLES = { 'Contents': 'Okuqulathwe', 'Document control': 'Ulawulo lwamaxwebhu', 'Site at a Glance': 'Indawo ngokubona nje' } as const;
+const XH_CONTENTS = XH_FRONT_MATTER_TITLES.Contents;
+function documentText(source: string, language: string, values: Record<string, string | number> = {}): string {
+  if (language !== 'xh') return reportDocumentText(source, language, values);
+  if (Object.hasOwn(XH_FRONT_MATTER_TITLES, source)) return XH_FRONT_MATTER_TITLES[source as keyof typeof XH_FRONT_MATTER_TITLES];
+  return fillInline(inlineText(language, source), values);
+}
 
 /** Headings that are front matter and take no number. Compared case-insensitively. */
 const UNNUMBERED_TITLES = new Set([
@@ -22,6 +34,7 @@ const UNNUMBERED_TITLES = new Set([
   'site at a glance',
   'indawo kafushane',
   'okuqukethwe',
+  ...Object.values(XH_FRONT_MATTER_TITLES).map(title => title.toLocaleLowerCase()),
   ...['Contents','Document control','Site at a Glance'].flatMap(title=>REPORT_DOCUMENT_LANGUAGES.map(language=>reportDocumentText(title,language).toLocaleLowerCase())),
 ]);
 
@@ -165,7 +178,7 @@ export function numberSections(markdown: string): NumberingResult {
  */
 export function buildContents(headings: NumberedHeading[],language='en'): string {
   if (!headings.length) return '';
-  const out: string[] = [`## ${reportDocumentText('Contents',language)}`, ''];
+  const out: string[] = [`## ${documentText('Contents',language)}`, ''];
   for (const h of headings) {
     if (h.level === 2) out.push(`**${h.number}. ${h.title}**  `);
     else out.push(`  ${h.number} ${h.title}  `);
@@ -208,8 +221,8 @@ export function numberFigures(markdown: string,language='en'): FigureResult {
     }
     const n = figures.length + 1;
     const alt = m[1].trim();
-    const caption = alt || reportDocumentText('Figure not captioned',language);
-    const text=reportDocumentText('Figure {number} — {caption}',language,{number:n,caption});
+    const caption = alt || documentText('Figure not captioned',language);
+    const text=documentText('Figure {number} — {caption}',language,{number:n,caption});
     figures.push(text);
     out.push(line);
     out.push('');
@@ -222,7 +235,7 @@ export function numberFigures(markdown: string,language='en'): FigureResult {
 /** The list of figures, or '' when the document has none. */
 export function buildListOfFigures(figures: string[],language='en'): string {
   if (!figures.length) return '';
-  return [`## ${reportDocumentText('Figures',language)}`, '', ...figures.map((f) => `${f}  `), ''].join('\n');
+  return [`## ${documentText('Figures',language)}`, '', ...figures.map((f) => `${f}  `), ''].join('\n');
 }
 
 /**
@@ -247,7 +260,7 @@ export function ensureDocumentArchitecture(markdown: string,language='en'): stri
   const text = markdown ?? '';
   if (!text.trim()) return text;
   // Already a structured document — leave it exactly as generated.
-  const contentsTitles=new Set(['en',...REPORT_DOCUMENT_LANGUAGES].map(code=>reportDocumentText('Contents',code).toLocaleLowerCase()));
+  const contentsTitles=new Set([...['en',...REPORT_DOCUMENT_LANGUAGES].map(code=>reportDocumentText('Contents',code).toLocaleLowerCase()),XH_CONTENTS.toLocaleLowerCase()]);
   if(text.split('\n').some(line=>{const match=/^##\s+(.+?)\s*$/.exec(line);return match&&contentsTitles.has(match[1].toLocaleLowerCase());}))return text;
 
   const figured = numberFigures(text,language);

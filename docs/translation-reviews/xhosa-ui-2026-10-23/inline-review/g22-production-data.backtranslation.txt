@@ -1,0 +1,347 @@
+0. Protection/care needs attention before expanding
+1. Check the farm's details before choosing
+2. Discuss these options with a local mentor
+3. What are chickens used for: eggs, meat or both?
+4. Is clean drinking water always available?
+5. Which food is available?
+6. Are the birds safe at night?
+7. Does this place get frost?
+8. Make sure reliable clean drinking water exists before buying more birds.
+9. Check that the food is suitable; scavenging and leftover food may not meet the needs of laying hens.
+10. Improve protection at night and make the house safe against the weather.
+11. The chicken enterprise you chose and the purpose you wrote differ; check them together.
+12. Each type has needs for clean drinking water, suitable food and a safe place to live.
+13. Scavenging alone may not give enough nutrients for eggs.
+14. In hot weather give shade, good air flow and reliable water. This is general care advice; the heat at this place is not confirmed.
+15. Adaptation of local chickens varies within provinces. Location alone does not show the better type for this farm.
+16. You reported frost. Check with a local mentor a place to protect from winter and to warm the chicks.
+17. You reported wet soil. Check whether the chicken house leaks and whether the sleeping place stays dry.
+18. Farming water is scarce. Check drinking water separately; garden water does not confirm safe water for chickens.
+19. Choice for eggs and meat. It surpassed other indigenous types in eggs in a controlled ARC trial; those results do not predict what will happen on this farm.
+20. Choice of an indigenous type kept by the ARC for eggs and meat; check local stock and care needs.
+21. Choice of an indigenous type described in different South African climates; confirm suitability with local advice.
+22. Commercial egg-laying chickens - egg system
+23. Think about it only after checking reliable food, drinking water, housing, health treatment and controlled light. Type and supplier still need confirming locally.
+24. Commercial broilers - meat system
+25. It needs reliable balanced food, water, suitable housing and management. Confirm availability of chicks and the meat market before choosing.
+26. These are ways to discuss, not a final recommendation of a division(?). Confirm locally healthy stock, supplier availability, air flow, chick warmth and a health plan. Record actual production months separately; this guide does not promise production or dates.
+27. Chickens
+28. Goats
+29. Bees
+30. Rabbits
+31. Ducks
+32. Pigs
+33. Pen/kraal
+34. Pond
+35. Milk
+36. Honey
+37. Fish
+38. Wool
+39. {product} per unit: {unit}
+40. Harvest per unit: {unit}
+41. Food per unit: {unit}
+42. Water per unit: {unit}
+43. Area per unit: {unit}
+44. bird
+45. broiler
+46. cow
+47. female
+48. ewe (female sheep)
+49. fish
+50. hen
+51. sheep
+52. sow (female pig)
+53. eggs/hen kept in house, laying cycle up to 90 weeks
+54. eggs/hen/year
+55. g harvest weight/fish
+56. kg greasy wool/sheep/year
+57. kg honey/hive/year
+58. kg live weight/bird at slaughter time
+59. kg milk/cow/lactation period
+60. kg milk/female/305-day lactation period
+61. kg weaning weight/calf
+62. kg/bird at slaughter (32-33 days)
+63. weaned young/dry (separated?) female
+64. weaned young/female/year
+65. lambs born per female each
+66. weaned piglets/sow/year
+67. young reaching slaughter/breeding age/female/year
+68. Indicator from the 2008 national survey; not an estimate of this hive.
+69. Weight of a live calf at weaning in local Nguni herds in Limpopo; not meat weight.
+70. Jersey and Holstein herds recorded for milk, per lactation period; not an annual amount.
+71. Commercial industry indicator at slaughter time; not an estimate of a home flock.
+72. Indicator of village chickens from dry and wet areas of KZN.
+73. Commercial laying-cycle indicator; not eggs per year.
+74. Indicator from non-South African research; live weight, not meat weight.
+75. Harvest weight per Mozambique tilapia; not the pond's harvest.
+76. Saanen herds recorded for milk, per lactation period; not an annual amount.
+77. Indicator of Boer goat in a wide area by weaned young; not meat weight.
+78. Indicator of the FAO garden programme; not an estimate of a South African farm.
+79. Lambs born reported by the farmer; not weaned lambs or meat weight.
+80. Merino indicator of a dry region; grass feeding and management affect shorn wool.
+81. Age of birds since hatching; not the time after buying birds ready to lay.
+82. Age at first calving; not the time after buying a cow.
+83. Age at first birth of young; not the age of first weaned young.
+84. Growth indicator of Mozambique tilapia; confirm starting stock and water conditions.
+85. From first calving to culling in research; not life since birth.
+86. From first calving to culling in recorded herds; not life since birth.
+87. Indicator of French intensive commerce; not the life of a garden rabbit doe.
+88. Dry feed eaten by cows producing milk; not fresh feed weight.
+89. Indicator of a commercial system; confirm the suitable feed allocation locally.
+90. Indicator for a Holstein milk cow; temperature and the animal's stage affect the need.
+91. Commercial indicator under normal conditions; water must always be available.
+92. Indicator for a pregnant and milk-producing sow; not the stage of growing pigs.
+93. Area inside the house with suitable resting places; not a walking-outside area.
+94. Outside free-range walking area in research; not an indoor living area.
+95. Cage for one adult breeding rabbit; not a floor space for a group.
+96. Honey flow depends on local plants and rain, so no month is recorded.
+97. Commercial milk operators need an even milk supply all year. This is an indicator of the herd's supply, not the whole year's milk from each cow. Confirm calving and milking months on your farm.
+98. With constant daylight of 14-16 hours, commercial hens always lay at the highest rate all year.
+99. Winter water temperature stops tilapia growth in most of South Africa; only the North-East sub-tropical supports growth all year without heating.
+100. In this South African Saanen milk-recording research, females giving birth in spring had the highest average milk yield per lactation period. Table 1 defines spring as August-October in this research. These are birth-season categories, not confirmed milking months.
+101. Breeding is not controlled and happens all year, but in one local study in Mpumalanga the calving rate was highest in autumn (96%) and spring (93%), low in winter (63%) and absent in summer.
+102. Breeding/birthing is not confined to one time - Boer females give birth all year - but births are concentrated in three peaks: March-April, June-July and September-October, with the highest peak overall in autumn.
+103. In hot, humid rainy-season conditions the rabbit breeding rate falls; artificial light in controlled cages can reduce this greatly.
+104. Nationwide sheep are shorn from about end of July to the middle of May (combined amounts for all shearing areas); many farms now shear every 6-8 months rather than once a year.
+105. Water during a dry period
+106. Frost on this farm
+107. Sun and drainage
+108. Planned crops that must be checked for frost
+109. Reported produce
+110. Leafy vegetables
+111. Other vegetables
+112. Staple crops
+113. Fruits
+114. Nuts and berries
+115. Chicken meat
+116. Other produce
+117. Farming place not yet set
+118. The farmer reports that farming water is reliable. Confirm the supply can carry each planned crop cycle.
+119. The farmer reports that farming water is scarce. Confirm which beds can be watered before buying planting materials.
+120. The farmer reports farming with rain only. Use the check of rain-dependent crops for this place; water for animals is a different need.
+121. Not recorded. Complete the site survey and confirm water before choosing an intensive farming plan.
+122. Frost was seen here in {months}. Check frost-tender plants by comparing with these observed things.
+123. Frost was seen here; months not recorded. Check frost-tender plants by comparing with these observed things.
+124. The farmer reports that no frost was seen. This does not confirm that next winter will have no frost.
+125. What was observed about frost locally is not recorded. Satellite monthly averages cannot confirm the dates of first and last frost.
+126. Sun: {state}.
+127. full sun reported
+128. half shade reported
+129. mostly shade reported
+130. not recorded
+131. Drainage: {state}. Soil test results and specific crop needs still need checking.
+132. water drains well, as reported
+133. soil stays wet, as reported; test the soil before planting
+134. These planned crops will stay in the ground during the months when frost is seen here. Confirm local protection or change planting before relying on these dates.
+135. Annual amount reported by the farmer for {year}: {qty}.
+136. Annual amount reported by the farmer - report year not recorded: {qty}.
+137. Home use: {used}. Sold: {sold}.
+138. Reported harvest months: {months}. These are aspects seen in research, not a new estimate of production.
+139. Check the recorded unit and amounts before using this row.
+140. (unit not recorded)
+141. Recorded variety: {variety}.
+142. not yet chosen
+143. Short list from research of similar climates: {list}.
+144. The research does not have a similar list for the region. Ask a local farmer or extension officer which marked variety is suitable for this time.
+145. The climate of this place is not set, so no local short list is requested. Open the crop card to see sources and record your choice.
+146. Buying advice: {text}
+147. {housing}: choose produce
+148. Choose the real lemon or mandarin choice in the catalogue for this map-placed crop before giving a production time. One map crop is one crop; the two production calendars are not combined.
+149. Confirm with the supplier the real citrus produce and the named variety; this combined pallet choice does not describe planting materials.
+150. The named peach times are source indicators only. Record the real variety of peach or nectarine; its chill need and harvest dates must be checked for this place.
+151. Choose identified planting materials for the produce and the real variety. The common name 'low-chill' does not choose Earligold, Cederberg or Afrisun, and does not set a combined time.
+152. Planting date is required
+153. Not yet planted
+154. not yet planted
+155. Check the age of the repeated harvest
+156. Growing · before the first-harvest indicator
+157. Harvest at this age is required
+158. Farm harvest plan
+159. Age not recorded
+160. Add planting dates
+161. Use as food needs checking before planning home produce
+162. Enter the total number of plants
+163. Age-group numbers exceed the plants on the map
+164. {n} plants need age groups
+165. Existing plants have a future planting date
+166. Fix beds that are double-booked
+167. {crop}: check the sowing date
+168. {bed}: check the farming place
+169. {crop}: harvest from a past time was not counted
+170. {from}–{to} years
+171. Use as food needs checking
+172. Not yet planted · see future harvest
+173. Growing · first-harvest indicator {span}
+174. Age plan: no crop planned at present
+175. An estimate, not a harvest promise. Vegetables and staple crops only repeat the repeated sowing that is kept; dated crops and existing ones happen once.
+176. Kilograms of a crop cycle of vegetable and staple crops are counted in the first harvest year, not divided into monthly numbers. Harvests from a past time need real records.
+177. The vegetable and staple estimate keeps bed area, sowing and plant measures unchanged. Update the plan if growing trees change shade, water or the existing bed area.
+178. Tree age is counted from planting at this place. Separate older and younger plants into age groups. Ages of the first-harvest research are indicators, not confirmed dates.
+179. Tree kg are your farm's or nursery's ideas per plant per year. The values stay until the next age you enter; no made-up growth multiplier. The list includes change in a year. Review the plan as plants get older.
+180. Check that variety, local climate, pollen carrying, water and care agree with your harvest ideas. Age alone does not show suitability of place or survival.
+181. Known amounts still leave out missing harvests. Eggs, meat, milk, fish and honey are not included in these crop kg amounts. Months of picking and checking food gaps still need confirming locally.
+182. Check the farming place
+183. Fix the farming place conflict: {beds}
+184. No crop-cycle kg measure with a source
+185. Check the size of the crop cycle
+186. All year
+187. Present sign of catalogue conditions: NEMBA {nemba}. Legal status needs checking; kept as information on an item here on the map, without planting advice or produce dates.
+188. Harvest {name} ({trees}) — local confirmed months {span}
+189. {names} or {last}
+190. Subtropical coast
+191. Karoo / dry interior
+192. High mountain
+193. Frozen green beans
+194. Invented storage months from January to March 2027, not a safe storage time. Freezer conditions, safe way of processing ("driving") and stored amount are not provided.
+195. Dried banana
+196. Invented storage months from June to August 2027, not a safe storage time. The sample banana harvest record is also invented; safe way of drying and stored amount not provided.
+197. Boiled cabbage
+198. Invented storage months from August to October 2027, not a safe storage time. Boiling control, a tested processing recipe and stored amount are not provided.
+199. Driven/processed tomato
+200. Invented storage months from May to August 2027, not a safe storage time. Method of processing, a tested storage recipe and stored amount not provided.
+201. Dried mango
+202. Invented storage months from March to May 2027, not a safe storage time. It is an invented item bought or carried; no harvest from this sample mango tree is requested. Safe drying method and stored amount not provided.
+203. Stored macadamia nuts
+204. Invented storage months from August to October 2027, not a safe storage time. They are invented nuts bought or carried, in the shell; no harvest from the sample trees is requested. Storage conditions, weight of the heart of the shell and stored amount not provided.
+205. The age of first harvest above is for leaves, not pods. Local months of picking leaves have no source. The pod indicator describes produce of the North West province, not a set harvest calendar for this KZN sample.
+206. Keep hives away from children's play areas, give clean water and use a dry place. Ask a registered beekeeper to check a safe local place before adding a hive.
+207. Inspect the whole colony regularly to see signs of bee disease that must be reported and infection by Cape-bee (Capensis).
+208. Place and protect hives so they are not stolen or damaged, which is one of the big problems facing South African beekeepers.
+209. Register with the Department before keeping bees. Registration lasts 24 months from registering or renewing and must be renewed on expiry.
+210. A beekeeper who does not renew registration on expiry will be removed from the register and face penalties under the Act.
+211. Beekeeping work and hired beekeeping services need a valid registration certificate. Check the certificate before using a beekeeper.
+212. Each hive must be marked clearly and legibly with the beekeeper's registration number.
+213. Keep written records of colonies, apiaries, diseases, disease-control steps and colony losses and the reasons for them.
+214. Do not move honey bees across the Cape bee line, or keep Cape bees north of this line, without written permission.
+215. Report any suspected reportable disease (American foulbrood is listed); officials may order that an infected colony be destroyed.
+216. Cattle pens must not be too full: there must be enough floor space for every cow to lie down at the same time.
+217. During transport, cattle must have no less than 1.4 m² of floor space each so that loading is not too tight or too loose.
+218. Cattle may not be transported for more than 18 hours without being taken out and given food, water and shelter.
+219. It is a crime to starve, underfeed, or withhold water or food from cattle.
+220. Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: the State Veterinary Services confirm separation and movement restriction.
+221. Every owner of cattle must register an official identification mark and mark their cattle with it, under the Animal Identification Act.
+222. Any suspected or confirmed abortion linked to brucellosis in cattle must be reported to the State Veterinarian's office, as part of the national bovine brucellosis control scheme under the Animal Diseases Act.
+223. No animal may be slaughtered anywhere other than a registered abattoir, except in the exempt situation below.
+224. A farmer's own slaughter for food at home, or for cultural or religious purposes, is not under the abattoir rule.
+225. In hot, humid KZN, KZN DARD describes a trial of milk of Nguni x Jersey cows at Makhathini to combine milk capacity and adaptation to place. Hand milking while the calf is present shows competition between home milk and calf growth. Discuss adapted stock and feed locally; commercial milk-recording amounts do not predict this system. Record calving, lactation stage and milk available after the calf's needs.
+226. Cattle must not be loaded for transport if their udders are swollen with milk.
+227. It is a crime to starve, underfeed, or withhold water or food from a dairy cow.
+228. Cattle in a feedlot or open camps need shade: shade structures must give at least 4 to 5 m² of shade per cow.
+229. Dairy farmers are legally compelled to test their herds for bovine TB, mainly because of export requirements, so most dairy cattle in South Africa are tested.
+230. Any suspected or confirmed abortion linked to brucellosis in cattle must be reported to the State Veterinarian's office, under the national bovine brucellosis control scheme.
+231. A cow that has been taken out (culled) may be slaughtered only at an abattoir, except for a farmer's own food or cultural or religious purposes.
+232. New South African commercial indicator: SAPA 2024 reports average slaughter at 30-31 days and bird weights of 1.8-1.85 kg. The main range above is still the earlier 2022 indicator of 32-33 days. These are commercial bird weights, not kg of dressed meat or a village flock's goal. Record hatching or purchase age, feeding system, the actual harvest date and the basis of the measured produce.
+233. Broilers in a floored house: no more than 40 kg of birds per square metre.
+234. Newly hatched chicks must be given food within 24 hours after hatching.
+235. Newly hatched chicks must be given access to water within 24 hours after hatching, immediately especially in hot weather.
+236. Clean water and suitable food must always be available, so the birds are not hungry or thirsty.
+237. Broiler houses need a minimum air flow of 5 cubic metres per hour per kilogram of bird weight in the house.
+238. In free-range broiler production, keeping birds inside must not exceed 15 birds per square metre of floor.
+239. An owner or manager with animals that are infected, or may be infected, [by] a controlled animal disease must report immediately to the State Veterinary Director.
+240. Newcastle disease and avian influenza that must be reported are on the state list of controlled animal diseases that must be reported.
+241. No animal may be slaughtered anywhere except an abattoir, except in the exempt conditions below.
+242. Slaughter for your own home food, or for cultural or religious purposes, is not under the abattoir rule.
+243. The ARC Irene trial compared Potchefstroom Koekoek, Venda, Ovambo and Naked Neck under commercial feed, water and controlled light. Averages of eggs/hen over a 52-week cycle were 195.9, 153.7, 125.5 and 138.9 respectively; ages of the first egg were 138.5, 139.0, 134.5 and 129.0 days from hatching, with no significant difference in first-egg age between the types. This is a controlled-type condition, not the harvest of scavenging chickens in KZN. Measure feed and housing before using the measure.
+244. In wide village systems chickens must look for water and food themselves.
+245. Scavenging village chickens grow more slowly than other commercially raised birds and are more vulnerable to disease, parasites and predators.
+246. In research in Limpopo and KwaZulu-Natal, 94.9% of farmers kept their chickens in a house at night.
+247. What free-ranging hens look for meets their maintenance and growth needs but not for laying eggs: protein at all times, calcium and phosphorus in winter.
+248. SAPA 2024 commercial-type averages up to 90 weeks: Dekalb Amberlink 429 eggs/hen housed, Dekalb Brown 428, Hy-Line Silver Brown 435, Hy-Line Brown 434 and Lohmann Brown Lite 413. These are whole-cycle goals, not eggs in a calendar year or a small farmer's estimate. Purchase age, real start of laying, live laying hens, feed, water and light need separate records.
+249. In free-range systems, hens must have access to the outside area at least 8 hours per day in the daytime.
+250. Where individual nest boxes are used, there must be at least one nest for every 8 hens.
+251. Hens need at least 8 hours of continuous darkness in each 24-hour cycle to "wish well" (to rest properly?).
+252. A floored house needs bedding material (litter) on one third (33%) of the floor at least.
+253. The free-range outside area must not be too full: no more than 5 birds per square metre of walking area.
+254. It is a crime to deny a duck food or water, or to put it in a place without enough space, ventilation, light or protection from heat and cold.
+255. Check flocks for sudden death, ruffled feathers, swollen wattles/combs or a sudden drop in egg production - these are signs of avian influenza and must be reported immediately.
+256. Keep ducks away from wild birds and flowing water/attractive food, and control visitors' access to the duck house, to reduce the risk of avian influenza.
+257. Ducks are among livestock listed in the Meat Safety Act, so its rules on registered abattoirs and hygiene apply to them.
+258. Ducks slaughtered for sale must be slaughtered at a registered abattoir; a farmer's own slaughter for food is not compulsory but that meat cannot be sold.
+259. At an abattoir, ducks must be looked after kindly during loading, transport, offloading, staying, restraint and killing, under the Animals Protection Act.
+260. Ducks are poultry, so an avian influenza outbreak in a duck flock is a controlled animal disease under the Animal Diseases Act and must be reported immediately to a state veterinarian.
+261. The ARC makes tilapia suitability depend on water temperature: summer growth may be suitable anywhere in South Africa if water exceeds 20°C; growth is bad below 18°C and winter water below 13°C can kill farmed tilapia. The Highveld indicator is a summer crop; tunnels can extend the range. Measure pond water and confirm types of laying and dates. Air climate or a pond placed on the map does not show harvest months, fish numbers or kg of food.
+262. Native Mozambique tilapia (O. mossambicus) is not a listed invasive species and can be farmed without an alien-species permit; fast-growing Nile Tilapia (O. niloticus) is.
+263. Nile Tilapia (Oreochromis niloticus) is a nationally listed invasive fish species: Category 1b within National Parks, provincial reserves, mountain catchment areas and forest reserves, and Category 3 in all other areas.
+264. Outside protected areas Nile tilapia is Category 3: it may remain in set areas or provinces, but spreading it or trading in it is prohibited.
+265. Nile Tilapia is listed under the NEMBA Alien and Invasive Species Regulations as requiring a permit to produce it.
+266. Producing a non-native or invasive species (such as Nile Tilapia) is prohibited in set areas under the Protected Areas Act and Fish Sanctuary Act; a permit is required to produce it elsewhere.
+267. Producing tilapia in South Africa requires a licence to use water under the National Water Act.
+268. Saanen South African indicator by number of lactation, not age in years: average milk weight in each set 305-day period was 947.3 kg at first kidding, 1043.2 second, 1073.4 third, 1020.3 fourth, 972.8 fifth, 901.6 sixth and 775.4 in >=7th. These ARC milk-recorded groups were mostly deep/mid-deep study herds. Record the real kidding date, number of lactation period and milk taken out; do not divide these equal amounts into months.
+269. At Putukwane near Polokwane, 179 milking females under broad feeding with unusual supplement were observed for 210 days after birth. Average milk weight was 1.45 kg/day in Saanen, 0.75 in British Alpine and 0.56 in Toggenburg in the observed lactation period. Milk of the first lactation period exceeded that of the mid-late period; March-April births exceeded October-November births in this group. These conditions differ from study-herd records. Discuss adapted stock and feed locally; these are not litres/day or year-round promises.
+270. It is a crime to keep a goat in a place without enough space, ventilation, light or protection from heat, cold or weather, or to shut in/tie it in a way that causes unnecessary suffering.
+271. It is a crime to starve, underfeed, or withhold water or food from a goat.
+272. The owner must not let a goat stay dirty or have parasites, and must get vet treatment or other treatment for a sick, injured or diseased animal when able.
+273. FMD is a controlled animal disease under the Animal Diseases Act: vet services confirm separation and movement restriction, and a suspected case must be reported.
+274. Within an area declared affected by FMD, goats and their products (including milk) cannot be moved to, from or within the area without the State vet's movement permission and complying with its conditions.
+275. Every goat owner must register an official identification mark and mark his goats with it, under the Animal Identification Act.
+276. A goat may be slaughtered for sale only at a registered abattoir under the Meat Safety Act (suitable when culled dairy females or male kids are sold for meat); own slaughter for food, or for cultural/religious purposes, is not compulsory but that meat cannot be sold afterwards.
+277. The 2016 state goat booklet distinguishes indigenous meat stock, Boer, Savanna and Kalahari Red from milk/(intsontelo) types, plus breeding purposes and individual records of births, weaning, weight and sales. Uncontrolled local breeding can produce births at any time; that does not establish availability of meat or weaned young all year. Choose suitable stock for the local system and record survival and production stage before estimating size.
+278. In smallholder systems in KZN Highland Sourveld, lack of food in winter and early spring can make goats thin. Females giving birth in autumn feed their young in winter; those giving birth in spring face food shortage late in pregnancy, especially when rain comes late. Plan winter food for your place and check weight with extension support; this is information about a regional care situation, not kg or a standard breeding calendar.
+279. Winter food shortage in local sourveld is a known care/production risk: autumn-birthing females must feed young in winter, and spring-birthing females are weakened by bad feed late in pregnancy, so winter feed supplement is important.
+280. Within an area declared affected by FMD, goats and their products cannot be moved to, from or within the area without the State vet's movement permission and complying with its conditions.
+281. Every goat owner, including community owners/smallholders, must register an official identification mark and mark his goats with it, under the Animal Identification Act.
+282. A goat may be slaughtered for sale only at a registered abattoir under the Meat Safety Act; slaughtering for the farmer's own use, or cultural/religious purposes (including ceremonial slaughter, common with indigenous goats), is not compulsory under this rule, but that meat cannot be sold afterwards.
+283. A goat may be slaughtered for sale only at a registered abattoir under the Meat Safety Act; slaughtering for the farmer's own use, or cultural/religious purposes, is not compulsory under this rule, but that meat cannot be sold afterwards.
+284. ARC Table 1 lists pregnant sows at 10-18 litres of drinking water a day and milk-producing sows at 18-23 litres a day. These are levels of breeding sows, not one amount for all pigs. Farrowing care separates cooling the sow and warming piglets; outdoor systems need strong adapted stock, shade and shelter. Confirm stage, reliable clean water, feed and housing locally. The booklet does not give confirmed kg of feed per breeding female for this plan.
+285. When pigs are transported on a vehicle, the SA code of practice for handling and transporting animals recommends 0.3 m² per porker, 0.4 m² per baconer and 0.8 m² per adult pig.
+286. It is a crime to keep a pig in a place without enough space, ventilation, light or protection from heat, cold or weather, or to shut in/tie it in a way that causes unnecessary suffering.
+287. It is a crime to starve, underfeed, or withhold water or food from a pig.
+288. In signs of high heat, pig houses need ventilation and a minimum number of animals, and outdoor pigs need shade and shelter.
+289. African swine fever (ASF) is listed as a controlled animal disease related to pigs under the Animal Diseases Act; warthogs and Ornithodorus ticks are carriers/vectors.
+290. FMD is also listed as a controlled animal disease related to pigs under the Animal Diseases Act.
+291. Swill (food waste) may not be fed to pigs unless cooked for at least 60 minutes or had germs removed in another equally effective way.
+292. Pigs may be moved only to a biosecure compartment from another legally verified/accepted compartment for this reason.
+293. A pig may not be slaughtered anywhere other than a registered abattoir, except for home food or cultural/religious purposes.
+294. The pig owner must apply to register an official identification mark and mark his pigs with it, under the Animal Identification Act.
+295. Indicator of South African growers: New Zealand White and Phendula rabbits in a 2017 trial at Stellenbosch were slaughtered at about 11 weeks after birth. Averages were 2.62 kg live slaughter weight, 1.55 kg hot carcass, 1.48 kg cold carcass and 1.26 kg reference carcass without head and red offal, still including bones. Measured pellets and water were freely available in the growers' house. These weights are not boneless meat or the annual produce of a doe; do not repeat them for the FAO garden aim that does not match.
+296. It is a crime to deny a rabbit food or water, or keep it in a place without enough space, ventilation, light or protection from heat and cold.
+297. Give breeding rabbits about 0.48-0.70 m2 of floor per cage, height 50-60 cm, not a cramped cage.
+298. Rabbits are among livestock listed in the Meat Safety Act, so the Act's rules on abattoirs and hygiene apply to them, as they do to ducks and other listed types.
+299. Rabbits slaughtered for sale must be slaughtered at a registered abattoir; own slaughter for food is not compulsory under this rule but meat from them cannot be sold.
+300. At an abattoir, rabbits (like other listed animals) must be treated kindly during loading, transport, offloading, staying, restraint and killing, under the Animals Protection Act.
+301. The European wild rabbit (same type as farmed New Zealand White/Californian rabbits) is listed as an invasive species under NEMBA only on South African offshore islands - it is not a listed/prohibited type on the mainland.
+302. The state sheep booklet describes controlled breeding at Mara Research Station, Limpopo: mating June-July and lambing November-December to match rain and grass. This is one station's breeding calendar, not months of mutton harvest. Choose stock adapted to meat and match it to local food, then record births, survival, weaning and real slaughter or sale; lambs born per ewe are not kg eaten.
+303. Sheep must not be stocked too densely: at least 0.56 square metres of floor space per sheep so that all can lie down.
+304. Electric prods, sticks or stimulating tools may not be used on sheep.
+305. Sheep moved by walking may not be moved more than 20 km in one day (25 km is considered excessive).
+306. Stock must be given water and eat quickly on arrival at an overnight camp or final destination.
+307. Injured, lame or blind sheep must be given first slaughter, or emergency slaughter, to prevent further pain or suffering.
+308. FMD is a controlled animal disease under the Animal Diseases Act; vet services confirm separation and movement restriction.
+309. Within an FMD-declared area, sheep and their products may not be moved to, from or within it without the State vet's permission.
+310. Sheep scab is a legally controlled disease: a suspected or confirmed case must be reported to the State vet immediately.
+311. To prevent sheep scab, all small animals on the farm must be treated with medicines registered under Act 36 of 1947, and infected sheep treated twice, 8 to 10 days apart.
+312. Every sheep owner must register an official identification mark and mark his sheep with it, under the Animal Identification Act.
+313. Sheep may be slaughtered only at an abattoir, except for a farmer's own food or cultural or religious purposes.
+314. There must be a treatment plan for sheep scab: this disease has a high economic and care cost.
+315. Although FMD exists in South Africa, export of wool continues under the OIE (World Organisation for Animal Health) closing rule.
+316. Wool from scab-infected sheep must be destroyed rather than sent to a buyer, where it would be marked as scab wool.
+317. From a 2008 national postal survey of 112 beekeepers who are SABIO members (22.4% response rate) who manage an estimated 19,520 hives in 2,094 apiaries; this amount was reported by themselves and was not measured. Table 7 (same document, pp. 13-14) shows large differences by region/focus/size in the same year: e.g. region 'All', honey focus, all operations of all sizes = 25.1-26.9 kg/hive/year in 3 study areas; honey in Western Cape with honey focus = 23.6-27.9 kg/hive/year; pollination focus in Western Cape, small operations = just 7.0-7.5 kg/hive/year. The same document also quotes earlier research with better evidence: 'their reported average yield very low, just 13.4 kilograms per hive' for Western Cape hives (Allsopp & Cherry 2004, quoted on p. 2 of this working paper), and old national bee census data of 8.3 kg/hive/year (1911-1988 average) rising to 24 kg/hive in the 1974/5 census (same document, p. 1). No single number can be called confirmed; 25 kg/hive/year is used as the main national estimate of this document itself.
+318. Table 5 gives weaning weight (WW) in four agro-ecological areas in the same nine local Nguni herds: dry area 114.51 kg (lowest), semi-dry area 119.98 kg, dry sub-humid area 117.91 kg, humid area 121.21 kg (highest). The range recorded here includes only the averages of the study's own areas from dry to humid; it is not connected to other weaning weights from other papers (other South African studies report different ranges in different systems - e.g. research stations or study herds - and were deliberately left out to avoid mixing systems). 826 calves from nine herds, which the paper itself says were 'kept under an extensive grazing system' in Limpopo province - the real local/extensive grazing system that suits this enterprise.
+319. 2354 days / 365.25 = 6.44 years. 'Time of failing(?)' is the productive life of a herd in 580 fully observed records in the combined dataset; the dissertation itself defines the productive life of a herd as 'time between date of first birth and date of culling'. Combined data from three extensive-grazing Nguni study herds, animals born 1968-2015.
+320. Table 1 ('Comparing numbers of cattle, production and reproduction in the main South African dairy breeds'), milk column, Grade rows: Jersey 3840 kg and Holstein-Friesland 5422 kg per lactation period (Registered rows: 4468 and 6426 kg). The document says these are National Milk Recording Scheme herds, 'shown to be managed better than those outside the scheme, and performance per lactation period up to 50% higher than the national herd', so a small farmer's herd should expect less.
+321. Table 1, AFC column, rows in table order Holstein-Friesland Reg./Grade, Jersey Reg./Grade, Ayrshire Reg./Grade: 28, 30, 25, 28, 29, 32 months. The Grade rows used here are Holstein-Friesland 30 and Jersey 28 (Grade Ayrshire 32 not used: the enterprise is Jersey or Holstein type). 28 x 4.35 = 121.8 weeks; 30 x 4.35 = 130.5 weeks. Milk starts at first calving, so age at first calving is the time to obtain the first produce.
+322. Holstein 739.33 and Jersey 696.81 days of productive life (first calving to culling) in South African milk-recorded herds, 2000-2019: 696.81/365.25 = 1.91 years and 739.33/365.25 = 2.02 years.
+323. Dry matter intake of lactating dairy cows: Jersey 14-16 kg DM/day, Holstein 24-28 kg DM/day. The whole range for both breeds used here (14 to 28 kg/day) because the enterprise generally includes Jersey, Holstein or mixed cattle.
+324. Table 21.1 gives water drunk by a Holstein dairy cow under cool/temperate and hot conditions: 58 L/day (cool) to 75 L/day (heat). Used as a general range for a lactating cow; not separated by breed because some table columns are for cool/heat-stress conditions, not breed.
+325. National commercial broiler industry average, South Africa, 2022. A separate breed trial table (Table 4b, same document, p. 39) gives 'Cumulative FI (kg)' and 'Body weight (kg)' of named breeds at exactly 35 days: Arbor Acres Plus 2.29kg, Cobb 500 2.52kg, Indian River 2.30kg, Ross 308 2.30kg (cumulative feed eaten 3.21-3.64kg) - slightly higher age (35 vs 32-33 days) and higher weight than the industry-wide average quoted above; not merged into the main number because it is a separate dataset (breed quality trial), but used below in the feed-eaten number.
+326. 32 days / 7 = 4.57 weeks; 33 days / 7 = 4.71 weeks. This enterprise has one growth cycle ending in slaughter, so 'time of first produce' = age at slaughter. South Africa, commercial industry average.
+327. Village scavenging/free-range chickens, KwaZulu-Natal: dry area (40.43) vs wet (49.91), difference not significant ('NS'). The ARC Irene trial of a controlled system of named indigenous types (Grobbelaar, Sutherland & Molalakgotla 2010, Animal Genetic Resources 46: 25-32) reports much higher numbers, now confirmed separately and kept in productionReferences; controlled conditions cannot replace the village scavenging place.
+328. Free-range village chickens, KwaZulu-Natal; birds of the dry area began laying earlier (15.74 weeks) than those of the wet area (27.78 weeks), the difference marked significant ('*') in the source table. The wide range shows the real difference of dry/wet-season condition reported by the source, not uncertainty of measuring.
+329. The combined 'eggs/hen housed' of table 4a for five commercial types; the same table gives 'Age at end of 90.0 weeks' for each type. A commercial house/cage average, not a trial of a free small farmer. Kept as the source gives it: the annual rate needs laying age from another book.
+330. Commercial indicator of laying hens: age of birds since hatching, not weeks after buying point-of-lay pullets or building housing. Supplier type, growth and real start may vary. The earlier number of 16-17 weeks was SAPA's years of accepting/housing, not first-egg evidence.
+331. The source says drunk water is within the ratio of both feed weights, and gives water of about 220 ml/day. Feed weight = 220 ml (taken as 220 g, density of water) / 2 = 110 g/day = 0.11 kg/day. Cross-check: SAPA Industry Profile 2022 Table 4a (p. 39) gives combined 'Feed intake kg' of 53.5-58.1 kg per hen in a laying period equal to 73-74 weeks (511-518 days): 53500/511 = 104.7 g/day to 58100/518 = 112.2 g/day, that is about 0.105-0.112 kg/day - it agrees with the 0.11 kg/day figure used here. Commercial system, South Africa.
+332. 220 ml/day = 0.22 L/day. Commercial system, South Africa.
+333. Indoor floor/house area in a Free Range or Barn with resting places system: 12 birds/m2 = 1/12 = 0.083 m2/bird. The outside free-range limit of the same Code is very big (5 birds/m2 = 0.2 m2/bird outside, see treatment) - not mixed into this inside number, per the instruction not to combine different systems. A separate table of cage systems in the same document (Table 3.1) gives a different, more confined number for battery cages, also not used here because this enterprise is made as free-range/barn. South Africa.
+334. Not South African (Guyana research reporting a citation of Steklenev 1990); no South African number of live weight at slaughter was found (see gaps). 2.93 kg = Pekin at 8-10 weeks, 2.29 kg = Muscovy at 8-10 weeks - matches the two types of this enterprise. The LRRD paper's own trial (Table 2, intensive system, Guyana) measured live weight at slaughter (8 weeks) as: Pekin drakes 2.53 kg, Pekin females 2.29 kg, Muscovy drakes 2.47 kg, Muscovy females 1.51 kg - generally agree, but not combined with the range quoted above because it is a different dataset/table from the same source. No eggs/duck/year number was found for either type (see gaps); the LRRD and SAJAS sources used here studied only ducks raised for meat.
+335. P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/females, 12 weeks for drakes). 'Time of first produce' = age at slaughter, because it is a single-cycle meat enterprise (no repeating production like eggs). Non-South African trial by Warsaw researchers, published in SAJAS; the journal's location does not make it local.
+336. 0.08 bird/m2 (outdoor/free-range system) = 1/0.08 = 12.5 m2/bird - used here as the main number because duck keeping by small/garden farmers is nearer to this free system than a deep-litter intensive house. The INTENSIVE deep-litter system of the same source gives 2.9 birds/m2 = 1/2.9 = 0.34 m2/bird (a very different, more confined number) - noted here for background but not combined with the range above, per the instruction not to mix numbers from different systems. Non-South African trial by Warsaw researchers, published in SAJAS; the journal's location does not make it local.
+337. 10 months x 4.35 = 43.5 weeks; 12 months x 4.35 = 52.2 weeks. This is the growing time of Mozambique Tilapia (O. mossambicus) to harvestable size; the source separately says Nile Tilapia (O. niloticus) reaches harvestable age faster, at 6-10 months (= 26.1-43.5 weeks) - not used here because it is a different species with a different legal status (see 'legal').
+338. Lowest mean (>=7th parity) and highest (3rd parity) of the groups in milk yield per set 305-day lactation period in 16,407 South African ARC Saanen milk records analysed, 1955-2018, mostly deep/mid-deep study herds. The original PDF Table 3 calls the last group >=7th; the HTML shows >7th. Kept in kg, without converting to litres, converting to a year or calculating between yield by age.
+339. This is age at first birth of young (first birth), not first weaned young. 16 months x 4.35 = 69.6 weeks; 18 months x 4.35 = 78.3 weeks, from the female's birth to first birth. In addition the source's own thinking of 150 days (~5 months, ~21.75 weeks) of weaning would put the first weaned young at about 91-100 weeks of the female's age, but this combined number is not shown as the main value because the field is recorded as 'age/time from start (hatching, birth) to first produce' and first birth is clear, placed directly; weaning entry is noted here to leave openness.
+340. The estimated weaning rate is 149%, or 1.49 weaned young per separated(?) female. The source describes twenty years of observation of Boer females in a wide area at 295 mm of rain; it does not describe weaned young per female per calendar year. This is a breeding result, not kg of live animals or dressed meat. A different measure of litter size at 1.93 born at each birth has a different divider and a different stage and is not combined with this number.
+341. Table 1 gives different ranges by body class of the same animal (sow): pregnant sows 10-18 L/day and milk-producing sows 18-23 L/day. Combined here into one range for the sow herd [10,23] including both conditions, rather than mixing other table classes (breeding pigs, growers, finishers, boars), which are another animalUnit. South Africa (number from a general training booklet for small/commercial farmers, not tied to one system).
+342. General FAO garden aim, not a rate observed in South Africa. 30-35 young per female per year reaching slaughter or breeding age after allowing for loss after weaning; not just weaned and not kg of meat. The source models six litters and 5.5 surviving young per litter, explaining the aim of 30 rabbits; an extra litter raises the stated aim to 35. Do not combine this garden aim with the weight of a growers' house carcass in a separate trial.
+343. 279 days / 365 = 0.76 years. This number is from French INTENSIVE commercial rabbit places (average of national recording system data 1992), NOT garden/free-grazing hutches - the source gives no different productive-life number for garden systems (see gaps). Take it as a lower-limit / industrial-system indicator only.
+344. 0.60x0.80=0.48 m2 to 0.70x1.00=0.70 m2, indoor/hutch cage for one adult breeding animal (one buck or one doe per cage), height 50-60 cm. FAO (general, not South African). A separate FAO table (p. 174, Fort & Martin 1981) gives a doe cage as 65-70 cm (front) x 50 cm (depth) = 0.325-0.35 m2 and a buck cage as 40x50 cm = 0.20 m2 - a smaller number chosen from one book, not combined with the range above to avoid mixing two different table sources.
+345. The outputUnit is 'lambs born/ewe/year' rather than the recommended 'kg live weight/lamb at weaning or slaughter' or 'lambs weaned/ewe/year': the source explains that 'Measuring accurately lamb birth percentages in smallholder sheep farmers is difficult because these farmers raise extensively and keep no records', and instead counts 'Lambs born per female (as recorded in research based on interviews with individual respondents)' - a number of births, not weaning, reported by smallholders rather than measured/weighed. 139%=1.39, 83%=0.83, 61%=0.61 lambs born/ewe/year; the range [0.61, 1.39] includes three Western Cape smallholder districts examined (Eden, Central Karoo, West Coast), all from this research/citation - not combined with any other document. The same paper separately says the COMMERCIAL extensive average lambing is 110-156% and weaning 94-132% (Snyman & Herselman, 2005), 'shown over combined ewes' clearly (different divider/system) - not combined into the smallholder range.
+346. The semi-arid/extensive grassland range (4-5 kg greasy wool/sheep/year) is used as the main value; the figure of 8 kg/year of its own "jaw" of a different system (sheep eating on CULTIVATED pastures) was deliberately left off the range rather than averaged. The Western Cape government allocation (Elsenburg) of Dohne Merino Extensive (Ceres-Karoo, 2024) separately gives sold wool of the herd as 4439.64 kg from a herd of '1 519' Smallstock Units, i.e. 4439.64/1519 = 2.92 kg per Smallstock Unit/year - not used as the main value because the source does not say 1 Smallstock Unit = 1 sheep (SSU is a middle definition of an animal class, not an actual head count), so converting to kg/sheep would need an unexplained conversion factor. A separate NWGA/Mandela Initiative paper about the Eastern Cape communal wool sheep development programme reports Grootfontein ADI progeny-test 'Greasy fleece weight (kg) 2.8 [commercial rams] 2.4 [communal rams]' in Eastern Cape communal herds - not combined into the main value because the table clearly says '6-month old lambs' (a different life stage from an adult full-year sheep) in line with the rule of not mixing numbers across life stages; kept here as Eastern Cape communal context only: lambs born from commercial rams at 6 months average 2.8 kg, lambs born from communal rams 2.4 kg, a difference of +16%.

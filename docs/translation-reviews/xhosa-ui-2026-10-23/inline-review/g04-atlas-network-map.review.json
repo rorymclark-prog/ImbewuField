@@ -1,0 +1,105 @@
+{
+  "unit": "g04-atlas-network-map",
+  "okCount": 173,
+  "items": [
+    {
+      "where": "line 68",
+      "verdict": "repair",
+      "english": "Illustrative estimate: cash income plus unmatched harvest at an assumed R15/kg. Not revenue, profit or measured household benefit.",
+      "draft": "Isiqikelelo somzekelo: ingeniso yemali kunye nesivuno esingahambelaniyo nentengiso ngexabiso eliqikelelweyo le-R15/kg. Ayiyo ingeniso, inzuzo okanye ingeniso yekhaya elinganisiweyo.",
+      "backtranslation": "...Not income, profit or estimated household income.",
+      "problem": "'measured household benefit' became 'estimated household income' (a money claim).",
+      "corrected": "Isiqikelelo somzekelo: ingeniso yemali kunye nesivuno esingahambelaniyo nentengiso ngexabiso eliqikelelweyo le-R15/kg. Ayiyo ingeniso, inzuzo okanye uncedo olulinganisiweyo lwekhaya."
+    },
+    {
+      "where": "line 93",
+      "verdict": "repair",
+      "english": "Weighted across the 5 setup steps, so the percentage is not simply steps done ÷ steps total.",
+      "draft": "Kubalwe kumanyathelo okuseta ama-5, ngoko ipesenti ayingomanyathelo agqityiweyo ÷ onke amanyathelo.",
+      "backtranslation": "Counted out of 5 setup steps, so percent is completed steps / all steps.",
+      "problem": "'Weighted' lost; also reads as a plain count.",
+      "corrected": "Ibalwa ngokubaluleka kwenyathelo ngalinye kumanyathelo okuseta ama-5, ngoko ipesenti ayingomanyathelo agqityiweyo ÷ onke amanyathelo ngokulula."
+    },
+    {
+      "where": "line 99",
+      "verdict": "repair",
+      "english": "{n} months to {month} {year}. Bars are dated ledger entries only — a gap is a month with no entry, not a month of no work.",
+      "draft": "Iinyanga ezi-{n} ukuya ku-{month} {year}. Imivalo ibonisa kuphela iingeniso zeencwadi ezinomhla — isikhewu yinyanga engenayo ingeniso, ayiyo inyanga engasetyenzwanga.",
+      "backtranslation": "Bars show only incomes of dated books - a gap is a month with no income",
+      "problem": "Chart is money in AND out; 'entries' narrowed to 'incomes'.",
+      "corrected": "Iinyanga ezi-{n} ukuya ku-{month} {year}. Imivalo ibonisa kuphela amanqaku ezincwadi ezinomhla — isikhewu yinyanga engenanto irekhodiweyo, ayiyo inyanga engasetyenzwanga."
+    },
+    {
+      "where": "line 110",
+      "verdict": "repair",
+      "english": "A plan is visible, but it has no verified crop-cycle kilogram benchmark. Missing evidence is not a 0 kg target.",
+      "draft": "Isicwangciso siyabonakala, kodwa asinawo umlinganiselo wekhilogram wesangqa sezityalo ovavanyiweyo. Ubungqina obulahlekileyo asisiyo injongo ye-0 kg.",
+      "backtranslation": "Missing evidence ['asisiyo' = the plan] is not a 0 kg goal.",
+      "problem": "Concord 'asisiyo' points at plan, not evidence (ubungqina).",
+      "corrected": "Isicwangciso siyabonakala, kodwa asinawo umlinganiselo wekhilogram wesangqa sezityalo ovavanyiweyo. Ubungqina obulahlekileyo abuyonjongo ye-0 kg."
+    },
+    {
+      "where": "line 113",
+      "verdict": "repair",
+      "english": "No chart is drawn rather than an invented one.",
+      "draft": "Akukho chathi itsalwayo kunokuba kwenziwe eyenziweyo.",
+      "backtranslation": "No drawn chart rather than a made one that was made.",
+      "problem": "Garbled; 'invented' lost.",
+      "corrected": "Akukho chathi itsalwayo kunokutsala eyaqanjiweyo."
+    },
+    {
+      "where": "line 115",
+      "verdict": "repair",
+      "english": "The site survey has not been started. All {total} questions are blank — this is a gap in the record, not a score of zero.",
+      "draft": "Uphando lwendawo aluqalwanga. Yonke imibuzo engu-{total} ayiphendulwanga — esi sisikhewu kwirekhodi, ayiyo isikolo se-zero.",
+      "backtranslation": "...not a 'school (isikolo) of zero'.",
+      "problem": "'isikolo' = school, not score.",
+      "corrected": "Uphando lwendawo aluqalwanga. Yonke imibuzo engu-{total} ayiphendulwanga — esi sisikhewu kwirekhodi, ayiyo inqaku elingu-zero."
+    },
+    {
+      "where": "line 118",
+      "verdict": "repair",
+      "english": "Treat the {n} blank answer as unknown. Do not read them as a low score.",
+      "draft": "Jonga impendulo engenanto engu-{n} njengengaziwayo. Ize ungayifundi njengesikolo esiphantsi.",
+      "backtranslation": "Don't read it as a low 'school'.",
+      "problem": "'isikolo' = school, not score.",
+      "corrected": "Jonga impendulo engenanto engu-{n} njengengaziwayo. Ize ungayifundi njengenqaku eliphantsi."
+    },
+    {
+      "where": "line 119",
+      "verdict": "repair",
+      "english": "Treat the {n} blank answers as unknown. Do not read them as a low score.",
+      "draft": "Jonga iimpendulo ezingenanto ezi-{n} njengezingaziwayo. Zize ungazifundi njengesikolo esiphantsi.",
+      "backtranslation": "Don't read them as a low 'school'.",
+      "problem": "'isikolo' = school, not score.",
+      "corrected": "Jonga iimpendulo ezingenanto ezi-{n} njengezingaziwayo. Zize ungazifundi njengamanqaku aphantsi."
+    },
+    {
+      "where": "line 138",
+      "verdict": "repair",
+      "english": "{n} more farmer is enrolled here but have not agreed to share their figures, so they are not listed.",
+      "draft": "Omnye umfama ({n}) ubhalisiwe apha kodwa akavumanga ukwabelana ngezibalo zakhe, ngoko akaphawulwanga kuluhlu.",
+      "backtranslation": "...so isn't marked in the list.",
+      "problem": "'not listed' became 'not marked' (consent/privacy; farmer might still be listed).",
+      "corrected": "Omnye umfama ({n}) ubhalisiwe apha kodwa akavumanga ukwabelana ngezibalo zakhe, ngoko akabhalwanga kuluhlu."
+    },
+    {
+      "where": "line 139",
+      "verdict": "repair",
+      "english": "{n} more farmers are enrolled here but have not agreed to share their figures, so they are not listed.",
+      "draft": "Abanye abafama abangu-{n} babhalisiwe apha kodwa abavumanga ukwabelana ngezibalo zabo, ngoko abaphawulwanga kuluhlu.",
+      "backtranslation": "...so aren't marked in the list.",
+      "problem": "same",
+      "corrected": "Abanye abafama abangu-{n} babhalisiwe apha kodwa abavumanga ukwabelana ngezibalo zabo, ngoko ababhalwanga kuluhlu."
+    },
+    {
+      "where": "line 183",
+      "verdict": "repair",
+      "english": "Tarred driveway",
+      "draft": "Indlela yemoto enetiyara",
+      "backtranslation": "Driveway with a tyre",
+      "problem": "'tiyara' = tyre; English is tarred driveway.",
+      "corrected": "Indlela yemoto enetari"
+    }
+  ]
+}

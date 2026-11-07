@@ -1,0 +1,637 @@
+{
+  "language": "xh",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Soil Health & Composting",
+        "body": [
+          "Soil is more than the ground under your feet.",
+          "It is a living place that feeds crops, holds water, and carries your harvest.",
+          "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Impilo yomhlaba nokwenza umgquba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umhlaba ungaphezu komhlaba ophantsi kweenyawo zakho."
+          },
+          {
+            "status": "draft",
+            "text": "Yindawo ephilayo. Iyazondla izityalo, igcine amanzi, ithwale nesivuno sakho."
+          },
+          {
+            "status": "draft",
+            "text": "Kule modyuli, funda ukuqonda umhlaba, wenze umgquba okhuselekileyo, ukhusele umhlaba ongenanto, kwaye usebenzise izityalo zokugquma (cover crops) neefama zeentshulube."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "Soil condition affects roots, water and the harvest.",
+          "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+          "Observe your soil, then choose ways to protect and improve it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kutheni kubalulekile"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imeko yomhlaba ichaphazela iingcambu, amanzi nesivuno."
+          },
+          {
+            "status": "draft",
+            "text": "Umhlaba ongenanto ophindaphindiweyo, ukucinezeleka nokulahleka kwe-organic matter kunokuwonakalisa. Umbala wodwa awusichazi sonke isimo."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga umhlaba wakho, uze ukhethe iindlela zokuwukhusela nokuwuphucula."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "Look for several clues about soil condition.",
+          "Use a jar to explore soil texture, while recognising its limits.",
+          "Care for a compost heap, protect bare ground, and distinguish worm castings from liquid drainage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Iziphumo zokufunda"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khangela imikhondo emininzi yemeko yomhlaba."
+          },
+          {
+            "status": "draft",
+            "text": "Sebenzisa ingqayi ukuphonononga ubume bomhlaba (texture), uyazi imida yayo."
+          },
+          {
+            "status": "draft",
+            "text": "Nakekela inqwaba yomgquba, ukhusele umhlaba ongenanto, kwaye wahlule inkunkuma yeentshulube (worm castings) kulwelo oluthontelayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Soil Is Alive",
+        "body": [
+          "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+          "Look at roots, soil structure and water movement as well as visible soil life."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umhlaba uyaphila"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umhlaba uqulethe iintlobo ezininzi zezinto eziphilayo. Iibhaktheriya namakhowa (i-fungi) ancedisa ekubolisweni kwe-organic matter kwaye ajikelezise izondlo."
+          },
+          {
+            "status": "draft",
+            "text": "Amanye amakhowa ancedisa iingcambu ukuba zifumane izondlo. Iindledlana zeentshulube zinokunceda amanzi nomoya ukuba angene emhlabeni."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga iingcambu, isakhiwo somhlaba nokuhamba kwamanzi, kunye nobomi bomhlaba obubonakalayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Watch: Read Your Soil",
+        "body": [
+          "Look closely at these two soil examples.",
+          "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+          "Look at the roots and the spaces around them.",
+          "Look at the surface cover. Loose mulch covers one example.",
+          "Use several clues together. Colour alone cannot tell you soil health. Check moisture, plant growth and how water enters the ground."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khangela: funda umhlaba wakho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Jonga ngocoselelo le mizekelo mibini yomhlaba."
+          },
+          {
+            "status": "draft",
+            "text": "Okokuqala, jonga isakhiwo somhlaba. Entsimini, bamba isiqwenga esifumileyo uzive ngesandla indlela esiqhekeka ngayo."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga iingcambu nezithuba ezizijikelezileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga ukugquma kumphezulu. Ingca yokugquma ekhululekileyo igquma omnye umzekelo."
+          },
+          {
+            "status": "draft",
+            "text": "Sebenzisa imikhondo emininzi kunye. Umbala wodwa awukwazi ukukuxelela ngempilo yomhlaba. Hlola ukufuma, ukukhula kwezityalo nendlela amanzi angena ngayo emhlabeni."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Explore Soil Texture with a Jar",
+        "body": [
+          "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+          "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+          "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Phonononga ubume bomhlaba ngengqayi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Faka umhlaba namanzi kwingqayi ecacileyo, kunye nedetergent encinci efanelekileyo yokwahlula amasuntswana omhlaba (dispersing detergent). Yivale uyihlokohlise, uze uyiyeke ingashukunyiswa."
+          },
+          {
+            "status": "draft",
+            "text": "Isanti iqala ukuhlala. I-silt (umhlaba ocolekileyo kunesanti) ilandela, ngelixa udongwe lunokuhlala lumi emanzini ixesha elide kakhulu."
+          },
+          {
+            "status": "draft",
+            "text": "Eli lilingelo elilula lokufunda. Izigaqa nodongwe olungekahlali zinokukulahlekisa; sebenzisa ilebhu yomhlaba xa kufuneka ubume bomhlaba (texture) buchanekile."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Read the Jar Carefully",
+        "body": [
+          "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+          "Compare the settled layers and feel the soil in the field.",
+          "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Funda ingqayi ngocoselelo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umaleko oqinileyo wesanti ngaphantsi kwamanzi anamafu awukuxeleli okwangoku umlinganiselo wokugqibela. Amanye amasuntswana acolekileyo asenokuba asamile emanzini."
+          },
+          {
+            "status": "draft",
+            "text": "Thelekisa imigangatho ehleliyo uze uvavanye umhlaba ngesandla entsimini."
+          },
+          {
+            "status": "draft",
+            "text": "Bhala oko ukubonayo nako konke okuseyinto engaqinisekanga. Musa ukumisela ukunisela okanye unyango lomhlaba ngokusekelwe kwingqayi enye kuphela."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Investigate Before You Treat",
+        "body": [
+          "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+          "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+          "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Phanda phambi kokunyanga"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ukuxinana komhlaba, ukungaphumi kakuhle kwamanzi nokulahleka kwe-organic matter kunokunciphisa iingcambu nobomi bomhlaba."
+          },
+          {
+            "status": "draft",
+            "text": "Umbala ophaphathekileyo okanye iintshulube ezimbalwa akungqini ukuba imichiza ibulele umhlaba. Umsebenzi weentshulube uyatshintsha nokufuma kunye nexesha lonyaka."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga iipatheni kwintsimi yonke. Hlola imbali yolawulo, ukuphuma kwamanzi nokukhula kwezityalo ngaphambi kokukhetha unyango."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Compost Feeds the Soil",
+        "body": [
+          "Compost is organic matter broken down under managed conditions.",
+          "Finished compost can improve soil structure and contribute nutrients.",
+          "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umgquba ondla umhlaba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umgquba yi-organic matter ebolisiweyo phantsi kweemeko ezilawulwayo."
+          },
+          {
+            "status": "draft",
+            "text": "Umgquba ogqityiweyo unokuphucula isakhiwo somhlaba kwaye unegalelo kwizondlo."
+          },
+          {
+            "status": "draft",
+            "text": "Ixesha lokulunga liyahluka ngokweempahla, ukufuma, umoya nobushushu. Igama lephondo okanye inani elimiselweyo leeveki asiso isivivinyo sokulunga."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Watch: Build the Compost Heap",
+        "body": [
+          "Build the heap with dry browns and fresh greens.",
+          "Keep the layers moist, not wet, so air and decomposers can work."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khangela: yakha inqwaba yomgquba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Yakha inqwaba ngezinto ezomileyo ezinsundu (browns) nezinto ezintsha eziluhlaza (greens)."
+          },
+          {
+            "status": "draft",
+            "text": "Zigcine imigangatho ifumile, kungemanzi, ukuze umoya nezinto ezibolisayo (decomposers) zisebenze."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Balance Browns and Greens",
+        "body": [
+          "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+          "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+          "Check moisture and air as the heap changes; one recipe does not suit every mix of materials."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Linganisa i-browns ne-greens"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Xuba i-browns ezomileyo ne-greens ezintsha. Phepha imigangatho eshinyeneyo, emanzi evala umoya."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba inqwaba iba bushelelezi okanye inuka kakhulu i-ammonia, yongeza i-browns ezomileyo uyiguqule."
+          },
+          {
+            "status": "draft",
+            "text": "Hlola ukufuma nomoya njengoko inqwaba itshintsha; iresiphi enye ayifaneli zonke ngxubevange zeempahla."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Heat Alone Is Not a Safety Check",
+        "body": [
+          "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+          "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+          "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ubushushu bodwa abuyisivivinyo sokhuseleko"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ukuba umbindi wenqwaba ushushu akuqinisekisi ukuba yonke inxalenye yenqwaba iphathiwe. Ixesha, ubushushu nolawulo zonke ziyabalulekile."
+          },
+          {
+            "status": "draft",
+            "text": "Musa ukufaka inyama, ubisi neemveliso zobisi, izityalo ezigulayo, inkunkuma yeenja neekati nezinto ezingcolisiweyo kule nkqubo ilula yasekhaya."
+          },
+          {
+            "status": "draft",
+            "text": "Musa ukucinga ukuba ukwenza umgquba ekhaya kutshabalalisa yonke imbewu yokhula okanye zonke izinto eziphilayo ezibangela izifo. Sebenzisa inkqubo eqatshelwayo apho kufuneka ucoceko."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Keep Seed Pods and Contaminants Out",
+        "body": [
+          "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+          "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+          "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Gcina amaqokobhe embewu nezinto ezingcolisayo ngaphandle"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Musa ukufaka amaqokobhe embewu (seed pods) ye-wattle enqwabeni yomgquba. Inqwaba eqhelekileyo isenokungayenzi yonke imbewu ingakwazi ukukhula."
+          },
+          {
+            "status": "draft",
+            "text": "Sebenzisa kuphela izinto ezicocekileyo, ezingaphathwanga. Ixolo lomthi libola ngokucotha; igama elithi 'ixolo' lodwa aliqinisekisi ukuba alingcolisekanga."
+          },
+          {
+            "status": "draft",
+            "text": "Hlola inqwaba uyiguqule xa ifuna umoya okanye ukuxutywa okungakumbi. Yigcine ifumile kunokuba izele ngamanzi."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Watch: Bare Soil and Mulch",
+        "body": [
+          "Compare bare soil with mulched soil.",
+          "When rain hits mulch instead of bare soil, much of the raindrop energy is dissipated. This diagram shows that surface-impact idea only; it does not predict how water will move at a particular site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khangela: umhlaba ongenanto nengca yokugquma"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Thelekisa umhlaba ongenanto nomhlaba ogqunyiweyo."
+          },
+          {
+            "status": "draft",
+            "text": "Xa imvula ibetha ingca yokugquma endaweni yomhlaba ongenanto, uninzi lwamandla amathontsi emvula luyachithakala. Lo mzobo ubonisa kuphela ingcamango yempembelelo emphezulu; awuxeleli kwangaphambili indlela amanzi aya kuhamba ngayo kwindawo ethile."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Mulch Protects the Ground",
+        "body": [
+          "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+          "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+          "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ingca yokugquma ikhusela umhlaba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Gquma umhlaba ongenanto ngengca yokugquma (mulch) efanelekileyo necocekileyo, njenge-straw, ingca eyomileyo okanye iziqwengana zomthi."
+          },
+          {
+            "status": "draft",
+            "text": "Ingca yokugquma inokunciphisa ukuphuma kwamanzi ngomphunga, ithambise ukubetha kwemvula kwaye ithintele ukhula."
+          },
+          {
+            "status": "draft",
+            "text": "Yigcine kude neziqu zemithi nezezityalo. Hlola ukufuma ngaphantsi uze ulungise umaleko; ingca yokugquma eninzi ayisoloko ilunge ngakumbi."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Cover Crops Between Seasons",
+        "body": [
+          "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+          "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+          "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Izityalo zokugquma phakathi kwamaxesha onyaka"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Izityalo zokugquma (cover crops) zinokukhusela umhlaba phakathi kwezityalo eziphambili. Khetha ngokwemozulu yasekuhlaleni, amanzi akhoyo nokutyala okulandelayo."
+          },
+          {
+            "status": "draft",
+            "text": "Imizekelo yekhosi ibandakanya i-oats, i-lupins, i-sunn hemp ne-cowpea. Hlola ukufaneleka kwasekuhlaleni ngaphambi kokuhlwayela."
+          },
+          {
+            "status": "draft",
+            "text": "Ii-legume (izityalo ezifana neembotyi) zifuna ibhaktheriya efanelekileyo neemeko zokukhula ukuze zibambe i-nitrogen. Izondlo ezisentsalelweni yazo ziyafumaneka njengoko impahla ibola."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Worm Castings and Liquid Drainage",
+        "body": [
+          "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+          "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+          "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Inkunkuma yeentshulube nolwelo oluthontelayo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Iifama zeentshulube (worm farms) zinokuguqula intsalela yokutya efanelekileyo nezinto zokulala zibe yinkunkuma yeentshulube (worm castings). Hlola ibhokisi kunokuba ulindele umhla omiselweyo wokuvuna."
+          },
+          {
+            "status": "draft",
+            "text": "Ulwelo oluthontelayo ngokwendalo kwibhokisi yeentshulube lubizwa ngokuba yi-leachate. Aluyonto enye neti yenkunkuma yeentshulube elungisiweyo."
+          },
+          {
+            "status": "draft",
+            "text": "I-leachate inokuba nezinto eziphilayo eziyingozi okanye izinto eziyingozi. Musa ukuyisebenzisa kwizityalo ezityiwayo okanye ucinge ukuba ukuyinciphisa ngamanzi kuyenza ikhuseleke."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Protect Soil All Year",
+        "body": [
+          "A Highveld field left bare after the maize harvest faces two main risks.",
+          "Winter wind can carry away dry topsoil.",
+          "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+          "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khusela umhlaba unyaka wonke"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Intsimi yaseHighveld eshiywe ingenanto emva kokuvuna umbona ijongene neengozi ezimbini eziphambili."
+          },
+          {
+            "status": "draft",
+            "text": "Umoya wobusika unokuthwala umhlaba ongaphezulu owomileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Isaqhwithi sokuqala esikhulu sentwasahlobo sinokubetha umhlaba ongenanto sonakalise umphezulu nesakhiwo sawo. Ukuba amanzi aqukuqela entsimini, anokuthwala umhlaba okhululekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo zokugquma, ingca yokugquma ne-organic matter zinokunceda ukubamba umhlaba endaweni nokuwugcina uphila."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.",
+          "Compare another spot and note recent weather and management.",
+          "Try the jar exercise. Write what it suggests, what is uncertain, and whether a laboratory test or local adviser could help."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umsebenzi wasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hlola umhlaba kwindawo osebenza kuyo. Rekhoda umbala, isakhiwo, iingcambu, ukufuma nawaphi na amakhondo eentshulube (iindledlana)."
+          },
+          {
+            "status": "draft",
+            "text": "Thelekisa nenye indawo uphawule imozulu yamva nje nolawulo."
+          },
+          {
+            "status": "draft",
+            "text": "Zama ilingelo lengqayi. Bhala oko elikuphakamisayo, oko kungaqinisekanga, nokuba ingaba uvavanyo lwelebhu okanye umcebisi wasekuhlaleni anganceda."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Start one soil-building action from this module.",
+          "Cover bare ground with mulch, begin a balanced compost heap, sow a suitable cover crop, or prepare a worm farm.",
+          "If your compost smells of ammonia and feels slimy, add dry carbon such as straw and turn it.",
+          "Build soil life step by step."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isenzo sasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qala isenzo esinye sokwakha umhlaba esivela kule modyuli."
+          },
+          {
+            "status": "draft",
+            "text": "Gquma umhlaba ongenanto ngengca yokugquma, qala inqwaba yomgquba elinganisiweyo, hlwayela isityalo sokugquma esifanelekileyo, okanye lungiselela ifama yeentshulube."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba umgquba wakho unuka i-ammonia kwaye ubushelelezi, yongeza i-carbon eyomileyo njenge-straw uze uwuguqule."
+          },
+          {
+            "status": "draft",
+            "text": "Yakha ubomi bomhlaba inyathelo ngenyathelo."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1087 @@
+[
+ {
+  "path": "vegetables-staples/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/description",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/infographicAlt",
+  "verdict": "repair",
+  "problem": "isiZulu 'cishe' for 'about'; locative concord 'umhlaba ... kuyo' should be 'kuwo'",
+  "repaired": "Ibhedi ephakanyisiweyo ebanzi malunga nemitha e-1.2, enendlela macala omabini, ukuze umntu afikelele embindini usuka macala omabini ngaphandle kokuma kanye phezu komhlaba ekulinywa kuwo.",
+  "severity": "wording"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/body",
+  "verdict": "repair",
+  "problem": "Malformed no-dig/dig verbs ('ukungombi', 'ungombe' -> 'ukungembi', 'wembe'); isiZulu 'Utamatisi' (isiXhosa 'iitumato'); 'least disturbance' line ungrammatical; 'gets harder/easier every season' rendered as static 'hard/easy all year'; 'never touch' weakened; 'iikherothi' -> standard 'iminqathe'",
+  "repaired": "Umhlaba ocinezelekileyo (compacted) ulahlekelwa zizithuba zawo zomoya. Iingcambu ziyacotha. Amanzi angena ngendlela eyahlukileyo. Ibhedi iba nzima ngakumbi ukuyisebenza ixesha ngalinye lonyaka.\n\nUkukhusela kulula. Iindlela ezisisigxina, kunye nebhedi emxinwa ngokwaneleyo ukuze ufikelele embindini usuka macala omabini.\n\nUbubanzi obuyimitha e-1 ukuya kwi-1.2. Yinani elisebenzayo elo. Kububanzi obunjalo unokufikelela embindini usuka kwenye yeendlela, kwaye iinyawo zakho azize ziyichukumise indawo ekulinywa kuyo.\n\nNgoku cinga ngamabhedi akho. Ngaba unokufikelela embindini ungangeni ngaphakathi? Yiya uzame oko phambi kokuba utyale enye into.\n\nAkukho simo sibhedi esinye esilungileyo kuyo yonke indawo.\n\nQala ngeyona ndlela iphazamisa umhlaba kancinci, kodwa esonjulula ingxaki yakho.\n\nIndlela yokungembi (no-dig) ilungele uninzi lwemihlaba yegadi. Ungawuphazamisi ulwakhiwo lwawo, wakhe ubutyebi bomhlaba phezulu.\n\nMusa ukumba udongwe olumanzi. Ukuba ukucinezeleka komhlaba okanye ukungaphumi kakuhle kwamanzi kubi kakhulu, chonga unobangela ngokufumana icebiso lasekuhlaleni phambi kokukhetha ukulima nzulu ngakumbi.\n\nAmabhedi aphakanyisiweyo (raised beds) alungele umhlaba omanzi, apho amanzi efuna indawo anokuhamba kuyo.\n\nAmabhedi angena emhlabeni (sunken beds) alungele umhlaba owomileyo, apho ufuna ukubamba nokugcina imvula oyifumanayo.\n\nJonga emva kwemvula enkulu. Amanzi ahlala phi okanye abaleka phi? Dibanisa oko ukubonileyo necebiso lomhlaba nelokuphuma kwamanzi phambi kokukhetha ibhedi.\n\nEzinye izityalo azikuthandi ukuphazanyiswa kweengcambu zazo. Zikhula kakuhle xa zihlwayelwa ngqo apho ziza kukhula khona. Iimbotyi, iminqathe (carrots) nombona zikweli qela.\n\nEzinye zikhula kakuhle xa ziqala zikhuselekile kwindawo yokuhlwayela imbewu (nursery), emva koko zitshintshelwe kwenye indawo. Iitumato neebrassica (izityalo zosapho lwekhaphetshu) zikweli qela.\n\nSebenzisa isikhokelo somgama phakathi kwezityalo ngokwesityalo, uhlobo lwaso neemeko zasekuhlaleni. Jonga ipakethi yembewu necebiso labalimi basekuhlaleni. Qaphela ukuxinana njengoko izityalo zikhula.\n\nPhambi kokuba utyale, phawula ibhedi.\n\nUbubanzi obuyimitha e-1.2. Ubude obuyimitha emithathu. Ibhedi enye yokuziqhelanisa.\n\nSebenzisa izikhonkwane nentambo. Phawula unxande, uphawule neendlela zombini zokufikelela.\n\nEmva koko lungiselela umhlaba wakho — qala ngokungembi, kwaye wembe nzulu kuphela xa umhlaba wakho uyidinga ngokwenene.\n\nUmgca wentambo uguqula ingcamango ibe sisigqibo. Xa iindlela sele zikhona, zigcine. Xa indawo ekulinywa kuyo sele ikhona, ikhusele.\n\nLoo bhedi iba lula ngakumbi ukuyiphucula ixesha ngalinye lonyaka, kuba uyekile ukuhamba phezu kwayo.",
+  "severity": "wording"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/options/0",
+  "verdict": "repair",
+  "problem": "isiZulu 'Utamatisi' (and class-1a concord); isiXhosa 'itumato'",
+  "repaired": "Itumato, efuna ukuqala kwangethuba",
+  "severity": "minor"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/rationale",
+  "verdict": "repair",
+  "problem": "isiZulu verb 'zimila' (grow); isiXhosa 'zikhula'",
+  "repaired": "Iimbotyi nezinye izityalo ezikhawulezayo, ezineengcambu ezibuthathaka, zikhula kakubi emva kokothuka kokutshintshelwa — ukuzihlwayela ngqo ebhedini kuyayiphepha loo ngxaki ngokupheleleyo.",
+  "severity": "minor"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/infographicAlt",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/body",
+  "verdict": "repair",
+  "problem": "Malformed 'belixa' in 'across the season'",
+  "repaired": "Ukutyala ngokulandelelana (succession planting) yimikhwa yekhalenda, hayi isityalo esikhethekileyo.\n\nKhetha into edliwa rhoqo yikhaya lakho. Emva koko uhlwayele isixa esincinci sayo, kuphindaphindwe.\n\nTyala umqolo omfutshane rhoqo emva kweeveki ezimbini ukuya kwezintathu.\n\nUkonakala kuncinci xa kunesivuno esiphuphumayo. Ukutya okutsha ixesha elide. Kwaye umsebenzi usasazeka ebudeni bexesha lonyaka endaweni yokuwela phezu kwakho kanye.\n\nUkuhlwayela ngamaxesha ahlukeneyo kunokunciphisa ingozi yokulahlekelwa yiyo yonke into kanye. Akuqinisekisi isivuno ukuba iimeko ezinzima ziyaqhubeka.\n\nSisiphi isityalo esikhawulezayo onokusihlwayela ngamaqela amancinci? Khetha esinye, uqale kule veki.\n\nNantsi indlela ekubonakala ngayo ekusebenzeni.\n\nHlwayela eyodwa. Emva koko emva kweeveki ezimbini ukuya kwezintathu, hlwayela ezimbini. Emva koko hlwayela ezintathu. Emva koko hlwayela ezine.\n\nNgexesha elifanelekileyo lesityalo, izivuno ziyakwazi ukuqala ukudibana. Iqela lokuqala alisoloko lilungile ngexesha lokuhlwayela okwesine.\n\nIiveki ezimbini ukuya kwezintathu sisingqi sokuqala, asingomthetho. Isityalo samagqabi sexesha elibandayo sinokuhlala ixesha elide. Ubushushu bunokukhawulezisa izinto, okanye bubangele ukuba isityalo singaphumeleli.\n\nQaphela oko igadi yakho ikwenzayo, kwaye uguqule ixesha eliphakathi kokuhlwayela. Oko kuqwalasela kokona buchule.\n\nUkuxuba izityalo (intercropping) akukuthi nje ukuzixinaniselanisa izityalo ezahlukeneyo. Isityalo ngasinye sidinga umsebenzi, nendawo eyaneleyo yokuwenza.\n\nI-Three Sisters ngumzekelo ovela kwizithethe zokulima zabantu bomthonyama baseMerika (the Americas).\n\nUmbona unika ukuphakama nesakhiwo.\n\nIimbotyi ziyakhwela kumbona, kwaye zigcina iprotheyini.\n\nIthanga lisasazeka emhlabeni, lisithile umhlaba kwaye ligcina ukumanzi.\n\nIxesha liyabaluleka. Qala umbona kuqala, ukuze ube nokomelela ngokwaneleyo ukuthwala iimbotyi xa ziqala ukukhwela.\n\nIzityalo zisenokukhuphisana. Zinike indawo, amanzi nokukhanya okufanelekileyo. Iimbotyi zibamba inayitrojeni kunye neebhaktheriya zeengcambu, kodwa musa ukuthatha ngokuthi zondla umbona kwangoko; izondlo ezikwintsalela zikhululwa ngexesha lokubola.\n\nIkhaya linokuba nesikhewu sendlala (hungry gap): iiveki apho ukutya okugciniweyo kuncipha phambi kokuba isivuno esilandelayo silunge.\n\nEyakho isenokuza emva kokuba umbona ogciniweyo uphelile. Isenokuza phambi kokuba imifuno eluhlaza yasebusika ilunge. Isenokuza ngexesha elomileyo apho amanzi ekhawulela igadi.\n\nMusa ukukopa ikhalenda yomnye umntu. Qala ngokubiza amagama eenyanga zakho.\n\nZibhale phantsi. Emva koko ukhethe isityalo nomhla wokuhlwayela ofaka ukutya kuloo sikhewu.\n\nOko kukucwangcisa ubuyela umva, kwaye yiyo eyahlula igadi ebonakala ivelisa kwikhaya elidlayo ngokwenene.",
+  "severity": "minor"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/infographicAlt",
+  "verdict": "repair",
+  "problem": "'kwisigxina' means 'on a permanent (thing)', not 'on a pole'",
+  "repaired": "Izityalo ezintathu eziyisiseko kunye: isiqu eside sokusanhlamvu, isityalo esikhwelayo kwisibonda, nesityalo sengcambu esibonakala sisemhlabeni isiqingatha.",
+  "severity": "wording"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/body",
+  "verdict": "repair",
+  "problem": "Gloss '(ohlwayelwa ngokwemvelo)' says open-pollinated means 'sown naturally' — wrong seed concept; 'yiloo idinga umhlobo' ungrammatical; 'Ubhatata' is the isiZulu class-1a form (isiXhosa 'ibhatata', class-9 concords)",
+  "repaired": "Isityalo esiyisiseko sifanelwe sisikhundla saso kuba sondla ikhaya ngaphaya kosuku lwesivuno.\n\nSithwala amandla okanye iprotheyini. Siyagcinwa, okanye sihlala emhlabeni side sisidinge. Kwaye rhoqo sithwala nenkumbulo yenkcubeko.\n\nIsityalo esiyisiseko esinye sikushiya ungakhuselekanga. Ezimbini okanye ngaphezulu zikunika ukhetho xa imozulu okanye izitshabalalisi zibetha.\n\nLima ubuncinane ezimbini. Hayi enye.\n\nSesiphi isityalo esiyisiseko ekuxhomekeke kuso ikhaya lakho kakhulu ngoku? Yiloo nto engahlukumeza kakhulu ukuba ayiphumelelanga — ngoko yiyo leyo efuna iqabane.\n\nIsityalo ngasinye esiyisiseko sikukhusela kwinto eyahlukileyo.\n\nUmbona unika iikhalori, kwaye ugcinwa womile. Umbona we-open-pollinated (impova yawo ithwalwa ngokwendalo ngumoya okanye zizinambuzane) ukuvumela nokuba ugcine imbewu yakho, ukuba ulawula ukwahlukaniswa kwezityalo (isolation) nokukhetha (selection).\n\nIimbotyi ne-cowpeas zinika isivuno seprotheyini enokugcinwa.\n\nIbhatata iphuhlisa ukunyamezela imbalela ngokuthile emva kokuba iingcambu zokugcina sezenziwe. Ifuna amanzi kwiiveki zokuqala nangoxa iingcambu zisenziwa; uxinzelelo lwamanzi ngelo xesha lunokunciphisa isivuno. Amagqabi ayo amancinci nawo ayadleka.\n\nAmadumbe asinda emhlabeni omanzi ngakumbi, apho ezinye izityalo eziyisiseko zilwa.\n\nQaphela ukuba ziyasilela kwiimeko ezahlukeneyo. Yiloo nto kanye.\n\nUkunyamezela akuthethi ukuba akukho nto isilelayo.\n\nKuthetha ukuba ukusilela okunye akuliphelisi icebo lokutya lekhaya lakho.\n\nIsityalo esinye sisenye indawo yokusilela.\n\nIzityalo ezimbini okanye ngaphezulu eziyisiseko zikunika iindlela ezininzi zokuqhubeka udla.\n\nIzityalo ezahlukeneyo zisebenzisa amanzi, umhlaba namaxesha ngokwahlukeneyo. Loo mahluko yikhuseleko.",
+  "severity": "meaning"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/keyPoints/2",
+  "verdict": "repair",
+  "problem": "'Ubhatata' isiZulu class-1a form; isiXhosa 'ibhatata' with class-9 concords",
+  "repaired": "Ibhatata iphuhlisa ukunyamezela imbalela ngokuthile emva kokuba iingcambu zokugcina sezenziwe, kodwa ifuna amanzi kwangoko; amagqabi amancinci ayadleka",
+  "severity": "minor"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/rationale",
+  "verdict": "repair",
+  "problem": "'ezingenakusimamela' is not a word; meant 'cannot fill [the niche]'",
+  "repaired": "Amadumbe enyaneni akhetha umhlaba onomswakama apho umbona wawuza kuzabalaza — agcwalisa isikhundla ezinye izityalo eziyisiseko ezingenakusizalisa kakuhle.",
+  "severity": "minor"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/infographicAlt",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/body",
+  "verdict": "repair",
+  "problem": "isiZulu 'eliphuzi' (yellow) -> 'elimthubi'; 'ebhaliswe isityalo' is ungrammatical for 'registered FOR that crop' -> 'ebhaliselwe'",
+  "repaired": "Uxinzelelo lwezitshabalalisi lunyuka ngesizathu.\n\nIzityalo ezikuxinzelelo. Isityalo esinye esilawula umhlaba. Okanye ukusetyenziswa kakhulu kweekhemikhali sele kwasusa izilwanyana ezizingelayo ebezikunceda.\n\nNgoko phambi kokuba unyange nantoni na, jonga yonke inkqubo.\n\nNgaba isityalo sinqongophele amanzi? Ngaba umhlaba ucinezelekile, okanye awunazondlo ezaneleyo? Ngaba izilwanyana ezizingelayo sele zisebenza ukusonjulula ingxaki?\n\nIgqabi elimthubi aliyiyo ngokuzenzekelayo inambuzane. Linokuba ngamanzi, ukondliwa, okanye umonakalo wengcambu. Zazi ukuba kungoluphi phambi kokuba wenze nto.\n\nLandela amanyathelo amane, ngokulandelelana.\n\nOkokuqala. Jonga. Jonga indlela umonakalo obonakala ngayo, ingaphantsi legqabi, isiqu, nezityalo ezikufutshane.\n\nOkwesibini. Khangela uxinzelelo. Ukumanza komhlaba, iingcambu, umgama phakathi kwezityalo, ukondliwa, ukuphuma kwamanzi.\n\nOkwesithathu. Khusela abakunceda. Izinambuzane ezinceda zenza umsebenzi obungawenza wena.\n\nOkwesine. Kuphela emva koko, yenza into — kwaye uqale ngento elula esebenzayo. Ukususa ngokwasemzimbeni, imiqobo okanye utshintsho kunakekelo lwesityalo kunokunceda. Qinisekisa ukuba isenzo sifanelana nengxaki kwaye ubone iziphumo.\n\nUkuba unyango luyadingeka, sebenzisa imveliso ebhaliselwe eso sityalo nesitshabalalisi, kwaye ulandele ileyibhile yayo. Oku kubandakanya iimveliso ze-neem. Jonga imiyalelo yokhuseleko nexesha lokulinda phambi kokuvuna. Musa ukuyila imixube okanye iidosi ezomeleleyo ngakumbi.\n\nYiba nyanisekile kuwe ngowuphi umnyathelo osoloko ewutsiba.",
+  "severity": "wording"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/keyPoints/3",
+  "verdict": "repair",
+  "problem": "'ebhaliswe isityalo' should be applicative 'ebhaliselwe' (registered FOR)",
+  "repaired": "Ukuba unyango luyadingeka, sebenzisa imveliso ebhaliselwe isityalo nesitshabalalisi kwaye ulandele ileyibhile",
+  "severity": "minor"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/options/1",
+  "verdict": "repair",
+  "problem": "Correct option: 'ebhaliswe isityalo' should be 'ebhaliselwe' (registered FOR)",
+  "repaired": "Imveliso ebhaliselwe isityalo nesitshabalalisi, isetyenziswe ngokweleyibhile yayo",
+  "severity": "minor"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/q",
+  "verdict": "repair",
+  "problem": "'ayaphuzisa' is an isiZulu-based causative ('make yellow'), not 'are turning yellow'",
+  "repaired": "Amagqabi eebrassica zomfama ayajika abe mthubi. Phambi kokucinga ukuba zizitshabalalisi, ufanele ajonge ntoni kuqala?",
+  "severity": "wording"
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/rationale",
+  "verdict": "repair",
+  "problem": "'Ukuphuzisa' isiZulu-based causative ('making yellow') for 'yellowing'",
+  "repaired": "Ukuba mthubi kwamagqabi kunezizathu ezininzi eziqhelekileyo, kwaye ingxaki yezondlo zomhlaba okanye yokunisela idinga isisombululo esahlukileyo ngokupheleleyo kunesitshabalalisi — ukujonga kuqala kuphepha unyango olulahlekileyo.",
+  "severity": "wording"
+ },
+ {
+  "path": "water-harvesting/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/description",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/infographicAlt",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/body",
+  "verdict": "repair",
+  "problem": "'otsiba' (-tsiba = jump) used for 'steep'; 'upslope' rendered 'up the mountain'",
+  "repaired": "Olunye uhlobo lomsele (swale) yimijelo elinganayo elandela umgca wokuphakama. Unciphisa ijubane lamanzi agelekayo aze awasasaze, ukuze amanzi athile afunxeke emhlabeni ofanelekileyo. Eminye imisele yenzelwe ukuba nethambeka elincinci elilawulweyo ukuze iphathe amanzi agqithisileyo iwasingise kancinci kwindawo ekhuselekileyo apho aphumela khona. Eyiphi indlela efanelana nomhlaba wakho ixhomekeke kumhlaba, kwithambeka, ekuphumeni kwamanzi nasekuhambeni kwamanzi esaqhwithi. Cela umcebisi wasekuhlaleni oqeqeshiweyo ahlole umgca, indlela yokuphuphuma kwamanzi nendawo awafikela kuyo phambi kokuba umbe.\n\nUmhlaba okhutshiweyo ekumbeni wenza i-berm (umqolo womhlaba) ngakwicala eliya ezantsi, apho kunokutyalwa khona imithi xa uyilo lwendawo lufanelekile.\n\nImithi etyalwe apho isenokusebenzisa ukufuma okugcinwe emhlabeni emva kwemvula, kuxhomekeke kwindawo.\n\nImvula enkulu isenokugcwalisa umsele ngokukhawuleza kunokuba amanzi afunxeke emhlabeni. Cwangcisa indlela ekhuselekileyo yokuphuphuma kwamanzi phambi kokuba umbe.\n\nIndlela yamanzi mayingawonakalisi ithambeka okanye ithumele amanzi anokonakalisa kummelwane. Umsele okanye idama elingezantsi kufuneka likwazi ukuwamkela ngokukhuselekileyo.\n\nCela umcebisi wasekuhlaleni oqeqeshiweyo ahlole umhlaba, ithambeka nokuhamba kwamanzi esaqhwithi. Umfanekiso awuyonto yoyilo lokwakha.\n\nIthambeka lodwa alikuxeleli ukuba umsele ufanelekile okanye hayi. Umhlaba, ukuphuma kwamanzi, umhlaba ongazinzanga namanzi asuka ngaphezulu kwethambeka konke kuyabaluleka.\n\nGcina umhlaba ugqunyiwe kakuhle. Funa uvavanyo lwasekuhlaleni phambi kokumba emhlabeni omnqantsa kakhulu, onamanzi okanye ongazinzanga. Imiqobo yengca nezitebhisi zomhlaba (iitheresi) nazo zifuna uyilo olufanele indawo.",
+  "severity": "wording"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/q",
+  "verdict": "repair",
+  "problem": "'elitsiba' (jumping) used for 'steep'",
+  "repaired": "Umfama ufuna ukulawula ukukhukuliseka komhlaba ethambekeni elimnqantsa kakhulu. Kufuneka enze ntoni phambi kokumba?",
+  "severity": "wording"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/options/0",
+  "verdict": "repair",
+  "problem": "'emiwe' malformed; 'dug' is 'embiwe' (distractor stays wrong)",
+  "repaired": "Imisele eqhelekileyo embiwe nzulu kangangoko",
+  "severity": "minor"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/infographicAlt",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/body",
+  "verdict": "repair",
+  "problem": "Noun-class error 'iMzantsi Afrika' -> 'uMzantsi Afrika'",
+  "repaired": "Idama okanye ichibi lingagcina amanzi agelekayo, kodwa inani elifumanekayo lixhomekeke kwimvula yasekuhlaleni, indawo ekhuphela amanzi (catchment), ilahleko yamanzi nokuba usebenzisa amanzi amaninzi kangakanani.\n\nAmaxesha emvula ayahluka kulo lonke uMzantsi Afrika. Sebenzisa iirekhodi zasekuhlaleni kwaye ucwangcise amaxesha omileyo; akukho sithembiso sokuba idama liya kuhlala ligcwele.\n\nPhambi kokutshintsha umjelo wamanzi okanye ukwakha imisebenzi yokugcina amanzi, jonga imvume efunekayo kwigunya lamanzi.\n\nIdama lifuna uphando lwendawo noyilo olwenziwa ngumntu oqeqeshelwe oko ngokufanelekileyo. Amanzi agelekayo kwindawo ekhuphela amanzi, umhlaba, iziseko, umngcipheko ongezantsi nendlela ekhuselekileyo yokuphuphuma kwamanzi (spillway) konke kuyabaluleka.\n\nMusa ukucinga ukuba imvula yonyaka ikuxelela ubukhulu bomkhukula okanye amanzi aya kuba nawo egcinwe.\n\nUkuphuphuma okungalawulwanga kunokukhukulisa kwaye kuqhekeze udonga. Cwangcisa indlela ekhuselekileyo yamanzi agqithisileyo phambi kokwakha.\n\nAmanzi anokulahleka ngokuhwamla nangokuvuza emhlabeni. Jonga ukuphakama kwamanzi kwaye ufune ukuvuza okanye ukukhukuliseka.\n\nGcina indlela yokuphuphuma ingavaliwe kwaye ugcine ukugqunywa kwamabhanki njengoko kumiselwe kuyilo. Musa ukutyala imithi kudonga ledama lomhlaba.\n\nIzilwanyana zingonakalisa amabhanki kwaye zongeze ubulongwe emanzini. Ubukho bazo abwenzi amanzi acocekileyo okanye akhuselekileyo.",
+  "severity": "minor"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/keyPoints/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/infographicAlt",
+  "verdict": "repair",
+  "problem": "isiZulu-leaning 'ihlukana'; isiXhosa relative 'eyahlukana'",
+  "repaired": "Imvula iphuma ophahleni ingena emjelweni wophahla (igatara) ize ihle ngombhobho ingene kwitanki, kukho i-first-flush diverter encinci eyahlukana nombhobho ngaphambi kwetanki ukulahla amanzi okuqala angcolileyo.",
+  "severity": "minor"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/body",
+  "verdict": "repair",
+  "problem": "'linganisa amanzi angaphumeliyo' ('measure water that does not succeed') for 'allow for water that misses the gutter'; malformed 'izophahla' and 'asiyongqiniseko'; 'okuceliweyo' = requested, not intended",
+  "repaired": "Uphahla lwakho lunokuqokelela amanzi emvula. Inani lixhomekeke kubungakanani bophahla, kwimvula nakwilahleko.\n\nJonga ukuba izinto zophahla zifanelekile na ekuqokeleleni amanzi emvula phambi kokuqhagamshela itanki.\n\nSebenzisa ubungakanani bophahla njengoko buboniwa ngaphezulu kunye neerekhodi zemvula zasekuhlaleni. Emva koko qwalasela amanzi angangeni emjelweni wophahla (igatara), aphambukiswayo okanye aphuphuma kwitanki egcweleyo.\n\nIsixa semvula yonyaka asikuxeleli ukuba mangaphi amanzi aya kubakho ngexesha lokoma. Thelekisa amanzi onawo nokusetyenziswa okucwangcisileyo.\n\nAmanzi asuka ophahleni anokuthwala uthuli, ubulongwe nokunye ukungcola. I-first-flush diverter (isixhobo esiphambukisa amanzi okuqala) igcina inxalenye yamanzi okuqala ingangeni kwitanki.\n\nUbungakanani bamanzi afuneka aphambukiswe buxhomekeke kuphahla nakwinkqubo. Sebenzisa imiyalelo yomthengisi yobungakanani nokugcinwa; akukho mthamo mnye ofanele lonke uphahla.\n\nI-diverter ayiwenzi amanzi asele afanelekile ukusela.\n\nUbungakanani betanki buxhomekeke kwimfuno yamanzi, imvula, ubungakanani bophahla nobude bamaxesha omileyo.\n\nBhala ukusetyenziswa oceba ukukwenza uze uqikelele imfuno yako usebenzisa iirekhodi zakho. Thelekisa oko namanzi onawo ngamaxesha onyaka.\n\nCwangcisa into oya kuyenza xa amanzi agciniweyo ancipha. Igama lephondo ngokwalo alinakukuxelela ubungakanani betanki obuyifunayo.\n\nGcina itanki igqunyiwe, gquma imingxuma ngesikrini ukuthintela izinambuzane, kwaye ugcine uphahla, igatara ne-diverter. Gcina amanzi emvula eyahlukile kwimibhobho yamanzi okusela.\n\nAmanzi abonakala ecocekile asenokuba namagciwane okanye iikhemikhali. Buza kwigunya lezempilo lasekuhlaleni malunga novavanyo nokucoca okufanelekileyo ekusetyenzisweni okucetywayo.\n\nIsihluzi esiyisiseko sodwa asisosiqinisekiso yamanzi okusela. Amanzi asetyenziswa kwizityalo zokutya nawo afuna uvavanyo lokhuseleko.",
+  "severity": "wording"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/keyPoints/1",
+  "verdict": "repair",
+  "problem": "Malformed 'ngokwephahla' -> 'ngokophahla'",
+  "repaired": "Linganisa kwaye ugcine i-first-flush diverter ngokophahla lakho",
+  "severity": "minor"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/keyPoints/3",
+  "verdict": "repair",
+  "problem": "'okuceliweyo' = 'requested'; intended use is 'okucetywayo'",
+  "repaired": "Uvavanyo nokucoca kufuneka kungqamane nokusetyenziswa okucetywayo",
+  "severity": "minor"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/rationale",
+  "verdict": "repair",
+  "problem": "'amanzi asetyenziswayo' = water USED; English compares usable SUPPLY with demand — the comparison collapses to use vs demand; plus concord 'lithelekise' for class-11 'ucwangciso'",
+  "repaired": "Ucwangciso lwetanki kufuneka luthelekise amanzi afumanekayo nemfuno ngamaxesha emvula nawokoma. Ubungakanani obumiselweyo bommandla omnye abunakukwenza oko.",
+  "severity": "meaning"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/options/2",
+  "verdict": "repair",
+  "problem": "'isiphekepheke' means rocket/spacecraft — nonsense for 'acidic' (distractor)",
+  "repaired": "Ane-asidi eninzi ngakumbi kwaye atshintsha i-pH yomhlaba ngokuhamba kwexesha",
+  "severity": "meaning"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/rationale",
+  "verdict": "repair",
+  "problem": "'okuceliweyo' = 'requested'; intended use is 'okucetywayo'",
+  "repaired": "Ukuphambukisa amanzi okuqala emvula kunganciphisa ukungcoliseka, kodwa akuqinisekisi ukuba amanzi alandelayo akhuselekile. Vavanya umgangatho wamanzi ngokokusetyenziswa okucetywayo.",
+  "severity": "minor"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/title",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/body",
+  "verdict": "repair",
+  "problem": "Final sentence says seek 'hired' advice ('eqeshiweyo') instead of qualified/trained; 'okuceliweyo' = requested, not intended",
+  "repaired": "Amanzi asetyenzisiweyo ekhaya anokuba namagciwane, ityuwa, iimveliso zokucoca nezinye izinto. Izikhokelo azichazi umthombo ngamnye ngendlela efanayo. Izikhokelo zaseMzantsi Afrika ziyahluka malunga namanzi asekhitshini namanzi okuhlamba iimpahla.\n\nMusa ukubandakanya amanzi asetoyilethi, amanzi eediyapha, okuhlamba umntu ogulayo okanye okuhlamba izilwanyana kwicebo lokuwasebenzisa kwakhona. Musa ukuphinda usebenzise amanzi aneekhemikhali eziyingozi.\n\nPhambi kokuphinda usebenzise, cela umasipala nomcebisi oqeqeshiweyo wasekuhlaleni wococeko ukuba ahlole umthombo ngqo, iinkonzo zamanzi nococeko zekhaya, ukusetyenziswa okucetywayo nendawo. Ukuba eli cebo alifumaneki okanye alicacanga, musa ukuphinda usebenzise amanzi.\n\nUmfanekiso oqhelekileyo awuyonto yoyilo lwefama. Umhlaba nengca yokugquma azibulali ntsholongwane emanzini angcolileyo. Wagcine kude nemibhobho yamanzi okusela kwaye uthintele ukunxibelelana nabantu okanye izilwanyana. Musa ukuwafafaza, ukuwayeka ame, okanye ukuwavumela aphume epropathini aye esitratweni, kumjelo wamanzi okanye emlanjeni.\n\nUkuba inkqubo yokuphinda kusetyenziswe amanzi sele isebenza kwaye amanzi enuka kakubi, ayama, okanye alimaza izityalo, yeka ukuwasebenzisa kwaye ufune ingcebiso yomcebisi oqeqeshiweyo wasekuhlaleni.",
+  "severity": "wording"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/keyPoints/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/keyPoints/1",
+  "verdict": "repair",
+  "problem": "'okuceliweyo' = 'requested'; intended use is 'okucetywayo'",
+  "repaired": "Jonga ngokwasekuhlaleni umthombo, imeko yeenkonzo, ukusetyenziswa okucetywayo nendawo phambi kokuphinda usebenzise",
+  "severity": "minor"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/keyPoints/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/keyPoints/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/options/1",
+  "verdict": "repair",
+  "problem": "Correct option: 'okuceliweyo' = 'requested'; intended use is 'okucetywayo'",
+  "repaired": "Cela umasipala nomcebisi oqeqeshiweyo wococeko ukuba ahlole umthombo, imeko yeenkonzo, ukusetyenziswa okucetywayo nendawo",
+  "severity": "minor"
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/q",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ }
+]

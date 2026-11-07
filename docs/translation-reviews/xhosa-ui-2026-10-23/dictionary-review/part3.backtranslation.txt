@@ -1,0 +1,454 @@
+0 | waterBalanceMonthApr | April
+1 | waterBalanceMonthMay | May
+2 | waterBalanceMonthJun | June
+3 | waterBalanceMonthJul | July
+4 | waterBalanceMonthAug | August
+5 | waterBalanceMonthSep | September
+6 | waterBalanceMonthOct | October
+7 | waterBalanceMonthNov | November
+8 | waterBalanceMonthDec | December
+9 | labelsDesignToggle | My design
+10 | editCornerLabel | Corner
+11 | savedPlacesHeader | Saved sites
+12 | savedPlacesNamePlaceholder | Site name...
+13 | savedPlacesNotesPlaceholder | Notes (not compulsory)...
+14 | savedPlacesSavedLabel | Saved
+15 | savedPlacesSaveThisLocation | Save this site
+16 | savedPlacesSelectFirst | Choose a place on the map first
+17 | savedPlacesRemove | Remove
+18 | savedPlacesEmptyTitle | There are no saved sites yet
+19 | savedPlacesEmptyHint | Analyse a site and save it here
+20 | savedPlacesTimeToday | today
+21 | savedPlacesTimeYesterday | yesterday
+22 | savedPlacesTimeDaysAgo | in the past {d} days
+23 | savedPlacesTimeWeeksAgo | in the past {w} weeks
+24 | savedPlacesTimeMonthsAgo | in the past {mo} months
+25 | elementEditingNamePlaceholder | e.g. {label}
+26 | elementEditingCustomButton | Yours
+27 | elementEditingLitresPlaceholder | litres
+28 | elementEditingOtherButton | Another / Other
+29 | elementEditingSpeciesPlaceholder | name of the type
+30 | elementEditingHowMany | how many
+31 | elementEditingNotePlaceholder | Note — e.g. it is leaking, needs a new tap
+32 | elementCountFewer | Reduce
+33 | elementCountMore | Enlarge
+34 | savedSiteUnavailable | This saved site can no longer be found. Go back to Site reports and choose another site.
+35 | biomeNameSavanna | Savanna
+36 | biomeNameGrassland | Grasslands
+37 | biomeNameDesert | Desert
+38 | biomeNameAlbanyThicket | Albany thicket
+39 | biomeNameIocb | Indian Ocean coast
+40 | biomeNameForest | Afromontane forest
+41 | biomeNameOutside | Outside South Africa
+42 | biomeNameUnavailable | Weather details are not available
+43 | seeMoreDetail | See more details
+44 | estVolumeTanksLabel | about {tanks} tanks of {size} L
+45 | estVolumeLitresUnit | L (estimate)
+46 | estVolumeTanksUnit | tanks of {size} L (estimate)
+47 | unitTempAverage | °C average
+48 | unitRainPerYear | mm per year
+49 | photoAnalysisHeading | Analysis of site photos
+50 | photoSatelliteViewTitle | Current satellite image
+51 | photoSatelliteViewDesc | Taken from the map — Lima will analyse what it sees
+52 | photoAnalysingEllipsis | Analysing...
+53 | photoAnalyseButton | Analyse
+54 | photoAnalysingImagery | Lima is analysing the images...
+55 | photoSendingToLima | Being sent to Lima...
+56 | photoReadsDesc | Reading the plants, water, shape/structure of the land & what is there · ~15–30s
+57 | photoDropOrTap | Put site photos here or tap to add a photo
+58 | photoUpToFive | Up to 5 photos · land, plants, shape of the land, buildings
+59 | photoAnalysePhotosSingular | Analyse 1 photo
+60 | photoAnalysePhotosPlural | Analyse {count} photos
+61 | photoAnalysingPhotosButton | Photos are being analysed...
+62 | photoClearButton | Remove
+63 | photoSelectLocationFirst | Choose a place on the map first
+64 | photoAddedToReportPrefix | Added to your report — tap
+65 | photoAddedToReportSuffix | above
+66 | photoErrorUnreadable | {file} could not be read
+67 | photoErrorUndecodable | {file} could not be opened — try JPEG or PNG
+68 | photoErrorZeroDimensions | {file} has a size of 0
+69 | photoErrorBlankHeic | {file} looks empty after being resized — try JPEG or PNG instead of HEIC
+70 | photoErrorGeneric | Photo {n} did not succeed
+71 | photoErrorBlankOrDark | Lima could not read the photo — it looks empty or very dark. Take it again where it is well lit, or convert it to JPEG/PNG first.
+72 | photoErrorAnalysisFailed | Something went wrong when your photo was being analysed. Please check your connection and try again.
+73 | photoZuluDraftNotice | The isiXhosa text in Photos is an unreviewed draft. A person who speaks isiXhosa well and a local farming inspector have not approved it yet.
+74 | profileZuluDraftNotice | The isiXhosa text in your profile is an unreviewed draft. A person who speaks isiXhosa well and a local farming inspector have not approved it yet.
+75 | profileShowOnMapLabel | Show my place on the project map
+76 | profileShowOnMapExplanation | Other people in your programme — mentors, NGO workers and other farmers — can see a pin at your farm on a shared map. You can close/switch this off again at any time.
+77 | profileTitle | Your profile
+78 | profileClose | Close
+79 | profilePhotoAlt | Profile photo
+80 | profileChangePhoto | Change photo
+81 | profileFullNameLabel | Full name
+82 | profileFullNamePlaceholder | Your name
+83 | profileRoleLabel | Role
+84 | profileRoleSetByAdmin | Roles are set by the administrator of your programme
+85 | profileRoleFarmer | Farmer
+86 | profileRoleMentor | Mentor/adviser
+87 | profileRoleStudent | Student/learner
+88 | profileRoleNgo | Organisation worker
+89 | profileRoleFunder | Funder
+90 | profileRoleAdmin | Administrator
+91 | profileAboutYouLabel | About you
+92 | profileBioCharsLeft | {n} left over/remaining
+93 | profileBioPlaceholder | Short introduction — your background, what you plant, what you like about permaculture…
+94 | profileSkillsLabel | Skills & interest
+95 | profileSkillSoilHealth | soil health
+96 | profileSkillWaterHarvesting | collecting water
+97 | profileSkillAgroforestry | farming with trees
+98 | profileSkillLivestock | livestock
+99 | profileSkillComposting | making compost
+100 | profileSkillFoodForest | food forest
+101 | profileSkillMarketGardening | garden for selling
+102 | profileSkillSeedSaving | keeping seed
+103 | profileMapVisibilityLabel | Being visible on the map
+104 | profileLocationWillBePlaced | Your place will be put in the centre of the map that is currently visible when you save.
+105 | profilePanMapFirst | Move the map to where you want to appear, then come back here to save.
+106 | profileSaveButton | Save
+107 | profileSavedFlash | Saved!
+108 | networkOffline | You are not on the internet. Connect again and try again.
+109 | networkBusy | There are too many requests right now. Please wait a moment and try again.
+110 | networkFailed | Something went wrong. Please check your connection and try again.
+111 | networkTapRefreshToRetry |  — tap Refresh to try again.
+112 | biomeSpeciesSavanna | Marula (Sclerocarya birrea) | Mopane | Wild fig (Ficus sycomorus) | Leadwood | Fever Tree | Buffalo thorn (Ziziphus mucronata)
+113 | biomeChallengesSavanna | Storms are strong but hard to predict | Grass competes with young trees for water and light | Frost can damage crops in high places | Termites can damage wood and small plants
+114 | biomeSpeciesGrassland | Buffalo thorn (Ziziphus mucronata) | Wild olive (Olea europaea subsp. africana) | Highveld Protea | Red Grass | Bulbine | Isivumbampunzi / Wild Garlic
+115 | biomeChallengesGrassland | Heavy frosts, down to about –10°C | Hailstorms | Clay soil erodes easily on slopes | Low wet ground (vlei) can be hard to drain water from
+116 | biomeChallengesFynbos | Fynbos needs fire at certain times to stay healthy, roughly every 10–15 years | Invasive plants that are not allowed can take over the place | There are no edible Fynbos plants — bring in soil for any food garden | Hot and dry summers
+117 | biomeSpeciesSucculentKaroo | Ice Plant | Aloe / Bitter Aloe | Quiver Tree | Vygie
+118 | biomeChallengesSucculentKaroo | Very dry, hot summers | Soil is alkaline (has a lot of lime) | Few food plants suit this climate | Strong sun and wind
+119 | biomeSpeciesNamaKaroo | Karoo Bush | Driedoring | Ganna | Aloe / Bitter Aloe | Wild olive
+120 | biomeChallengesNamaKaroo | A hard cement-like layer of soil below the ground | Evaporation is very high — it can be 3 times the amount of rain | Salty soil in low places | Few tree types suit this climate
+121 | biomeChallengesDesert | Extreme heat, above 45°C | Flash floods are not common but can be dangerous | Salt can build up in the soil as water evaporates | Wind can blow the topsoil far away
+122 | biomeSpeciesAlbanyThicket | Spekboom | Wild Plum | Waterberry | Noorsdoring
+123 | biomeChallengesAlbanyThicket | Thicket badly damaged by too much goat grazing | Dense thorny plants | Invasive cactus that is not allowed must be controlled | Little water in the dry season
+124 | biomeSpeciesIocb | Natal Wild Banana | Wild Plum | Natal Mahogany | Pigeonwood | Fever Tree | Sycamore Fig | Forest Silver Oak
+125 | biomeChallengesIocb | Hailstones and storms can cause damage | High humidity encourages fungal diseases | Steep slopes are at risk of erosion | Risk of ground collapsing/landslide on clay slopes
+126 | biomeSpeciesForest | Real yellowwood | Umduma | Wild peach | Stinkwood | Outeniqua yellowwood
+127 | biomeChallengesForest | Sunlight reaching the ground is reduced under dense trees | The forest is protected by law — it cannot be cut down | Invasive plants that are not permitted can spread here | Snails, including those without shells, can damage plants
+128 | biomeWaterSavanna | Strong summer rain storms arrive quickly. Dig swales along the side of the slope (water-keeping swales) and small ponds before the rain starts in August (eyeThupha) or September (eyoMsintsi), so that water enters the soil instead of spilling away. Make tanks big: at least 50 litres per square metre of roof that pours water into them. Dig long and narrow dams — about three times longer than wide — on gentle slopes.
+129 | biomeWaterGrassland | Summer brings short thunderstorms with heavy rain. On each slope, dig swales that go down slightly following the land (about a 1 m drop per every 1,000 m across) so that they spread the water instead of it rushing off. Winter is dry, so keeping water is important. As a rule: 1 square metre of roof collects about 1 litre of water for every 1 mm of rain.
+130 | biomeWaterFynbos | Rain falls only in winter, so do digging work at the end of autumn (March (eyoKwindla) to May (Canzibe)), before the rain arrives. Small soil walls following contour lines and shallow (not deep) pits covered with mulch work well. Measure the size of your water tanks carefully — summer (December to February) is dry. Used household water (greywater) is fine for food-growing areas, but never use it on natural Fynbos — it has too many nutrients for it.
+131 | biomeWaterSucculentKaroo | On slopes facing west, shade net can catch fog water. Build a small raised edge all around each plant to catch all the raindrops where they fall. Reusing household water (greywater) is suitable to do here. Every 100 mm of rain is important — even a small roof tank is valuable.
+132 | biomeWaterNamaKaroo | Storms rarely occur and are unexpected, so catch water everywhere you can. Build small curved walls just above each plant. Catch water spilling on the farm paths and let it into shallow pits. Underground water tanks help you get through times of drought — try to keep every raindrop that falls.
+133 | biomeWaterDesert | Shade net can catch fog water in the air. Design swales so that they safely catch floods that come suddenly. Keep water underground, where it stays cool and does not evaporate. Plant trees as wind barriers — they reduce water loss by evaporation and give shade before you plant crops.
+134 | biomeWaterAlbanyThicket | Rain falls in winter and summer. Use shallow swales and soil walls that follow contour lines. A food forest based on Spekboom can resist drought and uses water wisely. Small tanks that can irrigate with gravity-driven drip work well. On clay soil, be careful that plants do not stand in water.
+135 | biomeWaterIocb | Rain is heavy, so flood control is more important than collecting water. Use shallow swales to slow water on steep slopes. Raised beds stop plants from sitting in water. Swales following contour lines also help stop the soil collapsing on clay soil. Make pipes so that water from the roof goes into underground tanks.
+136 | biomeWaterForest | The forest makes its own water cycle with fog and moisture released by trees when they breathe. Keeping the upper leaves of the trees undisturbed keeps the soil wet. Swales at the edge of the forest catch any water that spills. Springs inside the forest give reliable water all year.
+137 | biomeWaterOutside | Choose a place in South Africa so that you get analysis that suits that place.
+138 | biomeWaterUnavailable | Repeat the site analysis before you do anything with this site's water advice.
+139 | bulkDensityExplainer | How compacted the soil is — a high number means roots struggle to grow
+140 | biomeSoilSavanna | The soil contains a lot of iron but few of the nutrients that plants need most (phosphorus and nitrogen). Cover the soil with mopane leaves, but only a thin layer — too much can stop other plants growing nearby. Plant acacia trees nearby; their roots add nitrogen to the soil. Moringa trees also draw nutrients from deep soil. Add compost and biochar (charcoal mixed with soil) until the soil has carbon of about 2% at least.
+141 | biomeSoilGrassland | Grazing animals often press this soil until it becomes hard. Loosen it below the surface before digging swales or ponds. Plant oats or vetch as a winter cover crop to protect and feed the soil. The soil is usually slightly acidic (pH 5.5–6.5) — add agricultural lime if it is more acidic than that. Add rotting matter to the soil with compost and biochar.
+142 | biomeSoilFynbos | Do not add compost, lime or phosphorus on natural Fynbos areas — it kills the plants, which are used to poor soil. Grow food separately, in soil brought in from somewhere else. Cover the food beds with Fynbos plant material. Cape reeds help hold the swale walls in a natural way.
+143 | biomeSoilSucculentKaroo | Cover the soil with stones rather than using rotting mulch — it is cheap and works well here. Add compost only in the food-growing area. Plants that keep water in their leaves (succulents) need soil that drains water well, not soil that holds water. In food beds, add biochar and gypsum. Worm farms are a good way to make strong liquid fertiliser.
+144 | biomeSoilNamaKaroo | A hard cement-like layer (calcrete) stays beneath the soil surface and may need to be broken with a special plough (chisel plough) so that roots grow downward. Add gypsum rather than lime — the soil is already alkaline. Biochar in the soil helps it hold water. Bitter Aloe grows well here and can be sold.
+145 | biomeSoilDesert | Anything that rots here is valuable — use goat or camel dung. Plant shade trees first, before any food crops. In low places, plant only types that can resist salt. Raised sand beds with a wick (a strip of material that absorbs water and draws it upward) work well for vegetables.
+146 | biomeSoilAlbanyThicket | Spekboom is the most important plant here: you can eat it, it stores a lot of carbon, and it can resist drought. To restore damaged soil, plant cut pieces of Spekboom directly — there is no need to first grow them in a nursery. Clay soil needs air that moves well, so use raised beds for vegetables.
+147 | biomeSoilIocb | The soil is acidic and nutrients wash away quickly. Add lime to raise the pH to about 6.5. Cover the soil with mulch and plant cover crops to stop nutrients being washed away. A mix of biochar and compost (terra preta) greatly improves the amount of food you can grow. Coffee, avocado, banana and sugarcane all grow well here.
+148 | biomeSoilForest | Forest soil is rich — disturb it as little as you can. Use small deep planting holes (keyhole beds) for vegetables rather than clearing large areas. Cover the soil with fallen leaves as mulch. Working with the structure of the forest itself (the food forest way) gives the best results. Leave most of the forest undisturbed.
+149 | biomeSoilOutside | Choose a place in South Africa so that you get analysis that suits that place.
+150 | biomeSoilUnavailable | Repeat the site analysis before you do anything with this site's soil advice.
+151 | soilImprovementZuluDraftNotice | ISIXHOSA DRAFT — These soil-improvement tips were translated by machine and have not yet been reviewed by an expert isiXhosa speaker or a local soil specialist. Read the English text beside each tip; if it is not clear, use the English words and seek local advice before putting anything in the soil to improve it.
+152 | savedSitesHeader | Your sites
+153 | savedSitesBackLink | All sites
+154 | unsavedSiteGroupLabel | It was not saved as a site
+155 | savedReportCountSingular | saved report
+156 | savedReportCountPlural | saved reports
+157 | photoSkippedNote | Some photos could not be read, so they were not added. iPhone photos are usually HEIC, which this browser cannot open — try JPEG/PNG copies or screenshot photos.
+158 | photoAnalyseError | We could not analyse those photos — check your connection and try again, or skip them and generate without them.
+159 | koppenClimateCodeLabel | Climate code (Köppen)
+160 | lifeGuideSelectLocation | Choose a place on the map first
+161 | lifeGuideBuilding | Your guide to living systems is being built...
+162 | lifeGuideLoadError | It did not load — check connection
+163 | evidenceSheetStorageFull | The storage space is full — the photo was not saved. Delete some other things to open up space.
+164 | evidenceSheetDismiss | Close
+165 | evidenceSheetLandLegalWarningTitle | This app is not a place for keeping copies.
+166 | evidenceSheetLandLegalWarningBody | The photo you scan here is made smaller; the PDF you upload keeps only the file name, not the document. Both stay on this phone only, and old items may be deleted automatically to make room for new ones. Keep the real papers safe as well — with your mentor, at home, or wherever they were issued.
+167 | evidenceSheetClose | Close
+168 | evidenceSheetLandLegalDesc | Documents that prove your right to farm this land
+169 | evidenceSheetDocOnlyDesc | PDFs, scanned items and test reports
+170 | evidenceSheetWaterDesc | Borehole test, usage & municipal bills
+171 | evidenceSheetTreesDesc | Take a photo of the upper leaves first, then the base and the stem
+172 | evidenceSheetDefaultDesc | Photos, scanned items and documents
+173 | evidenceSheetLabUploadInstructions | Upload the original PDF of the test (up to 10 MB) or a clear photo. PDFs stay on this device and can be taken out again here. Keep your original copy.
+174 | evidenceSheetLabReadNote | The report uses the results you enter below. What the PDF contains is not read automatically; the saved file alone does not prove that the result was measured.
+175 | evidenceSheetLabResultsLabel | Results and sample details
+176 | evidenceSheetLabResultsPlaceholder | Date of taking the sample; place / sample ID; laboratory; each result with its unit and method; relevant comments of the laboratory.
+177 | evidenceSheetSaveTestResults | Save the test results
+178 | evidenceSheetLabMaxEntries | This test folder takes four entries. Remove an old entry before adding another.
+179 | evidenceSheetReportedResultsName | Reported test results
+180 | evidenceSheetAccountChanged | The account or workspace has changed. Open the upload again.
+181 | evidenceSheetFileSaveFailed | The file could not be saved. Please try again.
+182 | evidenceSheetResultsSaveFailed | The results could not be saved. Keep a copy and try again.
+183 | evidenceSheetPdfUnavailable | This original PDF is not available here. Upload it again using your original copy.
+184 | evidenceSheetPdfOpenFailed | The PDF could not be opened.
+185 | evidenceSheetTakePhoto | Take / scan a photo
+186 | evidenceSheetUploadFile | Upload a file / PDF
+187 | evidenceSheetRemoveItem | Remove {name}
+188 | evidenceSheetRemovePhotoFallback | photo
+189 | evidenceSheetRemoveDocumentFallback | document
+190 | evidenceSheetPhotosCount | Photos · {n}
+191 | evidenceSheetOnFileCount | Saved ones · {n}
+192 | evidenceSheetDownloadOriginalPdf | Download the original PDF
+193 | evidenceSheetFilenameOnly | File name only. Upload the PDF again so that its contents are kept.
+194 | evidenceSheetQuickNumbersOptional | Quick numbers (not compulsory)
+195 | evidenceSheetTapToAdd | Tap to add
+196 | evidenceSheetSave | Save
+197 | evidenceSheetLimaLabNote | Evidence of the site · keep your original documents
+198 | evidenceSheetLimaDefaultNote | Lima · reads bills and reports for you
+199 | evidenceCatalogueTitle | Evidence storehouse
+200 | evidenceCatalogueHeading | The more the land tells us, the better the plan becomes
+201 | evidenceCatalogueIntro | A good site report goes in the order of lasting a long time — water first, then buildings and access routes, soil, living things, and animal systems.
+202 | evidenceCatalogueDroneTitle | Drone and aerial images — taken by a mentor
+203 | evidenceCatalogueDroneBody | When a mentor visits, his/her drone photos arrive directly at this site — a real picture looking down to design over, together with before/after records for funders.
+204 | evidenceCatalogueMentorOnly | Only the mentor
+205 | evidenceCatalogueEdiblesHeading | Existing indigenous trees give harvest and shade for free — Lima keeps them in the design instead of cutting them down.
+206 | evidenceCatalogueEdiblesProtected | protected
+207 | evidenceCatalogueEdiblesFooter | You do not see yours? Photograph it — Lima writes it as unknown, and a plant expert or a mentor can confirm it later.
+208 | homeMainSite | Main site
+209 | homeSetAsMain | Make main site
+210 | homeMainSiteLabel | Main
+211 | homeQuickJournalDesc | Notes and photos
+212 | journalLocalOnlyNote | Saved on this phone.
+213 | journalWeightsLiveElsewhere | Harvest weight and sales are put in My records.
+214 | journalOpenRecords | Open my records
+215 | homeUpcomingTasks | Coming tasks
+216 | homeTaskBoardViewPlan | Look at the production plan
+217 | taskVerbPrep | Prepare {crop} bed
+218 | taskVerbSow | Sow {crop} seed
+219 | taskVerbTransplant | Move and plant {crop}
+220 | taskVerbMulch | Water and cover {crop}
+221 | taskVerbHarvest | Harvest {crop}
+222 | taskVerbTerminateCover | Cut or lay down {crop}
+223 | taskVerbWeedEarly | Weed around {crop}
+224 | taskVerbWeedMid | Weed and check {crop}
+225 | taskBedLabel | Bed {n}
+226 | taskDueThisMonth | Needed this month
+227 | taskDueNextMonth | Needed next month
+228 | taskDueInMonths | Needed in {n} months
+229 | navPlantingCalendar | Planting calendar
+230 | navManual | Permaculture guide
+231 | openSurveyNoSiteTitle | Save the site first
+232 | openSurveyNoSiteMessage | Garden survey of a saved site. Tap a place on the map to save it, then open the survey there.
+233 | openSurveyNoSiteConfirm | I understand
+234 | navCommunity | Community
+235 | navLandmark | Main menu
+236 | navAtlas | Atlas
+237 | navNetwork | Networking
+238 | navExchange | Exchange
+239 | navBedCropPlan | Production plan
+240 | navAssessments | Project assessment
+241 | navDesignStudio | Design studio
+242 | navOfflineSync | Saved on this phone
+243 | navFeedback | Report a problem or suggest something new
+244 | navWhatsNew | What is new
+245 | navTour | Start tour
+246 | navTipsHelp | Tips and help
+247 | tipsEyebrow | LEARN AT YOUR OWN SPEED
+248 | tipsTitle | Tips and help
+249 | tipsIntro | A quick answer when you need it, or a guided tour of this app.
+250 | tipsChoosePracticeView | Choose a practice view
+251 | tipsBrowseGardensReports | Look at gardens and reports
+252 | tipsFindLabel | Get advice
+253 | tipsSearchPlaceholder | Try invoices, fruit garden or money
+254 | tipsNoMatch | There are no matching tips. Try another word or
+255 | tipsAskForHelp | ask for help
+256 | tipsVideoGuidesTitle | Video guides
+257 | tipsVideoGuidesBody | For now, follow the interactive tour and the steps above. Videos showing how the app works will be added here once they are published.
+258 | tipsYoutubeLink | Find videos that teach garden farming on YouTube ↗
+259 | tipsYoutubeNote | External search results are about gardening, not about using ImbewuField.
+260 | tourPill | Tour
+261 | navTourControls | Tour controls
+262 | navTourGardensReports | 18 gardens and completed reports
+263 | navExitTour | Leave the tour
+264 | navPageHelp | Page help
+265 | tourMenuTipOpenMenuAria | Open the menu to find Start tour
+266 | tourMenuTipTitle | Your tour stays here
+267 | tourMenuTipBodyBefore | The garden photo stays on Home. You can open again
+268 | tourMenuTipBodyAfter |  in this menu any time you need it.
+269 | tourMenuTipShowMenu | Show me the menu
+270 | updateBannerRefreshing | Refreshing…
+271 | updateBannerReady | The update is ready{sha}
+272 | updateBannerWhatChangedAria | What has changed
+273 | updateBannerDismissAria | Hide until the next version arrives
+274 | updateBannerNewVersion | A new version{sha} is available.
+275 | updateBannerCollapseAria | Fold up the update notice
+276 | updateBannerRefreshButton | Refresh
+277 | updateBannerShowMore | and {count} others
+278 | updateBannerShowLess | show a few
+279 | updateGuideContinue | Continue with the guide · {index}/{total}
+280 | updateGuideCloseAria | Close the update guide
+281 | updateGuideRegionAria | Update guide
+282 | updateGuideOfferBadge | THE REFRESHED APP
+283 | updateGuideTourBadge | UPDATE GUIDE · {index} OF {total}
+284 | updateGuideOfferTitle | Do you want to see what has changed?
+285 | updateGuideOfferBody | A short guide will take you to the pages of this update. You can stop at any time.
+286 | updateGuideNotNow | Not now
+287 | updateGuideOpenPage | Open this page
+288 | updateGuideArrived | You are on this page. Look around.
+289 | updateGuidePrevious | Before / Previous
+290 | updateGuideNext | Next step
+291 | updateGuideFinish | Finish the guide
+292 | updateGuideStop | Stop
+293 | tourOnboardingCta | Start the 15-minute tour
+294 | studentPortal | Learning gateway
+295 | studentPortalTitle | This is the learning gateway
+296 | studentPortalBody | It is prepared for learners — not your role. Go back to your home to continue.
+297 | studentBackHome | Go back to my home
+298 | studentMyStudies | My lessons
+299 | studentLearnPracticeGrow | Learn · practise · grow
+300 | studentCourseDescription | Your permaculture course, one practical lesson at a time.
+301 | studentRevisit | Look at your lessons again
+302 | studentStart | Start learning
+303 | studentContinue | Continue learning
+304 | studentCourseComplete | The course is finished!
+305 | studentReady | You are ready to start
+306 | studentKeepGoing | Continue
+307 | studentModulesComplete | {done} of {total} modules finished
+308 | studentProgressError | Progress could not be loaded or saved. Check your connection or access to your account.
+309 | studentRemaining | remaining
+310 | studentPractitioner | Permaculture expert
+311 | studentCategoryFoundation | Foundation
+312 | studentCategoryWater | Water
+313 | studentCategorySoil | Soil / Land
+314 | studentCategoryPlants | Crops
+315 | studentCategoryDesign | Design
+316 | studentCategoryBusiness | Business
+317 | studentCategorySeeds | Seed
+318 | studentCorrect | Correct
+319 | studentIncorrectSee | Not correct — look at {answer}
+320 | studentCloseLesson | Close the lesson
+321 | studentOpenLesson | Open the lesson
+322 | studentListenOrRead | Listen or read
+323 | studentReadAndPractise | Learn and practise
+324 | studentListenToLesson | Listen to this lesson
+325 | studentWatchAndListen | Watch and listen
+326 | studentDeckDescription | {count} slides, explained by voice. Nothing is played until you tap play.
+327 | studentViewSilentSlides | Look at the slides
+328 | studentSilentDeckDescription | {count} slides. No voice explanation starts by itself. You can choose a voice explanation in English.
+329 | studentSilentDeckNoVoiceDescription | {count} slides. No voice explanation is available.
+330 | studentKeyPoints | Main points
+331 | studentFacilitatorVideo | Facilitator training video — for face-to-face sessions, not for watching here.
+332 | studentCheckUnderstanding | Check your understanding
+333 | studentRelatedLessons | Related lessons
+334 | studentSubmitError | It was not possible to send — check your connection and try again.
+335 | studentPhotoAdded | Photo added — tap to change it
+336 | studentPhotoRequired | Add a photo (compulsory)
+337 | studentVoiceAdded | Voice note added — {name}
+338 | studentVoiceOptional | Add a voice note (not compulsory)
+339 | studentSubmitting | Sending…
+340 | studentResubmit | Send again
+341 | studentSubmit | Send
+342 | studentAlreadySubmitted | Already sent — sending again will change the photo and the voice note.
+343 | studentAssignmentSetByMentor | Set by your mentor
+344 | studentAssignmentProgress | {done} of {total} are done.
+345 | studentAssignmentOverdue | {count} are past the date.
+346 | studentAssignmentDueSoon | {count} needed this week.
+347 | studentAssignmentsOrder | Assigned modules are listed first. Everything else is still open to you.
+348 | studentStudyOffline | Learn without the internet
+349 | studentSaveBeforeSignal | Keep lessons on this phone before you go where there is no signal
+350 | studentSaveAvailable | Keep the available lessons on this phone
+351 | studentSaveModule | Keep {title} on this phone
+352 | studentYourCourse | Your course
+353 | studentModule | Module {number}
+354 | studentModules | modules
+355 | studentLocked | Locked
+356 | studentComplete | Finished
+357 | studentContinueHere | Continue here
+358 | studentAssigned | Assigned
+359 | studentAudio | Sound
+360 | studentLessonOne | lesson
+361 | studentLessons | lessons
+362 | studentMarkNotDone | Mark as not finished
+363 | studentMarkComplete | Mark as finished
+364 | studentDone | Finished
+365 | studentMarkDone | Mark finished
+366 | studentLessonsLabel | Lessons
+367 | studentListenModule | Listen to the whole module
+368 | studentSubmitModule | Send this module
+369 | studentSubmittedResubmit | Sent — tap to send again
+370 | studentReadinessComplete | Fully built
+371 | studentReadinessNarrated | Slides with voice
+372 | studentReadinessLessons | Lessons only
+373 | studentReadinessCompleteDetail | All {lessons} lessons have pictures, are explained by voice in {languages} languages, and have slides and moving pictures.
+374 | studentReadinessNarratedDetail | Slides with pictures and voice explanation are ready in {languages} languages. The translation check is still waiting.
+375 | studentReadinessLessonsDetail | The reading material and pictures are ready. Voice explanation and slides are still being made.
+376 | studentDueToday | Needed today
+377 | studentDueTomorrow | Needed tomorrow
+378 | studentDaysOverdue | Past the date by {count} days
+379 | studentDueInDays | Needed in {count} days
+380 | studentDueDate | Needed on {date}
+381 | studentOpenedByMentor | Opened by your mentor
+382 | studentFinishToUnlock | Finish the lesson called "{title}" to open this
+383 | studentSubmitToUnlock | Send the work of the lesson called "{title}" to open this
+384 | studentCapstone | Final project: the design of your farm
+385 | studentCapstoneComplete | You have finished all the modules. Build a set of plans for your final design in the design studio — that is your proof of finishing the course.
+386 | studentCapstoneLocked | Finish and send all {count} modules to open your final design.
+387 | studentOpenDesignStudio | Open the design studio
+388 | studentCompletionMessage | You have finished the whole ImbewuField permaculture curriculum. If you have a mentor, they will see this progress when they look again.
+389 | studentProgressFirebase | Your progress is kept on this device
+390 | studentSesothoUiDraftNotice | This translation is an AI draft. A speaker fluent in Sesotho has not yet reviewed it.
+391 | studentSesothoUiDraftNoticeSource | This translation is an AI draft. A speaker fluent in Sesotho has not yet reviewed it.
+392 | studentEnglishContentNotice | Some module names and descriptions are unreviewed isiXhosa drafts; the module cards mark each one. Other lesson texts and questions are still written in English. The sound check is done separately.
+393 | studentZuluLessonDraftNotice | This isiXhosa lesson, including its main points and its questions, is an unreviewed draft. A fluent isiXhosa speaker and a local farming inspector have not approved it yet.
+394 | studentZuluLessonEnglishFallbackNotice | This lesson is shown in English because the isiXhosa lesson text is not yet available for learners to use. Any isiXhosa sound does not mean the lesson text and questions have been reviewed.
+395 | studentZuluLessonDraftBadge | Unreviewed isiXhosa draft
+396 | studentZuluLessonEnglishBadge | Lesson text in English
+397 | studentZuluCourseLanguageNote | Some lessons have unreviewed isiXhosa drafts; other lessons are shown in English. The availability of sound is different from the review of the lesson text.
+398 | studentZuluAudioDraftNotice | This isiXhosa voice explanation is a draft made by machine. Listening by a person, isiXhosa review by a fluent speaker and local farming review are still waiting.
+399 | studentZuluModuleDraftBadge | Unreviewed isiXhosa draft
+400 | studentZuluModuleEnglishBadge | Title in English
+401 | studentDesignEnglishPreview | Design course · English teaching demonstration
+402 | studentDesignPreviewTitle | Design a working homestead
+403 | studentDesignPreviewIntro | Explore eighteen lesson drafts: understand the family, learn the site, compare ways of placing things, plan the work and revise with evidence. Practise with a given plan that is not the real one; real field design still needs checked measurements and local evidence.
+404 | studentDesignPreviewSimpleLabel | Design course
+405 | studentDesignPreviewCardTitle | Put the decisions together.
+406 | studentDesignPreviewCardBody | Build a design folder with a facilitator or a learning partner. This demonstration does not give course marks.
+407 | studentDesignPreviewAction | Explore the design teaching demonstration · English →
+408 | studentFinanceEnglishPreview | A separate course · English teaching demonstration
+409 | studentFinancePreviewTitle | Farm money
+410 | studentFinancePreviewIntro | Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with solved tasks and printable workbooks. The review and final assessment are still being prepared.
+411 | studentFinancePreviewSimpleLabel | Farm money course
+412 | studentFinancePreviewCardTitle | Understand money. Plan the next season.
+413 | studentFinancePreviewCardBody | Learn alone or with a facilitator. Your learning list is separate from the progress of the permaculture course.
+414 | studentFinancePreviewAction | Explore the money teaching demonstration · English →
+415 | studentAppGuidesHeading | Guides to the working app
+416 | studentAppGuidesTitle | Using ImbewuField
+417 | studentAppGuideAction | Read the guide · English →
+418 | studentSampleTourAction | Explore making maps, planning and records in the sample tour →
+419 | communityTagline | Farmer to farmer
+420 | communityTabNearby | Nearby
+421 | communityTabBoard | Board
+422 | communityTabMessages | Messages
+423 | communityNearbyEmpty | There are no nearby farmers who have agreed yet.
+424 | communityNearbyIntro | Farmers who choose to be visible appear here as an estimated area — never their home exactly.
+425 | communityMessageButton | Message
+426 | communityReportButton | Report
+427 | communityMoreLabel | More
+428 | communityLessLabel | Less
+429 | communityViewProfile | View profile
+430 | communityEditProfileTitle | Your community profile
+431 | communityEditProfileIntro | Share more or less the way you like. Nothing here is visible until you save it.
+432 | communityDisplayNameLabel | Displayed name
+433 | communityDisplayNamePlaceholder | e.g. Thabo M.
+434 | communityAreaLabel | Region / district
+435 | communityAreaHint | Town or district — not your exact address
+436 | communityAreaPlaceholder | e.g. Bergville, KZN
+437 | communityBioLabel | About you
+438 | communityBioPlaceholder | What you plant, what you like…
+439 | communityCropsLabel | What you plant
+440 | communityPhotosLabel | Photos of produce
+441 | communityPhotosHint | Up to 4 photos
+442 | communityShowOnMapLabel | Show me on the community map
+443 | communityShowOnMapHint | Your place is shown as an estimated area of ~1km, never your exact home
+444 | communitySaveProfile | Save profile
+445 | communityDeleteProfile | Delete my community profile
+446 | communityDeleteProfileConfirm | Delete your community profile? This removes your profile and your pin from the map. Your board notices stay until you close each one.
+447 | communityBoardTitle | Trade board
+448 | communityBoardEmpty | Nothing has been sent/posted yet — be the first.
+449 | communityBoardNewPost | New notice
+450 | communityBoardCategory | Category
+451 | communityBoardKind | Type
+452 | communityBoardKindHave | I have it
+453 | communityBoardKindWant | I want / I need

@@ -1,0 +1,116 @@
+[
+ {
+  "path": "food-forest/food-forest-l2/body",
+  "verdict": "ok",
+  "problem": "Re-check: negation now explicit ('ayiyonto eyaneleyo' = is not enough); list hedging, frost, legal and identification warnings all match. Minor: 'aluyiyo' is an unusual negative copula form but the negation is clear.",
+  "repaired": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/body",
+  "verdict": "repair",
+  "problem": "First fix holds (care, groundcover, no invented condition). Repaired: the reviewer's version re-added a condition ('ukuba kuyimfuneko' = if needed) and used 'esigciniweyo' (stored) for backup; now 'uhlale unesicwangciso ... esilindileyo (i-backup)' = always have a standby/backup plan. Also concord 'enokungena' -> 'anokungena' (amanzi).",
+  "repaired": "Qala ngokuhlola indawo, unikezelo lwamanzi nokhathalelo olukhoyo. Khusela umhlaba ongagqunyiwe kwangoko.\n\nIzityalo zenkxaso zethutyana zinokunika indawo yokukhuselwa nezinto eziluncedo ezisikiweyo apho kufanelekileyo.\n\nImithi ephambili nemigangatho esezantsi inokufakwa njengoko iimeko zivuma. Izityalo ezigubungela umhlaba akuyomfuneko ukuba zilinde de kube sekupheleni; phepha ukuba izityalo zikhuphisane nemithi emincinci.\n\nQala ngendawo onokuyinkcenkceshela uyigcine. Hlola izityalo ezikhoyo ngaphambi kokucoca.\n\nApho kufanelekileyo, ikhadibhodi eqhelekileyo phantsi kwengca yokugquma efanelekileyo inganciphisa ukukhula okungafunwayo. Gcina amanzi anokungena emhlabeni uzishiye iziqu zemithi zicocekile.\n\nCwangcisa ukwahlukana ngokobungakanani bezityalo xa sele zikhulile. Lungiselela izityalo zasenkulisweni (i-nursery) kwithuba elilandelayo elifanelekileyo lokutyala.\n\nKhangela indlela umthunzi, iingcambu namanzi akhoyo achaphazela ngayo izityalo ezingabamelwane.\n\nI-comfrey ne-wild garlic zivela kumzekelo wokuqala wokutyala ngaphantsi; hlola ukufaneleka kwazo kwindawo yakho ngaphambi kokuzisebenzisa.\n\nSika okanye nciphisa izityalo zenkxaso xa kuyimfuneko, usebenzisa iindlela ezifanelekileyo kuhlobo ngalunye. Izinqumlo ezicocekileyo ezifanelekileyo zinokubuyela njengengca yokugquma. Ungalindi unyaka othile omiselweyo ukuba ukukhuphisana sele kuzonakalisa izityalo.\n\nKhetha ithuba lokutyala xa ukumanzi komhlaba nemozulu elindelekileyo zixhasa ukusekwa.\n\nImvula inganceda, kodwa hlola indawo yeengcambu kwaye uhlale unesicwangciso sokunkcenkceshela esilindileyo (i-backup). Phepha ukutyala emhlabeni ozele ngamanzi.\n\nHlola izityalo ezincinci emva kokutyala. Ixesha lokuvuna nezinto ezongezwa zivela ngaphandle zixhomekeke kuhlobo lwesityalo, indawo nokhathalelo; akukho sivuno siqinisekisiweyo kunyaka wesihlanu."
+ },
+ {
+  "path": "market-community/market-community-l2/body",
+  "verdict": "repair",
+  "problem": "Negation fixed: 'bekwazi ukugcina isivumelwano' = CAN keep the agreement. Small repair: 'abathengi abavumelaneyo' (buyers who agree with each other) -> 'abavumelene nawe' (who have agreed with you) for 'agreed customers'.",
+  "repaired": "Buza ukuba umthengi ufuna ntoni: imveliso, ubuninzi, umgangatho, ukuhanjiswa nomhla wentlawulo.\n\nThelekisa iifizi zemarike, uthutho, ukupakisha neemveliso ezingathengiswanga kunye nexabiso lokuthengisa.\n\nJonga imithetho yemarike kunye neemfuno zasekuhlaleni zorhwebo nezokutya. Isitali esingekho sesikweni asiyonto ngokuzenzekelayo engenamithetho okanye iindleko.\n\nUkuthengisa ngqo kunokugcina inxalenye enkulu yexabiso lentengiso, kodwa kuthatha ixesha, ukupakisha, uthutho nokukhathalela abathengi.\n\nInkqubo yeebhokisi (box scheme) ibonelela ngokhetho oluqhelekileyo lweemveliso rhoqo kubathengi abavumelene nawe.\n\nVumelanani ngezinto eziya ebhokisini, ixabiso, intlawulo nento eyenzekayo xa izityalo zinqabile. Iiodolo eziqhelekileyo zinceda ukucwangcisa kuphela xa abathengi nabalimi bekwazi ukugcina isivumelwano.\n\nQala kwinto onokuyibonelela ngokuthembekileyo nakwinto abayifunayo abathengi.\n\nJonga iindleko nezidingo zokutya kwendlu phambi kokuthembisa iibhokisi eziqhelekileyo.\n\nUbungakanani begadi okanye inani labathengi kuphela alikuxeleli ingeniso. Zama ulungiselelo onokululawula uze urekhode iziphumo.\n\nUkuba imveliso iyatshintsha evekini ngeveki, phepha ukuthembisa ukuhanjiswa okungatshintshiyo ongenako ukukubonelela.\n\nNikela ngesivuno esigqithileyo onaso uze uvumelane ngemiqathango ecacileyo nabathengi.\n\nChaza iindlela zakho zokulima ngokunyanisekileyo. Jonga nasiphi na isatifikethi okanye isibango abasifunayo abathengi phambi kokusebenzisa ileyibhile."
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/body",
+  "verdict": "ok",
+  "problem": "Fixes hold: 'usemi' (remains standing), 'Lungelelanisa' (match), 'isangqa' (ring). Pest-control hedges intact. Minor: 'amancinci' adds 'small' to narrow leaves; 'izixhobo' for resources is loose but not misleading.",
+  "repaired": null
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/body",
+  "verdict": "ok",
+  "problem": "Fixed: 'Uthuli lwentyatyambo lombona luthwalwa ngumoya' = maize pollen is wind-carried (wind-pollinated); crossing 'ukuxubana' correct; fermentation glossed and both hedges kept. Minor: pollination gloss 'from one flower to another' slightly narrow given tomato self-pollination.",
+  "repaired": null
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/keyPoints/2",
+  "verdict": "ok",
+  "problem": "Fixed: wind-carried pollen; tomatoes mostly self-pollinate but can cross; check crop/variety isolation guidance. Matches.",
+  "repaired": null
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/options/1",
+  "verdict": "repair",
+  "problem": "Correct quiz option now says wind-pollinated. Repaired 'emgama' (non-standard locative) -> 'nakumgama omde' (even over long distance) for 'over distance'.",
+  "repaired": "Uthuli lwentyatyambo lombona luthwalwa ngumoya kwaye umbona uxubana ngokulula nakumgama omde; iitumato ubukhulu becala ziyazi-pollinate ngokwazo"
+ },
+ {
+  "path": "seeds-sovereignty/seeds-sovereignty-l3/body",
+  "verdict": "repair",
+  "problem": "Reversal fixed: 'kungavalela ukufuma ngaphakathi kwaye kuyonakalise' = can TRAP moisture inside and damage it; 'sealed container' for dry seed correct. Repaired ungrammatical relative 'ukugcina' -> 'ukugcinayo' (what one household saves).",
+  "repaired": "Yomisa imbewu kakuhle phambi kokuyigcina: kwiimvulophu zephepha, hayi iplastiki, kwindawo enomthunzi nomoya ohambayo — ungaze usebenzise ilanga elithe ngqo okanye ubushushu obuvalelweyo. Iintshaba ezintathu zokukwazi kwembewu ukuhluma kukushisa, ukukhanya nokufuma. Ubomi bembewu ekugcinweni buyahluka ngokwesityalo neemeko, ngoko vavanya ukuhluma phambi kokuthembela kwimbewu egciniweyo.\n\nBhala kwimvulophu nganye isityalo, uhlobo nomhla egciniwe ngawo. Gcina imbewu eyomile kakuhle kwisikhongozeli esivaliweyo kwindawo epholileyo, emnyama, eyomileyo. Ukuvala imbewu emanzi kungavalela ukufuma ngaphakathi kwaye kuyonakalise.\n\nPhambi kwesizini entsha yokutyala, vavanya iqela elincinci ngokuhluma ukuze ungathembeli kwimbewu eyaphulukana ngokuthe cwaka nokukwazi ukuhluma.\n\nCwangcisa ukutshintshisana ngembewu nabamelwane kwesi sizini. Oko umzi omnye ukugcinayo kakuhle, imizi emininzi inokwabelana ngako — kwaye ukwahluka kweentlobo zeqela lonke kukhula ngokutshintshisana ngalinye."
+ },
+ {
+  "path": "small-livestock/small-livestock-l2/body",
+  "verdict": "repair",
+  "problem": "Fixed: 'uneentlobo ezincinci ezimbini' = has two native subspecies. Repairs: 'umgca wokohlula' (ohlula = defeat; wrong word) -> 'umgca wokwahlula (demarcation line) olawula ukuhanjiswa kweenyosi'; 'ngokubanzi' hedged an absolute statement ('generally not a guide') -> 'ezibanzi' (broad ranges are not a guide); 'wezintyatyambo' -> Xhosa 'weentyatyambo'; glossed awkward commercial pollination and swarming phrases with the English terms.",
+  "repaired": "Iinyosi zobusi nezinye izinambuzane zithwala umgubo weentyatyambo ziwuse kwezinye iintyatyambo. Oku kunceda izityalo ezininzi zeziqhamo nemifuno, kuquka i-avocado. Izityalo neentlobo ezahlukeneyo ziyahluka ngezinto ezizidingayo ekungeniseni umgubo. Umzi wenyosi awuqinisekisi isivuno esingcono kuyo yonke indawo: imozulu, amanzi, impilo yezityalo nezinye izinambuzane ezisasaza umgubo nazo ziyabalulekile.\n\nUMzantsi Afrika uneentlobo ezincinci (subspecies) ezimbini zeenyosi zobusi zemveli. Inyosi yobusi yaseKapa (Cape honeybee) ifumaneka eNtshona Koloni nakwezinye iindawo zeMpuma Koloni. Inyosi yobusi yase-Afrika (African honeybee) yeyemveli kwi-Afrika ephakathi nakubuninzi boMzantsi weAfrika. Ezi ndawo zendalo ezibanzi aziyondlela yokukhokela ekuhambiseni iinyosi. Amanyathelo okulawula eSebe amisela umgca wokwahlula (demarcation line) olawula ukuhanjiswa kweenyosi. Jonga imithetho yangoku yokuhambisa iinyosi kwiSebe nakumgcini weenyosi onamava wasekuhlaleni ngaphambi kokuhambisa iinyosi okanye imizi yeenyosi.\n\nFunda kumgcini weenyosi onamava wasekuhlaleni ngaphambi kokufumana umzi wenyosi. Gcina imizi yeenyosi kude neendlela ezixineneyo, amakhaya neendawo apho abantwana badlala khona. Ilanga lasekuseni linokunceda; indawo ekhuselekileyo ibalulekile kuqala. Nika iinyosi izityalo ezinentyatyambo ngamaxesha onke onyaka kwaye uphephe ukuveza iinyosi kumachiza okubulala izinambuzane. Iinyosi ezisebenzayo aziyongqina lokuba ifama ayinamachiza okanye izifo. Amanyathelo kazwelonke okulawula iinyosi zobusi afuna ukubhaliswa kwimisebenzi echaziweyo yokugcina iinyosi, kuquka imizi yeenyosi elawulwayo yeemveliso zeenyosi, ukukhulisa ookumkanikazi, ukungenisa umgubo ngokurhweba (commercial pollination), nokususwa, ukutshatyalaliswa okanye ukuhanjiswa kweqela leenyosi. Buza kwiSebe ukuba awuqinisekanga ukuba imithetho iyasebenza na kumsebenzi wakho. Ukuba iqela leenyosi liphuma ngamaqela (swarming) ngokuphindaphindiweyo, cela umgcini weenyosi oqeqeshiweyo alihlole. Ukuxinana sesinye sezizathu ezinokubakho, akukuko ukuxilongwa kwengxaki."
+ },
+ {
+  "path": "soil-health/soil-health-l1/keyPoints/2",
+  "verdict": "ok",
+  "problem": "Fixed: 'linika nje umbono ngokubanzi' = gives only a general/rough idea; 'not a complete soil test' kept. Minor: copula 'aliyovavanyo' is non-standard for class-11 'uvavanyo' and 'ilingelo' is an unusual word for exercise, but meaning is clear.",
+  "repaired": null
+ },
+ {
+  "path": "soil-health/soil-health-l2/body",
+  "verdict": "repair",
+  "problem": "Pods fixed: 'amaqokobhe embewu (seed pods) ye-wattle' with English gloss; wattle warning restored. Repairs: object concord 'isenokungawenzi' (agreed with pods) -> 'isenokungayenzi yonke imbewu'; bark sentence brought to the English point ('its name alone is not proof of no contamination'): \"igama elithi 'ixolo' lodwa aliqinisekisi ukuba alingcolisekanga\".",
+  "repaired": "Umgquba yi-organic matter ebolisiweyo phantsi kweemeko ezilawulwayo.\n\nUmgquba ogqityiweyo unokuphucula isakhiwo somhlaba kwaye unegalelo kwizondlo.\n\nIxesha lokulunga liyahluka ngokweempahla, ukufuma, umoya nobushushu. Igama lephondo okanye inani elimiselweyo leeveki asiso isivivinyo sokulunga.\n\nXuba i-browns ezomileyo (izinto ezomileyo ezinsundu) ne-greens ezintsha (izinto ezintsha eziluhlaza). Phepha imigangatho eshinyeneyo, emanzi evala umoya.\n\nUkuba inqwaba iba bushelelezi okanye inuka kakhulu i-ammonia, yongeza i-browns ezomileyo uyiguqule.\n\nHlola ukufuma nomoya njengoko inqwaba itshintsha; iresiphi enye ayifaneli zonke ngxubevange zeempahla.\n\nIqondo eliphakathi elishushu aliqinisekisi ukuba yonke inxalenye yenqwaba iphathiwe. Ixesha, ubushushu nolawulo zonke ziyabalulekile.\n\nMusa ukufaka inyama, ubisi neemveliso zobisi, izityalo ezigulayo, inkunkuma yezilwanyana zasekhaya nezinto ezingcolisiweyo kule nkqubo ilula yasekhaya.\n\nMusa ukucinga ukuba ukwenza umgquba ekhaya kutshabalalisa yonke imbewu yokhula okanye zonke izinto eziphilayo ezibangela izifo. Sebenzisa inkqubo eqatshelwayo apho kufuneka ucoceko.\n\nMusa ukufaka amaqokobhe embewu (seed pods) ye-wattle enqwabeni yomgquba. Inqwaba eqhelekileyo isenokungayenzi yonke imbewu ingakwazi ukukhula.\n\nSebenzisa kuphela izinto ezicocekileyo, ezingaphathwanga. Ixolo lomthi libola ngokucotha; igama elithi 'ixolo' lodwa aliqinisekisi ukuba alingcolisekanga.\n\nHlola inqwaba uyiguqule xa ifuna umoya okanye ukuxutywa okungakumbi. Yigcine ifumile kunokuba izele ngamanzi."
+ },
+ {
+  "path": "soil-health/soil-health-l2/keyPoints/2",
+  "verdict": "ok",
+  "problem": "Pods fixed with gloss; matches English (which also does not name wattle).",
+  "repaired": null
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/1/q",
+  "verdict": "ok",
+  "problem": "Matches: why keep wattle seed pods out of an ordinary compost heap.",
+  "repaired": null
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "Matches: 'ahlala etsala' = always attract termites (distractor).",
+  "repaired": null
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": "Matches: release a gas that kills every soil organism (distractor).",
+  "repaired": null
+ },
+ {
+  "path": "soil-health/soil-health-l2/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": "Matches: ordinary heap may not expose every seed to non-viable conditions; excluding pods avoids spreading them with compost.",
+  "repaired": null
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/body",
+  "verdict": "repair",
+  "problem": "Fixes hold: 'Ibhatata' class 9; companion sentence grammatical; open-pollinated gloss now describes pollination, not sowing. Repairs: gloss used 'impova' (isiZulu-leaning) -> 'uthuli lwentyatyambo' as elsewhere in the course; 'nokuba ugcine' (could read 'whether') -> 'ukuba ugcine nembewu' (also lets you save); 'side sisidinge' (ambiguous we/it) -> 'ude usidinge' (until you need it); 'sisenye' (could read 'is another') -> 'siyindawo enye' (is one point of failure).",
+  "repaired": "Isityalo esiyisiseko sifanelwe sisikhundla saso kuba sondla ikhaya ngaphaya kosuku lwesivuno.\n\nSithwala amandla okanye iprotheyini. Siyagcinwa, okanye sihlala emhlabeni ude usidinge. Kwaye rhoqo sithwala nenkumbulo yenkcubeko.\n\nIsityalo esiyisiseko esinye sikushiya ungakhuselekanga. Ezimbini okanye ngaphezulu zikunika ukhetho xa imozulu okanye izitshabalalisi zibetha.\n\nLima ubuncinane ezimbini. Hayi enye.\n\nSesiphi isityalo esiyisiseko ekuxhomekeke kuso ikhaya lakho kakhulu ngoku? Yiloo nto engahlukumeza kakhulu ukuba ayiphumelelanga — ngoko yiyo leyo efuna iqabane.\n\nIsityalo ngasinye esiyisiseko sikukhusela kwinto eyahlukileyo.\n\nUmbona unika iikhalori, kwaye ugcinwa womile. Umbona we-open-pollinated (uthuli lwentyatyambo lwawo luthwalwa ngokwendalo ngumoya okanye zizinambuzane) ukuvumela ukuba ugcine nembewu yakho, ukuba ulawula ukwahlukaniswa kwezityalo (isolation) nokukhetha (selection).\n\nIimbotyi ne-cowpeas zinika isivuno seprotheyini enokugcinwa.\n\nIbhatata iphuhlisa ukunyamezela imbalela ngokuthile emva kokuba iingcambu zokugcina sezenziwe. Ifuna amanzi kwiiveki zokuqala nangoxa iingcambu zisenziwa; uxinzelelo lwamanzi ngelo xesha lunokunciphisa isivuno. Amagqabi ayo amancinci nawo ayadleka.\n\nAmadumbe asinda emhlabeni omanzi ngakumbi, apho ezinye izityalo eziyisiseko zilwa.\n\nQaphela ukuba ziyasilela kwiimeko ezahlukeneyo. Yiloo nto kanye.\n\nUkunyamezela akuthethi ukuba akukho nto isilelayo.\n\nKuthetha ukuba ukusilela okunye akuliphelisi icebo lokutya lekhaya lakho.\n\nIsityalo esinye siyindawo enye yokusilela.\n\nIzityalo ezimbini okanye ngaphezulu eziyisiseko zikunika iindlela ezininzi zokuqhubeka udla.\n\nIzityalo ezahlukeneyo zisebenzisa amanzi, umhlaba namaxesha ngokwahlukeneyo. Loo mahluko yikhuseleko."
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": "Fixed: 'amanzi afumanekayo' = available/usable supply compared with demand through wet and dry periods; concord 'luthelekise' correct for 'ucwangciso'.",
+  "repaired": null
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": "Fixed: 'Ane-asidi eninzi ngakumbi' = is more acidic; changes soil pH over time. Matches distractor.",
+  "repaired": null
+ }
+]

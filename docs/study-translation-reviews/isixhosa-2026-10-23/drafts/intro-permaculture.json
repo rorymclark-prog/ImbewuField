@@ -1,0 +1,115 @@
+{
+ "id": "intro-permaculture",
+ "title": "Intshayelelo kwi-permaculture",
+ "description": "Imigaqo yokuziphatha, imigaqo neepatheni — isiseko sayo yonke enye into oya kuyakha.",
+ "lessons": [
+  {
+   "id": "intro-permaculture-l1",
+   "title": "Imigaqo emithathu yokuziphatha: ukukhathalela umhlaba, ukukhathalela abantu, ukwabelana ngokufanelekileyo",
+   "body": "I-permaculture imi phezu kwemigaqo emithathu yokuziphatha. Ukukhathalela umhlaba (Earth Care) kuthetha ukuphatha umhlaba, amanzi, izityalo nezilwanyana njengeenkqubo eziphilayo ekufuneka sizikhusele, kungekhona izinto zokuzisebenzisa ziphele. Ukukhathalela abantu (People Care) kuthetha ukuba iimfuno zosapho lwakho zize kuqala, emva koko iimfuno zoluntu lwakho. Ukwabelana ngokufanelekileyo (Fair Share) kuthetha ukuthatha kuphela oko ukufunayo nokubuyisela intsalela — imbewu, ukutya, amanzi, ulwazi — kwinkqubo.\n\nEzi aziyiyo nje iingcamango ezingabambekiyo. Umfama othengisa onke amaqanda nemifuno kodwa engagcini nto etafileni yosapho uyeqa Ukukhathalela abantu. Uluntu olubiyela ngocingo umthombo wamanzi owabelwana ngawo luyaphula Ukwabelana ngokufanelekileyo.\n\nImigaqo yokuziphatha ibalulekile kuba ikunceda uthathe izigqibo xa kungekho ncwadi yemigaqo — xa ummelwane ecela ukudlisa iinkomo zakhe emva kwembalela, okanye izikhukula zonakalisa imisele yakho (i-swale, yimisele egrunjiweyo ebamba amanzi emvula). Yakha le migaqo mithathu kwindlela ocinga ngayo phambi kokuba wakhe nantoni na emhlabeni.",
+   "keyPoints": [
+    "Ukukhathalela umhlaba (Earth Care): khusela umhlaba, amanzi neentlobo ngeentlobo zezinto eziphilayo",
+    "Ukukhathalela abantu (People Care): iimfuno zosapho lwakho zize phambi kwemveliso yokuthengisa",
+    "Ukwabelana ngokufanelekileyo (Fair Share): buyisela intsalela kwinkqubo — imbewu, amanzi, ukutya, ulwazi",
+    "Imigaqo yokuziphatha ikhokela izigqibo xa kungekho ncwadi yemigaqo"
+   ],
+   "quiz": [
+    {
+     "q": "Umfama uthengisa yonke intsalela yombona wakhe kodwa akagcini nto yokwenza umgquba okanye yokugcina imbewu. Yeyiphi imigaqo yokuziphatha ayeqa kakhulu?",
+     "options": [
+      "Ukukhathalela umhlaba (Earth Care) kuphela",
+      "Ukukhathalela abantu (People Care) kuphela",
+      "Ukwabelana ngokufanelekileyo (Fair Share) — akabuyiseli nto kwinkqubo",
+      "Zontathu ngokulinganayo"
+     ],
+     "correct": 2,
+     "rationale": "Ukwabelana ngokufanelekileyo kuthetha ukubuyisela inxalenye yoko uthatha kuko — njengembewu, umgquba, okanye ukutya kwabanye. Ukuthengisa yonke into ungagcinanga nto kuyaphula olo jikelezo."
+    },
+    {
+     "q": "Umngxuma wakho wamanzi usebenzela ikhaya lakho. Abamelwane bacela amanzi nabo. Sesiphi isenzo esibonisa kakuhle yonke le migaqo mithathu yokuziphatha?",
+     "options": [
+      "Thengisa ukufikelela kumntu onikela ngexabiso eliphezulu",
+      "Gcina onke amanzi omngxuma kummandla omkhulu wokunkcenkceshela",
+      "Yazi ukuba ukwabelana kuyavunyelwa na nokuba umngxuma unokusebenzela bonke abasebenzisi. Emva koko kuphela vumelana ngendlela yokwabelana ngokufanelekileyo uqhubeke ubukele inqanaba lamanzi.",
+      "Vala umngxuma ngesigqubuthelo ukuze kugcinwe amanzi angaphantsi komhlaba kuphela"
+     ],
+     "correct": 2,
+     "rationale": "Yazi kuqala ukuba usetyenziso lwamanzi oluvunyelweyo luyintoni nokuba umthombo unokusebenzela bonke abasebenzisi ngaphandle kokuthatha amanzi amaninzi kakhulu. Ukuba ukwabelana kuyavunyelwa kwaye amanzi ayaneleyo, vumelanani ngendlela yokwabelana ngokufanelekileyo. Ukubeka iliso kukunceda uqaphele utshintsho; akukunikeli mvume yokuthatha amanzi angaphezulu."
+    }
+   ],
+   "infographicAlt": "Imigaqo emithathu yokuziphatha njengemijikelezo emithathu edibeneyo enobukhulu obufanayo: isandla sibambe umhlaba sibonisa Ukukhathalela umhlaba, abantu ababini bebonisa Ukukhathalela abantu, kunye nebhasikithi edlula phakathi kwezandla ibonisa Ukwabelana ngokufanelekileyo."
+  },
+  {
+   "id": "intro-permaculture-l2",
+   "title": "Imigaqo elishumi elinesibini: ukuyila ngokuhambelana nendalo",
+   "body": "UDavid Holmgren wabeka imigaqo elishumi elinesibini yoyilo kwincwadi ethi Essence of Permaculture. UBill Mollison noDavid Holmgren baqala kunye ingcamango ye-permaculture. Imigaqo emithathu eluncedo yokuqala kwesi sifundo yile: bukela uze usebenzisane — jonga umhlaba wakho isizini epheleleyo phambi kokwenza imisebenzi emikhulu yokumba umhlaba; bamba uze ugcine amandla — qaphela imvula, ilanga ne-biomass (izinto zezityalo eziphilayo enjengengca namagqabi) ngaphambi kokuba zishiye indawo yakho; kwaye sebenzisa imiphetho uze ukhathalele okusemaphethelweni — umgca wocingo okanye umtya osecaleni kwendlela unokuba yindawo eluncedo yokubukela.\n\nEminye ekufanele uyazi: ungavelisi nkunkuma (intsalela yokutya ibe ngumgquba, umgquba ube ngumhlaba), sebenzisa izisombululo ezincinci nezicothayo (ibhakethi inokunkcenkceshela ibhedi ngaphandle kombane), kwaye sebenzisa uze ukhathalele ukwahlukahlukana. Umonakalo wesichotho kumbona uxhomekeke kwisaqhwithi nakwinqanaba lokukhula kwesityalo.\n\nKhetha imigaqo emibini okanye emithathu ethetha nengxaki yakho enkulu uze uyisebenzise ngamandla. Eminye iya kucaca njengoko uqhubeka.",
+   "keyPoints": [
+    "Jonga umhlaba wakho isizini epheleleyo phambi kokwenza imisebenzi emikhulu yokumba umhlaba",
+    "Bamba uze ugcine imvula, ilanga ne-biomass ngaphambi kokuba zishiye indawo yakho",
+    "Imiphetho nemida inokuba zindawo eziluncedo zokubukela oko kukhula kakuhle",
+    "Umonakalo wesichotho kumbona uxhomekeke kwisaqhwithi nakwinqanaba lokukhula kwesityalo"
+   ],
+   "quiz": [
+    {
+     "q": "Umfama ufuna ukumba imisele (i-swale) ukuqokelela amanzi emvula. Kufuneka enze ntoni kuqala, elandela 'bukela uze usebenzisane'?",
+     "options": [
+      "Mba kwangoko emva kwemvula yokuqala elungileyo",
+      "Jonga apho amanzi ahamba khona nalapho aqokelelana khona ngexesha elingekho ngaphantsi kwesizini enye yemvula",
+      "Kopa uyilo lwemisele lommelwane",
+      "Cinga ukuba uyilo lwemisele olufanayo lulungele zonke iindawo"
+     ],
+     "correct": 1,
+     "rationale": "Isizini yemvula ibonisa ngaphezu kwesaqhwithi esinye, kodwa ukubukela linyathelo lokuqala kuphela. Hlola umhlaba, ithambeka, indlela amanzi ahla ngayo nendlela ekhuselekileyo yokuphuphuma kunye nomcebisi wasekuhlaleni oqeqeshiweyo phambi kokumba."
+    },
+    {
+     "q": "Sesiphi isicwangciso esisebenzisa kakuhle 'hlanganisa endaweni yokwahlula'?",
+     "options": [
+      "Iinkukhu zivalelwe kude negadi",
+      "Igadi, imithi yeziqhamo nendawo yeenkukhu zilungiswe ukuze iinkukhu zisebenzise ibhedi engenanto emva kokuvuna, emva koko umfama ahlole ulawulo olukhuselekileyo phambi kokuba izityalo ezityiwayo zibuye",
+      "Amadlelo awahlukeneyo kwisityalo ngasinye",
+      "Zonke izilwanyana zigcinwa ngaphandle kwendawo elinywayo"
+     ],
+     "correct": 1,
+     "rationale": "Ukuhlanganisa kwenza into nganye isebenzele abamelwane bayo — apha, iinkukhu zisusa izinambuzane zize zongeze ukuchuma komhlaba endaweni yokuhlala zingenzi nto kwindawo evaliweyo ezinzileyo. Ubulongwe obutsha bunokuba neentsholongwane, ngoko hlola ulawulo olukhuselekileyo phambi kokuba izityalo ezityiwayo zibuye."
+    }
+   ],
+   "infographicAlt": "Imigaqo yoyilo elishumi elinesibini ilungiswe njengamacandelo ajikeleze isityalo esincinci esiqalayo ukukhula esimbindini, nganye ibonakaliswe ngomfanekiso olula — iliso lokubukela, ithonsi lokubamba amanzi, ilanga lamandla, isangqa sokubuyisa inkunkuma."
+  },
+  {
+   "id": "intro-permaculture-l3",
+   "title": "Imimandla ne-sector: ukuhlela ifama yakho ngokwamandla",
+   "body": "Imimandla ne-sector zikunceda unciphise ukuchitha umsebenzi. Imimandla ihamba ukusuka ku-0 ukuya ku-5 ngokokuba utyelela kangakanani. Ummandla 0 yindlu. Kulo mzekelo, Ummandla 1 ukufutshane nendlu kwaye ubamba oko ukukha rhoqo — imifuno enevumba (herbs), amagqabi esaladi. Ummandla 2 yigadi ephambili nendawo yeenkukhu, etyelelwa kanye okanye kabini ngosuku. Ummandla 3 yintsimi ephambili, etyelelwa kanye evekini. Ummandla 4 uphantse ube yindle — imithi yeziqhamo nokutya kwemfuyo okufuna ingqalelo ngamanye amaxesha. Ummandla 5 uyashiywa ube yindle.\n\nIi-sector (iisekta) ngamandla afika evela ngaphandle — ilanga, umoya, imvula, izikhukula, umlilo. Jonga apho umoya onamandla uvela khona kwifama yakho. Iirekhodi zesikhululo sezulu esikufutshane zinokukunceda uhlole apho umoya uvela khona. Jonga apho amanzi emvula engena khona aze ahambe phezu komhlaba wakho. Zoba iintolo (→) ezibonisa oko ukubonayo.\n\nZoba imimandla ne-sector ephepheni, uya kuba nesakhelo soyilo lwakho.",
+   "keyPoints": [
+    "Kulo mzekelo, Ummandla 1 osondele endlini ubamba imifuno enevumba (herbs) ekhiwa rhoqo",
+    "Imimandla ihlela umsebenzi ngokokuba kufuneka utyelele kangakanani",
+    "Ii-sector zibonisa ilanga, umoya, amanzi emvula, izikhukula nomlilo ofikayo",
+    "Umzobo olula wemimandla ne-sector wanele ukuqala uyilo"
+   ],
+   "quiz": [
+    {
+     "q": "Utyala imifuno enevumba (herbs) kuMmandla 3, intsimi ephambili ekude nendlu. Yeyiphi ingxaki oku okuyibangelayo?",
+     "options": [
+      "Imifuno enevumba ikhula inkulu kakhulu",
+      "Ukuhamba okongezelelekileyo kunokuthetha ukuba awuyikhi okanye awuyihloli rhoqo",
+      "Imifuno enevumba yabelana ngomungu nezityalo eziphambili",
+      "Ummandla 3 ufumana ilanga elininzi kakhulu kwimifuno enevumba"
+     ],
+     "correct": 1,
+     "rationale": "Beka isityalo osikha rhoqo kufuphi nendlela oyisebenzisa yonke imihla. Ibhedi ekude yongeza ukuhamba kwaye inokungahlolwa rhoqo."
+    },
+    {
+     "q": "Ubona umoya onomonakalo uvela emntla-ntshona kwifama yase-Highveld. Isithintelo somoya (windbreak) kufuneka sibekwe phi?",
+     "options": [
+      "Umda osemzantsi-mpuma",
+      "Umda osemntla-ntshona, phakathi komoya nezityalo",
+      "Embindini wefama",
+      "Izithintelo zomoya azifuneki kuba imimoya yeza ngamaxesha onyaka"
+     ],
+     "correct": 1,
+     "rationale": "Isithintelo somoya sisebenza ngokuma phakathi komthombo womoya noko ungonakalisa — ngoko sifanele sibe ngakwicala apho umoya uvela khona ngokwenene."
+    }
+   ],
+   "infographicAlt": "Umzekelo wefama oboniswe ngemizobo: iimpawu ezinamanani ukusuka ku-0 ukuya ku-5 zilandela indlela ejikelezayo yabahambi ukusuka endlini nasegadini esondeleyo, zidlula iinkukhu nentsimi, ziye kwimithi nendawo yasecaleni komlambo eyindle ngakumbi. Iimpawu ngumzekelo, azizizo imida emiselweyo okanye imigama."
+  }
+ ]
+}

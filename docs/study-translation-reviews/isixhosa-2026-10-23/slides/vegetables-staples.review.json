@@ -1,0 +1,16 @@
+{
+ "module": "vegetables-staples",
+ "items": [
+  {
+   "n": 15,
+   "field": "body[0]",
+   "verdict": "repair",
+   "english": "Pest pressure usually rises for a reason.",
+   "draft": "Uxinzelelo lwezitshabalalisi lunyuka ngesizathu.",
+   "backtranslation": "Pest stress rises for a reason.",
+   "problem": "Hedge 'usually' lost; draft states absolutely that pest pressure always rises for a reason.",
+   "corrected": "Uxinzelelo lwezitshabalalisi rhoqo lunyuka ngesizathu."
+  }
+ ],
+ "okCount": 116
+}

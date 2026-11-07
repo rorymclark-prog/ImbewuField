@@ -18,6 +18,7 @@ import {
   translatedDesignStepLabel,
 } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { STEP_ORDER, LessonPanel } from './DesignWizard';
 import SpeakButton from '@/components/SpeakButton';
 import TankCalculator from './TankCalculator';
@@ -181,7 +182,7 @@ export default function StepGuide({
   if (collapsed) {
     return (
       <div style={{ padding: '6px 12px 0', display: 'flex', flexDirection: 'column', gap: 4 }}>
-        {lang === 'zu' && <DesignZuluDraftNotice />}
+        {(lang === 'zu' || lang === 'xh') && <DesignZuluDraftNotice />}
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
         <button
           type="button"
@@ -226,7 +227,7 @@ export default function StepGuide({
             {doneCount}/{subSteps.length}
           </span>
           <span style={{ fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
-            {allResolved ? t(DESIGN_CHROME_KEYS.guideAllDone) : current?.title}
+            {allResolved ? t(DESIGN_CHROME_KEYS.guideAllDone) : current ? inlineText(lang, current.title) : undefined}
           </span>
           <ChevronDown size={16} color={accentText} style={{ flexShrink: 0 }} />
         </button>
@@ -236,8 +237,8 @@ export default function StepGuide({
           <button
             type="button"
             onClick={onHide}
-            title="Hide the step guide — bring it back with “hidden” next to the handle"
-            aria-label="Hide the step guide"
+            title={inlineText(lang, 'Hide the step guide — bring it back with “hidden” next to the handle')}
+            aria-label={inlineText(lang, 'Hide the step guide')}
             style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               width: 26, height: 26, flexShrink: 0,
@@ -254,7 +255,10 @@ export default function StepGuide({
   }
 
   // ── Expanded: the walked checklist ──────────────────────────────────────────
-  const narration = current ? `${current.title}. ${current.instruction} ${current.where}` : '';
+  // The sub-step wording is English data (lib/design-substeps.ts); a draft language reads it translated at render.
+  // The spoken text is the draft with the English as the voice fallback; English and isiZulu are unchanged.
+  const englishNarration = current ? `${current.title}. ${current.instruction} ${current.where}` : '';
+  const narration = current ? `${inlineText(lang, current.title)}. ${inlineText(lang, current.instruction)} ${inlineText(lang, current.where)}` : '';
 
   return (
     <div style={{ padding: '6px 12px 0' }}>
@@ -267,7 +271,7 @@ export default function StepGuide({
           overflow: 'hidden',
         }}
       >
-        {lang === 'zu' && <div style={{ padding: '7px 10px 0' }}><DesignZuluDraftNotice /></div>}
+        {(lang === 'zu' || lang === 'xh') && <div style={{ padding: '7px 10px 0' }}><DesignZuluDraftNotice /></div>}
         {/* Header — accent-coloured band naming the current layer */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: accent }}>
           <Compass size={17} color={PAPER} style={{ flexShrink: 0 }} />
@@ -314,7 +318,7 @@ export default function StepGuide({
                   </span>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 13, fontWeight: isCurrent ? 800 : 600, color: done ? 'rgba(11,18,11,0.45)' : 'var(--text-primary)', textDecoration: done ? 'line-through' : 'none' }}>
-                      {ss.title}
+                      {inlineText(lang, ss.title)}
                       {ss.optional && !done && (
                         <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: 'var(--gold-dim)', textTransform: 'uppercase', letterSpacing: 0.3 }}>{t(DESIGN_CHROME_KEYS.guideOptional)}</span>
                       )}
@@ -325,10 +329,10 @@ export default function StepGuide({
 
                     {isCurrent && (
                       <div style={{ marginTop: 4, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        <div style={{ fontSize: 12.5, lineHeight: 1.45, color: 'var(--text-primary)' }}>{ss.instruction}</div>
+                        <div style={{ fontSize: 12.5, lineHeight: 1.45, color: 'var(--text-primary)' }}>{inlineText(lang, ss.instruction)}</div>
                         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
                           <MapPin size={13} color="var(--gold-dim)" style={{ flexShrink: 0, marginTop: 2 }} />
-                          <div style={{ fontSize: 12, lineHeight: 1.4, color: 'rgba(11,18,11,0.75)' }}>{ss.where}</div>
+                          <div style={{ fontSize: 12, lineHeight: 1.4, color: 'rgba(11,18,11,0.75)' }}>{inlineText(lang, ss.where)}</div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                           {ss.arm && (
@@ -347,7 +351,7 @@ export default function StepGuide({
                           >
                             {ss.optional ? t(DESIGN_CHROME_KEYS.guideSkip) : t(DESIGN_CHROME_KEYS.guideLater)}
                           </button>
-                          <SpeakButton text={narration} englishText={narration} size={16} color="var(--color-forest-800)" />
+                          <SpeakButton text={narration} englishText={englishNarration} size={16} color="var(--color-forest-800)" />
                         </div>
                       </div>
                     )}

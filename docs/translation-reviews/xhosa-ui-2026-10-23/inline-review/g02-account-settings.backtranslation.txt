@@ -1,0 +1,34 @@
+Phase A blind back-translation (values only, by source line number)
+4 The easy ones | 5 Main tasks only. Good when you're starting. | 6 All tools | 7 Everything, including all planning and money tools.
+8 Settings of how it looks | 9 Settings | 10 Language, text size and colour | 11 Close settings | 12 How much is shown | 13 You can change it anytime.
+14 Text size | 15 Normal | 16 Big | 17 Bigger | 18 Make the whole app big - text, buttons and menus.
+19 Guidance | 20 Guide me | 21 Show guidance for the next step on your site report. | 22 Lima reads aloud | 23 Speak tips aloud when a voice is available.
+24 App colour | 25 Earth | 26 Warm farming colours | 27 Slate | 28 Clean, recent, professional | 29 How to display | 30 Light | 31 Dark | 32 Automatic | 33 Automatic follows your device's setting.
+34 Tour and support | 35 Tour and samples - 15 minutes | 36 Choose workspace | 37 Browse 18 gardens | 38 Report a problem / ask for something new
+39 Farm guidance built on South African climate, soil and "ithafa" (plain/plateau) data.
+40 ImbewuField - saved automatically | 41 Explore role programmes | 42 Your account permissions don't change. | 43 Choose programme | 44 Your access to the app | 45 Platform administrator | 46 Profile not loaded
+47 connected to organisation | 48 no organisation connected
+49 Your account can open all role dashboards. Choose the right organisation within the portfolio.
+50 Your usual way of signing in is the same. Platform administrator must open owner access on the right account; choosing a dashboard doesn't change your permissions.
+51 Access refreshed. | 52 Access was not refreshed. Try again. | 53 Refresh my access | 54 Signed in as | 55 your linked account | 56 dashboard | 57-61 Farmer, Student, Mentor, Organisation, Funder
+62 Explore with sample records | 63 Choose practice programme
+64 Try each role using Ubhejane farm. Your account role stays the same, and practice changes don't affect real projects.
+65 Open practice programme: {name} | 66 Tour mode couldn't start.
+67 This isiXhosa text is a draft waiting to be reviewed by someone who speaks isiXhosa well.
+68 Signing out ends access to the account on this device. Sign in again to continue. | 69 Sign out | 70 Sign in
+71 Paid AI tools | 72 Choose which AI tools this account may use on this device. Typing, phone dictation, photos and keeping records still work even if AI is off.
+73 Allow all paid AI tools | 74 Lima chat and advice | 75 Scanning receipts | 76 Writing reports | 77 Cleaning visit notes | 78 Photo and crop analysis | 79 AI design and pictures
+80 These settings couldn't be saved. | 81 (goes at the head of your invoices) | 82 (appears on invoices)
+83 Your business board photo works. It's shrunk automatically.
+84 Account settings | 85 Account | 86 Add logo | 87 Being added | 88 Appearance and language | 89 Appearance | 90 Business logo | 91 Business name | 92 Cancel | 93 Change password | 94 Change photo | 95 Confirm new password
+96 Couldn't save. Try again. | 97 Your photo couldn't be updated. | 98 Current password | 99 Edit profile | 100 Edit | 101 Email | 102 Leave the tour | 103 Farm / organisation | 104 Full name | 105 Hide passwords | 106 ImbewuField - grows with you | 107 Language | 108 Read
+109 Leave this empty so the invoice uses your name. | 110 Your account is loading... | 111 Other account settings | 112 New password | 113 New passwords don't match. | 114 Password must have at least 6 characters. | 115 Password refreshed.
+116 Phone | 117 Profile details | 118 Remove | 119 Switch to | 120 Role | 121 Save | 122 Saving | 123 Show passwords | 124 Sign in to manage your account. | 125 Signing out | 126 Still loading... you can sign in instead.
+127 Tour account | 128 Refresh password | 129 Refreshing | 130 You're using the practice version. Nothing here is kept in a real account - sign in to keep your records.
+131 Your full name | 132 e.g. Ubhejane Creche | 133 NGO coordinator | 134 Administrator
+135 Machine-translated isiXhosa texts - not yet reviewed.
+136 The original English text is shown beside each draft until a person who speaks isiXhosa well has reviewed it, and the meaning of consent.
+137 machine-translated isiXhosa draft | 138 Tour - open the choices and leave | 139 Tour | 140 My account | 141 Offline and syncing | 142 Practice programmes | 143 Browse gardens | 144 Main menu | 145 Practice area
+146 You see sample records. Your account permissions don't change. | 147 Page controls | 148 MACHINE-TRANSLATED ISIXHOSA DRAFT.
+149 Words for choosing in the menu haven't been reviewed by someone who speaks isiXhosa well.
+150 Translation status: not reviewed yet. Read the original English text before choosing.

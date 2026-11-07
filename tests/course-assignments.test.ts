@@ -131,7 +131,9 @@ test('due label localisation preserves isiZulu and leaves English or unlisted la
   assert.equal(localisedDueText('Due in 4 days', 'zu', zuText), 'Kusele izinsuku ezingu-4');
   assert.equal(localisedDueText('Due 12 Sep', 'zu', zuText), 'Kufuneka ngo-12 Sep');
   assert.equal(localisedDueText('Due in 4 days', 'en', shouldNotBeCalled), 'Due in 4 days');
-  assert.equal(localisedDueText('Due in 4 days', 'xh', shouldNotBeCalled), 'Due in 4 days');
+  assert.equal(localisedDueText('Due in 4 days', 'af', shouldNotBeCalled), 'Due in 4 days');
+  // isiXhosa (23 Oct 2026) reads its own drafted templates, like the regional languages.
+  assert.equal(localisedDueText('Due in 4 days', 'xh', (key) => (key === 'studentDueInDays' ? 'Kusele iintsuku ezi-{count}' : key)), 'Kusele iintsuku ezi-4');
 });
 
 test('sorting puts the most urgent first and sinks finished work', () => {

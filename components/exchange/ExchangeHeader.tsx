@@ -3,6 +3,7 @@
 import AppHeader from '@/components/layout/AppHeader';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
+import { inlineText } from '@/lib/xh-inline';
 import { EX } from './theme';
 
 // w19-01: the shared AppHeader (brand, Back, burger, Settings, desktop nav) with the page title
@@ -11,7 +12,7 @@ export default function ExchangeHeader() {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
   const simple = useAppLevel() === 'simple';
-  const title = zu ? 'Ukuhwebelana kwabalimi' : 'Farmer exchange';
+  const title = zu ? 'Ukuhwebelana kwabalimi' : inlineText(lang, 'Farmer exchange');
   return (
     <>
       <AppHeader
@@ -22,14 +23,14 @@ export default function ExchangeHeader() {
              plain words for every reader. */}
           {!simple && (
             <span className="hidden sm:block" style={{ fontSize: 12, padding: '2px 8px', borderRadius: 100, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: EX.amberText, whiteSpace: 'nowrap' }}>
-              {zu ? 'umbukiso · amarekhodi okubonisa' : 'preview · demonstration records'}
+              {zu ? 'umbukiso · amarekhodi okubonisa' : inlineText(lang, 'preview · demonstration records')}
             </span>
           )}
         </>}
       />
       <div className="px-4 pt-4 sm:px-6" style={{ minWidth: 0 }}>
         <h1 className="t-h1" style={{ color: 'var(--text-primary)', margin: 0 }}>{title}</h1>
-        <p className="font-sans" style={{ fontSize: 14, color: EX.faint, margin: '2px 0 0', lineHeight: 1.35 }}>{zu ? 'Imbewu, izithombo, okusalile namathuluzi — phakathi kwabalimi' : 'Seed, seedlings, surplus and tools — between farmers'}</p>
+        <p className="font-sans" style={{ fontSize: 14, color: EX.faint, margin: '2px 0 0', lineHeight: 1.35 }}>{zu ? 'Imbewu, izithombo, okusalile namathuluzi — phakathi kwabalimi' : inlineText(lang, 'Seed, seedlings, surplus and tools — between farmers')}</p>
       </div>
     </>
   );

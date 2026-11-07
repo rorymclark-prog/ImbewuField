@@ -1,0 +1,16 @@
+{
+ "module": "small-livestock",
+ "items": [
+  {
+   "n": 15,
+   "field": "body[0]",
+   "verdict": "repair",
+   "english": "Animals can return some nutrients through compost made from manure. Fresh manure can carry harmful germs. Compost manure fully before using it around food crops.",
+   "draft": "Izilwanyana zinokubuyisela ezinye izondlo ngomgquba owenziwe ngobulongwe. Ubulongwe obutsha bunokuba neentsholongwane eziyingozi. Vundisa ubulongwe ngokupheleleyo ngaphambi kokuba ubusebenzise kufuphi nezityalo zokutya.",
+   "backtranslation": "Animals can return some nutrients through compost made from manure. Fresh manure can have dangerous germs. Rot the manure completely before you use it near food crops.",
+   "problem": "Safety instruction 'compost manure fully' became 'vundisa' (let it rot), losing the compost step; glossary term is umgquba.",
+   "corrected": "Izilwanyana zinokubuyisela ezinye izondlo ngomgquba owenziwe ngobulongwe. Ubulongwe obutsha bunokuba neentsholongwane eziyingozi. Yenza umgquba ngobulongwe ngokupheleleyo ngaphambi kokuba usebenzise kufuphi nezityalo zokutya."
+  }
+ ],
+ "okCount": 89
+}

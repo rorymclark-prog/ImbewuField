@@ -28,6 +28,8 @@ import { canonicalSpeciesId } from './species-aliases';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { isSampleMode } from './sample-mode';
 import { SPECIES } from './species-catalog';
+import { inlineText, inlineTemplate } from './xh-inline';
+import { inlineBuilt } from './xh-inline-match';
 import { ELEMENTS_BY_ID, plantingGroupFor } from './design-elements';
 import { statusOf } from './design-canvas';
 
@@ -438,4 +440,23 @@ export function treePickingByMonth(groups: readonly PlacedTreeGroup[], months: r
 /** One locally confirmed picking instruction, the same on screen and on paper. */
 export function treePickingPhrase(line: TreePickingLine): string {
   return `Pick ${line.name} (${line.trees}) — confirmed local months ${formatMonthSpan(line.season)}`;
+}
+
+/** The same instruction for the screen: identical English, isiXhosa for an isiXhosa reader. */
+export function treePickingPhraseText(line: TreePickingLine, lang: string): string {
+  return inlineTemplate(lang, 'Pick {name} ({trees}) — confirmed local months {span}', null, {
+    name: line.name, trees: line.trees, span: inlineText(lang, formatMonthSpan(line.season)),
+  });
+}
+
+/** A month span as the screen shows it: "Feb–Oct" stays as it is, "All year" is translated. */
+export function monthSpanText(lang: string, months: readonly number[]): string {
+  return inlineText(lang, formatMonthSpan(months));
+}
+
+/** The restriction note on a mapped plant (UnidentifiedPlantGroup.legalCheck) in the reader's language. */
+export function legalCheckText(lang: string, english: string): string {
+  return inlineBuilt(lang, english, [
+    'Existing catalogue restriction flag: NEMBA {nemba}. Legal status needs checking; kept as mapped inventory without planting advice or production dates.',
+  ]);
 }

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import styles from './MappingExplainer.module.css';
 
 const LAYERS = [
@@ -10,20 +12,22 @@ const LAYERS = [
 ] as const;
 
 export default function MappingExplainer() {
+  const { lang } = useLanguage();
+  const tx = (english: string) => inlineText(lang, english);
   const [layer, setLayer] = useState(0);
   return <section className={styles.explainer} aria-labelledby="map-example-title">
     <div className={styles.intro}>
-      <p className={styles.eyebrow}>Explore the difference</p>
-      <h2 id="map-example-title">One place. Three different records.</h2>
-      <p>Choose a layer to see what it describes.</p>
+      <p className={styles.eyebrow}>{tx('Explore the difference')}</p>
+      <h2 id="map-example-title">{tx('One place. Three different records.')}</h2>
+      <p>{tx('Choose a layer to see what it describes.')}</p>
     </div>
-    <div className={styles.switches} role="group" aria-label="Illustration layer">
-      {LAYERS.map((item, index) => <button key={item.name} type="button" aria-pressed={index === layer} onClick={() => setLayer(index)}>{item.name}</button>)}
+    <div className={styles.switches} role="group" aria-label={tx('Illustration layer')}>
+      {LAYERS.map((item, index) => <button key={item.name} type="button" aria-pressed={index === layer} onClick={() => setLayer(index)}>{tx(item.name)}</button>)}
     </div>
     <div className={styles.scene}>
       <svg viewBox="0 0 720 410" role="img" aria-labelledby="map-example-svg-title map-example-svg-description">
-        <title id="map-example-svg-title">{`${LAYERS[layer].name} in a schematic homestead`}</title>
-        <desc id="map-example-svg-description">A place pin sits beside a house. A four-corner boundary surrounds the house, paths, trees and four vegetable beds. The beds fill only part of the parcel. This illustration is not to scale and has no measured area.</desc>
+        <title id="map-example-svg-title">{inlineTemplate(lang, '{name} in a schematic homestead', null, { name: tx(LAYERS[layer].name) })}</title>
+        <desc id="map-example-svg-description">{tx('A place pin sits beside a house. A four-corner boundary surrounds the house, paths, trees and four vegetable beds. The beds fill only part of the parcel. This illustration is not to scale and has no measured area.')}</desc>
         <rect width="720" height="410" rx="20" fill="#eee9d9" />
         <g fill="none" stroke="#dbd6c5" strokeWidth="1.5">
           <path d="M0 80 Q200 10 375 75 T720 40 M0 112 Q200 42 375 107 T720 72 M0 335 Q220 260 380 320 T720 330 M0 367 Q220 292 380 352 T720 362" />
@@ -59,13 +63,13 @@ export default function MappingExplainer() {
           <circle cy="-9" r="7" fill="#fffdf6" />
         </g>
         <g fill="#334a36" fontFamily="system-ui, sans-serif" fontSize="17" fontWeight="600">
-          <text x="178" y="280">House</text><text x="369" y="322">Growing beds</text>
+          <text x="178" y="280">{tx('House')}</text><text x="369" y="322">{tx('Growing beds')}</text>
         </g>
       </svg>
-      <p className={styles.caption}>Teaching illustration · not to scale · no measured area</p>
+      <p className={styles.caption}>{tx('Teaching illustration · not to scale · no measured area')}</p>
     </div>
     <div className={styles.explanation} aria-live="polite" aria-atomic="true">
-      <h3>{LAYERS[layer].heading}</h3><p>{LAYERS[layer].text}</p>
+      <h3>{tx(LAYERS[layer].heading)}</h3><p>{tx(LAYERS[layer].text)}</p>
     </div>
   </section>;
 }

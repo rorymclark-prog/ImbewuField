@@ -1,0 +1,51 @@
+{
+  "unit": "g07-exchange-prices",
+  "okCount": 152,
+  "items": [
+    {
+      "where": "line 92",
+      "verdict": "repair",
+      "english": "No messaging.",
+      "draft": "Akukho myalezo.",
+      "backtranslation": "There is no message.",
+      "problem": "'No messaging' (feature) became 'no message'.",
+      "corrected": "Akukho kuthumelelana imiyalezo."
+    },
+    {
+      "where": "line 156",
+      "verdict": "repair",
+      "english": "Make an offer",
+      "draft": "Phakamisa ixabiso",
+      "backtranslation": "Raise the price",
+      "problem": "'Make an offer' became 'Raise the price' (price/money option).",
+      "corrected": "Nika isiphakamiso"
+    },
+    {
+      "where": "line 159",
+      "verdict": "repair",
+      "english": "Suggested from the app’s price book: about R{price}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.",
+      "draft": "Kucetyiswa kwincwadi yamaxabiso ye-app: malunga ne-R{price}/kg ngobuninzi. Ixabiso lasefama, hayi leshelufu yevenkile — lutshintshe libe linani oliyifunayo ngokwenene.",
+      "backtranslation": "about R{price}/kg at most",
+      "problem": "'wholesale' became 'ngobuninzi' read as 'at most' (money).",
+      "corrected": "Kucetyiswa kwincwadi yamaxabiso ye-app: malunga ne-R{price}/kg ngexabiso lokuthengisa ngobuninzi. Ixabiso lasefama, hayi leshelufu yevenkile — lutshintshe libe linani oliyifunayo ngokwenene."
+    },
+    {
+      "where": "line 161",
+      "verdict": "repair",
+      "english": "Enter an amount above zero, or choose Swap, Free or Make an offer.",
+      "draft": "Faka inani elingaphezulu kwezero, okanye ukhethe Tshintshiselana, Simahla okanye Phakamisa ixabiso.",
+      "backtranslation": "...or Raise the price.",
+      "problem": "Option name must match line 156.",
+      "corrected": "Faka inani elingaphezulu kwezero, okanye ukhethe Tshintshiselana, Simahla okanye Nika isiphakamiso."
+    },
+    {
+      "where": "line 162",
+      "verdict": "repair",
+      "english": "What would you take? e.g. maize seed or pumpkin seed",
+      "draft": "Wena wawuthatha ntoni? umz. imbewu yombona okanye yethanga",
+      "backtranslation": "What were you taking?",
+      "problem": "'What would you take?' (in swap) became past tense.",
+      "corrected": "Ungathatha ntoni? umz. imbewu yombona okanye yethanga"
+    }
+  ]
+}

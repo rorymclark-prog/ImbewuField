@@ -12,6 +12,7 @@ import st from '../lib/locales/st.ts';
 import ts from '../lib/locales/ts.ts';
 import ve from '../lib/locales/ve.ts';
 import { englishDictionary } from './translation-inventory.ts';
+import * as xhInline from '../lib/xh-inline.ts';
 import { beforeCoreEntryTranslations, type UiLocale } from './navigation-translation-preservation.ts';
 
 const english = englishDictionary();
@@ -31,6 +32,8 @@ function homeComponents(lang: UiLocale, heroSource = read('components/home/HomeH
   const dict = locales[lang];
   const dependencies: Record<string, unknown> = {
     '@/lib/i18n': { useLanguage: () => ({ lang, t: (key: string) => dict[key] ?? english[key] ?? key }) },
+    // The isiXhosa inline drafts (lib/xh-inline.ts) are plain data, used as shipped.
+    '@/lib/xh-inline': xhInline,
     '@/lib/site-progress': { useSiteProgress: () => ({ pct: 40, score: { steps: [{ done: true }, { done: true }, { done: false }, { done: false }, { done: false }] } }) },
     '@/lib/home-next-step': { nextAction: () => null },
     'next/link': { default: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => React.createElement('a', props) },

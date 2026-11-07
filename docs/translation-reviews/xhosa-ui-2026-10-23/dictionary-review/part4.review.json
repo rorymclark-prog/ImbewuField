@@ -1,0 +1,66 @@
+{
+  "unit": "dictionary-part4",
+  "okCount": 447,
+  "items": [
+    {
+      "index": 129,
+      "key": "surveyGuideProduction",
+      "verdict": "repair",
+      "english": "A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.",
+      "draft": "Incwadi yamanqaku, irekhodi yesivuno okanye irekhodi yentengiso ingakunceda. Musa ukudibanisa iikhilogram nezinyanda. Shiya amanani engabhalwanga xa iirekhodi zakho zingaqukanga unyaka opheleleyo.",
+      "backtranslation": "A notebook, harvest record or sales record can help you. Do not mix kilograms and ... (izinyanda). Leave numbers unwritten when your records do not cover the whole year.",
+      "problem": "Wrong/isiZulu-form term: \"izinyanda\" carries the isiZulu plural prefix (isiXhosa would be iinyanda) and is not a clear everyday word for \"bunches\" (e.g. spinach bunches). The warning not to add kilograms to bunches could be missed. Coordinator: used the isiXhosa plural iinyanda (bundles) rather than the loanword.",
+      "corrected": "Incwadi yamanqaku, irekhodi yesivuno okanye irekhodi yentengiso ingakunceda. Musa ukudibanisa iikhilogram neenyanda. Shiya amanani engabhalwanga xa iirekhodi zakho zingaqukanga unyaka opheleleyo."
+    },
+    {
+      "index": 226,
+      "key": "surveyUnitPlaceholder",
+      "verdict": "repair",
+      "english": "e.g. kg, bunches",
+      "draft": "Umz. kg, izinyanda",
+      "backtranslation": "e.g. kg, bundles",
+      "problem": "Same term problem as surveyGuideProduction: \"izinyanda\" is an isiZulu-prefixed, unclear word for \"bunches\" in the unit example. Coordinator: used the isiXhosa plural iinyanda (bundles) rather than the loanword.",
+      "corrected": "Umz. kg, iinyanda"
+    },
+    {
+      "index": 171,
+      "key": "surveyUnknownHint",
+      "verdict": "repair",
+      "english": "Leave a question blank if you are not sure. An unknown is more useful than a guess.",
+      "draft": "Shiya umbuzo ungaphendulwanga ukuba awuqinisekanga. Into engaziwayo iluncedo ngakumbi kunokuqashela.",
+      "backtranslation": "Leave a question unanswered if you are not sure. Something unknown is more helpful than guessing.",
+      "problem": "\"ukuqashela\" means to notice/take care, not to guess; the sentence (\"unknown is more useful than noticing\") loses the point that a guess is worse than leaving it blank. (Moderate confidence on the verb.)",
+      "corrected": "Shiya umbuzo ungaphendulwanga ukuba awuqinisekanga. Into engaziwayo iluncedo ngakumbi kunokuqikelela."
+    },
+    {
+      "index": 191,
+      "key": "surveyFixBeforeSave",
+      "verdict": "repair",
+      "english": "Check the production entries and areas before saving. Use positive numbers or zero; leave unknowns blank.",
+      "draft": "Jonga okubhaliweyo kwemveliso nobungakanani bemimandla phambi kokugcina. Sebenzisa amanani angaphezu kweqanda okanye iqanda; shiya izinto ongazaziyo zingabhalwanga.",
+      "backtranslation": "Check what is written of production and the sizes of areas before saving. Use numbers greater than zero or zero (literally: greater than egg or egg); leave things you do not know unwritten.",
+      "problem": "\"Positive numbers or zero\" rendered as \"greater than egg or egg\" using colloquial iqanda=zero; on a production form with an eggs category this can be read as eggs and is redundant (\"more than zero or zero\"). Rewritten with 0 explicit.",
+      "corrected": "Jonga okubhaliweyo kwemveliso nobungakanani bemimandla phambi kokugcina. Sebenzisa amanani angaphezu kwe-0 okanye i-0; shiya izinto ongazaziyo zingabhalwanga."
+    },
+    {
+      "index": 337,
+      "key": "offlineLessonDownloads",
+      "verdict": "repair",
+      "english": "Download lesson slides, narration and clips separately under",
+      "draft": "Khuphela izilayidi zezifundo, ingcaciso ethethwayo neziqendu ngokwahlukeneyo phantsi kwe",
+      "backtranslation": "Download lesson slides, spoken explanation and episodes separately under",
+      "problem": "Sentence ends in a dangling preposition \"phantsi kwe\" immediately before the link text \"Funda ngaphandle kwe-intanethi\" (see app/offline/page.tsx), so it reads as broken grammar (\"under-of Study offline\").",
+      "corrected": "Khuphela izilayidi zezifundo, ingcaciso ethethwayo neziqendu ngokwahlukeneyo phantsi kwecandelo elithi"
+    },
+    {
+      "index": 401,
+      "key": "pricesFarmGateTitle",
+      "verdict": "repair",
+      "english": "Farm-gate prices",
+      "draft": "Amaxabiso asefama",
+      "backtranslation": "Farm prices",
+      "problem": "\"Farm-gate\" dropped: \"Amaxabiso asefama\" means just farm prices; farm-gate (price at the gate, before market/shop mark-up) is the concept the page explains (see body text with \"esangweni\").",
+      "corrected": "Amaxabiso asesangweni lefama"
+    }
+  ]
+}

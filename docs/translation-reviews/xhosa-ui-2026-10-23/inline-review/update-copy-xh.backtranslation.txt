@@ -1,0 +1,149 @@
+# update-copy-xh — Phase A blind back-translation (isiXhosa values only, lib/update-copy-locales/xh.ts, insertion order)
+0. Saving and sending messages without internet now has drafts in all four languages.
+1. Consent choices now show translation drafts together with the English text in all four languages.
+2. Full production and harvest notes now have four translation drafts.
+3. Numbers and source limits stay together with each guide/indicator.
+4. First-harvest guides have full explanations that are drafts in four languages.
+5. Original age, test conditions and warnings when the time is missing stay with each guide.
+6. Drawing buttons keep clear icons when you change language.
+7. Drawing actions and section headings have four translation drafts together with English text.
+8. Saved crop-plan notes now follow the language of your report.
+9. Plant-buying details have four translation drafts; English research notes are marked.
+10. New reports use full cost tables and price warnings in drafts of four languages.
+11. Summaries use the same tool names; there is no change to prices and measured quantities.
+12. New reports have full planning warnings in drafts of four languages.
+13. Soil warnings follow the recorded source, including your uploaded lab test.
+14. New reports have full monitoring and risk tables in drafts of four languages.
+15. Risk limits, levels, quantities and recorded plant names keep the source meaning.
+16. New reports use draft labels for tools and methods in four languages.
+17. Names you chose, plant names and recorded quantities keep their original meaning.
+18. Measurement tables in new reports have draft labels and source explanations in four languages.
+19. New isiZulu reports include a complete front page and a measurement table.
+20. New reports have draft labels for the front page and document control in your language.
+21. The table of contents, captions under pictures and unfinished-report notices use drafts of four languages.
+22. Concept diagrams have draft captions and descriptions in four languages.
+23. Translated report headings keep the drawings that go with them and the concept diagrams.
+24. Drawings of rain, roof water, sun, wind, soil and work time use drafts of four languages.
+25. In drawings, months and level names follow your language, but there is no change to the measurements.
+26. Feature legends in the site plan, land-use labels and drawings of built/planned things follow drafts of four languages.
+27. Long drawing labels drop to the next line; no change to saved names, species codes or measured shapes.
+28. Report measurements, tank status and chart calendars follow drafts of four languages.
+29. Calendar descriptions keep the saved months, bed names and first-season features.
+30. The report summary and the shared pages now follow all four draft languages of the app.
+31. Summary PDFs keep the Tshivenda letters and show a notice of unreviewed translation.
+32. Preparing a report: the evidence status and help now follow all four draft languages.
+33. Saved measurements and earlier report text stay as they were at the beginning.
+34. Report controls follow your app language; saved report text keeps its own language.
+35. Four draft languages: study choice, map review and report-translation details.
+36. Crop-calendar months follow your language; exported crop plans are still written in English.
+37. Home: staff links, progress help and dates now follow all four draft languages.
+38. Sesotho, Xitsonga and Tshivenda: many site-report, map and Lima controls.
+39. Settings: text size, colours and AI controls now follow all four draft languages.
+40. The label showing that a part is in English now follows isiZulu, Sesotho, Xitsonga and Tshivenda.
+41. Sesotho, Xitsonga and Tshivenda: many menus, site progress and sign-in messages.
+42. Draft notices now cover all four languages and can open the English text page.
+43. Dark mode now reaches the Design studio, invoices, the print preview and sample pages.
+44. Farmer pages share one header and leave room for the Lima button; Home fills the laptop screen.
+45. isiZulu: today's date, plant names in records and prices, and one language note per page.
+46. Studies and Account open without flashing; short notices; Teach the Teachers in isiZulu.
+47. Staff dashboards: readable dates, simple words, and tables that fit the screen.
+48. Dark mode now covers staff dashboards, Studies, Money book, Exchange, Network and maps.
+49. On a laptop, pages share one header with the tabs of your role and use the full width.
+50. The Lima button and the Tour button now no longer sit on top of buttons or text.
+51. Account opens in tour mode, and maps show a simple message on phones that cannot draw them.
+52. One name everywhere: Field journal, Production plan, My records, Site reports.
+53. Short tab labels, page titles in the browser tab, South African number formats.
+54. Money book dates and charts show month names in Sesotho, Tshivenda, Xitsonga and isiZulu.
+55. Sesotho, Tshivenda and Xitsonga month names are unreviewed drafts; invoices stay in English.
+56. The tabs Ask, Photos, Profile, Design and Places now follow your language (isiZulu drafts).
+57. Error messages say what went wrong in simple words, never just a code like 500.
+58. Offline saving keeps your note or message instead of throwing it away or saying the app is stuck.
+59. Dark mode is fixed on NGO pages, Lima chat, writing areas and cards; buttons are easier to tap.
+60. Pages open quickly: chat, maps and charts load only when you open them.
+61. Studies keep five uncertain phrases about working offline in accurate English.
+62. Money book and Invoice get 33 extra unreviewed Sesotho, Tshivenda and Xitsonga drafts.
+63. Fixed lines still show accurate English; the Xitsonga warning about photos that are on the device only is clearer.
+64. Due-date and draft-status markers in Studies drop to the next line inside small phone cards.
+65. The Xitsonga warning about little storage space keeps its English words as they are.
+66. Invoice adds unreviewed Sesotho, Tshivenda and Xitsonga drafts beside accurate English.
+67. The invoice you print or share as a PDF stays in English for your customer.
+68. Tshivenda line prices no longer go out past the card edge on narrow phones.
+69. Studies fix nine unreviewed-draft phrases beside accurate English.
+70. Compare the updated words in Introduction, Learning, Water, Market and Small livestock.
+71. Saved slide packs update five corrected cards.
+72. Read the production guides
+73. Menu → Site reports
+74. In a new report, open the plant-buying section. Read the full production notes alongside their original numbers and source limits. Remaining English research is still marked as unfinished.
+75. Read the first-harvest guides
+76. In a new report, open the plant-buying section. The first-harvest age and its full source explanation use the report language. Some English research notes are still marked as unfinished.
+77. Update notices and recent changes now have four translation drafts.
+78. Read the recent updates
+79. Menu → What's new
+80. The update notice and recent history use your language. Old entries still have English text while their translation is being finished.
+81. Account controls and messages now have four translation drafts.
+82. Community profile controls now have four translation drafts.
+83. Check sharing choices
+84. Menu → Account
+85. In Account, check the sharing permissions alongside their English text. Sharing the Community profile is a separate choice when Community is available.
+86. Farmer profile and report controls now have four translation drafts.
+87. Community messages, board and map controls now have four translation drafts.
+88. Photo-viewer controls now have four translation drafts.
+89. Open a saved photo
+90. If your account has a photo, open it. Photo-viewer controls use your language; the original caption under the photo stays as written.
+91. App page titles now have four translation drafts.
+92. Tour and practice controls now have translation drafts in four languages.
+93. Review the practice views
+94. Menu → Practice views
+95. Open the chooser and Tour. Instructions and controls have unreviewed drafts; English text is available.
+96. Plant labels in Exchange and the Home task board are now readable also in isiZulu.
+97. Records, invoices and the farm data panel use one green colour and simple, readable controls.
+98. Studies pages share one header, open sections show an arrow, and Lima no longer hides text.
+99. Staff headers will never cut links; Network, sign-in and welcome pages are cleaner.
+100. isiZulu notes stay readable in dark mode, and the map header fits on a tablet.
+101. On a laptop, each page has only one set of links at the top, and headings are no longer cut off.
+102. Invoices keep money amounts on one line, and the share and print buttons appear only once.
+103. Sample pages, MEL and Atlas use one style of buttons and badges, and clearer notices.
+104. Studies drawings follow dark mode; Tips and the guide now match the rest of the app.
+105. Organisation and funder reports now show reach, evidence tables and follow-up.
+106. Choose groups or recorded months; download a short, full-colour or ink-saving PDF.
+107. Reports separate missing records from zero and show where the numbers come from.
+108. Sample pages, Teach the Teachers, the tour and tips now match the rest of the app.
+109. Records, Money, Contact, Sign in and the Design chooser read clearly in dark mode.
+110. Page titles, tabs and Home tiles share one style; mentors get an Assessment tab.
+111. Course drawings follow dark mode; numbers and dates are cleaner in Records and invoices.
+112. Green buttons in Studies, the refresher course and chat messages stay readable in dark mode.
+113. Grey text in Records and Money is darker in dark mode; Network labels are clearer.
+114. Print and source links in the sample plan are bigger so they are easy to tap; text boxes show when selected.
+115. On a laptop, assessment cards stay three per row and progress bars do not stretch.
+116. Studies pages and course colours follow dark mode; green buttons stay readable in dark mode.
+117. Bigger tap areas on Home, Sign in, Invoice, Contact and the NGO and funder pages.
+118. Sample pages, the Network map and your site report have clearer small text.
+119. The last emoji icons are now ordinary icons; survey and field-journal pages fit a laptop.
+120. The printable plan fits the phone; screen-reader tools pause between isiZulu and English.
+121. Buttons and headings use a capital letter on the first word only; Studies arrows are icons; staff charts have dark mode.
+122. On a laptop, Vision and Example fill the screen and farmer text is never below 12px.
+123. Sign in, Map, Prices and Account have headings; Prices and Calendar share one header.
+124. Continue an unfinished site survey after reopening this browser, or throw away its draft.
+125. The "Close and save draft" button lets you pause. Your report uses only the answers you save yourself.
+126. Farmers can download production and money reports from My records.
+127. Mentors and facilitators have visit, training, feedback and follow-up reports.
+128. MEL reports compare matching responses and show evidence dates and missing data.
+129. Reports share full, short and ink-saving designs; funders see published evidence.
+130. Home and Invoice open quickly and no longer redraw again on the day after an update.
+131. On a computer, the Lima button stays bottom right and no longer hides buttons.
+132. The weather card reads in isiZulu (as a draft) and stays clear in dark mode.
+133. Home shows today's date in isiZulu again instead of placeholder words.
+134. Farm reports compare months, seasons and past years using your recorded entries.
+135. Visit, training and programme reports compare recorded work done in different periods.
+136. MEL reports compare dated measurements and include details of agreed funder indicators.
+137. Funder evidence, missing records and current-status pictures stay clear in each PDF.
+138. Survey and reports now show crops, food-forest and animal produce through the whole year.
+139. Choose Site opportunities or the Full site plan, then choose the details you want.
+140. The records plan adds a map drawn to scale with features and a feature legend. Download it or save it without AI.
+141. Corrected samples are clearly marked; unused report settings are hidden.
+142. Open site reports
+143. Menu → Reports
+144. Check the report purpose, the yearly production plan and the saved maps of your site.
+145. Open the design studio
+146. Menu → Design studio
+147. Open View & export, then Records plan to get a drawing to scale with the legend of its features.

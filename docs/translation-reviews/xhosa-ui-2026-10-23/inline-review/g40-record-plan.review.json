@@ -1,0 +1,35 @@
+{
+  "unit": "g40-record-plan",
+  "shard": "g40-record-plan.ts",
+  "range": "all",
+  "okCount": 16,
+  "items": [
+    {
+      "index": 2,
+      "key": "Could not prepare the map. Please try again.",
+      "verdict": "repair",
+      "draft": "Imephu ayikwazanga ukulungiswa. Nceda uzame kwakhona.",
+      "backtranslation": "The map could not be fixed (or: prepared). Please try again.",
+      "problem": "'Could not prepare the map' — 'ukulungiswa' reads first as 'be repaired/corrected', suggesting the map is broken. Use -lungiselelwa (prepared), matching 'Kulungiselelwa' used for 'Preparing…' elsewhere in xh.ts.",
+      "corrected": "Imephu ayikwazanga ukulungiselelwa. Nceda uzame kwakhona."
+    },
+    {
+      "index": 10,
+      "key": "Preparing map…",
+      "verdict": "repair",
+      "draft": "Kulungiswa imephu…",
+      "backtranslation": "Fixing (or: preparing) the map…",
+      "problem": "'Preparing map…' rendered 'Kulungiswa imephu…' = 'the map is being fixed'. xh.ts already uses 'Kulungiselelwa' for preparing.",
+      "corrected": "Kulungiselelwa imephu…"
+    },
+    {
+      "index": 16,
+      "key": "Prepared example",
+      "verdict": "repair",
+      "draft": "Umzekelo olungisiweyo",
+      "backtranslation": "Corrected (or: fixed-up) example",
+      "problem": "'Prepared example' rendered 'Umzekelo olungisiweyo', read as 'corrected example' (the release notes use -lungisiwe for 'corrected'). Use 'olungiselelweyo'; same fix applied to the reportUi*PreparedExample dictionary keys (dict-1099).",
+      "corrected": "Umzekelo olungiselelweyo"
+    }
+  ]
+}

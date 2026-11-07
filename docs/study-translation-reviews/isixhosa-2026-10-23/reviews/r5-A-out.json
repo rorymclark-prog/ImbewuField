@@ -1,0 +1,844 @@
+[
+ {
+  "path": "vegetables-staples/title",
+  "back": "Vegetables and basic (staple) crops",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/description",
+  "back": "Preparing beds, planting in succession, staple crops and pest control — the day-to-day work of growing food.",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/infographicAlt",
+  "back": "A raised bed about 1.2 metres wide, with a path on both sides, so a person reaches the middle from both sides without standing even once on the growing soil.",
+  "flags": [
+   "'cishe' (approximately) is isiZulu; isiXhosa would use 'malunga ne-' or 'phantse'"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/title",
+  "back": "Preparing and planting your beds",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/body",
+  "back": "Compressed (compacted) soil loses its air spaces. Roots slow down. Water enters in a different way. The bed becomes hard to work all year round.\n\nProtecting is easy. Permanent paths, and a bed narrow enough that you reach the middle from both sides.\n\nA width of 1 to 1.2 metres. That is a working number. At that width you can reach the middle from one of the paths, and your feet do not touch the growing area.\n\nNow think about your beds. Can you reach the middle without going inside? Go and try that before you plant anything else.\n\nThere is no single bed shape that is right everywhere.\n\nStart with the method that disturbs the soil little [first/most] that solves your problem.\n\nThe no-dig method suits most garden soils. Do not disturb its structure; build soil richness on top.\n\nDo not dig wet clay. If soil compaction or poor drainage is very bad, identify the cause by getting local advice before choosing to dig deeper.\n\nRaised beds suit wet ground, where water needs a place to go.\n\nSunken beds suit dry ground, where you want to catch and keep the rain you get.\n\nLook after heavy rain. Where does water sit or run? Combine what you saw with soil and drainage advice before choosing a bed.\n\nSome plants do not like their roots being disturbed. They grow well when sown directly where they will grow. Beans, carrots and maize are in this group.\n\nOthers grow well when they start protected in a seed-raising place (nursery), then are moved to another place. Tomato and brassicas (cabbage-family plants) are in this group.\n\nUse a spacing guide by crop, its variety and local conditions. Check the seed packet and local farmers' advice. Watch for crowding as plants grow.\n\nBefore you plant, mark the bed.\n\nWidth 1.2 metres. Length three metres. One bed for practice.\n\nUse pegs and string. Mark a rectangle, and mark both access paths.\n\nThen prepare your soil — start with not-digging, and dig deep only when your soil really needs it.\n\nThe string line turns an idea into a decision. When the paths exist, keep them. When the growing area exists, protect it.\n\nThat bed will be easy to improve all year round, because you stopped walking on it.",
+  "flags": [
+   "'Amanzi angena ngendlela eyahlukileyo' = 'water enters in a different way' — vague; likely meant water runs off / does not soak in",
+   "'ukungombi' / 'ungombe' are malformed forms of -mba (dig); expected 'ukungembi' / 'wembe'",
+   "'Utamatisi' is isiZulu; isiXhosa is 'itumato'",
+   "'kancinci ngokuphambili' ungrammatical/unclear (least? first?)"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/keyPoints/0",
+  "back": "Keep beds 1-1.2m wide so that you never need to step on the growing area",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/keyPoints/1",
+  "back": "Test soil compaction and drainage before choosing to dig deeper; do not work wet clay",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/keyPoints/2",
+  "back": "Transplant crops that need a good start; direct-sow crops that do not like root disturbance",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/keyPoints/3",
+  "back": "Crowded plants do not grow well — leave enough space according to the local weather",
+  "flags": [
+   "'ngokwemozulu' = by weather/climate; may be narrower than 'local conditions'"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/q",
+  "back": "Why do you keep a vegetable bed 1-1.2m wide rather than wider?",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/options/0",
+  "back": "Wide beds get too much sun",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/options/1",
+  "back": "You can reach the middle from both sides without stepping on the growing area, avoiding soil compaction",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/options/2",
+  "back": "Narrow beds drain well in all conditions",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/options/3",
+  "back": "It is an unchanging rule with no working reason",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/0/rationale",
+  "back": "Stepping on cultivated soil compacts it and damages roots — a bed you reach from both sides means you will never need to do so.",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/q",
+  "back": "Which crop is best direct-sown rather than transplanted?",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/options/0",
+  "back": "Tomato, which needs an early start",
+  "flags": [
+   "'Utamatisi' is isiZulu; isiXhosa 'itumato'"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/options/1",
+  "back": "Brassicas, which need protection when young",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/options/2",
+  "back": "Beans, which do not like root disturbance",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/options/3",
+  "back": "Peppers, which are slow to germinate",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l1/quiz/1/rationale",
+  "back": "Beans and other fast crops, with weak roots, grow badly after the shock of transplanting — sowing them directly in the bed avoids that problem completely.",
+  "flags": [
+   "'zimila' (grow) is isiZulu; isiXhosa 'zikhula'"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/infographicAlt",
+  "back": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slow crop still growing, so the bed is never empty.",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/title",
+  "back": "Succession planting and intercropping",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/body",
+  "back": "Succession planting is a calendar habit, not a special crop.\n\nChoose something your household eats often. Then sow a small amount of it, repeatedly.\n\nPlant a short row every two to three weeks.\n\nSpoilage is small when there is an overflowing harvest. Fresh food for a long time. And the work is spread through the season instead of falling on you at once.\n\nSowing at different times can reduce the risk of losing everything at once. It does not guarantee a harvest if hard conditions continue.\n\nWhich fast crop can you sow in small batches? Choose one, start this week.\n\nHere is how it looks in practice.\n\nSow one alone. Then after two to three weeks, sow two. Then sow three. Then sow four.\n\nIn the right season for the crop, harvests can begin to overlap. The first batch is not always ready by the time of the fourth sowing.\n\nTwo to three weeks is a starting rhythm, not a rule. A cool-season leaf crop can last a long time. Heat can speed things up, or cause the crop to fail.\n\nWatch what your garden does, and adjust the time between sowings. That observation is the real skill.\n\nIntercropping is not just crowding different crops together. Each crop needs a job, and enough space to do it.\n\nThe Three Sisters is an example from the farming traditions of Indigenous peoples of the Americas.\n\nMaize gives height and structure.\n\nBeans climb the maize, and they store protein.\n\nPumpkin spreads on the ground, shades the soil and keeps moisture.\n\nTiming matters. Start the maize first, so it is strong enough to carry the beans when they start climbing.\n\nCrops can compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they feed the maize immediately; nutrients in the residue are released during decomposition.\n\nA household can have a hungry gap: weeks when stored food runs low before the next harvest is ready.\n\nYours may come after the stored maize is finished. It may come before the winter greens are ready. It may come in the dry time when water limits the garden.\n\nDo not copy someone else's calendar. Start by naming your months.\n\nWrite them down. Then choose a crop and a sowing date that puts food into that gap.\n\nThat is planning backwards, and it is what separates a garden that looks productive from a household that really eats.",
+  "flags": [
+   "'Ukonakala kuncinci xa kunesivuno esiphuphumayo' reads 'spoilage is small when there is a glut' — likely inverted (succession gives less waste THAN a glut)",
+   "'Hlwayela eyodwa ... hlwayela ezimbini ... ezintathu ... ezine' reads as 'sow one / two / three / four (plants)', not 'sow batch one, two, three, four'",
+   "'Iqela lokuqala alisoloko lilungile ngexesha lokuhlwayela okwesine' = 'first batch is not always ready by the fourth sowing' — check against source",
+   "'zigcina iprotheyini' = 'they store protein' — odd claim for beans in a Three Sisters line",
+   "'ebudeni belixa lonyaka' — 'belixa' malformed; expected 'bexesha'"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/keyPoints/0",
+  "back": "Sow at different times and adjust the interval by crop, weather and household use",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/keyPoints/1",
+  "back": "The Three Sisters comes from the farming traditions of Indigenous peoples of the Americas",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/keyPoints/2",
+  "back": "Use household food records to identify the hungry gap and plan for it",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/keyPoints/3",
+  "back": "Mixed crops may compete; manage space, timing and water",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/q",
+  "back": "Why do you sow lettuce in small batches every 2-3 weeks rather than once?",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/options/0",
+  "back": "It uses less seed overall",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/options/1",
+  "back": "It gives a steady harvest instead of an overflowing harvest then a gap",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/options/2",
+  "back": "Lettuce germinates better in small batches",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/options/3",
+  "back": "It reduces pest pressure",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/0/rationale",
+  "back": "One big sowing ripens at once — sowing at different times spreads the harvest so it matches what the household can really use.",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/q",
+  "back": "When does nitrogen in bean crop residue become available to other crops?",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/options/0",
+  "back": "Immediately whenever the bean touches the maize",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/options/1",
+  "back": "When soil organisms decompose the residue",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/options/2",
+  "back": "Only when pumpkin leaves shade it",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/options/3",
+  "back": "It can never be released",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l2/quiz/1/rationale",
+  "back": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residue is released by decomposition; growing beans beside maize does not guarantee immediate feeding.",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/infographicAlt",
+  "back": "Three staple crops together: a tall grain stalk, a climbing crop on a pole, and a root crop half visible in the soil.",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/title",
+  "back": "Staple crops: maize, beans and root vegetables",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/body",
+  "back": "A staple crop deserves its position because it feeds the household beyond harvest day.\n\nIt carries energy or protein. It is stored, or stays in the ground until we need it. And often it carries cultural memory too.\n\nA single staple crop leaves you unprotected. Two or more give you options when weather or pests strike.\n\nGrow at least two. Not one.\n\nWhich staple does your household depend on most now? That is the one that would hurt most if it failed — so that is the one that needs a friend.\n\nEach staple protects you from something different.\n\nMaize gives calories, and it stores dry. Open-pollinated (sown naturally) maize allows you even to save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after storage roots have formed. It needs water in the first weeks and while roots are forming; water stress at that time can reduce the harvest. Its young leaves are also edible.\n\nAmadumbe survive in wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That is exactly the point.\n\nResilience does not mean nothing fails.\n\nIt means one failure does not end your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staple crops give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is protection.",
+  "flags": [
+   "'(ohlwayelwa ngokwemvelo)' glosses open-pollinated as 'sown naturally' — wrong meaning; open-pollinated is about pollination, not sowing",
+   "'yiloo idinga umhlobo' ungrammatical (expected 'yiyo leyo efuna')"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/keyPoints/0",
+  "back": "Open-pollinated maize lets you save seed; hybrid seed will not produce plants like the parent in the next season",
+  "flags": [
+   "Absolute 'will not' — rationale (item 52) says offspring 'may vary'; check source"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/keyPoints/1",
+  "back": "Beans are an important protein crop — it yields, it stores, and it fixes nitrogen",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/keyPoints/2",
+  "back": "Sweet potato develops some drought tolerance after storage roots have formed, but needs water early; young leaves are edible",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/keyPoints/3",
+  "back": "Amadumbe (taro) is an under-used traditional staple, suited to wet soil of KZN and the coast",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/q",
+  "back": "Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/options/0",
+  "back": "Open-pollinated varieties yield more",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/options/1",
+  "back": "Hybrid seed will not reproduce the same — the next generation will not match the parent plant",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/options/2",
+  "back": "Open-pollinated maize always tolerates drought more",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/options/3",
+  "back": "Hybrids cannot be sown in South Africa",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/0/rationale",
+  "back": "Seed saved from an F1 hybrid may grow, but the next generation may vary. A stable open-pollinated variety with controlled pollen is more predictable when saving seed.",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/q",
+  "back": "Why are amadumbe (taro) a good choice as a staple in some parts of KZN?",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/options/0",
+  "back": "They grow well in very dry sandy soil",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/options/1",
+  "back": "They tolerate wet soil more than maize, suiting coastal conditions and high-rainfall areas",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/options/2",
+  "back": "They need no cultivation at all",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/options/3",
+  "back": "It is the only staple that stores for many years",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l3/quiz/1/rationale",
+  "back": "Amadumbe actually prefer moist soil where maize would struggle — they fill a niche other staples cannot [fill] well.",
+  "flags": [
+   "'ezingenakusimamela' is not a recognisable word (meant 'cannot fill/occupy')"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/infographicAlt",
+  "back": "A pest on a leaf, and three ways to control it without chemicals: a helpful insect, a physical barrier, and cutting by hand.",
+  "flags": [
+   "'ukusikha ngesandla' = 'cutting by hand'; if source is hand-picking, expected 'ukuchola ngesandla'"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/title",
+  "back": "Watch and then control pests and diseases",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/body",
+  "back": "Pest pressure rises for a reason.\n\nStressed plants. A single crop dominating the ground. Or heavy use of chemicals has already removed predator animals that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or lacking enough nutrients? Are predators already working to solve the problem?\n\nA yellow leaf is not automatically an insect. It can be water, feeding, or root damage. Know which it is before you do anything.\n\nFollow four steps, in order.\n\nFirst. Look. Look at how the damage appears, the underside of the leaf, the stem, and nearby plants.\n\nSecond. Look for stress. Soil moisture, roots, plant spacing, feeding, drainage.\n\nThird. Protect your helpers. Helpful insects do work you would have done.\n\nFourth. Only after that, do something — and start with the simple thing that works. Physical removal, barriers or a change in plant care can help. Make sure the action fits the problem and watch the results.\n\nIf treatment is needed, use a product registered [for] the crop and the pest, and follow its label. This includes neem products. Check safety instructions and the waiting period before harvest. Do not invent mixtures or stronger doses.\n\nBe honest with yourself about which step you always skip.",
+  "flags": [
+   "'eliphuzi' (yellow) is isiZulu; isiXhosa 'elimthubi'",
+   "'ebhaliswe isityalo' should be 'ebhaliselwe isityalo' (registered FOR the crop)",
+   "'ngokwasemzimbeni' (bodily) is a calque for 'physical'"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/keyPoints/0",
+  "back": "Identify the cause before treating the damage",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/keyPoints/1",
+  "back": "Check water, roots, feeding and helpful insects",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/keyPoints/2",
+  "back": "Use suitable physical or plant-care measures and watch the results",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/keyPoints/3",
+  "back": "If treatment is needed, use a product registered [for] the crop and pest and follow the label",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/q",
+  "back": "If a pest problem needs a treatment product, what should guide its use?",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/options/0",
+  "back": "A stronger mixture you invented yourself",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/options/1",
+  "back": "A product registered for the crop and pest, used according to its label",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/options/2",
+  "back": "Any product described as 'natural'",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/options/3",
+  "back": "A neighbour's dose for another crop",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/0/rationale",
+  "back": "The crop, pest, dose, safety and pre-harvest waiting instructions matter. A natural origin does not make a home-made treatment safe or suitable.",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/q",
+  "back": "A blind person's brassica leaves are causing yellowing. Before thinking it is pests, what should he check first?",
+  "flags": [
+   "'umfama' in isiXhosa means 'blind person'; farmer is 'umlimi'",
+   "'ayaphuzisa' = 'cause to be yellow' and 'phuzi' is isiZulu; expected 'ayamthubela/aba mthubi'"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/options/0",
+  "back": "Whether it is really a soil-nutrient or watering problem",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/options/1",
+  "back": "Whether the moon phase is right for treatment",
+  "flags": [
+   "'isigaba' (phase) is isiZulu-leaning; minor"
+  ]
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/options/2",
+  "back": "Whether his neighbour has the same problem",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/options/3",
+  "back": "Whether they are specifically aphids",
+  "flags": []
+ },
+ {
+  "path": "vegetables-staples/vegetables-staples-l4/quiz/1/rationale",
+  "back": "Yellowing has many common causes, and a soil-nutrient or watering problem needs a completely different solution than a pest — checking first avoids a wasted treatment.",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/title",
+  "back": "Harvesting water",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/description",
+  "back": "Swales, berms, dams, rainwater tanks and greywater — make water move slowly, spread and soak into the ground, every drop.",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/infographicAlt",
+  "back": "A concept illustration of a section of a level swale following the contour line, with a raised earth ridge below it. Arrows show runoff water slowing down and spreading; soaking in depends on the soil and the site.",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/title",
+  "back": "Swales and berms: slowing water on a slope",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/body",
+  "back": "One kind of swale is a level channel that follows the contour line. It slows runoff and spreads it, so that some water soaks into suitable soil. Some swales are designed with a small controlled slope so they carry excess water gently to a safe place where it exits. Which method suits your land depends on the soil, slope, drainage and storm-water flow. Ask a trained local adviser to check the line, the overflow path and where the water ends up before you dig.\n\nSoil taken out in digging makes a berm (earth ridge) on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may use moisture stored in the soil after rain, depending on the site.\n\nHeavy rain may fill the swale faster than water soaks into the ground. Plan a safe overflow path before you dig.\n\nThe water path must not damage the slope or send damaging water to a neighbour. The swale or dam below must be able to receive it safely.\n\nAsk a trained local adviser to check the soil, the slope and storm-water flow. The picture is not a construction design.\n\nThe slope alone does not tell you whether a swale is suitable or not. Soil, drainage, unstable ground and water from higher up the mountain all matter.\n\nKeep the soil well covered. Get a local assessment before digging on very 'jumping' [steep], wet or unstable ground. Grass barriers and terraces also need a design that fits the site.",
+  "flags": [
+   "'otsiba kakhulu' uses -tsiba (jump/skip) for 'steep'; expected e.g. 'ethambekeni elinyukayo kakhulu/elimnqantsa'"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/keyPoints/0",
+  "back": "A level swale following the contour can catch runoff so it soaks in at a suitable site; some swales need a designed slope and a safe outlet",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/keyPoints/1",
+  "back": "Keep soil well covered and plan a safe overflow path",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/keyPoints/2",
+  "back": "Test soil, drainage, slope and storm-water flow before digging",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/keyPoints/3",
+  "back": "The concept illustration is not a construction design",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/q",
+  "back": "A blind person has planned a level swale following the contour. After heavy rain, one end holds a lot of water. What should the blind person check before changing the digging work?",
+  "flags": [
+   "'umfama' = 'blind person' in isiXhosa; farmer is 'umlimi'"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/options/0",
+  "back": "Whether the channel can be made deeper without a site check",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/options/1",
+  "back": "The design made with measured levels, and a trained local adviser; there may be an undesigned low point",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/options/2",
+  "back": "Whether a new dam at the very lowest point will catch all the overflow",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/options/3",
+  "back": "Whether the soil must be compacted to stop all water entering",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/0/rationale",
+  "back": "A level design following the contour should spread water along its whole length. Uneven filling may show an undesigned low point, but some swales are designed sloping toward a safe outlet. Check the real design, the soil and the overflow path before changing it.",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/q",
+  "back": "A blind person wants to control soil erosion on a very 'jumping' [steep] slope. What should he do before digging?",
+  "flags": [
+   "'umfama' = 'blind person'; 'elitsiba' is the wrong verb for 'steep'"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/options/0",
+  "back": "Ordinary swales 'stood' [dug] as deep as possible",
+  "flags": [
+   "'emiwe' malformed; expected 'embiwe' (dug)"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/options/1",
+  "back": "Keep the soil covered and get a site assessment for suitable erosion control",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/options/2",
+  "back": "A big dam below to catch all runoff",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/options/3",
+  "back": "Compacting the soil surface with a roller",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l1/quiz/1/rationale",
+  "back": "Slope alone is not enough to choose the digging work. Soil, drainage, stability and storm-water flow must also be assessed.",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/infographicAlt",
+  "back": "A farm dam cut through the middle: water entering at one end, the body of stored water, a spillway high at the edge for excess water to exit, and a planted bank holding the soil.",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/title",
+  "back": "Farm dams and ponds: storing water for the dry season",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/body",
+  "back": "A dam or pond can store runoff, but the amount available depends on local rainfall, the catchment area, water losses and how much water you use.\n\nRain seasons vary across South Africa. Use local records and plan for dry periods; there is no promise that the dam will stay full.\n\nBefore changing a watercourse or building water-storage works, check the permit needed from the water authority.\n\nA dam needs a site investigation and design by a person properly trained for that. Runoff in the catchment, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not think annual rainfall tells you the size of a flood or the water you will have stored.\n\nUncontrolled overflow can erode and break the wall. Plan a safe path for excess water before building.\n\nWater can be lost by evaporation and by seepage into the ground. Check the water level and look for seepage or erosion.\n\nKeep the spillway unblocked and keep the bank cover as specified in the design. Do not plant trees on the wall of an earth dam.\n\nAnimals can damage the banks and add dung to the water. Their presence does not make the water clean or safe.",
+  "flags": [
+   "Last sentence 'their presence does not make water clean or safe' is an odd claim; check source meaning",
+   "'iMzantsi Afrika' should be 'uMzantsi Afrika'"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/keyPoints/0",
+  "back": "A dam needs a site assessment and design by a person trained for that",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/keyPoints/1",
+  "back": "Design a safe spillway before building",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/keyPoints/2",
+  "back": "Check needed water permits before building",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/keyPoints/3",
+  "back": "Keep bank cover and do not plant trees on the wall of an earth dam",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/q",
+  "back": "A farmer [umfama = blind person] builds a dam wall without a spillway. After an unusual storm, it overflows. What would be the likely result?",
+  "flags": [
+   "'umfama' = 'blind person' in isiXhosa"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/options/0",
+  "back": "The water irrigates low-lying fields beneficially",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/options/1",
+  "back": "It passes over the wall and erodes it, with a risk of very bad breaching",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/options/2",
+  "back": "The dam stays full and the overflow flows harmlessly",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/options/3",
+  "back": "Storage capacity increases permanently",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/0/rationale",
+  "back": "Without a designed spillway, excess water finds its own way over the wall — and uncontrolled flow is what erodes and finally breaks it.",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/q",
+  "back": "Which action helps protect an earth dam?",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/options/0",
+  "back": "A deep dam, uncovered, with no plants on the bank",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/options/1",
+  "back": "Keep the designed bank cover and keep the spillway unblocked",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/options/2",
+  "back": "Lining with full concrete and plastic",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/options/3",
+  "back": "A large surface so evaporation spreads evenly",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l2/quiz/1/rationale",
+  "back": "An unblocked spillway and well-kept banks help the dam work as designed. Trees should not be planted on the wall of an earth dam.",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/infographicAlt",
+  "back": "Rain runs off the roof into the roof channel (gutter) and goes down a pipe into a tank; there is a small first-flush diverter splitting off the pipe before the tank to discard the first dirty water.",
+  "flags": [
+   "'ihlukana' is isiZulu-leaning; isiXhosa 'yahlukana/iqhekeka'"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/title",
+  "back": "Rainwater tanks and roof harvesting: collecting and protecting water",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/body",
+  "back": "Your roof can collect rainwater. The amount depends on roof size, rainfall and losses.\n\nCheck whether the roof materials are suitable for collecting rainwater before connecting a tank.\n\nUse the roof size as seen from above together with local rainfall records. Then estimate water that 'does not succeed' into the gutter, is diverted, or overflows from a full tank.\n\nThe annual rainfall figure does not tell you how much water there will be in the dry season. Compare the water you have with the planned use.\n\nWater from the roof can carry dust, droppings and other dirt. A first-flush diverter (a device that diverts the first water) keeps part of the first water out of the tank.\n\nThe amount of water to be diverted depends on the roof and the system. Use the supplier's instructions for sizing and maintenance; there is no single volume that suits all roofs.\n\nThe diverter does not make the water fit for drinking.\n\nTank size depends on water demand, rainfall, roof size and the length of dry periods.\n\nWrite down the use you plan and estimate your demand using your records. Compare that with the water you have across the seasons.\n\nPlan what you will do when stored water runs low. The province name by itself cannot tell you the tank size you need.\n\nKeep the tank covered, cover openings with a screen to stop insects, and maintain the roof, gutter and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clean may have germs or chemicals. Ask the local health authority about testing and treatment suitable for the requested [intended] use.\n\nA basic filter alone is not a guarantee of drinking water. Water used on food crops also needs a safety test.",
+  "flags": [
+   "'linganisa' here = measure/estimate ok, but 'angaphumeliyo emjelweni' ('that does not succeed') is a poor rendering of water lost/missing the gutter",
+   "'izophahla' is a malformed plural; expected 'zonke iintlobo zophahla'",
+   "'okuceliweyo' = 'requested'; 'intended use' would be 'okucetywayo'",
+   "'asiyongqiniseko' malformed (expected 'asisosiqinisekiso')"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/keyPoints/0",
+  "back": "Roof size, rainfall, demand and losses determine the water that can usefully be stored",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/keyPoints/1",
+  "back": "Size and maintain the first-flush diverter according to your roof",
+  "flags": [
+   "'ngokwephahla' malformed; expected 'ngokophahla'"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/keyPoints/2",
+  "back": "Clear water may have germs or chemicals",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/keyPoints/3",
+  "back": "Testing and treatment must match the requested [intended] use",
+  "flags": [
+   "'okuceliweyo' = requested, not intended"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/q",
+  "back": "What information is needed to choose a rainwater tank?",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/options/0",
+  "back": "Only the province where the farm is",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/options/1",
+  "back": "Roof size, rainfall pattern, water demand and collection losses",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/options/2",
+  "back": "Only the amount of rain in one storm",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/options/3",
+  "back": "Only the price of the biggest tank available",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/0/rationale",
+  "back": "Tank planning must compare water used and demand across rainy and dry seasons. A fixed size for one region cannot do that.",
+  "flags": [
+   "'amanzi asetyenziswayo' = 'water used'; probably meant 'water available/supply' vs demand — check"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/q",
+  "back": "Why is a first-flush diverter important even for tank water used only for irrigation?",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/options/0",
+  "back": "It is not important for irrigation, it is important for drinking water only",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/options/1",
+  "back": "The first water carries concentrated droppings, dust and germs that can contaminate eaten crops",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/options/2",
+  "back": "It has more 'spaceship/rocket' and changes the soil pH over time",
+  "flags": [
+   "'isiphekepheke' means rocket/spacecraft — nonsense here (probably meant acidity)"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/options/3",
+  "back": "It prevents the tank from overfilling during storms",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l3/quiz/1/rationale",
+  "back": "Diverting the first rainwater can reduce contamination, but does not guarantee the following water is safe. Test water quality according to the requested [intended] use.",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/title",
+  "back": "Household used water (greywater): check before reusing it",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/body",
+  "back": "Household used water can contain germs, salt, cleaning products and other substances. Guidelines do not describe each source in the same way. South African guidelines differ about kitchen water and laundry water.\n\nDo not include toilet water, nappy water, water from washing a sick person or from washing animals in a reuse plan. Do not reuse water with dangerous chemicals.\n\nBefore reusing, ask the municipality and a trained local sanitation adviser to check the exact source, the household water and sanitation services, the requested [intended] use and the site. If this advice is not available or is unclear, do not reuse the water.\n\nA general picture is not a farm design. Soil and mulch do not kill germs in dirty water. Keep it away from drinking-water pipes and prevent contact with people or animals. Do not spray it, let it pond, or let it leave the property to the street, a watercourse or a river.\n\nIf a reuse system is already working and the water smells bad, ponds, or harms plants, stop using it and seek hired local advice.",
+  "flags": [
+   "'ingcebiso eqeshiweyo' = 'hired advice'; expected 'eqeqeshiweyo' (trained)"
+  ]
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/keyPoints/0",
+  "back": "Water sources and greywater guidelines may differ",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/keyPoints/1",
+  "back": "Check locally the source, service situation, requested [intended] use and site before reusing",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/keyPoints/2",
+  "back": "Soil and mulch do not kill germs in dirty water",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/keyPoints/3",
+  "back": "Prevent contact, spraying, ponding, run-off and connection to drinking-water pipes",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/q",
+  "back": "What must happen before household washing water is reused?",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/options/0",
+  "back": "Direct it under mulch around a tree",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/options/1",
+  "back": "Ask the municipality and a trained sanitation adviser to check the source, service situation, requested [intended] use and site",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/options/2",
+  "back": "Use it if it looks clean",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/options/3",
+  "back": "Use it only on plants not eaten raw",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/0/rationale",
+  "back": "Guidelines differ for some water sources and service situations for reuse. A local check by a trained person is needed before deciding which source and use is suitable or permitted.",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/q",
+  "back": "Why is the exact water source and cleaning products checked before reuse is considered?",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/options/0",
+  "back": "All cleaning products are safe if the water is mixed with lots of water",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/options/1",
+  "back": "Water composition and product effects vary, so the real source and products must be assessed",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/options/2",
+  "back": "Water can be reused when it has no smell",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/options/3",
+  "back": "Mulch removes all harmful substances",
+  "flags": []
+ },
+ {
+  "path": "water-harvesting/water-harvesting-l4/quiz/1/rationale",
+  "back": "Used water can have germs, salt and different chemicals. Even its looking clean, having no smell or mulch do not show that it is safe or suitable.",
+  "flags": []
+ }
+]

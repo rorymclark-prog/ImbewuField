@@ -14,6 +14,7 @@ import { ELEMENTS_BY_ID, GROUND_FEATURES } from '@/lib/design-elements';
 import { evaluateDesign, type Advice, type AdviceLayer } from '@/lib/design-rules';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 
@@ -126,7 +127,7 @@ function buildDesignSummary(state: DesignCanvasState) {
 }
 
 export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simple = false }: DesignAdvisorProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [advice, setAdvice] = useState<Advice[]>([]);
   // The tip card starts CLOSED and only opens when the farmer taps the chip. It used to open
   // itself, and the effect below reset the dismissal on EVERY edit (lastChangeId is updatedAt,
@@ -249,7 +250,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
       if (clean.length === 0) setAiError(t('designAdvisorNothingToAdd'));
       else setExpanded(true);
     } catch (err) {
-      setAiError(userFacingMessage(err, t('designAdvisorUnavailable'), t));
+      setAiError(inlineText(lang, userFacingMessage(err, t('designAdvisorUnavailable'), t)));
     } finally {
       setAiLoading(false);
     }

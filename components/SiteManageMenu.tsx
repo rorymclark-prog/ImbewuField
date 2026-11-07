@@ -50,9 +50,11 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
   function doDelete() { deletePlace(place.id); close(); }
 
   // Keep the English action beside its draft translation because this button permanently
-  // removes the selected saved site and its locally stored design data.
-  const deleteLabel = lang === 'zu' ? `${t('deleteSite')} (${translate('en', 'deleteSite')})` : t('deleteSite');
-  const deleteConfirm = lang === 'zu'
+  // removes the selected saved site and its locally stored design data. isiXhosa is an
+  // unreviewed machine draft too, so it gets the same English-beside-it treatment.
+  const showEnglishSource = lang === 'zu' || lang === 'xh';
+  const deleteLabel = showEnglishSource ? `${t('deleteSite')} (${translate('en', 'deleteSite')})` : t('deleteSite');
+  const deleteConfirm = showEnglishSource
     ? `${t('deleteSiteConfirm')} / ${translate('en', 'deleteSiteConfirm')}`
     : t('deleteSiteConfirm');
 

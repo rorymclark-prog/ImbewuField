@@ -22,8 +22,10 @@ const MIN = 44;
 
 test('the Appearance panel close button clears the 44px touch-target floor', () => {
   const src = source('../components/ThemePanel.tsx');
-  // All selected languages now share the dictionary; the touch-target rule still binds.
-  const label = "aria-label={t('settingsClose')}";
+  // All selected languages now share the dictionary; isiXhosa may read the same settingsClose key
+  // through the panel's ui() wrapper (its xh-inline fallback). The touch-target rule still binds.
+  const label = ["aria-label={t('settingsClose')}", "aria-label={ui('settingsClose')}"]
+    .find((candidate) => src.includes(candidate)) ?? "aria-label={t('settingsClose')}";
   const at = src.indexOf(label);
   assert.ok(at > 0, 'the Appearance panel close button moved or lost its translated label');
   const nearby = src.slice(at, at + 400);

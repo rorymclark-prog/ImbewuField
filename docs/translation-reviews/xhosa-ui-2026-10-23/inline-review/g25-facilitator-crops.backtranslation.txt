@@ -1,0 +1,506 @@
+0. and / together
+1. time not yet confirmed
+2. {min}–{max} days
+3. about {n} days
+4. week {n}
+5. {min}–{max} weeks
+6. month {n}
+7. {min}–{max} months
+8. The whole bed
+9. Half
+10. A third
+11. At a fourth/quarter (odd: "kwisine" = at the fourth)
+12. Started as a seedling, then transplanted
+13. Sown directly by seed
+14. confirm the distance first
+15. the packet rate is needed
+16. confirm the size/amount
+17. seed of {amount}
+18. about {n} {unit} (planting areas)
+19. of {beds}
+20. seed
+21. seedlings
+22. shoots/sprouts
+23. seed potatoes
+24. pieces
+25. corms
+26. The area visible on the map can carry about {n} plants at the spacings used by this plan.
+27. The sowing month on the tray for this first single-season crop ({month}) has passed, so buying grown-up seedlings is the remaining (left-over) way.
+28. Living planting materials — the area visible on the map can carry about {n} {unit} at the spacings used by this plan.
+29. Get packet seed before the sowing month of {month}.
+30. Sow directly in the soil in {month} to get about {n} plants at the spacings used by this plan.
+31. Get {amount} before sowing in {month}.
+32. This is the area visible on the map multiplied by the published range of {range} kg/ha of field rate.
+33. Confirm the row adjustment locally before taking the decision on how many are needed.
+34. This is not a confirmed seedling order and leaves nothing to ("shiyeli nto") the crops that are not "tyhutyhiyo" (shaken?); ask your seller what they advise for that crop.
+35. This is not a confirmed purchase amount and leaves nothing for the things that are not shaken; ask the seller what they advise for that crop.
+36. Get it close to the planting time in {month}, then follow the seller's advice or local handling advice.
+37. No general advice on keeping/storing is considered here.
+38. Use the packet rate for direct sowing of this crop and the germination guide; the field distance alone cannot tell you how much seed you must buy.
+39. Confirm the sowing method, the type of crop and the seller; there is no extra germination support.
+40. Usually 4–6 weeks in warm conditions; cold conditions can take nearly double (8–12 weeks). Start looking from the first month of readiness and then transplant when the seedlings and bed are ready. The bed calendar uses the middle month as the transplanting date used; update the planting if the seedlings are delayed.
+41. The final maturity points published for good conditions are planning slots, not a promise. Before sowing or transplanting the next crop, confirm the previous crop is finished and the bed is truly clean; crops may ripen later.
+42. Prepare the soil
+43. Sow
+44. Check / transplant
+45. Water and cover with grass
+46. Cut or roll down
+47. Wipe/remove weeds
+48. Remove weeds and look for insects
+49. {n} task
+50. {n} tasks
+51. nothing needs to be done
+52. planting distance of {cm}cm on all sides
+53. rows {cm}cm apart
+54. {cm}cm apart in the row
+55. sow {cm}cm deep
+56. start in the tray
+57. start in the tray, {cm}cm deep
+58. Check the soil and drainage; use a soil test or local advice before ploughing or adding fertilisers.
+59. Check the soil and drainage; use a soil test or local advice before adding fertilisers.
+60. spread/scatter at 70kg of seed/ha, or sow by "washing" at 105–140kg/ha; finish it before the next main summer crop
+61. sow by "washing" at 20kg/ha (Red type) up to 40-50kg/ha (Black type); finish it when the weight of plants is big, before the next crop
+62. sow by "washing" at 12-15kg/ha alone, or 4-7kg/ha when mixed with fodder grass; finish before the next crop
+63. sow by "washing" up to 4kg/ha, or scatter in rows up to 90cm apart at 2kg/ha; finish when fully flowering, before the next crop
+64. There are no beds yet
+65. {n} bed
+66. {n} beds
+67. {n} site of the main crop
+68. {n} sites of main crops
+69. No map has been traced for this
+70. Rain all year round
+71. Summer rain · light winter frost
+72. Climate taken from satellite weather records of this place: {pattern}.
+73. Climate taken from the nearest reference area — {region} (a safe method): {pattern}.
+74. No area visible on the map — assuming {pattern}.
+75. Design without a name
+76. saved on the date of {date}
+77. Garden design
+78. One saved design — here is what is in it.
+79. Saved design · {saved}
+80. this tool
+81. Design studio map
+82. Not being saved.
+83. This phone has no space left, so changes to your production plan are not continuing to be saved. Free up space — your plan stays on the screen until you close it.
+84. {n} sites
+85. The rain pattern is taken from satellite weather records (NASA POWER / ERA5) at the codes/coordinates of this place itself
+86. satellite records of this place
+87. No recorded weather for this place (offline or not yet available) — the reference place of the nearest region is used instead
+88. nearest reference: {region} (a safe method)
+89. No place set · assuming {pattern}
+90. Vegetables and main crops · Fruit, nuts and berries · Animal products. Houses are shown. Use the site survey to get animal numbers and care checks.
+91. Unreviewed isiXhosa draft. This kind of use and the instructions for tasks are an isiXhosa draft not reviewed by a person who speaks isiXhosa well. Plant names stay in English. Check planting times, climate and price estimates at their sources and in local farming advice before acting on them.
+92. This plan plants in {beds} — {area} m² of planting area{tail}
+93. , traced on your design studio map. Change the size or add beds there and it updates here.
+94. width of {w}m
+95. Remove all plantings of {n} from all beds? You can undo once straight after.
+96. same as 95
+97. Yes, remove
+98. Keep/Save
+99. Add a vegetable bed or main-crop site so that crops are suggested automatically.
+100. Your crops seen on the map and animal houses are listed below. To plan vegetables or main crops,
+101. add a bed or site in the design studio
+102. There are no vegetable beds on your map yet. Draw beds in the design studio and it will show here.
+103. There are no main-crop sites on your map yet. Draw a site in the design studio of maize, beans, "iimpuphu" (?) or sweet potatoes.
+104. There are no confirmed harvest months here locally yet. Your crops on the map are listed below; confirm when they give food here.
+105. On your map, those with harvest months that need to be confirmed: {names}. They continue to be listed in the printed plan.
+106. Show fruit, nuts and berries
+107. Hidden: the fruit orchard switch is off. It is that same switch that is in Money and Records, so showing them here counts the fruit orchard there too.
+108. There are no confirmed production months here locally yet. Beehives (bee-houses), chicken houses and "iinkxalabo" on your map continue to be listed below and in the printed plan.
+109. Show animal products
+110. Hidden: the animals switch is off.
+111. Have these crops been planted?
+112. Their sowing month has just passed. Confirm what happened before the plan counts their harvest or field work.
+113. Not planted
+114. The age of crops and harvest months could not be saved on this device. Keep this page open and download the plan before you leave.
+115. Animal products and production months could not be saved on this device. Keep this page open and download the plan before you leave.
+116. Food graphs, kg of produce and planting area
+117. The map gives planting areas and numbers of crops. Record the monthly amount below. To get R/m² of a crop, use All tools → Food, field and price → Plan cycle price and check prices, losses and the amount sold.
+118. Earlier records without a place are kept out of this place's calculations: {production} production records and {stock} stock records.
+119. check / transplant
+120. shows when you must first look at seedlings grown in a tray. The crop bar starts in the planned transplanting month; if the seedlings are delayed, update the planting rather than taking the bed as taken. Tap on it (or on the crop bar) for details.
+121. How the two-year calendar works (↻, faded bars, cycle)
+122. ↻ shows where the second year starts. The calendar shows
+123. two full years
+124. — swipe sideways to reach the second. This plan holds one cycle of a year rather than being a different plan each year, so the second year is the same cycle coming again, drawn
+125. faded
+126. to show that: it shows what these beds do if nothing changes, not a second year you finished with.
+127. Rotate crops
+128. it is safe only to follow one family immediately after another within this year's plan and after a crop marked as already growing. Good multi-year rotation needs dated records of past seasons; this screen does not save or fix them.
+129. Kept for about {n} saved month — {conditions}
+130. Kept for about {n} months saved — {conditions}
+131. source / spring (water source)
+132. Nothing is planned to be harvested in the beds, and nothing has a keeping time that comes from a source that was saved.
+133. For your trees (local harvest months)
+134. — reference for all of South Africa: {span}; first harvest after {range} years after planting
+135. — reference for all of South Africa: {span}
+136. For your animals (local production months)
+137. — source reference: {span}
+138. Ready to be harvested
+139. Cattle
+140. Sheep
+141. fresh/new
+142. kept/stored
+143. Why this plan chose what it chose
+144. From the plan recommended on {date}. Whatever you changed by hand since then is not explained here.
+145. What was chosen by the plan, one bed ({n})
+146. {month}: {label} — {items}, tap for details
+147. nothing planned
+148. {month}: {state}, tap for details
+149. no tree time/season
+150. {names} in season
+151. no animal product
+152. {product} from {animal}
+153. Food, field and price
+154. Availability
+155. Field use
+156. Plan cycle price
+157. Remaining stable year
+158. From today
+159. The repeating season of the planned rows; existing single-season crops are not repeated.
+160. Follows the planting calendar from today; existing and single-season crops are only shown in their season.
+161. Fruit, nuts and berries are visible · {n} kind(s) on your map
+162. Fruit, nuts and berries are visible · {n} kinds on your map
+163. Fruit, nuts and berries are hidden · tap to show them
+164. Animal products are visible · {animals}
+165. Animal products are hidden · tap to show them
+166. Vegetables and main crops are shown in separate rows. Green means ready to be harvested; gold means kept under conditions from the source. The source doesn't give a line of kg within the season, so this chart deliberately doesn't show kilograms per month or money.
+167. Add a planting with a confirmed time so you can see availability.
+168. Kept under the named conditions
+169. Fruit, nuts and berries: local harvest months
+170. Animal products: local production months
+171. Tree months are confirmed on this farm under fruit, nuts and berries on your map
+172. ; suggested crops are not included
+173. . The region's source windows remain references until you confirm the local time and whether the crops are already giving food.
+174. Animal months are confirmed on this farm under Animals on your map
+175. ; suggested houses are not included
+176. . Choosing layers doesn't promise eggs all year. Animals are not added to the bed bars or to any number of m².
+177. {month} — {state}, tap for details
+178. {n} plant/crop
+179. {n} plants/crops
+180. The share of the planting area visible on the map taken each month. The plan keeps each crop until the end of the supported ripening and harvest window to avoid double booking; finish a crop early only after checking the bed.
+181. The value of a "what if" question on the results of the crop-cycle reference of the saved plan. It is not a monthly cash flow statement, yearly profit, a current market quote or a promise of harvest. Typical prices are a South African picture that may be arranged from {months}; confirm a real buyer and the current local price before planting to sell.
+182. Selling directly
+183. Selling in bulk
+184. Add planting before building a price scenario.
+185. No average price figure is calculated because {beds} has overlapping or inactive planting shares. First fix the bed adjustment.
+186. same, plural beds
+187. % sold (the rest kept at home)
+188. Percent sold
+189. % loss or not working well
+190. Percent of loss
+191. Typical losses of South African small farmers are from 10–50%. A home garden watered every week is usually 15%; far from the market, or in the first season, 35–50% is usual.
+192. Household size (optional, only according to situation)
+193. Household size for the food guide
+194. e.g. 4
+195. A household of {n} people usually eats about {n} × 88 ≈ {kg} kg of vegetables a year (South African food guides: 240 g per person per day). A household of 4 ≈ 350 kg. This is a food guide that includes all sources of food — garden and shops together — not a planting target; it doesn't change your plan.
+196. A household of N people usually eats about N × 88 kg of vegetables a year (...). Household of 4 ≈ 350 kg. A food guide including all sources, not a planting target — doesn't change your plan.
+197. Not yet calculated: the sliders start at typical points (100% sold, 25% loss), not an estimate of your farm. First check both ideas.
+198. Use these ideas
+199. Production scores/points
+200. /m² in this plan cycle
+201. Combines both: {sold}% of the harvest sold at direct selling prices, the rest ({rest}%) valued at the cost of buying at retail in the place where it grows — judged by {area} m² of planting area visible on the map. A rough number for comparing plans or designs, not a guarantee of profit.
+202. same with bulk selling
+203. Vegetable beds
+204. They are sliders and prices like that combined number. Land of main crops always looks low per m² by nature — maize, beans and potatoes are low-grade per kilogram but are kept to feed the household all year — so compare beds with beds and sites with sites, not one with another.
+205. Hide comparison
+206. How does this compare with other farmers?
+207. Main-crop site on dry land — maize, dry beans, "iimpuphu", no irrigation
+208. Home garden, limited watering
+209. Community or school garden, reliable basic irrigation
+210. Fast market garden beds — drip, dense succession
+211. Rough ranges, not a published figure: taken from published South African yields valued at typical retail prices of the same period as this card's price picture. Only to guide — not targets, and not promises.
+212. What lowers that number
+213. Water that didn't succeed in dry months — the one with the biggest cause here; one missed month can ruin a whole crop cycle, and the difference between two irrigated ranges above and two not so.
+214. Land that stays empty between crops — the Field use tab above shows directly which months yours is empty.
+215. Harvest that is lost or unsold — that's the % loss slider above, already in that number.
+216. A mix of crops aimed at crops of low price per kilogram. That may be a good choice — main crops are kept to feed the household — that's why the numbers of beds and sites are shown separately.
+217. Crops with gaps: poor germination that was not resown, or a wider distance than the packet wants, harvest without saying a small thing of a prepared bed.
+218. The known middle number of the reference in this plan cycle
+219. direct cash scenario
+220. {n}% of the harvest sold, valued at direct selling prices (change the price switch above to change).
+221. same bulk
+222. replacement value scenario for home use
+223. The {n}% kept at home — always valued at retail, whichever price switch is chosen above, because retail is the price you would pay to replace it.
+224. The middle number doesn't include {names} because a confirmed harvest or a usable price per kilogram isn't available.
+225. Hide price ideas
+226. Check and edit price ideas
+227. dated source picture
+228. suggested price (average of prices found)
+229. rough estimate
+230. Retail R
+231. Bulk R
+232. Rotate by plant family
+233. Which crops are counted as relatives, and why that is not the same as a food group.
+234. Food groups describe what the household eats; rotation follows plant relatives that share insects and diseases. When "Rotate crops" is on, Recommend automatically will avoid repeating one family immediately — for example potato after tomato, or beetroot after Swiss chard. It does not set one order for everyone. The ARC crop rotation book looks at rotation as a decision of many seasons, so also keep records of past seasons.
+235. Read the ARC book
+236. Beet and chard family
+237. Onion family
+238. Carrot family
+239. Amadumbe family
+240. Lettuce family
+241. Cabbage family
+242. Spider-plant family
+243. Sweet-potato family
+244. Pumpkin family
+245. Bean and pea family
+246. Grass family
+247. Tomato and potato family
+248. Farming in a natural way
+249. This plan doesn't set a fertiliser or pesticide programme. The state of the soil, a correctly checked problem, the crop itself and the current South African label all matter ("ziyathamba" = are soft/gentle?); ask a local extension officer or a suitable specialist where possible.
+250. Feeding your crops
+251. Look before adding:
+252. check drainage, the state of the soil and earlier fertilisers. Use a soil or compost analysis where available together with local advice before deciding if a fertiliser is needed. The app doesn't change a main plant's name to a level of compost, animal manure, lime or fertiliser.
+253. Bean crops can support the next crop:
+254. dry beans, green beans, peas, broad beans and cowpeas are good rotation crops. This plan will avoid repeating one family immediately; it doesn't count a fertiliser reward.
+255. If you use a commercial product, check the current product label and the current rules of your certificate. "Organic" doesn't confirm a safe level or show that the product suits this soil ("isihlabathi" = sand).
+256. Protecting your crops
+257. Watch and record:
+258. note the affected crop, the signs, which part of the plant is damaged and how the problem changes. Confirm whether the problem is a pest, disease or nutrient problem before treating it; similar signs can need different answers.
+259. Use the suitable answer with the least danger:
+260. after an accurate examination, think about suitable cleanliness, barriers, removal or other control methods that are not chemical. This app does not say that a particular kind of plant controls a pest.
+261. If agricultural treatment is needed in South Africa:
+262. use only a product currently registered for the particular crop and problem. Follow its current label about rate, protective equipment, re-entry, time before harvest, storage and disposal. Do not take safety as given by saying "natural" or "organic."
+263. Check the Department of Agriculture:
+264. the current list of registered products
+265. together with the label of the product in your hand. Nothing in this crop advice schedules spraying automatically.
+266. Your trees and shrubs(?)
+267. Your animals
+268. {from} to {to}
+269. From your map · put the phone/hover or tap the bar
+270. Bars with circling marks: planning references from a source when already stable. Solid bars: harvest months confirmed here locally. New crops need time; references are not counted in food calculations.
+271. reference
+272. Planning reference - when already stable
+273. In season in your food forest
+274. For your animals
+275. Confirm local harvest dates. This reference is not included in food calculations or planned harvest tasks.
+276. Months confirmed locally on this farm. No monthly amount is assumed.
+277. Local production months are not confirmed, so there are no marked months.
+278. recorded bee movement: {n}
+279. same
+280. Recorded honey movement
+281. Moving by another kind of crop in one place, not your place's time, so there are no marked months.
+282. Source:
+283. A main-crop site from your design studio map — one field crop on a whole area; multi-year rotation needs dated records
+284. Basic food of sorghum/millet (amabele = sorghum)
+285. Beans and bean crops
+286. Roots and root crops
+287. Onion and garlic
+288. Fragrant (smelly) vegetables
+289. Fruiting vegetables
+290. Pumpkins and melons
+291. Not-so-common crops
+292. Ground-cover crops
+293. + crop
+294. the time to finish it is not yet confirmed
+295. cut or roll down {when}
+296. harvest {when}
+297. sow {month}
+298. bed {share}
+299. trays sown, not yet planted outside
+300. already growing
+301. second year, the same cycle comes again
+302. Plan to transplant {crop} in {entry}. Start looking at the seedlings in {start}; if they are not ready by {latest}, update the plan rather than taking the bed as taken.
+303. Plan to transplant {crop} in {entry}
+304. Twelve dots = Jan to Dec. Green marks the months you can sow that crop in the rain pattern of this place.
+305. It needs a big place — it needs its bed
+306. needs a big place
+307. the exact time of sowing up to the end is not yet confirmed
+308. {duration} to flowering, then cut or roll down
+309. {duration} from transplanting to harvest
+310. {duration} from sowing to harvest
+311. The usual harvest time: {period}; the plan keeps the bed taken until the end of the range unless you finish it early.
+312. {crop} needs a place to spread — better in its own dedicated bed than shared or divided with other crops.
+313. Type / type of crop (optional)
+314. Name on your seed packet
+315. Leave it empty if you did not choose. The time always is a circling (rough) guide of the crop.
+316. This old record can be kept or removed, but cannot be re-planned until a local time supported by a source is available.
+317. Recorded sowing:
+318. time of finishing:
+319. confirm locally
+320. Sowing month
+321. Careful harvest time
+322. check/transplant when it is good
+323. Outside the usual sowing time for this place — allowed.
+324. How big is the site?
+325. How big is the bed?
+326. The whole site — a main-crop site plants one field crop at one time and rotates to a different plant family in the next cycle, so there are no half shares here.
+327. Divide this bed (plant mixed crops or sequence)?
+328. This site already carries {clashes} — adding {crop} means they compete for the same ground, and a main-crop site plants one field crop at one time. Still allowed.
+329. This bed already carries {clashes} — adding {crop} to the whole bed means they compete for the same ground. Still allowed.
+330. This bed already carries {clashes} — adding {crop} on top of that means they compete for the same ground. Still allowed.
+331. {crop} in {span}
+332. (Mixed ones need {n}% of the bed.)
+333. This site has an old crop with a finishing time that wasn't confirmed.
+334. This bed has an old crop with a finishing time that wasn't confirmed.
+335. Left out of the site check above; confirm the ground is truly free before adding another crop.
+336. The app cannot tell whether this ground is still held, so confirm the ground is truly free before adding another crop.
+337. This is already growing (not a new planting)
+338. bed {share} — mixed crops
+339. This bed is shared with another crop at the same time. The kilogram comparison uses only the area given to each crop; there is no invented general reward or penalty for mixed crops.
+340. Trays sown — not yet planted outside
+341. Recorded sowing: {month} · finishing time not confirmed
+342. Sow {month} → cut or roll down {when}
+343. Sow {month} → harvest {when}
+344. {duration} after transplanting to flowering
+345. {duration} after transplanting to first harvest
+346. {duration} from sowing to flowering
+347. {duration} from sowing to first harvest
+348. The usual harvest time: {period} · bed kept to the end of the range unless you finish early
+349. Field ready time: {from}–{to}; transplant when ready.
+350. ≈ {kg} kg reference
+351. Ground-cover crop · no food harvest
+352. Harvest reference is not yet confirmed
+353. Remove {crop}? To choose another crop yourself, cancel and use Edit.
+354. Recommended plan
+355. What is the main reason for planting this year?
+356. Feed my family
+357. Plant different kinds for the household
+358. Plant crops for selling
+359. Focus selected sale crops on a few beds
+360. Home and sales
+361. Set aside sales beds and use the rest for household crops
+362. Harvests that come regularly
+363. Choose successive opportunities
+364. A few big harvests
+365. One big harvest at one time is acceptable
+366. How many crops do you want to focus on selling?
+367. Crop mix: your saved mix on this map
+368. Optional: change the recommended crop mix
+369. Filter crop types (optional)
+370. No type filter: the crop list below shows all crops. Crops without enough local evidence are chosen for manual review but are not planned automatically.
+371. {n} of {total} chosen.
+372. Use only these crops directly (optional)
+373. Search crops, e.g. maize or tomatoes
+374. Choose all that are shown
+375. Clear
+376. no yield estimate
+377. chosen for manual review
+378. Each crop can be marked. Crops with confirmed field time and starting can be planned; a crop that still lacks these details always is chosen for manual review and is not changed quietly. "No yield estimate" leaves kilograms and price empty rather than guessed.
+379. Only these crops will be used. The commercial mode compares kg/m² with new careful weight in each crop cycle where a supported sowing area fits; it is not profit, nutrition, buyer demand or evidence of the highest yearly total overall.
+380. Only these crops will be used. The plan measures supported sowing areas, types and your harvest speed; it will not change a crop not chosen or hold the one with the most confirmed ("obona buninzi buqinisekisiweyo").
+381. No direct list chosen: the household plan will use a different supported mix, including main-crop sites on the map. Open this part only when you want to take out crops or call (invoke) a direct choice of the household.
+382. Keep the change in my crop mix
+383. Keep this crop mix on this map
+384. Kept for this map. Used every time you plan here.
+385. Return to the original
+386. How do you want your harvests to be spread out?
+387. Plan for now, or the whole year?
+388. Start this month
+389. It fills your beds from today
+390. A better whole-year plan
+391. Try all the first 12 months and keep the one with a few months without new harvest
+392. Comparing the first 12 months…
+393. The plan compared plans starting in each of the 12 months and kept the one with a few months without new harvest.
+394. Good news: starting this month already gives the best result of the whole year on this farm.
+395. A plan of a few big harvests puts harvests together on purpose, so flat months continue even in the better whole-year version.
+396. With a few main crops, the first month mainly changes the amount harvested, not how they are spread evenly.
+397. Crops already planned stay where they are — the whole-year plan only adds around them. To have a plan for the whole farm, first remove the old plantings.
+398. Your first year, and the year that will become stable
+399. This plan covers two years. The first fills your beds from today, so some months in it are still low while crops go into the ground. The second is a complete repeating year — that is the one to work to reach.
+400. A month with no sowing work is not always empty — often all beds still hold a crop that has not yet come out.
+401. First year — from this month
+402. Second year — repeat crops; check the age of crops
+403. first time only
+404. Whole-year plan
+405. Climate used automatically
+406. Taken from satellite weather records of this place. You need not choose a type of rain.
+407. The weather of this place is not available now (offline or loading), so this uses the nearest reference: {reference} (a safe method).
+408. place of the region
+409. No area visible on the attached map, so the plan uses a visible safe method of summer rain. Draw the garden on the map to get a climate profile based on the place.
+410. Divide beds into parts for crops
+411. On by default: Recommend automatically may use parts of a whole bed, half, third or quarter beside one another so that a lasting crop does not leave all the bed empty. These are shares of space, not adjustments of rows of mixed crops; look at the positions of the parts in the ground.
+412. Rotate crops between beds
+413. It will avoid immediate succession of one family within this plan and after a crop marked as already growing — including tomato after potato and beetroot after Swiss chard. This is not a saved history of multi-year rotation.
+414. Plant big climbing/spreading trees (vines?) in a vegetable bed anyway
+415. Off by default: watermelon, pumpkin and butternut spread very much in a vegetable bed and fill it only for part of the year — we will suggest a dedicated site, a property triangle, or a food forest place instead. Turn this on only if you prefer to use one of your ordinary beds for them anyway.
+416. Site survey: water and frost
+417. Confirm your current water supply before turning on irrigation. Frost months seen are checked when the plan is suggested.
+418. Reliable irrigation in each crop cycle
+419. required
+420. This automatic plan deliberately squeezes together successive crop cycles. The rain region doesn't show farm water, so it is always off unless you can irrigate in all the suggested cycles.
+421. If it is skipped, you get a rain-dependent plan: only crops in months when this place's own rain can carry them.
+422. Your driest months
+423. This place gets about {mm} mm of rain in {months} — its three driest months (satellite record of this place).
+424. "Reliable irrigation" means your water, not rain, carries all crops in months like these.
+425. Recommend automatically will use only parts of a whole bed, half, third or quarter. It does not say it is a better plan overall and does not invent row adjustments.
+426. Whole-bed mode is on. Short empty periods may remain between crop cycles of a whole bed because the plan will not make two different crops compete in one bed.
+427. Choose at least one crop above before the plan can suggest anything.
+428. Turn on "Reliable irrigation in each crop cycle" above to make a plan. This plan squeezes crop cycles in sequence, so it works only if you can irrigate all of it. Or draw the farm's place on the map, and the rain-dependent plan can use its rain.
+429. Suggest a plan
+430. Nothing is suitable at this time — your beds may already be full, or the crops you chose have no supported suitable place. Review the climate choice or the crop list, or look at "Wait for their sowing time" below.
+431. To start: sow {crops} this month or next month.
+432. Sowing month {n} has already passed this year — those sowings will come back in the next season. All sowings of this plan will have started by {month}.
+433. {n} sowing months have already passed this year — same.
+434. Even the very best first month leaves no new harvest in {months} — look at the suggestions section below.
+435. While the plan stabilises, in the first 12 months there is no new harvest from it in {months}; after that the repeating year takes over.
+436. To cover the ground that would be left empty in your first months, including first single-season sowings: {crops}. Each goes only once — from next year the repeating plan covers those months by itself.
+437. Suggested planting of {n}:
+438. same
+439. start tray {sow} → transplant {entry} → harvest {harvest} ({duration} in the bed)
+440. sow {sow} → cut/roll down {harvest}
+441. sow {sow} → harvest {harvest}
+442. Wait for their sowing time
+443. Crops you chose that this plan has not yet sown, together with the next time of a real chance.
+444. Ground with no new sowing
+445. How this plan was made
+446. Add planting of {n} to my plan
+447. same
+448. or plan without a map — use one bed of 10 m²
+449. in the next month
+450. next year
+451. Production plan tasks
+452. Overall harvest — a careful reference
+453. Fix the place of overlapping beds
+454. kg across all active and planned crop cycles
+455. No confirmed kg amount
+456. No food harvest amount
+457. kg · no food crops
+458. {density} kg/m² on {area} m² of planting area — a rough number for comparing plans, not a promise of harvest
+459. No kg or price amount shown because the space in these beds does not match. Open the crop below and change its bed, month or share — the app will not guess which crop loses space.
+460. recorded share is {n}% of the bed
+461. no usable recorded share
+462. finishing time is not confirmed, so its months can't be checked
+463. Open ›
+464. A careful comparison of the area visible on the map of one planting cycle by active or planned planting; no support for loss or harvest curve within the month used here. A finished single-season crop is not repeated next year.
+465. Does not include {names}: no confirmed kg/m² reference, so the app doesn't turn those crops into zero or make up a number.
+466. {names} is a ground-cover crop, recorded as 0 kg of food, not counted as a harvest.
+467. same plural
+468. Bar length compares crops · % is share of the {kg} kg above
+469. not yet confirmed
+470. ground cover · 0 kg of food
+471. {kg} kg known
+472. {names} not yet confirmed
+473. {names} ground cover
+474. Sorted by the month of getting it. Raised seedlings are listed by the month they go into the ground.
+475. Later in the next 12 months ({n} additional month)
+476. ... ({n} additional months)
+477. Nothing new to buy for now.
+478. What those numbers cover and don't cover
+479. The list of planting places comes from the area visible on the map and the published distance; it is not a confirmed purchase measure or germination/loss allowances. The seller's guide and of each crop may change what you must buy. The quantity of seed is not taken from the distance of the grown crop: use the packet rate of direct sowing of this crop and the germination guide. The list of planting pieces is shown only for seedlings, pieces, corms, shoots and seed potatoes when both distance measures are confirmed. Where the row adjustment is not confirmed, confirm it locally before buying the things.
+480. Comparison of planned crops
+481. New cycles of vegetables and main crops, using published harvest references. See Food year above for harvest months and suggestions.
+482. Add sowing to a bed or planned site to see the comparison of a crop cycle.
+483. What the plan can show
+484. Each harvest number and date here comes from a published source or is marked as an estimate confirmed here locally — tap for method and sources.
+485. Harvest points use the careful end of published KZN commercial references where the crop is listed. They compare plans; they don't estimate a household's harvest. Temperature/little-frost windows, distance and time use official tables where those tables cover the crop; safe methods from the catalogue and regional patterns still need local confirmation. Bed occupation uses the high end of published ripening/harvest so that two crops are not booked onto one ground, but the source says these times are estimates and assumes good conditions; real crops may ripen later. Every sowing or transplanting of the next season depends on considering that the previous crop is finished and bed clean. The app does not divide the number of a crop cycle into invented monthly kilograms. Recommend automatically places only crops with confirmed yield, time and field-distance support. The household plan starts from a different supported mix; the direct list of crops is a strict list. It needs irrigation because tight succession without a farm water plan is not safe. Its squeezing method is a visible way of estimating, not evidence of the overall highest yield or of real row adjustment. The commercial placement of crops is based on new weight in the crop cycle; it is not profit, nutrition or evidence of buyer demand.
+486. Official KZN DARD tables:
+487. harvest references
+488. sowing and starting
+489. growing and harvesting times
+490. succession limits and the farmer's choice
+491. A planning guide only — sowing times are general numbers. Adjust with local rain, frost dates and small climate.
+492. For crops with a confirmed kg/m² reference, new cycles of bed crops in this comparison add up to about {kg}kg in a careful commercial comparison. No division into kilograms per month is shown because the reference source doesn't say how the harvest is spread within each new harvest period. This is not a promise of household or farm harvest.
+493. No kilogram or price amount shown because {names} has overlapping or inactive planting shares. Fix the bed adjustments rather than guessing which crop loses space.
+494. same plural
+495. {names} has no confirmed kg/m² reference and is left out of all kilogram numbers; it is not counted as 0kg.
+496. same plural
+497. {names} is a ground-cover crop and is left out of the food harvest number as 0 kg of food, not counted as a failed harvest.
+498. same plural
+499. Buying raised seedlings?
+500. Get them only when the bed and seedlings are ready; the planning time is {window}.
+501. Want to raise them yourself?
+502. Get packet seed before the tray-sowing month of {month}, use its tray-sowing rate, and sow the trays in {month}.
+503. Confirm the suitable row adjustment locally before buying planting materials; the catalogue does not have both confirmed distance methods needed to get the exact amounts.
+504. Plan to start it in {month}.
+505. This is the area visible on the map multiplied by the published range of {range} kg/ha of field rate. {instruction} Confirm sowing method and crop type with the seller; no extra germination support.

@@ -1,0 +1,26 @@
+{
+ "module": "intro-permaculture",
+ "items": [
+  {
+   "n": 12,
+   "field": "body[0]",
+   "verdict": "repair",
+   "english": "The edge is where two things meet — a fence line or the strip beside a path.",
+   "draft": "Umphetho yindawo apho izinto ezimbini zidibana khona — umgca wocingo okanye umtya osecaleni kwendlela.",
+   "backtranslation": "An edge is a place where two things meet: a wire fence line or a string beside a road.",
+   "problem": "'a strip beside a path' became 'umtya' (a string/rope beside the road), which is the wrong thing.",
+   "corrected": "Umphetho yindawo apho izinto ezimbini zidibana khona — umgca wocingo okanye ucezu lomhlaba olusecaleni kwendlela."
+  },
+  {
+   "n": 12,
+   "field": "body[1]",
+   "verdict": "repair",
+   "english": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+   "draft": "Ezi zinokuba ziindawo eziluncedo zokubukela. Jonga oko sele kukhula kakuhle ecaleni kweyakho. Umhlaba ngowo okuxelela into.",
+   "backtranslation": "These can be useful places to watch. Look at what is already growing well next to yours. The land itself tells you something.",
+   "problem": "'along yours' became 'ecaleni kweyakho' with a concord that points to no noun, so the edge being referred to is lost.",
+   "corrected": "Ezi zinokuba ziindawo eziluncedo zokubukela. Jonga oko sele kukhula kakuhle ecaleni komphetho wakho. Umhlaba ngowo okuxelela into."
+  }
+ ],
+ "okCount": 108
+}

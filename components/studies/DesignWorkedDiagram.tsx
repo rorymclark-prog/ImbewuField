@@ -3,6 +3,8 @@
 import { useState, type RefObject } from 'react';
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { DESIGN_WORKED } from '@/lib/design-worked';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import styles from './DesignWorkedDiagram.module.css';
 
 export type DesignWorkedDiagramView = 'source' | 'A' | 'B' | 'revision';
@@ -48,6 +50,8 @@ function Dimension({ feature, horizontal, label, colour = '#715634', side = 'lef
 
 /** A standalone SVG teaching diagram. Every visual attribute is in the SVG so an exported clone keeps its meaning. */
 export default function DesignWorkedDiagram({ view = 'source', svgRef }: { view?: DesignWorkedDiagramView; svgRef?: RefObject<SVGSVGElement> }) {
+  const { lang } = useLanguage();
+  const tx = (english: string) => inlineText(lang, english);
   const [enlarged, setEnlarged] = useState(false);
   const isA = view === 'A';
   const isB = view === 'B';
@@ -60,62 +64,62 @@ export default function DesignWorkedDiagram({ view = 'source', svgRef }: { view?
   const compostRect = rect(compost);
 
   return <figure className={styles.figure}>
-    <div className={styles.controls}><button type="button" aria-pressed={enlarged} onClick={() => setEnlarged(current => !current)}>{enlarged ? <Minimize2 size={16} aria-hidden="true" /> : <Maximize2 size={16} aria-hidden="true" />}{enlarged ? 'Fit diagram to screen' : 'Enlarge diagram'}</button></div>
-    <div className={styles.viewport} tabIndex={0} role="region" aria-label="Scrollable fictional classroom yard-plan diagram">
+    <div className={styles.controls}><button type="button" aria-pressed={enlarged} onClick={() => setEnlarged(current => !current)}>{enlarged ? <Minimize2 size={16} aria-hidden="true" /> : <Maximize2 size={16} aria-hidden="true" />}{tx(enlarged ? 'Fit diagram to screen' : 'Enlarge diagram')}</button></div>
+    <div className={styles.viewport} tabIndex={0} role="region" aria-label={tx('Scrollable fictional classroom yard-plan diagram')}>
       <svg ref={svgRef} className={`${styles.diagram}${enlarged ? ` ${styles.enlarged}` : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 818" width="720" height="818" role="img" aria-labelledby="worked-diagram-title worked-diagram-description" fontFamily="Arial, sans-serif">
-        <title id="worked-diagram-title">{`${DESIGN_WORKED.title}: ${title}`}</title>
-        <desc id="worked-diagram-description">A fictional classroom plan in metres. Existing evidence stays visible in every view. Concept A retains the existing growing area and shows a proposed compost area before revision. Concept B shows a separate alternative growing area while retaining the original growing area. Revision R2 visibly defers compost because no care role is agreed. The outer frame is a teaching frame, not a land-rights boundary, and the reported eastern water issue has unmeasured extent and levels.</desc>
+        <title id="worked-diagram-title">{`${tx(DESIGN_WORKED.title)}: ${tx(title)}`}</title>
+        <desc id="worked-diagram-description">{tx('A fictional classroom plan in metres. Existing evidence stays visible in every view. Concept A retains the existing growing area and shows a proposed compost area before revision. Concept B shows a separate alternative growing area while retaining the original growing area. Revision R2 visibly defers compost because no care role is agreed. The outer frame is a teaching frame, not a land-rights boundary, and the reported eastern water issue has unmeasured extent and levels.')}</desc>
         <defs>
           <pattern id="compost-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#7a4d20" strokeWidth="2" opacity="0.7" /></pattern>
         </defs>
         <rect className={styles.paper} width="720" height="818" fill="#f7f1e3" />
-        <text x="32" y="34" fill="#23382a" fontSize="20" fontWeight="700">{title}</text>
-        <text x="32" y="54" fill="#536651" fontSize="12">Metres · x increases right; y increases down</text>
-        <text x="32" y="70" fill="#536651" fontSize="12">Top edge is model north by classroom convention only</text>
-        <text x="32" y="90" className={styles.warn} fill="#8b4226" fontSize="12" fontWeight="700">FICTIONAL CLASSROOM MODEL · VIEW {viewRevision} · CURRENT PACK {DESIGN_WORKED.currentRevision} · NOT A SURVEY OR CONSTRUCTION DRAWING</text>
+        <text x="32" y="34" fill="#23382a" fontSize="20" fontWeight="700">{tx(title)}</text>
+        <text x="32" y="54" fill="#536651" fontSize="12">{tx('Metres · x increases right; y increases down')}</text>
+        <text x="32" y="70" fill="#536651" fontSize="12">{tx('Top edge is model north by classroom convention only')}</text>
+        <text x="32" y="90" className={styles.warn} fill="#8b4226" fontSize="12" fontWeight="700">{inlineTemplate(lang, 'FICTIONAL CLASSROOM MODEL · VIEW {view} · CURRENT PACK {pack} · NOT A SURVEY OR CONSTRUCTION DRAWING', null, { view: viewRevision, pack: DESIGN_WORKED.currentRevision })}</text>
 
-        <g aria-label="Teaching frame and existing evidence">
+        <g aria-label={tx('Teaching frame and existing evidence')}>
           <rect className={styles.plan} x={plan.x} y={plan.y} width={plan.width} height={plan.height} fill="#fffdf7" stroke="#715634" strokeWidth="3" />
-          <text x={plan.x} y={plan.y - 10} fill="#715634" fontSize="12" fontWeight="700">Teaching frame — model geometry only; not a boundary or land-rights record</text>
+          <text x={plan.x} y={plan.y - 10} fill="#715634" fontSize="12" fontWeight="700">{tx('Teaching frame — model geometry only; not a boundary or land-rights record')}</text>
 
           <rect {...rect(home)} fill="#d8d0bb" stroke="#665e4d" strokeWidth="2" />
           <rect {...aPlot} fill="#cfe1c0" stroke="#31593a" strokeWidth="3" />
           <rect {...routeRect} fill="#e3ddd0" stroke="#756b57" strokeWidth="2" />
-          <text className={styles.onShape} x={routeRect.x + routeRect.width / 2} y={routeRect.y + routeRect.height / 2} fill="#4c4a42" fontSize="12" textAnchor="middle" transform={`rotate(-90 ${routeRect.x + routeRect.width / 2} ${routeRect.y + routeRect.height / 2})`}>Existing route</text>
+          <text className={styles.onShape} x={routeRect.x + routeRect.width / 2} y={routeRect.y + routeRect.height / 2} fill="#4c4a42" fontSize="12" textAnchor="middle" transform={`rotate(-90 ${routeRect.x + routeRect.width / 2} ${routeRect.y + routeRect.height / 2})`}>{tx('Existing route')}</text>
           <circle className={styles.pin} cx={x(water.x)} cy={y(water.y)} r="7" fill="#2d6a4f" stroke="#fffdf7" strokeWidth="3" />
           <path d={`M ${x(water.x) - 8} ${y(water.y) - 5} L ${x(water.x) - 42} ${y(water.y) - 17}`} stroke="#31593a" strokeWidth="1.5" fill="none" />
-          <text x={x(water.x) - 45} y={y(water.y) - 20} fill="#274d36" fontSize="12" textAnchor="end">Water point</text>
+          <text x={x(water.x) - 45} y={y(water.y) - 20} fill="#274d36" fontSize="12" textAnchor="end">{tx('Water point')}</text>
           <circle className={styles.pin} cx={x(gate.x)} cy={y(gate.y)} r="6" fill="#80522b" stroke="#fffdf7" strokeWidth="2" />
           <NumberKey id="1" cx={aPlot.x + 17} cy={aPlot.y + 18} /><NumberKey id="2" cx={rect(home).x + 17} cy={rect(home).y + 18} /><NumberKey id="3" cx={routeRect.x + routeRect.width / 2} cy={routeRect.y + 18} /><NumberKey id="4" cx={x(water.x) + 15} cy={y(water.y) - 13} /><NumberKey id="5" cx={x(gate.x) - 14} cy={y(gate.y) - 14} />
         </g>
 
-        {isA && <g aria-label="Concept A proposal"><rect {...compostRect} fill="#ead19c" stroke="#7a4d20" strokeWidth="3" strokeDasharray="7 5" /><rect {...compostRect} fill="url(#compost-hatch)" /><NumberKey id="6" cx={compostRect.x + compostRect.width / 2} cy={compostRect.y + compostRect.height / 2} /><Dimension feature={compost} horizontal label={`${compost.width} m`} colour="#7a4d20" /></g>}
-        {isB && <g aria-label="Concept B alternative proposal"><rect {...bPlot} fill="#f8dcad" fillOpacity="0.8" stroke="#b85f1c" strokeWidth="3" strokeDasharray="9 6" /><NumberKey id="7" cx={bPlot.x + bPlot.width - 17} cy={bPlot.y + 18} /><Dimension feature={plotB} horizontal label={`${plotB.width} m`} colour="#a6501a" /><Dimension feature={plotB} horizontal={false} label={`${plotB.height} m`} colour="#a6501a" side="right" /></g>}
-        {(isA || isRevision) && <g aria-label="Existing growing-area dimensions"><Dimension feature={plotA} horizontal label={`${plotA.width} m`} /><Dimension feature={plotA} horizontal={false} label={`${plotA.height} m`} /></g>}
-        {isRevision && <g aria-label="Deferred compost revision"><rect {...compostRect} fill="none" stroke="#8b2e1e" strokeWidth="3" strokeDasharray="5 4" /><path d={`M ${compostRect.x} ${compostRect.y} L ${compostRect.x + compostRect.width} ${compostRect.y + compostRect.height} M ${compostRect.x + compostRect.width} ${compostRect.y} L ${compostRect.x} ${compostRect.y + compostRect.height}`} stroke="#8b2e1e" strokeWidth="2" /><text className={styles.warn} x="244" y={plan.y + plan.height + 40} fill="#8b2e1e" fontSize="12" fontWeight="700">P-COMPOST deferred — R2</text><text className={styles.warn} x="244" y={plan.y + plan.height + 56} fill="#8b2e1e" fontSize="12">W-CARE: no agreed care role</text></g>}
+        {isA && <g aria-label={tx('Concept A proposal')}><rect {...compostRect} fill="#ead19c" stroke="#7a4d20" strokeWidth="3" strokeDasharray="7 5" /><rect {...compostRect} fill="url(#compost-hatch)" /><NumberKey id="6" cx={compostRect.x + compostRect.width / 2} cy={compostRect.y + compostRect.height / 2} /><Dimension feature={compost} horizontal label={`${compost.width} m`} colour="#7a4d20" /></g>}
+        {isB && <g aria-label={tx('Concept B alternative proposal')}><rect {...bPlot} fill="#f8dcad" fillOpacity="0.8" stroke="#b85f1c" strokeWidth="3" strokeDasharray="9 6" /><NumberKey id="7" cx={bPlot.x + bPlot.width - 17} cy={bPlot.y + 18} /><Dimension feature={plotB} horizontal label={`${plotB.width} m`} colour="#a6501a" /><Dimension feature={plotB} horizontal={false} label={`${plotB.height} m`} colour="#a6501a" side="right" /></g>}
+        {(isA || isRevision) && <g aria-label={tx('Existing growing-area dimensions')}><Dimension feature={plotA} horizontal label={`${plotA.width} m`} /><Dimension feature={plotA} horizontal={false} label={`${plotA.height} m`} /></g>}
+        {isRevision && <g aria-label={tx('Deferred compost revision')}><rect {...compostRect} fill="none" stroke="#8b2e1e" strokeWidth="3" strokeDasharray="5 4" /><path d={`M ${compostRect.x} ${compostRect.y} L ${compostRect.x + compostRect.width} ${compostRect.y + compostRect.height} M ${compostRect.x + compostRect.width} ${compostRect.y} L ${compostRect.x} ${compostRect.y + compostRect.height}`} stroke="#8b2e1e" strokeWidth="2" /><text className={styles.warn} x="244" y={plan.y + plan.height + 40} fill="#8b2e1e" fontSize="12" fontWeight="700">{tx('P-COMPOST deferred — R2')}</text><text className={styles.warn} x="244" y={plan.y + plan.height + 56} fill="#8b2e1e" fontSize="12">{tx('W-CARE: no agreed care role')}</text></g>}
 
-        <g aria-label="Scale and source notes" fill="#536651" fontSize="12">
+        <g aria-label={tx('Scale and source notes')} fill="#536651" fontSize="12">
           <path d={`M ${plan.x} ${plan.y + plan.height + 38} H ${plan.x + metresToPixels * 5} M ${plan.x} ${plan.y + plan.height + 33} V ${plan.y + plan.height + 43} M ${plan.x + metresToPixels * 5} ${plan.y + plan.height + 33} V ${plan.y + plan.height + 43}`} stroke="#536651" strokeWidth="1.5" />
-          <text x={plan.x + metresToPixels * 2.5} y={plan.y + plan.height + 58} textAnchor="middle">5 m model distance</text>
-          <text className={styles.warn} x="456" y={plan.y + plan.height + 42} fill="#8b4226" fontWeight="700">Viewport diagram only</text>
-          <text className={styles.warn} x="456" y={plan.y + plan.height + 57} fill="#8b4226">No physical print scale is claimed</text>
+          <text x={plan.x + metresToPixels * 2.5} y={plan.y + plan.height + 58} textAnchor="middle">{tx('5 m model distance')}</text>
+          <text className={styles.warn} x="456" y={plan.y + plan.height + 42} fill="#8b4226" fontWeight="700">{tx('Viewport diagram only')}</text>
+          <text className={styles.warn} x="456" y={plan.y + plan.height + 57} fill="#8b4226">{tx('No physical print scale is claimed')}</text>
         </g>
 
-        <g aria-label="Reported water observation note" fill="#31566c"><text x="56" y={plan.y + plan.height + 86} fontSize="12" fontWeight="700">W-OBS: reported eastern-yard water issue</text><text x="56" y={plan.y + plan.height + 101} fontSize="12">Water reportedly crosses the eastern yard in heavy rain.</text><text x="56" y={plan.y + plan.height + 116} fontSize="12">Extent and levels are unmeasured; this is not a flood boundary.</text></g>
+        <g aria-label={tx('Reported water observation note')} fill="#31566c"><text x="56" y={plan.y + plan.height + 86} fontSize="12" fontWeight="700">{tx('W-OBS: reported eastern-yard water issue')}</text><text x="56" y={plan.y + plan.height + 101} fontSize="12">{tx('Water reportedly crosses the eastern yard in heavy rain.')}</text><text x="56" y={plan.y + plan.height + 116} fontSize="12">{tx('Extent and levels are unmeasured; this is not a flood boundary.')}</text></g>
 
-        <g aria-label="Legend and provenance" transform="translate(32 606)">
+        <g aria-label={tx('Legend and provenance')} transform="translate(32 606)">
           <rect className={styles.legendPanel} x="0" y="0" width="656" height="196" rx="8" fill="#fffdf7" stroke="#d5c8af" />
-          <text x="16" y="22" fill="#23382a" fontSize="14" fontWeight="700">Legend · marks are references to source cards, not proof of suitability</text>
-          <rect x="16" y="36" width="14" height="14" fill="#cfe1c0" stroke="#31593a" strokeWidth="2" /><text x="38" y="48" fill="#274d36" fontSize="12">1 Existing growing area · E-PLOT-A · W-MAP</text>
-          <rect x="16" y="58" width="14" height="14" fill="#d8d0bb" stroke="#665e4d" strokeWidth="2" /><text x="38" y="70" fill="#274d36" fontSize="12">2 Home · E-HOME · supplied fictional model</text>
-          <rect x="16" y="80" width="14" height="14" fill="#e3ddd0" stroke="#756b57" strokeWidth="2" strokeDasharray="0" /><text x="38" y="92" fill="#274d36" fontSize="12">3 Existing route · E-ROUTE · footprint only, not clearance guidance</text>
-          <circle cx="23" cy="109" r="6" fill="#2d6a4f" /><text x="38" y="113" fill="#274d36" fontSize="12">4 Water point · E-WATER · W-OBS does not establish quantity, quality or reliability</text>
-          <circle cx="23" cy="131" r="6" fill="#80522b" /><text x="38" y="135" fill="#274d36" fontSize="12">5 Gate reference · E-GATE · point only</text>
-          <rect x="16" y="146" width="14" height="14" fill="#ead19c" stroke="#7a4d20" strokeWidth="2" strokeDasharray="4 3" /><text x="38" y="158" fill="#274d36" fontSize="12">6 Compost proposal · P-COMPOST · W-A; only before R2</text>
-          <rect x="16" y="168" width="14" height="14" fill="#f8dcad" stroke="#b85f1c" strokeWidth="2" strokeDasharray="4 3" /><text x="38" y="180" fill="#274d36" fontSize="12">7 Alternative B growing area · P-B-PLOT · W-B</text>
+          <text x="16" y="22" fill="#23382a" fontSize="14" fontWeight="700">{tx('Legend · marks are references to source cards, not proof of suitability')}</text>
+          <rect x="16" y="36" width="14" height="14" fill="#cfe1c0" stroke="#31593a" strokeWidth="2" /><text x="38" y="48" fill="#274d36" fontSize="12">{tx('1 Existing growing area · E-PLOT-A · W-MAP')}</text>
+          <rect x="16" y="58" width="14" height="14" fill="#d8d0bb" stroke="#665e4d" strokeWidth="2" /><text x="38" y="70" fill="#274d36" fontSize="12">{tx('2 Home · E-HOME · supplied fictional model')}</text>
+          <rect x="16" y="80" width="14" height="14" fill="#e3ddd0" stroke="#756b57" strokeWidth="2" strokeDasharray="0" /><text x="38" y="92" fill="#274d36" fontSize="12">{tx('3 Existing route · E-ROUTE · footprint only, not clearance guidance')}</text>
+          <circle cx="23" cy="109" r="6" fill="#2d6a4f" /><text x="38" y="113" fill="#274d36" fontSize="12">{tx('4 Water point · E-WATER · W-OBS does not establish quantity, quality or reliability')}</text>
+          <circle cx="23" cy="131" r="6" fill="#80522b" /><text x="38" y="135" fill="#274d36" fontSize="12">{tx('5 Gate reference · E-GATE · point only')}</text>
+          <rect x="16" y="146" width="14" height="14" fill="#ead19c" stroke="#7a4d20" strokeWidth="2" strokeDasharray="4 3" /><text x="38" y="158" fill="#274d36" fontSize="12">{tx('6 Compost proposal · P-COMPOST · W-A; only before R2')}</text>
+          <rect x="16" y="168" width="14" height="14" fill="#f8dcad" stroke="#b85f1c" strokeWidth="2" strokeDasharray="4 3" /><text x="38" y="180" fill="#274d36" fontSize="12">{tx('7 Alternative B growing area · P-B-PLOT · W-B')}</text>
         </g>
       </svg>
     </div>
-    <figcaption className={styles.caption}>Existing evidence remains in every view. Concept A retains the existing growing area and, before revision, shows only the separate compost proposal. Concept B retains the original area as evidence while showing its separate alternative; they are not both active production. Geometry demonstrates supplied model fit only. It does not establish water, soil, tenure, drainage, usable access, costs, permissions or care agreement.</figcaption>
+    <figcaption className={styles.caption}>{tx('Existing evidence remains in every view. Concept A retains the existing growing area and, before revision, shows only the separate compost proposal. Concept B retains the original area as evidence while showing its separate alternative; they are not both active production. Geometry demonstrates supplied model fit only. It does not establish water, soil, tenure, drainage, usable access, costs, permissions or care agreement.')}</figcaption>
   </figure>;
 }

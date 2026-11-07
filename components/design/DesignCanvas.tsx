@@ -50,6 +50,9 @@ import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { PLAIN_HARD_SURFACE_PAINT } from '@/lib/sheet-base-mute';
 import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
+import { sectorNoteText, windConfirmedNoteText } from '@/lib/sector-note-display';
+import { designItemDisplayLabel } from '@/lib/design-element-display';
 import SectorOverlay from './SectorOverlay';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -614,7 +617,7 @@ export default function DesignCanvas({
   onConfirmCleanup,
   onCancelCleanup,
 }: DesignCanvasProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
   const underlayDataUrl = frame.underlayDataUrl ?? null;
@@ -1961,8 +1964,8 @@ export default function DesignCanvas({
     if (!effective || effective.provenance !== 'observed on site') return null;
     const recorded = new Date(state.localWind.recordedAt);
     const when = Number.isFinite(recorded.getTime()) ? recorded.toLocaleDateString() : null;
-    return `Wind confirmed on site: ${effective.fromLabel}${when ? ` (recorded ${when})` : ''}`;
-  }, [sectorModel, state.localWind]);
+    return windConfirmedNoteText(lang, effective.fromLabel, when);
+  }, [sectorModel, state.localWind, lang]);
 
   // GROUND LABEL DE-COLLISION. Ground features nest, so their centroids sit almost on top of each
   // other — "Property boundary", "Lawn" and "House" traced one inside the next all land within a
@@ -3625,7 +3628,7 @@ export default function DesignCanvas({
           // seven bed icons drowned the beds themselves (Rory: "maybe icons too?").
           const iconDiscR = chrome(clamp(6, Math.min(wPx, hPx) * 0.28, 11)) * mapTextScale;
           const fontSize = iconDiscR * 1.05;
-          const labelText = item.label ?? def.name;
+          const labelText = designItemDisplayLabel(item, def, lang);
           const labelFull = item.note ? `${labelText} · ${item.note}` : labelText;
           // Rotation applies to rect strips/beds/rows only (circles are rotation-invariant).
           const isRotatingThis = item.id === dragRotateId.current && rotPreview !== null;
@@ -3735,7 +3738,7 @@ export default function DesignCanvas({
                 <g transform={rotXf}>
                   {isGate && (
                     <g transform={`translate(0, ${chrome(40)})`} onPointerDown={(e) => startDragItem(e, item.id)} style={{ cursor: 'move', touchAction: 'none' }}>
-                      <title>Drag to move gate</title>
+                      <title>{inlineText(lang, 'Drag to move gate')}</title>
                       <circle r={chrome(22)} fill="transparent" />
                       <circle r={chrome(16)} fill="#1F4D2B" stroke="#FFFFFF" strokeWidth={chrome(1.5)} pointerEvents="none" />
                       <Move x={-chrome(11)} y={-chrome(11)} width={chrome(22)} height={chrome(22)} color="#FFFFFF" strokeWidth={2} pointerEvents="none" aria-hidden />
@@ -3813,7 +3816,7 @@ export default function DesignCanvas({
                   <text textAnchor="middle" dominantBaseline="central" fontSize={9.5} fontWeight={700} fill={GOLD}>
                     {isRotatingThis
                       ? `${Math.round(rot)}°`
-                      : isGate ? `${wM.toFixed(1)} m long`
+                      : isGate ? inlineTemplate(lang, '{length} m long', null, { length: wM.toFixed(1) })
                       : def.shape === 'circle'
                         ? `⌀ ${wM.toFixed(1)} m`
                         : `${wM.toFixed(1)} × ${hM.toFixed(1)} m`}
@@ -3859,8 +3862,8 @@ export default function DesignCanvas({
               const wPx = wM / mPerPx;
               const hPx = hM / mPerPx;
               const text = item.note
-                ? `${item.label ?? def.name} · ${item.note}`
-                : item.label ?? def.name;
+                ? `${designItemDisplayLabel(item, def, lang)} · ${item.note}`
+                : designItemDisplayLabel(item, def, lang);
               // Gap is measured off the ICON DISC, not the footprint. It used to be hPx/2 + 9 —
               // half of THIS plant's own canopy — so a 9 m macadamia's pill sat ~29 units below its
               // icon while a 2.5 m pawpaw's sat ~9 below, and pills from icons at different heights
@@ -4326,7 +4329,7 @@ export default function DesignCanvas({
           }}
         >
           {effectiveWindNote && <Check size={12} aria-hidden />}
-          {effectiveWindNote ?? sectorModel.dataNotes[0]}
+          {effectiveWindNote ?? sectorNoteText(lang, sectorModel.dataNotes[0])}
         </div>
       )}
 
@@ -4444,8 +4447,14 @@ export default function DesignCanvas({
         <button
           type="button"
           aria-pressed={basePhoto.mode !== 'satellite'}
-          aria-label={`Base: ${basePhoto.mode}. Switch base.`}
-          title={`Base: ${basePhoto.mode}. Switch to ${basePhoto.mode === 'satellite' ? (basePhoto.hasPhoto ? 'drone photo' : 'blank') : basePhoto.mode === 'photo' ? 'blank' : 'satellite'}.`}
+          // English and the regional languages keep the exact English string; a draft language reads it
+          // through the English-keyed drafts, with the mode words translated one by one.
+          aria-label={isInlineDraftLang(lang)
+            ? inlineTemplate(lang, 'Base: {mode}. Switch base.', null, { mode: inlineText(lang, basePhoto.mode) })
+            : `Base: ${basePhoto.mode}. Switch base.`}
+          title={isInlineDraftLang(lang)
+            ? inlineTemplate(lang, 'Base: {mode}. Switch to {next}.', null, { mode: inlineText(lang, basePhoto.mode), next: inlineText(lang, basePhoto.mode === 'satellite' ? (basePhoto.hasPhoto ? 'drone photo' : 'blank') : basePhoto.mode === 'photo' ? 'blank' : 'satellite') })
+            : `Base: ${basePhoto.mode}. Switch to ${basePhoto.mode === 'satellite' ? (basePhoto.hasPhoto ? 'drone photo' : 'blank') : basePhoto.mode === 'photo' ? 'blank' : 'satellite'}.`}
           onClick={() => basePhoto.onSelect(
             basePhoto.mode === 'satellite' ? (basePhoto.hasPhoto ? 'photo' : 'blank') : basePhoto.mode === 'photo' ? 'blank' : 'satellite',
           )}
@@ -4616,9 +4625,9 @@ export default function DesignCanvas({
         }}
       >
         {[
-          { label: '+', ariaLabel: 'Zoom in', onClick: () => zoomAbout(imgW / 2, imgH / 2, 1.3) },
-          { label: '−', ariaLabel: 'Zoom out', onClick: () => zoomAbout(imgW / 2, imgH / 2, 1 / 1.3) },
-          { label: '⤢', ariaLabel: 'Fit map to view', onClick: runAutoFit },
+          { label: '+', ariaLabel: inlineText(lang, 'Zoom in'), onClick: () => zoomAbout(imgW / 2, imgH / 2, 1.3) },
+          { label: '−', ariaLabel: inlineText(lang, 'Zoom out'), onClick: () => zoomAbout(imgW / 2, imgH / 2, 1 / 1.3) },
+          { label: '⤢', ariaLabel: inlineText(lang, 'Fit map to view'), onClick: runAutoFit },
         ].map(({ label, ariaLabel, onClick }) => (
           <button
             key={label}

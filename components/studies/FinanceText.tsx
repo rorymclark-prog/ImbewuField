@@ -1,4 +1,8 @@
+'use client';
+
 import type { ReactNode } from 'react';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText, xhInlineDraft } from '@/lib/xh-inline';
 import styles from './FinanceCourse.module.css';
 
 function inline(text: string): ReactNode[] {
@@ -14,16 +18,20 @@ function inline(text: string): ReactNode[] {
   });
 }
 
-/** Render the authored text as accessible elements; manuscript HTML is never executed. */
+/** Render the authored text as accessible elements; manuscript HTML is never executed.
+ *  isiXhosa readers get the draft keyed by this exact English body (lib/locales/xh-inline/), parsed
+ *  by the same rules, so its headings, lists, tables and links keep the English structure. */
 export default function FinanceText({ text, headingLevel = 4 }: { text: string; headingLevel?: 3 | 4 }) {
+  const { lang } = useLanguage();
   const Heading = headingLevel === 3 ? 'h3' : 'h4';
-  const blocks = text.trim().split(/\n\s*\n/);
-  return <div className={styles.prose}>{blocks.map((block, i) => {
+  const shown = lang === 'xh' ? (xhInlineDraft(text) ?? xhInlineDraft(text.trim()) ?? text) : text;
+  const blocks = shown.trim().split(/\n\s*\n/);
+  return <div className={styles.prose} lang={shown !== text ? 'xh' : undefined}>{blocks.map((block, i) => {
     const lines = block.split('\n');
     if (lines[0].startsWith('|') && lines.length > 1 && /^\|[\s:|\-]+\|$/.test(lines[1])) {
       const cells = (line: string) => line.replace(/^\||\|$/g, '').split('|').map(cell => cell.trim());
-      return <div key={i} className={styles.tableScroll} tabIndex={0} role="region" aria-label="Practice table; scroll sideways if needed"><table>
-        <caption>Scroll sideways if any columns are hidden.</caption>
+      return <div key={i} className={styles.tableScroll} tabIndex={0} role="region" aria-label={inlineText(lang, 'Practice table; scroll sideways if needed')}><table>
+        <caption>{inlineText(lang, 'Scroll sideways if any columns are hidden.')}</caption>
         <thead><tr>{cells(lines[0]).map((cell, n) => <th scope="col" key={n}>{inline(cell)}</th>)}</tr></thead>
         <tbody>{lines.slice(2).map((line, n) => <tr key={n}>{cells(line).map((cell, c) => <td key={c}>{inline(cell)}</td>)}</tr>)}</tbody>
       </table></div>;

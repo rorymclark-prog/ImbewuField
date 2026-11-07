@@ -51,5 +51,7 @@ test('ux-03/nav-04: /feedback no longer addresses "the developer" on the farmer-
   assert.doesNotMatch(farmerForm, /developer inbox/i, 'the admin-only "Developer inbox" heading is legitimately named that; this form-facing half must not use the word at all');
   assert.doesNotMatch(farmerForm, /'Send to developer'/);
   assert.match(farmerForm, /Tell us what happened/);
-  assert.match(farmerForm, /paired\('Send','Thumela'\)/);
+  // isiZulu still reads "Thumela / Send" (buttonLabel pairs for isiZulu); a draft language shows its draft alone on the button.
+  assert.match(farmerForm, /buttonLabel\('Send','Thumela'\)/);
+  assert.match(farmerForm, /const buttonLabel=\(en:string,zu:string\)=>lang==='zu'\?paired\(en,zu\):inlineText\(lang,en\);/);
 });

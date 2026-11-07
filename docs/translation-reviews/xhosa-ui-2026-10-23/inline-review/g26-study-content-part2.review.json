@@ -1,0 +1,35 @@
+{
+  "unit": "g26-study-content-part2",
+  "shard": "g26-study-content.ts",
+  "range": "504..1007",
+  "okCount": 501,
+  "items": [
+    {
+      "index": 828,
+      "key": "This card uses recorded sales minus assigned costs and today’s mapped area. Its square metres are not a historical measurement of harvested ground.",
+      "verdict": "repair",
+      "draft": "Eli khadi lisebenzisa iintengiso ezirekhodiweyo kuthatyathwe iindleko ezabelweyo nendawo emepiweyo yanamhlanje. Iimitha zayo zesikwere azingumlinganiselo wwangaphambili womhlaba ovuniweyo.",
+      "backtranslation": "Its square metres are not a previous (historical) measurement of harvested land.",
+      "problem": "Typo (doubled w) in \"wangaphambili\"; meaning intact but word is misspelled.",
+      "corrected": "Eli khadi lisebenzisa iintengiso ezirekhodiweyo kuthatyathwe iindleko ezabelweyo nendawo emepiweyo yanamhlanje. Iimitha zayo zesikwere azingumlinganiselo wangaphambili womhlaba ovuniweyo."
+    },
+    {
+      "index": 881,
+      "key": "Export records for a lender creates a PDF. Depending on the device, it downloads or opens a share sheet. Save a copy and inspect every page, including the farm name, generation date and Covers dates.",
+      "verdict": "repair",
+      "draft": "U-Thumela ngaphandle iirekhodi ezenzelwe umbolekisi wemali wenza i-PDF. Kuxhomekeke kwisixhobo, ikhuphela okanye ivula iphepha lokwabelana. Gcina ikopi uze uhlole lonke iphepha, kuquka igama lefama, umhla wokwenziwa kunye no-Covers dates.",
+      "backtranslation": "Keep a copy and check the whole page, including farm name, date made and Covers dates.",
+      "problem": "English says inspect every page of the PDF; draft says \"the whole page\" (singular), which could lead to checking only the first page.",
+      "corrected": "U-Thumela ngaphandle iirekhodi ezenzelwe umbolekisi wemali wenza i-PDF. Kuxhomekeke kwisixhobo, ikhuphela okanye ivula iphepha lokwabelana. Gcina ikopi uze uhlole onke amaphepha, kuquka igama lefama, umhla wokwenziwa kunye no-Covers dates."
+    },
+    {
+      "index": 950,
+      "key": "Inspect every page: site name, dates, measurements, units, included maps and pictures, source labels and gaps. Check that text and tables are readable. Keep original evidence separately; a report is not a complete backup.",
+      "verdict": "repair",
+      "draft": "Hlola lonke iphepha: igama lendawo, imihla, imilinganiselo, iiyunithi, iimephu nemifanekiso ebandakanyiweyo, iileyibhile zomthombo nezikhewu. Khangela ukuba umbhalo neetafile ziyafundeka. Gcina ubungqina boqobo ngokwahlukeneyo; ingxelo ayiyikopi epheleleyo yogcino.",
+      "backtranslation": "Check the whole page: site name, dates, measurements, units, maps and images included, source labels and gaps.",
+      "problem": "English says inspect every page; draft says \"check the whole page\" (singular), so a multi-page report might be checked only partly.",
+      "corrected": "Hlola onke amaphepha: igama lendawo, imihla, imilinganiselo, iiyunithi, iimephu nemifanekiso ebandakanyiweyo, iileyibhile zomthombo nezikhewu. Khangela ukuba umbhalo neetafile ziyafundeka. Gcina ubungqina boqobo ngokwahlukeneyo; ingxelo ayiyikopi epheleleyo yogcino."
+    }
+  ]
+}

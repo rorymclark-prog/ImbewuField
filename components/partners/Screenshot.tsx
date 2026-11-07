@@ -11,6 +11,8 @@
 
 import { useState } from 'react';
 import { ImageOff } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 interface ScreenshotProps {
   src: string;
@@ -23,6 +25,7 @@ interface ScreenshotProps {
 
 export default function Screenshot({ src, alt, label, caption, featured = false }: ScreenshotProps) {
   const [failed, setFailed] = useState(false);
+  const { lang } = useLanguage();
   const heightClass = featured
     ? 'h-[420px] sm:h-[520px] lg:h-[600px]'
     : 'h-[280px] sm:h-[320px]';
@@ -42,14 +45,14 @@ export default function Screenshot({ src, alt, label, caption, featured = false 
           <div className="flex flex-col items-center gap-2 px-6 text-center">
             <ImageOff size={22} strokeWidth={1.5} style={{ color: 'var(--text-muted)' }} />
             <span className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-              Screenshot coming soon
+              {inlineText(lang, 'Screenshot coming soon')}
             </span>
           </div>
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={src}
-            alt={alt}
+            alt={inlineText(lang, alt)}
             loading="lazy"
             onError={() => setFailed(true)}
             className="w-full h-full"
@@ -59,14 +62,29 @@ export default function Screenshot({ src, alt, label, caption, featured = false 
       </div>
       <figcaption className="text-center">
         <span className="block text-sm font-display font-semibold" style={{ color: 'var(--text-primary)' }}>
-          {label}
+          {inlineText(lang, label)}
         </span>
         {caption && (
           <span className="block mt-1 text-[13px] font-sans leading-snug" style={{ color: 'var(--text-muted)' }}>
-            {caption}
+            {inlineText(lang, caption)}
           </span>
         )}
       </figcaption>
     </figure>
+  );
+}
+
+/** The /partners QR image; lives here (a client component) only so its alt text can follow the language. */
+export function QrCode() {
+  const { lang } = useLanguage();
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/marketing/qr-imbewufield.svg"
+      alt={inlineText(lang, 'QR code linking to imbewufield.vercel.app')}
+      width={168}
+      height={168}
+      className="w-[168px] h-[168px]"
+    />
   );
 }

@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save, Sprout } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { isInlineDraftLang } from '@/lib/xh-inline';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { recordsDate } from '@/lib/records-months';
 import {
@@ -29,6 +30,7 @@ import {
   loadLetterhead, saveLetterhead, dueDateISO, EMPTY_LETTERHEAD, type SellerLetterhead,
 } from '@/lib/invoice-seller';
 import { buildInvoiceDocument, formatInvoiceZar } from '@/lib/invoice-document';
+import { formatXhosaDate } from '@/lib/xh-dates';
 import { buildInvoicePdf } from '@/lib/invoice-pdf';
 import InvoiceDocumentView from '@/components/invoice/InvoiceDocument';
 import LessonLink from '@/components/design/LessonLink';
@@ -173,6 +175,16 @@ const INVOICE_PAIRED_COPY = new Set([
   'Delete?',
   'Delete invoice',
 ]);
+// The sale card's money instructions (record the sale once, is it already in My Records, link or record). Paired with their
+// English source for a draft language only (lib/xh-inline.ts isInlineDraftLang): Sesotho, Tshivenda, Xitsonga and isiZulu
+// show exactly what they showed before, so they are not in INVOICE_PAIRED_COPY above.
+const INVOICE_DRAFT_PAIRED_COPY = new Set([
+  'Record the sale once',
+  'Keep the invoice, payment and quantity together.',
+  'Is this sale already in My Records?',
+  'No — record it with this invoice',
+  'Yes — link the existing sale',
+]);
 /** Offered as terms. Absent from the list on purpose: a preselected default. */
 const TERM_CHOICES: { label: string; days: number | null }[] = [
   { label: 'No due date', days: null },
@@ -229,7 +241,7 @@ export default function InvoicePage() {
       // sentence (lib/records-regional-drafts.ts), English when there is none. A sentence a farmer
       // may act on keeps the English beside the draft. Any other language keeps English.
       if (!isRecordsRegionalLang(lang)) return english;
-      return INVOICE_PAIRED_COPY.has(english) ? recordsPaired(lang, english) : recordsFill(lang, english);
+      return INVOICE_PAIRED_COPY.has(english) || (isInlineDraftLang(lang) && INVOICE_DRAFT_PAIRED_COPY.has(english)) ? recordsPaired(lang, english) : recordsFill(lang, english);
     }
     // Existing isiZulu wording always wins; only an English fallback is filled from a draft. A
     // paired sentence is paired only when there is a draft to pair (it used to print the English twice).
@@ -809,7 +821,7 @@ export default function InvoicePage() {
 
             {isRecordsRegionalLang(lang) && (
               <p role="note" lang="en" data-records-draft-notice={lang} className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>
-                {recordsDraftNotice(lang)} The invoice a buyer receives (print and PDF) stays in English.
+                {recordsDraftNotice(lang)}{lang === 'xh' ? ' The invoice a buyer receives (print and PDF) uses the isiXhosa draft labels; names, amounts and banking details stay as typed.' : ' The invoice a buyer receives (print and PDF) stays in English.'}
               </p>
             )}
 
@@ -953,7 +965,9 @@ export default function InvoicePage() {
                               #{String(inv.no).padStart(4, '0')} · {inv.billTo || ui('No buyer')}
                             </div>
                             <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-                              {isRecordsRegionalLang(lang)
+                              {lang === 'xh'
+                                ? formatXhosaDate(new Date(inv.dateISO), { day: true, month: 'short', year: true })
+                                : isRecordsRegionalLang(lang)
                                 ? recordsDate(lang, new Date(inv.dateISO), true)
                                 : new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                             </div>
@@ -1181,7 +1195,7 @@ export default function InvoicePage() {
                     <div className="flex-1 min-w-0">
                       <CropSelect
                         ariaLabel={ui('Crop or product')}
-                        language={lang === 'zu' ? 'zu' : 'en'}
+                        language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en'}
                         value={it.desc}
                         rememberedCrops={products.map((product) => product.desc)}
                         onChange={(crop, cropKey) => chooseCrop(it.id, crop, cropKey)}

@@ -1,0 +1,17 @@
+{
+  "unit": "g31-staff-demo",
+  "shard": "g31-staff-demo.ts",
+  "range": "all",
+  "okCount": 135,
+  "items": [
+    {
+      "index": 111,
+      "key": "Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.",
+      "verdict": "repair",
+      "draft": "Amanani abonisa ukwabelwa kovavanyo neempendulo. Umthathi-nxaxheba usenokubonakala kuvavanyo oluliqela. Iimpendulo zamanani ezingekhoyo zihlala zingaziwa. Ilindele uphononongo ithetha ivaliwe kodwa ayabelwananga; asiso simo sohlukileyo semvume esirekhodiweyo.",
+      "backtranslation": "The numbers show assignment of assessment and responses. A participant may appear in several assessments. Missing numeric responses remain unknown. Awaiting review means closed but not shared; it is not a separate recorded consent status.",
+      "problem": "\"approval status\" rendered as \"isimo semvume\" (consent status): consent meaning added",
+      "corrected": "Amanani abonisa ukwabelwa kovavanyo neempendulo. Umthathi-nxaxheba usenokubonakala kuvavanyo oluliqela. Iimpendulo zamanani ezingekhoyo zihlala zingaziwa. Ilindele uphononongo ithetha ivaliwe kodwa ayabelwananga; asiso simo sohlukileyo sokuvunywa esirekhodiweyo."
+    }
+  ]
+}

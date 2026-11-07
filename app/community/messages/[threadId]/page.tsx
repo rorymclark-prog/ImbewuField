@@ -10,6 +10,8 @@ import { useAuth } from '@/lib/auth';
 import { translate,useLanguage } from '@/lib/i18n';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 import { communityTimeAgo } from '@/lib/community-time';
+import { inlineText } from '@/lib/xh-inline';
+import { localeDate } from '@/lib/xh-dates';
 import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { getThread, subscribeMessages, sendMessage, reportContent } from '@/lib/db/community-queries';
@@ -17,10 +19,24 @@ import type { MessageThread, ThreadMessage } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
 import AppHeader from '@/components/layout/AppHeader';
 
+// isiXhosa: communityTimeAgo spells a date older than a day with the en-ZA month; isiXhosa
+// writes its own month names (lib/xh-dates). Every other language keeps communityTimeAgo exactly.
+function xhCommunityDate(ts: unknown, shown: string): string {
+  const value = ts as { toDate?: () => Date; seconds?: number } | null;
+  if (!value || !shown) return shown;
+  try {
+    const d = typeof value.toDate === 'function' ? value.toDate() : new Date((value.seconds ?? 0) * 1000);
+    return Date.now() - d.getTime() < 86_400_000 ? shown : localeDate('xh', d, { day: 'numeric', month: 'short' }, 'en-ZA');
+  } catch { return shown; }
+}
+
 export default function MessageThreadPage() {
   const { user, loading } = useAuth();
-  const { t, lang } = useLanguage();
-  const draft=['zu','st','ts','ve'].includes(lang);
+  const { t: localeT, lang } = useLanguage();
+  // isiXhosa: a key the xh locale has not translated yet falls back to English; show the unreviewed
+  // draft keyed by that same English instead (lib/locales/xh-inline). Other languages keep localeT.
+  const t = (key: string) => { const text = localeT(key); return lang === 'xh' && text === translate('en', key) ? inlineText(lang, text) : text; };
+  const draft=['zu','xh','st','ts','ve'].includes(lang);
   const paired=(key:string)=><><span lang={t(key)===translate('en',key)?'en':lang}>{t(key)}</span>{draft&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en',key)}</small>}</>;
   const router = useRouter();
   const params = useParams<{ threadId: string }>();
@@ -244,7 +260,7 @@ export default function MessageThreadPage() {
                 </div>
                 {!simple && (
                   <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
-                    {communityTimeAgo(m.created_at,lang,t,true)}
+                    {lang === 'xh' ? xhCommunityDate(m.created_at, communityTimeAgo(m.created_at,lang,t,true)) : communityTimeAgo(m.created_at,lang,t,true)}
                   </div>
                 )}
               </div>

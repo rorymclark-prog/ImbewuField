@@ -1,0 +1,188 @@
+{
+  "unit": "g26-study-content-part1",
+  "shard": "g26-study-content.ts",
+  "range": "0..503",
+  "okCount": 484,
+  "items": [
+    {
+      "index": 35,
+      "key": "Fictional classroom model. Coordinates, dimensions and statements are supplied for learning only. They are not a survey, a construction drawing, local advice or a plan for a real household.",
+      "verdict": "repair",
+      "draft": "Imodeli eqanjiweyo yeklasi. Izixhumanisi, imilinganiselo neentetho zinikezelwa ukufunda kuphela. Asiluphando lomhlaba, asiyondlalo yokwakha, asiyongcebiso yalapha ekhaya, kwaye asisosicwangciso sekhaya lokwenyani.",
+      "backtranslation": "A made-up classroom model. Links, measurements and quotes are given for learning only. It is not a land survey, not a building drawing (indlalo), not advice for here at home, and not a plan for a real home.",
+      "problem": "'Coordinates' rendered as 'Izixhumanisi' (= links/connections); 'local advice' rendered 'yalapha ekhaya' (advice of here at home); 'construction drawing' rendered with the unclear 'indlalo yokwakha'.",
+      "corrected": "Imodeli eqanjiweyo yeklasi. Iikhodineyithi, imilinganiselo neentetho zinikezelwa ukufunda kuphela. Ayiluphando lomhlaba, ayingomzobo wokwakha, ayiyongcebiso yasekuhlaleni, kwaye ayisosicwangciso sekhaya lokwenyani."
+    },
+    {
+      "index": 37,
+      "key": "supplied simulation input",
+      "verdict": "repair",
+      "draft": "okufakwayo kokulinganisa okunikeziweyo",
+      "backtranslation": "given measurement inputs",
+      "problem": "'Simulation input' rendered as 'okufakwayo kokulinganisa' (measuring/estimating input) - wrong term.",
+      "corrected": "okufakwayo kokulingisa okunikeziweyo"
+    },
+    {
+      "index": 39,
+      "key": "The household wants vegetables, an unobstructed home-to-gate route and manageable care. The person carrying water participates in the decision.",
+      "verdict": "repair",
+      "draft": "Ikhaya lifuna imifuno, indlela engavalekanga esuka ekhaya iye esangweni nononophelo oluphathekayo. Umntu ophatha amanzi uthatha inxaxheba kwisigqibo.",
+      "backtranslation": "...The person who manages/handles the water takes part in the decision.",
+      "problem": "'The person carrying water' rendered as 'ophatha amanzi' (manages/handles water) - role changed.",
+      "corrected": "Ikhaya lifuna imifuno, indlela engavalekanga esuka ekhaya iye esangweni nononophelo oluphathekayo. Umntu othwala amanzi uthatha inxaxheba kwisigqibo."
+    },
+    {
+      "index": 48,
+      "key": "Keep the existing growing area and investigate whether its care can improve while the route remains clear.",
+      "verdict": "repair",
+      "draft": "Gcina indawo yokulima esele ikho uphande ukuba ingaba unonophelo lwayo lunganyuka na ngoxa indlela ihleli icacile.",
+      "backtranslation": "Keep the existing growing area; investigate whether its care could increase while the path stays clear.",
+      "problem": "'whether its care can improve' rendered 'lunganyuka' (could increase/rise) - meaning drift.",
+      "corrected": "Gcina indawo yokulima esele ikho uphande ukuba ingaba unonophelo lwayo lunokuphuculwa na ngoxa indlela ihleli icacile."
+    },
+    {
+      "index": 114,
+      "key": "Revise or defer a component if agreed care is unavailable.",
+      "verdict": "repair",
+      "draft": "Hlaziya okanye umise icandelo ukuba unonophelo olwavunyelwana ngalo alukho.",
+      "backtranslation": "Update or stop the section if the agreed care does not exist.",
+      "problem": "'defer' rendered as 'umise' (stop) - the whole case uses 'defer' (bambezela); stopping vs deferring is a different decision.",
+      "corrected": "Hlaziya okanye ubambezele icandelo ukuba unonophelo olwavunyelwana ngalo alukho."
+    },
+    {
+      "index": 148,
+      "key": "A past paper copy has its own source and original reference fields.",
+      "verdict": "repair",
+      "draft": "Ikopi yephepha yamva inemimandla yayo yomthombo nesalathiso soqobo.",
+      "backtranslation": "Recent paper copy with its source fields and original reference.",
+      "problem": "'A past paper copy' rendered 'yamva' (later/recent); the sibling entry uses 'yangaphambili' (past).",
+      "corrected": "Ikopi yephepha yangaphambili inemimandla yayo yomthombo nesalathiso soqobo."
+    },
+    {
+      "index": 294,
+      "key": "Compare the map with the ground · illustrated example, not a surveyed plan",
+      "verdict": "repair",
+      "draft": "Thelekisa imephu nomhlaba · umzekelo ongumfanekiso, hayi icwangciso elinikelwe uphando",
+      "backtranslation": "Compare the map with the land · illustrative example, not a plan given for a survey/research.",
+      "problem": "'not a surveyed plan' rendered 'icwangciso elinikelwe uphando' (a plan given over to research) - unclear and wrong meaning.",
+      "corrected": "Thelekisa imephu nomhlaba · umzekelo ongumfanekiso, hayi icwangciso elilinganiswe emhlabeni"
+    },
+    {
+      "index": 373,
+      "key": "A tank or bed icon comes with starting dimensions. Check the real design requirements before keeping those values. A drawn earthwork is not a surveyed or approved construction instruction.",
+      "verdict": "repair",
+      "draft": "Icon yetanki okanye yebhedi iza nobungakanani bokuqala. Khangela iimfuno zokwenyani zoyilo phambi kokugcina ezo xabiso. Umsebenzi womhlaba ozotyiweyo awuyondlela yokwakha elinganisiweyo okanye evunyiweyo.",
+      "backtranslation": "Drawn earthwork is not a measured or approved way of building.",
+      "problem": "'construction instruction' rendered 'indlela yokwakha' (a method/way of building) - the earthworks safety point is that the drawing is not an instruction to build.",
+      "corrected": "Icon yetanki okanye yebhedi iza nobungakanani bokuqala. Khangela iimfuno zokwenyani zoyilo phambi kokugcina ezo xabiso. Umsebenzi womhlaba ozotyiweyo awuyomyalelo wokwakha olinganisiweyo okanye ovunyiweyo."
+    },
+    {
+      "index": 426,
+      "key": "Use Back to design to correct mapped growing areas. Do not change a crop quantity merely to hide an incorrect bed size. Keep practice or unmapped areas separate from a measured farm plan.",
+      "verdict": "repair",
+      "draft": "Sebenzisa u-Back to design ukulungisa iindawo zokulima ezimepiweyo. Ungatshintshi ubungakanani besityalo nje ukufihla ubungakanani bebhedi obungachanekanga. Gcina iindawo zokuziqhelisa okanye ezingamepiweyo zahlukile kwisicwangciso sefama esilinganisiweyo.",
+      "backtranslation": "Use Back to design (left in English) to fix mapped growing areas...",
+      "problem": "On-screen button 'Back to design' is translated in the app as 'Buyela kuyilo'; the lesson names it in English so the farmer will not find it.",
+      "corrected": "Sebenzisa u-Buyela kuyilo ukulungisa iindawo zokulima ezimepiweyo. Ungatshintshi ubungakanani besityalo nje ukufihla ubungakanani bebhedi obungachanekanga. Gcina iindawo zokuziqhelisa okanye ezingamepiweyo zahlukile kwisicwangciso sefama esilinganisiweyo."
+    },
+    {
+      "index": 429,
+      "key": "+ crop on the intended bed, or crop bar → Edit",
+      "verdict": "repair",
+      "draft": "+ crop kwibhedi ehlosiweyo, okanye ibha yesityalo → Hlela",
+      "backtranslation": "+ crop on the intended bed, or the crop bar → Edit",
+      "problem": "On-screen button '+ crop' is translated in the app as '+ isityalo'; left in English here.",
+      "corrected": "+ isityalo kwibhedi ehlosiweyo, okanye ibha yesityalo → Hlela"
+    },
+    {
+      "index": 430,
+      "key": "For a new planting, choose + crop on its actual bed or plot and select the crop. If the planting already appears, open its bar and choose Edit instead of adding it again.",
+      "verdict": "repair",
+      "draft": "Kukutyala okutsha, khetha + crop kwibhedi yayo yokwenyani okanye isiza uze ukhethe isityalo. Ukuba ukutyala sele kuvela, vula ibha yako uze ukhethe u-Hlela endaweni yokukongeza kwakhona.",
+      "backtranslation": "...choose + crop on its real bed or site...",
+      "problem": "On-screen button '+ crop' is translated in the app as '+ isityalo'; left in English here.",
+      "corrected": "Kukutyala okutsha, khetha + isityalo kwibhedi yayo yokwenyani okanye isiza uze ukhethe isityalo. Ukuba ukutyala sele kuvela, vula ibha yako uze ukhethe u-Hlela endaweni yokukongeza kwakhona."
+    },
+    {
+      "index": 435,
+      "key": "Sow month → How much of the bed? → Read the warnings",
+      "verdict": "repair",
+      "draft": "Sow month → How much of the bed? → Funda izilumkiso",
+      "backtranslation": "Sow month → How much of the bed? → Read warnings",
+      "problem": "Field labels 'Sow month' and 'How much of the bed?' are translated in the app ('Inyanga yokuhlwayela', 'Ingakanani umbhede?') but left in English here.",
+      "corrected": "Inyanga yokuhlwayela → Ingakanani umbhede? → Funda izilumkiso"
+    },
+    {
+      "index": 441,
+      "key": "Add to bed, Add as existing or Save changes → Reopen the crop bar",
+      "verdict": "repair",
+      "draft": "Add to bed, Add as existing okanye Save changes → Vula kwakhona ibha yesityalo",
+      "backtranslation": "Add to bed, Add as existing or Save changes → Reopen the crop bar",
+      "problem": "Button labels are translated in the app ('Yongeza kumbhede', 'Yongeza njengesele sikhona', 'Gcina utshintsho') but left in English here.",
+      "corrected": "Yongeza kumbhede, Yongeza njengesele sikhona okanye Gcina utshintsho → Vula kwakhona ibha yesityalo"
+    },
+    {
+      "index": 447,
+      "key": "Auto-suggest a plan → Goals and conditions → Review the proposal",
+      "verdict": "repair",
+      "draft": "Auto-suggest a plan → Goals and conditions → Phonononga isiphakamiso",
+      "backtranslation": "Auto-suggest a plan → Goals and conditions → Review the suggestion",
+      "problem": "Button 'Auto-suggest a plan' is translated in the app as 'Cebisa isicwangciso ngokuzenzekelayo' but left in English here.",
+      "corrected": "Cebisa isicwangciso ngokuzenzekelayo → Goals and conditions → Phonononga isiphakamiso"
+    },
+    {
+      "index": 450,
+      "key": "Suggest a plan prepares a proposal. Review its crops, timing, area shares and unresolved notes before choosing Add plantings to my plan. It adds around existing plantings; it does not erase them. Do not use Clear all simply to try a suggestion.",
+      "verdict": "repair",
+      "draft": "U-Suggest a plan ulungiselela isiphakamiso. Phonononga izityalo zaso, ixesha, izabelo zendawo namanqaku angaxazululwanga phambi kokukhetha u-Add plantings to my plan. Wongeza ujikeleze ukutyala okukhoyo; akusicimi. Ungasebenzisi u-Clear all ukuzama isiphakamiso nje.",
+      "backtranslation": "Suggest a plan prepares a suggestion. ... before choosing Add plantings to my plan. ... Do not use Clear all just to try a suggestion.",
+      "problem": "Buttons 'Suggest a plan' and 'Clear all' are translated in the app ('Cebisa isicwangciso', 'Susa konke') but left in English here ('Clear all' is a destructive button, so the farmer must be able to recognise it).",
+      "corrected": "U-Cebisa isicwangciso ulungiselela isiphakamiso. Phonononga izityalo zaso, ixesha, izabelo zendawo namanqaku angaxazululwanga phambi kokukhetha u-Add plantings to my plan. Wongeza ujikeleze ukutyala okukhoyo; akusicimi. Ungasebenzisi u-Susa konke ukuzama isiphakamiso nje."
+    },
+    {
+      "index": 453,
+      "key": "Year one and Year two → Tasks → Food, field & value",
+      "verdict": "repair",
+      "draft": "Year one kunye ne-Year two → Imisebenzi → Food, field & value",
+      "backtranslation": "Year one and Year two → Tasks → Food, field & value",
+      "problem": "Heading 'Food, field & value' is translated in the app as 'Ukutya, intsimi nexabiso' but left in English here.",
+      "corrected": "Year one kunye ne-Year two → Imisebenzi → Ukutya, intsimi nexabiso"
+    },
+    {
+      "index": 456,
+      "key": "A kilogram benchmark or Plan-cycle value is a comparison based on the entered plan and its stated assumptions. It is not actual yield, monthly cash received or complete profit. Open What the planner can prove and read the sources and gaps.",
+      "verdict": "repair",
+      "draft": "Umlinganiselo wekhilogram okanye ixabiso le-Plan-cycle luthelekiso olusekelwe kwisicwangciso esifakiweyo neengcinga zaso ezichaziweyo. Asisivuno sokwenyani, imali yenyanga efunyenweyo okanye inzuzo epheleleyo. Vula u-What the planner can prove ufunde imithombo namanqaku asweleyo.",
+      "backtranslation": "...Open What the planner can prove and read the sources and missing notes.",
+      "problem": "Link 'What the planner can prove' is translated in the app as 'Oko isicwangciso sinokukubonisa' but left in English here.",
+      "corrected": "Umlinganiselo wekhilogram okanye ixabiso le-Plan-cycle luthelekiso olusekelwe kwisicwangciso esifakiweyo neengcinga zaso ezichaziweyo. Asisivuno sokwenyani, imali yenyanga efunyenweyo okanye inzuzo epheleleyo. Vula u-Oko isicwangciso sinokukubonisa ufunde imithombo namanqaku asweleyo."
+    },
+    {
+      "index": 480,
+      "key": "Save the crop and kilograms, find the entry again and read the harvest comparison carefully.",
+      "verdict": "repair",
+      "draft": "Gcina isityalo neekhilogram, ufumane ingeniso kwakhona uze ufunde ukuthelekiswa kwesivuno ngocoselelo.",
+      "backtranslation": "Save the crop and kilograms, find the income again and read the harvest comparison carefully.",
+      "problem": "'find the entry again' rendered 'ufumane ingeniso kwakhona' (find the INCOME again) - an harvest entry is not income (money/records confusion).",
+      "corrected": "Gcina isityalo neekhilogram, ufumane irekhodi kwakhona uze ufunde ukuthelekiswa kwesivuno ngocoselelo."
+    },
+    {
+      "index": 499,
+      "key": "You may attach a clear photo of this harvest. You can also save the kilograms without a photo.",
+      "verdict": "repair",
+      "draft": "Ungaqhotyoshelwa ifoto ecacileyo yesi sivuno. Ungagcina neekhilogram ngaphandle kwefoto.",
+      "backtranslation": "You are not forced / can be attached a clear photo of this harvest. You can also save kilograms without a photo.",
+      "problem": "'Ungaqhotyoshelwa' is a passive ('you can be attached to') - wrong voice, misleading; should be active 'you may attach'.",
+      "corrected": "Ungaqhotyosha ifoto ecacileyo yesi sivuno. Ungagcina neekhilogram ngaphandle kwefoto."
+    },
+    {
+      "index": 502,
+      "key": "Save and find the entry again",
+      "verdict": "repair",
+      "draft": "Gcina uze ufumane ingeniso kwakhona",
+      "backtranslation": "Save and find the income again",
+      "problem": "'find the entry again' rendered 'ufumane ingeniso kwakhona' (find the INCOME again) - wrong term.",
+      "corrected": "Gcina uze ufumane irekhodi kwakhona"
+    }
+  ]
+}

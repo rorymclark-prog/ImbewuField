@@ -7,6 +7,8 @@ import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import { PORTFOLIO_STAGES, PORTFOLIO_LIMIT, PORTFOLIO_NOTICE, portfolioStorageKey, portfolioText, readPortfolio, type PortfolioAnswers } from '@/lib/design-portfolio';
 import OfflinePageLink from './OfflinePageLink';
 import DesignDraftCopy from './DesignDraftCopy';
+import Tx, { TxArrow, XhDraftLine } from './Tx';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import styles from './FinanceCourse.module.css';
 import folder from './DesignPortfolio.module.css';
 import ArrowLabel from './ArrowLabel';
@@ -14,6 +16,8 @@ import Summary from './Summary';
 
 type Draft = { key: string; answers: PortfolioAnswers; baseline: string | null; loadError: boolean; dirty: boolean };
 
+// Each stage's English eyebrow is spelled out so its isiXhosa draft is keyed by this exact text.
+const STAGE_EYEBROW = ['Stage 1 · Your design evidence', 'Stage 2 · Your design evidence', 'Stage 3 · Your design evidence', 'Stage 4 · Your design evidence', 'Stage 5 · Your design evidence', 'Stage 6 · Your design evidence'];
 const STAGE_ZU: Record<string, { title: string; purpose: string }> = {
   d1: { title: 'Abantu, indawo nobufakazi', purpose: 'Vumelanani ngomsebenzi ngaphambi kokudweba isisombululo.' },
   d2: { title: 'Amaphethini nemibuzo yokuklama', purpose: 'Chaza ukuthi ubufakazi busho ukuthini ekudizayineni.' },
@@ -83,7 +87,8 @@ export default function DesignPortfolio() {
   const answers = ready ? draft.answers : {};
   const statusCopy = (message: string) => {
     const zu = STATUS_ZU[message];
-    return lang === 'zu' && zu ? <DesignDraftCopy en={message} zu={zu} /> : message;
+    // isiXhosa reads the draft keyed by this exact English (lib/locales/xh-inline/).
+    return lang === 'zu' && zu ? <DesignDraftCopy en={message} zu={zu} /> : lang === 'xh' ? inlineText(lang, message) : message;
   };
   useEffect(() => {
     if (!ready || !draft.dirty) return;
@@ -112,7 +117,7 @@ export default function DesignPortfolio() {
   }
   function download() {
     if (!ready) return;
-    const url = URL.createObjectURL(new Blob([portfolioText(answers)], { type: 'text/plain;charset=utf-8' }));
+    const url = URL.createObjectURL(new Blob([portfolioText(answers, lang)], { type: 'text/plain;charset=utf-8' }));
     const link = document.createElement('a'); link.href = url; link.download = 'imbewu-design-learning-folder.txt';
     document.body.appendChild(link); link.click(); link.remove();
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
@@ -124,24 +129,26 @@ export default function DesignPortfolio() {
       <h2><DesignDraftCopy en="One folder, from brief to revision" zu="Ifolda eyodwa, kusukela encazelweni kuya ekubuyekezeni" /></h2>
       <p><DesignDraftCopy en="Use this beside your drawings, or work on paper. Read out your answers while a learning partner writes if that helps. Use a practice site or a short site label; private household details are not needed here." zu="Sebenzisa lokhu kanye nemidwebo yakho, noma ubhale ephepheni. Uma kusiza, funda izimpendulo zakho uzakwenu wokufunda azibhale. Sebenzisa indawo yokuzilolonga noma ilebula emfushane yendawo; akudingeki ufake imininingwane yangasese yomuzi." /></p>
       <p><DesignDraftCopy en="Saving keeps one folder for this account on this browser and device. It does not sync to another device. Guest notes are shared by people using this browser. Download a text copy to keep with your drawings, and save before leaving this page." zu="Ukulondoloza kugcina ifolda eyodwa yale akhawunti kule browser nakule divayisi. Ayivumelaniswa nenye idivayisi. Amanothi esivakashi abiwa ngabantu abasebenzisa le browser. Landa ikhophi yombhalo ukuze uyigcine nemidwebo yakho, bese ulondoloza ngaphambi kokuphuma kuleli khasi." /></p>
-      <nav className={folder.stageLinks} aria-label="Design folder stages">{PORTFOLIO_STAGES.map((stage, index) => <a key={stage.id} href={`#folder-${stage.id}`}><span>{index + 1}</span><DesignDraftCopy en={stage.title} zu={STAGE_ZU[stage.id].title} /></a>)}</nav>
+      <nav className={folder.stageLinks} aria-label={inlineText(lang, 'Design folder stages')}>{PORTFOLIO_STAGES.map((stage, index) => <a key={stage.id} href={`#folder-${stage.id}`}><span>{index + 1}</span><DesignDraftCopy en={stage.title} zu={STAGE_ZU[stage.id].title} /></a>)}</nav>
     </section>
     {!ready && <p role="status">{statusCopy('Opening your design folder…')}</p>}
     {PORTFOLIO_STAGES.map((stage, index) => <section className={`${styles.section} ${folder.stage}`} id={`folder-${stage.id}`} key={stage.id}>
-      <p className={styles.eyebrow}><DesignDraftCopy en={`Stage ${index + 1} · Your design evidence`} zu={`Isigaba ${index + 1} · Ubufakazi bomklamo wakho`} /></p>
+      <p className={styles.eyebrow}><DesignDraftCopy en={STAGE_EYEBROW[index] ?? `Stage ${index + 1} · Your design evidence`} zu={`Isigaba ${index + 1} · Ubufakazi bomklamo wakho`} /></p>
       <h2><DesignDraftCopy en={stage.title} zu={STAGE_ZU[stage.id].title} /></h2><p><DesignDraftCopy en={stage.purpose} zu={STAGE_ZU[stage.id].purpose} /></p>
-      <details className={folder.example}><Summary><DesignDraftCopy en="Discuss the busy-yard example" zu="Xoxani ngesibonelo segceke elimatasa" /></Summary><p>{stage.example}</p></details>
+      <details className={folder.example}><Summary><DesignDraftCopy en="Discuss the busy-yard example" zu="Xoxani ngesibonelo segceke elimatasa" /></Summary><p><Tx en={stage.example} /></p></details>
       {stage.fields.map(field => <div className={styles.answerField} key={field.id}>
         <label htmlFor={`portfolio-${field.id}`}><strong><DesignDraftCopy en={field.label} zu={FIELD_ZU[field.id].label} /></strong></label>
         <span id={`help-${field.id}`}><DesignDraftCopy en={field.prompt} zu={FIELD_ZU[field.id].prompt} /></span>
         <textarea id={`portfolio-${field.id}`} aria-describedby={`help-${field.id}`} disabled={!ready} rows={5} maxLength={PORTFOLIO_LIMIT} value={answers[field.id] ?? ''} onChange={event => change(field.id, event.target.value)} />
-        {(answers[field.id]?.length ?? 0) > PORTFOLIO_LIMIT - 500 && <span><DesignDraftCopy en={`${PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0)} characters remaining. Keep longer evidence in a separate document and reference it here.`} zu={`${PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0)} izinhlamvu ezisele. Gcina ubufakazi obude kudokhumenti ehlukile bese ubhekisela kubo lapha.`} /></span>}
+        {(answers[field.id]?.length ?? 0) > PORTFOLIO_LIMIT - 500 && <span>{lang === 'xh'
+          ? <XhDraftLine xh={inlineTemplate(lang, '{n} characters remaining. Keep longer evidence in a separate document and reference it here.', null, { n: PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0) })} en={`${PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0)} characters remaining. Keep longer evidence in a separate document and reference it here.`} />
+          : <DesignDraftCopy en={`${PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0)} characters remaining. Keep longer evidence in a separate document and reference it here.`} zu={`${PORTFOLIO_LIMIT - (answers[field.id]?.length ?? 0)} izinhlamvu ezisele. Gcina ubufakazi obude kudokhumenti ehlukile bese ubhekisela kubo lapha.`} />}</span>}
         <p className={folder.printAnswer}>{answers[field.id] || <DesignDraftCopy en="[Not yet recorded]" zu="[Akukarekhodwa]" />}</p>
       </div>)}
-      <aside className={folder.review}><h3><DesignDraftCopy en="Review the reasoning together" zu="Buyekeza indlela yokucabanga ndawonye" /></h3><p>{stage.review}</p><p>Discuss what is supported, what needs more evidence and the next attempt. Record feedback and changes in stage 6.</p></aside>
-      <div className={styles.actions}><button type="button" disabled={!ready || draft.loadError} onClick={save}><DesignDraftCopy en="Save folder after this stage" zu="Londoloza ifolda ngemva kwalesi sigaba" /></button><OfflinePageLink href={`/student/design/${stage.lesson}`}><DesignDraftCopy en="Revisit this stage’s lessons →" zu="Buyekeza izifundo zalesi sigaba →" /></OfflinePageLink>{stage.id === 'd4' && <OfflinePageLink href="/student/guides/design"><ArrowLabel>Design Studio guide</ArrowLabel></OfflinePageLink>}{stage.id === 'd5' && <OfflinePageLink href="/student/finance"><ArrowLabel>Farm Finance</ArrowLabel></OfflinePageLink>}</div><p className={folder.saveNote}>{ready ? statusCopy(message) : statusCopy('Opening your design folder…')}</p>
+      <aside className={folder.review}><h3><DesignDraftCopy en="Review the reasoning together" zu="Buyekeza indlela yokucabanga ndawonye" /></h3><p><Tx en={stage.review} /></p><p><Tx en="Discuss what is supported, what needs more evidence and the next attempt. Record feedback and changes in stage 6." /></p></aside>
+      <div className={styles.actions}><button type="button" disabled={!ready || draft.loadError} onClick={save}><DesignDraftCopy en="Save folder after this stage" zu="Londoloza ifolda ngemva kwalesi sigaba" /></button><OfflinePageLink href={`/student/design/${stage.lesson}`}><DesignDraftCopy en="Revisit this stage’s lessons →" zu="Buyekeza izifundo zalesi sigaba →" /></OfflinePageLink>{stage.id === 'd4' && <OfflinePageLink href="/student/guides/design"><TxArrow en="Design Studio guide" /></OfflinePageLink>}{stage.id === 'd5' && <OfflinePageLink href="/student/finance"><ArrowLabel>Farm Finance</ArrowLabel></OfflinePageLink>}</div><p className={folder.saveNote}>{ready ? statusCopy(message) : statusCopy('Opening your design folder…')}</p>
     </section>)}
-    <section className={styles.section}><h2><DesignDraftCopy en="Bring the folder and the actual plan" zu="Letha ifolda nohlelo lwangempela" /></h2><p>A reviewer needs the evidence notes, drawings and your explanation together. Check that each reference names the right revision. Explain an alternative you rejected, a decision still on hold and what could make you revise the plan.</p><p><DesignDraftCopy en="This page does not grade your answers or approve a design. Your facilitator reviews what you can explain and demonstrate, then helps identify the next attempt." zu="Leli khasi aliwabeki amamaki ezimpendulweni zakho futhi alivumi umklamo. Umgqugquzeli uhlola lokho ongakuchaza nokukubonisa, bese esiza ekutholeni umzamo olandelayo." /></p></section>
+    <section className={styles.section}><h2><DesignDraftCopy en="Bring the folder and the actual plan" zu="Letha ifolda nohlelo lwangempela" /></h2><p><Tx en="A reviewer needs the evidence notes, drawings and your explanation together. Check that each reference names the right revision. Explain an alternative you rejected, a decision still on hold and what could make you revise the plan." /></p><p><DesignDraftCopy en="This page does not grade your answers or approve a design. Your facilitator reviews what you can explain and demonstrate, then helps identify the next attempt." zu="Leli khasi aliwabeki amamaki ezimpendulweni zakho futhi alivumi umklamo. Umgqugquzeli uhlola lokho ongakuchaza nokukubonisa, bese esiza ekutholeni umzamo olandelayo." /></p></section>
     <div className={folder.saveBar}>
       <div className={styles.actions}><button type="button" className={styles.primary} disabled={!ready || draft.loadError} onClick={save}><DesignDraftCopy en="Save folder on this device" zu="Londoloza ifolda kule divayisi" /></button><button type="button" disabled={!ready} onClick={download}><DesignDraftCopy en="Download my folder as text" zu="Landa ifolda yami njengombhalo" /></button></div>
       <p role="status">{ready ? statusCopy(message) : statusCopy('Opening your design folder…')}</p>

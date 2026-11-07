@@ -1,3 +1,5 @@
+import { inlineText } from './xh-inline';
+
 export const PORTFOLIO_LIMIT = 8000;
 export const PORTFOLIO_STAGES = [
   {
@@ -91,12 +93,16 @@ export function readPortfolio(raw: string | null): PortfolioAnswers {
   return answers;
 }
 
-export function portfolioText(answers: PortfolioAnswers): string {
-  return [PORTFOLIO_NOTICE, 'Paper or drawing references below are not attachments. Keep a separate copy of those sources.',
+export function portfolioText(answers: PortfolioAnswers, lang = 'en'): string {
+  const tx = (english: string) => inlineText(lang, english);
+  return [tx(PORTFOLIO_NOTICE),
+    // isiXhosa is an unreviewed machine draft: a saved copy says so, in one line.
+    ...(lang === 'xh' ? [tx('Unreviewed isiXhosa draft.')] : []),
+    tx('Paper or drawing references below are not attachments. Keep a separate copy of those sources.'),
     ...PORTFOLIO_STAGES.flatMap(stage => [
-      `${stage.id.toUpperCase()} — ${stage.title}`, stage.purpose,
-      ...stage.fields.map(field => `${field.label}\n${field.prompt}\n\n${answers[field.id]?.trim() || '[Not yet recorded]'}`),
-      `For discussion with a reviewer: ${stage.review}`,
+      `${stage.id.toUpperCase()} — ${tx(stage.title)}`, tx(stage.purpose),
+      ...stage.fields.map(field => `${tx(field.label)}\n${tx(field.prompt)}\n\n${answers[field.id]?.trim() || tx('[Not yet recorded]')}`),
+      `${tx('For discussion with a reviewer:')} ${tx(stage.review)}`,
     ]),
   ].join('\n\n') + '\n';
 }

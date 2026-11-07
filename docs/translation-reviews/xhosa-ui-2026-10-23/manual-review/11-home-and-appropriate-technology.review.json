@@ -1,0 +1,24 @@
+{
+ "unit": "11-home-and-appropriate-technology",
+ "okCount": 111,
+ "items": [
+  {
+   "where": "Rocket stoves, safety warning",
+   "verdict": "repair",
+   "english": "a gas you cannot see or smell",
+   "draft": "irhasi ongayibonisiyo okanye ongayinuki",
+   "backtranslation": "a gas that you did not show / cannot smell",
+   "problem": "'ongayibonisiyo' is not 'cannot see'; carbon monoxide warning garbled.",
+   "corrected": "irhasi ongayiboniyo okanye ongayinuki"
+  },
+  {
+   "where": "Biogas digesters, step 3",
+   "verdict": "repair",
+   "english": "the fresh dung of several cattle or pigs each day",
+   "draft": "ubulongwe obutsha beenkomo okanye iihagu ezininzi ngosuku",
+   "backtranslation": "of many cattle or pigs",
+   "problem": "'several' became 'many' (sizing quantity inflated).",
+   "corrected": "ubulongwe obutsha beenkomo okanye iihagu ezimbalwa ngosuku"
+  }
+ ]
+}

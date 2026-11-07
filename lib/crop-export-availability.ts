@@ -15,6 +15,8 @@ import { sanitiseProductionRecords, sanitisePreservedFoodRecords, type DatedProd
 export type { DatedProductionRecord, PreservedFoodRecord, PreservedFoodMethod, ProductionUnit, ProductionDate } from '@/lib/production-records';
 import { ageReadyForSeason, treeAgeCalendarNote, buildProductionProjection } from '@/lib/production-projection';
 import { confirmedTreeMonths, formatMonthSpan, isHouseholdFoodHarvest, perennialHarvestFor, type PlacedTreeGroup, type TreeAvailabilityItem, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
+import { inlineBuilt } from '@/lib/xh-inline-match';
+import { inlineText } from '@/lib/xh-inline';
 import { ANIMAL_ENTERPRISES, HOUSING_ANIMALS, PRODUCT_LABEL, confirmedAnimalMonths, isFoodProduct, type AnimalAvailabilityItem, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 
 export function forestEntries(slots: readonly TreeAvailabilityItem[][]): AvailabilityEntry[][] {
@@ -490,4 +492,35 @@ export function buildProductionKgGraphs(input: ProductionKgGraphInput): Producti
   return { months, productionRecordsProvided: input.productionRecords !== undefined, stockRecordsProvided: input.preservedProducts !== undefined,
     recordIssues, unquantifiedCropSources: [...unquantified.values()], undatedSources: [...undated.values()], annualTreeEstimates,
   };
+}
+
+// ── The same chart, read in isiXhosa ────────────────────────────────────────────────────
+//
+// The chart's English (also drawn on paper) is built above; the screen translates what it shows.
+
+/** Why a crop cycle has no kilograms: fixed sentences, plus the bed-conflict list with its labels. */
+export function cropCycleReasonText(lang: string, english: string): string {
+  return inlineBuilt(lang, english, ['Resolve growing-space conflicts: {beds}']);
+}
+
+/** The example farm's made-up stock records (lib/sample-production-plan.ts): fixed labels, not catalogue names. */
+const EXAMPLE_STOCK_LABELS: ReadonlySet<string> = new Set([
+  'Frozen green beans', 'Dried banana', 'Fermented cabbage', 'Processed tomatoes', 'Dried mango', 'Stored macadamia nuts',
+]);
+
+/**
+ * A chart row's name. Animal rows read "Laying hens (commercial) - eggs": the enterprise name
+ * stays as the table gives it and the product word after the dash is translated. The example
+ * farm's stock labels are drafted. Crop, tree and any other catalogue names are never translated.
+ */
+export function availabilityLabelText(lang: string, label: string): string {
+  if (lang !== 'xh') return label;
+  if (EXAMPLE_STOCK_LABELS.has(label)) return inlineText(lang, label);
+  const dash = label.lastIndexOf(' - ');
+  if (dash > 0) {
+    const word = label.slice(dash + 3);
+    const product = (Object.keys(PRODUCT_LABEL) as (keyof typeof PRODUCT_LABEL)[]).find((key) => PRODUCT_LABEL[key].toLowerCase() === word);
+    if (product) return `${label.slice(0, dash + 3)}${inlineText(lang, PRODUCT_LABEL[product]).toLowerCase()}`;
+  }
+  return label;
 }

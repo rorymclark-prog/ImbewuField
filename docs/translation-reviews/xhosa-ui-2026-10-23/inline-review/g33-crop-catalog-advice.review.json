@@ -1,0 +1,35 @@
+{
+  "unit": "g33-crop-catalog-advice",
+  "shard": "g33-crop-catalog-advice.ts",
+  "range": "all",
+  "okCount": 60,
+  "items": [
+    {
+      "index": 26,
+      "key": "This stand is the audited irrigated geometry. Groundnuts need sandy, well-drained soil and a long frost-free growing season.",
+      "verdict": "repair",
+      "draft": "Esi sithuba siyigeometri ehlolwe ngokunkcenkceshelwa. I-groundnuts zifuna umhlaba oneentlabathi nodlulisa amanzi kakuhle kunye nexesha elide lokukhula elingenaqabaka.",
+      "backtranslation": "This spacing is geometry checked by irrigation. Groundnuts need sandy, well-draining soil...",
+      "problem": "\"audited irrigated geometry\" garbled to \"geometry checked by (being) irrigated\"; the irrigated-condition meaning is lost.",
+      "corrected": "Olu lungiselelo lwezityalo yigeometri ehloliwe kwiimeko zokunkcenkceshelwa. I-groundnuts zifuna umhlaba oneentlabathi nodlulisa amanzi kakuhle kunye nexesha elide lokukhula elingenaqabaka."
+    },
+    {
+      "index": 27,
+      "key": "Unshelled (in-shell) pods dried to in-shell moisture ~10% or less, stored in gunny bags, mud bins, baskets or a ventilated dry room, protected from pests and damp.",
+      "verdict": "kept",
+      "draft": "Iipodi ezingaxobulwanga (in-shell) ezomiswe zaya kumswakama we-in-shell ongama-~10% okanye ngaphantsi, zigcinwe kwiingxowa zegunny, kwiibhini zodaka, kwiingobozi okanye egumbini elomileyo elifumana umoya, zikhuselwe kwizinambuzane nakumswakama.",
+      "backtranslation": "...stored in gunny bags, mud bins, [iingobozi - unclear word], or a dry ventilated room...",
+      "problem": "\"baskets\" rendered as \"iingobozi\", an uncertain/possibly regional word (not attested elsewhere in the locale); replaced with plain loanword for baskets. Coordinator: kept \"iingobozi\" (ingobozi is the isiXhosa word for basket); not applied.",
+      "corrected": "Iipodi ezingaxobulwanga (in-shell) ezomiswe zaya kumswakama we-in-shell ongama-~10% okanye ngaphantsi, zigcinwe kwiingxowa zegunny, kwiibhini zodaka, kwiibhasikithi okanye egumbini elomileyo elifumana umoya, zikhuselwe kwizinambuzane nakumswakama."
+    },
+    {
+      "index": 50,
+      "key": "Grown and eaten as a fresh vegetable, unlike field maize — the dossier's own food-group is fruiting vegetable, not staple grain, so it is kept there rather than lumped with maize despite the shared species. Tender to frost like maize.",
+      "verdict": "repair",
+      "draft": "Ikhuliswa kwaye idliwa njengemifuno emitsha, ngokungafaniyo ne-maize yentsimi — iqela lokutya ledosi ngokwalo yimifuno eqhamayo, hayi iinkozo eziyisiseko, ngoko igcinwe apho endaweni yokudityaniswa ne-maize nangona ilolu hlobo lufanayo. Ithambile kwiqabaka njenge-maize.",
+      "backtranslation": "...the food group of the dose itself is fruiting vegetables, not staple grain...",
+      "problem": "\"dossier\" (the crop's own catalogue file) mistranslated as \"dose\" (idosi).",
+      "corrected": "Ikhuliswa kwaye idliwa njengemifuno emitsha, ngokungafaniyo ne-maize yentsimi — iqela lokutya elibhalwe kwifayile yesityalo ngokwalo yimifuno eqhamayo, hayi iinkozo eziyisiseko, ngoko igcinwe apho endaweni yokudityaniswa ne-maize nangona ilolu hlobo lufanayo. Ithambile kwiqabaka njenge-maize."
+    }
+  ]
+}

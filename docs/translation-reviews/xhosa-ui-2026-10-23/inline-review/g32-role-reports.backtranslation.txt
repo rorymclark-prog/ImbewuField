@@ -1,0 +1,74 @@
+0. Production and money reports
+1. Read, print or download a report from this book.
+2. YOUR FARM, AS RECORDED
+3. Farm reports
+4. Type of farm report
+5. Scope of farm report
+6. Choose a period. The preview and the PDF use the same records.
+7. The report analysis and the tables are currently in English. Records keep their original names and units.
+8. Production
+9. What was harvested and recorded as sold.
+10. Money
+11. Money received, costs and unpaid invoices.
+12. Report period
+13. This month
+14. This calendar year
+15. All the gardens in this book. Planned harvests are not in this report.
+16. Your records are loading…
+17. The records could not be confirmed
+18. Some books could not be read. Try again before exporting the report, so that missing data is not shown as 0.
+19. Try the records again
+20. Offline: this report uses the records currently on this device. New shared records may be missing.
+21. Make the next record have a price
+22. Look for missing records and unpaid invoices before sharing your report.
+23. Go back to this book
+24. Review invoices
+25. Facilitator delivery report
+26. Review saved sessions, participation, feedback and follow-up.
+27. Facilitator report area
+28. Scope of facilitator report
+29. DELIVERY, LEARNING AND NEXT STEPS
+30. The project chosen above applies to this report. Only saved sessions are included.
+31. From session date
+32. To session date
+33. Record owner
+34. All visible record owners
+35. Owner {n} · {name}
+36. Name not recorded
+37. Chosen owner · no record in this project
+38. Facilitators' names are recorded text; ownership follows the account that saved the session.
+39. Choose dates in order, ending today or earlier.
+40. MEL evidence area
+41. Scope of MEL report
+42. MONITORING, EVALUATION AND LEARNING
+43. Evidence, change and learning
+44. Bring approved indicators and assessment evidence into one review, specifying the people covered and the dates.
+45. Authorised MEL evidence is loading…
+46. Choose an authorised organisation to review its MEL evidence.
+47. Milestone evidence date
+48. Refresh evidence
+49. Assessment findings
+50. Compare together
+51. Chosen project · no visible records
+52. Choose an assessment
+53. Chosen assessment · not found
+54. No matching comparison
+55. Chosen earlier assessment · not found
+56. Milestones use the chosen reporting closing date. Assessment answers and action status become the current state. Each measure shows its size.
+57. Try the evidence again
+58. Choose a milestone evidence date today or earlier.
+59. The chosen assessment is loading…
+60. The chosen assessment no longer exists. Choose an assessment to continue.
+61. Turn findings into the next decision
+62. Use the available assessment and milestone areas to record an approved action, owner, date and evidence.
+63. Review assessment evidence
+64. Assessment analysis is not available or has not been enabled for this account.
+65. Programme milestone evidence is not available for this account.
+66. The chosen earlier assessment is not available or does not match. Choose it again; the report was not expanded.
+67. The chosen assessment evidence is not available in this scope.
+68. The findings of the published assessment are not available.
+69. The findings of the chosen assessment are not available.
+70. MEL evidence
+71. Approved indicators, assessment findings and compared change.
+72. Choose a project and assessment scope in the MEL area below.
+73. The controls here are an unreviewed isiXhosa draft. The MEL analysis text, tables and PDF are in English. Names and recorded evidence are kept as recorded.

@@ -1,0 +1,115 @@
+{
+ "id": "seeds-sovereignty",
+ "title": "Imbewu nolawulo lwembewu",
+ "description": "Londoloza, gcina kwaye wabelane ngembewu — inkululeko ekuthengeni imbewu rhoqo ngesizini.",
+ "lessons": [
+  {
+   "id": "seeds-sovereignty-l1",
+   "title": "Kutheni ukulondoloza imbewu kubalulekile",
+   "body": "Imbewu ye-open-pollinated esuka kuhlobo oluzinzileyo inokuvelisa izityalo ezifanayo xa i-pollination (ukudluliselwa kothuli lwentyatyambo ukusuka kwenye intyatyambo ukuya kwenye) ilawulwa ngokufanelekileyo. Ii-F1 hybrid zivela kubazali abakhethiweyo. Imbewu yazo egciniweyo inokuhluma, kodwa isizukulwana esilandelayo siyahluka; kusenokwenzeka ukuba singayigcini indibaniselwano owawuyifuna.\n\nUlawulo lwembewu (seed sovereignty) luquka ulwazi nokhetho olufunekayo ukuze utyale, ulondoloze kwaye wabelane ngembewu efanelekileyo. Gcina ukuchongwa kwesityalo nohlobo kunye neqela ngalinye lembewu.\n\nKhetha izityalo ezinempilo ezineempawu eziluncedo. Qala ngesityalo osaziyo, ubuze umcebisi wokulondoloza imbewu ukuba angayilawula njani i-pollination nokukhetha kwaso.",
+   "keyPoints": [
+    "Iintlobo ezizinzileyo ze-open-pollinated zifuna ulawulo olufanelekileyo lwe-pollination",
+    "Ulawulo lwembewu luthetha inkululeko ekuxhomekekeni kwinkampani yembewu ngesizini nganye",
+    "Ukwahluka kwezityalo neentlobo kunganceda ukuziqhelanisa notshintsho lwemozulu xa iintlobo zilungele iimeko zasekhaya",
+    "Khetha izityalo ezinempilo ezineempawu eziluncedo; sebenzisa isikhokelo sokulondoloza imbewu esithile kwisityalo ngasinye"
+   ],
+   "quiz": [
+    {
+     "q": "Kutheni imbewu elondolozwe kwitumato ye-hybrid (F1) ingayi kuvelisa izityalo ezifana nomzali kwisizini elandelayo?",
+     "options": [
+      "Imbewu ye-hybrid ayizali kwaphela kwaye ayiyi kuhluma konke konke",
+      "Imbewu ye-hybrid yidibaniso lemfuza lexesha elinye — inzala yayo yahluka kumzali wayo ngeendlela ezingalindelekanga",
+      "Ii-hybrid zikhula kuphela kwii-greenhouse zorhwebo",
+      "Imbewu ye-hybrid iphulukana ngokukhawuleza nokukwazi ukuhluma ekugcinweni"
+     ],
+     "correct": 1,
+     "rationale": "Ii-F1 hybrid zenziwa ngokuwelisa imigca emibini ethile yabazali — imbewu yazo iphethe idibaniso lemfuza elixubeneyo nelingaqikelelekiyo, ayiyiyo ikopi ezinzileyo yomzali."
+    },
+    {
+     "q": "Xa ukhetha isityalo somzali sokuthatha kuso imbewu, yintoni emele ikhokele ukhetho lwakho?",
+     "options": [
+      "Nasiphi na isityalo esivelise isiqhamo esinye esikhulu kunazo zonke",
+      "Isityalo esinempilo kakhulu, esingenasifo, esinemo entle, nokuba asiyiyo evelisa kakhulu",
+      "Nasiphi na isityalo esavuthwa kuqala, ngaphandle kokujonga impilo",
+      "Nasiphi na isityalo — ukhetho aluchaphazeli umgangatho wembewu yexesha elizayo"
+     ],
+     "correct": 1,
+     "rationale": "Ukhetha iimpawu ozifunayo ukuba ziqhubeke — impilo namandla okukhula zibaluleke ngakumbi kwixesha elide kunesivuno esikhulu sesityalo esinye."
+    }
+   ],
+   "infographicAlt": "Iipakethi zembewu ezimbini ngaphezu koqhathaniso olulula: izityalo ezintlanu ezibonakala zifana ngasekhohlo nezityalo ezintlanu ezahlukeneyo ngasekunene. Inzala yangempela ixhomekeke kuhlobo nakwi-pollination."
+  },
+  {
+   "id": "seeds-sovereignty-l2",
+   "title": "Indlela yokulondoloza imbewu: iindlela ezomileyo nezimanzi",
+   "body": "Imbewu eyomileyo kufuneka ivuthwe phambi kokuqokelelwa. Susa i-chaff (inkunkuma ethambileyo ejikelezayo imbewu) kunye nembewu eyonakeleyo, uze ugqibezele ukuyomisa emthunzini kukho umoya ohambayo.\n\nImbewu esesiqhamweni esinenyama idinga indlela ethile kwisityalo ngasinye. Imbewu yetumato inokuvundiswa (fermentation) ixesha elifutshane ukunceda ukususa ijeli yayo, emva koko ihlanjululwe yomiswe kakuhle. Gcina ingqayi esebenzayo ivulekile okanye igqunywe ngokukhululekileyo. Ukuvundiswa akufuneki kuzo zonke izityalo ezineembewu ezimanzi kwaye akuqinisekisi mbewu engenasifo.\n\nI-pollination (ukudluliselwa kothuli lwentyatyambo ukusuka kwenye intyatyambo ukuya kwenye) nayo ibalulekile. Uthuli lwentyatyambo lombona luthwalwa ngumoya (wind-pollinated), kwaye umbona unokuxubana nezinye iintlobo. Iitumato ubukhulu becala ziyazi-pollinate ngokwazo, kodwa ukuxubana kuyenzeka. Jonga isityalo nohlobo phambi kokucwangcisa ukwahlula (isolation) okanye ukulondoloza imbewu.",
+   "keyPoints": [
+    "Izityalo zendlela eyomileyo (iimbotyi, umbona, i-sunflower (intyatyambo yelanga)) ziyoma nje esityalweni phambi kokuqokelelwa",
+    "Ukuvundiswa (fermentation) kwetumato kususa ijeli; ezinye iimbewu ezimanzi zidinga indlela yazo yokulungiswa",
+    "Iitumato ubukhulu becala ziyazi-pollinate ngokwazo kodwa zinokuxubana; uthuli lwentyatyambo lombona luthwalwa ngumoya. Jonga isikhokelo sokwahlula esithile kwisityalo nohlobo phambi kokulondoloza imbewu",
+    "Hlambulula imbewu yetumato elungisiweyo uyomise kakuhle phambi kokuyigcina"
+   ],
+   "quiz": [
+    {
+     "q": "Ukuvundiswa (fermentation) okufutshane kunceda ukususa ntoni xa kulungiswa imbewu yetumato?",
+     "options": [
+      "Ukuvundiswa kuphucula incasa yembewu",
+      "Kunceda ukususa ijeli ejikeleze imbewu phambi kokuhlambulula nokuyomisa",
+      "Kubulala zonke izinambuzane ezonakalisayo ngaphakathi esiqhamweni",
+      "Yinto yesiko nje engenamsebenzi ngokwenene"
+     ],
+     "correct": 1,
+     "rationale": "Ukuvundiswa kunceda ukwahlula imbewu yetumato kwijeli yayo. Akuqinisekisi ukuhluma okanye imbewu engenasifo; yomisa, gcina uze uvavanye iqela."
+    },
+    {
+     "q": "Kutheni umbona udinga umgama wokwahlula omkhulu kakhulu kunetumato ukugcina uhlobo luhlambulukile?",
+     "options": [
+      "Imbewu yombona iyaphuka lula",
+      "Uthuli lwentyatyambo lombona luthwalwa ngumoya kwaye umbona uxubana ngokulula nakumgama omde; iitumato ubukhulu becala ziyazi-pollinate ngokwazo",
+      "Iitumato azixubani kwaphela kuyo nayiphi na imeko",
+      "Umbona uyatyatyamba ixesha elifutshane"
+     ],
+     "correct": 1,
+     "rationale": "Umoya uthwala ithuli lentyatyambo lombona kude kakhulu kunokuba izinambuzane okanye ukuzi-pollinate ngokwazo kuhambisa ithuli letumato — loo mahluko kwindlela ye-pollination yiyo eqhuba imfuneko yomgama wokwahlula."
+    }
+   ],
+   "infographicAlt": "Imbewu eyomileyo iqokelelwa kwiipodi (iingxowa zembewu) ezivuthiweyo. Umzekelo wendlela emanzi yetumato ubonisa ukuvundiswa (fermentation) okufutshane, ukuhlambulula nokuyomisa."
+  },
+  {
+   "id": "seeds-sovereignty-l3",
+   "title": "Ukomisa, ukugcina nokwabelana ngembewu",
+   "body": "Yomisa imbewu kakuhle phambi kokuyigcina: kwiimvulophu zephepha, hayi iplastiki, kwindawo enomthunzi nomoya ohambayo — ungaze usebenzise ilanga elithe ngqo okanye ubushushu obuvalelweyo. Iintshaba ezintathu zokukwazi kwembewu ukuhluma kukushisa, ukukhanya nokufuma. Ubomi bembewu ekugcinweni buyahluka ngokwesityalo neemeko, ngoko vavanya ukuhluma phambi kokuthembela kwimbewu egciniweyo.\n\nBhala kwimvulophu nganye isityalo, uhlobo nomhla egciniwe ngawo. Gcina imbewu eyomile kakuhle kwisikhongozeli esivaliweyo kwindawo epholileyo, emnyama, eyomileyo. Ukuvala imbewu emanzi kungavalela ukufuma ngaphakathi kwaye kuyonakalise.\n\nPhambi kwesizini entsha yokutyala, vavanya iqela elincinci ngokuhluma ukuze ungathembeli kwimbewu eyaphulukana ngokuthe cwaka nokukwazi ukuhluma.\n\nCwangcisa ukutshintshisana ngembewu nabamelwane kwesi sizini. Oko umzi omnye ukugcinayo kakuhle, imizi emininzi inokwabelana ngako — kwaye ukwahluka kweentlobo zeqela lonke kukhula ngokutshintshisana ngalinye.",
+   "keyPoints": [
+    "Yomisa imbewu emthunzini kukho umoya ohambayo; ungaze kwilanga elithe ngqo okanye ubushushu obuvalelweyo",
+    "Gcina imbewu ebhalwe igama kwindawo epholileyo, emnyama, eyomileyo — ukushisa, ukukhanya nokufuma ziintshaba ezintathu zokukwazi ukuhluma",
+    "Vavanya iqela elincinci ngokuhluma phambi kokuthembela kwimbewu egciniweyo ekutyaleni",
+    "Ukutshintshisana ngembewu kwandisa ukwahluka kweentlobo zomntu wonke ngokukhawuleza kunokulondoloza wedwa"
+   ],
+   "quiz": [
+    {
+     "q": "Zintoni iintshaba ezintathu eziphambili zokukwazi kwembewu egciniweyo ukuhluma?",
+     "options": [
+      "Umoya, izinambuzane nokungunda",
+      "Ukushisa, ukukhanya nokufuma",
+      "Ukubanda, ubumnyama nokoma",
+      "Ukuchukumisa umhlaba, izinambuzane ezonakalisayo neempuku"
+     ],
+     "correct": 1,
+     "rationale": "Ukugcina imbewu eyomile kakuhle ipholile kwaye imnyama kuphikisana nazo zontathu. Isikhongozeli esivaliweyo sinceda ukugcina imbewu eyomileyo iyomile, kodwa sinokubamba ukufuma ukuba imbewu ipakishwe isemanzi."
+    },
+    {
+     "q": "Kutheni kuvavanywa iqela elincinci lembewu egciniweyo ngokuhluma phambi kwesizini yokutyala?",
+     "options": [
+      "Yimfuneko yomthetho ekwabelaneni ngembewu",
+      "Imbewu inokuphulukana ngokuthe cwaka nokukwazi ukuhluma ekugcinweni, kwaye uvavanyo luthintela ukuthembela kwimbewu engayi kukhula",
+      "Iphucula incasa yembewu",
+      "Kuyimfuneko kuphela kwimbewu ye-hybrid"
+     ],
+     "correct": 1,
+     "rationale": "Uvavanyo lokuhluma lubamba imbewu esele ifile ekugcinweni phambi kokuba uthembele kuyo ekutyaleni kwesizini yonke."
+    }
+   ],
+   "infographicAlt": "Iimvulophu zembewu zigcinwe kwisikhongozeli esivaliweyo, zipholile, zimnyama kwaye ziyomile. Ecaleni kwazo, iimbewu ezilishumi kwilaphu elimanzi — ezinye zihlumile, ezinye azihlumanga — njengovavanyo lokuhluma."
+  }
+ ]
+}
