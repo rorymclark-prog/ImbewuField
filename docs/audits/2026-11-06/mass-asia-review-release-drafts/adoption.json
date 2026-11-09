@@ -1,0 +1,13 @@
+{
+  "sourceSha256": "1d81152adc5fb6c32cfb2bb21d707c6e6846f8974be873c039154e7ce978efc6",
+  "pairs": 16,
+  "reviewStatus": "unreviewed-ai-draft",
+  "newAppLanguageActivation": false,
+  "humanFluentApproval": false,
+  "actualPairChecks": 16,
+  "damagedControlsPerLocale": 16,
+  "actualNotesWords": 140,
+  "use": "Existing-language update/history captions only; source English retained underneath. Existing exact shared route wording preserved. No dedicated visible AI-draft badge claimed.",
+  "limits": "No fullsuite or actualbrowser/layout proof. Seven worksheet choices compare84 inactiveAI candidates only.",
+  "sourceReconciliation": "All four exact English rows and message hashes remain unchanged after release coverage was stamped with the actual code commit."
+}

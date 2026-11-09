@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-07",
+  "status": "unreviewed-machine-draft",
+  "scope": "UI release description only; no farming or course instruction",
+  "sourceEnglish": "Sector contour labels stay whole near the boundary.",
+  "translations": {
+    "zu": "Amalebula emigqa yokuphakama kuSector ahlala ephelele eduze komngcele.",
+    "st": "Mabitso a mela ya bophahamo ho Sector a dula a felletse pela moedi.",
+    "ts": "Malebulu ya milayeni yo tlakuka eka Sector ma tshamaka ma helele ekusuhi ni ndzilakana.",
+    "ve": "Malebulu a mitalo ya vhulapfu kha Sector a dzula o fhelela tsini na mukano."
+  }
+}

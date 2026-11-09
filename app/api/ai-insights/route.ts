@@ -3,8 +3,9 @@ import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
-
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
+import { resolveLocalAdvicePolicy, localAdviceDecisionCurrent } from '@/lib/local-advice-policy';
+import type { LocalAdviceDecision } from '@/lib/local-advice-types';
+import { selectLocalAdviceSystem } from '@/lib/local-advice-prompts';
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -70,48 +71,67 @@ Month-by-month key activities tied to the actual rainfall pattern (${d.rainfall.
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/ai-insights');
   if (auth.response) return auth.response;
-  const metered = await meteredAi(req, auth, '/api/ai-insights', client);
-  if (metered.response) return metered.response;
-  const { ai } = metered;
-  let data: LocationData;
+  let body: { adviceContext?: unknown; locationData?: LocationData };
   try {
-    data = await req.json();
+    body = await req.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
-  if (!data?.biome || !data.rainfall?.monthly || !Array.isArray(data.rainfall.monthly)
-      || !data.elevation || !data.soil || !data.climate) {
+  const data = body?.locationData;
+  if (!body || typeof body !== 'object' || Array.isArray(body) || !data?.biome
+      || !Array.isArray(data.rainfall?.monthly) || !data.elevation || !data.soil || !data.climate
+      || !Number.isFinite(data.lat) || !Number.isFinite(data.lon)) {
     return NextResponse.json({ error: 'Invalid location data' }, { status: 400 });
   }
-  const prompt = buildPrompt(data);
-
-  const stream = await ai.messages.stream({
-    model: AI_MODELS.main,
-    max_tokens: 2048,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const readable = new ReadableStream({
-    async start(controller) {
-      try {
-        for await (const chunk of stream) {
-          if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
-            controller.enqueue(new TextEncoder().encode(chunk.delta.text));
-          }
-        }
-      } catch (err) {
-        const msg = err instanceof Error ? err.message : String(err);
-        controller.enqueue(new TextEncoder().encode(`\n\n⚠ ${msg}`));
-      } finally {
-        controller.close();
-      }
-    },
-  });
-
-  return new Response(readable, {
-    headers: {
-      'Content-Type': 'text/plain; charset=utf-8',
-      'Cache-Control': 'no-cache',
-    },
-  });
+  let personalPrompt: string;
+  try { personalPrompt = buildPrompt(data); }
+  catch { return NextResponse.json({ error: 'Invalid location data' }, { status: 400 }); }
+  const policyInput = { adviceContext: body.adviceContext, location: data, hasSiteInputs: true };
+  let decision: LocalAdviceDecision;
+  try { decision = await resolveLocalAdvicePolicy(req, auth, policyInput); }
+  catch { return NextResponse.json({ code: 'LOCAL_ADVICE_COUNTRY_SOURCE_UNAVAILABLE',
+    error: 'Saved-site country details could not be checked. Try again after account updates reconnect.', allowanceMayBeSpent: false },
+    { status: 503, headers: { 'Cache-Control': 'no-store' } }); }
+  if (!decision.allowed) return NextResponse.json({ code: decision.code, error: decision.error, allowanceMayBeSpent: false },
+    { status: decision.status, headers: { 'Cache-Control': 'no-store' } });
+  if (decision.mode !== 'personal-site') return NextResponse.json({ code: 'LOCAL_ADVICE_PERSONAL_CONTEXT_NOT_ALLOWED',
+    error: 'This route requires a supported saved-site context. General app help is available in chat.', allowanceMayBeSpent: false },
+    { status: 422, headers: { 'Cache-Control': 'no-store' } });
+  let allowanceMayBeSpent = false;
+  const contextChanged = () => NextResponse.json({ code: 'LOCAL_ADVICE_CONTEXT_CHANGED',
+    error: 'The saved-site country context changed or could not be checked. No advice was delivered. Check the intended site before asking again.', allowanceMayBeSpent },
+    { status: 409, headers: { 'Cache-Control': 'no-store' } });
+  const stillCurrent = async () => {
+    if (req.signal.aborted) return false;
+    try {
+      const fresh = await resolveLocalAdvicePolicy(req, auth, policyInput);
+      return !req.signal.aborted && localAdviceDecisionCurrent(decision, fresh);
+    } catch { return false; }
+  };
+  const prompt = selectLocalAdviceSystem(decision.mode, personalPrompt);
+  if (!await stillCurrent()) return contextChanged();
+  try {
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
+    const metered = await meteredAi(req, auth, '/api/ai-insights', client);
+    allowanceMayBeSpent = true;
+    if (metered.response) return metered.response;
+    if (!await stillCurrent()) return contextChanged();
+    const stream = await metered.ai.messages.stream({ model: AI_MODELS.main, max_tokens: 2048,
+      messages: [{ role: 'user', content: prompt }] }, { signal: req.signal });
+    // Preserve the completed metering iterator while withholding every chunk
+    // until the original saved-country decision has been checked again.
+    const chunks: string[] = [];
+    for await (const chunk of stream) {
+      if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') chunks.push(chunk.delta.text);
+    }
+    if (!await stillCurrent() || req.signal.aborted) return contextChanged();
+    return new Response(chunks.join(''), { headers: { 'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-store', 'X-Imbewu-Advice-Mode': decision.mode } });
+  } catch {
+    console.error('[api/ai-insights] local advice request failed');
+    if (!await stillCurrent()) return contextChanged();
+    return NextResponse.json({ code: 'LOCAL_ADVICE_MODEL_UNAVAILABLE',
+      error: 'The advice request could not be completed. No advice was delivered. Try again explicitly.', allowanceMayBeSpent },
+      { status: 502, headers: { 'Cache-Control': 'no-store' } });
+  }
 }

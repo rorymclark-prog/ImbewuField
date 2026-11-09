@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "status": "needs-fluent-human-review",
+  "provenance": {
+    "executor": "Codex",
+    "method": "AI draft",
+    "createdOn": "2026-11-03"
+  },
+  "source": "source.json",
+  "sourceSha256": "ea662c644d50f4703b548e55165ae4e765e51a3317173d6cc9df1b5d35940daa",
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "messagesPerLocale": 6,
+  "totalCandidates": 24,
+  "reviewStatus": "unreviewed-ai-draft",
+  "fluentHumanApproval": false,
+  "existingDisclosedCandidateIntegration": true,
+  "newLanguageEnablement": false,
+  "scope": "Six newest UI release/tour strings only. No lesson, species, crop instruction, language approval or older-copy rewrite.",
+  "structuralValidation": "structural-validation.json"
+}

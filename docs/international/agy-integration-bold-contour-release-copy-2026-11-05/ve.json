@@ -1,0 +1,14 @@
+{
+  "locale": "ve",
+  "sourceSha256": "84e299057b574f4f05dff909b18bc080fceb23599139bdae92d72a980afae708",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "integrationBoldContourRelease.message.01",
+      "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+      "messageSha256": "968cf14c7fb3268a2ab00b3432955732243dad63ddebc0f90c3320dbaa289358",
+      "translation": "Zwienziso zwa tshipida zwino zwi sumbedza mitalo yo dziaho ya vhuimo ha mavu na mitalo i yelanaho ya thaluso ya mafulo."
+    }
+  ]
+}

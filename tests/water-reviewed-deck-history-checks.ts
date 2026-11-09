@@ -71,6 +71,9 @@ function checkOrdinaryMedia() {
   const counts = Object.fromEntries(['st', 've', 'ts'].map(language =>
     [language, ordinaryMedia.frames.filter((row: any) => row.language === language).length]));
   assert.deepEqual(counts, { st: 8, ve: 9, ts: 10 });
+  // Every frame keeps its exact binding check. Its language's complete deck
+  // is the same read-only input during this phase, so validate it once here.
+  const checkedDecks = new Map<'st' | 've' | 'ts', { slides: any[] }>();
   for (const row of ordinaryMedia.frames) {
     const bytes = readFileSync(row.asset);
     const residualBefore = soilWaterResidualMediaBefore(row.asset);
@@ -84,9 +87,13 @@ function checkOrdinaryMedia() {
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
     assert.notEqual(row.new.sha256, row.old.sha256);
-    const currentDeck = JSON.parse(readFileSync(`docs/narration/water-harvesting.${row.language}.paired-draft.json`, 'utf8'));
-    const beforeResidual = soilWaterResidualPairedBefore(currentDeck, `docs/narration/water-harvesting.${row.language}.paired-draft.json`);
-    waterDeckBeforeOrdinary(currentDeck, row.language);
+    let beforeResidual = checkedDecks.get(row.language);
+    if (!beforeResidual) {
+      const currentDeck = JSON.parse(readFileSync(`docs/narration/water-harvesting.${row.language}.paired-draft.json`, 'utf8')) as { slides: any[] };
+      beforeResidual = soilWaterResidualPairedBefore(currentDeck, `docs/narration/water-harvesting.${row.language}.paired-draft.json`);
+      waterDeckBeforeOrdinary(currentDeck, row.language);
+      checkedDecks.set(row.language, beforeResidual);
+    }
     const slide = beforeResidual.slides[row.slide - 1];
     assert.deepEqual(row.sourceDraftBinding.sourceEnglish, slide.english);
     assert.deepEqual(row.sourceDraftBinding.currentDraftTarget, slide.target);

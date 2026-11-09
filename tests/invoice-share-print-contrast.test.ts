@@ -18,12 +18,41 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import ts from 'typescript';
 
 const invoiceSrc = readFileSync(fileURLToPath(new URL('../app/invoice/page.tsx', import.meta.url)), 'utf8');
 const shareButtonSrc = readFileSync(
   fileURLToPath(new URL('../components/exchange/ShareListingButton.tsx', import.meta.url)),
   'utf8',
 );
+
+const invoiceAst = ts.createSourceFile('invoice.tsx', invoiceSrc, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+function actionButton(action: string): string {
+  const matches: ts.JsxOpeningElement[] = [];
+  const visit = (node: ts.Node) => {
+    if (ts.isJsxOpeningElement(node) && node.tagName.getText(invoiceAst) === 'button') {
+      const click = node.attributes.properties.find((attribute): attribute is ts.JsxAttribute => ts.isJsxAttribute(attribute) && attribute.name.getText(invoiceAst) === 'onClick');
+      const disabled = node.attributes.properties.find((attribute): attribute is ts.JsxAttribute => ts.isJsxAttribute(attribute) && attribute.name.getText(invoiceAst) === 'disabled');
+      // The underlined Retry action also invokes persist. Its text-only style
+      // is not one of the validity-gated filled primary action buttons.
+      const primary = disabled?.initializer && ts.isJsxExpression(disabled.initializer) && disabled.initializer.expression?.getText(invoiceAst) === '!valid';
+      if (primary && click?.initializer && ts.isJsxExpression(click.initializer) && click.initializer.expression) {
+        let ownsAction = false;
+        const handler = click.initializer.expression;
+        const find = (part: ts.Node) => {
+          if (ts.isCallExpression(part) && ts.isIdentifier(part.expression) && part.expression.text === action) ownsAction = true;
+          ts.forEachChild(part, find);
+        };
+        if (ts.isIdentifier(handler)) ownsAction = handler.text === action;
+        else find(handler);
+        if (ownsAction) matches.push(node);
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(invoiceAst); assert.equal(matches.length, 1, `${action} should have one validity-gated primary action button`);
+  return matches[0].getText(invoiceAst);
+}
 
 test('invoice page no longer fills Share/Print with the failing WhatsApp-green or light-ochre + white pairing', () => {
   assert.doesNotMatch(invoiceSrc, /#25D366/, 'WhatsApp green literal should be gone from the invoice page');
@@ -34,16 +63,16 @@ test('invoice page no longer fills Share/Print with the failing WhatsApp-green o
   );
 });
 
-test('invoice header Share/Print use the themed forest fill and the CLAUDE.md ochre-fill value', () => {
-  const shareCount = (invoiceSrc.match(/background:\s*valid\s*\?\s*'var\(--color-forest-800\)'/g) ?? []).length;
-  const printCount = (invoiceSrc.match(/background:\s*valid\s*\?\s*'#9A6018'/g) ?? []).length;
-  // header pair + the bottom-of-form duplicate pair = 2 each, plus (code-05, w14 dark-leftovers)
-  // the "Save invoice" button below the form, which used to fill with a literal '#1F4D2B' and now
-  // shares the same themed forest-fill token — a third, equally correct match for Share's pattern.
-  // w19-15: the header pair was removed (it duplicated the bottom row and squeezed the title in
-  // isiZulu on phone), so Share is now the bottom button + Save invoice, and Print the bottom one.
-  assert.equal(shareCount, 2, 'expected the Share button fill at the bottom of the form and the Save invoice button');
-  assert.equal(printCount, 1, 'expected the Print button fill at the bottom of the form');
+test('invoice Save, Download and Share use the themed forest pairing while Print keeps the prescribed ochre pairing', () => {
+  // Download is a separate user choice because native Share may offer no file
+  // download. Check each real action, not a total that rejects a new safe button.
+  for (const action of ['persist', 'deliverInvoicePdf', 'shareInvoice']) {
+    const button = actionButton(action);
+    assert.match(button, /background:\s*valid\s*\?\s*'var\(--color-forest-800\)'/, `${action} lost the themed forest fill`);
+    assert.match(button, /color:\s*valid\s*\?\s*'var\(--on-forest-800\)'/, `${action} lost the matching on-forest text`);
+  }
+  const print = actionButton('printInvoice');
+  assert.match(print, /background:\s*valid\s*\?\s*'#9A6018'/); assert.match(print, /color:\s*valid\s*\?\s*'#fff'/);
 });
 
 test('invoice Share/Print (bottom row only, w19-15) clear the 44px tap-target floor', () => {
@@ -51,6 +80,9 @@ test('invoice Share/Print (bottom row only, w19-15) clear the 44px tap-target fl
   assert.equal((invoiceSrc.match(/onClick=\{printInvoice\}/g) ?? []).length, 1, 'Print lives once, at the bottom');
   assert.match(invoiceSrc, /onClick=\{shareInvoice\}[\s\S]{0,400}min-h-11/, 'Share button should carry min-h-11');
   assert.match(invoiceSrc, /onClick=\{printInvoice\}[\s\S]{0,400}min-h-11/, 'Print button should carry min-h-11');
+  const download = actionButton('deliverInvoicePdf');
+  assert.match(download, /deliverInvoicePdf\(true\)/, 'Download must use the explicit shared delivery mode');
+  assert.match(download, /min-h-11/, 'Download must also clear the touch-target floor');
 });
 
 test('ShareListingButton no longer fills its WhatsApp-share pill with white-on-green', () => {

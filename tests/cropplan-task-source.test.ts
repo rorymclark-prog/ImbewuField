@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createSiteCountryContext } from '../lib/international/site-context.ts';
+import { updateSiteCountryContext } from '../lib/saved-places.ts';
 
 import type { CropPlanState, Planting } from '../lib/crop-plan.ts';
 import { taskMonthsFromNow, tasksForPlan, type PlanBed } from '../lib/crop-plan.ts';
@@ -29,6 +31,14 @@ import { loadCropBoardYear } from '../lib/task-board.ts';
 // appeared in two consecutive months. On the two-planting farm below the plan
 // holds 12 real tasks and the planner showed 3 — while nine months printed
 // "nothing due" over real harvests.
+
+
+// These chronology/source tests exercise the established SA planner. A saved
+// coordinate alone no longer chooses its country or permits its instructions.
+function confirmSouthAfricanReference(siteId: string) {
+  const context = createSiteCountryContext({ siteId, countryCode: 'ZA', confirmed: true });
+  assert.equal(updateSiteCountryContext(siteId, context).status, 'local-saved');
+}
 
 class MemoryStorage {
   private rows = new Map<string, string>();
@@ -84,6 +94,7 @@ function seedFarm(plantings: Planting[]) {
   local.setItem(`imbewu_design_canvas_${siteId}`, JSON.stringify(canvas()));
   const cropPlan: CropPlanState = { version: 1, plantings, updatedAt: 1 };
   local.setItem('imbewu_crop_plan_v1', JSON.stringify(cropPlan));
+  confirmSouthAfricanReference(siteId);
 }
 
 /** The farm from the verifier's reproduction: a planned tomato crop sown in

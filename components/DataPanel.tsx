@@ -1,6 +1,7 @@
 'use client';
 
 import { numberLabel } from '@/lib/format-figures';
+import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
@@ -812,6 +813,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   if (loading && !data) return <><Skeleton />{siteSurveySheet}</>;
   if (!data) return null;
 
+  const temperatureStatus = monthlyTemperatureStatus(data.climate);
+  const monthlyTemperatureNotice = temperatureStatus === 'complete'
+    ? 'Monthly temperatures have complete model inputs. This does not confirm local crop suitability.'
+    : temperatureStatus === 'incomplete'
+      ? 'Some monthly temperatures were missing from the provider response. Existing estimates are retained for display. This record cannot supply the planner’s monthly climate; reload the site when online to try again.'
+      : 'Monthly temperature coverage is unrecorded or could not be checked. Reload this site when online. This record cannot supply the planner’s monthly climate. Maps, records and planning from your own estimates remain available.';
+
   const bColor = BIOME_COLORS[data.biome.code] ?? '#6BA84F';
 
   // Suitability badge — quick heuristic from rainfall + slope
@@ -981,6 +989,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           setHeaderCollapsed((prev) => (y > 64 ? true : y < 24 ? false : prev));
         }}
         style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}>
+        <p lang="en" role="status" data-monthly-temperature-status={temperatureStatus}
+          className="rounded-xl p-3 text-sm font-sans" style={{ background: 'var(--bg-2)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }}>
+          {monthlyTemperatureNotice}
+        </p>
+
 
         {/* OVERVIEW */}
         {tab === 'Overview' && (
@@ -1183,7 +1196,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </div>
 
             {/* 12-month planting calendar strip */}
-            {data.rainfall.monthly?.length === 12 && (
+            {temperatureStatus === 'complete' && data.rainfall.monthly?.length === 12 && (
               <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
                 <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--color-forest-800)' }}>{t('plantingCalendarHeader')}</span>
                 <div className="flex gap-0.5 mt-2">
@@ -1437,6 +1450,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
         {/* CLIMATE */}
         {tab === 'Climate' && (() => {
+          // A display fill must not become a growing calendar, a derived zone
+          // interpretation or a count of frost-free days.
+          if (temperatureStatus !== 'complete') return (
+            <p lang="en" className="text-sm font-sans" style={{ color: 'var(--text-secondary)' }}>
+              Climate interpretation is unavailable for these monthly temperatures. Your original site estimates and saved records are retained.
+            </p>
+          );
           const MS = ['J','F','M','A','M','J','J','A','S','O','N','D'];
           const monthly = data.rainfall.monthly ?? [];
           const temps = data.climate.monthlyTemp;

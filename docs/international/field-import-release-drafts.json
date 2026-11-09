@@ -1,0 +1,43 @@
+{
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "provenance": "Codex",
+  "messages": [
+    {
+      "english": "Import field outlines from Google Earth.",
+      "translations": {
+        "zu": "Ngenisa imingcele yamasimu evela ku-Google Earth.",
+        "st": "Kenya meedi ea masimo e tsoang ho Google Earth.",
+        "ts": "Nghenisa mindzilekano ya masimu leyi humaka eka Google Earth.",
+        "ve": "Dzhenisani mikano ya masimu i bvaho kha Google Earth."
+      }
+    },
+    {
+      "english": "Review imported field outlines",
+      "translations": {
+        "zu": "Hlola imingcele yamasimu engenisiwe",
+        "st": "Hlahloba meedi ea masimo e kentsoeng",
+        "ts": "Kambisisa mindzilekano ya masimu leyi nghenisiweke",
+        "ve": "Ṱolani mikano ya masimu yo dzheniswaho"
+      }
+    },
+    {
+      "english": "Design Studio → Planting → Import field outlines",
+      "translations": {
+        "zu": "Design Studio → Ukutshala → Ngenisa imingcele yamasimu",
+        "st": "Design Studio → Ho lema → Kenya meedi ea masimo",
+        "ts": "Design Studio → Ku byala → Nghenisa mindzilekano ya masimu",
+        "ve": "Design Studio → U lima → Dzhenisani mikano ya masimu"
+      }
+    },
+    {
+      "english": "Choose a local KML file, review and select distinct outlines, then add them as new fields. Configure beds or open ground afterwards; map-reference locations are not surveyed boundaries.",
+      "translations": {
+        "zu": "Khetha ifayela le-KML elisedivayisini yakho, hlola bese ukhetha imingcele ehlukene, bese uyengeza njengamasimu amasha. Ngemva kwalokho hlela imibhede yokutshala (beds) noma insimu evulekile; izindawo zereferensi yemephu akuyona imingcele ekalwe ngokuhlola umhlaba (survey).",
+        "st": "Kgetha faele ya KML e sesebedisweng sa hao, hlahloba ebe o kgetha meedi e arohaneng, ebe o e kenya e le masimo a matjha. Ka mora moo lokisa libethe tsa temo (beds) kapa tshimo e bulehileng; dibaka tsa tshehetso ya mmapa hase meedi e lekantsweng ka tlhahlobo ya lefatshe (survey).",
+        "ts": "Hlawula fayili ya KML leyi nga eka xitirhisiwa xa wena, kambisisa kutani u hlawula mindzilekano yo hambana, kutani u yi engetela yi va masimu lamantshwa. Endzhaku lunghisa timbhedwa to byala (beds) kumbe nsimu leyi pfulekeke; tindhawu ta le mepeni a hi mindzilekano leyi pimiweke hi nkambisiso wa misava (survey).",
+        "ve": "Nangani faela ya KML i re kha tshishumiswa tshaṋu, ṱolani ni nange mikano yo fhambanaho, ni kone u i dzhenisa sa masimu maswa. Nga murahu dzudzanyani mmbete ya u ṱavha (beds) kana tsimu yo vuleaho; fhethu ha ndaedzo ya mmapa a si mikano yo pimiwaho nga u ela mavu (survey)."
+      }
+    }
+  ]
+}

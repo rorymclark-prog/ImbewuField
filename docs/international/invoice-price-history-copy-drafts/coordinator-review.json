@@ -1,0 +1,101 @@
+{
+  "sourceSha256": "21124529e1d311664726ab54726e1c43d2785cc0465bc3dabb9ad0711cfa6238",
+  "errors": {},
+  "validatedPairs": 56,
+  "negativeControls": [
+    {
+      "name": "wrong-locale",
+      "rejected": true
+    },
+    {
+      "name": "wrong-source-hash",
+      "rejected": true
+    },
+    {
+      "name": "false-review-approval",
+      "rejected": true
+    },
+    {
+      "name": "runtime-activation",
+      "rejected": true
+    },
+    {
+      "name": "missing-row",
+      "rejected": true
+    },
+    {
+      "name": "duplicate-row",
+      "rejected": true
+    },
+    {
+      "name": "wrong-order",
+      "rejected": true
+    },
+    {
+      "name": "english-drift",
+      "rejected": true
+    },
+    {
+      "name": "key-drift",
+      "rejected": true
+    },
+    {
+      "name": "message-hash-drift",
+      "rejected": true
+    },
+    {
+      "name": "empty-translation",
+      "rejected": true
+    },
+    {
+      "name": "nonstring-translation",
+      "rejected": true
+    },
+    {
+      "name": "invoice-marker-loss",
+      "rejected": true
+    },
+    {
+      "name": "currency-token-loss",
+      "rejected": true
+    },
+    {
+      "name": "buyer-token-loss",
+      "rejected": true
+    },
+    {
+      "name": "date-token-loss",
+      "rejected": true
+    },
+    {
+      "name": "invented-separator",
+      "rejected": true
+    },
+    {
+      "name": "invented-date-token",
+      "rejected": true
+    },
+    {
+      "name": "invented-row-approval",
+      "rejected": true
+    }
+  ],
+  "notesActualWhitespaceWords": 175,
+  "fluentApproval": false,
+  "runtimeActivation": false,
+  "packetHashes": {
+    "fr": "999c3155996c3f7b3204a2973d4c6bc0744b4d0aaf62d96c75e76f4266e815a9",
+    "es": "61c347b145093c64b26b998f7109e00e3a8baf21e057d1e0fb863ce08682188c",
+    "pt-BR": "628ce3700908d7f9a1564bfa7ccbbc57cb00c45e619bf42666a8cdcf682e370c",
+    "sw": "f12b1edb64938df8bf73bb3f904d9a02f9a1bb161414bd3e9069472a541408d0",
+    "hi": "92bf7be38968a2572cf40527deb75cc882c1fbd32d729ef3496249750a0c4e40",
+    "bn": "dfda51fbebdb1333990bfd8e61ae549cded3eef45fc1918b9507c0c74c325991",
+    "id": "14855a7f560c6b6f88a30e71fb32c09a782a22470b0466ae9e7271684f40dba8"
+  },
+  "sourceReconciliation": {
+    "frozenSourcePageSha256": "65e9579f8f058d83baf9cf155164205bd6e38d220c13db497f2a1fe7904b7a38",
+    "currentPageSha256": "7cc97fc371b1549db2fa601b46a466537f1da389857d00cd612b1d1e6e07b31f",
+    "allEightEnglishTemplatesUnchanged": true,
+    "reason": "Synchronous draft-intent binding changed code after source freeze; exact visible strings and template constituents were independently checked."
+  }
+}

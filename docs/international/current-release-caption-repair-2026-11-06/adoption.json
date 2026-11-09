@@ -1,0 +1,79 @@
+{
+  "sourceCommit": "1c5b964d4dc6f1235c9f76da15e36c611fc19af4",
+  "sourceSha256": "c89655f9bbfb32facd7ac35d1f6981c4f78edae436851851624a0ae0e400e4ed",
+  "reviewStatus": "unreviewed-ai-draft",
+  "humanFluentApproval": false,
+  "nativePacketRuntimeActivation": false,
+  "coordinatorAdoption": {
+    "existingSourcePairedCaptionLocales": [
+      "zu",
+      "st",
+      "ts",
+      "ve"
+    ],
+    "newRuntimeLanguages": [],
+    "existingCaptionRuntimeUse": true,
+    "exactEnglishAndDraftDisclosureRetained": true,
+    "calibratedLessonsOrControlsChanged": false
+  },
+  "validation": {
+    "pairs": 52,
+    "damagedControlsRejected": 72,
+    "notesActualWhitespaceWords": 186,
+    "scope": "Exact source/schema/order/hash/literals/tokens/privacy; identified wording corrections. Not fluent or general semantic certification."
+  },
+  "chunks": [
+    {
+      "locale": "zu",
+      "path": "lib/update-copy-locales/zu.ts",
+      "beforeSha256": "5a39694ce685165cf1dd42ba56d93226f5b0649fa9b58a6730a83db57ad17c97",
+      "afterSha256": "c07758e5bacdab3e5df5b27715a9938ec1d043947483840ebba4650750e5bc52",
+      "insertionSha256": "2b08ebc4a76386ad53836adc4a33434b08180ef688aff7831b65797e4daeaf24",
+      "originalBytesRestoredAfterRemovingInsertion": true
+    },
+    {
+      "locale": "st",
+      "path": "lib/update-copy-locales/st.ts",
+      "beforeSha256": "18aeb32743cb1eedbff4a5a3e43e0f3a8c018cbd4b3d66cbd47ebed7411f0968",
+      "afterSha256": "b501b2e6e7dad4f86ac30dbfb6691a37b71127faf690ba0a37e47affeff3de57",
+      "insertionSha256": "8ae2a73bde5bc31e83c767d870e52abf90356d4e7167d11adf732b9b259938de",
+      "originalBytesRestoredAfterRemovingInsertion": true
+    },
+    {
+      "locale": "ts",
+      "path": "lib/update-copy-locales/ts.ts",
+      "beforeSha256": "5a2c48052b953103eefa50e53f97253745c65c076d3e59a478fe822d7fe8b3ab",
+      "afterSha256": "3edb0f6f234ce1017ae68049ec09c643e623058d08ae38ce8269eb612f4aef94",
+      "insertionSha256": "2a2a9f6ac7771bd846d8dcf518b47757cc7ae32b0c9caba7e4cf65dc0c354082",
+      "originalBytesRestoredAfterRemovingInsertion": true
+    },
+    {
+      "locale": "ve",
+      "path": "lib/update-copy-locales/ve.ts",
+      "beforeSha256": "b12515b4d2af8413bf292ef29844a737d67567624da68f28967150e49c4bc449",
+      "afterSha256": "a73bf86567c475d4e0a8f6ea337f6db5a8679a4b043d10048afe21809247bb79",
+      "insertionSha256": "e53ee51a01b7e0c9be3f9871584518b139d19d5d07c9aca2401dc0eb38a37d5d",
+      "originalBytesRestoredAfterRemovingInsertion": true
+    }
+  ],
+  "protectedSourceSha256": {
+    "lib/i18n.tsx": "b926a4e185ed5d8b266004ad8f9e019aefadeca821f0d2567279406ab22e5be3",
+    "lib/update-copy.ts": "e65623737412e1f912b751902efe5ce535cda501ac5dbcd65d056c9f30995d0c",
+    "lib/update-copy-date.ts": "56c4209ea2ac0561ce5ee3af688ccd8881254b133583d7e9330dc5879f9cef2c",
+    "lib/release-notes-types.ts": "2654d37575b0d690c1f2a20f77a3174465c52d76cca45f92bff461e29c921006",
+    "lib/locales/zu.ts": "c2fc561bc9d12ed1839bff2e75579b72e2335d8116a300ef042c63b1841edda1",
+    "lib/locales/st.ts": "43005fb4911a43a7ce6769dcc61fcdd978c63b4b873dd01d2e0036b0bb025d33",
+    "lib/locales/ts.ts": "cfec39cbf8df44cce1f8e571fdbc0faf6db3d0913ed138b1a5ca34c86ccd0ae1",
+    "lib/locales/ve.ts": "18204eba05b3469d3d955cafd5fba6b1ea7dc7b5958180ba617c3a637bd9c0de"
+  },
+  "packets": {
+    "source.json": "c89655f9bbfb32facd7ac35d1f6981c4f78edae436851851624a0ae0e400e4ed",
+    "zu.json": "b6cbfd597c2fcc0ca4dd05a1dc66a097fd12e765a4a06e7e346957a990c1b344",
+    "st.json": "e2e65174f9b0a9c9b0d8386048faa26e72373e4d5b69a72c7fcf962711899102",
+    "ts.json": "c5863c2c4b138677ea1ebf572d2ea81630901223a43aac542fc154fd688d78c7",
+    "ve.json": "e306c54b70fa2f4f6890dbdad3eb331fb2d12f141efa3b03489b6fd355e61396",
+    "review-notes.md": "c71148ace3429b6e60ac00d20f3ea348b56120d4600daed8fbdc4c097c34226f"
+  },
+  "routeRepair": "The guide retains only exact Ask/Sold query destinations alongside original internal paths/fragments. Arrival/minimization share pathname+query authority; an inner search-aware guide is enclosed in its own Suspense boundary. Other queries remain held.",
+  "releaseGate": "Actual current-head checks/CI and visual review remain separate. No production release or worldwide crop-readiness claim."
+}

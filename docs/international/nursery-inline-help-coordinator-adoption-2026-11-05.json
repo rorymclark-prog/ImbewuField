@@ -1,0 +1,40 @@
+{
+  "atUtc": "2026-11-05T16:27:36.046424+00:00",
+  "sourceKind": "coordinator-supplied-unpublished-ui-release-sentence",
+  "baseCommit": "f81aa90d3df05625e11abf10e51064187f5feaa5",
+  "packetSha256": "65cf362aaa3e4b193080ccd3245ba28a35a261951b776cc5973c15f80977ddd5",
+  "adoptedBy": "coordinator",
+  "scope": "One description added to each of four existing-language update maps with existing unreviewed+English display. No new runtime language or human/fluent approval. Frozen AGY runtimeActivation:false is historical generation metadata, not current coordinator display adoption. UI/print/browser acceptance remains pending.",
+  "humanFluentApproval": false,
+  "newRuntimeLanguage": false,
+  "pairs": [
+    {
+      "locale": "st",
+      "source": "Language review pages keep help below the worksheet so it cannot cover the drafts.",
+      "packetMessageSha256": "d49afb6731cf638377c79ba11082504036422fdc9f5526ae67ff41680897f01f",
+      "previousDictionarySha256": "d4d9a6a2438fdc36cce2694688b14e65626f797de5721ac32236dd2360251b9d",
+      "dictionarySha256": "12ee229e2e381f3090ce8f1a004afca9a7d41004f723b46ff7e562a4165b6481"
+    },
+    {
+      "locale": "ts",
+      "source": "Language review pages keep help below the worksheet so it cannot cover the drafts.",
+      "packetMessageSha256": "d49afb6731cf638377c79ba11082504036422fdc9f5526ae67ff41680897f01f",
+      "previousDictionarySha256": "12c3f1ef3813a1a959742147416a0fbc62cb38211c386e30f270ca78bc165112",
+      "dictionarySha256": "d1eb09369dab4d0b3e75124f80cca9d521a6ad3777b8c437bba75ae5f03dad74"
+    },
+    {
+      "locale": "ve",
+      "source": "Language review pages keep help below the worksheet so it cannot cover the drafts.",
+      "packetMessageSha256": "d49afb6731cf638377c79ba11082504036422fdc9f5526ae67ff41680897f01f",
+      "previousDictionarySha256": "04aaa3077a4d429dd5bc8221c8af7392431150a451d14139e9933cc2f903b29d",
+      "dictionarySha256": "0536e51bcdacfc6c4f246005ddc9f69a8bb32040e7527a64951bb8fbe1fe2048"
+    },
+    {
+      "locale": "zu",
+      "source": "Language review pages keep help below the worksheet so it cannot cover the drafts.",
+      "packetMessageSha256": "d49afb6731cf638377c79ba11082504036422fdc9f5526ae67ff41680897f01f",
+      "previousDictionarySha256": "9800b9b965058f3de5acec45abfe30e9167bbea62e14281339ed97fb39963af2",
+      "dictionarySha256": "fb82fd9debc91b5bcedea53e9005bd38c06fa4163d35922fe2a5067428e7ff89"
+    }
+  ]
+}

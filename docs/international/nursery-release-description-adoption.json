@@ -1,0 +1,179 @@
+{
+  "coordinator": "Codex root",
+  "draftHead": "d2572449ab2254053ee1e8ca9f960774bcbb7953",
+  "policy": "Existing-language release descriptions remain explicitly unreviewed and paired with original English. No new app language or fluent human approval. Native packets remain immutable historical drafts; this coordinator adoption is a separate presentation step.",
+  "humanFluentApproval": false,
+  "newLanguageActivation": false,
+  "pairs": [
+    {
+      "locale": "st",
+      "key": "nurseryReviewRelease.message.01",
+      "english": "Saving rechecks this tab’s editing access.",
+      "messageSha256": "ecd1d958bc078975aa97212b87bd574fe34826859587291115c8196ac82f59ea",
+      "translation": "Ho boloka ho hlahloba bocha phihlello ya ho lokisa ya leqephe lena."
+    },
+    {
+      "locale": "st",
+      "key": "nurseryReviewRelease.message.02",
+      "english": "Compare nursery wording drafts in seven languages",
+      "messageSha256": "7d18bbe388d0b2be623f43b56edc93e0c4ca959ff6761ad26afc4dbb7be71428",
+      "translation": "Bapisa meralo ya mantswe a nesari ka dipuo tse supileng"
+    },
+    {
+      "locale": "st",
+      "key": "nurseryReviewRelease.message.03",
+      "english": "Compare nursery wording drafts",
+      "messageSha256": "7c3936dc3bc1887695e6bd6a941517cc6d458620a79a5e63da6d4f72539001b1",
+      "translation": "Bapisa meralo ya mantswe a nesari"
+    },
+    {
+      "locale": "st",
+      "key": "nurseryReviewRelease.message.04",
+      "english": "International reference tools → Language draft review → Nursery field planting",
+      "messageSha256": "787d827b6f4c2d6f81a44dba6bb65ee22f9c636b3683a057ad494c9afdad798c",
+      "translation": "Dithulusi tsa ditshupiso tsa matjhaba → Tlhahlobo ya meralo ya dipuo → Ho jala masimong ho tswa nesaring"
+    },
+    {
+      "locale": "st",
+      "key": "nurseryReviewRelease.message.05",
+      "english": "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.",
+      "messageSha256": "a088c7a32e50b511e9713d49112103c111a70ef0d5c6b0e064355427314a9f94",
+      "translation": "Bapisa Senyesemane sa nesari le meralo ya dipuo tse supileng mme o bone ha mohlodi wa tsona o hloka tlhahlobo e nngwe. Letlapa lena la tlhahlobo ha le dumele ditlhaloso kapa ho fetola puo ya sesebediswa sa hao."
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryReviewRelease.message.01",
+      "english": "Saving rechecks this tab’s editing access.",
+      "messageSha256": "ecd1d958bc078975aa97212b87bd574fe34826859587291115c8196ac82f59ea",
+      "translation": "Ku hlayisa ku kambisisa nakambe mfikelelo wo lulamisa wa thembu leyi."
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryReviewRelease.message.02",
+      "english": "Compare nursery wording drafts in seven languages",
+      "messageSha256": "7d18bbe388d0b2be623f43b56edc93e0c4ca959ff6761ad26afc4dbb7be71428",
+      "translation": "Pimanisa matsalo ya marito ya nesari hi tindzimi ta nkombo"
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryReviewRelease.message.03",
+      "english": "Compare nursery wording drafts",
+      "messageSha256": "7c3936dc3bc1887695e6bd6a941517cc6d458620a79a5e63da6d4f72539001b1",
+      "translation": "Pimanisa matsalo ya marito ya nesari"
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryReviewRelease.message.04",
+      "english": "International reference tools → Language draft review → Nursery field planting",
+      "messageSha256": "787d827b6f4c2d6f81a44dba6bb65ee22f9c636b3683a057ad494c9afdad798c",
+      "translation": "Switirhisiwa swo kongomisa swa matiko ya misava → Nkambisiso wa matsalo ya tindzimi → Ku byala masin’wini ku suka eka nesari"
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryReviewRelease.message.05",
+      "english": "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.",
+      "messageSha256": "a088c7a32e50b511e9713d49112103c111a70ef0d5c6b0e064355427314a9f94",
+      "translation": "Pimanisa Xinghezi xa nesari na matsalo ya tindzimi ta nkombo kutani u vona loko xihlovo xa swona xi lava nkambisiso wun’wana. Phepha leri ro kambisisa a ri pfumeleli vuhundzuluxi kumbe ku cinca ririmi ra tirhiso ra wena."
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryReviewRelease.message.01",
+      "english": "Saving rechecks this tab’s editing access.",
+      "messageSha256": "ecd1d958bc078975aa97212b87bd574fe34826859587291115c8196ac82f59ea",
+      "translation": "U vhulunga zwi vusulusa thendelo ya u lulamisa kha thabu iyi."
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryReviewRelease.message.02",
+      "english": "Compare nursery wording drafts in seven languages",
+      "messageSha256": "7d18bbe388d0b2be623f43b56edc93e0c4ca959ff6761ad26afc4dbb7be71428",
+      "translation": "Vhambedzani mitalo ya maipfi a nesele nga nyambo dza sumbe"
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryReviewRelease.message.03",
+      "english": "Compare nursery wording drafts",
+      "messageSha256": "7c3936dc3bc1887695e6bd6a941517cc6d458620a79a5e63da6d4f72539001b1",
+      "translation": "Vhambedzani mitalo ya maipfi a nesele"
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryReviewRelease.message.04",
+      "english": "International reference tools → Language draft review → Nursery field planting",
+      "messageSha256": "787d827b6f4c2d6f81a44dba6bb65ee22f9c636b3683a057ad494c9afdad798c",
+      "translation": "Zwishumiswa zwa ndaedzo zwa dzitshaka → Tsedzuluso ya mitalo ya nyambo → U tavha masimuni u bva neseleni"
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryReviewRelease.message.05",
+      "english": "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.",
+      "messageSha256": "a088c7a32e50b511e9713d49112103c111a70ef0d5c6b0e064355427314a9f94",
+      "translation": "Vhambedzani Tshiisimani tsha nesele na mitalo ya nyambo dza sumbe ni vhone musi tshisima tshayo tshi tshi toda inwe tsedzuluso. Bammbiri ili la tsedzuluso a li tendeli vhupinduleli kana u shandukisa luambo lwa tshipulufomo tshanu."
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryReviewRelease.message.01",
+      "english": "Saving rechecks this tab’s editing access.",
+      "messageSha256": "ecd1d958bc078975aa97212b87bd574fe34826859587291115c8196ac82f59ea",
+      "translation": "Ukulondoloza kuphinda kuhlolisise imvume yokuhlela yale thebhu."
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryReviewRelease.message.02",
+      "english": "Compare nursery wording drafts in seven languages",
+      "messageSha256": "7d18bbe388d0b2be623f43b56edc93e0c4ca959ff6761ad26afc4dbb7be71428",
+      "translation": "Qhathanisa izinhlaka zamagama enkulisa ngezilimi eziyisikhombisa"
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryReviewRelease.message.03",
+      "english": "Compare nursery wording drafts",
+      "messageSha256": "7c3936dc3bc1887695e6bd6a941517cc6d458620a79a5e63da6d4f72539001b1",
+      "translation": "Qhathanisa izinhlaka zamagama enkulisa"
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryReviewRelease.message.04",
+      "english": "International reference tools → Language draft review → Nursery field planting",
+      "messageSha256": "787d827b6f4c2d6f81a44dba6bb65ee22f9c636b3683a057ad494c9afdad798c",
+      "translation": "Amathuluzi okubhekisela emazweni omhlaba → Ukubuyekezwa kwezinhlaka zezilimi → Ukutshala ensimini kusuka enkulisa"
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryReviewRelease.message.05",
+      "english": "Compare the nursery English with seven language drafts and see when their source needs another check. This review worksheet does not approve translations or change your app language.",
+      "messageSha256": "a088c7a32e50b511e9713d49112103c111a70ef0d5c6b0e064355427314a9f94",
+      "translation": "Qhathanisa isiNgisi senkulisa nezinhlaka zezilimi eziyisikhombisa ubone lapho umthombo wazo udinga ukuhlolisiswa kabusha. Leli phepha lokusebenza lokubuyekeza aligunyazi izinguqulo noma lishintshe ulimi lohlelo lwakho lokusebenza."
+    },
+    {
+      "locale": "st",
+      "key": "integrationSectorRelease.message.01",
+      "english": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+      "messageSha256": "3738fb72f3f31da8311e7854f3b400559e82b1e939882883f7a15825c79d58ea",
+      "translation": "Ditshwantsho tsa karolo di boloka mebala e matla haholoanyane, e nang le mangolo a maholwanyane le mela e hlakileng ya sebopeho sa mobu."
+    },
+    {
+      "locale": "ts",
+      "key": "integrationSectorRelease.message.01",
+      "english": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+      "messageSha256": "3738fb72f3f31da8311e7854f3b400559e82b1e939882883f7a15825c79d58ea",
+      "translation": "Swifaniso swa xiyenge swi hlayisa mihlovo leyi fuweke swinene, hi marito lamakulu na mitsila leyi nga erivaleni ya vuandlalo bya misava."
+    },
+    {
+      "locale": "ve",
+      "key": "integrationSectorRelease.message.01",
+      "english": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+      "messageSha256": "3738fb72f3f31da8311e7854f3b400559e82b1e939882883f7a15825c79d58ea",
+      "translation": "Zwifanyiso zwa sekithara zwi vhulunga mivhala yo natesheaho, i re na madzina mahulwane na mitalo ya mavu i vhonalaho zwavhudi."
+    },
+    {
+      "locale": "zu",
+      "key": "integrationSectorRelease.message.01",
+      "english": "Sector illustrations keep richer colour, with larger labels and clearer contours.",
+      "messageSha256": "3738fb72f3f31da8311e7854f3b400559e82b1e939882883f7a15825c79d58ea",
+      "translation": "Imifanekiso yomkhakha igcina umbala othe xaxa, enamalebula amakhudlwana nemigqa ecacile yokuma komhlaba."
+    }
+  ],
+  "scope": "Six currentrelease literals/24existing-language draftpairs only; English remainspaired, no newruntime languages, lessons orfarminginstructions.",
+  "sectorSource": "One literal from main9c8289ff; sourcepacket captures combined-filehash with explicitcoordinatorcontext."
+}

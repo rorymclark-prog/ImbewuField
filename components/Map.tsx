@@ -47,8 +47,12 @@ import SpeakButton from './SpeakButton';
 import { useLanguage, translate } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getFirebase } from '@/lib/firebase/init';
-import { subscribeUserMapData, pushShapes } from '@/lib/user-sync';
-import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
+import { subscribeUserMapData, createShapeSyncTransport } from '@/lib/user-sync';
+import { activeAccountLocalStorageKey, accountLocalStorageKey, activeAccountUid } from '@/lib/account-local-storage';
+import { isSampleMode } from '@/lib/sample-mode';
+import { createShapeSyncController, shapeSyncKeys, shapeSyncNotice, type ShapeSyncController, type ShapeSyncStatus } from '@/lib/shape-sync/controller';
+import { createDrawShapeAdapter, type DrawLike, type DrawShapeAdapter, type PropertyEdit, type ReticleSession } from '@/lib/shape-sync/draw-adapter';
+import type { ConflictView, ResolveChoice } from '@/lib/shape-sync/protocol';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import { useAppLevel } from '@/lib/app-level';
 
@@ -59,6 +63,27 @@ const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 // Drawn parcels + water are persisted here so a refresh never loses the farmer's
 // work (was the #1 complaint — "20 minutes of drawing gone on refresh").
 const FARM_KEY = 'imbewu_farm_shapes';
+
+// Random ids for shape sync v2 (device, op, store and shape ids). Never derived from geometry,
+// so two coincident shapes are always two shapes.
+function newSyncId(): string {
+  try {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+  } catch { /* fall through */ }
+  const bytes = new Uint8Array(16);
+  try { crypto.getRandomValues(bytes); } catch { for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256); }
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Farmer-facing wording for a preserved shape-sync conflict (English; translations are gate G9).
+const SHAPE_CONFLICT_TEXT: Record<ConflictView['kind'], string> = {
+  'concurrent-edit': 'Changed on two devices at the same time.',
+  'delete-vs-edit': 'Deleted on one device after it was changed on another.',
+  'edit-after-delete': 'Changed on one device after it was deleted on another.',
+  'missing-target': 'Changed on a device that was offline for a long time; the original is gone.',
+  'legacy-divergence': 'An older version of the app has a different copy of this shape.',
+  'id-collision': 'Two different shapes arrived with the same identity.',
+};
 
 // Per-parcel colour palette — each new parcel gets the next entry, cycling if > 6.
 // Even-index entries hatch at 45°, odd at 135° so adjacent parcels are always distinct.
@@ -360,6 +385,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // pill). All tools is the map exactly as it was.
   const simple = useAppLevel() === 'simple';
   const mapRef = useRef<MapRef>(null);
+  const mapViewportRef = useRef<HTMLDivElement | null>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   // ux-14/desk-10/nav-14: on a phone or locked-down machine without WebGL the map area used to
   // be a blank beige (or black, in dark mode) slab with no message, icon or next step — "Map is
@@ -511,6 +537,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const editOriginal = useRef<[number, number][] | null>(null);          // snapshot for Cancel
   const editNameRef = useRef<{ name?: string; category?: string; hatchIdx?: number; placeId?: string; siteId?: string } | null>(null); // snapshot across edit
   const nativeEditBackupRef = useRef<GeoJSON.Feature | null>(null);      // snapshot for native-edit Undo
+  // ── Shape sync v2 (lib/shape-sync/*). The draw store is presentation; these turn each farmer
+  // action into one typed op. See docs/shape-sync-v2/AUDIT.md for every call site below.
+  const shapeSyncRef = useRef<ShapeSyncController | null>(null);
+  const shapeAdapterRef = useRef<DrawShapeAdapter | null>(null);
+  const reticleSessionRef = useRef<ReticleSession | null>(null);       // active reticle edit (draft lift)
+  const propertyEditRef = useRef<PropertyEdit | null>(null);           // basis captured when the name sheet OPENS
+  const [shapeConflicts, setShapeConflicts] = useState<ConflictView[]>([]);
+  const [shapeSyncStatus, setShapeSyncStatus] = useState<ShapeSyncStatus | null>(null);
+  const [conflictsOpen, setConflictsOpen] = useState(false);
+  const shapeSyncNoticeNow = shapeSyncNotice(shapeSyncStatus);
 
   // Saved-place pins: load + keep in sync with the Places tab
   useEffect(() => {
@@ -674,24 +710,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const draw = drawRef.current;
     if (!draw) return;
     const all = draw.getAll();
-    // Persist every shape change so a page refresh never loses the farmer's drawing.
-    // Skip while tearing down (unmount) or before restore has run — either path could
-    // overwrite the saved collection with a partial/empty in-memory store.
-    // applyingRemoteRef: true while we paint a Firestore-sourced shape onto the map.
-    // Skip persist+push then, or we'd echo the remote write straight back and loop.
-    if (!tearingDownRef.current && restoredRef.current && !applyingRemoteRef.current) {
-      const renderedUid = user?.uid ?? null;
-      const firebaseUid = getFirebase()?.auth?.currentUser?.uid ?? null;
-      // Firebase changes currentUser before React publishes the matching context update.
-      // During that narrow A → B window this closure still owns A's in-memory draw store:
-      // fail closed rather than writing it into the namespace selected for B.
-      if (firebaseUid !== renderedUid) return;
-      try {
-        localStorage.setItem(activeAccountLocalStorageKey(FARM_KEY), JSON.stringify(all));
-      } catch { /* quota / private mode */ }
-      // Push only after the initial reconcile, so a local draw can't clobber the merge.
-      if (renderedUid && mergeReadyRef.current) pushShapes(renderedUid, all).catch(() => {});
-    }
+    // Shape sync v2: recompute is STATS ONLY. It no longer persists the draw store or pushes it —
+    // the v1 whole-collection pushShapes here was the data-loss defect. Persistence happens per
+    // farmer action through shapeAdapterRef (typed ops, durable queue); the controller keeps
+    // FARM_KEY as a derived cache of its view and is bound to the account it was created for.
     const polygons = all.features.filter(
       (f: GeoJSON.Feature) => f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'
     );
@@ -745,7 +767,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       setWaterStats(null);
       onWaterDrawn?.(null);
     }
-  }, [onSiteDrawn, onWaterDrawn, user?.uid]);
+  }, [onSiteDrawn, onWaterDrawn]);
 
   // Lazily create the single MapboxDraw instance (handles both feature types via featureType prop)
   const ensureDraw = useCallback((): MapboxDraw | null => {
@@ -826,6 +848,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     map.on('draw.create', (e: { features: GeoJSON.Feature[] }) => {
       const type = drawTypeRef.current;
       let createdId: string | null = null;
+      const createdIds: string[] = [];
       e.features.forEach((f) => {
         if (f.id != null) {
           const fid = String(f.id);
@@ -841,8 +864,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           // Belongs to the place the farmer has open — see activePlaceIdRef.
           if (activePlaceIdRef.current) draw.setFeatureProperty(fid, 'placeId', activePlaceIdRef.current);
           createdId = fid;
+          createdIds.push(fid);
         }
       });
+      // Native draw_polygon is not reachable from this file today (activeDraw is only ever set to
+      // null); kept defensively. The create op is recorded AFTER the props above are stamped.
+      shapeAdapterRef.current?.recordDrawCreate(createdIds);
       setActiveDraw(null);
       recompute();
       // Drop into direct_select so the user can drag vertices immediately
@@ -850,12 +877,23 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         const id = createdId;
         setTimeout(() => {
           try { draw.changeMode('direct_select', { featureId: id }); } catch {}
+          shapeAdapterRef.current?.beginNativeEdit(id);
           setEditingFeatureId(id);
         }, 120);
       }
     });
-    map.on('draw.update', recompute);
-    map.on('draw.delete', recompute);
+    // Authoring events are user-driven: with the pinned Mapbox GL 3.25.0 / Draw 1.5.1, programmatic
+    // add/delete/set/deleteAll emit no draw.create/update/delete (they can still emit
+    // draw.selectionchange and draw.render). The adapter ignores anything fired while painting remote
+    // state or tearing down.
+    map.on('draw.update', (e: { features?: GeoJSON.Feature[] }) => {
+      shapeAdapterRef.current?.recordDrawUpdate(e?.features ?? []);
+      recompute();
+    });
+    map.on('draw.delete', (e: { features?: GeoJSON.Feature[] }) => {
+      shapeAdapterRef.current?.recordDrawDelete(e?.features ?? []);
+      recompute();
+    });
 
     // Track native entry/exit of direct_select so the edit bar appears even when the
     // user taps a shape directly (without going through our Edit button).
@@ -872,6 +910,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           if (ids.length > 0) {
             const f = draw.get(ids[0]);
             nativeEditBackupRef.current = f ? (JSON.parse(JSON.stringify(f)) as GeoJSON.Feature) : null;
+            // Capture the edit basis NOW: remote redraws are deferred while editing, so the
+            // farmer edits what they see and the ops must claim exactly that base.
+            shapeAdapterRef.current?.beginNativeEdit(String(ids[0]));
             setEditingFeatureId(ids[0]);
           }
         }, 60);
@@ -885,28 +926,52 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   // Restore persisted parcels + water once the map is ready (survives refresh).
   const restoredRef = useRef(false);
-  // True while tearing down on unmount: deleteAll() fires draw.delete → recompute,
-  // and we must NOT let that persist an empty collection (it would wipe saved shapes
+  // True while tearing down on unmount. The pinned Draw's programmatic deleteAll() emits no
+  // draw.delete authoring event, but teardown is still presentation: if any handler does run
+  // during it, the adapter must record nothing (an empty collection would wipe saved shapes
   // every time the user navigates away from the map).
   const tearingDownRef = useRef(false);
   // True while painting a Firestore-sourced shape onto the map — suppresses the
   // persist+push inside recompute so a remote change doesn't echo back into a loop.
   const applyingRemoteRef = useRef(false);
-  // Flips true once the initial local↔remote reconcile finishes — gates shape pushes
-  // so a local draw during the reconcile window can't clobber the merged result.
-  const mergeReadyRef = useRef(false);
+  // (v1's mergeReadyRef is gone: it only gated whole-collection pushes, which v2 never makes.)
   // Set when a live remote shape update arrives while the user is mid-edit; flushed when
   // they finish so we don't yank a feature out from under an in-progress vertex drag.
   const pendingRemoteRedrawRef = useRef(false);
+  // One adapter for the component's lifetime; it always talks to the CURRENT controller.
+  if (!shapeAdapterRef.current) {
+    shapeAdapterRef.current = createDrawShapeAdapter({
+      getController: () => shapeSyncRef.current,
+      getDraw: () => drawRef.current as unknown as DrawLike | null,
+      isPresentation: () => applyingRemoteRef.current || tearingDownRef.current,
+      newShapeId: () => `shp-${newSyncId()}`,
+      onRecordFailure: (result, context) => console.error('[shape-sync]', context, result),
+    });
+  }
+  // Pass 2: what the draw store is painted from. The controller VIEW (confirmed ⊕ pending), never
+  // the raw FARM_KEY while a controller exists — FARM_KEY may legitimately still hold RAW v1 content
+  // that could not be backed up (status.rawCacheHeld), and painting that would hide pending shapes.
+  // Draw always receives exactly { type, features }: the derived cache's in-band marker (and any
+  // other foreign member) never reaches mapbox-gl-draw.
+  const readPaintCollection = (): GeoJSON.FeatureCollection | null => {
+    const controller = shapeSyncRef.current;
+    if (controller) return { type: 'FeatureCollection', features: controller.view().features };
+    try {
+      const raw = localStorage.getItem(activeAccountLocalStorageKey(FARM_KEY));
+      const fc = raw ? JSON.parse(raw) : null;
+      return Array.isArray(fc?.features) ? { type: 'FeatureCollection', features: fc.features } : null;
+    } catch { return null; }
+  };
   const restoreShapes = useCallback(() => {
     if (restoredRef.current) return;
     const draw = ensureDraw();
     if (!draw) return;
     try {
-      const raw = localStorage.getItem(activeAccountLocalStorageKey(FARM_KEY));
-      if (raw) {
-        const fc = JSON.parse(raw);
-        if (fc?.features?.length) { draw.set(fc); recompute(); }
+      const fc = readPaintCollection();
+      if (fc?.features?.length) {
+        applyingRemoteRef.current = true;
+        try { draw.set(fc); } finally { applyingRemoteRef.current = false; }
+        recompute();
       }
     } catch { /* ignore corrupt/blocked storage */ }
     restoredRef.current = true;
@@ -914,8 +979,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   // Force the drawn shapes to match localStorage RIGHT NOW (used when a live Firestore
   // update arrives from another browser). Unlike restoreShapes this isn't one-shot.
-  // draw.set() does NOT fire draw.* events, so the applyingRemoteRef guard stays valid
-  // for the synchronous recompute() that follows.
+  // draw.set() emits no authoring draw.create/update/delete with the pinned Draw (it can emit
+  // draw.selectionchange/draw.render); applyingRemoteRef still marks the paint as presentation
+  // for the adapter and the synchronous recompute() that follows.
   const redrawShapesFromStorage = useCallback(() => {
     const draw = ensureDraw();
     if (!draw) return; // map not ready — the restore poller will pick up localStorage
@@ -928,15 +994,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       return;
     }
     try {
-      const raw = localStorage.getItem(activeAccountLocalStorageKey(FARM_KEY));
-      const fc = raw ? JSON.parse(raw) : null;
+      const fc = readPaintCollection();
       applyingRemoteRef.current = true;
-      draw.set(fc?.features ? fc : { type: 'FeatureCollection', features: [] });
+      draw.set(fc ?? { type: 'FeatureCollection', features: [] });
       restoredRef.current = true;
       recompute();
     } catch { /* ignore */ }
     finally { applyingRemoteRef.current = false; }
   }, [ensureDraw, recompute, editingFeatureId, pinDraw, editPin]);
+
+  // A native edit session ends whenever the native edit UI closes (Save, Escape, delete, mode exit).
+  useEffect(() => {
+    if (!editingFeatureId) shapeAdapterRef.current?.endNativeEdit();
+  }, [editingFeatureId]);
 
   // When the user finishes ALL editing sessions, flush any remote shape update we deferred.
   useEffect(() => {
@@ -951,13 +1021,87 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const redrawRef = useRef(redrawShapesFromStorage);
   redrawRef.current = redrawShapesFromStorage;
 
+  // ── Shape sync v2 controller + cross-device subscription (ONE effect, so every callback is
+  // bound to the controller of the account it was created for — never "whatever is current").
+  // Defined BEFORE the account-switch effect below: controller.start() writes this namespace's
+  // FARM_KEY view first, and that effect then paints it.
+  useEffect(() => {
+    const uid = user?.uid ?? null;
+    const sample = isSampleMode();
+    const synced = !!uid && !sample;
+    // Bind keys once. Signed-in: uid-scoped keys + Firestore transport. Sample / signed-out: the
+    // exact keys v1 used (activeAccountLocalStorageKey — bare in sample, guest-suffixed signed out)
+    // and NO transport, so nothing can leave the device (sample-mode safety layer 2 still applies).
+    const keys = shapeSyncKeys(synced
+      ? (base) => accountLocalStorageKey(base, uid)
+      : (base) => activeAccountLocalStorageKey(base));
+    const isCurrent = synced
+      ? () => !isSampleMode() && activeAccountUid() === uid && (getFirebase()?.auth?.currentUser?.uid ?? null) === uid
+      : sample
+        ? () => isSampleMode()
+        : () => !isSampleMode() && activeAccountUid() === null;
+    const controller = createShapeSyncController({
+      keys,
+      storage: window.localStorage,
+      transport: synced ? createShapeSyncTransport(uid as string) : null,
+      isCurrent,
+      now: () => Date.now(),
+      randomId: newSyncId,
+      // 'local' changes came FROM the draw store, so only remote/reset changes are repainted.
+      onView: (reason) => { if (reason !== 'local') redrawRef.current(); },
+      onConflicts: setShapeConflicts,
+      onStatus: setShapeSyncStatus,
+      // Deleting the v1 island after an atomic full ingest protects old clients on reopen, but it is
+      // a server-data change with product impact: OFF until gate G13 approves it.
+      drainLegacyIsland: false,
+    });
+    shapeSyncRef.current = controller;
+    controller.start();
+    const onOnline = () => controller.nudge();
+    window.addEventListener('online', onOnline);
+    // Another tab of this account wrote journal rows / the confirmed-state cache: re-read them.
+    const onStorage = (e: StorageEvent) => { if (e.storageArea === window.localStorage) controller.refresh(); };
+    window.addEventListener('storage', onStorage);
+    const unsub = synced ? subscribeUserMapData(uid as string, {
+      onPlaces: () => window.dispatchEvent(new CustomEvent('permamap-places-changed')),
+      onWater:  () => window.dispatchEvent(new CustomEvent('imbewu-water-points-changed')),
+      shapeSync: {
+        onRemoteState: (raw) => controller.receiveRemote(raw),
+        // The island is REMOTE content, but the controller journals it as ordinary ops and publishes
+        // 'local' — which onView above deliberately skips (local authoring echoes). A Draw that was
+        // already ready and painted before this bootstrap read would therefore stay empty, and an
+        // unresolved/offline first flush never re-publishes. Repaint only when THIS ingest added ops,
+        // only for the still-current controller, through the guarded redraw (no Draw yet → the restore
+        // poller paints later; native/reticle edit → deferred until it ends). Local edits stay unpainted.
+        onLegacyIsland: (island) => {
+          const ingested = controller.ingestLegacyIsland(island.shapesJson, island.version);
+          if (ingested.ok && ingested.opIds.length > 0 && shapeSyncRef.current === controller) redrawRef.current();
+        },
+        onReady: () => { void controller.flush(); },
+      },
+    }) : null;
+    return () => {
+      window.removeEventListener('online', onOnline);
+      window.removeEventListener('storage', onStorage);
+      unsub?.();
+      controller.dispose();
+      if (shapeSyncRef.current === controller) shapeSyncRef.current = null;
+      shapeAdapterRef.current?.reset();
+      reticleSessionRef.current = null;
+      propertyEditRef.current = null;
+    };
+  }, [user?.uid]);
+
   // A direct A → B sign-in can keep this component instance alive briefly. Reset the
   // draw store from the newly selected namespace immediately, bypassing the normal
   // "defer while editing" rule: an edit session itself belongs to the old account and
   // must not keep its geometry resident after the owner changes.
   useEffect(() => {
-    mergeReadyRef.current = false;
     pendingRemoteRedrawRef.current = false;
+    // Draft sessions belong to the previous owner: dropped, never recorded as ops.
+    shapeAdapterRef.current?.reset();
+    reticleSessionRef.current = null;
+    propertyEditRef.current = null;
     setEditingFeatureId(null);
     setPinDraw(null);
     setEditPin(null);
@@ -967,10 +1111,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       return;
     }
     try {
-      const raw = localStorage.getItem(activeAccountLocalStorageKey(FARM_KEY));
-      const fc = raw ? JSON.parse(raw) : null;
+      const fc = readPaintCollection();
       applyingRemoteRef.current = true;
-      draw.set(fc?.features ? fc : { type: 'FeatureCollection', features: [] });
+      draw.set(fc ?? { type: 'FeatureCollection', features: [] });
       restoredRef.current = true;
       recompute();
     } catch {
@@ -1052,31 +1195,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     };
   }, [contours]);
 
-  // Live cross-device sync: while signed in, subscribe to the user's Firestore docs.
-  // A save in ANY browser pushes here in realtime → localStorage updates → pins, water
-  // points and drawn shapes refresh without a reload. Also does a one-time merge of
-  // local + remote on connect so existing data from any device is unified.
-  useEffect(() => {
-    const uid = user?.uid;
-    if (!uid) return;
-    mergeReadyRef.current = false;
-    const unsub = subscribeUserMapData(uid, {
-      onPlaces: () => window.dispatchEvent(new CustomEvent('permamap-places-changed')),
-      onWater:  () => window.dispatchEvent(new CustomEvent('imbewu-water-points-changed')),
-      onShapes: () => redrawRef.current(),
-      onMergeDone: () => {
-        mergeReadyRef.current = true;
-        // Flush from the reconciled localStorage set, NOT draw.getAll() — a deferred
-        // mid-edit redraw means the draw store may still hold un-merged in-memory shapes.
-        try {
-          const raw = localStorage.getItem(activeAccountLocalStorageKey(FARM_KEY));
-          const fc = raw ? JSON.parse(raw) : null;
-          if (fc?.features?.length) pushShapes(uid, fc).catch(() => {});
-        } catch { /* ignore */ }
-      },
-    });
-    return () => { mergeReadyRef.current = false; unsub(); };
-  }, [user?.uid]);
+  // (Cross-device subscription moved into the shape sync v2 effect above, bound to its controller.)
 
   // cancelDraw: reliably exits an in-progress polygon draw.
   // Calling draw.changeMode('simple_select') while in draw_polygon discards any
@@ -1213,24 +1332,21 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     try { draw.changeMode('simple_select'); } catch {}
     const type = drawTypeRef.current;
     const ring = [...draftPoints, draftPoints[0]]; // close the ring
+    // Same properties v1 stamped one by one after draw.add (hatchIdx = count of this type before
+    // the add, which is what v1's "excluding itself" count after the add evaluated to).
+    const existingCount = draw.getAll().features.filter((feat: GeoJSON.Feature) =>
+      (feat.geometry.type === 'Polygon' || feat.geometry.type === 'MultiPolygon') &&
+      (type === 'water' ? feat.properties?.featureType === 'water' : feat.properties?.featureType !== 'water')
+    ).length;
+    const properties: Record<string, unknown> = { featureType: type, hatchIdx: existingCount, siteId: activeSiteIdRef.current };
+    // Belongs to the place the farmer has open — see activePlaceIdRef.
+    if (activePlaceIdRef.current) properties.placeId = activePlaceIdRef.current;
     const feature: GeoJSON.Feature<GeoJSON.Polygon> = {
-      type: 'Feature', properties: {},
+      type: 'Feature', properties,
       geometry: { type: 'Polygon', coordinates: [ring] },
     };
-    let id: string | null = null;
-    try { const ids = draw.add(feature); id = ids?.[0] ?? null; } catch { id = null; }
-    if (id != null) {
-      draw.setFeatureProperty(id, 'featureType', type);
-      const existingCount = draw.getAll().features.filter((feat: GeoJSON.Feature) =>
-        (feat.geometry.type === 'Polygon' || feat.geometry.type === 'MultiPolygon') &&
-        (type === 'water' ? feat.properties?.featureType === 'water' : feat.properties?.featureType !== 'water') &&
-        feat.id !== id
-      ).length;
-      draw.setFeatureProperty(id, 'hatchIdx', existingCount);
-      draw.setFeatureProperty(id, 'siteId', activeSiteIdRef.current);
-      // Belongs to the place the farmer has open — see activePlaceIdRef.
-      if (activePlaceIdRef.current) draw.setFeatureProperty(id, 'placeId', activePlaceIdRef.current);
-    }
+    // Stable shp-… id set on Feature.id + one durable 'create' op.
+    const id: string | null = shapeAdapterRef.current?.addNewShape(feature, 'reticle-create') ?? null;
     setPinDraw(null);
     setDraftPoints([]);
     unlockRotation();
@@ -1258,6 +1374,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     if (!draw) return;
     const f = draw.get(featureId) as GeoJSON.Feature<GeoJSON.Polygon> | undefined;
     if (!f || f.geometry?.type !== 'Polygon') return;
+    // Lift the shape into a draft session (adapter snapshots the WHOLE feature and the edit basis,
+    // then removes it from the draw store). Presentation only — never a tombstone.
+    const session = shapeAdapterRef.current?.beginReticleEdit(featureId) ?? null;
+    if (!session) return; // not a shape this account's sync knows: refuse rather than edit what can't be saved
+    reticleSessionRef.current = session;
     const ring = (f.geometry.coordinates[0] as [number, number][]).map((c) => [c[0], c[1]] as [number, number]);
     // Drop the closing duplicate vertex so we edit an open ring
     if (ring.length > 1) {
@@ -1266,7 +1387,6 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     }
     editOriginal.current = ring.map((c) => [c[0], c[1]] as [number, number]);
     editNameRef.current = { name: f.properties?.name as string | undefined, category: f.properties?.category as string | undefined, hatchIdx: f.properties?.hatchIdx as number | undefined, placeId: f.properties?.placeId as string | undefined, siteId: f.properties?.siteId as string | undefined };
-    try { draw.delete(featureId); } catch {}
     // Lock remaining shapes so tapping them doesn't accidentally activate a different layer
     try { draw.changeMode('static'); } catch {}
     const map = mapRef.current?.getMap();
@@ -1303,6 +1423,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setEditPin(null); setEditPoints([]); setSelCorner(null);
     setActiveDraw(null); setPinDraw(null);
     try { draw.changeMode('direct_select', { featureId }); } catch {}
+    shapeAdapterRef.current?.beginNativeEdit(featureId); // programmatic changeMode emits no modechange
     setEditingFeatureId(featureId);
   }, [ensureDraw]);
 
@@ -1400,24 +1521,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const draw = ensureDraw();
     const edit = editPin;
     if (!draw || !edit || editPoints.length < 3) return;
-    const ring = [...editPoints.map((c) => [c[0], c[1]]), [editPoints[0][0], editPoints[0][1]]];
-    const feature: GeoJSON.Feature<GeoJSON.Polygon> = {
-      type: 'Feature', properties: {},
-      geometry: { type: 'Polygon', coordinates: [ring] },
-    };
-    let id: string | null = null;
-    try { const ids = draw.add(feature); id = ids?.[0] ?? null; } catch { id = null; }
-    if (id != null) {
-      draw.setFeatureProperty(id, 'featureType', edit.type);
-      const snap = editNameRef.current;
-      if (snap?.name) draw.setFeatureProperty(id, 'name', snap.name);
-      if (snap?.category) draw.setFeatureProperty(id, 'category', snap.category);
-      if (snap?.hatchIdx != null) draw.setFeatureProperty(id, 'hatchIdx', snap.hatchIdx);
-      if (snap?.placeId) draw.setFeatureProperty(id, 'placeId', snap.placeId); // keep parcel↔place link across edits
-      // Preserve the shape's original siteId across edits; a legacy untagged shape gets
-      // stamped with the currently active site the moment it's next edited.
-      draw.setFeatureProperty(id, 'siteId', snap?.siteId ?? activeSiteIdRef.current);
-    }
+    // Re-add under the SAME id with EVERY original property, foreign member and inner ring; only
+    // the outer ring changes. v1 rebuilt it from five named props under a fresh id. As in v1, an
+    // untagged legacy shape is stamped with featureType / the active siteId (only when missing).
+    shapeAdapterRef.current?.finishReticleEdit(reticleSessionRef.current, editPoints, {
+      featureType: edit.type, siteId: activeSiteIdRef.current ?? null,
+    });
+    reticleSessionRef.current = null;
     editNameRef.current = null;
     setEditPin(null);
     setEditPoints([]);
@@ -1432,24 +1542,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // Abandon edits — restore the original shape unchanged
   const cancelReticleEdit = useCallback(() => {
     const draw = ensureDraw();
-    const edit = editPin;
-    const orig = editOriginal.current;
-    if (draw && edit && orig && orig.length >= 3) {
-      const ring = [...orig.map((c) => [c[0], c[1]]), [orig[0][0], orig[0][1]]];
-      try {
-        const ids = draw.add({ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [ring] } } as GeoJSON.Feature<GeoJSON.Polygon>);
-        const id = ids?.[0];
-        if (id != null) {
-          draw.setFeatureProperty(id, 'featureType', edit.type);
-          const snap = editNameRef.current;
-          if (snap?.name) draw.setFeatureProperty(id, 'name', snap.name);
-          if (snap?.category) draw.setFeatureProperty(id, 'category', snap.category);
-          if (snap?.hatchIdx != null) draw.setFeatureProperty(id, 'hatchIdx', snap.hatchIdx);
-          if (snap?.placeId) draw.setFeatureProperty(id, 'placeId', snap.placeId); // keep parcel↔place link across edits
-          draw.setFeatureProperty(id, 'siteId', snap?.siteId ?? activeSiteIdRef.current);
-        }
-      } catch {}
-    }
+    // Put back the EXACT lifted feature (same id, all properties, original geometry). Zero ops.
+    shapeAdapterRef.current?.cancelReticleEdit(reticleSessionRef.current);
+    reticleSessionRef.current = null;
     editNameRef.current = null;
     setEditPin(null);
     setEditPoints([]);
@@ -1459,17 +1554,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const mapInst2 = mapRef.current?.getMap();
     if (mapInst2 && draw) try { mapInst2.dragPan.enable(); draw.changeMode('simple_select'); } catch {}
     recompute();
-  }, [ensureDraw, editPin, recompute, unlockRotation]);
+  }, [ensureDraw, recompute, unlockRotation]);
 
   // Remove only the polygons of one type
   const clearType = useCallback((type: 'site' | 'water') => {
     const draw = drawRef.current;
     if (!draw) return;
     const all = draw.getAll();
-    all.features.forEach((f: GeoJSON.Feature) => {
-      const ftype = f.properties?.featureType === 'water' ? 'water' : 'site';
-      if (ftype === type && f.id != null) draw.delete(String(f.id));
-    });
+    // Currently unreferenced in this file. Semantics if wired: one explicit delete per shape the
+    // farmer can SEE, each with its own base — shapes another device added meanwhile survive.
+    const ids = all.features
+      .filter((f: GeoJSON.Feature) => (f.properties?.featureType === 'water' ? 'water' : 'site') === type && f.id != null)
+      .map((f: GeoJSON.Feature) => String(f.id));
+    shapeAdapterRef.current?.deleteShapes(ids, 'clear-type');
     setEditingFeatureId(null);
     recompute();
   }, [recompute]);
@@ -1480,6 +1577,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const draw = drawRef.current;
     if (!map || !draw) return;
     tearingDownRef.current = true; // don't let the deleteAll below wipe persisted shapes
+    shapeAdapterRef.current?.reset(); // teardown is presentation: no ops, draft sessions dropped
     draw.deleteAll();
     map.removeControl(draw as unknown as mapboxgl.IControl);
     drawRef.current = null;
@@ -1749,6 +1847,20 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     };
   }, []);
 
+  // Mapbox observes window resizing, not a status row changing its container.
+  // Resize only the paint viewport; keep the map, Draw and saved geometry intact.
+  useEffect(() => {
+    const viewport = mapViewportRef.current;
+    if (!viewport || typeof ResizeObserver === 'undefined') return;
+    let observing = true;
+    const observer = new ResizeObserver(() => {
+      if (!observing) return;
+      try { mapRef.current?.getMap()?.resize(); } catch {}
+    });
+    observer.observe(viewport);
+    return () => { observing = false; observer.disconnect(); };
+  }, [mapSupported]);
+
   // Sync draw layer visibility with the Shapes (showFeatures) and Hatching (showHatch) toggles.
   // Hide via layout `visibility` (definitive — a hidden layer draws nothing), and CRUCIALLY
   // re-apply on Draw's own `draw.render` event: MapboxDraw re-renders its layers on every
@@ -1859,12 +1971,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         shareRestored.current = true;
         loadSharedSite(code).then((data) => {
           if (!data) return;
-          const draw = drawRef.current;
-          if (draw) {
-            draw.set(data.geojson);
-            restoredRef.current = true;
-            recompute();
-          }
+          // ADDITIVE import under deterministic ids. v1 did draw.set(shared), replacing the farmer's
+          // own shapes in the store and then (recompute → pushShapes) in the cloud. Re-opening the
+          // link imports nothing twice and never resurrects an imported shape the farmer deleted.
+          const imported = shapeSyncRef.current?.importShared(data.geojson, code);
+          if (imported && imported.imported > 0) redrawRef.current();
           // Merge (not overwrite) the shared places/water points into localStorage — a raw
           // full-array setItem here bypassed loadPlaces()/mergeItems()/local tombstones
           // entirely, so importing a shared site could silently clobber places this device
@@ -2067,18 +2178,24 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     // "Link to place" chips still gets a correctly-linked parcel. The chips become a correction,
     // not the only route to one.
     setShapeNamePlaceId((f?.properties?.placeId as string) ?? activePlaceIdRef.current ?? null);
+    // Basis is captured when the sheet OPENS: a concurrent remote rename that arrives while the
+    // farmer is typing becomes a conflict, not a silent overwrite. During a reticle edit this binds
+    // to the lifted draft (v1 lost the rename there, and its recompute deleted the shape remotely).
+    propertyEditRef.current = shapeAdapterRef.current?.beginPropertyEdit(id) ?? null;
     setShapeNaming({ id, type });
   }, []);
   const confirmShapeNaming = useCallback(() => {
     if (!shapeNaming) return;
-    const draw = drawRef.current;
-    if (draw) {
-      try {
-        draw.setFeatureProperty(shapeNaming.id, 'name', shapeName.trim() || undefined);
-        draw.setFeatureProperty(shapeNaming.id, 'category', shapeCategory || undefined);
-        draw.setFeatureProperty(shapeNaming.id, 'placeId', shapeNamePlaceId ?? undefined);
-      } catch { /* feature may be gone */ }
-    }
+    const edit = propertyEditRef.current?.shapeId === shapeNaming.id ? propertyEditRef.current : null;
+    propertyEditRef.current = null;
+    // No basis means the shape is not in this account's synced view (e.g. an A→B switch closed
+    // over a stale sheet). Never write a rename that cannot be saved without saying so.
+    if (!edit) console.error('[shape-sync] rename not recorded: no edit basis for', shapeNaming.id);
+    shapeAdapterRef.current?.commitPropertyEdit(edit, {
+      name: shapeName.trim() || undefined,
+      category: shapeCategory || undefined,
+      placeId: shapeNamePlaceId ?? undefined,
+    });
     setShapeNaming(null);
     recompute();
     setSiteFeatures(getSiteFeatures());
@@ -2089,11 +2206,32 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const deleteFeature = useCallback((featureId: string) => {
     const draw = drawRef.current;
     if (!draw) return;
-    try { draw.delete(featureId); } catch {}
+    shapeAdapterRef.current?.deleteShapes([featureId], 'delete'); // tombstone with this view's base
     setEditingFeatureId((prev) => (prev === featureId ? null : prev));
     setPendingDelete(null);
     recompute();
   }, [recompute]);
+
+  // Shape sync v2: the farmer decides every preserved conflict. A resolution changes the view
+  // without a draw-store event, so repaint explicitly (redraw still defers during an edit).
+  const resolveShapeConflict = useCallback((conflict: ConflictView, choice: ResolveChoice) => {
+    const result = shapeSyncRef.current?.resolve(conflict.shapeId, conflict.conflictId, choice);
+    if (result?.ok) redrawRef.current();
+  }, []);
+  // Local export of everything the controller holds (confirmed state, pending queue, the verbatim
+  // v1 backup, quarantined features) — the farmer's own data, written to their own device.
+  const downloadShapeRecovery = useCallback(() => {
+    const json = shapeSyncRef.current?.exportRecovery();
+    if (!json) return;
+    const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `imbewu-map-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  }, []);
 
   // Two-tap delete: first tap arms (button shows "Sure?"), second tap within 3.5s deletes.
   // Stops an accidental 🗑 from wiping a boundary the farmer spent minutes drawing.
@@ -2168,7 +2306,67 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }
 
   return (
-    <div className="relative w-full h-full">
+    <div data-map-workspace className="relative flex w-full h-full min-h-0 flex-col">
+      {/* A separate flow row keeps status out of both the app navigation and
+          the map toolbar. Long decision trays scroll without covering the map. */}
+      <div data-map-sync-region role="region" aria-label="Map sync messages and decisions"
+        className="min-w-0 shrink-0 overflow-y-auto overscroll-contain" style={{ maxHeight: '40%' }}
+        tabIndex={!pinDraw && !editPin && shapeConflicts.length > 0 ? 0 : undefined}>
+      {/* ── Shape sync v2: durability + preserved conflicts. Never silent: a change that is not yet
+           safe on this device, a paused sync, or two versions of a shape are all shown here. Ordinary
+           'info' (saved on this device only / waiting / syncing) is a non-blocking status line: the
+           strip passes pointer events through, only the alert and the conflict tray take them. ── */}
+      {!pinDraw && !editPin && (shapeConflicts.length > 0 || (shapeSyncNoticeNow && shapeSyncNoticeNow.level !== 'ok')) && (
+        <div className="mx-auto w-full font-sans flex flex-col gap-2"
+          style={{ maxWidth: 'min(420px, 100%)', padding: '8px 12px', boxSizing: 'border-box', pointerEvents: 'none' }}>
+          {/* Pass 2: ONE pure source of wording (lib/shape-sync/controller shapeSyncNotice). It can
+              never say "synced" while anything is pending, volatile, held, deferred or blocked. */}
+          {shapeSyncNoticeNow && (shapeSyncNoticeNow.level === 'warn' || shapeSyncNoticeNow.level === 'error') && (
+            <div role="alert" className="rounded-xl px-3 py-2 flex items-center gap-2" style={{ background: 'rgba(28,14,10,0.94)', border: `1px solid ${shapeSyncNoticeNow.level === 'error' ? 'rgba(212,110,66,0.7)' : 'rgba(212,168,83,0.7)'}`, color: '#F4E3C0', fontSize: 13, pointerEvents: 'auto' }}>
+              <span className="flex-1">{shapeSyncNoticeNow.text}</span>
+              {shapeSyncNoticeNow.offerBackup && (
+                <button onClick={downloadShapeRecovery} className="rounded-lg px-2.5 py-1.5 font-semibold" style={{ background: 'rgba(247,242,233,0.12)', border: '1px solid rgba(234,243,226,0.25)', color: '#EAF3E2', cursor: 'pointer' }}>
+                  Download backup
+                </button>
+              )}
+            </div>
+          )}
+          {shapeSyncNoticeNow && shapeSyncNoticeNow.level === 'info' && (
+            <div role="status" aria-live="polite" className="self-center rounded-full px-3 py-1" style={{ background: 'rgba(28,14,10,0.78)', color: '#F4E3C0', fontSize: 13 }}>
+              {shapeSyncNoticeNow.text}
+            </div>
+          )}
+          {shapeConflicts.length > 0 && (
+            <div className="rounded-xl p-2" style={{ background: 'rgba(16,22,14,0.94)', border: '1px solid rgba(212,168,83,0.6)', boxShadow: '0 8px 24px rgba(0,0,0,0.45)', pointerEvents: 'auto' }}>
+              <button onClick={() => setConflictsOpen((o) => !o)} className="w-full flex items-center gap-2 px-1.5 py-1 font-semibold" style={{ background: 'transparent', border: 'none', color: '#F4E3C0', fontSize: 14, cursor: 'pointer' }}>
+                <AlertTriangle size={15} />
+                <span className="flex-1 text-left">{shapeConflicts.length === 1 ? '1 shape needs your decision' : `${shapeConflicts.length} shapes need your decision`}</span>
+                <ChevronDown size={15} style={{ transform: conflictsOpen ? 'rotate(180deg)' : 'none' }} />
+              </button>
+              {conflictsOpen && shapeConflicts.map((c) => {
+                const name = (c.current?.properties?.name ?? c.other?.properties?.name ?? 'Unnamed shape') as string;
+                const btn: React.CSSProperties = { background: 'rgba(247,242,233,0.1)', border: '1px solid rgba(234,243,226,0.22)', color: '#EAF3E2', borderRadius: 9, padding: '6px 10px', fontSize: 12.5, fontWeight: 600, cursor: 'pointer' };
+                return (
+                  <div key={c.conflictId} className="mt-2 rounded-lg p-2" style={{ background: 'rgba(247,242,233,0.06)' }}>
+                    <div style={{ color: '#fff', fontWeight: 700, fontSize: 13.5 }}>{name}</div>
+                    <div style={{ color: 'rgba(234,243,226,0.7)', fontSize: 12.5, marginBottom: 6 }}>{SHAPE_CONFLICT_TEXT[c.kind]}</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      <button style={btn} onClick={() => resolveShapeConflict(c, 'keep-current')}>{c.live ? 'Keep this version' : 'Keep it deleted'}</button>
+                      {c.other
+                        ? <button style={btn} onClick={() => resolveShapeConflict(c, 'use-branch')}>{c.live ? 'Use the other version' : 'Restore it'}</button>
+                        : <button style={btn} onClick={() => resolveShapeConflict(c, 'use-branch')}>Delete it</button>}
+                      {c.other && c.live && <button style={btn} onClick={() => resolveShapeConflict(c, 'keep-both')}>Keep both</button>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
+      </div>
+      <div ref={mapViewportRef} data-map-viewport className="relative min-h-0 w-full flex-1">
       {offlineCanvas&&<div role="status" style={{position:'absolute',bottom:80,left:12,maxWidth:'calc(100% - 24px)',zIndex:10,padding:'8px 12px',borderRadius:10,background:'var(--bg-1)',color:'var(--text-primary)',fontSize:14,pointerEvents:'none'}}>{t('mapOfflineCanvasStatus')}</div>}
       <ReactMapGL
         ref={mapRef}
@@ -3336,14 +3534,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <button onClick={() => {
                   const draw = drawRef.current;
-                  const backup = nativeEditBackupRef.current;
-                  if (!draw || !backup) return;
-                  const id = backup.id as string;
+                  // Pass 2: the adapter's ACTIVE native session is the only source of truth (its
+                  // backup is the shape this session edits; nativeEditBackupRef can be stale after
+                  // draw.create). No untracked draw-store revert: an unrecorded revert would be
+                  // captured by the next vertex drag as an edit and overwrite newer geometry.
+                  const session = shapeAdapterRef.current?.activeNative() ?? null;
+                  if (!draw || !session) return;
+                  const id = session.shapeId;
                   try {
-                    draw.delete(id);
-                    draw.add(backup);
-                    draw.changeMode('direct_select', { featureId: id });
-                    setEditingFeatureId(id);
+                    // Typed 'native-undo' op reverting this session's own changes (same id).
+                    if (shapeAdapterRef.current?.nativeUndo()) {
+                      draw.changeMode('direct_select', { featureId: id });
+                      setEditingFeatureId(id);
+                    }
                   } catch { /* ignore */ }
                   recompute();
                 }}
@@ -4450,6 +4653,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </div>
         </>
       )}
+      </div>
     </div>
   );
 }

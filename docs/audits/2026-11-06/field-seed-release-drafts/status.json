@@ -1,0 +1,25 @@
+{
+  "task": "docs/international/agy-field-seed-release-copy-2026-11-06/WORKORDER.md",
+  "status": "COMPLETED",
+  "correction": "COORDINATOR-REVIEW.md revisions applied: corrected caption 01 absence-vs-impossibility reading (especially in zu.json) to reflect an operational lack of a planned phase; sharpened horticultural nursery wording in st, ts, and ve to distinguish from childcare or generic field meanings; revised review-notes to state intended drafting boundaries and specific remaining reviewer checks rather than certifying semantics; clarified that arrow symbols are preserved while navigation text is translated; word-count claim superseded by coordinator measurement.",
+  "validation": "NOT RUN — coordinator-owned",
+  "workers": 0,
+  "workersActive": 0,
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "outputs": [
+    "docs/international/agy-field-seed-release-copy-2026-11-06/zu.json",
+    "docs/international/agy-field-seed-release-copy-2026-11-06/st.json",
+    "docs/international/agy-field-seed-release-copy-2026-11-06/ts.json",
+    "docs/international/agy-field-seed-release-copy-2026-11-06/ve.json",
+    "docs/international/agy-field-seed-release-copy-2026-11-06/review-notes.md",
+    "docs/international/agy-field-seed-release-copy-2026-11-06/status.json"
+  ],
+  "coordinatorReview": {
+    "actualNativeNotesWords": 224,
+    "actualFinalNotesWords": 211,
+    "notesProvenance": "Coordinator condensed the introductory sentence after actual idle handoff; all16 translation/source pairs unchanged by this edit.",
+    "validation": "Root source/structure/token controls, not semantic/fluent/human certification",
+    "unreviewedAi": true
+  }
+}

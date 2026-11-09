@@ -1,0 +1,72 @@
+{
+  "atUtc": "2026-11-05T21:11:54.057452+00:00",
+  "generationBase": "e4d717602ace5fce2bcde7b6af2a9e9e10959ef7",
+  "publicationCoreBase": "d2c5b586edd94f9f7dbb1827ff18c903e9f17517",
+  "sourceSha256": "f9dd1b8da9f2a19a91b2354ae7527ebe3d9c5931901788f2f66fb1701c22013a",
+  "scope": "AGY authored one caption in each E4-based map, retaining434 to435. Coordinator adopted exactly those four values on core-only D2 maps, retaining432 to433. The separate expanded language worksheet is deliberately not a dependency.",
+  "candidateExecutor": "AGY",
+  "finalSourceAndMetadataExecutor": "Codex coordinator",
+  "mainAppLanguageChoicesChanged": false,
+  "humanFluentApproval": false,
+  "browserApproved": false,
+  "nativeCommandsRun": false,
+  "nativeTestsRun": false,
+  "maps": [
+    {
+      "locale": "st",
+      "path": "lib/update-copy-locales/st.ts",
+      "key": "nurseryDemoTaskNavigation.release.01",
+      "english": "Keep your DEMO crop plan when opening the Task Planner.",
+      "messageSha256": "c1305588fddef63c3e794ea587c2aa209127783e85580064c8e198d442760a77",
+      "translation": "Boloka moralo wa hao wa dijalo wa DEMO ha o bula Task Planner.",
+      "nativeAuthoredSha256": "776128a3bac0ca77c53672f35dd1bcfc43baa58f3d516f8040b1a07fe4398b1f",
+      "nativeBaselinePairs": 434,
+      "nativeAuthoredPairs": 435,
+      "coreBaselinePairs": 432,
+      "publishedCorePairs": 433,
+      "publishedCoreSha256": "28b28e27cccf0a36b7b15e89138c158f855efaf385e68ef62e90b3cf0ec9d00f"
+    },
+    {
+      "locale": "ts",
+      "path": "lib/update-copy-locales/ts.ts",
+      "key": "nurseryDemoTaskNavigation.release.01",
+      "english": "Keep your DEMO crop plan when opening the Task Planner.",
+      "messageSha256": "c1305588fddef63c3e794ea587c2aa209127783e85580064c8e198d442760a77",
+      "translation": "Hlayisa pulani ya wena ya swibyariwa ya DEMO loko u pfula Task Planner.",
+      "nativeAuthoredSha256": "f8170532e4c3701f9a8e60b3bfbee973d20532c30e040a800c2a8aea9cb1b039",
+      "nativeBaselinePairs": 434,
+      "nativeAuthoredPairs": 435,
+      "coreBaselinePairs": 432,
+      "publishedCorePairs": 433,
+      "publishedCoreSha256": "b4186d91fb19e01ab51f8984c1e06a7019d2a1cbb74635a327c44f00a8018841"
+    },
+    {
+      "locale": "ve",
+      "path": "lib/update-copy-locales/ve.ts",
+      "key": "nurseryDemoTaskNavigation.release.01",
+      "english": "Keep your DEMO crop plan when opening the Task Planner.",
+      "messageSha256": "c1305588fddef63c3e794ea587c2aa209127783e85580064c8e198d442760a77",
+      "translation": "Vhulungani pulane yavho ya zwimela ya DEMO musi ni tshi vula Task Planner.",
+      "nativeAuthoredSha256": "ee95981a2c905c54ac3e55ccd9f9515a7ac1a42365397729f8c8be08ded8b252",
+      "nativeBaselinePairs": 434,
+      "nativeAuthoredPairs": 435,
+      "coreBaselinePairs": 432,
+      "publishedCorePairs": 433,
+      "publishedCoreSha256": "0ad5b223e3bb474c118a9d3e4f11fcab855a10c64a57432a421f6c101d8b7102"
+    },
+    {
+      "locale": "zu",
+      "path": "lib/update-copy-locales/zu.ts",
+      "key": "nurseryDemoTaskNavigation.release.01",
+      "english": "Keep your DEMO crop plan when opening the Task Planner.",
+      "messageSha256": "c1305588fddef63c3e794ea587c2aa209127783e85580064c8e198d442760a77",
+      "translation": "Gcina uhlelo lwakho lwezitshalo lwe-DEMO lapho uvula i-Task Planner.",
+      "nativeAuthoredSha256": "30a0df9b70ee40d201419e766fb6cbfa6d674f189eede291b8662cfb33018517",
+      "nativeBaselinePairs": 434,
+      "nativeAuthoredPairs": 435,
+      "coreBaselinePairs": 432,
+      "publishedCorePairs": 433,
+      "publishedCoreSha256": "25f557fcca75f1174d1aa2419b6ebdb3424a7e0a14757a8bc146ac06f70828c1"
+    }
+  ]
+}

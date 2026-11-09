@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "sourceKind": "coordinator-supplied-unpublished-ui-release-sentence",
+  "baseCommit": "e8c5fd2221f8989450e7e49436c1f907ef9b94e6",
+  "requestedBranch": "codex/nursery-save-feedback-correction",
+  "provenance": "Proposed description for the source-reproduced sticky pending-book warning. Implementation owner is correcting ephemeral feedback only; actual fixed-source tests/browser result not yet established. Not Git-extracted or certified release behavior.",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "messages": [
+    {
+      "key": "nurseryPlanSaveFeedbackRelease.message.01",
+      "english": "A warning about unsaved edits clears once the crop plan is saved.",
+      "messageSha256": "d5ac1037102390ff955a6692966bb1848a588cb3c124fbb8085225e820591fce"
+    }
+  ]
+}

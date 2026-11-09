@@ -1,0 +1,50 @@
+[
+  {
+    "id": "kmd-kiambu-weekly",
+    "requestedUrl": "https://meteo.go.ke/our-products/county-forecasts/kiambu-county-weekly-forecast/",
+    "effectiveUrl": "https://meteo.go.ke/our-products/county-forecasts/kiambu-county-weekly-forecast/",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T18:36:37.199037+00:00",
+    "completedAt": "2026-11-02T18:36:38.632095+00:00",
+    "bytes": 88835,
+    "sha256": "24547ba1e8c6020780b552a0e29df0288c0694edb12f48c4bff047fa5ec5771d",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "kalro-public-introduction",
+    "requestedUrl": "https://kalro.ecitizen.go.ke/",
+    "effectiveUrl": "https://kalro.ecitizen.go.ke/",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T18:36:38.632585+00:00",
+    "completedAt": "2026-11-02T18:36:40.063609+00:00",
+    "bytes": 30675,
+    "sha256": "c82f32e18b3ad34fe0cb94348fd1a6f5ac795664c17e44a14fede327c184fbb3",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "kephis-public-home",
+    "requestedUrl": "https://www.kephis.org/",
+    "effectiveUrl": "https://www.kephis.org/",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T18:36:40.063941+00:00",
+    "completedAt": "2026-11-02T18:36:41.325723+00:00",
+    "bytes": 418,
+    "sha256": "6918f7006bb76cd1fa677efe68cdff45ad43c47e5b3fc5f9418cb5ce73d9edc9",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "kmd-county-index",
+    "requestedUrl": "https://meteo.go.ke/our-products/county-forecasts/",
+    "effectiveUrl": "https://meteo.go.ke/our-products/county-forecasts/",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T18:57:12.953731+00:00",
+    "completedAt": "2026-11-02T18:57:15.411387+00:00",
+    "bytes": 117626,
+    "sha256": "a58d153b1cef01912ebde54173879b345e522eaaddbacae3e87e8412f1b841a7",
+    "receiptAuthor": "Codex coordinator machine"
+  }
+]

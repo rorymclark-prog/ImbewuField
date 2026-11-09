@@ -1,0 +1,78 @@
+{
+  "workorder": "docs/international/agy-field-block-imperial-entry-2026-11-03/WORKORDER.md",
+  "status": "completed-awaiting-root-review",
+  "snapshotHead": "6e184d251234566a94f1c61f0ddd925805ac66cc",
+  "inspectedFiles": [
+    {
+      "sourceFile": "components/design/FieldBlocksPanel.tsx",
+      "bytes": 5947,
+      "sha256": "0968d433e0e5745eccf9e6ae0e4a7a5c46d0c30aa87149a9eae13347105feccd"
+    },
+    {
+      "sourceFile": "lib/bed-block.ts",
+      "bytes": 18770,
+      "sha256": "aecc69ce888c2e4a8963703903f46566d0ab574e191634cf7a1e6daaf96859a1"
+    },
+    {
+      "sourceFile": "tests/bed-block.test.ts",
+      "bytes": 18948,
+      "sha256": "938fefa420139d961f964606273b8c084ce89d34a97fe493fdc768dd0ba6f72a"
+    }
+  ],
+  "nistSources": [
+    {
+      "name": "NIST SP 811 Appendix B.8",
+      "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8",
+      "sha256": "be7334086bcb574317dd1f78a7822adb699670b7f2bece6ca8a252884158eb5f"
+    },
+    {
+      "name": "NIST SP 811 Appendix B.9",
+      "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9",
+      "sha256": "0197b5ee24ad88a42cabb9f58a2a08bbda25431dc9182c222e66c09390583396"
+    },
+    {
+      "name": "NIST SP 811 Footnotes",
+      "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-footnotes",
+      "sha256": "20a953aad34582d88d50b099b9b3d4ed9d069787cbfe32b4220f965f21967bd5"
+    }
+  ],
+  "printedInternationalFootToMetreFactor": 0.3048,
+  "canonicalDimensionUnit": "m",
+  "entryUnitsSupportedByContract": [
+    "m",
+    "ft"
+  ],
+  "polygonFillMaxBeds": 500,
+  "rectangularBlockSpecCountRange": [
+    1,
+    60
+  ],
+  "parentOnApplyCommitAndAuthBehavior": "UNKNOWN",
+  "runtimeActivation": false,
+  "unitRuntimeSupportActive": false,
+  "contractWordCount": 423,
+  "contractMaxWords": 450,
+  "proposedNegativeScenarios": 3,
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "commandsExecuted": 0,
+  "testsExecuted": 0,
+  "selfValidatorsExecuted": 0,
+  "networkRequests": 0,
+  "outputs": [
+    "FIELD-BLOCK-ENTRY-CONTRACT.md",
+    "status.json"
+  ],
+  "coordinatorReview": {
+    "reviewedAtUtc": "2026-11-03T10:32:16.211988+00:00",
+    "actualWhitespaceWords": 423,
+    "allThreeSnapshotBytesAndSha256Checked": true,
+    "corrections": [
+      "Distinct rectangular MIN_BED_COUNT and MAX_BED_COUNT names",
+      "Coordinator parser decision supersedes narrower initial proposal",
+      "Expanded value fingerprint and separate account/sample boundary"
+    ],
+    "researchTestsExecuted": 0,
+    "runtimeIntegrationClaimed": false
+  }
+}

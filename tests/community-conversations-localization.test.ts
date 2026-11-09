@@ -1,3 +1,4 @@
+import { withArchivedReleaseTour } from './update-ui-renderer.ts';
 import{loadUpdateCopy,updateDescription}from'../lib/update-copy.ts';import{RELEASE_NOTES,visibleUpdateTour}from'../lib/release-notes.ts';
 import test from'node:test';import assert from'node:assert/strict';import fs from'node:fs';import{createHash}from'node:crypto';import ts from'typescript';
 import{actualCommunityConversation}from'./community-conversations-renderer.ts';import{communityNodeText,QA_COMMUNITY_PHOTO}from'./community-profile-renderer.ts';import{controlT,controlLocales,type ControlLanguage}from'./control-icon-renderers.ts';import{beforeCommunityThreadDictionary,beforePhotoViewerDictionary,beforeCommunityThreadTranslations,beforePhotoViewerTranslations}from'./ui-dictionary-preservation.ts';import{communityTimeAgo}from'../lib/community-time.ts';import{recordsDate}from'../lib/records-months.ts';
@@ -71,4 +72,7 @@ for(const lang of langs)test(`${lang}: the lazy nearby map announces loading wit
  const h=await actualCommunityConversation(lang,'hub',{mapLoading:true}),t=controlT(lang);try{assert.equal(h.renderer.root.findByProps({role:'status'}).props['aria-label'],t('communityHubLoading'));assert.equal(h.calls.maps.length,0);await h.tab('board');assert.equal(h.renderer.root.findAllByProps({role:'status'}).length,0);await h.tab('messages');assert.equal(h.calls.maps.length,0);}finally{await h.dispose();}
 });
 
- test('community release descriptions stay source-bound in four drafts and the visible guide retains its real destinations',async()=>{const note=RELEASE_NOTES.find(n=>n.sha===packet.sourceSha.slice(0,8));assert.ok(note?.changes.includes(packet.releasePair.english));for(const lang of langs)assert.equal(updateDescription(await loadUpdateCopy(lang),packet.releasePair.english),packet.releasePair[lang]);assert.ok(visibleUpdateTour().length>=2);for(const stop of visibleUpdateTour())assert.ok(fs.existsSync(new URL('../app'+stop.href+'/page.tsx',import.meta.url)));});
+ test('community release descriptions stay source-bound in four drafts and the visible guide retains its real destinations',async()=>{
+ // This positive guide case uses an explicit real archived announcement.
+ return withArchivedReleaseTour(async()=>{const note=RELEASE_NOTES.find(n=>n.sha===packet.sourceSha.slice(0,8));assert.ok(note?.changes.includes(packet.releasePair.english));for(const lang of langs)assert.equal(updateDescription(await loadUpdateCopy(lang),packet.releasePair.english),packet.releasePair[lang]);assert.ok(visibleUpdateTour().length>=2);for(const stop of visibleUpdateTour())assert.ok(fs.existsSync(new URL('../app'+stop.href+'/page.tsx',import.meta.url)));});
+});

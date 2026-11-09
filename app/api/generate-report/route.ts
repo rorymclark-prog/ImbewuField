@@ -11,6 +11,8 @@ import type { SiteSurvey } from '@/lib/site-survey';
 import { surveyToPrompt, normaliseSiteReportPurpose, siteReportPurposeInstruction } from '@/lib/site-survey';
 import { deriveSolar, isValidEarthLatitude } from '@/lib/solar';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { resolveReportCountryPolicy } from '@/lib/report-country-policy';
+import { DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA } from '@/lib/demo-site';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
 import type { DesignLayer } from '@/lib/design-studio';
@@ -140,11 +142,6 @@ function drySeasonMonthIndices(drySeason: string, pattern: string): number[] {
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/generate-report');
   if (auth.response) return auth.response;
-  const metered = await meteredAi(req, auth, '/api/generate-report', client);
-  if (metered.response) return metered.response;
-  const { ai } = metered;
-  // The model this report really runs on — the cheap one once the allowance is spent.
-  const reportModel = ai.model(AI_MODELS.main);
   let body: {
     locationData: LocationData;
     photoAnalysis?: string;
@@ -177,20 +174,24 @@ export async function POST(req: NextRequest) {
       headers: { 'Content-Type': 'application/json' },
     });
   }
-  const { locationData, photoAnalysis, siteData, waterData, phasePlan, surveyData, evidenceData, sections, language, bilingual, tone, length } = body;
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return Response.json({ error: 'Invalid report request.' }, { status: 400 });
+  }
+  let { locationData, photoAnalysis, siteData, waterData, phasePlan, surveyData, evidenceData } = body;
+  const { sections, language, bilingual, tone, length } = body;
 
   // The farmer's drawn geometry, validated. `studioLayers` (the old approved-DesignLayer path) is
   // deliberately no longer read: nothing in the app ever sets `approved: true`, so the branch that
   // consumed it could never run and every report printed "no design exists" over a finished plan.
   const reportPurpose = normaliseSiteReportPurpose(body.purpose) ?? normaliseSiteReportPurpose(surveyData?.reportPurpose) ?? 'complete';
-  const facts: ReportSiteFacts | null = normaliseReportSiteFacts(body.siteFacts);
+  let facts: ReportSiteFacts | null = normaliseReportSiteFacts(body.siteFacts);
 
   // THE SHEETS THE MODEL ACTUALLY LOOKS AT. The geometry has always crossed as numbers; this is the
   // picture those numbers describe. Rory: "the audit said the report needs to also draw analyses
   // from these images, not generic zone information". See lib/report-site-images.ts — including for
   // why every number in the document still comes from the facts and never from a drawing.
-  const siteImages = normaliseSiteAnalysisImages(body.siteImages);
-  const groundPhotos = normaliseGroundPhotos(body.groundPhotos);
+  let siteImages = normaliseSiteAnalysisImages(body.siteImages);
+  let groundPhotos = normaliseGroundPhotos(body.groundPhotos);
 
   // DoS hardening: drop any section name not in the canonical allow-list so an
   // attacker cannot drive unbounded parallel Anthropic calls via a crafted request.
@@ -225,6 +226,37 @@ export async function POST(req: NextRequest) {
       headers: { 'Content-Type': 'application/json' },
     });
   }
+
+  const country = await resolveReportCountryPolicy(req, auth, locationData, body.siteFacts);
+  if (!country.allowed) return Response.json({ error: country.error, code: country.code },
+    { status: country.status, headers: { 'Cache-Control': 'no-store' } });
+  const demoReference = country.mode === 'demo-south-african-reference';
+  let countryChanged = false;
+  const countryStillCurrent = async (): Promise<boolean> => {
+    if (countryChanged) return false;
+    const fresh = await resolveReportCountryPolicy(req, auth, locationData, body.siteFacts);
+    if (!fresh.allowed || fresh.fingerprint !== country.fingerprint || fresh.mode !== country.mode) {
+      countryChanged = true;
+      return false;
+    }
+    return true;
+  };
+  const changedCountryResponse = () => Response.json({ code: 'REPORT_CONTEXT_CHANGED',
+    error: 'Site country details changed or could not be checked while the report was prepared. The draft is withheld. Completed AI work may already have used allowance; review site details before trying again.' },
+    { status: 409, headers: { 'Cache-Control': 'no-store' } });
+
+  if (demoReference) {
+    // A forgeable sample header buys only this fixed public reference. Private
+    // request facts/photos/surveys can never ride through that demo exception.
+    locationData = DEMO_LOCATION; siteData = DEMO_SITE_DATA; waterData = DEMO_WATER_DATA;
+    facts = null; photoAnalysis = undefined; phasePlan = undefined;
+    surveyData = undefined; evidenceData = undefined; siteImages = []; groundPhotos = [];
+  }
+  const metered = await meteredAi(req, auth, '/api/generate-report', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
+  // The model this report really runs on — the cheap one once the allowance is spent.
+  const reportModel = ai.model(AI_MODELS.main);
 
   const langCode = language ?? 'en';
   const langName = LANGUAGES[langCode] ?? 'English';
@@ -381,7 +413,7 @@ Critical order: ${phasePlan.criticalOrder.join(' → ')}
 Site rules: ${phasePlan.siteRules.join(' · ')}
 Refer to these phases by number when you sequence work. Do not invent a different phase order.` : ''}
 ${facts ? `\n${measurementsPromptBlock(facts)}` : ''}
-${facts?.crop ? `\n${cropPlanPromptBlock(facts)}` : ''}
+${facts?.crop ? `\n${cropPlanPromptBlock(facts, true)}` : ''}
 ${photoAnalysis ? `\nSITE PHOTO ANALYSIS:\n${photoAnalysis}` : ''}
 ${marketEvidencePromptBlock(facts?.marketEvidence ?? surveyData?.marketEvidence)}
 ${surveyData ? `\nSITE SURVEY (farmer-reported observations; preserve their source and uncertainty):\n${surveyToPrompt(surveyData, d.rainfall.annual, false)}` : ''}
@@ -703,6 +735,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   const runBatch = async (batchSections: string[], idx: number): Promise<void> => {
     try {
       for (let attempt = 0; attempt < 2; attempt += 1) {
+        if (!(await countryStillCurrent())) return;
         const msg = await ai.messages.create({
           model: AI_MODELS.main,
           max_tokens: perBatchTokens,
@@ -768,6 +801,8 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
       zarPerReport: Number((t.usd * 18.5).toFixed(2)),
     })}`);
   }
+
+  if (!(await countryStillCurrent())) return changedCountryResponse();
 
   // ── Front matter and back matter, written in CODE ────────────────────────────
   //
@@ -862,7 +897,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   const readable = new ReadableStream({
     async start(controller) {
       try {
-        controller.enqueue(encoder.encode(assembled.markdown));
+        controller.enqueue(encoder.encode((demoReference ? '# DEMO — South African reference example\n\nThis fixed public example is not a report about your farm or locally approved international guidance.\n\n' : '') + assembled.markdown));
       } finally {
         controller.close();
       }
@@ -870,6 +905,6 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   });
 
   return new Response(readable, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache', 'X-Report-Provider': 'Anthropic', 'X-Report-Model': reportModel },
+    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache', 'X-Report-Provider': 'Anthropic', 'X-Report-Model': reportModel, 'X-Report-Mode': country.mode },
   });
 }

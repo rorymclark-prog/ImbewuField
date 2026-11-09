@@ -1,10 +1,12 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { useLocalAdviceContext } from '@/lib/use-local-advice-context';
+import { requestLocalAdvice, localAdviceHoldMessage, localAdviceUnavailableMessage, LOCAL_ADVICE_SITE_HOLD, LOCAL_ADVICE_BASIS } from '@/lib/local-advice-client';
 
 interface Props { locationData: LocationData | null }
 
@@ -60,44 +62,39 @@ function renderMarkdown(text: string) {
 
 export default function InsightsPanel({ locationData }: Props) {
   const { t } = useLanguage();
-  const [insights, setInsights] = useState('');
+  const [storedInsights, setInsights] = useState('');
+  const [resultKey, setResultKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const abortRef = useRef<AbortController | null>(null);
 
-  async function generate() {
-    if (!locationData) return;
-    abortRef.current?.abort();
-    abortRef.current = new AbortController();
-    setInsights('');
-    setError('');
-    setLoading(true);
+  const context = useLocalAdviceContext(locationData, locationData);
+  const contextKey = context.snapshot?.key ?? null;
+  const contextRef = useRef(context); contextRef.current = context;
+  const version = useRef(0);
+  const insights = resultKey === contextKey ? storedInsights : '';
+  useEffect(() => {
+    ++version.current; abortRef.current?.abort();
+    setInsights(''); setError(''); setLoading(false);
+    return () => { ++version.current; abortRef.current?.abort(); };
+  }, [contextKey]);
 
-    try {
-      const res = await fetch('/api/ai-insights', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
-        body: JSON.stringify(locationData),
-        signal: abortRef.current.signal,
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const reader = res.body!.getReader();
-      const decoder = new TextDecoder();
-      let text = '';
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        text += decoder.decode(value, { stream: true });
-        setInsights(text);
-      }
-    } catch (err: unknown) {
-      // Farmer sees a plain, actionable line, never the raw HTTP status or fetch
-      // error text (e.g. "API error 500", "Failed to fetch") — those tell a
-      // farmer nothing they can act on.
-      if (err instanceof Error && err.name !== 'AbortError') setError(t('insightsGenerateError'));
-    } finally {
-      setLoading(false);
-    }
+  async function generate() {
+    const snapshot = contextRef.current.snapshot;
+    if (!locationData || !snapshot) { setError(LOCAL_ADVICE_SITE_HOLD); return; }
+    const captured = ++version.current;
+    const current = () => captured === version.current && contextRef.current.isCurrent(snapshot);
+    abortRef.current?.abort();
+    const controller = new AbortController(); abortRef.current = controller;
+    setInsights(''); setError(''); setResultKey(snapshot.key); setLoading(true);
+    const result = await requestLocalAdvice({ snapshot, isCurrent: current, signal: controller.signal,
+      headers: paidApiHeaders, fetcher: init => fetch('/api/ai-insights', init), body: { locationData } });
+    if (!current()) return;
+    if (result.status === 'ready') setInsights(result.text);
+    else if (result.status === 'held') setError(localAdviceHoldMessage(result));
+    else if (result.status === 'unavailable') setError(localAdviceUnavailableMessage(result));
+    else if (result.status === 'error') setError(t('insightsGenerateError'));
+    setLoading(false);
   }
 
   if (!locationData) {
@@ -110,6 +107,9 @@ export default function InsightsPanel({ locationData }: Props) {
 
   return (
     <div>
+      <p lang="en" className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
+        {context.snapshot ? LOCAL_ADVICE_BASIS : LOCAL_ADVICE_SITE_HOLD}
+      </p>
       {/* Generate button */}
       <div className="flex items-center justify-between mb-4">
         <div>
@@ -124,7 +124,7 @@ export default function InsightsPanel({ locationData }: Props) {
         </div>
         <button
           onClick={generate}
-          disabled={loading}
+          disabled={loading || !context.snapshot}
           className="px-4 py-2 rounded-xl text-xs font-display font-semibold transition-all duration-200 flex items-center gap-1.5"
           style={
             loading

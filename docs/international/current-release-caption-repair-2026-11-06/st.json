@@ -1,0 +1,86 @@
+{
+  "locale": "st",
+  "sourceSha256": "c89655f9bbfb32facd7ac35d1f6981c4f78edae436851851624a0ae0e400e4ed",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "currentReleaseNotice01",
+      "english": "Quick sale names rand and links to invoices in another currency.",
+      "sha256": "d1a7ac4c5fad17be719e68a6f881663467047070d68bb14c69cc3cf31592d769",
+      "translation": "Thekiso e potlakileng e bolela ranta mme e hokahanya le li-invoice ka chelete e 'ngoe."
+    },
+    {
+      "key": "currentReleaseNotice02",
+      "english": "Choose the right sale entry",
+      "sha256": "a9acf5a1d74b41f160b9c0e352ca42d9817ea44c0f1ccd88dec9623a329e4f9b",
+      "translation": "Khetha ho kenya thekiso ho nepahetseng"
+    },
+    {
+      "key": "currentReleaseNotice03",
+      "english": "My Records → Sold → Quick sale entry",
+      "sha256": "b34d2c85dfeaccb988dfcade81aafe710ab7e94dc55731691d9cc7b57c9ee471",
+      "translation": "Litlaleho tsa Ka → E rekisitsoe → Ho kenya thekiso e potlakileng"
+    },
+    {
+      "key": "currentReleaseNotice04",
+      "english": "Quick sale records South African rand (ZAR). For another supported currency, open the separate sale-invoice form and choose its currency and payment status. Enter the sale there; the quick-sale draft is not transferred.",
+      "sha256": "7b9046fbd1f286483c54df0382b527591cf5afc969b42fc841c356cdff3e84e4",
+      "translation": "Thekiso e potlakileng e rekota ranta ea Afrika Boroa (ZAR). Bakeng sa chelete e 'ngoe e tšehelitsoeng, bula foromo e arohaneng ea invoice ea thekiso 'me u khethe chelete ea eona le boemo ba tefo. Kenya thekiso moo; moralo oa thekiso e potlakileng ha o fetisoe."
+    },
+    {
+      "key": "currentReleaseNotice05",
+      "english": "See when monthly temperatures are incomplete or need another check.",
+      "sha256": "5b8e18d5e5ac605f45efd0eb24207a4e3899f95e1db47134665e813a33f613bd",
+      "translation": "Bona ha mocheso oa khoeli le khoeli o sa phethahala kapa o hloka tlhahlobo e 'ngoe."
+    },
+    {
+      "key": "currentReleaseNotice06",
+      "english": "Check monthly temperature coverage",
+      "sha256": "605771bbdab2953c7950fd6d9132ad9db87aacbb529f44dbd0797347df2be793",
+      "translation": "Hlahloba boteng ba lintlha tsa mocheso oa khoeli le khoeli"
+    },
+    {
+      "key": "currentReleaseNotice07",
+      "english": "Map → Site details → Overview or Climate",
+      "sha256": "805e3365c4eae864da13784fee03269bae8a633087a2ab42b402180e392a2b5b",
+      "translation": "Mmapa → Lintlha tsa sebaka → Kakaretso kapa Boemo ba leholimo"
+    },
+    {
+      "key": "currentReleaseNotice08",
+      "english": "Check whether all monthly mean temperatures were supplied. Missing or unrecorded coverage holds the monthly calendar and planner climate interpretation; reload online to try again. Your saved maps, records and original estimates remain available. Complete model inputs do not confirm local crop suitability.",
+      "sha256": "75117da5d70e98f0ca9d6c575832b2149ea9e07629c9087d5401b64b1d3eaff1",
+      "translation": "Hlahloba hore na likhakanyo tsohle tsa karolelano ea mocheso oa khoeli le khoeli li fanoe. Boteng ba lintlha bo sieo kapa bo sa rekotwang bo emisa khalendara ea khoeli le khoeli le tlhaloso ea boemo ba leholimo ea moralo; laela hape inthaneteng ho leka hape. Limmapa tsa hau tse bolokiloeng, litlaleho le likhakanyo tsa pele li ntse li fumaneha. Lintlha tse felletseng tsa mohlala ha li netefatse ho tšoaneleha ha lijalo tsa lehae."
+    },
+    {
+      "key": "currentReleaseNotice09",
+      "english": "Choose app help separately from advice about a saved site.",
+      "sha256": "084f335a92554251294b3d49e8d7cda2c07051254c5c9a48b1657d95f703a66a",
+      "translation": "Khetha thuso ea lenaneo ka thoko ho keletso e mabapi le sebaka se bolokiloeng."
+    },
+    {
+      "key": "currentReleaseNotice10",
+      "english": "Review your LimaBar question before sending it.",
+      "sha256": "2edb8b1437825aba73c3d2ad875e39da3a290fd25a58545e9fe3f5289f770c7e",
+      "translation": "Hlahloba potso ea hau ea LimaBar pele u e romela."
+    },
+    {
+      "key": "currentReleaseNotice11",
+      "english": "Choose the scope of your question",
+      "sha256": "6d07936d680ee777c642137ad0162aefb9c854a06a8d87a11dcade74035180fc",
+      "translation": "Khetha boholo ba potso ea hau"
+    },
+    {
+      "key": "currentReleaseNotice12",
+      "english": "Ask Lima → Help with",
+      "sha256": "c02d81b61f4740e688f34bd4f288e26ca3885dcc6958999d501737369cf504d7",
+      "translation": "Botsa Lima → Thuso ka"
+    },
+    {
+      "key": "currentReleaseNotice13",
+      "english": "Choose Using the app for general help without attaching saved-site or record context. Advice about your own site needs supported country details saved to your signed-in account. Replies and attachments retire when their context changes. Manual maps and records remain available.",
+      "sha256": "c837b7fa60a6b0f0b8660dc1811b4c43c604aee17057eec7b07f07d1ed3bfb61",
+      "translation": "Khetha Ho sebedisa lenaneo bakeng sa thuso e akaretsang ntle le ho hokela sebaka se bolokiloeng kapa litlaleho. Keletso e mabapi le sebaka sa hau e hloka lintlha tsa naha tse tšehelitsoeng tse bolokiloeng akhaonteng ea hau e kentsweng. Likarabo le lihokelo lia tloha ha litaba tsa tsona li fetoha. Limmapa le litlaleho tseo u li sebelisang ka bowena li ntse li fumaneha."
+    }
+  ]
+}

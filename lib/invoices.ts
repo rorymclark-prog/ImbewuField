@@ -11,6 +11,14 @@ import {
 } from './sample-mode';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { normaliseRecordUnit, validRecordQuantity } from './farm-records';
+import { inspectInvoiceCurrencyBasis, invoiceRandConsumerEligibility } from './invoice-currency';
+import { detachJsonData, rawJsonIsLossless } from './lossless-json';
+import { readInvoiceStorage, writeInvoiceStorageRaw, makeBrowserInvoiceStorageContext,
+  captureInvoiceStorageLease, invoiceStorageLeaseMatches, parseInvoiceStoragePayload, INVOICE_STORAGE_EVENT,
+  captureInvoiceReadReceipt, invoiceReadReceiptMatches, releaseInvoiceReadReceipt,
+  type InvoiceStoragePayload, type InvoiceStorageContext } from './invoice-storage';
+import { captureInvoiceDocumentContext, invoiceDocumentContextIsCurrent, revokeInvoiceDocumentContext,
+  subscribeInvoiceDocumentContext, type InvoiceDocumentContext } from './length-unit-preference';
 
 export interface InvoiceItem { desc: string; qty: number; unit: string; price: number }
 export interface Product { desc: string; unit: string; price: number }
@@ -33,6 +41,9 @@ export interface Customer {
 export type CustomerDetails = Pick<Customer, 'address' | 'phone' | 'email'>;
 
 export interface SavedInvoice {
+  /** Present unreadable evidence is retained in views. Only a validated native
+   * basis can authorize a write; absence alone denotes an old Rand invoice. */
+  currencyCode?: unknown;
   /** The invoice is saved locally; its shared sales rows still need confirmation. */
   salesSyncPending?: boolean;
   enterprise?: import('./area-returns').GrowingEnterprise | null;
@@ -76,9 +87,6 @@ export function paymentMethodLabel(m: PaymentMethod): string {
 
 const C_KEY = 'imbewu_invoice_customers';
 const P_KEY = 'imbewu_invoice_products';
-const I_KEY = 'imbewu_invoices';
-const SEQ_KEY = 'imbewu_invoice_seq';
-const PENDING_LINK_KEY = 'imbewu_invoice_pending_links';
 
 function read<T>(baseKey: string): T[] {
   if (typeof window === 'undefined') return [];
@@ -202,6 +210,9 @@ function cleanItem(row: unknown): InvoiceItem | null {
 function cleanInvoice(row: unknown): SavedInvoice | null {
   if (!row || typeof row !== 'object') return null;
   const invoice = row as Partial<SavedInvoice>;
+  const basis = inspectInvoiceCurrencyBasis(row), currency = Object.getOwnPropertyDescriptor(row, 'currencyCode');
+  const denomination = basis.status === 'legacy-rand' ? {} : basis.status === 'recorded' ? { currencyCode: basis.currency }
+    : { currencyCode: currency && 'value' in currency && currency.value !== undefined ? currency.value : { held: true } };
   if (
     typeof invoice.id !== 'string'
     || !invoice.id.trim()
@@ -238,8 +249,9 @@ function cleanInvoice(row: unknown): SavedInvoice | null {
     ? invoice.dueDateISO
     : undefined;
   return {
+    ...denomination,
     ...(invoice.salesSyncPending === true ? { salesSyncPending: true } : {}),
-    enterprise: ['vegetables', 'staples', 'other'].includes(String(invoice.enterprise)) ? invoice.enterprise : undefined,
+    enterprise: typeof invoice.enterprise === 'string' && ['vegetables', 'staples', 'other'].includes(invoice.enterprise) ? invoice.enterprise : undefined,
     id: invoice.id.trim(),
     no: invoice.no!,
     billTo: invoice.billTo.trim(),
@@ -291,27 +303,6 @@ function writeProducts(v: Product[]): boolean {
   }
   return write(P_KEY, v);
 }
-function readInvoicesRaw(): SavedInvoice[] {
-  return cleanInvoices(isSampleMode() ? getSandboxInvoices() : read<unknown>(I_KEY));
-}
-function writeInvoices(v: SavedInvoice[]): boolean {
-  if (isSampleMode()) {
-    setSandboxInvoices(v);
-    return true;
-  }
-  return write(I_KEY, v);
-}
-function readPendingLinksRaw(): SavedInvoice[] {
-  return cleanInvoices(isSampleMode() ? getSandboxPendingInvoiceLinks() : read<unknown>(PENDING_LINK_KEY));
-}
-function writePendingLinks(v: SavedInvoice[]): boolean {
-  if (isSampleMode()) {
-    setSandboxPendingInvoiceLinks(v);
-    return true;
-  }
-  return write(PENDING_LINK_KEY, v);
-}
-
 /* ── Customers ──────────────────────────────── */
 export function loadCustomers(): Customer[] { return readCustomers(); }
 
@@ -350,143 +341,498 @@ export function addProduct(p: Product) {
   if (writeProducts([product, ...list].slice(0, 200))) notify();
 }
 
-/* ── Saved invoices ─────────────────────────── */
-// Old records predate `status`; cleanInvoice defaults them to unpaid while
-// validating the accounting fields at the persistence boundary.
-export function loadInvoices(): SavedInvoice[] { return readInvoicesRaw(); }
+/* ── Protected invoice book ─────────────────── */
 
-/** A link must survive a reload even when the final ledger write runs out of device space.
- * Pending documents live in the same owner's private storage, outside every cash total. */
-export function loadPendingInvoiceLinks(): SavedInvoice[] {
-  return readPendingLinksRaw().filter(invoice => Boolean(invoice.sourceSaleId));
+export interface InvoiceBookRead {
+  readonly status: 'ready' | 'held' | 'sample';
+  readonly reason?: string;
+  readonly writable: boolean;
+  readonly invoices: SavedInvoice[];
+  readonly pendingLinks: SavedInvoice[];
+  readonly nextNumber: number;
+  /** Hidden damaged rows remain in the raw book, outside accounting totals. */
+  readonly retainedUnreadableRows: number;
+  readonly currencyHeldRows: number;
 }
-export function stageInvoiceSaleLink(invoice: SavedInvoice): boolean {
-  const clean = cleanInvoice(invoice);
-  if (!clean?.sourceSaleId) return false;
-  const pending = loadPendingInvoiceLinks();
-  if (pending.some(row => row.sourceSaleId === clean.sourceSaleId && row.id !== clean.id)) return false;
-  return writePendingLinks([clean, ...pending.filter(row => row.id !== clean.id)]);
+export type InvoiceReadCoverage = { readonly status: 'complete' }
+  | { readonly status: 'held'; readonly hiddenRows: number; readonly reason: string };
+const collectionCoverage = new WeakMap<readonly unknown[], { coverage: InvoiceReadCoverage; snapshot: string }>();
+/** Inspect the original loaded collection before deriving a period subset. An
+ * unreadable book must never become an apparently complete zero-income list. */
+export function invoiceReadCoverage(invoices: readonly unknown[]): InvoiceReadCoverage {
+  const proof = collectionCoverage.get(invoices);
+  if (!proof) return { status: 'complete' };
+  try {
+    if (json(invoices) === proof.snapshot) return proof.coverage;
+  } catch { /* Altered or executable values cannot inherit the loaded coverage. */ }
+  return { status: 'held', hiddenRows: proof.coverage.status === 'held' ? proof.coverage.hiddenRows : 0, reason: 'invoice-view-changed' };
 }
-export function clearPendingInvoiceLink(id: string): boolean {
-  return writePendingLinks(loadPendingInvoiceLinks().filter(row => row.id !== id));
+function cover(invoices: SavedInvoice[], coverage: InvoiceReadCoverage): void {
+  collectionCoverage.set(invoices, { coverage: Object.freeze(coverage), snapshot: json(invoices) });
 }
-export function saveInvoice(inv: SavedInvoice): SavedInvoice[] {
-  const before = loadInvoices();
-  const candidateId = typeof inv.id === 'string' ? inv.id.trim() : '';
-  const previous = before.find((row) => row.id === candidateId);
-  if (previous?.sourceSaleId && (inv.sourceSaleId !== previous.sourceSaleId || inv.status !== 'paid')) return before;
-  // Editing invoice lines is not a payment action. Forms that do not expose payment fields may
-  // omit them, but must not erase evidence already attached to a paid invoice.
-  const withPayment = previous?.status === 'paid' && inv.status === 'paid'
-    ? {
-      ...inv,
-      paidAt: inv.paidAt ?? previous.paidAt,
-      paymentMethod: cleanPaymentMethod(inv.paymentMethod) ?? previous.paymentMethod,
+export type InvoiceMutationResult = { status: 'written'; book: InvoiceBookRead; token: string }
+  | { status: 'unchanged'; book: InvoiceBookRead }
+  | { status: 'held'; reason: string; book: InvoiceBookRead }
+  | { status: 'unconfirmed'; reason: string };
+interface InvoiceReadProof {
+  context: InvoiceDocumentContext;
+  storageContext: InvoiceStorageContext | null;
+  lease: object | null;
+  sample: boolean;
+  payload: InvoiceStoragePayload;
+  payloadRaw: string;
+  token: string;
+  display: string;
+  win: Window;
+}
+const admissions = new WeakMap<InvoiceBookRead, InvoiceReadProof>();
+interface SampleSequence { raw: string | null; context: InvoiceDocumentContext; stop: () => void }
+const sampleSequences = new WeakMap<Window, SampleSequence>();
+const json = (value: unknown) => JSON.stringify(detachJsonData(value, { allowUndefinedObjectFields: true }));
+const record = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
+const itemFields = new Set(['desc', 'qty', 'unit', 'price']);
+function rawId(row: unknown): string | null { return record(row) && typeof row.id === 'string' && row.id.trim() ? row.id.trim() : null; }
+function rawRows(raw: string): unknown[] { const rows: unknown = JSON.parse(raw); if (!Array.isArray(rows)) throw Error('invoice-book-unreadable'); return rows; }
+function currentSampleSequence(win: Window): string | null {
+  const saved = sampleSequences.get(win);
+  if (!saved) return null;
+  if (invoiceDocumentContextIsCurrent(saved.context)) return saved.raw;
+  saved.stop(); revokeInvoiceDocumentContext(saved.context); sampleSequences.delete(win); return null;
+}
+function setSampleSequence(win: Window, raw: string | null): void {
+  const old = sampleSequences.get(win); old?.stop(); if (old) revokeInvoiceDocumentContext(old.context);
+  const context = captureInvoiceDocumentContext(); if (!context || !invoiceDocumentContextIsCurrent(context)) throw Error('invoice-context-changed');
+  const saved: SampleSequence = { raw, context, stop: () => {} };
+  saved.stop = subscribeInvoiceDocumentContext(context, () => {
+    saved.stop(); revokeInvoiceDocumentContext(context);
+    if (sampleSequences.get(win) === saved) sampleSequences.delete(win);
+  });
+  sampleSequences.set(win, saved);
+}
+function sampleRows(value: unknown): unknown {
+  if (!Array.isArray(value)) throw Error('sample-invoices-unreadable');
+  // Audit array descriptors before obtaining rows: iteration would execute an
+  // index getter before the ordinary descriptor-safe clone could reject it.
+  const detached = detachJsonData(value, { allowUndefinedObjectFields: true });
+  for (let index = 0; index < value.length; index++) {
+    const field = Object.getOwnPropertyDescriptor(value, String(index));
+    if (!field || !Object.hasOwn(field, 'value')) throw Error('sample-invoices-unreadable');
+    const row: unknown = field.value;
+    if (!record(row)) continue;
+    const currency = Object.getOwnPropertyDescriptor(row, 'currencyCode');
+    // JSON omission is harmless for optional form fields, but it would turn
+    // an unreadable denomination into a historical Rand claim here.
+    if (currency && (!('value' in currency) || currency.value === undefined)) throw Error('currency-needs-review');
+  }
+  return detached;
+}
+function samplePayload(win: Window): InvoiceStoragePayload {
+  return { version: 1, invoicesRaw: JSON.stringify(sampleRows(getSandboxInvoices())),
+    pendingLinksRaw: JSON.stringify(sampleRows(getSandboxPendingInvoiceLinks())), sequenceRaw: currentSampleSequence(win) };
+}
+function nextNumber(payload: InvoiceStoragePayload, fallback = 44): number {
+  const requested = Number.isSafeInteger(fallback) && fallback > 0 ? fallback : 44;
+  let reserved = 1;
+  for (const row of [...rawRows(payload.invoicesRaw), ...rawRows(payload.pendingLinksRaw)]) {
+    if (record(row) && typeof row.no === 'number' && Number.isSafeInteger(row.no) && row.no > 0) {
+      if (row.no === Number.MAX_SAFE_INTEGER) return Number.MAX_SAFE_INTEGER;
+      reserved = Math.max(reserved, row.no + 1);
     }
-    : inv;
-  // An invoice is dated the day it was ISSUED. Every save used to stamp `new Date()`, so simply
-  // opening #0044 to fix a typo — or marking it paid — moved its date to today, and the buyer's
-  // printed copy and the farmer's ledger stopped agreeing about when the debt arose. The issue
-  // date is written once, by the save that created the record.
-  const candidate = previous
-    ? { ...withPayment, dateISO: previous.dateISO }
-    : withPayment;
-  const clean = cleanInvoice(candidate);
-  if (!clean) return before;
-  if (previous?.sourceSaleId && (
-    clean.sourceSaleId !== previous.sourceSaleId || clean.status !== previous.status
-    || clean.paidAt !== previous.paidAt || clean.total !== previous.total
-    || clean.enterprise !== previous.enterprise
-    || JSON.stringify(clean.items) !== JSON.stringify(previous.items)
-  )) return before;
-  // One logged sale can have only one document, including when two open forms save in turn.
-  if (clean.sourceSaleId && before.some(row => row.id !== clean.id && row.sourceSaleId === clean.sourceSaleId)) return before;
-  const list = before.filter((x) => x.id !== clean.id);
-  // Invoices are accounting history, not a recent-items convenience list. Never evict an older
-  // invoice merely because another was saved; if device quota is exhausted, preserve the entire
-  // prior ledger and report that durable state to the caller.
-  const updated = [clean, ...list];
-  if (!writeInvoices(updated)) return before;
-  notify();
-  return updated;
+  }
+  const saved = payload.sequenceRaw !== null && /^\d+$/.test(payload.sequenceRaw.trim()) ? Number(payload.sequenceRaw) : NaN;
+  return Math.max(reserved, Number.isSafeInteger(saved) && saved > 0 ? saved : requested);
 }
-export function deleteInvoice(id: string): SavedInvoice[] {
-  const before = loadInvoices();
-  const cleanId = typeof id === 'string' ? id.trim() : '';
-  if (!cleanId) return before;
-  if (before.find(row => row.id === cleanId)?.sourceSaleId) return before;
-  const updated = before.filter((x) => x.id !== cleanId);
-  if (updated.length === before.length || !writeInvoices(updated)) return before;
-  notify();
-  return updated;
+function view(payload: InvoiceStoragePayload, status: InvoiceBookRead['status'], reason?: string, writable = false): InvoiceBookRead {
+  const invoices = rawRows(payload.invoicesRaw), pending = rawRows(payload.pendingLinksRaw);
+  const ambiguous = !rawJsonIsLossless(payload.invoicesRaw) || !rawJsonIsLossless(payload.pendingLinksRaw);
+  const project = (rows: unknown[]) => cleanInvoices(rows).map(row => ambiguous ? { ...row, currencyCode: { held: true } } : row);
+  const saved = project(invoices), staged = project(pending).filter(row => Boolean(row.sourceSaleId));
+  const hiddenRows = invoices.length - saved.length;
+  const unreadableSource = reason && !['writer-not-acquired', 'upgrade-required'].includes(reason);
+  cover(saved, hiddenRows || ambiguous || unreadableSource ? { status: 'held', hiddenRows,
+    reason: ambiguous ? 'invoice-json-needs-review' : hiddenRows ? 'invoice-rows-needing-review' : reason! } : { status: 'complete' });
+  return Object.freeze({ status: ambiguous ? 'held' : status, ...(ambiguous ? { reason: 'invoice-json-needs-review' } : reason ? { reason } : {}),
+    writable: !ambiguous && writable, invoices: saved, pendingLinks: staged, nextNumber: nextNumber(payload),
+    retainedUnreadableRows: invoices.length + pending.length - saved.length - staged.length,
+    currencyHeldRows: [...saved, ...staged].filter(row => inspectInvoiceCurrencyBasis(row).status === 'held').length });
 }
-export function setInvoiceStatus(id: string, status: InvoiceStatus, paymentMethod?: PaymentMethod, receivedAt?: string): SavedInvoice[] {
-  const list = loadInvoices();
-  if (status !== 'paid' && status !== 'unpaid') return list;
-  const cleanId = typeof id === 'string' ? id.trim() : '';
-  const target = list.find((row) => row.id === cleanId);
-  if (!target) return list;
-  if (target.sourceSaleId && status !== 'paid') return list;
-  if (receivedAt && !Number.isFinite(Date.parse(receivedAt))) return list;
-  const method = cleanPaymentMethod(paymentMethod);
-  const replacement: SavedInvoice = status === 'paid'
-    ? {
-      ...target,
-      status,
-      // Changing how a payment was received must not change when it was received.
-      paidAt: target.sourceSaleId ? target.paidAt : receivedAt ?? (target.status === 'paid' && target.paidAt ? target.paidAt : new Date().toISOString()),
-      paymentMethod: method ?? (target.status === 'paid' ? target.paymentMethod : undefined),
+function emptyRead(reason: string): InvoiceBookRead {
+  const invoices: SavedInvoice[] = []; cover(invoices, { status: 'held', hiddenRows: 0, reason });
+  return Object.freeze({ status: 'held', reason, writable: false, invoices, pendingLinks: [], nextNumber: 44, retainedUnreadableRows: 0, currencyHeldRows: 0 });
+}
+function inspectBook(admit: boolean): InvoiceBookRead {
+  if (typeof window === 'undefined') return emptyRead('storage-unavailable');
+  let context: InvoiceDocumentContext | null = null;
+  try {
+    if (admit) {
+      context = captureInvoiceDocumentContext();
+      if (!context || !invoiceDocumentContextIsCurrent(context)) { revokeInvoiceDocumentContext(context); return emptyRead('invoice-context-changed'); }
     }
-    : {
-      ...target,
-      status,
-      paidAt: undefined,
-      paymentMethod: undefined,
+    const win = window, storageContext = makeBrowserInvoiceStorageContext(), state = readInvoiceStorage(storageContext);
+    const sample = state.status === 'sample';
+    const payload = sample ? samplePayload(win) : state.bookRaw === null ? null : parseInvoiceStoragePayload(state.bookRaw);
+    if (!payload) { revokeInvoiceDocumentContext(context); return emptyRead(state.reason ?? 'invoice-book-unreadable'); }
+    const payloadRaw = sample ? JSON.stringify(payload) : state.bookRaw!;
+    const lease = sample ? null : captureInvoiceStorageLease(storageContext);
+    const writable = admit && !!context && invoiceDocumentContextIsCurrent(context)
+      && (sample || state.status === 'ready' && state.writable && !!state.token && !!lease);
+    const book = view(payload, sample ? 'sample' : state.status, state.reason, writable);
+    if (book.writable && context) admissions.set(book, { context, storageContext, lease, sample, payload, payloadRaw,
+      token: sample ? payloadRaw : state.token!, display: json(book), win });
+    else revokeInvoiceDocumentContext(context);
+    return book;
+  } catch { revokeInvoiceDocumentContext(context); return emptyRead('invoice-book-unreadable'); }
+}
+export function readInvoiceBook(): InvoiceBookRead { return inspectBook(true); }
+export function releaseInvoiceBook(book: InvoiceBookRead): void {
+  const proof = admissions.get(book); if (!proof) return;
+  admissions.delete(book); revokeInvoiceDocumentContext(proof.context);
+}
+export function invoiceBookIsCurrent(book: InvoiceBookRead): boolean {
+  const proof = admissions.get(book);
+  if (!proof || typeof window === 'undefined' || window !== proof.win || !invoiceDocumentContextIsCurrent(proof.context)) return false;
+  try {
+    if (json(book) !== proof.display) return false;
+    if (proof.sample) return isSampleMode() && JSON.stringify(samplePayload(proof.win)) === proof.payloadRaw && invoiceDocumentContextIsCurrent(proof.context);
+    const fresh = readInvoiceStorage(proof.storageContext);
+    return !isSampleMode() && fresh.writable && fresh.token === proof.token && fresh.bookRaw === proof.payloadRaw
+      && invoiceStorageLeaseMatches(proof.lease, proof.storageContext) && invoiceDocumentContextIsCurrent(proof.context);
+  } catch { return false; }
+}
+
+export type InvoiceReadView =
+  | { readonly status: 'ready' | 'sample'; readonly invoices: readonly SavedInvoice[];
+      readonly coverage: { readonly status: 'complete' } }
+  | { readonly status: 'held'; readonly reason: string; readonly retainedUnreadableRows: number };
+interface InvoiceViewProof {
+  context: InvoiceDocumentContext;
+  storageContext: InvoiceStorageContext;
+  win: Window;
+  sample: boolean;
+  rawReceipt: object | null;
+  payloadRaw: string;
+  display: string;
+  checking: boolean;
+  eventChecking: boolean;
+  listeners: Set<() => void>;
+  stopActor: () => void;
+  stopEvents: () => void;
+}
+// Read receipts never enter admissions: a readable book is not permission to edit it.
+const readViews = new WeakMap<InvoiceReadView, InvoiceViewProof>();
+const heldReadView = (reason: string, retainedUnreadableRows = 0): InvoiceReadView =>
+  Object.freeze({ status: 'held', reason, retainedUnreadableRows });
+
+function readViewSource(win: Window, context: InvoiceStorageContext) {
+  const state = readInvoiceStorage(context), sample = state.status === 'sample';
+  const payload = sample ? samplePayload(win) : state.bookRaw === null ? null : parseInvoiceStoragePayload(state.bookRaw);
+  if (!payload) return null;
+  const book = view(payload, sample ? 'sample' : state.status, state.reason);
+  return { sample, book, payloadRaw: sample ? JSON.stringify(payload) : state.bookRaw! };
+}
+function readViewFingerprintMatches(proof: InvoiceViewProof): boolean {
+  if (typeof window === 'undefined' || window !== proof.win || !invoiceDocumentContextIsCurrent(proof.context)) return false;
+  const same = proof.sample ? JSON.stringify(samplePayload(proof.win)) === proof.payloadRaw
+    : invoiceReadReceiptMatches(proof.rawReceipt, proof.storageContext);
+  return same && invoiceDocumentContextIsCurrent(proof.context);
+}
+function withdrawReadView(delivery: InvoiceReadView, notify: boolean): void {
+  const proof = readViews.get(delivery); if (!proof) return;
+  readViews.delete(delivery);
+  releaseInvoiceReadReceipt(proof.rawReceipt);
+  proof.stopEvents(); proof.stopActor(); revokeInvoiceDocumentContext(proof.context);
+  const listeners = [...proof.listeners]; proof.listeners.clear();
+  if (notify) for (const listener of listeners) { try { listener(); } catch { /* One observer cannot retain another's stale delivery. */ } }
+}
+
+/** Capture a coherent private view without acquiring a lock, initializing a store
+ * or manufacturing an empty book when no payload is readable. */
+export function readInvoiceView(): InvoiceReadView {
+  let context: InvoiceDocumentContext | null = null, delivery: InvoiceReadView | null = null, rawReceipt: object | null = null;
+  try {
+    context = captureInvoiceDocumentContext();
+    if (!context || !invoiceDocumentContextIsCurrent(context) || typeof window === 'undefined') {
+      revokeInvoiceDocumentContext(context); return heldReadView('invoice-context-changed');
+    }
+    const win = window, storageContext = makeBrowserInvoiceStorageContext();
+    if (!storageContext) { revokeInvoiceDocumentContext(context); return heldReadView('storage-unavailable'); }
+    rawReceipt = storageContext.sample ? null : captureInvoiceReadReceipt(storageContext);
+    if (!storageContext.sample && !rawReceipt) { revokeInvoiceDocumentContext(context); return heldReadView('invoice-source-changed'); }
+    const source = readViewSource(win, storageContext);
+    if (!source) { releaseInvoiceReadReceipt(rawReceipt); revokeInvoiceDocumentContext(context); return heldReadView('invoice-book-unreadable'); }
+    const coverage = invoiceReadCoverage(source.book.invoices);
+    if (coverage.status === 'held' || source.book.retainedUnreadableRows) {
+      revokeInvoiceDocumentContext(context);
+      releaseInvoiceReadReceipt(rawReceipt);
+      return heldReadView(coverage.status === 'held' ? coverage.reason : 'invoice-rows-needing-review', source.book.retainedUnreadableRows);
+    }
+    if (!invoiceDocumentContextIsCurrent(context) || source.sample !== !!storageContext.sample
+      || !source.sample && !invoiceReadReceiptMatches(rawReceipt, storageContext)) {
+      releaseInvoiceReadReceipt(rawReceipt); revokeInvoiceDocumentContext(context); return heldReadView('invoice-source-changed');
+    }
+    delivery = Object.freeze({ status: source.sample ? 'sample' : 'ready', invoices: source.book.invoices,
+      coverage: Object.freeze({ status: 'complete' as const }) });
+    const proof: InvoiceViewProof = { context, storageContext, win, sample: source.sample, rawReceipt,
+      payloadRaw: source.payloadRaw, display: json(delivery), checking: false, eventChecking: false,
+      listeners: new Set(), stopActor: () => {}, stopEvents: () => {} };
+    readViews.set(delivery, proof);
+    proof.stopActor = subscribeInvoiceDocumentContext(context, () => withdrawReadView(delivery!, true));
+    const inspect = () => {
+      if (readViews.get(delivery!) !== proof) return;
+      if (!proof.checking) { invoiceReadViewIsCurrent(delivery!); return; }
+      // A synchronous event can expose changed bytes that its caller restores
+      // before the outer read returns. Witness those bytes with the same receipt,
+      // but withdraw if witnessing itself reenters rather than recursively reading.
+      if (proof.eventChecking) { withdrawReadView(delivery!, true); return; }
+      proof.eventChecking = true;
+      try { if (!readViewFingerprintMatches(proof)) withdrawReadView(delivery!, true); }
+      catch { withdrawReadView(delivery!, true); }
+      finally { proof.eventChecking = false; }
     };
-  if (
-    replacement.status === target.status
-    && replacement.paidAt === target.paidAt
-    && replacement.paymentMethod === target.paymentMethod
-  ) return list;
-  const updated = list.map((row) => (row.id === cleanId ? replacement : row));
-  if (!writeInvoices(updated)) return list;
-  notify();
-  return updated;
+    const storageChanged = (event: StorageEvent) => {
+      if (event.key && ![storageContext.canonicalKey, storageContext.receiptKey, ...storageContext.legacyKeys].includes(event.key)) return;
+      inspect();
+    };
+    const hidden = () => withdrawReadView(delivery!, true);
+    proof.stopEvents = () => {
+      win.removeEventListener('imbewu-invoices-changed', inspect); win.removeEventListener(INVOICE_STORAGE_EVENT, inspect);
+      win.removeEventListener('storage', storageChanged); win.removeEventListener('focus', inspect); win.removeEventListener('pageshow', inspect);
+      win.removeEventListener('pagehide', hidden);
+    };
+    win.addEventListener('imbewu-invoices-changed', inspect); win.addEventListener(INVOICE_STORAGE_EVENT, inspect);
+    win.addEventListener('storage', storageChanged); win.addEventListener('focus', inspect); win.addEventListener('pageshow', inspect);
+    win.addEventListener('pagehide', hidden);
+    if (!invoiceReadViewIsCurrent(delivery)) return heldReadView('invoice-source-changed');
+    return delivery;
+  } catch {
+    if (delivery) withdrawReadView(delivery, false);
+    else { releaseInvoiceReadReceipt(rawReceipt); revokeInvoiceDocumentContext(context); }
+    return heldReadView('invoice-book-unreadable');
+  }
 }
+
+export function invoiceReadViewIsCurrent(delivery: InvoiceReadView): boolean {
+  const proof = readViews.get(delivery);
+  if (!proof || proof.checking) return false;
+  proof.checking = true;
+  let current = false;
+  try {
+    if (json(delivery) === proof.display && readViewFingerprintMatches(proof) && readViews.get(delivery) === proof) {
+      const source = readViewSource(proof.win, proof.storageContext);
+      current = !!source && source.sample === proof.sample && source.payloadRaw === proof.payloadRaw
+        && source.book.retainedUnreadableRows === 0 && invoiceReadCoverage(source.book.invoices).status === 'complete'
+        && readViewFingerprintMatches(proof) && json(delivery) === proof.display
+        && invoiceDocumentContextIsCurrent(proof.context) && readViews.get(delivery) === proof;
+    }
+  } catch { /* Unreadable or executable source evidence cannot retain a receipt. */ }
+  finally { proof.checking = false; }
+  if (!current) withdrawReadView(delivery, true);
+  return current;
+}
+export function subscribeInvoiceReadView(delivery: InvoiceReadView, onWithdrawn: () => void): () => void {
+  const proof = readViews.get(delivery); if (!proof) return () => {};
+  proof.listeners.add(onWithdrawn);
+  invoiceReadViewIsCurrent(delivery);
+  return () => proof.listeners.delete(onWithdrawn);
+}
+export function releaseInvoiceReadView(delivery: InvoiceReadView): void { withdrawReadView(delivery, false); }
+
+function held(reason: string, source?: InvoiceBookRead): InvoiceMutationResult {
+  return { status: 'held', reason, book: source ?? inspectBook(false) };
+}
+function commit(payload: InvoiceStoragePayload, source: InvoiceBookRead): InvoiceMutationResult {
+  const proof = admissions.get(source);
+  if (!proof || !invoiceBookIsCurrent(source)) return held('invoice-source-changed', source);
+  const raw = JSON.stringify(payload);
+  if (raw === proof.payloadRaw) return { status: 'unchanged', book: source };
+  let token: string;
+  try {
+    if (!parseInvoiceStoragePayload(raw) || !rawJsonIsLossless(payload.invoicesRaw) || !rawJsonIsLossless(payload.pendingLinksRaw)) return held('invoice-json-needs-review', source);
+    if (proof.sample) {
+      if (!invoiceBookIsCurrent(source)) return held('invoice-source-changed', source);
+      setSandboxInvoices(rawRows(payload.invoicesRaw) as SavedInvoice[]);
+      setSandboxPendingInvoiceLinks(rawRows(payload.pendingLinksRaw) as SavedInvoice[]);
+      if (payload.sequenceRaw !== proof.payload.sequenceRaw) setSampleSequence(proof.win, payload.sequenceRaw);
+      token = raw;
+      if (!invoiceDocumentContextIsCurrent(proof.context) || JSON.stringify(samplePayload(proof.win)) !== raw) return { status: 'unconfirmed', reason: 'invoice-write-unconfirmed' };
+    } else {
+      const result = writeInvoiceStorageRaw(raw, proof.token, proof.storageContext, () => invoiceDocumentContextIsCurrent(proof.context));
+      if (result.status === 'held') return held(result.reason, source);
+      if (result.status === 'unconfirmed') return { status: 'unconfirmed', reason: result.reason };
+      token = result.token;
+    }
+    if (!invoiceDocumentContextIsCurrent(proof.context)) return { status: 'unconfirmed', reason: 'invoice-write-unconfirmed' };
+    const own = () => proof.sample ? JSON.stringify(samplePayload(proof.win)) === raw
+      : readInvoiceStorage(proof.storageContext).token === token && readInvoiceStorage(proof.storageContext).bookRaw === raw;
+    if (!own()) return { status: 'unconfirmed', reason: 'invoice-write-unconfirmed' };
+    const book = readInvoiceBook();
+    if (!invoiceBookIsCurrent(book) || !invoiceDocumentContextIsCurrent(proof.context) || !own()) {
+      releaseInvoiceBook(book); return { status: 'unconfirmed', reason: 'invoice-write-unconfirmed' };
+    }
+    releaseInvoiceBook(source); notify();
+    if (!invoiceBookIsCurrent(book)) { releaseInvoiceBook(book); return { status: 'unconfirmed', reason: 'invoice-write-unconfirmed' }; }
+    return { status: 'written', book, token };
+  } catch { return { status: 'unconfirmed', reason: 'invoice-write-unconfirmed' }; }
+}
+function sourceRows(source?: InvoiceBookRead): { payload: InvoiceStoragePayload; saved: unknown[]; pending: unknown[] } | null {
+  if (!source || !invoiceBookIsCurrent(source)) return null;
+  const proof = admissions.get(source)!;
+  if (!rawJsonIsLossless(proof.payload.invoicesRaw) || !rawJsonIsLossless(proof.payload.pendingLinksRaw)) return null;
+  return { payload: proof.payload, saved: rawRows(proof.payload.invoicesRaw), pending: rawRows(proof.payload.pendingLinksRaw) };
+}
+function target(rows: unknown[], id: string): { row: Record<string, unknown>; clean: SavedInvoice; index: number } | null {
+  const matches = rows.map((row, index) => ({ row, index })).filter(({ row }) => rawId(row) === id);
+  if (matches.length > 1) throw Error('ambiguous-invoice-id');
+  if (!matches.length) return null;
+  const found = matches[0]; if (!record(found.row)) throw Error('invoice-row-needs-review');
+  const clean = cleanInvoice(found.row); if (!clean) throw Error('invoice-row-needs-review');
+  return { row: found.row, clean, index: found.index };
+}
+function sameBasis(a: unknown, b: unknown): boolean {
+  const first = inspectInvoiceCurrencyBasis(a), second = inspectInvoiceCurrencyBasis(b);
+  return first.status !== 'held' && second.status !== 'held' && json(first) === json(second);
+}
+function extras(row: Record<string, unknown>, known: ReadonlySet<string>): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(row).filter(([key]) => !known.has(key)));
+}
+function mergedRow(original: Record<string, unknown> | undefined, incoming: Record<string, unknown>, clean: SavedInvoice): Record<string, unknown> {
+  const row = { ...original, ...incoming, ...clean } as Record<string, unknown>;
+  if (!Object.hasOwn(clean, 'currencyCode')) delete row.currencyCode;
+  row.items = clean.items.map((item, index) => {
+    const old = original && Array.isArray(original.items) && record(original.items[index]) ? original.items[index] : undefined;
+    const candidate = Array.isArray(incoming.items) && record(incoming.items[index]) ? incoming.items[index] : {};
+    if (old && Object.keys(extras(old, itemFields)).length && json(cleanItem(old)) !== json(item)) throw Error('invoice-line-metadata-needs-review');
+    return { ...old, ...candidate, ...item };
+  });
+  if (original && Array.isArray(original.items) && original.items.length > clean.items.length
+    && original.items.slice(clean.items.length).some(item => record(item) && Object.keys(extras(item, itemFields)).length)) throw Error('invoice-line-metadata-needs-review');
+  const contactKeys = new Set(['address', 'phone', 'email']);
+  const oldContact = record(original?.billToDetails) ? extras(original.billToDetails, contactKeys) : {};
+  const newContact = record(incoming.billToDetails) ? extras(incoming.billToDetails, contactKeys) : {};
+  if (Object.keys(oldContact).length || Object.keys(newContact).length) row.billToDetails = { ...oldContact, ...newContact, ...clean.billToDetails };
+  return detachJsonData(row, { allowUndefinedObjectFields: true }) as Record<string, unknown>;
+}
+function candidateRow(value: SavedInvoice): Record<string, unknown> {
+  if (inspectInvoiceCurrencyBasis(value).status === 'held') throw Error('invoice-currency-needs-review');
+  const row = detachJsonData(value, { allowUndefinedObjectFields: true });
+  if (!record(row)) throw Error('invalid-invoice');
+  return row;
+}
+function candidateInvoice(row: Record<string, unknown>, previous?: SavedInvoice): SavedInvoice {
+  // Existing payment evidence must survive an ordinary form that omits those
+  // optional fields. This happens before normalization can turn it into unpaid.
+  const paid = row.status === 'paid' && previous?.status === 'paid' ? { ...row,
+    paidAt: row.paidAt ?? previous.paidAt,
+    paymentMethod: cleanPaymentMethod(row.paymentMethod) ?? previous.paymentMethod } : row;
+  const clean = cleanInvoice(previous ? { ...paid, dateISO: previous.dateISO } : paid);
+  if (!clean) throw Error('invalid-invoice');
+  return clean;
+}
+function sameLinkedFacts(a: SavedInvoice, b: SavedInvoice): boolean {
+  return sameBasis(a, b) && a.sourceSaleId === b.sourceSaleId && a.status === b.status && a.paidAt === b.paidAt
+    && a.total === b.total && a.enterprise === b.enterprise && json(a.items) === json(b.items);
+}
+function noOtherSourceSale(rows: unknown[], invoice: SavedInvoice): boolean {
+  return !invoice.sourceSaleId || !rows.some(row => record(row) && row.sourceSaleId === invoice.sourceSaleId && rawId(row) !== invoice.id);
+}
+function numberAvailable(rows: unknown[], invoice: SavedInvoice, previous?: SavedInvoice): boolean {
+  // Historical duplicate numbers are retained evidence, not a reason to renumber
+  // an existing document. A new or changed number cannot create another collision.
+  return previous?.no === invoice.no || !rows.some(row => record(row) && row.no === invoice.no && rawId(row) !== invoice.id);
+}
+
+/** Compatibility views never capture a write admission or retain auth observers. */
+export function loadInvoices(): SavedInvoice[] { return inspectBook(false).invoices; }
+export function loadPendingInvoiceLinks(): SavedInvoice[] { return inspectBook(false).pendingLinks; }
+export function loadNextInvoiceNumber(fallback = 44): number {
+  try {
+    const state = readInvoiceStorage(), payload = state.status === 'sample' ? samplePayload(window)
+      : state.bookRaw === null ? null : parseInvoiceStoragePayload(state.bookRaw);
+    return payload ? nextNumber(payload, fallback) : Number.isSafeInteger(fallback) && fallback > 0 ? fallback : 44;
+  } catch { return Number.isSafeInteger(fallback) && fallback > 0 ? fallback : 44; }
+}
+
+export function saveInvoice(invoice: SavedInvoice, source?: InvoiceBookRead): InvoiceMutationResult {
+  const data = sourceRows(source); if (!data || !source) return held('invoice-source-required', source);
+  try {
+    const incoming = candidateRow(invoice), id = rawId(incoming); if (!id) return held('invalid-invoice', source);
+    const previous = target(data.saved, id), pending = target(data.pending, id), original = previous ?? pending;
+    // Absence is historical evidence, never an implicit currency choice for a
+    // newly authored document. Pending legacy recovery supplies that evidence.
+    if (!original && inspectInvoiceCurrencyBasis(incoming).status !== 'recorded') return held('new-invoice-currency-required', source);
+    if (original && !sameBasis(original.row, incoming)) return held('invoice-currency-is-immutable', source);
+    const clean = candidateInvoice(incoming, original?.clean);
+    if (previous?.clean.sourceSaleId && !sameLinkedFacts(previous.clean, clean)) return held('linked-sale-facts-are-immutable', source);
+    if (pending?.clean.sourceSaleId && !sameLinkedFacts(pending.clean, clean)) return held('pending-link-facts-are-immutable', source);
+    if (!noOtherSourceSale([...data.saved, ...data.pending], clean)) return held('sale-already-has-invoice', source);
+    if (!numberAvailable([...data.saved, ...data.pending], clean, original?.clean)) return held('invoice-number-already-used', source);
+    const row = mergedRow(original?.row, incoming, clean), saved = [...data.saved];
+    if (previous) saved[previous.index] = row; else saved.unshift(row);
+    return commit({ ...data.payload, invoicesRaw: JSON.stringify(saved) }, source);
+  } catch (error) { return held(error instanceof Error ? error.message : 'invalid-invoice', source); }
+}
+
+export function stageInvoiceSaleLink(invoice: SavedInvoice, source?: InvoiceBookRead): InvoiceMutationResult {
+  const data = sourceRows(source); if (!data || !source) return held('invoice-source-required', source);
+  try {
+    const incoming = candidateRow(invoice), id = rawId(incoming); if (!id) return held('invalid-invoice', source);
+    const saved = target(data.saved, id), previous = target(data.pending, id);
+    if (!saved && !previous && inspectInvoiceCurrencyBasis(incoming).status !== 'recorded') return held('new-invoice-currency-required', source);
+    const clean = candidateInvoice(incoming, previous?.clean ?? saved?.clean);
+    if (!clean.sourceSaleId) return held('source-sale-required', source);
+    for (const original of [saved, previous]) if (original && (!sameBasis(original.row, incoming) || !sameLinkedFacts(original.clean, clean))) return held('pending-link-facts-are-immutable', source);
+    if (!noOtherSourceSale([...data.saved, ...data.pending], clean)) return held('sale-already-has-invoice', source);
+    if (!numberAvailable([...data.saved, ...data.pending], clean, previous?.clean ?? saved?.clean)) return held('invoice-number-already-used', source);
+    const row = mergedRow(previous?.row ?? saved?.row, incoming, clean), pending = [...data.pending];
+    if (previous) pending[previous.index] = row; else pending.unshift(row);
+    return commit({ ...data.payload, pendingLinksRaw: JSON.stringify(pending) }, source);
+  } catch (error) { return held(error instanceof Error ? error.message : 'invalid-invoice', source); }
+}
+
+export function clearPendingInvoiceLink(id: string, source?: InvoiceBookRead): InvoiceMutationResult {
+  const data = sourceRows(source); if (!data || !source) return held('invoice-source-required', source);
+  try {
+    const pending = target(data.pending, id), saved = target(data.saved, id);
+    if (!pending) return { status: 'unchanged', book: source };
+    if (!saved || !sameLinkedFacts(pending.clean, saved.clean) || json(pending.clean) !== json(saved.clean)) return held('final-invoice-not-confirmed', source);
+    return commit({ ...data.payload, pendingLinksRaw: JSON.stringify(data.pending.filter((_, index) => index !== pending.index)) }, source);
+  } catch { return held('pending-link-needs-review', source); }
+}
+
+export function deleteInvoice(id: string, source?: InvoiceBookRead): InvoiceMutationResult {
+  const data = sourceRows(source); if (!data || !source) return held('invoice-source-required', source);
+  try {
+    const row = target(data.saved, typeof id === 'string' ? id.trim() : '');
+    if (!row) return { status: 'unchanged', book: source };
+    if (row.clean.sourceSaleId || inspectInvoiceCurrencyBasis(row.row).status === 'held') return held('invoice-delete-needs-review', source);
+    return commit({ ...data.payload, invoicesRaw: JSON.stringify(data.saved.filter((_, index) => index !== row.index)) }, source);
+  } catch { return held('invoice-delete-needs-review', source); }
+}
+
+export function setInvoiceStatus(id: string, status: InvoiceStatus, paymentMethod?: PaymentMethod, receivedAt?: string, source?: InvoiceBookRead): InvoiceMutationResult {
+  const data = sourceRows(source); if (!data || !source) return held('invoice-source-required', source);
+  try {
+    if (status !== 'paid' && status !== 'unpaid') return held('invalid-payment-status', source);
+    const row = target(data.saved, typeof id === 'string' ? id.trim() : '');
+    if (!row) return { status: 'unchanged', book: source };
+    if (row.clean.sourceSaleId && status !== 'paid' || receivedAt && !Number.isFinite(Date.parse(receivedAt))) return held('invalid-payment-status', source);
+    const method = cleanPaymentMethod(paymentMethod);
+    const candidate = status === 'paid' ? { ...row.clean, status,
+      paidAt: row.clean.sourceSaleId ? row.clean.paidAt : receivedAt ?? (row.clean.status === 'paid' ? row.clean.paidAt : undefined) ?? new Date().toISOString(),
+      paymentMethod: method ?? (row.clean.status === 'paid' ? row.clean.paymentMethod : undefined) }
+      : { ...row.clean, status, paidAt: undefined, paymentMethod: undefined };
+    if (candidate.status === row.clean.status && candidate.paidAt === row.clean.paidAt && candidate.paymentMethod === row.clean.paymentMethod) return { status: 'unchanged', book: source };
+    if (invoiceRandConsumerEligibility(row.row).status === 'eligible') candidate.salesSyncPending = true;
+    return saveInvoice(candidate, source);
+  } catch { return held('invalid-payment-status', source); }
+}
+
+export function saveNextInvoiceNumber(value: number, source?: InvoiceBookRead): InvoiceMutationResult {
+  const data = sourceRows(source); if (!data || !source) return held('invoice-source-required', source);
+  if (!Number.isSafeInteger(value) || value <= 0) return held('invalid-invoice-number', source);
+  return commit({ ...data.payload, sequenceRaw: String(Math.max(value, nextNumber(data.payload, 1))) }, source);
+}
+
 export function invoiceId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-}
-
-// The next invoice number is part of the same accounting ledger as the invoices
-// themselves. Keeping it behind the same account-key boundary prevents farmer B
-// inheriting farmer A's numbering sequence on a shared device.
-export function loadNextInvoiceNumber(fallback = 44): number {
-  const requestedFallback = Number.isSafeInteger(fallback) && fallback > 0 ? fallback : 44;
-  // The walkthrough now links every sale to an invoice, so its sequence is longer than 43.
-  const reserved = Math.max(1, ...loadInvoices().map(invoice => invoice.no + 1), ...loadPendingInvoiceLinks().map(invoice => invoice.no + 1));
-  const safeFallback = Math.max(requestedFallback, reserved);
-  if (typeof window === 'undefined') return safeFallback;
-  try {
-    const raw = localStorage.getItem(activeAccountLocalStorageKey(SEQ_KEY));
-    if (!raw) return safeFallback;
-    const value = Number.parseInt(raw, 10);
-    return Number.isSafeInteger(value) && value > 0 ? Math.max(value, reserved) : safeFallback;
-  } catch {
-    return safeFallback;
-  }
-}
-
-export function saveNextInvoiceNumber(value: number): boolean {
-  if (typeof window === 'undefined' || !Number.isSafeInteger(value) || value <= 0) {
-    return false;
-  }
-  try {
-    localStorage.setItem(
-      activeAccountLocalStorageKey(SEQ_KEY),
-      String(value),
-    );
-    return true;
-  } catch {
-    return false;
-  }
 }

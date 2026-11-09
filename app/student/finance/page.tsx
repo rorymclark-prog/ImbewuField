@@ -5,6 +5,7 @@ import FinanceReadingChecklist from '@/components/studies/FinanceReadingChecklis
 import PathwayOfflineDownload from '@/components/studies/PathwayOfflineDownload';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import CourseSyllabus from '@/components/studies/CourseSyllabus';
+import LearningRegionContext from '@/components/studies/LearningRegionNotice';
 import FullToolsOnly from '@/components/studies/FullToolsOnly';
 import { FinanceZuText, FinanceZuCourseNotice } from '@/components/studies/FinanceZu';
 import styles from '@/components/studies/FinanceCourse.module.css';
@@ -34,6 +35,7 @@ export default function FarmFinancePage() {
         <p>Each unit has a plain-language explanation, worked examples and practice to discuss with a facilitator or learning partner. Use the supplied practice figures; keep your household and customer details private.</p>
         <p>The figures are invented classroom examples, not local prices, promised earnings or recommendations for your farm. Each unit supplies its own case and opening balances.</p>
       </section>
+      <LearningRegionContext scope="finance-preview" />
       <CourseSyllabus
         id="syllabus"
         units={FINANCE_UNITS.map(unit => ({

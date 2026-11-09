@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "ef273fe14a5b393adcb13afd81e657982e707bf55f391f9a5da8bbbdd728d244",
+  "milestoneId": "grower-nursery-sowing-observations",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "reviewNotes": "Twelve Codex AI release-description candidates for four existing update languages only. Observed sowing day and optional integer count of physical trays are journal evidence, distinct from planned quantities. Recorded reference labels are not verified seed identity, stock movements or capacity. No fluent or human approval and no new runtime language. Separate from native AGY draft ownership.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "7787e24e919299303edfcd89c5217689cf865bfb108de16f0134e7911002af60",
+      "selectedFileSha256": "124f10b272178f5ad3ece2449edd364cd9cf325df9ece98eaf635f0cf3da9e7c",
+      "historicalBytesPreserved": true
+    },
+    "st": {
+      "originalFileSha256": "1edf4e8e8cffdb4d524335674ccf7586d35d76615b5d55843a8a792626fa4b17",
+      "selectedFileSha256": "deae59eabe7e2d91ec40b85a432ad2b6c6987f418737d8f8c59777b518055fd8",
+      "historicalBytesPreserved": true
+    },
+    "ve": {
+      "originalFileSha256": "84ba9f0e970bc726d218902f70f95eee5db9eca8a4a6f7571c9567d6e65fab03",
+      "selectedFileSha256": "13bb382dc826b7b826c5f08cb1cd155b9b3a336f469f7ad4a0a80168c23b8f27",
+      "historicalBytesPreserved": true
+    },
+    "ts": {
+      "originalFileSha256": "90b0cf3eded9f0fb318364d0f5de91167e8da1963b573dfff9703c236ee6f8d4",
+      "selectedFileSha256": "622fe30c48a22e07bdfcb1777133d9eaa7d46cbf290ba328c41434aabb8f3add",
+      "historicalBytesPreserved": true
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Record nursery sowing in your field journal",
+      "zu": "Rekhoda ukuhlwanyela e-nursery kujenali yakho yasensimini",
+      "st": "Rekota ho jala nursery jenaleng ya hao ya tshimo",
+      "ve": "Rekhodani u zwala kha nursery kha dzhenala yaṋu ya tsimu",
+      "ts": "Rhekhoda ku byala eka nursery eka jenali ya wena ya nsimu",
+      "messageSha256": "4acde0cf758ffe2ca68776495022bbf4f06ae4f6f095658b2798216993de2506"
+    },
+    {
+      "english": "Crop planner → Saved planned nursery batches",
+      "zu": "Umhleli wezitshalo → Amaqoqo e-nursery ahleliwe agciniwe",
+      "st": "Mohlophisi wa dijalo → Dihlopha tse rerilweng tsa nursery tse bolokilweng",
+      "ve": "Muvhekanyi wa zwimela → Zwigwada zwa nursery zwo vhekanywaho zwo vhulungwaho",
+      "ts": "Mupulani wa swibyariwa → Mintlawa ya nursery leyi pulaniweke yi tlhela yi hlayisiwa",
+      "messageSha256": "5543afd25b9a102af7e8c76375409c904c894e28ec12a868996456b7b169059a"
+    },
+    {
+      "english": "Record the day sowing happened and optional whole trays used for a saved batch. Review the observed entry and its recorded reference labels in your journal and downloads.",
+      "zu": "Rekhoda usuku ukuhlwanyela okwenzeke ngalo kanye, uma uthanda, nenani eliyinombolo ephelele lamathileyi asetshenzisiwe eqoqweni eligciniwe. Hlola irekhodi lalokho okubonile namalebula ereferensi agcinwe nalo kujenali yakho nakumafayela owalandayo.",
+      "st": "Rekota letsatsi leo ho jalweng ka lona le, ha o batla, palo ya diterei tse sebedisitsweng ka dinomoro tse felletseng bakeng sa sehlopha se bolokilweng. Hlahloba rekoto ya seo o se boneng le dileibole tsa ditshupiso tse rekotilweng le yona jenaleng ya hao le difaeleng tse jarollotsweng.",
+      "ve": "Rekhodani ḓuvha ḽe u zwala ha itea ngaḽo na, arali ni tshi ṱoḓa, tshivhalo tsha thireyi dzo shumiswaho nga nomboro yo fhelelaho kha tshigwada tsho vhulungwaho. Sedzulusani rekhodo ya zwe na vhona na lebulu dza referentsi dzo rekhodiwaho nayo kha dzhenala yaṋu na kha faela dzo downloudiwaho.",
+      "ts": "Rhekhoda siku leri ku byala ku humeleleke ha rona ni, loko u lava, nhlayo ya tithireyi leti tirhisiweke hi nomboro leyi heleleke eka ntlawa lowu hlayisiweke. Kambisisa rhekhodo ya leswi u swi voneke ni tilebulu ta tirheferense leti rhekhodiweke na yona eka jenali ya wena ni le ka tifayili leti dawunilodiweke.",
+      "messageSha256": "75370a539114019b95986049d932c0abb7909cafe45ddd6aa7499925caf3e022"
+    }
+  ]
+}

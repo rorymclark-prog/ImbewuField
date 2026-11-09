@@ -1,6 +1,39 @@
+import { readGrowerCycleIntent, readGrowerCycleIntentField, growerCycleIntentColumns, GROWER_INTENT_EXPORT_COLUMNS } from './international/grower-cycle-intent';
+import type { jsPDF } from 'jspdf';
+import { exactPdfTextWriter } from './pdf-exact-text';
 import type { PlanBed } from './crop-plan';
 import type { NurseryForecast, NurseryRange } from './crop-export-schedule';
 import { csvCell } from './journal-export';
+import { projectGrowerNurseryPreparation, type GrowerNurseryResult, type GrowerNurseryBatchReferenceView, type GrowerNurseryRequest } from './international/grower-nursery';
+import { reviewGrowerSeedSourcing, reviewGrowerFieldSeedSourcing, type GrowerSeedSourcingGroupReview,
+  type GrowerFieldSeedSourcingInput, type GrowerFieldSeedCycleBreakdownRow } from './international/grower-seed-sourcing';
+
+/** Static delivery copy only; never include entered references in an error. */
+export class NurseryReferenceExportError extends Error {
+  readonly reason = 'unsupported-reference-glyph' as const;
+  constructor() {
+    super('A planned reference cannot be printed faithfully with the bundled PDF font. Download the CSV to retain its exact text.');
+    this.name = 'NurseryReferenceExportError';
+  }
+}
+
+type MemberReference = GrowerNurseryBatchReferenceView;
+
+function exportReference(reference: MemberReference | undefined, source: GrowerNurseryResult['sourceStatus']): MemberReference {
+  // Old constructed DTOs did not carry reference evidence. Only a proposal is
+  // known to have no durable member; a saved DTO without evidence needs review.
+  return reference ?? (source === 'proposed' ? { status: 'proposed' } : { status: 'held', reason: 'reference-unavailable' });
+}
+function referenceColumns(reference: MemberReference) {
+  const missing = reference.status === 'proposed' ? 'No saved reference' : 'Needs review';
+  return { reference_status: reference.status,
+    variety: reference.status === 'ready' ? reference.fields.variety ?? 'Not recorded' : missing,
+    seed_lot_reference: reference.status === 'ready' ? reference.fields.seedLotReference ?? 'Not recorded' : missing,
+    raising_batch_reference: reference.status === 'ready' ? reference.fields.raisingBatchReference ?? 'Not recorded' : missing,
+    reference_note: reference.status === 'ready' ? 'Grower-entered planned references; not verified seed identity, observed sowing or stock.'
+      : reference.status === 'proposed' ? 'Proposed cycle: no saved planned reference.' : 'Saved planned references need review; do not infer their absence.' };
+}
+
 
 export interface NurseryCsvOptions {
   siteName?: string;
@@ -69,4 +102,585 @@ export function buildNurseryCsv(forecast: NurseryForecast, beds: PlanBed[], opti
     incomplete: week.incomplete ? 'yes' : 'no' });
   return `\uFEFF${[COLUMNS, ...rows.map((row) => COLUMNS.map((column) => row[column] ?? ''))]
     .map((row) => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
+}
+
+const issueLabels: Record<string, string> = {
+  'nursery-settings-review-missing': 'Confirm that you have reviewed the saved nursery equipment and recipes.',
+  'nursery-settings-review-stale': 'The saved nursery settings changed; review them again.',
+  'nursery-availability-missing': 'Nursery resource availability has not been confirmed.',
+  'other-nursery-reservations-missing': 'Other nursery uses have not been accounted for.',
+  'existing-field-reservations-not-accounted-for': 'Account for nursery resources used by the existing field occupations.',
+  'field-survival-missing': 'Your field survival estimate is missing.',
+  'field-survival-zero': 'A zero field survival rate cannot size a positive raising requirement.',
+  'nursery-recipe-missing': 'A nursery recipe for this crop identity is missing.',
+  'nursery-container-missing': 'The assigned propagation container is missing.',
+  'nursery-space-missing': 'The assigned nursery surface is missing.',
+  'container-cell-count-missing-or-zero': 'Enter a usable cell count for the seed-cell model.',
+  'germination-or-nursery-survival-missing': 'Your germination or nursery survival estimate is missing.',
+  'germination-or-nursery-survival-zero': 'A zero success rate cannot size a positive seed-cell requirement.',
+  'measured-tray-output-missing': 'Your measured usable output per tray is missing.',
+  'measured-tray-output-zero': 'A measured zero output cannot supply positive demand.',
+  'container-footprint-missing': 'Both outer container dimensions are needed for surface requirements.',
+  'resource-availability-incomplete': 'Dated availability is incomplete for a nursery resource.',
+  'tray-footprint-missing': 'Both outer container dimensions are needed for surface requirements.',
+  'recipe-duration-conflicts-with-cycle': 'The saved recipe duration conflicts with the reviewed crop-cycle dates.',
+  'nursery-cycle-outside-review-horizon': 'A nursery cycle lies outside the reviewed planning period.',
+  'nursery-settings-invalid-or-ambiguous': 'Saved nursery settings are invalid or ambiguous; no capacity is certified.',
+  'resource-reservation-identity-or-capacity': 'Check the selected resources, quantities and recorded allocations.',
+  'overlapping-resource-availability': 'Availability intervals for one resource overlap; enter disjoint intervals.',
+  'proposal-capacity-gaps': 'The crop proposal still has unmet demand; this nursery review is incomplete.',
+  'current-cycle-source-unavailable-or-stale': 'The crop proposal changed or is unavailable. Review the crop plan again.',
+  'resource-source-context-mismatch': 'The current nursery resource context does not match this crop plan.',
+  'nursery-inputs-invalid': 'Check all resource quantities and complete positive date intervals.',
+};
+export const growerNurseryIssueText = (code: string) => issueLabels[code.split(':')[0]] ?? 'Some required nursery inputs or source checks remain unresolved.';
+
+/** Format the already reviewed own-input snapshot. Private record identities and
+ * source fingerprints never belong in a shareable nursery worksheet. */
+export function buildGrowerNurseryCsv(result: GrowerNurseryResult, beds: readonly PlanBed[], options: NurseryCsvOptions = {}): string {
+  const columns = ['record_type', 'site_name', 'plan_basis', 'source_status', 'review_status', 'headroom',
+    'crop_name', 'growing_spaces', 'member_number', 'reference_status', 'variety', 'seed_lot_reference', 'raising_batch_reference', 'reference_note', 'start_date', 'end_date_exclusive', 'target_final_positions',
+    'starts', 'seeds', 'trays', 'area_m2', 'nursery_model', 'resource_type', 'resource_name',
+    'recorded_capacity', 'peak_known_min', 'peak_known_max', 'shortage_upper_end',
+    'availability_quantity', 'availability_complete', 'incomplete', 'assumptions', 'issues', ...GROWER_INTENT_EXPORT_COLUMNS] as const;
+  type OwnRow = Partial<Record<typeof columns[number], string | number>>;
+  const rows: OwnRow[] = [];
+  const preparation = projectGrowerNurseryPreparation(result);
+  const references = new Map(preparation.groups.flatMap(group => group.members.map(member => [member.batchId, member.reference] as const)));
+  const context: OwnRow = { site_name: options.siteName ?? 'Site name not recorded',
+    plan_basis: options.sample ? 'DEMO — example own-input nursery review' : 'Own-input nursery estimates',
+    source_status: result.sourceStatus ?? 'unavailable', review_status: result.status, headroom: result.headroom };
+  rows.push({ ...context, record_type: 'guidance', incomplete: result.status === 'ready' ? 'no' : 'yes',
+    assumptions: result.forecast.guidance, issues: result.issues.map(growerNurseryIssueText).join(' | ') });
+  for (const [index, batch] of result.batches.entries()) rows.push({ ...context, record_type: 'dated_raising_batch',
+    member_number: index + 1, ...growerCycleIntentColumns(readGrowerCycleIntentField(batch)), ...referenceColumns(exportReference(references.get(batch.id), batch.sourceStatus)),
+    source_status: batch.sourceStatus, crop_name: batch.cropName,
+    growing_spaces: batch.bedIds.map(id => beds.find(bed => bed.id === id)?.label ?? 'Growing space not available').join(' | '),
+    start_date: batch.startDate, end_date_exclusive: batch.endDateExclusive, target_final_positions: batch.targetPositions,
+    starts: batch.starts ?? 'unknown', seeds: batch.seeds ?? 'unknown', trays: batch.trays ?? 'unknown',
+    area_m2: batch.areaM2 ?? 'unknown', nursery_model: batch.model ?? 'unknown', incomplete: batch.incomplete ? 'yes' : 'no',
+    assumptions: batch.basis.join(' | '), issues: batch.issues.map(growerNurseryIssueText).join(' | ') });
+  for (const resource of result.resources) {
+    const shared: OwnRow = { ...context, resource_type: resource.resourceKind, resource_name: resource.name,
+      recorded_capacity: resource.capacity ?? 'unknown', headroom: resource.headroom,
+      availability_complete: resource.availabilityComplete ? 'yes' : 'no', incomplete: resource.incomplete ? 'yes' : 'no' };
+    rows.push({ ...shared, record_type: 'resource_simultaneous_peak', peak_known_min: resource.peak?.[0] ?? 'unknown',
+      peak_known_max: resource.peak?.[1] ?? 'unknown', shortage_upper_end: resource.shortage ?? 'unknown',
+      assumptions: 'Known assigned simultaneous demand. Incomplete quantities are lower bounds, not spare capacity.' });
+    for (const available of resource.availability) rows.push({ ...shared, record_type: 'grower_asserted_availability',
+      start_date: available.window.start, end_date_exclusive: available.window.endExclusive, availability_quantity: available.quantity });
+  }
+  return `\uFEFF${[columns, ...rows.map(row => columns.map(column => row[column] ?? ''))]
+    .map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
+}
+
+
+/** Build printable A4 nursery batch cards, one card per represented preparation group.
+ * These are planning cards for keeping/attaching with a batch, not verified tray labels. */
+export async function buildGrowerNurseryBatchLabelsPdf(result: GrowerNurseryResult, options: NurseryPreparationPdfOptions = {}): Promise<Blob> {
+  const projection = projectGrowerNurseryPreparation(result);
+  if (projection.status !== 'available') throw Error('The preparation worksheet is unavailable for this nursery review.');
+  if (projection.groups.some(group => !/^[\x20-\x7e]+$/.test(group.cropName))) throw Error('The crop identity cannot be printed faithfully with the current PDF font.');
+
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
+  const referenceWriter = await exactPdfTextWriter(doc, () => new NurseryReferenceExportError());
+  const width = doc.internal.pageSize.getWidth(), height = doc.internal.pageSize.getHeight();
+  const margin = 36, contentWidth = width - 2 * margin, bottom = height - 66;
+  const ink: [number, number, number] = [43, 48, 39];
+  let y = margin;
+
+  const font = (size: number, weight: 'normal' | 'bold' | 'italic' = 'normal') => {
+    doc.setFont('helvetica', weight); doc.setFontSize(size); doc.setTextColor(...ink);
+  };
+
+  function page(continuationGroup = '') {
+    doc.addPage(); y = margin;
+    if (continuationGroup) {
+      font(10, 'bold'); doc.text('PLANNED NURSERY BATCH (continued)', margin, y + 10); y += 18;
+      font(10); const lines = doc.splitTextToSize(continuationGroup, contentWidth) as string[];
+      doc.text(lines, margin, y + 10); y += lines.length * 13 + 6;
+    }
+  }
+
+  function ensure(space: number, continuationGroup = '') {
+    if (y + space > bottom) page(continuationGroup);
+  }
+
+  function paragraph(text: string, size = 10, weight: 'normal' | 'bold' | 'italic' = 'normal', gap = 5, continuationGroup = '') {
+    font(size, weight);
+    const lines = doc.splitTextToSize(preparationPdfCopy(text), contentWidth) as string[];
+    for (const line of lines) {
+      ensure(size * 1.3 + 2, continuationGroup);
+      font(size, weight); doc.text(line, margin, y + size); y += size * 1.3;
+    }
+    y += gap;
+  }
+
+  if (!projection.groups.length) {
+    const overallIncomplete = projection.projectionIncomplete || projection.reviewIncomplete;
+    paragraph('PLANNED NURSERY BATCH', 16, 'bold', 6);
+    paragraph(`Overall review status: ${overallIncomplete ? 'Incomplete review' : 'Reviewed inputs complete'}.`, 10, 'bold', 4);
+    paragraph(`Source: ${projection.sourceStatus === 'saved-planned' ? 'Saved planned crop cycles' : 'Proposed crop cycles'}. Grower estimates; source not verified.`, 9, 'normal', 4);
+    if (projection.horizon) {
+      paragraph(`Review horizon: ${projection.horizon.start} to before ${projection.horizon.endExclusive} (UTC).`, 9, 'normal', 4);
+    }
+    paragraph('No transplant batches are represented in this review. This does not establish a zero requirement for the whole garden.', 10, 'normal', 6);
+    for (const globalIssue of [...new Set(projection.issues.map(growerNurseryIssueText))]) {
+      paragraph(`Review note: ${globalIssue}`, 9, 'normal', 4);
+    }
+    paragraph('Planning card only: Not verified tray labels, observed sowing, nursery stock or seedling readiness.', 9, 'italic');
+  }
+
+  for (const [index, group] of projection.groups.entries()) {
+    if (index > 0) doc.addPage();
+    y = margin;
+    const cardTitle = `${group.cropName} - Preparation Group ${index + 1}`;
+
+    doc.setDrawColor(180, 190, 175);
+    doc.setLineDashPattern([4, 4], 0);
+    doc.roundedRect(margin, y, contentWidth, height - 2 * margin - 14, 4, 4, 'S');
+    doc.setLineDashPattern([], 0);
+
+    y += 16;
+    font(9, 'bold');
+    doc.text('CUT / FOLD GUIDE - ATTACH OR KEEP WITH BATCH', width / 2, y + 4, { align: 'center' });
+    y += 16;
+
+    paragraph('PLANNED NURSERY BATCH', 16, 'bold', 6, cardTitle);
+    paragraph(cardTitle, 13, 'bold', 6, cardTitle);
+    const overallIncomplete = projection.projectionIncomplete || projection.reviewIncomplete;
+    paragraph(`Overall review status: ${overallIncomplete ? 'Incomplete review' : 'Reviewed inputs complete'}.`, 10, 'bold', 4, cardTitle);
+    paragraph(`Source: ${projection.sourceStatus === 'saved-planned' ? 'Saved planned crop cycles' : 'Proposed crop cycles'}. Grower estimates; source not verified.`, 9, 'normal', 4, cardTitle);
+    if (projection.horizon) {
+      paragraph(`Review horizon: ${projection.horizon.start} to before ${projection.horizon.endExclusive} (UTC).`, 9, 'normal', 4, cardTitle);
+    }
+    paragraph(`Batch group status: ${group.incomplete ? 'Incomplete' : 'Included counts complete'}. Represented transplant batches only.`, 10, 'normal', 6, cardTitle);
+
+    paragraph(`Raising starts ${group.startDate} (UTC).`, 10, 'bold', 4, cardTitle);
+    const fieldDates = [...new Set(group.members.map(member => member.endDateExclusive))].sort().join(', ');
+    paragraph(`Raising ends before field entry: ${fieldDates} (exclusive UTC).`, 10, 'normal', 8, cardTitle);
+
+    const metrics = [
+      ['Final field positions', group.fieldPositions],
+      ['Starts to raise', group.startsToRaise],
+      ['Seeds to sow', group.seedsToSow],
+    ] as const;
+    const cellWidth = (contentWidth - 24) / 3;
+    const cells = metrics.map(([label, metric]) => {
+      font(10, 'bold'); const labels = doc.splitTextToSize(label, cellWidth - 14) as string[];
+      font(10); const values = doc.splitTextToSize(preparationMetricText(metric), cellWidth - 14) as string[];
+      return { labels, values };
+    });
+    const blockHeight = Math.max(...cells.map(cell => cell.labels.length + cell.values.length)) * 13 + 18;
+    ensure(blockHeight + 10, cardTitle);
+    for (const [col, cell] of cells.entries()) {
+      const cx = margin + 12 + col * (cellWidth + 4);
+      doc.setFillColor(244, 247, 240);
+      doc.roundedRect(cx, y, cellWidth, blockHeight, 3, 3, 'F');
+      let lineY = y + 14;
+      font(10, 'bold'); for (const l of cell.labels) { doc.text(l, cx + 6, lineY); lineY += 13; }
+      font(10); for (const v of cell.values) { doc.text(v, cx + 6, lineY); lineY += 13; }
+    }
+    y += blockHeight + 10;
+
+    for (const [memberIndex, member] of group.members.entries()) {
+      const reference = exportReference(member.reference, projection.sourceStatus), fields = referenceColumns(reference);
+      const memberHeading = `Member ${memberIndex + 1}: raising ${group.startDate}; field entry ${member.endDateExclusive} (exclusive UTC).`;
+      const intentLines = (member.intent ?? readGrowerCycleIntent(undefined)).lines;
+      // Keep this bounded public intent together with its member identity. The
+      // entered reference fields below retain their existing long-text paging.
+      font(9, 'bold'); let intentHeight = doc.splitTextToSize(memberHeading, contentWidth).length * 11.7 + 4;
+      font(9); for (const line of intentLines) intentHeight += doc.splitTextToSize(preparationPdfCopy(line), contentWidth).length * 11.7 + 4;
+      ensure(intentHeight + 2, cardTitle);
+      paragraph(memberHeading, 9, 'bold', 4, cardTitle);
+      for (const line of intentLines) paragraph(line, 9, 'normal', 4, cardTitle);
+      paragraph(fields.reference_note, 9, 'normal', 4, cardTitle);
+      for (const [label, value] of [['Variety', fields.variety], ['Seed lot reference', fields.seed_lot_reference], ['Raising batch reference', fields.raising_batch_reference]]) {
+        for (const line of referenceWriter.lines(`${label}: ${value}`, contentWidth)) {
+          ensure(15, cardTitle); referenceWriter.select(line); doc.setTextColor(...ink);
+          doc.text(line, margin, y + 10); y += 13;
+        }
+        y += 4;
+      }
+    }
+
+    paragraph('Planning card only: Not verified tray labels, observed sowing, nursery stock or seedling readiness.', 9, 'normal', 4, cardTitle);
+    paragraph('Loss estimates: Calculated counts already include supplied loss estimates; do not apply them again.', 9, 'normal', 4, cardTitle);
+    paragraph('Crop identity: Matching crop names do not identify interchangeable varieties or seed lots. Unknown requirements are not zero.', 9, 'normal', 4, cardTitle);
+    paragraph('This card does not establish resource availability, container packing or plant health.', 9, 'normal', 6, cardTitle);
+
+    if (group.outsideReviewHorizon) {
+      paragraph('Some raising dates extend beyond the review horizon.', 9, 'italic', 4, cardTitle);
+    }
+    for (const globalIssue of [...new Set(projection.issues.map(growerNurseryIssueText))]) {
+      paragraph(`Review note: ${globalIssue}`, 9, 'normal', 4, cardTitle);
+    }
+    for (const issue of [...new Set(group.issues.map(growerNurseryIssueText))]) {
+      paragraph(`Note: ${issue}`, 9, 'normal', 4, cardTitle);
+    }
+
+    ensure(95, cardTitle);
+    y += 4;
+    paragraph('Handwritten nursery notes (batch / seed lot / actual sowing - not saved by app):', 9, 'bold', 4, cardTitle);
+    doc.setDrawColor(200, 208, 195);
+    const writeFields = [
+      'Actual sowing date:',
+      'Seed lot / cultivar name:',
+      'Containers sown & notes:',
+    ];
+    for (const wf of writeFields) {
+      y += 14;
+      font(8.5);
+      doc.text(wf, margin + 12, y);
+      doc.line(margin + 125, y, width - margin - 12, y);
+    }
+    y += 10;
+  }
+
+  const pages = doc.getNumberOfPages();
+  for (let pageNumber = 1; pageNumber <= pages; ++pageNumber) {
+    doc.setPage(pageNumber);
+    font(8);
+    if (options.sample) {
+      font(9, 'bold');
+      doc.text('DEMO - EXAMPLE PLANNING DATA', width / 2, 21, { align: 'center' });
+    }
+    font(8);
+    doc.text('PLANNED NURSERY BATCH - planning cards (not verified tray labels)', margin, height - 42);
+    doc.text('Source not verified; not observed sowing or nursery stock', margin, height - 30);
+    doc.text(`Page ${pageNumber} of ${pages}`, width - margin, height - 30, { align: 'right' });
+  }
+
+  return new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
+}
+
+/** A shareable projection of the same nursery review, never another forecast.
+ * Membership and source receipts remain private; the caller still checks current
+ * source/book/actor and full result equality immediately before delivery. */
+export interface NurseryPreparationPdfOptions { sample?: boolean }
+
+/** Keep punctuation supported by the existing PDF font; crop identities are
+ * printed separately and are never renamed to make a glyph fit. */
+function preparationPdfCopy(text: string): string {
+  return text.replace(/[‐-―]/g, '-').replace(/[‘’]/g, "'").replace(/[“”]/g, '"')
+    .replace(/\u00a0/g, ' ');
+}
+
+function preparationMetricText(metric: import('./international/grower-nursery').GrowerNurseryPreparationMetric): string {
+  if (metric.status === 'overflow') return 'Total unavailable; review input counts';
+  if (metric.status === 'complete') return String(metric.total);
+  return `Unknown total; known subtotal ${metric.knownSubtotal === null ? 'Unknown' : metric.knownSubtotal}`;
+}
+
+/** A printable view of the same projection, without delivery or live authority.
+ * The caller still checks the original account/source and complete result. */
+export async function buildGrowerNurseryPreparationPdf(result: GrowerNurseryResult, options: NurseryPreparationPdfOptions = {}): Promise<Blob> {
+  const projection = projectGrowerNurseryPreparation(result);
+  if (projection.status !== 'available') throw Error('The preparation worksheet is unavailable for this nursery review.');
+  // The current canonical English names fit the existing standard font. If the
+  // catalogue later changes, hold rather than silently deleting name glyphs.
+  if (projection.groups.some(group => !/^[\x20-\x7e]+$/.test(group.cropName))) throw Error('The crop identity cannot be printed faithfully with the current PDF font.');
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
+  const referenceWriter = await exactPdfTextWriter(doc, () => new NurseryReferenceExportError());
+  const width = doc.internal.pageSize.getWidth(), height = doc.internal.pageSize.getHeight();
+  const margin = 36, contentWidth = width - 2 * margin, bottom = height - 66;
+  const ink: [number, number, number] = [43, 48, 39];
+  let y = margin, activeGroup = '';
+  const font = (size: number, weight: 'normal' | 'bold' | 'italic' = 'normal') => {
+    doc.setFont('helvetica', weight); doc.setFontSize(size); doc.setTextColor(...ink);
+  };
+  function page() {
+    doc.addPage(); y = margin;
+    font(10, 'bold'); doc.text('Planned transplant preparation (continued)', margin, y + 10); y += 18;
+    if (activeGroup) {
+      font(10); const lines = doc.splitTextToSize(activeGroup, contentWidth) as string[];
+      doc.text(lines, margin, y + 10); y += lines.length * 13 + 6;
+    }
+  }
+  function ensure(space: number) { if (y + space > bottom) page(); }
+  function paragraph(text: string, size = 10, weight: 'normal' | 'bold' | 'italic' = 'normal', gap = 5) {
+    font(size, weight);
+    const lines = doc.splitTextToSize(preparationPdfCopy(text), contentWidth) as string[];
+    // Dates and issues may run across several pages. Moving a whole oversized
+    // block once would still draw its last lines outside the paper.
+    for (const line of lines) {
+      ensure(size * 1.3 + 2); font(size, weight); doc.text(line, margin, y + size); y += size * 1.3;
+    }
+    y += gap;
+  }
+  paragraph('Planned transplant preparation', 18, 'bold', 10);
+  if (projection.horizon) paragraph(`Planning horizon: ${projection.horizon.start} to before ${projection.horizon.endExclusive} (UTC).`);
+  paragraph(`Overall review status: ${projection.projectionIncomplete || projection.reviewIncomplete ? 'Incomplete review' : 'Reviewed inputs complete'}.`, 10, 'bold');
+  paragraph(`Source: ${projection.sourceStatus === 'saved-planned' ? 'Saved planned crop cycles' : 'Proposed crop cycles'}. Grower estimates; source not verified.`);
+  paragraph('Coverage: Represented transplant raising batches only. Direct sowing and omitted garden work need separate review.');
+  paragraph('Estimates: These are planned estimates, not observed sowing, nursery stock or seedling readiness.');
+  paragraph('This worksheet does not establish resource availability, tray packing or plant health. Review the dated nursery resource comparison separately.');
+  paragraph('Loss estimates: Calculated counts already include supplied loss estimates; do not apply them again.');
+  paragraph('Matching crop names do not identify interchangeable varieties or seed lots. Unknown requirements are not zero.');
+  for (const issue of [...new Set(projection.issues.map(growerNurseryIssueText))]) paragraph(`Review input: ${issue}`);
+  y += 5;
+  if (!projection.groups.length) paragraph('No transplant batches are represented in this review. This does not establish a zero requirement for the whole garden.');
+  for (const [index, group] of projection.groups.entries()) {
+    // Between groups, a new page needs the document heading only. Repeating
+    // the new group as a continuation immediately above its own title is noise.
+    activeGroup = '';
+    ensure(110);
+    activeGroup = `${group.cropName} - preparation group ${index + 1}`;
+    paragraph(activeGroup, 12, 'bold');
+    paragraph(`Status: ${group.incomplete ? 'Incomplete' : 'Included counts complete'}.`);
+    paragraph(`Raising starts ${group.startDate} (UTC). Raising ends before field entry: ${[...new Set(group.members.map(member => member.endDateExclusive))].sort().join(', ')} (exclusive UTC).`);
+    const metrics = [
+      ['Final field positions', group.fieldPositions], ['Starts to raise', group.startsToRaise], ['Seeds to sow', group.seedsToSow],
+    ] as const;
+    const cellWidth = contentWidth / 3;
+    const cells = metrics.map(([label, metric]) => {
+      font(10, 'bold'); const labels = doc.splitTextToSize(label, cellWidth - 18) as string[];
+      font(10); const values = doc.splitTextToSize(preparationMetricText(metric), cellWidth - 18) as string[];
+      return { labels, values };
+    });
+    const blockHeight = Math.max(...cells.map(cell => cell.labels.length + cell.values.length)) * 13 + 18;
+    ensure(blockHeight + 5);
+    for (const [column, cell] of cells.entries()) {
+      const x = margin + column * cellWidth;
+      doc.setFillColor(244, 247, 240); doc.roundedRect(x, y, cellWidth - 6, blockHeight, 4, 4, 'F');
+      let lineY = y + 14;
+      font(10, 'bold'); for (const line of cell.labels) { doc.text(line, x + 7, lineY); lineY += 13; }
+      font(10); for (const line of cell.values) { doc.text(line, x + 7, lineY); lineY += 13; }
+    }
+    y += blockHeight + 7;
+    paragraph(`${group.members.length} represented ${group.members.length === 1 ? 'batch' : 'batches'}.`, 10);
+    for (const [memberIndex, member] of group.members.entries()) {
+      const reference = exportReference(member.reference, projection.sourceStatus), fields = referenceColumns(reference);
+      const memberHeading = `Member ${memberIndex + 1}: raising ${group.startDate}; field entry ${member.endDateExclusive} (exclusive UTC).`;
+      const intentLines = (member.intent ?? readGrowerCycleIntent(undefined)).lines;
+      font(9, 'bold'); let intentHeight = doc.splitTextToSize(memberHeading, contentWidth).length * 11.7 + 5;
+      font(9); for (const line of intentLines) intentHeight += doc.splitTextToSize(preparationPdfCopy(line), contentWidth).length * 11.7 + 5;
+      const referenceNoteHeight = doc.splitTextToSize(preparationPdfCopy(fields.reference_note), contentWidth).length * 11.7 + 5;
+      const referenceRows = [['Variety', fields.variety], ['Seed lot reference', fields.seed_lot_reference], ['Raising batch reference', fields.raising_batch_reference]]
+        .map(([label, value]) => referenceWriter.lines(`${label}: ${value}`, contentWidth));
+      const memberHeight = intentHeight + referenceNoteHeight + referenceRows.reduce((sum, lines) => sum + lines.length * 13 + 4, 0);
+      font(10); const freshPageRoom = bottom - margin - 18 - doc.splitTextToSize(activeGroup, contentWidth).length * 13 - 6;
+      // Extra intent must not leave a short reference block without its member
+      // identity. Oversized entered references retain existing per-line paging.
+      ensure((memberHeight + 2 <= freshPageRoom ? memberHeight : intentHeight) + 2);
+      paragraph(memberHeading, 9, 'bold');
+      for (const line of intentLines) paragraph(line, 9);
+      paragraph(fields.reference_note, 9);
+      for (const lines of referenceRows) {
+        for (const line of lines) {
+          ensure(15); referenceWriter.select(line); doc.setTextColor(...ink);
+          doc.text(line, margin, y + 10); y += 13;
+        }
+        y += 4;
+      }
+    }
+
+    if (group.outsideReviewHorizon) paragraph('Some raising dates extend beyond the review horizon.');
+    for (const issue of [...new Set(group.issues.map(growerNurseryIssueText))]) paragraph(`Note: ${issue}`);
+    y += 8;
+  }
+  activeGroup = '';
+  ensure(76); paragraph('Notes (written on sheet - not saved by app):', 10, 'bold');
+  doc.setDrawColor(190, 198, 183);
+  for (let line = 0; line < 3; ++line) { y += 14; doc.line(margin, y, width - margin, y); }
+  const pages = doc.getNumberOfPages();
+  for (let pageNumber = 1; pageNumber <= pages; ++pageNumber) {
+    doc.setPage(pageNumber); font(8);
+    if (options.sample) { font(9, 'bold'); doc.text('DEMO - EXAMPLE PLANNING DATA', width / 2, 21, { align: 'center' }); }
+    font(8); doc.text('Planned estimates - represented transplant batches only', margin, height - 42);
+    doc.text('Source not verified; not observed sowing or nursery stock', margin, height - 30);
+    doc.text(`Page ${pageNumber} of ${pages}`, width - margin, height - 30, { align: 'right' });
+  }
+  return new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
+}
+
+/** A shareable projection of the same nursery review, never another forecast.
+ * Membership and source receipts remain private; the caller still checks current
+ * source/book/actor and full result equality immediately before delivery. */
+export function buildGrowerNurseryPreparationCsv(result: GrowerNurseryResult, options: Pick<NurseryCsvOptions, 'sample'> = {}): string {
+  const projection = projectGrowerNurseryPreparation(result);
+  const columns = ['record_type', 'plan_basis', 'source_status', 'source_verification', 'review_status', 'review_incomplete',
+    'projection_status', 'projection_incomplete', 'coverage', 'horizon_start_utc', 'horizon_end_exclusive_utc', 'group_number', 'crop_name',
+    'raising_start_date_utc', 'field_entry_dates_exclusive_utc', 'represented_batch_count', 'metric', 'metric_status',
+    'known_subtotal', 'represented_batch_total', 'known_batch_count', 'unknown_batch_count', 'group_incomplete',
+    'outside_review_horizon', 'member_number', 'reference_status', 'variety', 'seed_lot_reference', 'raising_batch_reference', 'reference_note', 'issues', 'guidance', ...GROWER_INTENT_EXPORT_COLUMNS] as const;
+  type PreparationRow = Partial<Record<typeof columns[number], string | number>>;
+  const labels = (issues: readonly string[]) => [...new Set(issues.map(growerNurseryIssueText))].join(' | ');
+  const context: PreparationRow = {
+    plan_basis: options.sample ? 'DEMO — planned grower-estimated transplant preparation' : 'Planned grower-estimated transplant preparation',
+    source_status: projection.sourceStatus ?? 'unavailable', source_verification: projection.sourceVerification,
+    review_status: projection.reviewStatus, review_incomplete: projection.reviewIncomplete ? 'yes' : 'no', projection_status: projection.status,
+    projection_incomplete: projection.projectionIncomplete ? 'yes' : 'no',
+    coverage: projection.coverage, horizon_start_utc: projection.horizon?.start ?? 'unknown',
+    horizon_end_exclusive_utc: projection.horizon?.endExclusive ?? 'unknown',
+  };
+  const rows: PreparationRow[] = [{ ...context, record_type: 'guidance', represented_batch_count: projection.status === 'available' ? projection.representedBatchCount : 'unknown',
+    issues: labels(projection.issues), guidance: projection.guidance }];
+  for (const [index, group] of projection.groups.entries()) {
+    for (const [memberIndex, member] of group.members.entries()) rows.push({ ...context, record_type: 'planned_batch_reference',
+      group_number: index + 1, member_number: memberIndex + 1, crop_name: group.cropName, ...growerCycleIntentColumns(member.intent ?? readGrowerCycleIntent(undefined)),
+      raising_start_date_utc: group.startDate, field_entry_dates_exclusive_utc: member.endDateExclusive,
+      ...referenceColumns(exportReference(member.reference, projection.sourceStatus)), guidance: projection.guidance });
+    for (const [name, metric] of [['field_positions', group.fieldPositions], ['starts_to_raise', group.startsToRaise], ['seeds_to_sow', group.seedsToSow]] as const) {
+      rows.push({ ...context, record_type: 'preparation_group_metric', group_number: index + 1, crop_name: group.cropName,
+        raising_start_date_utc: group.startDate, field_entry_dates_exclusive_utc: group.members.map(member => member.endDateExclusive).join(' | '),
+        represented_batch_count: group.members.length, metric: name, metric_status: metric.status,
+        known_subtotal: metric.knownSubtotal ?? 'unknown', represented_batch_total: metric.total ?? 'unknown',
+        known_batch_count: metric.knownBatchCount, unknown_batch_count: metric.unknownBatchCount,
+        group_incomplete: group.incomplete ? 'yes' : 'no', outside_review_horizon: group.outsideReviewHorizon ? 'yes' : 'no',
+        issues: labels(group.issues), guidance: projection.guidance });
+    }
+  }
+  return `\uFEFF${[columns, ...rows.map(row => columns.map(column => row[column] ?? ''))]
+    .map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
+}
+
+const SEED_SOURCING_COLUMNS = [
+  'record_type',
+  'plan_basis',
+  'source_verification',
+  'coverage',
+  'whole_farm_coverage',
+  'review_status',
+  'nursery_review_status',
+  'horizon_start_utc',
+  'horizon_end_exclusive_utc',
+  'represented_batch_count',
+  'assigned_batch_count',
+  'unassigned_batch_count',
+  'supply_group_number',
+  'group_status',
+  'known_required_seed_subtotal',
+  'required_seeds',
+  'additional_seeds_needed',
+  'planned_packs',
+  'planned_pack_seeds',
+  'guidance',
+  'entered_supply_group_label',
+  'label_status',
+  'public_crop_names',
+  'identification_description',
+] as const;
+
+type SeedSourcingColumn = typeof SEED_SOURCING_COLUMNS[number];
+type SeedSourcingRow = Partial<Record<SeedSourcingColumn, string | number>>;
+
+function seedSourcingGroupCells(group: Pick<GrowerSeedSourcingGroupReview,
+  'index' | 'status' | 'knownRequiredSeedsSubtotal' | 'requiredSeeds' | 'counts' | 'identification'>) {
+  return {
+    supply_group_number: group.index + 1,
+    group_status: group.status,
+    known_required_seed_subtotal: group.knownRequiredSeedsSubtotal ?? 'unknown',
+    required_seeds: group.requiredSeeds ?? 'unknown',
+    additional_seeds_needed: group.counts?.neededSeeds ?? 'unknown',
+    planned_packs: group.counts?.packsNeeded ?? 'unknown',
+    planned_pack_seeds: group.counts?.plannedPackSeeds ?? 'unknown',
+    entered_supply_group_label: group.identification?.enteredLabel ?? '',
+    label_status: group.identification?.labelStatus ?? 'not-recorded',
+    public_crop_names: JSON.stringify(group.identification?.cropNames ?? []),
+    identification_description: group.identification?.description ?? '',
+  };
+}
+function serializeSeedSourcingCsv(columns: readonly string[], rows: readonly (readonly (string | number)[])[]): string {
+  return `\uFEFF${[columns, ...rows].map(row => row.map(csvCell).join(',')).join('\r\n')}\r\n`;
+}
+
+/** Export the seed sourcing planning review verbatim from canonical projection.
+ * Does not calculate requirements, assert actor freshness or record stock. */
+export function buildGrowerSeedSourcingCsv(
+  result: GrowerNurseryResult,
+  currentRequest: GrowerNurseryRequest,
+  groups: unknown,
+  options: Pick<NurseryCsvOptions, 'sample'> = {}
+): string {
+  const projection = reviewGrowerSeedSourcing({ result, currentRequest, groups });
+  if (projection.status === 'unavailable') {
+    throw new RangeError('A current saved nursery review is required for seed sourcing export.');
+  }
+
+  const context: SeedSourcingRow = {
+    plan_basis: options.sample
+      ? 'DEMO — planned seed sourcing estimates'
+      : 'Planned seed sourcing estimates',
+    source_verification: projection.sourceVerification,
+    coverage: projection.coverage,
+    whole_farm_coverage: projection.wholeFarmCoverage,
+    review_status: projection.status,
+    nursery_review_status: projection.nurseryReviewStatus,
+    horizon_start_utc: projection.horizon?.start ?? 'unknown',
+    horizon_end_exclusive_utc: projection.horizon?.endExclusive ?? 'unknown',
+    represented_batch_count: projection.representedBatchCount,
+    assigned_batch_count: projection.assignedBatchCount,
+    unassigned_batch_count: projection.unassignedBatchIds.length,
+    guidance: projection.guidance,
+  };
+
+  const rows: SeedSourcingRow[] = [
+    {
+      ...context,
+      record_type: 'guidance',
+    },
+  ];
+
+  for (const group of projection.groups) {
+    rows.push({
+      ...context,
+      record_type: 'supply_group',
+      ...seedSourcingGroupCells(group),
+    });
+  }
+
+  return serializeSeedSourcingCsv(SEED_SOURCING_COLUMNS, rows.map(row => SEED_SOURCING_COLUMNS.map(column => row[column] ?? '')));
+}
+
+const FIELD_SEED_SOURCING_COLUMNS = [
+  'record_type', 'plan_basis', 'source_verification', 'requirement_basis', 'coverage', 'whole_farm_coverage', 'review_status',
+  'represented_cycle_count', 'assigned_cycle_count', 'unassigned_cycle_count', 'held_source_row_count', 'legacy_source_row_count',
+  'excluded_nursery_cycle_count', 'supply_group_number', 'selected_cycle_count', 'group_status', 'known_required_seed_subtotal',
+  'required_seeds', 'additional_seeds_needed', 'planned_packs', 'planned_pack_seeds', 'entered_supply_group_label',
+  'label_status', 'public_crop_names', 'identification_description', 'issues', 'guidance',
+  // Appended per-cycle breakdown: the 27 columns above keep their exact order.
+  'cycle_number', 'planned_field_entry_date_utc', 'entered_gross_whole_seeds', 'cycle_requirement_status',
+  'counted_in_group_subtotal', 'related_cycle_numbers', 'cycle_relation_status',
+] as const;
+type FieldSeedSourcingColumn = typeof FIELD_SEED_SOURCING_COLUMNS[number];
+type FieldSeedSourcingRow = Partial<Record<FieldSeedSourcingColumn, string | number>>;
+/** A held or unconfirmed whole number stays visible only as the grower's entry;
+ * the status and counted flag beside it say whether it is a usable count. */
+const fieldEnteredGrossCell = (cycle: GrowerFieldSeedCycleBreakdownRow): string | number =>
+  cycle.enteredGrossState === 'entered' ? cycle.enteredGrossRequiredSeeds ?? 'invalid' : cycle.enteredGrossState;
+
+/** Replay raw accepted cycles instead of trusting a caller's projected review.
+ * The parent still owns live book/source/actor checks before file delivery.
+ * Per-cycle rows are worksheet presentation; their numbers are not identities. */
+export function buildGrowerFieldSeedSourcingCsv(
+  input: GrowerFieldSeedSourcingInput,
+  options: Pick<NurseryCsvOptions, 'sample'> = {}
+): string {
+  const projection = reviewGrowerFieldSeedSourcing(input);
+  if (projection.status === 'unavailable') throw new RangeError('A readable accepted-cycle source is required for field seed sourcing export.');
+  const context: FieldSeedSourcingRow = {
+    plan_basis: options.sample ? 'DEMO — entered gross whole-seed planning estimates' : 'Entered gross whole-seed planning estimates',
+    source_verification: projection.sourceVerification, requirement_basis: projection.requirementBasis,
+    coverage: projection.coverage, whole_farm_coverage: projection.wholeFarmCoverage, review_status: projection.status,
+    represented_cycle_count: projection.representedCycleCount, assigned_cycle_count: projection.assignedCycleCount,
+    unassigned_cycle_count: projection.unassignedPlantingIds.length, held_source_row_count: projection.heldSourceRowCount,
+    legacy_source_row_count: projection.legacySourceRowCount, excluded_nursery_cycle_count: projection.excludedNurseryCycleCount,
+    guidance: projection.guidance,
+  };
+  const rows: FieldSeedSourcingRow[] = [{ ...context, record_type: 'guidance', issues: projection.issues.join(' | ') }];
+  if (projection.sourceIssues.length) rows.push({ ...context, record_type: 'source_review', issues: projection.sourceIssues.join(' | ') });
+  for (const group of projection.groups) rows.push({ ...context, record_type: 'supply_group', ...seedSourcingGroupCells(group),
+    selected_cycle_count: group.selectedCycleCount, issues: group.issues.join(' | '),
+    related_cycle_numbers: group.cycleNumbers?.join(' | ') ?? '', cycle_relation_status: group.cycleRelation });
+  // Public numbers, dates and entries come only from the returned breakdown.
+  // Group quantity columns stay blank here, so no seed is listed twice.
+  for (const cycle of projection.cycleBreakdown) rows.push({ ...context, record_type: 'represented_cycle',
+    cycle_number: cycle.cycleNumber, public_crop_names: JSON.stringify(cycle.cropName === null ? [] : [cycle.cropName]),
+    planned_field_entry_date_utc: cycle.plannedFieldEntryDate ?? 'unknown', entered_gross_whole_seeds: fieldEnteredGrossCell(cycle),
+    cycle_requirement_status: cycle.requirementStatus, counted_in_group_subtotal: cycle.countedInGroupSubtotal ? 'yes' : 'no',
+    supply_group_number: cycle.supplyGroupNumber ?? '', cycle_relation_status: cycle.groupRelation, issues: cycle.issues.join(' | ') });
+  return serializeSeedSourcingCsv(FIELD_SEED_SOURCING_COLUMNS, rows.map(row => FIELD_SEED_SOURCING_COLUMNS.map(column => row[column] ?? '')));
 }

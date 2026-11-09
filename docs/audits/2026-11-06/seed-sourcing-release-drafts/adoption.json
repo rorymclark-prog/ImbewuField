@@ -1,0 +1,10 @@
+{
+  "sourceSha256": "d82c5119f4a9312517d1824d9536cdc09dc5ca5623945d632b11037cc981251d",
+  "pairs": 16,
+  "damagedControlsPerLocale": 17,
+  "notesWords": 180,
+  "review": "Exact source/key/hash/order/CSV/arrow checks plus identified seed-supply and whole-farm coverage drafting corrections. Not fluent/human certification.",
+  "use": "Existing-language update captions with exact English retained; no new app language or translation approval.",
+  "sourceFileReconciliation": "Frozen English unchanged; code commit stamp may change separately.",
+  "releaseGates": "Source type0/256affected+12finalconsumer/independentread; finalcaption checks/full/currentCI/desktop-phone still required."
+}

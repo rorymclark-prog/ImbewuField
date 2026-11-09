@@ -44,6 +44,13 @@ function invoice(id: string, unit = 'kg', total = 100): SavedInvoice {
 
 /* ── buildMonthlyCashFlow ─────────────────────────────────────────────────── */
 
+// These existing fixtures contain only established Rand records. A held result
+// must fail their arithmetic checks rather than being treated as zero.
+function knownRand(value: number | null): number {
+  assert.ok(value !== null, 'ordinary Rand evidence must retain a known monetary result');
+  return value;
+}
+
 test('a month with no records is still shown, zeroed, not skipped', () => {
   const months = buildMonthlyCashFlow(
     [sale(500, '2026-06-10T00:00:00.000Z')],
@@ -81,7 +88,7 @@ test('the trailing window is capped, even with years of history', () => {
   assert.equal(months.length, 3);
   assert.deepEqual(months.map((m) => m.monthKey), ['2026-06', '2026-07', '2026-08']);
   // The 2024 sale falls outside the window and must not be counted anywhere in it.
-  assert.equal(months.reduce((s, m) => s + m.incomeZar, 0), 200);
+  assert.equal(months.reduce((s, m) => s + knownRand(m.incomeZar), 0), 200);
 });
 
 test('income and expenses land in the calendar month they were dated, summed and counted', () => {
@@ -116,7 +123,7 @@ test('a row with an unparseable date is skipped entirely rather than crashing th
     [],
     NOW,
   );
-  assert.equal(months.reduce((s, m) => s + m.incomeZar, 0), 100);
+  assert.equal(months.reduce((s, m) => s + knownRand(m.incomeZar), 0), 100);
 });
 
 test('no dated sales or expenses at all produces an empty window, not a crash', () => {
@@ -306,7 +313,7 @@ test('the by-crop table names what its cap left out, as three separate true sums
   // the omitted line must reconcile to the totals at the top of the page, with nothing lost.
   const listedHarvested = track.topCrops.reduce((t, c) => t + c.harvestedKg, 0);
   const listedSold = track.topCrops.reduce((t, c) => t + c.soldKg, 0);
-  const listedRevenue = track.topCrops.reduce((t, c) => t + c.revenueZar, 0);
+  const listedRevenue = track.topCrops.reduce((t, c) => t + knownRand(c.revenueZar), 0);
   assert.equal(listedHarvested + track.omittedHarvestedKg, track.totalHarvestedKg);
   assert.equal(listedSold + track.omittedSoldKg, track.totalSoldKg);
   assert.equal(listedRevenue + track.omittedRevenueZar, track.totalRevenueZar);
@@ -397,7 +404,7 @@ test('the lender document never prints a crop that earned nothing off fruit that
   );
   const earnedNothing = track.topCrops.filter((c) => c.harvestedKg > 0 && c.revenueZar === 0);
   assert.deepEqual(earnedNothing, [], 'no row claims a harvest that earned nothing');
-  const grewNothing = track.topCrops.filter((c) => c.revenueZar > 0 && c.harvestedKg === 0);
+  const grewNothing = track.topCrops.filter((c) => knownRand(c.revenueZar) > 0 && c.harvestedKg === 0);
   assert.deepEqual(grewNothing, [], 'no row claims income off nothing grown');
 });
 

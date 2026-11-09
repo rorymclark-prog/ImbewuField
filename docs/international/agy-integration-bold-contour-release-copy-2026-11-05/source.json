@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "sourceKind": "frozen-current-main-bold-contour-release-literal",
+  "mainCommit": "1ae9ac2919bee8496ef820495e3bd5467e9d054a",
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "1b3cfdb751d089c979f924700c5c31cf188b578ac61895918fc22c765c5619d6",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu"
+  ],
+  "messages": [
+    {
+      "key": "integrationBoldContourRelease.message.01",
+      "english": "Sector illustrations now show bolder terrain contours and matching key lines.",
+      "messageSha256": "968cf14c7fb3268a2ab00b3432955732243dad63ddebc0f90c3320dbaa289358"
+    }
+  ]
+}

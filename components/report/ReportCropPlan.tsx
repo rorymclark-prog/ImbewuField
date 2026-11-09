@@ -3,7 +3,7 @@ import { useLanguage } from '@/lib/i18n';
 import { reportUiText, reportUiDate, reportUiMonth } from '@/lib/report-localisation';
 import { useEffect, useState } from 'react';
 import type { FactCropPlan } from '@/lib/report-site-facts';
-import { captureReportCropPlan, reportSowingCalendar, reportCropSignature, reportCropWorkingInput } from '@/lib/report-crop-plan';
+import { captureReportCropPlan, reportSowingCalendar, reportCropSignature, reportCropWorkingInput, currentReportCropSupport, reportCropRows } from '@/lib/report-crop-plan';
 import { loadCropPlan, CROP_PLAN_CHANGED_EVENT } from '@/lib/crop-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { getCropArt } from '@/lib/crop-art';
@@ -13,39 +13,54 @@ import type { ReportChart } from '@/lib/report-visuals';
 import styles from './ReportCropPlan.module.css';
 import ProductionYearOverview from './ProductionYearOverview';
 
-export default function ReportCropPlan({ crop, siteName, includeWorking, onIncludeWorking, language = 'en' }: {
-  crop: FactCropPlan; siteName: string; includeWorking: boolean; onIncludeWorking: (v: boolean) => void;
+export default function ReportCropPlan({ crop, siteName, siteId = null, includeWorking, onIncludeWorking, language = 'en' }: {
+  crop: FactCropPlan; siteName: string; siteId?: string | null; includeWorking: boolean; onIncludeWorking: (v: boolean) => void;
   language?: string; month?: number; onMonth?: (v: number) => void; legacyCharts?: ReportChart[];
 }) {
   const { lang: uiLanguage, t: appT } = useLanguage();
   const tr = (en: string, zu?: string) => reportUiText(en, uiLanguage, appT, zu);
   const s = crop.snapshot;
+  const savedRows = reportCropRows(crop);
   const [changed, setChanged] = useState(false), [exporting, setExporting] = useState(false), [error, setError] = useState('');
+  const [support, setSupport] = useState(() => currentReportCropSupport(s, siteId));
   useEffect(() => {
     const refresh = () => {
+      const current = currentReportCropSupport(s, siteId);
+      setSupport(current);
+      if (!current.allowCataloguePlanning) { setChanged(false); return; }
       if (!s) { setChanged(false); return; }
       const canvas = loadCanvasState(s.siteId);
       setChanged(!!canvas && reportCropSignature(captureReportCropPlan(canvas, loadCropPlan(), s.siteId)) !== reportCropSignature(s));
     };
     refresh();
-    window.addEventListener(CROP_PLAN_CHANGED_EVENT, refresh); window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh); window.addEventListener('focus', refresh);
-    return () => { window.removeEventListener(CROP_PLAN_CHANGED_EVENT, refresh); window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh); window.removeEventListener('focus', refresh); };
-  }, [s]);
+    window.addEventListener(CROP_PLAN_CHANGED_EVENT, refresh); window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh); window.addEventListener('focus', refresh); window.addEventListener('storage', refresh); window.addEventListener('permamap-places-changed', refresh);
+    return () => { window.removeEventListener(CROP_PLAN_CHANGED_EVENT, refresh); window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh); window.removeEventListener('focus', refresh); window.removeEventListener('storage', refresh); window.removeEventListener('permamap-places-changed', refresh); };
+  }, [s, siteId]);
   async function exportWorking(quick: boolean) {
-    if (!s) return;
+    if (!s || !currentReportCropSupport(s, siteId).allowCataloguePlanning) {
+      setSupport(currentReportCropSupport(s, siteId));
+      setError('Local crop-plan export is unavailable for the current site context.'); return;
+    }
+    const initialSupport = currentReportCropSupport(s, siteId);
     setExporting(true); setError('');
     try {
       const input = reportCropWorkingInput(s, siteName);
-      await deliverPdf(await buildCropPlanPdf({ ...input, ...(quick ? { sections: ['calendar', 'taskSummary'] as CropPlanSection[] } : {}) }), cropPlanPdfFilename(siteName, new Date(s.capturedAt), quick ? 'quick-print-a4' : undefined));
+      const blob = await buildCropPlanPdf({ ...input, ...(quick ? { sections: ['calendar', 'taskSummary'] as CropPlanSection[] } : {}) });
+      const current = currentReportCropSupport(s, siteId);
+      if (!current.allowCataloguePlanning || current.fingerprint !== initialSupport.fingerprint) {
+        setSupport(current); setError('Site details changed while the document was prepared. Review them before exporting.'); return;
+      }
+      await deliverPdf(blob, cropPlanPdfFilename(siteName, new Date(s.capturedAt), quick ? 'quick-print-a4' : undefined));
     } catch { setError('Could not export the crop plan. Please try again.'); }
     finally { setExporting(false); }
   }
-  const calendar = s ? reportSowingCalendar(s) : null;
+  const calendar = s && support.allowCataloguePlanning ? reportSowingCalendar(s) : null;
   const symbol = (cell: { sow: boolean; transplant: boolean }) => `${cell.sow ? 'S' : ''}${cell.sow && cell.transplant ? ' / ' : ''}${cell.transplant ? 'T' : ''}`;
   const title = (cell: { sow: boolean; transplant: boolean }) => [cell.sow ? tr('Sow seed', 'Hlwanyela imbewu') : '', cell.transplant ? tr('Check seedlings; transplant when ready', 'Hlola izithombo; tshala uma sezilungile') : ''].filter(Boolean).join('; ');
   return <section lang={uiLanguage} className={styles.section} aria-label={tr('Sowing calendar')}>
-    <ProductionYearOverview production={s?.annualProduction} language={language}/>
-    <h2>{tr('Seasonal sowing calendar', 'Ikhalenda lokuhlwanyela lezinkathi zonyaka')}</h2>
+    {support.allowCataloguePlanning && <ProductionYearOverview production={s?.annualProduction} language={language}/>}
+    {!support.allowCataloguePlanning && <p role="note" className={styles.notice}>Local crop guidance and inherited forecasts are unavailable for this report’s current site context. Saved sowing entries remain records; this report does not approve local farming advice.</p>}
+    <h2>{support.allowCataloguePlanning ? tr('Seasonal sowing calendar', 'Ikhalenda lokuhlwanyela lezinkathi zonyaka') : 'Saved sowing records'}</h2>
     <p className={styles.note}>{s ? `${tr('Saved plan', 'Uhlelo olugciniwe')} · ${reportUiDate(uiLanguage, s.capturedAt, false)}` : tr('This older report has a crop summary without dated planting records.', 'Lo mbiko omdala unesifinyezo sezitshalo ngaphandle kwamarekhodi anezinsuku.')}</p>
     {changed && <p className={styles.notice}>{tr('The current crop plan has changed. This calendar keeps the plan saved with this report.', 'Uhlelo lwamanje lushintshile. Leli khalenda ligcina uhlelo olwalugcinwe nalo mbiko.')}</p>}
     {calendar ? <>
@@ -58,9 +73,11 @@ export default function ReportCropPlan({ crop, siteName, includeWorking, onInclu
         return <div key={month}><strong>{reportUiMonth(uiLanguage, month)}</strong><p>{crops.length ? crops.map(row => `${row.name} (${symbol(row.cells[i])})`).join(' · ') : tr('No sowing or transplant task scheduled', 'Akukho ukuhlwanyela noma ukutshala okuhleliwe')}</p></div>;
       })}</div>
       {!!calendar.unscheduled.length && <p className={styles.note}>{tr('No new sowing/transplant task in this period:', 'Akukho ukuhlwanyela noma ukutshala okusha kulesi sikhathi:')} {calendar.unscheduled.join(', ')}. {tr('See the working plan for crops already growing and undated records.', 'Bheka uhlelo lomsebenzi ngezitshalo ezikhulayo namarekhodi angenazinsuku.')}</p>}
-    </> : <ul>{crop.crops.map(c => <li key={c.name}>{c.name} · {c.sowMonths.join(', ') || tr('Sowing not recorded', 'Ukuhlwanyela akubhalwanga')}</li>)}</ul>}
-    {s?.planNotes?.length ? <details className={styles.notes}><summary>{tr('Saved plan choices and checks', 'Ukukhetha nokuhlola uhlelo olugciniwe')}</summary><ul>{s.planNotes.map((note, i) => <li key={i}>{note.text}</li>)}</ul></details> : null}
-    {s && <div className={styles.controls}>
+    </> : <ul>{savedRows.map(row => <li key={row.key}>{row.name} · saved sowing: {row.sow || tr('Sowing not recorded', 'Ukuhlwanyela akubhalwanga')} · {row.where}
+      {row.intent && <div lang="en"><p>{row.status}</p>{row.intent.lines.map((line, index) => <p key={index} className="whitespace-pre-wrap [overflow-wrap:anywhere]">{line}</p>)}</div>}</li>)}</ul>}
+    {calendar && savedRows.some(row => row.intent) && <section lang="en" aria-label="Saved own-cycle planning intent"><h3>Saved own-cycle planning intent</h3><ul>{savedRows.filter(row => row.intent).map(row => <li key={row.key}>{row.name} · {row.where}<p>{row.status}</p>{row.intent?.lines.map((line, index) => <p key={index} className="whitespace-pre-wrap [overflow-wrap:anywhere]">{line}</p>)}</li>)}</ul></section>}
+    {support.allowCataloguePlanning && s?.planNotes?.length ? <details className={styles.notes}><summary>{tr('Saved plan choices and checks', 'Ukukhetha nokuhlola uhlelo olugciniwe')}</summary><ul>{s.planNotes.map((note, i) => <li key={i}>{note.text}</li>)}</ul></details> : null}
+    {s && support.allowCataloguePlanning && <div className={styles.controls}>
       <button onClick={() => { void exportWorking(false); }} disabled={exporting}>{tr('Full crop-plan report (English)', 'Umbiko ophelele wohlelo lwezitshalo (isiNgisi)')}</button>
       <button onClick={() => { void exportWorking(true); }} disabled={exporting}>{tr('Quick-print summary (English)', 'Isifinyezo sokuphrinta (isiNgisi)')}</button>
       <a href={`/facilitator/crops?canvasSite=${encodeURIComponent(s.siteId)}`} target="_blank" rel="noopener noreferrer">{tr('Open current production plan', 'Vula uhlelo lokukhiqiza lwamanje')} →</a>

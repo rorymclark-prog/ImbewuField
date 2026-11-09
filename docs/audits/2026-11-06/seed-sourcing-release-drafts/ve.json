@@ -1,0 +1,32 @@
+{
+  "locale": "ve",
+  "sourceSha256": "d82c5119f4a9312517d1824d9536cdc09dc5ca5623945d632b11037cc981251d",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "seedSourcing.release.01",
+      "english": "Review seed allocations and planned pack counts.",
+      "sha256": "44138fa66c3d2f9e53bad3f55ddf73f5c8dd472d23104dfcecf9871cd6459326",
+      "translation": "Ṱolani zwikovhelo zwa mbeu na mbalotshalo dza phakhethe dzo pulaniwaho."
+    },
+    {
+      "key": "seedSourcing.release.02",
+      "english": "Review planned seed sourcing",
+      "sha256": "846a8b52088b08bd09ffa789a07a56431daedd93f609aeb75adad845be2e9dc7",
+      "translation": "Ṱolani u wanala ha mbeu ho pulaniwaho"
+    },
+    {
+      "key": "seedSourcing.release.03",
+      "english": "Crop planner → Nursery requirements → Seed sourcing",
+      "sha256": "c361603174f1db225fcbae197644970a9836bc85aee2ada5befe6415d809413e",
+      "translation": "Mupulani wa zwimela → Zwṱoḓea zwa fhethu ha u alusa zwimela → U wanala ha mbeu"
+    },
+    {
+      "key": "seedSourcing.release.04",
+      "english": "Open the nursery review for saved planned batches, add the batches that can share a seed supply, and enter your allocation and seeds per pack. Review the planned requirements before downloading the CSV. Blank counts stay unknown; these inputs do not record seed stock, place an order or cover all farm seed demand.",
+      "sha256": "dac3e769b534b812f452187b0c29c4a08c4d9d21cc95357e90cbe21e9525c646",
+      "translation": "Vulani tsedzuluso ya fhethu ha u alusa zwimela ya zwigwada zwo pulaniwaho zwo vhulungwaho, engedzani zwigwada zwine zwa nga kovhelana mbeu ine ya wanala, nahone ni dzhenise tshipiḓa tshaṋu na mbeu kha phakhethe iṅwe na iṅwe. Ṱolani zwṱoḓea zwo pulaniwaho musi ni sa athu u kopa CSV. Mbalo dzi si na tshithu dzi dzula dzi sa ḓivhei; hezwi zwo dzheniswaho a zwi rekhodi tshitoko tsha mbeu, a zwi iti oda kana u khumbedza ṱhoḓea yoṱhe ya mbeu ya bulasi."
+    }
+  ]
+}

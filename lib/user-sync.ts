@@ -7,9 +7,17 @@ import { readTombstones, LOCAL_TOMBSTONE_TTL_MS } from './local-tombstones';
 import {
   accountLocalStorageKey,
   accountLocalStorageKeyMatchesPrefix,
+  activeAccountUid,
 } from './account-local-storage';
 import type { SavedPlace } from './saved-places';
 import type { WaterPoint } from './water-points';
+import { coordinateSiteIdForPlace, normaliseSiteCountryContext, type SiteCountryContext } from './international/site-context';
+import {
+  boundSiteContext, mergePlaceContexts, placeRevision, pickSiteContext, sameSiteContext,
+} from './international/place-context-merge';
+// Type-only: no runtime import cycle. The shape-sync v2 domain logic lives in lib/shape-sync/*;
+// every Firestore call for it stays in THIS file (single sync authority).
+import type { IslandRead, ShapeTransport, TransactStep } from './shape-sync/controller';
 
 const FARM_KEY      = 'imbewu_farm_shapes';
 const PLACES_KEY    = 'permamap_saved_places';
@@ -21,6 +29,9 @@ const PLACES_DELETED_KEY = `${PLACES_KEY}_deleted`;
 const WATER_DELETED_KEY  = `${WATER_KEY}_deleted`;
 const SURVEY_PREFIX = 'imbewu_site_survey_'; // one localStorage key per site: imbewu_site_survey_<siteId> (legacy blobs are keyed by placeId instead)
 const COLL          = 'user_map_data';
+// Shape sync v2 document (lib/shape-sync/protocol.ts RemoteShapeDoc). The v1 'shapes' document
+// becomes a READ-ONLY legacy island for v2 clients: v2 never writes it (see shapeSync below).
+const SHAPES_V2_DOC = 'shapes_v2';
 // Single authority for the tombstone TTL: imported from lib/local-tombstones.ts, not an
 // independently hardcoded 90-day literal — this repo's recurring drift pattern is exactly two
 // constants like this quietly diverging. Exported so tests can assert equality directly (and so
@@ -219,11 +230,143 @@ export function isDeleteStale(remoteItemTs: number | undefined, deletedAtMs: num
   return timestampOrZero(remoteItemTs) > deletedAtMs;
 }
 
+// THE places merge — every path that reconciles saved places (initial reconcile, live listener,
+// the shared-site import in lib/saved-places.ts) goes through this one function. Base rows and
+// tombstones are decided by the existing revision authority first; a grower's country context is
+// then re-attached only to a surviving row of the SAME revision (lib/international/place-context-merge.ts),
+// so a context can never revive a deleted site or outrank a newer move/notes edit.
+// ONE revision authority for places: placeRevision (edit time, else the legacy save time). It was
+// previously split — row selection read updatedAt only, so two legacy rows without updatedAt both
+// compared as 0 and the OLDER one could survive a tie and keep its own country. A legacy row that
+// pre-dates its tombstone is still deleted (tomb > savedAt); only a row saved AFTER the deletion now
+// survives, which is the deliberate re-add rule applied to rows that never had an updatedAt.
+// `getTs` stays injectable for tests. Contexts are additionally bound to (id, revision, savedAt),
+// so even a tie cannot attach one row's confirmation to another.
+export function mergePlaces(
+  remote: SavedPlace[], local: SavedPlace[],
+  remoteDel: Tombstones, localDel: Tombstones,
+  now: number, getTs: (p: SavedPlace) => number = placeRevision,
+): { items: SavedPlace[]; deleted: Tombstones } {
+  const merged = mergeItems(remote, local, remoteDel, localDel, placeId, getTs, now);
+  return { items: mergePlaceContexts(merged.items, [remote, local]), deleted: merged.deleted };
+}
+
+type SyncDb = NonNullable<ReturnType<typeof db>>;
+
+// Places reconcile + live listener are shared by the whole-map subscription and the places-only
+// one below, so the two can never grow different merge rules.
+async function reconcilePlacesDoc(d: SyncDb, uid: string, isCurrent: () => boolean, now: number): Promise<void> {
+  const placesKey = accountLocalStorageKey(PLACES_KEY, uid);
+  const placesDeletedKey = accountLocalStorageKey(PLACES_DELETED_KEY, uid);
+  const placesRef = doc(d, COLL, uid, 'data', 'places');
+  await runTransaction(d, async (tx) => {
+    const snap = await tx.get(placesRef);
+    if (!isCurrent()) return;
+    const data = snap.exists() ? snap.data() : {};
+    const remote: SavedPlace[] = data.places ?? [];
+    const remoteDel: Tombstones = data.deleted ?? {};
+    const { items, deleted } = mergePlaces(remote, readLocal<SavedPlace>(placesKey), remoteDel, readTombstones(placesDeletedKey), now);
+    localStorage.setItem(placesKey, JSON.stringify(items));
+    tx.set(placesRef, { places: items, deleted, updatedAt: serverTimestamp() });
+  });
+}
+
+function listenPlacesDoc(
+  d: SyncDb, uid: string, isCurrent: () => boolean, onChange: () => void, onError: (e: unknown) => void,
+): () => void {
+  const placesKey = accountLocalStorageKey(PLACES_KEY, uid);
+  const placesDeletedKey = accountLocalStorageKey(PLACES_DELETED_KEY, uid);
+  return onSnapshot(doc(d, COLL, uid, 'data', 'places'), (snap) => {
+    if (!isCurrent()) return;
+    if (snap.metadata.hasPendingWrites || !snap.exists()) return;
+    const { items } = mergePlaces(snap.data().places ?? [], readLocal<SavedPlace>(placesKey), snap.data().deleted ?? {}, readTombstones(placesDeletedKey), Date.now());
+    localStorage.setItem(placesKey, JSON.stringify(items));
+    onChange();
+  }, onError);
+}
+
+// Truthful delivery state for the places-only subscription. 'live' means the realtime listener is
+// attached, NOT that a particular edit has been acknowledged by the cloud.
+export type PlacesSyncState = 'syncing' | 'live' | 'offline' | 'unavailable';
+
+export interface PlacesSyncHandlers {
+  onPlaces?: () => void;
+  onState?: (state: PlacesSyncState) => void;
+}
+
+// Places-only live sync for a route (the crop planner) that must see cross-device saved-place
+// changes without starting whole-map shape/water/design reconciliation. Same lifecycle contract as
+// subscribeUserMapData: bound to `uid`, every step re-checks that this subscription is still the
+// current signed-in account, and the returned function disposes it (A→B switching = dispose, then
+// subscribe for B). 'unavailable' = no cloud transport (sample mode or no backend): local data only.
+// 'offline' = reconcile or the listener failed: local data kept, no live delivery until resubscribed.
+export function subscribeUserPlaces(uid: string, handlers: PlacesSyncHandlers): () => void {
+  const d = db();
+  if (!d) { handlers.onState?.('unavailable'); return () => {}; }
+
+  let disposed = false;
+  let unsubscribe: (() => void) | null = null;
+  const isCurrent = () => !disposed && getFirebase()?.auth?.currentUser?.uid === uid;
+  const emit = (state: PlacesSyncState) => { if (isCurrent()) handlers.onState?.(state); };
+
+  emit('syncing');
+  (async () => {
+    try {
+      await reconcilePlacesDoc(d, uid, isCurrent, Date.now());
+    } catch (e) {
+      console.error('[sync] places reconcile error (likely offline) — keeping local data', e);
+      emit('offline');
+      return;
+    }
+    if (!isCurrent()) return;
+    handlers.onPlaces?.();
+    if (!isCurrent()) return;
+    const stop = listenPlacesDoc(d, uid, isCurrent, () => handlers.onPlaces?.(), (e) => {
+      console.error('[sync] places listener', e);
+      emit('offline');
+    });
+    if (!isCurrent()) { stop(); return; }
+    unsubscribe = stop;
+    emit('live');
+  })();
+
+  return () => { disposed = true; unsubscribe?.(); unsubscribe = null; };
+}
+
 export interface SyncHandlers {
   onPlaces?: () => void;
   onWater?: () => void;
   onShapes?: () => void;
   onMergeDone?: () => void; // fired once after the initial local↔remote reconciliation
+  /** Shape sync v2. When present, the v1 whole-collection shape reconcile, bootstrap setDoc and
+   *  overwrite-on-listen below are NOT run at all; shapes flow only through these callbacks and
+   *  createShapeSyncTransport(). onShapes is then never called. */
+  shapeSync?: ShapeSyncHandlers;
+}
+
+/** The v1 `data/shapes` document as v2 sees it: read-only, with the server commit time old clients
+ *  stamp via serverTimestamp() — the island's own linear write order (0 when absent/unresolved). */
+export interface LegacyShapeIsland { shapesJson: unknown; version: number }
+
+export interface ShapeSyncHandlers {
+  /** shapes_v2 document data, or null when the document does not exist. */
+  onRemoteState(raw: unknown): void;
+  onLegacyIsland(island: LegacyShapeIsland): void;
+  /** Initial reconcile finished — flush the pending queue. */
+  onReady?(): void;
+}
+
+function timestampMillis(value: unknown): number {
+  const v = value as { toMillis?: () => unknown } | null | undefined;
+  if (v && typeof v.toMillis === 'function') {
+    const ms = v.toMillis();
+    if (typeof ms === 'number' && Number.isFinite(ms) && ms > 0) return Math.floor(ms);
+  }
+  return 0;
+}
+
+function legacyIsland(data: Record<string, unknown> | undefined): LegacyShapeIsland {
+  return { shapesJson: data?.shapesJson, version: timestampMillis(data?.updatedAt) };
 }
 
 // Subscribe to live cross-device sync for the signed-in user.
@@ -245,14 +388,12 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
   // namespaces halfway through an A→B transition. Bare legacy rows have no trustworthy owner,
   // so a signed-in account must never read or silently claim them.
   const farmKey          = accountLocalStorageKey(FARM_KEY, uid);
-  const placesKey        = accountLocalStorageKey(PLACES_KEY, uid);
-  const placesDeletedKey = accountLocalStorageKey(PLACES_DELETED_KEY, uid);
   const waterKey         = accountLocalStorageKey(WATER_KEY, uid);
   const waterDeletedKey  = accountLocalStorageKey(WATER_DELETED_KEY, uid);
   const designKey        = accountLocalStorageKey(DESIGN_STUDIO_KEY, uid);
 
   const shapesRef  = doc(d, COLL, uid, 'data', 'shapes');
-  const placesRef  = doc(d, COLL, uid, 'data', 'places');
+  const shapesV2Ref = doc(d, COLL, uid, 'data', SHAPES_V2_DOC);
   const waterRef   = doc(d, COLL, uid, 'data', 'water');
   const surveysRef = doc(d, COLL, uid, 'data', 'surveys');
   const designRef  = doc(d, COLL, uid, 'data', 'design');
@@ -267,16 +408,7 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
     // ── Phase 1: atomic reconcile ──
     try {
       // Places
-      await runTransaction(d, async (tx) => {
-        const snap = await tx.get(placesRef);
-        if (!isCurrentSubscription()) return;
-        const data = snap.exists() ? snap.data() : {};
-        const remote: SavedPlace[] = data.places ?? [];
-        const remoteDel: Tombstones = data.deleted ?? {};
-        const { items, deleted } = mergeItems(remote, readLocal<SavedPlace>(placesKey), remoteDel, readTombstones(placesDeletedKey), placeId, placeTs, now);
-        localStorage.setItem(placesKey, JSON.stringify(items));
-        tx.set(placesRef, { places: items, deleted, updatedAt: serverTimestamp() });
-      });
+      await reconcilePlacesDoc(d, uid, isCurrentSubscription, now);
       if (!isCurrentSubscription()) return;
       handlers.onPlaces?.();
 
@@ -301,7 +433,16 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       // Rule: if the remote doc EXISTS (even with zero features — a deliberate delete-all),
       // remote is authoritative so the deletion stays deleted. Only bootstrap from local when
       // no remote doc has ever been written, which recovers a device's pre-sync drawing.
-      {
+      if (handlers.shapeSync) {
+        // v2: READ both documents, write neither here. The controller turns the island into
+        // never-deleting 'legacy' ops and commits through createShapeSyncTransport().
+        const v2Snap = await getDoc(shapesV2Ref);
+        if (!isCurrentSubscription()) return;
+        handlers.shapeSync.onRemoteState(v2Snap.exists() ? v2Snap.data() : null);
+        const islandSnap = await getDoc(shapesRef);
+        if (!isCurrentSubscription()) return;
+        if (islandSnap.exists()) handlers.shapeSync.onLegacyIsland(legacyIsland(islandSnap.data()));
+      } else {
         const sSnap = await getDoc(shapesRef);
         if (!isCurrentSubscription()) return;
         const hasRemoteDoc = sSnap.exists() && sSnap.data().shapesJson !== undefined;
@@ -354,6 +495,8 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
     // A merge-done handler can synchronously tear this subscription down (for example because
     // auth switched while React was committing). Never attach live listeners after that.
     if (!isCurrentSubscription()) return;
+    handlers.shapeSync?.onReady?.();
+    if (!isCurrentSubscription()) return;
 
     // ── Phase 2: realtime listeners ──
     // MERGE remote into local (newest-wins + remote deletion tombstones) rather than blindly
@@ -370,13 +513,8 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       return true;
     };
 
-    if (!addLiveListener(() => onSnapshot(placesRef, (snap) => {
-      if (!isCurrentSubscription()) return;
-      if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const { items } = mergeItems(snap.data().places ?? [], readLocal<SavedPlace>(placesKey), snap.data().deleted ?? {}, readTombstones(placesDeletedKey), placeId, placeTs, Date.now());
-      localStorage.setItem(placesKey, JSON.stringify(items));
-      handlers.onPlaces?.();
-    }, (e) => console.error('[sync] places listener', e)))) return;
+    if (!addLiveListener(() => listenPlacesDoc(d, uid, isCurrentSubscription, () => handlers.onPlaces?.(),
+      (e) => console.error('[sync] places listener', e)))) return;
 
     if (!addLiveListener(() => onSnapshot(waterRef, (snap) => {
       if (!isCurrentSubscription()) return;
@@ -386,7 +524,20 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       handlers.onWater?.();
     }, (e) => console.error('[sync] water listener', e)))) return;
 
-    if (!addLiveListener(() => onSnapshot(shapesRef, (snap) => {
+    if (handlers.shapeSync) {
+      const shapeSync = handlers.shapeSync;
+      if (!addLiveListener(() => onSnapshot(shapesV2Ref, (snap) => {
+        if (!isCurrentSubscription()) return;
+        if (snap.metadata.hasPendingWrites) return;
+        shapeSync.onRemoteState(snap.exists() ? snap.data() : null);
+      }, (e) => console.error('[sync] shapes_v2 listener', e)))) return;
+      // Read-only tap on the v1 island so edits from not-yet-updated clients still arrive.
+      if (!addLiveListener(() => onSnapshot(shapesRef, (snap) => {
+        if (!isCurrentSubscription()) return;
+        if (snap.metadata.hasPendingWrites || !snap.exists()) return;
+        shapeSync.onLegacyIsland(legacyIsland(snap.data()));
+      }, (e) => console.error('[sync] legacy shapes listener', e)))) return;
+    } else if (!addLiveListener(() => onSnapshot(shapesRef, (snap) => {
       if (!isCurrentSubscription()) return;
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
       const fc = parseShapes(snap.data().shapesJson);
@@ -441,6 +592,96 @@ export async function upsertPlace(uid: string, place: SavedPlace): Promise<void>
       }
     });
   } catch (e) { console.error('[sync] upsertPlace', e); }
+}
+
+// What happened to a context-only cloud update. Only 'applied' and 'unchanged' mean the cloud copy
+// carries this context. Every other outcome leaves the cloud untouched; they split into
+//   DEFINITIVE rejections — the cloud row is a different place from the one the grower confirmed,
+//   so the still-current local confirmation must be rolled back (lib/saved-places.ts does that):
+//     missing-remote is NOT one of these (see below);  deleted — a deletion outranks the base;
+//     base-changed — the cloud row was moved/edited/re-added since (its revision or savedAt differs);
+//     site-mismatch — the cloud row sits at another canonical site than the context describes;
+//     unbound — the context carries no base binding, so it can approve nothing;
+//   PENDING outcomes — nothing is wrong with the confirmation, the cloud just cannot take it yet:
+//     missing-remote — the base place is not in the cloud (a country edit must not create it; a
+//       place made offline reaches the cloud through ordinary reconcile, context riding along);
+//     remote-behind — the cloud row is OLDER than the confirmed base: this device is ahead;
+//     superseded — the cloud holds a later confirmation for the same base (reconcile converges);
+//     unavailable — no transport, offline or quota error: nothing was acknowledged;
+//   and account-changed — the mounted owner or the Firebase user no longer equals the account this
+//     operation started for: it was abandoned without touching the cloud and must not report into
+//     the new account's UI.
+export type PlaceContextOutcome =
+  | 'applied' | 'unchanged' | 'missing-remote' | 'deleted' | 'base-changed' | 'remote-behind'
+  | 'site-mismatch' | 'unbound' | 'superseded' | 'unavailable' | 'account-changed';
+
+export const DEFINITIVE_CONTEXT_REJECTIONS: readonly PlaceContextOutcome[] =
+  ['deleted', 'base-changed', 'site-mismatch', 'unbound'];
+
+// Context-only transaction: updates ONLY `siteCountryContext` on the EXISTING remote row, never
+// replacing geometry/notes with the editor's possibly stale copy, never advancing the place
+// revision, never creating a row and never touching a tombstone. A rejected update is deliberately
+// NOT retried as a whole-place upsertPlace(): that would turn a metadata edit into a re-add.
+// `context.base` names the exact place identity it was confirmed against. The captured `uid` must
+// match BOTH the mounted local owner and the Firebase user at start, after the read (every retry)
+// and before the write, so a late callback after an A→B switch — or a transition where only one of
+// the two has moved — writes nothing. The local namespace stays on the mounted owner (that is
+// updateSiteCountryContext's rule); cloud access needs the credentialed user too.
+export interface PlaceContextResult {
+  outcome: PlaceContextOutcome;
+  /** For 'superseded': the later confirmation the cloud already holds for this exact base, so the
+   *  caller can adopt it locally instead of leaving a losing confirmation approved. */
+  authoritative?: SiteCountryContext;
+}
+
+export async function upsertPlaceContext(uid: string, context: SiteCountryContext): Promise<PlaceContextOutcome> {
+  return (await upsertPlaceContextResult(uid, context)).outcome;
+}
+
+export async function upsertPlaceContextResult(
+  uid: string, context: SiteCountryContext,
+): Promise<PlaceContextResult> {
+  const isCurrent = () => activeAccountUid() === uid && getFirebase()?.auth?.currentUser?.uid === uid;
+  if (!isCurrent()) return { outcome: 'account-changed' };
+  const d = db(); if (!d) return { outcome: 'unavailable' };
+  const safe = normaliseSiteCountryContext(context);
+  const base = safe?.base;
+  if (!safe || !base) return { outcome: 'unbound' };
+  const ref = doc(d, COLL, uid, 'data', 'places');
+  let outcome: PlaceContextOutcome = 'unavailable';
+  let authoritative: SiteCountryContext | undefined;
+  try {
+    await runTransaction(d, async (tx) => {
+      authoritative = undefined;
+      const snap = await tx.get(ref);
+      if (!isCurrent()) { outcome = 'account-changed'; return; }
+      const data = snap.exists() ? snap.data() : {};
+      const remote: SavedPlace[] = Array.isArray(data.places) ? data.places : [];
+      const deleted: Tombstones = data.deleted && typeof data.deleted === 'object' ? data.deleted : {};
+      const id = base.placeId;
+      const row = remote.find((p) => p?.id === id);
+      const tomb = timestampOrZero(deleted[id]);
+      if (!row) { outcome = tomb ? 'deleted' : 'missing-remote'; return; }
+      if (tomb > placeRevision(row)) { outcome = 'deleted'; return; }
+      const remoteRevision = placeRevision(row);
+      if (remoteRevision < base.revision) { outcome = 'remote-behind'; return; }
+      if (remoteRevision > base.revision || row.savedAt !== base.savedAt) { outcome = 'base-changed'; return; }
+      if (coordinateSiteIdForPlace(row) !== safe.siteId) { outcome = 'site-mismatch'; return; }
+      const existing = boundSiteContext(row);
+      const winner = pickSiteContext(existing, safe);
+      if (existing && winner && sameSiteContext(existing, safe)) { outcome = 'unchanged'; return; }
+      if (winner !== safe) { outcome = 'superseded'; authoritative = existing ?? undefined; return; }
+      outcome = 'applied';
+      tx.set(ref, {
+        places: remote.map((p) => (p?.id === id ? { ...p, siteCountryContext: safe } : p)),
+        deleted, updatedAt: serverTimestamp(),
+      });
+    });
+    return { outcome, authoritative };
+  } catch (e) {
+    console.error('[sync] upsertPlaceContext', e);
+    return { outcome: 'unavailable' };
+  }
 }
 
 // `deletedAtMs` is the ORIGINAL local delete timestamp (from lib/saved-places.ts's deletePlace(),
@@ -536,6 +777,52 @@ export async function removeWaterPoint(uid: string, id: string, deletedAtMs: num
   } catch (e) { console.error('[sync] removeWaterPoint', e); }
 }
 
+// ── Shape sync v2 transport ──────────────────────────────────────────────────────────────
+// One optimistic transaction per flush against user_map_data/{uid}/data/shapes_v2. `step` is the
+// pure controller step (read latest state → applyOps → serialize); runTransaction may call it again
+// on contention, which re-applies the queued OPS to the newer state — never a stale snapshot.
+// No write is attempted in sample mode (db() is null) or after the Firebase user changed.
+// Pass 2: with opts.island the v1 island is read in the SAME transaction, and deleted in it only
+// when the pure step decided so (protocol decideIslandDrain) — never by a separate write.
+export function createShapeSyncTransport(uid: string): ShapeTransport {
+  return {
+    async transact<R>(step: (current: unknown, island?: IslandRead) => TransactStep<R>, opts?: { island?: boolean }): Promise<R> {
+      const d = db();
+      if (!d) throw new Error('shape sync unavailable');
+      if (getFirebase()?.auth?.currentUser?.uid !== uid) throw new Error('shape sync account changed');
+      const ref = doc(d, COLL, uid, 'data', SHAPES_V2_DOC);
+      const islandRef = doc(d, COLL, uid, 'data', 'shapes');
+      let produced = false;
+      let result: R | undefined;
+      await runTransaction(d, async (tx) => {
+        produced = false;
+        result = undefined;
+        const snap = await tx.get(ref);
+        let island: IslandRead | undefined;
+        if (opts?.island) {
+          const islandSnap = await tx.get(islandRef);
+          const data = islandSnap.exists() ? islandSnap.data() : undefined;
+          island = { exists: islandSnap.exists(), shapesJson: data?.shapesJson, version: timestampMillis(data?.updatedAt) };
+        }
+        const out = step(snap.exists() ? snap.data() : null, island);
+        result = out.result;
+        produced = true;
+        if (out.write) tx.set(ref, { ...out.write, updatedAt: serverTimestamp() });
+        if (out.deleteIsland && island?.exists) tx.delete(islandRef);
+      });
+      if (!produced) throw new Error('shape sync transaction produced no result');
+      return result as R;
+    },
+  };
+}
+
+/**
+ * @deprecated UNSAFE — v1 whole-collection blind write; the confirmed data-loss defect
+ * (docs/SHAPE-SYNC-ANALYSIS-2026-08-10.md). Map.tsx no longer calls it under shape sync v2.
+ * Body intentionally unchanged: tests/shape-sync-loss.test.ts exercises it as the OLD-SOURCE red
+ * control. Delete only after `git grep pushShapes` shows no caller and the coordinator re-points
+ * that TODO test (see docs/shape-sync-v2/GATES.md, gate G7).
+ */
 // Shapes: this browser's draw collection is the source of truth. Plain full-collection
 // write (offline-friendly, fire-and-forget). Stored as a JSON string — GeoJSON coordinates
 // are nested arrays, which Firestore rejects as a native value. The realtime listener keeps

@@ -1,3 +1,4 @@
+import { hasGrowerCycleMarker } from './international/grower-cycle';
 // ── The crop plan reorganised around who reads it ───────────────────────────
 //
 // The old export was one long scroll: cover, bed list, buying list, then a
@@ -116,6 +117,8 @@ export interface PlanDashboard {
   netKg: number | null;
   /** Months with at least one verified fresh-picking window. Timing only. */
   freshPickingMonths: number;
+  /** Counts describe legacy-only windows when this evidence is present. */
+  heldGrowerPlantingIds?: string[];
   /** Months in which something harvested earlier is still inside the sourced
    * shelf life the catalog carries for it — counted whether or not the same
    * month also has a fresh window, so the two stats are independent readings of
@@ -160,7 +163,9 @@ export function buildPlanDashboard(
   const accountedPlantings = plantings.filter((planting) => bedIds.has(planting.bedId));
   const benchmark = buildPlanYieldBenchmark(accountedPlantings, beds, opts.nowMonth);
   const areaM2 = benchmark.growingAreaM2;
-  const grossKg = benchmark.knownKg;
+  const heldGrowerPlantingIds = plantings.filter(hasGrowerCycleMarker).map(p => p.id);
+  const hasOwnRows = heldGrowerPlantingIds.length > 0;
+  const grossKg = hasOwnRows ? null : benchmark.knownKg;
   const netKg = lossConfirmed && grossKg !== null ? grossKg * (1 - loss / 100) : null;
   const unknownYieldCrops = benchmark.unknownYieldCrops;
   const areaConflictBedLabels = benchmark.areaConflictBedLabels;
@@ -197,7 +202,8 @@ export function buildPlanDashboard(
       label: areaConflictBedLabels.length ? 'benchmark total blocked' : 'known benchmark total',
       detail: areaConflictBedLabels.length
         ? `resolve overlapping shares in ${areaConflictBedLabels.join(', ')}`
-        : hasKnownYield ? 'verified kg/m² crop entries only' : 'no verified kg/m² crop entry',
+        : hasOwnRows ? 'own dated records need their checked source; catalogue total is withheld'
+          : hasKnownYield ? 'verified kg/m² crop entries only' : 'no verified kg/m² crop entry',
     },
     {
       // Same knownKg ÷ same areaM2 already above — never a separate estimate,
@@ -221,9 +227,9 @@ export function buildPlanDashboard(
         detail: 'confirm a loss allowance from actual records',
       },
     {
-      value: `${freshPickingMonths}/12`,
+      value: hasOwnRows ? 'Unknown' : `${freshPickingMonths}/12`,
       label: 'fresh-picking months',
-      detail: 'timing windows only; no monthly kg inferred',
+      detail: hasOwnRows ? 'own dated records are not a complete catalogue food calendar' : 'timing windows only; no monthly kg inferred',
     },
   ];
 
@@ -238,9 +244,10 @@ export function buildPlanDashboard(
     signals.push(`${top[0].name} has the largest known benchmark volume at ${top[0].kg.toFixed(1)} kg.`);
   }
   if (!areaConflictBedLabels.length && top[1]) signals.push(`${top[1].name} follows in the benchmark comparison at ${top[1].kg.toFixed(1)} kg.`);
+  if (hasOwnRows) signals.push('Own dated records are retained. Catalogue totals and complete food or free-land coverage are withheld; check their saved source in the Task Planner.');
   if (unknownYieldCrops.length) {
     signals.push(`${unknownYieldCrops.join(', ')} ${unknownYieldCrops.length === 1 ? 'has' : 'have'} no verified kg/m² benchmark and ${unknownYieldCrops.length === 1 ? 'is' : 'are'} excluded from every kg total, not counted as 0kg.`);
-  } else if (!hasKnownYield) {
+  } else if (!hasKnownYield && !hasOwnRows) {
     signals.push('No crop in this plan has a verified kg/m² food-yield benchmark, so no kilogram comparison is shown.');
   }
   if (busiest.length) {
@@ -251,7 +258,7 @@ export function buildPlanDashboard(
     signals.push(`${names.join(', ')} carry the most planned jobs — counted as jobs, not hours.`);
   }
   const idle = idleBedMonths(plantings, beds, opts.nowMonth);
-  if (idle.count > 0) {
+  if (idle.count !== null && idle.count > 0) {
     signals.push(`${idle.count} bed-month${idle.count === 1 ? '' : 's'} of the year have no crop in the ground.`);
   }
 
@@ -267,11 +274,14 @@ export function buildPlanDashboard(
   }
   if (!lossConfirmed) decisions.push('Confirm a loss allowance from actual records before calculating a usable total.');
 
-  return { stats, signals, decisions, grossKg, netKg, freshPickingMonths, storedFoodMonths, storedFoodCrops, unknownYieldCrops, hasKnownYield, areaConflictBedLabels };
+  return { stats, signals, decisions, grossKg, netKg, freshPickingMonths, storedFoodMonths, storedFoodCrops, unknownYieldCrops, hasKnownYield, areaConflictBedLabels,
+    ...(hasOwnRows ? { heldGrowerPlantingIds } : {}) };
 }
 
 /** Bed-months with nothing in the ground — the honest counterweight to a big total. */
-export function idleBedMonths(plantings: Planting[], beds: PlanBed[], nowMonth?: number): { count: number; total: number } {
+export function idleBedMonths(plantings: Planting[], beds: PlanBed[], nowMonth?: number): { count: number | null; total: number; heldGrowerPlantingIds?: string[] } {
+  const heldGrowerPlantingIds = plantings.filter(hasGrowerCycleMarker).map(p => p.id);
+  if (heldGrowerPlantingIds.length) return { count: null, total: beds.length * 12, heldGrowerPlantingIds };
   if (nowMonth !== undefined) {
     const rows = buildOccupancyCalendar(plantings, beds, nowMonth);
     const count = rows.reduce(
@@ -913,12 +923,19 @@ export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildF
   const unitByCrop = unitByCropKey(plantings, beds);
   for (const bed of beds) {
     const mine = plantings
-      .filter((p) => p.bedId === bed.id && !p.finishedOnceSowing)
+      .filter((p) => p.bedId === bed.id && (hasGrowerCycleMarker(p) || !p.finishedOnceSowing))
       .map((p) => ({ p, crop: cropByKey(p.cropKey) }))
-      .filter((x): x is { p: Planting; crop: CropDef } => !!x.crop)
-      .sort((a, b) => a.p.sowMonth - b.p.sowMonth || a.crop.name.localeCompare(b.crop.name));
+      .filter((x) => !!x.crop || hasGrowerCycleMarker(x.p))
+      .sort((a, b) => a.p.sowMonth - b.p.sowMonth || (a.crop?.name ?? a.p.cropKey).localeCompare(b.crop?.name ?? b.p.cropKey));
 
     mine.forEach(({ p, crop }, i) => {
+      if (hasGrowerCycleMarker(p)) {
+        rows.push({ area: bed.label, isFirstOfArea: i === 0, crop: crop?.name ?? p.cropKey, share: 'Held',
+          establish: 'Own dated record', intoField: 'Check saved source', harvest: 'Not a catalogue schedule',
+          yieldKg: null, once: false, awaitingSowingConfirmation: false, frostCaveat: null });
+        return;
+      }
+      if (!crop) return;
       const pending = p.awaitingSowingConfirmation === true;
       const pendingStamp = typeof p.once === 'string' && /^(\d{4})-(0[1-9]|1[0-2])$/.test(p.once)
         ? `${monthShort(Number(p.once.slice(5)))} ${p.once.slice(0, 4)}` : 'dated';

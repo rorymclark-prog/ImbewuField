@@ -1,0 +1,50 @@
+[
+  {
+    "id": "us-ncei-normals",
+    "requestedUrl": "https://www.ncei.noaa.gov/access/us-climate-normals/",
+    "effectiveUrl": "https://www.ncei.noaa.gov/access/us-climate-normals/",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T21:28:36.834277+00:00",
+    "completedAt": "2026-11-02T21:28:37.636204+00:00",
+    "bytes": 5154,
+    "sha256": "92b643fe60a1cac16d89e94d37ce7504e3b6a2d89f9d9566165159bbb1ea82be",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "us-nrcs-wss",
+    "requestedUrl": "https://www.nrcs.usda.gov/resources/data-and-reports/web-soil-survey",
+    "effectiveUrl": "https://www.nrcs.usda.gov/resources/data-and-reports/web-soil-survey",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T21:28:36.834551+00:00",
+    "completedAt": "2026-11-02T21:28:45.710952+00:00",
+    "bytes": 261698,
+    "sha256": "4ca9219c1fab56397d5e70f83164e590b0bfae78c98ee1650a7552b1876e8f87",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "us-aphis-contacts",
+    "requestedUrl": "https://www.aphis.usda.gov/contact/plant-health",
+    "effectiveUrl": "https://www.aphis.usda.gov/contact/plant-health",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T21:28:36.835820+00:00",
+    "completedAt": "2026-11-02T21:28:39.390539+00:00",
+    "bytes": 83084,
+    "sha256": "8c5813ac74d3ceae0ca446a6d7f5149b8a3885e0a54f9eb4193bd3caca282f98",
+    "receiptAuthor": "Codex coordinator machine"
+  },
+  {
+    "id": "us-ncei-product",
+    "requestedUrl": "https://www.ncei.noaa.gov/products/us-climate-normals",
+    "effectiveUrl": "https://www.ncei.noaa.gov/products/land-based-station/us-climate-normals",
+    "httpStatus": "200",
+    "curlExit": 0,
+    "startedAt": "2026-11-02T21:53:27.695297+00:00",
+    "completedAt": "2026-11-02T21:53:29.456919+00:00",
+    "bytes": 97461,
+    "sha256": "f6e9bfe856f4ba60f9771e6e341170c46beef8dee8fbbaf96ad623c87e40dfed",
+    "receiptAuthor": "Codex coordinator machine"
+  }
+]

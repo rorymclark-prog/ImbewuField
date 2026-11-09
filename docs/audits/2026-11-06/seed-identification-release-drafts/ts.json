@@ -1,0 +1,32 @@
+{
+  "locale": "ts",
+  "sourceSha256": "fe826da1f3c03aa48d47074726ce3e0e45a7e6bcd084c7549b75309796846681",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "seedWorksheetIdentification.release.01",
+      "english": "Show crop names and your labels in seed worksheets.",
+      "sha256": "c2849d67135e110f621526eac13ad1937be55b2e757a51c9df309af0195b3867",
+      "translation": "Komba mavito ya swibyariwa na swilebele swa wena eka maphepha ya mintirho ya mbewu."
+    },
+    {
+      "key": "seedWorksheetIdentification.release.02",
+      "english": "Identify planned seed supply groups",
+      "sha256": "f13c8e5d432e38f0b84f0ff7a881d9fb265c9153c7939ae099d45ae7c9dd6da2",
+      "translation": "Tiva mintlawa ya mphakelo wa mbewu leyi kunguhatiweke"
+    },
+    {
+      "key": "seedWorksheetIdentification.release.03",
+      "english": "Crop planner → Saved planned nursery batches → Seed sourcing review",
+      "sha256": "3b9d89aa64064299d9385ee5f996ecb3cf656b75c14bf4ea300f1f94fcf4c651",
+      "translation": "Mupulani wa swibyariwa → Mintlawa ya xirhapa xo kurisa swimilana leyi kunguhatiweke leyi hlayisiweke → Nkambelo wa ku kumiwa ka mbewu"
+    },
+    {
+      "key": "seedWorksheetIdentification.release.04",
+      "english": "Add your own supply-group label and review crop names from the saved nursery batches you selected. The CSV worksheet includes your entered labels. Missing identification stays visible, and crop names do not confirm interchangeable varieties, seed lots or observed stock.",
+      "sha256": "f6ae798d1394d446faab3640d604bdb2fb2716290ddb09fa04a847699fa049bb",
+      "translation": "Engetela xilebele xa wena xa ntlawa wa mphakelo kutani u kambela mavito ya swibyariwa ku suka eka mintlawa ya xirhapa leyi hlayisiweke leyi u yi hlawuleke. Phepha ra mintirho ra CSV ri katsa swilebele leswi u swi ngheniseke. Vutitivisi lebyi kayivelaka byi tshama byi vonaka, naswona mavito ya swibyariwa a ma tiyisisi tinxaka leti cincanaka, mintlawa ya mbewu kumbe xitoko lexi voniweke hi mahlo."
+    }
+  ]
+}

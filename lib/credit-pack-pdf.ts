@@ -22,6 +22,7 @@ import { layoutTableColumns } from './report-pdf';
 import { formatInvoiceZar, formatQuantity } from './invoice-document';
 import type { ExpenseCategory, ExpenseLog, ProductionLog, SalesLog } from './db/types';
 import type { SavedInvoice } from './invoices';
+import { reviewInvoiceRandBasis, invoiceRandReviewMessage, type InvoiceRandReview } from './invoice-sales';
 import {
   buildMonthlyCashFlow,
   creditPackCashFlowSummary,
@@ -43,6 +44,18 @@ export class CreditPackSampleModeError extends Error {
     super("This export is disabled while you are viewing the Ubhejane farm. Sign in and turn off the tour to export your own records.");
     this.name = 'CreditPackSampleModeError';
   }
+}
+
+export class CreditPackCurrencyHeldError extends Error {
+  constructor(review?: InvoiceRandReview) {
+    super(review ? invoiceRandReviewMessage(review) ?? 'The invoice evidence cannot support this rand financial export.'
+      : 'This rand financial export is unavailable while invoices record another currency or have an unreadable currency. Review the invoice currencies; no exchange conversion is assumed.');
+    this.name = 'CreditPackCurrencyHeldError';
+  }
+}
+function formatCreditRand(value: number | null): string {
+  if (value === null) throw new CreditPackCurrencyHeldError();
+  return formatInvoiceZar(value);
 }
 
 export interface CreditPackFarmerIdentity {
@@ -106,6 +119,11 @@ export async function buildCreditPackPreviewPdf(input: Omit<CreditPackDocumentIn
 }
 
 async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: boolean): Promise<Blob> {
+
+  const invoiceReview = reviewInvoiceRandBasis((input.invoices ?? []).filter(invoice => invoice.status === 'paid'), input.invoices ?? []);
+  if (invoiceReview.status === 'held') {
+    throw new CreditPackCurrencyHeldError(invoiceReview);
+  }
 
   const now = input.now ?? new Date();
   const months = buildMonthlyCashFlow(input.sales, input.expenses, now, CREDIT_PACK_TRAILING_MONTHS, input.invoices);
@@ -247,7 +265,7 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
   const snapshot: string[] = [];
   if (months.length > 0) {
     snapshot.push(`${months.length} month${months.length === 1 ? '' : 's'} of records, income logged in ${consistency.monthsWithIncome} of them`);
-    snapshot.push(`Total income in this period: ${formatInvoiceZar(cashFlow.totalIncomeZar)} · total costs: ${formatInvoiceZar(cashFlow.totalExpensesZar)}`);
+    snapshot.push(`Total income in this period: ${formatCreditRand(cashFlow.totalIncomeZar)} · total costs: ${formatCreditRand(cashFlow.totalExpensesZar)}`);
   }
   const quantityList = (totals: Array<{ unit: RecordUnit; quantity: number }>) => totals.length ? totals.map(total => recordQuantityLabel(recordQuantityPayload(total.quantity, total.unit))).join(', ') : 'quantity not recorded';
   if (track.saleEntryCount > 0) {
@@ -276,16 +294,16 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
   } else {
     paragraph(
       `Income was logged in ${consistency.monthsWithIncome} of the last ${consistency.monthsCovered} months on record. `
-      + `Average income across all of those months, including the quiet ones, is ${formatInvoiceZar(consistency.avgMonthlyIncomeZar)}.`,
+      + `Average income across all of those months, including the quiet ones, is ${formatCreditRand(consistency.avgMonthlyIncomeZar)}.`,
       9.5, 13, INK.muted,
     );
     drawTable(
       ['Month', 'Sales income', 'Costs', 'Net', '# sales'],
       months.map((m) => [
         m.label,
-        formatInvoiceZar(m.incomeZar),
-        formatInvoiceZar(m.expensesZar),
-        formatInvoiceZar(m.netZar),
+        formatCreditRand(m.incomeZar),
+        formatCreditRand(m.expensesZar),
+        formatCreditRand(m.netZar),
         String(m.saleCount),
       ]),
       new Set([1, 2, 3, 4]),
@@ -300,8 +318,8 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
   } else {
     paragraph(
       `Over ${cashFlow.monthsCovered} month${cashFlow.monthsCovered === 1 ? '' : 's'}: `
-      + `${formatInvoiceZar(cashFlow.totalIncomeZar)} in sales income, ${formatInvoiceZar(cashFlow.totalExpensesZar)} in logged costs, `
-      + `for a net cash flow of ${formatInvoiceZar(cashFlow.netZar)}.`,
+      + `${formatCreditRand(cashFlow.totalIncomeZar)} in sales income, ${formatCreditRand(cashFlow.totalExpensesZar)} in logged costs, `
+      + `for a net cash flow of ${formatCreditRand(cashFlow.netZar)}.`,
       10, 14, INK.text,
     );
     if (cashFlow.byCategory.length === 0) {
@@ -309,7 +327,7 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
     } else {
       drawTable(
         ['Cost category', 'Amount', '# entries'],
-        cashFlow.byCategory.map((c) => [categoryLabel(c.category), formatInvoiceZar(c.zar), String(c.count)]),
+        cashFlow.byCategory.map((c) => [categoryLabel(c.category), formatCreditRand(c.zar), String(c.count)]),
         new Set([1, 2]),
       );
     }
@@ -335,7 +353,7 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
   } else {
     paragraph(
       `${track.saleEntryCount} sale${track.saleEntryCount === 1 ? '' : 's'} logged, `
-      + `${quantityList(track.soldQuantities)} sold for ${formatInvoiceZar(track.totalRevenueZar)} in total, `
+      + `${quantityList(track.soldQuantities)} sold for ${formatCreditRand(track.totalRevenueZar)} in total, `
       + `from ${dateLabel(track.firstSaleIso)} to ${dateLabel(track.lastSaleIso)}.`,
       10, 14, INK.text,
     );
@@ -343,7 +361,7 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
   if (track.countedProduce.length > 0) {
     paragraph('Counts and packages retain their recorded units. Their weight is unknown; they are separate from the kilogram table.', 10, 14, INK.text);
     drawTable(['Produce', 'Harvested', 'Sold', 'Revenue'], track.countedProduce.map(row => [
-      row.crop, row.harvested.length ? quantityList(row.harvested) : 'Not recorded', row.sold.length ? quantityList(row.sold) : 'Not recorded', formatInvoiceZar(row.revenueZar),
+      row.crop, row.harvested.length ? quantityList(row.harvested) : 'Not recorded', row.sold.length ? quantityList(row.sold) : 'Not recorded', formatCreditRand(row.revenueZar),
     ]), new Set([1, 2, 3]));
   }
   if (track.topCrops.length > 0) {
@@ -358,7 +376,7 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
         c.crop,
         `${formatQuantity(c.harvestedKg)} kg`,
         `${formatQuantity(c.soldKg)} kg`,
-        formatInvoiceZar(c.revenueZar),
+        formatCreditRand(c.revenueZar),
       ]),
       new Set([1, 2, 3]),
     );
@@ -376,7 +394,7 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
         `Also recorded, not listed above: ${track.omittedCrops.join(', ')} — ` +
         `${formatQuantity(track.omittedHarvestedKg)} kg harvested, ` +
         `${formatQuantity(track.omittedSoldKg)} kg sold, ` +
-        `${formatInvoiceZar(track.omittedRevenueZar)} revenue.`;
+        `${formatCreditRand(track.omittedRevenueZar)} revenue.`;
       const noteLines = doc.splitTextToSize(note, CW) as string[];
       need(noteLines.length * 10 + 6);
       doc.text(noteLines, M, y);

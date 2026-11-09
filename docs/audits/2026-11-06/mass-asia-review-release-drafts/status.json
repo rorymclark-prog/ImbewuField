@@ -1,0 +1,27 @@
+{
+  "order": "agy-mass-asia-review-release-copy-2026-11-06",
+  "status": "DRAFTED",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "candidates": 16,
+  "messagesPerLocale": 4,
+  "locales": 4,
+  "localeList": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "workers": 0,
+  "workersActive": 0,
+  "validation": "NOT RUN — coordinator-owned",
+  "sourceSha256": "1d81152adc5fb6c32cfb2bb21d707c6e6846f8974be873c039154e7ce978efc6",
+  "outputsWritten": [
+    "docs/international/agy-mass-asia-review-release-copy-2026-11-06/zu.json",
+    "docs/international/agy-mass-asia-review-release-copy-2026-11-06/st.json",
+    "docs/international/agy-mass-asia-review-release-copy-2026-11-06/ts.json",
+    "docs/international/agy-mass-asia-review-release-copy-2026-11-06/ve.json",
+    "docs/international/agy-mass-asia-review-release-copy-2026-11-06/review-notes.md",
+    "docs/international/agy-mass-asia-review-release-copy-2026-11-06/status.json"
+  ]
+}

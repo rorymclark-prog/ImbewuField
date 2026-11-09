@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { X } from 'lucide-react';
 import {
-  OPEN_UPDATE_GUIDE_EVENT, UPDATE_GUIDE_KEY, readUpdateGuide, type UpdateGuideState,
+  OPEN_UPDATE_GUIDE_EVENT, UPDATE_GUIDE_KEY, readUpdateGuide, isUpdateGuideDestination, type UpdateGuideState,
 } from '@/lib/update-tour';
 import { translate, useLanguage } from '@/lib/i18n';
 import styles from './UpdateGuide.module.css';
@@ -16,7 +16,14 @@ import FeatureUpdatePreview from './FeatureUpdatePreview';
 const PREVIEW_SEEN_KEY = 'imbewu-feature-preview-seen:';
 
 export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string | null }) {
+  // Search-dependent arrival stays inside the optional guide's own boundary,
+  // so static pages do not acquire a whole-layout client-render requirement.
+  return <Suspense fallback={null}><UpdateGuideContent loadedBuildSha={loadedBuildSha} /></Suspense>;
+}
+
+function UpdateGuideContent({ loadedBuildSha }: { loadedBuildSha: string | null }) {
   const pathname = usePathname();
+  const search = useSearchParams()?.toString() ?? '';
   const { lang, t } = useLanguage();
   const [guide, setGuide] = useState<UpdateGuideState | null>(null);
   const [minimized, setMinimized] = useState(false);
@@ -24,6 +31,8 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
   // Source-paired drafts can scroll. A new stop must start at its heading and close control.
   useEffect(() => { if (panel.current) panel.current.scrollTop = 0; }, [guide?.phase, guide?.index, minimized]);
   const nativeCopy = useUpdateCopy(lang, !!guide?.stops.length);
+  const stop = guide?.stops[guide.index];
+  const onPage = !!stop && isUpdateGuideDestination(pathname, search, stop.href);
 
   useEffect(() => {
     try {
@@ -51,8 +60,8 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
   // On arrival, get out of the way so the farmer can actually see and use the page.
   useEffect(() => {
     if (!guide || guide.phase !== 'tour') { setMinimized(false); return; }
-    setMinimized(pathname === guide.stops[guide.index].href.split('#')[0]);
-  }, [pathname, guide?.phase, guide?.index]);
+    setMinimized(onPage);
+  }, [onPage, guide?.phase, guide?.index]);
 
   function save(next: UpdateGuideState | null) {
     if (!next && guide?.stops[0]?.preview) {
@@ -66,8 +75,7 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
   }
 
   if (!guide || !guide.stops.length) return null;
-  const stop = guide.stops[guide.index];
-  const onPage = pathname === stop.href.split('#')[0];
+  if (!stop) return null;
   const draftLocale = isUpdateCopyLanguage(lang);
   const source = (key: string) => translate('en', key);
   const withCount = (value: string) => value.replace('{index}', String(guide.index + 1))

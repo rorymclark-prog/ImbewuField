@@ -1,0 +1,40 @@
+{
+  "atUtc": "2026-11-05T17:56:47.501849+00:00",
+  "sourceKind": "coordinator-supplied-unpublished-ui-release-sentence",
+  "baseCommit": "3c05ba6b0370364acfc9fd0663aa9a2f800299a9",
+  "packetSha256": "74f7943c6ebd1f18f86538684175fed7e1b1270cd18b0abf9c320c0bd822a259",
+  "adoptedBy": "coordinator",
+  "scope": "One print-layout description added to each of four existing-language update maps with existing unreviewed+English display. No new runtime language or human/fluent approval. Packet runtimeActivation:false records historical generation, separate from coordinator display adoption. Actual new print output remains unverified.",
+  "humanFluentApproval": false,
+  "newRuntimeLanguage": false,
+  "pairs": [
+    {
+      "locale": "st",
+      "source": "Printed language reviews keep each comparison together when it fits on a page.",
+      "packetMessageSha256": "1733d5afdcfe53f9edd9bbb1443be2ff275f43b3d16e8fd824b5947f945c6ebc",
+      "previousDictionarySha256": "12ee229e2e381f3090ce8f1a004afca9a7d41004f723b46ff7e562a4165b6481",
+      "dictionarySha256": "6b099e52ac8dac6200044760a76fddce2c53424c151bb8b9086d97578241207a"
+    },
+    {
+      "locale": "ts",
+      "source": "Printed language reviews keep each comparison together when it fits on a page.",
+      "packetMessageSha256": "1733d5afdcfe53f9edd9bbb1443be2ff275f43b3d16e8fd824b5947f945c6ebc",
+      "previousDictionarySha256": "d1eb09369dab4d0b3e75124f80cca9d521a6ad3777b8c437bba75ae5f03dad74",
+      "dictionarySha256": "e32434e3b95e08a4bea7680db2d9a92d992f2f77c474f27f4ce86c6699d8654b"
+    },
+    {
+      "locale": "ve",
+      "source": "Printed language reviews keep each comparison together when it fits on a page.",
+      "packetMessageSha256": "1733d5afdcfe53f9edd9bbb1443be2ff275f43b3d16e8fd824b5947f945c6ebc",
+      "previousDictionarySha256": "0536e51bcdacfc6c4f246005ddc9f69a8bb32040e7527a64951bb8fbe1fe2048",
+      "dictionarySha256": "5e1c75aa064272518094634e8d1075c6d2d3208364682a43eab706c08f8217a8"
+    },
+    {
+      "locale": "zu",
+      "source": "Printed language reviews keep each comparison together when it fits on a page.",
+      "packetMessageSha256": "1733d5afdcfe53f9edd9bbb1443be2ff275f43b3d16e8fd824b5947f945c6ebc",
+      "previousDictionarySha256": "fb82fd9debc91b5bcedea53e9005bd38c06fa4163d35922fe2a5067428e7ff89",
+      "dictionarySha256": "7fd01a5f2dd056575b8cc6f55f1bcb7d7f55476edd59fdc98a77c153889e6886"
+    }
+  ]
+}

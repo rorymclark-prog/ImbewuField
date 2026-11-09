@@ -1,0 +1,47 @@
+{
+  "validatedPairs": 16,
+  "rejectedDamagedControls": [
+    "order",
+    "key",
+    "english",
+    "message-hash",
+    "source-hash",
+    "locale-list",
+    "human-approval",
+    "fluent-approval",
+    "draft-status",
+    "runtime-activation",
+    "empty-candidate",
+    "nonstring-candidate",
+    "source-as-translation",
+    "wrong-language-assignment"
+  ],
+  "dictionaries": {
+    "zu": {
+      "historicalBytesPreserved": true,
+      "originalSha256": "c8ec10c503b097a34764ca9c0a472bf9dd9ddcf9b004f4959bdb05b5dc0a1cb0",
+      "selectedSha256": "77491ff1cb48f9701a7f4a7e124071749390a367fbd6b27fec1ba6687416dd14"
+    },
+    "st": {
+      "historicalBytesPreserved": true,
+      "originalSha256": "c31969055ff79d756cd583b22acfe2b2839a5a0d462275a98ae86a37b0939b16",
+      "selectedSha256": "b5a06382bd3a749a9cc638e24f71e74223797c851923bacda07a8c4097aaf5b3"
+    },
+    "ts": {
+      "historicalBytesPreserved": true,
+      "originalSha256": "fc2e4cd6efb11331a2054b698993158fea386a8db612d94539e7ed45a66831be",
+      "selectedSha256": "0aa48e334bda53f97454c1563306ab77a36f619f132e27a4bb77bb267219dd16"
+    },
+    "ve": {
+      "historicalBytesPreserved": true,
+      "originalSha256": "8c5fcd656cec0210eb39933340cbedb280fee52bbea80406ae3e324f02c9b8d0",
+      "selectedSha256": "c571c8fbbd31996b334b90c75ab366af6c882e211274186aa67335ae5541763c"
+    }
+  },
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "73f4b5bd06d6fcd8f608b7287a8ab57f4d0b3a859eed5240e63dec0a743a616c",
+  "fluentApproval": false,
+  "humanApproval": false,
+  "newRuntimeLanguages": false,
+  "existingDescriptionSelection": "unreviewed source-paired release descriptions only"
+}

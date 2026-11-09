@@ -25,8 +25,8 @@ test('the calendar reads the real crop plan, not the dead planner-crops key', ()
     'the orphaned localStorage key must not come back — nothing in the app ever wrote to it',
   );
   assert.match(
-    PAGE, /import \{ loadCropPlan \} from '@\/lib\/crop-plan';/,
-    'the calendar must read the same crop-plan store the planner writes to',
+    PAGE, /import\s*\{[^}]*\bloadCropPlan\b[^}]*\}\s*from\s*['"]@\/lib\/crop-plan['"]/,
+    'additional imports must not disguise a different crop-plan storage authority',
   );
   assert.match(
     PAGE, /const plan = loadCropPlan\(\);/,
@@ -58,11 +58,17 @@ test('"Show all" overrides the view without mutating the real plan', () => {
   );
 });
 
-test('a farmer with no plan at all sees a clearly labelled fallback, not silence', () => {
+test('a no-plan reference guide names its source without silently choosing a country or calendar', () => {
+  // The older claim assumed every empty plan could show an SA fallback. That
+  // is unsafe for unknown/foreign contexts. Runtime tests in
+  // international-calendar-context exercise default/foreign holds and the
+  // explicitly supported empty-plan guide; this source check guards authority.
   assert.match(
-    PAGE, /\{!hasPlan && \(/,
-    'the no-plan case must be handled explicitly',
+    PAGE, /resolvePlanningSupport\(/,
+    'even the no-plan fallback must ask the shared country/reference authority',
   );
+  assert.match(PAGE, /Reference calendar not selected/,
+    'an unselected context must have a truthful unavailable state');
   assert.match(
     PAGE, /Showing the general planting guide/,
     'the fallback must say in plain words that this is the general guide, not the farmer\'s own plan',

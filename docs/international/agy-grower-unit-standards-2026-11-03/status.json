@@ -1,0 +1,109 @@
+{
+  "workorder": "docs/international/agy-grower-unit-standards-2026-11-03/WORKORDER.md",
+  "status": "ready-for-coordinator-review",
+  "head": "fbe546d6c30c79e584981bbdf82d7cfada5b6363",
+  "generatedAt": "2026-11-03T03:31:00Z",
+  "nature": "documentation-only",
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "deliverables": [
+    {
+      "path": "docs/international/agy-grower-unit-standards-2026-11-03/CONVERSION-FACTS.md",
+      "measuredWhitespaceWordCount": 330,
+      "maxWordCap": 350,
+      "standardsVerifiedCount": 5,
+      "negativeControlsProposed": 3
+    }
+  ],
+  "sourcesInspected": [
+    {
+      "id": "b8",
+      "title": "NIST SP 811 Appendix B.8: Factors for Units Listed Alphabetically",
+      "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8",
+      "fetchedAtUtc": "2026-11-03T03:17:40.010237+00:00",
+      "fetchAttribution": "coordinator HTTP 200 fetch",
+      "sha256": "be7334086bcb574317dd1f78a7822adb699670b7f2bece6ca8a252884158eb5f"
+    },
+    {
+      "id": "b9",
+      "title": "NIST SP 811 Appendix B.9: Factors for units listed by kind of quantity or field of science",
+      "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9",
+      "fetchedAtUtc": "2026-11-03T03:17:40.635269+00:00",
+      "fetchAttribution": "coordinator HTTP 200 fetch",
+      "sha256": "0197b5ee24ad88a42cabb9f58a2a08bbda25431dc9182c222e66c09390583396"
+    },
+    {
+      "id": "footnotes",
+      "title": "NIST SP 811 Footnotes",
+      "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-footnotes",
+      "requestedUrl": "https://www.nist.gov/physical-measurement-laboratory/nist-guide-si-footnotes",
+      "fetchedAtUtc": "2026-11-03T03:27:20.320586+00:00",
+      "fetchAttribution": "coordinator HTTP 200 fetch",
+      "sha256": "20a953aad34582d88d50b099b9b3d4ed9d069787cbfe32b4220f965f21967bd5"
+    }
+  ],
+  "unitsVerified": [
+    {
+      "unit": "international foot",
+      "exactness": "exact",
+      "value": "3.048 E-01 m"
+    },
+    {
+      "unit": "international inch",
+      "exactness": "exact",
+      "value": "2.54 E-02 m"
+    },
+    {
+      "unit": "international square foot",
+      "exactness": "exact",
+      "value": "9.290 304 E-02 m2"
+    },
+    {
+      "unit": "avoirdupois pound",
+      "exactness": "exact-via-footnote-22",
+      "value": "4.535 923 7 E-01 kg",
+      "tableValueRounded": "4.535 924 E-01 kg"
+    },
+    {
+      "unit": "avoirdupois ounce",
+      "exactness": "unresolved-in-supplied-sources",
+      "tableValueRounded": "2.834 952 E-02 kg",
+      "implementationGate": true
+    }
+  ],
+  "coordinatorReviewCorrectionsApplied": [
+    "Read supplemental-receipt.json and footnotes.txt to inspect actual footnote 22.",
+    "Distinguished exact avoirdupois pound factor (0.45359237 kg / 4.535 923 7 E-01 kg) from rounded table entry (4.535 924 E-01 kg).",
+    "Identified unresolved ounce exactness as an implementation gate, rejecting unverified inference from rounded table factor.",
+    "Updated mathematical derivation section to cite exact reciprocal 1/0.45359237 rather than rounded table factor.",
+    "Included exact primary URLs as clickable Markdown links directly in CONVERSION-FACTS.md."
+  ],
+  "standardsVerification": {
+    "status": "SOURCE_VERIFIED_PRIMARY_WITH_OUNCE_GATE",
+    "attribution": "NIST SP 811 Appendices B.8, B.9 and Footnotes",
+    "implementationDelivered": false
+  },
+  "negativeControlsProposed": [
+    "unit-family confusion rejection",
+    "zero geometry drift",
+    "package mass isolation"
+  ],
+  "inspectionScope": {
+    "method": "static-snapshot-and-receipt-inspection",
+    "testsExecuted": 0,
+    "sourceWrites": 0,
+    "gitWrites": 0,
+    "networkCalls": 0,
+    "integrationDelivered": false
+  },
+  "coordinatorReview": {
+    "status": "reviewed-documentation-only",
+    "measuredWhitespaceWordCount": 330,
+    "receiptBodiesIndependentlyMatched": 3,
+    "printedUnitRowsIndependentlyChecked": 5,
+    "exactPoundFootnoteIndependentlyChecked": true,
+    "ounceExactness": "unresolved-in-supplied-sources",
+    "integrationDelivered": false,
+    "testsExecutedByThisReview": 0
+  }
+}

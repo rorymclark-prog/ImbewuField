@@ -109,7 +109,7 @@ import { SHEET_RENDER_RECIPE, savedSheetFreshness, type SavedSheetFreshness } fr
 import { newestSavedMapForSheet } from '@/lib/saved-map-preview';
 import { SHADE_CLOTH_ALPHA, STRUCTURES_LEGEND_SECTION_ORDER, isShadeClothStructure, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
-import { EDITORIAL_SECTOR_PAGE, paintEditorialSectorPage } from '@/lib/sector-editorial';
+import { EDITORIAL_SECTOR_PAGE, editorialContourCaptionAnchor, paintEditorialSectorPage } from '@/lib/sector-editorial';
 import { referenceFeatureArtworkUrl, settleOptionalReferenceArtLoad, stapleTileUrl, vegSpriteUrl, VEG_SPRITES, isTankDefId } from '@/lib/reference-feature-art';
 import {
   DEFAULT_SHEET_LABEL_MODE,
@@ -9912,16 +9912,25 @@ async function composeSectorSheet(
         image: canvas, width: W, height: H, boundary: renderRefLayers.boundary,
         paintMapReference: (target, fit) => {
           const fx=(n:number)=>fit.x+n*fit.w,fy=(n:number)=>fit.y+n*fit.h;
+          const clipRings=[renderRefLayers.boundary.map(([x,y])=>[fx(x),fy(y)] as [number,number])];
+          if(baseline)clipRings.push([[0,0],[baseline.width,0],[baseline.width,baseline.height],[0,baseline.height]]
+            .map(point=>historicalPresentationPhotoPoint(state,frame,refLayers,point as [number,number],baseline))
+            .map(([x,y])=>[fx(x),fy(y)] as [number,number]));
           target.save();
           if(renderRefLayers.boundary.length>=3){
             target.beginPath();renderRefLayers.boundary.forEach(([x,y],i)=>(i?target.lineTo:target.moveTo).call(target,fx(x),fy(y)));
             target.closePath();target.clip();
           }
+          const labelledLevels=new Set<number>();
           for(const line of sheetContours.lines){
             target.beginPath();line.points.forEach(([x,y],i)=>(i?target.lineTo:target.moveTo).call(target,fx(x),fy(y)));
             target.strokeStyle=line.major?'#765C3F':'#A28D70';target.lineWidth=line.major?1.8:.9;target.stroke();
-            const at=line.points[Math.floor(line.points.length/2)];
-            if(at&&line.major)drawOverviewContourCaption(target,`${line.elevM} m`,fx(at[0]),fy(at[1])-8,14);
+            if(line.major && !labelledLevels.has(line.elevM)){
+              const label=`${line.elevM} m`;
+              target.font=`700 14px ${SHEET_BODY_FONT}`;
+              const at=editorialContourCaptionAnchor(line.points.map(([x,y])=>[fx(x),fy(y)]),target.measureText(label).width+14*.24,14*1.3,clipRings);
+              if(at){drawOverviewContourCaption(target,label,at.x,at.y,14);labelledLevels.add(line.elevM);}
+            }
           }
           target.restore();
           drawBlueprintBoundary(target,renderRefLayers.boundary,fx,fy,fit.w,renderState,renderFrame);

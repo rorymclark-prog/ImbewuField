@@ -1,0 +1,50 @@
+[
+  {
+    "requestedUrl": "https://environment.data.gov.uk/flood-monitoring/doc/reference",
+    "effectiveUrl": "https://environment.data.gov.uk/flood-monitoring/doc/reference",
+    "requestedUtc": "2026-11-05T02:08:33.458146+00:00",
+    "completedUtc": "2026-11-05T02:08:33.913596+00:00",
+    "httpStatus": 200,
+    "bytes": 154617,
+    "sha256": "87b7156f3fea64b54b92473cc67f62227b9fb4bf678bd76761c4a907a5b07b92",
+    "timeoutSeconds": 15,
+    "maximumBodyBytes": 524288,
+    "error": null
+  },
+  {
+    "requestedUrl": "https://environment.data.gov.uk/flood-monitoring/doc/rainfall",
+    "effectiveUrl": "https://environment.data.gov.uk/flood-monitoring/doc/rainfall",
+    "requestedUtc": "2026-11-05T02:08:33.913761+00:00",
+    "completedUtc": "2026-11-05T02:08:34.298811+00:00",
+    "httpStatus": 200,
+    "bytes": 102384,
+    "sha256": "ab495adaf1ad4b14e89f476dd7ced093452c112b645992a0113200761d25cf82",
+    "timeoutSeconds": 15,
+    "maximumBodyBytes": 524288,
+    "error": null
+  },
+  {
+    "requestedUrl": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "effectiveUrl": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "requestedUtc": "2026-11-05T02:08:34.298888+00:00",
+    "completedUtc": "2026-11-05T02:08:34.434382+00:00",
+    "httpStatus": 200,
+    "bytes": 10450,
+    "sha256": "f5b2b9f2af63647cde889fa6c3508f5705925295b74912c68caa28dd37e64aa5",
+    "timeoutSeconds": 15,
+    "maximumBodyBytes": 524288,
+    "error": null
+  },
+  {
+    "requestedUrl": "https://environment.data.gov.uk/flood-monitoring/data/readings?parameter=rainfall&latest&_view=full&_sorted&_limit=1",
+    "effectiveUrl": "https://environment.data.gov.uk/flood-monitoring/data/readings?parameter=rainfall&latest&_view=full&_sorted&_limit=1",
+    "requestedUtc": "2026-11-05T02:09:33.604670+00:00",
+    "completedUtc": "2026-11-05T02:09:36.695818+00:00",
+    "httpStatus": 200,
+    "bytes": 1720,
+    "sha256": "fade53afddbd070b51847e37b5134f612412f60025aa792eebc2a90d9f39f1a9",
+    "timeoutSeconds": 15,
+    "maximumBodyBytes": 65536,
+    "error": null
+  }
+]

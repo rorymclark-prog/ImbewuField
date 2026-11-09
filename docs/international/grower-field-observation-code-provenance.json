@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "nativeAuthoredFiles": [
+    {
+      "path": "lib/journal-storage-status-copy.ts",
+      "bytes": 2554,
+      "sha256": "e30ec9b41971f478747eb702d9c133f5c5b583037c2b7401b6c96083e7cef505"
+    },
+    {
+      "path": "lib/journal-link-display.ts",
+      "bytes": 988,
+      "sha256": "300ff4010a0833857a01ccbe35fc651c04b5d50fc8f01be7f3ee31ec3f1bccda"
+    }
+  ],
+  "scope": "two pure wording helpers only",
+  "nativeCommandsOrTests": "not validation evidence",
+  "coordinatorValidation": "source inspected, current typecheck and real affected status/model/export tests exercised helpers; real app phone/desktop reference text seen; full/current-head CI pending",
+  "otherImplementation": "Codex source/storage/auth/UI and coordinator integration; native did not implement journal persistence or claim its tests",
+  "workers": "native reports main-only/zero active; observed contacts do not independently establish worker execution or authorship"
+}

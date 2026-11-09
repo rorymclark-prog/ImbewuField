@@ -1,0 +1,34 @@
+{
+  "base": "af840fb3b74efeeddf0d7ce1a23792a7f27b9936",
+  "feature": "Seven language choices for the source-bound harvest-weight draft worksheet;84AI comparison rows, no application-language activation.",
+  "nativeCode": "Three additional locale choices and introductory language list; coordinator subsequently registered existing in-flow return through shared BackControl.",
+  "dataAuthority": "Existing source-reader/assessMessage/server loader unchanged. Only locale set extended; frozen source with historical four-locale metadata and original four FRES packets byte-identical.",
+  "addedPackets": [
+    {
+      "path": "lib/international/locales/mass-entry-drafts/hi.json",
+      "sha256": "c5fd049ba1ed6b91137b3d824a12d2b22519a656714401cd802649da434d6a1d"
+    },
+    {
+      "path": "lib/international/locales/mass-entry-drafts/bn.json",
+      "sha256": "4480eb2b96f29193f2da67bc1d78b9b8451dd567239d80e17809747176baaa2b"
+    },
+    {
+      "path": "lib/international/locales/mass-entry-drafts/id.json",
+      "sha256": "c7f9bf0d2bd64bc9007f7764bde0aefac1a8a89e1f422bdcdc47666da2e7833c"
+    }
+  ],
+  "packaging": "Original eight route trace assets retained with only three exact JSON additions; no broad globs. Actual loader packaging test requires84 current draft rows and visible invalid rows for every missing language asset.",
+  "validation": {
+    "typecheckExit": 0,
+    "focusedTests": 228,
+    "pass": 228,
+    "fail": 0,
+    "skip": 0,
+    "todo": 0,
+    "whitespaceExit": 0,
+    "adverseBackControl": "Removing only registration makes unchanged caller-lifecycle assertion fail; source restored exactly."
+  },
+  "testClaimReconciliation": "Advertised chooser expands four to seven. Original four-row comparison behavior and ordered four-option subset remain explicitly checked, alongside all seven choices and new Asia selection/filter/isolation cases. Original failing4versus7 run retained privately.",
+  "visualEvidence": "Coordinator viewed actual prior af840fb desktop and390px screenshots from independent browser review and verified six artifact hashes. Global Back overlaps in-flow return. Shared registry correction is source-tested; corrected-head visual confirmation still pending.",
+  "releaseLimits": "Full current-head CI and actual corrected desktop/phone-width review remain pending. Focused checks do not meet the strict full-suite release gate. No production merge or fluent approval."
+}

@@ -1,0 +1,57 @@
+{
+  "job": "agy-nursery-unit-global-translations-2026-11-03",
+  "status": "complete",
+  "sourcePacket": "docs/international/agy-nursery-unit-global-translations-2026-11-03/source.json",
+  "sourceSha256": "1ad74cb3f57f231db0e80de9f5fc154f057db42485c628e6510711a79addc6ef",
+  "sourceCommitBase": "844e4a1bcbf9d1b25d5cc7b747ea22f88e1f727e",
+  "sourceFiles": [
+    {
+      "path": "components/crops/NurseryPlanPanel.tsx",
+      "bytes": 40074,
+      "sha256": "83662d0936bd840f1651c9f6e57d2a6b51ab1ff5b059a736f63e165d6951d474"
+    }
+  ],
+  "schemaExample": "docs/international/agy-field-block-unit-translations-2026-11-03/fr.json",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw",
+    "hi",
+    "bn",
+    "id"
+  ],
+  "messagesPerLocale": 18,
+  "totalDrafts": 126,
+  "outputs": [
+    "docs/international/agy-nursery-unit-global-translations-2026-11-03/fr.json",
+    "docs/international/agy-nursery-unit-global-translations-2026-11-03/es.json",
+    "docs/international/agy-nursery-unit-global-translations-2026-11-03/pt-BR.json",
+    "docs/international/agy-nursery-unit-global-translations-2026-11-03/sw.json",
+    "docs/international/agy-nursery-unit-global-translations-2026-11-03/hi.json",
+    "docs/international/agy-nursery-unit-global-translations-2026-11-03/bn.json",
+    "docs/international/agy-nursery-unit-global-translations-2026-11-03/id.json",
+    "docs/international/agy-nursery-unit-global-translations-2026-11-03/review-notes.md",
+    "docs/international/agy-nursery-unit-global-translations-2026-11-03/status.json"
+  ],
+  "constraints": {
+    "mainWriterOnly": true,
+    "workers": 0,
+    "shellCommandsRun": 0,
+    "networkCalls": 0,
+    "codeOrTestEdits": 0,
+    "runtimeOrSettingsChanges": 0,
+    "optionalInteractionSharing": "OFF"
+  },
+  "coordinatorReview": {
+    "reviewedAtUtc": "2026-11-03T12:10:45.272496+00:00",
+    "actualNotesWhitespaceWords": 281,
+    "exactPairsChecked": 126,
+    "damagedPacketControlsRejected": 14,
+    "hindiOwnedEquipmentAvailabilityQualifierRemoved": true,
+    "fluentOrSemanticCertification": false,
+    "runtimeActivation": false
+  }
+}
