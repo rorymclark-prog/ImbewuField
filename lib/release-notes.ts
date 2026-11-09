@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '9 November 2026', sha: 'ce637c546e9df5c4dc536a49d4ce1234c2467e0c', changes: [
+    'Nursery input errors no longer say a transplant batch is absent.',
+  ] },
   { when: '7 November 2026', sha: 'a6cca70e3b792e44c9d6456f4276bf97cc809372', changes: [
     'Set exact buyer dates and review proposed picking periods in your own crop plan.',
     'Nursery saves keep a clear warning when a completed write cannot be confirmed.',

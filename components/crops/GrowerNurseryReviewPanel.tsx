@@ -765,7 +765,7 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
             </div>
           </>}
       </section>}
-      {!shown.result.batches.length && <p>{props.savedReview ? 'These saved cycles have no represented transplant raising batch.' : 'This proposal has no transplant raising batch.'} Other nursery uses still need their own resource accounting.</p>}
+      {shown.result.fingerprint !== null && !shown.result.batches.length && <p>{props.savedReview ? 'These saved cycles have no represented transplant raising batch.' : 'This proposal has no transplant raising batch.'} Other nursery uses still need their own resource accounting.</p>}
       {shown.result.batches.map((batch, index) => {
         const footprintLabel = `Outer container footprint (${unit === 'metric' ? 'm²' : 'ft²'})`;
         return <article key={batch.id} className="space-y-2 rounded-lg border border-[var(--border)] p-3">

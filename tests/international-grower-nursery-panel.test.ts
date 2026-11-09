@@ -42,7 +42,7 @@ after(() => { hooks.deregister(); Reflect.deleteProperty(globalThis, '__growerNu
 const stamp = '2026-11-05T12:00:00.000Z';
 const own = <T, U extends string>(value: T, unit: U): GrowerInput<T, U> => ({ state: 'provided', value, unit,
   provenance: { kind: 'grower-estimate', recordedAt: stamp } });
-async function fixture(withReservation = false) {
+async function fixture(withReservation = false, direct = false) {
   const canvas = buildDemoDesignCanvasState(); canvas.siteId = 'site:0.00000,0.00000'; canvas.frame.centerLat = 0; canvas.frame.centerLng = 0;
   canvas.items = [{ ...canvas.items.find(row => row.defId === 'veg_bed')!, id: 'private-bed-id', wM: 3, hM: 4 }]; canvas.lines = []; canvas.zones = [];
   const source = await fingerprintGrowerWorkflowSource(inspectGrowerWorkflowSource({ kind: 'studio-canvas', sourceId: canvas.siteId,
@@ -50,7 +50,7 @@ async function fixture(withReservation = false) {
   assert.equal(source.status, 'ready'); if (source.status !== 'ready') throw Error('Fixture source unavailable');
   const crop = CROPS.find(row => !row.transplant)!;
   const profile: GrowerPlanningProfile = { version: 1, profileId: 'private-estimate-id', cropKey: crop.key, scope: source.scope,
-    inputs: { plantsPerM2: own(4, 'plants/m2'), yieldKgPerM2: own(1, 'kg/m2/cycle'), establishment: own('transplant', 'method'), nurseryDays: own(10, 'days'),
+    inputs: { plantsPerM2: own(4, 'plants/m2'), yieldKgPerM2: own(1, 'kg/m2/cycle'), establishment: own(direct ? 'direct' : 'transplant', 'method'), nurseryDays: direct ? { state: 'missing', reason: 'not-entered' } : own(10, 'days'),
       fieldEntryToFirstHarvestDays: own(1, 'days'), pickingDays: own(2, 'days'), fieldOccupancyDays: own(3, 'days'), turnaroundDays: own(1, 'days'), allowedEntryMonths: own([2], 'utc-months') } };
   const request: GrowerAutoPlanRequest = { requestedAt: stamp, scope: source.scope, geometryFingerprint: source.geometryFingerprint,
     profiles: [profile], beds: source.beds.map(bed => ({ bed, scope: source.scope, measuredAreaM2: own(bed.areaM2, 'm2') })),
@@ -103,6 +103,33 @@ function allocations(screen: ReturnType<typeof mount>, zero = false) {
   screen.click('Add resource availability'); screen.resource('Available resource', 1, { resource: 'space:private-bench-id', quantity: zero ? '0' : '2', start: '2028-02-01', endExclusive: '2028-03-15' });
   screen.check('I have reviewed the saved nursery'); screen.check('I confirm these dated resource'); screen.check('I have listed all other nursery uses');
 }
+
+for (const invalid of ['above-saved-stock', 'empty-date-interval'] as const) test(`invalid nursery allocation ${invalid} cannot report an absent transplant batch`, async () => {
+  const data = await fixture(), screen = mount({ ...data, contextRevision: 1, onCheckCurrent: async () => true });
+  try {
+    allocations(screen);
+    screen.resource('Available resource', 0, { resource: 'container:private-tray-id', quantity: invalid === 'above-saved-stock' ? '6' : '5',
+      start: '2028-02-01', endExclusive: invalid === 'empty-date-interval' ? '2028-02-01' : '2028-03-15' });
+    await screen.press('Review own nursery requirements');
+    assert.match(screen.text(), /The preparation worksheet is unavailable/);
+    assert.doesNotMatch(screen.text(), /This proposal has no transplant raising batch|These saved cycles have no represented transplant raising batch/);
+    assert.match(screen.text(), /Unknown; spare capacity is not established/);
+    screen.resource('Available resource', 0, { resource: 'container:private-tray-id', quantity: '5', start: '2028-02-01', endExclusive: '2028-03-15' });
+    await screen.press('Review own nursery requirements');
+    assert.match(screen.text(), /Proposed raising batch 1/);
+    assert.match(screen.text(), /Within the supplied dated budget/);
+  } finally { screen.dispose(); }
+});
+
+test('a checked direct-field proposal still reports genuinely absent nursery batches', async () => {
+  const data = await fixture(false, true), screen = mount({ ...data, contextRevision: 1, onCheckCurrent: async () => true });
+  try {
+    allocations(screen); await screen.press('Review own nursery requirements');
+    assert.match(screen.text(), /This proposal has no transplant raising batch/);
+    assert.match(screen.text(), /No transplant batch is represented in this review/);
+    assert.doesNotMatch(screen.text(), /The preparation worksheet is unavailable|Proposed raising batch 1/);
+  } finally { screen.dispose(); }
+});
 
 test('own proposal quantities stay visible but missing confirmations cannot certify resource headroom', async () => {
   const data = await fixture(), screen = mount({ ...data, contextRevision: 1, onCheckCurrent: async () => true });
