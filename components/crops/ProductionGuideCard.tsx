@@ -8,7 +8,7 @@ function GuideBody({ item, lines = item.lines }: { item: ProductionGuideItem; li
     {lines.map((line) => <p key={line} className="font-sans mt-1" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-secondary)' }}>{line}</p>)}
     {!!item.sources?.length && <ul className="font-sans mt-1" style={{ fontSize: 11, lineHeight: 1.5, color: 'var(--text-muted)', listStyle: 'disc', paddingInlineStart: 18 }}>
       {item.sources.map((source) => <li key={`${source.label}:${source.url}`}>
-        {source.url ? <a href={source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>{source.label}</a> : source.label}
+        {source.url ? <a href={source.url} target="_blank" rel="noopener noreferrer" className="crop-plan-source-link" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>{source.label}</a> : source.label}
       </li>)}
     </ul>}
   </>;

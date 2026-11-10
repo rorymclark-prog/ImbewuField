@@ -19,6 +19,8 @@ import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, Shopping
 import MenuButton from '@/components/MenuButton';
 import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
+import { useEscapeClose } from '@/lib/use-escape-close';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabilityGraphs';
@@ -159,6 +161,14 @@ const DISPLAY_MONTHS = 24;
 const LOOK_AHEAD_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
 const BED_LABEL_WIDTH = 128;
+
+// The three sheets' Close buttons draw a 16-18px icon. The hit area is 44x44 (house touch rule) and
+// the negative margins hand the extra size back, so the header keeps its height and the icon stays
+// where it was.
+const SHEET_CLOSE_STYLE: CSSProperties = {
+  background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)',
+  width: 44, height: 44, margin: '-12px -13px -12px 0', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+};
 /**
  * Notes in the fruit and animal rows sit in the 1,520px grid. A bare maxWidth of
  * 560–640 is wider than a phone's visible strip, so the sentence ran off the right
@@ -1219,11 +1229,24 @@ function FacilitatorCropsPageInner() {
   const bedRowsScrollRef = useRef<HTMLDivElement>(null);
   const foodChartScrollRef = useRef<HTMLDivElement | null>(null);
   const timelineScrollLeftRef = useRef(0);
+  // The month header and the food chart can scroll less far than the bed rows (the chart's phone
+  // gutter is 120px narrower; a "check / transplant" chip overhangs the bed rows' right edge). A
+  // follower that the browser clamps then fires its own scroll event, which used to drag every
+  // other scroller back to the smallest maximum and left the last ~140px of the 24-month axis
+  // unreachable at 390px. A scroll event whose position is exactly what this function just set
+  // is that echo, not the farmer, so it is ignored.
+  const echoedScrollRef = useRef(new WeakMap<HTMLDivElement, number>());
   const syncMonthScroll = useCallback((source: HTMLDivElement) => {
     const left = source.scrollLeft;
+    if (echoedScrollRef.current.get(source) === left) { echoedScrollRef.current.delete(source); return; }
     timelineScrollLeftRef.current = left;
     for (const node of [monthHeaderScrollRef.current, bedRowsScrollRef.current, foodChartScrollRef.current]) {
-      if (node && node !== source && Math.abs(node.scrollLeft - left) > 0.5) node.scrollLeft = left;
+      if (node && node !== source && Math.abs(node.scrollLeft - left) > 0.5) {
+        const before = node.scrollLeft;
+        node.scrollLeft = left;
+        // Only a node that actually moved will fire an event to ignore.
+        if (node.scrollLeft !== before) echoedScrollRef.current.set(node, node.scrollLeft);
+      }
     }
   }, []);
   const registerFoodChartScroll = useCallback((node: HTMLDivElement | null) => {
@@ -2451,6 +2474,13 @@ function FacilitatorCropsPageInner() {
       onRecordFieldPlanting={growerWorkflow.onRecordNurseryFieldPlanting} />
   </>;
 
+  // The planner view had no h1. The site picker, the invalid-link notice and the country hold each
+  // render their own, so the header title is the page heading only when none of those is on screen.
+  const TitleTag = !invalidCanvasSite && !needsSitePicker && allowCataloguePlanning ? 'h1' : 'span';
+  // The global h1 rule adds tight letter-spacing and the tag brings margins; the title must look
+  // exactly as the span drew it.
+  const TITLE_RESET: CSSProperties = { margin: 0, letterSpacing: 'inherit' };
+
   return (
     // Every surface on this screen now reads the per-theme tokens (--bg-0 page,
     // --bg-1 cards, --bg-2 insets) instead of the hard-coded light hex this screen
@@ -2484,10 +2514,13 @@ function FacilitatorCropsPageInner() {
           href="/home"
           aria-label={cropUi(lang, 'Home', 'Ikhaya')}
           title={cropUi(lang, 'Home', 'Ikhaya')}
-          className="flex-shrink-0 flex items-center justify-center rounded-xl"
-          style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--border)', color: 'var(--text-secondary)', textDecoration: 'none' }}
+          className="flex-shrink-0 flex items-center justify-center"
+          // 44x44 hit area (house touch rule) around the same 34px drawn button.
+          style={{ width: 44, height: 44, color: 'var(--text-secondary)', textDecoration: 'none' }}
         >
-          <Home size={16} strokeWidth={1.7} />
+          <span className="flex items-center justify-center rounded-xl" style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--border)' }}>
+            <Home size={16} strokeWidth={1.7} />
+          </span>
         </Link>
         {!simple && (
           <Link
@@ -2524,6 +2557,7 @@ function FacilitatorCropsPageInner() {
         )}
         <div className="w-px h-5 flex-shrink-0" style={{ background: 'var(--border)' }} />
         {!canvasSite && myDesignsList && myDesignsList.length > 0 ? (
+          <TitleTag className="flex-shrink-0 min-w-0" style={TITLE_RESET}>
           <button
             onClick={() => setSwitchingSite(true)}
             className="flex-shrink-0 flex items-center gap-1.5 min-w-0"
@@ -2535,9 +2569,10 @@ function FacilitatorCropsPageInner() {
             </div>
             <ChevronDown size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
           </button>
+          </TitleTag>
         ) : (
           <div className="flex flex-col min-w-0 flex-shrink-0">
-            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
+            <TitleTag className="font-display font-semibold" style={{ ...TITLE_RESET, fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</TitleTag>
             <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>
               {canvasSite ? cropUi(lang, 'Plants and housing from your map', 'Izitshalo nezindlu zezilwane ezisemephini yakho') : designTitle}
             </span>
@@ -2770,7 +2805,8 @@ function FacilitatorCropsPageInner() {
                 onClick={openAutoSuggest}
                 disabled={beds.length === 0 || hasOwnRecords}
                 title={hasOwnRecords ? 'Own dated records need their checked reservations in the Task Planner.' : beds.length === 0 ? 'Add a vegetable bed or staple plot to auto-suggest crops.' : undefined}
-                className="flex-1 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                // min-h-11 (44px), not py-2.5: the padding made this 43px, one under the house tap rule. "Clear all" beside it stretches to match.
+                className="flex-1 min-h-11 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
                 style={{ fontSize: 14, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#F7F2E9', cursor: beds.length === 0 ? 'not-allowed' : 'pointer', opacity: beds.length === 0 ? 0.55 : 1 }}
               >
                 <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Auto-suggest a plan', 'Phakamisa uhlelo ngokuzenzakalelayo')}
@@ -2951,6 +2987,7 @@ function FacilitatorCropsPageInner() {
                 ref={bedRowsScrollRef}
                 onScroll={(e) => syncMonthScroll(e.currentTarget)}
                 data-crop-bed-scroll
+                className="crop-plan-lanes"
                 // containerType so the notes below can size to this box: 100vw ignores the
                 // text-size slider's html zoom and ran the notes off the edge at 1.4.
                 style={{ overflowX: 'auto', containerType: 'inline-size' }}
@@ -3024,7 +3061,7 @@ function FacilitatorCropsPageInner() {
               <div className="mb-5">
                 <button
                   onClick={() => openPicker(beds[0].id)}
-                  className="w-full py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                  className="w-full min-h-11 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
                   style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}
                 >
                   <Plus size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Add a crop', 'Engeza isilimo')}
@@ -4923,7 +4960,8 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
               ))}
             </div>
             {lanes.map((lane) => (
-              <div key={lane.key} style={{ position: 'relative', height: 34, marginBottom: 4 }}>
+              // Same touch rule as the planting lanes: 34px (30px bar) with a mouse, 48px (44px bar) on touch or a narrow window.
+              <div key={lane.key} style={{ position: 'relative', height: 'var(--crop-produce-lane-h, 34px)', marginBottom: 4 }}>
                 {lane.runs.map((run, r) => {
                   const id = `${lane.key}@${r}`;
                   // Proposed plants are faded, as the month list did; year two is quieter, as a bed's is.
@@ -5202,7 +5240,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
               onClick={onAddCrop}
               disabled={ownRecordsHeld}
               className="font-sans"
-              style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.3)', borderRadius: 8, padding: '3px 10px', cursor: 'pointer' }}
+              style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.3)', borderRadius: 8, padding: '3px 10px', cursor: 'pointer', minHeight: 'var(--crop-add-min-h, 26px)' }}
             >
               {ownRecordsHeld ? 'Own dated records · check Task Planner' : '+ crop'}
             </button>
@@ -5288,13 +5326,13 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
 
   return (
     // Type set once here: the bar buttons and the name drawn beside a one-month bar inherit it.
-    <div style={{ position: 'relative', height: 30, marginBottom: 3, fontSize: 11, fontWeight: 600 }}>
+    <div style={{ position: 'relative', height: 'var(--crop-lane-h, 30px)', marginBottom: 3, fontSize: 11, fontWeight: 600 }}>
       {instances.map((seg, i) => {
         const yearTwo = isYearTwo(seg);
         // A one-month bar is ~58px wide: the icon and padding leave room for
         // about "Oni…", so Onions, Lettuce, Green beans and Maize (mielies)
         // all lost their name. The bar keeps the icon and the name is drawn
-        // beside it; each planting has its own 30px lane, so the space is free.
+        // beside it; each planting has its own lane (30px, 48px on touch), so the space is free.
         const nameBeside = segMonthCount(seg) === 1;
         // Three columns, not two: the longest label ("Maize (mielies) (83%)",
         // about 130px) is wider than the two columns that remain to the right of
@@ -5387,8 +5425,8 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
                   // The "check / transplant" chip hangs over the top edge of the
                   // lane and, for a bar near the right edge, sits where the
                   // name goes; dropping the name to the lower half keeps them apart.
-                  alignItems: hasTransplantChip ? 'flex-end' : 'center',
-                  paddingBottom: hasTransplantChip ? 2 : 0,
+                  alignItems: hasTransplantChip ? 'var(--crop-chip-name-align, flex-end)' : 'center',
+                  paddingBottom: hasTransplantChip ? 'var(--crop-chip-name-pad, 2px)' : 0,
                   lineHeight: 1, whiteSpace: 'nowrap',
                   color: 'var(--text-primary)', pointerEvents: 'none',
                 }}
@@ -5419,23 +5457,32 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
             onClick={onTap}
             className="font-sans"
             style={{
-              position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -3, transform: 'translateX(-50%)',
+              // The button is the hit area, centred where the 16px chip used to sit (its centre was
+              // 5px below the lane top); the drawn chip is the inner span. 24px tall on every
+              // screen (WCAG 2.5.8). It is NOT 44px on touch: it sits over its bar's top edge, and a
+              // taller hit area took taps from that bar and from the lane above (app/globals.css).
+              // min(): a chip centred in the last columns hung ~21px past the grid's right edge, which made the
+              // bed rows scroll further than the month header and drew the header 21px out of step at the far end.
+              position: 'absolute', left: `min(${leftPct(trOffset) + COL_PCT / 2}%, calc(100% - 52px))`, top: 5, transform: 'translate(-50%, -50%)',
+              height: 'var(--crop-chip-hit-h, 24px)', padding: 0, background: 'transparent', border: 'none',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               // --gold-dim, not --gold: 9px text on the card is 3.85:1 in --gold
               // and 5.78:1 here. The year-two fade below touches the fill and
               // border only; fading the whole chip took the label to 2.09:1.
-              fontSize: 9, fontWeight: 700, color: 'var(--gold-dim)', background: 'transparent',
-              border: '1px solid transparent', padding: '0 3px', borderRadius: 4,
+              fontSize: 9, fontWeight: 700, color: 'var(--gold-dim)',
               whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
             }}
             title={`Plan to transplant ${crop.name.toLowerCase()} in ${monthLabel(entry)}. Start checking seedlings in ${monthLabel(readinessStart)}; if they are still not ready by ${monthLabel(latestEntry)}, update the plan instead of treating the bed as occupied.`}
             aria-label={`Plan to transplant ${crop.name} in ${monthLabel(entry)}`}
           >
-            <span
-              aria-hidden="true"
-              style={{ position: 'absolute', inset: -1, background: 'var(--bg-1)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, opacity: isYearTwo(seg) ? 0.5 : 1 }}
-            />
-            <span style={{ position: 'relative' }}>
-              <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
+            <span style={{ position: 'relative', padding: '0 3px' }}>
+              <span
+                aria-hidden="true"
+                style={{ position: 'absolute', inset: -1, background: 'var(--bg-1)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, opacity: isYearTwo(seg) ? 0.5 : 1 }}
+              />
+              <span style={{ position: 'relative' }}>
+                <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
+              </span>
             </span>
           </button>
         );
@@ -5481,6 +5528,16 @@ function CropPickerModal({
   isPlot: boolean;
 }) {
   const { lang } = useLanguage();
+  // The sheet is mounted only while open, so `true`: focus lands on the search field (data-autofocus),
+  // Tab stays inside, Escape closes, and focus goes back to the "+ crop" or bar that opened it.
+  // No `autoFocus` on the input: React applies it before effects run, so the hook would record the
+  // input as the opener and hand focus back to a field that no longer exists.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  useDialogFocus(true, dialogRef);
+  useEscapeClose(true, onClose);
+  // "Back to list" remounts the search field; put the cursor back in it.
+  useEffect(() => { if (!crop) searchRef.current?.focus({ preventScroll: true }); }, [crop]);
   // Favourites sort to the top of whatever's currently filtered — a quick-
   // access shortlist, same idea as Tend's personal Crop Library, just
   // without per-farmer custom crop data.
@@ -5495,14 +5552,18 @@ function CropPickerModal({
     <div style={{ position: 'fixed', inset: 0, zIndex: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="crop-picker-title"
         className="rounded-2xl"
         style={{ position: 'relative', width: '100%', maxWidth: 440, maxHeight: '82vh', overflowY: 'auto', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 1 }}>
-          <span className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+          <span id="crop-picker-title" className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
             {crop ? (<><CropIcon cropKey={crop.key} icon={crop.icon} size={16} /> {crop.name}</>) : cropUi(lang, 'Add a crop', 'Engeza isilimo')}
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={SHEET_CLOSE_STYLE}>
             <X size={18} />
           </button>
         </div>
@@ -5512,7 +5573,8 @@ function CropPickerModal({
             <div className="flex items-center gap-2 rounded-xl px-3 py-2 mb-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
               <Search size={14} style={{ color: 'var(--text-muted)' }} />
               <input
-                autoFocus
+                ref={searchRef}
+                data-autofocus
                 value={search}
                 onChange={(e) => onSearch(e.target.value)}
                 placeholder={cropUi(lang, 'Search crops…', 'Sesha izitshalo…')}
@@ -5780,6 +5842,10 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
   // plan does not persist the farmer's original whitelist, so this screen
   // cannot safely infer which alternative food they would actually choose.
   const [confirmingRemove, setConfirmingRemove] = useState(false);
+  // Hooks sit above the early return below. Edit (the safe, primary action) takes focus on open.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(true, dialogRef);
+  useEscapeClose(true, onClose);
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const harvest = harvestMonthForCrop(planting.sowMonth, crop);
@@ -5792,15 +5858,19 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
     <div style={{ position: 'fixed', inset: 0, zIndex: 61, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="planting-detail-title"
         className="rounded-2xl p-4"
         // Long transplant and storage notes pushed Edit below a phone's screen with no way to scroll.
         style={{ position: 'relative', width: '100%', maxWidth: 300, maxHeight: 'calc(100dvh - 32px)', overflowY: 'auto', overscrollBehavior: 'contain', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-start justify-between mb-2">
-          <span className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}>
+          <span id="planting-detail-title" className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}>
             <CropIcon cropKey={crop.key} icon={crop.icon} size={15} /> {crop.name} <SeedBadge transplant={!!crop.transplant} />
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={SHEET_CLOSE_STYLE}>
             <X size={16} />
           </button>
         </div>
@@ -5842,6 +5912,8 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
             </div>
             <div className="flex gap-2">
               <button
+                // The safe answer takes focus: Remove's button just unmounted under the pointer or key.
+                autoFocus
                 onClick={() => setConfirmingRemove(false)}
                 className="flex-1 font-display font-semibold rounded-xl py-2"
                 style={{ fontSize: 13, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}
@@ -5861,6 +5933,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
           <div className="flex gap-2">
             <button
               onClick={onEdit}
+              data-autofocus
               className="flex-1 font-display font-semibold rounded-xl py-2"
               style={{ fontSize: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
             >
@@ -5944,6 +6017,9 @@ function AutoSuggestModal({
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
   const { lang } = useLanguage();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(true, dialogRef, { initialFocus: 'container' });
+  useEscapeClose(true, onClose);
   const [cropSearch, setCropSearch] = useState('');
   const nurseryForecast = useMemo(() => siteId && result
     ? buildNurseryForecast([...currentPlantings, ...result.plantings], beds, siteId, sanitiseNurserySettings(nurserySettings), now)
@@ -5960,14 +6036,21 @@ function AutoSuggestModal({
     <div style={{ position: 'fixed', inset: 0, zIndex: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
-        className="rounded-2xl"
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="auto-suggest-title"
+        // The container takes focus (not Close): the sheet is a long form and the first control is
+        // a dismiss, so Enter right after opening must not throw the questions away. It is not a
+        // control, so it draws no focus ring.
+        className="rounded-2xl outline-none"
         style={{ position: 'relative', width: '100%', maxWidth: 480, maxHeight: '86vh', overflowY: 'auto', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 1 }}>
-          <span className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
+          <span id="auto-suggest-title" className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
             <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {phase === 'questions' ? 'Auto-suggest a plan' : 'Suggested plan'}
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={SHEET_CLOSE_STYLE}>
             <X size={18} />
           </button>
         </div>

@@ -995,3 +995,41 @@ img[data-photo-preview]:focus-visible { outline: 3px solid var(--accent, #b87924
   .workspace-main { padding:12px !important; padding-bottom:calc(max(90px, var(--lima-fab-clearance, 0px)) + env(safe-area-inset-bottom)) !important; }
   .workspace-main > [class*="MelDashboard_root"] { padding:0; }
 }
+
+/* ── Crop plan (/facilitator/crops): lane and tap-target sizes ──────────────────────────────
+   One set of variables, read from the planting lanes, the "+ crop" button and the
+   "check / transplant" chips, so a lane and everything positioned inside it change together.
+   Wide screen with a mouse keeps the compact 30px lane (26px bar). On touch or a narrow window
+   the lane is 48px and the bar 44px: the bar's own height is its hit area, matching the house
+   44px rule. The max-width half matters because a narrow desktop window has no coarse pointer.
+   Inline styles use var(--crop-…, <wide value>) so a missing class never changes the wide look. */
+.crop-plan-lanes {
+  --crop-lane-h: 30px;
+  --crop-produce-lane-h: 34px;
+  --crop-add-min-h: 26px;
+  --crop-chip-hit-h: 24px;
+  --crop-chip-name-align: flex-end;
+  --crop-chip-name-pad: 2px;
+}
+@media (pointer: coarse), (max-width: 767px) {
+  .crop-plan-lanes {
+    --crop-lane-h: 48px;
+    --crop-produce-lane-h: 48px;
+    --crop-add-min-h: 44px;
+    /* The "check / transplant" chip deliberately stays 24px tall here. It sits over the top
+       edge of its bar, so a 44px hit area covered about 25px of that bar and 12px of the lane
+       above, and took their taps. 24px meets WCAG 2.5.8; it is the one control in the lanes
+       that does not reach the house 44px. */
+    /* At 48px the name beside a one-month bar clears the chip while centred. */
+    --crop-chip-name-align: center;
+    --crop-chip-name-pad: 0px;
+  }
+}
+
+/* Source links under a production-guide item: 11px text stacked 16px apart failed WCAG 2.5.8.
+   Each link is now its own 24px target (the list's pitch is then 24px), and 44px on touch or a
+   narrow window, with the same media query as the planting lanes above. */
+.crop-plan-source-link { display: inline-flex; align-items: center; min-height: 24px; }
+@media (pointer: coarse), (max-width: 767px) {
+  .crop-plan-source-link { min-height: 44px; }
+}
