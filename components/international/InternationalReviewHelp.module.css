@@ -1,0 +1,7 @@
+/* The app clips the body to the viewport. Evidence and its replacement help must
+   share a scroll owner, rather than hiding help below a second viewport. */
+.frame{height:100dvh;overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:env(safe-area-inset-bottom);background:var(--bg-0);color:var(--text-primary)}
+/* Project review previously owned scrolling itself. Keep its content intact and
+   let the shared frame scroll both the review and help, without nested scrolling. */
+.frame>main{height:auto;overflow:visible}
+@media print{.frame{height:auto;overflow:visible;padding-bottom:0}.help{display:none}}
