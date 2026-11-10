@@ -17,6 +17,8 @@ const languages: readonly { locale: MassEntryReviewLocale; label: string }[] = [
 const fieldClass = 'mt-1 min-h-11 w-full min-w-0 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-[var(--text-primary)]';
 const panelClass = 'min-w-0 space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-1)] p-3 [overflow-wrap:anywhere]';
 const noteClass = 'text-sm text-[var(--text-secondary)]';
+// Fixed red warning text measured 3.85:1 on the dark card. Keep its words and bullets readable in every theme.
+const issueClass = 'text-sm text-[var(--text-primary)]';
 
 const states: Record<'draft' | 'reviewed' | 'missing' | 'source-missing' | 'stale' | 'invalid', string> = {
   draft: 'Unreviewed AI draft · structurally valid',
@@ -118,7 +120,7 @@ export default function MassEntryDraftReview({ data }: { data: MassEntryReviewDa
             </p>
           )}
           {data.issue && (
-            <p role="status" className="rounded-lg border border-[var(--border)] p-3 text-sm text-red-600">
+            <p role="status" className={`rounded-lg border border-[var(--border)] p-3 ${issueClass}`}>
               {data.issue}
             </p>
           )}
@@ -233,7 +235,7 @@ export default function MassEntryDraftReview({ data }: { data: MassEntryReviewDa
               {row.issues.length > 0 && (
                 <ul
                   aria-label={`Issues for ${row.key}`}
-                  className="list-disc space-y-1 pl-5 text-sm text-red-600"
+                  className={`list-disc space-y-1 pl-5 ${issueClass}`}
                 >
                   {row.issues.map((issue, index) => (
                     <li key={index}>{issue}</li>
