@@ -48,6 +48,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Weekly target totals show one decimal, not six.',
   ], tour: [{ title: 'Read and tap your crop calendar', where: 'Menu → Crop plan', href: '/facilitator/crops',
     detail: 'Crop names are dark on their bars, and a one-month crop shows its name beside the bar. On a phone the bars and "+ crop" are taller. A faded bar is still next year’s repeat, not a new plan.' }] },
+  { when: '10 November 2026', sha: '8a4d1fd26b326d4469ee60d9eaf4c956ed9f4372', changes: [
+    'Language-review warnings are easier to read in light and dark themes.',
+  ] },
   { when: '9 November 2026', sha: 'ce637c546e9df5c4dc536a49d4ce1234c2467e0c', changes: [
     'Nursery input errors no longer say a transplant batch is absent.',
   ] },

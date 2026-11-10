@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest review warning continuation — [Mass-entry review warning contrast — 10 November 2026](2026-11-10/mass-review-warning-contrast-codex.md). A production dark-theme contrast failure is reproduced; changed-preview verification remains open.
+
 Latest private verification consolidation — [Preserved parent coverage and scoped Water validation — 7 November 2026](2026-11-07/international-performance-consolidation.md). Local source preparation; current successor checks and release gates remain separate.
 
 Latest release-test continuation — [Coverage with an empty current guide — 7 November 2026](2026-11-07/performance-release-fixtures.md). Explicit historical positive fixtures, honest current defaults and retained assertions; current-head full CI remains separate.
@@ -242,6 +244,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 - [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md).
 - [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md).
+- [Mass-entry review warning contrast — 10 November 2026](2026-11-10/mass-review-warning-contrast-codex.md).
 
 - [Zones reserve context and national locator — 6 November 2026](2026-11-06/zones-reserve-context-codex.md).
 
