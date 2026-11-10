@@ -251,7 +251,8 @@ test('the record minimum decides frost where a mean cannot: arid sites and close
   // Frost-free with a warm winter but a mild summer (East London): nothing to close, so warm-area.
   const mildSummer = { ...seasonal({ summerTemp: 23.4, winterTemp: 17.6, summerRain: 110, winterRain: 55, lat }), recordMinC: 10 };
   assert.equal(rainPatternFor(mildSummer, classifyKoppen(mildSummer)), 'mild-frost');
-  // A record that touched 2 °C is not frost-free: hollows in that cell froze.
+  // A record that touched 2 °C is not treated as frost-free: the rule's line is 2 °C, and a
+  // grid cell that came that close may hold colder ground the grid does not show.
   const touched = { ...seasonal({ summerTemp: 26, winterTemp: 17, summerRain: 140, winterRain: 20, lat }), recordMinC: 1.9 };
   assert.equal(rainPatternFor(touched, classifyKoppen(touched)), 'mild-frost');
   // A frost-free record makes a cool maritime coast a warm-area site even under 13 °C (George).

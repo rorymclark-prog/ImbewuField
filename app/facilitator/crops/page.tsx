@@ -93,8 +93,8 @@ import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
-import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
-import { outOfCalendarLine, outOfCalendarSignature, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
+import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { calendarCanJudgeSavedSowings, outOfCalendarLine, outOfCalendarSignature, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
 import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
@@ -1722,9 +1722,12 @@ function FacilitatorCropsPageInner() {
   // Sowings the site's calendar no longer offers. legacyPlantings is the right set: already
   // limited to this page's beds, and without the grower-cycle rows whose basis is the
   // grower's own estimates rather than the catalogue months. Nothing here moves a sowing.
+  // A mapped site whose own climate has not loaded is on a fallback guess, and a guess does
+  // not get to call a saved sowing out of season (calendarCanJudgeSavedSowings).
+  const canJudgeSavedSowings = calendarCanJudgeSavedSowings(calendarInUse.basis, hasSiteCoords);
   const outOfCalendar = useMemo(
-    () => allowCataloguePlanning ? sowingsOutsideCalendar(legacyPlantings.filter((planting) => beds.some((bed) => bed.id === planting.bedId)), pattern, { year: currentYear, month: currentMonth }) : [],
-    [allowCataloguePlanning, legacyPlantings, beds, pattern, currentYear, currentMonth],
+    () => allowCataloguePlanning && canJudgeSavedSowings ? sowingsOutsideCalendar(legacyPlantings.filter((planting) => beds.some((bed) => bed.id === planting.bedId)), pattern, { year: currentYear, month: currentMonth }) : [],
+    [allowCataloguePlanning, canJudgeSavedSowings, legacyPlantings, beds, pattern, currentYear, currentMonth],
   );
   const outOfCalendarScope = calendarScopeId ?? 'no-site';
   const outOfCalendarKey = outOfCalendarSignature(outOfCalendar, pattern);
@@ -2062,15 +2065,17 @@ function FacilitatorCropsPageInner() {
     const locationLine = climateSource === 'site'
       ? 'This site (satellite climate records)'
       : region ? `Nearest reference: ${region.name} (fallback)` : 'No site set';
+    // Paper says whose call the calendar was, as the screen does ("chosen by you").
+    const climateLine = printedSowingCalendarLine(calendarLabel, calendarBasis, climateSource);
     return {
       planTitle: (canvasSite ? placeName : null) ?? designTitle,
-      siteLine: climateSource === 'none'
+      siteLine: climateSource === 'none' && calendarBasis !== 'grower-choice'
         ? `No site set · assuming ${calendarLabel.toLowerCase()}`
-        : `${locationLine} · ${calendarLabel}`,
+        : `${locationLine} · ${climateLine}`,
       // The same two facts as separate values, because the PDF needs them apart and recovering
       // them by splitting siteLine printed "Climate: Not set" for every region in the country.
       locationLine,
-      climateLine: climateSource === 'none' ? `Assuming ${calendarLabel.toLowerCase()}` : calendarLabel,
+      climateLine,
       // Lets the PDF flag frost-tender harvest windows that run into Jun–Jul at a light-frost site.
       rainPattern: pattern,
       bedsSummary: `${bedCount} bed${bedCount === 1 ? '' : 's'}`
@@ -2081,7 +2086,7 @@ function FacilitatorCropsPageInner() {
       lossPercent: cashflowSettings.lossPercent,
       lossAllowanceConfirmed: cashflowSettings.confirmed === true,
     };
-  }, [beds, canvasSite, placeName, designTitle, region, pattern, calendarLabel, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
+  }, [beds, canvasSite, placeName, designTitle, region, pattern, calendarLabel, calendarBasis, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
 
   // One account holds several maps. A shared food name and month cannot tell us which
   // farm produced it; records without a site remain saved outside this site's totals.

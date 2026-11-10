@@ -90,11 +90,17 @@ export function monthlyTemperatureStatus(climate: unknown): MonthlyTemperatureSt
  * /api/location-data returns a generic figure during a NASA outage, and only a real
  * reading carries the provenance tag. An untagged number must never certify a site
  * as frost-free, so it reads as "not known".
+ *
+ * A tagged value still goes through cleanPowerValue, the one cleaning rule for POWER
+ * numbers. Until 10 November 2026 this helper accepted any finite number, so a stored
+ * payload carrying POWER's missing-value marker (-999, and anything at or below the
+ * -900 cutoff) came back as a record low of -999 °C: the calendar read it as frost,
+ * the reasons line printed it to the grower, and tree hardiness was judged against
+ * it. A missing marker is "not known", exactly as an untagged number is. Real cold
+ * and zero readings are kept (independent review of PR #1328, comment 6762553064).
  */
 export function recordMinimumC(climate: unknown): number | null {
   if (typeof climate !== 'object' || climate === null || Array.isArray(climate)) return null;
   const { minTemp, minTempSource } = climate as { minTemp?: unknown; minTempSource?: unknown };
-  return minTempSource === 'nasa-power' && typeof minTemp === 'number' && Number.isFinite(minTemp)
-    ? minTemp
-    : null;
+  return minTempSource === 'nasa-power' ? cleanPowerValue(minTemp) : null;
 }

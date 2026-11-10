@@ -7,10 +7,12 @@ import {
   sowingCalendarChoiceFor, withSowingCalendarChoice, type CropPlanState, type Planting,
 } from '@/lib/crop-plan';
 import { sowingCalendarInUse, type SiteClimate } from '@/lib/site-climate';
-import { SOWING_CALENDAR_OPTIONS, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
 import {
-  SOWING_CALENDAR_CORRECTED_AT, outOfCalendarLine, outOfCalendarSignature, planMayPredateCorrection, sowingsOutsideCalendar,
+  SOWING_CALENDAR_CORRECTED_AT, calendarCanJudgeSavedSowings, outOfCalendarLine, outOfCalendarSignature, planMayPredateCorrection,
+  sowingsOutsideCalendar,
 } from '@/lib/sowing-calendar-review';
+import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
 import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 
 // A GROWER CAN CHOOSE THEIR OWN SOWING CALENDAR, AND IS TOLD WHICH SAVED SOWINGS NO
@@ -202,6 +204,39 @@ test('hiding the list holds for the same list and calendar, and it returns when 
   assert.notEqual(outOfCalendarSignature(moved, 'all-year'), signature, 'a sowing moved to another wrong month is new information');
 });
 
+test('a hidden list returns when only the months the calendar recommends have changed', () => {
+  // Independent review of PR #1328 (comment 6762918246) ran the published function: a
+  // January cabbage told "sow it Feb–Jun" and the same row told "sow it Mar–May" gave the
+  // same signature, so a grower who had hidden the first list never saw the second. Each
+  // line of the list states those months; they are part of what the grower was told.
+  const cabbage = (calendarMonths: readonly number[]) => ({
+    plantingId: 'p1', bedId: 'b1', cropKey: 'cabbage', cropName: 'Cabbage', sowMonth: 1, calendarMonths,
+  });
+  const lettuce = { plantingId: 'p2', bedId: 'b2', cropKey: 'lettuce', cropName: 'Lettuce', sowMonth: 12, calendarMonths: [2, 3, 4, 5, 6, 7, 8] };
+  const before = outOfCalendarSignature([cabbage([2, 3, 4, 5, 6]), lettuce], 'all-year');
+
+  assert.notEqual(outOfCalendarSignature([cabbage([3, 4, 5]), lettuce], 'all-year'), before, 'the recommended months narrowed: the grower must see the list again');
+  assert.notEqual(outOfCalendarSignature([cabbage([2, 3, 4, 5, 6, 7]), lettuce], 'all-year'), before, 'one month added');
+  assert.notEqual(outOfCalendarSignature([cabbage([]), lettuce], 'all-year'), before, 'the calendar stopped offering the crop at all');
+  assert.notEqual(outOfCalendarSignature([cabbage([2, 3, 4, 5, 6]), { ...lettuce, calendarMonths: [3, 4, 5] }], 'all-year'), before, 'a change in any row counts');
+
+  // The same advice is the same notice, however the months or the rows are listed.
+  assert.equal(outOfCalendarSignature([cabbage([2, 3, 4, 5, 6]), lettuce], 'all-year'), before, 'unchanged advice stays hidden');
+  assert.equal(outOfCalendarSignature([cabbage([6, 5, 4, 3, 2]), lettuce], 'all-year'), before, 'month listing order is not a change');
+  assert.equal(outOfCalendarSignature([cabbage([2, 2, 3, 4, 5, 6, 6]), lettuce], 'all-year'), before, 'a repeated month is not a change');
+  assert.equal(outOfCalendarSignature([lettuce, cabbage([2, 3, 4, 5, 6])], 'all-year'), before, 'row order is not a change');
+  // A year-wrapping window keeps one form whichever month the catalogue lists first.
+  assert.equal(
+    outOfCalendarSignature([cabbage([10, 11, 12, 1])], 'winter'),
+    outOfCalendarSignature([cabbage([1, 10, 11, 12])], 'winter'),
+  );
+
+  // Rows built from the catalogue carry the catalogue's months into the signature.
+  const [found] = sowingsOutsideCalendar([row({ id: 'p1', cropKey: 'cabbage', sowMonth: 1 })], 'all-year', NOW);
+  assert.deepEqual([...found.calendarMonths], [2, 3, 4, 5, 6], 'fixture: the hot-area cabbage row');
+  assert.equal(outOfCalendarSignature([found], 'all-year'), 'all-year|p1:cabbage:1:2.3.4.5.6');
+});
+
 test('only a plan that may predate the correction is told the months changed under it', () => {
   assert.equal(SOWING_CALENDAR_CORRECTED_AT, Date.UTC(2026, 10, 10));
   assert.equal(planMayPredateCorrection(Date.UTC(2026, 8, 1)), true);
@@ -223,4 +258,67 @@ test('the public sample farm does not model the wrong season on its own calendar
     assert.deepEqual(sowingsOutsideCalendar(plan, 'all-year', { year: 2026, month }).map((item) => `${item.cropName} sown in month ${item.sowMonth}`), [],
       `opened in month ${month}`);
   }
+});
+
+test('saved sowings are judged on the site\'s own calendar or the grower\'s, never on a fallback guess for a mapped site', () => {
+  // The site's climate reading, the grower's frost answer and the grower's choice all know
+  // something about this ground.
+  assert.equal(calendarCanJudgeSavedSowings('site-climate', true), true);
+  assert.equal(calendarCanJudgeSavedSowings('grower-frost', true), true);
+  assert.equal(calendarCanJudgeSavedSowings('grower-choice', true), true);
+  assert.equal(calendarCanJudgeSavedSowings('grower-choice', false), true, 'a choice stands with or without a mapped site');
+  // A mapped site whose climate has not been read is on the nearest reference region.
+  assert.equal(calendarCanJudgeSavedSowings('reference', true), false);
+  // With no site mapped at all the cautious fallback is the only calendar the plan ever had.
+  assert.equal(calendarCanJudgeSavedSowings('reference', false), true);
+});
+
+test('the sample farm opens without an out-of-season list whether or not its climate has loaded', async () => {
+  // Independent review of PR #1328 opened the hosted preview at 0c00546 in a fresh browser
+  // (comment 6762970071). The sample farm's climate had not loaded, the page fell back to
+  // "Durban / KZN coast" (light frost), and it listed March butternut and February green
+  // beans as out of season. Both are in season on the farm's own hot-area calendar. The
+  // earlier acceptance test only covered the loaded state, so this one holds all three.
+  const { buildDemoCropPlan, buildDemoFacilitatorState } = await import('@/lib/demo-farm');
+  const plan = buildDemoCropPlan().plantings;
+  const bgSite = (buildDemoFacilitatorState() as { bgSite?: { lat: number; lon: number } }).bgSite;
+  assert.ok(bgSite, 'fixture: the sample farm is a mapped site');
+  const reference = referenceSowingCalendar(nearestRainfall(bgSite.lat, bgSite.lon));
+  assert.equal(reference, 'mild-frost', 'fixture: the fallback for the sample farm is the light-frost calendar, never the hot-area one');
+  const listed = (pattern: Parameters<typeof sowingsOutsideCalendar>[1], canJudge: boolean) =>
+    canJudge ? sowingsOutsideCalendar(plan, pattern, NOW).map((item) => `${item.cropKey}@${item.sowMonth}`).sort() : [];
+
+  // 1. Cold cache, offline or provider down: fallback calendar, and nothing is listed.
+  const cold = sowingCalendarInUse({ chosen: null, site: null, observedFrost: undefined, reference });
+  assert.deepEqual(cold, { pattern: 'mild-frost', basis: 'reference', automatic: 'mild-frost' });
+  assert.deepEqual(listed(cold.pattern, calendarCanJudgeSavedSowings(cold.basis, true)), []);
+  // The case the review saw is kept on the record: judged on the fallback, these two would be
+  // listed. If this changes, the fallback or the sample plan moved and the case needs re-reading.
+  assert.deepEqual(listed('mild-frost', true), ['butternut@3', 'green-beans@2']);
+
+  // 2. Climate loaded: the farm's own hot-area calendar, and nothing is out of season on it.
+  const loaded = sowingCalendarInUse({ chosen: null, site: { pattern: 'all-year', warmerNeighbour: null }, observedFrost: undefined, reference });
+  assert.equal(loaded.basis, 'site-climate');
+  assert.deepEqual(listed(loaded.pattern, calendarCanJudgeSavedSowings(loaded.basis, true)), []);
+
+  // 3. A visitor who chooses a calendar is judged on it even with no climate loaded: the
+  // choice is theirs, so the list is not a guess.
+  const chose = sowingCalendarInUse({ chosen: 'summer', site: null, observedFrost: undefined, reference });
+  assert.equal(calendarCanJudgeSavedSowings(chose.basis, true), true);
+  assert.ok(listed(chose.pattern, true).length > 0, 'the hard-frost calendar does not fit the sample plan, and the visitor is told');
+});
+
+test('the printed plan says when the calendar was the grower\'s choice', () => {
+  // Paper printed a chosen calendar under "This site (satellite climate records)" with no
+  // word that the grower chose it. The screen says "chosen by you"; paper must too.
+  assert.equal(printedSowingCalendarLine('Hot area, no frost · summer rain', 'grower-choice', 'site'),
+    'Hot area, no frost · summer rain (sowing calendar chosen by the grower)');
+  assert.equal(printedSowingCalendarLine('Winter frost', 'grower-choice', 'reference'), 'Winter frost (sowing calendar chosen by the grower)');
+  assert.equal(printedSowingCalendarLine('Winter frost', 'grower-choice', 'none'), 'Winter frost (sowing calendar chosen by the grower)',
+    'a choice is never printed as an assumption');
+  // Unchanged for every other basis: the calendar alone, or "Assuming ..." with no site.
+  assert.equal(printedSowingCalendarLine('Light frost at most · summer rain', 'site-climate', 'site'), 'Light frost at most · summer rain');
+  assert.equal(printedSowingCalendarLine('Light frost at most · summer rain', 'grower-frost', 'site'), 'Light frost at most · summer rain');
+  assert.equal(printedSowingCalendarLine('Light frost at most · summer rain', 'reference', 'reference'), 'Light frost at most · summer rain');
+  assert.equal(printedSowingCalendarLine('Winter frost', 'reference', 'none'), 'Assuming winter frost');
 });

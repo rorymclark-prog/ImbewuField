@@ -266,11 +266,11 @@ export type AtlasRainPattern = 'summer' | 'winter' | 'all-year' | 'mild-frost';
  * 1. FROST WAS GUESSED FROM A MEAN AND AN ARIDITY CLASS. Every semi-arid summer-rain
  *    site went to the hard-frost column, because "a desert's clear nights fall far
  *    below its mean". True for Upington; false for Komatipoort, Phalaborwa, Musina and
- *    Thohoyandou, which had no frost day in 20 years and were shown the Highveld's
- *    season — tomatoes sown August to October where the regional guides say January to
- *    July. The site's record minimum temperature was already being fetched and was not
- *    read. It is read now: an arid site clears the frost column only when its own
- *    record shows no freezing temperature.
+ *    Thohoyandou, which had no frost day in 20 years of the gridded record and were
+ *    shown the Highveld's season — tomatoes sown August to October where the regional
+ *    guides say January to July. The site's record minimum temperature was already
+ *    being fetched and was not read. It is read now: an arid site clears the frost
+ *    column only when its own record shows no freezing temperature.
  * 2. NOTHING COULD REACH THE HOT-AREA COLUMN ON SUMMER RAIN. 'all-year' was reachable
  *    only when summer rain was under 65 % of the year, so Richards Bay (64 %) got the
  *    frost-free calendar and Durban (69 %) did not. The column is KZN DARD's "Hot
@@ -282,10 +282,12 @@ export type AtlasRainPattern = 'summer' | 'winter' | 'all-year' | 'mild-frost';
  *    halves of the year now goes through the same frost test as a summer-rain site.
  *
  * THE HOT-AREA TEST, and where each number comes from. All three must hold:
- *   - Frost-free. Record minimum >= 2 °C, the line lib/design-studio.ts already uses
- *     for "watch for frost" — a grid cell that has touched 2 °C has hollows that
- *     froze. With no record minimum, the coldest-month mean must reach Köppen's
- *     tropical line (18 °C), aridity or not.
+ *   - Frost-free, as far as a grid can say. Record minimum >= 2 °C, the line
+ *     lib/design-studio.ts already uses for "watch for frost". It is this rule's
+ *     working line on gridded evidence, not a measurement: a cell whose record has
+ *     touched 2 °C may hold ground that froze, and a cell above the line is not
+ *     proof that a given farm or hollow never does. With no record minimum, the
+ *     coldest-month mean must reach Köppen's tropical line (18 °C), aridity or not.
  *   - Warm winter. Coldest-month mean >= 16 °C, the bottom of the common bean's optimum
  *     range in FAO ECOCROP (Phaseolus vulgaris, TOPMN — the table lib/crop-climate-gate.ts
  *     cites). The column sows bush beans from February to September, so beans must
@@ -303,7 +305,14 @@ export type AtlasRainPattern = 'summer' | 'winter' | 'all-year' | 'mild-frost';
  */
 export const HARD_FROST_COLDEST_MONTH_C = 7;
 export const LIGHT_FROST_COLDEST_MONTH_C = 13;
-/** Record minimum at or above this: no frost at screen height or in hollows (see above). */
+/**
+ * The rule's frost-free line: a gridded record minimum at or above this is TREATED as
+ * frost-free when a calendar is chosen. It is a heuristic on grid evidence, not an
+ * assurance about any farm: a grid minimum cannot rule out frost in a cold hollow.
+ * That is why a near miss is flagged (`closeCall`), why the reasons line tells the
+ * grower the records are for the wider area, and why their own frost answer and
+ * their own calendar choice both override it.
+ */
 export const FROST_FREE_RECORD_MIN_C = 2;
 /** Coldest-month mean for the hot-area column: ECOCROP TOPMN, Phaseolus vulgaris. */
 export const HOT_AREA_COLDEST_MONTH_C = 16;
@@ -316,8 +325,8 @@ export const HOT_AREA_HOTTEST_MONTH_C = 24;
  * month of 8.6 °C or lower — Sutherland 80 % of years, Underberg 45 %, Bethlehem 25 %,
  * Bloemfontein and Kokstad 20 %, Komani and Graaff-Reinet 15 % — and no site at 9.8 °C or
  * above reached more than 10 % (accuracy audit, CP-081). It selects a warning, never a
- * sowing month: the gridded record under-counts frost in a hollow, so the grower's own
- * last frost is what decides.
+ * sowing month: a gridded record can miss frost in a cold hollow and is not a frost
+ * observation at the farm, so the grower's own last frost is what decides.
  */
 export const LATE_FROST_COLDEST_MONTH_C = 9;
 /** Köppen's tropical line: the frost-free stand-in when no record minimum is known. */

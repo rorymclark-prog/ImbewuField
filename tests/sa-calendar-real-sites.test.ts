@@ -4,6 +4,7 @@ import test from 'node:test';
 
 import type { RainPattern } from '@/lib/crop-catalog';
 import { calendarForGrower, siteClimateFromLocationData, type SiteClimate } from '@/lib/site-climate';
+import { sowingCalendarReasons } from '@/lib/sowing-calendar-label';
 
 // DOES A REAL FARM GET THE CALENDAR ITS OWN FROST RECORD CALLS FOR?
 //
@@ -156,4 +157,40 @@ test('losing the record minimum never moves a place to a warmer calendar', () =>
     assert.ok(rank[without] <= rank[withMinimum], `${site.name}: '${without}' without a record minimum is warmer than '${withMinimum}' with it`);
   }
   assert.equal(climateOf(byName('Musina'), false).pattern, 'summer', 'an arid site with no frost evidence is not cleared of frost');
+});
+
+test('a missing-value marker in a stored payload is "no record minimum" at every place, and real cold readings are kept', () => {
+  // Independent review of PR #1328 (comment 6762553064): the record-minimum helper checked
+  // the provenance tag and then took any finite number, so NASA POWER's missing-value
+  // marker (-999; the cleaning rule's cutoff is -900) was read as a record low of -999 °C.
+  // Measured on this fixture before the fix: every one of the 44 places carried -999 as
+  // its record low and printed "-999 °C" to the grower, and four (Durban, Richards Bay,
+  // Komatipoort, Phalaborwa) were moved off the calendar their no-minimum reading gives.
+  // A marker must behave exactly like a payload that carries no minimum at all.
+  const withMinimum = (site: Site, minTemp: unknown) => {
+    const base = payload(site, false);
+    return siteClimateFromLocationData({ ...base, climate: { ...base.climate, minTemp, minTempSource: 'nasa-power' } }, site.lat);
+  };
+  for (const site of SITES) {
+    const none = climateOf(site, false);
+    assert.equal(none.recordMinC, null, site.name);
+    for (const marker of [-999, -900, -901, Number.NaN, Number.NEGATIVE_INFINITY]) {
+      const marked = withMinimum(site, marker);
+      assert.deepEqual(marked, none, `${site.name}: a ${marker} minimum must read as no minimum`);
+      const reasons = sowingCalendarReasons(marked!, { pattern: marked!.pattern, basis: 'site-climate' }).join(' ');
+      assert.doesNotMatch(reasons, /lowest temperature on record|-9\d\d|NaN|Infinity/, `${site.name}: the grower is shown a missing marker`);
+    }
+    // The place's own reading is untouched by the cleaning rule.
+    assert.equal(climateOf(site).recordMinC, site.recordMinC, site.name);
+  }
+
+  // Frost and exactly zero are real readings, not missing ones.
+  const frosty = SITES.filter((site) => site.recordMinC < 0);
+  const zeroOrBelow = SITES.filter((site) => site.recordMinC <= 0);
+  assert.ok(frosty.length >= 10, 'fixture: the set must hold real sub-zero record minimums');
+  for (const site of zeroOrBelow) assert.equal(climateOf(site).recordMinC, site.recordMinC, site.name);
+  const durban = byName('Durban');
+  assert.equal(withMinimum(durban, 0)?.recordMinC, 0, 'a record minimum of exactly 0 °C is kept, not treated as missing');
+  assert.equal(withMinimum(durban, -4)?.recordMinC, -4);
+  assert.notEqual(withMinimum(durban, -4)?.pattern, 'all-year', 'a site whose record shows -4 °C is not given the frost-free calendar');
 });

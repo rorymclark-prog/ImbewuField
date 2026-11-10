@@ -111,3 +111,22 @@ export function sowingCalendarReasons(
   }
   return out;
 }
+
+/**
+ * The sowing calendar as the printed plan and the PDF state it.
+ *
+ * The screen says "chosen by you" when the grower picked the calendar. Paper printed
+ * the same calendar under "This site (satellite climate records)" and said nothing
+ * more, so a plan on a calendar the records do not give read as if the records gave
+ * it (found on 10 November 2026 while checking every surface the choice reaches).
+ * A printed plan is handed to mentors and funders; it must say whose call the
+ * calendar was.
+ */
+export function printedSowingCalendarLine(
+  calendarLabel: string,
+  basis: CalendarBasis | 'reference',
+  climateSource: 'site' | 'reference' | 'none',
+): string {
+  if (basis === 'grower-choice') return `${calendarLabel} (sowing calendar chosen by the grower)`;
+  return climateSource === 'none' ? `Assuming ${calendarLabel.toLowerCase()}` : calendarLabel;
+}

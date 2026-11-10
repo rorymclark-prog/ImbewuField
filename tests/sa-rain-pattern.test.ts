@@ -195,7 +195,7 @@ const SITES: SASite[] = [
     place: 'Lephalale (Limpopo bushveld)', lat: -23.67, lon: 27.75,
     annual: 419, monthly: summerRain, coldest: 15.3, hottest: 27.0, recordMin: 0.1,
     expectPattern: 'mild-frost',
-    koppenBasis: 'BSh: the record stays just above freezing, so light frost in hollows at most — the warm-area column, not the hard-frost one',
+    koppenBasis: 'BSh: the gridded record stays just above freezing, so the rule reads light frost at most — the warm-area column, not the hard-frost one',
     assertKoppenPrefix: 'BS',
   },
   {

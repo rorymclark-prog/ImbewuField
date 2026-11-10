@@ -79,3 +79,17 @@ test('the notice gives the grower the real reason: their own calendar choice, or
   assert.match(notice, /:\s*planMayPredateCorrection\(plan\?\.planNotesAt\) && <p[^>]*>Sowing months and calendars were corrected on 10 November 2026\./,
     'the correction sentence is only for a plan that may predate it, and never alongside the choice sentence');
 });
+
+test('the list of out-of-season sowings is not drawn from a fallback guess for a mapped site', () => {
+  // Hosted preview, fresh visitor, sample farm: the climate had not loaded and two in-season
+  // sowings were listed against the Durban fallback (PR #1328, comment 6762970071).
+  assert.match(page, /const canJudgeSavedSowings = calendarCanJudgeSavedSowings\(calendarInUse\.basis, hasSiteCoords\);/);
+  assert.match(page, /allowCataloguePlanning && canJudgeSavedSowings \? sowingsOutsideCalendar\(/);
+});
+
+test('the printed plan takes its calendar line from the one rule that names a grower\'s choice', () => {
+  const meta = page.slice(page.indexOf('const exportMeta = useMemo'), page.indexOf('estimatedKgPerYear: totalYieldKg'));
+  assert.match(meta, /const climateLine = printedSowingCalendarLine\(calendarLabel, calendarBasis, climateSource\);/);
+  assert.match(meta, /\n\s+climateLine,\n/, 'the PDF receives that line unchanged');
+  assert.doesNotMatch(meta, /climateLine: /, 'no second, differently worded climate line');
+});

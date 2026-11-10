@@ -11,6 +11,7 @@
 import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
 import type { Planting } from '@/lib/crop-plan';
 import { formatMonthSpan } from '@/lib/perennial-harvest';
+import type { CalendarBasis } from '@/lib/site-climate';
 
 /** The day sowing months and calendars were corrected (UTC). A plan accepted before it
  * can be out of season through no choice of the grower's. */
@@ -75,6 +76,28 @@ export function sowingsOutsideCalendar(
   return out;
 }
 
+/**
+ * May the plan's saved sowings be called out of season on the calendar in use?
+ *
+ * Yes when the calendar is the site's own climate reading, the grower's frost answer or
+ * the grower's choice. Yes, too, when no site is mapped at all: the cautious fallback
+ * is then the only calendar the plan was ever made on.
+ *
+ * No when a site IS mapped and its climate has not been read (still loading, offline
+ * with nothing cached, or the provider is down). The page is then on the nearest
+ * reference region, a labelled guess that is never the hot-area calendar. The plan may
+ * well have been made on the site's real calendar, and judging it against the guess
+ * tells a Lowveld grower their in-season sowings are wrong, then takes it back when
+ * the climate loads. Seen on the hosted preview at 0c00546: a fresh visitor to the
+ * sample farm got the Durban light-frost fallback and two "out of season" sowings
+ * that are in season on the farm's own hot-area calendar (independent review of
+ * PR #1328, comment 6762970071). The crop picker still offers the fallback's months,
+ * and the header still says the calendar is a fallback.
+ */
+export function calendarCanJudgeSavedSowings(basis: CalendarBasis | 'reference', hasMappedSite: boolean): boolean {
+  return basis !== 'reference' || !hasMappedSite;
+}
+
 /** "Cabbage on Bed 1: planned for January. This calendar sows it Feb–Jun." */
 export function outOfCalendarLine(row: OutOfCalendarSowing, bedLabel?: string | null): string {
   const where = bedLabel ? ` on ${bedLabel}` : '';
@@ -84,13 +107,32 @@ export function outOfCalendarLine(row: OutOfCalendarSowing, bedLabel?: string | 
   return `${row.cropName}${where}: planned for ${MONTH_NAMES[row.sowMonth - 1]}. ${instead}`;
 }
 
+/** The months a row recommends, as one stable token: valid months only, each once, in
+ * calendar order. A catalogue row listed [10, 11, 12, 1] and one listed [1, 10, 11, 12]
+ * say the same thing to a grower and must not look like a change. */
+function recommendedMonthsToken(months: readonly number[]): string {
+  return [...new Set(months.filter((month) => Number.isInteger(month) && month >= 1 && month <= 12))]
+    .sort((a, b) => a - b)
+    .join('.');
+}
+
 /**
  * Identifies one set of out-of-season sowings under one calendar, so a grower who
  * hides the notice is not shown the same list again, and is shown it again as soon as
- * the list or the calendar changes.
+ * anything they were told changes: the calendar, which sowings are listed, the month
+ * a sowing is planned for, or the months the calendar recommends instead.
+ *
+ * The recommended months were left out until 10 November 2026. Every line of the list
+ * ends "This calendar sows it Feb–Jun", so a later correction to a crop's months
+ * changed what the list says while the signature stayed the same, and a grower who
+ * had hidden the old list was never shown the corrected one (independent review of
+ * PR #1328, comment 6762918246).
  */
 export function outOfCalendarSignature(rows: readonly OutOfCalendarSowing[], pattern: RainPattern): string {
-  return `${pattern}|${rows.map((row) => `${row.plantingId}:${row.cropKey}:${row.sowMonth}`).sort().join(',')}`;
+  return `${pattern}|${rows
+    .map((row) => `${row.plantingId}:${row.cropKey}:${row.sowMonth}:${recommendedMonthsToken(row.calendarMonths)}`)
+    .sort()
+    .join(',')}`;
 }
 
 /**
