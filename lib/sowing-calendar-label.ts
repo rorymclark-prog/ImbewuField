@@ -35,6 +35,23 @@ export function sowingCalendarLabel(pattern: RainPattern, rainSeason?: RainSeaso
   return `${base} · ${RAIN_SEASON_LABEL[rainSeason]}`;
 }
 
+/**
+ * The calendars a grower can pick from, in the order they are offered: coldest first,
+ * the Cape's winter-rain calendar last. `where` names places a grower can recognise
+ * their own area in; it is a reading aid, not a rule about who may choose what.
+ */
+export const SOWING_CALENDAR_OPTIONS: readonly { value: RainPattern; label: string; where: string }[] = [
+  { value: 'summer', label: SOWING_CALENDAR_LABEL.summer, where: 'Highveld, Midlands, Karoo' },
+  { value: 'mild-frost', label: SOWING_CALENDAR_LABEL['mild-frost'], where: 'warm areas and mild coasts' },
+  { value: 'all-year', label: SOWING_CALENDAR_LABEL['all-year'], where: 'Lowveld, Limpopo valley, KZN coast' },
+  { value: 'winter', label: SOWING_CALENDAR_LABEL.winter, where: 'Western Cape' },
+];
+
+/** "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)" — one option's text. */
+export function sowingCalendarOptionText(option: { label: string; where: string }): string {
+  return `${option.label} (${option.where})`;
+}
+
 const WARMTH_ORDER: RainPattern[] = ['summer', 'mild-frost', 'all-year'];
 
 const deg = (n: number): string => `${Math.round(n)} °C`;
@@ -55,7 +72,21 @@ export function sowingCalendarReasons(
 
   const chosenLabel = SOWING_CALENDAR_LABEL[chosen.pattern];
   const siteLabel = SOWING_CALENDAR_LABEL[site.pattern];
-  if (chosen.basis === 'grower-frost' && chosen.pattern !== site.pattern) {
+  if (chosen.basis === 'grower-choice') {
+    // Their choice stands. The screen still says what the records give, and says so
+    // plainly when the choice is warmer than a record that shows frost: the warmer
+    // calendars sow tender crops earlier, and the grower's own frost months are then
+    // the only thing holding those crops back.
+    let line = chosen.pattern === site.pattern
+      ? `You chose the "${chosenLabel}" calendar yourself. The climate records for this area give the same one.`
+      : `You chose the "${chosenLabel}" calendar yourself. The climate records for this area would give "${siteLabel}".`;
+    const warmerThanRecords = WARMTH_ORDER.includes(chosen.pattern) && WARMTH_ORDER.includes(site.pattern)
+      && WARMTH_ORDER.indexOf(chosen.pattern) > WARMTH_ORDER.indexOf(site.pattern);
+    if (warmerThanRecords && site.recordMinC !== null && site.recordMinC !== undefined && site.recordMinC <= 0) {
+      line += ` Those records show frost here (lowest on record ${deg(site.recordMinC)}). This calendar sows tender crops earlier, so record the months you see frost in the site survey.`;
+    }
+    out.push(line);
+  } else if (chosen.basis === 'grower-frost' && chosen.pattern !== site.pattern) {
     const warmer = WARMTH_ORDER.indexOf(chosen.pattern) > WARMTH_ORDER.indexOf(site.pattern);
     out.push(
       `Your site survey says you have ${warmer ? 'not ' : ''}seen frost here, so this plan uses the "${chosenLabel}" calendar. ` +
@@ -74,7 +105,8 @@ export function sowingCalendarReasons(
   }
   // The frost calendars wait for frost to pass by the end of August. Where winters are
   // this cold it often has not (lib/koppen-global.ts LATE_FROST_COLDEST_MONTH_C).
-  if ((chosen.pattern === 'summer' || chosen.pattern === 'winter') && site.coldestMonthC < LATE_FROST_COLDEST_MONTH_C) {
+  if (site.coldestMonthC < LATE_FROST_COLDEST_MONTH_C
+      && (chosen.pattern === 'summer' || chosen.pattern === 'winter' || chosen.basis === 'grower-choice')) {
     out.push('Frost often lasts into September where winters are this cold. Plant out tomatoes, peppers and other tender crops only after your own last frost, and record your frost months in the site survey.');
   }
   return out;

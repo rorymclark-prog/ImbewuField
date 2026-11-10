@@ -77,6 +77,10 @@ const hooks = registerHooks({
         // The page imports this since the 2026-11-10 accuracy fix. Climate is null in this
         // harness, so it is never called; it must only exist for the module to link.
         export const calendarForGrower = (site) => ({ pattern: site.pattern, basis: 'site-climate' });
+        // The page derives its calendar through this since 2026-11-10 (Rory: "go ahead with
+        // decisions 2 and 3"). Climate is null in this harness, so only a grower choice or the
+        // reference fallback can come back.
+        export const sowingCalendarInUse = (input) => ({ pattern: input.chosen ?? input.reference, basis: input.chosen ? 'grower-choice' : 'reference', automatic: input.reference });
       `), shortCircuit: true };
       if (specifier.startsWith('@/components/') && specifier !== '@/components/crops/useGrowerWorkflow'
         && !specifier.startsWith('@/components/international/') && !specifier.endsWith('.format')) {

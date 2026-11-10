@@ -46,7 +46,12 @@ test('Simple drops the secondary header chips but keeps site/bed picking and the
     node.pos >= CROPS.indexOf('<header') && node.end <= CROPS.indexOf('</header>')
       && node.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken
       && ts.isParenthesizedExpression(node.right) && ts.isConditionalExpression(node.right.expression)
-      && node.right.expression.condition.getText(pageTree) === "climateSource === 'site'");
+      // 2026-11-10, Rory: "go ahead with decisions 2 and 3". The badge chain used to start at
+      // `climateSource === 'site'`; a calendar the grower chose is now the first case, because it
+      // outranks where the automatic calendar came from. The site/reference/none cases are still
+      // in the same chain, and the Simple/country-support gate on it is asserted below unchanged.
+      && node.right.expression.condition.getText(pageTree) === "calendarBasis === 'grower-choice'"
+      && node.right.expression.whenFalse.getText(pageTree).startsWith("climateSource === 'site'"));
   assert.ok(climateBadge, 'the header must retain its site/reference climate badge');
   for (const simple of [true, false]) {
     for (const allowCataloguePlanning of [true, false]) {

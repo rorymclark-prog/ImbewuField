@@ -149,29 +149,39 @@ export function buildDemoFacilitatorState(): FacilitatorDesignState {
 }
 
 /* ── Crop plan: a full year across the 7 growing beds above ───────────────
-   DEMO_SITE resolves the 'summer' rain pattern through the per-site climate
-   path (lib/site-climate.ts over NASA POWER monthly normals for these exact
-   coordinates — summer-dominant rain, frost-free winter). The sow months
-   below are RECORDS of what this frost-free lowveld garden planted, not a
-   template: the autumn sowings (chard/carrots in April, lettuce in May) are
-   normal practice where winters carry no frost, and the planner shows its
-   "outside the usual sowing window — still allowed" advisory against the
-   conservative interior 'summer' windows rather than silently rewriting
-   history. The plan mixes already-growing (existing:true) plantings with
-   future ones and divides several beds into measured strips. The fractions
-   below were checked against every month of the audited crop-duration
-   calendar: concurrent strips never exceed the mapped bed, and the plan never overbooks a mapped bed. */
+   DEMO_SITE is a frost-free lowveld garden with summer rain. Since the
+   10 November 2026 accuracy fixes it resolves the HOT-AREA sowing calendar
+   through the per-site climate path (lib/site-climate.ts: no frost on record,
+   coldest month 16.8 °C, hottest 24.7 °C) — KZN DARD's "hot areas, frost-free"
+   column, where vegetables are sown from late summer through winter into
+   spring and midsummer is closed for most of them.
+
+   Every sowing below is in that calendar's months. Four were not: this plan
+   was first written against the hard-frost interior calendar the site used to
+   be given, so it sowed butternut in December, tomatoes and green beans in
+   October and lettuce in September. They now read March, September, February
+   and August, the nearest in-season months that still never overbook a bed in
+   any opening month (tests/demo-finance.test.ts checks all twelve). The
+   autumn sowings that were "outside the usual window" on the old calendar —
+   chard and carrots in April, lettuce in May — are simply in season on this
+   one. The sample farm is the first plan a visitor sees; it must not model the
+   wrong season.
+
+   The plan mixes already-growing (existing:true) plantings with future ones
+   and divides several beds into measured strips. The fractions below were
+   checked against every month of the audited crop-duration calendar:
+   concurrent strips never exceed the mapped bed, and the plan never overbooks a mapped bed. */
 
 export function buildDemoCropPlan(): CropPlanState {
   const plantings: Planting[] = [
     { id: 'demo-planting-1', bedId: 'demo-bed-6', cropKey: 'garlic', sowMonth: 5, areaFraction: 0.5, existing: true },
     { id: 'demo-planting-2', bedId: 'demo-bed-1', cropKey: 'onions', sowMonth: 3, areaFraction: 3.67 / 6, existing: true },
-    { id: 'demo-planting-3', bedId: 'demo-bed-3', cropKey: 'butternut', sowMonth: 12 },
+    { id: 'demo-planting-3', bedId: 'demo-bed-3', cropKey: 'butternut', sowMonth: 3 },
     { id: 'demo-planting-4', bedId: 'demo-bed-5', cropKey: 'swiss-chard', sowMonth: 4, areaFraction: 5.67 / 6, existing: true },
-    { id: 'demo-planting-5', bedId: 'demo-bed-4', cropKey: 'tomatoes', sowMonth: 10, areaFraction: 0.75 },
+    { id: 'demo-planting-5', bedId: 'demo-bed-4', cropKey: 'tomatoes', sowMonth: 9, areaFraction: 0.75 },
     { id: 'demo-planting-6', bedId: 'demo-hugel-1', cropKey: 'maize', sowMonth: 10, areaFraction: 5 / 6 },
-    { id: 'demo-planting-7', bedId: 'demo-bed-5', cropKey: 'green-beans', sowMonth: 10, areaFraction: 4.13 / 6 },
-    { id: 'demo-planting-8', bedId: 'demo-bed-2', cropKey: 'lettuce', sowMonth: 9, areaFraction: 3.7 / 6 },
+    { id: 'demo-planting-7', bedId: 'demo-bed-5', cropKey: 'green-beans', sowMonth: 2, areaFraction: 4.13 / 6 },
+    { id: 'demo-planting-8', bedId: 'demo-bed-2', cropKey: 'lettuce', sowMonth: 8, areaFraction: 3.7 / 6 },
     { id: 'demo-planting-9', bedId: 'demo-bed-6', cropKey: 'broccoli', sowMonth: 2, areaFraction: 3.75 / 8 },
     { id: 'demo-planting-10', bedId: 'demo-bed-6', cropKey: 'sweet-potato', sowMonth: 10, areaFraction: 3.67 / 8 },
     { id: 'demo-planting-11', bedId: 'demo-bed-1', cropKey: 'cabbage', sowMonth: 3, areaFraction: 2.33 / 6, existing: true },

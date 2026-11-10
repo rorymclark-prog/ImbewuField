@@ -128,6 +128,9 @@ export interface CropPlanState {
   /** Climate window used when the plan was generated. Optional so every plan
    * saved before this field existed remains readable. */
   rainPattern?: RainPattern;
+  /** The sowing calendar a grower has chosen for a site themselves, overriding
+   * the one read from climate records. Absent for every site left on automatic. */
+  sowingCalendarChoices?: SowingCalendarChoice[];
   /** Exact dated quantities travel with the plan; a housing icon cannot supply them. */
   productionRecords?: DatedProductionRecord[];
   /** Recorded stock months and weights, without inferred preservation or shelf life. */
@@ -602,7 +605,9 @@ function projectLoadedCropPlan(parsed: Partial<CropPlanState> | null | undefined
       ...(sandbox.growerPlanningProfiles !== undefined
         ? { growerPlanningProfiles: normaliseGrowerPlanningProfiles(sandbox.growerPlanningProfiles) } : {}),
       ...(sandbox.workspaceReferences !== undefined
-        ? { workspaceReferences: sanitiseWorkspacePlanningReferences(sandbox.workspaceReferences) } : {}) };
+        ? { workspaceReferences: sanitiseWorkspacePlanningReferences(sandbox.workspaceReferences) } : {}),
+      ...(sandbox.sowingCalendarChoices !== undefined
+        ? { sowingCalendarChoices: sanitiseSowingCalendarChoices(sandbox.sowingCalendarChoices) } : {}) };
   }
   if (!parsed || !Array.isArray(parsed.plantings)) return emptyPlan();
   const planNotes = sanitisePlanNotes(parsed.planNotes);
@@ -616,6 +621,8 @@ function projectLoadedCropPlan(parsed: Partial<CropPlanState> | null | undefined
     ...(Array.isArray(parsed.harvestTargets) ? { harvestTargets: sanitiseHarvestTargets(parsed.harvestTargets) } : {}),
     ...(parsed.nursery !== undefined ? { nursery: sanitiseNurserySettings(parsed.nursery) } : {}),
     ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
+    ...(sanitiseSowingCalendarChoices(parsed.sowingCalendarChoices).length
+      ? { sowingCalendarChoices: sanitiseSowingCalendarChoices(parsed.sowingCalendarChoices) } : {}),
     ...(Array.isArray(parsed.productionRecords) ? { productionRecords: sanitiseProductionRecords(parsed.productionRecords) } : {}),
     ...(Array.isArray(parsed.preservedProducts) ? { preservedProducts: sanitisePreservedFoodRecords(parsed.preservedProducts) } : {}),
     // The timestamp travels ONLY with notes. A stored date on its own labels
@@ -687,6 +694,74 @@ function isRainPattern(value: unknown): value is RainPattern {
     || value === 'winter'
     || value === 'all-year'
     || value === 'mild-frost';
+}
+
+/**
+ * A grower's own choice of sowing calendar for one planning scope.
+ *
+ * WHY IT EXISTS (10 November 2026, Rory: "go ahead with decisions 2 and 3"). The
+ * calendar is read from gridded climate records for a cell tens of kilometres wide.
+ * The accuracy audit showed what that costs at the edges: Mbombela reads 0.1 °C short
+ * of the hot-area line, Tzaneen's cell includes the escarpment above the town, and
+ * Worcester shares a cell with the Ceres mountains. A grower knows whether frost
+ * reaches their beds; the grid does not. Until now their only lever was the frost
+ * answer in the site survey, which could move a close call one step.
+ *
+ * `scopeId` is the mapped site's id, or the workspace id of an unmapped plan
+ * ('virtual-bed', a design id): the same ids the rest of this plan book is scoped by,
+ * because one account can hold several farms and a choice for one must never leak
+ * onto another. It is a planner setting, not a climate observation: nothing here
+ * says the site IS frost-free, only which calendar the grower asked to plan with.
+ */
+export interface SowingCalendarChoice {
+  scopeId: string;
+  calendar: RainPattern;
+  /** When the grower chose it (epoch ms) — shown so a stale choice is not anonymous. */
+  chosenAt: number;
+}
+
+const SOWING_CALENDAR_CHOICE_LIMIT = 100;
+
+/** Keep only well-formed choices, one per scope (the newest wins). Never throws. */
+export function sanitiseSowingCalendarChoices(value: unknown): SowingCalendarChoice[] {
+  if (!Array.isArray(value)) return [];
+  const byScope = new Map<string, SowingCalendarChoice>();
+  for (const raw of value) {
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) continue;
+    const row = raw as Partial<SowingCalendarChoice>;
+    if (typeof row.scopeId !== 'string' || !row.scopeId.trim() || row.scopeId.length > 200) continue;
+    if (!isRainPattern(row.calendar)) continue;
+    if (typeof row.chosenAt !== 'number' || !Number.isFinite(row.chosenAt) || row.chosenAt <= 0) continue;
+    const previous = byScope.get(row.scopeId);
+    if (!previous || row.chosenAt >= previous.chosenAt) {
+      byScope.set(row.scopeId, { scopeId: row.scopeId, calendar: row.calendar, chosenAt: row.chosenAt });
+    }
+  }
+  return [...byScope.values()].slice(0, SOWING_CALENDAR_CHOICE_LIMIT);
+}
+
+/** The calendar the grower chose for this scope, or null when it is on automatic. */
+export function sowingCalendarChoiceFor(
+  state: Pick<CropPlanState, 'sowingCalendarChoices'> | null | undefined, scopeId: string | null | undefined,
+): RainPattern | null {
+  if (!state || !scopeId) return null;
+  return sanitiseSowingCalendarChoices(state.sowingCalendarChoices).find((row) => row.scopeId === scopeId)?.calendar ?? null;
+}
+
+/**
+ * The plan book with this scope's calendar choice set, or cleared when `calendar` is
+ * null ("let the app decide"). Other scopes' choices are carried through untouched,
+ * and a book with no choices left drops the field so it reads as it did before.
+ */
+export function withSowingCalendarChoice<T extends Pick<CropPlanState, 'sowingCalendarChoices'>>(
+  state: T, scopeId: string, calendar: RainPattern | null, chosenAt: number = Date.now(),
+): T {
+  const others = sanitiseSowingCalendarChoices(state.sowingCalendarChoices).filter((row) => row.scopeId !== scopeId);
+  const next = calendar && scopeId.trim() && isRainPattern(calendar)
+    ? sanitiseSowingCalendarChoices([...others, { scopeId, calendar, chosenAt }])
+    : others;
+  const { sowingCalendarChoices: _dropped, ...rest } = state;
+  return (next.length ? { ...rest, sowingCalendarChoices: next } : rest) as T;
 }
 
 /** Opaque, account-bound device revision for delayed writers. Keep this token
@@ -992,6 +1067,7 @@ function cropPlanStorageValue(s: CropPlanState): CropPlanState {
   if (s.growerPlanningProfiles !== undefined) {
     saved = { ...saved, growerPlanningProfiles: normaliseGrowerPlanningProfiles(s.growerPlanningProfiles) };
   }
+  if (s.sowingCalendarChoices !== undefined) saved = { ...saved, sowingCalendarChoices: sanitiseSowingCalendarChoices(s.sowingCalendarChoices) };
   return saved;
 }
 /** Return the exact bytes this writer stored, rather than blessing whatever

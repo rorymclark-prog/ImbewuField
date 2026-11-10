@@ -125,7 +125,7 @@ export function siteClimateFromLocationData(data: unknown, lat: number): SiteCli
 }
 
 /** How the calendar in use was arrived at — every surface that names it says which. */
-export type CalendarBasis = 'site-climate' | 'grower-frost';
+export type CalendarBasis = 'site-climate' | 'grower-frost' | 'grower-choice';
 
 /**
  * The sowing calendar to plan with, once the grower's own answer to "Have you seen
@@ -151,6 +151,30 @@ export function calendarForGrower(
   if (observedFrost === 'yes' && site.pattern === 'all-year') return { pattern: 'mild-frost', basis: 'grower-frost' };
   if (observedFrost === 'no' && site.warmerNeighbour) return { pattern: site.warmerNeighbour, basis: 'grower-frost' };
   return { pattern: site.pattern, basis: 'site-climate' };
+}
+
+/**
+ * Which sowing calendar the plan uses, in order of who knows the ground best:
+ *
+ *  1. the calendar the grower chose themselves (CropPlanState.sowingCalendarChoices);
+ *  2. the site's climate reading, moved by their frost answer where the two can disagree
+ *     (calendarForGrower above);
+ *  3. the labelled regional fallback, when the site's own climate could not be read.
+ *
+ * `automatic` is what steps 2 and 3 give on their own. It is always returned so the
+ * screen can say what the app would have used and offer the way back to it; a choice
+ * that equals it is still reported as the grower's, because they made it.
+ */
+export function sowingCalendarInUse(input: {
+  chosen: RainPattern | null;
+  site: Pick<SiteClimate, 'pattern' | 'warmerNeighbour'> | null;
+  observedFrost: 'yes' | 'no' | 'unknown' | undefined;
+  reference: RainPattern;
+}): { pattern: RainPattern; basis: CalendarBasis | 'reference'; automatic: RainPattern } {
+  const fromSite = input.site ? calendarForGrower(input.site, input.observedFrost) : null;
+  const automatic = fromSite?.pattern ?? input.reference;
+  if (input.chosen) return { pattern: input.chosen, basis: 'grower-choice', automatic };
+  return { pattern: automatic, basis: fromSite?.basis ?? 'reference', automatic };
 }
 
 /**

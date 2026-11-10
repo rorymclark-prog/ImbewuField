@@ -93,8 +93,9 @@ import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
-import { SOWING_CALENDAR_LABEL, sowingCalendarLabel, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
-import { calendarForGrower, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
+import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { outOfCalendarLine, outOfCalendarSignature, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
+import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
 import { VarietyGuidance } from '@/components/crops/VarietyGuidance';
@@ -105,7 +106,7 @@ import {
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, totalGrowingAreaM2, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
-  restampEditedOnce, confirmOnceSowing,
+  restampEditedOnce, confirmOnceSowing, sowingCalendarChoiceFor, withSowingCalendarChoice,
   CROP_PLAN_CHANGED_EVENT,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
@@ -1005,7 +1006,9 @@ function FacilitatorCropsPageInner() {
     // per-site profile and a reference city 250 km away are different claims.
     // Resolved at generate time for BOTH branches: climate can still be loading
     // when the modal opens, so it is never precomputed.
-    const climateNote = climateSource === 'site'
+    const climateNote = calendarBasis === 'grower-choice'
+      ? `Sowing calendar chosen by the grower: ${calendarLabel}.`
+      : climateSource === 'site'
       ? `Sowing calendar from satellite climate records for this site: ${calendarLabel}.`
       : climateSource === 'reference'
         ? `Climate from nearest reference region — ${region?.name} (fallback): ${calendarLabel}.`
@@ -1673,13 +1676,17 @@ function FacilitatorCropsPageInner() {
   // down, offline with nothing cached); no site at all assumes summer rain.
   // `climateSource` travels with the pattern so every surface that prints the
   // climate can say WHICH of the three it is printing.
-  // The grower's own answer about frost ("Have you seen frost here?") outranks the grid cell
-  // in the two cases where they can disagree; `calendarBasis` says which one decided.
-  const siteCalendar = siteClimate
-    ? calendarForGrower(siteClimate, siteSurvey?.productionConditions?.frost)
-    : null;
-  const pattern: RainPattern = siteCalendar?.pattern ?? mapPattern;
-  const calendarBasis = siteCalendar?.basis ?? 'site-climate';
+  // Precedence (lib/site-climate.ts sowingCalendarInUse): the calendar the grower CHOSE, else
+  // the site climate moved by their frost answer, else the reference fallback. A grower knows
+  // whether frost reaches their beds; the grid cell does not (2026-11-10 accuracy audit:
+  // Mbombela, Tzaneen, Worcester). `calendarBasis` says which one decided; `climateSource`
+  // below still says where the AUTOMATIC calendar came from. Choosing is an optional
+  // override in Auto-suggest, never a question the grower must answer.
+  const calendarScopeId = surveySiteId ?? planningWorkspaceId ?? null;
+  const chosenCalendar = sowingCalendarChoiceFor(plan, calendarScopeId);
+  const calendarInUse = sowingCalendarInUse({ chosen: chosenCalendar, site: siteClimate, observedFrost: siteSurvey?.productionConditions?.frost, reference: mapPattern });
+  const pattern: RainPattern = calendarInUse.pattern;
+  const calendarBasis: CalendarBasis = calendarInUse.basis === 'reference' ? 'site-climate' : calendarInUse.basis;
   // Rain season for the label: the site's own, else the reference region's rain timing (which
   // IS a rain season), else unknown with no site.
   const calendarRainSeason = siteClimate?.rainSeason ?? region?.pattern ?? undefined;
@@ -1712,6 +1719,28 @@ function FacilitatorCropsPageInner() {
   // Only the shared intact foreign/disjoint proof can exclude another source.
   const legacyPlantings = useMemo(() => plantings.filter(p => !hasGrowerCycleMarker(p)), [plantings]);
   const markedPlantings = useMemo(() => plantings.filter(hasGrowerCycleMarker), [plantings]);
+  // Sowings the site's calendar no longer offers. legacyPlantings is the right set: already
+  // limited to this page's beds, and without the grower-cycle rows whose basis is the
+  // grower's own estimates rather than the catalogue months. Nothing here moves a sowing.
+  const outOfCalendar = useMemo(
+    () => allowCataloguePlanning ? sowingsOutsideCalendar(legacyPlantings.filter((planting) => beds.some((bed) => bed.id === planting.bedId)), pattern, { year: currentYear, month: currentMonth }) : [],
+    [allowCataloguePlanning, legacyPlantings, beds, pattern, currentYear, currentMonth],
+  );
+  const outOfCalendarScope = calendarScopeId ?? 'no-site';
+  const outOfCalendarKey = outOfCalendarSignature(outOfCalendar, pattern);
+  // Read after mount only: the page is server-rendered and localStorage does not exist there.
+  const [hiddenCalendarNotice, setHiddenCalendarNotice] = useState<Record<string, string>>({});
+  useEffect(() => {
+    try {
+      const raw = JSON.parse(localStorage.getItem(SOWING_CALENDAR_NOTICE_HIDDEN_KEY) || '{}');
+      if (raw && typeof raw === 'object' && !Array.isArray(raw)) setHiddenCalendarNotice(raw as Record<string, string>);
+    } catch { /* private window or blocked storage: the notice simply shows */ }
+  }, []);
+  function hideCalendarNotice() {
+    const next = { ...hiddenCalendarNotice, [outOfCalendarScope]: outOfCalendarKey };
+    setHiddenCalendarNotice(next);
+    try { localStorage.setItem(SOWING_CALENDAR_NOTICE_HIDDEN_KEY, JSON.stringify(next)); } catch { /* the notice stays hidden for this visit only */ }
+  }
   const hasOwnRecords = markedPlantings.length > 0;
   const legacyAddBlocked = (bedId: string, rows = plan?.plantings ?? []) => rows.some(p => hasGrowerCycleMarker(p)
     && (p.bedId === bedId || !currentBedIds.has(p.bedId)
@@ -1737,6 +1766,15 @@ function FacilitatorCropsPageInner() {
         variety: variety.trim().slice(0, 120) || undefined,
       };
       return { ...base, version: 1, plantings: [...base.plantings, next], updatedAt: Date.now() };
+    });
+  }
+  // A calendar choice rides the page's ordinary autosave (no save call here, no undo entry):
+  // it is a setting of the plan book, not an edit of a sowing.
+  function chooseSowingCalendar(calendar: RainPattern | null) {
+    if (!calendarScopeId || !currentPlanningScopeAllowed()) return;
+    setPlan((prev) => {
+      const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
+      return { ...withSowingCalendarChoice(base, calendarScopeId, calendar), version: 1 as const, updatedAt: Date.now() };
     });
   }
   function updatePlanting(id: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
@@ -2607,7 +2645,15 @@ function FacilitatorCropsPageInner() {
           </button>
         )}
         {!simple && <LessonLink id="crops:planner" label={cropUi(lang, 'Learn', 'Funda')} />}
-        {!simple && allowCataloguePlanning && (climateSource === 'site' ? (
+        {!simple && allowCataloguePlanning && (calendarBasis === 'grower-choice' ? (
+          <span
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
+            title="You chose this sowing calendar in Auto-suggest a plan"
+            style={{ fontSize: 13, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
+          >
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · chosen by you
+          </span>
+        ) : climateSource === 'site' ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
             title="Sowing calendar derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
@@ -2888,6 +2934,26 @@ function FacilitatorCropsPageInner() {
               now={{ year: new Date().getFullYear(), month: currentMonth }}
               saveContext={nurserySaveContext} onSettings={saveNurserySettings}
             />}
+
+            {outOfCalendar.length > 0 && hiddenCalendarNotice[outOfCalendarScope] !== outOfCalendarKey && (
+              <section aria-label="Sowings outside the sowing calendar" className="rounded-2xl px-4 py-3 mb-3 font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '4px solid var(--gold)' }}>
+                <h2 className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>{outOfCalendar.length === 1 ? '1 planned sowing is' : `${outOfCalendar.length} planned sowings are`} outside this site&apos;s sowing months</h2>
+                {/* Say WHY these are out of season, and only what is known: the grower's own calendar
+                    choice explains it outright; otherwise a plan that may predate the correction. */}
+                {calendarBasis === 'grower-choice'
+                  ? <p style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }} className="mt-1">You chose the &quot;{SOWING_CALENDAR_LABEL[pattern]}&quot; calendar for this site. These sowings were planned on a different one.</p>
+                  : planMayPredateCorrection(plan?.planNotesAt) && <p style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }} className="mt-1">Sowing months and calendars were corrected on 10 November 2026. A plan made before then can be out of season.</p>}
+                <ul className="mt-2 space-y-1" style={{ fontSize: 14, lineHeight: 1.45, color: 'var(--text-primary)' }}>
+                  {outOfCalendar.slice(0, 6).map((row) => <li key={row.plantingId}>{outOfCalendarLine(row, beds.find((bed) => bed.id === row.bedId)?.label)}</li>)}
+                  {outOfCalendar.length > 6 && <li>and {outOfCalendar.length - 6} more.</li>}
+                </ul>
+                <p className="mt-2" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>Nothing has been changed. Move each sowing, or keep it if you know it works on your land.</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button type="button" className="min-h-11 px-4 rounded-full font-sans font-semibold" style={{ fontSize: 14, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }} onClick={openAutoSuggest}>Make a new plan</button>
+                  <button type="button" className="min-h-11 px-4 rounded-full font-sans" style={{ fontSize: 14, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)' }} onClick={hideCalendarNotice}>Hide this list</button>
+                </div>
+              </section>
+            )}
 
             {/* Timeline. The month header and the bed-rows body are TWO
                 separate horizontal-scroll regions kept in sync by JS
@@ -3642,6 +3708,7 @@ function FacilitatorCropsPageInner() {
           generating={autoGenerating} idealMeta={idealMeta}
           hasCurrentPlantings={plantings.length > 0}
           pattern={pattern} calendarLabel={calendarLabel} calendarBasis={calendarBasis} climateSource={climateSource} referenceName={region?.name ?? null}
+          calendarChoice={chosenCalendar} automaticCalendar={calendarInUse.automatic} canChooseCalendar={!!calendarScopeId} onCalendarChoice={chooseSowingCalendar}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
@@ -5983,11 +6050,14 @@ const TIMING_OPTIONS: { key: PlanTiming; label: string; blurb: string }[] = [
   { key: 'fromNow', label: IDEAL_PLAN_COPY.fromNowLabel, blurb: IDEAL_PLAN_COPY.fromNowBlurb },
   { key: 'idealYear', label: IDEAL_PLAN_COPY.idealLabel, blurb: IDEAL_PLAN_COPY.idealBlurb },
 ];
+/** localStorage map of scope id to the out-of-season list signature the grower chose to hide. */
+const SOWING_CALENDAR_NOTICE_HIDDEN_KEY = 'imbewu_sowing_calendar_notice_hidden_v1';
+
 function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
   groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
-  pattern, calendarLabel, calendarBasis, climateSource, referenceName, rotateCrops, onRotateCrops,
+  pattern, calendarLabel, calendarBasis, climateSource, referenceName, calendarChoice, automaticCalendar, canChooseCalendar, onCalendarChoice, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   siteClimate, siteObservationNotes, beds, siteId, nurserySettings, currentPlantings, now, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -6015,6 +6085,13 @@ function AutoSuggestModal({
   climateSource: 'site' | 'reference' | 'none';
   /** Reference-region name when climateSource is 'reference'. */
   referenceName: string | null;
+  /** The calendar the grower chose for this site, or null when the app decides. */
+  calendarChoice: RainPattern | null;
+  /** The calendar the app would use with no choice, so the "Let the app decide" option can name it. */
+  automaticCalendar: RainPattern;
+  /** False with no site or workspace to save a choice against. */
+  canChooseCalendar: boolean;
+  onCalendarChoice: (calendar: RainPattern | null) => void;
   rotateCrops: boolean; onRotateCrops: (v: boolean) => void;
   allowVinesInBeds: boolean; onAllowVinesInBeds: (v: boolean) => void;
   allowMixedCropsInBed: boolean; onAllowMixedCropsInBed: (v: boolean) => void;
@@ -6233,15 +6310,33 @@ function AutoSuggestModal({
             </div>
 
             <div className="rounded-xl px-3 py-2.5" style={{ background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)' }}>
-              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>Climate used automatically</div>
+              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>{calendarBasis === 'grower-choice' ? 'Sowing calendar you chose' : 'Climate used automatically'}</div>
               <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-forest-800)' }}>
                 {(() => { const PatternIcon = PATTERN_META[pattern].Icon; return <PatternIcon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />; })()} {calendarLabel}
               </div>
               {siteClimate && sowingCalendarReasons(siteClimate, { pattern, basis: calendarBasis }).map((line) => (
                 <p key={line} className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{line}</p>
               ))}
+              {calendarBasis === 'grower-choice' && !siteClimate && (
+                <p className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>You chose this calendar yourself.</p>
+              )}
+              {canChooseCalendar && (
+                <>
+                  <label className="block font-sans mt-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+                    Sowing calendar for this site
+                    <select className="mt-1 w-full rounded-lg border px-3 min-h-11 font-sans" style={{ fontSize: 14, background: 'var(--bg-0)', color: 'var(--text-primary)', borderColor: 'var(--border)' }}
+                      value={calendarChoice ?? ''} onChange={(event) => onCalendarChoice(SOWING_CALENDAR_OPTIONS.find((option) => option.value === event.target.value)?.value ?? null)}>
+                      <option value="">Let the app decide: {SOWING_CALENDAR_LABEL[automaticCalendar]}</option>
+                      {SOWING_CALENDAR_OPTIONS.map((option) => <option key={option.value} value={option.value}>{sowingCalendarOptionText(option)}</option>)}
+                    </select>
+                  </label>
+                  <p className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>Choose one only if you know your land. The months offered for every crop change with it. Crops already on your plan stay where they are.</p>
+                </>
+              )}
               <p className="font-mono mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                {climateSource === 'site'
+                {calendarBasis === 'grower-choice'
+                  ? 'You chose this calendar. Choose "Let the app decide" to go back to the climate records.'
+                  : climateSource === 'site'
                   ? 'Derived from satellite climate records for this site. You do not need to choose a sowing calendar.'
                   : climateSource === 'reference'
                     ? `Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: ${referenceName ?? 'regional point'} (fallback).`
