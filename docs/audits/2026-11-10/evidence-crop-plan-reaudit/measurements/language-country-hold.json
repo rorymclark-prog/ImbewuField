@@ -1,0 +1,174 @@
+{
+ "view": {
+  "name": "gate-phone-zu",
+  "viewport": "390x844",
+  "devicePixelRatio": 1,
+  "theme": "earth light",
+  "level": "simple",
+  "lang": "en vs zu",
+  "sectionsOpened": false,
+  "countryHold": "left unconfirmed",
+  "appTextScale": 1,
+  "url": "/facilitator/crops",
+  "site": "public sample farm",
+  "servedBuild": {
+   "branch": "claude/blissful-pasteur-1c4ne6",
+   "sha": "3303ed3"
+  },
+  "siteClimate": {
+   "locationDataStatuses": [],
+   "fruitReferenceBarsShown": false,
+   "plannerShown": false
+  }
+ },
+ "method": "Text runs identical in the English and isiZulu captures of the same view, sorted by rule. Heuristic: check the lists.",
+ "rules": {
+  "translated": "the isiZulu run does not occur in the English capture",
+  "figures, units and dates": "only digits, punctuation, units and month names remain",
+  "crop, plant, bed and app names": "a catalogue crop name, one of the sample farm's four plants, \"Bed n\"/\"Plot n\", or an app name, optionally followed by figures",
+  "sentences of 9 or more words": "guidance, caveats and explanations. Some of this is sourced farming copy that must stay English until reviewed; this script cannot tell which",
+  "short labels of 8 words or fewer": "headings, buttons, field labels and status words, and fragments of them where a label is split across elements: the interface text that could carry an isiZulu draft"
+ },
+ "summary": {
+  "translated": {
+   "distinctRuns": 8,
+   "occurrences": 8
+  },
+  "figures, units and dates": {
+   "distinctRuns": 2,
+   "occurrences": 3
+  },
+  "crop, plant, bed and app names": {
+   "distinctRuns": 0,
+   "occurrences": 0
+  },
+  "sentences of 9 or more words": {
+   "distinctRuns": 9,
+   "occurrences": 9
+  },
+  "short labels of 8 words or fewer": {
+   "distinctRuns": 23,
+   "occurrences": 25
+  }
+ },
+ "interfaceLabels": {
+  "translatedRuns": 8,
+  "unchangedShortLabels": 23,
+  "statement": "23 distinct short labels or label fragments are unchanged English and 8 distinct runs are translated (25 and 8 occurrences)."
+ },
+ "translated": [
+  "Uhambo",
+  "Uhlelo lokukhiqiza",
+  "Izitshalo nezindlu zezilwane ezisemephini yakho",
+  "IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.",
+  "This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.",
+  "Lima, umsizi wakho wokutshala",
+  "Cela usizo",
+  "Isithombe"
+ ],
+ "unchangedShortLabels": [
+  {
+   "text": "record",
+   "count": 2
+  },
+  {
+   "text": "s",
+   "count": 2
+  },
+  {
+   "text": "Site country and region",
+   "count": 1
+  },
+  {
+   "text": "Confirm country details",
+   "count": 1
+  },
+  {
+   "text": "Site country",
+   "count": 1
+  },
+  {
+   "text": "Jurisdiction reference (optional)",
+   "count": 1
+  },
+  {
+   "text": "Agricultural region reference (optional)",
+   "count": 1
+  },
+  {
+   "text": "I confirm these details describe this mapped site.",
+   "count": 1
+  },
+  {
+   "text": "Save country details",
+   "count": 1
+  },
+  {
+   "text": "Confirm the site country before crop planning",
+   "count": 1
+  },
+  {
+   "text": "Review international evidence and readiness",
+   "count": 1
+  },
+  {
+   "text": "Saved sowing entries ·",
+   "count": 1
+  },
+  {
+   "text": "Harvest targets",
+   "count": 1
+  },
+  {
+   "text": "Your buyer-demand records",
+   "count": 1
+  },
+  {
+   "text": "Your growing estimates",
+   "count": 1
+  },
+  {
+   "text": "Automatic plan from your estimates",
+   "count": 1
+  },
+  {
+   "text": "Saved planned nursery batches",
+   "count": 1
+  },
+  {
+   "text": "DEMO — references stay in this sample session.",
+   "count": 1
+  },
+  {
+   "text": "Check saved nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Nursery planner",
+   "count": 1
+  },
+  {
+   "text": "This site’s trays and growing surface",
+   "count": 1
+  },
+  {
+   "text": "Record expected or actual production",
+   "count": 1
+  },
+  {
+   "text": "Record food kept in store",
+   "count": 1
+  }
+ ],
+ "unchangedSentences": [
+  "Vegetables and staples · Fruit, nuts & berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.",
+  "Country details are available from this device. Live account updates are unavailable.",
+  "The country for this site has not been confirmed. Existing plans and measured maps stay saved.",
+  "Country, language, currency and measurement units are separate choices. These details do not select a planting calendar or approve farming advice. They travel with a site if you explicitly share that site.",
+  "The existing automatic planner uses South African source assumptions. Country details alone cannot approve a new region. Local calendars, forecasts, crop instructions and their PDF/calendar exports are unavailable here until the planning basis is reviewed.",
+  "Your saved sowing entries and mapped measurements remain stored. You can review those entries, keep actual production records and manage your own nursery equipment below. The catalogue nursery forecast is unavailable here. For a saved measured growing space, use Automatic plan from your estimates to review proposed seedling requirements from your own dates and inputs.",
+  "Check the saved plan to review nursery batches or open the separate field seed worksheet for accepted cycles without nursery raising. Field seed sourcing does not require a nursery batch, nursery equipment or a nursery review horizon. References do not record actual sowing, available seeds or live nursery stock.",
+  "Check the current saved plan to load eligible planned nursery batches.",
+  "Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate."
+ ]
+}

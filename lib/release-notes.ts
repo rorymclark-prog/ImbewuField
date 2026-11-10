@@ -41,6 +41,26 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 November 2026', sha: '889438f66e2df0557bc1b07061b09a2e94b7f5a8', changes: [
+    'Choose your own sowing calendar if you know your land better than the climate records.',
+    'The crop plan lists planned sowings that are outside your sowing months.',
+    'The sample farm plan now follows the sowing months for its own hot area.',
+  ], tour: [{ title: 'Choose your sowing calendar', where: 'Crop plan → Auto-suggest a plan', href: '/facilitator/crops',
+    detail: 'Open Auto-suggest a plan and look for "Sowing calendar for this site". Pick the calendar that fits your land, or leave it on "Let the app decide". If a planned sowing is outside the months of the calendar in use, the plan lists it above the beds. Nothing is moved for you.' }] },
+  { when: '10 November 2026', sha: 'c32f6a39a6bf93d71fa674437ecb570716532b65', changes: [
+    'Hot, frost-free farms (Lowveld, KZN coast) now get the right sowing season.',
+    'Sowing months corrected for hot areas, the Western Cape and peas in frost areas.',
+    'The crop plan shows which sowing calendar it uses, and why.',
+    'A weekly target warns when a sowing could be ready before the buyer wants it.',
+  ], tour: [{ title: 'Check your sowing months', where: 'Menu → Crop plan', href: '/facilitator/crops',
+    detail: 'In a hot area with no frost, the plan now sows most vegetables from February to September, not in midsummer. Months also changed for the Western Cape and for peas where there is frost. A plan you made before keeps its old dates. Open Auto-suggest a plan to see which calendar is used and to make a new plan.' }] },
+  { when: '10 November 2026', sha: 'd3897bdc169f137f5b93683cd00dbdb73d0d3e12', changes: [
+    'Crop names on the plan calendar are easier to read, in light and dark.',
+    'Crop bars and "+ crop" are bigger to tap on a phone.',
+    'Crop plan pop-ups close with Escape and keep keyboard focus.',
+    'Weekly target totals show one decimal, not six.',
+  ], tour: [{ title: 'Read and tap your crop calendar', where: 'Menu → Crop plan', href: '/facilitator/crops',
+    detail: 'Crop names are dark on their bars, and a one-month crop shows its name beside the bar. On a phone the bars and "+ crop" are taller. A faded bar is still next year’s repeat, not a new plan.' }] },
   { when: '10 November 2026', sha: 'dc48b9c06b6e0cc7e733bc6dd67311d17855b506', changes: [
     'Country details show the next step and planning availability.',
   ] },

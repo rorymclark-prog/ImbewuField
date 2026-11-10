@@ -1,0 +1,5 @@
+The 'Hide this list' handler as published at 73734a40, cut out of the page and run with synthetic identities:
+a render made for account A, then the active account key changed to B before the retained handler ran.
+Account B already held {"site:B":"sigB-existing"}.
+
+writes after a retained account-A handler ran under account B: [["KEY::B","{\"site:A-coordinates\":\"summer|a1:cabbage:1:2.3\"}"]] | state sets: 1

@@ -65,7 +65,7 @@ export interface CropPlanPdfMeta {
   /** Optional page-level notice for clearly identified demonstrations and other special documents. */
   documentNotice?: string;
   /**
-   * "KZN Midlands · Summer rainfall", or an honest "No site set" line.
+   * "KZN Midlands · Winter frost", or an honest "No site set" line.
    *
    * FOR DISPLAY ONLY. Never take this apart again to recover the two halves — see locationLine.
    */
@@ -77,7 +77,7 @@ export interface CropPlanPdfMeta {
    * siteLine is joined with U+00B7 MIDDLE DOT and the split was on an ASCII hyphen, so all seven
    * regions in lib/water-calc.ts produced a one-element array: LOCATION got the whole string and
    * CLIMATE fell through to "Not set" while the climate was sitting right there. Worse where the
-   * pattern label carries its own hyphen — "Karoo · All-year rainfall" split on THAT, printing
+   * pattern label carries its own hyphen — "Karoo · All-year rainfall" (the label this used to carry) split on THAT, printing
    * LOCATION "Karoo · All" and CLIMATE "year rainfall".
    *
    * The lesson is not "use the right separator". A display string is a rendering, and parsing one
@@ -85,7 +85,7 @@ export interface CropPlanPdfMeta {
    * and climate label are two values at the source; they travel as two values.
    */
   locationLine: string;
-  /** The climate pattern, on its own: "Summer rainfall". Empty when genuinely unknown. */
+  /** The climate pattern, on its own: "Hot area, no frost · summer rain" (lib/sowing-calendar-label.ts). Empty when genuinely unknown. */
   climateLine: string;
   /**
    * The site's rainfall/frost pattern as DATA, not the rendered climateLine text — used to gate

@@ -65,6 +65,120 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 10 Nov 2026 — Sample farm: a fixed sowing calendar of its own (no farming number changed)
+- **Record:** Update 3 in `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-102). Rory: "go ahead with the
+  fixed calendar for the sample farm".
+- **Why:** the sample's calendar came from a live climate call. Where that route requires sign-in (the preview) it is
+  refused, and the sample's hot-area plan sat beside a light-frost crop picker.
+- **What:** the sample declares the hot-area calendar in its sample data (`lib/demo-farm.ts DEMO_SOWING_CALENDAR`, read
+  through `lib/sample-sowing-calendar.ts`). Sample mode and the sample's own site only. Header, Auto-suggest
+  box, plan notes and PDF say "set for the sample farm"; nothing is presented as climate records. A visitor's own choice
+  still wins. The guest lane and the climate route are unchanged.
+- **Checked:** affected tests and typecheck locally; the sample farm in a browser with the climate route aborted and
+  answering (390 px light and dark, 1280 px), a visitor's choice and the way back, and the PDF line.
+
+### 10 Nov 2026 — Crop plan: fixes from the independent review of the calendar work (no farming number changed; full suite still required before merge)
+- **Record:** Update 2 in `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-092–CP-099). Commit `9a980a5c`.
+  Codex reviewed PR #1328 at `2218228e` and `0c005462`; each fault was reproduced before it was changed.
+- **Fixed:** a NASA POWER missing-value marker was read as a record low (`recordMinimumC` now uses `cleanPowerValue`);
+  a hidden out-of-season list did not return when its recommended months changed; the list judged a saved plan against
+  a fallback calendar when a mapped site's climate had not loaded (seen on the hosted sample farm); the plan PDF did not
+  say the grower chose the calendar. Frost wording now says grid estimates, not a lower bound.
+- **Also fixed (CP-100):** "Hide this list" was remembered under a browser key not tied to the account, holding the
+  site id and crop list; it is now stored per account like the rest of the farm's data.
+- **Also fixed (CP-101):** a "Hide this list" handler kept past a change of account could write the old account's site
+  into the new account's record. It now asks the page's own actor and context admission and writes only under its own
+  render's key; choosing a calendar asks the same.
+- **Hosted preview at `73734a4`:** the saved-plan path (fresh plan, old plan, reloads, hide, clear) and two plan PDFs,
+  signed out, in guest storage.
+- **Hosted preview at `292bd10`:** no false list for a fresh sample visitor. Its climate request is refused (401) because
+  the preview requires sign-in and the route is outside the sample guest lane; production answers it today.
+- **Open:** the calendar page and Atlas do not follow a chosen calendar or use the planner's calendar names (CP-097);
+  13 crop-and-place pairs share no month with the regional guide and are named with a disposition each
+  (Mbombela and Tzaneen; Polokwane, Pretoria and Rustenburg; George). Guide overlap is not an accuracy figure.
+- **Checked:** 284 affected test files (4,125 tests) and typecheck locally; the sample farm with its climate blocked, and
+  a real local farm through fresh plan, old saved plan, reloads, hide, clear and PDF, in a browser on a local server.
+  **Not checked:** the hosted preview at this head, a signed-in account or second device, the calendar page and Atlas in
+  a browser. The 44 places are now regression evidence; no held-back places exist yet.
+
+### 10 Nov 2026 — Crop plan: grower's own calendar choice, and the out-of-season list (saved-plan field added; full suite required before merge)
+- **Record:** the update section of `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-078, CP-089, CP-091).
+  Rory: "go ahead with decisions 2 and 3". Commit `f11d5d09`.
+- **Choice:** Auto-suggest a plan has "Sowing calendar for this site" (four calendars or "Let the app decide"). Saved with
+  the plan per site (`CropPlanState.sowingCalendarChoices`; older plans still load). Authority order in
+  `lib/site-climate.ts` `sowingCalendarInUse`: the grower's choice, the climate reading moved by their frost answer, the
+  regional fallback. The screen says what the climate records would give, and warns when the choice is warmer than
+  records that show frost.
+- **Out-of-season list:** above the bed calendar, planned sowings the calendar in use does not offer, with the months it
+  does offer (`lib/sowing-calendar-review.ts`). Nothing is moved. Hideable per site; returns when the list or calendar changes.
+- **Sample farm:** four sowings written for the old hard-frost season moved to in-season months on its own hot-area
+  calendar (`lib/demo-farm.ts`); no bed is overbooked in any opening month.
+- **Tests:** `sowing-calendar-choice`, `sowing-calendar-choice-ui`; 281 affected files (4,081 tests) green locally.
+- **Open:** the choice is device-local, like the plan; whether an early-ready sowing should still count toward a target
+  (CP-079); the open source questions listed in the entry below.
+
+### 10 Nov 2026 — Crop plan accuracy fixes (farming data changed; full suite required before merge)
+- **Record:** `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-073–CP-083 dispositions, CP-086–CP-090),
+  evidence in `evidence-crop-plan-accuracy-fixes/`. Rory: "go ahead and fix the accuracy issues".
+- **Calendar choice** (`lib/koppen-global.ts` `sowingCalendarFor`, `lib/site-climate.ts`): frost is read from the site's
+  record minimum temperature instead of a mean and an aridity class; the hot-area column is chosen by frost and heat
+  (record minimum ≥ 2 °C, coldest month ≥ 16 °C, hottest ≥ 24 °C), not by rain timing; rain timing is a separate
+  reading (`rainSeason`); a close call is flagged; the grower's own frost answer can move it one column
+  (`calendarForGrower`). 11 of 44 audited places change calendar; the two climate records disagree at 2, down from 9.
+- **Sowing months** (`lib/crop-catalog.ts`): 39 rows in 29 crops corrected to a source row named in each comment:
+  16 hot-area rows (KZN DARD Table 6 hot column), 5 hard-frost rows (peas Jul–Sep), 17 Western Cape rows (the seed
+  industry's regional guide — secondary, and said to be), cowpea in warm areas. Sources as text in
+  `research/crop-sources/_kzn-table6-rows.json` and `_sansor-sowing-guide.json`.
+- **Agreement with the regional guide:** Lowveld 35% → 61%, KZN coast 47% → 72%, all regions but the Western Cape
+  63% → 71%; crop-site pairs sharing no month 72 → 12. The Western Cape figure is by construction and is not quoted.
+- **On screen:** the planner names the calendar ("Hot area, no frost · summer rain"), shows the readings behind it and
+  says when a site is close to a line; a weekly target warns when a linked sowing could be ready before the buyer's
+  window (the credit itself is unchanged); the coldest sites are told frost outlasts August.
+- **Tests:** new `crop-calendar-sources`, `sa-calendar-real-sites`, `sowing-calendar-label`; eight existing tests
+  rewritten with reasons. Typecheck clean; 212 affected test files green locally; full suite runs in CI.
+- **Open:** KZN table still second-hand (CP-083); heat check (CP-080); Mbombela and Tzaneen land on the light-frost
+  calendar; saved plans keep old months (CP-089); a direct calendar choice for growers is a product decision.
+  `PLAN_VERSION` untouched.
+
+### 10 Nov 2026 — Crop plan accuracy audit (no farming data changed)
+- **Record:** `docs/audits/2026-11-10/crop-plan-accuracy-claude.md`, findings CP-073–CP-083, with the scripts and
+  outputs in `evidence-crop-plan-accuracy/`. The planner's own functions were run for 44 South African and 18 other
+  places against 20 years of independent daily weather and a published regional sowing guide.
+- **Holds:** the weekly-target and yield arithmetic; frost safety at 42 of 44 sites; the interior calendars (70–79%
+  agreement with the regional guide); no catalogue plan is computed outside South Africa.
+- **Wrong:** seven Lowveld and Limpopo sites with no frost day in 20 years are put on the hard-frost Highveld calendar (35% agreement;
+  tomatoes shown for August–October where the region plants January–July). Durban and the sample farm get the
+  light-frost calendar (42%). The Western Cape calendar copies the interior's for nine crops. Harvest months are the
+  late edge, by one to three months for tray crops, and weekly targets are matched to them.
+- **Not verified:** the KZN source tables were offline, so source comparisons use the repo's own transcriptions.
+- **Next:** nothing approved. Every fix changes farming data and needs a source per month, the full suite and Rory.
+
+### 10 Nov 2026 — Crop plan steps 1 and 2 (on PR #1328, not merged)
+- **Step 1, readable calendar (done, `1cedb160` and `dbdf0d6b`):** bar labels in ink on their fills, year two fades
+  only its fill, one-month bars carry their name beside them, an opaque pinned header, dark-mode month labels, wrapped
+  notes, three wording slips, and weekly-target totals at one decimal. Contrast failures 23 / 43 / 46 / 69 → 0 in the
+  four default views; checked by measurement and by eye at 390px light and dark.
+- **Step 2, touch and keyboard (done, `676b2e22`):** the three crop sheets are named dialogs that take focus, hold Tab,
+  close on Escape and return focus (0 of 3 before, 3 of 3 now, at 390px and 1280px). On touch or a narrow window bars,
+  "+ crop", Home, Close and the two main buttons are 44px; controls between 24 and 44px in Simple at 390px went from
+  37 to 0. No control is under 24px without an exception (was 5, 15 with sections open). One h1. The calendar now pans
+  to its last month in All tools on a phone (CP-084).
+- **Evidence:** `docs/audits/2026-11-10/evidence-crop-plan-steps-1-2/`. Affected tests 550 of 550; full suite on CI.
+- **Still open from the plan:** steps 3 to 7, Rory's three decisions (CP-047, CP-048, CP-049), and CP-085.
+
+### 10 Nov 2026 — Crop plan re-audit and plan (no code changed)
+- **Record:** `docs/audits/2026-11-10/crop-plan-reaudit-claude.md`, measured on released `8a4d1fd` with the sample farm.
+  Findings CP-047–CP-072 with 17 screenshots, 25 measurement files, the four scripts that produce them and a README
+  with the exact commands and limits. Revised after Codex's independent review of the first version (six points,
+  record and evidence only).
+- **Decisions waiting on Rory:** the country hold now replaces the planner for every unconfirmed site, the sample
+  included (CP-047); the bed calendar sits two phone screens down in Simple mode (CP-048); two panels are both
+  called "Harvest targets" (CP-049).
+- **Measured faults:** crop-bar labels at 1.61–3.71:1 read from pixels; three pop-up sheets with no dialog role, no
+  Escape and no focus handling; a see-through pinned month header in the default theme; weekly target totals showing six decimals.
+- **Next:** nothing is approved for implementation. The three decisions stay with Rory; steps 1 (readable calendar)
+  and 2 (touch and keyboard) do not depend on them but still wait for his go.
+
 ### 27 Oct 2026 — Wave 28: overlays keep keyboard focus; Lima opens from the keyboard
 - **Overlays (Sonnet #1134, reviewed):** `lib/use-dialog-focus.ts` moves focus into Settings, the drawer, the Add sheet,
   evidence sheets, profile, POPIA consent, base-photo import, lesson link, the confirm dialog and the records entry

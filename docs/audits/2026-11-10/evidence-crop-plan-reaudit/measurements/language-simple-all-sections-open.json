@@ -1,0 +1,1344 @@
+{
+ "view": {
+  "name": "phone-light-simple-zu-expanded",
+  "viewport": "390x844",
+  "devicePixelRatio": 1,
+  "theme": "earth light",
+  "level": "simple",
+  "lang": "en vs zu",
+  "sectionsOpened": true,
+  "countryHold": "confirmed as ZA",
+  "appTextScale": 1,
+  "url": "/facilitator/crops",
+  "site": "public sample farm",
+  "servedBuild": {
+   "branch": "claude/blissful-pasteur-1c4ne6",
+   "sha": "3303ed3"
+  },
+  "siteClimate": {
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsShown": true,
+   "plannerShown": true
+  }
+ },
+ "method": "Text runs identical in the English and isiZulu captures of the same view, sorted by rule. Heuristic: check the lists.",
+ "rules": {
+  "translated": "the isiZulu run does not occur in the English capture",
+  "figures, units and dates": "only digits, punctuation, units and month names remain",
+  "crop, plant, bed and app names": "a catalogue crop name, one of the sample farm's four plants, \"Bed n\"/\"Plot n\", or an app name, optionally followed by figures",
+  "sentences of 9 or more words": "guidance, caveats and explanations. Some of this is sourced farming copy that must stay English until reviewed; this script cannot tell which",
+  "short labels of 8 words or fewer": "headings, buttons, field labels and status words, and fragments of them where a label is split across elements: the interface text that could carry an isiZulu draft"
+ },
+ "summary": {
+  "translated": {
+   "distinctRuns": 17,
+   "occurrences": 17
+  },
+  "figures, units and dates": {
+   "distinctRuns": 140,
+   "occurrences": 576
+  },
+  "crop, plant, bed and app names": {
+   "distinctRuns": 28,
+   "occurrences": 65
+  },
+  "sentences of 9 or more words": {
+   "distinctRuns": 164,
+   "occurrences": 198
+  },
+  "short labels of 8 words or fewer": {
+   "distinctRuns": 274,
+   "occurrences": 533
+  }
+ },
+ "interfaceLabels": {
+  "translatedRuns": 17,
+  "unchangedShortLabels": 274,
+  "statement": "274 distinct short labels or label fragments are unchanged English and 17 distinct runs are translated (533 and 17 occurrences)."
+ },
+ "translated": [
+  "Uhambo",
+  "Uhlelo lokukhiqiza",
+  "Izitshalo nezindlu zezilwane ezisemephini yakho",
+  "IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.",
+  "This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.",
+  "Phakamisa uhlelo ngokuzenzakalelayo",
+  "Umbhede",
+  "Engeza isilimo",
+  "Hamba nalolu hlelo",
+  "Draft notice: exported task names, planting times and instructions remain in English pending source and local farming review. Isaziso: amagama emisebenzi, izikhathi zokutshala nemiyalelo kumafayela athunyelwayo kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.",
+  "Engeza 37 imisebenzi ekhalendeni",
+  "Landa uhlelo (PDF)",
+  "Ikhalenda nemisebenzi",
+  "yivule ukuze uphrinte",
+  "Lima, umsizi wakho wokutshala",
+  "Cela usizo",
+  "Isithombe"
+ ],
+ "unchangedShortLabels": [
+  {
+   "text": "Unknown",
+   "count": 68
+  },
+  {
+   "text": "Known part only",
+   "count": 28
+  },
+  {
+   "text": "Calculated",
+   "count": 25
+  },
+  {
+   "text": "Recorded variety: not chosen yet.",
+   "count": 12
+  },
+  {
+   "text": "+ crop",
+   "count": 11
+  },
+  {
+   "text": "Source",
+   "count": 8
+  },
+  {
+   "text": "No new crop cycle starts picking",
+   "count": 7
+  },
+  {
+   "text": "plot",
+   "count": 4
+  },
+  {
+   "text": "· reference",
+   "count": 4
+  },
+  {
+   "text": "(proposed)",
+   "count": 4
+  },
+  {
+   "text": "existing",
+   "count": 4
+  },
+  {
+   "text": "confirm picking months",
+   "count": 4
+  },
+  {
+   "text": "Only proposed plants: no current picking dates.",
+   "count": 4
+  },
+  {
+   "text": "Plant ages & future harvest",
+   "count": 4
+  },
+  {
+   "text": "plants still need an age group.",
+   "count": 4
+  },
+  {
+   "text": "+ Add age group",
+   "count": 4
+  },
+  {
+   "text": "Reference seasons — check place and variety:",
+   "count": 4
+  },
+  {
+   "text": "Needs information",
+   "count": 4
+  },
+  {
+   "text": "Age not recorded",
+   "count": 4
+  },
+  {
+   "text": "Add planting dates",
+   "count": 4
+  },
+  {
+   "text": "Care and what to buy",
+   "count": 4
+  },
+  {
+   "text": "· known part",
+   "count": 3
+  },
+  {
+   "text": "Planned sowing",
+   "count": 3
+  },
+  {
+   "text": "Source field positions",
+   "count": 3
+  },
+  {
+   "text": "Usable starts needed",
+   "count": 3
+  },
+  {
+   "text": "Seeds to sow",
+   "count": 3
+  },
+  {
+   "text": "Whole tray fills",
+   "count": 3
+  },
+  {
+   "text": "Tray footprint",
+   "count": 3
+  },
+  {
+   "text": "Field-position basis: mapped allocation and shared catalogue spacing.",
+   "count": 3
+  },
+  {
+   "text": "Working field calendar:",
+   "count": 3
+  },
+  {
+   "text": "Published calendar readiness envelope",
+   "count": 3
+  },
+  {
+   "text": "Nursery reservation envelope:",
+   "count": 3
+  },
+  {
+   "text": "Source and grower assumptions",
+   "count": 3
+  },
+  {
+   "text": "Coarse monthly planning envelope, not exact sowing dates.",
+   "count": 3
+  },
+  {
+   "text": "No extra field-establishment allowance is included.",
+   "count": 3
+  },
+  {
+   "text": ", 1 proposed",
+   "count": 3
+  },
+  {
+   "text": "First-crop reference:",
+   "count": 3
+  },
+  {
+   "text": "after planting.",
+   "count": 3
+  },
+  {
+   "text": "Age & production references",
+   "count": 3
+  },
+  {
+   "text": "First crop:",
+   "count": 3
+  },
+  {
+   "text": "plant",
+   "count": 3
+  },
+  {
+   "text": "1 plants need age groups",
+   "count": 3
+  },
+  {
+   "text": "Harvest targets",
+   "count": 2
+  },
+  {
+   "text": "Harvest weight unit",
+   "count": 2
+  },
+  {
+   "text": "Reload saved harvest targets",
+   "count": 2
+  },
+  {
+   "text": "Crop",
+   "count": 2
+  },
+  {
+   "text": "Weekly quantity",
+   "count": 2
+  },
+  {
+   "text": "Sales unit",
+   "count": 2
+  },
+  {
+   "text": "For (optional)",
+   "count": 2
+  },
+  {
+   "text": "First harvest month",
+   "count": 2
+  },
+  {
+   "text": "Last harvest month (included)",
+   "count": 2
+  },
+  {
+   "text": "Saleable share (%) (optional)",
+   "count": 2
+  },
+  {
+   "text": "Save harvest target",
+   "count": 2
+  },
+  {
+   "text": "Removing a target keeps its plantings.",
+   "count": 2
+  },
+  {
+   "text": "Demand with no assigned resource remains unresolved.",
+   "count": 2
+  },
+  {
+   "text": ", optional)",
+   "count": 2
+  },
+  {
+   "text": "Fruit, nuts & berries",
+   "count": 2
+  },
+  {
+   "text": ", p. 5",
+   "count": 2
+  },
+  {
+   "text": "· expected when established",
+   "count": 2
+  },
+  {
+   "text": "0 existing; 1 proposed. Products: fruit.",
+   "count": 2
+  },
+  {
+   "text": "Fresh",
+   "count": 2
+  },
+  {
+   "text": "Number of food types",
+   "count": 2
+  },
+  {
+   "text": "record",
+   "count": 2
+  },
+  {
+   "text": "s",
+   "count": 2
+  },
+  {
+   "text": "Optional",
+   "count": 2
+  },
+  {
+   "text": "Country details saved for this sample session only.",
+   "count": 1
+  },
+  {
+   "text": "Your buyer-demand records",
+   "count": 1
+  },
+  {
+   "text": "Demand date entry",
+   "count": 1
+  },
+  {
+   "text": "Your growing estimates",
+   "count": 1
+  },
+  {
+   "text": "Estimate units",
+   "count": 1
+  },
+  {
+   "text": "Unit choice is temporary in this sample.",
+   "count": 1
+  },
+  {
+   "text": "No saved estimate profiles for this context.",
+   "count": 1
+  },
+  {
+   "text": "New estimate profile",
+   "count": 1
+  },
+  {
+   "text": "Crop identity",
+   "count": 1
+  },
+  {
+   "text": "Establishment method",
+   "count": 1
+  },
+  {
+   "text": "Plant density (plants per m²)",
+   "count": 1
+  },
+  {
+   "text": "Harvest weight (kg per m² per cycle)",
+   "count": 1
+  },
+  {
+   "text": "Nursery duration (days)",
+   "count": 1
+  },
+  {
+   "text": "Field entry to first harvest (days)",
+   "count": 1
+  },
+  {
+   "text": "Picking duration (days)",
+   "count": 1
+  },
+  {
+   "text": "Field occupancy (days)",
+   "count": 1
+  },
+  {
+   "text": "Turnaround after clearing (days)",
+   "count": 1
+  },
+  {
+   "text": "I specify the allowed field-entry months",
+   "count": 1
+  },
+  {
+   "text": "Allowed field-entry months (UTC)",
+   "count": 1
+  },
+  {
+   "text": "I supply these as my estimates",
+   "count": 1
+  },
+  {
+   "text": "Save estimate profile",
+   "count": 1
+  },
+  {
+   "text": "Start a new profile",
+   "count": 1
+  },
+  {
+   "text": "Review one measured bed",
+   "count": 1
+  },
+  {
+   "text": "Check saved bed measurements",
+   "count": 1
+  },
+  {
+   "text": "Measured bed",
+   "count": 1
+  },
+  {
+   "text": "Measured area:",
+   "count": 1
+  },
+  {
+   "text": "Not selected",
+   "count": 1
+  },
+  {
+   "text": "Planned field-entry date (UTC)",
+   "count": 1
+  },
+  {
+   "text": "Review estimated capacity and dates",
+   "count": 1
+  },
+  {
+   "text": "Automatic plan from your estimates",
+   "count": 1
+  },
+  {
+   "text": "Check saved design",
+   "count": 1
+  },
+  {
+   "text": "Buyer targets and priority",
+   "count": 1
+  },
+  {
+   "text": "No saved buyer targets for this mapped site.",
+   "count": 1
+  },
+  {
+   "text": "Household and trial growing (no buyer)",
+   "count": 1
+  },
+  {
+   "text": "Add household demand",
+   "count": 1
+  },
+  {
+   "text": "Add trial demand",
+   "count": 1
+  },
+  {
+   "text": "First planning date (UTC)",
+   "count": 1
+  },
+  {
+   "text": "Planning ends before (UTC)",
+   "count": 1
+  },
+  {
+   "text": "Search work limit",
+   "count": 1
+  },
+  {
+   "text": "Your available growing space",
+   "count": 1
+  },
+  {
+   "text": "Review automatic crop plan",
+   "count": 1
+  },
+  {
+   "text": "Saved planned nursery batches",
+   "count": 1
+  },
+  {
+   "text": "DEMO — references stay in this sample session.",
+   "count": 1
+  },
+  {
+   "text": "Check saved nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Site country and region",
+   "count": 1
+  },
+  {
+   "text": "Review country evidence",
+   "count": 1
+  },
+  {
+   "text": "Review or change country details",
+   "count": 1
+  },
+  {
+   "text": "Site country",
+   "count": 1
+  },
+  {
+   "text": "Jurisdiction reference (optional)",
+   "count": 1
+  },
+  {
+   "text": "Agricultural region reference (optional)",
+   "count": 1
+  },
+  {
+   "text": "I confirm these details describe this mapped site.",
+   "count": 1
+  },
+  {
+   "text": "Save country details",
+   "count": 1
+  },
+  {
+   "text": "Plan from weekly demand",
+   "count": 1
+  },
+  {
+   "text": "Nursery planner",
+   "count": 1
+  },
+  {
+   "text": "This site’s trays and growing surface",
+   "count": 1
+  },
+  {
+   "text": "Nursery planning forecast",
+   "count": 1
+  },
+  {
+   "text": "Peak simultaneous trays",
+   "count": 1
+  },
+  {
+   "text": "Peak simultaneous footprint",
+   "count": 1
+  },
+  {
+   "text": "Seasonal tray fills",
+   "count": 1
+  },
+  {
+   "text": "Dated nursery cohorts ·",
+   "count": 1
+  },
+  {
+   "text": "Net growing-surface budgets",
+   "count": 1
+  },
+  {
+   "text": "No nursery growing surface saved for this site.",
+   "count": 1
+  },
+  {
+   "text": "Container stock budgets",
+   "count": 1
+  },
+  {
+   "text": "No container types saved for this site.",
+   "count": 1
+  },
+  {
+   "text": "All nursery demand by week",
+   "count": 1
+  },
+  {
+   "text": "Week envelope",
+   "count": 1
+  },
+  {
+   "text": "Simultaneous trays",
+   "count": 1
+  },
+  {
+   "text": "Footprint (m²)",
+   "count": 1
+  },
+  {
+   "text": "Completeness",
+   "count": 1
+  },
+  {
+   "text": "Download nursery CSV",
+   "count": 1
+  },
+  {
+   "text": "Review seeds and equipment to source",
+   "count": 1
+  },
+  {
+   "text": "Open task planner",
+   "count": 1
+  },
+  {
+   "text": "Nursery units",
+   "count": 1
+  },
+  {
+   "text": "Reload saved nursery settings",
+   "count": 1
+  },
+  {
+   "text": "1. Net nursery growing surface ·",
+   "count": 1
+  },
+  {
+   "text": "Space name",
+   "count": 1
+  },
+  {
+   "text": "Net usable surface (",
+   "count": 1
+  },
+  {
+   "text": "Add nursery space",
+   "count": 1
+  },
+  {
+   "text": "2. Your trays and containers ·",
+   "count": 1
+  },
+  {
+   "text": "Container name",
+   "count": 1
+  },
+  {
+   "text": "Cells per container (optional)",
+   "count": 1
+  },
+  {
+   "text": "Owned containers (optional)",
+   "count": 1
+  },
+  {
+   "text": "Outer width (",
+   "count": 1
+  },
+  {
+   "text": "Outer length (",
+   "count": 1
+  },
+  {
+   "text": "Add container type",
+   "count": 1
+  },
+  {
+   "text": "3. Your crop nursery recipes ·",
+   "count": 1
+  },
+  {
+   "text": "Crop identity for nursery recipe",
+   "count": 1
+  },
+  {
+   "text": "Nursery model",
+   "count": 1
+  },
+  {
+   "text": "Container type",
+   "count": 1
+  },
+  {
+   "text": "Allocated nursery space",
+   "count": 1
+  },
+  {
+   "text": "Your field survival (%, optional)",
+   "count": 1
+  },
+  {
+   "text": "Your nursery duration (weeks, optional)",
+   "count": 1
+  },
+  {
+   "text": "Save crop recipe",
+   "count": 1
+  },
+  {
+   "text": "Year one — from this month",
+   "count": 1
+  },
+  {
+   "text": "Year two — repeat crops; check plant ages",
+   "count": 1
+  },
+  {
+   "text": "Now",
+   "count": 1
+  },
+  {
+   "text": "Vegetables",
+   "count": 1
+  },
+  {
+   "text": "Staple grain",
+   "count": 1
+  },
+  {
+   "text": "Staple crops",
+   "count": 1
+  },
+  {
+   "text": "Your trees & bushes",
+   "count": 1
+  },
+  {
+   "text": "Animal products",
+   "count": 1
+  },
+  {
+   "text": "Your animals",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts & berries on your map",
+   "count": 1
+  },
+  {
+   "text": "2–3 years",
+   "count": 1
+  },
+  {
+   "text": "Established production reference:",
+   "count": 1
+  },
+  {
+   "text": "years. Check the source's cultivar and conditions.",
+   "count": 1
+  },
+  {
+   "text": "Established production:",
+   "count": 1
+  },
+  {
+   "text": "Source production:",
+   "count": 1
+  },
+  {
+   "text": "kg/plant.",
+   "count": 1
+  },
+  {
+   "text": "Hass age benchmarks — irrigated Natal Midlands trial",
+   "count": 1
+  },
+  {
+   "text": "p. 6",
+   "count": 1
+  },
+  {
+   "text": "South Africa (general, SAAGA industry overview)",
+   "count": 1
+  },
+  {
+   "text": "South Africa - warm subtropical regions (Hass cultivar)",
+   "count": 1
+  },
+  {
+   "text": "South Africa - cool subtropical regions (Hass cultivar)",
+   "count": 1
+  },
+  {
+   "text": "3–4 years",
+   "count": 1
+  },
+  {
+   "text": "Grafted mango establishment — regional guide",
+   "count": 1
+  },
+  {
+   "text": "p. 20",
+   "count": 1
+  },
+  {
+   "text": ", p. 3",
+   "count": 1
+  },
+  {
+   "text": ", 2 proposed",
+   "count": 1
+  },
+  {
+   "text": "6–12 months",
+   "count": 1
+  },
+  {
+   "text": "Pod development, not a young green-pod picking calendar",
+   "count": 1
+  },
+  {
+   "text": "p. 7",
+   "count": 1
+  },
+  {
+   "text": "How production changes as plants grow",
+   "count": 1
+  },
+  {
+   "text": "Vegetables & staples",
+   "count": 1
+  },
+  {
+   "text": "Numbers are projections in kg",
+   "count": 1
+  },
+  {
+   "text": "Vegetables & staples:",
+   "count": 1
+  },
+  {
+   "text": "plants",
+   "count": 1
+  },
+  {
+   "text": "2 plants need age groups",
+   "count": 1
+  },
+  {
+   "text": "What the projection assumes",
+   "count": 1
+  },
+  {
+   "text": "Check your farm conditions",
+   "count": 1
+  },
+  {
+   "text": "Update site survey",
+   "count": 1
+  },
+  {
+   "text": "Climate area:",
+   "count": 1
+  },
+  {
+   "text": "Subtropical coast or Lowveld / Bushveld",
+   "count": 1
+  },
+  {
+   "text": "Your survey supplies the observations below.",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts and indigenous foods",
+   "count": 1
+  },
+  {
+   "text": "Assumed variety: Hass",
+   "count": 1
+  },
+  {
+   "text": "Keep roots well drained; water matters during flowering.",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+   "count": 1
+  },
+  {
+   "text": "Regional reference: Mango",
+   "count": 1
+  },
+  {
+   "text": "ARC Climate-Smart Agriculture, module 6, printed pp. 239–242",
+   "count": 1
+  },
+  {
+   "text": "SANBI PlantZAfrica: carissa-macrocarpa",
+   "count": 1
+  },
+  {
+   "text": "Water through the dry season",
+   "count": 1
+  },
+  {
+   "text": "Frost on this farm",
+   "count": 1
+  },
+  {
+   "text": "Sun and drainage",
+   "count": 1
+  },
+  {
+   "text": "Sun: not recorded.",
+   "count": 1
+  },
+  {
+   "text": "Crop varieties to check locally (",
+   "count": 1
+  },
+  {
+   "text": "crops",
+   "count": 1
+  },
+  {
+   "text": "Fordhook Giant, Sakata product page",
+   "count": 1
+  },
+  {
+   "text": "Bright Lights, Starke Ayres product page",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Rodade.",
+   "count": 1
+  },
+  {
+   "text": "Rodade, Sakata product page",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Contender; Star 2000.",
+   "count": 1
+  },
+  {
+   "text": "Contender bush bean, Starke Ayres product page",
+   "count": 1
+  },
+  {
+   "text": "Star 2000 bush bean, Starke Ayres product page",
+   "count": 1
+  },
+  {
+   "text": "LETTUCE INTRODUCTION, KZN DARD, p. 2",
+   "count": 1
+  },
+  {
+   "text": "Brigadier Lettuce Seeds, Starke Ayres product page",
+   "count": 1
+  },
+  {
+   "text": "LETTUCE INTRODUCTION, KZN DARD, p. 1",
+   "count": 1
+  },
+  {
+   "text": "COLE CROPS, KZN DARD, p. 3",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Conquistador.",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Chantenay Karoo; Kuroda.",
+   "count": 1
+  },
+  {
+   "text": "Chantenay Karoo, Sakata product page",
+   "count": 1
+  },
+  {
+   "text": "Kuroda, Sakata product page",
+   "count": 1
+  },
+  {
+   "text": "Food, production kg and growing space graphs",
+   "count": 1
+  },
+  {
+   "text": "Food and growing space",
+   "count": 1
+  },
+  {
+   "text": "Include kept food",
+   "count": 1
+  },
+  {
+   "text": "Stored",
+   "count": 1
+  },
+  {
+   "text": "Frozen",
+   "count": 1
+  },
+  {
+   "text": "Dried",
+   "count": 1
+  },
+  {
+   "text": "Fermented",
+   "count": 1
+  },
+  {
+   "text": "Processed",
+   "count": 1
+  },
+  {
+   "text": "Fresh food",
+   "count": 1
+  },
+  {
+   "text": "Harvested or produced this month, including staple crops.",
+   "count": 1
+  },
+  {
+   "text": "Fresh + kept food",
+   "count": 1
+  },
+  {
+   "text": "Planned pantry food",
+   "count": 1
+  },
+  {
+   "text": "Recorded kept food",
+   "count": 1
+  },
+  {
+   "text": "What is included in kept food?",
+   "count": 1
+  },
+  {
+   "text": "Production in kilograms",
+   "count": 1
+  },
+  {
+   "text": "Crop-cycle estimates",
+   "count": 1
+  },
+  {
+   "text": "Monthly production",
+   "count": 1
+  },
+  {
+   "text": "Food in store",
+   "count": 1
+  },
+  {
+   "text": "See weights and information still needed",
+   "count": 1
+  },
+  {
+   "text": "Onions: 5.5 kg for its full cycle",
+   "count": 1
+  },
+  {
+   "text": "Garlic: 2.4 kg for its full cycle",
+   "count": 1
+  },
+  {
+   "text": "Butternut: 7.2 kg for its full cycle",
+   "count": 1
+  },
+  {
+   "text": "Broccoli: 1.9 kg for its full cycle",
+   "count": 1
+  },
+  {
+   "text": "Crop growing space",
+   "count": 1
+  },
+  {
+   "text": "Occupied",
+   "count": 1
+  },
+  {
+   "text": "Free between crops",
+   "count": 1
+  },
+  {
+   "text": "Record expected or actual production",
+   "count": 1
+  },
+  {
+   "text": "Product",
+   "count": 1
+  },
+  {
+   "text": "Month",
+   "count": 1
+  },
+  {
+   "text": "Which figure?",
+   "count": 1
+  },
+  {
+   "text": "Amount",
+   "count": 1
+  },
+  {
+   "text": "Unit",
+   "count": 1
+  },
+  {
+   "text": "My price per unit (R)",
+   "count": 1
+  },
+  {
+   "text": "Optional · your own price",
+   "count": 1
+  },
+  {
+   "text": "Note",
+   "count": 1
+  },
+  {
+   "text": "Add production record",
+   "count": 1
+  },
+  {
+   "text": "Record food kept in store",
+   "count": 1
+  },
+  {
+   "text": "Original food",
+   "count": 1
+  },
+  {
+   "text": "Name of food in store",
+   "count": 1
+  },
+  {
+   "text": "How is it kept?",
+   "count": 1
+  },
+  {
+   "text": "Months with food in store",
+   "count": 1
+  },
+  {
+   "text": "Stock note",
+   "count": 1
+  },
+  {
+   "text": "Add stock record",
+   "count": 1
+  },
+  {
+   "text": "Or:",
+   "count": 1
+  },
+  {
+   "text": "Future harvest PDF",
+   "count": 1
+  },
+  {
+   "text": "Detailed reference PDF",
+   "count": 1
+  },
+  {
+   "text": "What each file contains",
+   "count": 1
+  }
+ ],
+ "unchangedSentences": [
+  "Vegetables and staples · Fruit, nuts & berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.",
+  "Country details are available from this device. Live account updates are unavailable.",
+  "Record what a market, restaurant or box scheme wants. Crop names identify your records. Use your own growing estimates below to review capacity; saving a target does not approve local farming advice or promise supply.",
+  "Weight units change entry and display only. Saved weights stay in kilograms. Use decimals with a dot or comma; no grouping, fractions or unit suffixes. Pack counts, sales units, dates and saleable share are unchanged.",
+  "Use your own harvest weight per sales unit and saleable share. Blank values stay saved as unknown; own-cycle capacity waits for them. Trays here contain harvested produce, not nursery seedlings.",
+  "Targets are saved with this site’s crop plan on this device.",
+  "Buyer demand is separate from crop capacity, observed harvests and sales.",
+  "Use your own estimates with an existing measured bed, in any country. Crop names identify your records only. These calculations do not use catalogue growing instructions or approve local suitability.",
+  "Units change entry and display only. Saved density stays in plants per m² and harvest weight in kg per m² per cycle. Durations, whole plant counts and UTC dates keep their meaning.",
+  "Leave unknown numbers blank. Nursery duration is required only for transplants. Field occupancy must include the full picking period. Zero is retained as entered; it is never treated as missing.",
+  "An unspecified window stays missing. Specifying a window with no months permits no field-entry date.",
+  "Provided profile values are recorded as grower estimates at the time you save or review. They are not independently verified evidence.",
+  "Check the current saved layout before reviewing a measured bed. Estimate profiles can still be saved while measurements are unavailable.",
+  ". Area comes from this bed and cannot be changed here.",
+  "Match your saved buyer targets to whole beds or field plots using your own growing estimates. This does not choose a local crop calendar or promise weekly deliveries.",
+  ". Areas come from the saved design; check them against your ground measurements.",
+  "The saved source may have changed. Check its current design again.",
+  "No current design has been checked for this review.",
+  "Save buyer targets and growing estimates above first. Select each target and its matching estimate profile. Earlier targets have priority.",
+  "Plan your own food or a trial on the same measured beds with your own growing estimates. Enter the gross harvest weight this plan should cover across the whole harvest window. Choose kilograms or pounds independently of country or language. Blank means not entered; 0 means a known zero.",
+  "This is not a nutrition or food-security assessment, a sale, or evidence that a crop or trial is suitable or safe.",
+  "Save a growing estimate for this site above first.",
+  "The search work limit is a software budget of 1–10,000 checks. Reaching it leaves the result unknown; it does not prove there is no space.",
+  "Nothing is assumed free. Enter each available interval. Known existing occupations are checked separately and cannot be overridden here. End dates are exclusive: the end day is outside that interval. Gaps are unavailable. Adjacent intervals stay separate; a crop cycle must fit within one interval.",
+  "No eligible saved bed or field-plot measurements have been checked.",
+  "I supply these planning dates and availability as my estimates.",
+  "Check the saved plan to review nursery batches or open the separate field seed worksheet for accepted cycles without nursery raising. Field seed sourcing does not require a nursery batch, nursery equipment or a nursery review horizon. References do not record actual sowing, available seeds or live nursery stock.",
+  "Check the current saved plan to load eligible planned nursery batches.",
+  "Saved country: South Africa. This is the grower’s description, not local agronomy approval.",
+  "· Reference tools only; opening this link does not save country details or approve farming advice.",
+  "Country, language, currency and measurement units are separate choices. These details do not select a planting calendar or approve farming advice. They travel with a site if you explicitly share that site.",
+  "Plan the produce you want each week for a market, restaurant or box scheme. Review the growing space and dated sowings before adding them to your saved beds.",
+  "Use your measured harvest weight for one produce pack. A target without its pack weight stays saved; growing space waits for that conversion. The saleable share is a percentage of the catalogue benchmark; leave it blank to apply no allowance. Trays here contain harvested produce; nursery starts need their own planning.",
+  "Crop-cycle capacity uses the catalogue’s South African planning yields and picking windows. It does not forecast kilograms each week. Check local suitability, losses and actual harvest records before promising deliveries.",
+  "Plan nursery demand from accepted crop sowings. Add your own equipment and crop estimates below. Blank values stay unknown; the app does not choose germination rates, tray sizes or nursery losses for you.",
+  "A forecast from crop-plan allocations, not an observation of seedling or empty-tray stock. Months provide coarse envelopes; weekly rows do not imply exact sowing or transplanting dates.",
+  "Incomplete forecast. Known quantities below are only part of the demand; unknown requirements cannot confirm spare space or stock.",
+  "Seasonal fills count repeated uses. Owned containers are compared with the simultaneous peak, so a tray reused later is not counted as a second item of stock.",
+  "Add this site’s own nursery profile for this crop.",
+  "Choose a container belonging to this site; its capacity is unknown.",
+  "Choose a nursery space belonging to this site; its usable surface is unknown.",
+  "Container dimensions are unknown; nursery surface demand cannot be calculated.",
+  "rows 60–70cm apart · 30–45cm apart in the row · sow 1.5–2cm deep",
+  "Reservation uses the existing latest field-entry month; no grower nursery duration was entered.",
+  "rows 40–50cm apart · 25–35cm apart in the row · sow 1.5–2cm deep",
+  "rows 90–120cm apart · 30–60cm apart in the row · sow 1cm deep",
+  "Combined peaks. Check each named resource above; combined surface alone cannot establish that an assigned bench is available.",
+  "Coarse monthly planning envelopes, not exact sowing dates. Upper range ends budget nursery space against the grower’s net usable surface. No aisle allowance or geometric packing guarantee is inferred. Incomplete estimates show known assigned demand only; unknown or unassigned demand is not zero and prevents a spare-capacity claim. Shortages on incomplete budgets are known lower bounds. Seasonal tray uses are separate from peak simultaneous stock. Field dates, tasks and yields stay unchanged.",
+  "Sample farm: this export is marked DEMO and contains example planning data.",
+  "Nursery checks leave your field-task calendar unchanged. Review the crop plan before changing field dates.",
+  "Units change entry and display only. Saved tray sizes stay in centimetres and net surface stays in square metres. Use decimal numbers with a dot or comma; no grouping, fractions or unit suffixes. Counts, percentages and dates keep their own units.",
+  "For this site only. Enter the net surface allocated to these crops after paths, work areas and other uses. Zero means no surface is allocated.",
+  "Give each tray type its own name. Outer width and length determine its bench footprint. Owned stock is the number allocated to this plan, not a count of trays currently empty.",
+  "Keep one recipe per crop identity for this site. Your own method and losses need review; a crop name does not determine propagation. The catalogue forecast uses only its supported transplant crops and timing. Own dated cycles keep their reviewed field dates.",
+  "Field survival is separate from nursery losses. Own-cycle requirements stay unknown until you enter it. The separate catalogue forecast applies no extra field allowance when blank. A saved 0% remains an observation, not a finite positive raising requirement.",
+  "Settings belong to this site’s crop plan on this device. Removing equipment leaves its dependent recipes visibly incomplete. This is a planning forecast, not observed live nursery stock. Net surface does not guarantee rectangular tray packing or include up-pot stage scheduling.",
+  "From your map · hover or tap a bar",
+  "Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.",
+  "On your map, with picking months to confirm: Avocado, Mango, Moringa, Num-num. They stay listed on the printed plan.",
+  "No locally confirmed production months yet. Hives, coops and pens on your map stay listed below and on the printed plan.",
+  "Picking months vary by place and variety. Outlined calendar marks are planning references when established. Confirm months for plants that already give food here to count them in food totals. Plants stay on the printed plan while dates are unknown.",
+  "These confirmations are kept on this device for this design.",
+  "All existing plants of this kind already give food here.",
+  "Put plants planted together in one group. Keep older and younger plants separate. Dates and expected kg stay on this device with your picking months.",
+  "Check variety, planting stock, site and units before using a reference. Your entered kg schedule supplies the projection.",
+  "Bruyns Hill, Natal Midlands bioclimatic group 2; irrigated Hass on clonal Duke 7 rootstock, 7 x 7 m (200 trees/ha), planted 1982–1984. The paper reports Hass starting in its second season and Fuerte in its third. The two-to-three-year reference describes those trial cultivars, not every avocado or nursery starting age.",
+  "In this irrigated, intensively managed Natal Midlands trial, Hass reached about 20 t/ha at age 6 and orchards approached maximum sustainable average yield by age 8. This is a trial-specific bearing reference; there is no national plateau or automatically interpolated age-yield curve.",
+  "Same-trial arithmetic at the initial 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree at age 6; sustainable average 22,500 kg/ha / 200 = 112.5 kg/tree. At age 3, 10,000 kg/ha / 200 = 50 kg/tree equivalent. These are average-equivalent reference values for the named Hass/Duke 7 orchard conditions, not measured individual-tree yields or default production for a different density, cultivar, climate or management. Intermediate ages are not inferred.",
+  "Hass on Duke 7, initially 200 trees/ha at Bruyns Hill (Natal Midlands bioclimatic group 2), with intensive irrigation and nutrition. Age 3: 10,000 kg/ha; age 6: 20,000 kg/ha; sustainable average about 22,500 kg/ha. Same-study density permits equivalents of 50 kg/tree at age 3 and 100 kg/tree at age 6; there is no reference for every intermediate age. These orchard benchmarks are conditional on good resources, comparable climate and timely orchard management, including Phytophthora control and thinning; do not auto-fill farm quantities.",
+  "Tap the months you pick from these plants here:",
+  "SA Avocado Industry Overview – South African Avocado Growers' Association (SAAGA)",
+  "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops)",
+  "Grafted mango stock in the KZN guide generally begins bearing after 3–4 years. Context is frost-free tropical/warm subtropical production with low humidity at flowering, including dry Zululand, Valley Bushveld and Lowveld. The text distinguishes grafted stock from seed-raised Peach/Sabre; do not apply this age to an unrecorded seedling or infer yearly kg.",
+  "Grafted stock generally first bears around 3–4 years and may remain productive 20 years or longer under the guide conditions. Seed-raised trees are a separate planting-material case. Frost, wet spring flowering conditions, cultivar and field establishment must be checked; longevity is not an age-yield curve.",
+  "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area)",
+  "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024)",
+  "The 6–12-month reference concerns the first leaf harvest after planting. Flowers and pods are normally produced during the second year of growth in the same North West guide. Leaf readiness does not establish pod production or picking months.",
+  "This botanical description discusses pods that become brown at maturity. The separate harvesting section requires young, tender, green pods for food and supplies no calendar for that stage. March–April is retained as pod-development phenology, not a confirmed young-pod picking season or leaf calendar.",
+  "No picking months are verified in the source record. Local observations can still be recorded above.",
+  "First-crop age is not sourced. Add a locally checked yield schedule.",
+  "The next ten years, starting this month. Add planting dates and expected yields under each plant above. Missing yields remain visible; young trees do not receive a mature-tree yield.",
+  "* Known subtotal only. Missing production is not zero. Striped ends show harvest that changes as plants age during the year.",
+  "29.7 kg from cycles starting harvest in this period",
+  "Projection, not a harvest promise. Vegetables and staples repeat only saved recurring sowings; dated and existing crops happen once.",
+  "Vegetable and staple crop-cycle kilograms are counted in the year of first picking, not divided into monthly quantities. Carry-in harvests need actual records.",
+  "Vegetable and staple estimates hold bed area, sowings and crop benchmarks constant. Revise the plan if growing trees change shade, water or available bed space.",
+  "Tree ages run from planting on this site. Separate older and younger plants into age groups. Research first-crop ages are references, not guaranteed dates.",
+  "Tree kg are your farm or nursery assumptions per plant per year. Values hold until the next age you enter; no growth multiplier is invented. A range covers changes within the year. Review the schedule as plants age.",
+  "Check that the variety, local climate, pollination, water and care match your yield assumptions. Ages alone do not establish site suitability or survival.",
+  "Known subtotals leave out missing yields. Eggs, meat, milk, fish and honey are not included in these crop kg totals. Picking months and food-gap checks still need local confirmation.",
+  "Bars use a labelled variety assumption or regional reference. New plants need time to produce. Only locally confirmed months enter your food totals.",
+  "First crop reference: 2–3 years. Bruyns Hill, Natal Midlands bioclimatic group 2; irrigated Hass on clonal Duke 7 rootstock, 7 x 7 m (200 trees/ha), planted 1982–1984. The paper reports Hass starting in its second season and Fuerte in its third. The two-to-three-year reference describes those trial cultivars, not every avocado or nursery starting age. Actual timing depends on variety and site care.",
+  "Established production reference: 6–8 years. In this irrigated, intensively managed Natal Midlands trial, Hass reached about 20 t/ha at age 6 and orchards approached maximum sustainable average yield by age 8. This is a trial-specific bearing reference; there is no national plateau or automatically interpolated age-yield curve.",
+  "Production reference: 100–112.5 kg/plant. Same-trial arithmetic at the initial 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree at age 6; sustainable average 22,500 kg/ha / 200 = 112.5 kg/tree. At age 3, 10,000 kg/ha / 200 = 50 kg/tree equivalent. These are average-equivalent reference values for the named Hass/Duke 7 orchard conditions, not measured individual-tree yields or default production for a different density, cultivar, climate or management. Intermediate ages are not inferred.",
+  "Hass age benchmarks — irrigated Natal Midlands trial: Hass on Duke 7, initially 200 trees/ha at Bruyns Hill (Natal Midlands bioclimatic group 2), with intensive irrigation and nutrition. Age 3: 10,000 kg/ha; age 6: 20,000 kg/ha; sustainable average about 22,500 kg/ha. Same-study density permits equivalents of 50 kg/tree at age 3 and 100 kg/tree at age 6; there is no reference for every intermediate age. These orchard benchmarks are conditional on good resources, comparable climate and timely orchard management, including Phytophthora control and thinning; do not auto-fill farm quantities.",
+  "Buying advice: KZN sequence: earlier Fuerte (May–Nov), middle Hass (Aug–Dec), later Ryan (Nov–Feb). These seasons overlap. Buy labelled grafted trees; confirm rootstock and pollination partners.",
+  "Pollination: partly self fertile. Check the chosen cultivar's requirements with the nursery.",
+  "Assumed variety: Hass. South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+  "KZN DARD, Fruit and Nut Production, PDF pp. 6–7 (regional reference; confirm current nursery stock)",
+  "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+  "Wolstenholme, Kaiser & Palmer, 'Yield Potential of Intensively Managed Avocados in the Natal Midlands — The Early Bearing Years', South African Avocado Growers' Association Yearbook 1991, 14:15-18, p. 6",
+  "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18, p. 7",
+  "Wolstenholme, Kaiser & Palmer (1991), SAAGA Yearbook 14:15–18; reflowed PDF, p. 6",
+  "First crop reference: 3–4 years. Grafted mango stock in the KZN guide generally begins bearing after 3–4 years. Context is frost-free tropical/warm subtropical production with low humidity at flowering, including dry Zululand, Valley Bushveld and Lowveld. The text distinguishes grafted stock from seed-raised Peach/Sabre; do not apply this age to an unrecorded seedling or infer yearly kg. Actual timing depends on variety and site care.",
+  "Grafted mango establishment — regional guide: Grafted stock generally first bears around 3–4 years and may remain productive 20 years or longer under the guide conditions. Seed-raised trees are a separate planting-material case. Frost, wet spring flowering conditions, cultivar and field establishment must be checked; longevity is not an age-yield curve.",
+  "Check frost, drainage and flowering-season disease pressure. Heat and sunburn sensitivity differ between cultivars.",
+  "Assumed planting variety: Tommy Atkins, subject to local flowering and frost checks. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.",
+  "Buying advice: ARC identifies Tommy Atkins and Kent among more heat/sunburn-tolerant options; Sensation and Keitt are more susceptible. Confirm local harvest dates before choosing a succession.",
+  "Regional reference: Mango. South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+  "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+  "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16, p. 20",
+  "0 existing; 2 proposed. Products: Leaves and green pods; keep their records separate.",
+  "First crop reference: 6–12 months. The 6–12-month reference concerns the first leaf harvest after planting. Flowers and pods are normally produced during the second year of growth in the same North West guide. Leaf readiness does not establish pod production or picking months. Actual timing depends on variety and site care.",
+  "Pod development, not a young green-pod picking calendar: This botanical description discusses pods that become brown at maturity. The separate harvesting section requires young, tender, green pods for food and supplies no calendar for that stage. March–April is retained as pod-development phenology, not a confirmed young-pod picking season or leaf calendar.",
+  "Choose a sunny, well-drained growing position, protect establishment and plan pruning for leaf harvest.",
+  "Buying advice: Use correctly identified local planting material. No locally validated named cultivar shortlist is sourced; this plan does not claim nitrogen fixation or medicinal effects.",
+  "Expected picking season: no fixed regional months sourced. Record planting and picking dates locally.",
+  "North West DARD: Moringa production for food security (2021)",
+  "North West Department of Agriculture and Rural Development, Moringa (Moringa oleifera) production: A possible solution to South African food security challenges, p. 33",
+  "North West Department of Agriculture and Rural Development, Moringa (Moringa oleifera) production: A possible solution to South African food security challenges, p. 7",
+  "0 existing; 1 proposed. Products: Ripe fruit, fresh or preserved.",
+  "Time to first crop: not sourced; do not rely on newly planted stock for immediate food.",
+  "Coastal plant; allow for thorns near children and paths.",
+  "Buying advice: Ask for a locally suitable fruiting plant; no named food cultivar is established by this source.",
+  "Not recorded. Complete the site survey and confirm water before choosing an intensive plan.",
+  "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.",
+  "Drainage: not recorded. Soil-test results and crop-specific needs still need checking.",
+  "Research groupings can infer climate fit. Confirm the season, soil, water and current stock with a local grower or extension officer. A recorded variety does not change this plan’s crop timing.",
+  "The research has no matching regional shortlist. Ask a local grower or extension officer which named variety suits this season.",
+  "Research shortlist for similar climates: Texas Grano 502 PPR; Granex 33; Pyramid.",
+  "Onion chapter, KZN DARD vegetable production guide, chapter 27, p. 1",
+  "Onion chapter, KZN DARD vegetable production guide, chapter 27, p. 2",
+  "Onion chapter, KZN DARD vegetable production guide, chapter 27, p. 3",
+  "Research shortlist for similar climates: Fordhook Giant; Bright Lights.",
+  "Research shortlist for similar climates: Aviram; Tropical Emperor; Summer Gold; Brigadier.",
+  "Research shortlist for similar climates: Green Valiant; Liberty; Pirate; Star 2201; Viking.",
+  "COLE CROPS, KZN DARD (Table 14, Sowing times, reading the Broccoli row's three columns: Cold/Warm/Hot areas), p. 3",
+  "Research shortlist for similar climates: Blesbok; Khumo; Impala; Bosbok.",
+  "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024, p. 1",
+  "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024, p. 2",
+  "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024, p. 3",
+  "Conquistador F1 Hybrid Fresh Market Cabbage, Sakata product page",
+  "Fresh harvest, food in store and recorded preserved food.",
+  "One food counts once, even if it is both fresh and frozen. These are planned or recorded windows, not kilograms or meals. Regional reference seasons and undated plants or housing stay outside these totals.",
+  "Food in store follows each crop’s sourced storage conditions. Freezing, drying, fermentation and other processing enter only through dated stock records. A harvest does not automatically create preserved food.",
+  "No kept-food records are supplied. Their availability is unknown. This graph uses only the marked harvest and sourced crop-storage windows.",
+  "Whole crop-cycle benchmarks, grouped by the month picking starts. A bar is the full cycle, not kilograms harvested in that month.",
+  "kg · * = known subtotal with missing weights. ? = quantity unknown. – = no new crop cycle starts picking. Litres, eggs and items retain their own units. Tree kg by age remain in the yearly projection; they are not spread across months.",
+  "Carrots: 10.3 kg for its full cycle · Carrots: 2.4 kg for its full cycle",
+  "m² of mapped beds and staple plots. Stored food does not keep a bed occupied.",
+  "Crop ground only: food forest, animal areas and ponds are not measured here. The graph caps occupation at each bed’s size; it does not prove that overlapping plantings fit. Keep the plan’s space checks.",
+  "The map supplies growing areas and plant counts. Record monthly quantities below. For crop R/m², use All tools → Food, field & value → Plan-cycle value and review prices, losses and the amount sold.",
+  "Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate.",
+  "Choose one product and one month. Expected means your estimate; actual means what was produced. Adding the same product, month and status replaces its previous figure.",
+  "This price is your record, not a live market price or a profit calculation.",
+  "No monthly production amounts recorded. Unknown does not mean zero.",
+  "Record food you have kept, bought or carried from an earlier harvest. Choose its months yourself. The plan does not work out a safe shelf life or a preservation recipe.",
+  "Tick each month. Add kg held in that month only if you know it. Blank kg stays unknown; nothing carries forward automatically.",
+  "No kept-food records yet. A harvest does not automatically create stored or processed food.",
+  "Files are made on this device. Download a copy to use away from the app.",
+  "Your plan includes vegetables, fruit, nuts, berries and animal products from your map.",
+  "The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the first of their month — this plan works in months, not exact days — with a reminder three days before. The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick.",
+  "It also has what to buy, monthly tick-off jobs and a harvest record.",
+  "Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The separate Future harvest PDF has the ten-year graph and age groups. Calendar & jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan, benchmarks, buying lists, guidance, monthly field sheets and harvest records."
+ ]
+}

@@ -9,7 +9,7 @@ import { assessHarvestTarget, HARVEST_TARGET_BASIS, targetMonthStamp } from '@/l
 import { numberLabel } from '@/lib/format-figures';
 import { buildNurseryForecast } from '@/lib/crop-export-schedule';
 import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
-import { createMassDraft, editMassDraft, readMassDraft, switchMassDraftUnit, formatMassKilograms, type MassDraft, type MassUnit } from '@/lib/mass-units';
+import { createMassDraft, editMassDraft, readMassDraft, switchMassDraftUnit, formatMassKilograms, formatDerivedMassKilograms, type MassDraft, type MassUnit } from '@/lib/mass-units';
 import { captureHarvestMassUnitPreferenceContext, harvestMassUnitPreferenceContextIsCurrent, readHarvestMassUnitPreference, writeHarvestMassUnitPreference, subscribeHarvestMassUnitPreferenceContext, revokeHarvestMassUnitPreferenceContext, type HarvestMassUnitPreferenceContext } from '@/lib/length-unit-preference';
 import { harvestTargetsSourceKey, createHarvestSaveRequest, harvestSaveContextIsCurrent, harvestSaveResultMatches, harvestSaveResultSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult } from '@/lib/nursery-save-receipt';
 import NurseryForecastSummary from './NurseryForecastSummary';
@@ -37,6 +37,11 @@ const amount = (kg: number | null, massUnit: MassUnit) => {
   const display = kg === null ? null : formatMassKilograms(kg, massUnit);
   return display === null ? 'Not calculated' : `${display} ${massUnit}`;
 };
+// Derived totals use the display formatter; typed/saved values (weeklyKg, kgPerUnit) keep the exact one.
+const derivedAmount = (kg: number | null, massUnit: MassUnit) => {
+  const display = kg === null ? null : formatDerivedMassKilograms(kg, massUnit);
+  return display === null ? 'Not calculated' : `${display} ${massUnit}`;
+};
 const unitLabel = (unit: string) => unit === 'each' ? 'items' : unit;
 const packLabel = (unit: string) => ({ each: 'item / head', bunches: 'bunch', bags: 'bag', crates: 'crate', trays: 'tray' })[unit as HarvestPackUnit];
 const weeklyLabel = (target: HarvestTarget, massUnit: MassUnit) => target.weeklyKg !== undefined
@@ -44,8 +49,8 @@ const weeklyLabel = (target: HarvestTarget, massUnit: MassUnit) => target.weekly
   : `${numberLabel(target.weeklyQuantity)} ${unitLabel(target.unit)}/week`;
 const targetAmount = (kg: number | null, target: HarvestTarget, massUnit: MassUnit) => kg === null ? 'Not calculated'
   : target.unit && target.kgPerUnit !== undefined
-    ? `${numberLabel(kg / target.kgPerUnit, 1)} ${unitLabel(target.unit)} equivalent (${amount(kg, massUnit)})`
-    : amount(kg, massUnit);
+    ? `${numberLabel(kg / target.kgPerUnit, 1)} ${unitLabel(target.unit)} equivalent (${derivedAmount(kg, massUnit)})`
+    : derivedAmount(kg, massUnit);
 const monthName = (stamp: string) => `${MONTHS_SHORT[Number(stamp.slice(5)) - 1]} ${stamp.slice(0, 4)}`;
 function targetWindowLabel(target: HarvestTarget): string {
   const window = resolveHarvestTargetDateWindow(target);
@@ -369,12 +374,13 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
         </div>
         {a.surplusKg !== null && a.surplusKg > 0.001 && <p className="text-xs">{targetAmount(a.surplusKg, a.target, massUnit)} above total demand because whole fields or standard bed shares are used.</p>}
         {a.target.unit && a.target.kgPerUnit !== undefined && <p className="text-xs">Your conversion: {formatMassKilograms(a.target.kgPerUnit, massUnit)} {massUnit} of harvest per {packLabel(a.target.unit)}. Pack equivalents are estimates, not packed stock.</p>}
-        {a.target.marketablePercent !== undefined && <p className="text-xs">Your saleable share: {numberLabel(a.target.marketablePercent)}%. Benchmark before your allowance: {amount(a.grossCycleKg, massUnit)}. This allowance sizes this target; production graphs keep the harvest benchmark.</p>}
+        {a.target.marketablePercent !== undefined && <p className="text-xs">Your saleable share: {numberLabel(a.target.marketablePercent)}%. Benchmark before your allowance: {derivedAmount(a.grossCycleKg, massUnit)}. This allowance sizes this target; production graphs keep the harvest benchmark.</p>}
         {a.missingReasons.includes('unit-weight') && <p className="text-xs text-[var(--gold)]">Enter your own harvest weight per sales unit before calculating growing space or suggesting sowings.</p>}
         {a.missingReasons.includes('zero-saleable-share') && <p className="text-xs text-[var(--gold)]">Your saleable share is 0%, so no saleable capacity can be planned.</p>}
         {a.missingReasons.includes('crop-evidence') && <p className="text-xs text-[var(--gold)]">Verified crop yield, timing or establishment evidence is missing.</p>}
         {a.gapMonths.length > 0 && <p className="text-xs text-[var(--gold)]">No linked picking window: {a.gapMonths.map(monthName).join(', ')}.</p>}
         {a.excludedRows > 0 && <p className="text-xs text-[var(--gold)]">{a.excludedRows} linked planting(s) excluded: check dates, crop, timing evidence, mapped area and overlaps.</p>}
+        {a.earlyCycles > 0 && a.earliestReadyMonth && <p className="text-xs text-[var(--gold)]">{a.earlyCycles === 1 ? '1 linked sowing' : `${a.earlyCycles} linked sowings`} could be ready before {monthName(a.target.startMonth)}, as early as {monthName(a.earliestReadyMonth)}. The plan counts the latest likely month, so a bed is not given away too soon. If the buyer cannot take it early, sow later.</p>}
         <p className="text-xs text-[var(--text-secondary)]">Area is summed across crop cycles; successive crops may reuse ground. Weekly supply remains unverified.</p>
       </article>)}
 

@@ -76,3 +76,31 @@ export function monthlyTemperatureStatus(climate: unknown): MonthlyTemperatureSt
 
   return 'unknown';
 }
+
+/**
+ * The lowest hourly 2 m air temperature in the site's NASA POWER record, °C, or null.
+ *
+ * `climate.minTemp` is the minimum of POWER's twelve climatology T2M_MIN values, and
+ * POWER defines T2M_MIN as "the minimum hourly air (dry bulb) temperature at 2 meters
+ * above the surface of the earth in the period of interest" — a record low for the
+ * grid cell, not an average night. Checked on 10 November 2026 against 20 years of
+ * ERA5 daily minima at 44 South African places: the two agree to a median 0.1 °C and
+ * within 2 °C at 31 of the 44 (docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md).
+ *
+ * /api/location-data returns a generic figure during a NASA outage, and only a real
+ * reading carries the provenance tag. An untagged number must never certify a site
+ * as frost-free, so it reads as "not known".
+ *
+ * A tagged value still goes through cleanPowerValue, the one cleaning rule for POWER
+ * numbers. Until 10 November 2026 this helper accepted any finite number, so a stored
+ * payload carrying POWER's missing-value marker (-999, and anything at or below the
+ * -900 cutoff) came back as a record low of -999 °C: the calendar read it as frost,
+ * the reasons line printed it to the grower, and tree hardiness was judged against
+ * it. A missing marker is "not known", exactly as an untagged number is. Real cold
+ * and zero readings are kept (independent review of PR #1328, comment 6762553064).
+ */
+export function recordMinimumC(climate: unknown): number | null {
+  if (typeof climate !== 'object' || climate === null || Array.isArray(climate)) return null;
+  const { minTemp, minTempSource } = climate as { minTemp?: unknown; minTempSource?: unknown };
+  return minTempSource === 'nasa-power' ? cleanPowerValue(minTemp) : null;
+}

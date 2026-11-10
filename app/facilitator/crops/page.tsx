@@ -19,6 +19,8 @@ import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, Shopping
 import MenuButton from '@/components/MenuButton';
 import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
+import { useEscapeClose } from '@/lib/use-escape-close';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabilityGraphs';
@@ -38,9 +40,10 @@ import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection
 import GrowerCycleIntent from '@/components/crops/GrowerCycleIntent';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
-import { activeAccountUid } from '@/lib/account-local-storage';
+import { activeAccountLocalStorageKey, activeAccountUid } from '@/lib/account-local-storage';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
+import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
 import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
@@ -90,8 +93,10 @@ import type { FacilitatorDesignState } from '@/lib/facilitator-design';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
-import { nearestRainfall } from '@/lib/water-calc';
-import { driestMonths, resolveSiteClimate, type SiteClimate } from '@/lib/site-climate';
+import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
+import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, hiddenCalendarNoticeWrite, outOfCalendarLine, outOfCalendarSignature, parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
+import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
 import { VarietyGuidance } from '@/components/crops/VarietyGuidance';
@@ -102,7 +107,7 @@ import {
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, totalGrowingAreaM2, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
-  restampEditedOnce, confirmOnceSowing,
+  restampEditedOnce, confirmOnceSowing, sowingCalendarChoiceFor, withSowingCalendarChoice,
   CROP_PLAN_CHANGED_EVENT,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
@@ -159,6 +164,21 @@ const DISPLAY_MONTHS = 24;
 const LOOK_AHEAD_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
 const BED_LABEL_WIDTH = 128;
+
+// The three sheets' Close buttons draw a 16-18px icon. The hit area is 44x44 (house touch rule) and
+// the negative margins hand the extra size back, so the header keeps its height and the icon stays
+// where it was.
+const SHEET_CLOSE_STYLE: CSSProperties = {
+  background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)',
+  width: 44, height: 44, margin: '-12px -13px -12px 0', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+};
+/**
+ * Notes in the fruit and animal rows sit in the 1,520px grid. A bare maxWidth of
+ * 560–640 is wider than a phone's visible strip, so the sentence ran off the right
+ * edge mid-way ("…picking months to confirm"). Capped to what is left of the
+ * viewport after the bed-label column, as the reference note above the trees does.
+ */
+const stickyNoteMaxWidth = (max: number) => `min(${max}px, calc(100cqw - ${BED_LABEL_WIDTH + 12}px))`;
 const MONTH_COLUMNS: CSSProperties = { display: 'grid', gridTemplateColumns: `repeat(${DISPLAY_MONTHS}, minmax(0, 1fr))` };
 
 // One emoji per kind of work, so a farmer scanning the month sees the SHAPE of
@@ -441,7 +461,7 @@ const VISIBLE_BUYING_MONTHS = 3;
 function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNow: boolean }) {
   return (
     <div>
-      <div className="font-display font-semibold mb-1" style={{ fontSize: 13, color: isNow ? '#1F4D2B' : 'var(--text-primary)' }}>
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 13, color: isNow ? 'var(--color-forest-800)' : 'var(--text-primary)' }}>
         {monthLabel(monthGroup.month)}{isNow ? ' · this month' : ''}
       </div>
       <div className="space-y-2">
@@ -564,6 +584,28 @@ function barGradient(seg: Segment, sowMonth: number, totalMonths: number, from: 
  * doesn't work out in practice.
  */
 const BAR_STYLE: 'gradient' | 'solid' = 'solid';
+
+/**
+ * Earth light declares --bg-2 as rgba(236,227,201,0.35) on purpose, so the pinned
+ * month header let bed names and "+ crop" buttons show through it while the grower
+ * scrolled. The same tint over the card's own opaque --bg-1 looks the same when
+ * nothing is behind it. Dark and slate declare an opaque --bg-2, which this
+ * leaves unchanged. Scoped here: --bg-2 itself is used app-wide and stays as is.
+ */
+const PINNED_HEADER_SURFACE = 'linear-gradient(var(--bg-2), var(--bg-2)), var(--bg-1)';
+
+/**
+ * The planting-bar fills are fixed hexes in every theme, so the label on them
+ * cannot follow the theme either: white on them measured 2.57:1 (planned),
+ * 3.71:1 (already growing) and 2.87:1 over the gold cap, and the dark theme's
+ * light --text-primary would be no better. The palette's Ink reads 6.78 / 4.68 /
+ * 7.32 / 6.05:1 on the four fills (tests/component-text-contrast.test.ts pins
+ * every pair), so change a fill and that test says whether the label survives.
+ */
+const BAR_LABEL_INK = '#20190F';
+/** [growing colour, harvest-cap colour]; already-growing stays olive so it still differs from planned. */
+const BAR_FILL_PLANNED: [string, string] = ['#7FAE6E', '#D4A017'];
+const BAR_FILL_EXISTING: [string, string] = ['#8C8654', '#B8934A'];
 
 const VIRTUAL_BED: PlanBed = { id: 'virtual-bed-1', label: 'Bed 1', areaM2: 10 };
 
@@ -690,11 +732,13 @@ function computeDesignBeds(state: FacilitatorDesignState | null): PlanBed[] {
   return beds;
 }
 
+// Labels come from lib/sowing-calendar-label.ts: the four columns are FROST regimes, and the
+// old "Summer / All-year rainfall" names told a hot Lowveld grower the wrong thing.
 const PATTERN_META: Record<RainPattern, { Icon: LucideIcon; label: string }> = {
-  summer: { Icon: Sun, label: 'Summer rainfall' },
-  winter: { Icon: CloudRain, label: 'Winter rainfall' },
-  'all-year': { Icon: Cloud, label: 'All-year rainfall' },
-  'mild-frost': { Icon: CloudSun, label: 'Summer rainfall · mild winter frost' },
+  summer: { Icon: Sun, label: SOWING_CALENDAR_LABEL.summer },
+  winter: { Icon: CloudRain, label: SOWING_CALENDAR_LABEL.winter },
+  'all-year': { Icon: Cloud, label: SOWING_CALENDAR_LABEL['all-year'] },
+  'mild-frost': { Icon: CloudSun, label: SOWING_CALENDAR_LABEL['mild-frost'] },
 };
 
 // ── Page ─────────────────────────────────────────────────────────────────
@@ -963,11 +1007,15 @@ function FacilitatorCropsPageInner() {
     // per-site profile and a reference city 250 km away are different claims.
     // Resolved at generate time for BOTH branches: climate can still be loading
     // when the modal opens, so it is never precomputed.
-    const climateNote = climateSource === 'site'
-      ? `Climate derived from satellite climate records for this site: ${PATTERN_META[pattern].label}.`
+    const climateNote = calendarBasis === 'grower-choice'
+      ? `Sowing calendar chosen by the grower: ${calendarLabel}.`
+      : calendarBasis === 'sample-farm'
+      ? `Sowing calendar set for the sample farm: ${calendarLabel}.`
+      : climateSource === 'site'
+      ? `Sowing calendar from satellite climate records for this site: ${calendarLabel}.`
       : climateSource === 'reference'
-        ? `Climate from nearest reference region — ${region?.name} (fallback): ${PATTERN_META[pattern].label}.`
-        : `No mapped site — assuming ${PATTERN_META[pattern].label.toLowerCase()}.`;
+        ? `Climate from nearest reference region — ${region?.name} (fallback): ${calendarLabel}.`
+        : `No mapped site — assuming ${calendarLabel.toLowerCase()}.`;
     if (aPlanTiming === 'idealYear') {
       // Busy label first, sweep second: the 12-anchor sweep is synchronous
       // (~0.5 s on a 12-bed farm, more on a low-end phone), so the button must
@@ -1190,11 +1238,24 @@ function FacilitatorCropsPageInner() {
   const bedRowsScrollRef = useRef<HTMLDivElement>(null);
   const foodChartScrollRef = useRef<HTMLDivElement | null>(null);
   const timelineScrollLeftRef = useRef(0);
+  // The month header and the food chart can scroll less far than the bed rows (the chart's phone
+  // gutter is 120px narrower; a "check / transplant" chip overhangs the bed rows' right edge). A
+  // follower that the browser clamps then fires its own scroll event, which used to drag every
+  // other scroller back to the smallest maximum and left the last ~140px of the 24-month axis
+  // unreachable at 390px. A scroll event whose position is exactly what this function just set
+  // is that echo, not the farmer, so it is ignored.
+  const echoedScrollRef = useRef(new WeakMap<HTMLDivElement, number>());
   const syncMonthScroll = useCallback((source: HTMLDivElement) => {
     const left = source.scrollLeft;
+    if (echoedScrollRef.current.get(source) === left) { echoedScrollRef.current.delete(source); return; }
     timelineScrollLeftRef.current = left;
     for (const node of [monthHeaderScrollRef.current, bedRowsScrollRef.current, foodChartScrollRef.current]) {
-      if (node && node !== source && Math.abs(node.scrollLeft - left) > 0.5) node.scrollLeft = left;
+      if (node && node !== source && Math.abs(node.scrollLeft - left) > 0.5) {
+        const before = node.scrollLeft;
+        node.scrollLeft = left;
+        // Only a node that actually moved will fire an event to ignore.
+        if (node.scrollLeft !== before) echoedScrollRef.current.set(node, node.scrollLeft);
+      }
     }
   }, []);
   const registerFoodChartScroll = useCallback((node: HTMLDivElement | null) => {
@@ -1602,12 +1663,11 @@ function FacilitatorCropsPageInner() {
     openAutoSuggest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mounted, autoParam, beds.length, allowCataloguePlanning]);
-  // A region flagged 'mild' frostRisk (e.g. Durban's coastal hinterland) uses
-  // KZN DARD's warm/light-frost sowing column rather than treating coast and
-  // frost-prone interior as interchangeable. This mapped result is shown to
-  // the farmer for transparency but is not turned into a rainfall quiz.
-  const mapPattern: RainPattern =
-    region?.frostRisk === 'mild' && region.pattern === 'summer' ? 'mild-frost' : (region?.pattern ?? 'summer');
+  // The reference region's `pattern` is RAIN timing, not a frost regime, so it must not be
+  // used as the sowing column: a Karoo fallback used to get the frost-free column. The
+  // calendar leans cold unless the region is flagged mild (water-calc referenceSowingCalendar).
+  // Shown to the farmer for transparency but not turned into a rainfall quiz.
+  const mapPattern: RainPattern = referenceSowingCalendar(region);
   // Climate is a site fact, not a questionnaire. Rory's field test made the
   // problem plain: many farmers do not know which rainfall label describes
   // them, while the app already has the mapped location needed to decide it.
@@ -1619,9 +1679,26 @@ function FacilitatorCropsPageInner() {
   // down, offline with nothing cached); no site at all assumes summer rain.
   // `climateSource` travels with the pattern so every surface that prints the
   // climate can say WHICH of the three it is printing.
-  const pattern: RainPattern = siteClimate?.pattern ?? mapPattern;
+  // Precedence (lib/site-climate.ts sowingCalendarInUse): the calendar the grower CHOSE, else
+  // the site climate moved by their frost answer, else the reference fallback. A grower knows
+  // whether frost reaches their beds; the grid cell does not (2026-11-10 accuracy audit:
+  // Mbombela, Tzaneen, Worcester). `calendarBasis` says which one decided; `climateSource`
+  // below still says where the AUTOMATIC calendar came from. Choosing is an optional
+  // override in Auto-suggest, never a question the grower must answer.
+  const calendarScopeId = surveySiteId ?? planningWorkspaceId ?? null;
+  const chosenCalendar = sowingCalendarChoiceFor(plan, calendarScopeId);
+  // The sample farm's calendar is declared in its sample data and never read from a live call
+  // (Rory, 10 November 2026). Outside sample mode, and for any other site, this is null.
+  const sampleCalendar = sampleSowingCalendarFor(calendarScopeId);
+  const calendarInUse = sowingCalendarInUse({ chosen: chosenCalendar, sample: sampleCalendar, site: siteClimate, observedFrost: siteSurvey?.productionConditions?.frost, reference: mapPattern });
+  const pattern: RainPattern = calendarInUse.pattern;
+  const calendarBasis: CalendarBasis = calendarInUse.basis === 'reference' ? 'site-climate' : calendarInUse.basis;
+  // Rain season for the label: the site's own, else the reference region's rain timing (which
+  // IS a rain season), else unknown with no site.
+  const calendarRainSeason = siteClimate?.rainSeason ?? region?.pattern ?? undefined;
   const climateSource: 'site' | 'reference' | 'none' = siteClimate ? 'site' : (region ? 'reference' : 'none');
   const patternMeta = PATTERN_META[pattern];
+  const calendarLabel = sowingCalendarLabel(pattern, calendarRainSeason);
   // Which of the eight growing zones this site's own climate points to — for the picker's
   // variety guidance only. Empty without a site climate: a reference city is not the site.
   const growingZones = useMemo<GrowingZoneId[]>(
@@ -1648,6 +1725,47 @@ function FacilitatorCropsPageInner() {
   // Only the shared intact foreign/disjoint proof can exclude another source.
   const legacyPlantings = useMemo(() => plantings.filter(p => !hasGrowerCycleMarker(p)), [plantings]);
   const markedPlantings = useMemo(() => plantings.filter(hasGrowerCycleMarker), [plantings]);
+  // Sowings the site's calendar no longer offers. legacyPlantings is the right set: already
+  // limited to this page's beds, and without the grower-cycle rows whose basis is the
+  // grower's own estimates rather than the catalogue months. Nothing here moves a sowing.
+  // A mapped site whose own climate has not loaded is on a fallback guess, and a guess does
+  // not get to call a saved sowing out of season (calendarCanJudgeSavedSowings).
+  const canJudgeSavedSowings = calendarCanJudgeSavedSowings(calendarInUse.basis, hasSiteCoords);
+  const outOfCalendar = useMemo(
+    () => allowCataloguePlanning && canJudgeSavedSowings ? sowingsOutsideCalendar(legacyPlantings.filter((planting) => beds.some((bed) => bed.id === planting.bedId)), pattern, { year: currentYear, month: currentMonth }) : [],
+    [allowCataloguePlanning, canJudgeSavedSowings, legacyPlantings, beds, pattern, currentYear, currentMonth],
+  );
+  const outOfCalendarScope = calendarScopeId ?? 'no-site';
+  const outOfCalendarKey = outOfCalendarSignature(outOfCalendar, pattern);
+  // Which lists this grower hid, kept per ACCOUNT: the record names a farm and its crops, so on
+  // a shared phone it must not pass from one account to the next (the bare key did exactly
+  // that). Read after mount only: the page is server-rendered and localStorage does not exist
+  // there. A record read for one account is never applied to another.
+  const hiddenNoticeStorageKey = activeAccountLocalStorageKey(SOWING_CALENDAR_NOTICE_HIDDEN_KEY);
+  const [hiddenCalendarNotice, setHiddenCalendarNotice] = useState<{ storageKey: string; byScope: Record<string, string> }>({ storageKey: '', byScope: {} });
+  useEffect(() => {
+    let byScope: Record<string, string> = {};
+    try { byScope = parseHiddenCalendarNotices(localStorage.getItem(hiddenNoticeStorageKey)); } catch { /* private window or blocked storage: the notice simply shows */ }
+    setHiddenCalendarNotice({ storageKey: hiddenNoticeStorageKey, byScope });
+  }, [hiddenNoticeStorageKey]);
+  const hiddenForThisAccount = hiddenCalendarNotice.storageKey === hiddenNoticeStorageKey ? hiddenCalendarNotice.byScope : {};
+  function hideCalendarNotice() {
+    // This handler carries the site and the list of the render that drew it. Kept past a change
+    // of account, sample mode or site, it must write nothing: working out the new account's key
+    // here would only choose where to put the OLD render's farm. Ask the page's own admission
+    // first, and write only under the key this render was drawn for (hiddenCalendarNoticeWrite).
+    const currentStorageKey = activeAccountLocalStorageKey(SOWING_CALENDAR_NOTICE_HIDDEN_KEY);
+    const actorIsCurrent = growerActorIsCurrent() && currentPlanningScopeAllowed();
+    const readStored = () => { try { return localStorage.getItem(currentStorageKey); } catch { return null; } };
+    const write = hiddenCalendarNoticeWrite({
+      renderedStorageKey: hiddenNoticeStorageKey, currentStorageKey, actorIsCurrent,
+      scope: outOfCalendarScope, signature: outOfCalendarKey,
+      storedRaw: actorIsCurrent && currentStorageKey === hiddenNoticeStorageKey ? readStored() : null,
+    });
+    if (!write) return;
+    setHiddenCalendarNotice(write);
+    try { localStorage.setItem(write.storageKey, JSON.stringify(write.byScope)); } catch { /* the notice stays hidden for this visit only */ }
+  }
   const hasOwnRecords = markedPlantings.length > 0;
   const legacyAddBlocked = (bedId: string, rows = plan?.plantings ?? []) => rows.some(p => hasGrowerCycleMarker(p)
     && (p.bedId === bedId || !currentBedIds.has(p.bedId)
@@ -1673,6 +1791,17 @@ function FacilitatorCropsPageInner() {
         variety: variety.trim().slice(0, 120) || undefined,
       };
       return { ...base, version: 1, plantings: [...base.plantings, next], updatedAt: Date.now() };
+    });
+  }
+  // A calendar choice rides the page's ordinary autosave (no save call here, no undo entry):
+  // it is a setting of the plan book, not an edit of a sowing.
+  function chooseSowingCalendar(calendar: RainPattern | null) {
+    // The scope id is this render's site. A handler kept past a change of account or site must
+    // not put that site into whichever plan is on screen now.
+    if (!calendarScopeId || !currentPlanningScopeAllowed() || !growerActorIsCurrent()) return;
+    setPlan((prev) => {
+      const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
+      return { ...withSowingCalendarChoice(base, calendarScopeId, calendar), version: 1 as const, updatedAt: Date.now() };
     });
   }
   function updatePlanting(id: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
@@ -1960,15 +2089,17 @@ function FacilitatorCropsPageInner() {
     const locationLine = climateSource === 'site'
       ? 'This site (satellite climate records)'
       : region ? `Nearest reference: ${region.name} (fallback)` : 'No site set';
+    // Paper says whose call the calendar was, as the screen does ("chosen by you").
+    const climateLine = printedSowingCalendarLine(calendarLabel, calendarBasis, climateSource);
     return {
       planTitle: (canvasSite ? placeName : null) ?? designTitle,
-      siteLine: climateSource === 'none'
-        ? `No site set · assuming ${patternMeta.label.toLowerCase()}`
-        : `${locationLine} · ${patternMeta.label}`,
+      siteLine: climateSource === 'none' && calendarBasis !== 'grower-choice' && calendarBasis !== 'sample-farm'
+        ? `No site set · assuming ${calendarLabel.toLowerCase()}`
+        : `${locationLine} · ${climateLine}`,
       // The same two facts as separate values, because the PDF needs them apart and recovering
       // them by splitting siteLine printed "Climate: Not set" for every region in the country.
       locationLine,
-      climateLine: climateSource === 'none' ? `Assuming ${patternMeta.label.toLowerCase()}` : patternMeta.label,
+      climateLine,
       // Lets the PDF flag frost-tender harvest windows that run into Jun–Jul at a light-frost site.
       rainPattern: pattern,
       bedsSummary: `${bedCount} bed${bedCount === 1 ? '' : 's'}`
@@ -1979,7 +2110,7 @@ function FacilitatorCropsPageInner() {
       lossPercent: cashflowSettings.lossPercent,
       lossAllowanceConfirmed: cashflowSettings.confirmed === true,
     };
-  }, [beds, canvasSite, placeName, designTitle, region, pattern, patternMeta, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
+  }, [beds, canvasSite, placeName, designTitle, region, pattern, calendarLabel, calendarBasis, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
 
   // One account holds several maps. A shared food name and month cannot tell us which
   // farm produced it; records without a site remain saved outside this site's totals.
@@ -2422,6 +2553,13 @@ function FacilitatorCropsPageInner() {
       onRecordFieldPlanting={growerWorkflow.onRecordNurseryFieldPlanting} />
   </>;
 
+  // The planner view had no h1. The site picker, the invalid-link notice and the country hold each
+  // render their own, so the header title is the page heading only when none of those is on screen.
+  const TitleTag = !invalidCanvasSite && !needsSitePicker && allowCataloguePlanning ? 'h1' : 'span';
+  // The global h1 rule adds tight letter-spacing and the tag brings margins; the title must look
+  // exactly as the span drew it.
+  const TITLE_RESET: CSSProperties = { margin: 0, letterSpacing: 'inherit' };
+
   return (
     // Every surface on this screen now reads the per-theme tokens (--bg-0 page,
     // --bg-1 cards, --bg-2 insets) instead of the hard-coded light hex this screen
@@ -2455,10 +2593,13 @@ function FacilitatorCropsPageInner() {
           href="/home"
           aria-label={cropUi(lang, 'Home', 'Ikhaya')}
           title={cropUi(lang, 'Home', 'Ikhaya')}
-          className="flex-shrink-0 flex items-center justify-center rounded-xl"
-          style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--border)', color: 'var(--text-secondary)', textDecoration: 'none' }}
+          className="flex-shrink-0 flex items-center justify-center"
+          // 44x44 hit area (house touch rule) around the same 34px drawn button.
+          style={{ width: 44, height: 44, color: 'var(--text-secondary)', textDecoration: 'none' }}
         >
-          <Home size={16} strokeWidth={1.7} />
+          <span className="flex items-center justify-center rounded-xl" style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--border)' }}>
+            <Home size={16} strokeWidth={1.7} />
+          </span>
         </Link>
         {!simple && (
           <Link
@@ -2495,6 +2636,7 @@ function FacilitatorCropsPageInner() {
         )}
         <div className="w-px h-5 flex-shrink-0" style={{ background: 'var(--border)' }} />
         {!canvasSite && myDesignsList && myDesignsList.length > 0 ? (
+          <TitleTag className="flex-shrink-0 min-w-0" style={TITLE_RESET}>
           <button
             onClick={() => setSwitchingSite(true)}
             className="flex-shrink-0 flex items-center gap-1.5 min-w-0"
@@ -2506,9 +2648,10 @@ function FacilitatorCropsPageInner() {
             </div>
             <ChevronDown size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
           </button>
+          </TitleTag>
         ) : (
           <div className="flex flex-col min-w-0 flex-shrink-0">
-            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
+            <TitleTag className="font-display font-semibold" style={{ ...TITLE_RESET, fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</TitleTag>
             <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>
               {canvasSite ? cropUi(lang, 'Plants and housing from your map', 'Izitshalo nezindlu zezilwane ezisemephini yakho') : designTitle}
             </span>
@@ -2531,13 +2674,29 @@ function FacilitatorCropsPageInner() {
           </button>
         )}
         {!simple && <LessonLink id="crops:planner" label={cropUi(lang, 'Learn', 'Funda')} />}
-        {!simple && allowCataloguePlanning && (climateSource === 'site' ? (
+        {!simple && allowCataloguePlanning && (calendarBasis === 'sample-farm' ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
-            title="Rainfall pattern derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
+            title="The sample farm's sowing calendar is part of the sample. It is not read from climate records."
+            style={{ fontSize: 13, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
+          >
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · set for the sample farm
+          </span>
+        ) : calendarBasis === 'grower-choice' ? (
+          <span
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
+            title="You chose this sowing calendar in Auto-suggest a plan"
+            style={{ fontSize: 13, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
+          >
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · chosen by you
+          </span>
+        ) : climateSource === 'site' ? (
+          <span
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
+            title="Sowing calendar derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
             style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
-            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {patternMeta.label} · satellite records for this site
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · satellite records for this site
           </span>
         ) : region ? (
           <span
@@ -2545,11 +2704,11 @@ function FacilitatorCropsPageInner() {
             title="No per-site climate available (offline or not yet fetched) — using the nearest regional reference point instead"
             style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
-            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {patternMeta.label} · nearest reference: {region.name} (fallback)
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · nearest reference: {region.name} (fallback)
           </span>
         ) : (
           <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: 'var(--bg-2)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
-            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> No site set · assuming {patternMeta.label.toLowerCase()}
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> No site set · assuming {calendarLabel.toLowerCase()}
           </span>
         ))}
       </header>
@@ -2741,7 +2900,8 @@ function FacilitatorCropsPageInner() {
                 onClick={openAutoSuggest}
                 disabled={beds.length === 0 || hasOwnRecords}
                 title={hasOwnRecords ? 'Own dated records need their checked reservations in the Task Planner.' : beds.length === 0 ? 'Add a vegetable bed or staple plot to auto-suggest crops.' : undefined}
-                className="flex-1 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                // min-h-11 (44px), not py-2.5: the padding made this 43px, one under the house tap rule. "Clear all" beside it stretches to match.
+                className="flex-1 min-h-11 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
                 style={{ fontSize: 14, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#F7F2E9', cursor: beds.length === 0 ? 'not-allowed' : 'pointer', opacity: beds.length === 0 ? 0.55 : 1 }}
               >
                 <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Auto-suggest a plan', 'Phakamisa uhlelo ngokuzenzakalelayo')}
@@ -2760,7 +2920,7 @@ function FacilitatorCropsPageInner() {
                 <button
                   onClick={() => setConfirmingClear(true)}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
-                  style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
+                  style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid rgba(179,58,58,0.3)', color: 'var(--orange)', cursor: 'pointer' }}
                   title="Clear catalogue plantings shown here; own dated records remain saved"
                 >
                   <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'zu' ? <span style={{ lineHeight: 1.1 }}>Sula konke<br/><small lang="en">Clear all</small></span> : 'Clear all'}
@@ -2812,6 +2972,26 @@ function FacilitatorCropsPageInner() {
               saveContext={nurserySaveContext} onSettings={saveNurserySettings}
             />}
 
+            {outOfCalendar.length > 0 && hiddenForThisAccount[outOfCalendarScope] !== outOfCalendarKey && (
+              <section aria-label="Sowings outside the sowing calendar" className="rounded-2xl px-4 py-3 mb-3 font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '4px solid var(--gold)' }}>
+                <h2 className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>{outOfCalendar.length === 1 ? '1 planned sowing is' : `${outOfCalendar.length} planned sowings are`} outside this site&apos;s sowing months</h2>
+                {/* Say WHY these are out of season, and only what is known: the grower's own calendar
+                    choice explains it outright; otherwise a plan that may predate the correction. */}
+                {calendarBasis === 'grower-choice'
+                  ? <p style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }} className="mt-1">You chose the &quot;{SOWING_CALENDAR_LABEL[pattern]}&quot; calendar for this site. These sowings were planned on a different one.</p>
+                  : planMayPredateCorrection(plan?.planNotesAt) && <p style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }} className="mt-1">Sowing months and calendars were corrected on 10 November 2026. A plan made before then can be out of season.</p>}
+                <ul className="mt-2 space-y-1" style={{ fontSize: 14, lineHeight: 1.45, color: 'var(--text-primary)' }}>
+                  {outOfCalendar.slice(0, 6).map((row) => <li key={row.plantingId}>{outOfCalendarLine(row, beds.find((bed) => bed.id === row.bedId)?.label)}</li>)}
+                  {outOfCalendar.length > 6 && <li>and {outOfCalendar.length - 6} more.</li>}
+                </ul>
+                <p className="mt-2" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>Nothing has been changed. Move each sowing, or keep it if you know it works on your land.</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button type="button" className="min-h-11 px-4 rounded-full font-sans font-semibold" style={{ fontSize: 14, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }} onClick={openAutoSuggest}>Make a new plan</button>
+                  <button type="button" className="min-h-11 px-4 rounded-full font-sans" style={{ fontSize: 14, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)' }} onClick={hideCalendarNotice}>Hide this list</button>
+                </div>
+              </section>
+            )}
+
             {/* Timeline. The month header and the bed-rows body are TWO
                 separate horizontal-scroll regions kept in sync by JS
                 (headerScrollRef mirrors bodyScrollRef's scrollLeft on every
@@ -2846,7 +3026,7 @@ function FacilitatorCropsPageInner() {
                   // Warm paper, not the card's own var(--bg-1): frozen chrome has to
                   // read as chrome. With both the same colour there was nothing
                   // to tell a farmer this row was pinned rather than scrolled to.
-                  background: 'var(--bg-2)',
+                  background: PINNED_HEADER_SURFACE,
                   // Content passes underneath, so say so.
                   boxShadow: '0 6px 12px -6px rgba(32,25,15,0.28)',
                   borderTopLeftRadius: 16,
@@ -2855,7 +3035,7 @@ function FacilitatorCropsPageInner() {
               >
                 {/* Same paper as the row around it — otherwise the frozen bar
                     is two-tone and the corner cell reads as a separate card. */}
-                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: 'var(--bg-2)', borderRight: '1px solid var(--border-strong)', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
+                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: PINNED_HEADER_SURFACE, borderRight: '1px solid var(--border-strong)', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
                   <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{cropUi(lang, 'Bed', 'Umbhede')}</span>
                 </div>
                 <div
@@ -2895,8 +3075,11 @@ function FacilitatorCropsPageInner() {
                         style={{
                           minWidth: 0, padding: '8px 2px', fontSize: 'clamp(12px, 0.85vw, 13px)',
                           fontWeight: i === 0 ? 700 : 500,
-                          color: i === 0 ? '#1F4D2B' : i >= 12 ? 'var(--text-muted)' : 'var(--text-muted)',
-                          background: i === 0 ? 'rgba(31,77,43,0.08)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
+                          // Forest hardcoded here read 1.72:1 on the dark header; the token flips to leaf.
+                          color: i === 0 ? 'var(--color-forest-800)' : 'var(--text-muted)',
+                          // 0.04, not 0.07 on year two: the heavier tint lifted the dark
+                          // header under --text-muted to 4.43:1; this one is 4.66:1.
+                          background: i === 0 ? 'rgba(31,77,43,0.08)' : i >= 12 ? 'rgba(196,164,106,0.04)' : 'transparent',
                           // A month label repeats every 12 columns (no year field
                           // anywhere in this data model) — a visible seam at the
                           // 1-year mark stops "Jul" (this year) and "Jul" (next
@@ -2919,7 +3102,10 @@ function FacilitatorCropsPageInner() {
                 ref={bedRowsScrollRef}
                 onScroll={(e) => syncMonthScroll(e.currentTarget)}
                 data-crop-bed-scroll
-                style={{ overflowX: 'auto' }}
+                className="crop-plan-lanes"
+                // containerType so the notes below can size to this box: 100vw ignores the
+                // text-size slider's html zoom and ran the notes off the edge at 1.4.
+                style={{ overflowX: 'auto', containerType: 'inline-size' }}
               >
                 <div style={{ minWidth: GRID_MIN_WIDTH }}>
                   {/* Four fixed sections, each with its place whether or not anything is in
@@ -2990,7 +3176,7 @@ function FacilitatorCropsPageInner() {
               <div className="mb-5">
                 <button
                   onClick={() => openPicker(beds[0].id)}
-                  className="w-full py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                  className="w-full min-h-11 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
                   style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}
                 >
                   <Plus size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Add a crop', 'Engeza isilimo')}
@@ -3049,7 +3235,7 @@ function FacilitatorCropsPageInner() {
             <div className="font-sans mb-5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5, marginTop: -12, maxWidth: 820 }}>
               <span
                 className="font-sans"
-                style={{ fontWeight: 600, color: 'var(--gold)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
+                style={{ fontWeight: 600, color: 'var(--gold-dim)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
               >
                 <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
               </span>{' '}
@@ -3179,8 +3365,10 @@ function FacilitatorCropsPageInner() {
                         className="font-sans"
                         style={{
                           fontSize: 11, padding: '3px 9px', cursor: 'pointer',
-                          background: harvestBoxView === v ? '#1F4D2B' : 'transparent',
-                          color: harvestBoxView === v ? 'var(--bg-1)' : 'var(--text-secondary)',
+                          // Forest and its on-colour move together: --bg-1 on the old
+                          // hardcoded forest was 1.91:1 in dark.
+                          background: harvestBoxView === v ? 'var(--color-forest-800)' : 'transparent',
+                          color: harvestBoxView === v ? 'var(--on-forest-800)' : 'var(--text-secondary)',
                         }}
                       >
                         {v === 'crop' ? cropUi(lang, 'By crop', 'Ngesilimo') : cropUi(lang, 'By bed', 'Ngombhede')}
@@ -3556,7 +3744,8 @@ function FacilitatorCropsPageInner() {
           planTiming={aPlanTiming} onPlanTiming={setAPlanTiming}
           generating={autoGenerating} idealMeta={idealMeta}
           hasCurrentPlantings={plantings.length > 0}
-          pattern={pattern} climateSource={climateSource} referenceName={region?.name ?? null}
+          pattern={pattern} calendarLabel={calendarLabel} calendarBasis={calendarBasis} climateSource={climateSource} referenceName={region?.name ?? null}
+          calendarChoice={chosenCalendar} automaticCalendar={calendarInUse.automatic} sampleCalendarSet={sampleCalendar !== null} canChooseCalendar={!!calendarScopeId} onCalendarChoice={chooseSowingCalendar}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
@@ -3968,7 +4157,7 @@ function MonthLineChart({
         <div style={MONTH_COLUMNS} data-crop-chart-labels>
           {monthOrder.map((m, i) => (
             <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }} title={monthAxisTitle(axis?.[i], m)}>
-              <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 4 }}>
+              <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? 'var(--color-forest-800)' : 'var(--text-muted)', marginTop: 4 }}>
                 {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
               </div>
               <MonthAxisTag slot={axis?.[i]} fontSize={9} />
@@ -4249,7 +4438,7 @@ function FoodAvailabilityChart({
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <div className="inline-flex rounded-full p-0.5" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
             {([['established', 'An established year'], ['fromToday', 'From today']] as ['established' | 'fromToday', string][]).map(([nextYearMode, label]) => (
-              <button key={nextYearMode} onClick={() => onYearModeChange(nextYearMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: yearMode === nextYearMode ? 'var(--text-secondary)' : 'transparent', color: yearMode === nextYearMode ? '#F7F2E9' : 'var(--text-secondary)' }}>
+              <button key={nextYearMode} onClick={() => onYearModeChange(nextYearMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: yearMode === nextYearMode ? 'var(--text-secondary)' : 'transparent', color: yearMode === nextYearMode ? 'var(--bg-1)' : 'var(--text-secondary)' }}>
                 {label}
               </button>
             ))}
@@ -4350,7 +4539,7 @@ function FoodAvailabilityChart({
                           {/* Month on top, count under the bar. Rory, 2026-10-01: "change the
                               number of products with the month just switch them". The month
                               heads the column the way it heads the calendar's. */}
-                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)' }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
+                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? 'var(--color-forest-800)' : 'var(--text-muted)' }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
                           <MonthAxisTag slot={axis[i]} />
                           <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
                             {total === 0 ? <div style={{ width: '68%', height: 3, background: 'var(--border)', borderRadius: 2 }} /> : (
@@ -4866,11 +5055,11 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
           {title}
         </div>
         <div className="font-sans" style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 3, lineHeight: 1.3 }}>
-          From your map · hover or tap a bar
+          From your map · tap or click a bar
         </div>
       </div>
       <div style={{ flex: '1 1 auto', minWidth: 0, position: 'relative' }}>
-        {kind === 'trees' && lanes.some(lane => lane.planning) && <p className="font-sans" style={{ padding: '8px 12px 2px', fontSize: 11, color: 'var(--text-secondary)', position: 'sticky', left: BED_LABEL_WIDTH, width: `min(560px, calc(100vw - ${BED_LABEL_WIDTH + 40}px))` }}>Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.</p>}
+        {kind === 'trees' && lanes.some(lane => lane.planning) && <p className="font-sans" style={{ padding: '8px 12px 2px', fontSize: 11, color: 'var(--text-secondary)', position: 'sticky', left: BED_LABEL_WIDTH, width: stickyNoteMaxWidth(560) }}>Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.</p>}
         {lanes.length > 0 ? (
           <div style={{ position: 'relative', padding: '6px 0' }}>
             <div style={{ ...MONTH_COLUMNS, position: 'absolute', inset: 0, pointerEvents: 'none' }}>
@@ -4887,7 +5076,8 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
               ))}
             </div>
             {lanes.map((lane) => (
-              <div key={lane.key} style={{ position: 'relative', height: 34, marginBottom: 4 }}>
+              // Same touch rule as the planting lanes: 34px (30px bar) with a mouse, 48px (44px bar) on touch or a narrow window.
+              <div key={lane.key} style={{ position: 'relative', height: 'var(--crop-produce-lane-h, 34px)', marginBottom: 4 }}>
                 {lane.runs.map((run, r) => {
                   const id = `${lane.key}@${r}`;
                   // Proposed plants are faded, as the month list did; year two is quieter, as a bed's is.
@@ -4937,13 +5127,13 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
             ))}
           </div>
         ) : unmarked.length ? null : (
-          <div className="font-sans" style={{ padding: '12px 12px', fontSize: 12.5, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
+          <div className="font-sans" style={{ padding: '12px 12px', fontSize: 12.5, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: stickyNoteMaxWidth(560) }}>
             {emptyText}
           </div>
         )}
         {unmarked.map((line) => <UnmarkedProduceLine key={line.enterpriseId} line={line} />)}
         {footnote && (
-          <div className="font-sans" style={{ padding: '0 12px 6px', fontSize: 11, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
+          <div className="font-sans" style={{ padding: '0 12px 6px', fontSize: 11, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: stickyNoteMaxWidth(560) }}>
             {footnote}
           </div>
         )}
@@ -5005,7 +5195,7 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
     <div
       className="font-sans"
       data-crop-calendar-unmarked={line.enterpriseId}
-      style={{ position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 640, padding: '8px 12px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 10px', borderTop: '1px dashed var(--border)' }}
+      style={{ position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: stickyNoteMaxWidth(640), padding: '8px 12px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 10px', borderTop: '1px dashed var(--border)' }}
     >
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: line.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
         <TrayArt src={enterpriseProductArtUrl(line.enterpriseId) ?? animalProductArtUrl(line.product)} label={PRODUCT_LABEL[line.product]} Fallback={Icon} color="var(--gold-dim)" />
@@ -5166,7 +5356,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
               onClick={onAddCrop}
               disabled={ownRecordsHeld}
               className="font-sans"
-              style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.3)', borderRadius: 8, padding: '3px 10px', cursor: 'pointer' }}
+              style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.3)', borderRadius: 8, padding: '3px 10px', cursor: 'pointer', minHeight: 'var(--crop-add-min-h, 26px)' }}
             >
               {ownRecordsHeld ? 'Own dated records · check Task Planner' : '+ crop'}
             </button>
@@ -5217,7 +5407,7 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
   // separates "already there" from "still to sow" at a glance. Each bar also
   // fades from "just sown" to a golden "ready to harvest" tone across its
   // length, so you can see how far along a planting is at a glance.
-  const [barFrom, barTo] = planting.existing ? ['#8C8654', '#B8934A'] : ['#7FAE6E', '#D4A017'];
+  const [barFrom, barTo] = planting.existing ? BAR_FILL_EXISTING : BAR_FILL_PLANNED;
   const segMonthCount = (seg: Segment) => seg.end - seg.start + 1;
   // How many of a copy's months are its "ready to pick" window. Anchored to
   // where harvest actually STARTS (that copy's OWN unclipped start + green
@@ -5247,55 +5437,122 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
     ? 'termination timing not verified'
     : crop.yieldKgPerM2 === 0 ? `cut or roll down ${harvestLabel}` : `harvest ${harvestLabel}`;
 
+  const hasTransplantChip = !simple && !!crop.transplant && (!planting.existing || !!planting.inNursery);
+  const barLabel = `${crop.name}${!simple && fLabel ? ` (${fLabel})` : ''}`;
+
   return (
-    <div style={{ position: 'relative', height: 30, marginBottom: 3 }}>
-      {instances.map((seg, i) => (
-        <button
-          key={i}
-          onClick={onTap}
-          className="font-sans"
-          style={{
-            position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
-            background: BAR_STYLE === 'gradient' ? barGradient(seg, seg.start, segMonthCount(seg), barFrom, barTo) : barFrom,
-            color: '#fff', border: 'none', borderRadius: 6,
-            fontSize: 11, fontWeight: 600, textAlign: 'left', paddingLeft: 6, paddingRight: 4,
-            overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', cursor: 'pointer',
-            // The repeat is drawn quieter than the year you are about to
-            // plant. It is the same plan coming round again, not a second,
-            // separately-decided year — and with Rotate crops on it is
-            // explicitly NOT what next season will look like. Full-strength
-            // colour on both would claim a certainty this plan doesn't have.
-            opacity: isYearTwo(seg) ? 0.5 : 1,
-          }}
-          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.inNursery ? ' · trays sown, not yet planted out' : planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
-        >
-          {BAR_STYLE === 'solid' && (
-            // The "ready to harvest" marker — a hard colour + a line, not a
-            // blend: a solid gold cap over the crop's WHOLE fresh-harvest
-            // window (one month for a one-shot harvest, several for a
-            // cut-and-come-again crop), with a crisp divider where it meets
-            // the growing colour. Can legitimately reach 100% width (viewing
-            // a crop from partway through its own harvest window, once the
-            // growing part has scrolled off the left edge) — MUST render
-            // behind the name label below, or a wide "ready" cap blots the
-            // name out entirely.
-            <div
+    // Type set once here: the bar buttons and the name drawn beside a one-month bar inherit it.
+    <div style={{ position: 'relative', height: 'var(--crop-lane-h, 30px)', marginBottom: 3, fontSize: 11, fontWeight: 600 }}>
+      {instances.map((seg, i) => {
+        const yearTwo = isYearTwo(seg);
+        // A one-month bar is ~58px wide: the icon and padding leave room for
+        // about "Oni…", so Onions, Lettuce, Green beans and Maize (mielies)
+        // all lost their name. The bar keeps the icon and the name is drawn
+        // beside it; each planting has its own lane (30px, 48px on touch), so the space is free.
+        const nameBeside = segMonthCount(seg) === 1;
+        // Three columns, not two: the longest label ("Maize (mielies) (83%)",
+        // about 130px) is wider than the two columns that remain to the right of
+        // the 22nd and would run past the grid and add scroll width.
+        const nameOnLeft = seg.start >= DISPLAY_MONTHS - 3;
+        const barFill = BAR_STYLE === 'gradient' ? barGradient(seg, seg.start, segMonthCount(seg), barFrom, barTo) : barFrom;
+        const capShare = readyMonthsFor(seg) / segMonthCount(seg);
+        // The "ready to harvest" marker — a hard colour + a line, not a blend: a
+        // solid gold cap over the crop's WHOLE fresh-harvest window (one month for
+        // a one-shot harvest, several for a cut-and-come-again crop), with a crisp
+        // divider where it meets the growing colour. Can legitimately reach 100%
+        // width (viewing a crop from partway through its own harvest window, once
+        // the growing part has scrolled off the left edge), so it is drawn BEHIND
+        // the name or a wide cap blots the name out. Its own corner radius stands
+        // in for the clip the button no longer has.
+        const harvestCap = BAR_STYLE === 'solid' ? (
+          <span
+            aria-hidden="true"
+            style={{
+              position: 'absolute', top: 0, bottom: 0, right: 0, width: `${100 * capShare}%`,
+              background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
+              borderRadius: capShare >= 1 ? 6 : '0 6px 6px 0',
+            }}
+          />
+        ) : null;
+        return (
+          <Fragment key={i}>
+            <button
+              onClick={onTap}
+              className="font-sans"
+              // The visible name sits outside a one-month button, so give the
+              // button its own: an icon-only button would otherwise be unnamed.
+              aria-label={nameBeside ? barLabel : undefined}
               style={{
-                position: 'absolute', top: 0, bottom: 0, right: 0, width: `${(100 * readyMonthsFor(seg)) / segMonthCount(seg)}%`,
-                background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
+                position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
+                // Year one paints its fill on the button itself, so the label has
+                // the fill as its ancestor. Year two leaves the button clear and
+                // fades the fill in a layer below, so the name keeps full strength
+                // (white at 50% was 1.61:1).
+                background: yearTwo ? 'transparent' : barFill,
+                color: yearTwo ? 'var(--text-primary)' : BAR_LABEL_INK, border: 'none', borderRadius: 6,
+                fontSize: 'inherit', fontWeight: 'inherit', textAlign: 'left', padding: nameBeside ? 0 : '0 4px 0 6px',
+                display: 'flex', alignItems: 'center', justifyContent: nameBeside ? 'center' : undefined,
+                whiteSpace: 'nowrap', cursor: 'pointer',
               }}
-            />
-          )}
-          {/* Every copy carries the crop name. A repeat with no label is the
-              thing that made the far columns unreadable in the first place —
-              a farmer panning right must be able to see WHAT is in the bed
-              there without panning back a year to find out. */}
-          <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 4, height: '100%', minWidth: 0, lineHeight: 1 }}>
-            <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
-            <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{crop.name}{!simple && fLabel ? ` (${fLabel})` : ''}</span>
-          </span>
-        </button>
-      ))}
+              title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.inNursery ? ' · trays sown, not yet planted out' : planting.existing ? ' · already growing' : ''}${yearTwo ? ' · year two, the same cycle coming round again' : ''}`}
+            >
+              {yearTwo ? (
+                // Year two is drawn quieter than the year you are about to plant.
+                // It is the same plan coming round again, not a second, separately-
+                // decided year — and with Rotate crops on it is explicitly NOT what
+                // next season will look like. Full-strength colour on both would
+                // claim a certainty this plan doesn't have. Only these layers fade.
+                // The layer clips itself because an overflow-hidden button would
+                // become the sticky container and the name could not follow the pan.
+                <span aria-hidden="true" style={{ position: 'absolute', inset: 0, borderRadius: 6, overflow: 'hidden', opacity: 0.5, background: barFill }}>
+                  {harvestCap}
+                </span>
+              ) : harvestCap}
+              {/* Every copy carries the crop name. A repeat with no label is the
+                  thing that made the far columns unreadable in the first place —
+                  a farmer panning right must be able to see WHAT is in the bed
+                  there without panning back a year to find out. The name sticks
+                  just right of the bed labels, as the fruit rows do, so a bar
+                  that starts off-screen to the left still says what it is. */}
+              {nameBeside ? (
+                <span style={{ position: 'relative', zIndex: 1, display: 'inline-flex' }}>
+                  <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
+                </span>
+              ) : (
+                <span style={{ position: 'sticky', left: BED_LABEL_WIDTH + 4, zIndex: 1, display: 'inline-flex', alignItems: 'center', gap: 4, maxWidth: '100%', minWidth: 0, overflow: 'hidden', lineHeight: 1 }}>
+                  <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
+                  <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{barLabel}</span>
+                </span>
+              )}
+            </button>
+            {nameBeside && (
+              // Not focusable and hidden from assistive tech: the button above
+              // already carries this text as its name, so a second reading or a
+              // second tab stop would only repeat it.
+              <span
+                aria-hidden="true"
+                className="font-sans"
+                style={{
+                  position: 'absolute', top: 2, bottom: 2,
+                  ...(nameOnLeft
+                    ? { right: `calc(${100 - leftPct(seg.start)}% + 4px)` }
+                    : { left: `calc(${leftPct(seg.start) + widthPct(seg)}% + 4px)` }),
+                  display: 'flex',
+                  // The "check / transplant" chip hangs over the top edge of the
+                  // lane and, for a bar near the right edge, sits where the
+                  // name goes; dropping the name to the lower half keeps them apart.
+                  alignItems: hasTransplantChip ? 'var(--crop-chip-name-align, flex-end)' : 'center',
+                  paddingBottom: hasTransplantChip ? 'var(--crop-chip-name-pad, 2px)' : 0,
+                  lineHeight: 1, whiteSpace: 'nowrap',
+                  color: 'var(--text-primary)', pointerEvents: 'none',
+                }}
+              >
+                {barLabel}
+              </span>
+            )}
+          </Fragment>
+        );
+      })}
       {/* The transplant marker. It used to read "(tr)", which the app's own
           owner looked at and asked what it stood for — an abbreviation nobody
           can decode is not a label, it's a puzzle. It now says the word, wears
@@ -5316,16 +5573,33 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
             onClick={onTap}
             className="font-sans"
             style={{
-              position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -3, transform: 'translateX(-50%)',
-              fontSize: 9, fontWeight: 700, color: 'var(--gold)', background: 'var(--bg-1)',
-              border: '1px solid rgba(154,96,24,0.35)', padding: '0 3px', borderRadius: 4,
+              // The button is the hit area, centred where the 16px chip used to sit (its centre was
+              // 5px below the lane top); the drawn chip is the inner span. 24px tall on every
+              // screen (WCAG 2.5.8). It is NOT 44px on touch: it sits over its bar's top edge, and a
+              // taller hit area took taps from that bar and from the lane above (app/globals.css).
+              // min(): a chip centred in the last columns hung ~21px past the grid's right edge, which made the
+              // bed rows scroll further than the month header and drew the header 21px out of step at the far end.
+              position: 'absolute', left: `min(${leftPct(trOffset) + COL_PCT / 2}%, calc(100% - 52px))`, top: 5, transform: 'translate(-50%, -50%)',
+              height: 'var(--crop-chip-hit-h, 24px)', padding: 0, background: 'transparent', border: 'none',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              // --gold-dim, not --gold: 9px text on the card is 3.85:1 in --gold
+              // and 5.78:1 here. The year-two fade below touches the fill and
+              // border only; fading the whole chip took the label to 2.09:1.
+              fontSize: 9, fontWeight: 700, color: 'var(--gold-dim)',
               whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
-              opacity: isYearTwo(seg) ? 0.5 : 1,
             }}
             title={`Plan to transplant ${crop.name.toLowerCase()} in ${monthLabel(entry)}. Start checking seedlings in ${monthLabel(readinessStart)}; if they are still not ready by ${monthLabel(latestEntry)}, update the plan instead of treating the bed as occupied.`}
             aria-label={`Plan to transplant ${crop.name} in ${monthLabel(entry)}`}
           >
-            <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
+            <span style={{ position: 'relative', padding: '0 3px' }}>
+              <span
+                aria-hidden="true"
+                style={{ position: 'absolute', inset: -1, background: 'var(--bg-1)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, opacity: isYearTwo(seg) ? 0.5 : 1 }}
+              />
+              <span style={{ position: 'relative' }}>
+                <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
+              </span>
+            </span>
           </button>
         );
       })}
@@ -5370,6 +5644,16 @@ function CropPickerModal({
   isPlot: boolean;
 }) {
   const { lang } = useLanguage();
+  // The sheet is mounted only while open, so `true`: focus lands on the search field (data-autofocus),
+  // Tab stays inside, Escape closes, and focus goes back to the "+ crop" or bar that opened it.
+  // No `autoFocus` on the input: React applies it before effects run, so the hook would record the
+  // input as the opener and hand focus back to a field that no longer exists.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  useDialogFocus(true, dialogRef);
+  useEscapeClose(true, onClose);
+  // "Back to list" remounts the search field; put the cursor back in it.
+  useEffect(() => { if (!crop) searchRef.current?.focus({ preventScroll: true }); }, [crop]);
   // Favourites sort to the top of whatever's currently filtered — a quick-
   // access shortlist, same idea as Tend's personal Crop Library, just
   // without per-farmer custom crop data.
@@ -5384,14 +5668,18 @@ function CropPickerModal({
     <div style={{ position: 'fixed', inset: 0, zIndex: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="crop-picker-title"
         className="rounded-2xl"
         style={{ position: 'relative', width: '100%', maxWidth: 440, maxHeight: '82vh', overflowY: 'auto', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 1 }}>
-          <span className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+          <span id="crop-picker-title" className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
             {crop ? (<><CropIcon cropKey={crop.key} icon={crop.icon} size={16} /> {crop.name}</>) : cropUi(lang, 'Add a crop', 'Engeza isilimo')}
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={SHEET_CLOSE_STYLE}>
             <X size={18} />
           </button>
         </div>
@@ -5401,7 +5689,8 @@ function CropPickerModal({
             <div className="flex items-center gap-2 rounded-xl px-3 py-2 mb-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
               <Search size={14} style={{ color: 'var(--text-muted)' }} />
               <input
-                autoFocus
+                ref={searchRef}
+                data-autofocus
                 value={search}
                 onChange={(e) => onSearch(e.target.value)}
                 placeholder={cropUi(lang, 'Search crops…', 'Sesha izitshalo…')}
@@ -5444,7 +5733,7 @@ function CropPickerModal({
                     <button
                       onClick={() => onToggleFavourite(c.key)}
                       aria-label={isFav ? cropUi(lang, 'Remove from favourites', 'Susa ezintandokazini') : cropUi(lang, 'Add to favourites', 'Engeza ezintandokazini')}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, fontSize: 16, color: isFav ? '#C07A1E' : '#D8CFBC' }}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, fontSize: 16, color: isFav ? 'var(--gold)' : '#D8CFBC' }}
                     >
                       <Star size={16} aria-hidden fill={isFav ? 'currentColor' : 'none'} />
                     </button>
@@ -5465,7 +5754,7 @@ function CropPickerModal({
               <button
                 onClick={() => onToggleFavourite(crop.key)}
                 aria-label={favouriteCropKeys.has(crop.key) ? 'Remove from favourites' : 'Add to favourites'}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: favouriteCropKeys.has(crop.key) ? '#C07A1E' : '#D8CFBC' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: favouriteCropKeys.has(crop.key) ? 'var(--gold)' : '#D8CFBC' }}
               >
                 <Star size={18} aria-hidden fill={favouriteCropKeys.has(crop.key) ? 'currentColor' : 'none'} />
               </button>
@@ -5669,6 +5958,10 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
   // plan does not persist the farmer's original whitelist, so this screen
   // cannot safely infer which alternative food they would actually choose.
   const [confirmingRemove, setConfirmingRemove] = useState(false);
+  // Hooks sit above the early return below. Edit (the safe, primary action) takes focus on open.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(true, dialogRef);
+  useEscapeClose(true, onClose);
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const harvest = harvestMonthForCrop(planting.sowMonth, crop);
@@ -5681,15 +5974,19 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
     <div style={{ position: 'fixed', inset: 0, zIndex: 61, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="planting-detail-title"
         className="rounded-2xl p-4"
         // Long transplant and storage notes pushed Edit below a phone's screen with no way to scroll.
         style={{ position: 'relative', width: '100%', maxWidth: 300, maxHeight: 'calc(100dvh - 32px)', overflowY: 'auto', overscrollBehavior: 'contain', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-start justify-between mb-2">
-          <span className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}>
+          <span id="planting-detail-title" className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}>
             <CropIcon cropKey={crop.key} icon={crop.icon} size={15} /> {crop.name} <SeedBadge transplant={!!crop.transplant} />
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={SHEET_CLOSE_STYLE}>
             <X size={16} />
           </button>
         </div>
@@ -5731,6 +6028,8 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
             </div>
             <div className="flex gap-2">
               <button
+                // The safe answer takes focus: Remove's button just unmounted under the pointer or key.
+                autoFocus
                 onClick={() => setConfirmingRemove(false)}
                 className="flex-1 font-display font-semibold rounded-xl py-2"
                 style={{ fontSize: 13, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}
@@ -5750,6 +6049,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
           <div className="flex gap-2">
             <button
               onClick={onEdit}
+              data-autofocus
               className="flex-1 font-display font-semibold rounded-xl py-2"
               style={{ fontSize: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
             >
@@ -5791,7 +6091,7 @@ function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
   groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
-  pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
+  pattern, calendarLabel, calendarBasis, climateSource, referenceName, calendarChoice, automaticCalendar, sampleCalendarSet, canChooseCalendar, onCalendarChoice, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   siteClimate, siteObservationNotes, beds, siteId, nurserySettings, currentPlantings, now, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -5811,10 +6111,23 @@ function AutoSuggestModal({
   idealMeta: IdealYearPlan | null;
   hasCurrentPlantings: boolean;
   pattern: RainPattern;
+  /** The calendar named for the grower (lib/sowing-calendar-label.ts), rain season included. */
+  calendarLabel: string;
+  /** Whether the grower's frost answer or the site climate chose `pattern`. */
+  calendarBasis: CalendarBasis;
   /** Where the pattern came from: the site's own satellite climate, the nearest reference region, or no site at all. */
   climateSource: 'site' | 'reference' | 'none';
   /** Reference-region name when climateSource is 'reference'. */
   referenceName: string | null;
+  /** The calendar the grower chose for this site, or null when the app decides. */
+  calendarChoice: RainPattern | null;
+  /** The calendar the app would use with no choice, so the "Let the app decide" option can name it. */
+  automaticCalendar: RainPattern;
+  /** True on the sample farm, whose automatic calendar is declared in the sample data. */
+  sampleCalendarSet: boolean;
+  /** False with no site or workspace to save a choice against. */
+  canChooseCalendar: boolean;
+  onCalendarChoice: (calendar: RainPattern | null) => void;
   rotateCrops: boolean; onRotateCrops: (v: boolean) => void;
   allowVinesInBeds: boolean; onAllowVinesInBeds: (v: boolean) => void;
   allowMixedCropsInBed: boolean; onAllowMixedCropsInBed: (v: boolean) => void;
@@ -5833,6 +6146,9 @@ function AutoSuggestModal({
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
   const { lang } = useLanguage();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(true, dialogRef, { initialFocus: 'container' });
+  useEscapeClose(true, onClose);
   const [cropSearch, setCropSearch] = useState('');
   const nurseryForecast = useMemo(() => siteId && result
     ? buildNurseryForecast([...currentPlantings, ...result.plantings], beds, siteId, sanitiseNurserySettings(nurserySettings), now)
@@ -5849,14 +6165,21 @@ function AutoSuggestModal({
     <div style={{ position: 'fixed', inset: 0, zIndex: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
-        className="rounded-2xl"
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="auto-suggest-title"
+        // The container takes focus (not Close): the sheet is a long form and the first control is
+        // a dismiss, so Enter right after opening must not throw the questions away. It is not a
+        // control, so it draws no focus ring.
+        className="rounded-2xl outline-none"
         style={{ position: 'relative', width: '100%', maxWidth: 480, maxHeight: '86vh', overflowY: 'auto', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 1 }}>
-          <span className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
+          <span id="auto-suggest-title" className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
             <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {phase === 'questions' ? 'Auto-suggest a plan' : 'Suggested plan'}
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={SHEET_CLOSE_STYLE}>
             <X size={18} />
           </button>
         </div>
@@ -6023,16 +6346,41 @@ function AutoSuggestModal({
             </div>
 
             <div className="rounded-xl px-3 py-2.5" style={{ background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)' }}>
-              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>Climate used automatically</div>
+              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>{calendarBasis === 'grower-choice' ? 'Sowing calendar you chose' : calendarBasis === 'sample-farm' ? 'Sample farm calendar' : 'Climate used automatically'}</div>
               <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-forest-800)' }}>
-                {(() => { const PatternIcon = PATTERN_META[pattern].Icon; return <PatternIcon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />; })()} {PATTERN_META[pattern].label}
+                {(() => { const PatternIcon = PATTERN_META[pattern].Icon; return <PatternIcon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />; })()} {calendarLabel}
               </div>
+              {calendarBasis === 'sample-farm' ? (
+                <p className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{SAMPLE_FARM_CALENDAR_REASON}</p>
+              ) : siteClimate && sowingCalendarReasons(siteClimate, { pattern, basis: calendarBasis }).map((line) => (
+                <p key={line} className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{line}</p>
+              ))}
+              {calendarBasis === 'grower-choice' && !siteClimate && (
+                <p className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>You chose this calendar yourself.</p>
+              )}
+              {canChooseCalendar && (
+                <>
+                  <label className="block font-sans mt-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+                    Sowing calendar for this site
+                    <select className="mt-1 w-full rounded-lg border px-3 min-h-11 font-sans" style={{ fontSize: 14, background: 'var(--bg-0)', color: 'var(--text-primary)', borderColor: 'var(--border)' }}
+                      value={calendarChoice ?? ''} onChange={(event) => onCalendarChoice(SOWING_CALENDAR_OPTIONS.find((option) => option.value === event.target.value)?.value ?? null)}>
+                      <option value="">{sampleCalendarSet ? 'Sample farm' : 'Let the app decide'}: {SOWING_CALENDAR_LABEL[automaticCalendar]}</option>
+                      {SOWING_CALENDAR_OPTIONS.map((option) => <option key={option.value} value={option.value}>{sowingCalendarOptionText(option)}</option>)}
+                    </select>
+                  </label>
+                  <p className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>Choose one only if you know your land. The months offered for every crop change with it. Crops already on your plan stay where they are.</p>
+                </>
+              )}
               <p className="font-mono mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                {climateSource === 'site'
-                  ? 'Derived from satellite climate records for this site. You do not need to choose a rainfall type.'
+                {calendarBasis === 'sample-farm'
+                  ? 'Set in the sample farm itself, not read from climate records. Pick another calendar above to see the months change.'
+                  : calendarBasis === 'grower-choice'
+                  ? (sampleCalendarSet ? 'You chose this calendar. Choose "Sample farm" in the list to go back.' : 'You chose this calendar. Choose "Let the app decide" to go back to the climate records.')
+                  : climateSource === 'site'
+                  ? 'Derived from satellite climate records for this site. You do not need to choose a sowing calendar.'
                   : climateSource === 'reference'
                     ? `Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: ${referenceName ?? 'regional point'} (fallback).`
-                    : 'No mapped location is attached, so the planner is using the visible summer-rainfall fallback. Map the garden for a location-based climate profile.'}
+                    : 'No mapped location is attached, so the planner is using the cautious winter-frost fallback. Map the garden for a location-based climate profile.'}
               </p>
             </div>
 

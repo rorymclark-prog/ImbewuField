@@ -8,7 +8,7 @@ function GuideBody({ item, lines = item.lines }: { item: ProductionGuideItem; li
     {lines.map((line) => <p key={line} className="font-sans mt-1" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-secondary)' }}>{line}</p>)}
     {!!item.sources?.length && <ul className="font-sans mt-1" style={{ fontSize: 11, lineHeight: 1.5, color: 'var(--text-muted)', listStyle: 'disc', paddingInlineStart: 18 }}>
       {item.sources.map((source) => <li key={`${source.label}:${source.url}`}>
-        {source.url ? <a href={source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>{source.label}</a> : source.label}
+        {source.url ? <a href={source.url} target="_blank" rel="noopener noreferrer" className="crop-plan-source-link" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>{source.label}</a> : source.label}
       </li>)}
     </ul>}
   </>;
@@ -19,7 +19,7 @@ function GuideItem({ item, product = false }: { item: ProductionGuideItem; produ
     <h4 className="font-sans font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{item.title}</h4>
     {item.expectedSeason && <div className="my-2" role="img" aria-label={`${item.expectedSeason.label}: ${item.expectedSeason.months.map(m => ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m - 1]).join(', ')}. ${item.expectedSeason.basis}`}>
       <p className="font-sans text-xs mb-2">{item.expectedSeason.label} · expected when established</p>
-      <div className="grid grid-cols-12 gap-0.5">{['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((label, i) => <div key={i} className="text-center font-sans text-xs rounded py-2" style={{ background: item.expectedSeason!.months.includes(i + 1) ? 'var(--emerald)' : 'var(--bg-2)', color: item.expectedSeason!.months.includes(i + 1) ? 'white' : 'var(--text-secondary)' }}>{label}</div>)}</div>
+      <div className="grid grid-cols-12 gap-0.5">{['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((label, i) => <div key={i} className="text-center font-sans text-xs rounded py-2" style={{ background: item.expectedSeason!.months.includes(i + 1) ? 'var(--color-forest-800)' : 'var(--bg-2)', color: item.expectedSeason!.months.includes(i + 1) ? 'var(--on-forest-800)' : 'var(--text-secondary)' }}>{label}</div>)}</div>
     </div>}
     {product && <p className="font-sans mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>{item.lines[0]}</p>}
     {product ? <details>

@@ -1,0 +1,2230 @@
+[
+ {
+  "key": "maize",
+  "name": "Maize (mielies)",
+  "sowMonths": {
+   "summer": [
+    10,
+    11
+   ],
+   "winter": [],
+   "all-year": [
+    10,
+    11,
+    12
+   ],
+   "mild-frost": [
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 140,
+  "daysToHarvestRange": [
+   120,
+   140
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.3,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 33,
+   "absoluteMax": 47
+  }
+ },
+ {
+  "key": "dry-beans",
+  "name": "Dry beans (sugar beans)",
+  "sowMonths": {
+   "summer": [
+    11,
+    12
+   ],
+   "winter": [],
+   "all-year": [
+    3,
+    4
+   ],
+   "mild-frost": [
+    11,
+    12,
+    1
+   ]
+  },
+  "daysToHarvest": 115,
+  "daysToHarvestRange": [
+   85,
+   115
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.2,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 32
+  }
+ },
+ {
+  "key": "green-beans",
+  "name": "Green beans",
+  "sowMonths": {
+   "summer": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "winter": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "mild-frost": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ]
+  },
+  "daysToHarvest": 60,
+  "daysToHarvestRange": [
+   48,
+   60
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.5,
+  "yieldRangeKgPerM2": [
+   0.5,
+   1
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 32
+  }
+ },
+ {
+  "key": "butternut",
+  "name": "Butternut",
+  "sowMonths": {
+   "summer": [
+    10,
+    11,
+    12
+   ],
+   "winter": [
+    9,
+    10,
+    11
+   ],
+   "all-year": [
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10
+   ],
+   "mild-frost": [
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 110,
+  "daysToHarvestRange": [
+   85,
+   110
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 1,
+  "yieldKgPerM2": 1.2,
+  "yieldRangeKgPerM2": [
+   1.2,
+   1.8
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 30,
+   "absoluteMax": 40
+  }
+ },
+ {
+  "key": "pumpkin",
+  "name": "Pumpkin",
+  "sowMonths": {
+   "summer": [
+    10,
+    11
+   ],
+   "winter": [
+    9,
+    10,
+    11
+   ],
+   "all-year": [
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10
+   ],
+   "mild-frost": [
+    9,
+    10,
+    11
+   ]
+  },
+  "daysToHarvest": 130,
+  "daysToHarvestRange": [
+   110,
+   130
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 1,
+  "yieldKgPerM2": 1.2,
+  "yieldRangeKgPerM2": [
+   1.2,
+   2
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 30,
+   "absoluteMax": 38
+  }
+ },
+ {
+  "key": "swiss-chard",
+  "name": "Swiss chard (spinach)",
+  "sowMonths": {
+   "summer": [
+    2,
+    3,
+    8,
+    9,
+    10
+   ],
+   "winter": [
+    3,
+    4,
+    8,
+    9
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "mild-frost": [
+    1,
+    2,
+    3,
+    4,
+    7,
+    8,
+    9
+   ]
+  },
+  "daysToHarvest": 60,
+  "daysToHarvestRange": [
+   50,
+   60
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 3,
+  "yieldKgPerM2": 2,
+  "yieldRangeKgPerM2": [
+   2,
+   3
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "kale",
+  "name": "Kale",
+  "sowMonths": {
+   "summer": [
+    1,
+    2,
+    3,
+    8,
+    9
+   ],
+   "winter": [
+    1,
+    2,
+    3,
+    8,
+    9
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "mild-frost": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 120,
+  "daysToHarvestRange": [
+   55,
+   120
+  ],
+  "transplant": true,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 1.5,
+  "yieldRangeKgPerM2": [
+   0.8,
+   3
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 22,
+   "absoluteMax": 30
+  }
+ },
+ {
+  "key": "cabbage",
+  "name": "Cabbage",
+  "sowMonths": {
+   "summer": [
+    1,
+    2,
+    3,
+    8,
+    9
+   ],
+   "winter": [
+    11,
+    12,
+    1,
+    2,
+    3,
+    4
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "mild-frost": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 125,
+  "daysToHarvestRange": [
+   65,
+   125
+  ],
+  "transplant": true,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 3,
+  "yieldRangeKgPerM2": [
+   3,
+   5
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 24,
+   "absoluteMax": 32
+  }
+ },
+ {
+  "key": "carrots",
+  "name": "Carrots",
+  "sowMonths": {
+   "summer": [
+    2,
+    3,
+    8,
+    9,
+    10
+   ],
+   "winter": [
+    2,
+    3,
+    4,
+    8,
+    9
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "mild-frost": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ]
+  },
+  "daysToHarvest": 120,
+  "daysToHarvestRange": [
+   80,
+   120
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 2,
+  "yieldRangeKgPerM2": [
+   2,
+   3
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 24,
+   "absoluteMax": 30
+  }
+ },
+ {
+  "key": "beetroot",
+  "name": "Beetroot",
+  "sowMonths": {
+   "summer": [
+    2,
+    3,
+    8,
+    9,
+    10
+   ],
+   "winter": [
+    2,
+    3,
+    4,
+    8,
+    9,
+    10
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "mild-frost": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 70,
+  "daysToHarvestRange": [
+   56,
+   70
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 1,
+  "yieldKgPerM2": 1.4,
+  "yieldRangeKgPerM2": [
+   1.4,
+   1.8
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "onions",
+  "name": "Onions",
+  "sowMonths": {
+   "summer": [
+    3,
+    4,
+    5
+   ],
+   "winter": [
+    4,
+    5
+   ],
+   "all-year": [
+    2,
+    3,
+    4
+   ],
+   "mild-frost": [
+    2,
+    3
+   ]
+  },
+  "daysToHarvest": 180,
+  "daysToHarvestRange": [
+   140,
+   180
+  ],
+  "transplant": true,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 1.5,
+  "yieldRangeKgPerM2": [
+   1.5,
+   3
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 30
+  }
+ },
+ {
+  "key": "tomatoes",
+  "name": "Tomatoes",
+  "sowMonths": {
+   "summer": [
+    8,
+    9,
+    10
+   ],
+   "winter": [
+    8,
+    9,
+    10
+   ],
+   "all-year": [
+    1,
+    2,
+    3,
+    7,
+    8,
+    9,
+    12
+   ],
+   "mild-frost": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 90,
+  "daysToHarvestRange": [
+   75,
+   90
+  ],
+  "transplant": true,
+  "frostTender": true,
+  "harvestWindowMonths": 2,
+  "yieldKgPerM2": 3,
+  "yieldRangeKgPerM2": [
+   3,
+   5
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 27,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "peppers",
+  "name": "Peppers",
+  "sowMonths": {
+   "summer": [
+    8,
+    9,
+    10
+   ],
+   "winter": [
+    8,
+    9,
+    10
+   ],
+   "all-year": [
+    1,
+    2,
+    3,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "mild-frost": [
+    8,
+    9,
+    10,
+    11
+   ]
+  },
+  "daysToHarvest": 80,
+  "daysToHarvestRange": [
+   65,
+   80
+  ],
+  "transplant": true,
+  "frostTender": true,
+  "harvestWindowMonths": 2,
+  "yieldKgPerM2": 2,
+  "yieldRangeKgPerM2": [
+   2,
+   3
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 30,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "chilli",
+  "name": "Chilli",
+  "sowMonths": {
+   "summer": [
+    8,
+    9,
+    10
+   ],
+   "winter": [
+    8,
+    9,
+    10
+   ],
+   "all-year": [
+    1,
+    2,
+    3,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "mild-frost": [
+    8,
+    9,
+    10,
+    11
+   ]
+  },
+  "daysToHarvest": 80,
+  "daysToHarvestRange": [
+   65,
+   80
+  ],
+  "transplant": true,
+  "frostTender": true,
+  "harvestWindowMonths": 2,
+  "yieldKgPerM2": 1,
+  "yieldRangeKgPerM2": [
+   1,
+   1.5
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 30,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "sweet-potato",
+  "name": "Sweet potato",
+  "sowMonths": {
+   "summer": [
+    11
+   ],
+   "winter": [
+    9,
+    10,
+    11
+   ],
+   "all-year": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "mild-frost": [
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 150,
+  "daysToHarvestRange": [
+   90,
+   150
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 1,
+  "yieldKgPerM2": 1.5,
+  "yieldRangeKgPerM2": [
+   1.5,
+   3
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 28,
+   "absoluteMax": 38
+  }
+ },
+ {
+  "key": "potato",
+  "name": "Potato",
+  "sowMonths": {
+   "summer": [
+    9,
+    10
+   ],
+   "winter": [
+    7,
+    8,
+    9
+   ],
+   "all-year": [
+    4,
+    5
+   ],
+   "mild-frost": [
+    1,
+    8,
+    9,
+    10
+   ]
+  },
+  "daysToHarvest": 120,
+  "daysToHarvestRange": [
+   90,
+   120
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 1,
+  "yieldRangeKgPerM2": [
+   1,
+   1.7
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 30
+  }
+ },
+ {
+  "key": "lettuce",
+  "name": "Lettuce",
+  "sowMonths": {
+   "summer": [
+    2,
+    3,
+    8,
+    9,
+    10
+   ],
+   "winter": [
+    2,
+    3,
+    4,
+    8,
+    9,
+    10
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "mild-frost": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 80,
+  "daysToHarvestRange": [
+   45,
+   80
+  ],
+  "transplant": true,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 1.2,
+  "yieldRangeKgPerM2": [
+   1.2,
+   2.5
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 21,
+   "absoluteMax": 30
+  }
+ },
+ {
+  "key": "amadumbe",
+  "name": "Amadumbe (taro)",
+  "sowMonths": {
+   "summer": [],
+   "winter": [
+    9,
+    10
+   ],
+   "all-year": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    3
+   ],
+   "mild-frost": [
+    9,
+    10,
+    11
+   ]
+  },
+  "daysToHarvest": 300,
+  "daysToHarvestRange": [
+   240,
+   300
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": null,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 28,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "groundnuts",
+  "name": "Groundnuts (peanuts)",
+  "sowMonths": {
+   "summer": [
+    10
+   ],
+   "winter": [
+    9,
+    10,
+    11
+   ],
+   "all-year": [
+    9,
+    10,
+    11
+   ],
+   "mild-frost": [
+    10,
+    11
+   ]
+  },
+  "daysToHarvest": 160,
+  "daysToHarvestRange": [
+   150,
+   160
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.12,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 32,
+   "absoluteMax": 45
+  }
+ },
+ {
+  "key": "garlic",
+  "name": "Garlic",
+  "sowMonths": {
+   "summer": [
+    4,
+    5
+   ],
+   "winter": [
+    3,
+    4,
+    5
+   ],
+   "all-year": [
+    4,
+    5
+   ],
+   "mild-frost": [
+    4,
+    5
+   ]
+  },
+  "daysToHarvest": 210,
+  "daysToHarvestRange": [
+   180,
+   210
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.6,
+  "yieldRangeKgPerM2": [
+   0.6,
+   1
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 30,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "peas",
+  "name": "Peas",
+  "sowMonths": {
+   "summer": [
+    7,
+    8,
+    9
+   ],
+   "winter": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "all-year": [
+    3,
+    4,
+    5
+   ],
+   "mild-frost": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "daysToHarvest": 80,
+  "daysToHarvestRange": [
+   60,
+   80
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.4,
+  "yieldRangeKgPerM2": [
+   0.4,
+   0.6
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 24,
+   "absoluteMax": 30
+  }
+ },
+ {
+  "key": "broad-beans",
+  "name": "Broad beans (fava beans)",
+  "sowMonths": {
+   "summer": [
+    4,
+    5
+   ],
+   "winter": [
+    4,
+    5,
+    6
+   ],
+   "all-year": [
+    4,
+    5
+   ],
+   "mild-frost": [
+    4,
+    5
+   ]
+  },
+  "daysToHarvest": 120,
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 1,
+  "yieldKgPerM2": 0.3,
+  "yieldRangeKgPerM2": [
+   0.3,
+   0.6
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 28,
+   "absoluteMax": 32
+  }
+ },
+ {
+  "key": "broccoli",
+  "name": "Broccoli",
+  "sowMonths": {
+   "summer": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "winter": [
+    12,
+    1
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "mild-frost": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "daysToHarvest": 80,
+  "daysToHarvestRange": [
+   50,
+   80
+  ],
+  "transplant": true,
+  "frostTender": false,
+  "harvestWindowMonths": 1,
+  "yieldKgPerM2": 0.5,
+  "yieldRangeKgPerM2": [
+   0.5,
+   0.9
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 24,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "cucumber",
+  "name": "Cucumber",
+  "sowMonths": {
+   "summer": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "winter": [
+    9,
+    10,
+    11
+   ],
+   "all-year": [
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10
+   ],
+   "mild-frost": [
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 70,
+  "daysToHarvestRange": [
+   60,
+   70
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 1.2,
+  "yieldRangeKgPerM2": [
+   1.2,
+   1.8
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 32,
+   "absoluteMax": 38
+  }
+ },
+ {
+  "key": "watermelon",
+  "name": "Watermelon",
+  "sowMonths": {
+   "summer": [
+    10,
+    11,
+    12
+   ],
+   "winter": [
+    9,
+    10
+   ],
+   "all-year": [
+    8,
+    9,
+    10
+   ],
+   "mild-frost": [
+    8,
+    9,
+    10
+   ]
+  },
+  "daysToHarvest": 95,
+  "daysToHarvestRange": [
+   75,
+   95
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 1,
+  "yieldKgPerM2": 1.2,
+  "yieldRangeKgPerM2": [
+   1.2,
+   2
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 35,
+   "absoluteMax": 40
+  }
+ },
+ {
+  "key": "coriander",
+  "name": "Coriander",
+  "sowMonths": {
+   "summer": [
+    2,
+    3,
+    8,
+    9
+   ],
+   "winter": [
+    2,
+    3,
+    4,
+    8,
+    9
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "mild-frost": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ]
+  },
+  "daysToHarvest": 55,
+  "daysToHarvestRange": [
+   40,
+   55
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": null,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 32
+  }
+ },
+ {
+  "key": "oats",
+  "name": "Oats (winter cover crop)",
+  "sowMonths": {
+   "summer": [
+    3,
+    4,
+    5
+   ],
+   "winter": [],
+   "all-year": [
+    3,
+    4,
+    5
+   ],
+   "mild-frost": [
+    3,
+    4,
+    5
+   ]
+  },
+  "daysToHarvest": 166,
+  "daysToHarvestRange": [
+   166,
+   166
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 20,
+   "absoluteMax": 30
+  }
+ },
+ {
+  "key": "true-spinach",
+  "name": "True spinach (English spinach)",
+  "sowMonths": {
+   "summer": [
+    2,
+    3,
+    8,
+    9,
+    10
+   ],
+   "winter": [
+    3,
+    4,
+    5
+   ],
+   "all-year": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "mild-frost": [
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9
+   ]
+  },
+  "daysToHarvest": 55,
+  "daysToHarvestRange": [
+   40,
+   55
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.7,
+  "yieldRangeKgPerM2": [
+   0.7,
+   1.2
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 20,
+   "absoluteMax": 27
+  }
+ },
+ {
+  "key": "turnip",
+  "name": "Turnips",
+  "sowMonths": {
+   "summer": [
+    1,
+    2,
+    3,
+    4,
+    8,
+    9
+   ],
+   "winter": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "mild-frost": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 90,
+  "daysToHarvestRange": [
+   60,
+   90
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 1,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 17,
+   "absoluteMax": 30
+  }
+ },
+ {
+  "key": "amaranth",
+  "name": "Amaranth (imbuya/thepe)",
+  "sowMonths": {
+   "summer": [
+    9,
+    10
+   ],
+   "winter": [],
+   "all-year": [],
+   "mild-frost": []
+  },
+  "daysToHarvest": 55,
+  "daysToHarvestRange": [
+   30,
+   55
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": null,
+  "timingVerified": true,
+  "heat": null
+ },
+ {
+  "key": "cauliflower",
+  "name": "Cauliflower",
+  "sowMonths": {
+   "summer": [
+    8,
+    9,
+    12,
+    1,
+    2,
+    3
+   ],
+   "winter": [
+    11,
+    12,
+    1,
+    2,
+    3,
+    4
+   ],
+   "all-year": [
+    2,
+    3,
+    4
+   ],
+   "mild-frost": [
+    7,
+    8,
+    9,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "daysToHarvest": 130,
+  "daysToHarvestRange": [
+   60,
+   130
+  ],
+  "transplant": true,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.7,
+  "yieldRangeKgPerM2": [
+   0.7,
+   1.2
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 30
+  }
+ },
+ {
+  "key": "parsley",
+  "name": "Parsley",
+  "sowMonths": {
+   "summer": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "winter": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "all-year": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "mild-frost": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "daysToHarvest": 80,
+  "daysToHarvestRange": [
+   70,
+   80
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.2,
+  "yieldRangeKgPerM2": [
+   0.2,
+   0.4
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 20,
+   "absoluteMax": 28
+  }
+ },
+ {
+  "key": "sorghum",
+  "name": "Sorghum",
+  "sowMonths": {
+   "summer": [
+    10,
+    11
+   ],
+   "winter": [],
+   "all-year": [],
+   "mild-frost": []
+  },
+  "daysToHarvest": 140,
+  "daysToHarvestRange": [
+   120,
+   140
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.077,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 35,
+   "absoluteMax": 40
+  }
+ },
+ {
+  "key": "soybean",
+  "name": "Soybean",
+  "sowMonths": {
+   "summer": [
+    11,
+    12
+   ],
+   "winter": [],
+   "all-year": [],
+   "mild-frost": []
+  },
+  "daysToHarvest": 130,
+  "daysToHarvestRange": [
+   120,
+   130
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.25,
+  "yieldRangeKgPerM2": [
+   0.25,
+   0.3
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 33,
+   "absoluteMax": 38
+  }
+ },
+ {
+  "key": "brinjal",
+  "name": "Brinjal (eggplant)",
+  "sowMonths": {
+   "summer": [
+    10,
+    11
+   ],
+   "winter": [
+    10,
+    11,
+    12
+   ],
+   "all-year": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "mild-frost": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ]
+  },
+  "daysToHarvest": 85,
+  "daysToHarvestRange": [
+   60,
+   85
+  ],
+  "transplant": true,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 1.2,
+  "yieldRangeKgPerM2": [
+   1.2,
+   2
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 35,
+   "absoluteMax": 40
+  }
+ },
+ {
+  "key": "gem-squash",
+  "name": "Gem squash",
+  "sowMonths": {
+   "summer": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "winter": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "all-year": [
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10
+   ],
+   "mild-frost": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ]
+  },
+  "daysToHarvest": 80,
+  "daysToHarvestRange": [
+   50,
+   80
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 1.2,
+  "yieldRangeKgPerM2": [
+   1.2,
+   1.8
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 30,
+   "absoluteMax": 40
+  }
+ },
+ {
+  "key": "baby-marrow",
+  "name": "Baby marrow (courgette)",
+  "sowMonths": {
+   "summer": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "winter": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "all-year": [
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10
+   ],
+   "mild-frost": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ]
+  },
+  "daysToHarvest": 50,
+  "daysToHarvestRange": [
+   40,
+   50
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.7,
+  "yieldRangeKgPerM2": [
+   0.7,
+   1.2
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 30,
+   "absoluteMax": 40
+  }
+ },
+ {
+  "key": "spanspek",
+  "name": "Spanspek (sweet melon)",
+  "sowMonths": {
+   "summer": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "winter": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "all-year": [
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10
+   ],
+   "mild-frost": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ]
+  },
+  "daysToHarvest": 110,
+  "daysToHarvestRange": [
+   80,
+   110
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 1.2,
+  "yieldRangeKgPerM2": [
+   1.2,
+   1.8
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 30,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "sweetcorn",
+  "name": "Sweetcorn",
+  "sowMonths": {
+   "summer": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "winter": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "all-year": [
+    1,
+    2,
+    3,
+    7,
+    8,
+    9
+   ],
+   "mild-frost": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ]
+  },
+  "daysToHarvest": 90,
+  "daysToHarvestRange": [
+   70,
+   90
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.7,
+  "yieldRangeKgPerM2": [
+   0.7,
+   1
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 33,
+   "absoluteMax": 47
+  }
+ },
+ {
+  "key": "cowpea",
+  "name": "Cowpea (imbumba/dinawa)",
+  "sowMonths": {
+   "summer": [
+    11,
+    12
+   ],
+   "winter": [],
+   "all-year": [
+    12,
+    1
+   ],
+   "mild-frost": [
+    12
+   ]
+  },
+  "daysToHarvest": 120,
+  "daysToHarvestRange": [
+   21,
+   120
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": null,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 35,
+   "absoluteMax": 40
+  }
+ },
+ {
+  "key": "bambara-groundnut",
+  "name": "Bambara groundnut (jugo bean)",
+  "sowMonths": {
+   "summer": [
+    10,
+    11
+   ],
+   "winter": [],
+   "all-year": [],
+   "mild-frost": []
+  },
+  "daysToHarvest": 150,
+  "daysToHarvestRange": [
+   110,
+   150
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.016,
+  "yieldRangeKgPerM2": [
+   0.016,
+   0.096
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 30,
+   "absoluteMax": 38
+  }
+ },
+ {
+  "key": "sunflower",
+  "name": "Sunflower (for seed)",
+  "sowMonths": {
+   "summer": [
+    11
+   ],
+   "winter": [],
+   "all-year": [],
+   "mild-frost": []
+  },
+  "daysToHarvest": 130,
+  "daysToHarvestRange": [
+   125,
+   130
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0.12,
+  "yieldRangeKgPerM2": [
+   0.12,
+   0.21
+  ],
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 34,
+   "absoluteMax": 45
+  }
+ },
+ {
+  "key": "radish",
+  "name": "Radish",
+  "sowMonths": {
+   "summer": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4
+   ],
+   "winter": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "all-year": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "mild-frost": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "daysToHarvest": 30,
+  "daysToHarvestRange": [
+   20,
+   30
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": null,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 26,
+   "absoluteMax": 37
+  }
+ },
+ {
+  "key": "mung-bean",
+  "name": "Mung bean",
+  "sowMonths": {
+   "summer": [
+    11,
+    12
+   ],
+   "winter": [],
+   "all-year": [],
+   "mild-frost": []
+  },
+  "daysToHarvest": 90,
+  "daysToHarvestRange": [
+   75,
+   90
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": null,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 36,
+   "absoluteMax": 40
+  }
+ },
+ {
+  "key": "spider-plant",
+  "name": "Spider plant (Cleome gynandra)",
+  "sowMonths": {
+   "summer": [
+    8,
+    9,
+    10
+   ],
+   "winter": [],
+   "all-year": [],
+   "mild-frost": []
+  },
+  "daysToHarvest": 42,
+  "daysToHarvestRange": [
+   28,
+   42
+  ],
+  "transplant": true,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": null,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "african-nightshade",
+  "name": "African nightshade (umsobo)",
+  "sowMonths": {
+   "summer": [
+    10,
+    11
+   ],
+   "winter": [],
+   "all-year": [],
+   "mild-frost": []
+  },
+  "daysToHarvest": 28,
+  "daysToHarvestRange": [
+   28,
+   28
+  ],
+  "transplant": true,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": null,
+  "timingVerified": true,
+  "heat": {
+   "optimalMax": 28,
+   "absoluteMax": 40
+  }
+ },
+ {
+  "key": "sunn-hemp",
+  "name": "Sunn hemp (cover crop)",
+  "sowMonths": {
+   "summer": [
+    10,
+    11
+   ],
+   "winter": [],
+   "all-year": [
+    10,
+    11
+   ],
+   "mild-frost": [
+    10,
+    11
+   ]
+  },
+  "daysToHarvest": 90,
+  "daysToHarvestRange": [
+   60,
+   90
+  ],
+  "transplant": false,
+  "frostTender": true,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0,
+  "timingVerified": false,
+  "heat": {
+   "optimalMax": 30,
+   "absoluteMax": 40
+  }
+ },
+ {
+  "key": "medic",
+  "name": "Medic (cover crop)",
+  "sowMonths": {
+   "summer": [],
+   "winter": [
+    4,
+    5
+   ],
+   "all-year": [
+    4,
+    5
+   ],
+   "mild-frost": []
+  },
+  "daysToHarvest": 100,
+  "daysToHarvestRange": [
+   60,
+   100
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0,
+  "timingVerified": false,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 35
+  }
+ },
+ {
+  "key": "fodder-radish",
+  "name": "Fodder radish (cover crop)",
+  "sowMonths": {
+   "summer": [
+    12,
+    1,
+    2
+   ],
+   "winter": [],
+   "all-year": [],
+   "mild-frost": [
+    1,
+    2
+   ]
+  },
+  "daysToHarvest": 180,
+  "daysToHarvestRange": [
+   161,
+   180
+  ],
+  "transplant": false,
+  "frostTender": false,
+  "harvestWindowMonths": 0,
+  "yieldKgPerM2": 0,
+  "timingVerified": false,
+  "heat": {
+   "optimalMax": 25,
+   "absoluteMax": 30
+  }
+ }
+]

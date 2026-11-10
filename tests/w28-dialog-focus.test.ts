@@ -102,6 +102,8 @@ test('every overlay calls useDialogFocus', () => {
     'components/EvidenceCatalogue.tsx', 'components/EvidenceSheet.tsx', 'components/ProfileSheet.tsx',
     'components/PopiaConsent.tsx', 'components/design/BasePhotoImport.tsx', 'components/design/LessonLink.tsx',
     'components/AppConfirm.tsx', 'app/records/page.tsx',
+    // Three sheets in one file: crop picker, planting detail, Auto-suggest. tests/crop-plan-touch-keyboard.test.ts pins each.
+    'app/facilitator/crops/page.tsx',
   ]) {
     const src = readFileSync(new URL(`../${f}`, import.meta.url), 'utf8');
     assert.match(src, /useDialogFocus\(/, f);
@@ -129,7 +131,7 @@ test('Escape closes overlays through one stable listener (w28-06)', () => {
   for (const f of [
     'components/AddSheet.tsx', 'components/EvidenceCatalogue.tsx', 'components/EvidenceSheet.tsx',
     'components/ProfileSheet.tsx', 'components/design/BasePhotoImport.tsx', 'components/journal/JournalEntrySheet.tsx',
-    'components/ThemePanel.tsx', 'components/NavDrawer.tsx',
+    'components/ThemePanel.tsx', 'components/NavDrawer.tsx', 'app/facilitator/crops/page.tsx',
   ]) {
     const src = readFileSync(new URL(`../${f}`, import.meta.url), 'utf8');
     assert.match(src, /useEscapeClose\((open|true), onClose\)/, f);

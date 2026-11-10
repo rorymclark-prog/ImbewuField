@@ -188,6 +188,12 @@ Shared acceptance checks: [Crop planning checklist](CROP-PLANNING-CHECKLIST.md).
 Use this with the latest dated crop record; it is a verification checklist, not a
 claim that every check has passed or that the proposed farming fixes are deployed.
 
+Latest record: [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md). What was done about CP-073–CP-083, with before and after figures for 44 places, and CP-086–CP-090. The calendar is now chosen by frost and heat; 39 sowing-month rows are corrected to their source rows; Lowveld agreement with the regional guide went from 35% to 61% and the KZN coast from 47% to 72%. A later update the same day adds a grower's own calendar choice and a list of saved sowings that are out of season (CP-089, CP-091). A second update answers the independent review: a missing-value marker read as a record low, a hidden list that did not return, a list judged against a fallback calendar, and a printed plan that did not say the grower chose the calendar are fixed (CP-092–CP-096), as are a record of hidden lists that was not kept per account (CP-100) and a retained hide handler that could write one account's site into another's record (CP-101); the 13 crop-and-place pairs that still share no month with the guide are named with a disposition each (CP-073 remaining, CP-098, CP-099); every surface the calendar reaches is listed with how it was checked. A third update gives the sample farm a fixed, labelled calendar in its own sample data, so its first screen no longer depends on a live climate call (CP-102). Guide overlap is not an accuracy figure, and the 44 places are now regression evidence, not an independent test. Still open: the calendar page and Atlas do not follow a chosen calendar (CP-097), the KZN table has not been re-read (CP-083), the heat check (CP-080), and whether an early-ready sowing should count toward a target (CP-079).
+
+The audit it answers: [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md). The planner's own functions run for 44 South African and 18 other locations against 20 years of independent daily weather and a published regional sowing guide: CP-073–CP-083. The arithmetic and the interior calendars hold; frost-free Lowveld, Limpopo and KZN coast sites were shown the wrong season. Findings only; no farming data changed in that record.
+
+Same day: [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md). First rendered review of `/facilitator/crops` on released `8a4d1fd`: CP-047–CP-072, with measured contrast, keyboard, phone, dark, isiZulu and large-text evidence. Findings and a plan only; no code changed.
+
 Latest field-block continuation: [Metres and international feet, retained drafts and crop allocations — 3 November 2026](2026-11-03/field-block-units-codex.md). Exact-tree checks, populated browser and current-head release gates remain open.
 
 Previous grower continuation: [Protected crop storage, account transfer and retained-copy review — 3 November 2026](2026-11-03/grower-storage-cutover-codex.md). Current-head checks, real two-tab/offline, populated browser and account gates remain open.
@@ -244,6 +250,9 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md).
+- [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md).
+- [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md).
 - [Mass-entry review warning contrast — 10 November 2026](2026-11-10/mass-review-warning-contrast-codex.md).
 
 - [Zones reserve context and national locator — 6 November 2026](2026-11-06/zones-reserve-context-codex.md).

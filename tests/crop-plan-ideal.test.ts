@@ -721,33 +721,70 @@ test('a starter sown three years ago cannot pick the crop for another bed', () =
   // history, which is a different channel with its own reading of a past crop,
   // and autoSuggestPlan reads stale rows too — neither is this pass's to
   // answer, and folding them in would make this guard measure something else.
+  //
+  // 2026-11-10: WHAT "CANNOT PICK" MEANS WHEN THE STALE ROW'S OWN BED CHANGES.
+  // This test used to require the other beds to be identical in all 24 fills. That held
+  // only by the luck of the calendar. Chard and beetroot are one rotation family, so
+  // three-year-old chard on Bed 2 can legitimately stop Bed 2 taking beetroot — the
+  // rotation-history channel named above. When Bed 2 then takes peas instead, the
+  // plan-wide ledger sees peas already placed and gives Bed 4 carrots. That is one
+  // real change on the stale row's own bed rippling outward, not its stamp being read
+  // as food still to come. It surfaced when the Western Cape pea window was corrected
+  // to its April-August source row (accuracy audit, CP-076) and peas became an April
+  // candidate; the same ripple was already there, unseen, on the light-frost calendar.
+  // Measured over 288 fills (4 calendars x 2 rhythms x 12 months x 3 stale crops): other
+  // beds changed in 2, and in both the stale row's own bed had changed first; in none
+  // did other beds change while its own bed stood still.
+  //
+  // So the leak this test guards is asserted where it can be told apart from that
+  // ripple: whenever the stale row's own bed sows exactly what it would have sown
+  // anyway, no other bed may differ. The fills where the own bed changes are counted,
+  // and must stay rare, so the guard cannot quietly stop comparing anything.
   const otherBeds = ['b1', 'b3', 'b4', 'p1', 'p2'];
-  const sig = (rows: readonly Planting[]) => rows
-    .filter((p) => otherBeds.includes(p.bedId))
+  const sigOf = (rows: readonly Planting[], bedIds: readonly string[]) => rows
+    .filter((p) => bedIds.includes(p.bedId))
     .map((p) => `${p.bedId}|${p.cropKey}|${p.sowMonth}|${(p.areaFraction ?? 1).toFixed(3)}`)
     .sort().join(' ');
+  const sig = (rows: readonly Planting[]) => sigOf(rows, otherBeds);
+  let compared = 0;
+  const ownBedChanged: string[] = [];
 
   for (const rhythm of ['steady', 'few-big'] as const) {
     for (let realNowMonth = 1; realNowMonth <= 12; realNowMonth++) {
       const answers = roryAnswers('commercial', rhythm);
       const cycle = autoSuggestPlan(answers, 'winter', STARTER_BEDS, [], realNowMonth).plantings;
-      const clean = sig(fillFirstSeasonGaps(
+      const cleanStarters = fillFirstSeasonGaps(
         answers, 'winter', STARTER_BEDS, cycle, [], realNowMonth, REAL_NOW_YEAR,
-      ).starters);
+      ).starters;
       // Sown and eaten years before this plan begins. It holds no ground today
       // and it feeds nobody today.
       const stale: Planting = {
         id: 'stale-chard', bedId: 'b2', cropKey: 'swiss-chard',
         sowMonth: realNowMonth, once: `${REAL_NOW_YEAR - 3}-${String(realNowMonth).padStart(2, '0')}`,
       };
-      const withStale = sig(fillFirstSeasonGaps(
+      const staleStarters = fillFirstSeasonGaps(
         answers, 'winter', STARTER_BEDS, cycle, [stale], realNowMonth, REAL_NOW_YEAR,
-      ).starters);
-      assert.equal(withStale, clean,
+      ).starters;
+      if (sigOf(staleStarters, ['b2']) !== sigOf(cleanStarters, ['b2'])) {
+        ownBedChanged.push(`${rhythm} from month ${realNowMonth}: ${sigOf(cleanStarters, ['b2'])} -> ${sigOf(staleStarters, ['b2'])}`);
+        continue;
+      }
+      compared++;
+      assert.equal(sig(staleStarters), sig(cleanStarters),
         `a starter from ${REAL_NOW_YEAR - 3} on Bed 2 changed what other beds sow, planning `
-        + `from month ${realNowMonth} (${rhythm}) — its stamp is being read as a month still to come`);
+        + `from month ${realNowMonth} (${rhythm}) while Bed 2 itself sowed the same thing — `
+        + 'its stamp is being read as a month still to come');
     }
   }
+  assert.ok(compared >= 22, `the guard must still compare nearly every fill (${compared} of 24); `
+    + `Bed 2's own starter changed in: ${ownBedChanged.join('; ')}`);
+  // The two fills where rotation history changes Bed 2's own starter (beetroot gives way,
+  // being chard's family), pinned so a third is noticed rather than absorbed. Only the
+  // second ripples on to another bed.
+  assert.deepEqual(ownBedChanged, [
+    'steady from month 12: b2|beetroot|2|0.333 b2|carrots|8|0.333 b2|green-beans|1|0.333 -> b2|carrots|8|0.333 b2|green-beans|12|0.333 b2|green-beans|1|0.333 b2|swiss-chard|3|0.333',
+    'few-big from month 4: b2|beetroot|4|1.000 -> b2|peas|4|1.000',
+  ]);
 });
 
 test('the coverage ledger gives the same answer every run', () => {

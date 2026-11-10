@@ -1,0 +1,10 @@
+{
+  sites: 44,
+  anyDifference: 44,
+  patternDiff: 4,
+  closeCallOrNeighbourDiff: 4
+}
+Durban: all-year -> mild-frost
+Richards Bay: all-year -> mild-frost
+Komatipoort: all-year -> summer
+Phalaborwa: all-year -> summer

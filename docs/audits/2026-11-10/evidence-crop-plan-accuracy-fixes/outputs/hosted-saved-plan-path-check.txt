@@ -1,0 +1,37 @@
+The PR's hosted preview at build 73734a4, signed-out visitor, 390 px, guest storage namespace. 10 November 2026, about 10:52 UTC.
+Not sample mode: the sample farm's design, saved place and (R2) a 15-sowing plan were written into the browser's guest storage by a script.
+The preview refuses the climate route (401), so the automatic calendar is the labelled Durban fallback throughout.
+
+== R1. A fresh farm with no saved plan at all
+stored at start: {"imbewu_crop_plan_cutover_v2::imbewu-owner::guest":{"bytes":229,"plantings":0,"choices":null},"imbewu_crop_plan_v2::imbewu-owner::guest":{"bytes":144,"plantings":0,"choices":null},"hiddenKeys":{}}
+modal: {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Light frost at most"}
+stored after choosing light frost: {"imbewu_crop_plan_cutover_v2::imbewu-owner::guest":{"bytes":229,"plantings":0,"choices":null},"imbewu_crop_plan_v2::imbewu-owner::guest":{"bytes":269,"plantings":0,"choices":[{"scopeId":"site:-27.72623,31.96304","calendar":"mild-frost","chosenAt":<time>}]},"hiddenKeys":{}}
+AFTER RELOAD modal: {"heading":"SOWING CALENDAR YOU CHOSE","value":"mild-frost","auto":"Let the app decide: Light frost at most"}
+stored after "Let the app decide": {"imbewu_crop_plan_cutover_v2::imbewu-owner::guest":{"bytes":229,"plantings":0,"choices":null},"imbewu_crop_plan_v2::imbewu-owner::guest":{"bytes":144,"plantings":0,"choices":null},"hiddenKeys":{}}
+AFTER RELOAD modal: {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Light frost at most"}
+
+== R2. A plan saved before the calendar choice existed (15 sowings, old storage key)
+stored at start: {"imbewu_crop_plan_cutover_v2::imbewu-owner::guest":{"bytes":4169,"plantings":15,"choices":null},"imbewu_crop_plan_v1::imbewu-owner::guest":{"bytes":1745,"plantings":15,"choices":null},"imbewu_crop_plan_v2::imbewu-owner::guest":{"bytes":2085,"plantings":15,"choices":null},"imbewu_crop_plan_v1":{"bytes":1745,"plantings":15,"choices":null},"hiddenKeys":{}}
+modal: {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Light frost at most"} | list rows: []
+after choosing light frost, list rows: ["Butternut on Bed 3: planned for March. This calendar sows it Oct–Dec.","Green beans on Bed 5: planned for February. This calendar sows it Sep–Jan."]
+reason: You chose the "Light frost at most" calendar for this site. These sowings were planned on a different one.
+stored: {"imbewu_crop_plan_cutover_v2::imbewu-owner::guest":{"bytes":4169,"plantings":15,"choices":null},"imbewu_crop_plan_v1::imbewu-owner::guest":{"bytes":1745,"plantings":15,"choices":null},"imbewu_crop_plan_v2::imbewu-owner::guest":{"bytes":2210,"plantings":15,"choices":[{"scopeId":"site:-27.72623,31.96304","calendar":"mild-frost","chosenAt":<time>}]},"imbewu_crop_plan_v1":{"bytes":1745,"plantings":15,"choices":null},"hiddenKeys":{}}
+AFTER RELOAD modal: {"heading":"SOWING CALENDAR YOU CHOSE","value":"mild-frost","auto":"Let the app decide: Light frost at most"} | list rows: ["Butternut on Bed 3: planned for March. This calendar sows it Oct–Dec.","Green beans on Bed 5: planned for February. This calendar sows it Sep–Jan."]
+after Hide: list 0 | hidden record keys: {"imbewu_sowing_calendar_notice_hidden_v1::imbewu-owner::guest":"{\"site:-27.72623,31.96304\":\"mild-frost|demo-planting-3:butternut:3:10.11.12,demo-planting-7:green-beans:2:1.9.10.11.12\"}"}
+AFTER RELOAD (hidden): list 0 | choice mild-frost
+  PDF saved real-farm-chosen-calendar.pdf 484185 bytes
+after choosing a DIFFERENT calendar (hard frost): list rows returned: 5
+after "Let the app decide": modal {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Light frost at most"} | list 0
+stored: {"imbewu_crop_plan_cutover_v2::imbewu-owner::guest":{"bytes":4169,"plantings":15,"choices":null},"imbewu_crop_plan_v1::imbewu-owner::guest":{"bytes":1745,"plantings":15,"choices":null},"imbewu_crop_plan_v2::imbewu-owner::guest":{"bytes":2085,"plantings":15,"choices":null},"imbewu_crop_plan_v1":{"bytes":1745,"plantings":15,"choices":null},"hiddenKeys":{"imbewu_sowing_calendar_notice_hidden_v1::imbewu-owner::guest":"{\"site:-27.72623,31.96304\":\"mild-frost|demo-planting-3:butternut:3:10.11.12,demo-planting-7:green-beans:2:1.9.10.11.12\"}"}}
+AFTER RELOAD (cleared): modal {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Light frost at most"} | list 0
+  PDF saved real-farm-automatic-calendar.pdf 484088 bytes
+
+The calendar line in each downloaded plan PDF (pdftotext -layout; 25 pages each):
+== real-farm-chosen-calendar.pdf
+110:Nearest reference: Durban / KZN coast & hinterland (fallback) - Light frost at most - summer rain (sowing calendar
+111:chosen by the grower)
+178:Nearest reference: Durban / KZN coast & hinterland (fallback) - Light frost at most - summer rain (sowing calendar
+179:chosen by the grower)
+== real-farm-automatic-calendar.pdf
+110:Nearest reference: Durban / KZN coast & hinterland (fallback) - Light frost at most - summer rain
+177:Nearest reference: Durban / KZN coast & hinterland (fallback) - Light frost at most - summer rain

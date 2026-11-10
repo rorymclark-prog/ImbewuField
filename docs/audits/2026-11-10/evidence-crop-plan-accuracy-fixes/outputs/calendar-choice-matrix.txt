@@ -1,0 +1,55 @@
+Columns: the calendar from the app's own reading before and after; the next column it is close to; rain timing; coldest and hottest month mean and
+record minimum (°C, NASA POWER); Köppen class; then the same rule on the independent record (ERA5), its frost days a year and lowest daily minimum.
+summer = hard frost; mild-frost = light frost at most; all-year = hot, frost-free; winter = winter-rainfall Cape.
+
+place               before     after      close to   rain     cold  hot   recMin class | ERA5 before ERA5 after frost/yr lowest
+Mkuze sample farm   mild-frost all-year   mild-frost summer   16.8  24.7  5.4    Cfa   | summer      all-year   0.0      3.7      CHANGED
+Durban              mild-frost all-year   -          summer   20.0  25.0  12.6   Aw    | all-year    all-year   0.0      7.6      CHANGED
+Richards Bay        all-year   all-year   -          all-year 19.3  25.6  9.3    Aw    | all-year    all-year   0.0      7.1
+Hillcrest           mild-frost mild-frost -          summer   13.8  21.8  2.2    Cfb   | mild-frost  mild-frost 0.0      2.9
+Pietermaritzburg    summer     summer     mild-frost summer   12.9  21.2  0.6    Cfb   | summer      summer     0.2      -0.4
+Underberg           summer     summer     -          summer   7.4   18.4  -6.2   Cwb   | summer      summer     41.2     -11.5
+Kokstad             summer     summer     -          summer   8.6   19.3  -4.5   Cwb   | summer      summer     15.0     -10.6
+Newcastle           summer     summer     -          summer   10.8  21.9  -2.8   Cwb   | summer      summer     5.1      -4.2
+Vryheid             summer     summer     -          summer   10.9  21.3  -2.3   Cwb   | summer      summer     3.6      -2.9
+Johannesburg        summer     summer     -          summer   9.9   21.6  -4.8   Cwb   | summer      summer     12.8     -4.7
+Pretoria            summer     summer     -          summer   12.6  24.3  -2.6   BSh   | summer      summer     0.5      -1.6
+Ermelo              summer     summer     -          summer   8.2   19.4  -6.7   Cwb   | summer      summer     9.3      -4.9
+Bethlehem           summer     summer     -          summer   7.9   21.5  -6.3   Cwb   | summer      summer     21.9     -6.5
+Bloemfontein        summer     summer     -          summer   8.5   24.4  -5.5   BSk   | summer      summer     22.5     -5.6
+Potchefstroom       summer     summer     -          summer   9.8   23.4  -5.6   BSk   | summer      summer     8.4      -3.9
+Mahikeng            summer     summer     -          summer   11.0  24.9  -4.1   BSh   | summer      summer     5.8      -3.9
+Kimberley           summer     summer     -          summer   9.8   26.3  -4.9   BSh   | summer      summer     8.0      -4.3
+Rustenburg          summer     summer     -          summer   12.8  24.9  -2.9   BSh   | summer      summer     0.9      -1.2
+Mbombela            summer     mild-frost all-year   summer   15.9  24.5  3.2    BSh   | mild-frost  mild-frost 0.0      0.8      CHANGED
+Komatipoort         summer     all-year   -          summer   18.4  26.3  6.9    BSh   | summer      all-year   0.0      7.7      CHANGED
+Tzaneen             summer     mild-frost summer     summer   13.8  23.1  0.7    BSh   | mild-frost  mild-frost 0.0      2.8      CHANGED
+Polokwane           summer     summer     -          summer   12.1  22.5  -1.9   BSh   | summer      summer     0.1      0.0
+Musina              summer     all-year   mild-frost summer   17.4  27.1  3.0    BWh   | summer      all-year   0.0      3.7      CHANGED
+Thohoyandou         summer     all-year   -          summer   17.2  26.2  5.0    BSh   | mild-frost  mild-frost 0.0      4.4      CHANGED  records differ
+Phalaborwa          summer     all-year   -          summer   18.2  27.0  5.6    BSh   | summer      all-year   0.0      5.2      CHANGED
+Lephalale           summer     mild-frost summer     summer   15.3  27.0  0.1    BSh   | summer      mild-frost 0.0      1.1      CHANGED
+Mthatha             summer     summer     -          summer   11.2  20.7  -1.8   Cfb   | summer      summer     0.1      0.0
+Port St Johns       mild-frost mild-frost -          summer   14.1  22.1  2.9    Cfa   | mild-frost  mild-frost 0.0      6.9
+East London         mild-frost mild-frost all-year   summer   17.6  23.4  10.0   Cfa   | all-year    mild-frost 0.0      5.2
+Gqeberha            all-year   mild-frost -          all-year 15.8  22.2  8.3    BSh   | all-year    mild-frost 0.0      6.2      CHANGED
+Komani              summer     summer     -          summer   8.3   20.9  -4.1   Cfb   | summer      summer     10.4     -4.1
+Graaff-Reinet       summer     summer     -          summer   7.9   21.6  -4.7   BSk   | summer      summer     7.0      -4.0
+Cape Town           winter     winter     -          winter   14.3  20.3  9.2    Csb   | winter      winter     0.0      3.5
+Stellenbosch        winter     winter     -          winter   11.9  21.6  3.9    Csb   | winter      winter     0.0      0.1
+Worcester           summer     summer     winter     all-year 8.8   21.8  -2.3   BSk   | all-year    summer     0.1      -3.0
+Ceres               winter     winter     -          winter   8.8   21.8  -2.3   Csb   | winter      winter     1.2      -3.5
+George              all-year   mild-frost -          all-year 13.8  21.3  5.3    Cfb   | all-year    mild-frost 0.0      3.1      CHANGED
+Oudtshoorn          summer     summer     -          all-year 9.8   21.6  -2.7   Cfb   | all-year    summer     2.7      -2.8
+Beaufort West       summer     summer     -          all-year 10.7  24.8  -2.9   BSk   | summer      summer     3.8      -2.4
+Vredendal           winter     winter     -          winter   12.4  24.4  -0.3   BSh   | winter      winter     0.0      0.2
+Sutherland          summer     summer     winter     all-year 7.8   22.3  -4.8   BSk   | summer      summer     23.6     -9.4
+Upington            summer     summer     -          summer   11.8  28.6  -2.5   BWh   | summer      summer     1.9      -2.0
+Springbok           winter     winter     summer     winter   10.5  24.5  -2.0   BWk   | all-year    summer     1.2      -1.3     records differ
+Kuruman             summer     summer     -          summer   10.8  26.6  -3.7   BSh   | summer      summer     3.7      -4.1
+
+44 places. Changed calendar: 11. The two climate records gave different calendars at 9 places before and 2 after. Flagged as close to a line: 10.
+  summer      before 31   after 24
+  mild-frost  before  5   after  8
+  all-year    before  3   after  7
+  winter      before  5   after  5

@@ -1,5 +1,6 @@
 import { decimalQuantityProduct, exactDecimalQuantityProduct } from './farm-records';
 import { detachJsonData } from './lossless-json';
+import { numberLabel } from './format-figures';
 import {
   createCanonicalUnitDraft, editCanonicalUnitDraft, readCanonicalUnitDraft, switchCanonicalUnitDraft,
   formatCanonicalUnitValue, representableUnitValue, parseExactUnitDecimal,
@@ -57,6 +58,20 @@ const massUnits = Object.freeze<CanonicalUnitSpec<MassUnit, 'mass'>>({
 });
 export function formatMassKilograms(kilograms: number, unit: MassUnit): string | null {
   return formatCanonicalUnitValue(massUnits, kilograms, unit);
+}
+/** Display text for a DERIVED total (weekly amount x weeks, unallocated volume,
+ * capacity). formatMassKilograms preserves every digit a grower typed so a
+ * readback matches the entry; applied to a product it prints "260.714286".
+ * Same rule as projectedKgLabel: one decimal from 1 up, up to three below,
+ * "<0.001" for a positive sliver so it never reads as zero. Never use this for
+ * entry readback or saved values. Returns null for non-finite or negative input. */
+export function formatDerivedMassKilograms(kilograms: number, unit: MassUnit): string | null {
+  if (!Number.isFinite(kilograms) || kilograms < 0) return null;
+  const value = kilogramsToMass(kilograms, unit);
+  if (value === null || value < 0) return null;
+  if (value === 0) return kilograms === 0 ? '0' : '<0.001';
+  if (value < 0.001) return '<0.001';
+  return numberLabel(value >= 1 ? Math.round(value * 10) / 10 : value, 3);
 }
 export interface MassDraft<K extends string> extends CanonicalUnitDraft<K, MassUnit, 'mass'> {
   readonly originalKilograms: Readonly<Record<K, number | undefined>>;

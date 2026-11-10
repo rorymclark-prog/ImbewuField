@@ -1,0 +1,32 @@
+Local development server, public sample farm, 10 November 2026. Run twice: with the climate route aborted, and with it answering.
+
+== Phone 390 px, climate BLOCKED; climate route answers: ["aborted"]
+out-of-season list on first open: 0
+calendar box: {"value":"","firstOption":"Sample farm: Hot area, no frost","text":"SAMPLE FARM CALENDAR |  Hot area, no frost · summer rain | This calendar is set for the sample farm, so the tour looks the same for everyone. On your own farm the app reads the climate records for your site, and you can choose a calendar yourself. | Sowing calendar for this site | Sample farm: Hot area, no frost | Winter frost (Highveld, Midlands, Karoo) | Light frost at most (warm areas and mild coasts) | Hot area, no frost (Lowveld, Limpopo valley, KZN coast) | Winter rainfall (Western Cape) | Choose one only if you know your land. The months offered for every crop change with it. Crops already on your plan stay where they are. | Set in the sample farm itself, not read from climate records. Pick another calendar above to see the months change."}
+after the visitor chooses Winter frost: list rows 5 | reason: You chose the "Winter frost" calendar for this site. These sowings were planned on a different one.
+calendar box with a visitor choice: {"value":"summer","firstOption":"Sample farm: Hot area, no frost","text":"SOWING CALENDAR YOU CHOSE |  Winter frost · summer rain | You chose this calendar yourself. | Sowing calendar for this site | Sample farm: Hot area, no frost | Winter frost (Highveld, Midlands, Karoo) | Light frost at most (warm areas and mild coasts) | Hot area, no frost (Lowveld, Limpopo valley, KZN coast) | Winter rainfall (Western Cape) | Choose one only if you know your land. The months offered for every crop change with it. Crops already on your plan stay where they are. | You chose this calendar. Choose \"Sample farm\" in the list to go back."}
+after "Sample farm calendar" again: {"value":"","firstOption":"Sample farm: Hot area, no frost"} | list: 0
+PDF saved 626777 bytes
+
+== Phone 390 px, climate ANSWERING; climate route answers: [200]
+out-of-season list on first open: 0
+calendar box: {"value":"","firstOption":"Sample farm: Hot area, no frost","text":"SAMPLE FARM CALENDAR |  Hot area, no frost · summer rain | This calendar is set for the sample farm, so the tour looks the same for everyone. On your own farm the app reads the climate records for your site, and you can choose a calendar yourself. | Sowing calendar for this site | Sample farm: Hot area, no frost | Winter frost (Highveld, Midlands, Karoo) | Light frost at most (warm areas and mild coasts) | Hot area, no frost (Lowveld, Limpopo valley, KZN coast) | Winter rainfall (Western Cape) | Choose one only if you know your land. The months offered for every crop change with it. Crops already on your plan stay where they are. | Set in the sample farm itself, not read from climate records. Pick another calendar above to see the months change."}
+after the visitor chooses Winter frost: list rows 5 | reason: You chose the "Winter frost" calendar for this site. These sowings were planned on a different one.
+calendar box with a visitor choice: {"value":"summer","firstOption":"Sample farm: Hot area, no frost","text":"SOWING CALENDAR YOU CHOSE |  Winter frost · summer rain | Coldest month averages 17 °C and hottest 25 °C here. The lowest temperature on record for this area is 5 °C. These are satellite-era climate records for the wider area, not a weather station on your land. | You chose the \"Winter frost\" calendar yourself. The climate records for this area would give \"Hot area, no frost\". | Sowing calendar for this site | Sample farm: Hot area, no frost | Winter frost (Highveld, Midlands, Karoo) | Light frost at most (warm areas and mild coasts) | Hot area, no frost (Lowveld, Limpopo valley, KZN coast) | Winter rainfall (Western Cape) | Choose one only if you know your land. The months offered for every crop change with it. Crops already on your plan stay where they are. | You chose this calendar. Choose \"Sample farm\" in the list to go back."}
+after "Sample farm calendar" again: {"value":"","firstOption":"Sample farm: Hot area, no frost"} | list: 0
+
+== Phone dark, climate BLOCKED: box "SAMPLE FARM CALENDAR |  Hot area, no frost · summer rain | This calendar is set for the sample farm, so the tour looks the same for everyone. On your own farm t" | overflow px: 0
+
+== Desktop 1280 px, climate BLOCKED; header chip: Hot area, no frost · summer rain · set for the sample farm | list: 0
+
+== Desktop 1280 px, climate ANSWERING; header chip: Hot area, no frost · summer rain · set for the sample farm | list: 0
+
+The calendar line in the plan PDF downloaded from the sample farm with the climate route aborted (pdftotext -layout; Pages: 31):
+156:Nearest reference: Durban / KZN coast & hinterland (fallback) - Hot area, no frost - summer rain (sowing calendar set
+157-for the sample farm)
+--
+213:Nearest reference: Durban / KZN coast & hinterland (fallback) - Hot area, no frost - summer rain (sowing calendar set
+214-for the sample farm)
+
+The first option of the calendar control at 390 px: text and room, in CSS pixels:
+{"text":"Sample farm: Hot area, no frost","textPx":203,"roomPx":248}

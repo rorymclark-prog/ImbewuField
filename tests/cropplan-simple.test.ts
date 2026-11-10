@@ -46,7 +46,18 @@ test('Simple drops the secondary header chips but keeps site/bed picking and the
     node.pos >= CROPS.indexOf('<header') && node.end <= CROPS.indexOf('</header>')
       && node.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken
       && ts.isParenthesizedExpression(node.right) && ts.isConditionalExpression(node.right.expression)
-      && node.right.expression.condition.getText(pageTree) === "climateSource === 'site'");
+      // 2026-11-10, Rory: "go ahead with decisions 2 and 3". The badge chain used to start at
+      // `climateSource === 'site'`; a calendar the grower chose is now the first case, because it
+      // outranks where the automatic calendar came from. The site/reference/none cases are still
+      // in the same chain, and the Simple/country-support gate on it is asserted below unchanged.
+      // Later the same day, Rory: "go ahead with the fixed calendar for the sample farm". The sample
+      // farm's declared calendar is now the first case of all ("set for the sample farm"), because on
+      // the sample it stands in for the climate reading and must never be labelled as one. The
+      // grower's choice and then site/reference/none follow in the same chain.
+      && node.right.expression.condition.getText(pageTree) === "calendarBasis === 'sample-farm'"
+      && ts.isConditionalExpression(node.right.expression.whenFalse)
+      && node.right.expression.whenFalse.condition.getText(pageTree) === "calendarBasis === 'grower-choice'"
+      && node.right.expression.whenFalse.whenFalse.getText(pageTree).startsWith("climateSource === 'site'"));
   assert.ok(climateBadge, 'the header must retain its site/reference climate badge');
   for (const simple of [true, false]) {
     for (const allowCataloguePlanning of [true, false]) {
@@ -147,7 +158,10 @@ test('Simple hides every long section below the grid; All tools keeps them all',
 
 test('Simple hides the fraction percentage and the transplant chip on the crop bars', () => {
   const barBlock = CROPS.slice(CROPS.indexOf('function PlantingBar('), CROPS.indexOf('function CropPickerModal('));
-  assert.match(barBlock, /\{crop\.name\}\{!simple && fLabel \? ` \(\$\{fLabel\}\)` : ''\}/);
+  // The label is built once (barLabel) because a one-month bar draws it beside the bar rather than
+  // inside it; the Simple gate has to sit on that single definition and both places must use it.
+  assert.match(barBlock, /const barLabel = `\$\{crop\.name\}\$\{!simple && fLabel \? ` \(\$\{fLabel\}\)` : ''\}`;/);
+  assert.ok((barBlock.match(/\{barLabel\}/g) ?? []).length >= 2, 'barLabel must be drawn both inside long bars and beside one-month bars');
   // The exact condition tests/crop-plan-page-ux.test.ts pins must survive untouched, just gated.
   assert.match(barBlock, /\{!simple && crop\.transplant && \(!planting\.existing \|\| planting\.inNursery\) && instances\.map/);
 });

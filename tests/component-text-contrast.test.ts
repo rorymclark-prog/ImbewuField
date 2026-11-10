@@ -67,6 +67,9 @@ const ROUTES = [
   'app/vision/page.tsx',
   'app/offline/page.tsx',
   'app/tips/page.tsx',
+  // The crop plan calendar. It was outside this walk, so its white-on-green bar labels (2.57:1)
+  // and #1F4D2B month label on the dark header (1.72:1) were never measured by anything.
+  'app/facilitator/crops/page.tsx',
 ];
 
 const source = (rel: string) => readFileSync(path.join(ROOT, rel), 'utf8');
@@ -198,4 +201,106 @@ test('the farmer routes this test walks all exist', () => {
     `the import walk reached only ${walked.length} .tsx files — it reached 93 when this test was `
       + 'written, so something has broken the resolver rather than the app getting smaller',
   );
+});
+
+// THE CROP PLAN BARS, WHICH THE hex-IN-`color:` SCAN ABOVE CANNOT SEE.
+//
+// The planting bars paint a label over a FIXED fill (the same hex in light and dark). The label
+// used to be `color: '#fff'` at 11px: 2.57:1 on the planned green, 3.71:1 on the already-growing
+// olive, 2.87:1 over the gold harvest cap, and 1.61:1 on year two, where the whole button was
+// faded to 50% so the text faded with it (docs/audits/2026-11-10 CP-050). The scan above only
+// finds a literal in a `color:` property; the label colour and the fills are now named constants,
+// so these tests read the constants and measure every label/fill pair.
+const cropPage = () => source('app/facilitator/crops/page.tsx');
+
+function constHex(name: string): string {
+  const m = cropPage().match(new RegExp(`const ${name}\\s*=\\s*'(#[0-9A-Fa-f]{6})'`));
+  assert.ok(m, `${name} is no longer a single hex constant in the crop plan page, so this test cannot read it`);
+  return m[1].toUpperCase();
+}
+function constPair(name: string): [string, string] {
+  const m = cropPage().match(new RegExp(`const ${name}[^=]*=\\s*\\['(#[0-9A-Fa-f]{6})',\\s*'(#[0-9A-Fa-f]{6})'\\]`));
+  assert.ok(m, `${name} is no longer a [growing, cap] pair of hexes in the crop plan page`);
+  return [m[1].toUpperCase(), m[2].toUpperCase()];
+}
+
+test('crop bar labels clear 4.5:1 on every fixed bar fill, in every theme', () => {
+  // The fills do not follow the theme, so the label ink must not either: a themed token here would
+  // pass in light and fail in dark (or the reverse) with no way to notice from the source.
+  const ink = constHex('BAR_LABEL_INK');
+  const fills = [...constPair('BAR_FILL_PLANNED'), ...constPair('BAR_FILL_EXISTING')];
+  assert.equal(fills.length, 4, 'planned and already-growing, each with a growing colour and a harvest cap');
+  for (const fill of fills) {
+    const ratio = contrastRatio(ink, fill);
+    assert.ok(ratio >= BODY_TEXT_MIN, `label ink ${ink} on bar fill ${fill} is ${ratio.toFixed(2)}:1, under 4.5:1`);
+  }
+});
+
+test('crop bar fills keep planned apart from already-growing', () => {
+  // Contrast alone is satisfied by painting every bar one colour; the audit asks for the olive
+  // already-growing treatment to survive the fix.
+  const planned = constPair('BAR_FILL_PLANNED');
+  const existing = constPair('BAR_FILL_EXISTING');
+  assert.notEqual(planned[0], existing[0]);
+  assert.notEqual(planned[1], existing[1]);
+});
+
+test('the crop bar label is not painted white or faded with its fill', () => {
+  const src = cropPage();
+  const start = src.indexOf('function PlantingBar');
+  const body = src.slice(start, src.indexOf('\nfunction ', start + 10));
+  assert.ok(!/color:\s*'#(?:fff|FFF|ffffff|FFFFFF)'/.test(body), 'a white label is back on the planting bars');
+  // Year two fades the fill layer only. Opacity on the button took its label to 1.61:1.
+  const buttonStyle = body.slice(body.indexOf('<button'), body.indexOf('aria-hidden="true"'));
+  assert.ok(!/opacity/.test(buttonStyle), 'opacity is back on the bar button, which fades the label with the fill');
+  assert.match(body, /\{yearTwo \? \([\s\S]*?opacity: 0\.5, background: barFill/, 'year two must still be drawn quieter than year one, by fading the fill layer');
+});
+
+test('crop plan calendar text that follows the theme uses a token that clears 4.5:1 in earth light and dark', () => {
+  const css = source('app/globals.css');
+  const block = (selector: string) => {
+    const at = css.indexOf(selector);
+    assert.ok(at >= 0, `${selector} not found in globals.css`);
+    return css.slice(at, css.indexOf('\n}', at));
+  };
+  const rootBlock = block(':root {');
+  const token = (b: string, name: string) => {
+    // A token a column does not redeclare comes from the first :root block.
+    const m = b.match(new RegExp(`${name}:\\s*(#[0-9A-Fa-f]{6})`)) ?? rootBlock.match(new RegExp(`${name}:\\s*(#[0-9A-Fa-f]{6})`));
+    assert.ok(m, `${name} not declared as a hex in that column or in :root`);
+    return m[1];
+  };
+  const light = block('html[data-theme="earth"] {');
+  const dark = block('html[data-theme="earth"].dark {');
+  // current month on the header, "By crop" active, the chip and legend, "Clear all".
+  const pairs: [string, string, string, string][] = [
+    ['--color-forest-800', '--bg-1', 'current month label', 'both'],
+    ['--color-forest-800', '--bg-2', 'current month label on the opaque dark header', 'dark'],
+    ['--on-forest-800', '--color-forest-800', 'By crop (active)', 'both'],
+    ['--bg-1', '--text-secondary', 'From today (active)', 'both'],
+    ['--gold-dim', '--bg-1', 'check / transplant chip and legend', 'both'],
+    ['--orange', '--bg-1', 'Clear all', 'both'],
+    ['--gold-dim', '--bg-0', 'age-group line on the tinted card', 'both'],
+    ['--gold-dim', '--bg-2', 'age-group line on the tinted card (opaque dark)', 'dark'],
+  ];
+  for (const [fgName, bgName, label, which] of pairs) {
+    for (const [theme, b] of [['light', light], ['dark', dark]] as const) {
+      if (which === 'dark' && theme === 'light') continue;
+      const fg = token(b, fgName);
+      const bgHex = token(b, bgName);
+      const ratio = contrastRatio(fg, bgHex);
+      assert.ok(ratio >= BODY_TEXT_MIN, `${label}: ${fgName} ${fg} on ${bgName} ${bgHex} in earth ${theme} is ${ratio.toFixed(2)}:1`);
+    }
+  }
+});
+
+test('the month strips and the age-group line keep a theme-safe pairing', () => {
+  // The strips painted white on var(--emerald), which turns leaf green in dark (2.04:1), and the
+  // age-group line was --gold (3.85:1 on the tinted card). --on-forest-800 is the only token declared
+  // to pair with a forest fill in every theme (asserted above); --emerald has no on-colour.
+  const guide = source('components/crops/ProductionGuideCard.tsx');
+  assert.ok(!/'white'|#fff\b/i.test(guide.slice(guide.indexOf('grid-cols-12'), guide.indexOf('grid-cols-12') + 600)), 'a white label is back on the month strips');
+  assert.match(guide, /'var\(--color-forest-800\)' : 'var\(--bg-2\)', color: [^:]*'var\(--on-forest-800\)'/);
+  const card = source('components/crops/ProductionProjectionCard.tsx');
+  assert.ok(!/fontSize: 12, color: 'var\(--gold\)'/.test(card), 'ProductionProjectionCard text is --gold again (3.85:1 on its card)');
 });

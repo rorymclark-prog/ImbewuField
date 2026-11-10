@@ -12,8 +12,9 @@
 // 'mild-frost'.
 //
 // The machinery that gets this right already shipped for the Atlas explorer:
-// lib/koppen-global.ts's classifyKoppen() + rainPatternFor() derive the same
-// four RainPattern values from twelve monthly temperature/rain pairs. This
+// lib/koppen-global.ts's classifyKoppen() + sowingCalendarFor() derive the same
+// four RainPattern values from twelve monthly temperature/rain pairs, plus the
+// site's record minimum temperature where the payload carries a real one. This
 // module is the bridge that lets the PLANNER use it: it reads the very same
 // LocationData that /api/location-data returns (and that app/farmer + /design
 // already cache per site in localStorage), derives the pattern, and refuses to
@@ -25,13 +26,29 @@
 // silent was the bug.
 
 import type { RainPattern } from '@/lib/crop-catalog';
-import { classifyKoppen, rainPatternFor } from '@/lib/koppen-global';
+import { classifyKoppen, sowingCalendarFor, type RainSeason } from '@/lib/koppen-global';
 import { paidApiHeaders } from '@/lib/api-client-auth';
-import { completeMonthlyTemperatures, monthlyTemperatureStatus } from '@/lib/climate-temperature';
+import { completeMonthlyTemperatures, monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
 
 export interface SiteClimate {
-  /** The planner's rainfall pattern, derived from this site's own monthly climate. */
+  /** The planner's sowing-calendar column, derived from this site's own climate:
+   * a FROST regime first (lib/koppen-global.ts sowingCalendarFor). */
   pattern: RainPattern;
+  /** When this site's rain falls. `pattern` cannot answer that: a hot lowveld farm
+   * with summer rain is on the frost-free column. Water sizing reads this. */
+  rainSeason: RainSeason;
+  /** Another column the site would get if its gridded readings moved by no more
+   * than two climate records typically disagree; null when the choice is clear. */
+  closeCall: RainPattern | null;
+  /** The next warmer column, when the site is within that tolerance of it (see
+   * calendarForGrower below). */
+  warmerNeighbour: RainPattern | null;
+  /** Coldest and hottest monthly mean, °C — the numbers the calendar choice rests on. */
+  coldestMonthC: number;
+  hottestMonthC: number;
+  /** Lowest temperature in the grid cell's NASA POWER record, °C; null when no real
+   * reading came with the payload (the choice then leans to the colder column). */
+  recordMinC: number | null;
   /** Annual rainfall (mm/yr) summed from the site's monthly normals. */
   annualMm: number;
   /** Monthly rainfall normals, mm, Jan..Dec — for water calcs that want the shape. */
@@ -87,15 +104,86 @@ export function siteClimateFromLocationData(data: unknown, lat: number): SiteCli
   const monthly = { tempC, precipMm: monthlyRainMm, lat };
   const koppen = classifyKoppen(monthly);
   if (koppen.code === '?') return null;
+  // The record minimum is optional evidence: a payload without a real one still gets
+  // a calendar, from the monthly means alone, on the colder side of every line.
+  const choice = sowingCalendarFor({ ...monthly, recordMinC: recordMinimumC(climate) ?? undefined }, koppen);
 
   return {
-    pattern: rainPatternFor(monthly, koppen),
+    pattern: choice.pattern,
+    rainSeason: choice.rainSeason,
+    closeCall: choice.closeCall,
+    warmerNeighbour: choice.warmerNeighbour,
+    coldestMonthC: choice.coldestMonthC,
+    hottestMonthC: choice.hottestMonthC,
+    recordMinC: choice.recordMinC,
     annualMm: Math.round(monthlyRainMm.reduce((sum, v) => sum + v, 0)),
     monthlyRainMm,
     monthlyTempC: tempC,
     koppen: koppen.code,
     rainfallSource,
   };
+}
+
+/** How the calendar in use was arrived at — every surface that names it says which. */
+export type CalendarBasis = 'site-climate' | 'grower-frost' | 'grower-choice' | 'sample-farm';
+
+/**
+ * The sowing calendar to plan with, once the grower's own answer to "Have you seen
+ * frost in this growing area?" (the site survey) is taken into account.
+ *
+ * The climate reading is a grid cell tens of kilometres wide; the answer is about the
+ * actual ground. So the answer outranks the grid, in the two cases where they can
+ * disagree about which column fits:
+ *
+ *  - Frost SEEN on a site the grid calls hot and frost-free: use the warm-area,
+ *    light-frost column. Its own frost months then gate tender crops as before.
+ *  - Frost NOT seen on a site the grid puts within a close call of a warmer column
+ *    (Mbombela: 0.1 °C short of the warm-winter line): use that warmer column. This is
+ *    the only way a site reaches a warmer calendar than its readings give it — the rule
+ *    itself leans cold — and it never skips a column or applies outside a close call.
+ *
+ * "Not sure" and no answer change nothing.
+ */
+export function calendarForGrower(
+  site: Pick<SiteClimate, 'pattern' | 'warmerNeighbour'>,
+  observedFrost: 'yes' | 'no' | 'unknown' | undefined,
+): { pattern: RainPattern; basis: CalendarBasis } {
+  if (observedFrost === 'yes' && site.pattern === 'all-year') return { pattern: 'mild-frost', basis: 'grower-frost' };
+  if (observedFrost === 'no' && site.warmerNeighbour) return { pattern: site.warmerNeighbour, basis: 'grower-frost' };
+  return { pattern: site.pattern, basis: 'site-climate' };
+}
+
+/**
+ * Which sowing calendar the plan uses, in order of who knows the ground best:
+ *
+ *  1. the calendar the grower chose themselves (CropPlanState.sowingCalendarChoices);
+ *  2. the site's climate reading, moved by their frost answer where the two can disagree
+ *     (calendarForGrower above);
+ *  3. the labelled regional fallback, when the site's own climate could not be read.
+ *
+ * `automatic` is what steps 2 and 3 give on their own. It is always returned so the
+ * screen can say what the app would have used and offer the way back to it; a choice
+ * that equals it is still reported as the grower's, because they made it.
+ *
+ * THE SAMPLE FARM IS THE ONE EXCEPTION TO STEPS 2 AND 3. Its calendar is declared in the
+ * sample data (`sample`, from lib/sample-sowing-calendar.ts) and stands in
+ * for both, whether or not a climate reading arrived, so the tour is the same wherever
+ * it is opened. It is reported as 'sample-farm', never as a climate reading, and a
+ * visitor's own choice still comes first. `automatic` is then the sample's calendar:
+ * the thing "go back" returns to.
+ */
+export function sowingCalendarInUse(input: {
+  chosen: RainPattern | null;
+  site: Pick<SiteClimate, 'pattern' | 'warmerNeighbour'> | null;
+  observedFrost: 'yes' | 'no' | 'unknown' | undefined;
+  reference: RainPattern;
+  sample?: RainPattern | null;
+}): { pattern: RainPattern; basis: CalendarBasis | 'reference'; automatic: RainPattern } {
+  const fromSite = input.site ? calendarForGrower(input.site, input.observedFrost) : null;
+  const automatic = input.sample ?? fromSite?.pattern ?? input.reference;
+  if (input.chosen) return { pattern: input.chosen, basis: 'grower-choice', automatic };
+  if (input.sample) return { pattern: input.sample, basis: 'sample-farm', automatic };
+  return { pattern: automatic, basis: fromSite?.basis ?? 'reference', automatic };
 }
 
 /**

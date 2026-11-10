@@ -252,9 +252,15 @@ test('preserved products are separate dated fictional stock records, not invente
   assert.deepEqual(e.input.preservedProducts, e.preservedProducts);
   assert.ok(e.input.sections!.includes('availabilityGraphs'), 'the full example must include its food-availability graphs');
   assert.equal(new Set(e.preservedProducts.map(row => row.id)).size, e.preservedProducts.length);
+  // The made-up stock months follow the plan's own picking months. Green beans were 1-3 and
+  // cabbage 8-10 until 2026-11-10: the hot-area column then offered bean sowing in November
+  // and cabbage in January, which its source table does not. Corrected to the source rows,
+  // this November-start plan sows both in February and picks beans from April and cabbage in
+  // September, so stock that started earlier would be food preserved before it was picked —
+  // the thing the assertion below exists to stop.
   const wanted = [
-    ['crop:green-beans', 1, 3], ['tree:musa-acuminata-aaa-group', 6, 8],
-    ['crop:cabbage', 8, 10], ['crop:tomatoes', 5, 8],
+    ['crop:green-beans', 4, 6], ['tree:musa-acuminata-aaa-group', 6, 8],
+    ['crop:cabbage', 9, 10], ['crop:tomatoes', 5, 8],
   ] as const;
   for (const [key, first, last] of wanted) {
     const record = e.preservedProducts.find(row => row.sourceIconKey === key)!;
@@ -338,6 +344,11 @@ interface RegionalPlannerCase {
   lat: number;
   temp: number[];
   rain: number[];
+  /** A synthetic record minimum for the two coastal cases, declared the way the coverage
+   * receipt above is. Since 2026-11-10 the calendar is chosen by frost first, and a coast's
+   * mild monthly mean cannot show that it never freezes; its record minimum can. Without
+   * one the Southern Cape case (coldest month 12 °C) leans to the hard-frost column. */
+  recordMin?: number;
   expectedZones: GrowingZoneId[];
   pattern: RainPattern;
   frostMonths: number[];
@@ -346,9 +357,11 @@ const REGIONAL_CASES: RegionalPlannerCase[] = [
   { zone: 'highveld', lat: -26.2, temp: temperatures(11, 20), rain: summerRain(713), expectedZones: ['highveld', 'midlands-mistbelt'], pattern: 'summer', frostMonths: [5, 6, 7, 8] },
   { zone: 'midlands-mistbelt', lat: -26.2, temp: temperatures(11, 20), rain: summerRain(713), expectedZones: ['highveld', 'midlands-mistbelt'], pattern: 'summer', frostMonths: [5, 6, 7, 8] },
   { zone: 'lowveld-bushveld', lat: -25.47, temp: temperatures(14, 25), rain: summerRain(800), expectedZones: ['lowveld-bushveld', 'subtropical-coast'], pattern: 'mild-frost', frostMonths: [] },
-  { zone: 'subtropical-coast', lat: -33.02, temp: temperatures(14, 22), rain: bimodalRain(750), expectedZones: ['subtropical-coast'], pattern: 'all-year', frostMonths: [] },
+  // Frost-free with a mild summer (these are East London's endpoints): the warm-area column.
+  // It reached the hot-area column on rain share alone until the 2026-11-10 accuracy audit.
+  { zone: 'subtropical-coast', lat: -33.02, temp: temperatures(14, 22), rain: bimodalRain(750), recordMin: 10, expectedZones: ['subtropical-coast'], pattern: 'mild-frost', frostMonths: [] },
   { zone: 'western-cape', lat: -33.93, temp: temperatures(12, 21), rain: winterRain(515), expectedZones: ['western-cape'], pattern: 'winter', frostMonths: [] },
-  { zone: 'southern-cape', lat: -33.02, temp: temperatures(12, 21), rain: bimodalRain(750), expectedZones: ['southern-cape'], pattern: 'all-year', frostMonths: [] },
+  { zone: 'southern-cape', lat: -33.02, temp: temperatures(12, 21), rain: bimodalRain(750), recordMin: 5, expectedZones: ['southern-cape'], pattern: 'mild-frost', frostMonths: [] },
   { zone: 'karoo-arid', lat: -28.45, temp: temperatures(13, 29), rain: summerRain(190), expectedZones: ['karoo-arid'], pattern: 'summer', frostMonths: [5, 6, 7, 8] },
   { zone: 'high-mountain', lat: -29.6, temp: temperatures(3.5, 16), rain: summerRain(900), expectedZones: ['high-mountain', 'highveld'], pattern: 'summer', frostMonths: [5, 6, 7, 8] },
 ];
@@ -362,7 +375,8 @@ test('all eight researched zone cases use their own crop calendar, heat checks a
   const e = buildCompleteProductionExample();
   for (const row of REGIONAL_CASES) {
     const climate = siteClimateFromLocationData({ rainfall: { rainfallSource: 'nasa-power', monthly: row.rain },
-      climate: { monthlyTemp: row.temp, monthlyTempCoverage: SYNTHETIC_COMPLETE_MEAN_COVERAGE } }, row.lat);
+      climate: { monthlyTemp: row.temp, monthlyTempCoverage: SYNTHETIC_COMPLETE_MEAN_COVERAGE,
+        ...(row.recordMin === undefined ? {} : { minTemp: row.recordMin, minTempSource: 'nasa-power' }) } }, row.lat);
     assert.ok(climate, `${row.zone}: a complete synthetic parser case must resolve`);
     assert.equal(climate.pattern, row.pattern, `${row.zone}: warm coastal sowings leaked into a different climate`);
     const zones = growingZonesForClimate(row.temp, row.rain, row.lat);

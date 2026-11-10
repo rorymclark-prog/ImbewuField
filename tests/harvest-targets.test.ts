@@ -7,7 +7,7 @@ import {
   benchmarkAreaConflictDetails, estimatedYieldKg, loadCropPlan, saveCropPlan, sanitiseHarvestTargets,
   tasksForPlan, taskMonthsFromNow, type HarvestTarget, type PlanBed, type Planting,
 } from '@/lib/crop-plan';
-import { assessHarvestTarget, targetDemand, targetPickingWindow, type HarvestTargetAssessment } from '@/lib/harvest-targets';
+import { assessHarvestTarget, earliestReadyMonthIndex, targetDemand, targetPickingWindow, type HarvestTargetAssessment } from '@/lib/harvest-targets';
 import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 
 const now = { year: 2026, month: 11 };
@@ -79,6 +79,39 @@ test('a partly overlapping picking window is not prorated into invented weekly o
   const whole = { ...t, endMonth: '2027-04' };
   assert.deepEqual(targetPickingWindow(row, whole), [2027 * 12, 2027 * 12 + 1, 2027 * 12 + 2, 2027 * 12 + 3]);
   assert.equal(assessHarvestTarget(whole, beds, [row])!.allocatedKg, beds[0].areaM2 * cropByKey(row.cropKey)!.yieldKgPerM2!);
+});
+
+test('a sowing that could be ready before the buyer\'s window opens is credited as before and the grower is told',async()=>{
+  // CP-079 (10 November 2026 accuracy audit). The picking month is the LATE edge: upper
+  // published duration, rounded up, after a two-month nursery. Cabbage sown in January is
+  // credited to an August order (1 + 2 + ceil(125/30) = month 8), while its published range
+  // starts at 65 days — after the shortest one-month nursery it could be cut from April.
+  // The credit is deliberately unchanged; what was missing was any word of this on screen.
+  const cabbage: Planting = { id: 'cab', bedId: beds[0].id, cropKey: 'cabbage', sowMonth: 1, once: '2027-01', harvestTargetId: target.id };
+  const order = { ...target, cropKey: 'cabbage', startMonth: '2027-08', endMonth: '2027-08' };
+  assert.deepEqual(targetPickingWindow(cabbage, order), [2027 * 12 + 7], 'fixture: the January sowing is credited to August');
+  assert.equal(earliestReadyMonthIndex(cabbage, 2027 * 12 + 7), 2027 * 12 + 0 + 1 + Math.floor(65 / 30));
+  const early = assessHarvestTarget(order, beds, [cabbage])!;
+  assert.equal(early.allocatedKg, beds[0].areaM2 * cropByKey('cabbage')!.yieldKgPerM2!, 'the credit itself must not change');
+  assert.equal(early.earlyCycles, 1);
+  assert.equal(early.earliestReadyMonth, '2027-04', 'January + one nursery month + two whole months of 65 days = April');
+
+  // A window that already covers the early end has nothing to warn about.
+  const covered = assessHarvestTarget({ ...order, startMonth: '2027-04' }, beds, [cabbage])!;
+  assert.equal(covered.earlyCycles, 0);
+  assert.equal(covered.earliestReadyMonth, null);
+
+  // A direct-sown crop has no nursery month: carrots sown in November (80-120 days) could
+  // be ready from January, so a January order is not early and a February one is.
+  const carrots: Planting = { id: 'car', bedId: beds[1].id, cropKey: 'carrots', sowMonth: 11, once: '2026-11', harvestTargetId: target.id };
+  assert.equal(earliestReadyMonthIndex(carrots, 0), 2026 * 12 + 10 + 2);
+  assert.equal(assessHarvestTarget({ ...target, startMonth: '2027-01', endMonth: '2027-06' }, beds, [carrots])!.earlyCycles, 0);
+  assert.equal(assessHarvestTarget({ ...target, startMonth: '2027-02', endMonth: '2027-06' }, beds, [carrots])!.earlyCycles, 1);
+
+  // A row that is excluded from the credit is never counted as an early one either.
+  const excluded = assessHarvestTarget(order, beds, [{ ...cabbage, awaitingSowingConfirmation: true }])!;
+  assert.equal(excluded.allocatedKg, 0);
+  assert.equal(excluded.earlyCycles, 0);
 });
 
 test('overbooked, pending, finished, missing and incorrectly dated allocations cannot inflate capacity',async()=>{

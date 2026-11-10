@@ -124,9 +124,29 @@ test('auto-suggest derives climate from the mapped site instead of asking the fa
   // branches are automatic; neither asks the farmer to classify their climate.
   assert.match(
     CROP_PLAN_SCREEN,
-    /const pattern:\s*RainPattern\s*=\s*siteClimate\?\.pattern\s*\?\?\s*mapPattern/,
-    'the mapped climate must be the planning authority — per-site reading first, nearest reference as fallback',
+    /const pattern:\s*RainPattern\s*=\s*calendarInUse\.pattern/,
+    'the calendar in use must come from the one precedence rule, not a second derivation on the page',
   );
+  // 2026-11-10, Rory: "go ahead with decisions 2 and 3". The page used to pin
+  // `siteCalendar?.pattern ?? mapPattern`. The same precedence (site reading, then reference
+  // fallback) now lives in sowingCalendarInUse, with one new FIRST rung: a calendar the
+  // grower chose. The intent is unchanged: the mapped climate stays the automatic authority
+  // and the grower is never asked to classify their climate. Choosing is an optional
+  // override in Auto-suggest, not a question they have to answer.
+  assert.match(
+    CROP_PLAN_SCREEN,
+    /sowingCalendarInUse\(\{[^}]*chosen:\s*chosenCalendar[^}]*site:\s*siteClimate[^}]*reference:\s*mapPattern/,
+    'the mapped site climate must be the automatic authority, with the nearest reference as fallback',
+  );
+  // 2026-11-10 accuracy audit (CP-073/CP-074/CP-078): the site's reading now passes through
+  // calendarForGrower so the grower's own frost answer can move a close call, and the
+  // reference fallback is a frost regime (referenceSowingCalendar), not the region's rain timing.
+  // Since 2026-11-10 (Rory: "go ahead with decisions 2 and 3") the page no longer calls
+  // calendarForGrower itself: sowingCalendarInUse does, so the frost rule and the grower's
+  // choice are applied in one place. The page must hand it the frost answer.
+  assert.match(CROP_PLAN_SCREEN, /observedFrost:\s*siteSurvey\?\.productionConditions\?\.frost/, 'the site reading must still receive the grower-frost answer');
+  assert.doesNotMatch(CROP_PLAN_SCREEN, /calendarForGrower\(/, 'a second page-level derivation would let the screen and the rule diverge');
+  assert.match(CROP_PLAN_SCREEN, /mapPattern:\s*RainPattern\s*=\s*referenceSowingCalendar\(region\)/, 'the reference fallback must be a frost regime');
   assert.match(
     CROP_PLAN_SCREEN,
     /rainPattern:\s*pattern/,
