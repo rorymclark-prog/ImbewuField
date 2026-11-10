@@ -74,6 +74,11 @@ must provision — not buildable from code alone).
   say the grower chose the calendar. Frost wording now says grid estimates, not a lower bound.
 - **Also fixed (CP-100):** "Hide this list" was remembered under a browser key not tied to the account, holding the
   site id and crop list; it is now stored per account like the rest of the farm's data.
+- **Also fixed (CP-101):** a "Hide this list" handler kept past a change of account could write the old account's site
+  into the new account's record. It now asks the page's own actor and context admission and writes only under its own
+  render's key; choosing a calendar asks the same.
+- **Hosted preview at `73734a4`:** the saved-plan path (fresh plan, old plan, reloads, hide, clear) and two plan PDFs,
+  signed out, in guest storage.
 - **Hosted preview at `292bd10`:** no false list for a fresh sample visitor. Its climate request is refused (401) because
   the preview requires sign-in and the route is outside the sample guest lane; production answers it today.
 - **Open:** the calendar page and Atlas do not follow a chosen calendar or use the planner's calendar names (CP-097);
