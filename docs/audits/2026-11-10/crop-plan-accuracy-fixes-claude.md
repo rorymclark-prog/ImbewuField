@@ -87,7 +87,7 @@ Decisions for Rory:
 
 3. **Should a mapped site whose climate has not loaded get the out-of-season list (CP-094)?** It does not, since Update 2. The reasoning and the cost are at the end of that section.
 4. **Should the sowing calendar page and the Atlas follow the grower's chosen calendar and use the planner's calendar names (CP-097)?** They do neither today.
-5. **What should the sample farm, and a signed-out grower, get when sign-in is required for the climate route?** Today the labelled fallback. See the end of Update 2.
+5. **What should a signed-out grower get when sign-in is required for the climate route?** Today the labelled fallback, and their own calendar choice. For the sample farm this is decided: it has a fixed calendar of its own (Update 3).
 
 Decided and done on 10 November, see the updates below: a direct calendar choice for growers, and telling growers which saved sowings are out of season.
 
@@ -209,4 +209,49 @@ The totals above hide which farms and crops are left. These are all of them. Eac
 
 CP-094 narrows decision 3: a mapped site whose climate has not loaded gets no out-of-season list. The alternative is to keep listing against the fallback with a sentence saying it is a guess. I chose silence because the fallback is never the hot-area calendar, so for hot-area farms the list was wrong in a known direction, and it appeared and disappeared as the climate loaded. The cost: a mapped site that never gets a climate reading never gets the list; its header says "fallback" throughout.
 
-The second is not changed at all. Where sign-in is required for paid routes, as on the preview, the sample farm and every signed-out grower stay on the regional fallback, which is never the hot-area calendar. Production does not require it today. On the day it does, the sample farm's plan (in season on its hot-area calendar) will sit beside a crop picker offering light-frost months. Three ways out: admit the climate route to the sample-mode guest lane (a deliberate allowlist, four third-party calls a request); give the sample farm a declared calendar in its sample data, labelled as set for the sample; or leave it, with the fallback labelled and no false list. In that state the pop-up also says the climate "is not available right now (offline or still loading)", which is not the reason for a refused request.
+The second was decided later the same day for the sample farm (Update 3: a fixed calendar in its sample data); for signed-out growers it is still open. Where sign-in is required for paid routes, as on the preview, the sample farm and every signed-out grower stay on the regional fallback, which is never the hot-area calendar. Production does not require it today. On the day it does, the sample farm's plan (in season on its hot-area calendar) will sit beside a crop picker offering light-frost months. Three ways out: admit the climate route to the sample-mode guest lane (a deliberate allowlist, four third-party calls a request); give the sample farm a declared calendar in its sample data, labelled as set for the sample; or leave it, with the fallback labelled and no false list. In that state the pop-up also says the climate "is not available right now (offline or still loading)", which is not the reason for a refused request.
+
+## Update 3, later on 10 November 2026: a fixed calendar for the sample farm
+
+Rory: "go ahead with the fixed calendar for the sample farm". Commit `889438f6`. This settles the second of the two calls at the end of Update 2. Nothing about which routes a signed-out visitor may call was changed, and no sowing month, threshold or sample sowing changed.
+
+| ID | Problem | Status | What was done |
+| --- | --- | --- | --- |
+| CP-102 | The sample farm's sowing calendar depended on a live climate call | fixed | The planner reads a site's calendar from climate records fetched for its coordinates. For the sample farm that made the first screen a visitor sees depend on the network. Where the climate route requires sign-in (the preview does, and `/api/location-data` is deliberately outside the sample guest lane) the call is refused, the page fell back to the Durban light-frost reference, and the sample's plan, written for the hot-area calendar, sat beside a crop picker offering light-frost months. The sample now declares its calendar in its own sample data: hot area (`DEMO_SOWING_CALENDAR` in `lib/demo-farm.ts`), which is what a recorded reading of the site gives through the calendar rule and what the sample plan is in season on in every opening month. In sample mode, for the sample farm's own site only, that calendar is used whether or not a climate reading arrives. A visitor's own choice still comes first. No climate reading is seeded or imitated. `lib/sample-sowing-calendar.ts`, `lib/site-climate.ts` `sowingCalendarInUse`. |
+
+What a visitor to the sample farm sees, the same with the climate route refused or answering:
+
+- Header: "Hot area, no frost · summer rain · set for the sample farm".
+- In Auto-suggest a plan, a box headed "Sample farm calendar" with one reason: "This calendar is set for the sample farm, so the tour looks the same for everyone. On your own farm the app reads the climate records for your site, and you can choose a calendar yourself." Under it: "Set in the sample farm itself, not read from climate records."
+- The first choice in the calendar control reads "Sample farm: Hot area, no frost" where a real farm reads "Let the app decide: …".
+- No out-of-season list. The crop picker offers hot-area months.
+- If the visitor chooses another calendar, it is theirs ("chosen by you"), the list appears if the plan does not fit it, and choosing "Sample farm" goes back.
+- The plan PDF ends its calendar line "(sowing calendar set for the sample farm)".
+
+Order of authority is now: the grower's or visitor's own choice; on the sample farm only, the sample's declared calendar; otherwise the climate reading moved by the frost answer; otherwise the labelled regional fallback.
+
+Cases, commit `889438f6`, local development server:
+
+| Case | Inputs | Expected, and why | Observed | Evidence | Result |
+| --- | --- | --- | --- | --- | --- |
+| S-01 | Sample farm, climate route aborted, 390 px light and dark, 1280 px | The declared calendar with its own label; no list; nothing presented as climate records | As expected. No horizontal overflow at 390 px | [`outputs/sample-farm-fixed-calendar-check.txt`](evidence-crop-plan-accuracy-fixes/outputs/sample-farm-fixed-calendar-check.txt), screens `13`–`15` | passed |
+| S-02 | The same with the climate route answering (200) | Identical header, box and list state: the reading does not change the sample | Identical | Same file | passed |
+| S-03 | The visitor chooses "Winter frost", then "Sample farm" | Five sowings listed with the "You chose…" reason; then none, and the sample's calendar again | As expected, in both climate states | Same file | passed |
+| S-04 | The plan PDF downloaded from the sample farm, climate route aborted | The calendar line ends "(sowing calendar set for the sample farm)" | As expected; 31 pages, that line read | Same file | passed |
+| S-05 | The declared scope against the sample design's own coordinates; sample mode on and off; another site; no browser | The scope is the one the planner builds; the calendar applies only in sample mode and only to that site | As expected | `tests/sowing-calendar-choice.test.ts` | passed |
+| S-06 | The sample plan against the declared calendar in each of the twelve opening months; a climate reading that agrees, disagrees, or is absent, with each frost answer | Nothing out of season; the same result every time | As expected | Same test file | passed |
+
+Verification:
+
+- Typecheck `npx tsc --noEmit` clean.
+- Tests: all 354 test files that touch the changed modules, the plan store, the sample farm, sample mode, the page or browser storage pass locally (4,978 tests). The full suite was not run locally; it runs in CI on the pushed head, and it has not yet passed on any head with the farming-data or saved-data changes.
+- The accessor first went into `lib/sample-mode.ts`. Two tests then failed, and showed that file's exact bytes are pinned by a sync fixture and two translation packets. It was moved to its own module, `lib/sample-sowing-calendar.ts`, and the pinned file is unchanged. I then ran the 51 other test files that compare file hashes: 568 of 593 tests pass, and the 25 that fail do so for reasons of this container (old course media missing from a shallow clone, and a broken Python imaging install), in course-media tests that read nothing this branch changed. Those 25 are not verified here and are left to CI.
+- The test that held the sample to "no list on the fallback" is rewritten for this decision, with the reason beside it; the fallback rule for real farms (CP-094) keeps its own test. The observation from the review is still pinned: judged on the fallback, butternut in March and green beans in February would be listed.
+- Looked at in a browser on a local server: the sample farm at 390 px light and dark and 1280 px, with the climate route aborted and answering. The first wording of the control's first choice was cut off at 390 px ("Sample farm calendar: Hot area, no fros"); it was shortened and now measures 203 px in 248 px of room.
+
+Limits and what was not checked:
+
+- **The PDF's location phrase still differs by deployment.** It names where the rain season came from: "Nearest reference: Durban / KZN coast & hinterland (fallback)" with no reading, "This site (satellite climate records)" with one. The calendar after it is the same.
+- **Another site opened inside the sample is read the ordinary way.** Where the climate route is refused it gets the labelled fallback.
+- **The sowing calendar page and the Atlas are unchanged** (CP-097): they do not show the sample's declared calendar.
+- Not checked at the time of writing: the hosted preview after this change; a physical phone; a screen reader. The wording is English only, like the rest of the calendar box.

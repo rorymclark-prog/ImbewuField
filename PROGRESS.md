@@ -65,6 +65,18 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 10 Nov 2026 — Sample farm: a fixed sowing calendar of its own (no farming number changed)
+- **Record:** Update 3 in `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-102). Rory: "go ahead with the
+  fixed calendar for the sample farm".
+- **Why:** the sample's calendar came from a live climate call. Where that route requires sign-in (the preview) it is
+  refused, and the sample's hot-area plan sat beside a light-frost crop picker.
+- **What:** the sample declares the hot-area calendar in its sample data (`lib/demo-farm.ts DEMO_SOWING_CALENDAR`, read
+  through `lib/sample-sowing-calendar.ts`). Sample mode and the sample's own site only. Header, Auto-suggest
+  box, plan notes and PDF say "set for the sample farm"; nothing is presented as climate records. A visitor's own choice
+  still wins. The guest lane and the climate route are unchanged.
+- **Checked:** affected tests and typecheck locally; the sample farm in a browser with the climate route aborted and
+  answering (390 px light and dark, 1280 px), a visitor's choice and the way back, and the PDF line.
+
 ### 10 Nov 2026 — Crop plan: fixes from the independent review of the calendar work (no farming number changed; full suite still required before merge)
 - **Record:** Update 2 in `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-092–CP-099). Commit `9a980a5c`.
   Codex reviewed PR #1328 at `2218228e` and `0c005462`; each fault was reproduced before it was changed.
