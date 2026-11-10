@@ -65,6 +65,26 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 10 Nov 2026 — Crop plan accuracy audit (no farming data changed)
+- **Record:** `docs/audits/2026-11-10/crop-plan-accuracy-claude.md`, findings CP-073–CP-083, with the scripts and
+  outputs in `evidence-crop-plan-accuracy/`. The planner's own functions were run for 44 South African and 18 other
+  places against 20 years of independent daily weather and a published regional sowing guide.
+- **Holds:** the weekly-target and yield arithmetic; frost safety at 42 of 44 sites; the interior calendars (70–79%
+  agreement with the regional guide); no catalogue plan is computed outside South Africa.
+- **Wrong:** seven frost-free Lowveld and Limpopo sites are put on the hard-frost Highveld calendar (35% agreement;
+  tomatoes shown for August–October where the region plants January–July). Durban and the sample farm get the
+  light-frost calendar (42%). The Western Cape calendar copies the interior's for nine crops. Harvest months are the
+  late edge, by one to three months for tray crops, and weekly targets are matched to them.
+- **Not verified:** the KZN source tables were offline, so source comparisons use the repo's own transcriptions.
+- **Next:** nothing approved. Every fix changes farming data and needs a source per month, the full suite and Rory.
+
+### 10 Nov 2026 — Crop plan steps 1 and 2 (in progress on PR #1328)
+- **Step 1, readable calendar (done, `1cedb160` and `dbdf0d6b`):** bar labels in ink on their fills, year two fades
+  only its fill, one-month bars carry their name beside them, an opaque pinned header, dark-mode month labels, wrapped
+  notes, three wording slips, and weekly-target totals at one decimal. Contrast failures 23 / 43 / 46 / 69 → 0 in the
+  four default views; checked by measurement and by eye at 390px light and dark.
+- **Step 2, touch and keyboard:** in progress.
+
 ### 10 Nov 2026 — Crop plan re-audit and plan (no code changed)
 - **Record:** `docs/audits/2026-11-10/crop-plan-reaudit-claude.md`, measured on released `8a4d1fd` with the sample farm.
   Findings CP-047–CP-072 with 17 screenshots, 25 measurement files, the four scripts that produce them and a README

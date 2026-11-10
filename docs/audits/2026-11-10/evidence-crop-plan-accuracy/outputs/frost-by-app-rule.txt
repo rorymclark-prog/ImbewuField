@@ -1,0 +1,13 @@
+threshold 1.0 air-frost days per month: 2 of 44 South African sites flagged, 10 crop/sow-month combinations
+   Underberg (summer) 5 :: tomatoes sown A: S 1.1 days, 45% of years; peppers sown A: S 1.1 days, 45% of years; chilli sown A: S 1.1 days, 45% of years; potato sown A: S 1.1 days, 45% of years; spider-plant sown A: S 1.1 days, 45% of years
+   Sutherland (summer) 5 :: tomatoes sown A: S 2.5 days, 80% of years; peppers sown A: S 2.5 days, 80% of years; chilli sown A: S 2.5 days, 80% of years; potato sown A: S 2.5 days, 80% of years; spider-plant sown A: S 2.5 days, 80% of years
+threshold 0.2 air-frost days per month: 9 of 44 South African sites flagged, 99 crop/sow-month combinations
+   Sutherland (summer) 38 :: maize sown O: N 0.2 days, 10% of years; green-beans sown S: O 0.7 days, 40% of years, N 0.2 days, 10% of years; green-beans sown O: N 0.2 days, 10% of years; butternut sown O: N 0.2 days, 10% of years; pumpkin sown O: N 0.2 days, 10% of years
+   Underberg (summer) 31 :: maize sown N: A 0.3 days, 25% of years; dry-beans sown D: A 0.3 days, 25% of years; green-beans sown S: O 0.2 days, 20% of years; butternut sown D: A 0.3 days, 25% of years; pumpkin sown N: A 0.3 days, 25% of years
+   Kokstad (summer) 5 :: tomatoes sown A: S 0.2 days, 20% of years; peppers sown A: S 0.2 days, 20% of years; chilli sown A: S 0.2 days, 20% of years; potato sown A: S 0.2 days, 20% of years; spider-plant sown A: S 0.2 days, 20% of years
+   Bethlehem (summer) 5 :: tomatoes sown A: S 0.3 days, 25% of years; peppers sown A: S 0.3 days, 25% of years; chilli sown A: S 0.3 days, 25% of years; potato sown A: S 0.3 days, 25% of years; spider-plant sown A: S 0.3 days, 25% of years
+   Bloemfontein (summer) 5 :: tomatoes sown A: S 0.3 days, 20% of years; peppers sown A: S 0.3 days, 20% of years; chilli sown A: S 0.3 days, 20% of years; potato sown A: S 0.3 days, 20% of years; spider-plant sown A: S 0.3 days, 20% of years
+   Komani (summer) 5 :: tomatoes sown A: S 0.2 days, 15% of years; peppers sown A: S 0.2 days, 15% of years; chilli sown A: S 0.2 days, 15% of years; potato sown A: S 0.2 days, 15% of years; spider-plant sown A: S 0.2 days, 15% of years
+   Graaff-Reinet (summer) 5 :: tomatoes sown A: S 0.2 days, 15% of years; peppers sown A: S 0.2 days, 15% of years; chilli sown A: S 0.2 days, 15% of years; potato sown A: S 0.2 days, 15% of years; spider-plant sown A: S 0.2 days, 15% of years
+   Ceres (winter) 3 :: potato sown J: A 0.3 days, 20% of years; amadumbe sown S: J 0.8 days, 35% of years; amadumbe sown O: J 0.8 days, 35% of years, A 0.3 days, 20% of years
+   Springbok (winter) 2 :: amadumbe sown S: J 0.2 days, 15% of years, J 0.8 days, 50% of years; amadumbe sown O: J 0.2 days, 15% of years, J 0.8 days, 50% of years

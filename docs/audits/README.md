@@ -180,7 +180,9 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest audit: [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md). First rendered review of `/facilitator/crops` on released `8a4d1fd`: CP-047–CP-072, with measured contrast, keyboard, phone, dark, isiZulu and large-text evidence. Findings and a plan only; no code changed.
+Latest audit: [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md). The planner's own functions run for 44 South African and 18 other locations against 20 years of independent daily weather and a published regional sowing guide: CP-073–CP-083. The arithmetic and the interior calendars hold; frost-free Lowveld, Limpopo and KZN coast sites are shown the wrong season. Findings only; no farming data changed.
+
+Same day: [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md). First rendered review of `/facilitator/crops` on released `8a4d1fd`: CP-047–CP-072, with measured contrast, keyboard, phone, dark, isiZulu and large-text evidence. Findings and a plan only; no code changed.
 
 Latest field-block continuation: [Metres and international feet, retained drafts and crop allocations — 3 November 2026](2026-11-03/field-block-units-codex.md). Exact-tree checks, populated browser and current-head release gates remain open.
 
@@ -238,6 +240,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md).
 - [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md).
 
 - [Zones reserve context and national locator — 6 November 2026](2026-11-06/zones-reserve-context-codex.md).
