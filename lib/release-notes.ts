@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 November 2026', sha: '29e5516d9195a75f300985015e9dfc4c7c2cf8f4', changes: [
+    'Country evidence explains missing dates, overdue reviews and what to check next.',
+  ] },
   { when: '10 November 2026', sha: '8a4d1fd26b326d4469ee60d9eaf4c956ed9f4372', changes: [
     'Language-review warnings are easier to read in light and dark themes.',
   ] },
