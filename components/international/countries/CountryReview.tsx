@@ -7,7 +7,7 @@ import { useRegisterBackControl } from '@/components/BackControl';
 import { COUNTRY_PROFILES, COUNTRY_RESEARCH_QUEUE, EUROPE_RESEARCH_NOTE } from '@/lib/international/countries/registry';
 import { evaluateCountryReadiness, sourceEvidenceState } from '@/lib/international/countries/readiness';
 import { readCountryEvidenceSelection, type CountryEvidenceSelection } from '@/lib/international/countries/navigation';
-import type { Known } from '@/lib/international/countries/types';
+import type { CountrySource, Known } from '@/lib/international/countries/types';
 import { COUNTRY_CLIMATE_DEMOS, NASA_REFERENCE_PROVIDER, fetchCountryClimateReference, type ClimateReferenceResult, type ClimateDemoCode } from '@/lib/international/providers/nasa-reference';
 import styles from './CountryReview.module.css';
 import NwsForecastReference from './NwsForecastReference';
@@ -34,6 +34,44 @@ const FAILURE_COPY = {
   'missing-measurement': 'The reference returned no usable monthly temperature measurements.',
   'response-too-large': 'The response exceeded this demonstration’s size limit and was stopped.',
 };
+
+// Explain the existing evidence decision; these labels never supply missing dates
+// or promote a reference into a local farming review.
+const EVIDENCE_COPY = {
+  'available-reference': {
+    label: 'Dated reference evidence',
+    next: 'Check the recorded coverage, units and licence for your purpose. Dated reference evidence alone does not approve local farming advice.',
+  },
+  missing: {
+    label: 'Full source evidence not recorded',
+    next: 'Read the full official source and record what it supports and what remains unknown before using it as evidence.',
+  },
+  stale: {
+    label: 'Recorded review is overdue',
+    next: 'Recheck the official source and record a new dated review. The previous review window has ended.',
+  },
+  undated: {
+    label: 'Evidence dates are missing or unusable',
+    next: 'Confirm the publication, access and review dates. An access date or page modification date cannot replace an unknown publication date.',
+  },
+};
+
+export function CountryEvidenceDetails({ source, asOf }: { source: CountrySource; asOf: string }) {
+  const copy = EVIDENCE_COPY[sourceEvidenceState(source, asOf)];
+  return <details className={styles.details}>
+    <summary><span>{source.authority}</span><small>{source.verification === 'content-read' ? 'Full source page read' : 'Source unavailable in this review'} · {copy.label}</small></summary>
+    <p><strong>Review next:</strong> {copy.next}</p>
+    <p><a href={source.url} target="_blank" rel="noreferrer" className={styles.link}>Open official source ↗</a></p>
+    <p>{source.verifiedClaim}</p><p>{source.limitations}</p>
+    <dl><dt>Coverage</dt><dd>{source.coverage}</dd><dt>Resolution</dt><dd>{metadata(source.resolution)}</dd>
+      <dt>Units</dt><dd>{metadata(source.units)}</dd><dt>Update cadence</dt><dd>{metadata(source.updateCadence)}</dd>
+      <dt>Licence</dt><dd>{metadata(source.licence)}</dd><dt>Attribution</dt><dd>{source.attribution}</dd>
+      <dt>Access</dt><dd>{metadata(source.accessRequirements)}</dd><dt>Missing data</dt><dd>{source.missingDataBehavior}</dd>
+      <dt>Accessed / published</dt><dd>{source.accessedOn ?? 'unknown'} / {source.publishedOn ?? 'unknown'}</dd>
+      {source.lastModifiedOn && <><dt>Page last modified (not publication)</dt><dd>{source.lastModifiedOn}</dd></>}
+      <dt>Review due</dt><dd>{source.reviewDueOn ?? 'unknown'}</dd></dl>
+  </details>;
+}
 
 export interface CountryReviewProps {
   countryHint?: unknown;
@@ -169,18 +207,9 @@ export default function CountryReview({ countryHint }: CountryReviewProps = {}) 
       <p className={styles.secondary}>A source page read is distinct from a dated dataset or approved farming guidance. Unknown publication dates remain undated evidence.</p>
       <div className={styles.evidenceGrid}>{readiness.evidence.map((entry) => <article key={entry.category} className={styles.card}>
         <h3>{CATEGORY_NAMES[entry.category]}</h3>
+        <p className={styles.secondary}>Dated reference evidence: {entry.availableCount} of {entry.sources.length} recorded sources. This does not approve local farming advice.</p>
         {!entry.sources.length && <p>No source dossier recorded.</p>}
-        {entry.sources.map((source) => <details key={source.id} className={styles.details}>
-          <summary><span>{source.authority}</span><small>{source.verification === 'content-read' ? 'Full source page read' : 'Source unavailable in this review'} · {sourceEvidenceState(source, asOf)}</small></summary>
-          <p><a href={source.url} target="_blank" rel="noreferrer" className={styles.link}>Open official source ↗</a></p>
-          <p>{source.verifiedClaim}</p><p>{source.limitations}</p>
-          <dl><dt>Coverage</dt><dd>{source.coverage}</dd><dt>Resolution</dt><dd>{metadata(source.resolution)}</dd>
-            <dt>Units</dt><dd>{metadata(source.units)}</dd><dt>Update cadence</dt><dd>{metadata(source.updateCadence)}</dd>
-            <dt>Licence</dt><dd>{metadata(source.licence)}</dd><dt>Attribution</dt><dd>{source.attribution}</dd>
-            <dt>Access</dt><dd>{metadata(source.accessRequirements)}</dd><dt>Missing data</dt><dd>{source.missingDataBehavior}</dd>
-            <dt>Accessed / published</dt><dd>{source.accessedOn ?? 'unknown'} / {source.publishedOn ?? 'unknown'}</dd>
-            {source.lastModifiedOn && <><dt>Page last modified (not publication)</dt><dd>{source.lastModifiedOn}</dd></>}</dl>
-        </details>)}
+        {entry.sources.map((source) => <CountryEvidenceDetails key={source.id} source={source} asOf={asOf} />)}
       </article>)}</div>
     </section>
     <section className={styles.card} aria-labelledby="provider-heading"><p className={styles.eyebrow}>Executable public reference</p>
