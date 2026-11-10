@@ -1,0 +1,61 @@
+{
+ "servedBuild": {
+  "branch": "claude/blissful-pasteur-1c4ne6",
+  "sha": "dbdf0d6"
+ },
+ "entered": {
+  "crop": "Carrots",
+  "weeklyQuantity": "5",
+  "unit": "kg",
+  "months": "defaults (12 months from the current month)"
+ },
+ "targetCardText": [
+  "Carrots · 5 kg/week",
+  "Nov 2026 – Oct 2027 · 365 days",
+  "Edit",
+  "Total demand",
+  "260.7 kg",
+  "Crop-cycle area needed",
+  "130.4 m²",
+  "Benchmark before allowance",
+  "0 kg",
+  "Unallocated volume",
+  "260.7 kg",
+  "No linked picking window: Nov 2026, Dec 2026, Jan 2027, Feb 2027, Mar 2027, Apr 2027, May 2027, Jun 2027, Jul 2027, Aug 2027, Sep 2027, Oct 2027.",
+  "Area is summed across crop cycles; successive crops may reuse ground. Weekly supply remains unverified."
+ ],
+ "reviewText": [
+  "Review 4 proposed sowings",
+  "Carrots · 5 kg/week: 48 kg linked cycle capacity after adding (unadjusted benchmark); 212.7 kg still unallocated. No picking window in Nov 2026, Dec 2026, Jan 2027, Feb 2027, Mar 2027, Apr 2027, Jun 2027, Jul 2027, Sep 2027.",
+  "Proposed additions — saved crops stay in place",
+  "Growing area\tCrop\tSow\tShare",
+  "Bed 1\tCarrots\tJan 2027\tWhole area",
+  "Bed 5\tCarrots\tJan 2027\tWhole area",
+  "Bed 7\tCarrots\tApr 2027\tWhole area",
+  "Bed 3\tCarrots\tJun 2027\tWhole area",
+  "Carrots: some requested crop-cycle volume remains unallocated (rotation conflicts; occupied ground or an unusable share).",
+  "Crop-cycle capacity uses the catalogue’s South African planning yields and picking windows. It does not forecast kilograms each week. Check local suitability, losses and actual harvest records before promising deliveries.",
+  "Only dated plantings linked to each target count towards its volume. Existing crops stay unchanged. Whole open fields and standard bed shares can create surplus. Pack weights and saleable shares use only the grower’s entries; no allowance is applied when none is entered.",
+  "Nursery check before adding target sowings",
+  "A forecast from crop-plan allocations, not an observation of seedling or empty-tray stock. Months provide coarse envelopes; weekly rows do not imply exact sowing or transplanting dates.",
+  "Incomplete forecast. Known quantities below are only part of the demand; unknown requirements cannot confirm spare space or stock.",
+  "Peak simultaneous trays · known part",
+  "Unknown",
+  "Peak simultaneous footprint · known part",
+  "Unknown",
+  "Seasonal tray fills · known part",
+  "Unknown",
+  "Seasonal fills count repeated uses. Owned containers are compared with the simultaneous peak, so a tray reused later is not counted as a second item of stock.",
+  "Add this site’s own nursery profile for this crop.",
+  "Choose a container belonging to this site; its capacity is unknown.",
+  "Choose a nursery space belonging to this site; its usable surface is unknown.",
+  "Container dimensions are unknown; nursery surface demand cannot be calculated.",
+  "Dated nursery cohorts · 3",
+  "Net growing-surface budgets",
+  "Container stock budgets",
+  "All nursery demand by week",
+  "Coarse monthly planning envelopes, not exact sowing dates. Upper range ends budget nursery space against the grower’s net usable surface. No aisle allowance or geometric packing guarantee is inferred. Incomplete estimates show known assigned demand only; unknown or unassigned demand is not zero and prevents a spare-capacity claim. Shortages on incomplete budgets are known lower bounds. Seasonal tray uses are separate from peak simultaneous stock. Field dates, tasks and yields stay unchanged.",
+  "Add 4 dated sowings to my plan"
+ ],
+ "note": "Synthetic entry on the public sample farm. Nothing was accepted onto the calendar."
+}

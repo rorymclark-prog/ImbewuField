@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 November 2026', sha: '676b2e2259726312fea4d9604870b12e242a484a', changes: [
+    'Crop names on the plan calendar are easier to read, in light and dark.',
+    'Crop bars and "+ crop" are bigger to tap on a phone.',
+    'Crop plan pop-ups close with Escape and keep keyboard focus.',
+    'Weekly target totals show one decimal, not six.',
+  ], tour: [{ title: 'Read and tap your crop calendar', where: 'Menu → Crop plan', href: '/facilitator/crops',
+    detail: 'Crop names are dark on their bars, and a one-month crop shows its name beside the bar. On a phone the bars and "+ crop" are taller. A faded bar is still next year’s repeat, not a new plan.' }] },
   { when: '9 November 2026', sha: 'ce637c546e9df5c4dc536a49d4ce1234c2467e0c', changes: [
     'Nursery input errors no longer say a transplant batch is absent.',
   ] },

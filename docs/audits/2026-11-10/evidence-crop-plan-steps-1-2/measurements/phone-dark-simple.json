@@ -1,0 +1,1064 @@
+{
+ "config": {
+  "name": "phone-dark-simple",
+  "viewport": "390x844",
+  "devicePixelRatio": 1,
+  "theme": "earth dark",
+  "level": "simple",
+  "lang": "en",
+  "sectionsOpened": false,
+  "countryHold": "confirmed as ZA",
+  "appTextScale": 1,
+  "url": "/facilitator/crops",
+  "site": "public sample farm",
+  "servedBuild": {
+   "branch": "claude/blissful-pasteur-1c4ne6",
+   "sha": "478e071"
+  },
+  "siteClimate": {
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsShown": true,
+   "plannerShown": true
+  }
+ },
+ "totals": {
+  "controls": 80,
+  "textRuns": 335,
+  "contrastFailures": 0,
+  "contrastFailuresConfirmedByPixels": 0,
+  "contrastFailuresNotPixelSampled": 0,
+  "contrastFailuresOnDisabledControls": 0,
+  "textUnder12px": 91,
+  "targetsUnder24_noException": 0,
+  "targetsUnder24_withException": 4,
+  "targets24to44": 0,
+  "unnamedControls": 0,
+  "clippedText": 0,
+  "h1": 1,
+  "docOverflowX": false
+ },
+ "layout": {
+  "scrollAreaTopPx": 204,
+  "scrollAreaHeightPx": 549,
+  "windowHeightPx": 844,
+  "scrollAreaShare": 0.65,
+  "calendarTopInScrollPx": 1137,
+  "pageScrollHeightPx": 6544,
+  "headerScrollWidthPx": 390,
+  "headerClientWidthPx": 390
+ },
+ "contrast": [],
+ "textUnder12px": [
+  {
+   "text": "Plants and housing from your map",
+   "fontPx": 11,
+   "selector": "div.flex.flex-col > header.flex-shrink-0.flex > div.flex.flex-col > span.font-sans.truncate",
+   "count": 1
+  },
+  {
+   "text": "Bed",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.mb-5 > div.flex > div > span.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Year one — from this month",
+   "fontPx": 9.5,
+   "selector": "div.flex-1 > div > div.flex > div.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Year two — repeat crops; check plant ages",
+   "fontPx": 9.5,
+   "selector": "div.flex-1 > div > div.flex > div.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Vegetables",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"].crop-plan-lanes > div > div[data-crop-calendar-section=\"veg\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "6.0",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 6
+  },
+  {
+   "text": "m²",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 11
+  },
+  {
+   "text": "Lettuce",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Carrots",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "Butternut",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Tomatoes",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "8.0",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 1
+  },
+  {
+   "text": "Garlic",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Sweet potato",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Staple grain",
+   "fontPx": 10,
+   "selector": "div.flex > div > div.font-sans > span",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Staple crops",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"].crop-plan-lanes > div > div[data-crop-calendar-section=\"staple\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "plot",
+   "fontPx": 8.5,
+   "selector": "div.flex > div > div.font-display.font-semibold > span.font-sans.font-semibold",
+   "count": 4
+  },
+  {
+   "text": "21.0",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 4
+  },
+  {
+   "text": "Fruit, nuts & berries",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"].crop-plan-lanes > div > div[data-crop-calendar-section=\"trees\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "From your map · tap or click a bar",
+   "fontPx": 10,
+   "selector": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > div.font-sans",
+   "count": 2
+  },
+  {
+   "text": "Outlined bars: sourced planning references when established. Solid bars: locally",
+   "fontPx": 11,
+   "selector": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > p.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Mango",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "· reference",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "(proposed)",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "Avocado",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Avocado — fruit · 1 plant on y\"].font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "On your map, with picking months to confirm: Avocado, Mango, Moringa, Num-num. T",
+   "fontPx": 11,
+   "selector": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > div.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Animal products",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"].crop-plan-lanes > div > div[data-crop-calendar-section=\"animals\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "These confirmations are kept on this device for this design.",
+   "fontPx": 11.5,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > p.font-sans.mb-3",
+   "count": 1
+  },
+  {
+   "text": "29.7 kg",
+   "fontPx": 11,
+   "selector": "div > div > button.grid.gap-2 > span",
+   "count": 1
+  },
+  {
+   "text": "*",
+   "fontPx": 11,
+   "selector": "div > div > button.grid.gap-2 > span",
+   "count": 10
+  },
+  {
+   "text": "48.8 kg",
+   "fontPx": 11,
+   "selector": "div > div > button.grid.gap-2 > span",
+   "count": 9
+  },
+  {
+   "text": "* Known subtotal only. Missing production is not zero. Striped ends show harvest",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > section[data-production-projection=\"true\"].mt-4.rounded-2xl > p.mt-2",
+   "count": 1
+  },
+  {
+   "text": "What each file contains",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5 > summary",
+   "count": 1
+  },
+  {
+   "text": "The calendar file works with Google Calendar and Apple Calendar. Tasks land as w",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5",
+   "count": 1
+  },
+  {
+   "text": "It also has what to buy, monthly tick-off jobs and a harvest record.",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5",
+   "count": 1
+  },
+  {
+   "text": "Picking dates for trees and animals must be confirmed locally; plants and housin",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5",
+   "count": 1
+  }
+ ],
+ "targetsUnder24": [
+  {
+   "label": "Avocado · 1 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 20,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Mango · 1 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 20,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Moringa · 2 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 20,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Num-num · 1 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 20,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  }
+ ],
+ "targets24to44": [],
+ "unnamedControls": [],
+ "clippedText": [],
+ "headings": [
+  "H1 Production plan",
+  "H4 Saved planned nursery batches",
+  "H2 Site country and region",
+  "H2 How production changes as plants grow",
+  "H3 Nov 2026 – Oct 2027",
+  "H3 Check your farm conditions",
+  "H3 Fruit, nuts and indigenous foods",
+  "H4 Avocado",
+  "H4 Mango",
+  "H4 Moringa",
+  "H4 Num-num",
+  "H4 Water through the dry season",
+  "H4 Frost on this farm",
+  "H4 Sun and drainage"
+ ],
+ "h1Rendered": [
+  "Production plan"
+ ],
+ "consoleErrors": [],
+ "textCorpus": [
+  {
+   "text": "Tour",
+   "count": 1
+  },
+  {
+   "text": "Production plan",
+   "count": 1
+  },
+  {
+   "text": "Plants and housing from your map",
+   "count": 1
+  },
+  {
+   "text": "Vegetables and staples · Fruit, nuts & berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.",
+   "count": 1
+  },
+  {
+   "text": "Country details are available from this device. Live account updates are unavailable.",
+   "count": 1
+  },
+  {
+   "text": "Country details saved for this sample session only.",
+   "count": 1
+  },
+  {
+   "text": "Harvest targets",
+   "count": 2
+  },
+  {
+   "text": "Your buyer-demand records",
+   "count": 1
+  },
+  {
+   "text": "Your growing estimates",
+   "count": 1
+  },
+  {
+   "text": "Automatic plan from your estimates",
+   "count": 1
+  },
+  {
+   "text": "Saved planned nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Check the saved plan to review nursery batches or open the separate field seed worksheet for accepted cycles without nursery raising. Field seed sourcing does not require a nursery batch, nursery equipment or a nursery review horizon. References do not record actual sowing, available seeds or live nursery stock.",
+   "count": 1
+  },
+  {
+   "text": "DEMO — references stay in this sample session.",
+   "count": 1
+  },
+  {
+   "text": "Check saved nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Check the current saved plan to load eligible planned nursery batches.",
+   "count": 1
+  },
+  {
+   "text": "Site country and region",
+   "count": 1
+  },
+  {
+   "text": "Saved country: South Africa. This is the grower’s description, not local agronomy approval.",
+   "count": 1
+  },
+  {
+   "text": "Review country evidence",
+   "count": 1
+  },
+  {
+   "text": "· Reference tools only; opening this link does not save country details or approve farming advice.",
+   "count": 1
+  },
+  {
+   "text": "Review or change country details",
+   "count": 1
+  },
+  {
+   "text": "Auto-suggest a plan",
+   "count": 1
+  },
+  {
+   "text": "Plan from weekly demand",
+   "count": 1
+  },
+  {
+   "text": "Nursery planner",
+   "count": 1
+  },
+  {
+   "text": "This site’s trays and growing surface",
+   "count": 1
+  },
+  {
+   "text": "Bed",
+   "count": 1
+  },
+  {
+   "text": "Year one — from this month",
+   "count": 1
+  },
+  {
+   "text": "Year two — repeat crops; check plant ages",
+   "count": 1
+  },
+  {
+   "text": "Nov",
+   "count": 4
+  },
+  {
+   "text": "Now",
+   "count": 1
+  },
+  {
+   "text": "Dec",
+   "count": 4
+  },
+  {
+   "text": "Jan",
+   "count": 4
+  },
+  {
+   "text": "2027",
+   "count": 1
+  },
+  {
+   "text": "Feb",
+   "count": 4
+  },
+  {
+   "text": "Mar",
+   "count": 4
+  },
+  {
+   "text": "Apr",
+   "count": 4
+  },
+  {
+   "text": "May",
+   "count": 4
+  },
+  {
+   "text": "Jun",
+   "count": 4
+  },
+  {
+   "text": "Jul",
+   "count": 4
+  },
+  {
+   "text": "Aug",
+   "count": 4
+  },
+  {
+   "text": "Sep",
+   "count": 4
+  },
+  {
+   "text": "Oct",
+   "count": 4
+  },
+  {
+   "text": "↻",
+   "count": 1
+  },
+  {
+   "text": "2028",
+   "count": 1
+  },
+  {
+   "text": "Vegetables",
+   "count": 1
+  },
+  {
+   "text": "Bed 1",
+   "count": 1
+  },
+  {
+   "text": "6.0",
+   "count": 6
+  },
+  {
+   "text": "m²",
+   "count": 11
+  },
+  {
+   "text": "Onions",
+   "count": 1
+  },
+  {
+   "text": "+ crop",
+   "count": 11
+  },
+  {
+   "text": "Bed 2",
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "count": 2
+  },
+  {
+   "text": "Carrots",
+   "count": 4
+  },
+  {
+   "text": "Bed 3",
+   "count": 1
+  },
+  {
+   "text": "Butternut",
+   "count": 2
+  },
+  {
+   "text": "Bed 4",
+   "count": 1
+  },
+  {
+   "text": "Tomatoes",
+   "count": 1
+  },
+  {
+   "text": "Bed 5",
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "count": 2
+  },
+  {
+   "text": "Bed 6",
+   "count": 1
+  },
+  {
+   "text": "8.0",
+   "count": 1
+  },
+  {
+   "text": "Garlic",
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "count": 2
+  },
+  {
+   "text": "Sweet potato",
+   "count": 2
+  },
+  {
+   "text": "Bed 7",
+   "count": 1
+  },
+  {
+   "text": "Staple grain",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "count": 2
+  },
+  {
+   "text": "Staple crops",
+   "count": 1
+  },
+  {
+   "text": "Plot 1",
+   "count": 1
+  },
+  {
+   "text": "plot",
+   "count": 4
+  },
+  {
+   "text": "21.0",
+   "count": 4
+  },
+  {
+   "text": "Plot 2",
+   "count": 1
+  },
+  {
+   "text": "Plot 3",
+   "count": 1
+  },
+  {
+   "text": "Plot 4",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts & berries",
+   "count": 2
+  },
+  {
+   "text": "Your trees & bushes",
+   "count": 1
+  },
+  {
+   "text": "From your map · tap or click a bar",
+   "count": 2
+  },
+  {
+   "text": "Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.",
+   "count": 1
+  },
+  {
+   "text": "Mango",
+   "count": 5
+  },
+  {
+   "text": "· reference",
+   "count": 4
+  },
+  {
+   "text": "(proposed)",
+   "count": 4
+  },
+  {
+   "text": "Avocado",
+   "count": 5
+  },
+  {
+   "text": "On your map, with picking months to confirm: Avocado, Mango, Moringa, Num-num. They stay listed on the printed plan.",
+   "count": 1
+  },
+  {
+   "text": "Animal products",
+   "count": 1
+  },
+  {
+   "text": "Your animals",
+   "count": 1
+  },
+  {
+   "text": "No locally confirmed production months yet. Hives, coops and pens on your map stay listed below and on the printed plan.",
+   "count": 1
+  },
+  {
+   "text": "Add a crop",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts & berries on your map",
+   "count": 1
+  },
+  {
+   "text": "Picking months vary by place and variety. Outlined calendar marks are planning references when established. Confirm months for plants that already give food here to count them in food totals. Plants stay on the printed plan while dates are unknown.",
+   "count": 1
+  },
+  {
+   "text": "These confirmations are kept on this device for this design.",
+   "count": 1
+  },
+  {
+   "text": "·",
+   "count": 16
+  },
+  {
+   "text": "1 proposed",
+   "count": 3
+  },
+  {
+   "text": "confirm picking months",
+   "count": 4
+  },
+  {
+   "text": "Moringa",
+   "count": 3
+  },
+  {
+   "text": "2 proposed",
+   "count": 1
+  },
+  {
+   "text": "Num-num",
+   "count": 3
+  },
+  {
+   "text": "How production changes as plants grow",
+   "count": 1
+  },
+  {
+   "text": "The next ten years, starting this month. Add planting dates and expected yields under each plant above. Missing yields remain visible; young trees do not receive a mature-tree yield.",
+   "count": 1
+  },
+  {
+   "text": "●",
+   "count": 2
+  },
+  {
+   "text": "Vegetables & staples",
+   "count": 1
+  },
+  {
+   "text": "Numbers are projections in kg",
+   "count": 1
+  },
+  {
+   "text": "Nov 2026",
+   "count": 1
+  },
+  {
+   "text": "29.7 kg",
+   "count": 1
+  },
+  {
+   "text": "*",
+   "count": 10
+  },
+  {
+   "text": "Nov 2027",
+   "count": 1
+  },
+  {
+   "text": "48.8 kg",
+   "count": 9
+  },
+  {
+   "text": "Nov 2028",
+   "count": 1
+  },
+  {
+   "text": "Nov 2029",
+   "count": 1
+  },
+  {
+   "text": "Nov 2030",
+   "count": 1
+  },
+  {
+   "text": "Nov 2031",
+   "count": 1
+  },
+  {
+   "text": "Nov 2032",
+   "count": 1
+  },
+  {
+   "text": "Nov 2033",
+   "count": 1
+  },
+  {
+   "text": "Nov 2034",
+   "count": 1
+  },
+  {
+   "text": "Nov 2035",
+   "count": 1
+  },
+  {
+   "text": "* Known subtotal only. Missing production is not zero. Striped ends show harvest that changes as plants age during the year.",
+   "count": 1
+  },
+  {
+   "text": "Nov 2026 – Oct 2027",
+   "count": 1
+  },
+  {
+   "text": "Vegetables & staples:",
+   "count": 1
+  },
+  {
+   "text": "29.7 kg from cycles starting harvest in this period",
+   "count": 1
+  },
+  {
+   "text": "1",
+   "count": 3
+  },
+  {
+   "text": "plant",
+   "count": 3
+  },
+  {
+   "text": "Needs information",
+   "count": 4
+  },
+  {
+   "text": "Age not recorded",
+   "count": 4
+  },
+  {
+   "text": "Add planting dates",
+   "count": 4
+  },
+  {
+   "text": "1 plant needs age groups",
+   "count": 3
+  },
+  {
+   "text": "2",
+   "count": 1
+  },
+  {
+   "text": "plants",
+   "count": 1
+  },
+  {
+   "text": "2 plants need age groups",
+   "count": 1
+  },
+  {
+   "text": "What the projection assumes",
+   "count": 1
+  },
+  {
+   "text": "Check your farm conditions",
+   "count": 1
+  },
+  {
+   "text": "Update site survey",
+   "count": 1
+  },
+  {
+   "text": "Climate area:",
+   "count": 1
+  },
+  {
+   "text": "Subtropical coast or Lowveld / Bushveld",
+   "count": 1
+  },
+  {
+   "text": ".",
+   "count": 1
+  },
+  {
+   "text": "Your survey supplies the observations below.",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts and indigenous foods",
+   "count": 1
+  },
+  {
+   "text": "Bars use a labelled variety assumption or regional reference. New plants need time to produce. Only locally confirmed months enter your food totals.",
+   "count": 1
+  },
+  {
+   "text": "Assumed variety: Hass",
+   "count": 1
+  },
+  {
+   "text": "· expected when established",
+   "count": 2
+  },
+  {
+   "text": "0 existing; 1 proposed. Products: fruit.",
+   "count": 2
+  },
+  {
+   "text": "Care and what to buy",
+   "count": 4
+  },
+  {
+   "text": "Regional reference: Mango",
+   "count": 1
+  },
+  {
+   "text": "0 existing; 2 proposed. Products: Leaves and green pods; keep their records separate.",
+   "count": 1
+  },
+  {
+   "text": "0 existing; 1 proposed. Products: Ripe fruit, fresh or preserved.",
+   "count": 1
+  },
+  {
+   "text": "Water through the dry season",
+   "count": 1
+  },
+  {
+   "text": "Not recorded. Complete the site survey and confirm water before choosing an intensive plan.",
+   "count": 1
+  },
+  {
+   "text": "Frost on this farm",
+   "count": 1
+  },
+  {
+   "text": "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.",
+   "count": 1
+  },
+  {
+   "text": "Sun and drainage",
+   "count": 1
+  },
+  {
+   "text": "Sun: not recorded.",
+   "count": 1
+  },
+  {
+   "text": "Drainage: not recorded. Soil-test results and crop-specific needs still need checking.",
+   "count": 1
+  },
+  {
+   "text": "Crop varieties to check locally (",
+   "count": 1
+  },
+  {
+   "text": "12",
+   "count": 1
+  },
+  {
+   "text": "crops",
+   "count": 1
+  },
+  {
+   "text": ")",
+   "count": 1
+  },
+  {
+   "text": "Food, production kg and growing space graphs",
+   "count": 1
+  },
+  {
+   "text": "Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate.",
+   "count": 1
+  },
+  {
+   "text": "Record expected or actual production",
+   "count": 1
+  },
+  {
+   "text": "0",
+   "count": 2
+  },
+  {
+   "text": "record",
+   "count": 2
+  },
+  {
+   "text": "s",
+   "count": 2
+  },
+  {
+   "text": "Record food kept in store",
+   "count": 1
+  },
+  {
+   "text": "Take this plan with you",
+   "count": 1
+  },
+  {
+   "text": "Files are made on this device. Download a copy to use away from the app.",
+   "count": 1
+  },
+  {
+   "text": "Your plan includes vegetables, fruit, nuts, berries and animal products from your map.",
+   "count": 1
+  },
+  {
+   "text": "Add 37 tasks to calendar",
+   "count": 1
+  },
+  {
+   "text": "Download the plan (PDF)",
+   "count": 1
+  },
+  {
+   "text": "Calendar & jobs",
+   "count": 1
+  },
+  {
+   "text": "Or:",
+   "count": 1
+  },
+  {
+   "text": "open it to print",
+   "count": 1
+  },
+  {
+   "text": "Future harvest PDF",
+   "count": 1
+  },
+  {
+   "text": "Detailed reference PDF",
+   "count": 1
+  },
+  {
+   "text": "What each file contains",
+   "count": 1
+  },
+  {
+   "text": "The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the first of their month — this plan works in months, not exact days — with a reminder three days before. The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick.",
+   "count": 1
+  },
+  {
+   "text": "It also has what to buy, monthly tick-off jobs and a harvest record.",
+   "count": 1
+  },
+  {
+   "text": "Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The separate Future harvest PDF has the ten-year graph and age groups. Calendar & jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan, benchmarks, buying lists, guidance, monthly field sheets and harvest records.",
+   "count": 1
+  },
+  {
+   "text": "Lima, your planting helper",
+   "count": 1
+  },
+  {
+   "text": "Ask for help",
+   "count": 1
+  },
+  {
+   "text": "Photo",
+   "count": 1
+  }
+ ]
+}

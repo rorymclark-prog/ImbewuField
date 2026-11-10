@@ -78,12 +78,18 @@ must provision — not buildable from code alone).
 - **Not verified:** the KZN source tables were offline, so source comparisons use the repo's own transcriptions.
 - **Next:** nothing approved. Every fix changes farming data and needs a source per month, the full suite and Rory.
 
-### 10 Nov 2026 — Crop plan steps 1 and 2 (in progress on PR #1328)
+### 10 Nov 2026 — Crop plan steps 1 and 2 (on PR #1328, not merged)
 - **Step 1, readable calendar (done, `1cedb160` and `dbdf0d6b`):** bar labels in ink on their fills, year two fades
   only its fill, one-month bars carry their name beside them, an opaque pinned header, dark-mode month labels, wrapped
   notes, three wording slips, and weekly-target totals at one decimal. Contrast failures 23 / 43 / 46 / 69 → 0 in the
   four default views; checked by measurement and by eye at 390px light and dark.
-- **Step 2, touch and keyboard:** in progress.
+- **Step 2, touch and keyboard (done, `676b2e22`):** the three crop sheets are named dialogs that take focus, hold Tab,
+  close on Escape and return focus (0 of 3 before, 3 of 3 now, at 390px and 1280px). On touch or a narrow window bars,
+  "+ crop", Home, Close and the two main buttons are 44px; controls between 24 and 44px in Simple at 390px went from
+  37 to 0. No control is under 24px without an exception (was 5, 15 with sections open). One h1. The calendar now pans
+  to its last month in All tools on a phone (CP-084).
+- **Evidence:** `docs/audits/2026-11-10/evidence-crop-plan-steps-1-2/`. Affected tests 550 of 550; full suite on CI.
+- **Still open from the plan:** steps 3 to 7, Rory's three decisions (CP-047, CP-048, CP-049), and CP-085.
 
 ### 10 Nov 2026 — Crop plan re-audit and plan (no code changed)
 - **Record:** `docs/audits/2026-11-10/crop-plan-reaudit-claude.md`, measured on released `8a4d1fd` with the sample farm.
