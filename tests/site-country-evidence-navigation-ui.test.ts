@@ -7,6 +7,8 @@ import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'rea
 import ts from 'typescript';
 import { bindSiteContext, createSiteCountryContext, resolveSiteCountryContext, type SiteContextPlace, type SiteContextResolution } from '../lib/international/site-context.ts';
 import { COUNTRY_PROFILES } from '../lib/international/countries/registry.ts';
+import { evaluateCountryReadiness } from '../lib/international/countries/readiness.ts';
+import type { CountrySource } from '../lib/international/countries/types.ts';
 import { COUNTRY_CLIMATE_DEMOS, NASA_REFERENCE_PROVIDER, type ClimateReferenceResult } from '../lib/international/providers/nasa-reference.ts';
 import type { CountryReviewProps } from '../components/international/countries/CountryReview.tsx';
 
@@ -64,7 +66,7 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
     } }).outputText };
   return next(url, context);
 } });
-const { default: CountryReviewModule } = await import('../components/international/countries/CountryReview.tsx');
+const { default: CountryReviewModule, CountryEvidenceDetails } = await import('../components/international/countries/CountryReview.tsx');
 const CountryReview: React.ComponentType<CountryReviewProps> = CountryReviewModule;
 const { default: SiteCountryPanel } = await import('../components/international/countries/SiteCountryPanel.tsx');
 const { default: InternationalReviewPage, metadata } = await import('../app/international/page.tsx');
@@ -127,6 +129,62 @@ beforeEach(() => { probe.calls = []; probe.saves = 0; probe.backRegistrations = 
 afterEach(() => { for (const renderer of mounted) act(() => renderer.unmount()); mounted.clear(); });
 after(() => {
   hooks.deregister(); for (const [name, descriptor] of original) { if (descriptor) Object.defineProperty(globalThis, name, descriptor); else Reflect.deleteProperty(globalThis, name); }
+});
+
+test('source review steps distinguish absent evidence, unusable dates, overdue review and dated reference without approving advice', () => {
+  const source: CountrySource = { ...structuredClone(COUNTRY_PROFILES[0].sources[0]),
+    publishedOn: '2026-10-01', accessedOn: '2026-11-01', reviewDueOn: '2026-12-01', verification: 'content-read' };
+  const cases: Array<[Partial<CountrySource>, RegExp, RegExp]> = [
+    [{}, /Dated reference evidence/, /Check the recorded coverage, units and licence/],
+    [{ verification: 'unavailable' }, /Full source evidence not recorded/, /Read the full official source/],
+    [{ verification: 'snippet-only' }, /Full source evidence not recorded/, /Read the full official source/],
+    [{ publishedOn: null, lastModifiedOn: '2026-11-01' }, /Evidence dates are missing or unusable/, /cannot replace an unknown publication date/],
+    [{ accessedOn: '2026-12-01' }, /Evidence dates are missing or unusable/, /Confirm the publication, access and review dates/],
+    [{ reviewDueOn: '2026-02-30' }, /Evidence dates are missing or unusable/, /Confirm the publication, access and review dates/],
+    [{ reviewDueOn: '2026-10-31' }, /Recorded review is overdue/, /previous review window has ended/],
+  ];
+  for (const [override, label, action] of cases) {
+    const input = { ...source, ...override }, before = JSON.stringify(input);
+    let renderer!: ReactTestRenderer;
+    act(() => { renderer = create(React.createElement(CountryEvidenceDetails, { source: input, asOf: '2026-11-10' })); });
+    mounted.add(renderer);
+    assert.match(text(renderer.root.findByType('summary')), label);
+    assert.match(text(renderer.root), action);
+    assert.match(text(renderer.root), /Review next:/);
+    const link = renderer.root.findByType('a');
+    assert.equal(link.props.href, source.url);
+    assert.equal(link.props.rel, 'noreferrer');
+    for (const retained of [source.verifiedClaim, source.limitations, source.coverage, source.attribution, source.missingDataBehavior]) {
+      assert.ok(text(renderer.root).includes(retained));
+    }
+    const due = renderer.root.findAllByType('dt').find(node => text(node) === 'Review due')!;
+    assert.ok(due);
+    assert.equal(JSON.stringify(input), before);
+    assert.doesNotMatch(text(renderer.root), /local farming advice approved|international planning enabled/i);
+    act(() => renderer.unmount()); mounted.delete(renderer);
+  }
+  assert.deepEqual(probe.calls, []); assert.equal(probe.saves, 0);
+});
+
+test('every pilot purpose shows its existing dated-evidence count while unsupported countries keep zero evidence and no local approval', () => {
+  const before = JSON.stringify(COUNTRY_PROFILES), asOf = new Date().toISOString().slice(0, 10);
+  for (const code of ['KE', 'GB', 'US', 'BR', 'ZA', 'OTHER']) {
+    const ui = mount(code), readiness = evaluateCountryReadiness({ countryCode: code }, asOf);
+    const evidence = ui.renderer.root.findAllByType('article');
+    assert.equal(evidence.length, readiness.evidence.length);
+    for (let i = 0; i < evidence.length; i++) {
+      const expected = readiness.evidence[i];
+      assert.ok(text(evidence[i]).includes(`Dated reference evidence: ${expected.availableCount} of ${expected.sources.length} recorded sources.`));
+      assert.match(text(evidence[i]), /This does not approve local farming advice/);
+      assert.equal(evidence[i].findAllByType('details').length, expected.sources.length);
+      if (!expected.sources.length) assert.match(text(evidence[i]), /No source dossier recorded/);
+    }
+    assert.equal(readiness.productionPlanSupported, false);
+    assert.match(ui.text(), /International production planning is unavailable/);
+    ui.dispose();
+  }
+  assert.equal(JSON.stringify(COUNTRY_PROFILES), before);
+  assert.deepEqual(probe.calls, []); assert.equal(probe.saves, 0);
 });
 
 test('Next14 page forwards only the country hint, supports a bare call and does not forward private query metadata or fetch', () => {

@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest country evidence continuation — [Review next steps and dated-evidence counts — 10 November 2026](2026-11-10/country-evidence-next-steps-codex.md). Affected source/React checks pass; changed-preview appearance remains unverified.
+
 Latest review warning continuation — [Mass-entry review warning contrast — 10 November 2026](2026-11-10/mass-review-warning-contrast-codex.md). A production dark-theme contrast failure is reproduced; changed-preview verification remains open.
 
 Latest private verification consolidation — [Preserved parent coverage and scoped Water validation — 7 November 2026](2026-11-07/international-performance-consolidation.md). Local source preparation; current successor checks and release gates remain separate.
