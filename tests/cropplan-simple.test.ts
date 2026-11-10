@@ -147,7 +147,10 @@ test('Simple hides every long section below the grid; All tools keeps them all',
 
 test('Simple hides the fraction percentage and the transplant chip on the crop bars', () => {
   const barBlock = CROPS.slice(CROPS.indexOf('function PlantingBar('), CROPS.indexOf('function CropPickerModal('));
-  assert.match(barBlock, /\{crop\.name\}\{!simple && fLabel \? ` \(\$\{fLabel\}\)` : ''\}/);
+  // The label is built once (barLabel) because a one-month bar draws it beside the bar rather than
+  // inside it; the Simple gate has to sit on that single definition and both places must use it.
+  assert.match(barBlock, /const barLabel = `\$\{crop\.name\}\$\{!simple && fLabel \? ` \(\$\{fLabel\}\)` : ''\}`;/);
+  assert.ok((barBlock.match(/\{barLabel\}/g) ?? []).length >= 2, 'barLabel must be drawn both inside long bars and beside one-month bars');
   // The exact condition tests/crop-plan-page-ux.test.ts pins must survive untouched, just gated.
   assert.match(barBlock, /\{!simple && crop\.transplant && \(!planting\.existing \|\| planting\.inNursery\) && instances\.map/);
 });

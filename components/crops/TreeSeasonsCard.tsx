@@ -6,6 +6,12 @@ import { formatMonthSpan, isHouseholdFoodHarvest, type PlacedTreeGroup, type Tre
 import TreeAgeEditor from './TreeAgeEditor';
 
 /** Source windows remain references until the farmer confirms the plants and local months. */
+/** A zero count read as news on every plant ("0 existing, 1 proposed"); both counts stay in the data. */
+const countsLabel = (g: { existing: number; proposed: number }) => {
+  const parts = [g.existing > 0 ? `${g.existing} existing` : '', g.proposed > 0 ? `${g.proposed} proposed` : ''].filter(Boolean);
+  return parts.length ? parts.join(', ') : '0 existing';
+};
+
 export default function TreeSeasonsCard({ groups, unidentified, choices, onChoose }: {
   groups: PlacedTreeGroup[];
   unidentified: UnidentifiedPlantGroup[];
@@ -17,14 +23,14 @@ export default function TreeSeasonsCard({ groups, unidentified, choices, onChoos
     <div className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: 'var(--text-primary)' }}><Trees size={16} aria-hidden /> Fruit, nuts &amp; berries on your map</div>
     <p className="font-sans mt-1 mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>Picking months vary by place and variety. Outlined calendar marks are planning references when established. Confirm months for plants that already give food here to count them in food totals. Plants stay on the printed plan while dates are unknown.</p>
     <p className="font-sans mb-3" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>These confirmations are kept on this device for this design.</p>
-    {unidentified.map((g) => <p key={g.speciesId ?? g.defId} className="font-sans mb-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{g.label} · {g.existing} existing{g.proposed ? `, ${g.proposed} proposed` : ''} on your map. {g.legalCheck ?? 'Choose the species in the Design Studio; picking dates are not yet known.'}</p>)}
+    {unidentified.map((g) => <p key={g.speciesId ?? g.defId} className="font-sans mb-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{g.label} · {countsLabel(g)} on your map. {g.legalCheck ?? 'Choose the species in the Design Studio; picking dates are not yet known.'}</p>)}
     <div className="flex flex-col gap-3">
       {groups.map((g) => {
         const choice = choices[g.harvest.speciesId] ?? { months: [], bearing: false };
         const update = (next: typeof choice) => onChoose(g.harvest.speciesId, next);
         const foodHeld = !isHouseholdFoodHarvest(g.harvest);
         return <details key={g.harvest.speciesId} style={{ borderTop: '1px solid var(--border)', paddingTop: 10 }}>
-          <summary className="font-sans font-semibold" style={{ cursor: 'pointer', fontSize: 13, color: 'var(--text-primary)' }}>{g.harvest.name} · {g.existing} existing{g.proposed ? `, ${g.proposed} proposed` : ''} · {foodHeld ? 'food use needs review' : choice.bearing && choice.months.length ? formatMonthSpan(choice.months) : 'confirm picking months'}</summary>
+          <summary className="font-sans font-semibold" style={{ cursor: 'pointer', fontSize: 13, color: 'var(--text-primary)' }}>{g.harvest.name} · {countsLabel(g)} · {foodHeld ? 'food use needs review' : choice.bearing && choice.months.length ? formatMonthSpan(choice.months) : 'confirm picking months'}</summary>
           {foodHeld ? <p className="font-sans mt-3" style={{ fontSize: 13, lineHeight: 1.5, color: 'var(--text-secondary)' }}>Kept as mapped inventory. Check the sourced food-use guidance below before planning household harvest. This plant is held out of ordinary food totals and picking jobs.</p> : <>
           <label className="font-sans flex items-start gap-2 mt-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
             <input type="checkbox" checked={choice.bearing} disabled={g.existing === 0} onChange={(event) => update({ ...choice, bearing: event.target.checked })} /> All existing plants of this kind already give food here.

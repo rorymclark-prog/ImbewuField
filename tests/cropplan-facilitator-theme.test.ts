@@ -32,7 +32,15 @@ const RETIRED_HARDCODED_CHROME = [
 ];
 
 test('the retired hard-coded chrome hex values do not reappear on the crop planner', () => {
-  const found = RETIRED_HARDCODED_CHROME.filter((hex) => CROPS.includes(hex));
+  // One declaration is exempt: BAR_LABEL_INK is the label on the planting bars, which sit on FIXED
+  // fills (the same hex in light and dark). A themed token there flips to light ink in dark and
+  // takes the label back under 4.5:1 (docs/audits/2026-11-10 CP-050), so it is Ink on purpose.
+  // tests/component-text-contrast.test.ts measures it against every fill. Any second use is
+  // still caught: only the exact declaration line is removed before the scan.
+  const INK_DECLARATION = "const BAR_LABEL_INK = '#20190F';";
+  assert.equal(CROPS.split(INK_DECLARATION).length - 1, 1, 'the bar label ink must stay a single named constant');
+  const scanned = CROPS.replace(INK_DECLARATION, '');
+  const found = RETIRED_HARDCODED_CHROME.filter((hex) => scanned.includes(hex));
   assert.deepEqual(
     found, [],
     `${found.length} retired hard-coded colour(s) are back in app/facilitator/crops/page.tsx: `

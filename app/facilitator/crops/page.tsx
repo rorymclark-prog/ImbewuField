@@ -159,6 +159,13 @@ const DISPLAY_MONTHS = 24;
 const LOOK_AHEAD_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
 const BED_LABEL_WIDTH = 128;
+/**
+ * Notes in the fruit and animal rows sit in the 1,520px grid. A bare maxWidth of
+ * 560–640 is wider than a phone's visible strip, so the sentence ran off the right
+ * edge mid-way ("…picking months to confirm"). Capped to what is left of the
+ * viewport after the bed-label column, as the reference note above the trees does.
+ */
+const stickyNoteMaxWidth = (max: number) => `min(${max}px, calc(100cqw - ${BED_LABEL_WIDTH + 12}px))`;
 const MONTH_COLUMNS: CSSProperties = { display: 'grid', gridTemplateColumns: `repeat(${DISPLAY_MONTHS}, minmax(0, 1fr))` };
 
 // One emoji per kind of work, so a farmer scanning the month sees the SHAPE of
@@ -441,7 +448,7 @@ const VISIBLE_BUYING_MONTHS = 3;
 function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNow: boolean }) {
   return (
     <div>
-      <div className="font-display font-semibold mb-1" style={{ fontSize: 13, color: isNow ? '#1F4D2B' : 'var(--text-primary)' }}>
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 13, color: isNow ? 'var(--color-forest-800)' : 'var(--text-primary)' }}>
         {monthLabel(monthGroup.month)}{isNow ? ' · this month' : ''}
       </div>
       <div className="space-y-2">
@@ -564,6 +571,28 @@ function barGradient(seg: Segment, sowMonth: number, totalMonths: number, from: 
  * doesn't work out in practice.
  */
 const BAR_STYLE: 'gradient' | 'solid' = 'solid';
+
+/**
+ * Earth light declares --bg-2 as rgba(236,227,201,0.35) on purpose, so the pinned
+ * month header let bed names and "+ crop" buttons show through it while the grower
+ * scrolled. The same tint over the card's own opaque --bg-1 looks the same when
+ * nothing is behind it. Dark and slate declare an opaque --bg-2, which this
+ * leaves unchanged. Scoped here: --bg-2 itself is used app-wide and stays as is.
+ */
+const PINNED_HEADER_SURFACE = 'linear-gradient(var(--bg-2), var(--bg-2)), var(--bg-1)';
+
+/**
+ * The planting-bar fills are fixed hexes in every theme, so the label on them
+ * cannot follow the theme either: white on them measured 2.57:1 (planned),
+ * 3.71:1 (already growing) and 2.87:1 over the gold cap, and the dark theme's
+ * light --text-primary would be no better. The palette's Ink reads 6.78 / 4.68 /
+ * 7.32 / 6.05:1 on the four fills (tests/component-text-contrast.test.ts pins
+ * every pair), so change a fill and that test says whether the label survives.
+ */
+const BAR_LABEL_INK = '#20190F';
+/** [growing colour, harvest-cap colour]; already-growing stays olive so it still differs from planned. */
+const BAR_FILL_PLANNED: [string, string] = ['#7FAE6E', '#D4A017'];
+const BAR_FILL_EXISTING: [string, string] = ['#8C8654', '#B8934A'];
 
 const VIRTUAL_BED: PlanBed = { id: 'virtual-bed-1', label: 'Bed 1', areaM2: 10 };
 
@@ -2760,7 +2789,7 @@ function FacilitatorCropsPageInner() {
                 <button
                   onClick={() => setConfirmingClear(true)}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
-                  style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
+                  style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid rgba(179,58,58,0.3)', color: 'var(--orange)', cursor: 'pointer' }}
                   title="Clear catalogue plantings shown here; own dated records remain saved"
                 >
                   <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'zu' ? <span style={{ lineHeight: 1.1 }}>Sula konke<br/><small lang="en">Clear all</small></span> : 'Clear all'}
@@ -2846,7 +2875,7 @@ function FacilitatorCropsPageInner() {
                   // Warm paper, not the card's own var(--bg-1): frozen chrome has to
                   // read as chrome. With both the same colour there was nothing
                   // to tell a farmer this row was pinned rather than scrolled to.
-                  background: 'var(--bg-2)',
+                  background: PINNED_HEADER_SURFACE,
                   // Content passes underneath, so say so.
                   boxShadow: '0 6px 12px -6px rgba(32,25,15,0.28)',
                   borderTopLeftRadius: 16,
@@ -2855,7 +2884,7 @@ function FacilitatorCropsPageInner() {
               >
                 {/* Same paper as the row around it — otherwise the frozen bar
                     is two-tone and the corner cell reads as a separate card. */}
-                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: 'var(--bg-2)', borderRight: '1px solid var(--border-strong)', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
+                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: PINNED_HEADER_SURFACE, borderRight: '1px solid var(--border-strong)', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
                   <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{cropUi(lang, 'Bed', 'Umbhede')}</span>
                 </div>
                 <div
@@ -2895,8 +2924,11 @@ function FacilitatorCropsPageInner() {
                         style={{
                           minWidth: 0, padding: '8px 2px', fontSize: 'clamp(12px, 0.85vw, 13px)',
                           fontWeight: i === 0 ? 700 : 500,
-                          color: i === 0 ? '#1F4D2B' : i >= 12 ? 'var(--text-muted)' : 'var(--text-muted)',
-                          background: i === 0 ? 'rgba(31,77,43,0.08)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
+                          // Forest hardcoded here read 1.72:1 on the dark header; the token flips to leaf.
+                          color: i === 0 ? 'var(--color-forest-800)' : 'var(--text-muted)',
+                          // 0.04, not 0.07 on year two: the heavier tint lifted the dark
+                          // header under --text-muted to 4.43:1; this one is 4.66:1.
+                          background: i === 0 ? 'rgba(31,77,43,0.08)' : i >= 12 ? 'rgba(196,164,106,0.04)' : 'transparent',
                           // A month label repeats every 12 columns (no year field
                           // anywhere in this data model) — a visible seam at the
                           // 1-year mark stops "Jul" (this year) and "Jul" (next
@@ -2919,7 +2951,9 @@ function FacilitatorCropsPageInner() {
                 ref={bedRowsScrollRef}
                 onScroll={(e) => syncMonthScroll(e.currentTarget)}
                 data-crop-bed-scroll
-                style={{ overflowX: 'auto' }}
+                // containerType so the notes below can size to this box: 100vw ignores the
+                // text-size slider's html zoom and ran the notes off the edge at 1.4.
+                style={{ overflowX: 'auto', containerType: 'inline-size' }}
               >
                 <div style={{ minWidth: GRID_MIN_WIDTH }}>
                   {/* Four fixed sections, each with its place whether or not anything is in
@@ -3049,7 +3083,7 @@ function FacilitatorCropsPageInner() {
             <div className="font-sans mb-5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5, marginTop: -12, maxWidth: 820 }}>
               <span
                 className="font-sans"
-                style={{ fontWeight: 600, color: 'var(--gold)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
+                style={{ fontWeight: 600, color: 'var(--gold-dim)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
               >
                 <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
               </span>{' '}
@@ -3179,8 +3213,10 @@ function FacilitatorCropsPageInner() {
                         className="font-sans"
                         style={{
                           fontSize: 11, padding: '3px 9px', cursor: 'pointer',
-                          background: harvestBoxView === v ? '#1F4D2B' : 'transparent',
-                          color: harvestBoxView === v ? 'var(--bg-1)' : 'var(--text-secondary)',
+                          // Forest and its on-colour move together: --bg-1 on the old
+                          // hardcoded forest was 1.91:1 in dark.
+                          background: harvestBoxView === v ? 'var(--color-forest-800)' : 'transparent',
+                          color: harvestBoxView === v ? 'var(--on-forest-800)' : 'var(--text-secondary)',
                         }}
                       >
                         {v === 'crop' ? cropUi(lang, 'By crop', 'Ngesilimo') : cropUi(lang, 'By bed', 'Ngombhede')}
@@ -3968,7 +4004,7 @@ function MonthLineChart({
         <div style={MONTH_COLUMNS} data-crop-chart-labels>
           {monthOrder.map((m, i) => (
             <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }} title={monthAxisTitle(axis?.[i], m)}>
-              <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 4 }}>
+              <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? 'var(--color-forest-800)' : 'var(--text-muted)', marginTop: 4 }}>
                 {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
               </div>
               <MonthAxisTag slot={axis?.[i]} fontSize={9} />
@@ -4249,7 +4285,7 @@ function FoodAvailabilityChart({
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <div className="inline-flex rounded-full p-0.5" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
             {([['established', 'An established year'], ['fromToday', 'From today']] as ['established' | 'fromToday', string][]).map(([nextYearMode, label]) => (
-              <button key={nextYearMode} onClick={() => onYearModeChange(nextYearMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: yearMode === nextYearMode ? 'var(--text-secondary)' : 'transparent', color: yearMode === nextYearMode ? '#F7F2E9' : 'var(--text-secondary)' }}>
+              <button key={nextYearMode} onClick={() => onYearModeChange(nextYearMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: yearMode === nextYearMode ? 'var(--text-secondary)' : 'transparent', color: yearMode === nextYearMode ? 'var(--bg-1)' : 'var(--text-secondary)' }}>
                 {label}
               </button>
             ))}
@@ -4350,7 +4386,7 @@ function FoodAvailabilityChart({
                           {/* Month on top, count under the bar. Rory, 2026-10-01: "change the
                               number of products with the month just switch them". The month
                               heads the column the way it heads the calendar's. */}
-                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)' }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
+                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? 'var(--color-forest-800)' : 'var(--text-muted)' }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
                           <MonthAxisTag slot={axis[i]} />
                           <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
                             {total === 0 ? <div style={{ width: '68%', height: 3, background: 'var(--border)', borderRadius: 2 }} /> : (
@@ -4866,11 +4902,11 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
           {title}
         </div>
         <div className="font-sans" style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 3, lineHeight: 1.3 }}>
-          From your map · hover or tap a bar
+          From your map · tap or click a bar
         </div>
       </div>
       <div style={{ flex: '1 1 auto', minWidth: 0, position: 'relative' }}>
-        {kind === 'trees' && lanes.some(lane => lane.planning) && <p className="font-sans" style={{ padding: '8px 12px 2px', fontSize: 11, color: 'var(--text-secondary)', position: 'sticky', left: BED_LABEL_WIDTH, width: `min(560px, calc(100vw - ${BED_LABEL_WIDTH + 40}px))` }}>Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.</p>}
+        {kind === 'trees' && lanes.some(lane => lane.planning) && <p className="font-sans" style={{ padding: '8px 12px 2px', fontSize: 11, color: 'var(--text-secondary)', position: 'sticky', left: BED_LABEL_WIDTH, width: stickyNoteMaxWidth(560) }}>Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.</p>}
         {lanes.length > 0 ? (
           <div style={{ position: 'relative', padding: '6px 0' }}>
             <div style={{ ...MONTH_COLUMNS, position: 'absolute', inset: 0, pointerEvents: 'none' }}>
@@ -4937,13 +4973,13 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
             ))}
           </div>
         ) : unmarked.length ? null : (
-          <div className="font-sans" style={{ padding: '12px 12px', fontSize: 12.5, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
+          <div className="font-sans" style={{ padding: '12px 12px', fontSize: 12.5, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: stickyNoteMaxWidth(560) }}>
             {emptyText}
           </div>
         )}
         {unmarked.map((line) => <UnmarkedProduceLine key={line.enterpriseId} line={line} />)}
         {footnote && (
-          <div className="font-sans" style={{ padding: '0 12px 6px', fontSize: 11, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
+          <div className="font-sans" style={{ padding: '0 12px 6px', fontSize: 11, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: stickyNoteMaxWidth(560) }}>
             {footnote}
           </div>
         )}
@@ -5005,7 +5041,7 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
     <div
       className="font-sans"
       data-crop-calendar-unmarked={line.enterpriseId}
-      style={{ position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 640, padding: '8px 12px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 10px', borderTop: '1px dashed var(--border)' }}
+      style={{ position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: stickyNoteMaxWidth(640), padding: '8px 12px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 10px', borderTop: '1px dashed var(--border)' }}
     >
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: line.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
         <TrayArt src={enterpriseProductArtUrl(line.enterpriseId) ?? animalProductArtUrl(line.product)} label={PRODUCT_LABEL[line.product]} Fallback={Icon} color="var(--gold-dim)" />
@@ -5217,7 +5253,7 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
   // separates "already there" from "still to sow" at a glance. Each bar also
   // fades from "just sown" to a golden "ready to harvest" tone across its
   // length, so you can see how far along a planting is at a glance.
-  const [barFrom, barTo] = planting.existing ? ['#8C8654', '#B8934A'] : ['#7FAE6E', '#D4A017'];
+  const [barFrom, barTo] = planting.existing ? BAR_FILL_EXISTING : BAR_FILL_PLANNED;
   const segMonthCount = (seg: Segment) => seg.end - seg.start + 1;
   // How many of a copy's months are its "ready to pick" window. Anchored to
   // where harvest actually STARTS (that copy's OWN unclipped start + green
@@ -5247,55 +5283,122 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
     ? 'termination timing not verified'
     : crop.yieldKgPerM2 === 0 ? `cut or roll down ${harvestLabel}` : `harvest ${harvestLabel}`;
 
+  const hasTransplantChip = !simple && !!crop.transplant && (!planting.existing || !!planting.inNursery);
+  const barLabel = `${crop.name}${!simple && fLabel ? ` (${fLabel})` : ''}`;
+
   return (
-    <div style={{ position: 'relative', height: 30, marginBottom: 3 }}>
-      {instances.map((seg, i) => (
-        <button
-          key={i}
-          onClick={onTap}
-          className="font-sans"
-          style={{
-            position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
-            background: BAR_STYLE === 'gradient' ? barGradient(seg, seg.start, segMonthCount(seg), barFrom, barTo) : barFrom,
-            color: '#fff', border: 'none', borderRadius: 6,
-            fontSize: 11, fontWeight: 600, textAlign: 'left', paddingLeft: 6, paddingRight: 4,
-            overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', cursor: 'pointer',
-            // The repeat is drawn quieter than the year you are about to
-            // plant. It is the same plan coming round again, not a second,
-            // separately-decided year — and with Rotate crops on it is
-            // explicitly NOT what next season will look like. Full-strength
-            // colour on both would claim a certainty this plan doesn't have.
-            opacity: isYearTwo(seg) ? 0.5 : 1,
-          }}
-          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.inNursery ? ' · trays sown, not yet planted out' : planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
-        >
-          {BAR_STYLE === 'solid' && (
-            // The "ready to harvest" marker — a hard colour + a line, not a
-            // blend: a solid gold cap over the crop's WHOLE fresh-harvest
-            // window (one month for a one-shot harvest, several for a
-            // cut-and-come-again crop), with a crisp divider where it meets
-            // the growing colour. Can legitimately reach 100% width (viewing
-            // a crop from partway through its own harvest window, once the
-            // growing part has scrolled off the left edge) — MUST render
-            // behind the name label below, or a wide "ready" cap blots the
-            // name out entirely.
-            <div
+    // Type set once here: the bar buttons and the name drawn beside a one-month bar inherit it.
+    <div style={{ position: 'relative', height: 30, marginBottom: 3, fontSize: 11, fontWeight: 600 }}>
+      {instances.map((seg, i) => {
+        const yearTwo = isYearTwo(seg);
+        // A one-month bar is ~58px wide: the icon and padding leave room for
+        // about "Oni…", so Onions, Lettuce, Green beans and Maize (mielies)
+        // all lost their name. The bar keeps the icon and the name is drawn
+        // beside it; each planting has its own 30px lane, so the space is free.
+        const nameBeside = segMonthCount(seg) === 1;
+        // Three columns, not two: the longest label ("Maize (mielies) (83%)",
+        // about 130px) is wider than the two columns that remain to the right of
+        // the 22nd and would run past the grid and add scroll width.
+        const nameOnLeft = seg.start >= DISPLAY_MONTHS - 3;
+        const barFill = BAR_STYLE === 'gradient' ? barGradient(seg, seg.start, segMonthCount(seg), barFrom, barTo) : barFrom;
+        const capShare = readyMonthsFor(seg) / segMonthCount(seg);
+        // The "ready to harvest" marker — a hard colour + a line, not a blend: a
+        // solid gold cap over the crop's WHOLE fresh-harvest window (one month for
+        // a one-shot harvest, several for a cut-and-come-again crop), with a crisp
+        // divider where it meets the growing colour. Can legitimately reach 100%
+        // width (viewing a crop from partway through its own harvest window, once
+        // the growing part has scrolled off the left edge), so it is drawn BEHIND
+        // the name or a wide cap blots the name out. Its own corner radius stands
+        // in for the clip the button no longer has.
+        const harvestCap = BAR_STYLE === 'solid' ? (
+          <span
+            aria-hidden="true"
+            style={{
+              position: 'absolute', top: 0, bottom: 0, right: 0, width: `${100 * capShare}%`,
+              background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
+              borderRadius: capShare >= 1 ? 6 : '0 6px 6px 0',
+            }}
+          />
+        ) : null;
+        return (
+          <Fragment key={i}>
+            <button
+              onClick={onTap}
+              className="font-sans"
+              // The visible name sits outside a one-month button, so give the
+              // button its own: an icon-only button would otherwise be unnamed.
+              aria-label={nameBeside ? barLabel : undefined}
               style={{
-                position: 'absolute', top: 0, bottom: 0, right: 0, width: `${(100 * readyMonthsFor(seg)) / segMonthCount(seg)}%`,
-                background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
+                position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
+                // Year one paints its fill on the button itself, so the label has
+                // the fill as its ancestor. Year two leaves the button clear and
+                // fades the fill in a layer below, so the name keeps full strength
+                // (white at 50% was 1.61:1).
+                background: yearTwo ? 'transparent' : barFill,
+                color: yearTwo ? 'var(--text-primary)' : BAR_LABEL_INK, border: 'none', borderRadius: 6,
+                fontSize: 'inherit', fontWeight: 'inherit', textAlign: 'left', padding: nameBeside ? 0 : '0 4px 0 6px',
+                display: 'flex', alignItems: 'center', justifyContent: nameBeside ? 'center' : undefined,
+                whiteSpace: 'nowrap', cursor: 'pointer',
               }}
-            />
-          )}
-          {/* Every copy carries the crop name. A repeat with no label is the
-              thing that made the far columns unreadable in the first place —
-              a farmer panning right must be able to see WHAT is in the bed
-              there without panning back a year to find out. */}
-          <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 4, height: '100%', minWidth: 0, lineHeight: 1 }}>
-            <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
-            <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{crop.name}{!simple && fLabel ? ` (${fLabel})` : ''}</span>
-          </span>
-        </button>
-      ))}
+              title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.inNursery ? ' · trays sown, not yet planted out' : planting.existing ? ' · already growing' : ''}${yearTwo ? ' · year two, the same cycle coming round again' : ''}`}
+            >
+              {yearTwo ? (
+                // Year two is drawn quieter than the year you are about to plant.
+                // It is the same plan coming round again, not a second, separately-
+                // decided year — and with Rotate crops on it is explicitly NOT what
+                // next season will look like. Full-strength colour on both would
+                // claim a certainty this plan doesn't have. Only these layers fade.
+                // The layer clips itself because an overflow-hidden button would
+                // become the sticky container and the name could not follow the pan.
+                <span aria-hidden="true" style={{ position: 'absolute', inset: 0, borderRadius: 6, overflow: 'hidden', opacity: 0.5, background: barFill }}>
+                  {harvestCap}
+                </span>
+              ) : harvestCap}
+              {/* Every copy carries the crop name. A repeat with no label is the
+                  thing that made the far columns unreadable in the first place —
+                  a farmer panning right must be able to see WHAT is in the bed
+                  there without panning back a year to find out. The name sticks
+                  just right of the bed labels, as the fruit rows do, so a bar
+                  that starts off-screen to the left still says what it is. */}
+              {nameBeside ? (
+                <span style={{ position: 'relative', zIndex: 1, display: 'inline-flex' }}>
+                  <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
+                </span>
+              ) : (
+                <span style={{ position: 'sticky', left: BED_LABEL_WIDTH + 4, zIndex: 1, display: 'inline-flex', alignItems: 'center', gap: 4, maxWidth: '100%', minWidth: 0, overflow: 'hidden', lineHeight: 1 }}>
+                  <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
+                  <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{barLabel}</span>
+                </span>
+              )}
+            </button>
+            {nameBeside && (
+              // Not focusable and hidden from assistive tech: the button above
+              // already carries this text as its name, so a second reading or a
+              // second tab stop would only repeat it.
+              <span
+                aria-hidden="true"
+                className="font-sans"
+                style={{
+                  position: 'absolute', top: 2, bottom: 2,
+                  ...(nameOnLeft
+                    ? { right: `calc(${100 - leftPct(seg.start)}% + 4px)` }
+                    : { left: `calc(${leftPct(seg.start) + widthPct(seg)}% + 4px)` }),
+                  display: 'flex',
+                  // The "check / transplant" chip hangs over the top edge of the
+                  // lane and, for a bar near the right edge, sits where the
+                  // name goes; dropping the name to the lower half keeps them apart.
+                  alignItems: hasTransplantChip ? 'flex-end' : 'center',
+                  paddingBottom: hasTransplantChip ? 2 : 0,
+                  lineHeight: 1, whiteSpace: 'nowrap',
+                  color: 'var(--text-primary)', pointerEvents: 'none',
+                }}
+              >
+                {barLabel}
+              </span>
+            )}
+          </Fragment>
+        );
+      })}
       {/* The transplant marker. It used to read "(tr)", which the app's own
           owner looked at and asked what it stood for — an abbreviation nobody
           can decode is not a label, it's a puzzle. It now says the word, wears
@@ -5317,15 +5420,23 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
             className="font-sans"
             style={{
               position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -3, transform: 'translateX(-50%)',
-              fontSize: 9, fontWeight: 700, color: 'var(--gold)', background: 'var(--bg-1)',
-              border: '1px solid rgba(154,96,24,0.35)', padding: '0 3px', borderRadius: 4,
+              // --gold-dim, not --gold: 9px text on the card is 3.85:1 in --gold
+              // and 5.78:1 here. The year-two fade below touches the fill and
+              // border only; fading the whole chip took the label to 2.09:1.
+              fontSize: 9, fontWeight: 700, color: 'var(--gold-dim)', background: 'transparent',
+              border: '1px solid transparent', padding: '0 3px', borderRadius: 4,
               whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
-              opacity: isYearTwo(seg) ? 0.5 : 1,
             }}
             title={`Plan to transplant ${crop.name.toLowerCase()} in ${monthLabel(entry)}. Start checking seedlings in ${monthLabel(readinessStart)}; if they are still not ready by ${monthLabel(latestEntry)}, update the plan instead of treating the bed as occupied.`}
             aria-label={`Plan to transplant ${crop.name} in ${monthLabel(entry)}`}
           >
-            <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
+            <span
+              aria-hidden="true"
+              style={{ position: 'absolute', inset: -1, background: 'var(--bg-1)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, opacity: isYearTwo(seg) ? 0.5 : 1 }}
+            />
+            <span style={{ position: 'relative' }}>
+              <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
+            </span>
           </button>
         );
       })}
@@ -5444,7 +5555,7 @@ function CropPickerModal({
                     <button
                       onClick={() => onToggleFavourite(c.key)}
                       aria-label={isFav ? cropUi(lang, 'Remove from favourites', 'Susa ezintandokazini') : cropUi(lang, 'Add to favourites', 'Engeza ezintandokazini')}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, fontSize: 16, color: isFav ? '#C07A1E' : '#D8CFBC' }}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, fontSize: 16, color: isFav ? 'var(--gold)' : '#D8CFBC' }}
                     >
                       <Star size={16} aria-hidden fill={isFav ? 'currentColor' : 'none'} />
                     </button>
@@ -5465,7 +5576,7 @@ function CropPickerModal({
               <button
                 onClick={() => onToggleFavourite(crop.key)}
                 aria-label={favouriteCropKeys.has(crop.key) ? 'Remove from favourites' : 'Add to favourites'}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: favouriteCropKeys.has(crop.key) ? '#C07A1E' : '#D8CFBC' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: favouriteCropKeys.has(crop.key) ? 'var(--gold)' : '#D8CFBC' }}
               >
                 <Star size={18} aria-hidden fill={favouriteCropKeys.has(crop.key) ? 'currentColor' : 'none'} />
               </button>
