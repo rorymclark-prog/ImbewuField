@@ -76,3 +76,25 @@ export function monthlyTemperatureStatus(climate: unknown): MonthlyTemperatureSt
 
   return 'unknown';
 }
+
+/**
+ * The lowest hourly 2 m air temperature in the site's NASA POWER record, °C, or null.
+ *
+ * `climate.minTemp` is the minimum of POWER's twelve climatology T2M_MIN values, and
+ * POWER defines T2M_MIN as "the minimum hourly air (dry bulb) temperature at 2 meters
+ * above the surface of the earth in the period of interest" — a record low for the
+ * grid cell, not an average night. Checked on 10 November 2026 against 20 years of
+ * ERA5 daily minima at 44 South African places: the two agree to a median 0.1 °C and
+ * within 2 °C at 31 of the 44 (docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md).
+ *
+ * /api/location-data returns a generic figure during a NASA outage, and only a real
+ * reading carries the provenance tag. An untagged number must never certify a site
+ * as frost-free, so it reads as "not known".
+ */
+export function recordMinimumC(climate: unknown): number | null {
+  if (typeof climate !== 'object' || climate === null || Array.isArray(climate)) return null;
+  const { minTemp, minTempSource } = climate as { minTemp?: unknown; minTempSource?: unknown };
+  return minTempSource === 'nasa-power' && typeof minTemp === 'number' && Number.isFinite(minTemp)
+    ? minTemp
+    : null;
+}

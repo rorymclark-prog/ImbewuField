@@ -73,8 +73,10 @@ export function buildCompleteProductionExample(): CompleteProductionExample {
   const now = new Date(2026, 10, 1);
   const months = Array.from({ length: 12 }, (_, i) => (now.getMonth() + i) % 12 + 1);
   const dates = months.map((month, i) => ({ year: now.getFullYear() + Math.floor((now.getMonth() + i) / 12), month }));
-  // This is an explicitly assumed warm coastal scenario, not fetched climate normals or an
-  // identification of a real private site. Sow timing keeps the catalogue's own coastal column.
+  // This is an explicitly assumed hot, frost-free coastal scenario, not fetched climate normals
+  // or an identification of a real private site. Sow timing keeps the catalogue's own hot-area
+  // column ('all-year'), where most vegetables are sown from February and midsummer is closed —
+  // which is why a plan starting in November picks its first vegetables in April.
   const zones: GrowingZoneId[] = ['subtropical-coast'];
   const rainPattern: RainPattern = 'all-year';
   const conditions: SiteProductionConditions = {
@@ -132,10 +134,14 @@ export function buildCompleteProductionExample(): CompleteProductionExample {
 
   // These are labelled stock observations for a made-up example. Neither the processing
   // method nor the interval is a preservation instruction or an automatically derived expiry.
+  // Each crop's first stock month is its first picking month in THIS plan, so a record can
+  // never show preserved food before the crop is picked. Green beans and cabbage moved on
+  // 2026-11-10, when the hot-area sowing column was corrected to its source rows: beans are
+  // now sown in February (not November) and picked from April; cabbage is picked in September.
   const preservedProducts: PreservedFoodRecord[] = [
-    { id: 'example-frozen-green-beans', label: 'Frozen green beans', sourceIconKey: 'crop:green-beans', method: 'frozen', dates: [1, 2, 3].map(month => ({ year: 2027, month })), provenance: 'fictional-example', note: 'Invented stock months from January to March 2027, not a safe shelf life. Freezer conditions, a safe processing method and the amount held are not supplied.' },
+    { id: 'example-frozen-green-beans', label: 'Frozen green beans', sourceIconKey: 'crop:green-beans', method: 'frozen', dates: [4, 5, 6].map(month => ({ year: 2027, month })), provenance: 'fictional-example', note: 'Invented stock months from April to June 2027, not a safe shelf life. Freezer conditions, a safe processing method and the amount held are not supplied.' },
     { id: 'example-dried-banana', label: 'Dried banana', sourceIconKey: `tree:${BANANA_ID}`, method: 'dried', dates: [6, 7, 8].map(month => ({ year: 2027, month })), provenance: 'fictional-example', note: 'Invented stock months from June to August 2027, not a safe shelf life. The example banana picking record is also invented; a safe drying method and the amount held are not supplied.' },
-    { id: 'example-fermented-cabbage', label: 'Fermented cabbage', sourceIconKey: 'crop:cabbage', method: 'fermented', dates: [8, 9, 10].map(month => ({ year: 2027, month })), provenance: 'fictional-example', note: 'Invented stock months from August to October 2027, not a safe shelf life. Fermentation controls, a tested processing recipe and the amount held are not supplied.' },
+    { id: 'example-fermented-cabbage', label: 'Fermented cabbage', sourceIconKey: 'crop:cabbage', method: 'fermented', dates: [9, 10].map(month => ({ year: 2027, month })), provenance: 'fictional-example', note: 'Invented stock months from September to October 2027, not a safe shelf life. Fermentation controls, a tested processing recipe and the amount held are not supplied.' },
     { id: 'example-processed-tomatoes', label: 'Processed tomatoes', sourceIconKey: 'crop:tomatoes', method: 'processed', dates: [5, 6, 7, 8].map(month => ({ year: 2027, month })), provenance: 'fictional-example', note: 'Invented stock months from May to August 2027, not a safe shelf life. The processing method, a tested preservation recipe and the amount held are not supplied.' },
     { id: 'example-dried-mango', label: 'Dried mango', sourceIconKey: 'tree:mangifera-indica', method: 'dried', dates: [3, 4, 5].map(month => ({ year: 2027, month })), provenance: 'fictional-example', note: 'Invented stock months from March to May 2027, not a safe shelf life. Made-up bought or carried stock; no harvest from this example mango tree is claimed. A safe drying method and the amount held are not supplied.' },
     { id: 'example-stored-macadamia', label: 'Stored macadamia nuts', sourceIconKey: 'tree:macadamia-integrifolia', method: 'stored', dates: [8, 9, 10].map(month => ({ year: 2027, month })), provenance: 'fictional-example', note: 'Invented stock months from August to October 2027, not a safe shelf life. Made-up bought or carried nuts in shell; no harvest from these example trees is claimed. Storage conditions, kernel weight and the amount held are not supplied.' },

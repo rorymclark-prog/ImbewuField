@@ -124,9 +124,14 @@ test('auto-suggest derives climate from the mapped site instead of asking the fa
   // branches are automatic; neither asks the farmer to classify their climate.
   assert.match(
     CROP_PLAN_SCREEN,
-    /const pattern:\s*RainPattern\s*=\s*siteClimate\?\.pattern\s*\?\?\s*mapPattern/,
+    /const pattern:\s*RainPattern\s*=\s*siteCalendar\?\.pattern\s*\?\?\s*mapPattern/,
     'the mapped climate must be the planning authority — per-site reading first, nearest reference as fallback',
   );
+  // 2026-11-10 accuracy audit (CP-073/CP-074/CP-078): the site's reading now passes through
+  // calendarForGrower so the grower's own frost answer can move a close call, and the
+  // reference fallback is a frost regime (referenceSowingCalendar), not the region's rain timing.
+  assert.match(CROP_PLAN_SCREEN, /siteClimate\s*\?\s*calendarForGrower\(siteClimate,/, 'the site reading must go through the grower-frost rule');
+  assert.match(CROP_PLAN_SCREEN, /mapPattern:\s*RainPattern\s*=\s*referenceSowingCalendar\(region\)/, 'the reference fallback must be a frost regime');
   assert.match(
     CROP_PLAN_SCREEN,
     /rainPattern:\s*pattern/,

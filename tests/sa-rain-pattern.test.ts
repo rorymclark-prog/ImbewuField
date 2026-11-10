@@ -21,8 +21,16 @@ import { classifyKoppen, rainPatternFor, type MonthlyClimate } from '@/lib/koppe
 // WHAT IS ASSERTED. The four-way pattern for every site, and the Köppen group/code only
 // where the class is unambiguous at these figures (knife-edge cases — Polokwane's BSh/Cwb
 // border, Durban's Cfa/Cwa letter, which depends on exactly how dry the driest winter
-// month is — assert the pattern alone, with the ambiguity named). The pattern thresholds
-// (65%/35% summer share; coldest month < 4 °C) come from lib/koppen-global.ts.
+// month is — assert the pattern alone, with the ambiguity named). The thresholds come
+// from lib/koppen-global.ts.
+//
+// 2026-11-10 ACCURACY AUDIT. The pattern is a sowing-calendar column, chosen by frost and
+// heat. Running the rule for 44 real places showed the frost-free Lowveld on the
+// hard-frost column and the hot coast on the light-frost one (CP-073, CP-074). Each
+// fixture now also carries the site's record minimum temperature as NASA POWER returned
+// it that day — the reading the app has always fetched and now uses — and expectations
+// changed where the old ones were the bug: Mkuze and Durban are hot-area sites, and East
+// London, a frost-free coast with a mild summer, is a warm-area one.
 
 /** Monthly rain that sums to `annual`, shaped like a summer-rainfall year (DJF/SON heavy).
  *  Same weights as tests/biome-ground-truth.test.ts. */
@@ -62,6 +70,8 @@ interface SASite {
   /** Coldest and hottest month mean temperature, °C. */
   coldest: number;
   hottest: number;
+  /** Lowest temperature in the grid cell's NASA POWER record, °C (read 2026-11-10). */
+  recordMin: number;
   expectPattern: 'summer' | 'winter' | 'all-year' | 'mild-frost';
   /** Named Köppen basis for the expectation. Asserted only when unambiguous at these figures. */
   koppenBasis: string;
@@ -72,72 +82,73 @@ const SITES: SASite[] = [
   {
     // The site that exposed the bug: the demo farm's real coordinates. Live NASA POWER
     // reading 2026-08-19: 768 mm/yr, coldest month 16.8 °C, summer share 0.80. Frost-free
-    // lowveld → KZN DARD's warm/light-frost column (2026-09-27 audit), never the
-    // hard-frost interior windows it used to get.
+    // lowveld. It was moved off the hard-frost windows on 2026-09-27, but only as far as
+    // the light-frost column, because no summer-rain site could reach the frost-free one.
+    // The Makhathini flats are what KZN DARD's "hot areas, frost-free" column is for.
     place: 'Mkuze valley lowveld (Ubhejane)', lat: -27.73, lon: 31.96,
-    annual: 750, monthly: summerRain, coldest: 16, hottest: 25,
-    expectPattern: 'mild-frost',
-    koppenBasis: 'Cwa/Aw border (humid subtropical–savanna, dry winter): summer-dominant rain, frost-free — coldest month above the 13 °C light-frost line',
+    annual: 750, monthly: summerRain, coldest: 16.8, hottest: 24.7, recordMin: 5.4,
+    expectPattern: 'all-year',
+    koppenBasis: 'Cwa/Aw border (humid subtropical–savanna, dry winter): no frost on record, coldest month above the 16 °C warm-winter line, hottest above 24 °C — hot-area column',
     assertKoppenPrefix: 'C', // 16 °C coldest keeps it under the 18 °C tropical line at these figures
   },
   {
     place: 'Durban coast', lat: -29.85, lon: 31.02,
-    annual: 1009, monthly: summerRain, coldest: 17, hottest: 24,
-    expectPattern: 'mild-frost',
-    koppenBasis: 'Cfa/Cwa (humid subtropical — the f/w letter is knife-edge on winter rain): summer-dominant either way, frost-free coast → warm-area column',
+    annual: 1009, monthly: summerRain, coldest: 17, hottest: 24, recordMin: 12.6,
+    expectPattern: 'all-year',
+    koppenBasis: 'Cfa/Cwa (humid subtropical — the f/w letter is knife-edge on winter rain): frost-free and hot either way → hot-area column, the one the KZN coast guides describe',
     assertKoppenPrefix: 'C',
   },
   {
     place: 'Cape Town', lat: -33.93, lon: 18.42,
-    annual: 515, monthly: winterRain, coldest: 12, hottest: 21,
+    annual: 515, monthly: winterRain, coldest: 12, hottest: 21, recordMin: 9.2,
     expectPattern: 'winter',
     koppenBasis: 'Csb (Mediterranean, warm summer): winter rain, dry summer',
     assertKoppenPrefix: 'Cs',
   },
   {
     place: 'Springbok (Namaqualand)', lat: -29.66, lon: 17.89,
-    annual: 200, monthly: winterRain, coldest: 12, hottest: 22,
+    annual: 200, monthly: winterRain, coldest: 12, hottest: 22, recordMin: -2.0,
     expectPattern: 'winter',
     koppenBasis: 'BSk (cold semi-arid steppe) with winter rainfall — arid, but what falls comes in winter',
     assertKoppenPrefix: 'BS',
   },
   {
     place: 'Bloemfontein', lat: -29.12, lon: 26.21,
-    annual: 550, monthly: summerRain, coldest: 8, hottest: 23,
+    annual: 550, monthly: summerRain, coldest: 8, hottest: 23, recordMin: -5.5,
     expectPattern: 'summer',
     koppenBasis: "BSk (cold semi-arid steppe), summer rain, hard interior frost — the planner's 'summer' IS its hard-frost-interior pattern (coldest month 8 °C, well under the 13 °C light-frost line)",
     assertKoppenPrefix: 'BS',
   },
   {
     place: 'Mbombela (Nelspruit)', lat: -25.47, lon: 30.97,
-    annual: 800, monthly: summerRain, coldest: 14, hottest: 25,
+    annual: 800, monthly: summerRain, coldest: 14, hottest: 25, recordMin: 3.2,
     expectPattern: 'mild-frost',
-    koppenBasis: 'Cwa (humid subtropical, dry winter): lowveld summer rainfall, light frost at most (coldest month 14 °C)',
+    koppenBasis: 'Cwa (humid subtropical, dry winter): the escarpment foot — frost-free on record, but a coldest month under the 16 °C warm-winter line keeps it on the warm-area column',
     assertKoppenPrefix: 'Cw',
   },
   {
     place: 'Polokwane', lat: -23.90, lon: 29.45,
-    annual: 480, monthly: summerRain, coldest: 11, hottest: 23,
+    annual: 480, monthly: summerRain, coldest: 11, hottest: 23, recordMin: -1.9,
     expectPattern: 'summer',
     koppenBasis: 'BSh/Cwb border (published maps disagree at the aridity line) — summer-dominant rain under either class, so only the pattern is asserted',
   },
   {
     place: 'Upington (Kalahari)', lat: -28.45, lon: 21.24,
-    annual: 190, monthly: summerRain, coldest: 13, hottest: 29,
+    annual: 190, monthly: summerRain, coldest: 13, hottest: 29, recordMin: -2.5,
     expectPattern: 'summer',
-    koppenBasis: 'BWh (hot desert): summer thunderstorms; arid, so its clear winter nights frost despite a 13 °C coldest-month mean — frost column',
+    koppenBasis: 'BWh (hot desert): summer thunderstorms; arid, and its record minimum is below freezing — the clear winter nights frost despite a 13 °C coldest-month mean — frost column',
     assertKoppenPrefix: 'BW',
   },
   {
     place: 'East London', lat: -33.02, lon: 27.90,
-    annual: 750, monthly: bimodalRain, coldest: 14, hottest: 22,
-    expectPattern: 'all-year',
-    koppenBasis: 'Cfa (humid subtropical, no dry season): Eastern Cape bimodal coast — summer share between the 35% and 65% pattern thresholds',
+    annual: 750, monthly: bimodalRain, coldest: 14, hottest: 22, recordMin: 10.0,
+    expectPattern: 'mild-frost',
+    koppenBasis: 'Cfa (humid subtropical, no dry season): Eastern Cape bimodal coast, frost-free but with a mild summer — the warm-area column, where its regional guide fits (beans October to January), not the hot-area one it reached by rain share alone',
     assertKoppenPrefix: 'Cf',
   },
   {
     place: 'Johannesburg', lat: -26.20, lon: 28.05,
-    annual: 713, monthly: summerRain, coldest: 11, hottest: 20,
+    annual: 713, monthly: summerRain, coldest: 11, hottest: 20, recordMin: -4.8,
     expectPattern: 'summer',
     koppenBasis: 'Cwb (subtropical highland, dry winter): Highveld summer rain with real winter frost — hard-frost interior column',
     assertKoppenPrefix: 'Cw',
@@ -145,30 +156,61 @@ const SITES: SASite[] = [
   {
     // The catalog's own 'mild-frost' example: Upper Highway (Hillcrest/Kloof) belt.
     place: 'Hillcrest (Upper Highway, KZN)', lat: -29.78, lon: 30.76,
-    annual: 950, monthly: summerRain, coldest: 13.5, hottest: 22,
+    annual: 950, monthly: summerRain, coldest: 13.5, hottest: 22, recordMin: 2.2,
     expectPattern: 'mild-frost',
     koppenBasis: 'Cfa/Cwa: summer rain, light frost only in low pockets — the pattern the warm/light-frost column was written for',
   },
   {
     // Harshest frost in the country used to be sent to the LIGHT-frost calendar.
     place: 'Lesotho-border highlands (Sani / Underberg heights)', lat: -29.6, lon: 29.4,
-    annual: 900, monthly: summerRain, coldest: 3.5, hottest: 16,
+    annual: 900, monthly: summerRain, coldest: 3.5, hottest: 16, recordMin: -6.2,
     expectPattern: 'summer',
     koppenBasis: 'Cwb/Cwc: summer rain, severe winter frost — the hard-frost column, never the light-frost one',
   },
   {
     // Hard-frost Karoo with no dominant rain season used to reach the frost-free column.
     place: 'Sutherland (Roggeveld)', lat: -32.4, lon: 20.66,
-    annual: 250, monthly: bimodalRain, coldest: 4.5, hottest: 20,
+    annual: 250, monthly: bimodalRain, coldest: 4.5, hottest: 20, recordMin: -4.8,
     expectPattern: 'summer',
     koppenBasis: 'BSk: the coldest town in SA — frost decides the calendar whatever the rain timing',
+  },
+  // ── Added 2026-11-10: the places the accuracy audit found on the wrong calendar ──
+  {
+    // No frost day in 20 years of daily record, and it was shown the Highveld's season:
+    // tomatoes August to October where the Lowveld guides say January to July.
+    place: 'Komatipoort (Lowveld)', lat: -25.43, lon: 31.95,
+    annual: 641, monthly: summerRain, coldest: 18.4, hottest: 26.3, recordMin: 6.9,
+    expectPattern: 'all-year',
+    koppenBasis: 'BSh (hot semi-arid): arid, so the mean alone could not clear it of frost — its own record does. Hot-area column',
+    assertKoppenPrefix: 'BS',
+  },
+  {
+    place: 'Musina (Limpopo valley)', lat: -22.35, lon: 30.04,
+    annual: 349, monthly: summerRain, coldest: 17.4, hottest: 27.1, recordMin: 3.0,
+    expectPattern: 'all-year',
+    koppenBasis: 'BWh (hot desert) like Upington, and the opposite frost record: no freezing temperature, a warm winter — hot-area column',
+    assertKoppenPrefix: 'BW',
+  },
+  {
+    place: 'Lephalale (Limpopo bushveld)', lat: -23.67, lon: 27.75,
+    annual: 419, monthly: summerRain, coldest: 15.3, hottest: 27.0, recordMin: 0.1,
+    expectPattern: 'mild-frost',
+    koppenBasis: 'BSh: the record stays just above freezing, so light frost in hollows at most — the warm-area column, not the hard-frost one',
+    assertKoppenPrefix: 'BS',
+  },
+  {
+    place: 'George (Garden Route)', lat: -33.96, lon: 22.46,
+    annual: 626, monthly: bimodalRain, coldest: 13.8, hottest: 21.3, recordMin: 5.3,
+    expectPattern: 'mild-frost',
+    koppenBasis: 'Cfb (temperate oceanic): frost-free with a mild summer and rain all year — the warm-area column; it used to reach the hot-area one on rain share alone',
+    assertKoppenPrefix: 'Cf',
   },
 ];
 
 test('rainPatternFor gives the Köppen-consistent pattern across SA\'s climate space', () => {
   const wrong: string[] = [];
   for (const s of SITES) {
-    const mc: MonthlyClimate = { tempC: temps(s.coldest, s.hottest), precipMm: s.monthly(s.annual), lat: s.lat };
+    const mc: MonthlyClimate = { tempC: temps(s.coldest, s.hottest), precipMm: s.monthly(s.annual), lat: s.lat, recordMinC: s.recordMin };
     const koppen = classifyKoppen(mc);
     const got = rainPatternFor(mc, koppen);
     if (got !== s.expectPattern) {

@@ -77,7 +77,7 @@ interface CropRow {
 const RAIN_PATTERN_LABELS: Record<RainPattern, { en: string; zu: string }> = {
   summer: { en: 'Summer-rainfall pattern', zu: 'Iphethini yemvula yasehlobo' },
   'mild-frost': { en: 'Summer rain, light winter frost', zu: 'Imvula yasehlobo, isithwathwa esincane sasebusika' },
-  'all-year': { en: 'Rain all year, frost-free', zu: 'Imvula unyaka wonke, asikho isithwathwa' },
+  'all-year': { en: 'Hot areas, no frost (Lowveld, KZN coast)', zu: 'Izindawo ezishisayo, asikho isithwathwa' },
   winter: { en: 'Winter-rainfall pattern', zu: 'Iphethini yemvula yasebusika' },
 };
 

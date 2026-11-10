@@ -1,0 +1,252 @@
+{
+  "_source": {
+    "title": "KZN Department of Agriculture and Rural Development, 'Plant Establishment' (Vegetable Production Guidelines), Table 6 'Sowing times for certain selected vegetable crops'",
+    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+    "columns": {
+      "cold": "Cold areas (moderate or heavy frosts)",
+      "warm": "Warm areas (light frosts)",
+      "hot": "Hot areas (frost-free)"
+    },
+    "maps": {
+      "cold": "catalogue column 'summer'",
+      "warm": "catalogue column 'mild-frost'",
+      "hot": "catalogue column 'all-year'"
+    },
+    "status": "SECOND-HAND. These are the cells as earlier research passes transcribed them into this repository (see heldIn). The document could not be re-read on 2026-11-10: the site returned 404 and 503 and the web archive was unreachable. A null cell means the repository holds no transcription of it, not that the table is empty there.",
+    "reading": "A slash marks an ambiguous endpoint ('Feb - Jun/Jul'). The catalogue excludes the ambiguous month; tests/crop-calendar-sources.test.ts requires each cited row to cover the narrow reading and stay inside the wide one.",
+    "collected": "2026-11-10 accuracy audit (CP-075, CP-077, CP-083), from research/crop-sources/_frost-free-months.json, the per-crop dossiers and lib/crop-catalog.ts comments. This file adds no new reading of the document."
+  },
+  "rows": {
+    "sweetcorn": {
+      "row": "Sweet corn",
+      "cold": "Sept/Oct - Dec",
+      "warm": "Aug/Sept - Jan/Feb",
+      "hot": "Jan - Mar, Jul - Sept",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "green-beans": {
+      "row": "Bean, bush",
+      "cold": "Sept - Jan",
+      "warm": "Aug - Feb/Mar",
+      "hot": "Feb - Sept",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "dry-beans": {
+      "row": "Bean, bush",
+      "cold": "Sept - Jan",
+      "warm": "Aug - Feb/Mar",
+      "hot": "Feb - Sept",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "butternut": {
+      "row": "Cucurbits",
+      "cold": "Sept - Dec/Jan",
+      "warm": "Aug - Jan/Feb",
+      "hot": "Mar - May, Jul - Oct",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "pumpkin": {
+      "row": "Cucurbits",
+      "cold": "Sept - Dec/Jan",
+      "warm": "Aug - Jan/Feb",
+      "hot": "Mar - May, Jul - Oct",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "cucumber": {
+      "row": "Cucurbits",
+      "cold": "Sept - Dec/Jan",
+      "warm": "Aug - Jan/Feb",
+      "hot": "Mar - May, Jul - Oct",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "watermelon": {
+      "row": "Cucurbits",
+      "cold": "Sept - Dec/Jan",
+      "warm": "Aug - Jan/Feb",
+      "hot": "Mar - May, Jul - Oct",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "gem-squash": {
+      "row": "Cucurbits",
+      "cold": "Sept - Dec/Jan",
+      "warm": "Aug - Jan/Feb",
+      "hot": "Mar - May, Jul - Oct",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "baby-marrow": {
+      "row": "Cucurbits",
+      "cold": "Sept - Dec/Jan",
+      "warm": "Aug - Jan/Feb",
+      "hot": "Mar - May, Jul - Oct",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "spanspek": {
+      "row": "Cucurbits",
+      "cold": "Sept - Dec/Jan",
+      "warm": "Aug - Jan/Feb",
+      "hot": "Mar - May, Jul - Oct",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "cabbage": {
+      "row": "Cabbage",
+      "cold": "Sept - Feb",
+      "warm": "All year",
+      "hot": "Feb - Jun/Jul",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "beetroot": {
+      "row": "Beetroot",
+      "cold": "Aug - Mar",
+      "warm": "All year",
+      "hot": "Feb - Sept",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "sweet-potato": {
+      "row": "Sweet potato (cuttings)",
+      "cold": "Nov",
+      "warm": "Sept/Oct - Dec",
+      "hot": "Aug - Mar",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "potato": {
+      "row": "Potato (tubers)",
+      "cold": "Sept/Oct",
+      "warm": "Jun - Aug",
+      "hot": "Apr/May",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "lettuce": {
+      "row": "Lettuce",
+      "cold": "Jan - Apr, Jul - Dec",
+      "warm": "All year",
+      "hot": "Feb - Aug/Sept",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "amadumbe": {
+      "row": "Madumbe (corms)",
+      "cold": "-",
+      "warm": "Aug - Nov",
+      "hot": "Jul - Dec, Mar",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "garlic": {
+      "row": "Garlic (cloves)",
+      "cold": "Apr - May",
+      "warm": "Apr - May",
+      "hot": "Apr - May",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "peas": {
+      "row": "Pea",
+      "cold": "Jun/Jul - Sept",
+      "warm": "Mar - Jul/Aug",
+      "hot": "Mar - May/Jun",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "broad-beans": {
+      "row": "Bean, broad",
+      "cold": "Apr - May",
+      "warm": "Apr - May",
+      "hot": "Apr - May",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "broccoli": {
+      "row": "Broccoli",
+      "cold": "Sept - Jan",
+      "warm": "Jan - Sept",
+      "hot": "Feb - Jun/Jul",
+      "heldIn": "research/crop-sources/_frost-free-months.json"
+    },
+    "cauliflower": {
+      "row": "Cauliflower",
+      "cold": "Aug - Sept, Dec - Feb/Mar",
+      "warm": "Jul - Sept, Jan - Apr",
+      "hot": "Feb - Mar/Apr",
+      "heldIn": "research/crop-sources/cauliflower.json",
+      "document": "KZN DARD 'Cole Crops', Table 14 'Sowing times' (the same three columns)"
+    },
+    "parsley": {
+      "row": "Parsley",
+      "cold": "Aug - Mar",
+      "warm": "Jul - Apr",
+      "hot": "Feb - Sept",
+      "heldIn": "research/crop-sources/parsley.json"
+    },
+    "radish": {
+      "row": "Radish",
+      "cold": "Jul - Apr",
+      "warm": "All year",
+      "hot": "Mar - Oct",
+      "heldIn": "research/crop-sources/radish.json"
+    },
+    "true-spinach": {
+      "row": "Spinach",
+      "cold": "Aug - Mar",
+      "warm": "Feb - May, Jul - Sept",
+      "hot": "Mar - Aug",
+      "heldIn": "lib/crop-catalog.ts (true-spinach comments)"
+    },
+    "swiss-chard": {
+      "row": "Swiss chard",
+      "cold": null,
+      "warm": "Jan - Apr, Jul - Sept",
+      "hot": "Feb - Aug",
+      "heldIn": "lib/crop-catalog.ts (swiss-chard comments)"
+    },
+    "carrots": {
+      "row": "Carrots",
+      "cold": null,
+      "warm": "Jan - Nov",
+      "hot": "Feb - Sept",
+      "heldIn": "lib/crop-catalog.ts (carrots comments; read from a reproduction of the table on 2026-09-27)"
+    },
+    "onions": {
+      "row": "Onion",
+      "cold": null,
+      "warm": null,
+      "hot": "Feb - Apr",
+      "heldIn": "lib/crop-catalog.ts (onions comments)"
+    },
+    "tomatoes": {
+      "row": "Tomato",
+      "cold": null,
+      "warm": null,
+      "hot": "Dec - Mar, Jul - Sept",
+      "heldIn": "lib/crop-catalog.ts (tomatoes comments)"
+    },
+    "peppers": {
+      "row": "Capsicum (chilli, green pepper)",
+      "cold": null,
+      "warm": null,
+      "hot": "Jan - Mar, Jul - Dec",
+      "heldIn": "lib/crop-catalog.ts (peppers comments)"
+    },
+    "chilli": {
+      "row": "Capsicum (chilli, green pepper)",
+      "cold": null,
+      "warm": null,
+      "hot": "Jan - Mar, Jul - Dec",
+      "heldIn": "lib/crop-catalog.ts (peppers comments)"
+    },
+    "turnip": {
+      "row": "Turnip",
+      "cold": null,
+      "warm": "All year",
+      "hot": "Feb - Sept/Oct",
+      "heldIn": "lib/crop-catalog.ts (turnip comments)"
+    },
+    "brinjal": {
+      "row": "Brinjal (Eggplant)",
+      "cold": "Oct - Nov",
+      "warm": "Sept - Dec/Jan",
+      "hot": "Jan - Sept",
+      "heldIn": "research/crop-sources/brinjal.json"
+    }
+  },
+  "noRow": {
+    "maize": "The table has a 'Sweet corn' row and no maize row; the sweet corn row is not applied to grain maize.",
+    "kale": "No kale row in any KZN DARD table (searched 2026-08-23). The catalogue borrows the cabbage row for the hot-area column and says so.",
+    "coriander": "No coriander row. The catalogue borrows the lettuce row for the hot-area column and says so.",
+    "groundnuts": "Not a vegetable this table covers."
+  }
+}

@@ -143,10 +143,10 @@ export interface PlanNote {
 
 /** The "chosen but didn't fit" warning for exactly these crops; null when none are left. */
 const CALENDAR_NAME: Record<RainPattern, string> = {
-  summer: 'the summer-rainfall, hard-frost calendar',
+  summer: 'the hard-frost calendar',
   winter: 'the winter-rainfall calendar',
-  'all-year': 'the frost-free calendar',
-  'mild-frost': 'the summer-rainfall, light-frost calendar',
+  'all-year': 'the hot-area, frost-free calendar',
+  'mild-frost': 'the warm-area, light-frost calendar',
 };
 
 /** Chosen crops this farm's sowing calendar gives no month at all — not a room problem. */
@@ -3924,18 +3924,22 @@ function autoSuggestPlanUnderGate(
   if (activeObservedFrostMonths.length) {
     notes.push(planNote('basis', `Your farmer-observed frost months (${activeObservedFrostMonths.map(month => MONTHS_SHORT[month - 1]).join(', ')}) were used: frost-sensitive crops are not suggested when their field growing period crosses those months. Unrecorded months are not a promise of frost-free conditions.`));
   }
-  if (pattern !== 'mild-frost') {
+  if (pattern !== 'mild-frost' && pattern !== 'all-year') {
     // ACTION FIRST. This used to lead with the provenance sentence and sat at
     // the very top of 75% of all plans, so the first thing most farmers in the
     // country read was a paragraph about an audit. It is genuinely actionable,
     // so it stays prominent — but as a warning that opens with the thing to do.
     notes.push(planNote('warning', 'Check each sowing month with your local extension officer — this calendar has been checked crop by crop only for KwaZulu-Natal.'));
   } else {
-    // Frost-free and light-frost summer-rain sites OUTSIDE KZN (Mbombela, Tzaneen)
-    // now reach this column too (lib/koppen-global.ts rainPatternFor). The engine
-    // does not know the province, so the provenance stays visible — as basis, not a
-    // warning: inside KZN it is the audited calendar and needs no action.
-    notes.push(planNote('basis', 'These sowing months follow the KZN DARD warm-area calendar. Outside KwaZulu-Natal, confirm them with your local extension officer.'));
+    // Warm and hot sites OUTSIDE KZN (Mbombela, Tzaneen, the Lowveld) reach these
+    // columns too (lib/koppen-global.ts sowingCalendarFor). The engine does not know
+    // the province, so the provenance stays visible — as basis, not a warning: inside
+    // KZN it is the audited calendar and needs no action. Since 2026-11-10 the
+    // hot-area column is KZN DARD Table 6's "hot areas, frost-free" column for the
+    // crops in FROST_FREE_CALENDAR_CITED, and Lowveld/Limpopo sites reach it.
+    notes.push(planNote('basis', pattern === 'all-year'
+      ? 'These sowing months follow the KZN DARD hot-area calendar. Outside KwaZulu-Natal, confirm them with your local extension officer.'
+      : 'These sowing months follow the KZN DARD warm-area calendar. Outside KwaZulu-Natal, confirm them with your local extension officer.'));
   }
 
   const usableBedIds = new Set(beds.map((bed) => bed.id));
@@ -4390,7 +4394,7 @@ function autoSuggestPlanUnderGate(
       .filter((key) => !FROST_FREE_CALENDAR_CITED.has(key))
       .map((key) => CROPS.find((crop) => crop.key === key)?.name ?? key);
     if (unchecked.length) {
-      notes.push(planNote('warning', `Frost-free sowing months for ${unchecked.join(', ')} are not yet from a published local table — check those dates with your extension officer before relying on them.`));
+      notes.push(planNote('warning', `Hot-area sowing months for ${unchecked.join(', ')} are not yet from a published local table — check those dates with your extension officer before relying on them.`));
     }
   }
 

@@ -74,6 +74,9 @@ const hooks = registerHooks({
       if (specifier === '@/lib/site-climate') return { url: moduleUrl(`
         export const resolveSiteClimate = async () => {globalThis.__internationalPlannerContext.climateRequests++; return null;};
         export const driestMonths = () => [];
+        // The page imports this since the 2026-11-10 accuracy fix. Climate is null in this
+        // harness, so it is never called; it must only exist for the module to link.
+        export const calendarForGrower = (site) => ({ pattern: site.pattern, basis: 'site-climate' });
       `), shortCircuit: true };
       if (specifier.startsWith('@/components/') && specifier !== '@/components/crops/useGrowerWorkflow'
         && !specifier.startsWith('@/components/international/') && !specifier.endsWith('.format')) {

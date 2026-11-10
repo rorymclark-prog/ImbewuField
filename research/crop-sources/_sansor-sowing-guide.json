@@ -1,0 +1,375 @@
+{
+  "_source": {
+    "title": "General sowing guide (according to SANSOR)",
+    "publisher": "South African National Seed Organisation (SANSOR) table, as reproduced by Sutherland Seedlings (a nursery)",
+    "url": "https://www.sutherlandseedlings.co.za/wp-content/uploads/2015/12/Vegetable-Sowguide-Sutherland-Seedlings.pdf",
+    "documentDate": "PDF metadata: CultVeg_sowguide.p65, created 2004-01-08",
+    "kind": "Seed-industry regional sowing table. SECONDARY: not a government or research publication, and more than twenty years old.",
+    "transcribed": "2026-11-10, typed from the rendered page image of the PDF and checked cell by cell against it. Where a cell continues on a second line, the two ranges are joined with a comma.",
+    "use": "The yardstick of the 2026-11-10 crop-plan accuracy audit for every region, and since that audit the SOURCE of the crop catalogue's Western Cape ('winter') sowing months where it has a row (CP-076). Agreement between the catalogue's Western Cape column and this table is therefore by construction, not an independent check."
+  },
+  "regions": [
+    "Highveld",
+    "Middleveld",
+    "Lowveld",
+    "Northern Cape and Great Karoo",
+    "KwaZulu-Natal Midlands",
+    "Eastern Cape and Little Karoo",
+    "Western Cape and South Coast",
+    "KwaZulu-Natal and Coast"
+  ],
+  "rows": {
+    "broad-beans": {
+      "row": "Bean (broad)",
+      "cells": [
+        "Apr-May",
+        "Apr-May",
+        "Apr-May",
+        "Apr",
+        "Apr-May",
+        "Apr-May",
+        "Apr-Jun",
+        "Apr-May"
+      ]
+    },
+    "green-beans": {
+      "row": "Bean (dwarf)",
+      "cells": [
+        "Aug-Jan",
+        "Aug-Feb",
+        "Feb-Sep",
+        "Aug-Jan",
+        "Aug-Jan",
+        "Oct-Jan",
+        "Oct-Feb",
+        "Feb-Sep"
+      ]
+    },
+    "beetroot": {
+      "row": "Beetroot",
+      "cells": [
+        "Aug-Oct, Jan-Mar",
+        "Aug-Apr",
+        "Feb-Jul",
+        "Aug-Oct, Feb-Mar",
+        "Aug-Apr",
+        "Jul-Feb",
+        "Jul-Nov, Feb-Apr",
+        "Feb-Jul"
+      ]
+    },
+    "brinjal": {
+      "row": "Brinjal or egg-fruit",
+      "cells": [
+        "Aug-Oct",
+        "Aug-Nov",
+        "Jan-Sep",
+        "Aug-Oct",
+        "Aug-Oct",
+        "Aug-Oct",
+        "Aug-Oct",
+        "Jan-Sep"
+      ]
+    },
+    "broccoli": {
+      "row": "Broccoli",
+      "cells": [
+        "Dec-Feb",
+        "Jan-Feb",
+        "-",
+        "Dec-Feb",
+        "Dec-Feb",
+        "Dec-Jan",
+        "Dec-Jan",
+        "-"
+      ]
+    },
+    "cabbage": {
+      "row": "Cabbage",
+      "cells": [
+        "Nov-Feb, Jul-Aug",
+        "Feb-Apr, Aug-Sep",
+        "Feb-Jun",
+        "Nov-Feb",
+        "Aug-Feb",
+        "Aug-Apr",
+        "Nov-Apr",
+        "Feb-Jun"
+      ]
+    },
+    "peppers": {
+      "row": "Capsicum",
+      "cells": [
+        "Aug-Oct",
+        "Aug-Oct",
+        "Jan-Apr, Jul-Oct",
+        "Aug-Oct",
+        "Sep-Oct",
+        "Aug-Oct",
+        "Aug-Oct",
+        "Jan-Apr, Jul-Oct"
+      ]
+    },
+    "chilli": {
+      "row": "Capsicum",
+      "cells": [
+        "Aug-Oct",
+        "Aug-Oct",
+        "Jan-Apr, Jul-Oct",
+        "Aug-Oct",
+        "Sep-Oct",
+        "Aug-Oct",
+        "Aug-Oct",
+        "Jan-Apr, Jul-Oct"
+      ]
+    },
+    "carrots": {
+      "row": "Carrot",
+      "cells": [
+        "Aug-Oct, Jan-Mar",
+        "Aug-Oct, Jan-Mar",
+        "Feb-Aug",
+        "Aug-Oct, Jan-Mar",
+        "Aug-Apr",
+        "Jul-Apr",
+        "Aug-Nov, Jan-Apr",
+        "Feb-Aug"
+      ]
+    },
+    "cauliflower": {
+      "row": "Cauliflower (early+main+late)",
+      "cells": [
+        "Nov-Mar",
+        "Nov-Mar",
+        "Feb-Mar",
+        "Nov-Feb",
+        "Dec-Mar",
+        "Dec-Apr",
+        "Nov-Apr",
+        "Feb-Mar"
+      ]
+    },
+    "cucumber": {
+      "row": "Cucumber (open culture)",
+      "cells": [
+        "Sep-Dec",
+        "Aug-Jan",
+        "Feb-Sep",
+        "Sep-Dec",
+        "Sep-Dec",
+        "Jul-Feb",
+        "Sep-Nov",
+        "Feb-Sep"
+      ]
+    },
+    "lettuce": {
+      "row": "Lettuce",
+      "cells": [
+        "Jan-Mar, Aug-Sep",
+        "Jan-Sep",
+        "Mar-May",
+        "Jan-Mar, Aug-Sep",
+        "Jan-Mar, Aug-Sep",
+        "Jan-Apr, Jul-Oct",
+        "Aug-May",
+        "Mar-May"
+      ]
+    },
+    "sweetcorn": {
+      "row": "Mealies (green and sweetcorn)",
+      "cells": [
+        "Sep-Nov",
+        "Aug-Dec",
+        "Jul-Nov",
+        "Aug-Nov",
+        "Sep-Nov",
+        "Sep-Dec",
+        "Aug-Dec",
+        "Jul-Nov"
+      ]
+    },
+    "spanspek": {
+      "row": "Melons (sweet)",
+      "cells": [
+        "Sep-Nov",
+        "Aug-Dec",
+        "Jun-Aug",
+        "Sep-Oct",
+        "-",
+        "Sep-Oct",
+        "Sep-Dec",
+        "Jun-Aug"
+      ]
+    },
+    "watermelon": {
+      "row": "Melon (water)",
+      "cells": [
+        "Sep-Nov",
+        "Aug-Sep",
+        "Jul-Aug",
+        "Sep-Oct",
+        "Sep-Oct",
+        "Sep-Oct",
+        "Sep-Oct",
+        "Jul-Aug"
+      ]
+    },
+    "onions": {
+      "row": "Onion",
+      "cells": [
+        "Feb-Mar",
+        "Feb-Mar",
+        "Feb-Mar",
+        "Mar-Jul",
+        "Feb-Mar",
+        "Mar-May",
+        "Apr-May",
+        "Feb-Mar"
+      ]
+    },
+    "parsley": {
+      "row": "Parsley",
+      "cells": [
+        "Sep-Oct, Feb-Apr",
+        "Aug-Oct, Mar-Apr",
+        "Mar-May, Aug-Sep",
+        "Feb-Mar, Sep-Oct",
+        "Aug-Sep, Dec-Jan",
+        "Aug-Dec",
+        "Mar-Nov",
+        "Mar-May, Aug-Sep"
+      ]
+    },
+    "peas": {
+      "row": "Pea",
+      "cells": [
+        "Jul-Sep",
+        "Apr-Jun",
+        "Mar-Jun",
+        "Jul-Aug",
+        "Jun-Jul",
+        "May-Jul",
+        "Apr-Aug",
+        "Mar-Jun"
+      ]
+    },
+    "pumpkin": {
+      "row": "Pumpkin and hubbard squash",
+      "cells": [
+        "Sep-Nov",
+        "Aug-Dec",
+        "Feb-Aug",
+        "Sep-Dec",
+        "Sep-Dec",
+        "Sep-Nov",
+        "Sep-Nov",
+        "Feb-Aug"
+      ]
+    },
+    "butternut": {
+      "row": "Squash (trailing types)",
+      "cells": [
+        "Sep-Nov",
+        "Aug-Jan",
+        "Feb-Aug",
+        "Aug-Nov",
+        "Sep-Nov",
+        "Sep-Dec",
+        "Aug-Jan",
+        "Feb-Aug"
+      ]
+    },
+    "gem-squash": {
+      "row": "Squash (trailing types)",
+      "cells": [
+        "Sep-Nov",
+        "Aug-Jan",
+        "Feb-Aug",
+        "Aug-Nov",
+        "Sep-Nov",
+        "Sep-Dec",
+        "Aug-Jan",
+        "Feb-Aug"
+      ]
+    },
+    "baby-marrow": {
+      "row": "Squash (bush types)",
+      "cells": [
+        "Sep-Nov",
+        "Aug-Jan",
+        "Feb-Aug",
+        "Aug-Nov",
+        "Sep-Nov",
+        "Sep-Dec",
+        "Aug-Jan",
+        "Feb-Aug"
+      ]
+    },
+    "radish": {
+      "row": "Radish",
+      "cells": [
+        "Aug-Nov, Feb-Apr",
+        "Jul-Oct, Feb-Mar",
+        "Feb-Sep",
+        "Aug-Oct, Feb-Mar",
+        "Aug-Oct, Jan-Apr",
+        "Aug-May",
+        "Mar-Oct",
+        "Feb-Sep"
+      ]
+    },
+    "true-spinach": {
+      "row": "Spinach",
+      "cells": [
+        "Aug-Apr",
+        "Aug-Apr",
+        "Feb-Jun",
+        "Aug-Apr",
+        "Aug-Apr",
+        "Aug-Sep",
+        "Mar-May",
+        "Feb-Jun"
+      ]
+    },
+    "swiss-chard": {
+      "row": "Swiss chard",
+      "cells": [
+        "Aug-Oct, Jan-Mar",
+        "Jul-Oct, Jan-Apr",
+        "Feb-Aug",
+        "Jan-Mar, Jul-Oct",
+        "Aug-Oct, Jan-Mar",
+        "Aug-Oct, Jan-Mar",
+        "Mar-Apr, Aug-Sep",
+        "Feb-Aug"
+      ]
+    },
+    "tomatoes": {
+      "row": "Tomato (open culture)",
+      "cells": [
+        "Aug-Nov",
+        "Jul-Dec",
+        "Jan-Jul",
+        "Aug-Nov",
+        "Aug-Nov",
+        "Aug-Oct",
+        "Jul-Sep",
+        "Jan-Jul"
+      ]
+    },
+    "turnip": {
+      "row": "Turnip",
+      "cells": [
+        "Aug-Sep, Jan-Apr",
+        "Jul-Sep, Jan-Apr",
+        "Feb-Jun",
+        "Aug-Sep, Jan-Apr",
+        "Jan-Apr, Aug-Sep",
+        "Jul-Aug, Feb-Mar",
+        "Mar-Nov",
+        "Feb-Jun"
+      ]
+    }
+  },
+  "notInTable": "Potato, sweet potato, garlic, kale, coriander, amadumbe, groundnuts and the grain and cover crops have no row. Cauliflower's three rows (early, main crop, late) are joined into one cell per region."
+}

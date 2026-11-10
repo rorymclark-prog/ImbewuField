@@ -92,8 +92,9 @@ import type { FacilitatorDesignState } from '@/lib/facilitator-design';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
-import { nearestRainfall } from '@/lib/water-calc';
-import { driestMonths, resolveSiteClimate, type SiteClimate } from '@/lib/site-climate';
+import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
+import { SOWING_CALENDAR_LABEL, sowingCalendarLabel, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { calendarForGrower, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
 import { VarietyGuidance } from '@/components/crops/VarietyGuidance';
@@ -729,11 +730,13 @@ function computeDesignBeds(state: FacilitatorDesignState | null): PlanBed[] {
   return beds;
 }
 
+// Labels come from lib/sowing-calendar-label.ts: the four columns are FROST regimes, and the
+// old "Summer / All-year rainfall" names told a hot Lowveld grower the wrong thing.
 const PATTERN_META: Record<RainPattern, { Icon: LucideIcon; label: string }> = {
-  summer: { Icon: Sun, label: 'Summer rainfall' },
-  winter: { Icon: CloudRain, label: 'Winter rainfall' },
-  'all-year': { Icon: Cloud, label: 'All-year rainfall' },
-  'mild-frost': { Icon: CloudSun, label: 'Summer rainfall · mild winter frost' },
+  summer: { Icon: Sun, label: SOWING_CALENDAR_LABEL.summer },
+  winter: { Icon: CloudRain, label: SOWING_CALENDAR_LABEL.winter },
+  'all-year': { Icon: Cloud, label: SOWING_CALENDAR_LABEL['all-year'] },
+  'mild-frost': { Icon: CloudSun, label: SOWING_CALENDAR_LABEL['mild-frost'] },
 };
 
 // ── Page ─────────────────────────────────────────────────────────────────
@@ -1003,10 +1006,10 @@ function FacilitatorCropsPageInner() {
     // Resolved at generate time for BOTH branches: climate can still be loading
     // when the modal opens, so it is never precomputed.
     const climateNote = climateSource === 'site'
-      ? `Climate derived from satellite climate records for this site: ${PATTERN_META[pattern].label}.`
+      ? `Sowing calendar from satellite climate records for this site: ${calendarLabel}.`
       : climateSource === 'reference'
-        ? `Climate from nearest reference region — ${region?.name} (fallback): ${PATTERN_META[pattern].label}.`
-        : `No mapped site — assuming ${PATTERN_META[pattern].label.toLowerCase()}.`;
+        ? `Climate from nearest reference region — ${region?.name} (fallback): ${calendarLabel}.`
+        : `No mapped site — assuming ${calendarLabel.toLowerCase()}.`;
     if (aPlanTiming === 'idealYear') {
       // Busy label first, sweep second: the 12-anchor sweep is synchronous
       // (~0.5 s on a 12-bed farm, more on a low-end phone), so the button must
@@ -1654,12 +1657,11 @@ function FacilitatorCropsPageInner() {
     openAutoSuggest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mounted, autoParam, beds.length, allowCataloguePlanning]);
-  // A region flagged 'mild' frostRisk (e.g. Durban's coastal hinterland) uses
-  // KZN DARD's warm/light-frost sowing column rather than treating coast and
-  // frost-prone interior as interchangeable. This mapped result is shown to
-  // the farmer for transparency but is not turned into a rainfall quiz.
-  const mapPattern: RainPattern =
-    region?.frostRisk === 'mild' && region.pattern === 'summer' ? 'mild-frost' : (region?.pattern ?? 'summer');
+  // The reference region's `pattern` is RAIN timing, not a frost regime, so it must not be
+  // used as the sowing column: a Karoo fallback used to get the frost-free column. The
+  // calendar leans cold unless the region is flagged mild (water-calc referenceSowingCalendar).
+  // Shown to the farmer for transparency but not turned into a rainfall quiz.
+  const mapPattern: RainPattern = referenceSowingCalendar(region);
   // Climate is a site fact, not a questionnaire. Rory's field test made the
   // problem plain: many farmers do not know which rainfall label describes
   // them, while the app already has the mapped location needed to decide it.
@@ -1671,9 +1673,19 @@ function FacilitatorCropsPageInner() {
   // down, offline with nothing cached); no site at all assumes summer rain.
   // `climateSource` travels with the pattern so every surface that prints the
   // climate can say WHICH of the three it is printing.
-  const pattern: RainPattern = siteClimate?.pattern ?? mapPattern;
+  // The grower's own answer about frost ("Have you seen frost here?") outranks the grid cell
+  // in the two cases where they can disagree; `calendarBasis` says which one decided.
+  const siteCalendar = siteClimate
+    ? calendarForGrower(siteClimate, siteSurvey?.productionConditions?.frost)
+    : null;
+  const pattern: RainPattern = siteCalendar?.pattern ?? mapPattern;
+  const calendarBasis = siteCalendar?.basis ?? 'site-climate';
+  // Rain season for the label: the site's own, else the reference region's rain timing (which
+  // IS a rain season), else unknown with no site.
+  const calendarRainSeason = siteClimate?.rainSeason ?? region?.pattern ?? undefined;
   const climateSource: 'site' | 'reference' | 'none' = siteClimate ? 'site' : (region ? 'reference' : 'none');
   const patternMeta = PATTERN_META[pattern];
+  const calendarLabel = sowingCalendarLabel(pattern, calendarRainSeason);
   // Which of the eight growing zones this site's own climate points to — for the picker's
   // variety guidance only. Empty without a site climate: a reference city is not the site.
   const growingZones = useMemo<GrowingZoneId[]>(
@@ -2015,12 +2027,12 @@ function FacilitatorCropsPageInner() {
     return {
       planTitle: (canvasSite ? placeName : null) ?? designTitle,
       siteLine: climateSource === 'none'
-        ? `No site set · assuming ${patternMeta.label.toLowerCase()}`
-        : `${locationLine} · ${patternMeta.label}`,
+        ? `No site set · assuming ${calendarLabel.toLowerCase()}`
+        : `${locationLine} · ${calendarLabel}`,
       // The same two facts as separate values, because the PDF needs them apart and recovering
       // them by splitting siteLine printed "Climate: Not set" for every region in the country.
       locationLine,
-      climateLine: climateSource === 'none' ? `Assuming ${patternMeta.label.toLowerCase()}` : patternMeta.label,
+      climateLine: climateSource === 'none' ? `Assuming ${calendarLabel.toLowerCase()}` : calendarLabel,
       // Lets the PDF flag frost-tender harvest windows that run into Jun–Jul at a light-frost site.
       rainPattern: pattern,
       bedsSummary: `${bedCount} bed${bedCount === 1 ? '' : 's'}`
@@ -2031,7 +2043,7 @@ function FacilitatorCropsPageInner() {
       lossPercent: cashflowSettings.lossPercent,
       lossAllowanceConfirmed: cashflowSettings.confirmed === true,
     };
-  }, [beds, canvasSite, placeName, designTitle, region, pattern, patternMeta, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
+  }, [beds, canvasSite, placeName, designTitle, region, pattern, calendarLabel, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
 
   // One account holds several maps. A shared food name and month cannot tell us which
   // farm produced it; records without a site remain saved outside this site's totals.
@@ -2598,10 +2610,10 @@ function FacilitatorCropsPageInner() {
         {!simple && allowCataloguePlanning && (climateSource === 'site' ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
-            title="Rainfall pattern derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
+            title="Sowing calendar derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
             style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
-            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {patternMeta.label} · satellite records for this site
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · satellite records for this site
           </span>
         ) : region ? (
           <span
@@ -2609,11 +2621,11 @@ function FacilitatorCropsPageInner() {
             title="No per-site climate available (offline or not yet fetched) — using the nearest regional reference point instead"
             style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
-            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {patternMeta.label} · nearest reference: {region.name} (fallback)
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · nearest reference: {region.name} (fallback)
           </span>
         ) : (
           <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: 'var(--bg-2)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
-            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> No site set · assuming {patternMeta.label.toLowerCase()}
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> No site set · assuming {calendarLabel.toLowerCase()}
           </span>
         ))}
       </header>
@@ -3629,7 +3641,7 @@ function FacilitatorCropsPageInner() {
           planTiming={aPlanTiming} onPlanTiming={setAPlanTiming}
           generating={autoGenerating} idealMeta={idealMeta}
           hasCurrentPlantings={plantings.length > 0}
-          pattern={pattern} climateSource={climateSource} referenceName={region?.name ?? null}
+          pattern={pattern} calendarLabel={calendarLabel} calendarBasis={calendarBasis} climateSource={climateSource} referenceName={region?.name ?? null}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
@@ -5975,7 +5987,7 @@ function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
   groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
-  pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
+  pattern, calendarLabel, calendarBasis, climateSource, referenceName, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   siteClimate, siteObservationNotes, beds, siteId, nurserySettings, currentPlantings, now, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -5995,6 +6007,10 @@ function AutoSuggestModal({
   idealMeta: IdealYearPlan | null;
   hasCurrentPlantings: boolean;
   pattern: RainPattern;
+  /** The calendar named for the grower (lib/sowing-calendar-label.ts), rain season included. */
+  calendarLabel: string;
+  /** Whether the grower's frost answer or the site climate chose `pattern`. */
+  calendarBasis: CalendarBasis;
   /** Where the pattern came from: the site's own satellite climate, the nearest reference region, or no site at all. */
   climateSource: 'site' | 'reference' | 'none';
   /** Reference-region name when climateSource is 'reference'. */
@@ -6219,14 +6235,17 @@ function AutoSuggestModal({
             <div className="rounded-xl px-3 py-2.5" style={{ background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)' }}>
               <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>Climate used automatically</div>
               <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-forest-800)' }}>
-                {(() => { const PatternIcon = PATTERN_META[pattern].Icon; return <PatternIcon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />; })()} {PATTERN_META[pattern].label}
+                {(() => { const PatternIcon = PATTERN_META[pattern].Icon; return <PatternIcon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />; })()} {calendarLabel}
               </div>
+              {siteClimate && sowingCalendarReasons(siteClimate, { pattern, basis: calendarBasis }).map((line) => (
+                <p key={line} className="font-sans mt-1" style={{ fontSize: 11.5, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{line}</p>
+              ))}
               <p className="font-mono mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
                 {climateSource === 'site'
-                  ? 'Derived from satellite climate records for this site. You do not need to choose a rainfall type.'
+                  ? 'Derived from satellite climate records for this site. You do not need to choose a sowing calendar.'
                   : climateSource === 'reference'
                     ? `Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: ${referenceName ?? 'regional point'} (fallback).`
-                    : 'No mapped location is attached, so the planner is using the visible summer-rainfall fallback. Map the garden for a location-based climate profile.'}
+                    : 'No mapped location is attached, so the planner is using the cautious winter-frost fallback. Map the garden for a location-based climate profile.'}
               </p>
             </div>
 

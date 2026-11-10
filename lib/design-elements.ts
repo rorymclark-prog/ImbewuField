@@ -184,6 +184,7 @@ export const ZONE_DEFS: Record<0 | 1 | 2 | 3 | 4 | 5, { label: string; color: st
 };
 
 import type { GroundFeatureKind } from '@/lib/design-canvas';
+import { recordMinimumC } from '@/lib/climate-temperature';
 
 // Ground/built features the farmer draws to record WHAT IS THERE (house, paving, lawn,
 // existing veg garden, orchard, cleared ground). Rendered as filled, labelled polygons —
@@ -1502,9 +1503,8 @@ export const FROST_CHECK_PLANTING_IDS = new Set([
 export function plantingColdMinimum(climate?: { minTemp: number; minTempSource?: string } | null): number | null {
   // /api/location-data also returns a generic 8°C during NASA outages. An absent provenance tag
   // must never let that constant certify a site as warm enough for frost-sensitive trees.
-  return climate?.minTempSource === 'nasa-power' && Number.isFinite(climate.minTemp)
-    ? climate.minTemp
-    : null;
+  // One reader for that rule: the crop planner's sowing calendar uses the same function.
+  return recordMinimumC(climate);
 }
 
 // SA biome NAME (as stored on site.biome, from lib/biome.ts BIOMES[].name) → the climates that
