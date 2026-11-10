@@ -128,5 +128,16 @@ export function printedSowingCalendarLine(
   climateSource: 'site' | 'reference' | 'none',
 ): string {
   if (basis === 'grower-choice') return `${calendarLabel} (sowing calendar chosen by the grower)`;
+  if (basis === 'sample-farm') return `${calendarLabel} (sowing calendar set for the sample farm)`;
   return climateSource === 'none' ? `Assuming ${calendarLabel.toLowerCase()}` : calendarLabel;
 }
+
+/**
+ * What the sample farm's calendar box says in place of climate readings. The sample's
+ * calendar is declared in its sample data (lib/demo-farm.ts DEMO_SOWING_CALENDAR), so
+ * the screen must not dress it as satellite records, and must tell a visitor what
+ * their own farm would get instead.
+ */
+export const SAMPLE_FARM_CALENDAR_REASON =
+  'This calendar is set for the sample farm, so the tour looks the same for everyone. '
+  + 'On your own farm the app reads the climate records for your site, and you can choose a calendar yourself.';

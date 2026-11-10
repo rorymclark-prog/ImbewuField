@@ -7,7 +7,9 @@ import {
   sowingCalendarChoiceFor, withSowingCalendarChoice, type CropPlanState, type Planting,
 } from '@/lib/crop-plan';
 import { sowingCalendarInUse, type SiteClimate } from '@/lib/site-climate';
-import { SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
+import { canonicalCoordinateSiteId } from '@/lib/site-id';
 import {
   SOWING_CALENDAR_CORRECTED_AT, SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, outOfCalendarLine, outOfCalendarSignature,
   parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar,
@@ -274,39 +276,97 @@ test('saved sowings are judged on the site\'s own calendar or the grower\'s, nev
   assert.equal(calendarCanJudgeSavedSowings('reference', false), true);
 });
 
-test('the sample farm opens without an out-of-season list whether or not its climate has loaded', async () => {
+test('the sample farm opens on its own declared calendar, with no out-of-season list, whether or not a climate reading arrives', async () => {
   // Independent review of PR #1328 opened the hosted preview at 0c00546 in a fresh browser
   // (comment 6762970071). The sample farm's climate had not loaded, the page fell back to
   // "Durban / KZN coast" (light frost), and it listed March butternut and February green
-  // beans as out of season. Both are in season on the farm's own hot-area calendar. The
-  // earlier acceptance test only covered the loaded state, so this one holds all three.
-  const { buildDemoCropPlan, buildDemoFacilitatorState } = await import('@/lib/demo-farm');
+  // beans as out of season. The cause was found later: the preview refuses the climate route
+  // for a signed-out visitor (401), so that state lasts the whole visit.
+  //
+  // This test first held the sample to "no list on the fallback" (CP-094). Rory then chose a
+  // fixed calendar for the sample (10 November 2026: "go ahead with the fixed calendar for the
+  // sample farm"), so the sample no longer reaches the fallback at all. The claims below are
+  // rewritten for that decision; the CP-094 rule for real farms keeps its own test above.
+  const { DEMO_SOWING_CALENDAR, buildDemoCropPlan, buildDemoFacilitatorState, demoSowingCalendarScopeId } = await import('@/lib/demo-farm');
   const plan = buildDemoCropPlan().plantings;
   const bgSite = (buildDemoFacilitatorState() as { bgSite?: { lat: number; lon: number } }).bgSite;
   assert.ok(bgSite, 'fixture: the sample farm is a mapped site');
   const reference = referenceSowingCalendar(nearestRainfall(bgSite.lat, bgSite.lon));
   assert.equal(reference, 'mild-frost', 'fixture: the fallback for the sample farm is the light-frost calendar, never the hot-area one');
+  assert.equal(DEMO_SOWING_CALENDAR, 'all-year', 'the sample is declared on the hot-area calendar its plan was written for');
   const listed = (pattern: Parameters<typeof sowingsOutsideCalendar>[1], canJudge: boolean) =>
     canJudge ? sowingsOutsideCalendar(plan, pattern, NOW).map((item) => `${item.cropKey}@${item.sowMonth}`).sort() : [];
 
-  // 1. Cold cache, offline or provider down: fallback calendar, and nothing is listed.
-  const cold = sowingCalendarInUse({ chosen: null, site: null, observedFrost: undefined, reference });
-  assert.deepEqual(cold, { pattern: 'mild-frost', basis: 'reference', automatic: 'mild-frost' });
-  assert.deepEqual(listed(cold.pattern, calendarCanJudgeSavedSowings(cold.basis, true)), []);
-  // The case the review saw is kept on the record: judged on the fallback, these two would be
-  // listed. If this changes, the fallback or the sample plan moved and the case needs re-reading.
+  // The scope the sample declares is the scope the planner will ask about: the page builds it
+  // from the design's own coordinates in this exact form.
+  assert.equal(demoSowingCalendarScopeId(), `site:${bgSite.lat.toFixed(5)},${bgSite.lon.toFixed(5)}`);
+  assert.equal(canonicalCoordinateSiteId(demoSowingCalendarScopeId()), demoSowingCalendarScopeId(), 'a valid site id');
+
+  // 1. No climate reading (refused, offline, provider down): the declared calendar, not the fallback.
+  const cold = sowingCalendarInUse({ chosen: null, sample: DEMO_SOWING_CALENDAR, site: null, observedFrost: undefined, reference });
+  assert.deepEqual(cold, { pattern: 'all-year', basis: 'sample-farm', automatic: 'all-year' });
+  assert.equal(calendarCanJudgeSavedSowings(cold.basis, true), true, 'a declared calendar is not a guess');
+  assert.deepEqual(listed(cold.pattern, true), []);
+
+  // 2. A climate reading arrives, and even one that disagrees: the sample is unchanged, so the
+  // tour is the same on every deployment.
+  for (const site of [{ pattern: 'all-year' as const, warmerNeighbour: null }, { pattern: 'mild-frost' as const, warmerNeighbour: 'all-year' as const }, { pattern: 'summer' as const, warmerNeighbour: null }]) {
+    for (const observedFrost of [undefined, 'yes', 'no'] as const) {
+      assert.deepEqual(sowingCalendarInUse({ chosen: null, sample: DEMO_SOWING_CALENDAR, site, observedFrost, reference }), cold);
+    }
+  }
+
+  // 3. In season on the declared calendar whichever month the tour is opened.
+  for (let month = 1; month <= 12; month++) {
+    assert.deepEqual(sowingsOutsideCalendar(plan, DEMO_SOWING_CALENDAR, { year: 2026, month }), [], `opened in month ${month}`);
+  }
+
+  // 4. A visitor's own choice still comes first, is theirs, and can be undone back to the sample's.
+  const chose = sowingCalendarInUse({ chosen: 'summer', sample: DEMO_SOWING_CALENDAR, site: null, observedFrost: undefined, reference });
+  assert.deepEqual(chose, { pattern: 'summer', basis: 'grower-choice', automatic: 'all-year' });
+  assert.ok(listed(chose.pattern, calendarCanJudgeSavedSowings(chose.basis, true)).length > 0, 'the hard-frost calendar does not fit the sample plan, and the visitor is told');
+
+  // 5. Kept on the record: without the declared calendar the sample would be back on the fallback,
+  // and judged on it these two sowings would be listed. That is what the review saw.
+  assert.deepEqual(sowingCalendarInUse({ chosen: null, site: null, observedFrost: undefined, reference }), { pattern: 'mild-frost', basis: 'reference', automatic: 'mild-frost' });
   assert.deepEqual(listed('mild-frost', true), ['butternut@3', 'green-beans@2']);
+});
 
-  // 2. Climate loaded: the farm's own hot-area calendar, and nothing is out of season on it.
-  const loaded = sowingCalendarInUse({ chosen: null, site: { pattern: 'all-year', warmerNeighbour: null }, observedFrost: undefined, reference });
-  assert.equal(loaded.basis, 'site-climate');
-  assert.deepEqual(listed(loaded.pattern, calendarCanJudgeSavedSowings(loaded.basis, true)), []);
+test('the sample calendar applies only in sample mode and only to the sample farm\'s own site', async () => {
+  const { demoSowingCalendarScopeId } = await import('@/lib/demo-farm');
+  const original = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const withSampleFlag = (flag: string | null) => Object.defineProperty(globalThis, 'window', {
+    configurable: true, value: { sessionStorage: { getItem: (key: string) => (key === 'imbewu_sample_mode' ? flag : null) } },
+  });
+  try {
+    withSampleFlag('1');
+    assert.equal(sampleSowingCalendarFor(demoSowingCalendarScopeId()), 'all-year');
+    assert.equal(sampleSowingCalendarFor(KOMATIPOORT), null, 'another site opened inside the sample is read the ordinary way');
+    assert.equal(sampleSowingCalendarFor(null), null);
+    assert.equal(sampleSowingCalendarFor(undefined), null);
+    // A real farm at the very same coordinates is not the sample.
+    withSampleFlag(null);
+    assert.equal(sampleSowingCalendarFor(demoSowingCalendarScopeId()), null);
+    withSampleFlag('0');
+    assert.equal(sampleSowingCalendarFor(demoSowingCalendarScopeId()), null);
+  } finally {
+    if (original) Object.defineProperty(globalThis, 'window', original);
+    else Reflect.deleteProperty(globalThis, 'window');
+  }
+  // With no browser at all (server render) there is no sample.
+  assert.equal(sampleSowingCalendarFor(demoSowingCalendarScopeId()), null);
+});
 
-  // 3. A visitor who chooses a calendar is judged on it even with no climate loaded: the
-  // choice is theirs, so the list is not a guess.
-  const chose = sowingCalendarInUse({ chosen: 'summer', site: null, observedFrost: undefined, reference });
-  assert.equal(calendarCanJudgeSavedSowings(chose.basis, true), true);
-  assert.ok(listed(chose.pattern, true).length > 0, 'the hard-frost calendar does not fit the sample plan, and the visitor is told');
+test('the sample farm\'s calendar is worded as the sample\'s, on screen and on paper', () => {
+  assert.match(SAMPLE_FARM_CALENDAR_REASON, /set for the sample farm/);
+  assert.match(SAMPLE_FARM_CALENDAR_REASON, /On your own farm the app reads the climate records for your site/);
+  assert.doesNotMatch(SAMPLE_FARM_CALENDAR_REASON, /satellite records for this site|lowest temperature on record|You chose/i, 'no borrowed provenance');
+  assert.equal(printedSowingCalendarLine('Hot area, no frost · summer rain', 'sample-farm', 'reference'),
+    'Hot area, no frost · summer rain (sowing calendar set for the sample farm)');
+  assert.equal(printedSowingCalendarLine('Hot area, no frost · summer rain', 'sample-farm', 'site'),
+    'Hot area, no frost · summer rain (sowing calendar set for the sample farm)', 'the same whether or not a climate reading arrived');
+  assert.equal(printedSowingCalendarLine('Hot area, no frost', 'sample-farm', 'none'), 'Hot area, no frost (sowing calendar set for the sample farm)',
+    'a declared calendar is never printed as an assumption');
 });
 
 test('the printed plan says when the calendar was the grower\'s choice', () => {

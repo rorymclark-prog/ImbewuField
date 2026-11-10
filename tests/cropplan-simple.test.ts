@@ -50,8 +50,14 @@ test('Simple drops the secondary header chips but keeps site/bed picking and the
       // `climateSource === 'site'`; a calendar the grower chose is now the first case, because it
       // outranks where the automatic calendar came from. The site/reference/none cases are still
       // in the same chain, and the Simple/country-support gate on it is asserted below unchanged.
-      && node.right.expression.condition.getText(pageTree) === "calendarBasis === 'grower-choice'"
-      && node.right.expression.whenFalse.getText(pageTree).startsWith("climateSource === 'site'"));
+      // Later the same day, Rory: "go ahead with the fixed calendar for the sample farm". The sample
+      // farm's declared calendar is now the first case of all ("set for the sample farm"), because on
+      // the sample it stands in for the climate reading and must never be labelled as one. The
+      // grower's choice and then site/reference/none follow in the same chain.
+      && node.right.expression.condition.getText(pageTree) === "calendarBasis === 'sample-farm'"
+      && ts.isConditionalExpression(node.right.expression.whenFalse)
+      && node.right.expression.whenFalse.condition.getText(pageTree) === "calendarBasis === 'grower-choice'"
+      && node.right.expression.whenFalse.whenFalse.getText(pageTree).startsWith("climateSource === 'site'"));
   assert.ok(climateBadge, 'the header must retain its site/reference climate badge');
   for (const simple of [true, false]) {
     for (const allowCataloguePlanning of [true, false]) {

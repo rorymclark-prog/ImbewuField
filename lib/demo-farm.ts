@@ -22,6 +22,7 @@ import { SAMPLE_ORCHARD, sampleOrchardRecords } from './sample-orchard';
 
 import type { FeatureCollection, Geometry } from 'geojson';
 import type { CropPlanState, Planting } from './crop-plan';
+import type { RainPattern } from './crop-catalog';
 // The sample farm's money is priced from the app's own researched price table,
 // never from figures typed into this fixture — see pricePerKg below.
 import { DEFAULT_CROP_PRICES } from './crop-prices';
@@ -40,6 +41,31 @@ import type { LocationData } from './types';
 import { buildDemoGeometryLockFixture } from './demo-geometry-fixture';
 
 export const DEMO_SITE = Object.freeze({ lat: -27.726231, lon: 31.963044, name: 'Ubhejane Crèche' });
+
+/* THE SAMPLE FARM'S SOWING CALENDAR IS PART OF THE SAMPLE, NOT A LIVE READING
+   (Rory, 10 November 2026: "go ahead with the fixed calendar for the sample farm").
+
+   The planner normally reads a site's calendar from climate records fetched for its
+   coordinates. For the sample farm that made the first screen a visitor sees depend on
+   a network call. Where the climate route requires sign-in (the preview does, and
+   /api/location-data is deliberately outside the sample guest lane) the call is
+   refused, the page falls back to the nearest reference region, and the sample's plan,
+   written for the hot-area calendar, sat beside a crop picker offering light-frost
+   months. A recorded reading of this site, run through the calendar rule, gives the
+   hot-area calendar (tests/sa-calendar-real-sites.test.ts, "Mkuze sample farm"), and the
+   sample plan below is in season on it in every opening month.
+   Read it through lib/sample-sowing-calendar.ts.
+
+   So the sample declares that calendar here, and every screen that shows it says it is
+   set for the sample farm. It is never presented as climate records, and no cached
+   reading is seeded to stand in for one. A visitor who picks another calendar in
+   Auto-suggest a plan still gets their choice. */
+export const DEMO_SOWING_CALENDAR: RainPattern = 'all-year';
+
+/** The scope the crop plan keys this site by: the planner's own form, five decimal places. */
+export function demoSowingCalendarScopeId(): string {
+  return `site:${DEMO_SITE.lat.toFixed(5)},${DEMO_SITE.lon.toFixed(5)}`;
+}
 
 // A fictional caretaker profile so ProfileSheet has something plausible to
 // display/edit during the demo — never a real signed-in user's profile, and

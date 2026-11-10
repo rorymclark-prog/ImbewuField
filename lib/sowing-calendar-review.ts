@@ -80,8 +80,9 @@ export function sowingsOutsideCalendar(
  * May the plan's saved sowings be called out of season on the calendar in use?
  *
  * Yes when the calendar is the site's own climate reading, the grower's frost answer or
- * the grower's choice. Yes, too, when no site is mapped at all: the cautious fallback
- * is then the only calendar the plan was ever made on.
+ * the grower's choice, and for the sample farm's declared calendar, which its plan was
+ * written for. Yes, too, when no site is mapped at all: the cautious fallback is then
+ * the only calendar the plan was ever made on.
  *
  * No when a site IS mapped and its climate has not been read (still loading, offline
  * with nothing cached, or the provider is down). The page is then on the nearest

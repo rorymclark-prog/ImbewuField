@@ -41,7 +41,10 @@ test('choosing a calendar goes through the autosave path, so it cannot bypass th
 
 test('the grower can pick a calendar or hand the decision back to the app, on a tap-sized control', () => {
   assert.match(page, /Sowing calendar for this site/);
-  assert.match(page, /Let the app decide: /);
+  // The first option reads "Let the app decide: …" everywhere except on the sample farm, whose automatic
+  // calendar is declared in the sample data, not decided by the app from climate records.
+  // "Sample farm: Hot area, no frost" fits the 390 px control; "Sample farm calendar: …" was cut off there.
+  assert.match(page, /\{sampleCalendarSet \? 'Sample farm' : 'Let the app decide'\}: \{SOWING_CALENDAR_LABEL\[automaticCalendar\]\}/);
   assert.match(page, /SOWING_CALENDAR_OPTIONS\.map\(/);
   const select = page.slice(page.indexOf('Sowing calendar for this site'), page.indexOf('Choose one only if you know your land'));
   assert.match(select, /min-h-11/);
@@ -289,4 +292,32 @@ test('choosing a calendar asks the same admission, so a retained handler cannot 
   world.context.current = { siteId: 'site:B', owner: 'B', sample: false, scopeKey: 'scope:B' };
   chooseForSiteA('summer');
   assert.equal(planUpdates.length, 1, 'account A\'s handler must not touch the plan on screen after the account changed to B');
+});
+
+test('the sample farm\'s calendar is shown as set for the sample, never as climate records or as the visitor\'s choice', () => {
+  // Rory, 10 November 2026: "go ahead with the fixed calendar for the sample farm".
+  assert.match(page, /const sampleCalendar = sampleSowingCalendarFor\(calendarScopeId\);/);
+  assert.match(page, /sowingCalendarInUse\(\{ chosen: chosenCalendar, sample: sampleCalendar, site: siteClimate,/);
+  // Not from lib/sample-mode.ts itself: that file's bytes are pinned by a sync fixture and two
+  // translation packets, and adding the accessor there broke both. It has its own module, which
+  // still asks sample-mode whether the sample is on. The page never reads demo data directly.
+  assert.match(page, /import \{ sampleSowingCalendarFor \} from '@\/lib\/sample-sowing-calendar';/);
+  assert.doesNotMatch(page, /from '@\/lib\/demo-farm'/);
+
+  // Header: its own chip, checked before the "chosen by you" and "satellite records" ones.
+  const header = page.slice(page.indexOf("calendarBasis === 'sample-farm' ? ("), page.indexOf('satellite records for this site'));
+  assert.match(header, /\{calendarLabel\} · set for the sample farm/);
+  assert.ok(header.indexOf('set for the sample farm') < header.indexOf('chosen by you'));
+
+  // Auto-suggest box: heading, the one reason line, the way back, and no climate reasons.
+  assert.match(page, /calendarBasis === 'sample-farm' \? 'Sample farm calendar' : 'Climate used automatically'/);
+  assert.match(page, /\{calendarBasis === 'sample-farm' \? \(\s*<p[^>]*>\{SAMPLE_FARM_CALENDAR_REASON\}<\/p>\s*\) : siteClimate && sowingCalendarReasons\(/,
+    'on the sample farm the reason is the sample line, with or without a climate reading');
+  assert.match(page, /Set in the sample farm itself, not read from climate records\./);
+  assert.match(page, /sampleCalendarSet=\{sampleCalendar !== null\}/);
+  assert.match(page, /Choose "Sample farm" in the list to go back\./);
+
+  // Plan notes and paper.
+  assert.match(page, /calendarBasis === 'sample-farm'\s*\? `Sowing calendar set for the sample farm: \$\{calendarLabel\}\.`/);
+  assert.match(page, /calendarBasis !== 'grower-choice' && calendarBasis !== 'sample-farm'/, 'a declared calendar is never printed as an assumption');
 });

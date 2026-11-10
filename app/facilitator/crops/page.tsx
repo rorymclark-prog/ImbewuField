@@ -43,6 +43,7 @@ import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-work
 import { activeAccountLocalStorageKey, activeAccountUid } from '@/lib/account-local-storage';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
+import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
 import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
@@ -93,7 +94,7 @@ import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
-import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
 import { SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, hiddenCalendarNoticeWrite, outOfCalendarLine, outOfCalendarSignature, parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
 import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
@@ -1008,6 +1009,8 @@ function FacilitatorCropsPageInner() {
     // when the modal opens, so it is never precomputed.
     const climateNote = calendarBasis === 'grower-choice'
       ? `Sowing calendar chosen by the grower: ${calendarLabel}.`
+      : calendarBasis === 'sample-farm'
+      ? `Sowing calendar set for the sample farm: ${calendarLabel}.`
       : climateSource === 'site'
       ? `Sowing calendar from satellite climate records for this site: ${calendarLabel}.`
       : climateSource === 'reference'
@@ -1684,7 +1687,10 @@ function FacilitatorCropsPageInner() {
   // override in Auto-suggest, never a question the grower must answer.
   const calendarScopeId = surveySiteId ?? planningWorkspaceId ?? null;
   const chosenCalendar = sowingCalendarChoiceFor(plan, calendarScopeId);
-  const calendarInUse = sowingCalendarInUse({ chosen: chosenCalendar, site: siteClimate, observedFrost: siteSurvey?.productionConditions?.frost, reference: mapPattern });
+  // The sample farm's calendar is declared in its sample data and never read from a live call
+  // (Rory, 10 November 2026). Outside sample mode, and for any other site, this is null.
+  const sampleCalendar = sampleSowingCalendarFor(calendarScopeId);
+  const calendarInUse = sowingCalendarInUse({ chosen: chosenCalendar, sample: sampleCalendar, site: siteClimate, observedFrost: siteSurvey?.productionConditions?.frost, reference: mapPattern });
   const pattern: RainPattern = calendarInUse.pattern;
   const calendarBasis: CalendarBasis = calendarInUse.basis === 'reference' ? 'site-climate' : calendarInUse.basis;
   // Rain season for the label: the site's own, else the reference region's rain timing (which
@@ -2087,7 +2093,7 @@ function FacilitatorCropsPageInner() {
     const climateLine = printedSowingCalendarLine(calendarLabel, calendarBasis, climateSource);
     return {
       planTitle: (canvasSite ? placeName : null) ?? designTitle,
-      siteLine: climateSource === 'none' && calendarBasis !== 'grower-choice'
+      siteLine: climateSource === 'none' && calendarBasis !== 'grower-choice' && calendarBasis !== 'sample-farm'
         ? `No site set · assuming ${calendarLabel.toLowerCase()}`
         : `${locationLine} · ${climateLine}`,
       // The same two facts as separate values, because the PDF needs them apart and recovering
@@ -2668,7 +2674,15 @@ function FacilitatorCropsPageInner() {
           </button>
         )}
         {!simple && <LessonLink id="crops:planner" label={cropUi(lang, 'Learn', 'Funda')} />}
-        {!simple && allowCataloguePlanning && (calendarBasis === 'grower-choice' ? (
+        {!simple && allowCataloguePlanning && (calendarBasis === 'sample-farm' ? (
+          <span
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
+            title="The sample farm's sowing calendar is part of the sample. It is not read from climate records."
+            style={{ fontSize: 13, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
+          >
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · set for the sample farm
+          </span>
+        ) : calendarBasis === 'grower-choice' ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
             title="You chose this sowing calendar in Auto-suggest a plan"
@@ -3731,7 +3745,7 @@ function FacilitatorCropsPageInner() {
           generating={autoGenerating} idealMeta={idealMeta}
           hasCurrentPlantings={plantings.length > 0}
           pattern={pattern} calendarLabel={calendarLabel} calendarBasis={calendarBasis} climateSource={climateSource} referenceName={region?.name ?? null}
-          calendarChoice={chosenCalendar} automaticCalendar={calendarInUse.automatic} canChooseCalendar={!!calendarScopeId} onCalendarChoice={chooseSowingCalendar}
+          calendarChoice={chosenCalendar} automaticCalendar={calendarInUse.automatic} sampleCalendarSet={sampleCalendar !== null} canChooseCalendar={!!calendarScopeId} onCalendarChoice={chooseSowingCalendar}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
@@ -6077,7 +6091,7 @@ function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
   groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
-  pattern, calendarLabel, calendarBasis, climateSource, referenceName, calendarChoice, automaticCalendar, canChooseCalendar, onCalendarChoice, rotateCrops, onRotateCrops,
+  pattern, calendarLabel, calendarBasis, climateSource, referenceName, calendarChoice, automaticCalendar, sampleCalendarSet, canChooseCalendar, onCalendarChoice, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   siteClimate, siteObservationNotes, beds, siteId, nurserySettings, currentPlantings, now, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -6109,6 +6123,8 @@ function AutoSuggestModal({
   calendarChoice: RainPattern | null;
   /** The calendar the app would use with no choice, so the "Let the app decide" option can name it. */
   automaticCalendar: RainPattern;
+  /** True on the sample farm, whose automatic calendar is declared in the sample data. */
+  sampleCalendarSet: boolean;
   /** False with no site or workspace to save a choice against. */
   canChooseCalendar: boolean;
   onCalendarChoice: (calendar: RainPattern | null) => void;
@@ -6330,11 +6346,13 @@ function AutoSuggestModal({
             </div>
 
             <div className="rounded-xl px-3 py-2.5" style={{ background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)' }}>
-              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>{calendarBasis === 'grower-choice' ? 'Sowing calendar you chose' : 'Climate used automatically'}</div>
+              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>{calendarBasis === 'grower-choice' ? 'Sowing calendar you chose' : calendarBasis === 'sample-farm' ? 'Sample farm calendar' : 'Climate used automatically'}</div>
               <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-forest-800)' }}>
                 {(() => { const PatternIcon = PATTERN_META[pattern].Icon; return <PatternIcon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />; })()} {calendarLabel}
               </div>
-              {siteClimate && sowingCalendarReasons(siteClimate, { pattern, basis: calendarBasis }).map((line) => (
+              {calendarBasis === 'sample-farm' ? (
+                <p className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{SAMPLE_FARM_CALENDAR_REASON}</p>
+              ) : siteClimate && sowingCalendarReasons(siteClimate, { pattern, basis: calendarBasis }).map((line) => (
                 <p key={line} className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{line}</p>
               ))}
               {calendarBasis === 'grower-choice' && !siteClimate && (
@@ -6346,7 +6364,7 @@ function AutoSuggestModal({
                     Sowing calendar for this site
                     <select className="mt-1 w-full rounded-lg border px-3 min-h-11 font-sans" style={{ fontSize: 14, background: 'var(--bg-0)', color: 'var(--text-primary)', borderColor: 'var(--border)' }}
                       value={calendarChoice ?? ''} onChange={(event) => onCalendarChoice(SOWING_CALENDAR_OPTIONS.find((option) => option.value === event.target.value)?.value ?? null)}>
-                      <option value="">Let the app decide: {SOWING_CALENDAR_LABEL[automaticCalendar]}</option>
+                      <option value="">{sampleCalendarSet ? 'Sample farm' : 'Let the app decide'}: {SOWING_CALENDAR_LABEL[automaticCalendar]}</option>
                       {SOWING_CALENDAR_OPTIONS.map((option) => <option key={option.value} value={option.value}>{sowingCalendarOptionText(option)}</option>)}
                     </select>
                   </label>
@@ -6354,8 +6372,10 @@ function AutoSuggestModal({
                 </>
               )}
               <p className="font-mono mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                {calendarBasis === 'grower-choice'
-                  ? 'You chose this calendar. Choose "Let the app decide" to go back to the climate records.'
+                {calendarBasis === 'sample-farm'
+                  ? 'Set in the sample farm itself, not read from climate records. Pick another calendar above to see the months change.'
+                  : calendarBasis === 'grower-choice'
+                  ? (sampleCalendarSet ? 'You chose this calendar. Choose "Sample farm" in the list to go back.' : 'You chose this calendar. Choose "Let the app decide" to go back to the climate records.')
                   : climateSource === 'site'
                   ? 'Derived from satellite climate records for this site. You do not need to choose a sowing calendar.'
                   : climateSource === 'reference'
