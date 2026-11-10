@@ -274,6 +274,46 @@ test('saved GB evidence link ignores unsaved US form edits, carries no private m
   }
 });
 
+test('saved-site status distinguishes an unopened map from unconfirmed or conflicting country details without changing records', () => {
+  const descriptions = new Map<string, string>();
+  for (const status of ['unknown', 'conflict', 'missing-site'] as const) {
+    const resolution: SiteContextResolution = { ...saved(), status, context: null };
+    const before = JSON.stringify(resolution); let renderer!: ReactTestRenderer;
+    act(() => { renderer = create(React.createElement(SiteCountryPanel, { resolution, onSaved() { throw Error('Reading status must not save'); } })); }); mounted.add(renderer);
+    const summary = renderer.root.findByType('section').findAllByType('p')[0];
+    descriptions.set(status, text(summary));
+    assert.doesNotMatch(text(renderer.root), /reference planning is available|Automatic crop planning is not available for this country/);
+    assert.equal(renderer.root.findAllByType('form').length, status === 'missing-site' ? 0 : 1);
+    assert.equal(JSON.stringify(resolution), before); assert.equal(probe.saves, 0);
+  }
+  assert.equal(new Set(descriptions.values()).size, 3, 'each state needs its own next action');
+  assert.match(descriptions.get('missing-site')!, /Open or save a mapped site/);
+  assert.match(descriptions.get('unknown')!, /Confirm the country for this saved mapped site/);
+  assert.match(descriptions.get('conflict')!, /disagree/);
+});
+
+test('planning availability follows the saved country authority, never an unsaved selector or local-approval assumption', () => {
+  for (const code of ['ZA', 'KE', 'GB', 'US', 'BR']) {
+    const resolution = saved(code), before = JSON.stringify(resolution); let renderer!: ReactTestRenderer;
+    act(() => { renderer = create(React.createElement(SiteCountryPanel, { resolution, onSaved() { throw Error('Viewing availability must not save'); } })); }); mounted.add(renderer);
+    const assertSavedMeaning = () => {
+      if (code === 'ZA') {
+        assert.match(text(renderer.root), /South African reference planning is available/);
+        assert.match(text(renderer.root), /does not verify local growing conditions/);
+        assert.doesNotMatch(text(renderer.root), /Automatic crop planning is not available for this country/);
+      } else {
+        assert.match(text(renderer.root), /Automatic crop planning is not available for this country/);
+        assert.match(text(renderer.root), /does not approve local farming advice/);
+        assert.doesNotMatch(text(renderer.root), /South African reference planning is available/);
+      }
+    };
+    assertSavedMeaning();
+    act(() => renderer.root.findByType('select').props.onChange({ target: { value: code === 'ZA' ? 'US' : 'ZA' } }));
+    assertSavedMeaning();
+    assert.equal(JSON.stringify(resolution), before); assert.equal(probe.saves, 0);
+  }
+});
+
 test('incoming hint retires a prior dossier, entered region and visible result before any stale frame commits', async () => {
   const ui = mount('GB'); act(() => ui.region().props.onChange({ target: { value: 'Private previous region' } }));
   await ui.click(); assert.match(ui.text(), /current synthetic public reference/);

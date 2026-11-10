@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 November 2026', sha: 'dc48b9c06b6e0cc7e733bc6dd67311d17855b506', changes: [
+    'Country details show the next step and planning availability.',
+  ] },
   { when: '10 November 2026', sha: 'fd7dc7adfe0af0a3cd817a616a339bd05f579074', changes: [
     'Country and project reviews keep Lima help below the text, without covering it.',
     'Reference-page printing leaves out screen-only spacing and focus outlines.',
