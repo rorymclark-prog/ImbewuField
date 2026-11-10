@@ -1,0 +1,99 @@
+{
+ "config": {
+  "name": "gate-phone-dark",
+  "viewport": "390x844",
+  "theme": "earth dark",
+  "level": "simple",
+  "lang": "en",
+  "expanded": false,
+  "countryGate": "gate",
+  "textScale": "1",
+  "url": "/facilitator/crops",
+  "build": "main 8a4d1fd (local dev server), sample farm",
+  "siteClimateLoaded": null
+ },
+ "totals": {
+  "controls": 19,
+  "contrastFailures": 1,
+  "contrastFailuresExcludingDisabled": 0,
+  "textUnder12px": 1,
+  "targetsUnder24_noException": 0,
+  "targetsUnder24_withException": 2,
+  "targets24to44": 1,
+  "unnamedControls": 0,
+  "clippedText": 0,
+  "h1": 1,
+  "docOverflowX": false
+ },
+ "contrast": [
+  {
+   "text": "Save country details",
+   "ratio": 1.7,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4D6D26",
+   "opacity": 0.5,
+   "fontPx": 16,
+   "weight": 600,
+   "sel": "section[aria-label=\"Site country and region\"].mb-4.rounded-2xl > details.mt-3 > form.grid.gap-3 > button.min-h-11.rounded-xl",
+   "disabled": true,
+   "count": 1
+  }
+ ],
+ "textUnder12px": [
+  {
+   "text": "Plants and housing from your map",
+   "fontPx": 11,
+   "sel": "div.flex.flex-col > header.flex-shrink-0.flex > div.flex.flex-col > span.font-sans.truncate",
+   "count": 1
+  }
+ ],
+ "targetsUnder24": [
+  {
+   "label": "on",
+   "w": 13,
+   "h": 13,
+   "tag": "input",
+   "exception": "user-agent control",
+   "clashesWith": null,
+   "sel": "details.mt-3 > form.grid.gap-3 > label.flex.items-start > input.mt-1",
+   "count": 1
+  },
+  {
+   "label": "Review international evidence and readiness",
+   "w": 287,
+   "h": 16,
+   "tag": "a",
+   "exception": "spacing",
+   "clashesWith": null,
+   "sel": "div.mx-auto.w-full > section[aria-label=\"Planning support\"].mb-4.rounded-2xl > p.mt-2.text-sm > a.underline",
+   "count": 1
+  }
+ ],
+ "targets24to44": [
+  {
+   "label": "Home",
+   "w": 34,
+   "h": 34,
+   "tag": "a",
+   "sel": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > a[aria-label=\"Home\"].flex-shrink-0.flex",
+   "count": 1
+  }
+ ],
+ "unnamedControls": [],
+ "clippedText": [],
+ "headings": [
+  "H2 Site country and region",
+  "H1 Confirm the site country before crop planning",
+  "H4 Saved planned nursery batches"
+ ],
+ "landmarks": {
+  "main": 0,
+  "h1": 1,
+  "h1Rendered": [
+   "Confirm the site country before crop planning"
+  ]
+ },
+ "overflowers": [],
+ "consoleErrors": []
+}

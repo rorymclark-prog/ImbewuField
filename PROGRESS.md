@@ -65,6 +65,16 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 10 Nov 2026 — Crop plan re-audit and plan (no code changed)
+- **Record:** `docs/audits/2026-11-10/crop-plan-reaudit-claude.md`, measured on released `8a4d1fd` with the sample farm.
+  Findings CP-047–CP-072 with 17 screenshots, 19 measurement files and the two scripts that reproduce them.
+- **Decisions waiting on Rory:** the country hold now replaces the planner for every unconfirmed site, the sample
+  included (CP-047); the bed calendar sits two phone screens down in Simple mode (CP-048); two panels are both
+  called "Harvest targets" (CP-049).
+- **Measured faults:** crop-bar labels at 1.55–3.71:1; three pop-up sheets with no dialog role, no Escape and no
+  focus handling; a see-through pinned month header in the default theme; weekly target totals showing six decimals.
+- **Next:** steps 1 (readable calendar) and 2 (touch and keyboard) need no decision. Nothing starts until Rory says go.
+
 ### 27 Oct 2026 — Wave 28: overlays keep keyboard focus; Lima opens from the keyboard
 - **Overlays (Sonnet #1134, reviewed):** `lib/use-dialog-focus.ts` moves focus into Settings, the drawer, the Add sheet,
   evidence sheets, profile, POPIA consent, base-photo import, lesson link, the confirm dialog and the records entry

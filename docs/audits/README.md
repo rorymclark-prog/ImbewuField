@@ -180,6 +180,8 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+Latest audit: [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md). First rendered review of `/facilitator/crops` on released `8a4d1fd`: CP-047–CP-072, with measured contrast, keyboard, phone, dark, isiZulu and large-text evidence. Findings and a plan only; no code changed.
+
 Latest field-block continuation: [Metres and international feet, retained drafts and crop allocations — 3 November 2026](2026-11-03/field-block-units-codex.md). Exact-tree checks, populated browser and current-head release gates remain open.
 
 Previous grower continuation: [Protected crop storage, account transfer and retained-copy review — 3 November 2026](2026-11-03/grower-storage-cutover-codex.md). Current-head checks, real two-tab/offline, populated browser and account gates remain open.
@@ -235,6 +237,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 [ImbewuField connector implementation and verification — 3 November 2026](2026-11-03/assistant-connector-codex.md). Native linking and production deployment are separate gates from the verified emulator and browser journey.
 
 ## Date index
+
+- [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md).
 
 - [Zones reserve context and national locator — 6 November 2026](2026-11-06/zones-reserve-context-codex.md).
 

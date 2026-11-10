@@ -1,0 +1,1036 @@
+{
+ "config": {
+  "name": "phone-light-simple-zu-expanded",
+  "viewport": "390x844",
+  "theme": "earth light",
+  "level": "simple",
+  "lang": "zu",
+  "expanded": true,
+  "countryGate": "confirm",
+  "textScale": "1",
+  "url": "/facilitator/crops",
+  "build": "main 8a4d1fd (local dev server), sample farm",
+  "siteClimateLoaded": false
+ },
+ "totals": {
+  "controls": 295,
+  "contrastFailures": 25,
+  "contrastFailuresExcludingDisabled": 23,
+  "textUnder12px": 157,
+  "targetsUnder24_noException": 0,
+  "targetsUnder24_withException": 45,
+  "targets24to44": 66,
+  "unnamedControls": 0,
+  "clippedText": 6,
+  "h1": 0,
+  "docOverflowX": false
+ },
+ "contrast": [
+  {
+   "text": "Lettuce",
+   "ratio": 1.55,
+   "need": 4.5,
+   "fg": "#FFFFFD",
+   "bg": "#BFD6B4",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Carrots",
+   "ratio": 1.55,
+   "need": 4.5,
+   "fg": "#FFFFFD",
+   "bg": "#BFD6B4",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 2
+  },
+  {
+   "text": "Butternut",
+   "ratio": 1.55,
+   "need": 4.5,
+   "fg": "#FFFFFD",
+   "bg": "#BFD6B4",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Tomatoes",
+   "ratio": 1.55,
+   "need": 4.5,
+   "fg": "#FFFFFD",
+   "bg": "#BFD6B4",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "ratio": 1.55,
+   "need": 4.5,
+   "fg": "#FFFFFD",
+   "bg": "#BFD6B4",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "ratio": 1.55,
+   "need": 4.5,
+   "fg": "#FFFFFD",
+   "bg": "#BFD6B4",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Sweet potato",
+   "ratio": 1.55,
+   "need": 4.5,
+   "fg": "#FFFFFD",
+   "bg": "#BFD6B4",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "ratio": 1.55,
+   "need": 4.5,
+   "fg": "#FFFFFD",
+   "bg": "#BFD6B4",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Carrots",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 2
+  },
+  {
+   "text": "Butternut",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Sweet potato",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Save country details",
+   "ratio": 2.61,
+   "need": 4.5,
+   "fg": "#FFFFFD",
+   "bg": "#8FA697",
+   "opacity": 0.5,
+   "fontPx": 16,
+   "weight": 600,
+   "sel": "section[aria-label=\"Site country and region\"].mb-4.rounded-2xl > details.mt-3 > form.grid.gap-3 > button.min-h-11.rounded-xl",
+   "disabled": true,
+   "count": 1
+  },
+  {
+   "text": "Review automatic crop plan",
+   "ratio": 3.28,
+   "need": 4.5,
+   "fg": "#938D85",
+   "bg": "#FFFEFA",
+   "opacity": 0.5,
+   "fontPx": 14,
+   "weight": 400,
+   "sel": "div.mx-auto.w-full > details.mb-4.rounded-2xl > section[aria-label=\"Grower automatic plan review\"].space-y-4.px-4 > button.min-h-11.rounded-lg",
+   "disabled": true,
+   "count": 1
+  },
+  {
+   "text": "Onions",
+   "ratio": 3.71,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#8C8654",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Garlic",
+   "ratio": 3.71,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#8C8654",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "1 plants need age groups",
+   "ratio": 3.85,
+   "need": 4.5,
+   "fg": "#9E5C08",
+   "bg": "#E4DCC6",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 400,
+   "sel": "div.mt-4.rounded-xl > div.flex.items-start > div > p",
+   "disabled": false,
+   "count": 3
+  },
+  {
+   "text": "2 plants need age groups",
+   "ratio": 3.85,
+   "need": 4.5,
+   "fg": "#9E5C08",
+   "bg": "#E4DCC6",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 400,
+   "sel": "div.mt-4.rounded-xl > div.flex.items-start > div > p",
+   "disabled": false,
+   "count": 1
+  }
+ ],
+ "textUnder12px": [
+  {
+   "text": "Izitshalo nezindlu zezilwane ezisemephini yakho",
+   "fontPx": 11,
+   "sel": "div.flex.flex-col > header.flex-shrink-0.flex > div.flex.flex-col > span.font-sans.truncate",
+   "count": 1
+  },
+  {
+   "text": "Umbhede",
+   "fontPx": 10,
+   "sel": "div.rounded-2xl.mb-5 > div.flex > div > span.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Year one \u2014 from this month",
+   "fontPx": 9.5,
+   "sel": "div.flex-1 > div > div.flex > div.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Year two \u2014 repeat crops; check plant ages",
+   "fontPx": 9.5,
+   "sel": "div.flex-1 > div > div.flex > div.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Vegetables",
+   "fontPx": 10.5,
+   "sel": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"veg\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "6.0",
+   "fontPx": 11,
+   "sel": "div > div.flex > div > div.font-mono",
+   "count": 6
+  },
+  {
+   "text": "m\u00b2",
+   "fontPx": 11,
+   "sel": "div > div.flex > div > div.font-mono",
+   "count": 11
+  },
+  {
+   "text": "Onions",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Carrots",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "Butternut",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Tomatoes",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "8.0",
+   "fontPx": 11,
+   "sel": "div > div.flex > div > div.font-mono",
+   "count": 1
+  },
+  {
+   "text": "Garlic",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Sweet potato",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Staple grain",
+   "fontPx": 10,
+   "sel": "div.flex > div > div.font-sans > span",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Staple crops",
+   "fontPx": 10.5,
+   "sel": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"staple\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "plot",
+   "fontPx": 8.5,
+   "sel": "div.flex > div > div.font-display.font-semibold > span.font-sans.font-semibold",
+   "count": 4
+  },
+  {
+   "text": "21.0",
+   "fontPx": 11,
+   "sel": "div > div.flex > div > div.font-mono",
+   "count": 4
+  },
+  {
+   "text": "Fruit, nuts & berries",
+   "fontPx": 10.5,
+   "sel": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"trees\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "From your map \u00b7 hover or tap a bar",
+   "fontPx": 10,
+   "sel": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > div.font-sans",
+   "count": 2
+  },
+  {
+   "text": "On your map, with picking months to confirm: Avocado, Mango,",
+   "fontPx": 11,
+   "sel": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > div.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Animal products",
+   "fontPx": 10.5,
+   "sel": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"animals\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "These confirmations are kept on this device for this design.",
+   "fontPx": 11.5,
+   "sel": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > p.font-sans.mb-3",
+   "count": 1
+  },
+  {
+   "text": "29.7 kg",
+   "fontPx": 11,
+   "sel": "div > div > button.grid.gap-2 > span",
+   "count": 1
+  },
+  {
+   "text": "*",
+   "fontPx": 11,
+   "sel": "div > div > button.grid.gap-2 > span",
+   "count": 10
+  },
+  {
+   "text": "48.8 kg",
+   "fontPx": 11,
+   "sel": "div > div > button.grid.gap-2 > span",
+   "count": 9
+  },
+  {
+   "text": "* Known subtotal only. Missing production is not zero. Strip",
+   "fontPx": 11,
+   "sel": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > section[data-production-projection=\"true\"].mt-4.rounded-2xl > p.mt-2",
+   "count": 1
+  },
+  {
+   "text": "KZN DARD, Fruit and Nut Production, PDF pp. 6\u20137 (regional re",
+   "fontPx": 11,
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "SA Avocado Industry Overview \u2013 South African Avocado Growers",
+   "fontPx": 11,
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Directorate Communication: Cultivation of Avocados (South Af",
+   "fontPx": 11,
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+   "fontPx": 11,
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 2
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer, 'Yield Potential of Intensive",
+   "fontPx": 11,
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer (1991), SAAGA Yearbook 14:15\u20131",
+   "fontPx": 11,
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "ARC Climate-Smart Agriculture, module 6, printed pp. 239\u2013242",
+   "fontPx": 11,
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "National Agricultural Marketing Council (NAMC), South Africa",
+   "fontPx": 11,
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age",
+   "fontPx": 11,
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "note": "19 more distinct rows omitted; the totals above are complete"
+  }
+ ],
+ "targetsUnder24": [
+  {
+   "label": "on",
+   "w": 13,
+   "h": 13,
+   "tag": "input",
+   "exception": "user-agent control",
+   "clashesWith": null,
+   "sel": "section[aria-label=\"Grower planning estimates\"].space-y-4.px-4 > form.space-y-3 > label.flex.min-h-11 > input",
+   "count": 20
+  },
+  {
+   "label": "Source",
+   "w": 40,
+   "h": 14,
+   "tag": "a",
+   "exception": "inline",
+   "clashesWith": null,
+   "sel": "div[data-tree-age-editor=\"true\"].font-sans.mt-4 > div > p > a",
+   "count": 5
+  },
+  {
+   "label": "Source p. 6",
+   "w": 63,
+   "h": 14,
+   "tag": "a",
+   "exception": "inline",
+   "clashesWith": null,
+   "sel": "div > details.mt-2.p-3 > p.mt-2 > a",
+   "count": 1
+  },
+  {
+   "label": "Source p. 7",
+   "w": 62,
+   "h": 14,
+   "tag": "a",
+   "exception": "inline",
+   "clashesWith": null,
+   "sel": "div > details.mt-2.p-3 > p.mt-2 > a",
+   "count": 1
+  },
+  {
+   "label": "SANBI PlantZAfrica: carissa-macrocarpa",
+   "w": 207,
+   "h": 12,
+   "tag": "a",
+   "exception": "spacing",
+   "clashesWith": null,
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "on",
+   "w": 17,
+   "h": 17,
+   "tag": "input",
+   "exception": "user-agent control",
+   "clashesWith": null,
+   "sel": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > fieldset.ProductionAvailabilityGraphs_options__2YxIc > label > input",
+   "count": 5
+  },
+  {
+   "label": "on",
+   "w": 18,
+   "h": 18,
+   "tag": "input",
+   "exception": "user-agent control",
+   "clashesWith": null,
+   "sel": "div.ProductionRecordsEditor_monthGrid__y17Cn > div.ProductionRecordsEditor_month__Tvc8n > label.ProductionRecordsEditor_check__Yw76K > input",
+   "count": 12
+  }
+ ],
+ "targets24to44": [
+  {
+   "label": "Ikhaya",
+   "w": 34,
+   "h": 34,
+   "tag": "a",
+   "sel": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > a[aria-label=\"Ikhaya\"].flex-shrink-0.flex",
+   "count": 1
+  },
+  {
+   "label": "Kilograms (kg) Pounds (lb)",
+   "w": 332,
+   "h": 36,
+   "tag": "select",
+   "sel": "details.mb-4.rounded-2xl > div.px-4.pb-4 > label.text-sm > select[aria-label=\"Harvest weight unit\"].w-full.rounded-lg",
+   "count": 2
+  },
+  {
+   "label": "Choose a crop Maize (mielies) Dry beans (sugar bea",
+   "w": 332,
+   "h": 36,
+   "tag": "select",
+   "sel": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > select.w-full.rounded-lg",
+   "count": 2
+  },
+  {
+   "label": "INPUT",
+   "w": 332,
+   "h": 39,
+   "tag": "input",
+   "sel": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > input.w-full.rounded-lg",
+   "count": 6
+  },
+  {
+   "label": "kg bunches bags crates Trays of harvested produce ",
+   "w": 332,
+   "h": 36,
+   "tag": "select",
+   "sel": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > select.w-full.rounded-lg",
+   "count": 2
+  },
+  {
+   "label": "INPUT",
+   "w": 332,
+   "h": 41,
+   "tag": "input",
+   "sel": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > input.w-full.rounded-lg",
+   "count": 2
+  },
+  {
+   "label": "Phakamisa uhlelo ngokuzenzakalelayo",
+   "w": 366,
+   "h": 43,
+   "tag": "button",
+   "sel": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.flex.gap-2 > button.flex-1.py-2.5",
+   "count": 1
+  },
+  {
+   "label": "2026-11",
+   "w": 332,
+   "h": 41,
+   "tag": "input",
+   "sel": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > input.w-full.rounded-lg",
+   "count": 1
+  },
+  {
+   "label": "2027-10",
+   "w": 332,
+   "h": 41,
+   "tag": "input",
+   "sel": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > input.w-full.rounded-lg",
+   "count": 1
+  },
+  {
+   "label": "Onions",
+   "w": 58,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "+ crop",
+   "w": 56,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 11
+  },
+  {
+   "label": "Lettuce",
+   "w": 290,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Lettuce",
+   "w": 58,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Carrots",
+   "w": 290,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 4
+  },
+  {
+   "label": "Butternut",
+   "w": 348,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Tomatoes",
+   "w": 406,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Green beans",
+   "w": 174,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Green beans",
+   "w": 58,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Garlic",
+   "w": 116,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Broccoli",
+   "w": 348,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Sweet potato",
+   "w": 406,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Sweet potato",
+   "w": 58,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Maize (mielies)",
+   "w": 348,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Maize (mielies)",
+   "w": 58,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Engeza isilimo",
+   "w": 366,
+   "h": 43,
+   "tag": "button",
+   "sel": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.mb-5 > button.w-full.py-2.5",
+   "count": 1
+  },
+  {
+   "label": "Avocado \u00b7 0 existing, 1 proposed \u00b7 confirm picking",
+   "w": 332,
+   "h": 39,
+   "tag": "summary",
+   "sel": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Mango \u00b7 0 existing, 1 proposed \u00b7 confirm picking m",
+   "w": 332,
+   "h": 39,
+   "tag": "summary",
+   "sel": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Moringa \u00b7 0 existing, 2 proposed \u00b7 confirm picking",
+   "w": 332,
+   "h": 39,
+   "tag": "summary",
+   "sel": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Num-num \u00b7 0 existing, 1 proposed \u00b7 confirm picking",
+   "w": 332,
+   "h": 39,
+   "tag": "summary",
+   "sel": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "KZN DARD, Fruit and Nut Production, PDF pp. 6\u20137 (r",
+   "w": 300,
+   "h": 29,
+   "tag": "a",
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "SA Avocado Industry Overview \u2013 South African Avoca",
+   "w": 281,
+   "h": 29,
+   "tag": "a",
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991",
+   "w": 314,
+   "h": 29,
+   "tag": "a",
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 2
+  },
+  {
+   "label": "Wolstenholme, Kaiser & Palmer (1991), SAAGA Yearbo",
+   "w": 286,
+   "h": 29,
+   "tag": "a",
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "ARC Climate-Smart Agriculture, module 6, printed p",
+   "w": 303,
+   "h": 29,
+   "tag": "a",
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "KZN DARD, Fruit and Nut Production in KZN, Mango b",
+   "w": 306,
+   "h": 29,
+   "tag": "a",
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "North West DARD: Moringa production for food secur",
+   "w": 283,
+   "h": 29,
+   "tag": "a",
+   "sel": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "What is included in kept food?",
+   "w": 298,
+   "h": 28,
+   "tag": "summary",
+   "sel": "details.rounded-2xl.p-4 > section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > details.ProductionAvailabilityGraphs_records__jqlZq > summary",
+   "count": 1
+  },
+  {
+   "label": "Crop-cycle estimates",
+   "w": 148,
+   "h": 42,
+   "tag": "button",
+   "sel": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE > div[aria-label=\"Kilogram graph view\"].ProductionAvailabilityGraphs_viewButtons__xz3pa > button",
+   "count": 1
+  },
+  {
+   "label": "Monthly production",
+   "w": 138,
+   "h": 42,
+   "tag": "button",
+   "sel": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE > div[aria-label=\"Kilogram graph view\"].ProductionAvailabilityGraphs_viewButtons__xz3pa > button",
+   "count": 1
+  },
+  {
+   "label": "Food in store",
+   "w": 101,
+   "h": 42,
+   "tag": "button",
+   "sel": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE > div[aria-label=\"Kilogram graph view\"].ProductionAvailabilityGraphs_viewButtons__xz3pa > button",
+   "count": 1
+  },
+  {
+   "note": "1 more distinct rows omitted; the totals above are complete"
+  }
+ ],
+ "unnamedControls": [],
+ "clippedText": [
+  {
+   "text": "Izitshalo nezindlu zezilwane ezisemephini yakho",
+   "shownPx": 220,
+   "neededPx": 243,
+   "sel": "div.flex.flex-col > header.flex-shrink-0.flex > div.flex.flex-col > span.font-sans.truncate",
+   "count": 1
+  },
+  {
+   "text": "Onions",
+   "shownPx": 30,
+   "neededPx": 36,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "shownPx": 30,
+   "neededPx": 39,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "shownPx": 30,
+   "neededPx": 65,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Sweet potato",
+   "shownPx": 30,
+   "neededPx": 69,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "shownPx": 30,
+   "neededPx": 77,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  }
+ ],
+ "headings": [
+  "H3 New estimate profile",
+  "H4 Saved planned nursery batches",
+  "H2 Site country and region",
+  "H3 Nursery planning forecast",
+  "H4 Broccoli",
+  "H4 Lettuce",
+  "H4 Tomatoes",
+  "H2 How production changes as plants grow",
+  "H3 Nov 2026 \u2013 Oct 2027",
+  "H3 Check your farm conditions",
+  "H3 Fruit, nuts and indigenous foods",
+  "H4 Avocado",
+  "H4 Mango",
+  "H4 Moringa",
+  "H4 Num-num",
+  "H4 Water through the dry season",
+  "H4 Frost on this farm",
+  "H4 Sun and drainage",
+  "H4 Garlic",
+  "H4 Onions",
+  "H4 Butternut",
+  "H4 Swiss chard (spinach)",
+  "H4 Tomatoes",
+  "H4 Maize (mielies)",
+  "H4 Green beans",
+  "H4 Lettuce",
+  "H4 Broccoli",
+  "H4 Sweet potato",
+  "H4 Cabbage",
+  "H4 Carrots",
+  "H2 Food and growing space",
+  "H3 Fresh food",
+  "H3 Fresh + kept food",
+  "H3 Production in kilograms",
+  "H3 Crop growing space"
+ ],
+ "landmarks": {
+  "main": 0,
+  "h1": 0,
+  "h1Rendered": []
+ },
+ "overflowers": [],
+ "consoleErrors": [
+  "Failed to load resource: the server responded with a status of 429 (Too Many Requests)"
+ ]
+}

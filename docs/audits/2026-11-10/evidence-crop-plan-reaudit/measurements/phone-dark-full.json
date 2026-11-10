@@ -1,0 +1,1595 @@
+{
+ "config": {
+  "name": "phone-dark-full",
+  "viewport": "390x844",
+  "theme": "earth dark",
+  "level": "full",
+  "lang": "en",
+  "expanded": false,
+  "countryGate": "confirm",
+  "textScale": "1",
+  "url": "/facilitator/crops",
+  "build": "main 8a4d1fd (local dev server), sample farm",
+  "siteClimateLoaded": true
+ },
+ "totals": {
+  "controls": 188,
+  "contrastFailures": 69,
+  "contrastFailuresExcludingDisabled": 69,
+  "textUnder12px": 191,
+  "targetsUnder24_noException": 5,
+  "targetsUnder24_withException": 7,
+  "targets24to44": 61,
+  "unnamedControls": 0,
+  "clippedText": 10,
+  "h1": 0,
+  "docOverflowX": false
+ },
+ "contrast": [
+  {
+   "text": "Nov",
+   "ratio": 1.72,
+   "need": 4.5,
+   "fg": "#1F4D2B",
+   "bg": "#221D10",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 700,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Nov",
+   "ratio": 1.91,
+   "need": 4.5,
+   "fg": "#1F4D2B",
+   "bg": "#181208",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 700,
+   "sel": "div[data-crop-availability-columns=\"true\"] > div > button[aria-label=\"November 2026 (now) \u2014 1 crop, \"].crop-availability-month > div.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "By crop",
+   "ratio": 1.91,
+   "need": 4.5,
+   "fg": "#181208",
+   "bg": "#1F4D2B",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 400,
+   "sel": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(62%)",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Carrots",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 2
+  },
+  {
+   "text": "(86%)",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Butternut",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(1/1)",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Tomatoes",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(75%)",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(20%)",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(69%)",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(47%)",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Sweet potato",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(46%)",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(83%)",
+   "ratio": 1.97,
+   "need": 4.5,
+   "fg": "#8C8984",
+   "bg": "#4C603B",
+   "opacity": 0.5,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Jun",
+   "ratio": 2.04,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#82C844",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 400,
+   "sel": "div.py-2 > div[aria-label=\"Assumed variety: Hass: Jun, Ju\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Jul",
+   "ratio": 2.04,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#82C844",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 400,
+   "sel": "div.py-2 > div[aria-label=\"Assumed variety: Hass: Jun, Ju\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Aug",
+   "ratio": 2.04,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#82C844",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 400,
+   "sel": "div.py-2 > div[aria-label=\"Assumed variety: Hass: Jun, Ju\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Sep",
+   "ratio": 2.04,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#82C844",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 400,
+   "sel": "div.py-2 > div[aria-label=\"Assumed variety: Hass: Jun, Ju\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Oct",
+   "ratio": 2.04,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#82C844",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 400,
+   "sel": "div.py-2 > div[aria-label=\"Assumed variety: Hass: Jun, Ju\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Jan",
+   "ratio": 2.04,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#82C844",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 400,
+   "sel": "div.py-2 > div[aria-label=\"Regional reference: Mango: Nov\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Feb",
+   "ratio": 2.04,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#82C844",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 400,
+   "sel": "div.py-2 > div[aria-label=\"Regional reference: Mango: Nov\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Mar",
+   "ratio": 2.04,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#82C844",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 400,
+   "sel": "div.py-2 > div[aria-label=\"Regional reference: Mango: Nov\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Nov",
+   "ratio": 2.04,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#82C844",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 400,
+   "sel": "div.py-2 > div[aria-label=\"Regional reference: Mango: Nov\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Dec",
+   "ratio": 2.04,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#82C844",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 400,
+   "sel": "div.py-2 > div[aria-label=\"Regional reference: Mango: Nov\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(62%)",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Carrots",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 2
+  },
+  {
+   "text": "(86%)",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Butternut",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(1/1)",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(20%)",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(69%)",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(47%)",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Sweet potato",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(46%)",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(83%)",
+   "ratio": 2.57,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#7FAE6E",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "From today",
+   "ratio": 2.74,
+   "need": 4.5,
+   "fg": "#F7F2E9",
+   "bg": "#A8906C",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "check / transplant",
+   "ratio": 3,
+   "need": 4.5,
+   "fg": "#785D24",
+   "bg": "#181208",
+   "opacity": 0.5,
+   "fontPx": 9,
+   "weight": 700,
+   "sel": "div > div > div > button[aria-label=\"Plan to transplant Lettuce in \"].font-sans",
+   "disabled": false,
+   "count": 3
+  },
+  {
+   "text": "Clear all",
+   "ratio": 3.17,
+   "need": 4.5,
+   "fg": "#B33A3A",
+   "bg": "#181208",
+   "opacity": 1,
+   "fontPx": 13,
+   "weight": 600,
+   "sel": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.flex.gap-2 > button.px-4.py-2.5",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Onions",
+   "ratio": 3.71,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#8C8654",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(61%)",
+   "ratio": 3.71,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#8C8654",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Garlic",
+   "ratio": 3.71,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#8C8654",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "(\u00bd)",
+   "ratio": 3.71,
+   "need": 4.5,
+   "fg": "#FFFFFF",
+   "bg": "#8C8654",
+   "opacity": 1,
+   "fontPx": 11,
+   "weight": 600,
+   "sel": "div > button.font-sans > span > span",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "\u21bb",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Nov",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Dec",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Jan",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Feb",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Mar",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Apr",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "May",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Jun",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Jul",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Aug",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Sep",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  },
+  {
+   "text": "Oct",
+   "ratio": 4.43,
+   "need": 4.5,
+   "fg": "#A08564",
+   "bg": "#2D2314",
+   "opacity": 1,
+   "fontPx": 12,
+   "weight": 500,
+   "sel": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "count": 1
+  }
+ ],
+ "textUnder12px": [
+  {
+   "text": "Plants and housing from your map",
+   "fontPx": 11,
+   "sel": "div.flex.flex-col > header.flex-shrink-0.flex > div.flex.flex-col > span.font-sans.truncate",
+   "count": 1
+  },
+  {
+   "text": "Bed",
+   "fontPx": 10,
+   "sel": "div.rounded-2xl.mb-5 > div.flex > div > span.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Year one \u2014 from this month",
+   "fontPx": 9.5,
+   "sel": "div.flex-1 > div > div.flex > div.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Year two \u2014 repeat crops; check plant ages",
+   "fontPx": 9.5,
+   "sel": "div.flex-1 > div > div.flex > div.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Vegetables",
+   "fontPx": 10.5,
+   "sel": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"veg\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "6.0",
+   "fontPx": 11,
+   "sel": "div > div.flex > div > div.font-mono",
+   "count": 6
+  },
+  {
+   "text": "m\u00b2",
+   "fontPx": 11,
+   "sel": "div > div.flex > div > div.font-mono",
+   "count": 11
+  },
+  {
+   "text": "Onions",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(61%)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(62%)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "check / transplant",
+   "fontPx": 9,
+   "sel": "div > div > div > button[aria-label=\"Plan to transplant Lettuce in \"].font-sans",
+   "count": 5
+  },
+  {
+   "text": "Carrots",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "(86%)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Butternut",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(1/1)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Tomatoes",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(75%)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(20%)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Green beans",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(69%)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "8.0",
+   "fontPx": 11,
+   "sel": "div > div.flex > div > div.font-mono",
+   "count": 1
+  },
+  {
+   "text": "Garlic",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(\u00bd)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(47%)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Sweet potato",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(46%)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Staple grain",
+   "fontPx": 10,
+   "sel": "div.flex > div > div.font-sans > span",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(83%)",
+   "fontPx": 11,
+   "sel": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Staple crops",
+   "fontPx": 10.5,
+   "sel": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"staple\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "plot",
+   "fontPx": 8.5,
+   "sel": "div.flex > div > div.font-display.font-semibold > span.font-sans.font-semibold",
+   "count": 4
+  },
+  {
+   "text": "21.0",
+   "fontPx": 11,
+   "sel": "div > div.flex > div > div.font-mono",
+   "count": 4
+  },
+  {
+   "text": "Fruit, nuts & berries",
+   "fontPx": 10.5,
+   "sel": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"trees\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "From your map \u00b7 hover or tap a bar",
+   "fontPx": 10,
+   "sel": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > div.font-sans",
+   "count": 2
+  },
+  {
+   "text": "Outlined bars: sourced planning references when established.",
+   "fontPx": 11,
+   "sel": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > p.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Mango",
+   "fontPx": 11,
+   "sel": "div > button[aria-label=\"Mango \u2014 fruit \u00b7 1 plant on you\"].font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "\u00b7 reference",
+   "fontPx": 11,
+   "sel": "div > button[aria-label=\"Mango \u2014 fruit \u00b7 1 plant on you\"].font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "(proposed)",
+   "fontPx": 11,
+   "sel": "div > button[aria-label=\"Mango \u2014 fruit \u00b7 1 plant on you\"].font-sans > span > span",
+   "count": 4
+  },
+  {
+   "note": "64 more distinct rows omitted; the totals above are complete"
+  }
+ ],
+ "targetsUnder24": [
+  {
+   "label": "check / transplant",
+   "w": 100,
+   "h": 16,
+   "tag": "button",
+   "exception": null,
+   "clashesWith": "Lettuce (62%)",
+   "sel": "div > div > div > button[aria-label=\"Plan to transplant Lettuce in \"].font-sans",
+   "count": 5
+  },
+  {
+   "label": "How the two-year timeline works (\u21bb, faded bars, ro",
+   "w": 366,
+   "h": 17,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "sel": "div.mx-auto.w-full > div.font-sans.mb-5 > details.mt-1.5 > summary.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Show 2 more months",
+   "w": 118,
+   "h": 18,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "sel": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > section[data-gap-fills=\"true\"] > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "LOOKING AHEAD \u25b8",
+   "w": 332,
+   "h": 15,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "sel": "div.grid.gap-4 > div.rounded-2xl.p-4 > div > button.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "label": "By crop",
+   "w": 57,
+   "h": 23,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "sel": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "By bed",
+   "w": 53,
+   "h": 23,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "sel": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Later in the next 12 months (1 more month)",
+   "w": 306,
+   "h": 19,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "sel": "div.scroll-mt-24.rounded-2xl > div.space-y-3 > details.rounded-xl.px-3 > summary.font-display.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "What these quantities do and do not cover",
+   "w": 332,
+   "h": 17,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "sel": "div.grid.gap-4 > div.scroll-mt-24.rounded-2xl > details.mt-2 > summary.font-sans",
+   "count": 1
+  }
+ ],
+ "targets24to44": [
+  {
+   "label": "Home",
+   "w": 34,
+   "h": 34,
+   "tag": "a",
+   "sel": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > a[aria-label=\"Home\"].flex-shrink-0.flex",
+   "count": 1
+  },
+  {
+   "label": "\u2039 Back to design",
+   "w": 109,
+   "h": 29,
+   "tag": "a",
+   "sel": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > a[aria-label=\"Back to design\"].flex-shrink-0.flex",
+   "count": 1
+  },
+  {
+   "label": "7 beds \u00b7 4 plots",
+   "w": 126,
+   "h": 28,
+   "tag": "button",
+   "sel": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > button.flex-shrink-0.inline-flex",
+   "count": 1
+  },
+  {
+   "label": "Auto-suggest a plan",
+   "w": 258,
+   "h": 43,
+   "tag": "button",
+   "sel": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.flex.gap-2 > button.flex-1.py-2.5",
+   "count": 1
+  },
+  {
+   "label": "Clear all",
+   "w": 100,
+   "h": 43,
+   "tag": "button",
+   "sel": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.flex.gap-2 > button.px-4.py-2.5",
+   "count": 1
+  },
+  {
+   "label": "Onions (61%)",
+   "w": 58,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "+ crop",
+   "w": 56,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 11
+  },
+  {
+   "label": "Lettuce (62%)",
+   "w": 290,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Lettuce (62%)",
+   "w": 58,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Carrots (86%)",
+   "w": 290,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Butternut (1/1)",
+   "w": 348,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Tomatoes (75%)",
+   "w": 406,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Carrots (20%)",
+   "w": 290,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Green beans (69%)",
+   "w": 174,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Green beans (69%)",
+   "w": 58,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Garlic (\u00bd)",
+   "w": 116,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Broccoli (47%)",
+   "w": 348,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Sweet potato (46%)",
+   "w": 406,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Sweet potato (46%)",
+   "w": 58,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Maize (mielies) (83%)",
+   "w": 348,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Maize (mielies) (83%)",
+   "w": 58,
+   "h": 26,
+   "tag": "button",
+   "sel": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Mango \u00b7 reference (proposed)",
+   "w": 290,
+   "h": 30,
+   "tag": "button",
+   "sel": "div > div > div > button[aria-label=\"Mango \u2014 fruit \u00b7 1 plant on you\"].font-sans",
+   "count": 2
+  },
+  {
+   "label": "Avocado \u00b7 reference (proposed)",
+   "w": 290,
+   "h": 30,
+   "tag": "button",
+   "sel": "div > div > div > button[aria-label=\"Avocado \u2014 fruit \u00b7 1 plant on y\"].font-sans",
+   "count": 2
+  },
+  {
+   "label": "Avocado \u00b7 0 existing, 1 proposed \u00b7 confirm picking",
+   "w": 332,
+   "h": 39,
+   "tag": "summary",
+   "sel": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Mango \u00b7 0 existing, 1 proposed \u00b7 confirm picking m",
+   "w": 332,
+   "h": 39,
+   "tag": "summary",
+   "sel": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Moringa \u00b7 0 existing, 2 proposed \u00b7 confirm picking",
+   "w": 332,
+   "h": 39,
+   "tag": "summary",
+   "sel": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Num-num \u00b7 0 existing, 1 proposed \u00b7 confirm picking",
+   "w": 332,
+   "h": 39,
+   "tag": "summary",
+   "sel": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Availability",
+   "w": 84,
+   "h": 27,
+   "tag": "button",
+   "sel": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Field utilization",
+   "w": 107,
+   "h": 27,
+   "tag": "button",
+   "sel": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Plan-cycle value",
+   "w": 113,
+   "h": 27,
+   "tag": "button",
+   "sel": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "An established year",
+   "w": 123,
+   "h": 25,
+   "tag": "button",
+   "sel": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "From today",
+   "w": 79,
+   "h": 25,
+   "tag": "button",
+   "sel": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Fruit, nuts & berries shown \u00b7 4 kinds on your map",
+   "w": 311,
+   "h": 28,
+   "tag": "button",
+   "sel": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.flex.flex-wrap > button.font-sans.rounded-full",
+   "count": 1
+  },
+  {
+   "label": "Plan it",
+   "w": 60,
+   "h": 28,
+   "tag": "button",
+   "sel": "div[data-gap-fill-month=\"1\"] > ul > li[data-gap-fill-suggestion=\"baby-marrow\"].flex.flex-wrap > button[aria-label=\"Plan Baby marrow (courgette), \"].font-sans.font-semibold",
+   "count": 9
+  },
+  {
+   "label": "Share tasks",
+   "w": 104,
+   "h": 30,
+   "tag": "button",
+   "sel": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > button.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "label": "Feeding your crops \u25b8",
+   "w": 332,
+   "h": 32,
+   "tag": "button",
+   "sel": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > button.w-full.flex",
+   "count": 1
+  },
+  {
+   "label": "Protecting your crops \u25b8",
+   "w": 332,
+   "h": 32,
+   "tag": "button",
+   "sel": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > button.w-full.flex",
+   "count": 1
+  }
+ ],
+ "unnamedControls": [],
+ "clippedText": [
+  {
+   "text": "Onions",
+   "shownPx": 30,
+   "neededPx": 67,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(61%)",
+   "shownPx": 30,
+   "neededPx": 67,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "shownPx": 30,
+   "neededPx": 73,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(62%)",
+   "shownPx": 30,
+   "neededPx": 73,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "shownPx": 30,
+   "neededPx": 99,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(69%)",
+   "shownPx": 30,
+   "neededPx": 99,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Sweet potato",
+   "shownPx": 30,
+   "neededPx": 103,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(46%)",
+   "shownPx": 30,
+   "neededPx": 103,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "shownPx": 30,
+   "neededPx": 111,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(83%)",
+   "shownPx": 30,
+   "neededPx": 111,
+   "sel": "div > button.font-sans > span > span",
+   "count": 1
+  }
+ ],
+ "headings": [
+  "H4 Saved planned nursery batches",
+  "H2 Site country and region",
+  "H2 How production changes as plants grow",
+  "H3 Nov 2026 \u2013 Oct 2027",
+  "H3 Check your farm conditions",
+  "H3 Fruit, nuts and indigenous foods",
+  "H4 Avocado",
+  "H4 Mango",
+  "H4 Moringa",
+  "H4 Num-num",
+  "H4 Water through the dry season",
+  "H4 Frost on this farm",
+  "H4 Sun and drainage"
+ ],
+ "landmarks": {
+  "main": 0,
+  "h1": 0,
+  "h1Rendered": []
+ },
+ "overflowers": [],
+ "consoleErrors": []
+}
