@@ -65,6 +65,22 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 10 Nov 2026 — Crop plan: grower's own calendar choice, and the out-of-season list (saved-plan field added; full suite required before merge)
+- **Record:** the update section of `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-078, CP-089, CP-091).
+  Rory: "go ahead with decisions 2 and 3". Commit `f11d5d09`.
+- **Choice:** Auto-suggest a plan has "Sowing calendar for this site" (four calendars or "Let the app decide"). Saved with
+  the plan per site (`CropPlanState.sowingCalendarChoices`; older plans still load). Authority order in
+  `lib/site-climate.ts` `sowingCalendarInUse`: the grower's choice, the climate reading moved by their frost answer, the
+  regional fallback. The screen says what the climate records would give, and warns when the choice is warmer than
+  records that show frost.
+- **Out-of-season list:** above the bed calendar, planned sowings the calendar in use does not offer, with the months it
+  does offer (`lib/sowing-calendar-review.ts`). Nothing is moved. Hideable per site; returns when the list or calendar changes.
+- **Sample farm:** four sowings written for the old hard-frost season moved to in-season months on its own hot-area
+  calendar (`lib/demo-farm.ts`); no bed is overbooked in any opening month.
+- **Tests:** `sowing-calendar-choice`, `sowing-calendar-choice-ui`; 281 affected files (4,081 tests) green locally.
+- **Open:** the choice is device-local, like the plan; whether an early-ready sowing should still count toward a target
+  (CP-079); the open source questions listed in the entry below.
+
 ### 10 Nov 2026 — Crop plan accuracy fixes (farming data changed; full suite required before merge)
 - **Record:** `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-073–CP-083 dispositions, CP-086–CP-090),
   evidence in `evidence-crop-plan-accuracy-fixes/`. Rory: "go ahead and fix the accuracy issues".

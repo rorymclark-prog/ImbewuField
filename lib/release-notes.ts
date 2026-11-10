@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 November 2026', sha: 'f11d5d09cefe457ea7c5779acd6b1f528d3b5100', changes: [
+    'Choose your own sowing calendar if you know your land better than the climate records.',
+    'The crop plan lists planned sowings that are outside your sowing months.',
+    'The sample farm plan now follows the sowing months for its own hot area.',
+  ], tour: [{ title: 'Choose your sowing calendar', where: 'Crop plan → Auto-suggest a plan', href: '/facilitator/crops',
+    detail: 'Open Auto-suggest a plan and look for "Sowing calendar for this site". Pick the calendar that fits your land, or leave it on "Let the app decide". If a planned sowing is outside the months of the calendar in use, the plan lists it above the beds. Nothing is moved for you.' }] },
   { when: '10 November 2026', sha: 'c32f6a39a6bf93d71fa674437ecb570716532b65', changes: [
     'Hot, frost-free farms (Lowveld, KZN coast) now get the right sowing season.',
     'Sowing months corrected for hot areas, the Western Cape and peas in frost areas.',

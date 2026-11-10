@@ -13,6 +13,7 @@ This folder backs [`../crop-plan-accuracy-fixes-claude.md`](../crop-plan-accurac
 | `outputs/catalog-after.json` | The crop catalogue's planning fields after the fixes (the "before" is `../evidence-crop-plan-accuracy/outputs/catalog.json`) |
 | `outputs/guide-agreement-before-after.txt` | What the second script printed, ending with the 39 changed rows |
 | `01`–`04` PNG | The running page after the fixes: the calendar name and reasons on desktop and on a phone in light and dark, and the weekly-target warning |
+| `05`–`08` PNG | The later update: choosing a calendar in the pop-up, the out-of-season list on a phone in light and dark, and the "chosen by you" header on desktop |
 
 ## Reproduce
 
