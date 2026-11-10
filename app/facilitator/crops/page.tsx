@@ -40,7 +40,7 @@ import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection
 import GrowerCycleIntent from '@/components/crops/GrowerCycleIntent';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
-import { activeAccountUid } from '@/lib/account-local-storage';
+import { activeAccountLocalStorageKey, activeAccountUid } from '@/lib/account-local-storage';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
@@ -94,7 +94,7 @@ import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
 import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
-import { calendarCanJudgeSavedSowings, outOfCalendarLine, outOfCalendarSignature, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
+import { SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, outOfCalendarLine, outOfCalendarSignature, parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
 import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
@@ -1731,18 +1731,23 @@ function FacilitatorCropsPageInner() {
   );
   const outOfCalendarScope = calendarScopeId ?? 'no-site';
   const outOfCalendarKey = outOfCalendarSignature(outOfCalendar, pattern);
-  // Read after mount only: the page is server-rendered and localStorage does not exist there.
-  const [hiddenCalendarNotice, setHiddenCalendarNotice] = useState<Record<string, string>>({});
+  // Which lists this grower hid, kept per ACCOUNT: the record names a farm and its crops, so on
+  // a shared phone it must not pass from one account to the next (the bare key did exactly
+  // that). Read after mount only: the page is server-rendered and localStorage does not exist
+  // there. A record read for one account is never applied to another.
+  const hiddenNoticeStorageKey = activeAccountLocalStorageKey(SOWING_CALENDAR_NOTICE_HIDDEN_KEY);
+  const [hiddenCalendarNotice, setHiddenCalendarNotice] = useState<{ storageKey: string; byScope: Record<string, string> }>({ storageKey: '', byScope: {} });
   useEffect(() => {
-    try {
-      const raw = JSON.parse(localStorage.getItem(SOWING_CALENDAR_NOTICE_HIDDEN_KEY) || '{}');
-      if (raw && typeof raw === 'object' && !Array.isArray(raw)) setHiddenCalendarNotice(raw as Record<string, string>);
-    } catch { /* private window or blocked storage: the notice simply shows */ }
-  }, []);
+    let byScope: Record<string, string> = {};
+    try { byScope = parseHiddenCalendarNotices(localStorage.getItem(hiddenNoticeStorageKey)); } catch { /* private window or blocked storage: the notice simply shows */ }
+    setHiddenCalendarNotice({ storageKey: hiddenNoticeStorageKey, byScope });
+  }, [hiddenNoticeStorageKey]);
+  const hiddenForThisAccount = hiddenCalendarNotice.storageKey === hiddenNoticeStorageKey ? hiddenCalendarNotice.byScope : {};
   function hideCalendarNotice() {
-    const next = { ...hiddenCalendarNotice, [outOfCalendarScope]: outOfCalendarKey };
-    setHiddenCalendarNotice(next);
-    try { localStorage.setItem(SOWING_CALENDAR_NOTICE_HIDDEN_KEY, JSON.stringify(next)); } catch { /* the notice stays hidden for this visit only */ }
+    const storageKey = activeAccountLocalStorageKey(SOWING_CALENDAR_NOTICE_HIDDEN_KEY);
+    const byScope = { ...(hiddenCalendarNotice.storageKey === storageKey ? hiddenCalendarNotice.byScope : {}), [outOfCalendarScope]: outOfCalendarKey };
+    setHiddenCalendarNotice({ storageKey, byScope });
+    try { localStorage.setItem(storageKey, JSON.stringify(byScope)); } catch { /* the notice stays hidden for this visit only */ }
   }
   const hasOwnRecords = markedPlantings.length > 0;
   const legacyAddBlocked = (bedId: string, rows = plan?.plantings ?? []) => rows.some(p => hasGrowerCycleMarker(p)
@@ -2940,7 +2945,7 @@ function FacilitatorCropsPageInner() {
               saveContext={nurserySaveContext} onSettings={saveNurserySettings}
             />}
 
-            {outOfCalendar.length > 0 && hiddenCalendarNotice[outOfCalendarScope] !== outOfCalendarKey && (
+            {outOfCalendar.length > 0 && hiddenForThisAccount[outOfCalendarScope] !== outOfCalendarKey && (
               <section aria-label="Sowings outside the sowing calendar" className="rounded-2xl px-4 py-3 mb-3 font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '4px solid var(--gold)' }}>
                 <h2 className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>{outOfCalendar.length === 1 ? '1 planned sowing is' : `${outOfCalendar.length} planned sowings are`} outside this site&apos;s sowing months</h2>
                 {/* Say WHY these are out of season, and only what is known: the grower's own calendar
@@ -6055,9 +6060,6 @@ const TIMING_OPTIONS: { key: PlanTiming; label: string; blurb: string }[] = [
   { key: 'fromNow', label: IDEAL_PLAN_COPY.fromNowLabel, blurb: IDEAL_PLAN_COPY.fromNowBlurb },
   { key: 'idealYear', label: IDEAL_PLAN_COPY.idealLabel, blurb: IDEAL_PLAN_COPY.idealBlurb },
 ];
-/** localStorage map of scope id to the out-of-season list signature the grower chose to hide. */
-const SOWING_CALENDAR_NOTICE_HIDDEN_KEY = 'imbewu_sowing_calendar_notice_hidden_v1';
-
 function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
   groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,

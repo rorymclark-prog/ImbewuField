@@ -9,9 +9,10 @@ import {
 import { sowingCalendarInUse, type SiteClimate } from '@/lib/site-climate';
 import { SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
 import {
-  SOWING_CALENDAR_CORRECTED_AT, calendarCanJudgeSavedSowings, outOfCalendarLine, outOfCalendarSignature, planMayPredateCorrection,
-  sowingsOutsideCalendar,
+  SOWING_CALENDAR_CORRECTED_AT, SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, outOfCalendarLine, outOfCalendarSignature,
+  parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar,
 } from '@/lib/sowing-calendar-review';
+import { accountLocalStorageKey } from '@/lib/account-local-storage';
 import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
 import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 
@@ -321,4 +322,30 @@ test('the printed plan says when the calendar was the grower\'s choice', () => {
   assert.equal(printedSowingCalendarLine('Light frost at most · summer rain', 'grower-frost', 'site'), 'Light frost at most · summer rain');
   assert.equal(printedSowingCalendarLine('Light frost at most · summer rain', 'reference', 'reference'), 'Light frost at most · summer rain');
   assert.equal(printedSowingCalendarLine('Winter frost', 'reference', 'none'), 'Assuming winter frost');
+});
+
+test('the record of hidden lists is per account, and a damaged record hides nothing', () => {
+  // The record names a farm and its crops. Under a bare key it stayed in the browser for the
+  // next account on a shared phone; under the account's key each account has its own.
+  const mine = accountLocalStorageKey(SOWING_CALENDAR_NOTICE_HIDDEN_KEY, 'grower-a');
+  const theirs = accountLocalStorageKey(SOWING_CALENDAR_NOTICE_HIDDEN_KEY, 'grower-b');
+  assert.notEqual(mine, theirs);
+  assert.notEqual(mine, SOWING_CALENDAR_NOTICE_HIDDEN_KEY, 'a signed-in account never uses the bare key');
+  assert.ok(mine.startsWith(SOWING_CALENDAR_NOTICE_HIDDEN_KEY));
+
+  const stored = JSON.stringify({ [KOMATIPOORT]: 'all-year|p1:cabbage:1:2.3.4.5.6' });
+  assert.deepEqual(parseHiddenCalendarNotices(stored), { [KOMATIPOORT]: 'all-year|p1:cabbage:1:2.3.4.5.6' });
+  // Missing, damaged or wrongly shaped: nothing is hidden, so the list simply shows.
+  assert.deepEqual(parseHiddenCalendarNotices(null), {});
+  assert.deepEqual(parseHiddenCalendarNotices(undefined), {});
+  assert.deepEqual(parseHiddenCalendarNotices(''), {});
+  assert.deepEqual(parseHiddenCalendarNotices('{not json'), {});
+  assert.deepEqual(parseHiddenCalendarNotices('[]'), {});
+  assert.deepEqual(parseHiddenCalendarNotices('"text"'), {});
+  assert.deepEqual(parseHiddenCalendarNotices('null'), {});
+  // Only scope → signature text is kept.
+  assert.deepEqual(parseHiddenCalendarNotices(JSON.stringify({ a: 'sig', b: 3, c: null, d: { nested: 'x' }, e: ['x'] })), { a: 'sig' });
+  const hostile = parseHiddenCalendarNotices('{"__proto__":"x","site":"sig"}');
+  assert.deepEqual(Object.keys(hostile), ['site']);
+  assert.equal(Object.getPrototypeOf(hostile), Object.prototype);
 });

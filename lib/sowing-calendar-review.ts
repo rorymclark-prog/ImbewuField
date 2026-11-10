@@ -136,6 +136,33 @@ export function outOfCalendarSignature(rows: readonly OutOfCalendarSowing[], pat
 }
 
 /**
+ * Base name of the browser record of hidden lists: site scope id → the signature the
+ * grower hid. The page must store it through activeAccountLocalStorageKey, never under
+ * this bare name. The record names a farm (the scope id is its coordinates) and its
+ * crops, and this app keeps one account's farm data out of the next account's reach on
+ * a shared phone (lib/account-local-storage.ts). The first version of the list wrote
+ * the bare name; found on 10 November 2026 while checking the hosted build, before the
+ * feature was released.
+ */
+export const SOWING_CALENDAR_NOTICE_HIDDEN_KEY = 'imbewu_sowing_calendar_notice_hidden_v1';
+
+/** Reads a stored record of hidden lists. Anything that is not scope → signature text is dropped. */
+export function parseHiddenCalendarNotices(raw: string | null | undefined): Record<string, string> {
+  if (typeof raw !== 'string' || !raw) return {};
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) return {};
+    const out: Record<string, string> = {};
+    for (const [scope, signature] of Object.entries(parsed)) {
+      if (typeof signature === 'string' && scope !== '__proto__') out[scope] = signature;
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
+/**
  * True when the plan's accepted suggestion predates the correction, or carries no date
  * at all. Only then may the page say the months changed under the grower: a plan made
  * after it is out of season because of something they or their calendar choice did.

@@ -61,14 +61,32 @@ test('a grower is told which planned sowings fall outside their calendar and tha
   assert.match(page, /Hide this list/);
 });
 
-test('hiding the list is remembered per site and read only after mount, so the server render never touches storage', () => {
-  assert.match(page, /imbewu_sowing_calendar_notice_hidden_v1/);
-  const lines = page.split('\n');
-  const reads = lines.map((line, i) => ({ line, i })).filter(({ line }) => /localStorage\.getItem\(SOWING_CALENDAR_NOTICE_HIDDEN_KEY/.test(line));
-  assert.equal(reads.length, 1);
-  const before = page.slice(0, page.indexOf('localStorage.getItem(SOWING_CALENDAR_NOTICE_HIDDEN_KEY'));
+test('hiding the list is remembered per site and per account, and read only after mount', () => {
+  // This test used to pin a read and a write of the bare key 'imbewu_sowing_calendar_notice_hidden_v1'.
+  // That was the fault: the record names a farm (its scope id is the site's coordinates) and its
+  // crops, and a bare key stays in the browser for the next account on a shared phone. Every other
+  // store of farm data here goes through activeAccountLocalStorageKey. Found on 10 November 2026
+  // while checking the hosted build, before the feature was released.
+  assert.doesNotMatch(page, /imbewu_sowing_calendar_notice_hidden_v1/, 'the bare key name must not be written into the page');
+  assert.doesNotMatch(page, /localStorage\.(getItem|setItem)\(SOWING_CALENDAR_NOTICE_HIDDEN_KEY/, 'never read or written under the bare key');
+  assert.match(page, /const hiddenNoticeStorageKey = activeAccountLocalStorageKey\(SOWING_CALENDAR_NOTICE_HIDDEN_KEY\);/);
+
+  // One read, inside an effect that re-runs when the account's key changes: the server render never touches storage.
+  const reads = page.split('localStorage.getItem(hiddenNoticeStorageKey)').length - 1;
+  assert.equal(reads, 1);
+  const before = page.slice(0, page.indexOf('localStorage.getItem(hiddenNoticeStorageKey)'));
   assert.ok(before.lastIndexOf('useEffect(() => {') > before.lastIndexOf('\nfunction '), 'the read must sit inside a useEffect, not at module level or in render');
-  assert.match(page, /try \{ localStorage\.setItem\(SOWING_CALENDAR_NOTICE_HIDDEN_KEY/);
+  const effect = page.slice(page.indexOf('localStorage.getItem(hiddenNoticeStorageKey)'));
+  assert.match(effect.slice(0, 400), /\}, \[hiddenNoticeStorageKey\]\);/, 'a change of account re-reads that account\'s own record');
+  assert.match(page, /parseHiddenCalendarNotices\(localStorage\.getItem\(hiddenNoticeStorageKey\)\)/, 'what is read is cleaned before use');
+
+  // The write computes the key again at the moment of the tap, and a record read for one account
+  // is never applied to, or merged into, another's.
+  assert.match(page, /const storageKey = activeAccountLocalStorageKey\(SOWING_CALENDAR_NOTICE_HIDDEN_KEY\);/);
+  assert.match(page, /try \{ localStorage\.setItem\(storageKey, JSON\.stringify\(byScope\)\); \}/);
+  assert.match(page, /hiddenCalendarNotice\.storageKey === hiddenNoticeStorageKey \? hiddenCalendarNotice\.byScope : \{\}/);
+  assert.match(page, /hiddenCalendarNotice\.storageKey === storageKey \? hiddenCalendarNotice\.byScope : \{\}/);
+  assert.match(page, /hiddenForThisAccount\[outOfCalendarScope\] !== outOfCalendarKey/);
 });
 
 test('the notice gives the grower the real reason: their own calendar choice, or a plan older than the correction', () => {
