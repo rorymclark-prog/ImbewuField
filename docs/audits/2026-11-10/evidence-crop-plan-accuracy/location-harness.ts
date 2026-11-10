@@ -241,7 +241,7 @@ function writeSummary(R: any[]) {
   p('# Calendar accuracy audit: app pattern vs ERA5 frost and heat'); p();
   p(`Generated ${new Date().toISOString().slice(0, 10)} by accuracy/harness.ts. Raw data: locations.json.`); p();
   p('## Limits'); p();
-  p('- ERA5 (Open-Meteo archive) is a gridded reanalysis, roughly 9-25 km cells. It under-counts frost in valley bottoms and cold-air pockets and smooths mountains: its air-frost counts are a LOWER bound for a real farm in a hollow, and cell elevation (see locations.json era5.elevationM) can differ from the site.');
+  p('- ERA5 (Open-Meteo archive) is a gridded reanalysis, roughly 9-25 km cells. It smooths mountains and can miss frost in valley bottoms and cold-air pockets: its air-frost counts are estimates for a grid cell, not frost observations at a farm, a farm in a hollow may frost more often, and cell elevation (see locations.json era5.elevationM) can differ from the site.');
   p('- App side is NASA POWER monthly means (via fetchNasaPower; rainfall may be swapped for Open-Meteo 1991-2020 by the app when the two differ >30%, see rainfallSource). ERA5 side is 2001-2020 daily. Different periods and grids; differences are reported, not reconciled.');
   p('- Frost days = daily Tmin (2 m air) <= 0 C; ground-frost proxy = Tmin <= 2 C. Field months = sow month through first harvest month (harvestMonthForCrop, which includes the nursery months for transplants). Frost on seedlings in a tray is not field frost; locations.json also carries frostExposureBedEntryOnly (from bedEntryMonth).');
   p('- Monthly resolution: a month counted as exposed is exposed for at least part of it; harvest-window months after first harvest are not counted.'); p();

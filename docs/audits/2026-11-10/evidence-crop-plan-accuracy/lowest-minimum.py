@@ -1,6 +1,6 @@
 # The lowest daily minimum temperature in the ERA5 record (2001-2020) for the sites whose frost status matters most.
 # "No air-frost day" is a count; this shows how close each site came, which matters because a gridded record
-# runs warmer than a cold hollow. Reads the raw daily cache written by location-harness.ts.
+# can run warmer than a cold hollow. Reads the raw daily cache written by location-harness.ts.
 # Usage: python3 lowest-minimum.py <OUT dir of location-harness.ts>
 import json, os, sys
 cache=os.path.join(sys.argv[1],'cache')

@@ -11,9 +11,13 @@ This folder backs [`../crop-plan-accuracy-fixes-claude.md`](../crop-plan-accurac
 | `outputs/calendar-choice-matrix.txt` | What the first script printed |
 | `outputs/calendar-choices.json` | The same, as data, for the second script |
 | `outputs/catalog-after.json` | The crop catalogue's planning fields after the fixes (the "before" is `../evidence-crop-plan-accuracy/outputs/catalog.json`) |
-| `outputs/guide-agreement-before-after.txt` | What the second script printed, ending with the 39 changed rows |
+| `outputs/guide-agreement-before-after.txt` | What the second script printed: per place and region, then every crop-and-place pair that shares no month with the guide, before (72) and after (13), by name, then the 39 changed rows |
 | `01`–`04` PNG | The running page after the fixes: the calendar name and reasons on desktop and on a phone in light and dark, and the weekly-target warning |
 | `05`–`08` PNG | The later update: choosing a calendar in the pop-up, the out-of-season list on a phone in light and dark, and the "chosen by you" header on desktop |
+| `missing-marker-effect.ts`, `outputs/missing-marker-effect.txt` | Update 2: what a NASA POWER missing-value marker did to the calendar at the 44 places before the record-minimum helper cleaned it |
+| `sample-farm-cold-cache-check.cjs`, `outputs/sample-farm-cold-cache-check.txt`, `09`–`11` PNG | Update 2: the sample farm in a browser with the climate endpoint aborted: the labelled fallback calendar and no out-of-season list, on a phone in light and dark and on desktop |
+| `make-local-farm-seeds.ts`, `saved-plan-path-check.cjs`, `outputs/saved-plan-path-check.txt`, `12` PNG | Update 2: a real local farm (signed out, not sample mode) through a fresh plan, an old saved plan, reloads, hide, a different calendar, clearing and two PDF downloads |
+| `outputs/pdf-calendar-lines.txt` | Update 2: the calendar line read back from the two downloaded plan PDFs |
 
 ## Reproduce
 
@@ -26,7 +30,20 @@ node --import ./tests/register-alias.mjs docs/audits/2026-11-10/evidence-crop-pl
 python3 $E/guide-agreement.py /tmp/catalog-after.json /tmp/calendar-choices.json
 ```
 
-The "after" columns are computed by the code the scripts are run on, so on a later revision they show that revision. The committed outputs were made on the commit that adds this folder.
+The "after" columns are computed by the code the scripts are run on, so on a later revision they show that revision. The committed outputs were made on the commit that adds this folder. They were regenerated on `9a980a5c` (Update 2): the matrix and the catalogue dump were byte-identical, and the agreement output gained only the two lists of named pairs.
+
+The Update 2 browser checks need a running app and Playwright, so they are not network-free:
+
+```bash
+node dev-server.mjs --port 4242 &
+node --import ./tests/register-alias.mjs $E/missing-marker-effect.ts
+OUT=/tmp/shots node $E/sample-farm-cold-cache-check.cjs
+node --import ./tests/register-alias.mjs $E/make-local-farm-seeds.ts /tmp/seeds.json
+SEEDS=/tmp/seeds.json OUT=/tmp/shots DL=/tmp/pdfs node $E/saved-plan-path-check.cjs
+pdftotext -layout /tmp/pdfs/real-farm-chosen-calendar.pdf - | grep 'satellite climate records'
+```
+
+Set `PLAYWRIGHT` to the module's path if it is not on the default resolution path. The real-farm script writes the sample farm's design and saved place into that browser profile's own storage and clicks through the first-run consent and goal prompts. It signs in to nothing and sends no farm data anywhere. Its climate reading is a live call to the app's own endpoint, so the calendar it reports depends on that answer.
 
 ## Inputs, and what kind of evidence each is
 
@@ -47,5 +64,7 @@ No weather-station record, on-farm frost date or agronomist's advice was availab
 - **The Western Cape agreement figure is not independent.** Those rows are now taken from the guide they are compared with. The script prints a total without the Western Cape for that reason.
 - **Agreement percentages count months.** They show which regions fit and which do not. They are not a pass mark.
 - **Which guide region a place belongs to is the auditor's assignment**, unchanged from the audit. Hillcrest and Port St Johns are not scored.
-- **Frost is a lower bound.** Both records smooth valleys. A hollow frosts when its grid cell does not.
-- **The screenshots are of the public sample farm** on a local development server, not the deployed site.
+- **Frost figures are grid estimates, not site frost observations.** Both records smooth valleys and can miss frost in a cold hollow. Nothing here shows the size or the direction of the difference at any one farm.
+- **The screenshots are of the public sample farm** on a local development server, not the deployed site. Screen `12` is the real local farm built from the sample farm's design.
+- **Sample mode keeps its data in memory.** Every edit, a calendar choice included, is forgotten on reload. That is how the sample works for all data, so the saved-plan path was checked on a real local farm instead.
+- **A pair that shares no month with the guide is a disagreement with one secondary source,** under the auditor's assignment of places to regions. It is not a finding that the app's months are wrong, and no month was moved to raise the overlap.

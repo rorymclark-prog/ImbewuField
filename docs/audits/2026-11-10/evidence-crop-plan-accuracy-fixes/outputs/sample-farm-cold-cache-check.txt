@@ -1,0 +1,20 @@
+Local development server, public sample farm, climate endpoint aborted. 10 November 2026.
+
+[A cold light] climate requests attempted: 1 (all aborted)
+[A cold light] out-of-season list on first open: 0
+[A cold light] modal: {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Light frost at most","foot":"Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback)."}
+[A cold] after the visitor chooses the hard-frost calendar, list rows: [
+  'Butternut on Bed 3: planned for March. This calendar sows it Oct–Dec.',
+  'Green beans on Bed 5: planned for February. This calendar sows it Sep–Jan.',
+  'Sweet potato on Bed 6: planned for October. This calendar sows it Nov.',
+  'Carrots on Bed 2: planned for April. This calendar sows it Feb–Mar, Aug–Oct.',
+  'Carrots on Bed 4: planned for April. This calendar sows it Feb–Mar, Aug–Oct.'
+]
+[A cold] back on "Let the app decide", list: 0
+
+[A cold dark] climate requests attempted: 1 (all aborted)
+[A cold dark] out-of-season list on first open: 0
+[A cold dark] modal: {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Light frost at most","foot":"Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback)."}
+
+[A cold desktop] header chip: Light frost at most · summer rain · nearest reference: Durban / KZN coast & hinterland (fallback)
+[A cold desktop] list: 0

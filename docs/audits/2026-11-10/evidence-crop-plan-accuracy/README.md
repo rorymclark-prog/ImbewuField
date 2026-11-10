@@ -34,7 +34,7 @@ This folder backs [`../crop-plan-accuracy-claude.md`](../crop-plan-accuracy-clau
 | Kind | What it is here | How far to trust it |
 | --- | --- | --- |
 | Code fact | The catalogue's months, the calendar the app assigns, the harvest month it computes | Exact and reproducible: it is what the app does |
-| Modelled or gridded estimate | NASA POWER and ERA5 temperatures, rain and frost-day counts for a grid cell | Good for comparing regions. Not a station reading and not a farm's microclimate: a hollow frosts when its cell does not |
+| Modelled or gridded estimate | NASA POWER and ERA5 temperatures, rain and frost-day counts for a grid cell | Good for comparing regions. Not a station reading and not a farm's microclimate: a hollow can frost when its cell does not |
 | Published advice | The SANSOR regional guide, Starke Ayres guidelines, the Cowpeas Infopak; the KZN table rows as transcribed earlier | General guidance for a region, not validated for any one farm. The KZN rows are second-hand until the document is re-read |
 | Not available to this audit | Weather-station observations, on-farm frost dates, an agronomist's or extension officer's local advice, a grower's own records | Outranks everything above where it exists |
 
@@ -80,7 +80,7 @@ The downloaded PDFs are not committed.
 
 ## Limits
 
-- **Frost is a lower bound.** ERA5 is a grid of roughly 9–25 km cells, not a weather station. It smooths mountains and misses cold air pooling in valleys. Frost here means a daily minimum air temperature at or below 0 °C; `lowest-minimum.txt` shows how close each key site came. No station record was used.
+- **Frost figures are grid estimates, not site frost observations.** ERA5 is a grid of roughly 9–25 km cells, not a weather station. It smooths mountains and can miss cold air pooling in valleys, so a farm in a hollow may frost when its cell does not. No validation here establishes a one-sided bound at any farm. (Reworded 10 November 2026 after independent review; this line used to say "Frost is a lower bound". The counts are unchanged.) Frost here means a daily minimum air temperature at or below 0 °C; `lowest-minimum.txt` shows how close each key site came. No station record was used.
 - **Thresholds, as coded.** The app's calendar choice uses the coldest-month mean (7, 11 and 13 °C) and the share of rain from October to March (65% and 35%), from `lib/koppen-global.ts`. A site near a line can fall either side with either dataset; that two gridded records disagree does not say which calendar is right.
 - **Two climate records, different periods.** NASA POWER is a long-term climatology; the ERA5 figures are 2001–2020. At 10 of 62 sites the app itself replaces NASA rainfall with Open-Meteo rainfall, which is not independent of ERA5. Temperatures always are.
 - **The regional guide is a yardstick, not an authority.** It is secondary and from 2004. Which of its eight regions a site belongs to is the auditor's assignment in `compare-sansor.py`. Hillcrest and Port St Johns were left out as ambiguous. Lephalale and Polokwane (Middleveld), Springbok and Graaff-Reinet (Northern Cape and Great Karoo), and East London and Gqeberha (Eastern Cape and Little Karoo, the nearest column to a coast it does not cover) are judgement calls.

@@ -9,7 +9,7 @@
 
 ## How far off it was, and what it is now
 
-The audit's worst finding was that hot, frost-free farms were shown the wrong season. That is fixed. The interior, where most of the country farms, was already close and moved a little.
+The audit's worst finding was that places whose records show no frost were shown the opposite season to their regional guide. The rule that caused it is fixed. No farm has been checked on the ground. The interior, where most of the country farms, was already close and moved a little.
 
 | Region (regional guide's column) | Before: months the guide also lists | After | Crops sharing no month with the guide, before → after |
 | --- | --- | --- | --- |
@@ -23,11 +23,13 @@ The audit's worst finding was that hot, frost-free farms were shown the wrong se
 | All regions except the Western Cape | 63% | 71% | 72 → 12 of 972 |
 | Western Cape and South Coast | 67% | 86% | not an independent figure: see below |
 
-Three things to know before reading those numbers:
+Five things to know before reading those numbers:
 
 - **They are not a pass mark.** The guide is a seed-industry table from 2004. A wide sowing window and a narrow one weigh differently. The numbers show which regions fit their own published advice and which did not.
 - **The Western Cape figure is by construction.** Those rows are now taken from the same guide, so agreeing with it proves nothing. Every other region's rows come from other sources, so the guide is an independent check there.
 - **The Lowveld is 61%, not 72%, because of two towns.** Komatipoort, Phalaborwa, Musina and Thohoyandou reach 72%. Mbombela and Tzaneen stay at 42%: their readings put them just on the cold side of a line (see CP-073 below).
+- **They are overlap with one guide, not accuracy.** They are not a pass rate or field validation. The 13 crop-and-place pairs that still share no month are named one by one in Update 2 below, with the one place the fixes made worse (George, onions) and the reason the Middleveld figure fell.
+- **The 44 places can no longer test the rule independently.** They were used to design it. From here on they are regression evidence, and a claim that the rule generalises needs places that were held back.
 
 Calendar choice, over the 44 places: 11 changed calendar. NASA POWER and the independent record now give different calendars at 2 places, down from 9.
 
@@ -83,9 +85,12 @@ Decisions for Rory:
 1. **Merging.** The branch holds the page fixes (steps 1 and 2), these farming-data changes and the two features in the update below. Under AGENTS §1 farming data and saved-plan changes need the full suite green before merge.
 2. **Should an early-ready sowing still count toward a target (CP-079)?** The warning is in; the credit is unchanged.
 
-Decided and done on 10 November, see the update below: a direct calendar choice for growers, and telling growers which saved sowings are out of season.
+3. **Should a mapped site whose climate has not loaded get the out-of-season list (CP-094)?** It does not, since Update 2. The reasoning and the cost are at the end of that section.
+4. **Should the sowing calendar page and the Atlas follow the grower's chosen calendar and use the planner's calendar names (CP-097)?** They do neither today.
 
-Still open and needing sources, not decisions: re-reading the KZN table (CP-083); a Western Cape government source (CP-076); months for the eight crops without a column (CP-082); a heat rule (CP-080); a first-language check of two isiZulu labels.
+Decided and done on 10 November, see the updates below: a direct calendar choice for growers, and telling growers which saved sowings are out of season.
+
+Still open and needing sources, not decisions: re-reading the KZN table (CP-083); a Western Cape government source (CP-076); months for the eight crops without a column (CP-082); a heat rule (CP-080); a first-language check of two isiZulu labels; local or primary evidence for the 13 named pairs that share no month with the guide (CP-073 remaining, CP-098, CP-099); and places held back from rule design, with their own frost dates, to test the calendar rule independently.
 
 ## Update, later on 10 November 2026: a grower's own calendar choice, and the out-of-season list
 
@@ -107,3 +112,90 @@ Verification for this update:
 - Limits: the choice is saved on the device with the plan, like the plan itself; it does not travel to another device. A grower can choose a calendar the climate records contradict. That is the point of the feature, and the screen says what the records show, but nothing stops them.
 
 Evidence folder: [`evidence-crop-plan-accuracy-fixes/`](evidence-crop-plan-accuracy-fixes/). Branch `claude/blissful-pasteur-1c4ne6`, PR #1328.
+
+## Update 2, later on 10 November 2026: independent review fixes, the display path, and the remaining mismatches by name
+
+Codex reviewed this branch at `2218228e` and `0c005462` and left nine comments on PR #1328. This section answers them. Code and tests are in commit `9a980a5c`. No sowing month, threshold, yield or species changed. The 44-place calendar matrix and the catalogue dump were regenerated on that commit and are byte-identical to the committed outputs, so the fixes below changed no place's calendar.
+
+### Findings from the review
+
+| ID | Problem | Status | What was done |
+| --- | --- | --- | --- |
+| CP-092 | New (review comment 6762553064). A missing-value marker could be read as a record low temperature | fixed | `recordMinimumC` checked the provenance tag and then accepted any finite number, so NASA POWER's missing marker (-999; the cleaning rule's cutoff is -900) came back as a record low of -999 °C. Reproduced with the published helper. On the 44-place fixture a marker put -999 on every place's reason line and moved four places (Durban, Richards Bay, Komatipoort, Phalaborwa) off the calendar their no-minimum reading gives ([`outputs/missing-marker-effect.txt`](evidence-crop-plan-accuracy-fixes/outputs/missing-marker-effect.txt)). The helper now passes a tagged value through `cleanPowerValue`, the one cleaning rule. Real frost readings and exactly 0 °C are kept. This is a fault in how a stored payload is read; it is not a claim that NASA sends these markers today. `lib/climate-temperature.ts`. |
+| CP-093 | New (6762918246). A hidden out-of-season list stayed hidden when the recommended months changed | fixed | Each line of the list ends "This calendar sows it Feb–Jun", but the stored signature left those months out. A later correction to a crop's months changed what the list says and a grower who had hidden it was never shown the new one. The signature now carries each row's recommended months in one fixed form (valid months, each once, in calendar order). Row order and month listing order still do not count as a change. `lib/sowing-calendar-review.ts`. |
+| CP-094 | New (6762970071). The out-of-season list judged a saved plan against a fallback guess | fixed | A mapped site whose own climate has not been read (first visit, offline with nothing cached, provider down) is on the nearest reference region. That fallback is labelled and is never the hot-area calendar. The list then told a hot-area grower that in-season sowings were wrong, and took it back when the climate loaded. The reviewer saw exactly this on the hosted preview: sample farm, fresh browser, Durban light-frost fallback, March butternut and February green beans listed. Saved sowings are now listed only when the calendar comes from the site's own climate, the grower's frost answer or the grower's choice, or when no site is mapped at all (the fallback is then the only calendar the plan ever had). The header still says the calendar is a fallback and the crop picker still offers the fallback's months. Why the hosted preview had no climate reading was not established. `lib/sowing-calendar-review.ts` `calendarCanJudgeSavedSowings`. |
+| CP-095 | New (found while checking every surface the choice reaches). The printed plan did not say the grower chose the calendar | fixed | The PDF printed a chosen calendar after "This site (satellite climate records)" and nothing more, so a calendar the records do not give read as if they gave it. It now ends "(sowing calendar chosen by the grower)", matching the screen's "chosen by you". Read back from a downloaded PDF: [`outputs/pdf-calendar-lines.txt`](evidence-crop-plan-accuracy-fixes/outputs/pdf-calendar-lines.txt). `lib/sowing-calendar-label.ts` `printedSowingCalendarLine`. |
+| CP-096 | New (6762593993). Two frost statements claimed more than a grid can show | fixed, wording only | The accuracy audit and both evidence READMEs said every ERA5 frost figure is a lower bound. The evidence shows grid estimates. They can miss frost in a cold hollow; nothing here establishes the size or direction of the difference at any one farm. The comment on `FROST_FREE_RECORD_MIN_C` said "no frost at screen height or in hollows"; it now says the 2 °C line is the rule's working line on grid evidence, not an assurance about a farm. Reworded in the audit record, two READMEs, the harness and its one output sentence, and three code comments. No count and no threshold changed. |
+| CP-097 | New, open. The sowing calendar page and the Atlas do not follow the grower's choice and name the calendars differently | open | Found by reading the code, not exercised in a browser. `/calendar` shows a reference pattern the visitor picks on that page and never reads the plan. The Atlas shows the automatic reading for whichever map point is clicked, without the frost answer or the choice. Both still name the hard-frost and light-frost calendars by rain ("Summer-rainfall pattern", "Summer rainfall, light frost") where the planner says "Winter frost" and "Light frost at most". A grower who chose a calendar can therefore see a different name, or a different calendar, for their own site on those two screens. Not changed here: it needs a decision on whether those screens should follow the plan, and new isiZulu wording that a first-language speaker should check. |
+
+Also noted, no change needed: the reviewer fetched NASA POWER's own definition of `T2M_MIN` and it supports how `recordMinimumC` reads the field (6763186529). The KZN table could not be re-read again at 09:31 UTC (6763875421), so CP-083 stays open.
+
+### Every surface the calendar reaches
+
+| Surface | Which calendar it shows | Follows the grower's choice | How it was checked |
+| --- | --- | --- | --- |
+| Production plan: header, Auto-suggest, crop picker months, out-of-season list | The calendar in use | Yes | Browser: real local farm and sample farm |
+| A saved plan from before the choice existed (old storage key, 15 sowings) | The calendar in use | Yes | Browser: loaded, choice made, reloaded, list hidden, reloaded, choice cleared, reloaded |
+| A farm with no saved plan at all | The calendar in use | Yes | Browser: the first save keeps the choice across a reload |
+| The plan PDF from the page | The calendar in use, now with "(sowing calendar chosen by the grower)" | Yes | PDF downloaded and its text read |
+| The PDF's variety shortlist ("Research climate group") | The site's climate reading | No, by design: it is variety guidance from the climate | Seen in the PDF text with the light-frost calendar chosen |
+| Notes on a suggested plan ("Sowing calendar chosen by the grower: …") | The calendar in use | Yes | Source assertion in a test only; no plan was suggested in the browser this round |
+| The PDF's frost-tender harvest flag | The calendar in use | Yes | Code reading only |
+| Calendar file (.ics) export | The saved sowings' own months | Not applicable | Not checked |
+| Sowing calendar page (`/calendar`) | A reference pattern picked on that page | No (CP-097) | Code reading only |
+| Atlas panel | The automatic reading for the clicked point | No (CP-097) | Code reading only |
+| Design report print page | Reads rain season for tank sizing only | Not applicable | Code reading only |
+| No climate reading (cold cache, offline, provider down) | The labelled regional fallback; a choice still wins | Yes | Browser with the climate endpoint aborted, and tests |
+| Sample farm | In memory only: every edit, including a choice, is forgotten on reload. That is how sample mode works for all data | Within the visit | Browser |
+| Signed-in account, cloud sync, a second device, a physical phone, the hosted preview at this head | | | Not checked |
+
+### Cases run for this update
+
+Commit `9a980a5c`, local development server, 10 November 2026. "Passed" means the observed result matched the expected one on that commit; it says nothing about a farm.
+
+| Case | Finding | Inputs | Expected, and why | Observed | Evidence | Result |
+| --- | --- | --- | --- | --- | --- | --- |
+| R-01 | CP-092 | -999, -900, -901, -899.9, -4, 0, 2, NaN, ±Infinity, "3", null; tagged and untagged | Same answer as `cleanPowerValue` when tagged `nasa-power`, null otherwise | As expected. With the old helper put back the test fails | `tests/climate-temperature.test.ts` | passed |
+| R-02 | CP-092 | The 44-place fixture with a marker as each record minimum | Identical to the same place with no minimum; no marker in the reason line; real minimums unchanged | As expected. With the old helper put back the test fails | `tests/sa-calendar-real-sites.test.ts` | passed |
+| R-03 | CP-093 | January cabbage told Feb–Jun, then Mar–May | Different signatures; same signature for reordered rows or months | As expected. Before: both `all-year\|p1:cabbage:1` | `tests/sowing-calendar-choice.test.ts` | passed |
+| R-04 | CP-094 | Sample farm, climate endpoint aborted, 390 px light and dark, 1280 px | Fallback calendar, labelled; no out-of-season list | "Light frost at most · summer rain · nearest reference: Durban / KZN coast & hinterland (fallback)"; list absent | [`outputs/sample-farm-cold-cache-check.txt`](evidence-crop-plan-accuracy-fixes/outputs/sample-farm-cold-cache-check.txt), screens `09`–`11` | passed locally; the hosted preview at this head was not checked |
+| R-05 | CP-094 | Same session; the visitor chooses "Winter frost", then "Let the app decide" | A choice is judged even with no climate: five sowings listed; then none | Five listed; then none | Same file | passed |
+| R-06 | CP-094 | Sample plan against the fallback calendar itself | Butternut (March) and green beans (February) would be listed: the reviewer's observation, kept as a pinned case | Those two | `tests/sowing-calendar-choice.test.ts` | passed |
+| R-07 | Decision 2 | Real local farm, no saved plan; choose light frost; reload; clear; reload | The choice is saved by the first save and survives; clearing survives | As expected | [`outputs/saved-plan-path-check.txt`](evidence-crop-plan-accuracy-fixes/outputs/saved-plan-path-check.txt) R1 | passed |
+| R-08 | Decisions 2 and 3 | Real local farm, a 15-sowing plan in the old storage key with no choice field | Loads; no list on its hot-area calendar; light frost lists two; reload keeps both; hide survives a reload; a different calendar brings the list back; clearing survives | As expected | Same file R2, screen `12` | passed |
+| R-09 | CP-095 | The plan PDF with light frost chosen, and with the automatic calendar | First ends "(sowing calendar chosen by the grower)"; second unchanged | As expected | [`outputs/pdf-calendar-lines.txt`](evidence-crop-plan-accuracy-fixes/outputs/pdf-calendar-lines.txt) | passed |
+| R-10 | All | The 44-place matrix and catalogue dump regenerated | Byte-identical to the committed outputs: these fixes change no calendar and no month | Identical | `outputs/calendar-choices.json`, `calendar-choice-matrix.txt`, `catalog-after.json` | passed |
+| R-11 | CP-073, CP-098, CP-099 | Guide comparison regenerated with every no-overlap pair named | 13 pairs, 12 outside the Western Cape, matching the reviewer's independent count | 13 and 12; the same six rows | [`outputs/guide-agreement-before-after.txt`](evidence-crop-plan-accuracy-fixes/outputs/guide-agreement-before-after.txt) | reproduced; the pairs themselves are open (below) |
+
+### The 13 crop-and-place pairs that still share no month with the guide
+
+The totals above hide which farms and crops are left. These are all of them. Each is a disagreement with a secondary seed-industry guide from 2004 under my own assignment of places to its regions. None is proof that the app's months are wrong, and none was "fixed" by moving months toward the guide. The 72 pairs before the fixes are listed by name in the same output file.
+
+| ID | Places | Crop | The app sows (calendar) | The guide sows (its column) | Where the app's months come from | Disposition, and what would settle it |
+| --- | --- | --- | --- | --- | --- | --- |
+| CP-073, remaining | Mbombela, Tzaneen | Butternut | Oct–Dec (light frost) | Feb–Aug (Lowveld) | KZN Table 6 warm column, "Aug - Jan/Feb" for cucurbits, second-hand | Open. The automatic rule keeps both towns on the light-frost calendar: Mbombela's coldest month is 15.9 °C against a 16 °C line, Tzaneen's record minimum is 0.7 °C against a 2 °C line. Both are flagged as close calls, and a grower who has not seen frost gets the hot-area calendar from their survey answer or their own choice. A grower override does not show the automatic default is right. Needs frost records from a station or farms in each town, or a Mpumalanga or Limpopo sowing table. |
+| CP-073, remaining | Mbombela, Tzaneen | Pumpkin | Sep–Nov (light frost) | Feb–Aug (Lowveld) | As above | As above |
+| CP-073, remaining | Mbombela, Tzaneen | Tomatoes | Aug–Dec (light frost) | Jan–Jul (Lowveld) | The warm-column text for tomato is not held in the repository | As above |
+| CP-098 | Polokwane, Pretoria, Rustenburg | Peas | Jul–Sep (hard frost) | Apr–Jun (Middleveld) | KZN Table 6 cold column, "Jun/Jul - Sept", second-hand | Open. Two sources disagree for the Middleveld; the guide's own Highveld column is Jul–Sep. Unchanged by the fixes in effect: the old row (Feb, Mar, Aug) shared no month either. Needs the KZN table re-read (CP-083) and a Gauteng, Limpopo or North West source. |
+| CP-098 | Polokwane, Pretoria, Rustenburg | Watermelon | Oct–Dec (hard frost) | Aug–Sep (Middleveld) | Inside KZN Table 6's cold-column window for cucurbits, "Sept - Dec/Jan", second-hand | Open. The hard-frost calendar waits for frost to pass; the guide's Middleveld column sows earlier. Whether these three places belong on the hard-frost calendar at all is the same boundary question as CP-078. Needs local frost dates and a regional source. |
+| CP-099 | George | Onions | Feb–Mar (light frost) | Apr–May (Western Cape and South Coast) | The light-frost onion row; the warm-column text for onion is not held in the repository | Open, and **introduced by these fixes**: George moved from the frost-free calendar (which shared a month) to the light-frost one. George has rain all year and is scored against the Western Cape column by my assignment, which may not suit it. Needs a southern Cape source for onion sowing dates. |
+
+### What the before-and-after figures are, and are not
+
+- **They are month overlap with one secondary guide.** They are not an accuracy figure, a pass rate or field validation, and this record should not be quoted as if they were.
+- **The Middleveld fell from 79% to 76%, and the cause is one place.** Lephalale moved from the hard-frost to the light-frost calendar. Its share of offered months that the guide also lists fell from 79% to 67%, because the light-frost calendar offers more months than the guide's Middleveld column. The share of the guide's months it now covers rose from 68% to 87%, and its two no-overlap crops went to none. Polokwane, Pretoria and Rustenburg went from 79% to 80%. Lephalale is bushveld; the guide has no bushveld column and "Middleveld" is my assignment. Whether Lephalale is better served is not known.
+- **The 44 places are no longer an independent check.** They were used to design the rule, so from here on they are regression evidence: they show the rule still does what it did. Saying the rule generalises needs places that were held back. None exist yet. New cases should come from extension officers or growers, with their own frost dates.
+- **Three kinds of evidence are kept apart.** Source alignment: `tests/crop-calendar-sources.test.ts` holds each sowing month inside its transcribed source row, with every exception named. Real-site classification: `tests/sa-calendar-real-sites.test.ts` holds the 44 places to their audited calendars and to an independent gridded frost record. Independent validation by station, farm or agronomist: none.
+- **The baseline is kept.** The audit's outputs in `evidence-crop-plan-accuracy/outputs/` are the "before" and are not regenerated. The fixes' outputs are separate files beside them. A later run should compare against both and keep the failures listed here, including the ones it fixes.
+
+### Verification for this update
+
+- Typecheck `npx tsc --noEmit` clean.
+- Tests: the 284 test files that touch the changed modules, the plan store, the sample farm or the page pass locally (4,125 tests, no failures). The full suite was not run locally. It runs in CI on the pushed head and its result is not known at the time of writing; no earlier full-suite pass covers these farming-data changes.
+- Each new test for CP-092 fails with the old helper put back (checked by restoring it), and R-03 was reproduced on the published function before the fix.
+- Browser, local development server: the sample farm with the climate endpoint aborted at 390 px light and dark and 1280 px; a real local farm (signed out, not sample mode, built from the sample farm's design) through a fresh plan, an old saved plan, reloads, hide, a different calendar, clearing, and two PDF downloads. Scripts are in the evidence folder.
+- Not checked: the hosted preview at this head; a signed-in account, cloud sync or a second device; a physical phone; a screen reader; the calendar page and the Atlas in a browser; the calendar file export; changing the calendar while a suggested plan is on screen for review; whether the first-run consent and goal prompts, which the real-farm script clicks through, read well. The two isiZulu labels are still unreviewed.
+
+### One call in this update that is Rory's to reverse
+
+CP-094 narrows decision 3: a mapped site whose climate has not loaded gets no out-of-season list. The alternative is to keep listing against the fallback with a sentence saying it is a guess. I chose silence because the fallback is never the hot-area calendar, so for hot-area farms the list was wrong in a known direction, and it appeared and disappeared as the climate loaded. The cost: a mapped site that never gets a climate reading never gets the list; its header says "fallback" throughout.

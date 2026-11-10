@@ -65,6 +65,21 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 10 Nov 2026 — Crop plan: fixes from the independent review of the calendar work (no farming number changed; full suite still required before merge)
+- **Record:** Update 2 in `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-092–CP-099). Commit `9a980a5c`.
+  Codex reviewed PR #1328 at `2218228e` and `0c005462`; each fault was reproduced before it was changed.
+- **Fixed:** a NASA POWER missing-value marker was read as a record low (`recordMinimumC` now uses `cleanPowerValue`);
+  a hidden out-of-season list did not return when its recommended months changed; the list judged a saved plan against
+  a fallback calendar when a mapped site's climate had not loaded (seen on the hosted sample farm); the plan PDF did not
+  say the grower chose the calendar. Frost wording now says grid estimates, not a lower bound.
+- **Open:** the calendar page and Atlas do not follow a chosen calendar or use the planner's calendar names (CP-097);
+  13 crop-and-place pairs share no month with the regional guide and are named with a disposition each
+  (Mbombela and Tzaneen; Polokwane, Pretoria and Rustenburg; George). Guide overlap is not an accuracy figure.
+- **Checked:** 284 affected test files (4,125 tests) and typecheck locally; the sample farm with its climate blocked, and
+  a real local farm through fresh plan, old saved plan, reloads, hide, clear and PDF, in a browser on a local server.
+  **Not checked:** the hosted preview at this head, a signed-in account or second device, the calendar page and Atlas in
+  a browser. The 44 places are now regression evidence; no held-back places exist yet.
+
 ### 10 Nov 2026 — Crop plan: grower's own calendar choice, and the out-of-season list (saved-plan field added; full suite required before merge)
 - **Record:** the update section of `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-078, CP-089, CP-091).
   Rory: "go ahead with decisions 2 and 3". Commit `f11d5d09`.

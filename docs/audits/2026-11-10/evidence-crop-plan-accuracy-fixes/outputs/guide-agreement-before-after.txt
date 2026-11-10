@@ -59,6 +59,37 @@ Without the W Cape                 63%    64%    72 of 972           71%    78% 
 not scored (region ambiguous): ['Hillcrest', 'Port St Johns']
 
 
+== Crop-and-place pairs sharing no month with the guide, BEFORE the fixes: 72 (72 outside the W Cape) ==
+guide region          crop                    calendar   app sows                      guide sows                    places
+E Cape & Little Karoo Peas                    all-year   Jan Feb Mar Apr Aug Sep       May Jun Jul                   Gqeberha
+E Cape & Little Karoo Peas                    summer     Feb Mar Aug                   May Jun Jul                   Komani, Mthatha, Oudtshoorn
+KZN & Coast           Butternut               mild-frost Oct Nov Dec                   Feb Mar Apr May Jun Jul Aug   Durban, Mkuze sample farm
+KZN & Coast           Pumpkin                 mild-frost Sep Oct Nov                   Feb Mar Apr May Jun Jul Aug   Durban, Mkuze sample farm
+KZN & Coast           Tomatoes                mild-frost Aug Sep Oct Nov Dec           Jan Feb Mar Apr May Jun Jul   Durban, Mkuze sample farm
+KZN Midlands          Peas                    summer     Feb Mar Aug                   Jun Jul                       Kokstad, Newcastle, Pietermaritzburg, Underberg, Vryheid
+Lowveld               Baby marrow (courgette) summer     Jan Sep Oct Nov Dec           Feb Mar Apr May Jun Jul Aug   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Brinjal (eggplant)      summer     Oct Nov                       Jan Feb Mar Apr May Jun Jul Aug SepKomatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Butternut               summer     Oct Nov Dec                   Feb Mar Apr May Jun Jul Aug   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Gem squash              summer     Jan Sep Oct Nov Dec           Feb Mar Apr May Jun Jul Aug   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Pumpkin                 summer     Oct Nov                       Feb Mar Apr May Jun Jul Aug   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Spanspek (sweet melon)  summer     Sep Oct Nov Dec               Jun Jul Aug                   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Tomatoes                summer     Aug Sep Oct                   Jan Feb Mar Apr May Jun Jul   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Watermelon              summer     Oct Nov Dec                   Jul Aug                       Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Middleveld            Peas                    summer     Feb Mar Aug                   Apr May Jun                   Lephalale, Polokwane, Pretoria, Rustenburg
+Middleveld            Watermelon              summer     Oct Nov Dec                   Aug Sep                       Lephalale, Polokwane, Pretoria, Rustenburg
+N Cape & Great Karoo  Peas                    winter     Feb Mar Apr                   Jul Aug                       Springbok
+
+
+== Crop-and-place pairs sharing no month with the guide, AFTER the fixes: 13 (12 outside the W Cape) ==
+guide region          crop                    calendar   app sows                      guide sows                    places
+Lowveld               Butternut               mild-frost Oct Nov Dec                   Feb Mar Apr May Jun Jul Aug   Mbombela, Tzaneen
+Lowveld               Pumpkin                 mild-frost Sep Oct Nov                   Feb Mar Apr May Jun Jul Aug   Mbombela, Tzaneen
+Lowveld               Tomatoes                mild-frost Aug Sep Oct Nov Dec           Jan Feb Mar Apr May Jun Jul   Mbombela, Tzaneen
+Middleveld            Peas                    summer     Jul Aug Sep                   Apr May Jun                   Polokwane, Pretoria, Rustenburg
+Middleveld            Watermelon              summer     Oct Nov Dec                   Aug Sep                       Polokwane, Pretoria, Rustenburg
+W Cape & South Coast  Onions                  mild-frost Feb Mar                       Apr May                       George
+
+
 == Every sowing-month row that changed ==
 Green beans                hot, frost-free  was Feb Mar Apr Aug Sep Oct Nov            now Feb Mar Apr May Jun Jul Aug Sep
 Green beans                Western Cape     was Aug Sep Oct Nov                        now Jan Feb Oct Nov Dec

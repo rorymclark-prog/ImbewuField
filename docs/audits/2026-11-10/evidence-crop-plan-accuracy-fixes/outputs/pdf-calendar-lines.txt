@@ -1,0 +1,8 @@
+The calendar line in the plan PDF downloaded from the page (pdftotext -layout), real local farm, 10 November 2026.
+
+== real-farm-chosen-calendar.pdf
+110:This site (satellite climate records) - Light frost at most - summer rain (sowing calendar chosen by the grower)
+177:This site (satellite climate records) - Light frost at most - summer rain (sowing calendar chosen by the grower)
+== real-farm-automatic-calendar.pdf
+110:This site (satellite climate records) - Hot area, no frost - summer rain
+177:This site (satellite climate records) - Hot area, no frost - summer rain

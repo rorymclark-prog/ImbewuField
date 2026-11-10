@@ -57,6 +57,24 @@ print('not scored (region ambiguous):',sorted(n for n in choice if n not in SITE
 
 L=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 show=lambda ms:' '.join(L[m-1] for m in ms) if ms else '(none)'
+
+# Every crop-and-place pair that shares no sowing month with the guide, BEFORE and AFTER, by name. A total hides
+# which farms and crops are left; these are the cases to settle with local or primary evidence. A pair here is a
+# disagreement with a secondary 2004 guide under the auditor's region assignment, not proof the app's months are wrong.
+def pairs(cat,which):
+    out=collections.defaultdict(list)
+    for name,r in sorted(SITE.items(), key=lambda kv:(kv[1],kv[0])):
+        pat=choice[name][which]
+        for k,row in guide['rows'].items():
+            ref=parse(row['cells'][r]); app=set(cat[k]['sowMonths'][pat])
+            if app and ref and not(app&ref): out[(SHORT[r],cat[k]['name'],pat,tuple(sorted(app)),tuple(sorted(ref)))].append(name)
+    return out
+for title,cat,which in (('BEFORE the fixes',catB,'before'),('AFTER the fixes',catA,'after')):
+    found=pairs(cat,which); total=sum(len(v) for v in found.values()); outside=sum(len(v) for k,v in found.items() if not k[0].startswith('W Cape'))
+    print(f"\n\n== Crop-and-place pairs sharing no month with the guide, {title}: {total} ({outside} outside the W Cape) ==")
+    print(f"{'guide region':22}{'crop':24}{'calendar':11}{'app sows':30}{'guide sows':30}places")
+    for (reg,crop,pat,app,ref),names in sorted(found.items()):
+        print(f"{reg[:21]:22}{crop[:23]:24}{pat:11}{show(app):30}{show(ref):30}{', '.join(names)}")
 COL={'summer':'hard frost','mild-frost':'light frost','all-year':'hot, frost-free','winter':'Western Cape'}
 print('\n\n== Every sowing-month row that changed ==')
 n=0
