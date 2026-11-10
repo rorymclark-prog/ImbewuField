@@ -184,6 +184,10 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+Shared acceptance checks: [Crop planning checklist](CROP-PLANNING-CHECKLIST.md).
+Use this with the latest dated crop record; it is a verification checklist, not a
+claim that every check has passed or that the proposed farming fixes are deployed.
+
 Latest field-block continuation: [Metres and international feet, retained drafts and crop allocations — 3 November 2026](2026-11-03/field-block-units-codex.md). Exact-tree checks, populated browser and current-head release gates remain open.
 
 Previous grower continuation: [Protected crop storage, account transfer and retained-copy review — 3 November 2026](2026-11-03/grower-storage-cutover-codex.md). Current-head checks, real two-tab/offline, populated browser and account gates remain open.
