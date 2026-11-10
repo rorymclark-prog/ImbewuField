@@ -72,6 +72,10 @@ must provision — not buildable from code alone).
   a hidden out-of-season list did not return when its recommended months changed; the list judged a saved plan against
   a fallback calendar when a mapped site's climate had not loaded (seen on the hosted sample farm); the plan PDF did not
   say the grower chose the calendar. Frost wording now says grid estimates, not a lower bound.
+- **Also fixed (CP-100):** "Hide this list" was remembered under a browser key not tied to the account, holding the
+  site id and crop list; it is now stored per account like the rest of the farm's data.
+- **Hosted preview at `292bd10`:** no false list for a fresh sample visitor. Its climate request is refused (401) because
+  the preview requires sign-in and the route is outside the sample guest lane; production answers it today.
 - **Open:** the calendar page and Atlas do not follow a chosen calendar or use the planner's calendar names (CP-097);
   13 crop-and-place pairs share no month with the regional guide and are named with a disposition each
   (Mbombela and Tzaneen; Polokwane, Pretoria and Rustenburg; George). Guide overlap is not an accuracy figure.

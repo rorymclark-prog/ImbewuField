@@ -1,0 +1,15 @@
+The PR's hosted preview build, fresh signed-out browser, sample farm, nothing blocked. 10 November 2026, about 10:35 UTC.
+Each line: seconds after load, whether the out-of-season list is on the page, every answer from the climate route, and the Auto-suggest pop-up's calendar text.
+
+build-info: {"status":200,"body":"{\"branch\":\"claude/blissful-pasteur-1c4ne6\",\"sha\":\"292bd10\",\"notes\":[\"Choose your own sowing calendar if you know your land better than the climate records.\",\"The crop plan lists planned sowings that are outside your sowing months.\",\"The sample farm plan now follows the sowing months for its own hot "}
+[phone] +9s list=0 climateCalls=[{"status":401,"ms":null,"src":{"rainfallSource":null,"minTempSource":null,"coverage":null}}] modal={"auto":"Let the app decide: Light frost at most","foot":"Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback)."}
+[phone] +26s list=0 climateCalls=[{"status":401,"ms":null,"src":{"rainfallSource":null,"minTempSource":null,"coverage":null}}] modal={"auto":"Let the app decide: Light frost at most","foot":"Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback)."}
+[phone] +57s list=0 climateCalls=[{"status":401,"ms":null,"src":{"rainfallSource":null,"minTempSource":null,"coverage":null}}] modal={"auto":"Let the app decide: Light frost at most","foot":"Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback)."}
+[desktop] +8s list=0 climateCalls=[{"status":401,"ms":null,"src":{"rainfallSource":null,"minTempSource":null,"coverage":null}}] modal={"auto":"Let the app decide: Light frost at most","foot":"Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback)."}
+[desktop] +25s list=0 climateCalls=[{"status":401,"ms":null,"src":{"rainfallSource":null,"minTempSource":null,"coverage":null}}] modal={"auto":"Let the app decide: Light frost at most","foot":"Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback)."}
+[desktop] +57s list=0 climateCalls=[{"status":401,"ms":null,"src":{"rainfallSource":null,"minTempSource":null,"coverage":null}}] modal={"auto":"Let the app decide: Light frost at most","foot":"Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback)."}
+[desktop] header chip: Light frost at most · summer rain · nearest reference: Durban / KZN coast & hinterland (fallback)
+
+One signed-out GET to /api/location-data for the sample farm's coordinates, with and without the sample-mode header:
+  the PR preview (branch claude/blissful-pasteur-1c4ne6, sha 292bd10): HTTP 401 {"error":"Authentication required."} both times
+  production (branch main, sha c34fa49): HTTP 200 with a full reading both times

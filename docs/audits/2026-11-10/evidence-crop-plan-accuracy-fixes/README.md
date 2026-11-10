@@ -18,6 +18,7 @@ This folder backs [`../crop-plan-accuracy-fixes-claude.md`](../crop-plan-accurac
 | `sample-farm-cold-cache-check.cjs`, `outputs/sample-farm-cold-cache-check.txt`, `09`–`11` PNG | Update 2: the sample farm in a browser with the climate endpoint aborted: the labelled fallback calendar and no out-of-season list, on a phone in light and dark and on desktop |
 | `make-local-farm-seeds.ts`, `saved-plan-path-check.cjs`, `outputs/saved-plan-path-check.txt`, `12` PNG | Update 2: a real local farm (signed out, not sample mode) through a fresh plan, an old saved plan, reloads, hide, a different calendar, clearing and two PDF downloads |
 | `outputs/pdf-calendar-lines.txt` | Update 2: the calendar line read back from the two downloaded plan PDFs |
+| `outputs/hosted-preview-fresh-sample-check.txt` | Update 2: the sample farm on the PR's hosted preview at `292bd10` for a fresh signed-out visitor, and the climate route's answer on the preview (401) and on production (200) |
 
 ## Reproduce
 
