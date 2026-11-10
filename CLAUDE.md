@@ -10,6 +10,10 @@ TypeScript · Tailwind · Firebase/Firestore · Mapbox GL · Anthropic (`claude-
    Visual targets: `design/handoff/*.png` (33 frames), `design/mockups/`.
 
 ## Conventions (do not drift)
+For crop-planning changes or audits, also read
+**`docs/audits/CROP-PLANNING-CHECKLIST.md`**. Keep source alignment, real-site
+regression and independent local validation separate, and carry open findings forward.
+
 For audit work, read **`docs/audits/README.md`** and the latest dated record for the
 area. Save new audits under `docs/audits/YYYY-MM-DD/` using the shared template,
 carry forward finding IDs, update the date index, and link the pushed record in
