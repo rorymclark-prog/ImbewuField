@@ -283,6 +283,11 @@ for your check to notice, and confirm it actually would.
 
 ## 5b. Keep audits readable across Claude and Codex
 
+For crop-planning changes or audits, also use
+[`docs/audits/CROP-PLANNING-CHECKLIST.md`](docs/audits/CROP-PLANNING-CHECKLIST.md).
+Keep source alignment, real-site regression and independent local validation
+separate; carry open finding IDs forward rather than restarting the evidence.
+
 For audit work, read `docs/audits/README.md` and the latest dated record for the
 area before starting. Save each new audit under `docs/audits/YYYY-MM-DD/` using
 `docs/audits/TEMPLATE.md`, link the previous audit, carry forward finding IDs and
