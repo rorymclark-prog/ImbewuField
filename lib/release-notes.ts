@@ -61,6 +61,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Weekly target totals show one decimal, not six.',
   ], tour: [{ title: 'Read and tap your crop calendar', where: 'Menu → Crop plan', href: '/facilitator/crops',
     detail: 'Crop names are dark on their bars, and a one-month crop shows its name beside the bar. On a phone the bars and "+ crop" are taller. A faded bar is still next year’s repeat, not a new plan.' }] },
+  { when: '10 November 2026', sha: 'dc48b9c06b6e0cc7e733bc6dd67311d17855b506', changes: [
+    'Country details show the next step and planning availability.',
+  ] },
+  { when: '10 November 2026', sha: 'fd7dc7adfe0af0a3cd817a616a339bd05f579074', changes: [
+    'Country and project reviews keep Lima help below the text, without covering it.',
+    'Reference-page printing leaves out screen-only spacing and focus outlines.',
+  ] },
   { when: '10 November 2026', sha: '29e5516d9195a75f300985015e9dfc4c7c2cf8f4', changes: [
     'Country evidence explains missing dates, overdue reviews and what to check next.',
   ] },
