@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import { listenForOverlay } from '@/lib/overlay-signal';
 import { Sprout, X, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { usesInternationalReviewHelp } from '@/lib/international/review-help';
 
 // perf-01: ChatPanel pulls in the farm-data catalogue (~2 MB) — only fetch it
 // once Lima is actually opened, not on every page load.
@@ -186,6 +187,9 @@ export default function ChatWidget() {
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
     pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
+    // The actual phone reference preview showed Lima over source text in both themes.
+    // The matching review frame keeps help available in flow, as the worksheets already do.
+    usesInternationalReviewHelp(pathname) ||
     // Reviewers must be able to read every draft line; these worksheets keep help in flow.
     pathname === '/international/locales' || pathname.startsWith('/international/locales/') ||
     // MEASURED COLLISIONS, 24 September. The FAB is fixed at 56x56, 130px up, z-60, in the same
@@ -377,6 +381,7 @@ function isLimaFabHiddenRoute(pathname: string): boolean {
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
     pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
+    usesInternationalReviewHelp(pathname) ||
     pathname === '/international/locales' || pathname.startsWith('/international/locales/') ||
     pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
     pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||

@@ -5,6 +5,7 @@ import ts from 'typescript';
 import * as jsxRuntime from 'react/jsx-runtime';
 import React from 'react';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
+import { usesInternationalReviewHelp } from '../lib/international/review-help.ts';
 
 // Follow-up to tests/map-control-overlap.test.ts's 12 August collisions. Flagged this time on the
 // funder dashboard, and /partners was already excluded for a related reason (see ChatWidget.tsx's
@@ -173,7 +174,7 @@ test('the /facilitator/crops right-dock offset is gone, not just overridden', ()
   assert.doesNotMatch(table, /facilitator\/crops/, 'the offset branch for an excluded route is dead code');
 });
 
-test('language worksheets replace the overlapping launcher without hiding it on other international pages', () => {
+test('reference and language review pages replace the overlapping launcher only where in-flow help exists', () => {
   // Reproduced at 390x844 on the final nursery preview: the launcher covers the Bengali
   // heading and first line at the bottom of the page. Evaluate the real route conditions,
   // including the clearance helper, rather than accepting a comment containing the route.
@@ -195,13 +196,87 @@ test('language worksheets replace the overlapping launcher without hiding it on 
   assert.ok(renderCondition, 'the actual launcher return-null route guard must exist');
   assert.ok(clearanceCondition, 'the actual clearance route guard must exist');
   for (const expression of [renderCondition, clearanceCondition]) {
-    const hidden = new Function('pathname', `return (${expression.getText(tree)});`) as (pathname: string) => boolean;
-    for (const path of ['/international/locales', '/international/locales/', '/international/locales/nursery-field-planting']) {
+    const evaluate = new Function('pathname', 'usesInternationalReviewHelp', `return (${expression.getText(tree)});`) as
+      (pathname: string, referenceHelp: typeof usesInternationalReviewHelp) => boolean;
+    const hidden = (pathname: string) => evaluate(pathname, usesInternationalReviewHelp);
+    // Actual 390px country-reference screenshots in both themes reproduced the same collision.
+    // These routes now own replacement help; retaining the old negative assertion would pin it.
+    for (const path of ['/international', '/international/', '/international/projects', '/international/projects/',
+      '/international/locales', '/international/locales/', '/international/locales/nursery-field-planting']) {
       assert.equal(hidden(path), true, `${path} must never have a floating launcher over review text`);
     }
-    for (const path of ['/international', '/international/sources', '/international/locales-archive', '/farmer']) {
+    for (const path of ['/international/sources', '/international/locales-archive', '/international/projects-archive',
+      '/international/projects/future', '/internationally', '/farmer']) {
       assert.equal(hidden(path), false, `${path} must retain its existing floating-help behavior`);
     }
+  }
+});
+
+test('country and project review share reachable in-place help without doubling worksheet help or replacing the review', () => {
+  const compile = (path: string) => ts.transpileModule(source(path), { compilerOptions: {
+    target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX,
+  } }).outputText;
+  let pathname = '/international';
+  const InlineHelp = ({ inPlace }: { inPlace?: boolean }) => React.createElement('section', { 'data-help': true, 'data-in-place': inPlace });
+  const frame: { exports: { default?: React.ComponentType<React.PropsWithChildren> } } = { exports: {} };
+  const requireFrame = (name: string): unknown => {
+    if (name === 'react/jsx-runtime') return jsxRuntime;
+    if (name === 'next/navigation') return { usePathname: () => pathname };
+    if (name === '@/components/LimaBar') return { default: InlineHelp };
+    if (name === '@/lib/international/review-help') return { usesInternationalReviewHelp };
+    if (name === './InternationalReviewHelp.module.css') return { default: { frame: 'reference-frame', help: 'reference-help' } };
+    throw Error(`Unexpected reference help dependency ${name}`);
+  };
+  new Function('require', 'exports', 'module', compile('../components/international/InternationalReviewHelp.tsx'))(requireFrame, frame.exports, frame);
+  assert.ok(frame.exports.default);
+  const layout: { exports: { default?: React.ComponentType<React.PropsWithChildren> } } = { exports: {} };
+  new Function('require', 'exports', 'module', compile('../app/international/layout.tsx'))((name: string) => {
+    if (name === 'react/jsx-runtime') return jsxRuntime;
+    if (name === '@/components/international/InternationalReviewHelp') return { default: frame.exports.default };
+    throw Error(`Unexpected international layout dependency ${name}`);
+  }, layout.exports, layout);
+  assert.ok(layout.exports.default);
+  const prior = Object.getOwnPropertyDescriptor(globalThis, 'IS_REACT_ACT_ENVIRONMENT');
+  Object.defineProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT', { configurable: true, value: true });
+  let renderer: ReactTestRenderer | undefined;
+  try {
+    for (const route of ['/international', '/international/', '/international/projects', '/international/projects/',
+      '/international/locales', '/international/locales/nursery-field-planting', '/international/locales/mass-entry',
+      '/international/sources', '/international/projects-archive', '/farmer']) {
+      pathname = route;
+      const worksheet = route.startsWith('/international/locales');
+      const review = React.createElement('main', { 'data-original-review': true }, 'Retained source, controls and unknown values');
+      const children = worksheet ? React.createElement('div', { 'data-language-draft-review': true }, review, React.createElement(InlineHelp, { inPlace: true })) : review;
+      act(() => { renderer = create(React.createElement(layout.exports.default!, null, children)); });
+      const region = renderer!.root.findAllByProps({ 'data-international-reference-review': true });
+      const owned = usesInternationalReviewHelp(route);
+      assert.equal(region.length, owned ? 1 : 0, route);
+      assert.equal(renderer!.root.findAllByProps({ 'data-original-review': true }).length, 1, 'the original review is retained once');
+      assert.equal(renderer!.root.findByProps({ 'data-original-review': true }).children[0], 'Retained source, controls and unknown values');
+      const help = renderer!.root.findAllByProps({ 'data-help': true });
+      assert.equal(help.length, owned || worksheet ? 1 : 0, 'one replacement help strip, never two on language worksheets');
+      for (const strip of help) assert.equal(strip.props['data-in-place'], true, 'help must preserve the current review instead of navigating away');
+      if (owned) {
+        assert.equal(region[0].props.tabIndex, 0, 'the shared scroll area is keyboard reachable');
+        assert.equal(region[0].props.role, 'region');
+        assert.equal(region[0].props.lang, 'en');
+        assert.equal(region[0].findByProps({ 'data-original-review': true }).parent, region[0], 'project scrolling can be released on the immediate main child');
+        const footer = region[0].findByProps({ className: 'reference-help' });
+        assert.ok(region[0].children.indexOf(footer) > region[0].children.indexOf(region[0].findByProps({ 'data-original-review': true })));
+        assert.match(region[0].findByType('style').children.join(''), /body:has\(\[data-international-reference-review\]\)/);
+      }
+      act(() => renderer!.unmount()); renderer = undefined;
+    }
+    const css = source('../components/international/InternationalReviewHelp.module.css');
+    assert.match(css, /\.frame\{[^}]*height:100dvh;[^}]*overflow-y:auto;/, 'help and long references share a reachable scroll owner');
+    assert.match(css, /\.frame>main\{height:auto;overflow:visible\}/, 'the project main must not trap help below a second viewport');
+    assert.match(css, /@media print\{\s*\.frame\{height:auto;overflow:visible;/);
+    assert.match(css, /\.help\{display:none\}/);
+    assert.doesNotMatch(css, /position\s*:\s*(?:fixed|absolute|sticky)/, 'replacement help must not recreate the overlay');
+  } finally {
+    if (renderer) act(() => renderer!.unmount());
+    if (prior) Object.defineProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT', prior);
+    else Reflect.deleteProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT');
   }
 });
 
