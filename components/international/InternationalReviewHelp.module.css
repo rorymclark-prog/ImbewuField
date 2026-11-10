@@ -4,4 +4,13 @@
 /* Project review previously owned scrolling itself. Keep its content intact and
    let the shared frame scroll both the review and help, without nested scrolling. */
 .frame>main{height:auto;overflow:visible}
-@media print{.frame{height:auto;overflow:visible;padding-bottom:0}.help{display:none}}
+/* The supplied A4 output ended with a background-only country page, while the
+   focused project scroll region painted its outline across page fragments.
+   Screen breathing room and focus decoration must not consume printed pages. */
+@media print{
+  .frame{height:auto;overflow:visible;padding-bottom:0;outline:none!important}
+  .frame :focus{outline:none!important}
+  .frame>div{min-height:0}
+  .frame>div>main,.frame>main>div{padding-bottom:0}
+  .help{display:none}
+}

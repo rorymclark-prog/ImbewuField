@@ -270,7 +270,7 @@ test('country and project review share reachable in-place help without doubling 
     const css = source('../components/international/InternationalReviewHelp.module.css');
     assert.match(css, /\.frame\{[^}]*height:100dvh;[^}]*overflow-y:auto;/, 'help and long references share a reachable scroll owner');
     assert.match(css, /\.frame>main\{height:auto;overflow:visible\}/, 'the project main must not trap help below a second viewport');
-    assert.match(css, /@media print\{\.frame\{height:auto;overflow:visible;/);
+    assert.match(css, /@media print\{\s*\.frame\{height:auto;overflow:visible;/);
     assert.match(css, /\.help\{display:none\}/);
     assert.doesNotMatch(css, /position\s*:\s*(?:fixed|absolute|sticky)/, 'replacement help must not recreate the overlay');
   } finally {
