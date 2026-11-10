@@ -3,7 +3,7 @@ import {
   benchmarkDatedAreaConflictPlantingIds, datedPlantingSowIndex, estimatedYieldKg,
   harvestTargetMonthIndex, planningMaturityMonths, sanitiseHarvestTargets,
   harvestTargetWeeklyKg, harvestTargetYieldFactor, isMonthlyHarvestTarget, resolveHarvestTargetDateWindow,
-  TRANSPLANT_ENTRY_PLANNED_MONTHS,
+  TRANSPLANT_ENTRY_EARLIEST_MONTHS, TRANSPLANT_ENTRY_PLANNED_MONTHS,
   type HarvestTarget, type KgHarvestTarget, type MonthlyHarvestTarget, type PlanBed, type Planting,
 } from './crop-plan';
 
@@ -22,6 +22,22 @@ export interface HarvestTargetAssessment {
   pickingMonths: string[];
   gapMonths: string[];
   excludedRows: number;
+  /**
+   * Credited crop cycles that could be READY BEFORE THE WINDOW OPENS, and the earliest
+   * month one of them could be (a targetMonthStamp), or null when none could.
+   *
+   * The picking months above are the LATE edge on purpose: the upper published
+   * duration, rounded up to a whole month, after a two-month nursery. That is the right
+   * caution for releasing a bed and the wrong one for a delivery date. The 10 November
+   * 2026 accuracy audit measured it against the catalogue's own duration ranges: one
+   * month later than a typical season for 30 crops, two for six, three for cabbage and
+   * cauliflower (CP-079). A cabbage sown in January is credited to an August order and
+   * will usually be ready from May.
+   *
+   * This does not change what is credited. It lets the screen say so.
+   */
+  earlyCycles: number;
+  earliestReadyMonth: string | null;
   missingBasis: boolean;
   missingReasons: ('crop-evidence' | 'unit-weight' | 'zero-saleable-share')[];
 }
@@ -64,6 +80,22 @@ export function targetPickingWindow(planting: Planting, target: HarvestTarget): 
   return Array.from({ length: last - first + 1 }, (_, offset) => first + offset);
 }
 
+/**
+ * The earliest month a sowing could plausibly give its first harvest: the LOWER end of
+ * the published duration counted in whole months already elapsed, after the shortest
+ * nursery period the planner allows. Seed sown on the first of a month with a 60-day
+ * crop is ready two months later, so the offset rounds DOWN, where the planning month
+ * rounds up. Null for a row that is not a dated sowing of a known crop.
+ */
+export function earliestReadyMonthIndex(planting: Planting, originIndex: number): number | null {
+  const crop = cropByKey(planting.cropKey);
+  const sow = datedPlantingSowIndex(planting, originIndex);
+  if (!crop || sow === null) return null;
+  const shortestDays = crop.daysToHarvestRange?.[0] ?? crop.daysToHarvest;
+  if (!Number.isFinite(shortestDays) || shortestDays <= 0) return null;
+  return sow + Math.floor(shortestDays / 30) + (crop.transplant ? TRANSPLANT_ENTRY_EARLIEST_MONTHS : 0);
+}
+
 export function assessHarvestTarget(
   target: KgHarvestTarget, beds: PlanBed[], plantings: Planting[], now?: { year: number; month: number },
 ): KnownMassAssessment | null;
@@ -94,8 +126,11 @@ export function assessHarvestTarget(
     startIndex, endIndex: harvestTargetMonthIndex(target.endMonth)! + 1, originIndex,
   });
   const picking = new Set<number>();
+  const windowStart = harvestTargetMonthIndex(target.startMonth)!;
   let grossCycleKg = 0;
   let excludedRows = 0;
+  let earlyCycles = 0;
+  let earliestReady: number | null = null;
   for (const row of linked) {
     const bed = bedById.get(row.bedId);
     const window = targetPickingWindow(row, target);
@@ -110,6 +145,11 @@ export function assessHarvestTarget(
     if (!Number.isFinite(kg) || !Number.isFinite(grossCycleKg + kg)) { excludedRows++; continue; }
     grossCycleKg += kg;
     window.forEach((month) => picking.add(month));
+    const ready = earliestReadyMonthIndex(row, windowStart);
+    if (ready !== null && ready < windowStart) {
+      earlyCycles++;
+      earliestReady = earliestReady === null ? ready : Math.min(earliestReady, ready);
+    }
   }
   const start = harvestTargetMonthIndex(target.startMonth)!;
   const end = harvestTargetMonthIndex(target.endMonth)!;
@@ -121,6 +161,7 @@ export function assessHarvestTarget(
     allocatedKg, grossCycleKg,
     shortageKg: demand.demandKg === null ? null : Math.max(0, demand.demandKg - allocatedKg),
     surplusKg: demand.demandKg === null ? null : Math.max(0, allocatedKg - demand.demandKg), excludedRows,
+    earlyCycles, earliestReadyMonth: earliestReady === null ? null : targetMonthStamp(earliestReady),
     pickingMonths: months.filter((m) => picking.has(m)).map(targetMonthStamp),
     gapMonths: months.filter((m) => !picking.has(m)).map(targetMonthStamp),
   };

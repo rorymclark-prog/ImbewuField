@@ -309,6 +309,17 @@ export const FROST_FREE_RECORD_MIN_C = 2;
 export const HOT_AREA_COLDEST_MONTH_C = 16;
 /** Hottest-month mean for the hot-area column: ECOCROP TOPMX, cabbage/broccoli/carrot/pea. */
 export const HOT_AREA_HOTTEST_MONTH_C = 24;
+/**
+ * Coldest-month mean below which frost commonly lasts into September. The hard-frost
+ * column assumes frost from May to August. In 20 years of daily minima (ERA5, 2001-2020)
+ * every audited site that frosted in September in at least 15 % of years had a coldest
+ * month of 8.6 °C or lower — Sutherland 80 % of years, Underberg 45 %, Bethlehem 25 %,
+ * Bloemfontein and Kokstad 20 %, Komani and Graaff-Reinet 15 % — and no site at 9.8 °C or
+ * above reached more than 10 % (accuracy audit, CP-081). It selects a warning, never a
+ * sowing month: the gridded record under-counts frost in a hollow, so the grower's own
+ * last frost is what decides.
+ */
+export const LATE_FROST_COLDEST_MONTH_C = 9;
 /** Köppen's tropical line: the frost-free stand-in when no record minimum is known. */
 const TROPICAL_COLDEST_MONTH_C = 18;
 const SUMMER_RAIN_SHARE = 0.65;

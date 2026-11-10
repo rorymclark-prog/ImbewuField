@@ -8,7 +8,7 @@
 // (2026-11-10 accuracy audit, CP-073/CP-074/CP-078).
 
 import type { RainPattern } from '@/lib/crop-catalog';
-import type { RainSeason } from '@/lib/koppen-global';
+import { LATE_FROST_COLDEST_MONTH_C, type RainSeason } from '@/lib/koppen-global';
 import type { SiteClimate, CalendarBasis } from '@/lib/site-climate';
 
 /** Short name of the sowing calendar (a frost regime, not rain timing). */
@@ -71,6 +71,11 @@ export function sowingCalendarReasons(
       line += ' Check sowing months against what grows well near you.';
     }
     out.push(line);
+  }
+  // The frost calendars wait for frost to pass by the end of August. Where winters are
+  // this cold it often has not (lib/koppen-global.ts LATE_FROST_COLDEST_MONTH_C).
+  if ((chosen.pattern === 'summer' || chosen.pattern === 'winter') && site.coldestMonthC < LATE_FROST_COLDEST_MONTH_C) {
+    out.push('Frost often lasts into September where winters are this cold. Plant out tomatoes, peppers and other tender crops only after your own last frost, and record your frost months in the site survey.');
   }
   return out;
 }

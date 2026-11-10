@@ -235,6 +235,15 @@ test('a Western Cape row is the hard-frost row only where a Western Cape source 
     'a Western Cape row became (or stopped being) identical to the hard-frost row: source it or record why');
 });
 
+test('cowpea can be scheduled in a warm area, in the month its national guide names', () => {
+  // CP-082: the light-frost row was empty, so a grower in the warm areas could not plan cowpea.
+  // Cowpeas Infopak: "In warmer areas the crop can be planted during the middle of December."
+  assert.deepEqual([...monthsOf('cowpea', 'mild-frost')], [12]);
+  const dossier = read('../research/crop-sources/cowpea.json');
+  assert.deepEqual(dossier.sowMonths['mild-frost'].months, [12], 'the dossier must carry the month the catalogue offers');
+  assert.match(dossier.sowMonths['mild-frost'].evidence[0].quote, /warmer areas.*middle of December/);
+});
+
 test('the Western Cape grows its peas and onions in its own season', () => {
   // Peas belong to the winter rain; onions bulb by day length and bolt from February seed.
   assert.deepEqual([...monthsOf('peas', 'winter')].sort((a, b) => a - b), [4, 5, 6, 7, 8]);

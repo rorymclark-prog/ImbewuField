@@ -112,6 +112,23 @@ test('any other close call falls back to checking sowing months locally', () => 
   );
 });
 
+test('a grower in the coldest places is warned that frost outlasts the calendar\'s August', () => {
+  // CP-081: the hard-frost calendar assumes frost from May to August. Sutherland frosted in
+  // September in 80% of years 2001-2020 and Underberg in 45%; both have a coldest month under 9 °C.
+  const sutherland = site({ pattern: 'summer', rainSeason: 'all-year', coldestMonthC: 7.8, hottestMonthC: 22.3, recordMinC: -4.8 });
+  const lines = sowingCalendarReasons(sutherland, { pattern: 'summer', basis: 'site-climate' });
+  assert.ok(lines.some((line) => /Frost often lasts into September/.test(line) && /after your own last frost/.test(line)), lines.join('\n'));
+  // Johannesburg (9.9 °C) frosted in September in one year in ten: no warning.
+  const johannesburg = site({ pattern: 'summer', rainSeason: 'summer', coldestMonthC: 9.9, hottestMonthC: 21.6, recordMinC: -4.8 });
+  assert.ok(!sowingCalendarReasons(johannesburg, { pattern: 'summer', basis: 'site-climate' }).some((line) => /September/.test(line)));
+  // A frosty winter-rainfall valley (Ceres, 8.8 °C) is warned too; a hot or light-frost site never is.
+  const ceres = site({ pattern: 'winter', rainSeason: 'winter', coldestMonthC: 8.8, hottestMonthC: 21.8, recordMinC: -2.3 });
+  assert.ok(sowingCalendarReasons(ceres, { pattern: 'winter', basis: 'site-climate' }).some((line) => /September/.test(line)));
+  for (const pattern of ['all-year', 'mild-frost'] as const) {
+    assert.ok(!sowingCalendarReasons(site({ pattern, coldestMonthC: 8 }), { pattern, basis: 'site-climate' }).some((line) => /September/.test(line)));
+  }
+});
+
 test('a clear-cut site gets only the climate line', () => {
   assert.equal(sowingCalendarReasons(site(), { pattern: 'all-year', basis: 'site-climate' }).length, 1);
 });

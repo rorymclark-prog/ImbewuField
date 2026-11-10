@@ -53,7 +53,17 @@
         }
       ]
     },
-    "mild-frost": { "months": [], "evidence": [] }
+    "mild-frost": {
+      "months": [12],
+      "evidence": [
+        {
+          "quote": "The best time to plant cowpeas in cooler areas is the middle of November. In warmer areas the crop can be planted during the middle of December.",
+          "url": "https://www.arc.agric.za/arc-gci/Documents/CultivatingCowpeas.pdf",
+          "page": null,
+          "doc": "Cowpeas Infopak, National Department of Agriculture and ARC (read 2026-11-10; accuracy audit CP-082)"
+        }
+      ]
+    }
   },
   "daysToHarvestRange": {
     "value": [21, 120],

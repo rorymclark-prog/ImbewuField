@@ -380,6 +380,7 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
         {a.missingReasons.includes('crop-evidence') && <p className="text-xs text-[var(--gold)]">Verified crop yield, timing or establishment evidence is missing.</p>}
         {a.gapMonths.length > 0 && <p className="text-xs text-[var(--gold)]">No linked picking window: {a.gapMonths.map(monthName).join(', ')}.</p>}
         {a.excludedRows > 0 && <p className="text-xs text-[var(--gold)]">{a.excludedRows} linked planting(s) excluded: check dates, crop, timing evidence, mapped area and overlaps.</p>}
+        {a.earlyCycles > 0 && a.earliestReadyMonth && <p className="text-xs text-[var(--gold)]">{a.earlyCycles === 1 ? '1 linked sowing' : `${a.earlyCycles} linked sowings`} could be ready before {monthName(a.target.startMonth)}, as early as {monthName(a.earliestReadyMonth)}. The plan counts the latest likely month, so a bed is not given away too soon. If the buyer cannot take it early, sow later.</p>}
         <p className="text-xs text-[var(--text-secondary)]">Area is summed across crop cycles; successive crops may reuse ground. Weekly supply remains unverified.</p>
       </article>)}
 

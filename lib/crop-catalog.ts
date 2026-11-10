@@ -1673,7 +1673,12 @@ export const CROPS: CropDef[] = [
       summer: [11, 12],
       winter: [], // a Western Cape yield-trial exists but is not treated as a sowing-calendar source
       'all-year': [12, 1],
-      'mild-frost': [],
+      // Was empty, so a warm-area grower could not schedule cowpea at all (accuracy
+      // audit, CP-082). The national Cowpeas Infopak (Department of Agriculture and
+      // ARC): 'The best time to plant cowpeas in cooler areas is the middle of
+      // November. In warmer areas the crop can be planted during the middle of
+      // December.' https://www.arc.agric.za/arc-gci/Documents/CultivatingCowpeas.pdf
+      'mild-frost': [12],
     },
     // 21 days = first imifino (leaf) pick; 120 days = grain-type upper bound (used for bed occupancy).
     daysToHarvest: 120,
