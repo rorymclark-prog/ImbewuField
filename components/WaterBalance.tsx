@@ -4,6 +4,8 @@ import type { LocationData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
 import { useLanguage } from '@/lib/i18n';
 import { numberLabel } from '@/lib/format-figures';
+import { LITRES_PER_PERSON_DAY, peopleFromAdults } from '@/lib/household';
+import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
 
 interface Props {
   locationData: LocationData;
@@ -46,14 +48,6 @@ function litresLabel(kl: number, t: (key: string) => string): string {
   return t('estVolumeLitresLabel').replace('{litres}', numberLabel(litres));
 }
 
-function peopleFromAdults(adults: string | undefined): number {
-  if (!adults) return 4;
-  if (adults === '1') return 1;
-  if (adults === '2-5') return 3;
-  if (adults === '6-10') return 7;
-  return 12;
-}
-
 export default function WaterBalance({ locationData, waterData, survey, siteAreaHa }: Props) {
   const { t, lang } = useLanguage();
   // Full isiZulu names do not fit the chart's narrow monthly ticks; numbers avoid English initials.
@@ -64,7 +58,7 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 
   // ── Demand estimates ───────────────────────────────────────────────────────
   const people = peopleFromAdults(survey?.adults);
-  const dailyHouseKL = (people * 80) / 1000;        // 80 L/person/day
+  const dailyHouseKL = (people * LITRES_PER_PERSON_DAY) / 1000;
   const monthlyHouseKL = dailyHouseKL * 30;
 
   const hasVeg     = survey?.existingCrops?.includes('vegetables') ?? false;
@@ -76,7 +70,9 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 
   // ── Catchment (roof harvest) ───────────────────────────────────────────────
   const roofM2 = (survey?.roofMainM2 ?? 0) + (survey?.roofSecondaryM2 ?? 0);
-  const efficiency = survey?.hasGutters ? 0.80 : 0.60;
+  // Guttered roofs use the app's one roof coefficient (lib/roof-runoff.ts). Without gutters this
+  // sheet has always allowed only 0.60: water runs off the eaves instead of into a downpipe.
+  const efficiency = survey?.hasGutters ? WATER_SHEET_ROOF_RUNOFF_COEFFICIENT : 0.60;
 
   // ── Per-month calculations ─────────────────────────────────────────────────
   const months = rainfall.monthly.map((mm, i) => {
@@ -97,14 +93,23 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
   const capacity = waterData?.estVolumeKL ?? 0;
   const minSafe = Math.max(monthlyHouseKL * 2, capacity * 0.15); // 2 months household or 15% of capacity
 
-  // Start tank at 50% of capacity (or half the annual harvest, whichever is less)
-  let level = capacity > 0 ? capacity * 0.5 : 0;
-  const tankLevels: number[] = [];
-  months.forEach(({ catchment, demand }) => {
-    level = Math.min(capacity, level + catchment - demand);
-    level = Math.max(0, level);
-    tankLevels.push(level);
-  });
+  // Month-end level: last month's level plus this month's catch minus its demand, held between
+  // empty and full. January starts with whatever December left, found by running the same year
+  // from an empty tank until it repeats (each pass is monotone and clamped, so it settles fast).
+  const runYear = (start: number) => {
+    let level = start;
+    return months.map(({ catchment, demand }) => {
+      level = Math.max(0, Math.min(capacity, level + catchment - demand));
+      return level;
+    });
+  };
+  let startLevel = 0;
+  for (let pass = 0; pass < 50 && capacity > 0; pass += 1) {
+    const end = runYear(startLevel)[11];
+    if (Math.abs(end - startLevel) < 0.0005) break;
+    startLevel = end;
+  }
+  const tankLevels = runYear(startLevel);
 
   // ── Chart geometry ─────────────────────────────────────────────────────────
   const W = 310;

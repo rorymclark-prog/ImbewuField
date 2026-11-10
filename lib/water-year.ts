@@ -3,9 +3,13 @@
 // Every number this module returns comes from rules the app already publishes:
 //   - roof catch:   lib/roof-runoff.ts roofHarvestLitres() with the one generic coefficient,
 //                   WATER_SHEET_ROOF_RUNOFF_COEFFICIENT (0.80, decided 2026-08-02);
-//   - household:    80 L per person per day, the same rule components/WaterBalance.tsx uses;
-//   - tank sizes:   the standard steps lib/water-calc.ts recommends from;
-//   - recommended:  lib/water-calc.ts recommendedTankLitres().
+//   - household:    lib/household.ts, 80 L per person per day, shared with WaterBalance.tsx;
+//   - tank sizes:   lib/water-calc.ts TANK_STEP_SIZES, then 10 000 L steps above them.
+//
+// householdTank() turns those into a recommendation that counts the people: it plays the year
+// for every standard size and picks the smallest tank that comes within a day of the fewest
+// empty days any tank could give this roof and household. Nothing in it is a new constant
+// except that one-day tolerance, which is stated wherever the recommendation is shown.
 //
 // What this module adds is only the bookkeeping between them, and its two assumptions are
 // stated wherever its results are shown:
@@ -24,13 +28,16 @@ import {
   roofHarvestLitres,
   WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
 } from '@/lib/roof-runoff';
-import { recommendedTankLitres } from '@/lib/water-calc';
+import { TANK_STEP_SIZES } from '@/lib/water-calc';
+import { LITRES_PER_PERSON_DAY } from '@/lib/household';
 
-/** Household use per person per day — WaterBalance.tsx's rule. */
-export const LITRES_PER_PERSON_DAY = 80;
+export { LITRES_PER_PERSON_DAY };
 
-/** The tank sizes lib/water-calc.ts rounds its recommendation up to. */
-export const TANK_SIZES_L = [2500, 5000, 10000, 20000] as const;
+/** The standard tank sizes the figure offers — lib/water-calc.ts's steps. */
+export const TANK_SIZES_L: readonly number[] = TANK_STEP_SIZES;
+
+/** A tank within this many empty days of the best any size can do counts as good enough. */
+export const EMPTY_DAY_TOLERANCE = 1;
 
 /** Calendar month lengths, January first (non-leap year). */
 export const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] as const;
@@ -49,8 +56,6 @@ export interface WaterYearInput {
   tankL: number;
   /** Runoff coefficient; defaults to the app's one generic value. */
   coefficient?: number;
-  /** Rainfall timing, for the recommended tank size only. */
-  pattern?: 'summer' | 'winter' | 'all-year';
 }
 
 export interface WaterMonth {
@@ -77,7 +82,7 @@ export interface WaterMonth {
 }
 
 export interface WaterYear {
-  input: Required<Omit<WaterYearInput, 'pattern'>> & { pattern: WaterYearInput['pattern'] };
+  input: Required<WaterYearInput>;
   /** Months in water-year order (October first). */
   months: WaterMonth[];
   /** Litres in the tank on 1 October, the level the year repeats from. */
@@ -89,8 +94,6 @@ export interface WaterYear {
   spilledL: number;
   shortL: number;
   emptyDays: number;
-  /** The tank size lib/water-calc.ts would recommend for this roof and rainfall. */
-  recommendedTankL: number | null;
   /** Year-on-year repeat found (always true unless the inputs are degenerate). */
   settled: boolean;
 }
@@ -147,7 +150,6 @@ export function waterYear(raw: WaterYearInput): WaterYear | null {
     people: Math.round(raw.people),
     tankL: raw.tankL,
     coefficient,
-    pattern: raw.pattern,
   };
 
   // Run the same year from an empty tank until 1 October repeats. Each pass is monotone in the
@@ -174,8 +176,59 @@ export function waterYear(raw: WaterYearInput): WaterYear | null {
     spilledL: sum('spilledL'),
     shortL,
     emptyDays: sum('emptyDays'),
-    recommendedTankL: input.pattern ? recommendedTankLitres(caughtL, input.pattern) : null,
     settled,
+  };
+}
+
+export interface HouseholdTank {
+  /** The recommended size, litres. */
+  tankL: number;
+  /** Empty days a year with that tank. */
+  emptyDays: number;
+  /** The fewest empty days any size can give — the roof's own limit for this household. */
+  fewestEmptyDays: number;
+  /**
+   * 'none': a tank this size carries the house all year.
+   * 'catch': the roof catches less than the house uses, so some empty days remain whatever the tank.
+   */
+  limit: 'none' | 'catch';
+  /** Every size tried, smallest first, with its empty days. */
+  tried: { tankL: number; emptyDays: number }[];
+}
+
+/**
+ * Sizes worth trying: the standard steps, then 10 000 L steps up to the most a tank could ever
+ * usefully hold — the smaller of a year's catch and a year's use. A tank bigger than that can
+ * only fill with water that is never there, or store water that is never needed.
+ */
+export function candidateTanks(caughtL: number, useL: number): number[] {
+  const sizes: number[] = [...TANK_SIZES_L];
+  const ceiling = Math.ceil(Math.min(caughtL, useL) / 10000) * 10000;
+  for (let size = TANK_SIZES_L[TANK_SIZES_L.length - 1] + 10000; size <= ceiling; size += 10000) sizes.push(size);
+  return sizes;
+}
+
+/**
+ * The tank this roof, this rain and this many people need: the smallest size whose year comes
+ * within EMPTY_DAY_TOLERANCE of the fewest empty days any size can manage. Null for bad input
+ * or an empty house (no one to serve, nothing to size).
+ */
+export function householdTank(input: Omit<WaterYearInput, 'tankL'>): HouseholdTank | null {
+  if (!Number.isFinite(input.people) || Math.round(input.people) < 1) return null;
+  const probe = waterYear({ ...input, tankL: TANK_SIZES_L[0] });
+  if (!probe) return null;
+  const tried = candidateTanks(probe.caughtL, probe.useL).map((tankL) => {
+    const y = waterYear({ ...input, tankL });
+    return { tankL, emptyDays: y ? y.emptyDays : Number.POSITIVE_INFINITY };
+  });
+  const fewestEmptyDays = Math.min(...tried.map((t) => t.emptyDays));
+  const pick = tried.find((t) => t.emptyDays <= fewestEmptyDays + EMPTY_DAY_TOLERANCE) ?? tried[tried.length - 1];
+  return {
+    tankL: pick.tankL,
+    emptyDays: pick.emptyDays,
+    fewestEmptyDays,
+    limit: fewestEmptyDays < 0.5 ? 'none' : 'catch',
+    tried,
   };
 }
 

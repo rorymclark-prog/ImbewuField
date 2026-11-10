@@ -252,7 +252,6 @@ function ExampleInner() {
         <WaterYear
           monthlyMm={data.rainfall.monthly}
           roofM2={water.areaM2}
-          pattern="summer"
           rainSource="NASA POWER monthly averages for this point"
         />
 

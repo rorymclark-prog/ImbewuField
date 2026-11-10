@@ -10,12 +10,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Minus, Pause, Play, Plus, RotateCcw } from 'lucide-react';
 import { numberLabel } from '@/lib/format-figures';
+import { DEFAULT_HOUSEHOLD } from '@/lib/household';
 import {
+  EMPTY_DAY_TOLERANCE,
   TANK_SIZES_L,
   WATER_YEAR_ORDER,
+  householdTank,
   levelAtDay,
   monthStarts,
   waterYear,
+  type HouseholdTank,
   type WaterMonth,
   type WaterYear as WaterYearResult,
 } from '@/lib/water-year';
@@ -28,14 +32,12 @@ const END_HOLD = 6;
 const LOOP_SECONDS = YEAR_SECONDS + END_HOLD;
 const MIN_PEOPLE = 1;
 const MAX_PEOPLE = 10;
-const BIGGEST_TANK = TANK_SIZES_L[TANK_SIZES_L.length - 1];
 
 interface Props {
   /** Monthly rainfall, January first, mm. */
   monthlyMm: readonly number[];
   roofM2: number;
-  pattern: 'summer' | 'winter' | 'all-year';
-  /** Household size to open on; 4 is WaterBalance's default when no survey says otherwise. */
+  /** Household size to open on; lib/household.ts's default when no survey says otherwise. */
   defaultPeople?: number;
   /** Where the rainfall comes from, said in the note under the figure. */
   rainSource: string;
@@ -56,7 +58,8 @@ interface Palette {
 interface Drop { x: number; y: number; vy: number; len: number }
 interface Bit { x: number; y: number; vx: number; vy: number; life: number }
 
-const lit = (n: number) => `${numberLabel(Math.round(n))} L`;
+// No-break spaces: "10 000 L" must never split across a line in the caption.
+const lit = (n: number) => `${numberLabel(Math.round(n)).replace(/ /g, '\u00a0')}\u00a0L`;
 const dayOf = (d: number, days: number) => Math.min(days, Math.floor(d) + 1);
 
 function readPalette(el: HTMLElement): Palette {
@@ -111,9 +114,16 @@ function monthSentence(m: WaterMonth, people: number): string {
   return line;
 }
 
-function nextTank(tankL: number): number | null {
-  const i = TANK_SIZES_L.indexOf(tankL as (typeof TANK_SIZES_L)[number]);
-  return i >= 0 && i < TANK_SIZES_L.length - 1 ? TANK_SIZES_L[i + 1] : null;
+function nextTank(tankL: number, sizes: readonly number[]): number | null {
+  const i = sizes.indexOf(tankL);
+  return i >= 0 && i < sizes.length - 1 ? sizes[i + 1] : null;
+}
+
+function recommendSentence(year: WaterYearResult, rec: HouseholdTank | null): string {
+  if (!rec || rec.tankL === year.input.tankL) return '';
+  const who = year.input.people === 1 ? 'one person' : `${year.input.people} people`;
+  if (rec.limit === 'none') return ` For ${who}, the smallest tank that never runs dry is ${lit(rec.tankL)}.`;
+  return ` For ${who}, ${lit(rec.tankL)} is the smallest tank within ${EMPTY_DAY_TOLERANCE} day of the fewest empty days any size can give (${Math.round(rec.fewestEmptyDays)}).`;
 }
 
 function yearSentence(year: WaterYearResult, bigger: WaterYearResult | null): string {
@@ -137,24 +147,32 @@ function yearSentence(year: WaterYearResult, bigger: WaterYearResult | null): st
   return `${head} The roof catches enough over the year, but this tank cannot carry the wet months' water into the dry ones.`;
 }
 
-export default function WaterYear({ monthlyMm, roofM2, pattern, defaultPeople = 4, rainSource }: Props) {
+export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_HOUSEHOLD, rainSource }: Props) {
   const [people, setPeople] = useState(Math.min(MAX_PEOPLE, Math.max(MIN_PEOPLE, defaultPeople)));
-  const recommended = useMemo(
-    () => waterYear({ monthlyMm, roofM2, people: 1, tankL: BIGGEST_TANK, pattern })?.recommendedTankL ?? null,
-    [monthlyMm, roofM2, pattern],
+  // The recommendation counts the household: it is re-sized every time the people change.
+  const rec = useMemo(() => householdTank({ monthlyMm, roofM2, people }), [monthlyMm, roofM2, people]);
+  const recommended = rec?.tankL ?? null;
+  // The tank follows the recommendation until someone picks one.
+  const [picked, setPicked] = useState<number | null>(null);
+  const tankL = picked ?? recommended ?? TANK_SIZES_L[TANK_SIZES_L.length - 1];
+  // Standard sizes, plus the recommendation (or a picked size) when it is above them.
+  const sizes = useMemo(
+    () => [...new Set([...TANK_SIZES_L, ...(recommended ? [recommended] : []), tankL])].sort((a, b) => a - b),
+    [recommended, tankL],
   );
-  const [tankL, setTankL] = useState<number>(
-    recommended && (TANK_SIZES_L as readonly number[]).includes(recommended) ? recommended : BIGGEST_TANK,
-  );
+  const biggest = sizes[sizes.length - 1];
   const [playing, setPlaying] = useState(true);
   const [reduced, setReduced] = useState(false);
 
-  const year = useMemo(() => waterYear({ monthlyMm, roofM2, people, tankL, pattern }), [monthlyMm, roofM2, people, tankL, pattern]);
+  const year = useMemo(() => waterYear({ monthlyMm, roofM2, people, tankL }), [monthlyMm, roofM2, people, tankL]);
   const bigger = useMemo(() => {
-    const n = nextTank(tankL);
-    return n ? waterYear({ monthlyMm, roofM2, people, tankL: n, pattern }) : null;
-  }, [monthlyMm, roofM2, people, tankL, pattern]);
-  const summary = useMemo(() => (year ? yearSentence(year, bigger) : ''), [year, bigger]);
+    const n = nextTank(tankL, sizes);
+    return n ? waterYear({ monthlyMm, roofM2, people, tankL: n }) : null;
+  }, [monthlyMm, roofM2, people, tankL, sizes]);
+  const summary = useMemo(
+    () => (year ? yearSentence(year, bigger) + recommendSentence(year, rec) : ''),
+    [year, bigger, rec],
+  );
 
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -173,6 +191,7 @@ export default function WaterYear({ monthlyMm, roofM2, pattern, defaultPeople = 
     year: year as WaterYearResult | null,
     summary,
     people,
+    biggest,
     w: 0,
     h: 0,
     dpr: 1,
@@ -195,9 +214,10 @@ export default function WaterYear({ monthlyMm, roofM2, pattern, defaultPeople = 
     L.year = year;
     L.summary = summary;
     L.people = people;
+    L.biggest = biggest;
     L.lastMonth = -1;
     L.draw?.();
-  }, [year, summary, people]);
+  }, [year, summary, people, biggest]);
 
   useEffect(() => {
     live.current.playing = playing;
@@ -266,7 +286,7 @@ export default function WaterYear({ monthlyMm, roofM2, pattern, defaultPeople = 
       const standH = 18;
       const tankBase = ground - standH;
       const hMax = tankBase - (gutterY + 24);
-      const k = Math.cbrt(tank / BIGGEST_TANK);
+      const k = Math.cbrt(tank / L.biggest);
       const th = hMax * k;
       const tw = Math.min(th * 0.86, w * (narrow ? 0.29 : 0.24) * k);
       const tcx = w * (narrow ? 0.6 : 0.6);
@@ -817,8 +837,8 @@ export default function WaterYear({ monthlyMm, roofM2, pattern, defaultPeople = 
         <div className={s.group}>
           <span className={s.groupLabel} id="water-year-tank">Tank</span>
           <div className={s.tanks} role="group" aria-labelledby="water-year-tank">
-            {TANK_SIZES_L.map((size) => (
-              <button key={size} type="button" className={s.tankBtn} aria-pressed={tankL === size} onClick={() => setTankL(size)}>
+            {sizes.map((size) => (
+              <button key={size} type="button" className={s.tankBtn} aria-pressed={tankL === size} onClick={() => setPicked(size)}>
                 <span>{numberLabel(size)} L</span>
                 {size === recommended && <span className={s.rec}>recommended</span>}
               </button>
@@ -839,8 +859,9 @@ export default function WaterYear({ monthlyMm, roofM2, pattern, defaultPeople = 
       <p className={s.note}>
         Roof {numberLabel(Math.round(roofM2))} m² × each month&rsquo;s rain × 0.80 runoff (the app&rsquo;s one roof coefficient).
         80 L per person per day. Rain and use are spread evenly through each month, and the year starts with whatever September
-        left in the tank. Recommended size: the app&rsquo;s tank rule for this catch. Rainfall: {rainSource}.
-        {' '}{defaultPeople} people is the app&rsquo;s household until a site survey says otherwise.
+        left in the tank. Recommended: for this many people, the smallest standard tank within {EMPTY_DAY_TOLERANCE} day
+        of the fewest empty days any size can give. Rainfall: {rainSource}.
+        {' '}{DEFAULT_HOUSEHOLD} people is the app&rsquo;s household until a site survey says otherwise.
       </p>
     </section>
   );
