@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
-import { createSiteCountryContext, type SiteContextResolution } from '@/lib/international/site-context';
+import { createSiteCountryContext, sitePlanningSupport, type SiteContextResolution } from '@/lib/international/site-context';
 import { savedCountryEvidenceHref } from '@/lib/international/countries/navigation';
 import { updateSiteCountryContext } from '@/lib/saved-places';
 import { DEFINITIVE_CONTEXT_REJECTIONS, type PlaceContextOutcome } from '@/lib/user-sync';
@@ -69,13 +69,18 @@ export default function SiteCountryPanel({ resolution, onSaved, onDelivery }: {
   }
 
   const evidenceHref = savedCountryEvidenceHref(resolution);
+  const planning = sitePlanningSupport(resolution);
 
   return <section aria-label="Site country and region" className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] p-4 font-sans text-[var(--text-primary)]">
     <h2 className="font-display text-lg font-semibold">Site country and region</h2>
     <p className="mt-1 text-sm text-[var(--text-secondary)]">{current
       ? `Saved country: ${countries.find(([code]) => code === current.countryCode)?.[1] ?? current.countryCode}. This is the grower’s description, not local agronomy approval.`
       : resolution.status === 'conflict' ? 'Saved entries for this same mapped site disagree. Confirm one description for all of them.'
-        : 'The country for this site has not been confirmed. Existing plans and measured maps stay saved.'}</p>
+        : resolution.status === 'missing-site' ? 'Open or save a mapped site before confirming its country.'
+          : 'Confirm the country for this saved mapped site. Existing plans and measured maps stay saved.'}</p>
+    {current && <p className="mt-2 text-sm text-[var(--text-secondary)]">{planning.allowAutoPlanning
+      ? 'South African reference planning is available for this saved site. Country confirmation does not verify local growing conditions.'
+      : 'Automatic crop planning is not available for this country. You can review country reference evidence; confirming the site does not approve local farming advice.'}</p>}
     {evidenceHref && <p className="mt-2 text-sm">
       <Link href={evidenceHref} className="inline-flex min-h-11 items-center font-medium underline">
         Review country evidence
