@@ -13,7 +13,41 @@ This folder backs [`../crop-plan-accuracy-claude.md`](../crop-plan-accuracy-clau
 | `harvest-timing-bias.py` | The app's first-harvest month against the published duration range |
 | `frost-by-app-rule.py` | Frost exposure using the app's own rule for when a crop is exposed |
 | `lowest-minimum.py` | The lowest daily minimum in 20 years for the sites whose frost status matters most |
+| `outputs/kzn-table6-rows.md` | Where each KZN row in the comparison comes from: the transcribed text, the repo file that holds it and the page recorded |
 | `outputs/` | What those scripts printed, plus `catalog.json`, `locations-climate.json` (monthly climate, frost statistics, missing days and both classifications per location) and `crop-month-matrix.csv` (every crop and sowing month for the 44 South African sites: 7,462 rows) |
+
+## Which code and data were run
+
+- **Code.** The harness imports the app's own modules and ran on this branch on 10 November 2026 between about 04:45 and 05:05 UTC. Every module that decides a calendar, a date or a quantity was identical to released `8a4d1fd` then, and is identical to released `29e5516` now:
+
+  ```bash
+  for c in 8a4d1fd 29e5516; do git diff --quiet $c HEAD -- lib/crop-catalog.ts lib/koppen-global.ts lib/site-climate.ts lib/nasa-power.ts lib/climate-temperature.ts lib/crop-climate-gate.ts lib/crop-plan.ts lib/harvest-targets.ts lib/crop-autosuggest.ts && echo "$c identical"; done
+  ```
+
+- **App climate input.** `fetchNasaPower(lat, lon)` from `lib/nasa-power.ts`, unchanged: NASA POWER monthly climatology of 2 m air temperature and precipitation for the point, with the app's own rule that swaps in Open-Meteo 1991–2020 rainfall when the two differ by more than 30% (10 of 62 sites; marked `rainfallSource: open-meteo`).
+- **Independent input.** `https://archive-api.open-meteo.com/v1/archive` with `daily=temperature_2m_min,temperature_2m_max,temperature_2m_mean,precipitation_sum`, `start_date=2001-01-01`, `end_date=2020-12-31`, `timezone=auto`, one request per site. `outputs/locations-climate.json` records the grid cell's coordinates and elevation, the number of days returned and the number missing for each site.
+- **Classification.** `siteClimateFromLocationData` for the app's answer; `classifyKoppen` and `rainPatternFor` again on the ERA5 monthly means for the cross-check. Thresholds are the app's own constants.
+- **Timing.** `harvestMonthForCrop` and `bedEntryMonth` from `lib/crop-plan.ts`.
+
+## Four kinds of evidence, kept apart
+
+| Kind | What it is here | How far to trust it |
+| --- | --- | --- |
+| Code fact | The catalogue's months, the calendar the app assigns, the harvest month it computes | Exact and reproducible: it is what the app does |
+| Modelled or gridded estimate | NASA POWER and ERA5 temperatures, rain and frost-day counts for a grid cell | Good for comparing regions. Not a station reading and not a farm's microclimate: a hollow frosts when its cell does not |
+| Published advice | The SANSOR regional guide, Starke Ayres guidelines, the Cowpeas Infopak; the KZN table rows as transcribed earlier | General guidance for a region, not validated for any one farm. The KZN rows are second-hand until the document is re-read |
+| Not available to this audit | Weather-station observations, on-farm frost dates, an agronomist's or extension officer's local advice, a grower's own records | Outranks everything above where it exists |
+
+Nothing in this folder is validated local advice. A finding that says the app disagrees with a regional guide means exactly that.
+
+## Nursery time and field time
+
+A tray-raised crop has two periods, and they are kept apart throughout:
+
+- **Nursery:** sowing to transplanting. The app plans 2 months and reserves the bed from 1 month after sowing. The sources say 4–6 weeks in warm conditions.
+- **Field:** transplanting to first harvest. The app treats a tray crop's catalogue duration as counted from transplanting (`lib/crop-plan.ts:1190`) and a direct-sown crop's as counted from sowing. Whether each source figure is from sowing or from transplanting was not re-checked crop by crop.
+
+`outputs/harvest-timing-bias.txt` shows the two parts in separate columns. In `outputs/crop-month-matrix.csv`, `months_sow_to_first_harvest` includes the nursery months of a tray crop and `months_earliest_bed_entry_to_first_harvest` does not; frost is only meaningful for the second.
 
 ## Reproduce
 

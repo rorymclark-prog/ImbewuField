@@ -44,6 +44,22 @@ The regional guide used as an independent yardstick is the "General sowing guide
 | CP-082 | **Whole regions cannot plan some of their own crops.** Nine crops have no sowing month in the light-frost calendar and eight none in the frost-free one: cowpea, bambara groundnut, sorghum, amaranth, spider plant, African nightshade, soybean, sunflower and mung bean. A grower on the KZN coast or at the sample farm cannot schedule them. Maize in the interior is October and November only. | open | An honest gap, not a wrong figure: no source was found for those columns. For cowpea one exists: the national Infopak says "In warmer areas the crop can be planted during the middle of December". Trade-press reports of Grain SA guidance put the western maize window to mid-December; that needs a primary source before it is used. |
 | CP-083 | **The source tables could not be re-read.** The KZN agriculture site returned 404 and 503 ("under maintenance"), the national department's site 503. The catalogue's own comments say a reproduction was used on 27 September for the same reason. | needs verification | Every source comparison here rests on the repo's transcriptions, the SANSOR guide and Starke Ayres' guidelines. The expected-yields table was not re-verified at all. Re-read the primary tables when the sites return. |
 
+## How strong each finding is
+
+The evidence folder keeps four kinds of evidence apart: what the code does, gridded climate estimates, published regional advice, and local facts this audit did not have (station records, a farm's own frost dates, an agronomist's advice). No finding here rests on local facts.
+
+| Finding | Rests on | Would be settled by |
+| --- | --- | --- |
+| CP-073 | Code fact (the calendar assigned) plus gridded minimum temperatures plus two published guides | Station frost records for the seven sites; local extension advice on planting seasons |
+| CP-074 | Code fact plus a published guide; the KZN hot-area column is second-hand | Re-reading the KZN table; advice from the KZN coast |
+| CP-075, CP-077 | Code fact against second-hand transcriptions of the KZN table | Re-reading the table |
+| CP-076 | Code fact (identical month lists; the catalogue's own comment) plus one secondary guide | A Western Cape source |
+| CP-078 | Code fact on two gridded datasets. It shows the choice is fragile, not which calendar is right | Station normals for the nine sites |
+| CP-079 | Code fact plus arithmetic on the catalogue's own duration ranges. Nursery and field time are separate columns in the output | Growers' harvest records |
+| CP-080 | Code fact: the count of rejections | Nothing further needed for the count; the right heat rule needs a source |
+| CP-081 | Gridded minimum temperatures, a lower bound for frost | Station or on-farm frost dates |
+| CP-082 | Code fact (empty month lists); one primary quote for cowpea | Sources for each crop and region |
+
 ## Verification
 
 - Location harness: the app's own `fetchNasaPower`, `siteClimateFromLocationData`, `classifyKoppen`, `rainPatternFor`, `harvestMonthForCrop` and the heat-check functions, run for 62 locations with no failed fetch. Independent record: ERA5 daily minimum, maximum and rain, 2001–2020, through Open-Meteo.
