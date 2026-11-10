@@ -6238,7 +6238,7 @@ function AutoSuggestModal({
                 {(() => { const PatternIcon = PATTERN_META[pattern].Icon; return <PatternIcon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />; })()} {calendarLabel}
               </div>
               {siteClimate && sowingCalendarReasons(siteClimate, { pattern, basis: calendarBasis }).map((line) => (
-                <p key={line} className="font-sans mt-1" style={{ fontSize: 11.5, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{line}</p>
+                <p key={line} className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{line}</p>
               ))}
               <p className="font-mono mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
                 {climateSource === 'site'

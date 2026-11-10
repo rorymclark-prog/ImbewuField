@@ -182,7 +182,9 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest audit: [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md). The planner's own functions run for 44 South African and 18 other locations against 20 years of independent daily weather and a published regional sowing guide: CP-073–CP-083. The arithmetic and the interior calendars hold; frost-free Lowveld, Limpopo and KZN coast sites are shown the wrong season. Findings only; no farming data changed.
+Latest record: [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md). What was done about CP-073–CP-083, with before and after figures for 44 places, and CP-086–CP-090. The calendar is now chosen by frost and heat; 39 sowing-month rows are corrected to their source rows; Lowveld agreement with the regional guide went from 35% to 61% and the KZN coast from 47% to 72%. Still open: the KZN table has not been re-read (CP-083), the heat check (CP-080), and four decisions for Rory.
+
+The audit it answers: [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md). The planner's own functions run for 44 South African and 18 other locations against 20 years of independent daily weather and a published regional sowing guide: CP-073–CP-083. The arithmetic and the interior calendars hold; frost-free Lowveld, Limpopo and KZN coast sites were shown the wrong season. Findings only; no farming data changed in that record.
 
 Same day: [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md). First rendered review of `/facilitator/crops` on released `8a4d1fd`: CP-047–CP-072, with measured contrast, keyboard, phone, dark, isiZulu and large-text evidence. Findings and a plan only; no code changed.
 
@@ -242,6 +244,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md).
 - [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md).
 - [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md).
 - [Mass-entry review warning contrast — 10 November 2026](2026-11-10/mass-review-warning-contrast-codex.md).

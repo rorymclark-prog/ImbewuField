@@ -1987,9 +1987,9 @@ export const CROPS: CropDef[] = [
  * hot-area plan uses them rather than presenting them as checked.
  *
  * 2026-11-10: the list was eight crops while the column cited the table for
- * thirteen more, so a plan warned about cauliflower and radish months that were
- * sourced; and seventeen older rows did not match the column they were filed
- * under. Both are corrected here (accuracy audit, CP-075). */
+ * eight more, so a plan warned about cauliflower and radish months that were
+ * sourced; and sixteen older rows did not match the column they were filed
+ * under. Both are corrected here (accuracy audit, CP-075, CP-088). */
 export const FROST_FREE_CALENDAR_CITED: ReadonlySet<string> = new Set([
   'swiss-chard', 'onions', 'tomatoes', 'peppers', 'chilli', 'true-spinach', 'turnip', 'carrots',
   'green-beans', 'dry-beans', 'cabbage', 'beetroot', 'lettuce', 'garlic', 'peas', 'broccoli',

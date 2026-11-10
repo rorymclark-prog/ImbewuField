@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 November 2026', sha: '7e4db70c5f6be1e823b9a0e8845555ab08a7abad', changes: [
+    'Hot, frost-free farms (Lowveld, KZN coast) now get the right sowing season.',
+    'Sowing months corrected for hot areas, the Western Cape and peas in frost areas.',
+    'The crop plan shows which sowing calendar it uses, and why.',
+    'A weekly target warns when a sowing could be ready before the buyer wants it.',
+  ], tour: [{ title: 'Check your sowing months', where: 'Menu → Crop plan', href: '/facilitator/crops',
+    detail: 'In a hot area with no frost, the plan now sows most vegetables from February to September, not in midsummer. Months also changed for the Western Cape and for peas where there is frost. A plan you made before keeps its old dates. Open Auto-suggest a plan to see which calendar is used and to make a new plan.' }] },
   { when: '10 November 2026', sha: 'd3897bdc169f137f5b93683cd00dbdb73d0d3e12', changes: [
     'Crop names on the plan calendar are easier to read, in light and dark.',
     'Crop bars and "+ crop" are bigger to tap on a phone.',

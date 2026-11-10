@@ -65,6 +65,29 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 10 Nov 2026 — Crop plan accuracy fixes (farming data changed; full suite required before merge)
+- **Record:** `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-073–CP-083 dispositions, CP-086–CP-090),
+  evidence in `evidence-crop-plan-accuracy-fixes/`. Rory: "go ahead and fix the accuracy issues".
+- **Calendar choice** (`lib/koppen-global.ts` `sowingCalendarFor`, `lib/site-climate.ts`): frost is read from the site's
+  record minimum temperature instead of a mean and an aridity class; the hot-area column is chosen by frost and heat
+  (record minimum ≥ 2 °C, coldest month ≥ 16 °C, hottest ≥ 24 °C), not by rain timing; rain timing is a separate
+  reading (`rainSeason`); a close call is flagged; the grower's own frost answer can move it one column
+  (`calendarForGrower`). 11 of 44 audited places change calendar; the two climate records disagree at 2, down from 9.
+- **Sowing months** (`lib/crop-catalog.ts`): 39 rows in 29 crops corrected to a source row named in each comment:
+  16 hot-area rows (KZN DARD Table 6 hot column), 5 hard-frost rows (peas Jul–Sep), 17 Western Cape rows (the seed
+  industry's regional guide — secondary, and said to be), cowpea in warm areas. Sources as text in
+  `research/crop-sources/_kzn-table6-rows.json` and `_sansor-sowing-guide.json`.
+- **Agreement with the regional guide:** Lowveld 35% → 61%, KZN coast 47% → 72%, all regions but the Western Cape
+  63% → 71%; crop-site pairs sharing no month 72 → 12. The Western Cape figure is by construction and is not quoted.
+- **On screen:** the planner names the calendar ("Hot area, no frost · summer rain"), shows the readings behind it and
+  says when a site is close to a line; a weekly target warns when a linked sowing could be ready before the buyer's
+  window (the credit itself is unchanged); the coldest sites are told frost outlasts August.
+- **Tests:** new `crop-calendar-sources`, `sa-calendar-real-sites`, `sowing-calendar-label`; eight existing tests
+  rewritten with reasons. Typecheck clean; 212 affected test files green locally; full suite runs in CI.
+- **Open:** KZN table still second-hand (CP-083); heat check (CP-080); Mbombela and Tzaneen land on the light-frost
+  calendar; saved plans keep old months (CP-089); a direct calendar choice for growers is a product decision.
+  `PLAN_VERSION` untouched.
+
 ### 10 Nov 2026 — Crop plan accuracy audit (no farming data changed)
 - **Record:** `docs/audits/2026-11-10/crop-plan-accuracy-claude.md`, findings CP-073–CP-083, with the scripts and
   outputs in `evidence-crop-plan-accuracy/`. The planner's own functions were run for 44 South African and 18 other

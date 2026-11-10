@@ -87,3 +87,7 @@ Nothing below is approved. Every item changes farming data or how a site is clas
 7. **Crops without a column (CP-082)** as sources are found; cowpea first.
 
 Evidence folder: [`evidence-crop-plan-accuracy/`](evidence-crop-plan-accuracy/). Branch `claude/blissful-pasteur-1c4ne6`, PR #1328.
+
+## Update, later on 10 November 2026: fixes made
+
+Rory approved the fixes the same day. What was done about each finding, with before and after figures, is in [crop-plan-accuracy-fixes-claude.md](crop-plan-accuracy-fixes-claude.md). In short: CP-073 to CP-077 are fixed (two Lowveld-edge towns land on the light-frost calendar, not the hot one); CP-078, CP-079, CP-081 and CP-082 are fixed in part; CP-080 is open; CP-083 still needs the source table to be re-read. The findings table above is left as it was written, as the record of what the audit found.
