@@ -67,13 +67,16 @@ must provision — not buildable from code alone).
 
 ### 10 Nov 2026 — Crop plan re-audit and plan (no code changed)
 - **Record:** `docs/audits/2026-11-10/crop-plan-reaudit-claude.md`, measured on released `8a4d1fd` with the sample farm.
-  Findings CP-047–CP-072 with 17 screenshots, 19 measurement files and the two scripts that reproduce them.
+  Findings CP-047–CP-072 with 17 screenshots, 25 measurement files, the four scripts that produce them and a README
+  with the exact commands and limits. Revised after Codex's independent review of the first version (six points,
+  record and evidence only).
 - **Decisions waiting on Rory:** the country hold now replaces the planner for every unconfirmed site, the sample
   included (CP-047); the bed calendar sits two phone screens down in Simple mode (CP-048); two panels are both
   called "Harvest targets" (CP-049).
-- **Measured faults:** crop-bar labels at 1.55–3.71:1; three pop-up sheets with no dialog role, no Escape and no
-  focus handling; a see-through pinned month header in the default theme; weekly target totals showing six decimals.
-- **Next:** steps 1 (readable calendar) and 2 (touch and keyboard) need no decision. Nothing starts until Rory says go.
+- **Measured faults:** crop-bar labels at 1.61–3.71:1 read from pixels; three pop-up sheets with no dialog role, no
+  Escape and no focus handling; a see-through pinned month header in the default theme; weekly target totals showing six decimals.
+- **Next:** nothing is approved for implementation. The three decisions stay with Rory; steps 1 (readable calendar)
+  and 2 (touch and keyboard) do not depend on them but still wait for his go.
 
 ### 27 Oct 2026 — Wave 28: overlays keep keyboard focus; Lima opens from the keyboard
 - **Overlays (Sonnet #1134, reviewed):** `lib/use-dialog-focus.ts` moves focus into Settings, the drawer, the Add sheet,

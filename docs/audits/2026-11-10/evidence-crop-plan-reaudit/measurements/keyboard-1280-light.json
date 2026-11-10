@@ -4,56 +4,147 @@
   "theme": "earth light",
   "level": "simple",
   "lang": "en",
-  "build": "main 8a4d1fd local dev, sample farm"
+  "url": "/facilitator/crops",
+  "servedBuild": {
+   "branch": "claude/blissful-pasteur-1c4ne6",
+   "sha": "504b319"
+  },
+  "site": "public sample farm",
+  "countryConfirmed": "ZA",
+  "isolation": "new browser context and page load per check"
  },
- "overlays": [
+ "pageLoads": [
   {
-   "overlay": "crop-picker",
-   "opened": true,
-   "title": "Add a crop",
-   "role": null,
-   "ariaModal": null,
-   "labelled": false,
-   "focusMovedInOnOpen": true,
-   "focusAfterOpen": "INPUT \"\"",
-   "tabLeavesOverlayAfterPresses": 93,
-   "tabTrapped": false,
-   "escapeCloses": false,
-   "closeControl": "18x18 aria-label=Close title=null",
-   "closedForNextTest": false,
-   "focusAfterClose": "A \"Ask for help\""
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
   },
   {
-   "overlay": "planting-detail",
-   "opened": true,
-   "title": "Butternut",
-   "role": null,
-   "ariaModal": null,
-   "labelled": false,
-   "focusMovedInOnOpen": false,
-   "focusAfterOpen": "BUTTON \"Butternut\"",
-   "tabLeavesOverlayAfterPresses": 1,
-   "tabTrapped": false,
-   "escapeCloses": false,
-   "closeControl": "16x16 aria-label=Close title=null",
-   "closedForNextTest": false,
-   "focusAfterClose": "BUTTON \"Butternut\""
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
   },
   {
-   "overlay": "auto-suggest",
-   "opened": true,
-   "title": "Auto-suggest a plan",
-   "role": null,
-   "ariaModal": null,
-   "labelled": false,
-   "focusMovedInOnOpen": false,
-   "focusAfterOpen": "BUTTON \"Auto-suggest a plan\"",
-   "tabLeavesOverlayAfterPresses": 1,
-   "tabTrapped": false,
-   "escapeCloses": false,
-   "closeControl": "18x18 aria-label=Close title=null",
-   "closedForNextTest": false,
-   "focusAfterClose": "SUMMARY \"Harvest targets Plan from week\""
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  },
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  },
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  },
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  },
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  }
+ ],
+ "sheets": [
+  {
+   "sheet": "crop-picker",
+   "expectedTitle": "^Add a crop$",
+   "runA": {
+    "opened": true,
+    "title": "Add a crop",
+    "role": null,
+    "ariaModal": null,
+    "accessibleName": null,
+    "focusMovedIntoSheetOnOpen": true,
+    "focusAfterOpen": "input \"\"",
+    "focusStillOnTrigger": false,
+    "focusableControlsInSheet": 94,
+    "closeButton": {
+     "widthPx": 18,
+     "heightPx": 18,
+     "ariaLabel": "Close"
+    },
+    "escapeClosesSheet": false,
+    "closeButtonClosesSheet": true,
+    "closedBy": "pointer click on its Close button",
+    "focusAfterClose": "body \"Tour Production plan Plants and hous\"",
+    "focusReturnedToTrigger": false
+   },
+   "runB": {
+    "opened": true,
+    "focusWentTo": "a \"Ask for help\"",
+    "focusInsideOnOpen": true,
+    "tabPressesToReachSheet": 0,
+    "tabPressesInsideBeforeFocusLeft": 93,
+    "focusableControlsInSheet": 94,
+    "reading": "focus is not contained: Tab leaves the sheet for the page behind it"
+   }
+  },
+  {
+   "sheet": "planting-detail",
+   "expectedTitle": "^Butternut",
+   "runA": {
+    "opened": true,
+    "title": "Butternut",
+    "role": null,
+    "ariaModal": null,
+    "accessibleName": null,
+    "focusMovedIntoSheetOnOpen": false,
+    "focusAfterOpen": "button \"Butternut\"",
+    "focusStillOnTrigger": true,
+    "focusableControlsInSheet": 4,
+    "closeButton": {
+     "widthPx": 16,
+     "heightPx": 16,
+     "ariaLabel": "Close"
+    },
+    "escapeClosesSheet": false,
+    "closeButtonClosesSheet": true,
+    "closedBy": "pointer click on its Close button",
+    "focusAfterClose": "body \"Tour Production plan Plants and hous\"",
+    "focusReturnedToTrigger": false
+   },
+   "runB": {
+    "opened": true,
+    "focusWentTo": "a \"Ask for help\"",
+    "focusInsideOnOpen": false,
+    "tabPressesToReachSheet": 60,
+    "tabPressesInsideBeforeFocusLeft": 4,
+    "focusableControlsInSheet": 4,
+    "reading": "focus is not contained: Tab leaves the sheet for the page behind it"
+   }
+  },
+  {
+   "sheet": "auto-suggest",
+   "expectedTitle": "^Auto-suggest a plan$",
+   "runA": {
+    "opened": true,
+    "title": "Auto-suggest a plan",
+    "role": null,
+    "ariaModal": null,
+    "accessibleName": null,
+    "focusMovedIntoSheetOnOpen": false,
+    "focusAfterOpen": "button \"Auto-suggest a plan\"",
+    "focusStillOnTrigger": true,
+    "focusableControlsInSheet": 76,
+    "closeButton": {
+     "widthPx": 18,
+     "heightPx": 18,
+     "ariaLabel": "Close"
+    },
+    "escapeClosesSheet": false,
+    "closeButtonClosesSheet": true,
+    "closedBy": "pointer click on its Close button",
+    "focusAfterClose": "body \"Tour Production plan Plants and hous\"",
+    "focusReturnedToTrigger": false
+   },
+   "runB": {
+    "opened": true,
+    "focusWentTo": "a \"Ask for help\"",
+    "focusInsideOnOpen": false,
+    "tabPressesToReachSheet": 70,
+    "tabPressesInsideBeforeFocusLeft": 14,
+    "focusableControlsInSheet": 76,
+    "reading": "focus is not contained: Tab leaves the sheet for the page behind it"
+   }
   }
  ],
  "tabStops": [
@@ -64,9 +155,9 @@
    "outline": "solid 3px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 75,
-   "h": 44
+   "fullyInViewport": true,
+   "widthPx": 75,
+   "heightPx": 44
   },
   {
    "tag": "a",
@@ -75,9 +166,9 @@
    "outline": "solid 2px rgb(106, 80, 64)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 34,
-   "h": 34
+   "fullyInViewport": true,
+   "widthPx": 34,
+   "heightPx": 34
   },
   {
    "tag": "summary",
@@ -86,9 +177,9 @@
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 1238,
-   "h": 48
+   "fullyInViewport": true,
+   "widthPx": 1238,
+   "heightPx": 48
   },
   {
    "tag": "summary",
@@ -97,9 +188,9 @@
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 1238,
-   "h": 48
+   "fullyInViewport": true,
+   "widthPx": 1238,
+   "heightPx": 48
   },
   {
    "tag": "summary",
@@ -108,9 +199,9 @@
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 1238,
-   "h": 48
+   "fullyInViewport": true,
+   "widthPx": 1238,
+   "heightPx": 48
   },
   {
    "tag": "button",
@@ -119,9 +210,9 @@
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 216,
-   "h": 44
+   "fullyInViewport": true,
+   "widthPx": 216,
+   "heightPx": 44
   },
   {
    "tag": "a",
@@ -130,9 +221,9 @@
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 162,
-   "h": 44
+   "fullyInViewport": true,
+   "widthPx": 162,
+   "heightPx": 44
   },
   {
    "tag": "summary",
@@ -141,9 +232,9 @@
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 1206,
-   "h": 44
+   "fullyInViewport": true,
+   "widthPx": 1206,
+   "heightPx": 44
   },
   {
    "tag": "button",
@@ -152,9 +243,9 @@
    "outline": "solid 3px rgb(247, 242, 233)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 1240,
-   "h": 43
+   "fullyInViewport": true,
+   "widthPx": 1240,
+   "heightPx": 43
   },
   {
    "tag": "summary",
@@ -163,20 +254,20 @@
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 1238,
-   "h": 48
+   "fullyInViewport": true,
+   "widthPx": 1238,
+   "heightPx": 48
   },
   {
    "tag": "summary",
-   "text": "Nursery plannerThis site\u2019s trays and",
+   "text": "Nursery plannerThis site’s trays and",
    "focusVisible": true,
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 1238,
-   "h": 48
+   "fullyInViewport": true,
+   "widthPx": 1238,
+   "heightPx": 48
   },
   {
    "tag": "button",
@@ -185,9 +276,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 58,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 58,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -196,9 +287,9 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -207,9 +298,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 290,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -218,9 +309,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 58,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 58,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -229,9 +320,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 290,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -240,9 +331,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 290,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -251,9 +342,9 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -262,9 +353,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 348,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 348,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -273,9 +364,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 348,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 348,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -284,9 +375,9 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -295,9 +386,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 406,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 406,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -306,9 +397,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 290,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -317,9 +408,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": false,
-   "w": 290,
-   "h": 26
+   "fullyInViewport": false,
+   "widthPx": 290,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -328,9 +419,9 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -339,9 +430,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 174,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 174,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -350,9 +441,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 58,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 58,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -361,9 +452,9 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -372,9 +463,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 116,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 116,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -383,9 +474,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 348,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 348,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -394,9 +485,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": false,
-   "w": 348,
-   "h": 26
+   "fullyInViewport": false,
+   "widthPx": 348,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -405,9 +496,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 406,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 406,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -416,9 +507,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 58,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 58,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -427,9 +518,9 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -438,9 +529,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 348,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 348,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -449,9 +540,9 @@
    "outline": "solid 2px rgb(255, 255, 255)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 58,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 58,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -460,9 +551,9 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -471,9 +562,9 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -482,9 +573,9 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -493,9 +584,9 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
@@ -504,58 +595,65 @@
    "outline": "solid 2px rgb(30, 77, 51)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 56,
-   "h": 26
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
   },
   {
    "tag": "button",
-   "text": "Add a crop",
-   "focusVisible": true,
-   "outline": "solid 3px rgb(30, 77, 51)",
-   "boxShadow": "none",
-   "hasIndicator": true,
-   "inViewport": true,
-   "w": 1240,
-   "h": 43
-  },
-  {
-   "tag": "summary",
-   "text": "Avocado \u00b7 0 existing, 1 proposed \u00b7 c",
+   "text": "Mango · reference (proposed)",
    "focusVisible": true,
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 1206,
-   "h": 20
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 30
   },
   {
-   "tag": "summary",
-   "text": "Mango \u00b7 0 existing, 1 proposed \u00b7 con",
+   "tag": "button",
+   "text": "Mango · reference (proposed)",
    "focusVisible": true,
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 1206,
-   "h": 20
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 30
   },
   {
-   "tag": "summary",
-   "text": "Moringa \u00b7 0 existing, 2 proposed \u00b7 c",
+   "tag": "button",
+   "text": "Avocado · reference (proposed)",
    "focusVisible": true,
    "outline": "solid 2px rgb(38, 27, 16)",
    "boxShadow": "none",
    "hasIndicator": true,
-   "inViewport": true,
-   "w": 1206,
-   "h": 20
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 30
+  },
+  {
+   "tag": "button",
+   "text": "Avocado · reference (proposed)",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": false,
+   "widthPx": 290,
+   "heightPx": 30
   }
  ],
  "summary": {
   "tabStopsSampled": 45,
-  "withoutFocusIndicator": 0,
-  "focusedOffscreen": 2
+  "tabStopsWithoutFocusIndicator": 0,
+  "sheetsOpened": 3,
+  "sheetsWithDialogRole": 0,
+  "sheetsWithAccessibleName": 0,
+  "sheetsTakingFocusOnOpen": 1,
+  "sheetsClosedByEscape": 0,
+  "sheetsClosedByOwnCloseButton": 3,
+  "sheetsReturningFocusToTrigger": 0,
+  "sheetsContainingTab": 0
  }
 }
