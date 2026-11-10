@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '10 November 2026', sha: '7e4db70c5f6be1e823b9a0e8845555ab08a7abad', changes: [
+  { when: '10 November 2026', sha: 'c32f6a39a6bf93d71fa674437ecb570716532b65', changes: [
     'Hot, frost-free farms (Lowveld, KZN coast) now get the right sowing season.',
     'Sowing months corrected for hot areas, the Western Cape and peas in frost areas.',
     'The crop plan shows which sowing calendar it uses, and why.',
