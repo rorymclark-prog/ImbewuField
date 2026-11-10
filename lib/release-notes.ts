@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '10 November 2026', sha: '676b2e2259726312fea4d9604870b12e242a484a', changes: [
+  { when: '10 November 2026', sha: 'd3897bdc169f137f5b93683cd00dbdb73d0d3e12', changes: [
     'Crop names on the plan calendar are easier to read, in light and dark.',
     'Crop bars and "+ crop" are bigger to tap on a phone.',
     'Crop plan pop-ups close with Escape and keep keyboard focus.',

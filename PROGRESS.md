@@ -71,7 +71,7 @@ must provision — not buildable from code alone).
   places against 20 years of independent daily weather and a published regional sowing guide.
 - **Holds:** the weekly-target and yield arithmetic; frost safety at 42 of 44 sites; the interior calendars (70–79%
   agreement with the regional guide); no catalogue plan is computed outside South Africa.
-- **Wrong:** seven frost-free Lowveld and Limpopo sites are put on the hard-frost Highveld calendar (35% agreement;
+- **Wrong:** seven Lowveld and Limpopo sites with no frost day in 20 years are put on the hard-frost Highveld calendar (35% agreement;
   tomatoes shown for August–October where the region plants January–July). Durban and the sample farm get the
   light-frost calendar (42%). The Western Cape calendar copies the interior's for nine crops. Harvest months are the
   late edge, by one to three months for tray crops, and weekly targets are matched to them.
