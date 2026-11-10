@@ -163,6 +163,42 @@ export function parseHiddenCalendarNotices(raw: string | null | undefined): Reco
 }
 
 /**
+ * What to store when a grower taps "Hide this list", or null when the tap must do nothing.
+ *
+ * The tap handler belongs to the render that drew the list: its site scope and its list
+ * signature are that render's. A handler kept past a change of account, sample mode or
+ * site still holds them. The first per-account version worked out the destination key at
+ * the moment of the tap and wrote the old render's site into it, so account A's farm
+ * landed in account B's record (independent review of PR #1328, comment 6765460003).
+ * Choosing the right key is not enough: old-render data has no right destination.
+ *
+ * So the write is admitted only when BOTH hold at the moment of the tap:
+ *  - the page's own actor and context admission says this render is still current
+ *    (same account, the browser's signed-in user agrees with it, same sample state,
+ *    same site and planning scope); and
+ *  - the account key now is the key this render was drawn for.
+ * Then the record stored under that key RIGHT NOW is read again and added to, so entries
+ * for the account's other sites, or written by another tab, are kept. A refused tap
+ * writes nothing anywhere: a newer account's record is left exactly as it was.
+ */
+export function hiddenCalendarNoticeWrite(input: {
+  renderedStorageKey: string;
+  currentStorageKey: string;
+  actorIsCurrent: boolean;
+  scope: string;
+  signature: string;
+  storedRaw: string | null | undefined;
+}): { storageKey: string; byScope: Record<string, string> } | null {
+  if (input.actorIsCurrent !== true) return null;
+  if (!input.renderedStorageKey || input.renderedStorageKey !== input.currentStorageKey) return null;
+  if (!input.scope || input.scope === '__proto__') return null;
+  return {
+    storageKey: input.currentStorageKey,
+    byScope: { ...parseHiddenCalendarNotices(input.storedRaw), [input.scope]: input.signature },
+  };
+}
+
+/**
  * True when the plan's accepted suggestion predates the correction, or carries no date
  * at all. Only then may the page say the months changed under the grower: a plan made
  * after it is out of season because of something they or their calendar choice did.

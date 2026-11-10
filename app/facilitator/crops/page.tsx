@@ -94,7 +94,7 @@ import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
 import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
-import { SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, outOfCalendarLine, outOfCalendarSignature, parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
+import { SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, hiddenCalendarNoticeWrite, outOfCalendarLine, outOfCalendarSignature, parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
 import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
@@ -1744,10 +1744,21 @@ function FacilitatorCropsPageInner() {
   }, [hiddenNoticeStorageKey]);
   const hiddenForThisAccount = hiddenCalendarNotice.storageKey === hiddenNoticeStorageKey ? hiddenCalendarNotice.byScope : {};
   function hideCalendarNotice() {
-    const storageKey = activeAccountLocalStorageKey(SOWING_CALENDAR_NOTICE_HIDDEN_KEY);
-    const byScope = { ...(hiddenCalendarNotice.storageKey === storageKey ? hiddenCalendarNotice.byScope : {}), [outOfCalendarScope]: outOfCalendarKey };
-    setHiddenCalendarNotice({ storageKey, byScope });
-    try { localStorage.setItem(storageKey, JSON.stringify(byScope)); } catch { /* the notice stays hidden for this visit only */ }
+    // This handler carries the site and the list of the render that drew it. Kept past a change
+    // of account, sample mode or site, it must write nothing: working out the new account's key
+    // here would only choose where to put the OLD render's farm. Ask the page's own admission
+    // first, and write only under the key this render was drawn for (hiddenCalendarNoticeWrite).
+    const currentStorageKey = activeAccountLocalStorageKey(SOWING_CALENDAR_NOTICE_HIDDEN_KEY);
+    const actorIsCurrent = growerActorIsCurrent() && currentPlanningScopeAllowed();
+    const readStored = () => { try { return localStorage.getItem(currentStorageKey); } catch { return null; } };
+    const write = hiddenCalendarNoticeWrite({
+      renderedStorageKey: hiddenNoticeStorageKey, currentStorageKey, actorIsCurrent,
+      scope: outOfCalendarScope, signature: outOfCalendarKey,
+      storedRaw: actorIsCurrent && currentStorageKey === hiddenNoticeStorageKey ? readStored() : null,
+    });
+    if (!write) return;
+    setHiddenCalendarNotice(write);
+    try { localStorage.setItem(write.storageKey, JSON.stringify(write.byScope)); } catch { /* the notice stays hidden for this visit only */ }
   }
   const hasOwnRecords = markedPlantings.length > 0;
   const legacyAddBlocked = (bedId: string, rows = plan?.plantings ?? []) => rows.some(p => hasGrowerCycleMarker(p)
@@ -1779,7 +1790,9 @@ function FacilitatorCropsPageInner() {
   // A calendar choice rides the page's ordinary autosave (no save call here, no undo entry):
   // it is a setting of the plan book, not an edit of a sowing.
   function chooseSowingCalendar(calendar: RainPattern | null) {
-    if (!calendarScopeId || !currentPlanningScopeAllowed()) return;
+    // The scope id is this render's site. A handler kept past a change of account or site must
+    // not put that site into whichever plan is on screen now.
+    if (!calendarScopeId || !currentPlanningScopeAllowed() || !growerActorIsCurrent()) return;
     setPlan((prev) => {
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
       return { ...withSowingCalendarChoice(base, calendarScopeId, calendar), version: 1 as const, updatedAt: Date.now() };
