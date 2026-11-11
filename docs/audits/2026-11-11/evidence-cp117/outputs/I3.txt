@@ -1,0 +1,56 @@
+
+== /farmer site data panel, phone light
+  location-data 200
+  Climate tab reached: true | withheld message: false
+  climate lines: [
+ "Climate code (Köppen) Cfa — Humid subtropical",
+ "No crops are suggested from the climate type alone. A climate type does not know your water, frost or soil. Use the crop plan for sowing months checked against this site.",
+ "Modelled record low: 5.4°C",
+ "Coldest month mean ≈ 17° (Jul)",
+ "Hottest month mean ≈ 25° (Feb)",
+ "Monthly sunshine is not shown. This record holds no monthly sunshine hours for this site.",
+ "Monthly wind is not shown. This record holds no monthly wind figures for this site.",
+ "Modelled annual mean wind: ≈ 10 km/h.",
+ "December to February: from the ESE.",
+ "June to August: from the SW.",
+ "Modelled record low: 5.4°C.",
+ "Frost months are not shown. Monthly averages cannot show frost, and this record has no daily frost history for your land. The record low is a gridded figure for the wider area."
+]
+  overflow: {"sw":390,"iw":390,"over":false}
+  overview lines: [
+ "Tap each corner of your land. Lima measures it for you.",
+ "Modelled record low",
+ "Modelled record low: 5.4°C. This is a gridded figure for the wider area, not a frost record for your land.",
+ "Modelled annual mean wind: ≈ 10 km/h.",
+ "Lima · 768mm annual rainfall estimate. Check dry-season supply before planning year-round crops. Soil conditions need checking on site; arrange a soil test. Want a full planting plan?",
+ "Frost can damage plants at higher ground"
+]
+  page errors: []
+
+== /farmer site data panel, phone dark
+  location-data 200
+  Climate tab reached: true | withheld message: false
+  climate lines: [
+ "Climate code (Köppen) Cfa — Humid subtropical",
+ "No crops are suggested from the climate type alone. A climate type does not know your water, frost or soil. Use the crop plan for sowing months checked against this site.",
+ "Modelled record low: 5.4°C",
+ "Coldest month mean ≈ 17° (Jul)",
+ "Hottest month mean ≈ 25° (Feb)",
+ "Monthly sunshine is not shown. This record holds no monthly sunshine hours for this site.",
+ "Monthly wind is not shown. This record holds no monthly wind figures for this site.",
+ "Modelled annual mean wind: ≈ 10 km/h.",
+ "December to February: from the ESE.",
+ "June to August: from the SW.",
+ "Modelled record low: 5.4°C.",
+ "Frost months are not shown. Monthly averages cannot show frost, and this record has no daily frost history for your land. The record low is a gridded figure for the wider area."
+]
+  overflow: {"sw":390,"iw":390,"over":false}
+  overview lines: [
+ "Tap each corner of your land. Lima measures it for you.",
+ "Modelled record low",
+ "Modelled record low: 5.4°C. This is a gridded figure for the wider area, not a frost record for your land.",
+ "Modelled annual mean wind: ≈ 10 km/h.",
+ "Lima · 768mm annual rainfall estimate. Check dry-season supply before planning year-round crops. Soil conditions need checking on site; arrange a soil test. Want a full planting plan?",
+ "Frost can damage plants at higher ground"
+]
+  page errors: []

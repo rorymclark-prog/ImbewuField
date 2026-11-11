@@ -6,6 +6,7 @@ import {
   completeMonthlyTemperatures,
   monthlyTemperatureStatus,
   recordMinimumC,
+  completeMonthlyRainfallMm,
 } from '../lib/climate-temperature.ts';
 
 test('cleanPowerValue retains finite numbers above -900, rejects sentinels/non-numbers, and does not coerce hostile objects', () => {
@@ -257,4 +258,27 @@ test('recordMinimumC trusts only a reading tagged as NASA POWER', () => {
   const climate = { minTemp: -999, minTempSource: 'nasa-power' };
   recordMinimumC(climate);
   assert.deepEqual(climate, { minTemp: -999, minTempSource: 'nasa-power' });
+});
+
+test('completeMonthlyRainfallMm needs twelve own, present, finite, non-negative months (CBR-04)', () => {
+  const year = [128.7, 100.2, 84.6, 48.6, 18, 14.4, 15.5, 18.6, 38.7, 69.8, 111.9, 119];
+  assert.equal(completeMonthlyRainfallMm(year), true);
+  assert.equal(completeMonthlyRainfallMm(new Array(12).fill(0)), true, 'a rainless year is a reading');
+  const hole = [...year]; delete hole[0];
+  assert.equal(hole.length, 12);
+  assert.equal(hole.every((v) => typeof v === 'number' && Number.isFinite(v)), true, 'fixture: the old check skipped the hole');
+  assert.equal(completeMonthlyRainfallMm(hole), false);
+  assert.equal(completeMonthlyRainfallMm(new Array(12)), false, 'twelve holes');
+  for (const bad of [null, undefined, Number.NaN, Number.POSITIVE_INFINITY, -0.1, -999, '10', {}]) {
+    const months: unknown[] = [...year]; months[4] = bad;
+    assert.equal(completeMonthlyRainfallMm(months), false, String(bad));
+  }
+  assert.equal(completeMonthlyRainfallMm(year.slice(0, 11)), false);
+  assert.equal(completeMonthlyRainfallMm([...year, 5]), false);
+  assert.equal(completeMonthlyRainfallMm({ ...year, length: 12 }), false, 'array-like is not an array');
+  // An inherited index does not stand in for a missing month.
+  const inherited = [...year]; delete inherited[2];
+  Object.defineProperty(Array.prototype, 2, { value: 84.6, configurable: true, writable: true });
+  try { assert.equal(completeMonthlyRainfallMm(inherited), false); } finally { delete (Array.prototype as unknown as Record<number, unknown>)[2]; }
+  assert.deepEqual(year, [128.7, 100.2, 84.6, 48.6, 18, 14.4, 15.5, 18.6, 38.7, 69.8, 111.9, 119], 'the input is not changed');
 });

@@ -1,0 +1,32 @@
+
+== /farmer site data panel, phone light
+  location-data 200
+  Climate tab reached: true | withheld message: false
+  climate lines: [
+ "≈ 768 mm / yr"
+]
+  overflow: {"sw":390,"iw":390,"over":false}
+  overview lines: [
+ "Tap each corner of your land. Lima measures it for you.",
+ "Annual rainfall",
+ "Soil organic carbon: 1.82% (from the SoilGrids global model, not a test of your soil).",
+ "Lima · Modelled annual rainfall: about 768 mm. Soil conditions need checking on site; arrange a soil test. Want a full planting plan?",
+ "General points for this biome, not findings for this site."
+]
+  page errors: []
+
+== /farmer site data panel, phone dark
+  location-data 200
+  Climate tab reached: true | withheld message: false
+  climate lines: [
+ "≈ 768 mm / yr"
+]
+  overflow: {"sw":390,"iw":390,"over":false}
+  overview lines: [
+ "Tap each corner of your land. Lima measures it for you.",
+ "Annual rainfall",
+ "Soil carbon is not measured here. Arrange a soil test before amendment purchases.",
+ "Lima · Modelled annual rainfall: about 768 mm. Soil conditions need checking on site; arrange a soil test. Want a full planting plan?",
+ "General points for this biome, not findings for this site."
+]
+  page errors: []

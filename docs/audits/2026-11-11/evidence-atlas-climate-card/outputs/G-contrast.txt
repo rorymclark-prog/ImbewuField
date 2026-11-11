@@ -1,0 +1,29 @@
+case                      element                ink       on  ratio    size weight  text
+complete-phone-light      climate code       #1E4D33  #FFFEFA   9.61    26px    700  Cwb
+complete-phone-light      climate name       #261B10  #FFFEFA  16.69    16px    600  Subtropical highland, dry winter
+complete-phone-light      class note         #6A5040  #FFFEFA   7.34  14.5px    400  Summer rain, dry winters and summers that stay warm rather t
+complete-phone-light      rain chip          #1C5A9E  #DFE7EC   5.58    12px    600  ≈ 641 mm/yr
+complete-phone-light      calendar chip      #6A5040  #F8F4E9   6.74    12px    600  Sowing calendar: Winter frost
+complete-phone-light      record-low chip    #6A5040  #F8F4E9   6.74    12px    600  Modelled record low: -4.8°C
+complete-phone-dark       climate code       #82C844  #181208   9.12    26px    700  Cwb
+complete-phone-dark       climate name       #EEE4D0  #181208  14.74    16px    600  Subtropical highland, dry winter
+complete-phone-dark       class note         #A8906C  #181208   6.09  14.5px    400  Summer rain, dry winters and summers that stay warm rather t
+complete-phone-dark       rain chip          #58A0DC  #202625   5.48    12px    600  ≈ 641 mm/yr
+complete-phone-dark       calendar chip      #A8906C  #22190E   5.66    12px    600  Sowing calendar: Winter frost
+complete-phone-dark       record-low chip    #A8906C  #22190E   5.66    12px    600  Modelled record low: -4.8°C
+complete-desktop-light    climate code       #1E4D33  #FFFEFA   9.61    26px    700  Cwb
+complete-desktop-light    climate name       #261B10  #FFFEFA  16.69    16px    600  Subtropical highland, dry winter
+complete-desktop-light    class note         #7B6456  #FFFEFA   5.48  14.5px    400  Summer rain, dry winters and summers that stay warm rather t
+complete-desktop-light    rain chip          #1C5A9E  #DFE7EC   5.58    12px    600  ≈ 641 mm/yr
+complete-desktop-light    calendar chip      #6A5040  #F8F4E9   6.74    12px    600  Sowing calendar: Winter frost
+complete-desktop-light    record-low chip    #6A5040  #F8F4E9   6.74    12px    600  Modelled record low: -4.8°C
+complete-desktop-dark     climate code       #82C844  #181208   9.12    26px    700  Cwb
+complete-desktop-dark     climate name       #EEE4D0  #181208  14.74    16px    600  Subtropical highland, dry winter
+complete-desktop-dark     class note         #978160  #181208   4.98  14.5px    400  Summer rain, dry winters and summers that stay warm rather t
+complete-desktop-dark     rain chip          #58A0DC  #202625   5.48    12px    600  ≈ 641 mm/yr
+complete-desktop-dark     calendar chip      #A8906C  #22190E   5.66    12px    600  Sowing calendar: Winter frost
+complete-desktop-dark     record-low chip    #A8906C  #22190E   5.66    12px    600  Modelled record low: -4.8°C
+incomplete-phone-dark     rain chip          #58A0DC  #202625   5.48    12px    600  ≈ 641 mm/yr
+incomplete-phone-dark     incomplete note    #A8906C  #181208   6.09    14px    400  Temperature records for this point are incomplete or could n
+incomplete-phone-light    rain chip          #1C5A9E  #DFE7EC   5.58    12px    600  ≈ 641 mm/yr
+incomplete-phone-light    incomplete note    #6A5040  #FFFEFA   7.34    14px    400  Temperature records for this point are incomplete or could n

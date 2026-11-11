@@ -1,0 +1,1834 @@
+files: tests/atlas-explorer.test.ts tests/atlas-panel-temperature-claims.test.ts tests/calendar-page-farm-calendar.test.ts tests/climate-temperature.test.ts tests/community-contact-datapanel-theme.test.ts tests/crop-climate-gate.test.ts tests/farmer-sample-details-intent.test.ts tests/koppen-global.test.ts tests/monthly-temperature-cache.test.ts tests/monthly-temperature-ui.test.ts tests/nasa-power.test.ts tests/planting-frost.test.ts tests/report-assurance-localization.test.ts tests/report-footnote-translation.test.ts tests/sa-calendar-real-sites.test.ts tests/sa-rain-pattern.test.ts tests/sample-production-plan.test.ts tests/site-climate.test.ts tests/sowing-calendar-choice.test.ts tests/sowing-calendar-label.test.ts tests/theme-token-coverage.test.ts tests/type-floor.test.ts tests/wind-compass-rose.test.ts 
+TAP version 13
+# (node:919) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/atlas.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: monthlyClimateFrom maps LocationData fields straight through, Jan-first
+ok 1 - monthlyClimateFrom maps LocationData fields straight through, Jan-first
+  ---
+  duration_ms: 1.671248
+  type: 'test'
+  ...
+# Subtest: koppenFrom is the same classifier the server runs — sane codes for known climates
+ok 2 - koppenFrom is the same classifier the server runs — sane codes for known climates
+  ---
+  duration_ms: 0.481851
+  type: 'test'
+  ...
+# Subtest: summer-rainfall subtropical climate maps to the summer pattern
+ok 3 - summer-rainfall subtropical climate maps to the summer pattern
+  ---
+  duration_ms: 0.348802
+  type: 'test'
+  ...
+# Subtest: Mediterranean winter-rainfall climate maps to the winter pattern
+ok 4 - Mediterranean winter-rainfall climate maps to the winter pattern
+  ---
+  duration_ms: 0.130877
+  type: 'test'
+  ...
+# Subtest: a hard-frost climate maps to the frost-waiting summer column regardless of rain seasonality
+ok 5 - a hard-frost climate maps to the frost-waiting summer column regardless of rain seasonality
+  ---
+  duration_ms: 0.160932
+  type: 'test'
+  ...
+# Subtest: hot, evenly wet climate maps to all-year
+ok 6 - hot, evenly wet climate maps to all-year
+  ---
+  duration_ms: 0.145248
+  type: 'test'
+  ...
+# Subtest: unusable climate data yields null, never a guessed pattern
+ok 7 - unusable climate data yields null, never a guessed pattern
+  ---
+  duration_ms: 0.114786
+  type: 'test'
+  ...
+# Subtest: a year the server filled with display substitutes gives no sowing calendar (Argon F-05)
+ok 8 - a year the server filled with display substitutes gives no sowing calendar (Argon F-05)
+  ---
+  duration_ms: 0.442674
+  type: 'test'
+  ...
+# Subtest: southern-hemisphere months pass through unshifted
+ok 9 - southern-hemisphere months pass through unshifted
+  ---
+  duration_ms: 0.232049
+  type: 'test'
+  ...
+# Subtest: northern-hemisphere months shift six months into the SA calendar
+ok 10 - northern-hemisphere months shift six months into the SA calendar
+  ---
+  duration_ms: 0.411762
+  type: 'test'
+  ...
+# Subtest: catalogMonthFor rejects out-of-range months
+ok 11 - catalogMonthFor rejects out-of-range months
+  ---
+  duration_ms: 0.424658
+  type: 'test'
+  ...
+# Subtest: sowableInMonth returns crops whose window includes the month, for that pattern only
+ok 12 - sowableInMonth returns crops whose window includes the month, for that pattern only
+  ---
+  duration_ms: 0.509834
+  type: 'test'
+  ...
+# Subtest: the descriptive crop readout keeps yield-null food crops but excludes zero-food and timing-unverified entries
+ok 13 - the descriptive crop readout keeps yield-null food crops but excludes zero-food and timing-unverified entries
+  ---
+  duration_ms: 0.144934
+  type: 'test'
+  ...
+# Subtest: coriander and kale stay visible in their sourced windows even with unverified kilograms
+ok 14 - coriander and kale stay visible in their sourced windows even with unverified kilograms
+  ---
+  duration_ms: 0.212857
+  type: 'test'
+  ...
+# Subtest: against the real catalog: every returned crop honestly lists the month, and some month is never empty
+ok 15 - against the real catalog: every returned crop honestly lists the month, and some month is never empty
+  ---
+  duration_ms: 2.917263
+  type: 'test'
+  ...
+# (node:925) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/atlas.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the display rule admits only a complete, self-consistent temperature year
+ok 16 - the display rule admits only a complete, self-consistent temperature year
+  ---
+  duration_ms: 0.991728
+  type: 'test'
+  ...
+# Subtest: the pure calendar helper keeps its narrower refusal, so its other callers are unaffected
+ok 17 - the pure calendar helper keeps its narrower refusal, so its other callers are unaffected
+  ---
+  duration_ms: 0.644227
+  type: 'test'
+  ...
+# Subtest: a year of 20 °C substitutes shows no climate type, no frost claim and no temperature (Codex FDR-01)
+ok 18 - a year of 20 °C substitutes shows no climate type, no frost claim and no temperature (Codex FDR-01)
+  ---
+  duration_ms: 9.633436
+  type: 'test'
+  ...
+# Subtest: one substituted month is enough: the real-looking months are withheld too
+ok 19 - one substituted month is enough: the real-looking months are withheld too
+  ---
+  duration_ms: 2.536102
+  type: 'test'
+  ...
+# Subtest: a payload with no coverage receipt is withheld like an incomplete one
+ok 20 - a payload with no coverage receipt is withheld like an incomplete one
+  ---
+  duration_ms: 2.516707
+  type: 'test'
+  ...
+# Subtest: complete temperatures: climate type, calendar, temperatures and the record low; no frost class
+ok 21 - complete temperatures: climate type, calendar, temperatures and the record low; no frost class
+  ---
+  duration_ms: 4.737403
+  type: 'test'
+  ...
+# Subtest: Underberg: a coldest mean of 7.37 °C no longer reads "Frost-free" beside a record low of -6.2 °C
+ok 22 - Underberg: a coldest mean of 7.37 °C no longer reads "Frost-free" beside a record low of -6.2 °C
+  ---
+  duration_ms: 7.30753
+  type: 'test'
+  ...
+# Subtest: the record low is printed only when it is a validated, source-tagged reading
+ok 23 - the record low is printed only when it is a validated, source-tagged reading
+  ---
+  duration_ms: 65.435444
+  type: 'test'
+  ...
+# Subtest: isiZulu mode: the record-low chip stays in English and is marked translation pending
+ok 24 - isiZulu mode: the record-low chip stays in English and is marked translation pending
+  ---
+  duration_ms: 12.761464
+  type: 'test'
+  ...
+# Subtest: an outage keeps its own placeholder warning and prints no temperature
+ok 25 - an outage keeps its own placeholder warning and prints no temperature
+  ---
+  duration_ms: 13.649471
+  type: 'test'
+  ...
+# Subtest: the panel source no longer derives a frost statement from a monthly mean
+ok 26 - the panel source no longer derives a frost statement from a monthly mean
+  ---
+  duration_ms: 0.44072
+  type: 'test'
+  ...
+# Subtest: the climate card paints its code, note and chips with theme tokens (CP-115)
+ok 27 - the climate card paints its code, note and chips with theme tokens (CP-115)
+  ---
+  duration_ms: 1.426854
+  type: 'test'
+  ...
+# (node:926) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/calendar-page-farm-calendar.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: nothing known: no farm calendar is offered
+ok 28 - nothing known: no farm calendar is offered
+  ---
+  duration_ms: 0.685067
+  type: 'test'
+  ...
+# Subtest: the grower's choice wins over the sample and the site; the sample wins over the site
+ok 29 - the grower's choice wins over the sample and the site; the sample wins over the site
+  ---
+  duration_ms: 1.835542
+  type: 'test'
+  ...
+# Subtest: the site's own records, and the grower's frost answer where the site is a close call
+ok 30 - the site's own records, and the grower's frost answer where the site is a close call
+  ---
+  duration_ms: 0.199168
+  type: 'test'
+  ...
+# Subtest: the option names the calendar; the line under it says whose call it was
+ok 31 - the option names the calendar; the line under it says whose call it was
+  ---
+  duration_ms: 0.16145
+  type: 'test'
+  ...
+# Subtest: every calendar has an English and an isiZulu name
+ok 32 - every calendar has an English and an isiZulu name
+  ---
+  duration_ms: 0.082933
+  type: 'test'
+  ...
+# Subtest: the calendar page and the Atlas use the shared names, not their own
+ok 33 - the calendar page and the Atlas use the shared names, not their own
+  ---
+  duration_ms: 0.715781
+  type: 'test'
+  ...
+# Subtest: the calendar page reads this device only: no climate fetch
+ok 34 - the calendar page reads this device only: no climate fetch
+  ---
+  duration_ms: 0.416659
+  type: 'test'
+  ...
+# Subtest: cleanPowerValue retains finite numbers above -900, rejects sentinels/non-numbers, and does not coerce hostile objects
+ok 35 - cleanPowerValue retains finite numbers above -900, rejects sentinels/non-numbers, and does not coerce hostile objects
+  ---
+  duration_ms: 0.733651
+  type: 'test'
+  ...
+# Subtest: completeMonthlyTemperatures accepts dense 12-element arrays of clean numbers and rejects invalid shapes including inherited prototype properties
+ok 36 - completeMonthlyTemperatures accepts dense 12-element arrays of clean numbers and rejects invalid shapes including inherited prototype properties
+  ---
+  duration_ms: 1.169147
+  type: 'test'
+  ...
+# Subtest: monthlyTemperatureStatus maps coverage metadata and guards against false completeness
+ok 37 - monthlyTemperatureStatus maps coverage metadata and guards against false completeness
+  ---
+  duration_ms: 0.354017
+  type: 'test'
+  ...
+# Subtest: recordMinimumC applies the POWER cleaning rule after the provenance check: a missing marker is not a record low
+ok 38 - recordMinimumC applies the POWER cleaning rule after the provenance check: a missing marker is not a record low
+  ---
+  duration_ms: 0.219258
+  type: 'test'
+  ...
+# Subtest: recordMinimumC trusts only a reading tagged as NASA POWER
+ok 39 - recordMinimumC trusts only a reading tagged as NASA POWER
+  ---
+  duration_ms: 0.117019
+  type: 'test'
+  ...
+# Subtest: completeMonthlyRainfallMm needs twelve own, present, finite, non-negative months (CBR-04)
+ok 40 - completeMonthlyRainfallMm needs twelve own, present, finite, non-negative months (CBR-04)
+  ---
+  duration_ms: 0.274391
+  type: 'test'
+  ...
+# (node:928) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/climate-temperature.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: community profile and messages pages no longer paint forest fill or error text as a literal hex
+ok 41 - community profile and messages pages no longer paint forest fill or error text as a literal hex
+  ---
+  duration_ms: 0.962534
+  type: 'test'
+  ...
+# Subtest: ContactInbox no longer paints cards, dark text or error notices as a literal hex
+ok 42 - ContactInbox no longer paints cards, dark text or error notices as a literal hex
+  ---
+  duration_ms: 0.32662
+  type: 'test'
+  ...
+# Subtest: DataPanel no longer paints forest fill, error text or plain dark text as the known-banned literal hexes
+ok 43 - DataPanel no longer paints forest fill, error text or plain dark text as the known-banned literal hexes
+  ---
+  duration_ms: 1.389496
+  type: 'test'
+  ...
+# Subtest: DataPanel captions that were at 9.5px now clamp to a 12px floor
+ok 44 - DataPanel captions that were at 9.5px now clamp to a 12px floor
+  ---
+  duration_ms: 0.86566
+  type: 'test'
+  ...
+# Subtest: AtlasPanel and the contact-page subject label clear the 11px caption floor
+ok 45 - AtlasPanel and the contact-page subject label clear the 11px caption floor
+  ---
+  duration_ms: 1.663562
+  type: 'test'
+  ...
+# (node:959) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/crop-autosuggest.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: every schedulable crop has a sourced ECOCROP heat limit
+ok 46 - every schedulable crop has a sourced ECOCROP heat limit
+  ---
+  duration_ms: 2.008744
+  type: 'test'
+  ...
+# Subtest: no site temperatures means the regional calendar is used unchanged
+ok 47 - no site temperatures means the regional calendar is used unchanged
+  ---
+  duration_ms: 193.756217
+  type: 'test'
+  ...
+# Subtest: a month hotter than the ECOCROP limit rules out a crop that grows through it
+ok 48 - a month hotter than the ECOCROP limit rules out a crop that grows through it
+  ---
+  duration_ms: 110.727594
+  type: 'test'
+  ...
+# Subtest: a hot summer skips only the sowing months that grow into it
+ok 49 - a hot summer skips only the sowing months that grow into it
+  ---
+  duration_ms: 42.110169
+  type: 'test'
+  ...
+# Subtest: Thornthwaite PET is zero at or below freezing and rises with temperature
+ok 50 - Thornthwaite PET is zero at or below freezing and rises with temperature
+  ---
+  duration_ms: 0.428041
+  type: 'test'
+  ...
+# Subtest: rain-fed growing months need rain of at least half the PET
+ok 51 - rain-fed growing months need rain of at least half the PET
+  ---
+  duration_ms: 0.26191
+  type: 'test'
+  ...
+# Subtest: without irrigation and without site climate the planner still refuses
+ok 52 - without irrigation and without site climate the planner still refuses
+  ---
+  duration_ms: 0.135975
+  type: 'test'
+  ...
+# Subtest: a rain-fed plan only grows crops through the wet months
+ok 53 - a rain-fed plan only grows crops through the wet months
+  ---
+  duration_ms: 164.183164
+  type: 'test'
+  ...
+# Subtest: a hot-area plan names exactly the planted crops whose hot-area months are not a published row
+ok 54 - a hot-area plan names exactly the planted crops whose hot-area months are not a published row
+  ---
+  duration_ms: 44.210589
+  type: 'test'
+  ...
+# Subtest: farmer-observed frost limits tender crops even when the satellite mean and regional calendar are warm
+ok 55 - farmer-observed frost limits tender crops even when the satellite mean and regional calendar are warm
+  ---
+  duration_ms: 83.470951
+  type: 'test'
+  ...
+# Subtest: when every local month has observed frost the tender refusal says frost rather than claiming lack of space
+ok 56 - when every local month has observed frost the tender refusal says frost rather than claiming lack of space
+  ---
+  duration_ms: 26.007044
+  type: 'test'
+  ...
+# Subtest: a blank or malformed observed frost answer cannot invent a new frost calendar
+ok 57 - a blank or malformed observed frost answer cannot invent a new frost calendar
+  ---
+  duration_ms: 206.168104
+  type: 'test'
+  ...
+# Subtest: observed frost checks the reserved field span across New Year, excluding nursery time and stored-food months
+ok 58 - observed frost checks the reserved field span across New Year, excluding nursery time and stored-food months
+  ---
+  duration_ms: 0.254951
+  type: 'test'
+  ...
+# Subtest: first-season starters obey the same observed-frost and sourced heat checks as the repeating cycle
+ok 59 - first-season starters obey the same observed-frost and sourced heat checks as the repeating cycle
+  ---
+  duration_ms: 10.258044
+  type: 'test'
+  ...
+# Subtest: an unconfirmed missed sowing cannot occupy ground or choose food for first-season starters
+ok 60 - an unconfirmed missed sowing cannot occupy ground or choose food for first-season starters
+  ---
+  duration_ms: 2.30741
+  type: 'test'
+  ...
+# Subtest: manual frost warnings see only a saved cohort's remaining field months, with no false annual repeat
+ok 61 - manual frost warnings see only a saved cohort's remaining field months, with no false annual repeat
+  ---
+  duration_ms: 0.47776
+  type: 'test'
+  ...
+# Subtest: CBR-04: a rainfall year with a missing month is not a site climate
+ok 62 - CBR-04: a rainfall year with a missing month is not a site climate
+  ---
+  duration_ms: 1.137484
+  type: 'test'
+  ...
+# Subtest: CBR-05: the heat gate takes no evidence from a missing-value marker or a missing month
+ok 63 - CBR-05: the heat gate takes no evidence from a missing-value marker or a missing month
+  ---
+  duration_ms: 0.279234
+  type: 'test'
+  ...
+# Subtest: CBR-06: a month with no rain never passes the rain-fed water screen
+ok 64 - CBR-06: a month with no rain never passes the rain-fed water screen
+  ---
+  duration_ms: 0.310106
+  type: 'test'
+  ...
+# (node:967) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/climate-temperature.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: automatic DEMO initialization loads the actual selection path and camera without issuing a details-sheet opening
+ok 65 - automatic DEMO initialization loads the actual selection path and camera without issuing a details-sheet opening
+  ---
+  duration_ms: 3.048837
+  type: 'test'
+  ...
+# Subtest: automatic cached DEMO data preserves the closed sheet and does not refetch
+ok 66 - automatic cached DEMO data preserves the closed sheet and does not refetch
+  ---
+  duration_ms: 4.762605
+  type: 'test'
+  ...
+# Subtest: automatic cached DEMO data preserves the open sheet and does not refetch
+ok 67 - automatic cached DEMO data preserves the open sheet and does not refetch
+  ---
+  duration_ms: 0.334854
+  type: 'test'
+  ...
+# Subtest: an explicit default selection still opens details with cached
+ok 68 - an explicit default selection still opens details with cached
+  ---
+  duration_ms: 0.454445
+  type: 'test'
+  ...
+# Subtest: an explicit default selection still opens details with missing-cache
+ok 69 - an explicit default selection still opens details with missing-cache
+  ---
+  duration_ms: 0.256024
+  type: 'test'
+  ...
+# Subtest: an explicit default selection still opens details with http-error
+ok 70 - an explicit default selection still opens details with http-error
+  ---
+  duration_ms: 0.330143
+  type: 'test'
+  ...
+# Subtest: an explicit default selection still opens details with network-error
+ok 71 - an explicit default selection still opens details with network-error
+  ---
+  duration_ms: 0.378307
+  type: 'test'
+  ...
+# Subtest: explicit openDetails false never closes a sheet already opened by the user
+ok 72 - explicit openDetails false never closes a sheet already opened by the user
+  ---
+  duration_ms: 0.559141
+  type: 'test'
+  ...
+# Subtest: a map jump remains an explicit default-opening selection and keeps its direct camera move
+ok 73 - a map jump remains an explicit default-opening selection and keeps its direct camera move
+  ---
+  duration_ms: 0.514116
+  type: 'test'
+  ...
+# Subtest: a saved-site deep link retains its explicit opening intent with cached
+ok 74 - a saved-site deep link retains its explicit opening intent with cached
+  ---
+  duration_ms: 4.825577
+  type: 'test'
+  ...
+# Subtest: a saved-site deep link retains its explicit opening intent with missing-cache
+ok 75 - a saved-site deep link retains its explicit opening intent with missing-cache
+  ---
+  duration_ms: 0.360816
+  type: 'test'
+  ...
+# Subtest: a saved-site deep link retains its explicit opening intent with network-error
+ok 76 - a saved-site deep link retains its explicit opening intent with network-error
+  ---
+  duration_ms: 0.273274
+  type: 'test'
+  ...
+# Subtest: a saved-site deep link waits for authentication during auth loading
+ok 77 - a saved-site deep link waits for authentication during auth loading
+  ---
+  duration_ms: 0.171629
+  type: 'test'
+  ...
+# Subtest: a saved-site deep link retains its sample bypass during auth loading
+ok 78 - a saved-site deep link retains its sample bypass during auth loading
+  ---
+  duration_ms: 0.186573
+  type: 'test'
+  ...
+# Subtest: an unavailable cache read does not suppress an explicit selection or replace good data
+ok 79 - an unavailable cache read does not suppress an explicit selection or replace good data
+  ---
+  duration_ms: 0.196581
+  type: 'test'
+  ...
+# Subtest: an unavailable cache write does not suppress an explicit selection or replace good data
+ok 80 - an unavailable cache write does not suppress an explicit selection or replace good data
+  ---
+  duration_ms: 0.128582
+  type: 'test'
+  ...
+# Subtest: an existing panel deep-link opening survives automatic DEMO initialization
+ok 81 - an existing panel deep-link opening survives automatic DEMO initialization
+  ---
+  duration_ms: 0.426626
+  type: 'test'
+  ...
+# Subtest: an existing chat deep-link opening survives automatic DEMO initialization
+ok 82 - an existing chat deep-link opening survives automatic DEMO initialization
+  ---
+  duration_ms: 0.205312
+  type: 'test'
+  ...
+# Subtest: automatic initialization retains the not-sample guard
+ok 83 - automatic initialization retains the not-sample guard
+  ---
+  duration_ms: 0.175972
+  type: 'test'
+  ...
+# Subtest: automatic initialization retains the already-selected guard
+ok 84 - automatic initialization retains the already-selected guard
+  ---
+  duration_ms: 0.102768
+  type: 'test'
+  ...
+# Subtest: automatic initialization retains the saved-site-intent guard
+ok 85 - automatic initialization retains the saved-site-intent guard
+  ---
+  duration_ms: 0.088565
+  type: 'test'
+  ...
+# Subtest: automatic initialization retains the report-intent guard
+ok 86 - automatic initialization retains the report-intent guard
+  ---
+  duration_ms: 0.105386
+  type: 'test'
+  ...
+# Subtest: automatic initializer cleanup cancels only its delayed camera move, without claiming to abort the current data request
+ok 87 - automatic initializer cleanup cancels only its delayed camera move, without claiming to abort the current data request
+  ---
+  duration_ms: 0.263871
+  type: 'test'
+  ...
+# Subtest: automatic DEMO http failure retains the normal error route without opening details
+ok 88 - automatic DEMO http failure retains the normal error route without opening details
+  ---
+  duration_ms: 0.212354
+  type: 'test'
+  ...
+# Subtest: automatic DEMO network failure retains the normal error route without opening details
+ok 89 - automatic DEMO network failure retains the normal error route without opening details
+  ---
+  duration_ms: 0.155132
+  type: 'test'
+  ...
+# Subtest: mismatched cached or returned site identity remains rejected while explicit details still opens
+ok 90 - mismatched cached or returned site identity remains rejected while explicit details still opens
+  ---
+  duration_ms: 0.190351
+  type: 'test'
+  ...
+# Subtest: a superseded automatic success cannot replace explicit selection data, errors, loading or opening intent
+ok 91 - a superseded automatic success cannot replace explicit selection data, errors, loading or opening intent
+  ---
+  duration_ms: 0.382794
+  type: 'test'
+  ...
+# Subtest: a superseded automatic http-error cannot replace explicit selection data, errors, loading or opening intent
+ok 92 - a superseded automatic http-error cannot replace explicit selection data, errors, loading or opening intent
+  ---
+  duration_ms: 0.156418
+  type: 'test'
+  ...
+# Subtest: a superseded automatic network-error cannot replace explicit selection data, errors, loading or opening intent
+ok 93 - a superseded automatic network-error cannot replace explicit selection data, errors, loading or opening intent
+  ---
+  duration_ms: 0.13682
+  type: 'test'
+  ...
+# (node:975) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/koppen-global.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: unusable input returns ? rather than a guess
+ok 94 - unusable input returns ? rather than a guess
+  ---
+  duration_ms: 0.993939
+  type: 'test'
+  ...
+# Subtest: the summer half-year flips with the hemisphere
+ok 95 - the summer half-year flips with the hemisphere
+  ---
+  duration_ms: 5.470609
+  type: 'test'
+  ...
+# Subtest: aridity is judged against the threshold, and outranks every other group
+ok 96 - aridity is judged against the threshold, and outranks every other group
+  ---
+  duration_ms: 0.43868
+  type: 'test'
+  ...
+# Subtest: tropical splits on the driest month, not on the annual total
+ok 97 - tropical splits on the driest month, not on the annual total
+  ---
+  duration_ms: 0.266048
+  type: 'test'
+  ...
+# Subtest: a dry season in the summer half reads differently from one in the winter half
+ok 98 - a dry season in the summer half reads differently from one in the winter half
+  ---
+  duration_ms: 0.159824
+  type: 'test'
+  ...
+# Subtest: temperate second letter distinguishes dry-summer, dry-winter and no dry season
+ok 99 - temperate second letter distinguishes dry-summer, dry-winter and no dry season
+  ---
+  duration_ms: 0.211269
+  type: 'test'
+  ...
+# Subtest: temperate third letter tracks how hot and how long the summer is
+ok 100 - temperate third letter tracks how hot and how long the summer is
+  ---
+  duration_ms: 0.175435
+  type: 'test'
+  ...
+# Subtest: cold and polar groups are separated by the coldest and warmest months
+ok 101 - cold and polar groups are separated by the coldest and warmest months
+  ---
+  duration_ms: 0.129586
+  type: 'test'
+  ...
+# Subtest: every code the classifier can emit carries a description and a grower note
+ok 102 - every code the classifier can emit carries a description and a grower note
+  ---
+  duration_ms: 0.403816
+  type: 'test'
+  ...
+# Subtest: the rainfall pattern bridge matches the planner's four patterns
+ok 103 - the rainfall pattern bridge matches the planner's four patterns
+  ---
+  duration_ms: 4.809425
+  type: 'test'
+  ...
+# Subtest: the record minimum decides frost where a mean cannot: arid sites and close calls
+ok 104 - the record minimum decides frost where a mean cannot: arid sites and close calls
+  ---
+  duration_ms: 0.337057
+  type: 'test'
+  ...
+# Subtest: the calendar choice reports rain timing separately and flags a close call
+ok 105 - the calendar choice reports rain timing separately and flags a close call
+  ---
+  duration_ms: 0.176629
+  type: 'test'
+  ...
+# Subtest: the close-call search also tries both monthly means together (Argon F-07)
+ok 106 - the close-call search also tries both monthly means together (Argon F-07)
+  ---
+  duration_ms: 1.187379
+  type: 'test'
+  ...
+# Subtest: no class note calls the year mild or frost light at a place with a sub-zero record low (CP-114)
+ok 107 - no class note calls the year mild or frost light at a place with a sub-zero record low (CP-114)
+  ---
+  duration_ms: 2.415773
+  type: 'test'
+  ...
+# Subtest: the three temperate notes that used to claim mildness now state the class and say it is silent on frost (CP-114)
+ok 108 - the three temperate notes that used to claim mildness now state the class and say it is silent on frost (CP-114)
+  ---
+  duration_ms: 0.439376
+  type: 'test'
+  ...
+# (node:983) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/climate-temperature.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: planner reuses provider-complete v7 evidence without an automatic request
+ok 109 - planner reuses provider-complete v7 evidence without an automatic request
+  ---
+  duration_ms: 3.336463
+  type: 'test'
+  ...
+# Subtest: farmer reuses provider-complete v7 evidence without an automatic request
+ok 110 - farmer reuses provider-complete v7 evidence without an automatic request
+  ---
+  duration_ms: 0.702395
+  type: 'test'
+  ...
+# Subtest: planner refetches legacy v7 cache instead of promoting finite display arrays
+ok 111 - planner refetches legacy v7 cache instead of promoting finite display arrays
+  ---
+  duration_ms: 35.971227
+  type: 'test'
+  ...
+# Subtest: farmer refetches legacy v7 cache instead of promoting finite display arrays
+ok 112 - farmer refetches legacy v7 cache instead of promoting finite display arrays
+  ---
+  duration_ms: 1.289756
+  type: 'test'
+  ...
+# Subtest: design refetches legacy v7 cache instead of promoting finite display arrays
+ok 113 - design refetches legacy v7 cache instead of promoting finite display arrays
+  ---
+  duration_ms: 5.198052
+  type: 'test'
+  ...
+# Subtest: planner refetches incomplete v7 cache instead of promoting finite display arrays
+ok 114 - planner refetches incomplete v7 cache instead of promoting finite display arrays
+  ---
+  duration_ms: 0.703611
+  type: 'test'
+  ...
+# Subtest: farmer refetches incomplete v7 cache instead of promoting finite display arrays
+ok 115 - farmer refetches incomplete v7 cache instead of promoting finite display arrays
+  ---
+  duration_ms: 0.530485
+  type: 'test'
+  ...
+# Subtest: design refetches incomplete v7 cache instead of promoting finite display arrays
+ok 116 - design refetches incomplete v7 cache instead of promoting finite display arrays
+  ---
+  duration_ms: 1.814626
+  type: 'test'
+  ...
+# Subtest: planner refetches contradictory v7 cache instead of promoting finite display arrays
+ok 117 - planner refetches contradictory v7 cache instead of promoting finite display arrays
+  ---
+  duration_ms: 0.734688
+  type: 'test'
+  ...
+# Subtest: farmer refetches contradictory v7 cache instead of promoting finite display arrays
+ok 118 - farmer refetches contradictory v7 cache instead of promoting finite display arrays
+  ---
+  duration_ms: 2.384386
+  type: 'test'
+  ...
+# Subtest: design refetches contradictory v7 cache instead of promoting finite display arrays
+ok 119 - design refetches contradictory v7 cache instead of promoting finite display arrays
+  ---
+  duration_ms: 5.806785
+  type: 'test'
+  ...
+# Subtest: planner keeps legacy v7 evidence unknown when a refetch is unavailable
+ok 120 - planner keeps legacy v7 evidence unknown when a refetch is unavailable
+  ---
+  duration_ms: 0.505308
+  type: 'test'
+  ...
+# Subtest: farmer keeps legacy v7 evidence unknown when a refetch is unavailable
+ok 121 - farmer keeps legacy v7 evidence unknown when a refetch is unavailable
+  ---
+  duration_ms: 0.247866
+  type: 'test'
+  ...
+# Subtest: design keeps legacy v7 evidence unknown when a refetch is unavailable
+ok 122 - design keeps legacy v7 evidence unknown when a refetch is unavailable
+  ---
+  duration_ms: 2.542389
+  type: 'test'
+  ...
+# Subtest: planner keeps incomplete v7 evidence unknown when a refetch is unavailable
+ok 123 - planner keeps incomplete v7 evidence unknown when a refetch is unavailable
+  ---
+  duration_ms: 0.300159
+  type: 'test'
+  ...
+# Subtest: farmer keeps incomplete v7 evidence unknown when a refetch is unavailable
+ok 124 - farmer keeps incomplete v7 evidence unknown when a refetch is unavailable
+  ---
+  duration_ms: 0.283895
+  type: 'test'
+  ...
+# Subtest: design keeps incomplete v7 evidence unknown when a refetch is unavailable
+ok 125 - design keeps incomplete v7 evidence unknown when a refetch is unavailable
+  ---
+  duration_ms: 1.650121
+  type: 'test'
+  ...
+# Subtest: planner leaves old v6 bytes untouched and reports no climate success when offline
+ok 126 - planner leaves old v6 bytes untouched and reports no climate success when offline
+  ---
+  duration_ms: 0.389038
+  type: 'test'
+  ...
+# Subtest: farmer leaves old v6 bytes untouched and reports no climate success when offline
+ok 127 - farmer leaves old v6 bytes untouched and reports no climate success when offline
+  ---
+  duration_ms: 0.261597
+  type: 'test'
+  ...
+# Subtest: design leaves old v6 bytes untouched and reports no climate success when offline
+ok 128 - design leaves old v6 bytes untouched and reports no climate success when offline
+  ---
+  duration_ms: 0.696106
+  type: 'test'
+  ...
+# Subtest: planner does not certify an incomplete live response as monthly evidence
+ok 129 - planner does not certify an incomplete live response as monthly evidence
+  ---
+  duration_ms: 0.665225
+  type: 'test'
+  ...
+# Subtest: farmer does not certify an incomplete live response as monthly evidence
+ok 130 - farmer does not certify an incomplete live response as monthly evidence
+  ---
+  duration_ms: 1.085804
+  type: 'test'
+  ...
+# Subtest: design does not certify an incomplete live response as monthly evidence
+ok 131 - design does not certify an incomplete live response as monthly evidence
+  ---
+  duration_ms: 8.221621
+  type: 'test'
+  ...
+# Subtest: Design Studio keeps a complete cached result on refresh failure and retires a cancelled refresh
+ok 132 - Design Studio keeps a complete cached result on refresh failure and retires a cancelled refresh
+  ---
+  duration_ms: 0.876211
+  type: 'test'
+  ...
+# Subtest: the farmer request and site-identity fences still prevent late or mismatched cache publication
+ok 133 - the farmer request and site-identity fences still prevent late or mismatched cache publication
+  ---
+  duration_ms: 1.225926
+  type: 'test'
+  ...
+# Subtest: standalone sector and tank readers share v7 while leaving legacy storage unchanged
+ok 134 - standalone sector and tank readers share v7 while leaving legacy storage unchanged
+  ---
+  duration_ms: 0.629231
+  type: 'test'
+  ...
+# Subtest: the planner is told why a mapped site has no climate reading, and is told nothing when it has one
+ok 135 - the planner is told why a mapped site has no climate reading, and is told nothing when it has one
+  ---
+  duration_ms: 7.477937
+  type: 'test'
+  ...
+# (node:991) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/climate-temperature.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the actual notice distinguishes incomplete provider inputs from legacy unknown without altering values
+ok 136 - the actual notice distinguishes incomplete provider inputs from legacy unknown without altering values
+  ---
+  duration_ms: 13.338154
+  type: 'test'
+  ...
+# Subtest: the actual overview calendar cannot interpret display fills or unrecorded means as growing months
+ok 137 - the actual overview calendar cannot interpret display fills or unrecorded means as growing months
+  ---
+  duration_ms: 1.905499
+  type: 'test'
+  ...
+# Subtest: the actual climate guard withholds zone and frost-day calculations while keeping the complete path
+ok 138 - the actual climate guard withholds zone and frost-day calculations while keeping the complete path
+  ---
+  duration_ms: 0.335948
+  type: 'test'
+  ...
+# (node:999) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/nasa-power.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: one mm per day becomes the calendar number of mm in each complete month
+ok 139 - one mm per day becomes the calendar number of mm in each complete month
+  ---
+  duration_ms: 3.099453
+  type: 'test'
+  ...
+# Subtest: a partial Open-Meteo history is rejected rather than averaged as missing rain
+ok 140 - a partial Open-Meteo history is rejected rather than averaged as missing rain
+  ---
+  duration_ms: 0.919864
+  type: 'test'
+  ...
+# Subtest: invalid daily precipitation never creates a finite-looking monthly normal
+ok 141 - invalid daily precipitation never creates a finite-looking monthly normal
+  ---
+  duration_ms: 1.133419
+  type: 'test'
+  ...
+# Subtest: Open-Meteo outage, bad status and partial payload all return null
+ok 142 - Open-Meteo outage, bad status and partial payload all return null
+  ---
+  duration_ms: 0.800023
+  type: 'test'
+  ...
+# Subtest: NASA daily climatology is multiplied by each month length before annual sum
+ok 143 - NASA daily climatology is multiplied by each month length before annual sum
+  ---
+  duration_ms: 2.204543
+  type: 'test'
+  ...
+# Subtest: a missing monthly minimum cannot be stamped as evidence that a site is warm
+ok 144 - a missing monthly minimum cannot be stamped as evidence that a site is warm
+  ---
+  duration_ms: 0.638808
+  type: 'test'
+  ...
+# Subtest: both climate requests carry bounded abort signals
+ok 145 - both climate requests carry bounded abort signals
+  ---
+  duration_ms: 0.58664
+  type: 'test'
+  ...
+# Subtest: missing or sentinel NASA rainfall months reject instead of becoming zero-rain months
+ok 146 - missing or sentinel NASA rainfall months reject instead of becoming zero-rain months
+  ---
+  duration_ms: 1.405367
+  type: 'test'
+  ...
+# Subtest: March rainfall cannot be misclassified as austral summer DJF rain
+ok 147 - March rainfall cannot be misclassified as austral summer DJF rain
+  ---
+  duration_ms: 0.708455
+  type: 'test'
+  ...
+# Subtest: a partial Open-Meteo response leaves complete NASA rainfall in charge
+ok 148 - a partial Open-Meteo response leaves complete NASA rainfall in charge
+  ---
+  duration_ms: 0.633966
+  type: 'test'
+  ...
+# Subtest: a complete, materially different Open-Meteo normal can replace coarse NASA rainfall
+ok 149 - a complete, materially different Open-Meteo normal can replace coarse NASA rainfall
+  ---
+  duration_ms: 36.658902
+  type: 'test'
+  ...
+# Subtest: missing wind directions stay unknown rather than averaging sentinels to north
+ok 150 - missing wind directions stay unknown rather than averaging sentinels to north
+  ---
+  duration_ms: 0.524808
+  type: 'test'
+  ...
+# Subtest: negative wind and solar values and out-of-domain directions stay unavailable
+ok 151 - negative wind and solar values and out-of-domain directions stay unavailable
+  ---
+  duration_ms: 0.284143
+  type: 'test'
+  ...
+# Subtest: a malformed NASA payload fails with a stable data error
+ok 152 - a malformed NASA payload fails with a stable data error
+  ---
+  duration_ms: 0.218717
+  type: 'test'
+  ...
+# Subtest: invalid coordinates are rejected before spending a network request
+ok 153 - invalid coordinates are rejected before spending a network request
+  ---
+  duration_ms: 0.233178
+  type: 'test'
+  ...
+# Subtest: complete raw monthly means retain cold and zero values and carry their own coverage
+ok 154 - complete raw monthly means retain cold and zero values and carry their own coverage
+  ---
+  duration_ms: 1.308404
+  type: 'test'
+  ...
+# Subtest: missing or invalid monthly means cannot acquire coverage from the unchanged display fill or complete minima
+ok 155 - missing or invalid monthly means cannot acquire coverage from the unchanged display fill or complete minima
+  ---
+  duration_ms: 1.790583
+  type: 'test'
+  ...
+# Subtest: sparse arrays, annual-only data and wrong month-key shapes stay incomplete rather than pretending to be monthly records
+ok 156 - sparse arrays, annual-only data and wrong month-key shapes stay incomplete rather than pretending to be monthly records
+  ---
+  duration_ms: 1.572728
+  type: 'test'
+  ...
+# Subtest: complete monthly means do not stamp absent monthly minimum readings as frost evidence
+ok 157 - complete monthly means do not stamp absent monthly minimum readings as frost evidence
+  ---
+  duration_ms: 0.473219
+  type: 'test'
+  ...
+# (node:1007) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/design-elements.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Polokwane Savanna does not recommend frost-sensitive fruit and banana from biome alone
+ok 158 - Polokwane Savanna does not recommend frost-sensitive fruit and banana from biome alone
+  ---
+  duration_ms: 0.865999
+  type: 'test'
+  ...
+# Subtest: every screened or cautioned planting card exists and receives only one frost treatment
+ok 159 - every screened or cautioned planting card exists and receives only one frost treatment
+  ---
+  duration_ms: 0.18779
+  type: 'test'
+  ...
+# Subtest: Ubhejane and Durban keep warm-area planting choices when the screened minimum stays above freezing
+ok 160 - Ubhejane and Durban keep warm-area planting choices when the screened minimum stays above freezing
+  ---
+  duration_ms: 0.163901
+  type: 'test'
+  ...
+# Subtest: an outage or incomplete NASA minimum cannot silently assert that frost-sensitive trees suit a site
+ok 161 - an outage or incomplete NASA minimum cannot silently assert that frost-sensitive trees suit a site
+  ---
+  duration_ms: 0.094905
+  type: 'test'
+  ...
+# Subtest: the full Plant Catalog uses each species own frost tolerance at Polokwane
+ok 162 - the full Plant Catalog uses each species own frost tolerance at Polokwane
+  ---
+  duration_ms: 21.781269
+  type: 'test'
+  ...
+# (node:1015) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/plan-assurance.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the shared English statements and generic report remain exact while all source clauses have declared native drafts
+ok 163 - the shared English statements and generic report remain exact while all source clauses have declared native drafts
+  ---
+  duration_ms: 3.011371
+  type: 'test'
+  ...
+# Subtest: the full native statement retains each source paragraph in order rather than reducing its cautions to a short footer
+ok 164 - the full native statement retains each source paragraph in order rather than reducing its cautions to a short footer
+  ---
+  duration_ms: 0.845565
+  type: 'test'
+  ...
+# Subtest: recorded lab, app-default and unknown provenance replace only the mismatched generic soil paragraph using existing source cautions
+ok 165 - recorded lab, app-default and unknown provenance replace only the mismatched generic soil paragraph using existing source cautions
+  ---
+  duration_ms: 0.577612
+  type: 'test'
+  ...
+# Subtest: the native soil title and caution stay on the exact recorded source, with unknown provenance never promoted to a reading
+ok 166 - the native soil title and caution stay on the exact recorded source, with unknown provenance never promoted to a reading
+  ---
+  duration_ms: 0.345187
+  type: 'test'
+  ...
+# Subtest: the actual Atlas source component preserves English rendering and shows complete source-specific native titles and cautions
+ok 167 - the actual Atlas source component preserves English rendering and shows complete source-specific native titles and cautions
+  ---
+  duration_ms: 192.948837
+  type: 'test'
+  ...
+# Subtest: native Atlas pages declare draft status while report assurance uses the shared complete builder
+ok 168 - native Atlas pages declare draft status while report assurance uses the shared complete builder
+  ---
+  duration_ms: 1.146293
+  type: 'test'
+  ...
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# [ai-cost] {"route":"generate-report:TOTAL","length":"standard","batches":1,"calls":1,"images":0,"in":0,"out":0,"cacheWrite":0,"cacheRead":0,"usdPerReport":0,"zarPerReport":0}
+# Subtest: the actual report API emits full native assurances and chooses the existing soil caution for every supplied source
+ok 169 - the actual report API emits full native assurances and chooses the existing soil caution for every supplied source
+  ---
+  duration_ms: 393.796518
+  type: 'test'
+  ...
+# (node:1023) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/i18n-pending.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: ReportView loads the report-language locale and reads translate() from lib/i18n
+ok 170 - ReportView loads the report-language locale and reads translate() from lib/i18n
+  ---
+  duration_ms: 1.207989
+  type: 'test'
+  ...
+# Subtest: the footnote no longer interpolates raw koppenDesc / rainfall pattern / season-range data
+ok 171 - the footnote no longer interpolates raw koppenDesc / rainfall pattern / season-range data
+  ---
+  duration_ms: 1.46124
+  type: 'test'
+  ...
+# Subtest: every Köppen code lib/koppen-global.ts can return has a reportKoppenDesc<code> pending key
+ok 172 - every Köppen code lib/koppen-global.ts can return has a reportKoppenDesc<code> pending key
+  ---
+  duration_ms: 0.568349
+  type: 'test'
+  ...
+# Subtest: the rainfall-pattern words and the non-range season fallbacks are pending keys
+ok 173 - the rainfall-pattern words and the non-range season fallbacks are pending keys
+  ---
+  duration_ms: 0.182856
+  type: 'test'
+  ...
+# Subtest: REPORT_FOOTNOTE_ENGLISH_PENDING is spread into T_en (lib/i18n.tsx), not the per-locale files
+ok 174 - REPORT_FOOTNOTE_ENGLISH_PENDING is spread into T_en (lib/i18n.tsx), not the per-locale files
+  ---
+  duration_ms: 9.65616
+  type: 'test'
+  ...
+# Subtest: wet/dry season ranges reuse the existing translated survey month keys, rather than a second translation list
+ok 175 - wet/dry season ranges reuse the existing translated survey month keys, rather than a second translation list
+  ---
+  duration_ms: 0.259696
+  type: 'test'
+  ...
+# (node:1030) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/site-climate.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the fixture is the audited set: 44 places, each with a real record minimum
+ok 176 - the fixture is the audited set: 44 places, each with a real record minimum
+  ---
+  duration_ms: 1.424011
+  type: 'test'
+  ...
+# Subtest: no place with frost on its independent record is given a frost-free or light-frost calendar
+ok 177 - no place with frost on its independent record is given a frost-free or light-frost calendar
+  ---
+  duration_ms: 3.996693
+  type: 'test'
+  ...
+# Subtest: no place that never froze in twenty years is shown the hard-frost season, unless its record minimum says frost
+ok 178 - no place that never froze in twenty years is shown the hard-frost season, unless its record minimum says frost
+  ---
+  duration_ms: 1.127748
+  type: 'test'
+  ...
+# Subtest: the frost rules are one-sided: an answer that ignores the place can pass them, so they are not an accuracy score
+ok 179 - the frost rules are one-sided: an answer that ignores the place can pass them, so they are not an accuracy score
+  ---
+  duration_ms: 3.984533
+  type: 'test'
+  ...
+# Subtest: CP-103 (open): the two held-out places wrongly on hard frost are told so and can be moved by the grower
+ok 180 - CP-103 (open): the two held-out places wrongly on hard frost are told so and can be moved by the grower
+  ---
+  duration_ms: 1.548447
+  type: 'test'
+  ...
+# Subtest: Eshowe is told it is close to the hot-area line, and its grower's "no frost" can use that calendar (Argon F-07)
+ok 181 - Eshowe is told it is close to the hot-area line, and its grower's "no frost" can use that calendar (Argon F-07)
+  ---
+  duration_ms: 8.015812
+  type: 'test'
+  ...
+# Subtest: each of the 56 held-out places lands on the calendar recorded for it on 11 November 2026
+ok 182 - each of the 56 held-out places lands on the calendar recorded for it on 11 November 2026
+  ---
+  duration_ms: 0.772423
+  type: 'test'
+  ...
+# Subtest: each of the 44 places lands on its audited calendar
+ok 183 - each of the 44 places lands on its audited calendar
+  ---
+  duration_ms: 0.580235
+  type: 'test'
+  ...
+# Subtest: a hot Lowveld farm is on the frost-free calendar and still has summer rain
+ok 184 - a hot Lowveld farm is on the frost-free calendar and still has summer rain
+  ---
+  duration_ms: 0.502929
+  type: 'test'
+  ...
+# Subtest: a site just on the cold side of a line is told so, and the grower's own frost answer can move it one column
+ok 185 - a site just on the cold side of a line is told so, and the grower's own frost answer can move it one column
+  ---
+  duration_ms: 0.394266
+  type: 'test'
+  ...
+# Subtest: losing the record minimum never moves a place to a warmer calendar
+ok 186 - losing the record minimum never moves a place to a warmer calendar
+  ---
+  duration_ms: 0.926625
+  type: 'test'
+  ...
+# Subtest: a missing-value marker in a stored payload is "no record minimum" at every place, and real cold readings are kept
+ok 187 - a missing-value marker in a stored payload is "no record minimum" at every place, and real cold readings are kept
+  ---
+  duration_ms: 4.614108
+  type: 'test'
+  ...
+# (node:1039) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/koppen-global.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: rainPatternFor gives the Köppen-consistent pattern across SA's climate space
+ok 188 - rainPatternFor gives the Köppen-consistent pattern across SA's climate space
+  ---
+  duration_ms: 4.879765
+  type: 'test'
+  ...
+# Subtest: the temperature curve hits its two anchor points exactly
+ok 189 - the temperature curve hits its two anchor points exactly
+  ---
+  duration_ms: 0.152391
+  type: 'test'
+  ...
+# Subtest: the demo farm coordinates land in the Mkuze fixture, not on a distant reference city
+ok 190 - the demo farm coordinates land in the Mkuze fixture, not on a distant reference city
+  ---
+  duration_ms: 0.183579
+  type: 'test'
+  ...
+# (node:1047) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/sample-production-plan.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the standalone example cannot read or replace a farmer account or saved sample storage
+ok 191 - the standalone example cannot read or replace a farmer account or saved sample storage
+  ---
+  duration_ms: 152.822395
+  type: 'test'
+  ...
+# Subtest: the example contains crops, fruit, nuts, berries, eggs, milk, honey, fish and the requested rabbit and duck meat
+ok 192 - the example contains crops, fruit, nuts, berries, eggs, milk, honey, fish and the requested rabbit and duck meat
+  ---
+  duration_ms: 17.587857
+  type: 'test'
+  ...
+# Subtest: peanuts retain the existing crop name while mapped pigeon pea and moringa cannot invent timed food or kilograms
+ok 193 - peanuts retain the existing crop name while mapped pigeon pea and moringa cannot invent timed food or kilograms
+  ---
+  duration_ms: 32.282921
+  type: 'test'
+  ...
+# Subtest: the example app and printed guide retain every pigeon-pea research citation alongside its distinct sowing note
+ok 194 - the example app and printed guide retain every pigeon-pea research citation alongside its distinct sowing note
+  ---
+  duration_ms: 317.844976
+  type: 'test'
+  ...
+# Subtest: the first dated year and all future repeating crop cycles have separate adequate ground and valid catalogue sowings
+ok 195 - the first dated year and all future repeating crop cycles have separate adequate ground and valid catalogue sowings
+  ---
+  duration_ms: 23.138172
+  type: 'test'
+  ...
+# Subtest: research fruit windows remain references and only clearly fictional records supply local banana and animal dates
+ok 196 - research fruit windows remain references and only clearly fictional records supply local banana and animal dates
+  ---
+  duration_ms: 24.059069
+  type: 'test'
+  ...
+# Subtest: older and proposed plant ages are complete but cannot invent tree kilograms or animal totals
+ok 197 - older and proposed plant ages are complete but cannot invent tree kilograms or animal totals
+  ---
+  duration_ms: 10.356996
+  type: 'test'
+  ...
+# Subtest: preserved products are separate dated fictional stock records, not invented safe shelf lives or extra harvests
+ok 198 - preserved products are separate dated fictional stock records, not invented safe shelf lives or extra harvests
+  ---
+  duration_ms: 19.88968
+  type: 'test'
+  ...
+# Subtest: bought or carried mango and nuts do not manufacture local harvests, safe storage durations or kilograms
+ok 199 - bought or carried mango and nuts do not manufacture local harvests, safe storage durations or kilograms
+  ---
+  duration_ms: 21.282637
+  type: 'test'
+  ...
+# Subtest: all eight researched zone cases use their own crop calendar, heat checks and observed frost without claiming nationwide fruit suitability
+ok 200 - all eight researched zone cases use their own crop calendar, heat checks and observed frost without claiming nationwide fruit suitability
+  ---
+  duration_ms: 1247.581828
+  type: 'test'
+  ...
+# Subtest: missing or mismatched climate cannot borrow the warm example as site data or silently establish a rain-fed plan
+ok 201 - missing or mismatched climate cannot borrow the warm example as site data or silently establish a rain-fed plan
+  ---
+  duration_ms: 20.403881
+  type: 'test'
+  ...
+# Subtest: both full and calendar-only prints identify animal and preserved-stock dates as fictional records
+ok 202 - both full and calendar-only prints identify animal and preserved-stock dates as fictional records
+  ---
+  duration_ms: 228.106172
+  type: 'test'
+  ...
+# (node:1055) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/site-climate.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the historical recorded farm reading stays unknown without original monthly coverage evidence
+ok 203 - the historical recorded farm reading stays unknown without original monthly coverage evidence
+  ---
+  duration_ms: 1.131923
+  type: 'test'
+  ...
+# Subtest: provider-composed complete monthly evidence resolves the warm-area column, not the hard-frost interior
+ok 204 - provider-composed complete monthly evidence resolves the warm-area column, not the hard-frost interior
+  ---
+  duration_ms: 4.656813
+  type: 'test'
+  ...
+# Subtest: the API route’s NASA-outage fallback is never mistaken for per-site climate
+ok 205 - the API route’s NASA-outage fallback is never mistaken for per-site climate
+  ---
+  duration_ms: 0.294275
+  type: 'test'
+  ...
+# Subtest: malformed or partial payloads refuse to answer instead of guessing
+ok 206 - malformed or partial payloads refuse to answer instead of guessing
+  ---
+  duration_ms: 0.905022
+  type: 'test'
+  ...
+# Subtest: open-meteo rainfall keeps its provenance beside provider-complete monthly temperature evidence
+ok 207 - open-meteo rainfall keeps its provenance beside provider-complete monthly temperature evidence
+  ---
+  duration_ms: 0.837989
+  type: 'test'
+  ...
+# Subtest: the cache key matches the app-wide imbewu_loc_v7 format at 5 dp
+ok 208 - the cache key matches the app-wide imbewu_loc_v7 format at 5 dp
+  ---
+  duration_ms: 0.127782
+  type: 'test'
+  ...
+# (node:1063) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/crop-plan.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a calendar choice is kept per site and never spills onto another farm
+ok 209 - a calendar choice is kept per site and never spills onto another farm
+  ---
+  duration_ms: 2.093039
+  type: 'test'
+  ...
+# Subtest: "let the app decide" removes the choice, and a book with none left reads as it did before
+ok 210 - "let the app decide" removes the choice, and a book with none left reads as it did before
+  ---
+  duration_ms: 0.339709
+  type: 'test'
+  ...
+# Subtest: damaged or foreign choice rows are dropped, never guessed at
+ok 211 - damaged or foreign choice rows are dropped, never guessed at
+  ---
+  duration_ms: 0.316306
+  type: 'test'
+  ...
+# Subtest: the choice survives a save and reload, and a plan saved before it existed still loads
+ok 212 - the choice survives a save and reload, and a plan saved before it existed still loads
+  ---
+  duration_ms: 18.244965
+  type: 'test'
+  ...
+# Subtest: the grower's own choice wins; without one the climate reading and frost answer decide; without a reading, the fallback
+ok 213 - the grower's own choice wins; without one the climate reading and frost answer decide; without a reading, the fallback
+  ---
+  duration_ms: 0.347231
+  type: 'test'
+  ...
+# Subtest: every calendar is offered once, coldest first, with places a grower can recognise
+ok 214 - every calendar is offered once, coldest first, with places a grower can recognise
+  ---
+  duration_ms: 0.224672
+  type: 'test'
+  ...
+# Subtest: a grower who chose their calendar is told what the records give, and is warned when the records show frost
+ok 215 - a grower who chose their calendar is told what the records give, and is warned when the records show frost
+  ---
+  duration_ms: 0.503369
+  type: 'test'
+  ...
+# Subtest: a plan made for the old season lists exactly the sowings the hot-area calendar no longer offers
+ok 216 - a plan made for the old season lists exactly the sowings the hot-area calendar no longer offers
+  ---
+  duration_ms: 0.529177
+  type: 'test'
+  ...
+# Subtest: sowings that are already behind the grower, or were never planned from the catalogue, are not listed
+ok 217 - sowings that are already behind the grower, or were never planned from the catalogue, are not listed
+  ---
+  duration_ms: 0.459339
+  type: 'test'
+  ...
+# Subtest: hiding the list holds for the same list and calendar, and it returns when either changes
+ok 218 - hiding the list holds for the same list and calendar, and it returns when either changes
+  ---
+  duration_ms: 0.527976
+  type: 'test'
+  ...
+# Subtest: a hidden list returns when only the months the calendar recommends have changed
+ok 219 - a hidden list returns when only the months the calendar recommends have changed
+  ---
+  duration_ms: 0.321683
+  type: 'test'
+  ...
+# Subtest: only a plan that may predate the correction is told the months changed under it
+ok 220 - only a plan that may predate the correction is told the months changed under it
+  ---
+  duration_ms: 0.460666
+  type: 'test'
+  ...
+# Subtest: the public sample farm does not model the wrong season on its own calendar
+ok 221 - the public sample farm does not model the wrong season on its own calendar
+  ---
+  duration_ms: 7.891438
+  type: 'test'
+  ...
+# Subtest: saved sowings are judged on the site's own calendar or the grower's, never on a fallback guess for a mapped site
+ok 222 - saved sowings are judged on the site's own calendar or the grower's, never on a fallback guess for a mapped site
+  ---
+  duration_ms: 0.16383
+  type: 'test'
+  ...
+# Subtest: the sample farm opens on its own declared calendar, with no out-of-season list, whether or not a climate reading arrives
+ok 223 - the sample farm opens on its own declared calendar, with no out-of-season list, whether or not a climate reading arrives
+  ---
+  duration_ms: 28.281441
+  type: 'test'
+  ...
+# Subtest: the sample calendar applies only in sample mode and only to the sample farm's own site
+ok 224 - the sample calendar applies only in sample mode and only to the sample farm's own site
+  ---
+  duration_ms: 1.300789
+  type: 'test'
+  ...
+# Subtest: the sample farm's calendar is worded as the sample's, on screen and on paper
+ok 225 - the sample farm's calendar is worded as the sample's, on screen and on paper
+  ---
+  duration_ms: 0.266977
+  type: 'test'
+  ...
+# Subtest: the printed plan says when the calendar was the grower's choice
+ok 226 - the printed plan says when the calendar was the grower's choice
+  ---
+  duration_ms: 0.074916
+  type: 'test'
+  ...
+# Subtest: the record of hidden lists is per account, and a damaged record hides nothing
+ok 227 - the record of hidden lists is per account, and a damaged record hides nothing
+  ---
+  duration_ms: 0.345966
+  type: 'test'
+  ...
+# Subtest: the fallback note says why the site has no climate reading of its own
+ok 228 - the fallback note says why the site has no climate reading of its own
+  ---
+  duration_ms: 0.196236
+  type: 'test'
+  ...
+# (node:1071) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/sowing-calendar-label.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a hot lowveld site is named a frost-free area with summer rain, not "All-year rainfall"
+ok 229 - a hot lowveld site is named a frost-free area with summer rain, not "All-year rainfall"
+  ---
+  duration_ms: 1.38692
+  type: 'test'
+  ...
+# Subtest: calendar labels name the frost regime and add the rain season only where it is not already said
+ok 230 - calendar labels name the frost regime and add the rain season only where it is not already said
+  ---
+  duration_ms: 0.170728
+  type: 'test'
+  ...
+# Subtest: the always-shown reason quotes whole-degree climate numbers and the record minimum
+ok 231 - the always-shown reason quotes whole-degree climate numbers and the record minimum
+  ---
+  duration_ms: 0.512828
+  type: 'test'
+  ...
+# Subtest: with no record minimum the reason does not claim one
+ok 232 - with no record minimum the reason does not claim one
+  ---
+  duration_ms: 0.238176
+  type: 'test'
+  ...
+# Subtest: a grower who has not seen frost is told the warmer calendar came from their survey, and what the records said
+ok 233 - a grower who has not seen frost is told the warmer calendar came from their survey, and what the records said
+  ---
+  duration_ms: 0.214306
+  type: 'test'
+  ...
+# Subtest: a grower who has seen frost on a "no frost" site is told why the plan turned colder
+ok 234 - a grower who has seen frost on a "no frost" site is told why the plan turned colder
+  ---
+  duration_ms: 0.134195
+  type: 'test'
+  ...
+# Subtest: a close call with a warmer neighbour tells the grower how to reach the warmer calendar
+ok 235 - a close call with a warmer neighbour tells the grower how to reach the warmer calendar
+  ---
+  duration_ms: 0.13092
+  type: 'test'
+  ...
+# Subtest: a hot site close to the light-frost line tells the grower to report frost
+ok 236 - a hot site close to the light-frost line tells the grower to report frost
+  ---
+  duration_ms: 0.114956
+  type: 'test'
+  ...
+# Subtest: any other close call falls back to checking sowing months locally
+ok 237 - any other close call falls back to checking sowing months locally
+  ---
+  duration_ms: 0.252757
+  type: 'test'
+  ...
+# Subtest: a grower in the coldest places is warned that frost outlasts the calendar's August
+ok 238 - a grower in the coldest places is warned that frost outlasts the calendar's August
+  ---
+  duration_ms: 0.782037
+  type: 'test'
+  ...
+# Subtest: a clear-cut site gets only the climate line
+ok 239 - a clear-cut site gets only the climate line
+  ---
+  duration_ms: 0.137899
+  type: 'test'
+  ...
+# Subtest: no reason line ever shows "undefined", "null" or "NaN" to a grower
+ok 240 - no reason line ever shows "undefined", "null" or "NaN" to a grower
+  ---
+  duration_ms: 3.177468
+  type: 'test'
+  ...
+# Subtest: calendarForGrower: frost seen on a hot site moves the plan to light frost, on the grower's word
+ok 241 - calendarForGrower: frost seen on a hot site moves the plan to light frost, on the grower's word
+  ---
+  duration_ms: 1.677759
+  type: 'test'
+  ...
+# Subtest: calendarForGrower: no frost seen on a close-call site gives the warmer calendar
+ok 242 - calendarForGrower: no frost seen on a close-call site gives the warmer calendar
+  ---
+  duration_ms: 0.138696
+  type: 'test'
+  ...
+# Subtest: calendarForGrower: "not sure" or no answer never changes the calendar
+ok 243 - calendarForGrower: "not sure" or no answer never changes the calendar
+  ---
+  duration_ms: 0.197521
+  type: 'test'
+  ...
+# Subtest: calendarForGrower: frost seen where the climate already says frost does not change anything
+ok 244 - calendarForGrower: frost seen where the climate already says frost does not change anything
+  ---
+  duration_ms: 0.292574
+  type: 'test'
+  ...
+# Subtest: calendarForGrower: no frost seen with no warmer neighbour does not skip a column
+ok 245 - calendarForGrower: no frost seen with no warmer neighbour does not skip a column
+  ---
+  duration_ms: 0.11025
+  type: 'test'
+  ...
+# Subtest: the reference fallback never hands a far-away guess the frost-free hot-area calendar
+ok 246 - the reference fallback never hands a far-away guess the frost-free hot-area calendar
+  ---
+  duration_ms: 0.148364
+  type: 'test'
+  ...
+# Subtest: reference fallback: Karoo is hard-frost, Eastern Cape coast and Durban are light-frost, Cape Town is winter, no site is hard-frost-free by guesswork
+ok 247 - reference fallback: Karoo is hard-frost, Eastern Cape coast and Durban are light-frost, Cape Town is winter, no site is hard-frost-free by guesswork
+  ---
+  duration_ms: 0.321284
+  type: 'test'
+  ...
+# Subtest: a hot summer-rain site gets the same tank as a summer-rain site, and more than a rain-all-year one
+ok 248 - a hot summer-rain site gets the same tank as a summer-rain site, and more than a rain-all-year one
+  ---
+  duration_ms: 0.639727
+  type: 'test'
+  ...
+# Subtest: every token used for a surface, text or border changes with the theme
+ok 249 - every token used for a surface, text or border changes with the theme
+  ---
+  duration_ms: 2.822897
+  type: 'test'
+  ...
+# Subtest: the :root-only tokens are still :root-only, so nobody mistakes them for theme tokens
+ok 250 - the :root-only tokens are still :root-only, so nobody mistakes them for theme tokens
+  ---
+  duration_ms: 1.756185
+  type: 'test'
+  ...
+# Subtest: the two families really do look alike in earth light — which is why this test exists
+ok 251 - the two families really do look alike in earth light — which is why this test exists
+  ---
+  duration_ms: 0.597972
+  type: 'test'
+  ...
+# Subtest: components/MelDashboard.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 252 - components/MelDashboard.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.529177
+  type: 'test'
+  ...
+# Subtest: components/FieldWork.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 253 - components/FieldWork.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.250266
+  type: 'test'
+  ...
+# Subtest: components/ProgrammeProgress.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 254 - components/ProgrammeProgress.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.126247
+  type: 'test'
+  ...
+# Subtest: components/ProgrammeReport.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 255 - components/ProgrammeReport.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.253542
+  type: 'test'
+  ...
+# Subtest: components/DashboardTabs.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 256 - components/DashboardTabs.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.096046
+  type: 'test'
+  ...
+# Subtest: components/SampleExperience.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 257 - components/SampleExperience.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.233143
+  type: 'test'
+  ...
+# Subtest: none of this track's owned files paint a surface, border or text with a :root-only constant
+ok 258 - none of this track's owned files paint a surface, border or text with a :root-only constant
+  ---
+  duration_ms: 1.532905
+  type: 'test'
+  ...
+# Subtest: app/design/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+ok 259 - app/design/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+  ---
+  duration_ms: 1.566119
+  type: 'test'
+  ...
+# Subtest: app/design/lite/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+ok 260 - app/design/lite/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+  ---
+  duration_ms: 0.230355
+  type: 'test'
+  ...
+# Subtest: app/partners/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+ok 261 - app/partners/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+  ---
+  duration_ms: 0.14284
+  type: 'test'
+  ...
+# Subtest: app/samples/production/ProductionExample.module.css does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+ok 262 - app/samples/production/ProductionExample.module.css does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+  ---
+  duration_ms: 0.219184
+  type: 'test'
+  ...
+# Subtest: app/design/page.tsx keeps PAPER and GOLD_DIM paired as theme-aware tokens (ux-07/dark-05 — do not revert only one)
+ok 263 - app/design/page.tsx keeps PAPER and GOLD_DIM paired as theme-aware tokens (ux-07/dark-05 — do not revert only one)
+  ---
+  duration_ms: 1.045957
+  type: 'test'
+  ...
+# Subtest: app/partners/page.tsx no longer paints its root/sections with the bg-paper/text-ink :root-only Tailwind constants (code-08)
+ok 264 - app/partners/page.tsx no longer paints its root/sections with the bg-paper/text-ink :root-only Tailwind constants (code-08)
+  ---
+  duration_ms: 0.305314
+  type: 'test'
+  ...
+# Subtest: none of w14 dark-leftovers' owned page files paint a surface, border or text with a :root-only constant
+ok 265 - none of w14 dark-leftovers' owned page files paint a surface, border or text with a :root-only constant
+  ---
+  duration_ms: 1.25256
+  type: 'test'
+  ...
+# Subtest: app/samples/production/ProductionExample.module.css no longer paints .brandField text with raw var(--ochre) (ux-07)
+ok 266 - app/samples/production/ProductionExample.module.css no longer paints .brandField text with raw var(--ochre) (ux-07)
+  ---
+  duration_ms: 0.121731
+  type: 'test'
+  ...
+# Subtest: app/samples/production/ProductionExample.module.css does not paint a surface, border or text with the :root-only bg/surface/text family (code-17)
+ok 267 - app/samples/production/ProductionExample.module.css does not paint a surface, border or text with the :root-only bg/surface/text family (code-17)
+  ---
+  duration_ms: 0.259302
+  type: 'test'
+  ...
+# Subtest: app/samples/production/ProductionExample.module.css constrains horizontal overflow to .calendarScroll, not the whole .page (nav-12)
+ok 268 - app/samples/production/ProductionExample.module.css constrains horizontal overflow to .calendarScroll, not the whole .page (nav-12)
+  ---
+  duration_ms: 0.23095
+  type: 'test'
+  ...
+# Subtest: app/samples/production/page.tsx's hero h1 has a space between its two stacked phrases, not just a <br> (nav-12/nav-17)
+ok 269 - app/samples/production/page.tsx's hero h1 has a space between its two stacked phrases, not just a <br> (nav-12/nav-17)
+  ---
+  duration_ms: 0.136972
+  type: 'test'
+  ...
+# Subtest: components/invoice/InvoiceDocument.tsx keeps its printed sheet un-themed on purpose (dark-12 — do not theme this file)
+ok 270 - components/invoice/InvoiceDocument.tsx keeps its printed sheet un-themed on purpose (dark-12 — do not theme this file)
+  ---
+  duration_ms: 0.094564
+  type: 'test'
+  ...
+# Subtest: app/invoice/page.tsx frames the un-themed invoice preview with a themed well instead of theming the sheet (dark-12)
+ok 271 - app/invoice/page.tsx frames the un-themed invoice preview with a themed well instead of theming the sheet (dark-12)
+  ---
+  duration_ms: 0.726316
+  type: 'test'
+  ...
+# Subtest: app/invoice/page.tsx does not reintroduce the code-05 disabled/fill literals
+ok 272 - app/invoice/page.tsx does not reintroduce the code-05 disabled/fill literals
+  ---
+  duration_ms: 0.868821
+  type: 'test'
+  ...
+# Subtest: app/invoice/page.tsx pairs every outline-none with a focus-visible ring (code-15)
+ok 273 - app/invoice/page.tsx pairs every outline-none with a focus-visible ring (code-15)
+  ---
+  duration_ms: 0.765002
+  type: 'test'
+  ...
+# Subtest: app/invoice/page.tsx no longer shows a raw error.message to the farmer (copy-16)
+ok 274 - app/invoice/page.tsx no longer shows a raw error.message to the farmer (copy-16)
+  ---
+  duration_ms: 0.555525
+  type: 'test'
+  ...
+# Subtest: app/facilitator/print/page.tsx themes its print-preview surround and captions the sheet (dark-14)
+ok 275 - app/facilitator/print/page.tsx themes its print-preview surround and captions the sheet (dark-14)
+  ---
+  duration_ms: 0.368082
+  type: 'test'
+  ...
+# Subtest: components/SampleExperience.module.css's h1 matches the DESIGN.md §0 Page H1 scale (desk-16)
+ok 276 - components/SampleExperience.module.css's h1 matches the DESIGN.md §0 Page H1 scale (desk-16)
+  ---
+  duration_ms: 0.104952
+  type: 'test'
+  ...
+# Subtest: app/design/page.tsx has exactly one h1 in each of its two render states (nav-17)
+ok 277 - app/design/page.tsx has exactly one h1 in each of its two render states (nav-17)
+  ---
+  duration_ms: 1.212861
+  type: 'test'
+  ...
+# Subtest: exchange and atlas components paint no literal paper/card fill (sdesk-03)
+ok 278 - exchange and atlas components paint no literal paper/card fill (sdesk-03)
+  ---
+  duration_ms: 1.145254
+  type: 'test'
+  ...
+# Subtest: the /home next-step coach gradient and /example completeness card follow the theme
+ok 279 - the /home next-step coach gradient and /example completeness card follow the theme
+  ---
+  duration_ms: 0.367975
+  type: 'test'
+  ...
+# Subtest: the farmer charts and exchange header carry no font-mono (code-12)
+ok 280 - the farmer charts and exchange header carry no font-mono (code-12)
+  ---
+  duration_ms: 3.090632
+  type: 'test'
+  ...
+# Subtest: nothing a farmer has to read is set below 12px
+ok 281 - nothing a farmer has to read is set below 12px
+  ---
+  duration_ms: 44.282467
+  type: 'test'
+  ...
+# Subtest: the chart axes she cannot read are counted, not overlooked
+ok 282 - the chart axes she cannot read are counted, not overlooked
+  ---
+  duration_ms: 30.200394
+  type: 'test'
+  ...
+# Subtest: the expert tools cannot get worse, and a fix cannot go unrecorded
+ok 283 - the expert tools cannot get worse, and a fix cannot go unrecorded
+  ---
+  duration_ms: 89.5626
+  type: 'test'
+  ...
+# Subtest: every screen reachable from a farmer or staff route has been classified
+ok 284 - every screen reachable from a farmer or staff route has been classified
+  ---
+  duration_ms: 93.888144
+  type: 'test'
+  ...
+# Subtest: the floor cannot be undercut by a named Tailwind size
+ok 285 - the floor cannot be undercut by a named Tailwind size
+  ---
+  duration_ms: 0.408231
+  type: 'test'
+  ...
+# (node:1094) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/local-wind.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: COMPASS16_BEARING resolves every label aspectLabel can actually produce
+ok 286 - COMPASS16_BEARING resolves every label aspectLabel can actually produce
+  ---
+  duration_ms: 1.05039
+  type: 'test'
+  ...
+# Subtest: DataPanel's wind compass rose reads the full 16-point bearing table, not a partial 8-point one
+ok 287 - DataPanel's wind compass rose reads the full 16-point bearing table, not a partial 8-point one
+  ---
+  duration_ms: 1.304392
+  type: 'test'
+  ...
+1..287
+# tests 287
+# suites 0
+# pass 287
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6530.597044
+exit 0

@@ -1,0 +1,79 @@
+== A  Atlas page errors
+after load: 3
+after choosing the place: 2 more
+[
+ {
+  "kind": "console.error",
+  "message": "Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:2883)\n    at ua.loadURL (webpack-internal:"
+ },
+ {
+  "kind": "pageerror",
+  "message": "Invalid LngLat object: (NaN, NaN)",
+  "stack": "Error: Invalid LngLat object: (NaN, NaN) |     at new Ml (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:10:218489) |     at xm.unproject (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:10:401446) |     at Gi.coordinateLocation (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:109965) |     at Gi.pointLocation3D (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:109751) |     at Map.unproject (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:931433)"
+ },
+ {
+  "kind": "requestfailed",
+  "url": "http://localhost:4242/atlas?_rsc=1ydtm",
+  "failure": "net::ERR_ABORTED"
+ },
+ {
+  "kind": "pageerror",
+  "message": "Invalid LngLat object: (NaN, NaN)",
+  "stack": "Error: Invalid LngLat object: (NaN, NaN) |     at new Ml (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:10:218489) |     at xm.unproject (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:10:401446) |     at Gi.coordinateLocation (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:109965) |     at Gi.pointLocation3D (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:109751) |     at Map.unproject (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:931433)"
+ },
+ {
+  "kind": "pageerror",
+  "message": "Invalid LngLat object: (NaN, NaN)",
+  "stack": "Error: Invalid LngLat object: (NaN, NaN) |     at new Ml (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:10:218489) |     at xm.unproject (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:10:401446) |     at Gi.coordinateLocation (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:109965) |     at Gi.pointLocation3D (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:109751) |     at Map.unproject (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:931433)"
+ }
+]
+NEXT_PUBLIC map token present in the page: true
+
+== B  /farmer site data panel, phone light
+  panel Climate tab reached: false | url: /farmer?panel=Climate
+  first lines of the page: ["Back","Map","Design studio","Saved on this device only.","Offline canvas · saved drawings and pins. Satellite imagery and terrain need a connection.","Ubhejane Crèche","200 km","Find your land","+","−","z5.2","Tap your area or search a town","Places","Add"]
+
+== B  /farmer site data panel, phone dark
+  panel Climate tab reached: false | url: /farmer?panel=Climate
+  first lines of the page: ["Back","Map","Design studio","Saved on this device only.","Offline canvas · saved drawings and pins. Satellite imagery and terrain need a connection.","Ubhejane Crèche","200 km","Find your land","+","−","z5.2","Tap your area or search a town","Places","Add"]
+
+== C  crop plan, frost caveat
+  country panel present -> choosing ZA
+header chip: ["Hot area, no frost · summer rain · satellite records for this site"]
+  guide (frost not recorded): [
+ "Frost on this farm",
+ "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.",
+ "Frost-tender crops: frost months not confirmed",
+ "Planned picking can extend into frost. Confirm your local frost months; tender crops may stop producing when frost arrives.",
+ "This plan has no frost dates for your farm. Record the months you see frost in the site survey, and the plan will check these crops against them."
+]
+  saved reference-frost-not-recorded.pdf (758059 bytes)
+  survey frost question present: 0
+  guide (frost recorded: April, July, December): [
+ "Frost on this farm",
+ "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.",
+ "Frost-tender crops: frost months not confirmed",
+ "Planned picking can extend into frost. Confirm your local frost months; tender crops may stop producing when frost arrives.",
+ "This plan has no frost dates for your farm. Record the months you see frost in the site survey, and the plan will check these crops against them."
+]
+FAIL locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: /^Detailed reference PDF/ }).first()[22m
+[2m    - locator resolved to <button class="underline">Detailed reference PDF</button>[22m
+[2m  - attempting click action[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <path opacity="0.2" fill="var(--gold, #C07A1E)" d="M18 144c54-15 104-13 150 5l-9 31H9Z"></path> from <div role="dialog" aria-modal="true" aria-label="Site questionnaire" class="SiteSurveySheet_survey__cn5t5 fixed inset-0 z-50 flex flex-col u-anim-sheet">…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <p>Understand the site, constraints and possibilitie…</p> from <div role="dialog" aria-modal="true" aria-label="Site questionnaire" class="SiteSurveySheet_survey__cn5t5 fixed inset-0 z-50 flex flex-col u-anim-sheet">…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 20ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into vie

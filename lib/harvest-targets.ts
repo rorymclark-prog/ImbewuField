@@ -6,6 +6,7 @@ import {
   TRANSPLANT_ENTRY_EARLIEST_MONTHS, TRANSPLANT_ENTRY_PLANNED_MONTHS,
   type HarvestTarget, type KgHarvestTarget, type MonthlyHarvestTarget, type PlanBed, type Planting,
 } from './crop-plan';
+import { COVERAGE_TOLERANCE_KG, type HarvestTargetCoverage } from './harvest-target-coverage';
 
 export const HARVEST_TARGET_BASIS = 'Crop-cycle capacity uses the catalogue’s South African planning yields and picking windows. It does not forecast kilograms each week. Check local suitability, losses and actual harvest records before promising deliveries.';
 
@@ -38,6 +39,21 @@ export interface HarvestTargetAssessment {
    */
   earlyCycles: number;
   earliestReadyMonth: string | null;
+  /**
+   * The same target counted WITHOUT the cycles that could be ready early: the capacity
+   * left (after the saleable share), and the requested months whose only linked picking
+   * window comes from such a cycle. Nothing here changes what is credited above
+   * (Rory, 11 November 2026: keep the credit, say when it rests on a possibly-early crop).
+   */
+  onTimeAllocatedKg: number;
+  earlyOnlyMonths: string[];
+  /**
+   * One word for the card. 'covered-may-be-early' means the target is met on paper only
+   * because of cycles that could be ready before the buyer's window opens: without them
+   * it would be short, or a requested month would have no picking window.
+   * 'not-assessed' when the basis is missing, so no capacity was worked out.
+   */
+  coverage: HarvestTargetCoverage;
   missingBasis: boolean;
   missingReasons: ('crop-evidence' | 'unit-weight' | 'zero-saleable-share')[];
 }
@@ -127,7 +143,9 @@ export function assessHarvestTarget(
   });
   const picking = new Set<number>();
   const windowStart = harvestTargetMonthIndex(target.startMonth)!;
+  const onTimePicking = new Set<number>();
   let grossCycleKg = 0;
+  let onTimeGrossKg = 0;
   let excludedRows = 0;
   let earlyCycles = 0;
   let earliestReady: number | null = null;
@@ -149,20 +167,32 @@ export function assessHarvestTarget(
     if (ready !== null && ready < windowStart) {
       earlyCycles++;
       earliestReady = earliestReady === null ? ready : Math.min(earliestReady, ready);
+    } else {
+      onTimeGrossKg += kg;
+      window.forEach((month) => onTimePicking.add(month));
     }
   }
   const start = harvestTargetMonthIndex(target.startMonth)!;
   const end = harvestTargetMonthIndex(target.endMonth)!;
   const months = Array.from({ length: end - start + 1 }, (_, i) => start + i);
   const allocatedKg = grossCycleKg * factor;
+  const onTimeAllocatedKg = onTimeGrossKg * factor;
+  const gapMonths = months.filter((m) => !picking.has(m));
+  const earlyOnlyMonths = months.filter((m) => picking.has(m) && !onTimePicking.has(m));
+  const shortageKg = demand.demandKg === null ? null : Math.max(0, demand.demandKg - allocatedKg);
+  const coverage: HarvestTargetCoverage = missingBasis || shortageKg === null ? 'not-assessed'
+    : shortageKg > COVERAGE_TOLERANCE_KG || gapMonths.length > 0 ? 'short'
+      : demand.demandKg! - onTimeAllocatedKg > COVERAGE_TOLERANCE_KG || earlyOnlyMonths.length > 0 ? 'covered-may-be-early'
+        : 'covered';
   return {
     target, ...demand, missingBasis, missingReasons,
     cycleAreaM2: missingBasis ? null : demand.demandKg! / (crop.yieldKgPerM2! * factor),
     allocatedKg, grossCycleKg,
-    shortageKg: demand.demandKg === null ? null : Math.max(0, demand.demandKg - allocatedKg),
+    shortageKg,
     surplusKg: demand.demandKg === null ? null : Math.max(0, allocatedKg - demand.demandKg), excludedRows,
     earlyCycles, earliestReadyMonth: earliestReady === null ? null : targetMonthStamp(earliestReady),
+    onTimeAllocatedKg, earlyOnlyMonths: earlyOnlyMonths.map(targetMonthStamp), coverage,
     pickingMonths: months.filter((m) => picking.has(m)).map(targetMonthStamp),
-    gapMonths: months.filter((m) => !picking.has(m)).map(targetMonthStamp),
+    gapMonths: gapMonths.map(targetMonthStamp),
   };
 }
