@@ -438,6 +438,17 @@ export function sowingCalendarFor(c: MonthlyClimate, koppen: KoppenResult): Sowi
     ...(recordMinC === null ? [] : [{ recordMinC: recordMinC + CLOSE_CALL_RECORD_MIN_C }]),
     { hottestMonthC: facts.hottestMonthC + CLOSE_CALL_MEAN_C },
     { summerRainShare: facts.summerRainShare + CLOSE_CALL_RAIN_SHARE },
+    // Both monthly means together, colder then warmer. Two gridded records usually
+    // differ by an offset in every month, not in the coldest month alone, so a site can
+    // sit inside the tolerance of a line that needs BOTH readings to move: Eshowe
+    // (coldest 15.1 °C against 16, hottest 23.9 °C against 24) reaches the hot-area
+    // column when every month is one degree warmer, and the single-reading nudges above
+    // never say so (independent review of 11 November 2026, Argon F-07 reproduced by
+    // Codex). These come last, so they can only name a neighbour the nudges above
+    // missed; no threshold changes and no site's own calendar changes. Measured on the
+    // 100 recorded South African places: Eshowe is the only one affected.
+    { coldestMonthC: facts.coldestMonthC - CLOSE_CALL_MEAN_C, hottestMonthC: facts.hottestMonthC - CLOSE_CALL_MEAN_C },
+    { coldestMonthC: facts.coldestMonthC + CLOSE_CALL_MEAN_C, hottestMonthC: facts.hottestMonthC + CLOSE_CALL_MEAN_C },
   ];
   let closeCall: AtlasRainPattern | null = null;
   let warmerNeighbour: AtlasRainPattern | null = null;

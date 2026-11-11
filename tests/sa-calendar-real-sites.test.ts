@@ -148,6 +148,35 @@ test('CP-103 (open): the two held-out places wrongly on hard frost are told so a
   }
 });
 
+test('Eshowe is told it is close to the hot-area line, and its grower\'s "no frost" can use that calendar (Argon F-07)', () => {
+  // The only one of the 100 recorded places where a neighbour is reachable by moving both
+  // monthly means together and by neither alone (coldest 15.1 °C, hottest 23.9 °C, record
+  // minimum 2.9 °C, no frost day on the second record). Its own calendar does not change.
+  const eshowe = HELD_OUT_2026_11_11.find((site) => site.name === 'Eshowe');
+  assert.ok(eshowe);
+  assert.equal(eshowe.era5.airFrostDaysPerYear, 0, 'fixture: no frost on the second record');
+  const climate = climateOf(eshowe);
+  assert.equal(climate.pattern, 'mild-frost');
+  assert.equal(climate.closeCall, 'all-year');
+  assert.equal(climate.warmerNeighbour, 'all-year');
+  assert.deepEqual(calendarForGrower(climate, 'unknown'), { pattern: 'mild-frost', basis: 'site-climate' });
+  assert.deepEqual(calendarForGrower(climate, 'yes'), { pattern: 'mild-frost', basis: 'site-climate' });
+  assert.deepEqual(calendarForGrower(climate, 'no'), { pattern: 'all-year', basis: 'grower-frost' });
+  assert.match(sowingCalendarReasons(climate, { pattern: climate.pattern, basis: 'site-climate' }).join(' '),
+    /close to the line for the "Hot area, no frost" calendar\. If you have never seen frost on these beds, say so/);
+  // No other recorded place gained or lost a neighbour from the joint nudges: every place whose
+  // calendar changes when all twelve months move by one degree already names that calendar.
+  const shifted = (site: Site, by: number) => siteClimateFromLocationData({ ...payload(site), climate: { ...payload(site).climate, monthlyTemp: site.monthlyTempC.map((t) => t + by) } }, site.lat);
+  for (const site of ALL_SITES) {
+    const here = climateOf(site);
+    for (const by of [-1, 1]) {
+      const moved = shifted(site, by)?.pattern;
+      if (!moved || moved === here.pattern) continue;
+      assert.ok(here.closeCall === moved || here.warmerNeighbour === moved, `${site.name}: one degree ${by > 0 ? 'warmer' : 'colder'} gives '${moved}', which the site is not told about`);
+    }
+  }
+});
+
 // Where the rule puts each of the 56, as recorded on 11 November 2026. Butterworth and
 // Mossel Bay are under 'summer' because that is what the rule does, not because it is right.
 const HELD_OUT_RECORDED: Record<RainPattern, string[]> = {

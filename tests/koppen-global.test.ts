@@ -289,3 +289,40 @@ test('the calendar choice reports rain timing separately and flags a close call'
   const coast = { ...seasonal({ summerTemp: 21, winterTemp: 14, summerRain: 55, winterRain: 50, lat: -34 }), recordMinC: 5 };
   assert.equal(sowingCalendarFor(coast, classifyKoppen(coast)).rainSeason, 'all-year');
 });
+
+test('the close-call search also tries both monthly means together (Argon F-07)', () => {
+  // Independent review of 11 November 2026: Argon's claim, reproduced by Codex. Eshowe reads
+  // coldest 15.1 °C (line 16) and hottest 23.9 °C (line 24) with a frost-free record. Moving
+  // either reading alone by the one-degree tolerance leaves it on the light-frost column, so
+  // the search named no neighbour; moving every month by that same degree, which is how two
+  // gridded records usually differ, reaches the hot-area column. The site's own calendar is
+  // unchanged and no line moves: only the neighbour is now named.
+  const lat = -28.89;
+  const near = { ...seasonal({ summerTemp: 23.93, winterTemp: 15.1, summerRain: 100, winterRain: 20, lat }), recordMinC: 2.9 };
+  const choice = sowingCalendarFor(near, classifyKoppen(near));
+  assert.equal(choice.pattern, 'mild-frost');
+  assert.equal(choice.closeCall, 'all-year');
+  assert.equal(choice.warmerNeighbour, 'all-year');
+  // The same site read one degree warmer in every month is on the hot-area column: the neighbour is real.
+  const warmer = { ...near, tempC: near.tempC.map((t) => t + 1) };
+  assert.equal(sowingCalendarFor(warmer, classifyKoppen(warmer)).pattern, 'all-year');
+  // Outside the tolerance on either reading there is still no such neighbour.
+  for (const [summerTemp, winterTemp] of [[22.9, 15.1], [23.93, 14.9], [22.9, 14.9]]) {
+    const far = { ...seasonal({ summerTemp, winterTemp, summerRain: 100, winterRain: 20, lat }), recordMinC: 2.9 };
+    assert.notEqual(sowingCalendarFor(far, classifyKoppen(far)).warmerNeighbour, 'all-year', `${summerTemp}/${winterTemp}`);
+  }
+  // A record minimum under the frost-free line is not cleared by any shift of the means.
+  const touchedFrost = { ...near, recordMinC: -0.5 };
+  assert.notEqual(sowingCalendarFor(touchedFrost, classifyKoppen(touchedFrost)).warmerNeighbour, 'all-year');
+  // The joint nudges come last: where one reading alone already names a neighbour, that answer stands.
+  const oneAxis = { ...seasonal({ summerTemp: 24.5, winterTemp: 15.9, summerRain: 95, winterRain: 18, lat }), recordMinC: 3.2 };
+  const oneAxisChoice = sowingCalendarFor(oneAxis, classifyKoppen(oneAxis));
+  assert.equal(oneAxisChoice.pattern, 'mild-frost');
+  assert.equal(oneAxisChoice.closeCall, 'all-year');
+  // And the colder joint nudge names a colder neighbour the single nudges miss, without making it a "warmer" one.
+  const justHot = { ...seasonal({ summerTemp: 24.6, winterTemp: 16.6, summerRain: 100, winterRain: 20, lat }), recordMinC: 5 };
+  const justHotChoice = sowingCalendarFor(justHot, classifyKoppen(justHot));
+  assert.equal(justHotChoice.pattern, 'all-year');
+  assert.equal(justHotChoice.closeCall, 'mild-frost');
+  assert.equal(justHotChoice.warmerNeighbour, null);
+});
