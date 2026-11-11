@@ -1,2 +1,6 @@
 # PDFs are binary documents even when their encoded streams contain no NUL bytes.
 *.pdf binary
+# Calendar files end every line with CR LF, as the iCalendar standard requires. Kept byte for byte
+# as the app produced them (audit evidence), so they are not text for whitespace checks or line-ending
+# conversion.
+*.ics binary

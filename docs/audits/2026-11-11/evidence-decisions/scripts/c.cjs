@@ -13,7 +13,7 @@ const PTS = { Durban: [31.03, -29.86, 'Durban, KwaZulu-Natal, South Africa'], Jo
     log('map-unsupported message present:', await p.getByText('The map cannot open on this device').count(), ' canvas:', await p.locator('canvas').count());
     const input = p.getByLabel('Search anywhere on Earth…'); await input.fill(name); await p.waitForTimeout(1500);
     const sug = p.getByText(full).first(); log('suggestion shown:', await sug.count());
-    await sug.click(); 
+    await sug.click();
     await p.getByText(/Sowing calendar:/).first().waitFor({ timeout: 90000 }).catch(() => log('  chip not found'));
     await p.waitForTimeout(2000);
     const info = await p.evaluate(() => {
