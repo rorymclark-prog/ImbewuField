@@ -41,9 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '11 November 2026', sha: '7ee356e001cf2335edfe48680566a0f0c8654e64', changes: [
-    'The crop plan says when your frost months are not confirmed for frost-tender crops.',
-    'The Atlas and site data show the lowest recorded temperature, not a frost-free label.',
+  { when: '11 November 2026', sha: '25612c28c329c7a0083819724957af79be7e1202', changes: [
+    'Printed frost warnings follow the frost months you record, not a fixed winter window.',
+    'Site data shows the lowest recorded temperature; made-up sun, wind and crop hints are gone',
     'A weekly harvest target now says when its crop could be ready too early.',
     'The sowing calendar page uses the crop plan\'s calendar names and can show your farm\'s.',
   ] },
