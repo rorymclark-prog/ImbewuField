@@ -72,11 +72,18 @@ function Label({ icon, children }: { icon?: React.ReactNode; children: React.Rea
   );
 }
 
-function chip(bg: string, color: string): React.CSSProperties {
+// Chips paint with theme tokens. They used to carry fixed light fills ('#E7EEF4',
+// '#EDE7DA') and fixed ink, so in dark mode they stayed pale pills (finding CP-115).
+// The hairline is an inset shadow, not a border, so a chip's size is unchanged.
+const CHIP_WATER = { bg: 'color-mix(in srgb, var(--blue) 14%, transparent)', color: 'var(--blue)' } as const;
+const CHIP_NEUTRAL = { bg: 'var(--bg-2)', color: 'var(--text-secondary)' } as const;
+
+function chip(tone: { bg: string; color: string }): React.CSSProperties {
   return {
     display: 'inline-flex', alignItems: 'center', gap: 6,
     fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 12,
-    padding: '4px 10px', borderRadius: 999, background: bg, color,
+    padding: '4px 10px', borderRadius: 999, background: tone.bg, color: tone.color,
+    boxShadow: 'inset 0 0 0 1px var(--border)',
   };
 }
 
@@ -225,13 +232,13 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
               Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.
             </p>
             <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
-              <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} mm/yr</span>
+              <span style={chip(CHIP_WATER)}>≈ {annualRain} mm/yr</span>
             </div>
           </>
         ) : koppenKnown ? (
           <>
             <div className="flex items-baseline gap-2 flex-wrap">
-              <span className="font-display font-bold" style={{ fontSize: 26, color: '#1F4D2B', letterSpacing: '-0.02em', lineHeight: 1 }}>
+              <span className="font-display font-bold" style={{ fontSize: 26, color: 'var(--color-forest-800)', letterSpacing: '-0.02em', lineHeight: 1 }}>
                 {climate.koppen}
               </span>
               <span className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
@@ -239,18 +246,18 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
               </span>
             </div>
             {koppenNote && (
-              <p className="font-display mt-2 leading-relaxed" style={{ fontSize: 14.5, fontStyle: 'italic', color: '#4A4030' }}>
+              <p className="font-display mt-2 leading-relaxed" style={{ fontSize: 14.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>
                 {koppenNote}
               </p>
             )}
             <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
-              <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} mm/yr</span>
-              {pattern && <span style={chip('#EDE7DA', '#7A6A48')}>{pairedLabel(`Sowing calendar: ${SOWING_CALENDAR_LABEL[pattern]}`, `Ikhalenda lokutshala: ${SOWING_CALENDAR_LABEL_ZU[pattern]}`, isZulu)}</span>}
-              <span data-atlas-record-low={recordLowC === null ? 'unknown' : 'known'} style={chip('#EDE7DA', '#7A6A48')}>{heldTechnicalLabel(recordLowChip, isZulu)}</span>
+              <span style={chip(CHIP_WATER)}>≈ {annualRain} mm/yr</span>
+              {pattern && <span style={chip(CHIP_NEUTRAL)}>{pairedLabel(`Sowing calendar: ${SOWING_CALENDAR_LABEL[pattern]}`, `Ikhalenda lokutshala: ${SOWING_CALENDAR_LABEL_ZU[pattern]}`, isZulu)}</span>}
+              <span data-atlas-record-low={recordLowC === null ? 'unknown' : 'known'} style={chip(CHIP_NEUTRAL)}>{heldTechnicalLabel(recordLowChip, isZulu)}</span>
             </div>
           </>
         ) : (
-          <p className="font-display leading-relaxed" style={{ fontSize: 14, color: '#4A4030' }}>
+          <p className="font-display leading-relaxed" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
             Climate data could not be fetched for this point — the figures below are placeholders, not readings. Try the point again.
           </p>
         )}

@@ -135,6 +135,21 @@ function temperatureLetter(tHot: number, tCold: number, monthsAbove10: number): 
   return 'c';
 }
 
+// A NOTE MAY SAY ONLY WHAT ITS CLASS DEFINES. A class is decided by monthly MEANS (the
+// rules in classifyKoppen below): a temperate "C" class needs a coldest-month mean above
+// 0 °C and a hottest above 10 °C; "w" is a dry winter, "f" no dry season; "a" is a hottest
+// month of 22 °C or more, "b" a cooler summer with four months at 10 °C or more. None of
+// that says how cold a night gets, so a C-class note must not call the year mild or frost
+// light. Three did until 11 November 2026 (finding CP-114):
+//   Cwb  "…mild all year from altitude — a highland growing pattern."
+//   Cwa  "…frost is light, so the dry season is the real limit."
+//   Cfb  "Mild and damp year-round — a long, gentle season…"
+// Of the 100 saved South African places (tests/fixtures), all 13 Cwb places have a gridded
+// record minimum below 0 °C (to -6.7 °C) and frost on the second daily record, as do 5 of
+// 11 Cfb places (to -4.1 °C) and 1 of 3 Cwa places. Johannesburg printed "mild all year"
+// above a record low of -4.8 °C. The three now state the class's rain season and summer
+// warmth and say plainly that the class is silent on frost. "From altitude" is gone too:
+// the classifier never sees altitude. The class NAMES are the conventional ones, unchanged.
 const DESCRIPTIONS: Record<string, [string, string]> = {
   Af: ['Tropical rainforest', 'Warm and wet all year — growing never stops, but neither does disease pressure or leaching.'],
   Am: ['Tropical monsoon', 'A short dry spell inside a very wet year — storage and drainage matter more than irrigation.'],
@@ -145,13 +160,13 @@ const DESCRIPTIONS: Record<string, [string, string]> = {
   BSh: ['Hot semi-arid steppe', 'Rain comes, but not reliably. Harvesting and holding it is the difference between years.'],
   BSk: ['Cold semi-arid steppe', 'Dry, with real winters — a narrow window between the last frost and the dry heat.'],
   Cfa: ['Humid subtropical', 'Rain in every month and hot summers — a long season, with rot and fungus as the limit rather than drought.'],
-  Cfb: ['Temperate oceanic', 'Mild and damp year-round — a long, gentle season that rarely gets properly hot.'],
+  Cfb: ['Temperate oceanic', 'Rain in every month and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.'],
   Cfc: ['Subpolar oceanic', 'Cool and wet with a very short warm spell — hardy crops only.'],
   Csa: ['Mediterranean, hot summer', 'Winter rain, bone-dry summer — the growing calendar runs opposite to a summer-rainfall one.'],
   Csb: ['Mediterranean, warm summer', 'Winter rain and a dry, mild summer — irrigation carries the summer crop.'],
   Csc: ['Mediterranean, cold summer', 'Winter rain and a short cool summer — a narrow window.'],
-  Cwa: ['Humid subtropical, dry winter', 'Summer rain and a dry winter — frost is light, so the dry season is the real limit.'],
-  Cwb: ['Subtropical highland, dry winter', 'Summer rain, dry winters, mild all year from altitude — a highland growing pattern.'],
+  Cwa: ['Humid subtropical, dry winter', 'Summer rain, a dry winter and hot summers. This climate type alone does not tell you whether there is frost.'],
+  Cwb: ['Subtropical highland, dry winter', 'Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.'],
   Cwc: ['Subtropical highland, short summer', 'Summer rain with a very short warm season.'],
   Dfa: ['Cold, no dry season, hot summer', 'Hard winters and hot summers — everything happens between the frosts.'],
   Dfb: ['Cold, no dry season, warm summer', 'A real winter and a moderate summer — the season is bounded at both ends by frost.'],

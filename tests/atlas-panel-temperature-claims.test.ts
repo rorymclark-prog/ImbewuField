@@ -135,6 +135,9 @@ test('complete temperatures: climate type, calendar, temperatures and the record
   // "Sowing calendar: Winter frost".
   assert.match(seen, /Modelled record low: -4\.8°C/);
   assert.match(html, /data-atlas-record-low="known"/);
+  // CP-114: the class note beside that record low no longer calls the year mild.
+  assert.match(seen, /Summer rain, dry winters and summers that stay warm rather than hot\. This climate type alone does not tell you whether there is frost\./);
+  assert.doesNotMatch(seen, /mild all year|from altitude/);
   assert.doesNotMatch(seen, FROST_CLASS);
   assert.doesNotMatch(html, /data-atlas-temperature/);
 });
@@ -185,4 +188,26 @@ test('the panel source no longer derives a frost statement from a monthly mean',
   assert.doesNotMatch(source, /frostChip/);
   assert.doesNotMatch(source, /tMin\s*[<>]=?\s*\d/);
   assert.doesNotMatch(source, /recordLowC\s*[<>]=?\s*-?\d/, 'the record low is printed, never compared with a number');
+});
+
+test('the climate card paints its code, note and chips with theme tokens (CP-115)', () => {
+  // In dark mode the code (#1F4D2B) and the note (#4A4030) were dark ink on a dark card, and
+  // the chips kept fixed light fills. Tokens that are declared per theme move with it.
+  const source = readFileSync(new URL('../components/atlas/AtlasPanel.tsx', import.meta.url), 'utf8');
+  const card = source.slice(source.indexOf('{/* 1 — Climate headline'), source.indexOf('{/* 2 — Rainfall */}'));
+  assert.ok(card.length > 500);
+  assert.doesNotMatch(card, /color: '#[0-9A-Fa-f]{3,8}'/, 'no fixed text colour in the climate card');
+  assert.doesNotMatch(card, /chip\('#/, 'no fixed chip fill');
+  assert.match(card, /color: 'var\(--color-forest-800\)'/);
+  assert.equal((card.match(/chip\(CHIP_(WATER|NEUTRAL)\)/g) ?? []).length, 4);
+  assert.match(source, /const CHIP_WATER = \{ bg: 'color-mix\(in srgb, var\(--blue\) 14%, transparent\)', color: 'var\(--blue\)' \}/);
+  assert.match(source, /const CHIP_NEUTRAL = \{ bg: 'var\(--bg-2\)', color: 'var\(--text-secondary\)' \}/);
+  // Each token used is declared in both columns of both themes, so it moves in dark.
+  const css = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
+  for (const token of ['--color-forest-800', '--text-secondary', '--text-primary', '--bg-2', '--blue', '--border']) {
+    assert.ok((css.match(new RegExp(`^\\s*${token}:`, 'gm')) ?? []).length >= 4, `${token} is not declared per theme`);
+  }
+  // The chip's hairline is drawn inside the chip, so its size is what it was.
+  assert.match(source, /boxShadow: 'inset 0 0 0 1px var\(--border\)'/);
+  assert.doesNotMatch(source.slice(source.indexOf('function chip('), source.indexOf('function MiniStat(')), /border:/);
 });
