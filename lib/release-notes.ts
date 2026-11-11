@@ -42,7 +42,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '11 November 2026', sha: 'e5ed0cb0a06cc8766b5a0afc8351c12c7a91f3ad', changes: [
-    'A weekly harvest target now says when it is covered only by a crop that could be ready early.',
+    'A weekly harvest target now says when its crop could be ready too early.',
     'The sowing calendar page and the Atlas use the same calendar names as the crop plan.',
     'On the sowing calendar page you can pick the calendar your farm\'s crop plan uses.',
     'When the climate records for your site cannot be read, the crop plan now says why.',
