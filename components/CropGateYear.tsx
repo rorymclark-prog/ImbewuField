@@ -274,7 +274,7 @@ export default function CropGateYear({ site, climateSource }: Props) {
       const r1 = y; y += p1 + 12;
       const t2 = y; y += band;
       const r2 = y; y += p2 + 12;
-      const t3 = y; y += band;
+      const t3 = y; y += band + 10; // room for the sow marker under the row title
       const r3 = y; y += bed + 10;
       const t4 = y; y += band;
       const r4 = y; y += strip;
@@ -426,7 +426,7 @@ export default function CropGateYear({ site, climateSource }: Props) {
       ctx.font = `12px ${P.font}`; ctx.fillStyle = P.ink2;
       ctx.textAlign = hc > 8 ? 'right' : hc < 2 ? 'left' : 'center';
       const hx = hc > 8 ? colX(hc) + cw : hc < 2 ? colX(hc) + 2 : colX(hc) + cw / 2;
-      ctx.fillText(`${MONTH_SHORT[ht.hottestMonth - 1]} ${deg(ht.hottestC)}`, hx, yC(ht.hottestC) + 17);
+      ctx.fillText(`${MONTH_SHORT[ht.hottestMonth - 1]} ${deg(ht.hottestC)}`, hx, yC(ht.hottestC) - 9);
       ctx.restore();
 
       // ── Row 3: the crop's bed months, sliding into place.
