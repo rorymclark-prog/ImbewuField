@@ -20,6 +20,7 @@ import { siteClimateFromLocationData } from '@/lib/site-climate';
 
 import Illustration from '@/components/Illustration';
 import WaterYear from '@/components/WaterYear';
+import RainOnTerrainFilm from '@/components/RainOnTerrainFilm';
 import CropGateYear from '@/components/CropGateYear';
 import workspace from '@/components/layout/Workspace.module.css';
 
@@ -252,6 +253,9 @@ function ExampleInner() {
             </span>
           </div>
         </div>
+
+        {/* The same year as a film: the storm on the site's real ground, then the tank month by month. */}
+        <RainOnTerrainFilm />
 
         {/* The water year: the harvesting card's roof and this site's monthly rain, played through. */}
         <WaterYear
