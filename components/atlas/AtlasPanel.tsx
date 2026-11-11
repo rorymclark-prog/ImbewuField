@@ -18,16 +18,28 @@
  *    reading. A missing soilSource is shown as unknown, not hidden.
  *  - "What could grow here" is labelled as a catalog read-out, not advice,
  *    and disappears when the climate data is unusable.
+ *  - Monthly temperatures are printed and classified only when the server's coverage
+ *    receipt says the provider supplied all twelve (lib/atlas.ts,
+ *    atlasTemperaturesRecorded). Otherwise some may be 20 °C stand-ins, so the
+ *    climate type, the sowing calendar, the crop list and every temperature figure
+ *    are withheld and the panel says why. Rainfall is still shown.
+ *  - Frost is never read from a monthly MEAN. The chip used to say "Frost-free" for
+ *    a coldest-month mean of 5 °C or more: Johannesburg (mean 9.9 °C, record low
+ *    -4.8 °C) and Underberg (mean 7.4 °C, record low -6.2 °C) both read "Frost-free".
+ *    The chip now prints the gridded record low itself, when the payload carries a
+ *    validated one (recordMinimumC), and says so when it does not. It states a
+ *    number, not a frost class: no threshold is applied here.
  */
 
 import { AlertTriangle, Sprout, Mountain, Droplets, Thermometer, Layers, Leaf } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { planSoilCaution, planSoilCautionTitle } from '@/lib/plan-assurance';
 import { getCropArt } from '@/lib/crop-art';
+import { recordMinimumC } from '@/lib/climate-temperature';
 import { useLanguage } from '@/lib/i18n';
 import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_LABEL_ZU } from '@/lib/sowing-calendar-label';
 import {
-  atlasRainPattern, catalogMonthFor, koppenFrom, sowableInMonth,
+  atlasRainPattern, atlasTemperaturesRecorded, catalogMonthFor, koppenFrom, sowableInMonth,
 } from '@/lib/atlas';
 
 const MONTH_LETTERS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
@@ -160,6 +172,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
   const { climate, rainfall, soil, elevation } = data;
   const derived = koppenFrom(data);
   const koppenKnown = climate.koppen !== '?' && climate.koppen !== '';
+  const temperaturesRecorded = atlasTemperaturesRecorded(data);
   const koppenNote = climate.koppenNote
     ?? (derived.code === climate.koppen ? derived.growerNote : '');
 
@@ -170,15 +183,15 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
   const rainMax = Math.max(...rainfall.monthly, 1);
   const rainAvg = annualRain / 12;
 
-  const pattern = atlasRainPattern(data);
+  const pattern = temperaturesRecorded ? atlasRainPattern(data) : null;
+  // A validated, source-tagged gridded minimum, or null. Never minTemp read directly:
+  // an outage default and POWER's missing-value marker both arrive as plain numbers.
+  const recordLowC = recordMinimumC(climate);
+  const recordLowChip = recordLowC === null ? 'Record low: not known' : `Modelled record low: ${recordLowC}°C`;
   const monthNow = now.getMonth() + 1;
   const catalogMonth = pattern ? catalogMonthFor(monthNow, data.lat) : monthNow;
   const growable = pattern ? sowableInMonth(pattern, catalogMonth) : [];
   const northern = data.lat >= 0;
-
-  const frostChipGreen = tMin >= 5;
-  const frostChip = tMin < 2 ? 'Frost expected' : tMin < 5 ? 'Light frost possible' : 'Frost-free';
-  const frostChipZu = tMin < 2 ? 'Kulindeleke isithwathwa' : tMin < 5 ? 'Kungenzeka kube nesithwathwa esincane' : 'Akunasithwathwa';
 
   const coordLabel = `${Math.abs(data.lat).toFixed(3)}°${data.lat < 0 ? 'S' : 'N'}, ${Math.abs(data.lon).toFixed(3)}°${data.lon < 0 ? 'W' : 'E'}`;
 
@@ -206,7 +219,16 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
       {/* 1 — Climate headline (Köppen) */}
       <Card accent="#1F4D2B">
         <Label>{pairedLabel('Climate', 'Isimo sezulu', isZulu)}</Label>
-        {koppenKnown ? (
+        {koppenKnown && !temperaturesRecorded ? (
+          <>
+            <p data-atlas-temperature="incomplete" className="font-display leading-relaxed" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
+              Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.
+            </p>
+            <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
+              <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} mm/yr</span>
+            </div>
+          </>
+        ) : koppenKnown ? (
           <>
             <div className="flex items-baseline gap-2 flex-wrap">
               <span className="font-display font-bold" style={{ fontSize: 26, color: '#1F4D2B', letterSpacing: '-0.02em', lineHeight: 1 }}>
@@ -224,7 +246,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
               <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} mm/yr</span>
               {pattern && <span style={chip('#EDE7DA', '#7A6A48')}>{pairedLabel(`Sowing calendar: ${SOWING_CALENDAR_LABEL[pattern]}`, `Ikhalenda lokutshala: ${SOWING_CALENDAR_LABEL_ZU[pattern]}`, isZulu)}</span>}
-              <span style={chip(frostChipGreen ? '#DDEBCF' : '#F4EAD0', frostChipGreen ? '#3C6B3F' : '#9A7A2E')}>{pairedLabel(frostChip, frostChipZu, isZulu)}</span>
+              <span data-atlas-record-low={recordLowC === null ? 'unknown' : 'known'} style={chip('#EDE7DA', '#7A6A48')}>{heldTechnicalLabel(recordLowChip, isZulu)}</span>
             </div>
           </>
         ) : (
@@ -260,12 +282,19 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
       {/* 3 — Temperature */}
       <Card>
         <Label icon={<Thermometer size={12} />}>{pairedLabel('Temperature', 'Izinga lokushisa', isZulu)}</Label>
-        <div className="grid grid-cols-3 gap-2 mb-1">
-          <MiniStat label={pairedLabel('Mean', 'Isilinganiso', isZulu)} value={`${climate.meanTemp}°C`} />
-          <MiniStat label={pairedLabel('Coldest month', 'Inyanga ebanda kakhulu', isZulu)} value={`${Math.round(tMin)}°C`} />
-          <MiniStat label={pairedLabel('Hottest month', 'Inyanga eshisa kakhulu', isZulu)} value={`${Math.round(tMax)}°C`} />
-        </div>
-        {temps.length === 12 && (
+        {!temperaturesRecorded && (
+          <p data-atlas-temperature="incomplete" className="font-display leading-relaxed" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
+            Not shown. The temperature records for this point are incomplete or could not be checked.
+          </p>
+        )}
+        {temperaturesRecorded && (
+          <div className="grid grid-cols-3 gap-2 mb-1">
+            <MiniStat label={pairedLabel('Mean', 'Isilinganiso', isZulu)} value={`${climate.meanTemp}°C`} />
+            <MiniStat label={pairedLabel('Coldest month', 'Inyanga ebanda kakhulu', isZulu)} value={`${Math.round(tMin)}°C`} />
+            <MiniStat label={pairedLabel('Hottest month', 'Inyanga eshisa kakhulu', isZulu)} value={`${Math.round(tMax)}°C`} />
+          </div>
+        )}
+        {temperaturesRecorded && temps.length === 12 && (
           <MonthBars
             values={temps}
             unit="°C"

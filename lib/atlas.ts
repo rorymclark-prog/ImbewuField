@@ -73,6 +73,24 @@ export function koppenFrom(data: AtlasClimateInput): KoppenResult {
  * like. Returns null when the climate data is unusable (Köppen '?') — a
  * pattern guessed from placeholder data would feed a fake crop list.
  */
+/**
+ * True only when the server's coverage receipt says all twelve monthly temperatures were
+ * supplied by the provider AND the twelve values are usable. Anything else is not a set
+ * of readings the Atlas may print or classify from:
+ *   - 'incomplete': at least one month is a 20 °C display substitute and nothing in the
+ *     payload says which (independent review of 11 November 2026, Codex FDR-01);
+ *   - no receipt, or a receipt its own values contradict: not verifiable. The route's
+ *     fresh answers always carry a receipt, so this is an outage default or an old payload.
+ * The Atlas panel then shows no climate type, no sowing calendar and no temperature
+ * figure. Rainfall is a separate series and is still shown.
+ *
+ * This is the panel's display rule. atlasRainPattern below keeps its own, narrower
+ * refusal ('incomplete' only), so other callers of that helper are unaffected.
+ */
+export function atlasTemperaturesRecorded(data: { climate: unknown }): boolean {
+  return monthlyTemperatureStatus(data.climate) === 'complete';
+}
+
 export function atlasRainPattern(data: AtlasClimateInput): AtlasRainPattern | null {
   // The server fills a month NASA POWER did not supply with 20 °C so the temperature
   // chart can still draw, and marks the year 'incomplete' (lib/nasa-power.ts). Those are
